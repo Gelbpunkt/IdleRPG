@@ -1,0 +1,106 @@
+""The token it will use for auth with Discord."""
+token = "my cool bot token"
+
+"""The Postgres database credentials."""
+database = [
+    "database_name",
+    "database_user",
+    "database_password",
+    "localhost", # the host of the database, this is most likely localhost or 127.0.0.1
+]
+
+"""A token for the Discord Bot List (DBL)."""
+dbltoken = "dbltoken"
+
+"""A token for the Bots For Discord Website (BFD)."""
+bfdtoken = "bfdtoken"
+
+"""All cogs to load on startup."""
+initial_extensions = [
+    "cogs.owner",
+    "cogs.admin",
+    "cogs.gambling",
+    "cogs.adventure",
+    "cogs.ranks",
+    "cogs.trading",
+    "cogs.miscellaneous",
+    "cogs.server",
+    "cogs.profile",
+    "cogs.battles",
+    "cogs.help",
+    "cogs.vote",
+    "cogs.crates",
+    "cogs.patreon",
+    "cogs.store",
+    "cogs.marriage",
+    "cogs.guild",
+    "cogs.tournament",
+    "cogs.classes",
+    "cogs.chess",
+    "cogs.images",
+    "cogs.error_handler",
+    "cogs.global_events",
+    "cogs.raid",
+    "cogs.music",
+    "cogs.custom",
+    "cogs.shard_communication",
+]
+
+"""The channel where vote logging is sent from. This is an ID."""
+upvote_channel = 453948653913112609
+
+"""The prefix to use if none is set custom or we are in DMs."""
+global_prefix = "$"
+
+"""The channel ID to send join logs to."""
+join_channel = 441821532696870922
+
+"""Defines whether it is a beta version or not. This would disable some parts, e.g. no longer post the stats to DBL and BFD."""
+is_beta = False
+
+"""A list of Admins by ID."""
+admins = [
+    356091260429402122,
+    373797591395205122,
+    395938979293167617,
+    270624053809643522,
+    222005168147922944,
+    147874400836911104,
+    278269289960833035,
+    291215916916801536,
+    213045557181022209,
+    210510122810605569,
+    294894701708967936,
+    254234402354233344,
+    340745895932854272,
+    438443378498338816,
+    525139442663424011,
+]
+
+"""The support server ID."""
+support_server_id = 430017996304678923
+
+"""A channel ID to send admin logs to."""
+admin_log_channel = 457197748626653184
+
+"""All owners who have access to eval, sql and other commands."""
+owners = [244508568517083136, 356091260429402122, 294894701708967936]
+
+"""Credentials for the Lavalink server."""
+lava_creds = {
+    "password": "password",
+    "ws_url": "ws://127.0.0.1:2333",
+    "rest_url": "http://127.0.0.1:2333",
+}
+
+"""This is the colour used in most embeds and for everything else. You know that yellow from somewhere ;)"
+primary_colour = 0xFFBC00
+
+"""Our sentry URL to post bugs to."""
+sentry_url = "https://whatever.sentry.url"
+
+"""The token used to interact with the raid backend."""
+raidauth = "my raid api auth code"
+
+"""The base URL for links."""
+base_url = "https://idlerpg.travitia.xyz"

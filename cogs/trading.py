@@ -1,0 +1,518 @@
+import discord, traceback
+from discord.ext import commands
+import cogs.rpgtools as rpgtools
+from discord.ext.commands import BucketType
+import random
+from utils.checks import *
+
+from cogs.shard_communication import user_on_cooldown as user_cooldown
+
+
+class Trading:
+    def __init__(self, bot):
+        self.bot = bot
+
+    @has_char()
+    @commands.command(
+        description="Sells the item with the given ID for the given price."
+    )
+    async def sell(self, ctx, itemid: int, price: int):
+        async with self.bot.pool.acquire() as conn:
+            ret = await conn.fetchrow(
+                "SELECT * FROM inventory i JOIN allitems ai ON (i.item=ai.id) WHERE ai.id=$1 AND ai.owner=$2;",
+                itemid,
+                ctx.author.id,
+            )
+            if not ret:
+                return await ctx.send(f"You don't own an item with the ID: {itemid}")
+            if int(ret[8]) == 0 and int(ret[9]) <= 3:
+                return await ctx.send(
+                    "Your item is either equal to a Starter Item or worse. Noone would buy it."
+                )
+            elif int(ret[9]) == 0 and int(ret[8]) <= 3:
+                return await ctx.send(
+                    "Your item is either equal to a Starter Item or worse. Noone would buy it."
+                )
+            elif price > ret[6] * 50:
+                return await ctx.send(
+                    f"Your price is too high. Try adjusting it to be up to `{ret[6]*50}`."
+                )
+            elif price < 1:
+                return await ctx.send("You can't sell it for free or a negative price.")
+            await conn.execute(
+                "DELETE FROM inventory i USING allitems ai WHERE i.item=ai.id AND ai.id=$1 AND ai.owner=$2;",
+                itemid,
+                ctx.author.id,
+            )
+            await conn.execute(
+                "INSERT INTO market (item, price) VALUES ($1, $2);", itemid, price
+            )
+        await ctx.send(
+            f"Successfully added your item to the shop! Use `{ctx.prefix}shop` to view it in the market!"
+        )
+
+    @has_char()
+    @commands.command(aliases=["b"], description="Buys an item with the given ID.")
+    async def buy(self, ctx, itemid: int):
+        async with self.bot.pool.acquire() as conn:
+            item = await conn.fetchrow(
+                "SELECT * FROM market m JOIN allitems ai ON (m.item=ai.id) WHERE ai.id=$1;",
+                itemid,
+            )
+            if not item:
+                return await ctx.send(
+                    f"There is no item in the shop with the ID: {itemid}"
+                )
+            if not await has_money(self.bot, ctx.author.id, item[2]):
+                return await ctx.send("You're too poor to buy this item.")
+            deleted = await conn.fetchrow(
+                "DELETE FROM market m USING allitems ai WHERE m.item=ai.id AND ai.id=$1 AND ai.owner=$2 RETURNING *;",
+                itemid,
+                item[4],
+            )
+            await conn.execute(
+                "UPDATE allitems SET owner=$1 WHERE id=$2;", ctx.author.id, deleted[3]
+            )
+            await conn.execute(
+                'UPDATE profile SET money=money+$1 WHERE "user"=$2;',
+                deleted[2],
+                deleted[4],
+            )
+            await conn.execute(
+                'UPDATE profile SET money=money-$1 WHERE "user"=$2;',
+                deleted[2],
+                ctx.author.id,
+            )
+            await conn.execute(
+                "INSERT INTO inventory (item, equipped) VALUES ($1, $2);",
+                deleted[3],
+                False,
+            )
+        await ctx.send(
+            f"Successfully bought item `{deleted[3]}`. Use `{ctx.prefix}inventory` to view your updated inventory."
+        )
+        seller = self.bot.get_user(deleted[4])
+        if seller:
+            await seller.send(
+                f"**{ctx.author}** bought your **{deleted['name']}** for **${deleted['price']}** from the market."
+            )
+
+    @has_char()
+    @commands.command(description="Takes an item off the shop.")
+    async def remove(self, ctx, itemid: int):
+        async with self.bot.pool.acquire() as conn:
+            item = await conn.fetchrow(
+                "SELECT * FROM market m JOIN allitems ai ON (m.item=ai.id) WHERE ai.id=$1 AND ai.owner=$2;",
+                itemid,
+                ctx.author.id,
+            )
+            if not item:
+                return await ctx.send(
+                    f"You don't have an item of yours in the shop with the ID `{itemid}`."
+                )
+            deleted = await conn.fetchrow(
+                "DELETE FROM market m USING allitems ai WHERE m.item=ai.id AND ai.id=$1 AND ai.owner=$2 RETURNING *;",
+                itemid,
+                ctx.author.id,
+            )
+            await conn.execute(
+                "INSERT INTO inventory (item, equipped) VALUES ($1, $2);", itemid, False
+            )
+        await ctx.send(
+            f"Successfully remove item `{itemid}` from the shop and put it in your inventory."
+        )
+
+    @commands.command(
+        aliases=["market", "m"],
+        description="Show the market with all items and prices.",
+    )
+    async def shop(
+        self,
+        ctx,
+        itemtype: str = "All",
+        minstat: float = 0.00,
+        highestprice: int = 10000,
+    ):
+        itemtype = itemtype.title()
+        if itemtype not in ["All", "Sword", "Shield"]:
+            return await ctx.send(
+                "Use either `all`, `Sword` or `Shield` as a type to filter for."
+            )
+        if highestprice < 0:
+            return await ctx.send("Price must be minimum 0.")
+        async with self.bot.pool.acquire() as conn:
+            if itemtype == "All":
+                ret = await conn.fetch(
+                    'SELECT * FROM allitems ai JOIN market m ON (ai.id=m.item) WHERE m."price"<$1 AND (ai."damage">=$2 OR ai."armor">=$3);',
+                    highestprice,
+                    minstat,
+                    minstat,
+                )
+            elif itemtype == "Sword":
+                ret = await conn.fetch(
+                    'SELECT * FROM allitems ai JOIN market m ON (ai.id=m.item) WHERE ai."type"=$1 AND ai."damage">=$2 AND m."price"<$3;',
+                    itemtype,
+                    minstat,
+                    highestprice,
+                )
+            elif itemtype == "Shield":
+                ret = await conn.fetch(
+                    'SELECT * FROM allitems ai JOIN market m ON (ai.id=m.item) WHERE ai."type"=$1 AND ai."armor">=$2 AND m."price"<$3;',
+                    itemtype,
+                    minstat,
+                    highestprice,
+                )
+        if ret == []:
+            await ctx.send("The shop is currently empty.")
+        else:
+            maxpages = len(ret)
+            currentpage = 1
+            charname = await rpgtools.lookup(self.bot, ret[currentpage - 1][1])
+            msg = await ctx.send(
+                f"Item **{currentpage}** of **{maxpages}**\n\nSeller: `{charname}`\nName: `{ret[currentpage-1][2]}`\nValue: **${ret[currentpage-1][3]}**\nType: `{ret[currentpage-1][4]}`\nDamage: `{ret[currentpage-1][5]}`\nArmor: `{ret[currentpage-1][6]}`\nPrice: **${ret[currentpage-1][9]}**\n\nUse: `{ctx.prefix}buy {ret[currentpage-1][0]}` to buy this item."
+            )
+            await msg.add_reaction("\U000023ee")
+            await msg.add_reaction("\U000025c0")
+            await msg.add_reaction("\U000025b6")
+            await msg.add_reaction("\U000023ed")
+            await msg.add_reaction("\U0001f522")
+            shopactive = True
+
+            def reactioncheck(reaction, user):
+                return (
+                    str(reaction.emoji)
+                    in [
+                        "\U000025c0",
+                        "\U000025b6",
+                        "\U000023ee",
+                        "\U000023ed",
+                        "\U0001f522",
+                    ]
+                    and reaction.message.id == msg.id
+                    and user != self.bot.user
+                )
+
+            def msgcheck(amsg):
+                return amsg.channel == ctx.channel and not amsg.author.bot
+
+            while shopactive:
+                try:
+                    reaction, user = await self.bot.wait_for(
+                        "reaction_add", timeout=60.0, check=reactioncheck
+                    )
+                    if reaction.emoji == "\U000025c0":
+                        if currentpage == 1:
+                            pass
+                        else:
+                            currentpage -= 1
+                            charname = await rpgtools.lookup(
+                                self.bot, ret[currentpage - 1][1]
+                            )
+                            await msg.edit(
+                                content=f"Item **{currentpage}** of **{maxpages}**\n\nSeller: `{charname}`\nName: `{ret[currentpage-1][2]}`\nValue: **${ret[currentpage-1][3]}**\nType: `{ret[currentpage-1][4]}`\nDamage: `{ret[currentpage-1][5]}`\nArmor: `{ret[currentpage-1][6]}`\nPrice: **${ret[currentpage-1][9]}**\n\nUse: `{ctx.prefix}buy {ret[currentpage-1][0]}` to buy this item."
+                            )
+                        try:
+                            await msg.remove_reaction(reaction.emoji, user)
+                        except:
+                            pass
+                    elif reaction.emoji == "\U000025b6":
+                        if currentpage == maxpages:
+                            pass
+                        else:
+                            currentpage += 1
+                            charname = await rpgtools.lookup(
+                                self.bot, ret[currentpage - 1][1]
+                            )
+                            await msg.edit(
+                                content=f"Item **{currentpage}** of **{maxpages}**\n\nSeller: `{charname}`\nName: `{ret[currentpage-1][2]}`\nValue: **${ret[currentpage-1][3]}**\nType: `{ret[currentpage-1][4]}`\nDamage: `{ret[currentpage-1][5]}`\nArmor: `{ret[currentpage-1][6]}`\nPrice: **${ret[currentpage-1][9]}**\n\nUse: `{ctx.prefix}buy {ret[currentpage-1][0]}` to buy this item."
+                            )
+                        try:
+                            await msg.remove_reaction(reaction.emoji, user)
+                        except:
+                            pass
+                    elif reaction.emoji == "\U000023ee":
+                        currentpage = 1
+                        charname = await rpgtools.lookup(
+                            self.bot, ret[currentpage - 1][1]
+                        )
+                        await msg.edit(
+                            content=f"Item **{currentpage}** of **{maxpages}**\n\nSeller: `{charname}`\nName: `{ret[currentpage-1][2]}`\nValue: **${ret[currentpage-1][3]}**\nType: `{ret[currentpage-1][4]}`\nDamage: `{ret[currentpage-1][5]}`\nArmor: `{ret[currentpage-1][6]}`\nPrice: **${ret[currentpage-1][9]}**\n\nUse: `{ctx.prefix}buy {ret[currentpage-1][0]}` to buy this item."
+                        )
+                        try:
+                            await msg.remove_reaction(reaction.emoji, user)
+                        except:
+                            pass
+                    elif reaction.emoji == "\U000023ed":
+                        currentpage = maxpages
+                        charname = await rpgtools.lookup(
+                            self.bot, ret[currentpage - 1][1]
+                        )
+                        await msg.edit(
+                            content=f"Item **{currentpage}** of **{maxpages}**\n\nSeller: `{charname}`\nName: `{ret[currentpage-1][2]}`\nValue: **${ret[currentpage-1][3]}**\nType: `{ret[currentpage-1][4]}`\nDamage: `{ret[currentpage-1][5]}`\nArmor: `{ret[currentpage-1][6]}`\nPrice: **${ret[currentpage-1][9]}**\n\nUse: `{ctx.prefix}buy {ret[currentpage-1][0]}` to buy this item."
+                        )
+                        try:
+                            await msg.remove_reaction(reaction.emoji, user)
+                        except:
+                            pass
+                    elif reaction.emoji == "\U0001f522":
+                        question = await ctx.send(
+                            f"Enter a page number from `1` to `{maxpages}`"
+                        )
+                        num = await self.bot.wait_for(
+                            "message", timeout=10, check=msgcheck
+                        )
+                        if num == None:
+                            await question.delete()
+                        else:
+                            try:
+                                num2 = int(num.content)
+                                if num2 >= 1 and num2 <= maxpages:
+                                    currentpage = num2
+                                    charname = await rpgtools.lookup(
+                                        self.bot, ret[currentpage - 1][1]
+                                    )
+                                    await msg.edit(
+                                        content=f"Item **{currentpage}** of **{maxpages}**\n\nSeller: `{charname}`\nName: `{ret[currentpage-1][2]}`\nValue: **${ret[currentpage-1][3]}**\nType: `{ret[currentpage-1][4]}`\nDamage: `{ret[currentpage-1][5]}`\nArmor: `{ret[currentpage-1][6]}`\nPrice: **${ret[currentpage-1][9]}**\n\nUse: `{ctx.prefix}buy {ret[currentpage-1][0]}` to buy this item."
+                                    )
+                                else:
+                                    mymsg = await ctx.send(
+                                        f"Must be between `1` and `{maxpages}`.",
+                                        delete_after=2,
+                                    )
+                                try:
+                                    await num.delete()
+                                except:
+                                    pass
+                            except:
+                                mymsg = await ctx.send(
+                                    "That is no number!", delete_after=2
+                                )
+                                try:
+                                    await num.delete()
+                                except:
+                                    pass
+                        await question.delete()
+                        try:
+                            await msg.remove_reaction(reaction.emoji, user)
+                        except:
+                            pass
+                except:
+                    shopactive = False
+                    try:
+                        await msg.clear_reactions()
+                    except:
+                        pass
+                    finally:
+                        break
+
+    @has_char()
+    @user_cooldown(180)
+    @commands.command(description="Offer an item to a specific user.")
+    async def offer(self, ctx, itemid: int, price: int, user: discord.Member):
+        if price < 0 or price > 100_000_000:
+            return await ctx.send("Don't scam!")
+        async with self.bot.pool.acquire() as conn:
+            ret = await conn.fetchrow(
+                "SELECT * FROM inventory i JOIN allitems ai ON (i.item=ai.id) WHERE ai.id=$1 AND ai.owner=$2;",
+                itemid,
+                ctx.author.id,
+            )
+        if not ret:
+            return await ctx.send(f"You don't have an item with the ID `{itemid}`.")
+        if ret[2]:
+
+            def check(m):
+                return m.content.lower() == "confirm" and m.author == ctx.author
+
+            await ctx.send(
+                "Are you sure you want to sell your equipped item? Type `confirm` to sell it"
+            )
+            try:
+                await self.bot.wait_for("message", check=check, timeout=30)
+            except:
+                return await ctx.send("Item selling cancelled.")
+        await ctx.send(
+            f"{user.mention}, {ctx.author.mention} offered you an item! Write `buy @{str(ctx.author)}` to buy it! The price is **${price}**. You have **2 Minutes** to accept the trade or the offer will be canceled."
+        )
+
+        def msgcheck(amsg):
+            return (
+                amsg.content.strip() == f"buy <@{ctx.author.id}>"
+                or amsg.content.strip() == f"buy <@!{ctx.author.id}>"
+            ) and amsg.author == user
+
+        try:
+            res = await self.bot.wait_for("message", timeout=120, check=msgcheck)
+        except:
+            return await ctx.send(
+                f"They didn't want to buy your item, {ctx.author.mention}."
+            )
+        if not await has_money(self.bot, user.id, price):
+            return await ctx.send(f"{user.mention}, you're too poor to buy this item!")
+        async with self.bot.pool.acquire() as conn:
+            ret = await conn.fetchrow(
+                "SELECT * FROM inventory i JOIN allitems ai ON (i.item=ai.id) WHERE ai.id=$1 AND ai.owner=$2;",
+                itemid,
+                ctx.author.id,
+            )
+            if not ret:
+                return await ctx.send(
+                    f"The owner sold the item with the ID `{itemid}` in the meantime."
+                )
+            await conn.execute(
+                "UPDATE allitems SET owner=$1 WHERE id=$2;", user.id, itemid
+            )
+            await conn.execute(
+                'UPDATE profile SET money=money+$1 WHERE "user"=$2;',
+                price,
+                ctx.author.id,
+            )
+            await conn.execute(
+                'UPDATE profile SET money=money-$1 WHERE "user"=$2;', price, user.id
+            )
+            await conn.execute(
+                'UPDATE inventory SET "equipped"=$1 WHERE "item"=$2;', False, itemid
+            )
+        await ctx.send(
+            f"Successfully bought item `{itemid}`. Use `{ctx.prefix}inventory` to view your updated inventory."
+        )
+
+    @has_char()
+    @commands.command(aliases=["merch"], description="Sells an item for its value.")
+    async def merchant(self, ctx, itemid: int):
+        async with self.bot.pool.acquire() as conn:
+            item = await conn.fetchrow(
+                "SELECT * FROM inventory i JOIN allitems ai ON (i.item=ai.id) WHERE ai.id=$1 AND ai.owner=$2;",
+                itemid,
+                ctx.author.id,
+            )
+            if not item:
+                return await ctx.send(f"You don't own an item with the ID: {itemid}")
+            await conn.execute(
+                'UPDATE profile SET money=money+$1 WHERE "user"=$2;',
+                item[6],
+                ctx.author.id,
+            )
+            await conn.execute('DELETE FROM allitems WHERE "id"=$1;', itemid)
+        await ctx.send(f"You received **${item[6]}** when selling item `{itemid}`.")
+
+    @has_char()
+    @commands.command(
+        description="Sells all items except your equipped ones for their value."
+    )
+    async def merchall(self, ctx):
+        async with self.bot.pool.acquire() as conn:
+            ret = await conn.fetchrow(
+                "SELECT sum(value), count(value) FROM inventory i JOIN allitems ai ON (i.item=ai.id) WHERE ai.owner=$1 AND i.equipped IS FALSE;",
+                ctx.author.id,
+            )
+            if ret[1] == 0:
+                return await ctx.send("Nothing to merch.")
+            await conn.execute(
+                "DELETE FROM allitems ai USING inventory i WHERE ai.id=i.item AND ai.owner=$1 AND i.equipped IS FALSE;",
+                ctx.author.id,
+            )
+            await conn.execute(
+                'UPDATE profile SET "money"="money"+$1 WHERE "user"=$2;',
+                ret[0],
+                ctx.author.id,
+            )
+        await ctx.send(f"Merched **{ret[1]}** items for **${ret[0]}**.")
+
+    @commands.command(description="Views your pending shop items.")
+    async def pending(self, ctx):
+        async with self.bot.pool.acquire() as conn:
+            ret = await conn.fetch(
+                'SELECT * FROM allitems ai JOIN market m ON (m.item=ai.id) WHERE ai."owner"=$1;',
+                ctx.author.id,
+            )
+        if ret == []:
+            return await ctx.send("You don't have any pending shop offers.")
+        p = "**Your current shop offers**\n"
+        for row in ret:
+            p += f"A **{row[2]}** (ID: `{row[0]}`) with damage `{row[5]}` and armor `{row[6]}`. Value is **${row[3]}**, market price is **${row[9]}**.\n"
+        await ctx.send(p)
+
+    @has_char()
+    @user_cooldown(3600)
+    @commands.command(description="Buy items at the trader.")
+    async def trader(self, ctx):
+        # [type, damage, armor, value (0), name, price]
+        offers = []
+        for i in range(5):
+            name = random.choice(
+                ["Normal ", "Ugly ", "Useless ", "Premade ", "Handsmith "]
+            )
+            type = random.choice(["Sword", "Shield"])
+            name = (
+                name + random.choice(["Blade", "Stich", "Sword"])
+                if type == "Sword"
+                else name
+            )
+            name = (
+                name + random.choice(["Defender", "Aegis", "Buckler"])
+                if type == "Shield"
+                else name
+            )
+            damage = random.randint(1, 15) if type == "Sword" else 0
+            armor = random.randint(1, 15) if type == "Shield" else 0
+            price = armor * 50 + damage * 50
+            offers.append([type, damage, armor, 0, name, price])
+        nl = "\n"
+        await ctx.send(
+            f"""
+**The trader offers once per hour:**
+{nl.join([str(offers.index(w)+1)+") Type: `"+w[0]+"` Damage: `"+str(w[1])+".00` Armor: `"+str(w[2])+".00` Name: `"+w[4]+"` Price: **$"+str(w[5])+"**" for w in offers])}
+
+Type `trader buy offerid` in the next 30 seconds to buy something
+"""
+        )
+
+        def check(msg):
+            return (
+                msg.content.lower().startswith("trader buy")
+                and msg.author == ctx.author
+            )
+
+        try:
+            msg = await self.bot.wait_for("message", check=check, timeout=30)
+        except:
+            return
+
+        try:
+            offerid = int(msg.content.split()[-1])
+        except:
+            return await ctx.send("Unknown offer")
+        if offerid < 1 or offerid > 5:
+            return await ctx.send("Unknown offer")
+        offerid = offerid - 1
+        item = offers[offerid]
+        if not await has_money(self.bot, ctx.author.id, item[5]):
+            return await ctx.send("You are too poor to buy this item.")
+        async with self.bot.pool.acquire() as conn:
+            await conn.execute(
+                'UPDATE profile SET money=money-$1 WHERE "user"=$2;',
+                item[5],
+                ctx.author.id,
+            )
+            itemid = await conn.fetchval(
+                'INSERT INTO allitems ("owner", "name", "value", "type", "damage", "armor") VALUES ($1, $2, $3, $4, $5, $6) RETURNING *;',
+                ctx.author.id,
+                item[4],
+                0,
+                item[0],
+                item[1],
+                item[2],
+            )
+            await conn.execute(
+                'INSERT INTO inventory ("item", "equipped") VALUES ($1, $2);',
+                itemid,
+                False,
+            )
+        await ctx.send(
+            f"Successfully bought offer **{offerid+1}**. Use `{ctx.prefix}inventory` to view your updated inventory."
+        )
+
+
+def setup(bot):
+    bot.add_cog(Trading(bot))
