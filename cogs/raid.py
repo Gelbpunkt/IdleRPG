@@ -51,7 +51,7 @@ class Raid:
     async def spawn(self, ctx, hp: int):
         await self.bot.session.get(
             "https://raid.travitia.xyz/toggle",
-            headers={"Autorization": self.bot.config.raidauth},
+            headers={"Authorization": self.bot.config.raidauth},
         )
         self.bot.boss_is_spawned = True
         boss = {"hp": hp, "min_dmg": 100, "max_dmg": 500}
@@ -99,7 +99,7 @@ Use https://raid.travitia.xyz/ to join the raid!
 
         async with self.bot.session.get(
             "https://raid.travitia.xyz/joined",
-            headers={"Autorization": self.bot.config.raidauth},
+            headers={"Authorization": self.bot.config.raidauth},
         ) as r:
             self.bot.raid2 = await r.json()
         async with self.bot.pool.acquire() as conn:
