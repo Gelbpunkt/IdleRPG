@@ -4,6 +4,8 @@ This is the code for the IdleRPG Discord Bot.
 
 You may [submit an issue](https://github.com/Gelbpunkt/IdleRPG/issues) or open pull requests at any time.
 
+The master branch is always the *latest stable* version. For development versions, check other branches please.
+
 ## Current goals
 
 1. Work on a total rewrite for v3.4
@@ -19,6 +21,7 @@ Todo in v3.4:
 - Use custom converters instead of own handling every time
 - Move battles to a backend function
 - Clean up the directory structure
+- Move pagination to a module
 
 ## Can I selfhost?
 
