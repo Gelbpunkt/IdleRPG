@@ -143,21 +143,21 @@ class Trading:
         async with self.bot.pool.acquire() as conn:
             if itemtype == "All":
                 ret = await conn.fetch(
-                    'SELECT * FROM allitems ai JOIN market m ON (ai.id=m.item) WHERE m."price"<$1 AND (ai."damage">=$2 OR ai."armor">=$3);',
+                    'SELECT * FROM allitems ai JOIN market m ON (ai.id=m.item) WHERE m."price"<=$1 AND (ai."damage">=$2 OR ai."armor">=$3);',
                     highestprice,
                     minstat,
                     minstat,
                 )
             elif itemtype == "Sword":
                 ret = await conn.fetch(
-                    'SELECT * FROM allitems ai JOIN market m ON (ai.id=m.item) WHERE ai."type"=$1 AND ai."damage">=$2 AND m."price"<$3;',
+                    'SELECT * FROM allitems ai JOIN market m ON (ai.id=m.item) WHERE ai."type"=$1 AND ai."damage">=$2 AND m."price"<=$3;',
                     itemtype,
                     minstat,
                     highestprice,
                 )
             elif itemtype == "Shield":
                 ret = await conn.fetch(
-                    'SELECT * FROM allitems ai JOIN market m ON (ai.id=m.item) WHERE ai."type"=$1 AND ai."armor">=$2 AND m."price"<$3;',
+                    'SELECT * FROM allitems ai JOIN market m ON (ai.id=m.item) WHERE ai."type"=$1 AND ai."armor">=$2 AND m."price"<=$3;',
                     itemtype,
                     minstat,
                     highestprice,
