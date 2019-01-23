@@ -7,6 +7,7 @@ from utils.checks import *
 
 from cogs.shard_communication import user_on_cooldown as user_cooldown
 
+valid_chars = 'abcdefghijklmnopqrstuvwxyz1234567890<>@!'
 
 class Trading:
     def __init__(self, bot):
@@ -337,8 +338,8 @@ class Trading:
 
         def msgcheck(amsg):
             return (
-                amsg.content.strip() == f"buy <@{ctx.author.id}>"
-                or amsg.content.strip() == f"buy <@!{ctx.author.id}>"
+                filter(valid_chars.__contains__, amsg.content.lower()) == f"buy<@{ctx.author.id}>"
+                or filter(valid_chars.__contains__, amsg.content.lower()) == f"buy<@!{ctx.author.id}>"
             ) and amsg.author == user
 
         try:
