@@ -337,8 +337,8 @@ class Trading:
 
         def msgcheck(amsg):
             return (
-                amsg.content.strip() == f"buy <@{ctx.author.id}>"
-                or amsg.content.strip() == f"buy <@!{ctx.author.id}>"
+                amsg.content.strip().lower() == f"buy <@{ctx.author.id}>"
+                or amsg.content.strip().lower() == f"buy <@!{ctx.author.id}>"
             ) and amsg.author == user
 
         try:
