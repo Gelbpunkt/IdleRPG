@@ -96,14 +96,6 @@ async def global_cooldown(ctx: commands.Context):
         return True
 
 
-async def handle_vote(bot, msg):
-    user = int(msg.content.split("|")[1])
-    userobj = bot.get_user(user)
-    async with bot.pool.acquire() as conn:
-        await conn.execute('UPDATE profile SET crates=crates+1 WHERE "user"=$1;', user)
-    await userobj.send("Thanks for voting! You have been given a crate!")
-
-
 bot.bans = [
     314_210_539_498_897_418,
     326_069_549_042_630_657,
@@ -121,12 +113,6 @@ bot.bans = [
 
 @bot.event
 async def on_message(message):
-    if (
-        message.author.discriminator == "0000"
-        and message.channel.id == bot.config.upvote_channel
-        and not bot.config.is_beta
-    ):
-        await handle_vote(bot, message)
     if message.author.bot or message.author.id in bot.bans:
         return
     await bot.process_commands(message)
