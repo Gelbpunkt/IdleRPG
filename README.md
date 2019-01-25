@@ -6,6 +6,8 @@ You may [submit an issue](https://github.com/Gelbpunkt/IdleRPG/issues) or open p
 
 The master branch is always the *latest stable* version. For development versions, check other branches please.
 
+It is currently published as "All rights reserved", but we are working on a better licensing to give users more freedoms.
+
 ## Current goals
 
 1. Work on a total rewrite for v3.4
