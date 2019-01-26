@@ -71,7 +71,6 @@ Use https://raid.travitia.xyz/ to join the raid!
             await self.bot.get_channel(506_591_390_860_574_721).send(
                 "@everyone Zerekiel spawned! 15 Minutes until he is vulnerable...\nUse https://raid.travitia.xyz/ to join the raid!"
             )
-            pass
         except:
             await ctx.channel.set_permissions(
                 ctx.guild.default_role, overwrite=self.deny_sending
@@ -189,7 +188,7 @@ Use https://raid.travitia.xyz/ to join the raid!
         self.bot.boss_is_spawned = False
 
         if len(self.bot.raid) == 0:
-            await ctx.send("The raid all wiped!")
+            await ctx.send("The raid was all wiped!")
         elif boss["hp"] < 1:
             await ctx.channel.set_permissions(
                 ctx.guild.default_role, overwrite=self.allow_sending
@@ -277,7 +276,7 @@ Use https://raid.travitia.xyz/ to join the raid!
                 await msg.edit(content=f"{msg.content} Done!")
             else:
                 await ctx.send(
-                    f"{highest_bid[0].mention} spent the money in the meantime... Meh! Noone get it then, pah!\nThis incident has been reported and they will get banned if it happens again. Cheers!"
+                    f"{highest_bid[0].mention} spent the money in the meantime... Meh! Noone gets it then, pah!\nThis incident has been reported and they will get banned if it happens again. Cheers!"
                 )
 
             cash = int(hp / len(self.bot.raid))  # what da hood gets per survivor
