@@ -403,6 +403,7 @@ class Profile:
     @commands.command(description="Merges two items to a better item.")
     async def merge(self, ctx, firstitemid: int, seconditemid: int):
         if firstitemid == seconditemid:
+            reset_cooldown(ctx)
             return await ctx.send("Good luck with that.")
         async with self.bot.pool.acquire() as conn:
             item = await conn.fetchrow(
@@ -416,6 +417,7 @@ class Profile:
                 ctx.author.id,
             )
             if not item or not item2:
+                reset_cooldown(ctx)
                 return await ctx.send("You don't own both of these items.")
             if item[4] == "Sword":
                 stat1 = ("damage", item[5])
@@ -426,10 +428,12 @@ class Profile:
             elif item2[4] == "Shield":
                 stat2 = ("armor", item2[6])
             if stat2[1] < stat1[1] - 5 or stat2[1] > stat1[1] + 5:
+                reset_cooldown(ctx)
                 return await ctx.send(
                     f"The seconds item's stat must be in the range of `{stat1[1] - 5}` to `{stat1[1] + 5}` to upgrade an item with the stat of `{stat1[1]}`."
                 )
             if stat1[1] > 40:
+                reset_cooldown(ctx)
                 return await ctx.send(
                     "This item is already on the maximum upgrade level."
                 )
