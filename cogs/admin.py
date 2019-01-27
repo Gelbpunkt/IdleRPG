@@ -8,7 +8,7 @@ class Admin:
         self.bot = bot
 
     @is_admin()
-    @commands.command(aliases=['agive'], description="Gift money!", hidden=True)
+    @commands.command(aliases=["agive"], description="Gift money!", hidden=True)
     async def admingive(self, ctx, money: int, other: discord.User):
         if not await user_has_char(self.bot, other.id):
             return await ctx.send("That person hasn't got a character.")
@@ -23,7 +23,7 @@ class Admin:
         await channel.send(f"**{ctx.author}** gave **${money}** to **{other}**.")
 
     @is_admin()
-    @commands.command(aliases=['aremove'], description="Delete money!", hidden=True)
+    @commands.command(aliases=["aremove"], description="Delete money!", hidden=True)
     async def adminremove(self, ctx, money: int, other: discord.User):
         if not await user_has_char(self.bot, other.id):
             return await ctx.send("That person hasn't got a character.")
@@ -36,7 +36,9 @@ class Admin:
         await channel.send(f"**{ctx.author}** removed **${money}** from **{other}**.")
 
     @is_admin()
-    @commands.command(aliases=['adelete'], description="Deletes a character.", hidden=True)
+    @commands.command(
+        aliases=["adelete"], description="Deletes a character.", hidden=True
+    )
     async def admindelete(self, ctx, other: discord.User):
         if other.id in ctx.bot.config.admins:
             return await ctx.send("Very funny...")
@@ -49,7 +51,7 @@ class Admin:
         await channel.send(f"**{ctx.author}** deleted **{other}**.")
 
     @is_admin()
-    @commands.command(aliases=['arename'], description="Changes a character name")
+    @commands.command(aliases=["arename"], description="Changes a character name")
     async def adminrename(self, ctx, target: discord.User):
         if target.id in ctx.bot.config.admins:
             return await ctx.send("Very funny...")
@@ -79,7 +81,7 @@ class Admin:
         await channel.send(f"**{ctx.author}** renamed **{target}** to **{name}**.")
 
     @is_admin()
-    @commands.command(aliases=['acrate'], description="Gives crates to a user.")
+    @commands.command(aliases=["acrate"], description="Gives crates to a user.")
     async def admincrate(self, ctx, target: discord.Member, amount: int = 1):
         async with self.bot.pool.acquire() as conn:
             await conn.execute(
@@ -94,7 +96,7 @@ class Admin:
         )
 
     @is_admin()
-    @commands.command(aliases=['axp'], description="Gives XP to a user.")
+    @commands.command(aliases=["axp"], description="Gives XP to a user.")
     async def adminxp(self, ctx, target: discord.Member, amount: int):
         async with self.bot.pool.acquire() as conn:
             await conn.execute(
