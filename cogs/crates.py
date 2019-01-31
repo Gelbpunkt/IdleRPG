@@ -1,6 +1,7 @@
-import discord, random
+import discord
+import random
 from discord.ext import commands
-from utils.checks import *
+from utils.checks import has_char
 
 
 class Crates:
@@ -15,7 +16,8 @@ class Crates:
                 'SELECT crates FROM profile WHERE "user"=$1;', ctx.author.id
             )
         await ctx.send(
-            f"You currently have **{crates}** crates, {ctx.author.mention}! Use `{ctx.prefix}open` to open one!"
+            f"You currently have **{crates}** crates, {ctx.author.mention}!"
+            f"Use `{ctx.prefix}open` to open one!"
         )
 
     @has_char()

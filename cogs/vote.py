@@ -1,6 +1,4 @@
-import discord, aiohttp, random
 from discord.ext import commands
-from discord.ext.commands import BucketType
 
 
 class Vote:
@@ -10,7 +8,10 @@ class Vote:
     @commands.command(description="Sends a vote link.")
     async def vote(self, ctx):
         await ctx.send(
-            f"Upvote me for a big thanks! You will be rewarded a few seconds afterwards!\nhttps://discordbots.org/bot/idlerpg"
+            f"""
+            Upvote me for a big thanks! You will be rewarded a few seconds afterwards!
+            https://discordbots.org/bot/idlerpg"
+        """
         )
 
 

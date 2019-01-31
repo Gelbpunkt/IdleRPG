@@ -1,9 +1,9 @@
-import discord, traceback
+import discord
+import asyncio
 from discord.ext import commands
-import cogs.rpgtools as rpgtools
-from discord.ext.commands import BucketType
+from utils import misc as rpgtools
 import random
-from utils.checks import *
+from utils.checks import has_char, has_money
 
 from cogs.shard_communication import user_on_cooldown as user_cooldown
 
@@ -110,8 +110,8 @@ class Trading:
                 return await ctx.send(
                     f"You don't have an item of yours in the shop with the ID `{itemid}`."
                 )
-            deleted = await conn.fetchrow(
-                "DELETE FROM market m USING allitems ai WHERE m.item=ai.id AND ai.id=$1 AND ai.owner=$2 RETURNING *;",
+            await conn.execute(
+                "DELETE FROM market m USING allitems ai WHERE m.item=ai.id AND ai.id=$1 AND ai.owner=$2;",
                 itemid,
                 ctx.author.id,
             )
@@ -213,7 +213,7 @@ class Trading:
                             )
                         try:
                             await msg.remove_reaction(reaction.emoji, user)
-                        except:
+                        except discord.Forbidden:
                             pass
                     elif reaction.emoji == "\U000025b6":
                         if currentpage == maxpages:
@@ -228,7 +228,7 @@ class Trading:
                             )
                         try:
                             await msg.remove_reaction(reaction.emoji, user)
-                        except:
+                        except discord.Forbidden:
                             pass
                     elif reaction.emoji == "\U000023ee":
                         currentpage = 1
@@ -240,7 +240,7 @@ class Trading:
                         )
                         try:
                             await msg.remove_reaction(reaction.emoji, user)
-                        except:
+                        except discord.Forbidden:
                             pass
                     elif reaction.emoji == "\U000023ed":
                         currentpage = maxpages
@@ -252,7 +252,7 @@ class Trading:
                         )
                         try:
                             await msg.remove_reaction(reaction.emoji, user)
-                        except:
+                        except discord.Forbidden:
                             pass
                     elif reaction.emoji == "\U0001f522":
                         question = await ctx.send(
@@ -261,7 +261,7 @@ class Trading:
                         num = await self.bot.wait_for(
                             "message", timeout=10, check=msgcheck
                         )
-                        if num == None:
+                        if num is None:
                             await question.delete()
                         else:
                             try:
@@ -275,32 +275,30 @@ class Trading:
                                         content=f"Item **{currentpage}** of **{maxpages}**\n\nSeller: `{charname}`\nName: `{ret[currentpage-1][2]}`\nValue: **${ret[currentpage-1][3]}**\nType: `{ret[currentpage-1][4]}`\nDamage: `{ret[currentpage-1][5]}`\nArmor: `{ret[currentpage-1][6]}`\nPrice: **${ret[currentpage-1][9]}**\n\nUse: `{ctx.prefix}buy {ret[currentpage-1][0]}` to buy this item."
                                     )
                                 else:
-                                    mymsg = await ctx.send(
+                                    await ctx.send(
                                         f"Must be between `1` and `{maxpages}`.",
                                         delete_after=2,
                                     )
                                 try:
                                     await num.delete()
-                                except:
+                                except discord.Forbidden:
                                     pass
-                            except:
-                                mymsg = await ctx.send(
-                                    "That is no number!", delete_after=2
-                                )
+                            except ValueError:
+                                await ctx.send("That is no number!", delete_after=2)
                                 try:
                                     await num.delete()
-                                except:
+                                except discord.Forbidden:
                                     pass
                         await question.delete()
                         try:
                             await msg.remove_reaction(reaction.emoji, user)
-                        except:
+                        except discord.Forbidden:
                             pass
-                except:
+                except asyncio.TimeoutError:
                     shopactive = False
                     try:
                         await msg.clear_reactions()
-                    except:
+                    except discord.Forbidden:
                         pass
                     finally:
                         break
@@ -329,7 +327,7 @@ class Trading:
             )
             try:
                 await self.bot.wait_for("message", check=check, timeout=30)
-            except:
+            except asyncio.TimeoutError:
                 return await ctx.send("Item selling cancelled.")
         await ctx.send(
             f"{user.mention}, {ctx.author.mention} offered you an item! Write `buy @{str(ctx.author)}` to buy it! The price is **${price}**. You have **2 Minutes** to accept the trade or the offer will be canceled."
@@ -342,8 +340,8 @@ class Trading:
             ) and amsg.author == user
 
         try:
-            res = await self.bot.wait_for("message", timeout=120, check=msgcheck)
-        except:
+            await self.bot.wait_for("message", timeout=120, check=msgcheck)
+        except asyncio.TimeoutError:
             return await ctx.send(
                 f"They didn't want to buy your item, {ctx.author.mention}."
             )
@@ -476,12 +474,12 @@ Type `trader buy offerid` in the next 30 seconds to buy something
 
         try:
             msg = await self.bot.wait_for("message", check=check, timeout=30)
-        except:
+        except asyncio.TimeoutError:
             return
 
         try:
             offerid = int(msg.content.split()[-1])
-        except:
+        except ValueError:
             return await ctx.send("Unknown offer")
         if offerid < 1 or offerid > 5:
             return await ctx.send("Unknown offer")

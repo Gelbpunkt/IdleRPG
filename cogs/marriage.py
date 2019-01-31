@@ -1,10 +1,9 @@
 import discord
+import asyncio
 from discord.ext import commands
-import cogs.rpgtools as rpgtools
-from discord.ext.commands import BucketType
+from utils import misc as rpgtools
 import random
-import traceback
-from utils.checks import *
+from utils.checks import has_char, has_money
 
 from cogs.shard_communication import user_on_cooldown as user_cooldown
 
@@ -86,7 +85,7 @@ class Marriage:
                             f"Either you or he/she married in the meantime, {ctx.author.mention}... :broken_heart:"
                         )
 
-            except:
+            except asyncio.TimeoutError:
                 await ctx.send("They didn't want to marry.")
         else:
             await ctx.send(
@@ -262,7 +261,7 @@ To buy one of these items for your partner, use `{ctx.prefix}spoil shopid`
 
         try:
             msg = await self.bot.wait_for("message", check=check, timeout=30)
-        except:
+        except asyncio.TimeoutError:
             return await ctx.send(f"They didn't want to have a child :(")
         if random.randint(1, 2) == 1:
             return await ctx.send("You were unsuccessful at making a child.")
@@ -285,7 +284,7 @@ To buy one of these items for your partner, use `{ctx.prefix}spoil shopid`
 
         try:
             msg = await self.bot.wait_for("message", check=check, timeout=30)
-        except:
+        except asyncio.TimeoutError:
             return await ctx.send("You didn't enter a name.")
         name = msg.content.replace("@", "@\u200b")
         async with self.bot.pool.acquire() as conn:
@@ -379,7 +378,7 @@ To buy one of these items for your partner, use `{ctx.prefix}spoil shopid`
 
             try:
                 msg = await self.bot.wait_for("message", check=check, timeout=30)
-            except:
+            except asyncio.TimeoutError:
                 return await ctx.send("You didn't enter a name.")
             name = msg.content.replace("@", "@\u200b")
             async with self.bot.pool.acquire() as conn:

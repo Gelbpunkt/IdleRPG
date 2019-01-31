@@ -1,9 +1,9 @@
 import discord
+import asyncio
 from discord.ext import commands
 import cogs.rpgtools as rpgtools
-import traceback, random
-from discord.ext.commands import BucketType
-from utils.checks import *
+import random
+from utils.checks import has_char, has_money, is_patron
 import secrets
 
 from cogs.shard_communication import user_on_cooldown as user_cooldown
@@ -15,7 +15,6 @@ async def genstats(bot, userid, damage, armor):
             'SELECT class FROM profile WHERE "user"=$1;', userid
         )
     evolves1 = ["Mage", "Wizard", "Pyromancer", "Elementalist", "Dark Caster"]
-    evolves2 = ["Thief", "Rogue", "Chunin", "Renegade", "Assassin"]
     evolves3 = ["Warrior", "Swordsman", "Knight", "Warlord", "Berserker"]
     evolves4 = ["Novice", "Proficient", "Artisan", "Master", "Paragon"]
     if uclass in evolves1:
@@ -71,24 +70,12 @@ def is_ranger():
     return commands.check(predicate)
 
 
-def is_patron(bot, user):
-    member = bot.get_guild(430_017_996_304_678_923).get_member(
-        user.id
-    )  # cross server stuff
-    if not member:
-        return False
-    return (
-        discord.utils.get(member.roles, name="Donators") is not None
-        or discord.utils.get(member.roles, name="Administrators") is not None
-    )
-
-
 class Classes:
     def __init__(self, bot):
         self.bot = bot
 
     async def genstats(self, userid, damage, armor):
-        uclass = await bot.pool.fetchval(
+        uclass = await self.bot.pool.fetchval(
             'SELECT class FROM profile WHERE "user"=$1;', userid
         )
         evolves1 = ["Wizard", "Pyromancer", "Elementalist", "Dark Caster"]
@@ -156,7 +143,7 @@ class Classes:
                 )
                 try:
                     await self.bot.wait_for("message", check=check, timeout=30)
-                except:
+                except asyncio.TimeoutError:
                     return await ctx.send("Class change cancelled.")
                 await conn.execute(
                     'UPDATE profile SET "class"=$1 WHERE "user"=$2;',
@@ -188,7 +175,7 @@ class Classes:
                             f"classes/{userclass.lower().replace(' ', '_')}.png"
                         )
                     )
-                except:
+                except FileNotFoundError:
                     await ctx.send(
                         f"The image for your class **{userclass}** hasn't been added yet."
                     )

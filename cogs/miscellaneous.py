@@ -1,11 +1,15 @@
 from datetime import date, timedelta
-import discord, os, random, psutil, platform, asyncio
+import discord
+import os
+import random
+import psutil
+import platform
+import asyncio
 import pkg_resources as pkg
 from discord.ext import commands
 from discord.ext.commands import BucketType
-from cogs.help import chunks
 import time
-from utils.checks import *
+from utils.checks import has_char
 import datetime
 
 from cogs.shard_communication import user_on_cooldown as user_cooldown
@@ -158,7 +162,7 @@ __Sign up until Dec 6th!!!__
 `$matches` - view the pairings
 If you are willing to fight your scheduled match against the enemy, ping an Admin, they will use`$result guild_name` when it's over
 If you did not manage to fight your round, admins will make the bot choose a random winner.
-Round deadlines are announced in #announcements 
+Round deadlines are announced in #announcements
 
 **Have fun!!!** :idlerpg:
 """
@@ -208,7 +212,7 @@ Round deadlines are announced in #announcements
     async def echo(self, ctx, *, shout: commands.clean_content):
         try:
             await ctx.message.delete()
-        except:
+        except discord.Forbidden:
             pass
         await ctx.send(shout)
 
@@ -275,20 +279,22 @@ Round deadlines are announced in #announcements
             )
 
     @commands.command(description="Roleplay dice. Uses ndx format.")
-    async def dice(self, ctx, type: str):
-        type = type.lower().split("d")
-        if len(type) != 2:
+    async def dice(self, ctx, dice_type: str):
+        dice_type = dice_type.lower().split("d")
+        if len(dice_type) != 2:
             return await ctx.send("Use the ndx format.")
         try:
-            type[0] = int(type[0])
-            type[1] = int(type[1])
-            if type[0] > 100:
-                return await ctx.send("Too many dices.")
-        except:
-            await ctx.send("Use the ndx format.")
+            dice_type[0] = int(dice_type[0])
+            dice_type[1] = int(dice_type[1])
+        except ValueError:
+            await ctx.send(
+                "Use the ndx format. E.g. `5d20` will roll 5 dices with 20 sides each."
+            )
+        if dice_type[0] > 100:
+            return await ctx.send("Too many dices.")
         results = []
-        for i in range(type[0]):
-            results.append(random.randint(1, type[1]))
+        for _ in range(dice_type[0]):
+            results.append(random.randint(1, dice_type[1]))
         sumall = 0
         for i in results:
             sumall += i
@@ -369,24 +375,9 @@ Round deadlines are announced in #announcements
 
         try:
             msg = await self.bot.wait_for("message", check=check, timeout=10)
-        except:
+        except asyncio.TimeoutError:
             return await ctx.send(f"You didn't guess correctly! It was `{m}`!")
         await ctx.send(f"{msg.author.mention}, you are correct!")
-
-    """
-	@commands.command(description="Lists all your cooldowns.", aliases=["cooldowns"])
-	async def timers(self, ctx):
-		res = "```\n"
-		for c in set(self.bot.walk_commands()):
-			if c._buckets._cache.get(ctx.author.id):
-				time = c._buckets._cache.get(ctx.author.id)._window
-				time = datetime.timedelta(seconds=c._buckets._cache.get(ctx.author.id).per) - (datetime.datetime.utcnow() - datetime.datetime.fromtimestamp(time))
-				if str(time).split('.')[0].startswith("-"):
-					continue
-				res += f"{c.name} is on cooldown and available in {str(time).split('.')[0]}\n"
-		res += "```"
-		await ctx.send(res)
-	"""
 
     @commands.command(description="Ask me a yes/no question.", aliases=["yn"])
     async def yesno(self, ctx, *, question: str):

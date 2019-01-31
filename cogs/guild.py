@@ -1,11 +1,23 @@
-import traceback
 from typing import Union
-import discord, traceback, asyncio, random
+import discord
+import asyncio
+import random
 from discord.ext import commands
-import cogs.rpgtools as rpgtools
-from discord.ext.commands import BucketType
-from utils.checks import *
-from utils.tools import *
+from utils import misc as rpgtools
+from utils.checks import (
+    has_char,
+    has_money,
+    is_guild_officer,
+    is_guild_leader,
+    has_guild,
+    has_no_guild,
+    user_is_patron,
+    is_member_of_author_guild,
+    user_has_char,
+    has_guild_,
+    is_no_guild_leader,
+)
+from utils.tools import todelta
 
 from cogs.shard_communication import user_on_cooldown as user_cooldown
 
@@ -60,7 +72,7 @@ class Guild:
             embed.set_image(url=guild["badge"])
         try:
             await ctx.send(embed=embed)
-        except:
+        except discord.errors.HTTPException:
             await ctx.send(
                 f"The guild icon seems to be a bad URL. Use `{ctx.prefix}guild icon` to fix this."
             )
@@ -108,7 +120,7 @@ class Guild:
             )
             try:
                 bg = bgs[number - 1]
-            except:
+            except IndexError:
                 return await ctx.send(
                     f"The badge number {number} is not valid, your guild only has {len(bgs)} available."
                 )
@@ -128,7 +140,7 @@ class Guild:
         await ctx.send("Enter a name for your guild. Maximum length is 20 characters.")
         try:
             name = await self.bot.wait_for("message", timeout=60, check=mycheck)
-        except:
+        except asyncio.TimeoutError:
             return await ctx.send("Cancelled guild creation.")
         name = name.content
         if len(name) > 20:
@@ -138,7 +150,7 @@ class Guild:
         )
         try:
             url = await self.bot.wait_for("message", timeout=60, check=mycheck)
-        except:
+        except asyncio.TimeoutError:
             return await ctx.send("Cancelled guild creation.")
         url = url.content
         if len(url) > 60:
@@ -154,7 +166,7 @@ class Guild:
         await ctx.send("Are you sure? Type `confirm` to create a guild for **$10000**")
         try:
             await self.bot.wait_for("message", check=check, timeout=30)
-        except:
+        except asyncio.TimeoutError:
             return await ctx.send("Guild creation cancelled.")
         if not await has_money(self.bot, ctx.author.id, 10000):
             return await ctx.send(
@@ -250,8 +262,8 @@ class Guild:
             f"{newmember.mention}, {ctx.author.mention} invites you to join **{name}**. Type `invite accept` to join the guild."
         )
         try:
-            res = await self.bot.wait_for("message", timeout=60, check=mycheck)
-        except:
+            await self.bot.wait_for("message", timeout=60, check=mycheck)
+        except asyncio.TimeoutError:
             return await ctx.send(
                 f"{newmember.mention} didn't want to join your guild, {ctx.author.mention}."
             )
@@ -321,8 +333,8 @@ class Guild:
             "Are you sure to delete your guild? Type `guild deletion confirm` to confirm the deletion."
         )
         try:
-            res = await self.bot.wait_for("message", timeout=15, check=mycheck)
-        except:
+            await self.bot.wait_for("message", timeout=15, check=mycheck)
+        except asyncio.TimeoutError:
             return await ctx.send("Cancelled guild deletion.")
         async with self.bot.pool.acquire() as conn:
             guild_id = await conn.fetchval(
@@ -534,7 +546,7 @@ class Guild:
         )
         try:
             res = await self.bot.wait_for("message", timeout=60, check=msgcheck)
-        except:
+        except asyncio.TimeoutError:
             return await ctx.send(
                 f"{enemy.mention} didn't want to join your battle, {ctx.author.mention}."
             )
@@ -548,7 +560,7 @@ class Guild:
         async def guildcheck(already, guildid, user):
             try:
                 member = await converter.convert(ctx, user)
-            except:
+            except commands.errors.BadArgument:
                 return False
             guild = await self.bot.pool.fetchval(
                 'SELECT guild FROM profile WHERE "user"=$1;', member.id
@@ -757,7 +769,7 @@ class Guild:
                     )
                 else:
                     await ctx.send("You aren't in their guild.")
-            except:
+            except asyncio.TimeoutError:
                 if len(joined) < 3:
                     return await ctx.send(
                         "You didn't get enough other players for the guild adventure."

@@ -28,7 +28,8 @@ class Custom:
     @commands.command(description="Gives a rainbow cookie to a user!", hidden=True)
     async def rainbowcookie(self, ctx, user: discord.Member):
         await ctx.send(
-            f"**{user.display_name}**, you have been awarded a 🌈 🍪 🌈 by **{ctx.author.display_name}**!"
+            f"**{user.display_name}**, you have been awarded a 🌈 🍪 🌈"
+            f"by **{ctx.author.display_name}**!"
         )
 
     @is_ken()
@@ -39,7 +40,7 @@ class Custom:
             description=f"{ctx.author.mention} hugged {user.mention}! Awww!",
         )
         em.set_image(
-            url="https://cdn.discordapp.com/attachments/515954333368713235/518539871665520641/image0.gif"
+            url="https://cdn.discordapp.com/attachments/515954333368713235/518539871665520641/image0.gif"  # noqa
         )
         await ctx.send(embed=em)
 

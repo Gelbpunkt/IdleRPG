@@ -1,9 +1,9 @@
-from datetime import datetime
 import json
+import asyncio
 from async_timeout import timeout
-import discord
 from discord.ext import commands
 from datetime import timedelta
+
 
 # Cross-process cooldown check (pass this to commands)
 def user_on_cooldown(cooldown: int):
@@ -83,7 +83,7 @@ class GuildCommunication:
         )
 
     async def register_sub(self):
-        if not self.communication_channel in self.bot.redis.pubsub_channels:
+        if self.communication_channel not in self.bot.redis.pubsub_channels:
             await self.bot.redis.execute_pubsub("SUBSCRIBE", self.communication_channel)
             self.handler = self.bot.loop.create_task(self.event_handler())
 
@@ -224,7 +224,7 @@ class GuildCommunication:
         self.bot.loop.create_task(self.unregister_sub())
         try:
             self.handler.cancel()
-        except:
+        except:  # noqa
             pass
 
 

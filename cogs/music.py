@@ -11,8 +11,8 @@ except ModuleNotFoundError:
     from json import dumps, loads
 import discord
 from discord.ext import commands
-import aioredis
 import pylava
+
 
 # Exceptions
 class NotInVoiceChannel(commands.CheckFailure):

@@ -4,8 +4,7 @@ from cogs.help import chunks
 import math
 import random
 import asyncio
-from discord.ext.commands import BucketType
-from utils.checks import *
+from utils.checks import has_char, has_money, user_has_char
 
 from cogs.shard_communication import user_on_cooldown as user_cooldown
 
@@ -60,7 +59,7 @@ class Tournament:
                 else:
                     await ctx.send(f"You don't have a character, {res.author.mention}.")
                     continue
-            except:
+            except asyncio.TimeoutError:
                 acceptingentries = False
                 if len(participants) < 2:
                     return await ctx.send(
@@ -87,32 +86,32 @@ class Tournament:
                         match[0].id,
                     )
                     try:
-                        sw1 = sword1[5]
-                    except:
+                        sw1 = sword1["damage"]
+                    except KeyError:
                         sw1 = 0
                     shield1 = await conn.fetchrow(
                         "SELECT ai.* FROM profile p JOIN allitems ai ON (p.user=ai.owner) JOIN inventory i ON (ai.id=i.item) WHERE i.equipped IS TRUE AND p.user=$1 AND type='Shield';",
                         match[0].id,
                     )
                     try:
-                        sh1 = shield1[6]
-                    except:
+                        sh1 = shield1["armor"]
+                    except KeyError:
                         sh1 = 0
                     sword2 = await conn.fetchrow(
                         "SELECT ai.* FROM profile p JOIN allitems ai ON (p.user=ai.owner) JOIN inventory i ON (ai.id=i.item) WHERE i.equipped IS TRUE AND p.user=$1 AND type='Sword';",
                         match[1].id,
                     )
                     try:
-                        sw2 = sword2[5]
-                    except:
+                        sw2 = sword2["damage"]
+                    except KeyError:
                         sw2 = 0
                     shield2 = await conn.fetchrow(
                         "SELECT ai.* FROM profile p JOIN allitems ai ON (p.user=ai.owner) JOIN inventory i ON (ai.id=i.item) WHERE i.equipped IS TRUE AND p.user=$1 AND type='Shield';",
                         match[1].id,
                     )
                     try:
-                        sh2 = shield2[6]
-                    except:
+                        sh2 = shield2["armor"]
+                    except KeyError:
                         sh2 = 0
                 val1 = sw1 + sh1 + random.randint(1, 7)
                 val2 = sw2 + sh2 + random.randint(1, 7)
@@ -127,7 +126,7 @@ class Tournament:
                     looser = match[1 - match.index(winner)]
                 try:
                     remain.remove(looser)
-                except:
+                except ValueError:
                     pass  # for future happenings
                 await ctx.send(f"Winner of this match is {winner.mention}!")
                 await asyncio.sleep(2)

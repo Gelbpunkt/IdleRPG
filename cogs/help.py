@@ -1,6 +1,8 @@
-import discord, traceback, operator
+import discord
+import asyncio
 from discord.ext import commands
 from typing import Union
+from asyncpg import UniqueViolationError
 
 
 def chunks(l, n):
@@ -11,7 +13,7 @@ def chunks(l, n):
 
 async def makeembed(bot, pages, thecurrentpage):
     mymax = len(pages) + 1
-    if thecurrentpage is not 0:
+    if thecurrentpage != 0:
         embed = discord.Embed(
             title="IdleRPG Help",
             colour=discord.Colour(0xFFBC00),
@@ -103,7 +105,7 @@ class Help:
             thing_to_ban = self.bot.get_guild(id)
         try:
             await self.bot.pool.execute('INSERT INTO helpme ("id") VALUES ($1);', id)
-        except:
+        except UniqueViolationError:
             return await ctx.send("Error... Maybe they're already banned?")
         await ctx.send(
             f"{thing_to_ban.name} has been banned for the helpme command :ok_hand:"
@@ -122,7 +124,7 @@ class Help:
             )
         try:
             inv = await ctx.channel.create_invite()
-        except:
+        except discord.Forbidden:
             return await ctx.send("Error when creating Invite.")
         c = self.bot.get_channel(453_551_307_249_418_254)
         em = discord.Embed(title="Help Request", colour=0xFF0000)
@@ -200,7 +202,7 @@ class Help:
                         await msg.edit(embed=myembed)
                         try:
                             await msg.remove_reaction(reaction.emoji, user)
-                        except:
+                        except discord.Forbidden:
                             pass
                 elif reaction.emoji == "\U000025b6":
                     if currentpage == maxpages - 1:
@@ -211,7 +213,7 @@ class Help:
                         await msg.edit(embed=myembed)
                         try:
                             await msg.remove_reaction(reaction.emoji, user)
-                        except:
+                        except discord.Forbidden:
                             pass
                 elif reaction.emoji == "\U000023ed":
                     currentpage = maxpages - 1
@@ -219,7 +221,7 @@ class Help:
                     await msg.edit(embed=myembed)
                     try:
                         await msg.remove_reaction(reaction.emoji, user)
-                    except:
+                    except discord.Forbidden:
                         pass
                 elif reaction.emoji == "\U000023ee":
                     currentpage = 0
@@ -227,7 +229,7 @@ class Help:
                     await msg.edit(embed=myembed)
                     try:
                         await msg.remove_reaction(reaction.emoji, user)
-                    except:
+                    except discord.Forbidden:
                         pass
                 elif reaction.emoji == "\U0001f522":
                     question = await ctx.send(
@@ -245,31 +247,31 @@ class Help:
                                 await msg.edit(embed=myembed)
                                 try:
                                     await num.delete()
-                                except:
+                                except discord.Forbidden:
                                     pass
                             else:
-                                mymsg = await ctx.send(
+                                await ctx.send(
                                     f"Must be between `1` and `{maxpages}`.",
                                     delete_after=2,
                                 )
                                 try:
                                     await num.delete()
-                                except:
+                                except discord.Forbidden:
                                     pass
-                        except:
-                            mymsg = await ctx.send(
+                        except ValueError:
+                            await ctx.send(
                                 "That is not a valid number!", delete_after=2
                             )
                     await question.delete()
                     try:
                         await msg.remove_reaction(reaction.emoji, user)
-                    except:
+                    except discord.Forbidden:
                         pass
-            except:
+            except asyncio.TimeoutError:
                 browsing = False
                 try:
                     await msg.clear_reactions()
-                except:
+                except discord.Forbidden:
                     pass
                 finally:
                     break

@@ -1,6 +1,7 @@
 import discord
 from discord.ext import commands
-import random, secrets
+import random
+import secrets
 import utils.checks as checks
 
 

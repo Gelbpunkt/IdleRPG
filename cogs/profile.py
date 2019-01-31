@@ -1,15 +1,12 @@
-import discord, functools, traceback
+import discord
+import functools
+import asyncio
 from discord.ext import commands
-from cogs.rpgtools import profile_image
-import cogs.rpgtools as rpgtools
+from utils import misc as rpgtools
 from cogs.help import chunks
-from discord.ext.commands import BucketType
-from io import BytesIO, StringIO
-from PIL import Image, ImageFont, ImageDraw
-import io
+from io import BytesIO
 from cogs.classes import genstats
 from utils import checks
-from pathlib import Path
 
 from cogs.shard_communication import user_on_cooldown as user_cooldown
 
@@ -36,7 +33,7 @@ class Profile:
 
         try:
             name = await self.bot.wait_for("message", timeout=60, check=mycheck)
-        except:
+        except asyncio.TimeoutError:
             await self.bot.reset_cooldown(ctx)
             return await ctx.send(
                 f"Timeout expired. Enter `{ctx.prefix}{ctx.command}` again to retry!"
@@ -158,12 +155,12 @@ class Profile:
                 marriage = "Not married"
 
             try:
-                sword = [sword[2], sword[5]]
-            except:
+                sword = [sword["name"], sword["damage"]]
+            except KeyError:
                 sword = ["None equipped", 0.00]
             try:
-                shield = [shield[2], shield[6]]
-            except:
+                shield = [shield["name"], shield["armor"]]
+            except KeyError:
                 shield = ["None equipped", 0.00]
 
             damage, armor = await genstats(self.bot, targetid, sword[1], shield[1])
@@ -172,7 +169,7 @@ class Profile:
             extras = (damage, armor)
 
         thing = functools.partial(
-            profile_image,
+            rpgtools.profile_image,
             profile,
             sword,
             shield,
@@ -213,7 +210,7 @@ class Profile:
             title="Your inventory includes", colour=discord.Colour.blurple()
         )
         for weapon in ret:
-            if weapon[7] == True:
+            if weapon[7] is True:
                 eq = "(**Equipped**)"
             else:
                 eq = ""
@@ -283,7 +280,7 @@ class Profile:
                             await msg.edit(embed=result)
                         try:
                             await msg.remove_reaction(reaction.emoji, user)
-                        except:
+                        except discord.Forbidden:
                             pass
                     elif reaction.emoji == "\U000025b6":
                         if currentpage == maxpage:
@@ -297,7 +294,7 @@ class Profile:
                             await msg.edit(embed=result)
                         try:
                             await msg.remove_reaction(reaction.emoji, user)
-                        except:
+                        except discord.Forbidden:
                             pass
                     elif reaction.emoji == "\U000023ed":
                         currentpage = maxpage
@@ -306,7 +303,7 @@ class Profile:
                         await msg.edit(embed=result)
                         try:
                             await msg.remove_reaction(reaction.emoji, user)
-                        except:
+                        except discord.Forbidden:
                             pass
                     elif reaction.emoji == "\U000023ee":
                         currentpage = 0
@@ -315,7 +312,7 @@ class Profile:
                         await msg.edit(embed=result)
                         try:
                             await msg.remove_reaction(reaction.emoji, user)
-                        except:
+                        except discord.Forbidden:
                             pass
                     elif reaction.emoji == "\U0001f522":
                         question = await ctx.send(
@@ -335,28 +332,26 @@ class Profile:
                                     )
                                     await msg.edit(embed=result)
                                 else:
-                                    mymsg = await ctx.send(
+                                    await ctx.send(
                                         f"Must be between `1` and `{maxpage+1}`.",
                                         delete_after=2,
                                     )
                                 try:
                                     await num.delete()
-                                except:
+                                except discord.Forbidden:
                                     pass
-                            except:
-                                mymsg = await ctx.send(
-                                    "That is no number!", delete_after=2
-                                )
+                            except ValueError:
+                                await ctx.send("That is no number!", delete_after=2)
                         await question.delete()
                         try:
                             await msg.remove_reaction(reaction.emoji, user)
-                        except:
+                        except discord.Forbidden:
                             pass
-                except:
+                except asyncio.TimeoutError:
                     browsing = False
                     try:
                         await msg.clear_reactions()
-                    except:
+                    except discord.Forbidden:
                         pass
                     finally:
                         break
@@ -486,7 +481,7 @@ class Profile:
         )
         try:
             await self.bot.wait_for("message", check=check, timeout=30)
-        except:
+        except asyncio.TimeoutError:
             await self.bot.reset_cooldown(ctx)
             return await ctx.send("Weapon upgrade cancelled.")
         self.bot.reset_cooldown(ctx)
@@ -557,7 +552,7 @@ class Profile:
                 await ctx.send(
                     "An unknown error occured while checking your name. Try again!"
                 )
-        except:
+        except asyncio.TimeoutError:
             await ctx.send(
                 f"Timeout expired. Enter `{ctx.prefix}{ctx.command}` again to retry!"
             )
@@ -574,8 +569,8 @@ class Profile:
             "Are you sure? Type `deletion confirm` in the next 15 seconds to confirm."
         )
         try:
-            res = await self.bot.wait_for("message", timeout=15, check=mycheck)
-        except:
+            await self.bot.wait_for("message", timeout=15, check=mycheck)
+        except asyncio.TimeoutError:
             return await ctx.send("Cancelled deletion of your character.")
         async with self.bot.pool.acquire() as conn:
             await conn.execute('DELETE FROM boosters WHERE "user"=$1;', ctx.author.id)

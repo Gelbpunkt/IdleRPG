@@ -1,6 +1,7 @@
 import discord
+import asyncio
 from discord.ext import commands
-from utils.checks import *
+from utils.checks import is_admin, user_has_char
 
 
 class Admin:
@@ -70,7 +71,7 @@ class Admin:
 
         try:
             name = await self.bot.wait_for("message", timeout=60, check=mycheck)
-        except:
+        except asyncio.TimeoutError:
             return await ctx.send("Timeout expired.")
         name = name.content
         async with self.bot.pool.acquire() as conn:

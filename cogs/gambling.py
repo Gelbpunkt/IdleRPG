@@ -1,7 +1,10 @@
-import discord, secrets, os, asyncio, random
+import discord
+import secrets
+import os
+import asyncio
+import random
 from discord.ext import commands
-from discord.ext.commands import BucketType
-from utils.checks import *
+from utils.checks import has_money, has_char
 
 from cogs.shard_communication import user_on_cooldown as user_cooldown
 
@@ -131,7 +134,7 @@ class BlackJack:
         return hand
 
     async def player_win(self):
-        ### See https://media.discordapp.net/attachments/521026764659490836/521037532209741826/Bag.png
+        # See https://media.discordapp.net/attachments/521026764659490836/521037532209741826/Bag.png
         # if not await has_money(self.ctx.bot, self.ctx.author.id, self.money):
         #    return await self.ctx.send("You spent the money in the meantime.. Bleh!")
         await self.ctx.bot.pool.execute(
@@ -199,14 +202,14 @@ class BlackJack:
         self.player = self.deal()
         self.dealer = self.deal()
         await self.results(bj=True)
-        if self.over == True:
+        if self.over:
             return
         await self.msg.add_reaction("\U00002934")
         await self.msg.add_reaction("\U00002935")
         while (
-            not self.over
-            and self.total(self.dealer) < 22
+            self.total(self.dealer) < 22
             and self.total(self.player) < 22
+            and not self.over
         ):
 
             def check(reaction, user):
@@ -255,7 +258,7 @@ class Gambling:
     @commands.command(description="Flip a coin to win some money!", aliases=["coin"])
     async def flip(self, ctx, side: str = "heads", amount: int = 0):
         side = side.lower()
-        if not side in ["heads", "tails"]:
+        if side not in ["heads", "tails"]:
             return await ctx.send(f"Use `heads` or `tails` instead of `{side}`.")
         if amount < 0:
             return await ctx.send("Invalid money amount. Must be 0 or higher.")

@@ -1,5 +1,6 @@
 from datetime import timedelta
-import discord, traceback
+import discord
+import traceback
 from discord.ext import commands
 import Levenshtein as lv
 import utils.checks
@@ -27,16 +28,13 @@ class Errorhandler:
             or (ctx.command and hasattr(ctx.cog, f"_{ctx.command.cog_name}__error"))
             and not bypass
         ):
-            # Do nothing if the command/cog has its own error handler and the bypass is False
+            # Do nothing if the command/cog has its own error handler
             return
         if isinstance(error, commands.CommandNotFound):
             async with self.bot.pool.acquire() as conn:
-                try:
-                    ret = await conn.fetchval(
-                        'SELECT "unknown" FROM server WHERE "id"=$1;', ctx.guild.id
-                    )
-                except:
-                    return
+                ret = await conn.fetchval(
+                    'SELECT "unknown" FROM server WHERE "id"=$1;', ctx.guild.id
+                )
             if not ret:
                 return
             nl = "\n"
@@ -50,7 +48,7 @@ class Errorhandler:
                 await ctx.send(
                     f"**`Unknown Command`**\n\nDid you mean:\n{nl.join(matches)}\n\nNot what you meant? Type `{ctx.prefix}help` for a list of commands."
                 )
-            except:
+            except discord.Forbidden:
                 pass
         elif hasattr(error, "original") and isinstance(
             getattr(error, "original"), utils.checks.NoCharacter
@@ -123,10 +121,7 @@ class Errorhandler:
                             "user_id": str(ctx.author.id),
                         },
                     )
-        try:
-            await ctx.bot.reset_cooldown(ctx)
-        except:
-            pass
+        await ctx.bot.reset_cooldown(ctx)
 
     async def initialize_cog(self):
         """Saves the original cmd error handler"""

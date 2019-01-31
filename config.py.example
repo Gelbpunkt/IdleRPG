@@ -2,12 +2,12 @@
 token = "my cool bot token"
 
 """The Postgres database credentials."""
-database = [
-    "database_name",
-    "database_user",
-    "database_password",
-    "localhost", # the host of the database, this is most likely localhost or 127.0.0.1
-]
+database = {
+    "database": "database_name",
+    "user": "database_user",
+    "password": "database_password",
+    "host": "localhost",
+}
 
 """A token for the Discord Bot List (DBL)."""
 dbltoken = "dbltoken"
