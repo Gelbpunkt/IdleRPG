@@ -55,10 +55,7 @@ def calcchance(sword, shield, dungeon, level, returnsuccess=False, booster=False
             level,
         )
     else:
-        if booster:
-            randomn = random.randint(-25, 100)
-        else:
-            randomn = random.randint(0, 100)
+        randomn = random.randint(0, 100)
         success = (
             sword
             + shield
@@ -66,6 +63,8 @@ def calcchance(sword, shield, dungeon, level, returnsuccess=False, booster=False
             - (dungeon * (random.randint(2, 10)))
             + random.choice([level, -level])
         )
+        if booster:
+            success += 25
         return randomn <= success
 
 
