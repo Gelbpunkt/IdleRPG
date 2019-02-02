@@ -373,6 +373,7 @@ To buy one of these items for your partner, use `{ctx.prefix}spoil shopid`
             def check(msg):
                 return (
                     msg.author.id in [ctx.author.id, marriage]
+                    and msg.channel.id == ctx.channel.id
                     and len(msg.content) <= 20
                 )
 
