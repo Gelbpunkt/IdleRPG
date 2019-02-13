@@ -1,11 +1,11 @@
 import discord
 import asyncio
-from discord.ext import commands
-from utils import misc as rpgtools
 import random
-from utils.checks import has_char, has_money
 
 from cogs.shard_communication import user_on_cooldown as user_cooldown
+from discord.ext import commands
+from utils import misc as rpgtools
+from utils.checks import has_char, has_money
 
 
 class Trading:

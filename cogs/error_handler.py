@@ -1,10 +1,11 @@
-from datetime import timedelta
 import discord
 import traceback
-from discord.ext import commands
 import Levenshtein as lv
 import utils.checks
 import sys
+
+from datetime import timedelta
+from discord.ext import commands
 
 try:
     from raven import Client

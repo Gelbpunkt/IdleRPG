@@ -1,9 +1,10 @@
 import discord
-from discord.ext import commands
-from utils.checks import is_admin, has_char, has_money
 import asyncio
 import datetime
 import random
+
+from discord.ext import commands
+from utils.checks import is_admin, has_char, has_money
 from cogs.classes import genstats
 from decimal import Decimal
 

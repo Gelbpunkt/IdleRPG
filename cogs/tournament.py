@@ -1,11 +1,11 @@
 import discord
-from discord.ext import commands
-from cogs.help import chunks
 import math
 import random
 import asyncio
-from utils.checks import has_char, has_money, user_has_char
 
+from utils.checks import has_char, has_money, user_has_char
+from discord.ext import commands
+from cogs.help import chunks
 from cogs.shard_communication import user_on_cooldown as user_cooldown
 
 

@@ -1,10 +1,11 @@
 import discord
+import math
+import functools
+
 from discord.ext import commands
 from PIL import Image, ImageOps, ImageFilter
 from collections import defaultdict
-import math
 from io import BytesIO
-import functools
 from discord.ext.commands import BucketType
 
 

@@ -1,12 +1,12 @@
 import discord
 import asyncio
-from discord.ext import commands
 import cogs.rpgtools as rpgtools
 import random
-from utils.checks import has_char, has_money, is_patron
 import secrets
 
 from cogs.shard_communication import user_on_cooldown as user_cooldown
+from discord.ext import commands
+from utils.checks import has_char, has_money, is_patron
 
 
 async def genstats(bot, userid, damage, armor):

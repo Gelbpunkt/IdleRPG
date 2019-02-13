@@ -1,12 +1,13 @@
-from discord.ext import commands
 import discord
 import traceback
 import textwrap
 import io
 import subprocess
+import copy
+
 from contextlib import redirect_stdout
 from importlib import reload as importlib_reload
-import copy
+from discord.ext import commands
 
 
 class Owner:

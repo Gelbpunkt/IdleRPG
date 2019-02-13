@@ -1,7 +1,8 @@
 import discord
+import datetime
+
 from discord.ext import commands
 from utils.checks import has_char, has_money
-import datetime
 
 
 class Store:

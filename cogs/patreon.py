@@ -1,10 +1,11 @@
 import discord
 import functools
+import copy
+
 from io import BytesIO
 from discord.ext import commands
 from utils.misc import makebg
 from utils.checks import is_patron, has_char
-import copy
 from asyncpg.exceptions import StringDataRightTruncationError
 
 

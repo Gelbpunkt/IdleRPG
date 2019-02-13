@@ -3,9 +3,9 @@ import secrets
 import os
 import asyncio
 import random
+
 from discord.ext import commands
 from utils.checks import has_money, has_char
-
 from cogs.shard_communication import user_on_cooldown as user_cooldown
 
 

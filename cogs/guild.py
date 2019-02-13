@@ -1,7 +1,8 @@
-from typing import Union
 import discord
 import asyncio
 import random
+
+from typing import Union
 from discord.ext import commands
 from utils import misc as rpgtools
 from utils.checks import (
@@ -18,7 +19,6 @@ from utils.checks import (
     is_no_guild_leader,
 )
 from utils.tools import todelta
-
 from cogs.shard_communication import user_on_cooldown as user_cooldown
 
 

@@ -1,8 +1,9 @@
 import discord
-from discord.ext import commands
 import random
 import secrets
 import utils.checks as checks
+
+from discord.ext import commands
 
 
 class Halloween:
