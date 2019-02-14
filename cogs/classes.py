@@ -113,6 +113,7 @@ class Classes:
                 "Please align as a `Warrior`, `Mage`, `Thief`, `Ranger` or `Paragon` (Patreon Only)."
             )
         if profession == "Paragon" and not is_patron(self.bot, ctx.author):
+            await self.bot.reset_cooldown(ctx)
             return await ctx.send("You have to be a donator to choose this class.")
         if profession == "Paragon":
             profession = "Novice"
