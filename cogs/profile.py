@@ -213,13 +213,14 @@ class Profile:
             title="Your inventory includes", colour=discord.Colour.blurple()
         )
         for weapon in ret:
-            if weapon[7] == True:
+            if weapon[7]:
                 eq = "(**Equipped**)"
             else:
                 eq = ""
+            statstr = f"Damage: `{weapon[5]}`" if weapon[4] == "Sword" else f"Armor: `{weapon[6]}`"
             result.add_field(
                 name=f"{weapon[2]} {eq}",
-                value=f"ID: `{weapon[0]}`, Type: `{weapon[4]}` with Damage: `{weapon[5]}` and Armor: `{weapon[6]}`. Value is **${weapon[3]}**",
+                value=f"ID: `{weapon[0]}`, Type: `{weapon[4]}` with {statstr}. Value is **${weapon[3]}**",
             )
         return result
 

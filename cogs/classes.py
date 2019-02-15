@@ -347,11 +347,9 @@ Caretaker->  Trainer   ->  Bowman      -> Hunter         ->  Ranger
             embed.add_field(name="Name", value=itemname, inline=False)
             embed.add_field(name="Type", value=shieldorsword, inline=False)
             if shieldorsword == "Shield":
-                embed.add_field(name="Damage", value="0.00", inline=True)
                 embed.add_field(name="Armor", value=f"{maximumstat}.00", inline=True)
             else:
                 embed.add_field(name="Damage", value=f"{maximumstat}.00", inline=True)
-                embed.add_field(name="Armor", value="0.00", inline=True)
             embed.add_field(name="Value", value=f"${itemvalue}", inline=False)
             embed.set_footer(text=f"Your pet needs to recover, wait a day to retry")
             await ctx.send(embed=embed)
