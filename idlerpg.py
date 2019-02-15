@@ -1,5 +1,5 @@
-import sys, os
-from platform import python_version
+import sys
+import os
 import traceback
 import asyncio
 import uvloop
@@ -29,7 +29,7 @@ def get_prefix(bot, message):
         return commands.when_mentioned_or(bot.all_prefixes[message.guild.id])(
             bot, message
         )
-    except:
+    except KeyError:
         return commands.when_mentioned_or(bot.config.global_prefix)(bot, message)
     return bot.config.global_prefix
 
@@ -39,7 +39,7 @@ bot = commands.AutoShardedBot(
     case_insensitive=True,
     description="The one and only IdleRPG bot for discord",
 )
-bot.version = "3.3 stable"
+bot.version = "3.4 dev"
 bot.remove_command("help")
 bot.config = config
 bot.BASE_URL = config.base_url
@@ -55,25 +55,12 @@ for afile in os.listdir("cogs"):
         bot.linecount += len(f.readlines())
 
 
-async def create_pool():
-    credentials = bot.config.database
-    credentials = {
-        "database": credentials[0],
-        "user": credentials[1],
-        "password": credentials[2],
-        "host": credentials[3],
-    }
-    pool = await asyncpg.create_pool(**credentials, max_size=100)
-    return pool
-
-
 async def start_bot():
     bot.session = aiohttp.ClientSession(loop=bot.loop)
     bot.redis = await aioredis.create_pool(
         "redis://localhost", minsize=5, maxsize=10, loop=bot.loop
     )
-    pool = await create_pool()
-    bot.pool = pool
+    bot.pool = await asyncpg.create_pool(**bot.config.database, max_size=100)
     bot.all_prefixes = {}
     async with bot.pool.acquire() as conn:
         prefixes = await conn.fetch("SELECT id, prefix FROM server;")
@@ -82,12 +69,12 @@ async def start_bot():
     await bot.start(bot.config.token)
 
 
-map = commands.CooldownMapping.from_cooldown(1, 3, commands.BucketType.user)
+global_map = commands.CooldownMapping.from_cooldown(1, 3, commands.BucketType.user)
 
 
 @bot.check_once
 async def global_cooldown(ctx: commands.Context):
-    bucket = map.get_bucket(ctx.message)
+    bucket = global_map.get_bucket(ctx.message)
     retry_after = bucket.update_rate_limit()
 
     if retry_after:
@@ -120,20 +107,9 @@ async def on_message(message):
 
 @bot.event
 async def on_ready():
-    print(
-        f"Logged in as {bot.user.name} (ID: {bot.user.id}) | Connected to {len(bot.guilds)} servers | Connected to {len(bot.users)} users"
-    )
+    print(f"Logged in as {bot.user.name} (ID: {bot.user.id})")
     print("--------")
-    print(
-        f"Current Discord.py Version: {discord.__version__} | Current Python Version: {python_version()}"
-    )
-    print("--------")
-    print(f"Use this link to invite {bot.user.name}:")
-    print(
-        f"https://discordapp.com/oauth2/authorize?client_id={bot.user.id}&scope=bot&permissions=8"
-    )
-    print("--------")
-    print("Support Discord Server: https://discord.gg/MSBatf6")
+    print(f"Using discord.py {discord.__version__}")
     print("--------")
     print(f"You are running IdleRPG Bot {bot.version}")
     owner = (await bot.application_info()).owner
@@ -147,10 +123,10 @@ if __name__ == "__main__":
     for extension in bot.config.initial_extensions:
         try:
             bot.load_extension(extension)
-        except Exception as e:
+        except Exception:
             print(f"Failed to load extension {extension}.", file=sys.stderr)
             traceback.print_exc()
-    if bot.config.is_beta:  # TODO: find a better place for this (maybe a beta cog)
+    if bot.config.is_beta:  # TODO: move this (maybe a beta cog)
         bot.add_check(is_hypesquad)
     loop = asyncio.get_event_loop()
     loop.run_until_complete(start_bot())

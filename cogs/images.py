@@ -1,14 +1,12 @@
 import discord
-from discord.ext import commands
-from PIL import Image, ImageOps, ImageDraw, ImageFilter
-from collections import defaultdict
 import math
-from io import BytesIO
 import functools
-import re
-from discord.ext.commands import BucketType
 
-from cogs.shard_communication import user_on_cooldown as user_cooldown
+from discord.ext import commands
+from PIL import Image, ImageOps, ImageFilter
+from collections import defaultdict
+from io import BytesIO
+from discord.ext.commands import BucketType
 
 
 class Images:
@@ -113,7 +111,7 @@ class Images:
     async def pixelfy(self, ctx, user: discord.Member = None, size: int = 2):
         try:
             size = [256, 128, 64, 32, 16][size - 1]
-        except:
+        except IndexError:
             return await ctx.send("Use 1, 2, 3, 4 or 5 as intensity value.")
         user = user or ctx.author
         url = user.avatar_url_as(format="png", size=size)

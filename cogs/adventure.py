@@ -1,15 +1,15 @@
-import discord, random
-import cogs.rpgtools as rpgtools
-from cogs.rpgtools import makeadventures
-from discord.ext import commands
+import discord
+import random
+import asyncio
 import functools
-import traceback
-from cogs.classes import genstats
-from discord.ext.commands import BucketType
-from utils.checks import *
-from utils.tools import *
 
 from cogs.shard_communication import user_on_cooldown as user_cooldown
+from utils import misc as rpgtools
+from cogs.rpgtools import makeadventures
+from discord.ext import commands
+from cogs.classes import genstats
+from utils.checks import has_char
+from utils.tools import todelta
 
 
 class Adventure:
@@ -24,11 +24,6 @@ class Adventure:
     async def adventures(self, ctx):
         async with self.bot.pool.acquire() as conn:
             alldungeons = await conn.fetch('SELECT * FROM dungeon ORDER BY "id";')
-            if alldungeons == []:
-                owner = (await self.bot.application_info()).owner
-                return await ctx.send(
-                    "Either no adventures exist or a serious issue occured. Contact `{owner}` please and tell me what you tried."
-                )
             sword = await conn.fetchrow(
                 "SELECT ai.* FROM profile p JOIN allitems ai ON (p.user=ai.owner) JOIN inventory i ON (ai.id=i.item) WHERE i.equipped IS TRUE AND p.user=$1 AND type='Sword';",
                 ctx.author.id,
@@ -42,12 +37,12 @@ class Adventure:
             )
             playerlevel = rpgtools.xptolevel(playerxp)
             try:
-                swordbonus = sword[5]
-            except:
+                swordbonus = sword["damage"]
+            except KeyError:
                 swordbonus = 0
             try:
-                shieldbonus = shield[6]
-            except:
+                shieldbonus = shield["armor"]
+            except KeyError:
                 shieldbonus = 0
             chances = []
             msg = await ctx.send("Loading images...")
@@ -114,10 +109,6 @@ class Adventure:
                                     url="attachment://Adventure.png"
                                 ),
                             )
-                        try:
-                            await msg.remove_reaction(reaction.emoji, user)
-                        except:
-                            pass
                     elif reaction.emoji == "\U000025b6":
                         if currentpage == maxpage:
                             pass
@@ -133,10 +124,6 @@ class Adventure:
                                     url="attachment://Adventure.png"
                                 ),
                             )
-                        try:
-                            await msg.remove_reaction(reaction.emoji, user)
-                        except:
-                            pass
                     elif reaction.emoji == "\U000023ed":
                         currentpage = maxpage
                         await msg.delete()
@@ -147,10 +134,6 @@ class Adventure:
                                 url="attachment://Adventure.png"
                             ),
                         )
-                        try:
-                            await msg.remove_reaction(reaction.emoji, user)
-                        except:
-                            pass
                     elif reaction.emoji == "\U000023ee":
                         currentpage = 0
                         await msg.delete()
@@ -161,10 +144,6 @@ class Adventure:
                                 url="attachment://Adventure.png"
                             ),
                         )
-                        try:
-                            await msg.remove_reaction(reaction.emoji, user)
-                        except:
-                            pass
                     elif reaction.emoji == "\U0001f522":
                         question = await ctx.send(
                             f"Enter a page number from `1` to `{maxpage+1}`"
@@ -188,36 +167,27 @@ class Adventure:
                                         ),
                                     )
                                 else:
-                                    mymsg = await ctx.send(
+                                    await ctx.send(
                                         f"Must be between `1` and `{maxpage+1}`.",
                                         delete_after=2,
                                     )
                                 try:
                                     await num.delete()
-                                except:
+                                except discord.Forbidden:
                                     pass
-                            except:
-                                mymsg = await ctx.send(
-                                    "That is no number!", delete_after=2
-                                )
-                        await question.delete()
-                        try:
-                            await msg.remove_reaction(reaction.emoji, user)
-                        except:
-                            pass
-                    try:
-                        await msg.add_reaction("\U000023ee")
-                        await msg.add_reaction("\U000025c0")
-                        await msg.add_reaction("\U000025b6")
-                        await msg.add_reaction("\U000023ed")
-                        await msg.add_reaction("\U0001f522")
-                    except:
-                        pass
-                except:
+                            except ValueError:
+                                await ctx.send("That is no number!", delete_after=2)
+                    await question.delete()
+                    await msg.add_reaction("\U000023ee")
+                    await msg.add_reaction("\U000025c0")
+                    await msg.add_reaction("\U000025b6")
+                    await msg.add_reaction("\U000023ed")
+                    await msg.add_reaction("\U0001f522")
+                except asyncio.TimeoutError:
                     browsing = False
                     try:
                         await msg.clear_reactions()
-                    except:
+                    except discord.Forbidden:
                         pass
                     finally:
                         break
@@ -344,17 +314,15 @@ class Adventure:
                 ctx.author.id,
             )
         try:
-            SWORD = sword[5]
-        except:
+            SWORD = sword["damage"]
+        except KeyError:
             SWORD = 0
         try:
-            SHIELD = shield[6]
-        except:
+            SHIELD = shield["armor"]
+        except KeyError:
             SHIELD = 0
-            # class test
+        # class test
         SWORD, SHIELD = await genstats(self.bot, ctx.author.id, SWORD, SHIELD)
-        SWORD = int(SWORD)
-        SHIELD = int(SHIELD)
         HP = 100
         PROGRESS = 0  # percent
 
@@ -386,7 +354,7 @@ Use attack, defend or recover
                 res = await self.bot.wait_for(
                     "message", timeout=30, check=is_valid_move
                 )
-            except:
+            except asyncio.TimeoutError:
                 return await ctx.send("Adventure stopped because you refused to move.")
             move = res.content.lower()
             enemymove = random.choice(["attack", "defend", "recover"])
@@ -519,15 +487,15 @@ Use attack, defend or recover
                 )
                 playerlevel = rpgtools.xptolevel(playerxp)
                 try:
-                    swordbonus = sword[5]
-                except:
+                    swordbonus = sword["damage"]
+                except KeyError:
                     swordbonus = 0
                 try:
-                    shieldbonus = shield[6]
-                except:
+                    shieldbonus = shield["armor"]
+                except KeyError:
                     shieldbonus = 0
 
-                    # class test
+                # class test
                 swordbonus, shieldbonus = await genstats(
                     self.bot, ctx.author.id, swordbonus, shieldbonus
                 )
@@ -731,12 +699,9 @@ Use attack, defend or recover
                 'SELECT deaths, completed FROM profile WHERE "user"=$1;', ctx.author.id
             )
         deaths, completed = stats[0], stats[1]
-        try:
-            rate = round(completed / (deaths + completed) * 100, 2)
-        except:
-            return await ctx.send(f"You died **{deaths}** times.")
+        rate = round(completed / (deaths + completed) * 100, 2)
         await ctx.send(
-            f"Out of **{deaths+completed}** adventures, you died **{deaths}** times and survived **{completed}** times, which is a success rate of **{rate}%**."
+            f"Out of **{deaths + completed}** adventures, you died **{deaths}** times and survived **{completed}** times, which is a success rate of **{rate}%**."
         )
 
 

@@ -1,9 +1,9 @@
-import discord, asyncio, random
-from discord.ext import commands
-from discord.ext.commands import BucketType
-import traceback
-from utils.checks import *
+import discord
+import asyncio
+import random
 
+from discord.ext import commands
+from utils.checks import has_char, has_money, user_has_char
 from cogs.shard_communication import user_on_cooldown as user_cooldown
 
 
@@ -60,7 +60,7 @@ class Battles:
                     seeking = False
                 else:
                     await ctx.send("You don't have enough money to join the battle.")
-        except:
+        except asyncio.TimeoutError:
             return await ctx.send(
                 f"Noone wanted to join your battle, {ctx.author.mention}. Try again later!"
             )
@@ -154,7 +154,7 @@ class Battles:
                 res = await self.bot.wait_for("message", timeout=60, check=allcheck)
             else:
                 res = await self.bot.wait_for("message", timeout=60, check=privatecheck)
-        except:
+        except asyncio.TimeoutError:
             return await ctx.send(
                 f"Noone wanted to join your battle, {ctx.author.mention}. Try again later!"
             )
@@ -214,9 +214,9 @@ class Battles:
                     res = await self.bot.wait_for(
                         "message", timeout=30, check=is_valid_move
                     )
-                except:
+                except asyncio.TimeoutError:
                     return await ctx.send("Someone refused to move. Battle stopped.")
-                if not res.author in MOVES_DONE.keys():
+                if res.author not in MOVES_DONE.keys():
                     MOVES_DONE[res.author] = res.content.lower()
                 else:
                     await ctx.send(f"{res.author.mention}, you already moved!")

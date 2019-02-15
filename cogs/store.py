@@ -1,8 +1,8 @@
 import discord
-from discord.ext import commands
-from ast import literal_eval as make_tuple
-from utils.checks import *
 import datetime
+
+from discord.ext import commands
+from utils.checks import has_char, has_money
 
 
 class Store:
@@ -29,7 +29,7 @@ class Store:
     async def purchase(self, ctx, item: str, amount: int = 1):
         try:
             item = int(item.lstrip("#"))
-        except:
+        except ValueError:
             return await ctx.send("Enter a valid store item to buy.")
         if item < 1 or item > 3:
             return await ctx.send("Enter a valid store item to buy.")
@@ -93,7 +93,7 @@ class Store:
     @has_char()
     @commands.command(description="Uses a booster.")
     async def activate(self, ctx, boostertype: int):
-        if not boostertype in range(1, 4):
+        if boostertype not in range(1, 4):
             return await ctx.send(
                 "That is not a valid booster type. Must be from `1` to `3`."
             )

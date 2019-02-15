@@ -1,4 +1,6 @@
-import discord, random, io, os
+import random
+import io
+import os
 from PIL import Image, ImageFont, ImageDraw
 from pathlib import Path
 
@@ -46,17 +48,14 @@ def xptonextlevel(xp):
 
 
 def calcchance(sword, shield, dungeon, level, returnsuccess=False, booster=False):
-    if returnsuccess == False:
+    if returnsuccess is False:
         return (
             sword + shield + 75 - (dungeon * 10),
             sword + shield + 75 - (dungeon * 2),
             level,
         )
     else:
-        if booster:
-            randomn = random.randint(-25, 100)
-        else:
-            randomn = random.randint(0, 100)
+        randomn = random.randint(0, 100)
         success = (
             sword
             + shield
@@ -64,6 +63,8 @@ def calcchance(sword, shield, dungeon, level, returnsuccess=False, booster=False
             - (dungeon * (random.randint(2, 10)))
             + random.choice([level, -level])
         )
+        if booster:
+            success += 25
         return randomn <= success
 
 
@@ -72,14 +73,14 @@ def makebg(background, imgtype):
         (800, 600), resample=Image.NEAREST
     ) as bg:
         if imgtype == 1:
-            with Image.open("Foreground.png") as fg:
+            with Image.open("assets/profiles/Foreground.png") as fg:
                 bg = Image.alpha_composite(bg, fg)
                 output_buffer = io.BytesIO()
                 bg.save(output_buffer, "png")
                 output_buffer.seek(0)
                 return output_buffer
         elif imgtype == 2:
-            with Image.open("Foreground2.png") as fg:
+            with Image.open("assets/profiles/Foreground2.png") as fg:
                 bg = Image.alpha_composite(bg, fg)
                 output_buffer = io.BytesIO()
                 bg.save(output_buffer, "png")
@@ -93,11 +94,11 @@ def makeadventures(percentages):
     def key(s):
         return int(s[: s.index(".")])
 
-    allfiles = sorted(os.listdir("adventures"), key=key)
+    allfiles = sorted(os.listdir("assets/adventures"), key=key)
     for filetoopen in allfiles:
-        with Image.open("adventures/" + filetoopen) as myf:
+        with Image.open("assets/adventures/" + filetoopen) as myf:
             draw = ImageDraw.Draw(myf)
-            font = ImageFont.truetype("CaviarDreams.ttf", 16)
+            font = ImageFont.truetype("assets/fonts/CaviarDreams.ttf", 16)
             draw.text(
                 (314, 168),
                 f"{percentages[allfiles.index(filetoopen)][0]}% to",
@@ -131,7 +132,6 @@ def profile_image(
     extras,
 ):
     level = xptolevel(profile[3])
-    nextxp = xptonextlevel(profile[3])
     try:
         if not str(missionend)[:7].startswith("-"):
             endstr = f"{str(missionend)[:7]} left"
@@ -139,28 +139,26 @@ def profile_image(
             endstr = "finished"
         missionnumber = mission[3]
         missionstring = f"Adventure {missionnumber}, {endstr}"
-    except:
+    except KeyError:
         missionstring = "You are in no adventure!"
     if guild:
         guild = guild[0]
     else:
         guild = "No guild"
 
-    nl = "\n"
     with Image.open(image) as my_image:
         if color:
             try:
                 color = color.lstrip("#")
                 color = tuple(int(color[i : i + 2], 16) for i in (0, 2, 4))
-            except:
+            except ValueError:
                 color = (255, 255, 255)
         else:
             color = (255, 255, 255)
         draw = ImageDraw.Draw(my_image)
-        font = ImageFont.truetype("CaviarDreams.ttf", 34)
-        font2 = ImageFont.truetype("CaviarDreams.ttf", 24)
-        font3 = ImageFont.truetype("CaviarDreams.ttf", 28)
-        font4 = ImageFont.truetype("CaviarDreams.ttf", 18)
+        font = ImageFont.truetype("assets/fonts/CaviarDreams.ttf", 34)
+        font2 = ImageFont.truetype("assets/fonts/CaviarDreams.ttf", 24)
+        font3 = ImageFont.truetype("assets/fonts/CaviarDreams.ttf", 28)
         draw.text((73, 21), profile[1], color, font=font)
         draw.text((742, 34), str(level), (0, 0, 0), font=font2)
         draw.text((98, 315), str(profile[2]), color, font=font)
@@ -186,27 +184,27 @@ def profile_image(
             "Elementalist",
             "Dark Caster",
         ]:
-            with Image.open(Path("icons/elementalist.png")).resize(
+            with Image.open(Path("assets/icons/elementalist.png")).resize(
                 (50, 50), resample=Image.NEAREST
             ) as overlay:
                 my_image.paste(overlay, (723, 506), overlay)
         elif profile[13] in ["Thief", "Rogue", "Chunin", "Renegade", "Assassin"]:
-            with Image.open(Path("icons/thief.png")).resize(
+            with Image.open(Path("assets/icons/thief.png")).resize(
                 (50, 50), resample=Image.NEAREST
             ) as overlay:
                 my_image.paste(overlay, (723, 506), overlay)
         elif profile[13] in ["Warrior", "Swordsman", "Knight", "Warlord", "Berserker"]:
-            with Image.open(Path("icons/warrior.png")).resize(
+            with Image.open(Path("assets/icons/warrior.png")).resize(
                 (50, 50), resample=Image.NEAREST
             ) as overlay:
                 my_image.paste(overlay, (723, 506), overlay)
         elif profile[13] in ["Novice", "Proficient", "Artisan", "Master", "Paragon"]:
-            with Image.open(Path("icons/paragon.png")).resize(
+            with Image.open(Path("assets/icons/paragon.png")).resize(
                 (50, 50), resample=Image.NEAREST
             ) as overlay:
                 my_image.paste(overlay, (723, 506), overlay)
         elif profile[13] in ["Caretaker", "Trainer", "Bowman", "Hunter", "Ranger"]:
-            with Image.open(Path("icons/ranger.png")).resize(
+            with Image.open(Path("assets/icons/ranger.png")).resize(
                 (50, 50), resample=Image.NEAREST
             ) as overlay:
                 my_image.paste(overlay, (723, 506), overlay)
@@ -218,7 +216,7 @@ def profile_image(
 
 async def lookup(bot, userid):
     userid = int(userid)
-    member = discord.utils.get(bot.users, id=userid)
+    member = bot.get_user(userid)
     if member:
         return str(member)
     else:

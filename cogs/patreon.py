@@ -1,9 +1,12 @@
-import discord, functools
+import discord
+import functools
+import copy
+
 from io import BytesIO
 from discord.ext import commands
-from cogs.rpgtools import makebg
-from utils.checks import *
-import copy
+from utils.misc import makebg
+from utils.checks import is_patron, has_char
+from asyncpg.exceptions import StringDataRightTruncationError
 
 
 class Patreon:
@@ -52,7 +55,7 @@ class Patreon:
                     url = premade[int(url) - 1]
                 else:
                     return await ctx.send("That is not a valid premade background.")
-            except:
+            except ValueError:
                 return await ctx.send(
                     "I couldn't read that URL. Does it start with `http://` or `https://` and is either a png or jpeg?"
                 )
@@ -62,7 +65,7 @@ class Patreon:
                 str(url),
                 ctx.author.id,
             )
-        except:
+        except StringDataRightTruncationError:
             return await ctx.send("The URL is too long.")
         if url != 0:
             await ctx.send(f"Your new profile picture is now:\n{url}")
@@ -124,7 +127,7 @@ class Patreon:
             )
             try:
                 bg = bgs[number - 1]
-            except:
+            except IndexError:
                 return await ctx.send(
                     f"The background number {number} is not valid, you only have {len(bgs)} available."
                 )

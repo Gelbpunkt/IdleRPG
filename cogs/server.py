@@ -1,4 +1,6 @@
 import discord
+import asyncio
+
 from discord.ext import commands
 from cogs.help import chunks
 
@@ -13,7 +15,7 @@ class Server:
 
     @commands.guild_only()
     @commands.command(
-        description="Prints out some information about this server.", aliases=["server"]
+        description="See information about this server.", aliases=["server"]
     )
     async def serverinfo(self, ctx):
         if ctx.guild.icon_url:
@@ -162,13 +164,13 @@ class Server:
                     await msg.edit(embed=embed)
                 try:
                     await msg.remove_reaction(reaction.emoji, user)
-                except:
+                except discord.Forbidden:
                     pass
-            except:
+            except asyncio.TimeoutError:
                 waiting = False
                 try:
                     await msg.clear_reactions()
-                except:
+                except discord.Forbidden:
                     pass
 
     @commands.guild_only()
@@ -178,7 +180,7 @@ class Server:
             await ctx.send(
                 f"The prefix for server **{ctx.guild.name}** is `{self.bot.all_prefixes[ctx.guild.id]}`.\n\n`{ctx.prefix}settings prefix` changes it."
             )
-        except:
+        except KeyError:
             await ctx.send(
                 f"The prefix for server **{ctx.guild.name}** is `{self.bot.config.global_prefix}`.\n\n`{ctx.prefix}settings prefix` changes it."
             )

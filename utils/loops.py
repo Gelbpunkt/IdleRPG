@@ -10,5 +10,5 @@ async def queue_manager(bot: commands.Bot, queue: asyncio.Queue):
         task = await queue.get()
         try:
             await task
-        except Exception as error:
+        except Exception:
             print_exc()

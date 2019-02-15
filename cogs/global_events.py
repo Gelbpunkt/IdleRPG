@@ -1,6 +1,4 @@
-import asyncio
 import discord
-from websockets.exceptions import ConnectionClosed
 
 
 class GlobalEvents:
