@@ -333,7 +333,7 @@ Use https://raid.travitia.xyz/ to join the raid!
 
     @increase.command()
     async def defense(self, ctx):
-        """Increase your raid damage."""
+        """Increase your raid defense."""
         async with self.bot.pool.acquire() as conn:
             lvl = await conn.fetchval(
                 'SELECT defmultiply FROM profile WHERE "user"=$1;', ctx.author.id
