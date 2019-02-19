@@ -288,10 +288,16 @@ Use https://raid.travitia.xyz/ to join the raid!
             await ctx.send(
                 f"**Gave ${cash} of Zerekiel's ${hp} drop to all survivors!**"
             )
+            await self.bot.get_channel(506167065464406041).send(
+            f'__**Raid Status**__\n**HP:** {hp}\n**Result:** Vicrory!\n**Drop:** {weapon_stat} {weapon_type}\n**Sold To:** {highest_bid[0].mention} for ${highest_bid[1]}\n**Payout:** ${cash}\nNext raid in 8-12 hours!'
+            )
 
         else:
             await ctx.send(
                 "The raid did not manage to kill Zerekiel within 30 Minutes... He disappeared!"
+            )
+            await self.bot.get_channel(506167065464406041).send(
+            f'__**Raid Status**__\n**HP:** {hp}\n**Result:** Timeout at {boss["hp"]\nNext raid in 8-12 hours!'
             )
 
         await asyncio.sleep(30)
