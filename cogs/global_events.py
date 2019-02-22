@@ -86,6 +86,7 @@ class GlobalEvents:
         )
 
     async def status_updater(self):
+        await self.bot.wait_until_ready()
         await self.bot.change_presence(
             activity=discord.Game(name=self.bot.BASE_URL), status=discord.Status.idle
         )
