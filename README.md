@@ -12,7 +12,7 @@ It is currently published as "All rights reserved", but we are working on a bett
 
 1. Work on a total rewrite for v3.4
 2. Add all features from Travitia in v5
-3. Multiproces
+3. Multiprocess
 
 Todo in v3.4:
 
@@ -21,7 +21,6 @@ Todo in v3.4:
 - Cleanup, remove unnecessary code, beautify
 - Use custom converters instead of own handling every time
 - Move battles to a backend function
-- Clean up the directory structure
 - Move pagination to a module
 
 ## Can I selfhost?
