@@ -12,7 +12,6 @@ It is currently published as "All rights reserved", but we are working on a bett
 
 1. Work on a total rewrite for v3.4
 2. Add all features from Travitia in v5
-3. Multiproces
 
 Todo in v3.4:
 
