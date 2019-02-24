@@ -43,7 +43,7 @@ Todo in v3.4:
 
 ## Can I selfhost?
 
-[Yes, as long as you provide the code for everyone.](https://github.com/Gelbpunkt/IdleRPG/blob/vhttps://github.com/Gelbpunkt/IdleRPG/blob/v3.4-dev/LICENSE.md#13-remote-network-interaction-use-with-the-gnu-general-public-license)
+[Yes, as long as you provide the code for everyone.](https://github.com/Gelbpunkt/IdleRPG/blob/v3.4-dev/LICENSE.md#13-remote-network-interaction-use-with-the-gnu-general-public-license)
 
 ## How do I test my changes?
 
