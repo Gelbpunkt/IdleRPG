@@ -43,9 +43,7 @@ Todo in v3.4:
 
 ## Can I selfhost?
 
-The answer is simple: **No** (where is the fun at hosting a big MMO your own? Cool, you got everything, but where is the fun of the global community?)
-
-You're allowed to selfhost for testing your own changes that you will submit with a pull request later.
+[Yes, as long as you provide the code for everyone.](https://github.com/Gelbpunkt/IdleRPG/blob/v3.4-dev/README.md#license)
 
 ## How do I test my changes?
 
