@@ -6,7 +6,9 @@ You may [submit an issue](https://github.com/Gelbpunkt/IdleRPG/issues) or open p
 
 The master branch is always the *latest stable* version. For development versions, check other branches please.
 
-It is currently published as "All rights reserved", but we are working on a better licensing to give users more freedoms.
+## License
+
+The IdleRPG Project is dual-licensed under the terms of the [GNU Affero General Public License 3.0](https://github.com/Gelbpunkt/IdleRPG/blob/v3.4-dev/LICENSE.md) ("AGPL") for non-commercial and the Travitia License for commercial use. A copy of the AGPL can be found in the LICENSE file. The Travitia license can be obtained by sending a formal request to business [at] travitia <dot> xyz with usecase, name and address.
 
 ## Current goals
 
