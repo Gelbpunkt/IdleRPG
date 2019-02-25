@@ -2,6 +2,12 @@
 Original, main Paginator class written by EvieePy
 Modified by the IdleRPG Project
 
+The IdleRPG Discord Bot
+Copyright (C) 2018-2019 Diniboy and Gelbpunkt
+
+This software is dual-licensed under the GNU Affero General Public License for non-commercial and the Travitia License for commercial use.
+For more information, see README.md and LICENSE.md.
+
 The MIT License (MIT)
 Copyright (c) 2018 EvieePy
 Permission is hereby granted, free of charge, to any person obtaining a
@@ -20,6 +26,8 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
 FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 """
+
+
 import asyncio
 import discord
 from config import primary_colour
