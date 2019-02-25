@@ -61,8 +61,10 @@ python3 idlerpg.py
 
 A systemd unit file has been bundled as `idlerpg.service`.
 
-## Code style
+## Contributing
 
 IdleRPG uses [black](https://github.com/ambv/black) for code style. Please always run `test.sh` before submitting a pull request.
 
 Make sure black is done and flake8 throws no issues, then you are ready to submit a PR.
+
+**Make sure you sign the CLA [here](https://cla-assistant.io/Gelbpunkt/IdleRPG), else we cannot merge your changes.**
