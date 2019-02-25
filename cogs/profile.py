@@ -214,7 +214,11 @@ class Profile:
                 eq = "(**Equipped**)"
             else:
                 eq = ""
-            statstr = f"Damage: `{weapon[5]}`" if weapon[4] == "Sword" else f"Armor: `{weapon[6]}`"
+            statstr = (
+                f"Damage: `{weapon[5]}`"
+                if weapon[4] == "Sword"
+                else f"Armor: `{weapon[6]}`"
+            )
             result.add_field(
                 name=f"{weapon[2]} {eq}",
                 value=f"ID: `{weapon[0]}`, Type: `{weapon[4]}` with {statstr}. Value is **${weapon[3]}**",

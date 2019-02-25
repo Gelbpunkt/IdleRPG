@@ -247,7 +247,11 @@ class Trading:
                         charname = await rpgtools.lookup(
                             self.bot, ret[currentpage - 1][1]
                         )
-                        statstr=f"Damage: `{ret[currentpage-1][5]}`" if ret[currentpage-1][4] == "Sword" else f"Armor: `{ret[currentpage-1][6]}`"
+                        statstr = (
+                            f"Damage: `{ret[currentpage-1][5]}`"
+                            if ret[currentpage - 1][4] == "Sword"
+                            else f"Armor: `{ret[currentpage-1][6]}`"
+                        )
                         await msg.edit(
                             content=f"Item **{currentpage}** of **{maxpages}**\n\nSeller: `{charname}`\nName: `{ret[currentpage-1][2]}`\nValue: **${ret[currentpage-1][3]}**\nType: `{ret[currentpage-1][4]}`\n{statstr}\nPrice: **${ret[currentpage-1][9]}**\n\nUse: `{ctx.prefix}buy {ret[currentpage-1][0]}` to buy this item."
                         )
