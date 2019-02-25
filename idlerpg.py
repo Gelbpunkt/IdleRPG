@@ -12,6 +12,7 @@ import aioredis
 import config
 from utils.checks import is_hypesquad
 from utils.loops import queue_manager
+from utils import paginator
 
 if sys.platform == "linux" and sys.version_info >= (
     3,
@@ -42,6 +43,7 @@ bot = commands.AutoShardedBot(
 bot.version = "3.4 dev"
 bot.remove_command("help")
 bot.config = config
+bot.paginator = paginator
 bot.BASE_URL = config.base_url
 
 bot.linecount = 0
