@@ -22,6 +22,7 @@ import config
 from utils.checks import is_hypesquad
 from utils.loops import queue_manager
 from utils import paginator
+from classes.bot import BotBase
 
 if sys.platform == "linux" and sys.version_info >= (
     3,
@@ -44,7 +45,7 @@ def get_prefix(bot, message):
     return bot.config.global_prefix
 
 
-bot = commands.AutoShardedBot(
+bot = BotBase(
     command_prefix=get_prefix,
     case_insensitive=True,
     description="The one and only IdleRPG bot for discord",
