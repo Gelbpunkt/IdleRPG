@@ -98,7 +98,7 @@ class Patreon:
         thing = functools.partial(makebg, background, overlaytype)
         output_buffer = await self.bot.loop.run_in_executor(None, thing)
         f = copy.copy(output_buffer)
-        headers = {"Authorization": "Client-ID 6656d64547a5031"}
+        headers = {"Authorization": f"Client-ID {self.bot.config.imgur_token}"}
         data = {"image": f}
         async with self.bot.session.post(
             "https://api.imgur.com/3/image", data=data, headers=headers
