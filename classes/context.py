@@ -24,7 +24,7 @@ class Context(commands.Context):
 
     @property
     def disp(self):
-        return self.display_name
+        return self.author.display_name
 
     @property
     def uptime(self):
