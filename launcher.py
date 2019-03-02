@@ -21,7 +21,7 @@ import config
 
 __version__ = "0.7.0a"
 
-BOT_FILE = "bot.py"
+BOT_FILE = "idlerpg.py"
 communication_channel = "guild-channel"
 additional_shards = 4
 shard_per_cluster = 4
