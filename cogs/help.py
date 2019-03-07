@@ -93,7 +93,7 @@ class Help:
         )
 
     @is_supporter()
-    @commands.command(description="Block a guild or user from using the helpme command")
+    @commands.command(description="Unblock a guild or user from using the helpme command")
     async def nofaggot(self, ctx, thing_to_ban: Union[discord.User, int]):
         if isinstance(thing_to_ban, discord.User):
             id = thing_to_ban.id
