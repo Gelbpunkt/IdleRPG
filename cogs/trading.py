@@ -128,7 +128,7 @@ class Trading:
                 "INSERT INTO inventory (item, equipped) VALUES ($1, $2);", itemid, False
             )
         await ctx.send(
-            f"Successfully remove item `{itemid}` from the shop and put it in your inventory."
+            f"Successfully removed item `{itemid}` from the shop and put it in your inventory."
         )
 
     @commands.command(
