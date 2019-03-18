@@ -109,7 +109,7 @@ class Help:
             f"{thing_to_ban.name} has been banned for the helpme command :ok_hand:"
         )
 
-    @commands.command(description="Need help? This command allows a support member to join and help you!", aliases=["support"])
+    @commands.command(description="Need help? This command allows a support member to join and help you!")
     async def helpme(self, ctx, *, text: str):
         blocked = await self.bot.pool.fetchrow(
             'SELECT * FROM helpme WHERE "id"=$1 OR "id"=$2;',
