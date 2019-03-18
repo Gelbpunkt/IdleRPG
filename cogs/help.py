@@ -109,7 +109,7 @@ class Help:
             f"{thing_to_ban.name} has been banned for the helpme command :ok_hand:"
         )
 
-    @commands.command(description="Need help? Gotcha!")
+    @commands.command(description="Need help? This command allows a support member to join and help you!", aliases=["support"])
     async def helpme(self, ctx, *, text: str):
         blocked = await self.bot.pool.fetchrow(
             'SELECT * FROM helpme WHERE "id"=$1 OR "id"=$2;',
@@ -127,7 +127,8 @@ class Help:
         c = self.bot.get_channel(453_551_307_249_418_254)
         em = discord.Embed(title="Help Request", colour=0xFF0000)
         em.add_field(name="Requested by", value=f"{ctx.author}")
-        em.add_field(name="Requested in", value=f"#{ctx.channel}")
+        em.add_field(name="Requested in server", value=f"{ctx.guild.name}")
+        em.add_field(name="Requested in channel", value=f"#{ctx.channel}")
         em.add_field(name="Content", value=text)
         em.add_field(name="Invite", value=inv)
 
