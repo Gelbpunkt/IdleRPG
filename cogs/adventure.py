@@ -95,7 +95,11 @@ class Adventure:
                 )
 
             def msgcheck(amsg):
-                return amsg.channel == ctx.channel and not amsg.author.bot
+                return (
+                    amsg.channel == ctx.channel
+                    and amsg.author.id == ctx.author.id
+                    and not amsg.author.bot
+                )
 
             browsing = True
             while browsing:
