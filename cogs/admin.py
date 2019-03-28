@@ -14,7 +14,7 @@ from discord.ext import commands
 from utils.checks import is_admin, user_has_char
 
 
-class Admin:
+class Admin(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 

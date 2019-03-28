@@ -24,7 +24,7 @@ from discord.ext.commands import BucketType
 from utils.checks import has_char
 
 
-class Miscellaneous:
+class Miscellaneous(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 

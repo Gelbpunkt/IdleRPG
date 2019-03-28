@@ -18,7 +18,7 @@ from io import BytesIO
 from discord.ext.commands import BucketType
 
 
-class Images:
+class Images(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 

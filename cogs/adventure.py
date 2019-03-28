@@ -14,14 +14,13 @@ import functools
 
 from cogs.shard_communication import user_on_cooldown as user_cooldown
 from utils import misc as rpgtools
-from cogs.rpgtools import makeadventures
 from discord.ext import commands
 from cogs.classes import genstats
 from utils.checks import has_char
 from utils.tools import todelta
 
 
-class Adventure:
+class Adventure(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
@@ -64,7 +63,7 @@ class Adventure:
                     returnsuccess=False,
                 )
                 chances.append((success[0] - success[2], success[1] + success[2]))
-            thing = functools.partial(makeadventures, chances)
+            thing = functools.partial(rpgtools.makeadventures, chances)
             images = await self.bot.loop.run_in_executor(None, thing)
             await msg.delete()
             currentpage = 0

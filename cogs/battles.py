@@ -16,7 +16,7 @@ from utils.checks import has_char, has_money, user_has_char
 from cogs.shard_communication import user_on_cooldown as user_cooldown
 
 
-class Battles:
+class Battles(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 

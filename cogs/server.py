@@ -18,7 +18,7 @@ def get_guilds(bot, user):
     return [guild for guild in bot.guilds if user in guild.members]
 
 
-class Server:
+class Server(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 

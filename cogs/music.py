@@ -24,13 +24,13 @@ import pylava
 
 
 # Exceptions
-class NotInVoiceChannel(commands.CheckFailure):
+class NotInVoiceChannel(commands.Cog):
     """Should be raised if the invoker isn't in a voice channel"""
 
     pass
 
 
-class MusicPlayer:
+class MusicPlayer(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
         self.music_prefix = "mp:idle:"
@@ -404,7 +404,7 @@ class MusicPlayer:
         if queue_keys:
             await self.bot.redis.execute("DEL", *[key for key in queue_keys])
 
-    def __unload(self):
+    def cog_unload(self):
         self.bot.queue.put_nowait(self.cleanup())
 
 

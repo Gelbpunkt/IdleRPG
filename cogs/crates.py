@@ -14,7 +14,7 @@ from discord.ext import commands
 from utils.checks import has_char
 
 
-class Crates:
+class Crates(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 

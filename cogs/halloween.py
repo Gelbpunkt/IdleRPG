@@ -15,12 +15,12 @@ import utils.checks as checks
 from discord.ext import commands
 
 
-class Halloween:
+class Halloween(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
         self.bot.waiting = None
 
-    def __local_check(self, ctx):
+    def cog_check(self, ctx):
         return ctx.author.id == 287_215_355_137_622_016
 
     @checks.has_char()

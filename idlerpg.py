@@ -10,8 +10,8 @@ For more information, see README.md and LICENSE.md.
 import sys
 import os
 import traceback
+from json import loads
 import asyncio
-import uvloop
 import aiohttp
 import discord
 from discord.ext import commands
@@ -19,16 +19,17 @@ import asyncpg
 import aioredis
 
 import config
-from utils.checks import is_hypesquad
 from utils.loops import queue_manager
 from utils import paginator
-from classes.bot import BotBase
+from classes.bot import Bot
 
 if sys.platform == "linux" and sys.version_info >= (
     3,
     5,
 ):  # uvloop requires linux and min 3.5 Python
-    asyncio.set_event_loop_policy(uvloop.EventLoopPolicy())
+    # import uvloop
+    # asyncio.set_event_loop_policy(uvloop.EventLoopPolicy())
+    pass
 
 
 def get_prefix(bot, message):
@@ -45,10 +46,12 @@ def get_prefix(bot, message):
     return bot.config.global_prefix
 
 
-bot = BotBase(
+bot = Bot(
     command_prefix=get_prefix,
     case_insensitive=True,
     description="The one and only IdleRPG bot for discord",
+    shard_ids=loads(sys.argv[1]),
+    shard_count=int(sys.argv[2]),
 )
 bot.version = "3.4 dev"
 bot.remove_command("help")
@@ -72,12 +75,18 @@ async def start_bot():
     bot.redis = await aioredis.create_pool(
         "redis://localhost", minsize=5, maxsize=10, loop=bot.loop
     )
-    bot.pool = await asyncpg.create_pool(**bot.config.database, max_size=100)
+    bot.pool = await asyncpg.create_pool(**bot.config.database, max_size=10)
     bot.all_prefixes = {}
     async with bot.pool.acquire() as conn:
         prefixes = await conn.fetch("SELECT id, prefix FROM server;")
         for row in prefixes:
             bot.all_prefixes[row[0]] = row[1]
+    for extension in bot.config.initial_extensions:
+        try:
+            bot.load_extension(extension)
+        except Exception:
+            print(f"Failed to load extension {extension}.", file=sys.stderr)
+            traceback.print_exc()
     await bot.start(bot.config.token)
 
 
@@ -132,13 +141,5 @@ async def on_ready():
 
 if __name__ == "__main__":
     bot.queue = asyncio.Queue(loop=bot.loop)  # global queue for ordered tasks
-    for extension in bot.config.initial_extensions:
-        try:
-            bot.load_extension(extension)
-        except Exception:
-            print(f"Failed to load extension {extension}.", file=sys.stderr)
-            traceback.print_exc()
-    if bot.config.is_beta:  # TODO: move this (maybe a beta cog)
-        bot.add_check(is_hypesquad)
     loop = asyncio.get_event_loop()
     loop.run_until_complete(start_bot())

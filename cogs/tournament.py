@@ -30,7 +30,7 @@ def is_battle_owner():
     return commands.check(predicate)
 
 
-class Tournament:
+class Tournament(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 

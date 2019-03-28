@@ -31,7 +31,7 @@ from utils.tools import todelta
 from cogs.shard_communication import user_on_cooldown as user_cooldown
 
 
-class Guild:
+class Guild(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
@@ -306,7 +306,7 @@ class Guild:
             username = str(member)
             member = member.id
         else:
-            username = str(await self.bot.get_user_info(member))
+            username = str(await self.bot.fetch_user(member))
         if not await is_member_of_author_guild(ctx, member):
             return await ctx.send("Target is not a member of your guild.")
         async with self.bot.pool.acquire() as conn:

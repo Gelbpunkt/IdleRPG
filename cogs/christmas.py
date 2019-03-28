@@ -48,7 +48,7 @@ rewards = {
 }
 
 
-class Christmas:
+class Christmas(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
         with open("assets/data/hangman.txt", "r") as f:

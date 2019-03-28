@@ -9,7 +9,7 @@ For more information, see README.md and LICENSE.md.
 
 import discord
 import asyncio
-import cogs.rpgtools as rpgtools
+from utils import misc as rpgtools
 import random
 import secrets
 
@@ -79,7 +79,7 @@ def is_ranger():
     return commands.check(predicate)
 
 
-class Classes:
+class Classes(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 

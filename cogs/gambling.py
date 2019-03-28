@@ -251,7 +251,7 @@ class BlackJack:
         await self.results(win=True)
 
 
-class Gambling:
+class Gambling(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 

@@ -39,7 +39,7 @@ def raid_channel():
     return commands.check(predicate)
 
 
-class Raid:
+class Raid(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
         self.bot.boss_is_spawned = False

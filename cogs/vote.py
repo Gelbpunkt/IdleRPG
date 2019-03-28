@@ -10,7 +10,7 @@ For more information, see README.md and LICENSE.md.
 from discord.ext import commands
 
 
-class Vote:
+class Vote(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 

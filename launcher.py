@@ -7,17 +7,15 @@ For more information, see README.md and LICENSE.md.
 
 import sys
 import asyncio
-from functools import partial
 import json
-from pathlib import Path
-import signal
-from time import time
-from traceback import print_exc
 import aiohttp
 import aioredis
-from async_timeout import timeout
 
-import config
+from pathlib import Path
+from time import time
+from traceback import print_exc
+from config import token
+
 
 __version__ = "0.7.0a"
 
@@ -26,13 +24,18 @@ communication_channel = "guild-channel"
 additional_shards = 4
 shard_per_cluster = 4
 
-payload = {"Authorization": f"Bot {config.token}", "User-Agent": f"IdleRPG launcher (v{__version__})"}
+payload = {
+    "Authorization": f"Bot {token}",
+    "User-Agent": f"IdleRPG launcher (v{__version__})",
+}
+
 
 async def get_shard_count():
     async with aiohttp.ClientSession() as session, session.get(
         "https://discordapp.com/api/gateway/bot", headers=payload
     ) as req:
         return (await req.json()).get("shards")
+
 
 async def get_app_info():
     async with aiohttp.ClientSession() as session, session.get(
@@ -41,18 +44,25 @@ async def get_app_info():
         response = await req.json()
     return response["name"], response["id"]
 
+
 def get_cluster_list(shards: int):
-    return [list(range(0, shards)[i : i + shard_per_cluster]) for i in range(0, shards, shard_per_cluster)]
+    return [
+        list(range(0, shards)[i : i + shard_per_cluster])
+        for i in range(0, shards, shard_per_cluster)
+    ]
+
 
 class Instance:
-    def __init__(self, instance_id: int, shard_list: list, shard_count: int, loop, main=None):
+    def __init__(
+        self, instance_id: int, shard_list: list, shard_count: int, loop, main=None
+    ):
         self.main = main
         self.loop = loop
         self.shard_list = shard_list
-        self.shard_count = shard_count # overall shard count
+        self.shard_count = shard_count  # overall shard count
         self.started_at = None
         self.id = instance_id
-        self.command = f"{sys.executable} {Path.cwd() / BOT_FILE} \"{shard_list}\" {shard_count} {self.id}"
+        self.command = f'{sys.executable} {Path.cwd() / BOT_FILE} "{shard_list}" {shard_count} {self.id}'
         self._process = None
         loop.create_task(self.start())
 
@@ -67,11 +77,18 @@ class Instance:
             print(f"[Cluster #{self.id}] The cluster is already up")
             return
         self.started_at = time()
-        self._process = await asyncio.create_subprocess_shell(self.command, stdin=asyncio.subprocess.DEVNULL, stdout=asyncio.subprocess.DEVNULL,
-         stderr=asyncio.subprocess.PIPE, loop=self.loop)
+        self._process = await asyncio.create_subprocess_shell(
+            self.command,
+            stdin=asyncio.subprocess.DEVNULL,
+            stdout=asyncio.subprocess.DEVNULL,
+            stderr=asyncio.subprocess.PIPE,
+            loop=self.loop,
+        )
         task = self.loop.create_task(self._run())
         print(f"[Cluster #{self.id}] Started successfully")
-        task.add_done_callback(self.main.dead_process_handler) # TODO: simply use it inline
+        task.add_done_callback(
+            self.main.dead_process_handler
+        )  # TODO: simply use it inline
 
     async def stop(self):
         self._process.terminate()
@@ -90,9 +107,10 @@ class Instance:
     async def _run(self):
         stdout, stderr = await self._process.communicate()
         return self, stdout, stderr
-    
+
     def __repr__(self):
         return f"<Cluster ID={self.id}, active={self.is_active}, shards={self.shard_list}, started={self.started_at}>"
+
 
 class Main:
     def __init__(self, loop=None):
@@ -102,7 +120,9 @@ class Main:
 
     def dead_process_handler(self, result):
         instance, stdout, stderr = result.result()
-        print(f"[Cluster #{instance.id}] Exited with code [{instance._process.returncode}]")
+        print(
+            f"[Cluster #{instance.id}] Exited with code [{instance._process.returncode}]"
+        )
         if instance._process.returncode == 0:
             print(f"[Cluster #{instance.id}] Stopped gracefully")
         else:
@@ -119,8 +139,10 @@ class Main:
 
     async def event_handler(self):
         try:
-            self.redis = await aioredis.create_pool("redis://localhost", minsize=1, maxsize=1)
-        except:
+            self.redis = await aioredis.create_pool(
+                "redis://localhost", minsize=1, maxsize=1
+            )
+        except aioredis.RedisError:
             print_exc()
             exit("[ERROR] Redis must be installed properly")
 
@@ -131,14 +153,20 @@ class Main:
             except json.decoder.JSONDecodeError:
                 return  # not a valid JSON message
             if payload.get("scope") != "launcher" or not payload.get("action"):
-                return # not the launcher's task
+                return  # not the launcher's task
             if payload["action"] == "restart":
-                self.loop.create_task(self.get_instance(self.instances, payload["id"]).restart())
+                self.loop.create_task(
+                    self.get_instance(self.instances, payload["id"]).restart()
+                )
                 return
             if payload["action"] == "stop":
-                self.loop.create_task(self.get_instance(self.instances, payload["id"]).stop())
+                self.loop.create_task(
+                    self.get_instance(self.instances, payload["id"]).stop()
+                )
             if payload["action"] == "start":
-                self.loop.create_task(self.get_instance(self.instances, payload["id"]).start())
+                self.loop.create_task(
+                    self.get_instance(self.instances, payload["id"]).start()
+                )
             """if payload["action"] == "status":
                 # TODO: info
                 pass"""
@@ -151,12 +179,17 @@ class Main:
         for i, shard_list in enumerate(clusters, 1):
             if not shard_list:
                 continue
-            self.instances.append(Instance(i, shard_list, shard_count, self.loop, main=self))
-            await asyncio.sleep(4 * 5)
+            self.instances.append(
+                Instance(i, shard_list, shard_count, self.loop, main=self)
+            )
+            await asyncio.sleep(shard_per_cluster * 5)
+
 
 if __name__ == "__main__":
     if sys.platform.startswith("win"):
-        loop = asyncio.ProactorEventLoop()  # subprocess pipes only work with this under Win
+        loop = (
+            asyncio.ProactorEventLoop()
+        )  # subprocess pipes only work with this under Win
         asyncio.set_event_loop(loop)
     else:
         loop = asyncio.get_event_loop()
@@ -164,11 +197,17 @@ if __name__ == "__main__":
     try:
         loop.run_forever()
     except KeyboardInterrupt:
+
         def shutdown_handler(_loop, context):
-            if "exception" not in context or not isinstance(context["exception"], asyncio.CancelledError):
-                _loop.default_exception_handler(context) #TODO: fix context
+            if "exception" not in context or not isinstance(
+                context["exception"], asyncio.CancelledError
+            ):
+                _loop.default_exception_handler(context)  # TODO: fix context
+
         loop.set_exception_handler(shutdown_handler)
-        tasks = asyncio.gather(*asyncio.Task.all_tasks(loop=loop), loop=loop, return_exceptions=True)
+        tasks = asyncio.gather(
+            *asyncio.Task.all_tasks(loop=loop), loop=loop, return_exceptions=True
+        )
         tasks.add_done_callback(lambda t: loop.stop())
         tasks.cancel()
 

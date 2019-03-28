@@ -17,7 +17,7 @@ from utils import misc as rpgtools
 from utils.checks import has_char, has_money
 
 
-class Trading:
+class Trading(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 

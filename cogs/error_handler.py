@@ -25,7 +25,7 @@ else:
     SENTRY_SUPPORT = True
 
 
-class Errorhandler:
+class Errorhandler(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
         bot.on_command_error = self._on_command_error
@@ -143,7 +143,7 @@ class Errorhandler:
         if SENTRY_SUPPORT:
             await self.client.remote.get_transport().close()
 
-    def __unload(self):
+    def cog_unload(self):
         self.bot.queue.put_nowait(self.unload_cog())
 
 

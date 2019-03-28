@@ -7,10 +7,44 @@ For more information, see README.md and LICENSE.md.
 """
 
 
+import datetime
+
 from discord.ext import commands
-from classes.context import Context
 
 
-class BotBase(commands.AutoShardedBot):
-    async def get_context(self, message, *, cls=None):
-        return await super().get_context(message, cls=Context)
+class Bot(commands.AutoShardedBot):
+    def __init__(self, **kwargs):
+        super().__init__(**kwargs)
+
+        self.launch_time = (
+            datetime.datetime.now()
+        )  # we assume the bot is created for use right now
+
+        self.mention_formatter = commands.clean_content()
+
+    @property
+    def disp(self):
+        return self.author.display_name
+
+    @property
+    def uptime(self):
+        return datetime.datetime.now() - self.launch_time
+
+    async def send_message(
+        self,
+        target,
+        content=None,
+        *,
+        escape_mass_mentions=True,
+        escape_mentions=False,
+        **fields
+    ):
+        if escape_mass_mentions:
+            content = content.replace("@here", "@\u200bhere").replace(
+                "@everyone", "@\u200beveryone"
+            )
+        if escape_mentions:
+            # content = await self.mention_formatter.convert(self, content)
+            pass
+
+        await super(Bot, self).send_message(target, content=content, **fields)

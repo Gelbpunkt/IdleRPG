@@ -26,7 +26,7 @@ def is_ken():
     return commands.check(predicate)
 
 
-class Custom:
+class Custom(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 

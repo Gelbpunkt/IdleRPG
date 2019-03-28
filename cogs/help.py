@@ -21,41 +21,6 @@ def chunks(l, n):
         yield l[i : i + n]
 
 
-async def makeembed(bot, pages, thecurrentpage):
-    mymax = len(pages) + 1
-    if thecurrentpage != 0:
-        embed = discord.Embed(
-            title="IdleRPG Help",
-            colour=discord.Colour(0xFFBC00),
-            url=bot.BASE_URL,
-            description=f"**{pages[thecurrentpage-1][0]} Commands**",
-        )
-        embed.set_footer(
-            text=f"IdleRPG Version {bot.version} | Page {thecurrentpage+1} of {mymax}",
-            icon_url=bot.user.avatar_url,
-        )
-        for acommand in pages[thecurrentpage - 1]:
-            if acommand == pages[thecurrentpage - 1][0]:
-                continue
-            mydesc = acommand.description
-            if mydesc is None or mydesc == "":
-                mydesc = "No description set"
-            embed.add_field(name=f"{acommand.signature}", value=mydesc, inline=False)
-        return embed
-    else:
-        embed = discord.Embed(
-            title="IdleRPG Help",
-            colour=discord.Colour(0xFFBC00),
-            url=bot.BASE_URL,
-            description="**Welcome to the IdleRPG help. Use the arrows to move.\nFor more help, join the support server at https://discord.gg/axBKXBv.**\nCheck out our partners using the partners command!",
-        )
-        embed.set_image(url=f"{bot.BASE_URL}/IdleRPG.png")
-        embed.set_footer(
-            text=f"IdleRPG Version {bot.version}", icon_url=bot.user.avatar_url
-        )
-        return embed
-
-
 def is_supporter():
     async def predicate(ctx):
         u = ctx.bot.get_guild(ctx.bot.config.support_server_id).get_member(
@@ -68,9 +33,54 @@ def is_supporter():
     return commands.check(predicate)
 
 
-class Help:
+class Help(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
+        self.pages = self.make_pages()
+
+    def make_pages(self):
+        all_commands = {}
+        for cog, instance in self.bot.cogs.items():
+            if cog in ["Admin", "Owner"]:
+                continue
+            commands = list(chunks(list(instance.get_commands()), 10))
+            if len(commands) == 1:
+                all_commands[cog] = commands[0]
+            else:
+                for i, j in enumerate(commands):
+                    all_commands[f"{cog} ({i}/{len(commands)}"] = j
+
+        pages = []
+        maxpages = len(all_commands)
+
+        for i, (cog, commands) in all_commands.items():
+            if i == 0:
+                embed = discord.Embed(
+                    title="IdleRPG Help",
+                    colour=self.bot.config.primary_color,
+                    url=self.bot.BASE_URL,
+                    description="**Welcome to the IdleRPG help. Use the arrows to move.\nFor more help, join the support server at https://discord.gg/axBKXBv.**\nCheck out our partners using the partners command!",
+                )
+                embed.set_image(url=f"{bot.BASE_URL}/IdleRPG.png")
+                embed.set_footer(
+                    text=f"IdleRPG Version {bot.version}", icon_url=bot.user.avatar_url
+            )
+        else:
+            embed = discord.Embed(
+                title="IdleRPG Help",
+                colour=bot.config.primary_color,
+                url=bot.BASE_URL,
+                description=f"**{cog} Commands**",
+            )
+            embed.set_footer(
+                text=f"IdleRPG Version {bot.version} | Page {i + 1} of {maxpages}",
+                icon_url=bot.user.avatar_url,
+            )
+            for command in commands:
+                desc = acommand.description or getattr(command.callback, "__doc__") or "No Description set"
+                embed.add_field(name=f"{command.signature}", value=desc, inline=False)
+        pages.append(embed)
+        return pages
 
     @commands.command(
         description="Sends a link to the official documentation.", aliases=["docs"]
@@ -93,8 +103,10 @@ class Help:
         )
 
     @is_supporter()
-    @commands.command(description="Unblock a guild or user from using the helpme command")
-    async def nofaggot(self, ctx, thing_to_ban: Union[discord.User, int]):
+    @commands.command(
+        description="Unblock a guild or user from using the helpme command"
+    )
+    async def unbanfromhelpme(self, ctx, thing_to_ban: Union[discord.User, int]):
         if isinstance(thing_to_ban, discord.User):
             id = thing_to_ban.id
         else:
@@ -107,7 +119,7 @@ class Help:
 
     @is_supporter()
     @commands.command(description="Block a guild or user from using the helpme command")
-    async def faggot(self, ctx, thing_to_ban: Union[discord.User, int]):
+    async def banfromhelpme(self, ctx, thing_to_ban: Union[discord.User, int]):
         if isinstance(thing_to_ban, discord.User):
             id = thing_to_ban.id
         else:
@@ -121,7 +133,9 @@ class Help:
             f"{thing_to_ban.name} has been banned for the helpme command :ok_hand:"
         )
 
-    @commands.command(description="Need help? This command allows a support member to join and help you!")
+    @commands.command(
+        description="Need help? This command allows a support member to join and help you!"
+    )
     async def helpme(self, ctx, *, text: str):
         blocked = await self.bot.pool.fetchrow(
             'SELECT * FROM helpme WHERE "id"=$1 OR "id"=$2;',
@@ -132,6 +146,13 @@ class Help:
             return await ctx.send(
                 "You or your server has been blacklisted for some reason."
             )
+        def check(msg):
+            return msg.author == ctx.author and msg.content.lower == "yes, i do"
+        await ctx.send("Are you sure? This will notify our support team and allow them to join the server. If you are sure, type `Yes, I do`.")
+        try:
+            await self.bot.wait_for("message", check=check, timeout=20)
+        except asyncio.TimeoutError:
+            return await ctx.send("Cancelling your help request.")
         try:
             inv = await ctx.channel.create_invite()
         except discord.Forbidden:
@@ -153,29 +174,22 @@ class Help:
     async def help(
         self, ctx, *, command: commands.clean_content(escape_markdown=True) = None
     ):
-        if command is not None:
+        if command:
+            command = self.bot.get_command(command.lower())
+            if not command:
+                return await ctx.send("Sorry, that command does not exist.")
             pages = await ctx.bot.formatter.format_help_for(
-                ctx, self.bot.get_command(str(command))
+                ctx, command
             )
-            if not pages[0].split("\n")[2].endswith("for more info on a command."):
-                for page in pages:
-                    await ctx.send(page)
-            else:
-                await ctx.send(f"```There is no command named {command}.```")
+            for page in pages:
+                await ctx.send(page)
             return
 
-        commands = []
-        for cog in self.bot.cogs:
-            if cog == "Admin" or cog == "Owner" or cog == "Chess":
-                continue
-            for l in list(chunks(list(self.bot.get_cog_commands(cog)), 10)):
-                commands.append([l[0].cog_name] + l)
-
-        maxpages = len(commands) + 1
+        maxpage = len(self.pages) - 1
         currentpage = 0
         browsing = True
-        myembed = await makeembed(self.bot, commands, currentpage)
-        msg = await ctx.send(embed=myembed)
+        msg = await ctx.send(embed=self.pages[currentpage])
+
         await msg.add_reaction("\U000023ee")
         await msg.add_reaction("\U000025c0")
         await msg.add_reaction("\U000025b6")
@@ -209,35 +223,31 @@ class Help:
                         pass
                     else:
                         currentpage -= 1
-                        myembed = await makeembed(self.bot, commands, currentpage)
-                        await msg.edit(embed=myembed)
+                        await msg.edit(embed=self.pages[currentpage])
                         try:
                             await msg.remove_reaction(reaction.emoji, user)
                         except discord.Forbidden:
                             pass
                 elif reaction.emoji == "\U000025b6":
-                    if currentpage == maxpages - 1:
+                    if currentpage == maxpage:
                         pass
                     else:
                         currentpage += 1
-                        myembed = await makeembed(self.bot, commands, currentpage)
-                        await msg.edit(embed=myembed)
+                        await msg.edit(embed=self.pages[currentpage])
                         try:
                             await msg.remove_reaction(reaction.emoji, user)
                         except discord.Forbidden:
                             pass
                 elif reaction.emoji == "\U000023ed":
-                    currentpage = maxpages - 1
-                    myembed = await makeembed(self.bot, commands, currentpage)
-                    await msg.edit(embed=myembed)
+                    currentpage = maxpage
+                    await msg.edit(embed=self.pages[currentpage])
                     try:
                         await msg.remove_reaction(reaction.emoji, user)
                     except discord.Forbidden:
                         pass
                 elif reaction.emoji == "\U000023ee":
                     currentpage = 0
-                    myembed = await makeembed(self.bot, commands, currentpage)
-                    await msg.edit(embed=myembed)
+                    await msg.edit(embed=self.pages[currentpage])
                     try:
                         await msg.remove_reaction(reaction.emoji, user)
                     except discord.Forbidden:
@@ -250,12 +260,9 @@ class Help:
                     if num is not None:
                         try:
                             num2 = int(num.content)
-                            if num2 >= 1 and num2 <= maxpages:
+                            if num2 >= 1 and num2 <= maxpage + 1:
                                 currentpage = num2 - 1
-                                myembed = await makeembed(
-                                    self.bot, commands, currentpage
-                                )
-                                await msg.edit(embed=myembed)
+                                await msg.edit(embed=self.pages[currentpage])
                                 try:
                                     await num.delete()
                                 except discord.Forbidden:

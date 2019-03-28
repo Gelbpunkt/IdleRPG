@@ -13,7 +13,7 @@ from discord.ext import commands
 from utils import misc as rpgtools
 
 
-class Ranks:
+class Ranks(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 

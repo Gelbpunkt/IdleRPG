@@ -1,18 +1,14 @@
-"""
-The IdleRPG Discord Bot
-Copyright (C) 2018-2019 Diniboy and Gelbpunkt
-
-This software is dual-licensed under the GNU Affero General Public License for non-commercial and the Travitia License for commercial use.
-For more information, see README.md and LICENSE.md.
-"""
-
-
-import json
+from traceback import format_exc
 import asyncio
 
+try:
+    import ujson as json  # faster, but linux only
+except ImportError:
+    import json
+from uuid import uuid4
 from async_timeout import timeout
+import discord
 from discord.ext import commands
-from datetime import timedelta
 
 
 # Cross-process cooldown check (pass this to commands)
@@ -37,88 +33,65 @@ def user_on_cooldown(cooldown: int):
     return commands.check(predicate)  # TODO: Needs a redesign
 
 
-def dict_to_kwargs(**kwargs):
-    return ", ".join("%s=%r" % x for x in kwargs.items())
+class User(commands.Converter):
+    async def convert(self, ctx, argument):
+        data = await ctx.bot.cogs["Sharding"].handler(
+            "fetch_user", 1, {"user_inp": argument}
+        )
+        if not data:
+            raise commands.BadArgument(ctx.message, argument)
+        data = data[0]
+        data["username"] = data["name"]
+        return discord.User(state=ctx.bot._connection, data=data)
 
 
-class GuildCommunication:
+async def get_user(bot, user_id: int):
+    data = await bot.cogs["Sharding"].handler("get_user", 1, {"user_id": user_id})
+    if not data:
+        return None
+    data = data[0]
+    data["username"] = data["name"]
+    return discord.User(state=bot._connection, data=data)
+
+
+class Sharding(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
         self.communication_channel = "guild-channel"
-        self.key_prefix = "idle:"
-        self.handler = None
+        self.router = None
         bot.loop.create_task(self.register_sub())
-        self.bot.reset_cooldown = self.reset_cooldown
+        self._messages = dict()
+        """
+        _messages should be a dict with the syntax {"<command_id>": [outputs]}
+        """
 
-    """
-    async def stat_updater(self):
-        await self.bot.redis.execute(
-            "ZADD",
-            f"{self.key_prefix}guilds",
-            self.bot.process_id,
-            len(self.bot.guilds),
-        )
-        await self.bot.redis.execute(
-            "ZADD", f"{self.key_prefix}users", self.bot.process_id, len(self.bot.users)
-        )
-
-    async def on_ready(self):
-        await self.stat_updater()
-
-    async def on_guild_join(self, guild):
-        await self.stat_updater()
-
-    async def on_guild_remove(self, guild):
-        await self.stat_updater()
-    """
-
-    async def get_guilds(self):
-        return sum(
-            [
-                int(c.decode())
-                for c in await self.bot.redis.execute(
-                    "ZRANGE", f"{self.key_prefix}guilds", 0, -1
-                )
-            ]
-        )
-
-    async def get_users(self):
-        return sum(
-            [
-                int(c.decode())
-                for c in await self.bot.redis.execute(
-                    "ZRANGE", f"{self.key_prefix}users", 0, -1
-                )
-            ]
-        )
+    def cog_unload(self):
+        self.bot.loop.create_task(self.unregister_sub())
 
     async def register_sub(self):
-        if self.communication_channel not in self.bot.redis.pubsub_channels:
+        if (
+            not bytes(self.communication_channel, "utf-8")
+            in self.bot.redis.pubsub_channels
+        ):
             await self.bot.redis.execute_pubsub("SUBSCRIBE", self.communication_channel)
-            self.handler = self.bot.loop.create_task(self.event_handler())
+        self.router = self.bot.loop.create_task(self.event_handler())
 
     async def unregister_sub(self):
+        if self.router and not self.router.cancelled:
+            self.router.cancel()
         await self.bot.redis.execute_pubsub("UNSUBSCRIBE", self.communication_channel)
 
-    async def fetch_first_result(self, expected_id):
-        channel = self.bot.redis.pubsub_channels[self.communication_channel]
-        try:
-            async with timeout(5):
-                while await channel.wait_message():
-                    try:
-                        payload = await channel.get_json(encoding="utf-8")
-                    except json.decoder.JSONDecodeError:
-                        return None  # not a valid JSON message
-                    if (
-                        payload.get("value")
-                        and payload.get("command_id") == expected_id
-                    ):
-                        return payload["value"]
-        except asyncio.TimeoutError:
-            return None
-
     async def event_handler(self):
-        channel = self.bot.redis.pubsub_channels[self.communication_channel]
+        """
+        main router
+
+        Possible messages to come:
+        {"scope":<bot/launcher>, "action": "<name>", "args": "<dict of args>", "command_id": "<uuid4>"}
+        {"output": "<string>", "command_id": "<uuid4>"}
+        """
+        channel = self.bot.redis.pubsub_channels[
+            bytes(self.communication_channel, "utf-8")
+        ]
         while await channel.wait_message():
             try:
                 payload = await channel.get_json(encoding="utf-8")
@@ -126,117 +99,103 @@ class GuildCommunication:
                 return  # not a valid JSON message
             if payload.get("action") and hasattr(self, payload.get("action")):
                 try:
-                    eval(
-                        f"self.bot.loop.create_task(self.{payload.get('action')}({dict_to_kwargs(**payload.get('args'))}))"
+                    if payload.get("scope") != "bot":
+                        return  # it's not our cup of tea
+                    self.bot.loop.create_task(
+                        getattr(self, payload.get("action"))(
+                            **json.loads(payload.get("args")),
+                            command_id=payload["command_id"],
+                        )
                     )
-                except Exception as e:
-                    print(e)
+                except Exception:
+                    payload = {
+                        "error": True,
+                        "output": format_exc(),
+                        "command_id": payload["command_id"],
+                    }
+                    await self.bot.redis.execute(
+                        "PUBLISH", self.communication_channel, json.dumps(payload)
+                    )
+            if payload.get("output") and payload["command_id"] in self._messages:
+                self._messages[payload["command_id"]].append(payload["output"])
 
-    async def send_message(self, channel_id: int, message: str):
-        await self.bot.get_channel(channel_id).send(message)
-
-    async def get_properties_by_userid(self, command_id, user_id: int):
-        user = self.bot.get_user(user_id)
-        if user:
-            payload = {
-                "command_id": command_id,
-                "value": {
-                    "id": user.id,
-                    "name": user.name,
-                    "avatar_url": user.avatar_url_as(static_format="png"),
-                    "discriminator": user.discriminator,
-                    "display": f"{user.name}#{user.discriminator}",
-                },
-            }
-            await self.bot.redis.execute(
-                "PUBLISH", self.communication_channel, json.dumps(payload)
-            )
-
-    async def guild_count(self, command_id: int):
-        payload = {"command_id": command_id, "guildcount": len(self.bot.guilds)}
+    async def get_user(self, user_id: int, command_id: str):
+        if not self.bot.get_user(user_id):
+            return
+        payload = {"output": self.bot.get_user(int(user_id)), "command_id": command_id}
         await self.bot.redis.execute(
             "PUBLISH", self.communication_channel, json.dumps(payload)
         )
 
-    async def reload_cog(self, cog_name: str):
-        if cog_name in self.bot.cogs:
-            try:
-                self.bot.unload_extension(cog_name)
-            except Exception as e:
-                print(e)
-                return
-        try:
-            self.bot.load_extension(cog_name)
-        except Exception as e:
-            await self.bot.redis.execute(
-                "PUBLISH",
-                self.communication_channel,
-                json.dumps({"status": "error", "error_message": str(e)}),
-            )
+    async def fetch_user(self, user_inp, command_id: str):
+        user = None
+        if isinstance(user_inp, int) or (
+            isinstance(user_inp, str) and user_inp.isdigit()
+        ):
+            user = self.bot.get_user(int(user_inp))
+        else:
+            if len(arg) > 5 and arg[-5] == "#":
+                discrim = user_inp[-4:]
+                name = user_inp[:-5]
+                predicate = lambda u: u.name == name and u.discriminator == discrim
+                result = discord.utils.find(predicate, ctx.state._users.values())
+            else:
+                predicate = lambda u: u.name == user_inp
+                user = discord.utils.find(predicate, ctx.state._users.values())
+        if not user:
             return
+        payload = {"output": user, "command_id": command_id}
         await self.bot.redis.execute(
-            "PUBLISH", self.communication_channel, json.dumps({"status": "Done"})
+            "PUBLISH", self.communication_channel, json.dumps(payload)
         )
 
-    async def load_cog(self, cog_name: str):
+    async def evaluate(self, code, command_id: str):
+        payload = {"output": eval(code), "command_id": command_id}
+        await self.bot.redis.execute(
+            "PUBLISH", self.communication_channel, json.dumps(payload)
+        )
+
+    async def handler(
+        self,
+        action: str,
+        expected_count: int,
+        args: dict = {},
+        _timeout: int = 2,
+        scope: str = "bot",
+    ):  # TODO: think of a better name
+        """
+        coro
+        A function that sends an event and catches all incoming events. Can be used anywhere.
+
+        ex:
+          await ctx.send(await bot.cogs["Sharding"].handler("evaluate", 4, {"code": '", ".join([f"{a} - {round(b*1000,2)} ms" for a,b in self.bot.latencies])'}))
+
+        action: str          Must be the function's name you need to call
+        expected_count: int  Minimal amount of data to send back. Can be more than the given and less on timeout
+        args: dict           A dictionary for the action function's args to pass
+        _timeout: int=2      Maximal amount of time waiting for incoming responses
+        scope: str="bot"     Can be either launcher or bot. Used to differentiate them
+        """
+        # Preparation
+        command_id = f"{uuid4()}"  # str conversion
+        self._messages[command_id] = []  # must create it (see the router)
+
+        # Sending
+        payload = {"scope": scope, "action": action, "command_id": command_id}
+        if args:
+            payload["args"] = json.dumps(args)
+        await self.bot.redis.execute(
+            "PUBLISH", self.communication_channel, json.dumps(payload)
+        )
+        # Message collector
         try:
-            self.bot.load_extension(cog_name)
-        except Exception as e:
-            await self.bot.redis.execute(
-                "PUBLISH",
-                self.communication_channel,
-                json.dumps({"status": "error", "error_message": str(e)}),
-            )
-            return
-        await self.bot.redis.execute(
-            "PUBLISH", self.communication_channel, json.dumps({"status": "Done"})
-        )
-
-    async def unload_cog(self, cog_name: str):
-        if cog_name in self.bot.cogs:
-            try:
-                self.bot.unload_extension(cog_name)
-            except Exception as e:
-                await self.bot.redis.execute(
-                    "PUBLISH",
-                    self.communication_channel,
-                    json.dumps({"status": "error", "error_message": str(e)}),
-                )
-                return
-        await self.bot.redis.execute(
-            "PUBLISH", self.communication_channel, json.dumps({"status": "Done"})
-        )
-
-    async def reset_cooldown(self, ctx):
-        await self.bot.redis.execute("DEL", f"cd:{ctx.author.id}:{ctx.command.name}")
-
-    """
-    @user_on_cooldown(cooldown=20)
-    @commands.command()
-    async def diniboytestwontexecuteit(self, ctx):
-        await ctx.send("I said, don't! :\\")
-    """
-
-    @commands.command()
-    async def timers(self, ctx):
-        cooldowns = await self.bot.redis.execute("KEYS", f"cd:{ctx.author.id}:*")
-        if not cooldowns:
-            return await ctx.send("You don't have any active cooldown at the moment.")
-        timers = "Commands on cooldown:"
-        for key in cooldowns:
-            key = key.decode()
-            cooldown = await self.bot.redis.execute("TTL", key)
-            cmd = key.replace(f"cd:{ctx.author.id}:", "")
-            timers = f"{timers}\n{cmd} is on cooldown and will be available after {str(timedelta(seconds=cooldown)).split('.')[0]}"
-        await ctx.send(f"```{timers}```")
-
-    def __unload(self):
-        self.bot.loop.create_task(self.unregister_sub())
-        try:
-            self.handler.cancel()
-        except:  # noqa
+            async with timeout(_timeout):
+                while len(self._messages[command_id]) < expected_count:
+                    await asyncio.sleep(0.1)
+        except asyncio.TimeoutError:
             pass
+        return self._messages.pop(command_id, None)  # Cleanup
 
 
 def setup(bot):
-    bot.add_cog(GuildCommunication(bot))
+    bot.add_cog(Sharding(bot))

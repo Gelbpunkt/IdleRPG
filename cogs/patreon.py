@@ -18,7 +18,7 @@ from utils.checks import is_patron, has_char
 from asyncpg.exceptions import StringDataRightTruncationError
 
 
-class Patreon:
+class Patreon(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 

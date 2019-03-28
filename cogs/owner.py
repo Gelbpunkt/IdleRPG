@@ -19,12 +19,12 @@ from importlib import reload as importlib_reload
 from discord.ext import commands
 
 
-class Owner:
+class Owner(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
         self._last_result = None
 
-    async def __local_check(self, ctx):
+    async def cog_check(self, ctx):
         return ctx.author.id in self.bot.config.owners
 
     @commands.command(hidden=True)

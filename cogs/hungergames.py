@@ -15,7 +15,7 @@ import copy
 from discord.ext import commands
 
 
-class GameBase:
+class GameBase(commands.Cog):
     def __init__(self, ctx, players: list):
         self.players = players
         self.ctx = ctx
@@ -237,7 +237,7 @@ class GameBase:
             await self.ctx.send("Everyone died!")
 
 
-class HungerGames:
+class HungerGames(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
         self.games = {}

@@ -9,8 +9,10 @@ For more information, see README.md and LICENSE.md.
 
 import discord
 
+from discord.ext import commands
 
-class GlobalEvents:
+
+class GlobalEvents(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
         self.auth_headers = {
@@ -109,7 +111,7 @@ class GlobalEvents:
     def get_bfd_payload(self):
         return {"server_count": len(self.bot.guilds)}
 
-    def __unload(self):
+    def cog_unload(self):
         self.status_updates.cancel()  # Cancel the status updates on unload
 
 

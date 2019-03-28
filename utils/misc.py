@@ -229,7 +229,7 @@ async def lookup(bot, userid):
     if member:
         return str(member)
     else:
-        member = await bot.get_user_info(userid)
+        member = await bot.fetch_user(userid)
         if member:
             return str(member)
         else:
