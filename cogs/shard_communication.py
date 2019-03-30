@@ -42,6 +42,7 @@ def user_on_cooldown(cooldown: int):
 
 class User(commands.Converter):
     async def convert(self, ctx, argument):
+        # TODO: Try the local users first
         data = await ctx.bot.cogs["Sharding"].handler(
             "fetch_user", 1, {"user_inp": argument}
         )
@@ -49,16 +50,23 @@ class User(commands.Converter):
             raise commands.BadArgument(ctx.message, argument)
         data = data[0]
         data["username"] = data["name"]
-        return discord.User(state=ctx.bot._connection, data=data)
+        user = discord.User(state=ctx.bot._connection, data=data)
+        ctx.bot.users.append(user)
+        return user
 
 
 async def get_user(bot, user_id: int):
+    user = bot.get_user(user_id)
+    if user:
+        return user
     data = await bot.cogs["Sharding"].handler("get_user", 1, {"user_id": user_id})
     if not data:
         return None
     data = data[0]
     data["username"] = data["name"]
-    return discord.User(state=bot._connection, data=data)
+    user = discord.User(state=bot._connection, data=data)
+    bot.users.append(user)
+    return user
 
 
 class Sharding(commands.Cog):
@@ -141,14 +149,14 @@ class Sharding(commands.Cog):
         ):
             user = self.bot.get_user(int(user_inp))
         else:
-            if len(arg) > 5 and arg[-5] == "#":
+            if len(user_inp) > 5 and user_inp[-5] == "#":
                 discrim = user_inp[-4:]
                 name = user_inp[:-5]
                 predicate = lambda u: u.name == name and u.discriminator == discrim
-                result = discord.utils.find(predicate, ctx.state._users.values())
+                user = discord.utils.find(predicate, self.bot.users)
             else:
                 predicate = lambda u: u.name == user_inp
-                user = discord.utils.find(predicate, ctx.state._users.values())
+                user = discord.utils.find(predicate, self.bot.users)
         if not user:
             return
         payload = {"output": user, "command_id": command_id}

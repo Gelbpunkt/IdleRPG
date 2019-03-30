@@ -61,24 +61,25 @@ class Help(commands.Cog):
                     url=self.bot.BASE_URL,
                     description="**Welcome to the IdleRPG help. Use the arrows to move.\nFor more help, join the support server at https://discord.gg/axBKXBv.**\nCheck out our partners using the partners command!",
                 )
-                embed.set_image(url=f"{bot.BASE_URL}/IdleRPG.png")
+                embed.set_image(url=f"{self.bot.BASE_URL}/IdleRPG.png")
                 embed.set_footer(
-                    text=f"IdleRPG Version {bot.version}", icon_url=bot.user.avatar_url
+                    text=f"IdleRPG Version {self.bot.version}",
+                    icon_url=self.bot.user.avatar_url,
                 )
         else:
             embed = discord.Embed(
                 title="IdleRPG Help",
-                colour=bot.config.primary_color,
-                url=bot.BASE_URL,
+                colour=self.bot.config.primary_color,
+                url=self.bot.BASE_URL,
                 description=f"**{cog} Commands**",
             )
             embed.set_footer(
-                text=f"IdleRPG Version {bot.version} | Page {i + 1} of {maxpages}",
-                icon_url=bot.user.avatar_url,
+                text=f"IdleRPG Version {self.bot.version} | Page {i + 1} of {maxpages}",
+                icon_url=self.bot.user.avatar_url,
             )
             for command in commands:
                 desc = (
-                    acommand.description
+                    command.description
                     or getattr(command.callback, "__doc__")
                     or "No Description set"
                 )
@@ -260,7 +261,7 @@ class Help(commands.Cog):
                         pass
                 elif reaction.emoji == "\U0001f522":
                     question = await ctx.send(
-                        f"Enter a page number from `1` to `{maxpages}`"
+                        f"Enter a page number from `1` to `{maxpage + 1}`"
                     )
                     num = await self.bot.wait_for("message", timeout=10, check=msgcheck)
                     if num is not None:
@@ -275,7 +276,7 @@ class Help(commands.Cog):
                                     pass
                             else:
                                 await ctx.send(
-                                    f"Must be between `1` and `{maxpages}`.",
+                                    f"Must be between `1` and `{maxpage + 1}`.",
                                     delete_after=2,
                                 )
                                 try:
