@@ -15,7 +15,7 @@ import copy
 from discord.ext import commands
 
 
-class GameBase(commands.Cog):
+class GameBase:
     def __init__(self, ctx, players: list):
         self.players = players
         self.ctx = ctx

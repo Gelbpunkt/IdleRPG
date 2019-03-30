@@ -64,7 +64,7 @@ class Help(commands.Cog):
                 embed.set_image(url=f"{bot.BASE_URL}/IdleRPG.png")
                 embed.set_footer(
                     text=f"IdleRPG Version {bot.version}", icon_url=bot.user.avatar_url
-            )
+                )
         else:
             embed = discord.Embed(
                 title="IdleRPG Help",
@@ -77,7 +77,11 @@ class Help(commands.Cog):
                 icon_url=bot.user.avatar_url,
             )
             for command in commands:
-                desc = acommand.description or getattr(command.callback, "__doc__") or "No Description set"
+                desc = (
+                    acommand.description
+                    or getattr(command.callback, "__doc__")
+                    or "No Description set"
+                )
                 embed.add_field(name=f"{command.signature}", value=desc, inline=False)
         pages.append(embed)
         return pages
@@ -146,9 +150,13 @@ class Help(commands.Cog):
             return await ctx.send(
                 "You or your server has been blacklisted for some reason."
             )
+
         def check(msg):
             return msg.author == ctx.author and msg.content.lower == "yes, i do"
-        await ctx.send("Are you sure? This will notify our support team and allow them to join the server. If you are sure, type `Yes, I do`.")
+
+        await ctx.send(
+            "Are you sure? This will notify our support team and allow them to join the server. If you are sure, type `Yes, I do`."
+        )
         try:
             await self.bot.wait_for("message", check=check, timeout=20)
         except asyncio.TimeoutError:
@@ -178,9 +186,7 @@ class Help(commands.Cog):
             command = self.bot.get_command(command.lower())
             if not command:
                 return await ctx.send("Sorry, that command does not exist.")
-            pages = await ctx.bot.formatter.format_help_for(
-                ctx, command
-            )
+            pages = await ctx.bot.formatter.format_help_for(ctx, command)
             for page in pages:
                 await ctx.send(page)
             return
