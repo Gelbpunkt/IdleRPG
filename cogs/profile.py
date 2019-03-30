@@ -214,9 +214,9 @@ class Profile(commands.Cog):
             f"You currently have **{points} XP**, which means you are on Level **{rpgtools.xptolevel(points)}**. Missing to next level: **{rpgtools.xptonextlevel(points)}**"
         )
 
-    async def invembed(self, ret):
+    async def invembed(self, ctx, ret):
         result = discord.Embed(
-            title="Your inventory includes", colour=discord.Colour.blurple()
+            title=f"{ctx.author.nick}'s inventory includes", colour=discord.Colour.blurple()
         )
         for weapon in ret:
             if weapon[7]:
