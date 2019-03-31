@@ -193,7 +193,7 @@ class Adventure(commands.Cog):
 
                         try:
                             await msg.remove_reaction(reaction.emoji, user)
-                        except:
+                        except discord.Forbidden:
                             pass
 
                     await msg.add_reaction("\U000023ee")
