@@ -39,4 +39,8 @@ printf "Loading database schema...\n\n"
 
 psql $DBNAME < schema.sql
 
+printf "Installing dependencies...\n\n"
+
+pip3 install -r requirements.txt
+
 printf "Done!\n"
