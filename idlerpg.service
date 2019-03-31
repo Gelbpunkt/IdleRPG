@@ -5,7 +5,7 @@ After=multi-user.target
 [Service]
 Type=simple
 WorkingDirectory=/path/to/IdleRPG/
-ExecStart=/usr/bin/python3 /path/to/IdleRPG/idlerpg.py
+ExecStart=/usr/bin/python3 /path/to/IdleRPG/launcher.py
 User=my_username
 Restart=on-failure
 
