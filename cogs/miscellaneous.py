@@ -8,17 +8,15 @@ For more information, see README.md and LICENSE.md.
 
 
 import discord
-import os
 import random
 import psutil
 import platform
 import asyncio
 import pkg_resources as pkg
-import time
 import datetime
 
 from cogs.shard_communication import user_on_cooldown as user_cooldown
-from datetime import date, timedelta
+from datetime import date
 from discord.ext import commands
 from discord.ext.commands import BucketType
 from utils.checks import has_char
@@ -106,7 +104,7 @@ class Miscellaneous(commands.Cog):
         delta = d1 - d0
         myhours = delta.days * 3
         sysinfo = platform.linux_distribution()
-        owner = self.bot.get_user(self.bot.owner_id)
+        owner = await self.bot.get_user_global(self.bot.owner_id)
         embed = discord.Embed(
             title="IdleRPG Statistics",
             colour=0xB8BBFF,
@@ -154,26 +152,14 @@ class Miscellaneous(commands.Cog):
     async def changelog(self, ctx):
         await ctx.send(
             """
-**Wintersday event!**
-*and the new update of course*
+**IdleRPG v3.4.0 is released :tada:**
+This update was a huge performance amd future update that switched to use of multiple processes.
+Many performance tweaks and enhancements took place.
+However, as work on this is not done and code not clean, v3.5 will come by time, but will not be focused too hard.
 
-**Features**:
-- `$tradecrate` can now be specified a number of crates to trade
-- Cooldowns are now saved over restarts
-- `$calendar` - open the Wintersday calendar once a day!
-- `$snowballfight` - duel 2 vs 2 in a very special event mode! (can only be started by a guild officer or leader)
-- `${secret command name}` - you will see :D
-- `$combine` - combine items from calendar!
+**Have fun!!!** <:idlerpg:453946311524220949>
 
-**Snowball Tournament**
-__Sign up until Dec 6th!!!__
-`$signup` - sign up your guild for the tournament
-`$matches` - view the pairings
-If you are willing to fight your scheduled match against the enemy, ping an Admin, they will use`$result guild_name` when it's over
-If you did not manage to fight your round, admins will make the bot choose a random winner.
-Round deadlines are announced in #announcements
-
-**Have fun!!!** :idlerpg:
+*Note: This is the work of half a year and we will now work on prettification. More on the bot future will follow later.*
 """
         )
 
@@ -344,9 +330,7 @@ Round deadlines are announced in #announcements
 
     @commands.command(description="Bot uptime.")
     async def uptime(self, ctx):
-        p = psutil.Process(os.getpid())
-        secs = int(time.time() - p.create_time())
-        await ctx.send(f"I am online for **{str(timedelta(seconds=secs))}**.")
+        await ctx.send(f"I am online for **{self.bot.uptime}**.")
 
     @commands.command(hidden=True)
     async def easteregg(self, ctx):

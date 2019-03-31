@@ -73,7 +73,7 @@ class Halloween(commands.Cog):
             await conn.execute(
                 'UPDATE profile SET money=money-50 WHERE "user"=$1;', usr
             )
-        usr = self.bot.get_user(usr) or "Unknown User"
+        usr = await self.bot.get_user_global(usr) or "Unknown User"
         await ctx.send(f"{usr} gave you additional $50!")
 
     @checks.has_char()

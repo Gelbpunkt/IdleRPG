@@ -13,6 +13,7 @@ import asyncio
 from discord.ext import commands
 from typing import Union
 from asyncpg import UniqueViolationError
+from classes.converters import User
 
 
 def chunks(l, n):
@@ -48,28 +49,27 @@ class Help(commands.Cog):
                 all_commands[cog] = commands[0]
             else:
                 for i, j in enumerate(commands):
-                    all_commands[f"{cog} ({i}/{len(commands)}"] = j
+                    all_commands[f"{cog} ({i + 1}/{len(commands)})"] = j
 
         pages = []
         maxpages = len(all_commands)
 
-        for i, (cog, commands) in all_commands.items():
-            if i == 0:
-                embed = discord.Embed(
-                    title="IdleRPG Help",
-                    colour=self.bot.config.primary_color,
-                    url=self.bot.BASE_URL,
-                    description="**Welcome to the IdleRPG help. Use the arrows to move.\nFor more help, join the support server at https://discord.gg/axBKXBv.**\nCheck out our partners using the partners command!",
-                )
-                embed.set_image(url=f"{self.bot.BASE_URL}/IdleRPG.png")
-                embed.set_footer(
-                    text=f"IdleRPG Version {self.bot.version}",
-                    icon_url=self.bot.user.avatar_url,
-                )
-        else:
+        embed = discord.Embed(
+            title="IdleRPG Help",
+            colour=self.bot.config.primary_colour,
+            url=self.bot.BASE_URL,
+            description="**Welcome to the IdleRPG help. Use the arrows to move.\nFor more help, join the support server at https://discord.gg/axBKXBv.**\nCheck out our partners using the partners command!",
+        )
+        embed.set_image(url=f"{self.bot.BASE_URL}/IdleRPG.png")
+        embed.set_footer(
+            text=f"IdleRPG Version {self.bot.version}",
+            icon_url=self.bot.user.avatar_url,
+        )
+        pages.append(embed)
+        for i, (cog, commands) in enumerate(all_commands.items()):
             embed = discord.Embed(
                 title="IdleRPG Help",
-                colour=self.bot.config.primary_color,
+                colour=self.bot.config.primary_colour,
                 url=self.bot.BASE_URL,
                 description=f"**{cog} Commands**",
             )
@@ -83,8 +83,16 @@ class Help(commands.Cog):
                     or getattr(command.callback, "__doc__")
                     or "No Description set"
                 )
-                embed.add_field(name=f"{command.signature}", value=desc, inline=False)
-        pages.append(embed)
+                parent = command.full_parent_name
+                if len(command.aliases) > 0:
+                    fmt = f"[{command.name}|{'|'.join(command.aliases)}]"
+                    if parent:
+                        fmt = f"{parent} {fmt}"
+                else:
+                    fmt = command.name if not parent else f"{parent} {command.name}"
+                fmt = f"{fmt} {command.signature}"
+                embed.add_field(name=fmt, value=desc, inline=False)
+            pages.append(embed)
         return pages
 
     @commands.command(
@@ -111,7 +119,7 @@ class Help(commands.Cog):
     @commands.command(
         description="Unblock a guild or user from using the helpme command"
     )
-    async def unbanfromhelpme(self, ctx, thing_to_ban: Union[discord.User, int]):
+    async def unbanfromhelpme(self, ctx, thing_to_ban: Union[User, int]):
         if isinstance(thing_to_ban, discord.User):
             id = thing_to_ban.id
         else:
@@ -124,7 +132,7 @@ class Help(commands.Cog):
 
     @is_supporter()
     @commands.command(description="Block a guild or user from using the helpme command")
-    async def banfromhelpme(self, ctx, thing_to_ban: Union[discord.User, int]):
+    async def banfromhelpme(self, ctx, thing_to_ban: Union[User, int]):
         if isinstance(thing_to_ban, discord.User):
             id = thing_to_ban.id
         else:

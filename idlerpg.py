@@ -53,7 +53,7 @@ bot = Bot(
     shard_ids=loads(sys.argv[1]),
     shard_count=int(sys.argv[2]),
 )
-bot.version = "3.4 dev"
+bot.version = "3.4.0"
 bot.remove_command("help")
 bot.config = config
 bot.paginator = paginator

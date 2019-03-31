@@ -225,7 +225,7 @@ def profile_image(
 
 async def lookup(bot, userid):
     userid = int(userid)
-    member = bot.get_user(userid)
+    member = await bot.get_user_global(userid)
     if member:
         return str(member)
     else:

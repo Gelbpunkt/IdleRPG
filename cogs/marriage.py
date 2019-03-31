@@ -228,7 +228,7 @@ To buy one of these items for your partner, use `{ctx.prefix}spoil shopid`
         await ctx.send(
             f"You bought a **{item[1]}** for your partner and increased their love score by **{item[2]}** points!"
         )
-        user = self.bot.get_user(marriage)
+        user = await self.bot.get_user_global(marriage)
         if not user:
             return await ctx.send(
                 "Failed to DM your spouse, could not find their discord account"

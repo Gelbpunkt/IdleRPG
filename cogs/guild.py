@@ -29,6 +29,7 @@ from utils.checks import (
 )
 from utils.tools import todelta
 from cogs.shard_communication import user_on_cooldown as user_cooldown
+from classes.converters import User
 
 
 class Guild(commands.Cog):
@@ -112,11 +113,16 @@ class Guild(commands.Cog):
             'SELECT "user", "guildrank" FROM profile WHERE "guild"=(SELECT guild FROM profile WHERE "user"=$1);',
             ctx.author.id,
         )
-        members = [
-            f"{self.bot.get_user(m['user']) or 'Unknown User (ID '+str(m['user'])+')'} ({m['guildrank']})"
-            for m in members
-        ]
-        embed = discord.Embed(title="Your guild mates", description="\n".join(members))
+        members_fmt = []
+        for m in members:
+            u = str(
+                await self.bot.get_user_global(m["user"])
+                or f"Unknown User (ID {m['user']})"
+            )
+            members_fmt.append(f"{u} ({m['guildrank']}))")
+        embed = discord.Embed(
+            title="Your guild mates", description="\n".join(members_fmt)
+        )
         await ctx.send(embed=embed)
 
     @has_char()
@@ -301,7 +307,7 @@ class Guild(commands.Cog):
 
     @is_guild_officer()
     @guild.command(description="Kick someone out of your guild.")
-    async def kick(self, ctx, member: Union[discord.User, int]):
+    async def kick(self, ctx, member: Union[User, int]):
         if isinstance(member, discord.User):
             username = str(member)
             member = member.id

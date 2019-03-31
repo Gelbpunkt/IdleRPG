@@ -18,6 +18,7 @@ from io import BytesIO
 from cogs.classes import genstats
 from utils import checks
 from cogs.shard_communication import user_on_cooldown as user_cooldown
+from classes.converters import User
 
 
 class Profile(commands.Cog):
@@ -102,7 +103,7 @@ class Profile(commands.Cog):
     @commands.command(
         aliases=["me", "p"], description="View your or a different user's profile."
     )
-    async def profile(self, ctx, *, person: discord.User = None):
+    async def profile(self, ctx, *, person: User = None):
         await ctx.trigger_typing()
         person = person or ctx.author
         targetid = person.id

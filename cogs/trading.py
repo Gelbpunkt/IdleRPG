@@ -100,7 +100,7 @@ class Trading(commands.Cog):
         await ctx.send(
             f"Successfully bought item `{deleted[3]}`. Use `{ctx.prefix}inventory` to view your updated inventory."
         )
-        seller = self.bot.get_user(deleted[4])
+        seller = await self.bot.get_user_global(deleted[4])
         if seller:
             await seller.send(
                 f"**{ctx.author}** bought your **{deleted['name']}** for **${deleted['price']}** from the market."

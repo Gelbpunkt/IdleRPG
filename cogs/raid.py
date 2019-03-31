@@ -122,7 +122,7 @@ Use https://raid.travitia.xyz/ to join the raid!
                 self.bot.raid2,
             )
         for i in self.bot.raid2:
-            u = self.bot.get_user(i)
+            u = await self.bot.get_user_global(i)
             if not u:
                 continue
             dmg = 0

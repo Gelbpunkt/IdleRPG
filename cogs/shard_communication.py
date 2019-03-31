@@ -40,35 +40,6 @@ def user_on_cooldown(cooldown: int):
     return commands.check(predicate)  # TODO: Needs a redesign
 
 
-class User(commands.Converter):
-    async def convert(self, ctx, argument):
-        # TODO: Try the local users first
-        data = await ctx.bot.cogs["Sharding"].handler(
-            "fetch_user", 1, {"user_inp": argument}
-        )
-        if not data:
-            raise commands.BadArgument(ctx.message, argument)
-        data = data[0]
-        data["username"] = data["name"]
-        user = discord.User(state=ctx.bot._connection, data=data)
-        ctx.bot.users.append(user)
-        return user
-
-
-async def get_user(bot, user_id: int):
-    user = bot.get_user(user_id)
-    if user:
-        return user
-    data = await bot.cogs["Sharding"].handler("get_user", 1, {"user_id": user_id})
-    if not data:
-        return None
-    data = data[0]
-    data["username"] = data["name"]
-    user = discord.User(state=bot._connection, data=data)
-    bot.users.append(user)
-    return user
-
-
 class Sharding(commands.Cog):
     def __init__(self, bot):
         self.bot = bot

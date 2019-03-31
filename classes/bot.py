@@ -7,6 +7,7 @@ For more information, see README.md and LICENSE.md.
 """
 
 
+import discord
 import datetime
 
 from discord.ext import commands
@@ -29,6 +30,19 @@ class Bot(commands.AutoShardedBot):
     @property
     def uptime(self):
         return datetime.datetime.now() - self.launch_time
+
+    async def get_user_global(self, user_id: int):
+        user = self.get_user(user_id)
+        if user:
+            return user
+        data = await self.cogs["Sharding"].handler("get_user", 1, {"user_id": user_id})
+        if not data:
+            return None
+        data = data[0]
+        data["username"] = data["name"]
+        user = discord.User(state=self._connection, data=data)
+        self.users.append(user)
+        return user
 
     async def send_message(
         self,

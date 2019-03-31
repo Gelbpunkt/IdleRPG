@@ -270,9 +270,8 @@ Caretaker->  Trainer   ->  Bowman      -> Hunter         ->  Ranger
                     stolen,
                     usr["user"],
                 )
-                await ctx.send(
-                    f"You stole **${stolen}** from **{self.bot.get_user(usr['user'])}**."
-                )
+                user = await self.bot.get_user_global(usr["user"])
+                await ctx.send(f"You stole **${stolen}** from **{user}**.")
         else:
             await ctx.send("Your attempt to steal money wasn't successful.")
 
