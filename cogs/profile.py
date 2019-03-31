@@ -44,7 +44,7 @@ class Profile(commands.Cog):
         try:
             name = await self.bot.wait_for("message", timeout=60, check=mycheck)
         except asyncio.TimeoutError:
-            await self.bot.reset_cooldown(ctx)
+            self.bot.reset_cooldown(ctx)
             return await ctx.send(
                 f"Timeout expired. Enter `{ctx.prefix}{ctx.command}` again to retry!"
             )
@@ -91,10 +91,10 @@ class Profile(commands.Cog):
             )
         elif len(name) < 3:
             await ctx.send("Character names must be at least 3 characters!")
-            await self.bot.reset_cooldown(ctx)
+            self.bot.reset_cooldown(ctx)
         elif len(name) > 20:
             await ctx.send("Character names mustn't exceed 20 characters!")
-            await self.bot.reset_cooldown(ctx)
+            self.bot.reset_cooldown(ctx)
         else:
             await ctx.send(
                 "An unknown error occured while checking your name. Try again!"
@@ -413,7 +413,7 @@ class Profile(commands.Cog):
     @commands.command(description="Merges two items to a better item.")
     async def merge(self, ctx, firstitemid: int, seconditemid: int):
         if firstitemid == seconditemid:
-            await self.bot.reset_cooldown(ctx)
+            self.bot.reset_cooldown(ctx)
             return await ctx.send("Good luck with that.")
         async with self.bot.pool.acquire() as conn:
             item = await conn.fetchrow(
@@ -427,7 +427,7 @@ class Profile(commands.Cog):
                 ctx.author.id,
             )
             if not item or not item2:
-                await self.bot.reset_cooldown(ctx)
+                self.bot.reset_cooldown(ctx)
                 return await ctx.send("You don't own both of these items.")
             if item[4] == "Sword":
                 stat1 = ("damage", item[5])
@@ -438,12 +438,12 @@ class Profile(commands.Cog):
             elif item2[4] == "Shield":
                 stat2 = ("armor", item2[6])
             if stat2[1] < stat1[1] - 5 or stat2[1] > stat1[1] + 5:
-                await self.bot.reset_cooldown(ctx)
+                self.bot.reset_cooldown(ctx)
                 return await ctx.send(
                     f"The seconds item's stat must be in the range of `{stat1[1] - 5}` to `{stat1[1] + 5}` to upgrade an item with the stat of `{stat1[1]}`."
                 )
             if stat1[1] > 40:
-                await self.bot.reset_cooldown(ctx)
+                self.bot.reset_cooldown(ctx)
                 return await ctx.send(
                     "This item is already on the maximum upgrade level."
                 )
@@ -497,7 +497,7 @@ class Profile(commands.Cog):
         try:
             await self.bot.wait_for("message", check=check, timeout=30)
         except asyncio.TimeoutError:
-            await self.bot.reset_cooldown(ctx)
+            self.bot.reset_cooldown(ctx)
             return await ctx.send("Weapon upgrade cancelled.")
         self.bot.reset_cooldown(ctx)
         if not await checks.has_money(self.bot, ctx.author.id, pricetopay):
