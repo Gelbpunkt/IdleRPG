@@ -216,7 +216,7 @@ class Profile(commands.Cog):
 
     async def invembed(self, ctx, ret):
         result = discord.Embed(
-            title=f"{ctx.author.nick}'s inventory includes", colour=discord.Colour.blurple()
+            title=f"{ctx.author.display_name}'s inventory includes", colour=discord.Colour.blurple()
         )
         for weapon in ret:
             if weapon[7]:
@@ -248,7 +248,7 @@ class Profile(commands.Cog):
             allitems = list(chunks(ret, 5))
             currentpage = 0
             maxpage = len(allitems) - 1
-            result = await self.invembed(allitems[currentpage])
+            result = await self.invembed(ctx, allitems[currentpage])
             result.set_footer(text=f"Page {currentpage+1} of {maxpage+1}")
             msg = await ctx.send(embed=result)
             if maxpage == 0:
