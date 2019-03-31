@@ -39,4 +39,4 @@ printf "Loading database schema...\n\n"
 
 psql $DBNAME < schema.sql
 
-printf "Done!"
+printf "Done!\n"
