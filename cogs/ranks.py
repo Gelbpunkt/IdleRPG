@@ -22,12 +22,7 @@ class Ranks(commands.Cog):
         await ctx.trigger_typing()
         async with self.bot.pool.acquire() as conn:
             ret = await conn.fetch(
-                """
-                SELECT "user", "name", "money"
-                FROM profile
-                ORDER BY "money" DESC
-                LIMIT 10;'
-            """
+                'SELECT "user", "name", "money" FROM profile ORDER BY "money" DESC LIMIT 10;'
             )
         if ret == []:
             return await ctx.send(

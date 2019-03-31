@@ -51,7 +51,7 @@ class Help(commands.Cog):
         return fmt
 
     async def make_pages(self):
-        await self.bot.wait_until_ready() # prevent buggy start behaviour
+        await self.bot.wait_until_ready()  # prevent buggy start behaviour
         all_commands = {}
         for cog, instance in self.bot.cogs.items():
             if cog in ["Admin", "Owner"]:

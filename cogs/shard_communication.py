@@ -14,6 +14,7 @@ except ImportError:
     import json
 from uuid import uuid4
 from async_timeout import timeout
+from datetime import timedelta
 import discord
 import re
 from discord.ext import commands
