@@ -506,14 +506,9 @@ Use attack, defend or recover
                     'SELECT xp FROM profile WHERE "user"=$1;', ctx.author.id
                 )
                 playerlevel = rpgtools.xptolevel(playerxp)
-                try:
-                    swordbonus = sword["damage"]
-                except KeyError:
-                    swordbonus = 0
-                try:
-                    shieldbonus = shield["armor"]
-                except KeyError:
-                    shieldbonus = 0
+
+                swordbonus = sword["damage"] if sword else 0
+                shieldbonus = shield["armor"] if shield else 0
 
                 # class test
                 swordbonus, shieldbonus = await genstats(
