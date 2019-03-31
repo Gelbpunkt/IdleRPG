@@ -44,6 +44,9 @@ class Bot(commands.AutoShardedBot):
         self.users.append(user)
         return user
 
+    async def reset_cooldown(self, ctx):
+        await self.redis.execute("DEL", f"cd:{ctx.author.id}:{ctx.command.qualified_name}")
+
     async def send_message(
         self,
         target,
