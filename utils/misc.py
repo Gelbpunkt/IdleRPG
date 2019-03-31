@@ -10,8 +10,10 @@ For more information, see README.md and LICENSE.md.
 import random
 import io
 import os
+
 from PIL import Image, ImageFont, ImageDraw
 from pathlib import Path
+from discord.errors import NotFound
 
 levels = {
     "1": 0,
@@ -229,8 +231,9 @@ async def lookup(bot, userid):
     if member:
         return str(member)
     else:
-        member = await bot.fetch_user(userid)
-        if member:
-            return str(member)
-        else:
+        try:
+            member = await bot.fetch_user(userid)
+        except NotFound:
             return "None"
+        else:
+            return str(member)
