@@ -164,14 +164,8 @@ class Profile(commands.Cog):
             else:
                 marriage = "Not married"
 
-            try:
-                sword = [sword["name"], sword["damage"]]
-            except KeyError:
-                sword = ["None equipped", 0.00]
-            try:
-                shield = [shield["name"], shield["armor"]]
-            except KeyError:
-                shield = ["None equipped", 0.00]
+            sword = [sword["name"], sword["damage"]] if sword else ["None equipped", 0.00]
+            shield = [shield["name"], shield["armor"]] if shield else ["None equipped", 0.00]
 
             damage, armor = await genstats(self.bot, targetid, sword[1], shield[1])
             damage -= sword[1]
