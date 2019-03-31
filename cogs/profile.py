@@ -288,7 +288,7 @@ class Profile(commands.Cog):
                             pass
                         else:
                             currentpage -= 1
-                            result = await self.invembed(allitems[currentpage])
+                            result = await self.invembed(ctx, allitems[currentpage])
                             result.set_footer(
                                 text=f"Page {currentpage+1} of {maxpage+1}"
                             )
@@ -302,7 +302,7 @@ class Profile(commands.Cog):
                             pass
                         else:
                             currentpage += 1
-                            result = await self.invembed(allitems[currentpage])
+                            result = await self.invembed(ctx, allitems[currentpage])
                             result.set_footer(
                                 text=f"Page {currentpage+1} of {maxpage+1}"
                             )
@@ -313,7 +313,7 @@ class Profile(commands.Cog):
                             pass
                     elif reaction.emoji == "\U000023ed":
                         currentpage = maxpage
-                        result = await self.invembed(allitems[currentpage])
+                        result = await self.invembed(ctx, allitems[currentpage])
                         result.set_footer(text=f"Page {currentpage+1} of {maxpage+1}")
                         await msg.edit(embed=result)
                         try:
@@ -322,7 +322,7 @@ class Profile(commands.Cog):
                             pass
                     elif reaction.emoji == "\U000023ee":
                         currentpage = 0
-                        result = await self.invembed(allitems[currentpage])
+                        result = await self.invembed(ctx, allitems[currentpage])
                         result.set_footer(text=f"Page {currentpage+1} of {maxpage+1}")
                         await msg.edit(embed=result)
                         try:
@@ -341,7 +341,7 @@ class Profile(commands.Cog):
                                 num2 = int(num.content)
                                 if num2 >= 1 and num2 <= maxpage + 1:
                                     currentpage = num2 - 1
-                                    result = await self.invembed(allitems[currentpage])
+                                    result = await self.invembed(ctx, allitems[currentpage])
                                     result.set_footer(
                                         text=f"Page {currentpage+1} of {maxpage+1}"
                                     )
