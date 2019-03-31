@@ -340,7 +340,9 @@ class Adventure(commands.Cog):
         except KeyError:
             SHIELD = 0
         # class test
-        SWORD, SHIELD = await genstats(self.bot, ctx.author.id, SWORD, SHIELD)
+        SWORD, SHIELD = await genstats(
+            self.bot, ctx.author.id, float(SWORD), float(SHIELD)
+        )
         HP = 100
         PROGRESS = 0  # percent
 

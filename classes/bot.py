@@ -45,7 +45,9 @@ class Bot(commands.AutoShardedBot):
         return user
 
     async def reset_cooldown(self, ctx):
-        await self.redis.execute("DEL", f"cd:{ctx.author.id}:{ctx.command.qualified_name}")
+        await self.redis.execute(
+            "DEL", f"cd:{ctx.author.id}:{ctx.command.qualified_name}"
+        )
 
     async def send_message(
         self,
@@ -54,7 +56,7 @@ class Bot(commands.AutoShardedBot):
         *,
         escape_mass_mentions=True,
         escape_mentions=False,
-        **fields
+        **fields,
     ):
         if escape_mass_mentions:
             content = content.replace("@here", "@\u200bhere").replace(
