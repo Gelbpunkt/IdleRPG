@@ -37,7 +37,7 @@ def is_supporter():
 class Help(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
-        self.pages = self.make_pages()
+        bot.queue.put_nowait(self.make_pages())
 
     def make_signature(self, command):
         parent = command.full_parent_name
@@ -50,7 +50,8 @@ class Help(commands.Cog):
         fmt = f"{fmt} {command.signature}"
         return fmt
 
-    def make_pages(self):
+    async def make_pages(self):
+        await self.bot.wait_until_ready() # prevent buggy start behaviour
         all_commands = {}
         for cog, instance in self.bot.cogs.items():
             if cog in ["Admin", "Owner"]:
@@ -98,7 +99,7 @@ class Help(commands.Cog):
                     name=self.make_signature(command), value=desc, inline=False
                 )
             pages.append(embed)
-        return pages
+        self.pages = pages
 
     @commands.command(
         description="Sends a link to the official documentation.", aliases=["docs"]
