@@ -189,7 +189,13 @@ class Adventure(commands.Cog):
                                     pass
                             except ValueError:
                                 await ctx.send("That is no number!", delete_after=2)
-                    await question.delete()
+                        await question.delete()
+
+                        try:
+                            await msg.remove_reaction(reaction.emoji, user)
+                        except:
+                            pass
+
                     await msg.add_reaction("\U000023ee")
                     await msg.add_reaction("\U000025c0")
                     await msg.add_reaction("\U000025b6")

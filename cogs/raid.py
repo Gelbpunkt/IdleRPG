@@ -74,7 +74,7 @@ This boss has {boss['hp']} HP and has high-end loot!
 The dragon will be vulnerable in 15 Minutes
 Use https://raid.travitia.xyz/ to join the raid!
 """,
-            file=discord.File("dragon.jpg"),
+            file=discord.File("assets/other/dragon.jpg"),
         )
         try:
             await self.bot.get_channel(506_591_390_860_574_721).send(

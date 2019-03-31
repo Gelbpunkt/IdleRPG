@@ -182,6 +182,19 @@ class Sharding(commands.Cog):
             pass
         return self._messages.pop(command_id, None)  # Cleanup
 
+    @commands.command()
+    async def timers(self, ctx):
+        cooldowns = await self.bot.redis.execute("KEYS", f"cd:{ctx.author.id}:*")
+        if not cooldowns:
+            return await ctx.send("You don't have any active cooldown at the moment.")
+        timers = "Commands on cooldown:"
+        for key in cooldowns:
+            key = key.decode()
+            cooldown = await self.bot.redis.execute("TTL", key)
+            cmd = key.replace(f"cd:{ctx.author.id}:", "")
+            timers = f"{timers}\n{cmd} is on cooldown and will be available after {str(timedelta(seconds=cooldown)).split('.')[0]}"
+        await ctx.send(f"```{timers}```")
+
 
 def setup(bot):
     bot.add_cog(Sharding(bot))

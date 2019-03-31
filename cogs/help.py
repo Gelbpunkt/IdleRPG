@@ -39,6 +39,17 @@ class Help(commands.Cog):
         self.bot = bot
         self.pages = self.make_pages()
 
+    def make_signature(self, command):
+        parent = command.full_parent_name
+        if len(command.aliases) > 0:
+            fmt = f"[{command.name}|{'|'.join(command.aliases)}]"
+            if parent:
+                fmt = f"{parent} {fmt}"
+        else:
+            fmt = command.name if not parent else f"{parent} {command.name}"
+        fmt = f"{fmt} {command.signature}"
+        return fmt
+
     def make_pages(self):
         all_commands = {}
         for cog, instance in self.bot.cogs.items():
@@ -83,15 +94,9 @@ class Help(commands.Cog):
                     or getattr(command.callback, "__doc__")
                     or "No Description set"
                 )
-                parent = command.full_parent_name
-                if len(command.aliases) > 0:
-                    fmt = f"[{command.name}|{'|'.join(command.aliases)}]"
-                    if parent:
-                        fmt = f"{parent} {fmt}"
-                else:
-                    fmt = command.name if not parent else f"{parent} {command.name}"
-                fmt = f"{fmt} {command.signature}"
-                embed.add_field(name=fmt, value=desc, inline=False)
+                embed.add_field(
+                    name=self.make_signature(command), value=desc, inline=False
+                )
             pages.append(embed)
         return pages
 
@@ -195,10 +200,20 @@ class Help(commands.Cog):
             command = self.bot.get_command(command.lower())
             if not command:
                 return await ctx.send("Sorry, that command does not exist.")
-            pages = await ctx.bot.formatter.format_help_for(ctx, command)
-            for page in pages:
-                await ctx.send(page)
-            return
+            sig = self.make_signature(command)
+            subcommands = getattr(command, "commands", None)
+            if subcommands:
+                clean_subcommands = "\n".join(
+                    [
+                        f"    {c.name.ljust(15, ' ')} {c.description or getattr(c.callback, '__doc__')}"
+                        for c in subcommands
+                    ]
+                )
+                fmt = f"```\n{ctx.prefix}{sig}\n\n{command.description or getattr(command.callback, '__doc__')}\n\nCommands:\n{clean_subcommands}\n```"
+            else:
+                fmt = f"```\n{ctx.prefix}{sig}\n\n{command.description or getattr(command.callback, '__doc__')}\n```"
+
+            return await ctx.send(fmt)
 
         maxpage = len(self.pages) - 1
         currentpage = 0
