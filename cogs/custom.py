@@ -30,10 +30,6 @@ class Custom(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
-    @commands.command(description="TNG!", hidden=True)
-    async def tng(self, ctx):
-        await ctx.send(file=discord.File("custom/tng.jpg"))
-
     @is_sky()
     @commands.command(description="Gives a rainbow cookie to a user!", hidden=True)
     async def rainbowcookie(self, ctx, user: discord.Member):
