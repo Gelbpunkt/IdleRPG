@@ -8,7 +8,7 @@ The master branch is always the *latest stable* version. For development version
 
 ## License
 
-The IdleRPG Project is dual-licensed under the terms of the [GNU Affero General Public License 3.0](https://github.com/Gelbpunkt/IdleRPG/blob/v3.4-dev/LICENSE.md) ("AGPL") for non-commercial and the Travitia License for commercial use. A copy of the AGPL can be found in the [LICENSE.md](https://github.com/Gelbpunkt/IdleRPG/blob/v3.4-dev/LICENSE.md) file. The Travitia license can be obtained by sending a formal request to business [at] travitia \<dot\> xyz with usecase, name and address. "Commercial use" includes any kind of revenue made with or based upon the software, even donations.
+The IdleRPG Project is dual-licensed under the terms of the [GNU Affero General Public License 3.0](https://github.com/Gelbpunkt/IdleRPG/blob/master/LICENSE.md) ("AGPL") for non-commercial and the Travitia License for commercial use. A copy of the AGPL can be found in the [LICENSE.md](https://github.com/Gelbpunkt/IdleRPG/blob/master/LICENSE.md) file. The Travitia license can be obtained by sending a formal request to business [at] travitia \<dot\> xyz with usecase, name and address. "Commercial use" includes any kind of revenue made with or based upon the software, even donations.
 
 The AGPL allows you to:
 - [x] Modify the code
@@ -28,9 +28,7 @@ Summary and information taken from [here](https://tldrlegal.com/license/gnu-affe
 
 ## Current goals
 
-1. Work on a total rewrite for v3.4
-2. Add all features from Travitia in v5
-3. Multiprocess
+1. Prettify and fix v3.4 code
 
 Todo in v3.4:
 
@@ -39,11 +37,11 @@ Todo in v3.4:
 - Cleanup, remove unnecessary code, beautify
 - Use custom converters instead of own handling every time
 - Move battles to a backend function
-- Move pagination to a module
+- Rewrite everything
 
 ## Can I selfhost?
 
-[Yes, as long as you provide the code for everyone.](https://github.com/Gelbpunkt/IdleRPG/blob/v3.4-dev/LICENSE.md#13-remote-network-interaction-use-with-the-gnu-general-public-license)
+[Yes, as long as you provide the code for everyone.](https://github.com/Gelbpunkt/IdleRPG/blob/master/LICENSE.md#13-remote-network-interaction-use-with-the-gnu-general-public-license)
 
 ## How do I test my changes?
 
@@ -56,7 +54,7 @@ pip3 install -r requirements.txt
 mv config.py.example config.py
 (edit config.py to your needs now)
 (now do your changes)
-python3 idlerpg.py
+python3 launcher.py
 ```
 
 A systemd unit file has been bundled as `idlerpg.service`.
