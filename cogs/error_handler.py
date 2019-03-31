@@ -22,6 +22,7 @@ class Errorhandler:
         bot.queue.put_nowait(self.initialize_cog())
 
     async def _on_command_error(self, ctx, error, bypass=False):
+        ctx.command.reset_cooldown(ctx)
         if (
             hasattr(ctx.command, "on_error")
             or (ctx.command and hasattr(ctx.cog, f"_{ctx.command.cog_name}__error"))
