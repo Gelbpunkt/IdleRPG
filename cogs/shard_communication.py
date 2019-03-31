@@ -15,6 +15,7 @@ except ImportError:
 from uuid import uuid4
 from async_timeout import timeout
 import discord
+import re
 from discord.ext import commands
 
 
@@ -115,6 +116,9 @@ class Sharding(commands.Cog):
 
     async def fetch_user(self, user_inp, command_id: str):
         user = None
+        matches = re.search(r"<@!?(\d+)>", user_inp)
+        if matches:
+            user_inp = matches.group(1)
         if isinstance(user_inp, int) or (
             isinstance(user_inp, str) and user_inp.isdigit()
         ):
