@@ -19,7 +19,7 @@ class Vote(commands.Cog):
         await ctx.send(
             f"""
             Upvote me for a big thanks! You will be rewarded a few seconds afterwards!
-            https://discordbots.org/bot/idlerpg"
+            https://discordbots.org/bot/idlerpg
         """
         )
 

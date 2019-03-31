@@ -259,8 +259,8 @@ class Gambling(commands.Cog):
     @commands.command(description="Draw a card!", aliases=["card"])
     async def draw(self, ctx):
         await ctx.trigger_typing()
-        files = os.listdir("cards")
-        await ctx.send(file=discord.File(f"cards/{secrets.choice(files)}"))
+        files = os.listdir("assets/cards")
+        await ctx.send(file=discord.File(f"assets/cards/{secrets.choice(files)}"))
 
     @has_char()
     @user_cooldown(5)
