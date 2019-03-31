@@ -24,7 +24,7 @@ import pylava
 
 
 # Exceptions
-class NotInVoiceChannel(commands.Cog):
+class NotInVoiceChannel(commands.CheckFailure):
     """Should be raised if the invoker isn't in a voice channel"""
 
     pass
