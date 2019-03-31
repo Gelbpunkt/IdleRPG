@@ -9,9 +9,9 @@
 PATTERN=".*version = \"\(.*\)\".*"
 PATTERN2=".*\"user\": \"\(.*\)\".*"
 PATTERN3=".*\"database\": \"\(.*\)\".*"
-VERSION=$(cat config.py.example | sed -n "s/$PATTERN/\1/p")
-DBUSER=$(cat config.py.example | sed -n "s/$PATTERN2/\1/p")
-DBNAME=$(cat config.py.example | sed -n "s/$PATTERN3/\1/p")
+VERSION=$(sed -n "s/$PATTERN/\1/p" < config.py.example)
+DBUSER=$(sed -n "s/$PATTERN2/\1/p" < config.py.example)
+DBNAME=$(sed -n "s/$PATTERN3/\1/p" < config.py.example)
 
 printf "====================\n"
 printf "IdleRPG Setup Script\n"
@@ -19,7 +19,7 @@ printf "Version $VERSION\n"
 printf "====================\n\n\n"
 printf "WARNING: This script will only work as root or sudo and will touch files.\n"
 printf "Make sure you have config.py.example set to the correct database credentials!\n\n"
-read -p "Press enter to continue"
+read -r -p "Press enter to continue"
 
 printf "\n\n\nMoving config.py.example to config.py...\n\n"
 
