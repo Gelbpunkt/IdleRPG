@@ -43,4 +43,4 @@ printf "Installing dependencies...\n\n"
 
 pip3 install -r requirements.txt
 
-printf "Done!\n"
+printf "Done! Use systemctl start idlerpg to start the bot! Before, you may want to edit config.py more\n"

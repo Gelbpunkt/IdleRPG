@@ -50,11 +50,10 @@ Note: This requires you to have Redis and Postgres working, and, depending on wh
 ```
 git clone https://github.com/Gelbpunkt/IdleRPG
 cd IdleRPG
-pip3 install -r requirements.txt
-mv config.py.example config.py
-(edit config.py to your needs now)
-(now do your changes)
-python3 launcher.py
+(edit config.py.example to your database credentials)
+./setup.sh
+(do changes now)
+systemctl start idlerpg
 ```
 
 A systemd unit file has been bundled as `idlerpg.service`.
