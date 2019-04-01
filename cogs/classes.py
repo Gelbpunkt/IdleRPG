@@ -121,7 +121,7 @@ class Classes(commands.Cog):
             return await ctx.send(
                 "Please align as a `Warrior`, `Mage`, `Thief`, `Ranger` or `Paragon` (Patreon Only)."
             )
-        if profession == "Paragon" and not await user_is_patron(self.bot, ctx.author):
+        if profession == "Paragon" and not await user_is_patron(self.bot, ctx.author.id):
             await self.bot.reset_cooldown(ctx)
             return await ctx.send("You have to be a donator to choose this class.")
         if profession == "Paragon":

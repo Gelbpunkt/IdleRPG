@@ -165,14 +165,14 @@ def is_admin():
 
 def is_patron():
     async def predicate(ctx):
-        response = await ctx.bot.cogs["Sharding"].handler("user_is_patreon", 1, args={"member_id": user_id})
+        response = await ctx.bot.cogs["Sharding"].handler("user_is_patreon", 1, args={"member_id": ctx.author.id})
         return any(response)
 
     return commands.check(predicate)
 
 
-async def user_is_patron(bot, user_id):
-    response = await bot.cogs["Sharding"].handler("user_is_patreon", 1, args={"member_id": user_id})
+async def user_is_patron(bot, user):
+    response = await bot.cogs["Sharding"].handler("user_is_patreon", 1, args={"member_id": user.id})
     return any(response)
 
 def is_hypesquad(ctx):
