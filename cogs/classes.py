@@ -15,7 +15,7 @@ import secrets
 
 from cogs.shard_communication import user_on_cooldown as user_cooldown
 from discord.ext import commands
-from utils.checks import has_char, has_money, is_patron
+from utils.checks import has_char, has_money, is_patron, user_is_patron
 
 
 async def genstats(bot, userid, damage, armor):
@@ -121,7 +121,7 @@ class Classes(commands.Cog):
             return await ctx.send(
                 "Please align as a `Warrior`, `Mage`, `Thief`, `Ranger` or `Paragon` (Patreon Only)."
             )
-        if profession == "Paragon" and not is_patron(self.bot, ctx.author):
+        if profession == "Paragon" and not user_is_patron(self.bot, ctx.author):
             await self.bot.reset_cooldown(ctx)
             return await ctx.send("You have to be a donator to choose this class.")
         if profession == "Paragon":

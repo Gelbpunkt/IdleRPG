@@ -110,7 +110,7 @@ class Sharding(commands.Cog):
     async def user_is_patreon(self, member_id: int, command_id: str):
         if not self.bot.get_user(member_id):
             return # if the instance cannot see them, we can't do much
-        member = self.bot.get_guild(bot.config.support_server_id).get_member(member_id)
+        member = self.bot.get_guild(self.bot.config.support_server_id).get_member(member_id)
         if not member:
             return # when the bot can only see DMs with the user
         
