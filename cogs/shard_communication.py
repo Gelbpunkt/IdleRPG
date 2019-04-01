@@ -115,10 +115,12 @@ class Sharding(commands.Cog):
             return # when the bot can only see DMs with the user
         
         if any((discord.utils.get(member.roles, name="Donators"), discord.utils.get(member.roles, name="Administrators"))):
-            payload = {"output": user, "command_id": command_id}
-            await self.bot.redis.execute(
-                "PUBLISH", self.communication_channel, json.dumps(payload)
-            )
+            payload = {"output": True, "command_id": command_id}
+        else:
+            payload = {"output": False, "command_id": command_id}
+        await self.bot.redis.execute(
+            "PUBLISH", self.communication_channel, json.dumps(payload)
+        )
 
     async def get_user(self, user_id: int, command_id: str):
         if not self.bot.get_user(user_id):
