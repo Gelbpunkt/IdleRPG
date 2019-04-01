@@ -170,7 +170,7 @@ class Guild(commands.Cog):
         url = url.content
         if len(url) > 60:
             return await ctx.send("URLs mustn't exceed 60 characters.")
-        if user_is_patron(self.bot, ctx.author):
+        if await user_is_patron(self.bot, ctx.author):
             memberlimit = 100
         else:
             memberlimit = 50

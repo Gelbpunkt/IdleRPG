@@ -164,14 +164,14 @@ def is_admin():
 
 
 def is_patron():
-    def predicate(ctx):
+    async def predicate(ctx):
         response = await ctx.bot.cogs["Sharding"].handler("user_is_patreon", 1, args={"member_id": user_id})
         return any(response)
 
     return commands.check(predicate)
 
 
-def user_is_patron(bot, user_id):
+async def user_is_patron(bot, user_id):
     response = await bot.cogs["Sharding"].handler("user_is_patreon", 1, args={"member_id": user_id})
     return any(response)
 
