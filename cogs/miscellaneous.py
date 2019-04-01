@@ -1,17 +1,28 @@
-from datetime import date, timedelta
-import discord, os, random, psutil, platform, asyncio
+"""
+The IdleRPG Discord Bot
+Copyright (C) 2018-2019 Diniboy and Gelbpunkt
+
+This software is dual-licensed under the GNU Affero General Public License for non-commercial and the Travitia License for commercial use.
+For more information, see README.md and LICENSE.md.
+"""
+
+
+import discord
+import random
+import psutil
+import platform
+import asyncio
 import pkg_resources as pkg
-from discord.ext import commands
-from discord.ext.commands import BucketType
-from cogs.help import chunks
-import time
-from utils.checks import *
 import datetime
 
 from cogs.shard_communication import user_on_cooldown as user_cooldown
+from datetime import date
+from discord.ext import commands
+from discord.ext.commands import BucketType
+from utils.checks import has_char
 
 
-class Miscellaneous:
+class Miscellaneous(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
@@ -93,7 +104,7 @@ class Miscellaneous:
         delta = d1 - d0
         myhours = delta.days * 3
         sysinfo = platform.linux_distribution()
-        owner = self.bot.get_user(self.bot.owner_id)
+        owner = await self.bot.get_user_global(self.bot.owner_id)
         embed = discord.Embed(
             title="IdleRPG Statistics",
             colour=0xB8BBFF,
@@ -141,26 +152,14 @@ class Miscellaneous:
     async def changelog(self, ctx):
         await ctx.send(
             """
-**Wintersday event!**
-*and the new update of course*
+**IdleRPG v3.4.0 is released :tada:**
+This update was a huge performance amd future update that switched to use of multiple processes.
+Many performance tweaks and enhancements took place.
+However, as work on this is not done and code not clean, v3.5 will come by time, but will not be focused too hard.
 
-**Features**:
-- `$tradecrate` can now be specified a number of crates to trade
-- Cooldowns are now saved over restarts
-- `$calendar` - open the Wintersday calendar once a day!
-- `$snowballfight` - duel 2 vs 2 in a very special event mode! (can only be started by a guild officer or leader)
-- `${secret command name}` - you will see :D
-- `$combine` - combine items from calendar!
+**Have fun!!!** <:idlerpg:453946311524220949>
 
-**Snowball Tournament**
-__Sign up until Dec 6th!!!__
-`$signup` - sign up your guild for the tournament
-`$matches` - view the pairings
-If you are willing to fight your scheduled match against the enemy, ping an Admin, they will use`$result guild_name` when it's over
-If you did not manage to fight your round, admins will make the bot choose a random winner.
-Round deadlines are announced in #announcements 
-
-**Have fun!!!** :idlerpg:
+*Note: This is the work of half a year and we will now work on prettification. More on the bot future will follow later.*
 """
         )
 
@@ -208,7 +207,7 @@ Round deadlines are announced in #announcements
     async def echo(self, ctx, *, shout: commands.clean_content):
         try:
             await ctx.message.delete()
-        except:
+        except discord.Forbidden:
             pass
         await ctx.send(shout)
 
@@ -275,20 +274,22 @@ Round deadlines are announced in #announcements
             )
 
     @commands.command(description="Roleplay dice. Uses ndx format.")
-    async def dice(self, ctx, type: str):
-        type = type.lower().split("d")
-        if len(type) != 2:
+    async def dice(self, ctx, dice_type: str):
+        dice_type = dice_type.lower().split("d")
+        if len(dice_type) != 2:
             return await ctx.send("Use the ndx format.")
         try:
-            type[0] = int(type[0])
-            type[1] = int(type[1])
-            if type[0] > 100:
-                return await ctx.send("Too many dices.")
-        except:
-            await ctx.send("Use the ndx format.")
+            dice_type[0] = int(dice_type[0])
+            dice_type[1] = int(dice_type[1])
+        except ValueError:
+            await ctx.send(
+                "Use the ndx format. E.g. `5d20` will roll 5 dices with 20 sides each."
+            )
+        if dice_type[0] > 100:
+            return await ctx.send("Too many dices.")
         results = []
-        for i in range(type[0]):
-            results.append(random.randint(1, type[1]))
+        for _ in range(dice_type[0]):
+            results.append(random.randint(1, dice_type[1]))
         sumall = 0
         for i in results:
             sumall += i
@@ -329,9 +330,7 @@ Round deadlines are announced in #announcements
 
     @commands.command(description="Bot uptime.")
     async def uptime(self, ctx):
-        p = psutil.Process(os.getpid())
-        secs = int(time.time() - p.create_time())
-        await ctx.send(f"I am online for **{str(timedelta(seconds=secs))}**.")
+        await ctx.send(f"I am online for **{self.bot.uptime}**.")
 
     @commands.command(hidden=True)
     async def easteregg(self, ctx):
@@ -369,24 +368,9 @@ Round deadlines are announced in #announcements
 
         try:
             msg = await self.bot.wait_for("message", check=check, timeout=10)
-        except:
+        except asyncio.TimeoutError:
             return await ctx.send(f"You didn't guess correctly! It was `{m}`!")
         await ctx.send(f"{msg.author.mention}, you are correct!")
-
-    """
-	@commands.command(description="Lists all your cooldowns.", aliases=["cooldowns"])
-	async def timers(self, ctx):
-		res = "```\n"
-		for c in set(self.bot.walk_commands()):
-			if c._buckets._cache.get(ctx.author.id):
-				time = c._buckets._cache.get(ctx.author.id)._window
-				time = datetime.timedelta(seconds=c._buckets._cache.get(ctx.author.id).per) - (datetime.datetime.utcnow() - datetime.datetime.fromtimestamp(time))
-				if str(time).split('.')[0].startswith("-"):
-					continue
-				res += f"{c.name} is on cooldown and available in {str(time).split('.')[0]}\n"
-		res += "```"
-		await ctx.send(res)
-	"""
 
     @commands.command(description="Ask me a yes/no question.", aliases=["yn"])
     async def yesno(self, ctx, *, question: str):

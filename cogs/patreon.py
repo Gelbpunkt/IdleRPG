@@ -1,12 +1,24 @@
-import discord, functools
-from io import BytesIO
-from discord.ext import commands
-from cogs.rpgtools import makebg
-from utils.checks import *
+"""
+The IdleRPG Discord Bot
+Copyright (C) 2018-2019 Diniboy and Gelbpunkt
+
+This software is dual-licensed under the GNU Affero General Public License for non-commercial and the Travitia License for commercial use.
+For more information, see README.md and LICENSE.md.
+"""
+
+
+import discord
+import functools
 import copy
 
+from io import BytesIO
+from discord.ext import commands
+from utils.misc import makebg
+from utils.checks import is_patron, has_char
+from asyncpg.exceptions import StringDataRightTruncationError
 
-class Patreon:
+
+class Patreon(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
@@ -52,7 +64,7 @@ class Patreon:
                     url = premade[int(url) - 1]
                 else:
                     return await ctx.send("That is not a valid premade background.")
-            except:
+            except ValueError:
                 return await ctx.send(
                     "I couldn't read that URL. Does it start with `http://` or `https://` and is either a png or jpeg?"
                 )
@@ -62,7 +74,7 @@ class Patreon:
                 str(url),
                 ctx.author.id,
             )
-        except:
+        except StringDataRightTruncationError:
             return await ctx.send("The URL is too long.")
         if url != 0:
             await ctx.send(f"Your new profile picture is now:\n{url}")
@@ -86,7 +98,7 @@ class Patreon:
         thing = functools.partial(makebg, background, overlaytype)
         output_buffer = await self.bot.loop.run_in_executor(None, thing)
         f = copy.copy(output_buffer)
-        headers = {"Authorization": "Client-ID 6656d64547a5031"}
+        headers = {"Authorization": f"Client-ID {self.bot.config.imgur_token}"}
         data = {"image": f}
         async with self.bot.session.post(
             "https://api.imgur.com/3/image", data=data, headers=headers
@@ -124,7 +136,7 @@ class Patreon:
             )
             try:
                 bg = bgs[number - 1]
-            except:
+            except IndexError:
                 return await ctx.send(
                     f"The background number {number} is not valid, you only have {len(bgs)} available."
                 )

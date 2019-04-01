@@ -1,3 +1,12 @@
+"""
+The IdleRPG Discord Bot
+Copyright (C) 2018-2019 Diniboy and Gelbpunkt
+
+This software is dual-licensed under the GNU Affero General Public License for non-commercial and the Travitia License for commercial use.
+For more information, see README.md and LICENSE.md.
+"""
+
+
 import asyncio
 from functools import partial
 from typing import Union
@@ -11,8 +20,8 @@ except ModuleNotFoundError:
     from json import dumps, loads
 import discord
 from discord.ext import commands
-import aioredis
 import pylava
+
 
 # Exceptions
 class NotInVoiceChannel(commands.CheckFailure):
@@ -21,7 +30,7 @@ class NotInVoiceChannel(commands.CheckFailure):
     pass
 
 
-class MusicPlayer:
+class MusicPlayer(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
         self.music_prefix = "mp:idle:"
@@ -395,7 +404,7 @@ class MusicPlayer:
         if queue_keys:
             await self.bot.redis.execute("DEL", *[key for key in queue_keys])
 
-    def __unload(self):
+    def cog_unload(self):
         self.bot.queue.put_nowait(self.cleanup())
 
 

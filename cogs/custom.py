@@ -1,4 +1,14 @@
-﻿import discord
+"""
+The IdleRPG Discord Bot
+Copyright (C) 2018-2019 Diniboy and Gelbpunkt
+
+This software is dual-licensed under the GNU Affero General Public License for non-commercial and the Travitia License for commercial use.
+For more information, see README.md and LICENSE.md.
+"""
+
+
+import discord
+
 from discord.ext import commands
 
 
@@ -16,19 +26,16 @@ def is_ken():
     return commands.check(predicate)
 
 
-class Custom:
+class Custom(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
-
-    @commands.command(description="TNG!", hidden=True)
-    async def tng(self, ctx):
-        await ctx.send(file=discord.File("custom/tng.jpg"))
 
     @is_sky()
     @commands.command(description="Gives a rainbow cookie to a user!", hidden=True)
     async def rainbowcookie(self, ctx, user: discord.Member):
         await ctx.send(
-            f"**{user.display_name}**, you have been awarded a 🌈 🍪 🌈 by **{ctx.author.display_name}**!"
+            f"**{user.display_name}**, you have been awarded a 🌈 🍪 🌈"
+            f"by **{ctx.author.display_name}**!"
         )
 
     @is_ken()
@@ -39,7 +46,7 @@ class Custom:
             description=f"{ctx.author.mention} hugged {user.mention}! Awww!",
         )
         em.set_image(
-            url="https://cdn.discordapp.com/attachments/515954333368713235/518539871665520641/image0.gif"
+            url="https://cdn.discordapp.com/attachments/515954333368713235/518539871665520641/image0.gif"  # noqa
         )
         await ctx.send(embed=em)
 

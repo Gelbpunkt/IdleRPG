@@ -1,20 +1,27 @@
-import discord, functools, traceback
+"""
+The IdleRPG Discord Bot
+Copyright (C) 2018-2019 Diniboy and Gelbpunkt
+
+This software is dual-licensed under the GNU Affero General Public License for non-commercial and the Travitia License for commercial use.
+For more information, see README.md and LICENSE.md.
+"""
+
+
+import discord
+import functools
+import asyncio
+
 from discord.ext import commands
-from cogs.rpgtools import profile_image
-import cogs.rpgtools as rpgtools
+from utils import misc as rpgtools
 from cogs.help import chunks
-from discord.ext.commands import BucketType
-from io import BytesIO, StringIO
-from PIL import Image, ImageFont, ImageDraw
-import io
+from io import BytesIO
 from cogs.classes import genstats
 from utils import checks
-from pathlib import Path
-
 from cogs.shard_communication import user_on_cooldown as user_cooldown
+from classes.converters import User
 
 
-class Profile:
+class Profile(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
@@ -36,7 +43,7 @@ class Profile:
 
         try:
             name = await self.bot.wait_for("message", timeout=60, check=mycheck)
-        except:
+        except asyncio.TimeoutError:
             await self.bot.reset_cooldown(ctx)
             return await ctx.send(
                 f"Timeout expired. Enter `{ctx.prefix}{ctx.command}` again to retry!"
@@ -96,7 +103,7 @@ class Profile:
     @commands.command(
         aliases=["me", "p"], description="View your or a different user's profile."
     )
-    async def profile(self, ctx, *, person: discord.User = None):
+    async def profile(self, ctx, *, person: User = None):
         await ctx.trigger_typing()
         person = person or ctx.author
         targetid = person.id
@@ -147,7 +154,7 @@ class Profile:
                 )[0]
             background = profile["background"]
             if background == "0":
-                background = "Profile.png"
+                background = "assets/profiles/Profile.png"
             else:
                 async with self.bot.session.get(background) as r:
                     background = BytesIO(await r.read())
@@ -157,14 +164,8 @@ class Profile:
             else:
                 marriage = "Not married"
 
-            try:
-                sword = [sword[2], sword[5]]
-            except:
-                sword = ["None equipped", 0.00]
-            try:
-                shield = [shield[2], shield[6]]
-            except:
-                shield = ["None equipped", 0.00]
+            sword = [sword["name"], sword["damage"]] if sword else ["None equipped", 0.00]
+            shield = [shield["name"], shield["armor"]] if shield else ["None equipped", 0.00]
 
             damage, armor = await genstats(self.bot, targetid, sword[1], shield[1])
             damage -= sword[1]
@@ -172,7 +173,7 @@ class Profile:
             extras = (damage, armor)
 
         thing = functools.partial(
-            profile_image,
+            rpgtools.profile_image,
             profile,
             sword,
             shield,
@@ -208,18 +209,24 @@ class Profile:
             f"You currently have **{points} XP**, which means you are on Level **{rpgtools.xptolevel(points)}**. Missing to next level: **{rpgtools.xptonextlevel(points)}**"
         )
 
-    async def invembed(self, ret):
+    async def invembed(self, ctx, ret):
         result = discord.Embed(
-            title="Your inventory includes", colour=discord.Colour.blurple()
+            title=f"{ctx.author.display_name}'s inventory includes",
+            colour=discord.Colour.blurple(),
         )
         for weapon in ret:
-            if weapon[7] == True:
+            if weapon[7]:
                 eq = "(**Equipped**)"
             else:
                 eq = ""
+            statstr = (
+                f"Damage: `{weapon[5]}`"
+                if weapon[4] == "Sword"
+                else f"Armor: `{weapon[6]}`"
+            )
             result.add_field(
                 name=f"{weapon[2]} {eq}",
-                value=f"ID: `{weapon[0]}`, Type: `{weapon[4]}` with Damage: `{weapon[5]}` and Armor: `{weapon[6]}`. Value is **${weapon[3]}**",
+                value=f"ID: `{weapon[0]}`, Type: `{weapon[4]}` with {statstr}. Value is **${weapon[3]}**",
             )
         return result
 
@@ -237,7 +244,7 @@ class Profile:
             allitems = list(chunks(ret, 5))
             currentpage = 0
             maxpage = len(allitems) - 1
-            result = await self.invembed(allitems[currentpage])
+            result = await self.invembed(ctx, allitems[currentpage])
             result.set_footer(text=f"Page {currentpage+1} of {maxpage+1}")
             msg = await ctx.send(embed=result)
             if maxpage == 0:
@@ -276,46 +283,46 @@ class Profile:
                             pass
                         else:
                             currentpage -= 1
-                            result = await self.invembed(allitems[currentpage])
+                            result = await self.invembed(ctx, allitems[currentpage])
                             result.set_footer(
                                 text=f"Page {currentpage+1} of {maxpage+1}"
                             )
                             await msg.edit(embed=result)
                         try:
                             await msg.remove_reaction(reaction.emoji, user)
-                        except:
+                        except discord.Forbidden:
                             pass
                     elif reaction.emoji == "\U000025b6":
                         if currentpage == maxpage:
                             pass
                         else:
                             currentpage += 1
-                            result = await self.invembed(allitems[currentpage])
+                            result = await self.invembed(ctx, allitems[currentpage])
                             result.set_footer(
                                 text=f"Page {currentpage+1} of {maxpage+1}"
                             )
                             await msg.edit(embed=result)
                         try:
                             await msg.remove_reaction(reaction.emoji, user)
-                        except:
+                        except discord.Forbidden:
                             pass
                     elif reaction.emoji == "\U000023ed":
                         currentpage = maxpage
-                        result = await self.invembed(allitems[currentpage])
+                        result = await self.invembed(ctx, allitems[currentpage])
                         result.set_footer(text=f"Page {currentpage+1} of {maxpage+1}")
                         await msg.edit(embed=result)
                         try:
                             await msg.remove_reaction(reaction.emoji, user)
-                        except:
+                        except discord.Forbidden:
                             pass
                     elif reaction.emoji == "\U000023ee":
                         currentpage = 0
-                        result = await self.invembed(allitems[currentpage])
+                        result = await self.invembed(ctx, allitems[currentpage])
                         result.set_footer(text=f"Page {currentpage+1} of {maxpage+1}")
                         await msg.edit(embed=result)
                         try:
                             await msg.remove_reaction(reaction.emoji, user)
-                        except:
+                        except discord.Forbidden:
                             pass
                     elif reaction.emoji == "\U0001f522":
                         question = await ctx.send(
@@ -329,34 +336,34 @@ class Profile:
                                 num2 = int(num.content)
                                 if num2 >= 1 and num2 <= maxpage + 1:
                                     currentpage = num2 - 1
-                                    result = await self.invembed(allitems[currentpage])
+                                    result = await self.invembed(
+                                        ctx, allitems[currentpage]
+                                    )
                                     result.set_footer(
                                         text=f"Page {currentpage+1} of {maxpage+1}"
                                     )
                                     await msg.edit(embed=result)
                                 else:
-                                    mymsg = await ctx.send(
+                                    await ctx.send(
                                         f"Must be between `1` and `{maxpage+1}`.",
                                         delete_after=2,
                                     )
                                 try:
                                     await num.delete()
-                                except:
+                                except discord.Forbidden:
                                     pass
-                            except:
-                                mymsg = await ctx.send(
-                                    "That is no number!", delete_after=2
-                                )
+                            except ValueError:
+                                await ctx.send("That is no number!", delete_after=2)
                         await question.delete()
                         try:
                             await msg.remove_reaction(reaction.emoji, user)
-                        except:
+                        except discord.Forbidden:
                             pass
-                except:
+                except asyncio.TimeoutError:
                     browsing = False
                     try:
                         await msg.clear_reactions()
-                    except:
+                    except discord.Forbidden:
                         pass
                     finally:
                         break
@@ -486,7 +493,7 @@ class Profile:
         )
         try:
             await self.bot.wait_for("message", check=check, timeout=30)
-        except:
+        except asyncio.TimeoutError:
             await self.bot.reset_cooldown(ctx)
             return await ctx.send("Weapon upgrade cancelled.")
         self.bot.reset_cooldown(ctx)
@@ -557,7 +564,7 @@ class Profile:
                 await ctx.send(
                     "An unknown error occured while checking your name. Try again!"
                 )
-        except:
+        except asyncio.TimeoutError:
             await ctx.send(
                 f"Timeout expired. Enter `{ctx.prefix}{ctx.command}` again to retry!"
             )
@@ -574,8 +581,8 @@ class Profile:
             "Are you sure? Type `deletion confirm` in the next 15 seconds to confirm."
         )
         try:
-            res = await self.bot.wait_for("message", timeout=15, check=mycheck)
-        except:
+            await self.bot.wait_for("message", timeout=15, check=mycheck)
+        except asyncio.TimeoutError:
             return await ctx.send("Cancelled deletion of your character.")
         async with self.bot.pool.acquire() as conn:
             await conn.execute('DELETE FROM boosters WHERE "user"=$1;', ctx.author.id)

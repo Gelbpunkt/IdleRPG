@@ -1,16 +1,26 @@
-import discord, aiohttp, random
+"""
+The IdleRPG Discord Bot
+Copyright (C) 2018-2019 Diniboy and Gelbpunkt
+
+This software is dual-licensed under the GNU Affero General Public License for non-commercial and the Travitia License for commercial use.
+For more information, see README.md and LICENSE.md.
+"""
+
+
 from discord.ext import commands
-from discord.ext.commands import BucketType
 
 
-class Vote:
+class Vote(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
     @commands.command(description="Sends a vote link.")
     async def vote(self, ctx):
         await ctx.send(
-            f"Upvote me for a big thanks! You will be rewarded a few seconds afterwards!\nhttps://discordbots.org/bot/idlerpg"
+            f"""
+            Upvote me for a big thanks! You will be rewarded a few seconds afterwards!
+            https://discordbots.org/bot/idlerpg
+        """
         )
 
 

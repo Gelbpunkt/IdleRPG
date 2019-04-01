@@ -1,10 +1,19 @@
+"""
+The IdleRPG Discord Bot
+Copyright (C) 2018-2019 Diniboy and Gelbpunkt
+
+This software is dual-licensed under the GNU Affero General Public License for non-commercial and the Travitia License for commercial use.
+For more information, see README.md and LICENSE.md.
+"""
+
+
 import discord
-from discord.ext import commands
-from utils.checks import *
 import asyncio
 import datetime
 import random
-import traceback
+
+from discord.ext import commands
+from utils.checks import is_admin, has_char, has_money
 from cogs.classes import genstats
 from decimal import Decimal
 
@@ -18,7 +27,7 @@ def in_raid():
 
 def can_join():
     def predicate(ctx):
-        return ctx.bot.boss_is_spawned and not ctx.author in ctx.bot.raid
+        return ctx.bot.boss_is_spawned and ctx.author not in ctx.bot.raid
 
     return commands.check(predicate)
 
@@ -30,7 +39,7 @@ def raid_channel():
     return commands.check(predicate)
 
 
-class Raid:
+class Raid(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
         self.bot.boss_is_spawned = False
@@ -65,19 +74,19 @@ This boss has {boss['hp']} HP and has high-end loot!
 The dragon will be vulnerable in 15 Minutes
 Use https://raid.travitia.xyz/ to join the raid!
 """,
-            file=discord.File("dragon.jpg"),
+            file=discord.File("assets/other/dragon.jpg"),
         )
         try:
             await self.bot.get_channel(506_591_390_860_574_721).send(
                 "@everyone Zerekiel spawned! 15 Minutes until he is vulnerable...\nUse https://raid.travitia.xyz/ to join the raid!"
             )
-        except:
+        except discord.Forbidden:
             await ctx.channel.set_permissions(
                 ctx.guild.default_role, overwrite=self.deny_sending
             )
             self.bot.boss_is_spawned = False
             return await ctx.send(
-                "Honestly... I COULD NOT SEND THE SPAWN MESSAGE IN \#RAID-CHAT GUYS!!!"
+                "Honestly... I COULD NOT SEND THE SPAWN MESSAGE IN #RAID-CHAT GUYS!!!"
             )
         await asyncio.sleep(300)
         await ctx.send("**The dragon will be vulnerable in 10 minutes**")
@@ -112,9 +121,8 @@ Use https://raid.travitia.xyz/ to join the raid!
                 "Shield",
                 self.bot.raid2,
             )
-        raid = []
         for i in self.bot.raid2:
-            u = self.bot.get_user(i)
+            u = await self.bot.get_user_global(i)
             if not u:
                 continue
             dmg = 0
@@ -206,7 +214,7 @@ Use https://raid.travitia.xyz/ to join the raid!
                 if (
                     msg.channel.id != ctx.channel.id
                     or (not msg.content.isdigit())
-                    or (not msg.author in self.bot.raid)
+                    or (msg.author not in self.bot.raid)
                 ):
                     return False
                 if not (int(msg.content) > highest_bid[1]):
@@ -227,8 +235,6 @@ Use https://raid.travitia.xyz/ to join the raid!
                     msg = await self.bot.wait_for("message", timeout=60, check=check)
                 except asyncio.TimeoutError:
                     break
-                except:
-                    pass
                 bid = int(msg.content)
                 money = await self.bot.pool.fetchval(
                     'SELECT money FROM profile WHERE "user"=$1;', msg.author.id
@@ -300,45 +306,6 @@ Use https://raid.travitia.xyz/ to join the raid!
             ctx.guild.default_role, overwrite=self.deny_sending
         )
 
-    """
-    @commands.group(name="raid", invoke_without_command=True)
-    async def _raid(self, ctx):
-        await ctx.send(f"Use `{ctx.prefix}raid join/leave`")
-
-    @can_join()
-    @raid_channel()
-    @has_char()
-    @_raid.command()
-    async def join(self, ctx):
-        async with self.bot.pool.acquire() as conn:
-            dmg = (
-                await conn.fetchval(
-                    "SELECT ai.damage FROM profile p JOIN allitems ai ON (p.user=ai.owner) JOIN inventory i ON (ai.id=i.item) WHERE i.equipped IS TRUE AND p.user=$1 AND type='Sword';",
-                    ctx.author.id,
-                )
-                or 0
-            )
-            deff = (
-                await conn.fetchval(
-                    "SELECT ai.armor FROM profile p JOIN allitems ai ON (p.user=ai.owner) JOIN inventory i ON (ai.id=i.item) WHERE i.equipped IS TRUE AND p.user=$1 AND type='Shield';",
-                    ctx.author.id,
-                )
-                or 0
-            )
-        dmg, deff = await genstats(self.bot, ctx.author.id, dmg, deff)
-        self.bot.raid[ctx.author] = {"hp": 250, "armor": deff, "damage": dmg}
-        await ctx.send(
-            f"{ctx.author.mention} has been added with {deff} Armor, {dmg} Damage and 250 HP!"
-        )
-
-    @in_raid()
-    @raid_channel()
-    @_raid.command()
-    async def leave(self, ctx):
-        del self.bot.raid[ctx.author]
-        await ctx.send(f"{ctx.author.mention} left the raid...")
-    """
-
     def getpriceto(self, level: float):
         return sum(i * 25000 for i in range(1, int(level * 10) - 9))
 
@@ -375,7 +342,7 @@ Use https://raid.travitia.xyz/ to join the raid!
 
     @increase.command()
     async def defense(self, ctx):
-        """Increase your raid damage."""
+        """Increase your raid defense."""
         async with self.bot.pool.acquire() as conn:
             lvl = await conn.fetchval(
                 'SELECT defmultiply FROM profile WHERE "user"=$1;', ctx.author.id

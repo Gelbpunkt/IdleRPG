@@ -1,9 +1,19 @@
+"""
+The IdleRPG Discord Bot
+Copyright (C) 2018-2019 Diniboy and Gelbpunkt
+
+This software is dual-licensed under the GNU Affero General Public License for non-commercial and the Travitia License for commercial use.
+For more information, see README.md and LICENSE.md.
+"""
+
+
 import discord
+
 from discord.ext import commands
-import cogs.rpgtools as rpgtools
+from utils import misc as rpgtools
 
 
-class Ranks:
+class Ranks(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
@@ -12,7 +22,7 @@ class Ranks:
         await ctx.trigger_typing()
         async with self.bot.pool.acquire() as conn:
             ret = await conn.fetch(
-                'SELECT "user", "name", "money" from profile ORDER BY "money" DESC LIMIT 10;'
+                'SELECT "user", "name", "money" FROM profile ORDER BY "money" DESC LIMIT 10;'
             )
         if ret == []:
             return await ctx.send(
@@ -94,10 +104,7 @@ class Ranks:
         for profile in ret:
             number = ret.index(profile) + 1
             user = await rpgtools.lookup(self.bot, profile[0])
-            try:
-                lover = await rpgtools.lookup(self.bot, profile[1])
-            except:
-                lover = "Unknown User"
+            lover = await rpgtools.lookup(self.bot, profile[1])
             result += f"**{number}**. **{lover}** gifted their love **{user}** items worth **${profile[2]}**\n"
         result = discord.Embed(
             title="The Best lovers", description=result, colour=0xE7CA01

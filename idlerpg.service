@@ -4,11 +4,10 @@ After=multi-user.target
 
 [Service]
 Type=simple
-WorkingDirectory=/home/jens/production/IdleRPG/
-ExecStart=/usr/bin/python3 /home/jens/production/IdleRPG/idlerpg.py
-User=jens
+WorkingDirectory=/path/to/IdleRPG/
+ExecStart=/usr/bin/python3 /path/to/IdleRPG/launcher.py
+User=my_username
 Restart=on-failure
 
 [Install]
 WantedBy=multi-user.target
-

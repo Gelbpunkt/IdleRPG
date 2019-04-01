@@ -1,9 +1,20 @@
-import discord, random
+"""
+The IdleRPG Discord Bot
+Copyright (C) 2018-2019 Diniboy and Gelbpunkt
+
+This software is dual-licensed under the GNU Affero General Public License for non-commercial and the Travitia License for commercial use.
+For more information, see README.md and LICENSE.md.
+"""
+
+
+import discord
+import random
+
 from discord.ext import commands
-from utils.checks import *
+from utils.checks import has_char
 
 
-class Crates:
+class Crates(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
@@ -15,7 +26,8 @@ class Crates:
                 'SELECT crates FROM profile WHERE "user"=$1;', ctx.author.id
             )
         await ctx.send(
-            f"You currently have **{crates}** crates, {ctx.author.mention}! Use `{ctx.prefix}open` to open one!"
+            f"You currently have **{crates}** crates, {ctx.author.mention}!"
+            f"Use `{ctx.prefix}open` to open one!"
         )
 
     @has_char()

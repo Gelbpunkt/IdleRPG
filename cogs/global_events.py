@@ -1,9 +1,18 @@
-import asyncio
+"""
+The IdleRPG Discord Bot
+Copyright (C) 2018-2019 Diniboy and Gelbpunkt
+
+This software is dual-licensed under the GNU Affero General Public License for non-commercial and the Travitia License for commercial use.
+For more information, see README.md and LICENSE.md.
+"""
+
+
 import discord
-from websockets.exceptions import ConnectionClosed
+
+from discord.ext import commands
 
 
-class GlobalEvents:
+class GlobalEvents(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
         self.auth_headers = {
@@ -88,6 +97,7 @@ class GlobalEvents:
         )
 
     async def status_updater(self):
+        await self.bot.wait_until_ready()
         await self.bot.change_presence(
             activity=discord.Game(name=self.bot.BASE_URL), status=discord.Status.idle
         )
@@ -101,7 +111,7 @@ class GlobalEvents:
     def get_bfd_payload(self):
         return {"server_count": len(self.bot.guilds)}
 
-    def __unload(self):
+    def cog_unload(self):
         self.status_updates.cancel()  # Cancel the status updates on unload
 
 

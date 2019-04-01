@@ -1,15 +1,26 @@
-import discord
+"""
+The IdleRPG Discord Bot
+Copyright (C) 2018-2019 Diniboy and Gelbpunkt
+
+This software is dual-licensed under the GNU Affero General Public License for non-commercial and the Travitia License for commercial use.
+For more information, see README.md and LICENSE.md.
+"""
+
+
+import asyncio
+
 from discord.ext import commands
-from utils.checks import *
+from utils.checks import is_admin, user_has_char
+from classes.converters import User
 
 
-class Admin:
+class Admin(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
     @is_admin()
     @commands.command(aliases=["agive"], description="Gift money!", hidden=True)
-    async def admingive(self, ctx, money: int, other: discord.User):
+    async def admingive(self, ctx, money: int, other: User):
         if not await user_has_char(self.bot, other.id):
             return await ctx.send("That person hasn't got a character.")
         async with self.bot.pool.acquire() as conn:
@@ -24,7 +35,7 @@ class Admin:
 
     @is_admin()
     @commands.command(aliases=["aremove"], description="Delete money!", hidden=True)
-    async def adminremove(self, ctx, money: int, other: discord.User):
+    async def adminremove(self, ctx, money: int, other: User):
         if not await user_has_char(self.bot, other.id):
             return await ctx.send("That person hasn't got a character.")
         async with self.bot.pool.acquire() as conn:
@@ -39,7 +50,7 @@ class Admin:
     @commands.command(
         aliases=["adelete"], description="Deletes a character.", hidden=True
     )
-    async def admindelete(self, ctx, other: discord.User):
+    async def admindelete(self, ctx, other: User):
         if other.id in ctx.bot.config.admins:
             return await ctx.send("Very funny...")
         if not await user_has_char(self.bot, other.id):
@@ -52,7 +63,7 @@ class Admin:
 
     @is_admin()
     @commands.command(aliases=["arename"], description="Changes a character name")
-    async def adminrename(self, ctx, target: discord.User):
+    async def adminrename(self, ctx, target: User):
         if target.id in ctx.bot.config.admins:
             return await ctx.send("Very funny...")
         if not await user_has_char(self.bot, target.id):
@@ -70,7 +81,7 @@ class Admin:
 
         try:
             name = await self.bot.wait_for("message", timeout=60, check=mycheck)
-        except:
+        except asyncio.TimeoutError:
             return await ctx.send("Timeout expired.")
         name = name.content
         async with self.bot.pool.acquire() as conn:
@@ -82,7 +93,7 @@ class Admin:
 
     @is_admin()
     @commands.command(aliases=["acrate"], description="Gives crates to a user.")
-    async def admincrate(self, ctx, target: discord.Member, amount: int = 1):
+    async def admincrate(self, ctx, target: User, amount: int = 1):
         async with self.bot.pool.acquire() as conn:
             await conn.execute(
                 'UPDATE profile SET "crates"="crates"+$1 WHERE "user"=$2;',
@@ -97,7 +108,7 @@ class Admin:
 
     @is_admin()
     @commands.command(aliases=["axp"], description="Gives XP to a user.")
-    async def adminxp(self, ctx, target: discord.Member, amount: int):
+    async def adminxp(self, ctx, target: User, amount: int):
         async with self.bot.pool.acquire() as conn:
             await conn.execute(
                 'UPDATE profile SET "xp"="xp"+$1 WHERE "user"=$2;', amount, target.id

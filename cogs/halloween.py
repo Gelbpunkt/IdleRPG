@@ -1,15 +1,26 @@
+"""
+The IdleRPG Discord Bot
+Copyright (C) 2018-2019 Diniboy and Gelbpunkt
+
+This software is dual-licensed under the GNU Affero General Public License for non-commercial and the Travitia License for commercial use.
+For more information, see README.md and LICENSE.md.
+"""
+
+
 import discord
-from discord.ext import commands
-import random, secrets
+import random
+import secrets
 import utils.checks as checks
 
+from discord.ext import commands
 
-class Halloween:
+
+class Halloween(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
         self.bot.waiting = None
 
-    def __local_check(self, ctx):
+    def cog_check(self, ctx):
         return ctx.author.id == 287_215_355_137_622_016
 
     @checks.has_char()
@@ -62,7 +73,7 @@ class Halloween:
             await conn.execute(
                 'UPDATE profile SET money=money-50 WHERE "user"=$1;', usr
             )
-        usr = self.bot.get_user(usr) or "Unknown User"
+        usr = await self.bot.get_user_global(usr) or "Unknown User"
         await ctx.send(f"{usr} gave you additional $50!")
 
     @checks.has_char()

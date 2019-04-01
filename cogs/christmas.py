@@ -1,12 +1,21 @@
+"""
+The IdleRPG Discord Bot
+Copyright (C) 2018-2019 Diniboy and Gelbpunkt
+
+This software is dual-licensed under the GNU Affero General Public License for non-commercial and the Travitia License for commercial use.
+For more information, see README.md and LICENSE.md.
+"""
+
+
 import discord
 import datetime
 import random
-import traceback
 import string
 import asyncio
 import ujson
+
 from discord.ext import commands
-from utils.checks import *
+from utils.checks import has_char, is_guild_officer, is_guild_leader, is_admin
 from cogs.help import chunks
 
 from cogs.shard_communication import user_on_cooldown as user_cooldown
@@ -39,10 +48,10 @@ rewards = {
 }
 
 
-class Christmas:
+class Christmas(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
-        with open("hangman.txt", "r") as f:
+        with open("assets/data/hangman.txt", "r") as f:
             self.words = f.readlines()
 
     @commands.group(invoke_without_command=True)
@@ -174,7 +183,7 @@ class Christmas:
         )
         try:
             await self.bot.wait_for("message", check=check, timeout=30)
-        except:
+        except asyncio.TimeoutError:
             return await ctx.send("Timed out...")
         conv = commands.UserConverter()
         team1 = [ctx.author]
@@ -197,13 +206,13 @@ class Christmas:
         while len(team1) == 1:
             try:
                 msg = await self.bot.wait_for("message", check=check1, timeout=30)
-            except:
+            except asyncio.TimeoutError:
                 return await ctx.send("Timed out...")
             try:
                 u = await conv.convert(ctx, msg.content.split()[-1])
-            except:
+            except commands.BadArgument:
                 continue
-            if not u.id in guild1_members:
+            if u.id not in guild1_members:
                 await ctx.send("Not one of your guild members...")
             elif u in team1:
                 await ctx.send("That's you!")
@@ -215,13 +224,13 @@ class Christmas:
         while len(team2) == 1:
             try:
                 msg = await self.bot.wait_for("message", check=check2, timeout=30)
-            except:
+            except asyncio.TimeoutError:
                 return await ctx.send("Timed out...")
             try:
                 u = await conv.convert(ctx, msg.content.split()[-1])
-            except:
+            except commands.BadArgument:
                 continue
-            if not u.id in guild2_members:
+            if u.id not in guild2_members:
                 await ctx.send("Not one of your guild members...")
             elif u in team2:
                 await ctx.send("That's you!")
@@ -268,7 +277,7 @@ Next round starts in 5 seconds!
                 await ctx.send(f"`{word}`")
                 try:
                     msg = await self.bot.wait_for("message", check=corr, timeout=45)
-                except:
+                except asyncio.TimeoutError:
                     return await ctx.send(
                         "Noone managed to get it right, I'll cancel the fight!"
                     )
@@ -300,7 +309,7 @@ Next round starts in 5 seconds!
                 await ctx.send(f"`({m} * {x}) / {c} + {d}`")
                 try:
                     msg = await self.bot.wait_for("message", check=corr, timeout=45)
-                except:
+                except asyncio.TimeoutError:
                     return await ctx.send(
                         "Noone managed to get it right, I'll cancel the fight!"
                     )
@@ -327,7 +336,7 @@ Next round starts in 5 seconds!
                 while True:
                     try:
                         msg = await self.bot.wait_for("message", check=corr, timeout=20)
-                    except:
+                    except asyncio.TimeoutError:
                         return await ctx.send(
                             "Noone participated, I'll cancel the fight!"
                         )
@@ -341,12 +350,12 @@ Next round starts in 5 seconds!
                     else:
                         try:
                             await msg.delete()
-                        except:
+                        except discord.Forbidden:
                             pass
 
                         if msg.content in guessed:
                             continue
-                        if not msg.content in word:
+                        if msg.content not in word:
                             continue
                         guessed.append(msg.content)
                         disp = " ".join([i if (i in guessed) else "_" for i in word])
@@ -411,7 +420,7 @@ Next round starts in 5 seconds!
                     id = the_r[0][0]
                 else:
                     id = the_r[1][0]
-            except:
+            except IndexError:
                 return await ctx.send("Those guilds are not in a match!")
             c["Participants"].append([id, winnername])
             ujson.dump(c, f)
