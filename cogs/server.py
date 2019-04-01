@@ -14,10 +14,6 @@ from discord.ext import commands
 from cogs.help import chunks
 
 
-def get_guilds(bot, user):
-    return [guild for guild in bot.guilds if user in guild.members]
-
-
 class Server(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
@@ -121,10 +117,8 @@ class Server(commands.Cog):
             "offline": "<:offline:313956277237710868>",
         }
         nl = "\n"
-        auser = member
-        if not auser:
-            auser = ctx.author
-        shared = get_guilds(self.bot, auser)
+        auser = member or ctx.author
+        shared = [guild.name for guild in bot.guilds if auser in guild.members]
         embed = discord.Embed(
             title=f"{auser}",
             description=f"`Joined at`: {auser.joined_at}\n`Status...`: {statuses[str(auser.status)]}{str(auser.status).capitalize()}\n`Top Role.`: {auser.top_role.name}\n`Roles....`: {', '.join([role.name for role in auser.roles])}\n`Game.....`: {auser.activity if auser.activity else 'No Game Playing'}",
