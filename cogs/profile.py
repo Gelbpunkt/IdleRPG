@@ -10,7 +10,9 @@ For more information, see README.md and LICENSE.md.
 import discord
 import functools
 import asyncio
+import random
 
+from os import listdir
 from discord.ext import commands
 from utils import misc as rpgtools
 from cogs.help import chunks
@@ -164,8 +166,12 @@ class Profile(commands.Cog):
             else:
                 marriage = "Not married"
 
-            sword = [sword["name"], sword["damage"]] if sword else ["None equipped", 0.00]
-            shield = [shield["name"], shield["armor"]] if shield else ["None equipped", 0.00]
+            sword = (
+                [sword["name"], sword["damage"]] if sword else ["None equipped", 0.00]
+            )
+            shield = (
+                [shield["name"], shield["armor"]] if shield else ["None equipped", 0.00]
+            )
 
             damage, armor = await genstats(self.bot, targetid, sword[1], shield[1])
             damage -= sword[1]
