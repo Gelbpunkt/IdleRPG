@@ -164,30 +164,20 @@ def is_admin():
 
 
 def is_patron():
-    def predicate(ctx):
-        member = ctx.bot.get_guild(ctx.bot.config.support_server_id).get_member(
-            ctx.author.id
-        )  # cross server stuff
-        if not member:
-            return False
-        return (
-            discord.utils.get(member.roles, name="Donators") is not None
-            or discord.utils.get(member.roles, name="Administrators") is not None
+    async def predicate(ctx):
+        response = await ctx.bot.cogs["Sharding"].handler(
+            "user_is_patreon", 1, args={"member_id": ctx.author.id}
         )
+        return any(response)
 
     return commands.check(predicate)
 
 
-def user_is_patron(bot, userid):
-    member = bot.get_guild(bot.config.support_server_id).get_member(
-        userid
-    )  # cross server stuff
-    if not member:
-        return False
-    return (
-        discord.utils.get(member.roles, name="Donators") is not None
-        or discord.utils.get(member.roles, name="Administrators") is not None
+async def user_is_patron(bot, user):
+    response = await bot.cogs["Sharding"].handler(
+        "user_is_patreon", 1, args={"member_id": user.id}
     )
+    return any(response)
 
 
 def is_hypesquad(ctx):

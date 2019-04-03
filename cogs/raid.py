@@ -77,7 +77,7 @@ Use https://raid.travitia.xyz/ to join the raid!
             file=discord.File("assets/other/dragon.jpg"),
         )
         try:
-            await self.bot.get_channel(506_591_390_860_574_721).send(
+            await self.bot.get_channel(506_133_354_874_404_874).send(
                 "@everyone Zerekiel spawned! 15 Minutes until he is vulnerable...\nUse https://raid.travitia.xyz/ to join the raid!"
             )
         except discord.Forbidden:
