@@ -15,7 +15,7 @@ import secrets
 
 from cogs.shard_communication import user_on_cooldown as user_cooldown
 from discord.ext import commands
-from utils.checks import has_char, has_money, is_patron, user_is_patron
+from utils.checks import has_char, has_money, user_is_patron
 
 
 async def genstats(bot, userid, damage, armor):
@@ -182,7 +182,7 @@ class Classes(commands.Cog):
                 try:
                     await ctx.send(
                         file=discord.File(
-                            f"classes/{userclass.lower().replace(' ', '_')}.png"
+                            f"assets/classes/{userclass.lower().replace(' ', '_')}.png"
                         )
                     )
                 except FileNotFoundError:

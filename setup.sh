@@ -27,6 +27,9 @@ mv config.py.example config.py
 
 printf "Copying service file to /etc/systemd/system/idlerpg.service...\n\n"
 
+sed -e "s:/path/to/launcher.py:$(pwd)/launcher.py:g" idlerpg.service > idlerpg.service.2
+rm idlerpg.service
+mv idlerpg.service.2 idlerpg.service
 cp idlerpg.service /etc/systemd/system/idlerpg.service
 
 printf "Replacing schema username with $DBUSER...\n\n"
