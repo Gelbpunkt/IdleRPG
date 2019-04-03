@@ -10,9 +10,7 @@ For more information, see README.md and LICENSE.md.
 import discord
 import functools
 import asyncio
-import random
 
-from os import listdir
 from discord.ext import commands
 from utils import misc as rpgtools
 from cogs.help import chunks
