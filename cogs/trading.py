@@ -199,6 +199,7 @@ class Trading(commands.Cog):
                     ]
                     and reaction.message.id == msg.id
                     and user != self.bot.user
+                    and user == ctx.author
                 )
 
             def msgcheck(amsg):
