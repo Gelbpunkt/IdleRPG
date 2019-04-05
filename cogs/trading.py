@@ -174,6 +174,13 @@ class Trading(commands.Cog):
                 )
         if ret == []:
             await ctx.send("The shop is currently empty.")
+            
+        elif len(ret) == 1:
+            charname = await rpgtools.lookup(self.bot, ret[currentpage - 1][1])
+            clean_charname = await self.markdown_escaper.convert(ctx, charname)
+            msg = await ctx.send(
+                f"Item **1** of **1**\n\nSeller: `{clean_charname}`\nName: `{ret[0][2]}`\nValue: **${ret[0][3]}**\nType: `{ret[0][4]}`\nDamage: `{ret[0][5]}`\nArmor: `{ret[0][6]}`\nPrice: **${ret[0][9]}**\n\nUse: `{ctx.prefix}buy {ret[0][0]}` to buy this item."
+            )
         else:
             maxpages = len(ret)
             currentpage = 1
