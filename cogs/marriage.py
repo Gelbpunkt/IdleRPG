@@ -266,7 +266,9 @@ To buy one of these items for your partner, use `{ctx.prefix}spoil shopid`
         )
 
         def check(msg):
-            return msg.author.id == marriage and msg.content.lower() == "i do"
+            return msg.author.id == marriage \
+                   and msg.content.lower() == "i do" \
+                   and msg.channel.id == ctx.channel.id
 
         try:
             msg = await self.bot.wait_for("message", check=check, timeout=30)
@@ -285,11 +287,11 @@ To buy one of these items for your partner, use `{ctx.prefix}spoil shopid`
             )
 
         def check(msg):
-            return (
-                msg.author.id in [ctx.author.id, marriage]
-                and len(msg.content) <= 20
-                and msg.content not in names
-            )
+            return msg.author.id in [ctx.author.id, marriage] \
+                and len(msg.content) <= 20 \
+                and msg.content not in names \
+                and msg.channel.id == ctx.channel.id
+            
 
         try:
             msg = await self.bot.wait_for("message", check=check, timeout=30)
