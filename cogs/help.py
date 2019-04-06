@@ -165,9 +165,14 @@ class Help(commands.Cog):
             return await ctx.send(
                 "You or your server has been blacklisted for some reason."
             )
+        
+        if ctx.guild.id == 430017996304678923:
+            return await ctx.send("Cannot use helpme command in the support server... Go to <#430017996304678925> for help!")
 
         def check(msg):
-            return msg.author == ctx.author and msg.content.lower() == "yes, i do"
+            return msg.author == ctx.author \
+            and msg.content.lower() == "yes, i do" \
+            and msg.channel == ctx.channel
 
         await ctx.send(
             "Are you sure? This will notify our support team and allow them to join the server. If you are sure, type `Yes, I do`."
