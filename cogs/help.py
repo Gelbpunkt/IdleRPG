@@ -167,9 +167,7 @@ class Help(commands.Cog):
             )
 
         def check(msg):
-            return msg.author == ctx.author \
-            and msg.content.lower() == "yes, i do" \
-            and msg.channel == ctx.channel
+            return msg.author == ctx.author and msg.content.lower() == "yes, i do" and msg.channel == ctx.channel
 
         await ctx.send(
             "Are you sure? This will notify our support team and allow them to join the server. If you are sure, type `Yes, I do`."
