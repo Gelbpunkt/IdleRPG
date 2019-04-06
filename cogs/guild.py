@@ -759,7 +759,7 @@ class Guild(commands.Cog):
             user = await self.bot.pool.fetchrow(
                 'SELECT guild, xp FROM profile WHERE "user"=$1;', userid
             )
-            if user[0] == guild["id"]:
+            if user and user[0] == guild["id"]:
                 difficulty += int(rpgtools.xptolevel(user[1]))
                 return difficulty
             return False
@@ -791,7 +791,7 @@ class Guild(commands.Cog):
                     )
                 started = True
 
-        time = str(difficulty * 0.5) + "h"
+        time = f"{difficulty * 0.5}h"
 
         await ctx.send(
             f"""

@@ -136,7 +136,7 @@ class Patreon(commands.Cog):
             )
             try:
                 bg = bgs[number - 1]
-            except IndexError:
+            except TypeError:
                 return await ctx.send(
                     f"The background number {number} is not valid, you only have {len(bgs)} available."
                 )

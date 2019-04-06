@@ -23,28 +23,31 @@ class Admin(commands.Cog):
     async def admingive(self, ctx, money: int, other: User):
         if not await user_has_char(self.bot, other.id):
             return await ctx.send("That person hasn't got a character.")
-        async with self.bot.pool.acquire() as conn:
-            await conn.execute(
-                'UPDATE profile SET money=money+$1 WHERE "user"=$2;', money, other.id
-            )
+        await self.bot.pool.execute(
+            'UPDATE profile SET money=money+$1 WHERE "user"=$2;', money, other.id
+        )
         await ctx.send(
             f"Successfully gave **${money}** without a loss for you to **{other}**."
         )
-        channel = self.bot.get_channel(self.bot.config.admin_log_channel)
-        await channel.send(f"**{ctx.author}** gave **${money}** to **{other}**.")
+        await self.bot.http.send_message(
+            self.bot.config.admin_log_channel,
+            f"**{ctx.author}** gave **${money}** to **{other}**.",
+        )
 
     @is_admin()
     @commands.command(aliases=["aremove"], description="Delete money!", hidden=True)
     async def adminremove(self, ctx, money: int, other: User):
         if not await user_has_char(self.bot, other.id):
             return await ctx.send("That person hasn't got a character.")
-        async with self.bot.pool.acquire() as conn:
-            await conn.execute(
-                'UPDATE profile SET money=money-$1 WHERE "user"=$2;', money, other.id
-            )
+        await self.bot.pool.execute(
+            'UPDATE profile SET money=money-$1 WHERE "user"=$2;', money, other.id
+        )
         await ctx.send(f"Successfully removed **${money}** from **{other}**.")
         channel = self.bot.get_channel(self.bot.config.admin_log_channel)
-        await channel.send(f"**{ctx.author}** removed **${money}** from **{other}**.")
+        await self.bot.http.send_message(
+            self.bot.config.admin_log_channel,
+            f"**{ctx.author}** removed **${money}** from **{other}**.",
+        )
 
     @is_admin()
     @commands.command(
@@ -55,11 +58,11 @@ class Admin(commands.Cog):
             return await ctx.send("Very funny...")
         if not await user_has_char(self.bot, other.id):
             return await ctx.send("That person doesn't have a character.")
-        async with self.bot.pool.acquire() as conn:
-            await conn.execute('DELETE FROM profile WHERE "user"=$1;', other.id)
+        await self.bot.pool.execute('DELETE FROM profile WHERE "user"=$1;', other.id)
         await ctx.send("Successfully deleted the character.")
-        channel = self.bot.get_channel(self.bot.config.admin_log_channel)
-        await channel.send(f"**{ctx.author}** deleted **{other}**.")
+        await self.bot.http.send_message(
+            self.bot.config.admin_log_channel, f"**{ctx.author}** deleted **{other}**."
+        )
 
     @is_admin()
     @commands.command(aliases=["arename"], description="Changes a character name")
@@ -84,26 +87,26 @@ class Admin(commands.Cog):
         except asyncio.TimeoutError:
             return await ctx.send("Timeout expired.")
         name = name.content
-        async with self.bot.pool.acquire() as conn:
-            await conn.execute(
-                'UPDATE profile SET "name"=$1 WHERE "user"=$2;', name, target.id
-            )
-        channel = self.bot.get_channel(self.bot.config.admin_log_channel)
-        await channel.send(f"**{ctx.author}** renamed **{target}** to **{name}**.")
+        await self.bot.pool.execute(
+            'UPDATE profile SET "name"=$1 WHERE "user"=$2;', name, target.id
+        )
+        await self.bot.http.send_message(
+            self.bot.config.admin_log_channel,
+            f"**{ctx.author}** renamed **{target}** to **{name}**.",
+        )
 
     @is_admin()
     @commands.command(aliases=["acrate"], description="Gives crates to a user.")
     async def admincrate(self, ctx, target: User, amount: int = 1):
-        async with self.bot.pool.acquire() as conn:
-            await conn.execute(
-                'UPDATE profile SET "crates"="crates"+$1 WHERE "user"=$2;',
-                amount,
-                target.id,
-            )
+        await self.bot.pool.execute(
+            'UPDATE profile SET "crates"="crates"+$1 WHERE "user"=$2;',
+            amount,
+            target.id,
+        )
         await ctx.send(f"Successfully gave **{amount}** crates to **{target}**.")
-        channel = self.bot.get_channel(self.bot.config.admin_log_channel)
-        await channel.send(
-            f"**{ctx.author}** gave **{amount}** crates to **{target}**."
+        await self.bot.http.send_message(
+            self.bot.config.admin_log_channel,
+            f"**{ctx.author}** gave **{amount}** crates to **{target}**.",
         )
 
     @is_admin()
@@ -114,8 +117,10 @@ class Admin(commands.Cog):
                 'UPDATE profile SET "xp"="xp"+$1 WHERE "user"=$2;', amount, target.id
             )
         await ctx.send(f"Successfully gave **{amount}** XP to **{target}**.")
-        channel = self.bot.get_channel(self.bot.config.admin_log_channel)
-        await channel.send(f"**{ctx.author}** gave **{amount}** XP to **{target}**.")
+        await self.bot.http.send_message(
+            self.bot.config.admin_log_channel,
+            f"**{ctx.author}** gave **{amount}** XP to **{target}**.",
+        )
 
 
 def setup(bot):

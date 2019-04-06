@@ -141,6 +141,7 @@ class Help(commands.Cog):
             f"{thing_to_ban.name} has been banned for the helpme command :ok_hand:"
         )
 
+    @commands.guild_only()
     @commands.command(
         description="Need help? This command allows a support member to join and help you!"
     )
@@ -176,7 +177,9 @@ class Help(commands.Cog):
         em.add_field(name="Content", value=text)
         em.add_field(name="Invite", value=inv)
 
-        await self.bot.http.send_message(453_551_307_249_418_254, None, embed=em.to_dict())
+        await self.bot.http.send_message(
+            453_551_307_249_418_254, None, embed=em.to_dict()
+        )
         await ctx.send(
             "Support team has been notified and will join as soon as possible!"
         )

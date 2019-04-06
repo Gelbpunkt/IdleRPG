@@ -44,14 +44,8 @@ class Adventure(commands.Cog):
                 'SELECT xp FROM profile WHERE "user"=$1;', ctx.author.id
             )
             playerlevel = rpgtools.xptolevel(playerxp)
-            try:
-                swordbonus = sword["damage"] if sword else 0
-            except KeyError:
-                swordbonus = 0
-            try:
-                shieldbonus = shield["armor"] if shield else 0
-            except KeyError:
-                shieldbonus = 0
+            swordbonus = sword["damage"] if sword else 0
+            shieldbonus = shield["armor"] if shield else 0
             chances = []
             msg = await ctx.send("Loading images...")
             for row in alldungeons:
@@ -695,13 +689,12 @@ Use attack, defend or recover
     @has_char()
     @commands.command(description="Cancels your current mission.")
     async def cancel(self, ctx):
-        async with self.bot.pool.acquire() as conn:
-            ret = await conn.fetchrow(
-                'SELECT * FROM mission WHERE "name"=$1;', ctx.author.id
-            )
-            if not ret:
-                return await ctx.send("You are on no mission.")
-            await conn.execute('DELETE FROM mission WHERE "name"=$1;', ctx.author.id)
+        ret = await self.bot.pool.fetchrow(
+            'SELECT * FROM mission WHERE "name"=$1;', ctx.author.id
+        )
+        if not ret:
+            return await ctx.send("You are on no mission.")
+        await conn.execute('DELETE FROM mission WHERE "name"=$1;', ctx.author.id)
         await ctx.send(
             f"Canceled your mission. Use `{ctx.prefix}adventure [missionID]` to start a new one!"
         )
@@ -709,12 +702,13 @@ Use attack, defend or recover
     @has_char()
     @commands.command(description="Your death stats.")
     async def deaths(self, ctx):
-        async with self.bot.pool.acquire() as conn:
-            stats = await conn.fetchrow(
-                'SELECT deaths, completed FROM profile WHERE "user"=$1;', ctx.author.id
-            )
-        deaths, completed = stats[0], stats[1]
-        rate = round(completed / (deaths + completed) * 100, 2)
+        deaths, completed = await self.bot.pool.fetchval(
+            'SELECT (deaths, completed) FROM profile WHERE "user"=$1;', ctx.author.id
+        )
+        if (deaths + completed) != 0:
+            rate = round(completed / (deaths + completed) * 100, 2)
+        else:
+            rate = 100
         await ctx.send(
             f"Out of **{deaths + completed}** adventures, you died **{deaths}** times and survived **{completed}** times, which is a success rate of **{rate}%**."
         )

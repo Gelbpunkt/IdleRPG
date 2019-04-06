@@ -275,25 +275,28 @@ However, as work on this is not done and code not clean, v3.5 will come by time,
 
     @commands.command(description="Roleplay dice. Uses ndx format.")
     async def dice(self, ctx, dice_type: str):
-        dice_type = dice_type.lower().split("d")
-        if len(dice_type) != 2:
-            return await ctx.send("Use the ndx format.")
         try:
-            dice_type[0] = int(dice_type[0])
-            dice_type[1] = int(dice_type[1])
+            dice_type = list(map(int, dice_type.split("d")))
         except ValueError:
             await ctx.send(
                 "Use the ndx format. E.g. `5d20` will roll 5 dices with 20 sides each."
             )
+        if len(dice_type) != 2:
+            return await ctx.send("Use the ndx format.")
         if dice_type[0] > 100:
             return await ctx.send("Too many dices.")
+        if dice_type[1] > dice_type[0]:
+            return await ctx.send("The second number should be bigger than the first!")
         results = []
         for _ in range(dice_type[0]):
             results.append(random.randint(1, dice_type[1]))
         sumall = 0
         for i in results:
             sumall += i
-        average = sumall / len(results)
+        if results:
+            average = sumall / len(results)
+        else:
+            average = 0
         nl = "\n"
         results = [str(result) for result in results]
         await ctx.send(

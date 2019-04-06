@@ -7,6 +7,7 @@ For more information, see README.md and LICENSE.md.
 """
 
 
+from aiohttp import ClientOSError, ServerDisconnectedError, ContentTypeError
 import discord
 import traceback
 import Levenshtein as lv
@@ -106,7 +107,15 @@ class Errorhandler(commands.Cog):
             error, "original"
         ):
             if isinstance(error.original, OverflowError):
-                return await ctx.send("The number you entered exceeds the maximum allowed length!")
+                return await ctx.send(
+                    "The number you entered exceeds the maximum allowed length!"
+                )
+            if isinstance(
+                error.original,
+                (ClientOSError, ServerDisconnectedError, ContentTypeError),
+            ):
+                # Called on 500 HTTP responses
+                return
             print("In {}:".format(ctx.command.qualified_name), file=sys.stderr)
             traceback.print_tb(error.original.__traceback__)
             print(
@@ -133,6 +142,9 @@ class Errorhandler(commands.Cog):
                             "user_id": str(ctx.author.id),
                         },
                     )
+                await ctx.send(
+                    "The command you tried to use ran into an error. The incident has been reported and the team will work hard to fix the issue!"
+                )
         await ctx.bot.reset_cooldown(ctx)
 
     async def initialize_cog(self):

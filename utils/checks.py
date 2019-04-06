@@ -122,26 +122,17 @@ def is_no_guild_leader():
     return commands.check(predicate)
 
 
-def is_support_server():
-    async def predicate(ctx):
-        if ctx.guild.id == ctx.bot.config.support_server_id:
-            return True
-        return False
-
-    return commands.check(predicate)
-
-
 async def has_guild_(bot, userid):
     return await bot.pool.fetchval('SELECT guild FROM profile WHERE "user"=$1;', userid)
 
 
 async def is_member_of_author_guild(ctx, userid):
-    usrs = await ctx.bot.pool.fetch(
+    users = await ctx.bot.pool.fetch(
         'SELECT guild FROM profile WHERE "user"=$1 OR "user"=$2;', ctx.author.id, userid
     )
-    if len(usrs) != 2:
+    if len(users) != 2:
         return False
-    return usrs[0]["guild"] == usrs[1]["guild"]
+    return users[0]["guild"] == users[1]["guild"]
 
 
 async def user_has_char(bot, userid):
@@ -179,13 +170,14 @@ async def user_is_patron(bot, user):
     )
     return any(response)
 
+
 def is_supporter():
     async def predicate(ctx):
         response = await bot.cogs["Sharding"].handler(
             "user_is_helper", 1, args={"member_id": user.id}
         )
         return any(response)
-    
+
     return commands.check(predicate)
 
 
