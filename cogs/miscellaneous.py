@@ -52,7 +52,7 @@ class Miscellaneous(commands.Cog):
     @commands.command(aliases=["donate"], description="Support us!")
     async def patreon(self, ctx):
         guild_count = sum(
-            await bot.cogs["Sharding"].handler("guild_count", self.bot.shard_count)
+            await self.bot.cogs["Sharding"].handler("guild_count", self.bot.shard_count)
         )
         await ctx.send(
             f"This bot has its own patreon page.\n\n**Why should I donate?**\nThis bot is currently on {guild_count} servers, and it is growing"

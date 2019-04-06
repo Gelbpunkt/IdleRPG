@@ -158,7 +158,7 @@ class Owner(commands.Cog):
         description="[Owner only] Evaluates python code on all instances", hidden=True
     )
     async def evall(self, ctx, *, code: str):
-        data = await bot.cogs["Sharding"].handler(
+        data = await self.bot.cogs["Sharding"].handler(
             "evaluate", self.bot.shard_count, {"code": code}
         )
         if len(data) > 2000:

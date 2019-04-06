@@ -105,7 +105,9 @@ class GlobalEvents(commands.Cog):
     async def get_dbl_payload(self):
         return {
             "server_count": sum(
-                await bot.cogs["Sharding"].handler("guild_count", self.bot.shard_count)
+                await self.bot.cogs["Sharding"].handler(
+                    "guild_count", self.bot.shard_count
+                )
             ),
             "shard_count": self.bot.shard_count,
         }
@@ -113,7 +115,9 @@ class GlobalEvents(commands.Cog):
     async def get_bfd_payload(self):
         return {
             "server_count": sum(
-                await bot.cogs["Sharding"].handler("guild_count", self.bot.shard_count)
+                await self.bot.cogs["Sharding"].handler(
+                    "guild_count", self.bot.shard_count
+                )
             )
         }
 
