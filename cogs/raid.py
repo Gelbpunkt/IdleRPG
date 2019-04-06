@@ -381,7 +381,9 @@ Use https://raid.travitia.xyz/ to join the raid!
         
     @commands.command()
     async def raid(self, ctx):
-        await ctx.send("Did you ever want to join together with other players to defeat the dragon that roams this land? Raids got you covered!\n Join the support server (`$support`) for more information.")
-
+        await ctx.send(
+            "Did you ever want to join together with other players to defeat the dragon that roams this land? Raids got you covered!\nJoin the support server (`$support`) for more information.")
+        )
+        
 def setup(bot):
     bot.add_cog(Raid(bot))
