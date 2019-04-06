@@ -124,7 +124,7 @@ def is_no_guild_leader():
 
 def is_support_server():
     async def predicate(ctx):
-        if ctx.channel.id == ctx.bot.config.support_server_id:
+        if ctx.guild.id == ctx.bot.config.support_server_id:
             return True
         return False
 

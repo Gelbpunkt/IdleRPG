@@ -46,11 +46,11 @@ class Adventure(commands.Cog):
             playerlevel = rpgtools.xptolevel(playerxp)
             try:
                 swordbonus = sword["damage"]
-            except KeyError:
+            except (KeyError, TypeError):
                 swordbonus = 0
             try:
                 shieldbonus = shield["armor"]
-            except KeyError:
+            except (KeyError, TypeError):
                 shieldbonus = 0
             chances = []
             msg = await ctx.send("Loading images...")
