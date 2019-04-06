@@ -91,12 +91,19 @@ class Sharding(commands.Cog):
                 try:
                     if payload.get("scope") != "bot":
                         return  # it's not our cup of tea
-                    self.bot.loop.create_task(
-                        getattr(self, payload.get("action"))(
-                            **json.loads(payload.get("args")),
-                            command_id=payload["command_id"],
+                    if payload.get("args"):
+                        self.bot.loop.create_task(
+                            getattr(self, payload["action"])(
+                                **json.loads(payload["args"]),
+                                command_id=payload["command_id"],
+                            )
                         )
-                    )
+                    else:
+                        self.bot.loop.create_task(
+                            getattr(self, payload["action"])(
+                                command_id=payload["command_id"]
+                            )
+                        )
                 except Exception:
                     payload = {
                         "error": True,
