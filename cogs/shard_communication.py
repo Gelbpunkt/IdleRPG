@@ -19,7 +19,7 @@ from async_timeout import timeout
 import discord
 from discord.ext import commands
 
-from utils.eval import evaluate as _evalulate
+from utils.eval import evaluate as _evaluate
 
 
 # Cross-process cooldown check (pass this to commands)
