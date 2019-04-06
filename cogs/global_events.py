@@ -55,7 +55,7 @@ class GlobalEvents(commands.Cog):
 
     async def on_guild_join(self, guild):
         if not self.bot_owner:  # just for performance reasons (+1 API call)
-            self.bot_owner = (await self.bot.application_info()).owner
+            self.bot_owner = await self.bot.fetch_user(self.bot.owner_id)
 
         embed = discord.Embed(
             title="Thanks for adding me!",
@@ -102,14 +102,20 @@ class GlobalEvents(commands.Cog):
             activity=discord.Game(name=self.bot.BASE_URL), status=discord.Status.idle
         )
 
-    def get_dbl_payload(self):
+    async def get_dbl_payload(self):
         return {
-            "server_count": len(self.bot.guilds),
-            "shard_count": len(self.bot.shards),
+            "server_count": sum(
+                await bot.cogs["Sharding"].handler("guild_count", self.bot.shard_count)
+            ),
+            "shard_count": self.bot.shard_count,
         }
 
-    def get_bfd_payload(self):
-        return {"server_count": len(self.bot.guilds)}
+    async def get_bfd_payload(self):
+        return {
+            "server_count": sum(
+                await bot.cogs["Sharding"].handler("guild_count", self.bot.shard_count)
+            )
+        }
 
     def cog_unload(self):
         self.status_updates.cancel()  # Cancel the status updates on unload

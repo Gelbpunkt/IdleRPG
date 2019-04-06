@@ -154,6 +154,17 @@ class Owner(commands.Cog):
                 self._last_result = ret
                 await ctx.send(f"```py\n{value}{ret}\n```")
 
+    @commands.command(
+        description="[Owner only] Evaluates python code on all instances", hidden=True
+    )
+    async def evall(self, ctx, *, code: str):
+        data = await bot.cogs["Sharding"].handler(
+            "evaluate", self.bot.shard_count, {"code": code}
+        )
+        if len(data) > 2000:
+            data = data[:1997] + "..."
+        await ctx.send(data)
+
     @commands.command(description="[Owner only] Evaluates Bash Commands.", hidden=True)
     async def bash(self, ctx, *, command_to_run: str):
         output = subprocess.check_output(

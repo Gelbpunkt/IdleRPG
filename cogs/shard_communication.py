@@ -7,6 +7,8 @@ For more information, see README.md and LICENSE.md.
 
 from traceback import format_exc
 import asyncio
+from datetime import timedelta
+import re
 
 try:
     import ujson as json  # faster, but linux only
@@ -14,10 +16,10 @@ except ImportError:
     import json
 from uuid import uuid4
 from async_timeout import timeout
-from datetime import timedelta
 import discord
-import re
 from discord.ext import commands
+
+from utils.eval import evalulate as _evalulate
 
 
 # Cross-process cooldown check (pass this to commands)
@@ -146,6 +148,12 @@ class Sharding(commands.Cog):
             "PUBLISH", self.communication_channel, json.dumps(payload)
         )
 
+    async def guild_count(self, command_id: str):
+        payload = {"output": len(self.bot.guilds), "command_id": command_id}
+        await self.bot.redis.execute(
+            "PUBLISH", self.communication_channel, json.dumps(payload)
+        )
+
     async def get_user(self, user_id: int, command_id: str):
         if not self.bot.get_user(user_id):
             return
@@ -180,7 +188,10 @@ class Sharding(commands.Cog):
         )
 
     async def evaluate(self, code, command_id: str):
-        payload = {"output": eval(code), "command_id": command_id}
+        if code.startswith("```") and code.endswith("```"):
+            code = "\n".join(code.split("\n")[1:-1])
+        code = code.strip("` \n")
+        payload = {"output": _evaluate(code), "command_id": command_id}
         await self.bot.redis.execute(
             "PUBLISH", self.communication_channel, json.dumps(payload)
         )

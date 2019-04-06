@@ -26,7 +26,7 @@ class Crates(commands.Cog):
                 'SELECT crates FROM profile WHERE "user"=$1;', ctx.author.id
             )
         await ctx.send(
-            f"You currently have **{crates}** crates, {ctx.author.mention}!"
+            f"You currently have **{crates}** crates, {ctx.author.mention}! "
             f"Use `{ctx.prefix}open` to open one!"
         )
 
