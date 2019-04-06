@@ -105,6 +105,8 @@ class Errorhandler(commands.Cog):
         elif isinstance(error, commands.CommandInvokeError) and hasattr(
             error, "original"
         ):
+            if isinstance(error.original, OverflowError):
+                return await ctx.send("The number you entered exceeds the maximum allowed length!")
             print("In {}:".format(ctx.command.qualified_name), file=sys.stderr)
             traceback.print_tb(error.original.__traceback__)
             print(
