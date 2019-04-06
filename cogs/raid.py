@@ -76,6 +76,21 @@ Use https://raid.travitia.xyz/ to join the raid!
 """,
             file=discord.File("assets/other/dragon.jpg"),
         )
+        channels = await conn.fetch(
+            'SELECT channels FROM raids'
+        )
+        for notified_id in channels:
+            notified = await self.bot.get_channel(notified_id)
+            try:
+                await notified.send(
+                    f"""
+**ATTENTION! ZEREKIEL HAS SPAWNED!**
+This boss has {boss['hp']} HP and has high-end loot!
+The dragon will be vulnerable in 15 Minutes
+Use https://raid.travitia.xyz/ to join the raid!
+"""             )
+            except:
+                pass
         try:
             await self.bot.get_channel(506_133_354_874_404_874).send(
                 "@everyone Zerekiel spawned! 15 Minutes until he is vulnerable...\nUse https://raid.travitia.xyz/ to join the raid!"
@@ -86,7 +101,7 @@ Use https://raid.travitia.xyz/ to join the raid!
             )
             self.bot.boss_is_spawned = False
             return await ctx.send(
-                "Honestly... I COULD NOT SEND THE SPAWN MESSAGE IN #RAID-CHAT GUYS!!!"
+                "Honestly... I COULD NOT SEND THE SPAWN MESSAGE IN #RAID-MAIN GUYS!!!"
             )
         await asyncio.sleep(300)
         await ctx.send("**The dragon will be vulnerable in 10 minutes**")
@@ -378,7 +393,54 @@ Use https://raid.travitia.xyz/ to join the raid!
         await ctx.send(
             f"**{ctx.author.mention}'s raid multipliers**\nDamage Multiplier: x{atk} (Upgrading: ${atkp})\nDefense Multiplier: x{deff} (Upgrading: ${deffp})"
         )
-
+        
+    @commands.group(invoke_without_command=True)
+    async def raidnotif(self, ctx):
+        await ctx.send("Please use either `activate` or `deactivate` as a subcommand.")
+        
+    @raidnotif.command()
+    async def activate(self, ctx):
+        """Enters the channel this command is run in to the notified channels for raids"""
+        def mycheck(msg):
+            return (
+                msg.content.strip() == "accept" and amsg.author == ctx.author
+            )
+         await ctx.send(
+            f"This will notify this channel with an everyone ping when a raid starts.\nType `accept` to confirm.\n\nNOTE: this channel to be pinged should be private to avoid frustration with some members"
+        )
+        try:
+            await self.bot.wait_for("message", timeout=15, check=mycheck)
+        except asyncio.TimeoutError:
+            return await ctx.send("Notification activation cancelled")
+        async with self.bot.pool.acquire() as conn:
+                await conn.execute(
+                    "INSERT INTO raids (channels) VALUES ($1)", ctx.channel.id
+                )
+         await ctx.send(
+            f"Successfully added {ctx.channel} into the notified channels list."
+         )
+        
+    @raidnotif.command()
+    async def deactivate(self, ctx):
+        """Removes the channel this command is run in from the notified channels for raids."""
+        def mycheck(msg):
+            return (
+                msg.content.strip() == "accept" and amsg.author == ctx.author
+            )
+         await ctx.send(
+            f"This will no longer notify this channel with an everyone ping when a raid starts.\nType `accept` to confirm."
+        )
+        try:
+            await self.bot.wait_for("message", timeout=15, check=mycheck)
+        except asyncio.TimeoutError:
+            return await ctx.send("Notification activation cancelled")
+        async with self.bot.pool.acquire() as conn:
+                await conn.execute(
+                    'DELETE FROM raids WHERE "channel"=$1', ctx.channel.id
+                )
+         await ctx.send(
+            f"Successfully added {ctx.channel} into the notified channels list."
+         )
 
 def setup(bot):
     bot.add_cog(Raid(bot))
