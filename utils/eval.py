@@ -33,7 +33,7 @@ from traceback import format_exc
 from textwrap import indent
 
 
-async def evaluate(bot):
+async def evaluate(bot, body):
     env = {"bot": bot}
     env.update(globals())
     stdout = StringIO()
