@@ -179,6 +179,15 @@ async def user_is_patron(bot, user):
     )
     return any(response)
 
+def is_supporter():
+    async def predicate(ctx):
+        response = await bot.cogs["Sharding"].handler(
+            "user_is_helper", 1, args={"member_id": user.id}
+        )
+        return any(response)
+    
+    return commands.check(predicate)
+
 
 def is_hypesquad(ctx):
     member = ctx.bot.get_guild(ctx.bot.config.support_server_id).get_member(

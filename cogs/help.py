@@ -14,24 +14,13 @@ from discord.ext import commands
 from typing import Union
 from asyncpg import UniqueViolationError
 from classes.converters import User
+from utils.checks import is_supporter
 
 
 def chunks(l, n):
     """Yield successive n-sized chunks from l."""
     for i in range(0, len(l), n):
         yield l[i : i + n]
-
-
-def is_supporter():
-    async def predicate(ctx):
-        u = ctx.bot.get_guild(ctx.bot.config.support_server_id).get_member(
-            ctx.author.id
-        )
-        if not u:
-            return False
-        return "Support Team" in [r.name for r in u.roles]
-
-    return commands.check(predicate)
 
 
 class Help(commands.Cog):
@@ -180,7 +169,6 @@ class Help(commands.Cog):
             inv = await ctx.channel.create_invite()
         except discord.Forbidden:
             return await ctx.send("Error when creating Invite.")
-        c = self.bot.get_channel(453_551_307_249_418_254)
         em = discord.Embed(title="Help Request", colour=0xFF0000)
         em.add_field(name="Requested by", value=f"{ctx.author}")
         em.add_field(name="Requested in server", value=f"{ctx.guild.name}")
@@ -188,7 +176,7 @@ class Help(commands.Cog):
         em.add_field(name="Content", value=text)
         em.add_field(name="Invite", value=inv)
 
-        await c.send(embed=em)
+        await self.bot.http.send_message(453_551_307_249_418_254, None, embed=em.to_dict())
         await ctx.send(
             "Support team has been notified and will join as soon as possible!"
         )

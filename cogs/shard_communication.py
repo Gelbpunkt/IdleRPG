@@ -129,6 +129,23 @@ class Sharding(commands.Cog):
             "PUBLISH", self.communication_channel, json.dumps(payload)
         )
 
+    async def user_is_helper(self, member_id: int, command_id: str):
+        if not self.bot.get_user(member_id):
+            return  # if the instance cannot see them, we can't do much
+        member = self.bot.get_guild(self.bot.config.support_server_id).get_member(
+            member_id
+        )
+        if not member:
+            return  # when the bot can only see DMs with the user
+
+        if discord.utils.get(member.roles, name="Support Team"):
+            payload = {"output": True, "command_id": command_id}
+        else:
+            payload = {"output": False, "command_id": command_id}
+        await self.bot.redis.execute(
+            "PUBLISH", self.communication_channel, json.dumps(payload)
+        )
+
     async def get_user(self, user_id: int, command_id: str):
         if not self.bot.get_user(user_id):
             return
