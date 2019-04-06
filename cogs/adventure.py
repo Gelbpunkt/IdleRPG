@@ -689,12 +689,13 @@ Use attack, defend or recover
     @has_char()
     @commands.command(description="Cancels your current mission.")
     async def cancel(self, ctx):
-        ret = await self.bot.pool.fetchrow(
+        async with self.bot.pool.acquire() as conn:
+            ret = await self.bot.pool.fetchrow(
             'SELECT * FROM mission WHERE "name"=$1;', ctx.author.id
         )
-        if not ret:
-            return await ctx.send("You are on no mission.")
-        await conn.execute('DELETE FROM mission WHERE "name"=$1;', ctx.author.id)
+            if not ret:
+                return await ctx.send("You are on no mission.")
+            await conn.execute('DELETE FROM mission WHERE "name"=$1;', ctx.author.id)
         await ctx.send(
             f"Canceled your mission. Use `{ctx.prefix}adventure [missionID]` to start a new one!"
         )
