@@ -191,7 +191,7 @@ class Sharding(commands.Cog):
         if code.startswith("```") and code.endswith("```"):
             code = "\n".join(code.split("\n")[1:-1])
         code = code.strip("` \n")
-        payload = {"output": _evaluate(code), "command_id": command_id}
+        payload = {"output": await _evaluate(self.bot, code), "command_id": command_id}
         await self.bot.redis.execute(
             "PUBLISH", self.communication_channel, json.dumps(payload)
         )
