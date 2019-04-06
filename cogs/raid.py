@@ -86,7 +86,7 @@ Use https://raid.travitia.xyz/ to join the raid!
             )
             self.bot.boss_is_spawned = False
             return await ctx.send(
-                "Honestly... I COULD NOT SEND THE SPAWN MESSAGE IN #RAID-CHAT GUYS!!!"
+                "Honestly... I COULD NOT SEND THE SPAWN MESSAGE IN #RAID-MAIN GUYS!!!"
             )
         await asyncio.sleep(300)
         await ctx.send("**The dragon will be vulnerable in 10 minutes**")
@@ -378,7 +378,12 @@ Use https://raid.travitia.xyz/ to join the raid!
         await ctx.send(
             f"**{ctx.author.mention}'s raid multipliers**\nDamage Multiplier: x{atk} (Upgrading: ${atkp})\nDefense Multiplier: x{deff} (Upgrading: ${deffp})"
         )
-
-
+        
+    @commands.command()
+    async def raid(self, ctx):
+        await ctx.send(
+            f"Did you ever want to join together with other players to defeat the dragon that roams this land? Raids got you covered!\nJoin the support server (`{ctx.prefix}support`) for more information.")
+        )
+        
 def setup(bot):
     bot.add_cog(Raid(bot))
