@@ -77,10 +77,14 @@ async def start_bot():
     )
     bot.pool = await asyncpg.create_pool(**bot.config.database, max_size=10)
     bot.all_prefixes = {}
+    bot.all_guild_ids = [guild.id for guild in bot.guilds]
     async with bot.pool.acquire() as conn:
         prefixes = await conn.fetch("SELECT id, prefix FROM server;")
         for row in prefixes:
-            bot.all_prefixes[row[0]] = row[1]
+            if row[id] not in bot.all_guild_ids:
+                pass
+            else:
+                bot.all_prefixes[row[0]] = row[1]
     for extension in bot.config.initial_extensions:
         try:
             bot.load_extension(extension)
