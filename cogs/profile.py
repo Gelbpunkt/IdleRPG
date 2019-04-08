@@ -157,7 +157,7 @@ class Profile(commands.Cog):
                 background = "assets/profiles/Profile.png"
             else:
                 async with self.bot.session.get(background) as r:
-                    if r.status != "200"
+                    if r.status != "200":
                         background = "assets/profiles/Profile.png"
                     else:
                         background = BytesIO(await r.read())
