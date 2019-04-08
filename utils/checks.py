@@ -173,8 +173,8 @@ async def user_is_patron(bot, user):
 
 def is_supporter():
     async def predicate(ctx):
-        response = await bot.cogs["Sharding"].handler(
-            "user_is_helper", 1, args={"member_id": user.id}
+        response = await ctx.bot.cogs["Sharding"].handler(
+            "user_is_helper", 1, args={"member_id": ctx.author.id}
         )
         return any(response)
 

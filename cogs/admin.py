@@ -43,7 +43,6 @@ class Admin(commands.Cog):
             'UPDATE profile SET money=money-$1 WHERE "user"=$2;', money, other.id
         )
         await ctx.send(f"Successfully removed **${money}** from **{other}**.")
-        channel = self.bot.get_channel(self.bot.config.admin_log_channel)
         await self.bot.http.send_message(
             self.bot.config.admin_log_channel,
             f"**{ctx.author}** removed **${money}** from **{other}**.",

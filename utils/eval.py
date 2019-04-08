@@ -47,7 +47,7 @@ async def evaluate(bot, body):
     try:
         with redirect_stdout(stdout):
             ret = await func()
-    except Exception as e:
+    except Exception:
         value = stdout.getvalue()
         return f"```py\n{value}{format_exc()}\n```"
     else:

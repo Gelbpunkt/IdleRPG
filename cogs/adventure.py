@@ -691,8 +691,8 @@ Use attack, defend or recover
     async def cancel(self, ctx):
         async with self.bot.pool.acquire() as conn:
             ret = await self.bot.pool.fetchrow(
-            'SELECT * FROM mission WHERE "name"=$1;', ctx.author.id
-        )
+                'SELECT * FROM mission WHERE "name"=$1;', ctx.author.id
+            )
             if not ret:
                 return await ctx.send("You are on no mission.")
             await conn.execute('DELETE FROM mission WHERE "name"=$1;', ctx.author.id)
