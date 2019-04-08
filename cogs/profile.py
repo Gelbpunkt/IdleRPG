@@ -15,6 +15,7 @@ from discord.ext import commands
 from utils import misc as rpgtools
 from cogs.help import chunks
 from io import BytesIO
+from async_timeout import timeout
 from cogs.classes import genstats
 from utils import checks
 from cogs.shard_communication import user_on_cooldown as user_cooldown
@@ -156,12 +157,12 @@ class Profile(commands.Cog):
             if background == "0":
                 background = "assets/profiles/Profile.png"
             else:
-                async with self.bot.session.get(background) as r:
-                    if r.status != "200":
-                        background = "assets/profiles/Profile.png"
-                    else:
+                async with timeout(5), self.bot.session.get(background) as r:
+                    if r.status == 200:
                         background = BytesIO(await r.read())
                         background.seek(0)
+                    else:
+                        background = "assets/profiles/Profile.png"
             if str(profile[9]) != "0":
                 marriage = (await rpgtools.lookup(self.bot, profile[9])).split("#")[0]
             else:
