@@ -1,3 +1,8 @@
+"""Ignore this"""
+from discord.ext import commands
+
+"""End ignore"""
+
 """The token it will use for auth with Discord."""
 token = "my cool bot token"
 
@@ -47,44 +52,59 @@ initial_extensions = [
 ]
 
 """The channel where vote logging is sent from. This is an ID."""
-upvote_channel = 453948653913112609
+upvote_channel = 453_948_653_913_112_609
 
 """The prefix to use if none is set custom or we are in DMs."""
 global_prefix = "$"
 
 """The channel ID to send join logs to."""
-join_channel = 441821532696870922
+join_channel = 441_821_532_696_870_922
 
 """Defines whether it is a beta version or not. This would disable some parts, e.g. no longer post the stats to DBL and BFD."""
 is_beta = False
 
 """A list of Admins by ID."""
 admins = [
-    356091260429402122,
-    373797591395205122,
-    395938979293167617,
-    270624053809643522,
-    222005168147922944,
-    147874400836911104,
-    278269289960833035,
-    291215916916801536,
-    213045557181022209,
-    210510122810605569,
-    294894701708967936,
-    254234402354233344,
-    340745895932854272,
-    438443378498338816,
-    525139442663424011,
+    356_091_260_429_402_122,
+    373_797_591_395_205_122,
+    395_938_979_293_167_617,
+    270_624_053_809_643_522,
+    222_005_168_147_922_944,
+    147_874_400_836_911_104,
+    278_269_289_960_833_035,
+    291_215_916_916_801_536,
+    213_045_557_181_022_209,
+    210_510_122_810_605_569,
+    294_894_701_708_967_936,
+    254_234_402_354_233_344,
+    340_745_895_932_854_272,
+    438_443_378_498_338_816,
+    525_139_442_663_424_011,
+]
+
+"""A list of banned users."""
+bans = [
+    314_210_539_498_897_418,
+    326_069_549_042_630_657,
+    416_072_373_750_595_584,
+    283_291_722_749_050_883,
+    298_267_992_221_810_689,
+    121_469_467_782_807_552,
+    155_696_684_716_785_664,
+    206_439_870_288_101_386,
+    448_987_127_712_317_465,
+    138_058_071_619_534_848,
+    440_648_947_850_149_888,
 ]
 
 """The support server ID."""
-support_server_id = 430017996304678923
+support_server_id = 430_017_996_304_678_923
 
 """A channel ID to send admin logs to."""
-admin_log_channel = 457197748626653184
+admin_log_channel = 457_197_748_626_653_184
 
 """All owners who have access to eval, sql and other commands."""
-owners = [244508568517083136, 356091260429402122, 294894701708967936]
+owners = [244_508_568_517_083_136, 356_091_260_429_402_122, 294_894_701_708_967_936]
 
 """Credentials for the Lavalink server."""
 lava_creds = {
@@ -110,3 +130,6 @@ base_url = "https://idlerpg.travitia.xyz"
 
 """The Version of the Bot."""
 version = "3.4.0"
+
+"""Global cooldown (rate, per, [.user, .channel, .guild])"""
+cooldown = commands.CooldownMapping.from_cooldown(1, 3, commands.BucketType.user)

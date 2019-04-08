@@ -5,11 +5,10 @@ Copyright (C) 2018-2019 Diniboy and Gelbpunkt
 This software is dual-licensed under the GNU Affero General Public License for non-commercial and the Travitia License for commercial use.
 For more information, see README.md and LICENSE.md.
 """
-
-
 import discord
 
 from discord.ext import commands
+from utils.loops import queue_manager
 
 
 class GlobalEvents(commands.Cog):
@@ -24,7 +23,22 @@ class GlobalEvents(commands.Cog):
             self.status_updater()
         )  # Initiate the status updates and save it for the further close
 
+    async def on_message(self, message):
+        if message.author.bot or message.author.id in self.bot.bans:
+            return
+        await self.bot.process_commands(message)
+
     async def on_ready(self):
+        print(f"Logged in as {self.bot.user.name} (ID: {self.bot.user.id})")
+        print("--------")
+        print(f"Using discord.py {discord.__version__}")
+        print("--------")
+        print(f"You are running IdleRPG Bot {self.bot.version}")
+        owner = (await self.bot.application_info()).owner
+        self.bot.owner_id = owner.id
+        print(f"Created by {owner}")
+        self.bot.loop.create_task(queue_manager(self.bot, self.bot.queue))
+
         if not self.bot.config.is_beta:
             await self.bot.session.post(
                 f"https://discordbots.org/api/bots/{self.bot.user.id}/stats",
