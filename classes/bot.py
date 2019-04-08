@@ -5,13 +5,11 @@ Copyright (C) 2018-2019 Diniboy and Gelbpunkt
 This software is dual-licensed under the GNU Affero General Public License for non-commercial and the Travitia License for commercial use.
 For more information, see README.md and LICENSE.md.
 """
-
-
 import discord
 import datetime
 
 from discord.ext import commands
-
+from .context import Context
 
 class Bot(commands.AutoShardedBot):
     def __init__(self, **kwargs):
@@ -24,6 +22,9 @@ class Bot(commands.AutoShardedBot):
     @property
     def uptime(self):
         return datetime.datetime.now() - self.launch_time
+
+    async def get_context(self, message, *, cls=None):
+        return await super().get_context(message, cls=Context)
 
     async def get_user_global(self, user_id: int):
         user = self.get_user(user_id)
