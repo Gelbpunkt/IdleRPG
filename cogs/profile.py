@@ -157,8 +157,11 @@ class Profile(commands.Cog):
                 background = "assets/profiles/Profile.png"
             else:
                 async with self.bot.session.get(background) as r:
-                    background = BytesIO(await r.read())
-                    background.seek(0)
+                    if r.status != "200"
+                        background = "assets/profiles/Profile.png"
+                    else:
+                        background = BytesIO(await r.read())
+                        background.seek(0)
             if str(profile[9]) != "0":
                 marriage = (await rpgtools.lookup(self.bot, profile[9])).split("#")[0]
             else:
