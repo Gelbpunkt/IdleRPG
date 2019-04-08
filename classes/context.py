@@ -36,7 +36,7 @@ class Context(commands.Context):
             # #2 Advanced replace (gets matches and replaces with user repr)
             content = re.sub(
                 r"<@[!&]?([0-9]{17,21})>",
-                lambda x: f"@{str(self.bot.get_user(int(x.group(1))))}",
+                lambda x: f"@{self.bot.get_user(int(x.group(1)))}",
                 content,
             )
 
