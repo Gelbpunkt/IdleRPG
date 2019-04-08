@@ -28,8 +28,8 @@ import aioredis
 import asyncio
 import asyncpg
 import config
-import discord
 import datetime
+import discord
 import os
 import traceback
 
