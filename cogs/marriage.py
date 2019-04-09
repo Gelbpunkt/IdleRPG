@@ -358,18 +358,18 @@ To buy one of these items for your partner, use `{ctx.prefix}spoil shopid`
         if event == "death":
             cause = random.choice(
                 [
-                "They died of a shampoo overdose", 
+                "They died because of a shampoo overdose", 
                 "They died of lovesickness", 
-                "They died of age", 
+                "They've died of age", 
                 "They died of loneliness", 
-                "They were kidnapped by goblins", 
-                "They finally decided to move out after all these years, but couldn't survive a second alone", 
-                "They died of spontanious combustion",
-                "They got lost in the woods",
-                "They left through a portal into another dimension",
-                "They stepped on a brick of Lego\©",
-                "They stepped on a nearby landmine",
-                "They were abducted by aliens",
+                "A horde of goblins got them.", 
+                "They have finally decided to move out after all these years, but couldn't survive a second alone", 
+                "Spontanious combustion removed them from existence",
+                "While exploring the forest, they have gotten lost",
+                "They've left through a portal into another dimension",
+                "The unbearable pain of stepping on a Lego\© brick killed them",
+                "You heard a landmine going off nearby..",
+                "They have been abducted by aliens",
                 "The Catholic Church got them..",
                 ]
             )
