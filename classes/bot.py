@@ -13,6 +13,7 @@ import config
 import datetime
 import discord
 import os
+import sys
 import traceback
 
 from discord.ext import commands
@@ -44,7 +45,7 @@ class Bot(commands.AutoShardedBot):
             datetime.datetime.now()
         )  # we assume the bot is created for use right now
 
-    async def global_cooldown(ctx: commands.Context):
+    async def global_cooldown(self, ctx: commands.Context):
         bucket = self.config.cooldown.get_bucket(ctx.message)
         retry_after = bucket.update_rate_limit()
 
@@ -60,7 +61,7 @@ class Bot(commands.AutoShardedBot):
                     with open(f"{root}/{file_}") as f:
                         self.linecount += len(f.readlines())
 
-    async def connect_all():
+    async def connect_all(self):
         self.session = aiohttp.ClientSession(loop=self.loop)
         self.redis = await aioredis.create_pool(
             "redis://localhost", minsize=5, maxsize=10, loop=self.loop

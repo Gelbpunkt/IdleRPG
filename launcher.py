@@ -4,17 +4,16 @@ Copyright (C) 2018-2019 Diniboy and Gelbpunkt
 This software is dual-licensed under the GNU Affero General Public License for non-commercial and the Travitia License for commercial use.
 For more information, see README.md and LICENSE.md.
 """
-
-import sys
-import asyncio
-import json
 import aiohttp
 import aioredis
+import asyncio
+import json
+import sys
 
+from config import token
 from pathlib import Path
 from time import time
 from traceback import print_exc
-from config import token
 
 
 __version__ = "0.7.0a"
@@ -207,7 +206,7 @@ if __name__ == "__main__":
         loop.set_exception_handler(shutdown_handler)
         tasks = asyncio.gather(
             *asyncio.Task.all_tasks(loop=loop), loop=loop, return_exceptions=True
-        )
+        )  # TODO: asyncio.Task.all_tasks will be depracted soon
         tasks.add_done_callback(lambda t: loop.stop())
         tasks.cancel()
 
