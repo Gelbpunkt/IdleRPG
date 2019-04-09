@@ -357,7 +357,21 @@ To buy one of these items for your partner, use `{ctx.prefix}spoil shopid`
         event = random.choice(["death"] + ["age"] * 7 + ["namechange"] * 2)
         if event == "death":
             cause = random.choice(
-                ["a shampoo overdose", "lovesickness", "age", "loneliness"]
+                [
+                "a shampoo overdose", 
+                "lovesickness", 
+                "age", 
+                "loneliness", 
+                "kidnapped by goblins", 
+                "they decided to move out", 
+                "spontanious combustion",
+                "getting lost in the woods",
+                "left  through a portal into another dimension",
+                "stepping on a brick of Lego\©",
+                "they stepped on a landmine",
+                "abducted by aliens",
+                #"the Catholic Church",
+                ]
             )
             async with self.bot.pool.acquire() as conn:
                 await conn.execute(
