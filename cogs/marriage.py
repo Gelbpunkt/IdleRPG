@@ -357,21 +357,7 @@ To buy one of these items for your partner, use `{ctx.prefix}spoil shopid`
         event = random.choice(["death"] + ["age"] * 7 + ["namechange"] * 2)
         if event == "death":
             cause = random.choice(
-                [
-                "They died because of a shampoo overdose", 
-                "They died of lovesickness", 
-                "They've died of age", 
-                "They died of loneliness", 
-                "A horde of goblins got them.", 
-                "They have finally decided to move out after all these years, but couldn't survive a second alone", 
-                "Spontanious combustion removed them from existence",
-                "While exploring the forest, they have gotten lost",
-                "They've left through a portal into another dimension",
-                "The unbearable pain of stepping on a Lego\© brick killed them",
-                "You heard a landmine going off nearby..",
-                "They have been abducted by aliens",
-                "The Catholic Church got them..",
-                ]
+                ["a shampoo overdose", "lovesickness", "age", "loneliness"]
             )
             async with self.bot.pool.acquire() as conn:
                 await conn.execute(
@@ -380,7 +366,7 @@ To buy one of these items for your partner, use `{ctx.prefix}spoil shopid`
                     ctx.author.id,
                 )
             return await ctx.send(
-                f"{target[2]} died at the age of {target[3]}! {cause}."
+                f"{target[2]} died at the age of {target[3]}! The cause was {cause}."
             )
         elif event == "age":
             async with self.bot.pool.acquire() as conn:
