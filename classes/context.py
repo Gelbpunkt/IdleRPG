@@ -40,4 +40,4 @@ class Context(commands.Context):
                 content,
             )
 
-        await super().send(content, *args, **kwargs)
+        return await super().send(content, *args, **kwargs)
