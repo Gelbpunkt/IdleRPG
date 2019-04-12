@@ -644,7 +644,7 @@ Use attack, defend or recover
                             guild,
                         )
                     # !!! TEMPORARY EASTER EVENT !!!
-                    eggs = int(round(isfinished[3] ** 1.2 * random.randint(3, 6), 0))
+                    eggs = int(round(isfinished[3] ** 1.2 * random.randint(1, 4), 0))
                     await conn.execute(
                         'UPDATE profile SET "money"="money"+$1, "xp"="xp"+$2, "completed"="completed"+1, "eastereggs"="eastereggs"+$3 WHERE "user"=$4;',
                         gold,
@@ -658,7 +658,7 @@ Use attack, defend or recover
                         )
                     else:
                         await ctx.send(
-                            f"You have completed your dungeon and received **${gold}** as well as a new weapon: **{item[2]}**. Experience gained: **{xp}**.\nYour partner received **${int(gold/2)}**.You found **{eggs}** eastereggs! <:easteregg:566251086986608650> (`{ctx.prefix}easter`)"
+                            f"You have completed your dungeon and received **${gold}** as well as a new weapon: **{item[2]}**. Experience gained: **{xp}**.\nYour partner received **${int(gold/2)}**. You found **{eggs}** eastereggs! <:easteregg:566251086986608650> (`{ctx.prefix}easter`)"
                         )
                 else:
                     await ctx.send("You died on your mission. Try again!")
