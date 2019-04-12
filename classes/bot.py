@@ -23,7 +23,7 @@ from utils import paginator
 
 class Bot(commands.AutoShardedBot):
     def __init__(self, **kwargs):
-        super().__init__(**kwargs)
+        super().__init__(command_prefix=self._get_prefix, **kwargs)
 
         # setup stuff
         self.queue = asyncio.Queue(loop=self.loop)  # global queue for ordered tasks
@@ -36,7 +36,6 @@ class Bot(commands.AutoShardedBot):
         self.linecount = 0
         self.make_linecount()
         self.all_prefixes = {}
-        self.command_prefix = self.get_prefix
 
         # global cooldown
         self.add_check(self.global_cooldown, call_once=True)
@@ -89,7 +88,7 @@ class Bot(commands.AutoShardedBot):
     async def get_context(self, message, *, cls=None):
         return await super().get_context(message, cls=Context)
 
-    def get_prefix(self, message):
+    def _get_prefix(self, message):
         if not message.guild or self.config.is_beta:
             return (
                 self.config.global_prefix
