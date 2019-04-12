@@ -643,28 +643,22 @@ Use attack, defend or recover
                             int(gold / 10),
                             guild,
                         )
-
+                    # !!! TEMPORARY EASTER EVENT !!!
+                    eggs = round(isfinished[3] ** 1.2 * random.randint(3, 6), 0)
                     await conn.execute(
-                        'UPDATE profile SET money=money+$1 WHERE "user"=$2;',
+                        'UPDATE profile SET "money"="money"+$1, "xp"="xp"+$2, "completed"="completed"+1, "eastereggs"="eastereggs"+$3 WHERE "user"=$4;',
                         gold,
-                        ctx.author.id,
-                    )
-                    await conn.execute(
-                        'UPDATE profile SET xp=xp+$1 WHERE "user"=$2;',
                         xp,
-                        ctx.author.id,
-                    )
-                    await conn.execute(
-                        'UPDATE profile SET completed=completed+1 WHERE "user"=$1;',
+                        eggs,
                         ctx.author.id,
                     )
                     if partner == 0:
                         await ctx.send(
-                            f"You have completed your dungeon and received **${gold}** as well as a new weapon: **{item[2]}**. Experience gained: **{xp}**."
+                            f"You have completed your dungeon and received **${gold}** as well as a new weapon: **{item[2]}**. Experience gained: **{xp}**.\nYou found **{eggs}** eastereggs! <:easteregg:566251086986608650> (`{ctx.prefix}easter`)"
                         )
                     else:
                         await ctx.send(
-                            f"You have completed your dungeon and received **${gold}** as well as a new weapon: **{item[2]}**. Experience gained: **{xp}**.\nYour partner received **${int(gold/2)}**."
+                            f"You have completed your dungeon and received **${gold}** as well as a new weapon: **{item[2]}**. Experience gained: **{xp}**.\nYour partner received **${int(gold/2)}**.You found **{eggs}** eastereggs! <:easteregg:566251086986608650> (`{ctx.prefix}easter`)"
                         )
                 else:
                     await ctx.send("You died on your mission. Try again!")
