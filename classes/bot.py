@@ -88,7 +88,7 @@ class Bot(commands.AutoShardedBot):
     async def get_context(self, message, *, cls=None):
         return await super().get_context(message, cls=Context)
 
-    def _get_prefix(self, message):
+    def _get_prefix(self, bot, message):
         if not message.guild or self.config.is_beta:
             return (
                 self.config.global_prefix
