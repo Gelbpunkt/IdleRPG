@@ -108,6 +108,10 @@ class Miscellaneous(commands.Cog):
         myhours = delta.days * 3
         sysinfo = platform.linux_distribution()
         owner = await self.bot.get_user_global(self.bot.owner_id)
+        guild_count = sum(
+            await self.bot.cogs["Sharding"].handler("guild_count", self.bot.shard_count)
+        )
+
         embed = discord.Embed(
             title="IdleRPG Statistics",
             colour=0xB8BBFF,
@@ -134,7 +138,7 @@ class Miscellaneous(commands.Cog):
         )
         embed.add_field(
             name="Bot Statistics",
-            value=f"Code lines written: **{self.bot.linecount}**\nShards: **{len(self.bot.shards)}**\nServers: **{len(self.bot.guilds)}**\nMembers: "
+            value=f"Code lines written: **{self.bot.linecount}**\nShards: **{self.bot.shard_count}**\nServers: **{guild_count}**\nMembers: "
             f"**{len(self.bot.users)}**\nChannels: **{len(set(self.bot.get_all_channels()))}**\nCharacters: **{characters}**\nItems: **{items}**\nAverage hours of work: "
             f"**{myhours}**",
             inline=False,

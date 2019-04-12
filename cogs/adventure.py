@@ -644,7 +644,7 @@ Use attack, defend or recover
                             guild,
                         )
                     # !!! TEMPORARY EASTER EVENT !!!
-                    eggs = round(isfinished[3] ** 1.2 * random.randint(3, 6), 0)
+                    eggs = int(round(isfinished[3] ** 1.2 * random.randint(3, 6), 0))
                     await conn.execute(
                         'UPDATE profile SET "money"="money"+$1, "xp"="xp"+$2, "completed"="completed"+1, "eastereggs"="eastereggs"+$3 WHERE "user"=$4;',
                         gold,

@@ -19,15 +19,16 @@ class GlobalEvents(commands.Cog):
         }  # needed for DBL requests
         self.auth_headers2 = {"Authorization": bot.config.bfdtoken}
         self.bot_owner = None
-        self.status_updates = bot.loop.create_task(
-            self.status_updater()
-        )  # Initiate the status updates and save it for the further close
+        self.stats_updates = bot.loop.create_task(
+            self.stats_updater()
+        )  # Initiate the stats updates and save it for the further close
 
+    @commands.Cog.listener()
     async def on_message(self, message):
         if message.author.bot or message.author.id in self.bot.bans:
             return
-        await self.bot.process_commands(message)
 
+    @commands.Cog.listener()
     async def on_ready(self):
         print(f"Logged in as {self.bot.user.name} (ID: {self.bot.user.id})")
         print("--------")
@@ -38,35 +39,16 @@ class GlobalEvents(commands.Cog):
         self.bot.owner_id = owner.id
         print(f"Created by {owner}")
         self.bot.loop.create_task(queue_manager(self.bot, self.bot.queue))
+        await self.status_updater()
 
-        if not self.bot.config.is_beta:
-            await self.bot.session.post(
-                f"https://discordbots.org/api/bots/{self.bot.user.id}/stats",
-                data=self.get_dbl_payload(),
-                headers=self.auth_headers,
-            )
-            await self.bot.session.post(
-                f"https://botsfordiscord.com/api/bot/{self.bot.user.id}",
-                data=self.get_bfd_payload(),
-                headers=self.auth_headers2,
-            )
-
+    @commands.Cog.listener()
     async def on_guild_remove(self, guild):
         if self.bot.config.is_beta:
             return
         announce_channel = self.bot.get_channel(self.bot.config.join_channel)
         await announce_channel.send(f"Bye bye **{guild.name}**!")
-        await self.bot.session.post(
-            f"https://discordbots.org/api/bots/{self.bot.user.id}/stats",
-            data=self.get_dbl_payload(),
-            headers=self.auth_headers,
-        )
-        await self.bot.session.post(
-            f"https://botsfordiscord.com/api/bot/{self.bot.user.id}",
-            data=self.get_bfd_payload(),
-            headers=self.auth_headers2,
-        )
 
+    @commands.Cog.listener()
     async def on_guild_join(self, guild):
         if not self.bot_owner:  # just for performance reasons (+1 API call)
             self.bot_owner = await self.bot.fetch_user(self.bot.owner_id)
@@ -99,22 +81,30 @@ class GlobalEvents(commands.Cog):
         await announce_channel.send(
             f"Joined a new server! **{guild.name}** with **{len(guild.members)}** members!"
         )
-        await self.bot.session.post(
-            f"https://discordbots.org/api/bots/{self.bot.user.id}/stats",
-            data=self.get_dbl_payload(),
-            headers=self.auth_headers,
-        )
-        await self.bot.session.post(
-            f"https://botsfordiscord.com/api/bot/{self.bot.user.id}",
-            data=self.get_bfd_payload(),
-            headers=self.auth_headers2,
-        )
 
     async def status_updater(self):
         await self.bot.wait_until_ready()
         await self.bot.change_presence(
             activity=discord.Game(name=self.bot.BASE_URL), status=discord.Status.idle
         )
+
+    async def stats_updater(self):
+        if (
+            self.bot.shard_count - 1 not in self.bot.shards.keys()
+        ) or self.bot.config.is_beta:
+            return
+        await self.bot.wait_until_ready()
+        while True:
+            await self.bot.session.post(
+                f"https://discordbots.org/api/bots/{self.bot.user.id}/stats",
+                data=self.get_dbl_payload(),
+                headers=self.auth_headers,
+            )
+            await self.bot.session.post(
+                f"https://botsfordiscord.com/api/bot/{self.bot.user.id}",
+                data=self.get_bfd_payload(),
+                headers=self.auth_headers2,
+            )
 
     async def get_dbl_payload(self):
         return {
@@ -136,7 +126,7 @@ class GlobalEvents(commands.Cog):
         }
 
     def cog_unload(self):
-        self.status_updates.cancel()  # Cancel the status updates on unload
+        self.stats_updates.cancel()
 
 
 def setup(bot):

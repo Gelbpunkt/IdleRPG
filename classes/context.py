@@ -21,14 +21,14 @@ class Context(commands.Context):
     def disp(self):
         return self.author.display_name
 
-    async def send(self, content, *args, **kwargs):
+    async def send(self, content=None, *args, **kwargs):
         escape_massmentions = kwargs.get("escape_massmentions", True)
         escape_mentions = kwargs.get("escape_mentions", False)
-        if escape_massmentions:
+        if escape_massmentions and content:
             content = content.replace("@here", "@\u200bhere").replace(
                 "@everyone", "@\u200beveryone"
             )
-        if escape_mentions:
+        if escape_mentions and content:
             # There is 2 options here:
             # #1 Simple replace
             # content = re.sub(r"@([!&]?[0-9]{17,21})", "@\u200b\\1", content)

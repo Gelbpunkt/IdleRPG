@@ -41,7 +41,7 @@ class Errorhandler(commands.Cog):
         ):
             # Do nothing if the command/cog has its own error handler
             return
-        if isinstance(error, commands.CommandNotFound):
+        if isinstance(error, commands.CommandNotFound) and hasattr(ctx, "guild"):
             async with self.bot.pool.acquire() as conn:
                 ret = await conn.fetchval(
                     'SELECT "unknown" FROM server WHERE "id"=$1;', ctx.guild.id

@@ -372,7 +372,7 @@ To buy one of these items for your partner, use `{ctx.prefix}spoil shopid`
                     "Spontanious combustion removed them from existence",
                     "While exploring the forest, they have gotten lost.",
                     "They've left through a portal into another dimension...",
-                    "The unbearable pain of stepping on a Lego\© brick killed them.",
+                    "The unbearable pain of stepping on a Lego\© brick killed them.",  # noqa
                     "You heard a landmine going off nearby...",
                     "They have been abducted by aliens!",
                     "The Catholic Church got them...",

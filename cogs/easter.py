@@ -5,14 +5,13 @@ Copyright (C) 2018-2019 Diniboy and Gelbpunkt
 This software is dual-licensed under the GNU Affero General Public License for non-commercial and the Travitia License for commercial use.
 For more information, see README.md and LICENSE.md.
 """
-import discord
 import random
 
 from discord.ext import commands
 from utils.checks import has_char
 
 
-class Easter:
+class Easter(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
@@ -20,7 +19,7 @@ class Easter:
     async def easter(self, ctx):
         """Easter related commands for trading your collected eastereggs in for rewards."""
         await ctx.send(
-            f"**Easter event**\n\nLasts until the Tuesday after Easter!\nCollect eastereggs and use `{ctx.prefix}easter rewards` to check the rewards."
+            f"**Easter event <:easteregg:566251086986608650>**\n\nLasts until the Tuesday after Easter!\nCollect eastereggs and use `{ctx.prefix}easter rewards` to check the rewards. <:bunny:566290173831151627>\nHappy hunting!"
         )
 
     @has_char()
@@ -30,7 +29,7 @@ class Easter:
         await ctx.send(
             f"""
 **Easter event - rewards**
-Use `{ctx.prefix} easter reward [1-10]` to trade your eggs in.
+Use `{ctx.prefix}easter reward [1-10]` to trade your eggs in.
 
 **100 <:easteregg:566251086986608650>** - 1 crate
 **500 <:easteregg:566251086986608650>** - $10000
@@ -50,7 +49,7 @@ You have **{ctx.character_data["eastereggs"]}** <:easteregg:566251086986608650>.
     @easter.command()
     async def reward(self, ctx, reward_id: int):
         """Get your easter reward. ID may be 1 to 10."""
-        if reward < 1 or reward > 10:
+        if reward_id < 1 or reward_id > 10:
             return await ctx.send("Invalid reward.")
         reward = [
             (100, "crates", 1),
