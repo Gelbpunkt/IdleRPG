@@ -39,5 +39,13 @@ class Context(commands.Context):
                 lambda x: f"@{self.bot.get_user(int(x.group(1)))}",
                 content,
             )
+        try:
+            del kwargs["escape_mentions"]
+        except KeyError:
+            pass
+        try:
+            del kwargs["escape_massmentions"]
+        except KeyError:
+            pass
 
         return await super().send(content, *args, **kwargs)
