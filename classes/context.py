@@ -22,8 +22,8 @@ class Context(commands.Context):
         return self.author.display_name
 
     async def send(self, content=None, *args, **kwargs):
-        escape_massmentions = kwargs.get("escape_massmentions", True)
-        escape_mentions = kwargs.get("escape_mentions", False)
+        escape_massmentions = kwargs.pop("escape_massmentions", True)
+        escape_mentions = kwargs.pop("escape_mentions", False)
         if escape_massmentions and content:
             content = content.replace("@here", "@\u200bhere").replace(
                 "@everyone", "@\u200beveryone"
@@ -39,13 +39,5 @@ class Context(commands.Context):
                 lambda x: f"@{self.bot.get_user(int(x.group(1)))}",
                 content,
             )
-        try:
-            del kwargs["escape_mentions"]
-        except KeyError:
-            pass
-        try:
-            del kwargs["escape_massmentions"]
-        except KeyError:
-            pass
 
         return await super().send(content, *args, **kwargs)
