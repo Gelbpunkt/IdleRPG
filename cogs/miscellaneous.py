@@ -292,6 +292,8 @@ However, as work on this is not done and code not clean, v3.5 will come by time,
             return await ctx.send("Use the ndx format.")
         if dice_type[0] > 100:
             return await ctx.send("Too many dice.")
+        if dice_type[1] <= 0:
+            return await ctx.send("Dice must have at least one side.")
         results = []
         for _ in range(dice_type[0]):
             results.append(random.randint(1, dice_type[1]))
