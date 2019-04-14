@@ -116,7 +116,7 @@ You have **{ctx.character_data["eastereggs"]}** <:easteregg:566251086986608650>.
                 )
                 id_ = await conn.fetchval(
                     'INSERT INTO allitems ("owner", "type", "armor", "damage", "name", "value") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id";',
-                    ctx.athor.id,
+                    ctx.author.id,
                     type_,
                     deff,
                     atk,
