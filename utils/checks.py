@@ -155,7 +155,7 @@ def is_no_guild_leader():
     """Checks for a user not to be guild leader."""
 
     async def predicate(ctx):
-        ctx.profile_data = await ctx.bot.pool.fetchval(
+        ctx.profile_data = await ctx.bot.pool.fetchrow(
             'SELECT * FROM profile WHERE "user"=$1;', ctx.author.id
         )
         if ctx.profile_data["guildrank"] != "Leader":
