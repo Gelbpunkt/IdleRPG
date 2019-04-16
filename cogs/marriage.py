@@ -248,7 +248,7 @@ To buy one of these items for your partner, use `{ctx.prefix}spoil shopid`
             await conn.execute(
                 'UPDATE profile SET lovescore=lovescore+$1 WHERE "user"=$2;',
                 num,
-                ctx.character_data["marriage"],
+                marriage,
             )
         partner = await self.bot.get_user_global(marriage)
         scenario = random.choice(
