@@ -236,6 +236,38 @@ To buy one of these items for your partner, use `{ctx.prefix}spoil shopid`
         await user.send(
             f"**{ctx.author}** bought you a **{item[1]}** and increased your love score by **{item[2]}** points!"
         )
+        
+    @has_char()
+    @commands.command(name="date")
+    @user_cooldown(43200)
+    async def _date(self, ctx):
+        """Take your loved one on a date to increase your lovescore."""
+        num = random.randint(1, 15) * 10
+        marriage = ctx.character_data["marriage"]
+        if not marriage:
+            await ctx.send("You are not married yet.")
+        async with self.bot.pool.acquire() as conn:
+            await conn.execute(
+                'UPDATE profile SET lovescore=lovescore+$1 WHERE "user"=$2;',
+                num,
+                marriage,
+            )
+        
+        partner = await self.bot.get_user_global(marriage)
+        scenario = random.choice(
+            [
+                f"You and {partner.mention} went on a nice candlelit dinner.",
+                f"You and {partner.mention} had stargazed all night.",
+                f"You and {partner.mention} went to a circus that was in town.",
+                f"You and {partner.mention} went out to see a romantic movie.",
+                f"You and {partner.mention} went out to get ice cream.",
+                f"You and {partner.mention} had an anime marathon.",
+                f"You and {partner.mention} went for a spontaneous hiking trip.",
+                f"You and {partner.mention} decided to visit Paris.",
+                f"You and {partner.mention} went ice skating together.",
+            ]
+        )
+        await ctx.send(f"{scenario} This increased your lovescore by {num}")
 
     @has_char()
     @commands.guild_only()
