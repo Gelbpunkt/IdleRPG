@@ -34,14 +34,11 @@ class Store(commands.Cog):
         await ctx.send(embed=shopembed)
 
     @has_char()
-    @commands.command(description="Buy an item from the store.")
-    async def purchase(self, ctx, item: str, amount: int = 1):
-        try:
-            item = int(item.lstrip("#"))
-        except ValueError:
-            return await ctx.send("Enter a valid store item to buy.")
+    @commands.command()
+    async def purchase(self, ctx, item: int, amount: int = 1):
+        """Buy a booster from the store."""
         if item < 1 or item > 3:
-            return await ctx.send("Enter a valid store item to buy.")
+            return await ctx.send("Enter a valid booster to buy.")
         price = [1000, 500, 1000][item - 1] * amount
         if not await has_money(self.bot, ctx.author.id, price):
             return await ctx.send("You're too poor.")
