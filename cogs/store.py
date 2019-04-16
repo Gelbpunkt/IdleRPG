@@ -125,7 +125,7 @@ class Store(commands.Cog):
                     f"You already have one of these boosters active! Use `{ctx.prefix}boosters` to see how long it still lasts."
                 )
             elif check and check2:
-                return await conn.execute(
+                await conn.execute(
                     'DELETE FROM boosters WHERE "type"=$1 AND "user"=$2;',
                     boostertype,
                     ctx.author.id,
