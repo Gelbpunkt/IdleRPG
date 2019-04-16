@@ -248,7 +248,7 @@ To buy one of these items for your partner, use `{ctx.prefix}spoil shopid`
                 'SELECT marriage FROM profile WHERE "user"=$1;', ctx.author.id
             )
 
-            if marriage == 0:
+            if not marriage:
                 return await ctx.send("You are not married.")
 
             await conn.execute(
@@ -256,18 +256,18 @@ To buy one of these items for your partner, use `{ctx.prefix}spoil shopid`
                 num,
                 marriage,
             )
-        partner = await rpgtools.lookup(self.bot, marriage)
+        partner = await self.bot.get_user_global(marriage)
         scenario = random.choice(
             [
-                f"You and {partner} went on a nice candlelit dinner.",
-                f"You and {partner} had stargazed all night.",
-                f"You and {partner} went to a circus that was in town.",
-                f"You and {partner} went out to see a romantic movie.",
-                f"You and {partner} went out to get ice cream.",
-                f"You and {partner} had an anime marathon.",
-                f"You and {partner} went for a spontaneous hiking trip.",
-                f"You and {partner} decided to visit Paris.",
-                f"You and {partner} went ice skating together.",
+                f"You and {partner.mention} went on a nice candlelit dinner.",
+                f"You and {partner.mention} had stargazed all night.",
+                f"You and {partner.mention} went to a circus that was in town.",
+                f"You and {partner.mention} went out to see a romantic movie.",
+                f"You and {partner.mention} went out to get ice cream.",
+                f"You and {partner.mention} had an anime marathon.",
+                f"You and {partner.mention} went for a spontaneous hiking trip.",
+                f"You and {partner.mention} decided to visit Paris.",
+                f"You and {partner.mention} went ice skating together.",
             ]
         )
         await ctx.send(f"{scenario} This increased your lovescore by {num}")
