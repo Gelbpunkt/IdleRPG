@@ -242,7 +242,7 @@ To buy one of these items for your partner, use `{ctx.prefix}spoil shopid`
     @commands.cooldown(1, 43200, commands.BucketType.user)
     async def _date(self, ctx):
         """Take your loved one on a date to increase your lovescore."""
-        num = int(random.randint(1, 15) * 10)
+        num = random.randint(1, 15) * 10
         async with self.bot.pool.acquire() as conn:
             marriage = await conn.fetchval(
                 'SELECT marriage FROM profile WHERE "user"=$1;', ctx.author.id
@@ -259,15 +259,15 @@ To buy one of these items for your partner, use `{ctx.prefix}spoil shopid`
         partner = await rpgtools.lookup(self.bot, marriage)
         scenario = random.choice(
             [
-                f"You and {partner.name} went on a nice candlelit dinner.",
-                f"You and {partner.name} had stargazed all night.",
-                f"You and {partner.name} went to a circus that was in town.",
-                f"You and {partner.name} went out to see a romantic movie.",
-                f"You and {partner.name} went out to get ice cream.",
-                f"You and {partner.name} had an anime marathon.",
-                f"You and {partner.name} went for a spontaneous hiking trip.",
-                f"You and {partner.name} decided to visit Paris.",
-                f"You and {partner.name} went ice skating together.",
+                f"You and {partner} went on a nice candlelit dinner.",
+                f"You and {partner} had stargazed all night.",
+                f"You and {partner} went to a circus that was in town.",
+                f"You and {partner} went out to see a romantic movie.",
+                f"You and {partner} went out to get ice cream.",
+                f"You and {partner} had an anime marathon.",
+                f"You and {partner} went for a spontaneous hiking trip.",
+                f"You and {partner} decided to visit Paris.",
+                f"You and {partner} went ice skating together.",
             ]
         )
         await ctx.send(f"{scenario} This increased your lovescore by {num}")
