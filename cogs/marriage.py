@@ -245,7 +245,8 @@ To buy one of these items for your partner, use `{ctx.prefix}spoil shopid`
         num = random.randint(1, 15) * 10
         marriage = ctx.character_data["marriage"]
         if not marriage:
-            await ctx.send("You are not married yet.")
+            await self.bot.reset_cooldown(ctx)
+            return await ctx.send("You are not married yet.")
         async with self.bot.pool.acquire() as conn:
             await conn.execute(
                 'UPDATE profile SET lovescore=lovescore+$1 WHERE "user"=$2;',
