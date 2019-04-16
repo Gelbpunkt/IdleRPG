@@ -239,7 +239,7 @@ To buy one of these items for your partner, use `{ctx.prefix}spoil shopid`
         
     @has_char()
     @commands.command(name="date")
-    @commands.cooldown(1, 43200, commands.BucketType.user)
+    @user_cooldown(43200)
     async def _date(self, ctx):
         """Take your loved one on a date to increase your lovescore."""
         num = random.randint(1, 15) * 10
