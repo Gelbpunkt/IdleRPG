@@ -16,7 +16,9 @@ class Vote(commands.Cog):
 
     @commands.command(description="Sends a vote link.")
     async def vote(self, ctx):
-        await ctx.send("Upvote me for a big thanks! You will be rewarded a few seconds afterwards!\nhttps://discordbots.org/bot/idlerpg")
+        await ctx.send(
+            "Upvote me for a big thanks! You will be rewarded a few seconds afterwards!\nhttps://discordbots.org/bot/idlerpg"
+        )
 
 
 def setup(bot):

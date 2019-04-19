@@ -52,7 +52,7 @@ class Admin(commands.Cog):
     @commands.command(aliases=["adelete"], hidden=True)
     async def admindelete(self, ctx, other: User):
         """[Bot Admin only] Deletes any user's account."""
-        if other.id in ctx.bot.config.admins: # preserve deletion of admins
+        if other.id in ctx.bot.config.admins:  # preserve deletion of admins
             return await ctx.send("Very funny...")
         if not await user_has_char(self.bot, other.id):
             return await ctx.send("That person doesn't have a character.")
@@ -66,14 +66,12 @@ class Admin(commands.Cog):
     @commands.command(aliases=["arename"], hidden=True)
     async def adminrename(self, ctx, target: User):
         """[Bot Admin only] Renames a character."""
-        if target.id in ctx.bot.config.admins: # preserve renaming of admins
+        if target.id in ctx.bot.config.admins:  # preserve renaming of admins
             return await ctx.send("Very funny...")
         if not await user_has_char(self.bot, target.id):
             return await ctx.send("That person doesn't have a character.")
 
-        await ctx.send(
-            "What shall the character's name be? (min. 3 letters, max. 20)"
-        )
+        await ctx.send("What shall the character's name be? (min. 3 letters, max. 20)")
 
         def mycheck(amsg):
             return (
@@ -143,23 +141,27 @@ class Admin(commands.Cog):
                 'UPDATE profile SET "background"=$1, "class"=$2 WHERE "user"=$3;',
                 "0",
                 "No Class",
-                target.id
+                target.id,
             )
             await conn.execute(
                 'UPDATE allitems SET "name"=$1 WHERE "owner"=$2 AND "type"=$3;',
                 "Broken Sword",
                 ctx.author.id,
-                "Sword"
+                "Sword",
             )
             await conn.execute(
                 'UPDATE allitems SET "name"=$1 WHERE "owner"=$2 AND "type"=$3;',
                 "Broken Shield",
                 ctx.author.id,
-                "Shield"
+                "Shield",
             )
-            await conn.execute('UPDATE guilds SET "memberlimit"=$1 WHERE "leader"=$2;', 50, target.id)
+            await conn.execute(
+                'UPDATE guilds SET "memberlimit"=$1 WHERE "leader"=$2;', 50, target.id
+            )
 
-        await ctx.send(f"Successfully reset {target}'s background, class, item names and guild member limit.")
+        await ctx.send(
+            f"Successfully reset {target}'s background, class, item names and guild member limit."
+        )
 
 
 def setup(bot):

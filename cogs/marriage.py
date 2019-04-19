@@ -236,7 +236,7 @@ To buy one of these items for your partner, use `{ctx.prefix}spoil shopid`
         await user.send(
             f"**{ctx.author}** bought you a **{item[1]}** and increased your love score by **{item[2]}** points!"
         )
-        
+
     @has_char()
     @commands.command(name="date")
     @user_cooldown(43200)
@@ -253,7 +253,7 @@ To buy one of these items for your partner, use `{ctx.prefix}spoil shopid`
                 num,
                 marriage,
             )
-        
+
         partner = await self.bot.get_user_global(marriage)
         scenario = random.choice(
             [
