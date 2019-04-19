@@ -4,22 +4,21 @@ Copyright (C) 2018-2019 Diniboy and Gelbpunkt
 This software is dual-licensed under the GNU Affero General Public License for non-commercial and the Travitia License for commercial use.
 For more information, see README.md and LICENSE.md.
 """
-
-from traceback import format_exc
 import asyncio
-from datetime import timedelta
+import discord
 import re
+
+from async_timeout import timeout
+from datetime import timedelta
+from discord.ext import commands
+from traceback import format_exc
+from utils.eval import evaluate as _evaluate
+from uuid import uuid4
 
 try:
     import ujson as json  # faster, but linux only
 except ImportError:
     import json
-from uuid import uuid4
-from async_timeout import timeout
-import discord
-from discord.ext import commands
-
-from utils.eval import evaluate as _evaluate
 
 
 # Cross-process cooldown check (pass this to commands)
@@ -86,7 +85,7 @@ class Sharding(commands.Cog):
             try:
                 payload = await channel.get_json(encoding="utf-8")
             except json.decoder.JSONDecodeError:
-                return  # not a valid JSON message
+                continue  # not a valid JSON message
             if payload.get("action") and hasattr(self, payload.get("action")):
                 try:
                     if payload.get("scope") != "bot":
@@ -113,6 +112,7 @@ class Sharding(commands.Cog):
                     await self.bot.redis.execute(
                         "PUBLISH", self.communication_channel, json.dumps(payload)
                     )
+                    continue
             if payload.get("output") and payload["command_id"] in self._messages:
                 self._messages[payload["command_id"]].append(payload["output"])
 
