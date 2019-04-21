@@ -6,15 +6,16 @@ Please keep to these conventions when contributing to IdleRPG.
 
 At every file's top, insert the license header please. You may fine it in most of the files, just copy paste it.
 
-### Black
+### Black, flake8 and isort
 
-Always run `test.sh` and run `pip3 install black && pip3 install flake8` before. Fix any issues caused.
+We use black for codestyle and isort for import ordering.
+Always run `test.sh` and run `pip3 install black && pip3 install flake8 && pip3 install isort` before. Fix any issues caused.
 
 ### Import Order
 
-Order your imports alphabetically. Partial imports after normal ones, seperated with one line.
-Also, **no empty lines after license header and imports**.
-2 empty lines after last imports.
+Order your imports with `isort -rc .`.
+Also, **no empty lines after license header**.
+2 empty lines after the imports.
 
 
 Example:
@@ -23,19 +24,18 @@ Example:
 """
 License blah blah
 """
-import aiohttp
-import aioredis
 import asyncio
-import asyncpg
-import config
-import datetime
-import discord
-import os
-import traceback
+import functools
+import random
 
-from classes.context import Context
+import discord
 from discord.ext import commands
-from utils import paginator
+
+from cogs.classes import genstats
+from cogs.shard_communication import user_on_cooldown as user_cooldown
+from utils import misc as rpgtools
+from utils.checks import has_char
+from utils.tools import todelta
 
 
 class Whatever():
