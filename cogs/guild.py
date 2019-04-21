@@ -17,10 +17,19 @@ from discord.ext import commands
 from classes.converters import User
 from cogs.shard_communication import user_on_cooldown as user_cooldown
 from utils import misc as rpgtools
-from utils.checks import (has_char, has_guild, has_guild_, has_money,
-                          has_no_guild, is_guild_leader, is_guild_officer,
-                          is_member_of_author_guild, is_no_guild_leader,
-                          user_has_char, user_is_patron)
+from utils.checks import (
+    has_char,
+    has_guild,
+    has_guild_,
+    has_money,
+    has_no_guild,
+    is_guild_leader,
+    is_guild_officer,
+    is_member_of_author_guild,
+    is_no_guild_leader,
+    user_has_char,
+    user_is_patron,
+)
 from utils.tools import todelta
 
 
