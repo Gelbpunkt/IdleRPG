@@ -42,11 +42,13 @@ class Miscellaneous(commands.Cog):
     @commands.command()
     async def ping(self, ctx):
         """My current websocket latency."""
-        await ctx.send(embed=discord.Embed(
-            title="Pong!",
-            description=f"My current latency is {round(self.bot.latency*1000, 2)}ms",
-            color=0xF1C60C,
-        ))
+        await ctx.send(
+            embed=discord.Embed(
+                title="Pong!",
+                description=f"My current latency is {round(self.bot.latency*1000, 2)}ms",
+                color=0xF1C60C,
+            )
+        )
 
     @commands.command(aliases=["donate"])
     async def patreon(self, ctx):
