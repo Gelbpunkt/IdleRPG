@@ -7,13 +7,14 @@ For more information, see README.md and LICENSE.md.
 """
 
 
-import discord
 import asyncio
 import random
 
+import discord
 from discord.ext import commands
-from utils.checks import has_char, has_money, user_has_char
+
 from cogs.shard_communication import user_on_cooldown as user_cooldown
+from utils.checks import has_char, has_money, user_has_char
 
 
 class Battles(commands.Cog):

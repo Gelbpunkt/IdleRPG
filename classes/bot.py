@@ -5,18 +5,19 @@ Copyright (C) 2018-2019 Diniboy and Gelbpunkt
 This software is dual-licensed under the GNU Affero General Public License for non-commercial and the Travitia License for commercial use.
 For more information, see README.md and LICENSE.md.
 """
-import aiohttp
-import aioredis
 import asyncio
-import asyncpg
-import config
 import datetime
-import discord
 import os
 import sys
 import traceback
 
+import aiohttp
+import aioredis
+import asyncpg
+import discord
 from discord.ext import commands
+
+import config
 from classes.context import Context
 from utils import paginator
 

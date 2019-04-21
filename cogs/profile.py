@@ -7,19 +7,20 @@ For more information, see README.md and LICENSE.md.
 """
 
 
-import discord
-import functools
 import asyncio
-
-from discord.ext import commands
-from utils import misc as rpgtools
-from cogs.help import chunks
+import functools
 from io import BytesIO
+
+import discord
 from async_timeout import timeout
-from cogs.classes import genstats
-from utils import checks
-from cogs.shard_communication import user_on_cooldown as user_cooldown
+from discord.ext import commands
+
 from classes.converters import User
+from cogs.classes import genstats
+from cogs.help import chunks
+from cogs.shard_communication import user_on_cooldown as user_cooldown
+from utils import checks
+from utils import misc as rpgtools
 
 
 class Profile(commands.Cog):

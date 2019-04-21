@@ -4,17 +4,17 @@ Copyright (C) 2018-2019 Diniboy and Gelbpunkt
 This software is dual-licensed under the GNU Affero General Public License for non-commercial and the Travitia License for commercial use.
 For more information, see README.md and LICENSE.md.
 """
-import aiohttp
-import aioredis
 import asyncio
 import json
 import sys
-
-from config import token
 from pathlib import Path
 from time import time
 from traceback import print_exc
 
+import aiohttp
+import aioredis
+
+from config import token
 
 __version__ = "0.7.0a"
 

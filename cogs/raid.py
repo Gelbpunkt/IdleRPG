@@ -7,15 +7,16 @@ For more information, see README.md and LICENSE.md.
 """
 
 
-import discord
 import asyncio
 import datetime
 import random
-
-from discord.ext import commands
-from utils.checks import is_admin, has_char, has_money
-from cogs.classes import genstats
 from decimal import Decimal
+
+import discord
+from discord.ext import commands
+
+from cogs.classes import genstats
+from utils.checks import has_char, has_money, is_admin
 
 
 def in_raid():

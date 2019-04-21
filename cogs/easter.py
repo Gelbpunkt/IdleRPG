@@ -8,6 +8,7 @@ For more information, see README.md and LICENSE.md.
 import random
 
 from discord.ext import commands
+
 from utils.checks import has_char
 
 

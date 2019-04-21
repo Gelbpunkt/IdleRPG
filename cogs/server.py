@@ -7,10 +7,11 @@ For more information, see README.md and LICENSE.md.
 """
 
 
-import discord
 import asyncio
 
+import discord
 from discord.ext import commands
+
 from cogs.help import chunks
 
 

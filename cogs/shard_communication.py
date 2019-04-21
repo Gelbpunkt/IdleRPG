@@ -5,15 +5,16 @@ This software is dual-licensed under the GNU Affero General Public License for n
 For more information, see README.md and LICENSE.md.
 """
 import asyncio
-import discord
 import re
-
-from async_timeout import timeout
 from datetime import timedelta
-from discord.ext import commands
 from traceback import format_exc
-from utils.eval import evaluate as _evaluate
 from uuid import uuid4
+
+import discord
+from async_timeout import timeout
+from discord.ext import commands
+
+from utils.eval import evaluate as _evaluate
 
 try:
     import ujson as json  # faster, but linux only

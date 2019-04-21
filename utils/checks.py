@@ -6,7 +6,6 @@ This software is dual-licensed under the GNU Affero General Public License for n
 For more information, see README.md and LICENSE.md.
 """
 import discord
-
 from discord.ext import commands
 
 

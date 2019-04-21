@@ -7,15 +7,16 @@ For more information, see README.md and LICENSE.md.
 """
 
 
-import discord
-import functools
 import copy
-
+import functools
 from io import BytesIO
-from discord.ext import commands
-from utils.misc import makebg
-from utils.checks import is_patron, has_char
+
+import discord
 from asyncpg.exceptions import StringDataRightTruncationError
+from discord.ext import commands
+
+from utils.checks import has_char, is_patron
+from utils.misc import makebg
 
 
 class Patreon(commands.Cog):

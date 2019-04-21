@@ -7,10 +7,11 @@ For more information, see README.md and LICENSE.md.
 """
 
 
-import discord
 import datetime
 
+import discord
 from discord.ext import commands
+
 from utils.checks import has_char, has_money
 
 

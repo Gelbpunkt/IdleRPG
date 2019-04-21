@@ -7,8 +7,9 @@ For more information, see README.md and LICENSE.md.
 """
 import asyncio
 
-from classes.converters import User
 from discord.ext import commands
+
+from classes.converters import User
 from utils.checks import is_admin, user_has_char
 
 

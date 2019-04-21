@@ -7,15 +7,15 @@ For more information, see README.md and LICENSE.md.
 """
 
 
-import discord
-import traceback
-import textwrap
+import copy
 import io
 import subprocess
-import copy
-
+import textwrap
+import traceback
 from contextlib import redirect_stdout
 from importlib import reload as importlib_reload
+
+import discord
 from discord.ext import commands
 
 

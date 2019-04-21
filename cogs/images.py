@@ -7,15 +7,15 @@ For more information, see README.md and LICENSE.md.
 """
 
 
-import discord
-import math
 import functools
-
-from discord.ext import commands
-from PIL import Image, ImageOps, ImageFilter
+import math
 from collections import defaultdict
 from io import BytesIO
+
+import discord
+from discord.ext import commands
 from discord.ext.commands import BucketType
+from PIL import Image, ImageFilter, ImageOps
 
 
 class Images(commands.Cog):

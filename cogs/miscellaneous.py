@@ -7,16 +7,17 @@ For more information, see README.md and LICENSE.md.
 """
 import asyncio
 import datetime
+import platform
+import random
+from datetime import date
+
 import discord
 import pkg_resources as pkg
-import platform
 import psutil
-import random
-
-from cogs.shard_communication import user_on_cooldown as user_cooldown
-from datetime import date
 from discord.ext import commands
 from discord.ext.commands import BucketType
+
+from cogs.shard_communication import user_on_cooldown as user_cooldown
 from utils.checks import has_char
 
 

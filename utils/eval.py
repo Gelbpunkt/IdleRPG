@@ -27,10 +27,10 @@ FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 """
 
-from io import StringIO
 from contextlib import redirect_stdout
-from traceback import format_exc
+from io import StringIO
 from textwrap import indent
+from traceback import format_exc
 
 
 async def evaluate(bot, body):

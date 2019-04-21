@@ -7,13 +7,13 @@ For more information, see README.md and LICENSE.md.
 """
 
 
-import random
 import io
 import os
-
-from PIL import Image, ImageFont, ImageDraw
+import random
 from pathlib import Path
+
 from discord.errors import NotFound
+from PIL import Image, ImageDraw, ImageFont
 
 levels = {
     "1": 0,

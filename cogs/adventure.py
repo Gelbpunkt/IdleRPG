@@ -7,15 +7,16 @@ For more information, see README.md and LICENSE.md.
 """
 
 
-import discord
-import random
 import asyncio
 import functools
+import random
 
+import discord
+from discord.ext import commands
+
+from cogs.classes import genstats
 from cogs.shard_communication import user_on_cooldown as user_cooldown
 from utils import misc as rpgtools
-from discord.ext import commands
-from cogs.classes import genstats
 from utils.checks import has_char
 from utils.tools import todelta
 

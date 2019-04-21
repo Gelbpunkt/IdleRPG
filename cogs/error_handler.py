@@ -7,15 +7,16 @@ For more information, see README.md and LICENSE.md.
 """
 
 
-from aiohttp import ClientOSError, ServerDisconnectedError, ContentTypeError
-import discord
-import traceback
-import Levenshtein as lv
-import utils.checks
 import sys
-
+import traceback
 from datetime import timedelta
+
+import discord
+import Levenshtein as lv
+from aiohttp import ClientOSError, ContentTypeError, ServerDisconnectedError
 from discord.ext import commands
+
+import utils.checks
 
 try:
     from raven import Client

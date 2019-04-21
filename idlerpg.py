@@ -7,10 +7,9 @@ For more information, see README.md and LICENSE.md.
 """
 import asyncio
 import sys
-
-from classes.bot import Bot
 from json import loads
 
+from classes.bot import Bot
 
 if sys.platform == "linux" and sys.version_info >= (
     3,
