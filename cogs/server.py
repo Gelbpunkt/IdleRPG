@@ -5,8 +5,6 @@ Copyright (C) 2018-2019 Diniboy and Gelbpunkt
 This software is dual-licensed under the GNU Affero General Public License for non-commercial and the Travitia License for commercial use.
 For more information, see README.md and LICENSE.md.
 """
-
-
 import asyncio
 
 import discord
@@ -209,7 +207,8 @@ class Server(commands.Cog):
             await ctx.send("```" + "\n".join(i) + "```")
 
     @commands.command(description="Steal Avatars.")
-    async def avatar(self, ctx, target: discord.Member):
+    async def avatar(self, ctx, target: discord.Member = None):
+        target = target or ctx.author
         await ctx.send(
             embed=discord.Embed(
                 title="Download Link",
