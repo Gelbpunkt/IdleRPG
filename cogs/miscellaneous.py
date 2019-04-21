@@ -235,7 +235,7 @@ However, as work on this is not done and code not clean, v3.5 will come by time,
         results = list(filter(lambda a: a.lower() != "or", results))
         await ctx.send(f"My choice is: **{random.choice(results)}**.")
 
-    @commands.guily_only()
+    @commands.guild_only()
     @commands.command()
     async def love(self, ctx, first: discord.Member, second: discord.Member):
         """Calculates the potential love for 2 members."""
