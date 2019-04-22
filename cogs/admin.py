@@ -91,6 +91,7 @@ class Admin(commands.Cog):
         await self.bot.pool.execute(
             'UPDATE profile SET "name"=$1 WHERE "user"=$2;', name, target.id
         )
+        await ctx.send("Renamed.")
         await self.bot.http.send_message(
             self.bot.config.admin_log_channel,
             f"**{ctx.author}** renamed **{target}** to **{name}**.",
@@ -157,11 +158,15 @@ class Admin(commands.Cog):
                 "Shield",
             )
             await conn.execute(
-                'UPDATE guilds SET "memberlimit"=$1 WHERE "leader"=$2;', 50, target.id
+                'UPDATE guild SET "memberlimit"=$1 WHERE "leader"=$2;', 50, target.id
             )
 
         await ctx.send(
             f"Successfully reset {target}'s background, class, item names and guild member limit."
+        )
+        await self.bot.http.send_message(
+            self.bot.config.admin_log_channel,
+            f"**{ctx.author}** reset **{target}**'s donator perks.",
         )
 
 
