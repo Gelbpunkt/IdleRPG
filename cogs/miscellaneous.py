@@ -39,7 +39,7 @@ class Miscellaneous(commands.Cog):
         await self.bot.redis.execute(
             "EXPIRE", f"idle:daily:{ctx.author.id}", 48 * 60 * 60
         )  # 48h: after 2 days, they missed it
-        money = 2 ** (streak_mul % 10 - 1) * 50
+        money = 2 ** (streak_mul % 11 - 1) * 50
         await self.bot.pool.execute(
             'UPDATE profile SET money=money+$1 WHERE "user"=$2;', money, ctx.author.id
         )
