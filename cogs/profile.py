@@ -178,7 +178,7 @@ class Profile(commands.Cog):
     async def profile2(self, ctx, target: User = None):
         """View someone's profile, not image based."""
         target = target or ctx.author
-        rank_xp, rank_money = await self.bot.get_ranks_for(target)
+        rank_money, rank_xp = await self.bot.get_ranks_for(target)
         sword, shield = await self.bot.get_equipped_items_for(target)
         async with self.bot.pool.acquire() as conn:
             p_data = await conn.fetchrow(

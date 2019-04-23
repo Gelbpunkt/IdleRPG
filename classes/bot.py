@@ -97,7 +97,7 @@ class Bot(commands.AutoShardedBot):
                 "SELECT position FROM (SELECT profile.*, ROW_NUMBER() OVER(ORDER BY profile.money DESC) AS position FROM profile) s WHERE s.user = $1 LIMIT 1;",
                 v,
             )
-        return xp, money
+        return money, xp
 
     async def get_equipped_items_for(self, thing):
         v = thing.id if isinstance(thing, (discord.Member, discord.User)) else thing
