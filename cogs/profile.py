@@ -108,12 +108,12 @@ class Profile(commands.Cog):
         await ctx.trigger_typing()
         person = person or ctx.author
         targetid = person.id
-        if not await checks.user_has_char(self.bot, targetid):
-            return await ctx.send(f"**{person}** doesn't have a character.")
         async with self.bot.pool.acquire() as conn:
             profile = await conn.fetchrow(
                 'SELECT * FROM profile WHERE "user"=$1;', targetid
             )
+            if not profile:
+                return await ctx.send(f"**{person}** does not have a character.")
             sword, shield = await self.bot.get_equipped_items_for(targetid)
             ranks = await self.bot.get_ranks_for(targetid)
             mission = await conn.fetchrow(
@@ -184,6 +184,8 @@ class Profile(commands.Cog):
             p_data = await conn.fetchrow(
                 'SELECT * FROM profile WHERE "user"=$1;', target.id
             )
+            if not p_data:
+                return await ctx.send(f"**{target}** does not have a character.")
             mission = await conn.fetchrow(
                 'SELECT *, "end" - clock_timestamp() AS timeleft FROM mission WHERE "name"=$1;',
                 target.id,
