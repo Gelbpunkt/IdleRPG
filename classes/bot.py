@@ -88,7 +88,7 @@ class Bot(commands.AutoShardedBot):
 
     async def get_ranks_for(self, thing):
         v = thing.id if isinstance(thing, (discord.Member, discord.User)) else thing
-        async with self.bot.pool.acquire() as conn:
+        async with self.pool.acquire() as conn:
             xp = await conn.fetchval(
                 "SELECT position FROM (SELECT profile.*, ROW_NUMBER() OVER(ORDER BY profile.xp DESC) AS position FROM profile) s WHERE s.user = $1 LIMIT 1;",
                 v,
@@ -107,7 +107,7 @@ class Bot(commands.AutoShardedBot):
                 v,
             )
             shield = await conn.fetchrow(
-                "SELECT ai.* FROM profile p JOIN allitems ai ON (p.user=ai.owner) JOIN inventory i ON (ai.id=i.item) WHERE i.equipped IS TRUE AND p.user=$1 AND type='Sword';",
+                "SELECT ai.* FROM profile p JOIN allitems ai ON (p.user=ai.owner) JOIN inventory i ON (ai.id=i.item) WHERE i.equipped IS TRUE AND p.user=$1 AND type='Shield';",
                 v,
             )
         return sword, shield

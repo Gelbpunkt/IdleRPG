@@ -157,10 +157,7 @@ def profile_image(
         missionstring = f"Adventure {missionnumber}, {endstr}"
     except (KeyError, IndexError):
         missionstring = "You are in no adventure!"
-    if guild:
-        guild = guild[0]
-    else:
-        guild = "No guild"
+    guild = guild or "No guild"
 
     with Image.open(image) as my_image:
         if color:

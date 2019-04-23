@@ -192,29 +192,30 @@ class Profile(commands.Cog):
                 'SELECT name FROM guild WHERE "id"=$1;', p_data["guild"]
             )
         try:
-            colour = discord.Colour.from_rgb(rpgtools.hex_to_rgb(p_data["colour"]))
+            colour = discord.Colour.from_rgb(*rpgtools.hex_to_rgb(p_data["colour"]))
         except ValueError:
             colour = 0x000000
         if mission:
             timeleft = (
                 mission["timeleft"]
-                if mission["timeleft"] > datetime.datetime.utcnow()
+                if mission["end"] > datetime.datetime.now(datetime.timezone.utc)
                 else "Finished"
             )
         sword = f"{sword['name']} - {sword['damage']}" if sword else "No sword"
         shield = f"{shield['name']} - {shield['armor']}" if shield else "No shield"
         level = rpgtools.xptolevel(p_data["xp"])
         em = discord.Embed(colour=colour, title=f"{target}: {p_data['name']}")
+        em.set_thumbnail(url=target.avatar_url)
         em.add_field(
             name="General",
-            value=f"**Money**: `${p_data['money']}`\n**Level**: `{level}`\n**PvP Wins**: `{p_data['pvp']}`\n**Guild**: `{guild}`",
+            value=f"**Money**: `${p_data['money']}`\n**Level**: `{level}`\n**Class**: `{p_data['class']}`\n**PvP Wins**: `{p_data['pvpwins']}`\n**Guild**: `{guild}`",
         )
         em.add_field(
             name="Ranks", value=f"**Richest**: `{rank_money}`\n**XP**: `{rank_xp}`"
         )
-        em.add_field(name="Equipment", value=f"{sword}\n{shield}")
+        em.add_field(name="Equipment", value=f"Sword: {sword}\nShield: {shield}")
         if mission:
-            em.add_field(name=f"{mission['dungeon']} - {timeleft}")
+            em.add_field(name="Mission", value=f"{mission['dungeon']} - {timeleft}")
         await ctx.send(embed=em)
 
     @checks.has_char()
