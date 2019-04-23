@@ -155,7 +155,7 @@ def profile_image(
             endstr = "finished"
         missionnumber = mission[3]
         missionstring = f"Adventure {missionnumber}, {endstr}"
-    except (KeyError, IndexError):
+    except (KeyError, IndexError, TypeError):
         missionstring = "You are in no adventure!"
     guild = guild or "No guild"
 
