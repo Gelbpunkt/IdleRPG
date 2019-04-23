@@ -7,15 +7,16 @@ For more information, see README.md and LICENSE.md.
 """
 
 
-import discord
-import secrets
-import os
 import asyncio
+import os
 import random
+import secrets
 
+import discord
 from discord.ext import commands
-from utils.checks import has_money, has_char
+
 from cogs.shard_communication import user_on_cooldown as user_cooldown
+from utils.checks import has_char, has_money
 
 
 class BlackJack:

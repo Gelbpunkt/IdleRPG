@@ -7,15 +7,16 @@ For more information, see README.md and LICENSE.md.
 """
 
 
-import discord
-import functools
 import copy
-
+import functools
 from io import BytesIO
-from discord.ext import commands
-from utils.misc import makebg
-from utils.checks import is_patron, has_char
+
+import discord
 from asyncpg.exceptions import StringDataRightTruncationError
+from discord.ext import commands
+
+from utils.checks import has_char, is_patron
+from utils.misc import makebg
 
 
 class Patreon(commands.Cog):
@@ -136,7 +137,7 @@ class Patreon(commands.Cog):
             )
             try:
                 bg = bgs[number - 1]
-            except IndexError:
+            except TypeError:
                 return await ctx.send(
                     f"The background number {number} is not valid, you only have {len(bgs)} available."
                 )

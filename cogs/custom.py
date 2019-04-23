@@ -8,7 +8,6 @@ For more information, see README.md and LICENSE.md.
 
 
 import discord
-
 from discord.ext import commands
 
 

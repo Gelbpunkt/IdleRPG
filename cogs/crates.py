@@ -7,10 +7,11 @@ For more information, see README.md and LICENSE.md.
 """
 
 
-import discord
 import random
 
+import discord
 from discord.ext import commands
+
 from utils.checks import has_char
 
 
@@ -26,7 +27,7 @@ class Crates(commands.Cog):
                 'SELECT crates FROM profile WHERE "user"=$1;', ctx.author.id
             )
         await ctx.send(
-            f"You currently have **{crates}** crates, {ctx.author.mention}!"
+            f"You currently have **{crates}** crates, {ctx.author.mention}! "
             f"Use `{ctx.prefix}open` to open one!"
         )
 

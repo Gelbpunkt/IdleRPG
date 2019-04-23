@@ -5,39 +5,60 @@ Copyright (C) 2018-2019 Diniboy and Gelbpunkt
 This software is dual-licensed under the GNU Affero General Public License for non-commercial and the Travitia License for commercial use.
 For more information, see README.md and LICENSE.md.
 """
-
-
 import discord
 from discord.ext import commands
 
 
 class NoCharacter(commands.CheckFailure):
+    """Exception raised when a user has no character."""
+
     pass
 
 
 class NoGuild(commands.CheckFailure):
+    """Exception raised when a user has no guild."""
+
     pass
 
 
-class Guild(commands.CheckFailure):
+class NeedsNoGuild(commands.CheckFailure):
+    """Exception raised when a user needs to be in no guild."""
+
     pass
 
 
-class NoRank(commands.CheckFailure):
+class NoGuildPermissions(commands.CheckFailure):
+    """Exception raised when a user does not have permissions because he is missing roles."""
+
     pass
 
 
-class Leader(commands.CheckFailure):
+class NeedsNoGuildLeader(commands.CheckFailure):
+    """Exception raised when a user is guild leader and can't use the command therefore."""
+
+    pass
+
+
+class NeedsNoAdventure(commands.CheckFailure):
+    """Exception raised when a user needs to be on no adventure."""
+
+    pass
+
+
+class NeedsAdventure(commands.CheckFailure):
+    """Exception raised when a user needs to be on an adventure."""
+
     pass
 
 
 def has_char():
+    """Checks for a user to have a character."""
+
     async def predicate(ctx):
-        async with ctx.bot.pool.acquire() as conn:
-            test = await conn.fetchrow(
-                'SELECT * FROM profile WHERE "user"=$1;', ctx.author.id
-            )
-        if test:
+        ctx.character_data = await ctx.bot.pool.fetchrow(
+            'SELECT * FROM profile WHERE "user"=$1;', ctx.author.id
+        )
+        if ctx.character_data:
             return True
         raise NoCharacter()
 
@@ -45,41 +66,53 @@ def has_char():
 
 
 def has_adventure():
+    """Checks for a user to be on an adventure."""
+
     async def predicate(ctx):
-        async with ctx.bot.pool.acquire() as conn:
-            return await conn.fetchrow(
-                'SELECT * FROM mission WHERE "name"=$1;', ctx.author.id
-            )
+        ctx.adventure_data = await ctx.bot.pool.fetchrow(
+            'SELECT * FROM mission WHERE "name"=$1;', ctx.author.id
+        )
+        if ctx.adventure_data:
+            return True
+        raise NeedsAdventure()
 
     return commands.check(predicate)
 
 
 def has_no_adventure():
+    """Checks for a user to be on no adventure."""
+
     async def predicate(ctx):
-        async with ctx.bot.pool.acquire() as conn:
-            return not await conn.fetchrow(
-                'SELECT * FROM mission WHERE "name"=$1;', ctx.author.id
-            )
+        if not await ctx.bot.pool.fetchrow(
+            'SELECT * FROM mission WHERE "name"=$1;', ctx.author.id
+        ):
+            return True
+        raise NeedsNoAdventure()
 
     return commands.check(predicate)
 
 
 def has_no_guild():
+    """Checks for a user to be in no guild."""
+
     async def predicate(ctx):
         if not await ctx.bot.pool.fetchval(
             'SELECT guild FROM profile WHERE "user"=$1;', ctx.author.id
         ):
             return True
-        raise Guild()
+        raise NeedsNoGuild()
 
     return commands.check(predicate)
 
 
 def has_guild():
+    """Checks for a user to be in a guild."""
+
     async def predicate(ctx):
-        if await ctx.bot.pool.fetchval(
+        ctx.guild_data = await ctx.bot.pool.fetchval(
             'SELECT guild FROM profile WHERE "user"=$1;', ctx.author.id
-        ):
+        )
+        if ctx.guild_data:
             return True
         raise NoGuild()
 
@@ -87,48 +120,51 @@ def has_guild():
 
 
 def is_guild_officer():
+    """Checks for a user to be guild officer or leader."""
+
     async def predicate(ctx):
-        rank = await ctx.bot.pool.fetchval(
-            'SELECT guildrank FROM profile WHERE "user"=$1;', ctx.author.id
+        ctx.profile_data = await ctx.bot.pool.fetchrow(
+            'SELECT * FROM profile WHERE "user"=$1;', ctx.author.id
         )
-        if rank == "Leader" or rank == "Officer":
+        if (
+            ctx.profile_data["guildrank"] == "Leader"
+            or ctx.profile_data["guildrank"] == "Officer"
+        ):
             return True
-        raise NoRank()
+        raise NoGuildPermissions()
 
     return commands.check(predicate)
 
 
 def is_guild_leader():
+    """Checks for a user to be guild leader."""
+
     async def predicate(ctx):
-        rank = await ctx.bot.pool.fetchval(
-            'SELECT guildrank FROM profile WHERE "user"=$1;', ctx.author.id
+        ctx.profile_data = await ctx.bot.pool.fetchrow(
+            'SELECT * FROM profile WHERE "user"=$1;', ctx.author.id
         )
-        if rank == "Leader":
+        if ctx.profile_data["guildrank"] == "Leader":
             return True
-        raise NoRank()
+        raise NoGuildPermissions()
 
     return commands.check(predicate)
 
 
 def is_no_guild_leader():
+    """Checks for a user not to be guild leader."""
+
     async def predicate(ctx):
-        rank = await ctx.bot.pool.fetchval(
-            'SELECT guildrank FROM profile WHERE "user"=$1;', ctx.author.id
+        ctx.profile_data = await ctx.bot.pool.fetchrow(
+            'SELECT * FROM profile WHERE "user"=$1;', ctx.author.id
         )
-        if rank != "Leader":
+        if ctx.profile_data["guildrank"] != "Leader":
             return True
-        raise Leader()
+        raise NeedsNoGuildLeader()
 
     return commands.check(predicate)
 
 
-def is_support_server():
-    async def predicate(ctx):
-        if ctx.channel.id == ctx.bot.config.support_server_id:
-            return True
-        return False
-
-    return commands.check(predicate)
+# TODO: Pass context here and assign there?
 
 
 async def has_guild_(bot, userid):
@@ -136,12 +172,12 @@ async def has_guild_(bot, userid):
 
 
 async def is_member_of_author_guild(ctx, userid):
-    usrs = await ctx.bot.pool.fetch(
+    users = await ctx.bot.pool.fetch(
         'SELECT guild FROM profile WHERE "user"=$1 OR "user"=$2;', ctx.author.id, userid
     )
-    if len(usrs) != 2:
+    if len(users) != 2:
         return False
-    return usrs[0]["guild"] == usrs[1]["guild"]
+    return users[0]["guild"] == users[1]["guild"]
 
 
 async def user_has_char(bot, userid):
@@ -178,6 +214,16 @@ async def user_is_patron(bot, user):
         "user_is_patreon", 1, args={"member_id": user.id}
     )
     return any(response)
+
+
+def is_supporter():
+    async def predicate(ctx):
+        response = await ctx.bot.cogs["Sharding"].handler(
+            "user_is_helper", 1, args={"member_id": ctx.author.id}
+        )
+        return any(response)
+
+    return commands.check(predicate)
 
 
 def is_hypesquad(ctx):

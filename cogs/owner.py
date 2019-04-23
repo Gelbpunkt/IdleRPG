@@ -7,15 +7,15 @@ For more information, see README.md and LICENSE.md.
 """
 
 
-import discord
-import traceback
-import textwrap
+import copy
 import io
 import subprocess
-import copy
-
+import textwrap
+import traceback
 from contextlib import redirect_stdout
 from importlib import reload as importlib_reload
+
+import discord
 from discord.ext import commands
 
 
@@ -49,7 +49,7 @@ class Owner(commands.Cog):
         # Hidden means it won't show up on the default help.
 
     @commands.command(name="load", hidden=True)
-    async def cog_load(self, ctx, *, cog: str):
+    async def _load(self, ctx, *, cog: str):
         """Command which Loads a Module.
         Remember to use dot path. e.g: cogs.owner"""
 
@@ -61,7 +61,7 @@ class Owner(commands.Cog):
             await ctx.send("**`SUCCESS`**")
 
     @commands.command(name="unload", hidden=True)
-    async def cog_unload(self, ctx, *, cog: str):
+    async def _unload(self, ctx, *, cog: str):
         """Command which Unloads a Module.
         Remember to use dot path. e.g: cogs.owner"""
 
@@ -73,7 +73,7 @@ class Owner(commands.Cog):
             await ctx.send("**`SUCCESS`**")
 
     @commands.command(name="reload", hidden=True)
-    async def cog_reload(self, ctx, *, cog: str):
+    async def _reload(self, ctx, *, cog: str):
         """Command which Reloads a Module.
         Remember to use dot path. e.g: cogs.owner"""
 
@@ -153,6 +153,19 @@ class Owner(commands.Cog):
             else:
                 self._last_result = ret
                 await ctx.send(f"```py\n{value}{ret}\n```")
+
+    @commands.command(
+        description="[Owner only] Evaluates python code on all instances", hidden=True
+    )
+    async def evall(self, ctx, *, code: str):
+        data = "".join(
+            await self.bot.cogs["Sharding"].handler(
+                "evaluate", self.bot.shard_count, {"code": code}
+            )
+        )
+        if len(data) > 2000:
+            data = data[:1997] + "..."
+        await ctx.send(data)
 
     @commands.command(description="[Owner only] Evaluates Bash Commands.", hidden=True)
     async def bash(self, ctx, *, command_to_run: str):

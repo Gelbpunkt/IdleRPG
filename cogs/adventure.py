@@ -7,15 +7,16 @@ For more information, see README.md and LICENSE.md.
 """
 
 
-import discord
-import random
 import asyncio
 import functools
+import random
 
+import discord
+from discord.ext import commands
+
+from cogs.classes import genstats
 from cogs.shard_communication import user_on_cooldown as user_cooldown
 from utils import misc as rpgtools
-from discord.ext import commands
-from cogs.classes import genstats
 from utils.checks import has_char
 from utils.tools import todelta
 
@@ -44,14 +45,8 @@ class Adventure(commands.Cog):
                 'SELECT xp FROM profile WHERE "user"=$1;', ctx.author.id
             )
             playerlevel = rpgtools.xptolevel(playerxp)
-            try:
-                swordbonus = sword["damage"]
-            except KeyError:
-                swordbonus = 0
-            try:
-                shieldbonus = shield["armor"]
-            except KeyError:
-                shieldbonus = 0
+            swordbonus = sword["damage"] if sword else 0
+            shieldbonus = shield["armor"] if shield else 0
             chances = []
             msg = await ctx.send("Loading images...")
             for row in alldungeons:
@@ -649,28 +644,22 @@ Use attack, defend or recover
                             int(gold / 10),
                             guild,
                         )
-
+                    # !!! TEMPORARY EASTER EVENT !!!
+                    # eggs = int(round(isfinished[3] ** 1.5 * random.randint(4, 6), 0))
                     await conn.execute(
-                        'UPDATE profile SET money=money+$1 WHERE "user"=$2;',
+                        'UPDATE profile SET "money"="money"+$1, "xp"="xp"+$2, "completed"="completed"+1 WHERE "user"=$3;',
                         gold,
-                        ctx.author.id,
-                    )
-                    await conn.execute(
-                        'UPDATE profile SET xp=xp+$1 WHERE "user"=$2;',
                         xp,
-                        ctx.author.id,
-                    )
-                    await conn.execute(
-                        'UPDATE profile SET completed=completed+1 WHERE "user"=$1;',
+                        # eggs,
                         ctx.author.id,
                     )
                     if partner == 0:
                         await ctx.send(
-                            f"You have completed your dungeon and received **${gold}** as well as a new weapon: **{item[2]}**. Experience gained: **{xp}**."
+                            f"You have completed your dungeon and received **${gold}** as well as a new weapon: **{item[2]}**. Experience gained: **{xp}**."  # \nYou found **{eggs}** eastereggs! <:easteregg:566251086986608650> (`{ctx.prefix}easter`)
                         )
                     else:
                         await ctx.send(
-                            f"You have completed your dungeon and received **${gold}** as well as a new weapon: **{item[2]}**. Experience gained: **{xp}**.\nYour partner received **${int(gold/2)}**."
+                            f"You have completed your dungeon and received **${gold}** as well as a new weapon: **{item[2]}**. Experience gained: **{xp}**.\nYour partner received **${int(gold/2)}**."  # You found **{eggs}** eastereggs! <:easteregg:566251086986608650> (`{ctx.prefix}easter`)
                         )
                 else:
                     await ctx.send("You died on your mission. Try again!")
@@ -696,7 +685,7 @@ Use attack, defend or recover
     @commands.command(description="Cancels your current mission.")
     async def cancel(self, ctx):
         async with self.bot.pool.acquire() as conn:
-            ret = await conn.fetchrow(
+            ret = await self.bot.pool.fetchrow(
                 'SELECT * FROM mission WHERE "name"=$1;', ctx.author.id
             )
             if not ret:
@@ -709,12 +698,13 @@ Use attack, defend or recover
     @has_char()
     @commands.command(description="Your death stats.")
     async def deaths(self, ctx):
-        async with self.bot.pool.acquire() as conn:
-            stats = await conn.fetchrow(
-                'SELECT deaths, completed FROM profile WHERE "user"=$1;', ctx.author.id
-            )
-        deaths, completed = stats[0], stats[1]
-        rate = round(completed / (deaths + completed) * 100, 2)
+        deaths, completed = await self.bot.pool.fetchval(
+            'SELECT (deaths, completed) FROM profile WHERE "user"=$1;', ctx.author.id
+        )
+        if (deaths + completed) != 0:
+            rate = round(completed / (deaths + completed) * 100, 2)
+        else:
+            rate = 100
         await ctx.send(
             f"Out of **{deaths + completed}** adventures, you died **{deaths}** times and survived **{completed}** times, which is a success rate of **{rate}%**."
         )

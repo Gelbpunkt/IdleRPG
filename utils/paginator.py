@@ -29,7 +29,9 @@ DEALINGS IN THE SOFTWARE.
 
 
 import asyncio
+
 import discord
+
 from config import primary_colour
 
 

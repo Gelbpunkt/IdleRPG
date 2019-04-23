@@ -7,11 +7,11 @@ For more information, see README.md and LICENSE.md.
 """
 
 
-import discord
 import asyncio
-import random
 import copy
+import random
 
+import discord
 from discord.ext import commands
 
 

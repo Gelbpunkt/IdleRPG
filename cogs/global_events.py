@@ -5,11 +5,10 @@ Copyright (C) 2018-2019 Diniboy and Gelbpunkt
 This software is dual-licensed under the GNU Affero General Public License for non-commercial and the Travitia License for commercial use.
 For more information, see README.md and LICENSE.md.
 """
-
-
 import discord
-
 from discord.ext import commands
+
+from utils.loops import queue_manager
 
 
 class GlobalEvents(commands.Cog):
@@ -20,42 +19,39 @@ class GlobalEvents(commands.Cog):
         }  # needed for DBL requests
         self.auth_headers2 = {"Authorization": bot.config.bfdtoken}
         self.bot_owner = None
-        self.status_updates = bot.loop.create_task(
-            self.status_updater()
-        )  # Initiate the status updates and save it for the further close
+        self.stats_updates = bot.loop.create_task(
+            self.stats_updater()
+        )  # Initiate the stats updates and save it for the further close
 
+    @commands.Cog.listener()
+    async def on_message(self, message):
+        if message.author.bot or message.author.id in self.bot.bans:
+            return
+
+    @commands.Cog.listener()
     async def on_ready(self):
-        if not self.bot.config.is_beta:
-            await self.bot.session.post(
-                f"https://discordbots.org/api/bots/{self.bot.user.id}/stats",
-                data=self.get_dbl_payload(),
-                headers=self.auth_headers,
-            )
-            await self.bot.session.post(
-                f"https://botsfordiscord.com/api/bot/{self.bot.user.id}",
-                data=self.get_bfd_payload(),
-                headers=self.auth_headers2,
-            )
+        print(f"Logged in as {self.bot.user.name} (ID: {self.bot.user.id})")
+        print("--------")
+        print(f"Using discord.py {discord.__version__}")
+        print("--------")
+        print(f"You are running IdleRPG Bot {self.bot.version}")
+        owner = (await self.bot.application_info()).owner
+        self.bot.owner_id = owner.id
+        print(f"Created by {owner}")
+        self.bot.loop.create_task(queue_manager(self.bot, self.bot.queue))
+        await self.status_updater()
 
+    @commands.Cog.listener()
     async def on_guild_remove(self, guild):
         if self.bot.config.is_beta:
             return
         announce_channel = self.bot.get_channel(self.bot.config.join_channel)
         await announce_channel.send(f"Bye bye **{guild.name}**!")
-        await self.bot.session.post(
-            f"https://discordbots.org/api/bots/{self.bot.user.id}/stats",
-            data=self.get_dbl_payload(),
-            headers=self.auth_headers,
-        )
-        await self.bot.session.post(
-            f"https://botsfordiscord.com/api/bot/{self.bot.user.id}",
-            data=self.get_bfd_payload(),
-            headers=self.auth_headers2,
-        )
 
+    @commands.Cog.listener()
     async def on_guild_join(self, guild):
         if not self.bot_owner:  # just for performance reasons (+1 API call)
-            self.bot_owner = (await self.bot.application_info()).owner
+            self.bot_owner = await self.bot.fetch_user(self.bot.owner_id)
 
         embed = discord.Embed(
             title="Thanks for adding me!",
@@ -85,16 +81,6 @@ class GlobalEvents(commands.Cog):
         await announce_channel.send(
             f"Joined a new server! **{guild.name}** with **{len(guild.members)}** members!"
         )
-        await self.bot.session.post(
-            f"https://discordbots.org/api/bots/{self.bot.user.id}/stats",
-            data=self.get_dbl_payload(),
-            headers=self.auth_headers,
-        )
-        await self.bot.session.post(
-            f"https://botsfordiscord.com/api/bot/{self.bot.user.id}",
-            data=self.get_bfd_payload(),
-            headers=self.auth_headers2,
-        )
 
     async def status_updater(self):
         await self.bot.wait_until_ready()
@@ -102,17 +88,45 @@ class GlobalEvents(commands.Cog):
             activity=discord.Game(name=self.bot.BASE_URL), status=discord.Status.idle
         )
 
-    def get_dbl_payload(self):
+    async def stats_updater(self):
+        if (
+            self.bot.shard_count - 1 not in self.bot.shards.keys()
+        ) or self.bot.config.is_beta:
+            return
+        await self.bot.wait_until_ready()
+        while True:
+            await self.bot.session.post(
+                f"https://discordbots.org/api/bots/{self.bot.user.id}/stats",
+                data=self.get_dbl_payload(),
+                headers=self.auth_headers,
+            )
+            await self.bot.session.post(
+                f"https://botsfordiscord.com/api/bot/{self.bot.user.id}",
+                data=self.get_bfd_payload(),
+                headers=self.auth_headers2,
+            )
+
+    async def get_dbl_payload(self):
         return {
-            "server_count": len(self.bot.guilds),
-            "shard_count": len(self.bot.shards),
+            "server_count": sum(
+                await self.bot.cogs["Sharding"].handler(
+                    "guild_count", self.bot.shard_count
+                )
+            ),
+            "shard_count": self.bot.shard_count,
         }
 
-    def get_bfd_payload(self):
-        return {"server_count": len(self.bot.guilds)}
+    async def get_bfd_payload(self):
+        return {
+            "server_count": sum(
+                await self.bot.cogs["Sharding"].handler(
+                    "guild_count", self.bot.shard_count
+                )
+            )
+        }
 
     def cog_unload(self):
-        self.status_updates.cancel()  # Cancel the status updates on unload
+        self.stats_updates.cancel()
 
 
 def setup(bot):

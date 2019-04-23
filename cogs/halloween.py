@@ -7,12 +7,13 @@ For more information, see README.md and LICENSE.md.
 """
 
 
-import discord
 import random
 import secrets
-import utils.checks as checks
 
+import discord
 from discord.ext import commands
+
+import utils.checks as checks
 
 
 class Halloween(commands.Cog):

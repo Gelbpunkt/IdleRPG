@@ -7,18 +7,18 @@ For more information, see README.md and LICENSE.md.
 """
 
 
-import discord
+import asyncio
 import datetime
 import random
 import string
-import asyncio
+
+import discord
 import ujson
-
 from discord.ext import commands
-from utils.checks import has_char, is_guild_officer, is_guild_leader, is_admin
-from cogs.help import chunks
 
+from cogs.help import chunks
 from cogs.shard_communication import user_on_cooldown as user_cooldown
+from utils.checks import has_char, is_admin, is_guild_leader, is_guild_officer
 
 rewards = {
     1: {"crates": 0, "puzzle": False, "money": 500},

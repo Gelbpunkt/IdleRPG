@@ -343,7 +343,8 @@ CREATE TABLE public.profile (
     puzzles bigint DEFAULT 0,
     atkmultiply numeric DEFAULT 1.0,
     defmultiply numeric DEFAULT 1.0,
-    trickortreat bigint DEFAULT 0
+    trickortreat bigint DEFAULT 0,
+    eastereggs bigint DEFAULT 0
 );
 
 

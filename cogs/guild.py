@@ -7,29 +7,30 @@ For more information, see README.md and LICENSE.md.
 """
 
 
-import discord
 import asyncio
 import random
-
 from typing import Union
+
+import discord
 from discord.ext import commands
+
+from classes.converters import User
+from cogs.shard_communication import user_on_cooldown as user_cooldown
 from utils import misc as rpgtools
 from utils.checks import (
     has_char,
-    has_money,
-    is_guild_officer,
-    is_guild_leader,
     has_guild,
-    has_no_guild,
-    user_is_patron,
-    is_member_of_author_guild,
-    user_has_char,
     has_guild_,
+    has_money,
+    has_no_guild,
+    is_guild_leader,
+    is_guild_officer,
+    is_member_of_author_guild,
     is_no_guild_leader,
+    user_has_char,
+    user_is_patron,
 )
 from utils.tools import todelta
-from cogs.shard_communication import user_on_cooldown as user_cooldown
-from classes.converters import User
 
 
 class Guild(commands.Cog):
@@ -759,7 +760,7 @@ class Guild(commands.Cog):
             user = await self.bot.pool.fetchrow(
                 'SELECT guild, xp FROM profile WHERE "user"=$1;', userid
             )
-            if user[0] == guild["id"]:
+            if user and user[0] == guild["id"]:
                 difficulty += int(rpgtools.xptolevel(user[1]))
                 return difficulty
             return False
@@ -791,7 +792,7 @@ class Guild(commands.Cog):
                     )
                 started = True
 
-        time = str(difficulty * 0.5) + "h"
+        time = f"{difficulty * 0.5}h"
 
         await ctx.send(
             f"""

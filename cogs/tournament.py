@@ -7,15 +7,16 @@ For more information, see README.md and LICENSE.md.
 """
 
 
-import discord
+import asyncio
 import math
 import random
-import asyncio
 
-from utils.checks import has_char, has_money, user_has_char
+import discord
 from discord.ext import commands
+
 from cogs.help import chunks
 from cogs.shard_communication import user_on_cooldown as user_cooldown
+from utils.checks import has_char, has_money, user_has_char
 
 
 def is_battle_owner():

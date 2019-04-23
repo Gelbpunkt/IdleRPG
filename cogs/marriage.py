@@ -7,12 +7,13 @@ For more information, see README.md and LICENSE.md.
 """
 
 
-import discord
 import asyncio
 import random
 
-from cogs.shard_communication import user_on_cooldown as user_cooldown
+import discord
 from discord.ext import commands
+
+from cogs.shard_communication import user_on_cooldown as user_cooldown
 from utils import misc as rpgtools
 from utils.checks import has_char, has_money
 
@@ -238,6 +239,39 @@ To buy one of these items for your partner, use `{ctx.prefix}spoil shopid`
         )
 
     @has_char()
+    @commands.command(name="date")
+    @user_cooldown(43200)
+    async def _date(self, ctx):
+        """Take your loved one on a date to increase your lovescore."""
+        num = random.randint(1, 15) * 10
+        marriage = ctx.character_data["marriage"]
+        if not marriage:
+            await self.bot.reset_cooldown(ctx)
+            return await ctx.send("You are not married yet.")
+        async with self.bot.pool.acquire() as conn:
+            await conn.execute(
+                'UPDATE profile SET lovescore=lovescore+$1 WHERE "user"=$2;',
+                num,
+                marriage,
+            )
+
+        partner = await self.bot.get_user_global(marriage)
+        scenario = random.choice(
+            [
+                f"You and {partner.mention} went on a nice candlelit dinner.",
+                f"You and {partner.mention} had stargazed all night.",
+                f"You and {partner.mention} went to a circus that was in town.",
+                f"You and {partner.mention} went out to see a romantic movie.",
+                f"You and {partner.mention} went out to get ice cream.",
+                f"You and {partner.mention} had an anime marathon.",
+                f"You and {partner.mention} went for a spontaneous hiking trip.",
+                f"You and {partner.mention} decided to visit Paris.",
+                f"You and {partner.mention} went ice skating together.",
+            ]
+        )
+        await ctx.send(f"{scenario} This increased your lovescore by {num}")
+
+    @has_char()
     @commands.guild_only()
     @user_cooldown(3600)
     @commands.command(description="Make a child!", aliases=["fuck", "sex", "breed"])
@@ -266,7 +300,11 @@ To buy one of these items for your partner, use `{ctx.prefix}spoil shopid`
         )
 
         def check(msg):
-            return msg.author.id == marriage and msg.content.lower() == "i do"
+            return (
+                msg.author.id == marriage
+                and msg.content.lower() == "i do"
+                and msg.channel.id == ctx.channel.id
+            )
 
         try:
             msg = await self.bot.wait_for("message", check=check, timeout=30)
@@ -289,6 +327,7 @@ To buy one of these items for your partner, use `{ctx.prefix}spoil shopid`
                 msg.author.id in [ctx.author.id, marriage]
                 and len(msg.content) <= 20
                 and msg.content not in names
+                and msg.channel.id == ctx.channel.id
             )
 
         try:
@@ -357,7 +396,21 @@ To buy one of these items for your partner, use `{ctx.prefix}spoil shopid`
         event = random.choice(["death"] + ["age"] * 7 + ["namechange"] * 2)
         if event == "death":
             cause = random.choice(
-                ["a shampoo overdose", "lovesickness", "age", "loneliness"]
+                [
+                    "They died because of a shampoo overdose!",
+                    "They died of lovesickness...",
+                    "They've died of age.",
+                    "They died of loneliness.",
+                    "A horde of goblins got them.",
+                    "They have finally decided to move out after all these years, but couldn't survive a second alone.",
+                    "Spontanious combustion removed them from existence",
+                    "While exploring the forest, they have gotten lost.",
+                    "They've left through a portal into another dimension...",
+                    "The unbearable pain of stepping on a Lego\© brick killed them.",  # noqa
+                    "You heard a landmine going off nearby...",
+                    "They have been abducted by aliens!",
+                    "The Catholic Church got them...",
+                ]
             )
             async with self.bot.pool.acquire() as conn:
                 await conn.execute(
@@ -366,7 +419,7 @@ To buy one of these items for your partner, use `{ctx.prefix}spoil shopid`
                     ctx.author.id,
                 )
             return await ctx.send(
-                f"{target[2]} died at the age of {target[3]}! The cause was {cause}."
+                f"{target[2]} died at the age of {target[3]}! {cause}"
             )
         elif event == "age":
             async with self.bot.pool.acquire() as conn:

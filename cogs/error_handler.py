@@ -7,14 +7,16 @@ For more information, see README.md and LICENSE.md.
 """
 
 
-import discord
-import traceback
-import Levenshtein as lv
-import utils.checks
 import sys
-
+import traceback
 from datetime import timedelta
+
+import discord
+import Levenshtein as lv
+from aiohttp import ClientOSError, ContentTypeError, ServerDisconnectedError
 from discord.ext import commands
+
+import utils.checks
 
 try:
     from raven import Client
@@ -40,7 +42,7 @@ class Errorhandler(commands.Cog):
         ):
             # Do nothing if the command/cog has its own error handler
             return
-        if isinstance(error, commands.CommandNotFound):
+        if isinstance(error, commands.CommandNotFound) and hasattr(ctx, "guild"):
             async with self.bot.pool.acquire() as conn:
                 ret = await conn.fetchval(
                     'SELECT "unknown" FROM server WHERE "id"=$1;', ctx.guild.id
@@ -105,6 +107,16 @@ class Errorhandler(commands.Cog):
         elif isinstance(error, commands.CommandInvokeError) and hasattr(
             error, "original"
         ):
+            if isinstance(error.original, OverflowError):
+                return await ctx.send(
+                    "The number you entered exceeds the maximum allowed length!"
+                )
+            if isinstance(
+                error.original,
+                (ClientOSError, ServerDisconnectedError, ContentTypeError),
+            ):
+                # Called on 500 HTTP responses
+                return
             print("In {}:".format(ctx.command.qualified_name), file=sys.stderr)
             traceback.print_tb(error.original.__traceback__)
             print(
@@ -131,6 +143,9 @@ class Errorhandler(commands.Cog):
                             "user_id": str(ctx.author.id),
                         },
                     )
+                await ctx.send(
+                    "The command you tried to use ran into an error. The incident has been reported and the team will work hard to fix the issue!"
+                )
         await ctx.bot.reset_cooldown(ctx)
 
     async def initialize_cog(self):

@@ -4,20 +4,22 @@ Copyright (C) 2018-2019 Diniboy and Gelbpunkt
 This software is dual-licensed under the GNU Affero General Public License for non-commercial and the Travitia License for commercial use.
 For more information, see README.md and LICENSE.md.
 """
-
-from traceback import format_exc
 import asyncio
+import re
+from datetime import timedelta
+from traceback import format_exc
+from uuid import uuid4
+
+import discord
+from async_timeout import timeout
+from discord.ext import commands
+
+from utils.eval import evaluate as _evaluate
 
 try:
     import ujson as json  # faster, but linux only
 except ImportError:
     import json
-from uuid import uuid4
-from async_timeout import timeout
-from datetime import timedelta
-import discord
-import re
-from discord.ext import commands
 
 
 # Cross-process cooldown check (pass this to commands)
@@ -84,17 +86,24 @@ class Sharding(commands.Cog):
             try:
                 payload = await channel.get_json(encoding="utf-8")
             except json.decoder.JSONDecodeError:
-                return  # not a valid JSON message
+                continue  # not a valid JSON message
             if payload.get("action") and hasattr(self, payload.get("action")):
                 try:
                     if payload.get("scope") != "bot":
                         return  # it's not our cup of tea
-                    self.bot.loop.create_task(
-                        getattr(self, payload.get("action"))(
-                            **json.loads(payload.get("args")),
-                            command_id=payload["command_id"],
+                    if payload.get("args"):
+                        self.bot.loop.create_task(
+                            getattr(self, payload["action"])(
+                                **json.loads(payload["args"]),
+                                command_id=payload["command_id"],
+                            )
                         )
-                    )
+                    else:
+                        self.bot.loop.create_task(
+                            getattr(self, payload["action"])(
+                                command_id=payload["command_id"]
+                            )
+                        )
                 except Exception:
                     payload = {
                         "error": True,
@@ -104,6 +113,7 @@ class Sharding(commands.Cog):
                     await self.bot.redis.execute(
                         "PUBLISH", self.communication_channel, json.dumps(payload)
                     )
+                    continue
             if payload.get("output") and payload["command_id"] in self._messages:
                 self._messages[payload["command_id"]].append(payload["output"])
 
@@ -125,6 +135,29 @@ class Sharding(commands.Cog):
             payload = {"output": True, "command_id": command_id}
         else:
             payload = {"output": False, "command_id": command_id}
+        await self.bot.redis.execute(
+            "PUBLISH", self.communication_channel, json.dumps(payload)
+        )
+
+    async def user_is_helper(self, member_id: int, command_id: str):
+        if not self.bot.get_user(member_id):
+            return  # if the instance cannot see them, we can't do much
+        member = self.bot.get_guild(self.bot.config.support_server_id).get_member(
+            member_id
+        )
+        if not member:
+            return  # when the bot can only see DMs with the user
+
+        if discord.utils.get(member.roles, name="Support Team"):
+            payload = {"output": True, "command_id": command_id}
+        else:
+            payload = {"output": False, "command_id": command_id}
+        await self.bot.redis.execute(
+            "PUBLISH", self.communication_channel, json.dumps(payload)
+        )
+
+    async def guild_count(self, command_id: str):
+        payload = {"output": len(self.bot.guilds), "command_id": command_id}
         await self.bot.redis.execute(
             "PUBLISH", self.communication_channel, json.dumps(payload)
         )
@@ -163,7 +196,10 @@ class Sharding(commands.Cog):
         )
 
     async def evaluate(self, code, command_id: str):
-        payload = {"output": eval(code), "command_id": command_id}
+        if code.startswith("```") and code.endswith("```"):
+            code = "\n".join(code.split("\n")[1:-1])
+        code = code.strip("` \n")
+        payload = {"output": await _evaluate(self.bot, code), "command_id": command_id}
         await self.bot.redis.execute(
             "PUBLISH", self.communication_channel, json.dumps(payload)
         )

@@ -7,18 +7,20 @@ For more information, see README.md and LICENSE.md.
 """
 
 
-import discord
-import functools
 import asyncio
-
-from discord.ext import commands
-from utils import misc as rpgtools
-from cogs.help import chunks
+import functools
 from io import BytesIO
-from cogs.classes import genstats
-from utils import checks
-from cogs.shard_communication import user_on_cooldown as user_cooldown
+
+import discord
+from async_timeout import timeout
+from discord.ext import commands
+
 from classes.converters import User
+from cogs.classes import genstats
+from cogs.help import chunks
+from cogs.shard_communication import user_on_cooldown as user_cooldown
+from utils import checks
+from utils import misc as rpgtools
 
 
 class Profile(commands.Cog):
@@ -156,9 +158,12 @@ class Profile(commands.Cog):
             if background == "0":
                 background = "assets/profiles/Profile.png"
             else:
-                async with self.bot.session.get(background) as r:
-                    background = BytesIO(await r.read())
-                    background.seek(0)
+                async with timeout(5), self.bot.session.get(background) as r:
+                    if r.status == 200:
+                        background = BytesIO(await r.read())
+                        background.seek(0)
+                    else:
+                        background = "assets/profiles/Profile.png"
             if str(profile[9]) != "0":
                 marriage = (await rpgtools.lookup(self.bot, profile[9])).split("#")[0]
             else:

@@ -7,10 +7,11 @@ For more information, see README.md and LICENSE.md.
 """
 
 
-import discord
 import datetime
 
+import discord
 from discord.ext import commands
+
 from utils.checks import has_char, has_money
 
 
@@ -34,14 +35,11 @@ class Store(commands.Cog):
         await ctx.send(embed=shopembed)
 
     @has_char()
-    @commands.command(description="Buy an item from the store.")
-    async def purchase(self, ctx, item: str, amount: int = 1):
-        try:
-            item = int(item.lstrip("#"))
-        except ValueError:
-            return await ctx.send("Enter a valid store item to buy.")
+    @commands.command()
+    async def purchase(self, ctx, item: int, amount: int = 1):
+        """Buy a booster from the store."""
         if item < 1 or item > 3:
-            return await ctx.send("Enter a valid store item to buy.")
+            return await ctx.send("Enter a valid booster to buy.")
         price = [1000, 500, 1000][item - 1] * amount
         if not await has_money(self.bot, ctx.author.id, price):
             return await ctx.send("You're too poor.")
@@ -128,7 +126,7 @@ class Store(commands.Cog):
                     f"You already have one of these boosters active! Use `{ctx.prefix}boosters` to see how long it still lasts."
                 )
             elif check and check2:
-                return await conn.execute(
+                await conn.execute(
                     'DELETE FROM boosters WHERE "type"=$1 AND "user"=$2;',
                     boostertype,
                     ctx.author.id,
