@@ -550,7 +550,7 @@ class Profile(commands.Cog):
         if money < 0:
             return await ctx.send("Don't scam!")
         if money > 100_000_000:
-            await ctx.send("Don't send away that much money in one place. :scream:")
+            return await ctx.send("Don't send away that much money in one place. :scream:")
         if other == ctx.author:
             return await ctx.send("No cheating!")
         if not await checks.user_has_char(self.bot, other.id):
