@@ -5,9 +5,8 @@ Copyright (C) 2018-2019 Diniboy and Gelbpunkt
 This software is dual-licensed under the GNU Affero General Public License for non-commercial and the Travitia License for commercial use.
 For more information, see README.md and LICENSE.md.
 """
-
-
 import asyncio
+import datetime
 import functools
 from io import BytesIO
 
@@ -112,48 +111,23 @@ class Profile(commands.Cog):
         if not await checks.user_has_char(self.bot, targetid):
             return await ctx.send(f"**{person}** doesn't have a character.")
         async with self.bot.pool.acquire() as conn:
-            ranks = []
             profile = await conn.fetchrow(
                 'SELECT * FROM profile WHERE "user"=$1;', targetid
             )
-            color = profile["colour"]
-            sword = await conn.fetchrow(
-                "SELECT ai.* FROM profile p JOIN allitems ai ON (p.user=ai.owner) JOIN inventory i ON (ai.id=i.item) WHERE i.equipped IS TRUE AND p.user=$1 AND type='Sword';",
-                targetid,
-            )
-            shield = await conn.fetchrow(
-                "SELECT ai.* FROM profile p JOIN allitems ai ON (p.user=ai.owner) JOIN inventory i ON (ai.id=i.item) WHERE i.equipped IS TRUE AND p.user=$1 AND type='Shield';",
-                targetid,
-            )
-            ranks.append(
-                (
-                    await conn.fetchrow(
-                        "SELECT position FROM (SELECT profile.*, ROW_NUMBER() OVER(ORDER BY profile.money DESC) AS position FROM profile) s WHERE s.user = $1 LIMIT 1;",
-                        targetid,
-                    )
-                )[0]
-            )
-            ranks.append(
-                (
-                    await conn.fetchrow(
-                        "SELECT position FROM (SELECT profile.*, ROW_NUMBER() OVER(ORDER BY profile.xp DESC) AS position FROM profile) s WHERE s.user = $1 LIMIT 1;",
-                        targetid,
-                    )
-                )[0]
-            )
+            sword, shield = await self.bot.get_equipped_items_for(targetid)
+            ranks = await self.bot.get_ranks_for(targetid)
             mission = await conn.fetchrow(
                 'SELECT * FROM mission WHERE "name"=$1;', targetid
             )
-            guild = await conn.fetchrow(
-                'SELECT name FROM guild WHERE "id"=$1;', profile[12]
+            guild = await conn.fetchval(
+                'SELECT name FROM guild WHERE "id"=$1;', profile["guild"]
             )
-            if not mission:
-                mission = []
-            missionend = []
-            if mission != []:
-                missionend = (
-                    await conn.fetchrow("SELECT $1-clock_timestamp();", mission[2])
-                )[0]
+            if mission:
+                missionend = await conn.fetchval(
+                    "SELECT $1-clock_timestamp();", mission["end"]
+                )
+            else:
+                missionend = None
             background = profile["background"]
             if background == "0":
                 background = "assets/profiles/Profile.png"
@@ -164,8 +138,10 @@ class Profile(commands.Cog):
                         background.seek(0)
                     else:
                         background = "assets/profiles/Profile.png"
-            if str(profile[9]) != "0":
-                marriage = (await rpgtools.lookup(self.bot, profile[9])).split("#")[0]
+            if profile["marriage"]:
+                marriage = (await rpgtools.lookup(self.bot, profile["marriage"])).split(
+                    "#"
+                )[0]
             else:
                 marriage = "Not married"
 
@@ -189,7 +165,7 @@ class Profile(commands.Cog):
             mission,
             missionend,
             ranks,
-            color,
+            profile["colour"],
             background,
             marriage,
             guild,
@@ -197,6 +173,49 @@ class Profile(commands.Cog):
         )
         output_buffer = await self.bot.loop.run_in_executor(None, thing)
         await ctx.send(file=discord.File(fp=output_buffer, filename="Profile.png"))
+
+    @commands.command(aliases=["p2"])
+    async def profile2(self, ctx, target: User = None):
+        """View someone's profile, not image based."""
+        target = target or ctx.author
+        rank_xp, rank_money = await self.bot.get_ranks_for(target)
+        sword, shield = await self.bot.get_equipped_items_for(target)
+        async with self.bot.pool.acquire() as conn:
+            p_data = await conn.fetchrow(
+                'SELECT * FROM profile WHERE "user"=$1;', target.id
+            )
+            mission = await conn.fetchrow(
+                'SELECT *, clock_timestamp() - "end" AS timeleft FROM mission WHERE "name"=$1;',
+                target.id,
+            )
+            guild = await conn.fetchval(
+                'SELECT name FROM guild WHERE "id"=$1;', p_data["guild"]
+            )
+        try:
+            colour = discord.Colour.from_rgb(rpgtools.hex_to_rgb(p_data["colour"]))
+        except ValueError:
+            colour = 0x000000
+        if mission:
+            timeleft = (
+                mission["timeleft"]
+                if mission["timeleft"] > datetime.datetime.utcnow()
+                else "Finished"
+            )
+        sword = f"{sword['name']} - {sword['damage']}" if sword else "No sword"
+        shield = f"{shield['name']} - {shield['armor']}" if shield else "No shield"
+        level = rpgtools.xptolevel(p_data["xp"])
+        em = discord.Embed(colour=colour, title=f"{target}: {p_data['name']}")
+        em.add_field(
+            name="General",
+            value=f"**Money**: `${p_data['money']}`\n**Level**: `{level}`\n**PvP Wins**: `{p_data['pvp']}`\n**Guild**: `{guild}`",
+        )
+        em.add_field(
+            name="Ranks", value=f"**Richest**: `{rank_money}`\n**XP**: `{rank_xp}`"
+        )
+        em.add_field(name="Equipment", value=f"{sword}\n{shield}")
+        if mission:
+            em.add_field(name=f"{mission['dungeon']} - {timeleft}")
+        await ctx.send(embed=em)
 
     @checks.has_char()
     @commands.command(aliases=["money", "e"], description="Shows your current balance.")

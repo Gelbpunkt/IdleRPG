@@ -39,6 +39,11 @@ levels = {
 }
 
 
+def hex_to_rgb(hex_):
+    hex_ = hex_.lstrip("#")
+    return tuple(int(hex_[i : i + 2], 16) for i in (0, 2, 4))
+
+
 def xptolevel(xp):
     for point in list(levels.values()):
         if xp == point:
@@ -160,8 +165,7 @@ def profile_image(
     with Image.open(image) as my_image:
         if color:
             try:
-                color = color.lstrip("#")
-                color = tuple(int(color[i : i + 2], 16) for i in (0, 2, 4))
+                color = hex_to_rgb(color)
             except ValueError:
                 color = (255, 255, 255)
         else:

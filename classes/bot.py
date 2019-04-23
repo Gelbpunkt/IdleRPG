@@ -86,6 +86,32 @@ class Bot(commands.AutoShardedBot):
     def uptime(self):
         return datetime.datetime.now() - self.launch_time
 
+    async def get_ranks_for(self, thing):
+        v = thing.id if isinstance(thing, (discord.Member, discord.User)) else thing
+        async with self.bot.pool.acquire() as conn:
+            xp = await conn.fetchval(
+                "SELECT position FROM (SELECT profile.*, ROW_NUMBER() OVER(ORDER BY profile.xp DESC) AS position FROM profile) s WHERE s.user = $1 LIMIT 1;",
+                v,
+            )
+            money = await conn.fetchval(
+                "SELECT position FROM (SELECT profile.*, ROW_NUMBER() OVER(ORDER BY profile.money DESC) AS position FROM profile) s WHERE s.user = $1 LIMIT 1;",
+                v,
+            )
+        return xp, money
+
+    async def get_equipped_items_for(self, thing):
+        v = thing.id if isinstance(thing, (discord.Member, discord.User)) else thing
+        async with self.pool.acquire() as conn:
+            sword = await conn.fetchrow(
+                "SELECT ai.* FROM profile p JOIN allitems ai ON (p.user=ai.owner) JOIN inventory i ON (ai.id=i.item) WHERE i.equipped IS TRUE AND p.user=$1 AND type='Sword';",
+                v,
+            )
+            shield = await conn.fetchrow(
+                "SELECT ai.* FROM profile p JOIN allitems ai ON (p.user=ai.owner) JOIN inventory i ON (ai.id=i.item) WHERE i.equipped IS TRUE AND p.user=$1 AND type='Sword';",
+                v,
+            )
+        return sword, shield
+
     async def get_context(self, message, *, cls=None):
         return await super().get_context(message, cls=Context)
 
