@@ -34,11 +34,15 @@ class Miscellaneous(commands.Cog):
     @user_cooldown(86400)
     @commands.command()
     async def daily(self, ctx):
-        """Receive a daily reward."""
+        """Receive a daily reward based on your streak."""
+        streak = await self.bot.redis.execute("INCR", f"idle:daily:{ctx.author.id}")
+        await self.bot.redis.execute("EXPIRE", f"idle:daily:{ctx.author.id}", 48 * 60 * 60) # 48h: after 2 days, they missed it
+        streak_mul = streak if streak < 10 else 10
+        money = 2 ** (streak_mul - 1) * 50
         await self.bot.pool.execute(
-            'UPDATE profile SET money=money+$1 WHERE "user"=$2;', 50, ctx.author.id
+            'UPDATE profile SET money=money+$1 WHERE "user"=$2;', money, ctx.author.id
         )
-        await ctx.send("You received your daily **$50**!")
+        await ctx.send(f"You received your daily **${money}**!\nYou are on a streak of **{streak}** days!")
 
     @commands.command()
     async def ping(self, ctx):
