@@ -185,7 +185,7 @@ class Profile(commands.Cog):
                 'SELECT * FROM profile WHERE "user"=$1;', target.id
             )
             mission = await conn.fetchrow(
-                'SELECT *, clock_timestamp() - "end" AS timeleft FROM mission WHERE "name"=$1;',
+                'SELECT *, "end" - clock_timestamp() AS timeleft FROM mission WHERE "name"=$1;',
                 target.id,
             )
             guild = await conn.fetchval(
@@ -197,7 +197,7 @@ class Profile(commands.Cog):
             colour = 0x000000
         if mission:
             timeleft = (
-                mission["timeleft"]
+                str(mission["timeleft"]).split(".")[0]
                 if mission["end"] > datetime.datetime.now(datetime.timezone.utc)
                 else "Finished"
             )
