@@ -73,13 +73,13 @@ class Raid(commands.Cog):
 **ATTENTION! ZEREKIEL HAS SPAWNED!**
 This boss has {boss['hp']} HP and has high-end loot!
 The dragon will be vulnerable in 15 Minutes
-Use https://raid.travitia.xyz/ to join the raid!
+Use https://raid.travitia.xyz/login to join the raid!
 """,
             file=discord.File("assets/other/dragon.jpg"),
         )
         try:
             await self.bot.get_channel(506_133_354_874_404_874).send(
-                "@everyone Zerekiel spawned! 15 Minutes until he is vulnerable...\nUse https://raid.travitia.xyz/ to join the raid!"
+                "@everyone Zerekiel spawned! 15 Minutes until he is vulnerable...\nUse https://raid.travitia.xyz/login to join the raid!"
             )
         except discord.Forbidden:
             await ctx.channel.set_permissions(
