@@ -99,12 +99,12 @@ class GlobalEvents(commands.Cog):
         while True:
             await self.bot.session.post(
                 f"https://discordbots.org/api/bots/{self.bot.user.id}/stats",
-                data=self.get_dbl_payload(),
+                data=await self.get_dbl_payload(),
                 headers=self.auth_headers,
             )
             await self.bot.session.post(
                 f"https://botsfordiscord.com/api/bot/{self.bot.user.id}",
-                data=self.get_bfd_payload(),
+                data=await self.get_bfd_payload(),
                 headers=self.auth_headers2,
             )
             await asyncio.sleep(120)
