@@ -5,6 +5,8 @@ Copyright (C) 2018-2019 Diniboy and Gelbpunkt
 This software is dual-licensed under the GNU Affero General Public License for non-commercial and the Travitia License for commercial use.
 For more information, see README.md and LICENSE.md.
 """
+import asyncio
+
 import discord
 from discord.ext import commands
 
@@ -105,6 +107,7 @@ class GlobalEvents(commands.Cog):
                 data=self.get_bfd_payload(),
                 headers=self.auth_headers2,
             )
+            await asyncio.sleep(120)
 
     async def get_dbl_payload(self):
         return {
