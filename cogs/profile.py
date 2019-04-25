@@ -630,6 +630,7 @@ class Profile(commands.Cog):
                     g,
                 )
             await conn.execute('UPDATE profile SET "marriage"=$1 WHERE "marriage"=$2;', 0, ctx.author.id)
+            await conn.execute('DELETE FROM children WHERE "mother"=$1 OR "father"=$1;', ctx.author.id)
             await conn.execute('DELETE FROM profile WHERE "user"=$1;', ctx.author.id)
         await ctx.send(
             "Successfully deleted your character. Sorry to see you go :frowning:"
