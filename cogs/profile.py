@@ -550,7 +550,9 @@ class Profile(commands.Cog):
         if money < 0:
             return await ctx.send("Don't scam!")
         if money > 100_000_000:
-            return await ctx.send("Don't send away that much money in one place. :scream:")
+            return await ctx.send(
+                "Don't send away that much money in one place. :scream:"
+            )
         if other == ctx.author:
             return await ctx.send("No cheating!")
         if not await checks.user_has_char(self.bot, other.id):
@@ -629,8 +631,14 @@ class Profile(commands.Cog):
                     0,
                     g,
                 )
-            await conn.execute('UPDATE profile SET "marriage"=$1 WHERE "marriage"=$2;', 0, ctx.author.id)
-            await conn.execute('DELETE FROM children WHERE "mother"=$1 OR "father"=$1;', ctx.author.id)
+            await conn.execute(
+                'UPDATE profile SET "marriage"=$1 WHERE "marriage"=$2;',
+                0,
+                ctx.author.id,
+            )
+            await conn.execute(
+                'DELETE FROM children WHERE "mother"=$1 OR "father"=$1;', ctx.author.id
+            )
             await conn.execute('DELETE FROM profile WHERE "user"=$1;', ctx.author.id)
         await ctx.send(
             "Successfully deleted your character. Sorry to see you go :frowning:"
