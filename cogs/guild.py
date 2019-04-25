@@ -134,6 +134,8 @@ class Guild(commands.Cog):
             bgs = await conn.fetchval(
                 'SELECT badges FROM guild WHERE "leader"=$1;', ctx.author.id
             )
+            if not bgs:
+                return await ctx.send("Your guild has no badges yet.")
             try:
                 bg = bgs[number - 1]
             except IndexError:
