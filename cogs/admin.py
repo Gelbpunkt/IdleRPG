@@ -148,13 +148,13 @@ class Admin(commands.Cog):
             await conn.execute(
                 'UPDATE allitems SET "name"=$1 WHERE "owner"=$2 AND "type"=$3;',
                 "Broken Sword",
-                ctx.author.id,
+                target.id,
                 "Sword",
             )
             await conn.execute(
                 'UPDATE allitems SET "name"=$1 WHERE "owner"=$2 AND "type"=$3;',
                 "Broken Shield",
-                ctx.author.id,
+                target.id,
                 "Shield",
             )
             await conn.execute(
