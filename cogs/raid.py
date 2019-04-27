@@ -240,7 +240,7 @@ Use https://raid.travitia.xyz/ to join the raid!
                 money = await self.bot.pool.fetchval(
                     'SELECT money FROM profile WHERE "user"=$1;', msg.author.id
                 )
-                if bid > highest_bid[1] and money >= bid:
+                if money and bid > highest_bid[1] and money >= bid:
                     highest_bid = [msg.author, bid]
                     await ctx.send(f"{msg.author.mention} bids **${msg.content}**!")
             msg = await ctx.send(
