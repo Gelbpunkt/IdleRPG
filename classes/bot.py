@@ -62,7 +62,7 @@ class Bot(commands.AutoShardedBot):
                         self.linecount += len(f.readlines())
 
     async def connect_all(self):
-        self.session = aiohttp.ClientSession(loop=self.loop)
+        self.session = aiohttp.ClientSession(loop=self.loop, trust_env=True)
         self.redis = await aioredis.create_pool(
             "redis://localhost", minsize=5, maxsize=10, loop=self.loop
         )
