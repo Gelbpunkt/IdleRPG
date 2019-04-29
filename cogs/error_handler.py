@@ -5,8 +5,6 @@ Copyright (C) 2018-2019 Diniboy and Gelbpunkt
 This software is dual-licensed under the GNU Affero General Public License for non-commercial and the Travitia License for commercial use.
 For more information, see README.md and LICENSE.md.
 """
-
-
 import sys
 import traceback
 from datetime import timedelta
@@ -42,12 +40,10 @@ class Errorhandler(commands.Cog):
         ):
             # Do nothing if the command/cog has its own error handler
             return
-        if isinstance(error, commands.CommandNotFound) and hasattr(ctx, "guild"):
-            async with self.bot.pool.acquire() as conn:
-                ret = await conn.fetchval(
-                    'SELECT "unknown" FROM server WHERE "id"=$1;', ctx.guild.id
-                )
-            if not ret:
+        if isinstance(error, commands.CommandNotFound) and ctx.guild:
+            if not await self.bot.pool.fetchval(
+                'SELECT "unknown" FROM server WHERE "id"=$1;', ctx.guild.id
+            ):
                 return
             nl = "\n"
             matches = []
