@@ -174,7 +174,7 @@ class Profile(commands.Cog):
         output_buffer = await self.bot.loop.run_in_executor(None, thing)
         await ctx.send(file=discord.File(fp=output_buffer, filename="Profile.png"))
 
-    @commands.command(aliases=["p2"])
+    @commands.command(aliases=["p2", "pp"])
     async def profile2(self, ctx, target: User = None):
         """View someone's profile, not image based."""
         target = target or ctx.author
