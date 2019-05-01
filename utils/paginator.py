@@ -300,7 +300,9 @@ class AdventurePaginator:
 
             try:
                 await self.base.delete()
-                self.base = await ctx.send(embed=self.pages[self.current], file=self.files[self.current])
+                self.base = await ctx.send(
+                    embed=self.pages[self.current], file=self.files[self.current]
+                )
             except KeyError:
                 pass
 

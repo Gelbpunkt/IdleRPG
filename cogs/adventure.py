@@ -48,16 +48,18 @@ class Adventure(commands.Cog):
 
         await msg.delete()
 
-        pages = []
-        for idx, img in enumerate(images):
-            f = discord.File(img, filename=f"Adventure{idx + 1}.png")
-            pages.append(
-                embed=discord.Embed().set_image(
-                    url=f"attachment://Adventure{idx + 1}.png"
-                )
-            )
+        files = [
+            discord.File(img, filename=f"Adventure{idx + 1}.png")
+            for idx, img in enumerate(images)
+        ]
+        pages = [
+            discord.Embed().set_image(url=f"attachment://Adventure{idx + 1}.png")
+            for idx in range(len(images))
+        ]
 
-        await self.bot.paginator.Paginator(extras=pages).paginate(ctx)
+        await self.bot.paginator.AdventurePaginator(embeds=pages, files=files).paginate(
+            ctx
+        )
 
     @has_char()
     @commands.command(
