@@ -109,3 +109,20 @@ class IntFromTo(commands.Converter):
                 self.to_,
             )
         return arg
+
+class IntGreaterThan(commands.Converter):
+    def __init__(self, min_):
+        self.min_ = min_
+
+    async def convert(self, ctx, arg):
+        try:
+            arg = int(arg)
+        except ValueError:
+            raise commands.BadArgument("Converting to int failed.")
+        if not self.min_ < arg:
+            raise NotInRange(
+                f"The supplied number must be greater than {self.min_}.",
+                self.min_ + 1,
+                "infinity",
+            )
+        return arg
