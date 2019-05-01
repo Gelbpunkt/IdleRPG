@@ -203,16 +203,8 @@ class Paginator:
 class AdventurePaginator:
 
     __slots__ = (
-        "entries",
-        "extras",
-        "title",
-        "description",
-        "colour",
-        "footer",
-        "length",
-        "prepend",
-        "append",
-        "fmt",
+        "embeds",
+        "files",
         "timeout",
         "ordered",
         "controls",
