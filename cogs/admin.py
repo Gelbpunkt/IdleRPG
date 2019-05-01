@@ -10,7 +10,7 @@ import asyncio
 from discord.ext import commands
 
 from classes.converters import UserWithCharacter
-from utils.checks import is_admin, user_has_char
+from utils.checks import is_admin
 
 
 class Admin(commands.Cog):
