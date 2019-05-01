@@ -50,10 +50,10 @@ class UserWithCharacter(commands.Converter):
         data["username"] = data["name"]
         user = discord.User(state=ctx.bot._connection, data=data)
         ctx.bot.users.append(user)
-        user.character_data = await ctx.bot.pool.fetchrow(
+        ctx.user_data = await ctx.bot.pool.fetchrow(
             'SELECT * FROM profile WHERE "user"=$1;', user.id
         )
-        if user.character_data:
+        if ctx.user_data:
             return user
         else:
             raise UserHasNoChar("User has no character.", user)
@@ -83,10 +83,10 @@ class MemberWithCharacter(commands.converter.IDConverter):
         if result is None:
             raise commands.BadArgument(f"Member '{argument}' not found")
 
-        result.character_data = await ctx.bot.pool.fetchrow(
+        ctx.user_data = await ctx.bot.pool.fetchrow(
             'SELECT * FROM profile WHERE "user"=$1;', result.id
         )
-        if result.character_data:
+        if ctx.user_data:
             return result
         else:
             raise UserHasNoChar("User has no character.", result)
