@@ -249,7 +249,7 @@ class AdventurePaginator:
         bot = ctx.bot
         author = ctx.author
 
-        self.base = await ctx.send(embed=self.pages[0])
+        self.base = await ctx.send(embed=self.pages[0], file=self.files[0])
 
         if len(self.pages) == 1:
             await self.base.add_reaction("⏹")
@@ -295,6 +295,11 @@ class AdventurePaginator:
                 self.base = await ctx.send(
                     embed=self.pages[self.current], file=self.files[self.current]
                 )
+                for reaction in self.controls:
+                    try:
+                        await self.base.add_reaction(reaction)
+                    except discord.HTTPException:
+                        return
             except KeyError:
                 pass
 
