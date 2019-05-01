@@ -5,8 +5,6 @@ Copyright (C) 2018-2019 Diniboy and Gelbpunkt
 This software is dual-licensed under the GNU Affero General Public License for non-commercial and the Travitia License for commercial use.
 For more information, see README.md and LICENSE.md.
 """
-
-
 import asyncio
 import functools
 import random
@@ -26,184 +24,38 @@ class Adventure(commands.Cog):
         self.bot = bot
 
     @has_char()
-    @commands.command(
-        aliases=["missions", "dungeons"],
-        description="Shows a list of all dungeons with your success rate.",
-    )
+    @commands.command(aliases=["missions", "dungeons"])
     async def adventures(self, ctx):
-        async with self.bot.pool.acquire() as conn:
-            alldungeons = await conn.fetch('SELECT * FROM dungeon ORDER BY "id";')
-            sword = await conn.fetchrow(
-                "SELECT ai.* FROM profile p JOIN allitems ai ON (p.user=ai.owner) JOIN inventory i ON (ai.id=i.item) WHERE i.equipped IS TRUE AND p.user=$1 AND type='Sword';",
-                ctx.author.id,
+        """A list of all adventures with success rates, name and time it takes."""
+        sword, shield = await self.bot.get_equipped_items_for(ctx.author)
+        all_dungeons = await self.bot.pool.fetch('SELECT * FROM dungeon ORDER BY "id";') # TODO: This table can be hardcoded
+        level = rpgtools.xptolevel(ctx.character_data["xp"])
+        damage = sword["damage"] if sword else 0
+        defensd = shield["armor"] if shield else 0
+
+        msg = await ctx.send("Loading images...")
+
+        chances = []
+        for row in alldungeons:
+            success = rpgtools.calcchance(
+                swordbonus,
+                shieldbonus,
+                row[2],
+                int(playerlevel),
+                returnsuccess=False,
             )
-            shield = await conn.fetchrow(
-                "SELECT ai.* FROM profile p JOIN allitems ai ON (p.user=ai.owner) JOIN inventory i ON (ai.id=i.item) WHERE i.equipped IS TRUE AND p.user=$1 AND type='Shield';",
-                ctx.author.id,
-            )
-            playerxp = await conn.fetchval(
-                'SELECT xp FROM profile WHERE "user"=$1;', ctx.author.id
-            )
-            playerlevel = rpgtools.xptolevel(playerxp)
-            swordbonus = sword["damage"] if sword else 0
-            shieldbonus = shield["armor"] if shield else 0
-            chances = []
-            msg = await ctx.send("Loading images...")
-            for row in alldungeons:
-                success = rpgtools.calcchance(
-                    swordbonus,
-                    shieldbonus,
-                    row[2],
-                    int(playerlevel),
-                    returnsuccess=False,
-                )
-                chances.append((success[0] - success[2], success[1] + success[2]))
-            thing = functools.partial(rpgtools.makeadventures, chances)
-            images = await self.bot.loop.run_in_executor(None, thing)
-            await msg.delete()
-            currentpage = 0
-            maxpage = len(images) - 1
-            f = discord.File(images[currentpage], filename="Adventure.png")
-            msg = await ctx.send(
-                file=f,
-                embed=discord.Embed().set_image(url="attachment://Adventure.png"),
-            )
-            await msg.add_reaction("\U000023ee")
-            await msg.add_reaction("\U000025c0")
-            await msg.add_reaction("\U000025b6")
-            await msg.add_reaction("\U000023ed")
-            await msg.add_reaction("\U0001f522")
+            chances.append((success[0] - success[2], success[1] + success[2]))
+        thing = functools.partial(rpgtools.makeadventures, chances)
+        images = await self.bot.loop.run_in_executor(None, thing)
 
-            def reactioncheck(reaction, user):
-                return (
-                    str(reaction.emoji)
-                    in [
-                        "\U000025c0",
-                        "\U000025b6",
-                        "\U000023ee",
-                        "\U000023ed",
-                        "\U0001f522",
-                    ]
-                    and reaction.message.id == msg.id
-                    and user.id == ctx.author.id
-                )
+        await msg.delete()
 
-            def msgcheck(amsg):
-                return (
-                    amsg.channel == ctx.channel
-                    and amsg.author.id == ctx.author.id
-                    and not amsg.author.bot
-                )
+        pages = []
+        for idx, img in enumerate(images):
+            f = discord.File(img, filename=f"Adventure{idx + 1}.png")
+            pages.append(embed=discord.Embed().set_image(url=f"attachment://Adventure{idx + 1}.png"))
 
-            browsing = True
-            while browsing:
-                try:
-                    reaction, user = await self.bot.wait_for(
-                        "reaction_add", timeout=60.0, check=reactioncheck
-                    )
-                    if reaction.emoji == "\U000025c0":
-                        if currentpage == 0:
-                            pass
-                        else:
-                            currentpage -= 1
-                            await msg.delete()
-                            f = discord.File(
-                                images[currentpage], filename=f"Adventure.png"
-                            )
-                            msg = await ctx.send(
-                                file=f,
-                                embed=discord.Embed().set_image(
-                                    url="attachment://Adventure.png"
-                                ),
-                            )
-                    elif reaction.emoji == "\U000025b6":
-                        if currentpage == maxpage:
-                            pass
-                        else:
-                            currentpage += 1
-                            await msg.delete()
-                            f = discord.File(
-                                images[currentpage], filename="Adventure.png"
-                            )
-                            msg = await ctx.send(
-                                file=f,
-                                embed=discord.Embed().set_image(
-                                    url="attachment://Adventure.png"
-                                ),
-                            )
-                    elif reaction.emoji == "\U000023ed":
-                        currentpage = maxpage
-                        await msg.delete()
-                        f = discord.File(images[currentpage], filename="Adventure.png")
-                        msg = await ctx.send(
-                            file=f,
-                            embed=discord.Embed().set_image(
-                                url="attachment://Adventure.png"
-                            ),
-                        )
-                    elif reaction.emoji == "\U000023ee":
-                        currentpage = 0
-                        await msg.delete()
-                        f = discord.File(images[currentpage], filename="Adventure.png")
-                        msg = await ctx.send(
-                            file=f,
-                            embed=discord.Embed().set_image(
-                                url="attachment://Adventure.png"
-                            ),
-                        )
-                    elif reaction.emoji == "\U0001f522":
-                        question = await ctx.send(
-                            f"Enter a page number from `1` to `{maxpage+1}`"
-                        )
-                        num = await self.bot.wait_for(
-                            "message", timeout=10, check=msgcheck
-                        )
-                        if num is not None:
-                            try:
-                                num2 = int(num.content)
-                                if num2 >= 1 and num2 <= maxpage + 1:
-                                    currentpage = num2 - 1
-                                    await msg.delete()
-                                    f = discord.File(
-                                        images[currentpage], filename="Adventure.png"
-                                    )
-                                    msg = await ctx.send(
-                                        file=f,
-                                        embed=discord.Embed().set_image(
-                                            url="attachment://Adventure.png"
-                                        ),
-                                    )
-                                else:
-                                    await ctx.send(
-                                        f"Must be between `1` and `{maxpage+1}`.",
-                                        delete_after=2,
-                                    )
-                                try:
-                                    await num.delete()
-                                except discord.Forbidden:
-                                    pass
-                            except ValueError:
-                                await ctx.send("That is no number!", delete_after=2)
-                        await question.delete()
-
-                        try:
-                            await msg.remove_reaction(reaction.emoji, user)
-                        except discord.Forbidden:
-                            pass
-
-                    await msg.add_reaction("\U000023ee")
-                    await msg.add_reaction("\U000025c0")
-                    await msg.add_reaction("\U000025b6")
-                    await msg.add_reaction("\U000023ed")
-                    await msg.add_reaction("\U0001f522")
-                except asyncio.TimeoutError:
-                    browsing = False
-                    try:
-                        await msg.clear_reactions()
-                    except discord.Forbidden:
-                        pass
-                    finally:
-                        break
+        await self.bot.paginator.Paginator(extras=pages).paginate(ctx)
 
     @has_char()
     @commands.command(
