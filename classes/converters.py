@@ -110,6 +110,7 @@ class IntFromTo(commands.Converter):
             )
         return arg
 
+
 class IntGreaterThan(commands.Converter):
     def __init__(self, min_):
         self.min_ = min_
