@@ -9,7 +9,7 @@ import asyncio
 
 from discord.ext import commands
 
-from classes.converters import User
+from classes.converters import UserWithCharacter
 from utils.checks import is_admin, user_has_char
 
 
@@ -19,10 +19,8 @@ class Admin(commands.Cog):
 
     @is_admin()
     @commands.command(aliases=["agive"], hidden=True)
-    async def admingive(self, ctx, money: int, other: User):
+    async def admingive(self, ctx, money: int, other: UserWithCharacter):
         """[Bot Admin only] Gives money to a user without loss."""
-        if not await user_has_char(self.bot, other.id):
-            return await ctx.send("That person hasn't got a character.")
         await self.bot.pool.execute(
             'UPDATE profile SET money=money+$1 WHERE "user"=$2;', money, other.id
         )
@@ -36,10 +34,8 @@ class Admin(commands.Cog):
 
     @is_admin()
     @commands.command(aliases=["aremove"], hidden=True)
-    async def adminremove(self, ctx, money: int, other: User):
+    async def adminremove(self, ctx, money: int, other: UserWithCharacter):
         """[Bot Admin only] Removes money from a user without gain."""
-        if not await user_has_char(self.bot, other.id):
-            return await ctx.send("That person hasn't got a character.")
         await self.bot.pool.execute(
             'UPDATE profile SET money=money-$1 WHERE "user"=$2;', money, other.id
         )
@@ -51,12 +47,10 @@ class Admin(commands.Cog):
 
     @is_admin()
     @commands.command(aliases=["adelete"], hidden=True)
-    async def admindelete(self, ctx, other: User):
+    async def admindelete(self, ctx, other: UserWithCharacter):
         """[Bot Admin only] Deletes any user's account."""
         if other.id in ctx.bot.config.admins:  # preserve deletion of admins
             return await ctx.send("Very funny...")
-        if not await user_has_char(self.bot, other.id):
-            return await ctx.send("That person doesn't have a character.")
         await self.bot.pool.execute('DELETE FROM profile WHERE "user"=$1;', other.id)
         await ctx.send("Successfully deleted the character.")
         await self.bot.http.send_message(
@@ -65,12 +59,10 @@ class Admin(commands.Cog):
 
     @is_admin()
     @commands.command(aliases=["arename"], hidden=True)
-    async def adminrename(self, ctx, target: User):
+    async def adminrename(self, ctx, target: UserWithCharacter):
         """[Bot Admin only] Renames a character."""
         if target.id in ctx.bot.config.admins:  # preserve renaming of admins
             return await ctx.send("Very funny...")
-        if not await user_has_char(self.bot, target.id):
-            return await ctx.send("That person doesn't have a character.")
 
         await ctx.send("What shall the character's name be? (min. 3 letters, max. 20)")
 
@@ -87,9 +79,8 @@ class Admin(commands.Cog):
         except asyncio.TimeoutError:
             return await ctx.send("Timeout expired.")
 
-        name = name.content
         await self.bot.pool.execute(
-            'UPDATE profile SET "name"=$1 WHERE "user"=$2;', name, target.id
+            'UPDATE profile SET "name"=$1 WHERE "user"=$2;', name.content, target.id
         )
         await ctx.send("Renamed.")
         await self.bot.http.send_message(
@@ -99,11 +90,8 @@ class Admin(commands.Cog):
 
     @is_admin()
     @commands.command(aliases=["acrate"], hidden=True)
-    async def admincrate(self, ctx, target: User, amount: int = 1):
-        """[Bot Admin only] Gives crates to a user without loss."""
-        if not await user_has_char(self.bot, target.id):
-            return await ctx.send("That person doesn't have a character.")
-
+    async def admincrate(self, ctx, target: UserWithCharacter, amount: int = 1):
+        """[Bot Admin only] Gives/removes crates to a user without loss."""
         await self.bot.pool.execute(
             'UPDATE profile SET "crates"="crates"+$1 WHERE "user"=$2;',
             amount,
@@ -117,11 +105,8 @@ class Admin(commands.Cog):
 
     @is_admin()
     @commands.command(aliases=["axp"], hidden=True)
-    async def adminxp(self, ctx, target: User, amount: int):
+    async def adminxp(self, ctx, target: UserWithCharacter, amount: int):
         """[Bot Admin only] Gives xp to a user."""
-        if not await user_has_char(self.bot, target.id):
-            return await ctx.send("That person doesn't have a character.")
-
         await self.bot.pool.execute(
             'UPDATE profile SET "xp"="xp"+$1 WHERE "user"=$2;', amount, target.id
         )
@@ -133,11 +118,8 @@ class Admin(commands.Cog):
 
     @is_admin()
     @commands.command(aliases=["awipeperks"], hidden=True)
-    async def adminwipeperks(self, ctx, target: User):
+    async def adminwipeperks(self, ctx, target: UserWithCharacter):
         """[Bot Admin only] Wipes someone's donator perks."""
-        if not await user_has_char(self.bot, target.id):
-            return await ctx.send("That person doesn't have a character.")
-
         async with self.bot.pool.acquire() as conn:
             await conn.execute(
                 'UPDATE profile SET "background"=$1, "class"=$2 WHERE "user"=$3;',
