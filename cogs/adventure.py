@@ -28,20 +28,20 @@ class Adventure(commands.Cog):
     async def adventures(self, ctx):
         """A list of all adventures with success rates, name and time it takes."""
         sword, shield = await self.bot.get_equipped_items_for(ctx.author)
-        all_dungeons = await self.bot.pool.fetch('SELECT * FROM dungeon ORDER BY "id";') # TODO: This table can be hardcoded
+        all_dungeons = await self.bot.pool.fetch('SELECT difficulty FROM dungeon ORDER BY "id";') # TODO: This table can be hardcoded
         level = rpgtools.xptolevel(ctx.character_data["xp"])
         damage = sword["damage"] if sword else 0
-        defensd = shield["armor"] if shield else 0
+        defense = shield["armor"] if shield else 0
 
         msg = await ctx.send("Loading images...")
 
         chances = []
         for row in alldungeons:
             success = rpgtools.calcchance(
-                swordbonus,
-                shieldbonus,
-                row[2],
-                int(playerlevel),
+                damage,
+                defense,
+                row["difficulty"],
+                int(level),
                 returnsuccess=False,
             )
             chances.append((success[0] - success[2], success[1] + success[2]))
