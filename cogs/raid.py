@@ -5,8 +5,6 @@ Copyright (C) 2018-2019 Diniboy and Gelbpunkt
 This software is dual-licensed under the GNU Affero General Public License for non-commercial and the Travitia License for commercial use.
 For more information, see README.md and LICENSE.md.
 """
-
-
 import asyncio
 import datetime
 import random
@@ -43,8 +41,7 @@ def raid_channel():
 class Raid(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
-        self.bot.boss_is_spawned = False
-        self.bot.raid = {}
+        self.boss_is_spawned = False
         self.allow_sending = discord.PermissionOverwrite(
             send_messages=True, read_messages=True
         )
@@ -59,11 +56,12 @@ class Raid(commands.Cog):
     @raid_channel()
     @commands.command()
     async def spawn(self, ctx, hp: int):
+        """[Bot Admin only] Starts a raid."""
         await self.bot.session.get(
             "https://raid.travitia.xyz/toggle",
             headers={"Authorization": self.bot.config.raidauth},
         )
-        self.bot.boss_is_spawned = True
+        self.boss_is_spawned = True
         boss = {"hp": hp, "min_dmg": 100, "max_dmg": 500}
         await ctx.channel.set_permissions(
             ctx.guild.default_role, overwrite=self.read_only
@@ -74,21 +72,14 @@ class Raid(commands.Cog):
 This boss has {boss['hp']} HP and has high-end loot!
 The dragon will be vulnerable in 15 Minutes
 Use https://raid.travitia.xyz/ to join the raid!
+
+Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=453963965521985536&scope=identify&response_type=code&redirect_uri=https://raid.travitia.xyz/callback>
 """,
             file=discord.File("assets/other/dragon.jpg"),
         )
-        try:
-            await self.bot.get_channel(506_133_354_874_404_874).send(
-                "@everyone Zerekiel spawned! 15 Minutes until he is vulnerable...\nUse https://raid.travitia.xyz/ to join the raid!"
-            )
-        except discord.Forbidden:
-            await ctx.channel.set_permissions(
-                ctx.guild.default_role, overwrite=self.deny_sending
-            )
-            self.bot.boss_is_spawned = False
-            return await ctx.send(
-                "Honestly... I COULD NOT SEND THE SPAWN MESSAGE IN #RAID-MAIN GUYS!!!"
-            )
+        await self.bot.get_channel(506_167_065_464_406_041).send(
+            "@everyone Zerekiel spawned! 15 Minutes until he is vulnerable...\nUse https://raid.travitia.xyz/ to join the raid!"
+        )
         await asyncio.sleep(300)
         await ctx.send("**The dragon will be vulnerable in 10 minutes**")
         await asyncio.sleep(300)
@@ -110,57 +101,50 @@ Use https://raid.travitia.xyz/ to join the raid!
             "https://raid.travitia.xyz/joined",
             headers={"Authorization": self.bot.config.raidauth},
         ) as r:
-            self.bot.raid2 = await r.json()
+            raid_raw = await r.json()
         async with self.bot.pool.acquire() as conn:
             dmgs = await conn.fetch(
                 'SELECT p."user", ai.damage, p.atkmultiply FROM profile p JOIN allitems ai ON (p.user=ai.owner) JOIN inventory i ON (ai.id=i.item) WHERE i.equipped IS TRUE AND p.user=ANY($2) AND type=$1;',
                 "Sword",
-                self.bot.raid2,
+                raid_raw,
             )
             deffs = await conn.fetch(
                 'SELECT p."user", ai.armor, p.defmultiply FROM profile p JOIN allitems ai ON (p.user=ai.owner) JOIN inventory i ON (ai.id=i.item) WHERE i.equipped IS TRUE AND p.user=ANY($2) AND type=$1;',
                 "Shield",
-                self.bot.raid2,
+                 raid_raw,
             )
-        for i in self.bot.raid2:
+        raid = {}
+        for i in raid_raw:
             u = await self.bot.get_user_global(i)
             if not u:
                 continue
             dmg = 0
             deff = 0
-            for j in dmgs:
-                if j["user"] == i:
-                    dmg = j["damage"] * j["atkmultiply"]
-            for j in deffs:
-                if j["user"] == i:
-                    deff = j["armor"] * j["defmultiply"]
+            j = filter(lambda x: x["user"] == i, dmgs)
+            dmg = j["damage"] * j["atkmultiply"]
+            deff = j["armor"] * j["defmultiply"]
             dmg, deff = await genstats(self.bot, i, dmg, deff)
-            self.bot.raid[u] = {"hp": 250, "armor": deff, "damage": dmg}
+            raid[u] = {"hp": 250, "armor": deff, "damage": dmg}
 
-        if not self.bot.raid:
-            return await ctx.send(
-                "Noone joined for killing Zerekiel... Sadly the boss will now vanish..."
-            )
-        else:
-            await ctx.send("**Done getting data!**")
+        await ctx.send("**Done getting data!**")
 
         start = datetime.datetime.utcnow()
 
         while (
             boss["hp"] > 0
-            and len(self.bot.raid) > 0
-            and datetime.datetime.utcnow() < start + datetime.timedelta(minutes=30)
+            and len(raid) > 0
+            and datetime.datetime.utcnow() < start + datetime.timedelta(minutes=45)
         ):
-            target = random.choice(list(self.bot.raid.keys()))  # the guy it will attack
+            target = random.choice(list(raid.keys()))  # the guy it will attack
             dmg = random.randint(
                 boss["min_dmg"], boss["max_dmg"]
             )  # effective damage the dragon does
-            dmg -= self.bot.raid[target]["armor"]  # let's substract the shield, ouch
-            self.bot.raid[target]["hp"] -= dmg  # damage dealt
-            if self.bot.raid[target]["hp"] > 0:
+            dmg -= raid[target]["armor"]  # let's substract the shield, ouch
+            raid[target]["hp"] -= dmg  # damage dealt
+            if raid[target]["hp"] > 0:
                 em = discord.Embed(
                     title="Zerekiel attacked!",
-                    description=f"{target} now has {self.bot.raid[target]['hp']} HP!",
+                    description=f"{target} now has {raid[target]['hp']} HP!",
                     colour=0xFFB900,
                 )
             else:
@@ -170,18 +154,16 @@ Use https://raid.travitia.xyz/ to join the raid!
                     colour=0xFFB900,
                 )
             em.add_field(
-                name="Theoretical Damage", value=dmg + self.bot.raid[target]["armor"]
+                name="Theoretical Damage", value=dmg + raid[target]["armor"]
             )
-            em.add_field(name="Shield", value=self.bot.raid[target]["armor"])
+            em.add_field(name="Shield", value=raid[target]["armor"])
             em.add_field(name="Effective Damage", value=dmg)
             em.set_author(name=str(target), icon_url=target.avatar_url)
             em.set_thumbnail(url=f"{self.bot.BASE_URL}/dragon.png")
             await ctx.send(embed=em)
-            if self.bot.raid[target]["hp"] <= 0:
-                del self.bot.raid[target]
-            dmg_to_take = 0
-            for i in self.bot.raid:
-                dmg_to_take += self.bot.raid[i]["damage"]
+            if raid[target]["hp"] <= 0:
+                del raid[target]
+            dmg_to_take = sum(i["damage"] for i in raid.values())
             boss["hp"] -= dmg_to_take
             await asyncio.sleep(4)
             em = discord.Embed(title="The raid attacked Zerekiel!", colour=0xFF5C00)
@@ -196,7 +178,7 @@ Use https://raid.travitia.xyz/ to join the raid!
 
         self.bot.boss_is_spawned = False
 
-        if len(self.bot.raid) == 0:
+        if len(raid) == 0:
             await ctx.send("The raid was all wiped!")
         elif boss["hp"] < 1:
             await ctx.channel.set_permissions(
@@ -215,7 +197,7 @@ Use https://raid.travitia.xyz/ to join the raid!
                 if (
                     msg.channel.id != ctx.channel.id
                     or (not msg.content.isdigit())
-                    or (msg.author not in self.bot.raid)
+                    or (msg.author not in raid)
                 ):
                     return False
                 if not (int(msg.content) > highest_bid[1]):
@@ -223,11 +205,11 @@ Use https://raid.travitia.xyz/ to join the raid!
                 return True
 
             page = commands.Paginator()
-            page.add_line(
-                f"The raid killed the boss!\nHe dropped {weapon_name}, with a stat of {weapon_stat}!\nThe highest bid for it wins <:roosip:505447694408482846>\nSimply type how much you bid!\n\nPeople eligible for bids:\n\n"
-            )
-            for u in list(self.bot.raid.keys()):
+            for u in list(raid.keys()):
                 page.add_line(u.mention)
+            page.add_line(
+                f"The raid killed the boss!\nHe dropped a weapon/shield of unknown stat in the range of 42 to 50!\nThe highest bid for it wins <:roosip:505447694408482846>\nSimply type how much you bid!"
+            )
             for p in page.pages:
                 await ctx.send(p[4:-4])
 
@@ -240,7 +222,7 @@ Use https://raid.travitia.xyz/ to join the raid!
                 money = await self.bot.pool.fetchval(
                     'SELECT money FROM profile WHERE "user"=$1;', msg.author.id
                 )
-                if money and bid > highest_bid[1] and money >= bid:
+                if money and money >= bid:
                     highest_bid = [msg.author, bid]
                     await ctx.send(f"{msg.author.mention} bids **${msg.content}**!")
             msg = await ctx.send(
@@ -286,23 +268,22 @@ Use https://raid.travitia.xyz/ to join the raid!
                     f"{highest_bid[0].mention} spent the money in the meantime... Meh! Noone gets it then, pah!\nThis incident has been reported and they will get banned if it happens again. Cheers!"
                 )
 
-            cash = int(hp / len(self.bot.raid))  # what da hood gets per survivor
+            cash = int(hp * 2 / len(raid))  # what da hood gets per survivor
             async with self.bot.pool.acquire() as conn:
-                for u in self.bot.raid:
+                for u in raid:
                     await conn.execute(
                         'UPDATE profile SET money=money+$1 WHERE "user"=$2;', cash, u.id
                     )
             await ctx.send(
-                f"**Gave ${cash} of Zerekiel's ${hp} drop to all survivors!**"
+                f"**Gave ${cash} of Zerekiel's ${hp * 2} drop to all survivors!**"
             )
 
         else:
             await ctx.send(
-                "The raid did not manage to kill Zerekiel within 30 Minutes... He disappeared!"
+                "The raid did not manage to kill Zerekiel within 45 Minutes... He disappeared!"
             )
 
         await asyncio.sleep(30)
-        self.bot.raid = {}
         await ctx.channel.set_permissions(
             ctx.guild.default_role, overwrite=self.deny_sending
         )
@@ -321,22 +302,18 @@ Use https://raid.travitia.xyz/ to join the raid!
     @increase.command()
     async def damage(self, ctx):
         """Increase your raid damage."""
-        async with self.bot.pool.acquire() as conn:
-            lvl = await conn.fetchval(
-                'SELECT atkmultiply FROM profile WHERE "user"=$1;', ctx.author.id
+        newlvl = ctx.character_data["atkmultiply"] + Decimal("0.1")
+        price = self.getpriceto(newlvl)
+        if ctx.character_data["money"] < price:
+            return await ctx.send(
+                f"Upgrading your weapon attack raid multiplier to {newlvl} costs **${price}**, you are too poor."
             )
-            newlvl = lvl + Decimal("0.1")
-            price = self.getpriceto(newlvl)
-            if not await has_money(self.bot, ctx.author.id, price):
-                return await ctx.send(
-                    f"Upgrading your weapon attack raid multiplier to {newlvl} costs **${price}**, you are too poor."
-                )
-            await conn.execute(
-                'UPDATE profile SET "atkmultiply"=$1, "money"="money"-$2 WHERE "user"=$3;',
-                newlvl,
-                price,
-                ctx.author.id,
-            )
+        await self.bot.pool.execute(
+            'UPDATE profile SET "atkmultiply"=$1, "money"="money"-$2 WHERE "user"=$3;',
+            newlvl,
+            price,
+            ctx.author.id,
+        )
         await ctx.send(
             f"You upgraded your weapon attack raid multiplier to {newlvl} for **${price}**."
         )
@@ -344,22 +321,18 @@ Use https://raid.travitia.xyz/ to join the raid!
     @increase.command()
     async def defense(self, ctx):
         """Increase your raid defense."""
-        async with self.bot.pool.acquire() as conn:
-            lvl = await conn.fetchval(
-                'SELECT defmultiply FROM profile WHERE "user"=$1;', ctx.author.id
+        newlvl = ctx.character_data["defmultiply"] + Decimal("0.1")
+        price = self.getpriceto(newlvl)
+        if ctx.character_data["money"] < price:
+            return await ctx.send(
+                f"Upgrading your shield defense raid multiplier to {newlvl} costs **${price}**, you are too poor."
             )
-            newlvl = lvl + Decimal("0.1")
-            price = self.getpriceto(newlvl)
-            if not await has_money(self.bot, ctx.author.id, price):
-                return await ctx.send(
-                    f"Upgrading your shield defense raid multiplier to {newlvl} costs **${price}**, you are too poor."
-                )
-            await conn.execute(
-                'UPDATE profile SET "defmultiply"=$1, "money"="money"-$2 WHERE "user"=$3;',
-                newlvl,
-                price,
-                ctx.author.id,
-            )
+        await self.bot.pool.execute(
+            'UPDATE profile SET "defmultiply"=$1, "money"="money"-$2 WHERE "user"=$3;',
+            newlvl,
+            price,
+            ctx.author.id,
+        )
         await ctx.send(
             f"You upgraded your shield defense raid multiplier to {newlvl} for **${price}**."
         )
@@ -368,12 +341,8 @@ Use https://raid.travitia.xyz/ to join the raid!
     @commands.command()
     async def raidstats(self, ctx):
         """View your raid stats."""
-        data = await self.bot.pool.fetchrow(
-            'SELECT atkmultiply, defmultiply FROM profile WHERE "user"=$1;',
-            ctx.author.id,
-        )
-        atk = data["atkmultiply"]
-        deff = data["defmultiply"]
+        atk = ctx.character_data["atkmultiply"]
+        deff = ctx.character_data["defmultiply"]
         atkp = self.getpriceto(atk + Decimal("0.1"))
         deffp = self.getpriceto(deff + Decimal("0.1"))
         await ctx.send(
