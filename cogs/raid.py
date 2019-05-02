@@ -278,7 +278,7 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
     @is_admin()
     @ikhdosa_channel()
     @commands.command()
-    async def raiddefend(self, ctx, bandits: int):
+    async def raiddefend(self, ctx, bandits: int, group: str="I"):
         """[Bot Admin only] Starts a bandit raid in Ikhdosa."""
         await self.bot.session.get(
             "https://raid.travitia.xyz/toggle",
@@ -354,13 +354,13 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
             target_data["hp"] -= dmg  # damage dealt
             em = discord.Embed(title=f"Bandits left: `{len(bandits)}`", colour=0x000000)
             em.set_author(
-                name="Bandit Raider Group I",
+                name=f"Bandit Raider Group {group}",
                 icon_url=f"{self.bot.BASE_URL}/bandits1.jpg",
             )
             em.add_field(name="Bandit HP", value=f"{bandits[0]['hp']} HP left")
             if target_data["hp"] > 0:
                 em.add_field(
-                    name="Attack", value=f"Bandit ist fighting against `{target}`"
+                    name="Attack", value=f"Bandit is fighting against `{target}`"
                 )
             else:
                 em.add_field(name="Attack", value=f"Bandit killed `{target}`")
