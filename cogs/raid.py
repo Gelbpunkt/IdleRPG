@@ -256,11 +256,11 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
                 )
 
             cash = int(hp * 2 / len(raid))  # what da hood gets per survivor
-            async with self.bot.pool.acquire() as conn:
-                for u in raid:
-                    await conn.execute(
-                        'UPDATE profile SET money=money+$1 WHERE "user"=$2;', cash, u.id
-                    )
+            await self.bot.pool.execute(
+                'UPDATE profile SET money=money+$1 WHERE "user"=ANY($2);',
+                cash,
+                [u.id for u in raid.keys()],
+            )
             await ctx.send(
                 f"**Gave ${cash} of Zerekiel's ${hp * 2} drop to all survivors!**"
             )
@@ -278,7 +278,7 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
     @is_admin()
     @ikhdosa_channel()
     @commands.command()
-    async def raiddefend(self, ctx, bandits: int, group: str="I"):
+    async def raiddefend(self, ctx, bandits: int, group: str = "I"):
         """[Bot Admin only] Starts a bandit raid in Ikhdosa."""
         await self.bot.session.get(
             "https://raid.travitia.xyz/toggle",
@@ -296,13 +296,13 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
 """,
             file=discord.File("assets/other/bandits1.jpg"),
         )
-        # await asyncio.sleep(300)
-        # await ctx.send("**The bandits arrive in 10 minutes**")
-        # await asyncio.sleep(300)
-        # await ctx.send("**The bandits arrive in 5 minutes**")
-        # await asyncio.sleep(180)
-        # await ctx.send("**The bandits arrive in 2 minutes**")
-        # await asyncio.sleep(60)
+        await asyncio.sleep(300)
+        await ctx.send("**The bandits arrive in 10 minutes**")
+        await asyncio.sleep(300)
+        await ctx.send("**The bandits arrive in 5 minutes**")
+        await asyncio.sleep(180)
+        await ctx.send("**The bandits arrive in 2 minutes**")
+        await asyncio.sleep(60)
         await ctx.send("**The bandits arrive in 1 minute**")
         await asyncio.sleep(30)
         await ctx.send("**The bandits arrive in 30 seconds**")
