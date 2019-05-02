@@ -14,7 +14,7 @@ import discord
 from discord.ext import commands
 
 from cogs.classes import genstats
-from utils.checks import has_char, has_money, is_admin
+from utils.checks import has_char, is_admin
 
 
 def raid_channel():
@@ -107,6 +107,7 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
             deff = 0
             j = filter(lambda x: x["user"] == i, dmgs)
             dmg = j["damage"] * j["atkmultiply"]
+            j = filter(lambda x: x["user"] == i, deffs)
             deff = j["armor"] * j["defmultiply"]
             dmg, deff = await genstats(self.bot, i, dmg, deff)
             raid[u] = {"hp": 250, "armor": deff, "damage": dmg}
@@ -138,9 +139,7 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
                     description=f"{target} died!",
                     colour=0xFFB900,
                 )
-            em.add_field(
-                name="Theoretical Damage", value=dmg + raid[target]["armor"]
-            )
+            em.add_field(name="Theoretical Damage", value=dmg + raid[target]["armor"])
             em.add_field(name="Shield", value=raid[target]["armor"])
             em.add_field(name="Effective Damage", value=dmg)
             em.set_author(name=str(target), icon_url=target.avatar_url)
