@@ -24,6 +24,13 @@ def raid_channel():
     return commands.check(predicate)
 
 
+def ikhdosa_channel():
+    def predicate(ctx):
+        return ctx.channel.id == 561_929_996_952_797_217
+
+    return commands.check(predicate)
+
+
 class Raid(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
@@ -302,9 +309,7 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
         await asyncio.sleep(20)
         await ctx.send("**The bandits arrive in 10 seconds**")
         await asyncio.sleep(10)
-        await ctx.send(
-            "**The bandits arrived! Fetching participant data... Hang on!**"
-        )
+        await ctx.send("**The bandits arrived! Fetching participant data... Hang on!**")
 
         async with self.bot.session.get(
             "https://raid.travitia.xyz/joined",
@@ -338,55 +343,78 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
 
         start = datetime.datetime.utcnow()
 
-
-        target, target_data = random.choice(list(raid.values())
-        while (
-            len(bandits) > 0
-            and datetime.datetime.utcnow() < start + datetime.timedelta(minutes=45)
-        ):
+        target, target_data = random.choice(list(raid.values()))
+        while len(
+            bandits
+        ) > 0 and datetime.datetime.utcnow() < start + datetime.timedelta(minutes=45):
             dmg = random.randint(20, 60)  # effective damage the bandit does
-            dmg -= target_data["armor"] * (random.randint(2, 3) / 10)  # let's substract the shield, ouch
+            dmg -= target_data["armor"] * (
+                random.randint(2, 3) / 10
+            )  # let's substract the shield, ouch
             target_data["hp"] -= dmg  # damage dealt
-            em = discord.Embed(
-                title=f"Bandits left: `{len(bandits)}`",
-                colour=0x000000,
+            em = discord.Embed(title=f"Bandits left: `{len(bandits)}`", colour=0x000000)
+            em.set_author(
+                name="Bandit Raider Group I",
+                icon_url=f"{self.bot.BASE_URL}/bandits1.jpg",
             )
-            em.set_author(name="Bandit Raider Group I", icon_url=f"{self.bot.BASE_URL}/bandits1.jpg")
             em.add_field(name="Bandit HP", value=f"{bandits[0]['hp']} HP left")
             if target_data["hp"] > 0:
-                em.add_field(name="Attack", value=f"Bandit ist fighting against `{target}`")
+                em.add_field(
+                    name="Attack", value=f"Bandit ist fighting against `{target}`"
+                )
             else:
                 em.add_field(name="Attack", value=f"Bandit killed `{target}`")
-            em.add_field(name="Bandit Damage", value=f"Has dealt `{dmg}` damage to the swordsman `{target}`")
+            em.add_field(
+                name="Bandit Damage",
+                value=f"Has dealt `{dmg}` damage to the swordsman `{target}`",
+            )
             em.set_image(url=f"{self.bot.BASE_URL}/bandits2.jpg")
             await ctx.send(embed=em)
             if target_data["hp"] <= 0:
                 del raid[target]
                 if len(raid) == 0:  # no more raiders
                     break
-                target, target_data = random.choice(list(raid.values())
+                target, target_data = random.choice(list(raid.values()))
             bandits[0]["hp"] -= target_data["damage"]
             await asyncio.sleep(4)
-            em = discord.Embed(
-                title=f"Swordsmen left: `{len(raid)}`",
-                colour=0x009900,
+            em = discord.Embed(title=f"Swordsmen left: `{len(raid)}`", colour=0x009900)
+            em.set_author(
+                name=f"Swordsman ({target})",
+                icon_url=f"{self.bot.BASE_URL}/swordsman1.jpg",
             )
-            em.set_author(name=f"Swordsman ({target})", icon_url=f"{self.bot.BASE_URL}/swordsman1.jpg")
-            em.add_field(name="Swordsman HP", value=f"`{target}` got {target_data['hp']} HP left")
+            em.add_field(
+                name="Swordsman HP", value=f"`{target}` got {target_data['hp']} HP left"
+            )
             if bandits[0]["hp"] > 0:
-                em.add_field(name="Swordsman attack", value=f"Ist attacking the bandit and dealt `{target_data['damage']}` damage")
+                em.add_field(
+                    name="Swordsman attack",
+                    value=f"Ist attacking the bandit and dealt `{target_data['damage']}` damage",
+                )
             else:
                 money = random.randint(1500, 2300)
-                await self.bot.pool.execute('UPDATE profile SET "money"="money"+$1 WHERE "user"=$2;', money, target.id)
+                await self.bot.pool.execute(
+                    'UPDATE profile SET "money"="money"+$1 WHERE "user"=$2;',
+                    money,
+                    target.id,
+                )
                 bandits.pop(0)
-                em.add_field(name="Swordsman attack", value=f"Killed the bandit and received ${money}")
+                em.add_field(
+                    name="Swordsman attack",
+                    value=f"Killed the bandit and received ${money}",
+                )
             em.set_image(url=f"{self.bot.BASE_URL}/swordsman2.jpg")
             await ctx.send(embed=em)
             await asyncio.sleep(4)
 
         if len(bandits) == 0:
-            await ctx.send("The bandits got defeated, all Swordman that are alive are getting their money now...")
-            await self.bot.pool.execute('UPDATE profile SET "money"="money"+$1 WHERE "user"=ANY($2);', payout, list(raid.keys()))
+            await ctx.send(
+                "The bandits got defeated, all Swordman that are alive are getting their money now..."
+            )
+            await self.bot.pool.execute(
+                'UPDATE profile SET "money"="money"+$1 WHERE "user"=ANY($2);',
+                payout,
+                list(raid.keys()),
+            )
         elif len(raid) == 0:
             await ctx.send("The bandits plundered the town! All swordsmen died!")
 
