@@ -388,7 +388,7 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
             if bandits[0]["hp"] > 0:
                 em.add_field(
                     name="Swordsman attack",
-                    value=f"Ist attacking the bandit and dealt `{target_data['damage']}` damage",
+                    value=f"Is attacking the bandit and dealt `{target_data['damage']}` damage",
                 )
             else:
                 money = random.randint(1500, 2300)
@@ -413,7 +413,7 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
             await self.bot.pool.execute(
                 'UPDATE profile SET "money"="money"+$1 WHERE "user"=ANY($2);',
                 payout,
-                list(raid.keys()),
+                [u.id for u in raid.keys()],
             )
         elif len(raid) == 0:
             await ctx.send("The bandits plundered the town! All swordsmen died!")
