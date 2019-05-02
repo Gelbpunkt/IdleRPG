@@ -285,7 +285,7 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
             headers={"Authorization": self.bot.config.raidauth},
         )
         bandits = [{"hp": random.randint(70, 120), "id": i + 1} for i in range(bandits)]
-        payout = sum(i["hp"] for i in bandits.values())
+        payout = sum(i["hp"] for i in bandits)
         await ctx.send(
             f"""
 **Lieutenant**: We've spotted a group of Bandits! Come to the front and help me defend the city gates!
@@ -296,13 +296,13 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
 """,
             file=discord.File("assets/other/bandits1.jpg"),
         )
-        await asyncio.sleep(300)
-        await ctx.send("**The bandits arrive in 10 minutes**")
-        await asyncio.sleep(300)
-        await ctx.send("**The bandits arrive in 5 minutes**")
-        await asyncio.sleep(180)
-        await ctx.send("**The bandits arrive in 2 minutes**")
-        await asyncio.sleep(60)
+        # await asyncio.sleep(300)
+        # await ctx.send("**The bandits arrive in 10 minutes**")
+        # await asyncio.sleep(300)
+        # await ctx.send("**The bandits arrive in 5 minutes**")
+        # await asyncio.sleep(180)
+        # await ctx.send("**The bandits arrive in 2 minutes**")
+        # await asyncio.sleep(60)
         await ctx.send("**The bandits arrive in 1 minute**")
         await asyncio.sleep(30)
         await ctx.send("**The bandits arrive in 30 seconds**")
@@ -343,13 +343,13 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
 
         start = datetime.datetime.utcnow()
 
-        target, target_data = random.choice(list(raid.values()))
+        target, target_data = random.choice(list(raid.items()))
         while len(
             bandits
         ) > 0 and datetime.datetime.utcnow() < start + datetime.timedelta(minutes=45):
             dmg = random.randint(20, 60)  # effective damage the bandit does
-            dmg -= target_data["armor"] * (
-                random.randint(2, 3) / 10
+            dmg -= target_data["armor"] * Decimal(
+                random.choice(["0.2", "0.3"])
             )  # let's substract the shield, ouch
             target_data["hp"] -= dmg  # damage dealt
             em = discord.Embed(title=f"Bandits left: `{len(bandits)}`", colour=0x000000)
@@ -374,9 +374,9 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
                 del raid[target]
                 if len(raid) == 0:  # no more raiders
                     break
-                target, target_data = random.choice(list(raid.values()))
+                target, target_data = random.choice(list(raid.items()))
             bandits[0]["hp"] -= target_data["damage"]
-            await asyncio.sleep(4)
+            await asyncio.sleep(7)
             em = discord.Embed(title=f"Swordsmen left: `{len(raid)}`", colour=0x009900)
             em.set_author(
                 name=f"Swordsman ({target})",
@@ -404,11 +404,11 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
                 )
             em.set_image(url=f"{self.bot.BASE_URL}/swordsman2.jpg")
             await ctx.send(embed=em)
-            await asyncio.sleep(4)
+            await asyncio.sleep(7)
 
         if len(bandits) == 0:
             await ctx.send(
-                "The bandits got defeated, all Swordman that are alive are getting their money now..."
+                "The bandits got defeated, all Swordsmen that are alive are getting their money now..."
             )
             await self.bot.pool.execute(
                 'UPDATE profile SET "money"="money"+$1 WHERE "user"=ANY($2);',
@@ -421,7 +421,6 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
     def getpriceto(self, level: float):
         return sum(i * 25000 for i in range(1, int(level * 10) - 9))
 
-    @has_char()
     @commands.group(invoke_without_command=True)
     async def increase(self, ctx):
         """Upgrade your raid damage or defense multiplier."""
@@ -429,6 +428,7 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
             f"Use `{ctx.prefix}increase damage/defense` to upgrade your raid damage/defense multiplier by 10%."
         )
 
+    @has_char()
     @increase.command()
     async def damage(self, ctx):
         """Increase your raid damage."""
@@ -448,6 +448,7 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
             f"You upgraded your weapon attack raid multiplier to {newlvl} for **${price}**."
         )
 
+    @has_char()
     @increase.command()
     async def defense(self, ctx):
         """Increase your raid defense."""
