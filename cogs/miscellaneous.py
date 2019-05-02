@@ -91,6 +91,8 @@ class Miscellaneous(commands.Cog):
         async with self.bot.pool.acquire() as conn:
             characters = await conn.fetchval("SELECT COUNT(*) FROM profile;")
             items = await conn.fetchval("SELECT COUNT(*) FROM allitems;")
+            pg_version = conn.get_server_version()
+        pg_version = f"{pg_version.major}.{pg_version.minor}.{pg_version.micro} {pg_version.releaselevel}"
         total_online = len(
             {
                 m.id
@@ -146,7 +148,7 @@ class Miscellaneous(commands.Cog):
             name="Hosting Statistics",
             value=f"CPU Usage: **{psutil.cpu_percent()}%**\nRAM Usage: **{psutil.virtual_memory().percent}%**\nPython Version"
             f" **{platform.python_version()}** <:python:445247273065250817>\ndiscord.py Version **{pkg.get_distribution('discord.py').version}**\nOperating System: "
-            f"**{sysinfo[0].title()} {sysinfo[1].title()}**",
+            f"**{sysinfo[0].title()} {sysinfo[1].title()}**\nPostgreSQL Version **{pg_version}**",
             inline=False,
         )
         embed.add_field(
