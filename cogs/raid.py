@@ -268,6 +268,128 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
             ctx.guild.default_role, overwrite=self.deny_sending
         )
 
+    @is_admin()
+    @ikhdosa_channel()
+    @commands.command()
+    async def raiddefend(self, ctx, bandits: int):
+        """[Bot Admin only] Starts a bandit raid in Ikhdosa."""
+        await self.bot.session.get(
+            "https://raid.travitia.xyz/toggle",
+            headers={"Authorization": self.bot.config.raidauth},
+        )
+        bandits = [{"hp": random.randint(70, 120), "id": i + 1} for i in range(bandits)]
+        payout = sum(i["hp"] for i in bandits.values())
+        await ctx.send(
+            f"""
+**Lieutenant**: We've spotted a group of Bandits! Come to the front and help me defend the city gates!
+They arrive in 15 Minutes
+Use https://raid.travitia.xyz/ to join the raid!
+
+Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=453963965521985536&scope=identify&response_type=code&redirect_uri=https://raid.travitia.xyz/callback>
+""",
+            file=discord.File("assets/other/bandits1.jpg"),
+        )
+        await asyncio.sleep(300)
+        await ctx.send("**The bandits arrive in 10 minutes**")
+        await asyncio.sleep(300)
+        await ctx.send("**The bandits arrive in 5 minutes**")
+        await asyncio.sleep(180)
+        await ctx.send("**The bandits arrive in 2 minutes**")
+        await asyncio.sleep(60)
+        await ctx.send("**The bandits arrive in 1 minute**")
+        await asyncio.sleep(30)
+        await ctx.send("**The bandits arrive in 30 seconds**")
+        await asyncio.sleep(20)
+        await ctx.send("**The bandits arrive in 10 seconds**")
+        await asyncio.sleep(10)
+        await ctx.send(
+            "**The bandits arrived! Fetching participant data... Hang on!**"
+        )
+
+        async with self.bot.session.get(
+            "https://raid.travitia.xyz/joined",
+            headers={"Authorization": self.bot.config.raidauth},
+        ) as r:
+            raid_raw = await r.json()
+        async with self.bot.pool.acquire() as conn:
+            dmgs = await conn.fetch(
+                'SELECT p."user", ai.damage, p.atkmultiply FROM profile p JOIN allitems ai ON (p.user=ai.owner) JOIN inventory i ON (ai.id=i.item) WHERE i.equipped IS TRUE AND p.user=ANY($2) AND type=$1;',
+                "Sword",
+                raid_raw,
+            )
+            deffs = await conn.fetch(
+                'SELECT p."user", ai.armor, p.defmultiply FROM profile p JOIN allitems ai ON (p.user=ai.owner) JOIN inventory i ON (ai.id=i.item) WHERE i.equipped IS TRUE AND p.user=ANY($2) AND type=$1;',
+                "Shield",
+                raid_raw,
+            )
+        raid = {}
+        for i in raid_raw:
+            u = await self.bot.get_user_global(i)
+            if not u:
+                continue
+            j = next(filter(lambda x: x["user"] == i, dmgs))
+            dmg = j["damage"] * j["atkmultiply"] if j else 0
+            j = next(filter(lambda x: x["user"] == i, deffs))
+            deff = j["armor"] * j["defmultiply"] if j else 0
+            dmg, deff = await genstats(self.bot, i, dmg, deff)
+            raid[u] = {"hp": 100, "armor": deff, "damage": dmg}
+
+        await ctx.send("**Done getting data!**")
+
+        start = datetime.datetime.utcnow()
+
+
+        target, target_data = random.choice(list(raid.values())
+        while (
+            len(bandits) > 0
+            and datetime.datetime.utcnow() < start + datetime.timedelta(minutes=45)
+        ):
+            dmg = random.randint(20, 60)  # effective damage the bandit does
+            dmg -= target_data["armor"] * (random.randint(2, 3) / 10)  # let's substract the shield, ouch
+            target_data["hp"] -= dmg  # damage dealt
+            em = discord.Embed(
+                title=f"Bandits left: `{len(bandits)}`",
+                colour=0x000000,
+            )
+            em.set_author(name="Bandit Raider Group I", icon_url=f"{self.bot.BASE_URL}/bandits1.jpg")
+            em.add_field(name="Bandit HP", value=f"{bandits[0]['hp']} HP left")
+            if target_data["hp"] > 0:
+                em.add_field(name="Attack", value=f"Bandit ist fighting against `{target}`")
+            else:
+                em.add_field(name="Attack", value=f"Bandit killed `{target}`")
+            em.add_field(name="Bandit Damage", value=f"Has dealt `{dmg}` damage to the swordsman `{target}`")
+            em.set_image(url=f"{self.bot.BASE_URL}/bandits2.jpg")
+            await ctx.send(embed=em)
+            if target_data["hp"] <= 0:
+                del raid[target]
+                if len(raid) == 0:  # no more raiders
+                    break
+                target, target_data = random.choice(list(raid.values())
+            bandits[0]["hp"] -= target_data["damage"]
+            await asyncio.sleep(4)
+            em = discord.Embed(
+                title=f"Swordsmen left: `{len(raid)}`",
+                colour=0x009900,
+            )
+            em.set_author(name=f"Swordsman ({target})", icon_url=f"{self.bot.BASE_URL}/swordsman1.jpg")
+            em.add_field(name="Swordsman HP", value=f"`{target}` got {target_data['hp']} HP left")
+            if bandits[0]["hp"] > 0:
+                em.add_field(name="Swordsman attack", value=f"Ist attacking the bandit and dealt `{target_data['damage']}` damage")
+            else:
+                money = random.randint(1500, 2300)
+                await self.bot.pool.execute('UPDATE profile SET "money"="money"+$1 WHERE "user"=$2;', money, target.id)
+                bandits.pop(0)
+                em.add_field(name="Swordsman attack", value=f"Killed the bandit and received ${money}")
+            em.set_image(url=f"{self.bot.BASE_URL}/swordsman2.jpg")
+            await ctx.send(embed=em)
+            await asyncio.sleep(4)
+
+        if len(bandits) == 0:
+            await ctx.send("The bandits got defeated, all Swordman that are alive are getting their money now...")
+            await self.bot.pool.execute('UPDATE profile SET "money"="money"+$1 WHERE "user"=ANY($2);', payout, list(raid.keys()))
+        elif len(raid) == 0:
+            await ctx.send("The bandits plundered the town! All swordsmen died!")
+
     def getpriceto(self, level: float):
         return sum(i * 25000 for i in range(1, int(level * 10) - 9))
 
