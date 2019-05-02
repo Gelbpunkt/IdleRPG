@@ -17,20 +17,6 @@ from cogs.classes import genstats
 from utils.checks import has_char, has_money, is_admin
 
 
-def in_raid():
-    def predicate(ctx):
-        return ctx.author in ctx.bot.raid and ctx.channel.id == 506_133_354_874_404_874
-
-    return commands.check(predicate)
-
-
-def can_join():
-    def predicate(ctx):
-        return ctx.bot.boss_is_spawned and ctx.author not in ctx.bot.raid
-
-    return commands.check(predicate)
-
-
 def raid_channel():
     def predicate(ctx):
         return ctx.channel.id == 506_133_354_874_404_874
@@ -41,7 +27,7 @@ def raid_channel():
 class Raid(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
-        self.boss_is_spawned = False
+
         self.allow_sending = discord.PermissionOverwrite(
             send_messages=True, read_messages=True
         )
@@ -61,7 +47,6 @@ class Raid(commands.Cog):
             "https://raid.travitia.xyz/toggle",
             headers={"Authorization": self.bot.config.raidauth},
         )
-        self.boss_is_spawned = True
         boss = {"hp": hp, "min_dmg": 100, "max_dmg": 500}
         await ctx.channel.set_permissions(
             ctx.guild.default_role, overwrite=self.read_only
@@ -111,7 +96,7 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
             deffs = await conn.fetch(
                 'SELECT p."user", ai.armor, p.defmultiply FROM profile p JOIN allitems ai ON (p.user=ai.owner) JOIN inventory i ON (ai.id=i.item) WHERE i.equipped IS TRUE AND p.user=ANY($2) AND type=$1;',
                 "Shield",
-                 raid_raw,
+                raid_raw,
             )
         raid = {}
         for i in raid_raw:
@@ -175,8 +160,6 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
                 em.add_field(name="HP left", value="Dead!")
             await ctx.send(embed=em)
             await asyncio.sleep(4)
-
-        self.bot.boss_is_spawned = False
 
         if len(raid) == 0:
             await ctx.send("The raid was all wiped!")
