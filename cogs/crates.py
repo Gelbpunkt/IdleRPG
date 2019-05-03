@@ -10,6 +10,7 @@ import random
 import discord
 from discord.ext import commands
 
+from classes.converters import IntGreaterThan, MemberWithCharacter
 from utils.checks import has_char
 
 
@@ -31,7 +32,9 @@ class Crates(commands.Cog):
     async def _open(self, ctx):
         """Opens a crate."""
         if ctx.character_data["crates"] < 1:
-            return await ctx.send("Seems like you don't have a crate yet. Vote me up to get some or earn them!")
+            return await ctx.send(
+                "Seems like you don't have a crate yet. Vote me up to get some or earn them!"
+            )
         rand = random.randint(1, 6)
         if rand == 1:
             stat = float(random.randint(20, 30))
@@ -43,7 +46,11 @@ class Crates(commands.Cog):
         damage = stat if type_ == "Sword" else 0
         armor = stat if type_ == "Shield" else 0
         prefix = random.choice(["Rare", "Ancient", "Normal", "Legendary", "Famous"])
-        suffix = random.choice(["Sword", "Blade", "Stich"]) if type_ == "Sword" else random.choice(["Shield", "Defender", "Aegis"])
+        suffix = (
+            random.choice(["Sword", "Blade", "Stich"])
+            if type_ == "Sword"
+            else random.choice(["Shield", "Defender", "Aegis"])
+        )
         name = f"{prefix} {suffix}"
         value = random.randint(1, 250)
         async with self.bot.pool.acquire() as conn:
@@ -82,7 +89,9 @@ class Crates(commands.Cog):
 
     @has_char()
     @commands.command()
-    async def tradecrate(self, ctx, amount: Optional[IntGreaterThan(0)] = 1, other: discord.Member):
+    async def tradecrate(
+        self, ctx, other: MemberWithCharacter, amount: IntGreaterThan(0)
+    ):
         """Trades crates to a user."""
         if other == ctx.author:
             return await ctx.send("Very funny...")

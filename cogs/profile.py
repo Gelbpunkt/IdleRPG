@@ -274,7 +274,10 @@ class Profile(commands.Cog):
             return await ctx.send("Your inventory is empty.")
         allitems = list(chunks(ret, 5))
         maxpage = len(allitems) - 1
-        embeds = [self.invembed(ctx, chunk, idx, maxpage) for idx, chunk in enumerate(allitems)]
+        embeds = [
+            self.invembed(ctx, chunk, idx, maxpage)
+            for idx, chunk in enumerate(allitems)
+        ]
         await self.bot.paginator.Paginator(extras=embeds).paginate(ctx)
 
     @checks.has_char()

@@ -47,7 +47,7 @@ class Ranks(commands.Cog):
         )
         await ctx.send(embed=result)
 
-    @commands.command(aliases=["pvp", "battles"],)
+    @commands.command(aliases=["pvp", "battles"])
     async def pvpstats(self, ctx):
         """Top 10 players by wins in PvP matches."""
         await ctx.trigger_typing()
