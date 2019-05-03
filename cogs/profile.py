@@ -240,7 +240,7 @@ class Profile(commands.Cog):
             f"You currently have **{points} XP**, which means you are on Level **{rpgtools.xptolevel(points)}**. Missing to next level: **{rpgtools.xptonextlevel(points)}**"
         )
 
-    async def invembed(self, ctx, ret):
+    def invembed(self, ctx, ret, currentpage, maxpage):
         result = discord.Embed(
             title=f"{ctx.author.display_name}'s inventory includes",
             colour=discord.Colour.blurple(),
@@ -259,6 +259,7 @@ class Profile(commands.Cog):
                 name=f"{weapon[2]} {eq}",
                 value=f"ID: `{weapon[0]}`, Type: `{weapon[4]}` with {statstr}. Value is **${weapon[3]}**",
             )
+        result.set_footer(text=f"Page {currentpage + 1} of {maxpage + 1}")
         return result
 
     @checks.has_char()
@@ -266,138 +267,15 @@ class Profile(commands.Cog):
     async def inventory(self, ctx):
         async with self.bot.pool.acquire() as conn:
             ret = await conn.fetch(
-                "SELECT ai.*, i.equipped FROM profile p JOIN allitems ai ON (p.user=ai.owner) JOIN inventory i ON (ai.id=i.item) WHERE p.user=$1 ORDER BY i.equipped DESC;",
+                "SELECT ai.*, i.equipped FROM profile p JOIN allitems ai ON (p.user=ai.owner) JOIN inventory i ON (ai.id=i.item) WHERE p.user=$1 ORDER BY i.equipped DESC, ai."damage"+ai."armor" DESC;",
                 ctx.author.id,
             )
-        if ret == []:
-            await ctx.send("Your inventory is empty.")
-        else:
-            allitems = list(chunks(ret, 5))
-            currentpage = 0
-            maxpage = len(allitems) - 1
-            result = await self.invembed(ctx, allitems[currentpage])
-            result.set_footer(text=f"Page {currentpage+1} of {maxpage+1}")
-            msg = await ctx.send(embed=result)
-            if maxpage == 0:
-                return
-            await msg.add_reaction("\U000023ee")
-            await msg.add_reaction("\U000025c0")
-            await msg.add_reaction("\U000025b6")
-            await msg.add_reaction("\U000023ed")
-            await msg.add_reaction("\U0001f522")
-
-            def reactioncheck(reaction, user):
-                return (
-                    str(reaction.emoji)
-                    in [
-                        "\U000025c0",
-                        "\U000025b6",
-                        "\U000023ee",
-                        "\U000023ed",
-                        "\U0001f522",
-                    ]
-                    and reaction.message.id == msg.id
-                    and user.id == ctx.author.id
-                )
-
-            def msgcheck(amsg):
-                return amsg.channel == ctx.channel and not amsg.author.bot
-
-            browsing = True
-            while browsing:
-                try:
-                    reaction, user = await self.bot.wait_for(
-                        "reaction_add", timeout=60.0, check=reactioncheck
-                    )
-                    if reaction.emoji == "\U000025c0":
-                        if currentpage == 0:
-                            pass
-                        else:
-                            currentpage -= 1
-                            result = await self.invembed(ctx, allitems[currentpage])
-                            result.set_footer(
-                                text=f"Page {currentpage+1} of {maxpage+1}"
-                            )
-                            await msg.edit(embed=result)
-                        try:
-                            await msg.remove_reaction(reaction.emoji, user)
-                        except discord.Forbidden:
-                            pass
-                    elif reaction.emoji == "\U000025b6":
-                        if currentpage == maxpage:
-                            pass
-                        else:
-                            currentpage += 1
-                            result = await self.invembed(ctx, allitems[currentpage])
-                            result.set_footer(
-                                text=f"Page {currentpage+1} of {maxpage+1}"
-                            )
-                            await msg.edit(embed=result)
-                        try:
-                            await msg.remove_reaction(reaction.emoji, user)
-                        except discord.Forbidden:
-                            pass
-                    elif reaction.emoji == "\U000023ed":
-                        currentpage = maxpage
-                        result = await self.invembed(ctx, allitems[currentpage])
-                        result.set_footer(text=f"Page {currentpage+1} of {maxpage+1}")
-                        await msg.edit(embed=result)
-                        try:
-                            await msg.remove_reaction(reaction.emoji, user)
-                        except discord.Forbidden:
-                            pass
-                    elif reaction.emoji == "\U000023ee":
-                        currentpage = 0
-                        result = await self.invembed(ctx, allitems[currentpage])
-                        result.set_footer(text=f"Page {currentpage+1} of {maxpage+1}")
-                        await msg.edit(embed=result)
-                        try:
-                            await msg.remove_reaction(reaction.emoji, user)
-                        except discord.Forbidden:
-                            pass
-                    elif reaction.emoji == "\U0001f522":
-                        question = await ctx.send(
-                            f"Enter a page number from `1` to `{maxpage+1}`"
-                        )
-                        num = await self.bot.wait_for(
-                            "message", timeout=10, check=msgcheck
-                        )
-                        if num is not None:
-                            try:
-                                num2 = int(num.content)
-                                if num2 >= 1 and num2 <= maxpage + 1:
-                                    currentpage = num2 - 1
-                                    result = await self.invembed(
-                                        ctx, allitems[currentpage]
-                                    )
-                                    result.set_footer(
-                                        text=f"Page {currentpage+1} of {maxpage+1}"
-                                    )
-                                    await msg.edit(embed=result)
-                                else:
-                                    await ctx.send(
-                                        f"Must be between `1` and `{maxpage+1}`.",
-                                        delete_after=2,
-                                    )
-                                try:
-                                    await num.delete()
-                                except discord.Forbidden:
-                                    pass
-                            except ValueError:
-                                await ctx.send("That is no number!", delete_after=2)
-                        await question.delete()
-                        try:
-                            await msg.remove_reaction(reaction.emoji, user)
-                        except discord.Forbidden:
-                            pass
-                except asyncio.TimeoutError:
-                    browsing = False
-                    try:
-                        await msg.clear_reactions()
-                    except discord.Forbidden:
-                        pass
-                    finally:
-                        break
+        if not ret:
+            return await ctx.send("Your inventory is empty.")
+        allitems = list(chunks(ret, 5))
+        maxpage = len(allitems) - 1
+        embeds = [self.invembed(ctx, chunk, idx, maxpage) for idx, chunk in enumerate(allitems)]
+        await self.bot.paginator.Paginator(extras=embeds).paginate(ctx)
 
     @checks.has_char()
     @commands.command(aliases=["use"], description="Equips the item with the given ID.")
