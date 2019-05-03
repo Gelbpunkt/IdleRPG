@@ -5,8 +5,6 @@ Copyright (C) 2018-2019 Diniboy and Gelbpunkt
 This software is dual-licensed under the GNU Affero General Public License for non-commercial and the Travitia License for commercial use.
 For more information, see README.md and LICENSE.md.
 """
-
-
 import functools
 import math
 from collections import defaultdict
@@ -23,9 +21,9 @@ class Images(commands.Cog):
         self.bot = bot
 
     def make_pixels(self, data):
-        im = Image.open(data).resize((1024, 1024), resample=Image.NEAREST)
-        b = BytesIO()
-        im.save(b, format="png")
+        with Image.open(data).resize((1024, 1024), resample=Image.NEAREST) as im:
+            b = BytesIO()
+            im.save(b, format="png")
         b.seek(0)
         return b
 
@@ -123,7 +121,7 @@ class Images(commands.Cog):
         except IndexError:
             return await ctx.send("Use 1, 2, 3, 4 or 5 as intensity value.")
         user = user or ctx.author
-        url = user.avatar_url_as(format="png", size=size)
+        url = str(user.avatar_url_as(format="png", size=size))
         # change size to lower for less pixels
         async with self.bot.session.get(url) as r:
             data = BytesIO(await r.read())
@@ -135,7 +133,7 @@ class Images(commands.Cog):
     @commands.command(description="Edgyfy images.")
     async def edgy(self, ctx, user: discord.Member = None):
         user = user or ctx.author
-        async with self.bot.session.get(user.avatar_url_as(format="png")) as r:
+        async with self.bot.session.get(str(user.avatar_url_as(format="png"))) as r:
             data = BytesIO(await r.read())
         thing = functools.partial(self.make_edge, data)
         b = await self.bot.loop.run_in_executor(None, thing)
@@ -147,7 +145,7 @@ class Images(commands.Cog):
     async def invert(self, ctx, *, member: discord.Member = None):
         member = member or ctx.author
 
-        async with self.bot.session.get(member.avatar_url_as(format="png")) as r:
+        async with self.bot.session.get(str(member.avatar_url_as(format="png"))) as r:
             with BytesIO(await r.read()) as f:
                 func = functools.partial(self.invert_image, f)
                 file = await self.bot.loop.run_in_executor(None, func)
@@ -160,7 +158,7 @@ class Images(commands.Cog):
         member = member or ctx.author
 
         async with self.bot.session.get(
-            member.avatar_url_as(format="png", size=256)
+            str(member.avatar_url_as(format="png", size=256))
         ) as r:
             with BytesIO(await r.read()) as f:
                 func = functools.partial(self._oil, f, 3, 20)
