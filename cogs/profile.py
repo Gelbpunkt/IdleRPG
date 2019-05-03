@@ -267,7 +267,7 @@ class Profile(commands.Cog):
     async def inventory(self, ctx):
         async with self.bot.pool.acquire() as conn:
             ret = await conn.fetch(
-                "SELECT ai.*, i.equipped FROM profile p JOIN allitems ai ON (p.user=ai.owner) JOIN inventory i ON (ai.id=i.item) WHERE p.user=$1 ORDER BY i.equipped DESC, ai."damage"+ai."armor" DESC;",
+                'SELECT ai.*, i.equipped FROM profile p JOIN allitems ai ON (p.user=ai.owner) JOIN inventory i ON (ai.id=i.item) WHERE p."user"=$1 ORDER BY i."equipped" DESC, ai."damage"+ai."armor" DESC;',
                 ctx.author.id,
             )
         if not ret:
