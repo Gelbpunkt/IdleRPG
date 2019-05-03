@@ -90,7 +90,7 @@ class Crates(commands.Cog):
     @has_char()
     @commands.command()
     async def tradecrate(
-        self, ctx, other: MemberWithCharacter, amount: IntGreaterThan(0)
+        self, ctx, other: MemberWithCharacter, amount: IntGreaterThan(0) = 1
     ):
         """Trades crates to a user."""
         if other == ctx.author:
