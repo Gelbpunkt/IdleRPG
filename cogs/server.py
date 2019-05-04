@@ -9,6 +9,7 @@ import asyncio
 
 import discord
 from discord.ext import commands
+from discord.ext.commands.default import Author
 
 from cogs.help import chunks
 
@@ -22,16 +23,9 @@ class Server(commands.Cog):
         self.bot = bot
 
     @commands.guild_only()
-    @commands.command(
-        description="See information about this server.", aliases=["server"]
-    )
+    @commands.command(aliases=["server"])
     async def serverinfo(self, ctx):
-        if ctx.guild.icon_url:
-            urltext = (
-                f"[Link <:external_link:429288989560930314>]({ctx.guild.icon_url})"
-            )
-        else:
-            urltext = "`No icon has been set yet!`"
+        urltext = f"[Link <:external_link:429288989560930314>]({ctx.guild.icon_url})" if ctx.guild.icon_url else "`No icon has been set yet!`"
         em = discord.Embed(
             title="Server Information",
             description="Compact information about this server",
@@ -39,26 +33,29 @@ class Server(commands.Cog):
         )
         em.add_field(
             name="Information",
-            value=f"Server: `{str(ctx.guild)}`\nServer Region: `{ctx.guild.region}`\nMembers Total: `{ctx.guild.member_count}`\nID: `{ctx.guild.id}`\nIcon: {urltext}\nOwner: {ctx.guild.owner.mention}\nServer created at: `{ctx.guild.created_at.__format__('%A %d. %B %Y at %H:%M:%S')}`",
+            value=f"Server: `{ctx.guild.name}`\nServer Region: `{ctx.guild.region}`\nMembers Total: `{ctx.guild.member_count}`\nID: `{ctx.guild.id}`\nIcon: {urltext}\nOwner: {ctx.guild.owner.mention}\nServer created at: `{ctx.guild.created_at.__format__('%A %d. %B %Y at %H:%M:%S')}`",
         )
         em.add_field(
             name="Roles", value=f"{', '.join([role.name for role in ctx.guild.roles])}"
         )
         em.add_field(
             name="Shard",
-            value=f"`{ctx.guild.shard_id + 1}` of `{len(self.bot.shards)}`",
+            value=f"`{ctx.guild.shard_id + 1}` of `{self.bot.shard_count}`",
         )
         em.set_thumbnail(url=ctx.guild.icon_url)
         await ctx.send(embed=em)
 
     @commands.guild_only()
-    @commands.group(description="Change the settings.", invoke_without_command=True)
+    @commands.group(invoke_without_command=True)
     async def settings(self, ctx):
+        """Change the settings."""
         await ctx.send(f"Please use `{ctx.prefix}settings (prefix/unknown) value`")
 
     @commands.has_permissions(manage_guild=True)
-    @settings.command(description="Change the prefix.", name="prefix")
+    @settings.command(name="prefix")
     async def prefix_(self, ctx, prefix: str):
+        """Change the server bot prefix."""
+        # ToDo: handle default prefix here
         if self.bot.all_prefixes.get(ctx.guild.id):
             await self.bot.pool.execute(
                 'UPDATE server SET "prefix"=$1 WHERE "id"=$2;', prefix, ctx.guild.id
@@ -74,8 +71,9 @@ class Server(commands.Cog):
         await ctx.send(f"Prefix changed to `{prefix}`.")
 
     @commands.has_permissions(manage_guild=True)
-    @settings.command(description="Enable/Disable unknown command messages")
+    @settings.command()
     async def unknown(self, ctx, value: bool):
+        """Toggles messages on unknown commands invoked."""
         async with self.bot.pool.acquire() as conn:
             settings = await conn.fetchrow(
                 'SELECT * FROM server WHERE "id"=$1;', ctx.guild.id
@@ -94,8 +92,9 @@ class Server(commands.Cog):
         await ctx.send("Successfully updated the settings.")
 
     @commands.has_permissions(manage_guild=True)
-    @settings.command(description="Reset the settings.")
+    @settings.command()
     async def reset(self, ctx):
+        """Resets the server settings."""
         await self.bot.pool.execute('DELETE FROM server WHERE "id"=$1;', ctx.guild.id)
         try:
             del self.bot.all_prefixes[ctx.guild.id]
@@ -104,11 +103,8 @@ class Server(commands.Cog):
         await ctx.send("Done!")
 
     @commands.guild_only()
-    @commands.command(
-        description="Information about a user.",
-        aliases=["user", "member", "memberinfo"],
-    )
-    async def userinfo(self, ctx, member: discord.Member = None):
+    @commands.command(aliases=["user", "member", "memberinfo"])
+    async def userinfo(self, ctx, member: discord.Member = Author):
         ticks = {
             "True": "<:check:314349398811475968>",
             "False": "<:xmark:314349398824058880>",
@@ -119,102 +115,35 @@ class Server(commands.Cog):
             "dnd": "<:dnd:313956276893646850>",
             "offline": "<:offline:313956277237710868>",
         }
-        nl = "\n"
-        auser = member
-        if not auser:
-            auser = ctx.author
-        shared = get_guilds(self.bot, auser)
         embed = discord.Embed(
-            title=f"{auser}",
-            description=f"`Joined at`: {auser.joined_at}\n`Status...`: {statuses[str(auser.status)]}{str(auser.status).capitalize()}\n`Top Role.`: {auser.top_role.name}\n`Roles....`: {', '.join([role.name for role in auser.roles])}\n`Game.....`: {auser.activity if auser.activity else 'No Game Playing'}",
+            title=str(member),
+            description=f"`Joined at`: {member.joined_at}\n`Status...`: {statuses[str(auser.status)]}{str(auser.status).capitalize()}\n`Top Role.`: {auser.top_role.name}\n`Roles....`: {', '.join([role.name for role in auser.roles])}\n`Game.....`: {auser.activity if auser.activity else 'No Game Playing'}",
             color=auser.color.value,
-        )
-        embed.add_field(
-            name="Shared Servers",
-            value=f"**{len(shared)}**\n{nl.join([guild.name for guild in shared])}",
-        )
-        embed.set_thumbnail(url=auser.avatar_url)
-        msg = await ctx.send(embed=embed)
-        await msg.add_reaction("\U000025c0")
-        await msg.add_reaction("\U000025b6")
-
-        def reactioncheck(reaction, user):
-            return (
-                (str(reaction.emoji) in ["\U000025c0", "\U000025b6"])
-                and reaction.message.id == msg.id
-                and user.id == ctx.author.id
-            )
-
-        waiting = True
-        while waiting:
-            try:
-                reaction, user = await self.bot.wait_for(
-                    "reaction_add", timeout=60.0, check=reactioncheck
-                )
-                if reaction.emoji == "\U000025b6":
-                    em = discord.Embed(
-                        title="Permissions",
-                        description=f"{nl.join(['`'+value[0].replace('_', ' ').title().ljust(21, '.')+'`'+': '+ticks[str(value[1])] for value in auser.guild_permissions])}",
-                        color=auser.color.value,
-                    ).set_thumbnail(url=auser.avatar_url)
-                    await msg.edit(embed=em)
-                elif reaction.emoji == "\U000025c0":
-                    embed = discord.Embed(
-                        title=f"{auser}",
-                        description=f"`Joined at`: {auser.joined_at}\n`Status...`: {statuses[str(auser.status)]}{str(auser.status).capitalize()}\n`Top Role.`: {auser.top_role.name}\n`Roles....`: {', '.join([role.name for role in auser.roles])}\n`Game.....`: {auser.activity if auser.activity else 'No Game Playing'}",
-                        color=auser.color.value,
-                    )
-                    embed.add_field(
-                        name="Shared Servers",
-                        value=f"**{len(shared)}**\n{nl.join([guild.name for guild in shared])}",
-                    )
-                    embed.set_thumbnail(url=auser.avatar_url)
-                    await msg.edit(embed=embed)
-                try:
-                    await msg.remove_reaction(reaction.emoji, user)
-                except discord.Forbidden:
-                    pass
-            except asyncio.TimeoutError:
-                waiting = False
-                try:
-                    await msg.clear_reactions()
-                except discord.Forbidden:
-                    pass
-
+        ).set_thumbnail(url=member.avatar_url)
+        embed2 = discord.Embed(
+            title="Permissions",
+            description="\n".join(['`'+value[0].replace('_', ' ').title().ljust(21, '.')+'`'+': '+ticks[str(value[1])] for value in member.guild_permissions]),
+            color=member.color,
+        ).set_thumbnail(url=member.avatar_url)
+        await self.bot.paginator.Paginator(extras=[embed1, embed2]).paginate(ctx)
+ 
     @commands.guild_only()
-    @commands.command(description="See your prefix.")
+    @commands.command()
     async def prefix(self, ctx):
-        try:
-            await ctx.send(
-                f"The prefix for server **{ctx.guild.name}** is `{self.bot.all_prefixes[ctx.guild.id]}`.\n\n`{ctx.prefix}settings prefix` changes it."
-            )
-        except KeyError:
-            await ctx.send(
-                f"The prefix for server **{ctx.guild.name}** is `{self.bot.config.global_prefix}`.\n\n`{ctx.prefix}settings prefix` changes it."
-            )
-
-    @commands.command(description="Who uses your discriminator?", enabled=False)
-    async def discrim(self, ctx, discrim: str):
-        if len(discrim) != 4:
-            return await ctx.send("A discrim is 4 numbers.")
-        all = list(
-            chunks(
-                [str(user) for user in self.bot.users if user.discriminator == discrim],
-                54,
-            )
+        """View the bot prefix."""
+        prefix_ = self.bot.all_prefixes.get(ctx.guild.id, self.bot.config.global_prefix)
+        await ctx.send(
+            f"The prefix for server **{ctx.guild.name}** is `{prefix_}`.\n\n`{ctx.prefix}settings prefix` changes it."
         )
-        for i in all:
-            await ctx.send("```" + "\n".join(i) + "```")
 
     @commands.command(description="Steal Avatars.")
-    async def avatar(self, ctx, target: discord.Member = None):
-        target = target or ctx.author
+    async def avatar(self, ctx, target: discord.Member = Author):
         await ctx.send(
             embed=discord.Embed(
                 title="Download Link",
-                url=target.avatar_url_as(static_format="png"),
+                url=target.avatar_url_as(format="png"),
                 color=target.color,
-            ).set_image(url=target.avatar_url_as(static_format="png"))
+            ).set_image(url=target.avatar_url_as(format="png"))
         )
 
 
