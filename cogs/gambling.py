@@ -9,12 +9,13 @@ import asyncio
 import os
 import random
 import secrets
+from typing import Optional
 
 import discord
 from discord.ext import commands
 
-from cogs.shard_communication import user_on_cooldown as user_cooldown
-from utils.checks import has_char, has_money
+from classes.converters import IntFromTo, IntGreaterThan
+from utils.checks import has_char
 
 
 class BlackJack:
@@ -264,36 +265,49 @@ class Gambling(commands.Cog):
     @has_char()
     @commands.cooldown(1, 5, commands.BucketType.user)
     @commands.command(aliases=["coin"])
-    async def flip(self, ctx, side: Optional[str.lower] = "heads", *, amount: IntFromTo(0, 100_000) = 0):
+    async def flip(
+        self,
+        ctx,
+        side: Optional[str.lower] = "heads",
+        *,
+        amount: IntFromTo(0, 100_000) = 0,
+    ):
         """Flip a coin and bid on the outcome."""
         if side not in ["heads", "tails"]:
             return await ctx.send(f"Use `heads` or `tails` instead of `{side}`.")
         if ctx.character_data["money"] < amount:
             return await ctx.send("You are too poor.")
-        result = secrets.choice([("heads", "<:heads:437981551196897281>"), ("tails", "<:tails:437981602518138890>")])
+        result = secrets.choice(
+            [
+                ("heads", "<:heads:437981551196897281>"),
+                ("tails", "<:tails:437981602518138890>"),
+            ]
+        )
         if result == side:
             await self.bot.pool.execute(
                 'UPDATE profile SET money=money+$1 WHERE "user"=$2;',
                 amount,
                 ctx.author.id,
             )
-            await ctx.send(
-                f"{result[1]} It's **{result[0]}**! You won **${amount}**!"
-            )
-         else:
+            await ctx.send(f"{result[1]} It's **{result[0]}**! You won **${amount}**!")
+        else:
             await self.bot.pool.execute(
                 'UPDATE profile SET money=money-$1 WHERE "user"=$2;',
                 amount,
                 ctx.author.id,
             )
-            await ctx.send(
-                f"{result[1]} It's **{result[0]}**! You lost **${amount}**!"
-            )
+            await ctx.send(f"{result[1]} It's **{result[0]}**! You lost **${amount}**!")
 
     @has_char()
     @commands.cooldown(1, 5, commands.BucketType.user)
     @commands.command()
-    async def bet(self, ctx, maximum: IntGreaterThan(1) = 6, tip: IntGreaterThan(0) = 6, money: IntFromTo(0, 100_000) = 0):
+    async def bet(
+        self,
+        ctx,
+        maximum: IntGreaterThan(1) = 6,
+        tip: IntGreaterThan(0) = 6,
+        money: IntFromTo(0, 100_000) = 0,
+    ):
         if tip > maximum:
             return await ctx.send(
                 f"Invalid Tip. Must be in the Range of `1` to `{maximum}`."
