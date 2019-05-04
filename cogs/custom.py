@@ -5,17 +5,8 @@ Copyright (C) 2018-2019 Diniboy and Gelbpunkt
 This software is dual-licensed under the GNU Affero General Public License for non-commercial and the Travitia License for commercial use.
 For more information, see README.md and LICENSE.md.
 """
-
-
 import discord
 from discord.ext import commands
-
-
-def is_sky():
-    def predicate(ctx):
-        return ctx.author.id == 201_873_056_967_163_904
-
-    return commands.check(predicate)
 
 
 def is_ken():
@@ -28,14 +19,6 @@ def is_ken():
 class Custom(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
-
-    @is_sky()
-    @commands.command(description="Gives a rainbow cookie to a user!", hidden=True)
-    async def rainbowcookie(self, ctx, user: discord.Member):
-        await ctx.send(
-            f"**{user.display_name}**, you have been awarded a 🌈 🍪 🌈"
-            f"by **{ctx.author.display_name}**!"
-        )
 
     @is_ken()
     @commands.command(description="Hug someone!", hidden=True)
