@@ -120,9 +120,11 @@ class Miscellaneous(commands.Cog):
         d0 = date(2018, 3, 17)
         d1 = date.today()
         delta = d1 - d0
-        myhours = delta.days * 3
+        myhours = delta.days * 1.5
         sysinfo = platform.linux_distribution()
-        owner = await self.bot.get_user_global(self.bot.owner_id)
+        # owner = await self.bot.get_user_global(self.bot.owner_id)
+        # sad that teams are fucky
+        owner = " and ".join([str(await self.bot.get_user_global(u)) for u in self.bot.config.owners])
         guild_count = sum(
             await self.bot.cogs["Sharding"].handler("guild_count", self.bot.shard_count)
         )
@@ -228,21 +230,21 @@ However, as work on this is not done and code not clean, v3.5 will come by time,
         await ctx.send(f"The :8ball: says: **{random.choice(results)}**.")
 
     @commands.command(aliases=["say"])
-    async def echo(self, ctx, *, shout: commands.clean_content):
+    async def echo(self, ctx, *, phrase: str):
         """Repeats what you said."""
         try:
             await ctx.message.delete()
         except discord.Forbidden:
             pass
-        await ctx.send(shout)
+        await ctx.send(phrase, escape_mentions=True)
 
     @commands.command()
-    async def choose(sef, ctx, *results: commands.clean_content):
+    async def choose(self, ctx, *results: str):
         """Chooses a random option of supplied possiblies."""
         if not results:
             return await ctx.send("Cannot choose from an empty list...")
         results = list(filter(lambda a: a.lower() != "or", results))
-        await ctx.send(f"My choice is: **{random.choice(results)}**.")
+        await ctx.send(f"My choice is: **{random.choice(results)}**.", escape_mentions=True)
 
     @commands.guild_only()
     @commands.command()
@@ -369,7 +371,7 @@ However, as work on this is not done and code not clean, v3.5 will come by time,
     @commands.command()
     async def uptime(self, ctx):
         """Shows how long the bot is connected to Discord already."""
-        await ctx.send(f"I am online for **{self.bot.uptime}**.")
+        await ctx.send(f"I am online for **{self.bot.uptime.split('.')[0]}**.")
 
     @commands.command(hidden=True)
     async def easteregg(self, ctx):
