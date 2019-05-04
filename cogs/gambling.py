@@ -283,7 +283,7 @@ class Gambling(commands.Cog):
                 ("tails", "<:tails:437981602518138890>"),
             ]
         )
-        if result == side:
+        if result[0] == side:
             await self.bot.pool.execute(
                 'UPDATE profile SET money=money+$1 WHERE "user"=$2;',
                 amount,
