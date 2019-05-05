@@ -111,7 +111,7 @@ class Server(commands.Cog):
         embed = discord.Embed(
             title=str(member),
             description=f"`Joined at`: {str(member.joined_at).split('.')[0]}\n`Status...`: {statuses[str(member.status)]}{str(member.status).capitalize()}\n`Top Role.`: {member.top_role.name}\n`Roles....`: {', '.join([role.name for role in member.roles])}\n`Game.....`: {member.activity if member.activity else 'No Game Playing'}",
-            color=auser.color.value,
+            color=member.color,
         ).set_thumbnail(url=member.avatar_url)
         embed2 = discord.Embed(
             title="Permissions",
