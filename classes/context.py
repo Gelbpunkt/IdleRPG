@@ -24,6 +24,7 @@ class Context(commands.Context):
     async def send(self, content=None, *args, **kwargs):
         escape_massmentions = kwargs.pop("escape_massmentions", True)
         escape_mentions = kwargs.pop("escape_mentions", False)
+        content = str(content) if content is not None else None
         if escape_massmentions and content:
             content = content.replace("@here", "@\u200bhere").replace(
                 "@everyone", "@\u200beveryone"
