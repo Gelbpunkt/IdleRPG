@@ -336,9 +336,10 @@ class Gambling(commands.Cog):
                 f"You lost **${money}**! The random number was `{randomn}`, you tipped `{tip}`."
             )
 
+    @has_char()
     @commands.cooldown(1, 15, commands.BucketType.user)
     @commands.command(aliases=["bj"])
-    async def blackjack(self, ctx, amount: IntFromTo(0, 1000)):
+    async def blackjack(self, ctx, amount: IntFromTo(0, 1000) = 0):
         """[Alpha] Play blackjack against the dealer."""
         if ctx.character_data["money"] < amount:
             return await ctx.send("You're too poor.")
