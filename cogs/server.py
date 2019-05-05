@@ -5,13 +5,9 @@ Copyright (C) 2018-2019 Diniboy and Gelbpunkt
 This software is dual-licensed under the GNU Affero General Public License for non-commercial and the Travitia License for commercial use.
 For more information, see README.md and LICENSE.md.
 """
-import asyncio
-
 import discord
 from discord.ext import commands
 from discord.ext.commands.default import Author
-
-from cogs.help import chunks
 
 
 class Server(commands.Cog):
@@ -21,7 +17,11 @@ class Server(commands.Cog):
     @commands.guild_only()
     @commands.command(aliases=["server"])
     async def serverinfo(self, ctx):
-        urltext = f"[Link <:external_link:429288989560930314>]({ctx.guild.icon_url})" if ctx.guild.icon_url else "`No icon has been set yet!`"
+        urltext = (
+            f"[Link <:external_link:429288989560930314>]({ctx.guild.icon_url})"
+            if ctx.guild.icon_url
+            else "`No icon has been set yet!`"
+        )
         em = discord.Embed(
             title="Server Information",
             description="Compact information about this server",
@@ -115,11 +115,20 @@ class Server(commands.Cog):
         ).set_thumbnail(url=member.avatar_url)
         embed2 = discord.Embed(
             title="Permissions",
-            description="\n".join(['`'+value[0].replace('_', ' ').title().ljust(21, '.')+'`'+': '+ticks[str(value[1])] for value in member.guild_permissions]),
+            description="\n".join(
+                [
+                    "`"
+                    + value[0].replace("_", " ").title().ljust(21, ".")
+                    + "`"
+                    + ": "
+                    + ticks[str(value[1])]
+                    for value in member.guild_permissions
+                ]
+            ),
             color=member.color,
         ).set_thumbnail(url=member.avatar_url)
         await self.bot.paginator.Paginator(extras=[embed1, embed2]).paginate(ctx)
- 
+
     @commands.guild_only()
     @commands.command()
     async def prefix(self, ctx):

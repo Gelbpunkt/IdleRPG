@@ -124,7 +124,9 @@ class Miscellaneous(commands.Cog):
         sysinfo = platform.linux_distribution()
         # owner = await self.bot.get_user_global(self.bot.owner_id)
         # sad that teams are fucky
-        owner = " and ".join([str(await self.bot.get_user_global(u)) for u in self.bot.config.owners])
+        owner = " and ".join(
+            [str(await self.bot.get_user_global(u)) for u in self.bot.config.owners]
+        )
         guild_count = sum(
             await self.bot.cogs["Sharding"].handler("guild_count", self.bot.shard_count)
         )
@@ -244,7 +246,9 @@ However, as work on this is not done and code not clean, v3.5 will come by time,
         if not results:
             return await ctx.send("Cannot choose from an empty list...")
         results = list(filter(lambda a: a.lower() != "or", results))
-        await ctx.send(f"My choice is: **{random.choice(results)}**.", escape_mentions=True)
+        await ctx.send(
+            f"My choice is: **{random.choice(results)}**.", escape_mentions=True
+        )
 
     @commands.guild_only()
     @commands.command()
