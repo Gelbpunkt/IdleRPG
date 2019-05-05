@@ -98,7 +98,6 @@ class Server(commands.Cog):
     @commands.guild_only()
     @commands.command(aliases=["user", "member", "memberinfo"])
     async def userinfo(self, ctx, member: discord.Member = Author):
-        await ctx.send(str(dir(member)))
         ticks = {
             "True": "<:check:314349398811475968>",
             "False": "<:xmark:314349398824058880>",
@@ -111,7 +110,7 @@ class Server(commands.Cog):
         }
         embed = discord.Embed(
             title=str(member),
-            description=f"`Joined at`: {member.joined_at}\n`Status...`: {statuses[str(auser.status)]}{str(auser.status).capitalize()}\n`Top Role.`: {auser.top_role.name}\n`Roles....`: {', '.join([role.name for role in auser.roles])}\n`Game.....`: {auser.activity if auser.activity else 'No Game Playing'}",
+            description=f"`Joined at`: {str(member.joined_at).split('.')[0]}\n`Status...`: {statuses[str(member.status)]}{str(member.status).capitalize()}\n`Top Role.`: {member.top_role.name}\n`Roles....`: {', '.join([role.name for role in member.roles])}\n`Game.....`: {member.activity if member.activity else 'No Game Playing'}",
             color=auser.color.value,
         ).set_thumbnail(url=member.avatar_url)
         embed2 = discord.Embed(
