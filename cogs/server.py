@@ -14,10 +14,6 @@ from discord.ext.commands.default import Author
 from cogs.help import chunks
 
 
-def get_guilds(bot, user):
-    return [guild for guild in bot.guilds if user in guild.members]
-
-
 class Server(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
@@ -96,15 +92,13 @@ class Server(commands.Cog):
     async def reset(self, ctx):
         """Resets the server settings."""
         await self.bot.pool.execute('DELETE FROM server WHERE "id"=$1;', ctx.guild.id)
-        try:
-            del self.bot.all_prefixes[ctx.guild.id]
-        except KeyError:
-            pass
+        self.bot.all_prefixes.pop(ctx.guild.id, None)
         await ctx.send("Done!")
 
     @commands.guild_only()
     @commands.command(aliases=["user", "member", "memberinfo"])
     async def userinfo(self, ctx, member: discord.Member = Author):
+        await ctx.send(str(dir(member)))
         ticks = {
             "True": "<:check:314349398811475968>",
             "False": "<:xmark:314349398824058880>",
