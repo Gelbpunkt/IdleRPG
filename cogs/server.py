@@ -129,14 +129,15 @@ class Server(commands.Cog):
             f"The prefix for server **{ctx.guild.name}** is `{prefix_}`.\n\n`{ctx.prefix}settings prefix` changes it."
         )
 
-    @commands.command(description="Steal Avatars.")
+    @commands.command()
     async def avatar(self, ctx, target: discord.Member = Author):
+        """Shows someone's (or your) avatar."""
         await ctx.send(
             embed=discord.Embed(
                 title="Download Link",
-                url=target.avatar_url_as(format="png"),
+                url=str(target.avatar_url_as(static_format="png")),
                 color=target.color,
-            ).set_image(url=target.avatar_url_as(format="png"))
+            ).set_image(url=target.avatar_url_as(static_format="png"))
         )
 
 
