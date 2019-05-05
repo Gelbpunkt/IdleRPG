@@ -108,7 +108,7 @@ class Server(commands.Cog):
             "dnd": "<:dnd:313956276893646850>",
             "offline": "<:offline:313956277237710868>",
         }
-        embed = discord.Embed(
+        embed1 = discord.Embed(
             title=str(member),
             description=f"`Joined at`: {str(member.joined_at).split('.')[0]}\n`Status...`: {statuses[str(member.status)]}{str(member.status).capitalize()}\n`Top Role.`: {member.top_role.name}\n`Roles....`: {', '.join([role.name for role in member.roles])}\n`Game.....`: {member.activity if member.activity else 'No Game Playing'}",
             color=member.color,
