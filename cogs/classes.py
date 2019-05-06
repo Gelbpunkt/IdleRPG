@@ -119,7 +119,7 @@ class Classes(commands.Cog):
 		discord.Embed(title="Warrior", description="The tank class. Charge into battle with additional defense!\n+1 defense per evolution added onto your shield.", color=discord.Blue),
 		discord.Embed(title="Thief", description=f"The sneaky money stealer...\nGet access to `{ctx.perfix}steal` to steal 10% of the target's money, if successful.\n+8% success chance per evolution.", color=discord.Blue),
 		discord.Embed(title="Mage", description="Utilise powerful magic for stronger attacks.\n+1 damage per evolution added onto your sword.", color=discord.Blue)
-		discord.Embed(title="Ranger", description=f"Item hunter and trainer of their very own pet.\n Get access to `{ctx.prefix}hunt` and `{ctx.prefix}pet` to hunt a random item once a day.\n+3 minimum stat and +6 maximum stat per evolution.", discord.Blue)
+		discord.Embed(title="Ranger", description=f"Item hunter and trainer of their very own pet.\n Get access to `{ctx.prefix}hunt` and `{ctx.prefix}pet` to hunt a random item once a day.\n+3 minimum stat and +6 maximum stat per evolution.", colour=discord.Blue),
 	]
         choices = ["Warrior", "Thief", "Mage", "Ranger"]
         if await user_is_patron(self.bot, ctx.author):
