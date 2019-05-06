@@ -116,13 +116,17 @@ class Classes(commands.Cog):
     @user_cooldown(86400)
     @commands.command(name="class", description="Change your class.")
     async def _class(self, ctx, profession: str):
-        profession = profession.title()
+	embeds = [
+		discord.Embed(title="Warrior", description="The tank class. Charge into battle with additional defense!\n+1 defense per evolution added onto your shield.", color=discord.Blue),
+		discord.Embed(title="Thief", description=f"The sneaky money stealer...\nGet access to `{ctx.perfix}steal` to steal 10% of the target's money, if successful.\n+8% success chance per evolution.", color=discord.Blue),
+		discord.Embed(title="Mage", description="Utilise powerful magic for stronger attacks.\n+1 damage per evolution added onto your sword.", color=discord.Blue),
+		discord.Embed(title="Paragon", description="--Patreon only!--\nAbsorb the appretiation of the devs into your soul to power up.\n+1 damage and defense per evolution added onto your items.", color=discord.Blue),
+		discord.Embed(title="Ranger", description=f"Item hunter and trainer of their very own pet.\n Get access to `{ctx.prefix}hunt` and `{ctx.prefix}pet` to hunt a random item once a day.\n+3 minimum stat and +6 maximum stat per evolution.", discord.Blue)
+	]
+	profession = profession.title()
         if profession not in ["Warrior", "Thief", "Mage", "Paragon", "Ranger"]:
-            await self.bot.reset_cooldown(ctx)
-            return await ctx.send(
-                "Please align as a `Warrior`, `Mage`, `Thief`, `Ranger` or `Paragon` (Patreon Only)."
-            )
-        if profession == "Paragon" and not await user_is_patron(self.bot, ctx.author):
+		await self.bot.paginator.ChoosePaginator(entries=[embeds], choices=["Warrior", "Thief", "Mage", "Paragon", "Ranger"]).paginate(ctx)
+	if profession == "Paragon" and not await user_is_patron(self.bot, ctx.author):
             await self.bot.reset_cooldown(ctx)
             return await ctx.send("You have to be a donator to choose this class.")
         if profession == "Paragon":
@@ -249,17 +253,6 @@ Novice   ->  Proficient->  Artisan     -> Master         ->  Paragon
 Caretaker->  Trainer   ->  Bowman      -> Hunter         ->  Ranger
 ```"""
         )
-
-    @commands.command(name="classes", description="Information about classes") 
-    async def _classes(self, ctx):
-	await ctx.send(
-	    f"""
-**Warrior** - Extra defense, +1 per Evolution
-**Mage** - Extra damage, +1 per Evolution
-**Thief** - Access to command `{ctx.prefix}steal`. Steals 10% of a random user's money if successful, 1 hour cooldown, +8% chance per Evolution
-**Ranger** - Access to commands `{ctx.prefix}hunt` and `{ctx.prefix}pet`. Send your pet out to retrieve an item, 24 hour cooldown, +3 minimum stat +6 maximum stat per Evolution
-**Paragon** - Patreon only - Extra damage and defense, +1 per Evolution""" 
-	)
 
     @is_thief()
     @user_cooldown(3600)
