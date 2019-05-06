@@ -132,7 +132,7 @@ class Profile(commands.Cog):
             if background == "0":
                 background = "assets/profiles/Profile.png"
             else:
-                async with timeout(5), self.bot.session.get(background) as r:
+                async with timeout(10), self.bot.session.get(background) as r:
                     if r.status == 200:
                         background = BytesIO(await r.read())
                         background.seek(0)
