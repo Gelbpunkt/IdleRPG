@@ -250,6 +250,17 @@ Caretaker->  Trainer   ->  Bowman      -> Hunter         ->  Ranger
 ```"""
         )
 
+    @commands.command(name="classes", description="Information about classes") 
+    async def _classes(self, ctx):
+	await ctx.send(
+	    f"""
+**Warrior** - Extra defense, +1 per Evolution
+**Mage** - Extra damage, +1 per Evolution
+**Thief** - Access to command `{commands.prefix}steal`. Steals 10% of a random user's money if successful, 1 hour cooldown, +8% chance per Evolution
+**Ranger** - Access to commands `{commands.prefix}hunt` and `{commands.prefix}pet`. Send your pet out to retrieve an item, 24 hour cooldown, +3 minimum stat +6 maximum stat per Evolution
+**Paragon** - Patreon only - Extra damage and defense, +1 per Evolution""" 
+	)
+
     @is_thief()
     @user_cooldown(3600)
     @commands.command(description="[Thief Only] Steal money!")
@@ -299,7 +310,7 @@ Caretaker->  Trainer   ->  Bowman      -> Hunter         ->  Ranger
     async def hunt(self, ctx):
         petlvl = await petlevel(self.bot, ctx.author.id)
         async with self.bot.pool.acquire() as conn:
-            maximumstat = random.randint(1, petlvl * 6)
+            maximumstat = random.randint(petlvl * 3, petlvl * 6)
             shieldorsword = random.choice(["Sword", "Shield"])
             names = ["Broken", "Old", "Tattered", "Forgotten"]
             itemvalue = random.randint(1, 250)
