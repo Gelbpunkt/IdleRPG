@@ -249,7 +249,9 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
                     highest_bid[1],
                     highest_bid[0].id,
                 )
-                await msg.edit(content=f"{msg.content} Done! The weapon was {weapon_name} with a stat of {weapon_stat}!")
+                await msg.edit(
+                    content=f"{msg.content} Done! The weapon was {weapon_name} with a stat of {weapon_stat}!"
+                )
             else:
                 await ctx.send(
                     f"{highest_bid[0].mention} spent the money in the meantime... Meh! Noone gets it then, pah!\nThis incident has been reported and they will get banned if it happens again. Cheers!"
