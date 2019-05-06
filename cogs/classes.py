@@ -114,30 +114,26 @@ class Classes(commands.Cog):
 
     @has_char()
     @user_cooldown(86400)
-    @commands.command(name="class", description="Change your class.")
-    async def _class(self, ctx, profession: str):
+    @commands.command(name="class")
+    async def _class(self, ctx):
+        """Change your class."""
 	embeds = [
 		discord.Embed(title="Warrior", description="The tank class. Charge into battle with additional defense!\n+1 defense per evolution added onto your shield.", color=discord.Blue),
 		discord.Embed(title="Thief", description=f"The sneaky money stealer...\nGet access to `{ctx.perfix}steal` to steal 10% of the target's money, if successful.\n+8% success chance per evolution.", color=discord.Blue),
-		discord.Embed(title="Mage", description="Utilise powerful magic for stronger attacks.\n+1 damage per evolution added onto your sword.", color=discord.Blue),
-		discord.Embed(title="Paragon", description="--Patreon only!--\nAbsorb the appretiation of the devs into your soul to power up.\n+1 damage and defense per evolution added onto your items.", color=discord.Blue),
+		discord.Embed(title="Mage", description="Utilise powerful magic for stronger attacks.\n+1 damage per evolution added onto your sword.", color=discord.Blue)
 		discord.Embed(title="Ranger", description=f"Item hunter and trainer of their very own pet.\n Get access to `{ctx.prefix}hunt` and `{ctx.prefix}pet` to hunt a random item once a day.\n+3 minimum stat and +6 maximum stat per evolution.", discord.Blue)
 	]
-	profession = profession.title()
-        if profession not in ["Warrior", "Thief", "Mage", "Paragon", "Ranger"]:
-		await self.bot.paginator.ChoosePaginator(entries=[embeds], choices=["Warrior", "Thief", "Mage", "Paragon", "Ranger"]).paginate(ctx)
-	if profession == "Paragon" and not await user_is_patron(self.bot, ctx.author):
-            await self.bot.reset_cooldown(ctx)
-            return await ctx.send("You have to be a donator to choose this class.")
+        choices = ["Warrior", "Thief", "Mage", "Ranger"]
+        if await user_is_patron(self.bot, ctx.author):
+            embeds.append(discord.Embed(title="Paragon", description="--Patreon only!--\nAbsorb the appretiation of the devs into your soul to power up.\n+1 damage and defense per evolution added onto your items.", color=discord.Blue))
+            choices.append("Paragon")
+        profession = await self.bot.paginator.ChoosePaginator(entries=embeds, choices=choices).paginate(ctx)
         if profession == "Paragon":
             profession = "Novice"
         if profession == "Ranger":
             profession = "Caretaker"
         async with self.bot.pool.acquire() as conn:
-            curclass = await conn.fetchval(
-                'SELECT class FROM profile WHERE "user"=$1;', ctx.author.id
-            )
-            if curclass == "No Class":
+            if ctx.character_data["class"] == "No Class":
                 await conn.execute(
                     'UPDATE profile SET "class"=$1 WHERE "user"=$2;',
                     profession,
@@ -150,23 +146,9 @@ class Classes(commands.Cog):
                         f"You're too poor for a class change, it costs **$5000**."
                     )
 
-                def check(m):
-                    return m.content.lower() == "confirm" and m.author == ctx.author
-
-                await ctx.send(
-                    "Are you sure? Type `confirm` to change your class for **$5000**"
-                )
-                try:
-                    await self.bot.wait_for("message", check=check, timeout=30)
-                except asyncio.TimeoutError:
-                    return await ctx.send("Class change cancelled.")
                 await conn.execute(
-                    'UPDATE profile SET "class"=$1 WHERE "user"=$2;',
+                    'UPDATE profile SET "class"=$1, "money"="money"-$2 WHERE "user"=$3;',
                     profession,
-                    ctx.author.id,
-                )
-                await conn.execute(
-                    'UPDATE profile SET money=money-$1 WHERE "user"=$2;',
                     5000,
                     ctx.author.id,
                 )
