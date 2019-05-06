@@ -118,22 +118,22 @@ class Classes(commands.Cog):
             discord.Embed(
                 title="Warrior",
                 description="The tank class. Charge into battle with additional defense!\n+1 defense per evolution added onto your shield.",
-                color=self.bot.config.default_color,
+                color=self.bot.config.primary_colour,
             ),
             discord.Embed(
                 title="Thief",
                 description=f"The sneaky money stealer...\nGet access to `{ctx.perfix}steal` to steal 10% of the target's money, if successful.\n+8% success chance per evolution.",
-                color=self.bot.config.default_color,
+                color=self.bot.config.primary_colour,
             ),
             discord.Embed(
                 title="Mage",
                 description="Utilise powerful magic for stronger attacks.\n+1 damage per evolution added onto your sword.",
-                color=self.bot.config.default_color,
+                color=self.bot.config.primary_colour,
             ),
             discord.Embed(
                 title="Ranger",
                 description=f"Item hunter and trainer of their very own pet.\n Get access to `{ctx.prefix}hunt` and `{ctx.prefix}pet` to hunt a random item once a day.\n+3 minimum stat and +6 maximum stat per evolution.",
-                colour=self.bot.config.default_color,
+                colour=self.bot.config.primary_colour,
             ),
         ]
         choices = ["Warrior", "Thief", "Mage", "Ranger"]
@@ -142,7 +142,7 @@ class Classes(commands.Cog):
                 discord.Embed(
                     title="Paragon",
                     description="--Patreon only!--\nAbsorb the appretiation of the devs into your soul to power up.\n+1 damage and defense per evolution added onto your items.",
-                    color=self.bot.config.default_color,
+                    color=self.bot.config.primary_colour,
                 )
             )
             choices.append("Paragon")
