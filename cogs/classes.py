@@ -5,8 +5,6 @@ Copyright (C) 2018-2019 Diniboy and Gelbpunkt
 This software is dual-licensed under the GNU Affero General Public License for non-commercial and the Travitia License for commercial use.
 For more information, see README.md and LICENSE.md.
 """
-
-
 import asyncio
 import random
 import secrets
@@ -117,7 +115,7 @@ class Classes(commands.Cog):
     @commands.command(name="class")
     async def _class(self, ctx):
         """Change your class."""
-	embeds = [
+        embeds = [
 		discord.Embed(title="Warrior", description="The tank class. Charge into battle with additional defense!\n+1 defense per evolution added onto your shield.", color=discord.Blue),
 		discord.Embed(title="Thief", description=f"The sneaky money stealer...\nGet access to `{ctx.perfix}steal` to steal 10% of the target's money, if successful.\n+8% success chance per evolution.", color=discord.Blue),
 		discord.Embed(title="Mage", description="Utilise powerful magic for stronger attacks.\n+1 damage per evolution added onto your sword.", color=discord.Blue)
