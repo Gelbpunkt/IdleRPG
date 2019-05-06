@@ -110,9 +110,9 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
             u = await self.bot.get_user_global(i)
             if not u:
                 continue
-            j = next(filter(lambda x: x["user"] == i, dmgs))
+            j = next(filter(lambda x: x["user"] == i, dmgs), None)
             dmg = j["damage"] * j["atkmultiply"] if j else 0
-            j = next(filter(lambda x: x["user"] == i, deffs))
+            j = next(filter(lambda x: x["user"] == i, deffs), None)
             deff = j["armor"] * j["defmultiply"] if j else 0
             dmg, deff = await genstats(self.bot, i, dmg, deff)
             raid[u] = {"hp": 250, "armor": deff, "damage": dmg}
@@ -249,7 +249,7 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
                     highest_bid[1],
                     highest_bid[0].id,
                 )
-                await msg.edit(content=f"{msg.content} Done!")
+                await msg.edit(content=f"{msg.content} Done! The weapon was {weapon_name} with a stat of {weapon_stat}!")
             else:
                 await ctx.send(
                     f"{highest_bid[0].mention} spent the money in the meantime... Meh! Noone gets it then, pah!\nThis incident has been reported and they will get banned if it happens again. Cheers!"
@@ -332,9 +332,9 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
             u = await self.bot.get_user_global(i)
             if not u:
                 continue
-            j = next(filter(lambda x: x["user"] == i, dmgs))
+            j = next(filter(lambda x: x["user"] == i, dmgs), None)
             dmg = j["damage"] * j["atkmultiply"] if j else 0
-            j = next(filter(lambda x: x["user"] == i, deffs))
+            j = next(filter(lambda x: x["user"] == i, deffs), None)
             deff = j["armor"] * j["defmultiply"] if j else 0
             dmg, deff = await genstats(self.bot, i, dmg, deff)
             raid[u] = {"hp": 100, "armor": deff, "damage": dmg}
