@@ -122,7 +122,7 @@ class Classes(commands.Cog):
             ),
             discord.Embed(
                 title="Thief",
-                description=f"The sneaky money stealer...\nGet access to `{ctx.perfix}steal` to steal 10% of the target's money, if successful.\n+8% success chance per evolution.",
+                description=f"The sneaky money stealer...\nGet access to `{ctx.prefix}steal` to steal 10% of the target's money, if successful.\n+8% success chance per evolution.",
                 color=self.bot.config.primary_colour,
             ),
             discord.Embed(
