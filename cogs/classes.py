@@ -147,7 +147,7 @@ class Classes(commands.Cog):
             )
             choices.append("Paragon")
         profession = await self.bot.paginator.ChoosePaginator(
-            entries=embeds, choices=choices
+            extras=embeds, choices=choices
         ).paginate(ctx)
         if profession == "Paragon":
             profession = "Novice"
