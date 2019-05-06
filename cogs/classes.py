@@ -256,8 +256,8 @@ Caretaker->  Trainer   ->  Bowman      -> Hunter         ->  Ranger
 	    f"""
 **Warrior** - Extra defense, +1 per Evolution
 **Mage** - Extra damage, +1 per Evolution
-**Thief** - Access to command `{commands.prefix}steal`. Steals 10% of a random user's money if successful, 1 hour cooldown, +8% chance per Evolution
-**Ranger** - Access to commands `{commands.prefix}hunt` and `{commands.prefix}pet`. Send your pet out to retrieve an item, 24 hour cooldown, +3 minimum stat +6 maximum stat per Evolution
+**Thief** - Access to command `{ctx.prefix}steal`. Steals 10% of a random user's money if successful, 1 hour cooldown, +8% chance per Evolution
+**Ranger** - Access to commands `{ctx.prefix}hunt` and `{ctx.prefix}pet`. Send your pet out to retrieve an item, 24 hour cooldown, +3 minimum stat +6 maximum stat per Evolution
 **Paragon** - Patreon only - Extra damage and defense, +1 per Evolution""" 
 	)
 
