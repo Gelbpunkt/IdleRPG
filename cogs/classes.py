@@ -141,7 +141,7 @@ class Classes(commands.Cog):
             embeds.append(
                 discord.Embed(
                     title="Paragon",
-                    description="--Patreon only!--\nAbsorb the appretiation of the devs into your soul to power up.\n+1 damage and defense per evolution added onto your items.",
+                    description="--Patreon only!--\nAbsorb the appreciation of the devs into your soul to power up.\n+1 damage and defense per evolution added onto your items.",
                     color=self.bot.config.primary_colour,
                 )
             )
