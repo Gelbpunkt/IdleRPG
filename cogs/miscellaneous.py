@@ -375,7 +375,7 @@ However, as work on this is not done and code not clean, v3.5 will come by time,
     @commands.command()
     async def uptime(self, ctx):
         """Shows how long the bot is connected to Discord already."""
-        await ctx.send(f"I am online for **{self.bot.uptime.split('.')[0]}**.")
+        await ctx.send(f"I am online for **{str(self.bot.uptime).split('.')[0]}**.")
 
     @commands.command(hidden=True)
     async def easteregg(self, ctx):
