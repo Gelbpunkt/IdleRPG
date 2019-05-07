@@ -47,7 +47,7 @@ def user_on_cooldown(cooldown: int):
 class Sharding(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
-        self.communication_channel = "guild-channel"
+        self.communication_channel = bot.config.shard_announce_channel
         self.router = None
         bot.loop.create_task(self.register_sub())
         self._messages = dict()
