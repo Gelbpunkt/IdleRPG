@@ -122,6 +122,9 @@ primary_colour = 0xFFBC00
 """Our sentry URL to post bugs to."""
 sentry_url = "https://whatever.sentry.url"
 
+"""The redis PUBSUB channel used to communicate between processes"""
+shard_announce_channel = "guild_channel"
+
 """The token used to interact with the raid backend."""
 raidauth = "my raid api auth code"
 
