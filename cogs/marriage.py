@@ -403,7 +403,7 @@ To buy one of these items for your partner, use `{ctx.prefix}spoil shopid`
                     "They died of loneliness.",
                     "A horde of goblins got them.",
                     "They have finally decided to move out after all these years, but couldn't survive a second alone.",
-                    "Spontanious combustion removed them from existence",
+                    "Spontaneous combustion removed them from existence.",
                     "While exploring the forest, they have gotten lost.",
                     "They've left through a portal into another dimension...",
                     "The unbearable pain of stepping on a Lego\© brick killed them.",  # noqa
