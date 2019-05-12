@@ -66,7 +66,7 @@ class Bot(commands.AutoShardedBot):
         self.redis = await aioredis.create_pool(
             "redis://localhost", minsize=5, maxsize=10, loop=self.loop
         )
-        self.pool = await asyncpg.create_pool(**self.config.database, max_size=10)
+        self.pool = await asyncpg.create_pool(**self.config.database, max_size=20)
 
         # ToDo: Move this to on_ready?
         async with self.pool.acquire() as conn:
