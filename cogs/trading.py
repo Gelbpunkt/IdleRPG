@@ -5,8 +5,6 @@ Copyright (C) 2018-2019 Diniboy and Gelbpunkt
 This software is dual-licensed under the GNU Affero General Public License for non-commercial and the Travitia License for commercial use.
 For more information, see README.md and LICENSE.md.
 """
-
-
 import asyncio
 import random
 
@@ -435,11 +433,10 @@ class Trading(commands.Cog):
         await ctx.send(f"You received **${item[6]}** when selling item `{itemid}`.")
 
     @has_char()
-    @user_cooldown(180)
-    @commands.command(
-        description="Sells all items except your equipped ones for their value."
-    )
+    @user_cooldown(1800)
+    @commands.command()
     async def merchall(self, ctx):
+        """Sells all your non-equipped items for their value."""
         async with self.bot.pool.acquire() as conn:
             ret = await conn.fetchrow(
                 "SELECT sum(value), count(value) FROM inventory i JOIN allitems ai ON (i.item=ai.id) WHERE ai.owner=$1 AND i.equipped IS FALSE;",
