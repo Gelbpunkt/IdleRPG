@@ -14,7 +14,7 @@ import discord
 from async_timeout import timeout
 from discord.ext import commands
 
-from classes.converters import User, MemberWithCharacter, IntFromTo
+from classes.converters import IntFromTo, MemberWithCharacter, User
 from cogs.classes import genstats
 from cogs.help import chunks
 from cogs.shard_communication import user_on_cooldown as user_cooldown
@@ -224,7 +224,9 @@ class Profile(commands.Cog):
     @commands.command(aliases=["money", "e"])
     async def economy(self, ctx):
         """Shows your balance."""
-        await ctx.send(f"You currently have **${ctx.character_data['money']}**, {ctx.author.mention}!")
+        await ctx.send(
+            f"You currently have **${ctx.character_data['money']}**, {ctx.author.mention}!"
+        )
 
     @checks.has_char()
     @commands.command()
@@ -287,7 +289,7 @@ class Profile(commands.Cog):
                 itemid,
             )
             if not item:
-                return await ctx.send(f "You don't own an item with the ID `{itemid}`.")
+                return await ctx.send(f"You don't own an item with the ID `{itemid}`.")
             olditem = await conn.fetchrow(
                 "SELECT ai.* FROM profile p JOIN allitems ai ON (p.user=ai.owner) JOIN inventory i ON (ai.id=i.item) WHERE i.equipped IS TRUE AND p.user=$1 AND type=$2;",
                 ctx.author.id,
@@ -382,7 +384,7 @@ class Profile(commands.Cog):
                 )
         if ctx.character_data["money"] < pricetopay:
             return await ctx.send(
-                f"You are too poor to upgrade this item. The upgrade costs **${pricetopay}**, but you only have **${usermoney}**."
+                f"You are too poor to upgrade this item. The upgrade costs **${pricetopay}**, but you only have **${ctx.character_data['money']}**."
             )
 
         def check(m):
@@ -409,12 +411,14 @@ class Profile(commands.Cog):
                 ctx.author.id,
             )
         await ctx.send(
-            f"The {stattoupgrade} of your **{item[2]}** is now **{int(item[statid])+1}**. **${pricetopay}** has been taken off your balance."
+            f"The {stattoupgrade} of your **{item['name']}** is now **{int(item[stattoupgrade])+1}**. **${pricetopay}** has been taken off your balance."
         )
 
     @checks.has_char()
     @commands.command()
-    async def give(self, ctx, money: IntFromTo(0, 100000000), other: MemberWithCharacter):
+    async def give(
+        self, ctx, money: IntFromTo(0, 100000000), other: MemberWithCharacter
+    ):
         if other == ctx.author:
             return await ctx.send("No cheating!")
         if ctx.character_data["money"] < money:
@@ -469,6 +473,7 @@ class Profile(commands.Cog):
     @commands.command(aliases=["rm", "del"])
     async def delete(self, ctx):
         """Deletes your character."""
+
         def mycheck(amsg):
             return (
                 amsg.content.strip() == "deletion confirm" and amsg.author == ctx.author
@@ -506,7 +511,7 @@ class Profile(commands.Cog):
             "Successfully deleted your character. Sorry to see you go :frowning:"
         )
 
-    @commands.command(aliases=["color"],)
+    @commands.command(aliases=["color"])
     async def colour(self, ctx, colour: str):
         """Sets your profile text colour."""
         if len(colour) != 7 or not colour.startswith("#"):
