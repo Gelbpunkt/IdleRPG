@@ -149,20 +149,20 @@ class Bot(commands.AutoShardedBot):
     async def activate_booster(self, user, type_):
         if type_ not in ["time", "luck", "money"]:
             raise ValueError("Not a valid booster type.")
-        user = user.id if isinstance(user, discord.User) else user
+        user = user.id if isinstance(user, (discord.User, discord.Member)) else user
         await self.redis.execute("SET", f"booster:{user}:{type_}", 1, "EX", 86400)
 
     async def get_booster(self, user, type_):
-        user = user.id if isinstance(user, discord.User) else user
+        user = user.id if isinstance(user, (discord.User, discord.Member)) else user
         val = await self.redis.execute("TTL", f"booster:{user}:{type_}")
         return val if val != -1 else None
 
     async def start_adventure(self, user, number, time):
-        user = user.id if isinstance(user, discord.User) else user
+        user = user.id if isinstance(user, (discord.User, discord.Member)) else user
         await self.redis.execute("SET", f"adv:{user}", number, "EX", time.seconds + 259200) # +3 days
 
     async def get_adventure(self, user):
-        user = user.id if isinstance(user, discord.User) else user
+        user = user.id if isinstance(user, (discord.User, discord.Member)) else user
         ttl = await self.redis.execute("TTL", f"adv:{user}")
         if ttl == -1:
             return
@@ -171,3 +171,7 @@ class Bot(commands.AutoShardedBot):
         done = ttl <= 0
         time = datetime.timedelta(seconds=ttl)
         return num, time, done
+
+    async def cancel_adventure(self, user):
+        user = user.id if isinstance(user, (discord.User, discord.Member)) else user
+        await self.redis.execute("DEL", f"adv:{user}")
