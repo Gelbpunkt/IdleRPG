@@ -5,14 +5,13 @@ Copyright (C) 2018-2019 Diniboy and Gelbpunkt
 This software is dual-licensed under the GNU Affero General Public License for non-commercial and the Travitia License for commercial use.
 For more information, see README.md and LICENSE.md.
 """
-
-
 import datetime
 
 import discord
 from discord.ext import commands
 
 from utils.checks import has_char, has_money
+from classes.converters import IntGreaterThan, IntFromTo
 
 
 class Store(commands.Cog):
@@ -36,12 +35,10 @@ class Store(commands.Cog):
 
     @has_char()
     @commands.command()
-    async def purchase(self, ctx, item: int, amount: int = 1):
+    async def purchase(self, ctx, item: IntFromTo(1, 3), amount: IntGreaterThan(0) = 1):
         """Buy a booster from the store."""
-        if item < 1 or item > 3:
-            return await ctx.send("Enter a valid booster to buy.")
         price = [1000, 500, 1000][item - 1] * amount
-        if not await has_money(self.bot, ctx.author.id, price):
+        if ctx.character_data["money"] < price:
             return await ctx.send("You're too poor.")
         async with self.bot.pool.acquire() as conn:
             if item == 1:
