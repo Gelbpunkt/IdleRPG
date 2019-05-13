@@ -270,7 +270,7 @@ class Profile(commands.Cog):
             )
         if not ret:
             return await ctx.send("Your inventory is empty.")
-        allitems = chunks(ret, 5)
+        allitems = list(chunks(ret, 5))
         maxpage = len(allitems) - 1
         embeds = [
             self.invembed(ctx, chunk, idx, maxpage)
