@@ -159,7 +159,9 @@ class Bot(commands.AutoShardedBot):
 
     async def start_adventure(self, user, number, time):
         user = user.id if isinstance(user, (discord.User, discord.Member)) else user
-        await self.redis.execute("SET", f"adv:{user}", number, "EX", time.seconds + 259200) # +3 days
+        await self.redis.execute(
+            "SET", f"adv:{user}", number, "EX", time.seconds + 259200
+        )  # +3 days
 
     async def get_adventure(self, user):
         user = user.id if isinstance(user, (discord.User, discord.Member)) else user
