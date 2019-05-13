@@ -95,7 +95,7 @@ class Crates(commands.Cog):
         """Trades crates to a user."""
         if other == ctx.author:
             return await ctx.send("Very funny...")
-        if not ctx.character_data["crates"]:
+        if ctx.character_data["crates"] < amount:
             return await ctx.send("You don't have any crates.")
         async with self.bot.pool.acquire() as conn:
             await conn.execute(
