@@ -10,8 +10,8 @@ import datetime
 import discord
 from discord.ext import commands
 
-from utils.checks import has_char, has_money
-from classes.converters import IntGreaterThan, IntFromTo
+from classes.converters import IntFromTo, IntGreaterThan
+from utils.checks import has_char
 
 
 class Store(commands.Cog):
