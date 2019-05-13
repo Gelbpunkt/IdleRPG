@@ -435,6 +435,7 @@ class Trading(commands.Cog):
         await ctx.send(f"You received **${item[6]}** when selling item `{itemid}`.")
 
     @has_char()
+    @user_cooldown(180)
     @commands.command(
         description="Sells all items except your equipped ones for their value."
     )
