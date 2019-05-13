@@ -14,7 +14,7 @@ import discord
 from async_timeout import timeout
 from discord.ext import commands
 
-from classes.converters import User
+from classes.converters import User, MemberWithCharacter, IntFromTo
 from cogs.classes import genstats
 from cogs.help import chunks
 from cogs.shard_communication import user_on_cooldown as user_cooldown
@@ -221,21 +221,16 @@ class Profile(commands.Cog):
         await ctx.send(embed=em)
 
     @checks.has_char()
-    @commands.command(aliases=["money", "e"], description="Shows your current balance.")
+    @commands.command(aliases=["money", "e"])
     async def economy(self, ctx):
-        async with self.bot.pool.acquire() as conn:
-            money = await conn.fetchval(
-                'SELECT money FROM profile WHERE "user"=$1;', ctx.author.id
-            )
-        await ctx.send(f"You currently have **${money}**, {ctx.author.mention}!")
+        """Shows your balance."""
+        await ctx.send(f"You currently have **${ctx.character_data['money']}**, {ctx.author.mention}!")
 
     @checks.has_char()
-    @commands.command(description="Shows your current XP count.")
+    @commands.command()
     async def xp(self, ctx):
-        async with self.bot.pool.acquire() as conn:
-            points = await conn.fetchval(
-                'SELECT xp FROM profile WHERE "user"=$1;', ctx.author.id
-            )
+        """Shows your current XP and level."""
+        points = ctx.character_data["xp"]
         await ctx.send(
             f"You currently have **{points} XP**, which means you are on Level **{rpgtools.xptolevel(points)}**. Missing to next level: **{rpgtools.xptonextlevel(points)}**"
         )
@@ -263,8 +258,9 @@ class Profile(commands.Cog):
         return result
 
     @checks.has_char()
-    @commands.command(aliases=["inv", "i"], description="Shows your current inventory.")
+    @commands.command(aliases=["inv", "i"])
     async def inventory(self, ctx):
+        """Shows your current inventory."""
         async with self.bot.pool.acquire() as conn:
             ret = await conn.fetch(
                 'SELECT ai.*, i.equipped FROM profile p JOIN allitems ai ON (p.user=ai.owner) JOIN inventory i ON (ai.id=i.item) WHERE p."user"=$1 ORDER BY i."equipped" DESC, ai."damage"+ai."armor" DESC;',
@@ -272,7 +268,7 @@ class Profile(commands.Cog):
             )
         if not ret:
             return await ctx.send("Your inventory is empty.")
-        allitems = list(chunks(ret, 5))
+        allitems = chunks(ret, 5)
         maxpage = len(allitems) - 1
         embeds = [
             self.invembed(ctx, chunk, idx, maxpage)
@@ -281,46 +277,42 @@ class Profile(commands.Cog):
         await self.bot.paginator.Paginator(extras=embeds).paginate(ctx)
 
     @checks.has_char()
-    @commands.command(aliases=["use"], description="Equips the item with the given ID.")
+    @commands.command(aliases=["use"])
     async def equip(self, ctx, itemid: int):
+        """Equips an item of yours by ID."""
         async with self.bot.pool.acquire() as conn:
-            ret = await conn.fetch(
-                "SELECT ai.id FROM inventory i JOIN allitems ai ON (i.item=ai.id) WHERE ai.owner=$1;",
+            item = await conn.fetchrow(
+                'SELECT ai.* FROM inventory i JOIN allitems ai ON (i."item"=ai."id") WHERE ai."owner"=$1 and ai."id"=$2;',
                 ctx.author.id,
+                itemid,
             )
-            if not ret:
-                return await ctx.send("Your inventory is empty.")
-            ids = [r[0] for r in ret]
-            if itemid in ids:
-                itemtype = await conn.fetchval(
-                    'SELECT type FROM allitems WHERE "id"=$1;', itemid
-                )
-                olditem = await conn.fetchrow(
-                    "SELECT ai.* FROM profile p JOIN allitems ai ON (p.user=ai.owner) JOIN inventory i ON (ai.id=i.item) WHERE i.equipped IS TRUE AND p.user=$1 AND type=$2;",
-                    ctx.author.id,
-                    itemtype,
-                )
-                if olditem is not None:
-                    await conn.execute(
-                        'UPDATE inventory SET "equipped"=False WHERE "item"=$1;',
-                        olditem[0],
-                    )
+            if not item:
+                return await ctx.send(f "You don't own an item with the ID `{itemid}`.")
+            olditem = await conn.fetchrow(
+                "SELECT ai.* FROM profile p JOIN allitems ai ON (p.user=ai.owner) JOIN inventory i ON (ai.id=i.item) WHERE i.equipped IS TRUE AND p.user=$1 AND type=$2;",
+                ctx.author.id,
+                item["type"],
+            )
+            if olditem is not None:
                 await conn.execute(
-                    'UPDATE inventory SET "equipped"=True WHERE "item"=$1;', itemid
+                    'UPDATE inventory SET "equipped"=False WHERE "item"=$1;',
+                    olditem["id"],
                 )
-                if olditem is not None:
-                    await ctx.send(
-                        f"Successfully equipped item `{itemid}` and put off item `{olditem[0]}`."
-                    )
-                else:
-                    await ctx.send(f"Successfully equipped item `{itemid}`.")
+            await conn.execute(
+                'UPDATE inventory SET "equipped"=True WHERE "item"=$1;', itemid
+            )
+            if olditem is not None:
+                await ctx.send(
+                    f"Successfully equipped item `{itemid}` and put off item `{olditem[0]}`."
+                )
             else:
-                await ctx.send(f"You don't own an item with the ID `{itemid}`.")
+                await ctx.send(f"Successfully equipped item `{itemid}`.")
 
     @checks.has_char()
     @user_cooldown(3600)
-    @commands.command(description="Merges two items to a better item.")
+    @commands.command()
     async def merge(self, ctx, firstitemid: int, seconditemid: int):
+        """Merges two items to a better one. Second one is consumed."""
         if firstitemid == seconditemid:
             await self.bot.reset_cooldown(ctx)
             return await ctx.send("Good luck with that.")
@@ -366,9 +358,10 @@ class Profile(commands.Cog):
         )
 
     @checks.has_char()
-    @user_cooldown(60)
-    @commands.command(aliases=["upgrade"], description="Upgrades an item's stat by 1.")
+    @user_cooldown(3600)
+    @commands.command(aliases=["upgrade"])
     async def upgradeweapon(self, ctx, itemid: int):
+        """Upgrades an item's stat by 1."""
         async with self.bot.pool.acquire() as conn:
             item = await conn.fetchrow(
                 'SELECT * FROM allitems WHERE "id"=$1 AND "owner"=$2;',
@@ -377,22 +370,17 @@ class Profile(commands.Cog):
             )
             if not item:
                 return await ctx.send(f"You don't own an item with the ID `{itemid}`.")
-            if item[4] == "Sword":
+            if item["type"] == "Sword":
                 stattoupgrade = "damage"
-                statid = 5
                 pricetopay = int(item[5] * 250)
-            elif item[4] == "Shield":
+            elif item["type"] == "Shield":
                 stattoupgrade = "armor"
-                statid = 6
                 pricetopay = int(item[6] * 250)
-            if int(item[statid]) > 40:
+            if int(item[stattoupgrade]) > 40:
                 return await ctx.send(
                     "Your weapon already reached the maximum upgrade level."
                 )
-            usermoney = await conn.fetchval(
-                'SELECT money FROM profile WHERE "user"=$1;', ctx.author.id
-            )
-        if usermoney < pricetopay:
+        if ctx.character_data["money"] < pricetopay:
             return await ctx.send(
                 f"You are too poor to upgrade this item. The upgrade costs **${pricetopay}**, but you only have **${usermoney}**."
             )
@@ -408,7 +396,6 @@ class Profile(commands.Cog):
         except asyncio.TimeoutError:
             await self.bot.reset_cooldown(ctx)
             return await ctx.send("Weapon upgrade cancelled.")
-        self.bot.reset_cooldown(ctx)
         if not await checks.has_money(self.bot, ctx.author.id, pricetopay):
             return await ctx.send("You're too poor.")
         async with self.bot.pool.acquire() as conn:
@@ -426,19 +413,11 @@ class Profile(commands.Cog):
         )
 
     @checks.has_char()
-    @commands.command(description="Gift money!")
-    async def give(self, ctx, money: int, other: discord.Member):
-        if money < 0:
-            return await ctx.send("Don't scam!")
-        if money > 100_000_000:
-            return await ctx.send(
-                "Don't send away that much money in one place. :scream:"
-            )
+    @commands.command()
+    async def give(self, ctx, money: IntFromTo(0, 100000000), other: MemberWithCharacter):
         if other == ctx.author:
             return await ctx.send("No cheating!")
-        if not await checks.user_has_char(self.bot, other.id):
-            return await ctx.send("That person doesn't have a character.")
-        if not await checks.has_money(self.bot, ctx.author.id, money):
+        if ctx.character_data["money"] < money:
             return await ctx.send("You are too poor.")
         async with self.bot.pool.acquire() as conn:
             await conn.execute(
@@ -452,8 +431,9 @@ class Profile(commands.Cog):
         await ctx.send(f"Successfully gave **${money}** to {other.mention}.")
 
     @checks.has_char()
-    @commands.command(description="Changes your character name")
+    @commands.command()
     async def rename(self, ctx):
+        """Renames your character."""
         await ctx.send(
             "What shall your character's name be? (Minimum 3 Characters, Maximum 20)"
         )
@@ -486,8 +466,9 @@ class Profile(commands.Cog):
             )
 
     @checks.has_char()
-    @commands.command(aliases=["rm", "del"], description="Deletes your character.")
+    @commands.command(aliases=["rm", "del"])
     async def delete(self, ctx):
+        """Deletes your character."""
         def mycheck(amsg):
             return (
                 amsg.content.strip() == "deletion confirm" and amsg.author == ctx.author
@@ -525,17 +506,14 @@ class Profile(commands.Cog):
             "Successfully deleted your character. Sorry to see you go :frowning:"
         )
 
-    @commands.command(
-        aliases=["color"],
-        description="Set your default text colour for the profile command.",
-    )
+    @commands.command(aliases=["color"],)
     async def colour(self, ctx, colour: str):
+        """Sets your profile text colour."""
         if len(colour) != 7 or not colour.startswith("#"):
             return await ctx.send("Format for colour is `#RRGGBB`.")
-        async with self.bot.pool.acquire() as conn:
-            await conn.execute(
-                'UPDATE profile SET "colour"=$1 WHERE "user"=$2;', colour, ctx.author.id
-            )
+        await self.bot.pool.execute(
+            'UPDATE profile SET "colour"=$1 WHERE "user"=$2;', colour, ctx.author.id
+        )
         await ctx.send(f"Successfully set your profile colour to `{colour}`.")
 
 
