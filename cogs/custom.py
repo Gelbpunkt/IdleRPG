@@ -20,9 +20,15 @@ class Custom(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
+    @commands.command(hidden=True)
+    async def onetruechild(self, ctx):
+        """In loving memory of Mary Johanna, ex-developer."""
+        await ctx.send("His name is `#no homo` :heart:")
+
     @is_ken()
-    @commands.command(description="Hug someone!", hidden=True)
+    @commands.command(hidden=True)
     async def ken(self, ctx, user: discord.Member):
+        """[Ken only] Hug someone."""
         em = discord.Embed(
             title="Ken Hug!",
             description=f"{ctx.author.mention} hugged {user.mention}! Awww!",
