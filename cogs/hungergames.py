@@ -133,7 +133,7 @@ class GameBase:
                         ).paginate(self.ctx, location=p[0])
                     ]
                 except (self.ctx.bot.paginator.NoChoice, discord.Forbidden):
-                    await ctx.send(format_exc())
+                    await self.ctx.send(format_exc())
                     await self.ctx.send(
                         f"I couldn't send a DM to {p[0].mention}! Choosing random action..."
                     )
