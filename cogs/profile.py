@@ -419,6 +419,7 @@ class Profile(commands.Cog):
     async def give(
         self, ctx, money: IntFromTo(0, 100000000), other: MemberWithCharacter
     ):
+        """Gift money!"""
         if other == ctx.author:
             return await ctx.send("No cheating!")
         if ctx.character_data["money"] < money:
