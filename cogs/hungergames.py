@@ -5,11 +5,10 @@ Copyright (C) 2018-2019 Diniboy and Gelbpunkt
 This software is dual-licensed under the GNU Affero General Public License for non-commercial and the Travitia License for commercial use.
 For more information, see README.md and LICENSE.md.
 """
-
-
 import asyncio
 import copy
 import random
+from traceback import format_exc
 
 import discord
 from discord.ext import commands
@@ -134,6 +133,7 @@ class GameBase:
                         ).paginate(self.ctx, location=p[0])
                     ]
                 except (self.ctx.bot.paginator.NoChoice, discord.Forbidden):
+                    await ctx.send(format_exc())
                     await self.ctx.send(
                         f"I couldn't send a DM to {p[0].mention}! Choosing random action..."
                     )
@@ -243,14 +243,12 @@ class HungerGames(commands.Cog):
         self.games = {}
 
     @commands.command()
-    async def hungergames(self, ctx, player_count: int = 10):
-        if player_count < 2:
-            return await ctx.send("Very funny...")
+    async def hungergames(self, ctx):
         if self.games.get(ctx.channel.id):
             return await ctx.send("There is already a game in here!")
         players = [ctx.author]
         msg = await ctx.send(
-            f"{ctx.author.mention} started a game of Hunger Games! React with :shallow_pan_of_food: to join the game! **1/{player_count}**"
+            f"{ctx.author.mention} started a game of Hunger Games! React with :shallow_pan_of_food: to join the game! **1 joined**"
         )
         await msg.add_reaction("\U0001f958")
 
@@ -267,21 +265,20 @@ class HungerGames(commands.Cog):
                     "reaction_add", check=check, timeout=30
                 )
             except asyncio.TimeoutError:
-                del self.games[ctx.channel.id]
-                return await ctx.send("Not enough players joined...")
+                break
             players.append(user)
             await msg.edit(
-                content=f"{ctx.author.mention} started a game of Hunger Games! React with :shallow_pan_of_food: to join the game! **{len(players)}/{player_count}**"
+                content=f"{ctx.author.mention} started a game of Hunger Games! React with :shallow_pan_of_food: to join the game! **{len(players)} joined**"
             )
 
+        if len(players) < 2:
+            del self.games[ctx.channel.id]
+            return await ctx.send("Not enough players joined...")
+            
         game = GameBase(ctx, players=players)
         self.games[ctx.channel.id] = game
         await game.main()
         del self.games[ctx.channel.id]
-
-    @commands.command(hidden=True)
-    async def hungergameslist(self, ctx):
-        await ctx.send(self.games)
 
 
 def setup(bot):
