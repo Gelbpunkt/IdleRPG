@@ -259,7 +259,7 @@ class HungerGames(commands.Cog):
 
         self.games[ctx.channel.id] = "forming"
 
-        while len(players) < player_count:
+        while True:
             try:
                 reaction, user = await self.bot.wait_for(
                     "reaction_add", check=check, timeout=30
