@@ -8,7 +8,6 @@ For more information, see README.md and LICENSE.md.
 import asyncio
 import copy
 import random
-from traceback import format_exc
 
 import discord
 from discord.ext import commands
@@ -133,9 +132,8 @@ class GameBase:
                         ).paginate(self.ctx, location=p[0])
                     ]
                 except (self.ctx.bot.paginator.NoChoice, discord.Forbidden):
-                    await self.ctx.send(format_exc())
                     await self.ctx.send(
-                        f"I couldn't send a DM to {p[0].mention}! Choosing random action..."
+                        f"I couldn't send a DM to {p[0].mention}! (This is a known bug if your reaction didn't do anything) Choosing random action..."
                     )
                     action = random.choice(actions2)
                 if okay or (not okay and isinstance(action[2], tuple)):
