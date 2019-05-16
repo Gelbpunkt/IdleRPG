@@ -155,7 +155,7 @@ class Bot(commands.AutoShardedBot):
     async def get_booster(self, user, type_):
         user = user.id if isinstance(user, (discord.User, discord.Member)) else user
         val = await self.redis.execute("TTL", f"booster:{user}:{type_}")
-        return datetime.timedelta(seconds=val) if val != -1 else None
+        return datetime.timedelta(seconds=val) if val != -2 else None
 
     async def start_adventure(self, user, number, time):
         user = user.id if isinstance(user, (discord.User, discord.Member)) else user

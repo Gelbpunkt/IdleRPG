@@ -71,9 +71,9 @@ class Store(commands.Cog):
     @commands.command()
     async def boosters(self, ctx):
         """View your boosters."""
-        timeboosters = ctx.character_data["time_boosters"]
-        luckboosters = ctx.character_data["luck_boosters"]
-        moneyboosters = ctx.character_data["money_boosters"]
+        timeboosters = ctx.character_data["time_booster"]
+        luckboosters = ctx.character_data["luck_booster"]
+        moneyboosters = ctx.character_data["money_booster"]
         time = await self.bot.get_booster(ctx.author, "time")
         luck = await self.bot.get_booster(ctx.author, "luck")
         money = await self.bot.get_booster(ctx.author, "money")
