@@ -5,8 +5,6 @@ Copyright (C) 2018-2019 Diniboy and Gelbpunkt
 This software is dual-licensed under the GNU Affero General Public License for non-commercial and the Travitia License for commercial use.
 For more information, see README.md and LICENSE.md.
 """
-
-
 import io
 import os
 import random
@@ -149,11 +147,11 @@ def profile_image(
 ):
     level = xptolevel(profile[3])
     try:
-        if not str(missionend)[:7].startswith("-"):
-            endstr = f"{str(missionend)[:7]} left"
+        if not mission[2]:
+            endstr = f"{str(missionend).split('.')[0]} left"
         else:
             endstr = "finished"
-        missionnumber = mission[3]
+        missionnumber = mission[0]
         missionstring = f"Adventure {missionnumber}, {endstr}"
     except (KeyError, IndexError, TypeError):
         missionstring = "You are in no adventure!"
