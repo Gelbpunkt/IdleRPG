@@ -337,6 +337,7 @@ Use attack, defend or recover
     @has_adventure()
     @commands.command()
     async def cancel(self, ctx):
+        """Cancels your current adventure."""
         await self.bot.delete_adventure(ctx.author)
         await ctx.send(
             f"Canceled your mission. Use `{ctx.prefix}adventure [missionID]` to start a new one!"
