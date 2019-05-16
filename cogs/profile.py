@@ -6,7 +6,6 @@ This software is dual-licensed under the GNU Affero General Public License for n
 For more information, see README.md and LICENSE.md.
 """
 import asyncio
-import datetime
 import functools
 from io import BytesIO
 
@@ -191,11 +190,7 @@ class Profile(commands.Cog):
         except ValueError:
             colour = 0x000000
         if mission:
-            timeleft = (
-                str(mission[1]).split(".")[0]
-                if not mission[2]
-                else "Finished"
-            )
+            timeleft = str(mission[1]).split(".")[0] if not mission[2] else "Finished"
         sword = f"{sword['name']} - {sword['damage']}" if sword else "No sword"
         shield = f"{shield['name']} - {shield['armor']}" if shield else "No shield"
         level = rpgtools.xptolevel(p_data["xp"])
