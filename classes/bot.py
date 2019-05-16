@@ -166,7 +166,7 @@ class Bot(commands.AutoShardedBot):
     async def get_adventure(self, user):
         user = user.id if isinstance(user, (discord.User, discord.Member)) else user
         ttl = await self.redis.execute("TTL", f"adv:{user}")
-        if ttl == -1:
+        if ttl == -2:
             return
         num = await self.redis.execute("GET", f"adv:{user}")
         ttl = ttl - 259200

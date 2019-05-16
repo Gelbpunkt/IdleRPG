@@ -224,7 +224,7 @@ Use attack, defend or recover
     @commands.command(aliases=["s"])
     async def status(self, ctx):
         """Checks your adventure status."""
-        num, time, done = await self.bot.get_adventure(ctx.author)
+        num, time, done = ctx.adventure_data
         if done:
             sword, shield = await self.bot.get_equipped_items_for(ctx.author)
             playerlevel = rpgtools.xptolevel(ctx.character_data["xp"])
