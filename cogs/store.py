@@ -99,7 +99,7 @@ class Store(commands.Cog):
         """Activate a booster."""
         if boostertype not in ["time", "luck", "money"]:
             return await ctx.send(
-                "That is not a valid booster type. Must be from `1` to `3`."
+                "That is not a valid booster type. Must be `time/luck/money`."
             )
         boosters = ctx.character_data[f"{boostertype}_booster"]
         if not boosters:
