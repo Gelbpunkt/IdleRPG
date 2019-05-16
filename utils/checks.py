@@ -69,9 +69,7 @@ def has_adventure():
     """Checks for a user to be on an adventure."""
 
     async def predicate(ctx):
-        ctx.adventure_data = await ctx.bot.pool.fetchrow(
-            'SELECT * FROM mission WHERE "name"=$1;', ctx.author.id
-        )
+        ctx.adventure_data = await ctx.bot.get_adventure(ctx.author)
         if ctx.adventure_data:
             return True
         raise NeedsAdventure()
@@ -83,9 +81,7 @@ def has_no_adventure():
     """Checks for a user to be on no adventure."""
 
     async def predicate(ctx):
-        if not await ctx.bot.pool.fetchrow(
-            'SELECT * FROM mission WHERE "name"=$1;', ctx.author.id
-        ):
+        if not await ctx.bot.get_adventure(ctx.author):
             return True
         raise NeedsNoAdventure()
 
