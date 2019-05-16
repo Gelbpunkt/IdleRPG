@@ -174,6 +174,6 @@ class Bot(commands.AutoShardedBot):
         time = datetime.timedelta(seconds=ttl)
         return num, time, done
 
-    async def cancel_adventure(self, user):
+    async def delete_adventure(self, user):
         user = user.id if isinstance(user, (discord.User, discord.Member)) else user
         await self.redis.execute("DEL", f"adv:{user}")
