@@ -16,8 +16,7 @@ from classes.converters import IntFromTo
 from cogs.classes import genstats
 from cogs.shard_communication import user_on_cooldown as user_cooldown
 from utils import misc as rpgtools
-from utils.checks import has_char, has_no_adventure, has_adventure
-from utils.tools import todelta
+from utils.checks import has_adventure, has_char, has_no_adventure
 
 
 class Adventure(commands.Cog):
@@ -234,9 +233,7 @@ Use attack, defend or recover
             shield = shield["armor"] if shield else 0
 
             # class test
-            sword, shield = await genstats(
-                self.bot, ctx.author.id, sword, shield
-            )
+            sword, shield = await genstats(self.bot, ctx.author.id, sword, shield)
 
             luck_booster = await self.bot.get_booster(ctx.author, "luck")
             success = rpgtools.calcchance(
@@ -248,7 +245,11 @@ Use attack, defend or recover
                 booster=bool(luck_booster),
             )
             if success:
-                maximumstat = float(random.randint(1, isfinished[3] * 5)) if num < 6 else float(random.randint(1, 25))
+                maximumstat = (
+                    float(random.randint(1, num * 5))
+                    if num < 6
+                    else float(random.randint(1, 25))
+                )
                 if await self.bot.get_booster(ctx.author, "money"):
                     gold = int(random.randint(1, 30) * num * 1.25)
                 else:
@@ -276,7 +277,11 @@ Use attack, defend or recover
                 ]
                 damage = maximumstat if type_ == "Sword" else 0
                 armor = maximumstat if type_ == "Shield" else 0
-                name = random.choice(names) + random.choice([" Sword", " Blade", " Stich"]) else random.choice(names) + random.choice([" Shield", " Defender", " Aegis"])
+                name = random.choice(names) + (
+                    random.choice([" Sword", " Blade", " Stich"])
+                    if type_ == "Sword"
+                    else random.choice([" Shield", " Defender", " Aegis"])
+                )
                 async with self.bot.pool.acquire() as conn:
                     item = await conn.fetchrow(
                         'INSERT INTO allitems ("owner", "name", "value", "type", "damage", "armor") VALUES ($1, $2, $3, $4, $5, $6) RETURNING *;',
@@ -323,8 +328,7 @@ Use attack, defend or recover
             else:
                 await ctx.send("You died on your mission. Try again!")
                 await self.bot.pool.execute(
-                    'UPDATE profile SET deaths=deaths+1 WHERE "user"=$1;',
-                    ctx.author.id,
+                    'UPDATE profile SET deaths=deaths+1 WHERE "user"=$1;', ctx.author.id
                 )
             await self.bot.delete_adventure(ctx.author)
         else:

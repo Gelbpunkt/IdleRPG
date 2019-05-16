@@ -272,7 +272,7 @@ class HungerGames(commands.Cog):
         if len(players) < 2:
             del self.games[ctx.channel.id]
             return await ctx.send("Not enough players joined...")
-            
+
         game = GameBase(ctx, players=players)
         self.games[ctx.channel.id] = game
         await game.main()

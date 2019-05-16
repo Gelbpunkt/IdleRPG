@@ -5,8 +5,6 @@ Copyright (C) 2018-2019 Diniboy and Gelbpunkt
 This software is dual-licensed under the GNU Affero General Public License for non-commercial and the Travitia License for commercial use.
 For more information, see README.md and LICENSE.md.
 """
-import datetime
-
 import discord
 from discord.ext import commands
 
@@ -109,7 +107,10 @@ class Store(commands.Cog):
         check = await self.bot.get_booster(ctx.author, boostertype)
         if check:
             return await ctx.send("This booster is already running.")
-        await self.bot.pool.execute(f'UPDATE profile SET "{boostertype}_boosters"="{boostertype}_boosters"-1 WHERE "user"=$1;', ctx.author.id)
+        await self.bot.pool.execute(
+            f'UPDATE profile SET "{boostertype}_boosters"="{boostertype}_boosters"-1 WHERE "user"=$1;',
+            ctx.author.id,
+        )
         await self.bot.activate_booster(ctx.author, boostertype)
         await ctx.send(
             f"Successfully activated a **{boostertype.title()} booster** for the next **24 hours**!"
