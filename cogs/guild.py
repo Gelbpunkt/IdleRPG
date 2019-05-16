@@ -5,8 +5,6 @@ Copyright (C) 2018-2019 Diniboy and Gelbpunkt
 This software is dual-licensed under the GNU Affero General Public License for non-commercial and the Travitia License for commercial use.
 For more information, see README.md and LICENSE.md.
 """
-
-
 import asyncio
 import random
 from typing import Union
@@ -120,7 +118,7 @@ class Guild(commands.Cog):
                 await self.bot.get_user_global(m["user"])
                 or f"Unknown User (ID {m['user']})"
             )
-            members_fmt.append(f"{u} ({m['guildrank']}))")
+            members_fmt.append(f"{u} ({m['guildrank']})")
         embed = discord.Embed(
             title="Your guild mates", description="\n".join(members_fmt)
         )
