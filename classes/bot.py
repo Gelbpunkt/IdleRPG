@@ -172,7 +172,7 @@ class Bot(commands.AutoShardedBot):
         ttl = ttl - 259200
         done = ttl <= 0
         time = datetime.timedelta(seconds=ttl)
-        return num, time, done
+        return num.decode("ascii"), time, done
 
     async def delete_adventure(self, user):
         user = user.id if isinstance(user, (discord.User, discord.Member)) else user
