@@ -66,50 +66,6 @@ class Adventure(commands.Cog):
     @commands.command(aliases=["mission", "a", "dungeon"])
     async def adventure(self, ctx, dungeonnumber: IntFromTo(1, 20)):
         """Sends your character on an adventure."""
-        times = {
-            1: "30m",
-            2: "1h",
-            3: "2h",
-            4: "3h",
-            5: "4h",
-            6: "5h",
-            7: "6h",
-            8: "7h",
-            9: "8h",
-            10: "9h",
-            11: "10h",
-            12: "11h",
-            13: "12h",
-            14: "13h",
-            15: "14h",
-            16: "15h",
-            17: "16h",
-            18: "17h",
-            19: "18h",
-            20: "19h",
-        }
-        booster_times = {
-            1: "15m",
-            2: "30m",
-            3: "1h",
-            4: "1.5h",
-            5: "2h",
-            6: "2.5h",
-            7: "3h",
-            8: "3.5h",
-            9: "4h",
-            10: "4.5h",
-            11: "5h",
-            12: "5.5h",
-            13: "6h",
-            14: "6.5h",
-            15: "7h",
-            16: "7.5h",
-            17: "8h",
-            18: "8.5h",
-            19: "9h",
-            20: "9.5h",
-        }
         async with self.bot.pool.acquire() as conn:
             boostertest = await conn.fetchval(
                 'SELECT "end" FROM boosters WHERE "user"=$1 AND "type"=$2;',
