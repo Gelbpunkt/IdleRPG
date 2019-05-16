@@ -28,9 +28,7 @@ class Adventure(commands.Cog):
     async def adventures(self, ctx):
         """A list of all adventures with success rates, name and time it takes."""
         sword, shield = await self.bot.get_equipped_items_for(ctx.author)
-        all_dungeons = await self.bot.pool.fetch(
-            'SELECT difficulty FROM dungeon ORDER BY "id";'
-        )  # TODO: This table can be hardcoded
+        all_dungeons = list(self.bot.config.adventure_times.keys())
         level = rpgtools.xptolevel(ctx.character_data["xp"])
         damage = sword["damage"] if sword else 0
         defense = shield["armor"] if shield else 0
@@ -38,9 +36,9 @@ class Adventure(commands.Cog):
         msg = await ctx.send("Loading images...")
 
         chances = []
-        for row in all_dungeons:
+        for adv in all_dungeons:
             success = rpgtools.calcchance(
-                damage, defense, row["difficulty"], int(level), returnsuccess=False
+                damage, defense, adv, int(level), returnsuccess=False
             )
             chances.append((success[0] - success[2], success[1] + success[2]))
         thing = functools.partial(rpgtools.makeadventures, chances)
