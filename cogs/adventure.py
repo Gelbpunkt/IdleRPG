@@ -16,7 +16,7 @@ from classes.converters import IntFromTo
 from cogs.classes import genstats
 from cogs.shard_communication import user_on_cooldown as user_cooldown
 from utils import misc as rpgtools
-from utils.checks import has_char, has_no_adventure
+from utils.checks import has_char, has_no_adventure, has_adventure
 from utils.tools import todelta
 
 
@@ -66,46 +66,14 @@ class Adventure(commands.Cog):
     @commands.command(aliases=["mission", "a", "dungeon"])
     async def adventure(self, ctx, dungeonnumber: IntFromTo(1, 20)):
         """Sends your character on an adventure."""
-        async with self.bot.pool.acquire() as conn:
-            boostertest = await conn.fetchval(
-                'SELECT "end" FROM boosters WHERE "user"=$1 AND "type"=$2;',
-                ctx.author.id,
-                1,
-            )
-            boostertest2 = await conn.fetchval(
-                'SELECT "end" FROM boosters WHERE "user"=$1 AND "type"=$2 AND clock_timestamp() < "end";',
-                ctx.author.id,
-                1,
-            )
-            if not boostertest and not boostertest2:
-                end = await conn.fetchval(
-                    "SELECT clock_timestamp() + $1::interval;",
-                    todelta(times[dungeonnumber]),
-                )
-            elif boostertest and not boostertest2:
-                await conn.execute(
-                    'DELETE FROM boosters WHERE "user"=$1 AND "type"=$2;',
-                    ctx.author.id,
-                    1,
-                )
-                end = await conn.fetchval(
-                    "SELECT clock_timestamp() + $1::interval;",
-                    todelta(times[dungeonnumber]),
-                )
-            elif boostertest and boostertest2:
-                end = await conn.fetchval(
-                    "SELECT clock_timestamp() + $1::interval;",
-                    todelta(booster_times[dungeonnumber]),
-                )
-            await conn.execute(
-                'INSERT INTO mission ("name", "end", "dungeon") VALUES ($1, $2, $3);',
-                ctx.author.id,
-                end,
-                dungeonnumber,
-            )
-            await ctx.send(
-                f"Successfully sent your character out on an adventure. Use `{ctx.prefix}status` to see the current status of the mission."
-            )
+        time_booster = await self.bot.get_booster(ctx.author, "time")
+        time = self.bot.config.adventure_times[dungeonnumber]
+        if time_booster:
+            time = time / 2
+        await self.bot.start_adventure(ctx.author, dungeonnumber, time)
+        await ctx.send(
+            f"Successfully sent your character out on an adventure. Use `{ctx.prefix}status` to see the current status of the mission."
+        )
 
     @has_no_adventure()
     @user_cooldown(3600)
@@ -253,231 +221,131 @@ Use attack, defend or recover
         await ctx.send(embed=embed)
 
     @has_char()
+    @has_adventure()
     @commands.command(aliases=["s"])
     async def status(self, ctx):
         """Checks your adventure status."""
-        async with self.bot.pool.acquire() as conn:
-            ret = await conn.fetchrow(
-                'SELECT * FROM mission WHERE "name"=$1;', ctx.author.id
+        num, time, done = await self.bot.get_adventure(ctx.author)
+        if done:
+            sword, shield = await self.bot.get_equipped_items_for(ctx.author)
+            playerlevel = rpgtools.xptolevel(ctx.character_data["xp"])
+
+            sword = sword["damage"] if sword else 0
+            shield = shield["armor"] if shield else 0
+
+            # class test
+            sword, shield = await genstats(
+                self.bot, ctx.author.id, sword, shield
             )
-            if not ret:
-                return await ctx.send(
-                    f"You are on no mission yet. Use `{ctx.prefix}adventure [DungeonID]` to go out on an adventure!"
-                )
-            isfinished = await conn.fetchrow(
-                'SELECT * FROM mission WHERE name=$1 AND clock_timestamp() > "end";',
-                ctx.author.id,
+
+            luck_booster = await self.bot.get_booster(ctx.author, "luck")
+            success = rpgtools.calcchance(
+                sword,
+                shield,
+                num,
+                int(playerlevel),
+                returnsuccess=True,
+                booster=bool(luck_booster),
             )
-            if isfinished:
-                sword = await conn.fetchrow(
-                    "SELECT ai.* FROM profile p JOIN allitems ai ON (p.user=ai.owner) JOIN inventory i ON (ai.id=i.item) WHERE i.equipped IS TRUE AND p.user=$1 AND type='Sword';",
-                    ctx.author.id,
-                )
-                shield = await conn.fetchrow(
-                    "SELECT ai.* FROM profile p JOIN allitems ai ON (p.user=ai.owner) JOIN inventory i ON (ai.id=i.item) WHERE i.equipped IS TRUE AND p.user=$1 AND type='Shield';",
-                    ctx.author.id,
-                )
-                playerxp = await conn.fetchval(
-                    'SELECT xp FROM profile WHERE "user"=$1;', ctx.author.id
-                )
-                playerlevel = rpgtools.xptolevel(playerxp)
-
-                swordbonus = sword["damage"] if sword else 0
-                shieldbonus = shield["armor"] if shield else 0
-
-                # class test
-                swordbonus, shieldbonus = await genstats(
-                    self.bot, ctx.author.id, swordbonus, shieldbonus
-                )
-
-                boostertest = await conn.fetchval(
-                    'SELECT "end" FROM boosters WHERE "user"=$1 AND "type"=$2;',
-                    ctx.author.id,
-                    2,
-                )
-                boostertest2 = await conn.fetchval(
-                    'SELECT "end" FROM boosters WHERE "user"=$1 AND "type"=$2 AND clock_timestamp() < "end";',
-                    ctx.author.id,
-                    2,
-                )
-                if not boostertest and not boostertest2:
-                    success = rpgtools.calcchance(
-                        swordbonus,
-                        shieldbonus,
-                        isfinished[3],
-                        int(playerlevel),
-                        returnsuccess=True,
-                    )
-                elif boostertest and not boostertest2:
-                    await conn.execute(
-                        'DELETE FROM boosters WHERE "user"=$1 AND "type"=$2;',
+            if success:
+                maximumstat = float(random.randint(1, isfinished[3] * 5)) if num < 6 else float(random.randint(1, 25))
+                if await self.bot.get_booster(ctx.author, "money"):
+                    gold = int(random.randint(1, 30) * num * 1.25)
+                else:
+                    gold = random.randint(1, 30) * num
+                xp = random.randint(200, 1000) * num
+                type_ = random.choice(["Sword", "Shield"])
+                names = [
+                    "Victo's",
+                    "Arsandor's",
+                    "Nuhulu's",
+                    "Legendary",
+                    "Vosag's",
+                    "Mitoa's",
+                    "Scofin's",
+                    "Skeeren's",
+                    "Ager's",
+                    "Hazuro's",
+                    "Atarbu's",
+                    "Jadea's",
+                    "Zosus'",
+                    "Thocubra's",
+                    "Utrice's",
+                    "Lingoad's",
+                    "Zlatorpian's",
+                ]
+                damage = maximumstat if type_ == "Sword" else 0
+                armor = maximumstat if type_ == "Shield" else 0
+                name = random.choice(names) + random.choice([" Sword", " Blade", " Stich"]) else random.choice(names) + random.choice([" Shield", " Defender", " Aegis"])
+                async with self.bot.pool.acquire() as conn:
+                    item = await conn.fetchrow(
+                        'INSERT INTO allitems ("owner", "name", "value", "type", "damage", "armor") VALUES ($1, $2, $3, $4, $5, $6) RETURNING *;',
                         ctx.author.id,
-                        2,
+                        name,
+                        random.randint(1, 40) * num,
+                        type_,
+                        damage,
+                        armor,
                     )
-                    success = rpgtools.calcchance(
-                        swordbonus,
-                        shieldbonus,
-                        isfinished[3],
-                        int(playerlevel),
-                        returnsuccess=True,
-                    )
-                elif boostertest and boostertest2:
-                    success = rpgtools.calcchance(
-                        swordbonus,
-                        shieldbonus,
-                        isfinished[3],
-                        int(playerlevel),
-                        returnsuccess=True,
-                        booster=True,
-                    )
-                if success:
-                    if isfinished[3] < 6:
-                        maximumstat = float(random.randint(1, isfinished[3] * 5))
-                    else:
-                        maximumstat = float(random.randint(1, 25))
-                    boostertest = await conn.fetchval(
-                        'SELECT "end" FROM boosters WHERE "user"=$1 AND "type"=$2;',
-                        ctx.author.id,
-                        3,
-                    )
-                    boostertest2 = await conn.fetchval(
-                        'SELECT "end" FROM boosters WHERE "user"=$1 AND "type"=$2 AND clock_timestamp() < "end";',
-                        ctx.author.id,
-                        3,
-                    )
-                    if not boostertest and not boostertest2:
-                        gold = random.randint(1, 30) * isfinished[3]
-                    elif boostertest and not boostertest2:
-                        await conn.execute(
-                            'DELETE FROM boosters WHERE "user"=$1 AND "type"=$2;',
-                            ctx.author.id,
-                            3,
-                        )
-                        gold = random.randint(1, 30) * isfinished[3]
-                    elif boostertest and boostertest2:
-                        gold = int(random.randint(1, 30) * isfinished[3] * 1.25)
-                    xp = random.randint(200, 1000) * isfinished[3]
-                    shieldorsword = random.choice(["sw", "sh"])
-                    names = [
-                        "Victo's",
-                        "Arsandor's",
-                        "Nuhulu's",
-                        "Legendary",
-                        "Vosag's",
-                        "Mitoa's",
-                        "Scofin's",
-                        "Skeeren's",
-                        "Ager's",
-                        "Hazuro's",
-                        "Atarbu's",
-                        "Jadea's",
-                        "Zosus'",
-                        "Thocubra's",
-                        "Utrice's",
-                        "Lingoad's",
-                        "Zlatorpian's",
-                    ]
-                    if shieldorsword == "sw":
-                        item = await conn.fetchrow(
-                            'INSERT INTO allitems ("owner", "name", "value", "type", "damage", "armor") VALUES ($1, $2, $3, $4, $5, $6) RETURNING *;',
-                            ctx.author.id,
-                            random.choice(names)
-                            + random.choice([" Sword", " Blade", " Stich"]),
-                            random.randint(1, 40) * isfinished[3],
-                            "Sword",
-                            maximumstat,
-                            0.00,
-                        )
-                    if shieldorsword == "sh":
-                        item = await conn.fetchrow(
-                            'INSERT INTO allitems ("owner", "name", "value", "type", "damage", "armor") VALUES ($1, $2, $3, $4, $5, $6) RETURNING *;',
-                            ctx.author.id,
-                            random.choice(names)
-                            + random.choice([" Shield", " Defender", " Aegis"]),
-                            random.randint(1, 40) * isfinished[3],
-                            "Shield",
-                            0.00,
-                            maximumstat,
-                        )
                     await conn.execute(
                         'INSERT INTO inventory ("item", "equipped") VALUES ($1, $2);',
-                        item[0],
+                        item["id"],
                         False,
                     )
                     # marriage partner should get 50% of the money
-                    partner = await conn.fetchval(
-                        'SELECT marriage FROM profile WHERE "user"=$1;', ctx.author.id
-                    )
-                    if partner != 0:
+                    if ctx.character_data["marriage"]:
                         await conn.execute(
                             'UPDATE profile SET money=money+$1 WHERE "user"=$2;',
                             int(gold / 2),
-                            partner,
+                            ctx.character_data["marriage"],
                         )
-                        # guild money
-                    guild = await conn.fetchval(
-                        'SELECT guild FROM profile WHERE "user"=$1;', ctx.author.id
-                    )
-                    if guild != 0:
+                    # guild money
+                    if ctx.character_data["guild"]:
                         await conn.execute(
                             'UPDATE guild SET money=money+$1 WHERE "id"=$2;',
                             int(gold / 10),
-                            guild,
+                            ctx.character_data["guild"],
                         )
-                    # !!! TEMPORARY EASTER EVENT !!!
-                    # eggs = int(round(isfinished[3] ** 1.5 * random.randint(4, 6), 0))
                     await conn.execute(
                         'UPDATE profile SET "money"="money"+$1, "xp"="xp"+$2, "completed"="completed"+1 WHERE "user"=$3;',
                         gold,
                         xp,
-                        # eggs,
                         ctx.author.id,
                     )
-                    if partner == 0:
+                    if not ctx.character_data["marriage"]:
                         await ctx.send(
-                            f"You have completed your dungeon and received **${gold}** as well as a new weapon: **{item[2]}**. Experience gained: **{xp}**."  # \nYou found **{eggs}** eastereggs! <:easteregg:566251086986608650> (`{ctx.prefix}easter`)
+                            f"You have completed your dungeon and received **${gold}** as well as a new weapon: **{item['name']}**. Experience gained: **{xp}**."
                         )
                     else:
                         await ctx.send(
-                            f"You have completed your dungeon and received **${gold}** as well as a new weapon: **{item[2]}**. Experience gained: **{xp}**.\nYour partner received **${int(gold/2)}**."  # You found **{eggs}** eastereggs! <:easteregg:566251086986608650> (`{ctx.prefix}easter`)
+                            f"You have completed your dungeon and received **${gold}** as well as a new weapon: **{item['name']}**. Experience gained: **{xp}**.\nYour partner received **${int(gold/2)}**."
                         )
-                else:
-                    await ctx.send("You died on your mission. Try again!")
-                    await conn.execute(
-                        'UPDATE profile SET deaths=deaths+1 WHERE "user"=$1;',
-                        ctx.author.id,
-                    )
-                await conn.execute(
-                    'DELETE FROM mission WHERE "name"=$1;', ctx.author.id
-                )
             else:
-                # mission = await conn.fetchrow('SELECT * FROM mission WHERE name=$1 AND clock_timestamp() < "end";', ctx.author.id)
-                mission = ret
-                remain = await conn.fetchval("SELECT $1-clock_timestamp();", mission[2])
-                dungeon = await conn.fetchrow(
-                    "SELECT * FROM dungeon WHERE id=$1;", mission[3]
+                await ctx.send("You died on your mission. Try again!")
+                await self.bot.pool.execute(
+                    'UPDATE profile SET deaths=deaths+1 WHERE "user"=$1;',
+                    ctx.author.id,
                 )
-                await ctx.send(
-                    f"You are currently in the adventure with difficulty `{mission[3]}`.\nApproximate end in `{str(remain).split('.')[0]}`\nDungeon Name: `{dungeon[1]}`"
-                )
+            await self.bot.delete_adventure(ctx.author)
+        else:
+            dungeon = self.bot.config.adventure_names[num]
+            await ctx.send(
+                f"You are currently in the adventure with difficulty `{num}`.\nApproximate end in `{str(time).split('.')[0]}`\nDungeon Name: `{dungeon}`"
+            )
 
     @has_char()
-    @commands.command(description="Cancels your current mission.")
+    @has_adventure()
+    @commands.command()
     async def cancel(self, ctx):
-        async with self.bot.pool.acquire() as conn:
-            ret = await self.bot.pool.fetchrow(
-                'SELECT * FROM mission WHERE "name"=$1;', ctx.author.id
-            )
-            if not ret:
-                return await ctx.send("You are on no mission.")
-            await conn.execute('DELETE FROM mission WHERE "name"=$1;', ctx.author.id)
+        await self.bot.delete_adventure(ctx.author)
         await ctx.send(
             f"Canceled your mission. Use `{ctx.prefix}adventure [missionID]` to start a new one!"
         )
 
     @has_char()
-    @commands.command(description="Your death stats.")
+    @commands.command()
     async def deaths(self, ctx):
+        """Your death stats."""
         deaths, completed = await self.bot.pool.fetchval(
             'SELECT (deaths, completed) FROM profile WHERE "user"=$1;', ctx.author.id
         )
