@@ -182,10 +182,7 @@ class Profile(commands.Cog):
             )
             if not p_data:
                 return await ctx.send(f"**{target}** does not have a character.")
-            mission = await conn.fetchrow(
-                'SELECT *, "end" - clock_timestamp() AS timeleft FROM mission WHERE "name"=$1;',
-                target.id,
-            )
+            mission = await self.bot.get_adventure(ctx.author)
             guild = await conn.fetchval(
                 'SELECT name FROM guild WHERE "id"=$1;', p_data["guild"]
             )
@@ -195,8 +192,8 @@ class Profile(commands.Cog):
             colour = 0x000000
         if mission:
             timeleft = (
-                str(mission["timeleft"]).split(".")[0]
-                if mission["end"] > datetime.datetime.now(datetime.timezone.utc)
+                str(mission[1]).split(".")[0]
+                if not mission[2]
                 else "Finished"
             )
         sword = f"{sword['name']} - {sword['damage']}" if sword else "No sword"
@@ -213,7 +210,7 @@ class Profile(commands.Cog):
         )
         em.add_field(name="Equipment", value=f"Sword: {sword}\nShield: {shield}")
         if mission:
-            em.add_field(name="Mission", value=f"{mission['dungeon']} - {timeleft}")
+            em.add_field(name="Mission", value=f"{mission[0]} - {timeleft}")
         await ctx.send(embed=em)
 
     @checks.has_char()
