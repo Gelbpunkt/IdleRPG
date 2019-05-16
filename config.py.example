@@ -1,6 +1,6 @@
 """Ignore this"""
 from discord.ext import commands
-
+from datetime import timedelta
 """End ignore"""
 
 """The token it will use for auth with Discord."""
@@ -139,3 +139,28 @@ version = "3.4.0"
 
 """Global cooldown (rate, per, [.user, .channel, .guild])"""
 cooldown = commands.CooldownMapping.from_cooldown(1, 3, commands.BucketType.user)
+
+
+"""Adventure times."""
+adventure_times = {
+    1: timedelta(minutes=30),
+    2: timedelta(hours=1),
+    3: timedelta(hours=2),
+    4: timedelta(hours=3),
+    5: timedelta(hours=4),
+    6: timedelta(hours=5),
+    7: timedelta(hours=6),
+    8: timedelta(hours=7),
+    9: timedelta(hours=8),
+    10: timedelta(hours=9),
+    11: timedelta(hours=10),
+    12: timedelta(hours=11),
+    13: timedelta(hours=12),
+    14: timedelta(hours=13),
+    15: timedelta(hours=14),
+    16: timedelta(hours=15),
+    17: timedelta(hours=16),
+    18: timedelta(hours=17),
+    19: timedelta(hours=18),
+    20: timedelta(hours=19),
+}
