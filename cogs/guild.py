@@ -6,16 +6,16 @@ This software is dual-licensed under the GNU Affero General Public License for n
 For more information, see README.md and LICENSE.md.
 """
 import asyncio
-from datetime import timedelta
 import random
+from datetime import timedelta
 from typing import Union
 
 import discord
 from discord.ext import commands
 
 from classes.converters import User
-from cogs.shard_communication import user_on_cooldown as user_cooldown
 from cogs.shard_communication import guild_on_cooldown as guild_cooldown
+from cogs.shard_communication import user_on_cooldown as user_cooldown
 from utils import misc as rpgtools
 from utils.checks import (
     has_char,
@@ -30,7 +30,6 @@ from utils.checks import (
     user_has_char,
     user_is_patron,
 )
-from utils.tools import todelta
 
 
 class Guild(commands.Cog):
@@ -744,7 +743,9 @@ class Guild(commands.Cog):
             return await ctx.send(
                 f"Your guild is already on an adventure! Use `{ctx.prefix}guild status` to view how long it still lasts."
             )
-        guild = await self.bot.pool.fetchrow('SELECT * FROM guild WHERE "id"=$1;', ctx.character_data["guild"])
+        guild = await self.bot.pool.fetchrow(
+            'SELECT * FROM guild WHERE "id"=$1;', ctx.character_data["guild"]
+        )
 
         await ctx.send(
             f"{ctx.author.mention} seeks a guild adventure for **{guild['name']}**! Write `guild adventure join` to join them! Unlimited players can join in the next 30 seconds. The minimum of players required is 3."
@@ -819,9 +820,11 @@ Time it will take: **{time}**
         if adventure[2]:
             await self.bot.delete_guild_adventure(ctx.character_data["guild"])
             gold = random.randint(adventure[0] * 20, adventure[0] * 50)
-            
+
             await self.bot.pool.execute(
-                'UPDATE guild SET money=money+$1 WHERE "id"=$2;', gold, ctx.character_data["guild"]
+                'UPDATE guild SET money=money+$1 WHERE "id"=$2;',
+                gold,
+                ctx.character_data["guild"],
             )
             await ctx.send(
                 f"Your guild has completed an adventure of difficulty `{adventure[0]}` and **${gold}** has been added to the bank."

@@ -49,7 +49,9 @@ def guild_on_cooldown(cooldown: int):
     async def predicate(ctx):
         guild = getattr(ctx, "character_data", None)
         if not guild:
-            guild = await ctx.bot.pool.fetchval('SELECT guild FROM profile WHERE "user"=$1;', ctx.author.id)
+            guild = await ctx.bot.pool.fetchval(
+                'SELECT guild FROM profile WHERE "user"=$1;', ctx.author.id
+            )
         else:
             guild = guild["guild"]
         command_ttl = await ctx.bot.redis.execute(
