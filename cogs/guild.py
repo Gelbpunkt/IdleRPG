@@ -6,6 +6,7 @@ This software is dual-licensed under the GNU Affero General Public License for n
 For more information, see README.md and LICENSE.md.
 """
 import asyncio
+from datetime import timedelta
 import random
 from typing import Union
 
@@ -14,6 +15,7 @@ from discord.ext import commands
 
 from classes.converters import User
 from cogs.shard_communication import user_on_cooldown as user_cooldown
+from cogs.shard_communication import guild_on_cooldown as guild_cooldown
 from utils import misc as rpgtools
 from utils.checks import (
     has_char,
@@ -519,8 +521,10 @@ class Guild(commands.Cog):
         await ctx.send(f"Your new guild bank limit is now **${currentlimit+250000}**.")
 
     @has_char()
-    @guild.command(description="Battle against another guild.")
+    @guild_cooldown(1800)
+    @guild.command()
     async def battle(self, ctx, enemy: discord.Member, amount: int, fightercount: int):
+        """Battle against another guild."""
         if amount < 0:
             return await ctx.send("Don't scam!")
         if enemy is ctx.author:
@@ -732,21 +736,15 @@ class Guild(commands.Cog):
                 await ctx.send("It's a tie!")
 
     @is_guild_officer()
-    @user_cooldown(3600)
-    @guild.command(description="Starts a guild adventure.")
+    @guild_cooldown(3600)
+    @guild.command()
     async def adventure(self, ctx):
-        async with self.bot.pool.acquire() as conn:
-            guild = await conn.fetchrow(
-                'SELECT * FROM profile p JOIN guild g ON (p.guild=g.id) WHERE p."user"=$1;',
-                ctx.author.id,
+        """Starts a guild adventure."""
+        if await self.bot.get_guild_adventure(ctx.character_data["guild"]):
+            return await ctx.send(
+                f"Your guild is already on an adventure! Use `{ctx.prefix}guild status` to view how long it still lasts."
             )
-            check = await conn.fetchrow(
-                'SELECT * FROM guildadventure WHERE "guildid"=$1;', guild["id"]
-            )
-            if check:
-                return await ctx.send(
-                    f"Your guild is already on an adventure! Use `{ctx.prefix}guild status` to view how long it still lasts."
-                )
+        guild = await self.bot.pool.fetchrow('SELECT * FROM guild WHERE "id"=$1;', ctx.character_data["guild"])
 
         await ctx.send(
             f"{ctx.author.mention} seeks a guild adventure for **{guild['name']}**! Write `guild adventure join` to join them! Unlimited players can join in the next 30 seconds. The minimum of players required is 3."
@@ -792,7 +790,9 @@ class Guild(commands.Cog):
                     )
                 started = True
 
-        time = f"{difficulty * 0.5}h"
+        time = timedelta(hours=difficulty * 0.5)
+
+        await self.bot.start_guild_adventure(guild["id"], difficulty, time)
 
         await ctx.send(
             f"""
@@ -805,58 +805,31 @@ Time it will take: **{time}**
 """
         )
 
-        async with self.bot.pool.acquire() as conn:
-            enddate = await conn.fetchval(
-                "SELECT clock_timestamp() + $1::interval;", todelta(time)
-            )
-            await conn.execute(
-                'INSERT INTO guildadventure ("guildid", "end", "difficulty") VALUES ($1, $2, $3);',
-                guild["id"],
-                enddate,
-                difficulty,
-            )
-
-    @has_char()
-    @guild.command(description="Views your guild adventure status.")
+    @has_guild()
+    @guild.command()
     async def status(self, ctx):
-        async with self.bot.pool.acquire() as conn:
-            guild = await conn.fetchval(
-                'SELECT guild FROM profile WHERE "user"=$1;', ctx.author.id
-            )
-            if guild == 0:
-                return await ctx.send("You didn't join a guild yet.")
-            adventure = await conn.fetchrow(
-                'SELECT * FROM guildadventure WHERE "guildid"=$1;', guild
+        """Views your guild adventure."""
+        adventure = await self.bot.get_guild_adventure(ctx.character_data["guild"])
+
+        if not adventure:
+            return await ctx.send(
+                f"Your guild isn't on an adventure yet. Ask your guild leader to use `{ctx.prefix}guild adventure` to start one"
             )
 
-            if not adventure:
-                return await ctx.send(
-                    f"Your guild isn't on an adventure yet. Ask your guild leader to use `{ctx.prefix}guild adventure` to start one"
-                )
-
-            finished = await conn.fetchrow(
-                'SELECT * FROM guildadventure WHERE "guildid"=$1 AND "end" < clock_timestamp();',
-                guild,
+        if adventure[2]:
+            await self.bot.delete_guild_adventure(ctx.character_data["guild"])
+            gold = random.randint(adventure[0] * 20, adventure[0] * 50)
+            
+            await self.bot.pool.execute(
+                'UPDATE guild SET money=money+$1 WHERE "id"=$2;', gold, ctx.character_data["guild"]
             )
-
-            if finished:
-                gold = random.randint(adventure[2] * 20, adventure[2] * 50)
-                await conn.execute(
-                    'DELETE FROM guildadventure WHERE "guildid"=$1;', guild
-                )
-                await conn.execute(
-                    'UPDATE guild SET money=money+$1 WHERE "id"=$2;', gold, guild
-                )
-                await ctx.send(
-                    f"Your guild has completed an adventure of difficulty `{adventure[2]}` and **${gold}** has been added to the bank."
-                )
-            else:
-                remain = await conn.fetchval(
-                    "SELECT $1-clock_timestamp();", adventure[1]
-                )
-                await ctx.send(
-                    f"Your guild is currently in an adventure with difficulty `{adventure[2]}`.\nTime remaining: `{str(remain).split('.')[0]}`"
-                )
+            await ctx.send(
+                f"Your guild has completed an adventure of difficulty `{adventure[0]}` and **${gold}** has been added to the bank."
+            )
+        else:
+            await ctx.send(
+                f"Your guild is currently in an adventure with difficulty `{adventure[0]}`.\nTime remaining: `{str(adventure[1]).split('.')[0]}`"
+            )
 
 
 def setup(bot):
