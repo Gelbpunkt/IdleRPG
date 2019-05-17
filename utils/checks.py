@@ -105,7 +105,7 @@ def has_guild():
     """Checks for a user to be in a guild."""
 
     async def predicate(ctx):
-        ctx.character_data = await ctx.bot.pool.fetchval(
+        ctx.character_data = await ctx.bot.pool.fetchrow(
             'SELECT * FROM profile WHERE "user"=$1;', ctx.author.id
         )
         if ctx.character_data["guild"]:
