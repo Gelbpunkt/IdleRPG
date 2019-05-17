@@ -44,6 +44,33 @@ def user_on_cooldown(cooldown: int):
     return commands.check(predicate)  # TODO: Needs a redesign
 
 
+# Cross-process cooldown check (pass this to commands)
+def guild_on_cooldown(cooldown: int):
+    async def predicate(ctx):
+        guild = getattr(ctx, "character_data", None)
+        if not guild:
+            guild = await ctx.bot.pool.fetchval('SELECT guild FROM profile WHERE "user"=$1;', ctx.author.id)
+        else:
+            guild = guild["guild"]
+        command_ttl = await ctx.bot.redis.execute(
+            "TTL", f"cd:{guild}:{ctx.command.qualified_name}"
+        )
+        if command_ttl == -2:
+            await ctx.bot.redis.execute(
+                "SET",
+                f"cd:{guild}:{ctx.command.qualified_name}",
+                ctx.command.qualified_name,
+                "EX",
+                cooldown,
+            )
+            return True
+        else:
+            raise commands.CommandOnCooldown(ctx, command_ttl)
+            return False
+
+    return commands.check(predicate)
+
+
 class Sharding(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
