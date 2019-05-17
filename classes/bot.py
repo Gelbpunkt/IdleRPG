@@ -177,3 +177,21 @@ class Bot(commands.AutoShardedBot):
     async def delete_adventure(self, user):
         user = user.id if isinstance(user, (discord.User, discord.Member)) else user
         await self.redis.execute("DEL", f"adv:{user}")
+
+    async def start_guild_adventure(self, guild, difficulty, time):
+        await self.redis.execute(
+            "SET", f"guildadv:{guild}", difficulty, "EX", time.seconds + 259200
+        )  # +3 days
+
+    async def get_guild_adventure(self, guild):
+        ttl = await self.redis.execute("TTL", f"guildadv:{guild}")
+        if ttl == -2:
+            return
+        num = await self.redis.execute("GET", f"guildadv:{guild}")
+        ttl = ttl - 259200
+        done = ttl <= 0
+        time = datetime.timedelta(seconds=ttl)
+        return int(num.decode("ascii")), time, done
+
+    async def delete_guild_adventure(self, guild):
+        await self.redis.execute("DEL", f"guildadv:{guild}")
