@@ -97,11 +97,17 @@ class Errorhandler(commands.Cog):
             elif type(error) == utils.checks.NoGuildPermissions:
                 await ctx.send("Your rank in the guild is too low to use this command.")
             elif type(error) == utils.checks.NeedsNoGuildLeader:
-                await ctx.send("You mustn't be the owner of a guild to use this command.")
+                await ctx.send(
+                    "You mustn't be the owner of a guild to use this command."
+                )
             elif type(error) == utils.checks.NeedsNoAdventure:
-                await ctx.send(f"You are already on an adventure. Use `{ctx.prefix}status` to see how long it lasts.")
+                await ctx.send(
+                    f"You are already on an adventure. Use `{ctx.prefix}status` to see how long it lasts."
+                )
             elif type(error) == utils.checks.NeedsAdventure:
-                await ctx.send(f"You need to be on an adventure to use this command. Try `{ctx.prefix}adventure`!")
+                await ctx.send(
+                    f"You need to be on an adventure to use this command. Try `{ctx.prefix}adventure`!"
+                )
             else:
                 await ctx.send(
                     embed=discord.Embed(
@@ -109,7 +115,7 @@ class Errorhandler(commands.Cog):
                         description=":x: You don't have the permissions to use this command. It is thought for other users.",
                         colour=0xFF0000,
                     )
-                 )
+                )
         elif isinstance(error, discord.HTTPException):
             await ctx.send(
                 f"There was a error responding to your message:\n`{error.text}`\nCommon issues: Bad Guild Icon or too long response"
