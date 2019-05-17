@@ -9,8 +9,8 @@
 -- PostgreSQL database dump
 --
 
--- Dumped from database version 10.6 (Ubuntu 10.6-0ubuntu0.18.04.1)
--- Dumped by pg_dump version 10.6 (Ubuntu 10.6-0ubuntu0.18.04.1)
+-- Dumped from database version 11.3
+-- Dumped by pg_dump version 11.3
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -19,36 +19,9 @@ SET client_encoding = 'UTF8';
 SET standard_conforming_strings = on;
 SELECT pg_catalog.set_config('search_path', '', false);
 SET check_function_bodies = false;
+SET xmloption = content;
 SET client_min_messages = warning;
 SET row_security = off;
-
---
--- Name: plpgsql; Type: EXTENSION; Schema: -; Owner: 
---
-
-CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
-
-
---
--- Name: EXTENSION plpgsql; Type: COMMENT; Schema: -; Owner: 
---
-
-COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
-
-
---
--- Name: pg_trgm; Type: EXTENSION; Schema: -; Owner: 
---
-
-CREATE EXTENSION IF NOT EXISTS pg_trgm WITH SCHEMA public;
-
-
---
--- Name: EXTENSION pg_trgm; Type: COMMENT; Schema: -; Owner: 
---
-
-COMMENT ON EXTENSION pg_trgm IS 'text similarity measurement and index searching based on trigrams';
-
 
 --
 -- Name: array_diff(anyarray, anyarray); Type: FUNCTION; Schema: public; Owner: jens
@@ -108,19 +81,6 @@ ALTER SEQUENCE public.allitems_id_seq OWNED BY public.allitems.id;
 
 
 --
--- Name: boosters; Type: TABLE; Schema: public; Owner: jens
---
-
-CREATE TABLE public.boosters (
-    "user" bigint NOT NULL,
-    type bigint NOT NULL,
-    "end" timestamp with time zone NOT NULL
-);
-
-
-ALTER TABLE public.boosters OWNER TO jens;
-
---
 -- Name: children; Type: TABLE; Schema: public; Owner: jens
 --
 
@@ -134,19 +94,6 @@ CREATE TABLE public.children (
 
 
 ALTER TABLE public.children OWNER TO jens;
-
---
--- Name: dungeon; Type: TABLE; Schema: public; Owner: jens
---
-
-CREATE TABLE public.dungeon (
-    id bigint NOT NULL,
-    name character varying(30) NOT NULL,
-    difficulty integer
-);
-
-
-ALTER TABLE public.dungeon OWNER TO jens;
 
 --
 -- Name: guild; Type: TABLE; Schema: public; Owner: jens
@@ -188,19 +135,6 @@ ALTER TABLE public.guild_id_seq OWNER TO jens;
 
 ALTER SEQUENCE public.guild_id_seq OWNED BY public.guild.id;
 
-
---
--- Name: guildadventure; Type: TABLE; Schema: public; Owner: jens
---
-
-CREATE TABLE public.guildadventure (
-    guildid bigint NOT NULL,
-    "end" timestamp with time zone NOT NULL,
-    difficulty bigint NOT NULL
-);
-
-
-ALTER TABLE public.guildadventure OWNER TO jens;
 
 --
 -- Name: helpme; Type: TABLE; Schema: public; Owner: jens
@@ -282,41 +216,6 @@ ALTER SEQUENCE public.market_id_seq OWNED BY public.market.id;
 
 
 --
--- Name: mission; Type: TABLE; Schema: public; Owner: jens
---
-
-CREATE TABLE public.mission (
-    id bigint NOT NULL,
-    name bigint,
-    "end" timestamp with time zone,
-    dungeon bigint
-);
-
-
-ALTER TABLE public.mission OWNER TO jens;
-
---
--- Name: mission_id_seq; Type: SEQUENCE; Schema: public; Owner: jens
---
-
-CREATE SEQUENCE public.mission_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
-ALTER TABLE public.mission_id_seq OWNER TO jens;
-
---
--- Name: mission_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: jens
---
-
-ALTER SEQUENCE public.mission_id_seq OWNED BY public.mission.id;
-
-
---
 -- Name: profile; Type: TABLE; Schema: public; Owner: jens
 --
 
@@ -392,26 +291,11 @@ ALTER TABLE ONLY public.market ALTER COLUMN id SET DEFAULT nextval('public.marke
 
 
 --
--- Name: mission id; Type: DEFAULT; Schema: public; Owner: jens
---
-
-ALTER TABLE ONLY public.mission ALTER COLUMN id SET DEFAULT nextval('public.mission_id_seq'::regclass);
-
-
---
 -- Name: allitems allitems_pkey; Type: CONSTRAINT; Schema: public; Owner: jens
 --
 
 ALTER TABLE ONLY public.allitems
     ADD CONSTRAINT allitems_pkey PRIMARY KEY (id);
-
-
---
--- Name: dungeon dungeon_pkey; Type: CONSTRAINT; Schema: public; Owner: jens
---
-
-ALTER TABLE ONLY public.dungeon
-    ADD CONSTRAINT dungeon_pkey PRIMARY KEY (id);
 
 
 --
@@ -447,14 +331,6 @@ ALTER TABLE ONLY public.market
 
 
 --
--- Name: mission mission_pkey; Type: CONSTRAINT; Schema: public; Owner: jens
---
-
-ALTER TABLE ONLY public.mission
-    ADD CONSTRAINT mission_pkey PRIMARY KEY (id);
-
-
---
 -- Name: profile profile_pkey; Type: CONSTRAINT; Schema: public; Owner: jens
 --
 
@@ -471,27 +347,11 @@ ALTER TABLE ONLY public.allitems
 
 
 --
--- Name: boosters boosters_user_fkey; Type: FK CONSTRAINT; Schema: public; Owner: jens
---
-
-ALTER TABLE ONLY public.boosters
-    ADD CONSTRAINT boosters_user_fkey FOREIGN KEY ("user") REFERENCES public.profile("user");
-
-
---
 -- Name: guild guild_leader_fkey; Type: FK CONSTRAINT; Schema: public; Owner: jens
 --
 
 ALTER TABLE ONLY public.guild
     ADD CONSTRAINT guild_leader_fkey FOREIGN KEY (leader) REFERENCES public.profile("user");
-
-
---
--- Name: guildadventure guildadventure_guildid_fkey; Type: FK CONSTRAINT; Schema: public; Owner: jens
---
-
-ALTER TABLE ONLY public.guildadventure
-    ADD CONSTRAINT guildadventure_guildid_fkey FOREIGN KEY (guildid) REFERENCES public.guild(id) ON DELETE CASCADE;
 
 
 --
@@ -511,19 +371,10 @@ ALTER TABLE ONLY public.market
 
 
 --
--- Name: mission mission_dungeon_fkey; Type: FK CONSTRAINT; Schema: public; Owner: jens
+-- Name: TABLE profile; Type: ACL; Schema: public; Owner: jens
 --
 
-ALTER TABLE ONLY public.mission
-    ADD CONSTRAINT mission_dungeon_fkey FOREIGN KEY (dungeon) REFERENCES public.dungeon(id) ON DELETE CASCADE;
-
-
---
--- Name: mission mission_name_fkey; Type: FK CONSTRAINT; Schema: public; Owner: jens
---
-
-ALTER TABLE ONLY public.mission
-    ADD CONSTRAINT mission_name_fkey FOREIGN KEY (name) REFERENCES public.profile("user") ON DELETE CASCADE;
+GRANT ALL ON TABLE public.profile TO votehandler;
 
 
 --
