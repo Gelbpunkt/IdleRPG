@@ -15,6 +15,7 @@ from aiohttp import ClientOSError, ContentTypeError, ServerDisconnectedError
 from discord.ext import commands
 
 import utils.checks
+from utils.paginator import NoChoice
 
 try:
     from raven import Client
@@ -88,18 +89,33 @@ class Errorhandler(commands.Cog):
             )
         elif isinstance(error, commands.CheckFailure):
             if type(error) == utils.checks.NoCharacter:
-                return await ctx.send("You don't have a character yet.")
-            await ctx.send(
-                embed=discord.Embed(
-                    title="Permission denied",
-                    description=":x: You don't have the permissions to use this command. It is thought for other users.",
-                    colour=0xFF0000,
-                )
-            )
+                await ctx.send("You don't have a character yet.")
+            elif type(error) == utils.checks.NoGuild:
+                await ctx.send("You need to have a guild to use this command.")
+            elif type(error) == utils.checks.NeedsNoGuild:
+                await ctx.send("You need to be in no guild to use this command.")
+            elif type(error) == utils.checks.NoGuildPermissions:
+                await ctx.send("Your rank in the guild is too low to use this command.")
+            elif type(error) == utils.checks.NeedsNoGuildLeader:
+                await ctx.send("You mustn't be the owner of a guild to use this command.")
+            elif type(error) == utils.checks.NeedsNoAdventure:
+                await ctx.send(f"You are already on an adventure. Use `{ctx.prefix}status` to see how long it lasts.")
+            elif type(error) == utils.checks.NeedsAdventure:
+                await ctx.send(f"You need to be on an adventure to use this command. Try `{ctx.prefix}adventure`!")
+            else:
+                await ctx.send(
+                    embed=discord.Embed(
+                        title="Permission denied",
+                        description=":x: You don't have the permissions to use this command. It is thought for other users.",
+                        colour=0xFF0000,
+                    )
+                 )
         elif isinstance(error, discord.HTTPException):
             await ctx.send(
                 f"There was a error responding to your message:\n`{error.text}`\nCommon issues: Bad Guild Icon or too long response"
             )
+        elif isinstance(error, NoChoice):
+            await ctx.send("You did not choose anything.")
         elif isinstance(error, commands.CommandInvokeError) and hasattr(
             error, "original"
         ):
