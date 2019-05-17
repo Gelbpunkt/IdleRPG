@@ -55,12 +55,12 @@ def guild_on_cooldown(cooldown: int):
         else:
             guild = guild["guild"]
         command_ttl = await ctx.bot.redis.execute(
-            "TTL", f"cd:{guild}:{ctx.command.qualified_name}"
+            "TTL", f"guildcd:{guild}:{ctx.command.qualified_name}"
         )
         if command_ttl == -2:
             await ctx.bot.redis.execute(
                 "SET",
-                f"cd:{guild}:{ctx.command.qualified_name}",
+                f"guildcd:{guild}:{ctx.command.qualified_name}",
                 ctx.command.qualified_name,
                 "EX",
                 cooldown,
