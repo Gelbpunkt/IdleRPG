@@ -105,10 +105,10 @@ def has_guild():
     """Checks for a user to be in a guild."""
 
     async def predicate(ctx):
-        ctx.guild_data = await ctx.bot.pool.fetchval(
-            'SELECT guild FROM profile WHERE "user"=$1;', ctx.author.id
+        ctx.character_data = await ctx.bot.pool.fetchval(
+            'SELECT * FROM profile WHERE "user"=$1;', ctx.author.id
         )
-        if ctx.guild_data:
+        if ctx.character_data["guild"]:
             return True
         raise NoGuild()
 
@@ -119,12 +119,12 @@ def is_guild_officer():
     """Checks for a user to be guild officer or leader."""
 
     async def predicate(ctx):
-        ctx.profile_data = await ctx.bot.pool.fetchrow(
+        ctx.character_data = await ctx.bot.pool.fetchrow(
             'SELECT * FROM profile WHERE "user"=$1;', ctx.author.id
         )
         if (
-            ctx.profile_data["guildrank"] == "Leader"
-            or ctx.profile_data["guildrank"] == "Officer"
+            ctx.character_data["guildrank"] == "Leader"
+            or ctx.character_data["guildrank"] == "Officer"
         ):
             return True
         raise NoGuildPermissions()
@@ -136,10 +136,10 @@ def is_guild_leader():
     """Checks for a user to be guild leader."""
 
     async def predicate(ctx):
-        ctx.profile_data = await ctx.bot.pool.fetchrow(
+        ctx.character_data = await ctx.bot.pool.fetchrow(
             'SELECT * FROM profile WHERE "user"=$1;', ctx.author.id
         )
-        if ctx.profile_data["guildrank"] == "Leader":
+        if ctx.character_data["guildrank"] == "Leader":
             return True
         raise NoGuildPermissions()
 
@@ -150,10 +150,10 @@ def is_no_guild_leader():
     """Checks for a user not to be guild leader."""
 
     async def predicate(ctx):
-        ctx.profile_data = await ctx.bot.pool.fetchrow(
+        ctx.character_data = await ctx.bot.pool.fetchrow(
             'SELECT * FROM profile WHERE "user"=$1;', ctx.author.id
         )
-        if ctx.profile_data["guildrank"] != "Leader":
+        if ctx.character_data["guildrank"] != "Leader":
             return True
         raise NeedsNoGuildLeader()
 
