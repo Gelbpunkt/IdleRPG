@@ -344,7 +344,7 @@ class Trading(commands.Cog):
             footer="Hit a button to buy it",
             return_index=True,
             entries=[
-                f"**{i[4]} - {i[1] if i[0] == 'Sword' else i[2]} {'Damage' if i[0] == 'Sword' else 'Armor'} - **${i[5]}**"
+                f"**{i[4]}** - {i[1] if i[0] == 'Sword' else i[2]} {'Damage' if i[0] == 'Sword' else 'Armor'} - **${i[5]}**"
                 for i in offers
             ],
         ).paginate(ctx)
