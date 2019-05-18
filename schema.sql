@@ -4,6 +4,7 @@
 -- This software is dual-licensed under the GNU Affero General Public License for non-commercial and the Travitia License for commercial use.
 -- For more information, see README.md and LICENSE.md.
 
+
 --
 -- PostgreSQL database dump
 --
@@ -230,7 +231,7 @@ CREATE TABLE public.profile (
     time_booster bigint DEFAULT 0,
     luck_booster bigint DEFAULT 0,
     marriage bigint DEFAULT 0,
-    colour character varying(7) DEFAULT 0,
+    colour character varying(7) DEFAULT '#FFFFFF'::character varying,
     background character varying(60) DEFAULT 0,
     guild bigint DEFAULT 0,
     class character varying(50) DEFAULT 'No Class'::character varying,
