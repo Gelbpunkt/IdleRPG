@@ -8,6 +8,7 @@ For more information, see README.md and LICENSE.md.
 import asyncio
 import datetime
 import os
+import random
 import sys
 import traceback
 
@@ -16,6 +17,7 @@ import aioredis
 import asyncpg
 import discord
 from discord.ext import commands
+import fantasy_names as fn
 
 import config
 from classes.context import Context
@@ -195,3 +197,36 @@ class Bot(commands.AutoShardedBot):
 
     async def delete_guild_adventure(self, guild):
         await self.redis.execute("DEL", f"guildadv:{guild}")
+
+    async def create_item(self, name, value, type_, damage, armor, owner):
+        owner = owner.id if isinstance(owner, (discord.User, discord.Member)) else user
+        async with self.pool.acquire() as conn:
+            item = await conn.fetchrow(
+                'INSERT INTO allitems ("owner", "name", "value", "type", "damage", "armor") VALUES ($1, $2, $3, $4, $5, $6) RETURNING *;',
+                ctx.author.id,
+                name,
+                value,
+                type_,
+                damage,
+                armor,
+            )
+            await conn.execute(
+                'INSERT INTO inventory ("item", "equipped") VALUES ($1, $2);',
+                item["id"],
+                False,
+            )
+        return item
+
+    async def create_random_item(self, minstat, maxstat, minvalue, maxvalue, owner, insert=True):
+        owner = owner.id if isinstance(owner, (discord.User, discord.Member)) else user
+        item = {}
+        item["owner"] = owner
+        type_ = random.choice(["Sword", "Shield"])
+        item["type_"] = type_
+        item["damage"] = random.randint(minstat, maxstat) if type_ == "Sword" else 0
+        item["armor"] = random.randint(minstat, maxstat) if type_ == "Shield" else 0
+        item["value"] = random.randint(minvalue, maxvalue)
+        item["name"] = fn.weapon_name(type_)
+        if insert:
+            return await self.create_item(**item)
+        return item
