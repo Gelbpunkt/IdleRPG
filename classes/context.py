@@ -47,7 +47,7 @@ class Context(commands.Context):
             )
         except TimeoutError:
             await msg.delete()
-            raise NoChoice()
+            raise NoChoice("You did not choose anything.")
         await msg.delete()
         return bool(emojis.index(str(reaction.emoji)))
 
