@@ -8,7 +8,6 @@ For more information, see README.md and LICENSE.md.
 import io
 import os
 import random
-from pathlib import Path
 
 from discord.errors import NotFound
 from PIL import Image, ImageDraw, ImageFont

@@ -39,7 +39,12 @@ class Context(commands.Context):
             await msg.add_reaction(emoji)
 
         def check(r, u):
-            return u == user and str(r.emoji) in emojis and r.message.id == msg.id and not u.bot
+            return (
+                u == user
+                and str(r.emoji) in emojis
+                and r.message.id == msg.id
+                and not u.bot
+            )
 
         try:
             reaction, _ = await self.bot.wait_for(
