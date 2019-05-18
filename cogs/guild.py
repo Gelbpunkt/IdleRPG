@@ -702,8 +702,8 @@ class Guild(commands.Cog):
             user = await self.bot.pool.fetchrow(
                 'SELECT guild, xp FROM profile WHERE "user"=$1;', userid
             )
-            if user and user[0] == guild["id"]:
-                difficulty += int(rpgtools.xptolevel(user[1]))
+            if user and user["guild"] == guild["id"]:
+                difficulty += int(rpgtools.xptolevel(user["xp"]))
                 return difficulty
             return False
 
@@ -712,13 +712,14 @@ class Guild(commands.Cog):
                 r.message.id == msg.id
                 and str(r.emoji) == "\U00002694"
                 and u not in joined
+                and not u.bot
             )
 
         while not started:
             try:
                 r, u = await self.bot.wait_for("reaction_add", check=apply, timeout=30)
                 test = await is_in_guild(u.id, difficulty)
-                if difficulty:
+                if test:
                     difficulty = test
                     joined.append(u)
                     await ctx.send(f"Alright, {u.mention}, you have been added.")
