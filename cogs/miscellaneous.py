@@ -178,14 +178,24 @@ class Miscellaneous(commands.Cog):
         """The bot's update log."""
         await ctx.send(
             """
-**IdleRPG v3.4.0 is released :tada:**
-This update was a huge performance amd future update that switched to use of multiple processes.
-Many performance tweaks and enhancements took place.
-However, as work on this is not done and code not clean, v3.5 will come by time, but will not be focused too hard.
+**IdleRPG v3.5 is released :tada:**
+This update had 3 focuses:
+    - Making the source code prettier
+    - Making the bot more accessible (more reactions, less typing)
+    - Making the bot have higher performance (we got only 3 more things of this kind to do, yay!)
+
+**Soo... What's new?**
+- Guild descriptions will show up in `$guild` and `$guild info`
+- Confirmation is now done via ticking a box
+- Active battles and adventures should be more fun due to reactions
+- Joining challenges is now also reaction-based
+- The shop and `$pending` are now embeds and paginated
+- Internally, database calls were reduced by about 25-40%
 
 **Have fun!!!** <:idlerpg:453946311524220949>
 
-*Note: This is the work of half a year and we will now work on prettification. More on the bot future will follow later.*
+*Note: This is tested mostly, but not 100%. I appreciate bug reports.*
+*GitHub folks update your forks and branches!*
 """
         )
 
