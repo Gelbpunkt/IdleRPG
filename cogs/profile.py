@@ -96,8 +96,8 @@ class Profile(commands.Cog):
             guild = await conn.fetchval(
                 'SELECT name FROM guild WHERE "id"=$1;', profile["guild"]
             )
-            v1 = sword["damage"] if sword else 0
-            v2 = shield["armor"] if shield else 0
+            v1 = sword["damage"] if sword else 0.0
+            v2 = shield["armor"] if shield else 0.0
             damage, armor = await genstats(
                 self.bot,
                 targetid,
@@ -106,10 +106,10 @@ class Profile(commands.Cog):
             )
             extras = (damage - v1, armor - v2)
             sworddmg = (
-                f"{sword['damage']}{' (+' + str(extras[0]) + ')' if extras[0] else ''}"
+                f"{v1}{' (+' + str(extras[0]) + ')' if extras[0] else ''}"
             )
             shielddef = (
-                f"{shield['armor']}{' (+' + str(extras[1]) + ')' if extras[1] else ''}"
+                f"{v1}{' (+' + str(extras[1]) + ')' if extras[1] else ''}"
             )
             async with self.bot.trusted_session.post(
                 f"{self.bot.config.okapi_url}/api/genprofile",
