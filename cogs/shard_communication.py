@@ -274,8 +274,9 @@ class Sharding(commands.Cog):
             pass
         return self._messages.pop(command_id, None)  # Cleanup
 
-    @commands.command()
+    @commands.command(aliases=["cooldowns"])
     async def timers(self, ctx):
+        """Lists all your cooldowns."""
         cooldowns = await self.bot.redis.execute("KEYS", f"cd:{ctx.author.id}:*")
         if not cooldowns:
             return await ctx.send("You don't have any active cooldown at the moment.")
