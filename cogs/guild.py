@@ -63,9 +63,7 @@ class Guild(commands.Cog):
             'SELECT count(*) FROM profile WHERE "guild"=$1;', guild["id"]
         )
 
-        embed = discord.Embed(
-            title=guild["name"], description=guild["description"]
-        )
+        embed = discord.Embed(title=guild["name"], description=guild["description"])
         embed.add_field(
             name="Current Member Count",
             value=f"{membercount}/{guild['memberlimit']} Members",
@@ -357,7 +355,9 @@ class Guild(commands.Cog):
         """[Guild Owner only] Changes the guild description."""
         if len(text) > 200:
             return await ctx.send("The text may be up to 200 characters only.")
-        await self.bot.pool.execute('UPDATE guild SET "description"=$1 WHERE "leader"=$2;', text, ctx.author.id)
+        await self.bot.pool.execute(
+            'UPDATE guild SET "description"=$1 WHERE "leader"=$2;', text, ctx.author.id
+        )
         await ctx.send("Updated!")
 
     @has_guild()

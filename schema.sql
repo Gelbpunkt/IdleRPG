@@ -1,10 +1,3 @@
--- The IdleRPG Discord Bot
--- Copyright (C) 2018-2019 Diniboy and Gelbpunkt
-
--- This software is dual-licensed under the GNU Affero General Public License for non-commercial and the Travitia License for commercial use.
--- For more information, see README.md and LICENSE.md.
-
-
 --
 -- PostgreSQL database dump
 --
@@ -109,7 +102,8 @@ CREATE TABLE public.guild (
     wins bigint DEFAULT 0,
     banklimit bigint DEFAULT 250000,
     badges text[],
-    badge character varying(100) DEFAULT NULL::character varying
+    badge character varying(100) DEFAULT NULL::character varying,
+    description character varying(200) DEFAULT 'No Description set yet'::character varying NOT NULL
 );
 
 

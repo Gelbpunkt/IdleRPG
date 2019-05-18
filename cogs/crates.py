@@ -46,7 +46,9 @@ class Crates(commands.Cog):
         item = await self.bot.create_random_item(
             minstat=minstat, maxstat=maxstat, minvalue=1, maxvalue=250, owner=ctx.author
         )
-        await self.bot.pool.execute('UPDATE profile SET "crates"="crates"-1 WHERE "user"=$1;', ctx.author.id)
+        await self.bot.pool.execute(
+            'UPDATE profile SET "crates"="crates"-1 WHERE "user"=$1;', ctx.author.id
+        )
         embed = discord.Embed(
             title="You gained an item!",
             description="You found a new item when opening a crate!",

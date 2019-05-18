@@ -75,8 +75,10 @@ class Battles(commands.Cog):
         items_1 = await self.bot.get_equipped_items_for(ctx.author) or []
         items_2 = await self.bot.get_equipped_items_for(enemy) or []
         stats = [
-            sum([i["armor"] + i["damage"] if i else 0 for i in items_1]) + random.randint(1, 7),
-            sum([i["armor"] + i["damage"] if i else 0 for i in items_2]) + random.randint(1, 7),
+            sum([i["armor"] + i["damage"] if i else 0 for i in items_1])
+            + random.randint(1, 7),
+            sum([i["armor"] + i["damage"] if i else 0 for i in items_2])
+            + random.randint(1, 7),
         ]
         players = [ctx.author, enemy]
         if stats[0] == stats[1]:
