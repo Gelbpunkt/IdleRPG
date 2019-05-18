@@ -214,7 +214,7 @@ class Battles(commands.Cog):
                 idx = PLAYERS.index(u)
                 if MOVES_DONE[u] == "recover":
                     HP[idx] += 20
-                    await ctx.send(f"{u.mention} healed himself for **20 HP**.")
+                    await ctx.send(f"{u.mention} healed themselves for **20 HP**.")
                 elif MOVES_DONE[u] == "attack" and MOVES_DONE[o] != "defend":
                     eff = random.choice(
                         [
