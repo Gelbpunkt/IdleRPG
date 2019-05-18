@@ -5,8 +5,6 @@ Copyright (C) 2018-2019 Diniboy and Gelbpunkt
 This software is dual-licensed under the GNU Affero General Public License for non-commercial and the Travitia License for commercial use.
 For more information, see README.md and LICENSE.md.
 """
-
-
 import asyncio
 from typing import Union
 
@@ -91,31 +89,31 @@ class Help(commands.Cog):
             pages.append(embed)
         self.pages = pages
 
-    @commands.command(
-        description="Sends a link to the official documentation.", aliases=["docs"]
-    )
+    @commands.command()
     async def documentation(self, ctx):
+        """Sends a link to the official documentation."""
         await ctx.send(
             f"<:blackcheck:441826948919066625> **Check {self.bot.BASE_URL} for a list of commands**"
         )
 
-    @commands.command(description="Tutorial link.")
+    @commands.command()
     async def tutorial(self, ctx):
+        """Link to the bot tutorial."""
         await ctx.send(
             f"<:blackcheck:441826948919066625> **Check {self.bot.BASE_URL}/tutorial for a tutorial**"
         )
 
-    @commands.command(description="Link to the FAQ.")
+    @commands.command()
     async def faq(self, ctx):
+        """Link to the FAQ."""
         await ctx.send(
             f"<:blackcheck:441826948919066625> **Check {self.bot.BASE_URL}/tutorial for the official FAQ**"
         )
 
     @is_supporter()
-    @commands.command(
-        description="Unblock a guild or user from using the helpme command"
-    )
+    @commands.command()
     async def unbanfromhelpme(self, ctx, thing_to_ban: Union[User, int]):
+        """Unban an entitiy from using $helpme."""
         if isinstance(thing_to_ban, discord.User):
             id = thing_to_ban.id
         else:
@@ -127,8 +125,9 @@ class Help(commands.Cog):
         )
 
     @is_supporter()
-    @commands.command(description="Block a guild or user from using the helpme command")
+    @commands.command()
     async def banfromhelpme(self, ctx, thing_to_ban: Union[User, int]):
+        """Band a user from using $helpme."""
         if isinstance(thing_to_ban, discord.User):
             id = thing_to_ban.id
         else:
@@ -143,10 +142,9 @@ class Help(commands.Cog):
         )
 
     @commands.guild_only()
-    @commands.command(
-        description="Need help? This command allows a support member to join and help you!"
-    )
+    @commands.command()
     async def helpme(self, ctx, *, text: str):
+        """Allows a support team member to join your server for individual help."""
         blocked = await self.bot.pool.fetchrow(
             'SELECT * FROM helpme WHERE "id"=$1 OR "id"=$2;',
             ctx.guild.id,
@@ -157,20 +155,11 @@ class Help(commands.Cog):
                 "You or your server has been blacklisted for some reason."
             )
 
-        def check(msg):
-            return (
-                msg.author == ctx.author
-                and msg.content.lower() == "yes, i do"
-                and msg.channel == ctx.channel
-            )
+        if not await ctx.confirm(
+            "Are you sure? This will notify our support team and allow them to join the server."
+        ):
+            return
 
-        await ctx.send(
-            "Are you sure? This will notify our support team and allow them to join the server. If you are sure, type `Yes, I do`."
-        )
-        try:
-            await self.bot.wait_for("message", check=check, timeout=20)
-        except asyncio.TimeoutError:
-            return await ctx.send("Cancelling your help request.")
         try:
             inv = await ctx.channel.create_invite()
         except discord.Forbidden:
@@ -189,10 +178,11 @@ class Help(commands.Cog):
             "Support team has been notified and will join as soon as possible!"
         )
 
-    @commands.command(description="Get some help.")
+    @commands.command()
     async def help(
         self, ctx, *, command: commands.clean_content(escape_markdown=True) = None
     ):
+        """Shows help about the bot."""
         if command:
             command = self.bot.get_command(command.lower())
             if not command:
@@ -212,114 +202,7 @@ class Help(commands.Cog):
 
             return await ctx.send(fmt)
 
-        maxpage = len(self.pages) - 1
-        currentpage = 0
-        browsing = True
-        msg = await ctx.send(embed=self.pages[currentpage])
-
-        await msg.add_reaction("\U000023ee")
-        await msg.add_reaction("\U000025c0")
-        await msg.add_reaction("\U000025b6")
-        await msg.add_reaction("\U000023ed")
-        await msg.add_reaction("\U0001f522")
-
-        def reactioncheck(reaction, user):
-            return (
-                str(reaction.emoji)
-                in [
-                    "\U000025c0",
-                    "\U000025b6",
-                    "\U000023ee",
-                    "\U000023ed",
-                    "\U0001f522",
-                ]
-                and reaction.message.id == msg.id
-                and user.id == ctx.author.id
-            )
-
-        def msgcheck(amsg):
-            return amsg.channel == ctx.channel and not amsg.author.bot
-
-        while browsing:
-            try:
-                reaction, user = await self.bot.wait_for(
-                    "reaction_add", timeout=60.0, check=reactioncheck
-                )
-                if reaction.emoji == "\U000025c0":
-                    if currentpage == 0:
-                        pass
-                    else:
-                        currentpage -= 1
-                        await msg.edit(embed=self.pages[currentpage])
-                        try:
-                            await msg.remove_reaction(reaction.emoji, user)
-                        except discord.Forbidden:
-                            pass
-                elif reaction.emoji == "\U000025b6":
-                    if currentpage == maxpage:
-                        pass
-                    else:
-                        currentpage += 1
-                        await msg.edit(embed=self.pages[currentpage])
-                        try:
-                            await msg.remove_reaction(reaction.emoji, user)
-                        except discord.Forbidden:
-                            pass
-                elif reaction.emoji == "\U000023ed":
-                    currentpage = maxpage
-                    await msg.edit(embed=self.pages[currentpage])
-                    try:
-                        await msg.remove_reaction(reaction.emoji, user)
-                    except discord.Forbidden:
-                        pass
-                elif reaction.emoji == "\U000023ee":
-                    currentpage = 0
-                    await msg.edit(embed=self.pages[currentpage])
-                    try:
-                        await msg.remove_reaction(reaction.emoji, user)
-                    except discord.Forbidden:
-                        pass
-                elif reaction.emoji == "\U0001f522":
-                    question = await ctx.send(
-                        f"Enter a page number from `1` to `{maxpage + 1}`"
-                    )
-                    num = await self.bot.wait_for("message", timeout=10, check=msgcheck)
-                    if num is not None:
-                        try:
-                            num2 = int(num.content)
-                            if num2 >= 1 and num2 <= maxpage + 1:
-                                currentpage = num2 - 1
-                                await msg.edit(embed=self.pages[currentpage])
-                                try:
-                                    await num.delete()
-                                except discord.Forbidden:
-                                    pass
-                            else:
-                                await ctx.send(
-                                    f"Must be between `1` and `{maxpage + 1}`.",
-                                    delete_after=2,
-                                )
-                                try:
-                                    await num.delete()
-                                except discord.Forbidden:
-                                    pass
-                        except ValueError:
-                            await ctx.send(
-                                "That is not a valid number!", delete_after=2
-                            )
-                    await question.delete()
-                    try:
-                        await msg.remove_reaction(reaction.emoji, user)
-                    except discord.Forbidden:
-                        pass
-            except asyncio.TimeoutError:
-                browsing = False
-                try:
-                    await msg.clear_reactions()
-                except discord.Forbidden:
-                    pass
-                finally:
-                    break
+        await self.bot.paginator.Paginator(extras=self.pages).paginate(ctx)
 
 
 def setup(bot):
