@@ -717,7 +717,7 @@ class Guild(commands.Cog):
         while not started:
             try:
                 r, u = await self.bot.wait_for("reaction_add", check=apply, timeout=30)
-                test = await is_in_guild(u, difficulty)
+                test = await is_in_guild(u.id, difficulty)
                 if difficulty:
                     difficulty = test
                     joined.append(u)
