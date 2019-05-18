@@ -97,8 +97,8 @@ class Profile(commands.Cog):
             )
             damage, armor = await genstats(self.bot, targetid, sword["damage"] if sword else 0, shield["armor"] if shield else 0)
             extras = (damage - sword["damage"], armor - shield["armor"])
-            sworddmg = f"{sword["damage"]}{' (+' + str(extras[0]) + ')' if extras[0] else ''}"
-            shielddef = f"{shield["armor"]}{' (+' + str(extras[1]) + ')' if extras[1] else ''}"
+            sworddmg = f"{sword['damage']}{' (+' + str(extras[0]) + ')' if extras[0] else ''}"
+            shielddef = f"{shield['armor']}{' (+' + str(extras[1]) + ')' if extras[1] else ''}"
             async with self.bot.trusted_session.post(f"{self.bot.config.okapi_url/api/genprofile", data={
                 "name": profile["name"],
                 "color": profile["colour"],
