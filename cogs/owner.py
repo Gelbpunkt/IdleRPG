@@ -5,11 +5,9 @@ Copyright (C) 2018-2019 Diniboy and Gelbpunkt
 This software is dual-licensed under the GNU Affero General Public License for non-commercial and the Travitia License for commercial use.
 For more information, see README.md and LICENSE.md.
 """
-
-
+import asyncio
 import copy
 import io
-import subprocess
 import textwrap
 import traceback
 from contextlib import redirect_stdout
@@ -26,27 +24,6 @@ class Owner(commands.Cog):
 
     async def cog_check(self, ctx):
         return ctx.author.id in self.bot.config.owners
-
-    @commands.command(hidden=True)
-    async def addowner(self, ctx, user: discord.Member):
-        if user.id in self.bot.config.owners:
-            return await ctx.send("Sudo mode alreay enabled for that guy")
-        self.bot.config.owners.append(user.id)
-        await ctx.send(f"Glj! You can now abuse this botto, {user.mention}!")
-
-    @commands.command(
-        hidden=True, aliases=["remowner", "rmowner", "delowner", "deleteowner"]
-    )
-    async def removeowner(self, ctx, user: discord.Member):
-        if user.id == self.bot.owner_id:
-            return await ctx.send("Don't you dare deleting my creator!")
-        try:
-            self.bot.config.owners.remove(user.id)
-        except ValueError:
-            return await ctx.send("Failed, that guy is not an owner")
-        await ctx.send(f"Oooof... You can no longer abuse this botto, {user.mention}!")
-
-        # Hidden means it won't show up on the default help.
 
     @commands.command(name="load", hidden=True)
     async def _load(self, ctx, *, cog: str):
@@ -78,9 +55,8 @@ class Owner(commands.Cog):
         Remember to use dot path. e.g: cogs.owner"""
 
         try:
-            self.bot.unload_extension(cog)
-            self.bot.load_extension(cog)
-        except Exception as e:
+            self.bot.reload_extension(cog)
+         except Exception as e:
             await ctx.send(f"**`ERROR:`** {type(e).__name__} - {e}")
         else:
             await ctx.send("**`SUCCESS`**")
@@ -154,10 +130,9 @@ class Owner(commands.Cog):
                 self._last_result = ret
                 await ctx.send(f"```py\n{value}{ret}\n```")
 
-    @commands.command(
-        description="[Owner only] Evaluates python code on all instances", hidden=True
-    )
+    @commands.command(hidden=True)
     async def evall(self, ctx, *, code: str):
+        """[Owner only] Evaluates python code on all processes."""
         data = "".join(
             await self.bot.cogs["Sharding"].handler(
                 "evaluate", self.bot.shard_count, {"code": code}
@@ -167,15 +142,34 @@ class Owner(commands.Cog):
             data = data[:1997] + "..."
         await ctx.send(data)
 
-    @commands.command(description="[Owner only] Evaluates Bash Commands.", hidden=True)
+    @commands.command(hidden=True)
     async def bash(self, ctx, *, command_to_run: str):
-        output = subprocess.check_output(
-            command_to_run.split(), stderr=subprocess.STDOUT
-        ).decode("utf-8")
-        await ctx.send(f"```py\n{output}\n```")
+        """[Owner Only] Run shell commands."""
+        process_embed = discord.Embed(title="Here is your result, Sir", color=self.bot.config.primary_colour)
+        process_embed.set_thumbnail(url=self.bot.user.avatar_url)
+        process = await asyncio.create_subprocess_shell(command_to_run, stdin=asyncio.subprocess.DEVNULL, stdout=asyncio.subprocess.PIPE, stderr=asyncio.subprocess.PIPE)
+        try:
+            async with timeout(10), ctx.channel.typing():
+                stdout, stderr = await process.communicate()
+        except asyncio.TimeoutError:
+            process_embed.title = ("⌛ Timeout reached...")
+            return await ctx.send(embed=process_embed)
+        if process.returncode != 0 and stderr:
+            process_embed.add_field(name=":x:Ouch, an error!", value=f"The process `{process.pid}` returned a nonzero exit status `{process.returncode}`.\n" \
+             f"```{stderr.decode()}```", inline=False)
+        elif process.returncode != 0:
+            process_embed.add_field(name=":x:Ouch, an error!", value=f"The process `{process.pid}` returned a nonzero exit status `{process.returncode}`.", inline=False)
+        elif stderr: # Print errors with graceful shutdown aswell
+            process_embed.add_field(name=":x:Ouch, an error!", value=f"```{stderr.decode()}```", inline=False)
+        if stdout:
+            process_embed.add_field(name="<:cmd:472468557998063636>Output:", value=f"```{stdout.decode()}```", inline=False)
+        else:
+            process_embed.add_field(name="<:cmd:472468557998063636>Output:", value=f"```--- Empty output ---\nHere is a coffee: ☕```", inline=False)
+        await ctx.send(embed=process_embed)
 
-    @commands.command(hidden=True, description="[Owner Only] Execute SQL")
+    @commands.command(hidden=True)
     async def sql(self, ctx, *, query: str):
+        """[Owner Only] Very basic SQL command."""
         async with self.bot.pool.acquire() as conn:
             try:
                 ret = await conn.fetch(query)
@@ -186,25 +180,9 @@ class Owner(commands.Cog):
             else:
                 await ctx.send("No results to fetch.")
 
-    @commands.command(hidden=True, description="[Owner Only] Get an invite to a server")
-    async def gimme(self, ctx, *, guildname: str):
-        for guild in self.bot.guilds:
-            if guild.name == guildname:
-                try:
-                    return await ctx.send((await guild.invites())[0])
-                except IndexError:
-                    try:
-                        return await ctx.send(
-                            await guild.text_channels[0].create_invite()
-                        )
-                    except discord.Forbidden:
-                        return await ctx.send("Can't access invites.")
-        await ctx.send("No guild found.")
-
-    @commands.command(
-        hidden=True, description="[Owner Only] Invoke a command as someone"
-    )
+    @commands.command(hidden=True)
     async def runas(self, ctx, member: discord.Member, *, command: str):
+        """[Owner Only] Run a command as if you were the user."""
         fake_msg = copy.copy(ctx.message)
         fake_msg._update(ctx.message.channel, dict(content=ctx.prefix + command))
         fake_msg.author = member
@@ -213,13 +191,6 @@ class Owner(commands.Cog):
             await ctx.bot.invoke(new_ctx)
         except Exception:
             await ctx.send(f"```py\n{traceback.format_exc()}```")
-
-    @commands.command(description="Shard overview.")
-    async def shards(self, ctx):
-        res = "**Shard overview**\n"
-        for s in list(self.bot.shards.keys()):
-            res += f"Shard **{s}** ({len([g for g in self.bot.guilds if g.shard_id==s])} Servers). Ping: {round(self.bot.latencies[s][1]*1000, 2)}ms\n"
-        await ctx.send(res)
 
 
 def setup(bot):
