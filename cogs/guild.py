@@ -37,16 +37,13 @@ class Guild(commands.Cog):
         self.bot = bot
 
     @has_char()
-    @commands.group(
-        invoke_without_command=True,
-        description="A command containing various other ones. Try the help on this command.",
-    )
+    @commands.group(invoke_without_command=True)
     async def guild(self, ctx):
-        async with self.bot.pool.acquire() as conn:
-            guild = await conn.fetchrow(
-                'SELECT g.* FROM profile p JOIN guild g ON (p.guild=g.id) WHERE "user"=$1;',
-                ctx.author.id,
-            )
+        """This command contains all guild-related commands."""
+        guild = await self.bot.pool.fetchrow(
+            'SELECT * FROM guild WHERE "id"=$1;',
+            ctx.character_data["guild"]
+        )
         if not guild:
             return await ctx.send("You are not in a guild yet.")
         await self.get_guild_info(ctx, guild_id=guild[0])
@@ -62,22 +59,21 @@ class Guild(commands.Cog):
             guild = await self.bot.pool.fetchrow(
                 'SELECT * FROM guild WHERE "id"=$1;', guild_id
             )
-        else:
-            guild = False  # Technically impossible to happen but better to handle
         if not guild:
             return await ctx.send("No guild found.")
-        membercount = await self.bot.pool.fetch(
-            'SELECT * FROM profile WHERE "guild"=$1;', guild[0]
+
+        membercount = await self.bot.pool.fetchval(
+            'SELECT count(*) FROM profile WHERE "guild"=$1;', guild["id"]
         )
 
-        embed = discord.Embed(title=guild[1], description="Information about a guild.")
+        embed = discord.Embed(title=guild["name"], description="Information about a guild.")
         embed.add_field(
-            name="Current Member Count", value=f"{len(membercount)}/{guild[2]} Members"
+            name="Current Member Count", value=f"{membercount}/{guild["memberlimit"]} Members"
         )
-        leader = await rpgtools.lookup(self.bot, guild[3])
+        leader = await rpgtools.lookup(self.bot, guild["owner"])
         embed.add_field(name="Leader", value=f"{leader}")
-        embed.add_field(name="Guild Bank", value=f"**${guild[5]}** / **${guild[7]}**")
-        embed.set_thumbnail(url=guild[4])
+        embed.add_field(name="Guild Bank", value=f"**${guild['money']}** / **${guild['banklimit']}**")
+        embed.set_thumbnail(url=guild["icon"])
         if guild["badge"]:
             embed.set_image(url=guild["badge"])
         try:
@@ -87,31 +83,32 @@ class Guild(commands.Cog):
                 f"The guild icon seems to be a bad URL. Use `{ctx.prefix}guild icon` to fix this."
             )
 
-    @guild.command(description="Views a guild.", hidden=True)
+    @guild.command()
     async def info(self, ctx, *, name: str):
+        """Look up a guild by name."""
         await self.get_guild_info(ctx, name=name)
 
-    @guild.command(description="Guild GvG Ladder")
+    @guild.command()
     async def ladder(self, ctx):
-        ret = await self.bot.pool.fetch(
+        """The best GvG guilds."""
+        guilds = await self.bot.pool.fetch(
             "SELECT * FROM guild ORDER BY wins DESC LIMIT 10;"
         )
         result = ""
-        for guild in ret:
-            number = ret.index(guild) + 1
-            leader = await rpgtools.lookup(self.bot, guild[3])
-            result += f"{number}. {guild[1]}, a guild by `{leader}` with **{guild[6]}** GvG Wins and **${guild[5]}**\n"
-        result = discord.Embed(
+        for idx, guild in enumerate(guilds):
+            leader = await rpgtools.lookup(self.bot, guild["leader"])
+            result = f"{result}{idx + q}. {guild['name']}, a guild by `{leader}` with **{guild['wins']}** GvG Wins\n"
+        await ctx.send(embed=discord.Embed(
             title=f"The Best GvG Guilds", description=result, colour=0xE7CA01
-        )
-        await ctx.send(embed=result)
+        ))
 
     @has_guild()
-    @guild.command(description="A member list of your guild.")
+    @guild.command()
     async def members(self, ctx):
+        """List of your guild members."""
         members = await self.bot.pool.fetch(
-            'SELECT "user", "guildrank" FROM profile WHERE "guild"=(SELECT guild FROM profile WHERE "user"=$1);',
-            ctx.author.id,
+            'SELECT "user", "guildrank" FROM profile WHERE "guild"=$1;',
+            ctx.character_data["guild"],
         )
         members_fmt = []
         for m in members:
@@ -120,15 +117,15 @@ class Guild(commands.Cog):
                 or f"Unknown User (ID {m['user']})"
             )
             members_fmt.append(f"{u} ({m['guildrank']})")
-        embed = discord.Embed(
+        await ctx.send(embed=discord.Embed(
             title="Your guild mates", description="\n".join(members_fmt)
-        )
-        await ctx.send(embed=embed)
+        ))
 
     @has_char()
     @is_guild_leader()
-    @guild.command(description="Change your guild badge.")
-    async def badge(self, ctx, number: int):
+    @guild.command()
+    async def badge(self, ctx, number: IntGreaterThan(0)):
+        """[Guild owner only] Change the guild badge."""
         async with self.bot.pool.acquire() as conn:
             bgs = await conn.fetchval(
                 'SELECT badges FROM guild WHERE "leader"=$1;', ctx.author.id
@@ -149,8 +146,9 @@ class Guild(commands.Cog):
     @has_char()
     @has_no_guild()
     @user_cooldown(600)
-    @guild.command(description="Creates a guild.")
+    @guild.command()
     async def create(self, ctx):
+        """Creates a guild."""
         def mycheck(amsg):
             return amsg.author == ctx.author
 
@@ -177,14 +175,8 @@ class Guild(commands.Cog):
         else:
             memberlimit = 50
 
-        def check(m):
-            return m.content.lower() == "confirm" and m.author == ctx.author
-
-        await ctx.send("Are you sure? Type `confirm` to create a guild for **$10000**")
-        try:
-            await self.bot.wait_for("message", check=check, timeout=30)
-        except asyncio.TimeoutError:
-            return await ctx.send("Guild creation cancelled.")
+        if not await ctx.confirm("Are you sure? React to create a guild for **$10000**"):
+            return
         if not await has_money(self.bot, ctx.author.id, 10000):
             return await ctx.send(
                 "A guild creation costs **$10000**, you are too poor."
@@ -198,13 +190,9 @@ class Guild(commands.Cog):
                 url,
             )
             await conn.execute(
-                'UPDATE profile SET "guild"=$1, "guildrank"=$2 WHERE "user"=$3;',
+                'UPDATE profile SET "guild"=$1, "guildrank"=$2, "money"="money"-$3 WHERE "user"=$4;',
                 guild["id"],
                 "Leader",
-                ctx.author.id,
-            )
-            await conn.execute(
-                'UPDATE profile SET money=money-$1 WHERE "user"=$2;',
                 10000,
                 ctx.author.id,
             )
@@ -214,50 +202,39 @@ class Guild(commands.Cog):
 
     @is_guild_leader()
     @guild.command()
-    async def promote(self, ctx, member: discord.Member):
+    async def promote(self, ctx, member: MemberWithCharacter):
         """Promote someone to the rank of officer"""
         if member == ctx.author:
             return await ctx.send("Very funny...")
-        if not await is_member_of_author_guild(ctx, member.id):
+        if ctx.character_data["guild"] != ctx.user_data["guild"]:
             return await ctx.send("Target is not a member of your guild.")
-        async with self.bot.pool.acquire() as conn:
-            rank = await conn.fetchval(
-                'SELECT guildrank FROM profile WHERE "user"=$1;', member.id
-            )
-            if rank == "Officer":
-                return await ctx.send("This user is already an officer of your guild.")
-            await conn.execute(
-                'UPDATE profile SET guildrank=$1 WHERE "user"=$2;', "Officer", member.id
-            )
+        if ctx.user_data["guildrank"] == "Officer":
+            return await ctx.send("This user is already an officer of your guild.")
+        await self.bot.po.execute(
+            'UPDATE profile SET guildrank=$1 WHERE "user"=$2;', "Officer", member.id
+        )
         await ctx.send(f"Done! {member} has been promoted to the rank of `Officer`.")
 
     @is_guild_leader()
     @guild.command()
-    async def demote(self, ctx, member: discord.Member):
+    async def demote(self, ctx, member: MemberWithCharacter):
         """Demotes someone from the officer rank"""
         if member == ctx.author:
             return await ctx.send("Very funny...")
-        if not await is_member_of_author_guild(ctx, member.id):
+        if ctx.character_data["guild"] != ctx.user_data["guild"]:
             return await ctx.send("Target is not a member of your guild.")
-        async with self.bot.pool.acquire() as conn:
-            if (
-                await conn.fetchval(
-                    'SELECT guildrank FROM profile WHERE "user"=$1;', member.id
-                )
-                != "Officer"
-            ):
-                return await ctx.send("This user can't be demoted any further.")
-            await conn.execute(
-                'UPDATE profile SET guildrank=$1 WHERE "user"=$2;', "Member", member.id
-            )
+        if ctx.user_data["guildrank"] != "Officer":
+            return await ctx.send("This user can't be demoted any further.")
+        await self.bot.pool.execute(
+            'UPDATE profile SET guildrank=$1 WHERE "user"=$2;', "Member", member.id
+        )
         await ctx.send(f"Done! {member} has been demoted to the rank of `Member`.")
 
     @is_guild_officer()
-    @guild.command(description="Invite someone to your guild.")
-    async def invite(self, ctx, newmember: discord.Member):
-        if not await user_has_char(self.bot, newmember.id):
-            return await ctx.send("That member has not got a character.")
-        if await has_guild_(self.bot, newmember.id):
+    @guild.command()
+    async def invite(self, ctx, newmember: MemberWithCharacter):
+        """[Guild officer only] Invite someone to your guild."""
+        if ctx.user_data["guild"]:
             return await ctx.send("That member already has a guild.")
         async with self.bot.pool.acquire() as conn:
             id = await conn.fetchval(
@@ -272,18 +249,11 @@ class Guild(commands.Cog):
         if membercount >= limit:
             return await ctx.send("Your guild is already at the maximum member count.")
 
-        def mycheck(amsg):
-            return amsg.author == newmember and amsg.content.lower() == "invite accept"
-
-        await ctx.send(
-            f"{newmember.mention}, {ctx.author.mention} invites you to join **{name}**. Type `invite accept` to join the guild."
-        )
-        try:
-            await self.bot.wait_for("message", timeout=60, check=mycheck)
-        except asyncio.TimeoutError:
-            return await ctx.send(
-                f"{newmember.mention} didn't want to join your guild, {ctx.author.mention}."
-            )
+        if not await ctx.confirm(
+            f"{newmember.mention}, {ctx.author.mention} invites you to join **{name}**. React to join the guild.",
+            user=newmember
+        ):
+            return
         if await has_guild_(self.bot, newmember.id):
             return await ctx.send("That member already has a guild.")
         await self.bot.pool.execute(
@@ -293,38 +263,29 @@ class Guild(commands.Cog):
 
     @has_guild()
     @is_no_guild_leader()
-    @guild.command(description="Leave your current guild.")
+    @guild.command()
     async def leave(self, ctx):
-        guild = await self.bot.pool.fetchval(
-            'SELECT name FROM guild WHERE "id"=(SELECT guild FROM profile WHERE "user"=$1)',
-            ctx.author.id,
-        )
+        """Leave your current guild."""
         await self.bot.pool.execute(
             'UPDATE profile SET "guild"=$1, "guildrank"=$2 WHERE "user"=$3;',
             0,
             "Member",
             ctx.author.id,
         )
-        await ctx.send(f"You left **{guild}**.")
+        await ctx.send(f"You left your guild.")
 
     @is_guild_officer()
-    @guild.command(description="Kick someone out of your guild.")
-    async def kick(self, ctx, member: Union[User, int]):
-        if isinstance(member, discord.User):
-            username = str(member)
+    @guild.command()
+    async def kick(self, ctx, member: Union[MemberWithCharacter, int]):
+        """[Guild Officer only] Kick someone from your guild."""
+        if hasattr(ctx, "user_data"):
+            if ctx.user_data["guild"] != ctx.character_data["guild"]:
+                return
             member = member.id
         else:
-            username = str(await self.bot.fetch_user(member))
-        if not await is_member_of_author_guild(ctx, member):
-            return await ctx.send("Target is not a member of your guild.")
+            if await self.bot.pool.fetchval('SELECT guild FROM profile WHERE "user"=$1;', member) != ctx.character_data["guild"]:
+                return
         async with self.bot.pool.acquire() as conn:
-            rank = await conn.fetchval(
-                'SELECT guildrank FROM profile WHERE "user"=$1;', ctx.author.id
-            )
-            if rank not in ["Officer", "Leader"]:
-                return await ctx.send(
-                    "You have to be a guild officer or leader to do this action!"
-                )
             target_rank = await conn.fetchval(
                 'SELECT guildrank FROM profile WHERE "user"=$1;', member
             )
@@ -335,122 +296,101 @@ class Guild(commands.Cog):
                 "Member",
                 member,
             )
-            await ctx.send(f"**{username or 'Unknown user'}** has been kicked!")
+            await ctx.send("The person has been kicked!")
 
     @is_guild_leader()
-    @guild.command(description="Deletes your guild.")
+    @guild.command()
     async def delete(self, ctx):
-        def mycheck(amsg):
-            return (
-                amsg.author == ctx.author
-                and amsg.content.lower() == "guild deletion confirm"
-            )
-
-        await ctx.send(
-            "Are you sure to delete your guild? Type `guild deletion confirm` to confirm the deletion."
-        )
-        try:
-            await self.bot.wait_for("message", timeout=15, check=mycheck)
-        except asyncio.TimeoutError:
-            return await ctx.send("Cancelled guild deletion.")
+        """[Guild Owner only] Deletes the guild."""
+        if not await ctx.confirm(
+            "Are you sure to delete your guild? React to confirm the deletion."
+        ):
+            return
         async with self.bot.pool.acquire() as conn:
-            guild_id = await conn.fetchval(
-                'SELECT guild FROM profile WHERE "user"=$1', ctx.author.id
-            )
             await conn.execute('DELETE FROM guild WHERE "leader"=$1;', ctx.author.id)
             await conn.execute(
                 'UPDATE profile SET "guild"=$1, "guildrank"=$2 WHERE "guild"=$3;',
                 0,
                 "Member",
-                guild_id,
+                ctx.character_data["guild"],
             )
         await ctx.send("Successfully deleted your guild.")
 
     @is_guild_leader()
-    @guild.command(description="Changes your guild icon.")
+    @guild.command()
     async def icon(self, ctx, url: str):
+        """[Guild Leader only] Changes the guild icon."""
         if len(url) > 60:
             return await ctx.send("URLs musn't exceed 60 characters.")
-        if url.startswith("http") and (
+        if not (url.startswith("http") and (
             url.endswith(".png") or url.endswith(".jpg") or url.endswith(".jpeg")
-        ):
-            url = url
-        else:
+        )):
             return await ctx.send(
                 "I couldn't read that URL. Does it start with `http://` or `https://` and is either a png or jpeg?"
             )
         await self.bot.pool.execute(
-            'UPDATE guild SET "icon"=$1 WHERE "id"=(SELECT guild FROM profile WHERE "user"=$2);',
+            'UPDATE guild SET "icon"=$1 WHERE "id"=$2;',
             url,
-            ctx.author.id,
+            ctx.character_data["guild"],
         )
         await ctx.send("Successfully updated the guild icon.")
 
     @has_guild()
-    @guild.command(description="Shows the richest players in your guild. Maximum 10.")
+    @guild.command()
     async def richest(self, ctx):
+        """Shows the richest players in your guild."""
         await ctx.trigger_typing()
         async with self.bot.pool.acquire() as conn:
             guild = await conn.fetchrow(
-                'SELECT g.* FROM guild g JOIN profile p ON (g.id=p.guild) WHERE p."user"=$1;',
-                ctx.author.id,
+                'SELECT * FROM guild WHERE "id"=$1;',
+                ctx.character_data["guild"],
             )
-            ret = await conn.fetch(
+            players = await conn.fetch(
                 'SELECT "user", "name", "money" from profile WHERE "guild"=$1 ORDER BY "money" DESC LIMIT 10;',
                 guild["id"],
             )
         result = ""
-        for profile in ret:
-            number = ret.index(profile) + 1
-            charname = await rpgtools.lookup(self.bot, profile[0])
-            result = f"{result}{number}. {profile[1]}, a character by `{charname}` with **${profile[2]}**\n"
-        result = discord.Embed(
+        for idx, profile in enumerate(players):
+            charname = await rpgtools.lookup(self.bot, profile["user"])
+            result = f"{result}{idx + 1}. {profile['name']}, a character by `{charname}` with **${profile['money']}**\n"
+        await ctx.send(embed=discord.Embed(
             title=f"The Richest Players of {guild['name']}",
             description=result,
             colour=0xE7CA01,
-        )
-        await ctx.send(embed=result)
+        ))
 
     @has_guild()
-    @guild.command(
-        description="Shows the best players by XP in your guild. Maximum 10.",
-        aliases=["high", "top"],
-    )
+    @guild.command(aliases=["high", "top"])
     async def best(self, ctx):
+        """Shows the best players of your guild by XP."""
         await ctx.trigger_typing()
         async with self.bot.pool.acquire() as conn:
             guild = await conn.fetchrow(
-                "SELECT g.* FROM guild g JOIN profile p ON (p.guild=g.id) WHERE p.user=$1;",
-                ctx.author.id,
+                'SELECT * FROM guild WHERE "id"=$1;',
+                ctx.character_data["guild"]
             )
-            ret = await conn.fetch(
-                'SELECT "user", "name", "xp" from profile WHERE "guild"=$1 ORDER BY "xp" DESC LIMIT 10;',
+            players = await conn.fetch(
+                'SELECT "user", "name", "xp" FROM profile WHERE "guild"=$1 ORDER BY "xp" DESC LIMIT 10;',
                 guild["id"],
             )
         result = ""
-        for profile in ret:
-            number = ret.index(profile) + 1
+        for idx, profile in enumerate(players):
             charname = await rpgtools.lookup(self.bot, profile[0])
-            result = f"{result}{number}. {profile[1]}, a character by `{charname}` with Level **{rpgtools.xptolevel(profile[2])}** (**{profile[2]}** XP)\n"
-        result = discord.Embed(
+            result = f"{result}{idx + 1}. {profile['name']}, a character by `{charname}` with Level **{rpgtools.xptolevel(profile['xp'])}** (**{profile['xp']}** XP)\n"
+        await ctx.send(embed=discord.Embed(
             title=f"The Best Players of {guild['name']}",
             description=result,
             colour=0xE7CA01,
-        )
-        await ctx.send(embed=result)
+        ))
 
     @has_guild()
-    @guild.command(description="Pay money to your guild's bank.")
-    async def invest(self, ctx, amount: int):
-        if amount < 0:
-            return await ctx.send("Negative money cannot be invested.")
-        if not await has_money(self.bot, ctx.author.id, amount):
-            return await ctx.send("You don't have enough money to do that!")
+    @guild.command()
+    async def invest(self, ctx, amount: IntGreaterThan(0)):
+        """Invest some of your money and put it to the guild bank."""
+        if ctx.character_data["money"] < amount:
+            return await ctx.send("You're too poor.")
         async with self.bot.pool.acquire() as conn:
-            g = await conn.fetchrow(
-                'SELECT g.* FROM guild g JOIN profile p ON (g.id=p.guild) WHERE p."user"=$1;',
-                ctx.author.id,
-            )
+            g = await conn.fetchrow('SELECT * FROM guild WHERE "id"=$1;', ctx.character_data["guild"])
             if g["banklimit"] < g["money"] + amount:
                 return await ctx.send("The bank would be full.")
             profile_money = await conn.fetchval(
@@ -468,16 +408,13 @@ class Guild(commands.Cog):
         )
 
     @is_guild_officer()
-    @guild.command(description="Pay money to a guild member.")
-    async def pay(self, ctx, amount: int, member: discord.Member):
-        if amount < 0:
-            return await ctx.send("Don't scam!")
-        if not await user_has_char(self.bot, member.id):
-            return await ctx.send("That user doesn't have a character.")
+    @guild.command()
+    async def pay(self, ctx, amount: IntGreaterThan(0), member: MemberWithCharacter):
+        """[Guild Officer only] Pay money from the guild bank to a user."""
         async with self.bot.pool.acquire() as conn:
             guild = await conn.fetchrow(
-                'SELECT g.* FROM guild g JOIN profile p ON (g.id=p.guild) WHERE p."user"=$1;',
-                ctx.author.id,
+                'SELECT * FROM guild WHERE "id"=$1;',
+                ctx.character_data["guild"],
             )
             if guild["money"] < amount:
                 return await ctx.send("Your guild is too poor.")
@@ -492,12 +429,13 @@ class Guild(commands.Cog):
         )
 
     @is_guild_leader()
-    @guild.command(description="Upgrade your guild bank.")
+    @guild.command()
     async def upgrade(self, ctx):
+        """Upgrades your guild bank's capacity."""
         async with self.bot.pool.acquire() as conn:
             guild = await conn.fetchrow(
-                'SELECT * FROM guild WHERE "id"=(SELECT guild FROM profile WHERE "user"=$1);',
-                ctx.author.id,
+                'SELECT * FROM guild WHERE "id"=$1;',
+                ctx.character_data["guild"],
             )
             currentlimit = guild["banklimit"]
             level = int(currentlimit / 250_000)
@@ -519,62 +457,51 @@ class Guild(commands.Cog):
             )
         await ctx.send(f"Your new guild bank limit is now **${currentlimit+250000}**.")
 
-    @has_char()
+    @is_guild_officer()
     @guild_cooldown(1800)
     @guild.command()
-    async def battle(self, ctx, enemy: discord.Member, amount: int, fightercount: int):
+    async def battle(self, ctx, enemy: MemberWithCharacter, amount: IntGreaterThan(-1), fightercount: IntGreaterThan(1)):
         """Battle against another guild."""
-        if amount < 0:
-            return await ctx.send("Don't scam!")
-        if enemy is ctx.author:
+        if enemy == ctx.author:
             return await ctx.send("Poor kiddo having no friendos.")
+        guild1 = ctx.character_data["guild"]
+        guild2 = ctx.user_data["guild"]
+        if guild1 == 0 or guild2 == 0:
+            return await ctx.send("One of you both doesn't have a guild.")
+        if ctx.character_data["guildrank"] == "Member" or ctx.user_data["guildrank"] == "Member":
+            return await ctx.send(
+                "One of you both isn't an officer of their guild."
+            )
         async with self.bot.pool.acquire() as conn:
-            guild1, rank1 = await conn.fetchval(
-                'SELECT (guild, guildrank) FROM profile WHERE "user"=$1;', ctx.author.id
-            )
-            guild2, rank2 = await conn.fetchval(
-                'SELECT (guild, guildrank) FROM profile WHERE "user"=$1;', enemy.id
-            )
-
-            if guild1 == 0 or guild2 == 0:
-                return await ctx.send("One of you both doesn't have a guild.")
             guild1 = await conn.fetchrow('SELECT * FROM guild WHERE "id"=$1;', guild1)
             guild2 = await conn.fetchrow('SELECT * FROM guild WHERE "id"=$1;', guild2)
-            if rank1 == "Member" or rank2 == "Member":
-                return await ctx.send(
-                    "One of you both isn't an officer of their guild."
-                )
-            if guild1[5] < amount or guild2[5] < amount:
+            if guild1["money"] < amount or guild2["money"] < amount:
                 return await ctx.send("One of the guilds can't pay the price.")
             size1 = await conn.fetchval(
-                'SELECT count(user) FROM profile WHERE "guild"=$1;', guild1[0]
+                'SELECT count(user) FROM profile WHERE "guild"=$1;', guild1["id"]
             )
             size2 = await conn.fetchval(
-                'SELECT count(user) FROM profile WHERE "guild"=$1;', guild2[0]
+                'SELECT count(user) FROM profile WHERE "guild"=$1;', guild2["id"]
             )
-            if size1 < fightercount or size2 < fightercount:
-                return await ctx.send("One of the guilds is too small.")
+        if size1 < fightercount or size2 < fightercount:
+            return await ctx.send("One of the guilds is too small.")
 
-        def msgcheck(amsg):
-            return (
-                amsg.author == enemy and amsg.content.lower() == "guild battle accept"
-            )
 
-        await ctx.send(
-            f"{enemy.mention}, {ctx.author.mention} invites you to fight in a guild battle. Type `guild battle accept` to join the battle. You got **1 Minute to accept**."
-        )
-        try:
-            res = await self.bot.wait_for("message", timeout=60, check=msgcheck)
-        except asyncio.TimeoutError:
+        if not await ctx.confirm(
+            f"{enemy.mention}, {ctx.author.mention} invites you to fight in a guild battle. React to join the battle. You got **1 Minute to accept**.",
+            timeout=60,
+            user=enemy
+        ):
             return await ctx.send(
                 f"{enemy.mention} didn't want to join your battle, {ctx.author.mention}."
             )
+
         await ctx.send(
             f"{enemy.mention} accepted the challenge by {ctx.author.mention}. Please now nominate members, {ctx.author.mention}. Use `battle nominate @user` to add someone to your team."
         )
         team1 = []
         team2 = []
-        converter = commands.UserConverter()
+        converter = User()
 
         async def guildcheck(already, guildid, user):
             try:
@@ -640,42 +567,15 @@ class Guild(commands.Cog):
         await msg.edit(content="Fight started!\nGenerating battles... Done.")
         wins1 = 0
         wins2 = 0
-        for user in team1:
-            user2 = team2[team1.index(user)]
+        for idx, user in enumerate(team1):
+            user2 = team2[idx]
             msg = await ctx.send(
-                f"Guild Battle Fight **{team1.index(user)+1}** of **{len(team1)}**.\n**{user.name}** vs **{user2.name}**!\nBattle running..."
+                f"Guild Battle Fight **{idx + 1}** of **{len(team1)}**.\n**{user.name}** vs **{user2.name}**!\nBattle running..."
             )
-            async with self.bot.pool.acquire() as conn:
-                sw1 = (
-                    await conn.fetchval(
-                        "SELECT ai.damage FROM profile p JOIN allitems ai ON (p.user=ai.owner) JOIN inventory i ON (ai.id=i.item) WHERE i.equipped IS TRUE AND p.user=$1 AND type='Sword';",
-                        user.id,
-                    )
-                    or 0
-                )
-                sh1 = (
-                    await conn.fetchval(
-                        "SELECT ai.armor FROM profile p JOIN allitems ai ON (p.user=ai.owner) JOIN inventory i ON (ai.id=i.item) WHERE i.equipped IS TRUE AND p.user=$1 AND type='Shield';",
-                        user.id,
-                    )
-                    or 0
-                )
-                sw2 = (
-                    await conn.fetchval(
-                        "SELECT ai.damage FROM profile p JOIN allitems ai ON (p.user=ai.owner) JOIN inventory i ON (ai.id=i.item) WHERE i.equipped IS TRUE AND p.user=$1 AND type='Sword';",
-                        user2.id,
-                    )
-                    or 0
-                )
-                sh2 = (
-                    await conn.fetchval(
-                        "SELECT ai.armor FROM profile p JOIN allitems ai ON (p.user=ai.owner) JOIN inventory i ON (ai.id=i.item) WHERE i.equipped IS TRUE AND p.user=$1 AND type='Shield';",
-                        user2.id,
-                    )
-                    or 0
-                )
-            val1 = sw1 + sh1 + random.randint(1, 7)
-            val2 = sw2 + sh2 + random.randint(1, 7)
+            sw1, sh1 = await self.bot.get_equipped_items_for(user1)
+            val1 = (sw1["damage"] if sw1 else 0) + (sh1["armor"] if sh1 else 0) + random.randint(1, 7)
+            sw2, sh2 = await self.bot.get_equipped_items_for(user2)
+            val2 = (sw2["damage"] if sw2 else 0) + (sh2["armor"] if sh2 else 0) + random.randint(1, 7)
             if val1 > val2:
                 winner = user
                 wins1 += 1
@@ -683,7 +583,7 @@ class Guild(commands.Cog):
                 winner = user2
                 wins2 += 1
             else:
-                winner = random.choice(user, user2)
+                winner = random.choice([user, user2])
                 if winner == user:
                     wins1 += 1
                 else:
@@ -747,12 +647,14 @@ class Guild(commands.Cog):
             'SELECT * FROM guild WHERE "id"=$1;', ctx.character_data["guild"]
         )
 
-        await ctx.send(
-            f"{ctx.author.mention} seeks a guild adventure for **{guild['name']}**! Write `guild adventure join` to join them! Unlimited players can join in the next 30 seconds. The minimum of players required is 3."
+        msg = await ctx.send(
+            f"{ctx.author.mention} seeks a guild adventure for **{guild['name']}**! React to join! Unlimited players can join in the next minute. The minimum of players required is 3."
         )
 
+        await msg.add_reaction("\U00002694")
+
         joined = [ctx.author]
-        difficulty = int(rpgtools.xptolevel(guild[3]))
+        difficulty = int(rpgtools.xptolevel(ctx.character_data["xp"]))
         started = False
 
         async def is_in_guild(userid, difficulty):
@@ -764,23 +666,22 @@ class Guild(commands.Cog):
                 return difficulty
             return False
 
-        def apply(msg):
+        def apply(r, u):
             return (
-                msg.content.lower() == "guild adventure join"
-                and msg.channel == ctx.channel
-                and not msg.author.bot
-                and msg.author not in joined
+                r.message.id == msg.id
+                and str(r.emoji) == "\U00002694"
+                and u not in joined
             )
 
         while not started:
             try:
-                msg = await self.bot.wait_for("message", check=apply, timeout=30)
-                test = await is_in_guild(msg.author.id, difficulty)
-                if test:
+                r, u = await self.bot.wait_for("reaction_add", check=apply, timeout=30)
+                test = await is_in_guild(u, difficulty)
+                if difficulty:
                     difficulty = test
-                    joined.append(msg.author)
+                    joined.append(u)
                     await ctx.send(
-                        f"Alright, {msg.author.mention}, you have been added."
+                        f"Alright, {u.mention}, you have been added."
                     )
                 else:
                     await ctx.send("You aren't in their guild.")
