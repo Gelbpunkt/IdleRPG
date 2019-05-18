@@ -123,10 +123,10 @@ Use the reactions attack, defend or recover
             except asyncio.TimeoutError:
                 return await ctx.send("Adventure stopped because you refused to move.")
             try:
-                await msg.remove_reaction(ctx.author, reaction)
+                await msg.remove_reaction(reaction, ctx.author)
             except discord.Forbidden:
                 pass
-            move = emojis[str(reaction.emojis)]
+            move = emojis[str(reaction.emoji)]
             enemymove = random.choice(["attack", "defend", "recover"])
             if move == "recover":
                 HP += 20

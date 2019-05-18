@@ -8,7 +8,7 @@ The master branch is always the *latest stable* version. For development version
 
 ## License
 
-The IdleRPG Project is dual-licensed under the terms of the [GNU Affero General Public License 3.0](https://github.com/Gelbpunkt/IdleRPG/blob/master/LICENSE.md) ("AGPL") for non-commercial and the Travitia License for commercial use. A copy of the AGPL can be found in the [LICENSE.md](https://github.com/Gelbpunkt/IdleRPG/blob/master/LICENSE.md) file. The Travitia license can be obtained by sending a formal request to business [at] travitia \<dot\> xyz with usecase, name and address. "Commercial use" includes any kind of revenue made with or based upon the software, even donations.
+The IdleRPG Project is dual-licensed under the terms of the [GNU Affero General Public License 3.0](https://github.com/Gelbpunkt/IdleRPG/blob/v3.5/LICENSE.md) ("AGPL") for non-commercial and the Travitia License for commercial use. A copy of the AGPL can be found in the [LICENSE.md](https://github.com/Gelbpunkt/IdleRPG/blob/v3.5/LICENSE.md) file. The Travitia license can be obtained by sending a formal request to business [at] travitia \<dot\> xyz with usecase, name and address. "Commercial use" includes any kind of revenue made with or based upon the software, even donations.
 
 The AGPL allows you to:
 - [x] Modify the code
@@ -28,20 +28,11 @@ Summary and information taken from [here](https://tldrlegal.com/license/gnu-affe
 
 ## Current goals
 
-1. Prettify and fix v3.4 code
-
-Todo in v3.4:
-
-- Subclass context and .send to allow escaping mass-mentions by default
-- Re-use the data from checks as ctx attributes
-- Cleanup, remove unnecessary code, beautify
-- Use custom converters instead of own handling every time
-- Move battles to a backend function
-- Rewrite everything
+1. Prettify v3.5 and add anti-selfbot system
 
 ## Can I selfhost?
 
-[Yes, as long as you provide the code for everyone.](https://github.com/Gelbpunkt/IdleRPG/blob/master/LICENSE.md#13-remote-network-interaction-use-with-the-gnu-general-public-license)
+[Yes, as long as you provide the code for everyone.](https://github.com/Gelbpunkt/IdleRPG/blob/v3.5/LICENSE.md#13-remote-network-interaction-use-with-the-gnu-general-public-license)
 
 ## How do I test my changes?
 
