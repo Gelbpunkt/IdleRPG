@@ -257,7 +257,7 @@ class Trading(commands.Cog):
                     return await ctx.send("Cancelled.")
             await conn.execute(
                 'UPDATE profile SET money=money+$1 WHERE "user"=$2;',
-                item["price"],
+                item["value"],
                 ctx.author.id,
             )
             await conn.execute('DELETE FROM allitems WHERE "id"=$1;', itemid)
