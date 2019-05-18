@@ -157,8 +157,6 @@ class Trading(commands.Cog):
                 minstat,
                 highestprice,
             )
-        if not items:
-            await ctx.send("No results.")
 
         items = [
             discord.Embed(
@@ -175,6 +173,10 @@ class Trading(commands.Cog):
             .set_footer(text=f"Item {idx + 1} of {len(items)}")
             for idx, item in enumerate(items)
         ]
+
+        if not items:
+            await ctx.send("No results.")
+
         await self.bot.paginator.Paginator(extras=items).paginate(ctx)
 
     @has_char()
