@@ -55,7 +55,7 @@ class Tournament(commands.Cog):
                         f"Noone joined your tournament, {ctx.author.mention}."
                     )
             if await has_money(self.bot, u.id, prize):
-                participants.append()
+                participants.append(u)
                 await ctx.send(f"{u.mention} joined the tournament.")
             else:
                 await ctx.send(f"You don't have a character, {u.mention}.")
