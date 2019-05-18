@@ -163,7 +163,7 @@ class Trading(commands.Cog):
         items = [
             discord.Embed(
                 title="IdleRPG Shop",
-                description=f"Use `{ctx.prefix}buy {item['id']}` to buy this.",
+                description=f"Use `{ctx.prefix}buy {item['item']}` to buy this.",
                 colour=discord.Colour.blurple(),
             )
             .add_field(name="Name", value=item["name"])
@@ -299,7 +299,7 @@ class Trading(commands.Cog):
         items = [
             discord.Embed(
                 title="Your pending items",
-                description=f"Use `{ctx.prefix}buy {item['id']}` to buy this.",
+                description=f"Use `{ctx.prefix}buy {item['item']}` to buy this.",
                 colour=discord.Colour.blurple(),
             )
             .add_field(name="Name", value=item["name"])
