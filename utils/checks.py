@@ -14,6 +14,10 @@ class NoCharacter(commands.CheckFailure):
 
     pass
 
+class NeedsNoCharacter(commands.CheckFailure):
+    """Exception raised when a command requires you to have no character."""
+
+    pass
 
 class NoGuild(commands.CheckFailure):
     """Exception raised when a user has no guild."""
@@ -61,6 +65,20 @@ def has_char():
         if ctx.character_data:
             return True
         raise NoCharacter()
+
+    return commands.check(predicate)
+
+
+
+def has_no_char():
+    """Checks for a user to have no character."""
+
+    async def predicate(ctx):
+        if await ctx.bot.pool.fetchrow(
+            'SELECT * FROM profile WHERE "user"=$1;', ctx.author.id
+        ):
+            raise NeedsNoCharacter()
+        return True
 
     return commands.check(predicate)
 
