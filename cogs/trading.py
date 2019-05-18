@@ -157,6 +157,8 @@ class Trading(commands.Cog):
                 minstat,
                 highestprice,
             )
+        if not items:
+            return await ctx.send("No results.")
 
         items = [
             discord.Embed(
@@ -173,9 +175,6 @@ class Trading(commands.Cog):
             .set_footer(text=f"Item {idx + 1} of {len(items)}")
             for idx, item in enumerate(items)
         ]
-
-        if not items:
-            await ctx.send("No results.")
 
         await self.bot.paginator.Paginator(extras=items).paginate(ctx)
 
@@ -299,7 +298,7 @@ class Trading(commands.Cog):
             return await ctx.send("You don't have any pending shop offers.")
         items = [
             discord.Embed(
-                title="IdleRPG Shop",
+                title="Your pending items",
                 description=f"Use `{ctx.prefix}buy {item['id']}` to buy this.",
                 colour=discord.Colour.blurple(),
             )
