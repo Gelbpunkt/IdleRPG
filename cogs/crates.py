@@ -37,40 +37,13 @@ class Crates(commands.Cog):
             )
         rand = random.randint(1, 6)
         if rand == 1:
-            stat = float(random.randint(20, 30))
+            minstat, maxstat = (20, 30)
         elif rand == 2 or rand == 3:
-            stat = float(random.randint(10, 19))
+            minstat, maxstat = (10, 19)
         else:
-            stat = float(random.randint(1, 9))
-        type_ = random.choice(["Sword", "Shield"])
-        damage = stat if type_ == "Sword" else 0
-        armor = stat if type_ == "Shield" else 0
-        prefix = random.choice(["Rare", "Ancient", "Normal", "Legendary", "Famous"])
-        suffix = (
-            random.choice(["Sword", "Blade", "Stich"])
-            if type_ == "Sword"
-            else random.choice(["Shield", "Defender", "Aegis"])
-        )
-        name = f"{prefix} {suffix}"
-        value = random.randint(1, 250)
-        async with self.bot.pool.acquire() as conn:
-            item = await conn.fetchrow(
-                'INSERT INTO allitems ("owner", "name", "value", "type", "damage", "armor") VALUES ($1, $2, $3, $4, $5, $6) RETURNING *;',
-                ctx.author.id,
-                name,
-                value,
-                type_,
-                damage,
-                armor,
-            )
-            await conn.execute(
-                'INSERT INTO inventory ("item", "equipped") VALUES ($1, $2);',
-                item["id"],
-                False,
-            )
-            await conn.execute(
-                'UPDATE profile SET crates=crates-1 WHERE "user"=$1;', ctx.author.id
-            )
+            minstat, maxstat = (1, 9)
+
+        item = await self.bot.create_random_item(minstat=minstat, maxstat=maxstat, minvalue=1, maxvalue=250, owner=ctx.author)
 
         embed = discord.Embed(
             title="You gained an item!",
@@ -79,11 +52,11 @@ class Crates(commands.Cog):
         )
         embed.set_thumbnail(url=ctx.author.avatar_url)
         embed.add_field(name="ID", value=item["id"], inline=False)
-        embed.add_field(name="Name", value=name, inline=False)
-        embed.add_field(name="Type", value=type_, inline=False)
-        embed.add_field(name="Damage", value=damage, inline=True)
-        embed.add_field(name="Armor", value=armor, inline=True)
-        embed.add_field(name="Value", value=f"${value}", inline=False)
+        embed.add_field(name="Name", value=item["name"], inline=False)
+        embed.add_field(name="Type", value=item["type"], inline=False)
+        embed.add_field(name="Damage", value=item["damage"], inline=True)
+        embed.add_field(name="Armor", value=item["armor"], inline=True)
+        embed.add_field(name="Value", value=f"${item['value']}", inline=False)
         embed.set_footer(text=f"Remaining crates: {ctx.character_data['crates'] - 1}")
         await ctx.send(embed=embed)
 
