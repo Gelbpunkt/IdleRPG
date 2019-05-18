@@ -218,7 +218,7 @@ class Bot(commands.AutoShardedBot):
         return item
 
     async def create_random_item(self, minstat, maxstat, minvalue, maxvalue, owner, insert=True):
-        owner = owner.id if isinstance(owner, (discord.User, discord.Member)) else user
+        owner = owner.id if isinstance(owner, (discord.User, discord.Member)) else owner
         item = {}
         item["owner"] = owner
         type_ = random.choice(["Sword", "Shield"])
