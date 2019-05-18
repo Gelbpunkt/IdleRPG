@@ -5,8 +5,6 @@ Copyright (C) 2018-2019 Diniboy and Gelbpunkt
 This software is dual-licensed under the GNU Affero General Public License for non-commercial and the Travitia License for commercial use.
 For more information, see README.md and LICENSE.md.
 """
-
-
 import asyncio
 import random
 
@@ -24,10 +22,40 @@ class Marriage(commands.Cog):
 
     @has_char()
     @commands.guild_only()
-    @commands.command(aliases=["marry"], description="Propose for a marriage!")
-    async def propose(self, ctx, partner: discord.Member):
-        if partner.id == ctx.author.id:
+    @commands.command(aliases=["marry"])
+    async def propose(self, ctx, partner: MemberWithCharacter):
+        """Propose for a marriage."""
+        if partner == ctx.author:
             return await ctx.send("You should have a better friend than only yourself.")
+        if ctx.character_data["marriage"] != 0 or ctx.user_data["marriage"] != 0:
+            return await ctx.send("One of you is married.")
+        msg = await ctx.send(
+            embed=discord.Embed(
+                title=f"{ctx.author.name} has proposed for a marriage!",
+                description=f"{ctx.author.mention} wants to marry you, {partner.mention}! React with :heart: to marry him/her!",
+                colour=0xFF0000,
+            )
+            .set_image(url=ctx.author.avatar_url)
+            .set_thumbnail(
+                url="http://www.maasbach.com/wp-content/uploads/The-heart.png"
+            )
+        )
+        await msg.add_reaction("\U00002764")
+
+        def reactioncheck(reaction, user):
+            return (
+                str(reaction.emoji) == "\U00002764"
+                and reaction.message.id == msg.id
+                and user.id == partner.id
+            )
+
+        try:
+            reaction, user = await self.bot.wait_for(
+                "reaction_add", timeout=120.0, check=reactioncheck
+            )
+        except asyncio.TimeoutError:
+            return await ctx.send("They didn't want to marry.")
+        # check if someone married in the meantime
         async with self.bot.pool.acquire() as conn:
             check1 = await conn.fetchrow(
                 'SELECT * FROM profile WHERE "user"=$1 AND "marriage"=$2;',
@@ -39,78 +67,32 @@ class Marriage(commands.Cog):
                 partner.id,
                 0,
             )
-        if check1 and check2:
-            msg = await ctx.send(
-                embed=discord.Embed(
-                    title=f"{ctx.author.name} has proposed for a marriage!",
-                    description=f"{ctx.author.mention} wants to marry you, {partner.mention}! React with :heart: to marry him/her!",
-                    colour=0xFF0000,
+            if check1 and check2:
+                await conn.execute(
+                     'UPDATE profile SET "marriage"=$1 WHERE "user"=$2;',
+                     partner.id,
+                     ctx.author.id,
                 )
-                .set_image(url=ctx.author.avatar_url)
-                .set_thumbnail(
-                    url="http://www.maasbach.com/wp-content/uploads/The-heart.png"
+                await conn.execute(
+                    'UPDATE profile SET "marriage"=$1 WHERE "user"=$2;',
+                    ctx.author.id,
+                    partner.id,
                 )
-            )
-            await msg.add_reaction("\U00002764")
-
-            def reactioncheck(reaction, user):
-                return (
-                    str(reaction.emoji) == "\U00002764"
-                    and reaction.message.id == msg.id
-                    and user.id == partner.id
+                await ctx.send(
+                    f"Owwwwwww! :heart: {ctx.author.mention} and {partner.mention} are now married!"
                 )
-
-            try:
-                reaction, user = await self.bot.wait_for(
-                    "reaction_add", timeout=120.0, check=reactioncheck
+            else:
+                await ctx.send(
+                    f"Either you or he/she married in the meantime, {ctx.author.mention}... :broken_heart:"
                 )
-                # check if someone married in the meantime
-                async with self.bot.pool.acquire() as conn:
-                    check1 = await conn.fetchrow(
-                        'SELECT * FROM profile WHERE "user"=$1 AND "marriage"=$2;',
-                        ctx.author.id,
-                        0,
-                    )
-                    check2 = await conn.fetchrow(
-                        'SELECT * FROM profile WHERE "user"=$1 AND "marriage"=$2;',
-                        partner.id,
-                        0,
-                    )
-                    if check1 and check2:
-                        await conn.execute(
-                            'UPDATE profile SET "marriage"=$1 WHERE "user"=$2;',
-                            partner.id,
-                            ctx.author.id,
-                        )
-                        await conn.execute(
-                            'UPDATE profile SET "marriage"=$1 WHERE "user"=$2;',
-                            ctx.author.id,
-                            partner.id,
-                        )
-                        await ctx.send(
-                            f"Owwwwwww! :heart: {ctx.author.mention} and {partner.mention} are now married!"
-                        )
-                    else:
-                        await ctx.send(
-                            f"Either you or he/she married in the meantime, {ctx.author.mention}... :broken_heart:"
-                        )
-
-            except asyncio.TimeoutError:
-                await ctx.send("They didn't want to marry.")
-        else:
-            await ctx.send(
-                "One of you both doesn't have a character or is already married... :broken_heart:"
-            )
 
     @has_char()
-    @commands.command(description="Divorce from your partner.")
+    @commands.command()
     async def divorce(self, ctx):
+        """Break up with your partner."""
+        if not ctx.character_data["marriage"]:
+            return await ctx.send("You are not married yet.")
         async with self.bot.pool.acquire() as conn:
-            test = await conn.fetchval(
-                'SELECT marriage FROM profile WHERE "user"=$1;', ctx.author.id
-            )
-            if test == 0:
-                return await ctx.send("You are not married yet.")
             await conn.execute(
                 'UPDATE profile SET "marriage"=0 WHERE "user"=$1;', ctx.author.id
             )
@@ -123,111 +105,93 @@ class Marriage(commands.Cog):
         await ctx.send("You are now divorced.")
 
     @has_char()
-    @commands.command(description="View your marriage status.")
+    @commands.command()
     async def relationship(self, ctx):
-        async with self.bot.pool.acquire() as conn:
-            marriage = await conn.fetchval(
-                'SELECT marriage FROM profile WHERE "user"=$1;', ctx.author.id
-            )
-        if marriage == 0:
+        """View who you're married to."""
+        if not ctx.character_data["marriage"]:
             return await ctx.send("You are not married yet.")
         partner = await rpgtools.lookup(self.bot, marriage)
         await ctx.send(f"You are currently married to **{partner}**.")
 
     @has_char()
-    @commands.command(description="Views your love score.")
+    @commands.command()
     async def lovescore(self, ctx):
-        async with self.bot.pool.acquire() as conn:
-            score = await conn.fetchrow(
-                'SELECT lovescore, marriage FROM profile WHERE "user"=$1;',
-                ctx.author.id,
-            )
-        if score[1] != 0:
+        """Views your lovescore."""
+        if ctx.character_data["marriage"]:
             partner = await rpgtools.lookup(self.bot, score[1])
         else:
             partner = "noone"
         await ctx.send(
-            f"Your overall love score is **{score[0]}**. You are married to **{partner}**."
+            f"Your overall love score is **{ctx.character_data['lovescore']}**. You are married to **{partner}**."
         )
 
     @has_char()
-    @commands.command(
-        description="Buy something for your love and increase their score!"
-    )
-    async def spoil(self, ctx, item: int = None):
+    @commands.command()
+    async def spoil(self, ctx, item: IntFromTo(1, 40) = None):
+        """Buy something for your spouse and increase their lovescore."""
         items = [
-            [0, "Dog :dog2:", 50],
-            [1, "Cat :cat2:", 50],
-            [2, "Cow :cow2:", 75],
-            [3, "Penguin :penguin:", 100],
-            [4, "Unicorn :unicorn:", 1000],
-            [5, "Potato :potato:", 1],
-            [6, "Sweet potato :sweet_potato:", 2],
-            [7, "Peach :peach:", 5],
-            [8, "Ice Cream :ice_cream:", 10],
-            [9, "Bento Box :bento:", 50],
-            [10, "Movie Night :ticket:", 7],
-            [11, "Video Game Night :video_game:", 10],
-            [12, "Camping Night :fishing_pole_and_fish:", 15],
-            [13, "Couple Competition :trophy:", 30],
-            [14, "Concert Night :musical_keyboard:", 100],
-            [15, "Bicycle :bike:", 100],
-            [16, "Motorcycle :motorcycle:", 250],
-            [17, "Car :red_car:", 300],
-            [18, "Private Jet :airplane:", 1000],
-            [19, "Space Rocket :rocket:", 10000],
-            [20, "Credit Card :credit_card:", 20],
-            [21, "Watch :watch:", 100],
-            [22, "Phone :iphone:", 100],
-            [23, "Bed :bed:", 500],
-            [24, "Home films :projector:", 750],
-            [25, "Satchel :school_satchel:", 25],
-            [26, "Purse :purse:", 30],
-            [27, "Shoes :athletic_shoe:", 150],
-            [28, "Casual Attire :shirt:", 200],
-            [29, "Ring :ring:", 1000],
-            [30, "Balloon :balloon:", 10],
-            [31, "Flower Bouquet :bouquet:", 25],
-            [32, "Expensive Chocolates :chocolate_bar:", 40],
-            [33, "Declaration of Love :love_letter:", 50],
-            [34, "Key to Heart :key2:", 100],
-            [35, "Ancient Vase :amphora:", 15000],
-            [36, "House :house:", 25000],
-            [37, "Super Computer :computer:", 50000],
-            [38, "Precious Gemstone Collection :gem:", 75000],
-            [39, "Planet :earth_americas:", 1_000_000],
+            ("Dog :dog2:", 50),
+            ("Cat :cat2:", 50),
+            ("Cow :cow2:", 75),
+            ("Penguin :penguin:", 100),
+            ("Unicorn :unicorn:", 1000),
+            ("Potato :potato:", 1),
+            ("Sweet potato :sweet_potato:", 2),
+            ("Peach :peach:", 5),
+            ("Ice Cream :ice_cream:", 10),
+            ("Bento Box :bento:", 50),
+            ("Movie Night :ticket:", 75),
+            ("Video Game Night :video_game:", 10),
+            ("Camping Night :fishing_pole_and_fish:", 15),
+            ("Couple Competition :trophy:", 30),
+            ("Concert Night :musical_keyboard:", 100),
+            ("Bicycle :bike:", 100),
+            ("Motorcycle :motorcycle:", 250),
+            ("Car :red_car:", 300),
+            ("Private Jet :airplane:", 1000),
+            ("Space Rocket :rocket:", 10000),
+            ("Credit Card :credit_card:", 20),
+            ("Watch :watch:", 100),
+            ("Phone :iphone:", 100),
+            ("Bed :bed:", 500),
+            ("Home films :projector:", 750),
+            ("Satchel :school_satchel:", 25),
+            ("Purse :purse:", 30),
+            ("Shoes :athletic_shoe:", 150),
+            ("Casual Attire :shirt:", 200),
+            ("Ring :ring:", 1000),
+            ("Balloon :balloon:", 10),
+            ("Flower Bouquet :bouquet:", 25),
+            ("Expensive Chocolates :chocolate_bar:", 40),
+            ("Declaration of Love :love_letter:", 50),
+            ("Key to Heart :key2:", 100),
+            ("Ancient Vase :amphora:", 15000),
+            ("House :house:", 25000),
+            ("Super Computer :computer:", 50000),
+            ("Precious Gemstone Collection :gem:", 75000),
+            ("Planet :earth_americas:", 1_000_000),
         ]
-        nl = "\n"
-        if item is None:
-            shop = f"""
-{nl.join([str(item[0])+') '+item[1]+' ... Price: **$'+str(item[2])+'**' for item in items])}
-
-To buy one of these items for your partner, use `{ctx.prefix}spoil shopid`
-"""
-            return await ctx.send(shop)
-        elif item not in range(len(items)):
-            return await ctx.send("That's not a valid item to buy.")
-        item = items[item]
-        if not await has_money(self.bot, ctx.author.id, item[2]):
+        items_str = "\n".join([f"{idx + 1}.) {item} ... Price: **${price}**" for idx, (item, price) in enumerate(items)])
+        if not item:
+            return await ctx.send(f"{items_str}\n\nTo buy one of these items for your partner, use `{ctx.prefix}spoil shopid`")
+        item = items[item - 1]
+        if ctx.character_data["money"] < item[1]:
             return await ctx.send("You are too poor to buy this.")
+        if not ctx.character_data["marriage"]:
+            return await ctx.send("You're not married yet.")
         async with self.bot.pool.acquire() as conn:
-            marriage = await conn.fetchval(
-                'SELECT marriage FROM profile WHERE "user"=$1;', ctx.author.id
-            )
-            if marriage == 0:
-                return await ctx.send("You are not married.")
             await conn.execute(
                 'UPDATE profile SET lovescore=lovescore+$1 WHERE "user"=$2;',
-                item[2],
-                marriage,
+                item[1],
+                ctx.character_data["marriage"],
             )
             await conn.execute(
                 'UPDATE profile SET money=money-$1 WHERE "user"=$2;',
-                item[2],
+                item[1],
                 ctx.author.id,
             )
         await ctx.send(
-            f"You bought a **{item[1]}** for your partner and increased their love score by **{item[2]}** points!"
+            f"You bought a **{item[0]}** for your partner and increased their love score by **{item[1]}** points!"
         )
         user = await self.bot.get_user_global(marriage)
         if not user:
@@ -235,25 +199,24 @@ To buy one of these items for your partner, use `{ctx.prefix}spoil shopid`
                 "Failed to DM your spouse, could not find their discord account"
             )
         await user.send(
-            f"**{ctx.author}** bought you a **{item[1]}** and increased your love score by **{item[2]}** points!"
+            f"**{ctx.author}** bought you a **{item[0]}** and increased your love score by **{item[1]}** points!"
         )
 
     @has_char()
-    @commands.command(name="date")
+    @commands.command()
     @user_cooldown(43200)
-    async def _date(self, ctx):
+    async def date(self, ctx):
         """Take your loved one on a date to increase your lovescore."""
         num = random.randint(1, 15) * 10
         marriage = ctx.character_data["marriage"]
         if not marriage:
             await self.bot.reset_cooldown(ctx)
             return await ctx.send("You are not married yet.")
-        async with self.bot.pool.acquire() as conn:
-            await conn.execute(
-                'UPDATE profile SET lovescore=lovescore+$1 WHERE "user"=$2;',
-                num,
-                marriage,
-            )
+        await self.bot.pool.execute(
+            'UPDATE profile SET lovescore=lovescore+$1 WHERE "user"=$2;',
+            num,
+            marriage,
+        )
 
         partner = await self.bot.get_user_global(marriage)
         scenario = random.choice(
@@ -274,42 +237,24 @@ To buy one of these items for your partner, use `{ctx.prefix}spoil shopid`
     @has_char()
     @commands.guild_only()
     @user_cooldown(3600)
-    @commands.command(description="Make a child!", aliases=["fuck", "sex", "breed"])
+    @commands.command(aliases=["fuck", "sex", "breed"])
     async def child(self, ctx):
-        async with self.bot.pool.acquire() as conn:
-            marriage = await conn.fetchval(
-                'SELECT marriage FROM profile WHERE "user"=$1;', ctx.author.id
-            )
-            count = await conn.fetchval(
-                'SELECT count(*) FROM children WHERE "mother"=$1 OR "father"=$2;',
-                ctx.author.id,
-                ctx.author.id,
-            )
-            names = await conn.fetch(
-                'SELECT name FROM children WHERE "mother"=$1 OR "father"=$2;',
-                ctx.author.id,
-                ctx.author.id,
-            )
-        if marriage == 0:
-            return await ctx.send("You are not married yet.")
-        elif count >= 10:
-            return await ctx.send("You already have 10 children.")
-        names = [name[0] for name in names]
-        msg = await ctx.send(
-            f"Asking <@{marriage}> for a night...\nDo you want to make a child with {ctx.author.mention}? Type `I do`"
+        """Make a child with your spouse."""
+        marriage = ctx.character_data["marriage"]
+        if not marriage:
+            return await ctx.send("Can't produce a child alone, can you?")
+        names = await self.bot.pool.fetch(
+            'SELECT name FROM children WHERE "mother"=$1 OR "father"=$1;',
+            ctx.author.id,
         )
+        elif len(names) >= 10:
+            return await ctx.send("You already have 10 children.")
+        names = [name["name"] for name in names]
+        if not await ctx.confirm(
+            f"<@{marriage}>, do you want to make a child with {ctx.author.mention}?"
+        ):
+            return await ctx.send("O.o not in the mood today?")
 
-        def check(msg):
-            return (
-                msg.author.id == marriage
-                and msg.content.lower() == "i do"
-                and msg.channel.id == ctx.channel.id
-            )
-
-        try:
-            msg = await self.bot.wait_for("message", check=check, timeout=30)
-        except asyncio.TimeoutError:
-            return await ctx.send(f"They didn't want to have a child :(")
         if random.randint(1, 2) == 1:
             return await ctx.send("You were unsuccessful at making a child.")
         gender = random.choice(["m", "f"])
@@ -347,30 +292,28 @@ To buy one of these items for your partner, use `{ctx.prefix}spoil shopid`
         await ctx.send(f"{name} was born.")
 
     @has_char()
-    @commands.command(description="View your children.")
+    @commands.command()
     async def family(self, ctx):
-        async with self.bot.pool.acquire() as conn:
-            marriage = await conn.fetchval(
-                'SELECT marriage FROM profile WHERE "user"=$1;', ctx.author.id
-            )
-            if marriage == 0:
-                return await ctx.send("You are not married yet.")
-            children = await conn.fetch(
-                'SELECT * FROM children WHERE "mother"=$1 OR "father"=$1;',
-                ctx.author.id,
-            )
+        """View your children."""
+        marriage = ctx.character_data["marriage"]
+        if not marriage:
+            return await ctx.send("Lonely...")
+        children = await self.bot.pool.fetch(
+            'SELECT * FROM children WHERE "mother"=$1 OR "father"=$1;',
+            ctx.author.id,
+        )
         em = discord.Embed(
             title="Your family",
             description=f"Family of {ctx.author.mention} and <@{marriage}>",
         )
-        if children == []:
+        if not children:
             em.add_field(
                 name="No children yet", value=f"Use {ctx.prefix}child to make one!"
             )
         for child in children:
             em.add_field(
-                name=child[2] or "Unnamed",
-                value=f"Gender: {child[4]}, Age: {child[3]}",
+                name=child["name"],
+                value=f"Gender: {child['gender']}, Age: {child['age']}",
                 inline=False,
             )
         em.set_thumbnail(url=ctx.author.avatar_url)
@@ -378,19 +321,16 @@ To buy one of these items for your partner, use `{ctx.prefix}spoil shopid`
 
     @has_char()
     @user_cooldown(1800)
-    @commands.command(description="Events happening to your family.")
+    @commands.command()
     async def familyevent(self, ctx):
-        async with self.bot.pool.acquire() as conn:
-            marriage = await conn.fetchval(
-                'SELECT marriage FROM profile WHERE "user"=$1;', ctx.author.id
-            )
-            if marriage == 0:
-                return await ctx.send("You are not married yet.")
-            children = await conn.fetch(
-                'SELECT * FROM children WHERE "mother"=$1 OR "father"=$1;',
-                ctx.author.id,
-            )
-        if children == []:
+        """Events happening to your family."""
+        if not ctx.character_data["marriage"]:
+            return await ctx.send("You're lonely.")
+        children = await self.bot.pool.fetch(
+            'SELECT * FROM children WHERE "mother"=$1 OR "father"=$1;',
+            ctx.author.id,
+        )
+        if not children:
             return await ctx.send("You don't have kids yet.")
         target = random.choice(children)
         event = random.choice(["death"] + ["age"] * 7 + ["namechange"] * 2)
@@ -412,31 +352,31 @@ To buy one of these items for your partner, use `{ctx.prefix}spoil shopid`
                     "The Catholic Church got them...",
                 ]
             )
-            async with self.bot.pool.acquire() as conn:
-                await conn.execute(
-                    'DELETE FROM children WHERE "name"=$1 AND ("mother"=$2 OR "father"=$2);',
-                    target[2],
-                    ctx.author.id,
-                )
+            await self.bot.pool.execute(
+                'DELETE FROM children WHERE "name"=$1 AND ("mother"=$2 OR "father"=$2);',
+                target['name'],
+                ctx.author.id,
+            )
             return await ctx.send(
-                f"{target[2]} died at the age of {target[3]}! {cause}"
+                f"{target['name']} died at the age of {target['age']}! {cause}"
             )
         elif event == "age":
-            async with self.bot.pool.acquire() as conn:
-                await conn.execute(
-                    'UPDATE children SET age=age+1 WHERE "name"=$1 AND ("mother"=$2 OR "father"=$2);',
-                    target[2],
-                    ctx.author.id,
-                )
-            return await ctx.send(f"{target[2]} is now {target[3]+1} years old.")
+            await self.bot.pool.execute(
+                'UPDATE children SET age=age+1 WHERE "name"=$1 AND ("mother"=$2 OR "father"=$2);',
+                target['name'],
+                ctx.author.id,
+            )
+            return await ctx.send(f"{target['name']} is now {target['age'] + 1} years old.")
         elif event == "namechange":
-            await ctx.send(f"{target[2]} can be renamed! Enter a new name:")
-
+            await ctx.send(f"{target['name']} can be renamed! Enter a new name:")
+            names = [c["name"] for c in children]
+            names.remove(target["name"])
             def check(msg):
                 return (
                     msg.author.id in [ctx.author.id, marriage]
                     and msg.channel.id == ctx.channel.id
                     and len(msg.content) <= 20
+                    and msg.content not in names
                 )
 
             try:
@@ -444,14 +384,13 @@ To buy one of these items for your partner, use `{ctx.prefix}spoil shopid`
             except asyncio.TimeoutError:
                 return await ctx.send("You didn't enter a name.")
             name = msg.content.replace("@", "@\u200b")
-            async with self.bot.pool.acquire() as conn:
-                await conn.execute(
-                    'UPDATE children SET "name"=$1 WHERE "name"=$2 AND ("mother"=$3 OR "father"=$3);',
-                    name,
-                    target[2],
-                    ctx.author.id,
-                )
-            return await ctx.send(f"{target[2]} is now called {name}.")
+            await self.bot.po.execute(
+                'UPDATE children SET "name"=$1 WHERE "name"=$2 AND ("mother"=$3 OR "father"=$3);',
+                name,
+                target["name"],
+                ctx.author.id,
+            )
+            return await ctx.send(f"{target['name']} is now called {name}.")
 
 
 def setup(bot):
