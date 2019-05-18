@@ -5,8 +5,10 @@ Copyright (C) 2018-2019 Diniboy and Gelbpunkt
 This software is dual-licensed under the GNU Affero General Public License for non-commercial and the Travitia License for commercial use.
 For more information, see README.md and LICENSE.md.
 """
+from asyncio import TimeoutError
 import re
 
+import discord
 from discord.ext import commands
 
 
@@ -30,7 +32,7 @@ class Context(commands.Context):
             return u == self.author and str(r.emoji) in emojis and r.message.id == msg.id
         try:
             reaction, _ = await self.bot.wait_for("reaction_add", check=check, timeout=timeout)
-        except asyncio.TimeoutError:
+        except TimeoutError:
             return False
         return bool(emojis.index(str(reaction.emoji)))
 
