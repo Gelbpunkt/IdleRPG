@@ -398,7 +398,7 @@ class Profile(commands.Cog):
         try:
             name = await self.bot.wait_for("message", timeout=60, check=mycheck)
         except asyncio.TimeoutError:
-            await ctx.send(
+            return await ctx.send(
                 f"Timeout expired. Enter `{ctx.prefix}{ctx.command}` again to retry!"
             )
         name = name.content
