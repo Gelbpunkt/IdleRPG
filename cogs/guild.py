@@ -13,7 +13,7 @@ from typing import Union
 import discord
 from discord.ext import commands
 
-from classes.converters import User
+from classes.converters import IntGreaterThan, MemberWithCharacter, User
 from cogs.shard_communication import guild_on_cooldown as guild_cooldown
 from cogs.shard_communication import user_on_cooldown as user_cooldown
 from utils import misc as rpgtools
@@ -25,9 +25,7 @@ from utils.checks import (
     has_no_guild,
     is_guild_leader,
     is_guild_officer,
-    is_member_of_author_guild,
     is_no_guild_leader,
-    user_has_char,
     user_is_patron,
 )
 
@@ -102,7 +100,7 @@ class Guild(commands.Cog):
         result = ""
         for idx, guild in enumerate(guilds):
             leader = await rpgtools.lookup(self.bot, guild["leader"])
-            result = f"{result}{idx + q}. {guild['name']}, a guild by `{leader}` with **{guild['wins']}** GvG Wins\n"
+            result = f"{result}{idx + 1}. {guild['name']}, a guild by `{leader}` with **{guild['wins']}** GvG Wins\n"
         await ctx.send(
             embed=discord.Embed(
                 title=f"The Best GvG Guilds", description=result, colour=0xE7CA01
@@ -598,7 +596,7 @@ class Guild(commands.Cog):
             msg = await ctx.send(
                 f"Guild Battle Fight **{idx + 1}** of **{len(team1)}**.\n**{user.name}** vs **{user2.name}**!\nBattle running..."
             )
-            sw1, sh1 = await self.bot.get_equipped_items_for(user1)
+            sw1, sh1 = await self.bot.get_equipped_items_for(user)
             val1 = (
                 (sw1["damage"] if sw1 else 0)
                 + (sh1["armor"] if sh1 else 0)

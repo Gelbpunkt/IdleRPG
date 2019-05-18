@@ -5,14 +5,13 @@ Copyright (C) 2018-2019 Diniboy and Gelbpunkt
 This software is dual-licensed under the GNU Affero General Public License for non-commercial and the Travitia License for commercial use.
 For more information, see README.md and LICENSE.md.
 """
-import asyncio
 import random
 
 import discord
 from discord.ext import commands
 
+from classes.converters import IntFromTo, IntGreaterThan
 from cogs.shard_communication import user_on_cooldown as user_cooldown
-from utils import misc as rpgtools
 from utils.checks import has_char, has_money
 
 
@@ -39,7 +38,7 @@ class Trading(commands.Cog):
                 )
             elif price > item["value"] * 1000:
                 return await ctx.send(
-                    f"Your price is too high. Try adjusting it to be up to `{ret[6]*50}`."
+                    f"Your price is too high. Try adjusting it to be up to `{item[6] * 50}`."
                 )
             await conn.execute(
                 "DELETE FROM inventory i USING allitems ai WHERE i.item=ai.id AND ai.id=$1 AND ai.owner=$2;",
@@ -91,7 +90,7 @@ class Trading(commands.Cog):
                 False,
             )
         await ctx.send(
-            f"Successfully bought item `{deleted[3]}`. Use `{ctx.prefix}inventory` to view your updated inventory."
+            f"Successfully bought item `{item['id']}`. Use `{ctx.prefix}inventory` to view your updated inventory."
         )
         seller = await self.bot.get_user_global(item["owner"])
         if seller:

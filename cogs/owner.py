@@ -14,6 +14,7 @@ from contextlib import redirect_stdout
 from importlib import reload as importlib_reload
 
 import discord
+from async_timeout import timeout
 from discord.ext import commands
 
 

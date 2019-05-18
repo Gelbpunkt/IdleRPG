@@ -11,9 +11,9 @@ import random
 import discord
 from discord.ext import commands
 
-from classes.converters import IntFromTo
+from classes.converters import IntGreaterThan
 from cogs.shard_communication import user_on_cooldown as user_cooldown
-from utils.checks import has_char, has_money, user_has_char
+from utils.checks import has_char, has_money
 
 
 class Battles(commands.Cog):
@@ -154,7 +154,7 @@ class Battles(commands.Cog):
             else:
                 await ctx.send("You don't have enough money to join the battle.")
 
-        PLAYERS = [ctx.author, res.author]
+        PLAYERS = [ctx.author, enemy]
         HP = []
 
         DAMAGE = []

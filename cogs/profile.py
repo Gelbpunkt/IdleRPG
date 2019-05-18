@@ -6,12 +6,11 @@ This software is dual-licensed under the GNU Affero General Public License for n
 For more information, see README.md and LICENSE.md.
 """
 import asyncio
-import functools
 from io import BytesIO
 
 import discord
-from async_timeout import timeout
 from discord.ext import commands
+from discord.ext.commands.default import Author
 
 from classes.converters import IntFromTo, MemberWithCharacter, User
 from cogs.classes import genstats
@@ -25,7 +24,7 @@ class Profile(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
-    @has_no_char()
+    @checks.has_no_char()
     @user_cooldown(3600)
     @commands.command(aliases=["new", "c", "start"])
     async def create(self, ctx):

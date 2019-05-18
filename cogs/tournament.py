@@ -9,12 +9,12 @@ import asyncio
 import math
 import random
 
-import discord
 from discord.ext import commands
 
+from classes.converters import IntFromTo
 from cogs.help import chunks
 from cogs.shard_communication import user_on_cooldown as user_cooldown
-from utils.checks import has_char, has_money, user_has_char
+from utils.checks import has_char, has_money, user_has_money
 
 
 class Tournament(commands.Cog):
@@ -49,10 +49,10 @@ class Tournament(commands.Cog):
                         f"Noone joined your tournament, {ctx.author.mention}."
                     )
             if await user_has_money(self.bot, u.id, prize):
-                participants.append(res.author)
-                await ctx.send(f"{res.author.mention} joined the tournament.")
+                participants.append()
+                await ctx.send(f"{u.mention} joined the tournament.")
             else:
-                await ctx.send(f"You don't have a character, {res.author.mention}.")
+                await ctx.send(f"You don't have a character, {u.mention}.")
         toremove = 2 ** math.floor(math.log2(len(participants)))
         if toremove != len(participants):
             await ctx.send(

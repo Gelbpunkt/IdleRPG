@@ -202,11 +202,11 @@ class Bot(commands.AutoShardedBot):
     async def create_item(
         self, name, value, type_, damage, armor, owner, equipped=False
     ):
-        owner = owner.id if isinstance(owner, (discord.User, discord.Member)) else user
+        owner = owner.id if isinstance(owner, (discord.User, discord.Member)) else owner
         async with self.pool.acquire() as conn:
             item = await conn.fetchrow(
                 'INSERT INTO allitems ("owner", "name", "value", "type", "damage", "armor") VALUES ($1, $2, $3, $4, $5, $6) RETURNING *;',
-                ctx.author.id,
+                owner,
                 name,
                 value,
                 type_,

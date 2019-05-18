@@ -11,9 +11,10 @@ import random
 import discord
 from discord.ext import commands
 
+from classes.converters import IntFromTo, MemberWithCharacter
 from cogs.shard_communication import user_on_cooldown as user_cooldown
 from utils import misc as rpgtools
-from utils.checks import has_char, has_money
+from utils.checks import has_char
 
 
 class Marriage(commands.Cog):
@@ -96,7 +97,10 @@ class Marriage(commands.Cog):
             await conn.execute(
                 'UPDATE profile SET "marriage"=0 WHERE "user"=$1;', ctx.author.id
             )
-            await conn.execute('UPDATE profile SET "marriage"=0 WHERE "user"=$1;', test)
+            await conn.execute(
+                'UPDATE profile SET "marriage"=0 WHERE "user"=$1;',
+                ctx.character_data["marriage"],
+            )
             await conn.execute(
                 'DELETE FROM children WHERE "father"=$1 OR "mother"=$2;',
                 ctx.author.id,
@@ -110,7 +114,7 @@ class Marriage(commands.Cog):
         """View who you're married to."""
         if not ctx.character_data["marriage"]:
             return await ctx.send("You are not married yet.")
-        partner = await rpgtools.lookup(self.bot, marriage)
+        partner = await rpgtools.lookup(self.bot, ctx.character_data["marriage"])
         await ctx.send(f"You are currently married to **{partner}**.")
 
     @has_char()
@@ -118,7 +122,7 @@ class Marriage(commands.Cog):
     async def lovescore(self, ctx):
         """Views your lovescore."""
         if ctx.character_data["marriage"]:
-            partner = await rpgtools.lookup(self.bot, score[1])
+            partner = await rpgtools.lookup(self.bot, ctx.character_data["marriage"])
         else:
             partner = "noone"
         await ctx.send(
@@ -200,7 +204,7 @@ class Marriage(commands.Cog):
         await ctx.send(
             f"You bought a **{item[0]}** for your partner and increased their love score by **{item[1]}** points!"
         )
-        user = await self.bot.get_user_global(marriage)
+        user = await self.bot.get_user_global(ctx.character_data["marriage"])
         if not user:
             return await ctx.send(
                 "Failed to DM your spouse, could not find their discord account"
@@ -378,7 +382,7 @@ class Marriage(commands.Cog):
 
             def check(msg):
                 return (
-                    msg.author.id in [ctx.author.id, marriage]
+                    msg.author.id in [ctx.author.id, ctx.character_data["marriage"]]
                     and msg.channel.id == ctx.channel.id
                     and len(msg.content) <= 20
                     and msg.content not in names

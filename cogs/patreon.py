@@ -6,15 +6,13 @@ This software is dual-licensed under the GNU Affero General Public License for n
 For more information, see README.md and LICENSE.md.
 """
 import copy
-import functools
 from io import BytesIO
 
 import discord
 from asyncpg.exceptions import StringDataRightTruncationError
 from discord.ext import commands
 
-from utils.checks import has_char, is_patron
-from utils.misc import makebg
+from utils.checks import has_char, is_guild_leader, is_patron
 
 
 class Patreon(commands.Cog):
