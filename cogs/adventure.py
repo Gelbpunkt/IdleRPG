@@ -77,6 +77,7 @@ class Adventure(commands.Cog):
     @commands.command()
     async def activeadventure(self, ctx):
         """Go out on an active, action based adventure."""
+        msg = await ctx.send("**Active adventure loading...**")
         sword, shield = await self.bot.get_equipped_items_for(ctx.author)
         SWORD = sword["damage"] if sword else 0
         SHIELD = shield["armor"] if shield else 0
@@ -86,19 +87,24 @@ class Adventure(commands.Cog):
         )
         HP = 100
         PROGRESS = 0  # percent
+        emojis = {"\U00002694": "attack", "\U0001f6e1": "defend", "\U00002764": "recover"}
 
-        def is_valid_move(msg):
+        def is_valid_move(r, u):
             return (
-                msg.content.lower() in ["attack", "defend", "recover"]
-                and msg.author == ctx.author
+                r.message.id == msg.id
+                and u == ctx.author
+                and str(r.emoji) in emojis
             )
 
         ENEMY_HP = 100
 
+        for emoji in emojis:
+            await msg.add_reaction(emoji)
+
         while PROGRESS < 100 and HP > 0:
-            await ctx.send(
-                f"""
-**{ctx.author.display_name}'s Adventure**
+            await msg.edit(
+                content=f"""
+**{ctx.disp}'s Adventure**
 ```
 Progress: {PROGRESS}%
 HP......: {HP}
@@ -106,29 +112,32 @@ HP......: {HP}
 Enemy
 HP......: {ENEMY_HP}
 
-Use attack, defend or recover
+Use the reactions attack, defend or recover
 ```
 """,
-                delete_after=10,
             )
             try:
-                res = await self.bot.wait_for(
-                    "message", timeout=30, check=is_valid_move
+                reaction, _ = await self.bot.wait_for(
+                    "reaction_add", timeout=30, check=is_valid_move
                 )
             except asyncio.TimeoutError:
                 return await ctx.send("Adventure stopped because you refused to move.")
-            move = res.content.lower()
+            try:
+                await msg.remove_reaction(ctx.author, reaction)
+            except discord.Forbidden:
+                pass
+            move = emojis[str(reaction.emojis)]
             enemymove = random.choice(["attack", "defend", "recover"])
             if move == "recover":
                 HP += 20
-                await ctx.send("You healed yourself for 20 HP.", delete_after=10)
+                await ctx.send("You healed yourself for 20 HP.", delete_after=5)
             if enemymove == "recover":
                 ENEMY_HP += 20
-                await ctx.send(f"The enemy healed himself for 20 HP.", delete_after=10)
+                await ctx.send(f"The enemy healed himself for 20 HP.", delete_after=5)
             if move == "attack" and enemymove == "defend":
-                await ctx.send("Your attack was blocked!", delete_after=10)
+                await ctx.send("Your attack was blocked!", delete_after=5)
             if move == "defend" and enemymove == "attack":
-                await ctx.send("Enemy attack was blocked!", delete_after=10)
+                await ctx.send("Enemy attack was blocked!", delete_after=5)
             if move == "defend" and enemymove == "defend":
                 await ctx.send("Noone attacked.")
             if move == "attack" and enemymove == "attack":
@@ -137,21 +146,21 @@ Use attack, defend or recover
                 ENEMY_HP -= SWORD
                 await ctx.send(
                     f"You hit the enemy for **{SWORD}** damage, he hit you for **{efficiency}** damage.",
-                    delete_after=10,
+                    delete_after=5,
                 )
             elif move == "attack" and enemymove != "defend":
                 ENEMY_HP -= SWORD
                 await ctx.send(
-                    f"You hit the enemy for **{SWORD}** damage.", delete_after=10
+                    f"You hit the enemy for **{SWORD}** damage.", delete_after=5
                 )
             elif enemymove == "attack" and move == "recover":
                 efficiency = random.randint(int(SWORD * 0.5), int(SWORD * 1.5))
                 HP -= efficiency
                 await ctx.send(
-                    f"The enemy hit you for **{efficiency}** damage.", delete_after=10
+                    f"The enemy hit you for **{efficiency}** damage.", delete_after=5
                 )
             if ENEMY_HP < 1:
-                await ctx.send("Enemy defeated! You gained **20 HP**", delete_after=10)
+                await ctx.send("Enemy defeated! You gained **20 HP**", delete_after=5)
                 PROGRESS += random.randint(10, 40)
                 ENEMY_HP = 100
                 HP += 20
@@ -159,61 +168,19 @@ Use attack, defend or recover
         if HP < 1:
             return await ctx.send("You died.")
 
-        if SWORD < 26:
-            maximumstat = random.randint(1, SWORD + 5)
-        else:
-            maximumstat = random.randint(1, 30)
-        shieldorsword = random.choice(["Sword", "Shield"])
-        names = ["Rare", "Ancient", "Normal", "Legendary", "Famous"]
-        itemvalue = random.randint(1, 250)
-        async with self.bot.pool.acquire() as conn:
-            if shieldorsword == "Sword":
-                itemname = random.choice(names) + random.choice(
-                    [" Sword", " Blade", " Stich"]
-                )
-                item = await conn.fetchrow(
-                    'INSERT INTO allitems ("owner", "name", "value", "type", "damage", "armor") VALUES ($1, $2, $3, $4, $5, $6) RETURNING *;',
-                    ctx.author.id,
-                    itemname,
-                    itemvalue,
-                    "Sword",
-                    maximumstat,
-                    0.00,
-                )
-            elif shieldorsword == "Shield":
-                itemname = random.choice(names) + random.choice(
-                    [" Shield", " Defender", " Aegis"]
-                )
-                item = await conn.fetchrow(
-                    'INSERT INTO allitems ("owner", "name", "value", "type", "damage", "armor") VALUES ($1, $2, $3, $4, $5, $6) RETURNING *;',
-                    ctx.author.id,
-                    itemname,
-                    itemvalue,
-                    "Shield",
-                    0.00,
-                    maximumstat,
-                )
-            await conn.execute(
-                'INSERT INTO inventory ("item", "equipped") VALUES ($1, $2);',
-                item[0],
-                False,
-            )
+        item = await self.bot.create_random_item(minstat=1, maxstat=(SWORD + 5 if SWORD < 26 else 30), minvalue=1, maxvalue=250, owner=ctx.author)
         embed = discord.Embed(
             title="You gained an item!",
             description="You found a new item when finishing an active adventure!",
             color=0xFF0000,
         )
         embed.set_thumbnail(url=ctx.author.avatar_url)
-        embed.add_field(name="ID", value=item[0], inline=False)
-        embed.add_field(name="Name", value=itemname, inline=False)
-        embed.add_field(name="Type", value=shieldorsword, inline=False)
-        if shieldorsword == "Shield":
-            embed.add_field(name="Damage", value="0.00", inline=True)
-            embed.add_field(name="Armor", value=f"{maximumstat}.00", inline=True)
-        else:
-            embed.add_field(name="Damage", value=f"{maximumstat}.00", inline=True)
-            embed.add_field(name="Armor", value="0.00", inline=True)
-        embed.add_field(name="Value", value=f"${itemvalue}", inline=False)
+        embed.add_field(name="ID", value=item["id"], inline=False)
+        embed.add_field(name="Name", value=item["name"], inline=False)
+        embed.add_field(name="Type", value=item["type"], inline=False)
+        embed.add_field(name="Damage", value=item["damage"], inline=True)
+        embed.add_field(name="Armor", value=item["armor'], inline=True)
+        embed.add_field(name="Value", value=f"${item['value']}", inline=False)
         embed.set_footer(text=f"Your HP were {HP}")
         await ctx.send(embed=embed)
 
@@ -243,7 +210,7 @@ Use attack, defend or recover
                 booster=bool(luck_booster),
             )
             if success:
-                maximumstat = (
+                maxstat = (
                     float(random.randint(1, num * 5))
                     if num < 6
                     else float(random.randint(1, 25))
@@ -253,48 +220,8 @@ Use attack, defend or recover
                 else:
                     gold = random.randint(1, 30) * num
                 xp = random.randint(200, 1000) * num
-                type_ = random.choice(["Sword", "Shield"])
-                names = [
-                    "Victo's",
-                    "Arsandor's",
-                    "Nuhulu's",
-                    "Legendary",
-                    "Vosag's",
-                    "Mitoa's",
-                    "Scofin's",
-                    "Skeeren's",
-                    "Ager's",
-                    "Hazuro's",
-                    "Atarbu's",
-                    "Jadea's",
-                    "Zosus'",
-                    "Thocubra's",
-                    "Utrice's",
-                    "Lingoad's",
-                    "Zlatorpian's",
-                ]
-                damage = maximumstat if type_ == "Sword" else 0
-                armor = maximumstat if type_ == "Shield" else 0
-                name = random.choice(names) + (
-                    random.choice([" Sword", " Blade", " Stich"])
-                    if type_ == "Sword"
-                    else random.choice([" Shield", " Defender", " Aegis"])
-                )
+                item = await self.bot.create_random_item(minstat=1, maxstat=maxstat, minvalue=num, maxstat=num * 50, owner=ctx.author)
                 async with self.bot.pool.acquire() as conn:
-                    item = await conn.fetchrow(
-                        'INSERT INTO allitems ("owner", "name", "value", "type", "damage", "armor") VALUES ($1, $2, $3, $4, $5, $6) RETURNING *;',
-                        ctx.author.id,
-                        name,
-                        random.randint(1, 40) * num,
-                        type_,
-                        damage,
-                        armor,
-                    )
-                    await conn.execute(
-                        'INSERT INTO inventory ("item", "equipped") VALUES ($1, $2);',
-                        item["id"],
-                        False,
-                    )
                     # marriage partner should get 50% of the money
                     if ctx.character_data["marriage"]:
                         await conn.execute(
