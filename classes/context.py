@@ -46,7 +46,9 @@ class Context(commands.Context):
                 "reaction_add", check=check, timeout=timeout
             )
         except TimeoutError:
+            await msg.delete()
             raise NoChoice()
+        await msg.delete()
         return bool(emojis.index(str(reaction.emoji)))
 
     async def send(self, content=None, *args, **kwargs):
