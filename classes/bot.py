@@ -65,6 +65,7 @@ class Bot(commands.AutoShardedBot):
 
     async def connect_all(self):
         self.session = aiohttp.ClientSession(loop=self.loop, trust_env=True)
+        self.trusted_session = aiohttp.ClientSession(loop=self.loop)
         self.redis = await aioredis.create_pool(
             "redis://localhost", minsize=5, maxsize=10, loop=self.loop
         )
