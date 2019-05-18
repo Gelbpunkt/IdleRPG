@@ -11,6 +11,7 @@ import random
 import discord
 from discord.ext import commands
 
+from classes.converters import IntFromTo
 from cogs.shard_communication import user_on_cooldown as user_cooldown
 from utils.checks import has_char, has_money, user_has_char
 
@@ -21,90 +22,64 @@ class Battles(commands.Cog):
 
     @has_char()
     @user_cooldown(90)
-    @commands.command(
-        pass_context=True, description="Battle someone for the money you choose."
-    )
-    async def battle(self, ctx, money: int, enemy: discord.Member = None):
-        if money < 0:
-            return await ctx.send("Don't scam!")
-        if enemy:
-            if enemy.id == ctx.author.id:
-                return await ctx.send("You can't battle yourself.")
-        if not await has_money(self.bot, ctx.author.id, money):
+    @commands.command()
+    async def battle(self, ctx, money: IntGreaterThan(-1), enemy: discord.Member = None):
+        """Battle against another player."""
+        if enemy == ctx.author:
+            return await ctx.send("You can't battle yourself.")
+        if ctx.character_data["money"] < money:
             return await ctx.send("You are too poor.")
 
         if not enemy:
-            await ctx.send(
-                f"{ctx.author.mention} seeks a battle! Write `join @{str(ctx.author)}` now to duel him! The price is **${money}**."
+            msg = await ctx.send(
+                f"{ctx.author.mention} seeks a battle! React with \U00002694 now to duel them! The price is **${money}**."
             )
         else:
-            await ctx.send(
-                f"{ctx.author.mention} seeks a battle with {enemy.mention}! Write `private join @{str(ctx.author)}` now to duel him! The price is **${money}**."
+            msg = await ctx.send(
+                f"{ctx.author.mention} seeks a battle with {enemy.mention}! React with \U00002694 now to duel them! The price is **${money}**."
             )
 
+        def check(r, u):
+            if enemy:
+                if u != enemy:
+                    return False
+            return (
+                str(r.emoji) == "\U00002694"
+                and r.message.id == msg.id
+                and u != ctx.author
+            )
+
+        await msg.add_reaction("\U00002694")
         seeking = True
 
-        def allcheck(amsg):
-            return (
-                amsg.content.strip() == f"join <@{ctx.author.id}>"
-                or amsg.content.strip() == f"join <@!{ctx.author.id}>"
-            ) and amsg.author.id != ctx.author.id
-
-        def privatecheck(amsg):
-            return (
-                amsg.content.strip() == f"private join <@{ctx.author.id}>"
-                or amsg.content.strip() == f"private join <@!{ctx.author.id}>"
-            ) and amsg.author.id == enemy.id
-
-        try:
-            while seeking:
-                if enemy is None:
-                    res = await self.bot.wait_for("message", timeout=60, check=allcheck)
-                else:
-                    res = await self.bot.wait_for(
-                        "message", timeout=60, check=privatecheck
-                    )
-                if await has_money(self.bot, res.author.id, money):
-                    seeking = False
-                else:
-                    await ctx.send("You don't have enough money to join the battle.")
-        except asyncio.TimeoutError:
-            return await ctx.send(
-                f"Noone wanted to join your battle, {ctx.author.mention}. Try again later!"
-            )
+        while seeking:
+            try:
+                reaction, enemy = await self.bot.wait_for("reaction_add", timeout=60, check=check)
+            except asyncio.TimeoutError:
+                return await ctx.send(f"Noone wanted to join your battle, {ctx.author.mention}!")
+            if await has_money(self.bot, enemy.id, money):
+                seeking = False
+            else:
+                await ctx.send("You don't have enough money to join the battle.")
 
         await ctx.send(
-            f"Battle **{ctx.message.author.name}** vs **{res.author.name}** started! 30 seconds of fighting will now start!"
+            f"Battle **{ctx.disp}** vs **{enemy.display_name}** started! 30 seconds of fighting will now start!"
         )
-        PLAYERS = {ctx.author: 0, res.author: 0}
-        async with self.bot.pool.acquire() as conn:
-            for player in PLAYERS:
-                sword = await conn.fetchval(
-                    "SELECT ai.damage FROM profile p JOIN allitems ai ON (p.user=ai.owner) JOIN inventory i ON (ai.id=i.item) WHERE i.equipped IS TRUE AND p.user=$1 AND type='Sword';",
-                    player.id,
-                )
-                if sword:
-                    PLAYERS[player] += sword
-                shield = await conn.fetchval(
-                    "SELECT ai.armor FROM profile p JOIN allitems ai ON (p.user=ai.owner) JOIN inventory i ON (ai.id=i.item) WHERE i.equipped IS TRUE AND p.user=$1 AND type='Shield';",
-                    player.id,
-                )
-                if shield:
-                    PLAYERS[player] += shield
-        for i in PLAYERS:
-            PLAYERS[i] += random.randint(1, 7)
-        ratings = list(PLAYERS.items())
-        if ratings[0][1] > ratings[1][1]:
-            winner = ratings[0][0]
-            looser = ratings[1][0]
-        elif ratings[0][1] < ratings[1][1]:
-            winner = ratings[1][0]
-            looser = ratings[0][0]
+        items_1 = await self.bot.get_equipped_items_for(ctx.author) or []
+        items_2 = await self.bot.get_equipped_items_for(enemy) or []
+        stats = [
+            sum([i["armor"] + i["damage"] for i in items_1]) + random.randint(1, 7),
+            sum([i["armor"] + i["damage"] for i in items_2]) + random.randint(1, 7)
+        ]
+        players = [ctx.author, enemy]
+        if stats[0] == stats[1]:
+            winner = random.choice(players)
         else:
-            winner = random.choice(ratings)
-            looser = ratings[1 - ratings.index(winner)][0]
-            winner = winner[0]
+            winner = players[stats.index(max(stats))]
+        looser = players[players.index(winner) - 1]
+
         await asyncio.sleep(30)
+
         if not await has_money(self.bot, winner.id, money) or not await has_money(
             self.bot, looser.id, money
         ):
@@ -126,54 +101,46 @@ class Battles(commands.Cog):
         )
 
     @has_char()
-    @user_cooldown(90)
-    @commands.command(description="Active Battles.")
-    async def activebattle(self, ctx, money: int, enemy: discord.Member = None):
-        if money < 0:
-            return await ctx.send("Don't scam!")
-        if enemy:
-            if enemy.id == ctx.author.id:
-                return await ctx.send("You can't battle yourself.")
-        if not await has_money(self.bot, ctx.author.id, money):
+    @user_cooldown(600)
+    @commands.command()
+    async def activebattle(self, ctx, money: IntGreaterThan(-1), enemy: discord.Member = None):
+        """Reaction-based battle system."""
+        if enemy == ctx.author:
+            return await ctx.send("You can't battle yourself.")
+        if ctx.character_data["money"] < money:
             return await ctx.send("You are too poor.")
+
         if not enemy:
-            await ctx.send(
-                f"{ctx.author.mention} seeks an active battle! Write `active join @{str(ctx.author)}` now to duel him! The price is **${money}**."
+            msg = await ctx.send(
+                f"{ctx.author.mention} seeks an active battle! React with \U00002694 now to duel them! The price is **${money}**."
             )
         else:
-            await ctx.send(
-                f"{ctx.author.mention} seeks an active battle with {enemy.mention}! Write `active private join @{str(ctx.author)}` now to duel him! The price is **${money}**."
+            msg = await ctx.send(
+                f"{ctx.author.mention} seeks an active battle with {enemy.mention}! React with \U00002694 now to duel them! The price is **${money}**."
             )
 
-        def allcheck(amsg):
+        def check(r, u):
+            if enemy:
+                if u != enemy:
+                    return False
             return (
-                amsg.content.strip() == f"active join <@{ctx.author.id}>"
-                or amsg.content.strip() == f"active join <@!{ctx.author.id}>"
-            ) and amsg.author.id != ctx.author.id
+                str(r.emoji) == "\U00002694"
+                and r.message.id == msg.id
+                and u != ctx.author
+            )
 
-        def privatecheck(amsg):
-            return (
-                amsg.content.strip() == f"active private join <@{ctx.author.id}>"
-                or amsg.content.strip() == f"active private join <@!{ctx.author.id}>"
-            ) and amsg.author.id == enemy.id
+        await msg.add_reaction("\U00002694")
+        seeking = True
 
-        try:
-            if not enemy:
-                res = await self.bot.wait_for("message", timeout=60, check=allcheck)
+        while seeking:
+            try:
+                reaction, enemy = await self.bot.wait_for("reaction_add", timeout=60, check=check)
+            except asyncio.TimeoutError:
+                return await ctx.send(f"Noone wanted to join your battle, {ctx.author.mention}!")
+            if await has_money(self.bot, enemy.id, money):
+                seeking = False
             else:
-                res = await self.bot.wait_for("message", timeout=60, check=privatecheck)
-        except asyncio.TimeoutError:
-            return await ctx.send(
-                f"Noone wanted to join your battle, {ctx.author.mention}. Try again later!"
-            )
-
-        if not await user_has_char(self.bot, res.author.id):
-            return await ctx.send(
-                f"You don't have a character yet. Use `{ctx.prefix}create` to start!"
-            )
-
-        if not await has_money(self.bot, res.author.id, money):
-            return await ctx.send("The enemy who joined is too poor. Battle cancelled.")
+                await ctx.send("You don't have enough money to join the battle.")
 
         PLAYERS = [ctx.author, res.author]
         HP = []
@@ -181,53 +148,48 @@ class Battles(commands.Cog):
         DAMAGE = []
         ARMOR = []
 
-        async with self.bot.pool.acquire() as conn:
-            for p in PLAYERS:
-                c = await conn.fetchval(
-                    'SELECT class FROM profile WHERE "user"=$1;', p.id
-                )
-                if c in ["Caretaker", "Trainer", "Bowman", "Hunter", "Ranger"]:
-                    HP.append(120)
-                else:
-                    HP.append(100)
+        for p in PLAYERS:
+            c = await self.bot.poll.fetchval(
+                'SELECT class FROM profile WHERE "user"=$1;', p.id
+            )
+            if c in ["Caretaker", "Trainer", "Bowman", "Hunter", "Ranger"]:
+                HP.append(120)
+            else:
+                HP.append(100)
 
-                d = await conn.fetchval(
-                    "SELECT ai.damage FROM profile p JOIN allitems ai ON (p.user=ai.owner) JOIN inventory i ON (ai.id=i.item) WHERE i.equipped IS TRUE AND p.user=$1 AND type='Sword';",
-                    p.id,
-                )
-                DAMAGE.append(d or 0.00)
-                a = await conn.fetchval(
-                    "SELECT ai.armor FROM profile p JOIN allitems ai ON (p.user=ai.owner) JOIN inventory i ON (ai.id=i.item) WHERE i.equipped IS TRUE AND p.user=$1 AND type='Shield';",
-                    p.id,
-                )
-                ARMOR.append(a or 0.00)
+            d, a = await self.bot.get_equipped_items_for(p)
+            DAMAGE.append(int(d["damage"] )if d else 0)
+            ARMOR.append(int(a["armor"]) if a else 0)
 
-        for i in range(2):
-            ARMOR[i] = int(ARMOR[i])
-            DAMAGE[i] = int(DAMAGE[i])
+        moves = {"\U00002694": "attack", "\U0001f6e1": "defend", "\U00002764": "recover"}
 
-        def is_valid_move(msg):
+        last = None
+
+        def is_valid_move(r, u):
             return (
-                msg.content.lower() in ["attack", "defend", "recover"]
+                str(r.emoji) in moves
                 and msg.author in PLAYERS
+                and r.message.id == last.id
             )
 
         while HP[0] > 0 and HP[1] > 0:
-            await ctx.send(
-                f"{PLAYERS[0].mention}: **{HP[0]}** HP\n{PLAYERS[1].mention}: **{HP[1]}** HP\nUse `attack`, `defend` or `recover`."
+            last = await ctx.send(
+                f"{PLAYERS[0].mention}: **{HP[0]}** HP\n{PLAYERS[1].mention}: **{HP[1]}** HP\nReact to play."
             )
+            for emoji in moves:
+                await last.add_reaction(emoji)
             MOVES_DONE = {}
             while len(MOVES_DONE) < 2:
                 try:
-                    res = await self.bot.wait_for(
-                        "message", timeout=30, check=is_valid_move
+                    r, u = await self.bot.wait_for(
+                        "reaction_add", timeout=30, check=is_valid_move
                     )
                 except asyncio.TimeoutError:
                     return await ctx.send("Someone refused to move. Battle stopped.")
-                if res.author not in MOVES_DONE.keys():
-                    MOVES_DONE[res.author] = res.content.lower()
+                if u not in MOVES_DONE:
+                    MOVES_DONE[u] = moves[str(r.emoji)]
                 else:
-                    await ctx.send(f"{res.author.mention}, you already moved!")
+                    await ctx.send(f"{u.mention}, you already moved!")
             plz = list(MOVES_DONE.keys())
             for u in plz:
                 o = plz[:]
@@ -239,7 +201,7 @@ class Battles(commands.Cog):
                 elif MOVES_DONE[u] == "attack" and MOVES_DONE[o] != "defend":
                     eff = random.choice(
                         [
-                            int(DAMAGE[idx]),
+                            DAMAGE[idx],
                             int(DAMAGE[idx] * 0.5),
                             int(DAMAGE[idx] * 0.2),
                             int(DAMAGE[idx] * 0.8),
