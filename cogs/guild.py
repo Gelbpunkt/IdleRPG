@@ -68,7 +68,7 @@ class Guild(commands.Cog):
 
         embed = discord.Embed(title=guild["name"], description="Information about a guild.")
         embed.add_field(
-            name="Current Member Count", value=f"{membercount}/{guild["memberlimit"]} Members"
+            name="Current Member Count", value=f"{membercount}/{guild['memberlimit']} Members"
         )
         leader = await rpgtools.lookup(self.bot, guild["owner"])
         embed.add_field(name="Leader", value=f"{leader}")
