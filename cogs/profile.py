@@ -101,7 +101,7 @@ class Profile(commands.Cog):
             damage, armor = await genstats(self.bot, targetid, v1, v2)
             extras = (damage - v1, armor - v2)
             sworddmg = f"{v1}{' (+' + str(extras[0]) + ')' if extras[0] else ''}"
-            shielddef = f"{v1}{' (+' + str(extras[1]) + ')' if extras[1] else ''}"
+            shielddef = f"{v2}{' (+' + str(extras[1]) + ')' if extras[1] else ''}"
             async with self.bot.trusted_session.post(
                 f"{self.bot.config.okapi_url}/api/genprofile",
                 data={
