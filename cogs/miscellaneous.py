@@ -186,6 +186,7 @@ This update had 3 focuses:
 
 **Soo... What's new?**
 - Guild descriptions will show up in `$guild` and `$guild info`
+- The new v5 item naming system was added (looong names will make profiles look weird though, we're working on new profiles)
 - Confirmation is now done via ticking a box
 - Active battles and adventures should be more fun due to reactions
 - Joining challenges is now also reaction-based
