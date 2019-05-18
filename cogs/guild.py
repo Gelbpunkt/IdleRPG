@@ -64,7 +64,7 @@ class Guild(commands.Cog):
         )
 
         embed = discord.Embed(
-            title=guild["name"], description="Information about a guild."
+            title=guild["name"], description=guild["description"]
         )
         embed.add_field(
             name="Current Member Count",
@@ -350,6 +350,15 @@ class Guild(commands.Cog):
             ctx.character_data["guild"],
         )
         await ctx.send("Successfully updated the guild icon.")
+
+    @is_guild_leader()
+    @guild.command()
+    async def description(self, ctx, *, text: str):
+        """[Guild Owner only] Changes the guild description."""
+        if len(text) > 200:
+            return await ctx.send("The text may be up to 200 characters only.")
+        await self.bot.pool.execute('UPDATE guild SET "description"=$1 WHERE "leader"=$2;', text, ctx.author.id)
+        await ctx.send("Updated!")
 
     @has_guild()
     @guild.command()
