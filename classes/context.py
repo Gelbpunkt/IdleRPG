@@ -25,13 +25,14 @@ class Context(commands.Context):
     def disp(self):
         return self.author.display_name
 
-    async def confirm(self, message, timeout=20):
+    async def confirm(self, message, timeout=20, user=None):
+        user = user or self.author
         emojis = ["\U0000274e", "\U00002705"] # no, yes
         msg = await self.send(embed=discord.Embed(title="Confirmation", description=message, colour=discord.Colour.blurple()))
         for emoji in emojis:
             await msg.add_reaction(emoji)
         def check(r, u):
-            return u == self.author and str(r.emoji) in emojis and r.message.id == msg.id
+            return u == user and str(r.emoji) in emojis and r.message.id == msg.id
         try:
             reaction, _ = await self.bot.wait_for("reaction_add", check=check, timeout=timeout)
         except TimeoutError:
