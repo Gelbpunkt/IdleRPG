@@ -92,7 +92,7 @@ class Profile(commands.Cog):
                 return await ctx.send(f"**{person}** does not have a character.")
             sword, shield = await self.bot.get_equipped_items_for(targetid)
             ranks = await self.bot.get_ranks_for(targetid)
-            mission = await self.bot.get_adventure(ctx.author)
+            mission = await self.bot.get_adventure(targetid)
             guild = await conn.fetchval(
                 'SELECT name FROM guild WHERE "id"=$1;', profile["guild"]
             )
@@ -148,7 +148,7 @@ class Profile(commands.Cog):
             )
             if not p_data:
                 return await ctx.send(f"**{target}** does not have a character.")
-            mission = await self.bot.get_adventure(ctx.author)
+            mission = await self.bot.get_adventure(target)
             guild = await conn.fetchval(
                 'SELECT name FROM guild WHERE "id"=$1;', p_data["guild"]
             )
