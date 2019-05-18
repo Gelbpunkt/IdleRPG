@@ -25,21 +25,17 @@ class Profile(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
+    @has_no_char()
     @user_cooldown(3600)
-    @commands.command(
-        aliases=["new", "c", "start"], description="Creates a new character."
-    )
+    @commands.command(aliases=["new", "c", "start"])
     async def create(self, ctx):
-        if await checks.user_has_char(self.bot, ctx.author.id):
-            return await ctx.send(
-                f"You already own a character. Use `{ctx.prefix}profile` to view them!"
-            )
+        """Creates a new character."""
         await ctx.send(
             "What shall your character's name be? (Minimum 3 Characters, Maximum 20)"
         )
 
         def mycheck(amsg):
-            return amsg.author == ctx.author
+            return amsg.author == ctx.author and amsg.channel == ctx.channel
 
         try:
             name = await self.bot.wait_for("message", timeout=60, check=mycheck)
@@ -48,64 +44,44 @@ class Profile(commands.Cog):
             return await ctx.send(
                 f"Timeout expired. Enter `{ctx.prefix}{ctx.command}` again to retry!"
             )
-        name = name.content.strip()
+        name = name.content
         if len(name) > 2 and len(name) < 21:
-            async with self.bot.pool.acquire() as conn:
-                await conn.execute(
-                    "INSERT INTO profile VALUES ($1, $2, $3, $4);",
-                    ctx.author.id,
-                    name,
-                    100,
-                    0,
-                )
-                itemid = await conn.fetchval(
-                    "INSERT INTO allitems (owner, name, value, type, damage, armor) VALUES ($1, $2, $3, $4, $5, $6) RETURNING id;",
-                    ctx.author.id,
-                    "Starter Sword",
-                    0,
-                    "Sword",
-                    3.0,
-                    0.0,
-                )
-                await conn.execute(
-                    "INSERT INTO inventory (item, equipped) VALUES ($1, $2);",
-                    itemid,
-                    True,
-                )
-                itemid = await conn.fetchval(
-                    "INSERT INTO allitems (owner, name, value, type, damage, armor) VALUES ($1, $2, $3, $4, $5, $6) RETURNING id;",
-                    ctx.author.id,
-                    "Starter Shield",
-                    0,
-                    "Shield",
-                    0.0,
-                    3.0,
-                )
-                await conn.execute(
-                    "INSERT INTO inventory (item, equipped) VALUES ($1, $2);",
-                    itemid,
-                    True,
-                )
+            await self.bot.pool.execute(
+                "INSERT INTO profile VALUES ($1, $2, $3, $4);",
+                ctx.author.id,
+                name,
+                100,
+                0,
+            )
+            await self.bot.create_item(
+                name="Starter Sword",
+                value=0,
+                type_="Sword",
+                damage=3.0,
+                armor=0.0,
+                owner=ctx.author,
+                equipped=True,
+            )
+            await self.bot.create_item(
+                name="Starter Shield",
+                value=0,
+                type_="Shield",
+                damage=0.0,
+                armor=3.0,
+                owner=ctx.author,
+                equipped=True,
+            )
             await ctx.send(
                 f"Successfully added your character **{name}**! Now use `{ctx.prefix}profile` to view your character!"
             )
-        elif len(name) < 3:
-            await ctx.send("Character names must be at least 3 characters!")
+        elif len(name) < 3 or len(name) > 20:
+            await ctx.send("Character names must be at least 3 characters and up to 20.")
             await self.bot.reset_cooldown(ctx)
-        elif len(name) > 20:
-            await ctx.send("Character names mustn't exceed 20 characters!")
-            await self.bot.reset_cooldown(ctx)
-        else:
-            await ctx.send(
-                "An unknown error occured while checking your name. Try again!"
-            )
 
-    @commands.command(
-        aliases=["me", "p"], description="View your or a different user's profile."
-    )
-    async def profile(self, ctx, *, person: User = None):
+    @commands.command(aliases=["me", "p"])
+    async def profile(self, ctx, *, person: User = Author):
+        """View someone's or your own profile."""
         await ctx.trigger_typing()
-        person = person or ctx.author
         targetid = person.id
         async with self.bot.pool.acquire() as conn:
             profile = await conn.fetchrow(
@@ -119,60 +95,35 @@ class Profile(commands.Cog):
             guild = await conn.fetchval(
                 'SELECT name FROM guild WHERE "id"=$1;', profile["guild"]
             )
-            if mission:
-                missionend = mission[1]
-            else:
-                missionend = None
-            background = profile["background"]
-            if background == "0":
-                background = "assets/profiles/Profile.png"
-            else:
-                async with timeout(10), self.bot.session.get(background) as r:
-                    if r.status == 200:
-                        background = BytesIO(await r.read())
-                        background.seek(0)
-                    else:
-                        background = "assets/profiles/Profile.png"
-            if profile["marriage"]:
-                marriage = (await rpgtools.lookup(self.bot, profile["marriage"])).split(
-                    "#"
-                )[0]
-            else:
-                marriage = "Not married"
-
-            sword = (
-                [sword["name"], sword["damage"]] if sword else ["None equipped", 0.00]
-            )
-            shield = (
-                [shield["name"], shield["armor"]] if shield else ["None equipped", 0.00]
-            )
-
-            damage, armor = await genstats(self.bot, targetid, sword[1], shield[1])
-            damage -= sword[1]
-            armor -= shield[1]
-            extras = (damage, armor)
-
-        thing = functools.partial(
-            rpgtools.profile_image,
-            profile,
-            sword,
-            shield,
-            mission,
-            missionend,
-            ranks,
-            profile["colour"],
-            background,
-            marriage,
-            guild,
-            extras,
-        )
-        output_buffer = await self.bot.loop.run_in_executor(None, thing)
-        await ctx.send(file=discord.File(fp=output_buffer, filename="Profile.png"))
+            damage, armor = await genstats(self.bot, targetid, sword["damage"] if sword else 0, shield["armor"] if shield else 0)
+            extras = (damage - sword["damage"], armor - shield["armor"])
+            sworddmg = f"{sword["damage"]}{' (+' + str(extras[0]) + ')' if extras[0] else ''}"
+            shielddef = f"{shield["armor"]}{' (+' + str(extras[1]) + ')' if extras[1] else ''}"
+            async with self.bot.trusted_session.post(f"{self.bot.config.okapi_url/api/genprofile", data={
+                "name": profile["name"],
+                "color": profile["colour"],
+                "image": profile["background"],
+                "money": f"{profile['money']}",
+                "pvpWins": f"{profile['pvpwins']}",
+                "ecoRank": f"{ranks[0]}",
+                "rank": f"{ranks[1]},
+                "level": rpgtools.xptolevel(profile["xp"]),
+                "swordDamage": sworddmg,
+                "shieldDamage": shielddef, # Dini you fucked up
+                "swordName": sword["name"] if sword else "None Equipped",
+                "shieldName": shield["name"] if shield else "None Equipped",
+                "married": await rpgtools.lookup(self.bot, profile["marriage"]) or "Not Married",
+                "guild": guild,
+                "cast": profile["class"],
+                "icon": self.bot.get_class_line(profile["class"]).lower(),
+                "mission": f"{mission[0]} - {mission[1] if not mission[2] else 'Finished'}" if mission else "No Mission",
+            }) as req:
+                img = BytesIO(await req.read())
+        await ctx.send(file=discord.File(fp=img, filename="Profile.png"))
 
     @commands.command(aliases=["p2", "pp"])
-    async def profile2(self, ctx, target: User = None):
+    async def profile2(self, ctx, target: User = Author):
         """View someone's profile, not image based."""
-        target = target or ctx.author
         rank_money, rank_xp = await self.bot.get_ranks_for(target)
         sword, shield = await self.bot.get_equipped_items_for(target)
         async with self.bot.pool.acquire() as conn:
@@ -320,18 +271,18 @@ class Profile(commands.Cog):
             if not item or not item2:
                 await self.bot.reset_cooldown(ctx)
                 return await ctx.send("You don't own both of these items.")
-            if item[4] == "Sword":
-                stat1 = ("damage", item[5])
-            elif item[4] == "Shield":
-                stat1 = ("armor", item[6])
-            if item2[4] == "Sword":
-                stat2 = ("damage", item2[5])
-            elif item2[4] == "Shield":
-                stat2 = ("armor", item2[6])
+            if item["type"] == "Sword":
+                stat1 = ("damage", item["damage"])
+            elif item["type"] == "Shield":
+                stat1 = ("armor", item["armor"])
+            if item2["type"] == "Sword":
+                stat2 = ("damage", item2["damage"])
+            elif item2["type"] == "Shield":
+                stat2 = ("armor", item2["armor"])
             if stat2[1] < stat1[1] - 5 or stat2[1] > stat1[1] + 5:
                 await self.bot.reset_cooldown(ctx)
                 return await ctx.send(
-                    f"The seconds item's stat must be in the range of `{stat1[1] - 5}` to `{stat1[1] + 5}` to upgrade an item with the stat of `{stat1[1]}`."
+                    f"The second item's stat must be in the range of `{stat1[1] - 5}` to `{stat1[1] + 5}` to upgrade an item with the stat of `{stat1[1]}`."
                 )
             if stat1[1] > 40:
                 await self.bot.reset_cooldown(ctx)
@@ -362,10 +313,10 @@ class Profile(commands.Cog):
                 return await ctx.send(f"You don't own an item with the ID `{itemid}`.")
             if item["type"] == "Sword":
                 stattoupgrade = "damage"
-                pricetopay = int(item[5] * 250)
+                pricetopay = int(item["damage"] * 250)
             elif item["type"] == "Shield":
                 stattoupgrade = "armor"
-                pricetopay = int(item[6] * 250)
+                pricetopay = int(item["armor"] * 250)
             if int(item[stattoupgrade]) > 40:
                 return await ctx.send(
                     "Your weapon already reached the maximum upgrade level."
@@ -375,15 +326,7 @@ class Profile(commands.Cog):
                 f"You are too poor to upgrade this item. The upgrade costs **${pricetopay}**, but you only have **${ctx.character_data['money']}**."
             )
 
-        def check(m):
-            return m.content.lower() == "confirm" and m.author == ctx.author
-
-        await ctx.send(
-            f"Are you sure? Type `confirm` to improve your weapon for **${pricetopay}**"
-        )
-        try:
-            await self.bot.wait_for("message", check=check, timeout=30)
-        except asyncio.TimeoutError:
+        if not await ctx.confirm(f"Are you sure to upgrade this item: {item['name']}?"):
             await self.bot.reset_cooldown(ctx)
             return await ctx.send("Weapon upgrade cancelled.")
         if not await checks.has_money(self.bot, ctx.author.id, pricetopay):
@@ -430,53 +373,36 @@ class Profile(commands.Cog):
         await ctx.send(
             "What shall your character's name be? (Minimum 3 Characters, Maximum 20)"
         )
+        def mycheck(amsg):
+            return amsg.author == ctx.author
         try:
-
-            def mycheck(amsg):
-                return amsg.author == ctx.author
-
             name = await self.bot.wait_for("message", timeout=60, check=mycheck)
-            name = name.content.strip()
-            if len(name) > 2 and len(name) < 21:
-                async with self.bot.pool.acquire() as conn:
-                    await conn.execute(
-                        'UPDATE profile SET "name"=$1 WHERE "user"=$2;',
-                        name,
-                        ctx.author.id,
-                    )
-                await ctx.send("Character name updated.")
-            elif len(name) < 3:
-                await ctx.send("Character names must be at least 3 characters!")
-            elif len(name) > 20:
-                await ctx.send("Character names mustn't exceed 20 characters!")
-            else:
-                await ctx.send(
-                    "An unknown error occured while checking your name. Try again!"
-                )
         except asyncio.TimeoutError:
             await ctx.send(
                 f"Timeout expired. Enter `{ctx.prefix}{ctx.command}` again to retry!"
             )
+        name = name.content
+        if len(name) > 2 and len(name) < 21:
+            await self.bot.pool.execute(
+                'UPDATE profile SET "name"=$1 WHERE "user"=$2;',
+                name,
+                ctx.author.id,
+            )
+            await ctx.send("Character name updated.")
+        elif len(name) < 3:
+            await ctx.send("Character names must be at least 3 characters!")
+        elif len(name) > 20:
+            await ctx.send("Character names mustn't exceed 20 characters!")
 
     @checks.has_char()
     @commands.command(aliases=["rm", "del"])
     async def delete(self, ctx):
         """Deletes your character."""
-
-        def mycheck(amsg):
-            return (
-                amsg.content.strip() == "deletion confirm" and amsg.author == ctx.author
-            )
-
-        await ctx.send(
+        if not await ctx.confirm(
             "Are you sure? Type `deletion confirm` in the next 15 seconds to confirm."
-        )
-        try:
-            await self.bot.wait_for("message", timeout=15, check=mycheck)
-        except asyncio.TimeoutError:
+        ):
             return await ctx.send("Cancelled deletion of your character.")
         async with self.bot.pool.acquire() as conn:
-            await conn.execute('DELETE FROM boosters WHERE "user"=$1;', ctx.author.id)
             g = await conn.fetchval(
                 'DELETE FROM guild WHERE "leader"=$1 RETURNING id;', ctx.author.id
             )
