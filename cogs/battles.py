@@ -185,7 +185,7 @@ class Battles(commands.Cog):
         def is_valid_move(r, u):
             return (
                 str(r.emoji) in moves
-                and msg.author in PLAYERS
+                and u in PLAYERS
                 and r.message.id == last.id
             )
 
