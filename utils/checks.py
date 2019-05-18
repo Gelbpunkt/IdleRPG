@@ -14,10 +14,12 @@ class NoCharacter(commands.CheckFailure):
 
     pass
 
+
 class NeedsNoCharacter(commands.CheckFailure):
     """Exception raised when a command requires you to have no character."""
 
     pass
+
 
 class NoGuild(commands.CheckFailure):
     """Exception raised when a user has no guild."""
@@ -67,7 +69,6 @@ def has_char():
         raise NoCharacter()
 
     return commands.check(predicate)
-
 
 
 def has_no_char():

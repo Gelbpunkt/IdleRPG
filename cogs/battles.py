@@ -183,11 +183,7 @@ class Battles(commands.Cog):
         last = None
 
         def is_valid_move(r, u):
-            return (
-                str(r.emoji) in moves
-                and u in PLAYERS
-                and r.message.id == last.id
-            )
+            return str(r.emoji) in moves and u in PLAYERS and r.message.id == last.id
 
         while HP[0] > 0 and HP[1] > 0:
             last = await ctx.send(

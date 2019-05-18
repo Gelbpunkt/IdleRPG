@@ -70,7 +70,7 @@ class Guild(commands.Cog):
             name="Current Member Count",
             value=f"{membercount}/{guild['memberlimit']} Members",
         )
-        leader = await rpgtools.lookup(self.bot, guild["owner"])
+        leader = await rpgtools.lookup(self.bot, guild["leader"])
         embed.add_field(name="Leader", value=f"{leader}")
         embed.add_field(
             name="Guild Bank",
@@ -220,7 +220,7 @@ class Guild(commands.Cog):
             return await ctx.send("Target is not a member of your guild.")
         if ctx.user_data["guildrank"] == "Officer":
             return await ctx.send("This user is already an officer of your guild.")
-        await self.bot.po.execute(
+        await self.bot.pool.execute(
             'UPDATE profile SET guildrank=$1 WHERE "user"=$2;', "Officer", member.id
         )
         await ctx.send(f"Done! {member} has been promoted to the rank of `Officer`.")

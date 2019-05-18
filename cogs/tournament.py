@@ -14,7 +14,7 @@ from discord.ext import commands
 from classes.converters import IntFromTo
 from cogs.help import chunks
 from cogs.shard_communication import user_on_cooldown as user_cooldown
-from utils.checks import has_char, has_money, user_has_money
+from utils.checks import has_char, has_money
 
 
 class Tournament(commands.Cog):
@@ -34,8 +34,14 @@ class Tournament(commands.Cog):
         participants = [ctx.author]
         acceptingentries = True
 
+        await msg.add_reaction("\U00002694")
+
         def simplecheck(r, u):
-            return r.message.id == msg.id and u not in participants
+            return (
+                r.message.id == msg.id
+                and u not in participants
+                and str(r.emoji) == "\U00002694"
+            )
 
         while acceptingentries:
             try:
@@ -48,7 +54,7 @@ class Tournament(commands.Cog):
                     return await ctx.send(
                         f"Noone joined your tournament, {ctx.author.mention}."
                     )
-            if await user_has_money(self.bot, u.id, prize):
+            if await has_money(self.bot, u.id, prize):
                 participants.append()
                 await ctx.send(f"{u.mention} joined the tournament.")
             else:
