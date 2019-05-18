@@ -56,7 +56,7 @@ class Owner(commands.Cog):
 
         try:
             self.bot.reload_extension(cog)
-         except Exception as e:
+        except Exception as e:
             await ctx.send(f"**`ERROR:`** {type(e).__name__} - {e}")
         else:
             await ctx.send("**`SUCCESS`**")
