@@ -5,8 +5,8 @@ Copyright (C) 2018-2019 Diniboy and Gelbpunkt
 This software is dual-licensed under the GNU Affero General Public License for non-commercial and the Travitia License for commercial use.
 For more information, see README.md and LICENSE.md.
 """
-from asyncio import TimeoutError
 import re
+from asyncio import TimeoutError
 
 import discord
 from discord.ext import commands
@@ -27,14 +27,24 @@ class Context(commands.Context):
 
     async def confirm(self, message, timeout=20, user=None):
         user = user or self.author
-        emojis = ["\U0000274e", "\U00002705"] # no, yes
-        msg = await self.send(embed=discord.Embed(title="Confirmation", description=message, colour=discord.Colour.blurple()))
+        emojis = ["\U0000274e", "\U00002705"]  # no, yes
+        msg = await self.send(
+            embed=discord.Embed(
+                title="Confirmation",
+                description=message,
+                colour=discord.Colour.blurple(),
+            )
+        )
         for emoji in emojis:
             await msg.add_reaction(emoji)
+
         def check(r, u):
             return u == user and str(r.emoji) in emojis and r.message.id == msg.id
+
         try:
-            reaction, _ = await self.bot.wait_for("reaction_add", check=check, timeout=timeout)
+            reaction, _ = await self.bot.wait_for(
+                "reaction_add", check=check, timeout=timeout
+            )
         except TimeoutError:
             raise NoChoice()
         return bool(emojis.index(str(reaction.emoji)))

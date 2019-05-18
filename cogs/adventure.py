@@ -87,14 +87,14 @@ class Adventure(commands.Cog):
         )
         HP = 100
         PROGRESS = 0  # percent
-        emojis = {"\U00002694": "attack", "\U0001f6e1": "defend", "\U00002764": "recover"}
+        emojis = {
+            "\U00002694": "attack",
+            "\U0001f6e1": "defend",
+            "\U00002764": "recover",
+        }
 
         def is_valid_move(r, u):
-            return (
-                r.message.id == msg.id
-                and u == ctx.author
-                and str(r.emoji) in emojis
-            )
+            return r.message.id == msg.id and u == ctx.author and str(r.emoji) in emojis
 
         ENEMY_HP = 100
 
@@ -114,7 +114,7 @@ HP......: {ENEMY_HP}
 
 Use the reactions attack, defend or recover
 ```
-""",
+"""
             )
             try:
                 reaction, _ = await self.bot.wait_for(
@@ -168,7 +168,13 @@ Use the reactions attack, defend or recover
         if HP < 1:
             return await ctx.send("You died.")
 
-        item = await self.bot.create_random_item(minstat=1, maxstat=(SWORD + 5 if SWORD < 26 else 30), minvalue=1, maxvalue=250, owner=ctx.author)
+        item = await self.bot.create_random_item(
+            minstat=1,
+            maxstat=(SWORD + 5 if SWORD < 26 else 30),
+            minvalue=1,
+            maxvalue=250,
+            owner=ctx.author,
+        )
         embed = discord.Embed(
             title="You gained an item!",
             description="You found a new item when finishing an active adventure!",
@@ -179,7 +185,7 @@ Use the reactions attack, defend or recover
         embed.add_field(name="Name", value=item["name"], inline=False)
         embed.add_field(name="Type", value=item["type"], inline=False)
         embed.add_field(name="Damage", value=item["damage"], inline=True)
-        embed.add_field(name="Armor", value=item["armor'], inline=True)
+        embed.add_field(name="Armor", value=item["armor"], inline=True)
         embed.add_field(name="Value", value=f"${item['value']}", inline=False)
         embed.set_footer(text=f"Your HP were {HP}")
         await ctx.send(embed=embed)
@@ -220,7 +226,13 @@ Use the reactions attack, defend or recover
                 else:
                     gold = random.randint(1, 30) * num
                 xp = random.randint(200, 1000) * num
-                item = await self.bot.create_random_item(minstat=1, maxstat=maxstat, minvalue=num, maxstat=num * 50, owner=ctx.author)
+                item = await self.bot.create_random_item(
+                    minstat=1,
+                    maxstat=maxstat,
+                    minvalue=num,
+                    maxvalue=num * 50,
+                    owner=ctx.author,
+                )
                 async with self.bot.pool.acquire() as conn:
                     # marriage partner should get 50% of the money
                     if ctx.character_data["marriage"]:

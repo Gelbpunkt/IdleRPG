@@ -16,8 +16,8 @@ import aiohttp
 import aioredis
 import asyncpg
 import discord
-from discord.ext import commands
 import fantasy_names as fn
+from discord.ext import commands
 
 import config
 from classes.context import Context
@@ -199,7 +199,9 @@ class Bot(commands.AutoShardedBot):
     async def delete_guild_adventure(self, guild):
         await self.redis.execute("DEL", f"guildadv:{guild}")
 
-    async def create_item(self, name, value, type_, damage, armor, owner, equipped=False):
+    async def create_item(
+        self, name, value, type_, damage, armor, owner, equipped=False
+    ):
         owner = owner.id if isinstance(owner, (discord.User, discord.Member)) else user
         async with self.pool.acquire() as conn:
             item = await conn.fetchrow(
@@ -218,7 +220,9 @@ class Bot(commands.AutoShardedBot):
             )
         return item
 
-    async def create_random_item(self, minstat, maxstat, minvalue, maxvalue, owner, insert=True):
+    async def create_random_item(
+        self, minstat, maxstat, minvalue, maxvalue, owner, insert=True
+    ):
         owner = owner.id if isinstance(owner, (discord.User, discord.Member)) else owner
         item = {}
         item["owner"] = owner
@@ -237,7 +241,7 @@ class Bot(commands.AutoShardedBot):
             return "Elementalist"
         elif class_ in ["Warrior", "Swordsman", "Knight", "Warlord", "Berserker"]:
             return "Warrior"
-        elif class in ["Thief", "Rogue", "Chunin", "Renegade", "Assassin"]:
+        elif class_ in ["Thief", "Rogue", "Chunin", "Renegade", "Assassin"]:
             return "Thief"
-        elif class in ["Caretaker", "Trainer", "Bowman", "Hunter", "Ranger"]:
+        elif class_ in ["Caretaker", "Trainer", "Bowman", "Hunter", "Ranger"]:
             return "Ranger"

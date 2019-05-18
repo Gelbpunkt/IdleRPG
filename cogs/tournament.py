@@ -35,14 +35,13 @@ class Tournament(commands.Cog):
         acceptingentries = True
 
         def simplecheck(r, u):
-            return (
-                r.message.id == msg.id
-                and u not in participants
-            )
+            return r.message.id == msg.id and u not in participants
 
         while acceptingentries:
             try:
-                r, u = await self.bot.wait_for("reaction_add", timeout=30, check=simplecheck)
+                r, u = await self.bot.wait_for(
+                    "reaction_add", timeout=30, check=simplecheck
+                )
             except asyncio.TimeoutError:
                 acceptingentries = False
                 if len(participants) < 2:
@@ -71,8 +70,16 @@ class Tournament(commands.Cog):
                 await asyncio.sleep(2)
                 sw1, sh1 = await self.bot.get_equipped_items_for(match[0])
                 sw2, sh2 = await self.bot.get_equipped_items_for(match[1])
-                val1 = (sw1["damage"] if sw1 else 0) + (sh1["armor"] if sh1 else 0) + random.randint(1, 7)
-                val2 = (sw2["damage"] if sw2 else 0) + (sh2["armor"] if sh2 else 0) + random.randint(1, 7)
+                val1 = (
+                    (sw1["damage"] if sw1 else 0)
+                    + (sh1["armor"] if sh1 else 0)
+                    + random.randint(1, 7)
+                )
+                val2 = (
+                    (sw2["damage"] if sw2 else 0)
+                    + (sh2["armor"] if sh2 else 0)
+                    + random.randint(1, 7)
+                )
                 if val1 > val2:
                     winner = match[0]
                     looser = match[1]
@@ -88,7 +95,9 @@ class Tournament(commands.Cog):
 
             await ctx.send("Round Done!")
 
-        msg = await ctx.send(f"Tournament ended! The winner is {participants[0].mention}.")
+        msg = await ctx.send(
+            f"Tournament ended! The winner is {participants[0].mention}."
+        )
         if not await has_money(self.bot, ctx.author.id, prize):
             return await ctx.send("The creator spent money, prize can't be given!")
         async with self.bot.pool.acquire() as conn:

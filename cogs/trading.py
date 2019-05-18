@@ -165,15 +165,15 @@ class Trading(commands.Cog):
             discord.Embed(
                 title="IdleRPG Shop",
                 description=f"Use `{ctx.prefix}buy {item['id']}` to buy this.",
-                colour = discord.Colour.blurple(),
-            ).add_field(name="Name", value=item["name"])
+                colour=discord.Colour.blurple(),
+            )
+            .add_field(name="Name", value=item["name"])
             .add_field(name="Type", value=item["type"])
             .add_field(name="Damage", value=item["damage"])
             .add_field(name="Armor", value=item["armor"])
             .add_field(name="Value", value=f"${item['value']}")
             .add_field(name="Price", value=f"${item['price']}")
             .set_footer(text=f"Item {idx + 1} of {len(items)}")
-            
             for idx, item in enumerate(items)
         ]
         await self.bot.paginator.Paginator(extras=items).paginate(ctx)
@@ -181,7 +181,9 @@ class Trading(commands.Cog):
     @has_char()
     @user_cooldown(180)
     @commands.command()
-    async def offer(self, ctx, itemid: int, price: IntFromTo(0, 100_000_000), user: discord.Member):
+    async def offer(
+        self, ctx, itemid: int, price: IntFromTo(0, 100_000_000), user: discord.Member
+    ):
         """Offer an item to a specific user."""
         item = await self.bot.pool.fetchrow(
             "SELECT * FROM inventory i JOIN allitems ai ON (i.item=ai.id) WHERE ai.id=$1 AND ai.owner=$2;",
@@ -192,11 +194,13 @@ class Trading(commands.Cog):
             return await ctx.send(f"You don't have an item with the ID `{itemid}`.")
 
         if item["equipped"]:
-            if not await ctx.confirm(f"Are you sure you want to sell your equipped {item['name']}?"):
+            if not await ctx.confirm(
+                f"Are you sure you want to sell your equipped {item['name']}?"
+            ):
                 await ctx.send("Item selling cancelled.")
 
         if not await ctx.confirm(
-            f"{user.mention}, {ctx.author.mention} offered you an item! React to buy it! The price is **${price}**. You have **2 Minutes** to accept the trade or the offer will be canceled."
+            f"{user.mention}, {ctx.author.mention} offered you an item! React to buy it! The price is **${price}**. You have **2 Minutes** to accept the trade or the offer will be canceled.",
             user=user,
             timeout=120,
         ):
@@ -246,7 +250,10 @@ class Trading(commands.Cog):
             if not item:
                 return await ctx.send(f"You don't own an item with the ID: {itemid}")
             if item["equipped"]:
-                if not await ctx.confirm(f"Are you sure you want to sell your equipped {item['name']}?", timeout=6):
+                if not await ctx.confirm(
+                    f"Are you sure you want to sell your equipped {item['name']}?",
+                    timeout=6,
+                ):
                     return await ctx.send("Cancelled.")
             await conn.execute(
                 'UPDATE profile SET money=money+$1 WHERE "user"=$2;',
@@ -289,19 +296,19 @@ class Trading(commands.Cog):
             )
         if not items:
             return await ctx.send("You don't have any pending shop offers.")
-items = [
+        items = [
             discord.Embed(
                 title="IdleRPG Shop",
                 description=f"Use `{ctx.prefix}buy {item['id']}` to buy this.",
-                colour = discord.Colour.blurple(),
-            ).add_field(name="Name", value=item["name"])
+                colour=discord.Colour.blurple(),
+            )
+            .add_field(name="Name", value=item["name"])
             .add_field(name="Type", value=item["type"])
             .add_field(name="Damage", value=item["damage"])
             .add_field(name="Armor", value=item["armor"])
             .add_field(name="Value", value=f"${item['value']}")
             .add_field(name="Price", value=f"${item['price']}")
             .set_footer(text=f"Item {idx + 1} of {len(items)}")
-            
             for idx, item in enumerate(items)
         ]
         await self.bot.paginator.Paginator(extras=items).paginate(ctx)
@@ -337,16 +344,17 @@ items = [
             title="The Trader",
             footer="Hit a button to buy it",
             return_index=True,
-            entries=[f"**{i[4]} - {i[1] if i[0] == 'Sword' else i[2]} {'Damage' if i[0] == 'Sword' else 'Armor'} - **${i[5]}**"  for i in offers]
+            entries=[
+                f"**{i[4]} - {i[1] if i[0] == 'Sword' else i[2]} {'Damage' if i[0] == 'Sword' else 'Armor'} - **${i[5]}**"
+                for i in offers
+            ],
         )
-        
+
         item = offers[offerid]
         if not await has_money(self.bot, ctx.author.id, item[5]):
             return await ctx.send("You are too poor to buy this item.")
         await self.bot.pool.execute(
-            'UPDATE profile SET money=money-$1 WHERE "user"=$2;',
-            item[5],
-            ctx.author.id,
+            'UPDATE profile SET money=money-$1 WHERE "user"=$2;', item[5], ctx.author.id
         )
         await self.bot.create_item(
             type_=item[0],

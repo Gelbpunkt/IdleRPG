@@ -69,9 +69,9 @@ class Marriage(commands.Cog):
             )
             if check1 and check2:
                 await conn.execute(
-                     'UPDATE profile SET "marriage"=$1 WHERE "user"=$2;',
-                     partner.id,
-                     ctx.author.id,
+                    'UPDATE profile SET "marriage"=$1 WHERE "user"=$2;',
+                    partner.id,
+                    ctx.author.id,
                 )
                 await conn.execute(
                     'UPDATE profile SET "marriage"=$1 WHERE "user"=$2;',
@@ -171,9 +171,16 @@ class Marriage(commands.Cog):
             ("Precious Gemstone Collection :gem:", 75000),
             ("Planet :earth_americas:", 1_000_000),
         ]
-        items_str = "\n".join([f"{idx + 1}.) {item} ... Price: **${price}**" for idx, (item, price) in enumerate(items)])
+        items_str = "\n".join(
+            [
+                f"{idx + 1}.) {item} ... Price: **${price}**"
+                for idx, (item, price) in enumerate(items)
+            ]
+        )
         if not item:
-            return await ctx.send(f"{items_str}\n\nTo buy one of these items for your partner, use `{ctx.prefix}spoil shopid`")
+            return await ctx.send(
+                f"{items_str}\n\nTo buy one of these items for your partner, use `{ctx.prefix}spoil shopid`"
+            )
         item = items[item - 1]
         if ctx.character_data["money"] < item[1]:
             return await ctx.send("You are too poor to buy this.")
@@ -213,9 +220,7 @@ class Marriage(commands.Cog):
             await self.bot.reset_cooldown(ctx)
             return await ctx.send("You are not married yet.")
         await self.bot.pool.execute(
-            'UPDATE profile SET lovescore=lovescore+$1 WHERE "user"=$2;',
-            num,
-            marriage,
+            'UPDATE profile SET lovescore=lovescore+$1 WHERE "user"=$2;', num, marriage
         )
 
         partner = await self.bot.get_user_global(marriage)
@@ -244,10 +249,9 @@ class Marriage(commands.Cog):
         if not marriage:
             return await ctx.send("Can't produce a child alone, can you?")
         names = await self.bot.pool.fetch(
-            'SELECT name FROM children WHERE "mother"=$1 OR "father"=$1;',
-            ctx.author.id,
+            'SELECT name FROM children WHERE "mother"=$1 OR "father"=$1;', ctx.author.id
         )
-        elif len(names) >= 10:
+        if len(names) >= 10:
             return await ctx.send("You already have 10 children.")
         names = [name["name"] for name in names]
         if not await ctx.confirm(
@@ -299,8 +303,7 @@ class Marriage(commands.Cog):
         if not marriage:
             return await ctx.send("Lonely...")
         children = await self.bot.pool.fetch(
-            'SELECT * FROM children WHERE "mother"=$1 OR "father"=$1;',
-            ctx.author.id,
+            'SELECT * FROM children WHERE "mother"=$1 OR "father"=$1;', ctx.author.id
         )
         em = discord.Embed(
             title="Your family",
@@ -327,8 +330,7 @@ class Marriage(commands.Cog):
         if not ctx.character_data["marriage"]:
             return await ctx.send("You're lonely.")
         children = await self.bot.pool.fetch(
-            'SELECT * FROM children WHERE "mother"=$1 OR "father"=$1;',
-            ctx.author.id,
+            'SELECT * FROM children WHERE "mother"=$1 OR "father"=$1;', ctx.author.id
         )
         if not children:
             return await ctx.send("You don't have kids yet.")
@@ -354,7 +356,7 @@ class Marriage(commands.Cog):
             )
             await self.bot.pool.execute(
                 'DELETE FROM children WHERE "name"=$1 AND ("mother"=$2 OR "father"=$2);',
-                target['name'],
+                target["name"],
                 ctx.author.id,
             )
             return await ctx.send(
@@ -363,14 +365,17 @@ class Marriage(commands.Cog):
         elif event == "age":
             await self.bot.pool.execute(
                 'UPDATE children SET age=age+1 WHERE "name"=$1 AND ("mother"=$2 OR "father"=$2);',
-                target['name'],
+                target["name"],
                 ctx.author.id,
             )
-            return await ctx.send(f"{target['name']} is now {target['age'] + 1} years old.")
+            return await ctx.send(
+                f"{target['name']} is now {target['age'] + 1} years old."
+            )
         elif event == "namechange":
             await ctx.send(f"{target['name']} can be renamed! Enter a new name:")
             names = [c["name"] for c in children]
             names.remove(target["name"])
+
             def check(msg):
                 return (
                     msg.author.id in [ctx.author.id, marriage]

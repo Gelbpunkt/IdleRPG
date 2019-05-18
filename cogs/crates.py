@@ -43,7 +43,9 @@ class Crates(commands.Cog):
         else:
             minstat, maxstat = (1, 9)
 
-        item = await self.bot.create_random_item(minstat=minstat, maxstat=maxstat, minvalue=1, maxvalue=250, owner=ctx.author)
+        item = await self.bot.create_random_item(
+            minstat=minstat, maxstat=maxstat, minvalue=1, maxvalue=250, owner=ctx.author
+        )
 
         embed = discord.Embed(
             title="You gained an item!",

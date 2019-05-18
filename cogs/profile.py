@@ -75,7 +75,9 @@ class Profile(commands.Cog):
                 f"Successfully added your character **{name}**! Now use `{ctx.prefix}profile` to view your character!"
             )
         elif len(name) < 3 or len(name) > 20:
-            await ctx.send("Character names must be at least 3 characters and up to 20.")
+            await ctx.send(
+                "Character names must be at least 3 characters and up to 20."
+            )
             await self.bot.reset_cooldown(ctx)
 
     @commands.command(aliases=["me", "p"])
@@ -95,29 +97,44 @@ class Profile(commands.Cog):
             guild = await conn.fetchval(
                 'SELECT name FROM guild WHERE "id"=$1;', profile["guild"]
             )
-            damage, armor = await genstats(self.bot, targetid, sword["damage"] if sword else 0, shield["armor"] if shield else 0)
+            damage, armor = await genstats(
+                self.bot,
+                targetid,
+                sword["damage"] if sword else 0,
+                shield["armor"] if shield else 0,
+            )
             extras = (damage - sword["damage"], armor - shield["armor"])
-            sworddmg = f"{sword['damage']}{' (+' + str(extras[0]) + ')' if extras[0] else ''}"
-            shielddef = f"{shield['armor']}{' (+' + str(extras[1]) + ')' if extras[1] else ''}"
-            async with self.bot.trusted_session.post(f"{self.bot.config.okapi_url/api/genprofile", data={
-                "name": profile["name"],
-                "color": profile["colour"],
-                "image": profile["background"],
-                "money": f"{profile['money']}",
-                "pvpWins": f"{profile['pvpwins']}",
-                "ecoRank": f"{ranks[0]}",
-                "rank": f"{ranks[1]},
-                "level": rpgtools.xptolevel(profile["xp"]),
-                "swordDamage": sworddmg,
-                "shieldDamage": shielddef, # Dini you fucked up
-                "swordName": sword["name"] if sword else "None Equipped",
-                "shieldName": shield["name"] if shield else "None Equipped",
-                "married": await rpgtools.lookup(self.bot, profile["marriage"]) or "Not Married",
-                "guild": guild,
-                "cast": profile["class"],
-                "icon": self.bot.get_class_line(profile["class"]).lower(),
-                "mission": f"{mission[0]} - {mission[1] if not mission[2] else 'Finished'}" if mission else "No Mission",
-            }) as req:
+            sworddmg = (
+                f"{sword['damage']}{' (+' + str(extras[0]) + ')' if extras[0] else ''}"
+            )
+            shielddef = (
+                f"{shield['armor']}{' (+' + str(extras[1]) + ')' if extras[1] else ''}"
+            )
+            async with self.bot.trusted_session.post(
+                f"{self.bot.config.okapi_url}/api/genprofile",
+                data={
+                    "name": profile["name"],
+                    "color": profile["colour"],
+                    "image": profile["background"],
+                    "money": f"{profile['money']}",
+                    "pvpWins": f"{profile['pvpwins']}",
+                    "ecoRank": f"{ranks[0]}",
+                    "rank": f"{ranks[1]}",
+                    "level": rpgtools.xptolevel(profile["xp"]),
+                    "swordDamage": sworddmg,
+                    "shieldDamage": shielddef,  # Dini you fucked up
+                    "swordName": sword["name"] if sword else "None Equipped",
+                    "shieldName": shield["name"] if shield else "None Equipped",
+                    "married": await rpgtools.lookup(self.bot, profile["marriage"])
+                    or "Not Married",
+                    "guild": guild,
+                    "cast": profile["class"],
+                    "icon": self.bot.get_class_line(profile["class"]).lower(),
+                    "mission": f"{mission[0]} - {mission[1] if not mission[2] else 'Finished'}"
+                    if mission
+                    else "No Mission",
+                },
+            ) as req:
                 img = BytesIO(await req.read())
         await ctx.send(file=discord.File(fp=img, filename="Profile.png"))
 
@@ -373,8 +390,10 @@ class Profile(commands.Cog):
         await ctx.send(
             "What shall your character's name be? (Minimum 3 Characters, Maximum 20)"
         )
+
         def mycheck(amsg):
             return amsg.author == ctx.author
+
         try:
             name = await self.bot.wait_for("message", timeout=60, check=mycheck)
         except asyncio.TimeoutError:
@@ -384,9 +403,7 @@ class Profile(commands.Cog):
         name = name.content
         if len(name) > 2 and len(name) < 21:
             await self.bot.pool.execute(
-                'UPDATE profile SET "name"=$1 WHERE "user"=$2;',
-                name,
-                ctx.author.id,
+                'UPDATE profile SET "name"=$1 WHERE "user"=$2;', name, ctx.author.id
             )
             await ctx.send("Character name updated.")
         elif len(name) < 3:

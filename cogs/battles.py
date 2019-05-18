@@ -23,7 +23,9 @@ class Battles(commands.Cog):
     @has_char()
     @user_cooldown(90)
     @commands.command()
-    async def battle(self, ctx, money: IntGreaterThan(-1), enemy: discord.Member = None):
+    async def battle(
+        self, ctx, money: IntGreaterThan(-1), enemy: discord.Member = None
+    ):
         """Battle against another player."""
         if enemy == ctx.author:
             return await ctx.send("You can't battle yourself.")
@@ -54,9 +56,13 @@ class Battles(commands.Cog):
 
         while seeking:
             try:
-                reaction, enemy = await self.bot.wait_for("reaction_add", timeout=60, check=check)
+                reaction, enemy = await self.bot.wait_for(
+                    "reaction_add", timeout=60, check=check
+                )
             except asyncio.TimeoutError:
-                return await ctx.send(f"Noone wanted to join your battle, {ctx.author.mention}!")
+                return await ctx.send(
+                    f"Noone wanted to join your battle, {ctx.author.mention}!"
+                )
             if await has_money(self.bot, enemy.id, money):
                 seeking = False
             else:
@@ -69,7 +75,7 @@ class Battles(commands.Cog):
         items_2 = await self.bot.get_equipped_items_for(enemy) or []
         stats = [
             sum([i["armor"] + i["damage"] for i in items_1]) + random.randint(1, 7),
-            sum([i["armor"] + i["damage"] for i in items_2]) + random.randint(1, 7)
+            sum([i["armor"] + i["damage"] for i in items_2]) + random.randint(1, 7),
         ]
         players = [ctx.author, enemy]
         if stats[0] == stats[1]:
@@ -103,7 +109,9 @@ class Battles(commands.Cog):
     @has_char()
     @user_cooldown(600)
     @commands.command()
-    async def activebattle(self, ctx, money: IntGreaterThan(-1), enemy: discord.Member = None):
+    async def activebattle(
+        self, ctx, money: IntGreaterThan(-1), enemy: discord.Member = None
+    ):
         """Reaction-based battle system."""
         if enemy == ctx.author:
             return await ctx.send("You can't battle yourself.")
@@ -134,9 +142,13 @@ class Battles(commands.Cog):
 
         while seeking:
             try:
-                reaction, enemy = await self.bot.wait_for("reaction_add", timeout=60, check=check)
+                reaction, enemy = await self.bot.wait_for(
+                    "reaction_add", timeout=60, check=check
+                )
             except asyncio.TimeoutError:
-                return await ctx.send(f"Noone wanted to join your battle, {ctx.author.mention}!")
+                return await ctx.send(
+                    f"Noone wanted to join your battle, {ctx.author.mention}!"
+                )
             if await has_money(self.bot, enemy.id, money):
                 seeking = False
             else:
@@ -158,10 +170,14 @@ class Battles(commands.Cog):
                 HP.append(100)
 
             d, a = await self.bot.get_equipped_items_for(p)
-            DAMAGE.append(int(d["damage"] )if d else 0)
+            DAMAGE.append(int(d["damage"]) if d else 0)
             ARMOR.append(int(a["armor"]) if a else 0)
 
-        moves = {"\U00002694": "attack", "\U0001f6e1": "defend", "\U00002764": "recover"}
+        moves = {
+            "\U00002694": "attack",
+            "\U0001f6e1": "defend",
+            "\U00002764": "recover",
+        }
 
         last = None
 

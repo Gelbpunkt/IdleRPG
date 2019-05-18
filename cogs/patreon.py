@@ -87,7 +87,10 @@ class Patreon(commands.Cog):
             return await ctx.send(
                 "I couldn't read that URL. Does it start with `http://` or `https://` and is either a png or jpeg?"
             )
-        async with self.bot.trusted_session.post(f"{self.bot.config.okapi_url}/api/genoverlay/{overlaytype}", data={"url": url}) as req:
+        async with self.bot.trusted_session.post(
+            f"{self.bot.config.okapi_url}/api/genoverlay/{overlaytype}",
+            data={"url": url},
+        ) as req:
             background = BytesIO(await req.read())
         headers = {"Authorization": f"Client-ID {self.bot.config.imgur_token}"}
         data = {"image": copy.copy(background)}
