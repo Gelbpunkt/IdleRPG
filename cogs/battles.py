@@ -49,6 +49,7 @@ class Battles(commands.Cog):
                 str(r.emoji) == "\U00002694"
                 and r.message.id == msg.id
                 and u != ctx.author
+                and not u.bot
             )
 
         await msg.add_reaction("\U00002694")
