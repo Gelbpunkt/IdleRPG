@@ -238,7 +238,7 @@ class Bot(commands.AutoShardedBot):
 
     def get_class_line(self, class_):
         if class_ in ["Mage", "Wizard", "Pyromancer", "Elementalist", "Dark Caster"]:
-            return "Elementalist"
+            return "Mage"
         elif class_ in ["Warrior", "Swordsman", "Knight", "Warlord", "Berserker"]:
             return "Warrior"
         elif class_ in ["Thief", "Rogue", "Chunin", "Renegade", "Assassin"]:
@@ -247,3 +247,5 @@ class Bot(commands.AutoShardedBot):
             return "Ranger"
         elif class_ in ["Novice", "Proficient", "Artisan", "Master", "Paragon"]:
             return "Paragon"
+        else:
+            return "None"

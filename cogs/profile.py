@@ -96,13 +96,15 @@ class Profile(commands.Cog):
             guild = await conn.fetchval(
                 'SELECT name FROM guild WHERE "id"=$1;', profile["guild"]
             )
+            v1 = sword["damage"] if sword else 0
+            v2 = shield["armor"] if shield else 0
             damage, armor = await genstats(
                 self.bot,
                 targetid,
-                sword["damage"] if sword else 0,
-                shield["armor"] if shield else 0,
+                v1,
+                v2,
             )
-            extras = (damage - sword["damage"], armor - shield["armor"])
+            extras = (damage - v1, armor - v2)
             sworddmg = (
                 f"{sword['damage']}{' (+' + str(extras[0]) + ')' if extras[0] else ''}"
             )
@@ -127,7 +129,7 @@ class Profile(commands.Cog):
                     "married": await rpgtools.lookup(self.bot, profile["marriage"])
                     or "Not Married",
                     "guild": guild,
-                    "cast": profile["class"],
+                    "class": profile["class"],
                     "icon": self.bot.get_class_line(profile["class"]).lower(),
                     "mission": f"{mission[0]} - {mission[1] if not mission[2] else 'Finished'}"
                     if mission
@@ -415,7 +417,7 @@ class Profile(commands.Cog):
     async def delete(self, ctx):
         """Deletes your character."""
         if not await ctx.confirm(
-            "Are you sure? Type `deletion confirm` in the next 15 seconds to confirm."
+            "Are you sure? React in the next 30 seconds to confirm."
         ):
             return await ctx.send("Cancelled deletion of your character.")
         async with self.bot.pool.acquire() as conn:
