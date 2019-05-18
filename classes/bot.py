@@ -231,3 +231,13 @@ class Bot(commands.AutoShardedBot):
         if insert:
             return await self.create_item(**item)
         return item
+
+    def get_class_line(self, class_):
+        if class_ in ["Mage", "Wizard", "Pyromancer", "Elementalist", "Dark Caster"]:
+            return "Elementalist"
+        elif class_ in ["Warrior", "Swordsman", "Knight", "Warlord", "Berserker"]:
+            return "Warrior"
+        elif class in ["Thief", "Rogue", "Chunin", "Renegade", "Assassin"]:
+            return "Thief"
+        elif class in ["Caretaker", "Trainer", "Bowman", "Hunter", "Ranger"]:
+            return "Ranger"
