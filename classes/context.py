@@ -11,6 +11,8 @@ import re
 import discord
 from discord.ext import commands
 
+from utils.paginator import NoChoice
+
 
 class Context(commands.Context):
     """
@@ -33,7 +35,7 @@ class Context(commands.Context):
         try:
             reaction, _ = await self.bot.wait_for("reaction_add", check=check, timeout=timeout)
         except TimeoutError:
-            return False
+            raise NoChoice()
         return bool(emojis.index(str(reaction.emoji)))
 
     async def send(self, content=None, *args, **kwargs):
