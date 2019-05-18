@@ -259,7 +259,8 @@ class Marriage(commands.Cog):
             return await ctx.send("You already have 10 children.")
         names = [name["name"] for name in names]
         if not await ctx.confirm(
-            f"<@{marriage}>, do you want to make a child with {ctx.author.mention}?"
+            f"<@{marriage}>, do you want to make a child with {ctx.author.mention}?",
+            user=self.bot.get_user(marriage),
         ):
             return await ctx.send("O.o not in the mood today?")
 
