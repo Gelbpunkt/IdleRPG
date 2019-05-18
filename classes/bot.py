@@ -199,7 +199,7 @@ class Bot(commands.AutoShardedBot):
     async def delete_guild_adventure(self, guild):
         await self.redis.execute("DEL", f"guildadv:{guild}")
 
-    async def create_item(self, name, value, type_, damage, armor, owner):
+    async def create_item(self, name, value, type_, damage, armor, owner, equipped=False):
         owner = owner.id if isinstance(owner, (discord.User, discord.Member)) else user
         async with self.pool.acquire() as conn:
             item = await conn.fetchrow(
@@ -214,7 +214,7 @@ class Bot(commands.AutoShardedBot):
             await conn.execute(
                 'INSERT INTO inventory ("item", "equipped") VALUES ($1, $2);',
                 item["id"],
-                False,
+                equipped,
             )
         return item
 
