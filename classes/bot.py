@@ -245,3 +245,5 @@ class Bot(commands.AutoShardedBot):
             return "Thief"
         elif class_ in ["Caretaker", "Trainer", "Bowman", "Hunter", "Ranger"]:
             return "Ranger"
+        elif class_ in ["Novice", "Proficient", "Artisan", "Master", "Paragon"]:
+            return "Paragon"
