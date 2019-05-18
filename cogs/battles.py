@@ -135,6 +135,7 @@ class Battles(commands.Cog):
                 str(r.emoji) == "\U00002694"
                 and r.message.id == msg.id
                 and u != ctx.author
+                and not u.bot
             )
 
         await msg.add_reaction("\U00002694")
@@ -161,7 +162,7 @@ class Battles(commands.Cog):
         ARMOR = []
 
         for p in PLAYERS:
-            c = await self.bot.poll.fetchval(
+            c = await self.bot.pool.fetchval(
                 'SELECT class FROM profile WHERE "user"=$1;', p.id
             )
             if c in ["Caretaker", "Trainer", "Bowman", "Hunter", "Ranger"]:
