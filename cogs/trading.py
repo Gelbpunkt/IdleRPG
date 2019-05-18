@@ -137,7 +137,7 @@ class Trading(commands.Cog):
                 "Use either `All`, `Sword` or `Shield` as a type to filter for."
             )
         if itemtype == "All":
-            items = await self.bot.po.fetch(
+            items = await self.bot.pool.fetch(
                 'SELECT * FROM allitems ai JOIN market m ON (ai.id=m.item) WHERE m."price"<=$1 AND (ai."damage">=$2 OR ai."armor">=$3);',
                 highestprice,
                 minstat,
@@ -347,7 +347,7 @@ class Trading(commands.Cog):
                 f"**{i[4]} - {i[1] if i[0] == 'Sword' else i[2]} {'Damage' if i[0] == 'Sword' else 'Armor'} - **${i[5]}**"
                 for i in offers
             ],
-        )
+        ).paginate(ctx)
 
         item = offers[offerid]
         if not await has_money(self.bot, ctx.author.id, item[5]):
