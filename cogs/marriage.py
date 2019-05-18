@@ -384,7 +384,7 @@ class Marriage(commands.Cog):
             except asyncio.TimeoutError:
                 return await ctx.send("You didn't enter a name.")
             name = msg.content.replace("@", "@\u200b")
-            await self.bot.po.execute(
+            await self.bot.pool.execute(
                 'UPDATE children SET "name"=$1 WHERE "name"=$2 AND ("mother"=$3 OR "father"=$3);',
                 name,
                 target["name"],
