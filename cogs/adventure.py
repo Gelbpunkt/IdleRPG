@@ -224,7 +224,7 @@ Use the reactions attack, defend or recover
                 gold = random.randint(20 * (num - 1) or 1, 60 * (num - 1) or 70)
                 if await self.bot.get_booster(ctx.author, "money"):
                     gold = int(gold * 1.25)
-                xp = random.randint(500 * num, 1000 * num)
+                xp = random.randint(250 * num, 500 * num)
                 item = await self.bot.create_random_item(
                     minstat=num,
                     maxstat=5 + int(num * 1.5),
