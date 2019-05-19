@@ -219,7 +219,7 @@ Use the reactions attack, defend or recover
                 booster=bool(luck_booster),
             )
             if success:
-                gold = random.randint(20 * (num - 1) or 1, 60 * (num - 1) or 70
+                gold = random.randint(20 * (num - 1) or 1, 60 * (num - 1) or 70)
                 if await self.bot.get_booster(ctx.author, "money"):
                     gold = int(gold * 1.25)
                 xp = random.randint(500 * num, 1000 * num)
