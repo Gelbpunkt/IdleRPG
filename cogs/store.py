@@ -51,7 +51,7 @@ class Store(commands.Cog):
             ctx.author.id,
         )
         await ctx.send(
-            f"Successfully bought **{amount}** store item `{item}`. Use `{ctx.prefix}boosters` to view your new boosters."
+            f"Successfully bought **{amount}** {item.title()} booster(s). Use `{ctx.prefix}boosters` to view your new boosters."
         )
 
     @has_char()
