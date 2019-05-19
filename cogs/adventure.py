@@ -278,8 +278,8 @@ Use the reactions attack, defend or recover
                             )
                         else:
                             item = await self.bot.create_random_item(
-                                minstat=item[1],
-                                maxstat=item[1],
+                                minstat=reward[1],
+                                maxstat=reward[1],
                                 minvalue=1000,
                                 maxvalue=1000,
                                 owner=ctx.author,
