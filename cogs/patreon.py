@@ -95,7 +95,10 @@ class Patreon(commands.Cog):
         async with self.bot.session.post(
             "https://api.imgur.com/3/image", data=data, headers=headers
         ) as r:
-            link = (await r.json())["data"]["link"]
+            try:
+                link = (await r.json())["data"]["link"]
+            except KeyError:
+                return await ctx.send("Error when uploading to Imgur.")
         await ctx.send(
             f"Imgur Link for `{ctx.prefix}background`\n<{link}>",
             file=discord.File(fp=background, filename="GeneratedProfile.png"),
