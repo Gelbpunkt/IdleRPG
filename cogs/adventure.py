@@ -65,7 +65,9 @@ class Adventure(commands.Cog):
     async def adventure(self, ctx, dungeonnumber: IntFromTo(1, 20)):
         """Sends your character on an adventure."""
         if dungeonnumber > int(rpgtools.xptolevel(ctx.character_data["xp"])):
-            return await ctx.send(f"You must be on level **{dungeonnumber}** to do this adventure.")
+            return await ctx.send(
+                f"You must be on level **{dungeonnumber}** to do this adventure."
+            )
         time_booster = await self.bot.get_booster(ctx.author, "time")
         time = self.bot.config.adventure_times[dungeonnumber]
         if time_booster:
