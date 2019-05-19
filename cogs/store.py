@@ -8,7 +8,7 @@ For more information, see README.md and LICENSE.md.
 import discord
 from discord.ext import commands
 
-from classes.converters import IntFromTo, IntGreaterThan
+from classes.converters import IntGreaterThan
 from utils.checks import has_char
 
 
@@ -39,10 +39,12 @@ class Store(commands.Cog):
         try:
             price = {"time": 1000, "luck": 500, "money": 1000}[item] * amount
         except KeyError:
-            return await ctx.send(f"Please either buy `time`, `luck` or `money` instead of `{item}`.")
+            return await ctx.send(
+                f"Please either buy `time`, `luck` or `money` instead of `{item}`."
+            )
         if ctx.character_data["money"] < price:
             return await ctx.send("You're too poor.")
-        await conn.execute(
+        await self.bot.pool.execute(
             f'UPDATE profile SET {item}_booster={item}_booster+$1, "money"="money"-$2 WHERE "user"=$3;',
             amount,
             price,
