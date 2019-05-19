@@ -288,7 +288,7 @@ Use the reactions attack, defend or recover
                             item["name"] = f"Level {new_level} Memorial"
                             await self.bot.create_item(**item)
                         await ctx.send(
-                            f"You reached a new level: **{new_level}**! You received {reward[2]} as a reward!"
+                            f"You reached a new level: **{new_level}** :star:! You received {reward[2]} as a reward :tada:!"
                         )
             else:
                 await ctx.send("You died on your mission. Try again!")
