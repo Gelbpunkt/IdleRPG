@@ -261,6 +261,16 @@ Use the reactions attack, defend or recover
                         await ctx.send(
                             f"You have completed your dungeon and received **${gold}** as well as a new weapon: **{item['name']}**. Experience gained: **{xp}**.\nYour partner received **${int(gold/2)}**."
                         )
+                    new_level = int(rpgtools.xptolevel(ctx.character_data["xp"] + xp))
+                    if int(rpgtools.xptolevel(ctx.character_data["xp"])) < new_level:
+                        reward = random.choice([("crates", new_level, f"**{new_level}** crates"), ("money", new_level * 1000, f"**${new_level * 1000}**"), ("item", round(new_level * 1.5), "a special Item")])
+                        if reward[0] != "item":
+                            await self.bot.pool.execute(f'UPDATE profile SET {reward[0]}={reward[0]}+$1 WHERE "user"=$1;', reward[1], ctx.author.id)
+                        else:
+                            item = await self.bot.create_random_item(minstat=item[1], maxstat=item[1], minvalue=1000, maxvalue=1000, owner=ctx.author)
+                            item["name"] = f"Level {new_level} Memorial"
+                            await self.bot.create_item(**item)
+                        await ctx.send(f"You reached a new level: **{new_level}**! You received {reward[2]} as a reward!")
             else:
                 await ctx.send("You died on your mission. Try again!")
                 await self.bot.pool.execute(
