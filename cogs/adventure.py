@@ -59,10 +59,13 @@ class Adventure(commands.Cog):
             ctx
         )
 
+    @has_char()
     @has_no_adventure()
     @commands.command(aliases=["mission", "a", "dungeon"])
     async def adventure(self, ctx, dungeonnumber: IntFromTo(1, 20)):
         """Sends your character on an adventure."""
+        if dungeonnumber > int(rpgtools.xptolevel(ctx.character_data["xp"])):
+            return await ctx.send(f"You must be on level **{dungeonnumber}** to do this adventure.")
         time_booster = await self.bot.get_booster(ctx.author, "time")
         time = self.bot.config.adventure_times[dungeonnumber]
         if time_booster:
@@ -216,19 +219,13 @@ Use the reactions attack, defend or recover
                 booster=bool(luck_booster),
             )
             if success:
-                maxstat = (
-                    float(random.randint(1, num * 5))
-                    if num < 6
-                    else float(random.randint(1, 25))
-                )
+                gold = random.randint(20 * (num - 1) or 1, 60 * (num - 1) or 70
                 if await self.bot.get_booster(ctx.author, "money"):
-                    gold = int(random.randint(1, 30) * num * 1.25)
-                else:
-                    gold = random.randint(1, 30) * num
-                xp = random.randint(200, 1000) * num
+                    gold = int(gold * 1.25)
+                xp = random.randint(500 * num, 1000 * num)
                 item = await self.bot.create_random_item(
-                    minstat=1,
-                    maxstat=maxstat,
+                    minstat=num,
+                    maxstat=5 + int(num * 1.5),
                     minvalue=num,
                     maxvalue=num * 50,
                     owner=ctx.author,
