@@ -34,35 +34,20 @@ class Store(commands.Cog):
 
     @has_char()
     @commands.command()
-    async def purchase(self, ctx, item: IntFromTo(1, 3), amount: IntGreaterThan(0) = 1):
+    async def purchase(self, ctx, item: str.lower, amount: IntGreaterThan(0) = 1):
         """Buy a booster from the store."""
-        price = [1000, 500, 1000][item - 1] * amount
+        try:
+            price = {"time": 1000, "luck": 500, "money": 1000}[item] * amount
+        except KeyError:
+            return await ctx.send(f"Please either buy `time`, `luck` or `money` instead of `{item}`.")
         if ctx.character_data["money"] < price:
             return await ctx.send("You're too poor.")
-        async with self.bot.pool.acquire() as conn:
-            if item == 1:
-                await conn.execute(
-                    'UPDATE profile SET time_booster=time_booster+$1 WHERE "user"=$2;',
-                    amount,
-                    ctx.author.id,
-                )
-            elif item == 2:
-                await conn.execute(
-                    'UPDATE profile SET luck_booster=luck_booster+$1 WHERE "user"=$2;',
-                    amount,
-                    ctx.author.id,
-                )
-            elif item == 3:
-                await conn.execute(
-                    'UPDATE profile SET money_booster=money_booster+$1 WHERE "user"=$2;',
-                    amount,
-                    ctx.author.id,
-                )
-            await conn.execute(
-                'UPDATE profile SET money=money-$1 WHERE "user"=$2;',
-                price,
-                ctx.author.id,
-            )
+        await conn.execute(
+            f'UPDATE profile SET {item}_booster={item}_booster+$1, "money"="money"-$2 WHERE "user"=$3;',
+            amount,
+            price,
+            ctx.author.id,
+        )
         await ctx.send(
             f"Successfully bought **{amount}** store item `{item}`. Use `{ctx.prefix}boosters` to view your new boosters."
         )
