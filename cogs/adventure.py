@@ -283,6 +283,7 @@ Use the reactions attack, defend or recover
                                 minvalue=1000,
                                 maxvalue=1000,
                                 owner=ctx.author,
+                                insert=False,
                             )
                             item["name"] = f"Level {new_level} Memorial"
                             await self.bot.create_item(**item)
