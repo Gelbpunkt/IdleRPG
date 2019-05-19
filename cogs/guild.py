@@ -712,9 +712,8 @@ class Guild(commands.Cog):
                 user = await self.bot.pool.fetchrow(
                     'SELECT guild, xp FROM profile WHERE "user"=$1;', u.id
                 )
-                await ctx.send(user)
                 if user and user["guild"] == guild["id"]:
-                    difficulty = += int(rpgtools.xptolevel(user["xp"])))
+                    difficulty += int(rpgtools.xptolevel(user["xp"]))
                     joined.append(u)
                     await ctx.send(f"Alright, {u.mention}, you have been added.")
                 else:
