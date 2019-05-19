@@ -41,6 +41,7 @@ class Tournament(commands.Cog):
                 r.message.id == msg.id
                 and u not in participants
                 and str(r.emoji) == "\U00002694"
+                and not u.bot
             )
 
         while acceptingentries:
