@@ -698,15 +698,6 @@ class Guild(commands.Cog):
         difficulty = int(rpgtools.xptolevel(ctx.character_data["xp"]))
         started = False
 
-        async def is_in_guild(userid, difficulty):
-            user = await self.bot.pool.fetchrow(
-                'SELECT guild, xp FROM profile WHERE "user"=$1;', userid
-            )
-            if user and user["guild"] == guild["id"]:
-                difficulty += int(rpgtools.xptolevel(user["xp"]))
-                return difficulty
-            return False
-
         def apply(r, u):
             return (
                 r.message.id == msg.id
@@ -718,9 +709,12 @@ class Guild(commands.Cog):
         while not started:
             try:
                 r, u = await self.bot.wait_for("reaction_add", check=apply, timeout=30)
-                test = await is_in_guild(u.id, difficulty)
-                if test:
-                    difficulty = test
+                user = await self.bot.pool.fetchrow(
+                    'SELECT guild, xp FROM profile WHERE "user"=$1;', u.id
+                )
+                await ctx.send(user)
+                if user and user["guild"] == guild["id"]:
+                    difficulty = += int(rpgtools.xptolevel(user["xp"])))
                     joined.append(u)
                     await ctx.send(f"Alright, {u.mention}, you have been added.")
                 else:
