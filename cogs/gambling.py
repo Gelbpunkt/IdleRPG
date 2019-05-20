@@ -143,21 +143,9 @@ class BlackJack:
         return hand
 
     async def player_win(self):
-        # See https://media.discordapp.net/attachments/521026764659490836/521037532209741826/Bag.png
-        # if not await has_money(self.ctx.bot, self.ctx.author.id, self.money):
-        #    return await self.ctx.send("You spent the money in the meantime.. Bleh!")
         await self.ctx.bot.pool.execute(
             'UPDATE profile SET money=money+$1 WHERE "user"=$2;',
-            self.money,
-            self.ctx.author.id,
-        )
-
-    async def dealer_win(self):
-        # if not await has_money(self.ctx.bot, self.ctx.author.id, self.money):
-        #    return await self.ctx.send("You spent the money in the meantime.. Bleh!")
-        await self.ctx.bot.pool.execute(
-            'UPDATE profile SET money=money-$1 WHERE "user"=$2;',
-            self.money,
+            self.money * 2,
             self.ctx.author.id,
         )
 
@@ -203,7 +191,6 @@ class BlackJack:
             await self.player_win()
         elif winner == "dealer":
             self.over = True
-            await self.dealer_win()
         elif winner == "both":
             self.over = True
 
@@ -340,9 +327,10 @@ class Gambling(commands.Cog):
     @commands.cooldown(1, 15, commands.BucketType.user)
     @commands.command(aliases=["bj"])
     async def blackjack(self, ctx, amount: IntFromTo(0, 1000) = 0):
-        """[Alpha] Play blackjack against the dealer."""
+        """[Alpha] Play blackjack against the dealer. Dealer rules, means wins in case of tie."""
         if ctx.character_data["money"] < amount:
             return await ctx.send("You're too poor.")
+        await self.bot.pool.execute('UPDATE profile SET "money"="money"-$1 WHERE "user"=$2;', amount, ctx.author.id)
         bj = BlackJack(ctx, amount)
         await bj.run()
 
