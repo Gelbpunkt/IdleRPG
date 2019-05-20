@@ -112,7 +112,7 @@ class GlobalEvents(commands.Cog):
 
     async def load_settings(self):
         if self.bot.config.is_beta:
-            return # we're using the default prefix in beta
+            return  # we're using the default prefix in beta
         ids = [g.id for g in self.bot.guilds]
         prefixes = await self.bot.pool.fetch("SELECT id, prefix FROM server;")
         for row in prefixes:

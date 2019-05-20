@@ -26,7 +26,9 @@ from utils import paginator
 
 class Bot(commands.AutoShardedBot):
     def __init__(self, **kwargs):
-        super().__init__(command_prefix=config.global_prefix, **kwargs) # we overwrite the prefix when it is connected
+        super().__init__(
+            command_prefix=config.global_prefix, **kwargs
+        )  # we overwrite the prefix when it is connected
 
         # setup stuff
         self.queue = asyncio.Queue(loop=self.loop)  # global queue for ordered tasks
@@ -114,9 +116,7 @@ class Bot(commands.AutoShardedBot):
 
     def _get_prefix(self, bot, message):
         if not message.guild:
-            return (
-                self.config.global_prefix
-            )  # Use global prefix in DMs
+            return self.config.global_prefix  # Use global prefix in DMs
         try:
             return commands.when_mentioned_or(self.all_prefixes[message.guild.id])(
                 self, message
