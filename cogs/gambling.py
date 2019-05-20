@@ -330,7 +330,11 @@ class Gambling(commands.Cog):
         """[Alpha] Play blackjack against the dealer. Dealer rules, means wins in case of tie."""
         if ctx.character_data["money"] < amount:
             return await ctx.send("You're too poor.")
-        await self.bot.pool.execute('UPDATE profile SET "money"="money"-$1 WHERE "user"=$2;', amount, ctx.author.id)
+        await self.bot.pool.execute(
+            'UPDATE profile SET "money"="money"-$1 WHERE "user"=$2;',
+            amount,
+            ctx.author.id,
+        )
         bj = BlackJack(ctx, amount)
         await bj.run()
 
