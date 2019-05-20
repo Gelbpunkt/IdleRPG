@@ -40,6 +40,7 @@ class GlobalEvents(commands.Cog):
         owner = (await self.bot.application_info()).owner
         self.bot.owner_id = owner.id
         print(f"Created by {owner}")
+        await self.load_settings()
         self.bot.loop.create_task(queue_manager(self.bot, self.bot.queue))
         await self.status_updater()
 
@@ -108,6 +109,16 @@ class GlobalEvents(commands.Cog):
                 headers=self.auth_headers2,
             )
             await asyncio.sleep(120)
+
+    async def load_settings(self):
+        if self.bot.config.is_beta:
+            return # we're using the default prefix in beta
+        ids = [g.id for g in self.bot.guilds]
+        prefixes = await self.bot.pool.fetch("SELECT id, prefix FROM server;")
+        for row in prefixes:
+            if row["id"] in ids:
+                self.bot.all_prefixes[row["id"]] = row["prefix"]
+        self.bot.command_prefix = self.bot._get_prefix
 
     async def get_dbl_payload(self):
         return {
