@@ -122,7 +122,9 @@ class Errorhandler(commands.Cog):
                 f"There was a error responding to your message:\n`{error.text}`\nCommon issues: Bad Guild Icon or too long response"
             )
         elif isinstance(error, AsyncpgDataError):
-            await ctx.send("An argument or value you entered was far too high for me to handle properly!")
+            await ctx.send(
+                "An argument or value you entered was far too high for me to handle properly!"
+            )
         elif isinstance(error, NoChoice):
             await ctx.send("You did not choose anything.")
         elif isinstance(error, commands.CommandInvokeError) and hasattr(
