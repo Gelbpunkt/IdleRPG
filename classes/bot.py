@@ -26,7 +26,7 @@ from utils import paginator
 
 class Bot(commands.AutoShardedBot):
     def __init__(self, **kwargs):
-        super().__init__(command_prefix=self._get_prefix, **kwargs)
+        super().__init__(command_prefix=config.global_prefix, **kwargs) # we overwrite the prefix when it is connected
 
         # setup stuff
         self.queue = asyncio.Queue(loop=self.loop)  # global queue for ordered tasks
@@ -71,12 +71,6 @@ class Bot(commands.AutoShardedBot):
         )
         self.pool = await asyncpg.create_pool(**self.config.database, max_size=20)
 
-        # ToDo: Move this to on_ready?
-        async with self.pool.acquire() as conn:
-            prefixes = await conn.fetch("SELECT id, prefix FROM server;")
-            for row in prefixes:
-                self.all_prefixes[row["id"]] = row["prefix"]
-
         for extension in self.config.initial_extensions:
             try:
                 self.load_extension(extension)
@@ -119,17 +113,16 @@ class Bot(commands.AutoShardedBot):
         return await super().get_context(message, cls=Context)
 
     def _get_prefix(self, bot, message):
-        if not message.guild or self.config.is_beta:
+        if not message.guild:
             return (
                 self.config.global_prefix
-            )  # Use global prefix in DMs and if the bot is beta
+            )  # Use global prefix in DMs
         try:
             return commands.when_mentioned_or(self.all_prefixes[message.guild.id])(
                 self, message
             )
         except KeyError:
             return commands.when_mentioned_or(self.config.global_prefix)(self, message)
-        return self.config.global_prefix
 
     async def get_user_global(self, user_id: int):
         user = self.get_user(user_id)
