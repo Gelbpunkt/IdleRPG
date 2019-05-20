@@ -49,8 +49,10 @@ class Server(commands.Cog):
 
     @commands.has_permissions(manage_guild=True)
     @settings.command(name="prefix")
-    async def prefix_(self, ctx, prefix: str):
+    async def prefix_(self, ctx, *, prefix: str):
         """Change the server bot prefix."""
+        if len(prefix) > 10:
+            return await ctx.send("Prefixes may not be longer than 10 characters.")
         # ToDo: handle default prefix here
         if self.bot.all_prefixes.get(ctx.guild.id):
             await self.bot.pool.execute(
