@@ -319,6 +319,7 @@ class Profile(commands.Cog):
                 ctx.author.id,
             )
             if not item:
+                await self.bot.reset_cooldown(ctx)
                 return await ctx.send(f"You don't own an item with the ID `{itemid}`.")
             if item["type"] == "Sword":
                 stattoupgrade = "damage"
