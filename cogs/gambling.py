@@ -220,8 +220,7 @@ class BlackJack:
                     "reaction_add", check=check, timeout=20
                 )
             except asyncio.TimeoutError:
-                await self.dealer_win()
-                return await self.ctx.send("Blackjack timed out...")
+                return await self.ctx.send("Blackjack timed out... You lost your money!")
             if reaction.emoji == "\U00002934":
                 choice = "h"
             else:
