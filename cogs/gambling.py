@@ -182,6 +182,8 @@ class BlackJack:
         elif self.has_bj(self.player):
             await self.player_win()
             return await self.send(additional="You got a blackjack and won!")
+        else:
+            await self.send()
         await self.msg.add_reaction("\U00002934")  # hit
         await self.msg.add_reaction("\U00002935")  # stand
         await self.msg.add_reaction("\U000023ec")  # double down
