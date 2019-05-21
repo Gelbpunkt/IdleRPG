@@ -107,7 +107,7 @@ class BlackJack:
         missing = 21 - value
         num_11 = 0
         num_1 = 0
-        for i in aces:
+        for i in range(aces):
             if missing < 11:
                 num_1 += 1
                 missing -= 1
