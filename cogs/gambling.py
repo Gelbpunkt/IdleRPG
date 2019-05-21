@@ -20,7 +20,6 @@ from utils.checks import has_char
 
 class BlackJack:
     def __init__(self, ctx, money):
-        self.deck = [2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14] * 4
         self.cards = {
             "adiamonds": "<:adiamonds:508321810832556033>",
             "2diamonds": "<:2diamonds:508321809536385024>",
@@ -75,70 +74,61 @@ class BlackJack:
             "qspades": "<:qspades:508321868193726464>",
             "kspades": "<:kspades:508321811457507329>",
         }
+        self.prepare_deck()
         self.ctx = ctx
         self.msg = None
         self.over = False
         self.money = money
+        self.insurance = False
+        self.doubled = False
 
-    def pretty(self, it):
-        return " ".join(
-            [
-                self.cards[
-                    f"{i if isinstance(i, int) else i.lower()}{random.choice(['diamonds', 'hearts', 'clubs', 'spades'])}"
-                ]
-                for i in it
-            ]
-        )
+    def prepare_deck(self):
+        self.deck = []
+        for colour in ["hearts", "diamonds", "spades", "clover"]:
+            for value in range(2, 15):  # 11 = Jack, 12 = Queen, 13 = King, 14 = Ace
+                if value == 11:
+                    card = "j"
+                elif value == 12:
+                    card = "q"
+                elif value == 13:
+                    card = "k"
+                elif value == 14:
+                    card = "a"
+                else:
+                    card = str(value)
+                self.deck.append((value, colour, self.cards[f"{card}{colour}"]))
+        self.deck = self.deck * 6  # BlackJack is played with 6 sets of cards
+        random.shuffle(self.deck)
 
     def deal(self):
-        hand = []
-        for i in range(2):
-            random.shuffle(self.deck)
-            card = self.deck.pop()
-            if card == 11:
-                card = "J"
-            if card == 12:
-                card = "Q"
-            if card == 13:
-                card = "K"
-            if card == 14:
-                card = "A"
-            hand.append(card)
-        return hand
+        return self.deck.pop()
+
+    def calc_aces(self, value, aces):
+        missing = 21 - value
+        num_11 = 0
+        num_1 = 0
+        for i in aces:
+            if missing < 11:
+                num_1 += 1
+                missing -= 1
+            else:
+                num_11 += 1
+                missing -= 1
+        return value + num_11 * 11 + num_1
 
     def total(self, hand):
-        total = 0
-        no_aces = [h for h in hand if h != "A"]
-        aces = [h for h in hand if h == "A"]
-        for card in no_aces:
-            if card == "J" or card == "Q" or card == "K":
-                total += 10
-            else:
-                total += card
-        for card in aces:
-            if total >= 11:
-                total += 1
-            else:
-                total += 11
-        return total
+        value = sum(
+            [card[0] if card[0] < 11 else 10 for card in hand if card[0] != 14]
+        )  # ignore aces for now
+        aces = sum([1 for card in hand if card[0] == 14])
+        value += self.calc_aces(value, aces)
+        return value
 
     def has_bj(self, hand):
-        if not [a for a in hand if a == "A"]:
-            return False
-        if not [a for a in hand if a == 10]:
-            return False
-        return True
+        return self.total(hand) == 21
 
     def hit(self, hand):
-        card = self.deck.pop()
-        if card == 11:
-            card = "J"
-        if card == 12:
-            card = "Q"
-        if card == 13:
-            card = "K"
-        if card == 14:
-            card = "A"
+        card = self.deal()
         hand.append(card)
         return hand
 
@@ -149,59 +139,53 @@ class BlackJack:
             self.ctx.author.id,
         )
 
-    async def results(self, bj=False, win=False):
+    async def player_cashback(self):
+        await self.ctx.bot.pool.execute(
+            'UPDATE profile SET money=money+$1 WHERE "user"=$2;',
+            self.money,
+            self.ctx.author.id,
+        )
+
+    def pretty(self, hand):
+        return " ".join([card[2] for card in hand])
+
+    async def send(self, additional=""):
         player = self.total(self.player)
         dealer = self.total(self.dealer)
-        winner = None
-        text = f"The dealer has a {self.pretty(self.dealer)} for a total of {dealer}\nYou have a {self.pretty(self.player)} for a total of {player}\n"
-        if bj:
-            if self.has_bj(self.dealer) and self.has_bj(self.player):
-                text = f"{text}You both have a blackjack!"
-                winner = "both"
-            elif self.has_bj(self.player):
-                text = f"{text}\nCongratulations! You got a Blackjack!"
-                winner = "player"
-            elif self.has_bj(self.dealer):
-                text = f"{text}\nSorry, you lose. The dealer got a blackjack."
-                winner = "dealer"
-        if win:
-            if player > 21:
-                text = f"{text}Sorry. You busted. You lose."
-                winner = "dealer"
-            elif dealer > 21:
-                text = f"{text}Dealer busts. You win!"
-                winner = "player"
-            elif player < dealer:
-                text = (
-                    f"{text}Sorry. Your score isn't higher than the dealer. You lose."
-                )
-                winner = "dealer"
-            elif dealer < player:
-                text = f"{text}Congratulations. Your score is higher than the dealer. You win"
-                winner = "player"
-            elif player == dealer:
-                text = f"{text}It's a tie!"
-                winner = "both"
+        text = f"The dealer has a {self.pretty(self.dealer)} for a total of {dealer}\nYou have a {self.pretty(self.player)} for a total of {player}\n{additional}"
         if not self.msg:
             self.msg = await self.ctx.send(text)
         else:
             await self.msg.edit(content=text)
-        if winner == "player":
-            self.over = True
-            await self.player_win()
-        elif winner == "dealer":
-            self.over = True
-        elif winner == "both":
-            self.over = True
 
     async def run(self):
-        self.player = self.deal()
-        self.dealer = self.deal()
-        await self.results(bj=True)
-        if self.over:
-            return
-        await self.msg.add_reaction("\U00002934")
-        await self.msg.add_reaction("\U00002935")
+        self.player = [self.deal()]
+        self.dealer = [self.deal()]
+        await self.send()
+        # Insurance?
+        if await self.ctx.confirm(
+            "Would you like insurance? It will cost half your bet and will get you 2:1 back if the dealer has a blackjack. Else it is gone."
+        ):
+            self.insurance = True
+        self.player = self.hit(self.player)
+        self.dealer = self.hit(self.dealer)
+        if self.has_bj(self.dealer):
+            if self.insurance:
+                await self.player_cashback()
+                return await self.send(
+                    additional="The dealer got a blackjack. You had insurance and lost nothing."
+                )
+            else:
+                return await self.send(
+                    additional="The dealer got a blackjack. You lost."
+                )
+        elif self.has_bj(self.player):
+            await self.player_win()
+            return await self.send(additional="You got a blackjack and won!")
+        await self.msg.add_reaction("\U00002934")  # hit
+        await self.msg.add_reaction("\U00002935")  # stand
+        await self.msg.add_reaction("\U000023ec")  # double down
+        valid = ["\U00002934", "\U00002935", "\U000023ec"]
         while (
             self.total(self.dealer) < 22
             and self.total(self.player) < 22
@@ -212,7 +196,7 @@ class BlackJack:
                 return (
                     reaction.message.id == self.msg.id
                     and user == self.ctx.author
-                    and str(reaction.emoji) in ["\U00002934", "\U00002935"]
+                    and str(reaction.emoji) in valid
                 )
 
             try:
@@ -220,21 +204,61 @@ class BlackJack:
                     "reaction_add", check=check, timeout=20
                 )
             except asyncio.TimeoutError:
-                return await self.ctx.send("Blackjack timed out... You lost your money!")
+                return await self.ctx.send(
+                    "Blackjack timed out... You lost your money!"
+                )
+            try:
+                await self.msg.remove_reaction(reaction, user)
+            except discord.Forbidden:
+                pass
+            while self.total(self.dealer) < 17:
+                self.dealer = self.hit(self.dealer)
             if reaction.emoji == "\U00002934":
-                choice = "h"
-            else:
-                choice = "s"
-            if choice == "h":
-                self.hit(self.player)
-                while self.total(self.dealer) < 17:
-                    self.hit(self.dealer)
-            elif choice == "s":
-                while self.total(self.dealer) < 17:
-                    self.hit(self.dealer)
+                if self.doubled:
+                    valid.append("\U00002935")
+                    valid.remove("\U00002934")
+                    await self.msg.add_reaction("\U00002935")
+                    await self.msg.remove_reaction("\U00002934", self.ctx.bot.user)
+                self.player = self.hit(self.player)
+                await self.send()
+            elif reaction.emoji == "\U00002935":
                 self.over = True
-            await self.results()
-        await self.results(win=True)
+            else:
+                self.doubled = True
+                await self.ctx.bot.pool.execute(
+                    'UPDATE profile SET "money"="money"-$1 WHERE "user"=$2;',
+                    self.money,
+                    self.ctx.author.id,
+                )
+
+                self.money *= 2
+                valid.remove("\U000023ec")
+                valid.remove("\U00002935")
+                await self.msg.remove_reaction("\U000023ec", self.ctx.bot.user)
+                await self.msg.remove_reaction("\U00002935", self.ctx.bot.user)
+                await self.send(
+                    additional="You doubled your bid in exchange for only receiving one more card."
+                )
+
+        player = self.total(self.player)
+        dealer = self.total(self.dealer)
+        if player > 21:
+            await self.send(additional="You busted and loose.")
+        elif dealer > 21:
+            await self.send(additional="Dealer busts and you win!")
+            await self.player_win()
+        else:
+            if player > dealer:
+                await self.send(
+                    additional="You have a higher score than the dealer and win."
+                )
+                await self.player_win()
+            elif dealer > player:
+                await self.send(
+                    additional="Dealer has a higher score than you and wins."
+                )
+            else:
+                await self.send(additional="It's a tie. You loose your bet.")
 
 
 class Gambling(commands.Cog):

@@ -358,7 +358,7 @@ class Profile(commands.Cog):
     @checks.has_char()
     @commands.command()
     async def give(
-        self, ctx, money: IntFromTo(0, 100000000), other: MemberWithCharacter
+        self, ctx, money: IntFromTo(0, 100_000_000), other: MemberWithCharacter
     ):
         """Gift money!"""
         if other == ctx.author:
