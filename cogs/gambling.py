@@ -84,7 +84,7 @@ class BlackJack:
 
     def prepare_deck(self):
         self.deck = []
-        for colour in ["hearts", "diamonds", "spades", "clover"]:
+        for colour in ["hearts", "diamonds", "spades", "clubs"]:
             for value in range(2, 15):  # 11 = Jack, 12 = Queen, 13 = King, 14 = Ace
                 if value == 11:
                     card = "j"
