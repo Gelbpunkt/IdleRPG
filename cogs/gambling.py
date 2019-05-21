@@ -114,7 +114,7 @@ class BlackJack:
             else:
                 num_11 += 1
                 missing -= 1
-        return value + num_11 * 11 + num_1
+        return num_11 * 11 + num_1
 
     def total(self, hand):
         value = sum(
