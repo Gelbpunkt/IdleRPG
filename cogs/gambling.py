@@ -15,7 +15,7 @@ import discord
 from discord.ext import commands
 
 from classes.converters import IntFromTo, IntGreaterThan
-from utils.checks import has_char
+from utils.checks import has_char, has_money
 
 
 class BlackJack:
@@ -186,8 +186,10 @@ class BlackJack:
             await self.send()
         await self.msg.add_reaction("\U00002934")  # hit
         await self.msg.add_reaction("\U00002935")  # stand
-        await self.msg.add_reaction("\U000023ec")  # double down
-        valid = ["\U00002934", "\U00002935", "\U000023ec"]
+        valid = ["\U00002934", "\U00002935"]
+        if self.ctx.character_data["money"] - self.money * 2 >= 0:
+            await self.msg.add_reaction("\U000023ec")  # double down
+            valid.append("\U000023ec")
         while (
             self.total(self.dealer) < 22
             and self.total(self.player) < 22
@@ -226,6 +228,8 @@ class BlackJack:
             elif reaction.emoji == "\U00002935":
                 self.over = True
             else:
+                if not await has_money(self.ctx.bot, self.ctx.author.id, self.money * 2):
+                    return await self.ctx.send("Invalid. You're too poor and loose the match.")
                 self.doubled = True
                 await self.ctx.bot.pool.execute(
                     'UPDATE profile SET "money"="money"-$1 WHERE "user"=$2;',
