@@ -229,7 +229,7 @@ class BlackJack:
                 self.over = True
             else:
                 if not await has_money(self.ctx.bot, self.ctx.author.id, self.money * 2):
-                    return await self.ctx.send("Invalid. You're too poor and loose the match.")
+                    return await self.ctx.send("Invalid. You're too poor and lose the match.")
                 self.doubled = True
                 await self.ctx.bot.pool.execute(
                     'UPDATE profile SET "money"="money"-$1 WHERE "user"=$2;',
@@ -249,7 +249,7 @@ class BlackJack:
         player = self.total(self.player)
         dealer = self.total(self.dealer)
         if player > 21:
-            await self.send(additional="You busted and loose.")
+            await self.send(additional="You busted and lose.")
         elif dealer > 21:
             await self.send(additional="Dealer busts and you win!")
             await self.player_win()
@@ -264,7 +264,7 @@ class BlackJack:
                     additional="Dealer has a higher score than you and wins."
                 )
             else:
-                await self.send(additional="It's a tie. You loose your bet.")
+                await self.send(additional="It's a tie. You lose your bet.")
 
 
 class Gambling(commands.Cog):
