@@ -38,7 +38,7 @@ class Trading(commands.Cog):
                 )
             elif price > item["value"] * 1000:
                 return await ctx.send(
-                    f"Your price is too high. Try adjusting it to be up to `{item[6] * 50}`."
+                    f"Your price is too high. Try adjusting it to be up to `{item[6] * 1000}`."
                 )
             await conn.execute(
                 "DELETE FROM inventory i USING allitems ai WHERE i.item=ai.id AND ai.id=$1 AND ai.owner=$2;",
