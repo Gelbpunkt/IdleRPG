@@ -28,7 +28,8 @@ Summary and information taken from [here](https://tldrlegal.com/license/gnu-affe
 
 ## Current goals
 
-1. Prettify v3.5 and add anti-selfbot system
+1. Prettify v3.5 and add anti-selfbot system (v3.5 branch)
+2. Use GNU gettext to add i18n support
 
 ## Can I selfhost?
 
