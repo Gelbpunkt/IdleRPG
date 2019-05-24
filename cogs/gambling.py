@@ -228,8 +228,12 @@ class BlackJack:
             elif reaction.emoji == "\U00002935":
                 self.over = True
             else:
-                if not await has_money(self.ctx.bot, self.ctx.author.id, self.money * 2):
-                    return await self.ctx.send("Invalid. You're too poor and lose the match.")
+                if not await has_money(
+                    self.ctx.bot, self.ctx.author.id, self.money * 2
+                ):
+                    return await self.ctx.send(
+                        "Invalid. You're too poor and lose the match."
+                    )
                 self.doubled = True
                 await self.ctx.bot.pool.execute(
                     'UPDATE profile SET "money"="money"-$1 WHERE "user"=$2;',
