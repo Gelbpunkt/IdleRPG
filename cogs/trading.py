@@ -132,6 +132,7 @@ class Trading(commands.Cog):
         minstat: float = 0.00,
         highestprice: IntGreaterThan(-1) = 1_000_000,
     ):
+        """Show the market with all items and prices."""
         if itemtype not in ["All", "Sword", "Shield"]:
             return await ctx.send(
                 "Use either `All`, `Sword` or `Shield` as a type to filter for."
