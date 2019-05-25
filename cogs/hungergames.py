@@ -37,65 +37,67 @@ class GameBase:
     async def get_inputs(self):
         all_actions = [
             (
-                "Gather as much food as you can",
-                "gathers as much food as they can",
+                _("Gather as much food as you can"),
+                _("gathers as much food as they can"),
                 None,
             ),
-            ("Grab a backpack and retreat", "grabs a backpack and retreats", "leave"),
-            ("Take a pistol and suicide", "gives themselves the bullet", "leave"),
-            ("Ram a knife in your body", "commits suicide with a knife", "leave"),
-            ("Run away from the Curnocopia", "runs away from the Cornucopia", None),
-            ("Search for a pair of Explosives", "finds a bag full of explosives", None),
-            ("Look for water", "finds a canteen full of water", None),
-            ("Get a first aid kit", "clutches a first aid kit and runs away", None),
-            ("Grab a backpack", "grabs a backpack, not realizing it is empty", None),
-            ("Try to assault USER", "kills USER", ("kill", "USER")),
+            (_("Grab a backpack and retreat"), _("grabs a backpack and retreats"), "leave"),
+            (_("Take a pistol and suicide"), _("gives themselves the bullet"), "leave"),
+            (_("Ram a knife in your body"), _("commits suicide with a knife"), "leave"),
+            (_("Run away from the Curnocopia"), _("runs away from the Cornucopia"), None),
+            (_("Search for a pair of Explosives"), _("finds a bag full of explosives"), None),
+            (_("Look for water"), _("finds a canteen full of water"), None),
+            (_("Get a first aid kit"), _("clutches a first aid kit and runs away"), None),
+            (_("Grab a backpack"), _("grabs a backpack, not realizing it is empty"), None),
+            (_("Try to assault USER"), _("kills USER"), ("kill", "USER")),
             (
-                "Kill USER at the water",
-                "assaults USER while they were drinking water at the river",
+                _("Kill USER at the water"),
+                _("assaults USER while they were drinking water at the river"),
                 ("kill", "USER"),
             ),
-            ("Try to hide some landmines", "hides landmines at a few locations", None),
-            ("Take a bath", "baths in the water and enjoys the silence", None),
+            (_("Try to hide some landmines"), _("hides landmines at a few locations"), None),
+            (_("Take a bath"), _("baths in the water and enjoys the silence"), None),
         ]
         team_actions = [
-            ("kill USER", ("kill", "USER")),
-            ("grill at the fireplace and tell each other spooky stories", None),
-            ("annoy USER", "user"),
-            ("kill themselves by walking into a landmine", "killall"),
-            ("have a small party and get drunk", None),
-            ("watch animes together", None),
-            ("enjoy the silence", None),
-            ("attempt to kill USER but fail", "user"),
-            ("watch a movie together", "user"),
-            ("track down USER and kill them silently", ("kill", "USER")),
+            (_("kill USER"), ("kill", "USER")),
+            (_("grill at the fireplace and tell each other spooky stories"), None),
+            (_("annoy USER"), "user"),
+            (_("kill themselves by walking into a landmine"), "killall"),
+            (_("have a small party and get drunk"), None),
+            (_("watch animes together"), None),
+            (_("enjoy the silence"), None),
+            (_("attempt to kill USER but fail"), "user"),
+            (_("watch a movie together"), "user"),
+            (_("track down USER and kill them silently"), ("kill", "USER")),
         ]
         team_actions_2 = [
-            ("kill themselves by walking into a landmine", "killall"),
-            ("decide they want out of here and commit suicide", "killall"),
-            ("watch a movie together", None),
-            ("dance YMCA together", None),
-            ("sing songs together", None),
-            ("have a nice romantic evening", None),
-            ("watch the others being dumb", None),
-            ("kiss in the moonlight", None),
+            (_("kill themselves by walking into a landmine"), "killall"),
+            (_("decide they want out of here and commit suicide"), "killall"),
+            (_("watch a movie together"), None),
+            (_("dance YMCA together"), None),
+            (_("sing songs together"), None),
+            (_("have a nice romantic evening"), None),
+            (_("watch the others being dumb"), None),
+            (_("kiss in the moonlight"), None),
             (
-                "watch a movie together when USER suddely gets shot by a stranger",
+                _("watch a movie together when USER suddely gets shot by a stranger"),
                 ("killtogether", "USER"),
             ),
         ]
         user_actions = []
-        status = await self.ctx.send(f"**Round {self.round}**", delete_after=60)
+        roundtext = _("**Round {round}**")
+        status = await self.ctx.send(roundtext.format(round=self.round), delete_after=60)
         killed_this_round = []
         for p in self.rand_chunks(self.players):
             if len(p) == 1:
+                text = _("Letting {user} choose their action...").format(user=p[0])
                 try:
                     await status.edit(
-                        content=f"{status.content}\nLetting {p[0]} choose their action..."
+                        content=f"{status.content}\n{text}"
                     )
                 except discord.errors.NotFound:
                     status = await self.ctx.send(
-                        f"**Round {self.round}**\nLetting {p[0]} choose their action...",
+                        f"{roundtext}\n{text}".format(round=self.round),
                         delete_after=60,
                     )
                 actions = random.sample(all_actions, 3)
@@ -128,31 +130,32 @@ class GameBase:
                         await self.ctx.bot.paginator.Choose(
                             entries=actions_desc,
                             return_index=True,
-                            title="Choose an action",
+                            title=_("Choose an action"),
                         ).paginate(self.ctx, location=p[0])
                     ]
                 except (self.ctx.bot.paginator.NoChoice, discord.Forbidden):
                     await self.ctx.send(
-                        f"I couldn't send a DM to {p[0].mention}! (This is a known bug if your reaction didn't do anything) Choosing random action..."
+                        _("I couldn't send a DM to {user}! (This is a known bug if your reaction didn't do anything) Choosing random action...").format(user=p[0])
                     )
                     action = random.choice(actions2)
                 if okay or (not okay and isinstance(action[2], tuple)):
                     user_actions.append((p[0], action[1]))
                 else:
-                    user_actions.append((p[0], f"attempts to kill {kill} but fails"))
+                    user_actions.append((p[0], _("attempts to kill {user} but fails").format(user=kill)))
                 if action[2]:
                     if action[2] == "leave":
                         killed_this_round.append(p[0])
                     else:
                         if okay:
                             killed_this_round.append(action[2][1])
+                text = _("Letting {user} choose their action... Done").format(user=p[0])
                 try:
                     await status.edit(
-                        content=f"{status.content}\nLetting {p[0]} choose their action... Done"
+                        content=f"{status.content}\n{text}"
                     )
                 except discord.errors.NotFound:
                     status = await self.ctx.send(
-                        f"**Round {self.round}**\nLetting {p[0]} choose their action... Done",
+                        f"**{roundtext}\n{text}".format(round=self.round),
                         delete_after=60,
                     )
             else:
@@ -211,15 +214,17 @@ class GameBase:
         random.shuffle(cast)
         cast = list(self.chunks(cast, 2))
         self.cast = cast
+        text = _("Team")
         cast = "\n".join(
             [
-                f"Team #{i}: {team[0].mention} {team[1].mention}"
+                f"{text} #{i}: {team[0].mention} {team[1].mention}"
                 if len(team) == 2
-                else f"Team #{i}: {team[0].mention}"
+                else f"{text} #{i}: {team[0].mention}"
                 for i, team in enumerate(cast, start=1)
             ]
         )
-        await self.ctx.send(f"**The cast**\n{cast}")
+        text = _("The cast")
+        await self.ctx.send(f"**{text}**\n{cast}")
 
     async def main(self):
         self.round = 1
@@ -229,10 +234,10 @@ class GameBase:
             await asyncio.sleep(3)
         if len(self.players) == 1:
             await self.ctx.send(
-                f"This hunger game's winner is {self.players[0].mention}!"
+                _("This hunger game's winner is {winner}!").format(winner=self.players[0].mention)
             )
         else:
-            await self.ctx.send("Everyone died!")
+            await self.ctx.send(_("Everyone died!"))
 
 
 class HungerGames(commands.Cog):
@@ -242,11 +247,13 @@ class HungerGames(commands.Cog):
 
     @commands.command()
     async def hungergames(self, ctx):
+        _("""Starts a game of hunger games.""")
         if self.games.get(ctx.channel.id):
-            return await ctx.send("There is already a game in here!")
+            return await ctx.send(_("There is already a game in here!"))
         players = [ctx.author]
+        text = _("{author} started a game of Hunger Games! React with :shallow_pan_of_food: to join the game! **{num} joined**")
         msg = await ctx.send(
-            f"{ctx.author.mention} started a game of Hunger Games! React with :shallow_pan_of_food: to join the game! **1 joined**"
+            text.format(author=ctx.author.mention, num=1)
         )
         await msg.add_reaction("\U0001f958")
 
@@ -266,12 +273,12 @@ class HungerGames(commands.Cog):
                 break
             players.append(user)
             await msg.edit(
-                content=f"{ctx.author.mention} started a game of Hunger Games! React with :shallow_pan_of_food: to join the game! **{len(players)} joined**"
+                content=text.format(author=ctx.author, num=len(players)
             )
 
         if len(players) < 2:
             del self.games[ctx.channel.id]
-            return await ctx.send("Not enough players joined...")
+            return await ctx.send(_("Not enough players joined..."))
 
         game = GameBase(ctx, players=players)
         self.games[ctx.channel.id] = game
