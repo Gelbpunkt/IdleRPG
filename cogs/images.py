@@ -13,6 +13,7 @@ from io import BytesIO
 import discord
 from discord.ext import commands
 from discord.ext.commands import BucketType
+from discord.ext.commands.default import Author
 from PIL import Image, ImageFilter, ImageOps
 
 
@@ -114,13 +115,13 @@ class Images(commands.Cog):
                 b.seek(0)
                 return b
 
-    @commands.command(description="Pixelfy!")
-    async def pixelfy(self, ctx, user: discord.Member = None, size: int = 2):
+    @commands.command()
+    async def pixelfy(self, ctx, user: discord.Member = Author, size: int = 2):
+        _("""Pixelfys an Avatar.""")
         try:
             size = [256, 128, 64, 32, 16][size - 1]
         except IndexError:
-            return await ctx.send("Use 1, 2, 3, 4 or 5 as intensity value.")
-        user = user or ctx.author
+            return await ctx.send(_("Use 1, 2, 3, 4 or 5 as intensity value."))
         url = str(user.avatar_url_as(format="png", size=size))
         # change size to lower for less pixels
         async with self.bot.session.get(url) as r:
@@ -130,9 +131,9 @@ class Images(commands.Cog):
         file = discord.File(b, filename="pixel.png")
         await ctx.send(file=file)
 
-    @commands.command(description="Edgyfy images.")
-    async def edgy(self, ctx, user: discord.Member = None):
-        user = user or ctx.author
+    @commands.command()
+    async def edgy(self, ctx, user: discord.Member = Author):
+        _("""Finds edges in an Avatar.""")
         async with self.bot.session.get(str(user.avatar_url_as(format="png"))) as r:
             data = BytesIO(await r.read())
         thing = functools.partial(self.make_edge, data)
@@ -141,21 +142,21 @@ class Images(commands.Cog):
         await ctx.send(file=file)
 
     @commands.cooldown(1, 15, BucketType.channel)
-    @commands.command(description="Inverts an avatar.")
-    async def invert(self, ctx, *, member: discord.Member = None):
-        member = member or ctx.author
+    @commands.command()
+    async def invert(self, ctx, member: discord.Member = Author):
+        _("""Inverts an avatar.""")
 
         async with self.bot.session.get(str(member.avatar_url_as(format="png"))) as r:
             with BytesIO(await r.read()) as f:
                 func = functools.partial(self.invert_image, f)
                 file = await self.bot.loop.run_in_executor(None, func)
 
-                await ctx.send(file=discord.File(file, filename="inverted.png"))
+        await ctx.send(file=discord.File(file, filename="inverted.png"))
 
     @commands.cooldown(1, 15, BucketType.channel)
-    @commands.command(description="Oils an avatar", enabled=False)
-    async def oil(self, ctx, *, member: discord.Member = None):
-        member = member or ctx.author
+    @commands.command(enabled=False)
+    async def oil(self, ctx, member: discord.Member = Author):
+        _("""Oils an Avatar.""")
 
         async with self.bot.session.get(
             str(member.avatar_url_as(format="png", size=256))
@@ -164,7 +165,7 @@ class Images(commands.Cog):
                 func = functools.partial(self._oil, f, 3, 20)
                 file = await self.bot.loop.run_in_executor(None, func)
 
-                await ctx.send(file=discord.File(file, filename="oil.png"))
+        await ctx.send(file=discord.File(file, filename="oil.png"))
 
 
 def setup(bot):
