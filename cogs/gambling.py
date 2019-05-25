@@ -152,7 +152,7 @@ class BlackJack:
     async def send(self, additional=""):
         player = self.total(self.player)
         dealer = self.total(self.dealer)
-        text = f"The dealer has a {self.pretty(self.dealer)} for a total of {dealer}\nYou have a {self.pretty(self.player)} for a total of {player}\n{additional}"
+        text = _("The dealer has a {pretty_dealer} for a total of {dealer}\nYou have a {pretty_player} for a total of {player}\n{additional}").format(pretty_dealer=self.pretty(self.dealer), dealer=dealer, pretty_player=self.pretty(self.player), player=player, additional=additional)
         if not self.msg:
             self.msg = await self.ctx.send(text)
         else:
@@ -164,7 +164,7 @@ class BlackJack:
         await self.send()
         # Insurance?
         if await self.ctx.confirm(
-            "Would you like insurance? It will cost half your bet and will get you 2:1 back if the dealer has a blackjack. Else it is gone."
+            _("Would you like insurance? It will cost half your bet and will get you 2:1 back if the dealer has a blackjack. Else it is gone.")
         ):
             self.insurance = True
         self.player = self.hit(self.player)
@@ -173,15 +173,15 @@ class BlackJack:
             if self.insurance:
                 await self.player_cashback()
                 return await self.send(
-                    additional="The dealer got a blackjack. You had insurance and lost nothing."
+                    additional=_("The dealer got a blackjack. You had insurance and lost nothing.")
                 )
             else:
                 return await self.send(
-                    additional="The dealer got a blackjack. You lost."
+                    additional=_("The dealer got a blackjack. You lost.")
                 )
         elif self.has_bj(self.player):
             await self.player_win()
-            return await self.send(additional="You got a blackjack and won!")
+            return await self.send(additional=_("You got a blackjack and won!"))
         else:
             await self.send()
         await self.msg.add_reaction("\U00002934")  # hit
@@ -209,7 +209,7 @@ class BlackJack:
                 )
             except asyncio.TimeoutError:
                 return await self.ctx.send(
-                    "Blackjack timed out... You lost your money!"
+                    _("Blackjack timed out... You lost your money!")
                 )
             try:
                 await self.msg.remove_reaction(reaction, user)
@@ -232,7 +232,7 @@ class BlackJack:
                     self.ctx.bot, self.ctx.author.id, self.money * 2
                 ):
                     return await self.ctx.send(
-                        "Invalid. You're too poor and lose the match."
+                        _("Invalid. You're too poor and lose the match.")
                     )
                 self.doubled = True
                 await self.ctx.bot.pool.execute(
@@ -247,28 +247,28 @@ class BlackJack:
                 await self.msg.remove_reaction("\U000023ec", self.ctx.bot.user)
                 await self.msg.remove_reaction("\U00002935", self.ctx.bot.user)
                 await self.send(
-                    additional="You doubled your bid in exchange for only receiving one more card."
+                    additional=_("You doubled your bid in exchange for only receiving one more card.")
                 )
 
         player = self.total(self.player)
         dealer = self.total(self.dealer)
         if player > 21:
-            await self.send(additional="You busted and lose.")
+            await self.send(additional=_("You busted and lose."))
         elif dealer > 21:
-            await self.send(additional="Dealer busts and you win!")
+            await self.send(additional=_("Dealer busts and you win!"))
             await self.player_win()
         else:
             if player > dealer:
                 await self.send(
-                    additional="You have a higher score than the dealer and win."
+                    additional=_("You have a higher score than the dealer and win.")
                 )
                 await self.player_win()
             elif dealer > player:
                 await self.send(
-                    additional="Dealer has a higher score than you and wins."
+                    additional=_("Dealer has a higher score than you and wins.")
                 )
             else:
-                await self.send(additional="It's a tie. You lose your bet.")
+                await self.send(additional=_("It's a tie. You lose your bet."))
 
 
 class Gambling(commands.Cog):
@@ -279,7 +279,7 @@ class Gambling(commands.Cog):
     @commands.cooldown(1, 5, commands.BucketType.user)
     @commands.command(aliases=["card"])
     async def draw(self, ctx):
-        """Draws a random card."""
+        _("""Draws a random card.""")
         await ctx.send(file=discord.File(f"assets/cards/{secrets.choice(self.cards)}"))
 
     @has_char()
@@ -292,11 +292,11 @@ class Gambling(commands.Cog):
         *,
         amount: IntFromTo(0, 100_000) = 0,
     ):
-        """Flip a coin and bid on the outcome."""
+        _("""Flip a coin and bid on the outcome.""")
         if side not in ["heads", "tails"]:
-            return await ctx.send(f"Use `heads` or `tails` instead of `{side}`.")
+            return await ctx.send(_("Use `heads` or `tails` instead of `{side}`.").format(side=side))
         if ctx.character_data["money"] < amount:
-            return await ctx.send("You are too poor.")
+            return await ctx.send(_("You are too poor."))
         result = secrets.choice(
             [
                 ("heads", "<:heads:437981551196897281>"),
@@ -309,14 +309,14 @@ class Gambling(commands.Cog):
                 amount,
                 ctx.author.id,
             )
-            await ctx.send(f"{result[1]} It's **{result[0]}**! You won **${amount}**!")
+            await ctx.send(_("{result[1]} It's **{result[0]}**! You won **${amount}**!").format(result=result, amount=amount))
         else:
             await self.bot.pool.execute(
                 'UPDATE profile SET money=money-$1 WHERE "user"=$2;',
                 amount,
                 ctx.author.id,
             )
-            await ctx.send(f"{result[1]} It's **{result[0]}**! You lost **${amount}**!")
+            await ctx.send(_("{result[1]} It's **{result[0]}**! You lost **${amount}**!").format(result=result, amount=amount))
 
     @has_char()
     @commands.cooldown(1, 5, commands.BucketType.user)
@@ -330,12 +330,12 @@ class Gambling(commands.Cog):
     ):
         if tip > maximum:
             return await ctx.send(
-                f"Invalid Tip. Must be in the Range of `1` to `{maximum}`."
+                _("Invalid Tip. Must be in the Range of `1` to `{maximum}`.").format(maximum=maximum)
             )
         if money * (maximum - 1) > 100_000:
-            return await ctx.send("Spend it in a better way. C'mon!")
+            return await ctx.send(_("Spend it in a better way. C'mon!"))
         if ctx.character_data["money"] < money:
-            return await ctx.send("You're too poor.")
+            return await ctx.send(_("You're too poor."))
         randomn = secrets.randbelow(maximum + 1)
         if randomn == tip:
             await self.bot.pool.execute(
@@ -344,7 +344,7 @@ class Gambling(commands.Cog):
                 ctx.author.id,
             )
             await ctx.send(
-                f"You won **${money*(maximum-1)}**! The random number was `{randomn}`, you tipped `{tip}`."
+                _("You won **${money}**! The random number was `{num}`, you tipped `{tip}`.").format(num=randomn, tip=tip, money=money * (maximum - 1))
             )
         else:
             await self.bot.pool.execute(
@@ -353,16 +353,16 @@ class Gambling(commands.Cog):
                 ctx.author.id,
             )
             await ctx.send(
-                f"You lost **${money}**! The random number was `{randomn}`, you tipped `{tip}`."
+                _("You lost **${money}**! The random number was `{num}`, you tipped `{tip}`.").format(num=randomn, tip=tip, money=money)
             )
 
     @has_char()
     @commands.cooldown(1, 15, commands.BucketType.user)
     @commands.command(aliases=["bj"])
     async def blackjack(self, ctx, amount: IntFromTo(0, 1000) = 0):
-        """[Alpha] Play blackjack against the dealer. Dealer rules, means wins in case of tie."""
+        _("""[Alpha] Play blackjack against the dealer. Dealer rules, means wins in case of tie.""")
         if ctx.character_data["money"] < amount:
-            return await ctx.send("You're too poor.")
+            return await ctx.send(_("You're too poor."))
         await self.bot.pool.execute(
             'UPDATE profile SET "money"="money"-$1 WHERE "user"=$2;',
             amount,
