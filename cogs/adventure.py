@@ -66,7 +66,9 @@ class Adventure(commands.Cog):
         _("""Sends your character on an adventure.""")
         if dungeonnumber > int(rpgtools.xptolevel(ctx.character_data["xp"])):
             return await ctx.send(
-                _("You must be on level **{level}** to do this adventure.").format(level=dungeonnumber)
+                _("You must be on level **{level}** to do this adventure.").format(
+                    level=dungeonnumber
+                )
             )
         time_booster = await self.bot.get_booster(ctx.author, "time")
         time = self.bot.config.adventure_times[dungeonnumber]
@@ -74,7 +76,9 @@ class Adventure(commands.Cog):
             time = time / 2
         await self.bot.start_adventure(ctx.author, dungeonnumber, time)
         await ctx.send(
-            _("Successfully sent your character out on an adventure. Use `{prefix}status` to see the current status of the mission.").format(prefix=ctx.prefix)
+            _(
+                "Successfully sent your character out on an adventure. Use `{prefix}status` to see the current status of the mission."
+            ).format(prefix=ctx.prefix)
         )
 
     @has_no_adventure()
@@ -108,7 +112,8 @@ class Adventure(commands.Cog):
 
         while PROGRESS < 100 and HP > 0:
             await msg.edit(
-                content=_("""
+                content=_(
+                    """
 **{user}'s Adventure**
 ```
 Progress: {progress}%
@@ -119,14 +124,17 @@ HP......: {enemy_hp}
 
 Use the reactions attack, defend or recover
 ```
-""").format(user=ctx.disp, progress=PROGRESS, hp=HP, enemy_hp=ENEMY_HP)
+"""
+                ).format(user=ctx.disp, progress=PROGRESS, hp=HP, enemy_hp=ENEMY_HP)
             )
             try:
                 reaction, _ = await self.bot.wait_for(
                     "reaction_add", timeout=30, check=is_valid_move
                 )
             except asyncio.TimeoutError:
-                return await ctx.send(_("Adventure stopped because you refused to move."))
+                return await ctx.send(
+                    _("Adventure stopped because you refused to move.")
+                )
             try:
                 await msg.remove_reaction(reaction, ctx.author)
             except discord.Forbidden:
@@ -150,22 +158,32 @@ Use the reactions attack, defend or recover
                 HP -= efficiency
                 ENEMY_HP -= SWORD
                 await ctx.send(
-                    _("You hit the enemy for **{damage}** damage, he hit you for **{damage2}** damage.").format(damage=SWORD, damage2=efficiency),
+                    _(
+                        "You hit the enemy for **{damage}** damage, he hit you for **{damage2}** damage."
+                    ).format(damage=SWORD, damage2=efficiency),
                     delete_after=5,
                 )
             elif move == "attack" and enemymove != "defend":
                 ENEMY_HP -= SWORD
                 await ctx.send(
-                    _("You hit the enemy for **{damage}** damage.").format(damage=SWORD), delete_after=5
+                    _("You hit the enemy for **{damage}** damage.").format(
+                        damage=SWORD
+                    ),
+                    delete_after=5,
                 )
             elif enemymove == "attack" and move == "recover":
                 efficiency = random.randint(int(SWORD * 0.5), int(SWORD * 1.5))
                 HP -= efficiency
                 await ctx.send(
-                    _("The enemy hit you for **{damage}** damage.").format(damage=efficiency), delete_after=5
+                    _("The enemy hit you for **{damage}** damage.").format(
+                        damage=efficiency
+                    ),
+                    delete_after=5,
                 )
             if ENEMY_HP < 1:
-                await ctx.send(_("Enemy defeated! You gained **20 HP**"), delete_after=5)
+                await ctx.send(
+                    _("Enemy defeated! You gained **20 HP**"), delete_after=5
+                )
                 PROGRESS += random.randint(10, 40)
                 ENEMY_HP = 100
                 HP += 20
@@ -255,17 +273,27 @@ Use the reactions attack, defend or recover
                     )
                     if not ctx.character_data["marriage"]:
                         await ctx.send(
-                            _("You have completed your dungeon and received **${gold}** as well as a new weapon: **{item}**. Experience gained: **{xp}**.").format(gold=gold, item=item["name"], xp=xp)
+                            _(
+                                "You have completed your dungeon and received **${gold}** as well as a new weapon: **{item}**. Experience gained: **{xp}**."
+                            ).format(gold=gold, item=item["name"], xp=xp)
                         )
                     else:
                         await ctx.send(
-                            _("You have completed your dungeon and received **${gold}** as well as a new weapon: **{item}**. Experience gained: **{xp}**.\nYour partner received **${gold2}**.").format(gold=gold, gold2=int(gold) / 2, item=item["name"], xp=xp)
+                            _(
+                                "You have completed your dungeon and received **${gold}** as well as a new weapon: **{item}**. Experience gained: **{xp}**.\nYour partner received **${gold2}**."
+                            ).format(
+                                gold=gold, gold2=int(gold) / 2, item=item["name"], xp=xp
+                            )
                         )
                     new_level = int(rpgtools.xptolevel(ctx.character_data["xp"] + xp))
                     if int(rpgtools.xptolevel(ctx.character_data["xp"])) < new_level:
                         reward = random.choice(
                             [
-                                ("crates", new_level, _("**{amount}** crates").format(amount=new_level)),
+                                (
+                                    "crates",
+                                    new_level,
+                                    _("**{amount}** crates").format(amount=new_level),
+                                ),
                                 ("money", new_level * 1000, f"**${new_level * 1000}**"),
                                 ("item", round(new_level * 1.5), _("a special Item")),
                             ]
@@ -285,10 +313,14 @@ Use the reactions attack, defend or recover
                                 owner=ctx.author,
                                 insert=False,
                             )
-                            item["name"] = _("Level {new_level} Memorial").format(new_level=new_level)
+                            item["name"] = _("Level {new_level} Memorial").format(
+                                new_level=new_level
+                            )
                             await self.bot.create_item(**item)
                         await ctx.send(
-                            _("You reached a new level: **{new_level}** :star:! You received {reward} as a reward :tada:!").format(new_level=new_level, reward=reward[2])
+                            _(
+                                "You reached a new level: **{new_level}** :star:! You received {reward} as a reward :tada:!"
+                            ).format(new_level=new_level, reward=reward[2])
                         )
             else:
                 await ctx.send(_("You died on your mission. Try again!"))
@@ -299,7 +331,9 @@ Use the reactions attack, defend or recover
         else:
             dungeon = self.bot.config.adventure_names[num]
             await ctx.send(
-                _("You are currently in the adventure with difficulty `{difficulty}`.\nApproximate end in `{end}`\nDungeon Name: `{dungeon}`").format(difficulty=num, end=str(time).split('.')[0], dungeon=dungeon)
+                _(
+                    "You are currently in the adventure with difficulty `{difficulty}`.\nApproximate end in `{end}`\nDungeon Name: `{dungeon}`"
+                ).format(difficulty=num, end=str(time).split(".")[0], dungeon=dungeon)
             )
 
     @has_char()
@@ -309,7 +343,9 @@ Use the reactions attack, defend or recover
         _("""Cancels your current adventure.""")
         await self.bot.delete_adventure(ctx.author)
         await ctx.send(
-            _("Canceled your mission. Use `{prefix}adventure [missionID]` to start a new one!").format(prefix=ctx.prefix)
+            _(
+                "Canceled your mission. Use `{prefix}adventure [missionID]` to start a new one!"
+            ).format(prefix=ctx.prefix)
         )
 
     @has_char()
@@ -324,7 +360,11 @@ Use the reactions attack, defend or recover
         else:
             rate = 100
         await ctx.send(
-            _("Out of **{total}** adventures, you died **{deaths}** times and survived **{completed}** times, which is a success rate of **{rate}%**.").format(total=deaths + completed, deaths=deaths, completed=completed, rate=rate)
+            _(
+                "Out of **{total}** adventures, you died **{deaths}** times and survived **{completed}** times, which is a success rate of **{rate}%**."
+            ).format(
+                total=deaths + completed, deaths=deaths, completed=completed, rate=rate
+            )
         )
 
 

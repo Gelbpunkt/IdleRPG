@@ -101,7 +101,9 @@ class Christmas(commands.Cog):
                     "https://i.imgur.com/HuF0VbN.png",
                     ctx.author.id,
                 )
-                text = _("A special surprise - check out `{prefix}eventbackground` for a new Wintersday background!").format(prefix=ctx.prefix)
+                text = _(
+                    "A special surprise - check out `{prefix}eventbackground` for a new Wintersday background!"
+                ).format(prefix=ctx.prefix)
                 reward_text = f"{reward_text}\n- {text}"
         await ctx.send(reward_text)
 
@@ -117,7 +119,9 @@ class Christmas(commands.Cog):
                 != 6
             ):
                 return await ctx.send(
-                    _("The mysterious puzzles don't fit together... Maybe some are missing?")
+                    _(
+                        "The mysterious puzzles don't fit together... Maybe some are missing?"
+                    )
                 )
             bg = random.choice(
                 [
@@ -138,7 +142,9 @@ class Christmas(commands.Cog):
                 'UPDATE profile SET puzzles=0 WHERE "user"=$1;', ctx.author.id
             )
         await ctx.send(
-            _("You combined the puzzles! In your head a voice whispers: *Well done. Now use `{prefix}eventbackground 1` to set your new background that you just acquired...*").format(prefix=ctx.prefix)
+            _(
+                "You combined the puzzles! In your head a voice whispers: *Well done. Now use `{prefix}eventbackground 1` to set your new background that you just acquired...*"
+            ).format(prefix=ctx.prefix)
         )
 
     @is_guild_officer()
@@ -172,11 +178,15 @@ class Christmas(commands.Cog):
             ]
 
         msg = await ctx.send(
-            _("{enemy}, {author} has challenged you for an epic snowball fight! If you want to accept, react \U00002744\n**IMPORTANT: This is very spammy, make sure you are using a dedicated channel!**").format(enemy=enemy.mention, author=ctx.author.mention)
+            _(
+                "{enemy}, {author} has challenged you for an epic snowball fight! If you want to accept, react \U00002744\n**IMPORTANT: This is very spammy, make sure you are using a dedicated channel!**"
+            ).format(enemy=enemy.mention, author=ctx.author.mention)
         )
 
         def check(r, u):
-            return r.message.id == msg.id and u == enemy and str(r.emoji) == "\U00002744"
+            return (
+                r.message.id == msg.id and u == enemy and str(r.emoji) == "\U00002744"
+            )
 
         await msg.add_reaction("\U00002744")
 
@@ -200,7 +210,9 @@ class Christmas(commands.Cog):
             )
 
         await ctx.send(
-            _("{author}, type `snowballfight nominate @user` to add one of your guild members to the fight!").format(author=ctx.author.mention)
+            _(
+                "{author}, type `snowballfight nominate @user` to add one of your guild members to the fight!"
+            ).format(author=ctx.author.mention)
         )
         while len(team1) == 1:
             try:
@@ -218,7 +230,9 @@ class Christmas(commands.Cog):
             else:
                 team1.append(u)
         await ctx.send(
-            _("{enemy}, use `snowballfight nominate @user` to add one of your guild members to the fight!").format(enemy=enemy.mention)
+            _(
+                "{enemy}, use `snowballfight nominate @user` to add one of your guild members to the fight!"
+            ).format(enemy=enemy.mention)
         )
         while len(team2) == 1:
             try:
@@ -249,12 +263,14 @@ class Christmas(commands.Cog):
                 + ":black_large_square:" * (10 - points2)
             )
             await ctx.send(
-                _("""
+                _(
+                    """
 {author.mention}'s team vs {enemy.mention}'s team
 {t1} - {author}
 {t2} - {enemy}
 Next round starts in 5 seconds!
-""").format(author=ctx.author, enemy=enemy, t1=t1, t2=t2)
+"""
+                ).format(author=ctx.author, enemy=enemy, t1=t1, t2=t2)
             )
             await asyncio.sleep(5)
             game_mode = random.choice(["typeit", "maths", "hangman"])
@@ -270,7 +286,9 @@ Next round starts in 5 seconds!
                     ) and msg.content == real
 
                 await ctx.send(
-                    _("It's word typing time! In 3 seconds, I will send a word. Whoever types it fastest gets one point!")
+                    _(
+                        "It's word typing time! In 3 seconds, I will send a word. Whoever types it fastest gets one point!"
+                    )
                 )
                 await asyncio.sleep(3)
                 await ctx.send(f"`{word}`")
@@ -284,7 +302,9 @@ Next round starts in 5 seconds!
                     points1 += 1
                 else:
                     points2 += 1
-                await ctx.send(_("{author} got it right!").format(author=ctx.author.mention))
+                await ctx.send(
+                    _("{author} got it right!").format(author=ctx.author.mention)
+                )
             elif game_mode == "maths":
                 m = random.randint(1, 20)
                 x = random.randint(1, 30)
@@ -302,7 +322,9 @@ Next round starts in 5 seconds!
                     ) and msg.content == res
 
                 await ctx.send(
-                    _("It's maths time! In 3 seconds, I'll send a simple maths task to solve! Type the answer to get a point!")
+                    _(
+                        "It's maths time! In 3 seconds, I'll send a simple maths task to solve! Type the answer to get a point!"
+                    )
                 )
                 await asyncio.sleep(3)
                 await ctx.send(f"`({m} * {x}) / {c} + {d}`")
@@ -328,7 +350,9 @@ Next round starts in 5 seconds!
                 disp = "_ " * len(word)
                 guessed = []
                 await ctx.send(
-                    _("It's hangman time! In 3 seconds, I'll send a hangman-style word and you will have to either send your full word as the guess or a letter to check for!")
+                    _(
+                        "It's hangman time! In 3 seconds, I'll send a hangman-style word and you will have to either send your full word as the guess or a letter to check for!"
+                    )
                 )
                 await asyncio.sleep(3)
                 q = await ctx.send(f"`{disp}`")
@@ -344,7 +368,9 @@ Next round starts in 5 seconds!
                             points1 += 1
                         else:
                             points2 += 1
-                        await ctx.send(_("{user} got it right!").format(user=msg.author))
+                        await ctx.send(
+                            _("{user} got it right!").format(user=msg.author)
+                        )
                         break
                     else:
                         try:
@@ -421,11 +447,13 @@ Next round starts in 5 seconds!
                     id = the_r[1][0]
             except IndexError:
                 return await ctx.send(_("Those guilds are not in a match!"))
-            c["Participants"].append([id, winnername])
+            c["Participants"].append([id, winner])
             ujson.dump(c, f)
             f.truncate()
         await ctx.send(
-            _("The winner of {guild1} vs {guild2} is now {winner}!").format(guild1=guild1, guild2=guild2, winner=winner)
+            _("The winner of {guild1} vs {guild2} is now {winner}!").format(
+                guild1=guild1, guild2=guild2, winner=winner
+            )
         )
 
     @is_admin()
@@ -448,16 +476,16 @@ Next round starts in 5 seconds!
         with open("tournament.json", "r") as f:
             c = ujson.load(f)
         text = _("Participants who are already in the next round")
-        await ctx.send(
-            f"**{text}**:\n{', '.join([i[1] for i in c['Participants']])}"
-        )
+        await ctx.send(f"**{text}**:\n{', '.join([i[1] for i in c['Participants']])}")
         paginator = commands.Paginator()
         try:
             for i in [f"{i[0][1]} vs {i[1][1]}" for i in c["Matches"]]:
                 paginator.add_line(i)
         except IndexError:
             return await ctx.send(
-                _("No more matches to be done. Either it is over or it's time for a new round!")
+                _(
+                    "No more matches to be done. Either it is over or it's time for a new round!"
+                )
             )
         await ctx.send(_("**Matches to be done**:"))
         for i in paginator.pages:
