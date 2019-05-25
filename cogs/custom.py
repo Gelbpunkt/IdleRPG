@@ -22,16 +22,16 @@ class Custom(commands.Cog):
 
     @commands.command(hidden=True)
     async def onetruechild(self, ctx):
-        """In loving memory of Mary Johanna, ex-developer."""
-        await ctx.send("His name is `#no homo` :heart:")
+        _("""In loving memory of Mary Johanna, ex-developer.""")
+        await ctx.send(_("His name is `#no homo` :heart:"))
 
     @is_ken()
     @commands.command(hidden=True)
     async def ken(self, ctx, user: discord.Member):
-        """[Ken only] Hug someone."""
+        _("""[Ken only] Hug someone.""")
         em = discord.Embed(
-            title="Ken Hug!",
-            description=f"{ctx.author.mention} hugged {user.mention}! Awww!",
+            title=_("Ken Hug!"),
+            description=_("{author} hugged {user}! Awww!").format(author=ctx.author.mention, user=user.mention),
         )
         em.set_image(
             url="https://cdn.discordapp.com/attachments/515954333368713235/518539871665520641/image0.gif"  # noqa
