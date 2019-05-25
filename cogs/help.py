@@ -54,33 +54,33 @@ class Help(commands.Cog):
         maxpages = len(all_commands)
 
         embed = discord.Embed(
-            title="IdleRPG Help",
+            title=_("IdleRPG Help"),
             colour=self.bot.config.primary_colour,
             url=self.bot.BASE_URL,
-            description="**Welcome to the IdleRPG help. Use the arrows to move.\nFor more help, join the support server at https://discord.gg/axBKXBv.**\nCheck out our partners using the partners command!",
+            description=_("**Welcome to the IdleRPG help. Use the arrows to move.\nFor more help, join the support server at https://discord.gg/axBKXBv.**\nCheck out our partners using the partners command!"),
         )
         embed.set_image(url=f"{self.bot.BASE_URL}/IdleRPG.png")
         embed.set_footer(
-            text=f"IdleRPG Version {self.bot.version}",
+            text=_("IdleRPG Version {version}").format(version=self.bot.version),
             icon_url=self.bot.user.avatar_url,
         )
         pages.append(embed)
         for i, (cog, commands) in enumerate(all_commands.items()):
             embed = discord.Embed(
-                title="IdleRPG Help",
+                title=_("IdleRPG Help"),
                 colour=self.bot.config.primary_colour,
                 url=self.bot.BASE_URL,
-                description=f"**{cog} Commands**",
+                description=_("**{category} Commands**").format(category=cog),
             )
             embed.set_footer(
-                text=f"IdleRPG Version {self.bot.version} | Page {i + 1} of {maxpages}",
+                text=_("IdleRPG Version {version} | Page {page} of {maxpages}").format(version=self.bot.version, page=i + 1, maxpages=maxpages),
                 icon_url=self.bot.user.avatar_url,
             )
             for command in commands:
                 desc = (
                     command.description
                     or getattr(command.callback, "__doc__")
-                    or "No Description set"
+                    or _("No Description set")
                 )
                 embed.add_field(
                     name=self.make_signature(command), value=desc, inline=False
@@ -90,29 +90,22 @@ class Help(commands.Cog):
 
     @commands.command()
     async def documentation(self, ctx):
-        """Sends a link to the official documentation."""
+        _("""Sends a link to the official documentation.""")
         await ctx.send(
-            f"<:blackcheck:441826948919066625> **Check {self.bot.BASE_URL} for a list of commands**"
+            _("<:blackcheck:441826948919066625> **Check {url} for a list of commands**").format(url=f"{self.bot.BASE_URL}/commands")
         )
 
-    @commands.command()
+    @commands.command(aliases=["faq"])
     async def tutorial(self, ctx):
         """Link to the bot tutorial."""
         await ctx.send(
-            f"<:blackcheck:441826948919066625> **Check {self.bot.BASE_URL}/tutorial for a tutorial**"
-        )
-
-    @commands.command()
-    async def faq(self, ctx):
-        """Link to the FAQ."""
-        await ctx.send(
-            f"<:blackcheck:441826948919066625> **Check {self.bot.BASE_URL}/tutorial for the official FAQ**"
+            _("<:blackcheck:441826948919066625> **Check {url} for a tutorial and FAQ**").format(url=f"{self.bot.BASE_URL}/tutorial")
         )
 
     @is_supporter()
     @commands.command()
     async def unbanfromhelpme(self, ctx, thing_to_ban: Union[User, int]):
-        """Unban an entitiy from using $helpme."""
+        _("""Unban an entitiy from using $helpme.""")
         if isinstance(thing_to_ban, discord.User):
             id = thing_to_ban.id
         else:
@@ -120,13 +113,13 @@ class Help(commands.Cog):
             thing_to_ban = self.bot.get_guild(id)
         await self.bot.pool.execute('DELETE FROM helpme WHERE "id"=$1;', id)
         await ctx.send(
-            f"{thing_to_ban.name} has been unbanned for the helpme command :ok_hand:"
+            _("{thing} has been unbanned for the helpme command :ok_hand:").format(thing=thing_to_ban.name)
         )
 
     @is_supporter()
     @commands.command()
     async def banfromhelpme(self, ctx, thing_to_ban: Union[User, int]):
-        """Band a user from using $helpme."""
+        _("""Band a user from using $helpme.""")
         if isinstance(thing_to_ban, discord.User):
             id = thing_to_ban.id
         else:
@@ -135,15 +128,15 @@ class Help(commands.Cog):
         try:
             await self.bot.pool.execute('INSERT INTO helpme ("id") VALUES ($1);', id)
         except UniqueViolationError:
-            return await ctx.send("Error... Maybe they're already banned?")
+            return await ctx.send(_("Error... Maybe they're already banned?"))
         await ctx.send(
-            f"{thing_to_ban.name} has been banned for the helpme command :ok_hand:"
+            _("{thing} has been banned for the helpme command :ok_hand:").format(thing=thing_to_ban.name)
         )
 
     @commands.guild_only()
     @commands.command()
     async def helpme(self, ctx, *, text: str):
-        """Allows a support team member to join your server for individual help."""
+        _("""Allows a support team member to join your server for individual help.""")
         blocked = await self.bot.pool.fetchrow(
             'SELECT * FROM helpme WHERE "id"=$1 OR "id"=$2;',
             ctx.guild.id,
@@ -151,18 +144,18 @@ class Help(commands.Cog):
         )
         if blocked:
             return await ctx.send(
-                "You or your server has been blacklisted for some reason."
+                _("You or your server has been blacklisted for some reason.")
             )
 
         if not await ctx.confirm(
-            "Are you sure? This will notify our support team and allow them to join the server."
+            _("Are you sure? This will notify our support team and allow them to join the server.")
         ):
             return
 
         try:
             inv = await ctx.channel.create_invite()
         except discord.Forbidden:
-            return await ctx.send("Error when creating Invite.")
+            return await ctx.send(_("Error when creating Invite."))
         em = discord.Embed(title="Help Request", colour=0xFF0000)
         em.add_field(name="Requested by", value=f"{ctx.author}")
         em.add_field(name="Requested in server", value=f"{ctx.guild.name}")
@@ -174,18 +167,18 @@ class Help(commands.Cog):
             453_551_307_249_418_254, None, embed=em.to_dict()
         )
         await ctx.send(
-            "Support team has been notified and will join as soon as possible!"
+            _("Support team has been notified and will join as soon as possible!")
         )
 
     @commands.command()
     async def help(
         self, ctx, *, command: commands.clean_content(escape_markdown=True) = None
     ):
-        """Shows help about the bot."""
+        _("""Shows help about the bot.""")
         if command:
             command = self.bot.get_command(command.lower())
             if not command:
-                return await ctx.send("Sorry, that command does not exist.")
+                return await ctx.send(_("Sorry, that command does not exist."))
             sig = self.make_signature(command)
             subcommands = getattr(command, "commands", None)
             if subcommands:
