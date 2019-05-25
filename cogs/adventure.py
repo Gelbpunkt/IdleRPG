@@ -26,14 +26,14 @@ class Adventure(commands.Cog):
     @has_char()
     @commands.command(aliases=["missions", "dungeons"])
     async def adventures(self, ctx):
-        """A list of all adventures with success rates, name and time it takes."""
+        _("""A list of all adventures with success rates, name and time it takes.""")
         sword, shield = await self.bot.get_equipped_items_for(ctx.author)
         all_dungeons = list(self.bot.config.adventure_times.keys())
         level = rpgtools.xptolevel(ctx.character_data["xp"])
         damage = sword["damage"] if sword else 0
         defense = shield["armor"] if shield else 0
 
-        msg = await ctx.send("Loading images...")
+        msg = await ctx.send(_("Loading images..."))
 
         chances = []
         for adv in all_dungeons:
@@ -63,10 +63,10 @@ class Adventure(commands.Cog):
     @has_no_adventure()
     @commands.command(aliases=["mission", "a", "dungeon"])
     async def adventure(self, ctx, dungeonnumber: IntFromTo(1, 20)):
-        """Sends your character on an adventure."""
+        _("""Sends your character on an adventure.""")
         if dungeonnumber > int(rpgtools.xptolevel(ctx.character_data["xp"])):
             return await ctx.send(
-                f"You must be on level **{dungeonnumber}** to do this adventure."
+                _("You must be on level **{level}** to do this adventure.").format(level=dungeonnumber)
             )
         time_booster = await self.bot.get_booster(ctx.author, "time")
         time = self.bot.config.adventure_times[dungeonnumber]
@@ -74,15 +74,15 @@ class Adventure(commands.Cog):
             time = time / 2
         await self.bot.start_adventure(ctx.author, dungeonnumber, time)
         await ctx.send(
-            f"Successfully sent your character out on an adventure. Use `{ctx.prefix}status` to see the current status of the mission."
+            _("Successfully sent your character out on an adventure. Use `{prefix}status` to see the current status of the mission.").format(prefix=ctx.prefix)
         )
 
     @has_no_adventure()
     @user_cooldown(3600)
     @commands.command()
     async def activeadventure(self, ctx):
-        """Go out on an active, action based adventure."""
-        msg = await ctx.send("**Active adventure loading...**")
+        _("""Go out on an active, action based adventure.""")
+        msg = await ctx.send(_("**Active adventure loading...**"))
         sword, shield = await self.bot.get_equipped_items_for(ctx.author)
         SWORD = sword["damage"] if sword else 0
         SHIELD = shield["armor"] if shield else 0
@@ -108,25 +108,25 @@ class Adventure(commands.Cog):
 
         while PROGRESS < 100 and HP > 0:
             await msg.edit(
-                content=f"""
-**{ctx.disp}'s Adventure**
+                content=_("""
+**{user}'s Adventure**
 ```
-Progress: {PROGRESS}%
-HP......: {HP}
+Progress: {progress}%
+HP......: {hp}
 
 Enemy
-HP......: {ENEMY_HP}
+HP......: {enemy_hp}
 
 Use the reactions attack, defend or recover
 ```
-"""
+""").format(user=ctx.disp, progress=PROGRESS, hp=HP, enemy_hp=ENEMY_HP)
             )
             try:
                 reaction, _ = await self.bot.wait_for(
                     "reaction_add", timeout=30, check=is_valid_move
                 )
             except asyncio.TimeoutError:
-                return await ctx.send("Adventure stopped because you refused to move.")
+                return await ctx.send(_("Adventure stopped because you refused to move."))
             try:
                 await msg.remove_reaction(reaction, ctx.author)
             except discord.Forbidden:
@@ -135,43 +135,43 @@ Use the reactions attack, defend or recover
             enemymove = random.choice(["attack", "defend", "recover"])
             if move == "recover":
                 HP += 20
-                await ctx.send("You healed yourself for 20 HP.", delete_after=5)
+                await ctx.send(_("You healed yourself for 20 HP."), delete_after=5)
             if enemymove == "recover":
                 ENEMY_HP += 20
-                await ctx.send(f"The enemy healed himself for 20 HP.", delete_after=5)
+                await ctx.send(_("The enemy healed himself for 20 HP."), delete_after=5)
             if move == "attack" and enemymove == "defend":
-                await ctx.send("Your attack was blocked!", delete_after=5)
+                await ctx.send(_("Your attack was blocked!"), delete_after=5)
             if move == "defend" and enemymove == "attack":
-                await ctx.send("Enemy attack was blocked!", delete_after=5)
+                await ctx.send(_("Enemy attack was blocked!"), delete_after=5)
             if move == "defend" and enemymove == "defend":
-                await ctx.send("Noone attacked.")
+                await ctx.send(_("Noone attacked."))
             if move == "attack" and enemymove == "attack":
                 efficiency = random.randint(int(SWORD * 0.5), int(SWORD * 1.5))
                 HP -= efficiency
                 ENEMY_HP -= SWORD
                 await ctx.send(
-                    f"You hit the enemy for **{SWORD}** damage, he hit you for **{efficiency}** damage.",
+                    _("You hit the enemy for **{damage}** damage, he hit you for **{damage2}** damage.").format(damage=SWORD, damage2=efficiency),
                     delete_after=5,
                 )
             elif move == "attack" and enemymove != "defend":
                 ENEMY_HP -= SWORD
                 await ctx.send(
-                    f"You hit the enemy for **{SWORD}** damage.", delete_after=5
+                    _("You hit the enemy for **{damage}** damage.").format(damage=SWORD), delete_after=5
                 )
             elif enemymove == "attack" and move == "recover":
                 efficiency = random.randint(int(SWORD * 0.5), int(SWORD * 1.5))
                 HP -= efficiency
                 await ctx.send(
-                    f"The enemy hit you for **{efficiency}** damage.", delete_after=5
+                    _("The enemy hit you for **{damage}** damage.").format(damage=efficiency), delete_after=5
                 )
             if ENEMY_HP < 1:
-                await ctx.send("Enemy defeated! You gained **20 HP**", delete_after=5)
+                await ctx.send(_("Enemy defeated! You gained **20 HP**"), delete_after=5)
                 PROGRESS += random.randint(10, 40)
                 ENEMY_HP = 100
                 HP += 20
 
         if HP < 1:
-            return await ctx.send("You died.")
+            return await ctx.send(_("You died."))
 
         item = await self.bot.create_random_item(
             minstat=1,
@@ -181,25 +181,25 @@ Use the reactions attack, defend or recover
             owner=ctx.author,
         )
         embed = discord.Embed(
-            title="You gained an item!",
-            description="You found a new item when finishing an active adventure!",
+            title=_("You gained an item!"),
+            description=_("You found a new item when finishing an active adventure!"),
             color=0xFF0000,
         )
         embed.set_thumbnail(url=ctx.author.avatar_url)
-        embed.add_field(name="ID", value=item["id"], inline=False)
-        embed.add_field(name="Name", value=item["name"], inline=False)
-        embed.add_field(name="Type", value=item["type"], inline=False)
-        embed.add_field(name="Damage", value=item["damage"], inline=True)
-        embed.add_field(name="Armor", value=item["armor"], inline=True)
-        embed.add_field(name="Value", value=f"${item['value']}", inline=False)
-        embed.set_footer(text=f"Your HP were {HP}")
+        embed.add_field(name=_("ID"), value=item["id"], inline=False)
+        embed.add_field(name=_("Name"), value=item["name"], inline=False)
+        embed.add_field(name=_("Type"), value=item["type"], inline=False)
+        embed.add_field(name=_("Damage"), value=item["damage"], inline=True)
+        embed.add_field(name=_("Armor"), value=item["armor"], inline=True)
+        embed.add_field(name=_("Value"), value=f"${item['value']}", inline=False)
+        embed.set_footer(text=_("Your HP were {hp}").format(hp=HP))
         await ctx.send(embed=embed)
 
     @has_char()
     @has_adventure()
     @commands.command(aliases=["s"])
     async def status(self, ctx):
-        """Checks your adventure status."""
+        _("""Checks your adventure status.""")
         num, time, done = ctx.adventure_data
         if done:
             sword, shield = await self.bot.get_equipped_items_for(ctx.author)
@@ -255,19 +255,19 @@ Use the reactions attack, defend or recover
                     )
                     if not ctx.character_data["marriage"]:
                         await ctx.send(
-                            f"You have completed your dungeon and received **${gold}** as well as a new weapon: **{item['name']}**. Experience gained: **{xp}**."
+                            _("You have completed your dungeon and received **${gold}** as well as a new weapon: **{item}**. Experience gained: **{xp}**.").format(gold=gold, item=item["name"], xp=xp)
                         )
                     else:
                         await ctx.send(
-                            f"You have completed your dungeon and received **${gold}** as well as a new weapon: **{item['name']}**. Experience gained: **{xp}**.\nYour partner received **${int(gold/2)}**."
+                            _("You have completed your dungeon and received **${gold}** as well as a new weapon: **{item}**. Experience gained: **{xp}**.\nYour partner received **${gold2}**.").format(gold=gold, gold2=int(gold) / 2, item=item["name"], xp=xp)
                         )
                     new_level = int(rpgtools.xptolevel(ctx.character_data["xp"] + xp))
                     if int(rpgtools.xptolevel(ctx.character_data["xp"])) < new_level:
                         reward = random.choice(
                             [
-                                ("crates", new_level, f"**{new_level}** crates"),
+                                ("crates", new_level, _("**{amount}** crates").format(amount=new_level)),
                                 ("money", new_level * 1000, f"**${new_level * 1000}**"),
-                                ("item", round(new_level * 1.5), "a special Item"),
+                                ("item", round(new_level * 1.5), _("a special Item")),
                             ]
                         )
                         if reward[0] != "item":
@@ -285,13 +285,13 @@ Use the reactions attack, defend or recover
                                 owner=ctx.author,
                                 insert=False,
                             )
-                            item["name"] = f"Level {new_level} Memorial"
+                            item["name"] = _("Level {new_level} Memorial").format(new_level=new_level)
                             await self.bot.create_item(**item)
                         await ctx.send(
-                            f"You reached a new level: **{new_level}** :star:! You received {reward[2]} as a reward :tada:!"
+                            _("You reached a new level: **{new_level}** :star:! You received {reward} as a reward :tada:!").format(new_level=new_level, reward=reward[2])
                         )
             else:
-                await ctx.send("You died on your mission. Try again!")
+                await ctx.send(_("You died on your mission. Try again!"))
                 await self.bot.pool.execute(
                     'UPDATE profile SET deaths=deaths+1 WHERE "user"=$1;', ctx.author.id
                 )
@@ -299,23 +299,23 @@ Use the reactions attack, defend or recover
         else:
             dungeon = self.bot.config.adventure_names[num]
             await ctx.send(
-                f"You are currently in the adventure with difficulty `{num}`.\nApproximate end in `{str(time).split('.')[0]}`\nDungeon Name: `{dungeon}`"
+                _("You are currently in the adventure with difficulty `{difficulty}`.\nApproximate end in `{end}`\nDungeon Name: `{dungeon}`").format(difficulty=num, end=str(time).split('.')[0], dungeon=dungeon)
             )
 
     @has_char()
     @has_adventure()
     @commands.command()
     async def cancel(self, ctx):
-        """Cancels your current adventure."""
+        _("""Cancels your current adventure.""")
         await self.bot.delete_adventure(ctx.author)
         await ctx.send(
-            f"Canceled your mission. Use `{ctx.prefix}adventure [missionID]` to start a new one!"
+            _("Canceled your mission. Use `{prefix}adventure [missionID]` to start a new one!").format(prefix=ctx.prefix)
         )
 
     @has_char()
     @commands.command()
     async def deaths(self, ctx):
-        """Your death stats."""
+        _("""Your death stats.""")
         deaths, completed = await self.bot.pool.fetchval(
             'SELECT (deaths, completed) FROM profile WHERE "user"=$1;', ctx.author.id
         )
@@ -324,7 +324,7 @@ Use the reactions attack, defend or recover
         else:
             rate = 100
         await ctx.send(
-            f"Out of **{deaths + completed}** adventures, you died **{deaths}** times and survived **{completed}** times, which is a success rate of **{rate}%**."
+            _("Out of **{total}** adventures, you died **{deaths}** times and survived **{completed}** times, which is a success rate of **{rate}%**.").format(total=deaths + completed, deaths=deaths, completed=completed, rate=rate)
         )
 
 
