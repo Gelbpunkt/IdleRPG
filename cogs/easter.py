@@ -9,6 +9,7 @@ import random
 
 from discord.ext import commands
 
+from classes.converters import IntFromTo
 from utils.checks import has_char
 
 
@@ -18,19 +19,19 @@ class Easter(commands.Cog):
 
     @commands.group(invoke_without_command=True)
     async def easter(self, ctx):
-        """Easter related commands for trading your collected eastereggs in for rewards."""
+        _("""Easter related commands for trading your collected eastereggs in for rewards.""")
         await ctx.send(
-            f"**Easter event <:easteregg:566251086986608650>**\n\nLasts until the Tuesday after Easter!\nCollect eastereggs and use `{ctx.prefix}easter rewards` to check the rewards. <:bunny:566290173831151627>\nHappy hunting!"
+            _("**Easter event <:easteregg:566251086986608650>**\n\nLasts until the Tuesday after Easter!\nCollect eastereggs and use `{prefix}easter rewards` to check the rewards. <:bunny:566290173831151627>\nHappy hunting!").format(prefix=ctx.prefix)
         )
 
     @has_char()
     @easter.command()
     async def rewards(self, ctx):
-        """See the rewards for easter event."""
+        _("""See the rewards for easter event.""")
         await ctx.send(
-            f"""
+            _("""
 **Easter event - rewards**
-Use `{ctx.prefix}easter reward [1-10]` to trade your eggs in.
+Use `{prefix}easter reward [1-10]` to trade your eggs in.
 
 **100 <:easteregg:566251086986608650>** - 1 crate
 **500 <:easteregg:566251086986608650>** - $10000
@@ -43,15 +44,13 @@ Use `{ctx.prefix}easter reward [1-10]` to trade your eggs in.
 **7500 <:easteregg:566251086986608650>** - random item 40-50
 **10000 <:easteregg:566251086986608650>** - random 50 stat item
 
-You have **{ctx.character_data["eastereggs"]}** <:easteregg:566251086986608650>."""
+You have **{eggs}** <:easteregg:566251086986608650>.""").format(prefix=ctx.prefix, eggs=ctx.character_data["eastereggs"])
         )
 
     @has_char()
     @easter.command()
-    async def reward(self, ctx, reward_id: int):
-        """Get your easter reward. ID may be 1 to 10."""
-        if reward_id < 1 or reward_id > 10:
-            return await ctx.send("Invalid reward.")
+    async def reward(self, ctx, reward_id: IntFromTo(1, 10)):
+        _("""Get your easter reward. ID may be 1 to 10.""")
         reward = [
             (100, "crates", 1),
             (500, "money", 10000),
@@ -65,7 +64,7 @@ You have **{ctx.character_data["eastereggs"]}** <:easteregg:566251086986608650>.
             (10000, "item", 50, 50),
         ][reward_id - 1]
         if ctx.character_data["eastereggs"] < reward[0]:
-            return await ctx.send("You don't have enough eggs to claim this.")
+            return await ctx.send(_("You don't have enough eggs to claim this."))
 
         if reward[1] == "crates":
             await self.bot.pool.execute(
@@ -101,36 +100,20 @@ You have **{ctx.character_data["eastereggs"]}** <:easteregg:566251086986608650>.
                     ctx.character_data["guild"],
                 )
         elif reward[1] == "item":
-            type_ = random.choice(["Sword", "Shield"])
-            atk = random.randint(reward[2], reward[3]) if type_ == "Sword" else 0.00
-            deff = random.randint(reward[2], reward[3]) if type_ == "Shield" else 0.00
-            name = (
+            item = await self.bot.create_random_item(minstat=reward[2], maxstat=reward[3], minvalue=1000, maxvalue=1000, owner=ctx.author, insert=False)
+            item["name"] = (
                 random.choice(["Bunny Ear", "Egg Cannon", "Chocolate Bar"])
-                if type_ == "Sword"
+                if item["type_"] == "Sword"
                 else random.choice(["Giant Egg", "Sweet Defender"])
             )
-            async with self.bot.pool.acquire() as conn:
-                await conn.execute(
-                    'UPDATE profile SET "eastereggs"="eastereggs"-$1 WHERE "user"=$2;',
-                    reward[0],
-                    ctx.author.id,
-                )
-                id_ = await conn.fetchval(
-                    'INSERT INTO allitems ("owner", "type", "armor", "damage", "name", "value") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id";',
-                    ctx.author.id,
-                    type_,
-                    deff,
-                    atk,
-                    name,
-                    100,
-                )
-                await conn.execute(
-                    'INSERT INTO inventory ("equipped", "item") VALUES ($1, $2);',
-                    False,
-                    id_,
-                )
+            await self.bot.create_item(**item)
+            await self.bot.pool.execute(
+                'UPDATE profile SET "eastereggs"="eastereggs"-$1 WHERE "user"=$2;',
+                reward[0],
+                ctx.author.id,
+            )
         await ctx.send(
-            "You claimed your reward. Check your inventory/boosters/crates/money/etc.! You can claim multiple rewards, keep hunting!"
+            _("You claimed your reward. Check your inventory/boosters/crates/money/etc.! You can claim multiple rewards, keep hunting!")
         )
 
 
