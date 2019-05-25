@@ -336,10 +336,11 @@ class Profile(commands.Cog):
                 f"You are too poor to upgrade this item. The upgrade costs **${pricetopay}**, but you only have **${ctx.character_data['money']}**."
             )
 
-        if not await ctx.confirm(f"Are you sure to upgrade this item: {item['name']}?"):
+        if not await ctx.confirm(f"Are you sure you want to upgrade this item: {item['name']}? It will cost **${pricetopay}**."):
             await self.bot.reset_cooldown(ctx)
             return await ctx.send("Weapon upgrade cancelled.")
         if not await checks.has_money(self.bot, ctx.author.id, pricetopay):
+            await self.bot.reset_cooldown(ctx)
             return await ctx.send("You're too poor.")
         async with self.bot.pool.acquire() as conn:
             await conn.execute(
