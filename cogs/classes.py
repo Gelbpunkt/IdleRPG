@@ -163,6 +163,7 @@ class Classes(commands.Cog):
                 await ctx.send(f"Your new class is now `{profession}`.")
             else:
                 if not await has_money(self.bot, ctx.author.id, 5000):
+                    await self.bot.reset_cooldown(ctx)
                     return await ctx.send(
                         f"You're too poor for a class change, it costs **$5000**."
                     )
