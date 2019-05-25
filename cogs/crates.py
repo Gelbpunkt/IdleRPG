@@ -21,19 +21,18 @@ class Crates(commands.Cog):
     @has_char()
     @commands.command(aliases=["boxes"])
     async def crates(self, ctx):
-        """Shows your crates."""
+        _("""Shows your crates.""")
         await ctx.send(
-            f"You currently have **{ctx.character_data['crates']}** crates, {ctx.author.mention}! "
-            f"Use `{ctx.prefix}open` to open one!"
+            _("You currently have **{crates}** crates, {author}! Use `{prefix}open` to open one!").format(crates=ctx.character_data["crates"], author=ctx.author.mention, prefix=ctx.prefix)
         )
 
     @has_char()
     @commands.command(name="open")
     async def _open(self, ctx):
-        """Opens a crate."""
+        _("""Opens a crate.""")
         if ctx.character_data["crates"] < 1:
             return await ctx.send(
-                "Seems like you don't have a crate yet. Vote me up to get some or earn them!"
+                _("Seems like you don't have a crate yet. Vote me up to get some or earn them!")
             )
         rand = random.randint(1, 6)
         if rand == 1:
@@ -50,18 +49,18 @@ class Crates(commands.Cog):
             'UPDATE profile SET "crates"="crates"-1 WHERE "user"=$1;', ctx.author.id
         )
         embed = discord.Embed(
-            title="You gained an item!",
-            description="You found a new item when opening a crate!",
+            title=_("You gained an item!"),
+            description=_("You found a new item when opening a crate!"),
             color=0xFF0000,
         )
         embed.set_thumbnail(url=ctx.author.avatar_url)
-        embed.add_field(name="ID", value=item["id"], inline=False)
-        embed.add_field(name="Name", value=item["name"], inline=False)
-        embed.add_field(name="Type", value=item["type"], inline=False)
-        embed.add_field(name="Damage", value=item["damage"], inline=True)
-        embed.add_field(name="Armor", value=item["armor"], inline=True)
-        embed.add_field(name="Value", value=f"${item['value']}", inline=False)
-        embed.set_footer(text=f"Remaining crates: {ctx.character_data['crates'] - 1}")
+        embed.add_field(name=_("ID"), value=item["id"], inline=False)
+        embed.add_field(name=_("Name"), value=item["name"], inline=False)
+        embed.add_field(name=_("Type"), value=item["type"], inline=False)
+        embed.add_field(name=_("Damage"), value=item["damage"], inline=True)
+        embed.add_field(name=_("Armor"), value=item["armor"], inline=True)
+        embed.add_field(name=_("Value"), value=f"${item['value']}", inline=False)
+        embed.set_footer(text=_("Remaining crates: {crates}").format(crates=ctx.character_data['crates'] - 1))
         await ctx.send(embed=embed)
 
     @has_char()
@@ -69,11 +68,11 @@ class Crates(commands.Cog):
     async def tradecrate(
         self, ctx, other: MemberWithCharacter, amount: IntGreaterThan(0) = 1
     ):
-        """Trades crates to a user."""
+        _("""Trades crates to a user.""")
         if other == ctx.author:
-            return await ctx.send("Very funny...")
+            return await ctx.send(_("Very funny..."))
         if ctx.character_data["crates"] < amount:
-            return await ctx.send("You don't have any crates.")
+            return await ctx.send(_("You don't have any crates."))
         async with self.bot.pool.acquire() as conn:
             await conn.execute(
                 'UPDATE profile SET crates=crates-$1 WHERE "user"=$2;',
@@ -83,7 +82,7 @@ class Crates(commands.Cog):
             await conn.execute(
                 'UPDATE profile SET crates=crates+$1 WHERE "user"=$2;', amount, other.id
             )
-        await ctx.send(f"Successfully gave {amount} crate(s) to {other.mention}.")
+        await ctx.send(_("Successfully gave {amount} crate(s) to {other}.").format(amount=amount, other=other.mention))
 
 
 def setup(bot):
