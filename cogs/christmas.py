@@ -78,14 +78,16 @@ class Christmas(commands.Cog):
                     'UPDATE profile SET puzzles=puzzles+1 WHERE "user"=$1;',
                     ctx.author.id,
                 )
-                reward_text = f"{reward_text}\n- {_('A mysterious puzzle piece')}"
+                text = _("A mysterious puzzle piece")
+                reward_text = f"{reward_text}\n- {text}"
             if reward["crates"]:
                 await conn.execute(
                     'UPDATE profile SET crates=crates+$1 WHERE "user"=$2;',
                     reward["crates"],
                     ctx.author.id,
                 )
-                reward_text = f"{reward_text}\n- {reward['crates']} {_('crates')}"
+                text = _("{crates} crates").format(crates=reward["crates"])
+                reward_text = f"{reward_text}\n- {text}"
             if reward["money"]:
                 await conn.execute(
                     'UPDATE profile SET money=money+$1 WHERE "user"=$2;',
@@ -99,7 +101,8 @@ class Christmas(commands.Cog):
                     "https://i.imgur.com/HuF0VbN.png",
                     ctx.author.id,
                 )
-                reward_text = f"{reward_text}\n- {_('A special surprise - check out `{prefix}eventbackground` for a new Wintersday background!').format(prefix=ctx.prefix)}"
+                text = _("A special surprise - check out `{prefix}eventbackground` for a new Wintersday background!").format(prefix=ctx.prefix)
+                reward_text = f"{reward_text}\n- {text}"
         await ctx.send(reward_text)
 
     @has_char()
@@ -375,18 +378,18 @@ Next round starts in 5 seconds!
             c = ujson.load(f)
             f.seek(0)
             if d in c["Participants"]:
-                return await ctx.send("You're already signed up!")
+                return await ctx.send(_("You're already signed up!"))
             if len(c["Participants"]) > 64:
-                return await ctx.send("Tournament is full!")
+                return await ctx.send(_("Tournament is full!"))
             c["Participants"].append(d)
             ujson.dump(c, f)
             f.truncate()
-        await ctx.send(f"{g['name']} has been signed up.")
+        await ctx.send(_("{guild} has been signed up.").format(guild=g["name"]))
 
     @is_admin()
     @commands.command()
     async def makematches(self, ctx):
-        """Makes the snowball tournament matches"""
+        _("""Makes the snowball tournament matches""")
         with open("tournament.json", "r+") as f:
             c = ujson.load(f)
             f.seek(0)
@@ -396,39 +399,39 @@ Next round starts in 5 seconds!
             c["Participants"] = []
             ujson.dump(c, f)
             f.truncate()
-        await ctx.send("Matches generated!")
+        await ctx.send(_("Matches generated!"))
 
     @is_admin()
     @commands.command()
-    async def result(self, ctx, guild1name, guild2name, winnername):
-        """Save a result of a match if it is in the tournament"""
+    async def result(self, ctx, guild1, guild2, winner):
+        _("""Save a result of a match if it is in the tournament""")
         with open("tournament.json", "r+") as f:
             c = ujson.load(f)
             f.seek(0)
             for r in c["Matches"]:
-                if (r[0][1] == guild1name or r[0][1] == guild2name) and (
-                    r[1][1] == guild1name or r[1][1] == guild2name
+                if (r[0][1] == guild1 or r[0][1] == guild2) and (
+                    r[1][1] == guild1 or r[1][1] == guild2
                 ):
                     the_r = r
                     c["Matches"].remove(the_r)
             try:
-                if the_r[0][1] == winnername:
+                if the_r[0][1] == winner:
                     id = the_r[0][0]
                 else:
                     id = the_r[1][0]
             except IndexError:
-                return await ctx.send("Those guilds are not in a match!")
+                return await ctx.send(_("Those guilds are not in a match!"))
             c["Participants"].append([id, winnername])
             ujson.dump(c, f)
             f.truncate()
         await ctx.send(
-            f"The winner of {guild1name} vs {guild2name} is now {winnername}!"
+            _("The winner of {guild1} vs {guild2} is now {winner}!").format(guild1=guild1, guild2=guild2, winner=winner)
         )
 
     @is_admin()
     @commands.command()
     async def forceround(self, ctx):
-        """Enforces a new snowball round."""
+        _("""Enforces a new snowball round.""")
         with open("tournament.json", "r+") as f:
             c = ujson.load(f)
             f.seek(0)
@@ -437,15 +440,16 @@ Next round starts in 5 seconds!
             c["Matches"] = list(chunks(c["Participants"], 2))
             ujson.dump(c, f)
             f.truncate()
-        await ctx.send("Round forced!")
+        await ctx.send(_("Round forced!"))
 
     @commands.command()
     async def matches(self, ctx):
-        """Shows tournament matches."""
+        _("""Shows tournament matches.""")
         with open("tournament.json", "r") as f:
             c = ujson.load(f)
+        text = _("Participants who are already in the next round")
         await ctx.send(
-            f"**Participants who already are in the next round**:\n{', '.join([i[1] for i in c['Participants']])}"
+            f"**{text}**:\n{', '.join([i[1] for i in c['Participants']])}"
         )
         paginator = commands.Paginator()
         try:
@@ -453,9 +457,9 @@ Next round starts in 5 seconds!
                 paginator.add_line(i)
         except IndexError:
             return await ctx.send(
-                "No more matches to be done. Either it is over or it's time for a new round!"
+                _("No more matches to be done. Either it is over or it's time for a new round!")
             )
-        await ctx.send(f"**Matches to be done**:")
+        await ctx.send(_("**Matches to be done**:"))
         for i in paginator.pages:
             await ctx.send(i)
 
