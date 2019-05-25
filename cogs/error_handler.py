@@ -42,39 +42,17 @@ class Errorhandler(commands.Cog):
         ):
             # Do nothing if the command/cog has its own error handler
             return
-        if isinstance(error, commands.CommandNotFound) and ctx.guild:
-            if not await self.bot.pool.fetchval(
-                'SELECT "unknown" FROM server WHERE "id"=$1;', ctx.guild.id
-            ):
-                return
-            nl = "\n"
-            matches = []
-            for command in list(self.bot.commands):
-                if lv.distance(ctx.invoked_with, command.name) < 4:
-                    matches.append(command.name)
-            if len(matches) == 0:
-                matches.append("Oops! I couldn't find any similar Commands!")
-            try:
-                await ctx.send(
-                    f"**`Unknown Command`**\n\nDid you mean:\n{nl.join(matches)}\n\nNot what you meant? Type `{ctx.prefix}help` for a list of commands."
-                )
-            except discord.Forbidden:
-                pass
-        elif hasattr(error, "original") and isinstance(
-            getattr(error, "original"), utils.checks.NoCharacter
-        ):
-            await ctx.send(
-                f"You don't have a character yet. Use `{ctx.prefix}create` to create a new character!"
-            )
+        if isinstance(error, commands.CommandNotFound):
+            return
         elif isinstance(error, commands.MissingRequiredArgument):
             await ctx.send(
-                f"Oops! You forgot a required argument: `{error.param.name}`"
+                _("Oops! You forgot a required argument: `{arg}`").format(arg=error.param.name)
             )
         elif isinstance(error, commands.BadArgument):
-            await ctx.send(f"You used a wrong argument!")
+            await ctx.send(_("You used a malformed argument!"))
         elif isinstance(error, commands.CommandOnCooldown):
             return await ctx.send(
-                f"You are on cooldown. Try again in {timedelta(seconds=int(error.retry_after))}."
+                _("You are on cooldown. Try again in {time}.").format(time=timedelta(seconds=int(error.retry_after)))
             )
         elif hasattr(error, "original") and isinstance(
             error.original, discord.HTTPException
@@ -83,63 +61,55 @@ class Errorhandler(commands.Cog):
         elif isinstance(error, commands.NotOwner):
             await ctx.send(
                 embed=discord.Embed(
-                    title="Permission denied",
-                    description=":x: This command is only avaiable for the bot owner.",
+                    title=_("Permission denied"),
+                    description=_(":x: This command is only avaiable for the bot owner."),
                     colour=0xFF0000,
                 )
             )
         elif isinstance(error, commands.CheckFailure):
             if type(error) == utils.checks.NoCharacter:
-                await ctx.send("You don't have a character yet.")
+                await ctx.send(_("You don't have a character yet."))
             elif type(error) == utils.checks.NoGuild:
-                await ctx.send("You need to have a guild to use this command.")
+                await ctx.send(_("You need to have a guild to use this command."))
             elif type(error) == utils.checks.NeedsNoGuild:
-                await ctx.send("You need to be in no guild to use this command.")
+                await ctx.send(_("You need to be in no guild to use this command."))
             elif type(error) == utils.checks.NoGuildPermissions:
-                await ctx.send("Your rank in the guild is too low to use this command.")
+                await ctx.send(_("Your rank in the guild is too low to use this command."))
             elif type(error) == utils.checks.NeedsNoGuildLeader:
                 await ctx.send(
-                    "You mustn't be the owner of a guild to use this command."
+                    _("You mustn't be the owner of a guild to use this command.")
                 )
             elif type(error) == utils.checks.NeedsNoAdventure:
                 await ctx.send(
-                    f"You are already on an adventure. Use `{ctx.prefix}status` to see how long it lasts."
+                    _("You are already on an adventure. Use `{prefix}status` to see how long it lasts.").format(prefix=ctx.prefix)
                 )
             elif type(error) == utils.checks.NeedsAdventure:
                 await ctx.send(
-                    f"You need to be on an adventure to use this command. Try `{ctx.prefix}adventure`!"
+                    _("You need to be on an adventure to use this command. Try `{prefix}adventure`!").format(prefix=ctx.prefix)
                 )
             else:
                 await ctx.send(
                     embed=discord.Embed(
-                        title="Permission denied",
-                        description=":x: You don't have the permissions to use this command. It is thought for other users.",
+                        title=_("Permission denied"),
+                        description=_(":x: You don't have the permissions to use this command. It is thought for other users."),
                         colour=0xFF0000,
                     )
                 )
-        elif isinstance(error, discord.HTTPException):
-            await ctx.send(
-                f"There was a error responding to your message:\n`{error.text}`\nCommon issues: Bad Guild Icon or too long response"
-            )
-        elif isinstance(error, AsyncpgDataError):
-            await ctx.send(
-                "An argument or value you entered was far too high for me to handle properly!"
-            )
         elif isinstance(error, NoChoice):
-            await ctx.send("You did not choose anything.")
+            await ctx.send(_("You did not choose anything."))
         elif isinstance(error, commands.CommandInvokeError) and hasattr(
             error, "original"
         ):
-            if isinstance(error.original, OverflowError):
-                return await ctx.send(
-                    "The number you entered exceeds the maximum allowed length!"
-                )
             if isinstance(
                 error.original,
                 (ClientOSError, ServerDisconnectedError, ContentTypeError),
             ):
                 # Called on 500 HTTP responses
                 return
+            elif isinstance(error.original, AsyncpgDataError):
+                return await ctx.send(
+                    _("An argument or value you entered was far too high for me to handle properly!")
+                )
             print("In {}:".format(ctx.command.qualified_name), file=sys.stderr)
             traceback.print_tb(error.original.__traceback__)
             print(
@@ -167,7 +137,7 @@ class Errorhandler(commands.Cog):
                         },
                     )
                 await ctx.send(
-                    "The command you tried to use ran into an error. The incident has been reported and the team will work hard to fix the issue!"
+                    _("The command you tried to use ran into an error. The incident has been reported and the team will work hard to fix the issue!")
                 )
         await ctx.bot.reset_cooldown(ctx)
 
