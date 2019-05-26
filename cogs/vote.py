@@ -14,9 +14,9 @@ class Vote(commands.Cog):
 
     @commands.command()
     async def vote(self, ctx):
-        """Vote me up to get a reward!"""
+        _("""Vote me up to get a reward!""")
         await ctx.send(
-            "Upvote me for a big thanks! You will be rewarded a few seconds afterwards!\nhttps://discordbots.org/bot/idlerpg"
+            _("Upvote me for a big thanks! You will be rewarded a few seconds afterwards!\nhttps://discordbots.org/bot/idlerpg")
         )
 
 
