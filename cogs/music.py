@@ -32,7 +32,7 @@ class NotInVoiceChannel(commands.CheckFailure):
 class MusicPlayer(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
-        self.music_prefix = "mp:idle:"
+        self.music_prefix = "mp:idle:" if not bot.config.is_beta else "mp:idlebeta"
         if not hasattr(bot, "lava") or not bot.lava.connected:
             bot.queue.put_nowait(self.initialize_connection())
 
@@ -40,7 +40,7 @@ class MusicPlayer(commands.Cog):
     @commands.guild_only()
     @commands.command()
     async def play(self, ctx, *, query: str):
-        """Play some tunes"""
+        _("""Play some tunes""")
         player = self.bot.lava.get_player(ctx.guild.id)
         if not (
             query.startswith("https://")
@@ -58,12 +58,12 @@ class MusicPlayer(commands.Cog):
         if results:
             result = results[0]
         else:
-            return await ctx.send(":warning:`No results...`", delete_after=5)
+            return await ctx.send(_(":warning:`No results...`"), delete_after=5)
         del results  # memleak avoiding
         if ctx.author.voice:
             await player.connect(ctx.author.voice.channel.id)
         else:
-            return await ctx.send(":warning:`Connect to a voice channel first!`")
+            return await ctx.send(_(":warning:`Connect to a voice channel first!`"))
         result["requester_id"] = ctx.author.id
         result["channel_id"] = ctx.channel.id  # additional informations to keep
         await self.add_entry_to_queue(result, player)
@@ -72,7 +72,7 @@ class MusicPlayer(commands.Cog):
     @commands.guild_only()
     @commands.command()
     async def scsearch(self, ctx, *, query: str):
-        """Search and play some tunes from SoundCloud"""
+        _("""Search and play some tunes from SoundCloud""")
         player = self.bot.lava.get_player(ctx.guild.id)
         results = (await player.query(f"scsearch:{query.replace(' ', '+')}")).get(
             "tracks"
@@ -80,23 +80,23 @@ class MusicPlayer(commands.Cog):
         if results:
             result = results[0]
         else:
-            return await ctx.send(":warning:`No results...`", delete_after=5)
+            return await ctx.send(_(":warning:`No results...`"), delete_after=5)
         del results  # memleak avoiding
         if ctx.author.voice:
             await player.connect(ctx.author.voice.channel.id)
         else:
-            return await ctx.send(":warning:`Connect to a voice channel first!`")
+            return await ctx.send(_(":warning:`Connect to a voice channel first!`"))
         result["requester_id"] = ctx.author.id
-        result["channel_id"] = ctx.channel.id  # additional informations to keep
+        result["channel_id"] = ctx.channel.id  # additional information to keep
         await self.add_entry_to_queue(result, player)
         player.track_callback = self.on_track_end
 
     @commands.guild_only()
     @commands.command(
-        name="playrandom", aliases=["pran", "pr", "rp", "randomplay", "ranp", "randomp"]
+        aliases=["pran", "pr", "rp", "randomplay", "ranp", "randomp"]
     )
-    async def _playrandom(self, ctx, *, query: str):
-        """Picks a random result, and plays for you"""
+    async def playrandom(self, ctx, *, query: str):
+        _("""Picks a random result, and plays for you""")
         player = self.bot.lava.get_player(ctx.guild.id)
         if not (
             query.startswith("https://")
@@ -114,12 +114,12 @@ class MusicPlayer(commands.Cog):
         if results:
             result = choice(results)
         else:
-            return await ctx.send(":warning:`No results...`", delete_after=5)
+            return await ctx.send(_(":warning:`No results...`"), delete_after=5)
         del results  # memleak avoiding
         if ctx.author.voice:
             await player.connect(ctx.author.voice.channel.id)
         else:
-            return await ctx.send(":warning:`Connect to a voice channel first!`")
+            return await ctx.send(_(":warning:`Connect to a voice channel first!`"))
         result["requester_id"] = ctx.author.id
         result["channel_id"] = ctx.channel.id  # additional informations to keep
         await self.add_entry_to_queue(result, player)
@@ -128,7 +128,7 @@ class MusicPlayer(commands.Cog):
     @commands.guild_only()
     @commands.command(aliases=["stop"])
     async def leave(self, ctx):
-        """Stops the music and leaves the channel"""
+        _("""Stops the music and leaves the channel""")
         player = self.bot.lava.get_player(ctx.guild.id)
         if player.connected or ctx.guild.me.voice:
             player.track_callback = None  # don't need to handle it twice
@@ -137,17 +137,17 @@ class MusicPlayer(commands.Cog):
             )
             await player.stop()
             await player.disconnect()
-            await ctx.send(":white_check_mark:` Done!`", delete_after=5)
+            await ctx.send(_(":white_check_mark:` Done!`"), delete_after=5)
         else:
             await ctx.send(
-                ":warning:`I am currently not connected to any channel in this guild...`",
+                _(":warning:`I am currently not connected to any channel in this guild...`"),
                 delete_after=5,
             )
 
     @commands.guild_only()
     @commands.command(aliases=["q", "que", "cue"])
     async def queue(self, ctx):
-        """Show the next (maximum 5) tracks in the queue"""
+        _("""Show the next (maximum 5) tracks in the queue""")
         entries = await self.bot.redis.execute(
             "LRANGE", f"{self.music_prefix}que:{ctx.guild.id}", 1, 5
         )
@@ -160,43 +160,44 @@ class MusicPlayer(commands.Cog):
                     f'- {ctx.guild.get_member(entry.get("requester_id")).display_name}'
                 )
             queue_length = await self.get_queue_length(ctx.guild.id) - 1
+            text = _("Upcoming entries")
             await ctx.send(
                 embed=discord.Embed(
-                    title=f"Upcoming entries ({len(entries)}/{queue_length})",
+                    title=f"{text} ({len(entries)}/{queue_length})",
                     description=paginator.pages[0],
                     color=discord.Color.gold(),
                 )
             )
         else:
-            await ctx.send(":warning:`No more entries left.`")
+            await ctx.send(_(":warning:`No more entries left.`"))
 
     @commands.guild_only()
     @commands.command()
     async def skip(self, ctx):
-        """Skips the current song"""
+        _("""Skips the current song""")
         player = self.bot.lava.get_player(ctx.guild.id)
         if player.paused or player.playing:
             await player.stop()
             await ctx.message.add_reaction("✅")
         else:
-            await ctx.send(":warning:`Nothing to skip...`", delete_after=5)
+            await ctx.send(_(":warning:`Nothing to skip...`"), delete_after=5)
 
     @commands.guild_only()
     @commands.command(name="volume", aliases=["vol"])
     async def _volume(self, ctx, volume: int):
-        """Changes the playback's volume"""
+        _("""Changes the playback's volume""")
         player = self.bot.lava.get_player(ctx.guild.id)
         if not (player.paused or player.playing):
             return await ctx.send(
-                ":warning:`I am currently not playing anything here...`", delete_after=5
+                _(":warning:`I am currently not playing anything here...`"), delete_after=5
             )
         if not 0 <= volume <= 100:
             return await ctx.send(
-                ":warning:`The volume must between 0 and 100!`", delete_after=5
+                _(":warning:`The volume must between 0 and 100!`"), delete_after=5
             )
         if volume > player.volume:
             vol_warn = await ctx.send(
-                f":warning:`Playback volume is going to change to {volume} in 5 seconds. To avoid the sudden earrape, control the volume on client side!`"
+                _(":warning:`Playback volume is going to change to {volume} in 5 seconds. To avoid the sudden earrape, control the volume on client side!`").format(volume=volume)
             )
             await asyncio.sleep(5)
             await player.set_volume(volume)
@@ -204,35 +205,35 @@ class MusicPlayer(commands.Cog):
         else:
             await player.set_volume(volume)
         await ctx.send(
-            f":white_check_mark:` Volume successfully changed to {volume}!`",
+            _(":white_check_mark:` Volume successfully changed to {volume}!`").format(volume=volume),
             delete_after=5,
         )
 
     @commands.guild_only()
     @commands.command(aliases=["resume"])
     async def pause(self, ctx):
-        """Toggles the music playback's paused state"""
+        _("""Toggles the music playback's paused state""")
         player = self.bot.lava.get_player(ctx.guild.id)
         if player.playing and not player.paused:
             await player.set_pause(True)
-            await ctx.send(":white_check_mark:`Song paused!`", delete_after=5)
+            await ctx.send(_(":white_check_mark:`Song paused!`"), delete_after=5)
         elif player.paused:
             await player.set_pause(False)
-            await ctx.send(":white_check_mark:`Song resumed!`", delete_after=5)
+            await ctx.send(_(":white_check_mark:`Song resumed!`"), delete_after=5)
         elif not player.paused and not player.playing:
-            await ctx.send(":warning:`The song list is empty!`", delete_after=5)
+            await ctx.send(_(":warning:`The song list is empty!`"), delete_after=5)
 
     @commands.guild_only()
     @commands.command(aliases=["np"])
     async def now_playing(self, ctx):
-        """Displays some informations about the current song"""
+        _("""Displays some information about the current song""")
         player = self.bot.lava.get_player(ctx.guild.id)
         current_song = await self.bot.redis.execute(
             "LINDEX", f"{self.music_prefix}que:{ctx.guild.id}", 0
         )
         if not current_song:
             return await ctx.send(
-                ":warning:`I'm not playing anything at the moment...`", delete_after=5
+                _(":warning:`I'm not playing anything at the moment...`"), delete_after=5
             )
         current_song = loads(current_song)
         if not (ctx.guild and ctx.author.color == discord.Color.default()):
@@ -240,47 +241,48 @@ class MusicPlayer(commands.Cog):
         else:
             embed_color = self.bot.config.primary_colour
         player = self.bot.lava.get_player(ctx.guild.id)
-        playing_embed = discord.Embed(title="Now playing...", colour=embed_color)
+        playing_embed = discord.Embed(title=_("Now playing..."), colour=embed_color)
         if current_song.get("info"):
             if current_song["info"].get("title"):
                 playing_embed.description = playing_embed.add_field(
-                    name="Title",
+                    name=_("Title"),
                     value=f'```{current_song["info"]["title"]}```',
                     inline=False,
                 )
             if current_song["info"].get("author"):
                 playing_embed.add_field(
-                    name="Uploader", value=current_song["info"]["author"]
+                    name=_("Uploader"), value=current_song["info"]["author"]
                 )
             if current_song["info"].get("length") and not current_song["info"].get(
                 "isStream"
             ):
                 try:
                     playing_embed.add_field(
-                        name="Length",
+                        name=_("Length"),
                         value=timedelta(milliseconds=current_song["info"]["length"]),
                     )
                     playing_embed.add_field(
-                        name="Remaining",
+                        name=_("Remaining"),
                         value=str(
                             timedelta(milliseconds=current_song["info"]["length"])
                             - timedelta(seconds=player.position)
                         ).split(".")[0],
                     )
                     playing_embed.add_field(
-                        name="Position",
+                        name=_("Position"),
                         value=str(timedelta(seconds=player.position)).split(".")[0],
                     )
                 except OverflowError:  # we cannot do anything if C cannot handle it
                     pass
             elif current_song["info"].get("isStream"):
-                playing_embed.add_field(name="Length", value="Live")
+                playing_embed.add_field(name=_("Length"), value="Live")
             else:
-                playing_embed.add_field(name="Length", value="N/A")
+                playing_embed.add_field(name=_("Length"), value="N/A")
+            text = _("Click me!")
             if current_song["info"].get("uri"):
                 playing_embed.add_field(
-                    name="Link to the original",
-                    value=f"**[Click me!]({current_song['info']['uri']})**",
+                    name=_("Link to the original"),
+                    value=f"**[{text}]({current_song['info']['uri']})**",
                 )
                 if bool(
                     re_search(
@@ -293,9 +295,9 @@ class MusicPlayer(commands.Cog):
                     playing_embed.set_thumbnail(
                         url=f"https://img.youtube.com/vi/{current_song['info']['identifier']}/default.jpg"
                     )
-            playing_embed.add_field(name="Volume", value=f"{player.volume} %")
+            playing_embed.add_field(name=_("Volume"), value=f"{player.volume} %")
             if player.paused:
-                playing_embed.add_field(name="Playing status", value="`⏸Paused`")
+                playing_embed.add_field(name=_("Playing status"), value=_("`⏸Paused`"))
             if {"title", "length"} <= set(current_song["info"]) and not current_song[
                 "info"
             ]["isStream"]:
@@ -311,13 +313,13 @@ class MusicPlayer(commands.Cog):
                 )
                 playing_embed.description = controller
         else:
-            playing_embed.description = "```No informations```"
+            playing_embed.description = _("```No information```")
         if current_song.get("requester_id") and ctx.guild.get_member(
             current_song["requester_id"]
         ):  # check to avoid errors on guild leave
             req_member = ctx.guild.get_member(current_song["requester_id"])
             playing_embed.set_footer(
-                text=f"Song requested by: {req_member.display_name}",
+                text=_("Song requested by: {user}").format(user=req_member.display_name),
                 icon_url=req_member.avatar_url_as(format="png", size=64),
             )
         await ctx.send(embed=playing_embed)
@@ -357,13 +359,13 @@ class MusicPlayer(commands.Cog):
             )
             zws = "@\u200b"
             await self.bot.get_channel(entry.get("channel_id")).send(
-                f"🎧 Added {entry.get('info').get('title').replace('@', zws)} to the queue..."
+                _("🎧 Added {title} to the queue...").format(title=entry.get('info').get('title').replace('@', zws))
             )
 
     async def play_entry(self, entry: dict, player: pylava.Player):
         zws = "@\u200b"
         await self.bot.get_channel(entry.get("channel_id")).send(
-            f"🎧 Playing {entry.get('info').get('title').replace('@', zws)}..."
+            _("🎧 Playing {title}...").format(title=entry.get('info').get('title').replace('@', zws))
         )
         await player.play(entry.get("track"))
 
