@@ -10,6 +10,7 @@ import asyncio
 import discord
 from discord.ext import commands
 
+from utils import i18n
 from utils.loops import queue_manager
 
 
@@ -29,6 +30,8 @@ class GlobalEvents(commands.Cog):
     async def on_message(self, message):
         if message.author.bot or message.author.id in self.bot.bans:
             return
+        locale = await self.bot.get_cog("Locale").locale(message)
+        i18n.current_locale.set(locale)
 
     @commands.Cog.listener()
     async def on_ready(self):
