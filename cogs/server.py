@@ -17,26 +17,36 @@ class Server(commands.Cog):
     @commands.guild_only()
     @commands.command(aliases=["server"])
     async def serverinfo(self, ctx):
+        """Shows information about your server."""
+        text = _("Link")
         urltext = (
-            f"[Link <:external_link:429288989560930314>]({ctx.guild.icon_url})"
+            f"[{text} <:external_link:429288989560930314>]({ctx.guild.icon_url})"
             if ctx.guild.icon_url
-            else "`No icon has been set yet!`"
+            else _("`No icon has been set yet!`")
         )
         em = discord.Embed(
-            title="Server Information",
-            description="Compact information about this server",
+            title=_("Server Information"),
+            description=_("Compact information about this server"),
             colour=0xDEADBF,
         )
         em.add_field(
-            name="Information",
-            value=f"Server: `{ctx.guild.name}`\nServer Region: `{ctx.guild.region}`\nMembers Total: `{ctx.guild.member_count}`\nID: `{ctx.guild.id}`\nIcon: {urltext}\nOwner: {ctx.guild.owner.mention}\nServer created at: `{ctx.guild.created_at.__format__('%A %d. %B %Y at %H:%M:%S')}`",
+            name=_("Information"),
+            value=_("""\
+Server: `{name}`
+Server Region: `{region}`
+Members Total: `{members}`
+ID: `{id}`
+Icon: {urltext}
+Owner: {owner}
+Server created at: `{created_at}`""").format(name=ctx.guild.name, region=ctx.guild.region, members=ctx.guild.member_count, urltext=urltext, owner=ctx.guild.owner.mention, id=id, created_at=ctx.guild.created_at.__format__("%A %d. %B %Y at %H:%M:%S")),
         )
         em.add_field(
-            name="Roles", value=f"{', '.join([role.name for role in ctx.guild.roles])}"
+            name=_("Roles"), value=', '.join([role.name for role in ctx.guild.roles])
         )
+        text = _("{num} of {total}")
         em.add_field(
-            name="Shard",
-            value=f"`{ctx.guild.shard_id + 1}` of `{self.bot.shard_count}`",
+            name=_("Shard"),
+            value=text.format(num=ctx.guild.shard_id + 1, total=self.bot.shard_count),
         )
         em.set_thumbnail(url=ctx.guild.icon_url)
         await ctx.send(embed=em)
@@ -44,58 +54,40 @@ class Server(commands.Cog):
     @commands.guild_only()
     @commands.group(invoke_without_command=True)
     async def settings(self, ctx):
-        """Change the settings."""
-        await ctx.send(f"Please use `{ctx.prefix}settings (prefix/unknown) value`")
+        _("""Change the settings.""")
+        await ctx.send(_("Please use `{prefix}settings (prefix/unknown) value`").format(prefix=ctx.prefix))
 
     @commands.has_permissions(manage_guild=True)
     @settings.command(name="prefix")
     async def prefix_(self, ctx, *, prefix: str):
-        """Change the server bot prefix."""
+        _("""Change the server bot prefix.""")
         if len(prefix) > 10:
-            return await ctx.send("Prefixes may not be longer than 10 characters.")
-        # ToDo: handle default prefix here
+            return await ctx.send(_("Prefixes may not be longer than 10 characters."))
         if self.bot.all_prefixes.get(ctx.guild.id):
-            await self.bot.pool.execute(
-                'UPDATE server SET "prefix"=$1 WHERE "id"=$2;', prefix, ctx.guild.id
-            )
+            if prefix == self.bot.config.default_prefix:
+                del self.bot.all_prefixes[ctx.guild.id]
+                await self.bot.pool.execute('DELETE FROM server WHERE "id"=$1;', ctx.guild.id)
+            else:
+                await self.bot.pool.execute(
+                    'UPDATE server SET "prefix"=$1 WHERE "id"=$2;', prefix, ctx.guild.id
+                )
         else:
             await self.bot.pool.execute(
-                'INSERT INTO server ("id", "prefix", "unknown") VALUES ($1, $2, $3);',
+                'INSERT INTO server ("id", "prefix") VALUES ($1, $2);',
                 ctx.guild.id,
                 prefix,
-                False,
             )
-        self.bot.all_prefixes[ctx.guild.id] = prefix
-        await ctx.send(f"Prefix changed to `{prefix}`.")
-
-    @commands.has_permissions(manage_guild=True)
-    @settings.command()
-    async def unknown(self, ctx, value: bool):
-        """Toggles messages on unknown commands invoked."""
-        async with self.bot.pool.acquire() as conn:
-            settings = await conn.fetchrow(
-                'SELECT * FROM server WHERE "id"=$1;', ctx.guild.id
-            )
-            if not settings:
-                await conn.execute(
-                    'INSERT INTO server ("id", "prefix", "unknown") VALUES ($1, $2, $3);',
-                    ctx.guild.id,
-                    self.bot.config.global_prefix,
-                    value,
-                )
-            else:
-                await conn.execute(
-                    'UPDATE server SET "unknown"=$1 WHERE "id"=$2;', value, ctx.guild.id
-                )
-        await ctx.send("Successfully updated the settings.")
+        if prefix != self.bot.config.default_prefix:
+            self.bot.all_prefixes[ctx.guild.id] = prefix
+        await ctx.send(_("Prefix changed to `{prefix}`.").format(prefix=prefix))
 
     @commands.has_permissions(manage_guild=True)
     @settings.command()
     async def reset(self, ctx):
-        """Resets the server settings."""
+        _("""Resets the server settings.""")
         await self.bot.pool.execute('DELETE FROM server WHERE "id"=$1;', ctx.guild.id)
         self.bot.all_prefixes.pop(ctx.guild.id, None)
-        await ctx.send("Done!")
+        await ctx.send(_("Done!"))
 
     @commands.guild_only()
     @commands.command(aliases=["user", "member", "memberinfo"])
@@ -112,15 +104,20 @@ class Server(commands.Cog):
         }
         embed1 = discord.Embed(
             title=str(member),
-            description=f"`Joined at`: {str(member.joined_at).split('.')[0]}\n`Status...`: {statuses[str(member.status)]}{str(member.status).capitalize()}\n`Top Role.`: {member.top_role.name}\n`Roles....`: {', '.join([role.name for role in member.roles])}\n`Game.....`: {member.activity if member.activity else 'No Game Playing'}",
+            description=_("""\
+`Joined at`: {joined}
+`Status...`: {status}
+`Top Role.`: {toprole}
+`Roles....`: {roles}
+`Game.....`: {game}""").format(joined=str(member.joined_at).split('.')[0], status==f"{statuses[str(member.status)]}{str(member.status).capitalize()}", toprole=member.top_role.name, roles=', '.join([role.name for role in member.roles]), game=str(member.activity) if member.activity else _("No Game Playing")),
             color=member.color,
         ).set_thumbnail(url=member.avatar_url)
         embed2 = discord.Embed(
-            title="Permissions",
+            title=_("Permissions"),
             description="\n".join(
                 [
                     "`"
-                    + value[0].replace("_", " ").title().ljust(21, ".")
+                    + _(value[0].replace("_", " ").title()).ljust(21, ".")
                     + "`"
                     + ": "
                     + ticks[str(value[1])]
@@ -134,18 +131,18 @@ class Server(commands.Cog):
     @commands.guild_only()
     @commands.command()
     async def prefix(self, ctx):
-        """View the bot prefix."""
+        _("""View the bot prefix.""")
         prefix_ = self.bot.all_prefixes.get(ctx.guild.id, self.bot.config.global_prefix)
         await ctx.send(
-            f"The prefix for server **{ctx.guild.name}** is `{prefix_}`.\n\n`{ctx.prefix}settings prefix` changes it."
+            _("The prefix for server **{server}** is `{serverprefix}`.\n\n`{prefix}settings prefix` changes it.").format(server=ctx.guild, serverprefix=prefix_, prefix=ctx.prefix)
         )
 
     @commands.command()
     async def avatar(self, ctx, target: discord.Member = Author):
-        """Shows someone's (or your) avatar."""
+        _("""Shows someone's (or your) avatar.""")
         await ctx.send(
             embed=discord.Embed(
-                title="Download Link",
+                title=_("Download Link"),
                 url=str(target.avatar_url_as(static_format="png")),
                 color=target.color,
             ).set_image(url=target.avatar_url_as(static_format="png"))
