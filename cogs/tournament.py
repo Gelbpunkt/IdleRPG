@@ -25,11 +25,11 @@ class Tournament(commands.Cog):
     @user_cooldown(1800)
     @commands.command()
     async def tournament(self, ctx, prize: IntFromTo(0, 100_000_000)):
-        """Starts a new tournament."""
+        _("""Starts a new tournament.""")
         if ctx.character_data["money"] < prize:
-            return await ctx.send("You are too poor.")
+            return await ctx.send(_("You are too poor."))
         msg = await ctx.send(
-            f"{ctx.author.mention} started a tournament! Free entries, prize is **${prize}**! React with \U00002694 to join!"
+            _("{author} started a tournament! Free entries, prize is **${prize}**! React with \U00002694 to join!").format(author=ctx.author.mention, prize=prize)
         )
         participants = [ctx.author]
         acceptingentries = True
@@ -53,27 +53,29 @@ class Tournament(commands.Cog):
                 acceptingentries = False
                 if len(participants) < 2:
                     return await ctx.send(
-                        f"Noone joined your tournament, {ctx.author.mention}."
+                        _("Noone joined your tournament.")
                     )
-            if await has_money(self.bot, u.id, prize):
+            if await has_char(self.bot, u.id):
                 participants.append(u)
-                await ctx.send(f"{u.mention} joined the tournament.")
+                await ctx.send(_("{user} joined the tournament.").format(user=u.mention))
             else:
-                await ctx.send(f"You don't have a character, {u.mention}.")
+                await ctx.send(_("You don't have a character, {user}.").format(user=u.mention))
         toremove = 2 ** math.floor(math.log2(len(participants)))
         if toremove != len(participants):
             await ctx.send(
-                f"There are **{len(participants)}** entries, due to the fact we need a playable tournament, the last **{len(participants) - toremove}** have been removed."
+                _("There are **{num}** entries, due to the fact we need a playable tournament, the last **{removed}** have been removed.").format(num=len(participants), removed=len(participants) - toremove)
             )
             participants = participants[: -(len(participants) - toremove)]
         else:
-            await ctx.send(f"Tournament started with **{toremove}** entries.")
+            await ctx.send(_("Tournament started with **{num}** entries.").format(num=toremove))
         remain = participants
+        text = _("vs")
         while len(participants) > 1:
             random.shuffle(participants)
             matches = list(chunks(remain, 2))
+
             for match in matches:
-                await ctx.send(f"{match[0].mention} vs {match[1].mention}")
+                await ctx.send(f"{match[0].mention} {text} {match[1].mention}")
                 await asyncio.sleep(2)
                 sw1, sh1 = await self.bot.get_equipped_items_for(match[0])
                 sw2, sh2 = await self.bot.get_equipped_items_for(match[1])
@@ -97,16 +99,16 @@ class Tournament(commands.Cog):
                     winner = random.choice(match)
                     looser = match[1 - match.index(winner)]
                 participants.remove(looser)
-                await ctx.send(f"Winner of this match is {winner.mention}!")
+                await ctx.send(_("Winner of this match is {winner}!").format(winner=winner.mention))
                 await asyncio.sleep(2)
 
-            await ctx.send("Round Done!")
+            await ctx.send(_("Round Done!"))
 
         msg = await ctx.send(
-            f"Tournament ended! The winner is {participants[0].mention}."
+            _("Tournament ended! The winner is {winner}.").format(winner=participants[0].mention)
         )
         if not await has_money(self.bot, ctx.author.id, prize):
-            return await ctx.send("The creator spent money, prize can't be given!")
+            return await ctx.send(_("The creator spent money, prize can't be given!"))
         async with self.bot.pool.acquire() as conn:
             await conn.execute(
                 'UPDATE profile SET money=money-$1 WHERE "user"=$2;',
@@ -119,7 +121,7 @@ class Tournament(commands.Cog):
                 participants[0].id,
             )
         await msg.edit(
-            content=f"Tournament ended! The winner is {participants[0].mention}.\nMoney was given!"
+            content=_("Tournament ended! The winner is {winner}.\nMoney was given!").format(winner=participants[0].mention)
         )
 
 
