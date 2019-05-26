@@ -23,9 +23,9 @@ class Patreon(commands.Cog):
     @has_char()
     @commands.command()
     async def weaponname(self, ctx, itemid: int, *, newname: str):
-        """[Patreon Only] Changes an item name."""
+        _("""[Patreon Only] Changes an item name.""")
         if len(newname) > 40:
-            return await ctx.send("Name too long.")
+            return await ctx.send(_("Name too long."))
         async with self.bot.pool.acquire() as conn:
             item = await conn.fetchrow(
                 'SELECT * FROM allitems WHERE "owner"=$1 and "id"=$2;',
@@ -33,19 +33,19 @@ class Patreon(commands.Cog):
                 itemid,
             )
             if not item:
-                return await ctx.send(f"You don't have an item with the ID `{itemid}`.")
+                return await ctx.send(_("You don't have an item with the ID `{itemid}`.").format(itemid=itemid))
             await conn.execute(
                 'UPDATE allitems SET "name"=$1 WHERE "id"=$2;', newname, itemid
             )
-        await ctx.send(f"The item with the ID `{itemid}` is now called `{newname}`.")
+        await ctx.send(_("The item with the ID `{itemid}` is now called `{newname}`.").format(itemid=itemid, newname=newname))
 
     @is_patron()
     @has_char()
     @commands.command()
     async def background(self, ctx, url: str):
-        """[Patreon Only] Changes your profile background."""
+        _("""[Patreon Only] Changes your profile background.""")
         premade = [f"{self.bot.BASE_URL}/profile/premade{i}.png" for i in range(1, 14)]
-        if url == "reset":
+        if url == _("reset"):
             url = 0
         elif url.startswith("http") and (
             url.endswith(".png") or url.endswith(".jpg") or url.endswith(".jpeg")
@@ -55,10 +55,10 @@ class Patreon(commands.Cog):
             try:
                 url = premade[int(url) - 1]
             except IndexError:
-                return await ctx.send("That is not a valid premade background.")
+                return await ctx.send(_("That is not a valid premade background."))
         else:
             return await ctx.send(
-                "I couldn't read that URL. Does it start with `http://` or `https://` and is either a png or jpeg?"
+                _("I couldn't read that URL. Does it start with `http://` or `https://` and is either a png or jpeg?")
             )
         try:
             await self.bot.pool.execute(
@@ -67,23 +67,23 @@ class Patreon(commands.Cog):
                 ctx.author.id,
             )
         except StringDataRightTruncationError:
-            return await ctx.send("The URL is too long.")
+            return await ctx.send(_("The URL is too long."))
         if url != 0:
-            await ctx.send(f"Your new profile picture is now:\n{url}")
+            await ctx.send(_("Your new profile picture is now:\n{url}").format(url=url))
         else:
-            await ctx.send("Your profile picture has been reset.")
+            await ctx.send(_("Your profile picture has been reset."))
 
     @is_patron()
     @commands.command()
     async def makebackground(self, ctx, url: str, overlaytype: int):
-        """[Patreon Only] Generates a profile background based on an image. Valid overlays are 1 or 2 for grey and black."""
+        _("""[Patreon Only] Generates a profile background based on an image. Valid overlays are 1 or 2 for grey and black.""")
         if overlaytype not in [1, 2]:
-            return await ctx.send("Use either `1` or `2` as the overlay type.")
+            return await ctx.send(_("Use either `1` or `2` as the overlay type."))
         if not url.startswith("http") and (
             url.endswith(".png") or url.endswith(".jpg") or url.endswith(".jpeg")
         ):
             return await ctx.send(
-                "I couldn't read that URL. Does it start with `http://` or `https://` and is either a png or jpeg?"
+                _("I couldn't read that URL. Does it start with `http://` or `https://` and is either a png or jpeg?")
             )
         async with self.bot.trusted_session.post(
             f"{self.bot.config.okapi_url}/api/genoverlay/{overlaytype}",
@@ -98,9 +98,9 @@ class Patreon(commands.Cog):
             try:
                 link = (await r.json())["data"]["link"]
             except KeyError:
-                return await ctx.send("Error when uploading to Imgur.")
+                return await ctx.send(_("Error when uploading to Imgur."))
         await ctx.send(
-            f"Imgur Link for `{ctx.prefix}background`\n<{link}>",
+            _("Imgur Link for `{prefix}background`\n<{link}>").format(prefix=ctx.prefix, link=link),
             file=discord.File(fp=background, filename="GeneratedProfile.png"),
         )
 
@@ -108,16 +108,16 @@ class Patreon(commands.Cog):
     @is_guild_leader()
     @commands.command()
     async def updateguild(self, ctx):
-        """[Patreon Only] Update your guild member limit."""
+        _("""[Patreon Only] Update your guild member limit.""")
         await self.bot.pool.execute(
             'UPDATE guild SET memberlimit=$1 WHERE "leader"=$2;', 100, ctx.author.id
         )
-        await ctx.send("Your guild member limit is now 100.")
+        await ctx.send(_("Your guild member limit is now 100."))
 
     @has_char()
     @commands.command()
     async def eventbackground(self, ctx, number: int):
-        """Update your background to one from the events."""
+        _("""Update your background to one from the events.""")
         async with self.bot.pool.acquire() as conn:
             bgs = await conn.fetchval(
                 'SELECT backgrounds FROM profile WHERE "user"=$1;', ctx.author.id
@@ -126,12 +126,12 @@ class Patreon(commands.Cog):
                 bg = bgs[number - 1]
             except TypeError:
                 return await ctx.send(
-                    f"The background number {number} is not valid, you only have {len(bgs)} available."
+                    _("The background number {number} is not valid, you only have {total} available.").format(number=number, total=len(bgs))
                 )
             await conn.execute(
                 'UPDATE profile SET background=$1 WHERE "user"=$2;', bg, ctx.author.id
             )
-        await ctx.send("Background updated!")
+        await ctx.send(_("Background updated!"))
 
 
 def setup(bot):
