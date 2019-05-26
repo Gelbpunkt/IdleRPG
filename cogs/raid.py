@@ -13,7 +13,6 @@ from decimal import Decimal
 import discord
 from discord.ext import commands
 
-from cogs.classes import genstats
 from utils.checks import has_char, is_admin
 
 
@@ -114,7 +113,7 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
             dmg = j["damage"] * j["atkmultiply"] if j else 0
             j = next(filter(lambda x: x["user"] == i, deffs), None)
             deff = j["armor"] * j["defmultiply"] if j else 0
-            dmg, deff = await genstats(self.bot, i, dmg, deff)
+            dmg, deff = await self.bot.generate_stats(i, dmg, deff)
             raid[u] = {"hp": 250, "armor": deff, "damage": dmg}
 
         await ctx.send("**Done getting data!**")
@@ -338,7 +337,7 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
             dmg = j["damage"] * j["atkmultiply"] if j else 0
             j = next(filter(lambda x: x["user"] == i, deffs), None)
             deff = j["armor"] * j["defmultiply"] if j else 0
-            dmg, deff = await genstats(self.bot, i, dmg, deff)
+            dmg, deff = await self.bot.generate_stats(i, dmg, deff)
             raid[u] = {"hp": 100, "armor": deff, "damage": dmg}
 
         await ctx.send("**Done getting data!**")

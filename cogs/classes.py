@@ -5,7 +5,6 @@ Copyright (C) 2018-2019 Diniboy and Gelbpunkt
 This software is dual-licensed under the GNU Affero General Public License for non-commercial and the Travitia License for commercial use.
 For more information, see README.md and LICENSE.md.
 """
-import random
 import secrets
 
 import discord
@@ -13,7 +12,7 @@ from discord.ext import commands
 
 from cogs.shard_communication import user_on_cooldown as user_cooldown
 from utils import misc as rpgtools
-from utils.checks import has_char, has_money, user_is_patron, is_class
+from utils.checks import has_char, has_money, is_class, user_is_patron
 
 
 class Classes(commands.Cog):
@@ -28,22 +27,30 @@ class Classes(commands.Cog):
         embeds = [
             discord.Embed(
                 title=_("Warrior"),
-                description=_("The tank class. Charge into battle with additional defense!\n+1 defense per evolution added onto your shield."),
+                description=_(
+                    "The tank class. Charge into battle with additional defense!\n+1 defense per evolution added onto your shield."
+                ),
                 color=self.bot.config.primary_colour,
             ),
             discord.Embed(
                 title=_("Thief"),
-                description=_("The sneaky money stealer...\nGet access to `{prefix}steal` to steal 10% of the target's money, if successful.\n+8% success chance per evolution.").format(prefix=ctx.prefix),
+                description=_(
+                    "The sneaky money stealer...\nGet access to `{prefix}steal` to steal 10% of the target's money, if successful.\n+8% success chance per evolution."
+                ).format(prefix=ctx.prefix),
                 color=self.bot.config.primary_colour,
             ),
             discord.Embed(
                 title=_("Mage"),
-                description=_("Utilise powerful magic for stronger attacks.\n+1 damage per evolution added onto your sword."),
+                description=_(
+                    "Utilise powerful magic for stronger attacks.\n+1 damage per evolution added onto your sword."
+                ),
                 color=self.bot.config.primary_colour,
             ),
             discord.Embed(
                 title=_("Ranger"),
-                description=_("Item hunter and trainer of their very own pet.\nGet access to `{prefix}hunt` and `{ctx.prefix}pet` to hunt a random item once a day.\n+3 minimum stat and +6 maximum stat per evolution.").format(prefix=ctx.prefix),
+                description=_(
+                    "Item hunter and trainer of their very own pet.\nGet access to `{prefix}hunt` and `{ctx.prefix}pet` to hunt a random item once a day.\n+3 minimum stat and +6 maximum stat per evolution."
+                ).format(prefix=ctx.prefix),
                 colour=self.bot.config.primary_colour,
             ),
         ]
@@ -52,7 +59,9 @@ class Classes(commands.Cog):
             embeds.append(
                 discord.Embed(
                     title=_("Paragon"),
-                    description=_("Absorb the appreciation of the devs into your soul to power up.\n+1 damage and defense per evolution added onto your items."),
+                    description=_(
+                        "Absorb the appreciation of the devs into your soul to power up.\n+1 damage and defense per evolution added onto your items."
+                    ),
                     color=self.bot.config.primary_colour,
                 )
             )
@@ -71,7 +80,11 @@ class Classes(commands.Cog):
                 profession_,
                 ctx.author.id,
             )
-            await ctx.send(_("Your new class is now `{profession}`.").format(profession=_(profession)))
+            await ctx.send(
+                _("Your new class is now `{profession}`.").format(
+                    profession=_(profession)
+                )
+            )
         else:
             if not await has_money(self.bot, ctx.author.id, 5000):
                 await self.bot.reset_cooldown(ctx)
@@ -86,7 +99,9 @@ class Classes(commands.Cog):
                 ctx.author.id,
             )
             await ctx.send(
-                _("Your new class is now `{profession}`. **$5000** was taken off your balance.").format(profession=_(profession))
+                _(
+                    "Your new class is now `{profession}`. **$5000** was taken off your balance."
+                ).format(profession=_(profession))
             )
 
     @has_char()
@@ -104,7 +119,9 @@ class Classes(commands.Cog):
             )
         except FileNotFoundError:
             await ctx.send(
-                _("The image for your class **{class_}** hasn't been added yet.").format(class_=class_)
+                _(
+                    "The image for your class **{class_}** hasn't been added yet."
+                ).format(class_=class_)
             )
 
     @has_char()
@@ -117,11 +134,11 @@ class Classes(commands.Cog):
         if ctx.character_data["class"] == "No Class":
             return await ctx.send(_("You haven't got a class yet."))
         newindex = int(level / 5) - 1
-        newclass = self.bot.get_evolves[self.get.get_class_line(ctx.character_data["class"])][newindex]
+        newclass = self.bot.get_evolves[
+            self.get.get_class_line(ctx.character_data["class"])
+        ][newindex]
         await self.bot.pool.execute(
-            'UPDATE profile SET "class"=$1 WHERE "user"=$2;',
-            newclass,
-            ctx.author.id,
+            'UPDATE profile SET "class"=$1 WHERE "user"=$2;', newclass, ctx.author.id
         )
         await ctx.send(_("You are now a `{newclass}`.").format(newclass=newclass))
 
@@ -145,7 +162,9 @@ Caretaker->  Trainer   ->  Bowman      -> Hunter         ->  Ranger
     @commands.command()
     async def steal(self, ctx):
         _("[Thief Only] Steal money!")
-        if secrets.randbelow(100) in range(1, self.bot.get_class_grade(ctx.character_data["class"]) * 8 + 1):
+        if secrets.randbelow(100) in range(
+            1, self.bot.get_class_grade(ctx.character_data["class"]) * 8 + 1
+        ):
             async with self.bot.pool.acquire() as conn:
                 usr = await conn.fetchrow(
                     'SELECT "user", "money" FROM profile WHERE "money">=0 ORDER BY RANDOM() LIMIT 1;'
@@ -162,7 +181,11 @@ Caretaker->  Trainer   ->  Bowman      -> Hunter         ->  Ranger
                     usr["user"],
                 )
             user = await self.bot.get_user_global(usr["user"])
-            await ctx.send(_("You stole **${stolen}** from **{user}**.").format(stolen=stolen, user=user))
+            await ctx.send(
+                _("You stole **${stolen}** from **{user}**.").format(
+                    stolen=stolen, user=user
+                )
+            )
         else:
             await ctx.send(_("Your attempt to steal money wasn't successful."))
 
@@ -195,7 +218,7 @@ Caretaker->  Trainer   ->  Bowman      -> Hunter         ->  Ranger
             maxstat=petlvl * 6,
             minvalue=1,
             maxvalue=250,
-            owner=ctx.author
+            owner=ctx.author,
         )
         embed = discord.Embed(
             title=_("You gained an item!"),
@@ -205,7 +228,7 @@ Caretaker->  Trainer   ->  Bowman      -> Hunter         ->  Ranger
         embed.set_thumbnail(url=ctx.author.avatar_url)
         embed.add_field(name=_("ID"), value=item["id"], inline=False)
         embed.add_field(name=_("Name"), value=item["name"], inline=False)
-        embed.add_field(name=_("Type"), value=shieldorsword, inline=False)
+        embed.add_field(name=_("Type"), value=item["type"], inline=False)
         if item["type"] == "Sword":
             embed.add_field(name=_("Damage"), value=item["damage"], inline=True)
         else:

@@ -257,15 +257,29 @@ class Bot(commands.AutoShardedBot):
 
     def get_class_grade(self, class_):
         if class_ in ["Mage", "Wizard", "Pyromancer", "Elementalist", "Dark Caster"]:
-            return ["Mage", "Wizard", "Pyromancer", "Elementalist", "Dark Caster"].index(class_) + 1
+            return [
+                "Mage",
+                "Wizard",
+                "Pyromancer",
+                "Elementalist",
+                "Dark Caster",
+            ].index(class_) + 1
         elif class_ in ["Warrior", "Swordsman", "Knight", "Warlord", "Berserker"]:
-            return ["Warrior", "Swordsman", "Knight", "Warlord", "Berserker"].index(class_) + 1
+            return ["Warrior", "Swordsman", "Knight", "Warlord", "Berserker"].index(
+                class_
+            ) + 1
         elif class_ in ["Thief", "Rogue", "Chunin", "Renegade", "Assassin"]:
-            return ["Thief", "Rogue", "Chunin", "Renegade", "Assassin"].index(class_) + 1
+            return ["Thief", "Rogue", "Chunin", "Renegade", "Assassin"].index(
+                class_
+            ) + 1
         elif class_ in ["Caretaker", "Trainer", "Bowman", "Hunter", "Ranger"]:
-            return ["Caretaker", "Trainer", "Bowman", "Hunter", "Ranger"].index(class_) + 1
+            return ["Caretaker", "Trainer", "Bowman", "Hunter", "Ranger"].index(
+                class_
+            ) + 1
         elif class_ in ["Novice", "Proficient", "Artisan", "Master", "Paragon"]:
-            return ["Novice", "Proficient", "Artisan", "Master", "Paragon"].index(class_) + 1
+            return ["Novice", "Proficient", "Artisan", "Master", "Paragon"].index(
+                class_
+            ) + 1
         else:
             return 0
 

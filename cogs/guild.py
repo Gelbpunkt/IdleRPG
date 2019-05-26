@@ -406,7 +406,7 @@ class Guild(commands.Cog):
         for idx, profile in enumerate(players):
             charname = await rpgtools.lookup(self.bot, profile["user"])
             text = _("a character by `{charname}` with **${money}**").format(
-                charname=charname, money=money
+                charname=charname, money=profile["money"]
             )
             result = f"{result}{idx + 1}. {profile['name']}, {text}\n"
         await ctx.send(

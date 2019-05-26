@@ -139,7 +139,9 @@ class Halloween(commands.Cog):
         embed.add_field(name="Armor", value=item["armor"], inline=True)
         embed.add_field(name="Value", value=f"${item['value']}", inline=False)
         embed.set_footer(
-            text=_("Remaining trick-or-treat bags: {bags}").format(bags=bags - 1)
+            text=_("Remaining trick-or-treat bags: {bags}").format(
+                bags=ctx.character_data["trickortreat"] - 1
+            )
         )
         await ctx.send(embed=embed)
 

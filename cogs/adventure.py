@@ -13,7 +13,6 @@ import discord
 from discord.ext import commands
 
 from classes.converters import IntFromTo
-from cogs.classes import genstats
 from cogs.shard_communication import user_on_cooldown as user_cooldown
 from utils import misc as rpgtools
 from utils.checks import has_adventure, has_char, has_no_adventure
@@ -91,8 +90,8 @@ class Adventure(commands.Cog):
         SWORD = sword["damage"] if sword else 0
         SHIELD = shield["armor"] if shield else 0
         # class test
-        SWORD, SHIELD = await genstats(
-            self.bot, ctx.author.id, float(SWORD), float(SHIELD)
+        SWORD, SHIELD = await self.bot.generate_stats(
+            ctx.author, float(SWORD), float(SHIELD)
         )
         HP = 100
         PROGRESS = 0  # percent
@@ -227,7 +226,9 @@ Use the reactions attack, defend or recover
             shield = shield["armor"] if shield else 0
 
             # class test
-            sword, shield = await genstats(self.bot, ctx.author.id, sword, shield)
+            sword, shield = await self.bot.generate_stats(
+                ctx.author, sword, shield, class_=ctx.character_data["class"]
+            )
 
             luck_booster = await self.bot.get_booster(ctx.author, "luck")
             success = rpgtools.calcchance(

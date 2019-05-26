@@ -13,7 +13,6 @@ from discord.ext import commands
 from discord.ext.commands.default import Author
 
 from classes.converters import IntFromTo, MemberWithCharacter, User
-from cogs.classes import genstats
 from cogs.help import chunks
 from cogs.shard_communication import user_on_cooldown as user_cooldown
 from utils import checks
@@ -100,7 +99,9 @@ class Profile(commands.Cog):
             )
             v1 = sword["damage"] if sword else 0.0
             v2 = shield["armor"] if shield else 0.0
-            damage, armor = await genstats(self.bot, targetid, v1, v2)
+            damage, armor = await self.bot.generate_stats(
+                targetid, v1, v2, class_=profile["class"]
+            )
             extras = (damage - v1, armor - v2)
             sworddmg = f"{v1}{' (+' + str(extras[0]) + ')' if extras[0] else ''}"
             shielddef = f"{v2}{' (+' + str(extras[1]) + ')' if extras[1] else ''}"
