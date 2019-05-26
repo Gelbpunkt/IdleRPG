@@ -23,7 +23,13 @@ class Crates(commands.Cog):
     async def crates(self, ctx):
         _("""Shows your crates.""")
         await ctx.send(
-            _("You currently have **{crates}** crates, {author}! Use `{prefix}open` to open one!").format(crates=ctx.character_data["crates"], author=ctx.author.mention, prefix=ctx.prefix)
+            _(
+                "You currently have **{crates}** crates, {author}! Use `{prefix}open` to open one!"
+            ).format(
+                crates=ctx.character_data["crates"],
+                author=ctx.author.mention,
+                prefix=ctx.prefix,
+            )
         )
 
     @has_char()
@@ -32,7 +38,9 @@ class Crates(commands.Cog):
         _("""Opens a crate.""")
         if ctx.character_data["crates"] < 1:
             return await ctx.send(
-                _("Seems like you don't have a crate yet. Vote me up to get some or earn them!")
+                _(
+                    "Seems like you don't have a crate yet. Vote me up to get some or earn them!"
+                )
             )
         rand = random.randint(1, 6)
         if rand == 1:
@@ -60,7 +68,11 @@ class Crates(commands.Cog):
         embed.add_field(name=_("Damage"), value=item["damage"], inline=True)
         embed.add_field(name=_("Armor"), value=item["armor"], inline=True)
         embed.add_field(name=_("Value"), value=f"${item['value']}", inline=False)
-        embed.set_footer(text=_("Remaining crates: {crates}").format(crates=ctx.character_data['crates'] - 1))
+        embed.set_footer(
+            text=_("Remaining crates: {crates}").format(
+                crates=ctx.character_data["crates"] - 1
+            )
+        )
         await ctx.send(embed=embed)
 
     @has_char()
@@ -82,7 +94,11 @@ class Crates(commands.Cog):
             await conn.execute(
                 'UPDATE profile SET crates=crates+$1 WHERE "user"=$2;', amount, other.id
             )
-        await ctx.send(_("Successfully gave {amount} crate(s) to {other}.").format(amount=amount, other=other.mention))
+        await ctx.send(
+            _("Successfully gave {amount} crate(s) to {other}.").format(
+                amount=amount, other=other.mention
+            )
+        )
 
 
 def setup(bot):

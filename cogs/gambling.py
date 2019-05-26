@@ -152,7 +152,15 @@ class BlackJack:
     async def send(self, additional=""):
         player = self.total(self.player)
         dealer = self.total(self.dealer)
-        text = _("The dealer has a {pretty_dealer} for a total of {dealer}\nYou have a {pretty_player} for a total of {player}\n{additional}").format(pretty_dealer=self.pretty(self.dealer), dealer=dealer, pretty_player=self.pretty(self.player), player=player, additional=additional)
+        text = _(
+            "The dealer has a {pretty_dealer} for a total of {dealer}\nYou have a {pretty_player} for a total of {player}\n{additional}"
+        ).format(
+            pretty_dealer=self.pretty(self.dealer),
+            dealer=dealer,
+            pretty_player=self.pretty(self.player),
+            player=player,
+            additional=additional,
+        )
         if not self.msg:
             self.msg = await self.ctx.send(text)
         else:
@@ -164,7 +172,9 @@ class BlackJack:
         await self.send()
         # Insurance?
         if await self.ctx.confirm(
-            _("Would you like insurance? It will cost half your bet and will get you 2:1 back if the dealer has a blackjack. Else it is gone.")
+            _(
+                "Would you like insurance? It will cost half your bet and will get you 2:1 back if the dealer has a blackjack. Else it is gone."
+            )
         ):
             self.insurance = True
         self.player = self.hit(self.player)
@@ -173,7 +183,9 @@ class BlackJack:
             if self.insurance:
                 await self.player_cashback()
                 return await self.send(
-                    additional=_("The dealer got a blackjack. You had insurance and lost nothing.")
+                    additional=_(
+                        "The dealer got a blackjack. You had insurance and lost nothing."
+                    )
                 )
             else:
                 return await self.send(
@@ -247,7 +259,9 @@ class BlackJack:
                 await self.msg.remove_reaction("\U000023ec", self.ctx.bot.user)
                 await self.msg.remove_reaction("\U00002935", self.ctx.bot.user)
                 await self.send(
-                    additional=_("You doubled your bid in exchange for only receiving one more card.")
+                    additional=_(
+                        "You doubled your bid in exchange for only receiving one more card."
+                    )
                 )
 
         player = self.total(self.player)
@@ -294,7 +308,9 @@ class Gambling(commands.Cog):
     ):
         _("""Flip a coin and bid on the outcome.""")
         if side not in ["heads", "tails"]:
-            return await ctx.send(_("Use `heads` or `tails` instead of `{side}`.").format(side=side))
+            return await ctx.send(
+                _("Use `heads` or `tails` instead of `{side}`.").format(side=side)
+            )
         if ctx.character_data["money"] < amount:
             return await ctx.send(_("You are too poor."))
         result = secrets.choice(
@@ -309,14 +325,22 @@ class Gambling(commands.Cog):
                 amount,
                 ctx.author.id,
             )
-            await ctx.send(_("{result[1]} It's **{result[0]}**! You won **${amount}**!").format(result=result, amount=amount))
+            await ctx.send(
+                _("{result[1]} It's **{result[0]}**! You won **${amount}**!").format(
+                    result=result, amount=amount
+                )
+            )
         else:
             await self.bot.pool.execute(
                 'UPDATE profile SET money=money-$1 WHERE "user"=$2;',
                 amount,
                 ctx.author.id,
             )
-            await ctx.send(_("{result[1]} It's **{result[0]}**! You lost **${amount}**!").format(result=result, amount=amount))
+            await ctx.send(
+                _("{result[1]} It's **{result[0]}**! You lost **${amount}**!").format(
+                    result=result, amount=amount
+                )
+            )
 
     @has_char()
     @commands.cooldown(1, 5, commands.BucketType.user)
@@ -330,7 +354,9 @@ class Gambling(commands.Cog):
     ):
         if tip > maximum:
             return await ctx.send(
-                _("Invalid Tip. Must be in the Range of `1` to `{maximum}`.").format(maximum=maximum)
+                _("Invalid Tip. Must be in the Range of `1` to `{maximum}`.").format(
+                    maximum=maximum
+                )
             )
         if money * (maximum - 1) > 100_000:
             return await ctx.send(_("Spend it in a better way. C'mon!"))
@@ -344,7 +370,9 @@ class Gambling(commands.Cog):
                 ctx.author.id,
             )
             await ctx.send(
-                _("You won **${money}**! The random number was `{num}`, you tipped `{tip}`.").format(num=randomn, tip=tip, money=money * (maximum - 1))
+                _(
+                    "You won **${money}**! The random number was `{num}`, you tipped `{tip}`."
+                ).format(num=randomn, tip=tip, money=money * (maximum - 1))
             )
         else:
             await self.bot.pool.execute(
@@ -353,14 +381,18 @@ class Gambling(commands.Cog):
                 ctx.author.id,
             )
             await ctx.send(
-                _("You lost **${money}**! The random number was `{num}`, you tipped `{tip}`.").format(num=randomn, tip=tip, money=money)
+                _(
+                    "You lost **${money}**! The random number was `{num}`, you tipped `{tip}`."
+                ).format(num=randomn, tip=tip, money=money)
             )
 
     @has_char()
     @commands.cooldown(1, 15, commands.BucketType.user)
     @commands.command(aliases=["bj"])
     async def blackjack(self, ctx, amount: IntFromTo(0, 1000) = 0):
-        _("""[Alpha] Play blackjack against the dealer. Dealer rules, means wins in case of tie.""")
+        _(
+            """[Alpha] Play blackjack against the dealer. Dealer rules, means wins in case of tie."""
+        )
         if ctx.character_data["money"] < amount:
             return await ctx.send(_("You're too poor."))
         await self.bot.pool.execute(

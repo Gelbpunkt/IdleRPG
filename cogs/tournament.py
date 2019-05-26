@@ -29,7 +29,9 @@ class Tournament(commands.Cog):
         if ctx.character_data["money"] < prize:
             return await ctx.send(_("You are too poor."))
         msg = await ctx.send(
-            _("{author} started a tournament! Free entries, prize is **${prize}**! React with \U00002694 to join!").format(author=ctx.author.mention, prize=prize)
+            _(
+                "{author} started a tournament! Free entries, prize is **${prize}**! React with \U00002694 to join!"
+            ).format(author=ctx.author.mention, prize=prize)
         )
         participants = [ctx.author]
         acceptingentries = True
@@ -52,22 +54,28 @@ class Tournament(commands.Cog):
             except asyncio.TimeoutError:
                 acceptingentries = False
                 if len(participants) < 2:
-                    return await ctx.send(
-                        _("Noone joined your tournament.")
-                    )
+                    return await ctx.send(_("Noone joined your tournament."))
             if await has_char(self.bot, u.id):
                 participants.append(u)
-                await ctx.send(_("{user} joined the tournament.").format(user=u.mention))
+                await ctx.send(
+                    _("{user} joined the tournament.").format(user=u.mention)
+                )
             else:
-                await ctx.send(_("You don't have a character, {user}.").format(user=u.mention))
+                await ctx.send(
+                    _("You don't have a character, {user}.").format(user=u.mention)
+                )
         toremove = 2 ** math.floor(math.log2(len(participants)))
         if toremove != len(participants):
             await ctx.send(
-                _("There are **{num}** entries, due to the fact we need a playable tournament, the last **{removed}** have been removed.").format(num=len(participants), removed=len(participants) - toremove)
+                _(
+                    "There are **{num}** entries, due to the fact we need a playable tournament, the last **{removed}** have been removed."
+                ).format(num=len(participants), removed=len(participants) - toremove)
             )
             participants = participants[: -(len(participants) - toremove)]
         else:
-            await ctx.send(_("Tournament started with **{num}** entries.").format(num=toremove))
+            await ctx.send(
+                _("Tournament started with **{num}** entries.").format(num=toremove)
+            )
         remain = participants
         text = _("vs")
         while len(participants) > 1:
@@ -99,13 +107,17 @@ class Tournament(commands.Cog):
                     winner = random.choice(match)
                     looser = match[1 - match.index(winner)]
                 participants.remove(looser)
-                await ctx.send(_("Winner of this match is {winner}!").format(winner=winner.mention))
+                await ctx.send(
+                    _("Winner of this match is {winner}!").format(winner=winner.mention)
+                )
                 await asyncio.sleep(2)
 
             await ctx.send(_("Round Done!"))
 
         msg = await ctx.send(
-            _("Tournament ended! The winner is {winner}.").format(winner=participants[0].mention)
+            _("Tournament ended! The winner is {winner}.").format(
+                winner=participants[0].mention
+            )
         )
         if not await has_money(self.bot, ctx.author.id, prize):
             return await ctx.send(_("The creator spent money, prize can't be given!"))
@@ -121,7 +133,9 @@ class Tournament(commands.Cog):
                 participants[0].id,
             )
         await msg.edit(
-            content=_("Tournament ended! The winner is {winner}.\nMoney was given!").format(winner=participants[0].mention)
+            content=_(
+                "Tournament ended! The winner is {winner}.\nMoney was given!"
+            ).format(winner=participants[0].mention)
         )
 
 

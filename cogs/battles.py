@@ -34,11 +34,15 @@ class Battles(commands.Cog):
 
         if not enemy:
             msg = await ctx.send(
-                _("{author} seeks a battle! React with \U00002694 now to duel them! The price is **${money}**.").format(author=ctx.author.mention, money=money)
+                _(
+                    "{author} seeks a battle! React with \U00002694 now to duel them! The price is **${money}**."
+                ).format(author=ctx.author.mention, money=money)
             )
         else:
             msg = await ctx.send(
-                _("{author} seeks a battle with {enemy}! React with \U00002694 now to duel them! The price is **${money}**.").format(author=ctx.author.mention, enemy=enemy.mention, money=money)
+                _(
+                    "{author} seeks a battle with {enemy}! React with \U00002694 now to duel them! The price is **${money}**."
+                ).format(author=ctx.author.mention, enemy=enemy.mention, money=money)
             )
 
         def check(r, u):
@@ -62,7 +66,9 @@ class Battles(commands.Cog):
                 )
             except asyncio.TimeoutError:
                 return await ctx.send(
-                    _("Noone wanted to join your battle, {author}!").format(author=ctx.author.mention)
+                    _("Noone wanted to join your battle, {author}!").format(
+                        author=ctx.author.mention
+                    )
                 )
             if await has_money(self.bot, enemy.id, money):
                 seeking = False
@@ -70,7 +76,9 @@ class Battles(commands.Cog):
                 await ctx.send(_("You don't have enough money to join the battle."))
 
         await ctx.send(
-            _("Battle **{author}** vs **{enemy}** started! 30 seconds of fighting will now start!").format(author=ctx.disp, enemy=enemy.display_name)
+            _(
+                "Battle **{author}** vs **{enemy}** started! 30 seconds of fighting will now start!"
+            ).format(author=ctx.disp, enemy=enemy.display_name)
         )
         items_1 = await self.bot.get_equipped_items_for(ctx.author) or []
         items_2 = await self.bot.get_equipped_items_for(enemy) or []
@@ -93,7 +101,9 @@ class Battles(commands.Cog):
             self.bot, looser.id, money
         ):
             return await ctx.send(
-                _("One of you can't pay the price for the battle because he spent money in the time of fighting.")
+                _(
+                    "One of you can't pay the price for the battle because he spent money in the time of fighting."
+                )
             )
         async with self.bot.pool.acquire() as conn:
             await conn.execute(
@@ -106,7 +116,9 @@ class Battles(commands.Cog):
                 'UPDATE profile SET money=money-$1 WHERE "user"=$2;', money, looser.id
             )
         await ctx.send(
-            _("{winner} won the battle vs {looser}! Congratulations!").format(winner=winner.mention, looser=looser.mention)
+            _("{winner} won the battle vs {looser}! Congratulations!").format(
+                winner=winner.mention, looser=looser.mention
+            )
         )
 
     @has_char()
@@ -123,11 +135,15 @@ class Battles(commands.Cog):
 
         if not enemy:
             msg = await ctx.send(
-                _("{author} seeks an active battle! React with \U00002694 now to duel them! The price is **${money}**.").format(author=ctx.author.mention, money=money)
+                _(
+                    "{author} seeks an active battle! React with \U00002694 now to duel them! The price is **${money}**."
+                ).format(author=ctx.author.mention, money=money)
             )
         else:
             msg = await ctx.send(
-                _("{author} seeks an active battle with {enemy}! React with \U00002694 now to duel them! The price is **${money}**.").format(author=ctx.author.mention, enemy=enemy.mention, money=money)
+                _(
+                    "{author} seeks an active battle with {enemy}! React with \U00002694 now to duel them! The price is **${money}**."
+                ).format(author=ctx.author.mention, enemy=enemy.mention, money=money)
             )
 
         def check(r, u):
@@ -151,7 +167,9 @@ class Battles(commands.Cog):
                 )
             except asyncio.TimeoutError:
                 return await ctx.send(
-                    _("Noone wanted to join your battle, {author}!").format(author=ctx.author.mention)
+                    _("Noone wanted to join your battle, {author}!").format(
+                        author=ctx.author.mention
+                    )
                 )
             if await has_money(self.bot, enemy.id, money):
                 seeking = False
@@ -190,7 +208,14 @@ class Battles(commands.Cog):
 
         while HP[0] > 0 and HP[1] > 0:
             last = await ctx.send(
-                _("{player1}: **{hp1}** HP\n{player2}: **{hp2}** HP\nReact to play.").format(player1=ctx.author.mention, player2=enemy.mention, hp1=HP[0], hp2=HP[1])
+                _(
+                    "{player1}: **{hp1}** HP\n{player2}: **{hp2}** HP\nReact to play."
+                ).format(
+                    player1=ctx.author.mention,
+                    player2=enemy.mention,
+                    hp1=HP[0],
+                    hp2=HP[1],
+                )
             )
             for emoji in moves:
                 await last.add_reaction(emoji)
@@ -205,7 +230,9 @@ class Battles(commands.Cog):
                 if u not in MOVES_DONE:
                     MOVES_DONE[u] = moves[str(r.emoji)]
                 else:
-                    await ctx.send(_("{user}, you already moved!").format(user=u.mention))
+                    await ctx.send(
+                        _("{user}, you already moved!").format(user=u.mention)
+                    )
             plz = list(MOVES_DONE.keys())
             for u in plz:
                 o = plz[:]
@@ -213,7 +240,11 @@ class Battles(commands.Cog):
                 idx = PLAYERS.index(u)
                 if MOVES_DONE[u] == "recover":
                     HP[idx] += 20
-                    await ctx.send(_("{user} healed themselves for **20 HP**.").format(user=u.mention))
+                    await ctx.send(
+                        _("{user} healed themselves for **20 HP**.").format(
+                            user=u.mention
+                        )
+                    )
                 elif MOVES_DONE[u] == "attack" and MOVES_DONE[o] != "defend":
                     eff = random.choice(
                         [
@@ -224,7 +255,11 @@ class Battles(commands.Cog):
                         ]
                     )
                     HP[1 - idx] -= eff
-                    await ctx.send(_("{user} hit {enemy} for **{eff}** damage.").format(user=u.mention, enemy=o.mention, eff=eff))
+                    await ctx.send(
+                        _("{user} hit {enemy} for **{eff}** damage.").format(
+                            user=u.mention, enemy=o.mention, eff=eff
+                        )
+                    )
                 elif MOVES_DONE[u] == "attack" and MOVES_DONE[o] == "defend":
                     eff = random.choice(
                         [
@@ -245,10 +280,16 @@ class Battles(commands.Cog):
                     if eff - eff2 > 0:
                         HP[1 - idx] -= eff - eff2
                         await ctx.send(
-                            _("{user} hit {enemy} for **{eff}** damage.").format(user=u.mention, enemy=o.mention, eff=eff - eff2)
+                            _("{user} hit {enemy} for **{eff}** damage.").format(
+                                user=u.mention, enemy=o.mention, eff=eff - eff2
+                            )
                         )
                     else:
-                        await ctx.send(_("{user}'s attack on {enemy} failed!").format(user=u.mention, enemy=o.mention))
+                        await ctx.send(
+                            _("{user}'s attack on {enemy} failed!").format(
+                                user=u.mention, enemy=o.mention
+                            )
+                        )
         if HP[0] <= 0 and HP[1] <= 0:
             return await ctx.send(_("You both died!"))
         idx = HP.index([h for h in HP if h <= 0][0])
@@ -258,7 +299,9 @@ class Battles(commands.Cog):
             self.bot, looser.id, money
         ):
             return await ctx.send(
-                _("One of you both can't pay the price for the battle because he spent money in the time of fighting.")
+                _(
+                    "One of you both can't pay the price for the battle because he spent money in the time of fighting."
+                )
             )
         async with self.bot.pool.acquire() as conn:
             await conn.execute(
@@ -271,7 +314,9 @@ class Battles(commands.Cog):
                 'UPDATE profile SET money=money-$1 WHERE "user"=$2;', money, looser.id
             )
         await ctx.send(
-            _("{winner} won the active battle vs {looser}! Congratulations!").format(winner=winner.mention, looser=looser.mention)
+            _("{winner} won the active battle vs {looser}! Congratulations!").format(
+                winner=winner.mention, looser=looser.mention
+            )
         )
 
 

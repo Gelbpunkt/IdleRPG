@@ -27,13 +27,19 @@ class Marriage(commands.Cog):
     async def propose(self, ctx, partner: MemberWithCharacter):
         _("""Propose for a marriage.""")
         if partner == ctx.author:
-            return await ctx.send(_("You should have a better friend than only yourself."))
+            return await ctx.send(
+                _("You should have a better friend than only yourself.")
+            )
         if ctx.character_data["marriage"] != 0 or ctx.user_data["marriage"] != 0:
             return await ctx.send(_("One of you is married."))
         msg = await ctx.send(
             embed=discord.Embed(
-                title=_("{author} has proposed for a marriage!").format(author=ctx.author.mention),
-                description=_("{author} wants to marry you, {partner}! React with :heart: to marry them!").format(author=ctx.author.mention, partner=partner.mention),
+                title=_("{author} has proposed for a marriage!").format(
+                    author=ctx.author.mention
+                ),
+                description=_(
+                    "{author} wants to marry you, {partner}! React with :heart: to marry them!"
+                ).format(author=ctx.author.mention, partner=partner.mention),
                 colour=0xFF0000,
             )
             .set_image(url=ctx.author.avatar_url)
@@ -80,11 +86,15 @@ class Marriage(commands.Cog):
                     partner.id,
                 )
                 await ctx.send(
-                    _("Owwwwwww! :heart: {author} and {partner} are now married!").format(author=ctx.author.mention, partner=partner.mention)
+                    _(
+                        "Owwwwwww! :heart: {author} and {partner} are now married!"
+                    ).format(author=ctx.author.mention, partner=partner.mention)
                 )
             else:
                 await ctx.send(
-                    _("Either you or your lovee married in the meantime... :broken_heart:")
+                    _(
+                        "Either you or your lovee married in the meantime... :broken_heart:"
+                    )
                 )
 
     @has_char()
@@ -102,8 +112,7 @@ class Marriage(commands.Cog):
                 ctx.character_data["marriage"],
             )
             await conn.execute(
-                'DELETE FROM children WHERE "father"=$1 OR "mother"=$1;',
-                ctx.author.id,
+                'DELETE FROM children WHERE "father"=$1 OR "mother"=$1;', ctx.author.id
             )
         await ctx.send(_("You are now divorced."))
 
@@ -114,7 +123,9 @@ class Marriage(commands.Cog):
         if not ctx.character_data["marriage"]:
             return await ctx.send(_("You are not married yet."))
         partner = await rpgtools.lookup(self.bot, ctx.character_data["marriage"])
-        await ctx.send(_("You are currently married to **{partner}**.").format(partner=partner))
+        await ctx.send(
+            _("You are currently married to **{partner}**.").format(partner=partner)
+        )
 
     @has_char()
     @commands.command()
@@ -125,7 +136,9 @@ class Marriage(commands.Cog):
         else:
             partner = _("noone")
         await ctx.send(
-            _("Your overall love score is **{score}**. You are married to **{partner}**.").format(score=ctx.character_data['lovescore'], partner=partner)
+            _(
+                "Your overall love score is **{score}**. You are married to **{partner}**."
+            ).format(score=ctx.character_data["lovescore"], partner=partner)
         )
 
     @has_char()
@@ -182,10 +195,10 @@ class Marriage(commands.Cog):
             ]
         )
         if not item:
-            text = _("To buy one of these items for your partner, use `{prefix}spoil shopid`").format(prefix=ctx.prefix)
-            return await ctx.send(
-                f"{items_str}\n\n{text}"
-            )
+            text = _(
+                "To buy one of these items for your partner, use `{prefix}spoil shopid`"
+            ).format(prefix=ctx.prefix)
+            return await ctx.send(f"{items_str}\n\n{text}")
         item = items[item - 1]
         if ctx.character_data["money"] < item[1]:
             return await ctx.send(_("You are too poor to buy this."))
@@ -203,7 +216,9 @@ class Marriage(commands.Cog):
                 ctx.author.id,
             )
         await ctx.send(
-            _("You bought a **{item}** for your partner and increased their love score by **{points}** points!").format(item=item[0], points=item[1])
+            _(
+                "You bought a **{item}** for your partner and increased their love score by **{points}** points!"
+            ).format(item=item[0], points=item[1])
         )
         user = await self.bot.get_user_global(ctx.character_data["marriage"])
         if not user:
@@ -211,7 +226,9 @@ class Marriage(commands.Cog):
                 _("Failed to DM your spouse, could not find their Discord account")
             )
         await user.send(
-            _("**{author}** bought you a **{item}** and increased your love score by **{points}** points!").format(author=ctx.author, item=item[0], points=item[1])
+            _(
+                "**{author}** bought you a **{item}** and increased your love score by **{points}** points!"
+            ).format(author=ctx.author, item=item[0], points=item[1])
         )
 
     @has_char()
@@ -261,7 +278,9 @@ class Marriage(commands.Cog):
             return await ctx.send(_("You already have 10 children."))
         names = [name["name"] for name in names]
         if not await ctx.confirm(
-            _("<@{marriage}>, do you want to make a child with {author}?").format(marriage=marriage, author=ctx.author.mention),
+            _("<@{marriage}>, do you want to make a child with {author}?").format(
+                marriage=marriage, author=ctx.author.mention
+            ),
             user=self.bot.get_user(marriage),
         ):
             return await ctx.send(_("O.o not in the mood today?"))
@@ -271,11 +290,15 @@ class Marriage(commands.Cog):
         gender = random.choice(["m", "f"])
         if gender == "m":
             await ctx.send(
-                _("It's a boy! Your night of love was successful! Please enter a name for your child.")
+                _(
+                    "It's a boy! Your night of love was successful! Please enter a name for your child."
+                )
             )
         elif gender == "f":
             await ctx.send(
-                _("It's a girl! Your night of love was successful! Please enter a name for your child.")
+                _(
+                    "It's a girl! Your night of love was successful! Please enter a name for your child."
+                )
             )
 
         def check(msg):
@@ -314,16 +337,21 @@ class Marriage(commands.Cog):
         )
         em = discord.Embed(
             title=_("Your family"),
-            description=_("Family of {author} and <@{marriage}>").format(author=ctx.author.mention, marriage=marriage),
+            description=_("Family of {author} and <@{marriage}>").format(
+                author=ctx.author.mention, marriage=marriage
+            ),
         )
         if not children:
             em.add_field(
-                name=_("No children yet"), value=_("Use {prefix}child to make one!").format(prefix=ctx.prefix)
+                name=_("No children yet"),
+                value=_("Use {prefix}child to make one!").format(prefix=ctx.prefix),
             )
         for child in children:
             em.add_field(
                 name=child["name"],
-                value=_("Gender: {gender}, Age: {age}").format(gender=child["gender"], age=child["age"]),
+                value=_("Gender: {gender}, Age: {age}").format(
+                    gender=child["gender"], age=child["age"]
+                ),
                 inline=False,
             )
         em.set_thumbnail(url=ctx.author.avatar_url)
@@ -344,30 +372,34 @@ class Marriage(commands.Cog):
         target = random.choice(children)
         event = random.choice(["death"] + ["age"] * 7 + ["namechange"] * 2)
         if event == "death":
-            cause = _(random.choice(
-                [
-                    "They died because of a shampoo overdose!",
-                    "They died of lovesickness...",
-                    "They've died of age.",
-                    "They died of loneliness.",
-                    "A horde of goblins got them.",
-                    "They have finally decided to move out after all these years, but couldn't survive a second alone.",
-                    "Spontaneous combustion removed them from existence.",
-                    "While exploring the forest, they have gotten lost.",
-                    "They've left through a portal into another dimension...",
-                    "The unbearable pain of stepping on a Lego\© brick killed them.",  # noqa
-                    "You heard a landmine going off nearby...",
-                    "They have been abducted by aliens!",
-                    "The Catholic Church got them...",
-                ]
-            ))
+            cause = _(
+                random.choice(
+                    [
+                        "They died because of a shampoo overdose!",
+                        "They died of lovesickness...",
+                        "They've died of age.",
+                        "They died of loneliness.",
+                        "A horde of goblins got them.",
+                        "They have finally decided to move out after all these years, but couldn't survive a second alone.",
+                        "Spontaneous combustion removed them from existence.",
+                        "While exploring the forest, they have gotten lost.",
+                        "They've left through a portal into another dimension...",
+                        "The unbearable pain of stepping on a Lego\© brick killed them.",  # noqa
+                        "You heard a landmine going off nearby...",
+                        "They have been abducted by aliens!",
+                        "The Catholic Church got them...",
+                    ]
+                )
+            )
             await self.bot.pool.execute(
                 'DELETE FROM children WHERE "name"=$1 AND ("mother"=$2 OR "father"=$2);',
                 target["name"],
                 ctx.author.id,
             )
             return await ctx.send(
-                _("{name} died at the age of {age}! {cause}").format(name=target["name"], age=target["age"], cause=cause)
+                _("{name} died at the age of {age}! {cause}").format(
+                    name=target["name"], age=target["age"], cause=cause
+                )
             )
         elif event == "age":
             await self.bot.pool.execute(
@@ -376,10 +408,16 @@ class Marriage(commands.Cog):
                 ctx.author.id,
             )
             return await ctx.send(
-                _("{name} is now {age} years old.").format(name=target["name"], age=target["age"] + 1)
+                _("{name} is now {age} years old.").format(
+                    name=target["name"], age=target["age"] + 1
+                )
             )
         elif event == "namechange":
-            await ctx.send(_("{name} can be renamed! Enter a new name:").format(name=target["name"]))
+            await ctx.send(
+                _("{name} can be renamed! Enter a new name:").format(
+                    name=target["name"]
+                )
+            )
             names = [c["name"] for c in children]
             names.remove(target["name"])
 
@@ -402,7 +440,11 @@ class Marriage(commands.Cog):
                 target["name"],
                 ctx.author.id,
             )
-            return await ctx.send(_("{old_name} is now called {new_name}.").format(old_name=target["name"], new_name=name))
+            return await ctx.send(
+                _("{old_name} is now called {new_name}.").format(
+                    old_name=target["name"], new_name=name
+                )
+            )
 
 
 def setup(bot):

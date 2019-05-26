@@ -5,8 +5,6 @@ Copyright (C) 2018-2019 Diniboy and Gelbpunkt
 This software is dual-licensed under the GNU Affero General Public License for non-commercial and the Travitia License for commercial use.
 For more information, see README.md and LICENSE.md.
 """
-import random
-
 import discord
 from discord.ext import commands
 
@@ -31,14 +29,22 @@ class Trading(commands.Cog):
                 ctx.author.id,
             )
             if not item:
-                return await ctx.send(_("You don't own an item with the ID: {itemid}").format(itemid=itemid))
+                return await ctx.send(
+                    _("You don't own an item with the ID: {itemid}").format(
+                        itemid=itemid
+                    )
+                )
             if item["damage"] < 4 and item["armor"] < 4:
                 return await ctx.send(
-                    _("Your item is either equal to a Starter Item or worse. Noone would buy it.")
+                    _(
+                        "Your item is either equal to a Starter Item or worse. Noone would buy it."
+                    )
                 )
             elif price > item["value"] * 1000:
                 return await ctx.send(
-                    _("Your price is too high. Try adjusting it to be up to `{limit}`.").format(limit=item[6] * 1000)
+                    _(
+                        "Your price is too high. Try adjusting it to be up to `{limit}`."
+                    ).format(limit=item[6] * 1000)
                 )
             await conn.execute(
                 "DELETE FROM inventory i USING allitems ai WHERE i.item=ai.id AND ai.id=$1 AND ai.owner=$2;",
@@ -49,7 +55,9 @@ class Trading(commands.Cog):
                 "INSERT INTO market (item, price) VALUES ($1, $2);", itemid, price
             )
         await ctx.send(
-            _("Successfully added your item to the shop! Use `{prefix}shop` to view it in the market!").format(prefix=ctx.prefix)
+            _(
+                "Successfully added your item to the shop! Use `{prefix}shop` to view it in the market!"
+            ).format(prefix=ctx.prefix)
         )
 
     @has_char()
@@ -63,7 +71,9 @@ class Trading(commands.Cog):
             )
             if not item:
                 return await ctx.send(
-                    _("There is no item in the shop with the ID: {itemid}").format(itemid=itemid)
+                    _("There is no item in the shop with the ID: {itemid}").format(
+                        itemid=itemid
+                    )
                 )
             if ctx.character_data["money"] < item["price"]:
                 return await ctx.send(_("You're too poor to buy this item."))
@@ -90,12 +100,16 @@ class Trading(commands.Cog):
                 False,
             )
         await ctx.send(
-            _("Successfully bought item `{id}`. Use `{prefix}inventory` to view your updated inventory.").format(id=item["id"], prefix=ctx.prefix)
+            _(
+                "Successfully bought item `{id}`. Use `{prefix}inventory` to view your updated inventory."
+            ).format(id=item["id"], prefix=ctx.prefix)
         )
         seller = await self.bot.get_user_global(item["owner"])
         if seller:
             await seller.send(
-                _("**{author}** bought your **{name}** for **${price}** from the market.").format(author=ctx.author.name, name=item["name"], price=item["price"])
+                _(
+                    "**{author}** bought your **{name}** for **${price}** from the market."
+                ).format(author=ctx.author.name, name=item["name"], price=item["price"])
             )
 
     @has_char()
@@ -110,7 +124,9 @@ class Trading(commands.Cog):
             )
             if not item:
                 return await ctx.send(
-                    _("You don't have an item of yours in the shop with the ID `{itemid}`.").format(itemid=itemid)
+                    _(
+                        "You don't have an item of yours in the shop with the ID `{itemid}`."
+                    ).format(itemid=itemid)
                 )
             await conn.execute(
                 "DELETE FROM market m USING allitems ai WHERE m.item=ai.id AND ai.id=$1 AND ai.owner=$2;",
@@ -121,7 +137,9 @@ class Trading(commands.Cog):
                 "INSERT INTO inventory (item, equipped) VALUES ($1, $2);", itemid, False
             )
         await ctx.send(
-            _("Successfully removed item `{itemid}` from the shop and put it in your inventory.").format(itemid=itemid)
+            _(
+                "Successfully removed item `{itemid}` from the shop and put it in your inventory."
+            ).format(itemid=itemid)
         )
 
     @commands.command(aliases=["market", "m"])
@@ -133,11 +151,13 @@ class Trading(commands.Cog):
         highestprice: IntGreaterThan(-1) = 1_000_000,
     ):
         _("""Show the market with all items and prices.""")
-        if itemtype == "Any": # temp fix
+        if itemtype == "Any":  # temp fix
             itemtype = _("All")
         try:
-            itemtype = {_("All"): "All", _("Sword"): "Sword", _("Shield"): "Shield"}[itemtype]
-        else:
+            itemtype = {_("All"): "All", _("Sword"): "Sword", _("Shield"): "Shield"}[
+                itemtype
+            ]
+        except KeyError:
             return await ctx.send(
                 "Use either `All`, `Sword` or `Shield` as a type to filter for."
             )
@@ -168,7 +188,9 @@ class Trading(commands.Cog):
         items = [
             discord.Embed(
                 title=_("IdleRPG Shop"),
-                description=_("Use `{prefix}buy {item}` to buy this.").format(prefix=ctx.prefix, item=item["item"]),
+                description=_("Use `{prefix}buy {item}` to buy this.").format(
+                    prefix=ctx.prefix, item=item["item"]
+                ),
                 colour=discord.Colour.blurple(),
             )
             .add_field(name=_("Name"), value=item["name"])
@@ -177,7 +199,9 @@ class Trading(commands.Cog):
             .add_field(name=_("Armor"), value=item["armor"])
             .add_field(name=_("Value"), value=f"${item['value']}")
             .add_field(name=_("Price"), value=f"${item['price']}")
-            .set_footer(text=_("Item {num} of {total}").format(num=idx + 1, total=len(items)))
+            .set_footer(
+                text=_("Item {num} of {total}").format(num=idx + 1, total=len(items))
+            )
             for idx, item in enumerate(items)
         ]
 
@@ -196,23 +220,33 @@ class Trading(commands.Cog):
             ctx.author.id,
         )
         if not item:
-            return await ctx.send(_("You don't have an item with the ID `{itemid}`.").format(itemid=itemid))
+            return await ctx.send(
+                _("You don't have an item with the ID `{itemid}`.").format(
+                    itemid=itemid
+                )
+            )
 
         if item["equipped"]:
             if not await ctx.confirm(
-                _("Are you sure you want to sell your equipped {item}?").format(item=item["name"])
+                _("Are you sure you want to sell your equipped {item}?").format(
+                    item=item["name"]
+                )
             ):
                 await ctx.send(_("Item selling cancelled."))
 
         if not await ctx.confirm(
-            _("{user}, {author} offered you an item! React to buy it! The price is **${price}**. You have **2 Minutes** to accept the trade or the offer will be canceled.").format(user=user.mention, author=ctx.author.mention, price=price),
+            _(
+                "{user}, {author} offered you an item! React to buy it! The price is **${price}**. You have **2 Minutes** to accept the trade or the offer will be canceled."
+            ).format(user=user.mention, author=ctx.author.mention, price=price),
             user=user,
             timeout=120,
         ):
             return await ctx.send(_("They didn't want it."))
 
         if not await has_money(self.bot, user.id, price):
-            return await ctx.send(_("{user}, you're too poor to buy this item!").format(user=user.mention))
+            return await ctx.send(
+                _("{user}, you're too poor to buy this item!").format(user=user.mention)
+            )
         async with self.bot.pool.acquire() as conn:
             item = await conn.fetchrow(
                 "SELECT * FROM inventory i JOIN allitems ai ON (i.item=ai.id) WHERE ai.id=$1 AND ai.owner=$2;",
@@ -221,7 +255,9 @@ class Trading(commands.Cog):
             )
             if not item:
                 return await ctx.send(
-                    _("The owner sold the item with the ID `{itemid}` in the meantime.").format(itemid=itemid)
+                    _(
+                        "The owner sold the item with the ID `{itemid}` in the meantime."
+                    ).format(itemid=itemid)
                 )
             await conn.execute(
                 "UPDATE allitems SET owner=$1 WHERE id=$2;", user.id, itemid
@@ -238,7 +274,9 @@ class Trading(commands.Cog):
                 'UPDATE inventory SET "equipped"=$1 WHERE "item"=$2;', False, itemid
             )
         await ctx.send(
-            _("Successfully bought item `{itemid}`. Use `{prefix}inventory` to view your updated inventory.").format(itemid=itemid, prefix=ctx.prefix)
+            _(
+                "Successfully bought item `{itemid}`. Use `{prefix}inventory` to view your updated inventory."
+            ).format(itemid=itemid, prefix=ctx.prefix)
         )
 
     @has_char()
@@ -253,10 +291,16 @@ class Trading(commands.Cog):
                 ctx.author.id,
             )
             if not item:
-                return await ctx.send(_("You don't own an item with the ID: {itemid}").format(itemid=itemid))
+                return await ctx.send(
+                    _("You don't own an item with the ID: {itemid}").format(
+                        itemid=itemid
+                    )
+                )
             if item["equipped"]:
                 if not await ctx.confirm(
-                    _("Are you sure you want to sell your equipped {item}?").format(item=item["name"]),
+                    _("Are you sure you want to sell your equipped {item}?").format(
+                        item=item["name"]
+                    ),
                     timeout=6,
                 ):
                     return await ctx.send(_("Cancelled."))
@@ -266,7 +310,11 @@ class Trading(commands.Cog):
                 ctx.author.id,
             )
             await conn.execute('DELETE FROM allitems WHERE "id"=$1;', itemid)
-        await ctx.send(_("You received **${money}** when selling item `{itemid}`.").format(money=item["value"], itemid=itemid))
+        await ctx.send(
+            _("You received **${money}** when selling item `{itemid}`.").format(
+                money=item["value"], itemid=itemid
+            )
+        )
 
     @has_char()
     @user_cooldown(1800)
@@ -289,7 +337,11 @@ class Trading(commands.Cog):
                 money,
                 ctx.author.id,
             )
-        await ctx.send(_("Merched **{count}** items for **${money}**.").format(count=count, money=money))
+        await ctx.send(
+            _("Merched **{count}** items for **${money}**.").format(
+                count=count, money=money
+            )
+        )
 
     @commands.command()
     async def pending(self, ctx):
@@ -303,7 +355,9 @@ class Trading(commands.Cog):
         items = [
             discord.Embed(
                 title=_("Your pending items"),
-                description=_("Use `{prefix}buy {item}` to buy this.").format(prefix=ctx.prefix, item=item["item"]),
+                description=_("Use `{prefix}buy {item}` to buy this.").format(
+                    prefix=ctx.prefix, item=item["item"]
+                ),
                 colour=discord.Colour.blurple(),
             )
             .add_field(name=_("Name"), value=item["name"])
@@ -312,7 +366,9 @@ class Trading(commands.Cog):
             .add_field(name=_("Armor"), value=item["armor"])
             .add_field(name=_("Value"), value=f"${item['value']}")
             .add_field(name=_("Price"), value=f"${item['price']}")
-            .set_footer(text=_("Item {num} of {total}").format(num=idx + 1, total=len(items)))
+            .set_footer(
+                text=_("Item {num} of {total}").format(num=idx + 1, total=len(items))
+            )
             for idx, item in enumerate(items)
         ]
         await self.bot.paginator.Paginator(extras=items).paginate(ctx)
@@ -330,7 +386,7 @@ class Trading(commands.Cog):
                 minvalue=1,
                 maxvalue=1,
                 owner=ctx.author,
-                insert=False
+                insert=False,
             )
             price = item["armor"] * 50 + item["damage"] * 50
             offers.append((item, price))
@@ -353,7 +409,9 @@ class Trading(commands.Cog):
         )
         await self.bot.create_item(**item[0])
         await ctx.send(
-            _("Successfully bought offer **{offer}**. Use `{prefix}inventory` to view your updated inventory.").format(offer=offerid + 1, prefix=ctx.prefix)
+            _(
+                "Successfully bought offer **{offer}**. Use `{prefix}inventory` to view your updated inventory."
+            ).format(offer=offerid + 1, prefix=ctx.prefix)
         )
 
 

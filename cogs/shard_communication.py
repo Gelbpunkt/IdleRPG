@@ -279,13 +279,17 @@ class Sharding(commands.Cog):
         _("""Lists all your cooldowns.""")
         cooldowns = await self.bot.redis.execute("KEYS", f"cd:{ctx.author.id}:*")
         if not cooldowns:
-            return await ctx.send(_("You don't have any active cooldown at the moment."))
+            return await ctx.send(
+                _("You don't have any active cooldown at the moment.")
+            )
         timers = _("Commands on cooldown:")
         for key in cooldowns:
             key = key.decode()
             cooldown = await self.bot.redis.execute("TTL", key)
             cmd = key.replace(f"cd:{ctx.author.id}:", "")
-            text = _("{cmd} is on cooldown and will be available after {time}").format(cmd=cmd, time=str(timedelta(seconds=cooldown)).split('.')[0])
+            text = _("{cmd} is on cooldown and will be available after {time}").format(
+                cmd=cmd, time=str(timedelta(seconds=cooldown)).split(".")[0]
+            )
             timers = f"{timers}\n{text}"
         await ctx.send(f"```{timers}```")
 

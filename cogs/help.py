@@ -57,7 +57,9 @@ class Help(commands.Cog):
             title=_("IdleRPG Help"),
             colour=self.bot.config.primary_colour,
             url=self.bot.BASE_URL,
-            description=_("**Welcome to the IdleRPG help. Use the arrows to move.\nFor more help, join the support server at https://discord.gg/axBKXBv.**\nCheck out our partners using the partners command!"),
+            description=_(
+                "**Welcome to the IdleRPG help. Use the arrows to move.\nFor more help, join the support server at https://discord.gg/axBKXBv.**\nCheck out our partners using the partners command!"
+            ),
         )
         embed.set_image(url=f"{self.bot.BASE_URL}/IdleRPG.png")
         embed.set_footer(
@@ -73,7 +75,9 @@ class Help(commands.Cog):
                 description=_("**{category} Commands**").format(category=cog),
             )
             embed.set_footer(
-                text=_("IdleRPG Version {version} | Page {page} of {maxpages}").format(version=self.bot.version, page=i + 1, maxpages=maxpages),
+                text=_("IdleRPG Version {version} | Page {page} of {maxpages}").format(
+                    version=self.bot.version, page=i + 1, maxpages=maxpages
+                ),
                 icon_url=self.bot.user.avatar_url,
             )
             for command in commands:
@@ -92,14 +96,18 @@ class Help(commands.Cog):
     async def documentation(self, ctx):
         _("""Sends a link to the official documentation.""")
         await ctx.send(
-            _("<:blackcheck:441826948919066625> **Check {url} for a list of commands**").format(url=f"{self.bot.BASE_URL}/commands")
+            _(
+                "<:blackcheck:441826948919066625> **Check {url} for a list of commands**"
+            ).format(url=f"{self.bot.BASE_URL}/commands")
         )
 
     @commands.command(aliases=["faq"])
     async def tutorial(self, ctx):
         """Link to the bot tutorial."""
         await ctx.send(
-            _("<:blackcheck:441826948919066625> **Check {url} for a tutorial and FAQ**").format(url=f"{self.bot.BASE_URL}/tutorial")
+            _(
+                "<:blackcheck:441826948919066625> **Check {url} for a tutorial and FAQ**"
+            ).format(url=f"{self.bot.BASE_URL}/tutorial")
         )
 
     @is_supporter()
@@ -113,7 +121,9 @@ class Help(commands.Cog):
             thing_to_ban = self.bot.get_guild(id)
         await self.bot.pool.execute('DELETE FROM helpme WHERE "id"=$1;', id)
         await ctx.send(
-            _("{thing} has been unbanned for the helpme command :ok_hand:").format(thing=thing_to_ban.name)
+            _("{thing} has been unbanned for the helpme command :ok_hand:").format(
+                thing=thing_to_ban.name
+            )
         )
 
     @is_supporter()
@@ -130,7 +140,9 @@ class Help(commands.Cog):
         except UniqueViolationError:
             return await ctx.send(_("Error... Maybe they're already banned?"))
         await ctx.send(
-            _("{thing} has been banned for the helpme command :ok_hand:").format(thing=thing_to_ban.name)
+            _("{thing} has been banned for the helpme command :ok_hand:").format(
+                thing=thing_to_ban.name
+            )
         )
 
     @commands.guild_only()
@@ -148,7 +160,9 @@ class Help(commands.Cog):
             )
 
         if not await ctx.confirm(
-            _("Are you sure? This will notify our support team and allow them to join the server.")
+            _(
+                "Are you sure? This will notify our support team and allow them to join the server."
+            )
         ):
             return
 

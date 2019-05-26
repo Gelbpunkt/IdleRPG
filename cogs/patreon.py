@@ -33,11 +33,19 @@ class Patreon(commands.Cog):
                 itemid,
             )
             if not item:
-                return await ctx.send(_("You don't have an item with the ID `{itemid}`.").format(itemid=itemid))
+                return await ctx.send(
+                    _("You don't have an item with the ID `{itemid}`.").format(
+                        itemid=itemid
+                    )
+                )
             await conn.execute(
                 'UPDATE allitems SET "name"=$1 WHERE "id"=$2;', newname, itemid
             )
-        await ctx.send(_("The item with the ID `{itemid}` is now called `{newname}`.").format(itemid=itemid, newname=newname))
+        await ctx.send(
+            _("The item with the ID `{itemid}` is now called `{newname}`.").format(
+                itemid=itemid, newname=newname
+            )
+        )
 
     @is_patron()
     @has_char()
@@ -58,7 +66,9 @@ class Patreon(commands.Cog):
                 return await ctx.send(_("That is not a valid premade background."))
         else:
             return await ctx.send(
-                _("I couldn't read that URL. Does it start with `http://` or `https://` and is either a png or jpeg?")
+                _(
+                    "I couldn't read that URL. Does it start with `http://` or `https://` and is either a png or jpeg?"
+                )
             )
         try:
             await self.bot.pool.execute(
@@ -76,14 +86,18 @@ class Patreon(commands.Cog):
     @is_patron()
     @commands.command()
     async def makebackground(self, ctx, url: str, overlaytype: int):
-        _("""[Patreon Only] Generates a profile background based on an image. Valid overlays are 1 or 2 for grey and black.""")
+        _(
+            """[Patreon Only] Generates a profile background based on an image. Valid overlays are 1 or 2 for grey and black."""
+        )
         if overlaytype not in [1, 2]:
             return await ctx.send(_("Use either `1` or `2` as the overlay type."))
         if not url.startswith("http") and (
             url.endswith(".png") or url.endswith(".jpg") or url.endswith(".jpeg")
         ):
             return await ctx.send(
-                _("I couldn't read that URL. Does it start with `http://` or `https://` and is either a png or jpeg?")
+                _(
+                    "I couldn't read that URL. Does it start with `http://` or `https://` and is either a png or jpeg?"
+                )
             )
         async with self.bot.trusted_session.post(
             f"{self.bot.config.okapi_url}/api/genoverlay/{overlaytype}",
@@ -100,7 +114,9 @@ class Patreon(commands.Cog):
             except KeyError:
                 return await ctx.send(_("Error when uploading to Imgur."))
         await ctx.send(
-            _("Imgur Link for `{prefix}background`\n<{link}>").format(prefix=ctx.prefix, link=link),
+            _("Imgur Link for `{prefix}background`\n<{link}>").format(
+                prefix=ctx.prefix, link=link
+            ),
             file=discord.File(fp=background, filename="GeneratedProfile.png"),
         )
 
@@ -126,7 +142,9 @@ class Patreon(commands.Cog):
                 bg = bgs[number - 1]
             except TypeError:
                 return await ctx.send(
-                    _("The background number {number} is not valid, you only have {total} available.").format(number=number, total=len(bgs))
+                    _(
+                        "The background number {number} is not valid, you only have {total} available."
+                    ).format(number=number, total=len(bgs))
                 )
             await conn.execute(
                 'UPDATE profile SET background=$1 WHERE "user"=$2;', bg, ctx.author.id

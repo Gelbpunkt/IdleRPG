@@ -19,9 +19,13 @@ class Easter(commands.Cog):
 
     @commands.group(invoke_without_command=True)
     async def easter(self, ctx):
-        _("""Easter related commands for trading your collected eastereggs in for rewards.""")
+        _(
+            """Easter related commands for trading your collected eastereggs in for rewards."""
+        )
         await ctx.send(
-            _("**Easter event <:easteregg:566251086986608650>**\n\nLasts until the Tuesday after Easter!\nCollect eastereggs and use `{prefix}easter rewards` to check the rewards. <:bunny:566290173831151627>\nHappy hunting!").format(prefix=ctx.prefix)
+            _(
+                "**Easter event <:easteregg:566251086986608650>**\n\nLasts until the Tuesday after Easter!\nCollect eastereggs and use `{prefix}easter rewards` to check the rewards. <:bunny:566290173831151627>\nHappy hunting!"
+            ).format(prefix=ctx.prefix)
         )
 
     @has_char()
@@ -29,7 +33,8 @@ class Easter(commands.Cog):
     async def rewards(self, ctx):
         _("""See the rewards for easter event.""")
         await ctx.send(
-            _("""
+            _(
+                """
 **Easter event - rewards**
 Use `{prefix}easter reward [1-10]` to trade your eggs in.
 
@@ -44,7 +49,8 @@ Use `{prefix}easter reward [1-10]` to trade your eggs in.
 **7500 <:easteregg:566251086986608650>** - random item 40-50
 **10000 <:easteregg:566251086986608650>** - random 50 stat item
 
-You have **{eggs}** <:easteregg:566251086986608650>.""").format(prefix=ctx.prefix, eggs=ctx.character_data["eastereggs"])
+You have **{eggs}** <:easteregg:566251086986608650>."""
+            ).format(prefix=ctx.prefix, eggs=ctx.character_data["eastereggs"])
         )
 
     @has_char()
@@ -100,7 +106,14 @@ You have **{eggs}** <:easteregg:566251086986608650>.""").format(prefix=ctx.prefi
                     ctx.character_data["guild"],
                 )
         elif reward[1] == "item":
-            item = await self.bot.create_random_item(minstat=reward[2], maxstat=reward[3], minvalue=1000, maxvalue=1000, owner=ctx.author, insert=False)
+            item = await self.bot.create_random_item(
+                minstat=reward[2],
+                maxstat=reward[3],
+                minvalue=1000,
+                maxvalue=1000,
+                owner=ctx.author,
+                insert=False,
+            )
             item["name"] = (
                 random.choice(["Bunny Ear", "Egg Cannon", "Chocolate Bar"])
                 if item["type_"] == "Sword"
@@ -113,7 +126,9 @@ You have **{eggs}** <:easteregg:566251086986608650>.""").format(prefix=ctx.prefi
                 ctx.author.id,
             )
         await ctx.send(
-            _("You claimed your reward. Check your inventory/boosters/crates/money/etc.! You can claim multiple rewards, keep hunting!")
+            _(
+                "You claimed your reward. Check your inventory/boosters/crates/money/etc.! You can claim multiple rewards, keep hunting!"
+            )
         )
 
 

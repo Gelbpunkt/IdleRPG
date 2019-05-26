@@ -31,17 +31,27 @@ class Server(commands.Cog):
         )
         em.add_field(
             name=_("Information"),
-            value=_("""\
+            value=_(
+                """\
 Server: `{name}`
 Server Region: `{region}`
 Members Total: `{members}`
 ID: `{id}`
 Icon: {urltext}
 Owner: {owner}
-Server created at: `{created_at}`""").format(name=ctx.guild.name, region=ctx.guild.region, members=ctx.guild.member_count, urltext=urltext, owner=ctx.guild.owner.mention, id=id, created_at=ctx.guild.created_at.__format__("%A %d. %B %Y at %H:%M:%S")),
+Server created at: `{created_at}`"""
+            ).format(
+                name=ctx.guild.name,
+                region=ctx.guild.region,
+                members=ctx.guild.member_count,
+                urltext=urltext,
+                owner=ctx.guild.owner.mention,
+                id=id,
+                created_at=ctx.guild.created_at.__format__("%A %d. %B %Y at %H:%M:%S"),
+            ),
         )
         em.add_field(
-            name=_("Roles"), value=', '.join([role.name for role in ctx.guild.roles])
+            name=_("Roles"), value=", ".join([role.name for role in ctx.guild.roles])
         )
         text = _("{num} of {total}")
         em.add_field(
@@ -55,7 +65,11 @@ Server created at: `{created_at}`""").format(name=ctx.guild.name, region=ctx.gui
     @commands.group(invoke_without_command=True)
     async def settings(self, ctx):
         _("""Change the settings.""")
-        await ctx.send(_("Please use `{prefix}settings (prefix/unknown) value`").format(prefix=ctx.prefix))
+        await ctx.send(
+            _("Please use `{prefix}settings (prefix/unknown) value`").format(
+                prefix=ctx.prefix
+            )
+        )
 
     @commands.has_permissions(manage_guild=True)
     @settings.command(name="prefix")
@@ -66,7 +80,9 @@ Server created at: `{created_at}`""").format(name=ctx.guild.name, region=ctx.gui
         if self.bot.all_prefixes.get(ctx.guild.id):
             if prefix == self.bot.config.default_prefix:
                 del self.bot.all_prefixes[ctx.guild.id]
-                await self.bot.pool.execute('DELETE FROM server WHERE "id"=$1;', ctx.guild.id)
+                await self.bot.pool.execute(
+                    'DELETE FROM server WHERE "id"=$1;', ctx.guild.id
+                )
             else:
                 await self.bot.pool.execute(
                     'UPDATE server SET "prefix"=$1 WHERE "id"=$2;', prefix, ctx.guild.id
@@ -104,12 +120,20 @@ Server created at: `{created_at}`""").format(name=ctx.guild.name, region=ctx.gui
         }
         embed1 = discord.Embed(
             title=str(member),
-            description=_("""\
+            description=_(
+                """\
 `Joined at`: {joined}
 `Status...`: {status}
 `Top Role.`: {toprole}
 `Roles....`: {roles}
-`Game.....`: {game}""").format(joined=str(member.joined_at).split('.')[0], status==f"{statuses[str(member.status)]}{str(member.status).capitalize()}", toprole=member.top_role.name, roles=', '.join([role.name for role in member.roles]), game=str(member.activity) if member.activity else _("No Game Playing")),
+`Game.....`: {game}"""
+            ).format(
+                joined=str(member.joined_at).split(".")[0],
+                status=f"{statuses[str(member.status)]}{str(member.status).capitalize()}",
+                toprole=member.top_role.name,
+                roles=", ".join([role.name for role in member.roles]),
+                game=str(member.activity) if member.activity else _("No Game Playing"),
+            ),
             color=member.color,
         ).set_thumbnail(url=member.avatar_url)
         embed2 = discord.Embed(
@@ -134,7 +158,9 @@ Server created at: `{created_at}`""").format(name=ctx.guild.name, region=ctx.gui
         _("""View the bot prefix.""")
         prefix_ = self.bot.all_prefixes.get(ctx.guild.id, self.bot.config.global_prefix)
         await ctx.send(
-            _("The prefix for server **{server}** is `{serverprefix}`.\n\n`{prefix}settings prefix` changes it.").format(server=ctx.guild, serverprefix=prefix_, prefix=ctx.prefix)
+            _(
+                "The prefix for server **{server}** is `{serverprefix}`.\n\n`{prefix}settings prefix` changes it."
+            ).format(server=ctx.guild, serverprefix=prefix_, prefix=ctx.prefix)
         )
 
     @commands.command()

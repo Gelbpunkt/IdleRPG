@@ -40,9 +40,7 @@ class Profile(commands.Cog):
             name = await self.bot.wait_for("message", timeout=60, check=mycheck)
         except asyncio.TimeoutError:
             await self.bot.reset_cooldown(ctx)
-            return await ctx.send(
-                _("Timeout expired. Please retry!")
-            )
+            return await ctx.send(_("Timeout expired. Please retry!"))
         name = name.content
         if len(name) > 2 and len(name) < 21:
             await self.bot.pool.execute(
@@ -71,7 +69,9 @@ class Profile(commands.Cog):
                 equipped=True,
             )
             await ctx.send(
-                _("Successfully added your character **{name}**! Now use `{prefix}profile` to view your character!").format(name=name, prefix=ctx.prefix)
+                _(
+                    "Successfully added your character **{name}**! Now use `{prefix}profile` to view your character!"
+                ).format(name=name, prefix=ctx.prefix)
             )
         elif len(name) < 3 or len(name) > 20:
             await ctx.send(
@@ -89,7 +89,9 @@ class Profile(commands.Cog):
                 'SELECT * FROM profile WHERE "user"=$1;', targetid
             )
             if not profile:
-                return await ctx.send(_("**{person}** does not have a character.").format(person=person))
+                return await ctx.send(
+                    _("**{person}** does not have a character.").format(person=person)
+                )
             sword, shield = await self.bot.get_equipped_items_for(targetid)
             ranks = await self.bot.get_ranks_for(targetid)
             mission = await self.bot.get_adventure(targetid)
@@ -140,7 +142,9 @@ class Profile(commands.Cog):
                 'SELECT * FROM profile WHERE "user"=$1;', target.id
             )
             if not p_data:
-                return await ctx.send(_("**{target}** does not have a character.").format(target=target))
+                return await ctx.send(
+                    _("**{target}** does not have a character.").format(target=target)
+                )
             mission = await self.bot.get_adventure(target)
             guild = await conn.fetchval(
                 'SELECT name FROM guild WHERE "id"=$1;', p_data["guild"]
@@ -158,17 +162,33 @@ class Profile(commands.Cog):
         em.set_thumbnail(url=target.avatar_url)
         em.add_field(
             name=_("General"),
-            value=_("""\
+            value=_(
+                """\
 **Money**: `${money}`
 **Level**: `{level}`
 **Class**: `{class_}`
 **PvP Wins**: `{pvp}`
-**Guild**: `{guild}`""").format(money=p_data["money"], level=level, class_=p_data['class'], pvp=p_data['pvpwins'], guild=guild)
+**Guild**: `{guild}`"""
+            ).format(
+                money=p_data["money"],
+                level=level,
+                class_=p_data["class"],
+                pvp=p_data["pvpwins"],
+                guild=guild,
+            ),
         )
         em.add_field(
-            name=_("Ranks"), value=_("**Richest**: `{rank_money}`\n**XP**: `{rank_xp}`").format(rank_money=rank_money, rank_xp=rank_xp)
+            name=_("Ranks"),
+            value=_("**Richest**: `{rank_money}`\n**XP**: `{rank_xp}`").format(
+                rank_money=rank_money, rank_xp=rank_xp
+            ),
         )
-        em.add_field(name=_("Equipment"), value=_("Sword: {sword}\nShield: {shield}").format(sword=sword, shield=shield))
+        em.add_field(
+            name=_("Equipment"),
+            value=_("Sword: {sword}\nShield: {shield}").format(
+                sword=sword, shield=shield
+            ),
+        )
         if mission:
             em.add_field(name=_("Mission"), value=f"{mission[0]} - {timeleft}")
         await ctx.send(embed=em)
@@ -178,7 +198,9 @@ class Profile(commands.Cog):
     async def economy(self, ctx):
         _("""Shows your balance.""")
         await ctx.send(
-            _("You currently have **${money}**, {author}!").format(money=ctx.character_data['money'], author=ctx.author.mention)
+            _("You currently have **${money}**, {author}!").format(
+                money=ctx.character_data["money"], author=ctx.author.mention
+            )
         )
 
     @checks.has_char()
@@ -187,7 +209,13 @@ class Profile(commands.Cog):
         _("""Shows your current XP and level.""")
         points = ctx.character_data["xp"]
         await ctx.send(
-            _("You currently have **{points} XP**, which means you are on Level **{level}**. Missing to next level: **{missing}**").format(points=points, level=rpgtools.xptolevel(points), missing=rpgtools.xptonextlevel(points))
+            _(
+                "You currently have **{points} XP**, which means you are on Level **{level}**. Missing to next level: **{missing}**"
+            ).format(
+                points=points,
+                level=rpgtools.xptolevel(points),
+                missing=rpgtools.xptonextlevel(points),
+            )
         )
 
     def invembed(self, ctx, ret, currentpage, maxpage):
@@ -207,9 +235,20 @@ class Profile(commands.Cog):
             )
             result.add_field(
                 name=f"{weapon[2]} {eq}",
-                value=_("ID: `{id}`, Type: `{type_}` with {statstr}. Value is **${value}**").format(id=weapon["id"], type_=weapon["type"], statstr=statstr, value=weapon["value"]),
+                value=_(
+                    "ID: `{id}`, Type: `{type_}` with {statstr}. Value is **${value}**"
+                ).format(
+                    id=weapon["id"],
+                    type_=weapon["type"],
+                    statstr=statstr,
+                    value=weapon["value"],
+                ),
             )
-        result.set_footer(text=_("Page {page} of {maxpages}").format(page=currentpage + 1, maxpages=maxpage + 1))
+        result.set_footer(
+            text=_("Page {page} of {maxpages}").format(
+                page=currentpage + 1, maxpages=maxpage + 1
+            )
+        )
         return result
 
     @checks.has_char()
@@ -242,7 +281,11 @@ class Profile(commands.Cog):
                 itemid,
             )
             if not item:
-                return await ctx.send(_("You don't own an item with the ID `{itemid}`.").format(itemid=itemid))
+                return await ctx.send(
+                    _("You don't own an item with the ID `{itemid}`.").format(
+                        itemid=itemid
+                    )
+                )
             olditem = await conn.fetchrow(
                 "SELECT ai.* FROM profile p JOIN allitems ai ON (p.user=ai.owner) JOIN inventory i ON (ai.id=i.item) WHERE i.equipped IS TRUE AND p.user=$1 AND type=$2;",
                 ctx.author.id,
@@ -258,7 +301,9 @@ class Profile(commands.Cog):
             )
             if olditem:
                 await ctx.send(
-                    _("Successfully equipped item `{itemid}` and put off item `{olditem}`.").format(itemid=itemid, olditem=olditem["id"])
+                    _(
+                        "Successfully equipped item `{itemid}` and put off item `{olditem}`."
+                    ).format(itemid=itemid, olditem=olditem["id"])
                 )
             else:
                 await ctx.send(_("Successfully equipped item `{itemid}`."))
@@ -296,7 +341,9 @@ class Profile(commands.Cog):
             if stat2[1] < stat1[1] - 5 or stat2[1] > stat1[1] + 5:
                 await self.bot.reset_cooldown(ctx)
                 return await ctx.send(
-                    _("The second item's stat must be in the range of `{min_}` to `{max_}` to upgrade an item with the stat of `{stat}`.").format(min_=stat1[1] - 5, max_=stat1[1] + 5, stat=stat1[1])
+                    _(
+                        "The second item's stat must be in the range of `{min_}` to `{max_}` to upgrade an item with the stat of `{stat}`."
+                    ).format(min_=stat1[1] - 5, max_=stat1[1] + 5, stat=stat1[1])
                 )
             if stat1[1] > 40:
                 await self.bot.reset_cooldown(ctx)
@@ -309,7 +356,9 @@ class Profile(commands.Cog):
             )
             await conn.execute('DELETE FROM allitems WHERE "id"=$1;', seconditemid)
         await ctx.send(
-            _("The {stat} of your **{item}** is now **{stat + 1}**. The other item was destroyed.").format(stat=stat1[1], item=item["name"])
+            _(
+                "The {stat} of your **{item}** is now **{stat + 1}**. The other item was destroyed."
+            ).format(stat=stat1[1], item=item["name"])
         )
 
     @checks.has_char()
@@ -325,7 +374,11 @@ class Profile(commands.Cog):
             )
             if not item:
                 await self.bot.reset_cooldown(ctx)
-                return await ctx.send(_("You don't own an item with the ID `{itemid}`.").format(itemid=itemid))
+                return await ctx.send(
+                    _("You don't own an item with the ID `{itemid}`.").format(
+                        itemid=itemid
+                    )
+                )
             if item["type"] == "Sword":
                 stattoupgrade = "damage"
                 pricetopay = int(item["damage"] * 250)
@@ -338,10 +391,16 @@ class Profile(commands.Cog):
                 )
         if ctx.character_data["money"] < pricetopay:
             return await ctx.send(
-                _("You are too poor to upgrade this item. The upgrade costs **${pricetopay}**, but you only have **${mondy}**.").format(pricetopay=pricetopay, money=ctx.character_data['money'])
+                _(
+                    "You are too poor to upgrade this item. The upgrade costs **${pricetopay}**, but you only have **${mondy}**."
+                ).format(pricetopay=pricetopay, money=ctx.character_data["money"])
             )
 
-        if not await ctx.confirm(_("Are you sure you want to upgrade this item: {item}? It will cost **${pricetopay}**.").format(item=item["name"], pricetopay=pricetopay)):
+        if not await ctx.confirm(
+            _(
+                "Are you sure you want to upgrade this item: {item}? It will cost **${pricetopay}**."
+            ).format(item=item["name"], pricetopay=pricetopay)
+        ):
             await self.bot.reset_cooldown(ctx)
             return await ctx.send(_("Weapon upgrade cancelled."))
         if not await checks.has_money(self.bot, ctx.author.id, pricetopay):
@@ -358,7 +417,14 @@ class Profile(commands.Cog):
                 ctx.author.id,
             )
         await ctx.send(
-            _("The {stat} of your **{item}** is now **{newstat}**. **${pricetopay}** has been taken off your balance.").format(stat=stattoupgrade, item=item["name"], newstat=int(item[stattoupgrade])+1, pricetopay=pricetopay)
+            _(
+                "The {stat} of your **{item}** is now **{newstat}**. **${pricetopay}** has been taken off your balance."
+            ).format(
+                stat=stattoupgrade,
+                item=item["name"],
+                newstat=int(item[stattoupgrade]) + 1,
+                pricetopay=pricetopay,
+            )
         )
 
     @checks.has_char()
@@ -380,7 +446,11 @@ class Profile(commands.Cog):
             await conn.execute(
                 'UPDATE profile SET money=money+$1 WHERE "user"=$2;', money, other.id
             )
-        await ctx.send(_("Successfully gave **${money}** to {other}.").format(money=money, other=other.mention))
+        await ctx.send(
+            _("Successfully gave **${money}** to {other}.").format(
+                money=money, other=other.mention
+            )
+        )
 
     @checks.has_char()
     @commands.command()
@@ -396,9 +466,7 @@ class Profile(commands.Cog):
         try:
             name = await self.bot.wait_for("message", timeout=60, check=mycheck)
         except asyncio.TimeoutError:
-            return await ctx.send(
-                _("Timeout expired. Retry!")
-            )
+            return await ctx.send(_("Timeout expired. Retry!"))
         name = name.content
         if len(name) > 2 and len(name) < 21:
             await self.bot.pool.execute(
@@ -450,7 +518,11 @@ class Profile(commands.Cog):
         await self.bot.pool.execute(
             'UPDATE profile SET "colour"=$1 WHERE "user"=$2;', colour, ctx.author.id
         )
-        await ctx.send(_("Successfully set your profile colour to `{colour}`.").format(colour=colour))
+        await ctx.send(
+            _("Successfully set your profile colour to `{colour}`.").format(
+                colour=colour
+            )
+        )
 
 
 def setup(bot):

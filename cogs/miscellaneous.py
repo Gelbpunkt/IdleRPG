@@ -45,7 +45,9 @@ class Miscellaneous(commands.Cog):
             'UPDATE profile SET money=money+$1 WHERE "user"=$2;', money, ctx.author.id
         )
         await ctx.send(
-            _("You received your daily **${money}**!\nYou are on a streak of **{streak}** days!").format(money=money, streak=streak)
+            _(
+                "You received your daily **${money}**!\nYou are on a streak of **{streak}** days!"
+            ).format(money=money, streak=streak)
         )
 
     @commands.command()
@@ -54,7 +56,9 @@ class Miscellaneous(commands.Cog):
         await ctx.send(
             embed=discord.Embed(
                 title=_("Pong!"),
-                description=_("My current latency is {lat}ms").format(lat=round(self.bot.latency * 1000, 2)),
+                description=_("My current latency is {lat}ms").format(
+                    lat=round(self.bot.latency * 1000, 2)
+                ),
                 color=0xF1C60C,
             )
         )
@@ -65,7 +69,9 @@ class Miscellaneous(commands.Cog):
         guild_count = sum(
             await self.bot.cogs["Sharding"].handler("guild_count", self.bot.shard_count)
         )
-        await ctx.send(_("""\
+        await ctx.send(
+            _(
+                """\
 This bot has its own patreon page.
 
 **Why should I donate?**
@@ -75,21 +81,31 @@ If you want to continue using the bot or just help us, please donate a small amo
 Even $1 can help us.
 **Thank you!**
 
-<https://patreon.com/idlerpg>""").format(guild_count=guild_count)
+<https://patreon.com/idlerpg>"""
+            ).format(guild_count=guild_count)
         )
 
     @commands.command()
     async def invite(self, ctx):
         _("""Invite link for the bot.""")
         await ctx.send(
-            _("You are running version **{version}** by Adrian.\nInvite me! {url}").format(version=self.bot.version, url=discord.utils.oauth_url(self.bot.user.id, permissions=discord.Permissions(8)))
+            _(
+                "You are running version **{version}** by Adrian.\nInvite me! {url}"
+            ).format(
+                version=self.bot.version,
+                url=discord.utils.oauth_url(
+                    self.bot.user.id, permissions=discord.Permissions(8)
+                ),
+            )
         )
 
     @commands.command()
     async def support(self, ctx):
         _("""Information on the support server.""")
         await ctx.send(
-            _("Got problems or feature requests? Looking for people to play with? Join the support server:\nhttps://discord.gg/axBKXBv")
+            _(
+                "Got problems or feature requests? Looking for people to play with? Join the support server:\nhttps://discord.gg/axBKXBv"
+            )
         )
 
     @commands.command()
@@ -102,28 +118,12 @@ Even $1 can help us.
         pg_version = f"{pg_version.major}.{pg_version.micro} {pg_version.releaselevel}"
         all_members = self.bot.get_all_members()
         total_online = len(
-            {
-                m.id
-                for m in all_members
-                if m.status is discord.Status.online
-            }
+            {m.id for m in all_members if m.status is discord.Status.online}
         )
-        total_idle = len(
-            {
-                m.id
-                for m in all_members
-                if m.status is discord.Status.idle
-            }
-        )
-        total_dnd = len(
-            {m.id for m in all_members if m.status is discord.Status.dnd}
-        )
+        total_idle = len({m.id for m in all_members if m.status is discord.Status.idle})
+        total_dnd = len({m.id for m in all_members if m.status is discord.Status.dnd})
         total_offline = len(
-            {
-                m.id
-                for m in all_members
-                if m.status is discord.Status.offline
-            }
+            {m.id for m in all_members if m.status is discord.Status.offline}
         )
         d0 = self.bot.user.created_at
         d1 = date.today()
@@ -158,24 +158,42 @@ Even $1 can help us.
         )
         embed.add_field(
             name=_("Hosting Statistics"),
-            value=_("""\
+            value=_(
+                """\
 CPU Usage: **{cpu}%**
 RAM Usage: **{ram}%**
 Python Version **{python}** <:python:445247273065250817>
 discord.py Version **{dpy}**
 Operating System: **{osname} {osversion}**
-PostgreSQL Version **{pg_version}**""").format(cpu=psutil.cpu_percent(), ram=psutil.virtual_memory().percent, python=platform.python_version(), dpy=pkg.get_distribution('discord.py').version, osname=sysinfo[0].title(), osversion=sysinfo[1])
+PostgreSQL Version **{pg_version}**"""
+            ).format(
+                cpu=psutil.cpu_percent(),
+                ram=psutil.virtual_memory().percent,
+                python=platform.python_version(),
+                dpy=pkg.get_distribution("discord.py").version,
+                osname=sysinfo[0].title(),
+                osversion=sysinfo[1],
+            ),
             inline=False,
         )
         embed.add_field(
             name=_("Bot Statistics"),
-            value=_("""\
+            value=_(
+                """\
 Code lines written: **{lines}**
 Shards: **{shards}**
 Servers: **{guild_count}**
 Characters: **{characters}**
 Items: **{items}**
-Average hours of work: **{hours}**""").format(lines=self.bot.linecount, shards=self.bot.shard_count, guild_count=guild_count, characters=characters, items=items, hours=myhours),
+Average hours of work: **{hours}**"""
+            ).format(
+                lines=self.bot.linecount,
+                shards=self.bot.shard_count,
+                guild_count=guild_count,
+                characters=characters,
+                items=items,
+                hours=myhours,
+            ),
             inline=False,
         )
         await ctx.send(embed=embed)
@@ -184,7 +202,9 @@ Average hours of work: **{hours}**""").format(lines=self.bot.linecount, shards=s
     async def roll(self, ctx, maximum: IntGreaterThan(0)):
         _("""Roll a random number.""")
         await ctx.send(
-            _(":1234: You rolled **{num}**, {author}!").format(num=random.randint(0, maximum), author=ctx.author.mention)
+            _(":1234: You rolled **{num}**, {author}!").format(
+                num=random.randint(0, maximum), author=ctx.author.mention
+            )
         )
 
     @commands.command()
@@ -211,20 +231,25 @@ This update had 3 focuses:
 
 *Note: This is tested mostly, but not 100%. I appreciate bug reports.*
 *GitHub folks update your forks and branches!*
-""" # not gonna translate this tbh
+"""  # not gonna translate this tbh
         )
 
     @commands.has_permissions(manage_messages=True)
     @commands.command()
     async def clear(self, ctx, num: IntFromTo(1, 1000), target: discord.Member = None):
-        _("""Deletes an amount of messages from the history, optionally only by one member.""")
+        _(
+            """Deletes an amount of messages from the history, optionally only by one member."""
+        )
+
         def msgcheck(amsg):
             if target:
                 return amsg.author.id == target.id
             return True
 
         num = len(await ctx.channel.purge(limit=num + 1, check=msgcheck))
-        await ctx.send(_("👍 Deleted **{num}** messages for you.").format(num=num), delete_after=10)
+        await ctx.send(
+            _("👍 Deleted **{num}** messages for you.").format(num=num), delete_after=10
+        )
 
     @commands.command(name="8ball")
     async def _ball(self, ctx, *, question: str):
@@ -251,7 +276,11 @@ This update had 3 focuses:
             "Outlook not so good",
             "Very doubtful",
         ]
-        await ctx.send(_("The :8ball: says: **{result}**.").format(result=_(random.choice(results)))
+        await ctx.send(
+            _("The :8ball: says: **{result}**.").format(
+                result=_(random.choice(results))
+            )
+        )
 
     @commands.command(aliases=["say"])
     async def echo(self, ctx, *, phrase: str):
@@ -269,7 +298,8 @@ This update had 3 focuses:
             return await ctx.send(_("Cannot choose from an empty list..."))
         results = list(filter(lambda a: a.lower() != "or", results))
         await ctx.send(
-            _("My choice is: **{result}**.").format(result=random.choice(results)), escape_mentions=True
+            _("My choice is: **{result}**.").format(result=random.choice(results)),
+            escape_mentions=True,
         )
 
     @commands.guild_only()
@@ -278,7 +308,9 @@ This update had 3 focuses:
         _("""Calculates the potential love for 2 members.""")
         msg = await ctx.send(
             embed=discord.Embed(
-                description=_("Calculating Love for {first} and {second}...").format(first=first.mention, second=second.mention),
+                description=_("Calculating Love for {first} and {second}...").format(
+                    first=first.mention, second=second.mention
+                ),
                 color=0xFF0000,
             )
         )
@@ -290,7 +322,9 @@ This update had 3 focuses:
             love = random.randint(1, 10000) / 100
         embed = discord.Embed(
             title=_("Love Calculation"),
-            description=_("Love for {first} and {second} is at **{love}%**! ❤").format(first=first.mention, second=second.mention, love=love),
+            description=_("Love for {first} and {second} is at **{love}%**! ❤").format(
+                first=first.mention, second=second.mention, love=love
+            ),
             color=0xFF0000,
         )
         await msg.edit(embed=embed)
@@ -334,12 +368,16 @@ This update had 3 focuses:
 
     @commands.command()
     async def dice(self, ctx, dice_type: str):
-        _("""Tabletop RPG-ready dice. Rolls in the ndx format (3d20 is 3 dice with 20 sides).""")
+        _(
+            """Tabletop RPG-ready dice. Rolls in the ndx format (3d20 is 3 dice with 20 sides)."""
+        )
         try:
             dice_type = list(map(int, dice_type.split("d")))
         except ValueError:
             await ctx.send(
-                _("Use the ndx format. E.g. `5d20` will roll 5 dices with 20 sides each.")
+                _(
+                    "Use the ndx format. E.g. `5d20` will roll 5 dices with 20 sides each."
+                )
             )
         if len(dice_type) != 2:
             return await ctx.send(_("Use the ndx format."))
@@ -360,7 +398,9 @@ This update had 3 focuses:
         nl = "\n"
         results = [str(result) for result in results]
         await ctx.send(
-            _("```Sum: {sumall}\nAverage: {average}\nResults:\n{results}```").format(sumall=sumall, average=average, results=nl.join(results))
+            _("```Sum: {sumall}\nAverage: {average}\nResults:\n{results}```").format(
+                sumall=sumall, average=average, results=nl.join(results)
+            )
         )
 
     @commands.command()
@@ -370,13 +410,19 @@ This update had 3 focuses:
             [g for g in self.bot.guilds if g.me.display_name != self.bot.user.name]
         )
         info = (g.me.display_name, g.name)
-        await ctx.send(_("In **{server}** I am called **{name}**.").format(server=info[1], name=info[0]))
+        await ctx.send(
+            _("In **{server}** I am called **{name}**.").format(
+                server=info[1], name=info[0]
+            )
+        )
 
     @commands.command()
     async def cat(self, ctx):
         _("""Cat pics.""")
         await ctx.send(
-            embed=discord.Embed(title=_("Meow!"), color=ctx.author.color.value).set_image(
+            embed=discord.Embed(
+                title=_("Meow!"), color=ctx.author.color.value
+            ).set_image(
                 url=f"http://thecatapi.com/api/images/get?results_per_page=1&anticache={random.randint(1,10000)}"
             )
         )
@@ -389,15 +435,19 @@ This update had 3 focuses:
         ) as r:
             res = await r.json()
         await ctx.send(
-            embed=discord.Embed(title=_("Wouff!"), color=ctx.author.color.value).set_image(
-                url=res[0]["url"]
-            )
+            embed=discord.Embed(
+                title=_("Wouff!"), color=ctx.author.color.value
+            ).set_image(url=res[0]["url"])
         )
 
     @commands.command()
     async def uptime(self, ctx):
         _("""Shows how long the bot is connected to Discord already.""")
-        await ctx.send(_("I am online for **{time}**.").format(time=str(self.bot.uptime).split('.')[0]))
+        await ctx.send(
+            _("I am online for **{time}**.").format(
+                time=str(self.bot.uptime).split(".")[0]
+            )
+        )
 
     @commands.command(hidden=True)
     async def easteregg(self, ctx):
@@ -409,14 +459,18 @@ This update had 3 focuses:
     async def cookie(self, ctx, user: discord.Member):
         _("""Gives a cookie to a user.""")
         await ctx.send(
-            _("**{user}**, you've been given a cookie by **{author}**. :cookie:").format(author=ctx.disp, user=user.display_name)
+            _(
+                "**{user}**, you've been given a cookie by **{author}**. :cookie:"
+            ).format(author=ctx.disp, user=user.display_name)
         )
 
     @commands.guild_only()
     @commands.command(aliases=["ice-cream"])
     async def ice(self, ctx, other: discord.Member):
         _("""Gives ice cream to a user.""")
-        await ctx.send(_("{other}, here is your ice: :ice_cream:!").format(other=other.mention))
+        await ctx.send(
+            _("{other}, here is your ice: :ice_cream:!").format(other=other.mention)
+        )
 
     @commands.guild_only()
     @commands.cooldown(1, 20, BucketType.channel)
@@ -426,7 +480,9 @@ This update had 3 focuses:
         m = random.choice(ctx.guild.members)
         em = discord.Embed(
             title=_("Can you guess who this is?"),
-            description=_("Their discriminant is `#{disc}`").format(disc=m.discriminator),
+            description=_("Their discriminant is `#{disc}`").format(
+                disc=m.discriminator
+            ),
             color=m.color,
         )
         em.set_image(url=m.avatar_url)
@@ -440,7 +496,9 @@ This update had 3 focuses:
         try:
             msg = await self.bot.wait_for("message", check=check, timeout=20)
         except asyncio.TimeoutError:
-            return await ctx.send(_("You didn't guess correctly! It was `{member}`!").format(member=m))
+            return await ctx.send(
+                _("You didn't guess correctly! It was `{member}`!").format(member=m)
+            )
         await ctx.send(_("{user}, you are correct!").format(user=msg.author.mention))
 
     @commands.command(aliases=["yn"])
@@ -465,7 +523,9 @@ This update had 3 focuses:
         )
         em.add_field(
             name="GamesROB",
-            value=_("Trivia, Hangman, Minesweeper, Connect 4 and more, right from your chat! A bot offering non-RPG games made by deprilula28 and Fin.\n[discordbots.org Page](https://discordbots.org/bot/gamesrob)"),
+            value=_(
+                "Trivia, Hangman, Minesweeper, Connect 4 and more, right from your chat! A bot offering non-RPG games made by deprilula28 and Fin.\n[discordbots.org Page](https://discordbots.org/bot/gamesrob)"
+            ),
         )
         await ctx.send(embed=em)
 

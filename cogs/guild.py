@@ -81,7 +81,9 @@ class Guild(commands.Cog):
             await ctx.send(embed=embed)
         except discord.errors.HTTPException:
             await ctx.send(
-                _("The guild icon seems to be a bad URL. Use `{prefix}guild icon` to fix this.").format(prefix=ctx.prefix)
+                _(
+                    "The guild icon seems to be a bad URL. Use `{prefix}guild icon` to fix this."
+                ).format(prefix=ctx.prefix)
             )
 
     @guild.command()
@@ -98,7 +100,9 @@ class Guild(commands.Cog):
         result = ""
         for idx, guild in enumerate(guilds):
             leader = await rpgtools.lookup(self.bot, guild["leader"])
-            text = _("a guild by `{leader}` with **{wins}** GvG Wins").format(leader=leader, wins=guild["wins"])
+            text = _("a guild by `{leader}` with **{wins}** GvG Wins").format(
+                leader=leader, wins=guild["wins"]
+            )
             result = f"{result}{idx + 1}. {guild['name']}, {text}\n"
         await ctx.send(
             embed=discord.Embed(
@@ -142,7 +146,9 @@ class Guild(commands.Cog):
                 bg = bgs[number - 1]
             except IndexError:
                 return await ctx.send(
-                    _("The badge number {number} is not valid, your guild only has {amount} available.").format(amount=len(bgs), number=number)
+                    _(
+                        "The badge number {number} is not valid, your guild only has {amount} available."
+                    ).format(amount=len(bgs), number=number)
                 )
             await conn.execute(
                 'UPDATE guild SET badge=$1 WHERE "leader"=$2;', bg, ctx.author.id
@@ -159,7 +165,9 @@ class Guild(commands.Cog):
         def mycheck(amsg):
             return amsg.author == ctx.author
 
-        await ctx.send(_("Enter a name for your guild. Maximum length is 20 characters."))
+        await ctx.send(
+            _("Enter a name for your guild. Maximum length is 20 characters.")
+        )
         try:
             name = await self.bot.wait_for("message", timeout=60, check=mycheck)
         except asyncio.TimeoutError:
@@ -206,7 +214,9 @@ class Guild(commands.Cog):
                 ctx.author.id,
             )
         await ctx.send(
-            _("Successfully added your guild **{name}** with a member limit of **{memberlimit}**.").format(name=name, memberlimit=memberlimit)
+            _(
+                "Successfully added your guild **{name}** with a member limit of **{memberlimit}**."
+            ).format(name=name, memberlimit=memberlimit)
         )
 
     @is_guild_leader()
@@ -222,7 +232,11 @@ class Guild(commands.Cog):
         await self.bot.pool.execute(
             'UPDATE profile SET guildrank=$1 WHERE "user"=$2;', "Officer", member.id
         )
-        await ctx.send(_("Done! {member} has been promoted to the rank of `Officer`.").format(member=member))
+        await ctx.send(
+            _("Done! {member} has been promoted to the rank of `Officer`.").format(
+                member=member
+            )
+        )
 
     @is_guild_leader()
     @guild.command()
@@ -237,7 +251,11 @@ class Guild(commands.Cog):
         await self.bot.pool.execute(
             'UPDATE profile SET guildrank=$1 WHERE "user"=$2;', "Member", member.id
         )
-        await ctx.send(_("Done! {member} has been demoted to the rank of `Member`.").format(member=member))
+        await ctx.send(
+            _("Done! {member} has been demoted to the rank of `Member`.").format(
+                member=member
+            )
+        )
 
     @is_guild_officer()
     @guild.command()
@@ -256,10 +274,14 @@ class Guild(commands.Cog):
                 'SELECT (memberlimit, name) FROM guild WHERE "id"=$1;', id
             )
         if membercount >= limit:
-            return await ctx.send(_("Your guild is already at the maximum member count."))
+            return await ctx.send(
+                _("Your guild is already at the maximum member count.")
+            )
 
         if not await ctx.confirm(
-            _("{newmember}, {author} invites you to join **{name}**. React to join the guild.").format(newmember=newmember.mention, author=ctx.author.mention, name=name),
+            _(
+                "{newmember}, {author} invites you to join **{name}**. React to join the guild."
+            ).format(newmember=newmember.mention, author=ctx.author.mention, name=name),
             user=newmember,
         ):
             return
@@ -268,7 +290,11 @@ class Guild(commands.Cog):
         await self.bot.pool.execute(
             'UPDATE profile SET guild=$1 WHERE "user"=$2;', id, newmember.id
         )
-        await ctx.send(_("{newmember} is now a member of **{name}**. Welcome!").format(newmember=newmember.mention, name=name))
+        await ctx.send(
+            _("{newmember} is now a member of **{name}**. Welcome!").format(
+                newmember=newmember.mention, name=name
+            )
+        )
 
     @has_guild()
     @is_no_guild_leader()
@@ -341,7 +367,9 @@ class Guild(commands.Cog):
             and (url.endswith(".png") or url.endswith(".jpg") or url.endswith(".jpeg"))
         ):
             return await ctx.send(
-                _("I couldn't read that URL. Does it start with `http://` or `https://` and is either a png or jpeg?")
+                _(
+                    "I couldn't read that URL. Does it start with `http://` or `https://` and is either a png or jpeg?"
+                )
             )
         await self.bot.pool.execute(
             'UPDATE guild SET "icon"=$1 WHERE "id"=$2;',
@@ -377,7 +405,9 @@ class Guild(commands.Cog):
         result = ""
         for idx, profile in enumerate(players):
             charname = await rpgtools.lookup(self.bot, profile["user"])
-            text = _("a character by `{charname}` with **${money}**").format(charname=charname, money=money)
+            text = _("a character by `{charname}` with **${money}**").format(
+                charname=charname, money=money
+            )
             result = f"{result}{idx + 1}. {profile['name']}, {text}\n"
         await ctx.send(
             embed=discord.Embed(
@@ -403,7 +433,14 @@ class Guild(commands.Cog):
         result = ""
         for idx, profile in enumerate(players):
             charname = await rpgtools.lookup(self.bot, profile[0])
-            text = _("{name}, a character by `{charname}` with Level **{level}** (**{xp}** XP)").format(charname=charname, name=profile["name"], level=rpgtools.xptolevel(profile['xp']), xp=profile["xp"])
+            text = _(
+                "{name}, a character by `{charname}` with Level **{level}** (**{xp}** XP)"
+            ).format(
+                charname=charname,
+                name=profile["name"],
+                level=rpgtools.xptolevel(profile["xp"]),
+                xp=profile["xp"],
+            )
             result = f"{result}{idx + 1}. {text}\n"
         await ctx.send(
             embed=discord.Embed(
@@ -436,7 +473,9 @@ class Guild(commands.Cog):
                 g["id"],
             )
         await ctx.send(
-            _("Done! Now you have `${profile_money}` and the guild has `${guild_money}`.").format(profile_money=profile_money, guild_money=guild_money)
+            _(
+                "Done! Now you have `${profile_money}` and the guild has `${guild_money}`."
+            ).format(profile_money=profile_money, guild_money=guild_money)
         )
 
     @is_guild_officer()
@@ -456,7 +495,9 @@ class Guild(commands.Cog):
                 'UPDATE profile SET money=money+$1 WHERE "user"=$2;', amount, member.id
             )
         await ctx.send(
-            _("Successfully gave **${amount}** from your guild bank to {member}.").format(amount=amount, member=member.mention)
+            _(
+                "Successfully gave **${amount}** from your guild bank to {member}."
+            ).format(amount=amount, member=member.mention)
         )
 
     @is_guild_leader()
@@ -470,10 +511,14 @@ class Guild(commands.Cog):
             currentlimit = guild["banklimit"]
             level = int(currentlimit / 250_000)
             if level == 4:
-                return await ctx.send(_("Your guild already reached the maximum upgrade."))
+                return await ctx.send(
+                    _("Your guild already reached the maximum upgrade.")
+                )
             if int(currentlimit / 2) > guild["money"]:
                 return await ctx.send(
-                    _("Your guild is too poor, you got **${money}** but it costs **${price}** to upgrade.").format(money=guild["money"], price=int(currentlimit / 2))
+                    _(
+                        "Your guild is too poor, you got **${money}** but it costs **${price}** to upgrade."
+                    ).format(money=guild["money"], price=int(currentlimit / 2))
                 )
             await conn.execute(
                 'UPDATE guild SET banklimit=banklimit+$1 WHERE "id"=$2;',
@@ -485,7 +530,11 @@ class Guild(commands.Cog):
                 int(currentlimit / 2),
                 guild["id"],
             )
-        await ctx.send(_("Your new guild bank limit is now **${limit}**.").format(limit=currentlimit + 250000))
+        await ctx.send(
+            _("Your new guild bank limit is now **${limit}**.").format(
+                limit=currentlimit + 250000
+            )
+        )
 
     @is_guild_officer()
     @guild_cooldown(1800)
@@ -529,11 +578,15 @@ class Guild(commands.Cog):
             user=enemy,
         ):
             return await ctx.send(
-                _("{enemy} didn't want to join your battle, {author}.").format(enemy=enemy.mention, author=ctx.author.mention)
+                _("{enemy} didn't want to join your battle, {author}.").format(
+                    enemy=enemy.mention, author=ctx.author.mention
+                )
             )
 
         await ctx.send(
-            _("{enemy} accepted the challenge by {author}. Please now nominate members, {author}. Use `battle nominate @user` to add someone to your team.").format(enemy=enemy.mention, author=ctx.author.mention)
+            _(
+                "{enemy} accepted the challenge by {author}. Please now nominate members, {author}. Use `battle nominate @user` to add someone to your team."
+            ).format(enemy=enemy.mention, author=ctx.author.mention)
         )
         team1 = []
         team2 = []
@@ -571,15 +624,21 @@ class Guild(commands.Cog):
                 if guild1check:
                     team1.append(guild1check)
                     await ctx.send(
-                        _("{user} has been added to your team, {author}.").format(user=guild1check, author=ctx.author.mention)
+                        _("{user} has been added to your team, {author}.").format(
+                            user=guild1check, author=ctx.author.mention
+                        )
                     )
                 else:
                     await ctx.send(_("User not found."))
                     continue
             except asyncio.TimeoutError:
-                return await ctx.send(_("Took to long to add members. Fight cancelled."))
+                return await ctx.send(
+                    _("Took to long to add members. Fight cancelled.")
+                )
         await ctx.send(
-            _("Please now nominate members, {enemy}. Use `battle nominate @user` to add someone to your team.").format(enemy=enemy.mention)
+            _(
+                "Please now nominate members, {enemy}. Use `battle nominate @user` to add someone to your team."
+            ).format(enemy=enemy.mention)
         )
         while len(team2) != fightercount:
             try:
@@ -590,13 +649,17 @@ class Guild(commands.Cog):
                 if guild2check:
                     team2.append(guild2check)
                     await ctx.send(
-                        _("{user} has been added to your team, {enemy}.").format(user=guild2check, enemy=enemy.mention)
+                        _("{user} has been added to your team, {enemy}.").format(
+                            user=guild2check, enemy=enemy.mention
+                        )
                     )
                 else:
                     await ctx.send(_("User not found."))
                     continue
             except asyncio.TimeoutError:
-                return await ctx.send(_("Took to long to add members. Fight cancelled."))
+                return await ctx.send(
+                    _("Took to long to add members. Fight cancelled.")
+                )
 
         msg = await ctx.send(_("Fight started!\nGenerating battles..."))
         await asyncio.sleep(3)
@@ -606,7 +669,9 @@ class Guild(commands.Cog):
         for idx, user in enumerate(team1):
             user2 = team2[idx]
             msg = await ctx.send(
-                _("Guild Battle Fight **{num}** of **{total}**.\n**{user}** vs **{user2}**!\nBattle running...").format(num=idx + 1, total=len(team1), user=user, user2=user2)
+                _(
+                    "Guild Battle Fight **{num}** of **{total}**.\n**{user}** vs **{user2}**!\nBattle running..."
+                ).format(num=idx + 1, total=len(team1), user=user, user2=user2)
             )
             sw1, sh1 = await self.bot.get_equipped_items_for(user)
             val1 = (
@@ -634,7 +699,11 @@ class Guild(commands.Cog):
                     wins2 += 1
             await asyncio.sleep(5)
             await ctx.send(
-                _("Winner of **{user}** vs **{user2}** is **{winner}**! Current points: **{wins1}** to **{wins2}**.").format(user=user, user2=user2, winner=winner, wins1=wins1, wins2=wins2)
+                _(
+                    "Winner of **{user}** vs **{user2}** is **{winner}**! Current points: **{wins1}** to **{wins2}**."
+                ).format(
+                    user=user, user2=user2, winner=winner, wins1=wins1, wins2=wins2
+                )
             )
         async with self.bot.pool.acquire() as conn:
             money1 = await conn.fetchval(
@@ -659,7 +728,11 @@ class Guild(commands.Cog):
                 await conn.execute(
                     'UPDATE guild SET wins=wins+1 WHERE "id"=$1;', guild1["id"]
                 )
-                await ctx.send(_("{guild} won the battle! Congratulations!").format(guild=guild1["name"]))
+                await ctx.send(
+                    _("{guild} won the battle! Congratulations!").format(
+                        guild=guild1["name"]
+                    )
+                )
             elif wins2 > wins1:
                 await conn.execute(
                     'UPDATE guild SET money=money+$1 WHERE "id"=$2;',
@@ -674,7 +747,11 @@ class Guild(commands.Cog):
                 await conn.execute(
                     'UPDATE guild SET wins=wins+1 WHERE "id"=$1;', guild2["id"]
                 )
-                await ctx.send(_("{guild} won the battle! Congratulations!").format(guild=guild2["name"]))
+                await ctx.send(
+                    _("{guild} won the battle! Congratulations!").format(
+                        guild=guild2["name"]
+                    )
+                )
             else:
                 await ctx.send(_("It's a tie!"))
 
@@ -685,14 +762,18 @@ class Guild(commands.Cog):
         _("""Starts a guild adventure.""")
         if await self.bot.get_guild_adventure(ctx.character_data["guild"]):
             return await ctx.send(
-                _("Your guild is already on an adventure! Use `{prefix}guild status` to view how long it still lasts.").format(prefix=ctx.prefix)
+                _(
+                    "Your guild is already on an adventure! Use `{prefix}guild status` to view how long it still lasts."
+                ).format(prefix=ctx.prefix)
             )
         guild = await self.bot.pool.fetchrow(
             'SELECT * FROM guild WHERE "id"=$1;', ctx.character_data["guild"]
         )
 
         msg = await ctx.send(
-            _("{author} seeks a guild adventure for **{guild}**! React to join! Unlimited players can join in the next minute. The minimum of players required is 3.").format(author=ctx.author.mention, guild=guild["name"])
+            _(
+                "{author} seeks a guild adventure for **{guild}**! React to join! Unlimited players can join in the next minute. The minimum of players required is 3."
+            ).format(author=ctx.author.mention, guild=guild["name"])
         )
 
         await msg.add_reaction("\U00002694")
@@ -718,13 +799,19 @@ class Guild(commands.Cog):
                 if user and user["guild"] == guild["id"]:
                     difficulty += int(rpgtools.xptolevel(user["xp"]))
                     joined.append(u)
-                    await ctx.send(_("Alright, {user}, you have been added.").format(user=u.mention))
+                    await ctx.send(
+                        _("Alright, {user}, you have been added.").format(
+                            user=u.mention
+                        )
+                    )
                 else:
                     await ctx.send(_("You aren't in their guild."))
             except asyncio.TimeoutError:
                 if len(joined) < 3:
                     return await ctx.send(
-                        _("You didn't get enough other players for the guild adventure.")
+                        _(
+                            "You didn't get enough other players for the guild adventure."
+                        )
                     )
                 started = True
 
@@ -733,14 +820,21 @@ class Guild(commands.Cog):
         await self.bot.start_guild_adventure(guild["id"], difficulty, time)
 
         await ctx.send(
-            _("""
+            _(
+                """
 Guild adventure for **{guild}** started!
 Participants:
 {participants}
 
 Difficulty is **{difficulty}**
 Time it will take: **{time}**
-""").format(guild=guild["name"], participants=', '.join([m.mention for m in joined]), difficulty=difficulty, time=time)
+"""
+            ).format(
+                guild=guild["name"],
+                participants=", ".join([m.mention for m in joined]),
+                difficulty=difficulty,
+                time=time,
+            )
         )
 
     @has_guild()
@@ -751,7 +845,9 @@ Time it will take: **{time}**
 
         if not adventure:
             return await ctx.send(
-                _("Your guild isn't on an adventure yet. Ask your guild leader to use `{prefix}guild adventure` to start one").format(prefix=ctx.prefix)
+                _(
+                    "Your guild isn't on an adventure yet. Ask your guild leader to use `{prefix}guild adventure` to start one"
+                ).format(prefix=ctx.prefix)
             )
 
         if adventure[2]:
@@ -764,11 +860,17 @@ Time it will take: **{time}**
                 ctx.character_data["guild"],
             )
             await ctx.send(
-                _("Your guild has completed an adventure of difficulty `{difficulty}` and **${gold}** has been added to the bank.").format(difficulty=adventure[0], gold=gold)
+                _(
+                    "Your guild has completed an adventure of difficulty `{difficulty}` and **${gold}** has been added to the bank."
+                ).format(difficulty=adventure[0], gold=gold)
             )
         else:
             await ctx.send(
-                _("Your guild is currently in an adventure with difficulty `{difficulty}`.\nTime remaining: `{remain}`").format(difficulty=adventure[1], remain=str(adventure[1]).split('.')[0])
+                _(
+                    "Your guild is currently in an adventure with difficulty `{difficulty}`.\nTime remaining: `{remain}`"
+                ).format(
+                    difficulty=adventure[1], remain=str(adventure[1]).split(".")[0]
+                )
             )
 
 

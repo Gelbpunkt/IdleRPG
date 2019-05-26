@@ -92,9 +92,7 @@ class MusicPlayer(commands.Cog):
         player.track_callback = self.on_track_end
 
     @commands.guild_only()
-    @commands.command(
-        aliases=["pran", "pr", "rp", "randomplay", "ranp", "randomp"]
-    )
+    @commands.command(aliases=["pran", "pr", "rp", "randomplay", "ranp", "randomp"])
     async def playrandom(self, ctx, *, query: str):
         _("""Picks a random result, and plays for you""")
         player = self.bot.lava.get_player(ctx.guild.id)
@@ -140,7 +138,9 @@ class MusicPlayer(commands.Cog):
             await ctx.send(_(":white_check_mark:` Done!`"), delete_after=5)
         else:
             await ctx.send(
-                _(":warning:`I am currently not connected to any channel in this guild...`"),
+                _(
+                    ":warning:`I am currently not connected to any channel in this guild...`"
+                ),
                 delete_after=5,
             )
 
@@ -189,7 +189,8 @@ class MusicPlayer(commands.Cog):
         player = self.bot.lava.get_player(ctx.guild.id)
         if not (player.paused or player.playing):
             return await ctx.send(
-                _(":warning:`I am currently not playing anything here...`"), delete_after=5
+                _(":warning:`I am currently not playing anything here...`"),
+                delete_after=5,
             )
         if not 0 <= volume <= 100:
             return await ctx.send(
@@ -197,7 +198,9 @@ class MusicPlayer(commands.Cog):
             )
         if volume > player.volume:
             vol_warn = await ctx.send(
-                _(":warning:`Playback volume is going to change to {volume} in 5 seconds. To avoid the sudden earrape, control the volume on client side!`").format(volume=volume)
+                _(
+                    ":warning:`Playback volume is going to change to {volume} in 5 seconds. To avoid the sudden earrape, control the volume on client side!`"
+                ).format(volume=volume)
             )
             await asyncio.sleep(5)
             await player.set_volume(volume)
@@ -205,7 +208,9 @@ class MusicPlayer(commands.Cog):
         else:
             await player.set_volume(volume)
         await ctx.send(
-            _(":white_check_mark:` Volume successfully changed to {volume}!`").format(volume=volume),
+            _(":white_check_mark:` Volume successfully changed to {volume}!`").format(
+                volume=volume
+            ),
             delete_after=5,
         )
 
@@ -233,7 +238,8 @@ class MusicPlayer(commands.Cog):
         )
         if not current_song:
             return await ctx.send(
-                _(":warning:`I'm not playing anything at the moment...`"), delete_after=5
+                _(":warning:`I'm not playing anything at the moment...`"),
+                delete_after=5,
             )
         current_song = loads(current_song)
         if not (ctx.guild and ctx.author.color == discord.Color.default()):
@@ -319,7 +325,9 @@ class MusicPlayer(commands.Cog):
         ):  # check to avoid errors on guild leave
             req_member = ctx.guild.get_member(current_song["requester_id"])
             playing_embed.set_footer(
-                text=_("Song requested by: {user}").format(user=req_member.display_name),
+                text=_("Song requested by: {user}").format(
+                    user=req_member.display_name
+                ),
                 icon_url=req_member.avatar_url_as(format="png", size=64),
             )
         await ctx.send(embed=playing_embed)
@@ -359,13 +367,17 @@ class MusicPlayer(commands.Cog):
             )
             zws = "@\u200b"
             await self.bot.get_channel(entry.get("channel_id")).send(
-                _("🎧 Added {title} to the queue...").format(title=entry.get('info').get('title').replace('@', zws))
+                _("🎧 Added {title} to the queue...").format(
+                    title=entry.get("info").get("title").replace("@", zws)
+                )
             )
 
     async def play_entry(self, entry: dict, player: pylava.Player):
         zws = "@\u200b"
         await self.bot.get_channel(entry.get("channel_id")).send(
-            _("🎧 Playing {title}...").format(title=entry.get('info').get('title').replace('@', zws))
+            _("🎧 Playing {title}...").format(
+                title=entry.get("info").get("title").replace("@", zws)
+            )
         )
         await player.play(entry.get("track"))
 

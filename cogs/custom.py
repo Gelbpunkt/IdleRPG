@@ -31,7 +31,9 @@ class Custom(commands.Cog):
         _("""[Ken only] Hug someone.""")
         em = discord.Embed(
             title=_("Ken Hug!"),
-            description=_("{author} hugged {user}! Awww!").format(author=ctx.author.mention, user=user.mention),
+            description=_("{author} hugged {user}! Awww!").format(
+                author=ctx.author.mention, user=user.mention
+            ),
         )
         em.set_image(
             url="https://cdn.discordapp.com/attachments/515954333368713235/518539871665520641/image0.gif"  # noqa

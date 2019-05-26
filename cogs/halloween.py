@@ -11,8 +11,8 @@ import secrets
 import discord
 from discord.ext import commands
 
-from cogs.shard_communication import user_on_cooldown as user_cooldown
 import utils.checks as checks
+from cogs.shard_communication import user_on_cooldown as user_cooldown
 
 
 class Halloween(commands.Cog):
@@ -37,7 +37,9 @@ class Halloween(commands.Cog):
         self.waiting = None
         if secrets.randbelow(2) == 1:
             await ctx.send(
-                _("You walk around the houses and ring at {waiting}'s house! That's a trick or treat bag for you, yay!").format(waiting=waiting)
+                _(
+                    "You walk around the houses and ring at {waiting}'s house! That's a trick or treat bag for you, yay!"
+                ).format(waiting=waiting)
             )
             await self.bot.pool.execute(
                 'UPDATE profile SET trickortreat=trickortreat+1 WHERE "user"=$1;',
@@ -45,12 +47,16 @@ class Halloween(commands.Cog):
             )
         else:
             await ctx.send(
-                _("You walk around the houses and ring at {waiting}'s house! Sadly they don't have anything for you...").format(waiting=waiting)
+                _(
+                    "You walk around the houses and ring at {waiting}'s house! Sadly they don't have anything for you..."
+                ).format(waiting=waiting)
             )
         try:
             if secrets.randbelow(2) == 1:
                 await waiting.send(
-                    _("The waiting was worth it: {author} rang! That's a trick or treat bag for you, yay!").format(author=ctx.author)
+                    _(
+                        "The waiting was worth it: {author} rang! That's a trick or treat bag for you, yay!"
+                    ).format(author=ctx.author)
                 )
                 await self.bot.pool.execute(
                     'UPDATE profile SET trickortreat=trickortreat+1 WHERE "user"=$1;',
@@ -58,7 +64,9 @@ class Halloween(commands.Cog):
                 )
             else:
                 await waiting.send(
-                    _("{author} rings at your house, but... Nothing for you!").format(author=ctx.author)
+                    _("{author} rings at your house, but... Nothing for you!").format(
+                        author=ctx.author
+                    )
                 )
         except discord.Forbidden:
             pass
@@ -91,17 +99,28 @@ class Halloween(commands.Cog):
             minstat, maxstat = 10, 19
         else:
             minstat, maxstat = 1, 9
-        item = await self.bot.create_random_item(minstat=minstat, maxstat=maxstat, minvalue=1, maxvalue=200, owner=ctx.author, insert=False)
-        name = random.choice([
-            "Jack's",
-            "Spooky",
-            "Ghostly",
-            "Skeletal",
-            "Glowing",
-            "Moonlight",
-            "Adrian's really awesome",
-        ])
-        item["name"] = f"{name} {random.choice(['Sword', 'Blade', 'Stich', 'Arm', 'Bone']) if item['type_'] == 'Sword' else random.choice(["Shield", "Defender", "Aegis", "Shadow Shield", "Giant Ginger"])}'
+        item = await self.bot.create_random_item(
+            minstat=minstat,
+            maxstat=maxstat,
+            minvalue=1,
+            maxvalue=200,
+            owner=ctx.author,
+            insert=False,
+        )
+        name = random.choice(
+            [
+                "Jack's",
+                "Spooky",
+                "Ghostly",
+                "Skeletal",
+                "Glowing",
+                "Moonlight",
+                "Adrian's really awesome",
+            ]
+        )
+        item[
+            "name"
+        ] = f"{name} {random.choice(['Sword', 'Blade', 'Stich', 'Arm', 'Bone']) if item['type_'] == 'Sword' else random.choice(['Shield', 'Defender', 'Aegis', 'Shadow Shield', 'Giant Ginger'])}"
         await self.bot.create_item(**item)
         await self.bot.pool.execute(
             'UPDATE profile SET trickortreat=trickortreat-1 WHERE "user"=$1;',
@@ -119,7 +138,9 @@ class Halloween(commands.Cog):
         embed.add_field(name="Damage", value=item["damage"], inline=True)
         embed.add_field(name="Armor", value=item["armor"], inline=True)
         embed.add_field(name="Value", value=f"${item['value']}", inline=False)
-        embed.set_footer(text=_("Remaining trick-or-treat bags: {bags}").format(bags=bags - 1))
+        embed.set_footer(
+            text=_("Remaining trick-or-treat bags: {bags}").format(bags=bags - 1)
+        )
         await ctx.send(embed=embed)
 
 
