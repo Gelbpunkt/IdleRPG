@@ -17,6 +17,7 @@ import psutil
 from discord.ext import commands
 from discord.ext.commands import BucketType
 
+from classes.converters import IntFromTo, IntGreaterThan
 from cogs.shard_communication import user_on_cooldown as user_cooldown
 from utils.checks import has_char
 
@@ -27,14 +28,14 @@ class Miscellaneous(commands.Cog):
 
     @commands.command()
     async def dab(self, ctx):
-        """Let's dab together."""
-        await ctx.send("No. Just no. I am a bot. What did you think?")
+        _("""Let's dab together.""")
+        await ctx.send(_("No. Just no. I am a bot. What did you think?"))
 
     @has_char()
     @user_cooldown(86400)
     @commands.command()
     async def daily(self, ctx):
-        """Receive a daily reward based on your streak."""
+        _("""Receive a daily reward based on your streak.""")
         streak = await self.bot.redis.execute("INCR", f"idle:daily:{ctx.author.id}")
         await self.bot.redis.execute(
             "EXPIRE", f"idle:daily:{ctx.author.id}", 48 * 60 * 60
@@ -44,80 +45,87 @@ class Miscellaneous(commands.Cog):
             'UPDATE profile SET money=money+$1 WHERE "user"=$2;', money, ctx.author.id
         )
         await ctx.send(
-            f"You received your daily **${money}**!\nYou are on a streak of **{streak}** days!"
+            _("You received your daily **${money}**!\nYou are on a streak of **{streak}** days!").format(money=money, streak=streak)
         )
 
     @commands.command()
     async def ping(self, ctx):
-        """My current websocket latency."""
+        _("""My current websocket latency.""")
         await ctx.send(
             embed=discord.Embed(
-                title="Pong!",
-                description=f"My current latency is {round(self.bot.latency*1000, 2)}ms",
+                title=_("Pong!"),
+                description=_("My current latency is {lat}ms").format(lat=round(self.bot.latency * 1000, 2)),
                 color=0xF1C60C,
             )
         )
 
     @commands.command(aliases=["donate"])
     async def patreon(self, ctx):
-        """Support maintenance of the bot."""
+        _("""Support maintenance of the bot.""")
         guild_count = sum(
             await self.bot.cogs["Sharding"].handler("guild_count", self.bot.shard_count)
         )
-        await ctx.send(
-            f"This bot has its own patreon page.\n\n**Why should I donate?**\nThis bot is currently on {guild_count} servers, and it is growing"
-            " fast.\nHosting this bot for all users is not easy and costs money.\nIf you want to continue using the bot or just help us, please donate a small amount.\nEven"
-            " $1 can help us.\n**Thank you!**\n\n<https://patreon.com/idlerpg>"
+        await ctx.send(_("""\
+This bot has its own patreon page.
+
+**Why should I donate?**
+This bot is currently on {guild_count} servers, and it is growing fast.
+Hosting this bot for all users is not easy and costs a lot of money.
+If you want to continue using the bot or just help us, please donate a small amount.
+Even $1 can help us.
+**Thank you!**
+
+<https://patreon.com/idlerpg>""").format(guild_count=guild_count)
         )
 
     @commands.command()
     async def invite(self, ctx):
-        """Invite link for the bot."""
+        _("""Invite link for the bot.""")
         await ctx.send(
-            f"You are running version **{self.bot.version}** by Adrian.\nInvite me! "
-            f"<https://discordapp.com/oauth2/authorize?client_id={self.bot.user.id}&scope=bot&permissions=8>"
+            _("You are running version **{version}** by Adrian.\nInvite me! {url}").format(version=self.bot.version, url=discord.utils.oauth_url(self.bot.user.id, permissions=discord.Permissions(8)))
         )
 
     @commands.command()
     async def support(self, ctx):
-        """Information on the support server."""
+        _("""Information on the support server.""")
         await ctx.send(
-            "Got problems or feature requests? Looking for people to play with? Join the support server:\nhttps://discord.gg/axBKXBv"
+            _("Got problems or feature requests? Looking for people to play with? Join the support server:\nhttps://discord.gg/axBKXBv")
         )
 
     @commands.command()
     async def stats(self, ctx):
-        """Statistics on the bot."""
+        _("""Statistics on the bot.""")
         async with self.bot.pool.acquire() as conn:
             characters = await conn.fetchval("SELECT COUNT(*) FROM profile;")
             items = await conn.fetchval("SELECT COUNT(*) FROM allitems;")
             pg_version = conn.get_server_version()
-        pg_version = f"{pg_version.major}.{pg_version.minor}.{pg_version.micro} {pg_version.releaselevel}"
+        pg_version = f"{pg_version.major}.{pg_version.micro} {pg_version.releaselevel}"
+        all_members = self.bot.get_all_members()
         total_online = len(
             {
                 m.id
-                for m in self.bot.get_all_members()
+                for m in all_members
                 if m.status is discord.Status.online
             }
         )
         total_idle = len(
             {
                 m.id
-                for m in self.bot.get_all_members()
+                for m in all_members
                 if m.status is discord.Status.idle
             }
         )
         total_dnd = len(
-            {m.id for m in self.bot.get_all_members() if m.status is discord.Status.dnd}
+            {m.id for m in all_members if m.status is discord.Status.dnd}
         )
         total_offline = len(
             {
                 m.id
-                for m in self.bot.get_all_members()
+                for m in all_members
                 if m.status is discord.Status.offline
             }
         )
-        d0 = date(2018, 3, 17)
+        d0 = self.bot.user.created_at
         d1 = date.today()
         delta = d1 - d0
         myhours = delta.days * 1.5
@@ -132,10 +140,10 @@ class Miscellaneous(commands.Cog):
         )
 
         embed = discord.Embed(
-            title="IdleRPG Statistics",
+            title=_("IdleRPG Statistics"),
             colour=0xB8BBFF,
             url=self.bot.BASE_URL,
-            description="Official Support Server Invite: https://discord.gg/MSBatf6",
+            description=_("Official Support Server Invite: https://discord.gg/MSBatf6"),
         )
         embed.set_thumbnail(url=self.bot.user.avatar_url)
         embed.set_footer(
@@ -143,39 +151,45 @@ class Miscellaneous(commands.Cog):
             icon_url=self.bot.user.avatar_url,
         )
         embed.add_field(
-            name="General Statistics (this instance only)",
+            name=_("General Statistics (this instance only)"),
             value=f"<:online:313956277808005120>{total_online}<:away:313956277220802560>{total_idle}<:dnd:313956276893646850>"
             f"{total_dnd}<:offline:313956277237710868>{total_offline}",
             inline=False,
         )
         embed.add_field(
-            name="Hosting Statistics",
-            value=f"CPU Usage: **{psutil.cpu_percent()}%**\nRAM Usage: **{psutil.virtual_memory().percent}%**\nPython Version"
-            f" **{platform.python_version()}** <:python:445247273065250817>\ndiscord.py Version **{pkg.get_distribution('discord.py').version}**\nOperating System: "
-            f"**{sysinfo[0].title()} {sysinfo[1].title()}**\nPostgreSQL Version **{pg_version}**",
+            name=_("Hosting Statistics"),
+            value=_("""\
+CPU Usage: **{cpu}%**
+RAM Usage: **{ram}%**
+Python Version **{python}** <:python:445247273065250817>
+discord.py Version **{dpy}**
+Operating System: **{osname} {osversion}**
+PostgreSQL Version **{pg_version}**""").format(cpu=psutil.cpu_percent(), ram=psutil.virtual_memory().percent, python=platform.python_version(), dpy=pkg.get_distribution('discord.py').version, osname=sysinfo[0].title(), osversion=sysinfo[1])
             inline=False,
         )
         embed.add_field(
-            name="Bot Statistics",
-            value=f"Code lines written: **{self.bot.linecount}**\nShards: **{self.bot.shard_count}**\nServers: **{guild_count}**\nMembers: "
-            f"**{len(self.bot.users)}**\nChannels: **{len(set(self.bot.get_all_channels()))}**\nCharacters: **{characters}**\nItems: **{items}**\nAverage hours of work: "
-            f"**{myhours}**",
+            name=_("Bot Statistics"),
+            value=_("""\
+Code lines written: **{lines}**
+Shards: **{shards}**
+Servers: **{guild_count}**
+Characters: **{characters}**
+Items: **{items}**
+Average hours of work: **{hours}**""").format(lines=self.bot.linecount, shards=self.bot.shard_count, guild_count=guild_count, characters=characters, items=items, hours=myhours),
             inline=False,
         )
         await ctx.send(embed=embed)
 
     @commands.command()
-    async def roll(self, ctx, maximum: int):
-        """Roll a random number."""
-        if maximum < 0:
-            return await ctx.send("Mustn't be negative!")
+    async def roll(self, ctx, maximum: IntGreaterThan(0)):
+        _("""Roll a random number.""")
         await ctx.send(
-            f":1234: You rolled **{random.randint(0,maximum)}**, {ctx.author.mention}!"
+            _(":1234: You rolled **{num}**, {author}!").format(num=random.randint(0, maximum), author=ctx.author.mention)
         )
 
     @commands.command()
     async def changelog(self, ctx):
-        """The bot's update log."""
+        _("""The bot's update log.""")
         await ctx.send(
             """
 **IdleRPG v3.5 is released :tada:**
@@ -197,27 +211,24 @@ This update had 3 focuses:
 
 *Note: This is tested mostly, but not 100%. I appreciate bug reports.*
 *GitHub folks update your forks and branches!*
-"""
+""" # not gonna translate this tbh
         )
 
     @commands.has_permissions(manage_messages=True)
     @commands.command()
-    async def clear(self, ctx, num: int, target: discord.Member = None):
-        """Deletes an amount of messages from the history, optionally only by one member."""
-        if num > 1000 or num < 0:
-            return await ctx.send("Invalid amount. Maximum is 1000.")
-
+    async def clear(self, ctx, num: IntFromTo(1, 1000), target: discord.Member = None):
+        _("""Deletes an amount of messages from the history, optionally only by one member.""")
         def msgcheck(amsg):
             if target:
                 return amsg.author.id == target.id
             return True
 
-        await ctx.channel.purge(limit=num + 1, check=msgcheck)
-        await ctx.send(f"👍 Deleted **{num}** messages for you.", delete_after=10)
+        num = len(await ctx.channel.purge(limit=num + 1, check=msgcheck))
+        await ctx.send(_("👍 Deleted **{num}** messages for you.").format(num=num), delete_after=10)
 
     @commands.command(name="8ball")
     async def _ball(self, ctx, *, question: str):
-        """The magic 8 ball answers your questions."""
+        _("""The magic 8 ball answers your questions.""")
         results = [
             "It is certain",
             "It is decidedly so",
@@ -240,11 +251,11 @@ This update had 3 focuses:
             "Outlook not so good",
             "Very doubtful",
         ]
-        await ctx.send(f"The :8ball: says: **{random.choice(results)}**.")
+        await ctx.send(_("The :8ball: says: **{result}**.").format(result=_(random.choice(results)))
 
     @commands.command(aliases=["say"])
     async def echo(self, ctx, *, phrase: str):
-        """Repeats what you said."""
+        _("""Repeats what you said.""")
         try:
             await ctx.message.delete()
         except discord.Forbidden:
@@ -253,21 +264,21 @@ This update had 3 focuses:
 
     @commands.command()
     async def choose(self, ctx, *results: str):
-        """Chooses a random option of supplied possiblies."""
+        _("""Chooses a random option of supplied possiblies.""")
         if not results:
-            return await ctx.send("Cannot choose from an empty list...")
+            return await ctx.send(_("Cannot choose from an empty list..."))
         results = list(filter(lambda a: a.lower() != "or", results))
         await ctx.send(
-            f"My choice is: **{random.choice(results)}**.", escape_mentions=True
+            _("My choice is: **{result}**.").format(result=random.choice(results)), escape_mentions=True
         )
 
     @commands.guild_only()
     @commands.command()
     async def love(self, ctx, first: discord.Member, second: discord.Member):
-        """Calculates the potential love for 2 members."""
+        _("""Calculates the potential love for 2 members.""")
         msg = await ctx.send(
             embed=discord.Embed(
-                description=f"Calculating Love for {first.mention} and {second.mention}...",
+                description=_("Calculating Love for {first} and {second}...").format(first=first.mention, second=second.mention),
                 color=0xFF0000,
             )
         )
@@ -278,15 +289,15 @@ This update had 3 focuses:
         else:
             love = random.randint(1, 10000) / 100
         embed = discord.Embed(
-            title="Love Calculation",
-            description=f"Love for {first.mention} and {second.mention} is at **{love}%**! ❤",
+            title=_("Love Calculation"),
+            description=_("Love for {first} and {second} is at **{love}%**! ❤").format(first=first.mention, second=second.mention, love=love),
             color=0xFF0000,
         )
         await msg.edit(embed=embed)
 
     @commands.command()
     async def fancy(self, ctx, *, text: str):
-        """Fancies text with big emojis."""
+        _("""Fancies text with big emojis.""")
         nums = [
             "zero",
             "one",
@@ -311,7 +322,7 @@ This update had 3 focuses:
 
     @commands.command()
     async def meme(self, ctx):
-        """A random bad meme."""
+        _("""A random bad meme.""")
         async with self.bot.session.get(
             f"https://some-random-api.ml/meme?lol={random.randint(1,1000000)}"
         ) as resp:
@@ -323,19 +334,19 @@ This update had 3 focuses:
 
     @commands.command()
     async def dice(self, ctx, dice_type: str):
-        """Tabletop RPG-ready dice. Rolls in the ndx format (3d20 is 3 dice with 20 sides)."""
+        _("""Tabletop RPG-ready dice. Rolls in the ndx format (3d20 is 3 dice with 20 sides).""")
         try:
             dice_type = list(map(int, dice_type.split("d")))
         except ValueError:
             await ctx.send(
-                "Use the ndx format. E.g. `5d20` will roll 5 dices with 20 sides each."
+                _("Use the ndx format. E.g. `5d20` will roll 5 dices with 20 sides each.")
             )
         if len(dice_type) != 2:
-            return await ctx.send("Use the ndx format.")
+            return await ctx.send(_("Use the ndx format."))
         if dice_type[0] > 100:
-            return await ctx.send("Too many dice.")
+            return await ctx.send(_("Too many dice."))
         if dice_type[1] <= 0:
-            return await ctx.send("Dice must have at least one side.")
+            return await ctx.send(_("Dice must have at least one side."))
         results = []
         for _ in range(dice_type[0]):
             results.append(random.randint(1, dice_type[1]))
@@ -349,73 +360,73 @@ This update had 3 focuses:
         nl = "\n"
         results = [str(result) for result in results]
         await ctx.send(
-            f"```Sum: {sumall}\nAverage: {average}\nResults:\n{nl.join(results)}```"
+            _("```Sum: {sumall}\nAverage: {average}\nResults:\n{results}```").format(sumall=sumall, average=average, results=nl.join(results))
         )
 
     @commands.command()
     async def randomname(self, ctx):
-        """Sends my nickname in a random server."""
+        _("""Sends my nickname in a random server.""")
         g = random.choice(
             [g for g in self.bot.guilds if g.me.display_name != self.bot.user.name]
         )
         info = (g.me.display_name, g.name)
-        await ctx.send(f"In **{info[1]}** I am called **{info[0]}**.")
+        await ctx.send(_("In **{server}** I am called **{name}**.").format(server=info[1], name=info[0]))
 
     @commands.command()
     async def cat(self, ctx):
-        """Cat pics."""
+        _("""Cat pics.""")
         await ctx.send(
-            embed=discord.Embed(title="Meow!", color=ctx.author.color.value).set_image(
+            embed=discord.Embed(title=_("Meow!"), color=ctx.author.color.value).set_image(
                 url=f"http://thecatapi.com/api/images/get?results_per_page=1&anticache={random.randint(1,10000)}"
             )
         )
 
     @commands.command()
     async def dog(self, ctx):
-        """Dog pics."""
+        _("""Dog pics.""")
         async with self.bot.session.get(
             "https://api.thedogapi.com/v1/images/search"
         ) as r:
             res = await r.json()
         await ctx.send(
-            embed=discord.Embed(title="Wouff!", color=ctx.author.color.value).set_image(
+            embed=discord.Embed(title=_("Wouff!"), color=ctx.author.color.value).set_image(
                 url=res[0]["url"]
             )
         )
 
     @commands.command()
     async def uptime(self, ctx):
-        """Shows how long the bot is connected to Discord already."""
-        await ctx.send(f"I am online for **{str(self.bot.uptime).split('.')[0]}**.")
+        _("""Shows how long the bot is connected to Discord already.""")
+        await ctx.send(_("I am online for **{time}**.").format(time=str(self.bot.uptime).split('.')[0]))
 
     @commands.command(hidden=True)
     async def easteregg(self, ctx):
-        """Every good software has an Easter egg."""
-        await ctx.send("Find it!")
+        _("""Every good software has an Easter egg.""")
+        await ctx.send(_("Find it!"))
 
     @commands.guild_only()
     @commands.command()
     async def cookie(self, ctx, user: discord.Member):
-        """Gives a cookie to a user."""
+        _("""Gives a cookie to a user.""")
         await ctx.send(
-            f"**{user.display_name}**, you've been given a cookie by **{ctx.author.display_name}**. :cookie:"
+            _("**{user}**, you've been given a cookie by **{author}**. :cookie:").format(author=ctx.disp, user=user.display_name)
         )
 
     @commands.guild_only()
     @commands.command(aliases=["ice-cream"])
     async def ice(self, ctx, other: discord.Member):
-        """Gives ice cream to a user."""
-        await ctx.send(f"{other.mention}, here is your ice: :ice_cream:!")
+        _("""Gives ice cream to a user.""")
+        await ctx.send(_("{other}, here is your ice: :ice_cream:!").format(other=other.mention))
 
     @commands.guild_only()
     @commands.cooldown(1, 20, BucketType.channel)
     @commands.command()
     async def guess(self, ctx):
-        """User guessing game."""
+        _("""User guessing game.""")
         m = random.choice(ctx.guild.members)
         em = discord.Embed(
-            title="Can you guess who this is?",
-            description=f"Their discriminant is `#{m.discriminator}`",
+            title=_("Can you guess who this is?"),
+            description=_("Their discriminant is `#{disc}`").format(disc=m.discriminator),
             color=m.color,
         )
         em.set_image(url=m.avatar_url)
@@ -429,12 +440,12 @@ This update had 3 focuses:
         try:
             msg = await self.bot.wait_for("message", check=check, timeout=20)
         except asyncio.TimeoutError:
-            return await ctx.send(f"You didn't guess correctly! It was `{m}`!")
-        await ctx.send(f"{msg.author.mention}, you are correct!")
+            return await ctx.send(_("You didn't guess correctly! It was `{member}`!").format(member=m))
+        await ctx.send(_("{user}, you are correct!").format(user=msg.author.mention))
 
     @commands.command(aliases=["yn"])
     async def yesno(self, ctx, *, question: str):
-        """An alternative to 8ball, but has more bitchy answers."""
+        _("""An alternative to 8ball, but has more bitchy answers.""")
         async with self.bot.session.get("http://gelbpunkt.troet.org/api/") as r:
             res = await r.json()
         em = discord.Embed(
@@ -446,15 +457,15 @@ This update had 3 focuses:
 
     @commands.command()
     async def partners(self, ctx):
-        """Awesome bots by other coffee-drinking individuals."""
+        _("""Awesome bots by other coffee-drinking individuals.""")
         em = discord.Embed(
-            title="Partnered Bots",
-            description="Awesome bots made by other people!",
+            title=_("Partnered Bots"),
+            description=_("Awesome bots made by other people!"),
             colour=discord.Colour.blurple(),
         )
         em.add_field(
             name="GamesROB",
-            value="Trivia, Hangman, Minesweeper, Connect 4 and more, right from your chat! A bot offering non-RPG games made by deprilula28 and Fin.\n[discordbots.org Page](https://discordbots.org/bot/gamesrob)",
+            value=_("Trivia, Hangman, Minesweeper, Connect 4 and more, right from your chat! A bot offering non-RPG games made by deprilula28 and Fin.\n[discordbots.org Page](https://discordbots.org/bot/gamesrob)"),
         )
         await ctx.send(embed=em)
 
