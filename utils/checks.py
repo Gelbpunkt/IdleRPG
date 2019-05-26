@@ -179,6 +179,17 @@ def is_no_guild_leader():
     return commands.check(predicate)
 
 
+def is_class(class_):
+    """Checks for a user to be in a class line."""
+    async def predicate(ctx):
+        ret = await ctx.bot.pool.fetchval(
+            'SELECT class FROM profile WHERE "user"=$1;', ctx.author.id
+        )
+        return ctx.bot.in_class_line(ret, class_)
+
+    return commands.check(predicate)
+
+
 # TODO: Pass context here and assign there?
 
 
