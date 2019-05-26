@@ -16,12 +16,18 @@ class Locale(commands.Cog):
 
     async def set_locale(self, user, locale):
         """Sets the locale for a user."""
-        await self.bot.pool.execute('INSERT INTO user_settings ("user", "locale") VALUES ($1, $2) ON CONFLICT DO UPDATE SET "locale"=$2 WHERE "user"=$1;', user.id, locale)
-        self.bot.locale_cache[user.id] = locale 
+        await self.bot.pool.execute(
+            'INSERT INTO user_settings ("user", "locale") VALUES ($1, $2) ON CONFLICT DO UPDATE SET "locale"=$2 WHERE "user"=$1;',
+            user.id,
+            locale,
+        )
+        self.bot.locale_cache[user.id] = locale
 
     async def get_locale(self, user):
         """Gets the locale for a user from DB."""
-        return await self.bot.pool.fetchval('SELECT "locale" FROM user_settings WHERE "user"=$1;', user.id)
+        return await self.bot.pool.fetchval(
+            'SELECT "locale" FROM user_settings WHERE "user"=$1;', user.id
+        )
 
     async def locale(self, message):
         user = message.author
@@ -44,6 +50,7 @@ class Locale(commands.Cog):
             return await ctx.send(_("Not a valid language."))
         await self.set_locale(ctx.author, locale)
         await ctx.message.add_reaction("\U00002705")
+
 
 def setup(bot):
     bot.add_cog(Locale(bot))
