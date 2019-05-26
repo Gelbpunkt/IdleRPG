@@ -23,7 +23,7 @@ class Trading(commands.Cog):
     @has_char()
     @commands.command()
     async def sell(self, ctx, itemid: int, price: IntGreaterThan(-1)):
-        """Puts an item into the player store."""
+        _("""Puts an item into the player store.""")
         async with self.bot.pool.acquire() as conn:
             item = await conn.fetchrow(
                 "SELECT * FROM inventory i JOIN allitems ai ON (i.item=ai.id) WHERE ai.id=$1 AND ai.owner=$2;",
@@ -31,14 +31,14 @@ class Trading(commands.Cog):
                 ctx.author.id,
             )
             if not item:
-                return await ctx.send(f"You don't own an item with the ID: {itemid}")
+                return await ctx.send(_("You don't own an item with the ID: {itemid}").format(itemid=itemid))
             if item["damage"] < 4 and item["armor"] < 4:
                 return await ctx.send(
-                    "Your item is either equal to a Starter Item or worse. Noone would buy it."
+                    _("Your item is either equal to a Starter Item or worse. Noone would buy it.")
                 )
             elif price > item["value"] * 1000:
                 return await ctx.send(
-                    f"Your price is too high. Try adjusting it to be up to `{item[6] * 1000}`."
+                    _("Your price is too high. Try adjusting it to be up to `{limit}`.").format(limit=item[6] * 1000)
                 )
             await conn.execute(
                 "DELETE FROM inventory i USING allitems ai WHERE i.item=ai.id AND ai.id=$1 AND ai.owner=$2;",
@@ -49,13 +49,13 @@ class Trading(commands.Cog):
                 "INSERT INTO market (item, price) VALUES ($1, $2);", itemid, price
             )
         await ctx.send(
-            f"Successfully added your item to the shop! Use `{ctx.prefix}shop` to view it in the market!"
+            _("Successfully added your item to the shop! Use `{prefix}shop` to view it in the market!").format(prefix=ctx.prefix)
         )
 
     @has_char()
     @commands.command(aliases=["b"])
     async def buy(self, ctx, itemid: int):
-        """Buys an item from the global market."""
+        _("""Buys an item from the global market.""")
         async with self.bot.pool.acquire() as conn:
             item = await conn.fetchrow(
                 "SELECT * FROM market m JOIN allitems ai ON (m.item=ai.id) WHERE ai.id=$1;",
@@ -63,10 +63,10 @@ class Trading(commands.Cog):
             )
             if not item:
                 return await ctx.send(
-                    f"There is no item in the shop with the ID: {itemid}"
+                    _("There is no item in the shop with the ID: {itemid}").format(itemid=itemid)
                 )
             if ctx.character_data["money"] < item["price"]:
-                return await ctx.send("You're too poor to buy this item.")
+                return await ctx.send(_("You're too poor to buy this item."))
             await conn.execute(
                 "DELETE FROM market m USING allitems ai WHERE m.item=ai.id AND ai.id=$1 RETURNING *;",
                 itemid,
@@ -90,18 +90,18 @@ class Trading(commands.Cog):
                 False,
             )
         await ctx.send(
-            f"Successfully bought item `{item['id']}`. Use `{ctx.prefix}inventory` to view your updated inventory."
+            _("Successfully bought item `{id}`. Use `{prefix}inventory` to view your updated inventory.").format(id=item["id"], prefix=ctx.prefix)
         )
         seller = await self.bot.get_user_global(item["owner"])
         if seller:
             await seller.send(
-                f"**{ctx.author}** bought your **{item['name']}** for **${item['price']}** from the market."
+                _("**{author}** bought your **{name}** for **${price}** from the market.").format(author=ctx.author.name, name=item["name"], price=item["price"])
             )
 
     @has_char()
     @commands.command()
     async def remove(self, ctx, itemid: int):
-        """Takes an item off the shop."""
+        _("""Takes an item off the shop.""")
         async with self.bot.pool.acquire() as conn:
             item = await conn.fetchrow(
                 "SELECT * FROM market m JOIN allitems ai ON (m.item=ai.id) WHERE ai.id=$1 AND ai.owner=$2;",
@@ -110,7 +110,7 @@ class Trading(commands.Cog):
             )
             if not item:
                 return await ctx.send(
-                    f"You don't have an item of yours in the shop with the ID `{itemid}`."
+                    _("You don't have an item of yours in the shop with the ID `{itemid}`.").format(itemid=itemid)
                 )
             await conn.execute(
                 "DELETE FROM market m USING allitems ai WHERE m.item=ai.id AND ai.id=$1 AND ai.owner=$2;",
@@ -121,19 +121,23 @@ class Trading(commands.Cog):
                 "INSERT INTO inventory (item, equipped) VALUES ($1, $2);", itemid, False
             )
         await ctx.send(
-            f"Successfully removed item `{itemid}` from the shop and put it in your inventory."
+            _("Successfully removed item `{itemid}` from the shop and put it in your inventory.").format(itemid=itemid)
         )
 
     @commands.command(aliases=["market", "m"])
     async def shop(
         self,
         ctx,
-        itemtype: str.title = "All",
+        itemtype: str.title = "Any",
         minstat: float = 0.00,
         highestprice: IntGreaterThan(-1) = 1_000_000,
     ):
-        """Show the market with all items and prices."""
-        if itemtype not in ["All", "Sword", "Shield"]:
+        _("""Show the market with all items and prices.""")
+        if itemtype == "Any": # temp fix
+            itemtype = _("All")
+        try:
+            itemtype = {_("All"): "All", _("Sword"): "Sword", _("Shield"): "Shield"}[itemtype]
+        else:
             return await ctx.send(
                 "Use either `All`, `Sword` or `Shield` as a type to filter for."
             )
@@ -159,21 +163,21 @@ class Trading(commands.Cog):
                 highestprice,
             )
         if not items:
-            return await ctx.send("No results.")
+            return await ctx.send(_("No results."))
 
         items = [
             discord.Embed(
-                title="IdleRPG Shop",
-                description=f"Use `{ctx.prefix}buy {item['item']}` to buy this.",
+                title=_("IdleRPG Shop"),
+                description=_("Use `{prefix}buy {item}` to buy this.").format(prefix=ctx.prefix, item=item["item"]),
                 colour=discord.Colour.blurple(),
             )
-            .add_field(name="Name", value=item["name"])
-            .add_field(name="Type", value=item["type"])
-            .add_field(name="Damage", value=item["damage"])
-            .add_field(name="Armor", value=item["armor"])
-            .add_field(name="Value", value=f"${item['value']}")
-            .add_field(name="Price", value=f"${item['price']}")
-            .set_footer(text=f"Item {idx + 1} of {len(items)}")
+            .add_field(name=_("Name"), value=item["name"])
+            .add_field(name=_("Type"), value=item["type"])
+            .add_field(name=_("Damage"), value=item["damage"])
+            .add_field(name=_("Armor"), value=item["armor"])
+            .add_field(name=_("Value"), value=f"${item['value']}")
+            .add_field(name=_("Price"), value=f"${item['price']}")
+            .set_footer(text=_("Item {num} of {total}").format(num=idx + 1, total=len(items)))
             for idx, item in enumerate(items)
         ]
 
@@ -185,30 +189,30 @@ class Trading(commands.Cog):
     async def offer(
         self, ctx, itemid: int, price: IntFromTo(0, 100_000_000), user: discord.Member
     ):
-        """Offer an item to a specific user."""
+        _("""Offer an item to a specific user.""")
         item = await self.bot.pool.fetchrow(
             "SELECT * FROM inventory i JOIN allitems ai ON (i.item=ai.id) WHERE ai.id=$1 AND ai.owner=$2;",
             itemid,
             ctx.author.id,
         )
         if not item:
-            return await ctx.send(f"You don't have an item with the ID `{itemid}`.")
+            return await ctx.send(_("You don't have an item with the ID `{itemid}`.").format(itemid=itemid))
 
         if item["equipped"]:
             if not await ctx.confirm(
-                f"Are you sure you want to sell your equipped {item['name']}?"
+                _("Are you sure you want to sell your equipped {item}?").format(item=item["name"])
             ):
-                await ctx.send("Item selling cancelled.")
+                await ctx.send(_("Item selling cancelled."))
 
         if not await ctx.confirm(
-            f"{user.mention}, {ctx.author.mention} offered you an item! React to buy it! The price is **${price}**. You have **2 Minutes** to accept the trade or the offer will be canceled.",
+            _("{user}, {author} offered you an item! React to buy it! The price is **${price}**. You have **2 Minutes** to accept the trade or the offer will be canceled.").format(user=user.mention, author=ctx.author.mention, price=price),
             user=user,
             timeout=120,
         ):
-            return await ctx.send("They didn't want it.")
+            return await ctx.send(_("They didn't want it."))
 
         if not await has_money(self.bot, user.id, price):
-            return await ctx.send(f"{user.mention}, you're too poor to buy this item!")
+            return await ctx.send(_("{user}, you're too poor to buy this item!").format(user=user.mention))
         async with self.bot.pool.acquire() as conn:
             item = await conn.fetchrow(
                 "SELECT * FROM inventory i JOIN allitems ai ON (i.item=ai.id) WHERE ai.id=$1 AND ai.owner=$2;",
@@ -217,7 +221,7 @@ class Trading(commands.Cog):
             )
             if not item:
                 return await ctx.send(
-                    f"The owner sold the item with the ID `{itemid}` in the meantime."
+                    _("The owner sold the item with the ID `{itemid}` in the meantime.").format(itemid=itemid)
                 )
             await conn.execute(
                 "UPDATE allitems SET owner=$1 WHERE id=$2;", user.id, itemid
@@ -234,14 +238,14 @@ class Trading(commands.Cog):
                 'UPDATE inventory SET "equipped"=$1 WHERE "item"=$2;', False, itemid
             )
         await ctx.send(
-            f"Successfully bought item `{itemid}`. Use `{ctx.prefix}inventory` to view your updated inventory."
+            _("Successfully bought item `{itemid}`. Use `{prefix}inventory` to view your updated inventory.").format(itemid=itemid, prefix=ctx.prefix)
         )
 
     @has_char()
     @user_cooldown(10)
     @commands.command(aliases=["merch"])
     async def merchant(self, ctx, itemid: int):
-        """Sells an item for its value."""
+        _("""Sells an item for its value.""")
         async with self.bot.pool.acquire() as conn:
             item = await conn.fetchrow(
                 "SELECT * FROM inventory i JOIN allitems ai ON (i.item=ai.id) WHERE ai.id=$1 AND ai.owner=$2;",
@@ -249,33 +253,33 @@ class Trading(commands.Cog):
                 ctx.author.id,
             )
             if not item:
-                return await ctx.send(f"You don't own an item with the ID: {itemid}")
+                return await ctx.send(_("You don't own an item with the ID: {itemid}").format(itemid=itemid))
             if item["equipped"]:
                 if not await ctx.confirm(
-                    f"Are you sure you want to sell your equipped {item['name']}?",
+                    _("Are you sure you want to sell your equipped {item}?").format(item=item["name"]),
                     timeout=6,
                 ):
-                    return await ctx.send("Cancelled.")
+                    return await ctx.send(_("Cancelled."))
             await conn.execute(
                 'UPDATE profile SET money=money+$1 WHERE "user"=$2;',
                 item["value"],
                 ctx.author.id,
             )
             await conn.execute('DELETE FROM allitems WHERE "id"=$1;', itemid)
-        await ctx.send(f"You received **${item[6]}** when selling item `{itemid}`.")
+        await ctx.send(_("You received **${money}** when selling item `{itemid}`.").format(money=item["value"], itemid=itemid))
 
     @has_char()
     @user_cooldown(1800)
     @commands.command()
     async def merchall(self, ctx):
-        """Sells all your non-equipped items for their value."""
+        _("""Sells all your non-equipped items for their value.""")
         async with self.bot.pool.acquire() as conn:
             money, count = await conn.fetchval(
                 "SELECT (sum(value), count(value)) FROM inventory i JOIN allitems ai ON (i.item=ai.id) WHERE ai.owner=$1 AND i.equipped IS FALSE;",
                 ctx.author.id,
             )
             if count == 0:
-                return await ctx.send("Nothing to merch.")
+                return await ctx.send(_("Nothing to merch."))
             await conn.execute(
                 "DELETE FROM allitems ai USING inventory i WHERE ai.id=i.item AND ai.owner=$1 AND i.equipped IS FALSE;",
                 ctx.author.id,
@@ -285,31 +289,30 @@ class Trading(commands.Cog):
                 money,
                 ctx.author.id,
             )
-        await ctx.send(f"Merched **{count}** items for **${money}**.")
+        await ctx.send(_("Merched **{count}** items for **${money}**.").format(count=count, money=money))
 
     @commands.command()
     async def pending(self, ctx):
-        """View your pending shop offers."""
-        async with self.bot.pool.acquire() as conn:
-            items = await conn.fetch(
-                'SELECT * FROM allitems ai JOIN market m ON (m.item=ai.id) WHERE ai."owner"=$1;',
-                ctx.author.id,
-            )
+        _("""View your pending shop offers.""")
+        items = await self.bot.pool.fetch(
+            'SELECT * FROM allitems ai JOIN market m ON (m.item=ai.id) WHERE ai."owner"=$1;',
+            ctx.author.id,
+        )
         if not items:
-            return await ctx.send("You don't have any pending shop offers.")
+            return await ctx.send(_("You don't have any pending shop offers."))
         items = [
             discord.Embed(
-                title="Your pending items",
-                description=f"Use `{ctx.prefix}buy {item['item']}` to buy this.",
+                title=_("Your pending items"),
+                description=_("Use `{prefix}buy {item}` to buy this.").format(prefix=ctx.prefix, item=item["item"]),
                 colour=discord.Colour.blurple(),
             )
-            .add_field(name="Name", value=item["name"])
-            .add_field(name="Type", value=item["type"])
-            .add_field(name="Damage", value=item["damage"])
-            .add_field(name="Armor", value=item["armor"])
-            .add_field(name="Value", value=f"${item['value']}")
-            .add_field(name="Price", value=f"${item['price']}")
-            .set_footer(text=f"Item {idx + 1} of {len(items)}")
+            .add_field(name=_("Name"), value=item["name"])
+            .add_field(name=_("Type"), value=item["type"])
+            .add_field(name=_("Damage"), value=item["damage"])
+            .add_field(name=_("Armor"), value=item["armor"])
+            .add_field(name=_("Value"), value=f"${item['value']}")
+            .add_field(name=_("Price"), value=f"${item['price']}")
+            .set_footer(text=_("Item {num} of {total}").format(num=idx + 1, total=len(items)))
             for idx, item in enumerate(items)
         ]
         await self.bot.paginator.Paginator(extras=items).paginate(ctx)
@@ -318,55 +321,39 @@ class Trading(commands.Cog):
     @user_cooldown(3600)
     @commands.command()
     async def trader(self, ctx):
-        """Buy items at the trader."""
-        # [type, damage, armor, value (0), name, price]
+        _("""Buy items at the trader.""")
         offers = []
         for i in range(5):
-            name = random.choice(
-                ["Normal ", "Ugly ", "Useless ", "Premade ", "Handsmith "]
+            item = await self.bot.create_random_item(
+                minstat=1,
+                maxstat=15,
+                minvalue=1,
+                maxvalue=1,
+                owner=ctx.author,
+                insert=False
             )
-            type = random.choice(["Sword", "Shield"])
-            name = (
-                name + random.choice(["Blade", "Stich", "Sword"])
-                if type == "Sword"
-                else name
-            )
-            name = (
-                name + random.choice(["Defender", "Aegis", "Buckler"])
-                if type == "Shield"
-                else name
-            )
-            damage = random.randint(1, 15) if type == "Sword" else 0
-            armor = random.randint(1, 15) if type == "Shield" else 0
-            price = armor * 50 + damage * 50
-            offers.append([type, damage, armor, 0, name, price])
+            price = item["armor"] * 50 + item["damage"] * 50
+            offers.append((item, price))
 
         offerid = await self.bot.paginator.Choose(
-            title="The Trader",
-            footer="Hit a button to buy it",
+            title=_("The Trader"),
+            footer=_("Hit a button to buy it"),
             return_index=True,
             entries=[
-                f"**{i[4]}** - {i[1] if i[0] == 'Sword' else i[2]} {'Damage' if i[0] == 'Sword' else 'Armor'} - **${i[5]}**"
+                f"**{i[0]['name']}** - {i[0]['damage'] if i[0]['type_'] == 'Sword' else i[0]['armor']} - **${i[1]}**"
                 for i in offers
             ],
         ).paginate(ctx)
 
         item = offers[offerid]
         if not await has_money(self.bot, ctx.author.id, item[5]):
-            return await ctx.send("You are too poor to buy this item.")
+            return await ctx.send(_("You are too poor to buy this item."))
         await self.bot.pool.execute(
             'UPDATE profile SET money=money-$1 WHERE "user"=$2;', item[5], ctx.author.id
         )
-        await self.bot.create_item(
-            type_=item[0],
-            damage=item[1],
-            armor=item[2],
-            value=item[3],
-            name=item[4],
-            owner=ctx.author,
-        )
+        await self.bot.create_item(**item[0])
         await ctx.send(
-            f"Successfully bought offer **{offerid+1}**. Use `{ctx.prefix}inventory` to view your updated inventory."
+            _("Successfully bought offer **{offer}**. Use `{prefix}inventory` to view your updated inventory.").format(offer=offerid + 1, prefix=ctx.prefix)
         )
 
 
