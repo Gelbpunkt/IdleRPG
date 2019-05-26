@@ -161,7 +161,7 @@ Caretaker->  Trainer   ->  Bowman      -> Hunter         ->  Ranger
     @user_cooldown(3600)
     @commands.command()
     async def steal(self, ctx):
-        _("[Thief Only] Steal money!")
+        _("""[Thief Only] Steal money!""")
         if secrets.randbelow(100) in range(
             1, self.bot.get_class_grade(ctx.character_data["class"]) * 8 + 1
         ):
