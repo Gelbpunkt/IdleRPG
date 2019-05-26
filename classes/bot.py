@@ -229,6 +229,9 @@ class Bot(commands.AutoShardedBot):
             return await self.create_item(**item)
         return item
 
+    def in_class_line(self, class_, line):
+        return self.get_class_line(class_) == line
+
     def get_class_line(self, class_):
         if class_ in ["Mage", "Wizard", "Pyromancer", "Elementalist", "Dark Caster"]:
             return "Mage"
@@ -242,3 +245,43 @@ class Bot(commands.AutoShardedBot):
             return "Paragon"
         else:
             return "None"
+
+    def get_class_evolves(self):
+        return {
+            "Mage": ["Wizard", "Pyromancer", "Elementalist", "Dark Caster"],
+            "Thief": ["Rogue", "Chunin", "Renegade", "Assassin"],
+            "Warrior": ["Swordsman", "Knight", "Warlord", "Berserker"],
+            "Paragon": ["Proficient", "Artisan", "Master", "Paragon"],
+            "Ranger": ["Trainer", "Bowman", "Hunter", "Ranger"],
+        }
+
+    def get_class_grade(self, class_):
+        if class_ in ["Mage", "Wizard", "Pyromancer", "Elementalist", "Dark Caster"]:
+            return ["Mage", "Wizard", "Pyromancer", "Elementalist", "Dark Caster"].index(class_) + 1
+        elif class_ in ["Warrior", "Swordsman", "Knight", "Warlord", "Berserker"]:
+            return ["Warrior", "Swordsman", "Knight", "Warlord", "Berserker"].index(class_) + 1
+        elif class_ in ["Thief", "Rogue", "Chunin", "Renegade", "Assassin"]:
+            return ["Thief", "Rogue", "Chunin", "Renegade", "Assassin"].index(class_) + 1
+        elif class_ in ["Caretaker", "Trainer", "Bowman", "Hunter", "Ranger"]:
+            return ["Caretaker", "Trainer", "Bowman", "Hunter", "Ranger"].index(class_) + 1
+        elif class_ in ["Novice", "Proficient", "Artisan", "Master", "Paragon"]:
+            return ["Novice", "Proficient", "Artisan", "Master", "Paragon"].index(class_) + 1
+        else:
+            return 0
+
+    async def generate_stats(self, user, damage, armor, class_=None):
+        user = user.id if isinstance(user, (discord.User, discord.Member)) else user
+        if not class_:
+            class_ = await self.pool.fetchval(
+                'SELECT class FROM profile WHERE "user"=$1;', user
+            )
+        line = self.get_class_line(class_)
+        grade = self.get_class_grade(class_)
+        if line == "Mage":
+            return (damage + grade, armor)
+        elif line == "Warrior":
+            return (damage, armor + grade)
+        elif line == "Paragon":
+            return (damage + grade, armor + grade)
+        else:
+            return (damage, armor)
