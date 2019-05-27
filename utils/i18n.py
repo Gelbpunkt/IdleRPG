@@ -10,12 +10,11 @@ Thanks to lambda and Scragly for precious help!
 """
 import builtins
 import gettext
+import os.path
 from glob import glob
 from os import getcwd
-import os.path
 
 import aiocontextvars
-
 
 BASE_DIR = getcwd()
 default_locale = "en_US"
@@ -24,20 +23,13 @@ locale_dir = "locales"
 locales = frozenset(
     map(
         os.path.basename,
-        filter(
-            os.path.isdir,
-            glob(
-                os.path.join(BASE_DIR, locale_dir, "*")
-            )
-        )
+        filter(os.path.isdir, glob(os.path.join(BASE_DIR, locale_dir, "*"))),
     )
 )
 
-translations = {
+gettext_translations = {
     locale: gettext.translation(
-        "idlerpg",
-        languages=(locale,),
-        localedir=os.path.join(BASE_DIR, locale_dir)
+        "idlerpg", languages=(locale,), localedir=os.path.join(BASE_DIR, locale_dir)
     )
     for locale in locales
 }
@@ -48,17 +40,16 @@ translations = {
 gettext_translations["en_US"] = gettext.NullTranslations()
 locales = locales | {"en_US"}
 
+
 def use_current_gettext(*args, **kwargs):
     if not gettext_translations:
         return gettext.gettext(*args, **kwargs)
 
     locale = current_locale.get()
-    return (
-        gettext_translations.get(
-            locale,
-            gettext_translations[default_locale]
-        ).gettext(*args, **kwargs)
-    )
+    return gettext_translations.get(
+        locale, gettext_translations[default_locale]
+    ).gettext(*args, **kwargs)
+
 
 current_locale = aiocontextvars.ContextVar("i18n")
 builtins._ = use_current_gettext
