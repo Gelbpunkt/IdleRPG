@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-05-27 05:10+0000\n"
+"POT-Creation-Date: 2019-05-27 12:51+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -180,15 +180,22 @@ msgstr ""
 msgid "Remaining trick-or-treat bags: {bags}"
 msgstr ""
 
-#: cogs/locale.py:43
+#: cogs/locale.py:58
 msgid "Change the bot language or view possible options."
 msgstr ""
 
-#: cogs/locale.py:48
+#: cogs/locale.py:63
+#, python-brace-format
+msgid ""
+"Your current language is **{current_locale}**. Available options: "
+"{all_locales}"
+msgstr ""
+
+#: cogs/locale.py:69
 msgid "Sets the language."
 msgstr ""
 
-#: cogs/locale.py:50
+#: cogs/locale.py:71
 msgid "Not a valid language."
 msgstr ""
 

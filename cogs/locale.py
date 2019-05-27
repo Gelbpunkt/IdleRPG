@@ -18,7 +18,9 @@ class Locale(commands.Cog):
     async def set_locale(self, user, locale):
         """Sets the locale for a user."""
         if locale == i18n.default_locale:
-            await self.bot.pool.execute('DELETE FROM user_settings WHERE "user"=$1;', user.id)
+            await self.bot.pool.execute(
+                'DELETE FROM user_settings WHERE "user"=$1;', user.id
+            )
             locale = None
         else:
             async with self.bot.pool.acquire() as conn:
@@ -56,7 +58,11 @@ class Locale(commands.Cog):
         _("""Change the bot language or view possible options.""")
         all_locales = ", ".join(i18n.locales)
         current_locale = self.bot.locale_cache[ctx.author.id] or i18n.default_locale
-        await ctx.send(_("Your current language is **{current_locale}**. Available options: {all_locales}").format(current_locale=current_locale, all_locales=all_locales))
+        await ctx.send(
+            _(
+                "Your current language is **{current_locale}**. Available options: {all_locales}"
+            ).format(current_locale=current_locale, all_locales=all_locales)
+        )
 
     @language.command(name="set")
     async def set_(self, ctx, *, locale: str):
