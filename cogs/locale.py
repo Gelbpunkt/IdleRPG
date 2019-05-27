@@ -58,7 +58,9 @@ class Locale(commands.Cog):
     async def language(self, ctx):
         _("""Change the bot language or view possible options.""")
         all_locales = ", ".join(i18n.locales)
-        current_locale = self.bot.locale_cache[ctx.author.id] or i18n.default_locale
+        current_locale = (
+            self.bot.locale_cache.get(ctx.author.id, None) or i18n.default_locale
+        )
         await ctx.send(
             _(
                 "Your current language is **{current_locale}**. Available options: {all_locales}"

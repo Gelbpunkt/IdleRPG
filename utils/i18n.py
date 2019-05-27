@@ -58,7 +58,7 @@ def i18n_docstring(func):
     try:
         tree = ast.parse(src)
     except IndentationError:
-        tree = ast.parse('class Foo:\n' + src)
+        tree = ast.parse("class Foo:\n" + src)
         tree = tree.body[0].body[0]  # ClassDef -> FunctionDef
     else:
         tree = tree.body[0]  # FunctionDef
@@ -70,7 +70,7 @@ def i18n_docstring(func):
     if not isinstance(tree, ast.Call):
         return func
 
-    if not isinstance(tree.func, ast.Name) or tree.func.id != '_':
+    if not isinstance(tree.func, ast.Name) or tree.func.id != "_":
         return func
 
     assert len(tree.args) == 1

@@ -10,7 +10,7 @@ for file in files:
         for idx, line in enumerate(stuff):
             if "@" in line and (".group" in line or ".command" in line):
                 stuff2.insert(idx + 1, "    @locale_doc")
-                done += 1 
+                done += 1
         f.seek(0)
         f.write("\n".join(stuff2))
         f.truncate()
