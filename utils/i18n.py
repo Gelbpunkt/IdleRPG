@@ -56,4 +56,5 @@ builtins._ = use_current_gettext
 
 current_locale.set(default_locale)
 
-setup = aiocontextvars.enable_inherit
+# only for <3.7
+# setup = aiocontextvars.enable_inherit

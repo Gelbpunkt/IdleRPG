@@ -17,7 +17,7 @@ class Locale(commands.Cog):
     async def set_locale(self, user, locale):
         """Sets the locale for a user."""
         await self.bot.pool.execute(
-            'INSERT INTO user_settings ("user", "locale") VALUES ($1, $2) ON CONFLICT DO UPDATE SET "locale"=$2 WHERE "user"=$1;',
+            'INSERT INTO user_settings ("user", "locale") VALUES ($1, $2) ON CONFLICT ("user", "locale") DO UPDATE SET "locale"=$2 WHERE "user"=$1;',
             user.id,
             locale,
         )
