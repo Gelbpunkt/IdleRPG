@@ -54,6 +54,7 @@ class Locale(commands.Cog):
         return lang
 
     @commands.group(invoke_without_command=True, aliases=["locale", "lang"])
+    @locale_doc
     async def language(self, ctx):
         _("""Change the bot language or view possible options.""")
         all_locales = ", ".join(i18n.locales)
@@ -65,6 +66,7 @@ class Locale(commands.Cog):
         )
 
     @language.command(name="set")
+    @locale_doc
     async def set_(self, ctx, *, locale: str):
         _("""Sets the language.""")
         if locale not in i18n.locales:

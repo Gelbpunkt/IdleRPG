@@ -27,6 +27,7 @@ class Miscellaneous(commands.Cog):
         self.bot = bot
 
     @commands.command()
+    @locale_doc
     async def dab(self, ctx):
         _("""Let's dab together.""")
         await ctx.send(_("No. Just no. I am a bot. What did you think?"))
@@ -34,6 +35,7 @@ class Miscellaneous(commands.Cog):
     @has_char()
     @user_cooldown(86400)
     @commands.command()
+    @locale_doc
     async def daily(self, ctx):
         _("""Receive a daily reward based on your streak.""")
         streak = await self.bot.redis.execute("INCR", f"idle:daily:{ctx.author.id}")
@@ -51,6 +53,7 @@ class Miscellaneous(commands.Cog):
         )
 
     @commands.command()
+    @locale_doc
     async def ping(self, ctx):
         _("""My current websocket latency.""")
         await ctx.send(
@@ -64,6 +67,7 @@ class Miscellaneous(commands.Cog):
         )
 
     @commands.command(aliases=["donate"])
+    @locale_doc
     async def patreon(self, ctx):
         _("""Support maintenance of the bot.""")
         guild_count = sum(
@@ -86,6 +90,7 @@ Even $1 can help us.
         )
 
     @commands.command()
+    @locale_doc
     async def invite(self, ctx):
         _("""Invite link for the bot.""")
         await ctx.send(
@@ -100,6 +105,7 @@ Even $1 can help us.
         )
 
     @commands.command()
+    @locale_doc
     async def support(self, ctx):
         _("""Information on the support server.""")
         await ctx.send(
@@ -109,6 +115,7 @@ Even $1 can help us.
         )
 
     @commands.command()
+    @locale_doc
     async def stats(self, ctx):
         _("""Statistics on the bot.""")
         async with self.bot.pool.acquire() as conn:
@@ -199,6 +206,7 @@ Average hours of work: **{hours}**"""
         await ctx.send(embed=embed)
 
     @commands.command()
+    @locale_doc
     async def roll(self, ctx, maximum: IntGreaterThan(0)):
         _("""Roll a random number.""")
         await ctx.send(
@@ -208,6 +216,7 @@ Average hours of work: **{hours}**"""
         )
 
     @commands.command()
+    @locale_doc
     async def changelog(self, ctx):
         _("""The bot's update log.""")
         await ctx.send(
@@ -236,6 +245,7 @@ This update had 3 focuses:
 
     @commands.has_permissions(manage_messages=True)
     @commands.command()
+    @locale_doc
     async def clear(self, ctx, num: IntFromTo(1, 1000), target: discord.Member = None):
         _(
             """Deletes an amount of messages from the history, optionally only by one member."""
@@ -252,6 +262,7 @@ This update had 3 focuses:
         )
 
     @commands.command(name="8ball")
+    @locale_doc
     async def _ball(self, ctx, *, question: str):
         _("""The magic 8 ball answers your questions.""")
         results = [
@@ -283,6 +294,7 @@ This update had 3 focuses:
         )
 
     @commands.command(aliases=["say"])
+    @locale_doc
     async def echo(self, ctx, *, phrase: str):
         _("""Repeats what you said.""")
         try:
@@ -292,6 +304,7 @@ This update had 3 focuses:
         await ctx.send(phrase, escape_mentions=True)
 
     @commands.command()
+    @locale_doc
     async def choose(self, ctx, *results: str):
         _("""Chooses a random option of supplied possiblies.""")
         if not results:
@@ -304,6 +317,7 @@ This update had 3 focuses:
 
     @commands.guild_only()
     @commands.command()
+    @locale_doc
     async def love(self, ctx, first: discord.Member, second: discord.Member):
         _("""Calculates the potential love for 2 members.""")
         msg = await ctx.send(
@@ -330,6 +344,7 @@ This update had 3 focuses:
         await msg.edit(embed=embed)
 
     @commands.command()
+    @locale_doc
     async def fancy(self, ctx, *, text: str):
         _("""Fancies text with big emojis.""")
         nums = [
@@ -355,6 +370,7 @@ This update had 3 focuses:
         await ctx.send(newtext)
 
     @commands.command()
+    @locale_doc
     async def meme(self, ctx):
         _("""A random bad meme.""")
         async with self.bot.session.get(
@@ -367,6 +383,7 @@ This update had 3 focuses:
             )
 
     @commands.command()
+    @locale_doc
     async def dice(self, ctx, dice_type: str):
         _(
             """Tabletop RPG-ready dice. Rolls in the ndx format (3d20 is 3 dice with 20 sides)."""
@@ -404,6 +421,7 @@ This update had 3 focuses:
         )
 
     @commands.command()
+    @locale_doc
     async def randomname(self, ctx):
         _("""Sends my nickname in a random server.""")
         g = random.choice(
@@ -417,6 +435,7 @@ This update had 3 focuses:
         )
 
     @commands.command()
+    @locale_doc
     async def cat(self, ctx):
         _("""Cat pics.""")
         await ctx.send(
@@ -428,6 +447,7 @@ This update had 3 focuses:
         )
 
     @commands.command()
+    @locale_doc
     async def dog(self, ctx):
         _("""Dog pics.""")
         async with self.bot.session.get(
@@ -441,6 +461,7 @@ This update had 3 focuses:
         )
 
     @commands.command()
+    @locale_doc
     async def uptime(self, ctx):
         _("""Shows how long the bot is connected to Discord already.""")
         await ctx.send(
@@ -450,12 +471,14 @@ This update had 3 focuses:
         )
 
     @commands.command(hidden=True)
+    @locale_doc
     async def easteregg(self, ctx):
         _("""Every good software has an Easter egg.""")
         await ctx.send(_("Find it!"))
 
     @commands.guild_only()
     @commands.command()
+    @locale_doc
     async def cookie(self, ctx, user: discord.Member):
         _("""Gives a cookie to a user.""")
         await ctx.send(
@@ -466,6 +489,7 @@ This update had 3 focuses:
 
     @commands.guild_only()
     @commands.command(aliases=["ice-cream"])
+    @locale_doc
     async def ice(self, ctx, other: discord.Member):
         _("""Gives ice cream to a user.""")
         await ctx.send(
@@ -475,6 +499,7 @@ This update had 3 focuses:
     @commands.guild_only()
     @commands.cooldown(1, 20, BucketType.channel)
     @commands.command()
+    @locale_doc
     async def guess(self, ctx):
         _("""User guessing game.""")
         m = random.choice(ctx.guild.members)
@@ -502,6 +527,7 @@ This update had 3 focuses:
         await ctx.send(_("{user}, you are correct!").format(user=msg.author.mention))
 
     @commands.command(aliases=["yn"])
+    @locale_doc
     async def yesno(self, ctx, *, question: str):
         _("""An alternative to 8ball, but has more bitchy answers.""")
         async with self.bot.session.get("http://gelbpunkt.troet.org/api/") as r:
@@ -514,6 +540,7 @@ This update had 3 focuses:
         await ctx.send(embed=em)
 
     @commands.command()
+    @locale_doc
     async def partners(self, ctx):
         _("""Awesome bots by other coffee-drinking individuals.""")
         em = discord.Embed(

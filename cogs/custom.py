@@ -21,12 +21,14 @@ class Custom(commands.Cog):
         self.bot = bot
 
     @commands.command(hidden=True)
+    @locale_doc
     async def onetruechild(self, ctx):
         _("""In loving memory of Mary Johanna, ex-developer.""")
         await ctx.send(_("His name is `#no homo` :heart:"))
 
     @is_ken()
     @commands.command(hidden=True)
+    @locale_doc
     async def ken(self, ctx, user: discord.Member):
         _("""[Ken only] Hug someone.""")
         em = discord.Embed(

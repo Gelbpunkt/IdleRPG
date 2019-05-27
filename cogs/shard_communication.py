@@ -275,6 +275,7 @@ class Sharding(commands.Cog):
         return self._messages.pop(command_id, None)  # Cleanup
 
     @commands.command(aliases=["cooldowns"])
+    @locale_doc
     async def timers(self, ctx):
         _("""Lists all your cooldowns.""")
         cooldowns = await self.bot.redis.execute("KEYS", f"cd:{ctx.author.id}:*")

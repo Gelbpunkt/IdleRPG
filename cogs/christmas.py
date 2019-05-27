@@ -53,6 +53,7 @@ class Christmas(commands.Cog):
             self.words = f.readlines()
 
     @commands.group(invoke_without_command=True)
+    @locale_doc
     async def calendar(self, ctx):
         _("""Look at your Winter Calendar""")
         today = datetime.datetime.now().day
@@ -63,6 +64,7 @@ class Christmas(commands.Cog):
     @has_char()
     @user_cooldown(86401)  # truly make sure they use it once a day
     @calendar.command(name="open")
+    @locale_doc
     async def _open(self, ctx):
         _("""Open the Winter Calendar once every day.""")
         today = datetime.datetime.now().date()
@@ -109,6 +111,7 @@ class Christmas(commands.Cog):
 
     @has_char()
     @commands.command()
+    @locale_doc
     async def combine(self, ctx):
         _("""Combine the mysterious puzzle pieces.""")
         async with self.bot.pool.acquire() as conn:
@@ -149,6 +152,7 @@ class Christmas(commands.Cog):
 
     @is_guild_officer()
     @commands.command()
+    @locale_doc
     async def snowballfight(self, ctx, enemy: discord.Member):
         _("""Make a snowball fights against another guild.""")
         if enemy is ctx.author:
@@ -392,6 +396,7 @@ Next round starts in 5 seconds!
 
     @is_guild_leader()
     @commands.command()
+    @locale_doc
     async def signup(self, ctx):
         _("""Sign up for the snowball tournament.""")
         if datetime.datetime.now().day >= 6:
@@ -414,6 +419,7 @@ Next round starts in 5 seconds!
 
     @is_admin()
     @commands.command()
+    @locale_doc
     async def makematches(self, ctx):
         _("""Makes the snowball tournament matches""")
         with open("tournament.json", "r+") as f:
@@ -429,6 +435,7 @@ Next round starts in 5 seconds!
 
     @is_admin()
     @commands.command()
+    @locale_doc
     async def result(self, ctx, guild1, guild2, winner):
         _("""Save a result of a match if it is in the tournament""")
         with open("tournament.json", "r+") as f:
@@ -458,6 +465,7 @@ Next round starts in 5 seconds!
 
     @is_admin()
     @commands.command()
+    @locale_doc
     async def forceround(self, ctx):
         _("""Enforces a new snowball round.""")
         with open("tournament.json", "r+") as f:
@@ -471,6 +479,7 @@ Next round starts in 5 seconds!
         await ctx.send(_("Round forced!"))
 
     @commands.command()
+    @locale_doc
     async def matches(self, ctx):
         _("""Shows tournament matches.""")
         with open("tournament.json", "r") as f:

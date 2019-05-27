@@ -17,6 +17,7 @@ class Store(commands.Cog):
         self.bot = bot
 
     @commands.command()
+    @locale_doc
     async def store(self, ctx):
         _("""The booster store.""")
         shopembed = discord.Embed(
@@ -38,6 +39,7 @@ class Store(commands.Cog):
 
     @has_char()
     @commands.command()
+    @locale_doc
     async def purchase(self, ctx, booster: str.lower, amount: IntGreaterThan(0) = 1):
         _("""Buy a booster from the store.""")
         conv = {_("time"): "time", _("luck"): "luck", _("money"): "money"}
@@ -62,6 +64,7 @@ class Store(commands.Cog):
 
     @has_char()
     @commands.command()
+    @locale_doc
     async def boosters(self, ctx):
         _("""View your boosters.""")
         timeboosters = ctx.character_data["time_booster"]
@@ -104,6 +107,7 @@ class Store(commands.Cog):
 
     @has_char()
     @commands.command()
+    @locale_doc
     async def activate(self, ctx, booster: str):
         _("""Activate a booster.""")
         try:

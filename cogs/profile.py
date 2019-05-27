@@ -26,6 +26,7 @@ class Profile(commands.Cog):
     @checks.has_no_char()
     @user_cooldown(3600)
     @commands.command(aliases=["new", "c", "start"])
+    @locale_doc
     async def create(self, ctx):
         _("""Creates a new character.""")
         await ctx.send(
@@ -79,6 +80,7 @@ class Profile(commands.Cog):
             await self.bot.reset_cooldown(ctx)
 
     @commands.command(aliases=["me", "p"])
+    @locale_doc
     async def profile(self, ctx, *, person: User = Author):
         _("""View someone's or your own profile.""")
         await ctx.trigger_typing()
@@ -134,6 +136,7 @@ class Profile(commands.Cog):
         await ctx.send(file=discord.File(fp=img, filename="Profile.png"))
 
     @commands.command(aliases=["p2", "pp"])
+    @locale_doc
     async def profile2(self, ctx, target: User = Author):
         _("""View someone's profile, not image based.""")
         rank_money, rank_xp = await self.bot.get_ranks_for(target)
@@ -196,6 +199,7 @@ class Profile(commands.Cog):
 
     @checks.has_char()
     @commands.command(aliases=["money", "e"])
+    @locale_doc
     async def economy(self, ctx):
         _("""Shows your balance.""")
         await ctx.send(
@@ -206,6 +210,7 @@ class Profile(commands.Cog):
 
     @checks.has_char()
     @commands.command()
+    @locale_doc
     async def xp(self, ctx):
         _("""Shows your current XP and level.""")
         points = ctx.character_data["xp"]
@@ -254,6 +259,7 @@ class Profile(commands.Cog):
 
     @checks.has_char()
     @commands.command(aliases=["inv", "i"])
+    @locale_doc
     async def inventory(self, ctx):
         _("""Shows your current inventory.""")
         async with self.bot.pool.acquire() as conn:
@@ -273,6 +279,7 @@ class Profile(commands.Cog):
 
     @checks.has_char()
     @commands.command(aliases=["use"])
+    @locale_doc
     async def equip(self, ctx, itemid: int):
         _("""Equips an item of yours by ID.""")
         async with self.bot.pool.acquire() as conn:
@@ -312,6 +319,7 @@ class Profile(commands.Cog):
     @checks.has_char()
     @user_cooldown(3600)
     @commands.command()
+    @locale_doc
     async def merge(self, ctx, firstitemid: int, seconditemid: int):
         _("""Merges two items to a better one. Second one is consumed.""")
         if firstitemid == seconditemid:
@@ -365,6 +373,7 @@ class Profile(commands.Cog):
     @checks.has_char()
     @user_cooldown(3600)
     @commands.command(aliases=["upgrade"])
+    @locale_doc
     async def upgradeweapon(self, ctx, itemid: int):
         _("""Upgrades an item's stat by 1.""")
         async with self.bot.pool.acquire() as conn:
@@ -430,6 +439,7 @@ class Profile(commands.Cog):
 
     @checks.has_char()
     @commands.command()
+    @locale_doc
     async def give(
         self, ctx, money: IntFromTo(0, 100_000_000), other: MemberWithCharacter
     ):
@@ -455,6 +465,7 @@ class Profile(commands.Cog):
 
     @checks.has_char()
     @commands.command()
+    @locale_doc
     async def rename(self, ctx):
         _("""Renames your character.""")
         await ctx.send(
@@ -481,6 +492,7 @@ class Profile(commands.Cog):
 
     @checks.has_char()
     @commands.command(aliases=["rm", "del"])
+    @locale_doc
     async def delete(self, ctx):
         _("""Deletes your character.""")
         if not await ctx.confirm(
@@ -512,6 +524,7 @@ class Profile(commands.Cog):
         )
 
     @commands.command(aliases=["color"])
+    @locale_doc
     async def colour(self, ctx, colour: str):
         _("""Sets your profile text colour.""")
         if len(colour) != 7 or not colour.startswith("#"):

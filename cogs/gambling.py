@@ -292,6 +292,7 @@ class Gambling(commands.Cog):
 
     @commands.cooldown(1, 5, commands.BucketType.user)
     @commands.command(aliases=["card"])
+    @locale_doc
     async def draw(self, ctx):
         _("""Draws a random card.""")
         await ctx.send(file=discord.File(f"assets/cards/{secrets.choice(self.cards)}"))
@@ -299,6 +300,7 @@ class Gambling(commands.Cog):
     @has_char()
     @commands.cooldown(1, 5, commands.BucketType.user)
     @commands.command(aliases=["coin"])
+    @locale_doc
     async def flip(
         self,
         ctx,
@@ -345,6 +347,7 @@ class Gambling(commands.Cog):
     @has_char()
     @commands.cooldown(1, 5, commands.BucketType.user)
     @commands.command()
+    @locale_doc
     async def bet(
         self,
         ctx,
@@ -389,6 +392,7 @@ class Gambling(commands.Cog):
     @has_char()
     @commands.cooldown(1, 15, commands.BucketType.user)
     @commands.command(aliases=["bj"])
+    @locale_doc
     async def blackjack(self, ctx, amount: IntFromTo(0, 1000) = 0):
         _(
             """[Alpha] Play blackjack against the dealer. Dealer rules, means wins in case of tie."""

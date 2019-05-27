@@ -19,6 +19,7 @@ class Admin(commands.Cog):
 
     @is_admin()
     @commands.command(aliases=["agive"], hidden=True)
+    @locale_doc
     async def admingive(self, ctx, money: int, other: UserWithCharacter):
         _("""[Bot Admin only] Gives money to a user without loss.""")
         await self.bot.pool.execute(
@@ -36,6 +37,7 @@ class Admin(commands.Cog):
 
     @is_admin()
     @commands.command(aliases=["aremove"], hidden=True)
+    @locale_doc
     async def adminremove(self, ctx, money: int, other: UserWithCharacter):
         _("""[Bot Admin only] Removes money from a user without gain.""")
         await self.bot.pool.execute(
@@ -53,6 +55,7 @@ class Admin(commands.Cog):
 
     @is_admin()
     @commands.command(aliases=["adelete"], hidden=True)
+    @locale_doc
     async def admindelete(self, ctx, other: UserWithCharacter):
         _("""[Bot Admin only] Deletes any user's account.""")
         if other.id in ctx.bot.config.admins:  # preserve deletion of admins
@@ -65,6 +68,7 @@ class Admin(commands.Cog):
 
     @is_admin()
     @commands.command(aliases=["arename"], hidden=True)
+    @locale_doc
     async def adminrename(self, ctx, target: UserWithCharacter):
         _("""[Bot Admin only] Renames a character.""")
         if target.id in ctx.bot.config.admins:  # preserve renaming of admins
@@ -98,6 +102,7 @@ class Admin(commands.Cog):
 
     @is_admin()
     @commands.command(aliases=["acrate"], hidden=True)
+    @locale_doc
     async def admincrate(self, ctx, target: UserWithCharacter, amount: int = 1):
         _("""[Bot Admin only] Gives/removes crates to a user without loss.""")
         await self.bot.pool.execute(
@@ -117,6 +122,7 @@ class Admin(commands.Cog):
 
     @is_admin()
     @commands.command(aliases=["axp"], hidden=True)
+    @locale_doc
     async def adminxp(self, ctx, target: UserWithCharacter, amount: int):
         _("""[Bot Admin only] Gives xp to a user.""")
         await self.bot.pool.execute(
@@ -134,6 +140,7 @@ class Admin(commands.Cog):
 
     @is_admin()
     @commands.command(aliases=["awipeperks"], hidden=True)
+    @locale_doc
     async def adminwipeperks(self, ctx, target: UserWithCharacter):
         _("""[Bot Admin only] Wipes someone's donator perks.""")
         async with self.bot.pool.acquire() as conn:

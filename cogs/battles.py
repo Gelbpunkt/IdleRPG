@@ -23,6 +23,7 @@ class Battles(commands.Cog):
     @has_char()
     @user_cooldown(90)
     @commands.command()
+    @locale_doc
     async def battle(
         self, ctx, money: IntGreaterThan(-1), enemy: discord.Member = None
     ):
@@ -124,6 +125,7 @@ class Battles(commands.Cog):
     @has_char()
     @user_cooldown(600)
     @commands.command()
+    @locale_doc
     async def activebattle(
         self, ctx, money: IntGreaterThan(-1), enemy: discord.Member = None
     ):

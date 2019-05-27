@@ -22,6 +22,7 @@ class Classes(commands.Cog):
     @has_char()
     @user_cooldown(86400)
     @commands.command(name="class")
+    @locale_doc
     async def _class(self, ctx):
         _("""Change your class.""")
         embeds = [
@@ -106,6 +107,7 @@ class Classes(commands.Cog):
 
     @has_char()
     @commands.command()
+    @locale_doc
     async def myclass(self, ctx):
         _("""Views your class.""")
         class_ = ctx.character_data["class"]
@@ -126,6 +128,7 @@ class Classes(commands.Cog):
 
     @has_char()
     @commands.command()
+    @locale_doc
     async def evolve(self, ctx):
         _("""Evolve to the next level of your class.""")
         level = int(rpgtools.xptolevel(ctx.character_data["xp"]))
@@ -143,6 +146,7 @@ class Classes(commands.Cog):
         await ctx.send(_("You are now a `{newclass}`.").format(newclass=newclass))
 
     @commands.command()
+    @locale_doc
     async def tree(self, ctx):
         """Evolve tree."""
         await ctx.send(
@@ -160,6 +164,7 @@ Caretaker->  Trainer   ->  Bowman      -> Hunter         ->  Ranger
     @is_class("Thief")
     @user_cooldown(3600)
     @commands.command()
+    @locale_doc
     async def steal(self, ctx):
         _("""[Thief Only] Steal money!""")
         if secrets.randbelow(100) in range(
@@ -191,6 +196,7 @@ Caretaker->  Trainer   ->  Bowman      -> Hunter         ->  Ranger
 
     @is_class("Ranger")
     @commands.command()
+    @locale_doc
     async def pet(self, ctx):
         _("""[Ranger Only] View your pet!""")
         petlvl = self.bot.get_class_grade(ctx.character_data["class"])
@@ -210,6 +216,7 @@ Caretaker->  Trainer   ->  Bowman      -> Hunter         ->  Ranger
     @is_class("Ranger")
     @user_cooldown(86400)
     @commands.command()
+    @locale_doc
     async def hunt(self, ctx):
         _("""[Ranger Only] Let your pet get a weapon for you!""")
         petlvl = self.bot.get_class_grade(ctx.character_data["class"])

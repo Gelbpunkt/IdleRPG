@@ -24,6 +24,7 @@ class Marriage(commands.Cog):
     @has_char()
     @commands.guild_only()
     @commands.command(aliases=["marry"])
+    @locale_doc
     async def propose(self, ctx, partner: MemberWithCharacter):
         _("""Propose for a marriage.""")
         if partner == ctx.author:
@@ -99,6 +100,7 @@ class Marriage(commands.Cog):
 
     @has_char()
     @commands.command()
+    @locale_doc
     async def divorce(self, ctx):
         _("""Break up with your partner.""")
         if not ctx.character_data["marriage"]:
@@ -118,6 +120,7 @@ class Marriage(commands.Cog):
 
     @has_char()
     @commands.command()
+    @locale_doc
     async def relationship(self, ctx):
         _("""View who you're married to.""")
         if not ctx.character_data["marriage"]:
@@ -129,6 +132,7 @@ class Marriage(commands.Cog):
 
     @has_char()
     @commands.command()
+    @locale_doc
     async def lovescore(self, ctx):
         _("""Views your lovescore.""")
         if ctx.character_data["marriage"]:
@@ -143,6 +147,7 @@ class Marriage(commands.Cog):
 
     @has_char()
     @commands.command()
+    @locale_doc
     async def spoil(self, ctx, item: IntFromTo(1, 40) = None):
         _("""Buy something for your spouse and increase their lovescore.""")
         items = [
@@ -233,6 +238,7 @@ class Marriage(commands.Cog):
 
     @has_char()
     @commands.command()
+    @locale_doc
     @user_cooldown(43200)
     async def date(self, ctx):
         _("""Take your loved one on a date to increase your lovescore.""")
@@ -266,6 +272,7 @@ class Marriage(commands.Cog):
     @commands.guild_only()
     @user_cooldown(3600)
     @commands.command(aliases=["fuck", "sex", "breed"])
+    @locale_doc
     async def child(self, ctx):
         _("""Make a child with your spouse.""")
         marriage = ctx.character_data["marriage"]
@@ -327,6 +334,7 @@ class Marriage(commands.Cog):
 
     @has_char()
     @commands.command()
+    @locale_doc
     async def family(self, ctx):
         _("""View your children.""")
         marriage = ctx.character_data["marriage"]
@@ -360,6 +368,7 @@ class Marriage(commands.Cog):
     @has_char()
     @user_cooldown(1800)
     @commands.command()
+    @locale_doc
     async def familyevent(self, ctx):
         _("""Events happening to your family.""")
         if not ctx.character_data["marriage"]:

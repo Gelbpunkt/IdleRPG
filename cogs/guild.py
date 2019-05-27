@@ -36,6 +36,7 @@ class Guild(commands.Cog):
 
     @has_char()
     @commands.group(invoke_without_command=True)
+    @locale_doc
     async def guild(self, ctx):
         _("""This command contains all guild-related commands.""")
         guild = await self.bot.pool.fetchrow(
@@ -87,11 +88,13 @@ class Guild(commands.Cog):
             )
 
     @guild.command()
+    @locale_doc
     async def info(self, ctx, *, name: str):
         _("""Look up a guild by name.""")
         await self.get_guild_info(ctx, name=name)
 
     @guild.command()
+    @locale_doc
     async def ladder(self, ctx):
         _("""The best GvG guilds.""")
         guilds = await self.bot.pool.fetch(
@@ -112,6 +115,7 @@ class Guild(commands.Cog):
 
     @has_guild()
     @guild.command()
+    @locale_doc
     async def members(self, ctx):
         _("""List of your guild members.""")
         members = await self.bot.pool.fetch(
@@ -134,6 +138,7 @@ class Guild(commands.Cog):
     @has_char()
     @is_guild_leader()
     @guild.command()
+    @locale_doc
     async def badge(self, ctx, number: IntGreaterThan(0)):
         _("""[Guild owner only] Change the guild badge.""")
         async with self.bot.pool.acquire() as conn:
@@ -159,6 +164,7 @@ class Guild(commands.Cog):
     @has_no_guild()
     @user_cooldown(600)
     @guild.command()
+    @locale_doc
     async def create(self, ctx):
         _("""Creates a guild.""")
 
@@ -221,6 +227,7 @@ class Guild(commands.Cog):
 
     @is_guild_leader()
     @guild.command()
+    @locale_doc
     async def promote(self, ctx, member: MemberWithCharacter):
         _("""Promote someone to the rank of officer""")
         if member == ctx.author:
@@ -240,6 +247,7 @@ class Guild(commands.Cog):
 
     @is_guild_leader()
     @guild.command()
+    @locale_doc
     async def demote(self, ctx, member: MemberWithCharacter):
         _("""Demotes someone from the officer rank""")
         if member == ctx.author:
@@ -259,6 +267,7 @@ class Guild(commands.Cog):
 
     @is_guild_officer()
     @guild.command()
+    @locale_doc
     async def invite(self, ctx, newmember: MemberWithCharacter):
         _("""[Guild officer only] Invite someone to your guild.""")
         if ctx.user_data["guild"]:
@@ -299,6 +308,7 @@ class Guild(commands.Cog):
     @has_guild()
     @is_no_guild_leader()
     @guild.command()
+    @locale_doc
     async def leave(self, ctx):
         _("""Leave your current guild.""")
         await self.bot.pool.execute(
@@ -311,6 +321,7 @@ class Guild(commands.Cog):
 
     @is_guild_officer()
     @guild.command()
+    @locale_doc
     async def kick(self, ctx, member: Union[MemberWithCharacter, int]):
         _("""[Guild Officer only] Kick someone from your guild.""")
         if hasattr(ctx, "user_data"):
@@ -340,6 +351,7 @@ class Guild(commands.Cog):
 
     @is_guild_leader()
     @guild.command()
+    @locale_doc
     async def delete(self, ctx):
         _("""[Guild Owner only] Deletes the guild.""")
         if not await ctx.confirm(
@@ -358,6 +370,7 @@ class Guild(commands.Cog):
 
     @is_guild_leader()
     @guild.command()
+    @locale_doc
     async def icon(self, ctx, url: str):
         _("""[Guild Leader only] Changes the guild icon.""")
         if len(url) > 60:
@@ -380,6 +393,7 @@ class Guild(commands.Cog):
 
     @is_guild_leader()
     @guild.command()
+    @locale_doc
     async def description(self, ctx, *, text: str):
         _("""[Guild Owner only] Changes the guild description.""")
         if len(text) > 200:
@@ -391,6 +405,7 @@ class Guild(commands.Cog):
 
     @has_guild()
     @guild.command()
+    @locale_doc
     async def richest(self, ctx):
         _("""Shows the richest players in your guild.""")
         await ctx.trigger_typing()
@@ -419,6 +434,7 @@ class Guild(commands.Cog):
 
     @has_guild()
     @guild.command(aliases=["high", "top"])
+    @locale_doc
     async def best(self, ctx):
         _("""Shows the best players of your guild by XP.""")
         await ctx.trigger_typing()
@@ -452,6 +468,7 @@ class Guild(commands.Cog):
 
     @has_guild()
     @guild.command()
+    @locale_doc
     async def invest(self, ctx, amount: IntGreaterThan(0)):
         _("""Invest some of your money and put it to the guild bank.""")
         if ctx.character_data["money"] < amount:
@@ -480,6 +497,7 @@ class Guild(commands.Cog):
 
     @is_guild_officer()
     @guild.command()
+    @locale_doc
     async def pay(self, ctx, amount: IntGreaterThan(0), member: MemberWithCharacter):
         _("""[Guild Officer only] Pay money from the guild bank to a user.""")
         async with self.bot.pool.acquire() as conn:
@@ -502,6 +520,7 @@ class Guild(commands.Cog):
 
     @is_guild_leader()
     @guild.command()
+    @locale_doc
     async def upgrade(self, ctx):
         _("""Upgrades your guild bank's capacity.""")
         async with self.bot.pool.acquire() as conn:
@@ -539,6 +558,7 @@ class Guild(commands.Cog):
     @is_guild_officer()
     @guild_cooldown(1800)
     @guild.command()
+    @locale_doc
     async def battle(
         self,
         ctx,
@@ -758,6 +778,7 @@ class Guild(commands.Cog):
     @is_guild_officer()
     @guild_cooldown(3600)
     @guild.command()
+    @locale_doc
     async def adventure(self, ctx):
         _("""Starts a guild adventure.""")
         if await self.bot.get_guild_adventure(ctx.character_data["guild"]):
@@ -839,6 +860,7 @@ Time it will take: **{time}**
 
     @has_guild()
     @guild.command()
+    @locale_doc
     async def status(self, ctx):
         _("""Views your guild adventure.""")
         adventure = await self.bot.get_guild_adventure(ctx.character_data["guild"])

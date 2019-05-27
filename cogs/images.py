@@ -116,6 +116,7 @@ class Images(commands.Cog):
                 return b
 
     @commands.command()
+    @locale_doc
     async def pixelfy(self, ctx, user: discord.Member = Author, size: int = 2):
         _("""Pixelfys an Avatar.""")
         try:
@@ -132,6 +133,7 @@ class Images(commands.Cog):
         await ctx.send(file=file)
 
     @commands.command()
+    @locale_doc
     async def edgy(self, ctx, user: discord.Member = Author):
         _("""Finds edges in an Avatar.""")
         async with self.bot.session.get(str(user.avatar_url_as(format="png"))) as r:
@@ -143,6 +145,7 @@ class Images(commands.Cog):
 
     @commands.cooldown(1, 15, BucketType.channel)
     @commands.command()
+    @locale_doc
     async def invert(self, ctx, member: discord.Member = Author):
         _("""Inverts an avatar.""")
 
@@ -155,6 +158,7 @@ class Images(commands.Cog):
 
     @commands.cooldown(1, 15, BucketType.channel)
     @commands.command(enabled=False)
+    @locale_doc
     async def oil(self, ctx, member: discord.Member = Author):
         _("""Oils an Avatar.""")
 

@@ -24,6 +24,7 @@ class Adventure(commands.Cog):
 
     @has_char()
     @commands.command(aliases=["missions", "dungeons"])
+    @locale_doc
     async def adventures(self, ctx):
         _("""A list of all adventures with success rates, name and time it takes.""")
         sword, shield = await self.bot.get_equipped_items_for(ctx.author)
@@ -61,6 +62,7 @@ class Adventure(commands.Cog):
     @has_char()
     @has_no_adventure()
     @commands.command(aliases=["mission", "a", "dungeon"])
+    @locale_doc
     async def adventure(self, ctx, dungeonnumber: IntFromTo(1, 20)):
         _("""Sends your character on an adventure.""")
         if dungeonnumber > int(rpgtools.xptolevel(ctx.character_data["xp"])):
@@ -83,6 +85,7 @@ class Adventure(commands.Cog):
     @has_no_adventure()
     @user_cooldown(3600)
     @commands.command()
+    @locale_doc
     async def activeadventure(self, ctx):
         _("""Go out on an active, action based adventure.""")
         msg = await ctx.send(_("**Active adventure loading...**"))
@@ -215,6 +218,7 @@ Use the reactions attack, defend or recover
     @has_char()
     @has_adventure()
     @commands.command(aliases=["s"])
+    @locale_doc
     async def status(self, ctx):
         _("""Checks your adventure status.""")
         num, time, done = ctx.adventure_data
@@ -340,6 +344,7 @@ Use the reactions attack, defend or recover
     @has_char()
     @has_adventure()
     @commands.command()
+    @locale_doc
     async def cancel(self, ctx):
         _("""Cancels your current adventure.""")
         await self.bot.delete_adventure(ctx.author)
@@ -351,6 +356,7 @@ Use the reactions attack, defend or recover
 
     @has_char()
     @commands.command()
+    @locale_doc
     async def deaths(self, ctx):
         _("""Your death stats.""")
         deaths, completed = await self.bot.pool.fetchval(

@@ -47,6 +47,7 @@ class Raid(commands.Cog):
     @is_admin()
     @raid_channel()
     @commands.command()
+    @locale_doc
     async def spawn(self, ctx, hp: int):
         """[Bot Admin only] Starts a raid."""
         await self.bot.session.get(
@@ -279,6 +280,7 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
     @is_admin()
     @ikhdosa_channel()
     @commands.command()
+    @locale_doc
     async def raiddefend(self, ctx, bandits: int, group: str = "I"):
         """[Bot Admin only] Starts a bandit raid in Ikhdosa."""
         await self.bot.session.get(
@@ -423,6 +425,7 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
         return sum(i * 25000 for i in range(1, int(level * 10) - 9))
 
     @commands.group(invoke_without_command=True)
+    @locale_doc
     async def increase(self, ctx):
         """Upgrade your raid damage or defense multiplier."""
         await ctx.send(
@@ -431,6 +434,7 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
 
     @has_char()
     @increase.command()
+    @locale_doc
     async def damage(self, ctx):
         """Increase your raid damage."""
         newlvl = ctx.character_data["atkmultiply"] + Decimal("0.1")
@@ -451,6 +455,7 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
 
     @has_char()
     @increase.command()
+    @locale_doc
     async def defense(self, ctx):
         """Increase your raid defense."""
         newlvl = ctx.character_data["defmultiply"] + Decimal("0.1")
@@ -471,6 +476,7 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
 
     @has_char()
     @commands.command()
+    @locale_doc
     async def raidstats(self, ctx):
         """View your raid stats."""
         atk = ctx.character_data["atkmultiply"]
@@ -482,6 +488,7 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
         )
 
     @commands.command()
+    @locale_doc
     async def raid(self, ctx):
         await ctx.send(
             f"Did you ever want to join together with other players to defeat the dragon that roams this land? Raids got you covered!\nJoin the support server (`{ctx.prefix}support`) for more information."

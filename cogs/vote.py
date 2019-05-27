@@ -13,6 +13,7 @@ class Vote(commands.Cog):
         self.bot = bot
 
     @commands.command()
+    @locale_doc
     async def vote(self, ctx):
         _("""Vote me up to get a reward!""")
         await ctx.send(

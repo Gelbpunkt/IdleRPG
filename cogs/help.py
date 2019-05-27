@@ -93,6 +93,7 @@ class Help(commands.Cog):
         self.pages = pages
 
     @commands.command()
+    @locale_doc
     async def documentation(self, ctx):
         _("""Sends a link to the official documentation.""")
         await ctx.send(
@@ -102,6 +103,7 @@ class Help(commands.Cog):
         )
 
     @commands.command(aliases=["faq"])
+    @locale_doc
     async def tutorial(self, ctx):
         """Link to the bot tutorial."""
         await ctx.send(
@@ -112,6 +114,7 @@ class Help(commands.Cog):
 
     @is_supporter()
     @commands.command()
+    @locale_doc
     async def unbanfromhelpme(self, ctx, thing_to_ban: Union[User, int]):
         _("""Unban an entitiy from using $helpme.""")
         if isinstance(thing_to_ban, discord.User):
@@ -128,6 +131,7 @@ class Help(commands.Cog):
 
     @is_supporter()
     @commands.command()
+    @locale_doc
     async def banfromhelpme(self, ctx, thing_to_ban: Union[User, int]):
         _("""Band a user from using $helpme.""")
         if isinstance(thing_to_ban, discord.User):
@@ -147,6 +151,7 @@ class Help(commands.Cog):
 
     @commands.guild_only()
     @commands.command()
+    @locale_doc
     async def helpme(self, ctx, *, text: str):
         _("""Allows a support team member to join your server for individual help.""")
         blocked = await self.bot.pool.fetchrow(
@@ -185,6 +190,7 @@ class Help(commands.Cog):
         )
 
     @commands.command()
+    @locale_doc
     async def help(
         self, ctx, *, command: commands.clean_content(escape_markdown=True) = None
     ):

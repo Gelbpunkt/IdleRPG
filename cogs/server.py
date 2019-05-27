@@ -16,6 +16,7 @@ class Server(commands.Cog):
 
     @commands.guild_only()
     @commands.command(aliases=["server"])
+    @locale_doc
     async def serverinfo(self, ctx):
         """Shows information about your server."""
         text = _("Link")
@@ -63,6 +64,7 @@ Server created at: `{created_at}`"""
 
     @commands.guild_only()
     @commands.group(invoke_without_command=True)
+    @locale_doc
     async def settings(self, ctx):
         _("""Change the settings.""")
         await ctx.send(
@@ -73,6 +75,7 @@ Server created at: `{created_at}`"""
 
     @commands.has_permissions(manage_guild=True)
     @settings.command(name="prefix")
+    @locale_doc
     async def prefix_(self, ctx, *, prefix: str):
         _("""Change the server bot prefix.""")
         if len(prefix) > 10:
@@ -99,6 +102,7 @@ Server created at: `{created_at}`"""
 
     @commands.has_permissions(manage_guild=True)
     @settings.command()
+    @locale_doc
     async def reset(self, ctx):
         _("""Resets the server settings.""")
         await self.bot.pool.execute('DELETE FROM server WHERE "id"=$1;', ctx.guild.id)
@@ -107,6 +111,7 @@ Server created at: `{created_at}`"""
 
     @commands.guild_only()
     @commands.command(aliases=["user", "member", "memberinfo"])
+    @locale_doc
     async def userinfo(self, ctx, member: discord.Member = Author):
         ticks = {
             "True": "<:check:314349398811475968>",
@@ -154,6 +159,7 @@ Server created at: `{created_at}`"""
 
     @commands.guild_only()
     @commands.command()
+    @locale_doc
     async def prefix(self, ctx):
         _("""View the bot prefix.""")
         prefix_ = self.bot.all_prefixes.get(ctx.guild.id, self.bot.config.global_prefix)
@@ -164,6 +170,7 @@ Server created at: `{created_at}`"""
         )
 
     @commands.command()
+    @locale_doc
     async def avatar(self, ctx, target: discord.Member = Author):
         _("""Shows someone's (or your) avatar.""")
         await ctx.send(

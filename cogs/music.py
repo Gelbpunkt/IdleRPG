@@ -39,6 +39,7 @@ class MusicPlayer(commands.Cog):
     # Commands
     @commands.guild_only()
     @commands.command()
+    @locale_doc
     async def play(self, ctx, *, query: str):
         _("""Play some tunes""")
         player = self.bot.lava.get_player(ctx.guild.id)
@@ -71,6 +72,7 @@ class MusicPlayer(commands.Cog):
 
     @commands.guild_only()
     @commands.command()
+    @locale_doc
     async def scsearch(self, ctx, *, query: str):
         _("""Search and play some tunes from SoundCloud""")
         player = self.bot.lava.get_player(ctx.guild.id)
@@ -93,6 +95,7 @@ class MusicPlayer(commands.Cog):
 
     @commands.guild_only()
     @commands.command(aliases=["pran", "pr", "rp", "randomplay", "ranp", "randomp"])
+    @locale_doc
     async def playrandom(self, ctx, *, query: str):
         _("""Picks a random result, and plays for you""")
         player = self.bot.lava.get_player(ctx.guild.id)
@@ -125,6 +128,7 @@ class MusicPlayer(commands.Cog):
 
     @commands.guild_only()
     @commands.command(aliases=["stop"])
+    @locale_doc
     async def leave(self, ctx):
         _("""Stops the music and leaves the channel""")
         player = self.bot.lava.get_player(ctx.guild.id)
@@ -146,6 +150,7 @@ class MusicPlayer(commands.Cog):
 
     @commands.guild_only()
     @commands.command(aliases=["q", "que", "cue"])
+    @locale_doc
     async def queue(self, ctx):
         _("""Show the next (maximum 5) tracks in the queue""")
         entries = await self.bot.redis.execute(
@@ -173,6 +178,7 @@ class MusicPlayer(commands.Cog):
 
     @commands.guild_only()
     @commands.command()
+    @locale_doc
     async def skip(self, ctx):
         _("""Skips the current song""")
         player = self.bot.lava.get_player(ctx.guild.id)
@@ -184,6 +190,7 @@ class MusicPlayer(commands.Cog):
 
     @commands.guild_only()
     @commands.command(name="volume", aliases=["vol"])
+    @locale_doc
     async def _volume(self, ctx, volume: int):
         _("""Changes the playback's volume""")
         player = self.bot.lava.get_player(ctx.guild.id)
@@ -216,6 +223,7 @@ class MusicPlayer(commands.Cog):
 
     @commands.guild_only()
     @commands.command(aliases=["resume"])
+    @locale_doc
     async def pause(self, ctx):
         _("""Toggles the music playback's paused state""")
         player = self.bot.lava.get_player(ctx.guild.id)
@@ -230,6 +238,7 @@ class MusicPlayer(commands.Cog):
 
     @commands.guild_only()
     @commands.command(aliases=["np"])
+    @locale_doc
     async def now_playing(self, ctx):
         _("""Displays some information about the current song""")
         player = self.bot.lava.get_player(ctx.guild.id)

@@ -273,6 +273,7 @@ class HungerGames(commands.Cog):
         self.games = {}
 
     @commands.command()
+    @locale_doc
     async def hungergames(self, ctx):
         _("""Starts a game of hunger games.""")
         if self.games.get(ctx.channel.id):

@@ -16,6 +16,7 @@ class Ranks(commands.Cog):
         self.bot = bot
 
     @commands.command()
+    @locale_doc
     async def richest(self, ctx):
         _("""The 10 richest players.""")
         await ctx.trigger_typing()
@@ -35,6 +36,7 @@ class Ranks(commands.Cog):
         await ctx.send(embed=result)
 
     @commands.command(aliases=["best", "high", "top"])
+    @locale_doc
     async def highscore(self, ctx):
         _("""The top 10 players by XP.""")
         await ctx.trigger_typing()
@@ -59,6 +61,7 @@ class Ranks(commands.Cog):
         await ctx.send(embed=result)
 
     @commands.command(aliases=["pvp", "battles"])
+    @locale_doc
     async def pvpstats(self, ctx):
         _("""Top 10 players by wins in PvP matches.""")
         await ctx.trigger_typing()
@@ -78,6 +81,7 @@ class Ranks(commands.Cog):
         await ctx.send(embed=result)
 
     @commands.command()
+    @locale_doc
     async def lovers(self, ctx):
         _("""The top 10 lovers sorted by their spouse's lovescore.""")
         await ctx.trigger_typing()

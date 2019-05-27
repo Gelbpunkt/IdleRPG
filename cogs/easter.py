@@ -18,6 +18,7 @@ class Easter(commands.Cog):
         self.bot = bot
 
     @commands.group(invoke_without_command=True)
+    @locale_doc
     async def easter(self, ctx):
         _(
             """Easter related commands for trading your collected eastereggs in for rewards."""
@@ -30,6 +31,7 @@ class Easter(commands.Cog):
 
     @has_char()
     @easter.command()
+    @locale_doc
     async def rewards(self, ctx):
         _("""See the rewards for easter event.""")
         await ctx.send(
@@ -55,6 +57,7 @@ You have **{eggs}** <:easteregg:566251086986608650>."""
 
     @has_char()
     @easter.command()
+    @locale_doc
     async def reward(self, ctx, reward_id: IntFromTo(1, 10)):
         _("""Get your easter reward. ID may be 1 to 10.""")
         reward = [

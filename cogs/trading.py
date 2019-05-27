@@ -20,6 +20,7 @@ class Trading(commands.Cog):
 
     @has_char()
     @commands.command()
+    @locale_doc
     async def sell(self, ctx, itemid: int, price: IntGreaterThan(-1)):
         _("""Puts an item into the player store.""")
         async with self.bot.pool.acquire() as conn:
@@ -62,6 +63,7 @@ class Trading(commands.Cog):
 
     @has_char()
     @commands.command(aliases=["b"])
+    @locale_doc
     async def buy(self, ctx, itemid: int):
         _("""Buys an item from the global market.""")
         async with self.bot.pool.acquire() as conn:
@@ -114,6 +116,7 @@ class Trading(commands.Cog):
 
     @has_char()
     @commands.command()
+    @locale_doc
     async def remove(self, ctx, itemid: int):
         _("""Takes an item off the shop.""")
         async with self.bot.pool.acquire() as conn:
@@ -143,6 +146,7 @@ class Trading(commands.Cog):
         )
 
     @commands.command(aliases=["market", "m"])
+    @locale_doc
     async def shop(
         self,
         ctx,
@@ -210,6 +214,7 @@ class Trading(commands.Cog):
     @has_char()
     @user_cooldown(180)
     @commands.command()
+    @locale_doc
     async def offer(
         self, ctx, itemid: int, price: IntFromTo(0, 100_000_000), user: discord.Member
     ):
@@ -282,6 +287,7 @@ class Trading(commands.Cog):
     @has_char()
     @user_cooldown(10)
     @commands.command(aliases=["merch"])
+    @locale_doc
     async def merchant(self, ctx, itemid: int):
         _("""Sells an item for its value.""")
         async with self.bot.pool.acquire() as conn:
@@ -319,6 +325,7 @@ class Trading(commands.Cog):
     @has_char()
     @user_cooldown(1800)
     @commands.command()
+    @locale_doc
     async def merchall(self, ctx):
         _("""Sells all your non-equipped items for their value.""")
         async with self.bot.pool.acquire() as conn:
@@ -344,6 +351,7 @@ class Trading(commands.Cog):
         )
 
     @commands.command()
+    @locale_doc
     async def pending(self, ctx):
         _("""View your pending shop offers.""")
         items = await self.bot.pool.fetch(
@@ -376,6 +384,7 @@ class Trading(commands.Cog):
     @has_char()
     @user_cooldown(3600)
     @commands.command()
+    @locale_doc
     async def trader(self, ctx):
         _("""Buy items at the trader.""")
         offers = []

@@ -20,6 +20,7 @@ class Crates(commands.Cog):
 
     @has_char()
     @commands.command(aliases=["boxes"])
+    @locale_doc
     async def crates(self, ctx):
         _("""Shows your crates.""")
         await ctx.send(
@@ -34,6 +35,7 @@ class Crates(commands.Cog):
 
     @has_char()
     @commands.command(name="open")
+    @locale_doc
     async def _open(self, ctx):
         _("""Opens a crate.""")
         if ctx.character_data["crates"] < 1:
@@ -77,6 +79,7 @@ class Crates(commands.Cog):
 
     @has_char()
     @commands.command()
+    @locale_doc
     async def tradecrate(
         self, ctx, other: MemberWithCharacter, amount: IntGreaterThan(0) = 1
     ):

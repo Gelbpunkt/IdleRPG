@@ -22,6 +22,7 @@ class Patreon(commands.Cog):
     @is_patron()
     @has_char()
     @commands.command()
+    @locale_doc
     async def weaponname(self, ctx, itemid: int, *, newname: str):
         _("""[Patreon Only] Changes an item name.""")
         if len(newname) > 40:
@@ -50,6 +51,7 @@ class Patreon(commands.Cog):
     @is_patron()
     @has_char()
     @commands.command()
+    @locale_doc
     async def background(self, ctx, url: str):
         _("""[Patreon Only] Changes your profile background.""")
         premade = [f"{self.bot.BASE_URL}/profile/premade{i}.png" for i in range(1, 14)]
@@ -85,6 +87,7 @@ class Patreon(commands.Cog):
 
     @is_patron()
     @commands.command()
+    @locale_doc
     async def makebackground(self, ctx, url: str, overlaytype: int):
         _(
             """[Patreon Only] Generates a profile background based on an image. Valid overlays are 1 or 2 for grey and black."""
@@ -123,6 +126,7 @@ class Patreon(commands.Cog):
     @is_patron()
     @is_guild_leader()
     @commands.command()
+    @locale_doc
     async def updateguild(self, ctx):
         _("""[Patreon Only] Update your guild member limit.""")
         await self.bot.pool.execute(
@@ -132,6 +136,7 @@ class Patreon(commands.Cog):
 
     @has_char()
     @commands.command()
+    @locale_doc
     async def eventbackground(self, ctx, number: int):
         _("""Update your background to one from the events.""")
         async with self.bot.pool.acquire() as conn:

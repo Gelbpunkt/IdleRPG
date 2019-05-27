@@ -26,6 +26,7 @@ class Halloween(commands.Cog):
     @checks.has_char()
     @user_cooldown(43200)
     @commands.command()
+    @locale_doc
     async def trickortreat(self, ctx):
         _("""Trick or treat!""")
         waiting = self.waiting
@@ -85,6 +86,7 @@ class Halloween(commands.Cog):
 
     @checks.has_char()
     @commands.command()
+    @locale_doc
     async def yummy(self, ctx):
         """Open a trick or treat bag."""
         # better name?
