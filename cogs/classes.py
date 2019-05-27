@@ -161,6 +161,7 @@ Caretaker->  Trainer   ->  Bowman      -> Hunter         ->  Ranger
 ```"""
         )
 
+    @has_char()
     @is_class("Thief")
     @user_cooldown(3600)
     @commands.command()
@@ -194,6 +195,7 @@ Caretaker->  Trainer   ->  Bowman      -> Hunter         ->  Ranger
         else:
             await ctx.send(_("Your attempt to steal money wasn't successful."))
 
+    @has_char()
     @is_class("Ranger")
     @commands.command()
     @locale_doc
