@@ -54,9 +54,14 @@ def use_current_gettext(*args, **kwargs):
 
 
 def i18n_docstring(func):
-    src = "\n".join([l[4:] for l in inspect.getsource(func).split("\n")])
-    orig_tree = ast.parse(src)
-    tree = orig_tree.body[0]  # the FunctionDef
+    src = inspect.getsource(func)
+    try:
+        tree = ast.parse(src)
+    except IndentationError:
+        tree = ast.parse('class Foo:\n' + src)
+        tree = tree.body[0].body[0]  # ClassDef -> FunctionDef
+    else:
+        tree = tree.body[0]  # FunctionDef
 
     if not isinstance(tree.body[0], ast.Expr):
         return func
@@ -72,7 +77,6 @@ def i18n_docstring(func):
     assert isinstance(tree.args[0], ast.Str)
 
     func.__doc__ = tree.args[0].s
-    orig_tree.body[0] = ast.Pass()
     return func
 
 
