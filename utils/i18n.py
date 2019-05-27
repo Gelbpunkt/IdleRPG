@@ -54,7 +54,7 @@ def use_current_gettext(*args, **kwargs):
 
 
 def i18n_docstring(func):
-    src = inspect.getsource(func)
+    src = "\n".join([l[4:] for l in inspect.getsource(func).split("\n")])
     orig_tree = ast.parse(src)
     tree = orig_tree.body[0]  # the FunctionDef
 
