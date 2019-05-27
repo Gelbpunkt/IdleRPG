@@ -11,12 +11,13 @@ Thanks to lambda and Scragly for precious help!
 import builtins
 import gettext
 from glob import glob
+from os import getcwd
 import os.path
 
 import aiocontextvars
 
 
-BASE_DIR = os.getcwd()
+BASE_DIR = getcwd()
 default_locale = "en_US"
 locale_dir = "locales"
 
