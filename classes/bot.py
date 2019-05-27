@@ -21,6 +21,7 @@ from discord.ext import commands
 
 import config
 from classes.context import Context
+from utils import i18n
 from utils import paginator
 
 
@@ -80,6 +81,13 @@ class Bot(commands.AutoShardedBot):
                 print(f"Failed to load extension {extension}.", file=sys.stderr)
                 traceback.print_exc()
         await self.start(self.config.token)
+
+    async def on_message(self, message):
+        if message.author.bot or message.author.id in self.bans:
+            return
+        locale = await self.get_cog("Locale").locale(message)
+        i18n.current_locale.set(locale)
+        await self.process_commands(message)
 
     @property
     def uptime(self):
