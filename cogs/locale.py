@@ -4,6 +4,7 @@ Copyright (C) 2018-2019 Diniboy and Gelbpunkt
 This software is dual-licensed under the GNU Affero General Public License for non-commercial and the Travitia License for commercial use.
 For more information, see README.md and LICENSE.md.
 """
+from asyncpg.exceptions import UniqueViolationError
 from discord.ext import commands
 
 from utils import i18n
@@ -16,11 +17,19 @@ class Locale(commands.Cog):
 
     async def set_locale(self, user, locale):
         """Sets the locale for a user."""
-        await self.bot.pool.execute(
-            'INSERT INTO user_settings ("user", "locale") VALUES ($1, $2) ON CONFLICT ("user", "locale") DO UPDATE SET "locale"=$2 WHERE "user"=$1;',
-            user.id,
-            locale,
-        )
+        async with self.bot.pool.acquire() as conn:
+            try:
+                await conn.execute(
+                    'INSERT INTO user_settings ("user", "locale") VALUES ($1, $2);',
+                    user.id,
+                    locale,
+                )
+            except UniqueViolationError:
+                await conn.execute(
+                    'UPDATE user_settings SET "locale"=$1 WHERE "user"=$2;',
+                    locale,
+                    user.id,
+                )
         self.bot.locale_cache[user.id] = locale
 
     async def get_locale(self, user):
