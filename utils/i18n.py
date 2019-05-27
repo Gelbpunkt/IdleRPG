@@ -8,8 +8,10 @@ Almost everything here is copied from
 https://github.com/EmoteCollector/bot/blob/master/emote_collector/utils/i18n.py
 Thanks to lambda and Scragly for precious help!
 """
+import ast
 import builtins
 import gettext
+import inspect
 import os.path
 from glob import glob
 from os import getcwd
@@ -51,8 +53,32 @@ def use_current_gettext(*args, **kwargs):
     ).gettext(*args, **kwargs)
 
 
+def i18n_docstring(func):
+    src = inspect.getsource(func)
+    orig_tree = ast.parse(src)
+    tree = orig_tree.body[0]  # the FunctionDef
+
+    if not isinstance(tree.body[0], ast.Expr):
+        return func
+
+    tree = tree.body[0].value
+    if not isinstance(tree, ast.Call):
+        return func
+
+    if not isinstance(tree.func, ast.Name) or tree.func.id != '_':
+        return func
+
+    assert len(tree.args) == 1
+    assert isinstance(tree.args[0], ast.Str)
+
+    func.__doc__ = tree.args[0].s
+    orig_tree.body[0] = ast.Pass()
+    return func
+
+
 current_locale = aiocontextvars.ContextVar("i18n")
 builtins._ = use_current_gettext
+builtins.locale_doc = i18n_docstring
 
 current_locale.set(default_locale)
 
