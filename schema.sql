@@ -264,6 +264,56 @@ CREATE TABLE public.server (
 ALTER TABLE public.server OWNER TO jens;
 
 --
+-- Name: transactions; Type: TABLE; Schema: public; Owner: jens
+--
+
+CREATE TABLE public.transactions (
+    id integer NOT NULL,
+    "from" bigint NOT NULL,
+    "to" bigint NOT NULL,
+    subject character varying(50) NOT NULL,
+    info character varying(200) NOT NULL,
+    "timestamp" timestamp with time zone NOT NULL
+);
+
+
+ALTER TABLE public.transactions OWNER TO jens;
+
+--
+-- Name: transactions_id_seq; Type: SEQUENCE; Schema: public; Owner: jens
+--
+
+CREATE SEQUENCE public.transactions_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.transactions_id_seq OWNER TO jens;
+
+--
+-- Name: transactions_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: jens
+--
+
+ALTER SEQUENCE public.transactions_id_seq OWNED BY public.transactions.id;
+
+
+--
+-- Name: user_settings; Type: TABLE; Schema: public; Owner: jens
+--
+
+CREATE TABLE public.user_settings (
+    "user" bigint NOT NULL,
+    locale character varying(20) NOT NULL
+);
+
+
+ALTER TABLE public.user_settings OWNER TO jens;
+
+--
 -- Name: allitems id; Type: DEFAULT; Schema: public; Owner: jens
 --
 
@@ -289,6 +339,13 @@ ALTER TABLE ONLY public.inventory ALTER COLUMN id SET DEFAULT nextval('public.in
 --
 
 ALTER TABLE ONLY public.market ALTER COLUMN id SET DEFAULT nextval('public.market_id_seq'::regclass);
+
+
+--
+-- Name: transactions id; Type: DEFAULT; Schema: public; Owner: jens
+--
+
+ALTER TABLE ONLY public.transactions ALTER COLUMN id SET DEFAULT nextval('public.transactions_id_seq'::regclass);
 
 
 --
@@ -340,6 +397,22 @@ ALTER TABLE ONLY public.profile
 
 
 --
+-- Name: transactions transactions_pkey; Type: CONSTRAINT; Schema: public; Owner: jens
+--
+
+ALTER TABLE ONLY public.transactions
+    ADD CONSTRAINT transactions_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: user_settings user_settings_pkey; Type: CONSTRAINT; Schema: public; Owner: jens
+--
+
+ALTER TABLE ONLY public.user_settings
+    ADD CONSTRAINT user_settings_pkey PRIMARY KEY ("user");
+
+
+--
 -- Name: allitems allitems_owner_fkey; Type: FK CONSTRAINT; Schema: public; Owner: jens
 --
 
@@ -369,6 +442,14 @@ ALTER TABLE ONLY public.inventory
 
 ALTER TABLE ONLY public.market
     ADD CONSTRAINT market_item_fkey FOREIGN KEY (item) REFERENCES public.allitems(id) ON DELETE CASCADE;
+
+
+--
+-- Name: user_settings user_settings_user_fkey; Type: FK CONSTRAINT; Schema: public; Owner: jens
+--
+
+ALTER TABLE ONLY public.user_settings
+    ADD CONSTRAINT user_settings_user_fkey FOREIGN KEY ("user") REFERENCES public.profile("user") ON DELETE CASCADE;
 
 
 --
