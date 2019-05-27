@@ -17,19 +17,23 @@ class Locale(commands.Cog):
 
     async def set_locale(self, user, locale):
         """Sets the locale for a user."""
-        async with self.bot.pool.acquire() as conn:
-            try:
-                await conn.execute(
-                    'INSERT INTO user_settings ("user", "locale") VALUES ($1, $2);',
-                    user.id,
-                    locale,
-                )
-            except UniqueViolationError:
-                await conn.execute(
-                    'UPDATE user_settings SET "locale"=$1 WHERE "user"=$2;',
-                    locale,
-                    user.id,
-                )
+        if locale == i18n.default_locale:
+            await self.bot.pool.execute('DELETE FROM user_settings WHERE "user"=$1;', user.id)
+            locale = None
+        else:
+            async with self.bot.pool.acquire() as conn:
+                try:
+                    await conn.execute(
+                        'INSERT INTO user_settings ("user", "locale") VALUES ($1, $2);',
+                        user.id,
+                        locale,
+                    )
+                except UniqueViolationError:
+                    await conn.execute(
+                        'UPDATE user_settings SET "locale"=$1 WHERE "user"=$2;',
+                        locale,
+                        user.id,
+                    )
         self.bot.locale_cache[user.id] = locale
 
     async def get_locale(self, user):
@@ -50,7 +54,9 @@ class Locale(commands.Cog):
     @commands.group(invoke_without_command=True, aliases=["locale", "lang"])
     async def language(self, ctx):
         _("""Change the bot language or view possible options.""")
-        await ctx.send(", ".join(i18n.locales))
+        all_locales = ", ".join(i18n.locales)
+        current_locale = self.bot.locale_cache[ctx.author.id] or i18n.default_locale
+        await ctx.send(_("Your current language is **{current_locale}**. Available options: {all_locales}").format(current_locale=current_locale, all_locales=all_locales))
 
     @language.command(name="set")
     async def set_(self, ctx, *, locale: str):
