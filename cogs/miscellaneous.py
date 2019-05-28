@@ -99,6 +99,12 @@ Even $1 can help us.
             ).format(guild_count=guild_count)
         )
 
+    @commands.command(aliases=["license"])
+    @locale_doc
+    async def source(self, ctx):
+        _("""Shows the source code and license.""")
+        await ctx.send("AGPLv3+\nhttps://github.com/Gelbpunkt/IdleRPG")
+
     @commands.command()
     @locale_doc
     async def invite(self, ctx):
@@ -231,27 +237,26 @@ Average hours of work: **{hours}**"""
     async def changelog(self, ctx):
         _("""The bot's update log.""")
         await ctx.send(
-            """
-**IdleRPG v3.5 is released :tada:**
-This update had 3 focuses:
-    - Making the source code prettier
-    - Making the bot more accessible (more reactions, less typing)
-    - Making the bot have higher performance (we got only 3 more things of this kind to do, yay!)
+            """\
+**IdleRPG v3.6 is released! :tada:!**
 
-**Soo... What's new?**
-- Guild descriptions will show up in `$guild` and `$guild info`
-- The new v5 item naming system was added (looong names will make profiles look weird though, we're working on new profiles)
-- Confirmation is now done via ticking a box
-- Active battles and adventures should be more fun due to reactions
-- Joining challenges is now also reaction-based
-- The shop and `$pending` are now embeds and paginated
-- Internally, database calls were reduced by about 25-40%
+**What's new?**
+- IdleRPG can be translated now
+- Some commands were rewritten
+- `$language` shows available languages, `$language set LANGUAGE` will change your language
+- `$source` was added
+- The bot is now no longer dual licensed, it is now only AGPLv3+
 
-**Have fun!!!** <:idlerpg:453946311524220949>
+**What's fixed?**
+A bunch
 
-*Note: This is tested mostly, but not 100%. I appreciate bug reports.*
-*GitHub folks update your forks and branches!*
-"""  # not gonna translate this tbh
+**Are there bugs?**
+Of course
+
+**How to translate?**
+Head to #translate in the support server for more information
+
+Thank you for playing IdleRPG! :heart:"""
         )
 
     @commands.has_permissions(manage_messages=True)
@@ -277,30 +282,30 @@ This update had 3 focuses:
     async def _ball(self, ctx, *, question: str):
         _("""The magic 8 ball answers your questions.""")
         results = [
-            "It is certain",
-            "It is decidedly so",
-            "Without a doubt",
-            "Yes, definitely",
-            "You may rely on it",
-            "As I see it, yes",
-            "Most likely",
-            "Outlook good",
-            "Yes",
-            "Signs point to yes",
-            "Reply hazy try again",
-            "Ask again later",
-            "Better not tell you now",
-            "Cannot predict now",
-            "Concentrate and ask again",
-            "Don't count on it",
-            "My reply is no",
-            "My sources say no",
-            "Outlook not so good",
-            "Very doubtful",
+            _("It is certain"),
+            _("It is decidedly so"),
+            _("Without a doubt"),
+            _("Yes, definitely"),
+            _("You may rely on it"),
+            _("As I see it, yes"),
+            _("Most likely"),
+            _("Outlook good"),
+            _("Yes"),
+            _("Signs point to yes"),
+            _("Reply hazy try again"),
+            _("Ask again later"),
+            _("Better not tell you now"),
+            _("Cannot predict now"),
+            _("Concentrate and ask again"),
+            _("Don't count on it"),
+            _("My reply is no"),
+            _("My sources say no"),
+            _("Outlook not so good"),
+            _("Very doubtful"),
         ]
         await ctx.send(
             _("The :8ball: says: **{result}**.").format(
-                result=_(random.choice(results))
+                result=random.choice(results)
             )
         )
 
