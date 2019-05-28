@@ -147,7 +147,7 @@ class Classes(commands.Cog):
         if ctx.character_data["class"] == "No Class":
             return await ctx.send(_("You haven't got a class yet."))
         newindex = int(level / 5) - 1
-        newclass = self.bot.get_evolves[
+        newclass = self.bot.get_class_evolves()[
             self.get.get_class_line(ctx.character_data["class"])
         ][newindex]
         await self.bot.pool.execute(
@@ -225,6 +225,7 @@ Caretaker->  Trainer   ->  Bowman      -> Hunter         ->  Ranger
         em.set_image(url=url)
         await ctx.send(embed=em)
 
+    @has_char()
     @is_class("Ranger")
     @user_cooldown(86400)
     @commands.command()
