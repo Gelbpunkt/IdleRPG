@@ -148,7 +148,7 @@ class Classes(commands.Cog):
             return await ctx.send(_("You haven't got a class yet."))
         newindex = int(level / 5) - 1
         newclass = self.bot.get_class_evolves()[
-            self.get.get_class_line(ctx.character_data["class"])
+            self.bot.get_class_line(ctx.character_data["class"])
         ][newindex]
         await self.bot.pool.execute(
             'UPDATE profile SET "class"=$1 WHERE "user"=$2;', newclass, ctx.author.id
