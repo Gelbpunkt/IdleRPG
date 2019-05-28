@@ -421,7 +421,7 @@ class Trading(commands.Cog):
         ).paginate(ctx)
 
         item = offers[offerid]
-        if not await has_money(self.bot, ctx.author.id, item[5]):
+        if not await has_money(self.bot, ctx.author.id, item[1]):
             return await ctx.send(_("You are too poor to buy this item."))
         await self.bot.pool.execute(
             'UPDATE profile SET money=money-$1 WHERE "user"=$2;', item[5], ctx.author.id
