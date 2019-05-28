@@ -376,8 +376,8 @@ class Profile(commands.Cog):
             await conn.execute('DELETE FROM allitems WHERE "id"=$1;', seconditemid)
         await ctx.send(
             _(
-                "The {stat} of your **{item}** is now **{stat + 1}**. The other item was destroyed."
-            ).format(stat=stat1[1], item=item["name"])
+                "The {stat} of your **{item}** is now **{newstat}**. The other item was destroyed."
+            ).format(stat=stat1[1], item=item["name"], newstat=stat1[1] + 1)
         )
 
     @checks.has_char()
@@ -412,7 +412,7 @@ class Profile(commands.Cog):
         if ctx.character_data["money"] < pricetopay:
             return await ctx.send(
                 _(
-                    "You are too poor to upgrade this item. The upgrade costs **${pricetopay}**, but you only have **${mondy}**."
+                    "You are too poor to upgrade this item. The upgrade costs **${pricetopay}**, but you only have **${money}**."
                 ).format(pricetopay=pricetopay, money=ctx.character_data["money"])
             )
 
