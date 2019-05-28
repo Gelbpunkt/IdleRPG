@@ -19,7 +19,7 @@ import asyncio
 import datetime
 import platform
 import random
-from datetime import date
+from datetime import datetime
 
 import discord
 import pkg_resources as pkg
@@ -143,7 +143,7 @@ Even $1 can help us.
             {m.id for m in all_members if m.status is discord.Status.offline}
         )
         d0 = self.bot.user.created_at
-        d1 = date.today()
+        d1 = datetime.now()
         delta = d1 - d0
         myhours = delta.days * 1.5
         sysinfo = platform.linux_distribution()
