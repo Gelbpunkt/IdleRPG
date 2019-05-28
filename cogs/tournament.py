@@ -24,7 +24,7 @@ from discord.ext import commands
 from classes.converters import IntFromTo
 from cogs.help import chunks
 from cogs.shard_communication import user_on_cooldown as user_cooldown
-from utils.checks import has_char, has_money
+from utils.checks import has_char, has_money, user_has_char
 
 
 class Tournament(commands.Cog):
@@ -66,7 +66,7 @@ class Tournament(commands.Cog):
                 acceptingentries = False
                 if len(participants) < 2:
                     return await ctx.send(_("Noone joined your tournament."))
-            if await has_char(self.bot, u.id):
+            if await user_has_char(self.bot, u.id):
                 participants.append(u)
                 await ctx.send(
                     _("{user} joined the tournament.").format(user=u.mention)
