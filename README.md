@@ -30,7 +30,7 @@ Summary and information taken from [here](https://tldrlegal.com/license/gnu-affe
 
 ## Can I selfhost?
 
-[Yes, as long as you provide the code for everyone.](https://github.com/Gelbpunkt/IdleRPG/blob/v3.5/LICENSE.md#13-remote-network-interaction-use-with-the-gnu-general-public-license)
+[Yes, as long as you provide the code for everyone. See section 13 of this link.](https://www.gnu.org/licenses/agpl-3.0.en.html)
 
 ## How do I test my changes?
 
