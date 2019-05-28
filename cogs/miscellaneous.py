@@ -19,7 +19,6 @@ import asyncio
 import datetime
 import platform
 import random
-from datetime import datetime
 
 import discord
 import pkg_resources as pkg
@@ -140,16 +139,14 @@ Even $1 can help us.
             pg_version = conn.get_server_version()
         pg_version = f"{pg_version.major}.{pg_version.micro} {pg_version.releaselevel}"
         all_members = set(self.bot.get_all_members())
-        total_online = sum(
-            1 for m in all_members if m.status is discord.Status.online
-        )
+        total_online = sum(1 for m in all_members if m.status is discord.Status.online)
         total_idle = sum(1 for m in all_members if m.status is discord.Status.idle)
         total_dnd = sum(1 for m in all_members if m.status is discord.Status.dnd)
         total_offline = sum(
             1 for m in all_members if m.status is discord.Status.offline
         )
         d0 = self.bot.user.created_at
-        d1 = datetime.now()
+        d1 = datetime.datetime.now()
         delta = d1 - d0
         myhours = delta.days * 1.5
         sysinfo = platform.linux_distribution()
@@ -304,9 +301,7 @@ Thank you for playing IdleRPG! :heart:"""
             _("Very doubtful"),
         ]
         await ctx.send(
-            _("The :8ball: says: **{result}**.").format(
-                result=random.choice(results)
-            )
+            _("The :8ball: says: **{result}**.").format(result=random.choice(results))
         )
 
     @commands.command(aliases=["say"])
