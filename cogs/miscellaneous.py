@@ -389,7 +389,7 @@ Thank you for playing IdleRPG! :heart:"""
         ) as resp:
             await ctx.send(
                 embed=discord.Embed(color=0x0A00FF).set_image(
-                    url=(await resp.json())["url"]
+                    url=(await resp.json())["image"]
                 )
             )
 
