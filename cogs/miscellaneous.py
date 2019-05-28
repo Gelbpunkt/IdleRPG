@@ -133,14 +133,14 @@ Even $1 can help us.
             items = await conn.fetchval("SELECT COUNT(*) FROM allitems;")
             pg_version = conn.get_server_version()
         pg_version = f"{pg_version.major}.{pg_version.micro} {pg_version.releaselevel}"
-        all_members = self.bot.get_all_members()
-        total_online = len(
-            {m.id for m in all_members if m.status is discord.Status.online}
+        all_members = set(self.bot.get_all_members())
+        total_online = sum(
+            1 for m in all_members if m.status is discord.Status.online
         )
-        total_idle = len({m.id for m in all_members if m.status is discord.Status.idle})
-        total_dnd = len({m.id for m in all_members if m.status is discord.Status.dnd})
-        total_offline = len(
-            {m.id for m in all_members if m.status is discord.Status.offline}
+        total_idle = sum(1 for m in all_members if m.status is discord.Status.idle)
+        total_dnd = sum(1 for m in all_members if m.status is discord.Status.dnd)
+        total_offline = sum(
+            1 for m in all_members if m.status is discord.Status.offline
         )
         d0 = self.bot.user.created_at
         d1 = datetime.now()
