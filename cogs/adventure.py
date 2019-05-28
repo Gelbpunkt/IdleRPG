@@ -297,7 +297,7 @@ Use the reactions attack, defend or recover
                             _(
                                 "You have completed your dungeon and received **${gold}** as well as a new weapon: **{item}**. Experience gained: **{xp}**.\nYour partner received **${gold2}**."
                             ).format(
-                                gold=gold, gold2=int(gold) / 2, item=item["name"], xp=xp
+                                gold=gold, gold2=int(gold / 2), item=item["name"], xp=xp
                             )
                         )
                     new_level = int(rpgtools.xptolevel(ctx.character_data["xp"] + xp))
