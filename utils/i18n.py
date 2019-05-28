@@ -1,8 +1,19 @@
 """
 The IdleRPG Discord Bot
 Copyright (C) 2018-2019 Diniboy and Gelbpunkt
-This software is dual-licensed under the GNU Affero General Public License for non-commercial and the Travitia License for commercial use.
-For more information, see README.md and LICENSE.md.
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU Affero General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU Affero General Public License for more details.
+
+You should have received a copy of the GNU Affero General Public License
+along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 Almost everything here is copied from
 https://github.com/EmoteCollector/bot/blob/master/emote_collector/utils/i18n.py
@@ -10,13 +21,12 @@ Thanks to lambda and Scragly for precious help!
 """
 import ast
 import builtins
+import contextvars
 import gettext
 import inspect
 import os.path
 from glob import glob
 from os import getcwd
-
-import aiocontextvars
 
 BASE_DIR = getcwd()
 default_locale = "en_US"
@@ -80,7 +90,7 @@ def i18n_docstring(func):
     return func
 
 
-current_locale = aiocontextvars.ContextVar("i18n")
+current_locale = contextvars.ContextVar("i18n")
 builtins._ = use_current_gettext
 builtins.locale_doc = i18n_docstring
 

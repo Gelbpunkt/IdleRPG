@@ -4,11 +4,9 @@ This is the code for the IdleRPG Discord Bot.
 
 You may [submit an issue](https://github.com/Gelbpunkt/IdleRPG/issues) or open pull requests at any time.
 
-The master branch is always the *latest stable* version. For development versions, check other branches please.
-
 ## License
 
-The IdleRPG Project is dual-licensed under the terms of the [GNU Affero General Public License 3.0](https://github.com/Gelbpunkt/IdleRPG/blob/v3.5/LICENSE.md) ("AGPL") for non-commercial and the Travitia License for commercial use. A copy of the AGPL can be found in the [LICENSE.md](https://github.com/Gelbpunkt/IdleRPG/blob/v3.5/LICENSE.md) file. The Travitia license can be obtained by sending a formal request to business [at] travitia \<dot\> xyz with usecase, name and address. "Commercial use" includes any kind of revenue made with or based upon the software, even donations.
+The IdleRPG Project is licensed under the terms of the [GNU Affero General Public License 3.0](https://github.com/Gelbpunkt/IdleRPG/blob/v3.6/LICENSE.md) ("AGPL").
 
 The AGPL allows you to:
 - [x] Modify the code
@@ -28,8 +26,7 @@ Summary and information taken from [here](https://tldrlegal.com/license/gnu-affe
 
 ## Current goals
 
-1. Prettify v3.5 and add anti-selfbot system (v3.5 branch)
-2. Use GNU gettext to add i18n support
+1. Prettify v3.6 and add anti-selfbot system (v3.6 branch)
 
 ## Can I selfhost?
 
