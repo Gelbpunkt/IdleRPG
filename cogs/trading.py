@@ -424,7 +424,7 @@ class Trading(commands.Cog):
         if not await has_money(self.bot, ctx.author.id, item[1]):
             return await ctx.send(_("You are too poor to buy this item."))
         await self.bot.pool.execute(
-            'UPDATE profile SET money=money-$1 WHERE "user"=$2;', item[5], ctx.author.id
+            'UPDATE profile SET money=money-$1 WHERE "user"=$2;', item[1], ctx.author.id
         )
         await self.bot.create_item(**item[0])
         await ctx.send(
