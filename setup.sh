@@ -3,8 +3,19 @@
 # The IdleRPG Discord Bot
 # Copyright (C) 2018-2019 Diniboy and Gelbpunkt
 #
-# This software is dual-licensed under the GNU Affero General Public License for non-commercial and the Travitia License for commercial use.
-# For more information, see README.md and LICENSE.md.
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU Affero General Public License as published by
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
+# 
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU Affero General Public License for more details.
+# 
+# You should have received a copy of the GNU Affero General Public License
+# along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
 
 PATTERN=".*version = \"\(.*\)\".*"
 PATTERN2=".*\"user\": \"\(.*\)\".*"
@@ -28,6 +39,7 @@ mv config.py.example config.py
 printf "Copying service file to /etc/systemd/system/idlerpg.service...\n\n"
 
 sed -i "s:/path/to/launcher.py:$(pwd)/launcher.py:" idlerpg.service
+sed -i "s:my_username:$(whoami)" idlerpg.service
 cp idlerpg.service /etc/systemd/system/idlerpg.service
 
 printf "Replacing schema username with $DBUSER...\n\n"
