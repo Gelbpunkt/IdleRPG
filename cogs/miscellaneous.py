@@ -190,6 +190,7 @@ PostgreSQL Version **{pg_version}**"""
                 dpy=pkg.get_distribution("discord.py").version,
                 osname=sysinfo[0].title(),
                 osversion=sysinfo[1],
+                pg_version=pg_version,
             ),
             inline=False,
         )
