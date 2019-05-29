@@ -160,18 +160,12 @@ class Trading(commands.Cog):
     async def shop(
         self,
         ctx,
-        itemtype: str.title = "Any",
+        itemtype: str.title = "All",
         minstat: float = 0.00,
         highestprice: IntGreaterThan(-1) = 1_000_000,
     ):
         _("""Show the market with all items and prices.""")
-        if itemtype == "Any":  # temp fix
-            itemtype = _("All")
-        try:
-            itemtype = {_("All"): "All", _("Sword"): "Sword", _("Shield"): "Shield"}[
-                itemtype
-            ]
-        except KeyError:
+        if itemtype not in ["All", "Sword", "Shield"]:
             return await ctx.send(
                 "Use either `All`, `Sword` or `Shield` as a type to filter for."
             )

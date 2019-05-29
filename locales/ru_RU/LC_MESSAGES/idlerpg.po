@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-05-29 12:17+0000\n"
-"PO-Revision-Date: 2019-05-29 15:10+0300\n"
+"POT-Creation-Date: 2019-05-29 15:31+0000\n"
+"PO-Revision-Date: 2019-05-29 17:26+0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: ru_RU\n"
@@ -114,7 +114,7 @@ msgstr "Инвертировать аватарку."
 
 #: cogs/images.py:173
 msgid "Oils an Avatar."
-msgstr "Сделать аватрку масляной."
+msgstr "Сделать аватарку масляной."
 
 #: cogs/halloween.py:41
 msgid "Trick or treat!"
@@ -180,12 +180,12 @@ msgid "ID"
 msgstr "ID"
 
 #: cogs/halloween.py:148 cogs/crates.py:78 cogs/classes.py:250
-#: cogs/adventure.py:220 cogs/trading.py:210 cogs/trading.py:381
+#: cogs/adventure.py:220 cogs/trading.py:204 cogs/trading.py:375
 msgid "Name"
 msgstr "Имя"
 
 #: cogs/halloween.py:149 cogs/crates.py:79 cogs/classes.py:251
-#: cogs/adventure.py:221 cogs/trading.py:211 cogs/trading.py:382
+#: cogs/adventure.py:221 cogs/trading.py:205 cogs/trading.py:376
 msgid "Type"
 msgstr "Тип"
 
@@ -455,17 +455,17 @@ msgid "You found a new item when opening a crate!"
 msgstr "Вы нашли новый предмет, открыв ящик!"
 
 #: cogs/crates.py:80 cogs/classes.py:253 cogs/adventure.py:222
-#: cogs/trading.py:212 cogs/trading.py:383
+#: cogs/trading.py:206 cogs/trading.py:377
 msgid "Damage"
 msgstr "Урон"
 
 #: cogs/crates.py:81 cogs/classes.py:255 cogs/adventure.py:223
-#: cogs/trading.py:213 cogs/trading.py:384
+#: cogs/trading.py:207 cogs/trading.py:378
 msgid "Armor"
 msgstr "Защита"
 
 #: cogs/crates.py:82 cogs/classes.py:256 cogs/adventure.py:224
-#: cogs/trading.py:214 cogs/trading.py:385
+#: cogs/trading.py:208 cogs/trading.py:379
 msgid "Value"
 msgstr "Стоимость"
 
@@ -688,7 +688,7 @@ msgstr "Ждём, пока {user} выберет действие..."
 
 #: cogs/hungergames.py:166
 msgid "Choose an action"
-msgstr "Выбрать действие"
+msgstr "Действие выбрано"
 
 #: cogs/hungergames.py:172
 #, python-brace-format
@@ -750,7 +750,7 @@ msgstr "Недостаточно игроков для игры."
 #: cogs/error_handler.py:58
 #, python-brace-format
 msgid "Oops! You forgot a required argument: `{arg}`"
-msgstr "Упс! Вы забыли недостающее аргумент: `{arg}`"
+msgstr "Упс! Вы забыли недостающий аргумент: `{arg}`"
 
 #: cogs/error_handler.py:63
 msgid "You used a malformed argument!"
@@ -797,7 +797,7 @@ msgid ""
 "lasts."
 msgstr ""
 "Вы уже на приключении. Используйте `{prefix}status` , чтобы увидеть, как "
-"долго оно длиться."
+"долго оно длится."
 
 #: cogs/error_handler.py:108
 #, python-brace-format
@@ -1286,7 +1286,7 @@ msgstr "Это решительно так"
 
 #: cogs/miscellaneous.py:284
 msgid "Without a doubt"
-msgstr "Без раздумий"
+msgstr "Не сомневаюсь"
 
 #: cogs/miscellaneous.py:285
 msgid "Yes, definitely"
@@ -1427,7 +1427,7 @@ msgstr "Слишком много кубиков."
 
 #: cogs/miscellaneous.py:415
 msgid "Dice must have at least one side."
-msgstr "Кубик должен иметь хоть одну сторону."
+msgstr "Кубик должен иметь по крайней мере одну сторону."
 
 #: cogs/miscellaneous.py:429
 #, python-brace-format
@@ -1500,7 +1500,7 @@ msgstr "Даёт мороженное игроку."
 #: cogs/miscellaneous.py:507
 #, python-brace-format
 msgid "{other}, here is your ice: :ice_cream:!"
-msgstr "{other}, на, держи своё :ice_cream:!"
+msgstr "{other}, держи :ice_cream:!"
 
 #: cogs/miscellaneous.py:515
 msgid "User guessing game."
@@ -1585,28 +1585,16 @@ msgstr ""
 msgid "Buy a booster from the store."
 msgstr "Купить ускоритель в магазине."
 
-#: cogs/store.py:55 cogs/store.py:124
-msgid "time"
-msgstr "время"
-
-#: cogs/store.py:55 cogs/store.py:124
-msgid "luck"
-msgstr "удача"
-
-#: cogs/store.py:55 cogs/store.py:124
-msgid "money"
-msgstr "деньги"
-
-#: cogs/store.py:59
+#: cogs/store.py:56
 msgid "Please either buy `time`, `luck` or `money`."
 msgstr "Попробуйте купить `time`, `luck` or `money` , чтобы команда сработала."
 
-#: cogs/store.py:62 cogs/gambling.py:377 cogs/gambling.py:411 cogs/guild.py:485
+#: cogs/store.py:59 cogs/gambling.py:377 cogs/gambling.py:411 cogs/guild.py:485
 #: cogs/profile.py:428
 msgid "You're too poor."
 msgstr "Вы слишком бедны."
 
-#: cogs/store.py:71
+#: cogs/store.py:68
 #, python-brace-format
 msgid ""
 "Successfully bought **{amount}** {booster} booster(s). Use `{prefix}"
@@ -1615,67 +1603,67 @@ msgstr ""
 "Вы успешно купили **{amount}** {booster} ускорителей. Используйте `{prefix}"
 "boosters` , чтобы посмотреть ваши ускорители."
 
-#: cogs/store.py:79
+#: cogs/store.py:76
 msgid "View your boosters."
 msgstr "Показывает ваши ускорители."
 
-#: cogs/store.py:87
+#: cogs/store.py:84
 #, python-brace-format
 msgid "Time booster - {time}"
 msgstr "Ускоритель времени - {time}"
 
-#: cogs/store.py:92
+#: cogs/store.py:89
 #, python-brace-format
 msgid "Luck booster - {time}"
 msgstr "Увеличение удачи - {time}"
 
-#: cogs/store.py:97
+#: cogs/store.py:94
 #, python-brace-format
 msgid "Money booster - {time}"
 msgstr "Денежный усилитель - {time}"
 
-#: cogs/store.py:102
+#: cogs/store.py:99
 msgid "Currently active"
 msgstr "Сейчас активированы"
 
-#: cogs/store.py:107
+#: cogs/store.py:104
 msgid "Time Boosters"
-msgstr "Ускорители времени"
+msgstr "Ускоритель времени"
 
-#: cogs/store.py:107
+#: cogs/store.py:104
 msgid "Luck Boosters"
-msgstr "Увеличители удачи"
+msgstr "Увеличитель удачи"
+
+#: cogs/store.py:104
+msgid "Money Boosters"
+msgstr "Денежный усилитель"
 
 #: cogs/store.py:107
-msgid "Money Boosters"
-msgstr "Денежные усилители"
-
-#: cogs/store.py:110
 msgid "Your Boosters"
 msgstr "Ваши усилители"
 
-#: cogs/store.py:114
+#: cogs/store.py:111
 #, python-brace-format
 msgid "Use {prefix}activate to activate one"
 msgstr "Используйте {prefix}activate , чтобы активировать его"
 
-#: cogs/store.py:122
+#: cogs/store.py:119
 msgid "Activate a booster."
 msgstr "Активировать ускоритель."
 
-#: cogs/store.py:129
+#: cogs/store.py:122
 msgid "That is not a valid booster type. Must be `time/luck/money`."
-msgstr "Это не правильное название ускорителя. Должно быть `time/luck/money`."
+msgstr "Не правильное название ускорителя. Должно быть `time/luck/money`."
 
-#: cogs/store.py:133
+#: cogs/store.py:126
 msgid "You don't have any of these boosters."
 msgstr "У вас нет этих ускорителей."
 
-#: cogs/store.py:136
+#: cogs/store.py:129
 msgid "This booster is already running."
 msgstr "Этот ускоритель уже использован."
 
-#: cogs/store.py:144
+#: cogs/store.py:137
 #, python-brace-format
 msgid ""
 "Successfully activated a **{booster} booster** for the next **24 hours**!"
@@ -1798,7 +1786,7 @@ msgstr "[Участник патреона] Изменение имени пре
 msgid "Name too long."
 msgstr "Имя слишком длинное."
 
-#: cogs/patreon.py:48 cogs/trading.py:239
+#: cogs/patreon.py:48 cogs/trading.py:233
 #, python-brace-format
 msgid "You don't have an item with the ID `{itemid}`."
 msgstr "У вас нету предмета с данным ID `{itemid}`."
@@ -1895,7 +1883,7 @@ msgstr "Фон обновлён!"
 
 #: cogs/classes.py:37
 msgid "Change your class."
-msgstr "Смена класса."
+msgstr "Сменить свой класс."
 
 #: cogs/classes.py:40
 msgid "Warrior"
@@ -1940,7 +1928,7 @@ msgstr ""
 
 #: cogs/classes.py:61
 msgid "Ranger"
-msgstr "Лучник"
+msgstr "Охотник"
 
 #: cogs/classes.py:63
 #, python-brace-format
@@ -1950,8 +1938,8 @@ msgid ""
 "day.\n"
 "+3 minimum stat and +6 maximum stat per evolution."
 msgstr ""
-"Охотник на предметы и дрессировщик своих собственных питомцев.\n"
-"Получи доступ к охоте `{prefix}hunt` и `{prefix}pet` ,чтобы каждый день "
+"Охотник добывает предметы и дрессировщик собственного питомца.\n"
+"Получите доступ к охоте `{prefix}hunt` и `{prefix}pet` ,чтобы каждый день "
 "получать по случайному предмету.\n"
 "+3 к минимальным статам и +6 к максимальным за каждую эволюцию."
 
@@ -1971,7 +1959,7 @@ msgstr ""
 #: cogs/classes.py:95
 #, python-brace-format
 msgid "Your new class is now `{profession}`."
-msgstr "Ваш новый класс теперь `{profession}`."
+msgstr "Ваш новый класс `{profession}`."
 
 #: cogs/classes.py:103
 msgid "You're too poor for a class change, it costs **$5000**."
@@ -1995,7 +1983,7 @@ msgstr "Картинка для вашего класса **{class_}** ещё н
 
 #: cogs/classes.py:143
 msgid "Evolve to the next level of your class."
-msgstr "Эволюционирует ваш класс."
+msgstr "Эволюционирует ваш класс на новый уровень."
 
 #: cogs/classes.py:146
 msgid "Your level isn't high enough to evolve."
@@ -2008,7 +1996,7 @@ msgstr "У вас нет класса."
 #: cogs/classes.py:156
 #, python-brace-format
 msgid "You are now a `{newclass}`."
-msgstr "Ваш новый класс `{newclass}`."
+msgstr "Ваш класс: `{newclass}`."
 
 #: cogs/classes.py:180
 msgid "[Thief Only] Steal money!"
@@ -2025,7 +2013,7 @@ msgstr "Вы попытались своровать, но попытка не �
 
 #: cogs/classes.py:213
 msgid "[Ranger Only] View your pet!"
-msgstr "[Только лучник] Показывает вашего питомца!"
+msgstr "[Только охотник Показывает вашего питомца!"
 
 #: cogs/classes.py:215
 #, python-brace-format
@@ -2038,7 +2026,7 @@ msgstr "Уровень"
 
 #: cogs/classes.py:234
 msgid "[Ranger Only] Let your pet get a weapon for you!"
-msgstr "[Только лучник] Ваш питомец приносит вам оружие!"
+msgstr "[Только охотник] Ваш питомец приносит вам оружие!"
 
 #: cogs/classes.py:245
 msgid "Your pet found an item!"
@@ -2050,7 +2038,7 @@ msgstr "Ваш питомец должен восстановиться, под�
 
 #: cogs/music.py:54
 msgid "Play some tunes"
-msgstr "Играет некоторые ноты"
+msgstr "Играет некоторую мелодию"
 
 #: cogs/music.py:72 cogs/music.py:95 cogs/music.py:128
 msgid ":warning:`No results...`"
@@ -2070,7 +2058,7 @@ msgstr "Подбирает случайный результат и проигр
 
 #: cogs/music.py:143
 msgid "Stops the music and leaves the channel"
-msgstr "Останавливает музыку и ливает из канала"
+msgstr "Останавливает музыку и выходит из канала"
 
 #: cogs/music.py:152
 msgid ":white_check_mark:` Done!`"
@@ -2282,7 +2270,7 @@ msgstr "Приключение отменено, потому что вы отк
 
 #: cogs/adventure.py:158
 msgid "You healed yourself for 20 HP."
-msgstr "Вы захилял себя на 20 HP."
+msgstr "Вы захиляли себя на 20 HP."
 
 #: cogs/adventure.py:161
 msgid "The enemy healed himself for 20 HP."
@@ -2393,7 +2381,7 @@ msgid ""
 "Approximate end in `{end}`\n"
 "Dungeon Name: `{dungeon}`"
 msgstr ""
-"Сейчас вы на приключение с сложностью `{difficulty}`.\n"
+"Сейчас вы на приключении с сложностью `{difficulty}`.\n"
 "Приблизительный конец `{end}`\n"
 "Имя подземелья: `{dungeon}`"
 
@@ -2562,7 +2550,7 @@ msgstr ""
 msgid "Puts an item into the player store."
 msgstr "Кладёт предмет в магазин игрока."
 
-#: cogs/trading.py:44 cogs/trading.py:311
+#: cogs/trading.py:44 cogs/trading.py:305
 #, python-brace-format
 msgid "You don't own an item with the ID: {itemid}"
 msgstr "У вас нет предмета с данным ID: {itemid}"
@@ -2637,55 +2625,42 @@ msgstr "`{itemid}` был успешно удалён из магазина и �
 msgid "Show the market with all items and prices."
 msgstr "Показывает рынок со своими предметами и ценами."
 
-#. temp fix
-#: cogs/trading.py:169 cogs/trading.py:171
-msgid "All"
-msgstr "Все"
-
-#: cogs/trading.py:171
-msgid "Sword"
-msgstr "Меч"
-
-#: cogs/trading.py:171
-msgid "Shield"
-msgstr "Щит"
-
-#: cogs/trading.py:200
+#: cogs/trading.py:194
 msgid "No results."
 msgstr "Нет результатов."
 
-#: cogs/trading.py:204
+#: cogs/trading.py:198
 msgid "IdleRPG Shop"
 msgstr "Магазин IdleRPG"
 
-#: cogs/trading.py:205 cogs/trading.py:376
+#: cogs/trading.py:199 cogs/trading.py:370
 #, python-brace-format
 msgid "Use `{prefix}buy {item}` to buy this."
 msgstr "Используйте `{prefix}buy {item}` , чтобы купить это."
 
-#: cogs/trading.py:215 cogs/trading.py:386 cogs/marriage.py:205
+#: cogs/trading.py:209 cogs/trading.py:380 cogs/marriage.py:205
 msgid "Price"
 msgstr "Цена"
 
-#: cogs/trading.py:217 cogs/trading.py:388
+#: cogs/trading.py:211 cogs/trading.py:382
 #, python-brace-format
 msgid "Item {num} of {total}"
 msgstr "Вещь {num} из {total}"
 
-#: cogs/trading.py:231
+#: cogs/trading.py:225
 msgid "Offer an item to a specific user."
 msgstr "Предложить предмет конкретному игроку."
 
-#: cogs/trading.py:246 cogs/trading.py:317
+#: cogs/trading.py:240 cogs/trading.py:311
 #, python-brace-format
 msgid "Are you sure you want to sell your equipped {item}?"
 msgstr "Вы точно хотите продать надетый предмет? {item}?"
 
-#: cogs/trading.py:250
+#: cogs/trading.py:244
 msgid "Item selling cancelled."
 msgstr "Продажа вещи отменена."
 
-#: cogs/trading.py:254
+#: cogs/trading.py:248
 #, python-brace-format
 msgid ""
 "{user}, {author} offered you an item! React to buy it! The price is **"
@@ -2696,21 +2671,21 @@ msgstr ""
 "Цена составляет **${price}**. У вас есть **2 минуты**, чтобы подтвердить "
 "предложение, иначе оно будет отменено."
 
-#: cogs/trading.py:259
+#: cogs/trading.py:253
 msgid "They didn't want it."
 msgstr "Они не захотели этого."
 
-#: cogs/trading.py:263
+#: cogs/trading.py:257
 #, python-brace-format
 msgid "{user}, you're too poor to buy this item!"
 msgstr "{user}, вы слишком бедны, чтобы купить данный предмет!"
 
-#: cogs/trading.py:274
+#: cogs/trading.py:268
 #, python-brace-format
 msgid "The owner sold the item with the ID `{itemid}` in the meantime."
 msgstr "Владелец продал предмет с ID `{itemid}` ."
 
-#: cogs/trading.py:293
+#: cogs/trading.py:287
 #, python-brace-format
 msgid ""
 "Successfully bought item `{itemid}`. Use `{prefix}inventory` to view your "
@@ -2719,61 +2694,61 @@ msgstr ""
 "Предмет `{itemid}` успешно куплен. Используйте `{prefix}inventory` , чтобы "
 "посмотреть на ваш обновленный инвентарь."
 
-#: cogs/trading.py:302
+#: cogs/trading.py:296
 msgid "Sells an item for its value."
 msgstr "Продаёт предмет за его стоимость."
 
-#: cogs/trading.py:322
+#: cogs/trading.py:316
 msgid "Cancelled."
 msgstr "Отменено."
 
-#: cogs/trading.py:330
+#: cogs/trading.py:324
 #, python-brace-format
 msgid "You received **${money}** when selling item `{itemid}`."
 msgstr "Когда вы продали предмет `{itemid}`, вы получили **${money}** ."
 
-#: cogs/trading.py:340
+#: cogs/trading.py:334
 msgid "Sells all your non-equipped items for their value."
 msgstr "Продаёт все ваши не надетые вещи за их стоимость."
 
-#: cogs/trading.py:347
+#: cogs/trading.py:341
 msgid "Nothing to merch."
 msgstr "Нечего продавать."
 
-#: cogs/trading.py:358
+#: cogs/trading.py:352
 #, python-brace-format
 msgid "Merched **{count}** items for **${money}**."
 msgstr "Продано **{count}** вещей на сумму **${money}**."
 
-#: cogs/trading.py:366
+#: cogs/trading.py:360
 msgid "View your pending shop offers."
 msgstr "Показать ваши рассматриваемые предложения."
 
-#: cogs/trading.py:372
+#: cogs/trading.py:366
 msgid "You don't have any pending shop offers."
 msgstr "У вас нет рассматриваемых предложений."
 
-#: cogs/trading.py:375
+#: cogs/trading.py:369
 msgid "Your pending items"
 msgstr "Ваши рассматриваемые предметы"
 
-#: cogs/trading.py:399
+#: cogs/trading.py:393
 msgid "Buy items at the trader."
 msgstr "Купить вещи у торговца."
 
-#: cogs/trading.py:414
+#: cogs/trading.py:408
 msgid "The Trader"
 msgstr "Торговец"
 
-#: cogs/trading.py:415
+#: cogs/trading.py:409
 msgid "Hit a button to buy it"
 msgstr "Нажмите на кнопку, чтобы купить это"
 
-#: cogs/trading.py:425
+#: cogs/trading.py:419
 msgid "You are too poor to buy this item."
 msgstr "Вы слишком бедны для того, чтобы купить этот предмет."
 
-#: cogs/trading.py:432
+#: cogs/trading.py:426
 #, python-brace-format
 msgid ""
 "Successfully bought offer **{offer}**. Use `{prefix}inventory` to view your "
@@ -2873,7 +2848,7 @@ msgstr "Корова :cow2:"
 
 #: cogs/marriage.py:167
 msgid "Penguin :penguin:"
-msgstr "Пенгвин :penguin:"
+msgstr "Пингвин :penguin:"
 
 #: cogs/marriage.py:168
 msgid "Unicorn :unicorn:"
@@ -2993,7 +2968,7 @@ msgstr "Дорогой шоколад :chocolate_bar:"
 
 #: cogs/marriage.py:197
 msgid "Declaration of Love :love_letter:"
-msgstr "Декларация о любви :love_letter:"
+msgstr "Любовное письмо :love_letter:"
 
 #: cogs/marriage.py:198
 msgid "Key to Heart :key2:"
@@ -3013,7 +2988,7 @@ msgstr "Супер компьютер :computer:"
 
 #: cogs/marriage.py:202
 msgid "Precious Gemstone Collection :gem:"
-msgstr "Коллекция драгоценных каменей :gem:"
+msgstr "Коллекция драгоценных камней :gem:"
 
 #: cogs/marriage.py:203
 msgid "Planet :earth_americas:"
@@ -3424,7 +3399,7 @@ msgstr "Участники"
 
 #: cogs/guild.py:79
 msgid "Current Member Count"
-msgstr "Количество участников гильдии в данный момент"
+msgstr "Количество участников гильдии на данный момент"
 
 #: cogs/guild.py:83
 msgid "Leader"
@@ -3863,7 +3838,7 @@ msgid ""
 "players can join in the next minute. The minimum of players required is 3."
 msgstr ""
 "{author} созывает на гильдейское приключение для участников **{guild}**! "
-"Поставь реакцию, чтобы присоединиться! Неограниченное количество игроков "
+"Поставьте реакцию, чтобы присоединиться! Неограниченное количество игроков "
 "может присоединиться следующую минуту. Минимальное количество: 3 человека."
 
 #: cogs/guild.py:834
@@ -3938,8 +3913,8 @@ msgid ""
 "Upvote me for a big thanks! You will be rewarded a few seconds afterwards!\n"
 "https://discordbots.org/bot/idlerpg"
 msgstr ""
-"Голосуйте за меня и получайте подарки! Вы будете награждены после нескольких "
-"секунд после того как проголосуете!\n"
+"Голосуйте за меня и получайте подарки! Вы будете награждены в течении "
+"нескольких секунд,после того как проголосуете!\n"
 "https://discordbots.org/bot/idlerpg"
 
 #: cogs/custom.py:36
@@ -4357,3 +4332,21 @@ msgid ""
 msgstr ""
 "{target} Успешно убраны: фон, класс, имена предметов и лимит на количество "
 "людей в гильдии."
+
+#~ msgid "time"
+#~ msgstr "время"
+
+#~ msgid "luck"
+#~ msgstr "удача"
+
+#~ msgid "money"
+#~ msgstr "деньги"
+
+#~ msgid "All"
+#~ msgstr "Все"
+
+#~ msgid "Sword"
+#~ msgstr "Меч"
+
+#~ msgid "Shield"
+#~ msgstr "Щит"

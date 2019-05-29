@@ -52,16 +52,13 @@ class Store(commands.Cog):
     @locale_doc
     async def purchase(self, ctx, booster: str.lower, amount: IntGreaterThan(0) = 1):
         _("""Buy a booster from the store.""")
-        conv = {_("time"): "time", _("luck"): "luck", _("money"): "money"}
-        try:
-            item = conv[booster]
-        except KeyError:
+        if booster not in ["time", "luck", "money"]:
             return await ctx.send(_("Please either buy `time`, `luck` or `money`."))
-        price = {"time": 1000, "luck": 500, "money": 1000}[item] * amount
+        price = {"time": 1000, "luck": 500, "money": 1000}[booster] * amount
         if ctx.character_data["money"] < price:
             return await ctx.send(_("You're too poor."))
         await self.bot.pool.execute(
-            f'UPDATE profile SET {item}_booster={item}_booster+$1, "money"="money"-$2 WHERE "user"=$3;',
+            f'UPDATE profile SET {booster}_booster={booster}_booster+$1, "money"="money"-$2 WHERE "user"=$3;',
             amount,
             price,
             ctx.author.id,
@@ -118,13 +115,9 @@ class Store(commands.Cog):
     @has_char()
     @commands.command()
     @locale_doc
-    async def activate(self, ctx, booster: str):
+    async def activate(self, ctx, boostertype: str.lower):
         _("""Activate a booster.""")
-        try:
-            boostertype = {_("time"): "time", _("luck"): "luck", _("money"): "money"}[
-                booster
-            ]
-        except KeyError:
+        if boostertype not in ["time", "luck", "money"]:
             return await ctx.send(
                 _("That is not a valid booster type. Must be `time/luck/money`.")
             )

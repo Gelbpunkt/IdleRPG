@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-05-29 11:39+0000\n"
-"PO-Revision-Date: 2019-05-29 04:41-0300\n"
+"POT-Creation-Date: 2019-05-29 15:31+0000\n"
+"PO-Revision-Date: 2019-05-29 12:09-0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: es\n"
@@ -180,12 +180,12 @@ msgid "ID"
 msgstr "ID"
 
 #: cogs/halloween.py:148 cogs/crates.py:78 cogs/classes.py:250
-#: cogs/adventure.py:220 cogs/trading.py:210 cogs/trading.py:381
+#: cogs/adventure.py:220 cogs/trading.py:204 cogs/trading.py:375
 msgid "Name"
 msgstr "Nombre"
 
 #: cogs/halloween.py:149 cogs/crates.py:79 cogs/classes.py:251
-#: cogs/adventure.py:221 cogs/trading.py:211 cogs/trading.py:382
+#: cogs/adventure.py:221 cogs/trading.py:205 cogs/trading.py:376
 msgid "Type"
 msgstr "Tipo"
 
@@ -454,17 +454,17 @@ msgid "You found a new item when opening a crate!"
 msgstr "¡Has encontrado un nuevo objeto al abrir la caja!"
 
 #: cogs/crates.py:80 cogs/classes.py:253 cogs/adventure.py:222
-#: cogs/trading.py:212 cogs/trading.py:383
+#: cogs/trading.py:206 cogs/trading.py:377
 msgid "Damage"
 msgstr "Daño"
 
 #: cogs/crates.py:81 cogs/classes.py:255 cogs/adventure.py:223
-#: cogs/trading.py:213 cogs/trading.py:384
+#: cogs/trading.py:207 cogs/trading.py:378
 msgid "Armor"
 msgstr "Armadura"
 
 #: cogs/crates.py:82 cogs/classes.py:256 cogs/adventure.py:224
-#: cogs/trading.py:214 cogs/trading.py:385
+#: cogs/trading.py:208 cogs/trading.py:379
 msgid "Value"
 msgstr "Valor"
 
@@ -1574,29 +1574,17 @@ msgstr ""
 msgid "Buy a booster from the store."
 msgstr "Compra un potenciador de la tienda."
 
-#: cogs/store.py:55 cogs/store.py:124
-msgid "time"
-msgstr "tiempo"
-
-#: cogs/store.py:55 cogs/store.py:124
-msgid "luck"
-msgstr "suerte"
-
-#: cogs/store.py:55 cogs/store.py:124
-msgid "money"
-msgstr "dinero"
-
-#: cogs/store.py:59
+#: cogs/store.py:56
 msgid "Please either buy `time`, `luck` or `money`."
 msgstr ""
 "Por favor, compra: \"Time\", \"Luck\" o \"Money\". (Tiempo, Suerte o Dinero)."
 
-#: cogs/store.py:62 cogs/gambling.py:377 cogs/gambling.py:411 cogs/guild.py:485
+#: cogs/store.py:59 cogs/gambling.py:377 cogs/gambling.py:411 cogs/guild.py:485
 #: cogs/profile.py:428
 msgid "You're too poor."
 msgstr "Eres demasiado pobre."
 
-#: cogs/store.py:71
+#: cogs/store.py:68
 #, python-brace-format
 msgid ""
 "Successfully bought **{amount}** {booster} booster(s). Use `{prefix}"
@@ -1605,69 +1593,69 @@ msgstr ""
 "¡Has comprado exitosamente **{amount}** {booster} potenciador(es). Usa el "
 "comando \"{prefix}boosters\" para ver tu inventario de potenciaidores."
 
-#: cogs/store.py:79
+#: cogs/store.py:76
 msgid "View your boosters."
 msgstr "Tu lista de potenciadores."
 
-#: cogs/store.py:87
+#: cogs/store.py:84
 #, python-brace-format
 msgid "Time booster - {time}"
 msgstr "Potenciador de tiempo - {time}"
 
-#: cogs/store.py:92
+#: cogs/store.py:89
 #, python-brace-format
 msgid "Luck booster - {time}"
 msgstr "Potenciador de suerte - {time}"
 
-#: cogs/store.py:97
+#: cogs/store.py:94
 #, python-brace-format
 msgid "Money booster - {time}"
 msgstr "Potenciador de dinero - {time}"
 
-#: cogs/store.py:102
+#: cogs/store.py:99
 msgid "Currently active"
 msgstr "Activos actualmente"
 
-#: cogs/store.py:107
+#: cogs/store.py:104
 msgid "Time Boosters"
 msgstr "Potenciadores de tiempo"
 
-#: cogs/store.py:107
+#: cogs/store.py:104
 msgid "Luck Boosters"
 msgstr "Potenciadores de suerte"
 
-#: cogs/store.py:107
+#: cogs/store.py:104
 msgid "Money Boosters"
 msgstr "Potenciadores de dinero"
 
-#: cogs/store.py:110
+#: cogs/store.py:107
 msgid "Your Boosters"
 msgstr "Tus potenciadores"
 
-#: cogs/store.py:114
+#: cogs/store.py:111
 #, python-brace-format
 msgid "Use {prefix}activate to activate one"
 msgstr "Usa {prefix}activate luck/time/money para activar un potenciador"
 
-#: cogs/store.py:122
+#: cogs/store.py:119
 msgid "Activate a booster."
 msgstr "Activa un potenciador."
 
-#: cogs/store.py:129
+#: cogs/store.py:122
 msgid "That is not a valid booster type. Must be `time/luck/money`."
 msgstr ""
 "Ese no es un tipo válido de potenciador, debe ser: \"time/luck/money"
 "\" (tiempo, suerte, y dinero)."
 
-#: cogs/store.py:133
+#: cogs/store.py:126
 msgid "You don't have any of these boosters."
 msgstr "Tú no tienes ninguno de éstos potenciadores."
 
-#: cogs/store.py:136
+#: cogs/store.py:129
 msgid "This booster is already running."
 msgstr "Este potenciador ya está en curso."
 
-#: cogs/store.py:144
+#: cogs/store.py:137
 #, python-brace-format
 msgid ""
 "Successfully activated a **{booster} booster** for the next **24 hours**!"
@@ -1795,7 +1783,7 @@ msgstr "[Únicamente donadores] Cambia el nombre de un objeto."
 msgid "Name too long."
 msgstr "Nombre demasiado largo."
 
-#: cogs/patreon.py:48 cogs/trading.py:239
+#: cogs/patreon.py:48 cogs/trading.py:233
 #, python-brace-format
 msgid "You don't have an item with the ID `{itemid}`."
 msgstr "Tú no tienes un objeto con el ID \"{itemid}\"."
@@ -2571,7 +2559,7 @@ msgstr ""
 msgid "Puts an item into the player store."
 msgstr "Coloca un objeto en la tienda."
 
-#: cogs/trading.py:44 cogs/trading.py:311
+#: cogs/trading.py:44 cogs/trading.py:305
 #, python-brace-format
 msgid "You don't own an item with the ID: {itemid}"
 msgstr "Tú no tienes el objeto ID: {itemid}"
@@ -2648,55 +2636,42 @@ msgstr ""
 msgid "Show the market with all items and prices."
 msgstr "Muestra el mercado con todos los objetos y precios."
 
-#. temp fix
-#: cogs/trading.py:169 cogs/trading.py:171
-msgid "All"
-msgstr "Todo"
-
-#: cogs/trading.py:171
-msgid "Sword"
-msgstr "Espada"
-
-#: cogs/trading.py:171
-msgid "Shield"
-msgstr "Escudo"
-
-#: cogs/trading.py:200
+#: cogs/trading.py:194
 msgid "No results."
 msgstr "Sin resultados."
 
-#: cogs/trading.py:204
+#: cogs/trading.py:198
 msgid "IdleRPG Shop"
 msgstr "Tienda IdleRPG"
 
-#: cogs/trading.py:205 cogs/trading.py:376
+#: cogs/trading.py:199 cogs/trading.py:370
 #, python-brace-format
 msgid "Use `{prefix}buy {item}` to buy this."
 msgstr "UsA `{prefix}buy {item}` para comprar esto."
 
-#: cogs/trading.py:215 cogs/trading.py:386 cogs/marriage.py:205
+#: cogs/trading.py:209 cogs/trading.py:380 cogs/marriage.py:205
 msgid "Price"
 msgstr "Precio"
 
-#: cogs/trading.py:217 cogs/trading.py:388
+#: cogs/trading.py:211 cogs/trading.py:382
 #, python-brace-format
 msgid "Item {num} of {total}"
 msgstr "Objeto {num} de {total}"
 
-#: cogs/trading.py:231
+#: cogs/trading.py:225
 msgid "Offer an item to a specific user."
 msgstr "Ofrecer un objeto específico a un usuario."
 
-#: cogs/trading.py:246 cogs/trading.py:317
+#: cogs/trading.py:240 cogs/trading.py:311
 #, python-brace-format
 msgid "Are you sure you want to sell your equipped {item}?"
 msgstr "¿Estás seguro de que quieres vender tu {item} equipado?"
 
-#: cogs/trading.py:250
+#: cogs/trading.py:244
 msgid "Item selling cancelled."
 msgstr "Venta de objeto cancelada."
 
-#: cogs/trading.py:254
+#: cogs/trading.py:248
 #, python-brace-format
 msgid ""
 "{user}, {author} offered you an item! React to buy it! The price is **"
@@ -2707,21 +2682,21 @@ msgstr ""
 "es **${price}**. Tienes **2 minutos** para aceptar la oferta, o será "
 "cancelada."
 
-#: cogs/trading.py:259
+#: cogs/trading.py:253
 msgid "They didn't want it."
 msgstr "Ellos no lo quieren."
 
-#: cogs/trading.py:263
+#: cogs/trading.py:257
 #, python-brace-format
 msgid "{user}, you're too poor to buy this item!"
 msgstr "¡{user}, eres muy pobre para comprar este objeto!"
 
-#: cogs/trading.py:274
+#: cogs/trading.py:268
 #, python-brace-format
 msgid "The owner sold the item with the ID `{itemid}` in the meantime."
 msgstr "El dueño vendió el objeto con la ID `{itemid}`."
 
-#: cogs/trading.py:293
+#: cogs/trading.py:287
 #, python-brace-format
 msgid ""
 "Successfully bought item `{itemid}`. Use `{prefix}inventory` to view your "
@@ -2730,61 +2705,61 @@ msgstr ""
 "Has comprado exitosamente el objeto `{itemid}`. Usa `{prefix}inventory` para "
 "ver tu inventario actualizado."
 
-#: cogs/trading.py:302
+#: cogs/trading.py:296
 msgid "Sells an item for its value."
 msgstr "Vende un objeto por su valor."
 
-#: cogs/trading.py:322
+#: cogs/trading.py:316
 msgid "Cancelled."
 msgstr "Cancelado."
 
-#: cogs/trading.py:330
+#: cogs/trading.py:324
 #, python-brace-format
 msgid "You received **${money}** when selling item `{itemid}`."
 msgstr "Has recibido **${money}** al vender el objeto `{itemid}`."
 
-#: cogs/trading.py:340
+#: cogs/trading.py:334
 msgid "Sells all your non-equipped items for their value."
 msgstr "Vende todos los objetos que no tengas equipados por su valor."
 
-#: cogs/trading.py:347
+#: cogs/trading.py:341
 msgid "Nothing to merch."
 msgstr "Nada para vender."
 
-#: cogs/trading.py:358
+#: cogs/trading.py:352
 #, python-brace-format
 msgid "Merched **{count}** items for **${money}**."
 msgstr "Vendidos **{count}** objetos por **${money}**."
 
-#: cogs/trading.py:366
+#: cogs/trading.py:360
 msgid "View your pending shop offers."
 msgstr "Muestra tus objetos pendientes de venta."
 
-#: cogs/trading.py:372
+#: cogs/trading.py:366
 msgid "You don't have any pending shop offers."
 msgstr "Tú no tienes objetos a la venta."
 
-#: cogs/trading.py:375
+#: cogs/trading.py:369
 msgid "Your pending items"
 msgstr "Tus objetos a la venta"
 
-#: cogs/trading.py:399
+#: cogs/trading.py:393
 msgid "Buy items at the trader."
 msgstr "Comprar objetos al comerciante."
 
-#: cogs/trading.py:414
+#: cogs/trading.py:408
 msgid "The Trader"
 msgstr "El comerciante"
 
-#: cogs/trading.py:415
+#: cogs/trading.py:409
 msgid "Hit a button to buy it"
 msgstr "Aprieta el botón para comprarlo"
 
-#: cogs/trading.py:425
+#: cogs/trading.py:419
 msgid "You are too poor to buy this item."
 msgstr "Eres muy pobre para comprar este objeto."
 
-#: cogs/trading.py:432
+#: cogs/trading.py:426
 #, python-brace-format
 msgid ""
 "Successfully bought offer **{offer}**. Use `{prefix}inventory` to view your "
@@ -4390,6 +4365,15 @@ msgstr ""
 #~ msgid "Love for {first} and {second} is at **{love}%**! ?"
 #~ msgstr "¿¡El amor entre {first} y {second} es **{love}%**!?"
 
+#~ msgid "time"
+#~ msgstr "time"
+
+#~ msgid "luck"
+#~ msgstr "luck"
+
+#~ msgid "money"
+#~ msgstr "money"
+
 #~ msgid "`?Paused`"
 #~ msgstr "`?Pausado`"
 
@@ -4398,6 +4382,15 @@ msgstr ""
 
 #~ msgid "?? Playing {title}..."
 #~ msgstr "?? Reproduciendo {title}..."
+
+#~ msgid "All"
+#~ msgstr "All"
+
+#~ msgid "Sword"
+#~ msgstr "Sword"
+
+#~ msgid "Shield"
+#~ msgstr "Shield"
 
 #~ msgid ""
 #~ "The {stat} of your **{item}** is now **{stat + 1}**. The other item was "
