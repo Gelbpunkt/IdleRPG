@@ -901,7 +901,7 @@ Time it will take: **{time}**
                 _(
                     "Your guild is currently in an adventure with difficulty `{difficulty}`.\nTime remaining: `{remain}`"
                 ).format(
-                    difficulty=adventure[1], remain=str(adventure[1]).split(".")[0]
+                    difficulty=adventure[0], remain=str(adventure[1]).split(".")[0]
                 )
             )
 
