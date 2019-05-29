@@ -111,7 +111,7 @@ class Owner(commands.Cog):
             "author": ctx.author,
             "guild": ctx.guild,
             "message": ctx.message,
-            "_": self._last_result,
+            "__last__": self.last_result,
         }
 
         env.update(globals())
