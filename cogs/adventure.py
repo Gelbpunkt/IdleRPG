@@ -140,7 +140,7 @@ Use the reactions attack, defend or recover
                 ).format(user=ctx.disp, progress=PROGRESS, hp=HP, enemy_hp=ENEMY_HP)
             )
             try:
-                reaction, _ = await self.bot.wait_for(
+                reaction, user = await self.bot.wait_for(
                     "reaction_add", timeout=30, check=is_valid_move
                 )
             except asyncio.TimeoutError:
