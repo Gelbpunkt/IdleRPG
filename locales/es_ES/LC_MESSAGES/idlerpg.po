@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-05-29 05:29+0000\n"
-"PO-Revision-Date: 2019-05-28 18:27-0300\n"
+"POT-Creation-Date: 2019-05-29 11:39+0000\n"
+"PO-Revision-Date: 2019-05-29 04:41-0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: es\n"
@@ -56,8 +56,8 @@ msgid ""
 "There are **{num}** entries, due to the fact we need a playable tournament, "
 "the last **{removed}** have been removed."
 msgstr ""
-"Hay **{num}** participantes inscriptos, pero debido a que los cupos no dejan "
-"que el torneo sea jugable, los últimos **{removed}** han sido eliminados."
+"Hay **{num}** participantes inscriptos, pero debido a que los cupos "
+"dificultan la jugabilidad, los últimos **{removed}** han sido eliminados."
 
 #: cogs/tournament.py:88
 #, python-brace-format
@@ -543,7 +543,7 @@ msgstr "encuentra una bolsa llena de explosivos"
 
 #: cogs/hungergames.py:71
 msgid "Look for water"
-msgstr "Buscar por agua"
+msgstr "Ir a buscar agua"
 
 #: cogs/hungergames.py:71
 msgid "finds a canteen full of water"
@@ -732,7 +732,7 @@ msgid ""
 "join the game! **{num} joined**"
 msgstr ""
 "¡{author} inició un \"Juegos del Hambre\"! Reacciona con :"
-"shallow_pan_of_food: para participar. **{num} participantes ingresaron.**"
+"shallow_pan_of_food: para participar. **{num} participante(s) ingresaron.**"
 
 #: cogs/hungergames.py:317
 msgid "Not enough players joined..."
@@ -806,7 +806,7 @@ msgstr ""
 
 #: cogs/error_handler.py:122
 msgid "You did not choose anything."
-msgstr "Tú no elegiste nada."
+msgstr "No has elegido nada."
 
 #: cogs/error_handler.py:135
 msgid ""
@@ -1923,7 +1923,7 @@ msgstr ""
 "Un astuto ladrón de dinero...\n"
 "Acceso al CMD `{prefix}steal` para robar el 10%% del dinero del objetivo, si "
 "es que tiene éxito.\n"
-"+8% success chance per evolution."
+"+8% success chance per evolutión."
 
 #: cogs/classes.py:54
 msgid "Mage"
@@ -2497,11 +2497,11 @@ msgstr "Te has pasado de 21 y has perdido."
 
 #: cogs/gambling.py:282
 msgid "Dealer busts and you win!"
-msgstr "¡El dealer se pasa de 21 y tú ganas!"
+msgstr "¡El dealer se pasa de 21 y ganas!"
 
 #: cogs/gambling.py:287
 msgid "You have a higher score than the dealer and win."
-msgstr "Tú tienes mayor puntaje que el dealer, y tú ganas."
+msgstr "Tú tienes mayor puntaje que el dealer, y ganas."
 
 #: cogs/gambling.py:292
 msgid "Dealer has a higher score than you and wins."
@@ -2527,12 +2527,12 @@ msgstr "Usa `heads` o `tails` en vez de `{side}`."
 #: cogs/gambling.py:341
 #, python-brace-format
 msgid "{result[1]} It's **{result[0]}**! You won **${amount}**!"
-msgstr "¡{result[1]}Es **{result[0]}**! ¡Ganas *${amount}**!"
+msgstr "{result[1]} ¡Es **{result[0]}**! ¡Ganas **${amount}**!"
 
 #: cogs/gambling.py:352
 #, python-brace-format
 msgid "{result[1]} It's **{result[0]}**! You lost **${amount}**!"
-msgstr "¡{result[1]}Es**{result[0]}**! ¡Pierdes **${amount}**!"
+msgstr "{result[1]} ¡Es**{result[0]}**! ¡Pierdes **${amount}**!"
 
 #: cogs/gambling.py:370
 #, python-brace-format
@@ -2548,7 +2548,7 @@ msgstr "¡Gástalo de una mejor manera, vamos!"
 msgid ""
 "You won **${money}**! The random number was `{num}`, you tipped `{tip}`."
 msgstr ""
-"Has ganado **${money}**. El número aleatorio era '{num}`, tú elegiste `{tip}"
+"Has ganado **${money}**. El número aleatorio era `{num}`, tú elegiste `{tip}"
 "`."
 
 #: cogs/gambling.py:398
@@ -2556,7 +2556,7 @@ msgstr ""
 msgid ""
 "You lost **${money}**! The random number was `{num}`, you tipped `{tip}`."
 msgstr ""
-"Has perdido **${money}**. El número aleatorio era '{num}`, tú elegiste `{tip}"
+"Has perdido **${money}**. El número aleatorio era `{num}`, tú elegiste `{tip}"
 "`."
 
 #: cogs/gambling.py:408
@@ -3190,7 +3190,7 @@ msgstr "Tu familia"
 #: cogs/marriage.py:358
 #, python-brace-format
 msgid "Family of {author} and <@{marriage}>"
-msgstr "Familia de {author} and <@{marriage}>"
+msgstr "Familia de {author} y <@{marriage}>"
 
 #: cogs/marriage.py:364
 msgid "No children yet"
@@ -4102,7 +4102,7 @@ msgstr "Muestra tu balance económico."
 #: cogs/profile.py:216
 #, python-brace-format
 msgid "You currently have **${money}**, {author}!"
-msgstr "¡Actualmente tú tienes **${money}**, {author}!"
+msgstr "¡{author}, tu balance monetario es el siguiente: **${money}**!"
 
 #: cogs/profile.py:225
 msgid "Shows your current XP and level."
@@ -4179,7 +4179,7 @@ msgstr "Te has equipado exitosamente el objeto `{itemid}`."
 msgid "Merges two items to a better one. Second one is consumed."
 msgstr ""
 "Fusiona dos objetos para crear uno nuevo. El primero es el objeto a mejorar, "
-"el segundo el objeto que se destruirá."
+"el segundo es el objeto que se destruirá."
 
 #: cogs/profile.py:337
 msgid "Good luck with that."
