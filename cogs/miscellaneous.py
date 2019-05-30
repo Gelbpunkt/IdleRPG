@@ -568,7 +568,7 @@ Thank you for playing IdleRPG! :heart:"""
         em.add_field(
             name="Cautious Memory",
             value=_(
-                "Cautious Memory brings wiki-style pages to your server. Use it to document who's who in your server, or inside jokes, or community lore. Includes a full featured permissions system to keep your pages squeaky clean.\n[discordbots.org Page](https://discordbots.org/bot/541707781665718302)"
+                "Cautious Memory brings wiki-style pages to your server. Use it to document who's who in your server, inside jokes, or community lore. Includes a full featured permissions system to keep your pages squeaky clean.\n[discordbots.org Page](https://discordbots.org/bot/541707781665718302)"
             ),
         )
         await ctx.send(embed=em)
