@@ -7,21 +7,22 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-05-30 11:29+0000\n"
-"PO-Revision-Date: 2019-05-30 02:23+0300\n"
+"POT-Creation-Date: 2019-05-30 16:50+0000\n"
+"PO-Revision-Date: 2019-05-30 15:36+0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: ru_RU\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 2.2.3\n"
+"X-Generator: Poedit 2.0.6\n"
 "Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
 "%10<=4 && (n%100<12 || n%100>14) ? 1 : 2);\n"
 
 #: cogs/tournament.py:39
+#, fuzzy
 msgid "Starts a new tournament."
-msgstr "Начинается новое состязание."
+msgstr "Начинает новое состязание."
 
 #: cogs/tournament.py:41 cogs/battles.py:44 cogs/battles.py:146
 #: cogs/gambling.py:327 cogs/profile.py:460
@@ -34,8 +35,8 @@ msgid ""
 "{author} started a tournament! Free entries, prize is **${prize}**! React "
 "with \\U00002694 to join!"
 msgstr ""
-"{author} начал новое состязание! Бесплатные записи, приз за победу **${prize}"
-"**! Поставь эмодзи \\U00002694 ,чтобы присоединиться!"
+"{author} начал новое состязание! Бесплатный вход, приз за победу **${prize}"
+"**! Нажми на реакцию \\U00002694 ,чтобы присоединиться!"
 
 #: cogs/tournament.py:68
 msgid "Noone joined your tournament."
@@ -49,7 +50,7 @@ msgstr "{user} Присоединился к состязанию."
 #: cogs/tournament.py:76
 #, python-brace-format
 msgid "You don't have a character, {user}."
-msgstr "У вас нет персонажей для выбора, {user}"
+msgstr "У вас нет персонажа, {user}"
 
 #: cogs/tournament.py:82
 #, python-brace-format
@@ -81,7 +82,7 @@ msgstr "Раунд завершён!"
 #: cogs/tournament.py:129
 #, python-brace-format
 msgid "Tournament ended! The winner is {winner}."
-msgstr "Состязание закончилось! Победитель- {winner}"
+msgstr "Состязание закончилось! Победитель - {winner}"
 
 #: cogs/tournament.py:134
 msgid "The creator spent money, prize can't be given!"
@@ -98,7 +99,7 @@ msgstr ""
 
 #: cogs/images.py:131
 msgid "Pixelfys an Avatar."
-msgstr "Пикселизация аватара."
+msgstr "Пикселизация аватарки."
 
 #: cogs/images.py:135
 msgid "Use 1, 2, 3, 4 or 5 as intensity value."
@@ -106,7 +107,7 @@ msgstr "Используйте 1, 2, 3, 4, 5 как силу эффекта."
 
 #: cogs/images.py:148
 msgid "Finds edges in an Avatar."
-msgstr "Найти края в аватаре."
+msgstr "Найти края в аватарке."
 
 #: cogs/images.py:160
 msgid "Inverts an avatar."
@@ -322,7 +323,7 @@ msgstr "{user}, уже сделал свой ход!"
 #: cogs/battles.py:256
 #, python-brace-format
 msgid "{user} healed themselves for **20 HP**."
-msgstr "{user} вылечил себя на **20 HP**."
+msgstr "{user} восстановил себе **20 здоровья**."
 
 #: cogs/battles.py:271 cogs/battles.py:295
 #, python-brace-format
@@ -368,7 +369,7 @@ msgid ""
 "bunny:566290173831151627>\n"
 "Happy hunting!"
 msgstr ""
-"**Easter event <:easteregg:566251086986608650>**\n"
+"**Пасхальное событие <:easteregg:566251086986608650>**\n"
 "\n"
 "Продолжается до вторника после Пасхи!\n"
 "Собирайте пасхальные яйца и используйте `{prefix}easter rewards` to check "
@@ -400,10 +401,10 @@ msgid ""
 "You have **{eggs}** <:easteregg:566251086986608650>."
 msgstr ""
 "\n"
-"**Easter event - rewards**\n"
-"Используй `{prefix}easter reward [1-10]` to trade your eggs in.\n"
+"**Пасхальное событие - награды**\n"
+"Используй `{prefix}easter reward [1-10]` для обмена своих яиц.\n"
 "\n"
-"**100 <:easteregg:566251086986608650>** - 1 ящиков\n"
+"**100 <:easteregg:566251086986608650>** - 1 ящик\n"
 "**500 <:easteregg:566251086986608650>** - $10000\n"
 "**1000 <:easteregg:566251086986608650>** - случайный предмет 1-49\n"
 "**2000 <:easteregg:566251086986608650>** - 25 ящиков\n"
@@ -412,8 +413,7 @@ msgstr ""
 "**7500 <:easteregg:566251086986608650>** - Пасхальная гильдейская плашка\n"
 "**7500 <:easteregg:566251086986608650>** - 200 ящиков\n"
 "**7500 <:easteregg:566251086986608650>** - случайный предмет 40-50\n"
-"**10000 <:easteregg:566251086986608650>** - случайный 50 предмет с "
-"характеристикой\n"
+"**10000 <:easteregg:566251086986608650>** - случайный предмет 50\n"
 "\n"
 "У вас **{eggs}** <:easteregg:566251086986608650>."
 
@@ -584,19 +584,19 @@ msgstr "берёт рюкзак и понимает, что он пуст"
 
 #: cogs/hungergames.py:82
 msgid "Try to assault USER"
-msgstr ""
+msgstr "Попытаться напасть на USER"
 
 #: cogs/hungergames.py:82
 msgid "kills USER"
-msgstr ""
+msgstr "убивает USER"
 
 #: cogs/hungergames.py:84
 msgid "Kill USER at the water"
-msgstr ""
+msgstr "Убить USER в воде"
 
 #: cogs/hungergames.py:85
 msgid "assaults USER while they were drinking water at the river"
-msgstr ""
+msgstr "нападает на USER когда он(а) пил(а) воду в речке"
 
 #: cogs/hungergames.py:89
 msgid "Try to hide some landmines"
@@ -613,75 +613,75 @@ msgstr "Принять ванну"
 
 #: cogs/hungergames.py:93
 msgid "baths in the water and enjoys the silence"
-msgstr ""
+msgstr "принимает ванну в воде и наслаждается тишиной"
 
 #: cogs/hungergames.py:96
 msgid "kill USER"
-msgstr ""
+msgstr "убить USER"
 
 #: cogs/hungergames.py:97
 msgid "grill at the fireplace and tell each other spooky stories"
-msgstr "использовать гриль у камина и рассказывать друг-другу страшные истории"
+msgstr "жарят гриль у камина и рассказывают друг-другу страшные истории"
 
 #: cogs/hungergames.py:98
 msgid "annoy USER"
-msgstr ""
+msgstr "разджарать USER"
 
 #: cogs/hungergames.py:99 cogs/hungergames.py:108
 msgid "kill themselves by walking into a landmine"
-msgstr ""
+msgstr "убивает себя, наступив на мину"
 
 #: cogs/hungergames.py:100
 msgid "have a small party and get drunk"
-msgstr ""
+msgstr "празднуют мелкую вечеринку, и становятся пьяными"
 
 #: cogs/hungergames.py:101
 msgid "watch animes together"
-msgstr ""
+msgstr "смотрят аниме вместе"
 
 #: cogs/hungergames.py:102
 msgid "enjoy the silence"
-msgstr ""
+msgstr "наслаждаются тишиной"
 
 #: cogs/hungergames.py:103
 msgid "attempt to kill USER but fail"
-msgstr ""
+msgstr "попытался(ась) убить USER, но не смог(ла)"
 
 #: cogs/hungergames.py:104 cogs/hungergames.py:110
 msgid "watch a movie together"
-msgstr ""
+msgstr "смотрят кино вместе"
 
 #: cogs/hungergames.py:105
 msgid "track down USER and kill them silently"
-msgstr ""
+msgstr "отслеживает USER и тихо убивает"
 
 #: cogs/hungergames.py:109
 msgid "decide they want out of here and commit suicide"
-msgstr ""
+msgstr "решают что с них хватит, и накладывают на себя руки"
 
 #: cogs/hungergames.py:111
 msgid "dance YMCA together"
-msgstr ""
+msgstr "танцуют YMCA вместе"
 
 #: cogs/hungergames.py:112
 msgid "sing songs together"
-msgstr ""
+msgstr "поют песни вместе"
 
 #: cogs/hungergames.py:113
 msgid "have a nice romantic evening"
-msgstr ""
+msgstr "имеют хороший романтический вечер"
 
 #: cogs/hungergames.py:114
 msgid "watch the others being dumb"
-msgstr ""
+msgstr "смотрят на других, которые занимаются фиг пойми чем"
 
 #: cogs/hungergames.py:115
 msgid "kiss in the moonlight"
-msgstr ""
+msgstr "целуются при лунном свете"
 
 #: cogs/hungergames.py:117
 msgid "watch a movie together when USER suddely gets shot by a stranger"
-msgstr ""
+msgstr "смотрят кино вместе, когда вдруг странник стреляет в USER"
 
 #: cogs/hungergames.py:122
 #, python-brace-format
@@ -695,7 +695,7 @@ msgstr "Ждём, пока {user} выберет действие..."
 
 #: cogs/hungergames.py:166
 msgid "Choose an action"
-msgstr "Действие выбрано"
+msgstr "Выберите действие"
 
 #: cogs/hungergames.py:172
 #, python-brace-format
@@ -703,18 +703,18 @@ msgid ""
 "I couldn't send a DM to {user}! (This is a known bug if your reaction didn't "
 "do anything) Choosing random action..."
 msgstr ""
-"Я не отправил DM {user}! (Это очень частый баг, если твой эмодзи на "
-"сообщение не произошёл) Выбираю действие наугад..."
+"Я не смог отправить сообщение {user}! (Это известный баг, если твоя реакция "
+"ничего не сделала) Выбираю действие наугад..."
 
 #: cogs/hungergames.py:180
 #, python-brace-format
 msgid "attempts to kill {user} but fails"
-msgstr ""
+msgstr "попытался(ась) убить {user}, но это не вышло"
 
 #: cogs/hungergames.py:188
 #, python-brace-format
 msgid "Letting {user} choose their action... Done"
-msgstr "{user} Выбирает действие... сделано"
+msgstr "{user} Выбирает действие... Готово"
 
 #: cogs/hungergames.py:252
 msgid "Team"
@@ -757,11 +757,11 @@ msgstr "Недостаточно игроков для игры."
 #: cogs/error_handler.py:58
 #, python-brace-format
 msgid "Oops! You forgot a required argument: `{arg}`"
-msgstr "Упс! Вы забыли аргумент: `{arg}`"
+msgstr "Упс! Вы забыли недостающий аргумент: `{arg}`"
 
 #: cogs/error_handler.py:63
 msgid "You used a malformed argument!"
-msgstr "Неверный аргумент!"
+msgstr "Вы использовали бесформенный аргумент!"
 
 #: cogs/error_handler.py:66
 #, python-brace-format
@@ -1206,7 +1206,7 @@ msgstr "Статистика о боте."
 
 #: cogs/miscellaneous.py:163
 msgid "IdleRPG Statistics"
-msgstr "IdleRPG Статистика"
+msgstr "Статистика IdleRPG"
 
 #: cogs/miscellaneous.py:166
 msgid "Official Support Server Invite: https://discord.gg/MSBatf6"
@@ -1231,12 +1231,12 @@ msgid ""
 "Operating System: **{osname} {osversion}**\n"
 "PostgreSQL Version **{pg_version}**"
 msgstr ""
-"CPU Использование: **{cpu}%**\n"
-"RAM Использование: **{ram}%**\n"
-"Версия питона **{python}** <:python:445247273065250817>\n"
-"discord.py версия **{dpy}**\n"
+"Загрузка процессора: **{cpu}%**\n"
+"Загрузка оперативной памяти: **{ram}%**\n"
+"Версия Python **{python}** <:python:445247273065250817>\n"
+"Версия discord.py **{dpy}**\n"
 "Операционная система: **{osname} {osversion}**\n"
-"PostgreSQL версия **{pg_version}**"
+"Версия PostgreSQL **{pg_version}**"
 
 #: cogs/miscellaneous.py:201
 msgid "Bot Statistics"
@@ -1470,7 +1470,7 @@ msgstr "Картинки с котиками."
 
 #: cogs/miscellaneous.py:454
 msgid "Meow!"
-msgstr "Meow!"
+msgstr "Мяу!"
 
 #: cogs/miscellaneous.py:463
 msgid "Dog pics."
@@ -1478,7 +1478,7 @@ msgstr "Картинки с собачками."
 
 #: cogs/miscellaneous.py:470
 msgid "Wouff!"
-msgstr "Wouff!"
+msgstr "Гав-гав!"
 
 #: cogs/miscellaneous.py:477
 msgid "Shows how long the bot is connected to Discord already."
@@ -1549,7 +1549,7 @@ msgstr ""
 
 #: cogs/miscellaneous.py:558
 msgid "Partnered Bots"
-msgstr "Боты с партнёркой"
+msgstr "Боты-Партнёры"
 
 #: cogs/miscellaneous.py:559
 msgid "Awesome bots made by other people!"
@@ -1935,10 +1935,10 @@ msgid ""
 "successful.\n"
 "+8% success chance per evolution."
 msgstr ""
-"The sneaky money stealer...\n"
-"Get access to `{prefix}steal` to steal 10%% of the target's money, if "
-"successful.\n"
-"+8% success chance per evolution."
+"Подлый воришка...\n"
+"Получите доступ к `{prefix}steal` что-бы воровать 10%% от капитала жертвы, "
+"если это у вас выйдет.\n"
+"Шанс успеха повышается на 8% с каждой эволюцией."
 
 #: cogs/classes.py:54
 msgid "Mage"
@@ -2044,7 +2044,7 @@ msgstr "[Только охотник Показывает вашего пито�
 #: cogs/classes.py:215
 #, python-brace-format
 msgid "{user}'s pet"
-msgstr "{user} питомец"
+msgstr "питомец {user}'а"
 
 #: cogs/classes.py:216
 msgid "Level"
@@ -2409,7 +2409,7 @@ msgid ""
 msgstr ""
 "Сейчас вы на приключении с сложностью `{difficulty}`.\n"
 "Приблизительный конец `{end}`\n"
-"Название подземелья: `{dungeon}`"
+"Имя подземелья: `{dungeon}`"
 
 #: cogs/adventure.py:359
 msgid "Cancels your current adventure."
@@ -3010,7 +3010,7 @@ msgstr "Дом :house:"
 
 #: cogs/marriage.py:201
 msgid "Super Computer :computer:"
-msgstr "Супер компьютер :computer:"
+msgstr "Суперкомпьютер :computer:"
 
 #: cogs/marriage.py:202
 msgid "Precious Gemstone Collection :gem:"
@@ -3117,7 +3117,7 @@ msgstr "Это увеличило ваши очки любви на {num}"
 
 #: cogs/marriage.py:287
 msgid "Make a child with your spouse."
-msgstr "Сделай ребёнка со своим супругом."
+msgstr "Сделай ребёнка со своей второй половинкой."
 
 #: cogs/marriage.py:290
 msgid "Can't produce a child alone, can you?"
@@ -3134,11 +3134,11 @@ msgstr "<@{marriage}>, хочешь ли ты сделать ребёнка с {
 
 #: cogs/marriage.py:303
 msgid "O.o not in the mood today?"
-msgstr "O.o Не в настроении сегодня?"
+msgstr "O.o, не в настроении сегодня?"
 
 #: cogs/marriage.py:306
 msgid "You were unsuccessful at making a child."
-msgstr "Вам не повезло при создании ребёнка."
+msgstr "У вас не получилось сделать ребёнка."
 
 #: cogs/marriage.py:311
 msgid ""
@@ -3163,7 +3163,7 @@ msgstr "Вы не ввели имя."
 #: cogs/marriage.py:343
 #, python-brace-format
 msgid "{name} was born."
-msgstr "{name} родился."
+msgstr "{name} родился(ась)."
 
 #: cogs/marriage.py:349
 msgid "View your children."
@@ -3216,7 +3216,7 @@ msgstr "{name} умер в возрасте {age}! {cause}"
 #: cogs/marriage.py:430
 #, python-brace-format
 msgid "{name} is now {age} years old."
-msgstr "{name} сейчас {age} года (лет)."
+msgstr "{name} сейчас {age} лет."
 
 #: cogs/marriage.py:436
 #, python-brace-format
@@ -3333,7 +3333,7 @@ msgstr "{num} из {total}"
 
 #: cogs/server.py:69
 msgid "Shard"
-msgstr "Осколок"
+msgstr "Шард"
 
 #: cogs/server.py:79
 msgid "Change the settings."
@@ -4334,7 +4334,7 @@ msgstr "Переименован."
 
 #: cogs/admin.py:117
 msgid "[Bot Admin only] Gives/removes crates to a user without loss."
-msgstr "[Bot Admin only] Даёт/убирает лутбоксы."
+msgstr "[Только для администраторов бота] Даёт/убирает лутбоксы."
 
 #: cogs/admin.py:124
 #, python-brace-format
@@ -4343,7 +4343,7 @@ msgstr "Передача **{amount}** лутбоксов **{target}** прошл
 
 #: cogs/admin.py:137
 msgid "[Bot Admin only] Gives xp to a user."
-msgstr "[Bot Admin only] Выдал очки опыта участнику."
+msgstr "[Только для администраторов бота] Выдал очки опыта участнику."
 
 #: cogs/admin.py:142
 #, python-brace-format
@@ -4352,7 +4352,8 @@ msgstr "Удачно преданы очки опыта **{amount}** для **{t
 
 #: cogs/admin.py:155
 msgid "[Bot Admin only] Wipes someone's donator perks."
-msgstr "[Bot Admin only] Стёр чьи-то донатерские скилы."
+msgstr ""
+"[Только для администраторов бота] Убирает чьи-то донатерские привилегии."
 
 #: cogs/admin.py:181
 #, python-brace-format
@@ -4360,8 +4361,7 @@ msgid ""
 "Successfully reset {target}'s background, class, item names and guild member "
 "limit."
 msgstr ""
-"{target} Успешно убраны: фон, класс, имена предметов и лимит на количество "
-"людей в гильдии."
+"Успешно удалены фон, класс, имена вещей и лимит участников гильдии {target}."
 
 #~ msgid "time"
 #~ msgstr "время"
