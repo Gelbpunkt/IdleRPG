@@ -34,7 +34,6 @@ def chunks(l, n):
 class Help(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
-        bot.queue.put_nowait(self.make_pages())
 
     def make_signature(self, command):
         parent = command.full_parent_name
@@ -48,7 +47,6 @@ class Help(commands.Cog):
         return fmt
 
     async def make_pages(self):
-        await self.bot.wait_until_ready()  # prevent buggy start behaviour
         all_commands = {}
         for cog, instance in self.bot.cogs.items():
             if cog in ["Admin", "Owner"]:
@@ -91,16 +89,15 @@ class Help(commands.Cog):
                 icon_url=self.bot.user.avatar_url,
             )
             for command in commands:
-                desc = (
-                    command.description
-                    or getattr(command.callback, "__doc__")
-                    or _("No Description set")
-                )
+                if hasattr(command.callback, "__doc__"):
+                    desc = _(command.callback.__doc__)
+                else:
+                    desc = _("No Description set")
                 embed.add_field(
                     name=self.make_signature(command), value=desc, inline=False
                 )
             pages.append(embed)
-        self.pages = pages
+        return pages
 
     @commands.command()
     @locale_doc
@@ -214,17 +211,17 @@ class Help(commands.Cog):
             if subcommands:
                 clean_subcommands = "\n".join(
                     [
-                        f"    {c.name.ljust(15, ' ')} {c.description or getattr(c.callback, '__doc__')}"
+                        f"    {c.name.ljust(15, ' ')} {_(getattr(c.callback, '__doc__'))}"
                         for c in subcommands
                     ]
                 )
-                fmt = f"```\n{ctx.prefix}{sig}\n\n{command.description or getattr(command.callback, '__doc__')}\n\nCommands:\n{clean_subcommands}\n```"
+                fmt = f"```\n{ctx.prefix}{sig}\n\n{_(getattr(command.callback, '__doc__'))}\n\nCommands:\n{clean_subcommands}\n```"
             else:
-                fmt = f"```\n{ctx.prefix}{sig}\n\n{command.description or getattr(command.callback, '__doc__')}\n```"
+                fmt = f"```\n{ctx.prefix}{sig}\n\n{_(getattr(command.callback, '__doc__'))}\n```"
 
             return await ctx.send(fmt)
 
-        await self.bot.paginator.Paginator(extras=self.pages).paginate(ctx)
+        await self.bot.paginator.Paginator(extras=self.make_pages()).paginate(ctx)
 
 
 def setup(bot):
