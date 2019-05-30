@@ -267,14 +267,14 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
                     f"{highest_bid[0].mention} spent the money in the meantime... Meh! Noone gets it then, pah!\nThis incident has been reported and they will get banned if it happens again. Cheers!"
                 )
 
-            cash = int(hp * 2 / len(raid))  # what da hood gets per survivor
+            cash = int(hp / 4 / len(raid))  # what da hood gets per survivor
             await self.bot.pool.execute(
                 'UPDATE profile SET money=money+$1 WHERE "user"=ANY($2);',
                 cash,
                 [u.id for u in raid.keys()],
             )
             await ctx.send(
-                f"**Gave ${cash} of Zerekiel's ${hp * 2} drop to all survivors!**"
+                f"**Gave ${cash} of Zerekiel's ${int(hp / 4)} drop to all survivors!**"
             )
 
         else:
