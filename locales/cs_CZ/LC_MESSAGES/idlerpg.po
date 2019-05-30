@@ -3,49 +3,52 @@
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
-#, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: PACKAGE VERSION\n"
+"Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-05-30 10:29+0000\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
+"PO-Revision-Date: 2019-05-29 14:27+0200\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: cs\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 2.2.3\n"
+"Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n>=2 && n<=4 ? 1 : 2);\n"
 
 #: cogs/tournament.py:39
 msgid "Starts a new tournament."
-msgstr ""
+msgstr "Začni nový turnaj"
 
 #: cogs/tournament.py:41 cogs/battles.py:44 cogs/battles.py:146
 #: cogs/gambling.py:327 cogs/profile.py:460
 msgid "You are too poor."
-msgstr ""
+msgstr "Jsi příliš chudý."
 
 #: cogs/tournament.py:44
-#, python-brace-format
+#, fuzzy, python-brace-format
 msgid ""
 "{author} started a tournament! Free entries, prize is **${prize}**! React "
 "with \\U00002694 to join!"
 msgstr ""
+"{author} začal nový turnaj! Vstup je zadarmo, odměna za výhru je **${prize}"
+"**! Reagujte s \\U00002694 abyste se připojili"
 
 #: cogs/tournament.py:68
 msgid "Noone joined your tournament."
-msgstr ""
+msgstr "Nikdo se nepřipojil do turnaje."
 
 #: cogs/tournament.py:72
 #, python-brace-format
 msgid "{user} joined the tournament."
-msgstr ""
+msgstr "{user} se připojil k turnaji."
 
 #: cogs/tournament.py:76
 #, python-brace-format
 msgid "You don't have a character, {user}."
-msgstr ""
+msgstr "Ještě nemáš založený ůčet, {user}."
 
 #: cogs/tournament.py:82
 #, python-brace-format
@@ -53,33 +56,35 @@ msgid ""
 "There are **{num}** entries, due to the fact we need a playable tournament, "
 "the last **{removed}** have been removed."
 msgstr ""
+"Je **{num}** vstupů, aby byl turnaj vyrovnaný, posledních **{removed}** "
+"účastníku bylo odstraněno z turnaje."
 
 #: cogs/tournament.py:88
 #, python-brace-format
 msgid "Tournament started with **{num}** entries."
-msgstr ""
+msgstr "Turnaj začal s **{num}** vstupy do turnaje."
 
 #: cogs/tournament.py:91
 msgid "vs"
-msgstr ""
+msgstr "proti"
 
 #: cogs/tournament.py:122
 #, python-brace-format
 msgid "Winner of this match is {winner}!"
-msgstr ""
+msgstr "Vítěz tohoto kola je {winner}!"
 
 #: cogs/tournament.py:126
 msgid "Round Done!"
-msgstr ""
+msgstr "Kolo ukončeno"
 
 #: cogs/tournament.py:129
 #, python-brace-format
 msgid "Tournament ended! The winner is {winner}."
-msgstr ""
+msgstr "Turnaj skončil. Vítězem je {winner}."
 
 #: cogs/tournament.py:134
 msgid "The creator spent money, prize can't be given!"
-msgstr ""
+msgstr "Zakladatel utratil peníze, odměna nemůže být vydána"
 
 #: cogs/tournament.py:148
 #, python-brace-format
@@ -87,6 +92,8 @@ msgid ""
 "Tournament ended! The winner is {winner}.\n"
 "Money was given!"
 msgstr ""
+"Turnaj skončil. Vítězem se stává {winner}.\n"
+"Peníze jsou předány vítězi"
 
 #: cogs/images.py:131
 msgid "Pixelfys an Avatar."
@@ -94,7 +101,7 @@ msgstr ""
 
 #: cogs/images.py:135
 msgid "Use 1, 2, 3, 4 or 5 as intensity value."
-msgstr ""
+msgstr "Použij 1, 2, 3, 4 nebo 5 k "
 
 #: cogs/images.py:148
 msgid "Finds edges in an Avatar."
@@ -110,11 +117,11 @@ msgstr ""
 
 #: cogs/halloween.py:41
 msgid "Trick or treat!"
-msgstr ""
+msgstr "Trick or treat!"
 
 #: cogs/halloween.py:46
 msgid "You walk around the houses... Noone is there... *yet*"
-msgstr ""
+msgstr "Chodíš kolem domku… nikdo tam není… *zatím*"
 
 #: cogs/halloween.py:52
 #, python-brace-format
@@ -122,6 +129,8 @@ msgid ""
 "You walk around the houses and ring at {waiting}'s house! That's a trick or "
 "treat bag for you, yay!"
 msgstr ""
+" Chodíš okolo domků a najdeš tenhle pěkně vypadající domek {waiting}. "
+"Zazvoníš. {waiting} ti otevře a dostaneš Trick or Treat tašku. Jupí!"
 
 #: cogs/halloween.py:62
 #, python-brace-format
@@ -129,6 +138,8 @@ msgid ""
 "You walk around the houses and ring at {waiting}'s house! Sadly they don't "
 "have anything for you..."
 msgstr ""
+"Chodíš okolo domků a najdeš tenhle pěkně vypadající domek {waiting}! Smolně "
+"ti nikdo neotevřel. Ach jo!"
 
 #: cogs/halloween.py:69
 #, python-brace-format
@@ -136,53 +147,56 @@ msgid ""
 "The waiting was worth it: {author} rang! That's a trick or treat bag for "
 "you, yay!"
 msgstr ""
+"Čekání mělo smysl: {author} zazvonil! Dostal jsi Trick or Treat tašku. Jupí!"
 
 #: cogs/halloween.py:78
 #, python-brace-format
 msgid "{author} rings at your house, but... Nothing for you!"
-msgstr ""
+msgstr "{author} zvoní na tvůj domek, ale… nic pro tebe nemá!"
 
 #: cogs/halloween.py:95
 #, python-brace-format
 msgid "{user} gave you additional $50!"
-msgstr ""
+msgstr "{user} ti dal $50 navíc"
 
 #: cogs/halloween.py:105
 msgid "Seems you haven't got a trick or treat bag yet. Go get some!"
 msgstr ""
+"Vypadá to, že jsi zatím nedostal žádnou Trick or Treat tašku. Běž si ji "
+"získat!"
 
 #: cogs/halloween.py:142 cogs/crates.py:72 cogs/classes.py:244
 #: cogs/adventure.py:214
 msgid "You gained an item!"
-msgstr ""
+msgstr "Získal jsi předmět!"
 
 #: cogs/halloween.py:143
 msgid "You found a new item when opening a trick-or-treat bag!"
-msgstr ""
+msgstr "Našel jsi nový předmět při otevírání trick-or-treat tašky!"
 
 #: cogs/halloween.py:147 cogs/crates.py:77 cogs/classes.py:249
 #: cogs/adventure.py:219
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #: cogs/halloween.py:148 cogs/crates.py:78 cogs/classes.py:250
 #: cogs/adventure.py:220 cogs/trading.py:204 cogs/trading.py:375
 msgid "Name"
-msgstr ""
+msgstr "Jméno"
 
 #: cogs/halloween.py:149 cogs/crates.py:79 cogs/classes.py:251
 #: cogs/adventure.py:221 cogs/trading.py:205 cogs/trading.py:376
 msgid "Type"
-msgstr ""
+msgstr "Piš"
 
 #: cogs/halloween.py:154
 #, python-brace-format
 msgid "Remaining trick-or-treat bags: {bags}"
-msgstr ""
+msgstr "Máš ještě {bags} trick-or-treat tašek."
 
 #: cogs/locale.py:70
 msgid "Change the bot language or view possible options."
-msgstr ""
+msgstr "Změň jazky bota nebo shlédni možné nastavení"
 
 #: cogs/locale.py:77
 #, python-brace-format
@@ -190,14 +204,17 @@ msgid ""
 "Your current language is **{current_locale}**. Available options: "
 "{all_locales}"
 msgstr ""
+"Bot je teďka nastaven v **{current_locale}**. Můžeš bota změnit do "
+"{all_locales}"
 
 #: cogs/locale.py:84
 msgid "Sets the language."
-msgstr ""
+msgstr "Nastav jazyk"
 
 #: cogs/locale.py:86
 msgid "Not a valid language."
 msgstr ""
+"Tento jazyk buď neexistuje nebo bot ještě nebyl přeložen do tohoto jazyka"
 
 #: cogs/locale.py:92
 #, python-brace-format
@@ -208,11 +225,11 @@ msgstr ""
 
 #: cogs/battles.py:40
 msgid "Battle against another player."
-msgstr ""
+msgstr "Bojuj proti ostatním hráčům."
 
 #: cogs/battles.py:42 cogs/battles.py:144
 msgid "You can't battle yourself."
-msgstr ""
+msgstr "Nemůžeš bojovat proti sám sobě."
 
 #: cogs/battles.py:49
 #, python-brace-format
@@ -220,6 +237,8 @@ msgid ""
 "{author} seeks a battle! React with \\U00002694 now to duel them! The price "
 "is **${money}**."
 msgstr ""
+"{author} chce bojovat! Reaguj s \\U00002694 teď aby jsi proti jemu bojoval! "
+"Cena je **${money}**."
 
 #: cogs/battles.py:55
 #, python-brace-format
@@ -227,37 +246,40 @@ msgid ""
 "{author} seeks a battle with {enemy}! React with \\U00002694 now to duel "
 "them! The price is **${money}**."
 msgstr ""
+"{author} chce bojovat proti {enemy}! Reaguj s \\U00002694 teď aby jsi proti "
+"němu bojoval! Cena je **${money}**."
 
 #: cogs/battles.py:80 cogs/battles.py:182
 #, python-brace-format
 msgid "Noone wanted to join your battle, {author}!"
-msgstr ""
+msgstr "Nikdo se k tobě nepřipojil {author}!"
 
 #: cogs/battles.py:87 cogs/battles.py:189
 msgid "You don't have enough money to join the battle."
-msgstr ""
+msgstr "Nemáš dost peněz k boji!"
 
 #: cogs/battles.py:91
 #, python-brace-format
 msgid ""
 "Battle **{author}** vs **{enemy}** started! 30 seconds of fighting will now "
 "start!"
-msgstr ""
+msgstr "Boj **{author}** proti **{enemy}** začal! 30 vteřin boje nyní započne!"
 
 #: cogs/battles.py:116
 msgid ""
 "One of you can't pay the price for the battle because he spent money in the "
 "time of fighting."
 msgstr ""
+"Jeden z vás nemůže zaplatit za boj, protože utratil peníze při průběho boje."
 
 #: cogs/battles.py:130
 #, python-brace-format
 msgid "{winner} won the battle vs {looser}! Congratulations!"
-msgstr ""
+msgstr "{winner} vyhrál boj proti {looser}! Gratulujeme!"
 
 #: cogs/battles.py:142
 msgid "Reaction-based battle system."
-msgstr ""
+msgstr "Bojový systém založen na reakcích"
 
 #: cogs/battles.py:151
 #, python-brace-format
@@ -265,6 +287,8 @@ msgid ""
 "{author} seeks an active battle! React with \\U00002694 now to duel them! "
 "The price is **${money}**."
 msgstr ""
+"{author} chce provést aktivní boj! Reaguj s \\U00002694 teď aby jsi proti "
+"němu bojoval! Cena je **${money}**."
 
 #: cogs/battles.py:157
 #, python-brace-format
@@ -272,6 +296,8 @@ msgid ""
 "{author} seeks an active battle with {enemy}! React with \\U00002694 now to "
 "duel them! The price is **${money}**."
 msgstr ""
+"{author} chce aktivně bojovat proti {enemy}! Reaguj s \\U00002694 teď aby "
+"jsi proti němu bojoval! Cena je **${money}**."
 
 #: cogs/battles.py:224
 #, python-brace-format
@@ -280,45 +306,50 @@ msgid ""
 "{player2}: **{hp2}** HP\n"
 "React to play."
 msgstr ""
+"{player1}: **{hp1}** HP\n"
+"{player2}: **{hp2}** HP\n"
+"Zareaguj pro hru."
 
 #: cogs/battles.py:241
 msgid "Someone refused to move. Battle stopped."
-msgstr ""
+msgstr "Někdo odmítl hrát. Souboj pozastaven."
 
 #: cogs/battles.py:246
 #, python-brace-format
 msgid "{user}, you already moved!"
-msgstr ""
+msgstr "{user}, Již jsi hrál"
 
 #: cogs/battles.py:256
 #, python-brace-format
 msgid "{user} healed themselves for **20 HP**."
-msgstr ""
+msgstr "{user} si vyléčil **20 HP**."
 
 #: cogs/battles.py:271 cogs/battles.py:295
 #, python-brace-format
 msgid "{user} hit {enemy} for **{eff}** damage."
-msgstr ""
+msgstr "{user} způsobil {enemy}  **{eff}** poškození"
 
 #: cogs/battles.py:301
 #, python-brace-format
 msgid "{user}'s attack on {enemy} failed!"
-msgstr ""
+msgstr "{user} útok na {enemy} selhal!"
 
 #: cogs/battles.py:306
 msgid "You both died!"
-msgstr ""
+msgstr "Oba jste umřeli"
 
 #: cogs/battles.py:315
 msgid ""
 "One of you both can't pay the price for the battle because he spent money in "
 "the time of fighting."
 msgstr ""
+"Jeden z vás nemůže zaplatit cenu za souboj, protože peníze utratil během "
+"souboje"
 
 #: cogs/battles.py:329
 #, python-brace-format
 msgid "{winner} won the active battle vs {looser}! Congratulations!"
-msgstr ""
+msgstr "{winner} Vyhrál aktivní bitvu proti {looser}! Gratulujeme!"
 
 #: cogs/easter.py:34
 msgid ""
@@ -377,7 +408,7 @@ msgstr ""
 
 #: cogs/crates.py:35
 msgid "Shows your crates."
-msgstr ""
+msgstr "Zobraz si svoje truhly"
 
 #: cogs/crates.py:38
 #, python-brace-format
@@ -385,39 +416,42 @@ msgid ""
 "You currently have **{crates}** crates, {author}! Use `{prefix}open` to open "
 "one!"
 msgstr ""
+"Nyní máš **{crates}** truhel, {author}! použij `{prefix}open` pro otevření "
+"jedné z nich!"
 
 #: cogs/crates.py:50
 msgid "Opens a crate."
-msgstr ""
+msgstr "Otevřte truhlu"
 
 #: cogs/crates.py:54
 msgid ""
 "Seems like you don't have a crate yet. Vote me up to get some or earn them!"
 msgstr ""
+"Zdá se že zatím nemáš žádnou truhlu. Hlasuj pro bota a nějakou tím získej!"
 
 #: cogs/crates.py:73
 msgid "You found a new item when opening a crate!"
-msgstr ""
+msgstr "Našel jsi nový předmět když jsi otevíral truhlu"
 
 #: cogs/crates.py:80 cogs/classes.py:253 cogs/adventure.py:222
 #: cogs/trading.py:206 cogs/trading.py:377
 msgid "Damage"
-msgstr ""
+msgstr "Poškození"
 
 #: cogs/crates.py:81 cogs/classes.py:255 cogs/adventure.py:223
 #: cogs/trading.py:207 cogs/trading.py:378
 msgid "Armor"
-msgstr ""
+msgstr "Brnění"
 
 #: cogs/crates.py:82 cogs/classes.py:256 cogs/adventure.py:224
 #: cogs/trading.py:208 cogs/trading.py:379
 msgid "Value"
-msgstr ""
+msgstr "Hodnota"
 
 #: cogs/crates.py:84
 #, python-brace-format
 msgid "Remaining crates: {crates}"
-msgstr ""
+msgstr "Zbývá ti jestě {crates} truhel"
 
 #: cogs/crates.py:96
 msgid "Trades crates to a user."
@@ -428,202 +462,203 @@ msgstr ""
 #: cogs/crates.py:98 cogs/guild.py:244 cogs/guild.py:264 cogs/admin.py:72
 #: cogs/admin.py:85
 msgid "Very funny..."
-msgstr ""
+msgstr "Velmi zábavné..."
 
 #: cogs/crates.py:100
 msgid "You don't have any crates."
-msgstr ""
+msgstr "Nemáš žádné truhly "
 
 #: cogs/crates.py:111
 #, python-brace-format
 msgid "Successfully gave {amount} crate(s) to {other}."
-msgstr ""
+msgstr "Uspěšně jsi daroval {amount} truhel hráči {other}."
 
 #: cogs/hungergames.py:50
 msgid "Gather as much food as you can"
-msgstr ""
+msgstr "Nasbírat co nejvíce jídla"
 
 #: cogs/hungergames.py:51
 msgid "gathers as much food as they can"
-msgstr ""
+msgstr "sbírá co nejvíce jídla"
 
 #: cogs/hungergames.py:55
 msgid "Grab a backpack and retreat"
-msgstr ""
+msgstr "Sebrat batoh a ustoupit"
 
 #: cogs/hungergames.py:56
 msgid "grabs a backpack and retreats"
-msgstr ""
+msgstr "bere batoh a ustupuje"
 
 #: cogs/hungergames.py:59
 msgid "Take a pistol and suicide"
-msgstr ""
+msgstr "Vzít pistoli a zastřelit se"
 
 #: cogs/hungergames.py:59
 msgid "gives themselves the bullet"
-msgstr ""
+msgstr "si daroval kulku do hlavy"
 
 #: cogs/hungergames.py:60
 msgid "Ram a knife in your body"
-msgstr ""
+msgstr "Bodnout se nožem do těla"
 
 #: cogs/hungergames.py:60
 msgid "commits suicide with a knife"
-msgstr ""
+msgstr "se potřezal nožem "
 
 #: cogs/hungergames.py:62
 msgid "Run away from the Curnocopia"
-msgstr ""
+msgstr "Útéct pryč od Rohu hojnosti"
 
 #: cogs/hungergames.py:63
 msgid "runs away from the Cornucopia"
-msgstr ""
+msgstr "utíká pryč od rohu hojnosti"
 
 #: cogs/hungergames.py:67
 msgid "Search for a pair of Explosives"
-msgstr ""
+msgstr "Porozhlédnout se po nějakých výbušninách"
 
 #: cogs/hungergames.py:68
 msgid "finds a bag full of explosives"
-msgstr ""
+msgstr "nachází batoh plný výbušnin"
 
 #: cogs/hungergames.py:71
 msgid "Look for water"
-msgstr ""
+msgstr "Porozhlédnout se po vodě"
 
 #: cogs/hungergames.py:71
 msgid "finds a canteen full of water"
-msgstr ""
+msgstr "nachází čutoru plnou vody"
 
 #: cogs/hungergames.py:73
 msgid "Get a first aid kit"
-msgstr ""
+msgstr "Získat balíček první pomoci"
 
 #: cogs/hungergames.py:74
 msgid "clutches a first aid kit and runs away"
-msgstr ""
+msgstr "vytrhává balíček první pomoci a utíká"
 
 #: cogs/hungergames.py:78
 msgid "Grab a backpack"
-msgstr ""
+msgstr "Sebrat Batoh"
 
 #: cogs/hungergames.py:79
 msgid "grabs a backpack, not realizing it is empty"
-msgstr ""
+msgstr "bere batoh, ale nevšímá si, že je prázdný "
 
 #: cogs/hungergames.py:82
 msgid "Try to assault USER"
-msgstr ""
+msgstr "Pokusit se zazvraždit USER"
 
 #: cogs/hungergames.py:82
 msgid "kills USER"
-msgstr ""
+msgstr "Zabíjí USER"
 
 #: cogs/hungergames.py:84
 msgid "Kill USER at the water"
-msgstr ""
+msgstr "Zabít USER ve vodě"
 
 #: cogs/hungergames.py:85
 msgid "assaults USER while they were drinking water at the river"
-msgstr ""
+msgstr "Zabíjí USER během toho co pijí vodu z řeky"
 
 #: cogs/hungergames.py:89
 msgid "Try to hide some landmines"
-msgstr ""
+msgstr "Pokusit se ukrýt nějaké miny"
 
 #: cogs/hungergames.py:90
 msgid "hides landmines at a few locations"
-msgstr ""
+msgstr "Schovává miny v pár lokacích"
 
 #: cogs/hungergames.py:93
 msgid "Take a bath"
-msgstr ""
+msgstr "Dát si koupel"
 
 #: cogs/hungergames.py:93
 msgid "baths in the water and enjoys the silence"
-msgstr ""
+msgstr "Koupe se ve vodě a uzívá si ticha"
 
 #: cogs/hungergames.py:96
+#, fuzzy
 msgid "kill USER"
-msgstr ""
+msgstr "zabít USER"
 
 #: cogs/hungergames.py:97
 msgid "grill at the fireplace and tell each other spooky stories"
-msgstr ""
+msgstr "griluje nad ohništěm a vypráví ostatním strašidelný příběh"
 
 #: cogs/hungergames.py:98
 msgid "annoy USER"
-msgstr ""
+msgstr "otravovat USER"
 
 #: cogs/hungergames.py:99 cogs/hungergames.py:108
 msgid "kill themselves by walking into a landmine"
-msgstr ""
+msgstr "Zabil sám sebe vstoupením do minového pole"
 
 #: cogs/hungergames.py:100
 msgid "have a small party and get drunk"
-msgstr ""
+msgstr "mají malou párty a opili se"
 
 #: cogs/hungergames.py:101
 msgid "watch animes together"
-msgstr ""
+msgstr "sledují spolu anime"
 
 #: cogs/hungergames.py:102
 msgid "enjoy the silence"
-msgstr ""
+msgstr "si užívají ticha"
 
 #: cogs/hungergames.py:103
 msgid "attempt to kill USER but fail"
-msgstr ""
+msgstr "se pokusil zabít USER, ale selhal"
 
 #: cogs/hungergames.py:104 cogs/hungergames.py:110
 msgid "watch a movie together"
-msgstr ""
+msgstr "sledují spolu film"
 
 #: cogs/hungergames.py:105
 msgid "track down USER and kill them silently"
-msgstr ""
+msgstr "vystopoval USER a zabil jej potichu"
 
 #: cogs/hungergames.py:109
 msgid "decide they want out of here and commit suicide"
-msgstr ""
+msgstr "se rozhodli, že chtějí odsud a spáchají sebevraždu"
 
 #: cogs/hungergames.py:111
 msgid "dance YMCA together"
-msgstr ""
+msgstr "tancují spolu YMCA"
 
 #: cogs/hungergames.py:112
 msgid "sing songs together"
-msgstr ""
+msgstr "spívají spolu písničku"
 
 #: cogs/hungergames.py:113
 msgid "have a nice romantic evening"
-msgstr ""
+msgstr "mají krásný romantický večer"
 
 #: cogs/hungergames.py:114
 msgid "watch the others being dumb"
-msgstr ""
+msgstr "sledují ostatní jak se chovají hloupě"
 
 #: cogs/hungergames.py:115
 msgid "kiss in the moonlight"
-msgstr ""
+msgstr "se políbili za svitu měsíce"
 
 #: cogs/hungergames.py:117
 msgid "watch a movie together when USER suddely gets shot by a stranger"
-msgstr ""
+msgstr "sledují spolu film, když najednou USER byl zastřelen nahodným střelcem"
 
 #: cogs/hungergames.py:122
 #, python-brace-format
 msgid "**Round {round}**"
-msgstr ""
+msgstr "**Round {round}**"
 
 #: cogs/hungergames.py:129
 #, python-brace-format
 msgid "Letting {user} choose their action..."
-msgstr ""
+msgstr "Nechávám {user} vybrat svou akci..."
 
 #: cogs/hungergames.py:166
 msgid "Choose an action"
-msgstr ""
+msgstr "Vyber si akci"
 
 #: cogs/hungergames.py:172
 #, python-brace-format
@@ -631,41 +666,45 @@ msgid ""
 "I couldn't send a DM to {user}! (This is a known bug if your reaction didn't "
 "do anything) Choosing random action..."
 msgstr ""
+"Nemohu poslat osobní zprávu uživateli  {user}! (Tohle je známý bug, pokud "
+"tvé reakce nefungují) Vybírám proto náhodnou akci..."
 
 #: cogs/hungergames.py:180
 #, python-brace-format
 msgid "attempts to kill {user} but fails"
-msgstr ""
+msgstr "se pokusil zabít  {user} , ale selhal"
 
 #: cogs/hungergames.py:188
 #, python-brace-format
 msgid "Letting {user} choose their action... Done"
-msgstr ""
+msgstr "Nechávám  {user} vybrat svou akci... Hotovo"
 
 #: cogs/hungergames.py:252
 msgid "Team"
-msgstr ""
+msgstr "Tým"
 
 #: cogs/hungergames.py:261
+#, fuzzy
 msgid "The cast"
-msgstr ""
+msgstr "Obsazení"
 
 #: cogs/hungergames.py:272
 #, python-brace-format
 msgid "This hunger game's winner is {winner}!"
-msgstr ""
+msgstr "Vítěz těchto hladových hej je {winner}!"
 
 #: cogs/hungergames.py:277
 msgid "Everyone died!"
-msgstr ""
+msgstr "Všichni zemřeli!"
 
 #: cogs/hungergames.py:288
+#, fuzzy
 msgid "Starts a game of hunger games."
-msgstr ""
+msgstr "Start hladových her"
 
 #: cogs/hungergames.py:290
 msgid "There is already a game in here!"
-msgstr ""
+msgstr "Již zde probíhá hra"
 
 #: cogs/hungergames.py:293
 #, python-brace-format
@@ -673,52 +712,54 @@ msgid ""
 "{author} started a game of Hunger Games! React with :shallow_pan_of_food: to "
 "join the game! **{num} joined**"
 msgstr ""
+"{author} započal Hladové hry! Reaguj s :shallow_pan_of_food: pro připojení "
+"do hry! **{num} hráči se již pripojili**"
 
 #: cogs/hungergames.py:317
 msgid "Not enough players joined..."
-msgstr ""
+msgstr "Nepřipojilo se dost hráčů...."
 
 #: cogs/error_handler.py:58
 #, python-brace-format
 msgid "Oops! You forgot a required argument: `{arg}`"
-msgstr ""
+msgstr "Jejda! Zapomněl jsi na požadovaný argument: `{arg}`"
 
 #: cogs/error_handler.py:63
 msgid "You used a malformed argument!"
-msgstr ""
+msgstr "Použil jsi nesprávný argument!"
 
 #: cogs/error_handler.py:66
 #, python-brace-format
 msgid "You are on cooldown. Try again in {time}."
-msgstr ""
+msgstr "Odpočítává se ti cooldown. Zkus to znova za {time}."
 
 #: cogs/error_handler.py:77 cogs/error_handler.py:114
 msgid "Permission denied"
-msgstr ""
+msgstr "Práva zamítnuta"
 
 #: cogs/error_handler.py:79
 msgid ":x: This command is only avaiable for the bot owner."
-msgstr ""
+msgstr ":x: Tento příkaz je dostupný pouze pro majitele bota."
 
 #: cogs/error_handler.py:86
 msgid "You don't have a character yet."
-msgstr ""
+msgstr "Nemáš zatím žádnou postavu"
 
 #: cogs/error_handler.py:88
 msgid "You need to have a guild to use this command."
-msgstr ""
+msgstr "Musíš být v guildě pro využití tohoto příkazu"
 
 #: cogs/error_handler.py:90
 msgid "You need to be in no guild to use this command."
-msgstr ""
+msgstr "Nesmíš být v žádné guildě pro využítí tohoto příkazu"
 
 #: cogs/error_handler.py:93
 msgid "Your rank in the guild is too low to use this command."
-msgstr ""
+msgstr "Tvé postavené v guildě je příliž níské pro využití tohoto příkazu"
 
 #: cogs/error_handler.py:97
 msgid "You mustn't be the owner of a guild to use this command."
-msgstr ""
+msgstr "Nesmíš být majitel guildy pro využití tohoto příkazu"
 
 #: cogs/error_handler.py:102
 #, python-brace-format
@@ -726,27 +767,35 @@ msgid ""
 "You are already on an adventure. Use `{prefix}status` to see how long it "
 "lasts."
 msgstr ""
+"Již jsi se vydal na dobrodružství. Použij `{prefix}status` aby jsi si "
+"zobrazil za jak dlouho se vrátíš"
 
 #: cogs/error_handler.py:108
 #, python-brace-format
 msgid ""
 "You need to be on an adventure to use this command. Try `{prefix}adventure`!"
 msgstr ""
+"Musíš být na dobrodružství, aby jsi mohl využít tohoto příkazu. Zkust použít "
+"`{prefix}adventure`!"
 
 #: cogs/error_handler.py:116
 msgid ""
 ":x: You don't have the permissions to use this command. It is thought for "
 "other users."
 msgstr ""
+":x: Nemáš dostatečná práva pro použití tohoto příkazu. Je to pro ostatní "
+"uživatele."
 
 #: cogs/error_handler.py:122
 msgid "You did not choose anything."
-msgstr ""
+msgstr "Nic jsi si nevybral."
 
 #: cogs/error_handler.py:135
 msgid ""
 "An argument or value you entered was far too high for me to handle properly!"
 msgstr ""
+"Argument nebo hodnota již si zadal je pro mě příliš vysoká, takže s ní "
+"nedokážu pracovat!"
 
 #: cogs/error_handler.py:141
 msgid ""
@@ -759,36 +808,38 @@ msgid ""
 "The command you tried to use ran into an error. The incident has been "
 "reported and the team will work hard to fix the issue!"
 msgstr ""
+"Příkaz který jsi se pokusil použít selhal. Tato skutečnost bude oznámena a "
+"náš tým bude tvrdě pracovat na opravě!"
 
 #: cogs/christmas.py:68
 msgid "Look at your Winter Calendar"
-msgstr ""
+msgstr "Podívej se na svůj Vánoční Kalendář"
 
 #: cogs/christmas.py:71
 msgid "No calendar to show!"
-msgstr ""
+msgstr "Žádný kalendář k zobrazení!"
 
 #: cogs/christmas.py:79
 msgid "Open the Winter Calendar once every day."
-msgstr ""
+msgstr "Otevři Vánoční Kalendář jednou denně."
 
 #: cogs/christmas.py:84
 msgid "It's not calendar time yet..."
-msgstr ""
+msgstr "jestě není čas kalendáře..."
 
 #: cogs/christmas.py:86
 #, python-brace-format
 msgid "**You opened day {today}!**"
-msgstr ""
+msgstr "**otevřel jsi den číslo {today}!**"
 
 #: cogs/christmas.py:93
 msgid "A mysterious puzzle piece"
-msgstr ""
+msgstr "prapodivný kus puzzle"
 
 #: cogs/christmas.py:101
 #, python-brace-format
 msgid "{crates} crates"
-msgstr ""
+msgstr "{crates} truhel"
 
 #: cogs/christmas.py:117
 #, python-brace-format
@@ -796,14 +847,18 @@ msgid ""
 "A special surprise - check out `{prefix}eventbackground` for a new "
 "Wintersday background!"
 msgstr ""
+"Speciální překvapení - zkontroluj `{prefix}eventbackground` pro zimní pozadí "
+"profilu!"
 
 #: cogs/christmas.py:126
+#, fuzzy
 msgid "Combine the mysterious puzzle pieces."
-msgstr ""
+msgstr "kombinuj prapodivné kousky puzzle"
 
 #: cogs/christmas.py:136
 msgid "The mysterious puzzles don't fit together... Maybe some are missing?"
 msgstr ""
+"Prapodivné kousky puzzlke k sobě nesedí... Možná že některé z nich chybí?"
 
 #: cogs/christmas.py:159
 #, python-brace-format
@@ -815,15 +870,15 @@ msgstr ""
 
 #: cogs/christmas.py:167
 msgid "Make a snowball fights against another guild."
-msgstr ""
+msgstr "Uspořádat koulovanou proti jiné guildě."
 
 #: cogs/christmas.py:169
 msgid "You may not fight yourself."
-msgstr ""
+msgstr "neměl by jsi bojovat sám se sebou"
 
 #: cogs/christmas.py:178
 msgid "The enemy must be an officer or higher."
-msgstr ""
+msgstr "nepřítel musí být officer nebo vyšší"
 
 #: cogs/christmas.py:196
 #, python-brace-format
@@ -833,10 +888,14 @@ msgid ""
 "**IMPORTANT: This is very spammy, make sure you are using a dedicated "
 "channel!**"
 msgstr ""
+"{enemy}, {author} vás vyzývá na ultimátní sněhovou bitvu! pokud ji chcete "
+"přijmout, reagujte pomocí \\U00002744\n"
+"**DŮLEŽITÉ: Tato událost opravdu hodně spamuje. Ujistěte se, že používáte "
+"oddělený kanál!**"
 
 #: cogs/christmas.py:210 cogs/christmas.py:235 cogs/christmas.py:255
 msgid "Timed out..."
-msgstr ""
+msgstr "Čas vypršel..."
 
 #: cogs/christmas.py:228
 #, python-brace-format
@@ -844,14 +903,16 @@ msgid ""
 "{author}, type `snowballfight nominate @user` to add one of your guild "
 "members to the fight!"
 msgstr ""
+"{author}, zadej `snowballfight nominate @user` pro přizvání dalšího člena "
+"guildy k souboji!"
 
 #: cogs/christmas.py:241 cogs/christmas.py:261
 msgid "Not one of your guild members..."
-msgstr ""
+msgstr "Toto není člen tvé guildy..."
 
 #: cogs/christmas.py:243 cogs/christmas.py:263
 msgid "That's you!"
-msgstr ""
+msgstr "To jsi ty!"
 
 #: cogs/christmas.py:248
 #, python-brace-format
@@ -859,6 +920,8 @@ msgid ""
 "{enemy}, use `snowballfight nominate @user` to add one of your guild members "
 "to the fight!"
 msgstr ""
+"{enemy}, použil `snowballfight nominate @user` aby přizval jednoho z tvých "
+"členů guildy k souboji!"
 
 #: cogs/christmas.py:281
 #, python-brace-format
@@ -869,6 +932,11 @@ msgid ""
 "{t2} - {enemy}\n"
 "Next round starts in 5 seconds!\n"
 msgstr ""
+"\n"
+"tým hráče {author.mention} proti týmu hráče {enemy.mention}\n"
+"{t1} - {author}\n"
+"{t2} - {enemy}\n"
+"Další kolo startuje za 5 sekund!\n"
 
 #: cogs/christmas.py:304
 msgid ""
