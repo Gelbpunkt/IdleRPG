@@ -316,3 +316,30 @@ class Bot(commands.AutoShardedBot):
             return (damage + grade, armor + grade)
         else:
             return (damage, armor)
+
+    async def log_transaction(self, ctx, from_, to, subject, data):
+        """Logs a transaction."""
+        from = from_.id if isinstance(from_, (discord.Member, discord.User)) else from_
+        to = to.id if isinstance(to, (discord.Member, discord.User)) else to
+        timestamp = datetime.datetime.now()
+        assert subject in ["crates", "money", "shop", "offer"]
+        if isinstance(data, int):
+            description = f"""\
+{ctx.channel} in {ctx.guild or 'DMs'}
+From: {self.get_user(from_) or 'Unknown User'}
+To:   {self.get_user(to) or 'Unknown User'}
+Subject: {subject}
+Amount: {data}"""
+        else:
+            description = f"""\
+{ctx.channel} in {ctx.guild or 'DMs'}
+From: {self.get_user(from_) or 'Unknown User'}
+To:   {self.get_user(to) or 'Unknown User'}
+Subject: {subject} (Item)
+Name: {item['name']}
+Value: {item['value']}
+ID: {item['id']}
+Type: {item['type']}
+Damage: {item['damage']}
+Armor: {item['armor']}"""
+        await self.pool.execute('INSERT INTO transactions ("from", "to", "subject", "info", "timestamp") VALUES ($1, $2, $3, $4, $5;), from_, to, subject, description, timestamp)
