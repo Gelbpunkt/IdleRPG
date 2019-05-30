@@ -414,7 +414,7 @@ Thank you for playing IdleRPG! :heart:"""
         if dice_type[1] <= 0:
             return await ctx.send(_("Dice must have at least one side."))
         results = []
-        for _ in range(dice_type[0]):
+        for x in range(dice_type[0]):
             results.append(random.randint(1, dice_type[1]))
         sumall = 0
         for i in results:
