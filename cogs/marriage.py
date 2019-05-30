@@ -274,7 +274,7 @@ class Marriage(commands.Cog):
                 _("You and {partner} decided to visit Paris."),
                 _("You and {partner} went ice skating together."),
             ]
-        ).format(partner=partner.mention)
+        ).format(partner=(partner.mention if partner else _("Unknown User")))
         text = _("This increased your lovescore by {num}").format(num=num)
         await ctx.send(f"{scenario} {text}")
 
