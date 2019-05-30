@@ -472,7 +472,9 @@ class Profile(commands.Cog):
                 money=money, other=other.mention
             )
         )
-        await self.bot.log_transaction(ctx, from_=ctx.author, to=other, subject="money", data=money)
+        await self.bot.log_transaction(
+            ctx, from_=ctx.author, to=other, subject="money", data=money
+        )
 
     @checks.has_char()
     @commands.command()

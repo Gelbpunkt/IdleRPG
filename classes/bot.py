@@ -336,10 +336,17 @@ Amount: {data}"""
 From: {self.get_user(from_) or 'Unknown User'}
 To:   {self.get_user(to) or 'Unknown User'}
 Subject: {subject} (Item)
-Name: {item['name']}
-Value: {item['value']}
-ID: {item['id']}
-Type: {item['type']}
-Damage: {item['damage']}
-Armor: {item['armor']}"""
-        await self.pool.execute('INSERT INTO transactions ("from", "to", "subject", "info", "timestamp") VALUES ($1, $2, $3, $4, $5;), from_, to, subject, description, timestamp)
+Name: {data['name']}
+Value: {data['value']}
+ID: {data['id']}
+Type: {data['type']}
+Damage: {data['damage']}
+Armor: {data['armor']}"""
+        await self.pool.execute(
+            'INSERT INTO transactions ("from", "to", "subject", "info", "timestamp") VALUES ($1, $2, $3, $4, $5);',
+            from_,
+            to,
+            subject,
+            description,
+            timestamp,
+        )

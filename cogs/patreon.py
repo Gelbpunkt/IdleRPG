@@ -154,7 +154,11 @@ class Patreon(commands.Cog):
                 'SELECT backgrounds FROM profile WHERE "user"=$1;', ctx.author.id
             )
             if not bgs:
-                return await ctx.send(_("You do not have an eventbackground. They can be acquired on seasonal events."))
+                return await ctx.send(
+                    _(
+                        "You do not have an eventbackground. They can be acquired on seasonal events."
+                    )
+                )
             try:
                 bg = bgs[number - 1]
             except IndexError:

@@ -112,7 +112,9 @@ class Crates(commands.Cog):
                 amount=amount, other=other.mention
             )
         )
-        await self.bot.log_transaction(ctx, from_=ctx.author, to=other, subject="crates", data=amount)
+        await self.bot.log_transaction(
+            ctx, from_=ctx.author, to=other, subject="crates", data=amount
+        )
 
 
 def setup(bot):
