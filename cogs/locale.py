@@ -15,7 +15,7 @@ GNU Affero General Public License for more details.
 You should have received a copy of the GNU Affero General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
-from asyncpg.exceptions import UniqueViolationError
+from asyncpg.exceptions import UniqueViolationError, ForeignKeyViolationError
 from discord.ext import commands
 
 from utils import i18n
@@ -84,7 +84,12 @@ class Locale(commands.Cog):
         _("""Sets the language.""")
         if locale not in i18n.locales:
             return await ctx.send(_("Not a valid language."))
-        await self.set_locale(ctx.author, locale)
+        try:
+            await self.set_locale(ctx.author, locale)
+        except ForeignKeyViolationError:
+            i18n.current_locale.set(locale)
+            self.bot.locale_cache[ctx.author.id] = locale
+            await ctx.send(_("To permanently choose a language, please create a character and enter this command again. I set it to {language} temporarily.").format(language=locale))
         await ctx.message.add_reaction("\U00002705")
 
 
