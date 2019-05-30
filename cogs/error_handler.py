@@ -135,7 +135,7 @@ class Errorhandler(commands.Cog):
                         "An argument or value you entered was far too high for me to handle properly!"
                     )
                 )
-            elif isinstance(error.original, LookupError);
+            elif isinstance(error.original, LookupError):
                 return await ctx.send)
                     _(
                         "The languages have been reloaded while you were using a command. The execution therefore had to be stopped. Please try again."
