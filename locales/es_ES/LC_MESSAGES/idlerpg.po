@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-05-30 10:25+0000\n"
+"POT-Creation-Date: 2019-05-30 11:29+0000\n"
 "PO-Revision-Date: 2019-05-29 12:09-0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -180,12 +180,12 @@ msgid "ID"
 msgstr "ID"
 
 #: cogs/halloween.py:148 cogs/crates.py:78 cogs/classes.py:250
-#: cogs/adventure.py:220 cogs/trading.py:204 cogs/trading.py:375
+#: cogs/adventure.py:220 cogs/trading.py:211 cogs/trading.py:386
 msgid "Name"
 msgstr "Nombre"
 
 #: cogs/halloween.py:149 cogs/crates.py:79 cogs/classes.py:251
-#: cogs/adventure.py:221 cogs/trading.py:205 cogs/trading.py:376
+#: cogs/adventure.py:221 cogs/trading.py:212 cogs/trading.py:387
 msgid "Type"
 msgstr "Tipo"
 
@@ -215,7 +215,7 @@ msgstr "Elige el lenguaje."
 msgid "Not a valid language."
 msgstr "Lenguaje inválido."
 
-#: cogs/locale.py:92
+#: cogs/locale.py:94
 #, python-brace-format
 msgid ""
 "To permanently choose a language, please create a character and enter this "
@@ -461,17 +461,17 @@ msgid "You found a new item when opening a crate!"
 msgstr "¡Has encontrado un nuevo objeto al abrir la caja!"
 
 #: cogs/crates.py:80 cogs/classes.py:253 cogs/adventure.py:222
-#: cogs/trading.py:206 cogs/trading.py:377
+#: cogs/trading.py:213 cogs/trading.py:388
 msgid "Damage"
 msgstr "Daño"
 
 #: cogs/crates.py:81 cogs/classes.py:255 cogs/adventure.py:223
-#: cogs/trading.py:207 cogs/trading.py:378
+#: cogs/trading.py:214 cogs/trading.py:389
 msgid "Armor"
 msgstr "Armadura"
 
 #: cogs/crates.py:82 cogs/classes.py:256 cogs/adventure.py:224
-#: cogs/trading.py:208 cogs/trading.py:379
+#: cogs/trading.py:215 cogs/trading.py:390
 msgid "Value"
 msgstr "Valor"
 
@@ -1804,7 +1804,7 @@ msgstr "[Únicamente donadores] Cambia el nombre de un objeto."
 msgid "Name too long."
 msgstr "Nombre demasiado largo."
 
-#: cogs/patreon.py:48 cogs/trading.py:233
+#: cogs/patreon.py:48 cogs/trading.py:240
 #, python-brace-format
 msgid "You don't have an item with the ID `{itemid}`."
 msgstr "Tú no tienes un objeto con el ID \"{itemid}\"."
@@ -1889,12 +1889,12 @@ msgstr "El límite de miembros de tu gremio ahora es **100**."
 msgid "Update your background to one from the events."
 msgstr "Actualiza tu fondo de perfil en relación a uno del evento."
 
-#: cogs/patreon.py:157
+#: cogs/patreon.py:159
 msgid ""
 "You do not have an eventbackground. They can be acquired on seasonal events."
 msgstr ""
 
-#: cogs/patreon.py:163
+#: cogs/patreon.py:167
 #, python-brace-format
 msgid ""
 "The background number {number} is not valid, you only have {total} available."
@@ -1902,7 +1902,7 @@ msgstr ""
 "El fondo número {number} no es válido, ya que tú solo tienes {total} "
 "disponible(s)."
 
-#: cogs/patreon.py:169
+#: cogs/patreon.py:173
 msgid "Background updated!"
 msgstr "¡Fondo actualizado!"
 
@@ -2585,7 +2585,7 @@ msgstr ""
 msgid "Puts an item into the player store."
 msgstr "Coloca un objeto en la tienda."
 
-#: cogs/trading.py:44 cogs/trading.py:305
+#: cogs/trading.py:44 cogs/trading.py:316
 #, python-brace-format
 msgid "You don't own an item with the ID: {itemid}"
 msgstr "Tú no tienes el objeto ID: {itemid}"
@@ -2640,16 +2640,16 @@ msgstr ""
 msgid "**{author}** bought your **{name}** for **${price}** from the market."
 msgstr "**{author}** compró tu **{name}** por **${price}** del mercado."
 
-#: cogs/trading.py:131
+#: cogs/trading.py:138
 msgid "Takes an item off the shop."
 msgstr "Quita un objeto que hayas puesto en la tienda."
 
-#: cogs/trading.py:141
+#: cogs/trading.py:148
 #, python-brace-format
 msgid "You don't have an item of yours in the shop with the ID `{itemid}`."
 msgstr "Tú no tienes un objeto en la tienda con la ID `{itemid}`."
 
-#: cogs/trading.py:154
+#: cogs/trading.py:161
 #, python-brace-format
 msgid ""
 "Successfully removed item `{itemid}` from the shop and put it in your "
@@ -2658,46 +2658,46 @@ msgstr ""
 "Se quitó exitosamente el objeto `{itemid}` de la tienda, y se colocó en tu "
 "inventario."
 
-#: cogs/trading.py:167
+#: cogs/trading.py:174
 msgid "Show the market with all items and prices."
 msgstr "Muestra el mercado con todos los objetos y precios."
 
-#: cogs/trading.py:194
+#: cogs/trading.py:201
 msgid "No results."
 msgstr "Sin resultados."
 
-#: cogs/trading.py:198
+#: cogs/trading.py:205
 msgid "IdleRPG Shop"
 msgstr "Tienda IdleRPG"
 
-#: cogs/trading.py:199 cogs/trading.py:370
+#: cogs/trading.py:206 cogs/trading.py:381
 #, python-brace-format
 msgid "Use `{prefix}buy {item}` to buy this."
 msgstr "UsA `{prefix}buy {item}` para comprar esto."
 
-#: cogs/trading.py:209 cogs/trading.py:380 cogs/marriage.py:205
+#: cogs/trading.py:216 cogs/trading.py:391 cogs/marriage.py:205
 msgid "Price"
 msgstr "Precio"
 
-#: cogs/trading.py:211 cogs/trading.py:382
+#: cogs/trading.py:218 cogs/trading.py:393
 #, python-brace-format
 msgid "Item {num} of {total}"
 msgstr "Objeto {num} de {total}"
 
-#: cogs/trading.py:225
+#: cogs/trading.py:232
 msgid "Offer an item to a specific user."
 msgstr "Ofrecer un objeto específico a un usuario."
 
-#: cogs/trading.py:240 cogs/trading.py:311
+#: cogs/trading.py:247 cogs/trading.py:322
 #, python-brace-format
 msgid "Are you sure you want to sell your equipped {item}?"
 msgstr "¿Estás seguro de que quieres vender tu {item} equipado?"
 
-#: cogs/trading.py:244
+#: cogs/trading.py:251
 msgid "Item selling cancelled."
 msgstr "Venta de objeto cancelada."
 
-#: cogs/trading.py:248
+#: cogs/trading.py:255
 #, python-brace-format
 msgid ""
 "{user}, {author} offered you an item! React to buy it! The price is **"
@@ -2708,21 +2708,21 @@ msgstr ""
 "es **${price}**. Tienes **2 minutos** para aceptar la oferta, o será "
 "cancelada."
 
-#: cogs/trading.py:253
+#: cogs/trading.py:260
 msgid "They didn't want it."
 msgstr "Ellos no lo quieren."
 
-#: cogs/trading.py:257
+#: cogs/trading.py:264
 #, python-brace-format
 msgid "{user}, you're too poor to buy this item!"
 msgstr "¡{user}, eres muy pobre para comprar este objeto!"
 
-#: cogs/trading.py:268
+#: cogs/trading.py:275
 #, python-brace-format
 msgid "The owner sold the item with the ID `{itemid}` in the meantime."
 msgstr "El dueño vendió el objeto con la ID `{itemid}`."
 
-#: cogs/trading.py:287
+#: cogs/trading.py:294
 #, python-brace-format
 msgid ""
 "Successfully bought item `{itemid}`. Use `{prefix}inventory` to view your "
@@ -2731,61 +2731,61 @@ msgstr ""
 "Has comprado exitosamente el objeto `{itemid}`. Usa `{prefix}inventory` para "
 "ver tu inventario actualizado."
 
-#: cogs/trading.py:296
+#: cogs/trading.py:307
 msgid "Sells an item for its value."
 msgstr "Vende un objeto por su valor."
 
-#: cogs/trading.py:316
+#: cogs/trading.py:327
 msgid "Cancelled."
 msgstr "Cancelado."
 
-#: cogs/trading.py:324
+#: cogs/trading.py:335
 #, python-brace-format
 msgid "You received **${money}** when selling item `{itemid}`."
 msgstr "Has recibido **${money}** al vender el objeto `{itemid}`."
 
-#: cogs/trading.py:334
+#: cogs/trading.py:345
 msgid "Sells all your non-equipped items for their value."
 msgstr "Vende todos los objetos que no tengas equipados por su valor."
 
-#: cogs/trading.py:341
+#: cogs/trading.py:352
 msgid "Nothing to merch."
 msgstr "Nada para vender."
 
-#: cogs/trading.py:352
+#: cogs/trading.py:363
 #, python-brace-format
 msgid "Merched **{count}** items for **${money}**."
 msgstr "Vendidos **{count}** objetos por **${money}**."
 
-#: cogs/trading.py:360
+#: cogs/trading.py:371
 msgid "View your pending shop offers."
 msgstr "Muestra tus objetos pendientes de venta."
 
-#: cogs/trading.py:366
+#: cogs/trading.py:377
 msgid "You don't have any pending shop offers."
 msgstr "Tú no tienes objetos a la venta."
 
-#: cogs/trading.py:369
+#: cogs/trading.py:380
 msgid "Your pending items"
 msgstr "Tus objetos a la venta"
 
-#: cogs/trading.py:393
+#: cogs/trading.py:404
 msgid "Buy items at the trader."
 msgstr "Comprar objetos al comerciante."
 
-#: cogs/trading.py:408
+#: cogs/trading.py:419
 msgid "The Trader"
 msgstr "El comerciante"
 
-#: cogs/trading.py:409
+#: cogs/trading.py:420
 msgid "Hit a button to buy it"
 msgstr "Aprieta el botón para comprarlo"
 
-#: cogs/trading.py:419
+#: cogs/trading.py:430
 msgid "You are too poor to buy this item."
 msgstr "Eres muy pobre para comprar este objeto."
 
-#: cogs/trading.py:426
+#: cogs/trading.py:437
 #, python-brace-format
 msgid ""
 "Successfully bought offer **{offer}**. Use `{prefix}inventory` to view your "
@@ -3996,7 +3996,7 @@ msgstr "{author} abrazó {user}. ¡Awww!"
 msgid "Creates a new character."
 msgstr "Crea un nuevo personaje."
 
-#: cogs/profile.py:43 cogs/profile.py:482
+#: cogs/profile.py:43 cogs/profile.py:485
 msgid "What shall your character's name be? (Minimum 3 Characters, Maximum 20)"
 msgstr "¿Cuál será el nombre de tu personaje? (Mín. 3 / Máx. 20 caracteres)"
 
@@ -4264,53 +4264,53 @@ msgstr "¡Sin trucos!"
 msgid "Successfully gave **${money}** to {other}."
 msgstr "Se le otorgaron exitosamente **${money}** a {other}."
 
-#: cogs/profile.py:480
+#: cogs/profile.py:483
 msgid "Renames your character."
 msgstr "Re-nombra tu personaje."
 
-#: cogs/profile.py:491
+#: cogs/profile.py:494
 msgid "Timeout expired. Retry!"
 msgstr "Tiempo agotado. ¡Reintentalo nuevamente!"
 
-#: cogs/profile.py:497
+#: cogs/profile.py:500
 msgid "Character name updated."
 msgstr "Nombre del personaje actualizado."
 
-#: cogs/profile.py:499
+#: cogs/profile.py:502
 msgid "Character names must be at least 3 characters!"
 msgstr "¡El nombre del personaje debe tener al menos 3 caracteres!"
 
-#: cogs/profile.py:501
+#: cogs/profile.py:504
 msgid "Character names mustn't exceed 20 characters!"
 msgstr "¡El nombre del personaje no debe exceder los 20 caracteres!"
 
-#: cogs/profile.py:507
+#: cogs/profile.py:510
 msgid "Deletes your character."
 msgstr "Borra tu personaje."
 
-#: cogs/profile.py:509
+#: cogs/profile.py:512
 msgid "Are you sure? React in the next 30 seconds to confirm."
 msgstr "¿Estás seguro? Reacciona en los próximos 30 segundos para confirmar."
 
-#: cogs/profile.py:511
+#: cogs/profile.py:514
 msgid "Cancelled deletion of your character."
 msgstr "La eliminación de tu personaje fue cancelada."
 
-#: cogs/profile.py:533
+#: cogs/profile.py:536
 msgid "Successfully deleted your character. Sorry to see you go :frowning:"
 msgstr ""
 "Tu personaje ha sido eliminado correctamente. Lamentamos que te vayas :"
 "frowning:"
 
-#: cogs/profile.py:539
+#: cogs/profile.py:542
 msgid "Sets your profile text colour."
 msgstr "Establece un color en tu perfil."
 
-#: cogs/profile.py:541
+#: cogs/profile.py:544
 msgid "Format for colour is `#RRGGBB`."
 msgstr "El formato correcto de color es: `#RRGGBB`."
 
-#: cogs/profile.py:546
+#: cogs/profile.py:549
 #, python-brace-format
 msgid "Successfully set your profile colour to `{colour}`."
 msgstr "Se cambió el color de tu perfil exitosamente a `{colour}`."
