@@ -319,7 +319,7 @@ class Bot(commands.AutoShardedBot):
 
     async def log_transaction(self, ctx, from_, to, subject, data):
         """Logs a transaction."""
-        from = from_.id if isinstance(from_, (discord.Member, discord.User)) else from_
+        from_ = from_.id if isinstance(from_, (discord.Member, discord.User)) else from_
         to = to.id if isinstance(to, (discord.Member, discord.User)) else to
         timestamp = datetime.datetime.now()
         assert subject in ["crates", "money", "shop", "offer"]
