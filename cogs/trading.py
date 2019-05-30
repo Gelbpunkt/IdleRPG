@@ -123,6 +123,7 @@ class Trading(commands.Cog):
                     "**{author}** bought your **{name}** for **${price}** from the market."
                 ).format(author=ctx.author.name, name=item["name"], price=item["price"])
             )
+        await self.bot.log_transaction(ctx, from_=(seller if seller else item["owner"]), to=ctx.author, subject="shop", data=item)
 
     @has_char()
     @commands.command()
@@ -287,6 +288,8 @@ class Trading(commands.Cog):
                 "Successfully bought item `{itemid}`. Use `{prefix}inventory` to view your updated inventory."
             ).format(itemid=itemid, prefix=ctx.prefix)
         )
+
+        await self.bot.log_transaction(ctx, from_=ctx.author, to=user, subject="offer", data=item)
 
     @has_char()
     @user_cooldown(10)
