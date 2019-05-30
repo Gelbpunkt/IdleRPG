@@ -318,9 +318,9 @@ Thank you for playing IdleRPG! :heart:"""
     @locale_doc
     async def choose(self, ctx, *results: str):
         _("""Chooses a random option of supplied possiblies.""")
+        results = list(filter(lambda a: a.lower() != "or", results))
         if not results:
             return await ctx.send(_("Cannot choose from an empty list..."))
-        results = list(filter(lambda a: a.lower() != "or", results))
         await ctx.send(
             _("My choice is: **{result}**.").format(result=random.choice(results)),
             escape_mentions=True,
