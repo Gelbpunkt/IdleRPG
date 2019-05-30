@@ -121,7 +121,7 @@ class Classes(commands.Cog):
     async def myclass(self, ctx):
         _("""Views your class.""")
         class_ = ctx.character_data["class"]
-        if class_ == "No Class":
+        if class_ == "No Class" or not class_:
             return await ctx.send("You haven't got a class yet.")
         try:
             await ctx.send(
