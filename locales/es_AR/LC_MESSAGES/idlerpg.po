@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-05-30 09:45+0000\n"
+"POT-Creation-Date: 2019-05-30 10:25+0000\n"
 "PO-Revision-Date: 2019-05-29 12:14-0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -216,6 +216,13 @@ msgstr "Establece el lenguaje."
 #: cogs/locale.py:86
 msgid "Not a valid language."
 msgstr "Lenguaje inválido."
+
+#: cogs/locale.py:92
+#, python-brace-format
+msgid ""
+"To permanently choose a language, please create a character and enter this "
+"command again. I set it to {language} temporarily."
+msgstr ""
 
 #: cogs/battles.py:40
 msgid "Battle against another player."
@@ -1361,7 +1368,7 @@ msgstr "Repite lo que dijiste."
 msgid "Chooses a random option of supplied possiblies."
 msgstr "Elige una opción aleatoria de las posibilidades suministradas."
 
-#: cogs/miscellaneous.py:322
+#: cogs/miscellaneous.py:323
 msgid "Cannot choose from an empty list..."
 msgstr "No se puede elegir a alguien si la lista está vacía."
 
@@ -1884,7 +1891,12 @@ msgstr "El límite de miembros de tu gremio ahora es **100**."
 msgid "Update your background to one from the events."
 msgstr "Actualiza tu fondo de perfil en relación a uno del evento."
 
-#: cogs/patreon.py:161
+#: cogs/patreon.py:157
+msgid ""
+"You do not have an eventbackground. They can be acquired on seasonal events."
+msgstr ""
+
+#: cogs/patreon.py:163
 #, python-brace-format
 msgid ""
 "The background number {number} is not valid, you only have {total} available."
@@ -1892,7 +1904,7 @@ msgstr ""
 "El fondo número {number} no es válido, ya que sólo tenés {total} "
 "disponible(s)."
 
-#: cogs/patreon.py:167
+#: cogs/patreon.py:169
 msgid "Background updated!"
 msgstr "¡Fondo actualizado!"
 
@@ -3111,6 +3123,10 @@ msgstr "Vos y {partner} decidieron visitar París."
 #, python-brace-format
 msgid "You and {partner} went ice skating together."
 msgstr "Vos y {partner} fueron a patinar juntos sobre hielo."
+
+#: cogs/marriage.py:277
+msgid "Unknown User"
+msgstr ""
 
 #: cogs/marriage.py:278
 #, python-brace-format

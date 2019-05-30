@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-05-30 09:45+0000\n"
+"POT-Creation-Date: 2019-05-30 10:25+0000\n"
 "PO-Revision-Date: 2019-05-30 03:09+0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -213,6 +213,13 @@ msgstr "Избира езика."
 #: cogs/locale.py:86
 msgid "Not a valid language."
 msgstr "Невалиден език."
+
+#: cogs/locale.py:92
+#, python-brace-format
+msgid ""
+"To permanently choose a language, please create a character and enter this "
+"command again. I set it to {language} temporarily."
+msgstr ""
 
 #: cogs/battles.py:40
 msgid "Battle against another player."
@@ -1361,7 +1368,7 @@ msgstr "Повтаря това, което си казал."
 msgid "Chooses a random option of supplied possiblies."
 msgstr "Избира случайна опция от предоставени възможности."
 
-#: cogs/miscellaneous.py:322
+#: cogs/miscellaneous.py:323
 msgid "Cannot choose from an empty list..."
 msgstr "Не може да се избере от празен лист..."
 
@@ -1872,14 +1879,19 @@ msgstr "Лимита на Вашата гилдия е сега 100."
 msgid "Update your background to one from the events."
 msgstr "Актуализирате фона си по типа на събитията."
 
-#: cogs/patreon.py:161
+#: cogs/patreon.py:157
+msgid ""
+"You do not have an eventbackground. They can be acquired on seasonal events."
+msgstr ""
+
+#: cogs/patreon.py:163
 #, python-brace-format
 msgid ""
 "The background number {number} is not valid, you only have {total} available."
 msgstr ""
 "Номера на фона Ви {number} е невалиден, Вие имате само {total} в наличност."
 
-#: cogs/patreon.py:167
+#: cogs/patreon.py:169
 msgid "Background updated!"
 msgstr "Фонът е актуализиран!"
 
@@ -3024,6 +3036,10 @@ msgstr ""
 #: cogs/marriage.py:275
 #, python-brace-format
 msgid "You and {partner} went ice skating together."
+msgstr ""
+
+#: cogs/marriage.py:277
+msgid "Unknown User"
 msgstr ""
 
 #: cogs/marriage.py:278
