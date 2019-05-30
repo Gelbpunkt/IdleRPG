@@ -46,7 +46,7 @@ class Help(commands.Cog):
         fmt = f"{fmt} {command.signature}"
         return fmt
 
-    async def make_pages(self):
+    def make_pages(self):
         all_commands = {}
         for cog, instance in self.bot.cogs.items():
             if cog in ["Admin", "Owner"]:
