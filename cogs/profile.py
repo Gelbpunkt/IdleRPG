@@ -377,7 +377,7 @@ class Profile(commands.Cog):
         await ctx.send(
             _(
                 "The {stat} of your **{item}** is now **{newstat}**. The other item was destroyed."
-            ).format(stat=stat1[1], item=item["name"], newstat=stat1[1] + 1)
+            ).format(stat=stat1[0], item=item["name"], newstat=stat1[1] + 1)
         )
 
     @checks.has_char()
