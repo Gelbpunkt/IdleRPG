@@ -136,7 +136,7 @@ class Errorhandler(commands.Cog):
                     )
                 )
             elif isinstance(error.original, LookupError):
-                return await ctx.send)
+                return await ctx.send(
                     _(
                         "The languages have been reloaded while you were using a command. The execution therefore had to be stopped. Please try again."
                     )
