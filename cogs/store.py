@@ -135,7 +135,7 @@ class Store(commands.Cog):
         await ctx.send(
             _(
                 "Successfully activated a **{booster} booster** for the next **24 hours**!"
-            ).format(booster=booster.title())
+            ).format(booster=boostertype.title())
         )
 
 
