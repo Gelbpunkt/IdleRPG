@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-05-29 15:31+0000\n"
+"POT-Creation-Date: 2019-05-30 09:45+0000\n"
 "PO-Revision-Date: 2019-05-29 12:09-0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -815,7 +815,13 @@ msgstr ""
 "El parámetro o valor que has ingresado es muy alto para mí. ¡No puedo "
 "manejarlo correctamente!"
 
-#: cogs/error_handler.py:166
+#: cogs/error_handler.py:141
+msgid ""
+"The languages have been reloaded while you were using a command. The "
+"execution therefore had to be stopped. Please try again."
+msgstr ""
+
+#: cogs/error_handler.py:172
 msgid ""
 "The command you tried to use ran into an error. The incident has been "
 "reported and the team will work hard to fix the issue!"
@@ -1539,6 +1545,14 @@ msgstr ""
 "bot ofrece divertidos juegos no-RPG creado por deprilula28 and Fin.\n"
 "[discordbots.org Page](https://discordbots.org/bot/gamesrob)"
 
+#: cogs/miscellaneous.py:571
+msgid ""
+"Cautious Memory brings wiki-style pages to your server. Use it to document "
+"who's who in your server, inside jokes, or community lore. Includes a full "
+"featured permissions system to keep your pages squeaky clean.\n"
+"[discordbots.org Page](https://discordbots.org/bot/541707781665718302)"
+msgstr ""
+
 #: cogs/store.py:32
 msgid "The booster store."
 msgstr "La tienda de potenciadores."
@@ -1663,11 +1677,11 @@ msgstr ""
 "¡Se ha activado exitosamente un **potenciador de {booster}** durante las "
 "siguientes **24 horas**!"
 
-#: cogs/help.py:67 cogs/help.py:82
+#: cogs/help.py:65 cogs/help.py:80
 msgid "IdleRPG Help"
 msgstr "Ayuda de IdleRPG"
 
-#: cogs/help.py:71
+#: cogs/help.py:69
 msgid ""
 "**Welcome to the IdleRPG help. Use the arrows to move.\n"
 "For more help, join the support server at https://discord.gg/axBKXBv.**\n"
@@ -1679,77 +1693,77 @@ msgstr ""
 "axBKXBv.**\n"
 "¡Echa un vistazo a nuestros socios utilizando el comando de socios!"
 
-#: cogs/help.py:76
+#: cogs/help.py:74
 #, python-brace-format
 msgid "IdleRPG Version {version}"
 msgstr "Versión de IdleRPG: {version}"
 
-#: cogs/help.py:85
+#: cogs/help.py:83
 #, python-brace-format
 msgid "**{category} Commands**"
 msgstr "**{category} comandos**"
 
-#: cogs/help.py:88
+#: cogs/help.py:86
 #, python-brace-format
 msgid "IdleRPG Version {version} | Page {page} of {maxpages}"
 msgstr "Versión de IdleRPG {version} | Page {page} of {maxpages}"
 
-#: cogs/help.py:97
+#: cogs/help.py:95
 msgid "No Description set"
 msgstr "No hay descripción establecida"
 
-#: cogs/help.py:108
+#: cogs/help.py:105
 msgid "Sends a link to the official documentation."
 msgstr "Envía un link a la documentación oficial."
 
-#: cogs/help.py:111
+#: cogs/help.py:108
 #, python-brace-format
 msgid "<:blackcheck:441826948919066625> **Check {url} for a list of commands**"
 msgstr ""
 "<:blackcheck:441826948919066625> **Verifica la página {url} para tener "
 "acceso a una lista de comandos.**"
 
-#: cogs/help.py:121
+#: cogs/help.py:118
 #, python-brace-format
 msgid "<:blackcheck:441826948919066625> **Check {url} for a tutorial and FAQ**"
 msgstr ""
 "<:blackcheck:441826948919066625> **Verifica la página {url} para tener "
 "acceso a un tutorial y a las preguntas frecuentes (FAQ)**"
 
-#: cogs/help.py:129
+#: cogs/help.py:126
 msgid "Unban an entitiy from using $helpme."
 msgstr "Remueve el bloqueo de una entidad usando el comando $helpme."
 
-#: cogs/help.py:137
+#: cogs/help.py:134
 #, python-brace-format
 msgid "{thing} has been unbanned for the helpme command :ok_hand:"
 msgstr "{thing} ha sido desbloquear por el comando $helpme :ok_hand:"
 
-#: cogs/help.py:146
+#: cogs/help.py:143
 msgid "Band a user from using $helpme."
 msgstr "Bloquea a un usuario usando $helpme."
 
-#: cogs/help.py:155
+#: cogs/help.py:152
 msgid "Error... Maybe they're already banned?"
 msgstr "Ha ocurrido un error. ¿Quizás él ya fue bloqueado?"
 
-#: cogs/help.py:157
+#: cogs/help.py:154
 #, python-brace-format
 msgid "{thing} has been banned for the helpme command :ok_hand:"
 msgstr "{thing} fue bloqueado por medio del comando $helpme :ok_hand:"
 
-#: cogs/help.py:166
+#: cogs/help.py:163
 msgid "Allows a support team member to join your server for individual help."
 msgstr ""
 "Permite que un miembro del soporte a usuarios del bot ingrese a tu servidor "
 "para ayuda individual."
 
-#: cogs/help.py:174
+#: cogs/help.py:171
 msgid "You or your server has been blacklisted for some reason."
 msgstr ""
 "Tú o tu servidor han sido colocados en la lista negra por alguna razón."
 
-#: cogs/help.py:179
+#: cogs/help.py:176
 msgid ""
 "Are you sure? This will notify our support team and allow them to join the "
 "server."
@@ -1757,21 +1771,21 @@ msgstr ""
 "¿Estás seguro? Ésto notificará a nuestro equipo de soporte y les permitirá "
 "ingresar al servidor."
 
-#: cogs/help.py:187
+#: cogs/help.py:184
 msgid "Error when creating Invite."
 msgstr "Error al crear la invitación."
 
-#: cogs/help.py:199
+#: cogs/help.py:196
 msgid "Support team has been notified and will join as soon as possible!"
 msgstr ""
 "¡El equipo de soporte fue notificado, ingresará a tu servidor en cuanto sea "
 "posible!"
 
-#: cogs/help.py:207
+#: cogs/help.py:204
 msgid "Shows help about the bot."
 msgstr "Muestra la ayuda sobre el bot."
 
-#: cogs/help.py:211
+#: cogs/help.py:208
 msgid "Sorry, that command does not exist."
 msgstr "Lo siento, ese comando no existe."
 
