@@ -504,6 +504,9 @@ class Guild(commands.Cog):
                 "Done! Now you have `${profile_money}` and the guild has `${guild_money}`."
             ).format(profile_money=profile_money, guild_money=guild_money)
         )
+        await self.bot.log_transaction(
+            ctx, from_=ctx.author, to=0, subject="guild invest", data=amount
+        )
 
     @is_guild_officer()
     @guild.command()
@@ -526,6 +529,9 @@ class Guild(commands.Cog):
             _(
                 "Successfully gave **${amount}** from your guild bank to {member}."
             ).format(amount=amount, member=member.mention)
+        )
+        await self.bot.log_transaction(
+            ctx, from_=0, to=member, subject="guild pay", data=amount
         )
 
     @is_guild_leader()

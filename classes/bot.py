@@ -322,12 +322,19 @@ class Bot(commands.AutoShardedBot):
         from_ = from_.id if isinstance(from_, (discord.Member, discord.User)) else from_
         to = to.id if isinstance(to, (discord.Member, discord.User)) else to
         timestamp = datetime.datetime.now()
-        assert subject in ["crates", "money", "shop", "offer"]
+        assert subject in [
+            "crates",
+            "money",
+            "shop",
+            "offer",
+            "guild invest",
+            "guild pay",
+        ]
         if isinstance(data, int):
             description = f"""\
 {ctx.channel} in {ctx.guild or 'DMs'}
-From: {self.get_user(from_) or 'Unknown User'}
-To:   {self.get_user(to) or 'Unknown User'}
+From: {(self.get_user(from_) or 'Unknown User') if from_ != 0 else 'Guild Bank'}
+To:   {(self.get_user(to) or 'Unknown User') if to != 0 else 'Guild Bank'}
 Subject: {subject}
 Amount: {data}"""
         else:
