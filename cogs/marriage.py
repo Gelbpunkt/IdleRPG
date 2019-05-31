@@ -391,24 +391,22 @@ class Marriage(commands.Cog):
         target = random.choice(children)
         event = random.choice(["death"] + ["age"] * 7 + ["namechange"] * 2)
         if event == "death":
-            cause = _(
-                random.choice(
-                    [
-                        "They died because of a shampoo overdose!",
-                        "They died of lovesickness...",
-                        "They've died of age.",
-                        "They died of loneliness.",
-                        "A horde of goblins got them.",
-                        "They have finally decided to move out after all these years, but couldn't survive a second alone.",
-                        "Spontaneous combustion removed them from existence.",
-                        "While exploring the forest, they have gotten lost.",
-                        "They've left through a portal into another dimension...",
-                        "The unbearable pain of stepping on a Lego\© brick killed them.",  # noqa
-                        "You heard a landmine going off nearby...",
-                        "They have been abducted by aliens!",
-                        "The Catholic Church got them...",
-                    ]
-                )
+            cause = random.choice(
+                [
+                    _("They died because of a shampoo overdose!"),
+                    _("They died of lovesickness..."),
+                    _("They've died of age."),
+                    _("They died of loneliness."),
+                    _("A horde of goblins got them."),
+                    _("They have finally decided to move out after all these years, but couldn't survive a second alone."),
+                    _("Spontaneous combustion removed them from existence."),
+                    _("While exploring the forest, they have gotten lost."),
+                    _("They've left through a portal into another dimension..."),
+                    _("The unbearable pain of stepping on a Lego\© brick killed them."),  # noqa
+                    _("You heard a landmine going off nearby..."),
+                    _("They have been abducted by aliens!"),
+                    _("The Catholic Church got them..."),
+                ]
             )
             await self.bot.pool.execute(
                 'DELETE FROM children WHERE "name"=$1 AND ("mother"=$2 OR "father"=$2);',
