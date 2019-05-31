@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-05-30 11:29+0000\n"
-"PO-Revision-Date: 2019-05-29 14:27+0200\n"
+"POT-Creation-Date: 2019-05-31 07:25+0000\n"
+"PO-Revision-Date: 2019-05-30 21:16+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: cs\n"
@@ -355,6 +355,7 @@ msgstr "{winner} Vyhrál aktivní bitvu proti {looser}! Gratulujeme!"
 msgid ""
 "Easter related commands for trading your collected eastereggs in for rewards."
 msgstr ""
+"Velikonočně asociované příkazy na vyměňování velikonočních vajíček za odměny."
 
 #: cogs/easter.py:38
 #, python-brace-format
@@ -1069,6 +1070,8 @@ msgid ""
 "You received your daily **${money}**!\n"
 "You are on a streak of **{streak}** days!"
 msgstr ""
+"Obdržel jsi tvoji daily odměnu **${money}**!\n"
+"Jseš na streaku **{streak}** dní! Jen tak dál!"
 
 #: cogs/miscellaneous.py:67
 msgid "My current websocket latency."
@@ -2042,41 +2045,41 @@ msgstr ""
 
 #: cogs/music.py:297
 msgid "Position"
-msgstr ""
+msgstr "Pozice"
 
 #: cogs/music.py:306
 msgid "Click me!"
-msgstr ""
+msgstr "Zmáčni mně"
 
 #: cogs/music.py:309
 msgid "Link to the original"
-msgstr ""
+msgstr "Link k originálu"
 
 #: cogs/music.py:323
 msgid "Volume"
-msgstr ""
+msgstr "Hlasitost"
 
 #: cogs/music.py:325
 msgid "Playing status"
-msgstr ""
+msgstr "Hraji"
 
 #: cogs/music.py:325
 msgid "`⏸Paused`"
-msgstr ""
+msgstr "⏸Zapauzované"
 
 #: cogs/music.py:341
 msgid "```No information```"
-msgstr ""
+msgstr "```Žádné informace```"
 
 #: cogs/music.py:347
 #, python-brace-format
 msgid "Song requested by: {user}"
-msgstr ""
+msgstr "Písnička byla požádána:    {user}"
 
 #: cogs/music.py:389
-#, python-brace-format
+#, fuzzy, python-brace-format
 msgid "🎧 Added {title} to the queue..."
-msgstr ""
+msgstr "🎧 Přidal jsem"
 
 #: cogs/music.py:397
 #, python-brace-format
@@ -2086,19 +2089,20 @@ msgstr ""
 #: cogs/adventure.py:39
 msgid "A list of all adventures with success rates, name and time it takes."
 msgstr ""
+"Seznam všech dobrodružství s šancí na úspěch, jménem a časem ke splnění"
 
 #: cogs/adventure.py:46
 msgid "Loading images..."
-msgstr ""
+msgstr "Načítám obrátky. . ."
 
 #: cogs/adventure.py:77
 msgid "Sends your character on an adventure."
-msgstr ""
+msgstr "Pošle tvoji postavu na dobrodružství."
 
 #: cogs/adventure.py:80
 #, python-brace-format
 msgid "You must be on level **{level}** to do this adventure."
-msgstr ""
+msgstr "Musíš být level **{level}** k vydání se na toto dobrodružství"
 
 #: cogs/adventure.py:91
 #, python-brace-format
@@ -2106,14 +2110,16 @@ msgid ""
 "Successfully sent your character out on an adventure. Use `{prefix}status` "
 "to see the current status of the mission."
 msgstr ""
+"Úspěšně jsi odeslal svoji postavu na dobbrodružství. Použij `{prefix}"
+"status`k shlédnutí tvého současného statusu mise"
 
 #: cogs/adventure.py:100
 msgid "Go out on an active, action based adventure."
-msgstr ""
+msgstr "Běž na aktivní dobrodružství"
 
 #: cogs/adventure.py:101
 msgid "**Active adventure loading...**"
-msgstr ""
+msgstr "**Načítám aktivní dobrodružství. . . **"
 
 #: cogs/adventure.py:128
 #, python-brace-format
@@ -2130,30 +2136,43 @@ msgid ""
 "Use the reactions attack, defend or recover\n"
 "```\n"
 msgstr ""
+"\n"
+"**{user}ovo dobrodružství**\n"
+"```\n"
+"Průchod: {progress}%\n"
+"HP . . . . : {hp}\n"
+"\n"
+"Nepřítel\n"
+"HP . . . . : {enemy_hp}\n"
+"\n"
+"Použij reakci útoku, obrany nebo se ošetři\n"
+"\n"
+"```\n"
+"\n"
 
 #: cogs/adventure.py:148
 msgid "Adventure stopped because you refused to move."
-msgstr ""
+msgstr "Dobrodružství zrušeno, protože jste odmítal se pohnout!"
 
 #: cogs/adventure.py:158
 msgid "You healed yourself for 20 HP."
-msgstr ""
+msgstr "Ošetřil jses a získal jsi 20HP"
 
 #: cogs/adventure.py:161
 msgid "The enemy healed himself for 20 HP."
-msgstr ""
+msgstr "Nepřitel se ošetřil a získal 20HP"
 
 #: cogs/adventure.py:163
 msgid "Your attack was blocked!"
-msgstr ""
+msgstr "Tvůj útok byl zablokován!"
 
 #: cogs/adventure.py:165
 msgid "Enemy attack was blocked!"
-msgstr ""
+msgstr "Nepřítelův útok byl zablokován!"
 
 #: cogs/adventure.py:167
 msgid "Noone attacked."
-msgstr ""
+msgstr "Nikdo nezaútočil."
 
 #: cogs/adventure.py:174
 #, python-brace-format
@@ -2161,37 +2180,39 @@ msgid ""
 "You hit the enemy for **{damage}** damage, he hit you for **{damage2}** "
 "damage."
 msgstr ""
+"Ty jsi trefil nepřítele a ubral mu **{damage}** HP, on tě trefil a ubral ti "
+"za **{damage2}** HP!"
 
 #: cogs/adventure.py:181
 #, python-brace-format
 msgid "You hit the enemy for **{damage}** damage."
-msgstr ""
+msgstr "Trefil jsi nepřítele a to mu ubralo **{damage}** HP!"
 
 #: cogs/adventure.py:190
 #, python-brace-format
 msgid "The enemy hit you for **{damage}** damage."
-msgstr ""
+msgstr "Nepřítel tě trefil a to ti ubralo **{damage}** HP!"
 
 #: cogs/adventure.py:197
 msgid "Enemy defeated! You gained **20 HP**"
-msgstr ""
+msgstr "Nepřítel poražen! Získal jsi **20 HP**"
 
 #: cogs/adventure.py:204
 msgid "You died."
-msgstr ""
+msgstr "Umřel jsi"
 
 #: cogs/adventure.py:215
 msgid "You found a new item when finishing an active adventure!"
-msgstr ""
+msgstr "Načel jsi nový item při dokončování dobrodružství!"
 
 #: cogs/adventure.py:225
 #, python-brace-format
 msgid "Your HP were {hp}"
-msgstr ""
+msgstr "Tvoje HP bylo {hp}"
 
 #: cogs/adventure.py:233
 msgid "Checks your adventure status."
-msgstr ""
+msgstr "Zkontroluj svůj HP status"
 
 #: cogs/adventure.py:292
 #, python-brace-format
@@ -2199,6 +2220,8 @@ msgid ""
 "You have completed your dungeon and received **${gold}** as well as a new "
 "weapon: **{item}**. Experience gained: **{xp}**."
 msgstr ""
+"Dokončil jsi tvůj dungeon a obdržel jsi **${gold}** a nový předmět **{item}"
+"**. Získal jsi: **{xp}**."
 
 #: cogs/adventure.py:298
 #, python-brace-format
@@ -2207,20 +2230,23 @@ msgid ""
 "weapon: **{item}**. Experience gained: **{xp}**.\n"
 "Your partner received **${gold2}**."
 msgstr ""
+"Dokončil jsi tvůj dungeon a obdržel jsi **${gold}** a nový předmět **{item}"
+"**. Získal jsi: **{xp}**.\n"
+"Tvůj partner obdržel **${gold2}**."
 
 #: cogs/adventure.py:310
 #, python-brace-format
 msgid "**{amount}** crates"
-msgstr ""
+msgstr "**{amount}** truhel"
 
 #: cogs/adventure.py:313
 msgid "a special Item"
-msgstr ""
+msgstr "Speciální předmět"
 
 #: cogs/adventure.py:331
 #, python-brace-format
 msgid "Level {new_level} Memorial"
-msgstr ""
+msgstr "Level {new_level} Memoriál"
 
 #: cogs/adventure.py:337
 #, python-brace-format
@@ -2228,10 +2254,12 @@ msgid ""
 "You reached a new level: **{new_level}** :star:! You received {reward} as a "
 "reward :tada:!"
 msgstr ""
+"Dostal jsi se na nový level: **{new_level}** :star:! Získal jsi {reward} "
+"jako za odměnu:tada:!"
 
 #: cogs/adventure.py:341
 msgid "You died on your mission. Try again!"
-msgstr ""
+msgstr "Umřel jsi na tvém dobrodružství"
 
 #: cogs/adventure.py:350
 #, python-brace-format
@@ -2240,10 +2268,13 @@ msgid ""
 "Approximate end in `{end}`\n"
 "Dungeon Name: `{dungeon}`"
 msgstr ""
+"Nyní jseš na dobrodružství s obtížností `{difficulty}`.\n"
+"Dobrodružství dokončíš za `{end}`\n"
+"Název dobrodružství: `{dungeon}`"
 
 #: cogs/adventure.py:359
 msgid "Cancels your current adventure."
-msgstr ""
+msgstr "Zruší tvé současné dobrodružství"
 
 #: cogs/adventure.py:363
 #, python-brace-format
@@ -2251,10 +2282,12 @@ msgid ""
 "Canceled your mission. Use `{prefix}adventure [missionID]` to start a new "
 "one!"
 msgstr ""
+"Zrušil jsem tvé současné dobrodružství. Použij `{prefix}adventure [číslo "
+"dobrodružství]` k vydání se na nové"
 
 #: cogs/adventure.py:371
 msgid "Your death stats."
-msgstr ""
+msgstr "Tvůj počet smrtí"
 
 #: cogs/adventure.py:381
 #, python-brace-format
@@ -2262,23 +2295,25 @@ msgid ""
 "Out of **{total}** adventures, you died **{deaths}** times and survived "
 "**{completed}** times, which is a success rate of **{rate}%**."
 msgstr ""
+"Z **{total}** dobrodružství, umřel jsi **{deaths}** krát and přežil jsi "
+"**{completed}** krát, což je **{rate}%** úspěch!"
 
 #: cogs/shard_communication.py:291
 msgid "Lists all your cooldowns."
-msgstr ""
+msgstr "List čekání"
 
 #: cogs/shard_communication.py:295
 msgid "You don't have any active cooldown at the moment."
-msgstr ""
+msgstr "Nemáš nic na čekání teďka."
 
 #: cogs/shard_communication.py:297
 msgid "Commands on cooldown:"
-msgstr ""
+msgstr "Příkazy na počkání:"
 
 #: cogs/shard_communication.py:302
 #, python-brace-format
 msgid "{cmd} is on cooldown and will be available after {time}"
-msgstr ""
+msgstr "{cmd} je na počkání a bude ho možné použít za {time}"
 
 #: cogs/gambling.py:166
 #, python-brace-format
@@ -2344,17 +2379,17 @@ msgstr ""
 
 #: cogs/gambling.py:321
 msgid "Flip a coin and bid on the outcome."
-msgstr ""
+msgstr "Hoď si s mincí a sázej na výsledku"
 
 #: cogs/gambling.py:324
 #, python-brace-format
 msgid "Use `heads` or `tails` instead of `{side}`."
-msgstr ""
+msgstr "Použij `heads` jako hlava nebo `tails` jako ocas místo `{side}`."
 
 #: cogs/gambling.py:341
 #, python-brace-format
 msgid "{result[1]} It's **{result[0]}**! You won **${amount}**!"
-msgstr ""
+msgstr "{result[1]} Je to **{result[0]}**! Vyhrál jsi **${amount}**!"
 
 #: cogs/gambling.py:352
 #, python-brace-format
