@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-05-30 11:29+0000\n"
+"POT-Creation-Date: 2019-05-31 08:04+0000\n"
 "PO-Revision-Date: 2019-05-29 12:09-0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -164,7 +164,7 @@ msgid "Seems you haven't got a trick or treat bag yet. Go get some!"
 msgstr ""
 "Parece que no tienes una bolsa de \"Dulce o Truco\" aún. ¡Ve a conseguir una!"
 
-#: cogs/halloween.py:142 cogs/crates.py:72 cogs/classes.py:244
+#: cogs/halloween.py:142 cogs/crates.py:72 cogs/classes.py:245
 #: cogs/adventure.py:214
 msgid "You gained an item!"
 msgstr "¡Has obtenido un objeto!"
@@ -174,17 +174,17 @@ msgid "You found a new item when opening a trick-or-treat bag!"
 msgstr ""
 "¡Has encontrado un nuevo objeto abriendo una de tus bolsas de dulce o truco!"
 
-#: cogs/halloween.py:147 cogs/crates.py:77 cogs/classes.py:249
+#: cogs/halloween.py:147 cogs/crates.py:77 cogs/classes.py:250
 #: cogs/adventure.py:219
 msgid "ID"
 msgstr "ID"
 
-#: cogs/halloween.py:148 cogs/crates.py:78 cogs/classes.py:250
+#: cogs/halloween.py:148 cogs/crates.py:78 cogs/classes.py:251
 #: cogs/adventure.py:220 cogs/trading.py:211 cogs/trading.py:386
 msgid "Name"
 msgstr "Nombre"
 
-#: cogs/halloween.py:149 cogs/crates.py:79 cogs/classes.py:251
+#: cogs/halloween.py:149 cogs/crates.py:79 cogs/classes.py:252
 #: cogs/adventure.py:221 cogs/trading.py:212 cogs/trading.py:387
 msgid "Type"
 msgstr "Tipo"
@@ -460,17 +460,17 @@ msgstr ""
 msgid "You found a new item when opening a crate!"
 msgstr "¡Has encontrado un nuevo objeto al abrir la caja!"
 
-#: cogs/crates.py:80 cogs/classes.py:253 cogs/adventure.py:222
+#: cogs/crates.py:80 cogs/classes.py:254 cogs/adventure.py:222
 #: cogs/trading.py:213 cogs/trading.py:388
 msgid "Damage"
 msgstr "Daño"
 
-#: cogs/crates.py:81 cogs/classes.py:255 cogs/adventure.py:223
+#: cogs/crates.py:81 cogs/classes.py:256 cogs/adventure.py:223
 #: cogs/trading.py:214 cogs/trading.py:389
 msgid "Armor"
 msgstr "Armadura"
 
-#: cogs/crates.py:82 cogs/classes.py:256 cogs/adventure.py:224
+#: cogs/crates.py:82 cogs/classes.py:257 cogs/adventure.py:224
 #: cogs/trading.py:215 cogs/trading.py:390
 msgid "Value"
 msgstr "Valor"
@@ -1926,24 +1926,20 @@ msgstr ""
 msgid "Thief"
 msgstr "Ladrón"
 
-#: cogs/classes.py:49
-#, python-format, python-brace-format
+#: cogs/classes.py:50
+#, no-python-format, python-brace-format
 msgid ""
 "The sneaky money stealer...\n"
-"Get access to `{prefix}steal` to steal 10%% of the target's money, if "
+"Get access to `{prefix}steal` to steal 10% of the target's money, if "
 "successful.\n"
 "+8% success chance per evolution."
 msgstr ""
-"Un astuto ladrón de dinero...\n"
-"Acceso al CMD `{prefix}steal` para robar el 10%% del dinero del objetivo, si "
-"es que tiene éxito.\n"
-"+8% success chance per evolutión."
 
-#: cogs/classes.py:54
+#: cogs/classes.py:55
 msgid "Mage"
 msgstr "Mago"
 
-#: cogs/classes.py:56
+#: cogs/classes.py:57
 msgid ""
 "Utilise powerful magic for stronger attacks.\n"
 "+1 damage per evolution added onto your sword."
@@ -1951,11 +1947,11 @@ msgstr ""
 "Utiliza magia poderosa para ataques más fuertes.\n"
 "+1 ATK por evolución se agrega a tu espada."
 
-#: cogs/classes.py:61
+#: cogs/classes.py:62
 msgid "Ranger"
 msgstr "Arquero"
 
-#: cogs/classes.py:63
+#: cogs/classes.py:64
 #, python-brace-format
 msgid ""
 "Item hunter and trainer of their very own pet.\n"
@@ -1968,11 +1964,11 @@ msgstr ""
 "objeto al azar una vez por día.\n"
 "Tendrás entre 3+stats mínimos y +6 stats máximos por evolución."
 
-#: cogs/classes.py:72
+#: cogs/classes.py:73
 msgid "Paragon"
 msgstr "Paragon"
 
-#: cogs/classes.py:74
+#: cogs/classes.py:75
 msgid ""
 "Absorb the appreciation of the devs into your soul to power up.\n"
 "+1 damage and defense per evolution added onto your items."
@@ -1981,16 +1977,16 @@ msgstr ""
 "alma para hacerte más poderoso.\n"
 "+1 ATK y DEF son agregados a tus objetos cada evolución."
 
-#: cogs/classes.py:95
+#: cogs/classes.py:96
 #, python-brace-format
 msgid "Your new class is now `{profession}`."
 msgstr "Tu nueva clase ahora es \"{profession}\"."
 
-#: cogs/classes.py:103
+#: cogs/classes.py:104
 msgid "You're too poor for a class change, it costs **$5000**."
 msgstr "Eres muy pobre para cambiar tu clase. Hacer eso cuesta **$5000**."
 
-#: cogs/classes.py:114
+#: cogs/classes.py:115
 #, python-brace-format
 msgid ""
 "Your new class is now `{profession}`. **$5000** was taken off your balance."
@@ -1998,67 +1994,67 @@ msgstr ""
 "Tu nueva clase ahora es \"{profession}\". **$5000** fueron descontados de tu "
 "balance monetario."
 
-#: cogs/classes.py:122
+#: cogs/classes.py:123
 msgid "Views your class."
 msgstr "Observar tu clase."
 
-#: cogs/classes.py:135
+#: cogs/classes.py:136
 #, python-brace-format
 msgid "The image for your class **{class_}** hasn't been added yet."
 msgstr "La imagen para tu clase **{class_}** no ha sido agregada aún."
 
-#: cogs/classes.py:143
+#: cogs/classes.py:144
 msgid "Evolve to the next level of your class."
 msgstr "Evoluciona al siguiente rango de tu clase."
 
-#: cogs/classes.py:146
+#: cogs/classes.py:147
 msgid "Your level isn't high enough to evolve."
 msgstr "Tu nivel no es lo suficientemente alto para evolucionar."
 
-#: cogs/classes.py:148
+#: cogs/classes.py:149
 msgid "You haven't got a class yet."
 msgstr "Tú no tienes clase aún."
 
-#: cogs/classes.py:156
+#: cogs/classes.py:157
 #, python-brace-format
 msgid "You are now a `{newclass}`."
 msgstr "Ahora eres un **{newclass}**."
 
-#: cogs/classes.py:180
+#: cogs/classes.py:181
 msgid "[Thief Only] Steal money!"
 msgstr "[Únicamente ladrón] ¡Roba dinero!"
 
-#: cogs/classes.py:201
+#: cogs/classes.py:202
 #, python-brace-format
 msgid "You stole **${stolen}** from **{user}**."
 msgstr "Le has robado **${stolen}** a **{user}**."
 
-#: cogs/classes.py:206
+#: cogs/classes.py:207
 msgid "Your attempt to steal money wasn't successful."
 msgstr "Tu intento de robar dinero no fue exitoso."
 
-#: cogs/classes.py:213
+#: cogs/classes.py:214
 msgid "[Ranger Only] View your pet!"
 msgstr "[Únicamente arquero] ¡Mira a tu mascota!"
 
-#: cogs/classes.py:215
+#: cogs/classes.py:216
 #, python-brace-format
 msgid "{user}'s pet"
 msgstr "Mascota de {user}"
 
-#: cogs/classes.py:216
+#: cogs/classes.py:217
 msgid "Level"
 msgstr "Nivel"
 
-#: cogs/classes.py:234
+#: cogs/classes.py:235
 msgid "[Ranger Only] Let your pet get a weapon for you!"
 msgstr "[Únicamente arquero] ¡Deja que tu mascota consiga un arma para tí!"
 
-#: cogs/classes.py:245
+#: cogs/classes.py:246
 msgid "Your pet found an item!"
 msgstr "¡Tu mascota ha encontrado un objeto!"
 
-#: cogs/classes.py:257
+#: cogs/classes.py:258
 msgid "Your pet needs to recover, wait a day to retry"
 msgstr "Tu mascota necesita descansar. Espera un día para reintentarlo"
 
@@ -4388,6 +4384,17 @@ msgid ""
 msgstr ""
 "Se reinició exitosamente el fondo de perfil, clase, objetos re-nombrados, y "
 "límite de miembros de gremio de {target}."
+
+#~ msgid ""
+#~ "The sneaky money stealer...\n"
+#~ "Get access to `{prefix}steal` to steal 10%% of the target's money, if "
+#~ "successful.\n"
+#~ "+8% success chance per evolution."
+#~ msgstr ""
+#~ "Un astuto ladrón de dinero...\n"
+#~ "Acceso al CMD `{prefix}steal` para robar el 10%% del dinero del objetivo, "
+#~ "si es que tiene éxito.\n"
+#~ "+8% success chance per evolutión."
 
 #~ msgid "?? Deleted **{num}** messages for you."
 #~ msgstr "?? Borrados **{num}** mensajes (únicamente para tí)."

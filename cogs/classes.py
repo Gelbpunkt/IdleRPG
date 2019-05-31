@@ -46,7 +46,8 @@ class Classes(commands.Cog):
             discord.Embed(
                 title=_("Thief"),
                 description=_(
-                    "The sneaky money stealer...\nGet access to `{prefix}steal` to steal 10%% of the target's money, if successful.\n+8% success chance per evolution."
+                    # xgettext: no-python-format
+                    "The sneaky money stealer...\nGet access to `{prefix}steal` to steal 10% of the target's money, if successful.\n+8% success chance per evolution."
                 ).format(prefix=ctx.prefix),
                 color=self.bot.config.primary_colour,
             ),
