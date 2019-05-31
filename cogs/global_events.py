@@ -30,7 +30,6 @@ class GlobalEvents(commands.Cog):
             "Authorization": bot.config.dbltoken
         }  # needed for DBL requests
         self.auth_headers2 = {"Authorization": bot.config.bfdtoken}
-        self.bot_owner = None
         self.stats_updates = bot.loop.create_task(
             self.stats_updater()
         )  # Initiate the stats updates and save it for the further close
@@ -53,21 +52,21 @@ class GlobalEvents(commands.Cog):
     async def on_guild_remove(self, guild):
         if self.bot.config.is_beta:
             return
-        announce_channel = self.bot.get_channel(self.bot.config.join_channel)
-        await announce_channel.send(f"Bye bye **{guild.name}**!")
+        await self.bot.http.send_message(
+            self.bot.config.join_channel, f"Bye bye **{guild.name}**!"
+        )
 
     @commands.Cog.listener()
     async def on_guild_join(self, guild):
-        if not self.bot_owner:  # just for performance reasons (+1 API call)
-            self.bot_owner = await self.bot.fetch_user(self.bot.owner_id)
-
         embed = discord.Embed(
             title="Thanks for adding me!",
             colour=0xEEC340,
-            description=f"Hi! I am **IdleRPG**, a Discord Bot by `{self.bot_owner}`.\nI simulate"
+            description=f"Hi! I am **IdleRPG**, a Discord Bot by `Adrian#1337`.\nI simulate"
             f" a whole Roleplay with everything it needs!\n\nVisit **{self.bot.BASE_URL}** for a documentation on all my commands. :innocent:\nTo get started, type "
             f"`{self.bot.config.global_prefix}create`.\n\nA tutorial can be found on **{self.bot.BASE_URL}/tutorial**.\n\nDon't like my prefix? `{self.bot.config.global_prefix}"
-            "settings prefix` changes it.\n\nHave fun! :wink:",
+            "settings prefix` changes it.\n\n"
+            "Not English? {self.bot.config.global_prefix}language` and `{self.bot.config.global_prefix}language set` may include yours!\n\n"
+            "Have fun! :wink:",
         )
 
         embed.set_image(url=f"{self.bot.BASE_URL}/IdleRPG.png")
@@ -75,33 +74,33 @@ class GlobalEvents(commands.Cog):
             text=f"IdleRPG Version {self.bot.version}",
             icon_url=self.bot.user.avatar_url,
         )
-        allchannels = guild.text_channels
-        for channel in allchannels:
-            if (
-                channel.permissions_for(guild.me).send_messages
-                and channel.permissions_for(guild.me).read_messages
-            ):
-                await channel.send(embed=embed)
-                break
+        channels = list(
+            filter(
+                lambda x: x.permissions_for(guild.me).send_messages, guild.text_channels
+            )
+        )
+        if channels:
+            await channels[0].send(embed=embed)
         if self.bot.config.is_beta:
             return
-        announce_channel = self.bot.get_channel(self.bot.config.join_channel)
-        await announce_channel.send(
-            f"Joined a new server! **{guild.name}** with **{len(guild.members)}** members!"
+        await self.bot.http.send_message(
+            self.bot.config.join_channel,
+            f"Joined a new server! **{guild.name}** with **{guild.member_count}** members!",
         )
 
     async def status_updater(self):
         await self.bot.wait_until_ready()
         await self.bot.change_presence(
-            activity=discord.Game(name=self.bot.BASE_URL), status=discord.Status.idle
+            activity=discord.Game(name="Money was divided by 1000"),
+            status=discord.Status.idle,
         )
 
     async def stats_updater(self):
+        await self.bot.wait_until_ready()
         if (
             self.bot.shard_count - 1 not in self.bot.shards.keys()
         ) or self.bot.config.is_beta:
             return
-        await self.bot.wait_until_ready()
         while True:
             await self.bot.session.post(
                 f"https://discordbots.org/api/bots/{self.bot.user.id}/stats",
