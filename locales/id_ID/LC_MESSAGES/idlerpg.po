@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-05-31 08:04+0000\n"
-"PO-Revision-Date: 2019-05-30 16:38+0700\n"
+"POT-Creation-Date: 2019-05-31 10:30+0000\n"
+"PO-Revision-Date: 2019-05-31 16:14+0700\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: id_ID\n"
@@ -224,6 +224,8 @@ msgid ""
 "To permanently choose a language, please create a character and enter this "
 "command again. I set it to {language} temporarily."
 msgstr ""
+"Untuk memilih sebuah bahasa secara permanen, buatlah sebuah karakter dan "
+"tulislah perintah ini lagi, Pengaturan bahasa {language} ini hanya sementara."
 
 #: cogs/battles.py:40
 msgid "Battle against another player."
@@ -832,6 +834,8 @@ msgid ""
 "The languages have been reloaded while you were using a command. The "
 "execution therefore had to be stopped. Please try again."
 msgstr ""
+"Pilihan bahasa sedang dimuat kembali ketika anda melakukan perintah. "
+"Eksekusinya harus dihentikan. Mohon coba kembali."
 
 #: cogs/error_handler.py:172
 msgid ""
@@ -1044,7 +1048,7 @@ msgstr "{guild} telah mendaftar."
 
 #: cogs/christmas.py:434
 msgid "Makes the snowball tournament matches"
-msgstr ""
+msgstr "Membuat pertarungan bola salju"
 
 #: cogs/christmas.py:444
 msgid "Matches generated!"
@@ -1560,6 +1564,11 @@ msgid ""
 "featured permissions system to keep your pages squeaky clean.\n"
 "[discordbots.org Page](https://discordbots.org/bot/541707781665718302)"
 msgstr ""
+"Cautious Memory membawa halaman dengan tema wiki ke server anda. Gunakan itu "
+"untuk mendokumentasikan siapa yang ada di server anda, lelucon, atau peran "
+"komunitas. Sistem perizinan juga termasuk untuk menjaga halaman anda "
+"bersih.\n"
+"[Halaman discordbots.org](https://discordbots.org/bot/541707781665718302)"
 
 #: cogs/store.py:32
 msgid "The booster store."
@@ -1893,6 +1902,8 @@ msgstr "Memperbarui latar belakang anda dengan yang dari event sebelumnya."
 msgid ""
 "You do not have an eventbackground. They can be acquired on seasonal events."
 msgstr ""
+"Anda tidak memiliki latar belakang event. Latar belakang bisa didapatkan di "
+"event tertentu."
 
 #: cogs/patreon.py:167
 #, python-brace-format
@@ -2062,67 +2073,68 @@ msgstr ""
 
 #: cogs/music.py:54
 msgid "Play some tunes"
-msgstr ""
+msgstr "Memainkan beberapa musik"
 
 #: cogs/music.py:72 cogs/music.py:95 cogs/music.py:128
 msgid ":warning:`No results...`"
-msgstr ""
+msgstr ":warning:`Tidak ada hasil...`"
 
 #: cogs/music.py:77 cogs/music.py:100 cogs/music.py:133
 msgid ":warning:`Connect to a voice channel first!`"
 msgstr ""
+":warning:`Anda harus berada di salah satu saluran suara terlebih dahulu!`"
 
 #: cogs/music.py:87
 msgid "Search and play some tunes from SoundCloud"
-msgstr ""
+msgstr "Mencari dan memainkan beberapa musik di SoundCloud"
 
 #: cogs/music.py:110
 msgid "Picks a random result, and plays for you"
-msgstr ""
+msgstr "Memilih hasil acak, dan memainkannya untuk anda"
 
 #: cogs/music.py:143
 msgid "Stops the music and leaves the channel"
-msgstr ""
+msgstr "Menghentikan musik dan meninggalkan saluran"
 
 #: cogs/music.py:152
 msgid ":white_check_mark:` Done!`"
-msgstr ""
+msgstr ":white_check_mark:` Selesai!`"
 
 #: cogs/music.py:156
 msgid ":warning:`I am currently not connected to any channel in this guild...`"
-msgstr ""
+msgstr ":warning:`Saya sedang tidak berada di saluran apapun di guild ini...`"
 
 #: cogs/music.py:165
 msgid "Show the next (maximum 5) tracks in the queue"
-msgstr ""
+msgstr "Menunjukan track selanjutnya yang akan dimainkan (maksimum 5)"
 
 #: cogs/music.py:178
 msgid "Upcoming entries"
-msgstr ""
+msgstr "Lagu selanjutnya"
 
 #: cogs/music.py:187
 msgid ":warning:`No more entries left.`"
-msgstr ""
+msgstr ":warning:`Tidak ada lagu di antrian.`"
 
 #: cogs/music.py:193
 msgid "Skips the current song"
-msgstr ""
+msgstr "Melompati lagu yang sedang dimainkan"
 
 #: cogs/music.py:199
 msgid ":warning:`Nothing to skip...`"
-msgstr ""
+msgstr ":warning:`Tidak ada yang bisa dilompati`"
 
 #: cogs/music.py:205
 msgid "Changes the playback's volume"
-msgstr ""
+msgstr "Mengubah volume suara"
 
 #: cogs/music.py:209
 msgid ":warning:`I am currently not playing anything here...`"
-msgstr ""
+msgstr ":warning:`Saya sedang tidak memainkan apapun di sini...`"
 
 #: cogs/music.py:214
 msgid ":warning:`The volume must between 0 and 100!`"
-msgstr ""
+msgstr ":warning:`Volume harus berkisar diantara 0 dan 100!`"
 
 #: cogs/music.py:219
 #, python-brace-format
@@ -2130,115 +2142,119 @@ msgid ""
 ":warning:`Playback volume is going to change to {volume} in 5 seconds. To "
 "avoid the sudden earrape, control the volume on client side!`"
 msgstr ""
+":warning:`Volume akan diubah menjadi {volume} dalam 5 detik. Untuk "
+"menghindari kejutan suara, anda dapat mengubah volume di sisi anda!`"
 
 #: cogs/music.py:228
 #, python-brace-format
 msgid ":white_check_mark:` Volume successfully changed to {volume}!`"
-msgstr ""
+msgstr ":white_check_mark:` Volume suara telah diubah menjadi {volume}!`"
 
 #: cogs/music.py:238
 msgid "Toggles the music playback's paused state"
-msgstr ""
+msgstr "Memberhentikan musik sementara atau melanjutkannya"
 
 #: cogs/music.py:242
 msgid ":white_check_mark:`Song paused!`"
-msgstr ""
+msgstr ":white_check_mark:`Musik dihentikan sementara!`"
 
 #: cogs/music.py:245
 msgid ":white_check_mark:`Song resumed!`"
-msgstr ""
+msgstr ":white_check_mark:`Musik dilanjutkan!`"
 
 #: cogs/music.py:247
 msgid ":warning:`The song list is empty!`"
-msgstr ""
+msgstr ":warning:`Daftar lagu kosong!`"
 
 #: cogs/music.py:253
 msgid "Displays some information about the current song"
-msgstr ""
+msgstr "Menunjukan beberapa informasi mengenai lagu yang sedang diputar"
 
 #: cogs/music.py:260
 msgid ":warning:`I'm not playing anything at the moment...`"
-msgstr ""
+msgstr ":warning:`Saya sedang tidak memainkan apa apa...`"
 
 #: cogs/music.py:269
 msgid "Now playing..."
-msgstr ""
+msgstr "Sedang memainkan..."
 
 #: cogs/music.py:273
 msgid "Title"
-msgstr ""
+msgstr "Judul"
 
 #: cogs/music.py:279
 msgid "Uploader"
-msgstr ""
+msgstr "Pengunggah"
 
 #: cogs/music.py:286 cogs/music.py:303 cogs/music.py:305
 msgid "Length"
-msgstr ""
+msgstr "Lama"
 
 #: cogs/music.py:290
 msgid "Remaining"
-msgstr ""
+msgstr "Sisa"
 
 #: cogs/music.py:297
 msgid "Position"
-msgstr ""
+msgstr "Posisi"
 
 #: cogs/music.py:306
 msgid "Click me!"
-msgstr ""
+msgstr "Klik saya!"
 
 #: cogs/music.py:309
 msgid "Link to the original"
-msgstr ""
+msgstr "Link original"
 
 #: cogs/music.py:323
 msgid "Volume"
-msgstr ""
+msgstr "Volume"
 
 #: cogs/music.py:325
 msgid "Playing status"
-msgstr ""
+msgstr "Status"
 
 #: cogs/music.py:325
 msgid "`⏸Paused`"
-msgstr ""
+msgstr "`⏸Sedang dihentikan sementara`"
 
 #: cogs/music.py:341
 msgid "```No information```"
-msgstr ""
+msgstr "```Tidak ada informasi```"
 
 #: cogs/music.py:347
 #, python-brace-format
 msgid "Song requested by: {user}"
-msgstr ""
+msgstr "Lagu diminta oleh: {user}"
 
 #: cogs/music.py:389
 #, python-brace-format
 msgid "🎧 Added {title} to the queue..."
-msgstr ""
+msgstr "🎧 Menambahkan {title} ke antrian..."
 
 #: cogs/music.py:397
 #, python-brace-format
 msgid "🎧 Playing {title}..."
-msgstr ""
+msgstr "🎧 Memainkan {title}..."
 
 #: cogs/adventure.py:39
 msgid "A list of all adventures with success rates, name and time it takes."
 msgstr ""
+"Daftar semua petualangan dengan peluang keberhasilan, nama, dan durasinya."
 
 #: cogs/adventure.py:46
 msgid "Loading images..."
-msgstr ""
+msgstr "Memuat gambar..."
 
 #: cogs/adventure.py:77
 msgid "Sends your character on an adventure."
-msgstr ""
+msgstr "Mengirim karakter anda ke petualangan."
 
 #: cogs/adventure.py:80
 #, python-brace-format
 msgid "You must be on level **{level}** to do this adventure."
 msgstr ""
+"Anda harus berada di level **{level}** untuk melakukan petualangan ini."
 
 #: cogs/adventure.py:91
 #, python-brace-format
@@ -2246,14 +2262,16 @@ msgid ""
 "Successfully sent your character out on an adventure. Use `{prefix}status` "
 "to see the current status of the mission."
 msgstr ""
+"Anda berhasil mengirim karakter anda ke petualangan. Gunakan `{prefix}"
+"status` untuk mengecek status misi anda."
 
 #: cogs/adventure.py:100
 msgid "Go out on an active, action based adventure."
-msgstr ""
+msgstr "Menuju ke petualangan aktif yang berbasis gerakan."
 
 #: cogs/adventure.py:101
 msgid "**Active adventure loading...**"
-msgstr ""
+msgstr "**Memuat Petualangan Aktif…**"
 
 #: cogs/adventure.py:128
 #, python-brace-format
@@ -2270,30 +2288,41 @@ msgid ""
 "Use the reactions attack, defend or recover\n"
 "```\n"
 msgstr ""
+"\n"
+"**Petualangan {user}**\n"
+"```\n"
+"Proses: {progress}%\n"
+"Nyawa: {hp}\n"
+"\n"
+"Musuh\n"
+"Nyawa: {enemy_hp}\n"
+"\n"
+"Gunakan reaksi serangan, pertahanan, atau pemulihan\n"
+"```\n"
 
 #: cogs/adventure.py:148
 msgid "Adventure stopped because you refused to move."
-msgstr ""
+msgstr "Petualangan terhenti karena anda menolak untuk bergerak."
 
 #: cogs/adventure.py:158
 msgid "You healed yourself for 20 HP."
-msgstr ""
+msgstr "Anda memulihkan diri sendiri sebanyak 20 nyawa."
 
 #: cogs/adventure.py:161
 msgid "The enemy healed himself for 20 HP."
-msgstr ""
+msgstr "Musuh memulihkan diri sebanyak 20 nyawa."
 
 #: cogs/adventure.py:163
 msgid "Your attack was blocked!"
-msgstr ""
+msgstr "Serangan anda ditahan!"
 
 #: cogs/adventure.py:165
 msgid "Enemy attack was blocked!"
-msgstr ""
+msgstr "Serangan musuh ditahan!"
 
 #: cogs/adventure.py:167
 msgid "Noone attacked."
-msgstr ""
+msgstr "Tidak ada yang menyerang."
 
 #: cogs/adventure.py:174
 #, python-brace-format
@@ -2301,37 +2330,41 @@ msgid ""
 "You hit the enemy for **{damage}** damage, he hit you for **{damage2}** "
 "damage."
 msgstr ""
+"Anda mengenai musuh dan mengurangi nyawa musuh sebanyak **{damage}** nyawa, "
+"ia menyerang kembali dan mengurangi nyawa anda sebanyak **{damage2}** nyawa."
 
 #: cogs/adventure.py:181
 #, python-brace-format
 msgid "You hit the enemy for **{damage}** damage."
 msgstr ""
+"Anda mengenai musuh dan mengurangi nyawa musuh sebanyak **{damage}** nyawa."
 
 #: cogs/adventure.py:190
 #, python-brace-format
 msgid "The enemy hit you for **{damage}** damage."
 msgstr ""
+"Musuh mengenai anda dan mengurangi nyawa anda sebanyak **{damage}** nyawa."
 
 #: cogs/adventure.py:197
 msgid "Enemy defeated! You gained **20 HP**"
-msgstr ""
+msgstr "Musuh telah dikalahkan! Anda mendapatkan **20 Nyawa**"
 
 #: cogs/adventure.py:204
 msgid "You died."
-msgstr ""
+msgstr "Anda mati."
 
 #: cogs/adventure.py:215
 msgid "You found a new item when finishing an active adventure!"
-msgstr ""
+msgstr "Anda menemukan barang baru ketika menyelesaikan petualangan aktif!"
 
 #: cogs/adventure.py:225
 #, python-brace-format
 msgid "Your HP were {hp}"
-msgstr ""
+msgstr "Nyawa anda tersisa {hp}"
 
 #: cogs/adventure.py:233
 msgid "Checks your adventure status."
-msgstr ""
+msgstr "Mengecek status petualangan anda."
 
 #: cogs/adventure.py:292
 #, python-brace-format
@@ -2339,6 +2372,8 @@ msgid ""
 "You have completed your dungeon and received **${gold}** as well as a new "
 "weapon: **{item}**. Experience gained: **{xp}**."
 msgstr ""
+"Anda telah menyelesaikan petualangan anda dan menerima **${gold}** dan "
+"senjata baru: **{item}**. XP yang didapat: **{xp}**."
 
 #: cogs/adventure.py:298
 #, python-brace-format
@@ -2347,20 +2382,23 @@ msgid ""
 "weapon: **{item}**. Experience gained: **{xp}**.\n"
 "Your partner received **${gold2}**."
 msgstr ""
+"Anda telah menyelesaikan petualangan anda dan menerima **${gold}** dan "
+"senjata baru: **{item}**. XP yang didapat: **{xp}**.\n"
+"Pasangan anda menerima **${gold2}**."
 
 #: cogs/adventure.py:310
 #, python-brace-format
 msgid "**{amount}** crates"
-msgstr ""
+msgstr "**{amount}** peti"
 
 #: cogs/adventure.py:313
 msgid "a special Item"
-msgstr ""
+msgstr "benda spesial"
 
 #: cogs/adventure.py:331
 #, python-brace-format
 msgid "Level {new_level} Memorial"
-msgstr ""
+msgstr "Level {new_level} Memorial"
 
 #: cogs/adventure.py:337
 #, python-brace-format
@@ -2368,10 +2406,12 @@ msgid ""
 "You reached a new level: **{new_level}** :star:! You received {reward} as a "
 "reward :tada:!"
 msgstr ""
+"Anda mencapai level baru: **{new_level}** :star:! Anda menerima {reward} "
+"sebagai hadiah :tada:!"
 
 #: cogs/adventure.py:341
 msgid "You died on your mission. Try again!"
-msgstr ""
+msgstr "Anda mati dalam misi anda. Mohon coba kembali!"
 
 #: cogs/adventure.py:350
 #, python-brace-format
@@ -2380,10 +2420,13 @@ msgid ""
 "Approximate end in `{end}`\n"
 "Dungeon Name: `{dungeon}`"
 msgstr ""
+"Anda sedang berada di petualangan dengan tingkat kesulitan `{difficulty}`.\n"
+"Petualangan akan berakhir pada `{end}`\n"
+"Nama Dungeon: `{dungeon}`"
 
 #: cogs/adventure.py:359
 msgid "Cancels your current adventure."
-msgstr ""
+msgstr "Membatalkan petualangan yang sedang dilakukan."
 
 #: cogs/adventure.py:363
 #, python-brace-format
@@ -2391,10 +2434,12 @@ msgid ""
 "Canceled your mission. Use `{prefix}adventure [missionID]` to start a new "
 "one!"
 msgstr ""
+"Petualangan anda dibatalkan. Gunakan `{prefix}adventure [missionID]` untuk "
+"memulai yang baru!"
 
 #: cogs/adventure.py:371
 msgid "Your death stats."
-msgstr ""
+msgstr "Statistik kematian anda."
 
 #: cogs/adventure.py:381
 #, python-brace-format
@@ -2402,23 +2447,27 @@ msgid ""
 "Out of **{total}** adventures, you died **{deaths}** times and survived "
 "**{completed}** times, which is a success rate of **{rate}%**."
 msgstr ""
+"Dari **{total}** petualangan, anda mati sebanyak **{deaths}** kali dan "
+"berhasil sebanyak **{completed}** kali, dengan presentase keberhasilan "
+"sebesar **{rate}%**."
 
 #: cogs/shard_communication.py:291
 msgid "Lists all your cooldowns."
-msgstr ""
+msgstr "Mendaftar semua cooldown."
 
 #: cogs/shard_communication.py:295
 msgid "You don't have any active cooldown at the moment."
-msgstr ""
+msgstr "Anda tidak memiliki cooldown aktif pada saat ini."
 
 #: cogs/shard_communication.py:297
 msgid "Commands on cooldown:"
-msgstr ""
+msgstr "Perintah dalam cooldown:"
 
 #: cogs/shard_communication.py:302
 #, python-brace-format
 msgid "{cmd} is on cooldown and will be available after {time}"
 msgstr ""
+"{cmd} sedang dalam cooldown dan akan bisa digunakan kembali setelah {time}"
 
 #: cogs/gambling.py:166
 #, python-brace-format
@@ -2427,125 +2476,141 @@ msgid ""
 "You have a {pretty_player} for a total of {player}\n"
 "{additional}"
 msgstr ""
+"Bandar mempunyai kartu {pretty_dealer} dengan nilai {dealer}\n"
+"Anda mempunyai kartu {pretty_player} dengan nilai {player}\n"
+"{additional}"
 
 #: cogs/gambling.py:186
 msgid ""
 "Would you like insurance? It will cost half your bet and will get you 2:1 "
 "back if the dealer has a blackjack. Else it is gone."
 msgstr ""
+"Apakah anda ingin asuransi? Anda hanya akan mendapat setengah dari taruhan "
+"anda jika menang tetapi mendapatkan uang anda kembali jika bandar "
+"mendapatkan blackjack, selain itu hilang."
 
 #: cogs/gambling.py:197
 msgid "The dealer got a blackjack. You had insurance and lost nothing."
-msgstr ""
+msgstr "Bandar mendapatkan blackjack. Anda kalah."
 
 #: cogs/gambling.py:202
 msgid "The dealer got a blackjack. You lost."
-msgstr ""
+msgstr "Bandar mendapatkan blackjack. Anda kalah."
 
 #: cogs/gambling.py:206
 msgid "You got a blackjack and won!"
-msgstr ""
+msgstr "Anda mendapatkan blackjack dan menang!"
 
 #: cogs/gambling.py:234
 msgid "Blackjack timed out... You lost your money!"
-msgstr ""
+msgstr "Waktu bermain blackjack habis… Anda kehilangan uang!"
 
 #: cogs/gambling.py:257
 msgid "Invalid. You're too poor and lose the match."
-msgstr ""
+msgstr "Tidak valid. Anda terlalu miskin dan kalah dalam pertandingan."
 
 #: cogs/gambling.py:273
 msgid "You doubled your bid in exchange for only receiving one more card."
-msgstr ""
+msgstr "Anda menggandakan taruhan anda untuk hanya mendapatkan satu kartu."
 
 #: cogs/gambling.py:280
 msgid "You busted and lose."
-msgstr ""
+msgstr "Anda mendapatkan lebih dari 21 dan kalah."
 
 #: cogs/gambling.py:282
 msgid "Dealer busts and you win!"
-msgstr ""
+msgstr "Bandar mendapatkan lebih dari 21 dan anda menang!"
 
 #: cogs/gambling.py:287
 msgid "You have a higher score than the dealer and win."
-msgstr ""
+msgstr "Anda mendapatkan nilai yang lebih tinggi dari pada bandar dan menang."
 
 #: cogs/gambling.py:292
 msgid "Dealer has a higher score than you and wins."
-msgstr ""
+msgstr "Bandar mendapatkan nilai lebih banyak dari anda dan menang."
 
 #: cogs/gambling.py:295
 msgid "It's a tie. You lose your bet."
-msgstr ""
+msgstr "Hasilnya adalah seri. Anda kalah taruhan."
 
 #: cogs/gambling.py:307
 msgid "Draws a random card."
-msgstr ""
+msgstr "Menambah kartu acak."
 
 #: cogs/gambling.py:321
 msgid "Flip a coin and bid on the outcome."
-msgstr ""
+msgstr "Membalikan koin dan bertaruh untuk hasil."
 
 #: cogs/gambling.py:324
 #, python-brace-format
 msgid "Use `heads` or `tails` instead of `{side}`."
-msgstr ""
+msgstr "Gunakan `heads (kepala)` atau `tails (ekor)` dan bukan `{side}`."
 
 #: cogs/gambling.py:341
 #, python-brace-format
 msgid "{result[1]} It's **{result[0]}**! You won **${amount}**!"
 msgstr ""
+"{result[1]} Hasilnya adalah **{result[0]}**! Anda memenangkan **${amount}**!"
 
 #: cogs/gambling.py:352
 #, python-brace-format
 msgid "{result[1]} It's **{result[0]}**! You lost **${amount}**!"
 msgstr ""
+"{result[1]} Hasilnya adalah **{result[0]}**! Anda kehilangan **${amount}**!"
 
 #: cogs/gambling.py:370
 #, python-brace-format
 msgid "Invalid Tip. Must be in the Range of `1` to `{maximum}`."
-msgstr ""
+msgstr "Pilihan anda tidak valid. Pilihan harus di antara `1` dan `{maximum}`."
 
 #: cogs/gambling.py:375
 msgid "Spend it in a better way. C'mon!"
-msgstr ""
+msgstr "Habiskan uang anda dengan cara yang lebih baik."
 
 #: cogs/gambling.py:387
 #, python-brace-format
 msgid ""
 "You won **${money}**! The random number was `{num}`, you tipped `{tip}`."
 msgstr ""
+"Anda memenangkan **${money}**! Angka acaknya adalah `{num}`, anda menebak "
+"`{tip}`."
 
 #: cogs/gambling.py:398
 #, python-brace-format
 msgid ""
 "You lost **${money}**! The random number was `{num}`, you tipped `{tip}`."
 msgstr ""
+"Anda kehilangan **${money}**! Angka acaknya adalah `{num}`, anda menebak "
+"`{tip}`."
 
 #: cogs/gambling.py:408
 msgid ""
 "[Alpha] Play blackjack against the dealer. Dealer rules, means wins in case "
 "of tie."
 msgstr ""
+"[Alpha] Bermain blackjack melawan bandar. Bandar berkuasa, sehingga akan "
+"menang saat seri."
 
 #: cogs/trading.py:35
 msgid "Puts an item into the player store."
-msgstr ""
+msgstr "Mendaftarkan benda ke toko pemain."
 
 #: cogs/trading.py:44 cogs/trading.py:316
 #, python-brace-format
 msgid "You don't own an item with the ID: {itemid}"
-msgstr ""
+msgstr "Anda tidak memiliki benda dengan ID: {itemid}"
 
 #: cogs/trading.py:51
 msgid ""
 "Your item is either equal to a Starter Item or worse. Noone would buy it."
 msgstr ""
+"Benda anda sama atau lebih buruk dari peralatan standart. Tidak ada yang "
+"akan membeli."
 
 #: cogs/trading.py:57
 #, python-brace-format
 msgid "Your price is too high. Try adjusting it to be up to `{limit}`."
-msgstr ""
+msgstr "Harga anda terlalu tinggi. Cobalah atur harga dibawah `{limit}`."
 
 #: cogs/trading.py:70
 #, python-brace-format
@@ -2553,19 +2618,21 @@ msgid ""
 "Successfully added your item to the shop! Use `{prefix}shop` to view it in "
 "the market!"
 msgstr ""
+"Benda anda telah didaftarkan ke toko! Gunakan `{prefix}shop` untuk "
+"melihatnya di toko!"
 
 #: cogs/trading.py:78
 msgid "Buys an item from the global market."
-msgstr ""
+msgstr "Membeli barang dari toko global."
 
 #: cogs/trading.py:86
 #, python-brace-format
 msgid "There is no item in the shop with the ID: {itemid}"
-msgstr ""
+msgstr "Tidak ada benda di toko dengan ID: {itemid}"
 
 #: cogs/trading.py:91
 msgid "You're too poor to buy this item."
-msgstr ""
+msgstr "Anda terlalu miskin untuk membeli barang ini."
 
 #: cogs/trading.py:116
 #, python-brace-format
@@ -2573,20 +2640,22 @@ msgid ""
 "Successfully bought item `{id}`. Use `{prefix}inventory` to view your "
 "updated inventory."
 msgstr ""
+"Anda sukses membeli barang `{id}`. Gunakan `{prefix}inventory` untuk "
+"melihatnya di toko."
 
 #: cogs/trading.py:123
 #, python-brace-format
 msgid "**{author}** bought your **{name}** for **${price}** from the market."
-msgstr ""
+msgstr "**{author}** membeli **{name}** seharga **${price}** dari toko."
 
 #: cogs/trading.py:138
 msgid "Takes an item off the shop."
-msgstr ""
+msgstr "Menarik kembali benda dari toko."
 
 #: cogs/trading.py:148
 #, python-brace-format
 msgid "You don't have an item of yours in the shop with the ID `{itemid}`."
-msgstr ""
+msgstr "Anda tidak memiliki benda dengan ID `{itemid}` terdaftar di toko."
 
 #: cogs/trading.py:161
 #, python-brace-format
@@ -2594,45 +2663,49 @@ msgid ""
 "Successfully removed item `{itemid}` from the shop and put it in your "
 "inventory."
 msgstr ""
+"Benda anda `{itemid}` telah ditarik dari toko dan telah ditambahkan ke "
+"inventaris anda."
 
 #: cogs/trading.py:174
 msgid "Show the market with all items and prices."
-msgstr ""
+msgstr "Melihat barang dengan harganya di toko."
 
 #: cogs/trading.py:201
 msgid "No results."
-msgstr ""
+msgstr "Tidak ada hasil."
 
 #: cogs/trading.py:205
 msgid "IdleRPG Shop"
-msgstr ""
+msgstr "Toko IdleRPG"
 
 #: cogs/trading.py:206 cogs/trading.py:381
 #, python-brace-format
 msgid "Use `{prefix}buy {item}` to buy this."
-msgstr ""
+msgstr "Gunakan `{prefix}buy {item}` untuk membeli barang tersebut."
 
 #: cogs/trading.py:216 cogs/trading.py:391 cogs/marriage.py:205
 msgid "Price"
-msgstr ""
+msgstr "Harga"
 
 #: cogs/trading.py:218 cogs/trading.py:393
 #, python-brace-format
 msgid "Item {num} of {total}"
-msgstr ""
+msgstr "Benda {num} dari {total}"
 
 #: cogs/trading.py:232
 msgid "Offer an item to a specific user."
-msgstr ""
+msgstr "Menawarkan benda ke orang lain yang specific."
 
 #: cogs/trading.py:247 cogs/trading.py:322
 #, python-brace-format
 msgid "Are you sure you want to sell your equipped {item}?"
 msgstr ""
+"Apakah anda yakin anda ingin ingin menjual barang yang sedang anda gunakan, "
+"{item}?"
 
 #: cogs/trading.py:251
 msgid "Item selling cancelled."
-msgstr ""
+msgstr "Penjualan barang dibatalkan."
 
 #: cogs/trading.py:255
 #, python-brace-format
@@ -2641,20 +2714,23 @@ msgid ""
 "${price}**. You have **2 Minutes** to accept the trade or the offer will be "
 "canceled."
 msgstr ""
+"{user}, {author} menawarkan anda sebuah benda! Bereaksilah untuk membelinya! "
+"Harganya adalah **${price}**. Anda mempunyai **2 Menit** untuk menerima "
+"tawarannya atau transaksi akan dibatalkan."
 
 #: cogs/trading.py:260
 msgid "They didn't want it."
-msgstr ""
+msgstr "Ia tidak menginginkannya"
 
 #: cogs/trading.py:264
 #, python-brace-format
 msgid "{user}, you're too poor to buy this item!"
-msgstr ""
+msgstr "{user}, anda terlalu miskin untuk membeli barang ini!"
 
 #: cogs/trading.py:275
 #, python-brace-format
 msgid "The owner sold the item with the ID `{itemid}` in the meantime."
-msgstr ""
+msgstr "Penjual sedang menjual barang dengan ID `{itemid}` pada saat ini."
 
 #: cogs/trading.py:294
 #, python-brace-format
@@ -2662,60 +2738,62 @@ msgid ""
 "Successfully bought item `{itemid}`. Use `{prefix}inventory` to view your "
 "updated inventory."
 msgstr ""
+"Anda telah membeli benda `{itemid}` dengan sukses. Gunakan `{prefix}"
+"inventory` untuk melihat inventaris anda yang telah diperbarui."
 
 #: cogs/trading.py:307
 msgid "Sells an item for its value."
-msgstr ""
+msgstr "Menjual barang dengan harga."
 
 #: cogs/trading.py:327
 msgid "Cancelled."
-msgstr ""
+msgstr "Dibatalkan."
 
 #: cogs/trading.py:335
 #, python-brace-format
 msgid "You received **${money}** when selling item `{itemid}`."
-msgstr ""
+msgstr "Anda menerima **${money}** ketika menjual barang `{itemid}`."
 
 #: cogs/trading.py:345
 msgid "Sells all your non-equipped items for their value."
-msgstr ""
+msgstr "Menjual semua barang yang sedang tidak digunakan berdasarkan harganya."
 
 #: cogs/trading.py:352
 msgid "Nothing to merch."
-msgstr ""
+msgstr "Tidak ada barang untuk dijual."
 
 #: cogs/trading.py:363
 #, python-brace-format
 msgid "Merched **{count}** items for **${money}**."
-msgstr ""
+msgstr "Anda telah menjual **{count}** barang untuk **${money}**."
 
 #: cogs/trading.py:371
 msgid "View your pending shop offers."
-msgstr ""
+msgstr "Melihat barang yang sedang dijual."
 
 #: cogs/trading.py:377
 msgid "You don't have any pending shop offers."
-msgstr ""
+msgstr "Anda tidak punya barang yang sedang dijual."
 
 #: cogs/trading.py:380
 msgid "Your pending items"
-msgstr ""
+msgstr "Barang yang sedang dijual"
 
 #: cogs/trading.py:404
 msgid "Buy items at the trader."
-msgstr ""
+msgstr "Membeli barang di perdagangan"
 
 #: cogs/trading.py:419
 msgid "The Trader"
-msgstr ""
+msgstr "Perdagangan"
 
 #: cogs/trading.py:420
 msgid "Hit a button to buy it"
-msgstr ""
+msgstr "Klik tombol untuk membeli"
 
 #: cogs/trading.py:430
 msgid "You are too poor to buy this item."
-msgstr ""
+msgstr "Anda terlalu miskin untuk membeli barang ini."
 
 #: cogs/trading.py:437
 #, python-brace-format
@@ -2723,254 +2801,264 @@ msgid ""
 "Successfully bought offer **{offer}**. Use `{prefix}inventory` to view your "
 "updated inventory."
 msgstr ""
+"**{offer}** telah terbeli secara sukses. Gunakan `{prefix}inventory` untuk "
+"melihat inventaris yang telah diperbarui."
 
 #: cogs/marriage.py:39
 msgid "Propose for a marriage."
-msgstr ""
+msgstr "Melamar pasangan anda."
 
 #: cogs/marriage.py:42
 msgid "You should have a better friend than only yourself."
 msgstr ""
+"Anda seharusnya punya teman yang lebih baik dari pada diri anda sendiri."
 
 #: cogs/marriage.py:45
 msgid "One of you is married."
-msgstr ""
+msgstr "Salah satu dari anda sudah memiliki pasangan."
 
 #: cogs/marriage.py:48
 #, python-brace-format
 msgid "{author} has proposed for a marriage!"
-msgstr ""
+msgstr "{author} telah melamar anda!"
 
 #: cogs/marriage.py:52
 #, python-brace-format
 msgid ""
 "{author} wants to marry you, {partner}! React with :heart: to marry them!"
 msgstr ""
+"{author} mau menikah denganmu, {partner}! Bereaksilah dengan :heart: untuk "
+"menikahinya!"
 
 #: cogs/marriage.py:75
 msgid "They didn't want to marry."
-msgstr ""
+msgstr "Ia menolak lamaran anda."
 
 #: cogs/marriage.py:101
 #, python-brace-format
 msgid "Owwwwwww! :heart: {author} and {partner} are now married!"
-msgstr ""
+msgstr "Owwwwwww! :heart: {author} dan {partner} adalah suami istri sekarang!"
 
 #: cogs/marriage.py:107
 msgid "Either you or your lovee married in the meantime... :broken_heart:"
 msgstr ""
+"Salah satu dari anda sudah menikah pada saat pelamaran... :broken_heart:"
 
 #: cogs/marriage.py:115
 msgid "Break up with your partner."
-msgstr ""
+msgstr "Cerai dengan pasangan anda."
 
 #: cogs/marriage.py:117 cogs/marriage.py:137 cogs/marriage.py:259
 msgid "You are not married yet."
-msgstr ""
+msgstr "Anda belum menikah."
 
 #: cogs/marriage.py:129
 msgid "You are now divorced."
-msgstr ""
+msgstr "Anda sudah bercerai."
 
 #: cogs/marriage.py:135
 msgid "View who you're married to."
-msgstr ""
+msgstr "Melihat kepada siapa anda menikah."
 
 #: cogs/marriage.py:140
 #, python-brace-format
 msgid "You are currently married to **{partner}**."
-msgstr ""
+msgstr "**{partner}** adalah pasangan anda."
 
 #: cogs/marriage.py:147
 msgid "Views your lovescore."
-msgstr ""
+msgstr "Melihat nilai percintaan anda."
 
 #: cogs/marriage.py:151
 msgid "noone"
-msgstr ""
+msgstr "tidak ada"
 
 #: cogs/marriage.py:154
 #, python-brace-format
 msgid ""
 "Your overall love score is **{score}**. You are married to **{partner}**."
 msgstr ""
+"Nilai percintaan anda adalah **{score}**. Pasangan anda adalah **{partner}**."
 
 #: cogs/marriage.py:162
 msgid "Buy something for your spouse and increase their lovescore."
 msgstr ""
+"Membeli sesuatu untuk pasangan anda untuk meningkatkan nilai percintaan."
 
 #: cogs/marriage.py:164
 msgid "Dog :dog2:"
-msgstr ""
+msgstr "Anjing :dog2:"
 
 #: cogs/marriage.py:165
 msgid "Cat :cat2:"
-msgstr ""
+msgstr "Kucing :cat2:"
 
 #: cogs/marriage.py:166
 msgid "Cow :cow2:"
-msgstr ""
+msgstr "Sapi :cow2:"
 
 #: cogs/marriage.py:167
 msgid "Penguin :penguin:"
-msgstr ""
+msgstr "Penguin :penguin:"
 
 #: cogs/marriage.py:168
 msgid "Unicorn :unicorn:"
-msgstr ""
+msgstr "Unicorn :unicorn:"
 
 #: cogs/marriage.py:169
 msgid "Potato :potato:"
-msgstr ""
+msgstr "Kentang :potato:"
 
 #: cogs/marriage.py:170
 msgid "Sweet potato :sweet_potato:"
-msgstr ""
+msgstr "Ubi :sweet_potato:"
 
 #: cogs/marriage.py:171
 msgid "Peach :peach:"
-msgstr ""
+msgstr "Persik :peach:"
 
 #: cogs/marriage.py:172
 msgid "Ice Cream :ice_cream:"
-msgstr ""
+msgstr "Es Krim :ice_cream:"
 
 #: cogs/marriage.py:173
 msgid "Bento Box :bento:"
-msgstr ""
+msgstr "Kotak Bento :bento:"
 
 #: cogs/marriage.py:174
 msgid "Movie Night :ticket:"
-msgstr ""
+msgstr "Tiket Film :ticket:"
 
 #: cogs/marriage.py:175
 msgid "Video Game Night :video_game:"
-msgstr ""
+msgstr "Malam Video Game :video_game:"
 
 #: cogs/marriage.py:176
 msgid "Camping Night :fishing_pole_and_fish:"
-msgstr ""
+msgstr "Camping :fishing_pole_and_fish:"
 
 #: cogs/marriage.py:177
 msgid "Couple Competition :trophy:"
-msgstr ""
+msgstr "Pertandingan pasangan :trophy:"
 
 #: cogs/marriage.py:178
 msgid "Concert Night :musical_keyboard:"
-msgstr ""
+msgstr "Konser :musical_keyboard:"
 
 #: cogs/marriage.py:179
 msgid "Bicycle :bike:"
-msgstr ""
+msgstr "Sepeda :bike:"
 
 #: cogs/marriage.py:180
 msgid "Motorcycle :motorcycle:"
-msgstr ""
+msgstr "Sepeda Motor :motorcycle:"
 
 #: cogs/marriage.py:181
 msgid "Car :red_car:"
-msgstr ""
+msgstr "Mobil :red_car:"
 
 #: cogs/marriage.py:182
 msgid "Private Jet :airplane:"
-msgstr ""
+msgstr "Jet Privat :airplane:"
 
 #: cogs/marriage.py:183
 msgid "Space Rocket :rocket:"
-msgstr ""
+msgstr "Roket Luar Angkasa :rocket:"
 
 #: cogs/marriage.py:184
 msgid "Credit Card :credit_card:"
-msgstr ""
+msgstr "Kartu Kredit :credit_card:"
 
 #: cogs/marriage.py:185
 msgid "Watch :watch:"
-msgstr ""
+msgstr "Jam Tangan :watch:"
 
 #: cogs/marriage.py:186
 msgid "Phone :iphone:"
-msgstr ""
+msgstr "Hand Phone :iphone:"
 
 #: cogs/marriage.py:187
 msgid "Bed :bed:"
-msgstr ""
+msgstr "Kasur :bed:"
 
 #: cogs/marriage.py:188
 msgid "Home films :projector:"
-msgstr ""
+msgstr "Film :projector:"
 
 #: cogs/marriage.py:189
 msgid "Satchel :school_satchel:"
-msgstr ""
+msgstr "Tas :school_satchel:"
 
 #: cogs/marriage.py:190
 msgid "Purse :purse:"
-msgstr ""
+msgstr "Dompet :purse:"
 
 #: cogs/marriage.py:191
 msgid "Shoes :athletic_shoe:"
-msgstr ""
+msgstr "Sepatu :athletic_shoe:"
 
 #: cogs/marriage.py:192
 msgid "Casual Attire :shirt:"
-msgstr ""
+msgstr "Pakaian Kasual :shirt:"
 
 #: cogs/marriage.py:193
 msgid "Ring :ring:"
-msgstr ""
+msgstr "Cincin :ring:"
 
 #: cogs/marriage.py:194
 msgid "Balloon :balloon:"
-msgstr ""
+msgstr "Balon :balloon:"
 
 #: cogs/marriage.py:195
 msgid "Flower Bouquet :bouquet:"
-msgstr ""
+msgstr "Buket bunga :bouquet:"
 
 #: cogs/marriage.py:196
 msgid "Expensive Chocolates :chocolate_bar:"
-msgstr ""
+msgstr "Coklat mahal :chocolate_bar:"
 
 #: cogs/marriage.py:197
 msgid "Declaration of Love :love_letter:"
-msgstr ""
+msgstr "Surat Cinta :love_letter:"
 
 #: cogs/marriage.py:198
 msgid "Key to Heart :key2:"
-msgstr ""
+msgstr "Kunci Memorial :key2:"
 
 #: cogs/marriage.py:199
 msgid "Ancient Vase :amphora:"
-msgstr ""
+msgstr "Vas Antik :amphora:"
 
 #: cogs/marriage.py:200
 msgid "House :house:"
-msgstr ""
+msgstr "Rumah :house:"
 
 #: cogs/marriage.py:201
 msgid "Super Computer :computer:"
-msgstr ""
+msgstr "Komputer Super :computer:"
 
 #: cogs/marriage.py:202
 msgid "Precious Gemstone Collection :gem:"
-msgstr ""
+msgstr "Perhiasan mahal :gem:"
 
 #: cogs/marriage.py:203
 msgid "Planet :earth_americas:"
-msgstr ""
+msgstr "Planet :earth_asia:"
 
 #: cogs/marriage.py:214
 #, python-brace-format
 msgid "To buy one of these items for your partner, use `{prefix}spoil shopid`"
 msgstr ""
+"Untuk membeli salah satu dari benda ini untuk pasangan anda, gunakan "
+"`{prefix}spoil shopid`"
 
 #: cogs/marriage.py:219
 msgid "You are too poor to buy this."
-msgstr ""
+msgstr "Anda terlalu miskin untuk membeli barang ini."
 
 #: cogs/marriage.py:221
 msgid "You're not married yet."
-msgstr ""
+msgstr "Anda belum menikah."
 
 #: cogs/marriage.py:235
 #, python-brace-format
@@ -2978,10 +3066,14 @@ msgid ""
 "You bought a **{item}** for your partner and increased their love score by "
 "**{points}** points!"
 msgstr ""
+"Anda membelikan **{item}**untuk pasangan anda dan menaikan nilai percintaan "
+"sebanyak **{points}** poin!"
 
 #: cogs/marriage.py:241
 msgid "Failed to DM your spouse, could not find their Discord account"
 msgstr ""
+"Gagal mengirimkan hadiah kepada pasangan, saya tidak dapat menemukan akun "
+"Discordnya."
 
 #: cogs/marriage.py:245
 #, python-brace-format
@@ -2989,6 +3081,8 @@ msgid ""
 "**{author}** bought you a **{item}** and increased your love score by "
 "**{points}** points!"
 msgstr ""
+"**{author}** membelikan anda **{item}** dan meningkatkan nilai percintaan "
+"sebanyak **{points}** poin!"
 
 #: cogs/marriage.py:254
 msgid "Take your loved one on a date to increase your lovescore."
