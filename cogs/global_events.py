@@ -65,7 +65,7 @@ class GlobalEvents(commands.Cog):
             f" a whole Roleplay with everything it needs!\n\nVisit **{self.bot.BASE_URL}** for a documentation on all my commands. :innocent:\nTo get started, type "
             f"`{self.bot.config.global_prefix}create`.\n\nA tutorial can be found on **{self.bot.BASE_URL}/tutorial**.\n\nDon't like my prefix? `{self.bot.config.global_prefix}"
             "settings prefix` changes it.\n\n"
-            "Not English? {self.bot.config.global_prefix}language` and `{self.bot.config.global_prefix}language set` may include yours!\n\n"
+            f"Not English? `{self.bot.config.global_prefix}language` and `{self.bot.config.global_prefix}language set` may include yours!\n\n"
             "Have fun! :wink:",
         )
 
