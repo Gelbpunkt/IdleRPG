@@ -70,7 +70,7 @@ class Store(commands.Cog):
         )
 
     @has_char()
-    @commands.command()
+    @commands.command(aliases=["b"])
     @locale_doc
     async def boosters(self, ctx):
         _("""View your boosters.""")
