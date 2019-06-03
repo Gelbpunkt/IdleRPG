@@ -377,7 +377,7 @@ class Marriage(commands.Cog):
 
     @has_char()
     @user_cooldown(1800)
-    @commands.command()
+    @commands.command(aliases=["fe"])
     @locale_doc
     async def familyevent(self, ctx):
         _("""Events happening to your family.""")
