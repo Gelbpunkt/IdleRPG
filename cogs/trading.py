@@ -72,7 +72,7 @@ class Trading(commands.Cog):
         )
 
     @has_char()
-    @commands.command(aliases=["b"])
+    @commands.command()
     @locale_doc
     async def buy(self, ctx, itemid: int):
         _("""Buys an item from the global market.""")
