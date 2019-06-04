@@ -411,8 +411,8 @@ Thank you for playing IdleRPG! :heart:"""
             return await ctx.send(_("Use the ndx format."))
         if dice_type[0] > 100:
             return await ctx.send(_("Too many dice."))
-        if dice_type[1] <= 0:
-            return await ctx.send(_("Dice must have at least one side."))
+        if dice_type[1] <= 0 or dice_type[1] > 10000:
+            return await ctx.send(_("Dice must have at least one side and not larger than 10000."))
         results = []
         for x in range(dice_type[0]):
             results.append(random.randint(1, dice_type[1]))
