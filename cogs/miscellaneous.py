@@ -402,7 +402,7 @@ Thank you for playing IdleRPG! :heart:"""
         try:
             dice_type = list(map(int, dice_type.split("d")))
         except ValueError:
-            await ctx.send(
+            return await ctx.send(
                 _(
                     "Use the ndx format. E.g. `5d20` will roll 5 dices with 20 sides each."
                 )
