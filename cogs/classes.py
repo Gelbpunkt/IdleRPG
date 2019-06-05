@@ -184,7 +184,7 @@ Caretaker->  Trainer   ->  Bowman      -> Hunter         ->  Ranger
         ):
             async with self.bot.pool.acquire() as conn:
                 usr = await conn.fetchrow(
-                    'SELECT "user", "money" FROM profile WHERE "money">=0 ORDER BY RANDOM() LIMIT 1;'
+                    'SELECT "user", "money" FROM profile WHERE "money">=10 ORDER BY RANDOM() LIMIT 1;'
                 )
                 stolen = int(usr["money"] * 0.1)
                 await conn.execute(
