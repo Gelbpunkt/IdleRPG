@@ -16,7 +16,9 @@ You should have received a copy of the GNU Affero General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
 import asyncio
+from collections import deque, defaultdict
 import datetime
+from functools import partial
 import platform
 import random
 
@@ -34,6 +36,7 @@ from utils.checks import has_char
 class Miscellaneous(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
+        self.talk_context = defaultdict(partial(deque, maxlen=3))
 
     @commands.command()
     @locale_doc
@@ -549,6 +552,18 @@ Thank you for playing IdleRPG! :heart:"""
         em.set_thumbnail(url=ctx.author.avatar_url)
         em.timestamp = datetime.datetime.strptime(res.get("time"), "%Y-%m-%dT%H:%M:%SZ")
         await ctx.send(embed=em)
+
+    @commands.command(aliases=["cb", "chat"])
+    async def talk(self, ctx, *, text: str):
+        _("""Talk to me! (Supports only English)""")
+        if not (3 <= len(text) <= 60):
+            return await ctx.send(_("Text too long or too short. May be 3 to 60 characters."))
+        self.talk_context[ctx.author.id].append(text)
+        context = list(self.talk_context[ctx.author.id])[:-1]
+        async with self.bot.session.post("https://public-api.travitia.xyz/talk", json={"text": text, "context": context}, headers={"authorization": self.bot.config.traviapi}) as req:
+            json = await req.json()
+        await ctx.send(f"{ctx.author.mention}, {json['response']}")
+
 
     @commands.command()
     @locale_doc
