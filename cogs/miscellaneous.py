@@ -16,11 +16,11 @@ You should have received a copy of the GNU Affero General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
 import asyncio
-from collections import deque, defaultdict
 import datetime
-from functools import partial
 import platform
 import random
+from collections import defaultdict, deque
+from functools import partial
 
 import discord
 import pkg_resources as pkg
@@ -415,7 +415,9 @@ Thank you for playing IdleRPG! :heart:"""
         if dice_type[0] > 100:
             return await ctx.send(_("Too many dice."))
         if dice_type[1] <= 0 or dice_type[1] > 10000:
-            return await ctx.send(_("Dice must have at least one side and not more than 10000."))
+            return await ctx.send(
+                _("Dice must have at least one side and not more than 10000.")
+            )
         results = []
         for x in range(dice_type[0]):
             results.append(random.randint(1, dice_type[1]))
@@ -557,13 +559,18 @@ Thank you for playing IdleRPG! :heart:"""
     async def talk(self, ctx, *, text: str):
         _("""Talk to me! (Supports only English)""")
         if not (3 <= len(text) <= 60):
-            return await ctx.send(_("Text too long or too short. May be 3 to 60 characters."))
+            return await ctx.send(
+                _("Text too long or too short. May be 3 to 60 characters.")
+            )
         self.talk_context[ctx.author.id].append(text)
         context = list(self.talk_context[ctx.author.id])[:-1]
-        async with self.bot.session.post("https://public-api.travitia.xyz/talk", json={"text": text, "context": context}, headers={"authorization": self.bot.config.traviapi}) as req:
+        async with self.bot.session.post(
+            "https://public-api.travitia.xyz/talk",
+            json={"text": text, "context": context},
+            headers={"authorization": self.bot.config.traviapi},
+        ) as req:
             json = await req.json()
         await ctx.send(f"{ctx.author.mention}, {json['response']}")
-
 
     @commands.command()
     @locale_doc
