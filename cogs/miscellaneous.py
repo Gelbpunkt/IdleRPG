@@ -558,6 +558,7 @@ Thank you for playing IdleRPG! :heart:"""
     @commands.command(aliases=["cb", "chat"])
     async def talk(self, ctx, *, text: str):
         _("""Talk to me! (Supports only English)""")
+        await ctx.trigger_typing()
         if not (3 <= len(text) <= 60):
             return await ctx.send(
                 _("Text too long or too short. May be 3 to 60 characters.")
