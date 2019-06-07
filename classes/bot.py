@@ -173,7 +173,7 @@ class Bot(commands.AutoShardedBot):
     async def start_adventure(self, user, number, time):
         user = user.id if isinstance(user, (discord.User, discord.Member)) else user
         await self.redis.execute(
-            "SET", f"adv:{user}", number, "EX", time.seconds + 259_200
+            "SET", f"adv:{user}", number, "EX", time.total_seconds() + 259_200
         )  # +3 days
 
     async def get_adventure(self, user):
@@ -193,7 +193,7 @@ class Bot(commands.AutoShardedBot):
 
     async def start_guild_adventure(self, guild, difficulty, time):
         await self.redis.execute(
-            "SET", f"guildadv:{guild}", difficulty, "EX", time.seconds + 259_200
+            "SET", f"guildadv:{guild}", difficulty, "EX", time.total_seconds() + 259_200
         )  # +3 days
 
     async def get_guild_adventure(self, guild):
