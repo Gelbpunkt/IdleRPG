@@ -324,7 +324,7 @@ class Profile(commands.Cog):
                     ).format(itemid=itemid, olditem=olditem["id"])
                 )
             else:
-                await ctx.send(_("Successfully equipped item `{itemid}`."))
+                await ctx.send(_("Successfully equipped item `{itemid}`.").format(itemid=itemid))
 
     @checks.has_char()
     @user_cooldown(3600)
