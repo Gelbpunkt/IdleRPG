@@ -269,7 +269,7 @@ class MusicPlayer(commands.Cog):
         playing_embed = discord.Embed(title=_("Now playing..."), colour=embed_color)
         if current_song.get("info"):
             if current_song["info"].get("title"):
-                playing_embed.description = playing_embed.add_field(
+                playing_embed.add_field(
                     name=_("Title"),
                     value=f'```{current_song["info"]["title"]}```',
                     inline=False,
