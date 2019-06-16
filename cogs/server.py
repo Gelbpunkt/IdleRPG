@@ -57,7 +57,7 @@ Server created at: `{created_at}`"""
                 members=ctx.guild.member_count,
                 urltext=urltext,
                 owner=ctx.guild.owner.mention,
-                id=id,
+                id=ctx.guild.id,
                 created_at=ctx.guild.created_at.__format__("%A %d. %B %Y at %H:%M:%S"),
             ),
         )
