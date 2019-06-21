@@ -170,6 +170,7 @@ class Sharding(commands.Cog):
             (
                 discord.utils.get(member.roles, name="Donators"),
                 discord.utils.get(member.roles, name="Administrators"),
+                discord.utils.get(member.roles, name="Nitro Booster"),
             )
         ):
             payload = {"output": True, "command_id": command_id}
