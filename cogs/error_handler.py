@@ -108,6 +108,12 @@ class Errorhandler(commands.Cog):
                         "You need to be on an adventure to use this command. Try `{prefix}adventure`!"
                     ).format(prefix=ctx.prefix)
                 )
+            elif type(error) == utils.checks.NoPatron:
+                await ctx.ssnd(
+                    _(
+                        "You need to be a donator to use this command. Please head to `{prefix}donate` and make sure you joined the support server if you decide to support us."
+                    ).format(prefix=ctx.prefix)
+                )
             else:
                 await ctx.send(
                     embed=discord.Embed(
