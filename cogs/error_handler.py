@@ -109,7 +109,7 @@ class Errorhandler(commands.Cog):
                     ).format(prefix=ctx.prefix)
                 )
             elif type(error) == utils.checks.NoPatron:
-                await ctx.ssnd(
+                await ctx.send(
                     _(
                         "You need to be a donator to use this command. Please head to `{prefix}donate` and make sure you joined the support server if you decide to support us."
                     ).format(prefix=ctx.prefix)
