@@ -66,6 +66,10 @@ class NeedsAdventure(commands.CheckFailure):
 
     pass
 
+class NoPatron(commands.CheckFailure):
+    """Exception raised when you need to donate to use a command."""
+
+    pass
 
 def has_char():
     """Checks for a user to have a character."""
@@ -241,7 +245,9 @@ def is_patron():
         response = await ctx.bot.cogs["Sharding"].handler(
             "user_is_patreon", 1, args={"member_id": ctx.author.id}
         )
-        return any(response)
+        if any(response):
+            return True
+        raise NoPatron()
 
     return commands.check(predicate)
 
