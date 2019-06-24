@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: idlerpg2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-06-06 13:35+0000\n"
+"POT-Creation-Date: 2019-06-24 19:07+0000\n"
 "PO-Revision-Date: 2019-05-31 00:51+0300\n"
 "Last-Translator: Falcon.OVI\n"
 "Language-Team: Russian\n"
@@ -738,7 +738,7 @@ msgstr "Вы использовали неверный аргумент!"
 msgid "You are on cooldown. Try again in {time}."
 msgstr "Вы на перезарядке. Попробуйте снова через {time}."
 
-#: cogs/error_handler.py:77 cogs/error_handler.py:114
+#: cogs/error_handler.py:77 cogs/error_handler.py:120
 msgid "Permission denied"
 msgstr "Доступ запрещен"
 
@@ -783,7 +783,15 @@ msgstr ""
 "Вам необходимо начать приключение что бы использовать эту команду. "
 "Используйте команду `{prefix}приключения`!"
 
-#: cogs/error_handler.py:116
+#: cogs/error_handler.py:114
+#, python-brace-format
+msgid ""
+"You need to be a donator to use this command. Please head to `{prefix}"
+"donate` and make sure you joined the support server if you decide to support "
+"us."
+msgstr ""
+
+#: cogs/error_handler.py:122
 msgid ""
 ":x: You don't have the permissions to use this command. It is thought for "
 "other users."
@@ -791,24 +799,24 @@ msgstr ""
 ":x: У вас нет прав на использование этой команды. Она предназначена для "
 "других пользователей."
 
-#: cogs/error_handler.py:122
+#: cogs/error_handler.py:128
 msgid "You did not choose anything."
 msgstr "Вы ничего не выбрали."
 
-#: cogs/error_handler.py:135
+#: cogs/error_handler.py:141
 msgid ""
 "An argument or value you entered was far too high for me to handle properly!"
 msgstr ""
 "Введенный вами аргумент или значение были слишком высоки, чтобы я мог их "
 "правильно обработать!"
 
-#: cogs/error_handler.py:141
+#: cogs/error_handler.py:147
 msgid ""
 "The languages have been reloaded while you were using a command. The "
 "execution therefore had to be stopped. Please try again."
 msgstr ""
 
-#: cogs/error_handler.py:172
+#: cogs/error_handler.py:178
 msgid ""
 "The command you tried to use ran into an error. The incident has been "
 "reported and the team will work hard to fix the issue!"
@@ -2403,19 +2411,19 @@ msgstr ""
 "Из **{total}** приключений вы умерли **{deaths}** раз и выжили **{completed}"
 "** раз, ваш показатель успешных приключений**{rate}%**."
 
-#: cogs/shard_communication.py:291
+#: cogs/shard_communication.py:292
 msgid "Lists all your cooldowns."
 msgstr "Список ваших ожидающих действий."
 
-#: cogs/shard_communication.py:295
+#: cogs/shard_communication.py:296
 msgid "You don't have any active cooldown at the moment."
 msgstr "В данный момент не запущено ни одного активного действия."
 
-#: cogs/shard_communication.py:297
+#: cogs/shard_communication.py:298
 msgid "Commands on cooldown:"
 msgstr "Команды на перезарядке:"
 
-#: cogs/shard_communication.py:302
+#: cogs/shard_communication.py:303
 #, python-brace-format
 msgid "{cmd} is on cooldown and will be available after {time}"
 msgstr "{cmd} на перезарядке и будет доступна через {time}"

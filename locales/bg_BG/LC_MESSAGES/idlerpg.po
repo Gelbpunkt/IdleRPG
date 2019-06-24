@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-06-06 13:35+0000\n"
+"POT-Creation-Date: 2019-06-24 19:07+0000\n"
 "PO-Revision-Date: 2019-05-31 04:38+0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -760,7 +760,7 @@ msgstr "Използвахте неправилно зададен аргуме�
 msgid "You are on cooldown. Try again in {time}."
 msgstr "Имате времетраене. Опитайте отново след {time}."
 
-#: cogs/error_handler.py:77 cogs/error_handler.py:114
+#: cogs/error_handler.py:77 cogs/error_handler.py:120
 msgid "Permission denied"
 msgstr "Разрешението е отказано"
 
@@ -806,7 +806,15 @@ msgstr ""
 "Трябва да сте на приключение за да използвате тази команда. Опитайте "
 "`{prefix}adventure`!"
 
-#: cogs/error_handler.py:116
+#: cogs/error_handler.py:114
+#, python-brace-format
+msgid ""
+"You need to be a donator to use this command. Please head to `{prefix}"
+"donate` and make sure you joined the support server if you decide to support "
+"us."
+msgstr ""
+
+#: cogs/error_handler.py:122
 msgid ""
 ":x: You don't have the permissions to use this command. It is thought for "
 "other users."
@@ -814,18 +822,18 @@ msgstr ""
 ":x: Нямате разрешение да ползвате тази команда. Тя е предназначена за други "
 "потребители."
 
-#: cogs/error_handler.py:122
+#: cogs/error_handler.py:128
 msgid "You did not choose anything."
 msgstr "Вие не избрахте нищо."
 
-#: cogs/error_handler.py:135
+#: cogs/error_handler.py:141
 msgid ""
 "An argument or value you entered was far too high for me to handle properly!"
 msgstr ""
 "Аргумент или стойност, която въведохте, бе прекалено висока за мен, че да се "
 "справя подходящо!"
 
-#: cogs/error_handler.py:141
+#: cogs/error_handler.py:147
 msgid ""
 "The languages have been reloaded while you were using a command. The "
 "execution therefore had to be stopped. Please try again."
@@ -833,7 +841,7 @@ msgstr ""
 "Езиците бяха нулирани, докато използвахте команда. Затова екзекуцията "
 "трябваше да бъде спряна. Моля, опитайте отново."
 
-#: cogs/error_handler.py:172
+#: cogs/error_handler.py:178
 msgid ""
 "The command you tried to use ran into an error. The incident has been "
 "reported and the team will work hard to fix the issue!"
@@ -2441,19 +2449,19 @@ msgstr ""
 "От **{total}** приключение Вие сте загинали **{deaths}** пъти и сте оцелели "
 "**{completed}** пъти. Вашият успех в проценти е **{rate}%**."
 
-#: cogs/shard_communication.py:291
+#: cogs/shard_communication.py:292
 msgid "Lists all your cooldowns."
 msgstr "Лист с всички команди на времетраене."
 
-#: cogs/shard_communication.py:295
+#: cogs/shard_communication.py:296
 msgid "You don't have any active cooldown at the moment."
 msgstr "Нямате команди на времетраене в момента."
 
-#: cogs/shard_communication.py:297
+#: cogs/shard_communication.py:298
 msgid "Commands on cooldown:"
 msgstr "Команди на времетраене:"
 
-#: cogs/shard_communication.py:302
+#: cogs/shard_communication.py:303
 #, python-brace-format
 msgid "{cmd} is on cooldown and will be available after {time}"
 msgstr "{cmd} е на времетраене и ще може да я ползвате отново след {time}"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-06-06 13:35+0000\n"
+"POT-Creation-Date: 2019-06-24 19:07+0000\n"
 "PO-Revision-Date: 2019-05-30 18:20+0700\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -753,7 +753,7 @@ msgstr "Bạn đã sử dụng một đối số không đúng!"
 msgid "You are on cooldown. Try again in {time}."
 msgstr "Bạn đang trong thời gian chờ. Thử lại trong {time}."
 
-#: cogs/error_handler.py:77 cogs/error_handler.py:114
+#: cogs/error_handler.py:77 cogs/error_handler.py:120
 #, fuzzy
 msgid "Permission denied"
 msgstr "Quyền bị từ chối"
@@ -799,29 +799,37 @@ msgstr ""
 "Bạn cần phải ở trong cuộc phiêu lưu để sử dụng lệnh này.Thử `{prefix}"
 "adventure`!"
 
-#: cogs/error_handler.py:116
+#: cogs/error_handler.py:114
+#, python-brace-format
+msgid ""
+"You need to be a donator to use this command. Please head to `{prefix}"
+"donate` and make sure you joined the support server if you decide to support "
+"us."
+msgstr ""
+
+#: cogs/error_handler.py:122
 msgid ""
 ":x: You don't have the permissions to use this command. It is thought for "
 "other users."
 msgstr ""
 ":x: Bạn không có quyền sử dụng lệnh này. Nó được dành cho người dùng khác."
 
-#: cogs/error_handler.py:122
+#: cogs/error_handler.py:128
 msgid "You did not choose anything."
 msgstr "Bạn đã không chọn cái nào."
 
-#: cogs/error_handler.py:135
+#: cogs/error_handler.py:141
 msgid ""
 "An argument or value you entered was far too high for me to handle properly!"
 msgstr "Một đối số hoặc giá trị bạn đã nhập quá cao để tôi xử lý đúng cách!"
 
-#: cogs/error_handler.py:141
+#: cogs/error_handler.py:147
 msgid ""
 "The languages have been reloaded while you were using a command. The "
 "execution therefore had to be stopped. Please try again."
 msgstr ""
 
-#: cogs/error_handler.py:172
+#: cogs/error_handler.py:178
 msgid ""
 "The command you tried to use ran into an error. The incident has been "
 "reported and the team will work hard to fix the issue!"
@@ -2418,19 +2426,19 @@ msgstr ""
 "Trong số *{total}** cuộc phiêu lưu, Bạn đã chết **{deaths}** lần và sống sót "
 "**{completed}** lần, Tỉ lệ thành công của bạn là **{rate}%**."
 
-#: cogs/shard_communication.py:291
+#: cogs/shard_communication.py:292
 msgid "Lists all your cooldowns."
 msgstr "Liệt kê tất cả thời gian hồi chiêu của bạn."
 
-#: cogs/shard_communication.py:295
+#: cogs/shard_communication.py:296
 msgid "You don't have any active cooldown at the moment."
 msgstr "Bạn không có bất kỳ thời gian hồi chiêu nào vào lúc này."
 
-#: cogs/shard_communication.py:297
+#: cogs/shard_communication.py:298
 msgid "Commands on cooldown:"
 msgstr "Các lệnh về thời gian hồi chiêu:"
 
-#: cogs/shard_communication.py:302
+#: cogs/shard_communication.py:303
 #, python-brace-format
 msgid "{cmd} is on cooldown and will be available after {time}"
 msgstr "{cmd} đang trong thời gian hồi chiêu và sẽ khả dụng sau {time}"

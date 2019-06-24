@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-06-06 13:35+0000\n"
+"POT-Creation-Date: 2019-06-24 19:07+0000\n"
 "PO-Revision-Date: 2019-05-30 00:38+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -754,7 +754,7 @@ msgstr ""
 msgid "You are on cooldown. Try again in {time}."
 msgstr "Vous êtes en cooldown. Réessayez dans {time}."
 
-#: cogs/error_handler.py:77 cogs/error_handler.py:114
+#: cogs/error_handler.py:77 cogs/error_handler.py:120
 msgid "Permission denied"
 msgstr "Permission refusée"
 
@@ -801,7 +801,15 @@ msgstr ""
 "Vous devez être parti à l’aventure pour utiliser cette commande. Essayez "
 "`{prefix}adventure` !"
 
-#: cogs/error_handler.py:116
+#: cogs/error_handler.py:114
+#, python-brace-format
+msgid ""
+"You need to be a donator to use this command. Please head to `{prefix}"
+"donate` and make sure you joined the support server if you decide to support "
+"us."
+msgstr ""
+
+#: cogs/error_handler.py:122
 msgid ""
 ":x: You don't have the permissions to use this command. It is thought for "
 "other users."
@@ -809,22 +817,22 @@ msgstr ""
 ":x: Vous n’avez pas la permission d’utiliser cette commande. Elle est "
 "réservée à d’autres utilisateurs."
 
-#: cogs/error_handler.py:122
+#: cogs/error_handler.py:128
 msgid "You did not choose anything."
 msgstr "Vous n’avez rien choisi."
 
-#: cogs/error_handler.py:135
+#: cogs/error_handler.py:141
 msgid ""
 "An argument or value you entered was far too high for me to handle properly!"
 msgstr ""
 
-#: cogs/error_handler.py:141
+#: cogs/error_handler.py:147
 msgid ""
 "The languages have been reloaded while you were using a command. The "
 "execution therefore had to be stopped. Please try again."
 msgstr ""
 
-#: cogs/error_handler.py:172
+#: cogs/error_handler.py:178
 msgid ""
 "The command you tried to use ran into an error. The incident has been "
 "reported and the team will work hard to fix the issue!"
@@ -2374,19 +2382,19 @@ msgstr ""
 "avez survécu **{completed}** fois, ce qui vous donne un taux de succès de "
 "**{rate}%**."
 
-#: cogs/shard_communication.py:291
+#: cogs/shard_communication.py:292
 msgid "Lists all your cooldowns."
 msgstr "Liste tous vos cooldowns."
 
-#: cogs/shard_communication.py:295
+#: cogs/shard_communication.py:296
 msgid "You don't have any active cooldown at the moment."
 msgstr "Vous n’avez aucun cooldown actif pour le moment."
 
-#: cogs/shard_communication.py:297
+#: cogs/shard_communication.py:298
 msgid "Commands on cooldown:"
 msgstr "Commandes en cooldown:"
 
-#: cogs/shard_communication.py:302
+#: cogs/shard_communication.py:303
 #, python-brace-format
 msgid "{cmd} is on cooldown and will be available after {time}"
 msgstr "{cmd} est en cooldown et sera disponible dans {time}"
