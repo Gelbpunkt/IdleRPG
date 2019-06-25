@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-06-24 19:09+0000\n"
+"POT-Creation-Date: 2019-06-25 14:07+0000\n"
 "PO-Revision-Date: 2019-06-24 13:46-0400\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -22,7 +22,7 @@ msgid "Starts a new tournament."
 msgstr "Starts a new tournament. owo"
 
 #: cogs/tournament.py:41 cogs/battles.py:44 cogs/battles.py:146
-#: cogs/gambling.py:327 cogs/profile.py:460
+#: cogs/gambling.py:327 cogs/profile.py:462
 msgid "You are too poor."
 msgstr "You are too poor."
 
@@ -1598,7 +1598,7 @@ msgid "Please either buy `time`, `luck` or `money`."
 msgstr "Please either buy `time`, `luck` or `money`."
 
 #: cogs/store.py:59 cogs/gambling.py:377 cogs/gambling.py:411 cogs/guild.py:485
-#: cogs/profile.py:428
+#: cogs/profile.py:430
 msgid "You're too poor."
 msgstr "You're too poor, but you can have a cookie 🍪."
 
@@ -3876,7 +3876,7 @@ msgstr ""
 msgid "Creates a new character."
 msgstr ""
 
-#: cogs/profile.py:43 cogs/profile.py:485
+#: cogs/profile.py:43 cogs/profile.py:487
 msgid "What shall your character's name be? (Minimum 3 Characters, Maximum 20)"
 msgstr ""
 
@@ -4030,7 +4030,7 @@ msgstr ""
 msgid "Equips an item of yours by ID."
 msgstr ""
 
-#: cogs/profile.py:303 cogs/profile.py:398
+#: cogs/profile.py:303 cogs/profile.py:400
 #, python-brace-format
 msgid "You don't own an item with the ID `{itemid}`."
 msgstr ""
@@ -4040,132 +4040,132 @@ msgstr ""
 msgid "Successfully equipped item `{itemid}` and put off item `{olditem}`."
 msgstr ""
 
-#: cogs/profile.py:327
+#: cogs/profile.py:328
 #, python-brace-format
 msgid "Successfully equipped item `{itemid}`."
 msgstr ""
 
-#: cogs/profile.py:334
+#: cogs/profile.py:336
 msgid "Merges two items to a better one. Second one is consumed."
 msgstr ""
 
-#: cogs/profile.py:337
+#: cogs/profile.py:339
 msgid "Good luck with that."
 msgstr ""
 
-#: cogs/profile.py:351
+#: cogs/profile.py:353
 msgid "You don't own both of these items."
 msgstr ""
 
-#: cogs/profile.py:364
+#: cogs/profile.py:366
 #, python-brace-format
 msgid ""
 "The second item's stat must be in the range of `{min_}` to `{max_}` to "
 "upgrade an item with the stat of `{stat}`."
 msgstr ""
 
-#: cogs/profile.py:370
+#: cogs/profile.py:372
 msgid "This item is already on the maximum upgrade level."
 msgstr ""
 
-#: cogs/profile.py:379
+#: cogs/profile.py:381
 #, python-brace-format
 msgid ""
 "The {stat} of your **{item}** is now **{newstat}**. The other item was "
 "destroyed."
 msgstr ""
 
-#: cogs/profile.py:388
+#: cogs/profile.py:390
 msgid "Upgrades an item's stat by 1."
 msgstr ""
 
-#: cogs/profile.py:410
+#: cogs/profile.py:412
 msgid "Your weapon already reached the maximum upgrade level."
 msgstr ""
 
-#: cogs/profile.py:415
+#: cogs/profile.py:417
 #, python-brace-format
 msgid ""
 "You are too poor to upgrade this item. The upgrade costs **${pricetopay}**, "
 "but you only have **${money}**."
 msgstr ""
 
-#: cogs/profile.py:421
+#: cogs/profile.py:423
 #, python-brace-format
 msgid ""
 "Are you sure you want to upgrade this item: {item}? It will cost **"
 "${pricetopay}**."
 msgstr ""
 
-#: cogs/profile.py:425
+#: cogs/profile.py:427
 msgid "Weapon upgrade cancelled."
 msgstr ""
 
-#: cogs/profile.py:441
+#: cogs/profile.py:443
 #, python-brace-format
 msgid ""
 "The {stat} of your **{item}** is now **{newstat}**. **${pricetopay}** has "
 "been taken off your balance."
 msgstr ""
 
-#: cogs/profile.py:456
+#: cogs/profile.py:458
 msgid "Gift money!"
 msgstr ""
 
-#: cogs/profile.py:458
+#: cogs/profile.py:460
 msgid "No cheating!"
 msgstr ""
 
-#: cogs/profile.py:471
+#: cogs/profile.py:473
 #, python-brace-format
 msgid "Successfully gave **${money}** to {other}."
 msgstr ""
 
-#: cogs/profile.py:483
+#: cogs/profile.py:485
 msgid "Renames your character."
 msgstr ""
 
-#: cogs/profile.py:494
+#: cogs/profile.py:496
 msgid "Timeout expired. Retry!"
 msgstr ""
 
-#: cogs/profile.py:500
+#: cogs/profile.py:502
 msgid "Character name updated."
 msgstr ""
 
-#: cogs/profile.py:502
+#: cogs/profile.py:504
 msgid "Character names must be at least 3 characters!"
 msgstr ""
 
-#: cogs/profile.py:504
+#: cogs/profile.py:506
 msgid "Character names mustn't exceed 20 characters!"
 msgstr ""
 
-#: cogs/profile.py:510
+#: cogs/profile.py:512
 msgid "Deletes your character."
 msgstr ""
 
-#: cogs/profile.py:512
+#: cogs/profile.py:514
 msgid "Are you sure? React in the next 30 seconds to confirm."
 msgstr ""
 
-#: cogs/profile.py:514
+#: cogs/profile.py:516
 msgid "Cancelled deletion of your character."
 msgstr ""
 
-#: cogs/profile.py:536
+#: cogs/profile.py:538
 msgid "Successfully deleted your character. Sorry to see you go :frowning:"
 msgstr ""
 
-#: cogs/profile.py:542
+#: cogs/profile.py:544
 msgid "Sets your profile text colour."
 msgstr ""
 
-#: cogs/profile.py:544
+#: cogs/profile.py:546
 msgid "Format for colour is `#RRGGBB`."
 msgstr ""
 
-#: cogs/profile.py:549
+#: cogs/profile.py:551
 #, python-brace-format
 msgid "Successfully set your profile colour to `{colour}`."
 msgstr ""
