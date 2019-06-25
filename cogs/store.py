@@ -126,7 +126,9 @@ class Store(commands.Cog):
             return await ctx.send(_("You don't have any of these boosters."))
         check = await self.bot.get_booster(ctx.author, boostertype)
         if check:
-            return await ctx.send(_("This booster is already running."))
+            if not await ctx.confirm(_("This booster is already running. Do you want to refresh it anyways?")):
+                return
+
         await self.bot.pool.execute(
             f'UPDATE profile SET "{boostertype}_booster"="{boostertype}_booster"-1 WHERE "user"=$1;',
             ctx.author.id,
