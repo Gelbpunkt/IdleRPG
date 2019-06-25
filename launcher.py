@@ -68,7 +68,7 @@ class Instance:
     ):
         self.main = main
         self.loop = loop
-        self.shard_list = shard_list
+        print(shard_list)
         self.shard_count = shard_count  # overall shard count
         self.started_at = None
         self.id = instance_id

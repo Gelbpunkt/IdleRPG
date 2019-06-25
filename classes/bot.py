@@ -93,7 +93,20 @@ class Bot(commands.AutoShardedBot):
             except Exception:
                 print(f"Failed to load extension {extension}.", file=sys.stderr)
                 traceback.print_exc()
+        self.loop.create_task(self.reset_verified())
         await self.start(self.config.token)
+
+    async def reset_verified(self):
+        await self.wait_until_ready()
+        while not self.is_closed():
+            await asyncio.sleep(random.randint(60 * 30, 60 * 120))
+            self.verified = []
+
+    def matches_prefix(self, message):
+        prefixes = self._get_prefix(self, message)
+        if type(prefixes) == str:
+            return message.content.startswith(prefixes)
+        return message.content.startswith(tuple(prefixes))
 
     async def on_message(self, message):
         if message.author.bot or message.author.id in self.bans:
@@ -102,10 +115,10 @@ class Bot(commands.AutoShardedBot):
         i18n.current_locale.set(locale)
         if message.author.id in self.prompting and message.content:
             await self.handle_captcha(message.author, message.channel, message.content)
-        elif message.author.id not in self.verified:
-            await self.create_captcha(message.author, message.channel)
         if message.author.id in self.verified:
             await self.process_commands(message)
+        elif self.matches_prefix(message):
+            await self.create_captcha(message.author, message.channel)
 
     async def create_captcha(self, user, channel):
         async with self.session.get("https://captcha.travitia.xyz") as r:
@@ -115,20 +128,22 @@ class Bot(commands.AutoShardedBot):
             _(
                 "We have to verify you're not a bot. Please type the text you see within your next 3 messages."
             ),
-            file=discord.File(filename="captcha.png", fp=io.BytesIO(base64.b64decode(data[0][22:]))),
+            file=discord.File(
+                filename="captcha.png", fp=io.BytesIO(base64.b64decode(data[0][22:]))
+            ),
         )
 
     async def handle_captcha(self, user, channel, content):
         data = self.prompting[user.id]
         if data[0] == content:
-            await channel.send("Captcha completed!")
+            await channel.send(_("Captcha completed!"))
             self.verified.append(user.id)
             del self.prompting[user.id]
         else:
             self.prompting[user.id][1] += 1
             if self.prompting[user.id][1] >= 3:
                 self.bans.append(user.id)
-                await channel.send("You have been banned for selfbotting.")
+                await channel.send(_("You have been banned for selfbotting."))
 
     @property
     def uptime(self):
