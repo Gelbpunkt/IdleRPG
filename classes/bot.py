@@ -115,7 +115,7 @@ class Bot(commands.AutoShardedBot):
             _(
                 "We have to verify you're not a bot. Please type the text you see within your next 3 messages."
             ),
-            file=discord.File(fp=io.BytesIO(base64.b64decode(data[0][22:]))),
+            file=discord.File(filename="captcha.png", fp=io.BytesIO(base64.b64decode(data[0][22:]))),
         )
 
     async def handle_captcha(self, user, channel, content):
