@@ -16,7 +16,9 @@ You should have received a copy of the GNU Affero General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
 import asyncio
+import base64
 import datetime
+import io
 import os
 import random
 import sys
@@ -51,6 +53,8 @@ class Bot(commands.AutoShardedBot):
         self.linecount = 0
         self.make_linecount()
         self.all_prefixes = {}
+        self.prompting = {}
+        self.verified = []
 
         # global cooldown
         self.add_check(self.global_cooldown, call_once=True)
@@ -96,7 +100,30 @@ class Bot(commands.AutoShardedBot):
             return
         locale = await self.get_cog("Locale").locale(message)
         i18n.current_locale.set(locale)
-        await self.process_commands(message)
+        if message.author.id in self.prompting and message.content:
+            await self.handle_captcha(message.author, message.channel, message.content)
+        elif message.author.id not in self.verified:
+            await self.create_captcha(message.author, message.channel)
+        if message.author.id in self.verified:
+            await self.process_commands(message)
+
+    async def create_captcha(self, user, channel):
+        async with self.session.get("https://captcha.travitia.xyz") as r:
+            data = await r.json()
+        self.prompting[user.id] = [data[1], 0]
+        await channel.send(_("We have to verify you're not a bot. Please type the text you see within your next 3 messages."), file=discord.File(fp=io.BytesIO(base64.b64decode(data[0][22:])))
+
+    async def handle_captcha(self, user, channel, content):
+        data = self.prompting[user.id]
+        if data[0] == content:
+            await channel.send("Captcha completed!")
+            self.verified.append(user.id)
+            del self.prompting[user.id]
+        else:
+            self.prompting[user.id][1] += 1
+            if self.prompting[user.id][1] >= 3:
+                self.bans.append(user.id)
+                await channel.send("You have been banned for selfbotting.")
 
     @property
     def uptime(self):
