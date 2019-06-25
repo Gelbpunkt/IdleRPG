@@ -111,7 +111,12 @@ class Bot(commands.AutoShardedBot):
         async with self.session.get("https://captcha.travitia.xyz") as r:
             data = await r.json()
         self.prompting[user.id] = [data[1], 0]
-        await channel.send(_("We have to verify you're not a bot. Please type the text you see within your next 3 messages."), file=discord.File(fp=io.BytesIO(base64.b64decode(data[0][22:])))
+        await channel.send(
+            _(
+                "We have to verify you're not a bot. Please type the text you see within your next 3 messages."
+            ),
+            file=discord.File(fp=io.BytesIO(base64.b64decode(data[0][22:]))),
+        )
 
     async def handle_captcha(self, user, channel, content):
         data = self.prompting[user.id]
