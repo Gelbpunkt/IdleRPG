@@ -49,8 +49,6 @@ A systemd unit file has been bundled as `idlerpg.service`.
 
 ## Contributing
 
-IdleRPG uses [black](https://github.com/ambv/black) for code style. Please always run `test.sh` before submitting a pull request.
-
-Make sure black is done and flake8 throws no issues, then you are ready to submit a PR.
+IdleRPG uses [black](https://github.com/ambv/black), flake8 and isort for code style. Please always run `./test.sh` before submitting a pull request and fix any problems.
 
 **Make sure you sign the CLA [here](https://cla-assistant.io/Gelbpunkt/IdleRPG), else we cannot merge your changes.**
