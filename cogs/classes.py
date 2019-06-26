@@ -208,10 +208,10 @@ Caretaker->  Trainer   ->  Bowman      -> Hunter         ->  Ranger
 
     @has_char()
     @is_class("Ranger")
-    @commands.command()
+    @commands.group(invoke_without_command=True)
     @locale_doc
     async def pet(self, ctx):
-        _("""[Ranger Only] View your pet!""")
+        _("""[Ranger Only] View your pet or interact with it.""")
         petlvl = self.bot.get_class_grade(ctx.character_data["class"])
         em = discord.Embed(title=_("{user}'s pet").format(user=ctx.disp))
         em.add_field(name=_("Level"), value=petlvl, inline=False)
@@ -226,10 +226,8 @@ Caretaker->  Trainer   ->  Bowman      -> Hunter         ->  Ranger
         em.set_image(url=url)
         await ctx.send(embed=em)
 
-    @has_char()
-    @is_class("Ranger")
     @user_cooldown(86400)
-    @commands.command()
+    @pet.command()
     @locale_doc
     async def hunt(self, ctx):
         _("""[Ranger Only] Let your pet get a weapon for you!""")
