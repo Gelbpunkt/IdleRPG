@@ -26,7 +26,7 @@ Summary and information taken from [here](https://tldrlegal.com/license/gnu-affe
 
 ## Current goals
 
-1. Prettify v3.6 and add anti-selfbot system (v3.6 branch)
+Please see [#32](https://github.com/Gelbpunkt/IdleRPG/issues/32)
 
 ## Can I selfhost?
 
