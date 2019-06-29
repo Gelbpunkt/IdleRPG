@@ -1,11 +1,20 @@
-### Checklist
-<!-- Put an x inside [ ] to check it, like so: [x] -->
+---
+name: Feature request
+about: Suggest an idea for this project
+title: ''
+labels: ''
+assignees: ''
 
-- [ ] I have searched the open issues for duplicates.
-- [ ] I have members supporting this change (listed below)
+---
 
-### Player supporting this change
-<!--- Leave this out if none support it -->
+**Is your feature request related to a problem? Please describe.**
+A clear and concise description of what the problem is. Ex. I'm always frustrated when [...]
 
-### My proposal
-<!--- Put your new command name/feature here and explain why it is needed and what it should do in detail -->
+**Describe the solution you'd like**
+A clear and concise description of what you want to happen.
+
+**Describe alternatives you've considered**
+A clear and concise description of any alternative solutions or features you've considered.
+
+**Additional context**
+Add any other context or screenshots about the feature request here.
