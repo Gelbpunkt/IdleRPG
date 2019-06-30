@@ -226,6 +226,8 @@ Caretaker->  Trainer   ->  Bowman      -> Hunter         ->  Ranger
         em.set_image(url=url)
         await ctx.send(embed=em)
 
+    @has_char()
+    @is_class("Ranger")
     @user_cooldown(86400)
     @pet.command()
     @locale_doc
