@@ -542,13 +542,14 @@ class Profile(commands.Cog):
     @locale_doc
     async def colour(self, ctx, colour: str):
         _("""Sets your profile text colour.""")
-        if len(colour) != 7 or not colour.startswith("#"):
+        colour = colour.lstrip("#")
+        if len(colour) != 6:
             return await ctx.send(_("Format for colour is `#RRGGBB`."))
         await self.bot.pool.execute(
             'UPDATE profile SET "colour"=$1 WHERE "user"=$2;', colour, ctx.author.id
         )
         await ctx.send(
-            _("Successfully set your profile colour to `{colour}`.").format(
+            _("Successfully set your profile colour to `#{colour}`.").format(
                 colour=colour
             )
         )
