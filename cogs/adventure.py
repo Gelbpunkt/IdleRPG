@@ -48,7 +48,12 @@ class Adventure(commands.Cog):
         chances = []
         for adv in all_dungeons:
             success = rpgtools.calcchance(
-                damage, defense, adv, int(level), ctx.character_data["luck"], returnsuccess=False
+                damage,
+                defense,
+                adv,
+                int(level),
+                ctx.character_data["luck"],
+                returnsuccess=False,
             )
             chances.append((success[0] - success[2], success[1] + success[2]))
         thing = functools.partial(rpgtools.makeadventures, chances)
@@ -204,7 +209,7 @@ Use the reactions attack, defend or recover
             return await ctx.send(_("You died."))
 
         avg = (SWORD + SHIELD) // 2
-        maxstat = round((avg + 5) * (ctx.character_data["luck"] + 1))
+        maxstat = round((avg + 5) * ctx.character_data["luck"])
         item = await self.bot.create_random_item(
             minstat=1,
             maxstat=(maxstat if maxstat < 30 else 30),
@@ -258,7 +263,7 @@ Use the reactions attack, defend or recover
             )
             if success:
                 # luck affects gold amounts
-                luck_multiply = ctx.character_data["luck"] + 1
+                luck_multiply = ctx.character_data["luck"]
                 gold = round(
                     random.randint(20 * (num - 1) or 1, 60 * (num - 1) or 70)
                     * luck_multiply

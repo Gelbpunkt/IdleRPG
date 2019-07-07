@@ -234,7 +234,7 @@ Caretaker->  Trainer   ->  Bowman      -> Hunter         ->  Ranger
     async def hunt(self, ctx):
         _("""[Ranger Only] Let your pet get a weapon for you!""")
         petlvl = self.bot.get_class_grade(ctx.character_data["class"])
-        luck_multiply = ctx.character_data["luck"] + 1
+        luck_multiply = ctx.character_data["luck"]
         minstat = round(petlvl * 3 * luck_multiply)
         maxstat = round(petlvl * 6 * luck_multiply)
         item = await self.bot.create_random_item(

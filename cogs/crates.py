@@ -62,7 +62,7 @@ class Crates(commands.Cog):
         else:
             minstat, maxstat = (1, 9)
 
-        luck_multiply = ctx.character_data["luck"] + 1
+        luck_multiply = ctx.character_data["luck"]
         minstat, maxstat = (
             round(minstat * luck_multiply),
             round(maxstat * luck_multiply),
