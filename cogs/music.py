@@ -23,8 +23,9 @@ from re import search as re_search
 from typing import Union
 
 import discord
-import pylava
 from discord.ext import commands
+
+import pylava
 
 try:
     from ujson import dumps, loads  # faster but external

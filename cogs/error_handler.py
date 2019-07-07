@@ -15,9 +15,9 @@ GNU Affero General Public License for more details.
 You should have received a copy of the GNU Affero General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
-from asyncio import TimeoutError
 import sys
 import traceback
+from asyncio import TimeoutError
 from datetime import timedelta
 
 import discord
@@ -132,7 +132,12 @@ class Errorhandler(commands.Cog):
         ):
             if isinstance(
                 error.original,
-                (ClientOSError, ServerDisconnectedError, ContentTypeError, TimeoutError),
+                (
+                    ClientOSError,
+                    ServerDisconnectedError,
+                    ContentTypeError,
+                    TimeoutError,
+                ),
             ):
                 # Called on 500 HTTP responses
                 # TimeoutError: A Discord operation timed out. All others should be handled by us

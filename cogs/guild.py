@@ -567,7 +567,7 @@ class Guild(commands.Cog):
             )
         await ctx.send(
             _("Your new guild bank limit is now **${limit}**.").format(
-                limit=currentlimit + 250000
+                limit=currentlimit + 250_000
             )
         )
 

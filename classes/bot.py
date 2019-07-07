@@ -28,10 +28,10 @@ import aiohttp
 import aioredis
 import asyncpg
 import discord
-import fantasy_names as fn
 from discord.ext import commands
 
 import config
+import fantasy_names as fn
 from classes.context import Context
 from utils import i18n, paginator
 
