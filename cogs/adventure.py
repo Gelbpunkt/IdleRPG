@@ -203,9 +203,11 @@ Use the reactions attack, defend or recover
         if HP < 1:
             return await ctx.send(_("You died."))
 
+        avg = (SWORD + SHIELD) // 2
+        maxstat = round((avg + 5) * (ctx.character_data["luck"] + 1))
         item = await self.bot.create_random_item(
             minstat=1,
-            maxstat=(SWORD + 5 if SWORD < 26 else 30),
+            maxstat=(maxstat if maxstat < 30 else 30),
             minvalue=1,
             maxvalue=250,
             owner=ctx.author,
@@ -250,19 +252,28 @@ Use the reactions attack, defend or recover
                 shield,
                 num,
                 int(playerlevel),
+                ctx.character_data["luck"],  # luck affects the success calculation, too
                 returnsuccess=True,
                 booster=bool(luck_booster),
             )
             if success:
-                gold = random.randint(20 * (num - 1) or 1, 60 * (num - 1) or 70)
+                # luck affects gold amounts
+                luck_multiply = ctx.character_data["luck"] + 1
+                gold = round(
+                    random.randint(20 * (num - 1) or 1, 60 * (num - 1) or 70)
+                    * luck_multiply
+                )
                 if await self.bot.get_booster(ctx.author, "money"):
                     gold = int(gold * 1.25)
                 xp = random.randint(250 * num, 500 * num)
+                # luck affects item stats
+                minstat = round(num * luck_multiply)
+                maxstat = round(5 + int(num * 1.5) * luck_multiply)
                 item = await self.bot.create_random_item(
-                    minstat=num,
-                    maxstat=5 + int(num * 1.5),
-                    minvalue=num,
-                    maxvalue=num * 50,
+                    minstat=minstat if minstat < 35 else 35,  # we still limit it though
+                    maxstat=maxstat if maxstat < 35 else 35,
+                    minvalue=round(num * luck_multiply),  # value is luck-based, too
+                    maxvalue=round(num * 50 * luck_multiply),
                     owner=ctx.author,
                 )
                 async with self.bot.pool.acquire() as conn:

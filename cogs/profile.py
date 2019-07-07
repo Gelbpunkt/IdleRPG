@@ -208,6 +208,20 @@ class Profile(commands.Cog):
         await ctx.send(embed=em)
 
     @checks.has_char()
+    @commands.command()
+    @locale_doc
+    async def luck(self, ctx):
+        _("""Shows your luck factor ranging from -1 to 1.""")
+        await ctx.send(
+            _(
+                "Your current luck is `{luck}x` (≈{percent}%) more than usual (usual=0)."
+            ).format(
+                luck=ctx.character_data["luck"],
+                percent=ctx.character_data["luck"] * 100,
+            )
+        )
+
+    @checks.has_char()
     @commands.command(aliases=["money", "e"])
     @locale_doc
     async def economy(self, ctx):

@@ -23,9 +23,8 @@ from re import search as re_search
 from typing import Union
 
 import discord
-from discord.ext import commands
-
 import pylava
+from discord.ext import commands
 
 try:
     from ujson import dumps, loads  # faster but external
