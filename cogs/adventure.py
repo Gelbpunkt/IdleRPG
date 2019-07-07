@@ -48,7 +48,7 @@ class Adventure(commands.Cog):
         chances = []
         for adv in all_dungeons:
             success = rpgtools.calcchance(
-                damage, defense, adv, int(level), returnsuccess=False
+                damage, defense, adv, int(level), ctx.character_data["luck"], returnsuccess=False
             )
             chances.append((success[0] - success[2], success[1] + success[2]))
         thing = functools.partial(rpgtools.makeadventures, chances)
