@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: idlerpg2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-07-08 17:47+0000\n"
+"POT-Creation-Date: 2019-07-08 17:50+0000\n"
 "PO-Revision-Date: 2019-05-31 00:51+0300\n"
 "Last-Translator: Falcon.OVI\n"
 "Language-Team: Russian\n"
@@ -23,7 +23,7 @@ msgid "Starts a new tournament."
 msgstr "Начинается новый турнир."
 
 #: cogs/tournament.py:41 cogs/battles.py:44 cogs/battles.py:146
-#: cogs/gambling.py:327 cogs/profile.py:462
+#: cogs/gambling.py:327 cogs/profile.py:476
 msgid "You are too poor."
 msgstr "Вы слишком бедны."
 
@@ -163,8 +163,8 @@ msgstr "{user} предоставил вам дополнительные $50!"
 msgid "Seems you haven't got a trick or treat bag yet. Go get some!"
 msgstr "Кажется, у тебя еще нет сумки для шутки или угощения. Иди возьми!"
 
-#: cogs/halloween.py:142 cogs/crates.py:72 cogs/classes.py:245
-#: cogs/adventure.py:214
+#: cogs/halloween.py:142 cogs/crates.py:82 cogs/classes.py:248
+#: cogs/adventure.py:221
 msgid "You gained an item!"
 msgstr "Вы получили предмет!"
 
@@ -172,18 +172,18 @@ msgstr "Вы получили предмет!"
 msgid "You found a new item when opening a trick-or-treat bag!"
 msgstr "Вы нашли новый предмет при открытии сумки \"кошелек или жизнь\"!"
 
-#: cogs/halloween.py:147 cogs/crates.py:77 cogs/classes.py:250
-#: cogs/adventure.py:219
+#: cogs/halloween.py:147 cogs/crates.py:87 cogs/classes.py:253
+#: cogs/adventure.py:226
 msgid "ID"
 msgstr "ID"
 
-#: cogs/halloween.py:148 cogs/crates.py:78 cogs/classes.py:251
-#: cogs/adventure.py:220 cogs/trading.py:211 cogs/trading.py:386
+#: cogs/halloween.py:148 cogs/crates.py:88 cogs/classes.py:254
+#: cogs/adventure.py:227 cogs/trading.py:211 cogs/trading.py:386
 msgid "Name"
 msgstr "Имя"
 
-#: cogs/halloween.py:149 cogs/crates.py:79 cogs/classes.py:252
-#: cogs/adventure.py:221 cogs/trading.py:212 cogs/trading.py:387
+#: cogs/halloween.py:149 cogs/crates.py:89 cogs/classes.py:255
+#: cogs/adventure.py:228 cogs/trading.py:212 cogs/trading.py:387
 msgid "Type"
 msgstr "Тип"
 
@@ -437,46 +437,46 @@ msgstr ""
 "Похоже, у вас еще нет ящика. Проголосуйте за меня, чтобы получить или "
 "заработать его!"
 
-#: cogs/crates.py:73
+#: cogs/crates.py:83
 msgid "You found a new item when opening a crate!"
 msgstr "Вы нашли новый предмет при открытии ящика!"
 
-#: cogs/crates.py:80 cogs/classes.py:254 cogs/adventure.py:222
+#: cogs/crates.py:90 cogs/classes.py:257 cogs/adventure.py:229
 #: cogs/trading.py:213 cogs/trading.py:388
 msgid "Damage"
 msgstr "Урон"
 
-#: cogs/crates.py:81 cogs/classes.py:256 cogs/adventure.py:223
+#: cogs/crates.py:91 cogs/classes.py:259 cogs/adventure.py:230
 #: cogs/trading.py:214 cogs/trading.py:389
 msgid "Armor"
 msgstr "Броня"
 
-#: cogs/crates.py:82 cogs/classes.py:257 cogs/adventure.py:224
+#: cogs/crates.py:92 cogs/classes.py:260 cogs/adventure.py:231
 #: cogs/trading.py:215 cogs/trading.py:390
 msgid "Value"
 msgstr "Себестоимость"
 
-#: cogs/crates.py:84
+#: cogs/crates.py:94
 #, python-brace-format
 msgid "Remaining crates: {crates}"
 msgstr "Оставшиеся ящики: {crates}"
 
-#: cogs/crates.py:96
+#: cogs/crates.py:106
 msgid "Trades crates to a user."
 msgstr "Торгует ящиками для пользователя."
 
 #. preserve deletion of admins
 #. preserve renaming of admins
-#: cogs/crates.py:98 cogs/guild.py:244 cogs/guild.py:264 cogs/admin.py:72
+#: cogs/crates.py:108 cogs/guild.py:244 cogs/guild.py:264 cogs/admin.py:72
 #: cogs/admin.py:85
 msgid "Very funny..."
 msgstr "Очень смешно..."
 
-#: cogs/crates.py:100
+#: cogs/crates.py:110
 msgid "You don't have any crates."
 msgstr "У вас нет ящиков."
 
-#: cogs/crates.py:111
+#: cogs/crates.py:121
 #, python-brace-format
 msgid "Successfully gave {amount} crate(s) to {other}."
 msgstr "Успешно передано {amount} ящиков игроку {other}."
@@ -724,49 +724,49 @@ msgstr ""
 msgid "Not enough players joined..."
 msgstr "Не хватает игроков..."
 
-#: cogs/error_handler.py:58
+#: cogs/error_handler.py:59
 #, python-brace-format
 msgid "Oops! You forgot a required argument: `{arg}`"
 msgstr "Упс! Вы забыли необходимый аргумент: `{arg}`"
 
-#: cogs/error_handler.py:63
+#: cogs/error_handler.py:64
 msgid "You used a malformed argument!"
 msgstr "Вы использовали неверный аргумент!"
 
-#: cogs/error_handler.py:66
+#: cogs/error_handler.py:67
 #, python-brace-format
 msgid "You are on cooldown. Try again in {time}."
 msgstr "Вы на перезарядке. Попробуйте снова через {time}."
 
-#: cogs/error_handler.py:77 cogs/error_handler.py:120
+#: cogs/error_handler.py:78 cogs/error_handler.py:121
 msgid "Permission denied"
 msgstr "Доступ запрещен"
 
-#: cogs/error_handler.py:79
+#: cogs/error_handler.py:80
 msgid ":x: This command is only avaiable for the bot owner."
 msgstr ":x: Эта команда доступна только для владельца бота."
 
-#: cogs/error_handler.py:86
+#: cogs/error_handler.py:87
 msgid "You don't have a character yet."
 msgstr "У вас еще нет персонажа."
 
-#: cogs/error_handler.py:88
+#: cogs/error_handler.py:89
 msgid "You need to have a guild to use this command."
 msgstr "Для использования этой команды вам нужно иметь гильдию."
 
-#: cogs/error_handler.py:90
+#: cogs/error_handler.py:91
 msgid "You need to be in no guild to use this command."
 msgstr "Для использования этой команды вам не нужно находиться в гильдии."
 
-#: cogs/error_handler.py:93
+#: cogs/error_handler.py:94
 msgid "Your rank in the guild is too low to use this command."
 msgstr "Ваш ранг в гильдии слишком низок, чтобы использовать эту команду."
 
-#: cogs/error_handler.py:97
+#: cogs/error_handler.py:98
 msgid "You mustn't be the owner of a guild to use this command."
 msgstr "Вы не должны быть владельцем гильдии, чтобы использовать эту команду."
 
-#: cogs/error_handler.py:102
+#: cogs/error_handler.py:103
 #, python-brace-format
 msgid ""
 "You are already on an adventure. Use `{prefix}status` to see how long it "
@@ -775,7 +775,7 @@ msgstr ""
 "Ваша гильдия уже находится в приключении! Используйте `{prefix}гильдия` что "
 "бы узнать оставшееся время приключения."
 
-#: cogs/error_handler.py:108
+#: cogs/error_handler.py:109
 #, python-brace-format
 msgid ""
 "You need to be on an adventure to use this command. Try `{prefix}adventure`!"
@@ -783,7 +783,7 @@ msgstr ""
 "Вам необходимо начать приключение что бы использовать эту команду. "
 "Используйте команду `{prefix}приключения`!"
 
-#: cogs/error_handler.py:114
+#: cogs/error_handler.py:115
 #, python-brace-format
 msgid ""
 "You need to be a donator to use this command. Please head to `{prefix}"
@@ -791,7 +791,7 @@ msgid ""
 "us."
 msgstr ""
 
-#: cogs/error_handler.py:122
+#: cogs/error_handler.py:123
 msgid ""
 ":x: You don't have the permissions to use this command. It is thought for "
 "other users."
@@ -799,24 +799,24 @@ msgstr ""
 ":x: У вас нет прав на использование этой команды. Она предназначена для "
 "других пользователей."
 
-#: cogs/error_handler.py:128
+#: cogs/error_handler.py:129
 msgid "You did not choose anything."
 msgstr "Вы ничего не выбрали."
 
-#: cogs/error_handler.py:141
+#: cogs/error_handler.py:148
 msgid ""
 "An argument or value you entered was far too high for me to handle properly!"
 msgstr ""
 "Введенный вами аргумент или значение были слишком высоки, чтобы я мог их "
 "правильно обработать!"
 
-#: cogs/error_handler.py:147
+#: cogs/error_handler.py:154
 msgid ""
 "The languages have been reloaded while you were using a command. The "
 "execution therefore had to be stopped. Please try again."
 msgstr ""
 
-#: cogs/error_handler.py:178
+#: cogs/error_handler.py:185
 msgid ""
 "The command you tried to use ran into an error. The incident has been "
 "reported and the team will work hard to fix the issue!"
@@ -1591,7 +1591,7 @@ msgid "Please either buy `time`, `luck` or `money`."
 msgstr "Пожалуйста, купите `время`, `удачу` или `деньги`."
 
 #: cogs/store.py:59 cogs/gambling.py:377 cogs/gambling.py:411 cogs/guild.py:485
-#: cogs/profile.py:430
+#: cogs/profile.py:444
 msgid "You're too poor."
 msgstr "У вас недостаточно денег."
 
@@ -2026,11 +2026,11 @@ msgstr "Уровень"
 msgid "[Ranger Only] Let your pet get a weapon for you!"
 msgstr "[Только Рейнджер] Пусть ваш питомец достанет вам оружие!"
 
-#: cogs/classes.py:246
+#: cogs/classes.py:249
 msgid "Your pet found an item!"
 msgstr "Ваш питомец нашел предмет!"
 
-#: cogs/classes.py:258
+#: cogs/classes.py:261
 msgid "Your pet needs to recover, wait a day to retry"
 msgstr "Ваш питомец должен отдохнуть, подождите день, чтобы повторить попытку"
 
@@ -2212,16 +2212,16 @@ msgstr ""
 msgid "Loading images..."
 msgstr "Загрузка изображений..."
 
-#: cogs/adventure.py:77
+#: cogs/adventure.py:82
 msgid "Sends your character on an adventure."
 msgstr "Отправляет вашего персонажа в приключение."
 
-#: cogs/adventure.py:80
+#: cogs/adventure.py:85
 #, python-brace-format
 msgid "You must be on level **{level}** to do this adventure."
 msgstr "У вас должен быть уровень **{level}** для этого приключения."
 
-#: cogs/adventure.py:91
+#: cogs/adventure.py:96
 #, python-brace-format
 msgid ""
 "Successfully sent your character out on an adventure. Use `{prefix}status` "
@@ -2230,15 +2230,15 @@ msgstr ""
 "Ваш персонаж успешно отправлен в приключение. Используйте статус `{prefix}` "
 "для просмотра текущего состояния миссии."
 
-#: cogs/adventure.py:100
+#: cogs/adventure.py:105
 msgid "Go out on an active, action based adventure."
 msgstr "Отправляйтесь в активное приключение."
 
-#: cogs/adventure.py:101
+#: cogs/adventure.py:106
 msgid "**Active adventure loading...**"
 msgstr "**Активное приключение загружается...**"
 
-#: cogs/adventure.py:128
+#: cogs/adventure.py:133
 #, python-brace-format
 msgid ""
 "\n"
@@ -2265,69 +2265,69 @@ msgstr ""
 "Используйте атаку реакций, защищайтесь или восстанавливайте выше здоровье\n"
 "```\n"
 
-#: cogs/adventure.py:148
+#: cogs/adventure.py:153
 msgid "Adventure stopped because you refused to move."
 msgstr "Приключение остановлено потому что вы отказались сделать ход."
 
-#: cogs/adventure.py:158
+#: cogs/adventure.py:163
 msgid "You healed yourself for 20 HP."
 msgstr "Вы исцелили себя на 20 HP."
 
-#: cogs/adventure.py:161
+#: cogs/adventure.py:166
 msgid "The enemy healed himself for 20 HP."
 msgstr "Враг исцелил себя на 20 HP."
 
-#: cogs/adventure.py:163
+#: cogs/adventure.py:168
 msgid "Your attack was blocked!"
 msgstr "Ваша атака была заблокирована!"
 
-#: cogs/adventure.py:165
+#: cogs/adventure.py:170
 msgid "Enemy attack was blocked!"
 msgstr "Атака врага заблокирована!"
 
-#: cogs/adventure.py:167
+#: cogs/adventure.py:172
 msgid "Noone attacked."
 msgstr "Никто не атаковал."
 
-#: cogs/adventure.py:174
+#: cogs/adventure.py:179
 #, python-brace-format
 msgid ""
 "You hit the enemy for **{damage}** damage, he hit you for **{damage2}** "
 "damage."
 msgstr "Вы нанесли урон врагу **{damage}** враг нанес вам **{damage2}** урона."
 
-#: cogs/adventure.py:181
+#: cogs/adventure.py:186
 #, python-brace-format
 msgid "You hit the enemy for **{damage}** damage."
 msgstr "Вы ударили врага на **{damage}** урона."
 
-#: cogs/adventure.py:190
+#: cogs/adventure.py:195
 #, python-brace-format
 msgid "The enemy hit you for **{damage}** damage."
 msgstr "Враг нанес вам **{damage}** урона."
 
-#: cogs/adventure.py:197
+#: cogs/adventure.py:202
 msgid "Enemy defeated! You gained **20 HP**"
 msgstr "Враг побежден! Вы получили **20 HP**"
 
-#: cogs/adventure.py:204
+#: cogs/adventure.py:209
 msgid "You died."
 msgstr "Вы умерли."
 
-#: cogs/adventure.py:215
+#: cogs/adventure.py:222
 msgid "You found a new item when finishing an active adventure!"
 msgstr "Вы нашли новый предмет при завершении активного приключения!"
 
-#: cogs/adventure.py:225
+#: cogs/adventure.py:232
 #, python-brace-format
 msgid "Your HP were {hp}"
 msgstr "Ваши HP были {hp}"
 
-#: cogs/adventure.py:233
+#: cogs/adventure.py:240
 msgid "Checks your adventure status."
 msgstr "Проверяет ваш статус приключений."
 
-#: cogs/adventure.py:292
+#: cogs/adventure.py:308
 #, python-brace-format
 msgid ""
 "You have completed your dungeon and received **${gold}** as well as a new "
@@ -2336,7 +2336,7 @@ msgstr ""
 "Вы завершили испытание в подземелье и получили **${gold}** а также новое "
 "оружие: **{item}**. Полученный опыт: **{xp}**."
 
-#: cogs/adventure.py:298
+#: cogs/adventure.py:314
 #, python-brace-format
 msgid ""
 "You have completed your dungeon and received **${gold}** as well as a new "
@@ -2347,21 +2347,21 @@ msgstr ""
 "оружие: **{item}**. Полученный опыт: **{xp}**.\n"
 "Ваш партнер получил **${gold2}**."
 
-#: cogs/adventure.py:310
+#: cogs/adventure.py:326
 #, python-brace-format
 msgid "**{amount}** crates"
 msgstr "**{amount}** ящиков"
 
-#: cogs/adventure.py:313
+#: cogs/adventure.py:329
 msgid "a special Item"
 msgstr "специальный предмет"
 
-#: cogs/adventure.py:331
+#: cogs/adventure.py:347
 #, python-brace-format
 msgid "Level {new_level} Memorial"
 msgstr "Мемориальный {new_level} уровень"
 
-#: cogs/adventure.py:337
+#: cogs/adventure.py:353
 #, python-brace-format
 msgid ""
 "You reached a new level: **{new_level}** :star:! You received {reward} as a "
@@ -2370,11 +2370,11 @@ msgstr ""
 "Вы достигли нового уровня: **{new_level}** :star:! Вы получили {reward} в "
 "качестве награды :tada:!"
 
-#: cogs/adventure.py:341
+#: cogs/adventure.py:357
 msgid "You died on your mission. Try again!"
 msgstr "Вы умерли на миссии. Попробуйте еще раз!"
 
-#: cogs/adventure.py:350
+#: cogs/adventure.py:366
 #, python-brace-format
 msgid ""
 "You are currently in the adventure with difficulty `{difficulty}`.\n"
@@ -2385,11 +2385,11 @@ msgstr ""
 "Приключение закончится через `{end}`\n"
 "Название подземелья: `{dungeon}`"
 
-#: cogs/adventure.py:359
+#: cogs/adventure.py:375
 msgid "Cancels your current adventure."
 msgstr "Отменяет ваше текущее приключение."
 
-#: cogs/adventure.py:363
+#: cogs/adventure.py:379
 #, python-brace-format
 msgid ""
 "Canceled your mission. Use `{prefix}adventure [missionID]` to start a new "
@@ -2398,11 +2398,11 @@ msgstr ""
 "Отменена миссия. Используйте `{prefix}приключение [missionID]` чтобы начать "
 "новую!"
 
-#: cogs/adventure.py:371
+#: cogs/adventure.py:387
 msgid "Your death stats."
 msgstr "Ваша статистика смерти."
 
-#: cogs/adventure.py:381
+#: cogs/adventure.py:397
 #, python-brace-format
 msgid ""
 "Out of **{total}** adventures, you died **{deaths}** times and survived "
@@ -4001,7 +4001,7 @@ msgstr "{author} обнял {user}! Ахх!"
 msgid "Creates a new character."
 msgstr "Создает нового персонажа."
 
-#: cogs/profile.py:43 cogs/profile.py:487
+#: cogs/profile.py:43 cogs/profile.py:501
 msgid "What shall your character's name be? (Minimum 3 Characters, Maximum 20)"
 msgstr "Каким будет имя персонажа? (мин. 3 буквы, максимум 20)"
 
@@ -4106,19 +4106,28 @@ msgid "Mission"
 msgstr "Миссия"
 
 #: cogs/profile.py:214
+msgid "Shows your luck factor ranging from -1 to 1."
+msgstr ""
+
+#: cogs/profile.py:217
+#, python-brace-format
+msgid "Your current luck is `{luck}x` (≈{percent}%) more than usual (usual=0)."
+msgstr ""
+
+#: cogs/profile.py:228
 msgid "Shows your balance."
 msgstr "Показывает ваш баланс."
 
-#: cogs/profile.py:216
+#: cogs/profile.py:230
 #, python-brace-format
 msgid "You currently have **${money}**, {author}!"
 msgstr "В настоящее время у вас есть **${money}**, {author}!"
 
-#: cogs/profile.py:225
+#: cogs/profile.py:239
 msgid "Shows your current XP and level."
 msgstr "Показывает текущий опыт и уровень."
 
-#: cogs/profile.py:229
+#: cogs/profile.py:243
 #, python-brace-format
 msgid ""
 "You currently have **{points} XP**, which means you are on Level **{level}"
@@ -4127,75 +4136,75 @@ msgstr ""
 "В настоящее время у вас есть **{points} опыта**, что означает, что вы на "
 "уровне **{level}**. До следующего уровня не хватает: **{missing}**"
 
-#: cogs/profile.py:239
+#: cogs/profile.py:253
 #, python-brace-format
 msgid "{user}'s inventory includes"
 msgstr "инвентарь {user} включает в себя"
 
-#: cogs/profile.py:244
+#: cogs/profile.py:258
 msgid "(**Equipped**)"
 msgstr "(**Оснащенный**)"
 
-#: cogs/profile.py:248
+#: cogs/profile.py:262
 #, python-brace-format
 msgid "Damage: `{damage}`"
 msgstr "Урон: `{damage}`"
 
-#: cogs/profile.py:250
+#: cogs/profile.py:264
 #, python-brace-format
 msgid "Armor: `{armor}`"
 msgstr "Броня: `{armor}`"
 
-#: cogs/profile.py:255
+#: cogs/profile.py:269
 #, python-brace-format
 msgid "ID: `{id}`, Type: `{type_}` with {statstr}. Value is **${value}**"
 msgstr "ID: `{id}`, Тип: `{type_}` с {statstr}. Себестоимость **${value}**"
 
-#: cogs/profile.py:264
+#: cogs/profile.py:278
 #, python-brace-format
 msgid "Page {page} of {maxpages}"
 msgstr "Страница {page} из {maxpages}"
 
-#: cogs/profile.py:274
+#: cogs/profile.py:288
 msgid "Shows your current inventory."
 msgstr "Показывает ваш текущий инвентарь."
 
-#: cogs/profile.py:281
+#: cogs/profile.py:295
 msgid "Your inventory is empty."
 msgstr "Ваш инвентарь пуст."
 
-#: cogs/profile.py:294
+#: cogs/profile.py:308
 msgid "Equips an item of yours by ID."
 msgstr "Используйте ID вашего предмета."
 
-#: cogs/profile.py:303 cogs/profile.py:400
+#: cogs/profile.py:317 cogs/profile.py:414
 #, python-brace-format
 msgid "You don't own an item with the ID `{itemid}`."
 msgstr "У вас нет предмета с идентификатором `{itemid}`."
 
-#: cogs/profile.py:323
+#: cogs/profile.py:337
 #, python-brace-format
 msgid "Successfully equipped item `{itemid}` and put off item `{olditem}`."
 msgstr "Одета вещь `{itemid}` и снята вещь `{olditem}`."
 
-#: cogs/profile.py:328
+#: cogs/profile.py:342
 #, python-brace-format
 msgid "Successfully equipped item `{itemid}`."
 msgstr "Успешно одета вещь `{itemid}`."
 
-#: cogs/profile.py:336
+#: cogs/profile.py:350
 msgid "Merges two items to a better one. Second one is consumed."
 msgstr "Объединяет два элемента для улучшения. Второй расходуется."
 
-#: cogs/profile.py:339
+#: cogs/profile.py:353
 msgid "Good luck with that."
 msgstr "Удачи с этим."
 
-#: cogs/profile.py:353
+#: cogs/profile.py:367
 msgid "You don't own both of these items."
 msgstr "Вы не владеете этими предметами."
 
-#: cogs/profile.py:366
+#: cogs/profile.py:380
 #, python-brace-format
 msgid ""
 "The second item's stat must be in the range of `{min_}` to `{max_}` to "
@@ -4204,11 +4213,11 @@ msgstr ""
 "Статистика второй вещи должна быть в диапазоне от `{min_}` до `{max_}` для "
 "обновления вещи с статистикой `{stat}`."
 
-#: cogs/profile.py:372
+#: cogs/profile.py:386
 msgid "This item is already on the maximum upgrade level."
 msgstr "Эта вещь достигла максимального уровня."
 
-#: cogs/profile.py:381
+#: cogs/profile.py:395
 #, python-brace-format
 msgid ""
 "The {stat} of your **{item}** is now **{newstat}**. The other item was "
@@ -4216,15 +4225,15 @@ msgid ""
 msgstr ""
 "{stat} вашего **{item}** теперь **{newstat}**. Другая вещь была уничтожена."
 
-#: cogs/profile.py:390
+#: cogs/profile.py:404
 msgid "Upgrades an item's stat by 1."
 msgstr "Улучшает вещь на 1."
 
-#: cogs/profile.py:412
+#: cogs/profile.py:426
 msgid "Your weapon already reached the maximum upgrade level."
 msgstr "Ваше оружие уже достигло максимального уровня улучшения."
 
-#: cogs/profile.py:417
+#: cogs/profile.py:431
 #, python-brace-format
 msgid ""
 "You are too poor to upgrade this item. The upgrade costs **${pricetopay}**, "
@@ -4233,7 +4242,7 @@ msgstr ""
 "Вы слишком бедны, чтобы обновить этот предмет. Цена обновления **"
 "${pricetopay}**, но у вас только **${money}**."
 
-#: cogs/profile.py:423
+#: cogs/profile.py:437
 #, python-brace-format
 msgid ""
 "Are you sure you want to upgrade this item: {item}? It will cost **"
@@ -4242,11 +4251,11 @@ msgstr ""
 "Вы уверены, что хотите обновить этот предмет: {item}? Он будет стоить **"
 "${pricetopay}**."
 
-#: cogs/profile.py:427
+#: cogs/profile.py:441
 msgid "Weapon upgrade cancelled."
 msgstr "Обновление оружия отменено."
 
-#: cogs/profile.py:443
+#: cogs/profile.py:457
 #, python-brace-format
 msgid ""
 "The {stat} of your **{item}** is now **{newstat}**. **${pricetopay}** has "
@@ -4255,69 +4264,69 @@ msgstr ""
 "{stat} вашего **{item}** теперь **{newstat}**. **${pricetopay}** было снято "
 "с вашего баланса."
 
-#: cogs/profile.py:458
+#: cogs/profile.py:472
 msgid "Gift money!"
 msgstr "Подарочные деньги!"
 
-#: cogs/profile.py:460
+#: cogs/profile.py:474
 msgid "No cheating!"
 msgstr "Не шали, мы не любим читеров!"
 
-#: cogs/profile.py:473
+#: cogs/profile.py:487
 #, python-brace-format
 msgid "Successfully gave **${money}** to {other}."
 msgstr "Успешно отправлено **${money}** игроку {other}."
 
-#: cogs/profile.py:485
+#: cogs/profile.py:499
 msgid "Renames your character."
 msgstr "Переименовывает вашего персонажа."
 
-#: cogs/profile.py:496
+#: cogs/profile.py:510
 msgid "Timeout expired. Retry!"
 msgstr "Время истекло. Повторите!"
 
-#: cogs/profile.py:502
+#: cogs/profile.py:516
 msgid "Character name updated."
 msgstr "Имя персонажа обновлено."
 
-#: cogs/profile.py:504
+#: cogs/profile.py:518
 msgid "Character names must be at least 3 characters!"
 msgstr "Имена персонажей должны быть не менее 3 символов!"
 
-#: cogs/profile.py:506
+#: cogs/profile.py:520
 msgid "Character names mustn't exceed 20 characters!"
 msgstr "Имя персонажа не должно превышать 20 символов!"
 
-#: cogs/profile.py:512
+#: cogs/profile.py:526
 msgid "Deletes your character."
 msgstr "Удаляет вашего персонажа."
 
-#: cogs/profile.py:514
+#: cogs/profile.py:528
 msgid "Are you sure? React in the next 30 seconds to confirm."
 msgstr ""
 "Вы уверены? Нажмите на реакцию в течение следующих 30 секунд, чтобы "
 "подтвердить."
 
-#: cogs/profile.py:516
+#: cogs/profile.py:530
 msgid "Cancelled deletion of your character."
 msgstr "Отменено удаление вашего персонажа."
 
-#: cogs/profile.py:538
+#: cogs/profile.py:552
 msgid "Successfully deleted your character. Sorry to see you go :frowning:"
 msgstr "Ваш персонаж успешно удален. Жаль что вы покидаете нас :frowning:"
 
-#: cogs/profile.py:544
+#: cogs/profile.py:558
 msgid "Sets your profile text colour."
 msgstr "Задает цвет текста профиля."
 
-#: cogs/profile.py:546
+#: cogs/profile.py:561
 msgid "Format for colour is `#RRGGBB`."
 msgstr "Формат цвета `#RRGGBB`."
 
-#: cogs/profile.py:551
+#: cogs/profile.py:566
 #, python-brace-format
-msgid "Successfully set your profile colour to `{colour}`."
-msgstr "Ваш цвет профиля успешно изменен на `{colour}`."
+msgid "Successfully set your profile colour to `#{colour}`."
+msgstr ""
 
 #: cogs/admin.py:34
 msgid "[Bot Admin only] Gives money to a user without loss."
@@ -4393,6 +4402,9 @@ msgid ""
 "limit."
 msgstr ""
 "Успешно сброшен фон {target}, класс, имена предметов и лимит членов гильдии."
+
+#~ msgid "Successfully set your profile colour to `{colour}`."
+#~ msgstr "Ваш цвет профиля успешно изменен на `{colour}`."
 
 #~ msgid "This booster is already running."
 #~ msgstr "Этот бустер уже запущен."
