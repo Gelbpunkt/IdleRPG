@@ -62,8 +62,18 @@ class Crates(commands.Cog):
         else:
             minstat, maxstat = (1, 9)
 
+        luck_multiply = ctx.character_data["luck"]
+        minstat, maxstat = (
+            round(minstat * luck_multiply),
+            round(maxstat * luck_multiply),
+        )
+
         item = await self.bot.create_random_item(
-            minstat=minstat, maxstat=maxstat, minvalue=1, maxvalue=250, owner=ctx.author
+            minstat=minstat if minstat < 30 else 30,
+            maxstat=maxstat if maxstat < 30 else maxstat,
+            minvalue=1,
+            maxvalue=250,
+            owner=ctx.author,
         )
         await self.bot.pool.execute(
             'UPDATE profile SET "crates"="crates"-1 WHERE "user"=$1;', ctx.author.id

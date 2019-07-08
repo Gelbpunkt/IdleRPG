@@ -208,6 +208,20 @@ class Profile(commands.Cog):
         await ctx.send(embed=em)
 
     @checks.has_char()
+    @commands.command()
+    @locale_doc
+    async def luck(self, ctx):
+        _("""Shows your luck factor ranging from -1 to 1.""")
+        await ctx.send(
+            _(
+                "Your current luck is `{luck}x` (≈{percent}%) more than usual (usual=0)."
+            ).format(
+                luck=ctx.character_data["luck"] - 1,
+                percent=(ctx.character_data["luck"] - 1) * 100,
+            )
+        )
+
+    @checks.has_char()
     @commands.command(aliases=["money", "e"])
     @locale_doc
     async def economy(self, ctx):
@@ -542,13 +556,14 @@ class Profile(commands.Cog):
     @locale_doc
     async def colour(self, ctx, colour: str):
         _("""Sets your profile text colour.""")
-        if len(colour) != 7 or not colour.startswith("#"):
+        colour = colour.lstrip("#")
+        if len(colour) != 6:
             return await ctx.send(_("Format for colour is `#RRGGBB`."))
         await self.bot.pool.execute(
             'UPDATE profile SET "colour"=$1 WHERE "user"=$2;', colour, ctx.author.id
         )
         await ctx.send(
-            _("Successfully set your profile colour to `{colour}`.").format(
+            _("Successfully set your profile colour to `#{colour}`.").format(
                 colour=colour
             )
         )

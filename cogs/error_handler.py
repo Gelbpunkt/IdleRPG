@@ -17,6 +17,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
 import sys
 import traceback
+from asyncio import TimeoutError
 from datetime import timedelta
 
 import discord
@@ -131,9 +132,15 @@ class Errorhandler(commands.Cog):
         ):
             if isinstance(
                 error.original,
-                (ClientOSError, ServerDisconnectedError, ContentTypeError),
+                (
+                    ClientOSError,
+                    ServerDisconnectedError,
+                    ContentTypeError,
+                    TimeoutError,
+                ),
             ):
                 # Called on 500 HTTP responses
+                # TimeoutError: A Discord operation timed out. All others should be handled by us
                 return
             elif isinstance(error.original, AsyncpgDataError):
                 return await ctx.send(
