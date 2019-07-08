@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-06-24 19:07+0000\n"
-"PO-Revision-Date: 2019-05-30 18:20+0700\n"
+"POT-Creation-Date: 2019-07-08 17:45+0000\n"
+"PO-Revision-Date: 2019-07-08 19:05+0700\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: vi\n"
@@ -313,7 +313,7 @@ msgstr "Một người nào đó đã từ chối lượt. Trận đấu kết t
 #: cogs/battles.py:246
 #, python-brace-format
 msgid "{user}, you already moved!"
-msgstr "{user}, Bạn đã dung lượt của mình!"
+msgstr "{user}, Bạn đã dùng lượt của mình!"
 
 #: cogs/battles.py:256
 #, python-brace-format
@@ -323,7 +323,7 @@ msgstr "{user} đã hồi  **20 HP**."
 #: cogs/battles.py:271 cogs/battles.py:295
 #, python-brace-format
 msgid "{user} hit {enemy} for **{eff}** damage."
-msgstr "{user} tấn công {enemy} for **{eff}** điểm thiệt hại."
+msgstr "{user} tấn công {enemy} for **{eff}** sát thương."
 
 #: cogs/battles.py:301
 #, python-brace-format
@@ -401,10 +401,10 @@ msgstr ""
 "\n"
 "**100 <:easteregg:566251086986608650>** - 1 thùng\n"
 "**500 <:easteregg:566251086986608650>** - $10000\n"
-"**1000 <:easteregg:566251086986608650>** - ngẫu nhiên một vật phẩm từ1 đến "
+"**1000 <:easteregg:566251086986608650>** - ngẫu nhiên một vật phẩm từ 1 đến "
 "49\n"
 "**2000 <:easteregg:566251086986608650>** - 25 thùng\n"
-"**2500 <:easteregg:566251086986608650>** - 10 tên lửa cho mỗi loại\n"
+"**2500 <:easteregg:566251086986608650>** - 10 vật phẩm bổ trợ cho mỗi loại\n"
 "**5000 <:easteregg:566251086986608650>** - 100 thùng\n"
 "**7500 <:easteregg:566251086986608650>** - huy hiệu bang hội\n"
 "**7500 <:easteregg:566251086986608650>** - 200 thùng\n"
@@ -456,7 +456,7 @@ msgstr "Bạn tìm thấy một vật phẩm mới khi mở thùng!"
 #: cogs/crates.py:80 cogs/classes.py:254 cogs/adventure.py:222
 #: cogs/trading.py:213 cogs/trading.py:388
 msgid "Damage"
-msgstr "Thiệt hại"
+msgstr "Sát thương"
 
 #: cogs/crates.py:81 cogs/classes.py:256 cogs/adventure.py:223
 #: cogs/trading.py:214 cogs/trading.py:389
@@ -1147,8 +1147,7 @@ msgstr ""
 "Lưu trữ bot này cho tất cả người dùng là không dễ dàng và tốn rất nhiều "
 "tiền.\n"
 "Nếu bạn muốn tiếp tục sử dụng bot hoặc  giúp chúng tôi, vui lòng quyên góp "
-"một số tiền nhỏ.\n"
-"Thậm chí $1 có thể giúp chúng tôi.\n"
+"một số tiền nhỏ.\nThậm chí $1 có thể giúp chúng tôi.\n"
 "**Cảm ơn bạn**\n"
 "\n"
 "<https://patreon.com/idlerpg>"
@@ -1565,7 +1564,7 @@ msgstr ""
 
 #: cogs/store.py:32
 msgid "The booster store."
-msgstr "Các cửa hàng tăng cường."
+msgstr "Cửa hàng bán các vật phẩm bổ trợ."
 
 #: cogs/store.py:34
 msgid "IdleRPG Store"
@@ -1580,7 +1579,7 @@ msgstr ""
 
 #: cogs/store.py:41
 msgid "Boosters"
-msgstr "Tên lửa"
+msgstr "Vật phẩm bổ trợ"
 
 #: cogs/store.py:43
 msgid ""
@@ -1588,16 +1587,17 @@ msgid ""
 "`#2` Luck Booster\t**$500**\tBoosts adventure luck by 25%\n"
 "`#3` Money Booster\t**$1000**\tBoosts adventure money rewards by 25%"
 msgstr ""
-"`#1` Tên lửa thời gian\t**$1000**\tGiảm thời gian phiêu lưu 50%\n"
+"`#1` Vật phẩm giảm thời gian\t**$1000**\tGiảm thời gian phiêu lưu 50%\n"
 " \n"
-"`#2` Tên lửa may mắn\t**$500**\tCộng thêm 25% may mắn cho cuộc phiêu lưu\n"
+"`#2` Vật phẩm tăng may mắn\t**$500**\tCộng thêm 25% may mắn cho cuộc phiêu "
+"lưu\n"
 " \n"
-"#3` Tên lửa tăng tiền\t**$1000**\tTăng tiền thường sau chuyến phiêu lưu của "
+"#3` Vật phẩm tăng tiền\t**$1000**\tTăng tiền thường sau chuyến phiêu lưu của "
 "bạn 25%"
 
 #: cogs/store.py:54
 msgid "Buy a booster from the store."
-msgstr "Mua một booster từ cửa hàng."
+msgstr "Mua vật phẩm bổ trợ từ cửa hàng."
 
 #: cogs/store.py:56
 msgid "Please either buy `time`, `luck` or `money`."
@@ -1615,26 +1615,26 @@ msgid ""
 "boosters` to view your new boosters."
 msgstr ""
 "Mua thành công **{amount}** {booster} tên lửa. Sử dung `{prefix}boosters` để "
-"xem những tên lửa mới của bạn."
+"xem những vật phẩm mới của bạn."
 
 #: cogs/store.py:76
 msgid "View your boosters."
-msgstr "Xem tên lửa  của bạn."
+msgstr "Xem các vật phẩm bổ trợ của bạn."
 
 #: cogs/store.py:84
 #, python-brace-format
 msgid "Time booster - {time}"
-msgstr "Tên lửa thời gian - {time}"
+msgstr "Vật phẩm giảm thời gian  - {time}"
 
 #: cogs/store.py:89
 #, python-brace-format
 msgid "Luck booster - {time}"
-msgstr "Tên lửa may mắn - {time}"
+msgstr "Vật phẩm tăng may mắn - {time}"
 
 #: cogs/store.py:94
 #, python-brace-format
 msgid "Money booster - {time}"
-msgstr "Tên lửa tăng tiền - {time}"
+msgstr "Vật phẩm tăng tiền - {time}"
 
 #: cogs/store.py:99
 msgid "Currently active"
@@ -1642,19 +1642,19 @@ msgstr "Hiện đang hoạt động"
 
 #: cogs/store.py:104
 msgid "Time Boosters"
-msgstr "Tên lửa thời gian"
+msgstr "Vật phẩm giảm thời gian"
 
 #: cogs/store.py:104
 msgid "Luck Boosters"
-msgstr "Tên lửa may mắn"
+msgstr "Vật phẩm tăng may mắn"
 
 #: cogs/store.py:104
 msgid "Money Boosters"
-msgstr "Tên lửa tăng tiền"
+msgstr "Vật phẩm tăng tiền"
 
 #: cogs/store.py:107
 msgid "Your Boosters"
-msgstr "Tên lửa của bạn"
+msgstr "Các vật phẩm bổ trợ của bạn"
 
 #: cogs/store.py:111
 #, python-brace-format
@@ -1697,7 +1697,8 @@ msgstr ""
 "chuyển.\n"
 "Để được trợ giúp thêm, hãy tham gia máy chủ hỗ trợ tại https://discord.gg/"
 "axBKXBv.**\n"
-"Kiểm tra các đối tác của chúng tôi bằng cách sử dụng lệnh đối tác!"
+"Kiểm tra các đối tác của chúng tôi bằng cách sử dụng lệnh đối tác!\n"
+"Bản dịch được dịch bởi Quinella <3!"
 
 #: cogs/help.py:74
 #, python-brace-format
@@ -2358,9 +2359,9 @@ msgid ""
 "weapon: **{item}**. Experience gained: **{xp}**.\n"
 "Your partner received **${gold2}**."
 msgstr ""
-"You have completed your dungeon and received **${gold}** as well as a new "
-"weapon: **{item}**. Experience gained: **{xp}**.\n"
-"Cộng sự của bạn nhân **${gold2}**."
+"Bạn đã hoàn thành cuộc phiêu lưu và nhận được **${gold}** cũng như trang "
+"bị : **{item}**. Kinh nghiệm nhận được là: **{xp}**.\n"
+"Cộng sự của bạn nhân được **{gold2}**."
 
 #: cogs/adventure.py:310
 #, python-brace-format
@@ -2398,7 +2399,7 @@ msgid ""
 msgstr ""
 "Bạn hiện đang trong cuộc phiêu lưu với mức độ `{difficulty}`.\n"
 "Kết thúc sau `{end}`\n"
-"Tên cuộc phiêu lưu: {dungeon}`"
+"Tên cuộc phiêu lưu:`{dungeon}`"
 
 #: cogs/adventure.py:359
 msgid "Cancels your current adventure."
@@ -2423,8 +2424,8 @@ msgid ""
 "Out of **{total}** adventures, you died **{deaths}** times and survived "
 "**{completed}** times, which is a success rate of **{rate}%**."
 msgstr ""
-"Trong số *{total}** cuộc phiêu lưu, Bạn đã chết **{deaths}** lần và sống sót "
-"**{completed}** lần, Tỉ lệ thành công của bạn là **{rate}%**."
+"Trong số **{total}** cuộc phiêu lưu, Bạn đã chết **{deaths}** lần và sống "
+"sót **{completed}** lần, Tỉ lệ thành công của bạn là **{rate}%**."
 
 #: cogs/shard_communication.py:292
 msgid "Lists all your cooldowns."
