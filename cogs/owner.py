@@ -232,7 +232,7 @@ class Owner(commands.Cog):
     async def runas(self, ctx, member: discord.Member, *, command: str):
         """[Owner Only] Run a command as if you were the user."""
         fake_msg = copy.copy(ctx.message)
-        fake_msg._update(ctx.message.channel, dict(content=ctx.prefix + command))
+        fake_msg._update(dict(channel=ctx.channel, content=ctx.prefix + command))
         fake_msg.author = member
         new_ctx = await ctx.bot.get_context(fake_msg)
         try:

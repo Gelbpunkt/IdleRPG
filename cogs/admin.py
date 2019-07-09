@@ -107,7 +107,7 @@ class Admin(commands.Cog):
         await ctx.send(_("Renamed."))
         await self.bot.http.send_message(
             self.bot.config.admin_log_channel,
-            f"**{ctx.author}** renamed **{target}** to **{name}**.",
+            f"**{ctx.author}** renamed **{target}** to **{name.content}**.",
         )
 
     @is_admin()

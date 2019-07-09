@@ -40,13 +40,17 @@ class Profile(commands.Cog):
     async def create(self, ctx):
         _("""Creates a new character.""")
         await ctx.send(
-            _("""\
+            _(
+                """\
 What shall your character's name be? (Minimum 3 Characters, Maximum 20)
 
 **Please note that with the creation of a character, you agree to these rules:**
 1) Only up to two characters per individual
-2) No abusing or benefiting from bugs of exploits
-3) Be friendly and kind to other players""")
+2) No abusing or benefiting from bugs or exploits
+3) Be friendly and kind to other players
+
+IdleRPG is a global bot, your characters are valid everywhere"""
+            )
         )
 
         def mycheck(amsg):
