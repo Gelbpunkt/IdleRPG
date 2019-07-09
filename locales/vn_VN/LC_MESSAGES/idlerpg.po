@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-07-08 17:50+0000\n"
+"POT-Creation-Date: 2019-07-09 15:54+0000\n"
 "PO-Revision-Date: 2019-07-08 19:05+0700\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -23,7 +23,7 @@ msgid "Starts a new tournament."
 msgstr "Bắt đầu giải đấu."
 
 #: cogs/tournament.py:41 cogs/battles.py:44 cogs/battles.py:146
-#: cogs/gambling.py:327 cogs/profile.py:476
+#: cogs/gambling.py:327 cogs/profile.py:486
 msgid "You are too poor."
 msgstr "Bạn quá nghèo."
 
@@ -159,7 +159,7 @@ msgstr "{user} cho bạn thêm $50!"
 msgid "Seems you haven't got a trick or treat bag yet. Go get some!"
 msgstr "Có vẻ như bạn chưa có túi kẹo nào cả. Tới lúc trick or treat rồi!"
 
-#: cogs/halloween.py:142 cogs/crates.py:82 cogs/classes.py:248
+#: cogs/halloween.py:142 cogs/crates.py:82 cogs/classes.py:268
 #: cogs/adventure.py:221
 msgid "You gained an item!"
 msgstr "Bạn nhận được một món đồ!"
@@ -169,17 +169,17 @@ msgstr "Bạn nhận được một món đồ!"
 msgid "You found a new item when opening a trick-or-treat bag!"
 msgstr "Bạn kiếm được một món đồ khi mở túi trick or treat!"
 
-#: cogs/halloween.py:147 cogs/crates.py:87 cogs/classes.py:253
+#: cogs/halloween.py:147 cogs/crates.py:87 cogs/classes.py:273
 #: cogs/adventure.py:226
 msgid "ID"
 msgstr "ID"
 
-#: cogs/halloween.py:148 cogs/crates.py:88 cogs/classes.py:254
+#: cogs/halloween.py:148 cogs/crates.py:88 cogs/classes.py:274
 #: cogs/adventure.py:227 cogs/trading.py:211 cogs/trading.py:386
 msgid "Name"
 msgstr "Tên"
 
-#: cogs/halloween.py:149 cogs/crates.py:89 cogs/classes.py:255
+#: cogs/halloween.py:149 cogs/crates.py:89 cogs/classes.py:275
 #: cogs/adventure.py:228 cogs/trading.py:212 cogs/trading.py:387
 msgid "Type"
 msgstr "Loại"
@@ -453,17 +453,17 @@ msgstr "Dường như bạn chưa có thùng. Bỏ phiếu cho tôi để nhận
 msgid "You found a new item when opening a crate!"
 msgstr "Bạn tìm thấy một vật phẩm mới khi mở thùng!"
 
-#: cogs/crates.py:90 cogs/classes.py:257 cogs/adventure.py:229
+#: cogs/crates.py:90 cogs/classes.py:277 cogs/adventure.py:229
 #: cogs/trading.py:213 cogs/trading.py:388
 msgid "Damage"
 msgstr "Sát thương"
 
-#: cogs/crates.py:91 cogs/classes.py:259 cogs/adventure.py:230
+#: cogs/crates.py:91 cogs/classes.py:279 cogs/adventure.py:230
 #: cogs/trading.py:214 cogs/trading.py:389
 msgid "Armor"
 msgstr "Giáp"
 
-#: cogs/crates.py:92 cogs/classes.py:260 cogs/adventure.py:231
+#: cogs/crates.py:92 cogs/classes.py:280 cogs/adventure.py:231
 #: cogs/trading.py:215 cogs/trading.py:390
 msgid "Value"
 msgstr "Giá trị"
@@ -1605,7 +1605,7 @@ msgid "Please either buy `time`, `luck` or `money`."
 msgstr "Vui lòng mua `time`,`luck` hoặc`money`."
 
 #: cogs/store.py:59 cogs/gambling.py:377 cogs/gambling.py:411 cogs/guild.py:485
-#: cogs/profile.py:444
+#: cogs/profile.py:454
 msgid "You're too poor."
 msgstr "Bạn quá nghèo."
 
@@ -1810,19 +1810,15 @@ msgstr "Bạn không có một vật phẩm với ID `{itemid}`."
 msgid "The item with the ID `{itemid}` is now called `{newname}`."
 msgstr "Vật phẩm với ID `{itemid}` bây giờ được gọi là `{newname}`."
 
-#: cogs/patreon.py:66
+#: cogs/patreon.py:65
 msgid "[Patreon Only] Changes your profile background."
 msgstr "[Chỉ Patreon] Thay đổi nền hồ sơ của bạn."
 
-#: cogs/patreon.py:68
-msgid "reset"
-msgstr "cài lại"
-
-#: cogs/patreon.py:78
+#: cogs/patreon.py:77
 msgid "That is not a valid premade background."
 msgstr "Đó không phải là một nền tảng tiền đề hợp lệ."
 
-#: cogs/patreon.py:82 cogs/patreon.py:112 cogs/guild.py:394
+#: cogs/patreon.py:81 cogs/patreon.py:113 cogs/guild.py:394
 msgid ""
 "I couldn't read that URL. Does it start with `http://` or `https://` and is "
 "either a png or jpeg?"
@@ -1830,11 +1826,11 @@ msgstr ""
 "Không thể đọc URL đó. Nó có bắt đầu bằng `http://` hay `https://` và là png "
 "hay jpeg?"
 
-#: cogs/patreon.py:92
+#: cogs/patreon.py:93
 msgid "The URL is too long."
 msgstr "URL quá dài."
 
-#: cogs/patreon.py:94
+#: cogs/patreon.py:95
 #, python-brace-format
 msgid ""
 "Your new profile picture is now:\n"
@@ -1843,11 +1839,11 @@ msgstr ""
 "Hình ảnh hồ sơ mới của bạn bây giờ là:\n"
 "{url}"
 
-#: cogs/patreon.py:96
+#: cogs/patreon.py:97
 msgid "Your profile picture has been reset."
 msgstr "Ảnh hồ sơ của bạn đã được thiết lập lại."
 
-#: cogs/patreon.py:103
+#: cogs/patreon.py:104
 msgid ""
 "[Patreon Only] Generates a profile background based on an image. Valid "
 "overlays are 1 or 2 for grey and black."
@@ -1855,15 +1851,15 @@ msgstr ""
 "[Chỉ dành cho Patreon] Tạo nền hồ sơ dựa trên hình ảnh. Lớp phủ hợp lệ là 1 "
 "hoặc 2 cho màu xám và đen."
 
-#: cogs/patreon.py:106
+#: cogs/patreon.py:107
 msgid "Use either `1` or `2` as the overlay type."
 msgstr "Sử dụng `1` hoặc` 2` làm loại lớp phủ."
 
-#: cogs/patreon.py:128
+#: cogs/patreon.py:129
 msgid "Error when uploading to Imgur."
 msgstr "Lỗi khi tải lên Imgur."
 
-#: cogs/patreon.py:130
+#: cogs/patreon.py:131
 #, python-brace-format
 msgid ""
 "Imgur Link for `{prefix}background`\n"
@@ -1872,30 +1868,30 @@ msgstr ""
 "Liên kết Imgur cho nền`{prefix}background`\n"
 "<{link}>"
 
-#: cogs/patreon.py:141
+#: cogs/patreon.py:142
 msgid "[Patreon Only] Update your guild member limit."
 msgstr "[Chỉ dành cho Patreon] Cập nhật giới hạn thành viên bang hội của bạn."
 
-#: cogs/patreon.py:145
+#: cogs/patreon.py:146
 msgid "Your guild member limit is now 100."
 msgstr "Giới hạn thành viên bang hội của bạn bây giờ là 100."
 
-#: cogs/patreon.py:151
+#: cogs/patreon.py:152
 msgid "Update your background to one from the events."
 msgstr "Cập nhật nền của bạn từ các sự kiện."
 
-#: cogs/patreon.py:159
+#: cogs/patreon.py:160
 msgid ""
 "You do not have an eventbackground. They can be acquired on seasonal events."
 msgstr ""
 
-#: cogs/patreon.py:167
+#: cogs/patreon.py:168
 #, python-brace-format
 msgid ""
 "The background number {number} is not valid, you only have {total} available."
 msgstr "Số nền {number} không hợp lệ, bạn chỉ có sẵn  {total}"
 
-#: cogs/patreon.py:173
+#: cogs/patreon.py:174
 msgid "Background updated!"
 msgstr "Cập nhật nền!"
 
@@ -1957,11 +1953,25 @@ msgstr ""
 "lần một ngày\n"
 "+3 cấp độ tối thiểu và +6 cấp độ tối đa trên mỗi tiến hóa."
 
-#: cogs/classes.py:73
+#: cogs/classes.py:69
+msgid "Raider"
+msgstr ""
+
+#: cogs/classes.py:71
+msgid ""
+"A strong warrior who gives their live for the fight against Zerekiel.\n"
+"Every evolve boosts the raidstats by additional 10%."
+msgstr ""
+
+#: cogs/classes.py:76
+msgid "Ritualist"
+msgstr ""
+
+#: cogs/classes.py:87
 msgid "Paragon"
 msgstr "Paragon"
 
-#: cogs/classes.py:75
+#: cogs/classes.py:89
 msgid ""
 "Absorb the appreciation of the devs into your soul to power up.\n"
 "+1 damage and defense per evolution added onto your items."
@@ -1969,16 +1979,16 @@ msgstr ""
 "Hấp thụ sức mạnh của nhà phát triển vào linh hồn của bạn để tăng sức mạnh\n"
 "Sát thương và phòng thủ + 1 mỗi lần tiến hóa."
 
-#: cogs/classes.py:96
+#: cogs/classes.py:114
 #, python-brace-format
 msgid "Your new class is now `{profession}`."
 msgstr "Lớp chiến đấu của bạn hiện giờ là `{profession}`."
 
-#: cogs/classes.py:104
+#: cogs/classes.py:122
 msgid "You're too poor for a class change, it costs **$5000**."
 msgstr "Bạn quá nghèo để thay đổi lớp chiến đấu, nó tốn **$5000**."
 
-#: cogs/classes.py:115
+#: cogs/classes.py:133
 #, python-brace-format
 msgid ""
 "Your new class is now `{profession}`. **$5000** was taken off your balance."
@@ -1986,67 +1996,67 @@ msgstr ""
 "Lớp chiến đấu của bạn hiện giờ là `{profession}`. $5000 vừa bị trừ trong tài "
 "khoản của bạn."
 
-#: cogs/classes.py:123
+#: cogs/classes.py:141
 msgid "Views your class."
 msgstr "Xem lớp chiến đấu của bạn."
 
-#: cogs/classes.py:136
+#: cogs/classes.py:154
 #, python-brace-format
 msgid "The image for your class **{class_}** hasn't been added yet."
 msgstr "Hình ảnh cho **{class_}** chưa được thêm."
 
-#: cogs/classes.py:144
+#: cogs/classes.py:162
 msgid "Evolve to the next level of your class."
 msgstr "Phát triển đến cấp độ tiếp theo cho lớp chiến đấu của bạn."
 
-#: cogs/classes.py:147
+#: cogs/classes.py:165
 msgid "Your level isn't high enough to evolve."
 msgstr "Cấp độ của bạn không đủ cao để tiến hóa."
 
-#: cogs/classes.py:149
+#: cogs/classes.py:167
 msgid "You haven't got a class yet."
 msgstr "Bạn chưa có lớp."
 
-#: cogs/classes.py:157
+#: cogs/classes.py:175
 #, python-brace-format
 msgid "You are now a `{newclass}`."
 msgstr "Bạn bây giờ là `{newclass}`."
 
-#: cogs/classes.py:181
+#: cogs/classes.py:201
 msgid "[Thief Only] Steal money!"
 msgstr "[Dành cho trộm] Cướp tiền!"
 
-#: cogs/classes.py:202
+#: cogs/classes.py:222
 #, python-brace-format
 msgid "You stole **${stolen}** from **{user}**."
 msgstr "Bạn đã cướp được **${stolen}** từ **{user}**."
 
-#: cogs/classes.py:207
+#: cogs/classes.py:227
 msgid "Your attempt to steal money wasn't successful."
 msgstr "Nỗ lực ăn cắp tiền của bạn không thành công."
 
-#: cogs/classes.py:214
+#: cogs/classes.py:234
 msgid "[Ranger Only] View your pet or interact with it."
 msgstr ""
 
-#: cogs/classes.py:216
+#: cogs/classes.py:236
 #, python-brace-format
 msgid "{user}'s pet"
 msgstr "Thú cưng của {user}"
 
-#: cogs/classes.py:217
+#: cogs/classes.py:237
 msgid "Level"
 msgstr "Cấp độ"
 
-#: cogs/classes.py:235
+#: cogs/classes.py:255
 msgid "[Ranger Only] Let your pet get a weapon for you!"
 msgstr "[Dành cho thợ săn] Để thú cưng của bạn tìm một trang bị cho bạn!"
 
-#: cogs/classes.py:249
+#: cogs/classes.py:269
 msgid "Your pet found an item!"
 msgstr "Thú cưng của bạn đã tìm thấy một trang bị!"
 
-#: cogs/classes.py:261
+#: cogs/classes.py:281
 msgid "Your pet needs to recover, wait a day to retry"
 msgstr "Thú cưng của bạn cần lấy lại sức, chờ một ngày rồi thử lại"
 
@@ -4020,23 +4030,32 @@ msgstr "{author} ôm {user}! Awww!"
 msgid "Creates a new character."
 msgstr "Tạo một nhân vật mới."
 
-#: cogs/profile.py:43 cogs/profile.py:501
-msgid "What shall your character's name be? (Minimum 3 Characters, Maximum 20)"
-msgstr "Tên nhân vật của bạn sẽ là gì? (Tối thiểu 3 ký tự, tối đa 20)"
+#: cogs/profile.py:44
+msgid ""
+"What shall your character's name be? (Minimum 3 Characters, Maximum 20)\n"
+"\n"
+"**Please note that with the creation of a character, you agree to these "
+"rules:**\n"
+"1) Only up to two characters per individual\n"
+"2) No abusing or benefiting from bugs or exploits\n"
+"3) Be friendly and kind to other players\n"
+"\n"
+"IdleRPG is a global bot, your characters are valid everywhere"
+msgstr ""
 
-#: cogs/profile.py:53
+#: cogs/profile.py:63
 msgid "Timeout expired. Please retry!"
 msgstr "Thời gian đã hết. Làm ơn hãy thử lại!"
 
-#: cogs/profile.py:64
+#: cogs/profile.py:74
 msgid "Starter Sword"
 msgstr "Starter Sword"
 
-#: cogs/profile.py:73
+#: cogs/profile.py:83
 msgid "Starter Shield"
 msgstr "Starter Shield"
 
-#: cogs/profile.py:83
+#: cogs/profile.py:93
 #, python-brace-format
 msgid ""
 "Successfully added your character **{name}**! Now use `{prefix}profile` to "
@@ -4045,41 +4064,41 @@ msgstr ""
 "Tạo nhân vật của bạn thành công với tên **{name}**! Bây giờ dung `{prefix}"
 "profile` để xem nhân vật của bạn!"
 
-#: cogs/profile.py:88
+#: cogs/profile.py:98
 msgid "Character names must be at least 3 characters and up to 20."
 msgstr "Tên nhân vật phải có ít nhất 3 ký tự và tối đa 20."
 
-#: cogs/profile.py:95
+#: cogs/profile.py:105
 msgid "View someone's or your own profile."
 msgstr "Xem hồ sơ của ai đó hoặc của riêng bạn."
 
-#: cogs/profile.py:104
+#: cogs/profile.py:114
 #, python-brace-format
 msgid "**{person}** does not have a character."
 msgstr "**{person}** không có nhân vật."
 
-#: cogs/profile.py:136
+#: cogs/profile.py:146
 msgid "Not Married"
 msgstr "Chưa kết hôn"
 
-#: cogs/profile.py:142
+#: cogs/profile.py:152
 msgid "No Mission"
 msgstr "Không có nhiệm vụ"
 
-#: cogs/profile.py:151
+#: cogs/profile.py:161
 msgid "View someone's profile, not image based."
 msgstr "Xem hồ sơ của ai đó, không dựa trên hình ảnh."
 
-#: cogs/profile.py:160
+#: cogs/profile.py:170
 #, python-brace-format
 msgid "**{target}** does not have a character."
 msgstr "**{target}** không có nhân vật."
 
-#: cogs/profile.py:178
+#: cogs/profile.py:188
 msgid "General"
 msgstr "Chung"
 
-#: cogs/profile.py:180
+#: cogs/profile.py:190
 #, python-brace-format
 msgid ""
 "**Money**: `${money}`\n"
@@ -4096,11 +4115,11 @@ msgstr ""
 "**PvP Wins**: `{pvp}`\n"
 "**Bang hội**: `{guild}`"
 
-#: cogs/profile.py:195
+#: cogs/profile.py:205
 msgid "Ranks"
 msgstr "Hạng"
 
-#: cogs/profile.py:196
+#: cogs/profile.py:206
 #, python-brace-format
 msgid ""
 "**Richest**: `{rank_money}`\n"
@@ -4110,11 +4129,11 @@ msgstr ""
 " \n"
 "**XP**: `{rank_xp}`"
 
-#: cogs/profile.py:201
+#: cogs/profile.py:211
 msgid "Equipment"
 msgstr "Trang bị"
 
-#: cogs/profile.py:202
+#: cogs/profile.py:212
 #, python-brace-format
 msgid ""
 "Sword: {sword}\n"
@@ -4123,33 +4142,33 @@ msgstr ""
 "Kiếm: {sword}\n"
 "Khiên: {shield}"
 
-#: cogs/profile.py:207
+#: cogs/profile.py:217
 msgid "Mission"
 msgstr "Nhiệm vụ"
 
-#: cogs/profile.py:214
+#: cogs/profile.py:224
 msgid "Shows your luck factor ranging from -1 to 1."
 msgstr ""
 
-#: cogs/profile.py:217
+#: cogs/profile.py:227
 #, python-brace-format
 msgid "Your current luck is `{luck}x` (≈{percent}%) more than usual (usual=0)."
 msgstr ""
 
-#: cogs/profile.py:228
+#: cogs/profile.py:238
 msgid "Shows your balance."
 msgstr "Cho thấy tiền của bạn."
 
-#: cogs/profile.py:230
+#: cogs/profile.py:240
 #, python-brace-format
 msgid "You currently have **${money}**, {author}!"
 msgstr "Bạn đang có **${money}**, {author}!"
 
-#: cogs/profile.py:239
+#: cogs/profile.py:249
 msgid "Shows your current XP and level."
 msgstr "Hiển thị XP và cấp độ hiện tại của bạn."
 
-#: cogs/profile.py:243
+#: cogs/profile.py:253
 #, python-brace-format
 msgid ""
 "You currently have **{points} XP**, which means you are on Level **{level}"
@@ -4158,76 +4177,76 @@ msgstr ""
 "Bạn hiện có **{points} XP**, Điều đó cho thấy bạn đang ở cấp **{level}**. Để "
 "đạt cấp độ tiếp theo cần **{missing}**"
 
-#: cogs/profile.py:253
+#: cogs/profile.py:263
 #, python-brace-format
 msgid "{user}'s inventory includes"
 msgstr "Túi đồ của {user}"
 
-#: cogs/profile.py:258
+#: cogs/profile.py:268
 msgid "(**Equipped**)"
 msgstr "(**Đang trang bị**)"
 
-#: cogs/profile.py:262
+#: cogs/profile.py:272
 #, python-brace-format
 msgid "Damage: `{damage}`"
 msgstr "Sát thương: `{damage}`"
 
-#: cogs/profile.py:264
+#: cogs/profile.py:274
 #, python-brace-format
 msgid "Armor: `{armor}`"
 msgstr "Giáp:: `{armor}`"
 
-#: cogs/profile.py:269
+#: cogs/profile.py:279
 #, python-brace-format
 msgid "ID: `{id}`, Type: `{type_}` with {statstr}. Value is **${value}**"
 msgstr "ID: `{id}`, Loại: `{type_}` với {statstr}. Giá: **${value}**"
 
-#: cogs/profile.py:278
+#: cogs/profile.py:288
 #, python-brace-format
 msgid "Page {page} of {maxpages}"
 msgstr "Trang {page} của {maxpages}"
 
-#: cogs/profile.py:288
+#: cogs/profile.py:298
 msgid "Shows your current inventory."
 msgstr "Hiển thị túi đồ của bạn."
 
-#: cogs/profile.py:295
+#: cogs/profile.py:305
 msgid "Your inventory is empty."
 msgstr "Túi đồ của bạn đang trống."
 
-#: cogs/profile.py:308
+#: cogs/profile.py:318
 msgid "Equips an item of yours by ID."
 msgstr "Trang bị một vật phẩm của bạn bằng ID."
 
-#: cogs/profile.py:317 cogs/profile.py:414
+#: cogs/profile.py:327 cogs/profile.py:424
 #, python-brace-format
 msgid "You don't own an item with the ID `{itemid}`."
 msgstr "Bạn không sở hữu một vật phẩm có ID `{itemid}`."
 
-#: cogs/profile.py:337
+#: cogs/profile.py:347
 #, python-brace-format
 msgid "Successfully equipped item `{itemid}` and put off item `{olditem}`."
 msgstr "Trang bị thành công `{itemid}` và tháo trang bị `{olditem}`."
 
-#: cogs/profile.py:342
+#: cogs/profile.py:352
 #, python-brace-format
 msgid "Successfully equipped item `{itemid}`."
 msgstr "Trang bị thành công vật phẩm `{itemid}`."
 
-#: cogs/profile.py:350
+#: cogs/profile.py:360
 msgid "Merges two items to a better one. Second one is consumed."
 msgstr ""
 "Hợp nhất hai món đồ để tạo ra một món tốt hơn. Món đồ thứ hai sẽ bị tiêu hủy."
 
-#: cogs/profile.py:353
+#: cogs/profile.py:363
 msgid "Good luck with that."
 msgstr "Chúc bạn may mắn lần sau."
 
-#: cogs/profile.py:367
+#: cogs/profile.py:377
 msgid "You don't own both of these items."
 msgstr "Bạn không sở hữu cả hai món đồ này."
 
-#: cogs/profile.py:380
+#: cogs/profile.py:390
 #, python-brace-format
 msgid ""
 "The second item's stat must be in the range of `{min_}` to `{max_}` to "
@@ -4236,11 +4255,11 @@ msgstr ""
 "Chỉ số của món đồ thứ hai phải nằm trong phạm vi `{min_}` đến `{max_}` để "
 "nâng cấp món đồ có chỉ số `{stat}`."
 
-#: cogs/profile.py:386
+#: cogs/profile.py:396
 msgid "This item is already on the maximum upgrade level."
 msgstr "Vũ khí của bạn đã đến cấp độ nâng cấp tối đa."
 
-#: cogs/profile.py:395
+#: cogs/profile.py:405
 #, python-brace-format
 msgid ""
 "The {stat} of your **{item}** is now **{newstat}**. The other item was "
@@ -4249,15 +4268,15 @@ msgstr ""
 "Món đồ **{item}** đã tăng từ {stat} lên **{newstat}**. Mòn đồ kia đã bị phả "
 "hủy."
 
-#: cogs/profile.py:404
+#: cogs/profile.py:414
 msgid "Upgrades an item's stat by 1."
 msgstr "Nâng cấp  lên 1 chỉ số cho món đồ."
 
-#: cogs/profile.py:426
+#: cogs/profile.py:436
 msgid "Your weapon already reached the maximum upgrade level."
 msgstr "Vũ khí của bạn đã đến cấp độ nâng cấp tối đa."
 
-#: cogs/profile.py:431
+#: cogs/profile.py:441
 #, python-brace-format
 msgid ""
 "You are too poor to upgrade this item. The upgrade costs **${pricetopay}**, "
@@ -4266,7 +4285,7 @@ msgstr ""
 "Bạn quá nghèo để nâng cấp món đồ này. Gía nâng cấp là **${pricetopay}** "
 "nhưng bạn chỉ có **${money}**."
 
-#: cogs/profile.py:437
+#: cogs/profile.py:447
 #, python-brace-format
 msgid ""
 "Are you sure you want to upgrade this item: {item}? It will cost **"
@@ -4275,11 +4294,11 @@ msgstr ""
 "Bạn có chắc chắn muốn nâng cấp {item} không? Gía nâng cấp là **${pricetopay}"
 "**."
 
-#: cogs/profile.py:441
+#: cogs/profile.py:451
 msgid "Weapon upgrade cancelled."
 msgstr "Hủy nâng cấp vũ khí."
 
-#: cogs/profile.py:457
+#: cogs/profile.py:467
 #, python-brace-format
 msgid ""
 "The {stat} of your **{item}** is now **{newstat}**. **${pricetopay}** has "
@@ -4288,64 +4307,68 @@ msgstr ""
 "Món đồ **{item}** đã tăng từ {stat} lên **{newstat}**. **${pricetopay}** đã "
 "bị trừ vào tài khoản của bạn."
 
-#: cogs/profile.py:472
+#: cogs/profile.py:482
 msgid "Gift money!"
 msgstr "Cho tiền!"
 
-#: cogs/profile.py:474
+#: cogs/profile.py:484
 msgid "No cheating!"
 msgstr "Không được gian lận đâu nha!"
 
-#: cogs/profile.py:487
+#: cogs/profile.py:497
 #, python-brace-format
 msgid "Successfully gave **${money}** to {other}."
 msgstr "Đưa **${money}** từ **{other}** thành công."
 
-#: cogs/profile.py:499
+#: cogs/profile.py:509
 msgid "Renames your character."
 msgstr "Thay đổi tên nhân vật của bạn."
 
-#: cogs/profile.py:510
+#: cogs/profile.py:511
+msgid "What shall your character's name be? (Minimum 3 Characters, Maximum 20)"
+msgstr "Tên nhân vật của bạn sẽ là gì? (Tối thiểu 3 ký tự, tối đa 20)"
+
+#: cogs/profile.py:520
 msgid "Timeout expired. Retry!"
 msgstr "Thời gian đã hết. Xin hãy thử lại!"
 
-#: cogs/profile.py:516
+#: cogs/profile.py:526
 msgid "Character name updated."
 msgstr "Tên nhân vật đã được cập nhật."
 
-#: cogs/profile.py:518
+#: cogs/profile.py:528
 msgid "Character names must be at least 3 characters!"
 msgstr "Tên nhân vật không được ít hơn 3 chữ cái!"
 
-#: cogs/profile.py:520
+#: cogs/profile.py:530
 msgid "Character names mustn't exceed 20 characters!"
 msgstr "Tên nhân vật không được vượt quá 20 chữ cái!"
 
-#: cogs/profile.py:526
+#: cogs/profile.py:536
 msgid "Deletes your character."
 msgstr "Xóa nhân vật của bạn."
 
-#: cogs/profile.py:528
+#: cogs/profile.py:538
 msgid "Are you sure? React in the next 30 seconds to confirm."
 msgstr "Bạn chắc không? Hãy nhấn vào emote trong 30 giây để xác nhận."
 
-#: cogs/profile.py:530
+#: cogs/profile.py:540
 msgid "Cancelled deletion of your character."
 msgstr "Hủy xóa nhân vật của bạn."
 
-#: cogs/profile.py:552
+#: cogs/profile.py:562
 msgid "Successfully deleted your character. Sorry to see you go :frowning:"
 msgstr "Xóa nhân vật thành công. Chế sẽ nhớ fam lăm huhu :frowning:"
 
-#: cogs/profile.py:558
+#: cogs/profile.py:568
 msgid "Sets your profile text colour."
 msgstr "Cài đặt màu profile của bạn."
 
-#: cogs/profile.py:561
+#: cogs/profile.py:571
 msgid "Format for colour is `#RRGGBB`."
 msgstr "Công thức cho màu là `#RRGGBB`. [Hex color code]"
 
-#: cogs/profile.py:566
+#: cogs/profile.py:576
 #, python-brace-format
 msgid "Successfully set your profile colour to `#{colour}`."
 msgstr ""
@@ -4424,6 +4447,9 @@ msgid ""
 msgstr ""
 "Cài lại thành công hình nền, class, tên cũ khí và giới hạn thành viên trong "
 "hội của {target}."
+
+#~ msgid "reset"
+#~ msgstr "cài lại"
 
 #~ msgid "Successfully set your profile colour to `{colour}`."
 #~ msgstr "Cài đặt màu profile của bạn thành `{colour}` thành công."

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-07-08 17:50+0000\n"
+"POT-Creation-Date: 2019-07-09 15:54+0000\n"
 "PO-Revision-Date: 2019-05-31 11:32-0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -23,7 +23,7 @@ msgid "Starts a new tournament."
 msgstr "Comienza un nuevo torneo."
 
 #: cogs/tournament.py:41 cogs/battles.py:44 cogs/battles.py:146
-#: cogs/gambling.py:327 cogs/profile.py:476
+#: cogs/gambling.py:327 cogs/profile.py:486
 msgid "You are too poor."
 msgstr "Sos muy pobre."
 
@@ -166,7 +166,7 @@ msgstr ""
 "Parece que no tenés una bolsa de \"Dulce o Truco\" todavía. ¡Andá a "
 "conseguir una!"
 
-#: cogs/halloween.py:142 cogs/crates.py:82 cogs/classes.py:248
+#: cogs/halloween.py:142 cogs/crates.py:82 cogs/classes.py:268
 #: cogs/adventure.py:221
 msgid "You gained an item!"
 msgstr "¡Encontraste un objeto!"
@@ -176,17 +176,17 @@ msgid "You found a new item when opening a trick-or-treat bag!"
 msgstr ""
 "¡Encontraste un nuevo objeto abriendo una de tus bolsas de dulce o truco!"
 
-#: cogs/halloween.py:147 cogs/crates.py:87 cogs/classes.py:253
+#: cogs/halloween.py:147 cogs/crates.py:87 cogs/classes.py:273
 #: cogs/adventure.py:226
 msgid "ID"
 msgstr "ID"
 
-#: cogs/halloween.py:148 cogs/crates.py:88 cogs/classes.py:254
+#: cogs/halloween.py:148 cogs/crates.py:88 cogs/classes.py:274
 #: cogs/adventure.py:227 cogs/trading.py:211 cogs/trading.py:386
 msgid "Name"
 msgstr "Nombre"
 
-#: cogs/halloween.py:149 cogs/crates.py:89 cogs/classes.py:255
+#: cogs/halloween.py:149 cogs/crates.py:89 cogs/classes.py:275
 #: cogs/adventure.py:228 cogs/trading.py:212 cogs/trading.py:387
 msgid "Type"
 msgstr "Tipo"
@@ -465,17 +465,17 @@ msgstr ""
 msgid "You found a new item when opening a crate!"
 msgstr "¡Encontraste algo nuevo al abrir la caja!"
 
-#: cogs/crates.py:90 cogs/classes.py:257 cogs/adventure.py:229
+#: cogs/crates.py:90 cogs/classes.py:277 cogs/adventure.py:229
 #: cogs/trading.py:213 cogs/trading.py:388
 msgid "Damage"
 msgstr "Daño"
 
-#: cogs/crates.py:91 cogs/classes.py:259 cogs/adventure.py:230
+#: cogs/crates.py:91 cogs/classes.py:279 cogs/adventure.py:230
 #: cogs/trading.py:214 cogs/trading.py:389
 msgid "Armor"
 msgstr "Armadura"
 
-#: cogs/crates.py:92 cogs/classes.py:260 cogs/adventure.py:231
+#: cogs/crates.py:92 cogs/classes.py:280 cogs/adventure.py:231
 #: cogs/trading.py:215 cogs/trading.py:390
 msgid "Value"
 msgstr "Valor"
@@ -1626,7 +1626,7 @@ msgstr ""
 "inglés, claro)"
 
 #: cogs/store.py:59 cogs/gambling.py:377 cogs/gambling.py:411 cogs/guild.py:485
-#: cogs/profile.py:444
+#: cogs/profile.py:454
 msgid "You're too poor."
 msgstr "Sos muy pobre."
 
@@ -1840,19 +1840,15 @@ msgstr "Vos no tenés un objeto con el ID \"{itemid}\"."
 msgid "The item with the ID `{itemid}` is now called `{newname}`."
 msgstr "El objeto con el ID \"{itemid}\" ahora se llama \"{newname}\"."
 
-#: cogs/patreon.py:66
+#: cogs/patreon.py:65
 msgid "[Patreon Only] Changes your profile background."
 msgstr "[Únicamente donadores] Cambia la imagen de fondo de tu perfil."
 
-#: cogs/patreon.py:68
-msgid "reset"
-msgstr "reiniciar"
-
-#: cogs/patreon.py:78
+#: cogs/patreon.py:77
 msgid "That is not a valid premade background."
 msgstr "Ese fondo pre-creado no es válido."
 
-#: cogs/patreon.py:82 cogs/patreon.py:112 cogs/guild.py:394
+#: cogs/patreon.py:81 cogs/patreon.py:113 cogs/guild.py:394
 msgid ""
 "I couldn't read that URL. Does it start with `http://` or `https://` and is "
 "either a png or jpeg?"
@@ -1860,11 +1856,11 @@ msgstr ""
 "No puedo reconocer ese enlace. Verifica que empiece con: \"http://\" o "
 "\"https://\" ¿Es un archivo \".PNG/JPG/JPEG\"?"
 
-#: cogs/patreon.py:92
+#: cogs/patreon.py:93
 msgid "The URL is too long."
 msgstr "El link es demasiado largo."
 
-#: cogs/patreon.py:94
+#: cogs/patreon.py:95
 #, python-brace-format
 msgid ""
 "Your new profile picture is now:\n"
@@ -1873,11 +1869,11 @@ msgstr ""
 "Tu nueva foto de perfil ahora es:\n"
 "{url}"
 
-#: cogs/patreon.py:96
+#: cogs/patreon.py:97
 msgid "Your profile picture has been reset."
 msgstr "Tu foto de perfil fue reiniciada."
 
-#: cogs/patreon.py:103
+#: cogs/patreon.py:104
 msgid ""
 "[Patreon Only] Generates a profile background based on an image. Valid "
 "overlays are 1 or 2 for grey and black."
@@ -1885,15 +1881,15 @@ msgstr ""
 "[Únicamente donadores] Genera un fondo de perfil basado en una imagen. Las "
 "superposiciones válidas son 1 o 2 para gris y negro."
 
-#: cogs/patreon.py:106
+#: cogs/patreon.py:107
 msgid "Use either `1` or `2` as the overlay type."
 msgstr "Usá \"1\" o \"2\" como tipo de superposición."
 
-#: cogs/patreon.py:128
+#: cogs/patreon.py:129
 msgid "Error when uploading to Imgur."
 msgstr "Error al subir la imagen a Imgur."
 
-#: cogs/patreon.py:130
+#: cogs/patreon.py:131
 #, python-brace-format
 msgid ""
 "Imgur Link for `{prefix}background`\n"
@@ -1902,26 +1898,26 @@ msgstr ""
 "Enlace de Imgur para `{prefix}background`\n"
 "<{link}>"
 
-#: cogs/patreon.py:141
+#: cogs/patreon.py:142
 msgid "[Patreon Only] Update your guild member limit."
 msgstr ""
 "[Únicamente donadores] Actualiza la cantidad máxima de miembros de tu gremio."
 
-#: cogs/patreon.py:145
+#: cogs/patreon.py:146
 msgid "Your guild member limit is now 100."
 msgstr "El límite de miembros de tu gremio ahora es **100**."
 
-#: cogs/patreon.py:151
+#: cogs/patreon.py:152
 msgid "Update your background to one from the events."
 msgstr "Actualiza tu fondo de perfil en relación a uno del evento."
 
-#: cogs/patreon.py:159
+#: cogs/patreon.py:160
 msgid ""
 "You do not have an eventbackground. They can be acquired on seasonal events."
 msgstr ""
 "No tenés un fondo de evento. Pueden ser conseguidos en eventos de temporada."
 
-#: cogs/patreon.py:167
+#: cogs/patreon.py:168
 #, python-brace-format
 msgid ""
 "The background number {number} is not valid, you only have {total} available."
@@ -1929,7 +1925,7 @@ msgstr ""
 "El fondo número {number} no es válido, ya que sólo tenés {total} "
 "disponible(s)."
 
-#: cogs/patreon.py:173
+#: cogs/patreon.py:174
 msgid "Background updated!"
 msgstr "¡Fondo actualizado!"
 
@@ -1995,11 +1991,25 @@ msgstr ""
 "conseguir algo al azar una vez por día.\n"
 "Vas a tener entre 3+stats mínimos y +6 stats máximos por evolución."
 
-#: cogs/classes.py:73
+#: cogs/classes.py:69
+msgid "Raider"
+msgstr ""
+
+#: cogs/classes.py:71
+msgid ""
+"A strong warrior who gives their live for the fight against Zerekiel.\n"
+"Every evolve boosts the raidstats by additional 10%."
+msgstr ""
+
+#: cogs/classes.py:76
+msgid "Ritualist"
+msgstr ""
+
+#: cogs/classes.py:87
 msgid "Paragon"
 msgstr "Paragon"
 
-#: cogs/classes.py:75
+#: cogs/classes.py:89
 msgid ""
 "Absorb the appreciation of the devs into your soul to power up.\n"
 "+1 damage and defense per evolution added onto your items."
@@ -2008,16 +2018,16 @@ msgstr ""
 "alma para hacerte más poderoso.\n"
 "+1 ATK y DEF son agregados a tus objetos cada evolución."
 
-#: cogs/classes.py:96
+#: cogs/classes.py:114
 #, python-brace-format
 msgid "Your new class is now `{profession}`."
 msgstr "Tu nueva clase ahora es \"{profession}\"."
 
-#: cogs/classes.py:104
+#: cogs/classes.py:122
 msgid "You're too poor for a class change, it costs **$5000**."
 msgstr "Sos muy pobre para cambiar tu clase. Hacer eso cuesta **$5000**."
 
-#: cogs/classes.py:115
+#: cogs/classes.py:133
 #, python-brace-format
 msgid ""
 "Your new class is now `{profession}`. **$5000** was taken off your balance."
@@ -2025,67 +2035,67 @@ msgstr ""
 "Tu nueva clase ahora es \"{profession}\". **$5000** fueron descontados de tu "
 "balance monetario."
 
-#: cogs/classes.py:123
+#: cogs/classes.py:141
 msgid "Views your class."
 msgstr "Observar tu clase."
 
-#: cogs/classes.py:136
+#: cogs/classes.py:154
 #, python-brace-format
 msgid "The image for your class **{class_}** hasn't been added yet."
 msgstr "La imagen para tu clase **{class_}** no fue agregada todavía."
 
-#: cogs/classes.py:144
+#: cogs/classes.py:162
 msgid "Evolve to the next level of your class."
 msgstr "Evoluciona al siguiente rango de tu clase."
 
-#: cogs/classes.py:147
+#: cogs/classes.py:165
 msgid "Your level isn't high enough to evolve."
 msgstr "Tu nivel no es lo suficientemente alto para evolucionar."
 
-#: cogs/classes.py:149
+#: cogs/classes.py:167
 msgid "You haven't got a class yet."
 msgstr "No elegiste clase todavía."
 
-#: cogs/classes.py:157
+#: cogs/classes.py:175
 #, python-brace-format
 msgid "You are now a `{newclass}`."
 msgstr "Ahora sos un **{newclass}**."
 
-#: cogs/classes.py:181
+#: cogs/classes.py:201
 msgid "[Thief Only] Steal money!"
 msgstr "[Únicamente ladrón] ¡Roba dinero!"
 
-#: cogs/classes.py:202
+#: cogs/classes.py:222
 #, python-brace-format
 msgid "You stole **${stolen}** from **{user}**."
 msgstr "Le robaste **${stolen}** a **{user}**. Alto punga."
 
-#: cogs/classes.py:207
+#: cogs/classes.py:227
 msgid "Your attempt to steal money wasn't successful."
 msgstr "No servís para ladri, tomatelá. No robaste nada."
 
-#: cogs/classes.py:214
+#: cogs/classes.py:234
 msgid "[Ranger Only] View your pet or interact with it."
 msgstr ""
 
-#: cogs/classes.py:216
+#: cogs/classes.py:236
 #, python-brace-format
 msgid "{user}'s pet"
 msgstr "Mascota de {user}"
 
-#: cogs/classes.py:217
+#: cogs/classes.py:237
 msgid "Level"
 msgstr "Nivel"
 
-#: cogs/classes.py:235
+#: cogs/classes.py:255
 msgid "[Ranger Only] Let your pet get a weapon for you!"
 msgstr "[Únicamente arquero] ¡Deja que tu mascota consiga un arma para tí!"
 
-#: cogs/classes.py:249
+#: cogs/classes.py:269
 msgid "Your pet found an item!"
 msgstr "¡Tu mascota ha encontrado un objeto!"
 
-#: cogs/classes.py:261
+#: cogs/classes.py:281
 msgid "Your pet needs to recover, wait a day to retry"
 msgstr "Tu mascota necesita descansar. Espera un día para reintentarlo"
 
@@ -4080,23 +4090,32 @@ msgstr "{author} abrazó {user}. ¡Awww!"
 msgid "Creates a new character."
 msgstr "Crea un nuevo personaje."
 
-#: cogs/profile.py:43 cogs/profile.py:501
-msgid "What shall your character's name be? (Minimum 3 Characters, Maximum 20)"
-msgstr "¿Cuál será el nombre de tu personaje? (Mín. 3 / Máx. 20 caracteres)"
+#: cogs/profile.py:44
+msgid ""
+"What shall your character's name be? (Minimum 3 Characters, Maximum 20)\n"
+"\n"
+"**Please note that with the creation of a character, you agree to these "
+"rules:**\n"
+"1) Only up to two characters per individual\n"
+"2) No abusing or benefiting from bugs or exploits\n"
+"3) Be friendly and kind to other players\n"
+"\n"
+"IdleRPG is a global bot, your characters are valid everywhere"
+msgstr ""
 
-#: cogs/profile.py:53
+#: cogs/profile.py:63
 msgid "Timeout expired. Please retry!"
 msgstr "Tiempo agotado. ¡Reintentalo nuevamente!"
 
-#: cogs/profile.py:64
+#: cogs/profile.py:74
 msgid "Starter Sword"
 msgstr "Espada inicial"
 
-#: cogs/profile.py:73
+#: cogs/profile.py:83
 msgid "Starter Shield"
 msgstr "Escudo inicial"
 
-#: cogs/profile.py:83
+#: cogs/profile.py:93
 #, python-brace-format
 msgid ""
 "Successfully added your character **{name}**! Now use `{prefix}profile` to "
@@ -4105,41 +4124,41 @@ msgstr ""
 "Creaste tu personaje **{name}**. ¡Ahora podés usar  `{prefix}profile` para "
 "ver tu perfil!"
 
-#: cogs/profile.py:88
+#: cogs/profile.py:98
 msgid "Character names must be at least 3 characters and up to 20."
 msgstr "El nombre del personaje debe tener entre 3 a 20 dígitos."
 
-#: cogs/profile.py:95
+#: cogs/profile.py:105
 msgid "View someone's or your own profile."
 msgstr "Ver el perfil de alguien, o el tuyo."
 
-#: cogs/profile.py:104
+#: cogs/profile.py:114
 #, python-brace-format
 msgid "**{person}** does not have a character."
 msgstr "**{person}** no tiene un personaje creado."
 
-#: cogs/profile.py:136
+#: cogs/profile.py:146
 msgid "Not Married"
 msgstr "No casado"
 
-#: cogs/profile.py:142
+#: cogs/profile.py:152
 msgid "No Mission"
 msgstr "Sin misión"
 
-#: cogs/profile.py:151
+#: cogs/profile.py:161
 msgid "View someone's profile, not image based."
 msgstr "Ver el perfil de alguien, sin imagen."
 
-#: cogs/profile.py:160
+#: cogs/profile.py:170
 #, python-brace-format
 msgid "**{target}** does not have a character."
 msgstr "**{target}** does not have a character."
 
-#: cogs/profile.py:178
+#: cogs/profile.py:188
 msgid "General"
 msgstr "General"
 
-#: cogs/profile.py:180
+#: cogs/profile.py:190
 #, python-brace-format
 msgid ""
 "**Money**: `${money}`\n"
@@ -4154,11 +4173,11 @@ msgstr ""
 "**JvJ Ganados**: `{pvp}`\n"
 "**Gremio**: `{guild}`"
 
-#: cogs/profile.py:195
+#: cogs/profile.py:205
 msgid "Ranks"
 msgstr "Rango"
 
-#: cogs/profile.py:196
+#: cogs/profile.py:206
 #, python-brace-format
 msgid ""
 "**Richest**: `{rank_money}`\n"
@@ -4167,11 +4186,11 @@ msgstr ""
 "**Riqueza**: `{rank_money}`\n"
 "**Experiencia**: `{rank_xp}`"
 
-#: cogs/profile.py:201
+#: cogs/profile.py:211
 msgid "Equipment"
 msgstr "Equipamiento"
 
-#: cogs/profile.py:202
+#: cogs/profile.py:212
 #, python-brace-format
 msgid ""
 "Sword: {sword}\n"
@@ -4180,33 +4199,33 @@ msgstr ""
 "Espada: {sword}\n"
 "Escudo: {shield}"
 
-#: cogs/profile.py:207
+#: cogs/profile.py:217
 msgid "Mission"
 msgstr "Misión"
 
-#: cogs/profile.py:214
+#: cogs/profile.py:224
 msgid "Shows your luck factor ranging from -1 to 1."
 msgstr ""
 
-#: cogs/profile.py:217
+#: cogs/profile.py:227
 #, python-brace-format
 msgid "Your current luck is `{luck}x` (≈{percent}%) more than usual (usual=0)."
 msgstr ""
 
-#: cogs/profile.py:228
+#: cogs/profile.py:238
 msgid "Shows your balance."
 msgstr "Muestra tu balance económico."
 
-#: cogs/profile.py:230
+#: cogs/profile.py:240
 #, python-brace-format
 msgid "You currently have **${money}**, {author}!"
 msgstr "¡{author}, tu balance monetario es el siguiente: **${money}**!"
 
-#: cogs/profile.py:239
+#: cogs/profile.py:249
 msgid "Shows your current XP and level."
 msgstr "Muestra tu experiencia y nivel actual."
 
-#: cogs/profile.py:243
+#: cogs/profile.py:253
 #, python-brace-format
 msgid ""
 "You currently have **{points} XP**, which means you are on Level **{level}"
@@ -4215,79 +4234,79 @@ msgstr ""
 "Tenés **{points} XP**, lo que significa que estás en el nivel **{level}**. "
 "Para el siguiente nivel necesitas: **{missing}**"
 
-#: cogs/profile.py:253
+#: cogs/profile.py:263
 #, python-brace-format
 msgid "{user}'s inventory includes"
 msgstr "El inventario de {user} es el siguiente"
 
-#: cogs/profile.py:258
+#: cogs/profile.py:268
 msgid "(**Equipped**)"
 msgstr "(**EQUIPADO**)"
 
-#: cogs/profile.py:262
+#: cogs/profile.py:272
 #, python-brace-format
 msgid "Damage: `{damage}`"
 msgstr "Daño: `{damage}`"
 
-#: cogs/profile.py:264
+#: cogs/profile.py:274
 #, python-brace-format
 msgid "Armor: `{armor}`"
 msgstr "Defensa: `{armor}`"
 
-#: cogs/profile.py:269
+#: cogs/profile.py:279
 #, python-brace-format
 msgid "ID: `{id}`, Type: `{type_}` with {statstr}. Value is **${value}**"
 msgstr "ID: `{id}`, Tipo: `{type_}` con {statstr}. Valor: **${value}**"
 
-#: cogs/profile.py:278
+#: cogs/profile.py:288
 #, python-brace-format
 msgid "Page {page} of {maxpages}"
 msgstr "Página {page} de {maxpages}"
 
-#: cogs/profile.py:288
+#: cogs/profile.py:298
 msgid "Shows your current inventory."
 msgstr "Muestra tu inventario actual."
 
-#: cogs/profile.py:295
+#: cogs/profile.py:305
 msgid "Your inventory is empty."
 msgstr "Tu inventario está vacío."
 
-#: cogs/profile.py:308
+#: cogs/profile.py:318
 msgid "Equips an item of yours by ID."
 msgstr "Equipa un objeto tuyo por medio de la ID."
 
-#: cogs/profile.py:317 cogs/profile.py:414
+#: cogs/profile.py:327 cogs/profile.py:424
 #, python-brace-format
 msgid "You don't own an item with the ID `{itemid}`."
 msgstr "Vos no tenés un objeto con la ID `{itemid}`."
 
-#: cogs/profile.py:337
+#: cogs/profile.py:347
 #, python-brace-format
 msgid "Successfully equipped item `{itemid}` and put off item `{olditem}`."
 msgstr ""
 "Te equipaste exitosamente el objeto `{itemid}`. Tu objeto `{olditem}` "
 "anterior, fue trasladado a tu inventario."
 
-#: cogs/profile.py:342
+#: cogs/profile.py:352
 #, python-brace-format
 msgid "Successfully equipped item `{itemid}`."
 msgstr "Te equipaste exitosamente el objeto `{itemid}`."
 
-#: cogs/profile.py:350
+#: cogs/profile.py:360
 msgid "Merges two items to a better one. Second one is consumed."
 msgstr ""
 "Fusiona dos objetos para crear uno nuevo. El primero es el objeto a mejorar, "
 "el segundo es el objeto que se destruirá."
 
-#: cogs/profile.py:353
+#: cogs/profile.py:363
 msgid "Good luck with that."
 msgstr "Buena suerte con eso."
 
-#: cogs/profile.py:367
+#: cogs/profile.py:377
 msgid "You don't own both of these items."
 msgstr "No tenés ninguno de estos objetos."
 
-#: cogs/profile.py:380
+#: cogs/profile.py:390
 #, python-brace-format
 msgid ""
 "The second item's stat must be in the range of `{min_}` to `{max_}` to "
@@ -4296,11 +4315,11 @@ msgstr ""
 "El segundo objeto tiene que estar en un rango de `{min_}` a `{max_}` para "
 "ser fusionado con `{stat}`."
 
-#: cogs/profile.py:386
+#: cogs/profile.py:396
 msgid "This item is already on the maximum upgrade level."
 msgstr "Este objeto ya ha alcanzado el nivel máximo de mejora."
 
-#: cogs/profile.py:395
+#: cogs/profile.py:405
 #, python-brace-format
 msgid ""
 "The {stat} of your **{item}** is now **{newstat}**. The other item was "
@@ -4309,15 +4328,15 @@ msgstr ""
 "La estadística {stat} de tu **{item}** ahora es **{newstat}**. El otro "
 "objeto fue destruído."
 
-#: cogs/profile.py:404
+#: cogs/profile.py:414
 msgid "Upgrades an item's stat by 1."
 msgstr "Mejora el equipamiento sumándole un punto (1+)."
 
-#: cogs/profile.py:426
+#: cogs/profile.py:436
 msgid "Your weapon already reached the maximum upgrade level."
 msgstr "Tu arma ya alcanzó el nivel máximo de mejora."
 
-#: cogs/profile.py:431
+#: cogs/profile.py:441
 #, python-brace-format
 msgid ""
 "You are too poor to upgrade this item. The upgrade costs **${pricetopay}**, "
@@ -4326,7 +4345,7 @@ msgstr ""
 "Sos muy pobre para mejorar este ítem. La mejora cuesta **${pricetopay}**, "
 "pero vos sólo tenés **${money}**."
 
-#: cogs/profile.py:437
+#: cogs/profile.py:447
 #, python-brace-format
 msgid ""
 "Are you sure you want to upgrade this item: {item}? It will cost **"
@@ -4335,11 +4354,11 @@ msgstr ""
 "¿Estás seguro de que querés mejorar este objeto: {item}? Te va a costar **"
 "${pricetopay}**."
 
-#: cogs/profile.py:441
+#: cogs/profile.py:451
 msgid "Weapon upgrade cancelled."
 msgstr "Mejora de arma cancelada."
 
-#: cogs/profile.py:457
+#: cogs/profile.py:467
 #, python-brace-format
 msgid ""
 "The {stat} of your **{item}** is now **{newstat}**. **${pricetopay}** has "
@@ -4348,65 +4367,69 @@ msgstr ""
 "El {stat} de tu **{item}** ahora es **{newstat}**. **${pricetopay}** fue "
 "descontado de tu balance monetario."
 
-#: cogs/profile.py:472
+#: cogs/profile.py:482
 msgid "Gift money!"
 msgstr "¡Regala dinero!"
 
-#: cogs/profile.py:474
+#: cogs/profile.py:484
 msgid "No cheating!"
 msgstr "¡Sin trucos!"
 
-#: cogs/profile.py:487
+#: cogs/profile.py:497
 #, python-brace-format
 msgid "Successfully gave **${money}** to {other}."
 msgstr "Se le otorgaron exitosamente **${money}** a {other}."
 
-#: cogs/profile.py:499
+#: cogs/profile.py:509
 msgid "Renames your character."
 msgstr "Re-nombra tu personaje."
 
-#: cogs/profile.py:510
+#: cogs/profile.py:511
+msgid "What shall your character's name be? (Minimum 3 Characters, Maximum 20)"
+msgstr "¿Cuál será el nombre de tu personaje? (Mín. 3 / Máx. 20 caracteres)"
+
+#: cogs/profile.py:520
 msgid "Timeout expired. Retry!"
 msgstr "Tiempo agotado. ¡Reintentalo nuevamente!"
 
-#: cogs/profile.py:516
+#: cogs/profile.py:526
 msgid "Character name updated."
 msgstr "Nombre del personaje actualizado."
 
-#: cogs/profile.py:518
+#: cogs/profile.py:528
 msgid "Character names must be at least 3 characters!"
 msgstr "¡El nombre del personaje debe tener al menos 3 caracteres!"
 
-#: cogs/profile.py:520
+#: cogs/profile.py:530
 msgid "Character names mustn't exceed 20 characters!"
 msgstr "¡El nombre del personaje no debe exceder los 20 caracteres!"
 
-#: cogs/profile.py:526
+#: cogs/profile.py:536
 msgid "Deletes your character."
 msgstr "Borra tu personaje."
 
-#: cogs/profile.py:528
+#: cogs/profile.py:538
 msgid "Are you sure? React in the next 30 seconds to confirm."
 msgstr "¿Estás seguro? Reaccioná en los próximos 30 segundos para confirmar."
 
-#: cogs/profile.py:530
+#: cogs/profile.py:540
 msgid "Cancelled deletion of your character."
 msgstr "La eliminación de tu personaje fue cancelada."
 
-#: cogs/profile.py:552
+#: cogs/profile.py:562
 msgid "Successfully deleted your character. Sorry to see you go :frowning:"
 msgstr ""
 "Tu personaje fue eliminado correctamente. Una lástima que te vayas :frowning:"
 
-#: cogs/profile.py:558
+#: cogs/profile.py:568
 msgid "Sets your profile text colour."
 msgstr "Establece un color en tu perfil."
 
-#: cogs/profile.py:561
+#: cogs/profile.py:571
 msgid "Format for colour is `#RRGGBB`."
 msgstr "El formato correcto de color es: `#RRGGBB`."
 
-#: cogs/profile.py:566
+#: cogs/profile.py:576
 #, python-brace-format
 msgid "Successfully set your profile colour to `#{colour}`."
 msgstr ""
@@ -4484,6 +4507,9 @@ msgid ""
 msgstr ""
 "Se reinició exitosamente el fondo de perfil, clase, objetos re-nombrados, y "
 "límite de miembros de gremio de {target}."
+
+#~ msgid "reset"
+#~ msgstr "reiniciar"
 
 #~ msgid "Successfully set your profile colour to `{colour}`."
 #~ msgstr "Se cambió el color de tu perfil exitosamente a `{colour}`."
