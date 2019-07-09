@@ -79,9 +79,10 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
 """,
             file=discord.File("assets/other/dragon.jpg"),
         )
-        await self.bot.get_channel(506_167_065_464_406_041).send(
-            "@everyone Zerekiel spawned! 15 Minutes until he is vulnerable...\nUse https://raid.travitia.xyz/ to join the raid!"
-        )
+        if not self.bot.config.is_beta:
+            await self.bot.get_channel(506_167_065_464_406_041).send(
+                "@everyone Zerekiel spawned! 15 Minutes until he is vulnerable...\nUse https://raid.travitia.xyz/ to join the raid!"
+            )
         await asyncio.sleep(300)
         await ctx.send("**The dragon will be vulnerable in 10 minutes**")
         await asyncio.sleep(300)
