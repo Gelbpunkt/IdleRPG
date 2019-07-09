@@ -65,8 +65,22 @@ class Classes(commands.Cog):
                 ).format(prefix=ctx.prefix),
                 colour=self.bot.config.primary_colour,
             ),
+            discord.Embed(
+                title=_("Raider"),
+                description=_(
+                    "A strong warrior who gives their live for the fight against Zerekiel.\nEvery evolve boosts the raidstats by additional 10%."
+                ),
+                colour=self.bot.config.primary_colour,
+            ),
+            discord.Embed(
+                title=_("Ritualist"),
+                description=(
+                    "A seer, a sacrificer and a follower.\nThe Ritualist devotes their life to the god they follow. For every evolution, their sacrifices are 5% more effective."
+                ),
+                colour=self.bot.config.primary_colour,
+            ),
         ]
-        choices = ["Warrior", "Thief", "Mage", "Ranger"]
+        choices = ["Warrior", "Thief", "Mage", "Ranger", "Raider", "Ritualist"]
         if await user_is_patron(self.bot, ctx.author):
             embeds.append(
                 discord.Embed(
@@ -84,8 +98,12 @@ class Classes(commands.Cog):
         profession_ = profession
         if profession == "Paragon":
             profession_ = "Novice"
-        if profession == "Ranger":
+        elif profession == "Ranger":
             profession_ = "Caretaker"
+        elif profession == "Raider":
+            profession = "Swordsman"
+        elif profession == "Ritualist":
+            profession = "Priest"
         if ctx.character_data["class"] == "No Class":
             await self.bot.pool.execute(
                 'UPDATE profile SET "class"=$1 WHERE "user"=$2;',
@@ -169,6 +187,8 @@ Thieves  ->  Rogues    ->  Chunin      -> Renegades      ->  Assassins
 Mage     ->  Wizards   ->  Pyromancers -> Elementalists  ->  Dark Caster
 Novice   ->  Proficient->  Artisan     -> Master         ->  Paragon
 Caretaker->  Trainer   ->  Bowman      -> Hunter         ->  Ranger
+Swordsman->  Fighter   ->  Hero        -> Dragonslayer   ->  Raider
+Priest   ->  Mysticist ->  Summoner    -> Seer           ->  Ritualist
 ```"""
         )
 

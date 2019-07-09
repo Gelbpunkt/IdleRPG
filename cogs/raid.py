@@ -106,12 +106,12 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
             raid_raw = await r.json()
         async with self.bot.pool.acquire() as conn:
             dmgs = await conn.fetch(
-                'SELECT p."user", ai.damage, p.atkmultiply FROM profile p JOIN allitems ai ON (p.user=ai.owner) JOIN inventory i ON (ai.id=i.item) WHERE i.equipped IS TRUE AND p.user=ANY($2) AND type=$1;',
+                'SELECT p."user", p.class, ai.damage, p.atkmultiply FROM profile p JOIN allitems ai ON (p.user=ai.owner) JOIN inventory i ON (ai.id=i.item) WHERE i.equipped IS TRUE AND p.user=ANY($2) AND type=$1;',
                 "Sword",
                 raid_raw,
             )
             deffs = await conn.fetch(
-                'SELECT p."user", ai.armor, p.defmultiply FROM profile p JOIN allitems ai ON (p.user=ai.owner) JOIN inventory i ON (ai.id=i.item) WHERE i.equipped IS TRUE AND p.user=ANY($2) AND type=$1;',
+                'SELECT p."user", p.class, ai.armor, p.defmultiply FROM profile p JOIN allitems ai ON (p.user=ai.owner) JOIN inventory i ON (ai.id=i.item) WHERE i.equipped IS TRUE AND p.user=ANY($2) AND type=$1;',
                 "Shield",
                 raid_raw,
             )
@@ -121,9 +121,21 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
             if not u:
                 continue
             j = next(filter(lambda x: x["user"] == i, dmgs), None)
-            dmg = j["damage"] * j["atkmultiply"] if j else 0
+            if self.bot.get_class_line(j["class"]) == "Raider":
+                atkmultiply = j["atkmultiply"] + 0.1 * self.get.get_class_grade(
+                    j["class"]
+                )
+            else:
+                atkmultiply = j["atkmultiply"]
+            dmg = j["damage"] * atkmultiply if j else 0
             j = next(filter(lambda x: x["user"] == i, deffs), None)
-            deff = j["armor"] * j["defmultiply"] if j else 0
+            if self.bot.get_class_line(j["class"]) == "Raider":
+                defmultiply = j["defmultiply"] + 0.1 * self.get.get_class_grade(
+                    j["class"]
+                )
+            else:
+                defmultiply = j["defmultiply"]
+            deff = j["armor"] * defmultiply if j else 0
             dmg, deff = await self.bot.generate_stats(i, dmg, deff)
             raid[u] = {"hp": 250, "armor": deff, "damage": dmg}
 
@@ -346,9 +358,21 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
             if not u:
                 continue
             j = next(filter(lambda x: x["user"] == i, dmgs), None)
-            dmg = j["damage"] * j["atkmultiply"] if j else 0
+            if self.bot.get_class_line(j["class"]) == "Raider":
+                atkmultiply = j["atkmultiply"] + 0.1 * self.get.get_class_grade(
+                    j["class"]
+                )
+            else:
+                atkmultiply = j["atkmultiply"]
+            dmg = j["damage"] * atkmultiply if j else 0
             j = next(filter(lambda x: x["user"] == i, deffs), None)
-            deff = j["armor"] * j["defmultiply"] if j else 0
+            if self.bot.get_class_line(j["class"]) == "Raider":
+                defmultiply = j["defmultiply"] + 0.1 * self.get.get_class_grade(
+                    j["class"]
+                )
+            else:
+                defmultiply = j["defmultiply"]
+            deff = j["armor"] * defmultiply if j else 0
             dmg, deff = await self.bot.generate_stats(i, dmg, deff)
             raid[u] = {"hp": 100, "armor": deff, "damage": dmg}
 

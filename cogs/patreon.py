@@ -22,7 +22,7 @@ import discord
 from asyncpg.exceptions import StringDataRightTruncationError
 from discord.ext import commands
 
-from utils.checks import has_char, is_guild_leader, is_patron
+from utils.checks import has_char, is_guild_leader, is_patron, user_is_patron
 
 
 class Patreon(commands.Cog):
@@ -58,14 +58,13 @@ class Patreon(commands.Cog):
             )
         )
 
-    @is_patron()
     @has_char()
     @commands.command()
     @locale_doc
     async def background(self, ctx, url: str):
         _("""[Patreon Only] Changes your profile background.""")
         premade = [f"{self.bot.BASE_URL}/profile/premade{i}.png" for i in range(1, 14)]
-        if url == _("reset"):
+        if url == "reset":
             url = 0
         elif url.startswith("http") and (
             url.endswith(".png") or url.endswith(".jpg") or url.endswith(".jpeg")
@@ -82,6 +81,8 @@ class Patreon(commands.Cog):
                     "I couldn't read that URL. Does it start with `http://` or `https://` and is either a png or jpeg?"
                 )
             )
+        if url != 0 and not await user_is_patron(self.bot, ctx.author):
+            raise commands.CheckFailure("You are not a donator.")
         try:
             await self.bot.pool.execute(
                 'UPDATE profile SET "background"=$1 WHERE "user"=$2;',

@@ -311,6 +311,10 @@ class Bot(commands.AutoShardedBot):
             return "Ranger"
         elif class_ in ["Novice", "Proficient", "Artisan", "Master", "Paragon"]:
             return "Paragon"
+        elif class_ in ["Swordsman", "Fighter", "Hero", "Dragonslayer", "Raider"]:
+            return "Raider"
+        elif class_ in ["Priest", "Mysticist", "Summoner", "Seer", "Ritualist"]:
+            return "Ritualist"
         else:
             return "None"
 
@@ -321,6 +325,8 @@ class Bot(commands.AutoShardedBot):
             "Warrior": ["Swordsman", "Knight", "Warlord", "Berserker"],
             "Paragon": ["Proficient", "Artisan", "Master", "Paragon"],
             "Ranger": ["Trainer", "Bowman", "Hunter", "Ranger"],
+            "Raider": ["Swordsman", "Fighter", "Hero", "Dragonslayer", "Raider"],
+            "Ritualist": ["Priest", "Mysticist", "Summoner", "Seer", "Ritualist"],
         }
 
     def get_class_grade(self, class_):
@@ -346,6 +352,14 @@ class Bot(commands.AutoShardedBot):
             ) + 1
         elif class_ in ["Novice", "Proficient", "Artisan", "Master", "Paragon"]:
             return ["Novice", "Proficient", "Artisan", "Master", "Paragon"].index(
+                class_
+            ) + 1
+        elif class_ in ["Swordsman", "Fighter", "Hero", "Dragonslayer", "Raider"]:
+            return ["Swordsman", "Fighter", "Hero", "Dragonslayer", "Raider"].index(
+                class_
+            ) + 1
+        elif class_ in ["Priest", "Mysticist", "Summoner", "Seer", "Ritualist"]:
+            return ["Priest", "Mysticist", "Summoner", "Seer", "Ritualist"].index(
                 class_
             ) + 1
         else:
