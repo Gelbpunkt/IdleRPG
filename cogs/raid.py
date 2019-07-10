@@ -83,19 +83,22 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
             await self.bot.get_channel(506_167_065_464_406_041).send(
                 "@everyone Zerekiel spawned! 15 Minutes until he is vulnerable...\nUse https://raid.travitia.xyz/ to join the raid!"
             )
-        await asyncio.sleep(300)
-        await ctx.send("**The dragon will be vulnerable in 10 minutes**")
-        await asyncio.sleep(300)
-        await ctx.send("**The dragon will be vulnerable in 5 minutes**")
-        await asyncio.sleep(180)
-        await ctx.send("**The dragon will be vulnerable in 2 minutes**")
-        await asyncio.sleep(60)
-        await ctx.send("**The dragon will be vulnerable in 1 minute**")
-        await asyncio.sleep(30)
-        await ctx.send("**The dragon will be vulnerable in 30 seconds**")
-        await asyncio.sleep(20)
-        await ctx.send("**The dragon will be vulnerable in 10 seconds**")
-        await asyncio.sleep(10)
+        if not self.bot.config.is_beta:
+            await asyncio.sleep(300)
+            await ctx.send("**The dragon will be vulnerable in 10 minutes**")
+            await asyncio.sleep(300)
+            await ctx.send("**The dragon will be vulnerable in 5 minutes**")
+            await asyncio.sleep(180)
+            await ctx.send("**The dragon will be vulnerable in 2 minutes**")
+            await asyncio.sleep(60)
+            await ctx.send("**The dragon will be vulnerable in 1 minute**")
+            await asyncio.sleep(30)
+            await ctx.send("**The dragon will be vulnerable in 30 seconds**")
+            await asyncio.sleep(20)
+            await ctx.send("**The dragon will be vulnerable in 10 seconds**")
+            await asyncio.sleep(10)
+        else:
+            await asyncio.sleep(60)
         await ctx.send(
             "**The dragon is vulnerable! Fetching participant data... Hang on!**"
         )
@@ -122,16 +125,20 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
             if not u:
                 continue
             j = next(filter(lambda x: x["user"] == i, dmgs), None)
+            if j is None:
+                continue
             if self.bot.get_class_line(j["class"]) == "Raider":
-                atkmultiply = j["atkmultiply"] + 0.1 * self.get.get_class_grade(
+                atkmultiply = j["atkmultiply"] + Decimal("0.1") * self.bot.get_class_grade(
                     j["class"]
                 )
             else:
                 atkmultiply = j["atkmultiply"]
             dmg = j["damage"] * atkmultiply if j else 0
             j = next(filter(lambda x: x["user"] == i, deffs), None)
+            if j is None:
+                continue
             if self.bot.get_class_line(j["class"]) == "Raider":
-                defmultiply = j["defmultiply"] + 0.1 * self.get.get_class_grade(
+                efmultiply = j["defmultiply"] + Decimal("0.1") * self.bot.get_class_grade(
                     j["class"]
                 )
             else:
@@ -359,16 +366,20 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
             if not u:
                 continue
             j = next(filter(lambda x: x["user"] == i, dmgs), None)
+            if j is None:
+                continue
             if self.bot.get_class_line(j["class"]) == "Raider":
-                atkmultiply = j["atkmultiply"] + 0.1 * self.get.get_class_grade(
+                atkmultiply = j["atkmultiply"] + Decimal("0.1") * self.bot.get_class_grade(
                     j["class"]
                 )
             else:
                 atkmultiply = j["atkmultiply"]
             dmg = j["damage"] * atkmultiply if j else 0
             j = next(filter(lambda x: x["user"] == i, deffs), None)
+            if j is None:
+                continue
             if self.bot.get_class_line(j["class"]) == "Raider":
-                defmultiply = j["defmultiply"] + 0.1 * self.get.get_class_grade(
+                defmultiply = j["defmultiply"] + Decimal("0.1") * self.bot.get_class_grade(
                     j["class"]
                 )
             else:

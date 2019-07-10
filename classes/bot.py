@@ -83,7 +83,11 @@ class Bot(commands.AutoShardedBot):
         self.session = aiohttp.ClientSession(loop=self.loop, trust_env=True)
         self.trusted_session = aiohttp.ClientSession(loop=self.loop)
         self.redis = await aioredis.create_pool(
-            "redis://localhost", minsize=5, maxsize=10, loop=self.loop
+            "redis://localhost",
+            minsize=5,
+            maxsize=10,
+            loop=self.loop,
+            db=1 if self.config.is_beta else 0,
         )
         self.pool = await asyncpg.create_pool(**self.config.database, max_size=20)
 
@@ -325,8 +329,8 @@ class Bot(commands.AutoShardedBot):
             "Warrior": ["Swordsman", "Knight", "Warlord", "Berserker"],
             "Paragon": ["Proficient", "Artisan", "Master", "Paragon"],
             "Ranger": ["Trainer", "Bowman", "Hunter", "Ranger"],
-            "Raider": ["Swordsman", "Fighter", "Hero", "Dragonslayer", "Raider"],
-            "Ritualist": ["Priest", "Mysticist", "Summoner", "Seer", "Ritualist"],
+            "Raider": ["Fighter", "Hero", "Dragonslayer", "Raider"],
+            "Ritualist": ["Mysticist", "Summoner", "Seer", "Ritualist"],
         }
 
     def get_class_grade(self, class_):
