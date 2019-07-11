@@ -94,7 +94,7 @@ class Christmas(commands.Cog):
                 reward_text = f"{reward_text}\n- {text}"
             if reward["crates"]:
                 await conn.execute(
-                    'UPDATE profile SET crates=crates+$1 WHERE "user"=$2;',
+                    'UPDATE profile SET crates_common=crates_common+$1 WHERE "user"=$2;',
                     reward["crates"],
                     ctx.author.id,
                 )

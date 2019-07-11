@@ -87,7 +87,7 @@ You have **{eggs}** <:easteregg:566251086986608650>."""
 
         if reward[1] == "crates":
             await self.bot.pool.execute(
-                'UPDATE profile SET "crates"="crates"+$1, "eastereggs"="eastereggs"-$2 WHERE "user"=$3;',
+                'UPDATE profile SET "crates_common"="crates_common"+$1, "eastereggs"="eastereggs"-$2 WHERE "user"=$3;',
                 reward[2],
                 reward[0],
                 ctx.author.id,

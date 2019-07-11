@@ -320,16 +320,43 @@ Use the reactions attack, defend or recover
                     if int(rpgtools.xptolevel(ctx.character_data["xp"])) < new_level:
                         reward = random.choice(
                             [
-                                (
-                                    "crates",
-                                    new_level,
-                                    _("**{amount}** crates").format(amount=new_level),
-                                ),
+                                ["crates"],
                                 ("money", new_level * 1000, f"**${new_level * 1000}**"),
                                 ("item", round(new_level * 1.5), _("a special Item")),
                             ]
                         )
                         if reward[0] != "item":
+                            if reward[0] == "crates":
+                                if new_level < 6:
+                                    reward[0] = "crates_common"
+                                    reward.append(new_level)
+                                    reward.append(
+                                        f"**{new_level}** <:CrateCommon:598094865666015232>"
+                                    )
+                                elif new_level < 10:
+                                    reward[0] = "crates_uncommon"
+                                    reward.append(round(new_level / 2))
+                                    reward.append(
+                                        f"**{round(new_level / 2)}** <:CrateUncommon:598094865397579797>"
+                                    )
+                                elif new_level < 15:
+                                    reward[0] = "crates_rare"
+                                    reward.append(2)
+                                    reward.append(
+                                        "**2** <:CrateRare:598094865485791233>"
+                                    )
+                                elif new_level < 20:
+                                    reward[0] = "crates_rare"
+                                    reward.append(3)
+                                    reward.append(
+                                        f"**3** <:CrateRare:598094865485791233>"
+                                    )
+                                else:
+                                    reward[0] = "crates_magic"
+                                    reward.append(1)
+                                    reward.append(
+                                        "**1** <:CrateMagic:598094865611358209>"
+                                    )
                             await self.bot.pool.execute(
                                 f'UPDATE profile SET {reward[0]}={reward[0]}+$1 WHERE "user"=$2;',
                                 reward[1],
