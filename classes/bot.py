@@ -407,6 +407,14 @@ From: {(self.get_user(from_) or 'Unknown User') if from_ != 0 else 'Guild Bank'}
 To:   {(self.get_user(to) or 'Unknown User') if to != 0 else 'Guild Bank'}
 Subject: {subject}
 Amount: {data}"""
+        elif isinstance(data, list):
+            description = f"""\
+{ctx.channel} in {ctx.guild or 'DMs'}
+From: {(self.get_user(from_) or 'Unknown User')}
+To:   {(self.get_user(to) or 'Unknown User')}
+Subject: {subject}
+Amount: {data[0]}
+Rarity: {data[1]}"""
         else:
             description = f"""\
 {ctx.channel} in {ctx.guild or 'DMs'}

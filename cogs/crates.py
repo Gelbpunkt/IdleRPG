@@ -17,6 +17,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
 import random
 from collections import namedtuple
+from typing import Optional
 
 import discord
 from discord.ext import commands
@@ -59,7 +60,7 @@ class Crates(commands.Cog):
                 uncommon=ctx.character_data["crates_uncommon"],
                 rare=ctx.character_data["crates_rare"],
                 magic=ctx.character_data["crates_magic"],
-                legendary=ctx.character_data["legendary"],
+                legendary=ctx.character_data["crates_legendary"],
                 author=ctx.author.mention,
                 prefix=ctx.prefix,
             )
@@ -148,29 +149,39 @@ class Crates(commands.Cog):
     @commands.command()
     @locale_doc
     async def tradecrate(
-        self, ctx, other: MemberWithCharacter, amount: IntGreaterThan(0) = 1
+        self,
+        ctx,
+        other: MemberWithCharacter,
+        amount: Optional[IntGreaterThan(0)] = 1,
+        rarity: str.lower = "common",
     ):
         _("""Trades crates to a user.""")
         if other == ctx.author:
             return await ctx.send(_("Very funny..."))
-        if ctx.character_data["crates"] < amount:
-            return await ctx.send(_("You don't have any crates."))
+        if rarity not in ["common", "uncommon", "rare", "magic", "legendary"]:
+            return await ctx.send(
+                _("{rarity} is not a valid rarity.").format(rarity=rarity)
+            )
+        if ctx.character_data[f"crates_{rarity}"] < amount:
+            return await ctx.send(_("You don't have any crates of this rarity."))
         async with self.bot.pool.acquire() as conn:
             await conn.execute(
-                'UPDATE profile SET crates=crates-$1 WHERE "user"=$2;',
+                f'UPDATE profile SET "crates_{rarity}"="crates_{rarity}"-$1 WHERE "user"=$2;',
                 amount,
                 ctx.author.id,
             )
             await conn.execute(
-                'UPDATE profile SET crates=crates+$1 WHERE "user"=$2;', amount, other.id
+                f'UPDATE profile SET "crates_{rarity}"="crates_{rarity}"+$1 WHERE "user"=$2;',
+                amount,
+                other.id,
             )
         await ctx.send(
-            _("Successfully gave {amount} crate(s) to {other}.").format(
-                amount=amount, other=other.mention
+            _("Successfully gave {amount} {rarity} {crate(s) to {other}.").format(
+                amount=amount, other=other.mention, rarity=rarity
             )
         )
         await self.bot.log_transaction(
-            ctx, from_=ctx.author, to=other, subject="crates", data=amount
+            ctx, from_=ctx.author, to=other, subject="crates", data=[amount, rarity]
         )
 
 
