@@ -201,10 +201,6 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
             await ctx.channel.set_permissions(
                 ctx.guild.default_role, overwrite=self.allow_sending
             )
-            weapon_stat = random.randint(42, 50)
-            weapon_type = random.choice(["Sword", "Shield"])
-            name_mid = random.choice(["Ferocious", "Bloody", "Glimmering"])
-            weapon_name = f"Zerekiel's {name_mid} {weapon_type}"
             highest_bid = [
                 ctx.guild.get_member(356_091_260_429_402_122),
                 0,
@@ -225,7 +221,7 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
             for u in list(raid.keys()):
                 page.add_line(u.mention)
             page.add_line(
-                f"The raid killed the boss!\nHe dropped a weapon/shield of unknown stat in the range of 42 to 50!\nThe highest bid for it wins <:roosip:505447694408482846>\nSimply type how much you bid!"
+                f"The raid killed the boss!\nHe dropped a <:CrateLegendary:598094865678598144> Legendary Crate!\nThe highest bid for it wins <:roosip:505447694408482846>\nSimply type how much you bid!"
             )
             for p in page.pages:
                 await ctx.send(p[4:-4])
@@ -243,45 +239,18 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
                     highest_bid = [msg.author, bid]
                     await ctx.send(f"{msg.author.mention} bids **${msg.content}**!")
             msg = await ctx.send(
-                f"Auction done! Winner is {highest_bid[0].mention} with **${highest_bid[1]}**!\nGiving weapon..."
+                f"Auction done! Winner is {highest_bid[0].mention} with **${highest_bid[1]}**!\nGiving Legendary Crate..."
             )
             money = await self.bot.pool.fetchval(
                 'SELECT money FROM profile WHERE "user"=$1;', highest_bid[0].id
             )
             if money >= highest_bid[1]:
-                if weapon_type == "Sword":
-                    id = await self.bot.pool.fetchval(
-                        'INSERT INTO allitems ("owner", "name", "value", "type", "damage", "armor") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id";',
-                        highest_bid[0].id,
-                        weapon_name,
-                        1,
-                        weapon_type,
-                        weapon_stat,
-                        0,
-                    )
-                else:
-                    id = await self.bot.pool.fetchval(
-                        'INSERT INTO allitems ("owner", "name", "value", "type", "damage", "armor") VALUES ($1, $2, $3, $4, $5, $6) RETURNING "id";',
-                        highest_bid[0].id,
-                        weapon_name,
-                        1,
-                        weapon_type,
-                        0,
-                        weapon_stat,
-                    )
                 await self.bot.pool.execute(
-                    'INSERT INTO inventory ("item", "equipped") VALUES ($1, $2);',
-                    id,
-                    False,
-                )
-                await self.bot.pool.execute(
-                    'UPDATE profile SET money=money-$1 WHERE "user"=$2;',
+                    'UPDATE profile SET "money"="money"-$1, "crates_legendary"="crates_legendary"+1 WHERE "user"=$2;',
                     highest_bid[1],
                     highest_bid[0].id,
                 )
-                await msg.edit(
-                    content=f"{msg.content} Done! The weapon was {weapon_name} with a stat of {weapon_stat}!"
-                )
+                await msg.edit(content=f"{msg.content} Done!")
             else:
                 await ctx.send(
                     f"{highest_bid[0].mention} spent the money in the meantime... Meh! Noone gets it then, pah!\nThis incident has been reported and they will get banned if it happens again. Cheers!"
