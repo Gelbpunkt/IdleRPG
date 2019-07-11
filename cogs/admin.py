@@ -113,16 +113,22 @@ class Admin(commands.Cog):
     @is_admin()
     @commands.command(aliases=["acrate"], hidden=True)
     @locale_doc
-    async def admincrate(self, ctx, target: UserWithCharacter, amount: int = 1):
+    async def admincrate(
+        self, ctx, rarity: str.lower, amount: int, target: UserWithCharacter
+    ):
         _("""[Bot Admin only] Gives/removes crates to a user without loss.""")
+        if rarity not in ["common", "uncommon", "rare", "magic", "legendary"]:
+            return await ctx.send(
+                _("{rarity} is not a valid rarity.").format(rarity=rarity)
+            )
         await self.bot.pool.execute(
-            'UPDATE profile SET "crates"="crates"+$1 WHERE "user"=$2;',
+            f'UPDATE profile SET "crates_{rarity}"="crates_{rarity}"+$1 WHERE "user"=$2;',
             amount,
             target.id,
         )
         await ctx.send(
-            _("Successfully gave **{amount}** crates to **{target}**.").format(
-                amount=amount, target=target
+            _("Successfully gave **{amount}** {rarity} crates to **{target}**.").format(
+                amount=amount, target=target, rarity=rarity
             )
         )
         await self.bot.http.send_message(
