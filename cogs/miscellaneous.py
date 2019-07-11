@@ -17,6 +17,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
 import asyncio
 import datetime
+import os
 import platform
 import random
 from collections import defaultdict, deque
@@ -188,6 +189,7 @@ RAM Usage: **{ram}%**
 Python Version **{python}** <:python:445247273065250817>
 discord.py Version **{dpy}**
 Operating System: **{osname} {osversion}**
+Kernel Version: **{kernel}**
 PostgreSQL Version **{pg_version}**"""
             ).format(
                 cpu=psutil.cpu_percent(),
@@ -196,6 +198,7 @@ PostgreSQL Version **{pg_version}**"""
                 dpy=pkg.get_distribution("discord.py").version,
                 osname=sysinfo[0].title(),
                 osversion=sysinfo[1],
+                kernel=os.uname().release,
                 pg_version=pg_version,
             ),
             inline=False,
