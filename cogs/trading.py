@@ -21,6 +21,7 @@ from discord.ext import commands
 from classes.converters import IntFromTo, IntGreaterThan
 from cogs.shard_communication import user_on_cooldown as user_cooldown
 from utils.checks import has_char, has_money
+from utils.paginator import NoChoice
 
 
 class Trading(commands.Cog):
@@ -415,15 +416,18 @@ class Trading(commands.Cog):
             price = item["armor"] * 50 + item["damage"] * 50
             offers.append((item, price))
 
-        offerid = await self.bot.paginator.Choose(
-            title=_("The Trader"),
-            footer=_("Hit a button to buy it"),
-            return_index=True,
-            entries=[
-                f"**{i[0]['name']}** - {i[0]['damage'] if i[0]['type_'] == 'Sword' else i[0]['armor']} - **${i[1]}**"
-                for i in offers
-            ],
-        ).paginate(ctx)
+        try:
+            offerid = await self.bot.paginator.Choose(
+                title=_("The Trader"),
+                footer=_("Hit a button to buy it"),
+                return_index=True,
+                entries=[
+                    f"**{i[0]['name']}** - {i[0]['damage'] if i[0]['type_'] == 'Sword' else i[0]['armor']} - **${i[1]}**"
+                    for i in offers
+                ],
+            ).paginate(ctx)
+        except NoChoice:  # prevent cooldown reset
+            return await ctx.send(_("You did not choose anything."))
 
         item = offers[offerid]
         if not await has_money(self.bot, ctx.author.id, item[1]):

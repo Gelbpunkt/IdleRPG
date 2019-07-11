@@ -224,9 +224,9 @@ IdleRPG is a global bot, your characters are valid everywhere"""
         _("""Shows your luck factor ranging from -1 to 1.""")
         await ctx.send(
             _(
-                "Your current luck is `{luck}x` (≈{percent}%) more than usual (usual=0)."
+                "Your current luck multiplier is `{luck}x` (≈{percent}% more than usual (usual=0))."
             ).format(
-                luck=ctx.character_data["luck"] - 1,
+                luck=ctx.character_data["luck"],
                 percent=(ctx.character_data["luck"] - 1) * 100,
             )
         )
