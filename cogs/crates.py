@@ -17,7 +17,6 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
 import random
 from collections import namedtuple
-from typing import Optional
 
 import discord
 from discord.ext import commands
@@ -82,7 +81,7 @@ class Crates(commands.Cog):
                 )
             )
         # A number to detemine the crate item range
-        rand = random.randint(1, 10)
+        rand = random.randint(0, 9)
         if rarity == "common":
             if rand < 2:  # 20% 20-30
                 minstat, maxstat = (20, 30)
@@ -152,7 +151,7 @@ class Crates(commands.Cog):
         self,
         ctx,
         other: MemberWithCharacter,
-        amount: Optional[IntGreaterThan(0)] = 1,
+        amount: IntGreaterThan(0) = 1,
         rarity: str.lower = "common",
     ):
         _("""Trades crates to a user.""")
@@ -176,7 +175,7 @@ class Crates(commands.Cog):
                 other.id,
             )
         await ctx.send(
-            _("Successfully gave {amount} {rarity} {crate(s) to {other}.").format(
+            _("Successfully gave {amount} {rarity} crate(s) to {other}.").format(
                 amount=amount, other=other.mention, rarity=rarity
             )
         )
