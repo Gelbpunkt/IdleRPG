@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-07-09 15:54+0000\n"
+"POT-Creation-Date: 2019-07-11 11:46+0000\n"
 "PO-Revision-Date: 2019-07-08 19:05+0700\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -159,7 +159,7 @@ msgstr "{user} cho bạn thêm $50!"
 msgid "Seems you haven't got a trick or treat bag yet. Go get some!"
 msgstr "Có vẻ như bạn chưa có túi kẹo nào cả. Tới lúc trick or treat rồi!"
 
-#: cogs/halloween.py:142 cogs/crates.py:82 cogs/classes.py:268
+#: cogs/halloween.py:142 cogs/crates.py:129 cogs/classes.py:268
 #: cogs/adventure.py:221
 msgid "You gained an item!"
 msgstr "Bạn nhận được một món đồ!"
@@ -169,18 +169,18 @@ msgstr "Bạn nhận được một món đồ!"
 msgid "You found a new item when opening a trick-or-treat bag!"
 msgstr "Bạn kiếm được một món đồ khi mở túi trick or treat!"
 
-#: cogs/halloween.py:147 cogs/crates.py:87 cogs/classes.py:273
+#: cogs/halloween.py:147 cogs/crates.py:134 cogs/classes.py:273
 #: cogs/adventure.py:226
 msgid "ID"
 msgstr "ID"
 
-#: cogs/halloween.py:148 cogs/crates.py:88 cogs/classes.py:274
-#: cogs/adventure.py:227 cogs/trading.py:211 cogs/trading.py:386
+#: cogs/halloween.py:148 cogs/crates.py:135 cogs/classes.py:274
+#: cogs/adventure.py:227 cogs/trading.py:212 cogs/trading.py:387
 msgid "Name"
 msgstr "Tên"
 
-#: cogs/halloween.py:149 cogs/crates.py:89 cogs/classes.py:275
-#: cogs/adventure.py:228 cogs/trading.py:212 cogs/trading.py:387
+#: cogs/halloween.py:149 cogs/crates.py:136 cogs/classes.py:275
+#: cogs/adventure.py:228 cogs/trading.py:213 cogs/trading.py:388
 msgid "Type"
 msgstr "Loại"
 
@@ -427,71 +427,82 @@ msgid ""
 "You can claim multiple rewards, keep hunting!"
 msgstr "Bạn đã đổi phần thưởng của bạn. Kiểm tra chúng ở trong túi đồ!"
 
-#: cogs/crates.py:35
+#: cogs/crates.py:43
 msgid "Shows your crates."
 msgstr "Cho xem thùng của bạn."
 
-#: cogs/crates.py:38
+#: cogs/crates.py:46
 #, python-brace-format
 msgid ""
-"You currently have **{crates}** crates, {author}! Use `{prefix}open` to open "
-"one!"
+"**{author}'s crates**\n"
+"\n"
+"{emotes.common} {common}\n"
+"{emotes.uncommon} {uncommon}\n"
+"{emotes.rare} {rare}\n"
+"{emotes.magic} {magic}\n"
+"{emotes.legendary} {legendary}\n"
+"\n"
+" Use `{prefix}open [rarity]` to open one!"
 msgstr ""
-"Bạn hiện tại có **{crates}** thùng, {author}! Sử dung `{prefix}open` để mở "
-"một cái!"
 
-#: cogs/crates.py:50
+#: cogs/crates.py:72
 msgid "Opens a crate."
 msgstr "Mở một thùng."
 
-#: cogs/crates.py:54
-msgid ""
-"Seems like you don't have a crate yet. Vote me up to get some or earn them!"
-msgstr "Dường như bạn chưa có thùng. Bỏ phiếu cho tôi để nhận một thùng!"
+#: cogs/crates.py:75 cogs/crates.py:162 cogs/admin.py:122
+#, python-brace-format
+msgid "{rarity} is not a valid rarity."
+msgstr ""
 
-#: cogs/crates.py:83
+#: cogs/crates.py:80
+msgid ""
+"Seems like you don't have any crate of this rarity yet. Vote me up to get a "
+"random one or find them!"
+msgstr ""
+
+#: cogs/crates.py:130
 msgid "You found a new item when opening a crate!"
 msgstr "Bạn tìm thấy một vật phẩm mới khi mở thùng!"
 
-#: cogs/crates.py:90 cogs/classes.py:277 cogs/adventure.py:229
-#: cogs/trading.py:213 cogs/trading.py:388
+#: cogs/crates.py:137 cogs/classes.py:277 cogs/adventure.py:229
+#: cogs/trading.py:214 cogs/trading.py:389
 msgid "Damage"
 msgstr "Sát thương"
 
-#: cogs/crates.py:91 cogs/classes.py:279 cogs/adventure.py:230
-#: cogs/trading.py:214 cogs/trading.py:389
+#: cogs/crates.py:138 cogs/classes.py:279 cogs/adventure.py:230
+#: cogs/trading.py:215 cogs/trading.py:390
 msgid "Armor"
 msgstr "Giáp"
 
-#: cogs/crates.py:92 cogs/classes.py:280 cogs/adventure.py:231
-#: cogs/trading.py:215 cogs/trading.py:390
+#: cogs/crates.py:139 cogs/classes.py:280 cogs/adventure.py:231
+#: cogs/trading.py:216 cogs/trading.py:391
 msgid "Value"
 msgstr "Giá trị"
 
-#: cogs/crates.py:94
+#: cogs/crates.py:141
 #, python-brace-format
-msgid "Remaining crates: {crates}"
-msgstr "Các thùng còn lại: {crates}"
+msgid "Remaining {rarity} crates: {crates}"
+msgstr ""
 
-#: cogs/crates.py:106
+#: cogs/crates.py:157
 msgid "Trades crates to a user."
 msgstr "Giao dịch thùng đến một người chơi khác."
 
 #. preserve deletion of admins
 #. preserve renaming of admins
-#: cogs/crates.py:108 cogs/guild.py:244 cogs/guild.py:264 cogs/admin.py:72
+#: cogs/crates.py:159 cogs/guild.py:244 cogs/guild.py:264 cogs/admin.py:72
 #: cogs/admin.py:85
 msgid "Very funny..."
 msgstr "Khá buồn cười..."
 
-#: cogs/crates.py:110
-msgid "You don't have any crates."
-msgstr "Bạn không có thùng nào."
+#: cogs/crates.py:165
+msgid "You don't have any crates of this rarity."
+msgstr ""
 
-#: cogs/crates.py:121
+#: cogs/crates.py:178
 #, python-brace-format
-msgid "Successfully gave {amount} crate(s) to {other}."
-msgstr "Thành công gửi {amount} thùng đến {other}."
+msgid "Successfully gave {amount} {rarity} crate(s) to {other}."
+msgstr ""
 
 #: cogs/hungergames.py:50
 msgid "Gather as much food as you can"
@@ -814,7 +825,8 @@ msgid ""
 msgstr ""
 ":x: Bạn không có quyền sử dụng lệnh này. Nó được dành cho người dùng khác."
 
-#: cogs/error_handler.py:129
+#. prevent cooldown reset
+#: cogs/error_handler.py:129 cogs/trading.py:430
 msgid "You did not choose anything."
 msgstr "Bạn đã không chọn cái nào."
 
@@ -1800,7 +1812,7 @@ msgstr "[Chỉ dành cho Patreon] Thay đổi tên vật phẩm."
 msgid "Name too long."
 msgstr "Tên quá dài."
 
-#: cogs/patreon.py:48 cogs/trading.py:240
+#: cogs/patreon.py:48 cogs/trading.py:241
 #, python-brace-format
 msgid "You don't have an item with the ID `{itemid}`."
 msgstr "Bạn không có một vật phẩm với ID `{itemid}`."
@@ -2374,21 +2386,16 @@ msgstr ""
 "bị : **{item}**. Kinh nghiệm nhận được là: **{xp}**.\n"
 "Cộng sự của bạn nhân được **{gold2}**."
 
-#: cogs/adventure.py:326
-#, python-brace-format
-msgid "**{amount}** crates"
-msgstr "**{amount}** thùng"
-
-#: cogs/adventure.py:329
+#: cogs/adventure.py:325
 msgid "a special Item"
 msgstr "một trang bị đặc biệt"
 
-#: cogs/adventure.py:347
+#: cogs/adventure.py:374
 #, fuzzy, python-brace-format
 msgid "Level {new_level} Memorial"
 msgstr "Cấp độ {new_level} kỷ niệm"
 
-#: cogs/adventure.py:353
+#: cogs/adventure.py:380
 #, python-brace-format
 msgid ""
 "You reached a new level: **{new_level}** :star:! You received {reward} as a "
@@ -2397,11 +2404,11 @@ msgstr ""
 "Bạn đã đạt đến cấp độ mới: **{new_level}**: star:! Bạn đã nhận được {reward} "
 "dưới dạng phần thưởng:tada:!"
 
-#: cogs/adventure.py:357
+#: cogs/adventure.py:384
 msgid "You died on your mission. Try again!"
 msgstr "Bạn đã chết trong nhiệm vụ. Thử lại!"
 
-#: cogs/adventure.py:366
+#: cogs/adventure.py:393
 #, python-brace-format
 msgid ""
 "You are currently in the adventure with difficulty `{difficulty}`.\n"
@@ -2412,11 +2419,11 @@ msgstr ""
 "Kết thúc sau `{end}`\n"
 "Tên cuộc phiêu lưu:`{dungeon}`"
 
-#: cogs/adventure.py:375
+#: cogs/adventure.py:402
 msgid "Cancels your current adventure."
 msgstr "Hủy bỏ cuộc phiêu lưu hiện tại của bạn."
 
-#: cogs/adventure.py:379
+#: cogs/adventure.py:406
 #, python-brace-format
 msgid ""
 "Canceled your mission. Use `{prefix}adventure [missionID]` to start a new "
@@ -2425,11 +2432,11 @@ msgstr ""
 "Hủy bỏ nhiệm vụ của bạn. Sử dung `{prefix}adventure [missionID]` để bắt đầu "
 "cái mới!"
 
-#: cogs/adventure.py:387
+#: cogs/adventure.py:414
 msgid "Your death stats."
 msgstr "Số liệu thống kê cái chết của bạn."
 
-#: cogs/adventure.py:397
+#: cogs/adventure.py:424
 #, python-brace-format
 msgid ""
 "Out of **{total}** adventures, you died **{deaths}** times and survived "
@@ -2579,28 +2586,28 @@ msgstr ""
 "[Alpha] Chơi blackjack với các người chia bài. Người chia bài sẽ thắng nếu "
 "hòa."
 
-#: cogs/trading.py:35
+#: cogs/trading.py:36
 msgid "Puts an item into the player store."
 msgstr "Đưa một vật phẩm vào cửa hàng."
 
-#: cogs/trading.py:44 cogs/trading.py:316
+#: cogs/trading.py:45 cogs/trading.py:317
 #, python-brace-format
 msgid "You don't own an item with the ID: {itemid}"
 msgstr "Bạn không sở hữu vật phẩm có ID: {itemid}"
 
-#: cogs/trading.py:51
+#: cogs/trading.py:52
 msgid ""
 "Your item is either equal to a Starter Item or worse. Noone would buy it."
 msgstr ""
 "Vật phẩm của bạn bằng với Starter Item ( cấp độ 3) hoặc thấp hơn. Không ai "
 "sẽ mua nó."
 
-#: cogs/trading.py:57
+#: cogs/trading.py:58
 #, python-brace-format
 msgid "Your price is too high. Try adjusting it to be up to `{limit}`."
 msgstr "Giá của bạn quá cao. Hãy thử điều chỉnh nó lên đến `{limit}`."
 
-#: cogs/trading.py:70
+#: cogs/trading.py:71
 #, python-brace-format
 msgid ""
 "Successfully added your item to the shop! Use `{prefix}shop` to view it in "
@@ -2609,20 +2616,20 @@ msgstr ""
 "Đã thêm thành công mặt hàng của bạn vào cửa hàng! Sử dụng `{prefix} shop` để "
 "xem nó trên thị trường!"
 
-#: cogs/trading.py:78
+#: cogs/trading.py:79
 msgid "Buys an item from the global market."
 msgstr "Mua một mặt hàng từ thị trường toàn cầu."
 
-#: cogs/trading.py:86
+#: cogs/trading.py:87
 #, python-brace-format
 msgid "There is no item in the shop with the ID: {itemid}"
 msgstr "Không có sản phẩm trong các cửa hàng với ID: {itemid}"
 
-#: cogs/trading.py:91
+#: cogs/trading.py:92
 msgid "You're too poor to buy this item."
 msgstr "Bạn quá nghèo để mua mặt hàng này."
 
-#: cogs/trading.py:116
+#: cogs/trading.py:117
 #, python-brace-format
 msgid ""
 "Successfully bought item `{id}`. Use `{prefix}inventory` to view your "
@@ -2631,22 +2638,22 @@ msgstr ""
 "Đã mua thành công mặt hàng `{id}`. Sử dụng `{prefix}Inventory` để xem túi đồ "
 "được cập nhật của bạn."
 
-#: cogs/trading.py:123
+#: cogs/trading.py:124
 #, python-brace-format
 msgid "**{author}** bought your **{name}** for **${price}** from the market."
 msgstr ""
 "**{author}** đã mua vật phẩm tên **{name}** với **${price}** từ cửa hang."
 
-#: cogs/trading.py:138
+#: cogs/trading.py:139
 msgid "Takes an item off the shop."
 msgstr "Đưa một mặt hàng ra khỏi cửa hàng."
 
-#: cogs/trading.py:148
+#: cogs/trading.py:149
 #, python-brace-format
 msgid "You don't have an item of yours in the shop with the ID `{itemid}`."
 msgstr "Bạn không có món đồ của bạn trong cửa hàng với ID `{itemid}`."
 
-#: cogs/trading.py:161
+#: cogs/trading.py:162
 #, python-brace-format
 msgid ""
 "Successfully removed item `{itemid}` from the shop and put it in your "
@@ -2654,46 +2661,46 @@ msgid ""
 msgstr ""
 "Đã xóa thành công mục `{itemid}` khỏi cửa hàng và đưa nó vào kho của bạn."
 
-#: cogs/trading.py:174
+#: cogs/trading.py:175
 msgid "Show the market with all items and prices."
 msgstr "Hiển thị thị trường với tất cả các mặt hàng và giá cả."
 
-#: cogs/trading.py:201
+#: cogs/trading.py:202
 msgid "No results."
 msgstr "Ko có kết quả."
 
-#: cogs/trading.py:205
+#: cogs/trading.py:206
 msgid "IdleRPG Shop"
 msgstr "Cửa hàng IdleRPG"
 
-#: cogs/trading.py:206 cogs/trading.py:381
+#: cogs/trading.py:207 cogs/trading.py:382
 #, python-brace-format
 msgid "Use `{prefix}buy {item}` to buy this."
 msgstr "Sử dụng `{prefix}buy {item}` để mua cái này."
 
-#: cogs/trading.py:216 cogs/trading.py:391 cogs/marriage.py:205
+#: cogs/trading.py:217 cogs/trading.py:392 cogs/marriage.py:205
 msgid "Price"
 msgstr "Giá bán"
 
-#: cogs/trading.py:218 cogs/trading.py:393
+#: cogs/trading.py:219 cogs/trading.py:394
 #, python-brace-format
 msgid "Item {num} of {total}"
 msgstr "Mục {num} trong tổng số {total}"
 
-#: cogs/trading.py:232
+#: cogs/trading.py:233
 msgid "Offer an item to a specific user."
 msgstr "Bán một vật phẩm đến một người dùng cụ thể."
 
-#: cogs/trading.py:247 cogs/trading.py:322
+#: cogs/trading.py:248 cogs/trading.py:323
 #, python-brace-format
 msgid "Are you sure you want to sell your equipped {item}?"
 msgstr "Bạn có chắc chắn muốn bán {item} đang được trang bị của mình không?"
 
-#: cogs/trading.py:251
+#: cogs/trading.py:252
 msgid "Item selling cancelled."
 msgstr "Vật phẩm chuẩn bị bán bị hủy."
 
-#: cogs/trading.py:255
+#: cogs/trading.py:256
 #, python-brace-format
 msgid ""
 "{user}, {author} offered you an item! React to buy it! The price is **"
@@ -2704,21 +2711,21 @@ msgstr ""
 "giá là **${price}**. Bạn có **2 Minutes** để chấp nhận nếu không nó sẽ bị "
 "hủy."
 
-#: cogs/trading.py:260
+#: cogs/trading.py:261
 msgid "They didn't want it."
 msgstr "Họ không muốn nó."
 
-#: cogs/trading.py:264
+#: cogs/trading.py:265
 #, python-brace-format
 msgid "{user}, you're too poor to buy this item!"
 msgstr "{user}, Bạn quá nghèo để mua mặt hàng này!"
 
-#: cogs/trading.py:275
+#: cogs/trading.py:276
 #, python-brace-format
 msgid "The owner sold the item with the ID `{itemid}` in the meantime."
 msgstr "Chủ sở hữu đã bán vật phẩm có ID `{itemid}` trong thời gian đó."
 
-#: cogs/trading.py:294
+#: cogs/trading.py:295
 #, python-brace-format
 msgid ""
 "Successfully bought item `{itemid}`. Use `{prefix}inventory` to view your "
@@ -2727,62 +2734,62 @@ msgstr ""
 "Mua thành công vật phẩm `{itemid}`. Sử dung `{prefix}inventory` để xem túi "
 "đồ của bạn."
 
-#: cogs/trading.py:307
+#: cogs/trading.py:308
 msgid "Sells an item for its value."
 msgstr "Bán một mặt hàng với giá trị của nó."
 
-#: cogs/trading.py:327
+#: cogs/trading.py:328
 msgid "Cancelled."
 msgstr "Hủy bỏ."
 
-#: cogs/trading.py:335
+#: cogs/trading.py:336
 #, python-brace-format
 msgid "You received **${money}** when selling item `{itemid}`."
 msgstr "Bạn đã nhận được **${money}** khi bán vât phẩm `{itemid}`."
 
-#: cogs/trading.py:345
+#: cogs/trading.py:346
 msgid "Sells all your non-equipped items for their value."
 msgstr ""
 "Bán tất cả các mặt hàng không được trang bị của bạn với giá trị của chúng."
 
-#: cogs/trading.py:352
+#: cogs/trading.py:353
 msgid "Nothing to merch."
 msgstr "Không có gì để buôn."
 
-#: cogs/trading.py:363
+#: cogs/trading.py:364
 #, python-brace-format
 msgid "Merched **{count}** items for **${money}**."
 msgstr "Đã bán **{count}** vật phẩm với **${money}**."
 
-#: cogs/trading.py:371
+#: cogs/trading.py:372
 msgid "View your pending shop offers."
 msgstr "Xem các mặt hàng của bạn trong cửa hang."
 
-#: cogs/trading.py:377
+#: cogs/trading.py:378
 msgid "You don't have any pending shop offers."
 msgstr "Bạn không có bất kì mặt hàng nào trong cửa hang."
 
-#: cogs/trading.py:380
+#: cogs/trading.py:381
 msgid "Your pending items"
 msgstr "Các trang bị của bạn trong cửa hàng"
 
-#: cogs/trading.py:404
+#: cogs/trading.py:405
 msgid "Buy items at the trader."
 msgstr "Mua vật phẩm."
 
-#: cogs/trading.py:419
+#: cogs/trading.py:421
 msgid "The Trader"
 msgstr "Người giao dịch"
 
-#: cogs/trading.py:420
+#: cogs/trading.py:422
 msgid "Hit a button to buy it"
 msgstr "Nhấn nút để mua nó"
 
-#: cogs/trading.py:430
+#: cogs/trading.py:434
 msgid "You are too poor to buy this item."
 msgstr "Bạn quá nghèo để mua mặt hàng này."
 
-#: cogs/trading.py:437
+#: cogs/trading.py:441
 #, python-brace-format
 msgid ""
 "Successfully bought offer **{offer}**. Use `{prefix}inventory` to view your "
@@ -4152,7 +4159,9 @@ msgstr ""
 
 #: cogs/profile.py:227
 #, python-brace-format
-msgid "Your current luck is `{luck}x` (≈{percent}%) more than usual (usual=0)."
+msgid ""
+"Your current luck multiplier is `{luck}x` (≈{percent}% more than usual "
+"(usual=0))."
 msgstr ""
 
 #: cogs/profile.py:238
@@ -4415,31 +4424,31 @@ msgstr "Thời gian đã hết."
 msgid "Renamed."
 msgstr "Đã đổi tên."
 
-#: cogs/admin.py:117
+#: cogs/admin.py:119
 msgid "[Bot Admin only] Gives/removes crates to a user without loss."
 msgstr ""
 "[Dành cho Admin bot] Cho/lấy đi hộp của người chơi nhưng không ảnh hưởng đến "
 "bản thân."
 
-#: cogs/admin.py:124
+#: cogs/admin.py:130
 #, python-brace-format
-msgid "Successfully gave **{amount}** crates to **{target}**."
-msgstr "Đã đưa **{amount}** hộp cho {target} thành công."
+msgid "Successfully gave **{amount}** {rarity} crates to **{target}**."
+msgstr ""
 
-#: cogs/admin.py:137
+#: cogs/admin.py:143
 msgid "[Bot Admin only] Gives xp to a user."
 msgstr "[Bot Admin only] Đưa XP cho một người chơi."
 
-#: cogs/admin.py:142
+#: cogs/admin.py:148
 #, python-brace-format
 msgid "Successfully gave **{amount}** XP to **{target}**."
 msgstr "Đã đưa **{amount}** XP cho {target} thành công."
 
-#: cogs/admin.py:155
+#: cogs/admin.py:161
 msgid "[Bot Admin only] Wipes someone's donator perks."
 msgstr "[Dành cho admin bot] Cài lại đặc quyền của một người chơi (Donator)."
 
-#: cogs/admin.py:181
+#: cogs/admin.py:187
 #, python-brace-format
 msgid ""
 "Successfully reset {target}'s background, class, item names and guild member "
@@ -4447,6 +4456,33 @@ msgid ""
 msgstr ""
 "Cài lại thành công hình nền, class, tên cũ khí và giới hạn thành viên trong "
 "hội của {target}."
+
+#~ msgid ""
+#~ "You currently have **{crates}** crates, {author}! Use `{prefix}open` to "
+#~ "open one!"
+#~ msgstr ""
+#~ "Bạn hiện tại có **{crates}** thùng, {author}! Sử dung `{prefix}open` để "
+#~ "mở một cái!"
+
+#~ msgid ""
+#~ "Seems like you don't have a crate yet. Vote me up to get some or earn "
+#~ "them!"
+#~ msgstr "Dường như bạn chưa có thùng. Bỏ phiếu cho tôi để nhận một thùng!"
+
+#~ msgid "Remaining crates: {crates}"
+#~ msgstr "Các thùng còn lại: {crates}"
+
+#~ msgid "You don't have any crates."
+#~ msgstr "Bạn không có thùng nào."
+
+#~ msgid "Successfully gave {amount} crate(s) to {other}."
+#~ msgstr "Thành công gửi {amount} thùng đến {other}."
+
+#~ msgid "**{amount}** crates"
+#~ msgstr "**{amount}** thùng"
+
+#~ msgid "Successfully gave **{amount}** crates to **{target}**."
+#~ msgstr "Đã đưa **{amount}** hộp cho {target} thành công."
 
 #~ msgid "reset"
 #~ msgstr "cài lại"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-07-09 15:54+0000\n"
+"POT-Creation-Date: 2019-07-11 11:46+0000\n"
 "PO-Revision-Date: 2019-07-07 15:57+0700\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -163,7 +163,7 @@ msgstr "{user} gave you additionyaw $50 >w<"
 msgid "Seems you haven't got a trick or treat bag yet. Go get some!"
 msgstr "Seems you haven't got a twick ow tweat bag yet. Go get some owo"
 
-#: cogs/halloween.py:142 cogs/crates.py:82 cogs/classes.py:268
+#: cogs/halloween.py:142 cogs/crates.py:129 cogs/classes.py:268
 #: cogs/adventure.py:221
 msgid "You gained an item!"
 msgstr "You gainyed an item >w<"
@@ -172,18 +172,18 @@ msgstr "You gainyed an item >w<"
 msgid "You found a new item when opening a trick-or-treat bag!"
 msgstr "You found a nyew item when openying a twick-ow-tweat bag ^w^"
 
-#: cogs/halloween.py:147 cogs/crates.py:87 cogs/classes.py:273
+#: cogs/halloween.py:147 cogs/crates.py:134 cogs/classes.py:273
 #: cogs/adventure.py:226
 msgid "ID"
 msgstr "ID"
 
-#: cogs/halloween.py:148 cogs/crates.py:88 cogs/classes.py:274
-#: cogs/adventure.py:227 cogs/trading.py:211 cogs/trading.py:386
+#: cogs/halloween.py:148 cogs/crates.py:135 cogs/classes.py:274
+#: cogs/adventure.py:227 cogs/trading.py:212 cogs/trading.py:387
 msgid "Name"
 msgstr "Nyame"
 
-#: cogs/halloween.py:149 cogs/crates.py:89 cogs/classes.py:275
-#: cogs/adventure.py:228 cogs/trading.py:212 cogs/trading.py:387
+#: cogs/halloween.py:149 cogs/crates.py:136 cogs/classes.py:275
+#: cogs/adventure.py:228 cogs/trading.py:213 cogs/trading.py:388
 msgid "Type"
 msgstr "Type"
 
@@ -433,73 +433,82 @@ msgstr ""
 "You cwaimed youw wewawd. Check youw inventowy/boostews/cwates/monyey/etc. (・"
 "`ω´・)! You can cwaim muwtipwe wewawds, keep hunting UwU"
 
-#: cogs/crates.py:35
+#: cogs/crates.py:43
 msgid "Shows your crates."
 msgstr "Shows youw cwates."
 
-#: cogs/crates.py:38
+#: cogs/crates.py:46
 #, python-brace-format
 msgid ""
-"You currently have **{crates}** crates, {author}! Use `{prefix}open` to open "
-"one!"
+"**{author}'s crates**\n"
+"\n"
+"{emotes.common} {common}\n"
+"{emotes.uncommon} {uncommon}\n"
+"{emotes.rare} {rare}\n"
+"{emotes.magic} {magic}\n"
+"{emotes.legendary} {legendary}\n"
+"\n"
+" Use `{prefix}open [rarity]` to open one!"
 msgstr ""
-"You cuwwentwy have **{crates}** cwates, {author} owo! Use `{prefix}open` to "
-"open onye UwU"
 
-#: cogs/crates.py:50
+#: cogs/crates.py:72
 msgid "Opens a crate."
 msgstr "Opens a cwate."
 
-#: cogs/crates.py:54
-msgid ""
-"Seems like you don't have a crate yet. Vote me up to get some or earn them!"
+#: cogs/crates.py:75 cogs/crates.py:162 cogs/admin.py:122
+#, python-brace-format
+msgid "{rarity} is not a valid rarity."
 msgstr ""
-"Seems wike you don't have a cwate yet. Vote me up to get some ow eawn them "
-"(・`ω´・)"
 
-#: cogs/crates.py:83
+#: cogs/crates.py:80
+msgid ""
+"Seems like you don't have any crate of this rarity yet. Vote me up to get a "
+"random one or find them!"
+msgstr ""
+
+#: cogs/crates.py:130
 msgid "You found a new item when opening a crate!"
 msgstr "You found a nyew item when openying a cwate >w<"
 
-#: cogs/crates.py:90 cogs/classes.py:277 cogs/adventure.py:229
-#: cogs/trading.py:213 cogs/trading.py:388
+#: cogs/crates.py:137 cogs/classes.py:277 cogs/adventure.py:229
+#: cogs/trading.py:214 cogs/trading.py:389
 msgid "Damage"
 msgstr "Damage"
 
-#: cogs/crates.py:91 cogs/classes.py:279 cogs/adventure.py:230
-#: cogs/trading.py:214 cogs/trading.py:389
+#: cogs/crates.py:138 cogs/classes.py:279 cogs/adventure.py:230
+#: cogs/trading.py:215 cogs/trading.py:390
 msgid "Armor"
 msgstr "Awmow"
 
-#: cogs/crates.py:92 cogs/classes.py:280 cogs/adventure.py:231
-#: cogs/trading.py:215 cogs/trading.py:390
+#: cogs/crates.py:139 cogs/classes.py:280 cogs/adventure.py:231
+#: cogs/trading.py:216 cogs/trading.py:391
 msgid "Value"
 msgstr "Vawue"
 
-#: cogs/crates.py:94
+#: cogs/crates.py:141
 #, python-brace-format
-msgid "Remaining crates: {crates}"
-msgstr "Wemainying cwates: {crates}"
+msgid "Remaining {rarity} crates: {crates}"
+msgstr ""
 
-#: cogs/crates.py:106
+#: cogs/crates.py:157
 msgid "Trades crates to a user."
 msgstr "Twades cwates to a usew."
 
 #. preserve deletion of admins
 #. preserve renaming of admins
-#: cogs/crates.py:108 cogs/guild.py:244 cogs/guild.py:264 cogs/admin.py:72
+#: cogs/crates.py:159 cogs/guild.py:244 cogs/guild.py:264 cogs/admin.py:72
 #: cogs/admin.py:85
 msgid "Very funny..."
 msgstr "Vewy funny..."
 
-#: cogs/crates.py:110
-msgid "You don't have any crates."
-msgstr "You don't have any cwates."
+#: cogs/crates.py:165
+msgid "You don't have any crates of this rarity."
+msgstr ""
 
-#: cogs/crates.py:121
+#: cogs/crates.py:178
 #, python-brace-format
-msgid "Successfully gave {amount} crate(s) to {other}."
-msgstr "Successfuwwy gave {amount} cwate(s) to {other}."
+msgid "Successfully gave {amount} {rarity} crate(s) to {other}."
+msgstr ""
 
 #: cogs/hungergames.py:50
 msgid "Gather as much food as you can"
@@ -819,7 +828,8 @@ msgstr ""
 ":x: You don't have the pewmissions to use this command. It is thought fow "
 "othew usews."
 
-#: cogs/error_handler.py:129
+#. prevent cooldown reset
+#: cogs/error_handler.py:129 cogs/trading.py:430
 msgid "You did not choose anything."
 msgstr "You did nyot choose anything."
 
@@ -1801,7 +1811,7 @@ msgstr "[Patreon Only] Changes an item nyame."
 msgid "Name too long."
 msgstr "Nyame too long."
 
-#: cogs/patreon.py:48 cogs/trading.py:240
+#: cogs/patreon.py:48 cogs/trading.py:241
 #, python-brace-format
 msgid "You don't have an item with the ID `{itemid}`."
 msgstr "You don't have an item with the ID `{itemid}`."
@@ -2379,21 +2389,16 @@ msgstr ""
 "weapon: **{item}**. Expewience gainyed: **{xp}**.\n"
 "Youw pawtnyew weceived **${gold2}**."
 
-#: cogs/adventure.py:326
-#, python-brace-format
-msgid "**{amount}** crates"
-msgstr "**{amount}** cwates"
-
-#: cogs/adventure.py:329
+#: cogs/adventure.py:325
 msgid "a special Item"
 msgstr "a speciaw Item"
 
-#: cogs/adventure.py:347
+#: cogs/adventure.py:374
 #, python-brace-format
 msgid "Level {new_level} Memorial"
 msgstr "Levew {new_level} Memowial"
 
-#: cogs/adventure.py:353
+#: cogs/adventure.py:380
 #, python-brace-format
 msgid ""
 "You reached a new level: **{new_level}** :star:! You received {reward} as a "
@@ -2402,11 +2407,11 @@ msgstr ""
 "You weached a nyew wevew: **{new_level}** :star: ^w^!  You weceived {reward} "
 "as a wewawd :tada: >w<"
 
-#: cogs/adventure.py:357
+#: cogs/adventure.py:384
 msgid "You died on your mission. Try again!"
 msgstr "You died on youw mission. Twy again ;;^;;"
 
-#: cogs/adventure.py:366
+#: cogs/adventure.py:393
 #, python-brace-format
 msgid ""
 "You are currently in the adventure with difficulty `{difficulty}`.\n"
@@ -2417,11 +2422,11 @@ msgstr ""
 "Appwoximate end in `{end}`\n"
 "Dungeon Nyame: `{dungeon}`"
 
-#: cogs/adventure.py:375
+#: cogs/adventure.py:402
 msgid "Cancels your current adventure."
 msgstr "Cancews youw cuwwent adventuwe."
 
-#: cogs/adventure.py:379
+#: cogs/adventure.py:406
 #, python-brace-format
 msgid ""
 "Canceled your mission. Use `{prefix}adventure [missionID]` to start a new "
@@ -2430,11 +2435,11 @@ msgstr ""
 "Cancewed youw mission. Use `{prefix}adventure [missionID]` to stawt a nyew "
 "onye >w<"
 
-#: cogs/adventure.py:387
+#: cogs/adventure.py:414
 msgid "Your death stats."
 msgstr "Youw death stats."
 
-#: cogs/adventure.py:397
+#: cogs/adventure.py:424
 #, python-brace-format
 msgid ""
 "Out of **{total}** adventures, you died **{deaths}** times and survived "
@@ -2578,27 +2583,27 @@ msgstr ""
 "[Alpha] Play bwackjack against the dealer. Dealer rules, means wins in case "
 "of tie."
 
-#: cogs/trading.py:35
+#: cogs/trading.py:36
 msgid "Puts an item into the player store."
 msgstr "Puts an item into the pwayew stowe."
 
-#: cogs/trading.py:44 cogs/trading.py:316
+#: cogs/trading.py:45 cogs/trading.py:317
 #, python-brace-format
 msgid "You don't own an item with the ID: {itemid}"
 msgstr "You don't own an item with the ID: {itemid}"
 
-#: cogs/trading.py:51
+#: cogs/trading.py:52
 msgid ""
 "Your item is either equal to a Starter Item or worse. Noone would buy it."
 msgstr ""
 "Youw item is eithew equaw to a Stawtew Item ow wowse. Nyoonye wouwd buy it."
 
-#: cogs/trading.py:57
+#: cogs/trading.py:58
 #, python-brace-format
 msgid "Your price is too high. Try adjusting it to be up to `{limit}`."
 msgstr "Youw pwice is too high. Twy adjusting it to be up to `{limit}`."
 
-#: cogs/trading.py:70
+#: cogs/trading.py:71
 #, python-brace-format
 msgid ""
 "Successfully added your item to the shop! Use `{prefix}shop` to view it in "
@@ -2607,20 +2612,20 @@ msgstr ""
 "Successfuwwy added youw item to the shop >w<! Use `{prefix}shop` to view it "
 "in the mawket (・`ω´・)"
 
-#: cogs/trading.py:78
+#: cogs/trading.py:79
 msgid "Buys an item from the global market."
 msgstr "Buys an item fwom the gwobaw mawket."
 
-#: cogs/trading.py:86
+#: cogs/trading.py:87
 #, python-brace-format
 msgid "There is no item in the shop with the ID: {itemid}"
 msgstr "Thewe is nyo item in the shop with the ID: {itemid}"
 
-#: cogs/trading.py:91
+#: cogs/trading.py:92
 msgid "You're too poor to buy this item."
 msgstr "You'we too poow to buy this item."
 
-#: cogs/trading.py:116
+#: cogs/trading.py:117
 #, python-brace-format
 msgid ""
 "Successfully bought item `{id}`. Use `{prefix}inventory` to view your "
@@ -2629,21 +2634,21 @@ msgstr ""
 "Successfuwwy bought item `{id}`. Use `{prefix}inventory` to view youw "
 "updated inventowy."
 
-#: cogs/trading.py:123
+#: cogs/trading.py:124
 #, python-brace-format
 msgid "**{author}** bought your **{name}** for **${price}** from the market."
 msgstr "**{author}** bought youw **{name}** fow **${price}** fwom the mawket."
 
-#: cogs/trading.py:138
+#: cogs/trading.py:139
 msgid "Takes an item off the shop."
 msgstr "Takes an item off the shop."
 
-#: cogs/trading.py:148
+#: cogs/trading.py:149
 #, python-brace-format
 msgid "You don't have an item of yours in the shop with the ID `{itemid}`."
 msgstr "You don't have an item of youws in the shop with the ID `{itemid}`."
 
-#: cogs/trading.py:161
+#: cogs/trading.py:162
 #, python-brace-format
 msgid ""
 "Successfully removed item `{itemid}` from the shop and put it in your "
@@ -2652,48 +2657,48 @@ msgstr ""
 "Successfuwwy wemuvd item `{itemid}` fwom the shop and put it in youw "
 "inventowy."
 
-#: cogs/trading.py:174
+#: cogs/trading.py:175
 msgid "Show the market with all items and prices."
 msgstr ""
 "Successfuwwy wemuvd item `{itemid}` fwom the shop and put it in youw "
 "inventowy."
 
-#: cogs/trading.py:201
+#: cogs/trading.py:202
 msgid "No results."
 msgstr "Nyo wesuwts."
 
-#: cogs/trading.py:205
+#: cogs/trading.py:206
 msgid "IdleRPG Shop"
 msgstr "IdleRPG Shop"
 
-#: cogs/trading.py:206 cogs/trading.py:381
+#: cogs/trading.py:207 cogs/trading.py:382
 #, python-brace-format
 msgid "Use `{prefix}buy {item}` to buy this."
 msgstr "Use `{prefix}buy {item}` to buy this."
 
-#: cogs/trading.py:216 cogs/trading.py:391 cogs/marriage.py:205
+#: cogs/trading.py:217 cogs/trading.py:392 cogs/marriage.py:205
 msgid "Price"
 msgstr "Pwice"
 
-#: cogs/trading.py:218 cogs/trading.py:393
+#: cogs/trading.py:219 cogs/trading.py:394
 #, python-brace-format
 msgid "Item {num} of {total}"
 msgstr "Item {num} of {total}"
 
-#: cogs/trading.py:232
+#: cogs/trading.py:233
 msgid "Offer an item to a specific user."
 msgstr "Offew an item to a specific usew."
 
-#: cogs/trading.py:247 cogs/trading.py:322
+#: cogs/trading.py:248 cogs/trading.py:323
 #, python-brace-format
 msgid "Are you sure you want to sell your equipped {item}?"
 msgstr "Awe you suwe you want to seww youw equipped {item}?"
 
-#: cogs/trading.py:251
+#: cogs/trading.py:252
 msgid "Item selling cancelled."
 msgstr "Item sewwing cancewwed."
 
-#: cogs/trading.py:255
+#: cogs/trading.py:256
 #, python-brace-format
 msgid ""
 "{user}, {author} offered you an item! React to buy it! The price is **"
@@ -2704,21 +2709,21 @@ msgstr ""
 "** ${price}**. You have **2 Minyutes** to accept the trade ow the offew wiww "
 "be cancewed."
 
-#: cogs/trading.py:260
+#: cogs/trading.py:261
 msgid "They didn't want it."
 msgstr "They didn't want it."
 
-#: cogs/trading.py:264
+#: cogs/trading.py:265
 #, python-brace-format
 msgid "{user}, you're too poor to buy this item!"
 msgstr "{user}, you'we too poow to buy this item ;;w;;"
 
-#: cogs/trading.py:275
+#: cogs/trading.py:276
 #, python-brace-format
 msgid "The owner sold the item with the ID `{itemid}` in the meantime."
 msgstr "The ownyew sowd the item with the ID `{itemid}` in the meantime."
 
-#: cogs/trading.py:294
+#: cogs/trading.py:295
 #, python-brace-format
 msgid ""
 "Successfully bought item `{itemid}`. Use `{prefix}inventory` to view your "
@@ -2727,61 +2732,61 @@ msgstr ""
 "Successfuwwy bought item `{itemid}`. Use `{prefix}inventory` to view youw "
 "updated inventowy."
 
-#: cogs/trading.py:307
+#: cogs/trading.py:308
 msgid "Sells an item for its value."
 msgstr "Sewws an item fow its value."
 
-#: cogs/trading.py:327
+#: cogs/trading.py:328
 msgid "Cancelled."
 msgstr "Cancewwed."
 
-#: cogs/trading.py:335
+#: cogs/trading.py:336
 #, python-brace-format
 msgid "You received **${money}** when selling item `{itemid}`."
 msgstr "You weceived **${money}** when sewwing item `{itemid}`."
 
-#: cogs/trading.py:345
+#: cogs/trading.py:346
 msgid "Sells all your non-equipped items for their value."
 msgstr "Sewws aww youw nyon-equipped items fow theiw vawue."
 
-#: cogs/trading.py:352
+#: cogs/trading.py:353
 msgid "Nothing to merch."
 msgstr "Nyothing to mewch."
 
-#: cogs/trading.py:363
+#: cogs/trading.py:364
 #, python-brace-format
 msgid "Merched **{count}** items for **${money}**."
 msgstr "Mewched **{count}** items fow **${money}**."
 
-#: cogs/trading.py:371
+#: cogs/trading.py:372
 msgid "View your pending shop offers."
 msgstr "View youw pending shop offews."
 
-#: cogs/trading.py:377
+#: cogs/trading.py:378
 msgid "You don't have any pending shop offers."
 msgstr "You don't have any pending shop offews."
 
-#: cogs/trading.py:380
+#: cogs/trading.py:381
 msgid "Your pending items"
 msgstr "Youw pending items"
 
-#: cogs/trading.py:404
+#: cogs/trading.py:405
 msgid "Buy items at the trader."
 msgstr "Buy items at the twadew."
 
-#: cogs/trading.py:419
+#: cogs/trading.py:421
 msgid "The Trader"
 msgstr "The Tradew"
 
-#: cogs/trading.py:420
+#: cogs/trading.py:422
 msgid "Hit a button to buy it"
 msgstr "Hit a button to buy it"
 
-#: cogs/trading.py:430
+#: cogs/trading.py:434
 msgid "You are too poor to buy this item."
 msgstr "You awe too poow to buy this item."
 
-#: cogs/trading.py:437
+#: cogs/trading.py:441
 #, python-brace-format
 msgid ""
 "Successfully bought offer **{offer}**. Use `{prefix}inventory` to view your "
@@ -4155,7 +4160,9 @@ msgstr ""
 
 #: cogs/profile.py:227
 #, python-brace-format
-msgid "Your current luck is `{luck}x` (≈{percent}%) more than usual (usual=0)."
+msgid ""
+"Your current luck multiplier is `{luck}x` (≈{percent}% more than usual "
+"(usual=0))."
 msgstr ""
 
 #: cogs/profile.py:238
@@ -4418,29 +4425,29 @@ msgstr "Timeout expiwed."
 msgid "Renamed."
 msgstr "Wenyamed."
 
-#: cogs/admin.py:117
+#: cogs/admin.py:119
 msgid "[Bot Admin only] Gives/removes crates to a user without loss."
 msgstr "[Bot Admin onwy] Gives/wemuvs cwates to a usew without woss."
 
-#: cogs/admin.py:124
+#: cogs/admin.py:130
 #, python-brace-format
-msgid "Successfully gave **{amount}** crates to **{target}**."
-msgstr "Successfuwwy gave **{amount}** cwates to **{target}**."
+msgid "Successfully gave **{amount}** {rarity} crates to **{target}**."
+msgstr ""
 
-#: cogs/admin.py:137
+#: cogs/admin.py:143
 msgid "[Bot Admin only] Gives xp to a user."
 msgstr "[Bot Admin onwy] Gives xp to a usew."
 
-#: cogs/admin.py:142
+#: cogs/admin.py:148
 #, python-brace-format
 msgid "Successfully gave **{amount}** XP to **{target}**."
 msgstr "Successfuwwy gave **{amount}** XP to **{target}**."
 
-#: cogs/admin.py:155
+#: cogs/admin.py:161
 msgid "[Bot Admin only] Wipes someone's donator perks."
 msgstr "[Bot Admin onwy] Wipes someonye's donyatow pewks."
 
-#: cogs/admin.py:181
+#: cogs/admin.py:187
 #, python-brace-format
 msgid ""
 "Successfully reset {target}'s background, class, item names and guild member "
@@ -4448,6 +4455,35 @@ msgid ""
 msgstr ""
 "Successfuwwy weset {target}'s backgwound, cwass, item nyames and guiwd "
 "membew wimit."
+
+#~ msgid ""
+#~ "You currently have **{crates}** crates, {author}! Use `{prefix}open` to "
+#~ "open one!"
+#~ msgstr ""
+#~ "You cuwwentwy have **{crates}** cwates, {author} owo! Use `{prefix}open` "
+#~ "to open onye UwU"
+
+#~ msgid ""
+#~ "Seems like you don't have a crate yet. Vote me up to get some or earn "
+#~ "them!"
+#~ msgstr ""
+#~ "Seems wike you don't have a cwate yet. Vote me up to get some ow eawn "
+#~ "them (・`ω´・)"
+
+#~ msgid "Remaining crates: {crates}"
+#~ msgstr "Wemainying cwates: {crates}"
+
+#~ msgid "You don't have any crates."
+#~ msgstr "You don't have any cwates."
+
+#~ msgid "Successfully gave {amount} crate(s) to {other}."
+#~ msgstr "Successfuwwy gave {amount} cwate(s) to {other}."
+
+#~ msgid "**{amount}** crates"
+#~ msgstr "**{amount}** cwates"
+
+#~ msgid "Successfully gave **{amount}** crates to **{target}**."
+#~ msgstr "Successfuwwy gave **{amount}** cwates to **{target}**."
 
 #~ msgid "This booster is already running."
 #~ msgstr "This boostew is awweady wunnying."

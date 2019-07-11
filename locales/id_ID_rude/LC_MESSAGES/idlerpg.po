@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-07-09 15:54+0000\n"
+"POT-Creation-Date: 2019-07-11 11:46+0000\n"
 "PO-Revision-Date: 2019-06-01 17:59+0700\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -164,7 +164,7 @@ msgstr "{user} memberikan kamu tambahan $50!"
 msgid "Seems you haven't got a trick or treat bag yet. Go get some!"
 msgstr "Sepertinya kamu belum memiliki tas trick or treat. Dapatkan beberapa!"
 
-#: cogs/halloween.py:142 cogs/crates.py:82 cogs/classes.py:268
+#: cogs/halloween.py:142 cogs/crates.py:129 cogs/classes.py:268
 #: cogs/adventure.py:221
 msgid "You gained an item!"
 msgstr "Kamu mendapatkan barang!"
@@ -173,18 +173,18 @@ msgstr "Kamu mendapatkan barang!"
 msgid "You found a new item when opening a trick-or-treat bag!"
 msgstr "Kamu mendapatkan barang baru ketika membuka tas trick-or-treat!"
 
-#: cogs/halloween.py:147 cogs/crates.py:87 cogs/classes.py:273
+#: cogs/halloween.py:147 cogs/crates.py:134 cogs/classes.py:273
 #: cogs/adventure.py:226
 msgid "ID"
 msgstr "ID"
 
-#: cogs/halloween.py:148 cogs/crates.py:88 cogs/classes.py:274
-#: cogs/adventure.py:227 cogs/trading.py:211 cogs/trading.py:386
+#: cogs/halloween.py:148 cogs/crates.py:135 cogs/classes.py:274
+#: cogs/adventure.py:227 cogs/trading.py:212 cogs/trading.py:387
 msgid "Name"
 msgstr "Nama"
 
-#: cogs/halloween.py:149 cogs/crates.py:89 cogs/classes.py:275
-#: cogs/adventure.py:228 cogs/trading.py:212 cogs/trading.py:387
+#: cogs/halloween.py:149 cogs/crates.py:136 cogs/classes.py:275
+#: cogs/adventure.py:228 cogs/trading.py:213 cogs/trading.py:388
 msgid "Type"
 msgstr "Tipe"
 
@@ -436,73 +436,82 @@ msgstr ""
 "Kamu telah mengklaim hadiahmu. Periksa inventaris / penguat / peti / uang / "
 "dll! Kamu dapat mengklaim banyak hadiah, teruslah berburu!"
 
-#: cogs/crates.py:35
+#: cogs/crates.py:43
 msgid "Shows your crates."
 msgstr "Menunjukkan peti kamu."
 
-#: cogs/crates.py:38
+#: cogs/crates.py:46
 #, python-brace-format
 msgid ""
-"You currently have **{crates}** crates, {author}! Use `{prefix}open` to open "
-"one!"
+"**{author}'s crates**\n"
+"\n"
+"{emotes.common} {common}\n"
+"{emotes.uncommon} {uncommon}\n"
+"{emotes.rare} {rare}\n"
+"{emotes.magic} {magic}\n"
+"{emotes.legendary} {legendary}\n"
+"\n"
+" Use `{prefix}open [rarity]` to open one!"
 msgstr ""
-"Kamu saat ini memiliki **{crates}** peti, {author}! Gunakan `{prefix}open` "
-"untuk membuka salah satunya!"
 
-#: cogs/crates.py:50
+#: cogs/crates.py:72
 msgid "Opens a crate."
 msgstr "Membuka peti."
 
-#: cogs/crates.py:54
-msgid ""
-"Seems like you don't have a crate yet. Vote me up to get some or earn them!"
+#: cogs/crates.py:75 cogs/crates.py:162 cogs/admin.py:122
+#, python-brace-format
+msgid "{rarity} is not a valid rarity."
 msgstr ""
-"Sepertinya kamu tidak mempunyai peti. Pilih aku untuk mendapatkannya atau "
-"memperolehnya!"
 
-#: cogs/crates.py:83
+#: cogs/crates.py:80
+msgid ""
+"Seems like you don't have any crate of this rarity yet. Vote me up to get a "
+"random one or find them!"
+msgstr ""
+
+#: cogs/crates.py:130
 msgid "You found a new item when opening a crate!"
 msgstr "Kamu menemukan barang baru ketika membuka sebuah peti!"
 
-#: cogs/crates.py:90 cogs/classes.py:277 cogs/adventure.py:229
-#: cogs/trading.py:213 cogs/trading.py:388
+#: cogs/crates.py:137 cogs/classes.py:277 cogs/adventure.py:229
+#: cogs/trading.py:214 cogs/trading.py:389
 msgid "Damage"
 msgstr "Kerusakan"
 
-#: cogs/crates.py:91 cogs/classes.py:279 cogs/adventure.py:230
-#: cogs/trading.py:214 cogs/trading.py:389
+#: cogs/crates.py:138 cogs/classes.py:279 cogs/adventure.py:230
+#: cogs/trading.py:215 cogs/trading.py:390
 msgid "Armor"
 msgstr "Pelindung tubuh"
 
-#: cogs/crates.py:92 cogs/classes.py:280 cogs/adventure.py:231
-#: cogs/trading.py:215 cogs/trading.py:390
+#: cogs/crates.py:139 cogs/classes.py:280 cogs/adventure.py:231
+#: cogs/trading.py:216 cogs/trading.py:391
 msgid "Value"
 msgstr "Nilai"
 
-#: cogs/crates.py:94
+#: cogs/crates.py:141
 #, python-brace-format
-msgid "Remaining crates: {crates}"
-msgstr "Peti tersisa: {crates}"
+msgid "Remaining {rarity} crates: {crates}"
+msgstr ""
 
-#: cogs/crates.py:106
+#: cogs/crates.py:157
 msgid "Trades crates to a user."
 msgstr "Menukarkan peti dengan sebuah pengguna."
 
 #. preserve deletion of admins
 #. preserve renaming of admins
-#: cogs/crates.py:108 cogs/guild.py:244 cogs/guild.py:264 cogs/admin.py:72
+#: cogs/crates.py:159 cogs/guild.py:244 cogs/guild.py:264 cogs/admin.py:72
 #: cogs/admin.py:85
 msgid "Very funny..."
 msgstr "Sangat lucu..."
 
-#: cogs/crates.py:110
-msgid "You don't have any crates."
-msgstr "Kamu tidak memiliki peti."
+#: cogs/crates.py:165
+msgid "You don't have any crates of this rarity."
+msgstr ""
 
-#: cogs/crates.py:121
+#: cogs/crates.py:178
 #, python-brace-format
-msgid "Successfully gave {amount} crate(s) to {other}."
-msgstr "Berhasil memberikan {amount} peti untuk {other}."
+msgid "Successfully gave {amount} {rarity} crate(s) to {other}."
+msgstr ""
 
 #: cogs/hungergames.py:50
 msgid "Gather as much food as you can"
@@ -824,7 +833,8 @@ msgstr ""
 ":x: Kamu tidak memiliki izin untuk menggunakan perintah ini. Ini "
 "diperkirakan untuk pengguna lain."
 
-#: cogs/error_handler.py:129
+#. prevent cooldown reset
+#: cogs/error_handler.py:129 cogs/trading.py:430
 msgid "You did not choose anything."
 msgstr "Kamu tidak memilih apa pun."
 
@@ -1808,7 +1818,7 @@ msgstr "[Hanya Patreon] Mengganti nama barang."
 msgid "Name too long."
 msgstr "Nama terlalu panjang."
 
-#: cogs/patreon.py:48 cogs/trading.py:240
+#: cogs/patreon.py:48 cogs/trading.py:241
 #, python-brace-format
 msgid "You don't have an item with the ID `{itemid}`."
 msgstr "Kamu tidak memiliki barang dengan ID `{itemid}`."
@@ -2393,21 +2403,16 @@ msgstr ""
 "senjata baru: **{item}**. Pengalaman didapat: **{xp}**.\n"
 "Kompanyonmu mendapatkan **${gold2}**."
 
-#: cogs/adventure.py:326
-#, python-brace-format
-msgid "**{amount}** crates"
-msgstr "**{amount}** peti."
-
-#: cogs/adventure.py:329
+#: cogs/adventure.py:325
 msgid "a special Item"
 msgstr "barang spesial"
 
-#: cogs/adventure.py:347
+#: cogs/adventure.py:374
 #, python-brace-format
 msgid "Level {new_level} Memorial"
 msgstr "Peringatan Level {new_level}"
 
-#: cogs/adventure.py:353
+#: cogs/adventure.py:380
 #, python-brace-format
 msgid ""
 "You reached a new level: **{new_level}** :star:! You received {reward} as a "
@@ -2416,11 +2421,11 @@ msgstr ""
 "Kamu mencapai level baru: **{new_level}** :star:! Kamu mendapatkan {reward} "
 "sebagai hadiah :tada:!"
 
-#: cogs/adventure.py:357
+#: cogs/adventure.py:384
 msgid "You died on your mission. Try again!"
 msgstr "Kamu mati dalam misi kamu. Coba lagi!"
 
-#: cogs/adventure.py:366
+#: cogs/adventure.py:393
 #, python-brace-format
 msgid ""
 "You are currently in the adventure with difficulty `{difficulty}`.\n"
@@ -2431,11 +2436,11 @@ msgstr ""
 "Kira-kira berakhir dalam `{end}`\n"
 "Nama Dungeon: `{dungeon}`"
 
-#: cogs/adventure.py:375
+#: cogs/adventure.py:402
 msgid "Cancels your current adventure."
 msgstr "Membatalkan petualangan kamu saat ini."
 
-#: cogs/adventure.py:379
+#: cogs/adventure.py:406
 #, python-brace-format
 msgid ""
 "Canceled your mission. Use `{prefix}adventure [missionID]` to start a new "
@@ -2444,11 +2449,11 @@ msgstr ""
 "Membatalkan misi kamu. Gunakan `{prefix}adventure [missionID]` untuk memulai "
 "baru!"
 
-#: cogs/adventure.py:387
+#: cogs/adventure.py:414
 msgid "Your death stats."
 msgstr "Statistik kematian kamu."
 
-#: cogs/adventure.py:397
+#: cogs/adventure.py:424
 #, python-brace-format
 msgid ""
 "Out of **{total}** adventures, you died **{deaths}** times and survived "
@@ -2598,28 +2603,28 @@ msgstr ""
 "[Alpha] Memainkan blackjack melawan dealer. Aturan dealer, artinya menang "
 "jika seri."
 
-#: cogs/trading.py:35
+#: cogs/trading.py:36
 msgid "Puts an item into the player store."
 msgstr "Menaruh barang ke dalam toko pemain."
 
-#: cogs/trading.py:44 cogs/trading.py:316
+#: cogs/trading.py:45 cogs/trading.py:317
 #, python-brace-format
 msgid "You don't own an item with the ID: {itemid}"
 msgstr "Kamu tidak memiliki barang dengan ID: {itemid}"
 
-#: cogs/trading.py:51
+#: cogs/trading.py:52
 msgid ""
 "Your item is either equal to a Starter Item or worse. Noone would buy it."
 msgstr ""
 "Item kamu mungkin sama dengan Item pemula atau lebih buruk. Tidak ada yang "
 "mau membelinya."
 
-#: cogs/trading.py:57
+#: cogs/trading.py:58
 #, python-brace-format
 msgid "Your price is too high. Try adjusting it to be up to `{limit}`."
 msgstr "Hargamu terlalu tinggi. Coba sesuaikan agar sampai `{limit}`."
 
-#: cogs/trading.py:70
+#: cogs/trading.py:71
 #, python-brace-format
 msgid ""
 "Successfully added your item to the shop! Use `{prefix}shop` to view it in "
@@ -2628,20 +2633,20 @@ msgstr ""
 "Berhasil menambahkan barangmu ke toko! Gunakan `{prefix}shop` untuk "
 "melihatnya di pasar!"
 
-#: cogs/trading.py:78
+#: cogs/trading.py:79
 msgid "Buys an item from the global market."
 msgstr "Membeli barang dari pasar global."
 
-#: cogs/trading.py:86
+#: cogs/trading.py:87
 #, python-brace-format
 msgid "There is no item in the shop with the ID: {itemid}"
 msgstr "Tidak ada barang di toko dengan ID: {itemid}"
 
-#: cogs/trading.py:91
+#: cogs/trading.py:92
 msgid "You're too poor to buy this item."
 msgstr "Kamu terlalu miskin untuk membeli barang ini."
 
-#: cogs/trading.py:116
+#: cogs/trading.py:117
 #, python-brace-format
 msgid ""
 "Successfully bought item `{id}`. Use `{prefix}inventory` to view your "
@@ -2650,23 +2655,23 @@ msgstr ""
 "Berhasil membeli barang `{id}`. Gunakan `{prefix}inventory` untuk melihat "
 "inventaris kamu yang telah diperbarui."
 
-#: cogs/trading.py:123
+#: cogs/trading.py:124
 #, python-brace-format
 msgid "**{author}** bought your **{name}** for **${price}** from the market."
 msgstr ""
 "**{author}** membeli **{name}**mu dengan harga **${price}** dari pasar."
 
-#: cogs/trading.py:138
+#: cogs/trading.py:139
 msgid "Takes an item off the shop."
 msgstr "Mengambil barang dari toko."
 
-#: cogs/trading.py:148
+#: cogs/trading.py:149
 #, python-brace-format
 msgid "You don't have an item of yours in the shop with the ID `{itemid}`."
 msgstr ""
 "Kamu tidak mempunyai barang yang berada di tokomu dengan ID `{itemid}`."
 
-#: cogs/trading.py:161
+#: cogs/trading.py:162
 #, python-brace-format
 msgid ""
 "Successfully removed item `{itemid}` from the shop and put it in your "
@@ -2675,46 +2680,46 @@ msgstr ""
 "Berhasil menghapus barang `{itemid}` dari toko dan menaruhnya dalam "
 "inventarismu."
 
-#: cogs/trading.py:174
+#: cogs/trading.py:175
 msgid "Show the market with all items and prices."
 msgstr "Menunjukan pasar dengan semua barang dan harga."
 
-#: cogs/trading.py:201
+#: cogs/trading.py:202
 msgid "No results."
 msgstr "Tidak ada hasil."
 
-#: cogs/trading.py:205
+#: cogs/trading.py:206
 msgid "IdleRPG Shop"
 msgstr "Toko IdleRPG"
 
-#: cogs/trading.py:206 cogs/trading.py:381
+#: cogs/trading.py:207 cogs/trading.py:382
 #, python-brace-format
 msgid "Use `{prefix}buy {item}` to buy this."
 msgstr "Gunakan `{prefix}buy{item}` untuk membeli ini."
 
-#: cogs/trading.py:216 cogs/trading.py:391 cogs/marriage.py:205
+#: cogs/trading.py:217 cogs/trading.py:392 cogs/marriage.py:205
 msgid "Price"
 msgstr "Harga"
 
-#: cogs/trading.py:218 cogs/trading.py:393
+#: cogs/trading.py:219 cogs/trading.py:394
 #, python-brace-format
 msgid "Item {num} of {total}"
 msgstr "Barang {num} dari {total}"
 
-#: cogs/trading.py:232
+#: cogs/trading.py:233
 msgid "Offer an item to a specific user."
 msgstr "Menawarkan barang kepada pengguna tertentu."
 
-#: cogs/trading.py:247 cogs/trading.py:322
+#: cogs/trading.py:248 cogs/trading.py:323
 #, python-brace-format
 msgid "Are you sure you want to sell your equipped {item}?"
 msgstr "Apakah kamu yakin mau menjual {item} yang sedang kamu gunakan?"
 
-#: cogs/trading.py:251
+#: cogs/trading.py:252
 msgid "Item selling cancelled."
 msgstr "Penjualan barang dibatalkan."
 
-#: cogs/trading.py:255
+#: cogs/trading.py:256
 #, python-brace-format
 msgid ""
 "{user}, {author} offered you an item! React to buy it! The price is **"
@@ -2725,21 +2730,21 @@ msgstr ""
 "Harganya adalah **${price}**. Kamu punya **2 menit* untuk menerima "
 "perdagangannya atau penawaran akan dibatalkan."
 
-#: cogs/trading.py:260
+#: cogs/trading.py:261
 msgid "They didn't want it."
 msgstr "Mereka tidak menginginkannya."
 
-#: cogs/trading.py:264
+#: cogs/trading.py:265
 #, python-brace-format
 msgid "{user}, you're too poor to buy this item!"
 msgstr "{user}, kamu terlalu miskin untuk membeli barang ini!"
 
-#: cogs/trading.py:275
+#: cogs/trading.py:276
 #, python-brace-format
 msgid "The owner sold the item with the ID `{itemid}` in the meantime."
 msgstr "Pemilik menjual item dengan ID `{itemid}` untuk sementara."
 
-#: cogs/trading.py:294
+#: cogs/trading.py:295
 #, python-brace-format
 msgid ""
 "Successfully bought item `{itemid}`. Use `{prefix}inventory` to view your "
@@ -2748,61 +2753,61 @@ msgstr ""
 "Berhasil membeli barang `{itemid}`. Gunakan `{prefix}inventory` untuk "
 "melihat inventarismu yang telah diperbarui."
 
-#: cogs/trading.py:307
+#: cogs/trading.py:308
 msgid "Sells an item for its value."
 msgstr "Menjual barang untuk nilainya."
 
-#: cogs/trading.py:327
+#: cogs/trading.py:328
 msgid "Cancelled."
 msgstr "Dibatalkan."
 
-#: cogs/trading.py:335
+#: cogs/trading.py:336
 #, python-brace-format
 msgid "You received **${money}** when selling item `{itemid}`."
 msgstr "Kamu menerima **${money}** ketika menjual barang `{itemid}`."
 
-#: cogs/trading.py:345
+#: cogs/trading.py:346
 msgid "Sells all your non-equipped items for their value."
 msgstr "Jual semua barang yang tidak kamu gunakan untuk nilainya."
 
-#: cogs/trading.py:352
+#: cogs/trading.py:353
 msgid "Nothing to merch."
 msgstr "Tidak ada barang dagangan."
 
-#: cogs/trading.py:363
+#: cogs/trading.py:364
 #, python-brace-format
 msgid "Merched **{count}** items for **${money}**."
 msgstr "Menjual **{count}** barang seharga **${money}**."
 
-#: cogs/trading.py:371
+#: cogs/trading.py:372
 msgid "View your pending shop offers."
 msgstr "Lihat penawaran tokomu yang tertunda."
 
-#: cogs/trading.py:377
+#: cogs/trading.py:378
 msgid "You don't have any pending shop offers."
 msgstr "Kamu tidak memiliki penawaran yang tertunda dari tokomu."
 
-#: cogs/trading.py:380
+#: cogs/trading.py:381
 msgid "Your pending items"
 msgstr "Barang tertundamu."
 
-#: cogs/trading.py:404
+#: cogs/trading.py:405
 msgid "Buy items at the trader."
 msgstr "Membeli barang di pedagang."
 
-#: cogs/trading.py:419
+#: cogs/trading.py:421
 msgid "The Trader"
 msgstr "Pedagang"
 
-#: cogs/trading.py:420
+#: cogs/trading.py:422
 msgid "Hit a button to buy it"
 msgstr "Tekan tombol untuk membelinya"
 
-#: cogs/trading.py:430
+#: cogs/trading.py:434
 msgid "You are too poor to buy this item."
 msgstr "Kamu terlalu miskin untuk membeli barang ini."
 
-#: cogs/trading.py:437
+#: cogs/trading.py:441
 #, python-brace-format
 msgid ""
 "Successfully bought offer **{offer}**. Use `{prefix}inventory` to view your "
@@ -4115,7 +4120,9 @@ msgstr ""
 
 #: cogs/profile.py:227
 #, python-brace-format
-msgid "Your current luck is `{luck}x` (≈{percent}%) more than usual (usual=0)."
+msgid ""
+"Your current luck multiplier is `{luck}x` (≈{percent}% more than usual "
+"(usual=0))."
 msgstr ""
 
 #: cogs/profile.py:238
@@ -4365,34 +4372,60 @@ msgstr ""
 msgid "Renamed."
 msgstr ""
 
-#: cogs/admin.py:117
+#: cogs/admin.py:119
 msgid "[Bot Admin only] Gives/removes crates to a user without loss."
 msgstr ""
 
-#: cogs/admin.py:124
+#: cogs/admin.py:130
 #, python-brace-format
-msgid "Successfully gave **{amount}** crates to **{target}**."
+msgid "Successfully gave **{amount}** {rarity} crates to **{target}**."
 msgstr ""
 
-#: cogs/admin.py:137
+#: cogs/admin.py:143
 msgid "[Bot Admin only] Gives xp to a user."
 msgstr ""
 
-#: cogs/admin.py:142
+#: cogs/admin.py:148
 #, python-brace-format
 msgid "Successfully gave **{amount}** XP to **{target}**."
 msgstr ""
 
-#: cogs/admin.py:155
+#: cogs/admin.py:161
 msgid "[Bot Admin only] Wipes someone's donator perks."
 msgstr ""
 
-#: cogs/admin.py:181
+#: cogs/admin.py:187
 #, python-brace-format
 msgid ""
 "Successfully reset {target}'s background, class, item names and guild member "
 "limit."
 msgstr ""
+
+#~ msgid ""
+#~ "You currently have **{crates}** crates, {author}! Use `{prefix}open` to "
+#~ "open one!"
+#~ msgstr ""
+#~ "Kamu saat ini memiliki **{crates}** peti, {author}! Gunakan `{prefix}"
+#~ "open` untuk membuka salah satunya!"
+
+#~ msgid ""
+#~ "Seems like you don't have a crate yet. Vote me up to get some or earn "
+#~ "them!"
+#~ msgstr ""
+#~ "Sepertinya kamu tidak mempunyai peti. Pilih aku untuk mendapatkannya atau "
+#~ "memperolehnya!"
+
+#~ msgid "Remaining crates: {crates}"
+#~ msgstr "Peti tersisa: {crates}"
+
+#~ msgid "You don't have any crates."
+#~ msgstr "Kamu tidak memiliki peti."
+
+#~ msgid "Successfully gave {amount} crate(s) to {other}."
+#~ msgstr "Berhasil memberikan {amount} peti untuk {other}."
+
+#~ msgid "**{amount}** crates"
+#~ msgstr "**{amount}** peti."
 
 #~ msgid "reset"
 #~ msgstr "mengatur ulang"
