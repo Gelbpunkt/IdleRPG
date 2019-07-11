@@ -128,9 +128,9 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
             if j is None:
                 continue
             if self.bot.get_class_line(j["class"]) == "Raider":
-                atkmultiply = j["atkmultiply"] + Decimal("0.1") * self.bot.get_class_grade(
-                    j["class"]
-                )
+                atkmultiply = j["atkmultiply"] + Decimal(
+                    "0.1"
+                ) * self.bot.get_class_grade(j["class"])
             else:
                 atkmultiply = j["atkmultiply"]
             dmg = j["damage"] * atkmultiply if j else 0
@@ -138,9 +138,9 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
             if j is None:
                 continue
             if self.bot.get_class_line(j["class"]) == "Raider":
-                efmultiply = j["defmultiply"] + Decimal("0.1") * self.bot.get_class_grade(
-                    j["class"]
-                )
+                defmultiply = j["defmultiply"] + Decimal(
+                    "0.1"
+                ) * self.bot.get_class_grade(j["class"])
             else:
                 defmultiply = j["defmultiply"]
             deff = j["armor"] * defmultiply if j else 0
@@ -369,9 +369,9 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
             if j is None:
                 continue
             if self.bot.get_class_line(j["class"]) == "Raider":
-                atkmultiply = j["atkmultiply"] + Decimal("0.1") * self.bot.get_class_grade(
-                    j["class"]
-                )
+                atkmultiply = j["atkmultiply"] + Decimal(
+                    "0.1"
+                ) * self.bot.get_class_grade(j["class"])
             else:
                 atkmultiply = j["atkmultiply"]
             dmg = j["damage"] * atkmultiply if j else 0
@@ -379,9 +379,9 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
             if j is None:
                 continue
             if self.bot.get_class_line(j["class"]) == "Raider":
-                defmultiply = j["defmultiply"] + Decimal("0.1") * self.bot.get_class_grade(
-                    j["class"]
-                )
+                defmultiply = j["defmultiply"] + Decimal(
+                    "0.1"
+                ) * self.bot.get_class_grade(j["class"])
             else:
                 defmultiply = j["defmultiply"]
             deff = j["armor"] * defmultiply if j else 0
@@ -529,6 +529,10 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
         deff = ctx.character_data["defmultiply"]
         atkp = self.getpriceto(atk + Decimal("0.1"))
         deffp = self.getpriceto(deff + Decimal("0.1"))
+        if self.bot.get_class_line(ctx.character_data["class"]) == "Raider":
+            tier = self.bot.get_class_grade(ctx.character_data["class"])
+            atk += Decimal("0.1") * tier
+            deff += Decimal("0.1") * tier
         await ctx.send(
             f"**{ctx.author.mention}'s raid multipliers**\nDamage Multiplier: x{atk} (Upgrading: ${atkp})\nDefense Multiplier: x{deff} (Upgrading: ${deffp})"
         )
