@@ -10,15 +10,14 @@
 -- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 -- GNU Affero General Public License for more details.
 -- You should have received a copy of the GNU Affero General Public License
---along with this program.  If not, see <https://www.gnu.org/licenses/>.
-
+-- along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 --
 -- PostgreSQL database dump
 --
 
--- Dumped from database version 11.3
--- Dumped by pg_dump version 11.3
+-- Dumped from database version 11.4
+-- Dumped by pg_dump version 11.4
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -252,7 +251,13 @@ CREATE TABLE public.profile (
     atkmultiply numeric DEFAULT 1.0,
     defmultiply numeric DEFAULT 1.0,
     trickortreat bigint DEFAULT 0,
-    eastereggs bigint DEFAULT 0
+    eastereggs bigint DEFAULT 0,
+    luck numeric DEFAULT 0.0,
+    crates_common bigint DEFAULT 0,
+    crates_uncommon bigint DEFAULT 0,
+    crates_rare bigint DEFAULT 0,
+    crates_magic bigint DEFAULT 0,
+    crates_legendary bigint DEFAULT 0
 );
 
 

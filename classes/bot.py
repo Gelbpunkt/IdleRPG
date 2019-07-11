@@ -119,7 +119,7 @@ class Bot(commands.AutoShardedBot):
         i18n.current_locale.set(locale)
         if message.author.id in self.prompting and message.content:
             await self.handle_captcha(message.author, message.channel, message.content)
-        if message.author.id in self.verified:
+        elif message.author.id in self.verified:
             await self.process_commands(message)
         elif self.matches_prefix(message):
             await self.create_captcha(message.author, message.channel)
@@ -130,8 +130,8 @@ class Bot(commands.AutoShardedBot):
         self.prompting[user.id] = [data[1], 0]
         await channel.send(
             _(
-                "We have to verify you're not a bot. Please type the text you see within your next 3 messages."
-            ),
+                "{user}, we have to verify you're not a bot. Please type the text you see within your next 3 messages."
+            ).format(user=user.mention),
             file=discord.File(
                 filename="captcha.png", fp=io.BytesIO(base64.b64decode(data[0][22:]))
             ),
@@ -147,6 +147,7 @@ class Bot(commands.AutoShardedBot):
             self.prompting[user.id][1] += 1
             if self.prompting[user.id][1] >= 3:
                 self.bans.append(user.id)
+                del self.prompting[user.id]
                 await channel.send(_("You have been banned for selfbotting."))
 
     @property
