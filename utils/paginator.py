@@ -39,6 +39,7 @@ DEALINGS IN THE SOFTWARE.
 import asyncio
 
 import discord
+from discord.ext import commands
 
 from config import primary_colour
 
@@ -50,6 +51,109 @@ async def pager(entries, chunk: int):
 
 class NoChoice(discord.ext.commands.CommandInvokeError):
     pass
+
+
+class TextPaginator:
+    __slots__ = ("ctx", "reactions", "_paginator", "current", "message", "update_lock")
+
+    def __init__(self, ctx, prefix=None, suffix=None):
+        self._paginator = commands.Paginator(
+            prefix=prefix, suffix=suffix, max_size=1950
+        )
+        self.current = 0
+        self.message = None
+        self.ctx = ctx
+        self.update_lock = asyncio.Semaphore(value=2)
+        self.reactions = {
+            "⏮": "first",
+            "◀": "previous",
+            "⏹": "stop",
+            "▶": "next",
+            "⏭": "last",
+        }
+
+    @property
+    def pages(self):
+        paginator_pages = list(self._paginator._pages)
+        if len(self._paginator._current_page) > 1:
+            paginator_pages.append(
+                "\n".join(self._paginator._current_page)
+                + "\n"
+                + (self._paginator.suffix or "")
+            )
+        return paginator_pages
+
+    @property
+    def page_count(self):
+        return len(self.pages)
+
+    async def add_line(self, line):
+        before = self.page_count
+        if isinstance(line, str):
+            self._paginator.add_line(line)
+        else:
+            for _line in line:
+                self._paginator.add_line(_line)
+        after = self.page_count
+        if after > before:
+            self.current = after - 1
+        self.ctx.bot.loop.create_task(self.update())
+
+    async def react(self):
+        for emoji in self.reactions:
+            await self.message.add_reaction(emoji)
+
+    async def send(self):
+        self.message = await self.ctx.send(
+            self.pages[self.current] + f"Page {self.current + 1} / {self.page_count}"
+        )
+        await self.react()
+        self.ctx.bot.loop.create_task(self.listener())
+
+    async def update(self):
+        if self.update_lock.locked():
+            return
+
+        async with self.update_lock:
+            if self.update_lock.locked():
+                await asyncio.sleep(1)
+            if not self.message:
+                await asyncio.sleep(0.5)
+            else:
+                await self.message.edit(
+                    content=self.pages[self.current]
+                    + f"Page {self.current + 1} / {self.page_count}"
+                )
+
+    async def listener(self):
+        def check(reaction, user):
+            return (
+                user == self.ctx.author
+                and reaction.message.id == self.message.id
+                and reaction.emoji in self.reactions
+            )
+
+        while not self.ctx.bot.is_closed():
+            try:
+                reaction, user = await self.ctx.bot.wait_for(
+                    "reaction_add", check=check, timeout=120
+                )
+            except asyncio.TimeoutError:
+                await self.message.delete()
+                return
+            action = self.reactions[reaction.emoji]
+            if action == "first":
+                self.current = 0
+            elif action == "previous" and self.current != 0:
+                self.current -= 1
+            elif action == "next" and self.page_count != self.current + 1:
+                self.current += 1
+            elif action == "last":
+                self.current = self.page_count - 1
+            elif action == "stop":
+                await self.message.delete()
+                return
+            await self.update()
 
 
 class Paginator:

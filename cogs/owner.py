@@ -15,7 +15,6 @@ GNU Affero General Public License for more details.
 You should have received a copy of the GNU Affero General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
-import asyncio
 import copy
 import io
 import textwrap
@@ -24,8 +23,9 @@ from contextlib import redirect_stdout
 from importlib import reload as importlib_reload
 
 import discord
-from async_timeout import timeout
 from discord.ext import commands
+
+from utils import shell
 
 
 class Owner(commands.Cog):
@@ -164,54 +164,7 @@ class Owner(commands.Cog):
     @locale_doc
     async def bash(self, ctx, *, command_to_run: str):
         """[Owner Only] Run shell commands."""
-        process_embed = discord.Embed(
-            title="Here is your result, Sir", color=self.bot.config.primary_colour
-        )
-        process_embed.set_thumbnail(url=self.bot.user.avatar_url)
-        process = await asyncio.create_subprocess_shell(
-            command_to_run,
-            stdin=asyncio.subprocess.DEVNULL,
-            stdout=asyncio.subprocess.PIPE,
-            stderr=asyncio.subprocess.PIPE,
-        )
-        try:
-            async with timeout(10), ctx.channel.typing():
-                stdout, stderr = await process.communicate()
-        except asyncio.TimeoutError:
-            process_embed.title = "⌛ Timeout reached..."
-            return await ctx.send(embed=process_embed)
-        if process.returncode != 0 and stderr:
-            process_embed.add_field(
-                name=":x:Ouch, an error!",
-                value=f"The process `{process.pid}` returned a nonzero exit status `{process.returncode}`.\n"
-                f"```{stderr.decode()}```",
-                inline=False,
-            )
-        elif process.returncode != 0:
-            process_embed.add_field(
-                name=":x:Ouch, an error!",
-                value=f"The process `{process.pid}` returned a nonzero exit status `{process.returncode}`.",
-                inline=False,
-            )
-        elif stderr:  # Print errors with graceful shutdown aswell
-            process_embed.add_field(
-                name=":x:Ouch, an error!",
-                value=f"```{stderr.decode()}```",
-                inline=False,
-            )
-        if stdout:
-            process_embed.add_field(
-                name="<:cmd:472468557998063636>Output:",
-                value=f"```{stdout.decode()}```",
-                inline=False,
-            )
-        else:
-            process_embed.add_field(
-                name="<:cmd:472468557998063636>Output:",
-                value=f"```--- Empty output ---\nHere is a coffee: ☕```",
-                inline=False,
-            )
-        await ctx.send(embed=process_embed)
+        await shell.run(command_to_run, ctx)
 
     @commands.command(hidden=True)
     @locale_doc

@@ -91,7 +91,11 @@ class GlobalEvents(commands.Cog):
     async def status_updater(self):
         await self.bot.wait_until_ready()
         await self.bot.change_presence(
-            activity=discord.Game(name="Money was divided by 1000"),
+            activity=discord.Game(
+                name=f"IdleRPG v{self.bot.version}"
+                if self.bot.config.is_beta
+                else self.bot.BASE_URL
+            ),
             status=discord.Status.idle,
         )
 
