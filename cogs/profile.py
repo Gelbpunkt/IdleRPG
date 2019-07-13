@@ -566,16 +566,17 @@ IdleRPG is a global bot, your characters are valid everywhere"""
     @locale_doc
     async def colour(self, ctx, colour: str):
         _("""Sets your profile text colour.""")
-        colour = colour.lstrip("#")
-        if len(colour) != 6:
-            return await ctx.send(_("Format for colour is `#RRGGBB`."))
+        if len(colour) > 15:
+            return await ctx.send(
+                _("Format for colour is `#RRGGBB` or a colour code like `cyan`.")
+            )
         await self.bot.pool.execute(
             'UPDATE profile SET "colour"=$1 WHERE "user"=$2;', colour, ctx.author.id
         )
         await ctx.send(
-            _("Successfully set your profile colour to `#{colour}`.").format(
-                colour=colour
-            )
+            _(
+                "Successfully set your profile colour to `{colour}`. Hint: If you used a hex colour code, you must include the `#`."
+            ).format(colour=colour)
         )
 
 
