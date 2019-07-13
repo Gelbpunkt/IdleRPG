@@ -53,7 +53,6 @@ class Bot(commands.AutoShardedBot):
         self.linecount = 0
         self.make_linecount()
         self.all_prefixes = {}
-        self.prompting = {}
         self.verified = []
 
         # global cooldown
@@ -117,38 +116,52 @@ class Bot(commands.AutoShardedBot):
             return
         locale = await self.get_cog("Locale").locale(message)
         i18n.current_locale.set(locale)
-        if message.author.id in self.prompting and message.content:
-            await self.handle_captcha(message.author, message.channel, message.content)
-        elif message.author.id in self.verified:
+        if message.author.id in self.verified:
             await self.process_commands(message)
         elif self.matches_prefix(message):
             await self.create_captcha(message.author, message.channel)
 
     async def create_captcha(self, user, channel):
-        async with self.session.get("https://captcha.travitia.xyz") as r:
+        async with self.session.get("https://captcha.travitia.xyz/v2") as r:
             data = await r.json()
-        self.prompting[user.id] = [data[1], 0]
-        await channel.send(
+        reactions = [data["solution"]] + data["others"]
+        self.bans.append(user.id)  # prevent double captchas
+        msg = await channel.send(
             _(
-                "{user}, we have to verify you're not a bot. Please type the text you see within your next 3 messages."
+                "{user}, we have to verify you're not a bot. Please react with the emoji you see. You have 15 seconds and one attempt."
             ).format(user=user.mention),
             file=discord.File(
-                filename="captcha.png", fp=io.BytesIO(base64.b64decode(data[0][22:]))
+                filename="captcha.png",
+                fp=io.BytesIO(base64.b64decode(data["image"][22:])),
             ),
         )
+        random.shuffle(reactions)
+        for reaction in reactions:
+            await msg.add_reaction(reaction)
 
-    async def handle_captcha(self, user, channel, content):
-        data = self.prompting[user.id]
-        if data[0] == content:
-            await channel.send(_("Captcha completed!"))
+        def check(r, u):
+            return r.emoji in reactions and r.message.id == msg.id and u == user
+
+        try:
+            r, u = await self.wait_for("reaction_add", check=check, timeout=15)
+        except asyncio.TimeoutError:
+            return await channel.send(
+                _("{user}, you took too long and were banned.").format(
+                    user=user.mention
+                )
+            )
+        if r.emoji == data["solution"]:
+            await channel.send(
+                _("{user}, you have been verified!").format(user=user.mention)
+            )
+            self.bans.remove(user.id)
             self.verified.append(user.id)
-            del self.prompting[user.id]
         else:
-            self.prompting[user.id][1] += 1
-            if self.prompting[user.id][1] >= 3:
-                self.bans.append(user.id)
-                del self.prompting[user.id]
-                await channel.send(_("You have been banned for selfbotting."))
+            await channel.send(
+                _("{user}, that was wrong! I have banned you.").format(
+                    user=user.mention
+                )
+            )
 
     @property
     def uptime(self):
