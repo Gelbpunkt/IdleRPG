@@ -10,7 +10,8 @@
 -- MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 -- GNU Affero General Public License for more details.
 -- You should have received a copy of the GNU Affero General Public License
--- along with this program.  If not, see <https://www.gnu.org/licenses/>.
+--along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
 
 --
 -- PostgreSQL database dump
@@ -190,6 +191,41 @@ ALTER SEQUENCE public.inventory_id_seq OWNED BY public.inventory.id;
 
 
 --
+-- Name: loot; Type: TABLE; Schema: public; Owner: jens
+--
+
+CREATE TABLE public.loot (
+    id integer NOT NULL,
+    name character varying(50) NOT NULL,
+    value bigint NOT NULL
+);
+
+
+ALTER TABLE public.loot OWNER TO jens;
+
+--
+-- Name: loot_id_seq; Type: SEQUENCE; Schema: public; Owner: jens
+--
+
+CREATE SEQUENCE public.loot_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.loot_id_seq OWNER TO jens;
+
+--
+-- Name: loot_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: jens
+--
+
+ALTER SEQUENCE public.loot_id_seq OWNED BY public.loot.id;
+
+
+--
 -- Name: market; Type: TABLE; Schema: public; Owner: jens
 --
 
@@ -252,12 +288,12 @@ CREATE TABLE public.profile (
     defmultiply numeric DEFAULT 1.0,
     trickortreat bigint DEFAULT 0,
     eastereggs bigint DEFAULT 0,
-    luck numeric DEFAULT 0.0,
     crates_common bigint DEFAULT 0,
     crates_uncommon bigint DEFAULT 0,
     crates_rare bigint DEFAULT 0,
     crates_magic bigint DEFAULT 0,
-    crates_legendary bigint DEFAULT 0
+    crates_legendary bigint DEFAULT 0,
+    luck numeric DEFAULT 1.0
 );
 
 
@@ -348,6 +384,13 @@ ALTER TABLE ONLY public.inventory ALTER COLUMN id SET DEFAULT nextval('public.in
 
 
 --
+-- Name: loot id; Type: DEFAULT; Schema: public; Owner: jens
+--
+
+ALTER TABLE ONLY public.loot ALTER COLUMN id SET DEFAULT nextval('public.loot_id_seq'::regclass);
+
+
+--
 -- Name: market id; Type: DEFAULT; Schema: public; Owner: jens
 --
 
@@ -391,6 +434,14 @@ ALTER TABLE ONLY public.helpme
 
 ALTER TABLE ONLY public.inventory
     ADD CONSTRAINT inventory_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: loot loot_pkey; Type: CONSTRAINT; Schema: public; Owner: jens
+--
+
+ALTER TABLE ONLY public.loot
+    ADD CONSTRAINT loot_pkey PRIMARY KEY (id);
 
 
 --
