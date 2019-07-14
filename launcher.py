@@ -27,6 +27,9 @@ import aioredis
 
 from config import token
 
+if sys.version_info < (3, 8):
+    raise Exception("IdleRPG requires Python 3.8")
+
 __version__ = "0.7.0a"
 
 BOT_FILE = "idlerpg.py"
@@ -216,8 +219,8 @@ if __name__ == "__main__":
 
         loop.set_exception_handler(shutdown_handler)
         tasks = asyncio.gather(
-            *asyncio.Task.all_tasks(loop=loop), loop=loop, return_exceptions=True
-        )  # TODO: asyncio.Task.all_tasks will be depracted soon
+            *asyncio.all_tasks(loop=loop), loop=loop, return_exceptions=True
+        )
         tasks.add_done_callback(lambda t: loop.stop())
         tasks.cancel()
 

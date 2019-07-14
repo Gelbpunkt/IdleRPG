@@ -24,6 +24,7 @@ from collections import defaultdict, deque
 from functools import partial
 
 import discord
+import distro
 import pkg_resources as pkg
 import psutil
 from discord.ext import commands
@@ -153,7 +154,7 @@ Even $1 can help us.
         d1 = datetime.datetime.now()
         delta = d1 - d0
         myhours = delta.days * 1.5
-        sysinfo = platform.linux_distribution()
+        sysinfo = distro.linux_distribution()
         # owner = await self.bot.get_user_global(self.bot.owner_id)
         # sad that teams are fucky
         owner = " and ".join(
