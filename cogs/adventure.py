@@ -305,7 +305,7 @@ Adventure name: `{adventure}`"""
                     owner=ctx.author,
                 )
             else:
-                item = await items.get_item()
+                item = items.get_item()
                 await conn.execute(
                     'INSERT INTO loot ("name", "value", "user") VALUES ($1, $2, $3);',
                     item["name"],
