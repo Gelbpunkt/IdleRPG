@@ -307,9 +307,10 @@ Adventure name: `{adventure}`"""
             else:
                 item = await items.get_item()
                 await conn.execute(
-                    'INSERT INTO loot ("name", "value") VALUES ($1, $2);',
+                    'INSERT INTO loot ("name", "value", "user") VALUES ($1, $2, $3);',
                     item["name"],
                     item["value"],
+                    ctx.author.id,
                 )
 
             if guild := ctx.character_data["guild"]:

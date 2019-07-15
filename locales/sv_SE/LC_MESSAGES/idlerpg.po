@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-07-14 23:16+0000\n"
+"POT-Creation-Date: 2019-07-15 08:57+0000\n"
 "PO-Revision-Date: 2019-05-31 12:54+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -23,7 +23,7 @@ msgid "Starts a new tournament."
 msgstr "Startar en ny turnering."
 
 #: cogs/tournament.py:41 cogs/battles.py:44 cogs/battles.py:146
-#: cogs/gambling.py:327 cogs/profile.py:485
+#: cogs/gambling.py:327 cogs/profile.py:506
 msgid "You are too poor."
 msgstr "Du är för fattig."
 
@@ -480,7 +480,7 @@ msgid "Armor"
 msgstr "Rustning"
 
 #: cogs/crates.py:139 cogs/classes.py:280 cogs/adventure.py:232
-#: cogs/trading.py:216 cogs/trading.py:391
+#: cogs/trading.py:216 cogs/trading.py:391 cogs/profile.py:324
 msgid "Value"
 msgstr "Värde"
 
@@ -1619,7 +1619,7 @@ msgid "Please either buy `time`, `luck` or `money`."
 msgstr "Var snäll och köp `time`, `luck` eller `money`."
 
 #: cogs/store.py:59 cogs/gambling.py:377 cogs/gambling.py:411 cogs/guild.py:485
-#: cogs/profile.py:453
+#: cogs/profile.py:474
 msgid "You're too poor."
 msgstr "Du är för fattig."
 
@@ -2378,19 +2378,19 @@ msgstr ""
 msgid "You died on your mission. Try again!"
 msgstr "Du dog på ditt uppdrag. Försök igen!"
 
-#: cogs/adventure.py:338
+#: cogs/adventure.py:339
 #, python-brace-format
 msgid ""
 "You have completed your adventure and received **${gold}** as well as a new "
 "item: **{item}**. Experience gained: **{xp}**."
 msgstr ""
 
-#: cogs/adventure.py:383
+#: cogs/adventure.py:384
 #, python-brace-format
 msgid "Level {new_level} Memorial"
 msgstr "Nivå {new_level} Minnesmärke"
 
-#: cogs/adventure.py:399
+#: cogs/adventure.py:400
 #, python-brace-format
 msgid ""
 "You reached a new level: **{new_level}** :star:! You received {reward} as a "
@@ -2399,11 +2399,11 @@ msgstr ""
 "Du nådde en ny nivå: **{new_level}** :star:! Du fick {reward} som en "
 "belöning :tada:!"
 
-#: cogs/adventure.py:408
+#: cogs/adventure.py:409
 msgid "Cancels your current adventure."
 msgstr "Avbryter ditt nuvarande äventyr."
 
-#: cogs/adventure.py:412
+#: cogs/adventure.py:413
 #, python-brace-format
 msgid ""
 "Canceled your mission. Use `{prefix}adventure [missionID]` to start a new "
@@ -2412,11 +2412,11 @@ msgstr ""
 "Avbröt ditt uppdrag. Använda `{prefix}adventure [missionID]` för att starta "
 "ett nytt!"
 
-#: cogs/adventure.py:420
+#: cogs/adventure.py:421
 msgid "Your death stats."
 msgstr "Din dödsstatistik."
 
-#: cogs/adventure.py:430
+#: cogs/adventure.py:431
 #, python-brace-format
 msgid ""
 "Out of **{total}** adventures, you died **{deaths}** times and survived "
@@ -4198,38 +4198,51 @@ msgid "Your inventory is empty."
 msgstr "Ditt förråd är tomt."
 
 #: cogs/profile.py:317
+msgid "Shows your adventure loot that can be exchanged or sacrificed"
+msgstr ""
+
+#: cogs/profile.py:321
+msgid "You do not have any loot at this moment."
+msgstr ""
+
+#: cogs/profile.py:326
+#, python-brace-format
+msgid "Use $exchange {item} or $sacrifice {item}"
+msgstr ""
+
+#: cogs/profile.py:338
 msgid "Equips an item of yours by ID."
 msgstr "Utrustar ett föremål av ditt med ID."
 
-#: cogs/profile.py:326 cogs/profile.py:423
+#: cogs/profile.py:347 cogs/profile.py:444
 #, python-brace-format
 msgid "You don't own an item with the ID `{itemid}`."
 msgstr "Du äger inte ett föremål med ID `{itemid}`."
 
-#: cogs/profile.py:346
+#: cogs/profile.py:367
 #, python-brace-format
 msgid "Successfully equipped item `{itemid}` and put off item `{olditem}`."
 msgstr ""
 "Lyckades utrusta föremålet `{itemid}` och lade undan föremålet `{olditem}`."
 
-#: cogs/profile.py:351
+#: cogs/profile.py:372
 #, python-brace-format
 msgid "Successfully equipped item `{itemid}`."
 msgstr "Lyckades utrusta föremål `{itemid}`."
 
-#: cogs/profile.py:359
+#: cogs/profile.py:380
 msgid "Merges two items to a better one. Second one is consumed."
 msgstr "Slå samman två föremål till en bättre. Den andra är konsumerad."
 
-#: cogs/profile.py:362
+#: cogs/profile.py:383
 msgid "Good luck with that."
 msgstr "Lycka till med det."
 
-#: cogs/profile.py:376
+#: cogs/profile.py:397
 msgid "You don't own both of these items."
 msgstr "Du äger inte båda dessa föremål."
 
-#: cogs/profile.py:389
+#: cogs/profile.py:410
 #, python-brace-format
 msgid ""
 "The second item's stat must be in the range of `{min_}` to `{max_}` to "
@@ -4238,33 +4251,33 @@ msgstr ""
 "Det andra föremålets stats måste ligga inom`{min_}` till `{max_}` för att "
 "uppgradera ett föremål med statistiken `{stat}`."
 
-#: cogs/profile.py:395
+#: cogs/profile.py:416
 msgid "This item is already on the maximum upgrade level."
 msgstr "Det här föremålet är redan på den maximala uppgraderingsnivån."
 
-#: cogs/profile.py:404
+#: cogs/profile.py:425
 #, python-brace-format
 msgid ""
 "The {stat} of your **{item}** is now **{newstat}**. The other item was "
 "destroyed."
 msgstr ""
 
-#: cogs/profile.py:413
+#: cogs/profile.py:434
 msgid "Upgrades an item's stat by 1."
 msgstr "Uppgraderar ett objekts statistik med 1."
 
-#: cogs/profile.py:435
+#: cogs/profile.py:456
 msgid "Your weapon already reached the maximum upgrade level."
 msgstr "Ditt vapen har redan nått den maximala uppgraderingsnivån."
 
-#: cogs/profile.py:440
+#: cogs/profile.py:461
 #, python-brace-format
 msgid ""
 "You are too poor to upgrade this item. The upgrade costs **${pricetopay}**, "
 "but you only have **${money}**."
 msgstr ""
 
-#: cogs/profile.py:446
+#: cogs/profile.py:467
 #, python-brace-format
 msgid ""
 "Are you sure you want to upgrade this item: {item}? It will cost **"
@@ -4273,11 +4286,11 @@ msgstr ""
 "Är du säker på att du vill uppgradera det här föremålet: {item}? Det kommer "
 "att kosta **${pricetopay}**."
 
-#: cogs/profile.py:450
+#: cogs/profile.py:471
 msgid "Weapon upgrade cancelled."
 msgstr "Vapenuppgradering avbruten."
 
-#: cogs/profile.py:466
+#: cogs/profile.py:487
 #, python-brace-format
 msgid ""
 "The {stat} of your **{item}** is now **{newstat}**. **${pricetopay}** has "
@@ -4286,68 +4299,68 @@ msgstr ""
 "The {stat} av **{item}** är nu **{newstat}**. **${pricetopay}** har tagits "
 "från dina pengar."
 
-#: cogs/profile.py:481
+#: cogs/profile.py:502
 msgid "Gift money!"
 msgstr "Ge pengar!"
 
-#: cogs/profile.py:483
+#: cogs/profile.py:504
 msgid "No cheating!"
 msgstr "Inget fusk!"
 
-#: cogs/profile.py:496
+#: cogs/profile.py:517
 #, python-brace-format
 msgid "Successfully gave **${money}** to {other}."
 msgstr "Lyckades ge **${money}** till {other}."
 
-#: cogs/profile.py:508
+#: cogs/profile.py:529
 msgid "Renames your character."
 msgstr "Byt namn på din karaktär."
 
-#: cogs/profile.py:510
+#: cogs/profile.py:531
 msgid "What shall your character's name be? (Minimum 3 Characters, Maximum 20)"
 msgstr "Vad ska din karaktärs namn vara? (Minst 3 tecken, maximalt 20)"
 
-#: cogs/profile.py:519
+#: cogs/profile.py:540
 msgid "Timeout expired. Retry!"
 msgstr "Tiden har utgått. Försök igen!"
 
-#: cogs/profile.py:525
+#: cogs/profile.py:546
 msgid "Character name updated."
 msgstr "Karaktärsnamn uppdaterat."
 
-#: cogs/profile.py:527
+#: cogs/profile.py:548
 msgid "Character names must be at least 3 characters!"
 msgstr "Karaktärsnamn måste vara minst 3 tecken!"
 
-#: cogs/profile.py:529
+#: cogs/profile.py:550
 msgid "Character names mustn't exceed 20 characters!"
 msgstr "Karaktärsnamn får inte överstiga 20 tecken!"
 
-#: cogs/profile.py:535
+#: cogs/profile.py:556
 msgid "Deletes your character."
 msgstr "Tar bort din karaktär."
 
-#: cogs/profile.py:537
+#: cogs/profile.py:558
 msgid "Are you sure? React in the next 30 seconds to confirm."
 msgstr "Är du säker? Reagera inom 30 sekunder för att bekräfta."
 
-#: cogs/profile.py:539
+#: cogs/profile.py:560
 msgid "Cancelled deletion of your character."
 msgstr "Avbröt raderingen av din karaktär."
 
-#: cogs/profile.py:561
+#: cogs/profile.py:582
 msgid "Successfully deleted your character. Sorry to see you go :frowning:"
 msgstr "Har tagit bort din karaktär. Ledsen att se dig gå: frowning:"
 
-#: cogs/profile.py:567
+#: cogs/profile.py:588
 msgid "Sets your profile text colour."
 msgstr "Ställer in din profiltextfärg."
 
-#: cogs/profile.py:570
+#: cogs/profile.py:591
 msgid "Format for colour is `#RRGGBB` or a colour code like `cyan`."
 msgstr ""
 
-#: cogs/profile.py:577
+#: cogs/profile.py:598
 #, python-brace-format
 msgid ""
 "Successfully set your profile colour to `{colour}`. Hint: If you used a hex "

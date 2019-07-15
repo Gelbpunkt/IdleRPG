@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-07-14 23:16+0000\n"
+"POT-Creation-Date: 2019-07-15 08:57+0000\n"
 "PO-Revision-Date: 2019-07-07 16:40+0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -23,7 +23,7 @@ msgid "Starts a new tournament."
 msgstr "Yeni turnuva başlatır."
 
 #: cogs/tournament.py:41 cogs/battles.py:44 cogs/battles.py:146
-#: cogs/gambling.py:327 cogs/profile.py:485
+#: cogs/gambling.py:327 cogs/profile.py:506
 msgid "You are too poor."
 msgstr "Çok fakirsin."
 
@@ -481,7 +481,7 @@ msgid "Armor"
 msgstr "Zırh"
 
 #: cogs/crates.py:139 cogs/classes.py:280 cogs/adventure.py:232
-#: cogs/trading.py:216 cogs/trading.py:391
+#: cogs/trading.py:216 cogs/trading.py:391 cogs/profile.py:324
 msgid "Value"
 msgstr "Değer"
 
@@ -1618,7 +1618,7 @@ msgid "Please either buy `time`, `luck` or `money`."
 msgstr "Lütfen `zaman`, `şans` ya da `para` alın."
 
 #: cogs/store.py:59 cogs/gambling.py:377 cogs/gambling.py:411 cogs/guild.py:485
-#: cogs/profile.py:453
+#: cogs/profile.py:474
 msgid "You're too poor."
 msgstr "Çok fakirsin."
 
@@ -2377,19 +2377,19 @@ msgstr ""
 msgid "You died on your mission. Try again!"
 msgstr "Görevdeyken öldün. Tekrar dene!"
 
-#: cogs/adventure.py:338
+#: cogs/adventure.py:339
 #, python-brace-format
 msgid ""
 "You have completed your adventure and received **${gold}** as well as a new "
 "item: **{item}**. Experience gained: **{xp}**."
 msgstr ""
 
-#: cogs/adventure.py:383
+#: cogs/adventure.py:384
 #, python-brace-format
 msgid "Level {new_level} Memorial"
 msgstr "Seviye {new_level} Hatırası"
 
-#: cogs/adventure.py:399
+#: cogs/adventure.py:400
 #, python-brace-format
 msgid ""
 "You reached a new level: **{new_level}** :star:! You received {reward} as a "
@@ -2398,11 +2398,11 @@ msgstr ""
 "Yeni bir seviyeye ulaştın: **{new_level}** :star:! Ödül olarak {reward} "
 "aldın :tada:!"
 
-#: cogs/adventure.py:408
+#: cogs/adventure.py:409
 msgid "Cancels your current adventure."
 msgstr "Şu anki maceranı iptal eder."
 
-#: cogs/adventure.py:412
+#: cogs/adventure.py:413
 #, python-brace-format
 msgid ""
 "Canceled your mission. Use `{prefix}adventure [missionID]` to start a new "
@@ -2411,11 +2411,11 @@ msgstr ""
 "Görevini iptal ettin. Yenisine başlamak için `{prefix}adventure [görevID]` "
 "kullan!"
 
-#: cogs/adventure.py:420
+#: cogs/adventure.py:421
 msgid "Your death stats."
 msgstr "Ölüm istatistiklerin."
 
-#: cogs/adventure.py:430
+#: cogs/adventure.py:431
 #, python-brace-format
 msgid ""
 "Out of **{total}** adventures, you died **{deaths}** times and survived "
@@ -4207,39 +4207,52 @@ msgid "Your inventory is empty."
 msgstr "Envanterin boş."
 
 #: cogs/profile.py:317
+msgid "Shows your adventure loot that can be exchanged or sacrificed"
+msgstr ""
+
+#: cogs/profile.py:321
+msgid "You do not have any loot at this moment."
+msgstr ""
+
+#: cogs/profile.py:326
+#, python-brace-format
+msgid "Use $exchange {item} or $sacrifice {item}"
+msgstr ""
+
+#: cogs/profile.py:338
 msgid "Equips an item of yours by ID."
 msgstr "Eşyanı ID'sine göre giyer."
 
-#: cogs/profile.py:326 cogs/profile.py:423
+#: cogs/profile.py:347 cogs/profile.py:444
 #, python-brace-format
 msgid "You don't own an item with the ID `{itemid}`."
 msgstr "ID'si `{itemid}` olan bir eşyaya sahip değilsin."
 
-#: cogs/profile.py:346
+#: cogs/profile.py:367
 #, python-brace-format
 msgid "Successfully equipped item `{itemid}` and put off item `{olditem}`."
 msgstr ""
 "`{itemid}` ID'li eşya başarılı bir şekilde giyildi ve `{olditem}` ID'li eşya "
 "çıkartıldı."
 
-#: cogs/profile.py:351
+#: cogs/profile.py:372
 #, python-brace-format
 msgid "Successfully equipped item `{itemid}`."
 msgstr "`{itemid}` ID'li eşya başarılı bir şekilde giyildi."
 
-#: cogs/profile.py:359
+#: cogs/profile.py:380
 msgid "Merges two items to a better one. Second one is consumed."
 msgstr "İki eşyayı daha iyi bir eşya için birleştirir. İkinci eşya yok olur."
 
-#: cogs/profile.py:362
+#: cogs/profile.py:383
 msgid "Good luck with that."
 msgstr "Bununla iyi şanslar."
 
-#: cogs/profile.py:376
+#: cogs/profile.py:397
 msgid "You don't own both of these items."
 msgstr "Bu eşyaların her ikisine de sahip değilsin."
 
-#: cogs/profile.py:389
+#: cogs/profile.py:410
 #, python-brace-format
 msgid ""
 "The second item's stat must be in the range of `{min_}` to `{max_}` to "
@@ -4248,11 +4261,11 @@ msgstr ""
 "Gücü `{stat}` olan bir eşyayı yükseltmek için kullanılan ikinci eşyanın gücü "
 "`{min_}` ile `{max_}` arasında olmalı."
 
-#: cogs/profile.py:395
+#: cogs/profile.py:416
 msgid "This item is already on the maximum upgrade level."
 msgstr "Bu eşya zaten maksimum yükseltme seviyesinde."
 
-#: cogs/profile.py:404
+#: cogs/profile.py:425
 #, python-brace-format
 msgid ""
 "The {stat} of your **{item}** is now **{newstat}**. The other item was "
@@ -4261,15 +4274,15 @@ msgstr ""
 "Gücü {stat} olan **{item}**'nın gücü artık **{newstat}**. Diğer eşya yok "
 "edildi."
 
-#: cogs/profile.py:413
+#: cogs/profile.py:434
 msgid "Upgrades an item's stat by 1."
 msgstr "Eşyanın gücüne 1 ekleyerek yükseltir."
 
-#: cogs/profile.py:435
+#: cogs/profile.py:456
 msgid "Your weapon already reached the maximum upgrade level."
 msgstr "Silahın zaten maksimum yükseltme seviyesine ulaştı."
 
-#: cogs/profile.py:440
+#: cogs/profile.py:461
 #, python-brace-format
 msgid ""
 "You are too poor to upgrade this item. The upgrade costs **${pricetopay}**, "
@@ -4278,7 +4291,7 @@ msgstr ""
 "Bu eşyayı yükseltmek için çok fakirsin. Yükseltme **${pricetopay}** ediyor, "
 "ama sende sadece **${money}** var."
 
-#: cogs/profile.py:446
+#: cogs/profile.py:467
 #, python-brace-format
 msgid ""
 "Are you sure you want to upgrade this item: {item}? It will cost **"
@@ -4287,11 +4300,11 @@ msgstr ""
 "Bu eşyayı yükseltmek istediğine emin misin: {item}? Fiyatı **${pricetopay}** "
 "ediyor."
 
-#: cogs/profile.py:450
+#: cogs/profile.py:471
 msgid "Weapon upgrade cancelled."
 msgstr "Silah yükseltmesi iptal edildi."
 
-#: cogs/profile.py:466
+#: cogs/profile.py:487
 #, python-brace-format
 msgid ""
 "The {stat} of your **{item}** is now **{newstat}**. **${pricetopay}** has "
@@ -4300,69 +4313,69 @@ msgstr ""
 "Gücü {stat} olan **{item}**'nın gücü artık **{newstat}**. Bakiyenden **"
 "${pricetopay}** alındı."
 
-#: cogs/profile.py:481
+#: cogs/profile.py:502
 msgid "Gift money!"
 msgstr "Para hediye et!"
 
-#: cogs/profile.py:483
+#: cogs/profile.py:504
 msgid "No cheating!"
 msgstr "Hile yok!"
 
-#: cogs/profile.py:496
+#: cogs/profile.py:517
 #, python-brace-format
 msgid "Successfully gave **${money}** to {other}."
 msgstr "**${money}** para başarılı bir şekilde {other}'a verildi."
 
-#: cogs/profile.py:508
+#: cogs/profile.py:529
 msgid "Renames your character."
 msgstr "Karakterini yeniden adlandırır."
 
-#: cogs/profile.py:510
+#: cogs/profile.py:531
 msgid "What shall your character's name be? (Minimum 3 Characters, Maximum 20)"
 msgstr "Karakterinin adı ne olmalı? (Minimum 3 Karakter, Maksimum 20)"
 
-#: cogs/profile.py:519
+#: cogs/profile.py:540
 msgid "Timeout expired. Retry!"
 msgstr "Zaman aşımı süresi doldu. Tekrar dene!"
 
-#: cogs/profile.py:525
+#: cogs/profile.py:546
 msgid "Character name updated."
 msgstr "Karakter ismi güncellendi."
 
-#: cogs/profile.py:527
+#: cogs/profile.py:548
 msgid "Character names must be at least 3 characters!"
 msgstr "Karakter isimleri en az 3 karakter olmalı!"
 
-#: cogs/profile.py:529
+#: cogs/profile.py:550
 msgid "Character names mustn't exceed 20 characters!"
 msgstr "Karakter isimleri 20 karakteri geçmemeli!"
 
-#: cogs/profile.py:535
+#: cogs/profile.py:556
 msgid "Deletes your character."
 msgstr "Karakterini siler."
 
-#: cogs/profile.py:537
+#: cogs/profile.py:558
 msgid "Are you sure? React in the next 30 seconds to confirm."
 msgstr "Emin misin? Onaylamak için 30 saniye içinde tepki ver."
 
-#: cogs/profile.py:539
+#: cogs/profile.py:560
 msgid "Cancelled deletion of your character."
 msgstr "Karakterinin silinmesi iptal edildi."
 
-#: cogs/profile.py:561
+#: cogs/profile.py:582
 msgid "Successfully deleted your character. Sorry to see you go :frowning:"
 msgstr ""
 "Karakterin başarılı bir şekilde silindi. Gittiğini görmek üzücü :frowning:"
 
-#: cogs/profile.py:567
+#: cogs/profile.py:588
 msgid "Sets your profile text colour."
 msgstr "Profilinin metin rengini ayarlar."
 
-#: cogs/profile.py:570
+#: cogs/profile.py:591
 msgid "Format for colour is `#RRGGBB` or a colour code like `cyan`."
 msgstr ""
 
-#: cogs/profile.py:577
+#: cogs/profile.py:598
 #, python-brace-format
 msgid ""
 "Successfully set your profile colour to `{colour}`. Hint: If you used a hex "
