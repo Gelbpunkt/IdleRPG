@@ -323,8 +323,8 @@ IdleRPG is a global bot, your characters are valid everywhere"""
             discord.Embed(title=item["name"], colour=self.bot.config.primary_colour)
             .add_field(name=_("Value"), value=f"{item['value']}")
             .set_footer(
-                text=_("Use $exchange {item} or $sacrifice {item}").format(
-                    item=item["id"]
+                text=_("Use {prefix}exchange {item} or {prefix}sacrifice {item}").format(
+                    item=item["id"], prefix=ctx.prefix
                 )
             )
             for item in loot
