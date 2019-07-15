@@ -296,11 +296,10 @@ IdleRPG is a global bot, your characters are valid everywhere"""
     @locale_doc
     async def inventory(self, ctx):
         _("""Shows your current inventory.""")
-        async with self.bot.pool.acquire() as conn:
-            ret = await conn.fetch(
-                'SELECT ai.*, i.equipped FROM profile p JOIN allitems ai ON (p.user=ai.owner) JOIN inventory i ON (ai.id=i.item) WHERE p."user"=$1 ORDER BY i."equipped" DESC, ai."damage"+ai."armor" DESC;',
-                ctx.author.id,
-            )
+        ret = await self.bot.pool.fetch(
+            'SELECT ai.*, i.equipped FROM profile p JOIN allitems ai ON (p.user=ai.owner) JOIN inventory i ON (ai.id=i.item) WHERE p."user"=$1 ORDER BY i."equipped" DESC, ai."damage"+ai."armor" DESC;',
+            ctx.author.id,
+        )
         if not ret:
             return await ctx.send(_("Your inventory is empty."))
         allitems = list(chunks(ret, 5))
@@ -341,16 +340,16 @@ IdleRPG is a global bot, your characters are valid everywhere"""
             await conn.execute(
                 'UPDATE inventory SET "equipped"=True WHERE "item"=$1;', itemid
             )
-            if olditem:
-                await ctx.send(
-                    _(
-                        "Successfully equipped item `{itemid}` and put off item `{olditem}`."
-                    ).format(itemid=itemid, olditem=olditem["id"])
-                )
-            else:
-                await ctx.send(
-                    _("Successfully equipped item `{itemid}`.").format(itemid=itemid)
-                )
+        if olditem:
+            await ctx.send(
+                _(
+                    "Successfully equipped item `{itemid}` and put off item `{olditem}`."
+                ).format(itemid=itemid, olditem=olditem["id"])
+            )
+        else:
+            await ctx.send(
+                _("Successfully equipped item `{itemid}`.").format(itemid=itemid)
+            )
 
     @checks.has_char()
     @user_cooldown(3600)

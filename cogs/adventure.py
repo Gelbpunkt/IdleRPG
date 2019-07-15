@@ -279,7 +279,7 @@ Adventure name: `{adventure}`"""
 
         if not success:
             await self.bot.pool.execute(
-                'UPDATE profile SER "deaths"="deaths"+1 WHERE "user"=$1;', ctx.author.id
+                'UPDATE profile SET "deaths"="deaths"+1 WHERE "user"=$1;', ctx.author.id
             )
             return await ctx.send(_("You died on your mission. Try again!"))
 
