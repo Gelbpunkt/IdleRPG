@@ -24,6 +24,7 @@ from discord.ext import commands
 
 from classes.converters import IntFromTo
 from cogs.shard_communication import user_on_cooldown as user_cooldown
+from utils import items
 from utils import misc as rpgtools
 from utils.checks import has_adventure, has_char, has_no_adventure
 
@@ -239,159 +240,164 @@ Use the reactions attack, defend or recover
     async def status(self, ctx):
         _("""Checks your adventure status.""")
         num, time, done = ctx.adventure_data
-        if done:
-            sword, shield = await self.bot.get_equipped_items_for(ctx.author)
-            playerlevel = rpgtools.xptolevel(ctx.character_data["xp"])
 
-            sword = sword["damage"] if sword else 0
-            shield = shield["armor"] if shield else 0
-
-            # class test
-            sword, shield = await self.bot.generate_stats(
-                ctx.author, sword, shield, class_=ctx.character_data["class"]
-            )
-
-            luck_booster = await self.bot.get_booster(ctx.author, "luck")
-            success = rpgtools.calcchance(
-                sword,
-                shield,
-                num,
-                int(playerlevel),
-                ctx.character_data["luck"],  # luck affects the success calculation, too
-                returnsuccess=True,
-                booster=bool(luck_booster),
-            )
-            if success:
-                # luck affects gold amounts
-                luck_multiply = ctx.character_data["luck"]
-                gold = round(
-                    random.randint(20 * (num - 1) or 1, 60 * (num - 1) or 70)
-                    * luck_multiply
+        if not done:
+            return await ctx.send(
+                _(
+                    """\
+You are currently on an adventure with difficulty `{difficulty}`.
+Time until it completes: `{time_left}`
+Adventure name: `{adventure}`"""
+                ).format(
+                    difficulty=num,
+                    time_left=time,
+                    adventure=self.bot.config.adventure_names[num],
                 )
-                if await self.bot.get_booster(ctx.author, "money"):
-                    gold = int(gold * 1.25)
-                xp = random.randint(250 * num, 500 * num)
-                # luck affects item stats
+            )
+
+        sword, shield = await self.bot.get_equipped_items_for(ctx.author)
+        sword, shield = await self.bot.generate_stats(
+            ctx.author,
+            sword["damage"] if sword else 0,
+            shield["armor"] if shield else 0,
+            class_=ctx.character_data["class"],
+        )
+
+        luck_booster = await self.bot.get_booster(ctx.author, "luck")
+        current_level = int(rpgtools.xptolevel(ctx.character_data["xp"]))
+        luck_multiply = ctx.character_data["luck"]
+        success = rpgtools.calcchance(
+            sword,
+            shield,
+            num,
+            current_level,
+            luck_multiply,
+            returnsuccess=True,
+            booster=bool(luck_booster),
+        )
+        await self.bot.delete_adventure(ctx.author)
+
+        if not success:
+            await self.bot.pool.execute(
+                'UPDATE profile SER "deaths"="deaths"+1 WHERE "user"=$1;', ctx.author.id
+            )
+            return await ctx.send(_("You died on your mission. Try again!"))
+
+        gold = round(
+            random.randint(20 * (num - 1) or 1, 60 * (num - 1) or 70) * luck_multiply
+        )
+
+        if await self.bot.get_booster(ctx.author, "money"):
+            gold = int(gold * 1.25)
+
+        xp = random.randint(250 * num, 500 * num)
+
+        async with self.bot.pool.acquire() as conn:
+
+            if random.randint(1, 10) < 10:
                 minstat = round(num * luck_multiply)
                 maxstat = round(5 + int(num * 1.5) * luck_multiply)
                 item = await self.bot.create_random_item(
-                    minstat=minstat if minstat < 35 else 35,  # we still limit it though
+                    minstat=minstat if minstat < 35 else 35,
                     maxstat=maxstat if maxstat < 35 else 35,
-                    minvalue=round(num * luck_multiply),  # value is luck-based, too
+                    minvalue=round(num * luck_multiply),
                     maxvalue=round(num * 50 * luck_multiply),
                     owner=ctx.author,
                 )
-                async with self.bot.pool.acquire() as conn:
-                    # marriage partner should get 50% of the money
-                    if ctx.character_data["marriage"]:
-                        await conn.execute(
-                            'UPDATE profile SET money=money+$1 WHERE "user"=$2;',
-                            int(gold / 2),
-                            ctx.character_data["marriage"],
-                        )
-                    # guild money
-                    if ctx.character_data["guild"]:
-                        await conn.execute(
-                            'UPDATE guild SET money=money+$1 WHERE "id"=$2;',
-                            int(gold / 10),
-                            ctx.character_data["guild"],
-                        )
-                    await conn.execute(
-                        'UPDATE profile SET "money"="money"+$1, "xp"="xp"+$2, "completed"="completed"+1 WHERE "user"=$3;',
-                        gold,
-                        xp,
-                        ctx.author.id,
-                    )
-                    if not ctx.character_data["marriage"]:
-                        await ctx.send(
-                            _(
-                                "You have completed your dungeon and received **${gold}** as well as a new weapon: **{item}**. Experience gained: **{xp}**."
-                            ).format(gold=gold, item=item["name"], xp=xp)
-                        )
-                    else:
-                        await ctx.send(
-                            _(
-                                "You have completed your dungeon and received **${gold}** as well as a new weapon: **{item}**. Experience gained: **{xp}**.\nYour partner received **${gold2}**."
-                            ).format(
-                                gold=gold, gold2=int(gold / 2), item=item["name"], xp=xp
-                            )
-                        )
-                    new_level = int(rpgtools.xptolevel(ctx.character_data["xp"] + xp))
-                    if int(rpgtools.xptolevel(ctx.character_data["xp"])) < new_level:
-                        reward = random.choice(
-                            [
-                                ["crates"],
-                                ("money", new_level * 1000, f"**${new_level * 1000}**"),
-                                ("item", round(new_level * 1.5), _("a special Item")),
-                            ]
-                        )
-                        if reward[0] != "item":
-                            if reward[0] == "crates":
-                                if new_level < 6:
-                                    reward[0] = "crates_common"
-                                    reward.append(new_level)
-                                    reward.append(
-                                        f"**{new_level}** <:CrateCommon:598094865666015232>"
-                                    )
-                                elif new_level < 10:
-                                    reward[0] = "crates_uncommon"
-                                    reward.append(round(new_level / 2))
-                                    reward.append(
-                                        f"**{round(new_level / 2)}** <:CrateUncommon:598094865397579797>"
-                                    )
-                                elif new_level < 15:
-                                    reward[0] = "crates_rare"
-                                    reward.append(2)
-                                    reward.append(
-                                        "**2** <:CrateRare:598094865485791233>"
-                                    )
-                                elif new_level < 20:
-                                    reward[0] = "crates_rare"
-                                    reward.append(3)
-                                    reward.append(
-                                        f"**3** <:CrateRare:598094865485791233>"
-                                    )
-                                else:
-                                    reward[0] = "crates_magic"
-                                    reward.append(1)
-                                    reward.append(
-                                        "**1** <:CrateMagic:598094865611358209>"
-                                    )
-                            await self.bot.pool.execute(
-                                f'UPDATE profile SET {reward[0]}={reward[0]}+$1 WHERE "user"=$2;',
-                                reward[1],
-                                ctx.author.id,
-                            )
-                        else:
-                            item = await self.bot.create_random_item(
-                                minstat=reward[1],
-                                maxstat=reward[1],
-                                minvalue=1000,
-                                maxvalue=1000,
-                                owner=ctx.author,
-                                insert=False,
-                            )
-                            item["name"] = _("Level {new_level} Memorial").format(
-                                new_level=new_level
-                            )
-                            await self.bot.create_item(**item)
-                        await ctx.send(
-                            _(
-                                "You reached a new level: **{new_level}** :star:! You received {reward} as a reward :tada:!"
-                            ).format(new_level=new_level, reward=reward[2])
-                        )
             else:
-                await ctx.send(_("You died on your mission. Try again!"))
-                await self.bot.pool.execute(
-                    'UPDATE profile SET deaths=deaths+1 WHERE "user"=$1;', ctx.author.id
+                item = await items.get_item()
+                await conn.execute(
+                    'INSERT INTO loot ("name", "value") VALUES ($1, $2);',
+                    item["name"],
+                    item["value"],
                 )
-            await self.bot.delete_adventure(ctx.author)
-        else:
-            dungeon = self.bot.config.adventure_names[num]
+
+            if guild := ctx.character_data["guild"]:
+                await conn.execute(
+                    'UPDATE guild SET "money"="money"+$1 WHERE "id"=$2;',
+                    int(gold / 10),
+                    guild,
+                )
+
+            await conn.execute(
+                'UPDATE profile SET "money"="money"+$1, "xp"="xp"+$2, "completed"="completed"+1 WHERE "user"=$3;',
+                gold,
+                xp,
+                ctx.author.id,
+            )
+
+            if partner := ctx.character_data["marriage"]:
+                await conn.execute(
+                    'UPDATE profile SET "money"="money"+$1 WHERE "user"=$2;',
+                    int(gold / 2),
+                    partner,
+                )
+
             await ctx.send(
                 _(
-                    "You are currently in the adventure with difficulty `{difficulty}`.\nApproximate end in `{end}`\nDungeon Name: `{dungeon}`"
-                ).format(difficulty=num, end=str(time).split(".")[0], dungeon=dungeon)
+                    "You have completed your adventure and received **${gold}** as well as a new item: **{item}**. Experience gained: **{xp}**."
+                ).format(gold=gold, item=item["name"], xp=xp)
+            )
+
+            new_level = int(rpgtools.xptolevel(ctx.character_data["xp"] + xp))
+
+            if current_level == new_level:
+                return
+
+            if (reward := random.choice(["crates", "money", "item"])) == "crates":
+                if new_level < 6:
+                    column = "crates_common"
+                    amount = new_level
+                    reward_text = f"**{amount}** <:CrateCommon:598094865666015232>"
+                elif new_level < 10:
+                    column = "crates_uncommon"
+                    amount = round(new_level / 2)
+                    reward_text = f"**{amount}** <:CrateUncommon:598094865397579797>"
+                elif new_level < 15:
+                    column = "crates_rare"
+                    amount = 2
+                    reward_text = "**2** <:CrateRare:598094865485791233>"
+                elif new_level < 20:
+                    column = "crates_rare"
+                    amount = 3
+                    reward_text = f"**3** <:CrateRare:598094865485791233>"
+                else:
+                    column = "crates_magic"
+                    amount = 1
+                    reward_text = "**1** <:CrateMagic:598094865611358209>"
+                await self.bot.pool.execute(
+                    f'UPDATE profile SET {column}={column}+$1 WHERE "user"=$2;',
+                    amount,
+                    ctx.author.id,
+                )
+            elif reward == "item":
+                stat = round(new_level * 1.5)
+                item = await self.bot.create_random_item(
+                    minstat=stat,
+                    maxstat=stat,
+                    minvalue=1000,
+                    maxvalue=1000,
+                    owner=ctx.author,
+                    insert=False,
+                )
+                item["name"] = _("Level {new_level} Memorial").format(
+                    new_level=new_level
+                )
+                reward_text = "a special weapon"
+                await self.bot.create_item(**item)
+            elif reward == "money":
+                money = new_level * 1000
+                await self.bot.pool.execute(
+                    'UPDATE profile SET "money"="money"+$1 WHERE "user"=$2;',
+                    money,
+                    ctx.author.id,
+                )
+                reward_text = f"**${money}**"
+
+            await ctx.send(
+                _(
+                    "You reached a new level: **{new_level}** :star:! You received {reward} as a reward :tada:!"
+                ).format(new_level=new_level, reward=reward_text)
             )
 
     @has_char()

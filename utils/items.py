@@ -170,4 +170,5 @@ items = [
 
 
 def get_item():
-    return secrets.choice(items)
+    item = secrets.choice(items)
+    return {"name": item[0], "value": item[1]}
