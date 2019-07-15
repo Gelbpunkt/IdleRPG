@@ -311,13 +311,13 @@ IdleRPG is a global bot, your characters are valid everywhere"""
         await self.bot.paginator.Paginator(extras=embeds).paginate(ctx)
 
     @checks.has_char()
-    @commands.command(aliases["loot"])
+    @commands.command(aliases=["loot"])
     @locale_doc
     async def items(self, ctx):
         _("""Shows your adventure loot that can be exchanged or sacrificed""")
-        if not loot := await self.bot.pool.fetch(
+        if not (loot := await self.bot.pool.fetch(
             'SELECT * FROM loot WHERE "user"=$1;', ctx.author.id
-        ):
+        )):
             return await ctx.send(_("You do not have any loot at this moment."))
         embeds = [
             discord.Embed(title=item["name"], colour=self.bot.config.primary_colour)
