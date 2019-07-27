@@ -509,7 +509,9 @@ class Profile(commands.Cog):
     async def delete(self, ctx):
         _("""Deletes your character.""")
         if not await ctx.confirm(
-            _("Are you sure? React in the next 30 seconds to confirm.")
+            _(
+                "Are you absolutely sure you want to delete your character? React in the next 30 seconds to confirm.\n**This cannot be undone!!**"
+            )
         ):
             return await ctx.send(_("Cancelled deletion of your character."))
         async with self.bot.pool.acquire() as conn:
