@@ -23,6 +23,7 @@ from decimal import Decimal
 import discord
 from discord.ext import commands
 
+from classes.converters import IntGreaterThan
 from utils.checks import has_char, is_admin
 
 
@@ -58,7 +59,7 @@ class Raid(commands.Cog):
     @raid_channel()
     @commands.command()
     @locale_doc
-    async def spawn(self, ctx, hp: int):
+    async def spawn(self, ctx, hp: IntGreaterThan(0)):
         """[Bot Admin only] Starts a raid."""
         await self.bot.session.get(
             "https://raid.travitia.xyz/toggle",
