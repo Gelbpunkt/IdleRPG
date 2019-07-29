@@ -85,6 +85,12 @@ class Errorhandler(commands.Cog):
         elif isinstance(error, commands.CheckFailure):
             if type(error) == utils.checks.NoCharacter:
                 await ctx.send(_("You don't have a character yet."))
+            elif type(error) == utils.checks.NeedsNoCharacter:
+                await ctx.send(
+                    _(
+                        "This command requires you to not have created a character yet. You already have one."
+                    )
+                )
             elif type(error) == utils.checks.NoGuild:
                 await ctx.send(_("You need to have a guild to use this command."))
             elif type(error) == utils.checks.NeedsNoGuild:

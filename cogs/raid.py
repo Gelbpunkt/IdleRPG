@@ -23,6 +23,7 @@ from decimal import Decimal
 import discord
 from discord.ext import commands
 
+from classes.converters import IntGreaterThan
 from utils.checks import has_char, is_admin
 
 
@@ -58,7 +59,7 @@ class Raid(commands.Cog):
     @raid_channel()
     @commands.command()
     @locale_doc
-    async def spawn(self, ctx, hp: int):
+    async def spawn(self, ctx, hp: IntGreaterThan(0)):
         """[Bot Admin only] Starts a raid."""
         await self.bot.session.get(
             "https://raid.travitia.xyz/toggle",
@@ -280,7 +281,7 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
     @ikhdosa_channel()
     @commands.command()
     @locale_doc
-    async def raiddefend(self, ctx, bandits: int, group: str = "I"):
+    async def raiddefend(self, ctx, bandits: IntGreaterThan(1), group: str = "I"):
         """[Bot Admin only] Starts a bandit raid in Ikhdosa."""
         await self.bot.session.get(
             "https://raid.travitia.xyz/toggle",

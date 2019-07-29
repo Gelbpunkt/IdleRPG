@@ -315,17 +315,19 @@ IdleRPG is a global bot, your characters are valid everywhere"""
     @locale_doc
     async def items(self, ctx):
         _("""Shows your adventure loot that can be exchanged or sacrificed""")
-        if not (loot := await self.bot.pool.fetch(
-            'SELECT * FROM loot WHERE "user"=$1;', ctx.author.id
-        )):
+        if not (
+            loot := await self.bot.pool.fetch(
+                'SELECT * FROM loot WHERE "user"=$1;', ctx.author.id
+            )
+        ):
             return await ctx.send(_("You do not have any loot at this moment."))
         embeds = [
             discord.Embed(title=item["name"], colour=self.bot.config.primary_colour)
             .add_field(name=_("Value"), value=f"{item['value']}")
             .set_footer(
-                text=_("Use {prefix}exchange {item} or {prefix}sacrifice {item}").format(
-                    item=item["id"], prefix=ctx.prefix
-                )
+                text=_(
+                    "Use {prefix}exchange {item} or {prefix}sacrifice {item}"
+                ).format(item=item["id"], prefix=ctx.prefix)
             )
             for item in loot
         ]
@@ -555,7 +557,9 @@ IdleRPG is a global bot, your characters are valid everywhere"""
     async def delete(self, ctx):
         _("""Deletes your character.""")
         if not await ctx.confirm(
-            _("Are you sure? React in the next 30 seconds to confirm.")
+            _(
+                "Are you absolutely sure you want to delete your character? React in the next 30 seconds to confirm.\n**This cannot be undone.**"
+            )
         ):
             return await ctx.send(_("Cancelled deletion of your character."))
         async with self.bot.pool.acquire() as conn:
