@@ -91,6 +91,12 @@ class Errorhandler(commands.Cog):
                         "This command requires you to not have created a character yet. You already have one."
                     )
                 )
+            elif type(error) == utils.checks.NeedsGod:
+                await ctx.send(
+                    _(
+                        "You need to be following a god for this command. Please use `{prefix}follow` to choose one."
+                    ).format(prefix=ctx.prefix)
+                )
             elif type(error) == utils.checks.NoGuild:
                 await ctx.send(_("You need to have a guild to use this command."))
             elif type(error) == utils.checks.NeedsNoGuild:

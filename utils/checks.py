@@ -73,6 +73,12 @@ class NoPatron(commands.CheckFailure):
     pass
 
 
+class NeedsGod(commands.CheckFailure):
+    """Exception raised when you need to have a god to use a command."""
+
+    pass
+
+
 def has_char():
     """Checks for a user to have a character."""
 
@@ -203,6 +209,21 @@ def is_class(class_):
             'SELECT class FROM profile WHERE "user"=$1;', ctx.author.id
         )
         return ctx.bot.in_class_line(ret, class_)
+
+    return commands.check(predicate)
+
+
+def has_god():
+    """Checks for a user to have a god."""
+
+    async def predicate(ctx):
+        if not hasattr(ctx, "character_data"):
+            ctx.character_data = await ctx.bot.pool.fetchrow(
+                'SELECT * FROM profile WHERE "user"=$1;', ctx.author.id
+            )
+        if ctx.character_data["god"]:
+            return True
+        raise NeedsGod()
 
     return commands.check(predicate)
 
