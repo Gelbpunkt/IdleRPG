@@ -1,6 +1,7 @@
 """Ignore this"""
 from discord.ext import commands
 from datetime import timedelta
+
 """End ignore"""
 
 """The token it will use for auth with Discord."""
@@ -193,4 +194,46 @@ adventure_names = {
     18: "Gambling Problems?",
     19: "The Necromancer Of Kord",
     20: "Last One Standing",
+}
+
+gods = {
+    "Guilt": {
+        "user": 463318425901596672,
+        "description": "Guilt is the goddess of evil, misfortune, obsession, guilt, and mischief. If you did something bad, it was probably her who made you do it. Bad luck, guilt feelings and addictions make her powers grow.",
+    },
+    "Deimos": {"user": 402603953453268992, "description": "God of Terror and Dread"},
+    "Seren": {"user": 500521185730363393, "description": "Goddess of Stars and Sleep"},
+    "The Assassin": {
+        "user": 294894701708967936,
+        "description": "Karmic retribution type. The judge, jury, and executioner. No one really knows of him or his real name. He is shrouded in mystery, but there are still those who offer to him to keep him at bay or to strike down their foes.",
+    },
+    "Kvothe": {
+        "user": 489637665633730560,
+        "description": "God of music and verse, can make a song out of any situation and has the tendency to make verse out of normal conversation.",
+    },
+    "Asmodeus": {
+        "user": 318824057158107137,
+        "description": "Asmodeus reaps the souls of the dead. In order for adventurers to survive they must give up the experience and loot of their adventure to him and try again. As the god of death, he can bring people back to life but that is the price they must pay.",
+    },
+    "God of Salutations": {
+        "user": 344227184438804480,
+        "description": "Known for excelling at greetings and making mutual relationships with every deity and also gaining followers due to his history/characteristic.",
+    },
+    "War God Fox": {
+        "user": 254234402354233344,
+        "description": """And god said, there will be war!
+        ...
+        Do you see this mess on the battle field? It's my creation!
+        If you survive in a war, you'll gain my respect. But, if you die in a war, you'll lose everything~
+
+        Choose wisely my friend, maybe the next war will be against you.""",
+    },
+    "Athena, Goddess of Wisdom": {
+        "user": 226038728211038208,
+        "description": "Goddess of wisdom, war and the crafts, and favourite daughter of Zeus, Athena was, perhaps, the wisest, most courageous, and certainly the most resourceful of the Olympian gods.",
+    },
+    "CHamburr": {
+        "user": 446290930723717120,
+        "description": "Omniscient. Omnipotent. Omnipresent. An all-round god powered by endless streams of blood, with the one goal -- of flowing it through all mankind. The day he was born, he promised to give his unexhaustive love equally to everyone...",
+    },
 }

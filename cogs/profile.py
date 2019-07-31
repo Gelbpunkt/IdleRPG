@@ -334,6 +334,39 @@ IdleRPG is a global bot, your characters are valid everywhere"""
         await self.bot.paginator.Paginator(extras=embeds).paginate(ctx)
 
     @checks.has_char()
+    @user_cooldown(60)
+    @commands.command(aliases=["ex"])
+    @locale_doc
+    async def exchange(self, ctx, loot_id: int):
+        _("""Exchange an item for money or xp.""")
+        if not (
+            item := await self.bot.pool.fetchrow(
+                'SELECT * FROM loot WHERE "user"=$1 AND "id"=$2;',
+                ctx.author.id,
+                loot_id,
+            )
+        ):
+            return await ctx.send(_("You do not own this loot item."))
+        value = item["value"]
+        reward = await self.bot.paginator.Choose(
+            title=_("Select a reward"),
+            footer=_("Do you want favor? {prefix}sacrifice instead").format(
+                prefix=ctx.prefix
+            ),
+            return_index=True,
+            entries=[f"**${value}**", _("**{amount} XP**").format(amount=value)],
+        ).paginate(ctx)
+        reward = ["money", "xp"][reward]
+        async with self.bot.pool.acquire() as conn:
+            await conn.execute('DELETE FROM loot WHERE "id"=$1;', loot_id)
+            await conn.execute(
+                f'UPDATE profile SET "{reward}"="{reward}"+$1 WHERE "user"=$2;',
+                value,
+                ctx.author.id,
+            )
+        await ctx.send(_("Reward gained!"))
+
+    @checks.has_char()
     @commands.command(aliases=["use"])
     @locale_doc
     async def equip(self, ctx, itemid: int):
