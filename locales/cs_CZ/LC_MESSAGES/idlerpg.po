@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-07-15 08:57+0000\n"
+"POT-Creation-Date: 2019-07-31 11:40+0000\n"
 "PO-Revision-Date: 2019-05-30 21:16+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -23,7 +23,7 @@ msgid "Starts a new tournament."
 msgstr "Začni nový turnaj"
 
 #: cogs/tournament.py:41 cogs/battles.py:44 cogs/battles.py:146
-#: cogs/gambling.py:327 cogs/profile.py:506
+#: cogs/gambling.py:327 cogs/profile.py:541
 msgid "You are too poor."
 msgstr "Jsi příliš chudý."
 
@@ -455,7 +455,7 @@ msgid "Armor"
 msgstr "Brnění"
 
 #: cogs/crates.py:139 cogs/classes.py:280 cogs/adventure.py:232
-#: cogs/trading.py:216 cogs/trading.py:391 cogs/profile.py:324
+#: cogs/trading.py:216 cogs/trading.py:391 cogs/profile.py:326
 msgid "Value"
 msgstr "Hodnota"
 
@@ -744,7 +744,7 @@ msgstr "Použil jsi nesprávný argument!"
 msgid "You are on cooldown. Try again in {time}."
 msgstr "Odpočítává se ti cooldown. Zkus to znova za {time}."
 
-#: cogs/error_handler.py:78 cogs/error_handler.py:121
+#: cogs/error_handler.py:78 cogs/error_handler.py:135
 msgid "Permission denied"
 msgstr "Práva zamítnuta"
 
@@ -756,23 +756,40 @@ msgstr ":x: Tento příkaz je dostupný pouze pro majitele bota."
 msgid "You don't have a character yet."
 msgstr "Nemáš zatím žádnou postavu"
 
-#: cogs/error_handler.py:89
+#: cogs/error_handler.py:91
+msgid ""
+"This command requires you to not have created a character yet. You already "
+"have one."
+msgstr ""
+
+#: cogs/error_handler.py:97
+#, python-brace-format
+msgid ""
+"You need to be following a god for this command. Please use `{prefix}follow` "
+"to choose one."
+msgstr ""
+
+#: cogs/error_handler.py:101
+msgid "You are already following a god."
+msgstr ""
+
+#: cogs/error_handler.py:103
 msgid "You need to have a guild to use this command."
 msgstr "Musíš být v guildě pro využití tohoto příkazu"
 
-#: cogs/error_handler.py:91
+#: cogs/error_handler.py:105
 msgid "You need to be in no guild to use this command."
 msgstr "Nesmíš být v žádné guildě pro využítí tohoto příkazu"
 
-#: cogs/error_handler.py:94
+#: cogs/error_handler.py:108
 msgid "Your rank in the guild is too low to use this command."
 msgstr "Tvé postavené v guildě je příliž níské pro využití tohoto příkazu"
 
-#: cogs/error_handler.py:98
+#: cogs/error_handler.py:112
 msgid "You mustn't be the owner of a guild to use this command."
 msgstr "Nesmíš být majitel guildy pro využití tohoto příkazu"
 
-#: cogs/error_handler.py:103
+#: cogs/error_handler.py:117
 #, python-brace-format
 msgid ""
 "You are already on an adventure. Use `{prefix}status` to see how long it "
@@ -781,7 +798,7 @@ msgstr ""
 "Již jsi se vydal na dobrodružství. Použij `{prefix}status` aby jsi si "
 "zobrazil za jak dlouho se vrátíš"
 
-#: cogs/error_handler.py:109
+#: cogs/error_handler.py:123
 #, python-brace-format
 msgid ""
 "You need to be on an adventure to use this command. Try `{prefix}adventure`!"
@@ -789,7 +806,7 @@ msgstr ""
 "Musíš být na dobrodružství, aby jsi mohl využít tohoto příkazu. Zkust použít "
 "`{prefix}adventure`!"
 
-#: cogs/error_handler.py:115
+#: cogs/error_handler.py:129
 #, python-brace-format
 msgid ""
 "You need to be a donator to use this command. Please head to `{prefix}"
@@ -797,7 +814,7 @@ msgid ""
 "us."
 msgstr ""
 
-#: cogs/error_handler.py:123
+#: cogs/error_handler.py:137
 msgid ""
 ":x: You don't have the permissions to use this command. It is thought for "
 "other users."
@@ -806,24 +823,24 @@ msgstr ""
 "uživatele."
 
 #. prevent cooldown reset
-#: cogs/error_handler.py:129 cogs/trading.py:430
+#: cogs/error_handler.py:143 cogs/trading.py:430
 msgid "You did not choose anything."
 msgstr "Nic jsi si nevybral."
 
-#: cogs/error_handler.py:148
+#: cogs/error_handler.py:162
 msgid ""
 "An argument or value you entered was far too high for me to handle properly!"
 msgstr ""
 "Argument nebo hodnota již si zadal je pro mě příliš vysoká, takže s ní "
 "nedokážu pracovat!"
 
-#: cogs/error_handler.py:154
+#: cogs/error_handler.py:168
 msgid ""
 "The languages have been reloaded while you were using a command. The "
 "execution therefore had to be stopped. Please try again."
 msgstr ""
 
-#: cogs/error_handler.py:185
+#: cogs/error_handler.py:199
 msgid ""
 "The command you tried to use ran into an error. The incident has been "
 "reported and the team will work hard to fix the issue!"
@@ -1540,7 +1557,7 @@ msgid "Please either buy `time`, `luck` or `money`."
 msgstr ""
 
 #: cogs/store.py:59 cogs/gambling.py:377 cogs/gambling.py:411 cogs/guild.py:485
-#: cogs/profile.py:474
+#: cogs/profile.py:509
 msgid "You're too poor."
 msgstr ""
 
@@ -2960,162 +2977,162 @@ msgstr ""
 msgid "Make a child with your spouse."
 msgstr ""
 
-#: cogs/marriage.py:290
+#: cogs/marriage.py:291
 msgid "Can't produce a child alone, can you?"
 msgstr ""
 
-#: cogs/marriage.py:295
+#: cogs/marriage.py:297
 msgid "You already have 10 children."
 msgstr ""
 
-#: cogs/marriage.py:298
+#: cogs/marriage.py:300
 #, python-brace-format
 msgid "<@{marriage}>, do you want to make a child with {author}?"
 msgstr ""
 
-#: cogs/marriage.py:303
+#: cogs/marriage.py:305
 msgid "O.o not in the mood today?"
 msgstr ""
 
-#: cogs/marriage.py:306
+#: cogs/marriage.py:308
 msgid "You were unsuccessful at making a child."
 msgstr ""
 
-#: cogs/marriage.py:311
+#: cogs/marriage.py:313
 msgid ""
 "It's a boy! Your night of love was successful! Please enter a name for your "
 "child."
 msgstr ""
 
-#: cogs/marriage.py:317
+#: cogs/marriage.py:319
 msgid ""
 "It's a girl! Your night of love was successful! Please enter a name for your "
 "child."
 msgstr ""
 
-#: cogs/marriage.py:332 cogs/marriage.py:456
+#: cogs/marriage.py:334 cogs/marriage.py:458
 msgid "You didn't enter a name."
 msgstr ""
 
-#: cogs/marriage.py:343
+#: cogs/marriage.py:345
 #, python-brace-format
 msgid "{name} was born."
 msgstr ""
 
-#: cogs/marriage.py:349
+#: cogs/marriage.py:351
 msgid "View your children."
 msgstr ""
 
-#: cogs/marriage.py:352
+#: cogs/marriage.py:354
 msgid "Lonely..."
 msgstr ""
 
-#: cogs/marriage.py:357
+#: cogs/marriage.py:359
 msgid "Your family"
 msgstr ""
 
-#: cogs/marriage.py:358
+#: cogs/marriage.py:360
 #, python-brace-format
 msgid "Family of {author} and <@{marriage}>"
 msgstr ""
 
-#: cogs/marriage.py:364
+#: cogs/marriage.py:366
 msgid "No children yet"
 msgstr ""
 
-#: cogs/marriage.py:365
+#: cogs/marriage.py:367
 #, python-brace-format
 msgid "Use {prefix}child to make one!"
 msgstr ""
 
-#: cogs/marriage.py:370
+#: cogs/marriage.py:372
 #, python-brace-format
 msgid "Gender: {gender}, Age: {age}"
 msgstr ""
 
-#: cogs/marriage.py:383
+#: cogs/marriage.py:385
 msgid "Events happening to your family."
 msgstr ""
 
-#: cogs/marriage.py:385
+#: cogs/marriage.py:387
 msgid "You're lonely."
 msgstr ""
 
-#: cogs/marriage.py:390
+#: cogs/marriage.py:392
 msgid "You don't have kids yet."
 msgstr ""
 
-#: cogs/marriage.py:396
+#: cogs/marriage.py:398
 msgid "They died because of a shampoo overdose!"
 msgstr ""
 
-#: cogs/marriage.py:397
+#: cogs/marriage.py:399
 msgid "They died of lovesickness..."
 msgstr ""
 
-#: cogs/marriage.py:398
+#: cogs/marriage.py:400
 msgid "They've died of age."
 msgstr ""
 
-#: cogs/marriage.py:399
+#: cogs/marriage.py:401
 msgid "They died of loneliness."
 msgstr ""
 
-#: cogs/marriage.py:400
+#: cogs/marriage.py:402
 msgid "A horde of goblins got them."
 msgstr ""
 
-#: cogs/marriage.py:402
+#: cogs/marriage.py:404
 msgid ""
 "They have finally decided to move out after all these years, but couldn't "
 "survive a second alone."
 msgstr ""
 
-#: cogs/marriage.py:404
+#: cogs/marriage.py:406
 msgid "Spontaneous combustion removed them from existence."
 msgstr ""
 
-#: cogs/marriage.py:405
+#: cogs/marriage.py:407
 msgid "While exploring the forest, they have gotten lost."
 msgstr ""
 
-#: cogs/marriage.py:406
+#: cogs/marriage.py:408
 msgid "They've left through a portal into another dimension..."
 msgstr ""
 
-#: cogs/marriage.py:408
+#: cogs/marriage.py:410
 msgid "The unbearable pain of stepping on a Lego\\© brick killed them."
 msgstr ""
 
 #. noqa
-#: cogs/marriage.py:410
+#: cogs/marriage.py:412
 msgid "You heard a landmine going off nearby..."
 msgstr ""
 
-#: cogs/marriage.py:411
+#: cogs/marriage.py:413
 msgid "They have been abducted by aliens!"
 msgstr ""
 
-#: cogs/marriage.py:412
+#: cogs/marriage.py:414
 msgid "The Catholic Church got them..."
 msgstr ""
 
-#: cogs/marriage.py:421
+#: cogs/marriage.py:423
 #, python-brace-format
 msgid "{name} died at the age of {age}! {cause}"
 msgstr ""
 
-#: cogs/marriage.py:432
+#: cogs/marriage.py:434
 #, python-brace-format
 msgid "{name} is now {age} years old."
 msgstr ""
 
-#: cogs/marriage.py:438
+#: cogs/marriage.py:440
 #, python-brace-format
 msgid "{name} can be renamed! Enter a new name:"
 msgstr ""
 
-#: cogs/marriage.py:465
+#: cogs/marriage.py:467
 #, python-brace-format
 msgid "{old_name} is now called {new_name}."
 msgstr ""
@@ -3976,159 +3993,188 @@ msgstr ""
 msgid "Shows your adventure loot that can be exchanged or sacrificed"
 msgstr ""
 
-#: cogs/profile.py:321
+#: cogs/profile.py:323
 msgid "You do not have any loot at this moment."
 msgstr ""
 
-#: cogs/profile.py:326
+#: cogs/profile.py:329
 #, python-brace-format
-msgid "Use $exchange {item} or $sacrifice {item}"
+msgid "Use {prefix}exchange {item} or {prefix}sacrifice {item}"
 msgstr ""
 
-#: cogs/profile.py:338
+#: cogs/profile.py:341
+msgid "Exchange an item for money or xp."
+msgstr ""
+
+#: cogs/profile.py:349
+msgid "You do not own this loot item."
+msgstr ""
+
+#: cogs/profile.py:352
+msgid "Select a reward"
+msgstr ""
+
+#: cogs/profile.py:353
+#, python-brace-format
+msgid "Do you want favor? {prefix}sacrifice instead"
+msgstr ""
+
+#: cogs/profile.py:357
+#, python-brace-format
+msgid "**{amount} XP**"
+msgstr ""
+
+#: cogs/profile.py:367
+msgid "Reward gained!"
+msgstr ""
+
+#: cogs/profile.py:373
 msgid "Equips an item of yours by ID."
 msgstr ""
 
-#: cogs/profile.py:347 cogs/profile.py:444
+#: cogs/profile.py:382 cogs/profile.py:479
 #, python-brace-format
 msgid "You don't own an item with the ID `{itemid}`."
 msgstr ""
 
-#: cogs/profile.py:367
+#: cogs/profile.py:402
 #, python-brace-format
 msgid "Successfully equipped item `{itemid}` and put off item `{olditem}`."
 msgstr ""
 
-#: cogs/profile.py:372
+#: cogs/profile.py:407
 #, python-brace-format
 msgid "Successfully equipped item `{itemid}`."
 msgstr ""
 
-#: cogs/profile.py:380
+#: cogs/profile.py:415
 msgid "Merges two items to a better one. Second one is consumed."
 msgstr ""
 
-#: cogs/profile.py:383
+#: cogs/profile.py:418
 msgid "Good luck with that."
 msgstr ""
 
-#: cogs/profile.py:397
+#: cogs/profile.py:432
 msgid "You don't own both of these items."
 msgstr ""
 
-#: cogs/profile.py:410
+#: cogs/profile.py:445
 #, python-brace-format
 msgid ""
 "The second item's stat must be in the range of `{min_}` to `{max_}` to "
 "upgrade an item with the stat of `{stat}`."
 msgstr ""
 
-#: cogs/profile.py:416
+#: cogs/profile.py:451
 msgid "This item is already on the maximum upgrade level."
 msgstr ""
 
-#: cogs/profile.py:425
+#: cogs/profile.py:460
 #, python-brace-format
 msgid ""
 "The {stat} of your **{item}** is now **{newstat}**. The other item was "
 "destroyed."
 msgstr ""
 
-#: cogs/profile.py:434
+#: cogs/profile.py:469
 msgid "Upgrades an item's stat by 1."
 msgstr ""
 
-#: cogs/profile.py:456
+#: cogs/profile.py:491
 msgid "Your weapon already reached the maximum upgrade level."
 msgstr ""
 
-#: cogs/profile.py:461
+#: cogs/profile.py:496
 #, python-brace-format
 msgid ""
 "You are too poor to upgrade this item. The upgrade costs **${pricetopay}**, "
 "but you only have **${money}**."
 msgstr ""
 
-#: cogs/profile.py:467
+#: cogs/profile.py:502
 #, python-brace-format
 msgid ""
 "Are you sure you want to upgrade this item: {item}? It will cost **"
 "${pricetopay}**."
 msgstr ""
 
-#: cogs/profile.py:471
+#: cogs/profile.py:506
 msgid "Weapon upgrade cancelled."
 msgstr ""
 
-#: cogs/profile.py:487
+#: cogs/profile.py:522
 #, python-brace-format
 msgid ""
 "The {stat} of your **{item}** is now **{newstat}**. **${pricetopay}** has "
 "been taken off your balance."
 msgstr ""
 
-#: cogs/profile.py:502
+#: cogs/profile.py:537
 msgid "Gift money!"
 msgstr ""
 
-#: cogs/profile.py:504
+#: cogs/profile.py:539
 msgid "No cheating!"
 msgstr ""
 
-#: cogs/profile.py:517
+#: cogs/profile.py:552
 #, python-brace-format
 msgid "Successfully gave **${money}** to {other}."
 msgstr ""
 
-#: cogs/profile.py:529
+#: cogs/profile.py:564
 msgid "Renames your character."
 msgstr ""
 
-#: cogs/profile.py:531
+#: cogs/profile.py:566
 msgid "What shall your character's name be? (Minimum 3 Characters, Maximum 20)"
 msgstr ""
 
-#: cogs/profile.py:540
+#: cogs/profile.py:575
 msgid "Timeout expired. Retry!"
 msgstr ""
 
-#: cogs/profile.py:546
+#: cogs/profile.py:581
 msgid "Character name updated."
 msgstr ""
 
-#: cogs/profile.py:548
+#: cogs/profile.py:583
 msgid "Character names must be at least 3 characters!"
 msgstr ""
 
-#: cogs/profile.py:550
+#: cogs/profile.py:585
 msgid "Character names mustn't exceed 20 characters!"
 msgstr ""
 
-#: cogs/profile.py:556
+#: cogs/profile.py:591
 msgid "Deletes your character."
 msgstr ""
 
-#: cogs/profile.py:558
-msgid "Are you sure? React in the next 30 seconds to confirm."
+#: cogs/profile.py:594
+msgid ""
+"Are you absolutely sure you want to delete your character? React in the next "
+"30 seconds to confirm.\n"
+"**This cannot be undone.**"
 msgstr ""
 
-#: cogs/profile.py:560
+#: cogs/profile.py:597
 msgid "Cancelled deletion of your character."
 msgstr ""
 
-#: cogs/profile.py:582
+#: cogs/profile.py:619
 msgid "Successfully deleted your character. Sorry to see you go :frowning:"
 msgstr ""
 
-#: cogs/profile.py:588
+#: cogs/profile.py:625
 msgid "Sets your profile text colour."
 msgstr ""
 
-#: cogs/profile.py:591
+#: cogs/profile.py:628
 msgid "Format for colour is `#RRGGBB` or a colour code like `cyan`."
 msgstr ""
 
-#: cogs/profile.py:598
+#: cogs/profile.py:635
 #, python-brace-format
 msgid ""
 "Successfully set your profile colour to `{colour}`. Hint: If you used a hex "

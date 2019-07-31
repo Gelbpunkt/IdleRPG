@@ -79,6 +79,12 @@ class NeedsGod(commands.CheckFailure):
     pass
 
 
+class NeedsNoGod(commands.CheckFailure):
+    """Exception raised when you need to have no god to use a command."""
+
+    pass
+
+
 def has_char():
     """Checks for a user to have a character."""
 
@@ -224,6 +230,21 @@ def has_god():
         if ctx.character_data["god"]:
             return True
         raise NeedsGod()
+
+    return commands.check(predicate)
+
+
+def has_no_god():
+    """Checks for a user to have no god."""
+
+    async def predicate(ctx):
+        if not hasattr(ctx, "character_data"):
+            ctx.character_data = await ctx.bot.pool.fetchrow(
+                'SELECT * FROM profile WHERE "user"=$1;', ctx.author.id
+            )
+        if not ctx.character_data["god"]:
+            return True
+        raise NeedsNoGod()
 
     return commands.check(predicate)
 
