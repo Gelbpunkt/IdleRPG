@@ -12,9 +12,10 @@ GNU Affero General Public License for more details.
 You should have received a copy of the GNU Affero General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
+import secrets
+
 import discord
 from discord.ext import commands
-import secrets
 
 from cogs.shard_communication import user_on_cooldown as user_cooldown
 from utils.checks import has_char, has_god, has_no_god
@@ -89,32 +90,52 @@ class Gods(commands.Cog):
     async def pray(self, ctx):
         _("""Pray to your deity to gain favor.""")
         if (rand := secrets.randbelow(3)) == 0:
-            message = secrets.choice([
-                _("They obviously didn't like your prayer!"),
-                _("Noone heard you!"),
-                _("Your voice has made them screw off."),
-                _("Even a donkey would've been a better follower than you."),
-            ])
+            message = secrets.choice(
+                [
+                    _("They obviously didn't like your prayer!"),
+                    _("Noone heard you!"),
+                    _("Your voice has made them screw off."),
+                    _("Even a donkey would've been a better follower than you."),
+                ]
+            )
             val = 0
         elif rand == 1:
             val = secrets.randbelow(500) + 1
-            message = secrets.choice([
-                _("„Rather lousy, but okay“, they said."),
-                _("You were a little sleepy."),
-                _("They were a little amused about your singing."),
-                _("Hearing the same prayer over and over again made them tired."),
-            ])
-            await self.bot.pool.execute('UPDATE profile SET "favor"="favor"+$1 WHERE "user"=$2;', val, ctx.author.id)
+            message = secrets.choice(
+                [
+                    _("„Rather lousy, but okay“, they said."),
+                    _("You were a little sleepy."),
+                    _("They were a little amused about your singing."),
+                    _("Hearing the same prayer over and over again made them tired."),
+                ]
+            )
+            await self.bot.pool.execute(
+                'UPDATE profile SET "favor"="favor"+$1 WHERE "user"=$2;',
+                val,
+                ctx.author.id,
+            )
         elif rand == 2:
             val = secrets.randbelow(500) + 500
-            message = secrets.choice([
-                _("Your Gregorian chants were amazingly well sung."),
-                _("Even the birds joined in your singing."),
-                _("The other gods applauded while your god noted down the best mark."),
-                _("Rarely have you had a better day!"),
-            ])
-            await self.bot.pool.execute('UPDATE profile SET "favor"="favor"+$1 WHERE "user"=$2;', val, ctx.author.id)
-        await ctx.send(_("Your prayer resulted in **{val}** favor. {message}").format(val=val, message=message))
+            message = secrets.choice(
+                [
+                    _("Your Gregorian chants were amazingly well sung."),
+                    _("Even the birds joined in your singing."),
+                    _(
+                        "The other gods applauded while your god noted down the best mark."
+                    ),
+                    _("Rarely have you had a better day!"),
+                ]
+            )
+            await self.bot.pool.execute(
+                'UPDATE profile SET "favor"="favor"+$1 WHERE "user"=$2;',
+                val,
+                ctx.author.id,
+            )
+        await ctx.send(
+            _("Your prayer resulted in **{val}** favor. {message}").format(
+                val=val, message=message
+            )
+        )
 
     @has_char()
     @has_god()
@@ -122,7 +143,11 @@ class Gods(commands.Cog):
     @locale_doc
     async def favor(self, ctx):
         _("""Shows your god and favor.""")
-        await ctx.send(_("Your god is **{god}** and you have **{favor}** favor with them.").format(god=ctx.character_data["god"], favor=ctx.character_data["favor"])
+        await ctx.send(
+            _("Your god is **{god}** and you have **{favor}** favor with them.").format(
+                god=ctx.character_data["god"], favor=ctx.character_data["favor"]
+            )
+        )
 
 
 def setup(bot):
