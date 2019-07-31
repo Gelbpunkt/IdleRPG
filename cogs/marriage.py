@@ -287,11 +287,13 @@ class Marriage(commands.Cog):
         _("""Make a child with your spouse.""")
         marriage = ctx.character_data["marriage"]
         if not marriage:
+            await self.bot.reset_cooldown(ctx)
             return await ctx.send(_("Can't produce a child alone, can you?"))
         names = await self.bot.pool.fetch(
             'SELECT name FROM children WHERE "mother"=$1 OR "father"=$1;', ctx.author.id
         )
         if len(names) >= 10:
+            await self.bot.reset_cooldown(ctx)
             return await ctx.send(_("You already have 10 children."))
         names = [name["name"] for name in names]
         if not await ctx.confirm(
