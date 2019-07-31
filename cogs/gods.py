@@ -59,6 +59,7 @@ class Gods(commands.Cog):
     @has_no_god()
     @user_cooldown(60)  # to prevent double invoke
     @commands.command()
+    @locale_doc
     async def follow(self, ctx):
         _("""Choose your deity. This cannot be undone.""")
         embeds = [
