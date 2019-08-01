@@ -189,7 +189,7 @@ class Gods(commands.Cog):
             )
         else:
             await self.bot.pool.execute(
-                'UPDATE profile SET "luck"=CASE WHEN "luck"+$1<0.0 THEN 0.0 WHEN "luck"+$1>2.0 TNEN 2.0 ELSE round("luck"+$1, 2) END WHERE "user"=$2;',
+                'UPDATE profile SET "luck"=CASE WHEN "luck"+$1<0.0 THEN 0.0 WHEN "luck"+$1>2.0 THEN 2.0 ELSE round("luck"+$1, 2) END WHERE "user"=$2;',
                 amount,
                 target.id,
             )
