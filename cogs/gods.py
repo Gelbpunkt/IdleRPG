@@ -13,17 +13,22 @@ You should have received a copy of the GNU Affero General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
 import secrets
+from io import BytesIO
 
 import discord
 from discord.ext import commands
 
+from classes.converters import IntGreaterThan, UserWithCharacter
 from cogs.shard_communication import user_on_cooldown as user_cooldown
-from utils.checks import has_char, has_god, has_no_god
+from utils.checks import has_char, has_god, has_no_god, is_god
 
 
 class Gods(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
+        self.bot.gods = {
+            god["user"]: name for name, god in self.bot.config.gods.items()
+        }
 
     @has_char()
     @has_god()
@@ -47,7 +52,7 @@ class Gods(commands.Cog):
 
             await conn.execute('DELETE FROM loot WHERE "id"=$1;', loot_id)
             await conn.execute(
-                'UPDATE profile SET "sacrifices"="sacrifices"+$1 WHERE "user"=$2;',
+                'UPDATE profile SET "favor"="favor"+$1 WHERE "user"=$2;',
                 value,
                 ctx.author.id,
             )
@@ -147,6 +152,49 @@ class Gods(commands.Cog):
             _("Your god is **{god}** and you have **{favor}** favor with them.").format(
                 god=ctx.character_data["god"], favor=ctx.character_data["favor"]
             )
+        )
+
+    # just like admin commands, these aren't translated
+    @is_god()
+    @commands.command()
+    async def followers(self, ctx, limit: IntGreaterThan(0)):
+        """[God Only] Lists top followers."""
+        data = await self.bot.pool.fetch(
+            'SELECT * FROM profile WHERE "god"=$1 ORDER BY "favor" DESC LIMIT $2;',
+            self.bot.gods[ctx.author.id],
+            limit,
+        )
+        formatted = "\n".join(
+            [
+                f"{idx + 1}. {i['user']}: {i['favor']} Favor, Luck: {i['luck']}"
+                for idx, i in enumerate(data)
+            ]
+        )
+        await ctx.send(
+            file=discord.File(filename="followers.txt", fp=BytesIO(formatted.encode()))
+        )
+
+    @is_god()
+    @commands.command()
+    async def giveluck(self, ctx, amount: float, target: UserWithCharacter = "all"):
+        """[Gods Only] Gives luck to all of your followers or specific ones."""
+        god = self.bot.gods[ctx.author.id]
+        if target != "all" and ctx.user_data["god"] != god:
+            return await ctx.send("Not a follower of yours.")
+        if target == "all":
+            await self.bot.pool.execute(
+                'UPDATE profile SET "luck"=CASE WHEN "luck"+$1<0.0 THEN 0.0 WHEN "luck"+$1>2.0 THEN 2.0 ELSE round("luck"+$1, 2) END WHERE "god"=$2;',
+                amount,
+                god,
+            )
+        else:
+            await self.bot.pool.execute(
+                'UPDATE profile SET "luck"=CASE WHEN "luck"+$1<0.0 THEN 0.0 WHEN "luck"+$1>2.0 TNEN 2.0 ELSE round("luck"+$1, 2) END WHERE "user"=$2;',
+                amount,
+                target.id,
+            )
+        await ctx.send(
+            f"Gave {amount} luck to {'all of your followers' if target == 'all' else target}."
         )
 
 

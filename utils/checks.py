@@ -249,6 +249,15 @@ def has_no_god():
     return commands.check(predicate)
 
 
+def is_god():
+    """Checks for a user to be a god."""
+
+    def predicate(ctx):
+        return ctx.author.id in ctx.bot.gods
+
+    return commands.check(predicate)
+
+
 # TODO: Pass context here and assign there?
 
 

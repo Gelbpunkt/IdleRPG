@@ -221,7 +221,7 @@ IdleRPG is a global bot, your characters are valid everywhere"""
     @commands.command()
     @locale_doc
     async def luck(self, ctx):
-        _("""Shows your luck factor ranging from -1 to 1.""")
+        _("""Shows your luck factor ranging from 0 to 2.""")
         await ctx.send(
             _(
                 "Your current luck multiplier is `{luck}x` (≈{percent}% more than usual (usual=0))."
