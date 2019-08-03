@@ -583,10 +583,10 @@ class Guild(commands.Cog):
         fightercount: IntGreaterThan(1),
     ):
         _("""Battle against another guild.""")
-        if enemy == ctx.author:
-            return await ctx.send(_("Poor kiddo having no friendos."))
         guild1 = ctx.character_data["guild"]
         guild2 = ctx.user_data["guild"]
+        if guild1 == guild2:
+            return await ctx.send(_("Poor kiddo having no friendos."))
         if guild1 == 0 or guild2 == 0:
             return await ctx.send(_("One of you both doesn't have a guild."))
         if (
