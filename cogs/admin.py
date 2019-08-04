@@ -30,7 +30,7 @@ class Admin(commands.Cog):
     @is_admin()
     @commands.command(hidden=True)
     async def unban(self, ctx, *, other: UserWithCharacter):
-        _("""[Bot Admin only] Unban someone from the bot.""")
+        """[Bot Admin only] Unban someone from the bot."""
         try:
             bot.bans.remove(other.id)
             await ctx.send(f"Unbanned: {other.name}")
