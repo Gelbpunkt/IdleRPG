@@ -26,6 +26,16 @@ from utils.checks import is_admin
 class Admin(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
+        
+    @is_admin()
+    @commands.command(hidden=True)
+    async def unban(self, ctx, *, other: UserWithCharacter):
+        _("""[Bot Admin only] Unban someone from the bot.""")
+        try:
+            bot.bans.remove(other.id)
+            await ctx.send(f"Unbanned: {other.name}")
+        except:
+            await ctx.send(f"{other.name} is not banned.")
 
     @is_admin()
     @commands.command(aliases=["agive"], hidden=True)
