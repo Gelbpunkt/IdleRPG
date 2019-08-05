@@ -123,7 +123,7 @@ class BlackJack:
                 missing -= 1
             else:
                 num_11 += 1
-                missing -= 1
+                missing -= 11
         return num_11 * 11 + num_1
 
     def total(self, hand):
