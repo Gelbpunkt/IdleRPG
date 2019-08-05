@@ -139,11 +139,9 @@ class Guild(commands.Cog):
                 or _("Unknown User (ID {id})").format(id=m["user"])
             )
             members_fmt.append(f"{u} ({m['guildrank']})")
-        await ctx.send(
-            embed=discord.Embed(
-                title=_("Your guild mates"), description="\n".join(members_fmt)
-            )
-        )
+        await self.bot.paginator.Paginator(
+            entries=members_fmt, title=_("Your guild mates")
+        ).paginate(ctx)
 
     @has_char()
     @is_guild_leader()
