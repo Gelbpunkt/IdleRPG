@@ -286,7 +286,7 @@ class Sharding(commands.Cog):
             pass
         return self._messages.pop(command_id, None)  # Cleanup
 
-    @commands.command(aliases=["cooldowns"])
+    @commands.command(aliases=["cooldowns", "t", "cds"])
     @locale_doc
     async def timers(self, ctx):
         _("""Lists all your cooldowns.""")
