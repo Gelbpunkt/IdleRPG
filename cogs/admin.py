@@ -26,7 +26,7 @@ from utils.checks import is_admin
 class Admin(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
-        
+
     @is_admin()
     @commands.command(hidden=True)
     async def unban(self, ctx, *, other: UserWithCharacter):

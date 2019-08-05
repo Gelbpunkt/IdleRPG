@@ -301,42 +301,52 @@ class Trading(commands.Cog):
         )
 
     @has_char()
-    @user_cooldown(10)
+    @user_cooldown(600)  # prevent too long sale times
     @commands.command(aliases=["merch"])
     @locale_doc
-    async def merchant(self, ctx, itemid: int):
-        _("""Sells an item for its value.""")
+    async def merchant(self, ctx, *itemids: int):
+        _("""Sells items for their value.""")
         async with self.bot.pool.acquire() as conn:
-            item = await conn.fetchrow(
-                "SELECT * FROM inventory i JOIN allitems ai ON (i.item=ai.id) WHERE ai.id=$1 AND ai.owner=$2;",
-                itemid,
+            value, amount, equipped = await conn.fetchval(
+                "SELECT (sum(ai.value), count(*), SUM(CASE WHEN i.equipped THEN 1 END)) FROM inventory i JOIN allitems ai ON (i.item=ai.id) WHERE ai.id=ANY($1) AND ai.owner=$2;",
+                itemids,
                 ctx.author.id,
             )
-            if not item:
+            if not amount:
                 return await ctx.send(
-                    _("You don't own an item with the ID: {itemid}").format(
-                        itemid=itemid
+                    _("You don't own any items with the IDs: {itemids}").format(
+                        itemids=", ".join([str(itemid) for itemid in itemids])
                     )
                 )
-            if item["equipped"]:
+
+            if equipped:
                 if not await ctx.confirm(
-                    _("Are you sure you want to sell your equipped {item}?").format(
-                        item=item["name"]
-                    ),
+                    _(
+                        "You are about to sell {amount} equipped items. Are you sure?"
+                    ).format(amount=equipped),
                     timeout=6,
                 ):
                     return await ctx.send(_("Cancelled."))
+            await conn.execute('DELETE FROM allitems WHERE "id"=ANY($1);', itemids)
             await conn.execute(
                 'UPDATE profile SET money=money+$1 WHERE "user"=$2;',
-                item["value"],
+                value,
                 ctx.author.id,
             )
-            await conn.execute('DELETE FROM allitems WHERE "id"=$1;', itemid)
         await ctx.send(
-            _("You received **${money}** when selling item `{itemid}`.").format(
-                money=item["value"], itemid=itemid
+            _(
+                "You received **${money}** when selling item(s) `{itemids}`. {additional}"
+            ).format(
+                money=value,
+                itemids=", ".join([str(itemid) for itemid in itemids]),
+                additional=_(
+                    "Skipped `{amout}` because they did not belong to you."
+                ).format(amount=len(itemids) - amount)
+                if len(itemids) > amount
+                else "",
             )
         )
+        await self.bot.reset_cooldown(ctx)  # we finished
 
     @has_char()
     @user_cooldown(1800)

@@ -54,7 +54,9 @@ class Store(commands.Cog):
         _("""Buy a booster from the store.""")
         if booster not in ["time", "luck", "money", "all"]:
             return await ctx.send(_("Please either buy `time`, `luck` or `money`."))
-        price = {"time": 1000, "luck": 500, "money": 1000, "all": 2500}[booster] * amount
+        price = {"time": 1000, "luck": 500, "money": 1000, "all": 2500}[
+            booster
+        ] * amount
         if ctx.character_data["money"] < price:
             return await ctx.send(_("You're too poor."))
         if booster != "all":
