@@ -340,7 +340,7 @@ class Trading(commands.Cog):
                 money=value,
                 itemids=", ".join([str(itemid) for itemid in itemids]),
                 additional=_(
-                    "Skipped `{amout}` because they did not belong to you."
+                    "Skipped `{amount}` because they did not belong to you."
                 ).format(amount=len(itemids) - amount)
                 if len(itemids) > amount
                 else "",

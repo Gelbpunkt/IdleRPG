@@ -17,6 +17,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
 import asyncio
 
+import discord
 from discord.ext import commands
 
 from classes.converters import UserWithCharacter
@@ -29,10 +30,10 @@ class Admin(commands.Cog):
 
     @is_admin()
     @commands.command(hidden=True)
-    async def unban(self, ctx, *, other: UserWithCharacter):
+    async def unban(self, ctx, *, other: discord.User):
         """[Bot Admin only] Unban someone from the bot."""
         try:
-            bot.bans.remove(other.id)
+            self.bot.bans.remove(other.id)
             await ctx.send(f"Unbanned: {other.name}")
         except:
             await ctx.send(f"{other.name} is not banned.")
