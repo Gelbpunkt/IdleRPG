@@ -128,7 +128,7 @@ Even $1 can help us.
         _("""Information on the support server.""")
         await ctx.send(
             _(
-                "Got problems or feature requests? Looking for people to play with? Join the support server:\nhttps://discord.gg/axBKXBv"
+                "Got problems or feature requests? Looking for people to play with? Join the support server:\nhttps://discord.gg/MSBatf6"
             )
         )
 
