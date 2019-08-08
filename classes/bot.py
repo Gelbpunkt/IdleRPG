@@ -53,7 +53,7 @@ class Bot(commands.AutoShardedBot):
         self.linecount = 0
         self.make_linecount()
         self.all_prefixes = {}
-        self.verified = []
+        # self.verified = []
 
         # global cooldown
         self.add_check(self.global_cooldown, call_once=True)
@@ -96,7 +96,7 @@ class Bot(commands.AutoShardedBot):
             except Exception:
                 print(f"Failed to load extension {extension}.", file=sys.stderr)
                 traceback.print_exc()
-        self.loop.create_task(self.reset_verified())
+        # self.loop.create_task(self.reset_verified())
         await self.start(self.config.token)
 
     async def reset_verified(self):
@@ -116,10 +116,11 @@ class Bot(commands.AutoShardedBot):
             return
         locale = await self.get_cog("Locale").locale(message)
         i18n.current_locale.set(locale)
-        if message.author.id in self.verified:
-            await self.process_commands(message)
-        elif self.matches_prefix(message):
-            await self.create_captcha(message.author, message.channel)
+        # if message.author.id in self.verified:
+        #    await self.process_commands(message)
+        # elif self.matches_prefix(message):
+        #    await self.create_captcha(message.author, message.channel)
+        await self.process_commands(message)
 
     async def create_captcha(self, user, channel):
         async with self.session.get("https://captcha.travitia.xyz/v2") as r:
