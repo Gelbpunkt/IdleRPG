@@ -173,7 +173,7 @@ class GameBase:
                 ):
                     await self.ctx.send(
                         _(
-                            "I couldn't send a DM to {user}! (This is a known bug if your reaction didn't do anything) Choosing random action..."
+                            "I couldn't send a DM to {user}! Choosing random action..."
                         ).format(user=p[0])
                     )
                     action = random.choice(actions2)
