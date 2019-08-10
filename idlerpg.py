@@ -17,14 +17,14 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
 import asyncio
 import sys
+import tracemalloc
 from json import loads
 
 from classes.bot import Bot
 
-if sys.platform == "linux" and sys.version_info >= (
-    3,
-    5,
-):  # uvloop requires linux and min 3.5 Python
+tracemalloc.start()
+
+if sys.platform == "linux":  # uvloop requires linux
     import uvloop
 
     asyncio.set_event_loop_policy(uvloop.EventLoopPolicy())

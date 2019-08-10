@@ -166,7 +166,11 @@ class GameBase:
                             title=_("Choose an action"),
                         ).paginate(self.ctx, location=p[0])
                     ]
-                except (self.ctx.bot.paginator.NoChoice, discord.Forbidden):
+                except (
+                    self.ctx.bot.paginator.NoChoice,
+                    discord.Forbidden,
+                    asyncio.TimeoutError,
+                ):
                     await self.ctx.send(
                         _(
                             "I couldn't send a DM to {user}! (This is a known bug if your reaction didn't do anything) Choosing random action..."

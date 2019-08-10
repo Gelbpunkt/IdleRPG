@@ -245,6 +245,42 @@ class Sharding(commands.Cog):
             "PUBLISH", self.communication_channel, json.dumps(payload)
         )
 
+    async def wait_for_dms(self, event, check, timeout, command_id: str):
+        """
+        This uses socket raw events
+        The predicate is a dictionary with key-values from the event data to match 1:1
+        """
+        if 0 not in self.bot.shards.keys():
+            return
+        if event == "reaction_add":
+            event = "MESSAGE_REACTION_ADD"
+        elif event == "message":
+            event = "MESSAGE_CREATE"
+
+        check = {k: str(v) if isinstance(v, int) else v for k, v in check.items()}
+
+        def data_matches(dict1, dict2):
+            for key, val in dict1.items():
+                val2 = dict2[key]
+                if isinstance(val2, dict):
+                    if not data_matches(val, val2):
+                        return False
+                elif isinstance(val, (list, set)):
+                    if val2 not in val:
+                        return False
+                elif val2 != val:
+                    return False
+            return True
+
+        def pred(e):
+            return e["op"] == 0 and e["t"] == event and data_matches(check, e["d"])
+
+        out = await self.bot.wait_for("socket_response", check=pred, timeout=timeout)
+        payload = {"output": out["d"], "command_id": command_id}
+        await self.bot.redis.execute(
+            "PUBLISH", self.communication_channel, json.dumps(payload)
+        )
+
     async def handler(
         self,
         action: str,

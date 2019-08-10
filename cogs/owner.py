@@ -19,6 +19,7 @@ import copy
 import io
 import textwrap
 import traceback
+import tracemalloc
 from contextlib import redirect_stdout
 from importlib import reload as importlib_reload
 
@@ -84,6 +85,13 @@ class Owner(commands.Cog):
             await ctx.send(f"**`ERROR:`** {type(e).__name__} - {e}")
         else:
             await ctx.send("**`SUCCESS`**")
+
+    @commands.command(hidden=True)
+    async def debug(self, ctx):
+        if tracemalloc.is_tracing():
+            snapshot = tracemalloc.take_snapshot()
+            top_stats = snapshot.statistics("lineno")
+            await ctx.send("```" + "\n".join([str(x) for x in top_stats[:10]]) + "```")
 
     @commands.command(hidden=True)
     @locale_doc

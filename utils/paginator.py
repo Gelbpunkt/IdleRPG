@@ -638,10 +638,23 @@ class Choose:
                     return False
             return True
 
+        target_id = location.id if location else ctx.author.id
+
         try:
-            react, user = await ctx.bot.wait_for(
-                "reaction_add", check=check, timeout=self.timeout
-            )
+            if isinstance(location, (discord.User, discord.Member)):
+                react, user = await ctx.bot.wait_for_dms(
+                    "reaction_add",
+                    check={
+                        "emoji": {"name": self.emojis},
+                        "user_id": target_id,
+                        "message_id": base.id,
+                    },
+                    timeout=self.timeout,
+                )
+            else:
+                reaction, user = await ctx.bot.wait_for(
+                    "reaction_add", check=check, timeout=self.timeout
+                )
         except asyncio.TimeoutError:
             await self.stop_controller(base)
             raise NoChoice("You didn't choose anything.")

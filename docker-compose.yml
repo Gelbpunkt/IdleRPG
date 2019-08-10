@@ -1,14 +1,14 @@
 version: '3.7'
 services:
   postgres:
-    image: postgres/11.5-alpine
+    image: postgres:11.5-alpine
     ports:
     - "5432:5432"
     volumes:
     - postgres:/var/lib/postgresql
     restart: always
   redis:
-    image: redis/5.0.5-alpine
+    image: redis:5.0.5-alpine
     command: ["redis-server", "--appendonly", "yes"]
     hostname: redis
     networks:
