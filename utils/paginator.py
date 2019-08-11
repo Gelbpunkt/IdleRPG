@@ -652,7 +652,7 @@ class Choose:
                     timeout=self.timeout,
                 )
             else:
-                reaction, user = await ctx.bot.wait_for(
+                react, user = await ctx.bot.wait_for(
                     "reaction_add", check=check, timeout=self.timeout
                 )
         except asyncio.TimeoutError:

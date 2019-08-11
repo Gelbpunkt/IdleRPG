@@ -99,15 +99,20 @@ class Classes(commands.Cog):
         elif profession == "Ranger":
             profession_ = "Caretaker"
         elif profession == "Raider":
-            profession = "Swordsman"
+            profession_ = "Swordsman"
         elif profession == "Ritualist":
-            profession = "Priest"
+            profession_ = "Priest"
         if ctx.character_data["class"] == "No Class":
-            await self.bot.pool.execute(
-                'UPDATE profile SET "class"=$1 WHERE "user"=$2;',
-                profession_,
-                ctx.author.id,
-            )
+            async with self.bot.pool.acquire() as conn:
+                await conn.execute(
+                    'UPDATE profile SET "class"=$1 WHERE "user"=$2;',
+                    profession_,
+                    ctx.author.id,
+                )
+                if profession == "Ranger":
+                    await conn.execute(
+                        'INSERT INTO pets ("user") VALUES ($1);', ctx.author.id
+                    )
             await ctx.send(
                 _("Your new class is now `{profession}`.").format(
                     profession=_(profession)
@@ -120,12 +125,18 @@ class Classes(commands.Cog):
                     _("You're too poor for a class change, it costs **$5000**.")
                 )
 
-            await self.bot.pool.execute(
-                'UPDATE profile SET "class"=$1, "money"="money"-$2 WHERE "user"=$3;',
-                profession_,
-                5000,
-                ctx.author.id,
-            )
+            async with self.bot.pool.acquire() as conn:
+                await conn.execute(
+                    'UPDATE profile SET "class"=$1, "money"="money"-$2 WHERE "user"=$3;',
+                    profession_,
+                    5000,
+                    ctx.author.id,
+                )
+                await conn.execute('DELETE FROM pets WHERE "user"=$1;', ctx.author.id)
+                if profession == "Ranger":
+                    await conn.execute(
+                        'INSERT INTO pets ("user") VALUES ($1);', ctx.author.id
+                    )
             await ctx.send(
                 _(
                     "Your new class is now `{profession}`. **$5000** was taken off your balance."
@@ -137,8 +148,7 @@ class Classes(commands.Cog):
     @locale_doc
     async def myclass(self, ctx):
         _("""Views your class.""")
-        class_ = ctx.character_data["class"]
-        if class_ == "No Class" or not class_:
+        if (class_ := ctx.character_data["class"]) == "No Class" or not class_:
             return await ctx.send("You haven't got a class yet.")
         try:
             await ctx.send(
@@ -232,17 +242,52 @@ Priest   ->  Mysticist ->  Summoner    -> Seer           ->  Ritualist
         _("""[Ranger Only] View your pet or interact with it.""")
         petlvl = self.bot.get_class_grade(ctx.character_data["class"])
         em = discord.Embed(title=_("{user}'s pet").format(user=ctx.disp))
+        em.add_field(name=_("Name"), value=ctx.pet_data["name"], inline=False)
         em.add_field(name=_("Level"), value=petlvl, inline=False)
+        em.add_field(name=_("Food"), value=f"{ctx.pet_data['food']}/100", inline=False)
+        em.add_field(
+            name=_("Drinks"), value=f"{ctx.pet_data['drink']}/100", inline=False
+        )
+        em.add_field(name=_("Love"), value=f"{ctx.pet_data['love']}/100", inline=False)
+        em.add_field(name=_("Joy"), value=f"{ctx.pet_data['joy']}/100", inline=False)
         em.set_thumbnail(url=ctx.author.avatar_url)
-        url = [
-            "https://cdn.discordapp.com/attachments/456433263330852874/458568221189210122/fox.JPG",
-            "https://cdn.discordapp.com/attachments/456433263330852874/458568217770721280/bird_2.jpg",
-            "https://cdn.discordapp.com/attachments/456433263330852874/458568230110363649/hedgehog_2.JPG",
-            "https://cdn.discordapp.com/attachments/456433263330852874/458568231918108673/wolf_2.jpg",
-            "https://cdn.discordapp.com/attachments/456433263330852874/458577751226581024/dragon_2.jpg",
-        ][petlvl - 1]
-        em.set_image(url=url)
+        em.set_image(url=ctx.pet_data["image"])
         await ctx.send(embed=em)
+
+    @has_char()
+    @is_class("Ranger")
+    @pet.command()
+    @locale_doc
+    async def rename(self, ctx, *, name: str):
+        _("""[Ranger Only] Renames your pet.""")
+        if len(name) > 20:
+            return await ctx.send(_("Please enter a name shorter than 20 characters."))
+        await self.bot.pool.execute(
+            'UPDATE pets SET "name"=$1 WHERE "user"=$2;', name, ctx.author.id
+        )
+        await ctx.send(_("Pet name updated."))
+
+    @has_char()
+    @is_class("Ranger")
+    @pet.command()
+    @locale_doc
+    async def image(self, ctx, *, url: str):
+        _("""[Ranger Only] Sets your pet's image by URL.""")
+        if len(url) > 60:
+            return await ctx.send(_("URLs mustn't exceed 60 characters ."))
+        if not (
+            url.startswith("http")
+            and (url.endswith(".png") or url.endswith(".jpg") or url.endswith(".jpeg"))
+        ):
+            return await ctx.send(
+                _(
+                    "I couldn't read that URL. Does it start with `http://` or `https://` and is either a png or jpeg?"
+                )
+            )
+        await self.bot.pool.execute(
+            'UPDATE pets SET "image"=$1 WHERE "user"=$2;', url, ctx.author.id
+        )
+        await ctx.send(_("Your pet's image was successfully updated."))
 
     @has_char()
     @is_class("Ranger")

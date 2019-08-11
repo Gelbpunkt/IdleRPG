@@ -17,8 +17,8 @@
 -- PostgreSQL database dump
 --
 
--- Dumped from database version 11.4
--- Dumped by pg_dump version 11.4
+-- Dumped from database version 11.5
+-- Dumped by pg_dump version 11.5
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -261,6 +261,23 @@ ALTER SEQUENCE public.market_id_seq OWNED BY public.market.id;
 
 
 --
+-- Name: pets; Type: TABLE; Schema: public; Owner: jens
+--
+
+CREATE TABLE public.pets (
+    "user" bigint NOT NULL,
+    name character varying(20) DEFAULT 'Kevin'::character varying NOT NULL,
+    image character varying(60) DEFAULT 'https://i.imgur.com/IHhXjXg.jpg'::character varying NOT NULL,
+    food bigint DEFAULT 100 NOT NULL,
+    drink bigint DEFAULT 100 NOT NULL,
+    love bigint DEFAULT 100 NOT NULL,
+    joy bigint DEFAULT 100 NOT NULL
+);
+
+
+ALTER TABLE public.pets OWNER TO jens;
+
+--
 -- Name: profile; Type: TABLE; Schema: public; Owner: jens
 --
 
@@ -295,7 +312,7 @@ CREATE TABLE public.profile (
     crates_magic bigint DEFAULT 0,
     crates_legendary bigint DEFAULT 0,
     luck numeric DEFAULT 1.0,
-    sacrifices bigint DEFAULT 0,
+    favor bigint DEFAULT 0,
     god character varying(50) DEFAULT NULL::character varying
 );
 
@@ -456,6 +473,14 @@ ALTER TABLE ONLY public.market
 
 
 --
+-- Name: pets pets_pkey; Type: CONSTRAINT; Schema: public; Owner: jens
+--
+
+ALTER TABLE ONLY public.pets
+    ADD CONSTRAINT pets_pkey PRIMARY KEY ("user");
+
+
+--
 -- Name: profile profile_pkey; Type: CONSTRAINT; Schema: public; Owner: jens
 --
 
@@ -509,6 +534,14 @@ ALTER TABLE ONLY public.inventory
 
 ALTER TABLE ONLY public.market
     ADD CONSTRAINT market_item_fkey FOREIGN KEY (item) REFERENCES public.allitems(id) ON DELETE CASCADE;
+
+
+--
+-- Name: pets pets_user_fkey; Type: FK CONSTRAINT; Schema: public; Owner: jens
+--
+
+ALTER TABLE ONLY public.pets
+    ADD CONSTRAINT pets_user_fkey FOREIGN KEY ("user") REFERENCES public.profile("user") ON DELETE CASCADE;
 
 
 --
