@@ -20,7 +20,6 @@ import os
 import random
 
 from discord.errors import NotFound
-
 from PIL import Image, ImageDraw, ImageFont
 
 levels = {

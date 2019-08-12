@@ -27,8 +27,14 @@ from utils import misc as rpgtools
 from utils.checks import has_char, has_money, is_class, user_is_patron
 
 
-def update_pet(cmd):
-    async def hook(cog, ctx):
+class PetDied(commands.CommandInvokeError):
+    """Exception raised when the pet died."""
+
+    pass
+
+
+def update_pet():
+    async def predicate(ctx):
         diff = (
             (now := datetime.datetime.now(pytz.utc)) - ctx.pet_data["last_update"]
         ) // datetime.timedelta(hours=2)
@@ -44,14 +50,15 @@ def update_pet(cmd):
                     now,
                     ctx.author.id,
                 )
+                ctx.pet_data = data
                 if data["food"] < 0 or data["drink"] < 0:
                     await conn.execute(
                         'DELETE FROM pets WHERE "user"=$1;', ctx.author.id
                     )
-                    await ctx.send("Rip")
+                    raise PetDied()
+        return True
 
-    cmd.before_invoke(hook)
-    return cmd
+    return commands.check(predicate)
 
 
 class Classes(commands.Cog):

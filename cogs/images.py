@@ -24,7 +24,6 @@ import discord
 from discord.ext import commands
 from discord.ext.commands import BucketType
 from discord.ext.commands.default import Author
-
 from PIL import Image, ImageFilter, ImageOps
 
 
