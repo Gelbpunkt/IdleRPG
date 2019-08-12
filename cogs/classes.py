@@ -272,7 +272,7 @@ Priest   ->  Mysticist ->  Summoner    -> Seer           ->  Ritualist
 
     @has_char()
     @is_class("Ranger")
-    @update_pet
+    @update_pet()
     @commands.group(invoke_without_command=True)
     @locale_doc
     async def pet(self, ctx):
