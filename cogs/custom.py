@@ -26,6 +26,13 @@ def is_ken():
     return commands.check(predicate)
 
 
+def is_shoie():
+    def predicate(ctx):
+        return ctx.author.id == 423425457673863179
+
+    return commands.check(predicate)
+
+
 class Custom(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
@@ -50,6 +57,15 @@ class Custom(commands.Cog):
         em.set_image(
             url="https://cdn.discordapp.com/attachments/515954333368713235/518539871665520641/image0.gif"  # noqa
         )
+        await ctx.send(embed=em)
+
+    @is_shoie()
+    @commands.command(hidden=True)
+    async def slap(self, ctx, user: discord.Member):
+        """[Shoie only] Slap someone."""
+        em = discord.Embed(
+            title=f"{ctx.disp} slapped {user.display_name}"
+        ).set_image(url="https://media.giphy.com/media/keVd9WsqHg93O/giphy.gif")
         await ctx.send(embed=em)
 
 

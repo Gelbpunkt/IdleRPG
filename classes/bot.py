@@ -193,7 +193,11 @@ class Bot(commands.AutoShardedBot):
 
     async def start_guild_adventure(self, guild, difficulty, time):
         await self.redis.execute(
-            "SET", f"guildadv:{guild}", difficulty, "EX", int(time.total_seconds()) + 259_200
+            "SET",
+            f"guildadv:{guild}",
+            difficulty,
+            "EX",
+            int(time.total_seconds()) + 259_200,
         )  # +3 days
 
     async def get_guild_adventure(self, guild):

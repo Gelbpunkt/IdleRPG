@@ -26,6 +26,7 @@ if sys.platform == "linux" and sys.version_info >= (
     5,
 ):  # uvloop requires linux and min 3.5 Python
     import uvloop
+
     asyncio.set_event_loop_policy(uvloop.EventLoopPolicy())
 
 bot = Bot(

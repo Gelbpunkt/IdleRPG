@@ -66,10 +66,12 @@ class NeedsAdventure(commands.CheckFailure):
 
     pass
 
+
 class NoPatron(commands.CheckFailure):
     """Exception raised when you need to donate to use a command."""
 
     pass
+
 
 def has_char():
     """Checks for a user to have a character."""

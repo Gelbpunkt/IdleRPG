@@ -298,7 +298,9 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
             "https://raid.travitia.xyz/toggle",
             headers={"Authorization": self.bot.config.raidauth},
         )
-        bandits = [{"hp": random.randint(100, 190), "id": i + 1} for i in range(bandits)]
+        bandits = [
+            {"hp": random.randint(100, 190), "id": i + 1} for i in range(bandits)
+        ]
         payout = sum(i["hp"] for i in bandits)
         await ctx.send(
             f"""
