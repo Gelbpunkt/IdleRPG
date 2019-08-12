@@ -86,10 +86,12 @@ class NeedsNoGod(commands.CheckFailure):
 
     pass
 
+
 class PetDied(commands.CheckFailure):
     """Exception raised when the pet died."""
 
     pass
+
 
 class PetRanAway(commands.CheckFailure):
     """Exception raised when the pet ran away."""
@@ -289,7 +291,9 @@ def update_pet():
                         'DELETE FROM pets WHERE "user"=$1;', ctx.author.id
                     )
                     await conn.execute(
-                        'UPDATE profile SET "class"=$1 WHERE "user"=$2;', "No Class", ctx.author.id
+                        'UPDATE profile SET "class"=$1 WHERE "user"=$2;',
+                        "No Class",
+                        ctx.author.id,
                     )
                     raise PetDied()
                 if secrets.randbelow(100) > data["love"]:

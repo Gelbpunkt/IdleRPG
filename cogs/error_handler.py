@@ -127,13 +127,17 @@ class Errorhandler(commands.Cog):
                 await ctx.send(
                     _(
                         "Your pet **{pet}** died! You did not give it enough to eat or drink. Because of your bad treatment, you are no longer a {profession}."
-                    ).format(pet=ctx.pet_data["name"], profession=ctx.character_data["class"])
+                    ).format(
+                        pet=ctx.pet_data["name"], profession=ctx.character_data["class"]
+                    )
                 )
             elif type(error) == utils.checks.PetRanAway:
                 await ctx.send(
                     _(
                         "Your pet **{pet}** ran away! You did not show it your love enough! Because of your bad treatment, you are no longer a {profession}."
-                    ).format(pet=ctx.pet_data["name"], profession=ctx.character_data["class"])
+                    ).format(
+                        pet=ctx.pet_data["name"], profession=ctx.character_data["class"]
+                    )
                 )
             elif type(error) == utils.checks.NoPatron:
                 await ctx.send(
