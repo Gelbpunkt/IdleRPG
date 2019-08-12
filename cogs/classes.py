@@ -15,14 +15,43 @@ GNU Affero General Public License for more details.
 You should have received a copy of the GNU Affero General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
+import datetime
 import secrets
 
 import discord
+import pytz
 from discord.ext import commands
 
 from cogs.shard_communication import user_on_cooldown as user_cooldown
 from utils import misc as rpgtools
 from utils.checks import has_char, has_money, is_class, user_is_patron
+
+
+def update_pet(cmd):
+    async def hook(cog, ctx):
+        diff = (
+            datetime.datetime.now(pytz.utc) - ctx.pet_data["last_update"]
+        ) // datetime.timedelta(hours=2)
+        if diff >= 1:
+            # Pets loose 2 food, 4 drinks, 1 joy and 3 love
+            async with ctx.bot.pool.acquire() as conn:
+                data = await conn.fetchrow(
+                    'UPDATE pets SET "food"="food"-$1, "drink"="drink"-$2, "joy"=CASE WHEN "joy"-$3=>0 THEN "joy"-$3 ELSE 0 END, "love"=CASE WHEN "love"-$4=>0 THEN "love"-$4 ELSE 0 END, "last_update"=$5 WHERE "user"=$6 RETURNING *;',
+                    diff * 2,
+                    diff * 4,
+                    diff,
+                    diff * 3,
+                    now,
+                    ctx.author.id,
+                )
+                if data["food"] < 0 or data["drink"] < 0:
+                    await conn.execute(
+                        'DELETE FROM pets WHERE "user"=$1;', ctx.author.id
+                    )
+                    await ctx.send("Rip")
+
+    cmd.before_invoke(hook)
+    return cmd
 
 
 class Classes(commands.Cog):
@@ -236,6 +265,7 @@ Priest   ->  Mysticist ->  Summoner    -> Seer           ->  Ritualist
 
     @has_char()
     @is_class("Ranger")
+    @update_pet
     @commands.group(invoke_without_command=True)
     @locale_doc
     async def pet(self, ctx):

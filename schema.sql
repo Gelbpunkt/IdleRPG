@@ -271,7 +271,8 @@ CREATE TABLE public.pets (
     food bigint DEFAULT 100 NOT NULL,
     drink bigint DEFAULT 100 NOT NULL,
     love bigint DEFAULT 100 NOT NULL,
-    joy bigint DEFAULT 100 NOT NULL
+    joy bigint DEFAULT 100 NOT NULL,
+    last_update timestamp with time zone DEFAULT timezone('utc'::text, now()) NOT NULL
 );
 
 
