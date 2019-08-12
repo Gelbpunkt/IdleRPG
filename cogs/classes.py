@@ -339,10 +339,64 @@ Priest   ->  Mysticist ->  Summoner    -> Seer           ->  Ritualist
             ).format(item=f"{item[2]} {item[0]}", points=item[3])
         )
 
+    @update_pet()
     @has_char()
     @is_class("Ranger")
-    @pet.command()
+    @user_cooldown(43200)  # Meanie!
+    @pet.command(aliases=["caress", "hug", "kiss"])
+    @locale_doc
+    async def cuddle(self, ctx):
+        _("""[Ranger Only] Cuddle your pet to make it love you.""")
+        value = secrets.randbelow(12) + 1  # On average, it'll stay as is
+        await self.bot.pool.execute(
+            'UPDATE pets SET "love"=CASE WHEN "love"+$1>=100 THEN 100 ELSE "love"+$1 END WHERE "user"=$2;',
+            value,
+            ctx.author.id,
+        )
+        await ctx.send(
+            _(
+                "Your pet adores you! :heart: Cuddling it has increased its love for you by **{value}** points."
+            ).format(value=value)
+        )
+
     @update_pet()
+    @has_char()
+    @is_class("Ranger")
+    @user_cooldown(43200)  # We are mean, indeed
+    @pet.command(aliases=["fun"])
+    @locale_doc
+    async def play(self, ctx):
+        _("""[Ranger Only] Play with your pet to make it happier.""")
+        value = secrets.randbelow(12) + 1  # On average, it'll stay as is
+        await self.bot.pool.execute(
+            'UPDATE pets SET "joy"=CASE WHEN "joy"+$1>=100 THEN 100 ELSE "joy"+$1 END WHERE "user"=$2;',
+            value,
+            ctx.author.id,
+        )
+        await ctx.send(
+            _(
+                "You have been {activity} with your pet and it gained **{value}** joy!"
+            ).format(
+                activity=secrets.choice(
+                    [
+                        _("playing football :soccer:"),
+                        _("playing American football :football:"),
+                        _("playing rugby :rugy_football:"),
+                        _("playing basketball :basketball:"),
+                        _("playing tennis :tennis:"),
+                        _("playing ping-pong :ping_pong:"),
+                        _("boxing :boxing_glove:"),
+                        _("skiing :ski:"),
+                    ]
+                ),
+                value=value,
+            )
+        )
+
+    @update_pet()
+    @has_char()
+    @is_class("Ranger")
+    @pet.command(aliases=["name"])
     @locale_doc
     async def rename(self, ctx, *, name: str):
         _("""[Ranger Only] Renames your pet.""")
@@ -353,10 +407,10 @@ Priest   ->  Mysticist ->  Summoner    -> Seer           ->  Ritualist
         )
         await ctx.send(_("Pet name updated."))
 
+    @update_pet()
     @has_char()
     @is_class("Ranger")
     @pet.command()
-    @update_pet()
     @locale_doc
     async def image(self, ctx, *, url: str):
         _("""[Ranger Only] Sets your pet's image by URL.""")
@@ -376,11 +430,11 @@ Priest   ->  Mysticist ->  Summoner    -> Seer           ->  Ritualist
         )
         await ctx.send(_("Your pet's image was successfully updated."))
 
+    @update_pet()
     @has_char()
     @is_class("Ranger")
     @user_cooldown(86400)
     @pet.command()
-    @update_pet()
     @locale_doc
     async def hunt(self, ctx):
         _("""[Ranger Only] Let your pet get a weapon for you!""")

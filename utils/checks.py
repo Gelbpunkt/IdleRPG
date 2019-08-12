@@ -299,6 +299,14 @@ def update_pet():
                     )
                     raise PetDied()
                 elif secrets.randbelow(100) > data["love"]:
+                    await conn.execute(
+                        'DELETE FROM pets WHERE "user"=$1;', ctx.author.id
+                    )
+                    await conn.execute(
+                        'UPDATE profile SET "class"=$1 WHERE "user"=$2;',
+                        "No Class",
+                        ctx.author.id,
+                    )
                     raise PetRanAway()
         return True
 
