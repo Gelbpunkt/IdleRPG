@@ -268,7 +268,7 @@ Priest   ->  Mysticist ->  Summoner    -> Seer           ->  Ritualist
             ("Cucumber", 500, ":cucumber:", 4),
             ("Meat", 1500, ":meat_on_bone:", 10),
             ("Salad", 2500, ":salad:", 20),
-            ("Adrian's Cocktail", 20000, ":tropical_drink:", 100),
+            ("Adrian's Power Poop", 20000, ":poop:", 100),
         ]
         item = items[
             await self.bot.paginator.Choose(
@@ -294,6 +294,48 @@ Priest   ->  Mysticist ->  Summoner    -> Seer           ->  Ritualist
         await ctx.send(
             _(
                 "You bought **{item}** for your pet and increased its food bar by **{points}** points."
+            ).format(item=f"{item[2]} {item[0]}", points=item[3])
+        )
+
+    @update_pet()
+    @has_char()
+    @is_class("Ranger")
+    @pet.command()
+    @locale_doc
+    async def drink(self, ctx):
+        _("""[Ranger Only] Give your pet something to drink.""")
+        items = [
+            ("Some Water", 100, ":droplet:", 1),
+            ("A bottle of water", 300, ":baby_bottle:", 2),
+            ("Cocktail", 500, ":cocktail:", 4),
+            ("Wine", 1500, ":wine_glass:", 10),
+            ("Beer", 2500, ":beer:", 20),
+            ("Adrian's Cocktail", 20000, ":tropical_drink:", 100),
+        ]
+        item = items[
+            await self.bot.paginator.Choose(
+                entries=[f"{i[2]} {i[0]} **${i[1]}** -> +{i[3]}" for i in items],
+                return_index=True,
+                timeout=30,
+                title=_("Give your pet something to drink"),
+            ).paginate(ctx)
+        ]
+        if not await has_money(self.bot, ctx.author.id, item[1]):
+            return await ctx.send(_("You are too poor to buy this."))
+        async with self.bot.pool.acquire() as conn:
+            await conn.execute(
+                'UPDATE profile SET "money"="money"-$1 WHERE "user"=$2;',
+                item[1],
+                ctx.author.id,
+            )
+            await conn.execute(
+                'UPDATE pets SET "drink"=CASE WHEN "drink"+$1>=100 THEN 100 ELSE "drink"+$1 END WHERE "user"=$2;',
+                item[3],
+                ctx.author.id,
+            )
+        await ctx.send(
+            _(
+                "You bought **{item}** for your pet and increased its drinks bar by **{points}** points."
             ).format(item=f"{item[2]} {item[0]}", points=item[3])
         )
 
