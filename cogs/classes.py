@@ -15,16 +15,14 @@ GNU Affero General Public License for more details.
 You should have received a copy of the GNU Affero General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
-import datetime
 import secrets
 
 import discord
-import pytz
 from discord.ext import commands
 
 from cogs.shard_communication import user_on_cooldown as user_cooldown
 from utils import misc as rpgtools
-from utils.checks import has_char, has_money, is_class, user_is_patron
+from utils.checks import has_char, has_money, is_class, update_pet, user_is_patron
 
 
 class Classes(commands.Cog):
@@ -257,9 +255,52 @@ Priest   ->  Mysticist ->  Summoner    -> Seer           ->  Ritualist
         em.set_image(url=ctx.pet_data["image"])
         await ctx.send(embed=em)
 
+    @update_pet()
     @has_char()
     @is_class("Ranger")
     @pet.command()
+    @locale_doc
+    async def feed(self, ctx):
+        _("""[Ranger Only] Feed your pet.""")
+        items = [
+            ("Potato", 100, ":potato:", 1),
+            ("Apple", 300, ":apple:", 2),
+            ("Cucumber", 500, ":cucumber:", 4),
+            ("Meat", 1500, ":meat_on_bone:", 10),
+            ("Salad", 2500, ":salad:", 20),
+            ("Adrian's Cocktail", 20000, ":tropical_drink:", 100),
+        ]
+        item = items[
+            await self.bot.paginator.Choose(
+                entries=[f"{i[2]} {i[0]} **${i[1]}** -> +{i[3]}" for i in items],
+                return_index=True,
+                timeout=30,
+                title=_("Feed your pet"),
+            ).paginate(ctx)
+        ]
+        if not await has_money(self.bot, ctx.author.id, item[1]):
+            return await ctx.send(_("You are too poor to buy this."))
+        async with self.bot.pool.acquire() as conn:
+            await conn.execute(
+                'UPDATE profile SET "money"="money"-$1 WHERE "user"=$2;',
+                item[1],
+                ctx.author.id,
+            )
+            await conn.execute(
+                'UPDATE pets SET "food"=CASE WHEN "food"+$1>=100 THEN 100 ELSE "food"+$1 END WHERE "user"=$2;',
+                item[3],
+                ctx.author.id,
+            )
+        await ctx.send(
+            _(
+                "You bought **{item}** for your pet and increased its food bar by **{points}** points."
+            ).format(item=f"{item[2]} {item[0]}", points=item[3])
+        )
+
+    @has_char()
+    @is_class("Ranger")
+    @pet.command()
+    @update_pet()
     @locale_doc
     async def rename(self, ctx, *, name: str):
         _("""[Ranger Only] Renames your pet.""")
@@ -273,6 +314,7 @@ Priest   ->  Mysticist ->  Summoner    -> Seer           ->  Ritualist
     @has_char()
     @is_class("Ranger")
     @pet.command()
+    @update_pet()
     @locale_doc
     async def image(self, ctx, *, url: str):
         _("""[Ranger Only] Sets your pet's image by URL.""")
@@ -296,6 +338,7 @@ Priest   ->  Mysticist ->  Summoner    -> Seer           ->  Ritualist
     @is_class("Ranger")
     @user_cooldown(86400)
     @pet.command()
+    @update_pet()
     @locale_doc
     async def hunt(self, ctx):
         _("""[Ranger Only] Let your pet get a weapon for you!""")

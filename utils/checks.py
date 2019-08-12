@@ -15,9 +15,11 @@ GNU Affero General Public License for more details.
 You should have received a copy of the GNU Affero General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
+import datetime
 import secrets
 
 import discord
+import pytz
 from discord.ext import commands
 
 
@@ -296,7 +298,7 @@ def update_pet():
                         ctx.author.id,
                     )
                     raise PetDied()
-                if secrets.randbelow(100) > data["love"]:
+                elif secrets.randbelow(100) > data["love"]:
                     raise PetRanAway()
         return True
 
