@@ -27,7 +27,7 @@ from utils import misc as rpgtools
 from utils.checks import has_char, has_money, is_class, user_is_patron
 
 
-class PetDied(commands.CommandInvokeError):
+class PetDied(commands.CheckFailure):
     """Exception raised when the pet died."""
 
     pass
@@ -54,6 +54,9 @@ def update_pet():
                 if data["food"] < 0 or data["drink"] < 0:
                     await conn.execute(
                         'DELETE FROM pets WHERE "user"=$1;', ctx.author.id
+                    )
+                    await conn.execute(
+                        'UPDATE profile SET "class"=$1 WHERE "user"=$2;', "No Class", ctx.author.id
                     )
                     raise PetDied()
         return True
@@ -272,8 +275,8 @@ Priest   ->  Mysticist ->  Summoner    -> Seer           ->  Ritualist
 
     @has_char()
     @is_class("Ranger")
-    @update_pet()
     @commands.group(invoke_without_command=True)
+    @update_pet()
     @locale_doc
     async def pet(self, ctx):
         _("""[Ranger Only] View your pet or interact with it.""")
