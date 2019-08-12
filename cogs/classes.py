@@ -30,7 +30,7 @@ from utils.checks import has_char, has_money, is_class, user_is_patron
 def update_pet(cmd):
     async def hook(cog, ctx):
         diff = (
-            datetime.datetime.now(pytz.utc) - ctx.pet_data["last_update"]
+            (now := datetime.datetime.now(pytz.utc)) - ctx.pet_data["last_update"]
         ) // datetime.timedelta(hours=2)
         if diff >= 1:
             # Pets loose 2 food, 4 drinks, 1 joy and 3 love
