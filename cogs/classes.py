@@ -263,12 +263,12 @@ Priest   ->  Mysticist ->  Summoner    -> Seer           ->  Ritualist
     async def feed(self, ctx):
         _("""[Ranger Only] Feed your pet.""")
         items = [
-            ("Potato", 100, ":potato:", 1),
-            ("Apple", 300, ":apple:", 2),
-            ("Cucumber", 500, ":cucumber:", 4),
-            ("Meat", 1500, ":meat_on_bone:", 10),
-            ("Salad", 2500, ":salad:", 20),
-            ("Adrian's Power Poop", 20000, ":poop:", 100),
+            (_("Potato"), 100, ":potato:", 1),
+            (_("Apple"), 300, ":apple:", 2),
+            (_("Cucumber"), 500, ":cucumber:", 4),
+            (_("Meat"), 1500, ":meat_on_bone:", 10),
+            (_("Salad"), 2500, ":salad:", 20),
+            (_("Adrian's Power Poop"), 20000, ":poop:", 100),
         ]
         item = items[
             await self.bot.paginator.Choose(
@@ -305,12 +305,12 @@ Priest   ->  Mysticist ->  Summoner    -> Seer           ->  Ritualist
     async def drink(self, ctx):
         _("""[Ranger Only] Give your pet something to drink.""")
         items = [
-            ("Some Water", 100, ":droplet:", 1),
-            ("A bottle of water", 300, ":baby_bottle:", 2),
-            ("Cocktail", 500, ":cocktail:", 4),
-            ("Wine", 1500, ":wine_glass:", 10),
-            ("Beer", 2500, ":beer:", 20),
-            ("Adrian's Cocktail", 20000, ":tropical_drink:", 100),
+            (_("Some Water"), 100, ":droplet:", 1),
+            (_("A bottle of water"), 300, ":baby_bottle:", 2),
+            (_("Cocktail"), 500, ":cocktail:", 4),
+            (_("Wine"), 1500, ":wine_glass:", 10),
+            (_("Beer"), 2500, ":beer:", 20),
+            (_("Adrian's Cocktail"), 20000, ":tropical_drink:", 100),
         ]
         item = items[
             await self.bot.paginator.Choose(
