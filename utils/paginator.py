@@ -107,7 +107,7 @@ class TextPaginator:
         self.message = await self.ctx.send(
             self.pages[self.current] + f"Page {self.current + 1} / {self.page_count}"
         )
-        await self.react()
+        self.ctx.bot.loop.create_task(self.react())
         self.ctx.bot.loop.create_task(self.listener())
 
     async def update(self):
