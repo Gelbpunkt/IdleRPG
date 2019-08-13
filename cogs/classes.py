@@ -439,9 +439,10 @@ Priest   ->  Mysticist ->  Summoner    -> Seer           ->  Ritualist
     async def hunt(self, ctx):
         _("""[Ranger Only] Let your pet get a weapon for you!""")
         petlvl = self.bot.get_class_grade(ctx.character_data["class"])
+        joy_multiply = ctx.pet_data["joy"] / 100
         luck_multiply = ctx.character_data["luck"]
-        minstat = round(petlvl * 3 * luck_multiply)
-        maxstat = round(petlvl * 6 * luck_multiply)
+        minstat = round(petlvl * 3 * luck_multiply * joy_multiply)
+        maxstat = round(petlvl * 6 * luck_multiply * joy_multiply)
         item = await self.bot.create_random_item(
             minstat=minstat if minstat < 30 else 30,
             maxstat=maxstat if maxstat < 30 else 30,
