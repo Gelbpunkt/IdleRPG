@@ -15,6 +15,7 @@ GNU Affero General Public License for more details.
 You should have received a copy of the GNU Affero General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
+import asyncio
 from collections import defaultdict
 
 import discord
@@ -57,20 +58,20 @@ class Transaction(commands.Cog):
             [
                 _(
                     """\
-{user} gives:
+> {user} gives:
 {money}{crates}{items}"""
                 ).format(
                     user=user.mention,
-                    money=f"**${m}**\n" if (m := cont["money"]) else "",
-                    crates="\n".join(
+                    money=f"- **${m}**\n" if (m := cont["money"]) else "",
+                    crates="".join(
                         [
-                            f"- **{i}** {getattr(self.bot.cogs['Crates'].emotes, j)}"
+                            f"- **{i}** {getattr(self.bot.cogs['Crates'].emotes, j)}\n"
                             for j, i in cont["crates"].items()
                         ]
                     ),
-                    items="\n".join(
+                    items="".join(
                         [
-                            f"- {i['name']} ({i['type']}, {i['damage'] + i['armor']})"
+                            f"- {i['name']} ({i['type']}, {i['damage'] + i['armor']})\n"
                             for i in cont["items"]
                         ]
                     ),
@@ -85,10 +86,120 @@ class Transaction(commands.Cog):
                 "Use `{prefix}trade add/set/remove money/crates/item amount/itemid [crate rarity]`"
             ).format(prefix=ctx.prefix)
         )
-        if (base := self.transactions[id_]["base"]) is None:
-            self.transactions[id_]["base"] = await ctx.send(content)
-        else:
-            await base.edit(content=content)
+        if (base := self.transactions[id_]["base"]) is not None:
+            await base.delete()
+        self.transactions[id_]["base"] = await ctx.send(content)
+        if (task := self.transactions[id_]["task"]) is not None:
+            task.cancel()
+        self.transactions[id_]["task"] = self.bot.loop.create_task(
+            self.task(self.transactions[id_])
+        )
+
+    async def task(self, trans):
+        msg = trans["base"]
+        users = list(trans["content"].keys())
+        key = "-".join([str(u.id) for u in users])
+        acc = []
+        reacts = ["\U0000274e", "\U00002705"]
+        for r in reacts:
+            await msg.add_reaction(r)
+
+        def check(r, u):
+            return u in users and r.emoji in reacts and r.message.id == msg.id
+
+        while len(acc) < 2:
+            try:
+                r, u = await self.bot.wait_for("reaction_add", check=check, timeout=30)
+            except asyncio.TimeoutError:
+                await msg.delete()
+                del self.transactions[key]
+                return await msg.channel.send(_("Trade timed out."))
+            if reacts.index(r.emoji):
+                acc.append(u)
+            else:
+                await msg.delete()
+                del self.transactions[key]
+                return await msg.channel.send(
+                    _("{user} stopped the trade.").format(user=u.mention)
+                )
+        del self.transactions[key]
+        await self.transact(trans)
+
+    async def transact(self, trans):
+        chan = (base := trans["base"]).channel
+        await base.delete()
+        async with self.bot.pool.acquire() as conn:
+            async with conn.transaction():
+                for user, cont in trans["content"].items():
+                    user2 = (keys := list(trans["content"].keys()))[
+                        keys.index(user) - 1
+                    ]
+                if (money := cont["money"]) :
+                    if not await self.bot.has_money(user.id, money, conn=conn):
+                        return await chan.send(
+                            _(
+                                "Trade cancelled. Things were traded away in the meantime."
+                            )
+                        )
+                    await conn.execute(
+                        'UPDATE profile SET "money"="money"+$1 WHERE "user"=$2;',
+                        money,
+                        user2.id,
+                    )
+                    await conn.execute(
+                        'UPDATE profile SET "money"="money"-$1 WHERE "user"=$2;',
+                        money,
+                        user.id,
+                    )
+                if (crates := cont["crates"]) :
+                    for c, a in crates.items():
+                        if not await self.bot.has_crates(user.id, a, c, conn=conn):
+                            return await chan.send(
+                                _(
+                                    "Trade cancelled. Things were traded away in the meantime."
+                                )
+                            )
+                    c = ", ".join(
+                        [
+                            f'"crates_{rarity}"="crates_{rarity}"+${i + 1}'
+                            for i, rarity in enumerate(crates)
+                        ]
+                    )
+                    c2 = ", ".join(
+                        [
+                            f'"crates_{rarity}"="crates_{rarity}"-${i + 1}'
+                            for i, rarity in enumerate(crates)
+                        ]
+                    )
+                    largs = len(crates)
+                    await conn.execute(
+                        f'UPDATE profile SET {c} WHERE "user"=${largs + 1};',
+                        *list(crates.values()),
+                        user2.id,
+                    )
+                    await conn.execute(
+                        f'UPDATE profile SET {c2} WHERE "user"=${largs + 1};',
+                        *list(crates.values()),
+                        user.id,
+                    )
+                for item in cont["items"]:
+                    if not await self.bot.has_item(user.id, item["id"], conn=conn):
+                        return await chan.send(
+                            _(
+                                "Trade cancelled. Things were traded away in the meantime."
+                            )
+                        )
+                    await conn.execute(
+                        'UPDATE allitems SET "owner"=$1 WHERE "id"=$2;',
+                        user2.id,
+                        item["id"],
+                    )
+                    await conn.execute(
+                        'UPDATE inventory SET "equipped"=$1 WHERE "item"=$2;',
+                        False,
+                        item["id"],
+                    )
+        await chan.send(_("Trade successful."))
 
     @has_no_transaction()
     @commands.group(invoke_without_command=True)
@@ -111,6 +222,7 @@ class Transaction(commands.Cog):
                 user: {"crates": defaultdict(lambda: 0), "money": 0, "items": []},
             },
             "base": None,
+            "task": None,
         }
         await self.update(ctx)
 
@@ -220,8 +332,11 @@ class Transaction(commands.Cog):
     @locale_doc
     async def remove_crates(self, ctx, amount: IntGreaterThan(0), rarity: CrateRarity):
         _("""Removes crates from a trade.""")
-        if ctx.transaction["crates"][rarity] - amount >= 0:
-            ctx.transaction["crates"][rarity] -= amount
+        if (res := ctx.transaction["crates"][rarity] - amount) >= 0:
+            if res == 0:
+                del ctx.transaction["crates"][rarity]
+            else:
+                ctx.transaction["crates"][rarity] -= amount
             await ctx.message.add_reaction(":blackcheck:441826948919066625")
         else:
             await ctx.send(_("The resulting amount would be negative."))
