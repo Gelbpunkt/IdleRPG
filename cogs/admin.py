@@ -35,7 +35,7 @@ class Admin(commands.Cog):
         try:
             self.bot.bans.remove(other.id)
             await ctx.send(f"Unbanned: {other.name}")
-        except:
+        except ValueError:
             await ctx.send(f"{other.name} is not banned.")
 
     @is_admin()

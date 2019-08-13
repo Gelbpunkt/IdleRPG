@@ -19,6 +19,14 @@ class NotInRange(commands.BadArgument):
         self.to_ = to_
 
 
+class InvalidCrateRarity(commands.BadArgument):
+    pass
+
+
+class InvalidCoinSide(commands.BadArgument):
+    pass
+
+
 class UserHasNoChar(commands.BadArgument):
     pass
 
@@ -127,3 +135,19 @@ class IntGreaterThan(commands.Converter):
                 "infinity",
             )
         return arg
+
+
+class CrateRarity(commands.Converter):
+    async def convert(self, ctx, arg):
+        stuff = arg.lower()
+        if stuff not in ["common", "uncommon", "rare", "magic", "legendary"]:
+            raise InvalidCrateRarity()
+        return stuff
+
+
+class CoinSide(commands.Converter):
+    async def convert(self, ctx, arg):
+        stuff = arg.lower()
+        if stuff not in ["heads", "tails"]:
+            raise InvalidCoinSide()
+        return stuff

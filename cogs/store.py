@@ -68,7 +68,7 @@ class Store(commands.Cog):
             )
         else:
             await self.bot.pool.execute(
-                f'UPDATE profile SET "time_booster"="time_booster"+$1, "luck_booster"="luck_booster"+$1, "money_booster"="money_booster"+$1, "money"="money"-$2 WHERE "user"=$3;',
+                'UPDATE profile SET "time_booster"="time_booster"+$1, "luck_booster"="luck_booster"+$1, "money_booster"="money_booster"+$1, "money"="money"-$2 WHERE "user"=$3;',
                 amount,
                 price,
                 ctx.author.id,

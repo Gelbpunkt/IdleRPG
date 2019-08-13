@@ -313,7 +313,7 @@ Adventure name: `{adventure}`"""
                     ctx.author.id,
                 )
 
-            if guild := ctx.character_data["guild"]:
+            if (guild := ctx.character_data["guild"]) :
                 await conn.execute(
                     'UPDATE guild SET "money"="money"+$1 WHERE "id"=$2;',
                     int(gold / 10),
@@ -327,7 +327,7 @@ Adventure name: `{adventure}`"""
                 ctx.author.id,
             )
 
-            if partner := ctx.character_data["marriage"]:
+            if (partner := ctx.character_data["marriage"]) :
                 await conn.execute(
                     'UPDATE profile SET "money"="money"+$1 WHERE "user"=$2;',
                     int(gold / 2),
@@ -361,7 +361,7 @@ Adventure name: `{adventure}`"""
                 elif new_level < 20:
                     column = "crates_rare"
                     amount = 3
-                    reward_text = f"**3** <:CrateRare:598094865485791233>"
+                    reward_text = "**3** <:CrateRare:598094865485791233>"
                 else:
                     column = "crates_magic"
                     amount = 1

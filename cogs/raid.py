@@ -222,7 +222,7 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
             for u in list(raid.keys()):
                 page.add_line(u.mention)
             page.add_line(
-                f"The raid killed the boss!\nHe dropped a <:CrateLegendary:598094865678598144> Legendary Crate!\nThe highest bid for it wins <:roosip:505447694408482846>\nSimply type how much you bid!"
+                "The raid killed the boss!\nHe dropped a <:CrateLegendary:598094865678598144> Legendary Crate!\nThe highest bid for it wins <:roosip:505447694408482846>\nSimply type how much you bid!"
             )
             for p in page.pages:
                 await ctx.send(p[4:-4])
@@ -290,7 +290,7 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
         bandits = [{"hp": random.randint(70, 120), "id": i + 1} for i in range(bandits)]
         payout = sum(i["hp"] for i in bandits)
         await ctx.send(
-            f"""
+            """
 **Lieutenant**: We've spotted a group of Bandits! Come to the front and help me defend the city gates!
 They arrive in 15 Minutes
 Use https://raid.travitia.xyz/ to join the raid!

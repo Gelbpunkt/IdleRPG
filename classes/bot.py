@@ -287,6 +287,49 @@ class Bot(commands.AutoShardedBot):
         user = user.id if isinstance(user, (discord.User, discord.Member)) else user
         await self.redis.execute("DEL", f"adv:{user}")
 
+    async def has_money(self, user, money, conn=None):
+        user = user.id if isinstance(user, (discord.User, discord.Member)) else user
+        if conn:
+            return (
+                await conn.fetchval('SELECT money FROM profile WHERE "user"=$1;', user)
+                >= money
+            )
+        else:
+            return (
+                await self.pool.fetchval(
+                    'SELECT money FROM profile WHERE "user"=$1;', user
+                )
+                >= money
+            )
+
+    async def has_crates(self, user, crates, rarity, conn=None):
+        user = user.id if isinstance(user, (discord.User, discord.Member)) else user
+        if conn:
+            return (
+                await conn.fetchval(
+                    f'SELECT "crates_{rarity}" FROM profile WHERE "user"=$1;', user
+                )
+                >= crates
+            )
+        else:
+            return (
+                await self.pool.fetchval(
+                    f'SELECT "crates_{rarity}" FROM profile WHERE "user"=$1;', user
+                )
+                >= crates
+            )
+
+    async def has_item(self, user, item, conn=None):
+        user = user.id if isinstance(user, (discord.User, discord.Member)) else user
+        if conn:
+            return await conn.fetchrow(
+                'SELECT * FROM allitems WHERE "owner"=$1 AND "id"=$2;', user, item
+            )
+        else:
+            return await self.pool.fetchrow(
+                'SELECT * FROM allitems WHERE "owner"=$1 AND "id"=$2;', user, item
+            )
+
     async def start_guild_adventure(self, guild, difficulty, time):
         await self.redis.execute(
             "SET",

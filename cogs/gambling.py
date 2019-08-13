@@ -24,7 +24,7 @@ from typing import Optional
 import discord
 from discord.ext import commands
 
-from classes.converters import IntFromTo, IntGreaterThan
+from classes.converters import CoinSide, IntFromTo, IntGreaterThan
 from utils.checks import has_char, has_money
 
 
@@ -314,15 +314,11 @@ class Gambling(commands.Cog):
     async def flip(
         self,
         ctx,
-        side: Optional[str.lower] = "heads",
+        side: Optional[CoinSide] = "heads",
         *,
         amount: IntFromTo(0, 100_000) = 0,
     ):
         _("""Flip a coin and bid on the outcome.""")
-        if side not in ["heads", "tails"]:
-            return await ctx.send(
-                _("Use `heads` or `tails` instead of `{side}`.").format(side=side)
-            )
         if ctx.character_data["money"] < amount:
             return await ctx.send(_("You are too poor."))
         result = secrets.choice(
