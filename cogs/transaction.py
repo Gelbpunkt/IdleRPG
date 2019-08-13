@@ -64,7 +64,7 @@ class Transaction(commands.Cog):
                     money=f"**${m}**\n" if (m := cont["money"]) else "",
                     crates="\n".join(
                         [
-                            f"- **{i}** {getattr(self.bot.cogs['Crates'].emojis, j)}"
+                            f"- **{i}** {getattr(self.bot.cogs['Crates'].emotes, j)}"
                             for j, i in cont["crates"].items()
                         ]
                     ),
