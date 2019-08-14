@@ -16,6 +16,7 @@ You should have received a copy of the GNU Affero General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
 import secrets
+from decimal import Decimal
 
 import discord
 from discord.ext import commands
@@ -439,7 +440,7 @@ Priest   ->  Mysticist ->  Summoner    -> Seer           ->  Ritualist
     async def hunt(self, ctx):
         _("""[Ranger Only] Let your pet get a weapon for you!""")
         petlvl = self.bot.get_class_grade(ctx.character_data["class"])
-        joy_multiply = ctx.pet_data["joy"] / 100
+        joy_multiply = Decimal(ctx.pet_data["joy"] / 100)
         luck_multiply = ctx.character_data["luck"]
         minstat = round(petlvl * 3 * luck_multiply * joy_multiply)
         maxstat = round(petlvl * 6 * luck_multiply * joy_multiply)
