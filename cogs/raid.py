@@ -299,7 +299,7 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
             headers={"Authorization": self.bot.config.raidauth},
         )
         bandits = [
-            {"hp": random.randint(100, 190), "id": i + 1} for i in range(bandits)
+            {"hp": random.randint(100, 120), "id": i + 1} for i in range(bandits)
         ]
         payout = sum(i["hp"] for i in bandits)
         await ctx.send(
@@ -407,7 +407,7 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
                     value=f"Is attacking the bandit and dealt `{target_data['damage']}` damage",
                 )
             else:
-                money = random.randint(1600, 2300)
+                money = random.randint(2000, 3400)
                 await self.bot.pool.execute(
                     'UPDATE profile SET "money"="money"+$1 WHERE "user"=$2;',
                     money,
