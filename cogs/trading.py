@@ -46,7 +46,13 @@ class Trading(commands.Cog):
                         itemid=itemid
                     )
                 )
-            if item["damage"] < 4 and item["armor"] < 4:
+            if item["value"] > price:
+                return await ctx.send(
+                    _(
+                        "Selling an item below its value is a bad idea. You can always do `{prefix}merchant {itemid}` to get more money."
+                    ).format(prefix=ctx.prefix, itemid=itemid)
+                )
+            elif item["damage"] < 4 and item["armor"] < 4:
                 return await ctx.send(
                     _(
                         "Your item is either equal to a Starter Item or worse. Noone would buy it."
