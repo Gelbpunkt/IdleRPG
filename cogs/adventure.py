@@ -230,6 +230,7 @@ class Adventure(commands.Cog):
                         money=money
                     )
                 )
+                cell.treasure = False
             elif cell.enemy:
 
                 def to_bar(hp):
