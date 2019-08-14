@@ -21,6 +21,7 @@ import os
 import platform
 import random
 import re
+import secrets
 from collections import defaultdict, deque
 from functools import partial
 
@@ -58,13 +59,41 @@ class Miscellaneous(commands.Cog):
             "EXPIRE", f"idle:daily:{ctx.author.id}", 48 * 60 * 60
         )  # 48h: after 2 days, they missed it
         money = 2 ** ((streak + 9) % 10) * 50
-        await self.bot.pool.execute(
-            'UPDATE profile SET money=money+$1 WHERE "user"=$2;', money, ctx.author.id
-        )
+        # Either money or crates
+        if secrets.randbelow(3) > 0:
+            money = 2 ** ((streak + 9) % 10) * 50
+            await self.bot.pool.execute(
+                'UPDATE profile SET money=money+$1 WHERE "user"=$2;',
+                money,
+                ctx.author.id,
+            )
+            txt = f"**${money}**"
+        else:
+            num = round(((streak + 9) % 10 + 1) / 2)
+            amt = secrets.choice(range(1, 5 - num))
+            types = [
+                "common",
+                "uncommon",
+                "rare",
+                "magic",
+                "legendary",
+                "common",
+                "common",
+            ]  # Trick for -1
+            type_ = secrets.choice(
+                [types[num - 3]] * 80 + [types[num - 2]] * 19 + [types[num - 1]] * 1
+            )
+            await self.bot.pool.execute(
+                f'UPDATE profile SET "crates_{type_}"="crates_{type_}"+$1 WHERE "user"=$2;',
+                amt,
+                ctx.author.id,
+            )
+            txt = f"**{amt}** {getattr(self.bot.cogs['Crates'].emotes, type_)}"
+
         await ctx.send(
             _(
-                "You received your daily **${money}**!\nYou are on a streak of **{streak}** days!"
-            ).format(money=money, streak=streak)
+                "You received your daily {txt}!\nYou are on a streak of **{streak}** days!"
+            ).format(txt=txt, money=money, streak=streak)
         )
 
     @commands.command()

@@ -33,7 +33,26 @@ class UserHasNoChar(commands.BadArgument):
 
 class User(commands.Converter):
     async def convert(self, ctx, argument):
-        # TODO: Try the local users first
+        # Try local users first
+        user = None
+        matches = re.search(r"<@!?(\d+)>", argument)
+        if matches:
+            argument = matches.group(1)
+        if isinstance(argument, int) or (
+            isinstance(argument, str) and argument.isdigit()
+        ):
+            user = ctx.bot.get_user(int(argument))
+        else:
+            if len(argument) > 5 and argument[-5] == "#":
+                discrim = argument[-4:]
+                name = argument[:-5]
+                predicate = lambda u: u.name == name and u.discriminator == discrim
+                user = discord.utils.find(predicate, ctx.bot.users)
+            else:
+                predicate = lambda u: u.name == argument
+                user = discord.utils.find(predicate, ctx.bot.users)
+        if user:
+            return user
         data = await ctx.bot.cogs["Sharding"].handler(
             "fetch_user", 1, {"user_inp": argument}
         )
@@ -48,16 +67,34 @@ class User(commands.Converter):
 
 class UserWithCharacter(commands.Converter):
     async def convert(self, ctx, argument):
-        # TODO: Try the local users first
-        data = await ctx.bot.cogs["Sharding"].handler(
-            "fetch_user", 1, {"user_inp": argument}
-        )
-        if not data:
-            raise commands.BadArgument("Unknown user.", argument)
-        data = data[0]
-        data["username"] = data["name"]
-        user = discord.User(state=ctx.bot._connection, data=data)
-        ctx.bot.users.append(user)
+        # Try the local users first
+        user = None
+        matches = re.search(r"<@!?(\d+)>", argument)
+        if matches:
+            argument = matches.group(1)
+        if isinstance(argument, int) or (
+            isinstance(argument, str) and argument.isdigit()
+        ):
+            user = ctx.bot.get_user(int(argument))
+        else:
+            if len(argument) > 5 and argument[-5] == "#":
+                discrim = argument[-4:]
+                name = argument[:-5]
+                predicate = lambda u: u.name == name and u.discriminator == discrim
+                user = discord.utils.find(predicate, ctx.bot.users)
+            else:
+                predicate = lambda u: u.name == argument
+                user = discord.utils.find(predicate, ctx.bot.users)
+        if not user:
+            data = await ctx.bot.cogs["Sharding"].handler(
+                "fetch_user", 1, {"user_inp": argument}
+            )
+            if not data:
+                raise commands.BadArgument("Unknown user.", argument)
+            data = data[0]
+            data["username"] = data["name"]
+            user = discord.User(state=ctx.bot._connection, data=data)
+            ctx.bot.users.append(user)
         ctx.user_data = await ctx.bot.pool.fetchrow(
             'SELECT * FROM profile WHERE "user"=$1;', user.id
         )

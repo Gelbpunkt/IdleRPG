@@ -20,8 +20,9 @@ import random
 
 import discord
 from discord.ext import commands
+from discord.ext.commands.default import Author
 
-from classes.converters import IntFromTo, MemberWithCharacter
+from classes.converters import IntFromTo, MemberWithCharacter, UserWithCharacter
 from cogs.shard_communication import user_on_cooldown as user_cooldown
 from utils import misc as rpgtools
 from utils.checks import has_char
@@ -30,6 +31,9 @@ from utils.checks import has_char
 class Marriage(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
+
+    def get_max_kids(self, lovescore):
+        return 10 + lovescore // 250_000
 
     @has_char()
     @commands.guild_only()
@@ -143,16 +147,17 @@ class Marriage(commands.Cog):
     @has_char()
     @commands.command()
     @locale_doc
-    async def lovescore(self, ctx):
-        _("""Views your lovescore.""")
-        if ctx.character_data["marriage"]:
-            partner = await rpgtools.lookup(self.bot, ctx.character_data["marriage"])
+    async def lovescore(self, ctx, user: UserWithCharacter = Author):
+        _("""Views someone's lovescore.""")
+        data = ctx.character_data if user == ctx.author else ctx.user_data
+        if data["marriage"]:
+            partner = await rpgtools.lookup(self.bot, data["marriage"])
         else:
             partner = _("noone")
         await ctx.send(
             _(
-                "Your overall love score is **{score}**. You are married to **{partner}**."
-            ).format(score=ctx.character_data["lovescore"], partner=partner)
+                "{user}'s overall love score is **{score}**. {user} is married to **{partner}**."
+            ).format(user=user.name, score=data["lovescore"], partner=partner)
         )
 
     @has_char()
@@ -289,12 +294,22 @@ class Marriage(commands.Cog):
         if not marriage:
             await self.bot.reset_cooldown(ctx)
             return await ctx.send(_("Can't produce a child alone, can you?"))
-        names = await self.bot.pool.fetch(
-            'SELECT name FROM children WHERE "mother"=$1 OR "father"=$1;', ctx.author.id
-        )
-        if len(names) >= 10:
+        async with self.bot.pool.acquire() as conn:
+            names = await conn.fetch(
+                'SELECT name FROM children WHERE "mother"=$1 OR "father"=$1;',
+                ctx.author.id,
+            )
+            spouse = await conn.fetchval(
+                'SELECT lovescore FROM profile WHERE "user"=$1;', marriage
+            )
+        max_ = self.get_max_kids(ctx.character_data["lovescore"] + spouse)
+        if len(names) >= max_:
             await self.bot.reset_cooldown(ctx)
-            return await ctx.send(_("You already have 10 children."))
+            return await ctx.send(
+                _(
+                    "You already have {max_} children. You can increase this limit by increasing your lovescores."
+                ).format(max_=max_)
+            )
         names = [name["name"] for name in names]
         if not await ctx.confirm(
             _("<@{marriage}>, do you want to make a child with {author}?").format(

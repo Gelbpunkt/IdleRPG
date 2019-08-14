@@ -329,7 +329,7 @@ Adventure name: `{adventure}`"""
 
             if (partner := ctx.character_data["marriage"]) :
                 await conn.execute(
-                    'UPDATE profile SET "money"="money"+$1 WHERE "user"=$2;',
+                    'UPDATE profile SET "money"="money"+($1*(1+"lovescore"/1000000)) WHERE "user"=$2;',
                     int(gold / 2),
                     partner,
                 )
