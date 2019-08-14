@@ -27,6 +27,7 @@ from cogs.shard_communication import user_on_cooldown as user_cooldown
 from utils import items
 from utils import misc as rpgtools
 from utils.checks import has_adventure, has_char, has_no_adventure
+from utils.maze import Maze
 
 
 class Adventure(commands.Cog):
@@ -99,139 +100,252 @@ class Adventure(commands.Cog):
         )
 
     @has_no_adventure()
-    @user_cooldown(3600)
+    # @user_cooldown(3600)
     @commands.command()
     @locale_doc
     async def activeadventure(self, ctx):
-        _("""Go out on an active, action based adventure.""")
-        msg = await ctx.send(_("**Active adventure loading...**"))
-        sword, shield = await self.bot.get_equipped_items_for(ctx.author)
-        SWORD = sword["damage"] if sword else 0
-        SHIELD = shield["armor"] if shield else 0
-        # class test
-        SWORD, SHIELD = await self.bot.generate_stats(
-            ctx.author, float(SWORD), float(SHIELD)
-        )
-        HP = 100
-        PROGRESS = 0  # percent
-        emojis = {
-            "\U00002694": "attack",
-            "\U0001f6e1": "defend",
-            "\U00002764": "recover",
-        }
-
-        def is_valid_move(r, u):
-            return r.message.id == msg.id and u == ctx.author and str(r.emoji) in emojis
-
-        ENEMY_HP = 100
-
-        for emoji in emojis:
-            await msg.add_reaction(emoji)
-
-        while PROGRESS < 100 and HP > 0:
-            await msg.edit(
-                content=_(
-                    """
-**{user}'s Adventure**
-```
-Progress: {progress}%
-HP......: {hp}
-
-Enemy
-HP......: {enemy_hp}
-
-Use the reactions attack, defend or recover
-```
-"""
-                ).format(user=ctx.disp, progress=PROGRESS, hp=HP, enemy_hp=ENEMY_HP)
+        _("""Go out on an active, action based adventure in a maze.""")
+        if not await ctx.confirm(
+            _(
+                "You are going to be in a labyrinth of size 15x15. There are enemies, treasures and hidden traps. Reach the exit in the bottom right corner for a huge extra bonus!\nAre you ready?\n\nTip: Use a silent channel for this, you may want to read all the messages I will send."
             )
-            try:
-                reaction, user = await self.bot.wait_for(
-                    "reaction_add", timeout=30, check=is_valid_move
+        ):
+            return
+
+        msg = await ctx.send(_("**Generating a maze...**"))
+
+        maze = Maze.generate(15, 15)
+        direction_emojis = {
+            "n": "\U00002b06",
+            "e": "\U000027a1",
+            "s": "\U00002b07",
+            "w": "\U00002b05",
+        }
+        direction_emojis_inverse = {val: key for key, val in direction_emojis.items()}
+        direction_names = {
+            "n": _("North"),
+            "e": _("East"),
+            "s": _("South"),
+            "w": _("West"),
+        }
+        all_directions = set(direction_names.keys())
+        x = 0
+        y = 0
+
+        sword, shield = await self.bot.get_equipped_items_for(ctx.author)
+        attack, defense = await self.bot.generate_stats(
+            ctx.author,
+            float(sword["damage"] if sword else 0),
+            float(shield["armor"] if shield else 0),
+        )
+
+        attack = int(attack)
+        defense = int(defense)
+
+        hp = 1000
+
+        def free(cell):
+            return all_directions - cell.walls
+
+        def fmt_direction(direction):
+            return direction_names[direction]
+
+        def player_pos():
+            return maze[x, y]
+
+        def is_at_end():
+            return x == 14 and y == 14
+
+        def move(x, y, direction):
+            if direction == "n":
+                y = y - 1
+            elif direction == "e":
+                x = x + 1
+            elif direction == "s":
+                y = y + 1
+            elif direction == "w":
+                x = x - 1
+            return x, y
+
+        async def wait_for_move():
+            await msg.clear_reactions()
+            possible = free(player_pos())
+            for direction in possible:
+                await msg.add_reaction(direction_emojis[direction])
+
+            def check(r, u):
+                return (
+                    u == ctx.author
+                    and r.message.id == msg.id
+                    and direction_emojis_inverse.get(str(r.emoji), None) in possible
                 )
+
+            r, u = await self.bot.wait_for("reaction_add", check=check, timeout=30)
+
+            return direction_emojis_inverse[str(r.emoji)]
+
+        async def update():
+            text = ""
+            pos = player_pos()
+            for direction in ("n", "e", "s", "w"):
+                side = fmt_direction(direction)
+                fake_x, fake_y = move(x, y, direction)
+                fake_cell = maze[fake_x, fake_y]
+                if direction in pos.walls:
+                    text2 = _("To the {side} is a wall.").format(side=side)
+                elif fake_cell.enemy:
+                    text2 = _("To the {side} is an enemy.").format(side=side)
+                elif fake_cell.treasure:
+                    text2 = _("To the {side} is a treasure.").format(side=side)
+                else:
+                    text2 = _("To the {side} is a floor.").format(side=side)
+                text = f"{text}\n{text2}"
+
+            text2 = _("You are on {hp} HP").format(hp=hp)
+            text = f"{text}\n\n{text2}"
+
+            await msg.edit(content=text)
+
+        async def handle_specials(hp):
+            cell = player_pos()
+            if cell.trap:
+                damage = random.randint(30, 120)
+                await ctx.send(
+                    _("You stepped on a trap and took {damage} damage!").format(
+                        damage=damage
+                    )
+                )
+                cell.trap = False  # Remove the trap
+                return hp - damage
+            elif cell.treasure:
+                val = attack + defense
+                money = random.randint(val, val * 25)
+                await self.bot.pool.execute(
+                    'UPDATE profile SET "money"="money"+$1 WHERE "user"=$2;',
+                    money,
+                    ctx.author.id,
+                )
+                await ctx.send(
+                    _("You found a treasure with **${money}** inside!").format(
+                        money=money
+                    )
+                )
+            elif cell.enemy:
+
+                def to_bar(hp):
+                    fields = hp // 100
+                    return f"[{'▯' * fields}{'▮' * (10 - fields)}]"
+
+                def is_valid_move(r, u):
+                    return (
+                        r.message.id == msg.id
+                        and u == ctx.author
+                        and str(r.emoji) in emojis
+                    )
+
+                emojis = {
+                    "\U00002694": "attack",
+                    "\U0001f6e1": "defend",
+                    "\U00002764": "recover",
+                }
+                enemy = _("Enemy")
+                enemy_hp = 1000
+                heal_hp = round(attack * 0.25) or 1
+                min_dmg = round(attack * 0.5)
+                max_dmg = round(attack * 1.5)
+                status1 = _("The Fight started")
+                status2 = ""
+
+                await msg.clear_reactions()
+                for emoji in emojis:
+                    await msg.add_reaction(emoji)
+
+                while enemy_hp > 0 and hp > 0:
+                    await msg.edit(
+                        content=f"""\
+```
+{ctx.author.name}{" " * (38 - len(ctx.author.name) - len(enemy))}{enemy}
+------------++++++++++++++------------
+{to_bar(hp)}  {hp}  {enemy_hp}    {to_bar(enemy_hp)}
+
+{status1}
+{status2}
+```"""
+                    )
+
+                    r, u = await self.bot.wait_for(
+                        "reaction_add", check=is_valid_move, timeout=30
+                    )
+
+                    try:
+                        await msg.remove_reaction(r, u)
+                    except discord.Forbidden:
+                        pass
+
+                    enemy_move = random.choice(["attack", "defend", "recover"])
+                    player_move = emojis[str(r.emoji)]
+
+                    if enemy_move == "recover":
+                        enemy_hp += heal_hp
+                        enemy_hp = 1000 if enemy_hp > 1000 else enemy_hp
+                        status1 = _("The Enemy healed themselves for {hp} HP").format(
+                            hp=heal_hp
+                        )
+                    if player_move == "recover":
+                        hp += heal_hp
+                        hp = 1000 if hp > 1000 else hp
+                        status2 = _("You healed yourself for {hp} HP").format(
+                            hp=heal_hp
+                        )
+                    if (enemy_move == "attack" and player_move == "defend") or (
+                        enemy_move == "defend" and player_move == "attack"
+                    ):
+                        status1 = _("Attack blocked.")
+                        status2 = ""
+                    if enemy_move == "attack" and player_move != "defend":
+                        eff = random.randint(min_dmg, max_dmg)
+                        hp -= eff
+                        status1 = _("The Enemy hit you for {dmg} damage").format(
+                            dmg=eff
+                        )
+                    if player_move == "attack" and enemy_move != "defend":
+                        enemy_hp -= attack
+                        status2 = _("You hit the enemy for {dmg} damage").format(
+                            dmg=attack
+                        )
+
+                if enemy_hp <= 0:
+                    cell.enemy = False
+
+            return hp
+
+        while not is_at_end():
+            await update()
+            try:
+                direction = await wait_for_move()
             except asyncio.TimeoutError:
-                return await ctx.send(
-                    _("Adventure stopped because you refused to move.")
-                )
+                return await msg.edit(content=_("Timed out."))
+            x, y = move(x, y, direction)  # Python namespacing sucks, to be honest
             try:
-                await msg.remove_reaction(reaction, ctx.author)
-            except discord.Forbidden:
-                pass
-            move = emojis[str(reaction.emoji)]
-            enemymove = random.choice(["attack", "defend", "recover"])
-            if move == "recover":
-                HP += 20
-                await ctx.send(_("You healed yourself for 20 HP."), delete_after=5)
-            if enemymove == "recover":
-                ENEMY_HP += 20
-                await ctx.send(_("The enemy healed himself for 20 HP."), delete_after=5)
-            if move == "attack" and enemymove == "defend":
-                await ctx.send(_("Your attack was blocked!"), delete_after=5)
-            if move == "defend" and enemymove == "attack":
-                await ctx.send(_("Enemy attack was blocked!"), delete_after=5)
-            if move == "defend" and enemymove == "defend":
-                await ctx.send(_("Noone attacked."))
-            if move == "attack" and enemymove == "attack":
-                efficiency = random.randint(int(SWORD * 0.5), int(SWORD * 1.5))
-                HP -= efficiency
-                ENEMY_HP -= SWORD
-                await ctx.send(
-                    _(
-                        "You hit the enemy for **{damage}** damage, he hit you for **{damage2}** damage."
-                    ).format(damage=SWORD, damage2=efficiency),
-                    delete_after=5,
-                )
-            elif move == "attack" and enemymove != "defend":
-                ENEMY_HP -= SWORD
-                await ctx.send(
-                    _("You hit the enemy for **{damage}** damage.").format(
-                        damage=SWORD
-                    ),
-                    delete_after=5,
-                )
-            elif enemymove == "attack" and move == "recover":
-                efficiency = random.randint(int(SWORD * 0.5), int(SWORD * 1.5))
-                HP -= efficiency
-                await ctx.send(
-                    _("The enemy hit you for **{damage}** damage.").format(
-                        damage=efficiency
-                    ),
-                    delete_after=5,
-                )
-            if ENEMY_HP < 1:
-                await ctx.send(
-                    _("Enemy defeated! You gained **20 HP**"), delete_after=5
-                )
-                PROGRESS += random.randint(10, 40)
-                ENEMY_HP = 100
-                HP += 20
+                hp = await handle_specials(hp)  # Should've used a class for this
+            except asyncio.TimeoutError:
+                return await msg.edit(content=_("Timed out."))
+            if hp <= 0:
+                return await ctx.send(_("You died."))
 
-        if HP < 1:
-            return await ctx.send(_("You died."))
+        val = attack + defense
+        money = random.randint(val * 5, val * 100)
+        await self.bot.pool.execute(
+            'UPDATE profile SET "money"="money"+$1 WHERE "user"=$2;',
+            money,
+            ctx.author.id,
+        )
 
-        avg = (SWORD + SHIELD) // 2
-        maxstat = round((avg + 5) * ctx.character_data["luck"])
-        item = await self.bot.create_random_item(
-            minstat=1,
-            maxstat=(maxstat if maxstat < 30 else 30),
-            minvalue=1,
-            maxvalue=250,
-            owner=ctx.author,
+        await ctx.send(
+            _(
+                "You have reached the exit and were rewarded **${money}** for getting out!"
+            ).format(money=money)
         )
-        embed = discord.Embed(
-            title=_("You gained an item!"),
-            description=_("You found a new item when finishing an active adventure!"),
-            color=0xFF0000,
-        )
-        embed.set_thumbnail(url=ctx.author.avatar_url)
-        embed.add_field(name=_("ID"), value=item["id"], inline=False)
-        embed.add_field(name=_("Name"), value=item["name"], inline=False)
-        embed.add_field(name=_("Type"), value=item["type"], inline=False)
-        embed.add_field(name=_("Damage"), value=item["damage"], inline=True)
-        embed.add_field(name=_("Armor"), value=item["armor"], inline=True)
-        embed.add_field(name=_("Value"), value=f"${item['value']}", inline=False)
-        embed.set_footer(text=_("Your HP were {hp}").format(hp=HP))
-        await ctx.send(embed=embed)
 
     @has_char()
     @has_adventure()
