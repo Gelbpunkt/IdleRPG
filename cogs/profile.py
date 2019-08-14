@@ -431,35 +431,38 @@ IdleRPG is a global bot, your characters are valid everywhere"""
             if not item or not item2:
                 await self.bot.reset_cooldown(ctx)
                 return await ctx.send(_("You don't own both of these items."))
-            if item["type"] == "Sword":
-                stat1 = ("damage", item["damage"])
-            elif item["type"] == "Shield":
-                stat1 = ("armor", item["armor"])
-            if item2["type"] == "Sword":
-                stat2 = ("damage", item2["damage"])
-            elif item2["type"] == "Shield":
-                stat2 = ("armor", item2["armor"])
-            if stat2[1] < stat1[1] - 5 or stat2[1] > stat1[1] + 5:
+            if item["type"] != item2["type"]:
+                await self.bot.reset_cooldown(ctx)
+                return await ctx.send(
+                    _(
+                        "The items are of unequal type. You may only merge a sword with a sword or a shield with a shield."
+                    )
+                )
+            stat = "damage" if item["type"] == "Sword" else "armor"
+            if (
+                not (min_ := item2[stat] - 5)
+                <= (main := item[stat])
+                <= (max_ := item2[stat] + 5)
+            ):
                 await self.bot.reset_cooldown(ctx)
                 return await ctx.send(
                     _(
                         "The second item's stat must be in the range of `{min_}` to `{max_}` to upgrade an item with the stat of `{stat}`."
-                    ).format(min_=stat1[1] - 5, max_=stat1[1] + 5, stat=stat1[1])
+                    ).format(min_=min_, max_=max_, stat=main)
                 )
-            if stat1[1] > 40:
+            if main > 40:
                 await self.bot.reset_cooldown(ctx)
                 return await ctx.send(
                     _("This item is already on the maximum upgrade level.")
                 )
             await conn.execute(
-                f'UPDATE allitems SET {stat1[0]}={stat1[0]}+1 WHERE "id"=$1;',
-                firstitemid,
+                f'UPDATE allitems SET "{stat}"="{stat}"+1 WHERE "id"=$1;', firstitemid
             )
             await conn.execute('DELETE FROM allitems WHERE "id"=$1;', seconditemid)
         await ctx.send(
             _(
                 "The {stat} of your **{item}** is now **{newstat}**. The other item was destroyed."
-            ).format(stat=stat1[0], item=item["name"], newstat=stat1[1] + 1)
+            ).format(stat=stat, item=item["name"], newstat=main + 1)
         )
 
     @checks.has_char()
