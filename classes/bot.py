@@ -255,6 +255,11 @@ class Bot(commands.AutoShardedBot):
             "DEL", f"cd:{ctx.author.id}:{ctx.command.qualified_name}"
         )
 
+    async def reset_guild_cooldown(self, ctx):
+        await self.redis.execute(
+            "DEL", f"guildcd:{ctx.character_data['guild']}:{ctx.command.qualified_name}"
+        )
+
     async def activate_booster(self, user, type_):
         if type_ not in ["time", "luck", "money"]:
             raise ValueError("Not a valid booster type.")

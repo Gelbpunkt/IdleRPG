@@ -796,6 +796,7 @@ class Guild(commands.Cog):
     async def adventure(self, ctx):
         _("""Starts a guild adventure.""")
         if await self.bot.get_guild_adventure(ctx.character_data["guild"]):
+            await self.bot.reset_guild_cooldown(ctx)
             return await ctx.send(
                 _(
                     "Your guild is already on an adventure! Use `{prefix}guild status` to view how long it still lasts."
