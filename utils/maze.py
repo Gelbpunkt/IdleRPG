@@ -278,7 +278,7 @@ class Maze(object):
         m = Maze(width, height)
         m.randomize()
 
-        cells = random.sample(m.cells[1:], 5)
+        cells = random.sample(m.cells[1:], treasures)
         for cell in cells:
             cell.treasure = True
 

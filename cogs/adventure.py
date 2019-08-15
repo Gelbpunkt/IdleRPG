@@ -100,7 +100,7 @@ class Adventure(commands.Cog):
         )
 
     @has_no_adventure()
-    # @user_cooldown(3600)
+    @user_cooldown(7200)
     @commands.command()
     @locale_doc
     async def activeadventure(self, ctx):
@@ -168,10 +168,20 @@ class Adventure(commands.Cog):
             return x, y
 
         async def wait_for_move():
-            await msg.clear_reactions()
             possible = free(player_pos())
-            for direction in possible:
-                await msg.add_reaction(direction_emojis[direction])
+            needed = [direction_emojis[direction] for direction in possible]
+            try:
+                await msg.clear_reactions()
+            except discord.Forbidden:
+                for r in msg.reactions:
+                    if str(r.emoji) not in needed:
+                        await msg.remove_reaction(r, ctx.guild.me)
+                for r in needed:
+                    if r not in [str(r.emoji) for r in msg.reactions]:
+                        await msg.add_reaction(r)
+            else:
+                for direction in possible:
+                    await msg.add_reaction(direction_emojis[direction])
 
             def check(r, u):
                 return (
