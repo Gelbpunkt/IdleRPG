@@ -491,15 +491,10 @@ IdleRPG is a global bot, your characters are valid everywhere"""
                 stattoupgrade = "armor"
                 pricetopay = int(item["armor"] * 250)
             if int(item[stattoupgrade]) > 40:
+                await self.bot.reset_cooldown(ctx)
                 return await ctx.send(
                     _("Your weapon already reached the maximum upgrade level.")
                 )
-        if ctx.character_data["money"] < pricetopay:
-            return await ctx.send(
-                _(
-                    "You are too poor to upgrade this item. The upgrade costs **${pricetopay}**, but you only have **${money}**."
-                ).format(pricetopay=pricetopay, money=ctx.character_data["money"])
-            )
 
         if not await ctx.confirm(
             _(
@@ -510,7 +505,11 @@ IdleRPG is a global bot, your characters are valid everywhere"""
             return await ctx.send(_("Weapon upgrade cancelled."))
         if not await checks.has_money(self.bot, ctx.author.id, pricetopay):
             await self.bot.reset_cooldown(ctx)
-            return await ctx.send(_("You're too poor."))
+            return await ctx.send(
+                _(
+                    "You are too poor to upgrade this item. The upgrade costs **${pricetopay}**, but you only have **${money}**."
+                ).format(pricetopay=pricetopay, money=ctx.character_data["money"])
+            )
         async with self.bot.pool.acquire() as conn:
             await conn.execute(
                 f'UPDATE allitems SET {stattoupgrade}={stattoupgrade}+1 WHERE "id"=$1;',
