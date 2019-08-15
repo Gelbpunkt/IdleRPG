@@ -414,7 +414,7 @@ class Marriage(commands.Cog):
         if not children:
             return await ctx.send(_("You don't have kids yet."))
         target = random.choice(children)
-        event = random.choice(["death"] + ["age"] * 7 + ["namechange"] * 2)
+        event = random.choice(["death"] + ["age"] * 29 + ["namechange"] * 3)
         if event == "death":
             cause = random.choice(
                 [
