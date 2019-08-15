@@ -119,6 +119,8 @@ class Marriage(commands.Cog):
         _("""Break up with your partner.""")
         if not ctx.character_data["marriage"]:
             return await ctx.send(_("You are not married yet."))
+        if not await ctx.confirm(_("Are you sure you want to divorce your partner? You will lose all your children!")):
+            return await ctx.send(_("Cancelled the divorce. I guess the marriage is safe for now?"))
         async with self.bot.pool.acquire() as conn:
             await conn.execute(
                 'UPDATE profile SET "marriage"=0 WHERE "user"=$1;', ctx.author.id
