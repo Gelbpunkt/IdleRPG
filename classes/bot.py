@@ -394,8 +394,14 @@ class Bot(commands.AutoShardedBot):
             return await self.create_item(**item)
         return item
 
-    def in_class_line(self, class_, line):
-        return self.get_class_line(class_) == line
+    def in_class_line(self, classes, line):
+        return any([self.get_class_line(c) == line for c in classes])
+
+    def get_class_grade_from(self, classes, line):
+        for class_ in classes:
+            if self.get_class_line(class_) == line:
+                return self.get_class_grade(class_)
+        return None
 
     def get_class_line(self, class_):
         if class_ in ["Mage", "Wizard", "Pyromancer", "Elementalist", "Dark Caster"]:
@@ -408,7 +414,7 @@ class Bot(commands.AutoShardedBot):
             return "Ranger"
         elif class_ in ["Novice", "Proficient", "Artisan", "Master", "Paragon"]:
             return "Paragon"
-        elif class_ in ["Swordsman", "Fighter", "Hero", "Dragonslayer", "Raider"]:
+        elif class_ in ["Stabber", "Fighter", "Hero", "Dragonslayer", "Raider"]:
             return "Raider"
         elif class_ in ["Priest", "Mysticist", "Summoner", "Seer", "Ritualist"]:
             return "Ritualist"
@@ -451,8 +457,8 @@ class Bot(commands.AutoShardedBot):
             return ["Novice", "Proficient", "Artisan", "Master", "Paragon"].index(
                 class_
             ) + 1
-        elif class_ in ["Swordsman", "Fighter", "Hero", "Dragonslayer", "Raider"]:
-            return ["Swordsman", "Fighter", "Hero", "Dragonslayer", "Raider"].index(
+        elif class_ in ["Stabber", "Fighter", "Hero", "Dragonslayer", "Raider"]:
+            return ["Stabber", "Fighter", "Hero", "Dragonslayer", "Raider"].index(
                 class_
             ) + 1
         elif class_ in ["Priest", "Mysticist", "Summoner", "Seer", "Ritualist"]:
@@ -462,22 +468,23 @@ class Bot(commands.AutoShardedBot):
         else:
             return 0
 
-    async def generate_stats(self, user, damage, armor, class_=None):
+    async def generate_stats(self, user, damage, armor, classes=None):
         user = user.id if isinstance(user, (discord.User, discord.Member)) else user
-        if not class_:
-            class_ = await self.pool.fetchval(
+        if not classes:
+            classes = await self.pool.fetchval(
                 'SELECT class FROM profile WHERE "user"=$1;', user
             )
-        line = self.get_class_line(class_)
-        grade = self.get_class_grade(class_)
-        if line == "Mage":
-            return (damage + grade, armor)
-        elif line == "Warrior":
-            return (damage, armor + grade)
-        elif line == "Paragon":
-            return (damage + grade, armor + grade)
-        else:
-            return (damage, armor)
+        lines = [self.get_class_line(class_) for class_ in classes]
+        grades = [self.get_class_grade(class_) for class_ in classes]
+        for line, grade in zip(lines, grades):
+            if line == "Mage":
+                damage += grade
+            elif line == "Warrior":
+                armor += grade
+            elif line == "Paragon":
+                damage += grade
+                armor += grade
+        return (damage, armor)
 
     async def log_transaction(self, ctx, from_, to, subject, data):
         """Logs a transaction."""

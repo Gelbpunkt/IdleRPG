@@ -36,6 +36,14 @@ class Classes(commands.Cog):
     @locale_doc
     async def _class(self, ctx):
         _("""Change your class.""")
+        if int(rpgtools.xptolevel(ctx.character_data["xp"])) >= 12:
+            val = await self.bot.paginator.Choose(
+                title=_("Select class to change"),
+                entries=[_("Primary Class"), _("Secondary Class")],
+                return_index=True,
+            ).paginate(ctx)
+        else:
+            val = 0
         embeds = [
             discord.Embed(
                 title=_("Warrior"),
@@ -91,6 +99,15 @@ class Classes(commands.Cog):
                 )
             )
             choices.append("Paragon")
+        lines = [
+            self.bot.get_class_line(class_) for class_ in ctx.character_data["class"]
+        ]
+        embeds = list(filter(lambda x: _(x.title) not in lines, embeds))
+        for line in lines:
+            try:
+                choices.remove(line)
+            except ValueError:
+                pass
         profession = await self.bot.paginator.ChoosePaginator(
             extras=embeds, choices=choices
         ).paginate(ctx)
@@ -100,14 +117,16 @@ class Classes(commands.Cog):
         elif profession == "Ranger":
             profession_ = "Caretaker"
         elif profession == "Raider":
-            profession_ = "Swordsman"
+            profession_ = "Stabber"
         elif profession == "Ritualist":
             profession_ = "Priest"
-        if ctx.character_data["class"] == "No Class":
+        new_classes = ctx.character_data["class"]
+        new_classes[val] = profession_
+        if ctx.character_data["class"][val] == "No Class":
             async with self.bot.pool.acquire() as conn:
                 await conn.execute(
                     'UPDATE profile SET "class"=$1 WHERE "user"=$2;',
-                    profession_,
+                    new_classes,
                     ctx.author.id,
                 )
                 if profession == "Ranger":
@@ -120,7 +139,7 @@ class Classes(commands.Cog):
                 )
             )
         else:
-            if not await has_money(self.bot, ctx.author.id, 5000):
+            if not await self.bot.has_money(ctx.author.id, 5000):
                 await self.bot.reset_cooldown(ctx)
                 return await ctx.send(
                     _("You're too poor for a class change, it costs **$5000**.")
@@ -129,7 +148,7 @@ class Classes(commands.Cog):
             async with self.bot.pool.acquire() as conn:
                 await conn.execute(
                     'UPDATE profile SET "class"=$1, "money"="money"-$2 WHERE "user"=$3;',
-                    profession_,
+                    new_classes,
                     5000,
                     ctx.author.id,
                 )
@@ -149,39 +168,53 @@ class Classes(commands.Cog):
     @locale_doc
     async def myclass(self, ctx):
         _("""Views your class.""")
-        if (class_ := ctx.character_data["class"]) == "No Class" or not class_:
+        if (classes := ctx.character_data["class"])[0] == "No Class" or not classes:
             return await ctx.send("You haven't got a class yet.")
-        try:
-            await ctx.send(
-                file=discord.File(
-                    f"assets/classes/{class_.lower().replace(' ', '_')}.png"
+        for class_ in classes:
+            try:
+                await ctx.send(
+                    file=discord.File(
+                        f"assets/classes/{class_.lower().replace(' ', '_')}.png"
+                    )
                 )
-            )
-        except FileNotFoundError:
-            await ctx.send(
-                _(
-                    "The image for your class **{class_}** hasn't been added yet."
-                ).format(class_=class_)
-            )
+            except FileNotFoundError:
+                await ctx.send(
+                    _(
+                        "The image for your class **{class_}** hasn't been added yet."
+                    ).format(class_=class_)
+                )
 
     @has_char()
     @commands.command()
     @locale_doc
     async def evolve(self, ctx):
-        _("""Evolve to the next level of your class.""")
+        _("""Evolve to the next level of your classes.""")
         level = int(rpgtools.xptolevel(ctx.character_data["xp"]))
         if level < 5:
             return await ctx.send(_("Your level isn't high enough to evolve."))
-        if ctx.character_data["class"] == "No Class":
-            return await ctx.send(_("You haven't got a class yet."))
         newindex = int(level / 5) - 1
-        newclass = self.bot.get_class_evolves()[
-            self.bot.get_class_line(ctx.character_data["class"])
-        ][newindex]
+        updated = 0
+        new_classes = []
+        for class_ in ctx.character_data["class"]:
+            if class_ != "No Class":
+                new_classes.append(
+                    self.bot.get_class_evolves()[self.bot.get_class_line(class_)][
+                        newindex
+                    ]
+                )
+                updated += 1
+            else:
+                new_classes.append("No Class")
+        if updated == 0:
+            return await ctx.send(_("You haven't got a class yet."))
         await self.bot.pool.execute(
-            'UPDATE profile SET "class"=$1 WHERE "user"=$2;', newclass, ctx.author.id
+            'UPDATE profile SET "class"=$1 WHERE "user"=$2;', new_classes, ctx.author.id
         )
-        await ctx.send(_("You are now a `{newclass}`.").format(newclass=newclass))
+        await ctx.send(
+            _("You are now a `{class1}` and a `{class2}`.").format(
+                class1=new_classes[0], class2=new_classes[1]
+            )
+        )
 
     @commands.command()
     @locale_doc
@@ -209,7 +242,8 @@ Priest   ->  Mysticist ->  Summoner    -> Seer           ->  Ritualist
     async def steal(self, ctx):
         _("""[Thief Only] Steal money!""")
         if secrets.randbelow(100) in range(
-            1, self.bot.get_class_grade(ctx.character_data["class"]) * 8 + 1
+            1,
+            self.bot.get_class_grade_from(ctx.character_data["class"], "Thief") * 8 + 1,
         ):
             async with self.bot.pool.acquire() as conn:
                 usr = await conn.fetchrow(
@@ -242,7 +276,7 @@ Priest   ->  Mysticist ->  Summoner    -> Seer           ->  Ritualist
     @locale_doc
     async def pet(self, ctx):
         _("""[Ranger Only] View your pet or interact with it.""")
-        petlvl = self.bot.get_class_grade(ctx.character_data["class"])
+        petlvl = self.bot.get_class_grade_from(ctx.character_data["class"], "Ranger")
         em = discord.Embed(title=_("{user}'s pet").format(user=ctx.disp))
         em.add_field(name=_("Name"), value=ctx.pet_data["name"], inline=False)
         em.add_field(name=_("Level"), value=petlvl, inline=False)
@@ -439,7 +473,7 @@ Priest   ->  Mysticist ->  Summoner    -> Seer           ->  Ritualist
     @locale_doc
     async def hunt(self, ctx):
         _("""[Ranger Only] Let your pet get a weapon for you!""")
-        petlvl = self.bot.get_class_grade(ctx.character_data["class"])
+        petlvl = self.bot.get_class_grade_from(ctx.character_data["class"], "Ranger")
         joy_multiply = Decimal(ctx.pet_data["joy"] / 100)
         luck_multiply = ctx.character_data["luck"]
         minstat = round(petlvl * 3 * luck_multiply * joy_multiply)

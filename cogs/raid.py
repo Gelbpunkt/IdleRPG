@@ -498,13 +498,13 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
     @commands.command()
     @locale_doc
     async def raidstats(self, ctx):
-        """View your raid stats."""
+        _("""View your raid stats.""")
         atk = ctx.character_data["atkmultiply"]
         deff = ctx.character_data["defmultiply"]
         atkp = self.getpriceto(atk + Decimal("0.1"))
         deffp = self.getpriceto(deff + Decimal("0.1"))
-        if self.bot.get_class_line(ctx.character_data["class"]) == "Raider":
-            tier = self.bot.get_class_grade(ctx.character_data["class"])
+        if self.bot.in_class_line(ctx.character_data["class"], "Raider"):
+            tier = self.bot.get_class_grade_from(ctx.character_data["class"], "Raider")
             atk += Decimal("0.1") * tier
             deff += Decimal("0.1") * tier
         await ctx.send(
