@@ -79,6 +79,7 @@ class Miscellaneous(commands.Cog):
                 "legendary",
                 "common",
                 "common",
+                "common",
             ]  # Trick for -1
             type_ = secrets.choice(
                 [types[num - 3]] * 80 + [types[num - 2]] * 19 + [types[num - 1]] * 1
