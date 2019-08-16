@@ -216,7 +216,9 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
                     return False
                 if not (int(msg.content) > highest_bid[1]):
                     return False
-                if msg.author.id == highest_bid[0].id: # don't allow a player to outbid themselves
+                if (
+                    msg.author.id == highest_bid[0].id
+                ):  # don't allow a player to outbid themselves
                     return False
                 return True
 
