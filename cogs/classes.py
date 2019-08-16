@@ -168,21 +168,22 @@ class Classes(commands.Cog):
     @locale_doc
     async def myclass(self, ctx):
         _("""Views your class.""")
-        if (classes := ctx.character_data["class"])[0] == "No Class" or not classes:
+        if (classes := ctx.character_data["class"]) == ["No Class", "No Class"]:
             return await ctx.send("You haven't got a class yet.")
         for class_ in classes:
-            try:
-                await ctx.send(
-                    file=discord.File(
-                        f"assets/classes/{class_.lower().replace(' ', '_')}.png"
+            if class_ != "No Class":
+                try:
+                    await ctx.send(
+                        file=discord.File(
+                            f"assets/classes/{class_.lower().replace(' ', '_')}.png"
+                        )
                     )
-                )
-            except FileNotFoundError:
-                await ctx.send(
-                    _(
-                        "The image for your class **{class_}** hasn't been added yet."
-                    ).format(class_=class_)
-                )
+                except FileNotFoundError:
+                    await ctx.send(
+                        _(
+                            "The image for your class **{class_}** hasn't been added yet."
+                        ).format(class_=class_)
+                    )
 
     @has_char()
     @commands.command()
