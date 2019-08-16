@@ -296,7 +296,7 @@ CREATE TABLE public.profile (
     colour character varying(7) DEFAULT '#FFFFFF'::character varying,
     background character varying(60) DEFAULT 0,
     guild bigint DEFAULT 0,
-    class character varying(50) DEFAULT 'No Class'::character varying,
+    class character varying(50)[] DEFAULT '{"No Class","No Class"}'::character varying[],
     deaths bigint DEFAULT 0,
     completed bigint DEFAULT 0,
     lovescore bigint DEFAULT 0 NOT NULL,
