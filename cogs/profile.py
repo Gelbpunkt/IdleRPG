@@ -146,8 +146,8 @@ IdleRPG is a global bot, your characters are valid everywhere"""
                     "married": await rpgtools.lookup(self.bot, profile["marriage"])
                     or _("Not Married"),
                     "guild": guild,
-                    "class": profile["class"],
-                    "icon": self.bot.get_class_line(profile["class"]).lower(),
+                    "classes": profile["class"],
+                    "icons": [self.bot.get_class_line(c).lower() for c in profile["class"]],
                     "mission": f"{mission[0]} - {mission[1] if not mission[2] else _('Finished')}"
                     if mission
                     else _("No Mission"),
