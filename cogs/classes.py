@@ -232,7 +232,7 @@ Thieves  ->  Rogues    ->  Chunin      -> Renegades      ->  Assassins
 Mage     ->  Wizards   ->  Pyromancers -> Elementalists  ->  Dark Caster
 Novice   ->  Proficient->  Artisan     -> Master         ->  Paragon
 Caretaker->  Trainer   ->  Bowman      -> Hunter         ->  Ranger
-Swordsman->  Fighter   ->  Hero        -> Dragonslayer   ->  Raider
+Stabber  ->  Fighter   ->  Hero        -> Dragonslayer   ->  Raider
 Priest   ->  Mysticist ->  Summoner    -> Seer           ->  Ritualist
 ```"""
         )
