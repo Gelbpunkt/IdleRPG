@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-08-12 08:05+0000\n"
+"POT-Creation-Date: 2019-08-17 12:23+0000\n"
 "PO-Revision-Date: 2019-05-31 17:18+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -23,7 +23,8 @@ msgid "Starts a new tournament."
 msgstr "Hódor"
 
 #: cogs/tournament.py:41 cogs/battles.py:44 cogs/battles.py:146
-#: cogs/gambling.py:327 cogs/profile.py:541
+#: cogs/gambling.py:323 cogs/profile.py:544 cogs/transaction.py:249
+#: cogs/transaction.py:295
 msgid "You are too poor."
 msgstr "Hódor"
 
@@ -152,8 +153,7 @@ msgstr "{user} Hódor"
 msgid "Seems you haven't got a trick or treat bag yet. Go get some!"
 msgstr "Hódor"
 
-#: cogs/halloween.py:142 cogs/crates.py:129 cogs/classes.py:341
-#: cogs/adventure.py:222
+#: cogs/halloween.py:142 cogs/crates.py:129 cogs/classes.py:492
 msgid "You gained an item!"
 msgstr "Hódor"
 
@@ -161,19 +161,17 @@ msgstr "Hódor"
 msgid "You found a new item when opening a trick-or-treat bag!"
 msgstr "Hódor"
 
-#: cogs/halloween.py:147 cogs/crates.py:134 cogs/classes.py:346
-#: cogs/adventure.py:227
+#: cogs/halloween.py:147 cogs/crates.py:134 cogs/classes.py:497
 msgid "ID"
 msgstr "Hódor"
 
-#: cogs/halloween.py:148 cogs/crates.py:135 cogs/classes.py:275
-#: cogs/classes.py:347 cogs/adventure.py:228 cogs/trading.py:212
-#: cogs/trading.py:397
+#: cogs/halloween.py:148 cogs/crates.py:135 cogs/classes.py:284
+#: cogs/classes.py:498 cogs/trading.py:218 cogs/trading.py:403
 msgid "Name"
 msgstr "Hódor"
 
-#: cogs/halloween.py:149 cogs/crates.py:136 cogs/classes.py:348
-#: cogs/adventure.py:229 cogs/trading.py:213 cogs/trading.py:398
+#: cogs/halloween.py:149 cogs/crates.py:136 cogs/classes.py:499
+#: cogs/trading.py:219 cogs/trading.py:404
 msgid "Type"
 msgstr "Hódor"
 
@@ -401,7 +399,7 @@ msgstr ""
 msgid "Opens a crate."
 msgstr "Hódor"
 
-#: cogs/crates.py:75 cogs/crates.py:162 cogs/admin.py:133
+#: cogs/crates.py:75 cogs/crates.py:162 cogs/admin.py:134
 #, python-brace-format
 msgid "{rarity} is not a valid rarity."
 msgstr ""
@@ -416,18 +414,18 @@ msgstr ""
 msgid "You found a new item when opening a crate!"
 msgstr "Hódor"
 
-#: cogs/crates.py:137 cogs/classes.py:350 cogs/adventure.py:230
-#: cogs/trading.py:214 cogs/trading.py:399
+#: cogs/crates.py:137 cogs/classes.py:501 cogs/trading.py:220
+#: cogs/trading.py:405
 msgid "Damage"
 msgstr "Hódor"
 
-#: cogs/crates.py:138 cogs/classes.py:352 cogs/adventure.py:231
-#: cogs/trading.py:215 cogs/trading.py:400
+#: cogs/crates.py:138 cogs/classes.py:503 cogs/trading.py:221
+#: cogs/trading.py:406
 msgid "Armor"
 msgstr "Hódor"
 
-#: cogs/crates.py:139 cogs/classes.py:353 cogs/adventure.py:232
-#: cogs/trading.py:216 cogs/trading.py:401 cogs/profile.py:326
+#: cogs/crates.py:139 cogs/classes.py:504 cogs/trading.py:222
+#: cogs/trading.py:407 cogs/profile.py:327
 msgid "Value"
 msgstr "Hódor"
 
@@ -442,8 +440,8 @@ msgstr "Hódor"
 
 #. preserve deletion of admins
 #. preserve renaming of admins
-#: cogs/crates.py:159 cogs/guild.py:242 cogs/guild.py:262 cogs/admin.py:83
-#: cogs/admin.py:96
+#: cogs/crates.py:159 cogs/guild.py:242 cogs/guild.py:262 cogs/admin.py:84
+#: cogs/admin.py:97
 msgid "Very funny..."
 msgstr "Hódor"
 
@@ -707,7 +705,7 @@ msgstr "Hódor"
 msgid "You are on cooldown. Try again in {time}."
 msgstr "{time} Hódor"
 
-#: cogs/error_handler.py:78 cogs/error_handler.py:135
+#: cogs/error_handler.py:78 cogs/error_handler.py:151
 msgid "Permission denied"
 msgstr "Hódor"
 
@@ -768,34 +766,48 @@ msgstr "{prefix} Hódor"
 #: cogs/error_handler.py:129
 #, python-brace-format
 msgid ""
+"Your pet **{pet}** died! You did not give it enough to eat or drink. Because "
+"of your bad treatment, you are no longer a {profession}."
+msgstr ""
+
+#: cogs/error_handler.py:137
+#, python-brace-format
+msgid ""
+"Your pet **{pet}** ran away! You did not show it your love enough! Because "
+"of your bad treatment, you are no longer a {profession}."
+msgstr ""
+
+#: cogs/error_handler.py:145
+#, python-brace-format
+msgid ""
 "You need to be a donator to use this command. Please head to `{prefix}"
 "donate` and make sure you joined the support server if you decide to support "
 "us."
 msgstr ""
 
-#: cogs/error_handler.py:137
+#: cogs/error_handler.py:153
 msgid ""
 ":x: You don't have the permissions to use this command. It is thought for "
 "other users."
 msgstr "Hódor"
 
 #. prevent cooldown reset
-#: cogs/error_handler.py:143 cogs/trading.py:440
+#: cogs/error_handler.py:159 cogs/trading.py:446
 msgid "You did not choose anything."
 msgstr "Hódor"
 
-#: cogs/error_handler.py:162
+#: cogs/error_handler.py:178
 msgid ""
 "An argument or value you entered was far too high for me to handle properly!"
 msgstr "Hódor"
 
-#: cogs/error_handler.py:168
+#: cogs/error_handler.py:184
 msgid ""
 "The languages have been reloaded while you were using a command. The "
 "execution therefore had to be stopped. Please try again."
 msgstr ""
 
-#: cogs/error_handler.py:199
+#: cogs/error_handler.py:215
 msgid ""
 "The command you tried to use ran into an error. The incident has been "
 "reported and the team will work hard to fix the issue!"
@@ -1028,43 +1040,43 @@ msgstr "Hódor"
 msgid "**Matches to be done**:"
 msgstr "Hódor"
 
-#: cogs/miscellaneous.py:47
+#: cogs/miscellaneous.py:48
 msgid "Let's dab together."
 msgstr "Hódor"
 
-#: cogs/miscellaneous.py:48
+#: cogs/miscellaneous.py:49
 msgid "No. Just no. I am a bot. What did you think?"
 msgstr "Hódor"
 
-#: cogs/miscellaneous.py:55
+#: cogs/miscellaneous.py:56
 msgid "Receive a daily reward based on your streak."
 msgstr "Hódor"
 
-#: cogs/miscellaneous.py:66
+#: cogs/miscellaneous.py:96
 #, python-brace-format
 msgid ""
-"You received your daily **${money}**!\n"
+"You received your daily {txt}!\n"
 "You are on a streak of **{streak}** days!"
-msgstr "{money} Hódor {streak} Hódor"
+msgstr ""
 
-#: cogs/miscellaneous.py:73
+#: cogs/miscellaneous.py:103
 msgid "My current websocket latency."
 msgstr "Hódor"
 
-#: cogs/miscellaneous.py:76
+#: cogs/miscellaneous.py:106
 msgid "Pong!"
 msgstr "Hódor"
 
-#: cogs/miscellaneous.py:77
+#: cogs/miscellaneous.py:107
 #, python-brace-format
 msgid "My current latency is {lat}ms"
 msgstr "{lat} Hódor"
 
-#: cogs/miscellaneous.py:87
+#: cogs/miscellaneous.py:117
 msgid "Support maintenance of the bot."
 msgstr "Hódor"
 
-#: cogs/miscellaneous.py:93
+#: cogs/miscellaneous.py:123
 #, python-brace-format
 msgid ""
 "This bot has its own patreon page.\n"
@@ -1082,49 +1094,49 @@ msgstr ""
 "{guild_count} Hódor\n"
 "<https://patreon.com/idlerpg> Hódor"
 
-#: cogs/miscellaneous.py:110
+#: cogs/miscellaneous.py:140
 msgid "Shows the source code and license."
 msgstr "Hódor"
 
-#: cogs/miscellaneous.py:116
+#: cogs/miscellaneous.py:146
 msgid "Invite link for the bot."
 msgstr "Hódor"
 
-#: cogs/miscellaneous.py:119
+#: cogs/miscellaneous.py:149
 #, python-brace-format
 msgid ""
 "You are running version **{version}** by Adrian.\n"
 "Invite me! {url}"
 msgstr "{version} Hódor {url} Hódor"
 
-#: cogs/miscellaneous.py:131
+#: cogs/miscellaneous.py:161
 msgid "Information on the support server."
 msgstr "Hódor"
 
-#: cogs/miscellaneous.py:134
+#: cogs/miscellaneous.py:164
 msgid ""
 "Got problems or feature requests? Looking for people to play with? Join the "
 "support server:\n"
 "https://discord.gg/MSBatf6"
 msgstr "https://discord.gg/MSBatf6 Hódor"
 
-#: cogs/miscellaneous.py:141
+#: cogs/miscellaneous.py:171
 msgid "Statistics on the bot."
 msgstr "Hódor"
 
-#: cogs/miscellaneous.py:162
+#: cogs/miscellaneous.py:192
 msgid "IdleRPG Statistics"
 msgstr "Hódor"
 
-#: cogs/miscellaneous.py:165
+#: cogs/miscellaneous.py:195
 msgid "Official Support Server Invite: https://discord.gg/MSBatf6"
 msgstr "https://discord.gg/MSBatf6 Hódor"
 
-#: cogs/miscellaneous.py:173
+#: cogs/miscellaneous.py:203
 msgid "Hosting Statistics"
 msgstr "Hódor"
 
-#: cogs/miscellaneous.py:175
+#: cogs/miscellaneous.py:205
 #, python-brace-format
 msgid ""
 "CPU Usage: **{cpu}%**\n"
@@ -1136,11 +1148,11 @@ msgid ""
 "PostgreSQL Version **{pg_version}**"
 msgstr ""
 
-#: cogs/miscellaneous.py:196
+#: cogs/miscellaneous.py:226
 msgid "Bot Statistics"
 msgstr "Hódor"
 
-#: cogs/miscellaneous.py:198
+#: cogs/miscellaneous.py:228
 #, python-brace-format
 msgid ""
 "Code lines written: **{lines}**\n"
@@ -1157,185 +1169,185 @@ msgstr ""
 "**{items}** Hódor\n"
 "**{hours}** Hódor"
 
-#: cogs/miscellaneous.py:220
+#: cogs/miscellaneous.py:250
 msgid "Roll a random number."
 msgstr "Hódor"
 
-#: cogs/miscellaneous.py:222
+#: cogs/miscellaneous.py:252
 #, python-brace-format
 msgid ":1234: You rolled **{num}**, {author}!"
 msgstr "{num} Hódor {author} Hódor"
 
-#: cogs/miscellaneous.py:230
+#: cogs/miscellaneous.py:260
 msgid "The bot's update log."
 msgstr "Hódor"
 
-#: cogs/miscellaneous.py:259
+#: cogs/miscellaneous.py:289
 msgid ""
 "Deletes an amount of messages from the history, optionally only by one "
 "member."
 msgstr "Hódor"
 
-#: cogs/miscellaneous.py:269
+#: cogs/miscellaneous.py:299
 #, python-brace-format
 msgid "👍 Deleted **{num}** messages for you."
 msgstr "{num} Hódor"
 
-#: cogs/miscellaneous.py:275
+#: cogs/miscellaneous.py:305
 msgid "The magic 8 ball answers your questions."
 msgstr "Hódor"
 
-#: cogs/miscellaneous.py:277
+#: cogs/miscellaneous.py:307
 msgid "It is certain"
 msgstr "Hódor"
 
-#: cogs/miscellaneous.py:278
+#: cogs/miscellaneous.py:308
 msgid "It is decidedly so"
 msgstr "Hódor"
 
-#: cogs/miscellaneous.py:279
+#: cogs/miscellaneous.py:309
 msgid "Without a doubt"
 msgstr "Hódor"
 
-#: cogs/miscellaneous.py:280
+#: cogs/miscellaneous.py:310
 msgid "Yes, definitely"
 msgstr "Hódor"
 
-#: cogs/miscellaneous.py:281
+#: cogs/miscellaneous.py:311
 msgid "You may rely on it"
 msgstr "Hódor"
 
-#: cogs/miscellaneous.py:282
+#: cogs/miscellaneous.py:312
 msgid "As I see it, yes"
 msgstr "Hódor"
 
-#: cogs/miscellaneous.py:283
+#: cogs/miscellaneous.py:313
 msgid "Most likely"
 msgstr "Hódor"
 
-#: cogs/miscellaneous.py:284
+#: cogs/miscellaneous.py:314
 msgid "Outlook good"
 msgstr "Hódor"
 
-#: cogs/miscellaneous.py:285
+#: cogs/miscellaneous.py:315
 msgid "Yes"
 msgstr "Hódor"
 
-#: cogs/miscellaneous.py:286
+#: cogs/miscellaneous.py:316
 msgid "Signs point to yes"
 msgstr "Hódor"
 
-#: cogs/miscellaneous.py:287
+#: cogs/miscellaneous.py:317
 msgid "Reply hazy try again"
 msgstr "Hódor"
 
-#: cogs/miscellaneous.py:288
+#: cogs/miscellaneous.py:318
 msgid "Ask again later"
 msgstr "Hódor"
 
-#: cogs/miscellaneous.py:289
+#: cogs/miscellaneous.py:319
 msgid "Better not tell you now"
 msgstr "Hódor"
 
-#: cogs/miscellaneous.py:290
+#: cogs/miscellaneous.py:320
 msgid "Cannot predict now"
 msgstr "Hódor"
 
-#: cogs/miscellaneous.py:291
+#: cogs/miscellaneous.py:321
 msgid "Concentrate and ask again"
 msgstr "Hódor"
 
-#: cogs/miscellaneous.py:292
+#: cogs/miscellaneous.py:322
 msgid "Don't count on it"
 msgstr "Hódor"
 
-#: cogs/miscellaneous.py:293
+#: cogs/miscellaneous.py:323
 msgid "My reply is no"
 msgstr "Hódor"
 
-#: cogs/miscellaneous.py:294
+#: cogs/miscellaneous.py:324
 msgid "My sources say no"
 msgstr "Hódor"
 
-#: cogs/miscellaneous.py:295
+#: cogs/miscellaneous.py:325
 msgid "Outlook not so good"
 msgstr "Hódor"
 
-#: cogs/miscellaneous.py:296
+#: cogs/miscellaneous.py:326
 msgid "Very doubtful"
 msgstr "Hódor"
 
-#: cogs/miscellaneous.py:299
+#: cogs/miscellaneous.py:329
 #, python-brace-format
 msgid "The :8ball: says: **{result}**."
 msgstr "{result} Hódor"
 
-#: cogs/miscellaneous.py:305
+#: cogs/miscellaneous.py:335
 msgid "Repeats what you said."
 msgstr "Hódor"
 
-#: cogs/miscellaneous.py:315
+#: cogs/miscellaneous.py:345
 msgid "Chooses a random option of supplied possiblies."
 msgstr "Hódor"
 
-#: cogs/miscellaneous.py:318
+#: cogs/miscellaneous.py:348
 msgid "Cannot choose from an empty list..."
 msgstr "Hódor"
 
-#: cogs/miscellaneous.py:320
+#: cogs/miscellaneous.py:350
 #, python-brace-format
 msgid "My choice is: **{result}**."
 msgstr "{result} Hódor"
 
-#: cogs/miscellaneous.py:328
+#: cogs/miscellaneous.py:358
 msgid "Calculates the potential love for 2 members."
 msgstr "Hódor"
 
-#: cogs/miscellaneous.py:331
+#: cogs/miscellaneous.py:361
 #, python-brace-format
 msgid "Calculating Love for {first} and {second}..."
 msgstr "{first} Hódor {second} Hódor"
 
-#: cogs/miscellaneous.py:344
+#: cogs/miscellaneous.py:374
 msgid "Love Calculation"
 msgstr "Hódor"
 
-#: cogs/miscellaneous.py:345
+#: cogs/miscellaneous.py:375
 #, python-brace-format
 msgid "Love for {first} and {second} is at **{love}%**! ❤"
 msgstr "{first} Hódor {second} Hódor {love} Hódor"
 
-#: cogs/miscellaneous.py:355
+#: cogs/miscellaneous.py:385
 msgid "Fancies text with big emojis."
 msgstr "Hódor"
 
-#: cogs/miscellaneous.py:381
+#: cogs/miscellaneous.py:411
 msgid "A random bad meme."
 msgstr "Hódor"
 
-#: cogs/miscellaneous.py:395
+#: cogs/miscellaneous.py:425
 msgid ""
 "Tabletop RPG-ready dice. Rolls in the ndx format (3d20 is 3 dice with 20 "
 "sides)."
 msgstr "Hódor"
 
-#: cogs/miscellaneous.py:402
+#: cogs/miscellaneous.py:432
 msgid "Use the ndx format. E.g. `5d20` will roll 5 dices with 20 sides each."
 msgstr "Hódor"
 
-#: cogs/miscellaneous.py:406
+#: cogs/miscellaneous.py:436
 msgid "Use the ndx format."
 msgstr "Hódor"
 
-#: cogs/miscellaneous.py:408
+#: cogs/miscellaneous.py:438
 msgid "Too many dice."
 msgstr "Hódor"
 
-#: cogs/miscellaneous.py:411
+#: cogs/miscellaneous.py:441
 msgid "Dice must have at least one side and not more than 10000."
 msgstr ""
 
-#: cogs/miscellaneous.py:426
+#: cogs/miscellaneous.py:456
 #, python-brace-format
 msgid ""
 "```Sum: {sumall}\n"
@@ -1344,159 +1356,163 @@ msgid ""
 "{results}```"
 msgstr "{sumall} Hódor {average} Hódor {results} Hódor"
 
-#: cogs/miscellaneous.py:434
+#: cogs/miscellaneous.py:464
 msgid "Sends my nickname in a random server."
 msgstr "Hódor"
 
-#: cogs/miscellaneous.py:440
+#: cogs/miscellaneous.py:470
 #, python-brace-format
 msgid "In **{server}** I am called **{name}**."
 msgstr "{server} Hódor {name} Hódor"
 
-#: cogs/miscellaneous.py:448
+#: cogs/miscellaneous.py:478
 msgid "Cat pics."
 msgstr "Hódor"
 
-#: cogs/miscellaneous.py:451
+#: cogs/miscellaneous.py:481
 msgid "Meow!"
 msgstr "Hódor"
 
-#: cogs/miscellaneous.py:460
+#: cogs/miscellaneous.py:490
 msgid "Dog pics."
 msgstr "Hódor"
 
-#: cogs/miscellaneous.py:467
+#: cogs/miscellaneous.py:497
 msgid "Wouff!"
 msgstr "Hódor"
 
-#: cogs/miscellaneous.py:474
+#: cogs/miscellaneous.py:504
 msgid "Shows how long the bot is connected to Discord already."
 msgstr "Hódor"
 
-#: cogs/miscellaneous.py:476
+#: cogs/miscellaneous.py:506
 #, python-brace-format
 msgid "I am online for **{time}**."
 msgstr "{time} Hódor"
 
-#: cogs/miscellaneous.py:484
+#: cogs/miscellaneous.py:514
 msgid "Every good software has an Easter egg."
 msgstr "Hódor"
 
-#: cogs/miscellaneous.py:485
+#: cogs/miscellaneous.py:515
 msgid "Find it!"
 msgstr "Hódor"
 
-#: cogs/miscellaneous.py:491
+#: cogs/miscellaneous.py:521
 msgid "Gives a cookie to a user."
 msgstr "Hódor"
 
-#: cogs/miscellaneous.py:494
+#: cogs/miscellaneous.py:524
 #, python-brace-format
 msgid "**{user}**, you've been given a cookie by **{author}**. :cookie:"
 msgstr "{user} Hódor {author} Hódor"
 
-#: cogs/miscellaneous.py:502
+#: cogs/miscellaneous.py:532
 msgid "Gives ice cream to a user."
 msgstr "Hódor"
 
-#: cogs/miscellaneous.py:504
+#: cogs/miscellaneous.py:534
 #, python-brace-format
 msgid "{other}, here is your ice: :ice_cream:!"
 msgstr "{other} Hódor"
 
-#: cogs/miscellaneous.py:512
+#: cogs/miscellaneous.py:542
 msgid "User guessing game."
 msgstr "Hódor"
 
-#: cogs/miscellaneous.py:515
+#: cogs/miscellaneous.py:545
 msgid "Can you guess who this is?"
 msgstr "Hódor"
 
-#: cogs/miscellaneous.py:516
+#: cogs/miscellaneous.py:546
 #, python-brace-format
 msgid "Their discriminant is `#{disc}`"
 msgstr "#{disc} Hódor"
 
-#: cogs/miscellaneous.py:533
+#: cogs/miscellaneous.py:563
 #, python-brace-format
 msgid "You didn't guess correctly! It was `{member}`!"
 msgstr "{member} Hódor"
 
-#: cogs/miscellaneous.py:535
+#: cogs/miscellaneous.py:565
 #, python-brace-format
 msgid "{user}, you are correct!"
 msgstr "{user} Hódor"
 
-#: cogs/miscellaneous.py:540
+#: cogs/miscellaneous.py:570
 msgid "An alternative to 8ball, but has more bitchy answers."
 msgstr "Hódor"
 
-#: cogs/miscellaneous.py:552
+#: cogs/miscellaneous.py:582
 msgid "Talk to me! (Supports only English)"
 msgstr ""
 
-#: cogs/miscellaneous.py:556
+#: cogs/miscellaneous.py:586
 msgid "Text too long or too short. May be 3 to 60 characters."
 msgstr ""
 
-#: cogs/miscellaneous.py:572
+#: cogs/miscellaneous.py:602
 msgid ""
 "Sends today's garfield comic if no date info is passed. Else, it will use "
 "YYYY MM DD or DD MM YYYY depending on where the year is, with the date parts "
 "being seperated with spaces."
 msgstr ""
 
-#: cogs/miscellaneous.py:586 cogs/miscellaneous.py:620
+#: cogs/miscellaneous.py:616 cogs/miscellaneous.py:650
 msgid "Unable to parse date."
 msgstr ""
 
-#: cogs/miscellaneous.py:593
+#: cogs/miscellaneous.py:623
 msgid ""
 "Garfield was launched on June, 19th 1978 and I also cannot check the future."
 msgstr ""
 
-#: cogs/miscellaneous.py:606
+#: cogs/miscellaneous.py:636
 msgid ""
 "Sends today's userfriendly comic if no date info is passed. Else, it will "
 "use YYYY MM DD or DD MM YYYY depending on where the year is, with the date "
 "parts being seperated with spaces."
 msgstr ""
 
-#: cogs/miscellaneous.py:627
+#: cogs/miscellaneous.py:657
 msgid ""
 "Userfriendly was launched on November, 17th 1997 and I also cannot check the "
 "future."
 msgstr ""
 
-#: cogs/miscellaneous.py:639
+#: cogs/miscellaneous.py:669
 msgid "Taken from userfriendly.org"
 msgstr ""
 
-#: cogs/miscellaneous.py:649
+#: cogs/miscellaneous.py:679
 msgid "Awesome bots by other coffee-drinking individuals."
 msgstr "Hódor"
 
-#: cogs/miscellaneous.py:651
+#: cogs/miscellaneous.py:681
 msgid "Partnered Bots"
 msgstr "Hódor"
 
-#: cogs/miscellaneous.py:652
+#: cogs/miscellaneous.py:682
 msgid "Awesome bots made by other people!"
 msgstr "Hódor"
 
-#: cogs/miscellaneous.py:658
+#: cogs/miscellaneous.py:688
 msgid ""
 "Trivia, Hangman, Minesweeper, Connect 4 and more, right from your chat! A "
 "bot offering non-RPG games made by deprilula28 and Fin.\n"
 "[discordbots.org Page](https://discordbots.org/bot/gamesrob)"
 msgstr "Hódor"
 
-#: cogs/miscellaneous.py:664
+#: cogs/miscellaneous.py:694
 msgid ""
 "Cautious Memory brings wiki-style pages to your server. Use it to document "
 "who's who in your server, inside jokes, or community lore. Includes a full "
 "featured permissions system to keep your pages squeaky clean.\n"
 "[discordbots.org Page](https://discordbots.org/bot/541707781665718302)"
+msgstr ""
+
+#: cogs/raid.py:501
+msgid "View your raid stats."
 msgstr ""
 
 #: cogs/store.py:32
@@ -1531,8 +1547,7 @@ msgstr "Hódor"
 msgid "Please either buy `time`, `luck` or `money`."
 msgstr "Hódor"
 
-#: cogs/store.py:61 cogs/gambling.py:377 cogs/gambling.py:411 cogs/guild.py:483
-#: cogs/profile.py:509
+#: cogs/store.py:61 cogs/gambling.py:373 cogs/gambling.py:407 cogs/guild.py:483
 msgid "You're too poor."
 msgstr "Hódor"
 
@@ -1713,7 +1728,7 @@ msgstr "Hódor"
 msgid "Name too long."
 msgstr "Hódor"
 
-#: cogs/patreon.py:48 cogs/trading.py:241
+#: cogs/patreon.py:48 cogs/trading.py:247
 #, python-brace-format
 msgid "You don't have an item with the ID `{itemid}`."
 msgstr "{itemid} Hódor"
@@ -1731,7 +1746,7 @@ msgstr "Hódor"
 msgid "That is not a valid premade background."
 msgstr "Hódor"
 
-#: cogs/patreon.py:81 cogs/patreon.py:113 cogs/classes.py:314 cogs/guild.py:392
+#: cogs/patreon.py:81 cogs/patreon.py:113 cogs/classes.py:463 cogs/guild.py:392
 msgid ""
 "I couldn't read that URL. Does it start with `http://` or `https://` and is "
 "either a png or jpeg?"
@@ -1800,25 +1815,37 @@ msgstr "{number} Hódor {total} Hódor"
 msgid "Background updated!"
 msgstr "Hódor"
 
-#: cogs/classes.py:66
+#: cogs/classes.py:38
 msgid "Change your class."
 msgstr "Hódor"
 
-#: cogs/classes.py:69
+#: cogs/classes.py:41
+msgid "Select class to change"
+msgstr ""
+
+#: cogs/classes.py:42
+msgid "Primary Class"
+msgstr ""
+
+#: cogs/classes.py:42
+msgid "Secondary Class"
+msgstr ""
+
+#: cogs/classes.py:49
 msgid "Warrior"
 msgstr "Hódor"
 
-#: cogs/classes.py:71
+#: cogs/classes.py:51
 msgid ""
 "The tank class. Charge into battle with additional defense!\n"
 "+1 defense per evolution added onto your shield."
 msgstr "Hódor"
 
-#: cogs/classes.py:76
+#: cogs/classes.py:56
 msgid "Thief"
 msgstr "Hódor"
 
-#: cogs/classes.py:79
+#: cogs/classes.py:59
 #, no-python-format, python-brace-format
 msgid ""
 "The sneaky money stealer...\n"
@@ -1827,21 +1854,21 @@ msgid ""
 "+8% success chance per evolution."
 msgstr ""
 
-#: cogs/classes.py:84
+#: cogs/classes.py:64
 msgid "Mage"
 msgstr "Hódor"
 
-#: cogs/classes.py:86
+#: cogs/classes.py:66
 msgid ""
 "Utilise powerful magic for stronger attacks.\n"
 "+1 damage per evolution added onto your sword."
 msgstr "Hódor"
 
-#: cogs/classes.py:91
+#: cogs/classes.py:71
 msgid "Ranger"
 msgstr "Hódor"
 
-#: cogs/classes.py:93
+#: cogs/classes.py:73
 #, python-brace-format
 msgid ""
 "Item hunter and trainer of their very own pet.\n"
@@ -1850,146 +1877,280 @@ msgid ""
 "+3 minimum stat and +6 maximum stat per evolution."
 msgstr "{prefix} Hódor"
 
-#: cogs/classes.py:98
+#: cogs/classes.py:78
 msgid "Raider"
 msgstr ""
 
-#: cogs/classes.py:100
+#: cogs/classes.py:80
 msgid ""
 "A strong warrior who gives their live for the fight against Zerekiel.\n"
 "Every evolve boosts the raidstats by additional 10%."
 msgstr ""
 
-#: cogs/classes.py:105
+#: cogs/classes.py:85
 msgid "Ritualist"
 msgstr ""
 
-#: cogs/classes.py:114
+#: cogs/classes.py:94
 msgid "Paragon"
 msgstr "Hódor"
 
-#: cogs/classes.py:116
+#: cogs/classes.py:96
 msgid ""
 "Absorb the appreciation of the devs into your soul to power up.\n"
 "+1 damage and defense per evolution added onto your items."
 msgstr "Hódor"
 
-#: cogs/classes.py:146
+#: cogs/classes.py:139
 #, python-brace-format
 msgid "Your new class is now `{profession}`."
 msgstr "{profession} Hódor"
 
-#: cogs/classes.py:154
+#: cogs/classes.py:147
 msgid "You're too poor for a class change, it costs **$5000**."
 msgstr "Hódor"
 
-#: cogs/classes.py:171
+#: cogs/classes.py:164
 #, python-brace-format
 msgid ""
 "Your new class is now `{profession}`. **$5000** was taken off your balance."
 msgstr "{profession} Hódor"
 
-#: cogs/classes.py:179
+#: cogs/classes.py:172
 msgid "Views your class."
 msgstr "Hódor"
 
-#: cogs/classes.py:191
+#: cogs/classes.py:186
 #, python-brace-format
 msgid "The image for your class **{class_}** hasn't been added yet."
 msgstr "{class_} Hódor"
 
-#: cogs/classes.py:199
-msgid "Evolve to the next level of your class."
-msgstr "Hódor"
+#: cogs/classes.py:194
+msgid "Evolve to the next level of your classes."
+msgstr ""
 
-#: cogs/classes.py:202
+#: cogs/classes.py:197
 msgid "Your level isn't high enough to evolve."
 msgstr "Hódor"
 
-#: cogs/classes.py:204
+#: cogs/classes.py:212
 msgid "You haven't got a class yet."
 msgstr "Hódor"
 
-#: cogs/classes.py:212
+#: cogs/classes.py:217
 #, python-brace-format
-msgid "You are now a `{newclass}`."
-msgstr "{newclass} Hódor"
+msgid "You are now a `{class1}` and a `{class2}`."
+msgstr ""
 
-#: cogs/classes.py:238
+#: cogs/classes.py:246
 msgid "[Thief Only] Steal money!"
 msgstr "Hódor"
 
-#: cogs/classes.py:259
+#: cogs/classes.py:268
 #, python-brace-format
 msgid "You stole **${stolen}** from **{user}**."
 msgstr "{stolen} Hódor {user} Hódor"
 
-#: cogs/classes.py:264
+#: cogs/classes.py:273
 msgid "Your attempt to steal money wasn't successful."
 msgstr "Hódor"
 
-#: cogs/classes.py:272
+#: cogs/classes.py:281
 msgid "[Ranger Only] View your pet or interact with it."
 msgstr ""
 
-#: cogs/classes.py:274
+#: cogs/classes.py:283
 #, python-brace-format
 msgid "{user}'s pet"
 msgstr "{user} Hódor"
 
-#: cogs/classes.py:276
+#: cogs/classes.py:285
 msgid "Level"
 msgstr "Hódor"
 
-#: cogs/classes.py:277
+#: cogs/classes.py:286
 msgid "Food"
 msgstr ""
 
-#: cogs/classes.py:279
+#: cogs/classes.py:288
 msgid "Drinks"
 msgstr ""
 
-#: cogs/classes.py:281
+#: cogs/classes.py:290
 msgid "Love"
 msgstr ""
 
-#: cogs/classes.py:282
+#: cogs/classes.py:291
 msgid "Joy"
 msgstr ""
 
-#: cogs/classes.py:292
-msgid "[Ranger Only] Renames your pet."
+#: cogs/classes.py:302
+msgid "[Ranger Only] Feed your pet."
 msgstr ""
 
-#: cogs/classes.py:294
-msgid "Please enter a name shorter than 20 characters."
-msgstr ""
-
-#: cogs/classes.py:298
-msgid "Pet name updated."
+#: cogs/classes.py:304
+msgid "Potato"
 msgstr ""
 
 #: cogs/classes.py:305
-msgid "[Ranger Only] Sets your pet's image by URL."
+msgid "Apple"
+msgstr ""
+
+#: cogs/classes.py:306
+msgid "Cucumber"
 msgstr ""
 
 #: cogs/classes.py:307
+msgid "Meat"
+msgstr ""
+
+#: cogs/classes.py:308
+msgid "Salad"
+msgstr ""
+
+#: cogs/classes.py:309
+msgid "Adrian's Power Poop"
+msgstr ""
+
+#: cogs/classes.py:316
+msgid "Feed your pet"
+msgstr ""
+
+#: cogs/classes.py:320 cogs/classes.py:362 cogs/marriage.py:232
+msgid "You are too poor to buy this."
+msgstr " Hódor"
+
+#: cogs/classes.py:334
+#, python-brace-format
+msgid ""
+"You bought **{item}** for your pet and increased its food bar by **{points}"
+"** points."
+msgstr ""
+
+#: cogs/classes.py:344
+msgid "[Ranger Only] Give your pet something to drink."
+msgstr ""
+
+#: cogs/classes.py:346
+msgid "Some Water"
+msgstr ""
+
+#: cogs/classes.py:347
+msgid "A bottle of water"
+msgstr ""
+
+#: cogs/classes.py:348
+msgid "Cocktail"
+msgstr ""
+
+#: cogs/classes.py:349
+msgid "Wine"
+msgstr ""
+
+#: cogs/classes.py:350
+msgid "Beer"
+msgstr ""
+
+#: cogs/classes.py:351
+msgid "Adrian's Cocktail"
+msgstr ""
+
+#: cogs/classes.py:358
+msgid "Give your pet something to drink"
+msgstr ""
+
+#: cogs/classes.py:376
+#, python-brace-format
+msgid ""
+"You bought **{item}** for your pet and increased its drinks bar by **{points}"
+"** points."
+msgstr ""
+
+#: cogs/classes.py:387
+msgid "[Ranger Only] Cuddle your pet to make it love you."
+msgstr ""
+
+#: cogs/classes.py:396
+#, python-brace-format
+msgid ""
+"Your pet adores you! :heart: Cuddling it has increased its love for you by "
+"**{value}** points."
+msgstr ""
+
+#: cogs/classes.py:407
+msgid "[Ranger Only] Play with your pet to make it happier."
+msgstr ""
+
+#: cogs/classes.py:416
+#, python-brace-format
+msgid "You have been {activity} with your pet and it gained **{value}** joy!"
+msgstr ""
+
+#: cogs/classes.py:420
+msgid "playing football :soccer:"
+msgstr ""
+
+#: cogs/classes.py:421
+msgid "playing American football :football:"
+msgstr ""
+
+#: cogs/classes.py:422
+msgid "playing rugby :rugy_football:"
+msgstr ""
+
+#: cogs/classes.py:423
+msgid "playing basketball :basketball:"
+msgstr ""
+
+#: cogs/classes.py:424
+msgid "playing tennis :tennis:"
+msgstr ""
+
+#: cogs/classes.py:425
+msgid "playing ping-pong :ping_pong:"
+msgstr ""
+
+#: cogs/classes.py:426
+msgid "boxing :boxing_glove:"
+msgstr ""
+
+#: cogs/classes.py:427
+msgid "skiing :ski:"
+msgstr ""
+
+#: cogs/classes.py:440
+msgid "[Ranger Only] Renames your pet."
+msgstr ""
+
+#: cogs/classes.py:442
+msgid "Please enter a name shorter than 20 characters."
+msgstr ""
+
+#: cogs/classes.py:446
+msgid "Pet name updated."
+msgstr ""
+
+#: cogs/classes.py:454
+msgid "[Ranger Only] Sets your pet's image by URL."
+msgstr ""
+
+#: cogs/classes.py:456
 msgid "URLs mustn't exceed 60 characters ."
 msgstr ""
 
-#: cogs/classes.py:320
+#: cogs/classes.py:469
 msgid "Your pet's image was successfully updated."
 msgstr ""
 
-#: cogs/classes.py:328
+#: cogs/classes.py:478
 msgid "[Ranger Only] Let your pet get a weapon for you!"
 msgstr "Hódor"
 
-#: cogs/classes.py:342
+#: cogs/classes.py:493
 msgid "Your pet found an item!"
 msgstr "Hódor"
 
-#: cogs/classes.py:354
+#: cogs/classes.py:505
 msgid "Your pet needs to recover, wait a day to retry"
 msgstr "Hódor"
 
@@ -2156,123 +2317,151 @@ msgstr "{title} Hódor"
 msgid "🎧 Playing {title}..."
 msgstr "{title} Hódor"
 
-#: cogs/adventure.py:40
+#: cogs/adventure.py:41
 msgid "A list of all adventures with success rates, name and time it takes."
 msgstr "Hódor"
 
-#: cogs/adventure.py:47
+#: cogs/adventure.py:48
 msgid "Loading images..."
 msgstr "Hódor"
 
-#: cogs/adventure.py:83
+#: cogs/adventure.py:84
 msgid "Sends your character on an adventure."
 msgstr "Hódor"
 
-#: cogs/adventure.py:86
+#: cogs/adventure.py:87
 #, python-brace-format
 msgid "You must be on level **{level}** to do this adventure."
 msgstr "{level} Hódor"
 
-#: cogs/adventure.py:97
+#: cogs/adventure.py:98
 #, python-brace-format
 msgid ""
 "Successfully sent your character out on an adventure. Use `{prefix}status` "
 "to see the current status of the mission."
 msgstr "{prefix} Hódor"
 
-#: cogs/adventure.py:106
-msgid "Go out on an active, action based adventure."
-msgstr "Hódor"
-
 #: cogs/adventure.py:107
-msgid "**Active adventure loading...**"
-msgstr "Hódor"
-
-#: cogs/adventure.py:134
-#, python-brace-format
-msgid ""
-"\n"
-"**{user}'s Adventure**\n"
-"```\n"
-"Progress: {progress}%\n"
-"HP......: {hp}\n"
-"\n"
-"Enemy\n"
-"HP......: {enemy_hp}\n"
-"\n"
-"Use the reactions attack, defend or recover\n"
-"```\n"
+msgid "Go out on an active, action based adventure in a maze."
 msgstr ""
-"\n"
-"{user} Hódor\n"
-"\n"
-"{progress} Hódor\n"
-"{hp} Hódor\n"
-"{enemy_hp} Hódor\n"
 
-#: cogs/adventure.py:154
-msgid "Adventure stopped because you refused to move."
-msgstr "Hódor"
-
-#: cogs/adventure.py:164
-msgid "You healed yourself for 20 HP."
-msgstr "Hódor"
-
-#: cogs/adventure.py:167
-msgid "The enemy healed himself for 20 HP."
-msgstr "Hódor"
-
-#: cogs/adventure.py:169
-msgid "Your attack was blocked!"
-msgstr "Hódor"
-
-#: cogs/adventure.py:171
-msgid "Enemy attack was blocked!"
-msgstr "Hódor"
-
-#: cogs/adventure.py:173
-msgid "Noone attacked."
-msgstr "Hódor"
-
-#: cogs/adventure.py:180
-#, python-brace-format
+#: cogs/adventure.py:110
 msgid ""
-"You hit the enemy for **{damage}** damage, he hit you for **{damage2}** "
-"damage."
-msgstr "{damage} Hódor {damage2} Hódor"
+"You are going to be in a labyrinth of size 15x15. There are enemies, "
+"treasures and hidden traps. Reach the exit in the bottom right corner for a "
+"huge extra bonus!\n"
+"Are you ready?\n"
+"\n"
+"Tip: Use a silent channel for this, you may want to read all the messages I "
+"will send."
+msgstr ""
 
-#: cogs/adventure.py:187
+#: cogs/adventure.py:115
+msgid "**Generating a maze...**"
+msgstr ""
+
+#: cogs/adventure.py:126
+msgid "North"
+msgstr ""
+
+#: cogs/adventure.py:127
+msgid "East"
+msgstr ""
+
+#: cogs/adventure.py:128
+msgid "South"
+msgstr ""
+
+#: cogs/adventure.py:129
+msgid "West"
+msgstr ""
+
+#: cogs/adventure.py:205
 #, python-brace-format
-msgid "You hit the enemy for **{damage}** damage."
-msgstr "{damage} Hódor"
+msgid "To the {side} is a wall."
+msgstr ""
 
-#: cogs/adventure.py:196
+#: cogs/adventure.py:207
 #, python-brace-format
-msgid "The enemy hit you for **{damage}** damage."
-msgstr "{damage} Hódor"
+msgid "To the {side} is an enemy."
+msgstr ""
 
-#: cogs/adventure.py:203
-msgid "Enemy defeated! You gained **20 HP**"
-msgstr "Hódor"
+#: cogs/adventure.py:209
+#, python-brace-format
+msgid "To the {side} is a treasure."
+msgstr ""
 
-#: cogs/adventure.py:210
+#: cogs/adventure.py:211
+#, python-brace-format
+msgid "To the {side} is a floor."
+msgstr ""
+
+#: cogs/adventure.py:214
+#, python-brace-format
+msgid "You are on {hp} HP"
+msgstr ""
+
+#: cogs/adventure.py:224
+#, python-brace-format
+msgid "You stepped on a trap and took {damage} damage!"
+msgstr ""
+
+#: cogs/adventure.py:239
+#, python-brace-format
+msgid "You found a treasure with **${money}** inside!"
+msgstr ""
+
+#: cogs/adventure.py:262
+msgid "Enemy"
+msgstr ""
+
+#: cogs/adventure.py:267
+msgid "The Fight started"
+msgstr ""
+
+#: cogs/adventure.py:302
+#, python-brace-format
+msgid "The Enemy healed themselves for {hp} HP"
+msgstr ""
+
+#: cogs/adventure.py:308
+#, python-brace-format
+msgid "You healed yourself for {hp} HP"
+msgstr ""
+
+#: cogs/adventure.py:314
+msgid "Attack blocked."
+msgstr ""
+
+#: cogs/adventure.py:319
+#, python-brace-format
+msgid "The Enemy hit you for {dmg} damage"
+msgstr ""
+
+#: cogs/adventure.py:324
+#, python-brace-format
+msgid "You hit the enemy for {dmg} damage"
+msgstr ""
+
+#: cogs/adventure.py:338 cogs/adventure.py:343
+msgid "Timed out."
+msgstr ""
+
+#: cogs/adventure.py:345
 msgid "You died."
 msgstr "Hódor"
 
-#: cogs/adventure.py:223
-msgid "You found a new item when finishing an active adventure!"
-msgstr "Hódor"
-
-#: cogs/adventure.py:233
+#: cogs/adventure.py:357
 #, python-brace-format
-msgid "Your HP were {hp}"
-msgstr "{hp} Hódor"
+msgid ""
+"You have reached the exit and were rewarded **${money}** for getting out!"
+msgstr ""
 
-#: cogs/adventure.py:241
+#: cogs/adventure.py:366
 msgid "Checks your adventure status."
 msgstr "Hódor"
 
-#: cogs/adventure.py:247
+#: cogs/adventure.py:372
 #, python-brace-format
 msgid ""
 "You are currently on an adventure with difficulty `{difficulty}`.\n"
@@ -2280,45 +2469,45 @@ msgid ""
 "Adventure name: `{adventure}`"
 msgstr ""
 
-#: cogs/adventure.py:284
+#: cogs/adventure.py:410
 msgid "You died on your mission. Try again!"
 msgstr "Hódor"
 
-#: cogs/adventure.py:339
+#: cogs/adventure.py:465
 #, python-brace-format
 msgid ""
 "You have completed your adventure and received **${gold}** as well as a new "
 "item: **{item}**. Experience gained: **{xp}**."
 msgstr ""
 
-#: cogs/adventure.py:384
+#: cogs/adventure.py:510
 #, python-brace-format
 msgid "Level {new_level} Memorial"
 msgstr "{new_level} Hódor"
 
-#: cogs/adventure.py:400
+#: cogs/adventure.py:526
 #, python-brace-format
 msgid ""
 "You reached a new level: **{new_level}** :star:! You received {reward} as a "
 "reward :tada:!"
 msgstr "{new_level} Hódor {reward} Hódor"
 
-#: cogs/adventure.py:409
+#: cogs/adventure.py:535
 msgid "Cancels your current adventure."
 msgstr "Hódor"
 
-#: cogs/adventure.py:413
+#: cogs/adventure.py:539
 #, python-brace-format
 msgid ""
 "Canceled your mission. Use `{prefix}adventure [missionID]` to start a new "
 "one!"
 msgstr "{prefix} Hódor"
 
-#: cogs/adventure.py:421
+#: cogs/adventure.py:547
 msgid "Your death stats."
 msgstr "Hódor"
 
-#: cogs/adventure.py:431
+#: cogs/adventure.py:557
 #, python-brace-format
 msgid ""
 "Out of **{total}** adventures, you died **{deaths}** times and survived "
@@ -2329,18 +2518,23 @@ msgstr "{total} Hódor {deaths} Hódor {completed} Hódor {rate} Hódor"
 msgid "Lists all your cooldowns."
 msgstr "Hódor"
 
-#: cogs/shard_communication.py:332
+#: cogs/shard_communication.py:333
 msgid "You don't have any active cooldown at the moment."
 msgstr "Hódor"
 
-#: cogs/shard_communication.py:334
+#: cogs/shard_communication.py:335
 msgid "Commands on cooldown:"
 msgstr "Hódor"
 
-#: cogs/shard_communication.py:339
+#: cogs/shard_communication.py:340
 #, python-brace-format
 msgid "{cmd} is on cooldown and will be available after {time}"
 msgstr "{cmd} Hódor {time} Hódor"
+
+#: cogs/shard_communication.py:345
+#, python-brace-format
+msgid "Adventure is running and will be done after {time}"
+msgstr ""
 
 #: cogs/gambling.py:166
 #, python-brace-format
@@ -2410,12 +2604,7 @@ msgstr "Hódor"
 msgid "Flip a coin and bid on the outcome."
 msgstr "Hódor"
 
-#: cogs/gambling.py:324
-#, python-brace-format
-msgid "Use `heads` or `tails` instead of `{side}`."
-msgstr "{side} Hódor"
-
-#: cogs/gambling.py:341
+#: cogs/gambling.py:337
 #, python-brace-format
 msgid "{result[1]} It's **{result[0]}**! You won **${amount}**!"
 msgstr ""
@@ -2424,7 +2613,7 @@ msgstr ""
 "\n"
 "{amount} Hódor"
 
-#: cogs/gambling.py:352
+#: cogs/gambling.py:348
 #, python-brace-format
 msgid "{result[1]} It's **{result[0]}**! You lost **${amount}**!"
 msgstr ""
@@ -2433,28 +2622,28 @@ msgstr ""
 "\n"
 "{amount} Hódor"
 
-#: cogs/gambling.py:370
+#: cogs/gambling.py:366
 #, python-brace-format
 msgid "Invalid Tip. Must be in the Range of `1` to `{maximum}`."
 msgstr "{maximum} Hódor"
 
-#: cogs/gambling.py:375
+#: cogs/gambling.py:371
 msgid "Spend it in a better way. C'mon!"
 msgstr "Hódor "
 
-#: cogs/gambling.py:387
+#: cogs/gambling.py:383
 #, python-brace-format
 msgid ""
 "You won **${money}**! The random number was `{num}`, you tipped `{tip}`."
 msgstr "{money} Hódor {num} Hódor {tip} Hódor"
 
-#: cogs/gambling.py:398
+#: cogs/gambling.py:394
 #, python-brace-format
 msgid ""
 "You lost **${money}**! The random number was `{num}`, you tipped `{tip}`."
 msgstr "{money} Hódor {num} Hódor {tip} Hódor"
 
-#: cogs/gambling.py:408
+#: cogs/gambling.py:404
 msgid ""
 "[Alpha] Play blackjack against the dealer. Dealer rules, means wins in case "
 "of tie."
@@ -2470,103 +2659,110 @@ msgid "You don't own an item with the ID: {itemid}"
 msgstr "{itemid} Hódor"
 
 #: cogs/trading.py:52
+#, python-brace-format
+msgid ""
+"Selling an item below its value is a bad idea. You can always do `{prefix}"
+"merchant {itemid}` to get more money."
+msgstr ""
+
+#: cogs/trading.py:58
 msgid ""
 "Your item is either equal to a Starter Item or worse. Noone would buy it."
 msgstr "Hódor"
 
-#: cogs/trading.py:58
+#: cogs/trading.py:64
 #, python-brace-format
 msgid "Your price is too high. Try adjusting it to be up to `{limit}`."
 msgstr "{limit} Hódor"
 
-#: cogs/trading.py:71
+#: cogs/trading.py:77
 #, python-brace-format
 msgid ""
 "Successfully added your item to the shop! Use `{prefix}shop` to view it in "
 "the market!"
 msgstr "{prefix} Hódor"
 
-#: cogs/trading.py:79
+#: cogs/trading.py:85
 msgid "Buys an item from the global market."
 msgstr "Hódor"
 
-#: cogs/trading.py:87
+#: cogs/trading.py:93
 #, python-brace-format
 msgid "There is no item in the shop with the ID: {itemid}"
 msgstr "{itemid} Hódor"
 
-#: cogs/trading.py:92
+#: cogs/trading.py:98
 msgid "You're too poor to buy this item."
 msgstr "Hódor"
 
-#: cogs/trading.py:117
+#: cogs/trading.py:123
 #, python-brace-format
 msgid ""
 "Successfully bought item `{id}`. Use `{prefix}inventory` to view your "
 "updated inventory."
 msgstr "{id} Hódor {prefix} Hódor"
 
-#: cogs/trading.py:124
+#: cogs/trading.py:130
 #, python-brace-format
 msgid "**{author}** bought your **{name}** for **${price}** from the market."
 msgstr "{author} Hódor {name} Hódor {price} Hódor"
 
-#: cogs/trading.py:139
+#: cogs/trading.py:145
 msgid "Takes an item off the shop."
 msgstr "Hódor"
 
-#: cogs/trading.py:149
+#: cogs/trading.py:155
 #, python-brace-format
 msgid "You don't have an item of yours in the shop with the ID `{itemid}`."
 msgstr "{itemid} Hódor"
 
-#: cogs/trading.py:162
+#: cogs/trading.py:168
 #, python-brace-format
 msgid ""
 "Successfully removed item `{itemid}` from the shop and put it in your "
 "inventory."
 msgstr "{itemid} Hódor"
 
-#: cogs/trading.py:175
+#: cogs/trading.py:181
 msgid "Show the market with all items and prices."
 msgstr "Hódor"
 
-#: cogs/trading.py:202
+#: cogs/trading.py:208
 msgid "No results."
 msgstr "Hódor"
 
-#: cogs/trading.py:206
+#: cogs/trading.py:212
 msgid "IdleRPG Shop"
 msgstr "Hódor"
 
-#: cogs/trading.py:207 cogs/trading.py:392
+#: cogs/trading.py:213 cogs/trading.py:398
 #, python-brace-format
 msgid "Use `{prefix}buy {item}` to buy this."
 msgstr "{prefix} Hódor {item} Hódor"
 
-#: cogs/trading.py:217 cogs/trading.py:402 cogs/marriage.py:205
+#: cogs/trading.py:223 cogs/trading.py:408 cogs/marriage.py:218
 msgid "Price"
 msgstr "Hódor"
 
-#: cogs/trading.py:219 cogs/trading.py:404
+#: cogs/trading.py:225 cogs/trading.py:410
 #, python-brace-format
 msgid "Item {num} of {total}"
 msgstr "{num} Hódor {total} Hódor"
 
-#: cogs/trading.py:233
+#: cogs/trading.py:239
 msgid "Offer an item to a specific user."
 msgstr "Hódor"
 
-#: cogs/trading.py:248
+#: cogs/trading.py:254
 #, python-brace-format
 msgid "Are you sure you want to sell your equipped {item}?"
 msgstr "{item} Hódor"
 
-#: cogs/trading.py:252
+#: cogs/trading.py:258
 msgid "Item selling cancelled."
 msgstr "Hódor"
 
-#: cogs/trading.py:256
+#: cogs/trading.py:262
 #, python-brace-format
 msgid ""
 "{user}, {author} offered you an item! React to buy it! The price is **"
@@ -2574,588 +2770,598 @@ msgid ""
 "canceled."
 msgstr "{user} Hódor {author} Hódor {price} Hódor"
 
-#: cogs/trading.py:261
+#: cogs/trading.py:267
 msgid "They didn't want it."
 msgstr "Hódor"
 
-#: cogs/trading.py:265
+#: cogs/trading.py:271
 #, python-brace-format
 msgid "{user}, you're too poor to buy this item!"
 msgstr "{user} Hódor"
 
-#: cogs/trading.py:276
+#: cogs/trading.py:282
 #, python-brace-format
 msgid "The owner sold the item with the ID `{itemid}` in the meantime."
 msgstr "{itemid} Hódor"
 
-#: cogs/trading.py:295
+#: cogs/trading.py:301
 #, python-brace-format
 msgid ""
 "Successfully bought item `{itemid}`. Use `{prefix}inventory` to view your "
 "updated inventory."
 msgstr "{itemid} Hódor {prefix} Hódor"
 
-#: cogs/trading.py:308
+#: cogs/trading.py:314
 msgid "Sells items for their value."
 msgstr ""
 
-#: cogs/trading.py:317
+#: cogs/trading.py:323
 #, python-brace-format
 msgid "You don't own any items with the IDs: {itemids}"
 msgstr ""
 
-#: cogs/trading.py:325
+#: cogs/trading.py:331
 #, python-brace-format
 msgid "You are about to sell {amount} equipped items. Are you sure?"
 msgstr ""
 
-#: cogs/trading.py:329
+#: cogs/trading.py:335
 msgid "Cancelled."
 msgstr "Hódor"
 
-#: cogs/trading.py:338
+#: cogs/trading.py:344
 #, python-brace-format
 msgid ""
 "You received **${money}** when selling item(s) `{itemids}`. {additional}"
 msgstr ""
 
-#: cogs/trading.py:343
+#: cogs/trading.py:349
 #, python-brace-format
 msgid "Skipped `{amount}` because they did not belong to you."
 msgstr ""
 
-#: cogs/trading.py:356
+#: cogs/trading.py:362
 msgid "Sells all your non-equipped items for their value."
 msgstr "Hódor"
 
-#: cogs/trading.py:363
+#: cogs/trading.py:369
 msgid "Nothing to merch."
 msgstr "Hódor"
 
-#: cogs/trading.py:374
+#: cogs/trading.py:380
 #, python-brace-format
 msgid "Merched **{count}** items for **${money}**."
 msgstr "{count} Hódor {money} Hódor"
 
-#: cogs/trading.py:382
+#: cogs/trading.py:388
 msgid "View your pending shop offers."
 msgstr "Hódor"
 
-#: cogs/trading.py:388
+#: cogs/trading.py:394
 msgid "You don't have any pending shop offers."
 msgstr "Hódor"
 
-#: cogs/trading.py:391
+#: cogs/trading.py:397
 msgid "Your pending items"
 msgstr "Hódor"
 
-#: cogs/trading.py:415
+#: cogs/trading.py:421
 msgid "Buy items at the trader."
 msgstr "Hódor"
 
-#: cogs/trading.py:431
+#: cogs/trading.py:437
 msgid "The Trader"
 msgstr "Hódor"
 
-#: cogs/trading.py:432
+#: cogs/trading.py:438
 msgid "Hit a button to buy it"
 msgstr "Hódor"
 
-#: cogs/trading.py:444
+#: cogs/trading.py:450
 msgid "You are too poor to buy this item."
 msgstr "Hódor"
 
-#: cogs/trading.py:451
+#: cogs/trading.py:457
 #, python-brace-format
 msgid ""
 "Successfully bought offer **{offer}**. Use `{prefix}inventory` to view your "
 "updated inventory."
 msgstr "{offer} Hódor {prefix} Hódor"
 
-#: cogs/marriage.py:39
+#: cogs/marriage.py:43
 msgid "Propose for a marriage."
 msgstr "Hódor"
 
-#: cogs/marriage.py:42
+#: cogs/marriage.py:46
 msgid "You should have a better friend than only yourself."
 msgstr "Hódor"
 
-#: cogs/marriage.py:45
+#: cogs/marriage.py:49
 msgid "One of you is married."
 msgstr "Hódor"
 
-#: cogs/marriage.py:48
+#: cogs/marriage.py:52
 #, python-brace-format
 msgid "{author} has proposed for a marriage!"
 msgstr "{author} Hódor"
 
-#: cogs/marriage.py:52
+#: cogs/marriage.py:56
 #, python-brace-format
 msgid ""
 "{author} wants to marry you, {partner}! React with :heart: to marry them!"
 msgstr "{author} Hódor {partner} Hódor"
 
-#: cogs/marriage.py:75
+#: cogs/marriage.py:79
 msgid "They didn't want to marry."
 msgstr "Hódor"
 
-#: cogs/marriage.py:101
+#: cogs/marriage.py:105
 #, python-brace-format
 msgid "Owwwwwww! :heart: {author} and {partner} are now married!"
 msgstr "{author} Hódor {partner} Hódor"
 
-#: cogs/marriage.py:107
+#: cogs/marriage.py:111
 msgid "Either you or your lovee married in the meantime... :broken_heart:"
 msgstr "Hódor"
 
-#: cogs/marriage.py:115
+#: cogs/marriage.py:119
 msgid "Break up with your partner."
 msgstr "Hódor"
 
-#: cogs/marriage.py:117 cogs/marriage.py:137 cogs/marriage.py:259
+#: cogs/marriage.py:121 cogs/marriage.py:149 cogs/marriage.py:272
 msgid "You are not married yet."
 msgstr "Hódor"
 
-#: cogs/marriage.py:129
+#: cogs/marriage.py:124
+msgid ""
+"Are you sure you want to divorce your partner? You will lose all your "
+"children!"
+msgstr ""
+
+#: cogs/marriage.py:128
+msgid "Cancelled the divorce. I guess the marriage is safe for now?"
+msgstr ""
+
+#: cogs/marriage.py:141
 msgid "You are now divorced."
 msgstr "Hódor"
 
-#: cogs/marriage.py:135
+#: cogs/marriage.py:147
 msgid "View who you're married to."
 msgstr "Hódor"
 
-#: cogs/marriage.py:140
+#: cogs/marriage.py:152
 #, python-brace-format
 msgid "You are currently married to **{partner}**."
 msgstr "{partner} Hódor"
 
-#: cogs/marriage.py:147
-msgid "Views your lovescore."
-msgstr "Hódor"
+#: cogs/marriage.py:159
+msgid "Views someone's lovescore."
+msgstr ""
 
-#: cogs/marriage.py:151
+#: cogs/marriage.py:164
 msgid "noone"
 msgstr "Hódor"
 
-#: cogs/marriage.py:154
+#: cogs/marriage.py:167
 #, python-brace-format
 msgid ""
-"Your overall love score is **{score}**. You are married to **{partner}**."
-msgstr "{score} Hódor {partner} Hódor"
+"{user}'s overall love score is **{score}**. {user} is married to **{partner}"
+"**."
+msgstr ""
 
-#: cogs/marriage.py:162
+#: cogs/marriage.py:175
 msgid "Buy something for your spouse and increase their lovescore."
 msgstr "Hódor"
 
-#: cogs/marriage.py:164
+#: cogs/marriage.py:177
 msgid "Dog :dog2:"
 msgstr "Hódor"
 
-#: cogs/marriage.py:165
+#: cogs/marriage.py:178
 msgid "Cat :cat2:"
 msgstr "Hódor"
 
-#: cogs/marriage.py:166
+#: cogs/marriage.py:179
 msgid "Cow :cow2:"
 msgstr "Hódor"
 
-#: cogs/marriage.py:167
+#: cogs/marriage.py:180
 msgid "Penguin :penguin:"
 msgstr "Hódor"
 
-#: cogs/marriage.py:168
+#: cogs/marriage.py:181
 msgid "Unicorn :unicorn:"
 msgstr "Hódor"
 
-#: cogs/marriage.py:169
+#: cogs/marriage.py:182
 msgid "Potato :potato:"
 msgstr "Hódor"
 
-#: cogs/marriage.py:170
+#: cogs/marriage.py:183
 msgid "Sweet potato :sweet_potato:"
 msgstr "Hódor"
 
-#: cogs/marriage.py:171
+#: cogs/marriage.py:184
 msgid "Peach :peach:"
 msgstr "Hódor"
 
-#: cogs/marriage.py:172
+#: cogs/marriage.py:185
 msgid "Ice Cream :ice_cream:"
 msgstr "Hódor"
 
-#: cogs/marriage.py:173
+#: cogs/marriage.py:186
 msgid "Bento Box :bento:"
 msgstr "Hódor"
 
-#: cogs/marriage.py:174
+#: cogs/marriage.py:187
 msgid "Movie Night :ticket:"
 msgstr "Hódor"
 
-#: cogs/marriage.py:175
+#: cogs/marriage.py:188
 msgid "Video Game Night :video_game:"
 msgstr "Hódor"
 
-#: cogs/marriage.py:176
+#: cogs/marriage.py:189
 msgid "Camping Night :fishing_pole_and_fish:"
 msgstr "Hódor"
 
-#: cogs/marriage.py:177
+#: cogs/marriage.py:190
 msgid "Couple Competition :trophy:"
 msgstr "Hódor"
 
-#: cogs/marriage.py:178
+#: cogs/marriage.py:191
 msgid "Concert Night :musical_keyboard:"
 msgstr "Hódor"
 
-#: cogs/marriage.py:179
+#: cogs/marriage.py:192
 msgid "Bicycle :bike:"
 msgstr "Hódor"
 
-#: cogs/marriage.py:180
+#: cogs/marriage.py:193
 msgid "Motorcycle :motorcycle:"
 msgstr "Hódor"
 
-#: cogs/marriage.py:181
+#: cogs/marriage.py:194
 msgid "Car :red_car:"
 msgstr "Hódor"
 
-#: cogs/marriage.py:182
+#: cogs/marriage.py:195
 msgid "Private Jet :airplane:"
 msgstr "Hódor"
 
-#: cogs/marriage.py:183
+#: cogs/marriage.py:196
 msgid "Space Rocket :rocket:"
 msgstr "Hódor"
 
-#: cogs/marriage.py:184
+#: cogs/marriage.py:197
 msgid "Credit Card :credit_card:"
 msgstr "Hódor"
 
-#: cogs/marriage.py:185
+#: cogs/marriage.py:198
 msgid "Watch :watch:"
 msgstr "Hódor"
 
-#: cogs/marriage.py:186
+#: cogs/marriage.py:199
 msgid "Phone :iphone:"
 msgstr "Hódor"
 
-#: cogs/marriage.py:187
+#: cogs/marriage.py:200
 msgid "Bed :bed:"
 msgstr "Hódor"
 
-#: cogs/marriage.py:188
+#: cogs/marriage.py:201
 msgid "Home films :projector:"
 msgstr "Hódor"
 
-#: cogs/marriage.py:189
+#: cogs/marriage.py:202
 msgid "Satchel :school_satchel:"
 msgstr "Hódor"
 
-#: cogs/marriage.py:190
+#: cogs/marriage.py:203
 msgid "Purse :purse:"
 msgstr "Hódor"
 
-#: cogs/marriage.py:191
+#: cogs/marriage.py:204
 msgid "Shoes :athletic_shoe:"
 msgstr "Hódor"
 
-#: cogs/marriage.py:192
+#: cogs/marriage.py:205
 msgid "Casual Attire :shirt:"
 msgstr "Hódor"
 
-#: cogs/marriage.py:193
+#: cogs/marriage.py:206
 msgid "Ring :ring:"
 msgstr "Hódor"
 
-#: cogs/marriage.py:194
+#: cogs/marriage.py:207
 msgid "Balloon :balloon:"
 msgstr "Hódor"
 
-#: cogs/marriage.py:195
+#: cogs/marriage.py:208
 msgid "Flower Bouquet :bouquet:"
 msgstr "Hódor"
 
-#: cogs/marriage.py:196
+#: cogs/marriage.py:209
 msgid "Expensive Chocolates :chocolate_bar:"
 msgstr "Hódor"
 
-#: cogs/marriage.py:197
+#: cogs/marriage.py:210
 msgid "Declaration of Love :love_letter:"
 msgstr "Hódor"
 
-#: cogs/marriage.py:198
+#: cogs/marriage.py:211
 msgid "Key to Heart :key2:"
 msgstr "Hódor"
 
-#: cogs/marriage.py:199
+#: cogs/marriage.py:212
 msgid "Ancient Vase :amphora:"
 msgstr "Hódor"
 
-#: cogs/marriage.py:200
+#: cogs/marriage.py:213
 msgid "House :house:"
 msgstr "Hódor"
 
-#: cogs/marriage.py:201
+#: cogs/marriage.py:214
 msgid "Super Computer :computer:"
 msgstr "Hódor"
 
-#: cogs/marriage.py:202
+#: cogs/marriage.py:215
 msgid "Precious Gemstone Collection :gem:"
 msgstr "Hódor"
 
-#: cogs/marriage.py:203
+#: cogs/marriage.py:216
 msgid "Planet :earth_americas:"
 msgstr "Hódor"
 
-#: cogs/marriage.py:214
+#: cogs/marriage.py:227
 #, python-brace-format
 msgid "To buy one of these items for your partner, use `{prefix}spoil shopid`"
 msgstr "{prefix} Hódor  "
 
-#: cogs/marriage.py:219
-msgid "You are too poor to buy this."
-msgstr " Hódor"
-
-#: cogs/marriage.py:221
+#: cogs/marriage.py:234
 msgid "You're not married yet."
 msgstr "Hódor"
 
-#: cogs/marriage.py:235
+#: cogs/marriage.py:248
 #, python-brace-format
 msgid ""
 "You bought a **{item}** for your partner and increased their love score by "
 "**{points}** points!"
 msgstr "{item} Hódor {points} Hódor"
 
-#: cogs/marriage.py:241
+#: cogs/marriage.py:254
 msgid "Failed to DM your spouse, could not find their Discord account"
 msgstr "Hódor"
 
-#: cogs/marriage.py:245
+#: cogs/marriage.py:258
 #, python-brace-format
 msgid ""
 "**{author}** bought you a **{item}** and increased your love score by "
 "**{points}** points!"
 msgstr "{author} Hódor {item} Hódor {points} Hódor"
 
-#: cogs/marriage.py:254
+#: cogs/marriage.py:267
 msgid "Take your loved one on a date to increase your lovescore."
 msgstr "Hódor"
 
-#: cogs/marriage.py:267
+#: cogs/marriage.py:280
 #, python-brace-format
 msgid "You and {partner} went on a nice candlelit dinner."
 msgstr "{partner} Hódor"
 
-#: cogs/marriage.py:268
+#: cogs/marriage.py:281
 #, python-brace-format
 msgid "You and {partner} had stargazed all night."
 msgstr "{partner} Hódor"
 
-#: cogs/marriage.py:269
+#: cogs/marriage.py:282
 #, python-brace-format
 msgid "You and {partner} went to a circus that was in town."
 msgstr "{partner} Hódor"
 
-#: cogs/marriage.py:270
+#: cogs/marriage.py:283
 #, python-brace-format
 msgid "You and {partner} went out to see a romantic movie."
 msgstr "{partner} Hódor"
 
-#: cogs/marriage.py:271
+#: cogs/marriage.py:284
 #, python-brace-format
 msgid "You and {partner} went out to get ice cream."
 msgstr "{partner} Hódor"
 
-#: cogs/marriage.py:272
+#: cogs/marriage.py:285
 #, python-brace-format
 msgid "You and {partner} had an anime marathon."
 msgstr "{partner} Hódor"
 
-#: cogs/marriage.py:273
+#: cogs/marriage.py:286
 #, python-brace-format
 msgid "You and {partner} went for a spontaneous hiking trip."
 msgstr "{partner} Hódor"
 
-#: cogs/marriage.py:274
+#: cogs/marriage.py:287
 #, python-brace-format
 msgid "You and {partner} decided to visit Paris."
 msgstr "{partner} Hódor"
 
-#: cogs/marriage.py:275
+#: cogs/marriage.py:288
 #, python-brace-format
 msgid "You and {partner} went ice skating together."
 msgstr "{partner} Hódor"
 
-#: cogs/marriage.py:277
+#: cogs/marriage.py:290
 msgid "Unknown User"
 msgstr ""
 
-#: cogs/marriage.py:278
+#: cogs/marriage.py:291
 #, python-brace-format
 msgid "This increased your lovescore by {num}"
 msgstr "{num} Hódor"
 
-#: cogs/marriage.py:287
+#: cogs/marriage.py:300
 msgid "Make a child with your spouse."
 msgstr "Hódor"
 
-#: cogs/marriage.py:291
+#: cogs/marriage.py:304
 msgid "Can't produce a child alone, can you?"
 msgstr "Hódor"
 
-#: cogs/marriage.py:297
-msgid "You already have 10 children."
-msgstr "Hódor"
+#: cogs/marriage.py:318
+#, python-brace-format
+msgid ""
+"You already have {max_} children. You can increase this limit by increasing "
+"your lovescores."
+msgstr ""
 
-#: cogs/marriage.py:300
+#: cogs/marriage.py:323
 #, python-brace-format
 msgid "<@{marriage}>, do you want to make a child with {author}?"
 msgstr "<@{marriage}> Hódor {author} Hódor"
 
-#: cogs/marriage.py:305
+#: cogs/marriage.py:328
 msgid "O.o not in the mood today?"
 msgstr "Hódor"
 
-#: cogs/marriage.py:308
+#: cogs/marriage.py:331
 msgid "You were unsuccessful at making a child."
 msgstr "Hódor"
 
-#: cogs/marriage.py:313
+#: cogs/marriage.py:336
 msgid ""
 "It's a boy! Your night of love was successful! Please enter a name for your "
 "child."
 msgstr "Hódor"
 
-#: cogs/marriage.py:319
+#: cogs/marriage.py:342
 msgid ""
 "It's a girl! Your night of love was successful! Please enter a name for your "
 "child."
 msgstr "Hódor"
 
-#: cogs/marriage.py:334 cogs/marriage.py:458
+#: cogs/marriage.py:357 cogs/marriage.py:481
 msgid "You didn't enter a name."
 msgstr "Hódor"
 
-#: cogs/marriage.py:345
+#: cogs/marriage.py:368
 #, python-brace-format
 msgid "{name} was born."
 msgstr "{name} Hódor"
 
-#: cogs/marriage.py:351
+#: cogs/marriage.py:374
 msgid "View your children."
 msgstr "Hódor"
 
-#: cogs/marriage.py:354
+#: cogs/marriage.py:377
 msgid "Lonely..."
 msgstr "Hódor"
 
-#: cogs/marriage.py:359
+#: cogs/marriage.py:382
 msgid "Your family"
 msgstr "Hódor"
 
-#: cogs/marriage.py:360
+#: cogs/marriage.py:383
 #, python-brace-format
 msgid "Family of {author} and <@{marriage}>"
 msgstr " {author} Hódor <@{marriage}> Hódor"
 
-#: cogs/marriage.py:366
+#: cogs/marriage.py:389
 msgid "No children yet"
 msgstr "Hódor"
 
-#: cogs/marriage.py:367
+#: cogs/marriage.py:390
 #, python-brace-format
 msgid "Use {prefix}child to make one!"
 msgstr "{prefix} Hódor"
 
-#: cogs/marriage.py:372
+#: cogs/marriage.py:395
 #, python-brace-format
 msgid "Gender: {gender}, Age: {age}"
 msgstr "{gender} Hódor {age} Hódor"
 
-#: cogs/marriage.py:385
+#: cogs/marriage.py:408
 msgid "Events happening to your family."
 msgstr "Hódor"
 
-#: cogs/marriage.py:387
+#: cogs/marriage.py:410
 msgid "You're lonely."
 msgstr "Hódor"
 
-#: cogs/marriage.py:392
+#: cogs/marriage.py:415
 msgid "You don't have kids yet."
 msgstr "Hódor"
 
-#: cogs/marriage.py:398
+#: cogs/marriage.py:421
 msgid "They died because of a shampoo overdose!"
 msgstr ""
 
-#: cogs/marriage.py:399
+#: cogs/marriage.py:422
 msgid "They died of lovesickness..."
 msgstr ""
 
-#: cogs/marriage.py:400
+#: cogs/marriage.py:423
 msgid "They've died of age."
 msgstr ""
 
-#: cogs/marriage.py:401
+#: cogs/marriage.py:424
 msgid "They died of loneliness."
 msgstr ""
 
-#: cogs/marriage.py:402
+#: cogs/marriage.py:425
 msgid "A horde of goblins got them."
 msgstr ""
 
-#: cogs/marriage.py:404
+#: cogs/marriage.py:427
 msgid ""
 "They have finally decided to move out after all these years, but couldn't "
 "survive a second alone."
 msgstr ""
 
-#: cogs/marriage.py:406
+#: cogs/marriage.py:429
 msgid "Spontaneous combustion removed them from existence."
 msgstr ""
 
-#: cogs/marriage.py:407
+#: cogs/marriage.py:430
 msgid "While exploring the forest, they have gotten lost."
 msgstr ""
 
-#: cogs/marriage.py:408
+#: cogs/marriage.py:431
 msgid "They've left through a portal into another dimension..."
 msgstr ""
 
-#: cogs/marriage.py:410
+#: cogs/marriage.py:433
 msgid "The unbearable pain of stepping on a Lego\\© brick killed them."
 msgstr ""
 
 #. noqa
-#: cogs/marriage.py:412
+#: cogs/marriage.py:435
 msgid "You heard a landmine going off nearby..."
 msgstr ""
 
-#: cogs/marriage.py:413
+#: cogs/marriage.py:436
 msgid "They have been abducted by aliens!"
 msgstr ""
 
-#: cogs/marriage.py:414
+#: cogs/marriage.py:437
 msgid "The Catholic Church got them..."
 msgstr ""
 
-#: cogs/marriage.py:423
+#: cogs/marriage.py:446
 #, python-brace-format
 msgid "{name} died at the age of {age}! {cause}"
 msgstr "{name} Hódor {age} Hódor {cause} Hódor"
 
-#: cogs/marriage.py:434
+#: cogs/marriage.py:457
 #, python-brace-format
 msgid "{name} is now {age} years old."
 msgstr "{name} Hódor {age} Hódor"
 
-#: cogs/marriage.py:440
+#: cogs/marriage.py:463
 #, python-brace-format
 msgid "{name} can be renamed! Enter a new name:"
 msgstr "{name} Hódor"
 
-#: cogs/marriage.py:467
+#: cogs/marriage.py:490
 #, python-brace-format
 msgid "{old_name} is now called {new_name}."
 msgstr "{old_name} Hódor {new_name} Hódor"
@@ -3760,34 +3966,34 @@ msgstr "Hódor"
 msgid "Starts a guild adventure."
 msgstr "Hódor"
 
-#: cogs/guild.py:801
+#: cogs/guild.py:802
 #, python-brace-format
 msgid ""
 "Your guild is already on an adventure! Use `{prefix}guild status` to view "
 "how long it still lasts."
 msgstr "{prefix} Hódor"
 
-#: cogs/guild.py:810
+#: cogs/guild.py:811
 #, python-brace-format
 msgid ""
 "{author} seeks a guild adventure for **{guild}**! React to join! Unlimited "
 "players can join in the next minute. The minimum of players required is 3."
 msgstr "{author} Hódor {guild} Hódor"
 
-#: cogs/guild.py:838
+#: cogs/guild.py:839
 #, python-brace-format
 msgid "Alright, {user}, you have been added."
 msgstr "{user} Hódor"
 
-#: cogs/guild.py:843
+#: cogs/guild.py:844
 msgid "You aren't in their guild."
 msgstr "Hódor"
 
-#: cogs/guild.py:848
+#: cogs/guild.py:849
 msgid "You didn't get enough other players for the guild adventure."
 msgstr "Hódor"
 
-#: cogs/guild.py:859
+#: cogs/guild.py:860
 #, python-brace-format
 msgid ""
 "\n"
@@ -3805,25 +4011,25 @@ msgstr ""
 "{difficulty} Hódor\n"
 "{time} Hódor\n"
 
-#: cogs/guild.py:879
+#: cogs/guild.py:880
 msgid "Views your guild adventure."
 msgstr "Hódor"
 
-#: cogs/guild.py:885
+#: cogs/guild.py:886
 #, python-brace-format
 msgid ""
 "Your guild isn't on an adventure yet. Ask your guild leader to use `{prefix}"
 "guild adventure` to start one"
 msgstr "{prefix} Hódor"
 
-#: cogs/guild.py:900
+#: cogs/guild.py:901
 #, python-brace-format
 msgid ""
 "Your guild has completed an adventure of difficulty `{difficulty}` and **"
 "${gold}** has been added to the bank."
 msgstr "{difficulty} Hódor {gold} Hódor"
 
-#: cogs/guild.py:906
+#: cogs/guild.py:907
 #, python-brace-format
 msgid ""
 "Your guild is currently in an adventure with difficulty `{difficulty}`.\n"
@@ -3876,64 +4082,65 @@ msgid ""
 "1) Only up to two characters per individual\n"
 "2) No abusing or benefiting from bugs or exploits\n"
 "3) Be friendly and kind to other players\n"
+"4) Trading in-game items or currency for real money is forbidden\n"
 "\n"
 "IdleRPG is a global bot, your characters are valid everywhere"
 msgstr ""
 
-#: cogs/profile.py:63
+#: cogs/profile.py:64
 msgid "Timeout expired. Please retry!"
 msgstr "Hódor"
 
-#: cogs/profile.py:74
+#: cogs/profile.py:75
 msgid "Starter Sword"
 msgstr "Hódor"
 
-#: cogs/profile.py:83
+#: cogs/profile.py:84
 msgid "Starter Shield"
 msgstr "Hódor"
 
-#: cogs/profile.py:93
+#: cogs/profile.py:94
 #, python-brace-format
 msgid ""
 "Successfully added your character **{name}**! Now use `{prefix}profile` to "
 "view your character!"
 msgstr "{name} Hódor {prefix} Hódor"
 
-#: cogs/profile.py:98
+#: cogs/profile.py:99
 msgid "Character names must be at least 3 characters and up to 20."
 msgstr "Hódor"
 
-#: cogs/profile.py:105
+#: cogs/profile.py:106
 msgid "View someone's or your own profile."
 msgstr "Hódor"
 
-#: cogs/profile.py:114
+#: cogs/profile.py:115
 #, python-brace-format
 msgid "**{person}** does not have a character."
 msgstr "{person} Hódor"
 
-#: cogs/profile.py:146
+#: cogs/profile.py:147
 msgid "Not Married"
 msgstr "Hódor"
 
-#: cogs/profile.py:152
+#: cogs/profile.py:153
 msgid "No Mission"
 msgstr "Hódor"
 
-#: cogs/profile.py:161
+#: cogs/profile.py:162
 msgid "View someone's profile, not image based."
 msgstr "Hódor"
 
-#: cogs/profile.py:170
+#: cogs/profile.py:171
 #, python-brace-format
 msgid "**{target}** does not have a character."
 msgstr "{target} Hódor"
 
-#: cogs/profile.py:188
+#: cogs/profile.py:189
 msgid "General"
 msgstr "Hódor"
 
-#: cogs/profile.py:190
+#: cogs/profile.py:191
 #, python-brace-format
 msgid ""
 "**Money**: `${money}`\n"
@@ -3948,11 +4155,11 @@ msgstr ""
 "{pvp} Hódor\n"
 "{guild} Hódor"
 
-#: cogs/profile.py:205
+#: cogs/profile.py:206
 msgid "Ranks"
 msgstr "Hódor"
 
-#: cogs/profile.py:206
+#: cogs/profile.py:207
 #, python-brace-format
 msgid ""
 "**Richest**: `{rank_money}`\n"
@@ -3961,11 +4168,11 @@ msgstr ""
 "{rank_money} Hódor\n"
 "{rank_xp}` Hódor"
 
-#: cogs/profile.py:211
+#: cogs/profile.py:212
 msgid "Equipment"
 msgstr "Hódor"
 
-#: cogs/profile.py:212
+#: cogs/profile.py:213
 #, python-brace-format
 msgid ""
 "Sword: {sword}\n"
@@ -3974,335 +4181,355 @@ msgstr ""
 "{sword} Hódor\n"
 "{shield} Hódor"
 
-#: cogs/profile.py:217
+#: cogs/profile.py:218
 msgid "Mission"
 msgstr "Hódor"
 
-#: cogs/profile.py:224
+#: cogs/profile.py:225
 msgid "Shows your luck factor ranging from 0 to 2."
 msgstr ""
 
-#: cogs/profile.py:227
+#: cogs/profile.py:228
 #, python-brace-format
 msgid ""
 "Your current luck multiplier is `{luck}x` (≈{percent}% more than usual "
 "(usual=0))."
 msgstr ""
 
-#: cogs/profile.py:238
+#: cogs/profile.py:239
 msgid "Shows your balance."
 msgstr "Hódor"
 
-#: cogs/profile.py:240
+#: cogs/profile.py:241
 #, python-brace-format
 msgid "You currently have **${money}**, {author}!"
 msgstr "{money} Hódor {author} Hódor"
 
-#: cogs/profile.py:249
+#: cogs/profile.py:250
 msgid "Shows your current XP and level."
 msgstr "Hódor"
 
-#: cogs/profile.py:253
+#: cogs/profile.py:254
 #, python-brace-format
 msgid ""
 "You currently have **{points} XP**, which means you are on Level **{level}"
 "**. Missing to next level: **{missing}**"
 msgstr "{points} Hódor {level} Hódor {missing} Hódor"
 
-#: cogs/profile.py:263
+#: cogs/profile.py:264
 #, python-brace-format
 msgid "{user}'s inventory includes"
 msgstr "{user} Hódor"
 
-#: cogs/profile.py:268
+#: cogs/profile.py:269
 msgid "(**Equipped**)"
 msgstr "Hódor"
 
-#: cogs/profile.py:272
+#: cogs/profile.py:273
 #, python-brace-format
 msgid "Damage: `{damage}`"
 msgstr "{damage} Hódor"
 
-#: cogs/profile.py:274
+#: cogs/profile.py:275
 #, python-brace-format
 msgid "Armor: `{armor}`"
 msgstr "{armor} Hódor"
 
-#: cogs/profile.py:279
+#: cogs/profile.py:280
 #, python-brace-format
 msgid "ID: `{id}`, Type: `{type_}` with {statstr}. Value is **${value}**"
 msgstr "{id} Hódor {type_} Hódor {statstr} Hódor {value} Hódor"
 
-#: cogs/profile.py:288
+#: cogs/profile.py:289
 #, python-brace-format
 msgid "Page {page} of {maxpages}"
 msgstr "{page} Hódor {maxpages} Hódor"
 
-#: cogs/profile.py:298
+#: cogs/profile.py:299
 msgid "Shows your current inventory."
 msgstr "Hódor"
 
-#: cogs/profile.py:304
+#: cogs/profile.py:305
 msgid "Your inventory is empty."
 msgstr "Hódor"
 
-#: cogs/profile.py:317
+#: cogs/profile.py:318
 msgid "Shows your adventure loot that can be exchanged or sacrificed"
 msgstr ""
 
-#: cogs/profile.py:323
+#: cogs/profile.py:324
 msgid "You do not have any loot at this moment."
 msgstr ""
 
-#: cogs/profile.py:329
+#: cogs/profile.py:330
 #, python-brace-format
 msgid "Use {prefix}exchange {item} or {prefix}sacrifice {item}"
 msgstr ""
 
-#: cogs/profile.py:341
+#: cogs/profile.py:342
 msgid "Exchange an item for money or xp."
 msgstr ""
 
-#: cogs/profile.py:349 cogs/gods.py:47
+#: cogs/profile.py:350 cogs/gods.py:47
 msgid "You do not own this loot item."
 msgstr ""
 
-#: cogs/profile.py:352
+#: cogs/profile.py:353
 msgid "Select a reward"
 msgstr ""
 
-#: cogs/profile.py:353
+#: cogs/profile.py:354
 #, python-brace-format
 msgid "Do you want favor? {prefix}sacrifice instead"
 msgstr ""
 
-#: cogs/profile.py:357
+#: cogs/profile.py:358
 #, python-brace-format
 msgid "**{amount} XP**"
 msgstr ""
 
-#: cogs/profile.py:367
+#: cogs/profile.py:368
 msgid "Reward gained!"
 msgstr ""
 
-#: cogs/profile.py:373
+#: cogs/profile.py:374
 msgid "Equips an item of yours by ID."
 msgstr "Hódor"
 
-#: cogs/profile.py:382 cogs/profile.py:479
+#: cogs/profile.py:383 cogs/profile.py:483
 #, python-brace-format
 msgid "You don't own an item with the ID `{itemid}`."
 msgstr "{itemid} Hódor"
 
-#: cogs/profile.py:402
+#: cogs/profile.py:403
 #, python-brace-format
 msgid "Successfully equipped item `{itemid}` and put off item `{olditem}`."
 msgstr "{itemid} Hódor {olditem} Hódor"
 
-#: cogs/profile.py:407
+#: cogs/profile.py:408
 #, python-brace-format
 msgid "Successfully equipped item `{itemid}`."
 msgstr "{itemid} Hódor"
 
-#: cogs/profile.py:415
+#: cogs/profile.py:416
 msgid "Merges two items to a better one. Second one is consumed."
 msgstr "Hódor"
 
-#: cogs/profile.py:418
+#: cogs/profile.py:419
 msgid "Good luck with that."
 msgstr "Hódor"
 
-#: cogs/profile.py:432
+#: cogs/profile.py:433
 msgid "You don't own both of these items."
 msgstr "Hódor"
 
-#: cogs/profile.py:445
+#: cogs/profile.py:438
+msgid ""
+"The items are of unequal type. You may only merge a sword with a sword or a "
+"shield with a shield."
+msgstr ""
+
+#: cogs/profile.py:450
 #, python-brace-format
 msgid ""
 "The second item's stat must be in the range of `{min_}` to `{max_}` to "
 "upgrade an item with the stat of `{stat}`."
 msgstr "{min_} Hódor {max_} Hódor {stat} Hódor"
 
-#: cogs/profile.py:451
+#: cogs/profile.py:456
 msgid "This item is already on the maximum upgrade level."
 msgstr "Hódor"
 
-#: cogs/profile.py:460
+#: cogs/profile.py:464
 #, python-brace-format
 msgid ""
 "The {stat} of your **{item}** is now **{newstat}**. The other item was "
 "destroyed."
 msgstr "{stat} Hódor {item} Hódor {newstat} Hódor"
 
-#: cogs/profile.py:469
+#: cogs/profile.py:473
 msgid "Upgrades an item's stat by 1."
 msgstr "Hódor"
 
-#: cogs/profile.py:491
+#: cogs/profile.py:496
 msgid "Your weapon already reached the maximum upgrade level."
 msgstr "Hódor"
 
-#: cogs/profile.py:496
-#, python-brace-format
-msgid ""
-"You are too poor to upgrade this item. The upgrade costs **${pricetopay}**, "
-"but you only have **${money}**."
-msgstr "{pricetopay} Hódor {money} Hódor"
-
-#: cogs/profile.py:502
+#: cogs/profile.py:501
 #, python-brace-format
 msgid ""
 "Are you sure you want to upgrade this item: {item}? It will cost **"
 "${pricetopay}**."
 msgstr "{item} Hódor {pricetopay} Hódor"
 
-#: cogs/profile.py:506
+#: cogs/profile.py:505
 msgid "Weapon upgrade cancelled."
 msgstr "Hódor"
 
-#: cogs/profile.py:522
+#: cogs/profile.py:510
+#, python-brace-format
+msgid ""
+"You are too poor to upgrade this item. The upgrade costs **${pricetopay}**, "
+"but you only have **${money}**."
+msgstr "{pricetopay} Hódor {money} Hódor"
+
+#: cogs/profile.py:525
 #, python-brace-format
 msgid ""
 "The {stat} of your **{item}** is now **{newstat}**. **${pricetopay}** has "
 "been taken off your balance."
 msgstr "{stat} Hódor {item} Hódor {newstat} Hódor {pricetopay} Hódor"
 
-#: cogs/profile.py:537
+#: cogs/profile.py:540
 msgid "Gift money!"
 msgstr "Hódor"
 
-#: cogs/profile.py:539
+#: cogs/profile.py:542
 msgid "No cheating!"
 msgstr "Hódor"
 
-#: cogs/profile.py:552
+#: cogs/profile.py:555
 #, python-brace-format
 msgid "Successfully gave **${money}** to {other}."
 msgstr "{money} Hódor {other} Hódor"
 
-#: cogs/profile.py:564
+#: cogs/profile.py:567
 msgid "Renames your character."
 msgstr "Hódor"
 
-#: cogs/profile.py:566
+#: cogs/profile.py:569
 msgid "What shall your character's name be? (Minimum 3 Characters, Maximum 20)"
 msgstr "Hódor"
 
-#: cogs/profile.py:575
+#: cogs/profile.py:578
 msgid "Timeout expired. Retry!"
 msgstr "Hódor"
 
-#: cogs/profile.py:581
+#: cogs/profile.py:584
 msgid "Character name updated."
 msgstr "Hódor"
 
-#: cogs/profile.py:583
+#: cogs/profile.py:586
 msgid "Character names must be at least 3 characters!"
 msgstr "Hódor"
 
-#: cogs/profile.py:585
+#: cogs/profile.py:588
 msgid "Character names mustn't exceed 20 characters!"
 msgstr "Hódor"
 
-#: cogs/profile.py:591
+#: cogs/profile.py:594
 msgid "Deletes your character."
 msgstr "Hódor"
 
-#: cogs/profile.py:594
+#: cogs/profile.py:597
 msgid ""
 "Are you absolutely sure you want to delete your character? React in the next "
 "30 seconds to confirm.\n"
 "**This cannot be undone.**"
 msgstr ""
 
-#: cogs/profile.py:597
+#: cogs/profile.py:600
 msgid "Cancelled deletion of your character."
 msgstr "Hódor"
 
-#: cogs/profile.py:619
+#: cogs/profile.py:622
 msgid "Successfully deleted your character. Sorry to see you go :frowning:"
 msgstr "Hódor"
 
-#: cogs/profile.py:625
+#: cogs/profile.py:628
 msgid "Sets your profile text colour."
 msgstr "Hódor"
 
-#: cogs/profile.py:628
+#: cogs/profile.py:631
 msgid "Format for colour is `#RRGGBB` or a colour code like `cyan`."
 msgstr ""
 
-#: cogs/profile.py:635
+#: cogs/profile.py:638
 #, python-brace-format
 msgid ""
 "Successfully set your profile colour to `{colour}`. Hint: If you used a hex "
 "colour code, you must include the `#`."
 msgstr ""
 
-#: cogs/admin.py:45
+#: cogs/admin.py:35
+msgid "[Bot Admin only] Unban someone from the bot."
+msgstr ""
+
+#: cogs/admin.py:38
+#, python-brace-format
+msgid "Unbanned: {other}"
+msgstr ""
+
+#: cogs/admin.py:40
+#, python-brace-format
+msgid "{other} is not banned."
+msgstr ""
+
+#: cogs/admin.py:46
 msgid "[Bot Admin only] Gives money to a user without loss."
 msgstr "Hódor"
 
-#: cogs/admin.py:51
+#: cogs/admin.py:52
 #, python-brace-format
 msgid "Successfully gave **${money}** without a loss for you to **{other}**."
 msgstr "{money} Hódor {other} Hódor"
 
-#: cogs/admin.py:63
+#: cogs/admin.py:64
 msgid "[Bot Admin only] Removes money from a user without gain."
 msgstr "Hódor"
 
-#: cogs/admin.py:68
+#: cogs/admin.py:69
 #, python-brace-format
 msgid "Successfully removed **${money}** from **{other}**."
 msgstr "{money} Hódor {other} Hódor"
 
-#: cogs/admin.py:81
+#: cogs/admin.py:82
 msgid "[Bot Admin only] Deletes any user's account."
 msgstr "Hódor"
 
-#: cogs/admin.py:85
+#: cogs/admin.py:86
 msgid "Successfully deleted the character."
 msgstr "Hódor"
 
-#: cogs/admin.py:94
+#: cogs/admin.py:95
 msgid "[Bot Admin only] Renames a character."
 msgstr "Hódor"
 
-#: cogs/admin.py:99
+#: cogs/admin.py:100
 msgid "What shall the character's name be? (min. 3 letters, max. 20)"
 msgstr "Hódor"
 
-#: cogs/admin.py:113
+#: cogs/admin.py:114
 msgid "Timeout expired."
 msgstr "Hódor"
 
-#: cogs/admin.py:118
+#: cogs/admin.py:119
 msgid "Renamed."
 msgstr "Hódor"
 
-#: cogs/admin.py:130
+#: cogs/admin.py:131
 msgid "[Bot Admin only] Gives/removes crates to a user without loss."
 msgstr "Hódor"
 
-#: cogs/admin.py:141
+#: cogs/admin.py:142
 #, python-brace-format
 msgid "Successfully gave **{amount}** {rarity} crates to **{target}**."
 msgstr ""
 
-#: cogs/admin.py:154
+#: cogs/admin.py:155
 msgid "[Bot Admin only] Gives xp to a user."
 msgstr "Hódor"
 
-#: cogs/admin.py:159
+#: cogs/admin.py:160
 #, python-brace-format
 msgid "Successfully gave **{amount}** XP to **{target}**."
 msgstr "{amount} Hódor {target} Hódor"
 
-#: cogs/admin.py:172
+#: cogs/admin.py:173
 msgid "[Bot Admin only] Wipes someone's donator perks."
 msgstr "Hódor"
 
-#: cogs/admin.py:198
+#: cogs/admin.py:199
 #, python-brace-format
 msgid ""
 "Successfully reset {target}'s background, class, item names and guild member "
@@ -4313,87 +4540,459 @@ msgstr "{target} Hódor"
 msgid "Sacrifice an item for favor."
 msgstr ""
 
-#: cogs/gods.py:61
+#: cogs/gods.py:64
 #, python-brace-format
 msgid ""
 "You prayed to {god}, and they accepted your sacrifice ({name}). Your "
 "standing with the god has increased by **{points}** points."
 msgstr ""
 
-#: cogs/gods.py:71
+#: cogs/gods.py:74
 msgid "Choose your deity. This cannot be undone."
 msgstr ""
 
-#: cogs/gods.py:88
+#: cogs/gods.py:91
 #, python-brace-format
 msgid "You are now a follower of {god}."
 msgstr ""
 
-#: cogs/gods.py:96
+#: cogs/gods.py:99
 msgid "Pray to your deity to gain favor."
 msgstr ""
 
-#: cogs/gods.py:100
+#: cogs/gods.py:103
 msgid "They obviously didn't like your prayer!"
 msgstr ""
 
-#: cogs/gods.py:101
+#: cogs/gods.py:104
 msgid "Noone heard you!"
 msgstr ""
 
-#: cogs/gods.py:102
+#: cogs/gods.py:105
 msgid "Your voice has made them screw off."
 msgstr ""
 
-#: cogs/gods.py:103
+#: cogs/gods.py:106
 msgid "Even a donkey would've been a better follower than you."
 msgstr ""
 
-#: cogs/gods.py:111
+#: cogs/gods.py:114
 msgid "„Rather lousy, but okay“, they said."
 msgstr ""
 
-#: cogs/gods.py:112
+#: cogs/gods.py:115
 msgid "You were a little sleepy."
 msgstr ""
 
-#: cogs/gods.py:113
+#: cogs/gods.py:116
 msgid "They were a little amused about your singing."
 msgstr ""
 
-#: cogs/gods.py:114
+#: cogs/gods.py:117
 msgid "Hearing the same prayer over and over again made them tired."
 msgstr ""
 
-#: cogs/gods.py:126
+#: cogs/gods.py:129
 msgid "Your Gregorian chants were amazingly well sung."
 msgstr ""
 
-#: cogs/gods.py:127
+#: cogs/gods.py:130
 msgid "Even the birds joined in your singing."
 msgstr ""
 
-#: cogs/gods.py:129
+#: cogs/gods.py:132
 msgid "The other gods applauded while your god noted down the best mark."
 msgstr ""
 
-#: cogs/gods.py:131
+#: cogs/gods.py:134
 msgid "Rarely have you had a better day!"
 msgstr ""
 
-#: cogs/gods.py:140
+#: cogs/gods.py:143
 #, python-brace-format
 msgid "Your prayer resulted in **{val}** favor. {message}"
 msgstr ""
 
-#: cogs/gods.py:150
+#: cogs/gods.py:153
 msgid "Shows your god and favor."
 msgstr ""
 
-#: cogs/gods.py:152
+#: cogs/gods.py:155
 #, python-brace-format
 msgid "Your god is **{god}** and you have **{favor}** favor with them."
 msgstr ""
+
+#: cogs/transaction.py:60
+#, python-brace-format
+msgid ""
+"> {user} gives:\n"
+"{money}{crates}{items}"
+msgstr ""
+
+#: cogs/transaction.py:86
+#, python-brace-format
+msgid ""
+"Use `{prefix}trade add/set/remove money/crates/item amount/itemid [crate "
+"rarity]`"
+msgstr ""
+
+#: cogs/transaction.py:116
+msgid "Trade timed out."
+msgstr ""
+
+#: cogs/transaction.py:123
+#, python-brace-format
+msgid "{user} stopped the trade."
+msgstr ""
+
+#: cogs/transaction.py:141 cogs/transaction.py:159 cogs/transaction.py:189
+msgid "Trade cancelled. Things were traded away in the meantime."
+msgstr ""
+
+#: cogs/transaction.py:202
+msgid "Trade successful."
+msgstr ""
+
+#: cogs/transaction.py:208
+msgid "Opens a trading session with a user."
+msgstr ""
+
+#: cogs/transaction.py:210
+msgid "You cannot trade with yourself."
+msgstr ""
+
+#: cogs/transaction.py:212
+#, python-brace-format
+msgid "{user} has requested a trade, {user2}."
+msgstr ""
+
+#: cogs/transaction.py:233
+msgid "Adds something to a trade."
+msgstr ""
+
+#: cogs/transaction.py:236
+#, python-brace-format
+msgid "Please select something to add. Example: `{prefix}trade add money 1337`"
+msgstr ""
+
+#: cogs/transaction.py:244
+msgid "Adds money to a trade."
+msgstr ""
+
+#: cogs/transaction.py:255
+msgid "Adds crates to a trade."
+msgstr ""
+
+#: cogs/transaction.py:262 cogs/transaction.py:306
+msgid "You do not have enough crates."
+msgstr ""
+
+#: cogs/transaction.py:268
+msgid "Adds items to a trade."
+msgstr ""
+
+#: cogs/transaction.py:273
+msgid "You do not own this item."
+msgstr ""
+
+#: cogs/transaction.py:279
+msgid "Sets a value to a trade instead of adding onto it."
+msgstr ""
+
+#: cogs/transaction.py:282
+#, python-brace-format
+msgid "Please select something to set. Example: `{prefix}trade set money 1337`"
+msgstr ""
+
+#: cogs/transaction.py:290
+msgid "Sets money in a trade."
+msgstr ""
+
+#: cogs/transaction.py:301
+msgid "Sets crates in a trade."
+msgstr ""
+
+#: cogs/transaction.py:312
+msgid "Removes something from a trade."
+msgstr ""
+
+#: cogs/transaction.py:315
+#, python-brace-format
+msgid ""
+"Please select something to remove. Example: `{prefix}trade remove money 1337`"
+msgstr ""
+
+#: cogs/transaction.py:323
+msgid "Removes money from a trade."
+msgstr ""
+
+#: cogs/transaction.py:328
+msgid "Resulting amount is negative."
+msgstr ""
+
+#: cogs/transaction.py:334
+msgid "Removes crates from a trade."
+msgstr ""
+
+#: cogs/transaction.py:342
+msgid "The resulting amount would be negative."
+msgstr ""
+
+#: cogs/transaction.py:348
+msgid "Removes items from a trade."
+msgstr ""
+
+#: cogs/transaction.py:354
+msgid "This item is not in the trade."
+msgstr ""
+
+#: cogs/races.py:30
+msgid "Change your race. This is irreversible."
+msgstr ""
+
+#: cogs/races.py:33
+msgid "Human"
+msgstr ""
+
+#: cogs/races.py:35
+msgid ""
+"Humans are a team. They work and fight hand in hand and never give up, even "
+"when some of their friends already died. Their rage and hate against enemies "
+"makes them attack efficient and concentrated. Their attack and defense "
+"skills are pretty equal."
+msgstr ""
+
+#: cogs/races.py:40
+msgid "Dwarf"
+msgstr ""
+
+#: cogs/races.py:42
+msgid ""
+"Dwarves are the masters of their forge. Although they're very small, they "
+"can deal a lot of damage with their self-crafted equipment. Because of their "
+"reflexes, they have more defense than attack. Want an ale?"
+msgstr ""
+
+#: cogs/races.py:47
+msgid "Elf"
+msgstr ""
+
+#: cogs/races.py:49
+msgid ""
+"Elves are the masteres of camouflage. They melt with their enviroment to "
+"attack enemies without their knowing. Their bound to nature made them good "
+"friends of the wild spirits which they can call for help and protection. "
+"They have more attack than defense."
+msgstr ""
+
+#: cogs/races.py:54
+msgid "Orc"
+msgstr ""
+
+#: cogs/races.py:56
+msgid ""
+"Orcs are a friendly race based on their rituals of calling their ancestors "
+"to bless the rain and the deeds of their tribe. More ugly than nice, they "
+"mostly avoid being attacked by enemies. If they can't avoid a fight, then "
+"they have mostly no real damage, only a bit, but a huge armour. Who cares "
+"about the damage as long as you don't die?"
+msgstr ""
+
+#: cogs/races.py:61
+msgid "Jikill"
+msgstr ""
+
+#: cogs/races.py:63
+msgid ""
+"Jikills are dwarflike creatures with one eye in the middle of their face, "
+"which lets them have a big and huge forehead, big enough for their brain "
+"which can kill enemies. These sensitive creatures are easily knocked out."
+msgstr ""
+
+#: cogs/races.py:71
+msgid "One of my biggest regrets is..."
+msgstr ""
+
+#: cogs/races.py:73
+msgid "...that I never confessed my true love, and now she is dead."
+msgstr ""
+
+#: cogs/races.py:74
+msgid "...that I have never been to the funeral of my parents."
+msgstr ""
+
+#: cogs/races.py:75
+msgid "...that I betrayed my best friend."
+msgstr ""
+
+#: cogs/races.py:79
+msgid "One of my proudest creations is..."
+msgstr ""
+
+#: cogs/races.py:81
+msgid "...a perfected ale keg."
+msgstr ""
+
+#: cogs/races.py:82
+msgid "...a magical infused glove."
+msgstr ""
+
+#: cogs/races.py:83
+msgid "...a bone-forged axe."
+msgstr ""
+
+#: cogs/races.py:87
+msgid "My favourite spirit of the wild is..."
+msgstr ""
+
+#: cogs/races.py:89
+msgid "...Beringor, the bear spirit."
+msgstr ""
+
+#: cogs/races.py:90
+msgid "...Neysa, the tiger spirit."
+msgstr ""
+
+#: cogs/races.py:91
+msgid "...Avril, the wolf spirit."
+msgstr ""
+
+#: cogs/races.py:92
+msgid "...Sambuca, the eagle spirit."
+msgstr ""
+
+#: cogs/races.py:96
+msgid "The ancestor that gives me my strength is..."
+msgstr ""
+
+#: cogs/races.py:98
+msgid "...my sister."
+msgstr ""
+
+#: cogs/races.py:99
+msgid "...my father."
+msgstr ""
+
+#: cogs/races.py:100
+msgid "...my grandmother."
+msgstr ""
+
+#: cogs/races.py:101
+msgid "...my uncle."
+msgstr ""
+
+#: cogs/races.py:105
+msgid "The biggest action that can outknock me, is..."
+msgstr ""
+
+#: cogs/races.py:107
+msgid "...noise"
+msgstr ""
+
+#: cogs/races.py:108
+msgid "...spiritual pain"
+msgstr ""
+
+#: cogs/races.py:109
+msgid "...extreme temperatures."
+msgstr ""
+
+#: cogs/races.py:110
+msgid "...strange and powerful smells."
+msgstr ""
+
+#: cogs/races.py:127
+#, python-brace-format
+msgid "You are now a {race}."
+msgstr ""
+
+#~ msgid ""
+#~ "You received your daily **${money}**!\n"
+#~ "You are on a streak of **{streak}** days!"
+#~ msgstr "{money} Hódor {streak} Hódor"
+
+#~ msgid "Evolve to the next level of your class."
+#~ msgstr "Hódor"
+
+#~ msgid "You are now a `{newclass}`."
+#~ msgstr "{newclass} Hódor"
+
+#~ msgid "Go out on an active, action based adventure."
+#~ msgstr "Hódor"
+
+#~ msgid "**Active adventure loading...**"
+#~ msgstr "Hódor"
+
+#~ msgid ""
+#~ "\n"
+#~ "**{user}'s Adventure**\n"
+#~ "```\n"
+#~ "Progress: {progress}%\n"
+#~ "HP......: {hp}\n"
+#~ "\n"
+#~ "Enemy\n"
+#~ "HP......: {enemy_hp}\n"
+#~ "\n"
+#~ "Use the reactions attack, defend or recover\n"
+#~ "```\n"
+#~ msgstr ""
+#~ "\n"
+#~ "{user} Hódor\n"
+#~ "\n"
+#~ "{progress} Hódor\n"
+#~ "{hp} Hódor\n"
+#~ "{enemy_hp} Hódor\n"
+
+#~ msgid "Adventure stopped because you refused to move."
+#~ msgstr "Hódor"
+
+#~ msgid "You healed yourself for 20 HP."
+#~ msgstr "Hódor"
+
+#~ msgid "The enemy healed himself for 20 HP."
+#~ msgstr "Hódor"
+
+#~ msgid "Your attack was blocked!"
+#~ msgstr "Hódor"
+
+#~ msgid "Enemy attack was blocked!"
+#~ msgstr "Hódor"
+
+#~ msgid "Noone attacked."
+#~ msgstr "Hódor"
+
+#~ msgid ""
+#~ "You hit the enemy for **{damage}** damage, he hit you for **{damage2}** "
+#~ "damage."
+#~ msgstr "{damage} Hódor {damage2} Hódor"
+
+#~ msgid "You hit the enemy for **{damage}** damage."
+#~ msgstr "{damage} Hódor"
+
+#~ msgid "The enemy hit you for **{damage}** damage."
+#~ msgstr "{damage} Hódor"
+
+#~ msgid "Enemy defeated! You gained **20 HP**"
+#~ msgstr "Hódor"
+
+#~ msgid "You found a new item when finishing an active adventure!"
+#~ msgstr "Hódor"
+
+#~ msgid "Your HP were {hp}"
+#~ msgstr "{hp} Hódor"
+
+#~ msgid "Use `heads` or `tails` instead of `{side}`."
+#~ msgstr "{side} Hódor"
+
+#~ msgid "Views your lovescore."
+#~ msgstr "Hódor"
+
+#~ msgid ""
+#~ "Your overall love score is **{score}**. You are married to **{partner}**."
+#~ msgstr "{score} Hódor {partner} Hódor"
+
+#~ msgid "You already have 10 children."
+#~ msgstr "Hódor"
 
 #~ msgid ""
 #~ "I couldn't send a DM to {user}! (This is a known bug if your reaction "
