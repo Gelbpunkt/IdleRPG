@@ -291,7 +291,9 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
             "https://raid.travitia.xyz/toggle",
             headers={"Authorization": self.bot.config.raidauth},
         )
-        bandits = [{"hp": random.randint(100, 120), "id": i + 1} for i in range(bandits)]
+        bandits = [
+            {"hp": random.randint(100, 120), "id": i + 1} for i in range(bandits)
+        ]
         payout = sum(i["hp"] for i in bandits)
         await ctx.send(
             """
@@ -447,21 +449,25 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
     @commands.group(invoke_without_command=True)
     @locale_doc
     async def increase(self, ctx):
-        """Upgrade your raid damage or defense multiplier."""
+        _("""Upgrade your raid damage or defense multiplier.""")
         await ctx.send(
-            f"Use `{ctx.prefix}increase damage/defense` to upgrade your raid damage/defense multiplier by 10%."
+            _(
+                "Use `{prefix}increase damage/defense` to upgrade your raid damage/defense multiplier by 10%."
+            ).format(prefix=ctx.prefix)
         )
 
     @has_char()
     @increase.command()
     @locale_doc
     async def damage(self, ctx):
-        """Increase your raid damage."""
+        _("""Increase your raid damage.""")
         newlvl = ctx.character_data["atkmultiply"] + Decimal("0.1")
         price = self.getpriceto(newlvl)
         if ctx.character_data["money"] < price:
             return await ctx.send(
-                f"Upgrading your weapon attack raid multiplier to {newlvl} costs **${price}**, you are too poor."
+                _(
+                    "Upgrading your weapon attack raid multiplier to {newlvl} costs **${price}**, you are too poor."
+                ).format(newlvl=newlvl, price=price)
             )
         await self.bot.pool.execute(
             'UPDATE profile SET "atkmultiply"=$1, "money"="money"-$2 WHERE "user"=$3;',
@@ -470,19 +476,23 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
             ctx.author.id,
         )
         await ctx.send(
-            f"You upgraded your weapon attack raid multiplier to {newlvl} for **${price}**."
+            _(
+                "You upgraded your weapon attack raid multiplier to {newlvl} for **${price}**."
+            ).format(newlvl=newlvl, price=price)
         )
 
     @has_char()
     @increase.command()
     @locale_doc
     async def defense(self, ctx):
-        """Increase your raid defense."""
+        _("""Increase your raid defense.""")
         newlvl = ctx.character_data["defmultiply"] + Decimal("0.1")
         price = self.getpriceto(newlvl)
         if ctx.character_data["money"] < price:
             return await ctx.send(
-                f"Upgrading your shield defense raid multiplier to {newlvl} costs **${price}**, you are too poor."
+                _(
+                    "Upgrading your shield defense raid multiplier to {newlvl} costs **${price}**, you are too poor."
+                ).format(newlvl=newlvl, price=price)
             )
         await self.bot.pool.execute(
             'UPDATE profile SET "defmultiply"=$1, "money"="money"-$2 WHERE "user"=$3;',
@@ -491,7 +501,9 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
             ctx.author.id,
         )
         await ctx.send(
-            f"You upgraded your shield defense raid multiplier to {newlvl} for **${price}**."
+            _(
+                "You upgraded your shield defense raid multiplier to {newlvl} for **${price}**."
+            ).format(newlvl=newlvl, price=price)
         )
 
     @has_char()
@@ -508,14 +520,20 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
             atk += Decimal("0.1") * tier
             deff += Decimal("0.1") * tier
         await ctx.send(
-            f"**{ctx.author.mention}'s raid multipliers**\nDamage Multiplier: x{atk} (Upgrading: ${atkp})\nDefense Multiplier: x{deff} (Upgrading: ${deffp})"
+            _(
+                "**{author}'s raid multipliers**\nDamage Multiplier: x{atk} (Upgrading: ${atkp})\nDefense Multiplier: x{deff} (Upgrading: ${deffp})"
+            ).format(
+                author=ctx.author.mention, atk=atk, atkp=atkp, deff=deff, deffp=deffp
+            )
         )
 
     @commands.command()
     @locale_doc
     async def raid(self, ctx):
         await ctx.send(
-            f"Did you ever want to join together with other players to defeat the dragon that roams this land? Raids got you covered!\nJoin the support server (`{ctx.prefix}support`) for more information."
+            _(
+                "Did you ever want to join together with other players to defeat the dragon that roams this land? Raids got you covered!\nJoin the support server (`{prefix}support`) for more information."
+            ).format(prefix=ctx.prefix)
         )
 
 

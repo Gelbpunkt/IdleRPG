@@ -128,7 +128,11 @@ IdleRPG is a global bot, your characters are valid everywhere"""
             extras = (damage - v1, armor - v2)
             sworddmg = f"{v1}{' (+' + str(extras[0]) + ')' if extras[0] else ''}"
             shielddef = f"{v2}{' (+' + str(extras[1]) + ')' if extras[1] else ''}"
-            url = f"{self.bot.config.okapi_url}/api/genprofile/beta" if self.bot.config.is_beta else f"{self.bot.config.okapi_url}/api/genprofile"
+            url = (
+                f"{self.bot.config.okapi_url}/api/genprofile/beta"
+                if self.bot.config.is_beta
+                else f"{self.bot.config.okapi_url}/api/genprofile"
+            )
             async with self.bot.trusted_session.post(
                 url,
                 data={
@@ -148,7 +152,9 @@ IdleRPG is a global bot, your characters are valid everywhere"""
                     or _("Not Married"),
                     "guild": guild,
                     "classes": profile["class"],
-                    "icons": [self.bot.get_class_line(c).lower() for c in profile["class"]],
+                    "icons": [
+                        self.bot.get_class_line(c).lower() for c in profile["class"]
+                    ],
                     "mission": f"{mission[0]} - {mission[1] if not mission[2] else _('Finished')}"
                     if mission
                     else _("No Mission"),
