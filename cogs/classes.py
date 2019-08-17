@@ -35,7 +35,7 @@ class Classes(commands.Cog):
     @commands.command(name="class")
     @locale_doc
     async def _class(self, ctx):
-        _("""Change your class.""")
+        _("""Change your primary or secondary class.""")
         if int(rpgtools.xptolevel(ctx.character_data["xp"])) >= 12:
             val = await self.bot.paginator.Choose(
                 title=_("Select class to change"),
@@ -161,7 +161,7 @@ class Classes(commands.Cog):
                     )
             await ctx.send(
                 _(
-                    "Your new class is now `{profession}`. **$5000** was taken off your balance."
+                    "You selected the class `{profession}`. **$5000** was taken off your balance."
                 ).format(profession=_(profession))
             )
 
@@ -169,7 +169,7 @@ class Classes(commands.Cog):
     @commands.command()
     @locale_doc
     async def myclass(self, ctx):
-        _("""Views your class.""")
+        _("""Views your classes.""")
         if (classes := ctx.character_data["class"]) == ["No Class", "No Class"]:
             return await ctx.send("You haven't got a class yet.")
         for class_ in classes:
