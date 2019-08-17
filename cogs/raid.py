@@ -291,7 +291,7 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
             "https://raid.travitia.xyz/toggle",
             headers={"Authorization": self.bot.config.raidauth},
         )
-        bandits = [{"hp": random.randint(70, 120), "id": i + 1} for i in range(bandits)]
+        bandits = [{"hp": random.randint(100, 120), "id": i + 1} for i in range(bandits)]
         payout = sum(i["hp"] for i in bandits)
         await ctx.send(
             """
@@ -370,9 +370,9 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
         while len(
             bandits
         ) > 0 and datetime.datetime.utcnow() < start + datetime.timedelta(minutes=45):
-            dmg = random.randint(20, 60)  # effective damage the bandit does
+            dmg = random.randint(50, 90)  # effective damage the bandit does
             dmg -= target_data["armor"] * Decimal(
-                random.choice(["0.2", "0.3"])
+                random.choice(["0.1", "0.2"])
             )  # let's substract the shield, ouch
             target_data["hp"] -= dmg  # damage dealt
             em = discord.Embed(title=f"Bandits left: `{len(bandits)}`", colour=0x000000)
@@ -414,7 +414,7 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
                     value=f"Is attacking the bandit and dealt `{target_data['damage']}` damage",
                 )
             else:
-                money = random.randint(1500, 2300)
+                money = random.randint(2000, 3400)
                 await self.bot.pool.execute(
                     'UPDATE profile SET "money"="money"+$1 WHERE "user"=$2;',
                     money,
