@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-08-17 12:23+0000\n"
+"POT-Creation-Date: 2019-08-17 12:26+0000\n"
 "PO-Revision-Date: 2019-08-08 19:26+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -767,7 +767,7 @@ msgstr "Użyłeś nieprawidłowego argumentu!"
 msgid "You are on cooldown. Try again in {time}."
 msgstr "Zwolnij! Spróbuj ponownie za {time}."
 
-#: cogs/error_handler.py:78 cogs/error_handler.py:151
+#: cogs/error_handler.py:78 cogs/error_handler.py:157
 msgid "Permission denied"
 msgstr "Odrzucono dostęp"
 
@@ -843,6 +843,11 @@ msgid ""
 msgstr ""
 
 #: cogs/error_handler.py:145
+msgid ""
+"You have already selected a race and filled in your cv. This is irreversible."
+msgstr ""
+
+#: cogs/error_handler.py:151
 #, python-brace-format
 msgid ""
 "You need to be a donator to use this command. Please head to `{prefix}"
@@ -852,25 +857,25 @@ msgstr ""
 "Musisz być donatorem aby użyć tej komendy. Proszę użyj `{prefix}donate` i "
 "upewnij się że dołączyłeś na serwer wsparcia jeśli chcesz nas wesprzeć."
 
-#: cogs/error_handler.py:153
+#: cogs/error_handler.py:159
 msgid ""
 ":x: You don't have the permissions to use this command. It is thought for "
 "other users."
 msgstr ":x: Nie masz dostępu do tej komendy. To troska o innych graczy."
 
 #. prevent cooldown reset
-#: cogs/error_handler.py:159 cogs/trading.py:446
+#: cogs/error_handler.py:165 cogs/trading.py:446
 msgid "You did not choose anything."
 msgstr "Nic nie wybrałeś."
 
-#: cogs/error_handler.py:178
+#: cogs/error_handler.py:184
 msgid ""
 "An argument or value you entered was far too high for me to handle properly!"
 msgstr ""
 "Argument lub wartość, którą wpisałeś była zbyt wysoka abym sobie z tym "
 "poradził!"
 
-#: cogs/error_handler.py:184
+#: cogs/error_handler.py:190
 msgid ""
 "The languages have been reloaded while you were using a command. The "
 "execution therefore had to be stopped. Please try again."
@@ -878,7 +883,7 @@ msgstr ""
 "Języki zostały załadowane ponownie podczas gry używałeś komendy, dlatego też "
 "czynność musiała zostać przerwana. Spróbuj ponownie."
 
-#: cogs/error_handler.py:215
+#: cogs/error_handler.py:221
 msgid ""
 "The command you tried to use ran into an error. The incident has been "
 "reported and the team will work hard to fix the issue!"

@@ -139,6 +139,12 @@ class Errorhandler(commands.Cog):
                         pet=ctx.pet_data["name"], profession=ctx.character_data["class"]
                     )
                 )
+            elif type(error) == utils.checks.NotNothing:
+                await ctx.send(
+                    _(
+                        "You have already selected a race and filled in your cv. This is irreversible."
+                    )
+                )
             elif type(error) == utils.checks.NoPatron:
                 await ctx.send(
                     _(
