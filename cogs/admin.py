@@ -30,13 +30,14 @@ class Admin(commands.Cog):
 
     @is_admin()
     @commands.command(hidden=True)
+    @locale_doc
     async def unban(self, ctx, *, other: discord.User):
-        """[Bot Admin only] Unban someone from the bot."""
+        _("""[Bot Admin only] Unban someone from the bot.""")
         try:
             self.bot.bans.remove(other.id)
-            await ctx.send(f"Unbanned: {other.name}")
+            await ctx.send(_("Unbanned: {other}").format(other=other.name))
         except ValueError:
-            await ctx.send(f"{other.name} is not banned.")
+            await ctx.send(_("{other} is not banned.").format(other=other.name))
 
     @is_admin()
     @commands.command(aliases=["agive"], hidden=True)

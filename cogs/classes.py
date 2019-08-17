@@ -102,8 +102,10 @@ class Classes(commands.Cog):
         lines = [
             self.bot.get_class_line(class_) for class_ in ctx.character_data["class"]
         ]
-        embeds = list(filter(lambda x: _(x.title) not in lines, embeds))
         for line in lines:
+            for e in embeds:
+                if _(line) == e.title:
+                    embeds.remove(e)
             try:
                 choices.remove(line)
             except ValueError:

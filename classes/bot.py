@@ -468,11 +468,11 @@ class Bot(commands.AutoShardedBot):
         else:
             return 0
 
-    async def generate_stats(self, user, damage, armor, classes=None):
+    async def generate_stats(self, user, damage, armor, classes=None, race=None):
         user = user.id if isinstance(user, (discord.User, discord.Member)) else user
-        if not classes:
-            classes = await self.pool.fetchval(
-                'SELECT class FROM profile WHERE "user"=$1;', user
+        if not classes or not race:
+            classes, race = await self.pool.fetchval(
+                'SELECT ("class", "race") FROM profile WHERE "user"=$1;', user
             )
         lines = [self.get_class_line(class_) for class_ in classes]
         grades = [self.get_class_grade(class_) for class_ in classes]
@@ -484,7 +484,20 @@ class Bot(commands.AutoShardedBot):
             elif line == "Paragon":
                 damage += grade
                 armor += grade
-        return (damage, armor)
+        if race == "Human":
+            damage += 2
+            armor += 2
+        elif race == "Dwarf":
+            damage += 1
+            armor += 3
+        elif race == "Elf":
+            damage += 3
+            armor += 1
+        elif race == "Orc":
+            armor += 4
+        elif race == "Jikill":
+            damage += 4
+        return damage, armor
 
     async def log_transaction(self, ctx, from_, to, subject, data):
         """Logs a transaction."""

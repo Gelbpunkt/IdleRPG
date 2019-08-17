@@ -123,7 +123,7 @@ IdleRPG is a global bot, your characters are valid everywhere"""
             v1 = sword["damage"] if sword else 0.0
             v2 = shield["armor"] if shield else 0.0
             damage, armor = await self.bot.generate_stats(
-                targetid, v1, v2, classes=profile["class"]
+                targetid, v1, v2, classes=profile["class"], race=profile["race"]
             )
             extras = (damage - v1, armor - v2)
             sworddmg = f"{v1}{' (+' + str(extras[0]) + ')' if extras[0] else ''}"

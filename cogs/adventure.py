@@ -386,6 +386,7 @@ Adventure name: `{adventure}`"""
             sword["damage"] if sword else 0,
             shield["armor"] if shield else 0,
             classes=ctx.character_data["class"],
+            race=ctx.character_data["race"],
         )
 
         luck_booster = await self.bot.get_booster(ctx.author, "luck")

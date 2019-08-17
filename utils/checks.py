@@ -101,6 +101,12 @@ class PetRanAway(commands.CheckFailure):
     pass
 
 
+class NotNothing(commands.CheckFailure):
+    """Exception raised when a user is not a human."""
+
+    pass
+
+
 def has_char():
     """Checks for a user to have a character."""
 
@@ -236,6 +242,21 @@ def is_class(class_):
                     'SELECT * FROM pets WHERE "user"=$1;', ctx.author.id
                 )
         return check
+
+    return commands.check(predicate)
+
+
+def is_nothing():
+    """Checks for a user to be human and not taken cv yet."""
+
+    async def predicate(ctx):
+        if not hasattr(ctx, "character_data"):
+            ctx.character_data = await ctx.bot.pool.fetchrow(
+                'SELECT * FROM profile WHERE "user"=$1;', ctx.author.id
+            )
+        if ctx.character_data["race"] == "Human" and ctx.character_data["cv"] == -1:
+            return True
+        raise NotNothing()
 
     return commands.check(predicate)
 

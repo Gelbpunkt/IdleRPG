@@ -314,7 +314,9 @@ CREATE TABLE public.profile (
     crates_legendary bigint DEFAULT 0,
     luck numeric DEFAULT 1.0,
     favor bigint DEFAULT 0,
-    god character varying(50) DEFAULT NULL::character varying
+    god character varying(50) DEFAULT NULL::character varying,
+    race character varying(30) DEFAULT 'Human'::character varying,
+    cv bigint DEFAULT '-1'::integer
 );
 
 
