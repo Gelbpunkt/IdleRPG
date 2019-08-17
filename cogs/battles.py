@@ -46,13 +46,13 @@ class Battles(commands.Cog):
         if not enemy:
             msg = await ctx.send(
                 _(
-                    "{author} seeks a battle! React with \U00002694 now to duel them! The price is **${money}**."
+                    "{author} seeks a battle! React with ⚔ now to duel them! The price is **${money}**."
                 ).format(author=ctx.author.mention, money=money)
             )
         else:
             msg = await ctx.send(
                 _(
-                    "{author} seeks a battle with {enemy}! React with \U00002694 now to duel them! The price is **${money}**."
+                    "{author} seeks a battle with {enemy}! React with ⚔ now to duel them! The price is **${money}**."
                 ).format(author=ctx.author.mention, enemy=enemy.mention, money=money)
             )
 
@@ -148,13 +148,13 @@ class Battles(commands.Cog):
         if not enemy:
             msg = await ctx.send(
                 _(
-                    "{author} seeks an active battle! React with \U00002694 now to duel them! The price is **${money}**."
+                    "{author} seeks an active battle! React with ⚔ now to duel them! The price is **${money}**."
                 ).format(author=ctx.author.mention, money=money)
             )
         else:
             msg = await ctx.send(
                 _(
-                    "{author} seeks an active battle with {enemy}! React with \U00002694 now to duel them! The price is **${money}**."
+                    "{author} seeks an active battle with {enemy}! React with ⚔ now to duel them! The price is **${money}**."
                 ).format(author=ctx.author.mention, enemy=enemy.mention, money=money)
             )
 

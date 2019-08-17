@@ -193,7 +193,7 @@ class Christmas(commands.Cog):
 
         msg = await ctx.send(
             _(
-                "{enemy}, {author} has challenged you for an epic snowball fight! If you want to accept, react \U00002744\n**IMPORTANT: This is very spammy, make sure you are using a dedicated channel!**"
+                "{enemy}, {author} has challenged you for an epic snowball fight! If you want to accept, react ⚔\n**IMPORTANT: This is very spammy, make sure you are using a dedicated channel!**"
             ).format(enemy=enemy.mention, author=ctx.author.mention)
         )
 
