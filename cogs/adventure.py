@@ -164,7 +164,7 @@ Use the reactions attack, defend or recover
             if move == "defend" and enemymove == "attack":
                 await ctx.send(_("Enemy attack was blocked!"), delete_after=5)
             if move == "defend" and enemymove == "defend":
-                await ctx.send(_("Noone attacked."))
+                await ctx.send(_("Noone attacked."), delete_after=5)
             if move == "attack" and enemymove == "attack":
                 efficiency = random.randint(int(SWORD * 0.5), int(SWORD * 1.5))
                 HP -= efficiency
