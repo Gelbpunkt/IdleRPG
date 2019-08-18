@@ -24,7 +24,7 @@ import discord
 from discord.ext import commands
 
 from classes.converters import IntGreaterThan
-from utils.checks import has_char, is_admin
+from utils.checks import has_char, is_admin, is_god
 
 
 def raid_channel():
@@ -128,20 +128,20 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
             j = next(filter(lambda x: x["user"] == i, dmgs), None)
             if j is None:
                 continue
-            if self.bot.get_class_line(j["class"]) == "Raider":
+            if self.bot.in_class_line(j["class"], "Raider"):
                 atkmultiply = j["atkmultiply"] + Decimal(
                     "0.1"
-                ) * self.bot.get_class_grade(j["class"])
+                ) * self.bot.get_class_grade_from(j["class"], "Raider")
             else:
                 atkmultiply = j["atkmultiply"]
             dmg = j["damage"] * atkmultiply if j else 0
             j = next(filter(lambda x: x["user"] == i, deffs), None)
             if j is None:
                 continue
-            if self.bot.get_class_line(j["class"]) == "Raider":
+            if self.bot.in_class_line(j["class"], "Raider"):
                 defmultiply = j["defmultiply"] + Decimal(
                     "0.1"
-                ) * self.bot.get_class_grade(j["class"])
+                ) * self.bot.get_class_grade_from(j["class"], "Raider")
             else:
                 defmultiply = j["defmultiply"]
             deff = j["armor"] * defmultiply if j else 0
@@ -344,20 +344,20 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
             j = next(filter(lambda x: x["user"] == i, dmgs), None)
             if j is None:
                 continue
-            if self.bot.get_class_line(j["class"]) == "Raider":
+            if self.bot.in_class_line(j["class"], "Raider"):
                 atkmultiply = j["atkmultiply"] + Decimal(
                     "0.1"
-                ) * self.bot.get_class_grade(j["class"])
+                ) * self.bot.get_class_grade_from(j["class"], "Raider")
             else:
                 atkmultiply = j["atkmultiply"]
             dmg = j["damage"] * atkmultiply if j else 0
             j = next(filter(lambda x: x["user"] == i, deffs), None)
             if j is None:
                 continue
-            if self.bot.get_class_line(j["class"]) == "Raider":
+            if self.bot.in_class_line(j["class"], "Raider"):
                 defmultiply = j["defmultiply"] + Decimal(
                     "0.1"
-                ) * self.bot.get_class_grade(j["class"])
+                ) * self.bot.get_class_grade_from(j["class"], "Raider")
             else:
                 defmultiply = j["defmultiply"]
             deff = j["armor"] * defmultiply if j else 0
@@ -442,6 +442,138 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
             )
         elif len(raid) == 0:
             await ctx.send("The bandits plundered the town! All swordsmen died!")
+
+    @is_god()
+    @commands.command()
+    @locale_doc
+    async def guiltspawn(self, ctx):
+        """[Guilt only] Starts a raid."""
+        await self.bot.session.get(
+            "https://raid.travitia.xyz/toggle",
+            headers={"Authorization": self.bot.config.raidauth},
+        )
+        await ctx.channel.set_permissions(
+            ctx.guild.default_role, overwrite=self.read_only
+        )
+        await ctx.send(
+            """
+The goddess Guilt has grown weak from the easy, summer days of the mortals below.  "There must be balance. Show me your guilts, obsessions, and hates. All that taint your soul, show them to me!  Show me your devotion!" she cries, raising a hand and summoning twisted, shadowy wraiths. Some of the mortals flee in terror, some break down in despair, and some reach for a knife and aim inwards.  Yet, many still stand against the shadows, their willpower strong... for now.
+
+Use https://raid.travitia.xyz/ to join the raid!
+**You must be a follower of Guilt.**
+
+Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=453963965521985536&scope=identify&response_type=code&redirect_uri=https://raid.travitia.xyz/callback>
+""",
+            file=discord.File("assets/other/guilt.jpg"),
+        )
+        if not self.bot.config.is_beta:
+            await self.bot.get_channel(506_167_065_464_406_041).send(
+                "@everyone Guilt spawned! 15 Minutes until the terror begins...\nUse https://raid.travitia.xyz/ to join the raid!"
+            )
+        if not self.bot.config.is_beta:
+            await asyncio.sleep(300)
+            await ctx.send("**The terror will begin in 10 minutes**")
+            await asyncio.sleep(300)
+            await ctx.send("**The terror will begin in 5 minutes**")
+            await asyncio.sleep(180)
+            await ctx.send("**The terror will begin in 2 minutes**")
+            await asyncio.sleep(60)
+            await ctx.send("**The terror will begin in 1 minute**")
+            await asyncio.sleep(30)
+            await ctx.send("**The terror will begin in 30 seconds**")
+            await asyncio.sleep(20)
+            await ctx.send("**The terror will begin in 10 seconds**")
+            await asyncio.sleep(10)
+        else:
+            await asyncio.sleep(60)
+        await ctx.send("**The terror begins! Fetching participant data... Hang on!**")
+
+        async with self.bot.session.get(
+            "https://raid.travitia.xyz/joined",
+            headers={"Authorization": self.bot.config.raidauth},
+        ) as r:
+            raid_raw = await r.json()
+        async with self.bot.pool.acquire() as conn:
+            dmgs = await conn.fetch(
+                'SELECT p."user", p.class, ai.damage, p.atkmultiply FROM profile p JOIN allitems ai ON (p.user=ai.owner) JOIN inventory i ON (ai.id=i.item) WHERE i.equipped IS TRUE AND p.user=ANY($2) AND type=$1 AND p.god=$3;',
+                "Sword",
+                raid_raw,
+                "Guilt",
+            )
+            deffs = await conn.fetch(
+                'SELECT p."user", p.class, ai.armor, p.defmultiply FROM profile p JOIN allitems ai ON (p.user=ai.owner) JOIN inventory i ON (ai.id=i.item) WHERE i.equipped IS TRUE AND p.user=ANY($2) AND type=$1 AND p.god=$3;',
+                "Shield",
+                raid_raw,
+                "Guilt",
+            )
+        raid = {}
+        for i in raid_raw:
+            u = await self.bot.get_user_global(i)
+            if not u:
+                continue
+            j = next(filter(lambda x: x["user"] == i, dmgs), None)
+            if j is None:
+                continue
+            dmg = j["damage"] if j else 0
+            j = next(filter(lambda x: x["user"] == i, deffs), None)
+            if j is None:
+                continue
+            deff = j["armor"] if j else 0
+            dmg, deff = await self.bot.generate_stats(i, dmg, deff)
+            raid[u] = {"hp": 250, "armor": deff, "damage": dmg}
+
+        await ctx.send("**Done getting data!**")
+
+        start = datetime.datetime.utcnow()
+
+        while len(raid) > 1 and datetime.datetime.utcnow() < start + datetime.timedelta(
+            minutes=45
+        ):
+            stuff = random.sample(list(raid.items()), 2)  # attacker, target
+            attacker = stuff[0]
+            target = stuff[1]
+            dmg = random.randint(
+                round(attacker[1]["damage"] * Decimal("0.5")),
+                round(attacker[1]["damage"] * Decimal("1.5")),
+            )
+            dmg -= target[1]["armor"]
+            dmg = 0 if dmg < 0 else dmg
+            raid[target[0]]["hp"] -= dmg  # damage dealt
+            if raid[target[0]]["hp"] > 0:
+                em = discord.Embed(
+                    title=f"{attacker[0]} attacked {target[0]}!",
+                    description=f"{target[0]} now has {raid[target[0]]['hp']} HP!",
+                    colour=0xFFB900,
+                )
+            else:
+                em = discord.Embed(
+                    title=f"{attacker[0]} attacked {target[0]}!",
+                    description=f"{target[0]} died!",
+                    colour=0xFFB900,
+                )
+            em.add_field(name="Theoretical Damage", value=dmg + target[1]["armor"])
+            em.add_field(name="Shield", value=target[1]["armor"])
+            em.add_field(name="Effective Damage", value=dmg)
+            em.set_author(name=str(target[0]), icon_url=target[0].avatar_url)
+            em.set_thumbnail(url=f"{self.bot.BASE_URL}/guilt.jpg")
+            await ctx.send(embed=em)
+            if raid[target[0]]["hp"] <= 0:
+                del raid[target[0]]
+            await asyncio.sleep(4)
+
+        if len(raid) == 1:
+            survivor = list(raid.keys())[0]
+            await ctx.send(
+                f"The massacre is over. {survivor.mention} survived as the strongest of all.\nGuilt gave a <:CrateLegendary:598094865678598144> Legendary Crate to them."
+            )
+            await self.bot.pool.execute(
+                'UPDATE profile SET "crates_legendary"="crates_legendary"+1 WHERE "user"=$1;',
+                survivor.id,
+            )
+        else:
+            await ctx.send(
+                "The raid did not manage to finish within 45 Minutes... Guilt disappeared!"
+            )
 
     def getpriceto(self, level: float):
         return sum(i * 25000 for i in range(1, int(level * 10) - 9))
