@@ -784,6 +784,153 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
                 "The raid did not manage to kill Scylla within 45 Minutes... It disappeared!"
             )
 
+    @is_god()
+    @commands.command()
+    @locale_doc
+    async def kvothespawn(self, ctx, scrael: IntGreaterThan(1)):
+        """[Kvothe only] Starts a raid."""
+        await self.bot.session.get(
+            "https://raid.travitia.xyz/toggle",
+            headers={"Authorization": self.bot.config.raidauth},
+        )
+        scrael = [{"hp": random.randint(80, 100), "id": i + 1} for i in range(scrael)]
+        await ctx.send(
+            """
+The cthae has gathered an army of scrael. Fight for your life!
+
+Use https://raid.travitia.xyz/ to join the raid!
+**Only Kvothe's followers may join.**
+
+Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=453963965521985536&scope=identify&response_type=code&redirect_uri=https://raid.travitia.xyz/callback>
+""",
+            file=discord.File("assets/other/cthae.jpg"),
+        )
+        if not self.bot.config.is_beta:
+            await asyncio.sleep(300)
+            await ctx.send("**The scrael arrive in 10 minutes**")
+            await asyncio.sleep(300)
+            await ctx.send("**The scrael arrive in 5 minutes**")
+            await asyncio.sleep(180)
+            await ctx.send("**The scrael arrive in 2 minutes**")
+            await asyncio.sleep(60)
+            await ctx.send("**The scrael arrive in 1 minute**")
+            await asyncio.sleep(30)
+            await ctx.send("**The scrael arrive in 30 seconds**")
+            await asyncio.sleep(20)
+            await ctx.send("**The scrael arrive in 10 seconds**")
+            await asyncio.sleep(10)
+            await ctx.send(
+                "**The scrael arrived! Fetching participant data... Hang on!**"
+            )
+        else:
+            await asyncio.sleep(60)
+        async with self.bot.session.get(
+            "https://raid.travitia.xyz/joined",
+            headers={"Authorization": self.bot.config.raidauth},
+        ) as r:
+            raid_raw = await r.json()
+        async with self.bot.pool.acquire() as conn:
+            dmgs = await conn.fetch(
+                'SELECT p."user", ai.damage, p.atkmultiply FROM profile p JOIN allitems ai ON (p.user=ai.owner) JOIN inventory i ON (ai.id=i.item) WHERE i.equipped IS TRUE AND p.user=ANY($2) AND type=$1 AND p.god=$3;',
+                "Sword",
+                raid_raw,
+                "Kvothe",
+            )
+            deffs = await conn.fetch(
+                'SELECT p."user", ai.armor, p.defmultiply FROM profile p JOIN allitems ai ON (p.user=ai.owner) JOIN inventory i ON (ai.id=i.item) WHERE i.equipped IS TRUE AND p.user=ANY($2) AND type=$1 AND p.god=$3;',
+                "Shield",
+                raid_raw,
+                "Kvothe",
+            )
+        raid = {}
+        for i in raid_raw:
+            u = await self.bot.get_user_global(i)
+            if not u:
+                continue
+            j = next(filter(lambda x: x["user"] == i, dmgs), None)
+            if j is None:
+                continue
+            dmg = j["damage"] * j["atkmultiply"] if j else 0
+            j = next(filter(lambda x: x["user"] == i, deffs), None)
+            if j is None:
+                continue
+            deff = j["armor"] * j["defmultiply"] if j else 0
+            dmg, deff = await self.bot.generate_stats(i, dmg, deff)
+            raid[u] = {"hp": 100, "armor": deff, "damage": dmg, "kills": 0}
+
+        await ctx.send("**Done getting data!**")
+
+        start = datetime.datetime.utcnow()
+
+        while len(
+            scrael
+        ) > 0 and datetime.datetime.utcnow() < start + datetime.timedelta(minutes=45):
+            target, target_data = random.choice(list(raid.items()))
+            dmg = random.randint(50, 90)
+            dmg -= target_data["armor"] * Decimal(random.choice(["0.4", "0.5"]))
+            target_data["hp"] -= dmg
+            em = discord.Embed(title=f"Scrael left: `{len(scrael)}`", colour=0x000000)
+            em.add_field(name="Scrael HP", value=f"{scrael[0]['hp']} HP left")
+            if target_data["hp"] > 0:
+                em.add_field(
+                    name="Attack", value=f"Scrael is fighting against `{target}`"
+                )
+            else:
+                em.add_field(name="Attack", value=f"Scrael killed `{target}`")
+            em.add_field(
+                name="Scrael Damage", value=f"Has dealt `{dmg}` damage to `{target}`"
+            )
+            em.set_image(url=f"{self.bot.BASE_URL}/scrael.jpg")
+            await ctx.send(embed=em)
+            if target_data["hp"] <= 0:
+                del raid[target]
+                if len(raid) == 0:  # no more raiders
+                    break
+            scrael[0]["hp"] -= target_data["damage"]
+            await asyncio.sleep(7)
+            em = discord.Embed(title=f"Heroes left: `{len(raid)}`", colour=0x009900)
+            em.set_author(
+                name=f"Hero ({target})", icon_url=f"{self.bot.BASE_URL}/swordsman1.jpg"
+            )
+            em.add_field(
+                name="Hero HP", value=f"`{target}` got {target_data['hp']} HP left"
+            )
+            if scrael[0]["hp"] > 0:
+                em.add_field(
+                    name="Hero attack",
+                    value=f"Is attacking the scrael and dealt `{target_data['damage']}` damage",
+                )
+            else:
+                money = random.randint(1500, 2600)
+                await self.bot.pool.execute(
+                    'UPDATE profile SET "money"="money"+$1 WHERE "user"=$2;',
+                    money,
+                    target.id,
+                )
+                scrael.pop(0)
+                em.add_field(
+                    name="Hero attack", value=f"Killed the scrael and received ${money}"
+                )
+                raid[target]["kills"] += 1
+            em.set_image(url=f"{self.bot.BASE_URL}/swordsman2.jpg")
+            await ctx.send(embed=em)
+            await asyncio.sleep(7)
+
+        if len(scrael) == 0:
+            most_kills = sorted(raid.items(), key=lambda x: -(x[1]["kills"]))[0][0]
+            await self.bot.pool.execute(
+                'UPDATE profile SET "crates_legendary"="crates_legendary"+$1 WHERE "user"=$2;',
+                1,
+                most_kills.id,
+            )
+            await ctx.send(
+                f"The scrael were defeated! Our most glorious hero, {most_kills.mention}, has received Kvothe's grace, a {self.bot.cogs['Crates'].emotes.legendary}."
+            )
+        elif len(raid) == 0:
+            await ctx.send(
+                "The scrael have extinguished life in Kvothe's temple! All heroes died!"
+            )
+
     def getpriceto(self, level: float):
         return sum(i * 25000 for i in range(1, int(level * 10) - 9))
 
