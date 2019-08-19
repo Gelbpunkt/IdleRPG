@@ -931,6 +931,219 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
                 "The scrael have extinguished life in Kvothe's temple! All heroes died!"
             )
 
+    @is_god()
+    @commands.command()
+    @locale_doc
+    async def chamburrspawn(self, ctx, hp: IntGreaterThan(0)):
+        """[CHamburr only] Starts a raid."""
+        await self.bot.session.get(
+            "https://raid.travitia.xyz/toggle",
+            headers={"Authorization": self.bot.config.raidauth},
+        )
+        boss = {"hp": hp, "min_dmg": 100, "max_dmg": 500}
+        await ctx.channel.set_permissions(
+            ctx.guild.default_role, overwrite=self.read_only
+        )
+        await ctx.send(
+            f"""
+*Time to eat the hamburger! No, this time, the hamburger will eat you up...*
+
+This boss has {boss['hp']} HP and has high-end loot!
+The hamburger will be vulnerable in 15 Minutes
+Use https://raid.travitia.xyz/ to join the raid!
+**Only followers of CHamburr may join.**
+
+Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=453963965521985536&scope=identify&response_type=code&redirect_uri=https://raid.travitia.xyz/callback>
+""",
+            file=discord.File("assets/other/hamburger.jpg"),
+        )
+        if not self.bot.config.is_beta:
+            await asyncio.sleep(300)
+            await ctx.send("**The hamburger will be vulnerable in 10 minutes**")
+            await asyncio.sleep(300)
+            await ctx.send("**The hamburger will be vulnerable in 5 minutes**")
+            await asyncio.sleep(180)
+            await ctx.send("**The hamburger will be vulnerable in 2 minutes**")
+            await asyncio.sleep(60)
+            await ctx.send("**The hamburger will be vulnerable in 1 minute**")
+            await asyncio.sleep(30)
+            await ctx.send("**The hamburger will be vulnerable in 30 seconds**")
+            await asyncio.sleep(20)
+            await ctx.send("**The hamburger will be vulnerable in 10 seconds**")
+            await asyncio.sleep(10)
+        else:
+            await asyncio.sleep(60)
+        await ctx.send(
+            "**The hamburger is vulnerable! Fetching participant data... Hang on!**"
+        )
+
+        async with self.bot.session.get(
+            "https://raid.travitia.xyz/joined",
+            headers={"Authorization": self.bot.config.raidauth},
+        ) as r:
+            raid_raw = await r.json()
+        async with self.bot.pool.acquire() as conn:
+            dmgs = await conn.fetch(
+                'SELECT p."user", p.class, ai.damage, p.atkmultiply FROM profile p JOIN allitems ai ON (p.user=ai.owner) JOIN inventory i ON (ai.id=i.item) WHERE i.equipped IS TRUE AND p.user=ANY($2) AND type=$1 AND p.god=$3;',
+                "Sword",
+                raid_raw,
+                "CHamburr",
+            )
+            deffs = await conn.fetch(
+                'SELECT p."user", p.class, ai.armor, p.defmultiply FROM profile p JOIN allitems ai ON (p.user=ai.owner) JOIN inventory i ON (ai.id=i.item) WHERE i.equipped IS TRUE AND p.user=ANY($2) AND type=$1 AND p.god=$3;',
+                "Shield",
+                raid_raw,
+                "CHamburr",
+            )
+        raid = {}
+        for i in raid_raw:
+            u = await self.bot.get_user_global(i)
+            if not u:
+                continue
+            j = next(filter(lambda x: x["user"] == i, dmgs), None)
+            if j is None:
+                continue
+            dmg = j["damage"] * j["atkmultiply"] if j else 0
+            j = next(filter(lambda x: x["user"] == i, deffs), None)
+            if j is None:
+                continue
+            deff = j["armor"] * j["defmultiply"] if j else 0
+            dmg, deff = await self.bot.generate_stats(i, dmg, deff)
+            raid[u] = {"hp": 250, "armor": deff, "damage": dmg}
+
+        await ctx.send("**Done getting data!**")
+
+        start = datetime.datetime.utcnow()
+
+        while (
+            boss["hp"] > 0
+            and len(raid) > 0
+            and datetime.datetime.utcnow() < start + datetime.timedelta(minutes=45)
+        ):
+            target = random.choice(list(raid.keys()))  # the guy it will attack
+            dmg = random.randint(boss["min_dmg"], boss["max_dmg"])
+            dmg -= raid[target]["armor"]
+            raid[target]["hp"] -= dmg  # damage dealt
+            if raid[target]["hp"] > 0:
+                em = discord.Embed(
+                    title="Hamburger attacked!",
+                    description=f"{target} now has {raid[target]['hp']} HP!",
+                    colour=0xFFB900,
+                )
+            else:
+                em = discord.Embed(
+                    title="Hamburger attacked!",
+                    description=f"{target} died!",
+                    colour=0xFFB900,
+                )
+            em.add_field(name="Theoretical Damage", value=dmg + raid[target]["armor"])
+            em.add_field(name="Shield", value=raid[target]["armor"])
+            em.add_field(name="Effective Damage", value=dmg)
+            em.set_author(name=str(target), icon_url=target.avatar_url)
+            em.set_thumbnail(url=f"{self.bot.BASE_URL}/hamburger.jpg")
+            await ctx.send(embed=em)
+            if raid[target]["hp"] <= 0:
+                del raid[target]
+            dmg_to_take = sum(i["damage"] for i in raid.values())
+            boss["hp"] -= dmg_to_take
+            await asyncio.sleep(4)
+            em = discord.Embed(
+                title="The raid attacked the hamburger!", colour=0xFF5C00
+            )
+            em.set_thumbnail(url=f"{self.bot.BASE_URL}/knight.jpg")
+            em.add_field(name="Damage", value=dmg_to_take)
+            if boss["hp"] > 0:
+                em.add_field(name="HP left", value=boss["hp"])
+            else:
+                em.add_field(name="HP left", value="Dead!")
+            await ctx.send(embed=em)
+            await asyncio.sleep(4)
+
+        if len(raid) == 0:
+            await ctx.send("The raid was all wiped!")
+        elif boss["hp"] < 1:
+            await ctx.channel.set_permissions(
+                ctx.guild.default_role, overwrite=self.allow_sending
+            )
+            highest_bid = [
+                ctx.guild.get_member(356_091_260_429_402_122),
+                0,
+            ]  # user, amount
+
+            def check(msg):
+                if (
+                    msg.channel.id != ctx.channel.id
+                    or (not msg.content.isdigit())
+                    or (msg.author not in raid)
+                ):
+                    return False
+                if not (int(msg.content) > highest_bid[1]):
+                    return False
+                if (
+                    msg.author.id == highest_bid[0].id
+                ):  # don't allow a player to outbid themselves
+                    return False
+                return True
+
+            page = commands.Paginator()
+            for u in list(raid.keys()):
+                page.add_line(u.mention)
+            page.add_line(
+                "The raid killed the boss!\nHe dropped a <:CrateLegendary:598094865678598144> Legendary Crate!\nThe highest bid for it wins <:roosip:505447694408482846>\nSimply type how much you bid!"
+            )
+            for p in page.pages:
+                await ctx.send(p[4:-4])
+
+            while True:
+                try:
+                    msg = await self.bot.wait_for("message", timeout=60, check=check)
+                except asyncio.TimeoutError:
+                    break
+                bid = int(msg.content)
+                money = await self.bot.pool.fetchval(
+                    'SELECT money FROM profile WHERE "user"=$1;', msg.author.id
+                )
+                if money and money >= bid:
+                    highest_bid = [msg.author, bid]
+                    await ctx.send(f"{msg.author.mention} bids **${msg.content}**!")
+            msg = await ctx.send(
+                f"Auction done! Winner is {highest_bid[0].mention} with **${highest_bid[1]}**!\nGiving Legendary Crate..."
+            )
+            money = await self.bot.pool.fetchval(
+                'SELECT money FROM profile WHERE "user"=$1;', highest_bid[0].id
+            )
+            if money >= highest_bid[1]:
+                await self.bot.pool.execute(
+                    'UPDATE profile SET "money"="money"-$1, "crates_legendary"="crates_legendary"+1 WHERE "user"=$2;',
+                    highest_bid[1],
+                    highest_bid[0].id,
+                )
+                await msg.edit(content=f"{msg.content} Done!")
+            else:
+                await ctx.send(
+                    f"{highest_bid[0].mention} spent the money in the meantime... Meh! Noone gets it then, pah!\nThis incident has been reported and they will get banned if it happens again. Cheers!"
+                )
+
+            cash = int(hp / 4 / len(raid))  # what da hood gets per survivor
+            await self.bot.pool.execute(
+                'UPDATE profile SET money=money+$1 WHERE "user"=ANY($2);',
+                cash,
+                [u.id for u in raid.keys()],
+            )
+            await ctx.send(
+                f"**Gave ${cash} of the hamburger's ${int(hp / 4)} drop to all survivors!**"
+            )
+
+        else:
+            await ctx.send(
+                "The raid did not manage to kill the hamburger within 45 Minutes... He disappeared!"
+            )
+
+        await asyncio.sleep(30)
+        await ctx.channel.set_permissions(
+            ctx.guild.default_role, overwrite=self.deny_sending
+        )
+
     def getpriceto(self, level: float):
         return sum(i * 25000 for i in range(1, int(level * 10) - 9))
 
