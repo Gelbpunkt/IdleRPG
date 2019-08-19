@@ -590,7 +590,7 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
         )
         await ctx.send(
             """
-Scylla, the 8 headed Hydra lurks around the side of a narrow channel of water, right beside Olympus; She has been there for decades, eating millions of our men. It's your job to take care of her once and for all! I see your strength may be enough to take her down. Worry not you have many other worshipers right by your side. Loot may be waiting for you my worshippers If you do defeat her. Loot of imaginable power!
+Scylla, the 8 headed Hydra lurks around the side of a narrow channel of water, right beside Olympus; She has been there for decades, eating millions of our soldiers. It's your job to take care of her once and for all! I see your strength may be enough to take her down. Worry not you have many other worshippers right by your side. Loot may be waiting for you my men and woman! If you do defeat her. Loot of unimaginable power!
 
 Scylla will be vulnerable in 15 Minutes
 Use https://raid.travitia.xyz/ to join the raid!
@@ -779,6 +779,12 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
                     u.id,
                 )
                 await ctx.send(f"The chest contained **{name}**.")
+            await self.bot.pool.execute(
+                'UPDATE profile SET "money"="money"+$1 WHERE "user"=ANY($2);',
+                10000,
+                [u.id for u in raid],
+            )
+            await ctx.send("All survivors were given **$10,000**.")
         else:
             await ctx.send(
                 "The raid did not manage to kill Scylla within 45 Minutes... It disappeared!"
