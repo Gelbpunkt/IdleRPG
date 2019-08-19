@@ -575,6 +575,215 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
                 "The raid did not manage to finish within 45 Minutes... Guilt disappeared!"
             )
 
+    @is_god()
+    @commands.command()
+    @locale_doc
+    async def athenaspawn(self, ctx, hp: IntGreaterThan(0)):
+        """[Athena only] Starts a raid."""
+        await self.bot.session.get(
+            "https://raid.travitia.xyz/toggle",
+            headers={"Authorization": self.bot.config.raidauth},
+        )
+        boss = {"hp": hp, "min_dmg": 100, "max_dmg": 500}
+        await ctx.channel.set_permissions(
+            ctx.guild.default_role, overwrite=self.read_only
+        )
+        await ctx.send(
+            """
+Scylla, the 8 headed Hydra lurks around the side of a narrow channel of water, right beside Olympus; She has been there for decades, eating millions of our men. It's your job to take care of her once and for all! I see your strength may be enough to take her down. Worry not you have many other worshipers right by your side. Loot may be waiting for you my worshippers If you do defeat her. Loot of imaginable power!
+
+Scylla will be vulnerable in 15 Minutes
+Use https://raid.travitia.xyz/ to join the raid!
+
+**Only followers of Athena may join.**
+
+Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=453963965521985536&scope=identify&response_type=code&redirect_uri=https://raid.travitia.xyz/callback>
+""",
+            file=discord.File("assets/other/scylla.jpg"),
+        )
+        if not self.bot.config.is_beta:
+            await asyncio.sleep(300)
+            await ctx.send("**Scylla will be vulnerable in 10 minutes**")
+            await asyncio.sleep(300)
+            await ctx.send("**Scylla will be vulnerable in 5 minutes**")
+            await asyncio.sleep(180)
+            await ctx.send("**Scylla will be vulnerable in 2 minutes**")
+            await asyncio.sleep(60)
+            await ctx.send("**Scylla will be vulnerable in 1 minute**")
+            await asyncio.sleep(30)
+            await ctx.send("**Scylla will be vulnerable in 30 seconds**")
+            await asyncio.sleep(20)
+            await ctx.send("**Scylla will be vulnerable in 10 seconds**")
+            await asyncio.sleep(10)
+        else:
+            await asyncio.sleep(60)
+        await ctx.send(
+            "**Scylla is vulnerable! Fetching participant data... Hang on!**"
+        )
+
+        async with self.bot.session.get(
+            "https://raid.travitia.xyz/joined",
+            headers={"Authorization": self.bot.config.raidauth},
+        ) as r:
+            raid_raw = await r.json()
+        async with self.bot.pool.acquire() as conn:
+            dmgs = await conn.fetch(
+                'SELECT p."user", p.class, ai.damage, p.atkmultiply FROM profile p JOIN allitems ai ON (p.user=ai.owner) JOIN inventory i ON (ai.id=i.item) WHERE i.equipped IS TRUE AND p.user=ANY($2) AND type=$1 AND p.god=$3;',
+                "Sword",
+                raid_raw,
+                "Athena, Goddess of Wisdom",
+            )
+            deffs = await conn.fetch(
+                'SELECT p."user", p.class, ai.armor, p.defmultiply FROM profile p JOIN allitems ai ON (p.user=ai.owner) JOIN inventory i ON (ai.id=i.item) WHERE i.equipped IS TRUE AND p.user=ANY($2) AND type=$1 AND p.god=$3;',
+                "Shield",
+                raid_raw,
+                "Athena, Goddess of Wisdom",
+            )
+        raid = {}
+        for i in raid_raw:
+            u = await self.bot.get_user_global(i)
+            if not u:
+                continue
+            j = next(filter(lambda x: x["user"] == i, dmgs), None)
+            if j is None:
+                continue
+            dmg = j["damage"] * j["atkmultiply"] if j else 0
+            j = next(filter(lambda x: x["user"] == i, deffs), None)
+            if j is None:
+                continue
+            deff = j["armor"] * j["defmultiply"] if j else 0
+            dmg, deff = await self.bot.generate_stats(i, dmg, deff)
+            raid[u] = {"hp": 250, "armor": deff, "damage": dmg}
+
+        await ctx.send("**Done getting data!**")
+
+        start = datetime.datetime.utcnow()
+
+        while (
+            boss["hp"] > 0
+            and len(raid) > 0
+            and datetime.datetime.utcnow() < start + datetime.timedelta(minutes=45)
+        ):
+            target = random.choice(list(raid.keys()))  # the guy it will attack
+            dmg = random.randint(
+                boss["min_dmg"], boss["max_dmg"]
+            )  # effective damage scylla does
+            dmg -= raid[target]["armor"]  # let's substract the shield, ouch
+            raid[target]["hp"] -= dmg  # damage dealt
+            if raid[target]["hp"] > 0:
+                em = discord.Embed(
+                    title="Scylla attacked!",
+                    description=f"{target} now has {raid[target]['hp']} HP!",
+                    colour=0xFFB900,
+                )
+            else:
+                em = discord.Embed(
+                    title="Scylla attacked!",
+                    description=f"{target} died!",
+                    colour=0xFFB900,
+                )
+            em.add_field(name="Theoretical Damage", value=dmg + raid[target]["armor"])
+            em.add_field(name="Shield", value=raid[target]["armor"])
+            em.add_field(name="Effective Damage", value=dmg)
+            em.set_author(name=str(target), icon_url=target.avatar_url)
+            em.set_thumbnail(url=f"{self.bot.BASE_URL}/scylla.jpg")
+            await ctx.send(embed=em)
+            if raid[target]["hp"] <= 0:
+                del raid[target]
+            dmg_to_take = sum(i["damage"] for i in raid.values())
+            boss["hp"] -= dmg_to_take
+            await asyncio.sleep(4)
+            em = discord.Embed(title="The raid attacked Scylla!", colour=0xFF5C00)
+            em.set_thumbnail(url=f"{self.bot.BASE_URL}/knight.jpg")
+            em.add_field(name="Damage", value=dmg_to_take)
+            if boss["hp"] > 0:
+                em.add_field(name="HP left", value=boss["hp"])
+            else:
+                em.add_field(name="HP left", value="Dead!")
+            await ctx.send(embed=em)
+            await asyncio.sleep(4)
+
+        if len(raid) == 0:
+            await ctx.send("The raid was all wiped!")
+        elif boss["hp"] < 1:
+            msg = await ctx.send(
+                "Scylla was defeated and left a chest. Be the first to react with 📫 to win it."
+            )
+
+            def check(r, u):
+                return (
+                    r.message.id == msg.id
+                    and u in raid
+                    and str(r.emoji) == "\U0001f4eb"
+                )
+
+            await msg.add_reaction("\U0001f4eb")
+            try:
+                r, u = await self.bot.wait_for("reaction_add", timeout=60, check=check)
+            except asyncio.TimeoutError:
+                return
+
+            await ctx.send(f"{u.mention} was first!")
+
+            inside = random.choice(
+                [("money", random.randint(50000, 100000))] * 30
+                + [("item",)] * 20
+                + [("boosters",)] * 20
+                + [("nothing",)] * 10
+                + [
+                    (
+                        "crate",
+                        random.choice(["rare"] * 7 + ["magic"] * 2 + ["legendary"]),
+                    )
+                ]
+                * 10
+                + [("loot", random.randint(100, 10000))] * 10
+            )
+            cont = inside[0]
+            if cont == "money":
+                await self.bot.pool.execute(
+                    'UPDATE profile SET "money"="money"+$1 WHERE "user"=$2;',
+                    inside[1],
+                    u.id,
+                )
+                await ctx.send(f"The chest contained **${inside[1]}**.")
+            elif cont == "item":
+                item = await self.bot.create_random_item(
+                    minstat=1, maxstat=41, minvalue=1000, maxvalue=5000, owner=u.id
+                )
+                await ctx.send(f"The chest contained an item: **{item['name']}**.")
+            elif cont == "boosters":
+                await self.bot.pool.execute(
+                    'UPDATE profile SET "time_booster"="time_booster"+$1, "luck_booster"="luck_booster"+$1, "money_booster"="money_booster"+$1 WHERE "user"=$2;',
+                    1,
+                    u.id,
+                )
+                await ctx.send("The chest contained 3 boosters.")
+            elif cont == "nothing":
+                await ctx.send("The chest was empty.")
+            elif cont == "crate":
+                await self.bot.pool.execute(
+                    f'UPDATE profile SET "crates_{inside[1]}"="crates_{inside[1]}"+$1 WHERE "user"=$2;',
+                    1,
+                    u.id,
+                )
+                await ctx.send(
+                    f"The chest contained a {getattr(self.bot.cogs['Crates'].emotes, inside[1])}."
+                )
+            elif cont == "loot":
+                name = random.choice(["Scylla's Head", "Scylla's Arm", "Scylla's Leg"])
+                await self.bot.pool.execute(
+                    'INSERT INTO loot ("name", "value", "user") VALUES ($1, $2, $3);',
+                    name,
+                    inside[1],
+                    u.id,
+                )
+                await ctx.send(f"The chest contained **{name}**.")
+        else:
+            await ctx.send(
+                "The raid did not manage to kill Scylla within 45 Minutes... It disappeared!"
+            )
+
     def getpriceto(self, level: float):
         return sum(i * 25000 for i in range(1, int(level * 10) - 9))
 
