@@ -6,7 +6,7 @@ You may [submit an issue](https://github.com/Gelbpunkt/IdleRPG/issues) or open p
 
 ## License
 
-The IdleRPG Project is licensed under the terms of the [GNU Affero General Public License 3.0](https://github.com/Gelbpunkt/IdleRPG/blob/v3.6/LICENSE.md) ("AGPL").
+The IdleRPG Project is licensed under the terms of the [GNU Affero General Public License 3.0](https://github.com/Gelbpunkt/IdleRPG/blob/v4/LICENSE) ("AGPL").
 
 The AGPL allows you to:
 - [x] Modify the code

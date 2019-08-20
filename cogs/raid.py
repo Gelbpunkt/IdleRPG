@@ -1150,6 +1150,302 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
             ctx.guild.default_role, overwrite=self.deny_sending
         )
 
+    @is_god()
+    @commands.command()
+    @locale_doc
+    async def salutationsspawn(self, ctx, hp: IntGreaterThan(0)):
+        """[Salutations only] Starts a raid."""
+        await self.bot.session.get(
+            "https://raid.travitia.xyz/toggle",
+            headers={"Authorization": self.bot.config.raidauth},
+        )
+        boss = {"hp": hp, "min_dmg": 100, "max_dmg": 500}
+        await ctx.channel.set_permissions(
+            ctx.guild.default_role, overwrite=self.read_only
+        )
+        await ctx.send(
+            """
+**ALERT! CYBERUS has been summoned and is ENRAGED! CYBERUS: "Those who dare defile and seek wealth and power from me shall be purished..."**
+
+The bestie will be vulnerable in 15 Minutes
+Use https://raid.travitia.xyz/ to join the raid!
+
+**Only followers of Salutations may join.**
+
+Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=453963965521985536&scope=identify&response_type=code&redirect_uri=https://raid.travitia.xyz/callback>
+""",
+            file=discord.File("assets/other/cyberus.jpg"),
+        )
+        if not self.bot.config.is_beta:
+            await asyncio.sleep(300)
+            await ctx.send("**Cyberus will be vulnerable in 10 minutes**")
+            await asyncio.sleep(300)
+            await ctx.send("**Cyberus will be vulnerable in 5 minutes**")
+            await asyncio.sleep(180)
+            await ctx.send("**Cyberus will be vulnerable in 2 minutes**")
+            await asyncio.sleep(60)
+            await ctx.send("**Cyberus will be vulnerable in 1 minute**")
+            await asyncio.sleep(30)
+            await ctx.send("**Cyberus will be vulnerable in 30 seconds**")
+            await asyncio.sleep(20)
+            await ctx.send("**Cyberus will be vulnerable in 10 seconds**")
+            await asyncio.sleep(10)
+        else:
+            await asyncio.sleep(60)
+        await ctx.send(
+            "**Cyberus is vulnerable! Fetching participant data... Hang on!**"
+        )
+
+        async with self.bot.session.get(
+            "https://raid.travitia.xyz/joined",
+            headers={"Authorization": self.bot.config.raidauth},
+        ) as r:
+            raid_raw = await r.json()
+        async with self.bot.pool.acquire() as conn:
+            dmgs = await conn.fetch(
+                'SELECT p."user", p.class, ai.damage, p.atkmultiply FROM profile p JOIN allitems ai ON (p.user=ai.owner) JOIN inventory i ON (ai.id=i.item) WHERE i.equipped IS TRUE AND p.user=ANY($2) AND type=$1 AND p.god=$3;',
+                "Sword",
+                raid_raw,
+                "Salutations",
+            )
+            deffs = await conn.fetch(
+                'SELECT p."user", p.class, ai.armor, p.defmultiply FROM profile p JOIN allitems ai ON (p.user=ai.owner) JOIN inventory i ON (ai.id=i.item) WHERE i.equipped IS TRUE AND p.user=ANY($2) AND type=$1 AND p.god=$3;',
+                "Shield",
+                raid_raw,
+                "Salutations",
+            )
+        raid = {}
+        for i in raid_raw:
+            u = await self.bot.get_user_global(i)
+            if not u:
+                continue
+            j = next(filter(lambda x: x["user"] == i, dmgs), None)
+            if j is None:
+                continue
+            dmg = j["damage"] * j["atkmultiply"] if j else 0
+            j = next(filter(lambda x: x["user"] == i, deffs), None)
+            if j is None:
+                continue
+            deff = j["armor"] * j["defmultiply"] if j else 0
+            dmg, deff = await self.bot.generate_stats(i, dmg, deff)
+            raid[u] = {"hp": 250, "armor": deff, "damage": dmg}
+
+        await ctx.send("**Done getting data!**")
+
+        start = datetime.datetime.utcnow()
+
+        while (
+            boss["hp"] > 0
+            and len(raid) > 0
+            and datetime.datetime.utcnow() < start + datetime.timedelta(minutes=45)
+        ):
+            target = random.choice(list(raid.keys()))
+            msg = await ctx.send(f"Letting {target.mention} choose an action...")
+            try:
+                action = ["Greater Heal", "Second Wind", "Block"][
+                    await self.bot.paginator.Choose(
+                        entries=[
+                            "Greater Heal: Heal yourself for 40% HP",
+                            "Second Wind: Increase all users' damage by 50%",
+                            "Block: Block the attack with 50% chance",
+                        ],
+                        title="Choose a Raid Action",
+                        timeout=10,
+                        return_index=True,
+                    ).paginate(ctx, location=target)
+                ]
+            except self.bot.paginator.NoChoice:
+                action = None
+            cyberus_skill = random.choice(["enragement", "assassinate", "howl"])
+            if action == "Greater Heal":
+                raid[target]["hp"] += 63
+                if raid[target]["hp"] > 250:
+                    raid[target]["hp"] = 250
+            if action == "Block" and random.randint(1, 10) < 5:
+                await ctx.send(f"{target.mention} blocked the attack by Cyberus.")
+            else:
+                if cyberus_skill == "enragement":
+                    dmg = round(
+                        random.randint(boss["min_dmg"], boss["max_dmg"]) * 1.4
+                    )  # 40% more
+                    dmg -= raid[target]["armor"]
+                    raid[target]["hp"] -= dmg  # damage dealt
+                    if raid[target]["hp"] > 0:
+                        em = discord.Embed(
+                            title="Cyberus attacked!",
+                            description=f"{target} now has {raid[target]['hp']} HP!",
+                            colour=0xFFB900,
+                        )
+                    else:
+                        em = discord.Embed(
+                            title="Cyberus attacked!",
+                            description=f"{target} died!",
+                            colour=0xFFB900,
+                        )
+                    em.add_field(
+                        name="Theoretical Damage", value=dmg + raid[target]["armor"]
+                    )
+                    em.add_field(name="Shield", value=raid[target]["armor"])
+                    em.add_field(name="Effective Damage", value=dmg)
+                    em.set_author(name=str(target), icon_url=target.avatar_url)
+                    em.set_thumbnail(url=f"{self.bot.BASE_URL}/cyberus.jpg")
+                    await ctx.send(
+                        "Cyberus used **enragement**: Attack is increased by 40% but is more susceptible to damage by 10%.",
+                        embed=em,
+                    )
+                    if raid[target]["hp"] <= 0:
+                        del raid[target]
+                elif cyberus_skill == "assassinate" and random.randint(1, 10) < 5:
+                    del raid[target]
+                    await ctx.send(
+                        "Cyberus successfully used **assassinate** and kills a player regardless of HP.",
+                        embed=discord.Embed(
+                            title="Cyberus assassinated!",
+                            description=f"{target} died.",
+                            colour=0xFFB900,
+                        )
+                        .set_author(name=str(target), icon_url=target.avatar_url)
+                        .set_thumbnail(url=f"{self.bot.BASE_URL}/cyberus.jpg"),
+                    )
+                else:
+                    if cyberus_skill == "assassinate":
+                        text = "Cyberus failed to use **assassinate**."
+                    else:
+                        text = "Cyberus used **howl** to lower player damage by 30%."
+                    dmg = random.randint(boss["min_dmg"], boss["max_dmg"])
+                    dmg -= raid[target]["armor"]
+                    raid[target]["hp"] -= dmg  # damage dealt
+                    if raid[target]["hp"] > 0:
+                        em = discord.Embed(
+                            title="Cyberus attacked!",
+                            description=f"{target} now has {raid[target]['hp']} HP!",
+                            colour=0xFFB900,
+                        )
+                    else:
+                        em = discord.Embed(
+                            title="Cyberus attacked!",
+                            description=f"{target} died!",
+                            colour=0xFFB900,
+                        )
+                    em.add_field(
+                        name="Theoretical Damage", value=dmg + raid[target]["armor"]
+                    )
+                    em.add_field(name="Shield", value=raid[target]["armor"])
+                    em.add_field(name="Effective Damage", value=dmg)
+                    em.set_author(name=str(target), icon_url=target.avatar_url)
+                    em.set_thumbnail(url=f"{self.bot.BASE_URL}/cyberus.jpg")
+                    await ctx.send(text, embed=em)
+                    if raid[target]["hp"] <= 0:
+                        del raid[target]
+            dmg_to_take = sum(i["damage"] for i in raid.values())
+            base_dmg = dmg_to_take
+            text = ""
+            if cyberus_skill == "enragement":
+                text = "Cyberus takes **10%** more damage due to **enragement**.\n"
+                dmg_to_take += round(base_dmg * 0.1)
+            if action == "Second Wind":
+                text = f"{text}The players deal **50%** more damage due to **second wind**.\n"
+                dmg_to_take += round(base_dmg * 0.5)
+            if cyberus_skill == "howl":
+                text = f"{text}Cyberus uses **howl** to reduce damage by 30%"
+                dmg_to_take -= round(dmg_to_take * 0.3)
+            boss["hp"] -= dmg_to_take
+            await asyncio.sleep(4)
+            em = discord.Embed(title="The raid attacked Cyberus!", colour=0xFF5C00)
+            em.set_thumbnail(url=f"{self.bot.BASE_URL}/knight.jpg")
+            em.add_field(name="Damage", value=dmg_to_take)
+            if boss["hp"] > 0:
+                em.add_field(name="HP left", value=boss["hp"])
+            else:
+                em.add_field(name="HP left", value="Dead!")
+            await ctx.send(text, embed=em)
+            await asyncio.sleep(4)
+
+        if len(raid) == 0:
+            await ctx.send("The raid was all wiped!")
+        elif boss["hp"] < 1:
+            await ctx.channel.set_permissions(
+                ctx.guild.default_role, overwrite=self.allow_sending
+            )
+            highest_bid = [
+                ctx.guild.get_member(356_091_260_429_402_122),
+                0,
+            ]  # user, amount
+
+            def check(msg):
+                if (
+                    msg.channel.id != ctx.channel.id
+                    or (not msg.content.isdigit())
+                    or (msg.author not in raid)
+                ):
+                    return False
+                if not (int(msg.content) > highest_bid[1]):
+                    return False
+                if (
+                    msg.author.id == highest_bid[0].id
+                ):  # don't allow a player to outbid themselves
+                    return False
+                return True
+
+            page = commands.Paginator()
+            for u in list(raid.keys()):
+                page.add_line(u.mention)
+            page.add_line(
+                "The raid killed the boss!\nHe dropped a <:CrateLegendary:598094865678598144> Legendary Crate!\nThe highest bid for it wins <:roosip:505447694408482846>\nSimply type how much you bid!"
+            )
+            for p in page.pages:
+                await ctx.send(p[4:-4])
+
+            while True:
+                try:
+                    msg = await self.bot.wait_for("message", timeout=60, check=check)
+                except asyncio.TimeoutError:
+                    break
+                bid = int(msg.content)
+                money = await self.bot.pool.fetchval(
+                    'SELECT money FROM profile WHERE "user"=$1;', msg.author.id
+                )
+                if money and money >= bid:
+                    highest_bid = [msg.author, bid]
+                    await ctx.send(f"{msg.author.mention} bids **${msg.content}**!")
+            msg = await ctx.send(
+                f"Auction done! Winner is {highest_bid[0].mention} with **${highest_bid[1]}**!\nGiving Legendary Crate..."
+            )
+            money = await self.bot.pool.fetchval(
+                'SELECT money FROM profile WHERE "user"=$1;', highest_bid[0].id
+            )
+            if money >= highest_bid[1]:
+                await self.bot.pool.execute(
+                    'UPDATE profile SET "money"="money"-$1, "crates_legendary"="crates_legendary"+1 WHERE "user"=$2;',
+                    highest_bid[1],
+                    highest_bid[0].id,
+                )
+                await msg.edit(content=f"{msg.content} Done!")
+            else:
+                await ctx.send(
+                    f"{highest_bid[0].mention} spent the money in the meantime... Meh! Noone gets it then, pah!\nThis incident has been reported and they will get banned if it happens again. Cheers!"
+                )
+
+            cash = int(hp / 4 / len(raid))  # what da hood gets per survivor
+            await self.bot.pool.execute(
+                'UPDATE profile SET money=money+$1 WHERE "user"=ANY($2);',
+                cash,
+                [u.id for u in raid.keys()],
+            )
+            await ctx.send(
+                f"**Gave ${cash} of Cyberus' ${int(hp / 4)} drop to all survivors!**"
+            )
+
+        else:
+            await ctx.send(
+                "The raid did not manage to kill Cyberus within 45 Minutes... He disappeared!"
+            )
+
+        await asyncio.sleep(30)
+        await ctx.channel.set_permissions(
+            ctx.guild.default_role, overwrite=self.deny_sending
+        )
+
     def getpriceto(self, level: float):
         return sum(i * 25000 for i in range(1, int(level * 10) - 9))
 
