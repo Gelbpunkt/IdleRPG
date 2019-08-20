@@ -357,6 +357,8 @@ Use the reactions attack, defend or recover
     @locale_doc
     async def cancel(self, ctx):
         _("""Cancels your current adventure.""")
+        if not await ctx.confirm("Are you sure you want to cancel your current adventure?"):
+            return await ctx.send("Did not cancel your adventure. The journey continues...")
         await self.bot.delete_adventure(ctx.author)
         await ctx.send(
             _(
