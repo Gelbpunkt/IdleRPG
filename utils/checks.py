@@ -319,7 +319,7 @@ def update_pet():
                         ctx.author.id,
                     )
                     raise PetDied()
-                elif secrets.randbelow(100) > data["love"]:
+                elif data["love"] < 75 and secrets.randbelow(100) > data["love"]:
                     await conn.execute(
                         'DELETE FROM pets WHERE "user"=$1;', ctx.author.id
                     )

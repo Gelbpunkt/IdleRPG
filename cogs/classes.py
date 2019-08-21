@@ -380,7 +380,7 @@ Priest   ->  Mysticist ->  Summoner    -> Seer           ->  Ritualist
     @update_pet()
     @has_char()
     @is_class("Ranger")
-    @user_cooldown(43200)  # Meanie!
+    @user_cooldown(21600)
     @pet.command(aliases=["caress", "hug", "kiss"])
     @locale_doc
     async def cuddle(self, ctx):
