@@ -68,7 +68,6 @@ class Tournament(commands.Cog):
             if await user_has_char(self.bot, u.id):
                 if u in participants:
                     # May be that we're too slow and user reacting too fast
-                    await ctx.send("uwu yes")
                     continue
                 participants.append(u)
                 await ctx.send(
