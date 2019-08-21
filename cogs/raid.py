@@ -1568,6 +1568,156 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
                 "The raid did not manage to kill Asmodeus within 45 Minutes... He disappeared!"
             )
 
+    @is_god()
+    @commands.command()
+    @locale_doc
+    async def anankespawn(self, ctx, hp: IntGreaterThan(0)):
+        """[Ananke only] Starts a raid."""
+        await self.bot.session.get(
+            "https://raid.travitia.xyz/toggle",
+            headers={"Authorization": self.bot.config.raidauth},
+        )
+        boss = {"hp": hp, "min_dmg": 10, "max_dmg": 50}
+        await ctx.channel.set_permissions(
+            ctx.guild.default_role, overwrite=self.read_only
+        )
+        await ctx.send(
+            """
+A convinced Windows® user tries to attack Idle's server with just his conviction to Windows® to force it to turn off! Convince him to use Linux Distributions (e.g. Fedora) before idle dies for ten minutes!
+
+Use https://raid.travitia.xyz/ to join the raid!
+**Only followers of Ananke may join.**
+
+Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=453963965521985536&scope=identify&response_type=code&redirect_uri=https://raid.travitia.xyz/callback>
+
+> IdleRPG is not affiliated with Windows®, Microsoft© or any other non open-source software or vendor in any way
+""",
+            file=discord.File("assets/other/windows.png"),
+        )
+        if not self.bot.config.is_beta:
+            await asyncio.sleep(300)
+            await ctx.send(
+                "**The convinced Windows® user will be vulnerable in 10 minutes**"
+            )
+            await asyncio.sleep(300)
+            await ctx.send(
+                "**The convinced Windows® user will be vulnerable in 5 minutes**"
+            )
+            await asyncio.sleep(180)
+            await ctx.send(
+                "**The convinced Windows® user will be vulnerable in 2 minutes**"
+            )
+            await asyncio.sleep(60)
+            await ctx.send(
+                "**The convinced Windows® user will be vulnerable in 1 minute**"
+            )
+            await asyncio.sleep(30)
+            await ctx.send(
+                "**The convinced Windows® user will be vulnerable in 30 seconds**"
+            )
+            await asyncio.sleep(20)
+            await ctx.send(
+                "**The convinced Windows® user will be vulnerable in 10 seconds**"
+            )
+            await asyncio.sleep(10)
+        else:
+            await asyncio.sleep(60)
+        await ctx.send(
+            "**The convinced Windows® user is vulnerable! Fetching participant data... Hang on!**"
+        )
+
+        async with self.bot.session.get(
+            "https://raid.travitia.xyz/joined",
+            headers={"Authorization": self.bot.config.raidauth},
+        ) as r:
+            raid_raw = await r.json()
+        async with self.bot.pool.acquire() as conn:
+            dmgs = await conn.fetch(
+                'SELECT p."user", p.class, ai.damage, p.atkmultiply FROM profile p JOIN allitems ai ON (p.user=ai.owner) JOIN inventory i ON (ai.id=i.item) WHERE i.equipped IS TRUE AND p.user=ANY($2) AND type=$1 AND p.god=$3;',
+                "Sword",
+                raid_raw,
+                "Ananke",
+            )
+            deffs = await conn.fetch(
+                'SELECT p."user", p.class, ai.armor, p.defmultiply FROM profile p JOIN allitems ai ON (p.user=ai.owner) JOIN inventory i ON (ai.id=i.item) WHERE i.equipped IS TRUE AND p.user=ANY($2) AND type=$1 AND p.god=$3;',
+                "Shield",
+                raid_raw,
+                "Ananke",
+            )
+        raid = {}
+        for i in raid_raw:
+            u = await self.bot.get_user_global(i)
+            if not u:
+                continue
+            j = next(filter(lambda x: x["user"] == i, dmgs), None)
+            if j is None:
+                continue
+            dmg = j["damage"] * j["atkmultiply"] if j else 0
+            j = next(filter(lambda x: x["user"] == i, deffs), None)
+            if j is None:
+                continue
+            deff = j["armor"] * j["defmultiply"] if j else 0
+            dmg, deff = await self.bot.generate_stats(i, dmg, deff)
+            raid[u] = {"armor": deff, "damage": dmg}
+
+        await ctx.send("**Done getting data!**")
+
+        start = datetime.datetime.utcnow()
+
+        while boss[
+            "hp"
+        ] > 0 and datetime.datetime.utcnow() < start + datetime.timedelta(minutes=45):
+            target = random.choice(list(raid.keys()))
+            dmg = random.randint(boss["min_dmg"], boss["max_dmg"])
+            dmg -= raid[target]["armor"]
+            raid[target]["damage"] -= dmg
+            raid[target]["armor"] -= dmg
+            if raid[target]["damage"] < 0:
+                raid[target]["damage"] = 0
+            if raid[target]["armor"] < 0:
+                raid[target]["armor"] = 0
+            raid_dmg = sum(i["damage"] for i in raid.values())
+            boss["hp"] -= raid_dmg
+            em = discord.Embed(title="Convincing a Windows® user", colour=0xFFB900)
+            em.add_field(
+                name="Attack Target",
+                value=f"{target} ({raid[target]['damage']} convinction power; {raid[target]['armor']} personal convinction)",
+            )
+            em.add_field(
+                name="Theoretical Convinction", value=dmg + raid[target]["armor"]
+            )
+            em.add_field(name="Effective Convinction", value=dmg)
+            em.set_author(name=str(target), icon_url=target.avatar_url)
+            em.set_thumbnail(url=f"{self.bot.BASE_URL}/windows.png")
+            em.add_field(name="Raid Convinction", value=raid_dmg)
+            em.add_field(
+                name="Windows® User Convinction Of Windows®",
+                value=boss_hp if (boss_hp := boss["hp"]) > 0 else "Convinced!",
+            )
+            await ctx.send(embed=em)
+
+            await asyncio.sleep(4)
+
+        if boss["hp"] < 1:
+            winner = random.choice(raid)
+            await self.bot.pool.execute(
+                'UPDATE profile SET "crates_legendary"="crates_legendary"+1 WHERE "user"=$1;',
+                winner.id,
+            )
+            await ctx.send(
+                "The Windows® user has been convinced, he is happily using a Linux distribution now. He also left a {self.bot.cogs['Crates'].emotes.legendary} to a random survivor ({winner.mention}) as a thank you. Soon, the squad can convince more people from this planet!"
+            )
+
+        else:
+            await ctx.send(
+                "The raid did not manage to kill the convinced Windows® User within 45 Minutes... He disappeared and continues terrifying the web with Microsoft Edge® and Windows Explorer®!"
+            )
+
+        await asyncio.sleep(30)
+        await ctx.channel.set_permissions(
+            ctx.guild.default_role, overwrite=self.deny_sending
+        )
+
         await asyncio.sleep(30)
         await ctx.channel.set_permissions(
             ctx.guild.default_role, overwrite=self.deny_sending
