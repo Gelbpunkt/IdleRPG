@@ -199,12 +199,14 @@ IdleRPG is a global bot, your characters are valid everywhere"""
 **Money**: `${money}`
 **Level**: `{level}`
 **Class**: `{class_}`
+**Race**: `{race}`
 **PvP Wins**: `{pvp}`
 **Guild**: `{guild}`"""
             ).format(
                 money=p_data["money"],
                 level=level,
-                class_=p_data["class"],
+                class_="/".join(p_data["class"]),
+                race=p_data["race"],
                 pvp=p_data["pvpwins"],
                 guild=guild,
             ),
