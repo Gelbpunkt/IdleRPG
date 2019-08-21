@@ -728,15 +728,8 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
             inside = random.choice(
                 [("money", random.randint(50000, 100000))] * 30
                 + [("item",)] * 20
-                + [("boosters",)] * 20
-                + [("nothing",)] * 10
-                + [
-                    (
-                        "crate",
-                        random.choice(["rare"] * 7 + ["magic"] * 2 + ["legendary"]),
-                    )
-                ]
-                * 10
+                + [("boosters",)] * 15
+                + [("crate", random.choice(["magic", "legendary"]))] * 25
                 + [("loot", random.randint(100, 10000))] * 10
             )
             cont = inside[0]
@@ -759,8 +752,6 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
                     u.id,
                 )
                 await ctx.send("The chest contained 3 boosters.")
-            elif cont == "nothing":
-                await ctx.send("The chest was empty.")
             elif cont == "crate":
                 await self.bot.pool.execute(
                     f'UPDATE profile SET "crates_{inside[1]}"="crates_{inside[1]}"+$1 WHERE "user"=$2;',
@@ -1439,6 +1430,142 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
         else:
             await ctx.send(
                 "The raid did not manage to kill Cyberus within 45 Minutes... He disappeared!"
+            )
+
+        await asyncio.sleep(30)
+        await ctx.channel.set_permissions(
+            ctx.guild.default_role, overwrite=self.deny_sending
+        )
+
+    @is_god()
+    @commands.command()
+    @locale_doc
+    async def asmodeusspawn(self, ctx, hp: IntGreaterThan(0)):
+        """[Asmodeus only] Starts a raid."""
+        await self.bot.session.get(
+            "https://raid.travitia.xyz/toggle",
+            headers={"Authorization": self.bot.config.raidauth},
+        )
+        boss = {"hp": hp, "min_dmg": 100, "max_dmg": 500}
+        await ctx.channel.set_permissions(
+            ctx.guild.default_role, overwrite=self.read_only
+        )
+        await ctx.send(
+            """
+Asmodeus sends a wave of bloodlust throughout his followers and prepares himself for battle. Prepare yourselves as well, this will not be an easy fight. Join the raid now to battle him and reap the rewards.
+
+Use https://raid.travitia.xyz/ to join the raid!
+**Only followers of Asmodeus may join.**
+
+Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=453963965521985536&scope=identify&response_type=code&redirect_uri=https://raid.travitia.xyz/callback>
+""",
+            file=discord.File("assets/other/asmodeus.png"),
+        )
+        if not self.bot.config.is_beta:
+            await asyncio.sleep(300)
+            await ctx.send("**Asmodeus will be vulnerable in 10 minutes**")
+            await asyncio.sleep(300)
+            await ctx.send("**Asmodeus will be vulnerable in 5 minutes**")
+            await asyncio.sleep(180)
+            await ctx.send("**Asmodeus will be vulnerable in 2 minutes**")
+            await asyncio.sleep(60)
+            await ctx.send("**Asmodeus will be vulnerable in 1 minute**")
+            await asyncio.sleep(30)
+            await ctx.send("**Asmodeus will be vulnerable in 30 seconds**")
+            await asyncio.sleep(20)
+            await ctx.send("**Asmodeus will be vulnerable in 10 seconds**")
+            await asyncio.sleep(10)
+        else:
+            await asyncio.sleep(60)
+        await ctx.send(
+            "**The god is vulnerable! Fetching participant data... Hang on!**"
+        )
+
+        async with self.bot.session.get(
+            "https://raid.travitia.xyz/joined",
+            headers={"Authorization": self.bot.config.raidauth},
+        ) as r:
+            raid_raw = await r.json()
+        async with self.bot.pool.acquire() as conn:
+            dmgs = await conn.fetch(
+                'SELECT p."user", p.class, ai.damage, p.atkmultiply FROM profile p JOIN allitems ai ON (p.user=ai.owner) JOIN inventory i ON (ai.id=i.item) WHERE i.equipped IS TRUE AND p.user=ANY($2) AND type=$1 AND p.god=$3;',
+                "Sword",
+                raid_raw,
+                "Asmodeus",
+            )
+            deffs = await conn.fetch(
+                'SELECT p."user", p.class, ai.armor, p.defmultiply FROM profile p JOIN allitems ai ON (p.user=ai.owner) JOIN inventory i ON (ai.id=i.item) WHERE i.equipped IS TRUE AND p.user=ANY($2) AND type=$1 AND p.god=$3;',
+                "Shield",
+                raid_raw,
+                "Asmodeus",
+            )
+        raid = {}
+        for i in raid_raw:
+            u = await self.bot.get_user_global(i)
+            if not u:
+                continue
+            j = next(filter(lambda x: x["user"] == i, dmgs), None)
+            if j is None:
+                continue
+            dmg = j["damage"] * j["atkmultiply"] if j else 0
+            j = next(filter(lambda x: x["user"] == i, deffs), None)
+            if j is None:
+                continue
+            deff = j["armor"] * j["defmultiply"] if j else 0
+            dmg, deff = await self.bot.generate_stats(i, dmg, deff)
+            raid[u] = {"hp": 250, "armor": deff, "damage": dmg}
+
+        await ctx.send("**Done getting data!**")
+
+        start = datetime.datetime.utcnow()
+
+        while (
+            boss["hp"] > 0
+            and len(raid) > 0
+            and datetime.datetime.utcnow() < start + datetime.timedelta(minutes=45)
+        ):
+            target = random.choice(list(raid.keys()))
+            dmg = random.randint(boss["min_dmg"], boss["max_dmg"])
+            dmg -= raid[target]["armor"]
+            raid[target]["hp"] -= dmg
+            raid_dmg = sum(i["damage"] for i in raid.values())
+            boss["hp"] -= raid_dmg
+            em = discord.Embed(title="Asmodeus Raid", colour=0xFFB900)
+            if (hp := raid[target]["hp"]) > 0:
+                em.add_field(name="Attack Target", value=f"{target} ({hp} HP)")
+            else:
+                em.add_field(name="Attack Target", value=f"{target} (Now dead!)")
+            em.add_field(name="Theoretical Damage", value=dmg + raid[target]["armor"])
+            em.add_field(name="Shield", value=raid[target]["armor"])
+            em.add_field(name="Effective Damage", value=dmg)
+            em.set_author(name=str(target), icon_url=target.avatar_url)
+            em.set_thumbnail(url=f"{self.bot.BASE_URL}/asmodeus.png")
+            em.add_field(name="Raid Damage", value=raid_dmg)
+            em.add_field(
+                name="Asmodeus HP",
+                value=boss_hp if (boss_hp := boss["hp"]) > 0 else "Dead!",
+            )
+            await ctx.send(embed=em)
+            if raid[target]["hp"] <= 0:
+                del raid[target]
+
+            await asyncio.sleep(4)
+
+        if len(raid) == 0:
+            await ctx.send("The raid was all wiped!")
+        elif boss["hp"] < 1:
+            winner = random.choice(raid)
+            await self.bot.pool.execute(
+                'UPDATE profile SET "crates_legendary"="crates_legendary"+1 WHERE "user"=$1;',
+                winner.id,
+            )
+            await ctx.send(
+                "Asmodeus has been defeated. He will lay low for now. He also left a {self.bot.cogs['Crates'].emotes.legendary} to a random survivor ({winner.mention}) for their bravery. They may not get a second chance next time."
+            )
+
+        else:
+            await ctx.send(
+                "The raid did not manage to kill Asmodeus within 45 Minutes... He disappeared!"
             )
 
         await asyncio.sleep(30)

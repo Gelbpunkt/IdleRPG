@@ -45,7 +45,6 @@ class Tournament(commands.Cog):
             ).format(author=ctx.author.mention, prize=prize)
         )
         participants = [ctx.author]
-        acceptingentries = True
 
         await msg.add_reaction("\U00002694")
 
@@ -57,16 +56,20 @@ class Tournament(commands.Cog):
                 and not u.bot
             )
 
-        while acceptingentries:
+        while True:
             try:
                 r, u = await self.bot.wait_for(
                     "reaction_add", timeout=30, check=simplecheck
                 )
             except asyncio.TimeoutError:
-                acceptingentries = False
                 if len(participants) < 2:
                     return await ctx.send(_("Noone joined your tournament."))
+                break
             if await user_has_char(self.bot, u.id):
+                if u in participants:
+                    # May be that we're too slow and user reacting too fast
+                    await ctx.send("uwu yes")
+                    continue
                 participants.append(u)
                 await ctx.send(
                     _("{user} joined the tournament.").format(user=u.mention)
@@ -87,11 +90,10 @@ class Tournament(commands.Cog):
             await ctx.send(
                 _("Tournament started with **{num}** entries.").format(num=toremove)
             )
-        remain = participants
         text = _("vs")
         while len(participants) > 1:
             random.shuffle(participants)
-            matches = list(chunks(remain, 2))
+            matches = list(chunks(participants, 2))
 
             for match in matches:
                 await ctx.send(f"{match[0].mention} {text} {match[1].mention}")
