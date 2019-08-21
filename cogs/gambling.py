@@ -414,6 +414,98 @@ class Gambling(commands.Cog):
         bj = BlackJack(ctx, amount)
         await bj.run()
 
+    @has_char()
+    @commands.command(aliases=["doubleorsteal"])
+    @locale_doc
+    async def dos(self, ctx, user: discord.Member = None):
+        _(
+            "Play a double-or-steal game against someone. You start with $100 and can take it or double it with your money."
+        )
+        msg = await ctx.send(
+            _("React with 💰 to play double-or-steal with {user}!").format(
+                user=ctx.author
+            )
+        )
+
+        def check(r, u):
+            if user and user != u:
+                return False
+            return (
+                u != ctx.author
+                and not u.bot
+                and r.message.id == msg.id
+                and str(r.emoji) == "\U0001f4b0"
+            )
+
+        await msg.add_reaction("\U0001f4b0")
+
+        try:
+            r, u = await self.bot.wait_for("reaction_add", check=check, timeout=30)
+        except asyncio.TimeoutError:
+            return await ctx.send(_("Timed out."))
+
+        money = 100
+        users = (u, ctx.author)
+
+        async with self.bot.pool.acquire() as conn:
+            if not await self.bot.has_money(ctx.author, 100, conn=conn):
+                return await ctx.send(
+                    _("{user} is too poor to double.").format(user=user)
+                )
+            await conn.execute(
+                'UPDATE profile SET "money"="money"-100 WHERE "user"=$1;', ctx.author.id
+            )
+
+        while True:
+            user, other = users
+            try:
+                action = await self.bot.paginator.Choose(
+                    title=_("Double or steal ${money}?").format(money=money),
+                    entries=[_("Double"), _("Steal")],
+                    return_index=True,
+                ).paginate(ctx, user=user)
+            except self.bot.paginator.NoChoice:
+                await self.bot.pool.execute(
+                    'UPDATE profile SET "money"="money"+$1 WHERE "user"=$2;',
+                    money,
+                    other.id,
+                )
+                return await ctx.send(_("Timed out."))
+
+            if action:
+                await self.bot.pool.execute(
+                    'UPDATE profile SET "money"="money"+$1 WHERE "user"=$2;',
+                    money,
+                    user.id,
+                )
+                return await ctx.send(
+                    _("{user} stole **${money}**.").format(user=user, money=money)
+                )
+            else:
+                new_money = money * 2
+                async with self.bot.pool.acquire() as conn:
+                    await conn.execute(
+                        'UPDATE profile SET "money"="money"+$1 WHERE "user"=$2;',
+                        money,
+                        other.id,
+                    )
+                    if not await self.bot.has_money(user.id, new_money, conn=conn):
+                        return await ctx.send(
+                            _("{user} is too poor to double.").format(user=user)
+                        )
+                    await conn.execute(
+                        'UPDATE profile SET "money"="money"-$1 WHERE "user"=$2;',
+                        new_money,
+                        user.id,
+                    )
+                    await ctx.send(
+                        _("{user} doubled to **${money}**.").format(
+                            user=user, money=new_money
+                        )
+                    )
+                    money = new_money
+                    users = (other, user)
+
 
 def setup(bot):
     bot.add_cog(Gambling(bot))

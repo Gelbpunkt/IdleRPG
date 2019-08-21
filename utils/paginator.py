@@ -594,7 +594,7 @@ class Choose:
         self.timeout = timeout
         self.return_index = return_index
 
-    async def paginate(self, ctx, location=None):
+    async def paginate(self, ctx, location=None, user=None):
         if len(self.entries) > 10:
             raise ValueError("Exceeds maximum size")
         elif len(self.entries) < 2:
@@ -614,13 +614,15 @@ class Choose:
             em.set_footer(text=self.footer)
 
         self.controller = em
-        return await self.reaction_controller(ctx, location=location)
+        return await self.reaction_controller(ctx, location=location, user=user)
 
-    async def reaction_controller(self, ctx, location):
+    async def reaction_controller(self, ctx, location, user):
         if not location:
             base = await ctx.send(embed=self.controller)
         else:
             base = await location.send(embed=self.controller)
+
+        location = user
 
         for emoji in self.emojis:
             await base.add_reaction(emoji)
