@@ -24,8 +24,8 @@ from typing import Optional
 import discord
 from discord.ext import commands
 
-from classes.converters import CoinSide, IntFromTo, IntGreaterThan
-from utils.checks import has_char, has_money
+from classes.converters import CoinSide, IntFromTo, IntGreaterThan, MemberWithCharacter
+from utils.checks import has_char, has_money, user_has_char
 
 
 class BlackJack:
@@ -417,7 +417,7 @@ class Gambling(commands.Cog):
     @has_char()
     @commands.command(aliases=["doubleorsteal"])
     @locale_doc
-    async def dos(self, ctx, user: discord.Member = None):
+    async def dos(self, ctx, user: MemberWithCharacter = None):
         _(
             "Play a double-or-steal game against someone. You start with $100 and can take it or double it with your money."
         )
@@ -444,6 +444,8 @@ class Gambling(commands.Cog):
         except asyncio.TimeoutError:
             return await ctx.send(_("Timed out."))
 
+        if not await user_has_char(self.bot, u.id):
+            return await ctx.send(_("{user} has not character.").format(user=u))
         money = 100
         users = (u, ctx.author)
 
