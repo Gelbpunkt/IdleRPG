@@ -251,10 +251,11 @@ class Battles(commands.Cog):
                 o = o[1 - plz.index(u)]
                 idx = PLAYERS.index(u)
                 if MOVES_DONE[u] == "recover":
-                    HP[idx] += 20
+                    heal_hp = round(DAMAGE[1 - idx] * 0.25) or 1
+                    HP[idx] += heal_hp
                     await ctx.send(
-                        _("{user} healed themselves for **20 HP**.").format(
-                            user=u.mention
+                        _("{user} healed themselves for **{hp} HP**.").format(
+                            user=u.mention, hp=heal_hp
                         )
                     )
                 elif MOVES_DONE[u] == "attack" and MOVES_DONE[o] != "defend":
