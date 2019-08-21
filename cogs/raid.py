@@ -859,9 +859,11 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
 
         start = datetime.datetime.utcnow()
 
-        while len(
-            scrael
-        ) > 0 and datetime.datetime.utcnow() < start + datetime.timedelta(minutes=45):
+        while (
+            len(scrael) > 0
+            and len(raid) > 0
+            and datetime.datetime.utcnow() < start + datetime.timedelta(minutes=45)
+        ):
             target, target_data = random.choice(list(raid.items()))
             dmg = random.randint(50, 90)
             dmg -= target_data["armor"] * Decimal(random.choice(["0.4", "0.5"]))
