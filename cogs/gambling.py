@@ -292,7 +292,8 @@ class BlackJack:
                     additional=_("Dealer has a higher score than you and wins.")
                 )
             else:
-                await self.send(additional=_("It's a tie. You lose your bet."))
+                await self.player_cashback()
+                await self.send(additional=_("It's a tie."))
 
 
 class Gambling(commands.Cog):
