@@ -16,6 +16,7 @@ You should have received a copy of the GNU Affero General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
 import secrets
+from copy import copy
 from decimal import Decimal
 
 import discord
@@ -122,7 +123,7 @@ class Classes(commands.Cog):
             profession_ = "Stabber"
         elif profession == "Ritualist":
             profession_ = "Priest"
-        new_classes = ctx.character_data["class"]
+        new_classes = copy(ctx.character_data["class"])
         new_classes[val] = profession_
         if ctx.character_data["class"][val] == "No Class":
             async with self.bot.pool.acquire() as conn:

@@ -40,7 +40,7 @@ Note: This requires you to have Redis and Postgres working, and, depending on wh
 git clone https://github.com/Gelbpunkt/IdleRPG
 cd IdleRPG
 (edit config.py.example to your database credentials)
-./setup.sh
+./scripts/setup.sh
 (do changes now)
 systemctl start idlerpg
 ```
@@ -49,6 +49,6 @@ A systemd unit file has been bundled as `idlerpg.service`.
 
 ## Contributing
 
-IdleRPG uses [black](https://github.com/ambv/black), flake8 and isort for code style. Please always run `./test.sh` before submitting a pull request and fix any problems.
+IdleRPG uses [black](https://github.com/ambv/black), flake8 and isort for code style. Please always run `./scripts/format.sh` before submitting a pull request and fix any problems.
 
 **Make sure you sign the CLA [here](https://cla-assistant.io/Gelbpunkt/IdleRPG), else we cannot merge your changes.**
