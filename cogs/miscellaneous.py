@@ -627,6 +627,7 @@ We've added several new features and fixed old bugs.
         await ctx.send(embed=em)
 
     @commands.command(aliases=["cb", "chat"])
+    @locale_doc
     async def talk(self, ctx, *, text: str):
         _("""Talk to me! (Supports only English)""")
         await ctx.trigger_typing()

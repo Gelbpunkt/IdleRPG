@@ -634,7 +634,9 @@ IdleRPG is a global bot, your characters are valid everywhere"""
     @commands.command(aliases=["color"])
     @locale_doc
     async def colour(self, ctx, colour: str):
-        _("""Sets your profile text colour.""")
+        _(
+            """Sets your profile text colour. The format may be #RRGGBB or a HTML-valid string like "cyan"."""
+        )
         if len(colour) > 15:
             return await ctx.send(
                 _("Format for colour is `#RRGGBB` or a colour code like `cyan`.")

@@ -122,17 +122,17 @@ class Help(commands.Cog):
     @is_supporter()
     @commands.command()
     @locale_doc
-    async def unbanfromhelpme(self, ctx, thing_to_ban: Union[User, int]):
+    async def unbanfromhelpme(self, ctx, thing_to_unban: Union[User, int]):
         _("""Unban an entitiy from using $helpme.""")
-        if isinstance(thing_to_ban, discord.User):
-            id = thing_to_ban.id
+        if isinstance(thing_to_unban, discord.User):
+            id = thing_to_unban.id
         else:
-            id = thing_to_ban
-            thing_to_ban = self.bot.get_guild(id)
+            id = thing_to_unban
+            thing_to_unban = self.bot.get_guild(id)
         await self.bot.pool.execute('DELETE FROM helpme WHERE "id"=$1;', id)
         await ctx.send(
             _("{thing} has been unbanned for the helpme command :ok_hand:").format(
-                thing=thing_to_ban.name
+                thing=thing_to_unban.name
             )
         )
 
@@ -140,7 +140,7 @@ class Help(commands.Cog):
     @commands.command()
     @locale_doc
     async def banfromhelpme(self, ctx, thing_to_ban: Union[User, int]):
-        _("""Band a user from using $helpme.""")
+        _("""Ban a user from using $helpme.""")
         if isinstance(thing_to_ban, discord.User):
             id = thing_to_ban.id
         else:

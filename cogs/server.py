@@ -28,7 +28,7 @@ class Server(commands.Cog):
     @commands.command(aliases=["server"])
     @locale_doc
     async def serverinfo(self, ctx):
-        """Shows information about your server."""
+        _("""Shows information about your server.""")
         text = _("Link")
         urltext = (
             f"[{text} <:external_link:429288989560930314>]({ctx.guild.icon_url})"
@@ -123,6 +123,7 @@ Server created at: `{created_at}`"""
     @commands.command(aliases=["user", "member", "memberinfo"])
     @locale_doc
     async def userinfo(self, ctx, member: discord.Member = Author):
+        _("""Shows detailed information about a member of this server.""")
         ticks = {
             "True": "<:check:314349398811475968>",
             "False": "<:xmark:314349398824058880>",

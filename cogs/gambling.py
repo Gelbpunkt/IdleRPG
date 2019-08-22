@@ -362,6 +362,9 @@ class Gambling(commands.Cog):
         tip: IntGreaterThan(0) = 6,
         money: IntFromTo(0, 100_000) = 0,
     ):
+        _(
+            """Bet on the outcome of a dict roll with [maximum] sides. [tip] specifies the side you bet on. You will win [maximum - 1] * money money if you are right and loose [money] if you are wrong."""
+        )
         if tip > maximum:
             return await ctx.send(
                 _("Invalid Tip. Must be in the Range of `1` to `{maximum}`.").format(
@@ -401,9 +404,7 @@ class Gambling(commands.Cog):
     @commands.command(aliases=["bj"])
     @locale_doc
     async def blackjack(self, ctx, amount: IntFromTo(0, 1000) = 0):
-        _(
-            """[Alpha] Play blackjack against the dealer. Dealer rules, means wins in case of tie."""
-        )
+        _("""[Alpha] Play blackjack against the dealer.""")
         if ctx.character_data["money"] < amount:
             return await ctx.send(_("You're too poor."))
         await self.bot.pool.execute(
