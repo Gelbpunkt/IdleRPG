@@ -85,7 +85,8 @@ class Custom(commands.Cog):
                 title=_("Gotcha"), description=_("Shhh, it's a secret!")
             ).set_image(
                 url="https://cdn.discordapp.com/attachments/571201192382693376/613965413801263104/image0.jpg"
-            )
+            ),
+            delete_after=3,
         )
 
 
