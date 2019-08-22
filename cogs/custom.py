@@ -26,6 +26,20 @@ def is_ken():
     return commands.check(predicate)
 
 
+def is_shoie():
+    def predicate(ctx):
+        return ctx.author.id == 423425457673863179
+
+    return commands.check(predicate)
+
+
+def is_terror():
+    def predicate(ctx):
+        return ctx.author.id == 489637665633730560
+
+    return commands.check(predicate)
+
+
 class Custom(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
@@ -51,6 +65,28 @@ class Custom(commands.Cog):
             url="https://cdn.discordapp.com/attachments/515954333368713235/518539871665520641/image0.gif"  # noqa
         )
         await ctx.send(embed=em)
+
+    @is_shoie()
+    @commands.command(hidden=True)
+    async def slap(self, ctx, user: discord.Member):
+        """[Shoie only] Slap someone."""
+        em = discord.Embed(title=f"{ctx.disp} slapped {user.display_name}").set_image(
+            url="https://media.giphy.com/media/keVd9WsqHg93O/giphy.gif"
+        )
+        await ctx.send(embed=em)
+
+    @is_terror()
+    @commands.command()
+    @locale_doc
+    async def secret(self, ctx):
+        _("""[Terror Only] It's a secret.""")
+        await ctx.send(
+            embed=discord.Embed(
+                title=_("Gotcha"), description=_("Shhh, it's a secret!")
+            ).set_image(
+                url="https://cdn.discordapp.com/attachments/571201192382693376/613965413801263104/image0.jpg"
+            )
+        )
 
 
 def setup(bot):

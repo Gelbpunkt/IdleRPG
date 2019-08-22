@@ -17,6 +17,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
 import copy
 import io
+import re
 import textwrap
 import traceback
 import tracemalloc
@@ -200,6 +201,55 @@ class Owner(commands.Cog):
             await ctx.bot.invoke(new_ctx)
         except Exception:
             await ctx.send(f"```py\n{traceback.format_exc()}```")
+
+    @commands.command(hidden=True)
+    @locale_doc
+    async def makehtml(self, ctx):
+        """Generates HTML for commands page."""
+        with open("assets/html/commands.html", "r") as f:
+            base = f.read()
+        with open("assets/html/cog.html", "r") as f:
+            cog = f.read()
+        with open("assets/html/command.html", "r") as f:
+            command = f.read()
+
+        html = ""
+
+        for cog_name, cog_ in self.bot.cogs.items():
+            commands = set(c for c in list(cog_.walk_commands()) if not c.hidden)
+            if len(commands) > 0:
+                html += cog.format(name=cog_name)
+                for cmd in commands:
+                    html += command.format(
+                        name=cmd.qualified_name,
+                        usage=self.bot.cogs["Help"]
+                        .make_signature(cmd)
+                        .replace("<", "&lt;")
+                        .replace(">", "&gt;"),
+                        checks=f"<b>Checks: {checks}</b>"
+                        if (
+                            checks := ", ".join(
+                                [
+                                    ("cooldown" if "cooldown" in name else name)
+                                    for c in cmd.checks
+                                    if (
+                                        name := re.search(
+                                            r"<function ([^.]+)\.", repr(c)
+                                        ).group(1)
+                                    )
+                                    != "update_pet"
+                                ]
+                            )
+                        )
+                        else "",
+                        description=getattr(cmd.callback, "__doc__", None)
+                        or "No Description Set",
+                    )
+
+        html = base.format(content=html)
+        await ctx.send(
+            file=discord.File(filename="commands.html", fp=io.StringIO(html))
+        )
 
 
 def setup(bot):

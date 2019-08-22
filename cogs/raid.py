@@ -2113,6 +2113,7 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
     @commands.command()
     @locale_doc
     async def raid(self, ctx):
+        _("""Informs you about joining raids.""")
         await ctx.send(
             _(
                 "Did you ever want to join together with other players to defeat the dragon that roams this land? Raids got you covered!\nJoin the support server (`{prefix}support`) for more information."

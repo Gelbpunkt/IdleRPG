@@ -25,10 +25,10 @@ class Vote(commands.Cog):
     @commands.command()
     @locale_doc
     async def vote(self, ctx):
-        _("""Vote me up to get a reward!""")
+        _("""Vote me up to get a random crate!""")
         await ctx.send(
             _(
-                "Upvote me for a big thanks! You will be rewarded a few seconds afterwards!\nhttps://discordbots.org/bot/idlerpg"
+                "Upvote me to receive a random crate! You will be rewarded a few seconds afterwards!\nhttps://discordbots.org/bot/idlerpg"
             )
         )
 
