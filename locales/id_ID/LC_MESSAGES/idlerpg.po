@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-08-17 14:50+0000\n"
+"POT-Creation-Date: 2019-08-22 15:52+0000\n"
 "PO-Revision-Date: 2019-07-09 18:37+0700\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -23,7 +23,7 @@ msgid "Starts a new tournament."
 msgstr "Memulai turnamen baru."
 
 #: cogs/tournament.py:41 cogs/battles.py:44 cogs/battles.py:146
-#: cogs/gambling.py:323 cogs/profile.py:551 cogs/transaction.py:249
+#: cogs/gambling.py:324 cogs/profile.py:553 cogs/transaction.py:249
 #: cogs/transaction.py:295
 msgid "You are too poor."
 msgstr "Anda terlalu miskin."
@@ -35,21 +35,21 @@ msgid ""
 "with ⚔ to join!"
 msgstr ""
 
-#: cogs/tournament.py:68
+#: cogs/tournament.py:66
 msgid "Noone joined your tournament."
 msgstr "Tidak ada yang mendaftar ke turnamenmu."
 
-#: cogs/tournament.py:72
+#: cogs/tournament.py:74
 #, python-brace-format
 msgid "{user} joined the tournament."
 msgstr "{user} mendaftar ke turnamenmu."
 
-#: cogs/tournament.py:76
+#: cogs/tournament.py:78
 #, python-brace-format
 msgid "You don't have a character, {user}."
 msgstr "Anda tidak mempunyai karakter, {user}."
 
-#: cogs/tournament.py:82
+#: cogs/tournament.py:84
 #, python-brace-format
 msgid ""
 "There are **{num}** entries, due to the fact we need a playable tournament, "
@@ -58,36 +58,36 @@ msgstr ""
 "Terdapat **{num}** pendaftar, karena kita membutuhkan turnamen yang bisa "
 "dimainkan, pendaftar terakhir, **{removed}** telah didiskualifikasi."
 
-#: cogs/tournament.py:88
+#: cogs/tournament.py:90
 #, python-brace-format
 msgid "Tournament started with **{num}** entries."
 msgstr "Turnamen dimulai dengan **{num}** kontestan."
 
-#: cogs/tournament.py:91
+#: cogs/tournament.py:92
 msgid "vs"
 msgstr "vs"
 
-#: cogs/tournament.py:122
+#: cogs/tournament.py:123
 #, python-brace-format
 msgid "Winner of this match is {winner}!"
 msgstr "Pemenang dari pertandingan ini adalah {winner}!"
 
-#: cogs/tournament.py:126
+#: cogs/tournament.py:127
 msgid "Round Done!"
 msgstr "Ronde berakhir!"
 
-#: cogs/tournament.py:129
+#: cogs/tournament.py:130
 #, python-brace-format
 msgid "Tournament ended! The winner is {winner}."
 msgstr "Turnamen telah berakhir! Pemenangnya adalah {winner}."
 
-#: cogs/tournament.py:134
+#: cogs/tournament.py:135
 msgid "The creator spent money, prize can't be given!"
 msgstr ""
 "Penyelenggara turnamen tidak memiliki uang yang cukup, hadiah tidak dapat "
 "diberikan!"
 
-#: cogs/tournament.py:148
+#: cogs/tournament.py:149
 #, python-brace-format
 msgid ""
 "Tournament ended! The winner is {winner}.\n"
@@ -167,7 +167,7 @@ msgstr ""
 "Sepertinya anda belum memiliki kantung trick or treat. Pergilah dan dapatkan "
 "beberapa!"
 
-#: cogs/halloween.py:142 cogs/crates.py:129 cogs/classes.py:492
+#: cogs/halloween.py:142 cogs/crates.py:129 cogs/classes.py:493
 msgid "You gained an item!"
 msgstr "Anda mendapatkan sebuah benda!"
 
@@ -175,16 +175,16 @@ msgstr "Anda mendapatkan sebuah benda!"
 msgid "You found a new item when opening a trick-or-treat bag!"
 msgstr "Anda mendapatkan sebuah benda ketika membuka kantung trick or treat!"
 
-#: cogs/halloween.py:147 cogs/crates.py:134 cogs/classes.py:497
+#: cogs/halloween.py:147 cogs/crates.py:134 cogs/classes.py:498
 msgid "ID"
 msgstr "ID"
 
-#: cogs/halloween.py:148 cogs/crates.py:135 cogs/classes.py:284
-#: cogs/classes.py:498 cogs/trading.py:218 cogs/trading.py:403
+#: cogs/halloween.py:148 cogs/crates.py:135 cogs/classes.py:285
+#: cogs/classes.py:499 cogs/trading.py:218 cogs/trading.py:403
 msgid "Name"
 msgstr "Nama"
 
-#: cogs/halloween.py:149 cogs/crates.py:136 cogs/classes.py:499
+#: cogs/halloween.py:149 cogs/crates.py:136 cogs/classes.py:500
 #: cogs/trading.py:219 cogs/trading.py:404
 msgid "Type"
 msgstr "Tipe"
@@ -315,26 +315,26 @@ msgstr "Seseorang menolak untuk bergerak. Pertarungan dihentikan."
 msgid "{user}, you already moved!"
 msgstr "{user}, anda telah bergerak!"
 
-#: cogs/battles.py:256
+#: cogs/battles.py:257
 #, python-brace-format
-msgid "{user} healed themselves for **20 HP**."
-msgstr "{user} memulihkan **20 nyawa** sendiri."
+msgid "{user} healed themselves for **{hp} HP**."
+msgstr ""
 
-#: cogs/battles.py:271 cogs/battles.py:295
+#: cogs/battles.py:272 cogs/battles.py:296
 #, python-brace-format
 msgid "{user} hit {enemy} for **{eff}** damage."
 msgstr "{user} menyerang {enemy} dan mengurangi **{eff}** nyawa."
 
-#: cogs/battles.py:301
+#: cogs/battles.py:302
 #, python-brace-format
 msgid "{user}'s attack on {enemy} failed!"
 msgstr "Serangan {user} terhadap {enemy} meleset!"
 
-#: cogs/battles.py:306
+#: cogs/battles.py:307
 msgid "You both died!"
 msgstr "Kalian berdua mati dalam pertarungan!"
 
-#: cogs/battles.py:315
+#: cogs/battles.py:316
 msgid ""
 "One of you both can't pay the price for the battle because he spent money in "
 "the time of fighting."
@@ -342,7 +342,7 @@ msgstr ""
 "Salah satu dari anda tidak dapat membayar taruhan karena kehilangan uang "
 "saat bertarung."
 
-#: cogs/battles.py:329
+#: cogs/battles.py:330
 #, python-brace-format
 msgid "{winner} won the active battle vs {looser}! Congratulations!"
 msgstr "Selamat, {winner} memenangkan pertarungan aktif melawan {looser}!"
@@ -465,18 +465,18 @@ msgstr ""
 msgid "You found a new item when opening a crate!"
 msgstr "Anda menemukan benda baru ketika membuka peti!"
 
-#: cogs/crates.py:137 cogs/classes.py:501 cogs/trading.py:220
+#: cogs/crates.py:137 cogs/classes.py:502 cogs/trading.py:220
 #: cogs/trading.py:405
 msgid "Damage"
 msgstr "Serangan"
 
-#: cogs/crates.py:138 cogs/classes.py:503 cogs/trading.py:221
+#: cogs/crates.py:138 cogs/classes.py:504 cogs/trading.py:221
 #: cogs/trading.py:406
 msgid "Armor"
 msgstr "Perlindungan"
 
-#: cogs/crates.py:139 cogs/classes.py:504 cogs/trading.py:222
-#: cogs/trading.py:407 cogs/profile.py:334
+#: cogs/crates.py:139 cogs/classes.py:505 cogs/trading.py:222
+#: cogs/trading.py:407 cogs/profile.py:336
 msgid "Value"
 msgstr "Harga"
 
@@ -1638,57 +1638,57 @@ msgstr ""
 "bersih.\n"
 "[Halaman discordbots.org](https://discordbots.org/bot/541707781665718302)"
 
-#: cogs/raid.py:452
+#: cogs/raid.py:2035
 msgid "Upgrade your raid damage or defense multiplier."
 msgstr ""
 
-#: cogs/raid.py:455
+#: cogs/raid.py:2038
 #, python-brace-format
 msgid ""
 "Use `{prefix}increase damage/defense` to upgrade your raid damage/defense "
 "multiplier by 10%."
 msgstr ""
 
-#: cogs/raid.py:463
+#: cogs/raid.py:2046
 msgid "Increase your raid damage."
 msgstr ""
 
-#: cogs/raid.py:469
+#: cogs/raid.py:2052
 #, python-brace-format
 msgid ""
 "Upgrading your weapon attack raid multiplier to {newlvl} costs **${price}**, "
 "you are too poor."
 msgstr ""
 
-#: cogs/raid.py:480
+#: cogs/raid.py:2063
 #, python-brace-format
 msgid ""
 "You upgraded your weapon attack raid multiplier to {newlvl} for **${price}**."
 msgstr ""
 
-#: cogs/raid.py:488
+#: cogs/raid.py:2071
 msgid "Increase your raid defense."
 msgstr ""
 
-#: cogs/raid.py:494
+#: cogs/raid.py:2077
 #, python-brace-format
 msgid ""
 "Upgrading your shield defense raid multiplier to {newlvl} costs **${price}"
 "**, you are too poor."
 msgstr ""
 
-#: cogs/raid.py:505
+#: cogs/raid.py:2088
 #, python-brace-format
 msgid ""
 "You upgraded your shield defense raid multiplier to {newlvl} for **${price}"
 "**."
 msgstr ""
 
-#: cogs/raid.py:513
+#: cogs/raid.py:2096
 msgid "View your raid stats."
 msgstr ""
 
-#: cogs/raid.py:524
+#: cogs/raid.py:2107
 #, python-brace-format
 msgid ""
 "**{author}'s raid multipliers**\n"
@@ -1696,7 +1696,11 @@ msgid ""
 "Defense Multiplier: x{deff} (Upgrading: ${deffp})"
 msgstr ""
 
-#: cogs/raid.py:535
+#: cogs/raid.py:2116
+msgid "Informs you about joining raids."
+msgstr ""
+
+#: cogs/raid.py:2119
 #, python-brace-format
 msgid ""
 "Did you ever want to join together with other players to defeat the dragon "
@@ -1746,7 +1750,7 @@ msgstr ""
 "Mohon beli antara `time (waktu)`, `luck (keberuntungan)` atau  `money "
 "(uang)`."
 
-#: cogs/store.py:61 cogs/gambling.py:373 cogs/gambling.py:407 cogs/guild.py:483
+#: cogs/store.py:61 cogs/gambling.py:374 cogs/gambling.py:408 cogs/guild.py:483
 msgid "You're too poor."
 msgstr "Anda terlalu miskin."
 
@@ -1963,7 +1967,7 @@ msgstr "[Khusus Patreon] Mengubah latar belakang profil."
 msgid "That is not a valid premade background."
 msgstr "Itu bukan merupakan latar belakang yang sudah kami buat."
 
-#: cogs/patreon.py:81 cogs/patreon.py:113 cogs/classes.py:463 cogs/guild.py:392
+#: cogs/patreon.py:81 cogs/patreon.py:113 cogs/classes.py:464 cogs/guild.py:392
 msgid ""
 "I couldn't read that URL. Does it start with `http://` or `https://` and is "
 "either a png or jpeg?"
@@ -2044,27 +2048,27 @@ msgstr ""
 msgid "Background updated!"
 msgstr "Latar belakang telah diperbarui!"
 
-#: cogs/classes.py:38
+#: cogs/classes.py:39
 msgid "Change your primary or secondary class."
 msgstr ""
 
-#: cogs/classes.py:41
+#: cogs/classes.py:42
 msgid "Select class to change"
 msgstr ""
 
-#: cogs/classes.py:42
+#: cogs/classes.py:43
 msgid "Primary Class"
 msgstr ""
 
-#: cogs/classes.py:42
+#: cogs/classes.py:43
 msgid "Secondary Class"
 msgstr ""
 
-#: cogs/classes.py:49
+#: cogs/classes.py:50
 msgid "Warrior"
 msgstr "Warrior (Pejuang)"
 
-#: cogs/classes.py:51
+#: cogs/classes.py:52
 msgid ""
 "The tank class. Charge into battle with additional defense!\n"
 "+1 defense per evolution added onto your shield."
@@ -2072,11 +2076,11 @@ msgstr ""
 "Kelas pelindung. Maju ke medan pertempuran dengan pertahanan extra!\n"
 "+1 pertahanan per evolusi ditambahkan ke perisai anda."
 
-#: cogs/classes.py:56
+#: cogs/classes.py:57
 msgid "Thief"
 msgstr "Thief (Pencuri)"
 
-#: cogs/classes.py:59
+#: cogs/classes.py:60
 #, no-python-format, python-brace-format
 msgid ""
 "The sneaky money stealer...\n"
@@ -2089,11 +2093,11 @@ msgstr ""
 "berhasil.\n"
 "+8% tingkat kesuksesan per evolusi."
 
-#: cogs/classes.py:64
+#: cogs/classes.py:65
 msgid "Mage"
 msgstr "Mage (Ahli Sihir)"
 
-#: cogs/classes.py:66
+#: cogs/classes.py:67
 msgid ""
 "Utilise powerful magic for stronger attacks.\n"
 "+1 damage per evolution added onto your sword."
@@ -2101,11 +2105,11 @@ msgstr ""
 "Menggunakan sihir yang kuat untuk serangan yang lebih kuat.\n"
 "+1 serangan per evolusi ditambahkan ke pedang anda."
 
-#: cogs/classes.py:71
+#: cogs/classes.py:72
 msgid "Ranger"
 msgstr "Ranger (Pemburu)"
 
-#: cogs/classes.py:73
+#: cogs/classes.py:74
 #, python-brace-format
 msgid ""
 "Item hunter and trainer of their very own pet.\n"
@@ -2118,25 +2122,25 @@ msgstr ""
 "setiap hari.\n"
 "Berburu benda minimal +3 stats dan maksimum +6 stats per evolusi."
 
-#: cogs/classes.py:78
+#: cogs/classes.py:79
 msgid "Raider"
 msgstr ""
 
-#: cogs/classes.py:80
+#: cogs/classes.py:81
 msgid ""
 "A strong warrior who gives their live for the fight against Zerekiel.\n"
 "Every evolve boosts the raidstats by additional 10%."
 msgstr ""
 
-#: cogs/classes.py:85
+#: cogs/classes.py:86
 msgid "Ritualist"
 msgstr ""
 
-#: cogs/classes.py:94
+#: cogs/classes.py:95
 msgid "Paragon"
 msgstr "Paragon (Keturunan Dewa)"
 
-#: cogs/classes.py:96
+#: cogs/classes.py:97
 msgid ""
 "Absorb the appreciation of the devs into your soul to power up.\n"
 "+1 damage and defense per evolution added onto your items."
@@ -2144,257 +2148,257 @@ msgstr ""
 "Menyerap apresiasi dari developer ke dalam jiwa anda untuk bertambah kuat.\n"
 "+1 serangan dan pertahanan per evolusi ditambahkan ke benda anda."
 
-#: cogs/classes.py:139
+#: cogs/classes.py:140
 #, python-brace-format
 msgid "Your new class is now `{profession}`."
 msgstr "Kelas baru anda adalah `{profession}`."
 
-#: cogs/classes.py:147
+#: cogs/classes.py:148
 msgid "You're too poor for a class change, it costs **$5000**."
 msgstr "Anda terlalu miskin untuk berganti kelas, harganya **$5000**."
 
-#: cogs/classes.py:164
+#: cogs/classes.py:165
 #, python-brace-format
 msgid ""
 "You selected the class `{profession}`. **$5000** was taken off your balance."
 msgstr ""
 
-#: cogs/classes.py:172
+#: cogs/classes.py:173
 msgid "Views your classes."
 msgstr ""
 
-#: cogs/classes.py:186
+#: cogs/classes.py:187
 #, python-brace-format
 msgid "The image for your class **{class_}** hasn't been added yet."
 msgstr "Gambar untuk kelas anda, **{class_}** belum tersedia."
 
-#: cogs/classes.py:194
+#: cogs/classes.py:195
 msgid "Evolve to the next level of your classes."
 msgstr ""
 
-#: cogs/classes.py:197
+#: cogs/classes.py:198
 msgid "Your level isn't high enough to evolve."
 msgstr "Level anda tidak cukup untuk berevolusi."
 
-#: cogs/classes.py:212
+#: cogs/classes.py:213
 msgid "You haven't got a class yet."
 msgstr "Anda belum memiliki kelas."
 
-#: cogs/classes.py:217
+#: cogs/classes.py:218
 #, python-brace-format
 msgid "You are now a `{class1}` and a `{class2}`."
 msgstr ""
 
-#: cogs/classes.py:246
+#: cogs/classes.py:247
 msgid "[Thief Only] Steal money!"
 msgstr "[Khusus Pencuri] Mencuri uang!"
 
-#: cogs/classes.py:268
+#: cogs/classes.py:269
 #, python-brace-format
 msgid "You stole **${stolen}** from **{user}**."
 msgstr "Anda mencuri **${stolen}** dari **{user}**."
 
-#: cogs/classes.py:273
+#: cogs/classes.py:274
 msgid "Your attempt to steal money wasn't successful."
 msgstr "Percobaan pencurian anda tidak berhasil."
 
-#: cogs/classes.py:281
+#: cogs/classes.py:282
 msgid "[Ranger Only] View your pet or interact with it."
 msgstr ""
 
-#: cogs/classes.py:283
+#: cogs/classes.py:284
 #, python-brace-format
 msgid "{user}'s pet"
 msgstr "Hewan peliharaan milik {user}"
 
-#: cogs/classes.py:285
+#: cogs/classes.py:286
 msgid "Level"
 msgstr "Level"
 
-#: cogs/classes.py:286
+#: cogs/classes.py:287
 msgid "Food"
 msgstr ""
 
-#: cogs/classes.py:288
+#: cogs/classes.py:289
 msgid "Drinks"
 msgstr ""
 
-#: cogs/classes.py:290
+#: cogs/classes.py:291
 msgid "Love"
 msgstr ""
 
-#: cogs/classes.py:291
+#: cogs/classes.py:292
 msgid "Joy"
 msgstr ""
 
-#: cogs/classes.py:302
+#: cogs/classes.py:303
 msgid "[Ranger Only] Feed your pet."
 msgstr ""
 
-#: cogs/classes.py:304
+#: cogs/classes.py:305
 msgid "Potato"
 msgstr ""
 
-#: cogs/classes.py:305
+#: cogs/classes.py:306
 msgid "Apple"
 msgstr ""
 
-#: cogs/classes.py:306
+#: cogs/classes.py:307
 msgid "Cucumber"
 msgstr ""
 
-#: cogs/classes.py:307
+#: cogs/classes.py:308
 msgid "Meat"
 msgstr ""
 
-#: cogs/classes.py:308
+#: cogs/classes.py:309
 msgid "Salad"
 msgstr ""
 
-#: cogs/classes.py:309
+#: cogs/classes.py:310
 msgid "Adrian's Power Poop"
 msgstr ""
 
-#: cogs/classes.py:316
+#: cogs/classes.py:317
 msgid "Feed your pet"
 msgstr ""
 
-#: cogs/classes.py:320 cogs/classes.py:362 cogs/marriage.py:232
+#: cogs/classes.py:321 cogs/classes.py:363 cogs/marriage.py:232
 msgid "You are too poor to buy this."
 msgstr "Anda terlalu miskin untuk membeli barang ini."
 
-#: cogs/classes.py:334
+#: cogs/classes.py:335
 #, python-brace-format
 msgid ""
 "You bought **{item}** for your pet and increased its food bar by **{points}"
 "** points."
 msgstr ""
 
-#: cogs/classes.py:344
+#: cogs/classes.py:345
 msgid "[Ranger Only] Give your pet something to drink."
 msgstr ""
 
-#: cogs/classes.py:346
+#: cogs/classes.py:347
 msgid "Some Water"
 msgstr ""
 
-#: cogs/classes.py:347
+#: cogs/classes.py:348
 msgid "A bottle of water"
 msgstr ""
 
-#: cogs/classes.py:348
+#: cogs/classes.py:349
 msgid "Cocktail"
 msgstr ""
 
-#: cogs/classes.py:349
+#: cogs/classes.py:350
 msgid "Wine"
 msgstr ""
 
-#: cogs/classes.py:350
+#: cogs/classes.py:351
 msgid "Beer"
 msgstr ""
 
-#: cogs/classes.py:351
+#: cogs/classes.py:352
 msgid "Adrian's Cocktail"
 msgstr ""
 
-#: cogs/classes.py:358
+#: cogs/classes.py:359
 msgid "Give your pet something to drink"
 msgstr ""
 
-#: cogs/classes.py:376
+#: cogs/classes.py:377
 #, python-brace-format
 msgid ""
 "You bought **{item}** for your pet and increased its drinks bar by **{points}"
 "** points."
 msgstr ""
 
-#: cogs/classes.py:387
+#: cogs/classes.py:388
 msgid "[Ranger Only] Cuddle your pet to make it love you."
 msgstr ""
 
-#: cogs/classes.py:396
+#: cogs/classes.py:397
 #, python-brace-format
 msgid ""
 "Your pet adores you! :heart: Cuddling it has increased its love for you by "
 "**{value}** points."
 msgstr ""
 
-#: cogs/classes.py:407
+#: cogs/classes.py:408
 msgid "[Ranger Only] Play with your pet to make it happier."
 msgstr ""
 
-#: cogs/classes.py:416
+#: cogs/classes.py:417
 #, python-brace-format
 msgid "You have been {activity} with your pet and it gained **{value}** joy!"
 msgstr ""
 
-#: cogs/classes.py:420
+#: cogs/classes.py:421
 msgid "playing football :soccer:"
 msgstr ""
 
-#: cogs/classes.py:421
+#: cogs/classes.py:422
 msgid "playing American football :football:"
 msgstr ""
 
-#: cogs/classes.py:422
+#: cogs/classes.py:423
 msgid "playing rugby :rugy_football:"
 msgstr ""
 
-#: cogs/classes.py:423
+#: cogs/classes.py:424
 msgid "playing basketball :basketball:"
 msgstr ""
 
-#: cogs/classes.py:424
+#: cogs/classes.py:425
 msgid "playing tennis :tennis:"
 msgstr ""
 
-#: cogs/classes.py:425
+#: cogs/classes.py:426
 msgid "playing ping-pong :ping_pong:"
 msgstr ""
 
-#: cogs/classes.py:426
+#: cogs/classes.py:427
 msgid "boxing :boxing_glove:"
 msgstr ""
 
-#: cogs/classes.py:427
+#: cogs/classes.py:428
 msgid "skiing :ski:"
 msgstr ""
 
-#: cogs/classes.py:440
+#: cogs/classes.py:441
 msgid "[Ranger Only] Renames your pet."
 msgstr ""
 
-#: cogs/classes.py:442
+#: cogs/classes.py:443
 msgid "Please enter a name shorter than 20 characters."
 msgstr ""
 
-#: cogs/classes.py:446
+#: cogs/classes.py:447
 msgid "Pet name updated."
 msgstr ""
 
-#: cogs/classes.py:454
+#: cogs/classes.py:455
 msgid "[Ranger Only] Sets your pet's image by URL."
 msgstr ""
 
-#: cogs/classes.py:456
+#: cogs/classes.py:457
 msgid "URLs mustn't exceed 60 characters ."
 msgstr ""
 
-#: cogs/classes.py:469
+#: cogs/classes.py:470
 msgid "Your pet's image was successfully updated."
 msgstr ""
 
-#: cogs/classes.py:478
+#: cogs/classes.py:479
 msgid "[Ranger Only] Let your pet get a weapon for you!"
 msgstr ""
 "[Khusus Pemburu] Menyuruh hewan peliharaan anda mencari benda untuk anda!"
 
-#: cogs/classes.py:493
+#: cogs/classes.py:494
 msgid "Your pet found an item!"
 msgstr "Hewan peliharaan anda menemukan sebuah barang!"
 
-#: cogs/classes.py:505
+#: cogs/classes.py:506
 msgid "Your pet needs to recover, wait a day to retry"
 msgstr ""
 "Hewan peliharaan anda perlu beristirahat, mohon menunggu sehari untuk "
@@ -2613,48 +2617,48 @@ msgstr ""
 msgid "**Generating a maze...**"
 msgstr ""
 
-#: cogs/adventure.py:126
+#: cogs/adventure.py:126 utils/castle.py:29
 msgid "North"
 msgstr ""
 
-#: cogs/adventure.py:127
+#: cogs/adventure.py:127 utils/castle.py:29
 msgid "East"
 msgstr ""
 
-#: cogs/adventure.py:128
+#: cogs/adventure.py:128 utils/castle.py:29
 msgid "South"
 msgstr ""
 
-#: cogs/adventure.py:129
+#: cogs/adventure.py:129 utils/castle.py:29
 msgid "West"
 msgstr ""
 
-#: cogs/adventure.py:205
+#: cogs/adventure.py:205 utils/castle.py:129
 #, python-brace-format
 msgid "To the {side} is a wall."
 msgstr ""
 
-#: cogs/adventure.py:207
+#: cogs/adventure.py:207 utils/castle.py:131
 #, python-brace-format
 msgid "To the {side} is an enemy."
 msgstr ""
 
-#: cogs/adventure.py:209
+#: cogs/adventure.py:209 utils/castle.py:133
 #, python-brace-format
 msgid "To the {side} is a treasure."
 msgstr ""
 
-#: cogs/adventure.py:211
+#: cogs/adventure.py:211 utils/castle.py:135
 #, python-brace-format
 msgid "To the {side} is a floor."
 msgstr ""
 
-#: cogs/adventure.py:214
+#: cogs/adventure.py:214 utils/castle.py:138
 #, python-brace-format
 msgid "You are on {hp} HP"
 msgstr ""
 
-#: cogs/adventure.py:224
+#: cogs/adventure.py:224 utils/castle.py:151
 #, python-brace-format
 msgid "You stepped on a trap and took {damage} damage!"
 msgstr ""
@@ -2664,43 +2668,44 @@ msgstr ""
 msgid "You found a treasure with **${money}** inside!"
 msgstr ""
 
-#: cogs/adventure.py:262
+#: cogs/adventure.py:262 utils/castle.py:188
 msgid "Enemy"
 msgstr ""
 
-#: cogs/adventure.py:267
+#: cogs/adventure.py:267 utils/castle.py:193
 msgid "The Fight started"
 msgstr ""
 
-#: cogs/adventure.py:302
+#: cogs/adventure.py:302 utils/castle.py:229
 #, python-brace-format
 msgid "The Enemy healed themselves for {hp} HP"
 msgstr ""
 
-#: cogs/adventure.py:308
+#: cogs/adventure.py:308 utils/castle.py:235
 #, python-brace-format
 msgid "You healed yourself for {hp} HP"
 msgstr ""
 
-#: cogs/adventure.py:314
+#: cogs/adventure.py:314 utils/castle.py:239
 msgid "Attack blocked."
 msgstr ""
 
-#: cogs/adventure.py:319
+#: cogs/adventure.py:319 utils/castle.py:244
 #, python-brace-format
 msgid "The Enemy hit you for {dmg} damage"
 msgstr ""
 
-#: cogs/adventure.py:324
+#: cogs/adventure.py:324 utils/castle.py:247
 #, python-brace-format
 msgid "You hit the enemy for {dmg} damage"
 msgstr ""
 
-#: cogs/adventure.py:338 cogs/adventure.py:343
+#: cogs/adventure.py:338 cogs/adventure.py:343 cogs/gambling.py:445
+#: cogs/gambling.py:475 utils/castle.py:259 utils/castle.py:264
 msgid "Timed out."
 msgstr ""
 
-#: cogs/adventure.py:345
+#: cogs/adventure.py:345 utils/castle.py:267
 msgid "You died."
 msgstr "Anda mati."
 
@@ -2751,7 +2756,15 @@ msgstr ""
 msgid "Cancels your current adventure."
 msgstr "Membatalkan petualangan yang sedang dilakukan."
 
-#: cogs/adventure.py:539
+#: cogs/adventure.py:537
+msgid "Are you sure you want to cancel your current adventure?"
+msgstr ""
+
+#: cogs/adventure.py:540
+msgid "Did not cancel your adventure. The journey continues..."
+msgstr ""
+
+#: cogs/adventure.py:545
 #, python-brace-format
 msgid ""
 "Canceled your mission. Use `{prefix}adventure [missionID]` to start a new "
@@ -2760,11 +2773,11 @@ msgstr ""
 "Petualangan anda dibatalkan. Gunakan `{prefix}adventure [missionID]` untuk "
 "memulai yang baru!"
 
-#: cogs/adventure.py:547
+#: cogs/adventure.py:553
 msgid "Your death stats."
 msgstr "Statistik kematian anda."
 
-#: cogs/adventure.py:557
+#: cogs/adventure.py:563
 #, python-brace-format
 msgid ""
 "Out of **{total}** adventures, you died **{deaths}** times and survived "
@@ -2857,40 +2870,40 @@ msgstr "Anda mendapatkan nilai yang lebih tinggi dari pada bandar dan menang."
 msgid "Dealer has a higher score than you and wins."
 msgstr "Bandar mendapatkan nilai lebih banyak dari anda dan menang."
 
-#: cogs/gambling.py:295
-msgid "It's a tie. You lose your bet."
-msgstr "Hasilnya adalah seri. Anda kalah taruhan."
+#: cogs/gambling.py:296
+msgid "It's a tie."
+msgstr ""
 
-#: cogs/gambling.py:307
+#: cogs/gambling.py:308
 msgid "Draws a random card."
 msgstr "Menambah kartu acak."
 
-#: cogs/gambling.py:321
+#: cogs/gambling.py:322
 msgid "Flip a coin and bid on the outcome."
 msgstr "Membalikan koin dan bertaruh untuk hasil."
 
-#: cogs/gambling.py:337
+#: cogs/gambling.py:338
 #, python-brace-format
 msgid "{result[1]} It's **{result[0]}**! You won **${amount}**!"
 msgstr ""
 "{result[1]} Hasilnya adalah **{result[0]}**! Anda memenangkan **${amount}**!"
 
-#: cogs/gambling.py:348
+#: cogs/gambling.py:349
 #, python-brace-format
 msgid "{result[1]} It's **{result[0]}**! You lost **${amount}**!"
 msgstr ""
 "{result[1]} Hasilnya adalah **{result[0]}**! Anda kehilangan **${amount}**!"
 
-#: cogs/gambling.py:366
+#: cogs/gambling.py:367
 #, python-brace-format
 msgid "Invalid Tip. Must be in the Range of `1` to `{maximum}`."
 msgstr "Pilihan anda tidak valid. Pilihan harus di antara `1` dan `{maximum}`."
 
-#: cogs/gambling.py:371
+#: cogs/gambling.py:372
 msgid "Spend it in a better way. C'mon!"
 msgstr "Gunakan uang anda dengan cara yang lebih baik!"
 
-#: cogs/gambling.py:383
+#: cogs/gambling.py:384
 #, python-brace-format
 msgid ""
 "You won **${money}**! The random number was `{num}`, you tipped `{tip}`."
@@ -2898,7 +2911,7 @@ msgstr ""
 "Anda memenangkan **${money}**! Angka acaknya adalah `{num}`, anda menebak "
 "`{tip}`."
 
-#: cogs/gambling.py:394
+#: cogs/gambling.py:395
 #, python-brace-format
 msgid ""
 "You lost **${money}**! The random number was `{num}`, you tipped `{tip}`."
@@ -2906,13 +2919,57 @@ msgstr ""
 "Anda kehilangan **${money}**! Angka acaknya adalah `{num}`, anda menebak "
 "`{tip}`."
 
-#: cogs/gambling.py:404
+#: cogs/gambling.py:405
 msgid ""
 "[Alpha] Play blackjack against the dealer. Dealer rules, means wins in case "
 "of tie."
 msgstr ""
 "[Alpha] Bermain blackjack melawan bandar. Bandar berkuasa, sehingga akan "
 "menang saat seri."
+
+#: cogs/gambling.py:422
+msgid ""
+"Play a double-or-steal game against someone. You start with $100 and can "
+"take it or double it with your money."
+msgstr ""
+
+#: cogs/gambling.py:425
+#, python-brace-format
+msgid "React with 💰 to play double-or-steal with {user}!"
+msgstr ""
+
+#: cogs/gambling.py:448
+#, python-brace-format
+msgid "{user} has not character."
+msgstr ""
+
+#: cogs/gambling.py:455 cogs/gambling.py:496
+#, python-brace-format
+msgid "{user} is too poor to double."
+msgstr ""
+
+#: cogs/gambling.py:465
+#, python-brace-format
+msgid "Double or steal ${money}?"
+msgstr ""
+
+#: cogs/gambling.py:466
+msgid "Double"
+msgstr ""
+
+#: cogs/gambling.py:466
+msgid "Steal"
+msgstr ""
+
+#: cogs/gambling.py:484
+#, python-brace-format
+msgid "{user} stole **${money}**."
+msgstr ""
+
+#: cogs/gambling.py:504
+#, python-brace-format
+msgid "{user} doubled to **${money}**."
+msgstr ""
 
 #: cogs/trading.py:36
 msgid "Puts an item into the player store."
@@ -4380,40 +4437,50 @@ msgstr ""
 "Durasi tersisa: `{remain}`"
 
 #: cogs/vote.py:28
-msgid "Vote me up to get a reward!"
-msgstr "Vote saya untuk mendapat hadiah!"
+msgid "Vote me up to get a random crate!"
+msgstr ""
 
 #: cogs/vote.py:31
 msgid ""
-"Upvote me for a big thanks! You will be rewarded a few seconds afterwards!\n"
+"Upvote me to receive a random crate! You will be rewarded a few seconds "
+"afterwards!\n"
 "https://discordbots.org/bot/idlerpg"
 msgstr ""
-"Vote saya untuk imbalan yang besar! Anda akan diberikan hadiah beberapa "
-"detik kemudian!\n"
-"https://discordbots.org/bot/idlerpg"
 
-#: cogs/custom.py:36
+#: cogs/custom.py:50
 msgid "In loving memory of Mary Johanna, ex-developer."
 msgstr ""
 "Penghargaan tertinggi untuk Mary Johanna, developer kami yang sudah "
 "meningkatkan tim."
 
-#: cogs/custom.py:37
+#: cogs/custom.py:51
 msgid "His name is `#no homo` :heart:"
 msgstr "Namanya adalah `#no homo` :heart:"
 
-#: cogs/custom.py:43
+#: cogs/custom.py:57
 msgid "[Ken only] Hug someone."
 msgstr "[Khusus Ken] Memeluk seseorang."
 
-#: cogs/custom.py:45
+#: cogs/custom.py:59
 msgid "Ken Hug!"
 msgstr "Pelukan Ken!"
 
-#: cogs/custom.py:46
+#: cogs/custom.py:60
 #, python-brace-format
 msgid "{author} hugged {user}! Awww!"
 msgstr "{author} memeluk {user}! Awww!"
+
+#: cogs/custom.py:82
+msgid "[Terror Only] It's a secret."
+msgstr ""
+
+#: cogs/custom.py:85
+msgid "Gotcha"
+msgstr ""
+
+#: cogs/custom.py:85
+msgid "Shhh, it's a secret!"
+msgstr ""
 
 #: cogs/profile.py:41
 msgid "Creates a new character."
@@ -4494,20 +4561,16 @@ msgid ""
 "**Money**: `${money}`\n"
 "**Level**: `{level}`\n"
 "**Class**: `{class_}`\n"
+"**Race**: `{race}`\n"
 "**PvP Wins**: `{pvp}`\n"
 "**Guild**: `{guild}`"
 msgstr ""
-"**Uang**: `${money}`\n"
-"**Level**: `{level}`\n"
-"**Kelas**: `{class_}`\n"
-"**Kemenangan PvP**: `{pvp}`\n"
-"**Guild**: `{guild}`"
 
-#: cogs/profile.py:213
+#: cogs/profile.py:215
 msgid "Ranks"
 msgstr "Peringkat"
 
-#: cogs/profile.py:214
+#: cogs/profile.py:216
 #, python-brace-format
 msgid ""
 "**Richest**: `{rank_money}`\n"
@@ -4516,11 +4579,11 @@ msgstr ""
 "**Kekayaan**: `{rank_money}`\n"
 "**XP**: `{rank_xp}`"
 
-#: cogs/profile.py:219
+#: cogs/profile.py:221
 msgid "Equipment"
 msgstr "Peralatan"
 
-#: cogs/profile.py:220
+#: cogs/profile.py:222
 #, python-brace-format
 msgid ""
 "Sword: {sword}\n"
@@ -4529,35 +4592,35 @@ msgstr ""
 "Pedang: {sword}\n"
 "Perisai: {shield}"
 
-#: cogs/profile.py:225
+#: cogs/profile.py:227
 msgid "Mission"
 msgstr "Misi"
 
-#: cogs/profile.py:232
+#: cogs/profile.py:234
 msgid "Shows your luck factor ranging from 0 to 2."
 msgstr ""
 
-#: cogs/profile.py:235
+#: cogs/profile.py:237
 #, python-brace-format
 msgid ""
 "Your current luck multiplier is `{luck}x` (≈{percent}% more than usual "
 "(usual=0))."
 msgstr ""
 
-#: cogs/profile.py:246
+#: cogs/profile.py:248
 msgid "Shows your balance."
 msgstr "Menunjukan uang anda."
 
-#: cogs/profile.py:248
+#: cogs/profile.py:250
 #, python-brace-format
 msgid "You currently have **${money}**, {author}!"
 msgstr "Anda mempunyai **${money}**, {author}!"
 
-#: cogs/profile.py:257
+#: cogs/profile.py:259
 msgid "Shows your current XP and level."
 msgstr "Menunjukan XP anda sekarang dan level anda."
 
-#: cogs/profile.py:261
+#: cogs/profile.py:263
 #, python-brace-format
 msgid ""
 "You currently have **{points} XP**, which means you are on Level **{level}"
@@ -4566,121 +4629,121 @@ msgstr ""
 "Anda mempunyai **{points} XP**, yang berarti anda berada di Level **{level}"
 "**. XP yang dibutuhkan untuk naik level: **{missing}**"
 
-#: cogs/profile.py:271
+#: cogs/profile.py:273
 #, python-brace-format
 msgid "{user}'s inventory includes"
 msgstr "Inventaris {user} berisi"
 
-#: cogs/profile.py:276
+#: cogs/profile.py:278
 msgid "(**Equipped**)"
 msgstr "(**Dipakai**)"
 
-#: cogs/profile.py:280
+#: cogs/profile.py:282
 #, python-brace-format
 msgid "Damage: `{damage}`"
 msgstr "Serangan: `{damage}`"
 
-#: cogs/profile.py:282
+#: cogs/profile.py:284
 #, python-brace-format
 msgid "Armor: `{armor}`"
 msgstr "Pertahanan: `{armor}`"
 
-#: cogs/profile.py:287
+#: cogs/profile.py:289
 #, python-brace-format
 msgid "ID: `{id}`, Type: `{type_}` with {statstr}. Value is **${value}**"
 msgstr "ID: `{id}`, Tipe: `{type_}` dengan {statstr}. Harganya **${value}**"
 
-#: cogs/profile.py:296
+#: cogs/profile.py:298
 #, python-brace-format
 msgid "Page {page} of {maxpages}"
 msgstr "Halaman {page} dari {maxpages}"
 
-#: cogs/profile.py:306
+#: cogs/profile.py:308
 msgid "Shows your current inventory."
 msgstr "Menunjukan inventaris anda."
 
-#: cogs/profile.py:312
+#: cogs/profile.py:314
 msgid "Your inventory is empty."
 msgstr "Inventaris anda kosong."
 
-#: cogs/profile.py:325
+#: cogs/profile.py:327
 msgid "Shows your adventure loot that can be exchanged or sacrificed"
 msgstr ""
 
-#: cogs/profile.py:331
+#: cogs/profile.py:333
 msgid "You do not have any loot at this moment."
 msgstr ""
 
-#: cogs/profile.py:337
+#: cogs/profile.py:339
 #, python-brace-format
 msgid "Use {prefix}exchange {item} or {prefix}sacrifice {item}"
 msgstr ""
 
-#: cogs/profile.py:349
+#: cogs/profile.py:351
 msgid "Exchange an item for money or xp."
 msgstr ""
 
-#: cogs/profile.py:357 cogs/gods.py:47
+#: cogs/profile.py:359 cogs/gods.py:47
 msgid "You do not own this loot item."
 msgstr ""
 
-#: cogs/profile.py:360
+#: cogs/profile.py:362
 msgid "Select a reward"
 msgstr ""
 
-#: cogs/profile.py:361
+#: cogs/profile.py:363
 #, python-brace-format
 msgid "Do you want favor? {prefix}sacrifice instead"
 msgstr ""
 
-#: cogs/profile.py:365
+#: cogs/profile.py:367
 #, python-brace-format
 msgid "**{amount} XP**"
 msgstr ""
 
-#: cogs/profile.py:375
+#: cogs/profile.py:377
 msgid "Reward gained!"
 msgstr ""
 
-#: cogs/profile.py:381
+#: cogs/profile.py:383
 msgid "Equips an item of yours by ID."
 msgstr "Memakai benda dengan menulis ID."
 
-#: cogs/profile.py:390 cogs/profile.py:490
+#: cogs/profile.py:392 cogs/profile.py:492
 #, python-brace-format
 msgid "You don't own an item with the ID `{itemid}`."
 msgstr "Anda tidak mempunyai benda dengan ID `{itemid}`."
 
-#: cogs/profile.py:410
+#: cogs/profile.py:412
 #, python-brace-format
 msgid "Successfully equipped item `{itemid}` and put off item `{olditem}`."
 msgstr "Memakai benda `{itemid}` secara sukses dan melepas `{olditem}`."
 
-#: cogs/profile.py:415
+#: cogs/profile.py:417
 #, python-brace-format
 msgid "Successfully equipped item `{itemid}`."
 msgstr "Memakai benda `{itemid}` secara sukses."
 
-#: cogs/profile.py:423
+#: cogs/profile.py:425
 msgid "Merges two items to a better one. Second one is consumed."
 msgstr ""
 "Menggabungkan dua benda menjadi satu yang lebih baik. Yang kedua dikorbankan."
 
-#: cogs/profile.py:426
+#: cogs/profile.py:428
 msgid "Good luck with that."
 msgstr "Semoga berhasil."
 
-#: cogs/profile.py:440
+#: cogs/profile.py:442
 msgid "You don't own both of these items."
 msgstr "Anda tidak memiliki kedua benda ini."
 
-#: cogs/profile.py:445
+#: cogs/profile.py:447
 msgid ""
 "The items are of unequal type. You may only merge a sword with a sword or a "
 "shield with a shield."
 msgstr ""
 
-#: cogs/profile.py:457
+#: cogs/profile.py:459
 #, python-brace-format
 msgid ""
 "The second item's stat must be in the range of `{min_}` to `{max_}` to "
@@ -4689,11 +4752,11 @@ msgstr ""
 "Benda kedua harus berada diantara `{min_}` dan `{max_}` untuk mengupgrade "
 "benda dengan stat `{stat}`."
 
-#: cogs/profile.py:463
+#: cogs/profile.py:465
 msgid "This item is already on the maximum upgrade level."
 msgstr "Benda kedua tidak dapat diupgrade lagi."
 
-#: cogs/profile.py:471
+#: cogs/profile.py:473
 #, python-brace-format
 msgid ""
 "The {stat} of your **{item}** is now **{newstat}**. The other item was "
@@ -4702,15 +4765,15 @@ msgstr ""
 "{stat} dari **{item}** anda sekarang adalah **{newstat}**. Benda lainnya "
 "telah dihancurkan."
 
-#: cogs/profile.py:480
+#: cogs/profile.py:482
 msgid "Upgrades an item's stat by 1."
 msgstr "Mengupgrade benda anda sebanyak 1 stat."
 
-#: cogs/profile.py:503
+#: cogs/profile.py:505
 msgid "Your weapon already reached the maximum upgrade level."
 msgstr "Senjata anda telah mencapai level maksimum yang dapat diupgrade."
 
-#: cogs/profile.py:508
+#: cogs/profile.py:510
 #, python-brace-format
 msgid ""
 "Are you sure you want to upgrade this item: {item}? It will cost **"
@@ -4719,11 +4782,11 @@ msgstr ""
 "Apakah anda yakin ingin mengupgrade benda ini: {item}? Harganya adalah **"
 "${pricetopay}**."
 
-#: cogs/profile.py:512
+#: cogs/profile.py:514
 msgid "Weapon upgrade cancelled."
 msgstr "Upgrade senjata dibatalkan."
 
-#: cogs/profile.py:517
+#: cogs/profile.py:519
 #, python-brace-format
 msgid ""
 "You are too poor to upgrade this item. The upgrade costs **${pricetopay}**, "
@@ -4732,7 +4795,7 @@ msgstr ""
 "Anda terlalu miskin untuk mengupgrade benda ini. Upgrade ini harganya **"
 "${pricetopay}**, tetapi anda hanya punya **${money}**."
 
-#: cogs/profile.py:532
+#: cogs/profile.py:534
 #, python-brace-format
 msgid ""
 "The {stat} of your **{item}** is now **{newstat}**. **${pricetopay}** has "
@@ -4741,71 +4804,71 @@ msgstr ""
 "{stat} dari **{item}** sekarang adalah **{newstat}**. **${pricetopay}**telah "
 "dikurangi dari uang anda."
 
-#: cogs/profile.py:547
+#: cogs/profile.py:549
 msgid "Gift money!"
 msgstr "Uang hadiah!"
 
-#: cogs/profile.py:549
+#: cogs/profile.py:551
 msgid "No cheating!"
 msgstr "Tidak boleh curang!"
 
-#: cogs/profile.py:562
+#: cogs/profile.py:564
 #, python-brace-format
 msgid "Successfully gave **${money}** to {other}."
 msgstr "**${money}** telah diberikan kepada {other} secara sukses."
 
-#: cogs/profile.py:574
+#: cogs/profile.py:576
 msgid "Renames your character."
 msgstr "Menamai ulang karakter anda."
 
-#: cogs/profile.py:576
+#: cogs/profile.py:578
 msgid "What shall your character's name be? (Minimum 3 Characters, Maximum 20)"
 msgstr "Apakah nama karakter anda? (Minimal 3 Karakter, Maksimal 20 Karakter)"
 
-#: cogs/profile.py:585
+#: cogs/profile.py:587
 msgid "Timeout expired. Retry!"
 msgstr "Waktu habis. Mohon coba kembali!"
 
-#: cogs/profile.py:591
+#: cogs/profile.py:593
 msgid "Character name updated."
 msgstr "Nama karakter anda telah diperbarui."
 
-#: cogs/profile.py:593
+#: cogs/profile.py:595
 msgid "Character names must be at least 3 characters!"
 msgstr "Nama karakter harus lebih boleh kurang dari 3 karakter!"
 
-#: cogs/profile.py:595
+#: cogs/profile.py:597
 msgid "Character names mustn't exceed 20 characters!"
 msgstr "Nama karakter harus tidak boleh lebih dari 20 karakter!"
 
-#: cogs/profile.py:601
+#: cogs/profile.py:603
 msgid "Deletes your character."
 msgstr "Menghapus karakter anda."
 
-#: cogs/profile.py:604
+#: cogs/profile.py:606
 msgid ""
 "Are you absolutely sure you want to delete your character? React in the next "
 "30 seconds to confirm.\n"
 "**This cannot be undone.**"
 msgstr ""
 
-#: cogs/profile.py:607
+#: cogs/profile.py:609
 msgid "Cancelled deletion of your character."
 msgstr "Penghapusan karakter telah dibatalkan."
 
-#: cogs/profile.py:629
+#: cogs/profile.py:631
 msgid "Successfully deleted your character. Sorry to see you go :frowning:"
 msgstr "Penghapusan karakter sukses dilakukan. Anda akan dirindukan :frowning:"
 
-#: cogs/profile.py:635
+#: cogs/profile.py:637
 msgid "Sets your profile text colour."
 msgstr "Mengatur warna tulisan di profil."
 
-#: cogs/profile.py:638
+#: cogs/profile.py:640
 msgid "Format for colour is `#RRGGBB` or a colour code like `cyan`."
 msgstr ""
 
-#: cogs/profile.py:645
+#: cogs/profile.py:647
 #, python-brace-format
 msgid ""
 "Successfully set your profile colour to `{colour}`. Hint: If you used a hex "
@@ -5270,6 +5333,46 @@ msgstr ""
 #, python-brace-format
 msgid "You are now a {race}."
 msgstr ""
+
+#: utils/castle.py:164
+#, python-brace-format
+msgid "You found a treasure with {emote} inside!"
+msgstr ""
+
+#: utils/castle.py:269
+msgid "You have reached the exit!"
+msgstr ""
+
+#~ msgid "{user} healed themselves for **20 HP**."
+#~ msgstr "{user} memulihkan **20 nyawa** sendiri."
+
+#~ msgid "It's a tie. You lose your bet."
+#~ msgstr "Hasilnya adalah seri. Anda kalah taruhan."
+
+#~ msgid "Vote me up to get a reward!"
+#~ msgstr "Vote saya untuk mendapat hadiah!"
+
+#~ msgid ""
+#~ "Upvote me for a big thanks! You will be rewarded a few seconds "
+#~ "afterwards!\n"
+#~ "https://discordbots.org/bot/idlerpg"
+#~ msgstr ""
+#~ "Vote saya untuk imbalan yang besar! Anda akan diberikan hadiah beberapa "
+#~ "detik kemudian!\n"
+#~ "https://discordbots.org/bot/idlerpg"
+
+#~ msgid ""
+#~ "**Money**: `${money}`\n"
+#~ "**Level**: `{level}`\n"
+#~ "**Class**: `{class_}`\n"
+#~ "**PvP Wins**: `{pvp}`\n"
+#~ "**Guild**: `{guild}`"
+#~ msgstr ""
+#~ "**Uang**: `${money}`\n"
+#~ "**Level**: `{level}`\n"
+#~ "**Kelas**: `{class_}`\n"
+#~ "**Kemenangan PvP**: `{pvp}`\n"
+#~ "**Guild**: `{guild}`"
 
 #~ msgid ""
 #~ "{author} started a tournament! Free entries, prize is **${prize}**! React "

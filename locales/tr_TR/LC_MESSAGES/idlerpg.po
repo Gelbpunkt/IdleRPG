@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-08-17 17:05+0000\n"
+"POT-Creation-Date: 2019-08-22 15:52+0000\n"
 "PO-Revision-Date: 2019-08-17 19:10+0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -23,7 +23,7 @@ msgid "Starts a new tournament."
 msgstr "Yeni turnuva başlatır."
 
 #: cogs/tournament.py:41 cogs/battles.py:44 cogs/battles.py:146
-#: cogs/gambling.py:323 cogs/profile.py:551 cogs/transaction.py:249
+#: cogs/gambling.py:324 cogs/profile.py:553 cogs/transaction.py:249
 #: cogs/transaction.py:295
 msgid "You are too poor."
 msgstr "Çok fakirsin."
@@ -37,21 +37,21 @@ msgstr ""
 "{author} turnuva başlattı! Girişler ücretsiz, ödül **${prize}**! Katılmak "
 "için ⚔ ile tepki verin!"
 
-#: cogs/tournament.py:68
+#: cogs/tournament.py:66
 msgid "Noone joined your tournament."
 msgstr "Turnuvana kimse katılmadı."
 
-#: cogs/tournament.py:72
+#: cogs/tournament.py:74
 #, python-brace-format
 msgid "{user} joined the tournament."
 msgstr "{user} turnuvaya katıldı."
 
-#: cogs/tournament.py:76
+#: cogs/tournament.py:78
 #, python-brace-format
 msgid "You don't have a character, {user}."
 msgstr "Karakterin yok, {user}."
 
-#: cogs/tournament.py:82
+#: cogs/tournament.py:84
 #, python-brace-format
 msgid ""
 "There are **{num}** entries, due to the fact we need a playable tournament, "
@@ -60,34 +60,34 @@ msgstr ""
 "**{num}** giriş var, oynanılabilir bir turnuva olması gerektiğinden son "
 "**{removed}** kaldırıldı."
 
-#: cogs/tournament.py:88
+#: cogs/tournament.py:90
 #, python-brace-format
 msgid "Tournament started with **{num}** entries."
 msgstr "Turnuva **{num}** girişle başladı."
 
-#: cogs/tournament.py:91
+#: cogs/tournament.py:92
 msgid "vs"
 msgstr "vs"
 
-#: cogs/tournament.py:122
+#: cogs/tournament.py:123
 #, python-brace-format
 msgid "Winner of this match is {winner}!"
 msgstr "Bu maçın kazananı {winner}!"
 
-#: cogs/tournament.py:126
+#: cogs/tournament.py:127
 msgid "Round Done!"
 msgstr "Raunt Bitti!"
 
-#: cogs/tournament.py:129
+#: cogs/tournament.py:130
 #, python-brace-format
 msgid "Tournament ended! The winner is {winner}."
 msgstr "Turnuva bitti! Kazanan {winner}."
 
-#: cogs/tournament.py:134
+#: cogs/tournament.py:135
 msgid "The creator spent money, prize can't be given!"
 msgstr "Kurucu parayı harcadı, ödül verilemez!"
 
-#: cogs/tournament.py:148
+#: cogs/tournament.py:149
 #, python-brace-format
 msgid ""
 "Tournament ended! The winner is {winner}.\n"
@@ -165,7 +165,7 @@ msgstr "{user} sana fazladan $50 verdi!"
 msgid "Seems you haven't got a trick or treat bag yet. Go get some!"
 msgstr "Görünüşe göre henüz şeker ya da şaka torban yok. Git biraz al!"
 
-#: cogs/halloween.py:142 cogs/crates.py:129 cogs/classes.py:492
+#: cogs/halloween.py:142 cogs/crates.py:129 cogs/classes.py:493
 msgid "You gained an item!"
 msgstr "Eşya kazandın!"
 
@@ -173,16 +173,16 @@ msgstr "Eşya kazandın!"
 msgid "You found a new item when opening a trick-or-treat bag!"
 msgstr "Şeker-ya-da-şaka torbası açarken yeni eşya buldun!"
 
-#: cogs/halloween.py:147 cogs/crates.py:134 cogs/classes.py:497
+#: cogs/halloween.py:147 cogs/crates.py:134 cogs/classes.py:498
 msgid "ID"
 msgstr "ID"
 
-#: cogs/halloween.py:148 cogs/crates.py:135 cogs/classes.py:284
-#: cogs/classes.py:498 cogs/trading.py:218 cogs/trading.py:403
+#: cogs/halloween.py:148 cogs/crates.py:135 cogs/classes.py:285
+#: cogs/classes.py:499 cogs/trading.py:218 cogs/trading.py:403
 msgid "Name"
 msgstr "İsim"
 
-#: cogs/halloween.py:149 cogs/crates.py:136 cogs/classes.py:499
+#: cogs/halloween.py:149 cogs/crates.py:136 cogs/classes.py:500
 #: cogs/trading.py:219 cogs/trading.py:404
 msgid "Type"
 msgstr "Tür"
@@ -318,26 +318,26 @@ msgstr "Birisi hamle yapmayı reddetti. Savaş durduruldu."
 msgid "{user}, you already moved!"
 msgstr "{user}, sen zaten hamle yaptın!"
 
-#: cogs/battles.py:256
+#: cogs/battles.py:257
 #, python-brace-format
-msgid "{user} healed themselves for **20 HP**."
-msgstr "{user} kendine **20 HP** can bastı."
+msgid "{user} healed themselves for **{hp} HP**."
+msgstr ""
 
-#: cogs/battles.py:271 cogs/battles.py:295
+#: cogs/battles.py:272 cogs/battles.py:296
 #, python-brace-format
 msgid "{user} hit {enemy} for **{eff}** damage."
 msgstr "{user}, {enemy}'a **{eff}** hasar verdi."
 
-#: cogs/battles.py:301
+#: cogs/battles.py:302
 #, python-brace-format
 msgid "{user}'s attack on {enemy} failed!"
 msgstr "{user}'nın {enemy}'a saldırısı başarısız oldu!"
 
-#: cogs/battles.py:306
+#: cogs/battles.py:307
 msgid "You both died!"
 msgstr "İkinizde öldünüz!"
 
-#: cogs/battles.py:315
+#: cogs/battles.py:316
 msgid ""
 "One of you both can't pay the price for the battle because he spent money in "
 "the time of fighting."
@@ -345,7 +345,7 @@ msgstr ""
 "Dövüş esnasında para harcadığı için ikinizden biri savaşın fiyatını "
 "ödeyemiyor."
 
-#: cogs/battles.py:329
+#: cogs/battles.py:330
 #, python-brace-format
 msgid "{winner} won the active battle vs {looser}! Congratulations!"
 msgstr "{winner}, {looser}'a karşı olan aktif savaşı kazandı! Tebrikler!"
@@ -480,18 +480,18 @@ msgstr ""
 msgid "You found a new item when opening a crate!"
 msgstr "Sandık açarken yeni bir eşya buldun!"
 
-#: cogs/crates.py:137 cogs/classes.py:501 cogs/trading.py:220
+#: cogs/crates.py:137 cogs/classes.py:502 cogs/trading.py:220
 #: cogs/trading.py:405
 msgid "Damage"
 msgstr "Hasar"
 
-#: cogs/crates.py:138 cogs/classes.py:503 cogs/trading.py:221
+#: cogs/crates.py:138 cogs/classes.py:504 cogs/trading.py:221
 #: cogs/trading.py:406
 msgid "Armor"
 msgstr "Zırh"
 
-#: cogs/crates.py:139 cogs/classes.py:504 cogs/trading.py:222
-#: cogs/trading.py:407 cogs/profile.py:334
+#: cogs/crates.py:139 cogs/classes.py:505 cogs/trading.py:222
+#: cogs/trading.py:407 cogs/profile.py:336
 msgid "Value"
 msgstr "Değer"
 
@@ -1674,57 +1674,57 @@ msgstr ""
 "içerir.\n"
 "[discordbots.org Page](https://discordbots.org/bot/541707781665718302)"
 
-#: cogs/raid.py:452
+#: cogs/raid.py:2035
 msgid "Upgrade your raid damage or defense multiplier."
 msgstr ""
 
-#: cogs/raid.py:455
+#: cogs/raid.py:2038
 #, python-brace-format
 msgid ""
 "Use `{prefix}increase damage/defense` to upgrade your raid damage/defense "
 "multiplier by 10%."
 msgstr ""
 
-#: cogs/raid.py:463
+#: cogs/raid.py:2046
 msgid "Increase your raid damage."
 msgstr ""
 
-#: cogs/raid.py:469
+#: cogs/raid.py:2052
 #, python-brace-format
 msgid ""
 "Upgrading your weapon attack raid multiplier to {newlvl} costs **${price}**, "
 "you are too poor."
 msgstr ""
 
-#: cogs/raid.py:480
+#: cogs/raid.py:2063
 #, python-brace-format
 msgid ""
 "You upgraded your weapon attack raid multiplier to {newlvl} for **${price}**."
 msgstr ""
 
-#: cogs/raid.py:488
+#: cogs/raid.py:2071
 msgid "Increase your raid defense."
 msgstr ""
 
-#: cogs/raid.py:494
+#: cogs/raid.py:2077
 #, python-brace-format
 msgid ""
 "Upgrading your shield defense raid multiplier to {newlvl} costs **${price}"
 "**, you are too poor."
 msgstr ""
 
-#: cogs/raid.py:505
+#: cogs/raid.py:2088
 #, python-brace-format
 msgid ""
 "You upgraded your shield defense raid multiplier to {newlvl} for **${price}"
 "**."
 msgstr ""
 
-#: cogs/raid.py:513
+#: cogs/raid.py:2096
 msgid "View your raid stats."
 msgstr "Baskın istatistiklerine bak."
 
-#: cogs/raid.py:524
+#: cogs/raid.py:2107
 #, python-brace-format
 msgid ""
 "**{author}'s raid multipliers**\n"
@@ -1732,7 +1732,11 @@ msgid ""
 "Defense Multiplier: x{deff} (Upgrading: ${deffp})"
 msgstr ""
 
-#: cogs/raid.py:535
+#: cogs/raid.py:2116
+msgid "Informs you about joining raids."
+msgstr ""
+
+#: cogs/raid.py:2119
 #, python-brace-format
 msgid ""
 "Did you ever want to join together with other players to defeat the dragon "
@@ -1776,7 +1780,7 @@ msgstr "Dükkandan güçlendirici al."
 msgid "Please either buy `time`, `luck` or `money`."
 msgstr "Lütfen `zaman`, `şans` ya da `para` alın."
 
-#: cogs/store.py:61 cogs/gambling.py:373 cogs/gambling.py:407 cogs/guild.py:483
+#: cogs/store.py:61 cogs/gambling.py:374 cogs/gambling.py:408 cogs/guild.py:483
 msgid "You're too poor."
 msgstr "Çok fakirsin."
 
@@ -1986,7 +1990,7 @@ msgstr "[Patreon'a Özel] Profilinin arkaplanını değiştirir."
 msgid "That is not a valid premade background."
 msgstr "Bu geçerli bir önceden yapılmış arkaplan değil."
 
-#: cogs/patreon.py:81 cogs/patreon.py:113 cogs/classes.py:463 cogs/guild.py:392
+#: cogs/patreon.py:81 cogs/patreon.py:113 cogs/classes.py:464 cogs/guild.py:392
 msgid ""
 "I couldn't read that URL. Does it start with `http://` or `https://` and is "
 "either a png or jpeg?"
@@ -2063,27 +2067,27 @@ msgstr "Arkaplan numarası {number} geçerli değil, sende toplam {total} mevcut
 msgid "Background updated!"
 msgstr "Arkaplan güncellendi!"
 
-#: cogs/classes.py:38
+#: cogs/classes.py:39
 msgid "Change your primary or secondary class."
 msgstr "Birincil ya da ikincil sınıfını değiştir."
 
-#: cogs/classes.py:41
+#: cogs/classes.py:42
 msgid "Select class to change"
 msgstr "Değiştirmek için sınıf seç"
 
-#: cogs/classes.py:42
+#: cogs/classes.py:43
 msgid "Primary Class"
 msgstr "Birinicil Sınıf"
 
-#: cogs/classes.py:42
+#: cogs/classes.py:43
 msgid "Secondary Class"
 msgstr "İkincil Sınıf"
 
-#: cogs/classes.py:49
+#: cogs/classes.py:50
 msgid "Warrior"
 msgstr "Savaşçı"
 
-#: cogs/classes.py:51
+#: cogs/classes.py:52
 msgid ""
 "The tank class. Charge into battle with additional defense!\n"
 "+1 defense per evolution added onto your shield."
@@ -2091,11 +2095,11 @@ msgstr ""
 "Tank sınıfı. Savaşa ek defansla gir!\n"
 "Evrim başına kalkanına +1 defans eklenir."
 
-#: cogs/classes.py:56
+#: cogs/classes.py:57
 msgid "Thief"
 msgstr "Hırsız"
 
-#: cogs/classes.py:59
+#: cogs/classes.py:60
 #, no-python-format, python-brace-format
 msgid ""
 "The sneaky money stealer...\n"
@@ -2108,11 +2112,11 @@ msgstr ""
 "erişim al.\n"
 "Evrim başına +%8 başarı şansı."
 
-#: cogs/classes.py:64
+#: cogs/classes.py:65
 msgid "Mage"
 msgstr "Büyücü"
 
-#: cogs/classes.py:66
+#: cogs/classes.py:67
 msgid ""
 "Utilise powerful magic for stronger attacks.\n"
 "+1 damage per evolution added onto your sword."
@@ -2120,11 +2124,11 @@ msgstr ""
 "Daha güçlü saldırılar için güçlü büyü kullan.\n"
 "Evrim başına kılıcına +1 hasar eklenir."
 
-#: cogs/classes.py:71
+#: cogs/classes.py:72
 msgid "Ranger"
 msgstr "Korucu"
 
-#: cogs/classes.py:73
+#: cogs/classes.py:74
 #, python-brace-format
 msgid ""
 "Item hunter and trainer of their very own pet.\n"
@@ -2137,11 +2141,11 @@ msgstr ""
 "pet`e erişim al.\n"
 "Evrim başına +3 minimum güç ve +6 maksimum güç."
 
-#: cogs/classes.py:78
+#: cogs/classes.py:79
 msgid "Raider"
 msgstr "Akıncı"
 
-#: cogs/classes.py:80
+#: cogs/classes.py:81
 msgid ""
 "A strong warrior who gives their live for the fight against Zerekiel.\n"
 "Every evolve boosts the raidstats by additional 10%."
@@ -2149,15 +2153,15 @@ msgstr ""
 "Zerekiel ile savaşmaya hayatını adamış güçlü bir savaşçı.\n"
 "Her evrim geçirme raidstats'ı ekstra %10 arttırır."
 
-#: cogs/classes.py:85
+#: cogs/classes.py:86
 msgid "Ritualist"
 msgstr "Ayinci"
 
-#: cogs/classes.py:94
+#: cogs/classes.py:95
 msgid "Paragon"
 msgstr "Paragon"
 
-#: cogs/classes.py:96
+#: cogs/classes.py:97
 msgid ""
 "Absorb the appreciation of the devs into your soul to power up.\n"
 "+1 damage and defense per evolution added onto your items."
@@ -2165,126 +2169,126 @@ msgstr ""
 "Güçlenmek için geliştiricilerin takdirini ruhuna em.\n"
 "Evrim başına eşyalarına +1 hasar ve defans eklenir."
 
-#: cogs/classes.py:139
+#: cogs/classes.py:140
 #, python-brace-format
 msgid "Your new class is now `{profession}`."
 msgstr "Senin sınıfın artık `{profession}`."
 
-#: cogs/classes.py:147
+#: cogs/classes.py:148
 msgid "You're too poor for a class change, it costs **$5000**."
 msgstr "Sınıf değiştirmek için çok fakirsin, **$5000** ediyor."
 
-#: cogs/classes.py:164
+#: cogs/classes.py:165
 #, python-brace-format
 msgid ""
 "You selected the class `{profession}`. **$5000** was taken off your balance."
 msgstr "`{profession}` sınıfını seçtin. Hesabından **$5000** alındı."
 
-#: cogs/classes.py:172
+#: cogs/classes.py:173
 msgid "Views your classes."
 msgstr "Sınıflarına bak."
 
-#: cogs/classes.py:186
+#: cogs/classes.py:187
 #, python-brace-format
 msgid "The image for your class **{class_}** hasn't been added yet."
 msgstr "Senin sınıfın **{class_}** için resim henüz eklenmedi."
 
-#: cogs/classes.py:194
+#: cogs/classes.py:195
 msgid "Evolve to the next level of your classes."
 msgstr "Sınıfının bir sonraki seviyesine evrim geçir."
 
-#: cogs/classes.py:197
+#: cogs/classes.py:198
 msgid "Your level isn't high enough to evolve."
 msgstr "Seviyen evrimleşmek için yeterince yüksek değil."
 
-#: cogs/classes.py:212
+#: cogs/classes.py:213
 msgid "You haven't got a class yet."
 msgstr "Henüz sınıfın yok."
 
-#: cogs/classes.py:217
+#: cogs/classes.py:218
 #, python-brace-format
 msgid "You are now a `{class1}` and a `{class2}`."
 msgstr "Senin sınıfların şimdi `{class1}` ve `{class2}`."
 
-#: cogs/classes.py:246
+#: cogs/classes.py:247
 msgid "[Thief Only] Steal money!"
 msgstr "[Hırsıza Özel] Para çal!"
 
-#: cogs/classes.py:268
+#: cogs/classes.py:269
 #, python-brace-format
 msgid "You stole **${stolen}** from **{user}**."
 msgstr "**{user}**'dan **${stolen}** çaldın."
 
-#: cogs/classes.py:273
+#: cogs/classes.py:274
 msgid "Your attempt to steal money wasn't successful."
 msgstr "Para çalma girişimin başarısız oldu."
 
-#: cogs/classes.py:281
+#: cogs/classes.py:282
 msgid "[Ranger Only] View your pet or interact with it."
 msgstr "[Korucuya Özel] Evcil hayvanına bak ya da onunla etkileşime gir."
 
-#: cogs/classes.py:283
+#: cogs/classes.py:284
 #, python-brace-format
 msgid "{user}'s pet"
 msgstr "{user}'nın evcil hayvanı"
 
-#: cogs/classes.py:285
+#: cogs/classes.py:286
 msgid "Level"
 msgstr "Seviye"
 
-#: cogs/classes.py:286
+#: cogs/classes.py:287
 msgid "Food"
 msgstr "Yemek"
 
-#: cogs/classes.py:288
+#: cogs/classes.py:289
 msgid "Drinks"
 msgstr "İçecekler"
 
-#: cogs/classes.py:290
+#: cogs/classes.py:291
 msgid "Love"
 msgstr "Sevgi"
 
-#: cogs/classes.py:291
+#: cogs/classes.py:292
 msgid "Joy"
 msgstr "Neşe"
 
-#: cogs/classes.py:302
+#: cogs/classes.py:303
 msgid "[Ranger Only] Feed your pet."
 msgstr "[Korucuya Özel] Evcil hayvanını besle."
 
-#: cogs/classes.py:304
+#: cogs/classes.py:305
 msgid "Potato"
 msgstr "Patates"
 
-#: cogs/classes.py:305
+#: cogs/classes.py:306
 msgid "Apple"
 msgstr "Elma"
 
-#: cogs/classes.py:306
+#: cogs/classes.py:307
 msgid "Cucumber"
 msgstr "Salatalık"
 
-#: cogs/classes.py:307
+#: cogs/classes.py:308
 msgid "Meat"
 msgstr "Et"
 
-#: cogs/classes.py:308
+#: cogs/classes.py:309
 msgid "Salad"
 msgstr "Salata"
 
-#: cogs/classes.py:309
+#: cogs/classes.py:310
 msgid "Adrian's Power Poop"
 msgstr "Adrian'ın Güç Dışkısı"
 
-#: cogs/classes.py:316
+#: cogs/classes.py:317
 msgid "Feed your pet"
 msgstr "Evcil hayvanını besle"
 
-#: cogs/classes.py:320 cogs/classes.py:362 cogs/marriage.py:232
+#: cogs/classes.py:321 cogs/classes.py:363 cogs/marriage.py:232
 msgid "You are too poor to buy this."
 msgstr "Bunu satın almak için çok fakirsin."
 
-#: cogs/classes.py:334
+#: cogs/classes.py:335
 #, python-brace-format
 msgid ""
 "You bought **{item}** for your pet and increased its food bar by **{points}"
@@ -2293,39 +2297,39 @@ msgstr ""
 "Evcil hayvanın için **{item}** aldın ve yemek barını **{points}** puan "
 "yükselttin."
 
-#: cogs/classes.py:344
+#: cogs/classes.py:345
 msgid "[Ranger Only] Give your pet something to drink."
 msgstr "[Korucuya Özel] Evcil hayvanına içmesi için bir şey ver."
 
-#: cogs/classes.py:346
+#: cogs/classes.py:347
 msgid "Some Water"
 msgstr "Biraz Su"
 
-#: cogs/classes.py:347
+#: cogs/classes.py:348
 msgid "A bottle of water"
 msgstr "Bir şişe su"
 
-#: cogs/classes.py:348
+#: cogs/classes.py:349
 msgid "Cocktail"
 msgstr "Kokteyl"
 
-#: cogs/classes.py:349
+#: cogs/classes.py:350
 msgid "Wine"
 msgstr "Şarap"
 
-#: cogs/classes.py:350
+#: cogs/classes.py:351
 msgid "Beer"
 msgstr "Bira"
 
-#: cogs/classes.py:351
+#: cogs/classes.py:352
 msgid "Adrian's Cocktail"
 msgstr "Adrian'ın Kokteyli"
 
-#: cogs/classes.py:358
+#: cogs/classes.py:359
 msgid "Give your pet something to drink"
 msgstr "Evcil hayvanına içmesi için bir şey ver"
 
-#: cogs/classes.py:376
+#: cogs/classes.py:377
 #, python-brace-format
 msgid ""
 "You bought **{item}** for your pet and increased its drinks bar by **{points}"
@@ -2334,11 +2338,11 @@ msgstr ""
 "Evcil hayvanın için **{item}** aldın ve içecekler barını **{points}** puan "
 "yükselttin."
 
-#: cogs/classes.py:387
+#: cogs/classes.py:388
 msgid "[Ranger Only] Cuddle your pet to make it love you."
 msgstr "[Korucuya Özel] Seni sevmesi için evcil hayvanına sarıl."
 
-#: cogs/classes.py:396
+#: cogs/classes.py:397
 #, python-brace-format
 msgid ""
 "Your pet adores you! :heart: Cuddling it has increased its love for you by "
@@ -2347,82 +2351,82 @@ msgstr ""
 "Evcil hayvanın seni çok seviyor! :heart: Ona sarılmak sana olan sevgisini "
 "**{value}** puan yükseltti."
 
-#: cogs/classes.py:407
+#: cogs/classes.py:408
 msgid "[Ranger Only] Play with your pet to make it happier."
 msgstr "[Korucuya Özel] Evcil hayvanını mutlu etmek için onunla oyna."
 
-#: cogs/classes.py:416
+#: cogs/classes.py:417
 #, python-brace-format
 msgid "You have been {activity} with your pet and it gained **{value}** joy!"
 msgstr ""
 "Evcil hayvanınla {activity} aktivitesini yaptınız ve **{value}** neşe "
 "kazandı!"
 
-#: cogs/classes.py:420
+#: cogs/classes.py:421
 msgid "playing football :soccer:"
 msgstr "futbol oynuyorsunuz :soccer:"
 
-#: cogs/classes.py:421
+#: cogs/classes.py:422
 msgid "playing American football :football:"
 msgstr "Amerikan futbolu oynuyorsunuz :football:"
 
-#: cogs/classes.py:422
+#: cogs/classes.py:423
 msgid "playing rugby :rugy_football:"
 msgstr "ragbi oynuyorsunuz :rugy_football:"
 
-#: cogs/classes.py:423
+#: cogs/classes.py:424
 msgid "playing basketball :basketball:"
 msgstr "basketbol oynuyorsunuz :basketball:"
 
-#: cogs/classes.py:424
+#: cogs/classes.py:425
 msgid "playing tennis :tennis:"
 msgstr "tenis oynuyorsunuz :tennis:"
 
-#: cogs/classes.py:425
+#: cogs/classes.py:426
 msgid "playing ping-pong :ping_pong:"
 msgstr "masa tenisi oynuyorsunuz :ping_pong:"
 
-#: cogs/classes.py:426
+#: cogs/classes.py:427
 msgid "boxing :boxing_glove:"
 msgstr "boks yapıyorsunuz :boxing_glove:"
 
-#: cogs/classes.py:427
+#: cogs/classes.py:428
 msgid "skiing :ski:"
 msgstr "kayak yapıyorsunuz :ski:"
 
-#: cogs/classes.py:440
+#: cogs/classes.py:441
 msgid "[Ranger Only] Renames your pet."
 msgstr "[Korucuya Özel] Evcil hayvanının adını değiştirir."
 
-#: cogs/classes.py:442
+#: cogs/classes.py:443
 msgid "Please enter a name shorter than 20 characters."
 msgstr "Lütfen 20 karakterden kısa bir isim girin."
 
-#: cogs/classes.py:446
+#: cogs/classes.py:447
 msgid "Pet name updated."
 msgstr "Evcil hayvan adı güncellendi."
 
-#: cogs/classes.py:454
+#: cogs/classes.py:455
 msgid "[Ranger Only] Sets your pet's image by URL."
 msgstr "[Korucuya Özel] URL'ye göre evcil hayvanının resmini ayarlar."
 
-#: cogs/classes.py:456
+#: cogs/classes.py:457
 msgid "URLs mustn't exceed 60 characters ."
 msgstr "URL'ler 60 karakteri geçmemeli."
 
-#: cogs/classes.py:469
+#: cogs/classes.py:470
 msgid "Your pet's image was successfully updated."
 msgstr "Evcil hayvanının resmi başarılı bir şekilde güncellendi."
 
-#: cogs/classes.py:478
+#: cogs/classes.py:479
 msgid "[Ranger Only] Let your pet get a weapon for you!"
 msgstr "[Korucuya Özel] Evcil hayvanının senin için silah almasına izin ver!"
 
-#: cogs/classes.py:493
+#: cogs/classes.py:494
 msgid "Your pet found an item!"
 msgstr "Evcil hayvanın eşya buldu!"
 
-#: cogs/classes.py:505
+#: cogs/classes.py:506
 msgid "Your pet needs to recover, wait a day to retry"
 msgstr ""
 "Evcil hayvanının dinlenmesi gerekiyor, yeniden denemek için bir gün bekle"
@@ -2647,48 +2651,48 @@ msgstr ""
 msgid "**Generating a maze...**"
 msgstr "**Labirent oluşturuluyor...**"
 
-#: cogs/adventure.py:126
+#: cogs/adventure.py:126 utils/castle.py:29
 msgid "North"
 msgstr "Kuzey"
 
-#: cogs/adventure.py:127
+#: cogs/adventure.py:127 utils/castle.py:29
 msgid "East"
 msgstr "Doğu"
 
-#: cogs/adventure.py:128
+#: cogs/adventure.py:128 utils/castle.py:29
 msgid "South"
 msgstr "Güney"
 
-#: cogs/adventure.py:129
+#: cogs/adventure.py:129 utils/castle.py:29
 msgid "West"
 msgstr "Batı"
 
-#: cogs/adventure.py:205
+#: cogs/adventure.py:205 utils/castle.py:129
 #, python-brace-format
 msgid "To the {side} is a wall."
 msgstr "{side} tarafında duvar var."
 
-#: cogs/adventure.py:207
+#: cogs/adventure.py:207 utils/castle.py:131
 #, python-brace-format
 msgid "To the {side} is an enemy."
 msgstr "{side} tarafında düşman var."
 
-#: cogs/adventure.py:209
+#: cogs/adventure.py:209 utils/castle.py:133
 #, python-brace-format
 msgid "To the {side} is a treasure."
 msgstr " {side} tarafında hazine var."
 
-#: cogs/adventure.py:211
+#: cogs/adventure.py:211 utils/castle.py:135
 #, python-brace-format
 msgid "To the {side} is a floor."
 msgstr "{side} tarafında yer var."
 
-#: cogs/adventure.py:214
+#: cogs/adventure.py:214 utils/castle.py:138
 #, python-brace-format
 msgid "You are on {hp} HP"
 msgstr "Canın {hp} HP"
 
-#: cogs/adventure.py:224
+#: cogs/adventure.py:224 utils/castle.py:151
 #, python-brace-format
 msgid "You stepped on a trap and took {damage} damage!"
 msgstr "Tuzağa bastın ve {damage} hasar aldın!"
@@ -2698,43 +2702,44 @@ msgstr "Tuzağa bastın ve {damage} hasar aldın!"
 msgid "You found a treasure with **${money}** inside!"
 msgstr "İçinde **${money}** para olan bir hazine buldun!"
 
-#: cogs/adventure.py:262
+#: cogs/adventure.py:262 utils/castle.py:188
 msgid "Enemy"
 msgstr "Düşman"
 
-#: cogs/adventure.py:267
+#: cogs/adventure.py:267 utils/castle.py:193
 msgid "The Fight started"
 msgstr "Savaş başladı"
 
-#: cogs/adventure.py:302
+#: cogs/adventure.py:302 utils/castle.py:229
 #, python-brace-format
 msgid "The Enemy healed themselves for {hp} HP"
 msgstr "Düşman kendi canını {hp} HP iyileştirdi"
 
-#: cogs/adventure.py:308
+#: cogs/adventure.py:308 utils/castle.py:235
 #, python-brace-format
 msgid "You healed yourself for {hp} HP"
 msgstr "Kendi canını {hp} HP iyileştirdin"
 
-#: cogs/adventure.py:314
+#: cogs/adventure.py:314 utils/castle.py:239
 msgid "Attack blocked."
 msgstr "Saldırı engellendi."
 
-#: cogs/adventure.py:319
+#: cogs/adventure.py:319 utils/castle.py:244
 #, python-brace-format
 msgid "The Enemy hit you for {dmg} damage"
 msgstr "Düşman sana {dmg} hasar vurdu"
 
-#: cogs/adventure.py:324
+#: cogs/adventure.py:324 utils/castle.py:247
 #, python-brace-format
 msgid "You hit the enemy for {dmg} damage"
 msgstr "Sen düşmana {dmg} hasar vurdun"
 
-#: cogs/adventure.py:338 cogs/adventure.py:343
+#: cogs/adventure.py:338 cogs/adventure.py:343 cogs/gambling.py:445
+#: cogs/gambling.py:475 utils/castle.py:259 utils/castle.py:264
 msgid "Timed out."
 msgstr "Zaman aşımına uğradı."
 
-#: cogs/adventure.py:345
+#: cogs/adventure.py:345 utils/castle.py:267
 msgid "You died."
 msgstr "Öldün."
 
@@ -2790,7 +2795,15 @@ msgstr ""
 msgid "Cancels your current adventure."
 msgstr "Şu anki maceranı iptal eder."
 
-#: cogs/adventure.py:539
+#: cogs/adventure.py:537
+msgid "Are you sure you want to cancel your current adventure?"
+msgstr ""
+
+#: cogs/adventure.py:540
+msgid "Did not cancel your adventure. The journey continues..."
+msgstr ""
+
+#: cogs/adventure.py:545
 #, python-brace-format
 msgid ""
 "Canceled your mission. Use `{prefix}adventure [missionID]` to start a new "
@@ -2799,11 +2812,11 @@ msgstr ""
 "Görevini iptal ettin. Yenisine başlamak için `{prefix}adventure [görevID]` "
 "kullan!"
 
-#: cogs/adventure.py:547
+#: cogs/adventure.py:553
 msgid "Your death stats."
 msgstr "Ölüm istatistiklerin."
 
-#: cogs/adventure.py:557
+#: cogs/adventure.py:563
 #, python-brace-format
 msgid ""
 "Out of **{total}** adventures, you died **{deaths}** times and survived "
@@ -2893,45 +2906,45 @@ msgstr "Satıcıdan daha yüksek skorun var ve kazandın."
 msgid "Dealer has a higher score than you and wins."
 msgstr "Satıcının senden daha yüksek skoru var ve kazandı."
 
-#: cogs/gambling.py:295
-msgid "It's a tie. You lose your bet."
-msgstr "Berabere. Bahsini kaybettin."
+#: cogs/gambling.py:296
+msgid "It's a tie."
+msgstr ""
 
-#: cogs/gambling.py:307
+#: cogs/gambling.py:308
 msgid "Draws a random card."
 msgstr "Rastgele bir kart çeker."
 
-#: cogs/gambling.py:321
+#: cogs/gambling.py:322
 msgid "Flip a coin and bid on the outcome."
 msgstr "Yazı tura at ve sonuç hakkında teklif ver."
 
-#: cogs/gambling.py:337
+#: cogs/gambling.py:338
 #, python-brace-format
 msgid "{result[1]} It's **{result[0]}**! You won **${amount}**!"
 msgstr "{result[1]} Sonuç **{result[0]}**! **${amount}** kazandın!"
 
-#: cogs/gambling.py:348
+#: cogs/gambling.py:349
 #, python-brace-format
 msgid "{result[1]} It's **{result[0]}**! You lost **${amount}**!"
 msgstr "{result[1]} Sonuç **{result[0]}**! **${amount}** kaybettin!"
 
-#: cogs/gambling.py:366
+#: cogs/gambling.py:367
 #, python-brace-format
 msgid "Invalid Tip. Must be in the Range of `1` to `{maximum}`."
 msgstr "Geçersiz Bahşiş. `1` ile `{maximum}` arasında olmalı."
 
-#: cogs/gambling.py:371
+#: cogs/gambling.py:372
 msgid "Spend it in a better way. C'mon!"
 msgstr "Daha iyi bir şekilde harca. Hadi!"
 
-#: cogs/gambling.py:383
+#: cogs/gambling.py:384
 #, python-brace-format
 msgid ""
 "You won **${money}**! The random number was `{num}`, you tipped `{tip}`."
 msgstr ""
 "**${money}** kazandın! Rastgele numara`{num}`dı, sen `{tip}`e bahşiş verdin."
 
-#: cogs/gambling.py:394
+#: cogs/gambling.py:395
 #, python-brace-format
 msgid ""
 "You lost **${money}**! The random number was `{num}`, you tipped `{tip}`."
@@ -2939,13 +2952,57 @@ msgstr ""
 "**${money}** kaybettin! Rastgele numara `{num}`dı, sen `{tip}`e bahşiş "
 "verdin."
 
-#: cogs/gambling.py:404
+#: cogs/gambling.py:405
 msgid ""
 "[Alpha] Play blackjack against the dealer. Dealer rules, means wins in case "
 "of tie."
 msgstr ""
 "[Alpha] Satıcıya karşı blackjack oyna. Satıcı kuralları, kazanma beraberlik "
 "durumunda demek."
+
+#: cogs/gambling.py:422
+msgid ""
+"Play a double-or-steal game against someone. You start with $100 and can "
+"take it or double it with your money."
+msgstr ""
+
+#: cogs/gambling.py:425
+#, python-brace-format
+msgid "React with 💰 to play double-or-steal with {user}!"
+msgstr ""
+
+#: cogs/gambling.py:448
+#, python-brace-format
+msgid "{user} has not character."
+msgstr ""
+
+#: cogs/gambling.py:455 cogs/gambling.py:496
+#, python-brace-format
+msgid "{user} is too poor to double."
+msgstr ""
+
+#: cogs/gambling.py:465
+#, python-brace-format
+msgid "Double or steal ${money}?"
+msgstr ""
+
+#: cogs/gambling.py:466
+msgid "Double"
+msgstr ""
+
+#: cogs/gambling.py:466
+msgid "Steal"
+msgstr ""
+
+#: cogs/gambling.py:484
+#, python-brace-format
+msgid "{user} stole **${money}**."
+msgstr ""
+
+#: cogs/gambling.py:504
+#, python-brace-format
+msgid "{user} doubled to **${money}**."
+msgstr ""
 
 #: cogs/trading.py:36
 msgid "Puts an item into the player store."
@@ -4412,38 +4469,48 @@ msgstr ""
 "Kalan zaman: `{remain}`"
 
 #: cogs/vote.py:28
-msgid "Vote me up to get a reward!"
-msgstr "Ödül almak için bana oy ver!"
+msgid "Vote me up to get a random crate!"
+msgstr ""
 
 #: cogs/vote.py:31
 msgid ""
-"Upvote me for a big thanks! You will be rewarded a few seconds afterwards!\n"
+"Upvote me to receive a random crate! You will be rewarded a few seconds "
+"afterwards!\n"
 "https://discordbots.org/bot/idlerpg"
 msgstr ""
-"Büyük bir teşekkür için bana oy ver! Sonrasında birkaç saniye içinde "
-"ödüllendirileceksin!\n"
-"https://discordbots.org/bot/idlerpg"
 
-#: cogs/custom.py:36
+#: cogs/custom.py:50
 msgid "In loving memory of Mary Johanna, ex-developer."
 msgstr "Eski geliştirici Mary Johanna'nın sevgi dolu anısına."
 
-#: cogs/custom.py:37
+#: cogs/custom.py:51
 msgid "His name is `#no homo` :heart:"
 msgstr "Adı `#no homo` :heart:"
 
-#: cogs/custom.py:43
+#: cogs/custom.py:57
 msgid "[Ken only] Hug someone."
 msgstr "[Ken'e özel] Birine sarıl."
 
-#: cogs/custom.py:45
+#: cogs/custom.py:59
 msgid "Ken Hug!"
 msgstr "Ken Sarıl!"
 
-#: cogs/custom.py:46
+#: cogs/custom.py:60
 #, python-brace-format
 msgid "{author} hugged {user}! Awww!"
 msgstr "{author}, {user}'a sarıldı! Aaaa!"
+
+#: cogs/custom.py:82
+msgid "[Terror Only] It's a secret."
+msgstr ""
+
+#: cogs/custom.py:85
+msgid "Gotcha"
+msgstr ""
+
+#: cogs/custom.py:85
+msgid "Shhh, it's a secret!"
+msgstr ""
 
 #: cogs/profile.py:41
 msgid "Creates a new character."
@@ -4535,20 +4602,16 @@ msgid ""
 "**Money**: `${money}`\n"
 "**Level**: `{level}`\n"
 "**Class**: `{class_}`\n"
+"**Race**: `{race}`\n"
 "**PvP Wins**: `{pvp}`\n"
 "**Guild**: `{guild}`"
 msgstr ""
-"**Para**: `${money}`\n"
-"**Seviye**: `{level}`\n"
-"**Sınıf**: `{class_}`\n"
-"**PvP Galibiyeti**: `{pvp}`\n"
-"**Lonca**: `{guild}`"
 
-#: cogs/profile.py:213
+#: cogs/profile.py:215
 msgid "Ranks"
 msgstr "Rütbeler"
 
-#: cogs/profile.py:214
+#: cogs/profile.py:216
 #, python-brace-format
 msgid ""
 "**Richest**: `{rank_money}`\n"
@@ -4557,11 +4620,11 @@ msgstr ""
 "**En Zengin**: `{rank_money}`\n"
 "**TP**: `{rank_xp}`"
 
-#: cogs/profile.py:219
+#: cogs/profile.py:221
 msgid "Equipment"
 msgstr "Ekipman"
 
-#: cogs/profile.py:220
+#: cogs/profile.py:222
 #, python-brace-format
 msgid ""
 "Sword: {sword}\n"
@@ -4570,15 +4633,15 @@ msgstr ""
 "Kılıç: {sword}\n"
 "Kalkan: {shield}"
 
-#: cogs/profile.py:225
+#: cogs/profile.py:227
 msgid "Mission"
 msgstr "Görev"
 
-#: cogs/profile.py:232
+#: cogs/profile.py:234
 msgid "Shows your luck factor ranging from 0 to 2."
 msgstr "0'dan 2'ye kadar olan şans faktörünü gösterir."
 
-#: cogs/profile.py:235
+#: cogs/profile.py:237
 #, python-brace-format
 msgid ""
 "Your current luck multiplier is `{luck}x` (≈{percent}% more than usual "
@@ -4587,20 +4650,20 @@ msgstr ""
 "Şu anki şans çarpanın `{luck}x` (Normalinden ≈{percent}% daha fazla "
 "(Normal=0))."
 
-#: cogs/profile.py:246
+#: cogs/profile.py:248
 msgid "Shows your balance."
 msgstr "Bakiyeni gösterir."
 
-#: cogs/profile.py:248
+#: cogs/profile.py:250
 #, python-brace-format
 msgid "You currently have **${money}**, {author}!"
 msgstr "Şu anda **${money}** paran var, {author}!"
 
-#: cogs/profile.py:257
+#: cogs/profile.py:259
 msgid "Shows your current XP and level."
 msgstr "Şu anki TP ve seviyeni gösterir."
 
-#: cogs/profile.py:261
+#: cogs/profile.py:263
 #, python-brace-format
 msgid ""
 "You currently have **{points} XP**, which means you are on Level **{level}"
@@ -4609,116 +4672,116 @@ msgstr ""
 "Şu anda sende **{points} TP** var, bu da demek oluyor ki Seviyen **{level}"
 "**. Bir sonraki seviye için gereken: **{missing}**"
 
-#: cogs/profile.py:271
+#: cogs/profile.py:273
 #, python-brace-format
 msgid "{user}'s inventory includes"
 msgstr "{user}'in envanteri"
 
-#: cogs/profile.py:276
+#: cogs/profile.py:278
 msgid "(**Equipped**)"
 msgstr "(**Giyildi**)"
 
-#: cogs/profile.py:280
+#: cogs/profile.py:282
 #, python-brace-format
 msgid "Damage: `{damage}`"
 msgstr "Hasar: `{damage}`"
 
-#: cogs/profile.py:282
+#: cogs/profile.py:284
 #, python-brace-format
 msgid "Armor: `{armor}`"
 msgstr "Zırh: `{armor}`"
 
-#: cogs/profile.py:287
+#: cogs/profile.py:289
 #, python-brace-format
 msgid "ID: `{id}`, Type: `{type_}` with {statstr}. Value is **${value}**"
 msgstr "ID: `{id}`, Tür: `{type_}`, {statstr} gücünde. Değeri **${value}**"
 
-#: cogs/profile.py:296
+#: cogs/profile.py:298
 #, python-brace-format
 msgid "Page {page} of {maxpages}"
 msgstr "Sayfa {page} - {maxpages}"
 
-#: cogs/profile.py:306
+#: cogs/profile.py:308
 msgid "Shows your current inventory."
 msgstr "Şu anki envanterini gösterir."
 
-#: cogs/profile.py:312
+#: cogs/profile.py:314
 msgid "Your inventory is empty."
 msgstr "Envanterin boş."
 
-#: cogs/profile.py:325
+#: cogs/profile.py:327
 msgid "Shows your adventure loot that can be exchanged or sacrificed"
 msgstr "Takas edilebilir ya da feda edilebilir macera ganimetini gösterir"
 
-#: cogs/profile.py:331
+#: cogs/profile.py:333
 msgid "You do not have any loot at this moment."
 msgstr "Şu anda herhangi bir ganimetin yok."
 
-#: cogs/profile.py:337
+#: cogs/profile.py:339
 #, python-brace-format
 msgid "Use {prefix}exchange {item} or {prefix}sacrifice {item}"
 msgstr "{prefix}exchange {item} ya da {prefix}sacrifice {item} kullan"
 
-#: cogs/profile.py:349
+#: cogs/profile.py:351
 msgid "Exchange an item for money or xp."
 msgstr "Bir eşyayı para ya da tecrübe için takas et."
 
-#: cogs/profile.py:357 cogs/gods.py:47
+#: cogs/profile.py:359 cogs/gods.py:47
 msgid "You do not own this loot item."
 msgstr "Bu ganimet eşyasından sende yok."
 
-#: cogs/profile.py:360
+#: cogs/profile.py:362
 msgid "Select a reward"
 msgstr "Ödül seç"
 
-#: cogs/profile.py:361
+#: cogs/profile.py:363
 #, python-brace-format
 msgid "Do you want favor? {prefix}sacrifice instead"
 msgstr "İyilik ister misin? {prefix}sacrifice kullan"
 
-#: cogs/profile.py:365
+#: cogs/profile.py:367
 #, python-brace-format
 msgid "**{amount} XP**"
 msgstr "**{amount} tecrübe**"
 
-#: cogs/profile.py:375
+#: cogs/profile.py:377
 msgid "Reward gained!"
 msgstr "Ödül kazanıldı!"
 
-#: cogs/profile.py:381
+#: cogs/profile.py:383
 msgid "Equips an item of yours by ID."
 msgstr "Eşyanı ID'sine göre giyer."
 
-#: cogs/profile.py:390 cogs/profile.py:490
+#: cogs/profile.py:392 cogs/profile.py:492
 #, python-brace-format
 msgid "You don't own an item with the ID `{itemid}`."
 msgstr "ID'si `{itemid}` olan bir eşyaya sahip değilsin."
 
-#: cogs/profile.py:410
+#: cogs/profile.py:412
 #, python-brace-format
 msgid "Successfully equipped item `{itemid}` and put off item `{olditem}`."
 msgstr ""
 "`{itemid}` ID'li eşya başarılı bir şekilde giyildi ve `{olditem}` ID'li eşya "
 "çıkartıldı."
 
-#: cogs/profile.py:415
+#: cogs/profile.py:417
 #, python-brace-format
 msgid "Successfully equipped item `{itemid}`."
 msgstr "`{itemid}` ID'li eşya başarılı bir şekilde giyildi."
 
-#: cogs/profile.py:423
+#: cogs/profile.py:425
 msgid "Merges two items to a better one. Second one is consumed."
 msgstr "İki eşyayı daha iyi bir eşya için birleştirir. İkinci eşya yok olur."
 
-#: cogs/profile.py:426
+#: cogs/profile.py:428
 msgid "Good luck with that."
 msgstr "Bununla iyi şanslar."
 
-#: cogs/profile.py:440
+#: cogs/profile.py:442
 msgid "You don't own both of these items."
 msgstr "Bu eşyaların her ikisine de sahip değilsin."
 
-#: cogs/profile.py:445
+#: cogs/profile.py:447
 msgid ""
 "The items are of unequal type. You may only merge a sword with a sword or a "
 "shield with a shield."
@@ -4726,7 +4789,7 @@ msgstr ""
 "Eşyaların türü aynı değil. Sadece kılıç ile kılıcı ya da kalkan ile kalkanı "
 "birleştirebilirsin."
 
-#: cogs/profile.py:457
+#: cogs/profile.py:459
 #, python-brace-format
 msgid ""
 "The second item's stat must be in the range of `{min_}` to `{max_}` to "
@@ -4735,11 +4798,11 @@ msgstr ""
 "Gücü `{stat}` olan bir eşyayı yükseltmek için kullanılan ikinci eşyanın gücü "
 "`{min_}` ile `{max_}` arasında olmalı."
 
-#: cogs/profile.py:463
+#: cogs/profile.py:465
 msgid "This item is already on the maximum upgrade level."
 msgstr "Bu eşya zaten maksimum yükseltme seviyesinde."
 
-#: cogs/profile.py:471
+#: cogs/profile.py:473
 #, python-brace-format
 msgid ""
 "The {stat} of your **{item}** is now **{newstat}**. The other item was "
@@ -4748,15 +4811,15 @@ msgstr ""
 "Türü {stat} olan **{item}**'nın gücü artık **{newstat}**. Diğer eşya yok "
 "edildi."
 
-#: cogs/profile.py:480
+#: cogs/profile.py:482
 msgid "Upgrades an item's stat by 1."
 msgstr "Eşyanın gücüne 1 ekleyerek yükseltir."
 
-#: cogs/profile.py:503
+#: cogs/profile.py:505
 msgid "Your weapon already reached the maximum upgrade level."
 msgstr "Silahın zaten maksimum yükseltme seviyesine ulaştı."
 
-#: cogs/profile.py:508
+#: cogs/profile.py:510
 #, python-brace-format
 msgid ""
 "Are you sure you want to upgrade this item: {item}? It will cost **"
@@ -4765,11 +4828,11 @@ msgstr ""
 "Bu eşyayı yükseltmek istediğine emin misin: {item}? Fiyatı **${pricetopay}** "
 "ediyor."
 
-#: cogs/profile.py:512
+#: cogs/profile.py:514
 msgid "Weapon upgrade cancelled."
 msgstr "Silah yükseltmesi iptal edildi."
 
-#: cogs/profile.py:517
+#: cogs/profile.py:519
 #, python-brace-format
 msgid ""
 "You are too poor to upgrade this item. The upgrade costs **${pricetopay}**, "
@@ -4778,7 +4841,7 @@ msgstr ""
 "Bu eşyayı yükseltmek için çok fakirsin. Yükseltme **${pricetopay}** ediyor, "
 "ama sende sadece **${money}** var."
 
-#: cogs/profile.py:532
+#: cogs/profile.py:534
 #, python-brace-format
 msgid ""
 "The {stat} of your **{item}** is now **{newstat}**. **${pricetopay}** has "
@@ -4787,48 +4850,48 @@ msgstr ""
 "Türü {stat} olan **{item}**'nın gücü artık **{newstat}**. Bakiyenden **"
 "${pricetopay}** alındı."
 
-#: cogs/profile.py:547
+#: cogs/profile.py:549
 msgid "Gift money!"
 msgstr "Para hediye et!"
 
-#: cogs/profile.py:549
+#: cogs/profile.py:551
 msgid "No cheating!"
 msgstr "Hile yok!"
 
-#: cogs/profile.py:562
+#: cogs/profile.py:564
 #, python-brace-format
 msgid "Successfully gave **${money}** to {other}."
 msgstr "**${money}** para başarılı bir şekilde {other}'a verildi."
 
-#: cogs/profile.py:574
+#: cogs/profile.py:576
 msgid "Renames your character."
 msgstr "Karakterini yeniden adlandırır."
 
-#: cogs/profile.py:576
+#: cogs/profile.py:578
 msgid "What shall your character's name be? (Minimum 3 Characters, Maximum 20)"
 msgstr "Karakterinin adı ne olmalı? (Minimum 3 Karakter, Maksimum 20)"
 
-#: cogs/profile.py:585
+#: cogs/profile.py:587
 msgid "Timeout expired. Retry!"
 msgstr "Zaman aşımı süresi doldu. Tekrar dene!"
 
-#: cogs/profile.py:591
+#: cogs/profile.py:593
 msgid "Character name updated."
 msgstr "Karakter ismi güncellendi."
 
-#: cogs/profile.py:593
+#: cogs/profile.py:595
 msgid "Character names must be at least 3 characters!"
 msgstr "Karakter isimleri en az 3 karakter olmalı!"
 
-#: cogs/profile.py:595
+#: cogs/profile.py:597
 msgid "Character names mustn't exceed 20 characters!"
 msgstr "Karakter isimleri 20 karakteri geçmemeli!"
 
-#: cogs/profile.py:601
+#: cogs/profile.py:603
 msgid "Deletes your character."
 msgstr "Karakterini siler."
 
-#: cogs/profile.py:604
+#: cogs/profile.py:606
 msgid ""
 "Are you absolutely sure you want to delete your character? React in the next "
 "30 seconds to confirm.\n"
@@ -4838,24 +4901,24 @@ msgstr ""
 "saniye içinde tepki ver.\n"
 "**Geri alınamaz.**"
 
-#: cogs/profile.py:607
+#: cogs/profile.py:609
 msgid "Cancelled deletion of your character."
 msgstr "Karakterinin silinmesi iptal edildi."
 
-#: cogs/profile.py:629
+#: cogs/profile.py:631
 msgid "Successfully deleted your character. Sorry to see you go :frowning:"
 msgstr ""
 "Karakterin başarılı bir şekilde silindi. Gittiğini görmek üzücü :frowning:"
 
-#: cogs/profile.py:635
+#: cogs/profile.py:637
 msgid "Sets your profile text colour."
 msgstr "Profilinin metin rengini ayarlar."
 
-#: cogs/profile.py:638
+#: cogs/profile.py:640
 msgid "Format for colour is `#RRGGBB` or a colour code like `cyan`."
 msgstr "Renk için biçim `#RRGGBB` ya da `cyan` gibi renk kodudur."
 
-#: cogs/profile.py:645
+#: cogs/profile.py:647
 #, python-brace-format
 msgid ""
 "Successfully set your profile colour to `{colour}`. Hint: If you used a hex "
@@ -5352,6 +5415,46 @@ msgstr "...garip ve güçlü kokular."
 #, python-brace-format
 msgid "You are now a {race}."
 msgstr "Artık ırkın {race}."
+
+#: utils/castle.py:164
+#, python-brace-format
+msgid "You found a treasure with {emote} inside!"
+msgstr ""
+
+#: utils/castle.py:269
+msgid "You have reached the exit!"
+msgstr ""
+
+#~ msgid "{user} healed themselves for **20 HP**."
+#~ msgstr "{user} kendine **20 HP** can bastı."
+
+#~ msgid "It's a tie. You lose your bet."
+#~ msgstr "Berabere. Bahsini kaybettin."
+
+#~ msgid "Vote me up to get a reward!"
+#~ msgstr "Ödül almak için bana oy ver!"
+
+#~ msgid ""
+#~ "Upvote me for a big thanks! You will be rewarded a few seconds "
+#~ "afterwards!\n"
+#~ "https://discordbots.org/bot/idlerpg"
+#~ msgstr ""
+#~ "Büyük bir teşekkür için bana oy ver! Sonrasında birkaç saniye içinde "
+#~ "ödüllendirileceksin!\n"
+#~ "https://discordbots.org/bot/idlerpg"
+
+#~ msgid ""
+#~ "**Money**: `${money}`\n"
+#~ "**Level**: `{level}`\n"
+#~ "**Class**: `{class_}`\n"
+#~ "**PvP Wins**: `{pvp}`\n"
+#~ "**Guild**: `{guild}`"
+#~ msgstr ""
+#~ "**Para**: `${money}`\n"
+#~ "**Seviye**: `{level}`\n"
+#~ "**Sınıf**: `{class_}`\n"
+#~ "**PvP Galibiyeti**: `{pvp}`\n"
+#~ "**Lonca**: `{guild}`"
 
 #~ msgid ""
 #~ "{author} started a tournament! Free entries, prize is **${prize}**! React "
