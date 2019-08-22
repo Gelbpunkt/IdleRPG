@@ -33,13 +33,6 @@ def is_shoie():
     return commands.check(predicate)
 
 
-def is_terror():
-    def predicate(ctx):
-        return ctx.author.id == 489637665633730560
-
-    return commands.check(predicate)
-
-
 class Custom(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
@@ -75,11 +68,10 @@ class Custom(commands.Cog):
         )
         await ctx.send(embed=em)
 
-    @is_terror()
     @commands.command()
     @locale_doc
     async def secret(self, ctx):
-        _("""[Terror Only] It's a secret.""")
+        _("""It's a secret.""")
         await ctx.send(
             embed=discord.Embed(
                 title=_("Gotcha"), description=_("Shhh, it's a secret!")
