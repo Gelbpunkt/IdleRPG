@@ -309,23 +309,29 @@ def update_pet():
                     ctx.author.id,
                 )
                 ctx.pet_data = data
+                classes = ctx.character_data["class"]
+                for evolve in ctx.bot.get_class_evolves("Ranger"):
+                    if evolve in classes:
+                        idx = classes.index(evolve)
                 if data["food"] < 0 or data["drink"] < 0:
+                    classes[idx] = "No Class"
                     await conn.execute(
                         'DELETE FROM pets WHERE "user"=$1;', ctx.author.id
                     )
                     await conn.execute(
                         'UPDATE profile SET "class"=$1 WHERE "user"=$2;',
-                        "No Class",
+                        classes,
                         ctx.author.id,
                     )
                     raise PetDied()
                 elif data["love"] < 75 and secrets.randbelow(100) > data["love"]:
+                    classes[idx] = "No Class"
                     await conn.execute(
                         'DELETE FROM pets WHERE "user"=$1;', ctx.author.id
                     )
                     await conn.execute(
                         'UPDATE profile SET "class"=$1 WHERE "user"=$2;',
-                        "No Class",
+                        classes,
                         ctx.author.id,
                     )
                     raise PetRanAway()

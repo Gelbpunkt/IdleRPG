@@ -24,6 +24,7 @@ import discord
 from discord.ext import commands
 
 from classes.converters import IntGreaterThan
+from utils.castle import Castle, Player
 from utils.checks import has_char, is_admin, is_god
 
 
@@ -1936,6 +1937,93 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
         await ctx.channel.set_permissions(
             ctx.guild.default_role, overwrite=self.deny_sending
         )
+
+    @is_god()
+    @commands.command()
+    @locale_doc
+    async def gambitspawn(self, ctx):
+        """[Gambit only] Starts a raid."""
+        await self.bot.session.get(
+            "https://raid.travitia.xyz/toggle",
+            headers={"Authorization": self.bot.config.raidauth},
+        )
+        await ctx.channel.set_permissions(
+            ctx.guild.default_role, overwrite=self.read_only
+        )
+        await ctx.send(
+            """
+Gambit invites you to play a game. Inside this castle are rewards beyond your imagination, however all fun comes at a price. Inside lie countless tricks and traps. Take the risk and you could come out with riches beyond your imagination--however, be wary, as a wrong turn or bad luck could cause you to lose this game... for good.
+
+The game starts in 15 Minutes
+Use https://raid.travitia.xyz/ to join the raid!
+
+**Only followers of Gambit may join.**
+
+Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=453963965521985536&scope=identify&response_type=code&redirect_uri=https://raid.travitia.xyz/callback>
+""",
+            file=discord.File("assets/other/gambit.jpg"),
+        )
+        if not self.bot.config.is_beta:
+            await asyncio.sleep(300)
+            await ctx.send("**The game starts in 10 minutes**")
+            await asyncio.sleep(300)
+            await ctx.send("**The game starts in 5 minutes**")
+            await asyncio.sleep(180)
+            await ctx.send("**The game starts in 2 minutes**")
+            await asyncio.sleep(60)
+            await ctx.send("**The game starts in 1 minute**")
+            await asyncio.sleep(30)
+            await ctx.send("**The game starts in 30 seconds**")
+            await asyncio.sleep(20)
+            await ctx.send("**The game starts in 10 seconds**")
+            await asyncio.sleep(10)
+        else:
+            await asyncio.sleep(60)
+        await ctx.send("**Let the game begin! Fetching participant data... Hang on!**")
+
+        async with self.bot.session.get(
+            "https://raid.travitia.xyz/joined",
+            headers={"Authorization": self.bot.config.raidauth},
+        ) as r:
+            raid_raw = await r.json()
+        async with self.bot.pool.acquire() as conn:
+            dmgs = await conn.fetch(
+                'SELECT p."user", p.class, ai.damage, p.atkmultiply FROM profile p JOIN allitems ai ON (p.user=ai.owner) JOIN inventory i ON (ai.id=i.item) WHERE i.equipped IS TRUE AND p.user=ANY($2) AND type=$1 AND p.god=$3;',
+                "Sword",
+                raid_raw,
+                "Gambit",
+            )
+            deffs = await conn.fetch(
+                'SELECT p."user", p.class, ai.armor, p.defmultiply FROM profile p JOIN allitems ai ON (p.user=ai.owner) JOIN inventory i ON (ai.id=i.item) WHERE i.equipped IS TRUE AND p.user=ANY($2) AND type=$1 AND p.god=$3;',
+                "Shield",
+                raid_raw,
+                "Gambit",
+            )
+        raid = {}
+        for i in raid_raw:
+            u = await self.bot.get_user_global(i)
+            if not u:
+                continue
+            j = next(filter(lambda x: x["user"] == i, dmgs), None)
+            if j is None:
+                continue
+            dmg = j["damage"] if j else 0
+            j = next(filter(lambda x: x["user"] == i, deffs), None)
+            if j is None:
+                continue
+            deff = j["armor"] if j else 0
+            dmg, deff = await self.bot.generate_stats(i, dmg, deff)
+            raid[u] = {"hp": 1000, "armor": deff, "damage": dmg}
+
+        await ctx.send(
+            "**Done getting data! Setting up castle and backend... The game will start in your DMs**"
+        )
+
+        castle = Castle(self.bot)
+        for user, stats in raid.items():
+            castle.add_player(Player(user, stats))
+
+        await castle.run()
 
     def getpriceto(self, level: float):
         return sum(i * 25000 for i in range(1, int(level * 10) - 9))
