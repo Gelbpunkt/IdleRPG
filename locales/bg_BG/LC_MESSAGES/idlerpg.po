@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-08-22 17:10+0000\n"
+"POT-Creation-Date: 2019-08-22 18:43+0000\n"
 "PO-Revision-Date: 2019-05-31 04:38+0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -1556,60 +1556,60 @@ msgstr "{user}, познахте правилно!"
 msgid "An alternative to 8ball, but has more bitchy answers."
 msgstr "Алтернатива за **8ball**, но съдържа по-грубички отговори."
 
-#: cogs/miscellaneous.py:631
+#: cogs/miscellaneous.py:632
 msgid "Talk to me! (Supports only English)"
 msgstr ""
 
-#: cogs/miscellaneous.py:635
+#: cogs/miscellaneous.py:636
 msgid "Text too long or too short. May be 3 to 60 characters."
 msgstr ""
 
-#: cogs/miscellaneous.py:651
+#: cogs/miscellaneous.py:652
 msgid ""
 "Sends today's garfield comic if no date info is passed. Else, it will use "
 "YYYY MM DD or DD MM YYYY depending on where the year is, with the date parts "
 "being seperated with spaces."
 msgstr ""
 
-#: cogs/miscellaneous.py:665 cogs/miscellaneous.py:699
+#: cogs/miscellaneous.py:666 cogs/miscellaneous.py:700
 msgid "Unable to parse date."
 msgstr ""
 
-#: cogs/miscellaneous.py:672
+#: cogs/miscellaneous.py:673
 msgid ""
 "Garfield was launched on June, 19th 1978 and I also cannot check the future."
 msgstr ""
 
-#: cogs/miscellaneous.py:685
+#: cogs/miscellaneous.py:686
 msgid ""
 "Sends today's userfriendly comic if no date info is passed. Else, it will "
 "use YYYY MM DD or DD MM YYYY depending on where the year is, with the date "
 "parts being seperated with spaces."
 msgstr ""
 
-#: cogs/miscellaneous.py:706
+#: cogs/miscellaneous.py:707
 msgid ""
 "Userfriendly was launched on November, 17th 1997 and I also cannot check the "
 "future."
 msgstr ""
 
-#: cogs/miscellaneous.py:718
+#: cogs/miscellaneous.py:719
 msgid "Taken from userfriendly.org"
 msgstr ""
 
-#: cogs/miscellaneous.py:728
+#: cogs/miscellaneous.py:729
 msgid "Awesome bots by other coffee-drinking individuals."
 msgstr "Страхотни ботове създадени от други, кафе пиещи, индивиди."
 
-#: cogs/miscellaneous.py:730
+#: cogs/miscellaneous.py:731
 msgid "Partnered Bots"
 msgstr "Патньорски ботове"
 
-#: cogs/miscellaneous.py:731
+#: cogs/miscellaneous.py:732
 msgid "Awesome bots made by other people!"
 msgstr "Страхотни ботове направени от други програмисти!"
 
-#: cogs/miscellaneous.py:737
+#: cogs/miscellaneous.py:738
 msgid ""
 "Trivia, Hangman, Minesweeper, Connect 4 and more, right from your chat! A "
 "bot offering non-RPG games made by deprilula28 and Fin.\n"
@@ -1619,7 +1619,7 @@ msgstr ""
 "предлагащ **non-RPG** игри, създаден от *deprilula28* и *Fin*.\n"
 "[discordbots.org Page](https://discordbots.org/bot/gamesrob"
 
-#: cogs/miscellaneous.py:743
+#: cogs/miscellaneous.py:744
 msgid ""
 "Cautious Memory brings wiki-style pages to your server. Use it to document "
 "who's who in your server, inside jokes, or community lore. Includes a full "
@@ -1741,7 +1741,7 @@ msgstr "Купи усилвател от магазина."
 msgid "Please either buy `time`, `luck` or `money`."
 msgstr "Въведи   `time`, `luck` или `money`."
 
-#: cogs/store.py:61 cogs/gambling.py:374 cogs/gambling.py:408 cogs/guild.py:483
+#: cogs/store.py:61 cogs/gambling.py:377 cogs/gambling.py:409 cogs/guild.py:483
 msgid "You're too poor."
 msgstr "Прекалено сте бедни."
 
@@ -1882,8 +1882,8 @@ msgstr ""
 "На {thing} е разрешено използване на $helpme командата отново :ok_hand:"
 
 #: cogs/help.py:143
-msgid "Band a user from using $helpme."
-msgstr "Забранява на потребител да използва $helpme."
+msgid "Ban a user from using $helpme."
+msgstr ""
 
 #: cogs/help.py:152
 msgid "Error... Maybe they're already banned?"
@@ -2681,8 +2681,8 @@ msgstr ""
 msgid "You hit the enemy for {dmg} damage"
 msgstr ""
 
-#: cogs/adventure.py:338 cogs/adventure.py:343 cogs/gambling.py:445
-#: cogs/gambling.py:475 utils/castle.py:259 utils/castle.py:264
+#: cogs/adventure.py:338 cogs/adventure.py:343 cogs/gambling.py:446
+#: cogs/gambling.py:476 utils/castle.py:259 utils/castle.py:264
 msgid "Timed out."
 msgstr ""
 
@@ -2873,23 +2873,30 @@ msgstr "{result[1]} Страната е **{result[0]}**! Спечелихте **
 msgid "{result[1]} It's **{result[0]}**! You lost **${amount}**!"
 msgstr "{result[1]} Страната е **{result[0]}**! Загубихте **${amount}**!"
 
-#: cogs/gambling.py:367
+#: cogs/gambling.py:366
+msgid ""
+"Bet on the outcome of a dict roll with [maximum] sides. [tip] specifies the "
+"side you bet on. You will win [maximum - 1] * money money if you are right "
+"and loose [money] if you are wrong."
+msgstr ""
+
+#: cogs/gambling.py:370
 #, python-brace-format
 msgid "Invalid Tip. Must be in the Range of `1` to `{maximum}`."
 msgstr "Невалиден облог. Трябва да бъде в границата между `1` до `{maximum}`."
 
-#: cogs/gambling.py:372
+#: cogs/gambling.py:375
 msgid "Spend it in a better way. C'mon!"
 msgstr "Хайде да използвайте парите си за нещо друго!"
 
-#: cogs/gambling.py:384
+#: cogs/gambling.py:387
 #, python-brace-format
 msgid ""
 "You won **${money}**! The random number was `{num}`, you tipped `{tip}`."
 msgstr ""
 "Спечели **${money}**! Случайния номер е `{num}`, Вие заложихте на `{tip}`."
 
-#: cogs/gambling.py:395
+#: cogs/gambling.py:398
 #, python-brace-format
 msgid ""
 "You lost **${money}**! The random number was `{num}`, you tipped `{tip}`."
@@ -2897,54 +2904,50 @@ msgstr ""
 "Загубихте **${money}**! Случайния номер е `{num}`, а Вие заложихте на `{tip}"
 "`."
 
-#: cogs/gambling.py:405
-msgid ""
-"[Alpha] Play blackjack against the dealer. Dealer rules, means wins in case "
-"of tie."
+#: cogs/gambling.py:407
+msgid "[Alpha] Play blackjack against the dealer."
 msgstr ""
-"[Alpha] Започва игра срещу дилъра. Правилата са негови, което значи, че той "
-"печели ако получите равни суми."
 
-#: cogs/gambling.py:422
+#: cogs/gambling.py:423
 msgid ""
 "Play a double-or-steal game against someone. You start with $100 and can "
 "take it or double it with your money."
 msgstr ""
 
-#: cogs/gambling.py:425
+#: cogs/gambling.py:426
 #, python-brace-format
 msgid "React with 💰 to play double-or-steal with {user}!"
 msgstr ""
 
-#: cogs/gambling.py:448
+#: cogs/gambling.py:449
 #, python-brace-format
 msgid "{user} has not character."
 msgstr ""
 
-#: cogs/gambling.py:455 cogs/gambling.py:496
+#: cogs/gambling.py:456 cogs/gambling.py:497
 #, python-brace-format
 msgid "{user} is too poor to double."
 msgstr ""
 
-#: cogs/gambling.py:465
+#: cogs/gambling.py:466
 #, python-brace-format
 msgid "Double or steal ${money}?"
 msgstr ""
 
-#: cogs/gambling.py:466
+#: cogs/gambling.py:467
 msgid "Double"
 msgstr ""
 
-#: cogs/gambling.py:466
+#: cogs/gambling.py:467
 msgid "Steal"
 msgstr ""
 
-#: cogs/gambling.py:484
+#: cogs/gambling.py:485
 #, python-brace-format
 msgid "{user} stole **${money}**."
 msgstr ""
 
-#: cogs/gambling.py:504
+#: cogs/gambling.py:505
 #, python-brace-format
 msgid "{user} doubled to **${money}**."
 msgstr ""
@@ -3748,6 +3751,10 @@ msgstr "Точките любов между **{lover}** и **{lovee}** са **$
 msgid "The Best lovers"
 msgstr "Най-добрите партньори"
 
+#: cogs/server.py:31
+msgid "Shows information about your server."
+msgstr ""
+
 #: cogs/server.py:32
 msgid "Link"
 msgstr "Линк"
@@ -3830,7 +3837,11 @@ msgstr "Нуларайте настройките на сървъра."
 msgid "Done!"
 msgstr "Готово!"
 
-#: cogs/server.py:139
+#: cogs/server.py:126
+msgid "Shows detailed information about a member of this server."
+msgstr ""
+
+#: cogs/server.py:140
 #, python-brace-format
 msgid ""
 "`Joined at`: {joined}\n"
@@ -3845,19 +3856,19 @@ msgstr ""
 "`Роли ...`: {roles}\n"
 "`Игра.....`: {game}"
 
-#: cogs/server.py:150
+#: cogs/server.py:151
 msgid "No Game Playing"
 msgstr "Никаква игра не се играе"
 
-#: cogs/server.py:155
+#: cogs/server.py:156
 msgid "Permissions"
 msgstr "Разрешения"
 
-#: cogs/server.py:174
+#: cogs/server.py:175
 msgid "View the bot prefix."
 msgstr "Преглед на префикса на бота."
 
-#: cogs/server.py:178
+#: cogs/server.py:179
 #, python-brace-format
 msgid ""
 "The prefix for server **{server}** is `{serverprefix}`.\n"
@@ -3868,11 +3879,11 @@ msgstr ""
 "\n"
 "`{prefix}settings prefix` го променя."
 
-#: cogs/server.py:185
+#: cogs/server.py:186
 msgid "Shows someone's (or your) avatar."
 msgstr "Показва нечий (или вашият) аватар."
 
-#: cogs/server.py:188
+#: cogs/server.py:189
 msgid "Download Link"
 msgstr "Линк за изтегляне"
 
@@ -4828,15 +4839,17 @@ msgstr "Отменено бе изтриването на вашия герой.
 msgid "Successfully deleted your character. Sorry to see you go :frowning:"
 msgstr "Героят ви е изтрит успешно. Съжаляваме, че си тръгвате :frowning:"
 
-#: cogs/profile.py:637
-msgid "Sets your profile text colour."
-msgstr "Задава цвета на текста на профила Ви."
+#: cogs/profile.py:638
+msgid ""
+"Sets your profile text colour. The format may be #RRGGBB or a HTML-valid "
+"string like \"cyan\"."
+msgstr ""
 
-#: cogs/profile.py:640
+#: cogs/profile.py:642
 msgid "Format for colour is `#RRGGBB` or a colour code like `cyan`."
 msgstr ""
 
-#: cogs/profile.py:647
+#: cogs/profile.py:649
 #, python-brace-format
 msgid ""
 "Successfully set your profile colour to `{colour}`. Hint: If you used a hex "
@@ -5308,6 +5321,19 @@ msgstr ""
 #: utils/castle.py:269
 msgid "You have reached the exit!"
 msgstr ""
+
+#~ msgid "Band a user from using $helpme."
+#~ msgstr "Забранява на потребител да използва $helpme."
+
+#~ msgid ""
+#~ "[Alpha] Play blackjack against the dealer. Dealer rules, means wins in "
+#~ "case of tie."
+#~ msgstr ""
+#~ "[Alpha] Започва игра срещу дилъра. Правилата са негови, което значи, че "
+#~ "той печели ако получите равни суми."
+
+#~ msgid "Sets your profile text colour."
+#~ msgstr "Задава цвета на текста на профила Ви."
 
 #~ msgid "{user} healed themselves for **20 HP**."
 #~ msgstr "{user} се изцери с **20 HP**."

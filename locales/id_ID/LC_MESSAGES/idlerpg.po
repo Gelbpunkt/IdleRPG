@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-08-22 17:10+0000\n"
+"POT-Creation-Date: 2019-08-22 18:43+0000\n"
 "PO-Revision-Date: 2019-07-09 18:37+0700\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -1561,60 +1561,60 @@ msgstr "{user}, anda benar!"
 msgid "An alternative to 8ball, but has more bitchy answers."
 msgstr "Alternatif dari 8ball, tetapi dengan jawaban yang lebih mengejutkan."
 
-#: cogs/miscellaneous.py:631
+#: cogs/miscellaneous.py:632
 msgid "Talk to me! (Supports only English)"
 msgstr ""
 
-#: cogs/miscellaneous.py:635
+#: cogs/miscellaneous.py:636
 msgid "Text too long or too short. May be 3 to 60 characters."
 msgstr "Teks terlalu panjang atau terlalu pendek. Antara 3 sampai 60 karakter."
 
-#: cogs/miscellaneous.py:651
+#: cogs/miscellaneous.py:652
 msgid ""
 "Sends today's garfield comic if no date info is passed. Else, it will use "
 "YYYY MM DD or DD MM YYYY depending on where the year is, with the date parts "
 "being seperated with spaces."
 msgstr ""
 
-#: cogs/miscellaneous.py:665 cogs/miscellaneous.py:699
+#: cogs/miscellaneous.py:666 cogs/miscellaneous.py:700
 msgid "Unable to parse date."
 msgstr ""
 
-#: cogs/miscellaneous.py:672
+#: cogs/miscellaneous.py:673
 msgid ""
 "Garfield was launched on June, 19th 1978 and I also cannot check the future."
 msgstr ""
 
-#: cogs/miscellaneous.py:685
+#: cogs/miscellaneous.py:686
 msgid ""
 "Sends today's userfriendly comic if no date info is passed. Else, it will "
 "use YYYY MM DD or DD MM YYYY depending on where the year is, with the date "
 "parts being seperated with spaces."
 msgstr ""
 
-#: cogs/miscellaneous.py:706
+#: cogs/miscellaneous.py:707
 msgid ""
 "Userfriendly was launched on November, 17th 1997 and I also cannot check the "
 "future."
 msgstr ""
 
-#: cogs/miscellaneous.py:718
+#: cogs/miscellaneous.py:719
 msgid "Taken from userfriendly.org"
 msgstr ""
 
-#: cogs/miscellaneous.py:728
+#: cogs/miscellaneous.py:729
 msgid "Awesome bots by other coffee-drinking individuals."
 msgstr "Robot fantastis yang dibuat oleh seorang pencandu kopi."
 
-#: cogs/miscellaneous.py:730
+#: cogs/miscellaneous.py:731
 msgid "Partnered Bots"
 msgstr "Robot rekanan"
 
-#: cogs/miscellaneous.py:731
+#: cogs/miscellaneous.py:732
 msgid "Awesome bots made by other people!"
 msgstr "Robot keren yang dibuat oleh orang lain!"
 
-#: cogs/miscellaneous.py:737
+#: cogs/miscellaneous.py:738
 msgid ""
 "Trivia, Hangman, Minesweeper, Connect 4 and more, right from your chat! A "
 "bot offering non-RPG games made by deprilula28 and Fin.\n"
@@ -1625,7 +1625,7 @@ msgstr ""
 "deprilula28 dan Fin.\n"
 "[Halaman discordbots.org](https://discordbots.org/bot/gamesrob)"
 
-#: cogs/miscellaneous.py:743
+#: cogs/miscellaneous.py:744
 msgid ""
 "Cautious Memory brings wiki-style pages to your server. Use it to document "
 "who's who in your server, inside jokes, or community lore. Includes a full "
@@ -1750,7 +1750,7 @@ msgstr ""
 "Mohon beli antara `time (waktu)`, `luck (keberuntungan)` atau  `money "
 "(uang)`."
 
-#: cogs/store.py:61 cogs/gambling.py:374 cogs/gambling.py:408 cogs/guild.py:483
+#: cogs/store.py:61 cogs/gambling.py:377 cogs/gambling.py:409 cogs/guild.py:483
 msgid "You're too poor."
 msgstr "Anda terlalu miskin."
 
@@ -1893,8 +1893,8 @@ msgstr ""
 "helpme :ok_hand:"
 
 #: cogs/help.py:143
-msgid "Band a user from using $helpme."
-msgstr "Melarang seseorang dari menggunakan $helpme."
+msgid "Ban a user from using $helpme."
+msgstr ""
 
 #: cogs/help.py:152
 msgid "Error... Maybe they're already banned?"
@@ -2700,8 +2700,8 @@ msgstr ""
 msgid "You hit the enemy for {dmg} damage"
 msgstr ""
 
-#: cogs/adventure.py:338 cogs/adventure.py:343 cogs/gambling.py:445
-#: cogs/gambling.py:475 utils/castle.py:259 utils/castle.py:264
+#: cogs/adventure.py:338 cogs/adventure.py:343 cogs/gambling.py:446
+#: cogs/gambling.py:476 utils/castle.py:259 utils/castle.py:264
 msgid "Timed out."
 msgstr ""
 
@@ -2894,16 +2894,23 @@ msgid "{result[1]} It's **{result[0]}**! You lost **${amount}**!"
 msgstr ""
 "{result[1]} Hasilnya adalah **{result[0]}**! Anda kehilangan **${amount}**!"
 
-#: cogs/gambling.py:367
+#: cogs/gambling.py:366
+msgid ""
+"Bet on the outcome of a dict roll with [maximum] sides. [tip] specifies the "
+"side you bet on. You will win [maximum - 1] * money money if you are right "
+"and loose [money] if you are wrong."
+msgstr ""
+
+#: cogs/gambling.py:370
 #, python-brace-format
 msgid "Invalid Tip. Must be in the Range of `1` to `{maximum}`."
 msgstr "Pilihan anda tidak valid. Pilihan harus di antara `1` dan `{maximum}`."
 
-#: cogs/gambling.py:372
+#: cogs/gambling.py:375
 msgid "Spend it in a better way. C'mon!"
 msgstr "Gunakan uang anda dengan cara yang lebih baik!"
 
-#: cogs/gambling.py:384
+#: cogs/gambling.py:387
 #, python-brace-format
 msgid ""
 "You won **${money}**! The random number was `{num}`, you tipped `{tip}`."
@@ -2911,7 +2918,7 @@ msgstr ""
 "Anda memenangkan **${money}**! Angka acaknya adalah `{num}`, anda menebak "
 "`{tip}`."
 
-#: cogs/gambling.py:395
+#: cogs/gambling.py:398
 #, python-brace-format
 msgid ""
 "You lost **${money}**! The random number was `{num}`, you tipped `{tip}`."
@@ -2919,54 +2926,50 @@ msgstr ""
 "Anda kehilangan **${money}**! Angka acaknya adalah `{num}`, anda menebak "
 "`{tip}`."
 
-#: cogs/gambling.py:405
-msgid ""
-"[Alpha] Play blackjack against the dealer. Dealer rules, means wins in case "
-"of tie."
+#: cogs/gambling.py:407
+msgid "[Alpha] Play blackjack against the dealer."
 msgstr ""
-"[Alpha] Bermain blackjack melawan bandar. Bandar berkuasa, sehingga akan "
-"menang saat seri."
 
-#: cogs/gambling.py:422
+#: cogs/gambling.py:423
 msgid ""
 "Play a double-or-steal game against someone. You start with $100 and can "
 "take it or double it with your money."
 msgstr ""
 
-#: cogs/gambling.py:425
+#: cogs/gambling.py:426
 #, python-brace-format
 msgid "React with 💰 to play double-or-steal with {user}!"
 msgstr ""
 
-#: cogs/gambling.py:448
+#: cogs/gambling.py:449
 #, python-brace-format
 msgid "{user} has not character."
 msgstr ""
 
-#: cogs/gambling.py:455 cogs/gambling.py:496
+#: cogs/gambling.py:456 cogs/gambling.py:497
 #, python-brace-format
 msgid "{user} is too poor to double."
 msgstr ""
 
-#: cogs/gambling.py:465
+#: cogs/gambling.py:466
 #, python-brace-format
 msgid "Double or steal ${money}?"
 msgstr ""
 
-#: cogs/gambling.py:466
+#: cogs/gambling.py:467
 msgid "Double"
 msgstr ""
 
-#: cogs/gambling.py:466
+#: cogs/gambling.py:467
 msgid "Steal"
 msgstr ""
 
-#: cogs/gambling.py:484
+#: cogs/gambling.py:485
 #, python-brace-format
 msgid "{user} stole **${money}**."
 msgstr ""
 
-#: cogs/gambling.py:504
+#: cogs/gambling.py:505
 #, python-brace-format
 msgid "{user} doubled to **${money}**."
 msgstr ""
@@ -3776,6 +3779,10 @@ msgstr "**{lover}** telah memberikan **{lovee}** hadiah senilai **${points}**"
 msgid "The Best lovers"
 msgstr "Pasangan Terbaik"
 
+#: cogs/server.py:31
+msgid "Shows information about your server."
+msgstr ""
+
 #: cogs/server.py:32
 msgid "Link"
 msgstr "Link"
@@ -3858,7 +3865,11 @@ msgstr "Mengembalikan pengaturan server seperti semula."
 msgid "Done!"
 msgstr "Selesai!"
 
-#: cogs/server.py:139
+#: cogs/server.py:126
+msgid "Shows detailed information about a member of this server."
+msgstr ""
+
+#: cogs/server.py:140
 #, python-brace-format
 msgid ""
 "`Joined at`: {joined}\n"
@@ -3873,19 +3884,19 @@ msgstr ""
 "`Peran.........`: {roles}\n"
 "`Game..........`: {game}"
 
-#: cogs/server.py:150
+#: cogs/server.py:151
 msgid "No Game Playing"
 msgstr "Tidak ada permainan yang sedang dimainkan"
 
-#: cogs/server.py:155
+#: cogs/server.py:156
 msgid "Permissions"
 msgstr "Izin"
 
-#: cogs/server.py:174
+#: cogs/server.py:175
 msgid "View the bot prefix."
 msgstr "Melihat prefix robot."
 
-#: cogs/server.py:178
+#: cogs/server.py:179
 #, python-brace-format
 msgid ""
 "The prefix for server **{server}** is `{serverprefix}`.\n"
@@ -3896,11 +3907,11 @@ msgstr ""
 "\n"
 "Gunakan `{prefix}settings prefix` untuk mengubah."
 
-#: cogs/server.py:185
+#: cogs/server.py:186
 msgid "Shows someone's (or your) avatar."
 msgstr "Menunjukan avatar seseorang (atau milik anda)"
 
-#: cogs/server.py:188
+#: cogs/server.py:189
 msgid "Download Link"
 msgstr "Link Pengunduhan"
 
@@ -4860,15 +4871,17 @@ msgstr "Penghapusan karakter telah dibatalkan."
 msgid "Successfully deleted your character. Sorry to see you go :frowning:"
 msgstr "Penghapusan karakter sukses dilakukan. Anda akan dirindukan :frowning:"
 
-#: cogs/profile.py:637
-msgid "Sets your profile text colour."
-msgstr "Mengatur warna tulisan di profil."
+#: cogs/profile.py:638
+msgid ""
+"Sets your profile text colour. The format may be #RRGGBB or a HTML-valid "
+"string like \"cyan\"."
+msgstr ""
 
-#: cogs/profile.py:640
+#: cogs/profile.py:642
 msgid "Format for colour is `#RRGGBB` or a colour code like `cyan`."
 msgstr ""
 
-#: cogs/profile.py:647
+#: cogs/profile.py:649
 #, python-brace-format
 msgid ""
 "Successfully set your profile colour to `{colour}`. Hint: If you used a hex "
@@ -5342,6 +5355,19 @@ msgstr ""
 #: utils/castle.py:269
 msgid "You have reached the exit!"
 msgstr ""
+
+#~ msgid "Band a user from using $helpme."
+#~ msgstr "Melarang seseorang dari menggunakan $helpme."
+
+#~ msgid ""
+#~ "[Alpha] Play blackjack against the dealer. Dealer rules, means wins in "
+#~ "case of tie."
+#~ msgstr ""
+#~ "[Alpha] Bermain blackjack melawan bandar. Bandar berkuasa, sehingga akan "
+#~ "menang saat seri."
+
+#~ msgid "Sets your profile text colour."
+#~ msgstr "Mengatur warna tulisan di profil."
 
 #~ msgid "{user} healed themselves for **20 HP**."
 #~ msgstr "{user} memulihkan **20 nyawa** sendiri."
