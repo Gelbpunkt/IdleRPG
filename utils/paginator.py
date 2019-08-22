@@ -622,25 +622,25 @@ class Choose:
         else:
             base = await location.send(embed=self.controller)
 
-        location = user
-
         for emoji in self.emojis:
             await base.add_reaction(emoji)
+
+        user = location if location else user
 
         def check(r, u):
             if str(r) not in self.emojis:
                 return False
             elif u.id == ctx.bot.user.id or r.message.id != base.id:
                 return False
-            if not location:
+            if not user:
                 if u.id != ctx.author.id:
                     return False
             else:
-                if u.id != location.id:
+                if u.id != user.id:
                     return False
             return True
 
-        target_id = location.id if location else ctx.author.id
+        target_id = user.id if user else ctx.author.id
 
         try:
             if isinstance(location, (discord.User, discord.Member)):

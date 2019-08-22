@@ -95,9 +95,9 @@ class Player:
         r, u = await self.bot.wait_for_dms(
             "reaction_add",
             check={
+                "emoji": {"name": possible},
                 "user_id": self.user.id,
                 "message_id": self.msg.id,
-                "emoji": {"name": possible},
             },
             timeout=30,
         )
@@ -237,17 +237,18 @@ class Player:
     async def run(self, maze, bot):
         self.maze = maze
         self.bot = bot
-        while not self.at_end:
+        while not self.at_end and self.hp > 0:
             await self.update()
             try:
                 direction = await self.get_move()
             except asyncio.TimeoutError:
                 return await self.msg.edit(content=_("Timed out."))
-        self.move(direction)
-        try:
-            await self.handle_specials()
-        except asyncio.TimeoutError:
-            return await self.msg.edit(content=_("Timed out."))
+            self.move(direction)
+            try:
+                await self.handle_specials()
+            except asyncio.TimeoutError:
+                return await self.msg.edit(content=_("Timed out."))
+
         if self.hp <= 0:
             return await self.user.send(_("You died."))
 
