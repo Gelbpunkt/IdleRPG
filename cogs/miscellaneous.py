@@ -260,25 +260,74 @@ Average hours of work: **{hours}**"""
         _("""The bot's update log.""")
         await ctx.send(
             """\
-**IdleRPG v3.6 is released! :tada:!**
+**IdleRPG v4.0.0 has been released :tada:**
 
-**What's new?**
-- IdleRPG can be translated now
-- Some commands were rewritten
-- `$language` shows available languages, `$language set LANGUAGE` will change your language
-- `$source` was added
-- The bot is now no longer dual licensed, it is now only AGPLv3+
+This is the largest update we've had in a year or more. Bugs are predestined, even though testing has been done.
 
-**What's fixed?**
-A bunch
+We've added several new features and fixed old bugs.
 
-**Are there bugs?**
-Of course
+**Changes**
+- IdleRPG now uses Python 3.8, a beta version that'll be officially released in October
+- We decided not to use captchas, but have a working implementation
+- Daily streaks can now give crates
+- Crates now have 5 rarities (all have their own emoji)
+    - Common
+    - Uncommon
+    - Rare
+    - Magic
+    - Legendary
+    Legendary crates contain items 42-50
+- There's now a luck factor which affects your adventure success chances and reward items and will also make you earn better items from crates. It doesn't affect gambling, though. View it with `$luck`
+- Gods are a thing. You can choose to follow a god with `$follow` (cannot be undone). They can give luck to their followers based on their favor (view yours with `$favor`).
+- Adventures can drop items with weird names which will pop up in `$loot`. They can either be `$sacrifice`d to your god for favor or `$exchange`d for XP or money
+- Gods will do their personal raids (Jashan and Seren are still working on theirs) every week
+- New classes:
+    - Raider will have additional 10%-50% on raidstats against Zerekiel and Bandits, NOT in god raids
+    - Ritualist: +5-25% extra favor from sacrificing
+- Races determine your extra offensive and defensive ability everywhere. They're set with `$race` (cannot be undone) and defaults to Human.
+    - Human: +2 atk +2 def
+    - Elf: +3 atk +1 def
+    - Dwarf: +1 atk +3 def
+    - Orc: +4 def
+    - Jikill: +4 atk
+- When selecting a race, you get to choose an answer on a question (kinda CV). Not sure what to do with it yet
+- You can have two classes starting at level 12, getting both classes' benefits. They'll display in `$profile` and `$myclass`
+- Active adventures will now take place in a huge labyrinth (15x15) with traps, enemies, treasures and rewards for exiting"""
+        )
 
-**How to translate?**
-Head to #translate in the support server for more information
+        await ctx.send(
+            """\
+- Added a nice error message on `$create` if you have a character
+- Profile pictures had a minor update
+- Added my two favourite web comics: `$garfield` and `$userfriendly`
+- Programmers Only: IdleRPG can now listen for events in DMs across processes, this fixes `$hungergames`
+- `$trade` is a fully-featured trading system:
+    - Both parties can add subjects to the trade and decline or accept
+    - You can trade many items, crates and money at once safely without the hassle of being scammed
+    - `$trade add`, `$trade set` and `$trade remove` will handle the trading process
+- Lovescore will now affect the max amount of kids you can have by 1 every 250,000 and increase the money your spouse gets from your adventures
+- Development:
+    - Moved flake8 and isort to setup.cfg
+    - Cleaned up scripts to own folder
+    - Added `requirements-dev.txt` for developer dependencies
+    - Added `bot.has_*` helpers, not using them everywhere yet
+    - Started work on using Docker
+- You can now use `$flip 50` and it'll default to heads
+- `$create` shows the bot rules now
+- You can view others' lovescore now by using `$lovescore user`
+- Fixed blackjack ace calculation
+- You can merch multiple items now `$merchant id1 id2 id3...`
+- You cannot sell your items in the shop below their value: Prevents newbie accidents
+- You can now only merge equal types: sword with sword and shield with shield
+- Children death rate is far lower now, making them grow to more realistic ages
+- Translations involving an emoji will now be translated, earlier it was English due to a bug
+- Fixed a bug with double signup in tournaments
+- Blackjack will now push if there's a tie (earlier=loose)
+- Recover is less op in active adventures/battles now
+- `$dos` is a new minigame: You can double or steal the money you play for with your friend
+- We switched to Semantic Versioning (more info: https://semver.org/), which means idle is now on version 4.0.0
 
-Thank you for playing IdleRPG! :heart:"""
+**Thank you for playing IdleRPG!**"""
         )
 
     @commands.has_permissions(manage_messages=True)
