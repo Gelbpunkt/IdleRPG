@@ -911,7 +911,8 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
                 em.add_field(
                     name="Hero attack", value=f"Killed the scrael and received ${money}"
                 )
-                raid[target]["kills"] += 1
+                if raid.get(target, None):
+                    raid[target]["kills"] += 1
             em.set_image(url=f"{self.bot.BASE_URL}/swordsman2.jpg")
             await ctx.send(embed=em)
             await asyncio.sleep(7)
