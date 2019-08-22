@@ -1421,14 +1421,14 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
                     f"{highest_bid[0].mention} spent the money in the meantime... Meh! Noone gets it then, pah!\nThis incident has been reported and they will get banned if it happens again. Cheers!"
                 )
 
-            cash = int(hp / 4 / len(raid))  # what da hood gets per survivor
             await self.bot.pool.execute(
-                'UPDATE profile SET money=money+$1 WHERE "user"=ANY($2);',
-                cash,
+                'UPDATE profile SET "money"="money"+$1, "xp"="xp"+$2 WHERE "user"=ANY($3);',
+                2000,
+                1000,
                 [u.id for u in raid.keys()],
             )
             await ctx.send(
-                f"**Gave ${cash} of Cyberus' ${int(hp / 4)} drop to all survivors!**"
+                "**Gave $2000 and 1000XP of Cyberus' drop to all survivors!**"
             )
 
         else:

@@ -230,7 +230,15 @@ class Owner(commands.Cog):
                         if (
                             checks := ", ".join(
                                 [
-                                    ("cooldown" if "cooldown" in name else name)
+                                    (
+                                        "cooldown"
+                                        if "cooldown" in name
+                                        else (
+                                            "has_character"
+                                            if name == "has_char"
+                                            else name
+                                        )
+                                    )
                                     for c in cmd.checks
                                     if (
                                         name := re.search(
