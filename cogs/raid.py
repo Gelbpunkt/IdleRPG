@@ -1423,7 +1423,7 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
 
             await self.bot.pool.execute(
                 'UPDATE profile SET "money"="money"+$1, "xp"="xp"+$2 WHERE "user"=ANY($3);',
-                2000,
+                5000,
                 1000,
                 [u.id for u in raid.keys()],
             )

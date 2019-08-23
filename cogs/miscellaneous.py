@@ -100,7 +100,7 @@ class Miscellaneous(commands.Cog):
     @commands.command()
     @locale_doc
     async def ping(self, ctx):
-        _("""My current websocket latency.""")
+        _("""Shows you the bot's current websocket latency.""")
         await ctx.send(
             embed=discord.Embed(
                 title=_("Pong!"),
@@ -158,7 +158,7 @@ Even $1 can help us.
     @commands.command()
     @locale_doc
     async def support(self, ctx):
-        _("""Information on the support server.""")
+        _("""Sends you the link to the official IdleRPG Support server.""")
         await ctx.send(
             _(
                 "Got problems or feature requests? Looking for people to play with? Join the support server:\nhttps://discord.gg/MSBatf6"
@@ -257,7 +257,7 @@ Average hours of work: **{hours}**"""
     @commands.command()
     @locale_doc
     async def changelog(self, ctx):
-        _("""The bot's update log.""")
+        _("""Shows you the bots current version along with its new updates.""")
         await ctx.send(
             """\
 **IdleRPG v4.0.0 has been released :tada:**
@@ -550,7 +550,7 @@ We've added several new features and fixed old bugs.
     @commands.command()
     @locale_doc
     async def uptime(self, ctx):
-        _("""Shows how long the bot is connected to Discord already.""")
+        _("""Shows how long the bot has been connected to Discord.""")
         await ctx.send(
             _("I am online for **{time}**.").format(
                 time=str(self.bot.uptime).split(".")[0]
