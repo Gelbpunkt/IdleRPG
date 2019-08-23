@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-08-22 18:43+0000\n"
-"PO-Revision-Date: 2019-08-17 22:14+0700\n"
+"POT-Creation-Date: 2019-08-23 05:29+0000\n"
+"PO-Revision-Date: 2019-08-23 12:14+0700\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: vi\n"
@@ -319,7 +319,7 @@ msgstr "{user}, Bạn đã dùng lượt của mình!"
 #: cogs/battles.py:257
 #, python-brace-format
 msgid "{user} healed themselves for **{hp} HP**."
-msgstr ""
+msgstr "{user} đã hồi **{hp} HP**"
 
 #: cogs/battles.py:272 cogs/battles.py:296
 #, python-brace-format
@@ -859,7 +859,7 @@ msgstr ""
 msgid ""
 "You have already selected a race and filled in your cv. This is irreversible."
 msgstr ""
-"Bạn đã chọn một cuộc đua và điền vào cv của bạn. Điều này là không thể thay "
+"Bạn đã chọn một chủng tộc và điền vào cv của bạn. Điều này là không thể thay "
 "đổi."
 
 #: cogs/error_handler.py:151
@@ -1675,7 +1675,7 @@ msgstr ""
 
 #: cogs/raid.py:2035
 msgid "Upgrade your raid damage or defense multiplier."
-msgstr ""
+msgstr "Nâng cấp sức tấn công và phòng thủ cho raid"
 
 #: cogs/raid.py:2038
 #, python-brace-format
@@ -1683,10 +1683,12 @@ msgid ""
 "Use `{prefix}increase damage/defense` to upgrade your raid damage/defense "
 "multiplier by 10%."
 msgstr ""
+"Sử dung `{prefix}increase damage/defense` để nâng cấp sức tấn công hoặc "
+"phòng thủ của bạn lên 10%"
 
 #: cogs/raid.py:2046
 msgid "Increase your raid damage."
-msgstr ""
+msgstr "Nâng cấp sức tấn công"
 
 #: cogs/raid.py:2052
 #, python-brace-format
@@ -1694,16 +1696,18 @@ msgid ""
 "Upgrading your weapon attack raid multiplier to {newlvl} costs **${price}**, "
 "you are too poor."
 msgstr ""
+"Nâng cấp sức tấn công lên {newlvl} cần **${price}**, nhưng bạn lại không có "
+"đủ tiền"
 
 #: cogs/raid.py:2063
 #, python-brace-format
 msgid ""
 "You upgraded your weapon attack raid multiplier to {newlvl} for **${price}**."
-msgstr ""
+msgstr "Bạn đã nâng cấp sức tấn công lên {newlvl} bằng **${price}**"
 
 #: cogs/raid.py:2071
 msgid "Increase your raid defense."
-msgstr ""
+msgstr "Nâng cấp sức phòng thủ"
 
 #: cogs/raid.py:2077
 #, python-brace-format
@@ -1711,13 +1715,15 @@ msgid ""
 "Upgrading your shield defense raid multiplier to {newlvl} costs **${price}"
 "**, you are too poor."
 msgstr ""
+"Nâng cấp sức phòng thủ lên {newlvl} cần **${price}**, nhưng bạn lại không có "
+"đủ tiền"
 
 #: cogs/raid.py:2088
 #, python-brace-format
 msgid ""
 "You upgraded your shield defense raid multiplier to {newlvl} for **${price}"
 "**."
-msgstr ""
+msgstr "Bạn đã nâng cấp sức phòng thủ lên {newlvl} bằng **${price}**"
 
 #: cogs/raid.py:2096
 msgid "View your raid stats."
@@ -1730,10 +1736,13 @@ msgid ""
 "Damage Multiplier: x{atk} (Upgrading: ${atkp})\n"
 "Defense Multiplier: x{deff} (Upgrading: ${deffp})"
 msgstr ""
+"**Sức tấn công và phòng thủ cho raid của {author}**\n"
+"Sức tấn công: x{atk} ( Lần tiếp theo cần: ${atkp})\n"
+"Sức phòng thủ: x{deff} ( Lần tiếp theo cần: ${deffp})"
 
 #: cogs/raid.py:2116
 msgid "Informs you about joining raids."
-msgstr ""
+msgstr "Giới thiệu cho bạn về raid"
 
 #: cogs/raid.py:2119
 #, python-brace-format
@@ -1742,6 +1751,9 @@ msgid ""
 "that roams this land? Raids got you covered!\n"
 "Join the support server (`{prefix}support`) for more information."
 msgstr ""
+"Bạn đã bao giờ muốn tham gia cùng với những người chơi khác để đánh bại con "
+"rồng lang thang trên vùng đất này chưa? Raid đang chờ bạn!\n"
+"Tham gia máy chủ hỗ trỡ (`{prefix}support`) để có thêm nhiều thông tin"
 
 #: cogs/store.py:32
 msgid "The booster store."
@@ -2803,11 +2815,11 @@ msgstr "Hủy bỏ cuộc phiêu lưu hiện tại của bạn."
 
 #: cogs/adventure.py:537
 msgid "Are you sure you want to cancel your current adventure?"
-msgstr ""
+msgstr "Bạn có chắc chắc muốn thoát cuộc phiêu lưu hiện tại?"
 
 #: cogs/adventure.py:540
 msgid "Did not cancel your adventure. The journey continues..."
-msgstr ""
+msgstr "Bạn đã không từ bỏ. Cuộc phiêu lưu vẫn đang bắt đầu"
 
 #: cogs/adventure.py:545
 #, python-brace-format
@@ -2819,8 +2831,9 @@ msgstr ""
 "cái mới!"
 
 #: cogs/adventure.py:553
-msgid "Your death stats."
-msgstr "Số liệu thống kê cái chết của bạn."
+msgid ""
+"Your death stats. Shows statictics from all your adventures ever completed."
+msgstr ""
 
 #: cogs/adventure.py:563
 #, python-brace-format
@@ -2915,7 +2928,7 @@ msgstr "Người chia bài có số điểm cao hơn bạn và chiến thắng."
 
 #: cogs/gambling.py:296
 msgid "It's a tie."
-msgstr ""
+msgstr "Hòa."
 
 #: cogs/gambling.py:308
 msgid "Draws a random card."
@@ -2939,8 +2952,8 @@ msgstr "{result[1]} Nó là **{result[0]}**! Bạn thua **${amount}**!"
 
 #: cogs/gambling.py:366
 msgid ""
-"Bet on the outcome of a dict roll with [maximum] sides. [tip] specifies the "
-"side you bet on. You will win [maximum - 1] * money money if you are right "
+"Bet on the outcome of a dice roll with [maximum] sides. [tip] specifies the "
+"side you bet on. You will win [maximum - 1] * [money] money if you are right "
 "and loose [money] if you are wrong."
 msgstr ""
 
@@ -2968,51 +2981,53 @@ msgstr "Bạn đã mất **${money}**! Số ngẫu nhiên là `{num}`, bạn đ�
 
 #: cogs/gambling.py:407
 msgid "[Alpha] Play blackjack against the dealer."
-msgstr ""
+msgstr "[Alpha] Chơi blackjack với người chia bài"
 
 #: cogs/gambling.py:423
 msgid ""
 "Play a double-or-steal game against someone. You start with $100 and can "
 "take it or double it with your money."
 msgstr ""
+"Đánh cắp tiền từ một ai đó. Bạn bắt đầu với 100 đô la và có thể lấy nó hoặc "
+"nhân đôi số tiền đó."
 
 #: cogs/gambling.py:426
 #, python-brace-format
 msgid "React with 💰 to play double-or-steal with {user}!"
-msgstr ""
+msgstr "Nhấn 💰 để đánh cắp tiền {user}!"
 
 #: cogs/gambling.py:449
 #, python-brace-format
 msgid "{user} has not character."
-msgstr ""
+msgstr "{user} không có nhân vật."
 
 #: cogs/gambling.py:456 cogs/gambling.py:497
 #, python-brace-format
 msgid "{user} is too poor to double."
-msgstr ""
+msgstr "{user} quá nghèo để nhân đôi số tiền"
 
 #: cogs/gambling.py:466
 #, python-brace-format
 msgid "Double or steal ${money}?"
-msgstr ""
+msgstr "Nhân đôi hay chỉ nhận ${money}?"
 
 #: cogs/gambling.py:467
 msgid "Double"
-msgstr ""
+msgstr "Nhân đôi"
 
 #: cogs/gambling.py:467
 msgid "Steal"
-msgstr ""
+msgstr "Cướp"
 
 #: cogs/gambling.py:485
 #, python-brace-format
 msgid "{user} stole **${money}**."
-msgstr ""
+msgstr "{user} đã đánh cắp được **${money}**."
 
 #: cogs/gambling.py:505
 #, python-brace-format
 msgid "{user} doubled to **${money}**."
-msgstr ""
+msgstr "{user} đã nhân đôi số tiền và nhận được **${money}**."
 
 #: cogs/trading.py:36
 msgid "Puts an item into the player store."
@@ -3824,7 +3839,7 @@ msgstr "Những người tình tốt nhất"
 
 #: cogs/server.py:31
 msgid "Shows information about your server."
-msgstr ""
+msgstr "Cho thông tin về server của bạn."
 
 #: cogs/server.py:32
 msgid "Link"
@@ -3910,7 +3925,7 @@ msgstr "Đã xong!"
 
 #: cogs/server.py:126
 msgid "Shows detailed information about a member of this server."
-msgstr ""
+msgstr "Hiển thị thông tin chi tiết về một thành viên của server này"
 
 #: cogs/server.py:140
 #, python-brace-format
@@ -4483,7 +4498,7 @@ msgstr ""
 
 #: cogs/vote.py:28
 msgid "Vote me up to get a random crate!"
-msgstr ""
+msgstr "Vote cho tôi để nhận một crate ngẫu nhiên"
 
 #: cogs/vote.py:31
 msgid ""
@@ -4491,39 +4506,42 @@ msgid ""
 "afterwards!\n"
 "https://discordbots.org/bot/idlerpg"
 msgstr ""
+"Vote tôi để nhận một crate ngẫu nhiên! Bạn sẽ được thưởng sau vài giây sau "
+"khi vote!\n"
+"https://discordbots.org/bot/idlerpg"
 
-#: cogs/custom.py:50
+#: cogs/custom.py:43
 msgid "In loving memory of Mary Johanna, ex-developer."
 msgstr "Ký ức yêu thưởng của Mary Johanna, nhà phát triển cũ."
 
-#: cogs/custom.py:51
+#: cogs/custom.py:44
 msgid "His name is `#no homo` :heart:"
 msgstr "Tên của anh ấy là #no homo` :heart:"
 
-#: cogs/custom.py:57
+#: cogs/custom.py:50
 msgid "[Ken only] Hug someone."
 msgstr "[Dành cho Ken] Ôm một ai đó."
 
-#: cogs/custom.py:59
+#: cogs/custom.py:52
 msgid "Ken Hug!"
 msgstr "Ken hug!"
 
-#: cogs/custom.py:60
+#: cogs/custom.py:53
 #, python-brace-format
 msgid "{author} hugged {user}! Awww!"
 msgstr "{author} ôm {user}! Awww!"
 
-#: cogs/custom.py:82
-msgid "[Terror Only] It's a secret."
+#: cogs/custom.py:74
+msgid "It's a secret."
 msgstr ""
 
-#: cogs/custom.py:85
+#: cogs/custom.py:77
 msgid "Gotcha"
-msgstr ""
+msgstr "Gotcha"
 
-#: cogs/custom.py:85
+#: cogs/custom.py:77
 msgid "Shhh, it's a secret!"
-msgstr ""
+msgstr "Shhh, bí mật!"
 
 #: cogs/profile.py:41
 msgid "Creates a new character."
@@ -4542,6 +4560,17 @@ msgid ""
 "\n"
 "IdleRPG is a global bot, your characters are valid everywhere"
 msgstr ""
+"Tên nhân vật của bạn sẽ là gì? (Tối thiểu 3 ký tự, tối đa 20)\n"
+"\n"
+"** Xin lưu ý rằng với việc tạo ra một nhân vật, bạn đồng ý với các quy tắc "
+"sau: **\n"
+"1) Chỉ có tối đa hai ký tự cho mỗi cá nhân\n"
+"2) Không lạm dụng hoặc hưởng lợi từ lỗi hoặc khai thác\n"
+"3) Thân thiện và tử tế với những người chơi khác\n"
+"4) Nghiêm cấm giao dịch các mặt hàng trong trò chơi hoặc tiền tệ bằng tiền "
+"thật\n"
+"\n"
+"IdleRPG là một bot toàn cầu, các nhân vật của bạn có giá trị ở mọi nơi"
 
 #: cogs/profile.py:64
 msgid "Timeout expired. Please retry!"
@@ -4608,6 +4637,12 @@ msgid ""
 "**PvP Wins**: `{pvp}`\n"
 "**Guild**: `{guild}`"
 msgstr ""
+"**Tiền**: `${money}`\n"
+"**Cấp độ**: `{level}`\n"
+"**Class**: `{class_}`\n"
+"**Chủng tộc**: `{race}`\n"
+"**Số lần PVP thắng**: `{pvp}`\n"
+"**Bang hội**: `{guild}`"
 
 #: cogs/profile.py:215
 msgid "Ranks"
@@ -4917,7 +4952,7 @@ msgstr "Xóa nhân vật thành công. Chế sẽ nhớ fam lăm huhu :frowning:
 msgid ""
 "Sets your profile text colour. The format may be #RRGGBB or a HTML-valid "
 "string like \"cyan\"."
-msgstr ""
+msgstr "Đổi màu cho profile của bạn."
 
 #: cogs/profile.py:642
 msgid "Format for colour is `#RRGGBB` or a colour code like `cyan`."
@@ -5424,11 +5459,24 @@ msgstr "Từ bây giờ bạn là {race}"
 #: utils/castle.py:164
 #, python-brace-format
 msgid "You found a treasure with {emote} inside!"
-msgstr ""
+msgstr "Bạn đã tìm thấy một kho báu với {emote} bên trong!"
 
 #: utils/castle.py:269
 msgid "You have reached the exit!"
-msgstr ""
+msgstr "Bạn đã tìm được lối ra!"
+
+#~ msgid "Your death stats."
+#~ msgstr "Số liệu thống kê cái chết của bạn."
+
+#~ msgid ""
+#~ "Bet on the outcome of a dict roll with [maximum] sides. [tip] specifies "
+#~ "the side you bet on. You will win [maximum - 1] * money money if you are "
+#~ "right and loose [money] if you are wrong."
+#~ msgstr ""
+#~ "Đặt cược tiền để đoán. Nếu bạn đoán đúng thì sẽ cộng tiền và ngược lại"
+
+#~ msgid "[Terror Only] It's a secret."
+#~ msgstr "[Dành cho Terror] Bí mật."
 
 #~ msgid "Band a user from using $helpme."
 #~ msgstr "Gợi ý người dùng sử dung $helpme."

@@ -550,7 +550,7 @@ Adventure name: `{adventure}`"""
     @commands.command()
     @locale_doc
     async def deaths(self, ctx):
-        _("""Your death stats.""")
+        _("""Your death stats. Shows statictics from all your adventures ever completed.""")
         deaths, completed = await self.bot.pool.fetchval(
             'SELECT (deaths, completed) FROM profile WHERE "user"=$1;', ctx.author.id
         )

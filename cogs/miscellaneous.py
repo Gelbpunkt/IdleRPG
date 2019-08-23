@@ -70,7 +70,7 @@ class Miscellaneous(commands.Cog):
             txt = f"**${money}**"
         else:
             num = round(((streak + 9) % 10 + 1) / 2)
-            amt = secrets.randbelow(5 - num)
+            amt = secrets.randbelow(5 - num) + 1
             types = [
                 "common",
                 "uncommon",
