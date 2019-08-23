@@ -510,7 +510,7 @@ We've added several new features and fixed old bugs.
     @commands.command()
     @locale_doc
     async def randomname(self, ctx):
-        _("""Sends my nickname in a random server.""")
+        _("""Sends you my nickname from a random server.""")
         g = random.choice(
             [g for g in self.bot.guilds if g.me.display_name != self.bot.user.name]
         )
