@@ -28,7 +28,7 @@ class Ranks(commands.Cog):
     @commands.command()
     @locale_doc
     async def richest(self, ctx):
-        _("""The 10 richest players.""")
+        _("""The 10 most richest players in IdleRPG.""")
         await ctx.trigger_typing()
         players = await self.bot.pool.fetch(
             'SELECT "user", "name", "money" FROM profile ORDER BY "money" DESC LIMIT 10;'

@@ -446,7 +446,7 @@ class Gambling(commands.Cog):
             return await ctx.send(_("Timed out."))
 
         if not await user_has_char(self.bot, u.id):
-            return await ctx.send(_("{user} has not character.").format(user=u))
+            return await ctx.send(_("{user} has no character.").format(user=u))
         money = 100
         users = (u, ctx.author)
 

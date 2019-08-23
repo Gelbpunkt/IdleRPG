@@ -33,7 +33,7 @@ class Trading(commands.Cog):
     @commands.command()
     @locale_doc
     async def sell(self, ctx, itemid: int, price: IntGreaterThan(-1)):
-        _("""Puts an item into the player store.""")
+        _("""Puts your item into the market.""")
         async with self.bot.pool.acquire() as conn:
             item = await conn.fetchrow(
                 "SELECT * FROM inventory i JOIN allitems ai ON (i.item=ai.id) WHERE ai.id=$1 AND ai.owner=$2;",
@@ -178,7 +178,7 @@ class Trading(commands.Cog):
         minstat: float = 0.00,
         highestprice: IntGreaterThan(-1) = 1_000_000,
     ):
-        _("""Show the market with all items and prices.""")
+        _("""Lists the buyable items on the market.""")
         if itemtype not in ["All", "Sword", "Shield"]:
             return await ctx.send(
                 "Use either `All`, `Sword` or `Shield` as a type to filter for."
@@ -418,7 +418,7 @@ class Trading(commands.Cog):
     @commands.command()
     @locale_doc
     async def trader(self, ctx):
-        _("""Buy items at the trader.""")
+        _("""Buys items at the trader.""")
         offers = []
         for i in range(5):
             item = await self.bot.create_random_item(

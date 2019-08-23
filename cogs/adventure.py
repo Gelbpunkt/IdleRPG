@@ -104,7 +104,7 @@ class Adventure(commands.Cog):
     @commands.command()
     @locale_doc
     async def activeadventure(self, ctx):
-        _("""Go out on an active, action based adventure in a maze.""")
+        _("""Go out on a docile adventure controlled by reactions.""")
         if not await ctx.confirm(
             _(
                 "You are going to be in a labyrinth of size 15x15. There are enemies, treasures and hidden traps. Reach the exit in the bottom right corner for a huge extra bonus!\nAre you ready?\n\nTip: Use a silent channel for this, you may want to read all the messages I will send."
@@ -550,7 +550,9 @@ Adventure name: `{adventure}`"""
     @commands.command()
     @locale_doc
     async def deaths(self, ctx):
-        _("""Your death stats. Shows statictics from all your adventures ever completed.""")
+        _(
+            """Your death stats. Shows statictics from all your adventures ever completed."""
+        )
         deaths, completed = await self.bot.pool.fetchval(
             'SELECT (deaths, completed) FROM profile WHERE "user"=$1;', ctx.author.id
         )
