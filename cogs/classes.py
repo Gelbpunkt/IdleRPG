@@ -71,7 +71,7 @@ class Classes(commands.Cog):
             discord.Embed(
                 title=_("Ranger"),
                 description=_(
-                    "Item hunter and trainer of their very own pet.\nGet access to `{prefix}hunt` and `{prefix}pet` to hunt a random item once a day.\n+3 minimum stat and +6 maximum stat per evolution."
+                    "Item hunter and trainer of their very own pet.\nGet access to `{prefix}pet` to interact with your pet and let it get items for you.\n+3 minimum stat and +6 maximum stat per evolution."
                 ).format(prefix=ctx.prefix),
                 colour=self.bot.config.primary_colour,
             ),
