@@ -288,7 +288,6 @@ CREATE TABLE public.profile (
     money integer,
     xp integer,
     pvpwins bigint DEFAULT 0 NOT NULL,
-    crates bigint DEFAULT 0 NOT NULL,
     money_booster bigint DEFAULT 0,
     time_booster bigint DEFAULT 0,
     luck_booster bigint DEFAULT 0,
@@ -313,8 +312,8 @@ CREATE TABLE public.profile (
     crates_magic bigint DEFAULT 0,
     crates_legendary bigint DEFAULT 0,
     luck numeric DEFAULT 1.0,
-    favor bigint DEFAULT 0,
     god character varying(50) DEFAULT NULL::character varying,
+    favor bigint DEFAULT 0,
     race character varying(30) DEFAULT 'Human'::character varying,
     cv bigint DEFAULT '-1'::integer
 );
@@ -529,6 +528,14 @@ ALTER TABLE ONLY public.guild
 
 ALTER TABLE ONLY public.inventory
     ADD CONSTRAINT inventory_item_fkey FOREIGN KEY (item) REFERENCES public.allitems(id) ON DELETE CASCADE;
+
+
+--
+-- Name: loot loot_user_fkey; Type: FK CONSTRAINT; Schema: public; Owner: jens
+--
+
+ALTER TABLE ONLY public.loot
+    ADD CONSTRAINT loot_user_fkey FOREIGN KEY ("user") REFERENCES public.profile("user") ON DELETE CASCADE;
 
 
 --
