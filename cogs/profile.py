@@ -449,11 +449,10 @@ IdleRPG is a global bot, your characters are valid everywhere"""
                     )
                 )
             stat = "damage" if item["type"] == "Sword" else "armor"
-            if (
-                not (min_ := item2[stat] - 5)
-                <= (main := item[stat])
-                <= (max_ := item2[stat] + 5)
-            ):
+            min_ = item2[stat] - 5
+            main = item[stat]
+            max_ = item2[stat] + 5
+            if not min_ <= main <= max_:
                 await self.bot.reset_cooldown(ctx)
                 return await ctx.send(
                     _(
