@@ -127,7 +127,7 @@ class Guild(commands.Cog):
     @guild.command()
     @locale_doc
     async def members(self, ctx):
-        _("""List of your guild members.""")
+        _("""Shows you a list of your guild members.""")
         members = await self.bot.pool.fetch(
             'SELECT "user", "guildrank" FROM profile WHERE "guild"=$1;',
             ctx.character_data["guild"],

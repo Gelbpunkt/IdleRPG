@@ -123,7 +123,7 @@ Server created at: `{created_at}`"""
     @commands.command(aliases=["user", "member", "memberinfo"])
     @locale_doc
     async def userinfo(self, ctx, member: discord.Member = Author):
-        _("""Shows detailed information about a member of this server.""")
+        _("""Shows detailed information about a member in the server.""")
         ticks = {
             "True": "<:check:314349398811475968>",
             "False": "<:xmark:314349398824058880>",
