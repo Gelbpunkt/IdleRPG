@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-08-24 13:20+0000\n"
+"POT-Creation-Date: 2019-08-24 17:25+0000\n"
 "PO-Revision-Date: 2019-08-23 21:47+0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -23,7 +23,7 @@ msgid "Starts a new tournament."
 msgstr "Yeni turnuva başlatır."
 
 #: cogs/tournament.py:41 cogs/battles.py:44 cogs/battles.py:146
-#: cogs/gambling.py:324 cogs/profile.py:553 cogs/transaction.py:249
+#: cogs/gambling.py:324 cogs/profile.py:554 cogs/transaction.py:249
 #: cogs/transaction.py:295
 msgid "You are too poor."
 msgstr "Çok fakirsin."
@@ -491,7 +491,7 @@ msgid "Armor"
 msgstr "Zırh"
 
 #: cogs/crates.py:139 cogs/classes.py:507 cogs/trading.py:222
-#: cogs/trading.py:407 cogs/profile.py:336
+#: cogs/trading.py:407 cogs/profile.py:337
 msgid "Value"
 msgstr "Değer"
 
@@ -2148,14 +2148,10 @@ msgstr "Korucu"
 #, python-brace-format
 msgid ""
 "Item hunter and trainer of their very own pet.\n"
-"Get access to `{prefix}hunt` and `{prefix}pet` to hunt a random item once a "
-"day.\n"
+"Get access to `{prefix}pet` to interact with your pet and let it get items "
+"for you.\n"
 "+3 minimum stat and +6 maximum stat per evolution."
 msgstr ""
-"Eşya avcısı ve kendi evcil hayvanının eğitmeni.\n"
-"Her gün bir kez rastgele bir eşya avlamak için `{prefix}hunt` ve `{prefix}"
-"pet`e erişim al.\n"
-"Evrim başına +3 minimum güç ve +6 maksimum güç."
 
 #: cogs/classes.py:79
 msgid "Raider"
@@ -4571,34 +4567,24 @@ msgid ""
 "2) No abusing or benefiting from bugs or exploits\n"
 "3) Be friendly and kind to other players\n"
 "4) Trading in-game items or currency for real money is forbidden\n"
+"5) Giving or selling renamed items is forbidden\n"
 "\n"
 "IdleRPG is a global bot, your characters are valid everywhere"
 msgstr ""
-"Karakterinin adı ne olmalı? (Minimum 3 Karakter, Maksimum 20)\n"
-"\n"
-"**Şunu lütfen bilin ki karakter oluşturduğunuzda bu kuralları kabul "
-"edersiniz:**\n"
-"1) Kişi başına sadece 2 karakter\n"
-"2) Bugları ya da açıkları suistimal etmek ya da onlardan avantaj sağlamak "
-"yasak\n"
-"3) Diğer oyunculara karşı arkadaş canlısı ve nazik olun\n"
-"4) Oyun-içi eşyaları ya da parayı gerçek para ile alışveriş etmek yasak\n"
-"\n"
-"IdleRPG evrensel bir bot, karakterlerin her yerde geçerli"
 
-#: cogs/profile.py:64
+#: cogs/profile.py:65
 msgid "Timeout expired. Please retry!"
 msgstr "Zaman aşımı süresi doldu. Lütfen tekrar dene!"
 
-#: cogs/profile.py:75
+#: cogs/profile.py:76
 msgid "Starter Sword"
 msgstr "Başlangıç Kılıcı"
 
-#: cogs/profile.py:84
+#: cogs/profile.py:85
 msgid "Starter Shield"
 msgstr "Başlangıç Kalkanı"
 
-#: cogs/profile.py:94
+#: cogs/profile.py:95
 #, python-brace-format
 msgid ""
 "Successfully added your character **{name}**! Now use `{prefix}profile` to "
@@ -4607,41 +4593,41 @@ msgstr ""
 "Karakterin **{name}** başarılı bir şekilde eklendi! Şimdi karakterine bakmak "
 "için `{prefix}profile` kullan!"
 
-#: cogs/profile.py:99
+#: cogs/profile.py:100
 msgid "Character names must be at least 3 characters and up to 20."
 msgstr "Karakter isimleri en az 3 karakter ve en fazla 20 karakter olmalı."
 
-#: cogs/profile.py:106
+#: cogs/profile.py:107
 msgid "View someone's or your own profile."
 msgstr "Birinin ya da senin kendi profiline bak."
 
-#: cogs/profile.py:115
+#: cogs/profile.py:116
 #, python-brace-format
 msgid "**{person}** does not have a character."
 msgstr "**{person}**'nin karakteri yok."
 
-#: cogs/profile.py:152
+#: cogs/profile.py:153
 msgid "Not Married"
 msgstr "Bekâr"
 
-#: cogs/profile.py:160
+#: cogs/profile.py:161
 msgid "No Mission"
 msgstr "Görev Yok"
 
-#: cogs/profile.py:169
+#: cogs/profile.py:170
 msgid "View someone's profile, not image based."
 msgstr "Birinin profiline bak, görüntü tabanlı değil."
 
-#: cogs/profile.py:178
+#: cogs/profile.py:179
 #, python-brace-format
 msgid "**{target}** does not have a character."
 msgstr "**{target}**'nin karakteri yok."
 
-#: cogs/profile.py:196
+#: cogs/profile.py:197
 msgid "General"
 msgstr "Genel"
 
-#: cogs/profile.py:198
+#: cogs/profile.py:199
 #, python-brace-format
 msgid ""
 "**Money**: `${money}`\n"
@@ -4658,11 +4644,11 @@ msgstr ""
 "**PvP Galibiyetleri**: `{pvp}`\n"
 "**Lonca**: `{guild}`"
 
-#: cogs/profile.py:215
+#: cogs/profile.py:216
 msgid "Ranks"
 msgstr "Rütbeler"
 
-#: cogs/profile.py:216
+#: cogs/profile.py:217
 #, python-brace-format
 msgid ""
 "**Richest**: `{rank_money}`\n"
@@ -4671,11 +4657,11 @@ msgstr ""
 "**En Zengin**: `{rank_money}`\n"
 "**TP**: `{rank_xp}`"
 
-#: cogs/profile.py:221
+#: cogs/profile.py:222
 msgid "Equipment"
 msgstr "Ekipman"
 
-#: cogs/profile.py:222
+#: cogs/profile.py:223
 #, python-brace-format
 msgid ""
 "Sword: {sword}\n"
@@ -4684,15 +4670,15 @@ msgstr ""
 "Kılıç: {sword}\n"
 "Kalkan: {shield}"
 
-#: cogs/profile.py:227
+#: cogs/profile.py:228
 msgid "Mission"
 msgstr "Görev"
 
-#: cogs/profile.py:234
+#: cogs/profile.py:235
 msgid "Shows your luck factor ranging from 0 to 2."
 msgstr "0'dan 2'ye kadar olan şans faktörünü gösterir."
 
-#: cogs/profile.py:237
+#: cogs/profile.py:238
 #, python-brace-format
 msgid ""
 "Your current luck multiplier is `{luck}x` (≈{percent}% more than usual "
@@ -4701,20 +4687,20 @@ msgstr ""
 "Şu anki şans çarpanın `{luck}x` (Normalinden ≈{percent}% daha fazla "
 "(Normal=0))."
 
-#: cogs/profile.py:248
+#: cogs/profile.py:249
 msgid "Shows your balance."
 msgstr "Bakiyeni gösterir."
 
-#: cogs/profile.py:250
+#: cogs/profile.py:251
 #, python-brace-format
 msgid "You currently have **${money}**, {author}!"
 msgstr "Şu anda **${money}** paran var, {author}!"
 
-#: cogs/profile.py:259
+#: cogs/profile.py:260
 msgid "Shows your current XP and level."
 msgstr "Şu anki TP ve seviyeni gösterir."
 
-#: cogs/profile.py:263
+#: cogs/profile.py:264
 #, python-brace-format
 msgid ""
 "You currently have **{points} XP**, which means you are on Level **{level}"
@@ -4723,116 +4709,116 @@ msgstr ""
 "Şu anda sende **{points} TP** var, bu da demek oluyor ki Seviyen **{level}"
 "**. Bir sonraki seviye için gereken: **{missing}**"
 
-#: cogs/profile.py:273
+#: cogs/profile.py:274
 #, python-brace-format
 msgid "{user}'s inventory includes"
 msgstr "{user}'in envanteri"
 
-#: cogs/profile.py:278
+#: cogs/profile.py:279
 msgid "(**Equipped**)"
 msgstr "(**Giyildi**)"
 
-#: cogs/profile.py:282
+#: cogs/profile.py:283
 #, python-brace-format
 msgid "Damage: `{damage}`"
 msgstr "Hasar: `{damage}`"
 
-#: cogs/profile.py:284
+#: cogs/profile.py:285
 #, python-brace-format
 msgid "Armor: `{armor}`"
 msgstr "Zırh: `{armor}`"
 
-#: cogs/profile.py:289
+#: cogs/profile.py:290
 #, python-brace-format
 msgid "ID: `{id}`, Type: `{type_}` with {statstr}. Value is **${value}**"
 msgstr "ID: `{id}`, Tür: `{type_}`, {statstr} gücünde. Değeri **${value}**"
 
-#: cogs/profile.py:298
+#: cogs/profile.py:299
 #, python-brace-format
 msgid "Page {page} of {maxpages}"
 msgstr "Sayfa {page} - {maxpages}"
 
-#: cogs/profile.py:308
+#: cogs/profile.py:309
 msgid "Shows your current inventory."
 msgstr "Şu anki envanterini gösterir."
 
-#: cogs/profile.py:314
+#: cogs/profile.py:315
 msgid "Your inventory is empty."
 msgstr "Envanterin boş."
 
-#: cogs/profile.py:327
+#: cogs/profile.py:328
 msgid "Shows your adventure loot that can be exchanged or sacrificed"
 msgstr "Takas edilebilir ya da feda edilebilir macera ganimetini gösterir"
 
-#: cogs/profile.py:333
+#: cogs/profile.py:334
 msgid "You do not have any loot at this moment."
 msgstr "Şu anda herhangi bir ganimetin yok."
 
-#: cogs/profile.py:339
+#: cogs/profile.py:340
 #, python-brace-format
 msgid "Use {prefix}exchange {item} or {prefix}sacrifice {item}"
 msgstr "{prefix}exchange {item} ya da {prefix}sacrifice {item} kullan"
 
-#: cogs/profile.py:351
+#: cogs/profile.py:352
 msgid "Exchange an item for money or xp."
 msgstr "Bir eşyayı para ya da tecrübe için takas et."
 
-#: cogs/profile.py:359 cogs/gods.py:47
+#: cogs/profile.py:360 cogs/gods.py:47
 msgid "You do not own this loot item."
 msgstr "Bu ganimet eşyasından sende yok."
 
-#: cogs/profile.py:362
+#: cogs/profile.py:363
 msgid "Select a reward"
 msgstr "Ödül seç"
 
-#: cogs/profile.py:363
+#: cogs/profile.py:364
 #, python-brace-format
 msgid "Do you want favor? {prefix}sacrifice instead"
 msgstr "İyilik ister misin? {prefix}sacrifice kullan"
 
-#: cogs/profile.py:367
+#: cogs/profile.py:368
 #, python-brace-format
 msgid "**{amount} XP**"
 msgstr "**{amount} tecrübe**"
 
-#: cogs/profile.py:377
+#: cogs/profile.py:378
 msgid "Reward gained!"
 msgstr "Ödül kazanıldı!"
 
-#: cogs/profile.py:383
+#: cogs/profile.py:384
 msgid "Equips an item of yours by ID."
 msgstr "Eşyanı ID'sine göre giyer."
 
-#: cogs/profile.py:392 cogs/profile.py:492
+#: cogs/profile.py:393 cogs/profile.py:493
 #, python-brace-format
 msgid "You don't own an item with the ID `{itemid}`."
 msgstr "ID'si `{itemid}` olan bir eşyaya sahip değilsin."
 
-#: cogs/profile.py:412
+#: cogs/profile.py:413
 #, python-brace-format
 msgid "Successfully equipped item `{itemid}` and put off item `{olditem}`."
 msgstr ""
 "`{itemid}` ID'li eşya başarılı bir şekilde giyildi ve `{olditem}` ID'li eşya "
 "çıkartıldı."
 
-#: cogs/profile.py:417
+#: cogs/profile.py:418
 #, python-brace-format
 msgid "Successfully equipped item `{itemid}`."
 msgstr "`{itemid}` ID'li eşya başarılı bir şekilde giyildi."
 
-#: cogs/profile.py:425
+#: cogs/profile.py:426
 msgid "Merges two items to a better one. Second one is consumed."
 msgstr "İki eşyayı daha iyi bir eşya için birleştirir. İkinci eşya yok olur."
 
-#: cogs/profile.py:428
+#: cogs/profile.py:429
 msgid "Good luck with that."
 msgstr "Bununla iyi şanslar."
 
-#: cogs/profile.py:442
+#: cogs/profile.py:443
 msgid "You don't own both of these items."
 msgstr "Bu eşyaların her ikisine de sahip değilsin."
 
-#: cogs/profile.py:447
+#: cogs/profile.py:448
 msgid ""
 "The items are of unequal type. You may only merge a sword with a sword or a "
 "shield with a shield."
@@ -4840,7 +4826,7 @@ msgstr ""
 "Eşyaların türü aynı değil. Sadece kılıç ile kılıcı ya da kalkan ile kalkanı "
 "birleştirebilirsin."
 
-#: cogs/profile.py:459
+#: cogs/profile.py:460
 #, python-brace-format
 msgid ""
 "The second item's stat must be in the range of `{min_}` to `{max_}` to "
@@ -4849,11 +4835,11 @@ msgstr ""
 "Gücü `{stat}` olan bir eşyayı yükseltmek için kullanılan ikinci eşyanın gücü "
 "`{min_}` ile `{max_}` arasında olmalı."
 
-#: cogs/profile.py:465
+#: cogs/profile.py:466
 msgid "This item is already on the maximum upgrade level."
 msgstr "Bu eşya zaten maksimum yükseltme seviyesinde."
 
-#: cogs/profile.py:473
+#: cogs/profile.py:474
 #, python-brace-format
 msgid ""
 "The {stat} of your **{item}** is now **{newstat}**. The other item was "
@@ -4862,15 +4848,15 @@ msgstr ""
 "Türü {stat} olan **{item}**'nın gücü artık **{newstat}**. Diğer eşya yok "
 "edildi."
 
-#: cogs/profile.py:482
+#: cogs/profile.py:483
 msgid "Upgrades an item's stat by 1."
 msgstr "Eşyanın gücüne 1 ekleyerek yükseltir."
 
-#: cogs/profile.py:505
+#: cogs/profile.py:506
 msgid "Your weapon already reached the maximum upgrade level."
 msgstr "Silahın zaten maksimum yükseltme seviyesine ulaştı."
 
-#: cogs/profile.py:510
+#: cogs/profile.py:511
 #, python-brace-format
 msgid ""
 "Are you sure you want to upgrade this item: {item}? It will cost **"
@@ -4879,11 +4865,11 @@ msgstr ""
 "Bu eşyayı yükseltmek istediğine emin misin: {item}? Fiyatı **${pricetopay}** "
 "ediyor."
 
-#: cogs/profile.py:514
+#: cogs/profile.py:515
 msgid "Weapon upgrade cancelled."
 msgstr "Silah yükseltmesi iptal edildi."
 
-#: cogs/profile.py:519
+#: cogs/profile.py:520
 #, python-brace-format
 msgid ""
 "You are too poor to upgrade this item. The upgrade costs **${pricetopay}**, "
@@ -4892,7 +4878,7 @@ msgstr ""
 "Bu eşyayı yükseltmek için çok fakirsin. Yükseltme **${pricetopay}** ediyor, "
 "ama sende sadece **${money}** var."
 
-#: cogs/profile.py:534
+#: cogs/profile.py:535
 #, python-brace-format
 msgid ""
 "The {stat} of your **{item}** is now **{newstat}**. **${pricetopay}** has "
@@ -4901,48 +4887,48 @@ msgstr ""
 "Türü {stat} olan **{item}**'nın gücü artık **{newstat}**. Bakiyenden **"
 "${pricetopay}** alındı."
 
-#: cogs/profile.py:549
+#: cogs/profile.py:550
 msgid "Gift money!"
 msgstr "Para hediye et!"
 
-#: cogs/profile.py:551
+#: cogs/profile.py:552
 msgid "No cheating!"
 msgstr "Hile yok!"
 
-#: cogs/profile.py:564
+#: cogs/profile.py:565
 #, python-brace-format
 msgid "Successfully gave **${money}** to {other}."
 msgstr "**${money}** para başarılı bir şekilde {other}'a verildi."
 
-#: cogs/profile.py:576
+#: cogs/profile.py:577
 msgid "Renames your character."
 msgstr "Karakterini yeniden adlandırır."
 
-#: cogs/profile.py:578
+#: cogs/profile.py:579
 msgid "What shall your character's name be? (Minimum 3 Characters, Maximum 20)"
 msgstr "Karakterinin adı ne olmalı? (Minimum 3 Karakter, Maksimum 20)"
 
-#: cogs/profile.py:587
+#: cogs/profile.py:588
 msgid "Timeout expired. Retry!"
 msgstr "Zaman aşımı süresi doldu. Tekrar dene!"
 
-#: cogs/profile.py:593
+#: cogs/profile.py:594
 msgid "Character name updated."
 msgstr "Karakter ismi güncellendi."
 
-#: cogs/profile.py:595
+#: cogs/profile.py:596
 msgid "Character names must be at least 3 characters!"
 msgstr "Karakter isimleri en az 3 karakter olmalı!"
 
-#: cogs/profile.py:597
+#: cogs/profile.py:598
 msgid "Character names mustn't exceed 20 characters!"
 msgstr "Karakter isimleri 20 karakteri geçmemeli!"
 
-#: cogs/profile.py:603
+#: cogs/profile.py:604
 msgid "Deletes your character."
 msgstr "Karakterini siler."
 
-#: cogs/profile.py:606
+#: cogs/profile.py:607
 msgid ""
 "Are you absolutely sure you want to delete your character? React in the next "
 "30 seconds to confirm.\n"
@@ -4952,16 +4938,16 @@ msgstr ""
 "saniye içinde tepki ver.\n"
 "**Geri alınamaz.**"
 
-#: cogs/profile.py:609
+#: cogs/profile.py:610
 msgid "Cancelled deletion of your character."
 msgstr "Karakterinin silinmesi iptal edildi."
 
-#: cogs/profile.py:631
+#: cogs/profile.py:632
 msgid "Successfully deleted your character. Sorry to see you go :frowning:"
 msgstr ""
 "Karakterin başarılı bir şekilde silindi. Gittiğini görmek üzücü :frowning:"
 
-#: cogs/profile.py:638
+#: cogs/profile.py:639
 msgid ""
 "Sets your profile text colour. The format may be #RRGGBB or a HTML-valid "
 "string like \"cyan\"."
@@ -4969,11 +4955,11 @@ msgstr ""
 "Profil metin rengini ayarlar. Biçimi #RRGGBB ya da \"cyan\" gibi bir HTML-"
 "geçerli dize olabilir."
 
-#: cogs/profile.py:642
+#: cogs/profile.py:643
 msgid "Format for colour is `#RRGGBB` or a colour code like `cyan`."
 msgstr "Renk için biçim `#RRGGBB` ya da `cyan` gibi renk kodudur."
 
-#: cogs/profile.py:649
+#: cogs/profile.py:650
 #, python-brace-format
 msgid ""
 "Successfully set your profile colour to `{colour}`. Hint: If you used a hex "
@@ -5479,6 +5465,41 @@ msgstr "İçinde {emote} olan bir hazine buldun!"
 #: utils/castle.py:269
 msgid "You have reached the exit!"
 msgstr "Çıkışa ulaştın!"
+
+#~ msgid ""
+#~ "Item hunter and trainer of their very own pet.\n"
+#~ "Get access to `{prefix}hunt` and `{prefix}pet` to hunt a random item once "
+#~ "a day.\n"
+#~ "+3 minimum stat and +6 maximum stat per evolution."
+#~ msgstr ""
+#~ "Eşya avcısı ve kendi evcil hayvanının eğitmeni.\n"
+#~ "Her gün bir kez rastgele bir eşya avlamak için `{prefix}hunt` ve `{prefix}"
+#~ "pet`e erişim al.\n"
+#~ "Evrim başına +3 minimum güç ve +6 maksimum güç."
+
+#~ msgid ""
+#~ "What shall your character's name be? (Minimum 3 Characters, Maximum 20)\n"
+#~ "\n"
+#~ "**Please note that with the creation of a character, you agree to these "
+#~ "rules:**\n"
+#~ "1) Only up to two characters per individual\n"
+#~ "2) No abusing or benefiting from bugs or exploits\n"
+#~ "3) Be friendly and kind to other players\n"
+#~ "4) Trading in-game items or currency for real money is forbidden\n"
+#~ "\n"
+#~ "IdleRPG is a global bot, your characters are valid everywhere"
+#~ msgstr ""
+#~ "Karakterinin adı ne olmalı? (Minimum 3 Karakter, Maksimum 20)\n"
+#~ "\n"
+#~ "**Şunu lütfen bilin ki karakter oluşturduğunuzda bu kuralları kabul "
+#~ "edersiniz:**\n"
+#~ "1) Kişi başına sadece 2 karakter\n"
+#~ "2) Bugları ya da açıkları suistimal etmek ya da onlardan avantaj sağlamak "
+#~ "yasak\n"
+#~ "3) Diğer oyunculara karşı arkadaş canlısı ve nazik olun\n"
+#~ "4) Oyun-içi eşyaları ya da parayı gerçek para ile alışveriş etmek yasak\n"
+#~ "\n"
+#~ "IdleRPG evrensel bir bot, karakterlerin her yerde geçerli"
 
 #~ msgid "Shows detailed information about a member of this server."
 #~ msgstr "Bu sunucunun bir üyesi hakkında ayrıntılı bilgi gösterir."
