@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-08-24 11:00+0000\n"
+"POT-Creation-Date: 2019-08-24 13:20+0000\n"
 "PO-Revision-Date: 2019-05-30 15:36+0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -165,7 +165,7 @@ msgstr "{user} подарил вам дополнительные $50!"
 msgid "Seems you haven't got a trick or treat bag yet. Go get some!"
 msgstr "По-видимому ты ещё не получил мешок с конфетами. Иди и достань его!"
 
-#: cogs/halloween.py:142 cogs/crates.py:129 cogs/classes.py:493
+#: cogs/halloween.py:142 cogs/crates.py:129 cogs/classes.py:495
 msgid "You gained an item!"
 msgstr "Вы получили предмет!"
 
@@ -173,16 +173,16 @@ msgstr "Вы получили предмет!"
 msgid "You found a new item when opening a trick-or-treat bag!"
 msgstr "Вы получили новый предмет, во время открытия мешка с конфетами!"
 
-#: cogs/halloween.py:147 cogs/crates.py:134 cogs/classes.py:498
+#: cogs/halloween.py:147 cogs/crates.py:134 cogs/classes.py:500
 msgid "ID"
 msgstr "ID"
 
-#: cogs/halloween.py:148 cogs/crates.py:135 cogs/classes.py:285
-#: cogs/classes.py:499 cogs/trading.py:218 cogs/trading.py:403
+#: cogs/halloween.py:148 cogs/crates.py:135 cogs/classes.py:287
+#: cogs/classes.py:501 cogs/trading.py:218 cogs/trading.py:403
 msgid "Name"
 msgstr "Имя"
 
-#: cogs/halloween.py:149 cogs/crates.py:136 cogs/classes.py:500
+#: cogs/halloween.py:149 cogs/crates.py:136 cogs/classes.py:502
 #: cogs/trading.py:219 cogs/trading.py:404
 msgid "Type"
 msgstr "Тип"
@@ -459,17 +459,17 @@ msgstr ""
 msgid "You found a new item when opening a crate!"
 msgstr "Вы нашли новый предмет, открыв ящик!"
 
-#: cogs/crates.py:137 cogs/classes.py:502 cogs/trading.py:220
+#: cogs/crates.py:137 cogs/classes.py:504 cogs/trading.py:220
 #: cogs/trading.py:405
 msgid "Damage"
 msgstr "Урон"
 
-#: cogs/crates.py:138 cogs/classes.py:504 cogs/trading.py:221
+#: cogs/crates.py:138 cogs/classes.py:506 cogs/trading.py:221
 #: cogs/trading.py:406
 msgid "Armor"
 msgstr "Защита"
 
-#: cogs/crates.py:139 cogs/classes.py:505 cogs/trading.py:222
+#: cogs/crates.py:139 cogs/classes.py:507 cogs/trading.py:222
 #: cogs/trading.py:407 cogs/profile.py:336
 msgid "Value"
 msgstr "Стоимость"
@@ -1956,7 +1956,7 @@ msgstr "[Только Патреон] Изменить фон вашего пр�
 msgid "That is not a valid premade background."
 msgstr "Неверно указан, сделанный ранее фон."
 
-#: cogs/patreon.py:81 cogs/patreon.py:113 cogs/classes.py:464 cogs/guild.py:392
+#: cogs/patreon.py:81 cogs/patreon.py:113 cogs/classes.py:466 cogs/guild.py:392
 msgid ""
 "I couldn't read that URL. Does it start with `http://` or `https://` and is "
 "either a png or jpeg?"
@@ -2118,11 +2118,18 @@ msgstr ""
 msgid "Ritualist"
 msgstr ""
 
-#: cogs/classes.py:95
+#: cogs/classes.py:88
+msgid ""
+"A seer, a sacrificer and a follower.\n"
+"The Ritualist devotes their life to the god they follow. For every "
+"evolution, their sacrifices are 5% more effective."
+msgstr ""
+
+#: cogs/classes.py:97
 msgid "Paragon"
 msgstr "Парагон"
 
-#: cogs/classes.py:97
+#: cogs/classes.py:99
 msgid ""
 "Absorb the appreciation of the devs into your soul to power up.\n"
 "+1 damage and defense per evolution added onto your items."
@@ -2131,256 +2138,256 @@ msgstr ""
 "+1 атаки и защиты будет добавлены на ваши предметы, за каждую эволюцию вашей "
 "профессии."
 
-#: cogs/classes.py:140
+#: cogs/classes.py:142
 #, python-brace-format
 msgid "Your new class is now `{profession}`."
 msgstr "Ваш новый класс `{profession}`."
 
-#: cogs/classes.py:148
+#: cogs/classes.py:150
 msgid "You're too poor for a class change, it costs **$5000**."
 msgstr "Вы слишком бедны, чтобы сменить класс, смена класса стоит **$5000**."
 
-#: cogs/classes.py:165
+#: cogs/classes.py:167
 #, python-brace-format
 msgid ""
 "You selected the class `{profession}`. **$5000** was taken off your balance."
 msgstr ""
 
-#: cogs/classes.py:173
+#: cogs/classes.py:175
 msgid "Views your classes."
 msgstr ""
 
-#: cogs/classes.py:187
+#: cogs/classes.py:189
 #, python-brace-format
 msgid "The image for your class **{class_}** hasn't been added yet."
 msgstr "Картинка для вашего класса **{class_}** ещё не была добавлена."
 
-#: cogs/classes.py:195
+#: cogs/classes.py:197
 msgid "Evolve to the next level of your classes."
 msgstr ""
 
-#: cogs/classes.py:198
+#: cogs/classes.py:200
 msgid "Your level isn't high enough to evolve."
 msgstr "Ваш уровень слишком низок для повышения."
 
-#: cogs/classes.py:213
+#: cogs/classes.py:215
 msgid "You haven't got a class yet."
 msgstr "У вас нет класса."
 
-#: cogs/classes.py:218
+#: cogs/classes.py:220
 #, python-brace-format
 msgid "You are now a `{class1}` and a `{class2}`."
 msgstr ""
 
-#: cogs/classes.py:247
+#: cogs/classes.py:249
 msgid "[Thief Only] Steal money!"
 msgstr "[Только вор] Ворует деньги!"
 
-#: cogs/classes.py:269
+#: cogs/classes.py:271
 #, python-brace-format
 msgid "You stole **${stolen}** from **{user}**."
 msgstr "Вы своровали **${stolen}** у **{user}**."
 
-#: cogs/classes.py:274
+#: cogs/classes.py:276
 msgid "Your attempt to steal money wasn't successful."
 msgstr "Вы попытались своровать, но попытка не была успешной."
 
-#: cogs/classes.py:282
+#: cogs/classes.py:284
 msgid "[Ranger Only] View your pet or interact with it."
 msgstr ""
 
-#: cogs/classes.py:284
+#: cogs/classes.py:286
 #, python-brace-format
 msgid "{user}'s pet"
 msgstr "питомец {user}'а"
 
-#: cogs/classes.py:286
+#: cogs/classes.py:288
 msgid "Level"
 msgstr "Уровень"
 
-#: cogs/classes.py:287
+#: cogs/classes.py:289
 msgid "Food"
 msgstr ""
 
-#: cogs/classes.py:289
+#: cogs/classes.py:291
 msgid "Drinks"
 msgstr ""
 
-#: cogs/classes.py:291
+#: cogs/classes.py:293
 msgid "Love"
 msgstr ""
 
-#: cogs/classes.py:292
+#: cogs/classes.py:294
 msgid "Joy"
 msgstr ""
 
-#: cogs/classes.py:303
+#: cogs/classes.py:305
 msgid "[Ranger Only] Feed your pet."
 msgstr ""
 
-#: cogs/classes.py:305
+#: cogs/classes.py:307
 msgid "Potato"
 msgstr ""
 
-#: cogs/classes.py:306
+#: cogs/classes.py:308
 msgid "Apple"
 msgstr ""
 
-#: cogs/classes.py:307
+#: cogs/classes.py:309
 msgid "Cucumber"
 msgstr ""
 
-#: cogs/classes.py:308
+#: cogs/classes.py:310
 msgid "Meat"
 msgstr ""
 
-#: cogs/classes.py:309
+#: cogs/classes.py:311
 msgid "Salad"
 msgstr ""
 
-#: cogs/classes.py:310
+#: cogs/classes.py:312
 msgid "Adrian's Power Poop"
 msgstr ""
 
-#: cogs/classes.py:317
+#: cogs/classes.py:319
 msgid "Feed your pet"
 msgstr ""
 
-#: cogs/classes.py:321 cogs/classes.py:363 cogs/marriage.py:232
+#: cogs/classes.py:323 cogs/classes.py:365 cogs/marriage.py:232
 msgid "You are too poor to buy this."
 msgstr "Вы слишком бедны, чтобы купить это."
 
-#: cogs/classes.py:335
+#: cogs/classes.py:337
 #, python-brace-format
 msgid ""
 "You bought **{item}** for your pet and increased its food bar by **{points}"
 "** points."
 msgstr ""
 
-#: cogs/classes.py:345
+#: cogs/classes.py:347
 msgid "[Ranger Only] Give your pet something to drink."
 msgstr ""
 
-#: cogs/classes.py:347
+#: cogs/classes.py:349
 msgid "Some Water"
 msgstr ""
 
-#: cogs/classes.py:348
+#: cogs/classes.py:350
 msgid "A bottle of water"
 msgstr ""
 
-#: cogs/classes.py:349
+#: cogs/classes.py:351
 msgid "Cocktail"
 msgstr ""
 
-#: cogs/classes.py:350
+#: cogs/classes.py:352
 msgid "Wine"
 msgstr ""
 
-#: cogs/classes.py:351
+#: cogs/classes.py:353
 msgid "Beer"
 msgstr ""
 
-#: cogs/classes.py:352
+#: cogs/classes.py:354
 msgid "Adrian's Cocktail"
 msgstr ""
 
-#: cogs/classes.py:359
+#: cogs/classes.py:361
 msgid "Give your pet something to drink"
 msgstr ""
 
-#: cogs/classes.py:377
+#: cogs/classes.py:379
 #, python-brace-format
 msgid ""
 "You bought **{item}** for your pet and increased its drinks bar by **{points}"
 "** points."
 msgstr ""
 
-#: cogs/classes.py:388
+#: cogs/classes.py:390
 msgid "[Ranger Only] Cuddle your pet to make it love you."
 msgstr ""
 
-#: cogs/classes.py:397
+#: cogs/classes.py:399
 #, python-brace-format
 msgid ""
 "Your pet adores you! :heart: Cuddling it has increased its love for you by "
 "**{value}** points."
 msgstr ""
 
-#: cogs/classes.py:408
+#: cogs/classes.py:410
 msgid "[Ranger Only] Play with your pet to make it happier."
 msgstr ""
 
-#: cogs/classes.py:417
+#: cogs/classes.py:419
 #, python-brace-format
 msgid "You have been {activity} with your pet and it gained **{value}** joy!"
 msgstr ""
 
-#: cogs/classes.py:421
+#: cogs/classes.py:423
 msgid "playing football :soccer:"
 msgstr ""
 
-#: cogs/classes.py:422
+#: cogs/classes.py:424
 msgid "playing American football :football:"
 msgstr ""
 
-#: cogs/classes.py:423
+#: cogs/classes.py:425
 msgid "playing rugby :rugy_football:"
 msgstr ""
 
-#: cogs/classes.py:424
+#: cogs/classes.py:426
 msgid "playing basketball :basketball:"
 msgstr ""
 
-#: cogs/classes.py:425
+#: cogs/classes.py:427
 msgid "playing tennis :tennis:"
 msgstr ""
 
-#: cogs/classes.py:426
+#: cogs/classes.py:428
 msgid "playing ping-pong :ping_pong:"
 msgstr ""
 
-#: cogs/classes.py:427
+#: cogs/classes.py:429
 msgid "boxing :boxing_glove:"
 msgstr ""
 
-#: cogs/classes.py:428
+#: cogs/classes.py:430
 msgid "skiing :ski:"
 msgstr ""
 
-#: cogs/classes.py:441
+#: cogs/classes.py:443
 msgid "[Ranger Only] Renames your pet."
 msgstr ""
 
-#: cogs/classes.py:443
+#: cogs/classes.py:445
 msgid "Please enter a name shorter than 20 characters."
 msgstr ""
 
-#: cogs/classes.py:447
+#: cogs/classes.py:449
 msgid "Pet name updated."
 msgstr ""
 
-#: cogs/classes.py:455
+#: cogs/classes.py:457
 msgid "[Ranger Only] Sets your pet's image by URL."
 msgstr ""
 
-#: cogs/classes.py:457
+#: cogs/classes.py:459
 msgid "URLs mustn't exceed 60 characters ."
 msgstr ""
 
-#: cogs/classes.py:470
+#: cogs/classes.py:472
 msgid "Your pet's image was successfully updated."
 msgstr ""
 
-#: cogs/classes.py:479
+#: cogs/classes.py:481
 msgid "[Ranger Only] Let your pet get a weapon for you!"
 msgstr "[Только охотник] Ваш питомец приносит вам оружие!"
 
-#: cogs/classes.py:494
+#: cogs/classes.py:496
 msgid "Your pet found an item!"
 msgstr "Ваш питомец нашёл предмет!"
 
-#: cogs/classes.py:506
+#: cogs/classes.py:508
 msgid "Your pet needs to recover, wait a day to retry"
 msgstr "Ваш питомец должен восстановиться, подождите день и попробуйте снова"
 
