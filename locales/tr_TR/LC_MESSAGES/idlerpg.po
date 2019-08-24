@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-08-23 05:46+0000\n"
-"PO-Revision-Date: 2019-08-17 19:10+0300\n"
+"POT-Creation-Date: 2019-08-23 20:04+0000\n"
+"PO-Revision-Date: 2019-08-23 21:47+0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: tr_TR\n"
@@ -305,8 +305,8 @@ msgid ""
 "{player2}: **{hp2}** HP\n"
 "React to play."
 msgstr ""
-"{player1}: **{hp1}** Can\n"
-"{player2}: **{hp2}** Can\n"
+"{player1}: **{hp1}** HP Can\n"
+"{player2}: **{hp2}** HP Can\n"
 "Oynamak için tepki verin."
 
 #: cogs/battles.py:241
@@ -321,7 +321,7 @@ msgstr "{user}, sen zaten hamle yaptın!"
 #: cogs/battles.py:257
 #, python-brace-format
 msgid "{user} healed themselves for **{hp} HP**."
-msgstr ""
+msgstr "{user} kendi canını **{hp} HP** iyileştirdi."
 
 #: cogs/battles.py:272 cogs/battles.py:296
 #, python-brace-format
@@ -1177,8 +1177,8 @@ msgstr ""
 "Yaptığın seri **{streak}** gün!"
 
 #: cogs/miscellaneous.py:103
-msgid "My current websocket latency."
-msgstr "Şuanki websocket gecikmem."
+msgid "Shows you the bot's current websocket latency."
+msgstr ""
 
 #: cogs/miscellaneous.py:106
 msgid "Pong!"
@@ -1239,8 +1239,8 @@ msgstr ""
 "Beni davet et! {url}"
 
 #: cogs/miscellaneous.py:161
-msgid "Information on the support server."
-msgstr "Destek sunucusuyla ilgili bilgi."
+msgid "Sends you the link to the official IdleRPG Support server."
+msgstr ""
 
 #: cogs/miscellaneous.py:164
 msgid ""
@@ -1318,8 +1318,8 @@ msgid ":1234: You rolled **{num}**, {author}!"
 msgstr ":1234: **{num}** attın, {author}!"
 
 #: cogs/miscellaneous.py:260
-msgid "The bot's update log."
-msgstr "Botun güncelleştirme logu."
+msgid "Shows you the bots current version along with its new updates."
+msgstr ""
 
 #: cogs/miscellaneous.py:338
 msgid ""
@@ -1504,8 +1504,8 @@ msgstr ""
 "{results}```"
 
 #: cogs/miscellaneous.py:513
-msgid "Sends my nickname in a random server."
-msgstr "Kullanıcı adımı rastgele bir sunucuda yollar."
+msgid "Sends you my nickname from a random server."
+msgstr ""
 
 #: cogs/miscellaneous.py:519
 #, python-brace-format
@@ -1529,8 +1529,8 @@ msgid "Wouff!"
 msgstr "Hav!"
 
 #: cogs/miscellaneous.py:553
-msgid "Shows how long the bot is connected to Discord already."
-msgstr "Botun Discord'a ne kadar süredir bağlandığını gösterir."
+msgid "Shows how long the bot has been connected to Discord."
+msgstr ""
 
 #: cogs/miscellaneous.py:555
 #, python-brace-format
@@ -1676,7 +1676,7 @@ msgstr ""
 
 #: cogs/raid.py:2035
 msgid "Upgrade your raid damage or defense multiplier."
-msgstr ""
+msgstr "Baskın hasar ya da savunma çarpanını yükselt."
 
 #: cogs/raid.py:2038
 #, python-brace-format
@@ -1684,10 +1684,12 @@ msgid ""
 "Use `{prefix}increase damage/defense` to upgrade your raid damage/defense "
 "multiplier by 10%."
 msgstr ""
+"Baskın hasar/savunma çarpanını %10 yükseltmek için `{prefix}increase damage/"
+"defense` kullan."
 
 #: cogs/raid.py:2046
 msgid "Increase your raid damage."
-msgstr ""
+msgstr "Baskın hasarını arttır."
 
 #: cogs/raid.py:2052
 #, python-brace-format
@@ -1695,16 +1697,20 @@ msgid ""
 "Upgrading your weapon attack raid multiplier to {newlvl} costs **${price}**, "
 "you are too poor."
 msgstr ""
+"Silah saldırısı baskın çarpanını {newlvl}'a yükseltmek **${price}** ediyor, "
+"çok fakirsin."
 
 #: cogs/raid.py:2063
 #, python-brace-format
 msgid ""
 "You upgraded your weapon attack raid multiplier to {newlvl} for **${price}**."
 msgstr ""
+"Silah saldırısı baskın çarpanını **${price}** karşılığında {newlvl}'a "
+"yükselttin."
 
 #: cogs/raid.py:2071
 msgid "Increase your raid defense."
-msgstr ""
+msgstr "Baskın savunmanı arttır."
 
 #: cogs/raid.py:2077
 #, python-brace-format
@@ -1712,6 +1718,8 @@ msgid ""
 "Upgrading your shield defense raid multiplier to {newlvl} costs **${price}"
 "**, you are too poor."
 msgstr ""
+"Kalkan savunması baskın çarpanını {newlvl}'a yükseltmek **${price}** ediyor, "
+"çok fakirsin."
 
 #: cogs/raid.py:2088
 #, python-brace-format
@@ -1719,6 +1727,8 @@ msgid ""
 "You upgraded your shield defense raid multiplier to {newlvl} for **${price}"
 "**."
 msgstr ""
+"Kalkan savunması baskın çarpanını **${price}** karşılığında {newlvl}'a "
+"yükselttin."
 
 #: cogs/raid.py:2096
 msgid "View your raid stats."
@@ -1731,10 +1741,13 @@ msgid ""
 "Damage Multiplier: x{atk} (Upgrading: ${atkp})\n"
 "Defense Multiplier: x{deff} (Upgrading: ${deffp})"
 msgstr ""
+"**{author}'ın baskın çarpanları**\n"
+"Hasar Çarpanı: x{atk} (Yükseltmek: ${atkp})\n"
+"Savunma Çarpanı: x{deff} (Yükseltmek: ${deffp})"
 
 #: cogs/raid.py:2116
 msgid "Informs you about joining raids."
-msgstr ""
+msgstr "Baskınlara katılma konusunda seni bilgilendirir."
 
 #: cogs/raid.py:2119
 #, python-brace-format
@@ -1743,6 +1756,9 @@ msgid ""
 "that roams this land? Raids got you covered!\n"
 "Join the support server (`{prefix}support`) for more information."
 msgstr ""
+"Hiç bu topraklarda dolaşan ejderhayı yenmek için diğer oyuncularla bir araya "
+"gelmek istedin mi? Baskınlar bunun için burada!\n"
+"Daha fazla bilgi için destek sunucusuna (`{prefix}support`) katıl."
 
 #: cogs/store.py:32
 msgid "The booster store."
@@ -1911,25 +1927,25 @@ msgstr "<:blackcheck:441826948919066625> **Öğretici ve SSS için {url} bak**"
 
 #: cogs/help.py:126
 msgid "Unban an entitiy from using $helpme."
-msgstr "$helpme kullanarak bir varlığın engelini kaldır."
+msgstr "Bir varlığın $helpme kullanma yasağını kaldır."
 
 #: cogs/help.py:134
 #, python-brace-format
 msgid "{thing} has been unbanned for the helpme command :ok_hand:"
-msgstr "{thing} helpme komutu için engeli kaldırıldı :ok_hand:"
+msgstr "{thing} helpme komutu için yasağı kaldırıldı :ok_hand:"
 
 #: cogs/help.py:143
 msgid "Ban a user from using $helpme."
-msgstr ""
+msgstr "Bir kullanıcının $helpme kullanmasını yasakla."
 
 #: cogs/help.py:152
 msgid "Error... Maybe they're already banned?"
-msgstr "Hata... Belki de çoktan engellendiler?"
+msgstr "Hata... Belki de çoktan yasaklandılar?"
 
 #: cogs/help.py:154
 #, python-brace-format
 msgid "{thing} has been banned for the helpme command :ok_hand:"
-msgstr "{thing} helpme komutu için engellendi :ok_hand:"
+msgstr "{thing} helpme komutu için yasaklandı :ok_hand:"
 
 #: cogs/help.py:163
 msgid "Allows a support team member to join your server for individual help."
@@ -2627,7 +2643,7 @@ msgstr ""
 
 #: cogs/adventure.py:107
 msgid "Go out on a docile adventure controlled by reactions."
-msgstr ""
+msgstr "Tepkiler ile kontrol edilen uysal bir maceraya çık."
 
 #: cogs/adventure.py:110
 msgid ""
@@ -2797,11 +2813,11 @@ msgstr "Şu anki maceranı iptal eder."
 
 #: cogs/adventure.py:537
 msgid "Are you sure you want to cancel your current adventure?"
-msgstr ""
+msgstr "Şuanki maceranı iptal etmek istediğinden emin misin?"
 
 #: cogs/adventure.py:540
 msgid "Did not cancel your adventure. The journey continues..."
-msgstr ""
+msgstr "Maceran iptal edilmedi. Yolculuk devam ediyor..."
 
 #: cogs/adventure.py:545
 #, python-brace-format
@@ -2816,6 +2832,8 @@ msgstr ""
 msgid ""
 "Your death stats. Shows statictics from all your adventures ever completed."
 msgstr ""
+"Ölüm istatistiklerin. Şimdiye kadar tamamlanmış olan tüm maceralarından "
+"istatistikler gösterir."
 
 #: cogs/adventure.py:565
 #, python-brace-format
@@ -2909,7 +2927,7 @@ msgstr "Satıcının senden daha yüksek skoru var ve kazandı."
 
 #: cogs/gambling.py:296
 msgid "It's a tie."
-msgstr ""
+msgstr "Berabere."
 
 #: cogs/gambling.py:308
 msgid "Draws a random card."
@@ -2935,6 +2953,9 @@ msgid ""
 "side you bet on. You will win [maximum - 1] * [money] money if you are right "
 "and loose [money] if you are wrong."
 msgstr ""
+"[maximum] tarafı olan bir zar atışının sonucuna bahis yap. [tip] bahis "
+"yaptığın tarafı belirtir. Doğruysa [maximum - 1] * [money] para kazanacaksın "
+"ve yanlışsa [money] kaybedeceksin."
 
 #: cogs/gambling.py:370
 #, python-brace-format
@@ -2962,55 +2983,57 @@ msgstr ""
 
 #: cogs/gambling.py:407
 msgid "[Alpha] Play blackjack against the dealer."
-msgstr ""
+msgstr "[Alpha] Satıcıya karşı blackjack oyna."
 
 #: cogs/gambling.py:423
 msgid ""
 "Play a double-or-steal game against someone. You start with $100 and can "
 "take it or double it with your money."
 msgstr ""
+"Birine karşı iki-ya-da-çal oyunu oyna. $100 ile başlarsın ve kendi paranla "
+"onu ya alır ya da ikiye katlarsın."
 
 #: cogs/gambling.py:426
 #, python-brace-format
 msgid "React with 💰 to play double-or-steal with {user}!"
-msgstr ""
+msgstr "{user} ile iki-ya-da-çal oynamak için 💰 ile tepki ver!"
 
 #: cogs/gambling.py:449
 #, python-brace-format
 msgid "{user} has no character."
-msgstr ""
+msgstr "{user}'ın karakteri yok."
 
 #: cogs/gambling.py:456 cogs/gambling.py:497
 #, python-brace-format
 msgid "{user} is too poor to double."
-msgstr ""
+msgstr "{user} ikiye katlamak için çok fakir."
 
 #: cogs/gambling.py:466
 #, python-brace-format
 msgid "Double or steal ${money}?"
-msgstr ""
+msgstr "İkiye katla ya da çal ${money}?"
 
 #: cogs/gambling.py:467
 msgid "Double"
-msgstr ""
+msgstr "İkiye katla"
 
 #: cogs/gambling.py:467
 msgid "Steal"
-msgstr ""
+msgstr "Çal"
 
 #: cogs/gambling.py:485
 #, python-brace-format
 msgid "{user} stole **${money}**."
-msgstr ""
+msgstr "{user} **${money}** çaldı."
 
 #: cogs/gambling.py:505
 #, python-brace-format
 msgid "{user} doubled to **${money}**."
-msgstr ""
+msgstr "{user} iki katına **${money}** çıkardı."
 
 #: cogs/trading.py:36
 msgid "Puts your item into the market."
-msgstr ""
+msgstr "Eşyanı markete koyar."
 
 #: cogs/trading.py:45
 #, python-brace-format
@@ -3096,7 +3119,7 @@ msgstr ""
 
 #: cogs/trading.py:181
 msgid "Lists the buyable items on the market."
-msgstr ""
+msgstr "Marketteki satın alınabilir eşyaları listeler."
 
 #: cogs/trading.py:208
 msgid "No results."
@@ -3223,7 +3246,7 @@ msgstr "Bekleyen eşyaların"
 
 #: cogs/trading.py:421
 msgid "Buys items at the trader."
-msgstr ""
+msgstr "Tüccardan eşyalar satın alır."
 
 #: cogs/trading.py:437
 msgid "The Trader"
@@ -3758,7 +3781,7 @@ msgstr "{old_name} ismi artık {new_name}."
 
 #: cogs/ranks.py:31
 msgid "The 10 most richest players in IdleRPG."
-msgstr ""
+msgstr "IdleRPG'deki en zengin 10 oyuncu."
 
 #: cogs/ranks.py:39
 #, python-brace-format
@@ -3818,7 +3841,7 @@ msgstr "En İyi Aşıklar"
 
 #: cogs/server.py:31
 msgid "Shows information about your server."
-msgstr ""
+msgstr "Sunucun hakkında bilgi gösterir."
 
 #: cogs/server.py:32
 msgid "Link"
@@ -3904,7 +3927,7 @@ msgstr "Bitti!"
 
 #: cogs/server.py:126
 msgid "Shows detailed information about a member of this server."
-msgstr ""
+msgstr "Bu sunucunun bir üyesi hakkında ayrıntılı bilgi gösterir."
 
 #: cogs/server.py:140
 #, python-brace-format
@@ -4482,7 +4505,7 @@ msgstr ""
 
 #: cogs/vote.py:28
 msgid "Vote me up to get a random crate!"
-msgstr ""
+msgstr "Rastgele bir sandık almak için bana oy ver!"
 
 #: cogs/vote.py:31
 msgid ""
@@ -4490,6 +4513,9 @@ msgid ""
 "afterwards!\n"
 "https://discordbots.org/bot/idlerpg"
 msgstr ""
+"Rastgele bir sandık almak için bana oy ver! Sonrasında birkaç saniye içinde "
+"ödüllendirileceksin!\n"
+"https://discordbots.org/bot/idlerpg"
 
 #: cogs/custom.py:43
 msgid "In loving memory of Mary Johanna, ex-developer."
@@ -4514,15 +4540,15 @@ msgstr "{author}, {user}'a sarıldı! Aaaa!"
 
 #: cogs/custom.py:74
 msgid "It's a secret."
-msgstr ""
+msgstr "Bu bir sır."
 
 #: cogs/custom.py:77
 msgid "Gotcha"
-msgstr ""
+msgstr "Yakaladım"
 
 #: cogs/custom.py:77
 msgid "Shhh, it's a secret!"
-msgstr ""
+msgstr "Shhh, bu bir sır!"
 
 #: cogs/profile.py:41
 msgid "Creates a new character."
@@ -4618,6 +4644,12 @@ msgid ""
 "**PvP Wins**: `{pvp}`\n"
 "**Guild**: `{guild}`"
 msgstr ""
+"**Para**: `${money}`\n"
+"**Seviye**: `{level}`\n"
+"**Sınıf**: `{class_}`\n"
+"**Irk**: `{race}`\n"
+"**PvP Galibiyetleri**: `{pvp}`\n"
+"**Lonca**: `{guild}`"
 
 #: cogs/profile.py:215
 msgid "Ranks"
@@ -4927,6 +4959,8 @@ msgid ""
 "Sets your profile text colour. The format may be #RRGGBB or a HTML-valid "
 "string like \"cyan\"."
 msgstr ""
+"Profil metin rengini ayarlar. Biçimi #RRGGBB ya da \"cyan\" gibi bir HTML-"
+"geçerli dize olabilir."
 
 #: cogs/profile.py:642
 msgid "Format for colour is `#RRGGBB` or a colour code like `cyan`."
@@ -4943,17 +4977,17 @@ msgstr ""
 
 #: cogs/admin.py:35
 msgid "[Bot Admin only] Unban someone from the bot."
-msgstr "[Bot Adminine özel] Birinin engelini bottan kaldır."
+msgstr "[Bot Adminine özel] Birinin yasağını bottan kaldır."
 
 #: cogs/admin.py:38
 #, python-brace-format
 msgid "Unbanned: {other}"
-msgstr "Engel kaldırıldı: {other}"
+msgstr "Yasak kaldırıldı: {other}"
 
 #: cogs/admin.py:40
 #, python-brace-format
 msgid "{other} is not banned."
-msgstr "{other} engellenmiş değil."
+msgstr "{other} yasaklanmış değil."
 
 #: cogs/admin.py:46
 msgid "[Bot Admin only] Gives money to a user without loss."
@@ -5433,11 +5467,26 @@ msgstr "Artık ırkın {race}."
 #: utils/castle.py:164
 #, python-brace-format
 msgid "You found a treasure with {emote} inside!"
-msgstr ""
+msgstr "İçinde {emote} olan bir hazine buldun!"
 
 #: utils/castle.py:269
 msgid "You have reached the exit!"
-msgstr ""
+msgstr "Çıkışa ulaştın!"
+
+#~ msgid "My current websocket latency."
+#~ msgstr "Şuanki websocket gecikmem."
+
+#~ msgid "Information on the support server."
+#~ msgstr "Destek sunucusuyla ilgili bilgi."
+
+#~ msgid "The bot's update log."
+#~ msgstr "Botun güncelleştirme logu."
+
+#~ msgid "Sends my nickname in a random server."
+#~ msgstr "Kullanıcı adımı rastgele bir sunucuda yollar."
+
+#~ msgid "Shows how long the bot is connected to Discord already."
+#~ msgstr "Botun Discord'a ne kadar süredir bağlandığını gösterir."
 
 #~ msgid "Go out on an active, action based adventure in a maze."
 #~ msgstr "Labirent içinde aktif, aksiyon bazlı bir maceraya çık."

@@ -179,6 +179,14 @@ class Gods(commands.Cog):
 
     @is_god()
     @commands.command()
+    async def resetfavor(self, ctx):
+        """[Gods Only] Reset all yoir followers' favor."""
+        god = self.bot.gods[ctx.author.id]
+        await self.bot.execute('UPDATE profile SET "favor"=0 WHERE "god"=$1;', god)
+        await ctx.send("Done.")
+
+    @is_god()
+    @commands.command()
     async def giveluck(self, ctx, amount: float, target: UserWithCharacter = "all"):
         """[Gods Only] Gives luck to all of your followers or specific ones."""
         god = self.bot.gods[ctx.author.id]
