@@ -134,72 +134,72 @@ class Transaction(commands.Cog):
                     user2 = (keys := list(trans["content"].keys()))[
                         keys.index(user) - 1
                     ]
-                if (money := cont["money"]) :
-                    if not await self.bot.has_money(user.id, money, conn=conn):
-                        return await chan.send(
-                            _(
-                                "Trade cancelled. Things were traded away in the meantime."
-                            )
-                        )
-                    await conn.execute(
-                        'UPDATE profile SET "money"="money"+$1 WHERE "user"=$2;',
-                        money,
-                        user2.id,
-                    )
-                    await conn.execute(
-                        'UPDATE profile SET "money"="money"-$1 WHERE "user"=$2;',
-                        money,
-                        user.id,
-                    )
-                if (crates := cont["crates"]) :
-                    for c, a in crates.items():
-                        if not await self.bot.has_crates(user.id, a, c, conn=conn):
+                    if (money := cont["money"]) :
+                        if not await self.bot.has_money(user.id, money, conn=conn):
                             return await chan.send(
                                 _(
                                     "Trade cancelled. Things were traded away in the meantime."
                                 )
                             )
-                    c = ", ".join(
-                        [
-                            f'"crates_{rarity}"="crates_{rarity}"+${i + 1}'
-                            for i, rarity in enumerate(crates)
-                        ]
-                    )
-                    c2 = ", ".join(
-                        [
-                            f'"crates_{rarity}"="crates_{rarity}"-${i + 1}'
-                            for i, rarity in enumerate(crates)
-                        ]
-                    )
-                    largs = len(crates)
-                    await conn.execute(
-                        f'UPDATE profile SET {c} WHERE "user"=${largs + 1};',
-                        *list(crates.values()),
-                        user2.id,
-                    )
-                    await conn.execute(
-                        f'UPDATE profile SET {c2} WHERE "user"=${largs + 1};',
-                        *list(crates.values()),
-                        user.id,
-                    )
-                for item in cont["items"]:
-                    if not await self.bot.has_item(user.id, item["id"], conn=conn):
-                        return await chan.send(
-                            _(
-                                "Trade cancelled. Things were traded away in the meantime."
-                            )
+                        await conn.execute(
+                            'UPDATE profile SET "money"="money"+$1 WHERE "user"=$2;',
+                            money,
+                            user2.id,
                         )
-                    await conn.execute(
-                        'UPDATE allitems SET "owner"=$1 WHERE "id"=$2;',
-                        user2.id,
-                        item["id"],
-                    )
-                    await conn.execute(
-                        'UPDATE inventory SET "equipped"=$1 WHERE "item"=$2;',
-                        False,
-                        item["id"],
-                    )
-        await chan.send(_("Trade successful."))
+                        await conn.execute(
+                            'UPDATE profile SET "money"="money"-$1 WHERE "user"=$2;',
+                            money,
+                            user.id,
+                        )
+                    if (crates := cont["crates"]) :
+                        for c, a in crates.items():
+                            if not await self.bot.has_crates(user.id, a, c, conn=conn):
+                                return await chan.send(
+                                    _(
+                                        "Trade cancelled. Things were traded away in the meantime."
+                                    )
+                                )
+                        c = ", ".join(
+                            [
+                                f'"crates_{rarity}"="crates_{rarity}"+${i + 1}'
+                                for i, rarity in enumerate(crates)
+                            ]
+                        )
+                        c2 = ", ".join(
+                            [
+                                f'"crates_{rarity}"="crates_{rarity}"-${i + 1}'
+                                for i, rarity in enumerate(crates)
+                            ]
+                        )
+                        largs = len(crates)
+                        await conn.execute(
+                            f'UPDATE profile SET {c} WHERE "user"=${largs + 1};',
+                            *list(crates.values()),
+                            user2.id,
+                        )
+                        await conn.execute(
+                            f'UPDATE profile SET {c2} WHERE "user"=${largs + 1};',
+                            *list(crates.values()),
+                            user.id,
+                        )
+                    for item in cont["items"]:
+                        if not await self.bot.has_item(user.id, item["id"], conn=conn):
+                            return await chan.send(
+                                _(
+                                    "Trade cancelled. Things were traded away in the meantime."
+                                )
+                            )
+                        await conn.execute(
+                            'UPDATE allitems SET "owner"=$1 WHERE "id"=$2;',
+                            user2.id,
+                            item["id"],
+                        )
+                        await conn.execute(
+                            'UPDATE inventory SET "equipped"=$1 WHERE "item"=$2;',
+                            False,
+                            item["id"],
+                        )
+            await chan.send(_("Trade successful."))
 
     @has_no_transaction()
     @commands.group(invoke_without_command=True)
