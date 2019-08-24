@@ -208,14 +208,17 @@ class Bot(commands.AutoShardedBot):
             return commands.when_mentioned_or(self.config.global_prefix)(self, message)
 
     async def wait_for_dms(self, event, check, timeout=30):
-        data = (
-            await self.cogs["Sharding"].handler(
-                action="wait_for_dms",
-                args={"event": event, "check": check, "timeout": timeout},
-                expected_count=1,
-                _timeout=timeout,
-            )
-        )[0]
+        try:
+            data = (
+                await self.cogs["Sharding"].handler(
+                    action="wait_for_dms",
+                    args={"event": event, "check": check, "timeout": timeout},
+                    expected_count=1,
+                    _timeout=timeout,
+                )
+            )[0]
+        except IndexError:
+            raise asyncio.TimeoutError()
         if event == "message":
             channel_id = int(data["channel_id"])
             channel = (
