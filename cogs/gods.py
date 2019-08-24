@@ -180,7 +180,7 @@ class Gods(commands.Cog):
     @is_god()
     @commands.command()
     async def resetfavor(self, ctx):
-        """[Gods Only] Reset all yoir followers' favor."""
+        """[Gods Only] Reset all your followers' favor."""
         god = self.bot.gods[ctx.author.id]
         await self.bot.execute('UPDATE profile SET "favor"=0 WHERE "god"=$1;', god)
         await ctx.send("Done.")
