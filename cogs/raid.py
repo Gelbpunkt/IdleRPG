@@ -328,12 +328,12 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
             raid_raw = await r.json()
         async with self.bot.pool.acquire() as conn:
             dmgs = await conn.fetch(
-                'SELECT p."user", ai.damage, p.atkmultiply FROM profile p JOIN allitems ai ON (p.user=ai.owner) JOIN inventory i ON (ai.id=i.item) WHERE i.equipped IS TRUE AND p.user=ANY($2) AND type=$1;',
+                'SELECT p."user", p."class", ai.damage, p.atkmultiply FROM profile p JOIN allitems ai ON (p.user=ai.owner) JOIN inventory i ON (ai.id=i.item) WHERE i.equipped IS TRUE AND p.user=ANY($2) AND type=$1;',
                 "Sword",
                 raid_raw,
             )
             deffs = await conn.fetch(
-                'SELECT p."user", ai.armor, p.defmultiply FROM profile p JOIN allitems ai ON (p.user=ai.owner) JOIN inventory i ON (ai.id=i.item) WHERE i.equipped IS TRUE AND p.user=ANY($2) AND type=$1;',
+                'SELECT p."user", p."class", ai.armor, p.defmultiply FROM profile p JOIN allitems ai ON (p.user=ai.owner) JOIN inventory i ON (ai.id=i.item) WHERE i.equipped IS TRUE AND p.user=ANY($2) AND type=$1;',
                 "Shield",
                 raid_raw,
             )
