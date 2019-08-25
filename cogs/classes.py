@@ -422,7 +422,7 @@ Priest   ->  Mysticist ->  Summoner    -> Seer           ->  Ritualist
                     [
                         _("playing football :soccer:"),
                         _("playing American football :football:"),
-                        _("playing rugby :rugy_football:"),
+                        _("playing rugby :rugby_football:"),
                         _("playing basketball :basketball:"),
                         _("playing tennis :tennis:"),
                         _("playing ping-pong :ping_pong:"),
