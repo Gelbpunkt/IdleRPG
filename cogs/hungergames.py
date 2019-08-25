@@ -286,7 +286,7 @@ class HungerGames(commands.Cog):
         self.bot = bot
         self.games = {}
 
-    @commands.command()
+    @commands.command(aliases=["hg"])
     @locale_doc
     async def hungergames(self, ctx):
         _("""Starts a game of hunger games.""")
@@ -314,7 +314,9 @@ class HungerGames(commands.Cog):
             except asyncio.TimeoutError:
                 break
             players.append(user)
-            await msg.edit(content=text.format(author=ctx.author, num=len(players)))
+            await msg.edit(
+                content=text.format(author=ctx.author.mention, num=len(players))
+            )
 
         if len(players) < 2:
             del self.games[ctx.channel.id]
