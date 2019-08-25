@@ -189,9 +189,9 @@ class GameBase:
                     else:
                         if okay:
                             killed_this_round.append(action[2][1])
-                text = _("Letting {user} choose their action... Done").format(user=p[0])
+                text = _("Done")
                 try:
-                    await status.edit(content=f"{status.content}\n{text}")
+                    await status.edit(content=f"{status.content} {text}")
                 except discord.errors.NotFound:
                     status = await self.ctx.send(
                         f"**{roundtext}\n{text}".format(round=self.round),
