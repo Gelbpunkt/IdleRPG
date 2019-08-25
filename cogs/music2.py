@@ -186,7 +186,7 @@ class Music2(commands.Cog):
                 "DEL", f"{self.music_prefix}que:{player.guild_id}"
             )
         else:
-            await self.play_entry(
+            await self.play_track(
                 self.load_track(
                     loads(
                         await self.bot.redis.execute(
