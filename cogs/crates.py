@@ -111,10 +111,10 @@ class Crates(commands.Cog):
             else:
                 minstat, maxstat = (30, 34)
         elif rarity == "legendary":  # no else because why
-            if rand < 2:  # 20% 48-50
-                minstat, maxstat = (48, 50)
-            elif rand < 5:  # 30% 45-48
-                minstat, maxstat = (45, 48)
+            if rand < 2:  # 20% 49-50
+                minstat, maxstat = (49, 50)
+            elif rand < 5:  # 30% 46-48
+                minstat, maxstat = (46, 48)
             else:  # 50% 41-45
                 minstat, maxstat = (41, 45)
 
