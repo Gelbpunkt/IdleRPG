@@ -99,6 +99,7 @@ class Adventure(commands.Cog):
             ).format(prefix=ctx.prefix)
         )
 
+    @has_char()
     @has_no_adventure()
     @user_cooldown(7200)
     @commands.command()
