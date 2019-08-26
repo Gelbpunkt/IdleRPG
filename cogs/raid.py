@@ -1699,7 +1699,7 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
             await asyncio.sleep(4)
 
         if boss["hp"] < 1:
-            winner = random.choice(raid)
+            winner = random.choice(list(raid.keys()))
             await self.bot.pool.execute(
                 'UPDATE profile SET "crates_legendary"="crates_legendary"+1 WHERE "user"=$1;',
                 winner.id,
