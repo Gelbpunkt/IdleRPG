@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-08-25 08:38+0000\n"
-"PO-Revision-Date: 2019-08-23 21:47+0300\n"
+"POT-Creation-Date: 2019-08-26 18:28+0000\n"
+"PO-Revision-Date: 2019-08-25 02:58+0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: tr_TR\n"
@@ -717,9 +717,8 @@ msgid "attempts to kill {user} but fails"
 msgstr "{user}'yı öldürmeyi dener ama başaramaz"
 
 #: cogs/hungergames.py:192
-#, python-brace-format
-msgid "Letting {user} choose their action... Done"
-msgstr "{user}'nın kendi eylemini seçmesine izin verir... Bitti"
+msgid "Done"
+msgstr ""
 
 #: cogs/hungergames.py:256
 msgid "Team"
@@ -755,7 +754,7 @@ msgstr ""
 "{author} Açlık Oyunları oyunu başlattı! Oyuna katılmak için :"
 "shallow_pan_of_food: ile tepki verin! **{num} katıldı**"
 
-#: cogs/hungergames.py:321
+#: cogs/hungergames.py:323
 msgid "Not enough players joined..."
 msgstr "Yeteri kadar oyuncu katılmadı..."
 
@@ -1178,7 +1177,7 @@ msgstr ""
 
 #: cogs/miscellaneous.py:103
 msgid "Shows you the bot's current websocket latency."
-msgstr ""
+msgstr "Sana botun mevcut websocket gecikmesini gösterir."
 
 #: cogs/miscellaneous.py:106
 msgid "Pong!"
@@ -1240,7 +1239,7 @@ msgstr ""
 
 #: cogs/miscellaneous.py:161
 msgid "Sends you the link to the official IdleRPG Support server."
-msgstr ""
+msgstr "Sana resmî IdleRPG Destek sunucusu bağlantısı gönderir."
 
 #: cogs/miscellaneous.py:164
 msgid ""
@@ -1319,7 +1318,7 @@ msgstr ":1234: **{num}** attın, {author}!"
 
 #: cogs/miscellaneous.py:260
 msgid "Shows you the bots current version along with its new updates."
-msgstr ""
+msgstr "Sana botun yeni güncellemeleriyle beraber mevcut sürümünü gösterir."
 
 #: cogs/miscellaneous.py:338
 msgid ""
@@ -1505,7 +1504,7 @@ msgstr ""
 
 #: cogs/miscellaneous.py:513
 msgid "Sends you my nickname from a random server."
-msgstr ""
+msgstr "Sana benim rastgele bir sunucudaki kullanıcı adımı gönderir."
 
 #: cogs/miscellaneous.py:519
 #, python-brace-format
@@ -1530,7 +1529,7 @@ msgstr "Hav!"
 
 #: cogs/miscellaneous.py:553
 msgid "Shows how long the bot has been connected to Discord."
-msgstr ""
+msgstr "Botun ne kadar süredir Discord'a bağlı olduğunu gösterir."
 
 #: cogs/miscellaneous.py:555
 #, python-brace-format
@@ -2152,6 +2151,10 @@ msgid ""
 "for you.\n"
 "+3 minimum stat and +6 maximum stat per evolution."
 msgstr ""
+"Eşya avcısı ve kendi evcil hayvanının eğitmeni.\n"
+"Evcil hayvanınla etkileşime geçmek ve onun senin için eşya almasını sağlamak "
+"için `{prefix}pet`e erişim al.\n"
+"Evrim başına +3 minimum stat ve +6 maksimum stat."
 
 #: cogs/classes.py:79
 msgid "Raider"
@@ -2175,6 +2178,9 @@ msgid ""
 "The Ritualist devotes their life to the god they follow. For every "
 "evolution, their sacrifices are 5% more effective."
 msgstr ""
+"Bir kâhin, bir kurbancı ve bir inançlı.\n"
+"Ayinci hayatını inandığı tanrıya adar. Evrim başına edilen kurbanlar %5 daha "
+"etkili olur."
 
 #: cogs/classes.py:97
 msgid "Paragon"
@@ -2415,7 +2421,7 @@ msgstr "kayak yapıyorsunuz :ski:"
 
 #: cogs/classes.py:443
 msgid "[Ranger Only] Renames your pet."
-msgstr "[Korucuya Özel] Evcil hayvanının adını değiştirir."
+msgstr "[Korucuya Özel] Evcil hayvanını yeniden adlandırır."
 
 #: cogs/classes.py:445
 msgid "Please enter a name shorter than 20 characters."
@@ -3775,7 +3781,7 @@ msgstr "{name} şimdi {age} yaşında."
 #: cogs/marriage.py:463
 #, python-brace-format
 msgid "{name} can be renamed! Enter a new name:"
-msgstr "{name} isim değiştirebilir! Yeni bir isim yaz:"
+msgstr "{name} yeniden adlandırılabilir! Yeni bir isim yaz:"
 
 #: cogs/marriage.py:490
 #, python-brace-format
@@ -3930,7 +3936,7 @@ msgstr "Bitti!"
 
 #: cogs/server.py:126
 msgid "Shows detailed information about a member in the server."
-msgstr ""
+msgstr "Sunucudaki bir üye hakkında ayrıntılı bilgi gösterir."
 
 #: cogs/server.py:140
 #, python-brace-format
@@ -4029,7 +4035,7 @@ msgstr "En İyi GvG Loncaları"
 
 #: cogs/guild.py:130
 msgid "Shows you a list of your guild members."
-msgstr ""
+msgstr "Senin lonca üyelerinin bir listesini gösterir."
 
 #: cogs/guild.py:139
 #, python-brace-format
@@ -4571,6 +4577,18 @@ msgid ""
 "\n"
 "IdleRPG is a global bot, your characters are valid everywhere"
 msgstr ""
+"Karakterinin adı ne olmalı? (Minimum 3 Karakter, Maksimum 20)\n"
+"\n"
+"**Şunu lütfen bilin ki karakter oluşturduğunuzda bu kuralları kabul "
+"edersiniz:**\n"
+"1) Kişi başına sadece 2 karakter\n"
+"2) Bugları ya da açıkları suistimal etmek ya da onlardan avantaj sağlamak "
+"yasak\n"
+"3) Diğer oyunculara karşı arkadaş canlısı ve nazik olun\n"
+"4) Oyun-içi eşyaları ya da parayı gerçek para ile alışveriş etmek yasak\n"
+"5) Yeniden adlandırılmış eşyaları vermek ya da satmak yasak\n"
+"\n"
+"IdleRPG evrensel bir bot, karakterlerin her yerde geçerli"
 
 #: cogs/profile.py:65
 msgid "Timeout expired. Please retry!"
@@ -5465,6 +5483,9 @@ msgstr "İçinde {emote} olan bir hazine buldun!"
 #: utils/castle.py:269
 msgid "You have reached the exit!"
 msgstr "Çıkışa ulaştın!"
+
+#~ msgid "Letting {user} choose their action... Done"
+#~ msgstr "{user}'nın kendi eylemini seçmesine izin verir... Bitti"
 
 #~ msgid "playing rugby :rugy_football:"
 #~ msgstr "ragbi oynuyorsunuz :rugy_football:"
