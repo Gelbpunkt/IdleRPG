@@ -310,9 +310,7 @@ def update_pet():
                 )
                 ctx.pet_data = data
                 classes = ctx.character_data["class"]
-                for evolve in ctx.bot.get_class_evolves("Ranger"):
-                    if evolve in classes:
-                        idx = classes.index(evolve)
+                idx = ctx.bot.get_class_grade_from(classes, "Ranger")
                 if data["food"] < 0 or data["drink"] < 0:
                     classes[idx] = "No Class"
                     await conn.execute(
