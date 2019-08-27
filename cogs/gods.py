@@ -49,8 +49,8 @@ class Gods(commands.Cog):
             value = item["value"]
             if self.bot.in_class_line(class_, "Ritualist"):
                 value = round(
-                    value * 1
-                    + 0.05 * self.bot.get_class_grade_from(class_, "Ritualist")
+                    value
+                    * (1 + 0.05 * self.bot.get_class_grade_from(class_, "Ritualist"))
                 )
 
             await conn.execute('DELETE FROM loot WHERE "id"=$1;', loot_id)
