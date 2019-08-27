@@ -484,6 +484,8 @@ Priest   ->  Mysticist ->  Summoner    -> Seer           ->  Ritualist
         luck_multiply = ctx.character_data["luck"]
         minstat = round(petlvl * 3 * luck_multiply * joy_multiply)
         maxstat = round(petlvl * 6 * luck_multiply * joy_multiply)
+        if minstat < 1 or maxstat < 1:
+            return await ctx.send(_("Your pet is not happy enough to hunt an item. Try making it joyful!"))
         item = await self.bot.create_random_item(
             minstat=minstat if minstat < 30 else 30,
             maxstat=maxstat if maxstat < 30 else 30,
