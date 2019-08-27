@@ -310,8 +310,9 @@ def update_pet():
                 )
                 ctx.pet_data = data
                 classes = ctx.character_data["class"]
-                for idx, evolve in enumerate(ctx.bot.get_class_evolves()["Ranger"]):
+                for evolve in ctx.bot.get_class_evolves()["Ranger"]:
                     if evolve in classes:
+                        idx = classes.index(evolve)
                         break
                 if data["food"] < 0 or data["drink"] < 0:
                     classes[idx] = "No Class"
