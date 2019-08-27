@@ -89,7 +89,7 @@ class Bot(commands.AutoShardedBot):
             db=1 if self.config.is_beta else 0,
         )
         self.pool = await asyncpg.create_pool(
-            **self.config.database, max_size=20, command_timeout=10.0
+            **self.config.database, max_size=20, command_timeout=60.0
         )
 
         for extension in self.config.initial_extensions:

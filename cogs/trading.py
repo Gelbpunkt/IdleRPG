@@ -367,16 +367,17 @@ class Trading(commands.Cog):
             )
             if count == 0:
                 return await ctx.send(_("Nothing to merch."))
-            await conn.execute(
-                "DELETE FROM allitems ai USING inventory i WHERE ai.id=i.item AND ai.owner=$1 AND i.equipped IS FALSE;",
-                ctx.author.id,
-            )
-            await conn.execute(
-                'UPDATE profile SET "money"="money"+$1 WHERE "user"=$2;',
-                money,
-                ctx.author.id,
-            )
-        await ctx.send(
+            async with conn.transaction():
+                await conn.execute(
+                    "DELETE FROM allitems ai USING inventory i WHERE ai.id=i.item AND ai.owner=$1 AND i.equipped IS FALSE;",
+                    ctx.author.id,
+                )
+                await conn.execute(
+                    'UPDATE profile SET "money"="money"+$1 WHERE "user"=$2;',
+                    money,
+                    ctx.author.id,
+                )
+            await ctx.send(
             _("Merched **{count}** items for **${money}**.").format(
                 count=count, money=money
             )
