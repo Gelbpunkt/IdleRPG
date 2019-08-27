@@ -88,7 +88,9 @@ class Bot(commands.AutoShardedBot):
             loop=self.loop,
             db=1 if self.config.is_beta else 0,
         )
-        self.pool = await asyncpg.create_pool(**self.config.database, max_size=20)
+        self.pool = await asyncpg.create_pool(
+            **self.config.database, max_size=20, command_timeout=10.0
+        )
 
         for extension in self.config.initial_extensions:
             try:
@@ -475,7 +477,8 @@ class Bot(commands.AutoShardedBot):
         user = user.id if isinstance(user, (discord.User, discord.Member)) else user
         if not classes or not race:
             classes, race = await self.pool.fetchval(
-                'SELECT ("class", "race") FROM profile WHERE "user"=$1;', user
+                'SELECT ("class"::text[], "race"::text) FROM profile WHERE "user"=$1;',
+                user,
             )
         lines = [self.get_class_line(class_) for class_ in classes]
         grades = [self.get_class_grade(class_) for class_ in classes]

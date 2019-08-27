@@ -198,16 +198,23 @@ class GameBase:
                         delete_after=60,
                     )
             else:
+                possible_kills = [item for item in p if p not in killed_this_round]
+                if len(possible_kills) > 0:
+                    target = random.choice(possible_kills)
+                else:
+                    target = None
                 if len(p) > 2:
                     action = random.choice(team_actions)
                 else:
                     action = random.choice(team_actions_2)
-                possible_kills = [item for item in p if item not in killed_this_round]
-                target = random.choice(possible_kills)
                 users = [u for u in p if u != target]
                 if not action[1]:
                     user_actions.append(
                         (self.nice_join([u.name for u in p]), action[0])
+                    )
+                elif not target:  # fix
+                    user_actions.append(
+                        (self.nice_join([u.name for u in p]), _("do nothing."))
                     )
                 elif action[1] == "user":
                     user_actions.append(
@@ -325,7 +332,10 @@ class HungerGames(commands.Cog):
         game = GameBase(ctx, players=players)
         self.games[ctx.channel.id] = game
         await game.main()
-        del self.games[ctx.channel.id]
+        try:
+            del self.games[ctx.channel.id]
+        except KeyError:  # got stuck in between
+            pass
 
 
 def setup(bot):
