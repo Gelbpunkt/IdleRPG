@@ -147,7 +147,7 @@ class Gods(commands.Cog):
 
     @has_char()
     @has_god()
-    @commands.command()
+    @commands.command(aliases=["favour"])
     @locale_doc
     async def favor(self, ctx):
         _("""Shows your god and favor.""")
@@ -161,7 +161,7 @@ class Gods(commands.Cog):
     @is_god()
     @commands.command()
     async def followers(self, ctx, limit: IntGreaterThan(0)):
-        """[God Only] Lists top followers."""
+        _("""[God Only] Lists top followers.""")
         data = await self.bot.pool.fetch(
             'SELECT * FROM profile WHERE "god"=$1 ORDER BY "favor" DESC LIMIT $2;',
             self.bot.gods[ctx.author.id],
@@ -178,9 +178,9 @@ class Gods(commands.Cog):
         )
 
     @is_god()
-    @commands.command()
+    @commands.command(aliases=["resetfavour"])
     async def resetfavor(self, ctx):
-        """[Gods Only] Reset all your followers' favor."""
+        _("""[Gods Only] Reset all your followers' favor.""")
         god = self.bot.gods[ctx.author.id]
         await self.bot.pool.execute('UPDATE profile SET "favor"=0 WHERE "god"=$1;', god)
         await ctx.send("Done.")
@@ -188,7 +188,7 @@ class Gods(commands.Cog):
     @is_god()
     @commands.command()
     async def giveluck(self, ctx, amount: float, target: UserWithCharacter = "all"):
-        """[Gods Only] Gives luck to all of your followers or specific ones."""
+        _("""[Gods Only] Gives luck to all of your followers or specific ones.""")
         god = self.bot.gods[ctx.author.id]
         if target != "all" and ctx.user_data["god"] != god:
             return await ctx.send("Not a follower of yours.")
