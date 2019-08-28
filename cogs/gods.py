@@ -147,7 +147,7 @@ class Gods(commands.Cog):
 
     @has_char()
     @has_god()
-    @commands.command()
+    @commands.command(aliases=["favour"])
     @locale_doc
     async def favor(self, ctx):
         _("""Shows your god and favor.""")
@@ -178,7 +178,7 @@ class Gods(commands.Cog):
         )
 
     @is_god()
-    @commands.command()
+    @commands.command(aliases=["resetfavour"])
     async def resetfavor(self, ctx):
         """[Gods Only] Reset all your followers' favor."""
         god = self.bot.gods[ctx.author.id]
