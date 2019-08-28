@@ -197,15 +197,11 @@ class Gods(commands.Cog):
             return await ctx.send("Be fair.")
         if target == "all":
             await self.bot.pool.execute(
-                'UPDATE profile SET "luck"=$1 WHERE "god"=$2;',
-                amount,
-                god,
+                'UPDATE profile SET "luck"=$1 WHERE "god"=$2;', amount, god
             )
         else:
             await self.bot.pool.execute(
-                'UPDATE profile SET "luck"=$1 WHERE "user"=$2;',
-                amount,
-                target.id,
+                'UPDATE profile SET "luck"=$1 WHERE "user"=$2;', amount, target.id
             )
         await ctx.send(
             f"Gave {amount} luck to {'all of your followers' if target == 'all' else target}."

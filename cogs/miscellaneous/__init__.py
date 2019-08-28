@@ -32,7 +32,9 @@ import psutil
 from discord.ext import commands
 from discord.ext.commands import BucketType
 
+import aiowiki
 from classes.converters import IntFromTo, IntGreaterThan
+from cogs.help import chunks
 from cogs.shard_communication import user_on_cooldown as user_cooldown
 from utils.checks import has_char
 
@@ -41,6 +43,13 @@ class Miscellaneous(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
         self.talk_context = defaultdict(partial(deque, maxlen=3))
+        self.bot.loop.create_task(self.make_wikis())
+
+    async def make_wikis(self):
+        self.bot.wikipedia = aiowiki.Wiki.wikipedia("en", session=self.bot.session)
+        self.bot.idlewiki = aiowiki.Wiki(
+            "https://wiki.travitia.xyz/api.php", session=self.bot.session
+        )
 
     @commands.command()
     @locale_doc
@@ -745,6 +754,40 @@ We've added several new features and fixed old bugs.
             ),
         )
         await ctx.send(embed=em)
+
+    @commands.command()
+    @locale_doc
+    async def wikipedia(self, ctx, *, query: str):
+        _("""Searches Wikipedia for an entry.""")
+        try:
+            page = (await self.bot.wikipedia.opensearch(query))[0]
+            text = await page.summary()
+        except (aiowiki.exceptions.PageNotFound, IndexError):
+            return await ctx.send(_("No wikipedia entry found."))
+        p = commands.Paginator()
+        for l in text.split("\n"):
+            for i in chunks(l, 1900):
+                p.add_line(i)
+        await self.bot.paginator.Paginator(
+            title=page.title, entries=p.pages, length=1
+        ).paginate(ctx)
+
+    @commands.command(aliases=["wiki"])
+    @locale_doc
+    async def idlewiki(self, ctx, *, query: str):
+        _("""Searches IdleRPG Wiki for an entry.""")
+        try:
+            page = (await self.bot.idlewiki.opensearch(query))[0]
+            text = await page.summary()
+        except (aiowiki.exceptions.PageNotFound, IndexError):
+            return await ctx.send(_("No entry found."))
+        p = commands.Paginator()
+        for l in text.split("\n"):
+            for i in chunks(l, 1900):
+                p.add_line(i)
+        await self.bot.paginator.Paginator(
+            title=page.title, entries=p.pages, length=1
+        ).paginate(ctx)
 
 
 def setup(bot):

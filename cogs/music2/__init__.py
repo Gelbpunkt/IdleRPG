@@ -12,15 +12,13 @@ GNU Affero General Public License for more details.
 You should have received a copy of the GNU Affero General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
+from json import dumps, loads
 from typing import Union
 
 import wavelink
 from discord.ext import commands
 
-try:
-    from ujson import dumps, loads
-except ImportError:
-    from json import dumps, loads
+from cogs.help import chunks
 
 
 def is_in_vc():
@@ -99,6 +97,35 @@ class Music2(commands.Cog):
             await ctx.player.connect(ctx.voice_channel)
 
         await self.add_entry_to_queue(track, ctx.player)
+
+    @commands.command()
+    @locale_doc
+    async def lyrics(self, ctx, *, query: str):
+        _("""Retrieves song lyrics.""")
+        if len(query) < 3:
+            return await ctx.send(_(":x: Look for a longer query!"), delete_after=5)
+
+        headers = {"Authorization": f"Bearer {self.bot.config.ksoft_key}"}
+        params = {"q": query, "limit": 1}
+        async with self.bot.session.get(
+            "https://api.ksoft.si/lyrics/search", params=params, headers=headers
+        ) as req:
+            if req.status != 200:
+                return await ctx.send(_(":warning: No results!"))
+            json_data = loads(await req.text())
+        if not json_data.get("data", []):
+            return await ctx.send(_(":warning: No results!"))
+        result = json_data["data"][0]
+        del json_data
+        p = commands.Paginator()
+        for l in result.get("lyrics", _("No lyrics found!")).split("\n"):
+            for i in chunks(l, 1900):
+                p.add_line(i)
+        await self.bot.paginator.Paginator(
+            title=f"{result.get('artist', _('Unknown Artist'))} - {result.get('name', _('Unknown Title'))}",
+            entries=p.pages,
+            length=1,
+        ).paginate(ctx)
 
     def update_track(self, track: wavelink.Track, requester_id: int, channel_id: int):
         return FakeTrack(

@@ -20,18 +20,13 @@ import re
 from datetime import timedelta
 from traceback import format_exc
 from uuid import uuid4
+import json
 
 import discord
 from async_timeout import timeout
 from discord.ext import commands
 
 from utils.eval import evaluate as _evaluate
-
-try:
-    import ujson as json  # faster, but linux only
-except ImportError:
-    import json
-
 
 # Cross-process cooldown check (pass this to commands)
 def user_on_cooldown(cooldown: int):

@@ -53,6 +53,8 @@ initial_extensions = [
     "cogs.transaction",
     "cogs.races",
     "cogs.hungergames",
+    "cogs.maths",
+    "cogs.music2",
     "cogs.shard_communication",
 ]
 
@@ -140,6 +142,9 @@ imgur_token = "my secret imgur token"
 """The Travitia API token."""
 traviapi = "just a secret"
 
+"""The KSoft key."""
+ksoft_key = "my key"
+
 """The base URL for links."""
 base_url = "https://idlerpg.travitia.xyz"
 
@@ -147,7 +152,7 @@ base_url = "https://idlerpg.travitia.xyz"
 okapi_url = "https://okapi.travitia.xyz"
 
 """The Version of the Bot."""
-version = "4.0.0b"
+version = "4.1.0a"
 
 """Global cooldown (rate, per, [.user, .channel, .guild])"""
 cooldown = commands.CooldownMapping.from_cooldown(1, 3, commands.BucketType.user)

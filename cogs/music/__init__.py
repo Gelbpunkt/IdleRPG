@@ -18,6 +18,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 import asyncio
 from datetime import timedelta
 from functools import partial
+from json import dumps, loads
 from random import choice
 from re import search as re_search
 from typing import Union
@@ -25,11 +26,6 @@ from typing import Union
 import discord
 import pylava
 from discord.ext import commands
-
-try:
-    from ujson import dumps, loads  # faster but external
-except ModuleNotFoundError:
-    from json import dumps, loads
 
 
 # Exceptions
