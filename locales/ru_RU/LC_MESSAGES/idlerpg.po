@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-08-26 18:28+0000\n"
+"POT-Creation-Date: 2019-08-28 10:17+0000\n"
 "PO-Revision-Date: 2019-05-30 15:36+0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -165,7 +165,7 @@ msgstr "{user} подарил вам дополнительные $50!"
 msgid "Seems you haven't got a trick or treat bag yet. Go get some!"
 msgstr "По-видимому ты ещё не получил мешок с конфетами. Иди и достань его!"
 
-#: cogs/halloween.py:142 cogs/crates.py:129 cogs/classes.py:495
+#: cogs/halloween.py:142 cogs/crates.py:129 cogs/classes.py:499
 msgid "You gained an item!"
 msgstr "Вы получили предмет!"
 
@@ -173,17 +173,17 @@ msgstr "Вы получили предмет!"
 msgid "You found a new item when opening a trick-or-treat bag!"
 msgstr "Вы получили новый предмет, во время открытия мешка с конфетами!"
 
-#: cogs/halloween.py:147 cogs/crates.py:134 cogs/classes.py:500
+#: cogs/halloween.py:147 cogs/crates.py:134 cogs/classes.py:504
 msgid "ID"
 msgstr "ID"
 
 #: cogs/halloween.py:148 cogs/crates.py:135 cogs/classes.py:287
-#: cogs/classes.py:501 cogs/trading.py:218 cogs/trading.py:403
+#: cogs/classes.py:505 cogs/trading.py:218 cogs/trading.py:404
 msgid "Name"
 msgstr "Имя"
 
-#: cogs/halloween.py:149 cogs/crates.py:136 cogs/classes.py:502
-#: cogs/trading.py:219 cogs/trading.py:404
+#: cogs/halloween.py:149 cogs/crates.py:136 cogs/classes.py:506
+#: cogs/trading.py:219 cogs/trading.py:405
 msgid "Type"
 msgstr "Тип"
 
@@ -459,18 +459,18 @@ msgstr ""
 msgid "You found a new item when opening a crate!"
 msgstr "Вы нашли новый предмет, открыв ящик!"
 
-#: cogs/crates.py:137 cogs/classes.py:504 cogs/trading.py:220
-#: cogs/trading.py:405
+#: cogs/crates.py:137 cogs/classes.py:508 cogs/trading.py:220
+#: cogs/trading.py:406
 msgid "Damage"
 msgstr "Урон"
 
-#: cogs/crates.py:138 cogs/classes.py:506 cogs/trading.py:221
-#: cogs/trading.py:406
+#: cogs/crates.py:138 cogs/classes.py:510 cogs/trading.py:221
+#: cogs/trading.py:407
 msgid "Armor"
 msgstr "Защита"
 
-#: cogs/crates.py:139 cogs/classes.py:507 cogs/trading.py:222
-#: cogs/trading.py:407 cogs/profile.py:337
+#: cogs/crates.py:139 cogs/classes.py:511 cogs/trading.py:222
+#: cogs/trading.py:408 cogs/profile.py:337
 msgid "Value"
 msgstr "Стоимость"
 
@@ -709,32 +709,36 @@ msgstr "попытался(ась) убить {user}, но это не вышл�
 msgid "Done"
 msgstr ""
 
-#: cogs/hungergames.py:256
+#: cogs/hungergames.py:217
+msgid "do nothing."
+msgstr ""
+
+#: cogs/hungergames.py:263
 msgid "Team"
 msgstr "Команда"
 
-#: cogs/hungergames.py:265
+#: cogs/hungergames.py:272
 msgid "The cast"
 msgstr "В ролях"
 
-#: cogs/hungergames.py:276
+#: cogs/hungergames.py:283
 #, python-brace-format
 msgid "This hunger game's winner is {winner}!"
 msgstr "Победитель голодных игр {winner}!"
 
-#: cogs/hungergames.py:281
+#: cogs/hungergames.py:288
 msgid "Everyone died!"
 msgstr "Все умерли!"
 
-#: cogs/hungergames.py:292
+#: cogs/hungergames.py:299
 msgid "Starts a game of hunger games."
 msgstr "Начинает игру в голодные игры."
 
-#: cogs/hungergames.py:294
+#: cogs/hungergames.py:301
 msgid "There is already a game in here!"
 msgstr "Предложение о начале игры уже было запущено!"
 
-#: cogs/hungergames.py:297
+#: cogs/hungergames.py:304
 #, python-brace-format
 msgid ""
 "{author} started a game of Hunger Games! React with :shallow_pan_of_food: to "
@@ -743,7 +747,7 @@ msgstr ""
 "{author} начал игру в голодные игры! Поставьте реакцию :"
 "shallow_pan_of_food: , чтобы присоединиться к игре! **{num} ожидают игры**"
 
-#: cogs/hungergames.py:323
+#: cogs/hungergames.py:330
 msgid "Not enough players joined..."
 msgstr "Недостаточно игроков для игры."
 
@@ -761,7 +765,7 @@ msgstr "Вы использовали бесформенный аргумент!
 msgid "You are on cooldown. Try again in {time}."
 msgstr "Перезарядка. Попробуйте снова в {time}."
 
-#: cogs/error_handler.py:78 cogs/error_handler.py:157
+#: cogs/error_handler.py:78 cogs/error_handler.py:153
 msgid "Permission denied"
 msgstr "Доступ запрещён"
 
@@ -831,19 +835,23 @@ msgid ""
 "of your bad treatment, you are no longer a {profession}."
 msgstr ""
 
-#: cogs/error_handler.py:137
+#: cogs/error_handler.py:130 cogs/error_handler.py:136 cogs/classes.py:72
+msgid "Ranger"
+msgstr "Охотник"
+
+#: cogs/error_handler.py:135
 #, python-brace-format
 msgid ""
 "Your pet **{pet}** ran away! You did not show it your love enough! Because "
 "of your bad treatment, you are no longer a {profession}."
 msgstr ""
 
-#: cogs/error_handler.py:145
+#: cogs/error_handler.py:141
 msgid ""
 "You have already selected a race and filled in your cv. This is irreversible."
 msgstr ""
 
-#: cogs/error_handler.py:151
+#: cogs/error_handler.py:147
 #, python-brace-format
 msgid ""
 "You need to be a donator to use this command. Please head to `{prefix}"
@@ -851,7 +859,7 @@ msgid ""
 "us."
 msgstr ""
 
-#: cogs/error_handler.py:159
+#: cogs/error_handler.py:155
 msgid ""
 ":x: You don't have the permissions to use this command. It is thought for "
 "other users."
@@ -860,24 +868,24 @@ msgstr ""
 "других игроков."
 
 #. prevent cooldown reset
-#: cogs/error_handler.py:165 cogs/trading.py:446
+#: cogs/error_handler.py:161 cogs/trading.py:447
 msgid "You did not choose anything."
 msgstr "Вы ничего не выбрали."
 
-#: cogs/error_handler.py:184
+#: cogs/error_handler.py:180
 msgid ""
 "An argument or value you entered was far too high for me to handle properly!"
 msgstr ""
 "Аргумент или цена, которую вы ввели была слишком высока, чтобы работать "
 "правильно!"
 
-#: cogs/error_handler.py:190
+#: cogs/error_handler.py:186
 msgid ""
 "The languages have been reloaded while you were using a command. The "
 "execution therefore had to be stopped. Please try again."
 msgstr ""
 
-#: cogs/error_handler.py:221
+#: cogs/error_handler.py:217
 msgid ""
 "The command you tried to use ran into an error. The incident has been "
 "reported and the team will work hard to fix the issue!"
@@ -2086,10 +2094,6 @@ msgstr ""
 "Используют сильные зачарования, для более сильных атак.\n"
 "+1 урона за каждую эволюцию будет добавлено на ваш меч."
 
-#: cogs/classes.py:72
-msgid "Ranger"
-msgstr "Охотник"
-
 #: cogs/classes.py:74
 #, python-brace-format
 msgid ""
@@ -2105,8 +2109,8 @@ msgstr ""
 
 #: cogs/classes.py:81
 msgid ""
-"A strong warrior who gives their live for the fight against Zerekiel.\n"
-"Every evolve boosts the raidstats by additional 10%."
+"A strong warrior who gives their life for the fight against Zerekiel.\n"
+"Every evolution boosts your raidstats by an additional 10%."
 msgstr ""
 
 #: cogs/classes.py:86
@@ -2378,11 +2382,15 @@ msgstr ""
 msgid "[Ranger Only] Let your pet get a weapon for you!"
 msgstr "[Только охотник] Ваш питомец приносит вам оружие!"
 
-#: cogs/classes.py:496
+#: cogs/classes.py:489
+msgid "Your pet is not happy enough to hunt an item. Try making it joyful!"
+msgstr ""
+
+#: cogs/classes.py:500
 msgid "Your pet found an item!"
 msgstr "Ваш питомец нашёл предмет!"
 
-#: cogs/classes.py:508
+#: cogs/classes.py:512
 msgid "Your pet needs to recover, wait a day to retry"
 msgstr "Ваш питомец должен восстановиться, подождите день и попробуйте снова"
 
@@ -2579,11 +2587,11 @@ msgstr ""
 "Ваш персонаж успешно отправился в приключение. Используйте`{prefix}status` ,"
 "чтобы увидеть прогресс миссии."
 
-#: cogs/adventure.py:107
+#: cogs/adventure.py:108
 msgid "Go out on a docile adventure controlled by reactions."
 msgstr ""
 
-#: cogs/adventure.py:110
+#: cogs/adventure.py:111
 msgid ""
 "You are going to be in a labyrinth of size 15x15. There are enemies, "
 "treasures and hidden traps. Reach the exit in the bottom right corner for a "
@@ -2594,113 +2602,113 @@ msgid ""
 "will send."
 msgstr ""
 
-#: cogs/adventure.py:115
+#: cogs/adventure.py:116
 msgid "**Generating a maze...**"
 msgstr ""
 
-#: cogs/adventure.py:126 utils/castle.py:29
+#: cogs/adventure.py:127 utils/castle.py:29
 msgid "North"
 msgstr ""
 
-#: cogs/adventure.py:127 utils/castle.py:29
+#: cogs/adventure.py:128 utils/castle.py:29
 msgid "East"
 msgstr ""
 
-#: cogs/adventure.py:128 utils/castle.py:29
+#: cogs/adventure.py:129 utils/castle.py:29
 msgid "South"
 msgstr ""
 
-#: cogs/adventure.py:129 utils/castle.py:29
+#: cogs/adventure.py:130 utils/castle.py:29
 msgid "West"
 msgstr ""
 
-#: cogs/adventure.py:205 utils/castle.py:129
+#: cogs/adventure.py:206 utils/castle.py:129
 #, python-brace-format
 msgid "To the {side} is a wall."
 msgstr ""
 
-#: cogs/adventure.py:207 utils/castle.py:131
+#: cogs/adventure.py:208 utils/castle.py:131
 #, python-brace-format
 msgid "To the {side} is an enemy."
 msgstr ""
 
-#: cogs/adventure.py:209 utils/castle.py:133
+#: cogs/adventure.py:210 utils/castle.py:133
 #, python-brace-format
 msgid "To the {side} is a treasure."
 msgstr ""
 
-#: cogs/adventure.py:211 utils/castle.py:135
+#: cogs/adventure.py:212 utils/castle.py:135
 #, python-brace-format
 msgid "To the {side} is a floor."
 msgstr ""
 
-#: cogs/adventure.py:214 utils/castle.py:138
+#: cogs/adventure.py:215 utils/castle.py:138
 #, python-brace-format
 msgid "You are on {hp} HP"
 msgstr ""
 
-#: cogs/adventure.py:224 utils/castle.py:151
+#: cogs/adventure.py:225 utils/castle.py:151
 #, python-brace-format
 msgid "You stepped on a trap and took {damage} damage!"
 msgstr ""
 
-#: cogs/adventure.py:239
+#: cogs/adventure.py:240
 #, python-brace-format
 msgid "You found a treasure with **${money}** inside!"
 msgstr ""
 
-#: cogs/adventure.py:262 utils/castle.py:188
+#: cogs/adventure.py:263 utils/castle.py:188
 msgid "Enemy"
 msgstr ""
 
-#: cogs/adventure.py:267 utils/castle.py:193
+#: cogs/adventure.py:268 utils/castle.py:193
 msgid "The Fight started"
 msgstr ""
 
-#: cogs/adventure.py:302 utils/castle.py:229
+#: cogs/adventure.py:303 utils/castle.py:229
 #, python-brace-format
 msgid "The Enemy healed themselves for {hp} HP"
 msgstr ""
 
-#: cogs/adventure.py:308 utils/castle.py:235
+#: cogs/adventure.py:309 utils/castle.py:235
 #, python-brace-format
 msgid "You healed yourself for {hp} HP"
 msgstr ""
 
-#: cogs/adventure.py:314 utils/castle.py:239
+#: cogs/adventure.py:315 utils/castle.py:239
 msgid "Attack blocked."
 msgstr ""
 
-#: cogs/adventure.py:319 utils/castle.py:244
+#: cogs/adventure.py:320 utils/castle.py:244
 #, python-brace-format
 msgid "The Enemy hit you for {dmg} damage"
 msgstr ""
 
-#: cogs/adventure.py:324 utils/castle.py:247
+#: cogs/adventure.py:325 utils/castle.py:247
 #, python-brace-format
 msgid "You hit the enemy for {dmg} damage"
 msgstr ""
 
-#: cogs/adventure.py:338 cogs/adventure.py:343 cogs/gambling.py:446
+#: cogs/adventure.py:339 cogs/adventure.py:344 cogs/gambling.py:446
 #: cogs/gambling.py:476 utils/castle.py:259 utils/castle.py:264
 msgid "Timed out."
 msgstr ""
 
-#: cogs/adventure.py:345 utils/castle.py:267
+#: cogs/adventure.py:346 utils/castle.py:267
 msgid "You died."
 msgstr "Вы умерли."
 
-#: cogs/adventure.py:357
+#: cogs/adventure.py:358
 #, python-brace-format
 msgid ""
 "You have reached the exit and were rewarded **${money}** for getting out!"
 msgstr ""
 
-#: cogs/adventure.py:366
+#: cogs/adventure.py:367
 msgid "Checks your adventure status."
 msgstr "Показывает ваше приключение."
 
-#: cogs/adventure.py:372
+#: cogs/adventure.py:373
 #, python-brace-format
 msgid ""
 "You are currently on an adventure with difficulty `{difficulty}`.\n"
@@ -2708,23 +2716,23 @@ msgid ""
 "Adventure name: `{adventure}`"
 msgstr ""
 
-#: cogs/adventure.py:410
+#: cogs/adventure.py:411
 msgid "You died on your mission. Try again!"
 msgstr "Вы потерпели неудачу и умерли. Попробуйте снова!"
 
-#: cogs/adventure.py:465
+#: cogs/adventure.py:466
 #, python-brace-format
 msgid ""
 "You have completed your adventure and received **${gold}** as well as a new "
 "item: **{item}**. Experience gained: **{xp}**."
 msgstr ""
 
-#: cogs/adventure.py:510
+#: cogs/adventure.py:511
 #, python-brace-format
 msgid "Level {new_level} Memorial"
 msgstr "Уровень {new_level} мемориал"
 
-#: cogs/adventure.py:526
+#: cogs/adventure.py:527
 #, python-brace-format
 msgid ""
 "You reached a new level: **{new_level}** :star:! You received {reward} as a "
@@ -2733,19 +2741,19 @@ msgstr ""
 "Вы достигли нового уровня: **{new_level}** :star:! Вы получаете {reward} , в "
 "награду :tada:!"
 
-#: cogs/adventure.py:535
+#: cogs/adventure.py:536
 msgid "Cancels your current adventure."
 msgstr "Отменяет текущее приключение."
 
-#: cogs/adventure.py:537
+#: cogs/adventure.py:538
 msgid "Are you sure you want to cancel your current adventure?"
 msgstr ""
 
-#: cogs/adventure.py:540
+#: cogs/adventure.py:541
 msgid "Did not cancel your adventure. The journey continues..."
 msgstr ""
 
-#: cogs/adventure.py:545
+#: cogs/adventure.py:546
 #, python-brace-format
 msgid ""
 "Canceled your mission. Use `{prefix}adventure [missionID]` to start a new "
@@ -2754,12 +2762,12 @@ msgstr ""
 "Ваша миссия отменена. Используйте `{prefix}adventure [missionID]` , чтобы "
 "начать новое!"
 
-#: cogs/adventure.py:554
+#: cogs/adventure.py:555
 msgid ""
 "Your death stats. Shows statictics from all your adventures ever completed."
 msgstr ""
 
-#: cogs/adventure.py:565
+#: cogs/adventure.py:566
 #, python-brace-format
 msgid ""
 "Out of **{total}** adventures, you died **{deaths}** times and survived "
@@ -3044,16 +3052,16 @@ msgstr "Нет результатов."
 msgid "IdleRPG Shop"
 msgstr "Магазин IdleRPG"
 
-#: cogs/trading.py:213 cogs/trading.py:398
+#: cogs/trading.py:213 cogs/trading.py:399
 #, python-brace-format
 msgid "Use `{prefix}buy {item}` to buy this."
 msgstr "Используйте `{prefix}buy {item}` , чтобы купить это."
 
-#: cogs/trading.py:223 cogs/trading.py:408 cogs/marriage.py:218
+#: cogs/trading.py:223 cogs/trading.py:409 cogs/marriage.py:218
 msgid "Price"
 msgstr "Цена"
 
-#: cogs/trading.py:225 cogs/trading.py:410
+#: cogs/trading.py:225 cogs/trading.py:411
 #, python-brace-format
 msgid "Item {num} of {total}"
 msgstr "Вещь {num} из {total}"
@@ -3142,40 +3150,40 @@ msgstr "Продаёт все ваши не надетые вещи за их с
 msgid "Nothing to merch."
 msgstr "Нечего продавать."
 
-#: cogs/trading.py:380
+#: cogs/trading.py:381
 #, python-brace-format
 msgid "Merched **{count}** items for **${money}**."
 msgstr "Продано **{count}** вещей на сумму **${money}**."
 
-#: cogs/trading.py:388
+#: cogs/trading.py:389
 msgid "View your pending shop offers."
 msgstr "Показать ваши рассматриваемые предложения."
 
-#: cogs/trading.py:394
+#: cogs/trading.py:395
 msgid "You don't have any pending shop offers."
 msgstr "У вас нет рассматриваемых предложений."
 
-#: cogs/trading.py:397
+#: cogs/trading.py:398
 msgid "Your pending items"
 msgstr "Ваши рассматриваемые предметы"
 
-#: cogs/trading.py:421
+#: cogs/trading.py:422
 msgid "Buys items at the trader."
 msgstr ""
 
-#: cogs/trading.py:437
+#: cogs/trading.py:438
 msgid "The Trader"
 msgstr "Торговец"
 
-#: cogs/trading.py:438
+#: cogs/trading.py:439
 msgid "Hit a button to buy it"
 msgstr "Нажмите на кнопку, чтобы купить это"
 
-#: cogs/trading.py:450
+#: cogs/trading.py:451
 msgid "You are too poor to buy this item."
 msgstr "Вы слишком бедны для того, чтобы купить этот предмет."
 
-#: cogs/trading.py:457
+#: cogs/trading.py:458
 #, python-brace-format
 msgid ""
 "Successfully bought offer **{offer}**. Use `{prefix}inventory` to view your "
