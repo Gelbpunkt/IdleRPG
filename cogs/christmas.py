@@ -21,7 +21,7 @@ import random
 import string
 
 import discord
-import ujson
+import json
 from discord.ext import commands
 
 from cogs.help import chunks
@@ -416,14 +416,14 @@ Next round starts in 5 seconds!
         )
         d = [g["id"], g["name"]]
         with open("tournament.json", "r+") as f:
-            c = ujson.load(f)
+            c = json.load(f)
             f.seek(0)
             if d in c["Participants"]:
                 return await ctx.send(_("You're already signed up!"))
             if len(c["Participants"]) > 64:
                 return await ctx.send(_("Tournament is full!"))
             c["Participants"].append(d)
-            ujson.dump(c, f)
+            json.dump(c, f)
             f.truncate()
         await ctx.send(_("{guild} has been signed up.").format(guild=g["name"]))
 
@@ -433,13 +433,13 @@ Next round starts in 5 seconds!
     async def makematches(self, ctx):
         _("""Makes the snowball tournament matches""")
         with open("tournament.json", "r+") as f:
-            c = ujson.load(f)
+            c = json.load(f)
             f.seek(0)
             d = c["Participants"]
             e = list(chunks(d, 2))
             c["Matches"] = e
             c["Participants"] = []
-            ujson.dump(c, f)
+            json.dump(c, f)
             f.truncate()
         await ctx.send(_("Matches generated!"))
 
@@ -449,7 +449,7 @@ Next round starts in 5 seconds!
     async def result(self, ctx, guild1, guild2, winner):
         _("""Save a result of a match if it is in the tournament""")
         with open("tournament.json", "r+") as f:
-            c = ujson.load(f)
+            c = json.load(f)
             f.seek(0)
             for r in c["Matches"]:
                 if (r[0][1] == guild1 or r[0][1] == guild2) and (
@@ -465,7 +465,7 @@ Next round starts in 5 seconds!
             except IndexError:
                 return await ctx.send(_("Those guilds are not in a match!"))
             c["Participants"].append([id, winner])
-            ujson.dump(c, f)
+            json.dump(c, f)
             f.truncate()
         await ctx.send(
             _("The winner of {guild1} vs {guild2} is now {winner}!").format(
@@ -479,12 +479,12 @@ Next round starts in 5 seconds!
     async def forceround(self, ctx):
         _("""Enforces a new snowball round.""")
         with open("tournament.json", "r+") as f:
-            c = ujson.load(f)
+            c = json.load(f)
             f.seek(0)
             for r in c["Matches"]:
                 c["Participants"].append(random.choice(r))
             c["Matches"] = list(chunks(c["Participants"], 2))
-            ujson.dump(c, f)
+            json.dump(c, f)
             f.truncate()
         await ctx.send(_("Round forced!"))
 
@@ -493,7 +493,7 @@ Next round starts in 5 seconds!
     async def matches(self, ctx):
         _("""Shows tournament matches.""")
         with open("tournament.json", "r") as f:
-            c = ujson.load(f)
+            c = json.load(f)
         text = _("Participants who are already in the next round")
         await ctx.send(f"**{text}**:\n{', '.join([i[1] for i in c['Participants']])}")
         paginator = commands.Paginator()

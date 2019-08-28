@@ -18,6 +18,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 import asyncio
 import re
 from datetime import timedelta
+import json
 from traceback import format_exc
 from uuid import uuid4
 
@@ -26,11 +27,6 @@ from async_timeout import timeout
 from discord.ext import commands
 
 from utils.eval import evaluate as _evaluate
-
-try:
-    import ujson as json  # faster, but linux only
-except ImportError:
-    import json
 
 
 # Cross-process cooldown check (pass this to commands)

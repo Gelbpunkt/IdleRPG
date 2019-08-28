@@ -12,15 +12,11 @@ GNU Affero General Public License for more details.
 You should have received a copy of the GNU Affero General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
+from json import dumps, loads
 from typing import Union
 
 import wavelink
 from discord.ext import commands
-
-try:
-    from ujson import dumps, loads
-except ImportError:
-    from json import dumps, loads
 
 
 def is_in_vc():
