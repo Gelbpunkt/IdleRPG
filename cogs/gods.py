@@ -187,20 +187,23 @@ class Gods(commands.Cog):
 
     @is_god()
     @commands.command()
-    async def giveluck(self, ctx, amount: float, target: UserWithCharacter = "all"):
+    async def setluck(self, ctx, amount: float, target: UserWithCharacter = "all"):
         """[Gods Only] Gives luck to all of your followers or specific ones."""
         god = self.bot.gods[ctx.author.id]
         if target != "all" and ctx.user_data["god"] != god:
             return await ctx.send("Not a follower of yours.")
+        amount = round(amount, 2)
+        if amount < 0 or amount > 2:
+            return await ctx.send("Be fair.")
         if target == "all":
             await self.bot.pool.execute(
-                'UPDATE profile SET "luck"=CASE WHEN "luck"+$1<0.0 THEN 0.0 WHEN "luck"+$1>2.0 THEN 2.0 ELSE round("luck"+$1, 2) END WHERE "god"=$2;',
+                'UPDATE profile SET "luck"=$1 END WHERE "god"=$2;',
                 amount,
                 god,
             )
         else:
             await self.bot.pool.execute(
-                'UPDATE profile SET "luck"=CASE WHEN "luck"+$1<0.0 THEN 0.0 WHEN "luck"+$1>2.0 THEN 2.0 ELSE round("luck"+$1, 2) END WHERE "user"=$2;',
+                'UPDATE profile SET "luck"=$1 WHERE "user"=$2;',
                 amount,
                 target.id,
             )
