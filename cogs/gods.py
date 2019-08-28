@@ -197,7 +197,7 @@ class Gods(commands.Cog):
             return await ctx.send("Be fair.")
         if target == "all":
             await self.bot.pool.execute(
-                'UPDATE profile SET "luck"=$1 END WHERE "god"=$2;',
+                'UPDATE profile SET "luck"=$1 WHERE "god"=$2;',
                 amount,
                 god,
             )
