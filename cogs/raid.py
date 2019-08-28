@@ -1705,7 +1705,7 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
                 winner.id,
             )
             await ctx.send(
-                "The Windows® user has been convinced, he is happily using a Linux distribution now. He also left a {self.bot.cogs['Crates'].emotes.legendary} to a random survivor ({winner.mention}) as a thank you. Soon, the squad can convince more people from this planet!"
+                f"The Windows® user has been convinced, he is happily using a Linux distribution now. He also left a {self.bot.cogs['Crates'].emotes.legendary} to a random survivor ({winner.mention}) as a thank you. Soon, the squad can convince more people from this planet!"
             )
 
         else:
