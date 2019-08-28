@@ -78,7 +78,7 @@ class Classes(commands.Cog):
             discord.Embed(
                 title=_("Raider"),
                 description=_(
-                    "A strong warrior who gives their live for the fight against Zerekiel.\nEvery evolve boosts the raidstats by additional 10%."
+                    "A strong warrior who gives their life for the fight against Zerekiel.\nEvery evolution boosts your raidstats by an additional 10%."
                 ),
                 colour=self.bot.config.primary_colour,
             ),
