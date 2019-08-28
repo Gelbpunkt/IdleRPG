@@ -378,10 +378,10 @@ class Trading(commands.Cog):
                     ctx.author.id,
                 )
             await ctx.send(
-            _("Merched **{count}** items for **${money}**.").format(
-                count=count, money=money
+                _("Merched **{count}** items for **${money}**.").format(
+                    count=count, money=money
+                )
             )
-        )
 
     @commands.command()
     @locale_doc
