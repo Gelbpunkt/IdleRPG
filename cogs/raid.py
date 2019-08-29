@@ -862,7 +862,7 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
             and datetime.datetime.utcnow() < start + datetime.timedelta(minutes=45)
         ):
             target, target_data = random.choice(list(raid.items()))
-            dmg = random.randint(50, 90)
+            dmg = random.randint(35, 65)
             dmg -= target_data["armor"] * Decimal(random.choice(["0.4", "0.5"]))
             target_data["hp"] -= dmg
             em = discord.Embed(title=f"Scrael left: `{len(scrael)}`", colour=0x000000)
@@ -897,7 +897,7 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
                     value=f"Is attacking the scrael and dealt `{target_data['damage']}` damage",
                 )
             else:
-                money = random.randint(1500, 2600)
+                money = random.randint(250, 750)
                 await self.bot.pool.execute(
                     'UPDATE profile SET "money"="money"+$1 WHERE "user"=$2;',
                     money,
