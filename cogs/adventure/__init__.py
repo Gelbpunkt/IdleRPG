@@ -469,64 +469,8 @@ Adventure name: `{adventure}`"""
 
             new_level = int(rpgtools.xptolevel(ctx.character_data["xp"] + xp))
 
-            if current_level == new_level:
-                return
-
-            if (reward := random.choice(["crates", "money", "item"])) == "crates":
-                if new_level < 6:
-                    column = "crates_common"
-                    amount = new_level
-                    reward_text = f"**{amount}** <:CrateCommon:598094865666015232>"
-                elif new_level < 10:
-                    column = "crates_uncommon"
-                    amount = round(new_level / 2)
-                    reward_text = f"**{amount}** <:CrateUncommon:598094865397579797>"
-                elif new_level < 15:
-                    column = "crates_rare"
-                    amount = 2
-                    reward_text = "**2** <:CrateRare:598094865485791233>"
-                elif new_level < 20:
-                    column = "crates_rare"
-                    amount = 3
-                    reward_text = "**3** <:CrateRare:598094865485791233>"
-                else:
-                    column = "crates_magic"
-                    amount = 1
-                    reward_text = "**1** <:CrateMagic:598094865611358209>"
-                await self.bot.pool.execute(
-                    f'UPDATE profile SET {column}={column}+$1 WHERE "user"=$2;',
-                    amount,
-                    ctx.author.id,
-                )
-            elif reward == "item":
-                stat = round(new_level * 1.5)
-                item = await self.bot.create_random_item(
-                    minstat=stat,
-                    maxstat=stat,
-                    minvalue=1000,
-                    maxvalue=1000,
-                    owner=ctx.author,
-                    insert=False,
-                )
-                item["name"] = _("Level {new_level} Memorial").format(
-                    new_level=new_level
-                )
-                reward_text = "a special weapon"
-                await self.bot.create_item(**item)
-            elif reward == "money":
-                money = new_level * 1000
-                await self.bot.pool.execute(
-                    'UPDATE profile SET "money"="money"+$1 WHERE "user"=$2;',
-                    money,
-                    ctx.author.id,
-                )
-                reward_text = f"**${money}**"
-
-            await ctx.send(
-                _(
-                    "You reached a new level: **{new_level}** :star:! You received {reward} as a reward :tada:!"
-                ).format(new_level=new_level, reward=reward_text)
-            )
+            if current_level != new_level:
+                await self.bot.process_levelup(ctx, new_level)
 
     @has_char()
     @has_adventure()

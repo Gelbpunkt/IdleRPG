@@ -368,6 +368,8 @@ IdleRPG is a global bot, your characters are valid everywhere"""
             entries=[f"**${value}**", _("**{amount} XP**").format(amount=value)],
         ).paginate(ctx)
         reward = ["money", "xp"][reward]
+        if reward == "xp":
+            old_level = int(rpgtools.xptolevel(ctx.character_data["xp"]))
         async with self.bot.pool.acquire() as conn:
             await conn.execute('DELETE FROM loot WHERE "id"=$1;', loot_id)
             await conn.execute(
@@ -376,6 +378,11 @@ IdleRPG is a global bot, your characters are valid everywhere"""
                 ctx.author.id,
             )
         await ctx.send(_("Reward gained!"))
+
+        if reward == "xp":
+            new_level = int(rpgtools.xptolevel(ctx.character_data["xp"] + value))
+            if old_level != new_level:
+                await self.bot.process_levelup(ctx, new_level)
 
     @checks.has_char()
     @commands.command(aliases=["use"])

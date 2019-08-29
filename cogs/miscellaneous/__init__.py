@@ -781,6 +781,9 @@ We've added several new features and fixed old bugs.
             text = await page.text()
         except (aiowiki.exceptions.PageNotFound, IndexError):
             return await ctx.send(_("No entry found."))
+        else:
+            if not text:
+                return await ctx.send(_("No content to display."))
         p = commands.Paginator()
         for l in text.split("\n"):
             for i in chunks(l, 1900):

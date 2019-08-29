@@ -399,6 +399,61 @@ class Bot(commands.AutoShardedBot):
             return await self.create_item(**item)
         return item
 
+    async def process_levelup(self, ctx, new_level):
+        if (reward := random.choice(["crates", "money", "item"])) == "crates":
+            if new_level < 6:
+                column = "crates_common"
+                amount = new_level
+                reward_text = f"**{amount}** <:CrateCommon:598094865666015232>"
+            elif new_level < 10:
+                column = "crates_uncommon"
+                amount = round(new_level / 2)
+                reward_text = f"**{amount}** <:CrateUncommon:598094865397579797>"
+            elif new_level < 15:
+                column = "crates_rare"
+                amount = 2
+                reward_text = "**2** <:CrateRare:598094865485791233>"
+            elif new_level < 20:
+                column = "crates_rare"
+                amount = 3
+                reward_text = "**3** <:CrateRare:598094865485791233>"
+            else:
+                column = "crates_magic"
+                amount = 1
+                reward_text = "**1** <:CrateMagic:598094865611358209>"
+            await self.pool.execute(
+                f'UPDATE profile SET {column}={column}+$1 WHERE "user"=$2;',
+                amount,
+                ctx.author.id,
+            )
+        elif reward == "item":
+            stat = round(new_level * 1.5)
+            item = await self.create_random_item(
+                minstat=stat,
+                maxstat=stat,
+                minvalue=1000,
+                maxvalue=1000,
+                owner=ctx.author,
+                insert=False,
+            )
+            item["name"] = _("Level {new_level} Memorial").format(new_level=new_level)
+            reward_text = _("a special weapon")
+            await self.create_item(**item)
+        elif reward == "money":
+            money = new_level * 1000
+            await self.pool.execute(
+                'UPDATE profile SET "money"="money"+$1 WHERE "user"=$2;',
+                money,
+                ctx.author.id,
+            )
+            reward_text = f"**${money}**"
+
+        await ctx.send(
+            _(
+                "You reached a new level: **{new_level}** :star:! You received {reward} as a reward :tada:!"
+            ).format(new_level=new_level, reward=reward_text)
+        )
+
     def in_class_line(self, classes, line):
         return any([self.get_class_line(c) == line for c in classes])
 

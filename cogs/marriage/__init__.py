@@ -327,7 +327,7 @@ class Marriage(commands.Cog):
         ):
             return await ctx.send(_("O.o not in the mood today?"))
 
-        if random.randint(1, 2) == 1:
+        if random.choice([True, False]):
             return await ctx.send(_("You were unsuccessful at making a child."))
         gender = random.choice(["m", "f"])
         if gender == "m":
