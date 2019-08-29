@@ -82,7 +82,7 @@ class Music2(commands.Cog):
     @get_player()
     @commands.command()
     @locale_doc
-    async def play2(self, ctx, *, query: str):
+    async def play(self, ctx, *, query: str):
         _("""Query YouTube for a track and play it or add it to the playlist.""")
         try:
             track = self.update_track(
