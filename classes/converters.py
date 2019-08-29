@@ -6,6 +6,7 @@ License for non-commercial and the Travitia License for commercial
 use.
 For more information, see README.md and LICENSE.md.
 """
+import datetime
 import re
 
 import discord
@@ -29,6 +30,11 @@ class InvalidCoinSide(commands.BadArgument):
 
 class UserHasNoChar(commands.BadArgument):
     pass
+
+
+class DateOutOfRange(commands.BadArgument):
+    def __init__(self, min_):
+        self.min_ = min_
 
 
 class User(commands.Converter):
@@ -188,3 +194,34 @@ class CoinSide(commands.Converter):
         if stuff not in ["heads", "tails"]:
             raise InvalidCoinSide()
         return stuff
+
+
+class DateOrToday(commands.Converter):
+    def __init__(self, min_date):
+        self.min_date = min_date
+
+    def convert(self, ctx, date_info):
+        if isinstance(date_info, str):
+            if "-" in date_info:
+                date_info = date_info.split("-")
+            elif "." in date_info:
+                date_info = date_info.split(".")
+            else:
+                raise commands.BadArgument()
+        if not date_info:
+            date = datetime.date.today()
+        elif len(date_info) != 3:
+            raise commands.BadArgument()
+        else:
+            if date_info[0] > 1900:  # YYYY-MM-DD
+                date = datetime.date(
+                    year=date_info[0], month=date_info[1], day=date_info[2]
+                )
+            elif date_info[2] > 1900:  # DD-MM-YYYY
+                date = datetime.date(
+                    year=date_info[2], month=date_info[1], day=date_info[0]
+                )
+            else:
+                raise commands.BadArgument()
+            if date < self.min_date or date > datetime.date.today():
+                raise DateOutOfRange(self.min_date)

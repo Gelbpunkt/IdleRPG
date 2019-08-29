@@ -33,7 +33,7 @@ from discord.ext import commands
 from discord.ext.commands import BucketType
 
 import aiowiki
-from classes.converters import IntFromTo, IntGreaterThan
+from classes.converters import DateOrToday, IntFromTo, IntGreaterThan
 from cogs.help import chunks
 from cogs.shard_communication import user_on_cooldown as user_cooldown
 from utils.checks import has_char
@@ -656,32 +656,12 @@ We've added several new features and fixed old bugs.
 
     @commands.command()
     @locale_doc
-    async def garfield(self, ctx, *date_info: IntGreaterThan(0)):
+    async def garfield(
+        self, ctx, date: DateOrToday(datetime.date(year=1978, month=6, day=19))
+    ):
         _(
             """Sends today's garfield comic if no date info is passed. Else, it will use YYYY MM DD or DD MM YYYY depending on where the year is, with the date parts being seperated with spaces."""
         )
-        if not date_info:
-            date = datetime.date.today()
-        else:
-            if date_info[0] > 1900:  # YYYY-MM-DD
-                date = datetime.date(
-                    year=date_info[0], month=date_info[1], day=date_info[2]
-                )
-            elif date_info[2] > 1900:  # DD-MM-YYYY
-                date = datetime.date(
-                    year=date_info[2], month=date_info[1], day=date_info[0]
-                )
-            else:
-                return await ctx.send(_("Unable to parse date."))
-            if (
-                date < datetime.date(year=1978, month=6, day=19)
-                or date > datetime.date.today()
-            ):
-                return await ctx.send(
-                    _(
-                        "Garfield was launched on June, 19th 1978 and I also cannot check the future."
-                    )
-                )
         await ctx.send(
             embed=discord.Embed(color=self.bot.config.primary_colour).set_image(
                 url=f"https://d1ejxu6vysztl5.cloudfront.net/comics/garfield/{date.year}/{date.strftime('%Y-%m-%d')}.gif?format=png"
@@ -690,32 +670,12 @@ We've added several new features and fixed old bugs.
 
     @commands.command(aliases=["uf"])
     @locale_doc
-    async def userfriendly(self, ctx, *date_info: IntGreaterThan(0)):
+    async def userfriendly(
+        self, ctx, date: DateOrToday(datetime.date(year=1997, month=11, day=17))
+    ):
         _(
             """Sends today's userfriendly comic if no date info is passed. Else, it will use YYYY MM DD or DD MM YYYY depending on where the year is, with the date parts being seperated with spaces."""
         )
-        if not date_info:
-            date = datetime.date.today()
-        else:
-            if date_info[0] > 1900:  # YYYY-MM-DD
-                date = datetime.date(
-                    year=date_info[0], month=date_info[1], day=date_info[2]
-                )
-            elif date_info[2] > 1900:  # DD-MM-YYYY
-                date = datetime.date(
-                    year=date_info[2], month=date_info[1], day=date_info[0]
-                )
-            else:
-                return await ctx.send(_("Unable to parse date."))
-            if (
-                date < datetime.date(year=1997, month=11, day=17)
-                or date > datetime.date.today()
-            ):
-                return await ctx.send(
-                    _(
-                        "Userfriendly was launched on November, 17th 1997 and I also cannot check the future."
-                    )
-                )
         async with self.bot.session.get(
             f"http://ars.userfriendly.org/cartoons/?id={date.strftime('%Y%m%d')}&mode=classic"
         ) as r:
