@@ -293,7 +293,10 @@ class MusicPlayer(commands.Cog):
                         name=_("Position"),
                         value=str(timedelta(seconds=player.position)).split(".")[0],
                     )
-                except OverflowError:  # we cannot do anything if C cannot handle it
+                except (
+                    OverflowError,
+                    TypeError,
+                ):  # we cannot do anything if C cannot handle it or player.position is None
                     pass
             elif current_song["info"].get("isStream"):
                 playing_embed.add_field(name=_("Length"), value="Live")
