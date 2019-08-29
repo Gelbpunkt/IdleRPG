@@ -17,6 +17,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
 import re
 from asyncio import TimeoutError
+from contextlib import suppress
 
 import discord
 from discord.ext import commands
@@ -35,9 +36,17 @@ class Context(commands.Context):
     def disp(self):
         return self.author.display_name
 
-    async def confirm(self, message, timeout=20, user=None):
+    async def confirm(
+        self,
+        message,
+        timeout=20,
+        user=None,
+        emoji_no="\U0000274e",
+        emoji_yes="\U00002705",
+    ):
         user = user or self.author
-        emojis = ["\U0000274e", "\U00002705"]  # no, yes
+        emojis = (emoji_no, emoji_yes)
+
         msg = await self.send(
             embed=discord.Embed(
                 title="Confirmation",
@@ -49,41 +58,44 @@ class Context(commands.Context):
             await msg.add_reaction(emoji)
 
         def check(r, u):
-            return (
-                u == user
-                and str(r.emoji) in emojis
-                and r.message.id == msg.id
-                and not u.bot
-            )
+            return u == user and str(r.emoji) in emojis and r.message.id == msg.id
+
+        async def cleanup():
+            with suppress(discord.HTTPException):
+                await msg.delete()
 
         try:
             reaction, _ = await self.bot.wait_for(
                 "reaction_add", check=check, timeout=timeout
             )
         except TimeoutError:
-            await msg.delete()
+            await cleanup()
             raise NoChoice("You did not choose anything.")
-        await msg.delete()
+
+        # finally statement should not be used for cleanup because it will be triggered
+        # by bot shutdown/cancellation of command
+        await cleanup()
+
         return bool(emojis.index(str(reaction.emoji)))
 
     async def send(self, content=None, *args, **kwargs):
-        escape_massmentions = kwargs.pop("escape_massmentions", True)
-        escape_mentions = kwargs.pop("escape_mentions", False)
-        content = str(content) if content is not None else None
-        if escape_massmentions and content:
-            content = content.replace("@here", "@\u200bhere").replace(
-                "@everyone", "@\u200beveryone"
-            )
-        if escape_mentions and content:
-            # There is 2 options here:
-            # #1 Simple replace
-            # content = re.sub(r"@([!&]?[0-9]{17,21})", "@\u200b\\1", content)
-            #
-            # #2 Advanced replace (gets matches and replaces with user repr)
-            content = re.sub(
-                r"<@[!&]?([0-9]{17,21})>",
-                lambda x: f"@{self.bot.get_user(int(x.group(1)))}",
-                content,
-            )
+        if content is not None:
+            content = str(content)
+
+            if kwargs.pop("escape_massmentions", True):
+                content = content.replace("@here", "@\u200bhere").replace(
+                    "@everyone", "@\u200beveryone"
+                )
+            if kwargs.pop("escape_mentions", False):
+                # There are 2 options here:
+                # #1 Simple replace
+                # content = re.sub(r"@([!&]?[0-9]{17,21})", "@\u200b\\1", content)
+                #
+                # #2 Advanced replace (gets matches and replaces with user repr)
+                content = re.sub(
+                    r"<@[!&]?([0-9]{17,21})>",
+                    lambda x: f"@{self.bot.get_user(int(x.group(1)))}",
+                    content,
+                )
 
         return await super().send(content, *args, **kwargs)
