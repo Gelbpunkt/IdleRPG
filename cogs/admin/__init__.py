@@ -18,10 +18,11 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 import asyncio
 
 import discord
+
 from discord.ext import commands
 
-from classes.converters import UserWithCharacter
 from utils.checks import is_admin
+from classes.converters import UserWithCharacter
 
 
 class Admin(commands.Cog):

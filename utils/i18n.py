@@ -20,13 +20,14 @@ https://github.com/EmoteCollector/bot/blob/master/emote_collector/utils/i18n.py
 Thanks to lambda and Scragly for precious help!
 """
 import ast
-import builtins
-import contextvars
 import gettext
 import inspect
 import os.path
-from glob import glob
+import builtins
+import contextvars
+
 from os import getcwd
+from glob import glob
 
 BASE_DIR = getcwd()
 default_locale = "en_US"

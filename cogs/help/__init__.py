@@ -18,11 +18,12 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 from typing import Union
 
 import discord
+
 from asyncpg import UniqueViolationError
 from discord.ext import commands
 
-from classes.converters import User
 from utils.checks import is_supporter
+from classes.converters import User
 
 
 def chunks(l, n):

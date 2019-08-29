@@ -16,15 +16,17 @@ You should have received a copy of the GNU Affero General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
 import secrets
+
 from copy import copy
 from decimal import Decimal
 
 import discord
+
 from discord.ext import commands
 
-from cogs.shard_communication import user_on_cooldown as user_cooldown
 from utils import misc as rpgtools
-from utils.checks import has_char, has_money, is_class, update_pet, user_is_patron
+from utils.checks import has_char, is_class, has_money, update_pet, user_is_patron
+from cogs.shard_communication import user_on_cooldown as user_cooldown
 
 
 class Classes(commands.Cog):

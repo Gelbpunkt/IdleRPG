@@ -15,17 +15,19 @@ GNU Affero General Public License for more details.
 You should have received a copy of the GNU Affero General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
-import asyncio
 import os
 import random
+import asyncio
 import secrets
+
 from typing import Optional
 
 import discord
+
 from discord.ext import commands
 
-from classes.converters import CoinSide, IntFromTo, IntGreaterThan, MemberWithCharacter
 from utils.checks import has_char, has_money, user_has_char
+from classes.converters import CoinSide, IntFromTo, IntGreaterThan, MemberWithCharacter
 
 
 class BlackJack:

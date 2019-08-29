@@ -36,10 +36,10 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
 FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
 DEALINGS IN THE SOFTWARE.
 """
-from contextlib import redirect_stdout
 from io import StringIO
 from textwrap import indent
 from traceback import format_exc
+from contextlib import redirect_stdout
 
 
 async def evaluate(bot, body):

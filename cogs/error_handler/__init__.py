@@ -17,15 +17,18 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
 import sys
 import traceback
+
 from asyncio import TimeoutError
 from datetime import timedelta
 
 import discord
+
 from aiohttp import ClientOSError, ContentTypeError, ServerDisconnectedError
-from asyncpg.exceptions import DataError as AsyncpgDataError
 from discord.ext import commands
+from asyncpg.exceptions import DataError as AsyncpgDataError
 
 import utils.checks
+
 from utils.paginator import NoChoice
 
 try:

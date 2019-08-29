@@ -16,13 +16,15 @@ You should have received a copy of the GNU Affero General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
 import copy
+
 from io import BytesIO
 
 import discord
-from asyncpg.exceptions import StringDataRightTruncationError
-from discord.ext import commands
 
-from utils.checks import has_char, is_guild_leader, is_patron, user_is_patron
+from discord.ext import commands
+from asyncpg.exceptions import StringDataRightTruncationError
+
+from utils.checks import has_char, is_patron, user_is_patron, is_guild_leader
 
 
 class Patreon(commands.Cog):

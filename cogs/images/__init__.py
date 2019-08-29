@@ -15,17 +15,19 @@ GNU Affero General Public License for more details.
 You should have received a copy of the GNU Affero General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
-import functools
 import math
-from collections import defaultdict
+import functools
+
 from io import BytesIO
+from collections import defaultdict
 
 import discord
+
 from discord.ext import commands
 from discord.ext.commands import BucketType
 from discord.ext.commands.default import Author
 
-from PIL import Image, ImageFilter, ImageOps
+from PIL import Image, ImageOps, ImageFilter
 
 
 class Images(commands.Cog):

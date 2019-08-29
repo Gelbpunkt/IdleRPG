@@ -16,9 +16,11 @@ You should have received a copy of the GNU Affero General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
 import re
+
 from asyncio import TimeoutError
 
 import discord
+
 from discord.ext import commands
 
 from utils.paginator import NoChoice

@@ -6,10 +6,11 @@ License for non-commercial and the Travitia License for commercial
 use.
 For more information, see README.md and LICENSE.md.
 """
-import datetime
 import re
+import datetime
 
 import discord
+
 from discord.ext import commands
 
 

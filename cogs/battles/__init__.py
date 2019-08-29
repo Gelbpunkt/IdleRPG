@@ -15,15 +15,16 @@ GNU Affero General Public License for more details.
 You should have received a copy of the GNU Affero General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
-import asyncio
 import random
+import asyncio
 
 import discord
+
 from discord.ext import commands
 
+from utils.checks import has_char, has_money
 from classes.converters import IntGreaterThan
 from cogs.shard_communication import user_on_cooldown as user_cooldown
-from utils.checks import has_char, has_money
 
 
 class Battles(commands.Cog):

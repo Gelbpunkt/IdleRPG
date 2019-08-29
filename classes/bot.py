@@ -15,25 +15,27 @@ GNU Affero General Public License for more details.
 You should have received a copy of the GNU Affero General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
-import asyncio
-import base64
-import datetime
 import io
 import os
-import random
 import sys
+import base64
+import random
+import asyncio
+import datetime
 import traceback
 
 import aiohttp
-import aioredis
 import asyncpg
 import discord
+import aioredis
 import fantasy_names as fn
+
 from discord.ext import commands
 
 import config
-from classes.context import Context
+
 from utils import i18n, paginator
+from classes.context import Context
 
 
 class Bot(commands.AutoShardedBot):

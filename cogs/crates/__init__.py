@@ -16,13 +16,15 @@ You should have received a copy of the GNU Affero General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
 import random
+
 from collections import namedtuple
 
 import discord
+
 from discord.ext import commands
 
-from classes.converters import IntGreaterThan, MemberWithCharacter
 from utils.checks import has_char
+from classes.converters import IntGreaterThan, MemberWithCharacter
 
 
 class Crates(commands.Cog):

@@ -15,11 +15,12 @@ GNU Affero General Public License for more details.
 You should have received a copy of the GNU Affero General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
-import asyncio
-import json
 import sys
-from pathlib import Path
+import json
+import asyncio
+
 from time import time
+from pathlib import Path
 from traceback import print_exc
 
 import aiohttp

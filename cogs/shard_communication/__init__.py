@@ -15,16 +15,18 @@ GNU Affero General Public License for more details.
 You should have received a copy of the GNU Affero General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
-import asyncio
-import json
 import re
+import json
+import asyncio
+
+from uuid import uuid4
 from datetime import timedelta
 from traceback import format_exc
-from uuid import uuid4
 
 import discord
-from async_timeout import timeout
+
 from discord.ext import commands
+from async_timeout import timeout
 
 from utils.eval import evaluate as _evaluate
 

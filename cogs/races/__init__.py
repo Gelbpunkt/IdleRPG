@@ -13,6 +13,7 @@ You should have received a copy of the GNU Affero General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
 import discord
+
 from discord.ext import commands
 
 from utils.checks import has_char, is_nothing

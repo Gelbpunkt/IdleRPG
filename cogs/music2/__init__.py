@@ -16,6 +16,7 @@ from json import dumps, loads
 from typing import Union
 
 import wavelink
+
 from discord.ext import commands
 
 from cogs.help import chunks
@@ -85,10 +86,11 @@ class Music2(commands.Cog):
     async def play(self, ctx, *, query: str):
         _("""Query YouTube for a track and play it or add it to the playlist.""")
         try:
+            tracks = await self.bot.wavelink.get_tracks(f"ytsearch:{query}")
+            track = tracks[0] if isinstance(tracks, list) else tracks.tracks[0]
+            del tracks
             track = self.update_track(
-                (await self.bot.wavelink.get_tracks(f"ytsearch:{query}"))[0],
-                requester_id=ctx.author.id,
-                channel_id=ctx.channel.id,
+                track, requester_id=ctx.author.id, channel_id=ctx.channel.id
             )
         except IndexError:
             return await ctx.send(_("No results..."))

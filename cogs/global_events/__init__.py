@@ -18,6 +18,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 import asyncio
 
 import discord
+
 from discord.ext import commands
 
 from utils.loops import queue_manager

@@ -16,17 +16,19 @@ You should have received a copy of the GNU Affero General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
 import asyncio
+
 from io import BytesIO
 
 import discord
+
 from discord.ext import commands
 from discord.ext.commands.default import Author
 
-from classes.converters import IntFromTo, MemberWithCharacter, User
-from cogs.help import chunks
-from cogs.shard_communication import user_on_cooldown as user_cooldown
-from utils import checks
 from utils import misc as rpgtools
+from utils import checks
+from cogs.help import chunks
+from classes.converters import User, IntFromTo, MemberWithCharacter
+from cogs.shard_communication import user_on_cooldown as user_cooldown
 
 
 class Profile(commands.Cog):

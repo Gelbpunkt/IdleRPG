@@ -15,19 +15,20 @@ GNU Affero General Public License for more details.
 You should have received a copy of the GNU Affero General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
+import random
 import asyncio
 import functools
-import random
 
 import discord
+
 from discord.ext import commands
 
+from utils import misc as rpgtools
+from utils import items
+from utils.maze import Maze
+from utils.checks import has_char, has_adventure, has_no_adventure
 from classes.converters import IntFromTo
 from cogs.shard_communication import user_on_cooldown as user_cooldown
-from utils import items
-from utils import misc as rpgtools
-from utils.checks import has_adventure, has_char, has_no_adventure
-from utils.maze import Maze
 
 
 class Adventure(commands.Cog):

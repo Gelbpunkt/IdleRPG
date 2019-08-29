@@ -39,6 +39,7 @@ DEALINGS IN THE SOFTWARE.
 import asyncio
 
 import discord
+
 from discord.ext import commands
 
 from config import primary_colour

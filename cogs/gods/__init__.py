@@ -13,14 +13,16 @@ You should have received a copy of the GNU Affero General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
 import secrets
+
 from io import BytesIO
 
 import discord
+
 from discord.ext import commands
 
+from utils.checks import is_god, has_god, has_char, has_no_god
 from classes.converters import IntGreaterThan, UserWithCharacter
 from cogs.shard_communication import user_on_cooldown as user_cooldown
-from utils.checks import has_char, has_god, has_no_god, is_god
 
 
 class Gods(commands.Cog):
