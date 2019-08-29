@@ -16,17 +16,18 @@ You should have received a copy of the GNU Affero General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
 import asyncio
+import json
 import re
 from datetime import timedelta
 from traceback import format_exc
 from uuid import uuid4
-import json
 
 import discord
 from async_timeout import timeout
 from discord.ext import commands
 
 from utils.eval import evaluate as _evaluate
+
 
 # Cross-process cooldown check (pass this to commands)
 def user_on_cooldown(cooldown: int):

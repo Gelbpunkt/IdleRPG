@@ -778,7 +778,7 @@ We've added several new features and fixed old bugs.
         _("""Searches IdleRPG Wiki for an entry.""")
         try:
             page = (await self.bot.idlewiki.opensearch(query))[0]
-            text = await page.summary()
+            text = await page.text()
         except (aiowiki.exceptions.PageNotFound, IndexError):
             return await ctx.send(_("No entry found."))
         p = commands.Paginator()
