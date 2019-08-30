@@ -15,15 +15,15 @@ GNU Affero General Public License for more details.
 You should have received a copy of the GNU Affero General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
+import copy
 import io
 import re
-import copy
 import textwrap
 import traceback
 import tracemalloc
 
-from importlib import reload as importlib_reload
 from contextlib import redirect_stdout
+from importlib import reload as importlib_reload
 
 import discord
 

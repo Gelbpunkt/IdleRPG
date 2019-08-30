@@ -15,8 +15,8 @@ GNU Affero General Public License for more details.
 You should have received a copy of the GNU Affero General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
-from re import findall
 from json import loads
+from re import findall
 from time import time
 
 import discord

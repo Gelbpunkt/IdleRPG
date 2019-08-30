@@ -21,10 +21,10 @@ from io import BytesIO
 
 import discord
 
-from discord.ext import commands
 from asyncpg.exceptions import StringDataRightTruncationError
+from discord.ext import commands
 
-from utils.checks import has_char, is_patron, user_is_patron, is_guild_leader
+from utils.checks import has_char, is_guild_leader, is_patron, user_is_patron
 
 
 class Patreon(commands.Cog):

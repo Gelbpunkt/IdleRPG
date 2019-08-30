@@ -22,8 +22,8 @@ import discord
 from asyncpg import UniqueViolationError
 from discord.ext import commands
 
-from utils.checks import is_supporter
 from classes.converters import User
+from utils.checks import is_supporter
 
 
 def chunks(l, n):

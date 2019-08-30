@@ -12,11 +12,11 @@ GNU Affero General Public License for more details.
 You should have received a copy of the GNU Affero General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
+import asyncio
 import re
 import time
-import asyncio
 
-from asyncio.subprocess import PIPE, DEVNULL
+from asyncio.subprocess import DEVNULL, PIPE
 
 from utils.paginator import TextPaginator
 

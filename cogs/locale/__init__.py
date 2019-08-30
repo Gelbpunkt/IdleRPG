@@ -15,8 +15,8 @@ GNU Affero General Public License for more details.
 You should have received a copy of the GNU Affero General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
+from asyncpg.exceptions import ForeignKeyViolationError, UniqueViolationError
 from discord.ext import commands
-from asyncpg.exceptions import UniqueViolationError, ForeignKeyViolationError
 
 from utils import i18n
 

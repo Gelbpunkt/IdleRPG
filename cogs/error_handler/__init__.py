@@ -24,8 +24,8 @@ from datetime import timedelta
 import discord
 
 from aiohttp import ClientOSError, ContentTypeError, ServerDisconnectedError
-from discord.ext import commands
 from asyncpg.exceptions import DataError as AsyncpgDataError
+from discord.ext import commands
 
 import utils.checks
 

@@ -15,9 +15,9 @@ GNU Affero General Public License for more details.
 You should have received a copy of the GNU Affero General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
-import random
 import asyncio
 import datetime
+import random
 
 from decimal import Decimal
 
@@ -25,9 +25,9 @@ import discord
 
 from discord.ext import commands
 
-from utils.castle import Castle, Player
-from utils.checks import is_god, has_char, is_admin
 from classes.converters import IntGreaterThan
+from utils.castle import Castle, Player
+from utils.checks import has_char, is_admin, is_god
 
 
 def raid_channel():

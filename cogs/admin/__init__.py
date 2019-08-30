@@ -21,8 +21,8 @@ import discord
 
 from discord.ext import commands
 
-from utils.checks import is_admin
 from classes.converters import UserWithCharacter
+from utils.checks import is_admin
 
 
 class Admin(commands.Cog):

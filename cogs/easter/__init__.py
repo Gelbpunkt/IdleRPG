@@ -19,8 +19,8 @@ import random
 
 from discord.ext import commands
 
-from utils.checks import has_char
 from classes.converters import IntFromTo
+from utils.checks import has_char
 
 
 class Easter(commands.Cog):

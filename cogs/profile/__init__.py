@@ -24,11 +24,11 @@ import discord
 from discord.ext import commands
 from discord.ext.commands.default import Author
 
-from utils import misc as rpgtools
-from utils import checks
+from classes.converters import IntFromTo, MemberWithCharacter, User
 from cogs.help import chunks
-from classes.converters import User, IntFromTo, MemberWithCharacter
 from cogs.shard_communication import user_on_cooldown as user_cooldown
+from utils import checks
+from utils import misc as rpgtools
 
 
 class Profile(commands.Cog):
