@@ -390,9 +390,9 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
         while len(
             bandits
         ) > 0 and datetime.datetime.utcnow() < start + datetime.timedelta(minutes=45):
-            dmg = random.randint(60, 90)  # effective damage the bandit does
+            dmg = random.randint(60, 100)  # effective damage the bandit does
             dmg -= target_data["armor"] * Decimal(
-                random.choice(["0.1", "0.3"])
+                random.choice(["0.1", "0.2"])
             )  # let's substract the shield, ouch
             target_data["hp"] -= dmg  # damage dealt
             em = discord.Embed(title=f"Bandit officers left: `{len(bandits)}`", colour=0x000000)
