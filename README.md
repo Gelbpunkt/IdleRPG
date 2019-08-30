@@ -39,7 +39,7 @@ Note: This requires you to have Redis and Postgres working, and, depending on wh
 ```
 git clone https://github.com/Gelbpunkt/IdleRPG
 cd IdleRPG
-(edit config.py.example to your database credentials)
+(edit config.example.py to your database credentials)
 ./scripts/setup.sh
 (do changes now)
 systemctl start idlerpg

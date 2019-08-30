@@ -1,6 +1,7 @@
 """Ignore this"""
-from discord.ext import commands
 from datetime import timedelta
+
+from discord.ext import commands
 
 """End ignore"""
 
@@ -54,7 +55,6 @@ initial_extensions = [
     "cogs.races",
     "cogs.hungergames",
     "cogs.maths",
-    "cogs.music2",
     "cogs.shard_communication",
 ]
 

@@ -20,21 +20,21 @@
 PATTERN=".*version = \"\(.*\)\".*"
 PATTERN2=".*\"user\": \"\(.*\)\".*"
 PATTERN3=".*\"database\": \"\(.*\)\".*"
-VERSION=$(sed -n "s/$PATTERN/\1/p" < config.py.example)
-DBUSER=$(sed -n "s/$PATTERN2/\1/p" < config.py.example)
-DBNAME=$(sed -n "s/$PATTERN3/\1/p" < config.py.example)
+VERSION=$(sed -n "s/$PATTERN/\1/p" < config.example.py)
+DBUSER=$(sed -n "s/$PATTERN2/\1/p" < config.example.py)
+DBNAME=$(sed -n "s/$PATTERN3/\1/p" < config.example.py)
 
 printf "====================\n"
 printf "IdleRPG Setup Script\n"
 printf "Version $VERSION\n"
 printf "====================\n\n\n"
 printf "WARNING: This script will only work as root or sudo and will touch files.\n"
-printf "Make sure you have config.py.example set to the correct database credentials!\n\n"
+printf "Make sure you have config.example.py set to the correct database credentials!\n\n"
 read -r -p "Press enter to continue"
 
-printf "\n\n\nMoving config.py.example to config.py...\n\n"
+printf "\n\n\nMoving config.example.py to config.py...\n\n"
 
-mv config.py.example config.py
+mv config.example.py config.py
 
 printf "Copying service file to /etc/systemd/system/idlerpg.service...\n\n"
 
