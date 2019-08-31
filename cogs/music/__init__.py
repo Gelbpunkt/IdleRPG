@@ -2,6 +2,7 @@
 The IdleRPG Discord Bot
 Copyright (C) 2018-2019 Diniboy and Gelbpunkt
 This program is free software: you can redistribute it and/or modify
+
 it under the terms of the GNU Affero General Public License as published by
 the Free Software Foundation, either version 3 of the License, or
 (at your option) any later version.
@@ -9,9 +10,12 @@ This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 GNU Affero General Public License for more details.
+
 You should have received a copy of the GNU Affero General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
+import asyncio
+
 from json import dumps, loads
 from typing import Union
 
@@ -20,6 +24,10 @@ import wavelink
 from discord.ext import commands
 
 from cogs.help import chunks
+
+
+class VoteDidNotPass(commands.CheckFailure):
+    pass
 
 
 def is_in_vc():
@@ -36,6 +44,58 @@ def is_in_vc():
 def get_player():
     def predicate(ctx):
         ctx.player = ctx.bot.wavelink.get_player(ctx.guild.id)
+        return True
+
+    return commands.check(predicate)
+
+
+def is_not_locked():
+    def predicate(ctx):
+        return not getattr(ctx.player, "locked", False) or getattr(ctx.player, "dj", None) == ctx.author
+
+    return commands.check(predicate)
+
+
+def vote(action):
+    async def predicate(ctx):
+        if ctx.author == ctx.player.dj:
+            return True
+        if action == "skip":
+            text = _(
+                "{user} wants to skip a track. React if you agree. **{current}/{total}** voted for it!"
+            )
+        members = ctx.bot.get_channel(ctx.player.channel_id).members
+        accepted = {ctx.author}
+        needed = int(len(members) / 2) + 1
+
+        msg = await ctx.send(
+            text.format(user=ctx.author.mention, current=len(accepted), total=needed)
+        )
+
+        def check(r, u):
+            return (
+                u in members
+                and u not in accepted
+                and str(r.emoji) == "\U00002705"
+                and r.message.id == msg.id
+            )
+
+        await msg.add_reaction("\U00002705")
+
+        while len(accepted) < needed:
+            try:
+                r, u = await ctx.bot.wait_for("reaction_add", check=check, timeout=10)
+            except asyncio.TimeoutError:
+                raise VoteDidNotPass()
+            accepted.append(u)
+            await msg.edit(
+                content=text.format(
+                    user=ctx.author.mention, current=len(accepted), total=needed
+                )
+            )
+
+        await msg.delete()
+        await ctx.send(_("Vote passed!"))
         return True
 
     return commands.check(predicate)
@@ -79,8 +139,9 @@ class Music2(commands.Cog):
         node = await self.bot.wavelink.initiate_node(**self.bot.config.lava_creds_new)
         node.set_hook(self.event_hook)
 
-    @is_in_vc()
+    @is_not_locked()
     @get_player()
+    @is_in_vc()
     @commands.command()
     @locale_doc
     async def play(self, ctx, *, query: str):
@@ -97,8 +158,22 @@ class Music2(commands.Cog):
 
         if not ctx.player.is_connected:
             await ctx.player.connect(ctx.voice_channel)
+            # Setup some attributes
+            ctx.player.dj = ctx.author
+            ctx.player.locked = False
 
         await self.add_entry_to_queue(track, ctx.player)
+
+    @vote("skip")
+    @is_not_locked()
+    @get_player()
+    @is_in_vc()
+    @commands.commanx()
+    @locale_doc
+    async def skip(self, ctx):
+        _("""Skip the currently playing song.""")
+        await ctx.player.stop()
+        await ctx.message.add_reaction("✅")
 
     @commands.command()
     @locale_doc
