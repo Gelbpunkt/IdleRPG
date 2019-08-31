@@ -16,9 +16,11 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
 import asyncio
 
+from datetime import timedelta
 from json import dumps, loads
 from typing import Union
 
+import discord
 import wavelink
 
 from discord.ext import commands
@@ -51,7 +53,10 @@ def get_player():
 
 def is_not_locked():
     def predicate(ctx):
-        return not getattr(ctx.player, "locked", False) or getattr(ctx.player, "dj", None) == ctx.author
+        return (
+            not getattr(ctx.player, "locked", False)
+            or getattr(ctx.player, "dj", None) == ctx.author
+        )
 
     return commands.check(predicate)
 
@@ -145,7 +150,9 @@ class Music2(commands.Cog):
     @commands.command(aliases=["scsearch"])
     @locale_doc
     async def play(self, ctx, *, query: str):
-        _("""Query YouTube or SoundCloud for a track and play it or add it to the playlist.""")
+        _(
+            """Query YouTube or SoundCloud for a track and play it or add it to the playlist."""
+        )
         if ctx.invoked_with == "scsearch":
             pre = "scsearch:"
         else:
@@ -172,12 +179,54 @@ class Music2(commands.Cog):
     @is_not_locked()
     @get_player()
     @is_in_vc()
-    @commands.commanx()
+    @commands.command()
     @locale_doc
     async def skip(self, ctx):
         _("""Skip the currently playing song.""")
         await ctx.player.stop()
         await ctx.message.add_reaction("✅")
+
+    @vote("stop")
+    @is_not_locked()
+    @get_player()
+    @is_in_vc()
+    @commands.command(aliases=["leave"])
+    @locale_doc
+    async def stop(self, ctx):
+        _("""Stops the music and leaves voice chat.""")
+        await self.bot.redis.execute("DEL", f"{self.music_prefix}que:{ctx.guild.id}")
+        await ctx.player.stop()
+        await ctx.player.disconnect()
+        await ctx.message.add_reaction("✅")
+
+    @get_player()
+    @is_in_vc()
+    @commands.command(aliases=["q", "que", "cue"])
+    @locale_doc
+    async def queue(self, ctx):
+        _("""Show the next (maximum 5) tracks in the queue.""")
+        entries = await self.bot.redis.execute(
+            "LRANGE", f"{self.music_prefix}que:{ctx.guild.id}", 1, 5
+        )
+        if entries:
+            paginator = commands.Paginator()
+            for entry in entries:
+                entry = self.load_track(loads(entry))
+                paginator.add_line(
+                    f"• {entry.title} ({timedelta(milliseconds=entry.length)}) "
+                    f"- {ctx.guild.get_member(entry.requester_id).display_name}"
+                )
+            queue_length = await self.get_queue_length(ctx.guild.id) - 1
+            text = _("Upcoming entries")
+            await ctx.send(
+                embed=discord.Embed(
+                    title=f"{text} ({len(entries)}/{queue_length})",
+                    description=paginator.pages[0],
+                    color=discord.Color.gold(),
+                )
+            )
+        else:
+            await ctx.send(_(":warning:`No more entries left.`"))
 
     @commands.command()
     @locale_doc
