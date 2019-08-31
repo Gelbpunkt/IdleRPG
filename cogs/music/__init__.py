@@ -73,6 +73,13 @@ def is_not_locked():
     return commands.check(predicate)
 
 
+def is_dj():
+    def predicate(ctx):
+        return getattr(ctx.player, "dj", None) == ctx.author
+
+    return commands.check(predicate)
+
+
 def vote(action):
     async def predicate(ctx):
         if ctx.author == ctx.player.dj:
@@ -81,9 +88,29 @@ def vote(action):
             text = _(
                 "{user} wants to skip a track. React if you agree. **{current}/{total}** voted for it!"
             )
-        members = ctx.bot.get_channel(ctx.player.channel_id).members
+        elif action == "pause_resume":
+            text = _(
+                "{user} wants to pause/resume the player. React if you agree. **{current}/{total}** voted for it!"
+            )
+        elif action == "stop":
+            text = _(
+                "{user} wants to stop playback. React if you agree. **{current}/{total}** voted for it!"
+            )
+        elif action == "volume":
+            text = _(
+                "{user} wants to change the volume. React if you agree. **{current}/{total}** voted for it!"
+            )
+        elif action == "loop":
+            text = _(
+                "{user} wants to toggle repeating. React if you agree. **{current}/{total}** voted for it!"
+            )
+        members = [
+            m
+            for m in ctx.bot.get_channel(int(ctx.player.channel_id)).members
+            if m != ctx.guild.me
+        ]
         accepted = {ctx.author}
-        needed = int(len(members) / 2) + 1
+        needed = int((len(members) - 1) / 2) + 1
 
         msg = await ctx.send(
             text.format(user=ctx.author.mention, current=len(accepted), total=needed)
@@ -104,7 +131,7 @@ def vote(action):
                 r, u = await ctx.bot.wait_for("reaction_add", check=check, timeout=10)
             except asyncio.TimeoutError:
                 raise VoteDidNotPass()
-            accepted.append(u)
+            accepted.add(u)
             await msg.edit(
                 content=text.format(
                     user=ctx.author.mention, current=len(accepted), total=needed
@@ -184,8 +211,38 @@ class Music2(commands.Cog):
             # Setup some attributes
             ctx.player.dj = ctx.author
             ctx.player.locked = False
+            ctx.player.loop = False
 
         await self.add_entry_to_queue(track, ctx.player)
+
+    @is_dj()
+    @get_player()
+    @is_in_vc()
+    @commands.command(aliases=["unlock"])
+    @locale_doc
+    async def lock(self, ctx):
+        _(
+            """Lock/Unlock the player if you are the DJ. Allows noone else to control music."""
+        )
+        if ctx.player.locked:
+            ctx.player.locked = False
+        else:
+            ctx.player.locked = True
+        await ctx.message.add_reaction("✅")
+
+    @vote("loop")
+    @is_not_locked()
+    @get_player()
+    @is_in_vc()
+    @commands.command(aliases=["repeat"])
+    @locale_doc
+    async def loop(self, ctx):
+        _("""Toggle repeat of the current track.""")
+        if ctx.player.loop:
+            ctx.player.loop = False
+        else:
+            ctx.player.loop = True
+        await ctx.message.add_reaction("✅")
 
     @vote("skip")
     @is_not_locked()
@@ -312,9 +369,16 @@ class Music2(commands.Cog):
         playing_embed.add_field(name=_("Volume"), value=f"{ctx.player.volume} %")
         if ctx.player.paused:
             playing_embed.add_field(name=_("Playing status"), value=_("`⏸Paused`"))
+        playing_embed.add_field(name=_("DJ"), value=ctx.player.dj.mention)
+        playing_embed.add_field(
+            name=_("Locked"), value=_("Yes") if ctx.player.locked else _("No")
+        )
+        playing_embed.add_field(
+            name=_("Looping"), value=_("Yes") if ctx.player.loop else _("No")
+        )
         if not current_song.is_stream:
             button_position = int(
-                100 * (ctx.player.position / (current_song.length / 1000)) / 2.5
+                100 * (ctx.player.position / current_song.length) / 2.5
             )
             controller = (
                 f"```ɴᴏᴡ ᴘʟᴀʏɪɴɢ: {current_song.title}\n"
@@ -364,9 +428,18 @@ class Music2(commands.Cog):
 
     @commands.command()
     @locale_doc
-    async def lyrics(self, ctx, *, query: str):
-        _("""Retrieves song lyrics.""")
-        if len(query) < 3:
+    async def lyrics(self, ctx, *, query: str = None):
+        _(
+            """Retrieves song lyrics. If no song specified, will check the current playing song."""
+        )
+        if query is None:
+            track = self.bot.wavelink.get_player(ctx.guild.id, cls=Player).current
+            if not track:
+                return await ctx.send(
+                    _("I am not playing. Please specify a song to look for.")
+                )
+            query = track.title
+        elif len(query) < 3:
             return await ctx.send(_(":x: Look for a longer query!"), delete_after=5)
 
         headers = {"Authorization": f"Bearer {self.bot.config.ksoft_key}"}
@@ -467,10 +540,14 @@ class Music2(commands.Cog):
             return False
 
     async def on_track_end(self, player: wavelink.Player):
-        await self.bot.redis.execute(
-            "LPOP", f"{self.music_prefix}que:{player.guild_id}"
-        )  # remove the previous entry
-        if not await self.get_queue_length(player.guild_id):
+        if not player.loop:
+            await self.bot.redis.execute(
+                "LPOP", f"{self.music_prefix}que:{player.guild_id}"
+            )  # remove the previous entry
+        if (
+            not await self.get_queue_length(player.guild_id)
+            or len(self.bot.get_channel(int(player.channel_id)).members) == 1
+        ):
             # That was the last track
             await player.disconnect()
             await self.bot.redis.execute(
