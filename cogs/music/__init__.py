@@ -15,6 +15,7 @@ You should have received a copy of the GNU Affero General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
 import asyncio
+import time
 
 from datetime import timedelta
 from json import dumps, loads
@@ -25,11 +26,22 @@ import wavelink
 
 from discord.ext import commands
 
+from classes.converters import IntFromTo
 from cogs.help import chunks
 
 
 class VoteDidNotPass(commands.CheckFailure):
     pass
+
+
+class Player(wavelink.Player):
+    @property
+    def position(self):
+        if self.paused:
+            return min(self.last_position, self.current.duration)
+
+        difference = (time.time() * 1000) - self.last_update
+        return min(self.last_position + difference, self.current.duration)
 
 
 def is_in_vc():
@@ -45,7 +57,7 @@ def is_in_vc():
 
 def get_player():
     def predicate(ctx):
-        ctx.player = ctx.bot.wavelink.get_player(ctx.guild.id)
+        ctx.player = ctx.bot.wavelink.get_player(ctx.guild.id, cls=Player)
         return True
 
     return commands.check(predicate)
@@ -198,6 +210,128 @@ class Music2(commands.Cog):
         await ctx.player.stop()
         await ctx.player.disconnect()
         await ctx.message.add_reaction("✅")
+
+    @vote("volume")
+    @is_not_locked()
+    @get_player()
+    @is_in_vc()
+    @commands.command(aliases=["vol"])
+    @locale_doc
+    async def volume(self, ctx, volume: IntFromTo(0, 100)):
+        _("""Changes the playback's volume""")
+        if volume > ctx.player.volume:
+            vol_warn = await ctx.send(
+                _(
+                    ":warning:`Playback volume is going to change to {volume} in 5 seconds. To avoid the sudden earrape, control the volume on client side!`"
+                ).format(volume=volume)
+            )
+            await asyncio.sleep(5)
+            await ctx.player.set_volume(volume)
+            await vol_warn.delete()
+        else:
+            await ctx.player.set_volume(volume)
+        await ctx.send(
+            _(":white_check_mark:` Volume successfully changed to {volume}!`").format(
+                volume=volume
+            ),
+            delete_after=5,
+        )
+
+    @vote("pause_resume")
+    @is_not_locked()
+    @get_player()
+    @is_in_vc()
+    @commands.command(aliases=["resume"])
+    @locale_doc
+    async def pause(self, ctx):
+        _("""Toggles the music playback's paused state""")
+        if not ctx.player.paused:
+            await ctx.player.set_pause(True)
+            await ctx.send(_(":white_check_mark:`Song paused!`"), delete_after=5)
+        else:
+            await ctx.player.set_pause(False)
+            await ctx.send(_(":white_check_mark:`Song resumed!`"), delete_after=5)
+
+    @get_player()
+    @is_in_vc()
+    @commands.command(aliases=["np"])
+    @locale_doc
+    async def now_playing(self, ctx):
+        _("""Displays some information about the current song.""")
+        current_song = self.load_track(
+            loads(
+                await self.bot.redis.execute(
+                    "LINDEX", f"{self.music_prefix}que:{ctx.guild.id}", 0
+                )
+            )
+        )
+
+        if not (ctx.guild and ctx.author.color == discord.Color.default()):
+            embed_color = ctx.author.color
+        else:
+            embed_color = self.bot.config.primary_colour
+
+        playing_embed = discord.Embed(title=_("Now playing..."), colour=embed_color)
+        playing_embed.add_field(
+            name=_("Title"), value=f"```{current_song.title}```", inline=False
+        )
+        if (author := current_song.info.get("author")) :
+            playing_embed.add_field(name=_("Uploader"), value=author)
+        if current_song.length and not current_song.is_stream:
+            try:
+                playing_embed.add_field(
+                    name=_("Length"), value=timedelta(milliseconds=current_song.length)
+                )
+                playing_embed.add_field(
+                    name=_("Remaining"),
+                    value=str(
+                        timedelta(milliseconds=current_song.length)
+                        - timedelta(milliseconds=ctx.player.position)
+                    ).split(".")[0],
+                )
+                playing_embed.add_field(
+                    name=_("Position"),
+                    value=str(timedelta(milliseconds=ctx.player.position)).split(".")[
+                        0
+                    ],
+                )
+            except OverflowError:  # we cannot do anything if C cannot handle it
+                pass
+        elif current_song.is_stream:
+            playing_embed.add_field(name=_("Length"), value="Live")
+        else:
+            playing_embed.add_field(name=_("Length"), value="N/A")
+        text = _("Click me!")
+        if current_song.uri:
+            playing_embed.add_field(
+                name=_("Link to the original"),
+                value=f"**[{text}]({current_song.uri})**",
+            )
+        if current_song.thumb:
+            playing_embed.set_thumbnail(url=current_song.thumb)
+        playing_embed.add_field(name=_("Volume"), value=f"{ctx.player.volume} %")
+        if ctx.player.paused:
+            playing_embed.add_field(name=_("Playing status"), value=_("`⏸Paused`"))
+        if not current_song.is_stream:
+            button_position = int(
+                100 * (ctx.player.position / (current_song.length / 1000)) / 2.5
+            )
+            controller = (
+                f"```ɴᴏᴡ ᴘʟᴀʏɪɴɢ: {current_song.title}\n"
+                f"{(button_position - 1) * '─'}⚪{(40 - button_position) * '─'}\n ◄◄⠀{'▐▐' if not ctx.player.paused else '▶'} ⠀►►⠀⠀　　⠀ "
+                f"{str(timedelta(milliseconds=ctx.player.position)).split('.')[0]} / {timedelta(seconds=int(current_song.length / 1000))}\n{11*' '}───○ 🔊⠀　　　ᴴᴰ ⚙ ❐ ⊏⊐```"
+            )
+            playing_embed.description = controller
+        else:
+            playing_embed.description = _("```No information```")
+        if (
+            user := ctx.guild.get_member(current_song.requester_id)
+        ) :  # check to avoid errors on guild leave
+            playing_embed.set_footer(
+                text=_("Song requested by: {user}").format(user=user.display_name),
+                icon_url=user.avatar_url_as(format="png", size=64),
+            )
+        await ctx.send(embed=playing_embed)
 
     @get_player()
     @is_in_vc()
