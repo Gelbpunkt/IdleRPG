@@ -128,30 +128,54 @@ class Store(commands.Cog):
     @locale_doc
     async def activate(self, ctx, boostertype: str.lower):
         _("""Activate a booster.""")
-        if boostertype not in ["time", "luck", "money"]:
+        if boostertype not in ["time", "luck", "money", "all"]:
             return await ctx.send(
-                _("That is not a valid booster type. Must be `time/luck/money`.")
+                _("That is not a valid booster type. Must be `time/luck/money/all`.")
             )
-        boosters = ctx.character_data[f"{boostertype}_booster"]
-        if not boosters:
-            return await ctx.send(_("You don't have any of these boosters."))
-        check = await self.bot.get_booster(ctx.author, boostertype)
-        if check:
+        if boostertype != "all":
+            boosters = ctx.character_data[f"{boostertype}_booster"]
+            if not boosters:
+                return await ctx.send(_("You don't have any of these boosters."))
+            check = await self.bot.get_booster(ctx.author, boostertype)
+            if check:
+                if not await ctx.confirm(
+                    _(
+                        "This booster is already running. Do you want to refresh it anyways?"
+                    )
+                ):
+                    return
+
+            await self.bot.pool.execute(
+                f'UPDATE profile SET "{boostertype}_booster"="{boostertype}_booster"-1 WHERE "user"=$1;',
+                ctx.author.id,
+            )
+            await self.bot.activate_booster(ctx.author, boostertype)
+            await ctx.send(
+                _(
+                    "Successfully activated a **{booster} booster** for the next **24 hours**!"
+                ).format(booster=boostertype.title())
+            )
+        else:
+            for i in ["time", "luck", "money"]:
+                if not ctx.character_data[f"{i}_booster"]:
+                    return await ctx.send(_("You don't have any of these boosters."))
             if not await ctx.confirm(
-                _("This booster is already running. Do you want to refresh it anyways?")
+                _(
+                    "This will overwrite all active boosters and refresh them. Are you sure?"
+                )
             ):
                 return
 
-        await self.bot.pool.execute(
-            f'UPDATE profile SET "{boostertype}_booster"="{boostertype}_booster"-1 WHERE "user"=$1;',
-            ctx.author.id,
-        )
-        await self.bot.activate_booster(ctx.author, boostertype)
-        await ctx.send(
-            _(
-                "Successfully activated a **{booster} booster** for the next **24 hours**!"
-            ).format(booster=boostertype.title())
-        )
+            await self.bot.pool.execute(
+                'UPDATE profile SET "time_booster"="time_booster"-1, "luck_booster"="luck_booster"-1, "money_booster"="money_booster"-1 WHERE "user"=$1;',
+                ctx.author.id,
+            )
+            await self.bot.activate_booster(ctx.author, "time")
+            await self.bot.activate_booster(ctx.author, "luck")
+            await self.bot.activate_booster(ctx.author, "money")
+            await ctx.send(
+                _("Successfully activated all boosters for the next **24 hours**!")
+            )
 
 
 def setup(bot):

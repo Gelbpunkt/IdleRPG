@@ -320,11 +320,14 @@ class Marriage(commands.Cog):
                 ).format(max_=max_)
             )
         names = [name["name"] for name in names]
+        user = self.bot.get_user(marriage)
+        if not user:
+            return await ctx.send(_("Your spouse is not here."))
         if not await ctx.confirm(
-            _("<@{marriage}>, do you want to make a child with {author}?").format(
-                marriage=marriage, author=ctx.author.mention
+            _("{user}, do you want to make a child with {author}?").format(
+                user=user.mention, author=ctx.author.mention
             ),
-            user=self.bot.get_user(marriage),
+            user=user,
         ):
             return await ctx.send(_("O.o not in the mood today?"))
 
@@ -347,7 +350,7 @@ class Marriage(commands.Cog):
         def check(msg):
             return (
                 msg.author.id in [ctx.author.id, marriage]
-                and len(msg.content) <= 20
+                and 1 <= len(msg.content) <= 20
                 and msg.content not in names
                 and msg.channel.id == ctx.channel.id
             )

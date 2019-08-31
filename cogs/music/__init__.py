@@ -104,6 +104,10 @@ def vote(action):
             text = _(
                 "{user} wants to toggle repeating. React if you agree. **{current}/{total}** voted for it!"
             )
+        elif action == "equalizer":
+            text = _(
+                "{user} wants to change the equalizer. React if you agree. **{current}/{total}** voted for it!"
+            )
         members = [
             m
             for m in ctx.bot.get_channel(int(ctx.player.channel_id)).members
@@ -212,6 +216,7 @@ class Music2(commands.Cog):
             ctx.player.dj = ctx.author
             ctx.player.locked = False
             ctx.player.loop = False
+            ctx.player.eq = "Flat"
 
         await self.add_entry_to_queue(track, ctx.player)
 
@@ -309,6 +314,22 @@ class Music2(commands.Cog):
             await ctx.player.set_pause(False)
             await ctx.send(_(":white_check_mark:`Song resumed!`"), delete_after=5)
 
+    @vote("equalizer")
+    @is_not_locked()
+    @get_player()
+    @is_in_vc()
+    @commands.command(aliases=["equaliser", "eq"])
+    @locale_doc
+    async def equalizer(self, ctx, eq: str.upper):
+        _("""Sets the equalizer. May be flat, piano, metal or boost.""")
+        if eq not in ctx.player.equalizers:
+            return await ctx.send(
+                _("Not a valid equalizer. May be flat, piano, metal or boost.")
+            )
+        await ctx.player.set_preq(eq)
+        ctx.player.eq = eq.title()
+        await ctx.message.add_reaction("✅")
+
     @get_player()
     @is_in_vc()
     @commands.command(aliases=["np"])
@@ -376,6 +397,7 @@ class Music2(commands.Cog):
         playing_embed.add_field(
             name=_("Looping"), value=_("Yes") if ctx.player.loop else _("No")
         )
+        playing_embed.add_field(name=_("Equalizer"), value=ctx.player.eq)
         if not current_song.is_stream:
             button_position = int(
                 100 * (ctx.player.position / current_song.length) / 2.5

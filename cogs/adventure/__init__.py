@@ -422,7 +422,19 @@ Adventure name: `{adventure}`"""
 
         async with self.bot.pool.acquire() as conn:
 
-            if random.randint(1, 10) < 10:
+            if (
+                random.randint(
+                    (
+                        2
+                        if self.bot.in_class_line(
+                            ctx.character_data["class"], "Ritualist"
+                        )
+                        else 1
+                    ),
+                    10,
+                )
+                < 10
+            ):
                 minstat = round(num * luck_multiply)
                 maxstat = round(5 + int(num * 1.5) * luck_multiply)
                 item = await self.bot.create_random_item(

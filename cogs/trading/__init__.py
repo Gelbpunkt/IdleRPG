@@ -95,6 +95,8 @@ class Trading(commands.Cog):
                         itemid=itemid
                     )
                 )
+            if item["owner"] == ctx.author:
+                return await ctx.send(_("You may not buy your own items."))
             if ctx.character_data["money"] < item["price"]:
                 return await ctx.send(_("You're too poor to buy this item."))
             await conn.execute(
