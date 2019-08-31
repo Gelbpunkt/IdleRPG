@@ -293,7 +293,7 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
             headers={"Authorization": self.bot.config.raidauth},
         )
         bandits = [
-            {"hp": random.randint(4000, 5000), "id": i + 1} for i in range(bandits)
+            {"hp": random.randint(5000, 7000), "id": i + 1} for i in range(bandits)
         ]
         payout = sum(i["hp"] for i in bandits)
         await ctx.send(
@@ -329,14 +329,16 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
         await ctx.send("**Bandit Officer**: Ready to charge!!")
         await asyncio.sleep(60)
         await ctx.send("**The bandit officers arrive in 1 minute**")
-        await asyncio.sleep(30)
+        await asyncio.sleep(15)
+        await ctx.send("**The God of Salutations just gave every defender some HP.**")
+        await asyncio.sleep(15)
         await ctx.send("**The bandit officers arrive in 30 seconds**")
         await asyncio.sleep(10)
         await ctx.send("**The bandit officers arrive in 20 seconds**")
         await asyncio.sleep(10)
         await ctx.send("**Bandit Officer**: For our lord and savior, War God Fox!!")
         await asyncio.sleep(10)
-        await ctx.send("**The bandit officers are charging! Fetching participant data... Hang on!**")
+        await ctx.send("**The bandit officers are charging!! Fetching participant data... Hang on!**")
 
         async with self.bot.session.get(
             "https://raid.travitia.xyz/joined",
@@ -380,7 +382,7 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
                 defmultiply = j["defmultiply"]
             deff = j["armor"] * defmultiply if j else 0
             dmg, deff = await self.bot.generate_stats(i, dmg, deff)
-            raid[u] = {"hp": 100, "armor": deff, "damage": dmg}
+            raid[u] = {"hp": 200, "armor": deff, "damage": dmg}
 
         await ctx.send("**Done getting data!**")
 
@@ -390,7 +392,7 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
         while len(
             bandits
         ) > 0 and datetime.datetime.utcnow() < start + datetime.timedelta(minutes=45):
-            dmg = random.randint(60, 100)  # effective damage the bandit does
+            dmg = random.randint(80, 150)  # effective damage the bandit does
             dmg -= target_data["armor"] * Decimal(
                 random.choice(["0.1", "0.2"])
             )  # let's substract the shield, ouch
