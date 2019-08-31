@@ -142,12 +142,16 @@ class Music2(commands.Cog):
     @is_not_locked()
     @get_player()
     @is_in_vc()
-    @commands.command()
+    @commands.command(aliases=["scsearch"])
     @locale_doc
     async def play(self, ctx, *, query: str):
-        _("""Query YouTube for a track and play it or add it to the playlist.""")
+        _("""Query YouTube or SoundCloud for a track and play it or add it to the playlist.""")
+        if ctx.invoked_with == "scsearch":
+            pre = "scsearch:"
+        else:
+            pre = "ytsearch:"
         try:
-            tracks = await self.bot.wavelink.get_tracks(f"ytsearch:{query}")
+            tracks = await self.bot.wavelink.get_tracks(f"{pre}{query}")
             track = tracks[0] if isinstance(tracks, list) else tracks.tracks[0]
             del tracks
             track = self.update_track(
