@@ -227,7 +227,7 @@ class Classes(commands.Cog):
     @commands.command()
     @locale_doc
     async def tree(self, ctx):
-        """Evolve tree."""
+        _("""Evolve tree.""")
         await ctx.send(
             """```
 Level 0   |  Level 5    |  Level 10     | Level 15        |  Level 20
@@ -306,12 +306,12 @@ Priest   ->  Mysticist ->  Summoner    -> Seer           ->  Ritualist
     async def feed(self, ctx):
         _("""[Ranger Only] Feed your pet.""")
         items = [
-            (_("Potato"), 100, ":potato:", 1),
-            (_("Apple"), 300, ":apple:", 2),
-            (_("Cucumber"), 500, ":cucumber:", 4),
-            (_("Meat"), 1500, ":meat_on_bone:", 10),
-            (_("Salad"), 2500, ":salad:", 20),
-            (_("Adrian's Power Poop"), 20000, ":poop:", 100),
+            (_("Potato"), 10, ":potato:", 1),
+            (_("Apple"), 30, ":apple:", 2),
+            (_("Cucumber"), 50, ":cucumber:", 4),
+            (_("Meat"), 150, ":meat_on_bone:", 10),
+            (_("Salad"), 250, ":salad:", 20),
+            (_("Adrian's Power Poop"), 2000, ":poop:", 100),
         ]
         item = items[
             await self.bot.paginator.Choose(
@@ -348,12 +348,12 @@ Priest   ->  Mysticist ->  Summoner    -> Seer           ->  Ritualist
     async def drink(self, ctx):
         _("""[Ranger Only] Give your pet something to drink.""")
         items = [
-            (_("Some Water"), 100, ":droplet:", 1),
-            (_("A bottle of water"), 300, ":baby_bottle:", 2),
-            (_("Cocktail"), 500, ":cocktail:", 4),
-            (_("Wine"), 1500, ":wine_glass:", 10),
-            (_("Beer"), 2500, ":beer:", 20),
-            (_("Adrian's Cocktail"), 20000, ":tropical_drink:", 100),
+            (_("Some Water"), 10, ":droplet:", 1),
+            (_("A bottle of water"), 30, ":baby_bottle:", 2),
+            (_("Cocktail"), 50, ":cocktail:", 4),
+            (_("Wine"), 150, ":wine_glass:", 10),
+            (_("Beer"), 250, ":beer:", 20),
+            (_("Adrian's Cocktail"), 2000, ":tropical_drink:", 100),
         ]
         item = items[
             await self.bot.paginator.Choose(
@@ -405,7 +405,7 @@ Priest   ->  Mysticist ->  Summoner    -> Seer           ->  Ritualist
     @update_pet()
     @has_char()
     @is_class("Ranger")
-    @user_cooldown(43200)  # We are mean, indeed
+    @user_cooldown(21600)  # We are mean, indeed
     @pet.command(aliases=["fun"])
     @locale_doc
     async def play(self, ctx):
