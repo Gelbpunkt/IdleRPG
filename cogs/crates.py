@@ -115,8 +115,8 @@ class Crates(commands.Cog):
                 minstat, maxstat = (49, 50)
             elif rand < 5:  # 30% 46-48
                 minstat, maxstat = (46, 48)
-            else:  # 50% 41-45
-                minstat, maxstat = (41, 45)
+            else:  # 50% 42-45
+                minstat, maxstat = (42, 45)
 
         item = await self.bot.create_random_item(
             minstat=minstat, maxstat=maxstat, minvalue=1, maxvalue=250, owner=ctx.author
