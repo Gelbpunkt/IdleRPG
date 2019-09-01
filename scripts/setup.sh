@@ -16,42 +16,130 @@
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
+bold=$(tput bold)
+normal=$(tput sgr0)
+cwd=$(pwd)
 
-PATTERN=".*version = \"\(.*\)\".*"
-PATTERN2=".*\"user\": \"\(.*\)\".*"
-PATTERN3=".*\"database\": \"\(.*\)\".*"
-VERSION=$(sed -n "s/$PATTERN/\1/p" < config.example.py)
-DBUSER=$(sed -n "s/$PATTERN2/\1/p" < config.example.py)
-DBNAME=$(sed -n "s/$PATTERN3/\1/p" < config.example.py)
+if [ "$EUID" -ne 0 ]
+  then echo "Please run as root"
+  exit
+else
+  echo "Check... Running as root OK"
+fi
+
+if [ -x "$(command -v podman)" ]; then
+    echo "Check... Podman installed OK"
+else
+    echo "podman is not installed. Use your package manager"
+fi
+
+prompt_paths () {
+    read -p "Path to okapi: " okapi_path
+    okapi_path=$(echo $okapi_path | sed 's:/*$::')
+    read -p "Path to teatro: " teatro_path
+    teatro_path=$(echo $teatro_path | sed 's:/*$::')
+}
+
+get_dependencies () {
+    printf "Cloning okapi and teatro...\n"
+    printf "Please enter a directory for the files\n"
+    printf "e.g. /home/kevin/ will install to /home/kevin/okapi and /home/kevin/teatro\n"
+    read -p "Enter a path (must exist already): " base_dir
+    base_dir=$(echo $base_dir | sed 's:/*$::')
+    printf "Entering ${base_dir}\n\n"
+    cd $base_dir
+    printf "Cloning...\n"
+    git clone https://github.com/Kenvyra/okapi
+    git clone https://github.com/Kenvyra/teatro
+    okapi_path="${base_dir}/okapi"
+    teatro_path="${base_dir}/teatro"
+    printf "Done cloning. Going back.\n"
+    cd $cwd
+}
 
 printf "====================\n"
 printf "IdleRPG Setup Script\n"
-printf "Version $VERSION\n"
+printf "Version 2.0\n"
 printf "====================\n\n\n"
-printf "WARNING: This script will only work as root or sudo and will touch files.\n"
-printf "Make sure you have config.example.py set to the correct database credentials!\n\n"
-read -r -p "Press enter to continue"
+printf "This script will walk you through setting up Podman with IdleRPG and its components\n\n${bold}Make sure you are in the base directory of IdleRPG${normal}\n\n"
 
-printf "\n\n\nMoving config.example.py to config.py...\n\n"
+printf "IdleRPG depends on okapi and teatro.\n"
 
-mv config.example.py config.py
+while true; do
+    read -p "Are they cloned? [y/n] " yn
+    case $yn in
+        [Yy]* ) prompt_paths; break;;
+        [Nn]* ) get_dependencies; break;;
+        * ) printf "Please answer yes or no.\n";;
+    esac
+done
 
-printf "Copying service file to /etc/systemd/system/idlerpg.service...\n\n"
+printf "\n\nDependencies OK\n"
+printf "Okapi Path: ${okapi_path}\n"
+printf "Teatro Path: ${teatro_path}\n\n"
 
-sed -i "s:/path/to/launcher.py:$(pwd)/launcher.py:" idlerpg.service
-sed -i "s:my_username:$(whoami)" idlerpg.service
-cp idlerpg.service /etc/systemd/system/idlerpg.service
+printf "Next is the PostgreSQL installation.\n"
+printf "We will generate a one-time startup file to load the schema\n"
+read -p "IdleRPG Database User: " idlerpg_db_user
+printf "${idlerpg_db_user} Password: "
+read -s idlerpg_db_user_password
+printf "\n"
+read -p "Teatro Database User: " teatro_db_user
+printf "${teatro_db_user} Password: "
+read -s teatro_db_user_password
 
-printf "Replacing schema username with $DBUSER...\n\n"
+printf "\n${idlerpg_db_user} and ${teatro_db_user} will be created...\n"
 
-sed -i "s:jens:$DBUSER:" schema.sql
+printf "Generating the sql file...\n"
 
-printf "Loading database schema...\n\n"
+header="
+    CREATE USER ${idlerpg_db_user};
+    CREATE USER ${teatro_db_user};
+    CREATE DATABASE idlerpg;
+    GRANT ALL PRIVILEGES ON DATABASE idlerpg TO ${idlerpg_db_user};
+    GRANT ALL PRIVILEGES ON DATABASE idlerpg TO ${teatro_db_user};
+    ALTER USER ${idlerpg_db_user} WITH PASSWORD '${idlerpg_db_user_password}';
+    ALTER USER ${teatro_db_user} WITH PASSWORD '${teatro_db_user_password}';
+"
+sed -i "s:jens:${idlerpg_db_user}:" schema.sql
+schema=$(<schema.sql)
+script="
+#!/bin/bash
+set -e
 
-psql $DBNAME < schema.sql
+psql -v ON_ERROR_STOP=1 --username \"\$POSTGRES_USER\" --dbname \"\$POSTGRES_DB\" <<-EOSQL
+${header}
+EOSQL
+psql -v ON_ERROR_STOP=1 --username \"\$POSTGRES_USER\" --dbname idlerpg <<-EOSQL
+${schema}
+EOSQL
+"
 
-printf "Installing dependencies...\n\n"
+echo "${script}" >> init.sh
+exit
 
-pip3 install -r requirements.txt
+printf "Creating podman pod...\n"
+podman pod create -p 7666:7666 -n idlerpg
+printf "Creating /opt directories for mounting configs...\n"
+mkdir /opt/pgdata
+mkdir /opt/redisdata
+mkdir /opt/andesite
+mkdir /opt/teatro
+mkdir /opt/pginit
+mkdir /opt/idlerpg
+mv init.sh /opt/pginit/init.sh
 
-printf "Done! Use systemctl start idlerpg to start the bot! Before, you may want to edit config.py more\n"
+printf "Modifying unit file paths for podman builds...\n"
+
+sed -i "s:IDLERPG_PATH:${cwd}:" units/podman-idlerpg.service
+sed -i "s:OKAPI_PATH:${okapi_path}:" units/podman-okapi.service
+sed -i "s:TEATRO_PATH:${teatro_path}:" units/podman-teatro.service
+
+printf "Copying units...\n"
+cp units/* /etc/systemd/system/
+
+printf "Done.\n"
+printf "Create /opt/teatro/config.json with the teatro config (https://github.com/Kenvyra/teatro/blob/master/config.example.json)\n"
+printf "Create /opt/idlerpg/config.py with the IdleRPG config (https://github.com/Gelbpunkt/IdleRPG/blob/v4/config.example.py)\n"
+printf "Create /opt/andesite/application.conf with the Andesite config (https://github.com/natanbc/andesite-node/blob/master/application.conf.example)\n"
+printf "Then start your units (probably build them manually due to systemd timeout) and enjoy :)\n"
