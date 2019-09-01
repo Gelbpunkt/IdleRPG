@@ -124,7 +124,6 @@ EOSQL
 "
 
 echo "${script}" >> init.sh
-exit
 
 printf "Creating podman pod...\n"
 podman pod create -p 7666:7666 -n idlerpg
