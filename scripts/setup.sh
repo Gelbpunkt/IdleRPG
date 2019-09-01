@@ -136,6 +136,8 @@ mkdir /opt/teatro
 mkdir /opt/pginit
 mkdir /opt/idlerpg
 mv init.sh /opt/pginit/init.sh
+chmod 0777 /opt/pgdata
+chmod 0777 /opt/redisdata
 
 printf "Modifying unit file paths for podman builds...\n"
 

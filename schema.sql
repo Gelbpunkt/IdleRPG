@@ -31,21 +31,6 @@ SET xmloption = content;
 SET client_min_messages = warning;
 SET row_security = off;
 
---
--- Name: array_diff(anyarray, anyarray); Type: FUNCTION; Schema: public; Owner: jens
---
-
-CREATE FUNCTION public.array_diff(array1 anyarray, array2 anyarray) RETURNS anyarray
-    LANGUAGE sql IMMUTABLE
-    AS $$
-    select coalesce(array_agg(elem), '{}')
-    from unnest(array1) elem
-    where elem <> all(array2)
-$$;
-
-
-ALTER FUNCTION public.array_diff(array1 anyarray, array2 anyarray) OWNER TO jens;
-
 SET default_tablespace = '';
 
 SET default_with_oids = false;
