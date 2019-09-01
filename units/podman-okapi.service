@@ -3,7 +3,7 @@ Description=Okapi Container
 
 [Service]
 Type=simple
-ExecStartPre=/usr/bin/podman build -t okapi:latest /home/web/okapi.travitia.xyz/
+ExecStartPre=/usr/bin/podman build -t okapi:latest OKAPI_PATH
 ExecStart=/usr/bin/podman run --rm --name okapi --pod idlerpg okapi:latest
 ExecReload=-/usr/bin/podman stop okapi
 ExecStop=-/usr/bin/podman stop okapi
