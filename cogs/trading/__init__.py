@@ -240,6 +240,8 @@ class Trading(commands.Cog):
         self, ctx, itemid: int, price: IntFromTo(0, 100_000_000), user: discord.Member
     ):
         _("""Offer an item to a specific user.""")
+        if user == ctx.author:
+            return await ctx.send(_("You may not offer items to yourself."))
         item = await self.bot.pool.fetchrow(
             "SELECT * FROM inventory i JOIN allitems ai ON (i.item=ai.id) WHERE ai.id=$1 AND ai.owner=$2;",
             itemid,
