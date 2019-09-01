@@ -1364,10 +1364,10 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
             text = ""
             if cyberus_skill == "enragement":
                 text = "Cyberus takes **10%** more damage due to **enragement**.\n"
-                dmg_to_take += round(base_dmg * 0.1)
+                dmg_to_take += round(base_dmg * Decimal("0.1"))
             if action == "Second Wind":
                 text = f"{text}The players deal **50%** more damage due to **second wind**.\n"
-                dmg_to_take += round(base_dmg * 0.5)
+                dmg_to_take += round(base_dmg * Decimal("0.5"))
             if cyberus_skill == "howl":
                 text = f"{text}Cyberus uses **howl** to reduce damage by 30%"
                 dmg_to_take -= round(dmg_to_take * Decimal("0.3"))

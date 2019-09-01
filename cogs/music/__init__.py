@@ -43,6 +43,12 @@ class Player(wavelink.Player):
         difference = (time.time() * 1000) - self.last_update
         return min(self.last_position + difference, self.current.duration)
 
+    def cleanup(self):
+        self.loop = False
+        self.locked = False
+        self.dj = None
+        self.eq = "Flat"
+
 
 def is_in_vc():
     def predicate(ctx):
@@ -271,6 +277,7 @@ class Music2(commands.Cog):
         await self.bot.redis.execute("DEL", f"{self.music_prefix}que:{ctx.guild.id}")
         await ctx.player.stop()
         await ctx.player.disconnect()
+        ctx.player.cleanup()
         await ctx.message.add_reaction("✅")
 
     @vote("volume")
@@ -572,6 +579,7 @@ class Music2(commands.Cog):
         ):
             # That was the last track
             await player.disconnect()
+            player.cleanup()
             await self.bot.redis.execute(
                 "DEL", f"{self.music_prefix}que:{player.guild_id}"
             )
