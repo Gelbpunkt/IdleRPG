@@ -1,1 +1,15 @@
-/etc/systemd/system/podman-postgresql.service
+[Unit]
+Description=Postgres Container
+After=network.target
+
+[Service]
+Type=simple
+ExecStartPre=-/usr/bin/podman pull postgres:11-alpine
+ExecStart=/usr/bin/podman run --rm --pod idlerpg --name postgresql -v /opt/pgdata:/var/lib/postgresql/data postgres:11-alpine
+ExecReload=-/usr/bin/podman stop postgresql
+ExecStop=-/usr/bin/podman stop postgresql
+Restart=always
+RestartSec=30
+
+[Install]
+WantedBy=multi-user.target

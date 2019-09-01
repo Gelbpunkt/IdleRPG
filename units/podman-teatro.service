@@ -1,0 +1,14 @@
+[Unit]
+Description=Teatro Container
+
+[Service]
+Type=simple
+ExecStartPre=/usr/bin/podman build -t teatro:latest /home/jens/teatro/
+ExecStart=/usr/bin/podman run --rm --name teatro -v /opt/teatro/config.json:/teatro/config.json --pod idlerpg teatro:latest
+ExecReload=-/usr/bin/podman stop teatro
+ExecStop=-/usr/bin/podman stop teatro
+Restart=always
+RestartSec=30
+
+[Install]
+WantedBy=multi-user.target
