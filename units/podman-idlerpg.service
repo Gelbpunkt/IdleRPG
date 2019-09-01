@@ -4,7 +4,7 @@ After=podman-postgresql.service
 
 [Service]
 Type=simple
-ExecStartPre=/usr/bin/podman build -t idlerpg:latest /home/jens/IdleRPG/v4/IdleRPG
+ExecStartPre=/usr/bin/podman build -t idlerpg:latest PATH_TO_IDLERPG
 ExecStart=/usr/bin/podman run --rm --name idlerpgv4 -v /opt/idlerpg/config.py:/idlerpg/config.py --pod idlerpg idlerpg:latest
 ExecReload=-/usr/bin/podman stop idlerpgv4
 ExecStop=-/usr/bin/podman stop idlerpgv4
