@@ -31,6 +31,14 @@ if [ -x "$(command -v podman)" ]; then
     echo "Check... Podman installed OK"
 else
     echo "podman is not installed. Use your package manager"
+    exit
+fi
+
+if [ -x "$(command -v git)" ]; then
+    echo "Check... git installed OK"
+else
+    echo "git is not installed. Use your package manager"
+    exit
 fi
 
 prompt_paths () {
@@ -137,6 +145,7 @@ sed -i "s:TEATRO_PATH:${teatro_path}:" units/podman-teatro.service
 
 printf "Copying units...\n"
 cp units/* /etc/systemd/system/
+systemctl daemon-reload
 
 printf "Done.\n"
 printf "Create /opt/teatro/config.json with the teatro config (https://github.com/Kenvyra/teatro/blob/master/config.example.json)\n"
