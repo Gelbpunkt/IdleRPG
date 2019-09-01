@@ -120,7 +120,7 @@ def vote(action):
             if m != ctx.guild.me
         ]
         accepted = {ctx.author}
-        needed = int((len(members) - 1) / 2) + 1
+        needed = int(len(members) / 2) + 1
 
         msg = await ctx.send(
             text.format(user=ctx.author.mention, current=len(accepted), total=needed)
