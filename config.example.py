@@ -62,13 +62,13 @@ initial_extensions = [
 upvote_channel = 453_948_653_913_112_609
 
 """The prefix to use if none is set custom or we are in DMs."""
-global_prefix = "beta "
+global_prefix = "$"
 
 """The channel ID to send join logs to."""
 join_channel = 441_821_532_696_870_922
 
 """Defines whether it is a beta version or not. This would disable some parts, e.g. no longer post the stats to DBL and BFD."""
-is_beta = True
+is_beta = False
 
 """A list of Admins by ID."""
 admins = [
@@ -152,7 +152,7 @@ base_url = "https://idlerpg.travitia.xyz"
 okapi_url = "https://okapi.travitia.xyz"
 
 """The Version of the Bot."""
-version = "4.1.0a"
+version = "4.1.1"
 
 """Global cooldown (rate, per, [.user, .channel, .guild])"""
 cooldown = commands.CooldownMapping.from_cooldown(1, 3, commands.BucketType.user)
