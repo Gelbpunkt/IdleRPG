@@ -557,15 +557,17 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
         while len(raid) > 1 and datetime.datetime.utcnow() < start + datetime.timedelta(
             minutes=45
         ):
-            stuff = random.sample(list(raid.items()), 2)  # attacker, target
-            attacker = stuff[0]
-            target = stuff[1]
+            attacker, target = random.sample(list(raid.items()), 2)
             dmg = random.randint(
                 round(attacker[1]["damage"] * Decimal("0.5")),
                 round(attacker[1]["damage"] * Decimal("1.5")),
             )
             dmg -= target[1]["armor"]
-            dmg = 0 if dmg < 0 else dmg
+            dmg = (
+                random.choices(range(0, 10), weights=range(0, 10)[::-1])[0]
+                if dmg < 0
+                else dmg
+            )
             raid[target[0]]["hp"] -= dmg  # damage dealt
             if raid[target[0]]["hp"] > 0:
                 em = discord.Embed(
