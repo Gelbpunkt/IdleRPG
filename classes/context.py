@@ -50,7 +50,7 @@ class Context(commands.Context):
         emojis = (emoji_no, emoji_yes)
         
         if user.id == self.bot.user.id:
-            return false
+            return False
 
         msg = await self.send(
             embed=discord.Embed(
