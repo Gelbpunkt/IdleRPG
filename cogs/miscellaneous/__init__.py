@@ -609,7 +609,7 @@ Average hours of work: **{hours}**"""
     @commands.command()
     @locale_doc
     async def garfield(
-        self, ctx, date: DateOrToday(datetime.date(year=1978, month=6, day=19))
+        self, ctx, *, date: DateOrToday(datetime.date(year=1978, month=6, day=19))
     ):
         _(
             """Sends today's garfield comic if no date info is passed. Else, it will use YYYY MM DD or DD MM YYYY depending on where the year is, with the date parts being seperated with spaces."""
@@ -623,7 +623,7 @@ Average hours of work: **{hours}**"""
     @commands.command(aliases=["uf"])
     @locale_doc
     async def userfriendly(
-        self, ctx, date: DateOrToday(datetime.date(year=1997, month=11, day=17))
+        self, ctx, *, date: DateOrToday(datetime.date(year=1997, month=11, day=17))
     ):
         _(
             """Sends today's userfriendly comic if no date info is passed. Else, it will use YYYY MM DD or DD MM YYYY depending on where the year is, with the date parts being seperated with spaces."""
