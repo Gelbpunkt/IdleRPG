@@ -338,7 +338,11 @@ class Trading(commands.Cog):
                     timeout=6,
                 ):
                     return await ctx.send(_("Cancelled."))
-            await conn.execute('DELETE FROM allitems WHERE "id"=ANY($1) AND "owner"=$2;', itemids, ctx.author.id)
+            await conn.execute(
+                'DELETE FROM allitems WHERE "id"=ANY($1) AND "owner"=$2;',
+                itemids,
+                ctx.author.id,
+            )
             await conn.execute(
                 'UPDATE profile SET money=money+$1 WHERE "user"=$2;',
                 value,

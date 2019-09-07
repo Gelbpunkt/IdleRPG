@@ -438,8 +438,8 @@ Adventure name: `{adventure}`"""
                 minstat = round(num * luck_multiply)
                 maxstat = round(5 + int(num * 1.5) * luck_multiply)
                 item = await self.bot.create_random_item(
-                    minstat=minstat if minstat < 35 else 35,
-                    maxstat=maxstat if maxstat < 35 else 35,
+                    minstat=(minstat if minstat > 0 else 1) if minstat < 35 else 35,
+                    maxstat=(maxstat if maxstat > 0 else 1) if maxstat < 35 else 35,
                     minvalue=round(num * luck_multiply),
                     maxvalue=round(num * 50 * luck_multiply),
                     owner=ctx.author,
