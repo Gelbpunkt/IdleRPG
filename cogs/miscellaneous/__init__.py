@@ -122,10 +122,10 @@ class Miscellaneous(commands.Cog):
                 color=0xF1C60C,
             )
         )
-        
+
     @commands.command(aliases=["shorten"])
     @locale_doc
-    async def imgur(self, ctx, given_url = None):
+    async def imgur(self, ctx, given_url=None):
         _("""Gives you a short URL from an image or long URL""")
         if not given_url and not ctx.message.attachments:
             return await ctx.send(_("Please supply a URL or an image attachment"))
@@ -138,20 +138,18 @@ class Miscellaneous(commands.Cog):
             ):
                 return await ctx.send(_("This is not a valid image file."))
             given_url = url
-            
+
         async with self.bot.session.post(
-            "https://api.imgur.com/3/image"
-            headers={"Authorization":f"Client-ID {self.bot.config.imgur_token}"},
-            data={"image":given_url}
+            "https://api.imgur.com/3/image",
+            headers={"Authorization": f"Client-ID {self.bot.config.imgur_token}"},
+            data={"image": given_url},
         ) as r:
             try:
                 link = (await r.json())["data"]["link"]
             except KeyError:
                 return await ctx.send(_("Error when uploading to Imgur."))
-        await ctx.send(
-            _(f"Here's your short image URL: <{link}>").format(link=link)
-        )
-        
+        await ctx.send(_("Here's your short image URL: <{link}>").format(link=link))
+
     @commands.command(aliases=["donate"])
     @locale_doc
     async def patreon(self, ctx):
@@ -638,7 +636,7 @@ Average hours of work: **{hours}**"""
     @commands.command()
     @locale_doc
     async def garfield(
-        self, ctx, date: DateOrToday(datetime.date(year=1978, month=6, day=19))
+        self, ctx, *, date: DateOrToday(datetime.date(year=1978, month=6, day=19))
     ):
         _(
             """Sends today's garfield comic if no date info is passed. Else, it will use YYYY MM DD or DD MM YYYY depending on where the year is, with the date parts being seperated with spaces."""
@@ -652,7 +650,7 @@ Average hours of work: **{hours}**"""
     @commands.command(aliases=["uf"])
     @locale_doc
     async def userfriendly(
-        self, ctx, date: DateOrToday(datetime.date(year=1997, month=11, day=17))
+        self, ctx, *, date: DateOrToday(datetime.date(year=1997, month=11, day=17))
     ):
         _(
             """Sends today's userfriendly comic if no date info is passed. Else, it will use YYYY MM DD or DD MM YYYY depending on where the year is, with the date parts being seperated with spaces."""
