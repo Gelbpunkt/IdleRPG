@@ -125,7 +125,7 @@ class Miscellaneous(commands.Cog):
 
     @commands.command(aliases=["shorten"])
     @locale_doc
-    async def imgur(self, ctx, given_url=None):
+    async def imgur(self, ctx, given_url: str = None):
         _("""Gives you a short URL from an image or long URL""")
         if not given_url and not ctx.message.attachments:
             return await ctx.send(_("Please supply a URL or an image attachment"))
