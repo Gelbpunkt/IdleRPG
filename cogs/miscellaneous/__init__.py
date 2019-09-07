@@ -139,7 +139,7 @@ class Miscellaneous(commands.Cog):
                 return await ctx.send(_("This is not a valid image file."))
             given_url = url
             
-        async with self.bot.trusted_session.post(
+        async with self.bot.session.post(
             "https://api.imgur.com/3/image"
             headers={"Authorization":f"Client-ID {self.bot.config.imgur_token}"},
             data={"image":given_url}
@@ -149,7 +149,7 @@ class Miscellaneous(commands.Cog):
             except KeyError:
                 return await ctx.send(_("Error when uploading to Imgur."))
         await ctx.send(
-            _(f"Here's your short image URL: <{link}>")
+            _(f"Here's your short image URL: <{link}>").format(link=link)
         )
         
     @commands.command(aliases=["donate"])
