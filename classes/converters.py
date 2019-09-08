@@ -208,18 +208,16 @@ class CoinSide(commands.Converter):
         return stuff
 
 
-class DateOrToday(commands.Converter):
+class DateNewerThan(commands.Converter):
     def __init__(self, min_date):
         self.min_date = min_date
 
     def convert(self, ctx, date_info):
         try:
             date = dateparser.parse(date_info)
-            if not date:
-                date = datetime.date.today()
-            else:
-                date = date.date()
+            date = date.date()
         except ValueError:
             raise commands.BadArgument()
         if date < self.min_date or date > datetime.date.today():
             raise DateOutOfRange(self.min_date)
+        return date
