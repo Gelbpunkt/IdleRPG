@@ -17,6 +17,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
 import decimal
 import math
+import traceback
 
 from discord.ext import commands
 
@@ -246,7 +247,7 @@ class Maths(commands.Cog):
 
         def p_error(p):
             raise ParsingError(
-                _("Syntax error at '{character}'".format(character=p.value))
+                _("Syntax error at '{character}'").format(character=p.value)
             )
 
         self.parser = yacc()
@@ -334,6 +335,7 @@ class Maths(commands.Cog):
                     _("The variable name starts with a reserved keyword.")
                 )
             await ctx.send(e)
+            await ctx.send(traceback.format_exc())
             return await ctx.send(_("Unknown Error Occured"))
         vars = ret["vars"]
         ret = ret["result"]
