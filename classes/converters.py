@@ -13,6 +13,8 @@ import discord
 
 from discord.ext import commands
 
+import dateparser
+
 
 class NotInRange(commands.BadArgument):
     def __init__(self, text, from_, to_):
@@ -202,27 +204,13 @@ class DateOrToday(commands.Converter):
         self.min_date = min_date
 
     def convert(self, ctx, date_info):
-        if isinstance(date_info, str):
-            if "-" in date_info:
-                date_info = date_info.split("-")
-            elif "." in date_info:
-                date_info = date_info.split(".")
+        try:
+            date = dateparser.parse(date_info)
+            if not date:
+                date = datetime.date.today()
             else:
-                raise commands.BadArgument()
-        if not date_info:
-            date = datetime.date.today()
-        elif len(date_info) != 3:
+                date = date.date
+        except ValueError:
             raise commands.BadArgument()
-        else:
-            if date_info[0] > 1900:  # YYYY-MM-DD
-                date = datetime.date(
-                    year=date_info[0], month=date_info[1], day=date_info[2]
-                )
-            elif date_info[2] > 1900:  # DD-MM-YYYY
-                date = datetime.date(
-                    year=date_info[2], month=date_info[1], day=date_info[0]
-                )
-            else:
-                raise commands.BadArgument()
-            if date < self.min_date or date > datetime.date.today():
-                raise DateOutOfRange(self.min_date)
+        if date < self.min_date or date > datetime.date.today():
+            raise DateOutOfRange(self.min_date)

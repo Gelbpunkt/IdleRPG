@@ -442,9 +442,10 @@ class Marriage(commands.Cog):
                 ]
             )
             await self.bot.pool.execute(
-                'DELETE FROM children WHERE "name"=$1 AND ("mother"=$2 OR "father"=$2);',
+                'DELETE FROM children WHERE "name"=$1 AND ("mother"=$2 OR "father"=$2) AND "age"=$3;',
                 target["name"],
                 ctx.author.id,
+                target["age"],
             )
             return await ctx.send(
                 _("{name} died at the age of {age}! {cause}").format(
@@ -453,9 +454,10 @@ class Marriage(commands.Cog):
             )
         elif event == "age":
             await self.bot.pool.execute(
-                'UPDATE children SET age=age+1 WHERE "name"=$1 AND ("mother"=$2 OR "father"=$2);',
+                'UPDATE children SET "age"="age"+1 WHERE "name"=$1 AND ("mother"=$2 OR "father"=$2) WHERE "age"=$3;',
                 target["name"],
                 ctx.author.id,
+                target["age"],
             )
             return await ctx.send(
                 _("{name} is now {age} years old.").format(
@@ -485,10 +487,11 @@ class Marriage(commands.Cog):
                 return await ctx.send(_("You didn't enter a name."))
             name = msg.content.replace("@", "@\u200b")
             await self.bot.pool.execute(
-                'UPDATE children SET "name"=$1 WHERE "name"=$2 AND ("mother"=$3 OR "father"=$3);',
+                'UPDATE children SET "name"=$1 WHERE "name"=$2 AND ("mother"=$3 OR "father"=$3) AND "age"=$4;',
                 name,
                 target["name"],
                 ctx.author.id,
+                target["age"],
             )
             return await ctx.send(
                 _("{old_name} is now called {new_name}.").format(

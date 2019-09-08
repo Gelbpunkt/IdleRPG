@@ -641,6 +641,7 @@ IdleRPG is a global bot, your characters are valid everywhere"""
                 'DELETE FROM children WHERE "mother"=$1 OR "father"=$1;', ctx.author.id
             )
             await conn.execute('DELETE FROM profile WHERE "user"=$1;', ctx.author.id)
+        await self.bot.cancel_adventure(ctx.author)
         await ctx.send(
             _("Successfully deleted your character. Sorry to see you go :frowning:")
         )
