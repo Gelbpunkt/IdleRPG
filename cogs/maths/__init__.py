@@ -333,6 +333,7 @@ class Maths(commands.Cog):
                 return await ctx.send(
                     _("The variable name starts with a reserved keyword.")
                 )
+            await ctx.send(e)
             return await ctx.send(_("Unknown Error Occured"))
         vars = ret["vars"]
         ret = ret["result"]
