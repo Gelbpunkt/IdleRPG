@@ -1,10 +1,19 @@
 """
 The IdleRPG Discord Bot
 Copyright (C) 2018-2019 Diniboy and Gelbpunkt
-This software is dual-licensed under the GNU Affero General Public
-License for non-commercial and the Travitia License for commercial
-use.
-For more information, see README.md and LICENSE.md.
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU Affero General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU Affero General Public License for more details.
+
+You should have received a copy of the GNU Affero General Public License
+along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
 import datetime
 import re
@@ -209,7 +218,7 @@ class DateOrToday(commands.Converter):
             if not date:
                 date = datetime.date.today()
             else:
-                date = date.date
+                date = date.date()
         except ValueError:
             raise commands.BadArgument()
         if date < self.min_date or date > datetime.date.today():
