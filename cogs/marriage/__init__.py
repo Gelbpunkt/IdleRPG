@@ -454,7 +454,7 @@ class Marriage(commands.Cog):
             )
         elif event == "age":
             await self.bot.pool.execute(
-                'UPDATE children SET "age"="age"+1 WHERE "name"=$1 AND ("mother"=$2 OR "father"=$2) WHERE "age"=$3;',
+                'UPDATE children SET "age"="age"+1 WHERE "name"=$1 AND ("mother"=$2 OR "father"=$2) AND "age"=$3;',
                 target["name"],
                 ctx.author.id,
                 target["age"],
