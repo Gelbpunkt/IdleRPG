@@ -22,6 +22,7 @@ import tracemalloc
 from json import loads
 
 from classes.bot import Bot
+from contextvars_executor import ContextVarExecutor
 
 tracemalloc.start()
 
@@ -40,4 +41,5 @@ bot = Bot(
 
 if __name__ == "__main__":
     loop = asyncio.get_event_loop()
+    loop.set_default_executor(ContextVarExecutor())
     loop.run_until_complete(bot.connect_all())

@@ -17,7 +17,6 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
 import decimal
 import math
-import traceback
 
 from discord.ext import commands
 
@@ -334,8 +333,6 @@ class Maths(commands.Cog):
                 return await ctx.send(
                     _("The variable name starts with a reserved keyword.")
                 )
-            await ctx.send(e)
-            await ctx.send(traceback.format_exc())
             return await ctx.send(_("Unknown Error Occured"))
         vars = ret["vars"]
         ret = ret["result"]
