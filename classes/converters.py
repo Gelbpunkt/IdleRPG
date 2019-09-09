@@ -212,11 +212,11 @@ class DateNewerThan(commands.Converter):
     def __init__(self, min_date):
         self.min_date = min_date
 
-    def convert(self, ctx, date_info):
+    async def convert(self, ctx, date_info):
         try:
             date = dateparser.parse(date_info)
             date = date.date()
-        except ValueError:
+        except (ValueError, AttributeError):
             raise commands.BadArgument()
         if date < self.min_date or date > datetime.date.today():
             raise DateOutOfRange(self.min_date)
