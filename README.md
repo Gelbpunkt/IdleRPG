@@ -34,15 +34,14 @@ Please see [#32](https://github.com/Gelbpunkt/IdleRPG/issues/32)
 
 ## How do I test my changes?
 
-Note: This requires you to have Redis and Postgres working, and, depending on what you are doing, Lavalink.
+Note: This requires you to have Podman and Git working.
 
 ```
 git clone https://github.com/Gelbpunkt/IdleRPG
 cd IdleRPG
-(edit config.example.py to your database credentials)
 ./scripts/setup.sh
-(do changes now)
-systemctl start idlerpg
+Add /opt/* config files
+systemctl start podman-idlerpg
 ```
 
 A systemd unit file has been bundled as `idlerpg.service`.
