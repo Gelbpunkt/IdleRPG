@@ -16,8 +16,10 @@ You should have received a copy of the GNU Affero General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
 import asyncio
-import functools
 import random
+
+from base64 import b64decode
+from io import BytesIO
 
 import discord
 
@@ -59,13 +61,18 @@ class Adventure(commands.Cog):
                 returnsuccess=False,
             )
             chances.append((success[0] - success[2], success[1] + success[2]))
-        thing = functools.partial(rpgtools.makeadventures, chances)
-        images = await self.bot.loop.run_in_executor(None, thing)
+        async with self.bot.trusted_session.post(
+            f"{self.bot.config.okapi_url}/api/genadventures",
+            json={"percentages": chances},
+        ) as r:
+            images = await r.json()
 
         await msg.delete()
 
         files = [
-            discord.File(img, filename=f"Adventure{idx + 1}.png")
+            discord.File(
+                filename=f"Adventure{idx + 1}.png", fp=BytesIO(b64decode(img[22:]))
+            )
             for idx, img in enumerate(images)
         ]
         pages = [
