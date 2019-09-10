@@ -85,7 +85,7 @@ class Transaction(commands.Cog):
             content
             + "\n\n"
             + _(
-                "Use `{prefix}trade add/set/remove money/crates/item amount/itemid [crate rarity]`"
+                "Use `{prefix}trade [add/set/remove] [money/crates/item] [amount/itemid] [crate rarity]`"
             ).format(prefix=ctx.prefix)
         )
         if (base := self.transactions[id_]["base"]) is not None:

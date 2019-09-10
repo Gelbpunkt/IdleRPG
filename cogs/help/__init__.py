@@ -100,7 +100,7 @@ class Help(commands.Cog):
             pages.append(embed)
         return pages
 
-    @commands.command()
+    @commands.command(alieses=["commands", "cmds"])
     @locale_doc
     async def documentation(self, ctx):
         _("""Sends a link to the official documentation.""")
