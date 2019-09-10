@@ -15,13 +15,9 @@ GNU Affero General Public License for more details.
 You should have received a copy of the GNU Affero General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
-import io
-import os
 import random
 
 from discord.errors import NotFound
-
-from PIL import Image, ImageDraw, ImageFont
 
 levels = {
     "1": 0,
@@ -94,36 +90,6 @@ def calcchance(sword, shield, dungeon, level, luck, returnsuccess=False, booster
         if booster:
             success += 25
         return randomn <= success
-
-
-def makeadventures(percentages):
-    images = []
-
-    def key(s):
-        return int(s[: s.index(".")])
-
-    allfiles = sorted(os.listdir("assets/adventures"), key=key)
-    for filetoopen in allfiles:
-        with Image.open("assets/adventures/" + filetoopen) as myf:
-            draw = ImageDraw.Draw(myf)
-            font = ImageFont.truetype("assets/fonts/CaviarDreams.ttf", 16)
-            draw.text(
-                (314, 168),
-                f"{percentages[allfiles.index(filetoopen)][0]}% to",
-                (0, 0, 0),
-                font=font,
-            )
-            draw.text(
-                (314, 187),
-                f"{percentages[allfiles.index(filetoopen)][1]}%",
-                (0, 0, 0),
-                font=font,
-            )
-            output_buffer = io.BytesIO()
-            myf.save(output_buffer, "png")
-            output_buffer.seek(0)
-            images.append(output_buffer)
-    return images
 
 
 async def lookup(bot, userid):
