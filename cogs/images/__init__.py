@@ -34,13 +34,6 @@ class Images(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
-    def make_pixels(self, data):
-        with Image.open(data).resize((1024, 1024), resample=Image.NEAREST) as im:
-            b = BytesIO()
-            im.save(b, format="png")
-        b.seek(0)
-        return b
-
     def make_edgy(self, data):
         with Image.open(data) as im:
             edged = im.filter(ImageFilter.FIND_EDGES)
@@ -138,12 +131,11 @@ class Images(commands.Cog):
             return await ctx.send(_("Use 1, 2, 3, 4 or 5 as intensity value."))
         url = str(user.avatar_url_as(format="png", size=size))
         # change size to lower for less pixels
-        async with self.bot.session.get(url) as r:
-            data = BytesIO(await r.read())
-        thing = functools.partial(self.make_pixels, data)
-        b = await self.bot.loop.run_in_executor(None, thing)
-        file = discord.File(b, filename="pixel.png")
-        await ctx.send(file=file)
+        async with self.bot.trusted_session.post(
+            f"{self.bot.config.okapi_url}/api/imageops/pixel", data={"image": url}
+        ) as r:
+            img = BytesIO(await r.read())
+        await ctx.send(file=discord.File(fp=img, filename="pixels.png"))
 
     @commands.command()
     @locale_doc
