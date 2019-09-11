@@ -4,7 +4,7 @@ Description=Okapi Container
 [Service]
 Type=simple
 ExecStartPre=/usr/bin/podman build -t okapi:latest PATH_TO_OKAPI
-ExecStart=/usr/bin/podman run --rm --name okapi --pod idlerpg okapi:latest
+ExecStart=/usr/bin/podman run --rm --name okapi -v /opt/okapi/config.json:/okapi/config.json --pod idlerpg okapi:latest
 ExecReload=-/usr/bin/podman stop okapi
 ExecStop=-/usr/bin/podman stop okapi
 Restart=always
