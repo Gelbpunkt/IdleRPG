@@ -21,10 +21,6 @@ git submodule init
 git submodule update
 python3 setup.py install
 cd ..
-git clone https://github.com/python-pillow/Pillow
-cd Pillow
-make install
-cd ..
 cd ..
 rm -rf build
 echo "--------------------------"
