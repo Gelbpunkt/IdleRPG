@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-09-10 15:22+0000\n"
+"POT-Creation-Date: 2019-09-13 19:17+0000\n"
 "PO-Revision-Date: 2019-09-08 17:24+0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -97,23 +97,23 @@ msgstr ""
 "Turnuva bitti! Kazanan {winner}.\n"
 "Para verildi!"
 
-#: cogs/images/__init__.py:134
+#: cogs/images/__init__.py:34
 msgid "Pixelfys an Avatar."
 msgstr "Avatarı pikselleştir."
 
-#: cogs/images/__init__.py:138
+#: cogs/images/__init__.py:38
 msgid "Use 1, 2, 3, 4 or 5 as intensity value."
 msgstr "1, 2, 3, 4 ya da 5'i yoğunluk değeri olarak kullanın."
 
-#: cogs/images/__init__.py:151
+#: cogs/images/__init__.py:50
 msgid "Finds edges in an Avatar."
 msgstr "Avatardaki kenarları bulur."
 
-#: cogs/images/__init__.py:163
+#: cogs/images/__init__.py:62
 msgid "Inverts an avatar."
 msgstr "Avatarı ters çevirir."
 
-#: cogs/images/__init__.py:176
+#: cogs/images/__init__.py:74
 msgid "Oils an Avatar."
 msgstr "Avatarı yağlar."
 
@@ -1288,11 +1288,11 @@ msgstr "Sana resmî IdleRPG Destek sunucusu bağlantısı gönderir."
 msgid ""
 "Got problems or feature requests? Looking for people to play with? Join the "
 "support server:\n"
-"https://discord.gg/MSBatf6"
+"https://discord.gg/idlerpg"
 msgstr ""
 "Sorunların ya da özellik önerilerin mi var? Beraber oynayacak insanlar mı "
 "arıyorsun? Destek sunucusuna katıl:\n"
-"https://discord.gg/MSBatf6"
+"https://discord.gg/idlerpg"
 
 #: cogs/miscellaneous/__init__.py:210
 msgid "Statistics on the bot."
@@ -1303,8 +1303,8 @@ msgid "IdleRPG Statistics"
 msgstr "IdleRPG İstatistikleri"
 
 #: cogs/miscellaneous/__init__.py:234
-msgid "Official Support Server Invite: https://discord.gg/MSBatf6"
-msgstr "Resmî Destek Sunucusu Daveti: https://discord.gg/MSBatf6"
+msgid "Official Support Server Invite: https://discord.gg/idlerpg"
+msgstr "Resmî Destek Sunucusu Daveti: https://discord.gg/idlerpg"
 
 #: cogs/miscellaneous/__init__.py:242
 msgid "Hosting Statistics"
@@ -1945,11 +1945,11 @@ msgstr "IdleRPG Yardım"
 #: cogs/help/__init__.py:70
 msgid ""
 "**Welcome to the IdleRPG help. Use the arrows to move.\n"
-"For more help, join the support server at https://discord.gg/MSBatf6.**\n"
+"For more help, join the support server at https://discord.gg/idlerpg.**\n"
 "Check out our partners using the partners command!"
 msgstr ""
 "**IdleRPG yardıma hoş geldin. Hareket etmek için okları kullan.\n"
-"Daha fazla yardım için, https://discord.gg/MSBatf6 bağlantısından destek "
+"Daha fazla yardım için, https://discord.gg/idlerpg bağlantısından destek "
 "sunucusuna katıl.**\n"
 "partners komutunu kullanarak ortaklarımıza bak!"
 
@@ -2781,25 +2781,25 @@ msgstr "🎧 {title} sıraya eklendi..."
 msgid "🎧 Playing {title}..."
 msgstr "🎧 {title} çalınıyor..."
 
-#: cogs/adventure/__init__.py:42
+#: cogs/adventure/__init__.py:44
 msgid "A list of all adventures with success rates, name and time it takes."
 msgstr ""
 "Bütün maceraların başarı oranları, ismi ve ne kadar süreceğinin listesi."
 
-#: cogs/adventure/__init__.py:49
+#: cogs/adventure/__init__.py:51
 msgid "Loading images..."
 msgstr "Resimler yükleniyor..."
 
-#: cogs/adventure/__init__.py:85
+#: cogs/adventure/__init__.py:92
 msgid "Sends your character on an adventure."
 msgstr "Karakterini maceraya yollar."
 
-#: cogs/adventure/__init__.py:88
+#: cogs/adventure/__init__.py:95
 #, python-brace-format
 msgid "You must be on level **{level}** to do this adventure."
 msgstr "Bu macerayı yapmak için seviye **{level}** olmalısın."
 
-#: cogs/adventure/__init__.py:99
+#: cogs/adventure/__init__.py:106
 #, python-brace-format
 msgid ""
 "Successfully sent your character out on an adventure. Use `{prefix}status` "
@@ -2808,11 +2808,11 @@ msgstr ""
 "Karakterin başarılı bir şekilde maceraya çıktı. Görevin şu anki durumunu "
 "görmek için `{prefix}status` kullan."
 
-#: cogs/adventure/__init__.py:109
+#: cogs/adventure/__init__.py:116
 msgid "Go out on a docile adventure controlled by reactions."
 msgstr "Tepkiler ile kontrol edilen uysal bir maceraya çık."
 
-#: cogs/adventure/__init__.py:112
+#: cogs/adventure/__init__.py:119
 msgid ""
 "You are going to be in a labyrinth of size 15x15. There are enemies, "
 "treasures and hidden traps. Reach the exit in the bottom right corner for a "
@@ -2830,114 +2830,114 @@ msgstr ""
 "İpucu: Bunun için sessiz bir kanal kullan, gönderdiğim bütün mesajları "
 "okumak isteyebilirsin."
 
-#: cogs/adventure/__init__.py:117
+#: cogs/adventure/__init__.py:124
 msgid "**Generating a maze...**"
 msgstr "**Labirent oluşturuluyor...**"
 
-#: cogs/adventure/__init__.py:128 utils/castle.py:29
+#: cogs/adventure/__init__.py:135 utils/castle.py:29
 msgid "North"
 msgstr "Kuzey"
 
-#: cogs/adventure/__init__.py:129 utils/castle.py:29
+#: cogs/adventure/__init__.py:136 utils/castle.py:29
 msgid "East"
 msgstr "Doğu"
 
-#: cogs/adventure/__init__.py:130 utils/castle.py:29
+#: cogs/adventure/__init__.py:137 utils/castle.py:29
 msgid "South"
 msgstr "Güney"
 
-#: cogs/adventure/__init__.py:131 utils/castle.py:29
+#: cogs/adventure/__init__.py:138 utils/castle.py:29
 msgid "West"
 msgstr "Batı"
 
-#: cogs/adventure/__init__.py:207 utils/castle.py:129
+#: cogs/adventure/__init__.py:214 utils/castle.py:129
 #, python-brace-format
 msgid "To the {side} is a wall."
 msgstr "{side} tarafında duvar var."
 
-#: cogs/adventure/__init__.py:209 utils/castle.py:131
+#: cogs/adventure/__init__.py:216 utils/castle.py:131
 #, python-brace-format
 msgid "To the {side} is an enemy."
 msgstr "{side} tarafında düşman var."
 
-#: cogs/adventure/__init__.py:211 utils/castle.py:133
+#: cogs/adventure/__init__.py:218 utils/castle.py:133
 #, python-brace-format
 msgid "To the {side} is a treasure."
 msgstr " {side} tarafında hazine var."
 
-#: cogs/adventure/__init__.py:213 utils/castle.py:135
+#: cogs/adventure/__init__.py:220 utils/castle.py:135
 #, python-brace-format
 msgid "To the {side} is a floor."
 msgstr "{side} tarafında yer var."
 
-#: cogs/adventure/__init__.py:216 utils/castle.py:138
+#: cogs/adventure/__init__.py:223 utils/castle.py:138
 #, python-brace-format
 msgid "You are on {hp} HP"
 msgstr "Canın {hp} HP"
 
-#: cogs/adventure/__init__.py:226 utils/castle.py:151
+#: cogs/adventure/__init__.py:233 utils/castle.py:151
 #, python-brace-format
 msgid "You stepped on a trap and took {damage} damage!"
 msgstr "Tuzağa bastın ve {damage} hasar aldın!"
 
-#: cogs/adventure/__init__.py:241
+#: cogs/adventure/__init__.py:248
 #, python-brace-format
 msgid "You found a treasure with **${money}** inside!"
 msgstr "İçinde **${money}** para olan bir hazine buldun!"
 
-#: cogs/adventure/__init__.py:264 utils/castle.py:188
+#: cogs/adventure/__init__.py:271 utils/castle.py:188
 msgid "Enemy"
 msgstr "Düşman"
 
-#: cogs/adventure/__init__.py:269 utils/castle.py:193
+#: cogs/adventure/__init__.py:276 utils/castle.py:193
 msgid "The Fight started"
 msgstr "Savaş başladı"
 
-#: cogs/adventure/__init__.py:304 utils/castle.py:229
+#: cogs/adventure/__init__.py:311 utils/castle.py:229
 #, python-brace-format
 msgid "The Enemy healed themselves for {hp} HP"
 msgstr "Düşman kendi canını {hp} HP iyileştirdi"
 
-#: cogs/adventure/__init__.py:310 utils/castle.py:235
+#: cogs/adventure/__init__.py:317 utils/castle.py:235
 #, python-brace-format
 msgid "You healed yourself for {hp} HP"
 msgstr "Kendi canını {hp} HP iyileştirdin"
 
-#: cogs/adventure/__init__.py:316 utils/castle.py:239
+#: cogs/adventure/__init__.py:323 utils/castle.py:239
 msgid "Attack blocked."
 msgstr "Saldırı engellendi."
 
-#: cogs/adventure/__init__.py:321 utils/castle.py:244
+#: cogs/adventure/__init__.py:328 utils/castle.py:244
 #, python-brace-format
 msgid "The Enemy hit you for {dmg} damage"
 msgstr "Düşman sana {dmg} hasar vurdu"
 
-#: cogs/adventure/__init__.py:326 utils/castle.py:247
+#: cogs/adventure/__init__.py:333 utils/castle.py:247
 #, python-brace-format
 msgid "You hit the enemy for {dmg} damage"
 msgstr "Sen düşmana {dmg} hasar vurdun"
 
-#: cogs/adventure/__init__.py:340 cogs/adventure/__init__.py:345
+#: cogs/adventure/__init__.py:347 cogs/adventure/__init__.py:352
 #: cogs/gambling/__init__.py:448 cogs/gambling/__init__.py:478
 #: utils/castle.py:259 utils/castle.py:264
 msgid "Timed out."
 msgstr "Zaman aşımına uğradı."
 
-#: cogs/adventure/__init__.py:347 utils/castle.py:267
+#: cogs/adventure/__init__.py:354 utils/castle.py:267
 msgid "You died."
 msgstr "Öldün."
 
-#: cogs/adventure/__init__.py:359
+#: cogs/adventure/__init__.py:366
 #, python-brace-format
 msgid ""
 "You have reached the exit and were rewarded **${money}** for getting out!"
 msgstr "Çıkışa ulaştın ve çıktığın için **${money}** parayla ödüllendirildin!"
 
-#: cogs/adventure/__init__.py:368
+#: cogs/adventure/__init__.py:375
 msgid "Checks your adventure status."
 msgstr "Macera durumunu kontrol eder."
 
-#: cogs/adventure/__init__.py:374
+#: cogs/adventure/__init__.py:381
 #, python-brace-format
 msgid ""
 "You are currently on an adventure with difficulty `{difficulty}`.\n"
@@ -2948,11 +2948,11 @@ msgstr ""
 "Yaklaşık bitiş süresi: `{time_left}`\n"
 "Macera ismi: `{adventure}`"
 
-#: cogs/adventure/__init__.py:412
+#: cogs/adventure/__init__.py:419
 msgid "You died on your mission. Try again!"
 msgstr "Görevdeyken öldün. Tekrar dene!"
 
-#: cogs/adventure/__init__.py:479
+#: cogs/adventure/__init__.py:486
 #, python-brace-format
 msgid ""
 "You have completed your adventure and received **${gold}** as well as a new "
@@ -2961,19 +2961,19 @@ msgstr ""
 "Maceranı tamamladın ve hem **${gold}** hem de yeni bir eşya: **{item}** "
 "aldın. Kazanılan tecrübe: **{xp}**."
 
-#: cogs/adventure/__init__.py:493
+#: cogs/adventure/__init__.py:500
 msgid "Cancels your current adventure."
 msgstr "Şu anki maceranı iptal eder."
 
-#: cogs/adventure/__init__.py:495
+#: cogs/adventure/__init__.py:502
 msgid "Are you sure you want to cancel your current adventure?"
 msgstr "Şuanki maceranı iptal etmek istediğinden emin misin?"
 
-#: cogs/adventure/__init__.py:498
+#: cogs/adventure/__init__.py:505
 msgid "Did not cancel your adventure. The journey continues..."
 msgstr "Maceran iptal edilmedi. Yolculuk devam ediyor..."
 
-#: cogs/adventure/__init__.py:503
+#: cogs/adventure/__init__.py:510
 #, python-brace-format
 msgid ""
 "Canceled your mission. Use `{prefix}adventure [missionID]` to start a new "
@@ -2982,14 +2982,14 @@ msgstr ""
 "Görevini iptal ettin. Yenisine başlamak için `{prefix}adventure [görevID]` "
 "kullan!"
 
-#: cogs/adventure/__init__.py:512
+#: cogs/adventure/__init__.py:519
 msgid ""
 "Your death stats. Shows statictics from all your adventures ever completed."
 msgstr ""
 "Ölüm istatistiklerin. Şimdiye kadar tamamlanmış olan tüm maceralarından "
 "istatistikler gösterir."
 
-#: cogs/adventure/__init__.py:523
+#: cogs/adventure/__init__.py:530
 #, python-brace-format
 msgid ""
 "Out of **{total}** adventures, you died **{deaths}** times and survived "
@@ -5341,11 +5341,9 @@ msgstr ""
 #: cogs/transaction/__init__.py:88
 #, python-brace-format
 msgid ""
-"Use `{prefix}trade add/set/remove money/crates/item amount/itemid [crate "
-"rarity]`"
+"Use `{prefix}trade [add/set/remove] [money/crates/item] [amount/itemid] "
+"[crate rarity]`"
 msgstr ""
-"`{prefix}trade add/set/remove money/crates/item amount/itemid [crate "
-"rarity]` kullan"
 
 #: cogs/transaction/__init__.py:118
 msgid "Trade timed out."
@@ -5800,6 +5798,13 @@ msgstr "İçinde {emote} olan bir hazine buldun!"
 #: utils/castle.py:269
 msgid "You have reached the exit!"
 msgstr "Çıkışa ulaştın!"
+
+#~ msgid ""
+#~ "Use `{prefix}trade add/set/remove money/crates/item amount/itemid [crate "
+#~ "rarity]`"
+#~ msgstr ""
+#~ "`{prefix}trade add/set/remove money/crates/item amount/itemid [crate "
+#~ "rarity]` kullan"
 
 #~ msgid ""
 #~ "Your current luck multiplier is `{luck}x` (≈{percent}% more than usual "

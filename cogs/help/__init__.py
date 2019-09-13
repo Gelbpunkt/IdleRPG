@@ -67,7 +67,7 @@ class Help(commands.Cog):
             colour=self.bot.config.primary_colour,
             url=self.bot.BASE_URL,
             description=_(
-                "**Welcome to the IdleRPG help. Use the arrows to move.\nFor more help, join the support server at https://discord.gg/MSBatf6.**\nCheck out our partners using the partners command!"
+                "**Welcome to the IdleRPG help. Use the arrows to move.\nFor more help, join the support server at https://discord.gg/idlerpg.**\nCheck out our partners using the partners command!"
             ),
         )
         embed.set_image(url=f"{self.bot.BASE_URL}/IdleRPG.png")
