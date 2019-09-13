@@ -38,7 +38,7 @@ class Owner(commands.Cog):
         self._last_result = None
 
     async def cog_check(self, ctx):
-        return ctx.author.id in self.bot.config.owners
+        return await self.bot.is_owner(ctx.author)
 
     @commands.command(name="load", hidden=True)
     @locale_doc

@@ -114,9 +114,6 @@ support_server_id = 430_017_996_304_678_923
 """A channel ID to send admin logs to."""
 admin_log_channel = 457_197_748_626_653_184
 
-"""All owners who have access to eval, sql and other commands."""
-owners = [244_508_568_517_083_136, 356_091_260_429_402_122, 294_894_701_708_967_936]
-
 """Credentials for the Lavalink server."""
 lava_creds = {
     "password": "password",

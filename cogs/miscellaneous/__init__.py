@@ -218,11 +218,12 @@ Even $1 can help us.
         delta = d1 - d0
         myhours = delta.days * 1.5
         sysinfo = distro.linux_distribution()
-        # owner = await self.bot.get_user_global(self.bot.owner_id)
-        # sad that teams are fucky
-        owner = " and ".join(
-            [str(await self.bot.get_user_global(u)) for u in self.bot.config.owners]
-        )
+        if self.bot.owner_ids:
+            owner = " and ".join(
+                [str(await self.bot.get_user_global(u)) for u in self.bot.owner_ids]
+            )
+        else:
+            owner = str(await self.bot.get_user_global(self.bot.owner_id))
         guild_count = sum(
             await self.bot.cogs["Sharding"].handler("guild_count", self.bot.shard_count)
         )
