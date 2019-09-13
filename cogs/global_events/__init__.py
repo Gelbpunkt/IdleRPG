@@ -42,9 +42,7 @@ class GlobalEvents(commands.Cog):
         print(f"Using discord.py {discord.__version__}")
         print("--------")
         print(f"You are running IdleRPG Bot {self.bot.version}")
-        owner = (await self.bot.application_info()).owner
-        self.bot.owner_id = owner.id
-        print(f"Created by {owner}")
+        print(f"Created by The IdleRPG Team")
         await self.load_settings()
         self.bot.loop.create_task(queue_manager(self.bot, self.bot.queue))
         await self.status_updater()

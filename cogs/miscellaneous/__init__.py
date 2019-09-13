@@ -185,7 +185,7 @@ Even $1 can help us.
         _("""Invite link for the bot.""")
         await ctx.send(
             _(
-                "You are running version **{version}** by Adrian.\nInvite me! {url}"
+                "You are running version **{version}** by The IdleRPG Developers.\nInvite me! {url}"
             ).format(
                 version=self.bot.version,
                 url=discord.utils.oauth_url(
