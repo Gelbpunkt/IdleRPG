@@ -431,16 +431,16 @@ Adventure name: `{adventure}`"""
 
             if (
                 random.randint(
+                    1,
                     (
-                        2
+                        5
                         if self.bot.in_class_line(
                             ctx.character_data["class"], "Ritualist"
                         )
-                        else 1
+                        else 10
                     ),
-                    10,
                 )
-                < 10
+                == 1
             ):
                 minstat = round(num * luck_multiply)
                 maxstat = round(5 + int(num * 1.5) * luck_multiply)
