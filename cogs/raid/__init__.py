@@ -295,7 +295,7 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
             headers={"Authorization": self.bot.config.raidauth},
         )
         bandits = [
-            {"hp": random.randint(100, 120), "id": i + 1} for i in range(bandits)
+            {"hp": random.randint(5000, 7000), "id": i + 1} for i in range(bandits)
         ]
         payout = sum(i["hp"] for i in bandits)
         await ctx.send(
@@ -315,7 +315,7 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
         await ctx.send("**The bandit officers arrive in 25 minutes**")
         await asyncio.sleep(150)
         await ctx.send(
-            "**Bandit Officer**: This is our last warning. Hand out all your goods and Gold!"
+            "**Bandit Officer**: This is our last warning. Hand out all your goods and gold!"
         )
         await asyncio.sleep(150)
         await ctx.send("**The bandit officers arrive in 20 minutes**")
@@ -333,10 +333,8 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
         await ctx.send("**Bandit Officer**: Ready to charge!!")
         await asyncio.sleep(60)
         await ctx.send("**The bandit officers arrive in 1 minute**")
-        await asyncio.sleep(15)
-        await ctx.send("**The God of Salutations just gave every defender some HP.**")
-        await asyncio.sleep(15)
-        await ctx.send("**The bandit officers arrive in 30 seconds**")
+        await asyncio.sleep(30)
+        await ctx.send("**Friendly gods gave all defenders some more HP!**")
         await asyncio.sleep(10)
         await ctx.send("**The bandit officers arrive in 20 seconds**")
         await asyncio.sleep(10)
@@ -445,7 +443,7 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
                     value=f"Is attacking the bandit officer and dealt `{target_data['damage']}` damage",
                 )
             else:
-                money = random.randint(20000, 40000)
+                money = random.randint(15000, 30000)
                 await self.bot.pool.execute(
                     'UPDATE profile SET "money"="money"+$1 WHERE "user"=$2;',
                     money,
