@@ -238,6 +238,41 @@ class Guild(commands.Cog):
     @is_guild_leader()
     @guild.command()
     @locale_doc
+    async def transfer(self, ctx, member: MemberWithCharacter):
+        _("""Transfer guild ownership to someone else.""")
+        if (
+            member == ctx.author
+            or ctx.character_data["guild"] != ctx.user_data["guild"]
+        ):
+            return await ctx.send(_("Not a member of your guild."))
+        if not await ctx.confirm(
+            _("Are you sure to transfer guild ownership to {user}?").format(
+                user=member.mention
+            )
+        ):
+            return
+        async with self.bot.pool.acquire() as conn:
+            await conn.execute(
+                'UPDATE profile SET "guildrank"=$1 WHERE "user"=$2;',
+                "Member",
+                ctx.author.id,
+            )
+            await conn.execute(
+                'UPDATE profile SET "guildrank"=$1 WHERE "user"=$2;',
+                "Leader",
+                member.id,
+            )
+            name = await conn.fetchval(
+                'UPDATE guild SET "leader"=$1 WHERE "id"=$2 RETURNING "name";',
+                member.id,
+                ctx.character_data["guild"],
+            )
+
+        await ctx.send(_("{user} now leads {guild}.").format(user=member, guild=name))
+
+    @is_guild_leader()
+    @guild.command()
+    @locale_doc
     async def promote(self, ctx, member: MemberWithCharacter):
         _("""Promote someone to the rank of officer""")
         if member == ctx.author:
