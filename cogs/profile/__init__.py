@@ -373,7 +373,7 @@ IdleRPG is a global bot, your characters are valid everywhere"""
         if reward == "xp":
             old_level = int(rpgtools.xptolevel(ctx.character_data["xp"]))
         async with self.bot.pool.acquire() as conn:
-            thing = await conn.execute(
+            thing = await conn.fetchrow(
                 'DELETE FROM loot WHERE "id"=$1 RETURNING *;', loot_id
             )
             if not thing:
