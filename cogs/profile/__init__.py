@@ -166,6 +166,68 @@ IdleRPG is a global bot, your characters are valid everywhere"""
                 img = BytesIO(await req.read())
         await ctx.send(file=discord.File(fp=img, filename="Profile.png"))
 
+    @commands.command(aliases=["meb", "pb"])
+    @locale_doc
+    async def profilebeta(self, ctx, *, person: User = Author):
+        _("""View someone's or your own profile.""")
+        await ctx.trigger_typing()
+        targetid = person.id
+        async with self.bot.pool.acquire() as conn:
+            profile = await conn.fetchrow(
+                'SELECT * FROM profile WHERE "user"=$1;', targetid
+            )
+            if not profile:
+                return await ctx.send(
+                    _("**{person}** does not have a character.").format(person=person)
+                )
+            sword, shield = await self.bot.get_equipped_items_for(targetid)
+            mission = await self.bot.get_adventure(targetid)
+            guild = await conn.fetchval(
+                'SELECT name FROM guild WHERE "id"=$1;', profile["guild"]
+            )
+            v1 = sword["damage"] if sword else 0.0
+            v2 = shield["armor"] if shield else 0.0
+            damage, armor = await self.bot.generate_stats(
+                targetid, v1, v2, classes=profile["class"], race=profile["race"]
+            )
+            extras = (damage - v1, armor - v2)
+            sworddmg = f"{v1}{' (+' + str(extras[0]) + ')' if extras[0] else ''}"
+            shielddef = f"{v2}{' (+' + str(extras[1]) + ')' if extras[1] else ''}"
+            url = (
+                f"{self.bot.config.okapi_url}/api/genprofile/beta"
+                # if self.bot.config.is_beta
+                # else f"{self.bot.config.okapi_url}/api/genprofile"
+            )
+            async with self.bot.trusted_session.post(
+                url,
+                data={
+                    "name": profile["name"],
+                    "color": profile["colour"],
+                    "image": "0",  # profile["background"]
+                    "race": profile["race"],
+                    "classes": profile["class"],
+                    "damage": sworddmg,
+                    "defense": shielddef,
+                    "swordName": sword["name"] if sword else "None Equipped",
+                    "shieldName": shield["name"] if shield else "None Equipped",
+                    "level": rpgtools.xptolevel(profile["xp"]),
+                    "money": f"{profile['money']}",
+                    "pvpWins": f"{profile['pvpwins']}",
+                    "marriage": await rpgtools.lookup(self.bot, profile["marriage"])
+                    or _("Not Married"),
+                    "guild": guild,
+                    "god": profile["god"],
+                    "icons": [
+                        self.bot.get_class_line(c).lower() for c in profile["class"]
+                    ],
+                    "adventure": f"Adventure {mission[0]}\n{mission[1] if not mission[2] else _('Finished')}"
+                    if mission
+                    else _("No Mission"),
+                },
+            ) as req:
+                img = BytesIO(await req.read())
+        await ctx.send(file=discord.File(fp=img, filename="Profile.png"))
+
     @commands.command(aliases=["p2", "pp"])
     @locale_doc
     async def profile2(self, ctx, target: User = Author):
