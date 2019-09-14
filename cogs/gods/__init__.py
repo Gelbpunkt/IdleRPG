@@ -161,7 +161,6 @@ class Gods(commands.Cog):
 
     # just like admin commands, these aren't translated
     @has_char()
-    @is_god()
     @commands.command()
     @locale_doc
     async def followers(self, ctx, limit: IntGreaterThan(0)):
