@@ -18,11 +18,10 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 import datetime
 import re
 
+import dateparser
 import discord
 
 from discord.ext import commands
-
-import dateparser
 
 
 class NotInRange(commands.BadArgument):

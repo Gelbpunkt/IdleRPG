@@ -26,6 +26,7 @@ import secrets
 from collections import defaultdict, deque
 from functools import partial
 
+import aiowiki
 import discord
 import distro
 import pkg_resources as pkg
@@ -33,8 +34,6 @@ import psutil
 
 from discord.ext import commands
 from discord.ext.commands import BucketType
-
-import aiowiki
 
 from classes.converters import DateNewerThan, IntFromTo, IntGreaterThan
 from cogs.help import chunks

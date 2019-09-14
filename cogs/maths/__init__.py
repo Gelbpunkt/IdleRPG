@@ -19,7 +19,6 @@ import decimal
 import math
 
 from discord.ext import commands
-
 from ply.lex import lex
 from ply.yacc import yacc
 

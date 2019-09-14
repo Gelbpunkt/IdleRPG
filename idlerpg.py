@@ -21,8 +21,9 @@ import tracemalloc
 
 from json import loads
 
-from classes.bot import Bot
 from contextvars_executor import ContextVarExecutor
+
+from classes.bot import Bot
 
 tracemalloc.start()
 
