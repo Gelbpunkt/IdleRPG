@@ -160,13 +160,21 @@ class Gods(commands.Cog):
         )
 
     # just like admin commands, these aren't translated
+    @has_char()
     @is_god()
     @commands.command()
+    @locale_doc
     async def followers(self, ctx, limit: IntGreaterThan(0)):
-        """[God Only] Lists top followers."""
+        _("""Lists top followers of your god (or yourself).""")
+        if ctx.author.id in self.bot.gods:
+            god = self.bot.gods[ctx.author.id]
+        else:
+            if limit > 25:
+                return await ctx.send(_("Normal followers may only view the top 25."))
+            god = ctx.character_data["god"]
         data = await self.bot.pool.fetch(
             'SELECT * FROM profile WHERE "god"=$1 ORDER BY "favor" DESC LIMIT $2;',
-            self.bot.gods[ctx.author.id],
+            god,
             limit,
         )
         formatted = "\n".join(
