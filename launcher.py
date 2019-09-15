@@ -27,7 +27,7 @@ from traceback import print_exc
 import aiohttp
 import aioredis
 
-from config import token
+from config import token, shard_per_cluster, additional_shards
 
 if sys.version_info < (3, 8):
     raise Exception("IdleRPG requires Python 3.8")
@@ -36,8 +36,6 @@ __version__ = "0.7.0a"
 
 BOT_FILE = "idlerpg.py"
 communication_channel = "guild-channel"
-additional_shards = 4
-shard_per_cluster = 4
 
 payload = {
     "Authorization": f"Bot {token}",
@@ -96,7 +94,7 @@ class Instance:
 
     async def start(self):
         if self.is_active:
-            print(f"[Cluster #{self.id} ({self.name}] The cluster is already up")
+            print(f"[Cluster #{self.id} ({self.name})] The cluster is already up")
             return
         self.started_at = time()
         self._process = await asyncio.create_subprocess_shell(
@@ -191,9 +189,17 @@ class Main:
                 self.loop.create_task(
                     self.get_instance(self.instances, payload["id"]).start()
                 )
-            """if payload["action"] == "status":
-                # TODO: info
-                pass"""
+            if payload["action"] == "statuses" and payload.get("command_id"):
+                statuses = {}
+                for instance in self.instances:
+                    payload[instance.name] = instance.is_active
+                await self.redis.execute(
+                    "PUBLISH",
+                    communication_channel,
+                    json.dumps(
+                        {"command_id": payload["command_id"], "output": statuses}
+                    ),
+                )
 
     async def launch(self):
         shard_count = await get_shard_count() + additional_shards

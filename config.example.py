@@ -64,6 +64,12 @@ upvote_channel = 453_948_653_913_112_609
 """The prefix to use if none is set custom or we are in DMs."""
 global_prefix = "$"
 
+"""Extra shards to launch on bot startup"""
+additional_shards = 4
+
+"""How many shard a process will handle (at max)"""
+shard_per_cluster = 4
+
 """The channel ID to send join logs to."""
 join_channel = 441_821_532_696_870_922
 

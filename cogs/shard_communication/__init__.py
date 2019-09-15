@@ -209,6 +209,15 @@ class Sharding(commands.Cog):
             "PUBLISH", self.communication_channel, json.dumps(payload)
         )
 
+    async def send_latency_and_shard_count(self, command_id: str):
+        payload = {
+            "output": {self.bot.cluster_name: [self.bot.shard_ids, self.bot.latency]},
+            "command_id": command_id,
+        }
+        await self.bot.redis.execute(
+            "PUBLISH", self.communication_channel, json.dumps(payload)
+        )
+
     async def fetch_user(self, user_inp, command_id: str):
         user = None
         matches = re.search(r"<@!?(\d+)>", user_inp)
