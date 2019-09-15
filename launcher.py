@@ -152,7 +152,7 @@ class Main:
             print(f"[Cluster #{instance.id} ({instance.name})] Restarting...")
             instance.loop.create_task(instance.start())
 
-    def get_instance(iterable, id: int):
+    def get_instance(self, iterable, id: int):
         for elem in iterable:
             if getattr(elem, "id") == id:
                 return elem
