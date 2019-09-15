@@ -27,7 +27,7 @@ from traceback import print_exc
 import aiohttp
 import aioredis
 
-from config import token, shard_per_cluster, additional_shards
+from config import token, shard_per_cluster, additional_shards, shard_announce_channel
 
 if sys.version_info < (3, 8):
     raise Exception("IdleRPG requires Python 3.8")
@@ -35,7 +35,6 @@ if sys.version_info < (3, 8):
 __version__ = "0.7.0a"
 
 BOT_FILE = "idlerpg.py"
-communication_channel = "guild-channel"
 
 payload = {
     "Authorization": f"Bot {token}",
@@ -162,13 +161,13 @@ class Main:
     async def event_handler(self):
         try:
             self.redis = await aioredis.create_pool(
-                "redis://localhost", minsize=1, maxsize=1
+                "redis://localhost", minsize=1, maxsize=2
             )
         except aioredis.RedisError:
             print_exc()
             exit("[ERROR] Redis must be installed properly")
 
-        channel = self.redis.pubsub_channels[bytes(communication_channel, "utf-8")]
+        channel = self.redis.pubsub_channels[bytes(shard_announce_channel, "utf-8")]
         while await channel.wait_message():
             try:
                 payload = await channel.get_json(encoding="utf-8")
