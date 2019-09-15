@@ -195,7 +195,7 @@ class Main:
                     payload[instance.name] = instance.is_active
                 await self.redis.execute(
                     "PUBLISH",
-                    communication_channel,
+                    shard_announce_channel,
                     json.dumps(
                         {"command_id": payload["command_id"], "output": statuses}
                     ),
