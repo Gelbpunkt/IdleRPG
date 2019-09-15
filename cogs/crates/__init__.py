@@ -48,11 +48,11 @@ class Crates(commands.Cog):
                 """\
 **{author}'s crates**
 
-{emotes.common} {common}
-{emotes.uncommon} {uncommon}
-{emotes.rare} {rare}
-{emotes.magic} {magic}
-{emotes.legendary} {legendary}
+{emotes.common} [common] {common}
+{emotes.uncommon} [uncommon] {uncommon}
+{emotes.rare} [rare] {rare}
+{emotes.magic} [magic] {magic}
+{emotes.legendary} [legendary] {legendary}
 
  Use `{prefix}open [rarity]` to open one!"""
             ).format(
