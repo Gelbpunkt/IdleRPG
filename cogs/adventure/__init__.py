@@ -440,7 +440,7 @@ Adventure name: `{adventure}`"""
                         else 10
                     ),
                 )
-                == 1
+                != 1
             ):
                 minstat = round(num * luck_multiply)
                 maxstat = round(5 + int(num * 1.5) * luck_multiply)
