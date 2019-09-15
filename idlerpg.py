@@ -17,15 +17,12 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
 import asyncio
 import sys
-import tracemalloc
 
 from json import loads
 
 from contextvars_executor import ContextVarExecutor
 
 from classes.bot import Bot
-
-tracemalloc.start()
 
 if sys.platform == "linux":  # uvloop requires linux
     import uvloop
@@ -37,6 +34,7 @@ bot = Bot(
     description="The one and only IdleRPG bot for discord",
     shard_ids=loads(sys.argv[1]),
     shard_count=int(sys.argv[2]),
+    cluster_name=sys.argv[3],
 )
 
 

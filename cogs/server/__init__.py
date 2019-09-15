@@ -65,10 +65,14 @@ Server created at: `{created_at}`"""
         em.add_field(
             name=_("Roles"), value=", ".join([role.name for role in ctx.guild.roles])
         )
-        text = _("{num} of {total}")
+        text = _("{name}, Shard {num} of {total}")
         em.add_field(
-            name=_("Shard"),
-            value=text.format(num=ctx.guild.shard_id + 1, total=self.bot.shard_count),
+            name=_("Cluster"),
+            value=text.format(
+                name=self.bot.cluster_name,
+                num=ctx.guild.shard_id + 1,
+                total=self.bot.shard_count,
+            ),
         )
         em.set_thumbnail(url=ctx.guild.icon_url)
         await ctx.send(embed=em)

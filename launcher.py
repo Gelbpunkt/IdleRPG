@@ -17,6 +17,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
 import asyncio
 import json
+import random
 import sys
 
 from pathlib import Path
@@ -68,7 +69,13 @@ def get_cluster_list(shards: int):
 
 class Instance:
     def __init__(
-        self, instance_id: int, shard_list: list, shard_count: int, loop, main=None
+        self,
+        instance_id: int,
+        shard_list: list,
+        shard_count: int,
+        name: str,
+        loop,
+        main=None,
     ):
         self.main = main
         self.loop = loop
@@ -76,7 +83,8 @@ class Instance:
         self.shard_count = shard_count  # overall shard count
         self.started_at = None
         self.id = instance_id
-        self.command = f'{sys.executable} {Path.cwd() / BOT_FILE} "{shard_list}" {shard_count} {self.id}'
+        self.name = name
+        self.command = f'{sys.executable} {Path.cwd() / BOT_FILE} "{shard_list}" {shard_count} {self.id} {self.name}'
         self._process = None
         loop.create_task(self.start())
 
@@ -88,7 +96,7 @@ class Instance:
 
     async def start(self):
         if self.is_active:
-            print(f"[Cluster #{self.id}] The cluster is already up")
+            print(f"[Cluster #{self.id} ({self.name}] The cluster is already up")
             return
         self.started_at = time()
         self._process = await asyncio.create_subprocess_shell(
@@ -109,9 +117,9 @@ class Instance:
         await asyncio.sleep(5)
         if self.is_active:
             self._process.kill()
-            print(f"[Cluster #{self.id}] Got force killed")
+            print(f"[Cluster #{self.id} ({self.name})] Got force killed")
             return
-        print(f"[Cluster #{self.id}] Killed gracefully")
+        print(f"[Cluster #{self.id} ({self.name})] Killed gracefully")
 
     async def restart(self):
         if self.is_active:
@@ -123,7 +131,7 @@ class Instance:
         return self, stdout, stderr
 
     def __repr__(self):
-        return f"<Cluster ID={self.id}, active={self.is_active}, shards={self.shard_list}, started={self.started_at}>"
+        return f"<Cluster ID={self.id} name={self.name}, active={self.is_active}, shards={self.shard_list}, started={self.started_at}>"
 
 
 class Main:
@@ -135,14 +143,16 @@ class Main:
     def dead_process_handler(self, result):
         instance, stdout, stderr = result.result()
         print(
-            f"[Cluster #{instance.id}] Exited with code [{instance._process.returncode}]"
+            f"[Cluster #{instance.id} ({instance.name})] Exited with code [{instance._process.returncode}]"
         )
         if instance._process.returncode == 0:
-            print(f"[Cluster #{instance.id}] Stopped gracefully")
+            print(f"[Cluster #{instance.id} ({instance.name})] Stopped gracefully")
         else:
             stderr = "\n".join(stderr.decode("utf-8").split("\n")[-20:])
-            print(f"[Cluster #{instance.id}] STDERR (last 20 lines): {stderr}")
-            print(f"[Cluster #{instance.id}] Restarting...")
+            print(
+                f"[Cluster #{instance.id} ({instance.name})] STDERR (last 20 lines): {stderr}"
+            )
+            print(f"[Cluster #{instance.id} ({instance.name})] Restarting...")
             instance.loop.create_task(instance.start())
 
     def get_instance(iterable, id: int):
@@ -190,16 +200,23 @@ class Main:
         clusters = get_cluster_list(shard_count)
         name, id = await get_app_info()
         print(f"[MAIN] Starting {name} ({id}) - {len(clusters)} clusters")
+        used_names = []
         for i, shard_list in enumerate(clusters, 1):
             if not shard_list:
                 continue
+            name = None
+            while name is None or name in used_names:
+                name = random.choice(names)
             self.instances.append(
-                Instance(i, shard_list, shard_count, self.loop, main=self)
+                Instance(i, shard_list, shard_count, name, self.loop, main=self)
             )
             await asyncio.sleep(shard_per_cluster * 5)
 
 
 if __name__ == "__main__":
+    with open("assets/data/names.txt", "r") as f:
+        names = f.read().splitlines()
+
     if sys.platform.startswith("win"):
         loop = (
             asyncio.ProactorEventLoop()

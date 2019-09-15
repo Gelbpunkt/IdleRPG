@@ -101,12 +101,8 @@ class Patreon(commands.Cog):
     @is_patron()
     @commands.command()
     @locale_doc
-    async def makebackground(self, ctx, url: str, overlaytype: int):
-        _(
-            """[Patreon Only] Generates a profile background based on an image. Valid overlays are 1 or 2 for grey and black."""
-        )
-        if overlaytype not in [1, 2]:
-            return await ctx.send(_("Use either `1` or `2` as the overlay type."))
+    async def makebackground(self, ctx, url: str):
+        _("""[Patreon Only] Generates a profile background based on an image.""")
         if not url.startswith("http") and (
             url.endswith(".png") or url.endswith(".jpg") or url.endswith(".jpeg")
         ):
@@ -116,8 +112,7 @@ class Patreon(commands.Cog):
                 )
             )
         async with self.bot.trusted_session.post(
-            f"{self.bot.config.okapi_url}/api/genoverlay/{overlaytype}",
-            data={"url": url},
+            f"{self.bot.config.okapi_url}/api/genoverlay", data={"url": url}
         ) as req:
             background = BytesIO(await req.read())
         headers = {"Authorization": f"Client-ID {self.bot.config.imgur_token}"}

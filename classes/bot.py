@@ -40,6 +40,7 @@ from utils import i18n, paginator
 
 class Bot(commands.AutoShardedBot):
     def __init__(self, **kwargs):
+        self.cluster_name = kwargs.pop("cluster_name")
         super().__init__(
             command_prefix=config.global_prefix, **kwargs
         )  # we overwrite the prefix when it is connected
