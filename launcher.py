@@ -207,6 +207,7 @@ class Main:
             name = None
             while name is None or name in used_names:
                 name = random.choice(names)
+            used_names.append(name)
             self.instances.append(
                 Instance(i, shard_list, shard_count, name, self.loop, main=self)
             )

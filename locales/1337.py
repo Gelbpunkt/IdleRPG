@@ -37,7 +37,7 @@ for no, line in enumerate(cont):
                         is_in_b = True
                     elif i == "}":
                         is_in_b = False
-                    if i == "`" and buf[j + 1:j + 9] == "{prefix}":
+                    if i == "`" and buf[j + 1 : j + 9] == "{prefix}":
                         is_in_c = True
                     elif i == "`" and is_in_c:
                         is_in_c = False
@@ -56,11 +56,15 @@ for no, line in enumerate(cont):
                         is_in_b = True
                     elif i == "}":
                         is_in_b = False
-                    if i == "`" and line[j + 1:j + 9] == "{prefix}":
+                    if i == "`" and line[j + 1 : j + 9] == "{prefix}":
                         is_in_c = True
                     elif i == "`" and is_in_c:
                         is_in_c = False
-                    if (not is_in_b) and (not is_in_c) and (not (i == "t" and line[j - 1] == "\\")):
+                    if (
+                        (not is_in_b)
+                        and (not is_in_c)
+                        and (not (i == "t" and line[j - 1] == "\\"))
+                    ):
                         new_line = f"{new_line}{mapping.get(i.lower(), i)}"
                     else:
                         new_line = f"{new_line}{i}"
