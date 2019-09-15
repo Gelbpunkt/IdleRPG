@@ -167,7 +167,7 @@ class Main:
             print_exc()
             exit("[ERROR] Redis must be installed properly")
 
-        await self.bot.redis.execute_pubsub("SUBSCRIBE", shard_announce_channel)
+        await self.redis.execute_pubsub("SUBSCRIBE", shard_announce_channel)
         channel = self.redis.pubsub_channels[bytes(shard_announce_channel, "utf-8")]
         while await channel.wait_message():
             try:
