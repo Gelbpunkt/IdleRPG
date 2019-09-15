@@ -34,7 +34,7 @@ bot = Bot(
     description="The one and only IdleRPG bot for discord",
     shard_ids=loads(sys.argv[1]),
     shard_count=int(sys.argv[2]),
-    cluster_name=sys.argv[3],
+    cluster_name=sys.argv[4],
 )
 
 
