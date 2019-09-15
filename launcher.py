@@ -201,6 +201,7 @@ class Main:
                 )
 
     async def launch(self):
+        loop.create_task(self.event_handler())
         shard_count = await get_shard_count() + additional_shards
         clusters = get_cluster_list(shard_count)
         name, id = await get_app_info()
