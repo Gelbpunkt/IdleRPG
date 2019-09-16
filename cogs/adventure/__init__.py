@@ -91,7 +91,7 @@ class Adventure(commands.Cog):
     async def adventure(self, ctx, dungeonnumber: AreaFiftyOneInt(1, 20)):
         _("""Sends your character on an adventure.""")
         if dungeonnumber > int(rpgtools.xptolevel(ctx.character_data["xp"])):
-            if dungeonnumber != 21: # bybass level req. for the event
+            if dungeonnumber != 51: # bybass level req. for the event
                 return await ctx.send(
                     _("You must be on level **{level}** to do this adventure.").format(
                         level=dungeonnumber
