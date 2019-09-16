@@ -182,12 +182,20 @@ class AreaFiftyOneInt(commands.Converter):
             arg = int(arg)
         except ValueError:
             raise commands.BadArgument("Converting to int failed.")
-        if not self.from_ <= arg <= self.to_:
-            raise NotInRange(
-                f"The supplied number must be in range of {self.from_} to {self.to_}.",
-                self.from_,
-                self.to_,
-            )
+        if not str(datetime.datetime.today()).split(" ")[0] in ["2019-09-19", "2019-09-20", "2019-09-21"]:
+            if not self.from_ <= arg <= self.to_:
+                raise NotInRange(
+                    f"The supplied number must be in range of {self.from_} to {self.to_}.",
+                    self.from_,
+                    self.to_,
+                )
+        else:
+            if not self.from_ <= arg <= self.to_:
+                raise NotInRange(
+                    f"The supplied number must be in range of {self.from_} to {self.to_} or 51.",
+                    self.from_,
+                    self.to_,
+                )
         if arg == 51:
             arg = 21
         return arg
