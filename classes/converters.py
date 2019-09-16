@@ -171,6 +171,26 @@ class IntFromTo(commands.Converter):
                 self.to_,
             )
         return arg
+    
+class IntFromToOr(commands.Converter):
+    def __init__(self, from_, to_, or_):
+        self.from_ = from_
+        self.to_ = to_
+        self.or_ = or_
+
+    async def convert(self, ctx, arg):
+        try:
+            arg = int(arg)
+        except ValueError:
+            raise commands.BadArgument("Converting to int failed.")
+        if not self.from_ <= arg <= self.to_ or arg != self.or_:
+            raise NotInRange(
+                f"The supplied number must be in range of {self.from_} to {self.to_} ot {self.or_}.",
+                self.from_,
+                self.to_,
+                self.or_,
+            )
+        return arg
 
 
 class IntGreaterThan(commands.Converter):
