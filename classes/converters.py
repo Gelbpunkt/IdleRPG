@@ -190,14 +190,12 @@ class AreaFiftyOneInt(commands.Converter):
                     self.to_,
                 )
         else:
-            if not self.from_ <= arg <= self.to_:
+            if not self.from_ <= arg <= self.to_ and arg!=51:
                 raise NotInRange(
                     f"The supplied number must be in range of {self.from_} to {self.to_} or 51.",
                     self.from_,
                     self.to_,
                 )
-        if arg == 51:
-            arg = 21
         return arg
 
 
