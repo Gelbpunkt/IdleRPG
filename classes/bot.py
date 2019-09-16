@@ -401,6 +401,56 @@ class Bot(commands.AutoShardedBot):
         if insert:
             return await self.create_item(**item)
         return item
+    
+    async def create_random_51_item(
+        self, minstat, maxstat, minvalue, maxvalue, owner, insert=True
+    ):
+        owner = owner.id if isinstance(owner, (discord.User, discord.Member)) else owner
+        item = {}
+        item["owner"] = owner
+        type_ = random.choice(["Sword", "Shield"])
+        item["type_"] = type_
+        item["damage"] = random.randint(minstat, maxstat) if type_ == "Sword" else 0
+        item["armor"] = random.randint(minstat, maxstat) if type_ == "Shield" else 0
+        item["value"] = random.randint(minvalue, maxvalue)
+        if type_ == "Sword":
+            item["name"] = random.choice(
+                [
+                    "Alpha Omega Grenades",
+                    "SOL Satellite",
+                    "Gristle Gun",
+                    "Monomolecular Wire",
+                    "Mini Death Star Drone",
+                    "Blue Light Saber",
+                    "Red Light Saber",
+                    "Green Light Saber",
+                    "Sharpness V Diamond Sword",
+                    "Wither Skull Blaster",
+                    "Fireflower",
+                    "Scarborough Fair",
+                    "F.L.U.D.D.",
+                ]
+            )
+        else:
+            item["name"] = random.choice(
+                [
+                    "Night Owl",
+                    "Titanium Armor",
+                    "Uno Reverse Card",
+                    "Light Shield",
+                    "Corona Armor",
+                    "Guardian Dragon",
+                    "Portal Gun",
+                    "Discord Light Theme",
+                    "Power Suit",
+                    "Varia Suit",
+                    "Gravity Suit",
+                    "Extraterrestrial Barrier"
+                ]
+            ) 
+        if insert:
+            return await self.create_item(**item)
+        return item
 
     async def process_levelup(self, ctx, new_level):
         if (reward := random.choice(["crates", "money", "item"])) == "crates":
