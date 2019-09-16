@@ -172,24 +172,24 @@ class IntFromTo(commands.Converter):
             )
         return arg
     
-class IntFromToOr(commands.Converter):
-    def __init__(self, from_, to_, or_):
+class AreaFiftyOneInt(commands.Converter):
+    def __init__(self, from_, to_):
         self.from_ = from_
         self.to_ = to_
-        self.or_ = or_
 
     async def convert(self, ctx, arg):
         try:
             arg = int(arg)
         except ValueError:
             raise commands.BadArgument("Converting to int failed.")
-        if not self.from_ <= arg <= self.to_ or arg != self.or_:
+        if not self.from_ <= arg <= self.to_:
             raise NotInRange(
-                f"The supplied number must be in range of {self.from_} to {self.to_} ot {self.or_}.",
+                f"The supplied number must be in range of {self.from_} to {self.to_}.",
                 self.from_,
                 self.to_,
-                self.or_,
             )
+        if arg == 51:
+            arg = 21
         return arg
 
 
