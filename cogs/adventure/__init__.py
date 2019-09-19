@@ -88,14 +88,15 @@ class Adventure(commands.Cog):
     @has_no_adventure()
     @commands.command(aliases=["mission", "a", "dungeon"])
     @locale_doc
-    async def adventure(self, ctx, dungeonnumber: IntFromTo(1, 20)):
+    async def adventure(self, ctx, dungeonnumber: AreaFiftyOneInt(1, 20)):
         _("""Sends your character on an adventure.""")
         if dungeonnumber > int(rpgtools.xptolevel(ctx.character_data["xp"])):
-            return await ctx.send(
-                _("You must be on level **{level}** to do this adventure.").format(
-                    level=dungeonnumber
+            if dungeonnumber != 51: # bybass level req. for the event
+                return await ctx.send(
+                    _("You must be on level **{level}** to do this adventure.").format(
+                        level=dungeonnumber
+                    )
                 )
-            )
         time_booster = await self.bot.get_booster(ctx.author, "time")
         time = self.bot.config.adventure_times[dungeonnumber]
         if time_booster:
@@ -444,13 +445,25 @@ Adventure name: `{adventure}`"""
             ):
                 minstat = round(num * luck_multiply)
                 maxstat = round(5 + int(num * 1.5) * luck_multiply)
-                item = await self.bot.create_random_item(
-                    minstat=(minstat if minstat > 0 else 1) if minstat < 35 else 35,
-                    maxstat=(maxstat if maxstat > 0 else 1) if maxstat < 35 else 35,
-                    minvalue=round(num * luck_multiply),
-                    maxvalue=round(num * 50 * luck_multiply),
-                    owner=ctx.author,
-                )
+                
+                if num == 51:
+                    item = await self.bot.create_random_51_item(
+                        minstat=(minstat if minstat > 0 else 1) if minstat < 35 else 35,
+                        maxstat=(maxstat if maxstat > 0 else 1) if maxstat < 35 else 35,
+                        minvalue=round(num * luck_multiply),
+                        maxvalue=round(num * 50 * luck_multiply),
+                        owner=ctx.author,
+                    )
+                
+                else:
+                    item = await self.bot.create_random_item(
+                        minstat=(minstat if minstat > 0 else 1) if minstat < 35 else 35,
+                        maxstat=(maxstat if maxstat > 0 else 1) if maxstat < 35 else 35,
+                        minvalue=round(num * luck_multiply),
+                        maxvalue=round(num * 50 * luck_multiply),
+                        owner=ctx.author,
+                    )
+                    
             else:
                 item = items.get_item()
                 await conn.execute(
