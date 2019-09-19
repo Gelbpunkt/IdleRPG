@@ -726,7 +726,11 @@ Average hours of work: **{hours}**"""
     async def idlewiki(self, ctx, *, query: str = None):
         _("""Searches IdleRPG Wiki for an entry.""")
         if not query:
-            return await ctx.send(_("Check out the official IdleRPG Wiki here:\n<https://wiki.travitia.xyz/index.php?title=Main_Page>"))
+            return await ctx.send(
+                _(
+                    "Check out the official IdleRPG Wiki here:\n<https://wiki.travitia.xyz/index.php?title=Main_Page>"
+                )
+            )
         try:
             page = (await self.bot.idlewiki.opensearch(query))[0]
             text = await page.text()

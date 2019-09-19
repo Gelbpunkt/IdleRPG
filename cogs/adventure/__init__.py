@@ -25,7 +25,7 @@ import discord
 
 from discord.ext import commands
 
-from classes.converters import IntFromTo
+from classes.converters import IntFromTo, AreaFiftyOneInt
 from cogs.shard_communication import user_on_cooldown as user_cooldown
 from utils import items
 from utils import misc as rpgtools
@@ -91,7 +91,7 @@ class Adventure(commands.Cog):
     async def adventure(self, ctx, dungeonnumber: AreaFiftyOneInt(1, 20)):
         _("""Sends your character on an adventure.""")
         if dungeonnumber > int(rpgtools.xptolevel(ctx.character_data["xp"])):
-            if dungeonnumber != 51: # bybass level req. for the event
+            if dungeonnumber != 51:  # bybass level req. for the event
                 return await ctx.send(
                     _("You must be on level **{level}** to do this adventure.").format(
                         level=dungeonnumber
@@ -445,7 +445,7 @@ Adventure name: `{adventure}`"""
             ):
                 minstat = round(num * luck_multiply)
                 maxstat = round(5 + int(num * 1.5) * luck_multiply)
-                
+
                 if num == 51:
                     item = await self.bot.create_random_51_item(
                         minstat=(minstat if minstat > 0 else 1) if minstat < 35 else 35,
@@ -454,7 +454,7 @@ Adventure name: `{adventure}`"""
                         maxvalue=round(num * 50 * luck_multiply),
                         owner=ctx.author,
                     )
-                
+
                 else:
                     item = await self.bot.create_random_item(
                         minstat=(minstat if minstat > 0 else 1) if minstat < 35 else 35,
@@ -463,7 +463,7 @@ Adventure name: `{adventure}`"""
                         maxvalue=round(num * 50 * luck_multiply),
                         owner=ctx.author,
                     )
-                    
+
             else:
                 item = items.get_item()
                 await conn.execute(

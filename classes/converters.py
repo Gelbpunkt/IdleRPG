@@ -171,7 +171,8 @@ class IntFromTo(commands.Converter):
                 self.to_,
             )
         return arg
-    
+
+
 class AreaFiftyOneInt(commands.Converter):
     def __init__(self, from_, to_):
         self.from_ = from_
@@ -182,7 +183,11 @@ class AreaFiftyOneInt(commands.Converter):
             arg = int(arg)
         except ValueError:
             raise commands.BadArgument("Converting to int failed.")
-        if not str(datetime.datetime.today()).split(" ")[0] in ["2019-09-19", "2019-09-20", "2019-09-21"]:
+        if not str(datetime.datetime.today()).split(" ")[0] in [
+            "2019-09-19",
+            "2019-09-20",
+            "2019-09-21",
+        ]:
             if not self.from_ <= arg <= self.to_:
                 raise NotInRange(
                     f"The supplied number must be in range of {self.from_} to {self.to_}.",
@@ -190,7 +195,7 @@ class AreaFiftyOneInt(commands.Converter):
                     self.to_,
                 )
         else:
-            if not self.from_ <= arg <= self.to_ and arg!=51:
+            if not self.from_ <= arg <= self.to_ and arg != 51:
                 raise NotInRange(
                     f"The supplied number must be in range of {self.from_} to {self.to_} or 51.",
                     self.from_,

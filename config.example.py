@@ -183,7 +183,7 @@ adventure_times = {
     18: timedelta(hours=17),
     19: timedelta(hours=18),
     20: timedelta(hours=19),
-    51: timedelta(hours=24)
+    51: timedelta(hours=24),
 }
 
 adventure_names = {

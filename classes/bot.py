@@ -401,7 +401,7 @@ class Bot(commands.AutoShardedBot):
         if insert:
             return await self.create_item(**item)
         return item
-    
+
     async def create_random_51_item(
         self, minstat, maxstat, minvalue, maxvalue, owner, insert=True
     ):
@@ -445,9 +445,9 @@ class Bot(commands.AutoShardedBot):
                     "Power Suit",
                     "Varia Suit",
                     "Gravity Suit",
-                    "Extraterrestrial Barrier"
+                    "Extraterrestrial Barrier",
                 ]
-            ) 
+            )
         if insert:
             return await self.create_item(**item)
         return item
