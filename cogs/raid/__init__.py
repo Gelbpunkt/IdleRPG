@@ -1712,17 +1712,17 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
             em = discord.Embed(title="Convincing a Windows® user", colour=0xFFB900)
             em.add_field(
                 name="Attack Target",
-                value=f"{target} ({raid[target]['damage']} convinction power; {raid[target]['armor']} personal convinction)",
+                value=f"{target} ({raid[target]['damage']} conviction power; {raid[target]['armor']} personal conviction)",
             )
             em.add_field(
-                name="Theoretical Convinction", value=dmg + raid[target]["armor"]
+                name="Theoretical Conviction", value=dmg + raid[target]["armor"]
             )
-            em.add_field(name="Effective Convinction", value=dmg)
+            em.add_field(name="Effective Conviction", value=dmg)
             em.set_author(name=str(target), icon_url=target.avatar_url)
             em.set_thumbnail(url=f"{self.bot.BASE_URL}/windows.png")
-            em.add_field(name="Raid Convinction", value=raid_dmg)
+            em.add_field(name="Raid Conviction", value=raid_dmg)
             em.add_field(
-                name="Windows® User Convinction Of Windows®",
+                name="Windows® User Conviction Of Windows®",
                 value=boss_hp if (boss_hp := boss["hp"]) > 0 else "Convinced!",
             )
             await ctx.send(embed=em)
