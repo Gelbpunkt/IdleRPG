@@ -233,7 +233,7 @@ Even $1 can help us.
             title=_("IdleRPG Statistics"),
             colour=0xB8BBFF,
             url=self.bot.BASE_URL,
-            description=_("Official Support Server Invite: https://discord.gg/idlerpg"),
+            description=_("Official Support Server Invite: https://discord.gg/MSBatf6"),
         )
         embed.set_thumbnail(url=self.bot.user.avatar_url)
         embed.set_footer(
