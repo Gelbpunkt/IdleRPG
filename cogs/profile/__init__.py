@@ -465,17 +465,17 @@ IdleRPG is a global bot, your characters are valid everywhere"""
             main = item[stat]
             main2 = item2[stat]
             max_ = item[stat] + 5
+            if main > 40:
+                await self.bot.reset_cooldown(ctx)
+                return await ctx.send(
+                    _("This item is already on the maximum upgrade level.")
+                )
             if not min_ <= main2 <= max_:
                 await self.bot.reset_cooldown(ctx)
                 return await ctx.send(
                     _(
                         "The second item's stat must be in the range of `{min_}` to `{max_}` to upgrade an item with the stat of `{stat}`."
                     ).format(min_=min_, max_=max_, stat=main)
-                )
-            if main > 40:
-                await self.bot.reset_cooldown(ctx)
-                return await ctx.send(
-                    _("This item is already on the maximum upgrade level.")
                 )
             await conn.execute(
                 f'UPDATE allitems SET "{stat}"="{stat}"+1 WHERE "id"=$1;', firstitemid
