@@ -245,7 +245,7 @@ Even $1 can help us.
             value=_(
                 """\
 CPU Usage: **{cpu}%**, **{cores}** cores @ **{freq}** GHz
-RAM Usage: **{ram}% (Total: {total_ram})**
+RAM Usage: **{ram}%** (Total: **{total_ram}**)
 Python Version **{python}** <:python:445247273065250817>
 discord.py Version **{dpy}**
 Operating System: **{osname} {osversion}**
