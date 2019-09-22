@@ -433,7 +433,8 @@ IdleRPG is a global bot, your characters are valid everywhere"""
     @checks.has_char()
     @commands.command()
     @locale_doc
-    async def unequip(self, ctx itemid: int):
+    async def unequip(self, ctx, itemid: int):
+        _("""Unequip one of your equipped items""")
         item = await conn.fetchrow(
                 'SELECT ai.* FROM inventory i JOIN allitems ai ON (i."item"=ai."id") WHERE ai."owner"=$1 and ai."id"=$2;',
                 ctx.author.id,
