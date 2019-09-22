@@ -82,6 +82,17 @@ class Custom(commands.Cog):
             delete_after=3,
         )
 
+    @commands.command(hidden=True)
+    async def kill(self, ctx, target: discord.Member):
+        """Kill someone."""
+        await ctx.send(
+            embed=discord.Embed(
+                title=f"{target} has been killed by {ctx.author}."
+            ).set_image(
+                url="https://media.discordapp.net/attachments/439779845673844739/625403834033766428/kill.gif"
+            )
+        )
+
 
 def setup(bot):
     bot.add_cog(Custom(bot))
