@@ -25,7 +25,7 @@ import discord
 
 from discord.ext import commands
 
-from classes.converters import IntFromTo, AreaFiftyOneInt
+from classes.converters import IntFromTo
 from cogs.shard_communication import user_on_cooldown as user_cooldown
 from utils import items
 from utils import misc as rpgtools
@@ -88,15 +88,14 @@ class Adventure(commands.Cog):
     @has_no_adventure()
     @commands.command(aliases=["mission", "a", "dungeon"])
     @locale_doc
-    async def adventure(self, ctx, dungeonnumber: AreaFiftyOneInt(1, 20)):
+    async def adventure(self, ctx, dungeonnumber: IntFromTo(1, 20)):
         _("""Sends your character on an adventure.""")
         if dungeonnumber > int(rpgtools.xptolevel(ctx.character_data["xp"])):
-            if dungeonnumber != 51:  # bybass level req. for the event
-                return await ctx.send(
-                    _("You must be on level **{level}** to do this adventure.").format(
-                        level=dungeonnumber
-                    )
+            return await ctx.send(
+                _("You must be on level **{level}** to do this adventure.").format(
+                    level=dungeonnumber
                 )
+            )
         time_booster = await self.bot.get_booster(ctx.author, "time")
         time = self.bot.config.adventure_times[dungeonnumber]
         if time_booster:

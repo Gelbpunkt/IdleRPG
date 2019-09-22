@@ -27,7 +27,7 @@ from traceback import print_exc
 import aiohttp
 import aioredis
 
-from config import token, shard_per_cluster, additional_shards, shard_announce_channel
+from config import additional_shards, shard_announce_channel, shard_per_cluster, token
 
 if sys.version_info < (3, 8):
     raise Exception("IdleRPG requires Python 3.8")

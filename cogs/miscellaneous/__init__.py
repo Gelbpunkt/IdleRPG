@@ -29,6 +29,7 @@ from functools import partial
 import aiowiki
 import discord
 import distro
+import humanize
 import pkg_resources as pkg
 import psutil
 
@@ -226,6 +227,7 @@ Even $1 can help us.
         guild_count = sum(
             await self.bot.cogs["Sharding"].handler("guild_count", self.bot.shard_count)
         )
+        meminfo = psutil.virtual_memory()
 
         embed = discord.Embed(
             title=_("IdleRPG Statistics"),
@@ -242,8 +244,8 @@ Even $1 can help us.
             name=_("Hosting Statistics"),
             value=_(
                 """\
-CPU Usage: **{cpu}%**
-RAM Usage: **{ram}%**
+CPU Usage: **{cpu}%**, **{cores}** cores @ **{freq}** GHz
+RAM Usage: **{ram}% (Total: {total_ram})**
 Python Version **{python}** <:python:445247273065250817>
 discord.py Version **{dpy}**
 Operating System: **{osname} {osversion}**
@@ -251,7 +253,10 @@ Kernel Version: **{kernel}**
 PostgreSQL Version **{pg_version}**"""
             ).format(
                 cpu=psutil.cpu_percent(),
-                ram=psutil.virtual_memory().percent,
+                cores=psutil.cpu_count(),
+                freq=psutil.cpu_freq().max / 1000,
+                ram=meminfo.percent,
+                total_ram=humanize.naturalsize(meminfo.total),
                 python=platform.python_version(),
                 dpy=pkg.get_distribution("discord.py").version,
                 osname=sysinfo[0].title(),
