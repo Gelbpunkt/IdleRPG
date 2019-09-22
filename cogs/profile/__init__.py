@@ -429,37 +429,32 @@ IdleRPG is a global bot, your characters are valid everywhere"""
             await ctx.send(
                 _("Successfully equipped item `{itemid}`.").format(itemid=itemid)
             )
-                       
+
     @checks.has_char()
     @commands.command()
     @locale_doc
     async def unequip(self, ctx, itemid: int):
         _("""Unequip one of your equipped items""")
-        item = await conn.fetchrow(
+        async with self.bot.pool.acquire() as conn:
+            item = await conn.fetchrow(
                 'SELECT ai.* FROM inventory i JOIN allitems ai ON (i."item"=ai."id") WHERE ai."owner"=$1 and ai."id"=$2;',
                 ctx.author.id,
                 itemid,
             )
-        if not item:
-            return await ctx.send(
-                _("You don't own an item with the ID `{itemid}`.").format(
-                    itemid=itemid
+            if not item:
+                return await ctx.send(
+                    _("You don't own an item with the ID `{itemid}`.").format(
+                        itemid=itemid
+                    )
                 )
-            )
-        if not item["equipped"]:
-            return await ctx.send(
-                _("You don't have this item equipped.")
-            )
-        async with self.bot.pool.acquire() as conn:
+            if not item["equipped"]:
+                return await ctx.send(_("You don't have this item equipped."))
             await conn.execute(
                 'UPDATE inventory SET "equipped"=False WHERE "item"=$1;', itemid
             )
         await ctx.send(
-            _("Successfully unequipped item `{itemid}`.").format(
-                itemdid=itemid
-            )
+            _("Successfully unequipped item `{itemid}`.").format(itemdid=itemid)
         )
-            
 
     @checks.has_char()
     @user_cooldown(3600)
