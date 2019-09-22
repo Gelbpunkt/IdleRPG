@@ -200,7 +200,7 @@ Even $1 can help us.
         _("""Sends you the link to the official IdleRPG Support server.""")
         await ctx.send(
             _(
-                "Got problems or feature requests? Looking for people to play with? Join the support server:\nhttps://discord.gg/idlerpg"
+                "Got problems or feature requests? Looking for people to play with? Join the support server:\nhttps://discord.gg/MSBatf6"
             )
         )
 
@@ -233,7 +233,7 @@ Even $1 can help us.
             title=_("IdleRPG Statistics"),
             colour=0xB8BBFF,
             url=self.bot.BASE_URL,
-            description=_("Official Support Server Invite: https://discord.gg/idlerpg"),
+            description=_("Official Support Server Invite: https://discord.gg/MSBatf6"),
         )
         embed.set_thumbnail(url=self.bot.user.avatar_url)
         embed.set_footer(
