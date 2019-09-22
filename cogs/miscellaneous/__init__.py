@@ -200,7 +200,7 @@ Even $1 can help us.
         _("""Sends you the link to the official IdleRPG Support server.""")
         await ctx.send(
             _(
-                "Got problems or feature requests? Looking for people to play with? Join the support server:\nhttps://discord.gg/idlerpg"
+                "Got problems or feature requests? Looking for people to play with? Join the support server:\nhttps://discord.gg/MSBatf6"
             )
         )
 
