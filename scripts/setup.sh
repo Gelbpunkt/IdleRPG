@@ -133,6 +133,7 @@ mkdir /opt/redisdata
 mkdir /opt/andesite
 mkdir /opt/teatro
 mkdir /opt/pginit
+mkdir /opt/okapi
 mkdir /opt/idlerpg
 mv init.sh /opt/pginit/init.sh
 chmod 0777 /opt/pgdata
