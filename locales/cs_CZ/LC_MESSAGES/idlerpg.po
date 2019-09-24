@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-09-22 13:36-0700\n"
+"POT-Creation-Date: 2019-09-24 08:03-0700\n"
 "PO-Revision-Date: 2019-05-30 21:16+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -24,7 +24,7 @@ msgstr "Začni nový turnaj"
 
 #: cogs/tournament/__init__.py:41 cogs/battles/__init__.py:45
 #: cogs/battles/__init__.py:147 cogs/gambling/__init__.py:326
-#: cogs/profile/__init__.py:597 cogs/transaction/__init__.py:251
+#: cogs/profile/__init__.py:592 cogs/transaction/__init__.py:251
 #: cogs/transaction/__init__.py:297
 msgid "You are too poor."
 msgstr "Jsi příliš chudý."
@@ -4612,8 +4612,8 @@ msgstr ""
 msgid "Equips an item of yours by ID."
 msgstr ""
 
-#: cogs/profile/__init__.py:405 cogs/profile/__init__.py:445
-#: cogs/profile/__init__.py:536
+#: cogs/profile/__init__.py:405 cogs/profile/__init__.py:446
+#: cogs/profile/__init__.py:531
 #, python-brace-format
 msgid "You don't own an item with the ID `{itemid}`."
 msgstr ""
@@ -4636,147 +4636,147 @@ msgstr ""
 msgid "You don't have this item equipped."
 msgstr ""
 
-#: cogs/profile/__init__.py:458
+#: cogs/profile/__init__.py:456
 #, python-brace-format
 msgid "Successfully unequipped item `{itemid}`."
 msgstr ""
 
-#: cogs/profile/__init__.py:469
+#: cogs/profile/__init__.py:464
 msgid "Merges two items to a better one. Second one is consumed."
 msgstr ""
 
-#: cogs/profile/__init__.py:472
+#: cogs/profile/__init__.py:467
 msgid "Good luck with that."
 msgstr ""
 
-#: cogs/profile/__init__.py:486
+#: cogs/profile/__init__.py:481
 msgid "You don't own both of these items."
 msgstr ""
 
-#: cogs/profile/__init__.py:491
+#: cogs/profile/__init__.py:486
 msgid ""
 "The items are of unequal type. You may only merge a sword with a sword or a "
 "shield with a shield."
 msgstr ""
 
-#: cogs/profile/__init__.py:502
+#: cogs/profile/__init__.py:497
 msgid "This item is already on the maximum upgrade level."
 msgstr ""
 
-#: cogs/profile/__init__.py:508
+#: cogs/profile/__init__.py:503
 #, python-brace-format
 msgid ""
 "The second item's stat must be in the range of `{min_}` to `{max_}` to "
 "upgrade an item with the stat of `{stat}`."
 msgstr ""
 
-#: cogs/profile/__init__.py:517
+#: cogs/profile/__init__.py:512
 #, python-brace-format
 msgid ""
 "The {stat} of your **{item}** is now **{newstat}**. The other item was "
 "destroyed."
 msgstr ""
 
-#: cogs/profile/__init__.py:526
+#: cogs/profile/__init__.py:521
 msgid "Upgrades an item's stat by 1."
 msgstr ""
 
-#: cogs/profile/__init__.py:549
+#: cogs/profile/__init__.py:544
 msgid "Your weapon already reached the maximum upgrade level."
 msgstr ""
 
-#: cogs/profile/__init__.py:554
+#: cogs/profile/__init__.py:549
 #, python-brace-format
 msgid ""
 "Are you sure you want to upgrade this item: {item}? It will cost **"
 "${pricetopay}**."
 msgstr ""
 
-#: cogs/profile/__init__.py:558
+#: cogs/profile/__init__.py:553
 msgid "Weapon upgrade cancelled."
 msgstr ""
 
-#: cogs/profile/__init__.py:563
+#: cogs/profile/__init__.py:558
 #, python-brace-format
 msgid ""
 "You are too poor to upgrade this item. The upgrade costs **${pricetopay}**, "
 "but you only have **${money}**."
 msgstr ""
 
-#: cogs/profile/__init__.py:578
+#: cogs/profile/__init__.py:573
 #, python-brace-format
 msgid ""
 "The {stat} of your **{item}** is now **{newstat}**. **${pricetopay}** has "
 "been taken off your balance."
 msgstr ""
 
-#: cogs/profile/__init__.py:593
+#: cogs/profile/__init__.py:588
 msgid "Gift money!"
 msgstr ""
 
-#: cogs/profile/__init__.py:595
+#: cogs/profile/__init__.py:590
 msgid "No cheating!"
 msgstr ""
 
-#: cogs/profile/__init__.py:608
+#: cogs/profile/__init__.py:603
 #, python-brace-format
 msgid "Successfully gave **${money}** to {other}."
 msgstr ""
 
-#: cogs/profile/__init__.py:620
+#: cogs/profile/__init__.py:615
 msgid "Renames your character."
 msgstr ""
 
-#: cogs/profile/__init__.py:622
+#: cogs/profile/__init__.py:617
 msgid "What shall your character's name be? (Minimum 3 Characters, Maximum 20)"
 msgstr ""
 
-#: cogs/profile/__init__.py:631
+#: cogs/profile/__init__.py:626
 msgid "Timeout expired. Retry!"
 msgstr ""
 
-#: cogs/profile/__init__.py:637
+#: cogs/profile/__init__.py:632
 msgid "Character name updated."
 msgstr ""
 
-#: cogs/profile/__init__.py:639
+#: cogs/profile/__init__.py:634
 msgid "Character names must be at least 3 characters!"
 msgstr ""
 
-#: cogs/profile/__init__.py:641
+#: cogs/profile/__init__.py:636
 msgid "Character names mustn't exceed 20 characters!"
 msgstr ""
 
-#: cogs/profile/__init__.py:647
+#: cogs/profile/__init__.py:642
 msgid "Deletes your character."
 msgstr ""
 
-#: cogs/profile/__init__.py:650
+#: cogs/profile/__init__.py:645
 msgid ""
 "Are you absolutely sure you want to delete your character? React in the next "
 "30 seconds to confirm.\n"
 "**This cannot be undone.**"
 msgstr ""
 
-#: cogs/profile/__init__.py:653
+#: cogs/profile/__init__.py:648
 msgid "Cancelled deletion of your character."
 msgstr ""
 
-#: cogs/profile/__init__.py:676
+#: cogs/profile/__init__.py:671
 msgid "Successfully deleted your character. Sorry to see you go :frowning:"
 msgstr ""
 
-#: cogs/profile/__init__.py:683
+#: cogs/profile/__init__.py:678
 msgid ""
 "Sets your profile text colour. The format may be #RRGGBB or a HTML-valid "
 "string like \"cyan\"."
 msgstr ""
 
-#: cogs/profile/__init__.py:687
+#: cogs/profile/__init__.py:682
 msgid "Format for colour is `#RRGGBB` or a colour code like `cyan`."
 msgstr ""
 
-#: cogs/profile/__init__.py:694
+#: cogs/profile/__init__.py:689
 #, python-brace-format
 msgid ""
 "Successfully set your profile colour to `{colour}`. Hint: If you used a hex "

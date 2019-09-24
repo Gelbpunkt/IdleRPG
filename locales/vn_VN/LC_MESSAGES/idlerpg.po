@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-09-22 13:36-0700\n"
+"POT-Creation-Date: 2019-09-24 08:03-0700\n"
 "PO-Revision-Date: 2019-08-27 11:51+0700\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -24,7 +24,7 @@ msgstr "Bắt đầu giải đấu."
 
 #: cogs/tournament/__init__.py:41 cogs/battles/__init__.py:45
 #: cogs/battles/__init__.py:147 cogs/gambling/__init__.py:326
-#: cogs/profile/__init__.py:597 cogs/transaction/__init__.py:251
+#: cogs/profile/__init__.py:592 cogs/transaction/__init__.py:251
 #: cogs/transaction/__init__.py:297
 msgid "You are too poor."
 msgstr "Bạn quá nghèo."
@@ -4932,8 +4932,8 @@ msgstr "Đã nhận được quà!"
 msgid "Equips an item of yours by ID."
 msgstr "Trang bị một vật phẩm của bạn bằng ID."
 
-#: cogs/profile/__init__.py:405 cogs/profile/__init__.py:445
-#: cogs/profile/__init__.py:536
+#: cogs/profile/__init__.py:405 cogs/profile/__init__.py:446
+#: cogs/profile/__init__.py:531
 #, python-brace-format
 msgid "You don't own an item with the ID `{itemid}`."
 msgstr "Bạn không sở hữu một vật phẩm có ID `{itemid}`."
@@ -4956,25 +4956,25 @@ msgstr ""
 msgid "You don't have this item equipped."
 msgstr ""
 
-#: cogs/profile/__init__.py:458
+#: cogs/profile/__init__.py:456
 #, python-brace-format
 msgid "Successfully unequipped item `{itemid}`."
 msgstr ""
 
-#: cogs/profile/__init__.py:469
+#: cogs/profile/__init__.py:464
 msgid "Merges two items to a better one. Second one is consumed."
 msgstr ""
 "Hợp nhất hai món đồ để tạo ra một món tốt hơn. Món đồ thứ hai sẽ bị tiêu hủy."
 
-#: cogs/profile/__init__.py:472
+#: cogs/profile/__init__.py:467
 msgid "Good luck with that."
 msgstr "Chúc bạn may mắn lần sau."
 
-#: cogs/profile/__init__.py:486
+#: cogs/profile/__init__.py:481
 msgid "You don't own both of these items."
 msgstr "Bạn không sở hữu cả hai món đồ này."
 
-#: cogs/profile/__init__.py:491
+#: cogs/profile/__init__.py:486
 msgid ""
 "The items are of unequal type. You may only merge a sword with a sword or a "
 "shield with a shield."
@@ -4982,11 +4982,11 @@ msgstr ""
 "Các trang bị có loại không đồng đều. Bạn chỉ có thể hợp nhất một thanh kiếm "
 "với một thanh kiếm hoặc một chiếc khiên với một chiếc khiên."
 
-#: cogs/profile/__init__.py:502
+#: cogs/profile/__init__.py:497
 msgid "This item is already on the maximum upgrade level."
 msgstr "Vũ khí của bạn đã đến cấp độ nâng cấp tối đa."
 
-#: cogs/profile/__init__.py:508
+#: cogs/profile/__init__.py:503
 #, python-brace-format
 msgid ""
 "The second item's stat must be in the range of `{min_}` to `{max_}` to "
@@ -4995,7 +4995,7 @@ msgstr ""
 "Chỉ số của món đồ thứ hai phải nằm trong phạm vi `{min_}` đến `{max_}` để "
 "nâng cấp món đồ có chỉ số `{stat}`."
 
-#: cogs/profile/__init__.py:517
+#: cogs/profile/__init__.py:512
 #, python-brace-format
 msgid ""
 "The {stat} of your **{item}** is now **{newstat}**. The other item was "
@@ -5004,15 +5004,15 @@ msgstr ""
 "Món đồ **{item}** đã tăng từ {stat} lên **{newstat}**. Mòn đồ kia đã bị phả "
 "hủy."
 
-#: cogs/profile/__init__.py:526
+#: cogs/profile/__init__.py:521
 msgid "Upgrades an item's stat by 1."
 msgstr "Nâng cấp  lên 1 chỉ số cho món đồ."
 
-#: cogs/profile/__init__.py:549
+#: cogs/profile/__init__.py:544
 msgid "Your weapon already reached the maximum upgrade level."
 msgstr "Vũ khí của bạn đã đến cấp độ nâng cấp tối đa."
 
-#: cogs/profile/__init__.py:554
+#: cogs/profile/__init__.py:549
 #, python-brace-format
 msgid ""
 "Are you sure you want to upgrade this item: {item}? It will cost **"
@@ -5021,11 +5021,11 @@ msgstr ""
 "Bạn có chắc chắn muốn nâng cấp {item} không? Gía nâng cấp là **${pricetopay}"
 "**."
 
-#: cogs/profile/__init__.py:558
+#: cogs/profile/__init__.py:553
 msgid "Weapon upgrade cancelled."
 msgstr "Hủy nâng cấp vũ khí."
 
-#: cogs/profile/__init__.py:563
+#: cogs/profile/__init__.py:558
 #, python-brace-format
 msgid ""
 "You are too poor to upgrade this item. The upgrade costs **${pricetopay}**, "
@@ -5034,7 +5034,7 @@ msgstr ""
 "Bạn quá nghèo để nâng cấp món đồ này. Gía nâng cấp là **${pricetopay}** "
 "nhưng bạn chỉ có **${money}**."
 
-#: cogs/profile/__init__.py:578
+#: cogs/profile/__init__.py:573
 #, python-brace-format
 msgid ""
 "The {stat} of your **{item}** is now **{newstat}**. **${pricetopay}** has "
@@ -5043,48 +5043,48 @@ msgstr ""
 "Món đồ **{item}** đã tăng từ {stat} lên **{newstat}**. **${pricetopay}** đã "
 "bị trừ vào tài khoản của bạn."
 
-#: cogs/profile/__init__.py:593
+#: cogs/profile/__init__.py:588
 msgid "Gift money!"
 msgstr "Cho tiền!"
 
-#: cogs/profile/__init__.py:595
+#: cogs/profile/__init__.py:590
 msgid "No cheating!"
 msgstr "Không được gian lận đâu nha!"
 
-#: cogs/profile/__init__.py:608
+#: cogs/profile/__init__.py:603
 #, python-brace-format
 msgid "Successfully gave **${money}** to {other}."
 msgstr "Đưa **${money}** từ **{other}** thành công."
 
-#: cogs/profile/__init__.py:620
+#: cogs/profile/__init__.py:615
 msgid "Renames your character."
 msgstr "Thay đổi tên nhân vật của bạn."
 
-#: cogs/profile/__init__.py:622
+#: cogs/profile/__init__.py:617
 msgid "What shall your character's name be? (Minimum 3 Characters, Maximum 20)"
 msgstr "Tên nhân vật của bạn sẽ là gì? (Tối thiểu 3 ký tự, tối đa 20)"
 
-#: cogs/profile/__init__.py:631
+#: cogs/profile/__init__.py:626
 msgid "Timeout expired. Retry!"
 msgstr "Thời gian đã hết. Xin hãy thử lại!"
 
-#: cogs/profile/__init__.py:637
+#: cogs/profile/__init__.py:632
 msgid "Character name updated."
 msgstr "Tên nhân vật đã được cập nhật."
 
-#: cogs/profile/__init__.py:639
+#: cogs/profile/__init__.py:634
 msgid "Character names must be at least 3 characters!"
 msgstr "Tên nhân vật không được ít hơn 3 chữ cái!"
 
-#: cogs/profile/__init__.py:641
+#: cogs/profile/__init__.py:636
 msgid "Character names mustn't exceed 20 characters!"
 msgstr "Tên nhân vật không được vượt quá 20 chữ cái!"
 
-#: cogs/profile/__init__.py:647
+#: cogs/profile/__init__.py:642
 msgid "Deletes your character."
 msgstr "Xóa nhân vật của bạn."
 
-#: cogs/profile/__init__.py:650
+#: cogs/profile/__init__.py:645
 msgid ""
 "Are you absolutely sure you want to delete your character? React in the next "
 "30 seconds to confirm.\n"
@@ -5094,25 +5094,25 @@ msgstr ""
 "tiếp theo để xác nhận.\n"
 "**Điều này không thể được hoàn tác.**"
 
-#: cogs/profile/__init__.py:653
+#: cogs/profile/__init__.py:648
 msgid "Cancelled deletion of your character."
 msgstr "Hủy xóa nhân vật của bạn."
 
-#: cogs/profile/__init__.py:676
+#: cogs/profile/__init__.py:671
 msgid "Successfully deleted your character. Sorry to see you go :frowning:"
 msgstr "Xóa nhân vật thành công. Chế sẽ nhớ fam lăm huhu :frowning:"
 
-#: cogs/profile/__init__.py:683
+#: cogs/profile/__init__.py:678
 msgid ""
 "Sets your profile text colour. The format may be #RRGGBB or a HTML-valid "
 "string like \"cyan\"."
 msgstr "Đổi màu cho profile của bạn."
 
-#: cogs/profile/__init__.py:687
+#: cogs/profile/__init__.py:682
 msgid "Format for colour is `#RRGGBB` or a colour code like `cyan`."
 msgstr "Định dạng cho màu là `#RRGGBB` hoặc mã màu như`cyan`."
 
-#: cogs/profile/__init__.py:694
+#: cogs/profile/__init__.py:689
 #, python-brace-format
 msgid ""
 "Successfully set your profile colour to `{colour}`. Hint: If you used a hex "
