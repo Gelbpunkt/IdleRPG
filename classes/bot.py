@@ -400,7 +400,7 @@ class Bot(commands.AutoShardedBot):
         return item
 
     def in_class_line(self, classes, line):
-        return any([self.get_class_line(c) == line for c in classes])
+        return any([self.get_class_line(c) == line for c in list(classes)])
 
     def get_class_grade_from(self, classes, line):
         for class_ in classes:
