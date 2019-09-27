@@ -46,6 +46,7 @@ class GlobalEvents(commands.Cog):
         await self.load_settings()
         self.bot.loop.create_task(queue_manager(self.bot, self.bot.queue))
         await self.bot.is_owner(self.bot.user.id)  # force getting the owners
+        await asyncio.sleep(600)
         await self.status_updater()
 
     @commands.Cog.listener()
