@@ -306,11 +306,15 @@ IdleRPG is a global bot, your characters are valid everywhere"""
     @checks.has_char()
     @commands.command(aliases=["inv", "i"])
     @locale_doc
-    async def inventory(self, ctx):
+    async def inventory(self, ctx, lowest: IntFromTo(0, 60), highest: IntFromTo(0, 60)):
         _("""Shows your current inventory.""")
+        if highest <= lowest:
+            return await ctx.send(_("Make sure that the `highest` value is greater than `lowest`"))
         ret = await self.bot.pool.fetch(
-            'SELECT ai.*, i.equipped FROM profile p JOIN allitems ai ON (p.user=ai.owner) JOIN inventory i ON (ai.id=i.item) WHERE p."user"=$1 ORDER BY i."equipped" DESC, ai."damage"+ai."armor" DESC;',
+            'SELECT ai.*, i.equipped FROM profile p JOIN allitems ai ON (p.user=ai.owner) JOIN inventory i ON (ai.id=i.item) WHERE p."user"=$1 AND ai."damage"+ai."armor" BETWEEN $2 AND $3 OR i."equipped" ORDER BY i."equipped" DESC, ai."damage"+ai."armor" DESC;',
             ctx.author.id,
+            lowest,
+            highest,
         )
         if not ret:
             return await ctx.send(_("Your inventory is empty."))
