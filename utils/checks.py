@@ -311,7 +311,7 @@ def update_pet():
                 )
                 ctx.pet_data = data
                 classes = ctx.character_data["class"]
-              for evolve in ['Caretaker'] + ctx.bot.get_class_evolves()["Ranger"]:
+                for evolve in ['Caretaker'] + ctx.bot.get_class_evolves()["Ranger"]:
                 #Maybe we should add the Caretaker since it makes an error when it's not in the list
                     if evolve in classes:
                         idx = classes.index(evolve)
