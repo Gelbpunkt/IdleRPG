@@ -31,7 +31,7 @@ if sys.platform == "linux":  # uvloop requires linux
 
 bot = Bot(
     case_insensitive=True,
-    activity=activity=discord.Game(
+    activity=discord.Game(
         name=f"IdleRPG v{self.bot.version}"
         if self.bot.config.is_beta
         else self.bot.BASE_URL
