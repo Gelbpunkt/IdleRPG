@@ -31,11 +31,6 @@ if sys.platform == "linux":  # uvloop requires linux
 
 bot = Bot(
     case_insensitive=True,
-    activity=discord.Game(
-        name=f"IdleRPG v{self.bot.version}"
-        if self.bot.config.is_beta
-        else self.bot.BASE_URL
-    ),
     description="The one and only IdleRPG bot for discord",
     shard_ids=loads(sys.argv[1]),
     shard_count=int(sys.argv[2]),
