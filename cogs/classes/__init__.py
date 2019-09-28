@@ -255,7 +255,7 @@ Priest   ->  Mysticist ->  Summoner    -> Seer           ->  Ritualist
         ):
             async with self.bot.pool.acquire() as conn:
                 usr = await conn.fetchrow(
-                    'SELECT "user", "money" FROM profile WHERE "money">=10 WHERE "user"!=$1 ORDER BY RANDOM() LIMIT 1;',
+                    'SELECT "user", "money" FROM profile WHERE "money">=10 AND "user"!=$1 ORDER BY RANDOM() LIMIT 1;',
                     ctx.author.id
                 )
                 stolen = int(usr["money"] * 0.1)
