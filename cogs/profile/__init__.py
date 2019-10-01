@@ -315,7 +315,7 @@ IdleRPG is a global bot, your characters are valid everywhere"""
                 _("Make sure that the `highest` value is greater than `lowest`.")
             )
         ret = await self.bot.pool.fetch(
-            'SELECT ai.*, i.equipped FROM profile p JOIN allitems ai ON (p.user=ai.owner) JOIN inventory i ON (ai.id=i.item) WHERE p."user"=$1 AND ai."damage"+ai."armor" BETWEEN $2 AND $3 OR i."equipped" ORDER BY i."equipped" DESC, ai."damage"+ai."armor" DESC;',
+            'SELECT ai.*, i.equipped FROM profile p JOIN allitems ai ON (p.user=ai.owner) JOIN inventory i ON (ai.id=i.item) WHERE p."user"=$1 AND ((ai."damage"+ai."armor" BETWEEN $2 AND $3) OR i."equipped") ORDER BY i."equipped" DESC, ai."damage"+ai."armor" DESC;',
             ctx.author.id,
             lowest,
             highest,
