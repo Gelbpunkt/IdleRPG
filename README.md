@@ -2,7 +2,6 @@
 
 ![Build Status](https://api.travis-ci.com/Gelbpunkt/IdleRPG.svg)
 
-
 This is the code for the IdleRPG Discord Bot.
 
 You may [submit an issue](https://github.com/Gelbpunkt/IdleRPG/issues) or [open a pull request](https://github.com/Gelbpunkt/IdleRPG/pulls) at any time.
@@ -12,20 +11,23 @@ You may [submit an issue](https://github.com/Gelbpunkt/IdleRPG/issues) or [open 
 The IdleRPG Project is licensed under the terms of the [GNU Affero General Public License 3.0](https://github.com/Gelbpunkt/IdleRPG/blob/v4/LICENSE) ("AGPL").
 
 The AGPL allows you to:
+
 - [x] Modify the code
 - [x] Distribute it
 
 It however does not allow you to:
+
 - [ ] Sublicense
 - [ ] Hold liable
 
 You must:
+
 - Include the copyright
 - Include the License
 - Disclose the source
 - State changes
 
-Summary and information taken from [here](https://tldrlegal.com/license/gnu-affero-general-public-license-v3-(agpl-3.0)).
+Summary and information taken from [here](<https://tldrlegal.com/license/gnu-affero-general-public-license-v3-(agpl-3.0)>).
 
 ## Current goals
 
