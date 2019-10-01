@@ -1,5 +1,8 @@
 # IdleRPG
 
+![Build Status](https://api.travis-ci.com/Gelbpunkt/IdleRPG.svg)
+
+
 This is the code for the IdleRPG Discord Bot.
 
 You may [submit an issue](https://github.com/Gelbpunkt/IdleRPG/issues) or [open a pull request](https://github.com/Gelbpunkt/IdleRPG/pulls) at any time.
