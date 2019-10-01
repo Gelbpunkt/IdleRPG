@@ -2,7 +2,7 @@
 
 This is the code for the IdleRPG Discord Bot.
 
-You may [submit an issue](https://github.com/Gelbpunkt/IdleRPG/issues) or open pull requests at any time.
+You may [submit an issue](https://github.com/Gelbpunkt/IdleRPG/issues) or [open a pull request](https://github.com/Gelbpunkt/IdleRPG/pulls) at any time.
 
 ## License
 
@@ -48,6 +48,6 @@ A systemd unit file has been bundled as `idlerpg.service`.
 
 ## Contributing
 
-IdleRPG uses [black](https://github.com/ambv/black), flake8 and isort for code style. Please always run `./scripts/format.sh` before submitting a pull request and fix any problems.
+IdleRPG uses [black](https://github.com/ambv/black), [flake8](https://github.com/PyCQA/flake8) and [isort](https://github.com/timothycrosley/isort) for code style. Please always run `./scripts/format.sh` before submitting a pull request and fix any problems.
 
 **Make sure you sign the CLA [here](https://cla-assistant.io/Gelbpunkt/IdleRPG), else we cannot merge your changes.**
