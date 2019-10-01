@@ -20,6 +20,8 @@ import sys
 
 from json import loads
 
+import discord
+
 from contextvars_executor import ContextVarExecutor
 
 from classes.bot import Bot
