@@ -12,3 +12,6 @@ before_install:
 
 script:
   - podman build -t idlerpg:latest .
+
+after_success:
+  - podman push --creds="$DOCKERHUB_USER:$DOCKERHUB_PASSWORD" idlerpg docker://docker.io/gelbpunkt/idlerpg
