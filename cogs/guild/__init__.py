@@ -865,7 +865,7 @@ class Guild(commands.Cog):
 
         while not started:
             try:
-                r, u = await self.bot.wait_for("reaction_add", check=apply, timeout=30)
+                r, u = await self.bot.wait_for("reaction_add", check=apply, timeout=300)
                 user = await self.bot.pool.fetchrow(
                     'SELECT guild, xp FROM profile WHERE "user"=$1;', u.id
                 )
