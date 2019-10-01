@@ -57,10 +57,8 @@ class Bot(commands.AutoShardedBot):
         self.make_linecount()
         self.all_prefixes = {}
         # self.verified = []
-        self.activity = (
-            discord.Game(
-                name=f"IdleRPG v{config.version}" if config.is_beta else config.base_url
-            ),
+        self.activity = discord.Game(
+            name=f"IdleRPG v{config.version}" if config.is_beta else config.base_url
         )
 
         # global cooldown
