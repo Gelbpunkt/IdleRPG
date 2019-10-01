@@ -15,4 +15,4 @@ script:
   - podman build -t gelbpunkt/idlerpg:latest .
 
 after_success:
-    - 'if [ $TRAVIS_PULL_REQUEST" != "false" ]; then podman push --creds="$DOCKERHUB_USER:$DOCKERHUB_PASSWORD" gelbpunkt/idlerpg:latest; fi'
+    - 'if [ "$TRAVIS_PULL_REQUEST" = "false" ]; then podman push --creds="$DOCKERHUB_USER:$DOCKERHUB_PASSWORD" gelbpunkt/idlerpg:latest; fi'
