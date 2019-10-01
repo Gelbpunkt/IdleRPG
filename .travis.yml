@@ -1,0 +1,10 @@
+dist: bionic
+
+before_install:
+  - sudo apt update
+  - sudo apt -y  install software-properties-common
+  - sudo add-apt-repository -y ppa:projectatomic/ppa
+  - sudo apt -y install podman
+
+script:
+  - podman build -t idlerpg:latest .
