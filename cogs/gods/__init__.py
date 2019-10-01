@@ -86,7 +86,7 @@ class Gods(commands.Cog):
             extras=embeds, choices=list(self.bot.config.gods.keys())
         ).paginate(ctx)
 
-        if not await ctx.confirm(_("Warning: Gods/Goddesses are able to alter your luck that impacts your adventure success chances. Are you sure you want to follow {god}?").format(god=god)):
+        if not await ctx.confirm(_("Warning: Gods/Goddesses are able to alter your luck (including decreasing it!) that impacts your adventure success chances. Are you sure you want to follow {god}?").format(god=god)):
             return
 
         await self.bot.pool.execute(
