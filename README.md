@@ -1,6 +1,6 @@
 # IdleRPG
 
-![Build Status](https://api.travis-ci.com/Gelbpunkt/IdleRPG.svg)
+[![Build Status](https://api.travis-ci.com/Gelbpunkt/IdleRPG.svg)](https://travis-ci.com/Gelbpunkt/IdleRPG)
 
 This is the code for the IdleRPG Discord Bot.
 
