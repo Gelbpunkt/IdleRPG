@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-10-01 02:04-0700\n"
+"POT-Creation-Date: 2019-10-02 03:54-0700\n"
 "PO-Revision-Date: 2019-09-28 23:41+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -5254,83 +5254,91 @@ msgstr ""
 msgid "Choose your deity. This cannot be undone."
 msgstr "Välj din gud. Detta kan inte ångras."
 
-#: cogs/gods/__init__.py:93
+#: cogs/gods/__init__.py:89
+#, python-brace-format
+msgid ""
+"Warning: Gods/Goddesses are able to alter your luck (including decreasing "
+"it!) that impacts your adventure success chances. Are you sure you want to "
+"follow {god}?"
+msgstr ""
+
+#: cogs/gods/__init__.py:96
 #, python-brace-format
 msgid "You are now a follower of {god}."
 msgstr "Du avgudar nu {god}"
 
-#: cogs/gods/__init__.py:101
+#: cogs/gods/__init__.py:104
 msgid "Pray to your deity to gain favor."
 msgstr "Be till din gud för att tjäna förmån."
 
-#: cogs/gods/__init__.py:105
+#: cogs/gods/__init__.py:108
 msgid "They obviously didn't like your prayer!"
 msgstr "De uppskattade uppenbarligen inte din bön!"
 
-#: cogs/gods/__init__.py:106
+#: cogs/gods/__init__.py:109
 msgid "Noone heard you!"
 msgstr "Ingen hörde dig!"
 
-#: cogs/gods/__init__.py:107
+#: cogs/gods/__init__.py:110
 msgid "Your voice has made them screw off."
 msgstr "Din röst har fått dem att försvinna."
 
-#: cogs/gods/__init__.py:108
+#: cogs/gods/__init__.py:111
 msgid "Even a donkey would've been a better follower than you."
 msgstr "Till och med en åsna hade varit en bättre följare än dig."
 
-#: cogs/gods/__init__.py:116
+#: cogs/gods/__init__.py:119
 msgid "„Rather lousy, but okay“, they said."
 msgstr "„Ganska slarvigt men okej\", sa dem."
 
-#: cogs/gods/__init__.py:117
+#: cogs/gods/__init__.py:120
 msgid "You were a little sleepy."
 msgstr "Du var lite trött."
 
-#: cogs/gods/__init__.py:118
+#: cogs/gods/__init__.py:121
 msgid "They were a little amused about your singing."
 msgstr "De var lite roade av ditt sjungande."
 
-#: cogs/gods/__init__.py:119
+#: cogs/gods/__init__.py:122
 msgid "Hearing the same prayer over and over again made them tired."
 msgstr "Att höra samma bön om och om igen gjorde dem trötta."
 
-#: cogs/gods/__init__.py:131
+#: cogs/gods/__init__.py:134
 msgid "Your Gregorian chants were amazingly well sung."
 msgstr "Dina Gregorianska sånger var fantastiskt välsjungna."
 
-#: cogs/gods/__init__.py:132
+#: cogs/gods/__init__.py:135
 msgid "Even the birds joined in your singing."
 msgstr "Till och med fåglarna deltog i ditt sjungande."
 
-#: cogs/gods/__init__.py:134
+#: cogs/gods/__init__.py:137
 msgid "The other gods applauded while your god noted down the best mark."
 msgstr ""
 "De andra gudarna applåderade medan din gud skrev ner det bästa betyget."
 
-#: cogs/gods/__init__.py:136
+#: cogs/gods/__init__.py:139
 msgid "Rarely have you had a better day!"
 msgstr "Sällan har du haft en bättre dag!"
 
-#: cogs/gods/__init__.py:145
+#: cogs/gods/__init__.py:148
 #, python-brace-format
 msgid "Your prayer resulted in **{val}** favor. {message}"
 msgstr "Din bön resulterade med **{val}** förmån. {message}."
 
-#: cogs/gods/__init__.py:155
+#: cogs/gods/__init__.py:158
 msgid "Shows your god and favor."
 msgstr "Visar din gud och din förmån."
 
-#: cogs/gods/__init__.py:157
+#: cogs/gods/__init__.py:160
 #, python-brace-format
 msgid "Your god is **{god}** and you have **{favor}** favor with them."
 msgstr "Din gud är **{god}** och du har **{favor}** förmån med dem."
 
-#: cogs/gods/__init__.py:167
+#: cogs/gods/__init__.py:170
 msgid "Lists top followers of your god (or yourself)."
 msgstr "Visar din guds bästa följare (eller dig själv) ."
 
-#: cogs/gods/__init__.py:172
+#: cogs/gods/__init__.py:175
 msgid "Normal followers may only view the top 25."
 msgstr "Vanliga följare kan bara se de högsta 25."
 

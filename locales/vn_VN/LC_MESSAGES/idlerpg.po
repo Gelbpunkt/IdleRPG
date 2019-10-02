@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-10-01 02:01-0700\n"
+"POT-Creation-Date: 2019-10-02 03:54-0700\n"
 "PO-Revision-Date: 2019-08-27 11:51+0700\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -5231,83 +5231,91 @@ msgstr ""
 msgid "Choose your deity. This cannot be undone."
 msgstr "Chọn vị thần của bạn. Điều này không thể được hoàn tác."
 
-#: cogs/gods/__init__.py:93
+#: cogs/gods/__init__.py:89
+#, python-brace-format
+msgid ""
+"Warning: Gods/Goddesses are able to alter your luck (including decreasing "
+"it!) that impacts your adventure success chances. Are you sure you want to "
+"follow {god}?"
+msgstr ""
+
+#: cogs/gods/__init__.py:96
 #, python-brace-format
 msgid "You are now a follower of {god}."
 msgstr "Bây giờ bạn là tín đồ của {god}."
 
-#: cogs/gods/__init__.py:101
+#: cogs/gods/__init__.py:104
 msgid "Pray to your deity to gain favor."
 msgstr "Hãy cầu nguyện cho vị thần của bạn để có được sự ưu ái."
 
-#: cogs/gods/__init__.py:105
+#: cogs/gods/__init__.py:108
 msgid "They obviously didn't like your prayer!"
 msgstr "Họ rõ ràng không thích lời cầu nguyện của bạn!"
 
-#: cogs/gods/__init__.py:106
+#: cogs/gods/__init__.py:109
 msgid "Noone heard you!"
 msgstr "Không ai thèm nghe bạn!"
 
-#: cogs/gods/__init__.py:107
+#: cogs/gods/__init__.py:110
 msgid "Your voice has made them screw off."
 msgstr "Giọng nói của bạn đã khiến họ tức giận."
 
-#: cogs/gods/__init__.py:108
+#: cogs/gods/__init__.py:111
 msgid "Even a donkey would've been a better follower than you."
 msgstr "Ngay cả một con lừa cũng có thể là người một tín đồ tốt hơn bạn."
 
-#: cogs/gods/__init__.py:116
+#: cogs/gods/__init__.py:119
 msgid "„Rather lousy, but okay“, they said."
 msgstr "\"Khá tệ hại, nhưng không sao\", họ nói."
 
-#: cogs/gods/__init__.py:117
+#: cogs/gods/__init__.py:120
 msgid "You were a little sleepy."
 msgstr "Bạn hơi buồn ngủ."
 
-#: cogs/gods/__init__.py:118
+#: cogs/gods/__init__.py:121
 msgid "They were a little amused about your singing."
 msgstr "Họ có một chút thích thú về giọng hát của bạn."
 
-#: cogs/gods/__init__.py:119
+#: cogs/gods/__init__.py:122
 msgid "Hearing the same prayer over and over again made them tired."
 msgstr "Nghe cùng một lời cầu nguyện lặp đi lặp lại khiến họ mệt mỏi."
 
-#: cogs/gods/__init__.py:131
+#: cogs/gods/__init__.py:134
 msgid "Your Gregorian chants were amazingly well sung."
 msgstr "Ca khúc Gregorian của bạn đã được hát tuyệt vời."
 
-#: cogs/gods/__init__.py:132
+#: cogs/gods/__init__.py:135
 msgid "Even the birds joined in your singing."
 msgstr "Ngay cả những con chịm cũng chăm chú lắng nghe trong lúc bạn hát."
 
-#: cogs/gods/__init__.py:134
+#: cogs/gods/__init__.py:137
 msgid "The other gods applauded while your god noted down the best mark."
 msgstr ""
 "Các vị thần khác vỗ tay trong khi thần của bạn ghi lại dấu ấn tốt nhất."
 
-#: cogs/gods/__init__.py:136
+#: cogs/gods/__init__.py:139
 msgid "Rarely have you had a better day!"
 msgstr "Hiếm khi bạn có một ngày tốt hơn!"
 
-#: cogs/gods/__init__.py:145
+#: cogs/gods/__init__.py:148
 #, python-brace-format
 msgid "Your prayer resulted in **{val}** favor. {message}"
 msgstr "Lời cầu nguyện của bạn tăng **{val}** sự ưu ái. {message}"
 
-#: cogs/gods/__init__.py:155
+#: cogs/gods/__init__.py:158
 msgid "Shows your god and favor."
 msgstr "Cho thấy thần và sự ưu ái của bạn."
 
-#: cogs/gods/__init__.py:157
+#: cogs/gods/__init__.py:160
 #, python-brace-format
 msgid "Your god is **{god}** and you have **{favor}** favor with them."
 msgstr "Vị thần của bạn là **{god}** và bạn có **{favor}** sự ưu ái từ họ"
 
-#: cogs/gods/__init__.py:167
+#: cogs/gods/__init__.py:170
 msgid "Lists top followers of your god (or yourself)."
 msgstr ""
 
-#: cogs/gods/__init__.py:172
+#: cogs/gods/__init__.py:175
 msgid "Normal followers may only view the top 25."
 msgstr ""
 
