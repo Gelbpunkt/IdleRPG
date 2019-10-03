@@ -1,4 +1,4 @@
-FROM python:3.8.0b4-alpine3.10
+FROM python:3.8.0rc1-alpine3.10
 
 WORKDIR /idlerpg
 COPY requirements.txt /idlerpg/
