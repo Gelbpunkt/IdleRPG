@@ -11,8 +11,4 @@ before_install:
   - sudo curl https://raw.githubusercontent.com/containers/skopeo/master/default-policy.json -o /etc/containers/policy.json
 
 script:
-  - 'if [ "$TRAVIS_PULL_REQUEST" != "false" ]; then unset DOCKERHUB_USER && unset DOCKERHUB_PASSWORD; fi'
   - sudo podman build -t gelbpunkt/idlerpg:latest .
-
-after_success:
-  - 'if [ "$TRAVIS_PULL_REQUEST" = "false" ]; then sudo podman push --creds="$DOCKERHUB_USER:$DOCKERHUB_PASSWORD" --log-level=debug gelbpunkt/idlerpg:latest; fi'
