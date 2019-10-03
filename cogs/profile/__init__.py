@@ -461,7 +461,7 @@ IdleRPG is a global bot, your characters are valid everywhere"""
                 'UPDATE inventory SET "equipped"=False WHERE "item"=$1;', itemid
             )
         await ctx.send(
-            _("Successfully unequipped item `{itemid}`.").format(itemdid=itemid)
+            _("Successfully unequipped item `{itemid}`.").format(itemid=itemid)
         )
 
     @checks.has_char()
