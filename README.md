@@ -10,24 +10,7 @@ You may [submit an issue](https://github.com/Gelbpunkt/IdleRPG/issues) or [open 
 
 The IdleRPG Project is licensed under the terms of the [GNU Affero General Public License 3.0](https://github.com/Gelbpunkt/IdleRPG/blob/v4/LICENSE) ("AGPL").
 
-The AGPL allows you to:
-
-- [x] Modify the code
-- [x] Distribute it
-
-It however does not allow you to:
-
-- [ ] Sublicense
-- [ ] Hold liable
-
-You must:
-
-- Include the copyright
-- Include the License
-- Disclose the source
-- State changes
-
-Summary and information taken from [here](<https://tldrlegal.com/license/gnu-affero-general-public-license-v3-(agpl-3.0)>).
+[AGPL for humans](<https://tldrlegal.com/license/gnu-affero-general-public-license-v3-(agpl-3.0)>).
 
 ## Current goals
 
@@ -41,15 +24,12 @@ Please see [#32](https://github.com/Gelbpunkt/IdleRPG/issues/32)
 
 Note: This requires you to have Podman and Git working.
 
-```
+```sh
 git clone https://github.com/Gelbpunkt/IdleRPG
 cd IdleRPG
 ./scripts/setup.sh
-Add /opt/* config files
-systemctl start podman-idlerpg
+systemctl start "podman-*"
 ```
-
-A systemd unit file has been bundled as `idlerpg.service`.
 
 ## Contributing
 

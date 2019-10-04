@@ -3,8 +3,8 @@ Description=Teatro Container
 
 [Service]
 Type=simple
-ExecStartPre=/usr/bin/podman build -t teatro:latest PATH_TO_TEATRO
-ExecStart=/usr/bin/podman run --rm --name teatro -v /opt/teatro/config.json:/teatro/config.json --pod idlerpg teatro:latest
+ExecStartPre=/usr/bin/podman pull gelbpunkt/teatro:latest
+ExecStart=/usr/bin/podman run --rm --name teatro -v /opt/teatro/config.json:/teatro/config.json --pod idlerpg gelbpunkt/teatro:latest
 ExecReload=-/usr/bin/podman stop teatro
 ExecStop=-/usr/bin/podman stop teatro
 Restart=always
