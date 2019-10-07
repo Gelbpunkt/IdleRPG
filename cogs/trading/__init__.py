@@ -367,19 +367,31 @@ class Trading(commands.Cog):
     @user_cooldown(1800)
     @commands.command()
     @locale_doc
-    async def merchall(self, ctx):
+    async def merchall(
+        self, ctx, minstat: IntFromTo(0, 60) = 0, maxstat: IntFromTo(0, 60) = 60
+    ):
         _("""Sells all your non-equipped items for their value.""")
         async with self.bot.pool.acquire() as conn:
             money, count = await conn.fetchval(
-                "SELECT (sum(value), count(value)) FROM inventory i JOIN allitems ai ON (i.item=ai.id) WHERE ai.owner=$1 AND i.equipped IS FALSE;",
+                "SELECT (sum(value), count(value)) FROM inventory i JOIN allitems ai ON (i.item=ai.id) WHERE ai.owner=$1 AND i.equipped IS FALSE AND ai.armor+ai.damage BETWEEN $2 AND $3;",
                 ctx.author.id,
+                minstat,
+                maxstat,
             )
             if count == 0:
                 return await ctx.send(_("Nothing to merch."))
+            if not ctx.confirm(
+                _(
+                    "You are about to sell **{count} items!**\nAre you sure you want to do this?"
+                ).format(count=count)
+            ):
+                return
             async with conn.transaction():
                 await conn.execute(
-                    "DELETE FROM allitems ai USING inventory i WHERE ai.id=i.item AND ai.owner=$1 AND i.equipped IS FALSE;",
+                    "DELETE FROM allitems ai USING inventory i WHERE ai.id=i.item AND ai.owner=$1 AND i.equipped IS FALSE AND ai.armor+ai.damage BETWEEN $2 AND $3;",
                     ctx.author.id,
+                    minstat,
+                    maxstat,
                 )
                 await conn.execute(
                     'UPDATE profile SET "money"="money"+$1 WHERE "user"=$2;',
