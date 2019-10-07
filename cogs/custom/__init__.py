@@ -34,6 +34,13 @@ def is_shoie():
     return commands.check(predicate)
 
 
+def is_meliodas():
+    def predicate(ctx):
+        return ctx.author.id == 150323474014011399
+
+    return commands.check(predicate)
+
+
 class Custom(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
@@ -92,6 +99,14 @@ class Custom(commands.Cog):
                 url="https://media.discordapp.net/attachments/439779845673844739/625403834033766428/kill.gif"
             )
         )
+
+    @is_meliodas()
+    @commands.command(hidden=True)
+    async def meliodas(self, ctx):
+        """Will he lose his money?"""
+        msg = await ctx.send("Will Meliodas lose all his money today?")
+        await msg.add_reaction("\U00002705")
+        await msg.add_reaction("\U0000274e")
 
 
 def setup(bot):

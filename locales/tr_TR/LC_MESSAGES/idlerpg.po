@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-10-02 03:54-0700\n"
-"PO-Revision-Date: 2019-09-22 02:05+0300\n"
+"POT-Creation-Date: 2019-10-07 01:23-0700\n"
+"PO-Revision-Date: 2019-10-06 13:13+0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: tr_TR\n"
@@ -454,6 +454,15 @@ msgid ""
 "\n"
 " Use `{prefix}open [rarity]` to open one!"
 msgstr ""
+"**{author}'ın sandıkları**\n"
+"\n"
+"{emotes.common} [common] {common}\n"
+"{emotes.uncommon} [uncommon] {uncommon}\n"
+"{emotes.rare} [rare] {rare}\n"
+"{emotes.magic} [magic] {magic}\n"
+"{emotes.legendary} [legendary] {legendary}\n"
+"\n"
+"Bir tane açmak için `{prefix}open [rarity]` kullan!"
 
 #: cogs/crates/__init__.py:74
 msgid "Opens a crate."
@@ -1313,6 +1322,13 @@ msgid ""
 "Kernel Version: **{kernel}**\n"
 "PostgreSQL Version **{pg_version}**"
 msgstr ""
+"CPU Kullanımı: **{cpu}%**, **{cores}** çekirdekler @ **{freq}** GHz\n"
+"RAM Kullanımı: **{ram}%** (Toplam: **{total_ram}**)\n"
+"Python Versiyon **{python}** <:python:445247273065250817>\n"
+"discord.py Versiyon **{dpy}**\n"
+"İşletim Sistemi: **{osname} {osversion}**\n"
+"Kernel Versiyon: **{kernel}**\n"
+"PostgreSQL Versiyon **{pg_version}**"
 
 #: cogs/miscellaneous/__init__.py:270
 msgid "Bot Statistics"
@@ -1702,6 +1718,8 @@ msgid ""
 "Check out the official IdleRPG Wiki here:\n"
 "<https://wiki.travitia.xyz/index.php?title=Main_Page>"
 msgstr ""
+"Resmi IdleRPG Wiki'ye buradan göz at:\n"
+"<https://wiki.travitia.xyz/index.php?title=Main_Page>"
 
 #: cogs/miscellaneous/__init__.py:743
 msgid "No entry found."
@@ -4922,7 +4940,7 @@ msgstr "Şu anki envanterini gösterir."
 
 #: cogs/profile/__init__.py:315
 msgid "Make sure that the `highest` value is greater than `lowest`."
-msgstr ""
+msgstr "`highest` değerin `lowest` değerden büyük olduğundan emin ol."
 
 #: cogs/profile/__init__.py:324
 msgid "Your inventory is empty."
@@ -4995,16 +5013,16 @@ msgstr "`{itemid}` ID'li eşya başarılı bir şekilde giyildi."
 
 #: cogs/profile/__init__.py:445
 msgid "Unequip one of your equipped items"
-msgstr ""
+msgstr "Giydiğin eşyalardan birini çıkar"
 
 #: cogs/profile/__init__.py:459
 msgid "You don't have this item equipped."
-msgstr ""
+msgstr "Bu eşyayı giymiyorsun."
 
 #: cogs/profile/__init__.py:464
 #, python-brace-format
 msgid "Successfully unequipped item `{itemid}`."
-msgstr ""
+msgstr "Başarılı bir şekilde `{itemid}` eşyası çıkarıldı."
 
 #: cogs/profile/__init__.py:472
 msgid "Merges two items to a better one. Second one is consumed."
@@ -5277,90 +5295,93 @@ msgstr ""
 msgid "Choose your deity. This cannot be undone."
 msgstr "Tanrını seç. Bu geri alınamaz."
 
-#: cogs/gods/__init__.py:89
+#: cogs/gods/__init__.py:91
 #, python-brace-format
 msgid ""
 "Warning: Gods/Goddesses are able to alter your luck (including decreasing "
 "it!) that impacts your adventure success chances. Are you sure you want to "
 "follow {god}?"
 msgstr ""
+"Uyarı: Tanrılar/Tanrıçalar maceranın başarı şansını etkileyen şansını "
+"değiştirebilir. (Azaltmakta dahil!) {god}'a bağlanmak istediğinden emin "
+"misin?"
 
-#: cogs/gods/__init__.py:96
+#: cogs/gods/__init__.py:100
 #, python-brace-format
 msgid "You are now a follower of {god}."
 msgstr "Artık {god}'a bağlısın."
 
-#: cogs/gods/__init__.py:104
+#: cogs/gods/__init__.py:108
 msgid "Pray to your deity to gain favor."
 msgstr "İyilik kazanmak için tanrına dua et."
 
-#: cogs/gods/__init__.py:108
+#: cogs/gods/__init__.py:112
 msgid "They obviously didn't like your prayer!"
 msgstr "Onlar belli ki duanı beğenmediler!"
 
-#: cogs/gods/__init__.py:109
+#: cogs/gods/__init__.py:113
 msgid "Noone heard you!"
 msgstr "Seni kimse duymadı!"
 
-#: cogs/gods/__init__.py:110
+#: cogs/gods/__init__.py:114
 msgid "Your voice has made them screw off."
 msgstr "Sesin onları mahvetti."
 
-#: cogs/gods/__init__.py:111
+#: cogs/gods/__init__.py:115
 msgid "Even a donkey would've been a better follower than you."
 msgstr "Eşek bile senden daha bağlı biri olurdu."
 
-#: cogs/gods/__init__.py:119
+#: cogs/gods/__init__.py:123
 msgid "„Rather lousy, but okay“, they said."
 msgstr "„Oldukça berbat, ama tamam“, dediler."
 
-#: cogs/gods/__init__.py:120
+#: cogs/gods/__init__.py:124
 msgid "You were a little sleepy."
 msgstr "Biraz uykuluydun."
 
-#: cogs/gods/__init__.py:121
+#: cogs/gods/__init__.py:125
 msgid "They were a little amused about your singing."
 msgstr "Senin şarkı söylemenle biraz eğlendiler."
 
-#: cogs/gods/__init__.py:122
+#: cogs/gods/__init__.py:126
 msgid "Hearing the same prayer over and over again made them tired."
 msgstr "Aynı duayı tekrar tekrar duymak onları yordu."
 
-#: cogs/gods/__init__.py:134
+#: cogs/gods/__init__.py:138
 msgid "Your Gregorian chants were amazingly well sung."
 msgstr "Gregorian ilahilerin inanılmaz iyi söylendi."
 
-#: cogs/gods/__init__.py:135
+#: cogs/gods/__init__.py:139
 msgid "Even the birds joined in your singing."
 msgstr "Şarkı söylemene kuşlar bile katıldı."
 
-#: cogs/gods/__init__.py:137
+#: cogs/gods/__init__.py:141
 msgid "The other gods applauded while your god noted down the best mark."
 msgstr "Senin tanrın en iyi notu kaydederken diğer tanrılar alkışladı."
 
-#: cogs/gods/__init__.py:139
+#: cogs/gods/__init__.py:143
 msgid "Rarely have you had a better day!"
 msgstr "Nadiren daha iyi bir gün geçirdin mi!"
 
-#: cogs/gods/__init__.py:148
+#: cogs/gods/__init__.py:152
 #, python-brace-format
 msgid "Your prayer resulted in **{val}** favor. {message}"
 msgstr "Duan **{val}** iyilik ile sonuçlandı. {message}"
 
-#: cogs/gods/__init__.py:158
+#: cogs/gods/__init__.py:162
 msgid "Shows your god and favor."
 msgstr "Tanrını ve iyiliğini gösterir."
 
-#: cogs/gods/__init__.py:160
+#: cogs/gods/__init__.py:164
 #, python-brace-format
 msgid "Your god is **{god}** and you have **{favor}** favor with them."
 msgstr "Tanrın **{god}** ve onlarla *{favor}** iyiliğin var."
 
-#: cogs/gods/__init__.py:170
+#: cogs/gods/__init__.py:174
 msgid "Lists top followers of your god (or yourself)."
 msgstr "Senin tanrının en iyi takipçilerini listeler (ya da senin)."
 
-#: cogs/gods/__init__.py:175
+#: cogs/gods/__init__.py:179
 msgid "Normal followers may only view the top 25."
 msgstr "Normal takipçiler sadece ilk 25'i görebilirler."
 
