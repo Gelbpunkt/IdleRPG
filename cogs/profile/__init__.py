@@ -607,9 +607,15 @@ IdleRPG is a global bot, your characters are valid everywhere"""
             await conn.execute(
                 'UPDATE profile SET money=money+$1 WHERE "user"=$2;', money, other.id
             )
+            authormoney = await conn.fetchval(
+                'SELECT money FROM profiles WHERE "user"=$1', ctx.author.id
+            )
+            othermoney = await conn.fetchval(
+                'SELECT money FROM profiles WHERE "user"=$1', ctx.author.id
+            )
         await ctx.send(
-            _("Successfully gave **${money}** to {other}.").format(
-                money=money, other=other.mention
+            _("Success!\n{other} now has **${othermoney}**, you now have **${authormoney}**.").format(
+                other=other.mention, othermoney=othermoney, authormoney=authormoney
             )
         )
         await self.bot.log_transaction(
