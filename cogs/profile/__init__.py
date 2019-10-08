@@ -611,7 +611,7 @@ IdleRPG is a global bot, your characters are valid everywhere"""
                 'SELECT money FROM profiles WHERE "user"=$1', ctx.author.id
             )
             othermoney = await conn.fetchval(
-                'SELECT money FROM profiles WHERE "user"=$1', ctx.author.id
+                'SELECT money FROM profiles WHERE "user"=$1', other.id
             )
         await ctx.send(
             _("Success!\n{other} now has **${othermoney}**, you now have **${authormoney}**.").format(
