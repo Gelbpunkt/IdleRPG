@@ -599,19 +599,13 @@ IdleRPG is a global bot, your characters are valid everywhere"""
         if ctx.character_data["money"] < money:
             return await ctx.send(_("You are too poor."))
         async with self.bot.pool.acquire() as conn:
-            await conn.execute(
-                'UPDATE profile SET money=money-$1 WHERE "user"=$2;',
+            authormoney = await conn.fetchval(
+                'UPDATE profile SET money=money-$1 WHERE "user"=$2 RETURNING money;',
                 money,
                 ctx.author.id,
             )
-            await conn.execute(
-                'UPDATE profile SET money=money+$1 WHERE "user"=$2;', money, other.id
-            )
-            authormoney = await conn.fetchval(
-                'SELECT money FROM profiles WHERE "user"=$1', ctx.author.id
-            )
             othermoney = await conn.fetchval(
-                'SELECT money FROM profiles WHERE "user"=$1', other.id
+                'UPDATE profile SET money=money+$1 WHERE "user"=$2 RETURNING money;', money, other.id
             )
         await ctx.send(
             _("Success!\n{other} now has **${othermoney}**, you now have **${authormoney}**.").format(
