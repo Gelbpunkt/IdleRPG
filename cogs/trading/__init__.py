@@ -368,7 +368,7 @@ class Trading(commands.Cog):
     @commands.command()
     @locale_doc
     async def merchall(
-        self, ctx, minstat: IntFromTo(0, 60) = 0, maxstat: IntFromTo(0, 60) = 60
+        self, ctx, maxstat: IntFromTo(0, 60) = 60, minstat: IntFromTo(0, 60) = 0
     ):
         _("""Sells all your non-equipped items for their value.""")
         async with self.bot.pool.acquire() as conn:
