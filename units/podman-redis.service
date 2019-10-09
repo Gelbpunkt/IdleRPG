@@ -4,8 +4,8 @@ After=network.target
 
 [Service]
 Type=simple
-ExecStartPre=-/usr/bin/podman pull redis:5.0.5-alpine
-ExecStart=/usr/bin/podman run --rm --pod idlerpg --name redis -v /opt/redisdata:/data:z redis:5.0.5-alpine --appendonly yes
+ExecStartPre=-/usr/bin/podman pull redis:5-alpine
+ExecStart=/usr/bin/podman run --rm --pod idlerpg --name redis -v /opt/redisdata:/data:z redis:5-alpine --appendonly yes
 ExecReload=-/usr/bin/podman stop redis
 ExecStop=-/usr/bin/podman stop redis
 Restart=always
