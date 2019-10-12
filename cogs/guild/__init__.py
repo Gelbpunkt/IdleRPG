@@ -590,6 +590,14 @@ class Guild(commands.Cog):
                         "Your guild is too poor, you got **${money}** but it costs **${price}** to upgrade."
                     ).format(money=guild["money"], price=int(currentlimit / 2))
                 )
+            
+            if not await ctx.confirm(
+                _("This will upgrade your guild bank limit to **${limit}** for **${cost}**. Proceed?").format(
+                    limit=currentlimit + 250_000,
+                    cost=int(currentlimit / 2),
+                )
+            ):
+                return
             await conn.execute(
                 'UPDATE guild SET banklimit=banklimit+$1 WHERE "id"=$2;',
                 250_000,
