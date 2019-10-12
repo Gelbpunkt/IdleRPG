@@ -277,7 +277,7 @@ CREATE TABLE public.profile (
     time_booster bigint DEFAULT 0,
     luck_booster bigint DEFAULT 0,
     marriage bigint DEFAULT 0,
-    colour character varying(7) DEFAULT '#FFFFFF'::character varying,
+    colour character varying(7) DEFAULT '#000000'::character varying,
     background character varying(60) DEFAULT 0,
     guild bigint DEFAULT 0,
     class character varying(50)[] DEFAULT '{"No Class","No Class"}'::character varying[],
