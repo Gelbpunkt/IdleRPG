@@ -411,7 +411,7 @@ class Marriage(commands.Cog):
             await ctx.send(embed=em)
         else:
             embeds = []
-            children_lists = list(self.make_chunks(children, 5))
+            children_lists = list(self.make_chunks(children, 9))
             for small_list in children_lists:
                 em = discord.Embed(
                     title=_("Your family"),
@@ -425,7 +425,7 @@ class Marriage(commands.Cog):
                         value=_("Gender: {gender}, Age: {age}").format(
                             gender=child["gender"], age=child["age"]
                         ),
-                        inline=False,
+                        inline=True,
                     )
                 embeds.append(em)
             await self.bot.paginator.Paginator(extras=embeds).paginate(ctx)
