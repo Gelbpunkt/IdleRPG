@@ -25,6 +25,7 @@ from discord.ext.commands.default import Author
 
 from classes.converters import IntFromTo, MemberWithCharacter, UserWithCharacter
 from cogs.shard_communication import user_on_cooldown as user_cooldown
+from cogs.help import chunks
 from utils import misc as rpgtools
 from utils.checks import has_char
 
@@ -371,11 +372,6 @@ class Marriage(commands.Cog):
             )
         await ctx.send(_("{name} was born.").format(name=name))
 
-    def make_chunks(self, child_list: list, size: int):
-        """splits children into smaller list for pagination"""
-        for i in range(0, len(child_list), size):
-            yield child_list[i : i + size]
-
     @has_char()
     @commands.command()
     @locale_doc
@@ -411,7 +407,7 @@ class Marriage(commands.Cog):
             await ctx.send(embed=em)
         else:
             embeds = []
-            children_lists = list(self.make_chunks(children, 9))
+            children_lists = list(chunks(children, 9))
             for small_list in children_lists:
                 em = discord.Embed(
                     title=_("Your family"),
