@@ -371,6 +371,11 @@ class Marriage(commands.Cog):
             )
         await ctx.send(_("{name} was born.").format(name=name))
 
+    def make_chunks(self, child_list: list, size: int):
+        """splits children into smaller list for pagination"""
+        for i in range(0, len(child_list), size):
+            yield child_list[i : i + size]
+
     @has_char()
     @commands.command()
     @locale_doc
@@ -393,16 +398,37 @@ class Marriage(commands.Cog):
                 name=_("No children yet"),
                 value=_("Use {prefix}child to make one!").format(prefix=ctx.prefix),
             )
-        for child in children:
-            em.add_field(
-                name=child["name"],
-                value=_("Gender: {gender}, Age: {age}").format(
-                    gender=child["gender"], age=child["age"]
-                ),
-                inline=False,
-            )
-        em.set_thumbnail(url=ctx.author.avatar_url)
-        await ctx.send(embed=em)
+        if len(children) <= 5:
+            for child in children:
+                em.add_field(
+                    name=child["name"],
+                    value=_("Gender: {gender}, Age: {age}").format(
+                        gender=child["gender"], age=child["age"]
+                    ),
+                    inline=False,
+                )
+            em.set_thumbnail(url=ctx.author.avatar_url)
+            await ctx.send(embed=em)
+        else:
+            embeds = []
+            children_lists = list(self.make_chunks(children, 5))
+            for small_list in children_lists:
+                em = discord.Embed(
+                    title=_("Your family"),
+                    description=_("Family of {author} and <@{marriage}>").format(
+                        author=ctx.author.mention, marriage=marriage
+                    ),
+                )
+                for child in small_list:
+                    em.add_field(
+                        name=child["name"],
+                        value=_("Gender: {gender}, Age: {age}").format(
+                            gender=child["gender"], age=child["age"]
+                        ),
+                        inline=False,
+                    )
+                embeds.append(em)
+            await self.bot.paginator.Paginator(extras=embeds).paginate(ctx)
 
     @has_char()
     @user_cooldown(1800)
