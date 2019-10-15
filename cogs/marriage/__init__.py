@@ -24,8 +24,8 @@ from discord.ext import commands
 from discord.ext.commands.default import Author
 
 from classes.converters import IntFromTo, MemberWithCharacter, UserWithCharacter
-from cogs.shard_communication import user_on_cooldown as user_cooldown
 from cogs.help import chunks
+from cogs.shard_communication import user_on_cooldown as user_cooldown
 from utils import misc as rpgtools
 from utils.checks import has_char
 

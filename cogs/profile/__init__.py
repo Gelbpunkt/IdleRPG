@@ -605,10 +605,14 @@ IdleRPG is a global bot, your characters are valid everywhere"""
                 ctx.author.id,
             )
             othermoney = await conn.fetchval(
-                'UPDATE profile SET money=money+$1 WHERE "user"=$2 RETURNING money;', money, other.id
+                'UPDATE profile SET money=money+$1 WHERE "user"=$2 RETURNING money;',
+                money,
+                other.id,
             )
         await ctx.send(
-            _("Success!\n{other} now has **${othermoney}**, you now have **${authormoney}**.").format(
+            _(
+                "Success!\n{other} now has **${othermoney}**, you now have **${authormoney}**."
+            ).format(
                 other=other.mention, othermoney=othermoney, authormoney=authormoney
             )
         )

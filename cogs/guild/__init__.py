@@ -17,10 +17,12 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
 import asyncio
 import random
+
 from datetime import timedelta
 from typing import Union
 
 import discord
+
 from discord.ext import commands
 
 from classes.converters import IntGreaterThan, MemberWithCharacter, User
