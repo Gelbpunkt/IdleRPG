@@ -328,7 +328,7 @@ CREATE TABLE public.transactions (
     "from" bigint NOT NULL,
     "to" bigint NOT NULL,
     subject character varying(50) NOT NULL,
-    info character varying(200) NOT NULL,
+    info character varying(582) NOT NULL,
     "timestamp" timestamp with time zone NOT NULL
 );
 
