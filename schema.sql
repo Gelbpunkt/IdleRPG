@@ -42,7 +42,7 @@ SET default_table_access_method = heap;
 CREATE TABLE public.allitems (
     id bigint NOT NULL,
     owner bigint,
-    name character varying(200) NOT NULL,
+    name character varying(575) NOT NULL,
     value integer NOT NULL,
     type character varying(10) NOT NULL,
     damage numeric(5,2) NOT NULL,
