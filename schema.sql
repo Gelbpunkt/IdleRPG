@@ -549,10 +549,10 @@ ALTER TABLE ONLY public.user_settings
 
 
 --
--- Name: SCHEMA public; Type: ACL; Schema: -; Owner: postgres
+-- Name: TABLE profile; Type: ACL; Schema: public; Owner: jens
 --
 
-GRANT ALL ON SCHEMA public TO jens;
+GRANT ALL ON TABLE public.profile TO votehandler;
 
 
 --
