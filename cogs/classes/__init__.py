@@ -16,12 +16,10 @@ You should have received a copy of the GNU Affero General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
 import secrets
-
 from copy import copy
 from decimal import Decimal
 
 import discord
-
 from discord.ext import commands
 
 from cogs.shard_communication import user_on_cooldown as user_cooldown
@@ -133,7 +131,7 @@ class Classes(commands.Cog):
             conf = await ctx.confirm(
                 _(
                     "You are about to select the `{profession}` class for yourself, changing it later will cost **$5000**. Proceed?"
-                ).format(profession=profession,)
+                ).format(profession=profession)
             )
             if not conf:
                 await self.bot.reset_cooldown(ctx)
@@ -158,7 +156,7 @@ class Classes(commands.Cog):
             conf = await ctx.confirm(
                 _(
                     "You are about to change to the `{profession}` class, this will cost **$5000**. Proceed?"
-                ).format(profession=profession,)
+                ).format(profession=profession)
             )
             if not conf:
                 await self.bot.reset_cooldown(ctx)
