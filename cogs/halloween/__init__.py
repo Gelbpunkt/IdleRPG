@@ -91,7 +91,11 @@ class Halloween(commands.Cog):
                 'UPDATE profile SET money=money-50 WHERE "user"=$1;', usr
             )
         usr = await self.bot.get_user_global(usr) or "Unknown User"
-        await ctx.send(_("{user} gave you additional $50!").format(user=usr))
+        await ctx.send(
+            _("A random stranger nearby, **{user}**, gave you additional $50!").format(
+                user=usr
+            )
+        )
 
     @checks.has_char()
     @commands.command()
@@ -127,6 +131,12 @@ class Halloween(commands.Cog):
                 "Glowing",
                 "Moonlight",
                 "Adrian's really awesome",
+                "Ghost Buster's",
+                "Ghoulish",
+                "Vampiric",
+                "Living",
+                "Undead",
+                "Glooming",
             ]
         )
         item[
@@ -140,15 +150,14 @@ class Halloween(commands.Cog):
         embed = discord.Embed(
             title=_("You gained an item!"),
             description=_("You found a new item when opening a trick-or-treat bag!"),
-            color=0xFF0000,
+            color=self.bot.config.primary_colour,
         )
         embed.set_thumbnail(url=ctx.author.avatar_url)
-        embed.add_field(name=_("ID"), value=item["name"], inline=False)
         embed.add_field(name=_("Name"), value=item["name"], inline=False)
         embed.add_field(name=_("Type"), value=item["type_"], inline=False)
-        embed.add_field(name="Damage", value=item["damage"], inline=True)
-        embed.add_field(name="Armor", value=item["armor"], inline=True)
-        embed.add_field(name="Value", value=f"${item['value']}", inline=False)
+        embed.add_field(name=_("Damage"), value=item["damage"], inline=True)
+        embed.add_field(name=_("Armor"), value=item["armor"], inline=True)
+        embed.add_field(name=_("Value"), value=f"${item['value']}", inline=False)
         embed.set_footer(
             text=_("Remaining trick-or-treat bags: {bags}").format(
                 bags=ctx.character_data["trickortreat"] - 1

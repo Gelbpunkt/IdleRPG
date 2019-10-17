@@ -25,7 +25,7 @@ import discord
 
 from discord.ext import commands
 
-from classes.converters import IntGreaterThan, MemberWithCharacter, User
+from classes.converters import IntFromTo, IntGreaterThan, MemberWithCharacter, User
 from cogs.shard_communication import guild_on_cooldown as guild_cooldown
 from cogs.shard_communication import user_on_cooldown as user_cooldown
 from utils import misc as rpgtools
@@ -936,14 +936,15 @@ Time it will take: **{time}**
             gold = random.randint(adventure[0] * 20, adventure[0] * 50)
 
             await self.bot.pool.execute(
-                'UPDATE guild SET money=money+$1 WHERE "id"=$2;',
+                'UPDATE guild SET "money"="money"+$1, "pumpkins"="pumpkins"+$2 WHERE "id"=$3;',
                 gold,
+                adventure[0] * 10,
                 ctx.character_data["guild"],
             )
             await ctx.send(
                 _(
-                    "Your guild has completed an adventure of difficulty `{difficulty}` and **${gold}** has been added to the bank."
-                ).format(difficulty=adventure[0], gold=gold)
+                    "Your guild has completed an adventure of difficulty `{difficulty}` and **${gold}** has been added to the bank. You also found **{pumpkins}** 🎃!"
+                ).format(difficulty=adventure[0], gold=gold, pumpkins=adventure[0] * 10)
             )
         else:
             await ctx.send(
@@ -953,6 +954,77 @@ Time it will take: **{time}**
                     difficulty=adventure[0], remain=str(adventure[1]).split(".")[0]
                 )
             )
+
+    @has_guild()
+    @guild.command()
+    @locale_doc
+    async def event(self, ctx):
+        _("""View your guild's progress in the ongoing event.""")
+        pumpkins = await self.bot.pool.fetchval(
+            'SELECT pumpkins FROM guild WHERE "id"=$1;', ctx.character_data["guild"]
+        )
+        val = int(pumpkins / 50000 * 10)
+        percent = round(pumpkins / 50000 * 100, 2)
+        if val > 10:
+            val = 10
+        progress = f"{'▣' * val}{'▢' * (10 - val)}"
+        await ctx.send(
+            _(
+                """\
+**Halloween 2019 🎃 👻**
+
+*Progress for best reward*
+{bar} {percent}% {pumpkins}/50,000 🎃
+
+*Prices for claiming*
+`(ID for {prefix}guild claim) Amount 🎃: Reward`
+**(1)** 1000 🎃: **$5000** Guild Bank Fill
+**(2)** 5000 🎃: **$27500** Guild Bank Fill
+**(3)** 10000 🎃: **$60000** Guild Bank Fill
+**(4)** 25000 🎃: **$175000** Guild Bank Fill
+
+**(5)** 37500 🎃: Halloween 2019 Guild Badge #1
+**(6)** 50000 🎃: Halloween 2019 Guild Badge #2
+
+**(7)** 10000 🎃: 2 additional guild member slots
+**(8)** 20000 🎃: 5 additional guild member slots
+**(9)** 35000 🎃: 8 additional guild member slots
+**(10)** 50000 🎃: 15 additional guild member slots
+*Please note that these will be **gone** if the leader uses `{prefix}updateguild`, so choose carefully*"""
+            ).format(
+                bar=progress, percent=percent, pumpkins=pumpkins, prefix=ctx.prefix
+            )
+        )
+
+    @is_guild_leader()
+    @guild.command()
+    @locale_doc
+    async def claim(self, ctx, reward_id: IntFromTo(1, 10)):
+        _("""[Guild Leader only] Claim event rewards.""")
+        reward = [
+            {"price": 1000, "reward": "money", "data": 5000},
+            {"price": 5000, "reward": "money", "data": 27500},
+            {"price": 10000, "reward": "money", "data": 60000},
+            {"price": 25000, "reward": "money", "data": 175000},
+            {"price": 37500, "reward": "badge", "data": "https://idlerpg.travitia.xyz/halloween_2019_1.png"},
+            {"price": 50000, "reward": "badge", "data": "https://idlerpg.travitia.xyz/halloween_2019_2.png"},
+            {"price": 10000, "reward": "members", "data": 2},
+            {"price": 20000, "reward": "members", "data": 5},
+            {"price": 35000, "reward": "members", "data": 8},
+            {"price": 50000, "reward": "members", "data": 15},
+        ][reward_id - 1]
+        async with self.bot.pool.acquire() as conn:
+            if (pumpkins := await conn.fetchval('SELECT pumpkins FROM guild WHERE "id"=$1;', ctx.character_data["guild"])) < reward["price"]:
+                return await ctx.send(_("You have insufficient pumpkins for this reward."))
+            await conn.execute('UPDATE guild SET "pumpkins"="pumpkins"-$1 WHERE "id"=$2;', reward["price"], ctx.character_data["guild"])
+            if reward["reward"] == "money":
+                await conn.execute('UPDATE guild SET "money"="money"+$1 WHERE "id"=$2;', reward["data"], ctx.character_data["guild"])
+            elif reward["reward"] == "badge":
+                await conn.execute('UPDATE guild SET "badges"=array_append("badges", $1) WHERE "id"=$2;', reward["data"], ctx.character_data["guild"])
+            elif reward["reward"] == "members":
+                await conn.execute('UPDATE guild SET "memberlimit"="memberlimit"+$1 WHERE "id"=$2;', reward["data"], ctx.character_data["guild"])
+        await ctx.send(_("Reward successfully claimed for **{amount}** 🎃!").format(amount=reward["price"]))
+
 
 
 def setup(bot):

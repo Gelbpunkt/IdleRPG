@@ -103,7 +103,8 @@ CREATE TABLE public.guild (
     banklimit bigint DEFAULT 250000,
     badges text[],
     badge character varying(100) DEFAULT NULL::character varying,
-    description character varying(200) DEFAULT 'No Description set yet'::character varying NOT NULL
+    description character varying(200) DEFAULT 'No Description set yet'::character varying NOT NULL,
+    pumpkins bigint DEFAULT 0
 );
 
 
@@ -548,10 +549,10 @@ ALTER TABLE ONLY public.user_settings
 
 
 --
--- Name: TABLE profile; Type: ACL; Schema: public; Owner: jens
+-- Name: SCHEMA public; Type: ACL; Schema: -; Owner: postgres
 --
 
-GRANT ALL ON TABLE public.profile TO votehandler;
+GRANT ALL ON SCHEMA public TO jens;
 
 
 --

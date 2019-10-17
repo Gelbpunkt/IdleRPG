@@ -92,7 +92,7 @@ class Bot(commands.AutoShardedBot):
             minsize=5,
             maxsize=10,
             loop=self.loop,
-            db=1 if self.config.is_beta else 0,
+            db=0,
         )
         self.pool = await asyncpg.create_pool(
             **self.config.database, max_size=20, command_timeout=60.0

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-10-07 01:23-0700\n"
+"POT-Creation-Date: 2019-10-17 20:13+0200\n"
 "PO-Revision-Date: 2019-07-09 18:37+0700\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -117,15 +117,15 @@ msgstr "Membalik warna avatar."
 msgid "Oils an Avatar."
 msgstr "Meminyaki Avatar."
 
-#: cogs/halloween/__init__.py:43
+#: cogs/halloween/__init__.py:40
 msgid "Trick or treat!"
 msgstr "Trick or treat!"
 
-#: cogs/halloween/__init__.py:48
+#: cogs/halloween/__init__.py:45
 msgid "You walk around the houses... Noone is there... *yet*"
 msgstr "Anda berjalan keliling perumahan… Tidak ada orang... *untuk sekarang*"
 
-#: cogs/halloween/__init__.py:54
+#: cogs/halloween/__init__.py:51
 #, python-brace-format
 msgid ""
 "You walk around the houses and ring at {waiting}'s house! That's a trick or "
@@ -134,7 +134,7 @@ msgstr ""
 "Anda berjalan keliling perumahan dan mengetuk pintu di rumah {waiting}! Anda "
 "mendapatkan kantung trick or treat!"
 
-#: cogs/halloween/__init__.py:64
+#: cogs/halloween/__init__.py:61
 #, python-brace-format
 msgid ""
 "You walk around the houses and ring at {waiting}'s house! Sadly they don't "
@@ -143,7 +143,7 @@ msgstr ""
 "Anda berjalan keliling perumahan dan mengetuk pintu di rumah {waiting}! Akan "
 "tetapi dia tidak mempunyai apa pun untuk mu."
 
-#: cogs/halloween/__init__.py:71
+#: cogs/halloween/__init__.py:68
 #, python-brace-format
 msgid ""
 "The waiting was worth it: {author} rang! That's a trick or treat bag for "
@@ -152,49 +152,66 @@ msgstr ""
 "Penantian anda telah terbayar: {author} mengetuk pintu anda! Anda "
 "mendapatkan kantung trick or treat!"
 
-#: cogs/halloween/__init__.py:80
+#: cogs/halloween/__init__.py:77
 #, python-brace-format
 msgid "{author} rings at your house, but... Nothing for you!"
 msgstr "{author} mengetuk pintu anda, tetapi tidak memiliki apa pun untuk mu!"
 
-#: cogs/halloween/__init__.py:97
+#: cogs/halloween/__init__.py:95
 #, python-brace-format
-msgid "{user} gave you additional $50!"
-msgstr "{user} memberikan anda $50 lagi!"
+msgid "A random stranger nearby, **{user}**, gave you additional $50!"
+msgstr ""
 
-#: cogs/halloween/__init__.py:107
+#: cogs/halloween/__init__.py:104
+msgid "Open a trick or treat bag."
+msgstr ""
+
+#: cogs/halloween/__init__.py:108
 msgid "Seems you haven't got a trick or treat bag yet. Go get some!"
 msgstr ""
 "Sepertinya anda belum memiliki kantung trick or treat. Pergilah dan dapatkan "
 "beberapa!"
 
-#: cogs/halloween/__init__.py:144 cogs/crates/__init__.py:131
+#: cogs/halloween/__init__.py:151 cogs/crates/__init__.py:131
 #: cogs/classes/__init__.py:502
 msgid "You gained an item!"
 msgstr "Anda mendapatkan sebuah benda!"
 
-#: cogs/halloween/__init__.py:145
+#: cogs/halloween/__init__.py:152
 msgid "You found a new item when opening a trick-or-treat bag!"
 msgstr "Anda mendapatkan sebuah benda ketika membuka kantung trick or treat!"
 
-#: cogs/halloween/__init__.py:149 cogs/crates/__init__.py:136
-#: cogs/classes/__init__.py:507
-msgid "ID"
-msgstr "ID"
-
-#: cogs/halloween/__init__.py:150 cogs/crates/__init__.py:137
+#: cogs/halloween/__init__.py:156 cogs/crates/__init__.py:137
 #: cogs/classes/__init__.py:290 cogs/classes/__init__.py:508
-#: cogs/trading/__init__.py:221 cogs/trading/__init__.py:413
+#: cogs/trading/__init__.py:221 cogs/trading/__init__.py:425
 msgid "Name"
 msgstr "Nama"
 
-#: cogs/halloween/__init__.py:151 cogs/crates/__init__.py:138
+#: cogs/halloween/__init__.py:157 cogs/crates/__init__.py:138
 #: cogs/classes/__init__.py:509 cogs/trading/__init__.py:222
-#: cogs/trading/__init__.py:414
+#: cogs/trading/__init__.py:426
 msgid "Type"
 msgstr "Tipe"
 
-#: cogs/halloween/__init__.py:156
+#: cogs/halloween/__init__.py:158 cogs/crates/__init__.py:139
+#: cogs/classes/__init__.py:511 cogs/trading/__init__.py:223
+#: cogs/trading/__init__.py:427
+msgid "Damage"
+msgstr "Serangan"
+
+#: cogs/halloween/__init__.py:159 cogs/crates/__init__.py:140
+#: cogs/classes/__init__.py:513 cogs/trading/__init__.py:224
+#: cogs/trading/__init__.py:428
+msgid "Armor"
+msgstr "Perlindungan"
+
+#: cogs/halloween/__init__.py:160 cogs/crates/__init__.py:141
+#: cogs/classes/__init__.py:514 cogs/trading/__init__.py:225
+#: cogs/trading/__init__.py:429 cogs/profile/__init__.py:346
+msgid "Value"
+msgstr "Harga"
+
+#: cogs/halloween/__init__.py:162
 #, python-brace-format
 msgid "Remaining trick-or-treat bags: {bags}"
 msgstr "Kantung trick or treat yang tersisa: {bags}"
@@ -471,21 +488,9 @@ msgstr ""
 msgid "You found a new item when opening a crate!"
 msgstr "Anda menemukan benda baru ketika membuka peti!"
 
-#: cogs/crates/__init__.py:139 cogs/classes/__init__.py:511
-#: cogs/trading/__init__.py:223 cogs/trading/__init__.py:415
-msgid "Damage"
-msgstr "Serangan"
-
-#: cogs/crates/__init__.py:140 cogs/classes/__init__.py:513
-#: cogs/trading/__init__.py:224 cogs/trading/__init__.py:416
-msgid "Armor"
-msgstr "Perlindungan"
-
-#: cogs/crates/__init__.py:141 cogs/classes/__init__.py:514
-#: cogs/trading/__init__.py:225 cogs/trading/__init__.py:417
-#: cogs/profile/__init__.py:346
-msgid "Value"
-msgstr "Harga"
+#: cogs/crates/__init__.py:136 cogs/classes/__init__.py:507
+msgid "ID"
+msgstr "ID"
 
 #: cogs/crates/__init__.py:143
 #, python-brace-format
@@ -877,7 +882,7 @@ msgstr ""
 "untuk pemain lain."
 
 #. prevent cooldown reset
-#: cogs/error_handler/__init__.py:164 cogs/trading/__init__.py:456
+#: cogs/error_handler/__init__.py:164 cogs/trading/__init__.py:468
 msgid "You did not choose anything."
 msgstr "Anda tidak memilih apa pun."
 
@@ -2315,7 +2320,7 @@ msgid "Feed your pet"
 msgstr ""
 
 #: cogs/classes/__init__.py:326 cogs/classes/__init__.py:368
-#: cogs/marriage/__init__.py:233
+#: cogs/marriage/__init__.py:234
 msgid "You are too poor to buy this."
 msgstr "Anda terlalu miskin untuk membeli barang ini."
 
@@ -2861,26 +2866,33 @@ msgstr ""
 msgid "You died on your mission. Try again!"
 msgstr "Anda mati dalam misi anda. Mohon coba kembali!"
 
-#: cogs/adventure/__init__.py:498
+#: cogs/adventure/__init__.py:491
 #, python-brace-format
 msgid ""
 "You have completed your adventure and received **${gold}** as well as a new "
 "item: **{item}**. Experience gained: **{xp}**."
 msgstr ""
 
-#: cogs/adventure/__init__.py:512
+#: cogs/adventure/__init__.py:496
+#, python-brace-format
+msgid ""
+"On your adventure, you found **{amount}** 🎃! Your guild leader forced you to "
+"give them to the guild..."
+msgstr ""
+
+#: cogs/adventure/__init__.py:508
 msgid "Cancels your current adventure."
 msgstr "Membatalkan petualangan yang sedang dilakukan."
 
-#: cogs/adventure/__init__.py:514
+#: cogs/adventure/__init__.py:510
 msgid "Are you sure you want to cancel your current adventure?"
 msgstr ""
 
-#: cogs/adventure/__init__.py:517
+#: cogs/adventure/__init__.py:513
 msgid "Did not cancel your adventure. The journey continues..."
 msgstr ""
 
-#: cogs/adventure/__init__.py:522
+#: cogs/adventure/__init__.py:518
 #, python-brace-format
 msgid ""
 "Canceled your mission. Use `{prefix}adventure [missionID]` to start a new "
@@ -2889,12 +2901,12 @@ msgstr ""
 "Petualangan anda dibatalkan. Gunakan `{prefix}adventure [missionID]` untuk "
 "memulai yang baru!"
 
-#: cogs/adventure/__init__.py:531
+#: cogs/adventure/__init__.py:527
 msgid ""
 "Your death stats. Shows statictics from all your adventures ever completed."
 msgstr ""
 
-#: cogs/adventure/__init__.py:542
+#: cogs/adventure/__init__.py:538
 #, python-brace-format
 msgid ""
 "Out of **{total}** adventures, you died **{deaths}** times and survived "
@@ -3189,17 +3201,17 @@ msgstr "Tidak ada hasil."
 msgid "IdleRPG Shop"
 msgstr "Toko IdleRPG"
 
-#: cogs/trading/__init__.py:216 cogs/trading/__init__.py:408
+#: cogs/trading/__init__.py:216 cogs/trading/__init__.py:420
 #, python-brace-format
 msgid "Use `{prefix}buy {item}` to buy this."
 msgstr "Gunakan `{prefix}buy {item}` untuk membeli barang tersebut."
 
-#: cogs/trading/__init__.py:226 cogs/trading/__init__.py:418
-#: cogs/marriage/__init__.py:219
+#: cogs/trading/__init__.py:226 cogs/trading/__init__.py:430
+#: cogs/marriage/__init__.py:220
 msgid "Price"
 msgstr "Harga"
 
-#: cogs/trading/__init__.py:228 cogs/trading/__init__.py:420
+#: cogs/trading/__init__.py:228 cogs/trading/__init__.py:432
 #, python-brace-format
 msgid "Item {num} of {total}"
 msgstr "Benda {num} dari {total}"
@@ -3286,48 +3298,55 @@ msgstr ""
 msgid "Skipped `{amount}` because they did not belong to you."
 msgstr ""
 
-#: cogs/trading/__init__.py:371
+#: cogs/trading/__init__.py:373
 msgid "Sells all your non-equipped items for their value."
 msgstr "Menjual semua barang yang sedang tidak digunakan berdasarkan harganya."
 
-#: cogs/trading/__init__.py:378
+#: cogs/trading/__init__.py:382
 msgid "Nothing to merch."
 msgstr "Tidak ada barang untuk dijual."
 
-#: cogs/trading/__init__.py:390
+#: cogs/trading/__init__.py:385
+#, python-brace-format
+msgid ""
+"You are about to sell **{count} items!**\n"
+"Are you sure you want to do this?"
+msgstr ""
+
+#: cogs/trading/__init__.py:402
 #, python-brace-format
 msgid "Merched **{count}** items for **${money}**."
 msgstr "Anda telah menjual **{count}** barang untuk **${money}**."
 
-#: cogs/trading/__init__.py:398
+#: cogs/trading/__init__.py:410
 msgid "View your pending shop offers."
 msgstr "Melihat barang yang sedang dijual."
 
-#: cogs/trading/__init__.py:404
+#: cogs/trading/__init__.py:416
 msgid "You don't have any pending shop offers."
 msgstr "Anda tidak punya barang yang sedang dijual."
 
-#: cogs/trading/__init__.py:407
+#: cogs/trading/__init__.py:419
 msgid "Your pending items"
 msgstr "Barang yang sedang dijual"
 
-#: cogs/trading/__init__.py:431
+#: cogs/trading/__init__.py:443
 msgid "Buys items at the trader."
 msgstr ""
 
-#: cogs/trading/__init__.py:447
+#: cogs/trading/__init__.py:459
 msgid "The Trader"
 msgstr "Perdagangan"
 
-#: cogs/trading/__init__.py:448
+#: cogs/trading/__init__.py:460
 msgid "Hit a button to buy it"
 msgstr "Klik tombol untuk membeli"
 
-#: cogs/trading/__init__.py:460
+#: cogs/trading/__init__.py:472
 msgid "You are too poor to buy this item."
 msgstr "Anda terlalu miskin untuk membeli barang ini."
 
-#: cogs/trading/__init__.py:467
+#: cogs/trading/__init__.py:479
 #, python-brace-format
 msgid ""
 "Successfully bought offer **{offer}**. Use `{prefix}inventory` to view your "
@@ -3336,25 +3355,25 @@ msgstr ""
 "**{offer}** telah terbeli secara sukses. Gunakan `{prefix}inventory` untuk "
 "melihat inventaris yang telah diperbarui."
 
-#: cogs/marriage/__init__.py:44
+#: cogs/marriage/__init__.py:45
 msgid "Propose for a marriage."
 msgstr "Melamar pasangan anda."
 
-#: cogs/marriage/__init__.py:47
+#: cogs/marriage/__init__.py:48
 msgid "You should have a better friend than only yourself."
 msgstr ""
 "Anda seharusnya punya teman yang lebih baik dari pada diri anda sendiri."
 
-#: cogs/marriage/__init__.py:50
+#: cogs/marriage/__init__.py:51
 msgid "One of you is married."
 msgstr "Salah satu dari anda sudah memiliki pasangan."
 
-#: cogs/marriage/__init__.py:53
+#: cogs/marriage/__init__.py:54
 #, python-brace-format
 msgid "{author} has proposed for a marriage!"
 msgstr "{author} telah melamar anda!"
 
-#: cogs/marriage/__init__.py:57
+#: cogs/marriage/__init__.py:58
 #, python-brace-format
 msgid ""
 "{author} wants to marry you, {partner}! React with :heart: to marry them!"
@@ -3362,244 +3381,244 @@ msgstr ""
 "{author} mau menikah denganmu, {partner}! Bereaksilah dengan :heart: untuk "
 "menikahinya!"
 
-#: cogs/marriage/__init__.py:80
+#: cogs/marriage/__init__.py:81
 msgid "They didn't want to marry."
 msgstr "Ia menolak lamaran anda."
 
-#: cogs/marriage/__init__.py:106
+#: cogs/marriage/__init__.py:107
 #, python-brace-format
 msgid "Owwwwwww! :heart: {author} and {partner} are now married!"
 msgstr "Owwwwwww! :heart: {author} dan {partner} adalah suami istri sekarang!"
 
-#: cogs/marriage/__init__.py:112
+#: cogs/marriage/__init__.py:113
 msgid "Either you or your lovee married in the meantime... :broken_heart:"
 msgstr ""
 "Salah satu dari anda sudah menikah pada saat pelamaran... :broken_heart:"
 
-#: cogs/marriage/__init__.py:120
+#: cogs/marriage/__init__.py:121
 msgid "Break up with your partner."
 msgstr "Cerai dengan pasangan anda."
 
-#: cogs/marriage/__init__.py:122 cogs/marriage/__init__.py:150
-#: cogs/marriage/__init__.py:273
+#: cogs/marriage/__init__.py:123 cogs/marriage/__init__.py:151
+#: cogs/marriage/__init__.py:274
 msgid "You are not married yet."
 msgstr "Anda belum menikah."
 
-#: cogs/marriage/__init__.py:125
+#: cogs/marriage/__init__.py:126
 msgid ""
 "Are you sure you want to divorce your partner? You will lose all your "
 "children!"
 msgstr ""
 
-#: cogs/marriage/__init__.py:129
+#: cogs/marriage/__init__.py:130
 msgid "Cancelled the divorce. I guess the marriage is safe for now?"
 msgstr ""
 
-#: cogs/marriage/__init__.py:142
+#: cogs/marriage/__init__.py:143
 msgid "You are now divorced."
 msgstr "Anda sudah bercerai."
 
-#: cogs/marriage/__init__.py:148
+#: cogs/marriage/__init__.py:149
 msgid "View who you're married to."
 msgstr "Melihat kepada siapa anda menikah."
 
-#: cogs/marriage/__init__.py:153
+#: cogs/marriage/__init__.py:154
 #, python-brace-format
 msgid "You are currently married to **{partner}**."
 msgstr "**{partner}** adalah pasangan anda."
 
-#: cogs/marriage/__init__.py:160
+#: cogs/marriage/__init__.py:161
 msgid "Views someone's lovescore."
 msgstr ""
 
-#: cogs/marriage/__init__.py:165
+#: cogs/marriage/__init__.py:166
 msgid "noone"
 msgstr "tidak ada"
 
-#: cogs/marriage/__init__.py:168
+#: cogs/marriage/__init__.py:169
 #, python-brace-format
 msgid ""
 "{user}'s overall love score is **{score}**. {user} is married to **{partner}"
 "**."
 msgstr ""
 
-#: cogs/marriage/__init__.py:176
+#: cogs/marriage/__init__.py:177
 msgid "Buy something for your spouse and increase their lovescore."
 msgstr ""
 "Membeli sesuatu untuk pasangan anda untuk meningkatkan nilai percintaan."
 
-#: cogs/marriage/__init__.py:178
+#: cogs/marriage/__init__.py:179
 msgid "Dog :dog2:"
 msgstr "Anjing :dog2:"
 
-#: cogs/marriage/__init__.py:179
+#: cogs/marriage/__init__.py:180
 msgid "Cat :cat2:"
 msgstr "Kucing :cat2:"
 
-#: cogs/marriage/__init__.py:180
+#: cogs/marriage/__init__.py:181
 msgid "Cow :cow2:"
 msgstr "Sapi :cow2:"
 
-#: cogs/marriage/__init__.py:181
+#: cogs/marriage/__init__.py:182
 msgid "Penguin :penguin:"
 msgstr "Penguin :penguin:"
 
-#: cogs/marriage/__init__.py:182
+#: cogs/marriage/__init__.py:183
 msgid "Unicorn :unicorn:"
 msgstr "Unicorn :unicorn:"
 
-#: cogs/marriage/__init__.py:183
+#: cogs/marriage/__init__.py:184
 msgid "Potato :potato:"
 msgstr "Kentang :potato:"
 
-#: cogs/marriage/__init__.py:184
+#: cogs/marriage/__init__.py:185
 msgid "Sweet potato :sweet_potato:"
 msgstr "Ubi :sweet_potato:"
 
-#: cogs/marriage/__init__.py:185
+#: cogs/marriage/__init__.py:186
 msgid "Peach :peach:"
 msgstr "Persik :peach:"
 
-#: cogs/marriage/__init__.py:186
+#: cogs/marriage/__init__.py:187
 msgid "Ice Cream :ice_cream:"
 msgstr "Es Krim :ice_cream:"
 
-#: cogs/marriage/__init__.py:187
+#: cogs/marriage/__init__.py:188
 msgid "Bento Box :bento:"
 msgstr "Kotak Bento :bento:"
 
-#: cogs/marriage/__init__.py:188
+#: cogs/marriage/__init__.py:189
 msgid "Movie Night :ticket:"
 msgstr "Tiket Film :ticket:"
 
-#: cogs/marriage/__init__.py:189
+#: cogs/marriage/__init__.py:190
 msgid "Video Game Night :video_game:"
 msgstr "Malam Video Game :video_game:"
 
-#: cogs/marriage/__init__.py:190
+#: cogs/marriage/__init__.py:191
 msgid "Camping Night :fishing_pole_and_fish:"
 msgstr "Camping :fishing_pole_and_fish:"
 
-#: cogs/marriage/__init__.py:191
+#: cogs/marriage/__init__.py:192
 msgid "Couple Competition :trophy:"
 msgstr "Pertandingan pasangan :trophy:"
 
-#: cogs/marriage/__init__.py:192
+#: cogs/marriage/__init__.py:193
 msgid "Concert Night :musical_keyboard:"
 msgstr "Konser :musical_keyboard:"
 
-#: cogs/marriage/__init__.py:193
+#: cogs/marriage/__init__.py:194
 msgid "Bicycle :bike:"
 msgstr "Sepeda :bike:"
 
-#: cogs/marriage/__init__.py:194
+#: cogs/marriage/__init__.py:195
 msgid "Motorcycle :motorcycle:"
 msgstr "Sepeda Motor :motorcycle:"
 
-#: cogs/marriage/__init__.py:195
+#: cogs/marriage/__init__.py:196
 msgid "Car :red_car:"
 msgstr "Mobil :red_car:"
 
-#: cogs/marriage/__init__.py:196
+#: cogs/marriage/__init__.py:197
 msgid "Private Jet :airplane:"
 msgstr "Jet Privat :airplane:"
 
-#: cogs/marriage/__init__.py:197
+#: cogs/marriage/__init__.py:198
 msgid "Space Rocket :rocket:"
 msgstr "Roket Luar Angkasa :rocket:"
 
-#: cogs/marriage/__init__.py:198
+#: cogs/marriage/__init__.py:199
 msgid "Credit Card :credit_card:"
 msgstr "Kartu Kredit :credit_card:"
 
-#: cogs/marriage/__init__.py:199
+#: cogs/marriage/__init__.py:200
 msgid "Watch :watch:"
 msgstr "Jam Tangan :watch:"
 
-#: cogs/marriage/__init__.py:200
+#: cogs/marriage/__init__.py:201
 msgid "Phone :iphone:"
 msgstr "Hand Phone :iphone:"
 
-#: cogs/marriage/__init__.py:201
+#: cogs/marriage/__init__.py:202
 msgid "Bed :bed:"
 msgstr "Kasur :bed:"
 
-#: cogs/marriage/__init__.py:202
+#: cogs/marriage/__init__.py:203
 msgid "Home films :projector:"
 msgstr "Film :projector:"
 
-#: cogs/marriage/__init__.py:203
+#: cogs/marriage/__init__.py:204
 msgid "Satchel :school_satchel:"
 msgstr "Tas :school_satchel:"
 
-#: cogs/marriage/__init__.py:204
+#: cogs/marriage/__init__.py:205
 msgid "Purse :purse:"
 msgstr "Dompet :purse:"
 
-#: cogs/marriage/__init__.py:205
+#: cogs/marriage/__init__.py:206
 msgid "Shoes :athletic_shoe:"
 msgstr "Sepatu :athletic_shoe:"
 
-#: cogs/marriage/__init__.py:206
+#: cogs/marriage/__init__.py:207
 msgid "Casual Attire :shirt:"
 msgstr "Pakaian Kasual :shirt:"
 
-#: cogs/marriage/__init__.py:207
+#: cogs/marriage/__init__.py:208
 msgid "Ring :ring:"
 msgstr "Cincin :ring:"
 
-#: cogs/marriage/__init__.py:208
+#: cogs/marriage/__init__.py:209
 msgid "Balloon :balloon:"
 msgstr "Balon :balloon:"
 
-#: cogs/marriage/__init__.py:209
+#: cogs/marriage/__init__.py:210
 msgid "Flower Bouquet :bouquet:"
 msgstr "Buket bunga :bouquet:"
 
-#: cogs/marriage/__init__.py:210
+#: cogs/marriage/__init__.py:211
 msgid "Expensive Chocolates :chocolate_bar:"
 msgstr "Coklat mahal :chocolate_bar:"
 
-#: cogs/marriage/__init__.py:211
+#: cogs/marriage/__init__.py:212
 msgid "Declaration of Love :love_letter:"
 msgstr "Surat Cinta :love_letter:"
 
-#: cogs/marriage/__init__.py:212
+#: cogs/marriage/__init__.py:213
 msgid "Key to Heart :key2:"
 msgstr "Kunci Memorial :key2:"
 
-#: cogs/marriage/__init__.py:213
+#: cogs/marriage/__init__.py:214
 msgid "Ancient Vase :amphora:"
 msgstr "Vas Antik :amphora:"
 
-#: cogs/marriage/__init__.py:214
+#: cogs/marriage/__init__.py:215
 msgid "House :house:"
 msgstr "Rumah :house:"
 
-#: cogs/marriage/__init__.py:215
+#: cogs/marriage/__init__.py:216
 msgid "Super Computer :computer:"
 msgstr "Komputer Super :computer:"
 
-#: cogs/marriage/__init__.py:216
+#: cogs/marriage/__init__.py:217
 msgid "Precious Gemstone Collection :gem:"
 msgstr "Perhiasan mahal :gem:"
 
-#: cogs/marriage/__init__.py:217
+#: cogs/marriage/__init__.py:218
 msgid "Planet :earth_americas:"
 msgstr "Planet :earth_asia:"
 
-#: cogs/marriage/__init__.py:228
+#: cogs/marriage/__init__.py:229
 #, python-brace-format
 msgid "To buy one of these items for your partner, use `{prefix}spoil shopid`"
 msgstr ""
 "Untuk membeli salah satu dari benda ini untuk pasangan anda, gunakan "
 "`{prefix}spoil shopid`"
 
-#: cogs/marriage/__init__.py:235
+#: cogs/marriage/__init__.py:236
 msgid "You're not married yet."
 msgstr "Anda belum menikah."
 
-#: cogs/marriage/__init__.py:249
+#: cogs/marriage/__init__.py:250
 #, python-brace-format
 msgid ""
 "You bought a **{item}** for your partner and increased their love score by "
@@ -3608,13 +3627,13 @@ msgstr ""
 "Anda membelikan **{item}**untuk pasangan anda dan menaikan nilai percintaan "
 "sebanyak **{points}** poin!"
 
-#: cogs/marriage/__init__.py:255
+#: cogs/marriage/__init__.py:256
 msgid "Failed to DM your spouse, could not find their Discord account"
 msgstr ""
 "Gagal mengirimkan hadiah kepada pasangan, saya tidak dapat menemukan akun "
 "Discordnya"
 
-#: cogs/marriage/__init__.py:259
+#: cogs/marriage/__init__.py:260
 #, python-brace-format
 msgid ""
 "**{author}** bought you a **{item}** and increased your love score by "
@@ -3623,234 +3642,234 @@ msgstr ""
 "**{author}** membelikan anda **{item}** dan meningkatkan nilai percintaan "
 "sebanyak **{points}** poin!"
 
-#: cogs/marriage/__init__.py:268
+#: cogs/marriage/__init__.py:269
 msgid "Take your loved one on a date to increase your lovescore."
 msgstr "Berkencan dengan pasanganmu untuk meningkatkan nilai percintaan."
 
-#: cogs/marriage/__init__.py:281
+#: cogs/marriage/__init__.py:282
 #, python-brace-format
 msgid "You and {partner} went on a nice candlelit dinner."
 msgstr "Anda dan {partner} pergi ke makan malam yang romantis."
 
-#: cogs/marriage/__init__.py:282
+#: cogs/marriage/__init__.py:283
 #, python-brace-format
 msgid "You and {partner} had stargazed all night."
 msgstr "Anda dan {partner} pergi melihat langit malam."
 
-#: cogs/marriage/__init__.py:283
+#: cogs/marriage/__init__.py:284
 #, python-brace-format
 msgid "You and {partner} went to a circus that was in town."
 msgstr "Anda dan {partner} pergi menonton sirkus di kota."
 
-#: cogs/marriage/__init__.py:284
+#: cogs/marriage/__init__.py:285
 #, python-brace-format
 msgid "You and {partner} went out to see a romantic movie."
 msgstr "Anda dan {partner} pergi menonton film romantis."
 
-#: cogs/marriage/__init__.py:285
+#: cogs/marriage/__init__.py:286
 #, python-brace-format
 msgid "You and {partner} went out to get ice cream."
 msgstr "Anda dan {partner} pergi membeli es krim."
 
-#: cogs/marriage/__init__.py:286
+#: cogs/marriage/__init__.py:287
 #, python-brace-format
 msgid "You and {partner} had an anime marathon."
 msgstr "Anda dan {partner} menghabiskan episode anime bersama."
 
-#: cogs/marriage/__init__.py:287
+#: cogs/marriage/__init__.py:288
 #, python-brace-format
 msgid "You and {partner} went for a spontaneous hiking trip."
 msgstr "Anda dan {partner} pergi memanjat gunung tanpa persiapan."
 
-#: cogs/marriage/__init__.py:288
+#: cogs/marriage/__init__.py:289
 #, python-brace-format
 msgid "You and {partner} decided to visit Paris."
 msgstr "Anda dan {partner} memutuskan untuk pergi ke Paris."
 
-#: cogs/marriage/__init__.py:289
+#: cogs/marriage/__init__.py:290
 #, python-brace-format
 msgid "You and {partner} went ice skating together."
 msgstr "Anda dan {partner} pergi berseluncur es."
 
-#: cogs/marriage/__init__.py:291
+#: cogs/marriage/__init__.py:292
 msgid "Unknown User"
 msgstr "Pengguna yang tidak diketahui"
 
-#: cogs/marriage/__init__.py:292
+#: cogs/marriage/__init__.py:293
 #, python-brace-format
 msgid "This increased your lovescore by {num}"
 msgstr "Aktifitas ini meningkatkan nilai percintaan anda sebanyak {num}"
 
-#: cogs/marriage/__init__.py:301
+#: cogs/marriage/__init__.py:302
 msgid "Make a child with your spouse."
 msgstr "Menghasilkan keturunan dengan pasangan."
 
-#: cogs/marriage/__init__.py:305
+#: cogs/marriage/__init__.py:306
 msgid "Can't produce a child alone, can you?"
 msgstr "Anda tidak bisa menghasilkan keturunan sendiri, bukan begitu?"
 
-#: cogs/marriage/__init__.py:319
+#: cogs/marriage/__init__.py:320
 #, python-brace-format
 msgid ""
 "You already have {max_} children. You can increase this limit by increasing "
 "your lovescores."
 msgstr ""
 
-#: cogs/marriage/__init__.py:325
+#: cogs/marriage/__init__.py:326
 msgid "Your spouse is not here."
 msgstr ""
 
-#: cogs/marriage/__init__.py:327
+#: cogs/marriage/__init__.py:328
 #, python-brace-format
 msgid "{user}, do you want to make a child with {author}?"
 msgstr ""
 
-#: cogs/marriage/__init__.py:332
+#: cogs/marriage/__init__.py:333
 msgid "O.o not in the mood today?"
 msgstr "O.o tidak berselera saat ini?"
 
-#: cogs/marriage/__init__.py:335
+#: cogs/marriage/__init__.py:336
 msgid "You were unsuccessful at making a child."
 msgstr "Anda tidak berhasil mempunyai anak."
 
-#: cogs/marriage/__init__.py:340
+#: cogs/marriage/__init__.py:341
 msgid ""
 "It's a boy! Your night of love was successful! Please enter a name for your "
 "child."
 msgstr "Anak anda lelaki! Malam anda berhasil! Mohon berikan nama anak anda."
 
-#: cogs/marriage/__init__.py:346
+#: cogs/marriage/__init__.py:347
 msgid ""
 "It's a girl! Your night of love was successful! Please enter a name for your "
 "child."
 msgstr ""
 "Anak anda perempuan! Malam anda berhasil! Mohon berikan nama anak anda."
 
-#: cogs/marriage/__init__.py:361 cogs/marriage/__init__.py:487
+#: cogs/marriage/__init__.py:362 cogs/marriage/__init__.py:509
 msgid "You didn't enter a name."
 msgstr "Anda tidak memberikan sebuah nama."
 
-#: cogs/marriage/__init__.py:372
+#: cogs/marriage/__init__.py:373
 #, python-brace-format
 msgid "{name} was born."
 msgstr "{name} telah dilahirkan."
 
-#: cogs/marriage/__init__.py:378
+#: cogs/marriage/__init__.py:379
 msgid "View your children."
 msgstr "Melihat daftar anak anda."
 
-#: cogs/marriage/__init__.py:381
+#: cogs/marriage/__init__.py:382
 msgid "Lonely..."
 msgstr "Kesepian..."
 
-#: cogs/marriage/__init__.py:386
+#: cogs/marriage/__init__.py:387 cogs/marriage/__init__.py:413
 msgid "Your family"
 msgstr "Keluarga anda"
 
-#: cogs/marriage/__init__.py:387
+#: cogs/marriage/__init__.py:388 cogs/marriage/__init__.py:414
 #, python-brace-format
 msgid "Family of {author} and <@{marriage}>"
 msgstr "Keluarga dari {author} dan <@{marriage}>"
 
-#: cogs/marriage/__init__.py:393
+#: cogs/marriage/__init__.py:394
 msgid "No children yet"
 msgstr "Anda belum mempunyai anak"
 
-#: cogs/marriage/__init__.py:394
+#: cogs/marriage/__init__.py:395
 #, python-brace-format
 msgid "Use {prefix}child to make one!"
 msgstr "Gunakan {prefix}child untuk mempunyai anak!"
 
-#: cogs/marriage/__init__.py:399
+#: cogs/marriage/__init__.py:401 cogs/marriage/__init__.py:421
 #, python-brace-format
 msgid "Gender: {gender}, Age: {age}"
 msgstr "Jenis Kelamin: {gender}, Umur: {age}"
 
-#: cogs/marriage/__init__.py:412
+#: cogs/marriage/__init__.py:434
 msgid "Events happening to your family."
 msgstr "Kejadian yang terjadi pada keluarga anda."
 
-#: cogs/marriage/__init__.py:414
+#: cogs/marriage/__init__.py:436
 msgid "You're lonely."
 msgstr "Anda kesepian."
 
-#: cogs/marriage/__init__.py:419
+#: cogs/marriage/__init__.py:441
 msgid "You don't have kids yet."
 msgstr "Anda belum memiliki anak."
 
-#: cogs/marriage/__init__.py:425
+#: cogs/marriage/__init__.py:447
 msgid "They died because of a shampoo overdose!"
 msgstr "Mereka mati karena overdosis sampo!"
 
-#: cogs/marriage/__init__.py:426
+#: cogs/marriage/__init__.py:448
 msgid "They died of lovesickness..."
 msgstr "Mereka mati karena mabuk cinta..."
 
-#: cogs/marriage/__init__.py:427
+#: cogs/marriage/__init__.py:449
 msgid "They've died of age."
 msgstr "Mereka telah mati karena usia."
 
-#: cogs/marriage/__init__.py:428
+#: cogs/marriage/__init__.py:450
 msgid "They died of loneliness."
 msgstr "Mereka mati karena kesepian."
 
-#: cogs/marriage/__init__.py:429
+#: cogs/marriage/__init__.py:451
 msgid "A horde of goblins got them."
 msgstr "Segerombolan goblin menculik mereka."
 
-#: cogs/marriage/__init__.py:431
+#: cogs/marriage/__init__.py:453
 msgid ""
 "They have finally decided to move out after all these years, but couldn't "
 "survive a second alone."
 msgstr ""
 
-#: cogs/marriage/__init__.py:433
+#: cogs/marriage/__init__.py:455
 msgid "Spontaneous combustion removed them from existence."
 msgstr "Pembakaran secara tiba-tiba menghapus mereka dari dunia."
 
-#: cogs/marriage/__init__.py:434
+#: cogs/marriage/__init__.py:456
 msgid "While exploring the forest, they have gotten lost."
 msgstr "Ketika menjelajahi hutan, mereka tersesat."
 
-#: cogs/marriage/__init__.py:435
+#: cogs/marriage/__init__.py:457
 msgid "They've left through a portal into another dimension..."
 msgstr "Mereka telah pergi melalui portal ke dimensi lain..."
 
-#: cogs/marriage/__init__.py:437
+#: cogs/marriage/__init__.py:459
 msgid "The unbearable pain of stepping on a Lego\\© brick killed them."
 msgstr ""
 "Rasa sakit yang tak  tertahankan karena menginjak Lego\\© telah membunuh "
 "mereka."
 
 #. noqa
-#: cogs/marriage/__init__.py:439
+#: cogs/marriage/__init__.py:461
 msgid "You heard a landmine going off nearby..."
 msgstr ""
 
-#: cogs/marriage/__init__.py:440
+#: cogs/marriage/__init__.py:462
 msgid "They have been abducted by aliens!"
 msgstr "Mereka telah diculik oleh alien!"
 
-#: cogs/marriage/__init__.py:441
+#: cogs/marriage/__init__.py:463
 msgid "The Catholic Church got them..."
 msgstr "Gereja Katolik menangkap mereka..."
 
-#: cogs/marriage/__init__.py:451
+#: cogs/marriage/__init__.py:473
 #, python-brace-format
 msgid "{name} died at the age of {age}! {cause}"
 msgstr "{name} meninggal di umur {age}! {cause}"
 
-#: cogs/marriage/__init__.py:463
+#: cogs/marriage/__init__.py:485
 #, python-brace-format
 msgid "{name} is now {age} years old."
 msgstr "{name} sekarang berumur {age}."
 
-#: cogs/marriage/__init__.py:469
+#: cogs/marriage/__init__.py:491
 #, python-brace-format
 msgid "{name} can be renamed! Enter a new name:"
 msgstr "{name} dapat dinamai ulang! Mohon berikan nama yang baru:"
 
-#: cogs/marriage/__init__.py:497
+#: cogs/marriage/__init__.py:519
 #, python-brace-format
 msgid "{old_name} is now called {new_name}."
 msgstr "{old_name} sekarang bernama {new_name}."
@@ -4384,41 +4403,48 @@ msgstr ""
 "Guild anda terlalu miskin, tabungan guild anda adalah **${money}** tetapi "
 "membutuhkan **${price}** untuk mengupgrade."
 
-#: cogs/guild/__init__.py:604
+#: cogs/guild/__init__.py:596
+#, python-brace-format
+msgid ""
+"This will upgrade your guild bank limit to **${limit}** for **${cost}**. "
+"Proceed?"
+msgstr ""
+
+#: cogs/guild/__init__.py:611
 #, python-brace-format
 msgid "Your new guild bank limit is now **${limit}**."
 msgstr "Limit baru untuk tabungan guild anda sekarang **${limit}**."
 
-#: cogs/guild/__init__.py:620
+#: cogs/guild/__init__.py:627
 msgid "Battle against another guild."
 msgstr "Bertarung melawan guild lain."
 
-#: cogs/guild/__init__.py:622
+#: cogs/guild/__init__.py:629
 msgid "Poor kiddo having no friendos."
 msgstr "Anak malang ini tidak mempunyai teman."
 
-#: cogs/guild/__init__.py:626
+#: cogs/guild/__init__.py:633
 msgid "One of you both doesn't have a guild."
 msgstr "Salah satu dari anda tidak mempunyai guild."
 
-#: cogs/guild/__init__.py:631
+#: cogs/guild/__init__.py:638
 msgid "One of you both isn't an officer of their guild."
 msgstr "Salah satu dari anda bukan merupakan opsir dari guild."
 
-#: cogs/guild/__init__.py:636
+#: cogs/guild/__init__.py:643
 msgid "One of the guilds can't pay the price."
 msgstr "Salah satu guild tidak dapat membayar taruhan."
 
-#: cogs/guild/__init__.py:644
+#: cogs/guild/__init__.py:651
 msgid "One of the guilds is too small."
 msgstr "Salah satu guild terlalu kecil."
 
-#: cogs/guild/__init__.py:652
+#: cogs/guild/__init__.py:659
 #, python-brace-format
 msgid "{enemy} didn't want to join your battle, {author}."
 msgstr "{enemy} tidak mau melawan anda, {author}."
 
-#: cogs/guild/__init__.py:659
+#: cogs/guild/__init__.py:666
 #, python-brace-format
 msgid ""
 "{enemy} accepted the challenge by {author}. Please now nominate members, "
@@ -4428,24 +4454,24 @@ msgstr ""
 "{author}. Gunakan `battle nominate @user` untuk menambahkan seseorang ke "
 "dalam tim."
 
-#: cogs/guild/__init__.py:675
+#: cogs/guild/__init__.py:682
 msgid "That person isn't in your guild."
 msgstr "Orang tersebut tidak tergabung dalam guild anda."
 
-#: cogs/guild/__init__.py:698
+#: cogs/guild/__init__.py:705
 #, python-brace-format
 msgid "{user} has been added to your team, {author}."
 msgstr "{user} telah ditambahkan ke tim anda, {author}."
 
-#: cogs/guild/__init__.py:703 cogs/guild/__init__.py:728
+#: cogs/guild/__init__.py:710 cogs/guild/__init__.py:735
 msgid "User not found."
 msgstr "User tidak ditemukan."
 
-#: cogs/guild/__init__.py:707 cogs/guild/__init__.py:732
+#: cogs/guild/__init__.py:714 cogs/guild/__init__.py:739
 msgid "Took to long to add members. Fight cancelled."
 msgstr "Anda terlalu lama menambahkan pemain, Pertandingan dibatalkan."
 
-#: cogs/guild/__init__.py:711
+#: cogs/guild/__init__.py:718
 #, python-brace-format
 msgid ""
 "Please now nominate members, {enemy}. Use `battle nominate @user` to add "
@@ -4454,12 +4480,12 @@ msgstr ""
 "Mohon memilih anggota, {enemy}. Gunakan `battle nominate @user` untuk "
 "menambahkan seseorang ke tim."
 
-#: cogs/guild/__init__.py:723
+#: cogs/guild/__init__.py:730
 #, python-brace-format
 msgid "{user} has been added to your team, {enemy}."
 msgstr "{user} telah ditambahkan ke tim anda, {enemy}."
 
-#: cogs/guild/__init__.py:735
+#: cogs/guild/__init__.py:742
 msgid ""
 "Fight started!\n"
 "Generating battles..."
@@ -4467,7 +4493,7 @@ msgstr ""
 "Pertarungan dimulai!\n"
 "Membuat pertarungan..."
 
-#: cogs/guild/__init__.py:737
+#: cogs/guild/__init__.py:744
 msgid ""
 "Fight started!\n"
 "Generating battles... Done."
@@ -4475,7 +4501,7 @@ msgstr ""
 "Pertarungan dimulai!\n"
 "Membuat pertarungan… Selesai."
 
-#: cogs/guild/__init__.py:744
+#: cogs/guild/__init__.py:751
 #, python-brace-format
 msgid ""
 "Guild Battle Fight **{num}** of **{total}**.\n"
@@ -4486,7 +4512,7 @@ msgstr ""
 "**{user}** vs **{user2}**!\n"
 "Pertarungan dilangsungkan..."
 
-#: cogs/guild/__init__.py:774
+#: cogs/guild/__init__.py:781
 #, python-brace-format
 msgid ""
 "Winner of **{user}** vs **{user2}** is **{winner}**! Current points: "
@@ -4495,24 +4521,24 @@ msgstr ""
 "Pemenang dari **{user}** vs **{user2}** adalah **{winner}**! Poin sementara: "
 "**{wins1}** dan **{wins2}**."
 
-#: cogs/guild/__init__.py:787
+#: cogs/guild/__init__.py:794
 msgid "Some guild spent the money??? Bad looser!"
 msgstr "Sebuah guild menghabiskan uangnya??? Pecundang yang menyedihkan!"
 
-#: cogs/guild/__init__.py:803 cogs/guild/__init__.py:822
+#: cogs/guild/__init__.py:810 cogs/guild/__init__.py:829
 #, python-brace-format
 msgid "{guild} won the battle! Congratulations!"
 msgstr "{guild} memenangkan pertarungan! Selamat!"
 
-#: cogs/guild/__init__.py:827
+#: cogs/guild/__init__.py:834
 msgid "It's a tie!"
 msgstr "Hasilnya seri!"
 
-#: cogs/guild/__init__.py:834
+#: cogs/guild/__init__.py:841
 msgid "Starts a guild adventure."
 msgstr "Memulai petualangan guild."
 
-#: cogs/guild/__init__.py:839
+#: cogs/guild/__init__.py:846
 #, python-brace-format
 msgid ""
 "Your guild is already on an adventure! Use `{prefix}guild status` to view "
@@ -4521,7 +4547,7 @@ msgstr ""
 "Guild anda sudah berada di petualangan! Gunakan `{prefix}guild status` untuk "
 "melihat durasi yang tersisa."
 
-#: cogs/guild/__init__.py:848
+#: cogs/guild/__init__.py:855
 #, python-brace-format
 msgid ""
 "{author} seeks a guild adventure for **{guild}**! React to join! Unlimited "
@@ -4531,20 +4557,20 @@ msgstr ""
 "bergabung! Tidak ada batas maksimal anggota untuk bergabung selama semenit "
 "kedepan. Minimal pemain yang dibutuhkan adalah 3."
 
-#: cogs/guild/__init__.py:876
+#: cogs/guild/__init__.py:883
 #, python-brace-format
 msgid "Alright, {user}, you have been added."
 msgstr "Baiklah, {user}, anda telah didaftarkan ke petualangan guild."
 
-#: cogs/guild/__init__.py:881
+#: cogs/guild/__init__.py:888
 msgid "You aren't in their guild."
 msgstr "Anda tidak berada di guild tersebut."
 
-#: cogs/guild/__init__.py:886
+#: cogs/guild/__init__.py:893
 msgid "You didn't get enough other players for the guild adventure."
 msgstr "Tidak cukup anggota untuk memulai petualangan guild."
 
-#: cogs/guild/__init__.py:897
+#: cogs/guild/__init__.py:904
 #, python-brace-format
 msgid ""
 "\n"
@@ -4563,11 +4589,11 @@ msgstr ""
 "Tingkat kesulitannya adalah **{difficulty}**\n"
 "Durasi: **{time}**\n"
 
-#: cogs/guild/__init__.py:917
+#: cogs/guild/__init__.py:924
 msgid "Views your guild adventure."
 msgstr "Melihat petualangan guild."
 
-#: cogs/guild/__init__.py:923
+#: cogs/guild/__init__.py:930
 #, python-brace-format
 msgid ""
 "Your guild isn't on an adventure yet. Ask your guild leader to use `{prefix}"
@@ -4576,7 +4602,7 @@ msgstr ""
 "Guild anda tidak sedang melakukan petualangan. Mintalah pemimpin guild untuk "
 "menggunakan `{prefix}guild adventure` untuk memulai"
 
-#: cogs/guild/__init__.py:938
+#: cogs/guild/__init__.py:945
 #, python-brace-format
 msgid ""
 "Your guild has completed an adventure of difficulty `{difficulty}` and **"
@@ -4585,7 +4611,7 @@ msgstr ""
 "Guild anda telah menyelesaikan petualangan dengan tingkat kesulitan "
 "`{difficulty}` dan **${gold}** telah ditambahkan ke tabungan guild."
 
-#: cogs/guild/__init__.py:944
+#: cogs/guild/__init__.py:951
 #, python-brace-format
 msgid ""
 "Your guild is currently in an adventure with difficulty `{difficulty}`.\n"
@@ -4594,6 +4620,49 @@ msgstr ""
 "Guild anda sedang melakukan petualangan dengan tingkat kesulitan "
 "`{difficulty}`.\n"
 "Durasi tersisa: `{remain}`"
+
+#: cogs/guild/__init__.py:961
+msgid "View your guild's progress in the ongoing event."
+msgstr ""
+
+#: cogs/guild/__init__.py:972
+#, python-brace-format
+msgid ""
+"**Halloween 2019 🎃 👻**\n"
+"\n"
+"*Progress for best reward*\n"
+"{bar} {percent}% {pumpkins}/50,000 🎃\n"
+"\n"
+"*Prices for claiming*\n"
+"`(ID for {prefix}guild claim) Amount 🎃: Reward`\n"
+"**(1)** 1000 🎃: **$5000** Guild Bank Fill\n"
+"**(2)** 5000 🎃: **$27500** Guild Bank Fill\n"
+"**(3)** 10000 🎃: **$60000** Guild Bank Fill\n"
+"**(4)** 25000 🎃: **$175000** Guild Bank Fill\n"
+"\n"
+"**(5)** 37500 🎃: Halloween 2019 Guild Badge #1\n"
+"**(6)** 50000 🎃: Halloween 2019 Guild Badge #2\n"
+"\n"
+"**(7)** 10000 🎃: 2 additional guild member slots\n"
+"**(8)** 20000 🎃: 5 additional guild member slots\n"
+"**(9)** 35000 🎃: 8 additional guild member slots\n"
+"**(10)** 50000 🎃: 15 additional guild member slots\n"
+"*Please note that these will be **gone** if the leader uses `{prefix}"
+"updateguild`, so choose carefully*"
+msgstr ""
+
+#: cogs/guild/__init__.py:1002
+msgid "[Guild Leader only] Claim event rewards."
+msgstr ""
+
+#: cogs/guild/__init__.py:1017
+msgid "You have insufficient pumpkins for this reward."
+msgstr ""
+
+#: cogs/guild/__init__.py:1025
+#, python-brace-format
+msgid "Reward successfully claimed for **{amount}** 🎃!"
+msgstr ""
 
 #: cogs/vote/__init__.py:28
 msgid "Vote me up to get a random crate!"
@@ -4606,38 +4675,38 @@ msgid ""
 "https://discordbots.org/bot/idlerpg"
 msgstr ""
 
-#: cogs/custom/__init__.py:44
+#: cogs/custom/__init__.py:51
 msgid "In loving memory of Mary Johanna, ex-developer."
 msgstr ""
 "Penghargaan tertinggi untuk Mary Johanna, developer kami yang sudah "
 "meningkatkan tim."
 
-#: cogs/custom/__init__.py:45
+#: cogs/custom/__init__.py:52
 msgid "His name is `#no homo` :heart:"
 msgstr "Namanya adalah `#no homo` :heart:"
 
-#: cogs/custom/__init__.py:51
+#: cogs/custom/__init__.py:58
 msgid "[Ken only] Hug someone."
 msgstr "[Khusus Ken] Memeluk seseorang."
 
-#: cogs/custom/__init__.py:53
+#: cogs/custom/__init__.py:60
 msgid "Ken Hug!"
 msgstr "Pelukan Ken!"
 
-#: cogs/custom/__init__.py:54
+#: cogs/custom/__init__.py:61
 #, python-brace-format
 msgid "{author} hugged {user}! Awww!"
 msgstr "{author} memeluk {user}! Awww!"
 
-#: cogs/custom/__init__.py:75
+#: cogs/custom/__init__.py:82
 msgid "It's a secret."
 msgstr ""
 
-#: cogs/custom/__init__.py:78
+#: cogs/custom/__init__.py:85
 msgid "Gotcha"
 msgstr ""
 
-#: cogs/custom/__init__.py:78
+#: cogs/custom/__init__.py:85
 msgid "Shhh, it's a secret!"
 msgstr ""
 
@@ -4994,65 +5063,67 @@ msgstr "Uang hadiah!"
 msgid "No cheating!"
 msgstr "Tidak boleh curang!"
 
-#: cogs/profile/__init__.py:611
+#: cogs/profile/__init__.py:614
 #, python-brace-format
-msgid "Successfully gave **${money}** to {other}."
-msgstr "**${money}** telah diberikan kepada {other} secara sukses."
+msgid ""
+"Success!\n"
+"{other} now has **${othermoney}**, you now have **${authormoney}**."
+msgstr ""
 
-#: cogs/profile/__init__.py:623
+#: cogs/profile/__init__.py:627
 msgid "Renames your character."
 msgstr "Menamai ulang karakter anda."
 
-#: cogs/profile/__init__.py:625
+#: cogs/profile/__init__.py:629
 msgid "What shall your character's name be? (Minimum 3 Characters, Maximum 20)"
 msgstr "Apakah nama karakter anda? (Minimal 3 Karakter, Maksimal 20 Karakter)"
 
-#: cogs/profile/__init__.py:634
+#: cogs/profile/__init__.py:638
 msgid "Timeout expired. Retry!"
 msgstr "Waktu habis. Mohon coba kembali!"
 
-#: cogs/profile/__init__.py:640
+#: cogs/profile/__init__.py:644
 msgid "Character name updated."
 msgstr "Nama karakter anda telah diperbarui."
 
-#: cogs/profile/__init__.py:642
+#: cogs/profile/__init__.py:646
 msgid "Character names must be at least 3 characters!"
 msgstr "Nama karakter harus lebih boleh kurang dari 3 karakter!"
 
-#: cogs/profile/__init__.py:644
+#: cogs/profile/__init__.py:648
 msgid "Character names mustn't exceed 20 characters!"
 msgstr "Nama karakter harus tidak boleh lebih dari 20 karakter!"
 
-#: cogs/profile/__init__.py:650
+#: cogs/profile/__init__.py:654
 msgid "Deletes your character."
 msgstr "Menghapus karakter anda."
 
-#: cogs/profile/__init__.py:653
+#: cogs/profile/__init__.py:657
 msgid ""
 "Are you absolutely sure you want to delete your character? React in the next "
 "30 seconds to confirm.\n"
 "**This cannot be undone.**"
 msgstr ""
 
-#: cogs/profile/__init__.py:656
+#: cogs/profile/__init__.py:660
 msgid "Cancelled deletion of your character."
 msgstr "Penghapusan karakter telah dibatalkan."
 
-#: cogs/profile/__init__.py:679
+#: cogs/profile/__init__.py:683
 msgid "Successfully deleted your character. Sorry to see you go :frowning:"
 msgstr "Penghapusan karakter sukses dilakukan. Anda akan dirindukan :frowning:"
 
-#: cogs/profile/__init__.py:686
+#: cogs/profile/__init__.py:690
 msgid ""
 "Sets your profile text colour. The format may be #RRGGBB or a HTML-valid "
 "string like \"cyan\"."
 msgstr ""
 
-#: cogs/profile/__init__.py:690
+#: cogs/profile/__init__.py:694
 msgid "Format for colour is `#RRGGBB` or a colour code like `cyan`."
 msgstr ""
 
-#: cogs/profile/__init__.py:697
+#: cogs/profile/__init__.py:701
 #, python-brace-format
 msgid ""
 "Successfully set your profile colour to `{colour}`. Hint: If you used a hex "
@@ -5147,6 +5218,15 @@ msgid ""
 msgstr ""
 "Latar belakang, kelas, nama benda, dan batas anggota guild dari {target} "
 "telah dikembalikan seperti semula dengan sukses."
+
+#: cogs/admin/__init__.py:212
+msgid "[Bot Admin only] Resets someone's class(es)."
+msgstr ""
+
+#: cogs/admin/__init__.py:219
+#, python-brace-format
+msgid "Successfully reset {target}'s class."
+msgstr ""
 
 #: cogs/gods/__init__.py:40
 msgid "Sacrifice an item for favor."
@@ -5682,6 +5762,12 @@ msgstr ""
 #: utils/castle.py:269
 msgid "You have reached the exit!"
 msgstr ""
+
+#~ msgid "{user} gave you additional $50!"
+#~ msgstr "{user} memberikan anda $50 lagi!"
+
+#~ msgid "Successfully gave **${money}** to {other}."
+#~ msgstr "**${money}** telah diberikan kepada {other} secara sukses."
 
 #~ msgid ""
 #~ "[Patreon Only] Generates a profile background based on an image. Valid "

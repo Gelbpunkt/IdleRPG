@@ -445,23 +445,13 @@ Adventure name: `{adventure}`"""
                 minstat = round(num * luck_multiply)
                 maxstat = round(5 + int(num * 1.5) * luck_multiply)
 
-                if num == 51:
-                    item = await self.bot.create_random_51_item(
-                        minstat=(minstat if minstat > 0 else 1) if minstat < 35 else 35,
-                        maxstat=(maxstat if maxstat > 0 else 1) if maxstat < 35 else 35,
-                        minvalue=round(num * luck_multiply),
-                        maxvalue=round(num * 50 * luck_multiply),
-                        owner=ctx.author,
-                    )
-
-                else:
-                    item = await self.bot.create_random_item(
-                        minstat=(minstat if minstat > 0 else 1) if minstat < 35 else 35,
-                        maxstat=(maxstat if maxstat > 0 else 1) if maxstat < 35 else 35,
-                        minvalue=round(num * luck_multiply),
-                        maxvalue=round(num * 50 * luck_multiply),
-                        owner=ctx.author,
-                    )
+                item = await self.bot.create_random_item(
+                    minstat=(minstat if minstat > 0 else 1) if minstat < 35 else 35,
+                    maxstat=(maxstat if maxstat > 0 else 1) if maxstat < 35 else 35,
+                    minvalue=round(num * luck_multiply),
+                    maxvalue=round(num * 50 * luck_multiply),
+                    owner=ctx.author,
+                )
 
             else:
                 item = items.get_item()
@@ -472,12 +462,15 @@ Adventure name: `{adventure}`"""
                     ctx.author.id,
                 )
 
-            if (guild := ctx.character_data["guild"]) :
+            if (guild := ctx.character_data["guild"]):
+                pumkins = random.randint(num * 2, num * 5)
                 await conn.execute(
-                    'UPDATE guild SET "money"="money"+$1 WHERE "id"=$2;',
+                    'UPDATE guild SET "money"="money"+$1, "pumpkins"="pumpkins"+$2 WHERE "id"=$3;',
                     int(gold / 10),
+                    pumpkins,
                     guild,
                 )
+
 
             await conn.execute(
                 'UPDATE profile SET "money"="money"+$1, "xp"="xp"+$2, "completed"="completed"+1 WHERE "user"=$3;',
@@ -498,6 +491,9 @@ Adventure name: `{adventure}`"""
                     "You have completed your adventure and received **${gold}** as well as a new item: **{item}**. Experience gained: **{xp}**."
                 ).format(gold=gold, item=item["name"], xp=xp)
             )
+
+            if guild:
+                await ctx.send(_("On your adventure, you found **{amount}** 🎃! Your guild leader forced you to give them to the guild...").format(amount=pumpkins))
 
             new_level = int(rpgtools.xptolevel(ctx.character_data["xp"] + xp))
 
