@@ -129,11 +129,11 @@ class Classes(commands.Cog):
         new_classes[val] = profession_
         if not await ctx.confirm(
             _(
-                "You are about to select the `{profession}` class for yourself. {textaddon}Proceed?"
+                "You are about to select the `{profession}` class for yourself. {textaddon} Proceed?"
             ).format(
-                textaddon=_("This will cost **$5000**. ")
+                textaddon=_("This will cost **$5000**.")
                 if ctx.character_data["class"][val] == "No Class"
-                else _("Changing it later will cost **$5000**. ")
+                else _("Changing it later will cost **$5000**.")
             )
         ):
             await self.bot.reset_cooldown(ctx)
