@@ -144,7 +144,7 @@ class Main:
         if instance._process.returncode == 0:
             print(f"[Cluster #{instance.id} ({instance.name})] Stopped gracefully")
         else:
-            stderr = "\n".join(stderr.decode("utf-8").split("\n"))  # [-20:])
+            stderr = "\n".join(stderr.decode("utf-8").split("\n")[-20:])
             print(
                 f"[Cluster #{instance.id} ({instance.name})] STDERR (last 20 lines): {stderr}"
             )

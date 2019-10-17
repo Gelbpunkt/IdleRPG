@@ -88,11 +88,7 @@ class Bot(commands.AutoShardedBot):
         self.session = aiohttp.ClientSession(trust_env=True)
         self.trusted_session = aiohttp.ClientSession()
         self.redis = await aioredis.create_pool(
-            "redis://localhost",
-            minsize=5,
-            maxsize=10,
-            loop=self.loop,
-            db=0,
+            "redis://localhost", minsize=5, maxsize=10, loop=self.loop, db=0
         )
         self.pool = await asyncpg.create_pool(
             **self.config.database, max_size=20, command_timeout=60.0

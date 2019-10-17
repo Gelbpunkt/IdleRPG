@@ -1006,25 +1006,60 @@ Time it will take: **{time}**
             {"price": 5000, "reward": "money", "data": 27500},
             {"price": 10000, "reward": "money", "data": 60000},
             {"price": 25000, "reward": "money", "data": 175000},
-            {"price": 37500, "reward": "badge", "data": "https://idlerpg.travitia.xyz/halloween_2019_1.png"},
-            {"price": 50000, "reward": "badge", "data": "https://idlerpg.travitia.xyz/halloween_2019_2.png"},
+            {
+                "price": 37500,
+                "reward": "badge",
+                "data": "https://idlerpg.travitia.xyz/halloween_2019_1.png",
+            },
+            {
+                "price": 50000,
+                "reward": "badge",
+                "data": "https://idlerpg.travitia.xyz/halloween_2019_2.png",
+            },
             {"price": 10000, "reward": "members", "data": 2},
             {"price": 20000, "reward": "members", "data": 5},
             {"price": 35000, "reward": "members", "data": 8},
             {"price": 50000, "reward": "members", "data": 15},
         ][reward_id - 1]
         async with self.bot.pool.acquire() as conn:
-            if (pumpkins := await conn.fetchval('SELECT pumpkins FROM guild WHERE "id"=$1;', ctx.character_data["guild"])) < reward["price"]:
-                return await ctx.send(_("You have insufficient pumpkins for this reward."))
-            await conn.execute('UPDATE guild SET "pumpkins"="pumpkins"-$1 WHERE "id"=$2;', reward["price"], ctx.character_data["guild"])
+            if (
+                await conn.fetchval(
+                    'SELECT pumpkins FROM guild WHERE "id"=$1;',
+                    ctx.character_data["guild"],
+                )
+                < reward["price"]
+            ):
+                return await ctx.send(
+                    _("You have insufficient pumpkins for this reward.")
+                )
+            await conn.execute(
+                'UPDATE guild SET "pumpkins"="pumpkins"-$1 WHERE "id"=$2;',
+                reward["price"],
+                ctx.character_data["guild"],
+            )
             if reward["reward"] == "money":
-                await conn.execute('UPDATE guild SET "money"="money"+$1 WHERE "id"=$2;', reward["data"], ctx.character_data["guild"])
+                await conn.execute(
+                    'UPDATE guild SET "money"="money"+$1 WHERE "id"=$2;',
+                    reward["data"],
+                    ctx.character_data["guild"],
+                )
             elif reward["reward"] == "badge":
-                await conn.execute('UPDATE guild SET "badges"=array_append("badges", $1) WHERE "id"=$2;', reward["data"], ctx.character_data["guild"])
+                await conn.execute(
+                    'UPDATE guild SET "badges"=array_append("badges", $1) WHERE "id"=$2;',
+                    reward["data"],
+                    ctx.character_data["guild"],
+                )
             elif reward["reward"] == "members":
-                await conn.execute('UPDATE guild SET "memberlimit"="memberlimit"+$1 WHERE "id"=$2;', reward["data"], ctx.character_data["guild"])
-        await ctx.send(_("Reward successfully claimed for **{amount}** 🎃!").format(amount=reward["price"]))
-
+                await conn.execute(
+                    'UPDATE guild SET "memberlimit"="memberlimit"+$1 WHERE "id"=$2;',
+                    reward["data"],
+                    ctx.character_data["guild"],
+                )
+        await ctx.send(
+            _("Reward successfully claimed for **{amount}** 🎃!").format(
+                amount=reward["price"]
+            )
+        )
 
 
 def setup(bot):
