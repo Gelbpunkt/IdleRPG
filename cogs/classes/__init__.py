@@ -130,6 +130,15 @@ class Classes(commands.Cog):
         new_classes = copy(ctx.character_data["class"])
         new_classes[val] = profession_
         if ctx.character_data["class"][val] == "No Class":
+            conf = await ctx.confirm(
+                _(
+                    "You are about to select the `{profession}` class for yourself, changing it later will cost **$5000**. Proceed?"
+                ).format(profession=profession,)
+            )
+            if not conf:
+                await self.bot.reset_cooldown(ctx)
+                await conf.delete()
+                return await ctx.send(_("Class selection cancelled."))
             async with self.bot.pool.acquire() as conn:
                 await conn.execute(
                     'UPDATE profile SET "class"=$1 WHERE "user"=$2;',
@@ -146,6 +155,15 @@ class Classes(commands.Cog):
                 )
             )
         else:
+            conf = await ctx.confirm(
+                _(
+                    "You are about to change to the `{profession}` class, this will cost **$5000**. Proceed?"
+                ).format(profession=profession,)
+            )
+            if not conf:
+                await self.bot.reset_cooldown(ctx)
+                await conf.delete()
+                return await ctx.send(_("Class change cancelled."))
             if not await self.bot.has_money(ctx.author.id, 5000):
                 await self.bot.reset_cooldown(ctx)
                 return await ctx.send(
