@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-10-17 20:13+0200\n"
+"POT-Creation-Date: 2019-10-17 13:40-0700\n"
 "PO-Revision-Date: 2019-06-01 17:59+0700\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -169,7 +169,7 @@ msgid "Seems you haven't got a trick or treat bag yet. Go get some!"
 msgstr "Sepertinya kamu belum memiliki tas trick or treat. Dapatkan beberapa!"
 
 #: cogs/halloween/__init__.py:151 cogs/crates/__init__.py:131
-#: cogs/classes/__init__.py:502
+#: cogs/classes/__init__.py:513
 msgid "You gained an item!"
 msgstr "Kamu mendapatkan barang!"
 
@@ -178,31 +178,31 @@ msgid "You found a new item when opening a trick-or-treat bag!"
 msgstr "Kamu mendapatkan barang baru ketika membuka tas trick-or-treat!"
 
 #: cogs/halloween/__init__.py:156 cogs/crates/__init__.py:137
-#: cogs/classes/__init__.py:290 cogs/classes/__init__.py:508
+#: cogs/classes/__init__.py:301 cogs/classes/__init__.py:519
 #: cogs/trading/__init__.py:221 cogs/trading/__init__.py:425
 msgid "Name"
 msgstr "Nama"
 
 #: cogs/halloween/__init__.py:157 cogs/crates/__init__.py:138
-#: cogs/classes/__init__.py:509 cogs/trading/__init__.py:222
+#: cogs/classes/__init__.py:520 cogs/trading/__init__.py:222
 #: cogs/trading/__init__.py:426
 msgid "Type"
 msgstr "Tipe"
 
 #: cogs/halloween/__init__.py:158 cogs/crates/__init__.py:139
-#: cogs/classes/__init__.py:511 cogs/trading/__init__.py:223
+#: cogs/classes/__init__.py:522 cogs/trading/__init__.py:223
 #: cogs/trading/__init__.py:427
 msgid "Damage"
 msgstr "Kerusakan"
 
 #: cogs/halloween/__init__.py:159 cogs/crates/__init__.py:140
-#: cogs/classes/__init__.py:513 cogs/trading/__init__.py:224
+#: cogs/classes/__init__.py:524 cogs/trading/__init__.py:224
 #: cogs/trading/__init__.py:428
 msgid "Armor"
 msgstr "Pelindung tubuh"
 
 #: cogs/halloween/__init__.py:160 cogs/crates/__init__.py:141
-#: cogs/classes/__init__.py:514 cogs/trading/__init__.py:225
+#: cogs/classes/__init__.py:525 cogs/trading/__init__.py:225
 #: cogs/trading/__init__.py:429 cogs/profile/__init__.py:346
 msgid "Value"
 msgstr "Nilai"
@@ -484,7 +484,7 @@ msgstr ""
 msgid "You found a new item when opening a crate!"
 msgstr "Kamu menemukan barang baru ketika membuka sebuah peti!"
 
-#: cogs/crates/__init__.py:136 cogs/classes/__init__.py:507
+#: cogs/crates/__init__.py:136 cogs/classes/__init__.py:518
 msgid "ID"
 msgstr "ID"
 
@@ -2011,7 +2011,7 @@ msgid "That is not a valid premade background."
 msgstr "Itu bukan latar belakang yang sebelumnya dibuat yang valid."
 
 #: cogs/patreon/__init__.py:83 cogs/patreon/__init__.py:111
-#: cogs/classes/__init__.py:469 cogs/guild/__init__.py:429
+#: cogs/classes/__init__.py:480 cogs/guild/__init__.py:429
 msgid ""
 "I couldn't read that URL. Does it start with `http://` or `https://` and is "
 "either a png or jpeg?"
@@ -2179,267 +2179,286 @@ msgstr ""
 "Menyerap penghargaan dari para developer ke dalam jiwamu untuk menguatkan.\n"
 "+1 kerusakan dan pertahanan per evolusi ditambahkan ke barangmu."
 
-#: cogs/classes/__init__.py:144
+#: cogs/classes/__init__.py:134
+#, python-brace-format
+msgid ""
+"You are about to select the `{profession}` class for yourself. {textaddon} "
+"Proceed?"
+msgstr ""
+
+#: cogs/classes/__init__.py:136
+msgid "This will cost **$5000**."
+msgstr ""
+
+#: cogs/classes/__init__.py:138
+msgid "Changing it later will cost **$5000**."
+msgstr ""
+
+#: cogs/classes/__init__.py:142
+msgid "Class selection cancelled."
+msgstr ""
+
+#: cogs/classes/__init__.py:155
 #, python-brace-format
 msgid "Your new class is now `{profession}`."
 msgstr "Kelasmu yang baru sekarang adalah `{profession}`."
 
-#: cogs/classes/__init__.py:152
+#: cogs/classes/__init__.py:163
 msgid "You're too poor for a class change, it costs **$5000**."
 msgstr "Kamu terlalu miskin untuk berganti kelas, harganya adalah **$5000**."
 
-#: cogs/classes/__init__.py:169
+#: cogs/classes/__init__.py:180
 #, python-brace-format
 msgid ""
 "You selected the class `{profession}`. **$5000** was taken off your balance."
 msgstr ""
 
-#: cogs/classes/__init__.py:177
+#: cogs/classes/__init__.py:188
 msgid "Views your classes."
 msgstr ""
 
-#: cogs/classes/__init__.py:191
+#: cogs/classes/__init__.py:202
 #, python-brace-format
 msgid "The image for your class **{class_}** hasn't been added yet."
 msgstr "Gambar dari kelasmu **{class_}** belum ditambahkan."
 
-#: cogs/classes/__init__.py:199
+#: cogs/classes/__init__.py:210
 msgid "Evolve to the next level of your classes."
 msgstr ""
 
-#: cogs/classes/__init__.py:202
+#: cogs/classes/__init__.py:213
 msgid "Your level isn't high enough to evolve."
 msgstr "Level kamu tidak cukup tinggi untuk berevolusi."
 
-#: cogs/classes/__init__.py:217
+#: cogs/classes/__init__.py:228
 msgid "You haven't got a class yet."
 msgstr "Kamu masih belum memiliki kelas."
 
-#: cogs/classes/__init__.py:222
+#: cogs/classes/__init__.py:233
 #, python-brace-format
 msgid "You are now a `{class1}` and a `{class2}`."
 msgstr ""
 
-#: cogs/classes/__init__.py:230
+#: cogs/classes/__init__.py:241
 msgid "Evolve tree."
 msgstr ""
 
-#: cogs/classes/__init__.py:251
+#: cogs/classes/__init__.py:262
 msgid "[Thief Only] Steal money!"
 msgstr "[Hanya pencuri] Mencuri uang!"
 
-#: cogs/classes/__init__.py:274
+#: cogs/classes/__init__.py:285
 #, python-brace-format
 msgid "You stole **${stolen}** from **{user}**."
 msgstr "Kamu mencuri **${stolen}** dari **{user}**."
 
-#: cogs/classes/__init__.py:279
+#: cogs/classes/__init__.py:290
 msgid "Your attempt to steal money wasn't successful."
 msgstr "Upaya kamu untuk mencuri uang tidak berhasil."
 
-#: cogs/classes/__init__.py:287
+#: cogs/classes/__init__.py:298
 msgid "[Ranger Only] View your pet or interact with it."
 msgstr ""
 
-#: cogs/classes/__init__.py:289
+#: cogs/classes/__init__.py:300
 #, python-brace-format
 msgid "{user}'s pet"
 msgstr "Hewan peliharaan {user}"
 
-#: cogs/classes/__init__.py:291
+#: cogs/classes/__init__.py:302
 msgid "Level"
 msgstr "Level"
 
-#: cogs/classes/__init__.py:292
+#: cogs/classes/__init__.py:303
 msgid "Food"
 msgstr ""
 
-#: cogs/classes/__init__.py:294
+#: cogs/classes/__init__.py:305
 msgid "Drinks"
 msgstr ""
 
-#: cogs/classes/__init__.py:296
+#: cogs/classes/__init__.py:307
 msgid "Love"
 msgstr ""
 
-#: cogs/classes/__init__.py:297
+#: cogs/classes/__init__.py:308
 msgid "Joy"
 msgstr ""
 
-#: cogs/classes/__init__.py:308
+#: cogs/classes/__init__.py:319
 msgid "[Ranger Only] Feed your pet."
 msgstr ""
 
-#: cogs/classes/__init__.py:310
+#: cogs/classes/__init__.py:321
 msgid "Potato"
 msgstr ""
 
-#: cogs/classes/__init__.py:311
+#: cogs/classes/__init__.py:322
 msgid "Apple"
 msgstr ""
 
-#: cogs/classes/__init__.py:312
+#: cogs/classes/__init__.py:323
 msgid "Cucumber"
 msgstr ""
 
-#: cogs/classes/__init__.py:313
+#: cogs/classes/__init__.py:324
 msgid "Meat"
 msgstr ""
 
-#: cogs/classes/__init__.py:314
+#: cogs/classes/__init__.py:325
 msgid "Salad"
 msgstr ""
 
-#: cogs/classes/__init__.py:315
+#: cogs/classes/__init__.py:326
 msgid "Adrian's Power Poop"
 msgstr ""
 
-#: cogs/classes/__init__.py:322
+#: cogs/classes/__init__.py:333
 msgid "Feed your pet"
 msgstr ""
 
-#: cogs/classes/__init__.py:326 cogs/classes/__init__.py:368
+#: cogs/classes/__init__.py:337 cogs/classes/__init__.py:379
 #: cogs/marriage/__init__.py:234
 msgid "You are too poor to buy this."
 msgstr "Kamu terlalu miskin untuk membeli ini."
 
-#: cogs/classes/__init__.py:340
+#: cogs/classes/__init__.py:351
 #, python-brace-format
 msgid ""
 "You bought **{item}** for your pet and increased its food bar by **{points}"
 "** points."
 msgstr ""
 
-#: cogs/classes/__init__.py:350
+#: cogs/classes/__init__.py:361
 msgid "[Ranger Only] Give your pet something to drink."
 msgstr ""
 
-#: cogs/classes/__init__.py:352
+#: cogs/classes/__init__.py:363
 msgid "Some Water"
 msgstr ""
 
-#: cogs/classes/__init__.py:353
+#: cogs/classes/__init__.py:364
 msgid "A bottle of water"
 msgstr ""
 
-#: cogs/classes/__init__.py:354
+#: cogs/classes/__init__.py:365
 msgid "Cocktail"
 msgstr ""
 
-#: cogs/classes/__init__.py:355
+#: cogs/classes/__init__.py:366
 msgid "Wine"
 msgstr ""
 
-#: cogs/classes/__init__.py:356
+#: cogs/classes/__init__.py:367
 msgid "Beer"
 msgstr ""
 
-#: cogs/classes/__init__.py:357
+#: cogs/classes/__init__.py:368
 msgid "Adrian's Cocktail"
 msgstr ""
 
-#: cogs/classes/__init__.py:364
+#: cogs/classes/__init__.py:375
 msgid "Give your pet something to drink"
 msgstr ""
 
-#: cogs/classes/__init__.py:382
+#: cogs/classes/__init__.py:393
 #, python-brace-format
 msgid ""
 "You bought **{item}** for your pet and increased its drinks bar by **{points}"
 "** points."
 msgstr ""
 
-#: cogs/classes/__init__.py:393
+#: cogs/classes/__init__.py:404
 msgid "[Ranger Only] Cuddle your pet to make it love you."
 msgstr ""
 
-#: cogs/classes/__init__.py:402
+#: cogs/classes/__init__.py:413
 #, python-brace-format
 msgid ""
 "Your pet adores you! :heart: Cuddling it has increased its love for you by "
 "**{value}** points."
 msgstr ""
 
-#: cogs/classes/__init__.py:413
+#: cogs/classes/__init__.py:424
 msgid "[Ranger Only] Play with your pet to make it happier."
 msgstr ""
 
-#: cogs/classes/__init__.py:422
+#: cogs/classes/__init__.py:433
 #, python-brace-format
 msgid "You have been {activity} with your pet and it gained **{value}** joy!"
 msgstr ""
 
-#: cogs/classes/__init__.py:426
+#: cogs/classes/__init__.py:437
 msgid "playing football :soccer:"
 msgstr ""
 
-#: cogs/classes/__init__.py:427
+#: cogs/classes/__init__.py:438
 msgid "playing American football :football:"
 msgstr ""
 
-#: cogs/classes/__init__.py:428
+#: cogs/classes/__init__.py:439
 msgid "playing rugby :rugby_football:"
 msgstr ""
 
-#: cogs/classes/__init__.py:429
+#: cogs/classes/__init__.py:440
 msgid "playing basketball :basketball:"
 msgstr ""
 
-#: cogs/classes/__init__.py:430
+#: cogs/classes/__init__.py:441
 msgid "playing tennis :tennis:"
 msgstr ""
 
-#: cogs/classes/__init__.py:431
+#: cogs/classes/__init__.py:442
 msgid "playing ping-pong :ping_pong:"
 msgstr ""
 
-#: cogs/classes/__init__.py:432
+#: cogs/classes/__init__.py:443
 msgid "boxing :boxing_glove:"
 msgstr ""
 
-#: cogs/classes/__init__.py:433
+#: cogs/classes/__init__.py:444
 msgid "skiing :ski:"
 msgstr ""
 
-#: cogs/classes/__init__.py:446
+#: cogs/classes/__init__.py:457
 msgid "[Ranger Only] Renames your pet."
 msgstr ""
 
-#: cogs/classes/__init__.py:448
+#: cogs/classes/__init__.py:459
 msgid "Please enter a name shorter than 20 characters."
 msgstr ""
 
-#: cogs/classes/__init__.py:452
+#: cogs/classes/__init__.py:463
 msgid "Pet name updated."
 msgstr ""
 
-#: cogs/classes/__init__.py:460
+#: cogs/classes/__init__.py:471
 msgid "[Ranger Only] Sets your pet's image by URL."
 msgstr ""
 
-#: cogs/classes/__init__.py:462
+#: cogs/classes/__init__.py:473
 msgid "URLs mustn't exceed 60 characters ."
 msgstr ""
 
-#: cogs/classes/__init__.py:475
+#: cogs/classes/__init__.py:486
 msgid "Your pet's image was successfully updated."
 msgstr ""
 
-#: cogs/classes/__init__.py:484
+#: cogs/classes/__init__.py:495
 msgid "[Ranger Only] Let your pet get a weapon for you!"
 msgstr ""
 "[Hanya Ranger] Membiarkan hewan peliharaan kamu mendapatkan senjata untuk "
 "kamu!"
 
-#: cogs/classes/__init__.py:492
+#: cogs/classes/__init__.py:503
 msgid "Your pet is not happy enough to hunt an item. Try making it joyful!"
 msgstr ""
 
-#: cogs/classes/__init__.py:503
+#: cogs/classes/__init__.py:514
 msgid "Your pet found an item!"
 msgstr "Hewan peliharaanmu menemukan sebuah barang!"
 
-#: cogs/classes/__init__.py:515
+#: cogs/classes/__init__.py:526
 msgid "Your pet needs to recover, wait a day to retry"
 msgstr "Hewan peliharaanmu perlu dipulih, tunggu sehari untuk mencoba lagi"
 
@@ -2846,33 +2865,33 @@ msgstr ""
 msgid "You died on your mission. Try again!"
 msgstr "Kamu mati dalam misi kamu. Coba lagi!"
 
-#: cogs/adventure/__init__.py:491
+#: cogs/adventure/__init__.py:490
 #, python-brace-format
 msgid ""
 "You have completed your adventure and received **${gold}** as well as a new "
 "item: **{item}**. Experience gained: **{xp}**."
 msgstr ""
 
-#: cogs/adventure/__init__.py:496
+#: cogs/adventure/__init__.py:497
 #, python-brace-format
 msgid ""
 "On your adventure, you found **{amount}** 🎃! Your guild leader forced you to "
 "give them to the guild..."
 msgstr ""
 
-#: cogs/adventure/__init__.py:508
+#: cogs/adventure/__init__.py:511
 msgid "Cancels your current adventure."
 msgstr "Membatalkan petualangan kamu saat ini."
 
-#: cogs/adventure/__init__.py:510
+#: cogs/adventure/__init__.py:513
 msgid "Are you sure you want to cancel your current adventure?"
 msgstr ""
 
-#: cogs/adventure/__init__.py:513
+#: cogs/adventure/__init__.py:516
 msgid "Did not cancel your adventure. The journey continues..."
 msgstr ""
 
-#: cogs/adventure/__init__.py:518
+#: cogs/adventure/__init__.py:521
 #, python-brace-format
 msgid ""
 "Canceled your mission. Use `{prefix}adventure [missionID]` to start a new "
@@ -2881,12 +2900,12 @@ msgstr ""
 "Membatalkan misi kamu. Gunakan `{prefix}adventure [missionID]` untuk memulai "
 "baru!"
 
-#: cogs/adventure/__init__.py:527
+#: cogs/adventure/__init__.py:530
 msgid ""
 "Your death stats. Shows statictics from all your adventures ever completed."
 msgstr ""
 
-#: cogs/adventure/__init__.py:538
+#: cogs/adventure/__init__.py:541
 #, python-brace-format
 msgid ""
 "Out of **{total}** adventures, you died **{deaths}** times and survived "
@@ -3724,7 +3743,7 @@ msgstr ""
 "Itu anak perempuan! Malam cintamu berhasil! Silakan masukkan nama untuk "
 "anakmu."
 
-#: cogs/marriage/__init__.py:362 cogs/marriage/__init__.py:509
+#: cogs/marriage/__init__.py:362 cogs/marriage/__init__.py:515
 msgid "You didn't enter a name."
 msgstr "Kamu tidak memasukkan sebuah nama."
 
@@ -3764,89 +3783,94 @@ msgstr "Gunakan {prefix}child untuk membuatnya!"
 msgid "Gender: {gender}, Age: {age}"
 msgstr "Jenis kelamin: {gender}, Umur: {age}"
 
-#: cogs/marriage/__init__.py:434
+#: cogs/marriage/__init__.py:427
+#, python-brace-format
+msgid "Page {cur} of {max}"
+msgstr ""
+
+#: cogs/marriage/__init__.py:440
 msgid "Events happening to your family."
 msgstr "Peristiwa yang terjadi di keluargamu."
 
-#: cogs/marriage/__init__.py:436
+#: cogs/marriage/__init__.py:442
 msgid "You're lonely."
 msgstr "Kamu sendirian."
 
-#: cogs/marriage/__init__.py:441
+#: cogs/marriage/__init__.py:447
 msgid "You don't have kids yet."
 msgstr "Kamu belum punya anak."
 
-#: cogs/marriage/__init__.py:447
+#: cogs/marriage/__init__.py:453
 msgid "They died because of a shampoo overdose!"
 msgstr ""
 
-#: cogs/marriage/__init__.py:448
+#: cogs/marriage/__init__.py:454
 msgid "They died of lovesickness..."
 msgstr ""
 
-#: cogs/marriage/__init__.py:449
+#: cogs/marriage/__init__.py:455
 msgid "They've died of age."
 msgstr ""
 
-#: cogs/marriage/__init__.py:450
+#: cogs/marriage/__init__.py:456
 msgid "They died of loneliness."
 msgstr ""
 
-#: cogs/marriage/__init__.py:451
+#: cogs/marriage/__init__.py:457
 msgid "A horde of goblins got them."
 msgstr ""
 
-#: cogs/marriage/__init__.py:453
+#: cogs/marriage/__init__.py:459
 msgid ""
 "They have finally decided to move out after all these years, but couldn't "
 "survive a second alone."
 msgstr ""
 
-#: cogs/marriage/__init__.py:455
+#: cogs/marriage/__init__.py:461
 msgid "Spontaneous combustion removed them from existence."
 msgstr ""
 
-#: cogs/marriage/__init__.py:456
+#: cogs/marriage/__init__.py:462
 msgid "While exploring the forest, they have gotten lost."
 msgstr ""
 
-#: cogs/marriage/__init__.py:457
+#: cogs/marriage/__init__.py:463
 msgid "They've left through a portal into another dimension..."
 msgstr ""
 
-#: cogs/marriage/__init__.py:459
+#: cogs/marriage/__init__.py:465
 msgid "The unbearable pain of stepping on a Lego\\© brick killed them."
 msgstr ""
 
 #. noqa
-#: cogs/marriage/__init__.py:461
+#: cogs/marriage/__init__.py:467
 msgid "You heard a landmine going off nearby..."
 msgstr ""
 
-#: cogs/marriage/__init__.py:462
+#: cogs/marriage/__init__.py:468
 msgid "They have been abducted by aliens!"
 msgstr ""
 
-#: cogs/marriage/__init__.py:463
+#: cogs/marriage/__init__.py:469
 msgid "The Catholic Church got them..."
 msgstr ""
 
-#: cogs/marriage/__init__.py:473
+#: cogs/marriage/__init__.py:479
 #, python-brace-format
 msgid "{name} died at the age of {age}! {cause}"
 msgstr "{name} meninggal dunia di usia {age}! {cause}"
 
-#: cogs/marriage/__init__.py:485
+#: cogs/marriage/__init__.py:491
 #, python-brace-format
 msgid "{name} is now {age} years old."
 msgstr "{name} sekarang berumur {age} tahun."
 
-#: cogs/marriage/__init__.py:491
+#: cogs/marriage/__init__.py:497
 #, python-brace-format
 msgid "{name} can be renamed! Enter a new name:"
 msgstr "{name} dapat diganti namanya! Masukkan nama baru:"
 
-#: cogs/marriage/__init__.py:519
+#: cogs/marriage/__init__.py:525
 #, python-brace-format
 msgid "{old_name} is now called {new_name}."
 msgstr "{old_name} sekarang disebut {new_name}."
@@ -4528,25 +4552,25 @@ msgid ""
 "guild adventure` to start one"
 msgstr ""
 
-#: cogs/guild/__init__.py:945
+#: cogs/guild/__init__.py:946
 #, python-brace-format
 msgid ""
 "Your guild has completed an adventure of difficulty `{difficulty}` and **"
-"${gold}** has been added to the bank."
+"${gold}** has been added to the bank. You also found **{pumpkins}** 🎃!"
 msgstr ""
 
-#: cogs/guild/__init__.py:951
+#: cogs/guild/__init__.py:952
 #, python-brace-format
 msgid ""
 "Your guild is currently in an adventure with difficulty `{difficulty}`.\n"
 "Time remaining: `{remain}`"
 msgstr ""
 
-#: cogs/guild/__init__.py:961
+#: cogs/guild/__init__.py:962
 msgid "View your guild's progress in the ongoing event."
 msgstr ""
 
-#: cogs/guild/__init__.py:972
+#: cogs/guild/__init__.py:973
 #, python-brace-format
 msgid ""
 "**Halloween 2019 🎃 👻**\n"
@@ -4572,15 +4596,15 @@ msgid ""
 "updateguild`, so choose carefully*"
 msgstr ""
 
-#: cogs/guild/__init__.py:1002
+#: cogs/guild/__init__.py:1003
 msgid "[Guild Leader only] Claim event rewards."
 msgstr ""
 
-#: cogs/guild/__init__.py:1017
+#: cogs/guild/__init__.py:1033
 msgid "You have insufficient pumpkins for this reward."
 msgstr ""
 
-#: cogs/guild/__init__.py:1025
+#: cogs/guild/__init__.py:1059
 #, python-brace-format
 msgid "Reward successfully claimed for **{amount}** 🎃!"
 msgstr ""
