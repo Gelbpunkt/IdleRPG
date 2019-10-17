@@ -32,9 +32,6 @@ class Halloween(commands.Cog):
         self.bot = bot
         self.waiting = None
 
-    def cog_check(self, ctx):
-        return ctx.author.id == 287_215_355_137_622_016
-
     @checks.has_char()
     @user_cooldown(43200)
     @commands.command()
@@ -100,7 +97,7 @@ class Halloween(commands.Cog):
     @commands.command()
     @locale_doc
     async def yummy(self, ctx):
-        """Open a trick or treat bag."""
+        _("""Open a trick or treat bag.""")
         # better name?
         if ctx.character_data["trickortreat"] < 1:
             return await ctx.send(
@@ -137,7 +134,7 @@ class Halloween(commands.Cog):
         ] = f"{name} {random.choice(['Sword', 'Blade', 'Stich', 'Arm', 'Bone']) if item['type_'] == 'Sword' else random.choice(['Shield', 'Defender', 'Aegis', 'Shadow Shield', 'Giant Ginger'])}"
         await self.bot.create_item(**item)
         await self.bot.pool.execute(
-            'UPDATE profile SET trickortreat=trickortreat-1 WHERE "user"=$1;',
+            'UPDATE profile SET "trickortreat"="trickortreat"-1 WHERE "user"=$1;',
             ctx.author.id,
         )
         embed = discord.Embed(
