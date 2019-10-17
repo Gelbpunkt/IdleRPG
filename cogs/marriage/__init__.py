@@ -423,6 +423,10 @@ class Marriage(commands.Cog):
                         ),
                         inline=True,
                     )
+                em.set_footer(text=_("Page {cur} of {max}").format(
+                    cur=children_lists.index(small_list) + 1,
+                    max=len(children_lists),
+                )
                 embeds.append(em)
             await self.bot.paginator.Paginator(extras=embeds).paginate(ctx)
 
