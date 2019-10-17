@@ -135,7 +135,8 @@ class Classes(commands.Cog):
             ).format(
                 textaddon=_("This will cost **$5000**.")
                 if ctx.character_data["class"][val] == "No Class"
-                else _("Changing it later will cost **$5000**.")
+                else _("Changing it later will cost **$5000**."),
+                profession=profession,
             )
         ):
             await self.bot.reset_cooldown(ctx)
