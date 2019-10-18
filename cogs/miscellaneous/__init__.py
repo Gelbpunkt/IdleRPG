@@ -698,13 +698,13 @@ Average hours of work: **{hours}**"""
         em.add_field(
             name="GamesROB",
             value=_(
-                "Trivia, Hangman, Minesweeper, Connect 4 and more, right from your chat! A bot offering non-RPG games made by deprilula28 and Fin.\n[discordbots.org Page](https://discordbots.org/bot/gamesrob)"
+                "Trivia, Hangman, Minesweeper, Connect 4 and more, right from your chat! A bot offering non-RPG games made by deprilula28 and Fin.\n[top.gg Page](https://top.gg/bot/gamesrob)"
             ),
         )
         em.add_field(
             name="Cautious Memory",
             value=_(
-                "Cautious Memory brings wiki-style pages to your server. Use it to document who's who in your server, inside jokes, or community lore. Includes a full featured permissions system to keep your pages squeaky clean.\n[discordbots.org Page](https://discordbots.org/bot/541707781665718302)"
+                "Cautious Memory brings wiki-style pages to your server. Use it to document who's who in your server, inside jokes, or community lore. Includes a full featured permissions system to keep your pages squeaky clean.\n[top.gg Page](https://top.gg/bot/541707781665718302)"
             ),
         )
         await ctx.send(embed=em)
