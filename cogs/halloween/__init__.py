@@ -85,7 +85,8 @@ class Halloween(commands.Cog):
                 'UPDATE profile SET money=money+50 WHERE "user"=$1', ctx.author.id
             )
             usr = await conn.fetchval(
-                'SELECT "user" FROM profile WHERE "money">=50 ORDER BY RANDOM() LIMIT 1;'
+                'SELECT "user" FROM profile WHERE "money">=50 AND "user"!=$1 ORDER BY RANDOM() LIMIT 1;',
+                ctx.author.id
             )
             await conn.execute(
                 'UPDATE profile SET money=money-50 WHERE "user"=$1;', usr
