@@ -200,7 +200,8 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
             await asyncio.sleep(4)
 
         if len(raid) == 0:
-            await ctx.send("The raid was all wiped!")
+            m = await ctx.send("The raid was all wiped!")
+            await m.add_reaction("\U0001F1EB")
         elif boss["hp"] < 1:
             await ctx.channel.set_permissions(
                 ctx.guild.default_role, overwrite=self.allow_sending
