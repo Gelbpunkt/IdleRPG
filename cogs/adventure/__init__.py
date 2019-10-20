@@ -119,7 +119,7 @@ class Adventure(commands.Cog):
                 "You are going to be in a labyrinth of size 15x15. There are enemies, treasures and hidden traps. Reach the exit in the bottom right corner for a huge extra bonus!\nAre you ready?\n\nTip: Use a silent channel for this, you may want to read all the messages I will send."
             )
         ):
-            return
+            return await self.bot.reset_cooldown(ctx)
 
         msg = await ctx.send(_("**Generating a maze...**"))
 
