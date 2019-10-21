@@ -25,7 +25,7 @@ import discord
 
 from discord.ext import commands
 
-from classes.converters import IntGreaterThan, MemberWithCharacter, User
+from classes.converters import IntFromTo, IntGreaterThan, MemberWithCharacter, User
 from cogs.shard_communication import guild_on_cooldown as guild_cooldown
 from cogs.shard_communication import user_on_cooldown as user_cooldown
 from utils import misc as rpgtools
@@ -187,6 +187,7 @@ class Guild(commands.Cog):
         try:
             name = await self.bot.wait_for("message", timeout=60, check=mycheck)
         except asyncio.TimeoutError:
+            await self.bot.reset_cooldown(ctx)
             return await ctx.send(_("Cancelled guild creation."))
         name = name.content
         if len(name) > 20:
@@ -197,6 +198,7 @@ class Guild(commands.Cog):
         try:
             url = await self.bot.wait_for("message", timeout=60, check=mycheck)
         except asyncio.TimeoutError:
+            await self.bot.reset_cooldown(ctx)
             return await ctx.send(_("Cancelled guild creation."))
         url = url.content
         if len(url) > 60:
@@ -209,7 +211,7 @@ class Guild(commands.Cog):
         if not await ctx.confirm(
             _("Are you sure? React to create a guild for **$10000**")
         ):
-            return
+            return await self.bot.reset_cooldown(ctx)
         if not await has_money(self.bot, ctx.author.id, 10000):
             return await ctx.send(
                 _("A guild creation costs **$10000**, you are too poor.")
@@ -590,6 +592,13 @@ class Guild(commands.Cog):
                         "Your guild is too poor, you got **${money}** but it costs **${price}** to upgrade."
                     ).format(money=guild["money"], price=int(currentlimit / 2))
                 )
+
+            if not await ctx.confirm(
+                _(
+                    "This will upgrade your guild bank limit to **${limit}** for **${cost}**. Proceed?"
+                ).format(limit=currentlimit + 250_000, cost=int(currentlimit / 2))
+            ):
+                return
             await conn.execute(
                 'UPDATE guild SET banklimit=banklimit+$1 WHERE "id"=$2;',
                 250_000,
@@ -648,6 +657,7 @@ class Guild(commands.Cog):
             timeout=60,
             user=enemy,
         ):
+            await self.bot.reset_cooldown(ctx)
             return await ctx.send(
                 _("{enemy} didn't want to join your battle, {author}.").format(
                     enemy=enemy.mention, author=ctx.author.mention
@@ -703,6 +713,7 @@ class Guild(commands.Cog):
                     await ctx.send(_("User not found."))
                     continue
             except asyncio.TimeoutError:
+                await self.bot.reset_guild_cooldown(ctx)
                 return await ctx.send(
                     _("Took to long to add members. Fight cancelled.")
                 )
@@ -728,6 +739,7 @@ class Guild(commands.Cog):
                     await ctx.send(_("User not found."))
                     continue
             except asyncio.TimeoutError:
+                await self.bot.reset_guild_cooldown(ctx)
                 return await ctx.send(
                     _("Took to long to add members. Fight cancelled.")
                 )
@@ -865,7 +877,7 @@ class Guild(commands.Cog):
 
         while not started:
             try:
-                r, u = await self.bot.wait_for("reaction_add", check=apply, timeout=30)
+                r, u = await self.bot.wait_for("reaction_add", check=apply, timeout=300)
                 user = await self.bot.pool.fetchrow(
                     'SELECT guild, xp FROM profile WHERE "user"=$1;', u.id
                 )
@@ -929,14 +941,15 @@ Time it will take: **{time}**
             gold = random.randint(adventure[0] * 20, adventure[0] * 50)
 
             await self.bot.pool.execute(
-                'UPDATE guild SET money=money+$1 WHERE "id"=$2;',
+                'UPDATE guild SET "money"="money"+$1, "pumpkins"="pumpkins"+$2 WHERE "id"=$3;',
                 gold,
+                adventure[0] * 10,
                 ctx.character_data["guild"],
             )
             await ctx.send(
                 _(
-                    "Your guild has completed an adventure of difficulty `{difficulty}` and **${gold}** has been added to the bank."
-                ).format(difficulty=adventure[0], gold=gold)
+                    "Your guild has completed an adventure of difficulty `{difficulty}` and **${gold}** has been added to the bank. You also found **{pumpkins}** 🎃!"
+                ).format(difficulty=adventure[0], gold=gold, pumpkins=adventure[0] * 10)
             )
         else:
             await ctx.send(
@@ -946,6 +959,112 @@ Time it will take: **{time}**
                     difficulty=adventure[0], remain=str(adventure[1]).split(".")[0]
                 )
             )
+
+    @has_guild()
+    @guild.command()
+    @locale_doc
+    async def event(self, ctx):
+        _("""View your guild's progress in the ongoing event.""")
+        pumpkins = await self.bot.pool.fetchval(
+            'SELECT pumpkins FROM guild WHERE "id"=$1;', ctx.character_data["guild"]
+        )
+        val = int(pumpkins / 50000 * 10)
+        percent = round(pumpkins / 50000 * 100, 2)
+        if val > 10:
+            val = 10
+        progress = f"{'▣' * val}{'▢' * (10 - val)}"
+        await ctx.send(
+            _(
+                """\
+**Halloween 2019 🎃 👻**
+
+*Progress for best reward*
+{bar} {percent}% {pumpkins}/50,000 🎃
+
+*Prices for claiming*
+`(ID for {prefix}guild claim) Amount 🎃: Reward`
+**(1)** 1000 🎃: **$5000** Guild Bank Fill
+**(2)** 5000 🎃: **$27500** Guild Bank Fill
+**(3)** 10000 🎃: **$60000** Guild Bank Fill
+**(4)** 25000 🎃: **$175000** Guild Bank Fill
+
+**(5)** 37500 🎃: Halloween 2019 Guild Badge #1
+**(6)** 50000 🎃: Halloween 2019 Guild Badge #2
+
+**(7)** 10000 🎃: 2 additional guild member slots
+**(8)** 20000 🎃: 5 additional guild member slots
+**(9)** 35000 🎃: 8 additional guild member slots
+**(10)** 50000 🎃: 15 additional guild member slots
+*Please note that these will be **gone** if the leader uses `{prefix}updateguild`, so choose carefully*"""
+            ).format(
+                bar=progress, percent=percent, pumpkins=pumpkins, prefix=ctx.prefix
+            )
+        )
+
+    @is_guild_leader()
+    @guild.command()
+    @locale_doc
+    async def claim(self, ctx, reward_id: IntFromTo(1, 10)):
+        _("""[Guild Leader only] Claim event rewards.""")
+        reward = [
+            {"price": 1000, "reward": "money", "data": 5000},
+            {"price": 5000, "reward": "money", "data": 27500},
+            {"price": 10000, "reward": "money", "data": 60000},
+            {"price": 25000, "reward": "money", "data": 175000},
+            {
+                "price": 37500,
+                "reward": "badge",
+                "data": "https://idlerpg.travitia.xyz/halloween_2019_1.png",
+            },
+            {
+                "price": 50000,
+                "reward": "badge",
+                "data": "https://idlerpg.travitia.xyz/halloween_2019_2.png",
+            },
+            {"price": 10000, "reward": "members", "data": 2},
+            {"price": 20000, "reward": "members", "data": 5},
+            {"price": 35000, "reward": "members", "data": 8},
+            {"price": 50000, "reward": "members", "data": 15},
+        ][reward_id - 1]
+        async with self.bot.pool.acquire() as conn:
+            if (
+                await conn.fetchval(
+                    'SELECT pumpkins FROM guild WHERE "id"=$1;',
+                    ctx.character_data["guild"],
+                )
+                < reward["price"]
+            ):
+                return await ctx.send(
+                    _("You have insufficient pumpkins for this reward.")
+                )
+            await conn.execute(
+                'UPDATE guild SET "pumpkins"="pumpkins"-$1 WHERE "id"=$2;',
+                reward["price"],
+                ctx.character_data["guild"],
+            )
+            if reward["reward"] == "money":
+                await conn.execute(
+                    'UPDATE guild SET "money"="money"+$1 WHERE "id"=$2;',
+                    reward["data"],
+                    ctx.character_data["guild"],
+                )
+            elif reward["reward"] == "badge":
+                await conn.execute(
+                    'UPDATE guild SET "badges"=array_append("badges", $1) WHERE "id"=$2;',
+                    reward["data"],
+                    ctx.character_data["guild"],
+                )
+            elif reward["reward"] == "members":
+                await conn.execute(
+                    'UPDATE guild SET "memberlimit"="memberlimit"+$1 WHERE "id"=$2;',
+                    reward["data"],
+                    ctx.character_data["guild"],
+                )
+        await ctx.send(
+            _("Reward successfully claimed for **{amount}** 🎃!").format(
+                amount=reward["price"]
+            )
+        )
 
 
 def setup(bot):

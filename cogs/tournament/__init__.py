@@ -63,6 +63,7 @@ class Tournament(commands.Cog):
                 )
             except asyncio.TimeoutError:
                 if len(participants) < 2:
+                    await self.bot.reset_cooldown(ctx)
                     return await ctx.send(_("Noone joined your tournament."))
                 break
             if await user_has_char(self.bot, u.id):

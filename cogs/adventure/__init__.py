@@ -119,7 +119,7 @@ class Adventure(commands.Cog):
                 "You are going to be in a labyrinth of size 15x15. There are enemies, treasures and hidden traps. Reach the exit in the bottom right corner for a huge extra bonus!\nAre you ready?\n\nTip: Use a silent channel for this, you may want to read all the messages I will send."
             )
         ):
-            return
+            return await self.bot.reset_cooldown(ctx)
 
         msg = await ctx.send(_("**Generating a maze...**"))
 
@@ -344,11 +344,13 @@ class Adventure(commands.Cog):
             try:
                 direction = await wait_for_move()
             except asyncio.TimeoutError:
+                await self.bot.reset_cooldown(ctx)
                 return await msg.edit(content=_("Timed out."))
             x, y = move(x, y, direction)  # Python namespacing sucks, to be honest
             try:
                 hp = await handle_specials(hp)  # Should've used a class for this
             except asyncio.TimeoutError:
+                await self.bot.reset_cooldown(ctx)
                 return await msg.edit(content=_("Timed out."))
             if hp <= 0:
                 return await ctx.send(_("You died."))
@@ -445,23 +447,13 @@ Adventure name: `{adventure}`"""
                 minstat = round(num * luck_multiply)
                 maxstat = round(5 + int(num * 1.5) * luck_multiply)
 
-                if num == 51:
-                    item = await self.bot.create_random_51_item(
-                        minstat=(minstat if minstat > 0 else 1) if minstat < 35 else 35,
-                        maxstat=(maxstat if maxstat > 0 else 1) if maxstat < 35 else 35,
-                        minvalue=round(num * luck_multiply),
-                        maxvalue=round(num * 50 * luck_multiply),
-                        owner=ctx.author,
-                    )
-
-                else:
-                    item = await self.bot.create_random_item(
-                        minstat=(minstat if minstat > 0 else 1) if minstat < 35 else 35,
-                        maxstat=(maxstat if maxstat > 0 else 1) if maxstat < 35 else 35,
-                        minvalue=round(num * luck_multiply),
-                        maxvalue=round(num * 50 * luck_multiply),
-                        owner=ctx.author,
-                    )
+                item = await self.bot.create_random_item(
+                    minstat=(minstat if minstat > 0 else 1) if minstat < 35 else 35,
+                    maxstat=(maxstat if maxstat > 0 else 1) if maxstat < 35 else 35,
+                    minvalue=round(num * luck_multiply),
+                    maxvalue=round(num * 50 * luck_multiply),
+                    owner=ctx.author,
+                )
 
             else:
                 item = items.get_item()
@@ -473,9 +465,11 @@ Adventure name: `{adventure}`"""
                 )
 
             if (guild := ctx.character_data["guild"]) :
+                pumpkins = random.randint(num * 2, num * 5)
                 await conn.execute(
-                    'UPDATE guild SET "money"="money"+$1 WHERE "id"=$2;',
+                    'UPDATE guild SET "money"="money"+$1, "pumpkins"="pumpkins"+$2 WHERE "id"=$3;',
                     int(gold / 10),
+                    pumpkins,
                     guild,
                 )
 
@@ -498,6 +492,13 @@ Adventure name: `{adventure}`"""
                     "You have completed your adventure and received **${gold}** as well as a new item: **{item}**. Experience gained: **{xp}**."
                 ).format(gold=gold, item=item["name"], xp=xp)
             )
+
+            if guild:
+                await ctx.send(
+                    _(
+                        "On your adventure, you found **{amount}** 🎃! Your guild leader forced you to give them to the guild..."
+                    ).format(amount=pumpkins)
+                )
 
             new_level = int(rpgtools.xptolevel(ctx.character_data["xp"] + xp))
 

@@ -232,6 +232,7 @@ class BlackJack:
                     "reaction_add", check=check, timeout=20
                 )
             except asyncio.TimeoutError:
+                await self.bot.reset_cooldown(self.ctx)
                 return await self.ctx.send(
                     _("Blackjack timed out... You lost your money!")
                 )

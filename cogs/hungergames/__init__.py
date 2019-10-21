@@ -328,6 +328,7 @@ class HungerGames(commands.Cog):
 
         if len(players) < 2:
             del self.games[ctx.channel.id]
+            await self.bot.reset_cooldown(ctx)
             return await ctx.send(_("Not enough players joined..."))
 
         game = GameBase(ctx, players=players)

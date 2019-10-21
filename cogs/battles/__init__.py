@@ -77,6 +77,7 @@ class Battles(commands.Cog):
                     "reaction_add", timeout=60, check=check
                 )
             except asyncio.TimeoutError:
+                await self.bot.reset_cooldown(ctx)
                 return await ctx.send(
                     _("Noone wanted to join your battle, {author}!").format(
                         author=ctx.author.mention
@@ -179,6 +180,7 @@ class Battles(commands.Cog):
                     "reaction_add", timeout=60, check=check
                 )
             except asyncio.TimeoutError:
+                await self.bot.reset_cooldown(ctx)
                 return await ctx.send(
                     _("Noone wanted to join your battle, {author}!").format(
                         author=ctx.author.mention
@@ -239,6 +241,7 @@ class Battles(commands.Cog):
                         "reaction_add", timeout=30, check=is_valid_move
                     )
                 except asyncio.TimeoutError:
+                    await self.bot.reset_cooldown(ctx)
                     return await ctx.send(_("Someone refused to move. Battle stopped."))
                 if u not in MOVES_DONE:
                     MOVES_DONE[u] = moves[str(r.emoji)]

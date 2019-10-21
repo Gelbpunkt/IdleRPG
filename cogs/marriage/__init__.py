@@ -24,6 +24,7 @@ from discord.ext import commands
 from discord.ext.commands.default import Author
 
 from classes.converters import IntFromTo, MemberWithCharacter, UserWithCharacter
+from cogs.help import chunks
 from cogs.shard_communication import user_on_cooldown as user_cooldown
 from utils import misc as rpgtools
 from utils.checks import has_char
@@ -329,6 +330,7 @@ class Marriage(commands.Cog):
             ),
             user=user,
         ):
+            await self.bot.reset_cooldown(ctx)
             return await ctx.send(_("O.o not in the mood today?"))
 
         if random.choice([True, False]):
@@ -358,6 +360,7 @@ class Marriage(commands.Cog):
         try:
             msg = await self.bot.wait_for("message", check=check, timeout=30)
         except asyncio.TimeoutError:
+            await self.bot.reset_cooldown(ctx)
             return await ctx.send(_("You didn't enter a name."))
         name = msg.content.replace("@", "@\u200b")
         async with self.bot.pool.acquire() as conn:
@@ -393,16 +396,43 @@ class Marriage(commands.Cog):
                 name=_("No children yet"),
                 value=_("Use {prefix}child to make one!").format(prefix=ctx.prefix),
             )
-        for child in children:
-            em.add_field(
-                name=child["name"],
-                value=_("Gender: {gender}, Age: {age}").format(
-                    gender=child["gender"], age=child["age"]
-                ),
-                inline=False,
-            )
-        em.set_thumbnail(url=ctx.author.avatar_url)
-        await ctx.send(embed=em)
+        if len(children) <= 5:
+            for child in children:
+                em.add_field(
+                    name=child["name"],
+                    value=_("Gender: {gender}, Age: {age}").format(
+                        gender=child["gender"], age=child["age"]
+                    ),
+                    inline=False,
+                )
+            em.set_thumbnail(url=ctx.author.avatar_url)
+            await ctx.send(embed=em)
+        else:
+            embeds = []
+            children_lists = list(chunks(children, 9))
+            for small_list in children_lists:
+                em = discord.Embed(
+                    title=_("Your family"),
+                    description=_("Family of {author} and <@{marriage}>").format(
+                        author=ctx.author.mention, marriage=marriage
+                    ),
+                )
+                for child in small_list:
+                    em.add_field(
+                        name=child["name"],
+                        value=_("Gender: {gender}, Age: {age}").format(
+                            gender=child["gender"], age=child["age"]
+                        ),
+                        inline=True,
+                    )
+                em.set_footer(
+                    text=_("Page {cur} of {max}").format(
+                        cur=children_lists.index(small_list) + 1,
+                        max=len(children_lists),
+                    )
+                )
+                embeds.append(em)
+            await self.bot.paginator.Paginator(extras=embeds).paginate(ctx)
 
     @has_char()
     @user_cooldown(1800)
@@ -484,6 +514,7 @@ class Marriage(commands.Cog):
             try:
                 msg = await self.bot.wait_for("message", check=check, timeout=30)
             except asyncio.TimeoutError:
+                await self.bot.reset_cooldown(ctx)
                 return await ctx.send(_("You didn't enter a name."))
             name = msg.content.replace("@", "@\u200b")
             await self.bot.pool.execute(
