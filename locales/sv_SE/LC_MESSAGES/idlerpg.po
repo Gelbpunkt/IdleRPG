@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-10-19 05:15-0700\n"
-"PO-Revision-Date: 2019-09-28 23:41+0200\n"
+"POT-Creation-Date: 2019-10-22 06:42-0700\n"
+"PO-Revision-Date: 2019-10-18 14:19+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: sv_SE\n"
@@ -161,10 +161,11 @@ msgstr "{author} ringer på din dörr, men... Inget till dig!"
 #, python-brace-format
 msgid "A random stranger nearby, **{user}**, gave you additional $50!"
 msgstr ""
+"En slumpmässig främling i närheten, **{user}** gav dig ytterligare $50!"
 
 #: cogs/halloween/__init__.py:105
 msgid "Open a trick or treat bag."
-msgstr ""
+msgstr "Öppna en bus eller godis påse."
 
 #: cogs/halloween/__init__.py:109
 msgid "Seems you haven't got a trick or treat bag yet. Go get some!"
@@ -473,6 +474,14 @@ msgid ""
 "\n"
 " Use `{prefix}open [rarity]` to open one!"
 msgstr ""
+"**{author}s lådor**\n"
+"{emotes.common} [common] {common}\n"
+"{emotes.uncommon} [uncommon] {uncommon}\n"
+"{emotes.rare} [rare] {rare}\n"
+"{emotes.magic} [magic] {magic}\n"
+"{emotes.legendary} [legendary] {legendary}\n"
+"\n"
+"Använd `{prefix}open [rarity]` för att öppna en!"
 
 #: cogs/crates/__init__.py:74
 msgid "Opens a crate."
@@ -1296,6 +1305,9 @@ msgid ""
 "support server:\n"
 "https://discord.gg/MSBatf6"
 msgstr ""
+"Har du några funktionsförslag? Letar du efter folk att spela med? Gå med "
+"supportservern:\n"
+"https://discord.gg/MSBatf6"
 
 #: cogs/miscellaneous/__init__.py:210
 msgid "Statistics on the bot."
@@ -1308,6 +1320,7 @@ msgstr "IdleRPG Statistik"
 #: cogs/miscellaneous/__init__.py:236
 msgid "Official Support Server Invite: https://discord.gg/MSBatf6"
 msgstr ""
+"Inbjudan till den officiella supportservern: https://discord.gg/MSBatf6"
 
 #: cogs/miscellaneous/__init__.py:244
 msgid "Hosting Statistics"
@@ -1324,6 +1337,13 @@ msgid ""
 "Kernel Version: **{kernel}**\n"
 "PostgreSQL Version **{pg_version}**"
 msgstr ""
+"CPU Usage: **{cpu}%**, **{cores}** cores @ **{freq}** GHz\n"
+"RAM Usage: **{ram}%** (Total: **{total_ram}**)\n"
+"Python Version **{python}** <:python:445247273065250817>\n"
+"discord.py Version **{dpy}**\n"
+"Operativsystem: **{osname} {osversion}**\n"
+"Kernel Version: **{kernel}**\n"
+"PostgreSQL Version **{pg_version}**"
 
 #: cogs/miscellaneous/__init__.py:270
 msgid "Bot Statistics"
@@ -1715,6 +1735,8 @@ msgid ""
 "Check out the official IdleRPG Wiki here:\n"
 "<https://wiki.travitia.xyz/index.php?title=Main_Page>"
 msgstr ""
+"Ta en titt på den officiella IdleRPGwikin här:\n"
+"<https://wiki.travitia.xyz/index.php?title=Main_Page>"
 
 #: cogs/miscellaneous/__init__.py:743
 msgid "No entry found."
@@ -1943,6 +1965,9 @@ msgid ""
 "For more help, join the support server at https://discord.gg/MSBatf6.**\n"
 "Check out our partners using the partners command!"
 msgstr ""
+"**Välkommen till IdleRPGhjälpen. Använd pilarna för att byta sida.\n"
+"För mer hjälp, gå med supportservern här: https://discord.gg/MSBatf6.**\n"
+"Ta en titt på våra delägare med hjälp av partnerskommandot!"
 
 #: cogs/help/__init__.py:75
 #, python-brace-format
@@ -2246,18 +2271,19 @@ msgid ""
 "You are about to select the `{profession}` class for yourself. {textaddon} "
 "Proceed?"
 msgstr ""
+"Du är på väg att välja `{profession}klassen`. {textaddon} vill du fullfölja?"
 
 #: cogs/classes/__init__.py:136
 msgid "Changing it later will cost **$5000**."
-msgstr ""
+msgstr "Att ändra det senare kommer kosta **$5000**."
 
 #: cogs/classes/__init__.py:138
 msgid "This will cost **$5000**."
-msgstr ""
+msgstr "Detta kommer kosta **$5000**."
 
 #: cogs/classes/__init__.py:143
 msgid "Class selection cancelled."
-msgstr ""
+msgstr "Klassval avbrutit."
 
 #: cogs/classes/__init__.py:156
 #, python-brace-format
@@ -2973,6 +2999,8 @@ msgid ""
 "On your adventure, you found **{amount}** 🎃! Your guild leader forced you to "
 "give them to the guild..."
 msgstr ""
+"På ditt äventyr hittade du **{amount}** 🎃! Din guildledare tvingade dig att "
+"ge dem till guilden..."
 
 #: cogs/adventure/__init__.py:511
 msgid "Cancels your current adventure."
@@ -3407,6 +3435,8 @@ msgid ""
 "You are about to sell **{count} items!**\n"
 "Are you sure you want to do this?"
 msgstr ""
+"Du är på väg att sälja **{count}** föremål!\n"
+"Är du säker på att du vill göra detta?"
 
 #: cogs/trading/__init__.py:402
 #, python-brace-format
@@ -3883,7 +3913,7 @@ msgstr "Kön: {gender}, Ålder: {age}"
 #: cogs/marriage/__init__.py:427
 #, python-brace-format
 msgid "Page {cur} of {max}"
-msgstr ""
+msgstr "Sida {cur} av {max}"
 
 #: cogs/marriage/__init__.py:440
 msgid "Events happening to your family."
@@ -4502,6 +4532,8 @@ msgid ""
 "This will upgrade your guild bank limit to **${limit}** for **${cost}**. "
 "Proceed?"
 msgstr ""
+"Detta kommer uppgradera din guildbanksbegränsning till **${limit}** för **"
+"${cost}**. Vill du fullfölja?"
 
 #: cogs/guild/__init__.py:611
 #, python-brace-format
@@ -4699,6 +4731,9 @@ msgid ""
 "Your guild has completed an adventure of difficulty `{difficulty}` and **"
 "${gold}** has been added to the bank. You also found **{pumpkins}** 🎃!"
 msgstr ""
+"Din guild har klarat av ett äventyr med svårighetsgraden `{difficulty}` och "
+"**${gold}** har lagts till i guildbanken. Du har även funnit **{pumpkins}** "
+"🎃!"
 
 #: cogs/guild/__init__.py:952
 #, python-brace-format
@@ -4711,7 +4746,7 @@ msgstr ""
 
 #: cogs/guild/__init__.py:962
 msgid "View your guild's progress in the ongoing event."
-msgstr ""
+msgstr "Se din guilds framsteg i det pågående evenemanget. "
 
 #: cogs/guild/__init__.py:973
 #, python-brace-format
@@ -4738,19 +4773,40 @@ msgid ""
 "*Please note that these will be **gone** if the leader uses `{prefix}"
 "updateguild`, so choose carefully*"
 msgstr ""
+"**Halloween 2019 🎃 👻**\n"
+"\n"
+"*Framsteg för bästa belöning*\n"
+"{bar} {percent}% {pumpkins}/50,000 🎃\n"
+"\n"
+"*Kostnad för att skaffa*\n"
+"`(ID for {prefix}guild claim) Amount 🎃: Reward`\n"
+"**(1)** 1000 🎃: **$5000** Guild Bank Fill\n"
+"**(2)** 5000 🎃: **$27500** Guild Bank Fill\n"
+"**(3)** 10000 🎃: **$60000** Guild Bank Fill\n"
+"**(4)** 25000 🎃: **$175000** Guild Bank Fill\n"
+"\n"
+"**(5)** 37500 🎃: Halloween 2019 Guild Badge #1\n"
+"**(6)** 50000 🎃: Halloween 2019 Guild Badge #2\n"
+"\n"
+"**(7)** 10000 🎃: 2 ytterligare guildmedlemsplatser\n"
+"**(8)** 20000 🎃: 5 ytterligare guildmedlemsplatser\n"
+"**(9)** 35000 🎃: 8 ytterligare guildmedlemsplatser\n"
+"**(10)** 50000 🎃: 15 ytterligare guildmedlemsplatser\n"
+"*Vänligen notera att dessa kommer vara* ***borta*** *om ledaren använder "
+"`{prefix}updateguild`, så välj försiktigt*"
 
 #: cogs/guild/__init__.py:1003
 msgid "[Guild Leader only] Claim event rewards."
-msgstr ""
+msgstr "[Enbart guildledare] Skaffa evenemangsbelöningar."
 
 #: cogs/guild/__init__.py:1033
 msgid "You have insufficient pumpkins for this reward."
-msgstr ""
+msgstr "Du har inte tillräckligt med pumpor för denna belöningen."
 
 #: cogs/guild/__init__.py:1059
 #, python-brace-format
 msgid "Reward successfully claimed for **{amount}** 🎃!"
-msgstr ""
+msgstr "Belöning skaffad för **{amount}** 🎃!"
 
 #: cogs/vote/__init__.py:28
 msgid "Vote me up to get a random crate!"
@@ -4999,7 +5055,7 @@ msgstr "Visar din nuvarande förråd."
 
 #: cogs/profile/__init__.py:315
 msgid "Make sure that the `highest` value is greater than `lowest`."
-msgstr ""
+msgstr "Var säker på att `highest` värdet är större än `lowest`."
 
 #: cogs/profile/__init__.py:324
 msgid "Your inventory is empty."
@@ -5070,16 +5126,16 @@ msgstr "Utrustade föremål `{itemid}`."
 
 #: cogs/profile/__init__.py:445
 msgid "Unequip one of your equipped items"
-msgstr ""
+msgstr "Ta av en av dina utrustade föremål"
 
 #: cogs/profile/__init__.py:459
 msgid "You don't have this item equipped."
-msgstr ""
+msgstr "Du har inte detta föremål utrustat. "
 
 #: cogs/profile/__init__.py:464
 #, python-brace-format
 msgid "Successfully unequipped item `{itemid}`."
-msgstr ""
+msgstr "Du har tagit av `{itemid}`."
 
 #: cogs/profile/__init__.py:472
 msgid "Merges two items to a better one. Second one is consumed."
@@ -5176,6 +5232,8 @@ msgid ""
 "Success!\n"
 "{other} now has **${othermoney}**, you now have **${authormoney}**."
 msgstr ""
+"Succé!\n"
+"{other} har nu **${othermoney}** och du har **${authormoney}**."
 
 #: cogs/profile/__init__.py:627
 msgid "Renames your character."
@@ -5332,12 +5390,12 @@ msgstr ""
 
 #: cogs/admin/__init__.py:212
 msgid "[Bot Admin only] Resets someone's class(es)."
-msgstr ""
+msgstr "[Endast botadmin] Ställ om någons klass(er)."
 
 #: cogs/admin/__init__.py:219
 #, python-brace-format
 msgid "Successfully reset {target}'s class."
-msgstr ""
+msgstr "Ställt om {target}s klass."
 
 #: cogs/gods/__init__.py:40
 msgid "Sacrifice an item for favor."
@@ -5363,6 +5421,8 @@ msgid ""
 "it!) that impacts your adventure success chances. Are you sure you want to "
 "follow {god}?"
 msgstr ""
+"Varning. Gudar/Gudinnor kan ändra din tur (även minska den!) som påverkar "
+"dina äventyrssuccéchanser. Är du säker på att du vill avguda {god}?"
 
 #: cogs/gods/__init__.py:100
 #, python-brace-format
