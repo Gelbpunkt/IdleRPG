@@ -156,9 +156,6 @@ class Store(commands.Cog):
                 ).format(booster=boostertype.title())
             )
         else:
-            for i in ["time", "luck", "money"]:
-                if not ctx.character_data[f"{i}_booster"]:
-                    return await ctx.send(_("You don't have any of these boosters."))
             if not await ctx.confirm(
                 _(
                     "This will overwrite all active boosters and refresh them. Are you sure?"
@@ -166,15 +163,27 @@ class Store(commands.Cog):
             ):
                 return
 
+            reducible = [
+                i
+                for i in ("time", "luck", "money")
+                if ctx.character_data[f"{i}_booster"]
+            ]
+
+            if not reducible:
+                return await ctx.send(_("Nothing to activate."))
+
+            to_reduce = ", ".join([f'"{i}_booster"="{i}_booster"-1' for i in reducible])
+
             await self.bot.pool.execute(
-                'UPDATE profile SET "time_booster"="time_booster"-1, "luck_booster"="luck_booster"-1, "money_booster"="money_booster"-1 WHERE "user"=$1;',
-                ctx.author.id,
+                f'UPDATE profile SET {to_reduce} WHERE "user"=$1;', ctx.author.id
             )
-            await self.bot.activate_booster(ctx.author, "time")
-            await self.bot.activate_booster(ctx.author, "luck")
-            await self.bot.activate_booster(ctx.author, "money")
+
+            for i in reducible:
+                await self.bot.activate_booster(ctx.author, i)
             await ctx.send(
-                _("Successfully activated all boosters for the next **24 hours**!")
+                _("Successfully activated {types} for the next **24 hours**!").format(
+                    types=", ".join(reducible)
+                )
             )
 
 

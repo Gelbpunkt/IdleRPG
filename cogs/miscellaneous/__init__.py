@@ -314,6 +314,7 @@ Average hours of work: **{hours}**"""
 - Consistently resetting cooldowns mostly now
 - New command `$about` for quick links and about info
 - Pets can now be feeded sushi and vodka, filling the 50 points gap
+- `$activate all` will activate all boosters you got, not force you to own all types
 
 **Thank you for playing IdleRPG!**"""
         )
@@ -768,6 +769,7 @@ This bot is developed by people who love to code for a good cause and improving 
 <https://raid.travitia.xyz> - Raid Website
 <https://travitia.xyz> - IdleRPG's next major upgrade
 <https://idlerpg.xyz> - Our link shortener
+<https://public-api.travitia.xyz> - Our public API
 <https://cloud.idlerpg.xyz> - VPS hosting by IdleRPG
 <https://github.com/Kenvyra> - Other IdleRPG related code
 <https://discordapp.com/terms> - Discord's ToS
