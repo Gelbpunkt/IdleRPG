@@ -183,7 +183,6 @@ adventure_times = {
     18: timedelta(hours=17),
     19: timedelta(hours=18),
     20: timedelta(hours=19),
-    51: timedelta(hours=24),
 }
 
 adventure_names = {
@@ -207,7 +206,6 @@ adventure_names = {
     18: "Gambling Problems?",
     19: "The Necromancer Of Kord",
     20: "Last One Standing",
-    51: "Storm Area 51",
 }
 
 gods = {
