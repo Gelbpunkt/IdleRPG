@@ -17,8 +17,8 @@
 -- PostgreSQL database dump
 --
 
--- Dumped from database version 11.5
--- Dumped by pg_dump version 11.5
+-- Dumped from database version 12.0
+-- Dumped by pg_dump version 12.0
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -33,7 +33,7 @@ SET row_security = off;
 
 SET default_tablespace = '';
 
-SET default_with_oids = false;
+SET default_table_access_method = heap;
 
 --
 -- Name: allitems; Type: TABLE; Schema: public; Owner: jens
@@ -103,7 +103,8 @@ CREATE TABLE public.guild (
     banklimit bigint DEFAULT 250000,
     badges text[],
     badge character varying(100) DEFAULT NULL::character varying,
-    description character varying(200) DEFAULT 'No Description set yet'::character varying NOT NULL
+    description character varying(200) DEFAULT 'No Description set yet'::character varying NOT NULL,
+    pumpkins bigint DEFAULT 0
 );
 
 
@@ -277,7 +278,7 @@ CREATE TABLE public.profile (
     time_booster bigint DEFAULT 0,
     luck_booster bigint DEFAULT 0,
     marriage bigint DEFAULT 0,
-    colour character varying(7) DEFAULT '#FFFFFF'::character varying,
+    colour character varying(7) DEFAULT '#000000'::character varying,
     background character varying(60) DEFAULT 0,
     guild bigint DEFAULT 0,
     class character varying(50)[] DEFAULT '{"No Class","No Class"}'::character varying[],
@@ -328,7 +329,7 @@ CREATE TABLE public.transactions (
     "from" bigint NOT NULL,
     "to" bigint NOT NULL,
     subject character varying(50) NOT NULL,
-    info character varying(200) NOT NULL,
+    info character varying(582) NOT NULL,
     "timestamp" timestamp with time zone NOT NULL
 );
 

@@ -41,52 +41,13 @@ else
     exit
 fi
 
-prompt_paths () {
-    read -p "Path to okapi: " okapi_path
-    okapi_path=$(echo $okapi_path | sed 's:/*$::')
-    read -p "Path to teatro: " teatro_path
-    teatro_path=$(echo $teatro_path | sed 's:/*$::')
-}
-
-get_dependencies () {
-    printf "Cloning okapi and teatro...\n"
-    printf "Please enter a directory for the files\n"
-    printf "e.g. /home/kevin/ will install to /home/kevin/okapi and /home/kevin/teatro\n"
-    read -p "Enter a path (must exist already): " base_dir
-    base_dir=$(echo $base_dir | sed 's:/*$::')
-    printf "Entering ${base_dir}\n\n"
-    cd $base_dir
-    printf "Cloning...\n"
-    git clone https://github.com/Kenvyra/okapi
-    git clone https://github.com/Kenvyra/teatro
-    okapi_path="${base_dir}/okapi"
-    teatro_path="${base_dir}/teatro"
-    printf "Done cloning. Going back.\n"
-    cd $cwd
-}
-
 printf "====================\n"
 printf "IdleRPG Setup Script\n"
-printf "Version 2.0\n"
+printf "Version 3.0\n"
 printf "====================\n\n\n"
 printf "This script will walk you through setting up Podman with IdleRPG and its components\n\n${bold}Make sure you are in the base directory of IdleRPG${normal}\n\n"
 
-printf "IdleRPG depends on okapi and teatro.\n"
-
-while true; do
-    read -p "Are they cloned? [y/n] " yn
-    case $yn in
-        [Yy]* ) prompt_paths; break;;
-        [Nn]* ) get_dependencies; break;;
-        * ) printf "Please answer yes or no.\n";;
-    esac
-done
-
-printf "\n\nDependencies OK\n"
-printf "Okapi Path: ${okapi_path}\n"
-printf "Teatro Path: ${teatro_path}\n\n"
-
-printf "Next is the PostgreSQL installation.\n"
+printf "First is the PostgreSQL installation.\n"
 printf "We will generate a one-time startup file to load the schema\n"
 read -p "IdleRPG Database User: " idlerpg_db_user
 printf "${idlerpg_db_user} Password: "
@@ -131,27 +92,26 @@ printf "Creating /opt directories for mounting configs...\n"
 mkdir /opt/pgdata
 mkdir /opt/redisdata
 mkdir /opt/andesite
+curl https://raw.githubusercontent.com/natanbc/andesite-node/master/application.conf.example -o /opt/andesite/application.conf
 mkdir /opt/teatro
+curl https://raw.githubusercontent.com/Kenvyra/teatro/master/config.example.json -o /opt/teatro/config.json
 mkdir /opt/pginit
 mkdir /opt/okapi
+cd /opt/teatro
+curl https://raw.githubusercontent.com/Kenvyra/okapi/master/config.json -o /opt/okapi/config.json
 mkdir /opt/idlerpg
+curl https://raw.githubusercontent.com/Gelbpunkt/IdleRPG/v4/config.example.py -o /opt/idlerpg/config.py
 mv init.sh /opt/pginit/init.sh
 chmod 0777 /opt/pgdata
 chmod 0777 /opt/redisdata
-
-printf "Modifying unit file paths for podman builds...\n"
-
-sed -i "s:IDLERPG_PATH:${cwd}:" units/podman-idlerpg.service
-sed -i "s:OKAPI_PATH:${okapi_path}:" units/podman-okapi.service
-sed -i "s:TEATRO_PATH:${teatro_path}:" units/podman-teatro.service
 
 printf "Copying units...\n"
 cp units/* /etc/systemd/system/
 systemctl daemon-reload
 
 printf "Done.\n"
-printf "Create /opt/teatro/config.json with the teatro config (https://github.com/Kenvyra/teatro/blob/master/config.example.json)\n"
-printf "Create /opt/idlerpg/config.py with the IdleRPG config (https://github.com/Gelbpunkt/IdleRPG/blob/v4/config.example.py)\n"
-printf "Create /opt/andesite/application.conf with the Andesite config (https://github.com/natanbc/andesite-node/blob/master/application.conf.example)\n"
-printf "Create /opt/okapi/config.json with a proxy value\n"
-printf "Then start your units (probably build them manually due to systemd timeout) and enjoy :)\n"
+printf "Now edit /opt/teatro/config.json\n"
+printf "and /opt/idlerpg/config.py\n"
+printf "and /opt/andesite/application.conf\n"
+printf "and /opt/okapi/config.json\n"
+printf "Then start your units and enjoy :)\n"

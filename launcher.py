@@ -101,7 +101,6 @@ class Instance:
             stdin=asyncio.subprocess.DEVNULL,
             stdout=asyncio.subprocess.DEVNULL,
             stderr=asyncio.subprocess.PIPE,
-            loop=self.loop,
         )
         task = self.loop.create_task(self._run())
         print(f"[Cluster #{self.id}] Started successfully")
@@ -145,10 +144,8 @@ class Main:
         if instance._process.returncode == 0:
             print(f"[Cluster #{instance.id} ({instance.name})] Stopped gracefully")
         else:
-            stderr = "\n".join(stderr.decode("utf-8").split("\n")[-20:])
-            print(
-                f"[Cluster #{instance.id} ({instance.name})] STDERR (last 20 lines): {stderr}"
-            )
+            stderr = "\n".join(stderr.decode("utf-8").split("\n"))
+            print(f"[Cluster #{instance.id} ({instance.name})] STDERR: {stderr}")
             print(f"[Cluster #{instance.id} ({instance.name})] Restarting...")
             instance.loop.create_task(instance.start())
 

@@ -200,7 +200,8 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
             await asyncio.sleep(4)
 
         if len(raid) == 0:
-            await ctx.send("The raid was all wiped!")
+            m = await ctx.send("The raid was all wiped!")
+            await m.add_reaction("\U0001F1EB")
         elif boss["hp"] < 1:
             await ctx.channel.set_permissions(
                 ctx.guild.default_role, overwrite=self.allow_sending
@@ -275,9 +276,10 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
             )
 
         else:
-            await ctx.send(
+            m = await ctx.send(
                 "The raid did not manage to kill Zerekiel within 45 Minutes... He disappeared!"
             )
+            await m.add_reaction("\U0001F1EB")
 
         await asyncio.sleep(30)
         await ctx.channel.set_permissions(
@@ -1272,7 +1274,7 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
                             "Block: Block the attack with 50% chance",
                         ],
                         title="Choose a Raid Action",
-                        timeout=10,
+                        timeout=20,
                         return_index=True,
                     ).paginate(ctx, location=target)
                 ]
@@ -1591,7 +1593,7 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
                 winner.id,
             )
             await ctx.send(
-                "Asmodeus has been defeated. He will lay low for now. He also left a {self.bot.cogs['Crates'].emotes.legendary} to a random survivor ({winner.mention}) for their bravery. They may not get a second chance next time."
+                f"Asmodeus has been defeated. He will lay low for now. He also left a {self.bot.cogs['Crates'].emotes.legendary} to a random survivor ({winner.mention}) for their bravery. They may not get a second chance next time."
             )
 
         else:

@@ -306,11 +306,19 @@ IdleRPG is a global bot, your characters are valid everywhere"""
     @checks.has_char()
     @commands.command(aliases=["inv", "i"])
     @locale_doc
-    async def inventory(self, ctx):
+    async def inventory(
+        self, ctx, lowest: IntFromTo(0, 60) = 0, highest: IntFromTo(0, 60) = 60
+    ):
         _("""Shows your current inventory.""")
+        if highest <= lowest:
+            return await ctx.send(
+                _("Make sure that the `highest` value is greater than `lowest`.")
+            )
         ret = await self.bot.pool.fetch(
-            'SELECT ai.*, i.equipped FROM profile p JOIN allitems ai ON (p.user=ai.owner) JOIN inventory i ON (ai.id=i.item) WHERE p."user"=$1 ORDER BY i."equipped" DESC, ai."damage"+ai."armor" DESC;',
+            'SELECT ai.*, i.equipped FROM profile p JOIN allitems ai ON (p.user=ai.owner) JOIN inventory i ON (ai.id=i.item) WHERE p."user"=$1 AND ((ai."damage"+ai."armor" BETWEEN $2 AND $3) OR i."equipped") ORDER BY i."equipped" DESC, ai."damage"+ai."armor" DESC;',
             ctx.author.id,
+            lowest,
+            highest,
         )
         if not ret:
             return await ctx.send(_("Your inventory is empty."))
@@ -453,7 +461,7 @@ IdleRPG is a global bot, your characters are valid everywhere"""
                 'UPDATE inventory SET "equipped"=False WHERE "item"=$1;', itemid
             )
         await ctx.send(
-            _("Successfully unequipped item `{itemid}`.").format(itemdid=itemid)
+            _("Successfully unequipped item `{itemid}`.").format(itemid=itemid)
         )
 
     @checks.has_char()
@@ -591,17 +599,21 @@ IdleRPG is a global bot, your characters are valid everywhere"""
         if ctx.character_data["money"] < money:
             return await ctx.send(_("You are too poor."))
         async with self.bot.pool.acquire() as conn:
-            await conn.execute(
-                'UPDATE profile SET money=money-$1 WHERE "user"=$2;',
+            authormoney = await conn.fetchval(
+                'UPDATE profile SET money=money-$1 WHERE "user"=$2 RETURNING money;',
                 money,
                 ctx.author.id,
             )
-            await conn.execute(
-                'UPDATE profile SET money=money+$1 WHERE "user"=$2;', money, other.id
+            othermoney = await conn.fetchval(
+                'UPDATE profile SET money=money+$1 WHERE "user"=$2 RETURNING money;',
+                money,
+                other.id,
             )
         await ctx.send(
-            _("Successfully gave **${money}** to {other}.").format(
-                money=money, other=other.mention
+            _(
+                "Success!\n{other} now has **${othermoney}**, you now have **${authormoney}**."
+            ).format(
+                other=other.mention, othermoney=othermoney, authormoney=authormoney
             )
         )
         await self.bot.log_transaction(

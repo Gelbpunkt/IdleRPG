@@ -4,8 +4,8 @@ After=network.target
 
 [Service]
 Type=simple
-ExecStartPre=-/usr/bin/podman pull postgres:11-alpine
-ExecStart=/usr/bin/podman run --rm --pod idlerpg --name postgresql -v /opt/pgdata:/var/lib/postgresql/data:z -v /opt/pginit/init.sh:/docker-entrypoint-initdb.d/init.sh:z postgres:11-alpine -N 300
+ExecStartPre=-/usr/bin/podman pull postgres:12-alpine
+ExecStart=/usr/bin/podman run --rm --pod idlerpg --name postgresql --shm-size 4G -v /opt/pgdata:/var/lib/postgresql/data:z -v /opt/pginit/init.sh:/docker-entrypoint-initdb.d/init.sh:z postgres:12-alpine -N 300
 ExecReload=-/usr/bin/podman stop postgresql
 ExecStop=-/usr/bin/podman stop postgresql
 Restart=always

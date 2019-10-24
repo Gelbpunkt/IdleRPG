@@ -146,7 +146,7 @@ class Admin(commands.Cog):
         )
         await self.bot.http.send_message(
             self.bot.config.admin_log_channel,
-            f"**{ctx.author}** gave **{amount}** crates to **{target}**.",
+            f"**{ctx.author}** gave **{amount}** {rarity} crates to **{target}**.",
         )
 
     @is_admin()
@@ -203,6 +203,23 @@ class Admin(commands.Cog):
         await self.bot.http.send_message(
             self.bot.config.admin_log_channel,
             f"**{ctx.author}** reset **{target}**'s donator perks.",
+        )
+
+    @is_admin()
+    @commands.command(aliases=["aresetclass"], hidden=True)
+    @locale_doc
+    async def adminresetclass(self, ctx, target: UserWithCharacter):
+        _("""[Bot Admin only] Resets someone's class(es).""")
+        async with self.bot.pool.acquire() as conn:
+            await conn.execute(
+                """UPDATE profile SET "class"='{"No Class", "No Class"}' WHERE "user"=$1;""",
+                target.id,
+            )
+
+        await ctx.send(_("Successfully reset {target}'s class.").format(target=target))
+        await self.bot.http.send_message(
+            self.bot.config.admin_log_channel,
+            f"**{ctx.author}** reset **{target}**'s class.",
         )
 
 

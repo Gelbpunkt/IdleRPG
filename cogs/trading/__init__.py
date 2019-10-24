@@ -260,7 +260,8 @@ class Trading(commands.Cog):
                     item=item["name"]
                 )
             ):
-                await ctx.send(_("Item selling cancelled."))
+                await self.bot.reset_cooldown(ctx)
+                return await ctx.send(_("Item selling cancelled."))
 
         if not await ctx.confirm(
             _(
@@ -269,6 +270,7 @@ class Trading(commands.Cog):
             user=user,
             timeout=120,
         ):
+            await self.bot.reset_cooldown(ctx)
             return await ctx.send(_("They didn't want it."))
 
         if not await has_money(self.bot, user.id, price):
@@ -337,6 +339,7 @@ class Trading(commands.Cog):
                     ).format(amount=equipped),
                     timeout=6,
                 ):
+                    await self.bot.reset_cooldown(ctx)
                     return await ctx.send(_("Cancelled."))
             await conn.execute(
                 'DELETE FROM allitems WHERE "id"=ANY($1) AND "owner"=$2;',
@@ -367,19 +370,31 @@ class Trading(commands.Cog):
     @user_cooldown(1800)
     @commands.command()
     @locale_doc
-    async def merchall(self, ctx):
+    async def merchall(
+        self, ctx, maxstat: IntFromTo(0, 60) = 60, minstat: IntFromTo(0, 60) = 0
+    ):
         _("""Sells all your non-equipped items for their value.""")
         async with self.bot.pool.acquire() as conn:
             money, count = await conn.fetchval(
-                "SELECT (sum(value), count(value)) FROM inventory i JOIN allitems ai ON (i.item=ai.id) WHERE ai.owner=$1 AND i.equipped IS FALSE;",
+                "SELECT (sum(value), count(value)) FROM inventory i JOIN allitems ai ON (i.item=ai.id) WHERE ai.owner=$1 AND i.equipped IS FALSE AND ai.armor+ai.damage BETWEEN $2 AND $3;",
                 ctx.author.id,
+                minstat,
+                maxstat,
             )
             if count == 0:
                 return await ctx.send(_("Nothing to merch."))
+            if not await ctx.confirm(
+                _(
+                    "You are about to sell **{count} items!**\nAre you sure you want to do this?"
+                ).format(count=count)
+            ):
+                return await self.bot.reset_cooldown(ctx)
             async with conn.transaction():
                 await conn.execute(
-                    "DELETE FROM allitems ai USING inventory i WHERE ai.id=i.item AND ai.owner=$1 AND i.equipped IS FALSE;",
+                    "DELETE FROM allitems ai USING inventory i WHERE ai.id=i.item AND ai.owner=$1 AND i.equipped IS FALSE AND ai.armor+ai.damage BETWEEN $2 AND $3;",
                     ctx.author.id,
+                    minstat,
+                    maxstat,
                 )
                 await conn.execute(
                     'UPDATE profile SET "money"="money"+$1 WHERE "user"=$2;',

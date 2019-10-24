@@ -107,7 +107,7 @@ class GlobalEvents(commands.Cog):
             return
         while True:
             await self.bot.session.post(
-                f"https://discordbots.org/api/bots/{self.bot.user.id}/stats",
+                f"https://top.gg/api/bots/{self.bot.user.id}/stats",
                 data=await self.get_dbl_payload(),
                 headers=self.auth_headers,
             )

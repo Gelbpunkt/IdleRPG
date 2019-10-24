@@ -32,12 +32,9 @@ class Halloween(commands.Cog):
         self.bot = bot
         self.waiting = None
 
-    def cog_check(self, ctx):
-        return ctx.author.id == 287_215_355_137_622_016
-
     @checks.has_char()
     @user_cooldown(43200)
-    @commands.command()
+    @commands.command(aliases=["tot"])
     @locale_doc
     async def trickortreat(self, ctx):
         _("""Trick or treat!""")
@@ -88,19 +85,24 @@ class Halloween(commands.Cog):
                 'UPDATE profile SET money=money+50 WHERE "user"=$1', ctx.author.id
             )
             usr = await conn.fetchval(
-                'SELECT "user" FROM profile WHERE "money">=50 ORDER BY RANDOM() LIMIT 1;'
+                'SELECT "user" FROM profile WHERE "money">=50 AND "user"!=$1 ORDER BY RANDOM() LIMIT 1;',
+                ctx.author.id,
             )
             await conn.execute(
                 'UPDATE profile SET money=money-50 WHERE "user"=$1;', usr
             )
         usr = await self.bot.get_user_global(usr) or "Unknown User"
-        await ctx.send(_("{user} gave you additional $50!").format(user=usr))
+        await ctx.send(
+            _("A random stranger nearby, **{user}**, gave you additional $50!").format(
+                user=usr
+            )
+        )
 
     @checks.has_char()
     @commands.command()
     @locale_doc
     async def yummy(self, ctx):
-        """Open a trick or treat bag."""
+        _("""Open a trick or treat bag.""")
         # better name?
         if ctx.character_data["trickortreat"] < 1:
             return await ctx.send(
@@ -130,6 +132,12 @@ class Halloween(commands.Cog):
                 "Glowing",
                 "Moonlight",
                 "Adrian's really awesome",
+                "Ghost Buster's",
+                "Ghoulish",
+                "Vampiric",
+                "Living",
+                "Undead",
+                "Glooming",
             ]
         )
         item[
@@ -137,21 +145,20 @@ class Halloween(commands.Cog):
         ] = f"{name} {random.choice(['Sword', 'Blade', 'Stich', 'Arm', 'Bone']) if item['type_'] == 'Sword' else random.choice(['Shield', 'Defender', 'Aegis', 'Shadow Shield', 'Giant Ginger'])}"
         await self.bot.create_item(**item)
         await self.bot.pool.execute(
-            'UPDATE profile SET trickortreat=trickortreat-1 WHERE "user"=$1;',
+            'UPDATE profile SET "trickortreat"="trickortreat"-1 WHERE "user"=$1;',
             ctx.author.id,
         )
         embed = discord.Embed(
             title=_("You gained an item!"),
             description=_("You found a new item when opening a trick-or-treat bag!"),
-            color=0xFF0000,
+            color=self.bot.config.primary_colour,
         )
         embed.set_thumbnail(url=ctx.author.avatar_url)
-        embed.add_field(name=_("ID"), value=item["name"], inline=False)
         embed.add_field(name=_("Name"), value=item["name"], inline=False)
         embed.add_field(name=_("Type"), value=item["type_"], inline=False)
-        embed.add_field(name="Damage", value=item["damage"], inline=True)
-        embed.add_field(name="Armor", value=item["armor"], inline=True)
-        embed.add_field(name="Value", value=f"${item['value']}", inline=False)
+        embed.add_field(name=_("Damage"), value=item["damage"], inline=True)
+        embed.add_field(name=_("Armor"), value=item["armor"], inline=True)
+        embed.add_field(name=_("Value"), value=f"${item['value']}", inline=False)
         embed.set_footer(
             text=_("Remaining trick-or-treat bags: {bags}").format(
                 bags=ctx.character_data["trickortreat"] - 1

@@ -20,16 +20,16 @@ import discord
 from discord.ext import commands
 
 
-def is_ken():
+def is_meliodas():
     def predicate(ctx):
-        return ctx.author.id == 318_824_057_158_107_137
+        return ctx.author.id == 150323474014011399
 
     return commands.check(predicate)
 
 
-def is_shoie():
+def is_zinquo():
     def predicate(ctx):
-        return ctx.author.id == 423425457673863179
+        return ctx.author.id == 189929542465355776
 
     return commands.check(predicate)
 
@@ -43,31 +43,6 @@ class Custom(commands.Cog):
     async def onetruechild(self, ctx):
         _("""In loving memory of Mary Johanna, ex-developer.""")
         await ctx.send(_("His name is `#no homo` :heart:"))
-
-    @is_ken()
-    @commands.command(hidden=True)
-    @locale_doc
-    async def ken(self, ctx, user: discord.Member):
-        _("""[Ken only] Hug someone.""")
-        em = discord.Embed(
-            title=_("Ken Hug!"),
-            description=_("{author} hugged {user}! Awww!").format(
-                author=ctx.author.mention, user=user.mention
-            ),
-        )
-        em.set_image(
-            url="https://cdn.discordapp.com/attachments/515954333368713235/518539871665520641/image0.gif"  # noqa
-        )
-        await ctx.send(embed=em)
-
-    @is_shoie()
-    @commands.command(hidden=True)
-    async def slap(self, ctx, user: discord.Member):
-        """[Shoie only] Slap someone."""
-        em = discord.Embed(title=f"{ctx.disp} slapped {user.display_name}").set_image(
-            url="https://media.giphy.com/media/keVd9WsqHg93O/giphy.gif"
-        )
-        await ctx.send(embed=em)
 
     @commands.command()
     @locale_doc
@@ -91,6 +66,22 @@ class Custom(commands.Cog):
             ).set_image(
                 url="https://media.discordapp.net/attachments/439779845673844739/625403834033766428/kill.gif"
             )
+        )
+
+    @is_meliodas()
+    @commands.command(hidden=True)
+    async def meliodas(self, ctx):
+        """Will he lose his money?"""
+        msg = await ctx.send("Will Meliodas lose all his money today?")
+        await msg.add_reaction("\U00002705")
+        await msg.add_reaction("\U0000274e")
+
+    @is_zinquo()
+    @commands.command(hidden=True)
+    async def phoenix(self, ctx):
+        """Temporary placeholder."""
+        await ctx.send(
+            "> “When the bones settle and all the ash falls, the phoenix will be reborn, and life begins anew.”"
         )
 
 

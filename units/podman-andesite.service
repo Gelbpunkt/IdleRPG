@@ -4,8 +4,8 @@ After=network.target
 
 [Service]
 Type=simple
-ExecStartPre=-/usr/bin/podman pull natanbc/andesite:27ce0cc0861fa884850a5034413daf2020494fc9
-ExecStart=/usr/bin/podman run --rm --pod idlerpg --name andesite -v /opt/andesite/application.conf:/andesite/application.conf natanbc/andesite:27ce0cc0861fa884850a5034413daf2020494fc9
+ExecStartPre=-/usr/bin/podman pull natanbc/andesite:73f6afd4e192939f5dd531cf8d7e90f6c7ac0a49
+ExecStart=/usr/bin/podman run --rm --pod idlerpg --name andesite -v /opt/andesite/application.conf:/andesite/application.conf natanbc/andesite:73f6afd4e192939f5dd531cf8d7e90f6c7ac0a49
 ExecReload=-/usr/bin/podman stop andesite
 ExecStop=-/usr/bin/podman stop andesite
 Restart=always

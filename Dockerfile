@@ -1,12 +1,16 @@
-FROM python:3.8.0b4-alpine3.10
+FROM python:3.8.0-alpine3.10
 
 WORKDIR /idlerpg
 COPY requirements.txt /idlerpg/
 
-RUN apk add --no-cache --virtual .deps curl git && \
+RUN apk add --no-cache curl git && \
     curl -sL https://raw.githubusercontent.com/Gelbpunkt/alpine-python-3.8-wheels/master/index-order | while read p; do pip install "https://github.com/Gelbpunkt/alpine-python-3.8-wheels/raw/master/wheels/$p"; done && \
     pip install --no-cache-dir -r requirements.txt && \
-    apk del .deps
+    apk del curl
 
-CMD python3.8 launcher.py
 COPY . /idlerpg
+
+# fix git remote url from ssh to https
+RUN git remote set-url origin https://github.com/Gelbpunkt/IdleRPG
+
+CMD python launcher.py

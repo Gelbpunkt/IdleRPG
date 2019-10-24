@@ -129,6 +129,18 @@ class Classes(commands.Cog):
             profession_ = "Priest"
         new_classes = copy(ctx.character_data["class"])
         new_classes[val] = profession_
+        if not await ctx.confirm(
+            _(
+                "You are about to select the `{profession}` class for yourself. {textaddon} Proceed?"
+            ).format(
+                textaddon=_("Changing it later will cost **$5000**.")
+                if ctx.character_data["class"][val] == "No Class"
+                else _("This will cost **$5000**."),
+                profession=profession,
+            )
+        ):
+            await self.bot.reset_cooldown(ctx)
+            return await ctx.send(_("Class selection cancelled."))
         if ctx.character_data["class"][val] == "No Class":
             async with self.bot.pool.acquire() as conn:
                 await conn.execute(
@@ -255,7 +267,8 @@ Priest   ->  Mysticist ->  Summoner    -> Seer           ->  Ritualist
         ):
             async with self.bot.pool.acquire() as conn:
                 usr = await conn.fetchrow(
-                    'SELECT "user", "money" FROM profile WHERE "money">=10 ORDER BY RANDOM() LIMIT 1;'
+                    'SELECT "user", "money" FROM profile WHERE "money">=10 AND "user"!=$1 ORDER BY RANDOM() LIMIT 1;',
+                    ctx.author.id,
                 )
                 stolen = int(usr["money"] * 0.1)
                 await conn.execute(

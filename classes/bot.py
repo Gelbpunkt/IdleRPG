@@ -57,6 +57,9 @@ class Bot(commands.AutoShardedBot):
         self.make_linecount()
         self.all_prefixes = {}
         # self.verified = []
+        self.activity = discord.Game(
+            name=f"IdleRPG v{config.version}" if config.is_beta else config.base_url
+        )
 
         # global cooldown
         self.add_check(self.global_cooldown, call_once=True)
@@ -85,11 +88,7 @@ class Bot(commands.AutoShardedBot):
         self.session = aiohttp.ClientSession(trust_env=True)
         self.trusted_session = aiohttp.ClientSession()
         self.redis = await aioredis.create_pool(
-            "redis://localhost",
-            minsize=5,
-            maxsize=10,
-            loop=self.loop,
-            db=1 if self.config.is_beta else 0,
+            "redis://localhost", minsize=5, maxsize=10, loop=self.loop, db=0
         )
         self.pool = await asyncpg.create_pool(
             **self.config.database, max_size=20, command_timeout=60.0
