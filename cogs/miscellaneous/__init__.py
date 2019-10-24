@@ -304,21 +304,15 @@ Average hours of work: **{hours}**"""
         _("""Shows you the bots current version along with its new updates.""")
         await ctx.send(
             """\
-**IdleRPG v4.1.0 has been released :tada:**
+**IdleRPG v4.1.8 has been released :tada:**
 
-- Added Akinator again, but they changed their backend (so it is removed again)
-- Switched to Podman. Huge change, therefore selfhosting is far easier now, but all redis data (dailies, cooldowns, etc.) was lost
-- Lyrics are now a thing! `$lyrics` (will auto-search for current playing song if none specified)
-- Maths is back from Travitia. `$calc`
-- Music remake is done! Featuring `$lock/unlock`, DJs, `$equalizer`s, `$loop` and much more
-- Added `$wikipedia` and `$wiki` (`$wiki` checks IdleRPG Wiki)
-- `$activate all`
-- Fixed Shin's Raid
-- Updated Bandit Raids
-- Voting is now in timers (may be broken, should be fine though)
-- Voting is now in NodeJS and open source at https://github.com/Kenvyra/teatro
-- Adventure luck chances are properly fixed
-- setup.sh will walk you through a full IdleRPG install
+- Admin logging for crates is now showing rarity
+- Zemsu raid action timeout is now 20s (earlier 10s)
+- No success at producing a child is now "safer sex" and gives lovescore
+- Class images for the paragon line are added
+- Updated Swedish and Turkish (thanks to our amazing translators Wrench and Nya!)
+- Consistently resetting cooldowns mostly now
+- New command `$about` for quick links and about info
 
 **Thank you for playing IdleRPG!**"""
         )
@@ -751,6 +745,33 @@ Average hours of work: **{hours}**"""
         await self.bot.paginator.Paginator(
             title=page.title, entries=p.pages, length=1
         ).paginate(ctx)
+
+    @commands.command(aliases=["pages", "about"])
+    @locale_doc
+    async def web(self, ctx):
+        _("""About the bot and our websites.""")
+        await ctx.send(
+            _(
+                """\
+**IdleRPG** is Discord's most advanced medieval RPG bot.
+We aim to provide the perfect experience at RPG in Discord with minimum effort for the user.
+
+We are not collected any data apart from your character information and our transaction logs.
+The bot is 100% free to use and open source.
+This bot is developed by people who love to code for a good cause and improving your gameplay experience.
+
+**Links**
+<https://github.com/Gelbpunkt/IdleRPG> - Source Code
+<https://idlerpg.travitia.xyz> - Bot Website
+<https://wiki.travitia.xyz> - IdleRPG wiki
+<https://raid.travitia.xyz> - Raid Website
+<https://travitia.xyz> - IdleRPG's next major upgrade
+<https://idlerpg.xyz> - Our link shortener
+<https://cloud.idlerpg.xyz> - VPS hosting by IdleRPG
+<https://github.com/Kenvyra> - Other IdleRPG related code
+<https://discordapp.com/terms> - Discord's ToS"""
+            )
+        )
 
 
 def setup(bot):
