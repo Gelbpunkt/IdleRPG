@@ -211,7 +211,7 @@ class Guild(commands.Cog):
         if not await ctx.confirm(
             _("Are you sure? React to create a guild for **$10000**")
         ):
-            return await self.bot.reset_cooldown(ctx)
+            return
         if not await has_money(self.bot, ctx.author.id, 10000):
             return await ctx.send(
                 _("A guild creation costs **$10000**, you are too poor.")
@@ -657,7 +657,6 @@ class Guild(commands.Cog):
             timeout=60,
             user=enemy,
         ):
-            await self.bot.reset_cooldown(ctx)
             return await ctx.send(
                 _("{enemy} didn't want to join your battle, {author}.").format(
                     enemy=enemy.mention, author=ctx.author.mention

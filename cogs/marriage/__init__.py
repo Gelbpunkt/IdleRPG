@@ -330,7 +330,6 @@ class Marriage(commands.Cog):
             ),
             user=user,
         ):
-            await self.bot.reset_cooldown(ctx)
             return await ctx.send(_("O.o not in the mood today?"))
 
         if random.choice([True, False]):

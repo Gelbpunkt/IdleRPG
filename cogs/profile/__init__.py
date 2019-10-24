@@ -557,7 +557,6 @@ IdleRPG is a global bot, your characters are valid everywhere"""
                 "Are you sure you want to upgrade this item: {item}? It will cost **${pricetopay}**."
             ).format(item=item["name"], pricetopay=pricetopay)
         ):
-            await self.bot.reset_cooldown(ctx)
             return await ctx.send(_("Weapon upgrade cancelled."))
         if not await checks.has_money(self.bot, ctx.author.id, pricetopay):
             await self.bot.reset_cooldown(ctx)
