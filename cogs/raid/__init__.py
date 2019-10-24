@@ -1274,7 +1274,7 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
                             "Block: Block the attack with 50% chance",
                         ],
                         title="Choose a Raid Action",
-                        timeout=10,
+                        timeout=20,
                         return_index=True,
                     ).paginate(ctx, location=target)
                 ]
