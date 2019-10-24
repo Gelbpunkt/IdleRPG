@@ -334,7 +334,13 @@ class Marriage(commands.Cog):
             return await ctx.send(_("O.o not in the mood today?"))
 
         if random.choice([True, False]):
-            return await ctx.send(_("You were unsuccessful at making a child."))
+            await self.bot.pool.execute(
+                'UPDATE profile SET "lovescore"="lovescore"+$1 WHERE "user"=$2 OR "user"=$3;',
+                random.randint(10, 50),
+                ctx.author.id,
+                marriage,
+            )
+            return await ctx.send(_("You had a lovely night 😏"))
         gender = random.choice(["m", "f"])
         if gender == "m":
             await ctx.send(
