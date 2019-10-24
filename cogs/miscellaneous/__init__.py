@@ -756,7 +756,7 @@ Average hours of work: **{hours}**"""
 **IdleRPG** is Discord's most advanced medieval RPG bot.
 We aim to provide the perfect experience at RPG in Discord with minimum effort for the user.
 
-We are not collected any data apart from your character information and our transaction logs.
+We are not collecting any data apart from your character information and our transaction logs.
 The bot is 100% free to use and open source.
 This bot is developed by people who love to code for a good cause and improving your gameplay experience.
 
