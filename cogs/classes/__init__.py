@@ -323,6 +323,7 @@ Priest   ->  Mysticist ->  Summoner    -> Seer           ->  Ritualist
             (_("Cucumber"), 50, ":cucumber:", 4),
             (_("Meat"), 150, ":meat_on_bone:", 10),
             (_("Salad"), 250, ":salad:", 20),
+            (_("Sushi"), 800, ":sushi:", 50),
             (_("Adrian's Power Poop"), 2000, ":poop:", 100),
         ]
         item = items[
@@ -365,6 +366,7 @@ Priest   ->  Mysticist ->  Summoner    -> Seer           ->  Ritualist
             (_("Cocktail"), 50, ":cocktail:", 4),
             (_("Wine"), 150, ":wine_glass:", 10),
             (_("Beer"), 250, ":beer:", 20),
+            (_("Vodka"), 800, ":flag_ru:", 50),
             (_("Adrian's Cocktail"), 2000, ":tropical_drink:", 100),
         ]
         item = items[

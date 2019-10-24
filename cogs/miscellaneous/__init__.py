@@ -313,6 +313,7 @@ Average hours of work: **{hours}**"""
 - Updated Swedish and Turkish (thanks to our amazing translators Wrench and Nya!)
 - Consistently resetting cooldowns mostly now
 - New command `$about` for quick links and about info
+- Pets can now be feeded sushi and vodka, filling the 50 points gap
 
 **Thank you for playing IdleRPG!**"""
         )
