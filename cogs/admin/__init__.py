@@ -146,7 +146,7 @@ class Admin(commands.Cog):
         )
         await self.bot.http.send_message(
             self.bot.config.admin_log_channel,
-            f"**{ctx.author}** gave **{amount}** crates to **{target}**.",
+            f"**{ctx.author}** gave **{amount}** {rarity} crates to **{target}**.",
         )
 
     @is_admin()
