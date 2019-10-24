@@ -769,7 +769,8 @@ This bot is developed by people who love to code for a good cause and improving 
 <https://idlerpg.xyz> - Our link shortener
 <https://cloud.idlerpg.xyz> - VPS hosting by IdleRPG
 <https://github.com/Kenvyra> - Other IdleRPG related code
-<https://discordapp.com/terms> - Discord's ToS"""
+<https://discordapp.com/terms> - Discord's ToS
+<https://www.ncpgambling.org/help-treatment/national-helpline-1-800-522-4700/> - Gambling Helpline"""
             )
         )
 
