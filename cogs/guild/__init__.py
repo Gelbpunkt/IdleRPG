@@ -187,6 +187,7 @@ class Guild(commands.Cog):
         try:
             name = await self.bot.wait_for("message", timeout=60, check=mycheck)
         except asyncio.TimeoutError:
+            await self.bot.reset_cooldown(ctx)
             return await ctx.send(_("Cancelled guild creation."))
         name = name.content
         if len(name) > 20:
@@ -197,6 +198,7 @@ class Guild(commands.Cog):
         try:
             url = await self.bot.wait_for("message", timeout=60, check=mycheck)
         except asyncio.TimeoutError:
+            await self.bot.reset_cooldown(ctx)
             return await ctx.send(_("Cancelled guild creation."))
         url = url.content
         if len(url) > 60:
@@ -209,7 +211,7 @@ class Guild(commands.Cog):
         if not await ctx.confirm(
             _("Are you sure? React to create a guild for **$10000**")
         ):
-            return await self.bot.reset_cooldown(ctx)
+            return
         if not await has_money(self.bot, ctx.author.id, 10000):
             return await ctx.send(
                 _("A guild creation costs **$10000**, you are too poor.")
@@ -655,7 +657,6 @@ class Guild(commands.Cog):
             timeout=60,
             user=enemy,
         ):
-            await self.bot.reset_cooldown(ctx)
             return await ctx.send(
                 _("{enemy} didn't want to join your battle, {author}.").format(
                     enemy=enemy.mention, author=ctx.author.mention
@@ -711,6 +712,7 @@ class Guild(commands.Cog):
                     await ctx.send(_("User not found."))
                     continue
             except asyncio.TimeoutError:
+                await self.bot.reset_guild_cooldown(ctx)
                 return await ctx.send(
                     _("Took to long to add members. Fight cancelled.")
                 )
@@ -736,6 +738,7 @@ class Guild(commands.Cog):
                     await ctx.send(_("User not found."))
                     continue
             except asyncio.TimeoutError:
+                await self.bot.reset_guild_cooldown(ctx)
                 return await ctx.send(
                     _("Took to long to add members. Fight cancelled.")
                 )

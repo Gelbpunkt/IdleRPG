@@ -260,7 +260,6 @@ class Trading(commands.Cog):
                     item=item["name"]
                 )
             ):
-                await self.bot.reset_cooldown(ctx)
                 return await ctx.send(_("Item selling cancelled."))
 
         if not await ctx.confirm(
@@ -270,7 +269,6 @@ class Trading(commands.Cog):
             user=user,
             timeout=120,
         ):
-            await self.bot.reset_cooldown(ctx)
             return await ctx.send(_("They didn't want it."))
 
         if not await has_money(self.bot, user.id, price):
@@ -339,7 +337,6 @@ class Trading(commands.Cog):
                     ).format(amount=equipped),
                     timeout=6,
                 ):
-                    await self.bot.reset_cooldown(ctx)
                     return await ctx.send(_("Cancelled."))
             await conn.execute(
                 'DELETE FROM allitems WHERE "id"=ANY($1) AND "owner"=$2;',
@@ -388,7 +385,7 @@ class Trading(commands.Cog):
                     "You are about to sell **{count} items!**\nAre you sure you want to do this?"
                 ).format(count=count)
             ):
-                return await self.bot.reset_cooldown(ctx)
+                return
             async with conn.transaction():
                 await conn.execute(
                     "DELETE FROM allitems ai USING inventory i WHERE ai.id=i.item AND ai.owner=$1 AND i.equipped IS FALSE AND ai.armor+ai.damage BETWEEN $2 AND $3;",

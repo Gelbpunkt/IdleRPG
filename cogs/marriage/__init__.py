@@ -330,7 +330,6 @@ class Marriage(commands.Cog):
             ),
             user=user,
         ):
-            await self.bot.reset_cooldown(ctx)
             return await ctx.send(_("O.o not in the mood today?"))
 
         if random.choice([True, False]):
@@ -366,6 +365,7 @@ class Marriage(commands.Cog):
         try:
             msg = await self.bot.wait_for("message", check=check, timeout=30)
         except asyncio.TimeoutError:
+            await self.bot.reset_cooldown(ctx)
             return await ctx.send(_("You didn't enter a name."))
         name = msg.content.replace("@", "@\u200b")
         async with self.bot.pool.acquire() as conn:
@@ -519,6 +519,7 @@ class Marriage(commands.Cog):
             try:
                 msg = await self.bot.wait_for("message", check=check, timeout=30)
             except asyncio.TimeoutError:
+                await self.bot.reset_cooldown(ctx)
                 return await ctx.send(_("You didn't enter a name."))
             name = msg.content.replace("@", "@\u200b")
             await self.bot.pool.execute(

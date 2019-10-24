@@ -139,7 +139,6 @@ class Classes(commands.Cog):
                 profession=profession,
             )
         ):
-            await self.bot.reset_cooldown(ctx)
             return await ctx.send(_("Class selection cancelled."))
         if ctx.character_data["class"][val] == "No Class":
             async with self.bot.pool.acquire() as conn:
