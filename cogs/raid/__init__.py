@@ -303,9 +303,8 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
         await ctx.send(
             """
 *Arrow shot*
-**Lieutenant**: We've spotted a group of Bandii...
-**Bandit Officer**: Listen up! We demand all of your resources or else we gonna have to use our heavy halberds! We kill for War God Fox!!!
-The Bandit Officers gonna arrive in 30 minutes, prepare of heavy armed Bandits.
+**Lieutenant**: We've spotted a group of Bandits!
+The Bandits gonna arrive in 15 minutes.
 
 Use https://raid.travitia.xyz/ to join the raid!
 
@@ -319,31 +318,21 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
         await ctx.send(
             "**Bandit Officer**: This is our last warning. Hand out all your goods and gold!"
         )
-        await asyncio.sleep(150)
-        await ctx.send("**The bandit officers arrive in 20 minutes**")
-        await asyncio.sleep(300)
-        await ctx.send("**The bandit officers arrive in 15 minutes**")
-        await asyncio.sleep(150)
-        await ctx.send("**Bandit Officer**: You all gathering fast together. I see.")
-        await asyncio.sleep(150)
-        await ctx.send("**The bandit officers arrive in 10 minutes**")
-        await asyncio.sleep(300)
-        await ctx.send("**The bandit officers arrive in 5 minutes**")
-        await asyncio.sleep(120)
-        await ctx.send("**The bandit officers arrive in 3 minutes**")
-        await asyncio.sleep(60)
-        await ctx.send("**Bandit Officer**: Ready to charge!!")
-        await asyncio.sleep(60)
-        await ctx.send("**The bandit officers arrive in 1 minute**")
-        await asyncio.sleep(30)
-        await ctx.send("**Friendly gods gave all defenders some more HP!**")
-        await asyncio.sleep(10)
-        await ctx.send("**The bandit officers arrive in 20 seconds**")
-        await asyncio.sleep(10)
-        await ctx.send("**Bandit Officer**: For our lord and savior, War God Fox!!")
-        await asyncio.sleep(10)
+            await asyncio.sleep(300)
+            await ctx.send("**The dragon will be vulnerable in 10 minutes**")
+            await asyncio.sleep(300)
+            await ctx.send("**The dragon will be vulnerable in 5 minutes**")
+            await asyncio.sleep(180)
+            await ctx.send("**The dragon will be vulnerable in 2 minutes**")
+            await asyncio.sleep(60)
+            await ctx.send("**The dragon will be vulnerable in 1 minute**")
+            await asyncio.sleep(30)
+            await ctx.send("**The dragon will be vulnerable in 30 seconds**")
+            await asyncio.sleep(20)
+            await ctx.send("**The dragon will be vulnerable in 10 seconds**")
+            await asyncio.sleep(10)
         await ctx.send(
-            "**The bandit officers are charging! Fetching participant data... Hang on!**"
+            "**The bandits have arrived! Fetching participant data... Hang on!**"
         )
 
         async with self.bot.session.get(
@@ -388,7 +377,7 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
                 defmultiply = j["defmultiply"]
             deff = j["armor"] * defmultiply if j else 0
             dmg, deff = await self.bot.generate_stats(i, dmg, deff)
-            raid[u] = {"hp": 200, "armor": deff, "damage": dmg}
+            raid[u] = {"hp": 150, "armor": deff, "damage": dmg}
 
         await ctx.send("**Done getting data!**")
 
@@ -398,26 +387,26 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
         while len(
             bandits
         ) > 0 and datetime.datetime.utcnow() < start + datetime.timedelta(minutes=45):
-            dmg = random.randint(80, 150)  # effective damage the bandit does
+            dmg = random.randint(70, 100)  # effective damage the bandit does
             dmg -= target_data["armor"] * Decimal(
                 random.choice(["0.1", "0.2"])
             )  # let's substract the shield, ouch
             target_data["hp"] -= dmg  # damage dealt
             em = discord.Embed(
-                title=f"Bandit officers left: `{len(bandits)}`", colour=0x000000
+                title=f"Bandits left: `{len(bandits)}`", colour=0x000000
             )
             em.set_author(
-                name=f"Bandit officers {group}",
+                name=f"Bandit Group {group}",
                 icon_url=f"{self.bot.BASE_URL}/bandits1.jpg",
             )
             em.add_field(name="Bandit HP", value=f"{bandits[0]['hp']} HP left")
             if target_data["hp"] > 0:
                 em.add_field(
                     name="Attack",
-                    value=f"Bandit officer is fighting against `{target}`",
+                    value=f"Bandit is fighting against `{target}`",
                 )
             else:
-                em.add_field(name="Attack", value=f"Bandit officer killed `{target}`")
+                em.add_field(name="Attack", value=f"Bandit killed `{target}`")
             em.add_field(
                 name="Bandit Damage",
                 value=f"Has dealt `{dmg}` damage to the swordsman `{target}`",
@@ -442,10 +431,10 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
             if bandits[0]["hp"] > 0:
                 em.add_field(
                     name="Swordsman attack",
-                    value=f"Is attacking the bandit officer and dealt `{target_data['damage']}` damage",
+                    value=f"Is attacking the bandit and dealt `{target_data['damage']}` damage",
                 )
             else:
-                money = random.randint(15000, 30000)
+                money = random.randint(4000, 8000)
                 await self.bot.pool.execute(
                     'UPDATE profile SET "money"="money"+$1 WHERE "user"=$2;',
                     money,
@@ -454,7 +443,7 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
                 bandits.pop(0)
                 em.add_field(
                     name="Swordsman attack",
-                    value=f"Killed the bandit officer and received ${money}",
+                    value=f"Killed the bandit and received ${money}",
                 )
             em.set_image(url=f"{self.bot.BASE_URL}/swordsman2.jpg")
             await ctx.send(embed=em)
@@ -462,7 +451,7 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
 
         if len(bandits) == 0:
             await ctx.send(
-                "The bandit officers got defeated, War God Fox won't be proud of the bandits."
+                "The bandits got deafeted, Ikhdosa is safe again!"
                 "Sending the rewards of the survivors their money..."
             )
             await self.bot.pool.execute(
@@ -472,7 +461,7 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
             )
         elif len(raid) == 0:
             await ctx.send(
-                "The bandit officers plundered the whole town! War God Fox is proud!\nAll swordsmen died!"
+                "The bandits plundered the town!\nAll swordsmen died!"
             )
 
     @is_god()
