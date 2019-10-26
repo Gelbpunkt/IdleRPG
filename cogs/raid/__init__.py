@@ -1373,6 +1373,8 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
             if cyberus_skill == "howl":
                 text = f"{text}Cyberus uses **howl** to reduce damage by 30%"
                 dmg_to_take -= round(dmg_to_take * Decimal("0.3"))
+            if not action:
+                text = f"{text}No skill selected!"
             boss["hp"] -= dmg_to_take
             await asyncio.sleep(4)
             em = discord.Embed(title="The raid attacked Cyberus!", colour=0xFF5C00)
