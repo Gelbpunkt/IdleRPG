@@ -152,8 +152,8 @@ class Guild(commands.Cog):
     async def badge(self, ctx, number: IntGreaterThan(0)):
         _("""[Guild owner only] Change the guild badge.""")
         async with self.bot.pool.acquire() as conn:
-            bgs = await conn.fetchval(
-                'SELECT badges FROM guild WHERE "leader"=$1;', ctx.author.id
+            bgs, channel = await conn.fetchval(
+                'SELECT (badges, channel) FROM guild WHERE "leader"=$1;', ctx.author.id
             )
             if not bgs:
                 return await ctx.send(_("Your guild has no badges yet."))
@@ -169,6 +169,9 @@ class Guild(commands.Cog):
                 'UPDATE guild SET badge=$1 WHERE "leader"=$2;', bg, ctx.author.id
             )
         await ctx.send(_("Badge updated!"))
+        await self.bot.http.send_message(
+            channel, f"**{ctx.author}** changed the guild badge."
+        )
 
     @has_char()
     @has_no_guild()
@@ -264,13 +267,16 @@ class Guild(commands.Cog):
                 "Leader",
                 member.id,
             )
-            name = await conn.fetchval(
-                'UPDATE guild SET "leader"=$1 WHERE "id"=$2 RETURNING "name";',
+            name, channel = await conn.fetchval(
+                'UPDATE guild SET "leader"=$1 WHERE "id"=$2 RETURNING ("name", "channel");',
                 member.id,
                 ctx.character_data["guild"],
             )
 
         await ctx.send(_("{user} now leads {guild}.").format(user=member, guild=name))
+        await self.bot.http.send_message(
+            channel, f"Ownership changed from **{ctx.author}** to **{member}**"
+        )
 
     @is_guild_leader()
     @guild.command()
@@ -283,13 +289,21 @@ class Guild(commands.Cog):
             return await ctx.send(_("Target is not a member of your guild."))
         if ctx.user_data["guildrank"] == "Officer":
             return await ctx.send(_("This user is already an officer of your guild."))
-        await self.bot.pool.execute(
-            'UPDATE profile SET guildrank=$1 WHERE "user"=$2;', "Officer", member.id
-        )
+        async with self.bot.pool.acquire() as conn:
+            await conn.execute(
+                'UPDATE profile SET guildrank=$1 WHERE "user"=$2;', "Officer", member.id
+            )
+            channel = await conn.fetchval(
+                'SELECT "channel" FROM guild WHERE "id"=$1;',
+                ctx.character_data["guild"],
+            )
         await ctx.send(
             _("Done! {member} has been promoted to the rank of `Officer`.").format(
                 member=member
             )
+        )
+        await self.bot.http.send_message(
+            channel, f"**{ctx.author}** promoted **{member}** to the rank of Officer."
         )
 
     @is_guild_leader()
@@ -303,13 +317,21 @@ class Guild(commands.Cog):
             return await ctx.send(_("Target is not a member of your guild."))
         if ctx.user_data["guildrank"] != "Officer":
             return await ctx.send(_("This user can't be demoted any further."))
-        await self.bot.pool.execute(
-            'UPDATE profile SET guildrank=$1 WHERE "user"=$2;', "Member", member.id
-        )
+        async with self.bot.pool.acquire() as conn:
+            await conn.execute(
+                'UPDATE profile SET guildrank=$1 WHERE "user"=$2;', "Member", member.id
+            )
+            channel = await conn.fetchval(
+                'SELECT "channel" FROM guild WHERE "id"=$1;',
+                ctx.character_data["guild"],
+            )
         await ctx.send(
             _("Done! {member} has been demoted to the rank of `Member`.").format(
                 member=member
             )
+        )
+        await self.bot.http.send_message(
+            channel, f"**{ctx.author}** demoted **{member}** to the rank of Member."
         )
 
     @is_guild_officer()
@@ -326,8 +348,8 @@ class Guild(commands.Cog):
             membercount = await conn.fetchval(
                 'SELECT COUNT(*) FROM profile WHERE "guild"=$1;', id
             )
-            limit, name = await conn.fetchval(
-                'SELECT (memberlimit, name) FROM guild WHERE "id"=$1;', id
+            limit, name, channel = await conn.fetchval(
+                'SELECT (memberlimit, name, channel) FROM guild WHERE "id"=$1;', id
             )
         if membercount >= limit:
             return await ctx.send(
@@ -351,6 +373,9 @@ class Guild(commands.Cog):
                 newmember=newmember.mention, name=name
             )
         )
+        await self.bot.http.send_message(
+            channel, f"**{ctx.author}** invited **{newmember}** to the guild"
+        )
 
     @has_guild()
     @is_no_guild_leader()
@@ -358,13 +383,20 @@ class Guild(commands.Cog):
     @locale_doc
     async def leave(self, ctx):
         _("""Leave your current guild.""")
-        await self.bot.pool.execute(
-            'UPDATE profile SET "guild"=$1, "guildrank"=$2 WHERE "user"=$3;',
-            0,
-            "Member",
-            ctx.author.id,
-        )
+        async with self.bot.pool.acquire() as conn:
+            await conn.execute(
+                'UPDATE profile SET "guild"=$1, "guildrank"=$2 WHERE "user"=$3;',
+                0,
+                "Member",
+                ctx.author.id,
+            )
+            channel = await conn.fetchval(
+                'SELECT "channel" FROM guild WHERE "id"=$1;',
+                ctx.character_data["guild"],
+            )
+
         await ctx.send(_("You left your guild."))
+        await self.bot.http.send_message(channel, f"**{ctx.author}** left the guild.")
 
     @is_guild_officer()
     @guild.command()
@@ -394,7 +426,13 @@ class Guild(commands.Cog):
                 "Member",
                 member,
             )
-            await ctx.send(_("The person has been kicked!"))
+            channel = await conn.fetchval(
+                'SELECT channel FROM guild WHERE "id"=$1;', ctx.character_data["guild"]
+            )
+        await ctx.send(_("The person has been kicked!"))
+        await self.bot.http.send_message(
+            channel, f"**{ctx.author}** kicked user with ID **{member}**"
+        )
 
     @is_guild_leader()
     @guild.command()
@@ -406,7 +444,10 @@ class Guild(commands.Cog):
         ):
             return
         async with self.bot.pool.acquire() as conn:
-            await conn.execute('DELETE FROM guild WHERE "leader"=$1;', ctx.author.id)
+            channel = await conn.fetchval(
+                'DELETE FROM guild WHERE "leader"=$1 RETURNING "channel";',
+                ctx.author.id,
+            )
             await conn.execute(
                 'UPDATE profile SET "guild"=$1, "guildrank"=$2 WHERE "guild"=$3;',
                 0,
@@ -414,6 +455,7 @@ class Guild(commands.Cog):
                 ctx.character_data["guild"],
             )
         await ctx.send(_("Successfully deleted your guild."))
+        await self.bot.http.send_message(channel, f"Guild deleted by **{ctx.author}**")
 
     @is_guild_leader()
     @guild.command()
@@ -431,12 +473,15 @@ class Guild(commands.Cog):
                     "I couldn't read that URL. Does it start with `http://` or `https://` and is either a png or jpeg?"
                 )
             )
-        await self.bot.pool.execute(
-            'UPDATE guild SET "icon"=$1 WHERE "id"=$2;',
+        channel = await self.bot.pool.fetchval(
+            'UPDATE guild SET "icon"=$1 WHERE "id"=$2 RETURNING "channel";',
             url,
             ctx.character_data["guild"],
         )
         await ctx.send(_("Successfully updated the guild icon."))
+        await self.bot.http.send_message(
+            channel, f"**{ctx.author}** changed the guild icon"
+        )
 
     @is_guild_leader()
     @guild.command()
@@ -445,10 +490,34 @@ class Guild(commands.Cog):
         _("""[Guild Owner only] Changes the guild description.""")
         if len(text) > 200:
             return await ctx.send(_("The text may be up to 200 characters only."))
-        await self.bot.pool.execute(
-            'UPDATE guild SET "description"=$1 WHERE "leader"=$2;', text, ctx.author.id
+        channel = await self.bot.pool.fetchval(
+            'UPDATE guild SET "description"=$1 WHERE "leader"=$2 RETURNING "channel";',
+            text,
+            ctx.author.id,
         )
         await ctx.send(_("Updated!"))
+        await self.bot.http.send_message(
+            channel, f"**{ctx.author}** changed the description"
+        )
+
+    @commands.has_permissions(administrator=True)
+    @is_guild_leader()
+    @guild.command()
+    @locale_doc
+    async def channel(self, ctx):
+        _(
+            """[Guild Owner only] Change the logging channel for the guild. You also need to be server admin."""
+        )
+        if not await ctx.confirm(
+            _("This will become the channel for all logs. Are you sure?")
+        ):
+            return
+        await self.bot.pool.execute(
+            'UPDATE guild SET "channel"=$1 WHERE "leader"=$2;',
+            ctx.channel.id,
+            ctx.author.id,
+        )
+        await ctx.send("**Guild logs will go here** ✅")
 
     @has_guild()
     @guild.command()
@@ -544,6 +613,9 @@ class Guild(commands.Cog):
         await self.bot.log_transaction(
             ctx, from_=ctx.author, to=0, subject="guild invest", data=amount
         )
+        await self.bot.http.send_message(
+            g["channel"], f"**{ctx.author}** invested **${amount}**"
+        )
 
     @is_guild_officer()
     @guild.command()
@@ -569,6 +641,9 @@ class Guild(commands.Cog):
         )
         await self.bot.log_transaction(
             ctx, from_=0, to=member, subject="guild pay", data=amount
+        )
+        await self.bot.http.send_message(
+            guild["channel"], f"**{ctx.author}** paid **${amount}** to **{member}**"
         )
 
     @is_guild_leader()
@@ -613,6 +688,10 @@ class Guild(commands.Cog):
             _("Your new guild bank limit is now **${limit}**.").format(
                 limit=currentlimit + 250_000
             )
+        )
+        await self.bot.http.send_message(
+            guild["channel"],
+            f"**{ctx.author}** upgraded the guild bank to **${currentlimit + 250000}**",
         )
 
     @is_guild_officer()
@@ -920,6 +999,10 @@ Time it will take: **{time}**
                 time=time,
             )
         )
+        await self.bot.http.send_message(
+            guild["channel"],
+            f"**Guild adventure with difficulty **{difficulty}**, lasting {time}, started",
+        )
 
     @has_guild()
     @guild.command()
@@ -939,8 +1022,8 @@ Time it will take: **{time}**
             await self.bot.delete_guild_adventure(ctx.character_data["guild"])
             gold = random.randint(adventure[0] * 20, adventure[0] * 50)
 
-            await self.bot.pool.execute(
-                'UPDATE guild SET "money"="money"+$1, "pumpkins"="pumpkins"+$2 WHERE "id"=$3;',
+            channel = await self.bot.pool.fetchval(
+                'UPDATE guild SET "money"="money"+$1, "pumpkins"="pumpkins"+$2 WHERE "id"=$3 RETURNING "channel";',
                 gold,
                 adventure[0] * 10,
                 ctx.character_data["guild"],
@@ -949,6 +1032,10 @@ Time it will take: **{time}**
                 _(
                     "Your guild has completed an adventure of difficulty `{difficulty}` and **${gold}** has been added to the bank. You also found **{pumpkins}** 🎃!"
                 ).format(difficulty=adventure[0], gold=gold, pumpkins=adventure[0] * 10)
+            )
+            await self.bot.http.send_message(
+                channel,
+                f"**{ctx.author}** ended the guild adventure, reward was **${gold}**",
             )
         else:
             await ctx.send(

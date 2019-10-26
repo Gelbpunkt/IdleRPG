@@ -104,7 +104,8 @@ CREATE TABLE public.guild (
     badges text[],
     badge character varying(100) DEFAULT NULL::character varying,
     description character varying(200) DEFAULT 'No Description set yet'::character varying NOT NULL,
-    pumpkins bigint DEFAULT 0
+    pumpkins bigint DEFAULT 0,
+    channel bigint
 );
 
 

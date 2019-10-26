@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-10-26 03:48-0700\n"
+"POT-Creation-Date: 2019-10-26 04:25-0700\n"
 "PO-Revision-Date: 2019-07-09 18:37+0700\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -503,8 +503,8 @@ msgstr "Menukar peti dengan pemain lain."
 
 #. preserve deletion of admins
 #. preserve renaming of admins
-#: cogs/crates/__init__.py:161 cogs/guild/__init__.py:281
-#: cogs/guild/__init__.py:301 cogs/admin/__init__.py:85
+#: cogs/crates/__init__.py:161 cogs/guild/__init__.py:287
+#: cogs/guild/__init__.py:315 cogs/admin/__init__.py:85
 #: cogs/admin/__init__.py:98
 msgid "Very funny..."
 msgstr "Sangat lucu..."
@@ -1840,7 +1840,7 @@ msgstr ""
 "(uang)`."
 
 #: cogs/store/__init__.py:62 cogs/gambling/__init__.py:380
-#: cogs/gambling/__init__.py:412 cogs/guild/__init__.py:522
+#: cogs/gambling/__init__.py:412 cogs/guild/__init__.py:591
 msgid "You're too poor."
 msgstr "Anda terlalu miskin."
 
@@ -2069,7 +2069,7 @@ msgid "That is not a valid premade background."
 msgstr "Itu bukan merupakan latar belakang yang sudah kami buat."
 
 #: cogs/patreon/__init__.py:83 cogs/patreon/__init__.py:111
-#: cogs/classes/__init__.py:490 cogs/guild/__init__.py:431
+#: cogs/classes/__init__.py:490 cogs/guild/__init__.py:473
 msgid ""
 "I couldn't read that URL. Does it start with `http://` or `https://` and is "
 "either a png or jpeg?"
@@ -4220,40 +4220,40 @@ msgstr ""
 msgid "Badge updated!"
 msgstr "Logo telah diperbarui!"
 
-#: cogs/guild/__init__.py:179
+#: cogs/guild/__init__.py:182
 msgid "Creates a guild."
 msgstr "Membuat guild."
 
-#: cogs/guild/__init__.py:185
+#: cogs/guild/__init__.py:188
 msgid "Enter a name for your guild. Maximum length is 20 characters."
 msgstr "Masukan nama untuk guild anda. Panjang maksimumnya adalah 20 karakter."
 
-#: cogs/guild/__init__.py:191 cogs/guild/__init__.py:202
+#: cogs/guild/__init__.py:194 cogs/guild/__init__.py:205
 msgid "Cancelled guild creation."
 msgstr "Pembuatan guild dibatalkan."
 
-#: cogs/guild/__init__.py:194
+#: cogs/guild/__init__.py:197
 msgid "Guild names musn't exceed 20 characters."
 msgstr "Nama guild tidak boleh lebih dari 20 karakter."
 
-#: cogs/guild/__init__.py:196
+#: cogs/guild/__init__.py:199
 msgid "Send a link to the guild's icon. Maximum length is 60 characters."
 msgstr "Mengirim link ke logo guild. Panjang maksimum andalah 60 karakter."
 
-#: cogs/guild/__init__.py:205
+#: cogs/guild/__init__.py:208
 msgid "URLs mustn't exceed 60 characters."
 msgstr "URL tidak boleh lebih Panjang dari 60 karakter."
 
-#: cogs/guild/__init__.py:212
+#: cogs/guild/__init__.py:215
 msgid "Are you sure? React to create a guild for **$10000**"
 msgstr ""
 "Apakah anda yakin? Bereaksilah untuk membuat guild dengan harga **$10000**"
 
-#: cogs/guild/__init__.py:217
+#: cogs/guild/__init__.py:220
 msgid "A guild creation costs **$10000**, you are too poor."
 msgstr "Pembuatan guild membutuhkan **$10000**, anda terlalu miskin."
 
-#: cogs/guild/__init__.py:236
+#: cogs/guild/__init__.py:239
 #, python-brace-format
 msgid ""
 "Successfully added your guild **{name}** with a member limit of "
@@ -4262,67 +4262,67 @@ msgstr ""
 "Guild dengan nama **{name}** telah dibuat dengan batas anggota sebanyak "
 "**{memberlimit}**."
 
-#: cogs/guild/__init__.py:244
+#: cogs/guild/__init__.py:247
 msgid "Transfer guild ownership to someone else."
 msgstr ""
 
-#: cogs/guild/__init__.py:249
+#: cogs/guild/__init__.py:252
 msgid "Not a member of your guild."
 msgstr ""
 
-#: cogs/guild/__init__.py:251
+#: cogs/guild/__init__.py:254
 #, python-brace-format
 msgid "Are you sure to transfer guild ownership to {user}?"
 msgstr ""
 
-#: cogs/guild/__init__.py:273
+#: cogs/guild/__init__.py:276
 #, python-brace-format
 msgid "{user} now leads {guild}."
 msgstr ""
 
-#: cogs/guild/__init__.py:279
+#: cogs/guild/__init__.py:285
 msgid "Promote someone to the rank of officer"
 msgstr "Mempromosikan seseorang menjadi opsir"
 
-#: cogs/guild/__init__.py:283 cogs/guild/__init__.py:303
+#: cogs/guild/__init__.py:289 cogs/guild/__init__.py:317
 msgid "Target is not a member of your guild."
 msgstr "Target bukan merupakan anggota dari guild anda."
 
-#: cogs/guild/__init__.py:285
+#: cogs/guild/__init__.py:291
 msgid "This user is already an officer of your guild."
 msgstr "Pemain ini sudah merupakan opsir di guild."
 
-#: cogs/guild/__init__.py:290
+#: cogs/guild/__init__.py:301
 #, python-brace-format
 msgid "Done! {member} has been promoted to the rank of `Officer`."
 msgstr "Selesai! {member} telah dipromosikan menjadi  `Opsir`."
 
-#: cogs/guild/__init__.py:299
+#: cogs/guild/__init__.py:313
 msgid "Demotes someone from the officer rank"
 msgstr "Menurunkan seseorang dari jabatan opsir"
 
-#: cogs/guild/__init__.py:305
+#: cogs/guild/__init__.py:319
 msgid "This user can't be demoted any further."
 msgstr "Anggota ini tidak bisa diturunkan lebih lanjut."
 
-#: cogs/guild/__init__.py:310
+#: cogs/guild/__init__.py:329
 #, python-brace-format
 msgid "Done! {member} has been demoted to the rank of `Member`."
 msgstr "Selesai! {member} telah diturunkan menjadi `Anggota`."
 
-#: cogs/guild/__init__.py:319
+#: cogs/guild/__init__.py:341
 msgid "[Guild officer only] Invite someone to your guild."
 msgstr "[Khusus Opsir Guild] Mengundang seseorang ke guild anda."
 
-#: cogs/guild/__init__.py:321 cogs/guild/__init__.py:345
+#: cogs/guild/__init__.py:343 cogs/guild/__init__.py:367
 msgid "That member already has a guild."
 msgstr "Orang tersebut sudah tergabung di guild lain."
 
-#: cogs/guild/__init__.py:334
+#: cogs/guild/__init__.py:356
 msgid "Your guild is already at the maximum member count."
 msgstr "Guild anda sudah memiliki jumlah anggota maksimum."
 
-#: cogs/guild/__init__.py:339
+#: cogs/guild/__init__.py:361
 #, python-brace-format
 msgid ""
 "{newmember}, {author} invites you to join **{name}**. React to join the "
@@ -4331,114 +4331,124 @@ msgstr ""
 "{newmember}, {author} mengundang anda untuk bergabung ke **{name}**. "
 "Bereaksilah untuk menerima tawaran."
 
-#: cogs/guild/__init__.py:350
+#: cogs/guild/__init__.py:372
 #, python-brace-format
 msgid "{newmember} is now a member of **{name}**. Welcome!"
 msgstr ""
 "{newmember} sekarang merupakan anggota dari  **{name}**. Selamat datang!"
 
-#: cogs/guild/__init__.py:360
+#: cogs/guild/__init__.py:385
 msgid "Leave your current guild."
 msgstr "Meninggalkan guild anda sekarang."
 
-#: cogs/guild/__init__.py:367
+#: cogs/guild/__init__.py:398
 msgid "You left your guild."
 msgstr "Anda telah meninggalkan guild anda."
 
-#: cogs/guild/__init__.py:373
+#: cogs/guild/__init__.py:405
 msgid "[Guild Officer only] Kick someone from your guild."
 msgstr "[Khusus Opsir Guild] Mengeluarkan seseorang dari guild anda."
 
-#: cogs/guild/__init__.py:376 cogs/guild/__init__.py:385
+#: cogs/guild/__init__.py:408 cogs/guild/__init__.py:417
 msgid "Not your guild mate."
 msgstr "Bukan anggota dari guild anda."
 
-#: cogs/guild/__init__.py:391
+#: cogs/guild/__init__.py:423
 msgid "You can only kick members."
 msgstr "Anda hanya boleh mengeluarkan anggota."
 
-#: cogs/guild/__init__.py:397
+#: cogs/guild/__init__.py:432
 msgid "The person has been kicked!"
 msgstr "Orang tersebut sudah dikeluarkan!"
 
-#: cogs/guild/__init__.py:403
+#: cogs/guild/__init__.py:441
 msgid "[Guild Owner only] Deletes the guild."
 msgstr "[Khusus Pemimpin Guild] Menghapus guild."
 
-#: cogs/guild/__init__.py:405
+#: cogs/guild/__init__.py:443
 msgid "Are you sure to delete your guild? React to confirm the deletion."
 msgstr ""
 "Apakah anda yakin untuk menghapus guild? Bereaksilah untuk mengkonfirmasi "
 "penghapusan."
 
-#: cogs/guild/__init__.py:416
+#: cogs/guild/__init__.py:457
 msgid "Successfully deleted your guild."
 msgstr "Anda telah menghapus guild anda."
 
-#: cogs/guild/__init__.py:422
+#: cogs/guild/__init__.py:464
 msgid "[Guild Leader only] Changes the guild icon."
 msgstr "[Khusus Pemimpin Guild] Mengubah logo guild."
 
-#: cogs/guild/__init__.py:424
+#: cogs/guild/__init__.py:466
 msgid "URLs musn't exceed 60 characters."
 msgstr "URL tidak boleh melebihi 60 karakter."
 
-#: cogs/guild/__init__.py:439
+#: cogs/guild/__init__.py:481
 msgid "Successfully updated the guild icon."
 msgstr "Logo guild telah diperbarui."
 
-#: cogs/guild/__init__.py:445
+#: cogs/guild/__init__.py:490
 msgid "[Guild Owner only] Changes the guild description."
 msgstr "[Khusus Pemimpin Guild] Mengubah deskripsi guild."
 
-#: cogs/guild/__init__.py:447
+#: cogs/guild/__init__.py:492
 msgid "The text may be up to 200 characters only."
 msgstr "Text harus dibawah 200 karakter."
 
-#: cogs/guild/__init__.py:451
+#: cogs/guild/__init__.py:498
 msgid "Updated!"
 msgstr "Telah diperbarui!"
 
-#: cogs/guild/__init__.py:457
+#: cogs/guild/__init__.py:509
+msgid ""
+"[Guild Owner only] Change the logging channel for the guild. You also need "
+"to be server admin."
+msgstr ""
+
+#: cogs/guild/__init__.py:512
+msgid "This will become the channel for all logs. Are you sure?"
+msgstr ""
+
+#: cogs/guild/__init__.py:526
 msgid "Shows the richest players in your guild."
 msgstr "Menunjukan anggota terkaya di guild anda."
 
-#: cogs/guild/__init__.py:470
+#: cogs/guild/__init__.py:539
 #, python-brace-format
 msgid "a character by `{charname}` with **${money}**"
 msgstr "karakter milik `{charname}` dengan **${money}**"
 
-#: cogs/guild/__init__.py:476
+#: cogs/guild/__init__.py:545
 #, python-brace-format
 msgid "The Richest Players of {guild}"
 msgstr "Pemain Terkaya dari {guild}"
 
-#: cogs/guild/__init__.py:486
+#: cogs/guild/__init__.py:555
 msgid "Shows the best players of your guild by XP."
 msgstr "Menunjukan pemain dengan XP terbanyak di guild anda."
 
-#: cogs/guild/__init__.py:500
+#: cogs/guild/__init__.py:569
 #, python-brace-format
 msgid ""
 "{name}, a character by `{charname}` with Level **{level}** (**{xp}** XP)"
 msgstr ""
 "{name}, karakter dari  `{charname}` dengan Level **{level}** (**{xp}** XP)"
 
-#: cogs/guild/__init__.py:510
+#: cogs/guild/__init__.py:579
 #, python-brace-format
 msgid "The Best Players of {name}"
 msgstr "Pemain terbaik dari {name}"
 
-#: cogs/guild/__init__.py:520
+#: cogs/guild/__init__.py:589
 msgid "Invest some of your money and put it to the guild bank."
 msgstr ""
 "Menginvestasikan sebagian uang anda dan memasukannya ke tabungan guild."
 
-#: cogs/guild/__init__.py:528
+#: cogs/guild/__init__.py:597
 msgid "The bank would be full."
 msgstr "Tabungan akan penuh."
 
-#: cogs/guild/__init__.py:541
+#: cogs/guild/__init__.py:610
 #, python-brace-format
 msgid ""
 "Done! Now you have `${profile_money}` and the guild has `${guild_money}`."
@@ -4446,28 +4456,28 @@ msgstr ""
 "Selesai! Sekarang anda mempunyai `${profile_money}` dan guild mempunyai `"
 "${guild_money}`."
 
-#: cogs/guild/__init__.py:552
+#: cogs/guild/__init__.py:624
 msgid "[Guild Officer only] Pay money from the guild bank to a user."
 msgstr "[Khusus Opsir guild] Membayar uang dari tabungan guild ke pemain."
 
-#: cogs/guild/__init__.py:558
+#: cogs/guild/__init__.py:630
 msgid "Your guild is too poor."
 msgstr "Guild anda terlalu miskin."
 
-#: cogs/guild/__init__.py:567
+#: cogs/guild/__init__.py:639
 #, python-brace-format
 msgid "Successfully gave **${amount}** from your guild bank to {member}."
 msgstr "Sukses memberikan **${amount}** dari tabungan guild ke {member}."
 
-#: cogs/guild/__init__.py:578
+#: cogs/guild/__init__.py:653
 msgid "Upgrades your guild bank's capacity."
 msgstr "Meningkatkan kapasitas tabungan guild."
 
-#: cogs/guild/__init__.py:587
+#: cogs/guild/__init__.py:662
 msgid "Your guild already reached the maximum upgrade."
 msgstr "Guild anda sudah mencapai upgrade maksimum."
 
-#: cogs/guild/__init__.py:592
+#: cogs/guild/__init__.py:667
 #, python-brace-format
 msgid ""
 "Your guild is too poor, you got **${money}** but it costs **${price}** to "
@@ -4476,48 +4486,48 @@ msgstr ""
 "Guild anda terlalu miskin, tabungan guild anda adalah **${money}** tetapi "
 "membutuhkan **${price}** untuk mengupgrade."
 
-#: cogs/guild/__init__.py:598
+#: cogs/guild/__init__.py:673
 #, python-brace-format
 msgid ""
 "This will upgrade your guild bank limit to **${limit}** for **${cost}**. "
 "Proceed?"
 msgstr ""
 
-#: cogs/guild/__init__.py:613
+#: cogs/guild/__init__.py:688
 #, python-brace-format
 msgid "Your new guild bank limit is now **${limit}**."
 msgstr "Limit baru untuk tabungan guild anda sekarang **${limit}**."
 
-#: cogs/guild/__init__.py:629
+#: cogs/guild/__init__.py:708
 msgid "Battle against another guild."
 msgstr "Bertarung melawan guild lain."
 
-#: cogs/guild/__init__.py:631
+#: cogs/guild/__init__.py:710
 msgid "Poor kiddo having no friendos."
 msgstr "Anak malang ini tidak mempunyai teman."
 
-#: cogs/guild/__init__.py:635
+#: cogs/guild/__init__.py:714
 msgid "One of you both doesn't have a guild."
 msgstr "Salah satu dari anda tidak mempunyai guild."
 
-#: cogs/guild/__init__.py:640
+#: cogs/guild/__init__.py:719
 msgid "One of you both isn't an officer of their guild."
 msgstr "Salah satu dari anda bukan merupakan opsir dari guild."
 
-#: cogs/guild/__init__.py:645
+#: cogs/guild/__init__.py:724
 msgid "One of the guilds can't pay the price."
 msgstr "Salah satu guild tidak dapat membayar taruhan."
 
-#: cogs/guild/__init__.py:653
+#: cogs/guild/__init__.py:732
 msgid "One of the guilds is too small."
 msgstr "Salah satu guild terlalu kecil."
 
-#: cogs/guild/__init__.py:661
+#: cogs/guild/__init__.py:740
 #, python-brace-format
 msgid "{enemy} didn't want to join your battle, {author}."
 msgstr "{enemy} tidak mau melawan anda, {author}."
 
-#: cogs/guild/__init__.py:668
+#: cogs/guild/__init__.py:747
 #, python-brace-format
 msgid ""
 "{enemy} accepted the challenge by {author}. Please now nominate members, "
@@ -4527,24 +4537,24 @@ msgstr ""
 "{author}. Gunakan `battle nominate @user` untuk menambahkan seseorang ke "
 "dalam tim."
 
-#: cogs/guild/__init__.py:684
+#: cogs/guild/__init__.py:763
 msgid "That person isn't in your guild."
 msgstr "Orang tersebut tidak tergabung dalam guild anda."
 
-#: cogs/guild/__init__.py:707
+#: cogs/guild/__init__.py:786
 #, python-brace-format
 msgid "{user} has been added to your team, {author}."
 msgstr "{user} telah ditambahkan ke tim anda, {author}."
 
-#: cogs/guild/__init__.py:712 cogs/guild/__init__.py:738
+#: cogs/guild/__init__.py:791 cogs/guild/__init__.py:817
 msgid "User not found."
 msgstr "User tidak ditemukan."
 
-#: cogs/guild/__init__.py:717 cogs/guild/__init__.py:743
+#: cogs/guild/__init__.py:796 cogs/guild/__init__.py:822
 msgid "Took to long to add members. Fight cancelled."
 msgstr "Anda terlalu lama menambahkan pemain, Pertandingan dibatalkan."
 
-#: cogs/guild/__init__.py:721
+#: cogs/guild/__init__.py:800
 #, python-brace-format
 msgid ""
 "Please now nominate members, {enemy}. Use `battle nominate @user` to add "
@@ -4553,12 +4563,12 @@ msgstr ""
 "Mohon memilih anggota, {enemy}. Gunakan `battle nominate @user` untuk "
 "menambahkan seseorang ke tim."
 
-#: cogs/guild/__init__.py:733
+#: cogs/guild/__init__.py:812
 #, python-brace-format
 msgid "{user} has been added to your team, {enemy}."
 msgstr "{user} telah ditambahkan ke tim anda, {enemy}."
 
-#: cogs/guild/__init__.py:746
+#: cogs/guild/__init__.py:825
 msgid ""
 "Fight started!\n"
 "Generating battles..."
@@ -4566,7 +4576,7 @@ msgstr ""
 "Pertarungan dimulai!\n"
 "Membuat pertarungan..."
 
-#: cogs/guild/__init__.py:748
+#: cogs/guild/__init__.py:827
 msgid ""
 "Fight started!\n"
 "Generating battles... Done."
@@ -4574,7 +4584,7 @@ msgstr ""
 "Pertarungan dimulai!\n"
 "Membuat pertarungan… Selesai."
 
-#: cogs/guild/__init__.py:755
+#: cogs/guild/__init__.py:834
 #, python-brace-format
 msgid ""
 "Guild Battle Fight **{num}** of **{total}**.\n"
@@ -4585,7 +4595,7 @@ msgstr ""
 "**{user}** vs **{user2}**!\n"
 "Pertarungan dilangsungkan..."
 
-#: cogs/guild/__init__.py:785
+#: cogs/guild/__init__.py:864
 #, python-brace-format
 msgid ""
 "Winner of **{user}** vs **{user2}** is **{winner}**! Current points: "
@@ -4594,24 +4604,24 @@ msgstr ""
 "Pemenang dari **{user}** vs **{user2}** adalah **{winner}**! Poin sementara: "
 "**{wins1}** dan **{wins2}**."
 
-#: cogs/guild/__init__.py:798
+#: cogs/guild/__init__.py:877
 msgid "Some guild spent the money??? Bad looser!"
 msgstr "Sebuah guild menghabiskan uangnya??? Pecundang yang menyedihkan!"
 
-#: cogs/guild/__init__.py:814 cogs/guild/__init__.py:833
+#: cogs/guild/__init__.py:893 cogs/guild/__init__.py:912
 #, python-brace-format
 msgid "{guild} won the battle! Congratulations!"
 msgstr "{guild} memenangkan pertarungan! Selamat!"
 
-#: cogs/guild/__init__.py:838
+#: cogs/guild/__init__.py:917
 msgid "It's a tie!"
 msgstr "Hasilnya seri!"
 
-#: cogs/guild/__init__.py:845
+#: cogs/guild/__init__.py:924
 msgid "Starts a guild adventure."
 msgstr "Memulai petualangan guild."
 
-#: cogs/guild/__init__.py:850
+#: cogs/guild/__init__.py:929
 #, python-brace-format
 msgid ""
 "Your guild is already on an adventure! Use `{prefix}guild status` to view "
@@ -4620,7 +4630,7 @@ msgstr ""
 "Guild anda sudah berada di petualangan! Gunakan `{prefix}guild status` untuk "
 "melihat durasi yang tersisa."
 
-#: cogs/guild/__init__.py:859
+#: cogs/guild/__init__.py:938
 #, python-brace-format
 msgid ""
 "{author} seeks a guild adventure for **{guild}**! React to join! Unlimited "
@@ -4630,20 +4640,20 @@ msgstr ""
 "bergabung! Tidak ada batas maksimal anggota untuk bergabung selama semenit "
 "kedepan. Minimal pemain yang dibutuhkan adalah 3."
 
-#: cogs/guild/__init__.py:887
+#: cogs/guild/__init__.py:966
 #, python-brace-format
 msgid "Alright, {user}, you have been added."
 msgstr "Baiklah, {user}, anda telah didaftarkan ke petualangan guild."
 
-#: cogs/guild/__init__.py:892
+#: cogs/guild/__init__.py:971
 msgid "You aren't in their guild."
 msgstr "Anda tidak berada di guild tersebut."
 
-#: cogs/guild/__init__.py:897
+#: cogs/guild/__init__.py:976
 msgid "You didn't get enough other players for the guild adventure."
 msgstr "Tidak cukup anggota untuk memulai petualangan guild."
 
-#: cogs/guild/__init__.py:908
+#: cogs/guild/__init__.py:987
 #, python-brace-format
 msgid ""
 "\n"
@@ -4662,11 +4672,11 @@ msgstr ""
 "Tingkat kesulitannya adalah **{difficulty}**\n"
 "Durasi: **{time}**\n"
 
-#: cogs/guild/__init__.py:928
+#: cogs/guild/__init__.py:1011
 msgid "Views your guild adventure."
 msgstr "Melihat petualangan guild."
 
-#: cogs/guild/__init__.py:934
+#: cogs/guild/__init__.py:1017
 #, python-brace-format
 msgid ""
 "Your guild isn't on an adventure yet. Ask your guild leader to use `{prefix}"
@@ -4675,14 +4685,14 @@ msgstr ""
 "Guild anda tidak sedang melakukan petualangan. Mintalah pemimpin guild untuk "
 "menggunakan `{prefix}guild adventure` untuk memulai"
 
-#: cogs/guild/__init__.py:950
+#: cogs/guild/__init__.py:1033
 #, python-brace-format
 msgid ""
 "Your guild has completed an adventure of difficulty `{difficulty}` and **"
 "${gold}** has been added to the bank. You also found **{pumpkins}** 🎃!"
 msgstr ""
 
-#: cogs/guild/__init__.py:956
+#: cogs/guild/__init__.py:1043
 #, python-brace-format
 msgid ""
 "Your guild is currently in an adventure with difficulty `{difficulty}`.\n"
@@ -4692,11 +4702,11 @@ msgstr ""
 "`{difficulty}`.\n"
 "Durasi tersisa: `{remain}`"
 
-#: cogs/guild/__init__.py:966
+#: cogs/guild/__init__.py:1053
 msgid "View your guild's progress in the ongoing event."
 msgstr ""
 
-#: cogs/guild/__init__.py:977
+#: cogs/guild/__init__.py:1064
 #, python-brace-format
 msgid ""
 "**Halloween 2019 🎃 👻**\n"
@@ -4722,15 +4732,15 @@ msgid ""
 "updateguild`, so choose carefully*"
 msgstr ""
 
-#: cogs/guild/__init__.py:1007
+#: cogs/guild/__init__.py:1094
 msgid "[Guild Leader only] Claim event rewards."
 msgstr ""
 
-#: cogs/guild/__init__.py:1037
+#: cogs/guild/__init__.py:1124
 msgid "You have insufficient pumpkins for this reward."
 msgstr ""
 
-#: cogs/guild/__init__.py:1063
+#: cogs/guild/__init__.py:1150
 #, python-brace-format
 msgid "Reward successfully claimed for **{amount}** 🎃!"
 msgstr ""

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-10-26 03:48-0700\n"
+"POT-Creation-Date: 2019-10-26 04:25-0700\n"
 "PO-Revision-Date: 2019-10-18 21:18+0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -518,8 +518,8 @@ msgstr "Kullanıcıyla sandık takas eder."
 
 #. preserve deletion of admins
 #. preserve renaming of admins
-#: cogs/crates/__init__.py:161 cogs/guild/__init__.py:281
-#: cogs/guild/__init__.py:301 cogs/admin/__init__.py:85
+#: cogs/crates/__init__.py:161 cogs/guild/__init__.py:287
+#: cogs/guild/__init__.py:315 cogs/admin/__init__.py:85
 #: cogs/admin/__init__.py:98
 msgid "Very funny..."
 msgstr "Çok komik..."
@@ -1889,7 +1889,7 @@ msgid "Please either buy `time`, `luck` or `money`."
 msgstr "Lütfen `zaman`, `şans` ya da `para` alın."
 
 #: cogs/store/__init__.py:62 cogs/gambling/__init__.py:380
-#: cogs/gambling/__init__.py:412 cogs/guild/__init__.py:522
+#: cogs/gambling/__init__.py:412 cogs/guild/__init__.py:591
 msgid "You're too poor."
 msgstr "Çok fakirsin."
 
@@ -2117,7 +2117,7 @@ msgid "That is not a valid premade background."
 msgstr "Bu geçerli bir önceden yapılmış arkaplan değil."
 
 #: cogs/patreon/__init__.py:83 cogs/patreon/__init__.py:111
-#: cogs/classes/__init__.py:490 cogs/guild/__init__.py:431
+#: cogs/classes/__init__.py:490 cogs/guild/__init__.py:473
 msgid ""
 "I couldn't read that URL. Does it start with `http://` or `https://` and is "
 "either a png or jpeg?"
@@ -4323,41 +4323,41 @@ msgstr ""
 msgid "Badge updated!"
 msgstr "Rozet güncellendi!"
 
-#: cogs/guild/__init__.py:179
+#: cogs/guild/__init__.py:182
 msgid "Creates a guild."
 msgstr "Lonca kurar."
 
-#: cogs/guild/__init__.py:185
+#: cogs/guild/__init__.py:188
 msgid "Enter a name for your guild. Maximum length is 20 characters."
 msgstr "Loncan için bir isim yaz. Maksimum uzunluk 20 karakterdir."
 
-#: cogs/guild/__init__.py:191 cogs/guild/__init__.py:202
+#: cogs/guild/__init__.py:194 cogs/guild/__init__.py:205
 msgid "Cancelled guild creation."
 msgstr "Lonca kurulumu iptal edildi."
 
-#: cogs/guild/__init__.py:194
+#: cogs/guild/__init__.py:197
 msgid "Guild names musn't exceed 20 characters."
 msgstr "Lonca isimleri 20 karakteri geçmemeli."
 
-#: cogs/guild/__init__.py:196
+#: cogs/guild/__init__.py:199
 msgid "Send a link to the guild's icon. Maximum length is 60 characters."
 msgstr ""
 "Lonca'nın simgesine giden bir bağlantı yolla. Maksimum uzunluk 60 "
 "karakterdir."
 
-#: cogs/guild/__init__.py:205
+#: cogs/guild/__init__.py:208
 msgid "URLs mustn't exceed 60 characters."
 msgstr "URLler 60 karakteri geçmemeli."
 
-#: cogs/guild/__init__.py:212
+#: cogs/guild/__init__.py:215
 msgid "Are you sure? React to create a guild for **$10000**"
 msgstr "Emin misin? **$10000** karşılığında lonca kurmak için tepki ver"
 
-#: cogs/guild/__init__.py:217
+#: cogs/guild/__init__.py:220
 msgid "A guild creation costs **$10000**, you are too poor."
 msgstr "Bir lonca kurmak **$10000** ediyor, çok fakirsin."
 
-#: cogs/guild/__init__.py:236
+#: cogs/guild/__init__.py:239
 #, python-brace-format
 msgid ""
 "Successfully added your guild **{name}** with a member limit of "
@@ -4366,67 +4366,67 @@ msgstr ""
 "Üye limiti **{memberlimit}** olan loncan **{name}** başarılı bir şekilde "
 "eklendi."
 
-#: cogs/guild/__init__.py:244
+#: cogs/guild/__init__.py:247
 msgid "Transfer guild ownership to someone else."
 msgstr "Lonca sahipliğini bir başkasına devret."
 
-#: cogs/guild/__init__.py:249
+#: cogs/guild/__init__.py:252
 msgid "Not a member of your guild."
 msgstr "Senin loncanın bir üyesi değil."
 
-#: cogs/guild/__init__.py:251
+#: cogs/guild/__init__.py:254
 #, python-brace-format
 msgid "Are you sure to transfer guild ownership to {user}?"
 msgstr "Lonca sahipliğini {user}'a devrettiğinden emin misin?"
 
-#: cogs/guild/__init__.py:273
+#: cogs/guild/__init__.py:276
 #, python-brace-format
 msgid "{user} now leads {guild}."
 msgstr "{user} şimdi {guild} loncasını yönetiyor."
 
-#: cogs/guild/__init__.py:279
+#: cogs/guild/__init__.py:285
 msgid "Promote someone to the rank of officer"
 msgstr "Birini subay rütbesine terfi ettir"
 
-#: cogs/guild/__init__.py:283 cogs/guild/__init__.py:303
+#: cogs/guild/__init__.py:289 cogs/guild/__init__.py:317
 msgid "Target is not a member of your guild."
 msgstr "Hedef senin loncanın bir üyesi değil."
 
-#: cogs/guild/__init__.py:285
+#: cogs/guild/__init__.py:291
 msgid "This user is already an officer of your guild."
 msgstr "Bu kullanıcı zaten loncanın bir subayı."
 
-#: cogs/guild/__init__.py:290
+#: cogs/guild/__init__.py:301
 #, python-brace-format
 msgid "Done! {member} has been promoted to the rank of `Officer`."
 msgstr "Bitti! {member} `Subay` rütbesine terfi etti."
 
-#: cogs/guild/__init__.py:299
+#: cogs/guild/__init__.py:313
 msgid "Demotes someone from the officer rank"
 msgstr "Birini subay rütbesinden düşürür"
 
-#: cogs/guild/__init__.py:305
+#: cogs/guild/__init__.py:319
 msgid "This user can't be demoted any further."
 msgstr "Bu kullanıcı daha fazla düşürülemez."
 
-#: cogs/guild/__init__.py:310
+#: cogs/guild/__init__.py:329
 #, python-brace-format
 msgid "Done! {member} has been demoted to the rank of `Member`."
 msgstr "Bitti! {member} `Üye` rütbesine düşürüldü."
 
-#: cogs/guild/__init__.py:319
+#: cogs/guild/__init__.py:341
 msgid "[Guild officer only] Invite someone to your guild."
 msgstr "[Lonca subayına özel] Birini loncana davet et."
 
-#: cogs/guild/__init__.py:321 cogs/guild/__init__.py:345
+#: cogs/guild/__init__.py:343 cogs/guild/__init__.py:367
 msgid "That member already has a guild."
 msgstr "Bu üyenin zaten bir loncası var."
 
-#: cogs/guild/__init__.py:334
+#: cogs/guild/__init__.py:356
 msgid "Your guild is already at the maximum member count."
 msgstr "Loncan zaten maksimum üye sayısında."
 
-#: cogs/guild/__init__.py:339
+#: cogs/guild/__init__.py:361
 #, python-brace-format
 msgid ""
 "{newmember}, {author} invites you to join **{name}**. React to join the "
@@ -4435,90 +4435,100 @@ msgstr ""
 "{newmember}, {author} seni **{name}** loncasına katılmaya davet ediyor. "
 "Loncaya katılmak için tepki ver."
 
-#: cogs/guild/__init__.py:350
+#: cogs/guild/__init__.py:372
 #, python-brace-format
 msgid "{newmember} is now a member of **{name}**. Welcome!"
 msgstr "{newmember} artık bir **{name}** üyesi. Hoş geldin!"
 
-#: cogs/guild/__init__.py:360
+#: cogs/guild/__init__.py:385
 msgid "Leave your current guild."
 msgstr "Şu anki loncandan çık."
 
-#: cogs/guild/__init__.py:367
+#: cogs/guild/__init__.py:398
 msgid "You left your guild."
 msgstr "Loncanı terk ettin."
 
-#: cogs/guild/__init__.py:373
+#: cogs/guild/__init__.py:405
 msgid "[Guild Officer only] Kick someone from your guild."
 msgstr "[Lonca Subayına özel] Birini loncadan at."
 
-#: cogs/guild/__init__.py:376 cogs/guild/__init__.py:385
+#: cogs/guild/__init__.py:408 cogs/guild/__init__.py:417
 msgid "Not your guild mate."
 msgstr "Lonca arkadaşın değil."
 
-#: cogs/guild/__init__.py:391
+#: cogs/guild/__init__.py:423
 msgid "You can only kick members."
 msgstr "Sadece üyeleri atabilirsin."
 
-#: cogs/guild/__init__.py:397
+#: cogs/guild/__init__.py:432
 msgid "The person has been kicked!"
 msgstr "Bu kişi atıldı!"
 
-#: cogs/guild/__init__.py:403
+#: cogs/guild/__init__.py:441
 msgid "[Guild Owner only] Deletes the guild."
 msgstr "[Lonca Sahibine özel] Loncayı siler."
 
-#: cogs/guild/__init__.py:405
+#: cogs/guild/__init__.py:443
 msgid "Are you sure to delete your guild? React to confirm the deletion."
 msgstr "Lonca silmekte emin misin? Silmeyi onaylamak için tepki ver."
 
-#: cogs/guild/__init__.py:416
+#: cogs/guild/__init__.py:457
 msgid "Successfully deleted your guild."
 msgstr "Loncan başarılı bir şekilde silindi."
 
-#: cogs/guild/__init__.py:422
+#: cogs/guild/__init__.py:464
 msgid "[Guild Leader only] Changes the guild icon."
 msgstr "[Lonca Liderine özel] Lonca simgesini değiştirir."
 
-#: cogs/guild/__init__.py:424
+#: cogs/guild/__init__.py:466
 msgid "URLs musn't exceed 60 characters."
 msgstr "URLler 60 karakteri geçmemeli."
 
-#: cogs/guild/__init__.py:439
+#: cogs/guild/__init__.py:481
 msgid "Successfully updated the guild icon."
 msgstr "Lonca simgesi başarılı bir şekilde güncellendi."
 
-#: cogs/guild/__init__.py:445
+#: cogs/guild/__init__.py:490
 msgid "[Guild Owner only] Changes the guild description."
 msgstr "[Lonca Sahibine özel] Lonca açıklamasını değiştirir."
 
-#: cogs/guild/__init__.py:447
+#: cogs/guild/__init__.py:492
 msgid "The text may be up to 200 characters only."
 msgstr "Metin en fazla 200 karakter olabilir."
 
-#: cogs/guild/__init__.py:451
+#: cogs/guild/__init__.py:498
 msgid "Updated!"
 msgstr "Güncellendi!"
 
-#: cogs/guild/__init__.py:457
+#: cogs/guild/__init__.py:509
+msgid ""
+"[Guild Owner only] Change the logging channel for the guild. You also need "
+"to be server admin."
+msgstr ""
+
+#: cogs/guild/__init__.py:512
+msgid "This will become the channel for all logs. Are you sure?"
+msgstr ""
+
+#: cogs/guild/__init__.py:526
 msgid "Shows the richest players in your guild."
 msgstr "Loncandaki en zengin oyuncuları gösterir."
 
-#: cogs/guild/__init__.py:470
+#: cogs/guild/__init__.py:539
 #, python-brace-format
 msgid "a character by `{charname}` with **${money}**"
 msgstr "`{charname}` tarafından yapılmış **${money}** olan bir karakter"
 
-#: cogs/guild/__init__.py:476
+#: cogs/guild/__init__.py:545
 #, python-brace-format
 msgid "The Richest Players of {guild}"
 msgstr "{guild} Loncasının En Zengin Oyuncuları"
 
-#: cogs/guild/__init__.py:486
+#: cogs/guild/__init__.py:555
 msgid "Shows the best players of your guild by XP."
 msgstr "Loncandaki TPye göre en iyi oyuncuları gösterir."
 
-#: cogs/guild/__init__.py:500
+#: cogs/guild/__init__.py:569
 #, python-brace-format
 msgid ""
 "{name}, a character by `{charname}` with Level **{level}** (**{xp}** XP)"
@@ -4526,49 +4536,49 @@ msgstr ""
 "{name}, `{charname}` tarafından yapılmış, Seviye **{level}** (**{xp}** TP) "
 "olan bir karakter"
 
-#: cogs/guild/__init__.py:510
+#: cogs/guild/__init__.py:579
 #, python-brace-format
 msgid "The Best Players of {name}"
 msgstr "{name}'in En İyi Oyuncuları"
 
-#: cogs/guild/__init__.py:520
+#: cogs/guild/__init__.py:589
 msgid "Invest some of your money and put it to the guild bank."
 msgstr "Paranın birazını yatır ve lonca bankasına koy."
 
-#: cogs/guild/__init__.py:528
+#: cogs/guild/__init__.py:597
 msgid "The bank would be full."
 msgstr "Banka dolu."
 
-#: cogs/guild/__init__.py:541
+#: cogs/guild/__init__.py:610
 #, python-brace-format
 msgid ""
 "Done! Now you have `${profile_money}` and the guild has `${guild_money}`."
 msgstr ""
 "Bitti! Şu anda sende `${profile_money}` ve loncada da `${guild_money}` var."
 
-#: cogs/guild/__init__.py:552
+#: cogs/guild/__init__.py:624
 msgid "[Guild Officer only] Pay money from the guild bank to a user."
 msgstr "[Lonca Subayına özel] Lonca bankasından kullanıcıya para öde."
 
-#: cogs/guild/__init__.py:558
+#: cogs/guild/__init__.py:630
 msgid "Your guild is too poor."
 msgstr "Loncan çok fakir."
 
-#: cogs/guild/__init__.py:567
+#: cogs/guild/__init__.py:639
 #, python-brace-format
 msgid "Successfully gave **${amount}** from your guild bank to {member}."
 msgstr ""
 "Lonca bankasından **${amount}** başarılı bir şekilde {member}'a verildi."
 
-#: cogs/guild/__init__.py:578
+#: cogs/guild/__init__.py:653
 msgid "Upgrades your guild bank's capacity."
 msgstr "Lonca bankasının kapasitesini yükseltir."
 
-#: cogs/guild/__init__.py:587
+#: cogs/guild/__init__.py:662
 msgid "Your guild already reached the maximum upgrade."
 msgstr "Loncan zaten maksimum yükseltmeye ulaştı."
 
-#: cogs/guild/__init__.py:592
+#: cogs/guild/__init__.py:667
 #, python-brace-format
 msgid ""
 "Your guild is too poor, you got **${money}** but it costs **${price}** to "
@@ -4576,7 +4586,7 @@ msgid ""
 msgstr ""
 "Loncan çok fakir, sende **${money}** var ama yükseltmek **${price}** ediyor."
 
-#: cogs/guild/__init__.py:598
+#: cogs/guild/__init__.py:673
 #, python-brace-format
 msgid ""
 "This will upgrade your guild bank limit to **${limit}** for **${cost}**. "
@@ -4585,41 +4595,41 @@ msgstr ""
 "Bu, **${cost}**'a lonca bankası limitini **${limit}**'a yükseltecek. Devam "
 "edilsin mi?"
 
-#: cogs/guild/__init__.py:613
+#: cogs/guild/__init__.py:688
 #, python-brace-format
 msgid "Your new guild bank limit is now **${limit}**."
 msgstr "Lonca bankasının yeni limiti artık **${limit}**."
 
-#: cogs/guild/__init__.py:629
+#: cogs/guild/__init__.py:708
 msgid "Battle against another guild."
 msgstr "Başka bir loncaya karşı savaş."
 
-#: cogs/guild/__init__.py:631
+#: cogs/guild/__init__.py:710
 msgid "Poor kiddo having no friendos."
 msgstr "Zavallı çocuğun hiç arkadaşı yok."
 
-#: cogs/guild/__init__.py:635
+#: cogs/guild/__init__.py:714
 msgid "One of you both doesn't have a guild."
 msgstr "İkinizden birinin loncası yok."
 
-#: cogs/guild/__init__.py:640
+#: cogs/guild/__init__.py:719
 msgid "One of you both isn't an officer of their guild."
 msgstr "İkinizden biri loncasında subay değil."
 
-#: cogs/guild/__init__.py:645
+#: cogs/guild/__init__.py:724
 msgid "One of the guilds can't pay the price."
 msgstr "Loncalardan biri fiyatı ödeyemiyor."
 
-#: cogs/guild/__init__.py:653
+#: cogs/guild/__init__.py:732
 msgid "One of the guilds is too small."
 msgstr "Loncalardan biri çok küçük."
 
-#: cogs/guild/__init__.py:661
+#: cogs/guild/__init__.py:740
 #, python-brace-format
 msgid "{enemy} didn't want to join your battle, {author}."
 msgstr "{enemy} savaşına katılmak istemedi, {author}."
 
-#: cogs/guild/__init__.py:668
+#: cogs/guild/__init__.py:747
 #, python-brace-format
 msgid ""
 "{enemy} accepted the challenge by {author}. Please now nominate members, "
@@ -4629,24 +4639,24 @@ msgstr ""
 "üye ata, {author}. Kendi takımına birini eklemek için `battle nominate "
 "@user` kullan."
 
-#: cogs/guild/__init__.py:684
+#: cogs/guild/__init__.py:763
 msgid "That person isn't in your guild."
 msgstr "Bu kişi loncanda değil."
 
-#: cogs/guild/__init__.py:707
+#: cogs/guild/__init__.py:786
 #, python-brace-format
 msgid "{user} has been added to your team, {author}."
 msgstr "{user} takımına eklendi, {author}."
 
-#: cogs/guild/__init__.py:712 cogs/guild/__init__.py:738
+#: cogs/guild/__init__.py:791 cogs/guild/__init__.py:817
 msgid "User not found."
 msgstr "Kullanıcı bulunamadı."
 
-#: cogs/guild/__init__.py:717 cogs/guild/__init__.py:743
+#: cogs/guild/__init__.py:796 cogs/guild/__init__.py:822
 msgid "Took to long to add members. Fight cancelled."
 msgstr "Üye eklemek çok uzun sürdü. Dövüş iptal edildi."
 
-#: cogs/guild/__init__.py:721
+#: cogs/guild/__init__.py:800
 #, python-brace-format
 msgid ""
 "Please now nominate members, {enemy}. Use `battle nominate @user` to add "
@@ -4655,12 +4665,12 @@ msgstr ""
 "Lütfen şimdi üye ata, {enemy}. Kendi takımına birini eklemek için `battle "
 "nominate @user` kullan."
 
-#: cogs/guild/__init__.py:733
+#: cogs/guild/__init__.py:812
 #, python-brace-format
 msgid "{user} has been added to your team, {enemy}."
 msgstr "{user} takımına eklendi, {enemy}."
 
-#: cogs/guild/__init__.py:746
+#: cogs/guild/__init__.py:825
 msgid ""
 "Fight started!\n"
 "Generating battles..."
@@ -4668,7 +4678,7 @@ msgstr ""
 "Dövüş başladı!\n"
 "Savaşlar oluşturuluyor..."
 
-#: cogs/guild/__init__.py:748
+#: cogs/guild/__init__.py:827
 msgid ""
 "Fight started!\n"
 "Generating battles... Done."
@@ -4676,7 +4686,7 @@ msgstr ""
 "Dövüş başladı!\n"
 "Savaşlar oluşturuluyor... Bitti."
 
-#: cogs/guild/__init__.py:755
+#: cogs/guild/__init__.py:834
 #, python-brace-format
 msgid ""
 "Guild Battle Fight **{num}** of **{total}**.\n"
@@ -4687,7 +4697,7 @@ msgstr ""
 "**{user}** vs **{user2}**!\n"
 "Savaş sürüyor..."
 
-#: cogs/guild/__init__.py:785
+#: cogs/guild/__init__.py:864
 #, python-brace-format
 msgid ""
 "Winner of **{user}** vs **{user2}** is **{winner}**! Current points: "
@@ -4696,24 +4706,24 @@ msgstr ""
 "**{user}** vs **{user2}**'in kazananı **{winner}**! Şu anki puanlar: "
 "**{wins1}** ve **{wins2}**."
 
-#: cogs/guild/__init__.py:798
+#: cogs/guild/__init__.py:877
 msgid "Some guild spent the money??? Bad looser!"
 msgstr "Bazı lonca parayı harcadı??? Kötü ezik!"
 
-#: cogs/guild/__init__.py:814 cogs/guild/__init__.py:833
+#: cogs/guild/__init__.py:893 cogs/guild/__init__.py:912
 #, python-brace-format
 msgid "{guild} won the battle! Congratulations!"
 msgstr "{guild} savaşı kazandı! Tebrikler!"
 
-#: cogs/guild/__init__.py:838
+#: cogs/guild/__init__.py:917
 msgid "It's a tie!"
 msgstr "Berabere!"
 
-#: cogs/guild/__init__.py:845
+#: cogs/guild/__init__.py:924
 msgid "Starts a guild adventure."
 msgstr "Lonca macerası başlatır."
 
-#: cogs/guild/__init__.py:850
+#: cogs/guild/__init__.py:929
 #, python-brace-format
 msgid ""
 "Your guild is already on an adventure! Use `{prefix}guild status` to view "
@@ -4722,7 +4732,7 @@ msgstr ""
 "Loncan zaten macerada! Ne kadar süreceğini görmek için `{prefix}guild "
 "status` kullan."
 
-#: cogs/guild/__init__.py:859
+#: cogs/guild/__init__.py:938
 #, python-brace-format
 msgid ""
 "{author} seeks a guild adventure for **{guild}**! React to join! Unlimited "
@@ -4732,20 +4742,20 @@ msgstr ""
 "Bir sonraki dakikada sınırsız oyuncu katılabilir. Gereken minimum oyuncu "
 "sayısı 3."
 
-#: cogs/guild/__init__.py:887
+#: cogs/guild/__init__.py:966
 #, python-brace-format
 msgid "Alright, {user}, you have been added."
 msgstr "Peki, {user}, eklendin."
 
-#: cogs/guild/__init__.py:892
+#: cogs/guild/__init__.py:971
 msgid "You aren't in their guild."
 msgstr "Onların loncasında değilsin."
 
-#: cogs/guild/__init__.py:897
+#: cogs/guild/__init__.py:976
 msgid "You didn't get enough other players for the guild adventure."
 msgstr "Lonca macerası için yeterince başka oyuncu alamadın."
 
-#: cogs/guild/__init__.py:908
+#: cogs/guild/__init__.py:987
 #, python-brace-format
 msgid ""
 "\n"
@@ -4764,11 +4774,11 @@ msgstr ""
 "Zorluk **{difficulty}**\n"
 "Alacağı Zaman: **{time}**\n"
 
-#: cogs/guild/__init__.py:928
+#: cogs/guild/__init__.py:1011
 msgid "Views your guild adventure."
 msgstr "Lonca macerana bakar."
 
-#: cogs/guild/__init__.py:934
+#: cogs/guild/__init__.py:1017
 #, python-brace-format
 msgid ""
 "Your guild isn't on an adventure yet. Ask your guild leader to use `{prefix}"
@@ -4777,7 +4787,7 @@ msgstr ""
 "Loncan henüz macerada değil. Bir tane başlatması için loncanın liderinden "
 "`{prefix}guild adventure` kullanmasını iste"
 
-#: cogs/guild/__init__.py:950
+#: cogs/guild/__init__.py:1033
 #, python-brace-format
 msgid ""
 "Your guild has completed an adventure of difficulty `{difficulty}` and **"
@@ -4786,7 +4796,7 @@ msgstr ""
 "Loncan `{difficulty}` zorluğundaki bir macerayı tamamladı ve **${gold}** "
 "bankaya eklendi. Ayrıca **{pumpkins}** 🎃 buldun!"
 
-#: cogs/guild/__init__.py:956
+#: cogs/guild/__init__.py:1043
 #, python-brace-format
 msgid ""
 "Your guild is currently in an adventure with difficulty `{difficulty}`.\n"
@@ -4795,11 +4805,11 @@ msgstr ""
 "Loncan şu anda `{difficulty}` zorlukta olan bir macerada.\n"
 "Kalan zaman: `{remain}`"
 
-#: cogs/guild/__init__.py:966
+#: cogs/guild/__init__.py:1053
 msgid "View your guild's progress in the ongoing event."
 msgstr "Loncanın, devam eden etkinlikteki ilerlemesine bak."
 
-#: cogs/guild/__init__.py:977
+#: cogs/guild/__init__.py:1064
 #, python-brace-format
 msgid ""
 "**Halloween 2019 🎃 👻**\n"
@@ -4846,15 +4856,15 @@ msgstr ""
 "*Eğer lider `{prefix}updateguild` kullanırsa bunların **gideceğine** lütfen "
 "dikkat et, bu yüzden dikkatli seç*"
 
-#: cogs/guild/__init__.py:1007
+#: cogs/guild/__init__.py:1094
 msgid "[Guild Leader only] Claim event rewards."
 msgstr "[Lonca Liderine özel] Etkinlik ödüllerini al."
 
-#: cogs/guild/__init__.py:1037
+#: cogs/guild/__init__.py:1124
 msgid "You have insufficient pumpkins for this reward."
 msgstr "Bu ödül için yetersiz balkabağın var."
 
-#: cogs/guild/__init__.py:1063
+#: cogs/guild/__init__.py:1150
 #, python-brace-format
 msgid "Reward successfully claimed for **{amount}** 🎃!"
 msgstr "Ödül başarılı bir şekilde **{amount}** 🎃 ile alındı!"

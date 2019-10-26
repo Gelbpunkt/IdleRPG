@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-10-26 03:48-0700\n"
+"POT-Creation-Date: 2019-10-26 04:25-0700\n"
 "PO-Revision-Date: 2019-05-29 12:09-0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -497,8 +497,8 @@ msgstr "As entregas das caixas a um usuario."
 
 #. preserve deletion of admins
 #. preserve renaming of admins
-#: cogs/crates/__init__.py:161 cogs/guild/__init__.py:281
-#: cogs/guild/__init__.py:301 cogs/admin/__init__.py:85
+#: cogs/crates/__init__.py:161 cogs/guild/__init__.py:287
+#: cogs/guild/__init__.py:315 cogs/admin/__init__.py:85
 #: cogs/admin/__init__.py:98
 msgid "Very funny..."
 msgstr "muito engraçado..."
@@ -1794,7 +1794,7 @@ msgid "Please either buy `time`, `luck` or `money`."
 msgstr ""
 
 #: cogs/store/__init__.py:62 cogs/gambling/__init__.py:380
-#: cogs/gambling/__init__.py:412 cogs/guild/__init__.py:522
+#: cogs/gambling/__init__.py:412 cogs/guild/__init__.py:591
 msgid "You're too poor."
 msgstr ""
 
@@ -2007,7 +2007,7 @@ msgid "That is not a valid premade background."
 msgstr ""
 
 #: cogs/patreon/__init__.py:83 cogs/patreon/__init__.py:111
-#: cogs/classes/__init__.py:490 cogs/guild/__init__.py:431
+#: cogs/classes/__init__.py:490 cogs/guild/__init__.py:473
 msgid ""
 "I couldn't read that URL. Does it start with `http://` or `https://` and is "
 "either a png or jpeg?"
@@ -4058,338 +4058,348 @@ msgstr ""
 msgid "Badge updated!"
 msgstr ""
 
-#: cogs/guild/__init__.py:179
+#: cogs/guild/__init__.py:182
 msgid "Creates a guild."
 msgstr ""
 
-#: cogs/guild/__init__.py:185
+#: cogs/guild/__init__.py:188
 msgid "Enter a name for your guild. Maximum length is 20 characters."
 msgstr ""
 
-#: cogs/guild/__init__.py:191 cogs/guild/__init__.py:202
+#: cogs/guild/__init__.py:194 cogs/guild/__init__.py:205
 msgid "Cancelled guild creation."
 msgstr ""
 
-#: cogs/guild/__init__.py:194
+#: cogs/guild/__init__.py:197
 msgid "Guild names musn't exceed 20 characters."
 msgstr ""
 
-#: cogs/guild/__init__.py:196
+#: cogs/guild/__init__.py:199
 msgid "Send a link to the guild's icon. Maximum length is 60 characters."
 msgstr ""
 
-#: cogs/guild/__init__.py:205
+#: cogs/guild/__init__.py:208
 msgid "URLs mustn't exceed 60 characters."
 msgstr ""
 
-#: cogs/guild/__init__.py:212
+#: cogs/guild/__init__.py:215
 msgid "Are you sure? React to create a guild for **$10000**"
 msgstr ""
 
-#: cogs/guild/__init__.py:217
+#: cogs/guild/__init__.py:220
 msgid "A guild creation costs **$10000**, you are too poor."
 msgstr ""
 
-#: cogs/guild/__init__.py:236
+#: cogs/guild/__init__.py:239
 #, python-brace-format
 msgid ""
 "Successfully added your guild **{name}** with a member limit of "
 "**{memberlimit}**."
 msgstr ""
 
-#: cogs/guild/__init__.py:244
+#: cogs/guild/__init__.py:247
 msgid "Transfer guild ownership to someone else."
 msgstr ""
 
-#: cogs/guild/__init__.py:249
+#: cogs/guild/__init__.py:252
 msgid "Not a member of your guild."
 msgstr ""
 
-#: cogs/guild/__init__.py:251
+#: cogs/guild/__init__.py:254
 #, python-brace-format
 msgid "Are you sure to transfer guild ownership to {user}?"
 msgstr ""
 
-#: cogs/guild/__init__.py:273
+#: cogs/guild/__init__.py:276
 #, python-brace-format
 msgid "{user} now leads {guild}."
 msgstr ""
 
-#: cogs/guild/__init__.py:279
+#: cogs/guild/__init__.py:285
 msgid "Promote someone to the rank of officer"
 msgstr ""
 
-#: cogs/guild/__init__.py:283 cogs/guild/__init__.py:303
+#: cogs/guild/__init__.py:289 cogs/guild/__init__.py:317
 msgid "Target is not a member of your guild."
 msgstr ""
 
-#: cogs/guild/__init__.py:285
+#: cogs/guild/__init__.py:291
 msgid "This user is already an officer of your guild."
 msgstr ""
 
-#: cogs/guild/__init__.py:290
+#: cogs/guild/__init__.py:301
 #, python-brace-format
 msgid "Done! {member} has been promoted to the rank of `Officer`."
 msgstr ""
 
-#: cogs/guild/__init__.py:299
+#: cogs/guild/__init__.py:313
 msgid "Demotes someone from the officer rank"
 msgstr ""
 
-#: cogs/guild/__init__.py:305
+#: cogs/guild/__init__.py:319
 msgid "This user can't be demoted any further."
 msgstr ""
 
-#: cogs/guild/__init__.py:310
+#: cogs/guild/__init__.py:329
 #, python-brace-format
 msgid "Done! {member} has been demoted to the rank of `Member`."
 msgstr ""
 
-#: cogs/guild/__init__.py:319
+#: cogs/guild/__init__.py:341
 msgid "[Guild officer only] Invite someone to your guild."
 msgstr ""
 
-#: cogs/guild/__init__.py:321 cogs/guild/__init__.py:345
+#: cogs/guild/__init__.py:343 cogs/guild/__init__.py:367
 msgid "That member already has a guild."
 msgstr ""
 
-#: cogs/guild/__init__.py:334
+#: cogs/guild/__init__.py:356
 msgid "Your guild is already at the maximum member count."
 msgstr ""
 
-#: cogs/guild/__init__.py:339
+#: cogs/guild/__init__.py:361
 #, python-brace-format
 msgid ""
 "{newmember}, {author} invites you to join **{name}**. React to join the "
 "guild."
 msgstr ""
 
-#: cogs/guild/__init__.py:350
+#: cogs/guild/__init__.py:372
 #, python-brace-format
 msgid "{newmember} is now a member of **{name}**. Welcome!"
 msgstr ""
 
-#: cogs/guild/__init__.py:360
+#: cogs/guild/__init__.py:385
 msgid "Leave your current guild."
 msgstr ""
 
-#: cogs/guild/__init__.py:367
+#: cogs/guild/__init__.py:398
 msgid "You left your guild."
 msgstr ""
 
-#: cogs/guild/__init__.py:373
+#: cogs/guild/__init__.py:405
 msgid "[Guild Officer only] Kick someone from your guild."
 msgstr ""
 
-#: cogs/guild/__init__.py:376 cogs/guild/__init__.py:385
+#: cogs/guild/__init__.py:408 cogs/guild/__init__.py:417
 msgid "Not your guild mate."
 msgstr ""
 
-#: cogs/guild/__init__.py:391
+#: cogs/guild/__init__.py:423
 msgid "You can only kick members."
 msgstr ""
 
-#: cogs/guild/__init__.py:397
+#: cogs/guild/__init__.py:432
 msgid "The person has been kicked!"
 msgstr ""
 
-#: cogs/guild/__init__.py:403
+#: cogs/guild/__init__.py:441
 msgid "[Guild Owner only] Deletes the guild."
 msgstr ""
 
-#: cogs/guild/__init__.py:405
+#: cogs/guild/__init__.py:443
 msgid "Are you sure to delete your guild? React to confirm the deletion."
 msgstr ""
 
-#: cogs/guild/__init__.py:416
+#: cogs/guild/__init__.py:457
 msgid "Successfully deleted your guild."
 msgstr ""
 
-#: cogs/guild/__init__.py:422
+#: cogs/guild/__init__.py:464
 msgid "[Guild Leader only] Changes the guild icon."
 msgstr ""
 
-#: cogs/guild/__init__.py:424
+#: cogs/guild/__init__.py:466
 msgid "URLs musn't exceed 60 characters."
 msgstr ""
 
-#: cogs/guild/__init__.py:439
+#: cogs/guild/__init__.py:481
 msgid "Successfully updated the guild icon."
 msgstr ""
 
-#: cogs/guild/__init__.py:445
+#: cogs/guild/__init__.py:490
 msgid "[Guild Owner only] Changes the guild description."
 msgstr ""
 
-#: cogs/guild/__init__.py:447
+#: cogs/guild/__init__.py:492
 msgid "The text may be up to 200 characters only."
 msgstr ""
 
-#: cogs/guild/__init__.py:451
+#: cogs/guild/__init__.py:498
 msgid "Updated!"
 msgstr ""
 
-#: cogs/guild/__init__.py:457
+#: cogs/guild/__init__.py:509
+msgid ""
+"[Guild Owner only] Change the logging channel for the guild. You also need "
+"to be server admin."
+msgstr ""
+
+#: cogs/guild/__init__.py:512
+msgid "This will become the channel for all logs. Are you sure?"
+msgstr ""
+
+#: cogs/guild/__init__.py:526
 msgid "Shows the richest players in your guild."
 msgstr ""
 
-#: cogs/guild/__init__.py:470
+#: cogs/guild/__init__.py:539
 #, python-brace-format
 msgid "a character by `{charname}` with **${money}**"
 msgstr ""
 
-#: cogs/guild/__init__.py:476
+#: cogs/guild/__init__.py:545
 #, python-brace-format
 msgid "The Richest Players of {guild}"
 msgstr ""
 
-#: cogs/guild/__init__.py:486
+#: cogs/guild/__init__.py:555
 msgid "Shows the best players of your guild by XP."
 msgstr ""
 
-#: cogs/guild/__init__.py:500
+#: cogs/guild/__init__.py:569
 #, python-brace-format
 msgid ""
 "{name}, a character by `{charname}` with Level **{level}** (**{xp}** XP)"
 msgstr ""
 
-#: cogs/guild/__init__.py:510
+#: cogs/guild/__init__.py:579
 #, python-brace-format
 msgid "The Best Players of {name}"
 msgstr ""
 
-#: cogs/guild/__init__.py:520
+#: cogs/guild/__init__.py:589
 msgid "Invest some of your money and put it to the guild bank."
 msgstr ""
 
-#: cogs/guild/__init__.py:528
+#: cogs/guild/__init__.py:597
 msgid "The bank would be full."
 msgstr ""
 
-#: cogs/guild/__init__.py:541
+#: cogs/guild/__init__.py:610
 #, python-brace-format
 msgid ""
 "Done! Now you have `${profile_money}` and the guild has `${guild_money}`."
 msgstr ""
 
-#: cogs/guild/__init__.py:552
+#: cogs/guild/__init__.py:624
 msgid "[Guild Officer only] Pay money from the guild bank to a user."
 msgstr ""
 
-#: cogs/guild/__init__.py:558
+#: cogs/guild/__init__.py:630
 msgid "Your guild is too poor."
 msgstr ""
 
-#: cogs/guild/__init__.py:567
+#: cogs/guild/__init__.py:639
 #, python-brace-format
 msgid "Successfully gave **${amount}** from your guild bank to {member}."
 msgstr ""
 
-#: cogs/guild/__init__.py:578
+#: cogs/guild/__init__.py:653
 msgid "Upgrades your guild bank's capacity."
 msgstr ""
 
-#: cogs/guild/__init__.py:587
+#: cogs/guild/__init__.py:662
 msgid "Your guild already reached the maximum upgrade."
 msgstr ""
 
-#: cogs/guild/__init__.py:592
+#: cogs/guild/__init__.py:667
 #, python-brace-format
 msgid ""
 "Your guild is too poor, you got **${money}** but it costs **${price}** to "
 "upgrade."
 msgstr ""
 
-#: cogs/guild/__init__.py:598
+#: cogs/guild/__init__.py:673
 #, python-brace-format
 msgid ""
 "This will upgrade your guild bank limit to **${limit}** for **${cost}**. "
 "Proceed?"
 msgstr ""
 
-#: cogs/guild/__init__.py:613
+#: cogs/guild/__init__.py:688
 #, python-brace-format
 msgid "Your new guild bank limit is now **${limit}**."
 msgstr ""
 
-#: cogs/guild/__init__.py:629
+#: cogs/guild/__init__.py:708
 msgid "Battle against another guild."
 msgstr ""
 
-#: cogs/guild/__init__.py:631
+#: cogs/guild/__init__.py:710
 msgid "Poor kiddo having no friendos."
 msgstr ""
 
-#: cogs/guild/__init__.py:635
+#: cogs/guild/__init__.py:714
 msgid "One of you both doesn't have a guild."
 msgstr ""
 
-#: cogs/guild/__init__.py:640
+#: cogs/guild/__init__.py:719
 msgid "One of you both isn't an officer of their guild."
 msgstr ""
 
-#: cogs/guild/__init__.py:645
+#: cogs/guild/__init__.py:724
 msgid "One of the guilds can't pay the price."
 msgstr ""
 
-#: cogs/guild/__init__.py:653
+#: cogs/guild/__init__.py:732
 msgid "One of the guilds is too small."
 msgstr ""
 
-#: cogs/guild/__init__.py:661
+#: cogs/guild/__init__.py:740
 #, python-brace-format
 msgid "{enemy} didn't want to join your battle, {author}."
 msgstr ""
 
-#: cogs/guild/__init__.py:668
+#: cogs/guild/__init__.py:747
 #, python-brace-format
 msgid ""
 "{enemy} accepted the challenge by {author}. Please now nominate members, "
 "{author}. Use `battle nominate @user` to add someone to your team."
 msgstr ""
 
-#: cogs/guild/__init__.py:684
+#: cogs/guild/__init__.py:763
 msgid "That person isn't in your guild."
 msgstr ""
 
-#: cogs/guild/__init__.py:707
+#: cogs/guild/__init__.py:786
 #, python-brace-format
 msgid "{user} has been added to your team, {author}."
 msgstr ""
 
-#: cogs/guild/__init__.py:712 cogs/guild/__init__.py:738
+#: cogs/guild/__init__.py:791 cogs/guild/__init__.py:817
 msgid "User not found."
 msgstr ""
 
-#: cogs/guild/__init__.py:717 cogs/guild/__init__.py:743
+#: cogs/guild/__init__.py:796 cogs/guild/__init__.py:822
 msgid "Took to long to add members. Fight cancelled."
 msgstr ""
 
-#: cogs/guild/__init__.py:721
+#: cogs/guild/__init__.py:800
 #, python-brace-format
 msgid ""
 "Please now nominate members, {enemy}. Use `battle nominate @user` to add "
 "someone to your team."
 msgstr ""
 
-#: cogs/guild/__init__.py:733
+#: cogs/guild/__init__.py:812
 #, python-brace-format
 msgid "{user} has been added to your team, {enemy}."
 msgstr ""
 
-#: cogs/guild/__init__.py:746
+#: cogs/guild/__init__.py:825
 msgid ""
 "Fight started!\n"
 "Generating battles..."
 msgstr ""
 
-#: cogs/guild/__init__.py:748
+#: cogs/guild/__init__.py:827
 msgid ""
 "Fight started!\n"
 "Generating battles... Done."
 msgstr ""
 
-#: cogs/guild/__init__.py:755
+#: cogs/guild/__init__.py:834
 #, python-brace-format
 msgid ""
 "Guild Battle Fight **{num}** of **{total}**.\n"
@@ -4397,58 +4407,58 @@ msgid ""
 "Battle running..."
 msgstr ""
 
-#: cogs/guild/__init__.py:785
+#: cogs/guild/__init__.py:864
 #, python-brace-format
 msgid ""
 "Winner of **{user}** vs **{user2}** is **{winner}**! Current points: "
 "**{wins1}** to **{wins2}**."
 msgstr ""
 
-#: cogs/guild/__init__.py:798
+#: cogs/guild/__init__.py:877
 msgid "Some guild spent the money??? Bad looser!"
 msgstr ""
 
-#: cogs/guild/__init__.py:814 cogs/guild/__init__.py:833
+#: cogs/guild/__init__.py:893 cogs/guild/__init__.py:912
 #, python-brace-format
 msgid "{guild} won the battle! Congratulations!"
 msgstr ""
 
-#: cogs/guild/__init__.py:838
+#: cogs/guild/__init__.py:917
 msgid "It's a tie!"
 msgstr ""
 
-#: cogs/guild/__init__.py:845
+#: cogs/guild/__init__.py:924
 msgid "Starts a guild adventure."
 msgstr ""
 
-#: cogs/guild/__init__.py:850
+#: cogs/guild/__init__.py:929
 #, python-brace-format
 msgid ""
 "Your guild is already on an adventure! Use `{prefix}guild status` to view "
 "how long it still lasts."
 msgstr ""
 
-#: cogs/guild/__init__.py:859
+#: cogs/guild/__init__.py:938
 #, python-brace-format
 msgid ""
 "{author} seeks a guild adventure for **{guild}**! React to join! Unlimited "
 "players can join in the next minute. The minimum of players required is 3."
 msgstr ""
 
-#: cogs/guild/__init__.py:887
+#: cogs/guild/__init__.py:966
 #, python-brace-format
 msgid "Alright, {user}, you have been added."
 msgstr ""
 
-#: cogs/guild/__init__.py:892
+#: cogs/guild/__init__.py:971
 msgid "You aren't in their guild."
 msgstr ""
 
-#: cogs/guild/__init__.py:897
+#: cogs/guild/__init__.py:976
 msgid "You didn't get enough other players for the guild adventure."
 msgstr ""
 
-#: cogs/guild/__init__.py:908
+#: cogs/guild/__init__.py:987
 #, python-brace-format
 msgid ""
 "\n"
@@ -4460,36 +4470,36 @@ msgid ""
 "Time it will take: **{time}**\n"
 msgstr ""
 
-#: cogs/guild/__init__.py:928
+#: cogs/guild/__init__.py:1011
 msgid "Views your guild adventure."
 msgstr ""
 
-#: cogs/guild/__init__.py:934
+#: cogs/guild/__init__.py:1017
 #, python-brace-format
 msgid ""
 "Your guild isn't on an adventure yet. Ask your guild leader to use `{prefix}"
 "guild adventure` to start one"
 msgstr ""
 
-#: cogs/guild/__init__.py:950
+#: cogs/guild/__init__.py:1033
 #, python-brace-format
 msgid ""
 "Your guild has completed an adventure of difficulty `{difficulty}` and **"
 "${gold}** has been added to the bank. You also found **{pumpkins}** 🎃!"
 msgstr ""
 
-#: cogs/guild/__init__.py:956
+#: cogs/guild/__init__.py:1043
 #, python-brace-format
 msgid ""
 "Your guild is currently in an adventure with difficulty `{difficulty}`.\n"
 "Time remaining: `{remain}`"
 msgstr ""
 
-#: cogs/guild/__init__.py:966
+#: cogs/guild/__init__.py:1053
 msgid "View your guild's progress in the ongoing event."
 msgstr ""
 
-#: cogs/guild/__init__.py:977
+#: cogs/guild/__init__.py:1064
 #, python-brace-format
 msgid ""
 "**Halloween 2019 🎃 👻**\n"
@@ -4515,15 +4525,15 @@ msgid ""
 "updateguild`, so choose carefully*"
 msgstr ""
 
-#: cogs/guild/__init__.py:1007
+#: cogs/guild/__init__.py:1094
 msgid "[Guild Leader only] Claim event rewards."
 msgstr ""
 
-#: cogs/guild/__init__.py:1037
+#: cogs/guild/__init__.py:1124
 msgid "You have insufficient pumpkins for this reward."
 msgstr ""
 
-#: cogs/guild/__init__.py:1063
+#: cogs/guild/__init__.py:1150
 #, python-brace-format
 msgid "Reward successfully claimed for **{amount}** 🎃!"
 msgstr ""
