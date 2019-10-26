@@ -269,6 +269,14 @@ Priest   ->  Mysticist ->  Summoner    -> Seer           ->  Ritualist
                     'SELECT "user", "money" FROM profile WHERE "money">=10 AND "user"!=$1 ORDER BY RANDOM() LIMIT 1;',
                     ctx.author.id,
                 )
+
+                if usr["user"] in self.bot.owner_ids:
+                    return await ctx.send(
+                        _(
+                            "You attempted to steal from a bot VIP, but the bodyguards caught you."
+                        )
+                    )
+
                 stolen = int(usr["money"] * 0.1)
                 await conn.execute(
                     'UPDATE profile SET money=money+$1 WHERE "user"=$2;',

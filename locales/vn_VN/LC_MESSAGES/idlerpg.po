@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-10-24 13:40-0700\n"
+"POT-Creation-Date: 2019-10-26 03:48-0700\n"
 "PO-Revision-Date: 2019-10-06 20:49+0700\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -166,7 +166,7 @@ msgid "Seems you haven't got a trick or treat bag yet. Go get some!"
 msgstr "Có vẻ như bạn chưa có túi kẹo nào cả. Tới lúc trick or treat rồi!"
 
 #: cogs/halloween/__init__.py:152 cogs/crates/__init__.py:131
-#: cogs/classes/__init__.py:515
+#: cogs/classes/__init__.py:523
 msgid "You gained an item!"
 msgstr "Bạn nhận được một món đồ!"
 
@@ -176,31 +176,31 @@ msgid "You found a new item when opening a trick-or-treat bag!"
 msgstr "Bạn kiếm được một món đồ khi mở túi trick or treat!"
 
 #: cogs/halloween/__init__.py:157 cogs/crates/__init__.py:137
-#: cogs/classes/__init__.py:301 cogs/classes/__init__.py:521
+#: cogs/classes/__init__.py:309 cogs/classes/__init__.py:529
 #: cogs/trading/__init__.py:221 cogs/trading/__init__.py:425
 msgid "Name"
 msgstr "Tên"
 
 #: cogs/halloween/__init__.py:158 cogs/crates/__init__.py:138
-#: cogs/classes/__init__.py:522 cogs/trading/__init__.py:222
+#: cogs/classes/__init__.py:530 cogs/trading/__init__.py:222
 #: cogs/trading/__init__.py:426
 msgid "Type"
 msgstr "Loại"
 
 #: cogs/halloween/__init__.py:159 cogs/crates/__init__.py:139
-#: cogs/classes/__init__.py:524 cogs/trading/__init__.py:223
+#: cogs/classes/__init__.py:532 cogs/trading/__init__.py:223
 #: cogs/trading/__init__.py:427
 msgid "Damage"
 msgstr "Sát thương"
 
 #: cogs/halloween/__init__.py:160 cogs/crates/__init__.py:140
-#: cogs/classes/__init__.py:526 cogs/trading/__init__.py:224
+#: cogs/classes/__init__.py:534 cogs/trading/__init__.py:224
 #: cogs/trading/__init__.py:428
 msgid "Armor"
 msgstr "Giáp"
 
 #: cogs/halloween/__init__.py:161 cogs/crates/__init__.py:141
-#: cogs/classes/__init__.py:527 cogs/trading/__init__.py:225
+#: cogs/classes/__init__.py:535 cogs/trading/__init__.py:225
 #: cogs/trading/__init__.py:429 cogs/profile/__init__.py:346
 msgid "Value"
 msgstr "Giá trị"
@@ -500,7 +500,7 @@ msgstr ""
 msgid "You found a new item when opening a crate!"
 msgstr "Bạn tìm thấy một vật phẩm mới khi mở thùng!"
 
-#: cogs/crates/__init__.py:136 cogs/classes/__init__.py:520
+#: cogs/crates/__init__.py:136 cogs/classes/__init__.py:528
 msgid "ID"
 msgstr "ID"
 
@@ -2121,7 +2121,7 @@ msgid "That is not a valid premade background."
 msgstr "Đó không phải là một nền tảng tiền đề hợp lệ."
 
 #: cogs/patreon/__init__.py:83 cogs/patreon/__init__.py:111
-#: cogs/classes/__init__.py:482 cogs/guild/__init__.py:431
+#: cogs/classes/__init__.py:490 cogs/guild/__init__.py:431
 msgid ""
 "I couldn't read that URL. Does it start with `http://` or `https://` and is "
 "either a png or jpeg?"
@@ -2362,86 +2362,90 @@ msgstr ""
 msgid "[Thief Only] Steal money!"
 msgstr "[Dành cho trộm] Cướp tiền!"
 
-#: cogs/classes/__init__.py:285
+#: cogs/classes/__init__.py:276
+msgid "You attempted to steal from a bot VIP, but the bodyguards caught you."
+msgstr ""
+
+#: cogs/classes/__init__.py:293
 #, python-brace-format
 msgid "You stole **${stolen}** from **{user}**."
 msgstr "Bạn đã cướp được **${stolen}** từ **{user}**."
 
-#: cogs/classes/__init__.py:290
+#: cogs/classes/__init__.py:298
 msgid "Your attempt to steal money wasn't successful."
 msgstr "Nỗ lực ăn cắp tiền của bạn không thành công."
 
-#: cogs/classes/__init__.py:298
+#: cogs/classes/__init__.py:306
 msgid "[Ranger Only] View your pet or interact with it."
 msgstr "[Dành cho Người nuôi thú] Xem thú cưng của bạn."
 
-#: cogs/classes/__init__.py:300
+#: cogs/classes/__init__.py:308
 #, python-brace-format
 msgid "{user}'s pet"
 msgstr "Thú cưng của {user}"
 
-#: cogs/classes/__init__.py:302
+#: cogs/classes/__init__.py:310
 msgid "Level"
 msgstr "Cấp độ"
 
-#: cogs/classes/__init__.py:303
+#: cogs/classes/__init__.py:311
 msgid "Food"
 msgstr "Thức ăn"
 
-#: cogs/classes/__init__.py:305
+#: cogs/classes/__init__.py:313
 msgid "Drinks"
 msgstr "Nước uống"
 
-#: cogs/classes/__init__.py:307
+#: cogs/classes/__init__.py:315
 msgid "Love"
 msgstr "Tình yêu"
 
-#: cogs/classes/__init__.py:308
+#: cogs/classes/__init__.py:316
 msgid "Joy"
 msgstr "Sự vui sướng"
 
-#: cogs/classes/__init__.py:319
+#: cogs/classes/__init__.py:327
 msgid "[Ranger Only] Feed your pet."
 msgstr "[Dành cho người nuôi thú] Nuôi thú cưng của bạn."
 
-#: cogs/classes/__init__.py:321
+#: cogs/classes/__init__.py:329
 msgid "Potato"
 msgstr "Khoai tây"
 
-#: cogs/classes/__init__.py:322
+#: cogs/classes/__init__.py:330
 msgid "Apple"
 msgstr "Táo"
 
-#: cogs/classes/__init__.py:323
+#: cogs/classes/__init__.py:331
 msgid "Cucumber"
 msgstr "Dưa chuột"
 
-#: cogs/classes/__init__.py:324
+#: cogs/classes/__init__.py:332
 msgid "Meat"
 msgstr "Thịt"
 
-#: cogs/classes/__init__.py:325
+#: cogs/classes/__init__.py:333
 msgid "Salad"
 msgstr "Salad"
 
-#: cogs/classes/__init__.py:326
+#: cogs/classes/__init__.py:334
 msgid "Sushi"
 msgstr ""
 
-#: cogs/classes/__init__.py:327
+#: cogs/classes/__init__.py:335
 msgid "Adrian's Power Poop"
 msgstr "Cục cứt thần thánh"
 
-#: cogs/classes/__init__.py:334
+#: cogs/classes/__init__.py:342
 msgid "Feed your pet"
 msgstr "Cho thú cưng của bạn ăn."
 
-#: cogs/classes/__init__.py:338 cogs/classes/__init__.py:381
+#: cogs/classes/__init__.py:346 cogs/classes/__init__.py:389
 #: cogs/marriage/__init__.py:234
 msgid "You are too poor to buy this."
 msgstr "Bạn quá nghèo để mua cái này."
 
-#: cogs/classes/__init__.py:352
+#: cogs/classes/__init__.py:360
 #, python-brace-format
 msgid ""
 "You bought **{item}** for your pet and increased its food bar by **{points}"
@@ -2450,43 +2454,43 @@ msgstr ""
 "Bạn đã mua **{item}** cho thú cưng của bạn và tăng điểm trên thanh đồ ăn "
 "**{points}** điểm."
 
-#: cogs/classes/__init__.py:362
+#: cogs/classes/__init__.py:370
 msgid "[Ranger Only] Give your pet something to drink."
 msgstr "[Dành cho người nuôi thú] Cho thú cưng của bạn uống."
 
-#: cogs/classes/__init__.py:364
+#: cogs/classes/__init__.py:372
 msgid "Some Water"
 msgstr "Một chút nước."
 
-#: cogs/classes/__init__.py:365
+#: cogs/classes/__init__.py:373
 msgid "A bottle of water"
 msgstr "Một chai nước"
 
-#: cogs/classes/__init__.py:366
+#: cogs/classes/__init__.py:374
 msgid "Cocktail"
 msgstr "Cocktail"
 
-#: cogs/classes/__init__.py:367
+#: cogs/classes/__init__.py:375
 msgid "Wine"
 msgstr "Rượu"
 
-#: cogs/classes/__init__.py:368
+#: cogs/classes/__init__.py:376
 msgid "Beer"
 msgstr "Bia"
 
-#: cogs/classes/__init__.py:369
+#: cogs/classes/__init__.py:377
 msgid "Vodka"
 msgstr ""
 
-#: cogs/classes/__init__.py:370
+#: cogs/classes/__init__.py:378
 msgid "Adrian's Cocktail"
 msgstr "Vẫn là cocktail nhưng được nhiều điểm hơn :)"
 
-#: cogs/classes/__init__.py:377
+#: cogs/classes/__init__.py:385
 msgid "Give your pet something to drink"
 msgstr "Cho thú cưng của bạn một thứ gì đó để uống"
 
-#: cogs/classes/__init__.py:395
+#: cogs/classes/__init__.py:403
 #, python-brace-format
 msgid ""
 "You bought **{item}** for your pet and increased its drinks bar by **{points}"
@@ -2495,11 +2499,11 @@ msgstr ""
 "Bạn đã mua **{item}** cho thú cưng của bạn và tăng thanh đồ uống lên "
 "**{points}** điểm."
 
-#: cogs/classes/__init__.py:406
+#: cogs/classes/__init__.py:414
 msgid "[Ranger Only] Cuddle your pet to make it love you."
 msgstr "[Dành cho người nuôi thú] Ôm thú cưng của bạn để làm cho nó yêu bạn."
 
-#: cogs/classes/__init__.py:415
+#: cogs/classes/__init__.py:423
 #, python-brace-format
 msgid ""
 "Your pet adores you! :heart: Cuddling it has increased its love for you by "
@@ -2508,85 +2512,85 @@ msgstr ""
 "hú cưng của bạn yêu bạn! : heart: Ôm ấp nó đã tăng tình yêu của bạn lên "
 "**{value}** điểm."
 
-#: cogs/classes/__init__.py:426
+#: cogs/classes/__init__.py:434
 msgid "[Ranger Only] Play with your pet to make it happier."
 msgstr "[Dành cho người nuôi thú] Chơi với thú cưng của bạn để làm nó vui hơn"
 
-#: cogs/classes/__init__.py:435
+#: cogs/classes/__init__.py:443
 #, python-brace-format
 msgid "You have been {activity} with your pet and it gained **{value}** joy!"
 msgstr ""
 "Bạn đã {activity} với thú cưng của bạn và nó tăng **{value}** sự vui sướng!"
 
-#: cogs/classes/__init__.py:439
+#: cogs/classes/__init__.py:447
 msgid "playing football :soccer:"
 msgstr "Chơi bóng đá :soccer:"
 
-#: cogs/classes/__init__.py:440
+#: cogs/classes/__init__.py:448
 msgid "playing American football :football:"
 msgstr "Chơi bóng đá :football:"
 
-#: cogs/classes/__init__.py:441
+#: cogs/classes/__init__.py:449
 msgid "playing rugby :rugby_football:"
 msgstr "Chơi rugby :rugby_football:"
 
-#: cogs/classes/__init__.py:442
+#: cogs/classes/__init__.py:450
 msgid "playing basketball :basketball:"
 msgstr "Chơi bóng rổ :basketball:"
 
-#: cogs/classes/__init__.py:443
+#: cogs/classes/__init__.py:451
 msgid "playing tennis :tennis:"
 msgstr "Chơi tennis :tennis:"
 
-#: cogs/classes/__init__.py:444
+#: cogs/classes/__init__.py:452
 msgid "playing ping-pong :ping_pong:"
 msgstr "Chơi ping-pong :ping_pong:"
 
-#: cogs/classes/__init__.py:445
+#: cogs/classes/__init__.py:453
 msgid "boxing :boxing_glove:"
 msgstr "Chơi boxing :boxing_glove:"
 
-#: cogs/classes/__init__.py:446
+#: cogs/classes/__init__.py:454
 msgid "skiing :ski:"
 msgstr "Trượt tuyết :ski:"
 
-#: cogs/classes/__init__.py:459
+#: cogs/classes/__init__.py:467
 msgid "[Ranger Only] Renames your pet."
 msgstr "[Dành cho người nuôi thú] Đổi tên cho thú cưng của bạn."
 
-#: cogs/classes/__init__.py:461
+#: cogs/classes/__init__.py:469
 msgid "Please enter a name shorter than 20 characters."
 msgstr "Hãy đặt một cái tên ngắn hơn 20 chữ cái"
 
-#: cogs/classes/__init__.py:465
+#: cogs/classes/__init__.py:473
 msgid "Pet name updated."
 msgstr "Tên đã được cập nhật"
 
-#: cogs/classes/__init__.py:473
+#: cogs/classes/__init__.py:481
 msgid "[Ranger Only] Sets your pet's image by URL."
 msgstr "[Dành cho người nuôi thú] Đặt hình ảnh của thú cưng của bạn bằng URL."
 
-#: cogs/classes/__init__.py:475
+#: cogs/classes/__init__.py:483
 msgid "URLs mustn't exceed 60 characters ."
 msgstr "URL không được quá 60 kí tự"
 
-#: cogs/classes/__init__.py:488
+#: cogs/classes/__init__.py:496
 msgid "Your pet's image was successfully updated."
 msgstr "Hình ảnh cho thú cưng của bạn đã được cập nhật"
 
-#: cogs/classes/__init__.py:497
+#: cogs/classes/__init__.py:505
 msgid "[Ranger Only] Let your pet get a weapon for you!"
 msgstr "[Dành cho thợ săn] Để thú cưng của bạn tìm một trang bị cho bạn!"
 
-#: cogs/classes/__init__.py:505
+#: cogs/classes/__init__.py:513
 msgid "Your pet is not happy enough to hunt an item. Try making it joyful!"
 msgstr "Thú cưng của bạn không muốn đi săn item. Làm nó vui hơn đi!"
 
-#: cogs/classes/__init__.py:516
+#: cogs/classes/__init__.py:524
 msgid "Your pet found an item!"
 msgstr "Thú cưng của bạn đã tìm thấy một trang bị!"
 
-#: cogs/classes/__init__.py:528
+#: cogs/classes/__init__.py:536
 msgid "Your pet needs to recover, wait a day to retry"
 msgstr "Thú cưng của bạn cần lấy lại sức, chờ một ngày rồi thử lại"
 
