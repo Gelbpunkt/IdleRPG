@@ -27,7 +27,7 @@ from discord.ext import commands
 
 from classes.converters import IntGreaterThan
 from utils.castle import Castle, Player
-from utils.checks import has_char, is_admin, is_god
+from utils.checks import has_char, is_admin, is_god, AlreadyRaiding
 
 
 def raid_channel():
@@ -43,11 +43,19 @@ def ikhdosa_channel():
 
     return commands.check(predicate)
 
+def raid_free():
+    def predicate(ctx):
+        if ctx.bot.cogs["Raid"].raid_ongoing:
+            raise AlreadyRaiding("There is already a raid ongoing.")
+        return True
+
+    return commands.check(predicate)
 
 class Raid(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
+        self.raid_ongoing = False
         self.allow_sending = discord.PermissionOverwrite(
             send_messages=True, read_messages=True
         )
@@ -60,10 +68,12 @@ class Raid(commands.Cog):
 
     @is_admin()
     @raid_channel()
+    @raid_free()
     @commands.command()
     @locale_doc
     async def spawn(self, ctx, hp: IntGreaterThan(0)):
         """[Bot Admin only] Starts a raid."""
+        self.raid_ongoing = True
         await self.bot.session.get(
             "https://raid.travitia.xyz/toggle",
             headers={"Authorization": self.bot.config.raidauth},
@@ -285,13 +295,16 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
         await ctx.channel.set_permissions(
             ctx.guild.default_role, overwrite=self.deny_sending
         )
+        self.raid_ongoing = False
 
     @is_admin()
     @ikhdosa_channel()
+    @raid_free()
     @commands.command()
     @locale_doc
     async def raiddefend(self, ctx, bandits: IntGreaterThan(1), group: str = "I"):
         """[Bot Admin only] Starts a bandit raid in Ikhdosa."""
+        self.raid_ongoing = True
         await self.bot.session.get(
             "https://raid.travitia.xyz/toggle",
             headers={"Authorization": self.bot.config.raidauth},
@@ -474,12 +487,15 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
             await ctx.send(
                 "The bandit officers plundered the whole town! War God Fox is proud!\nAll swordsmen died!"
             )
+        self.raid_ongoing = False
 
     @is_god()
+    @raid_free()
     @commands.command()
     @locale_doc
     async def guiltspawn(self, ctx):
         """[Guilt only] Starts a raid."""
+        self.raid_ongoing = True
         await self.bot.session.get(
             "https://raid.travitia.xyz/toggle",
             headers={"Authorization": self.bot.config.raidauth},
@@ -604,12 +620,15 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
             await ctx.send(
                 "The raid did not manage to finish within 45 Minutes... Guilt disappeared!"
             )
+        self.raid_ongoing = False
 
     @is_god()
+    @raid_free()
     @commands.command()
     @locale_doc
     async def athenaspawn(self, ctx, hp: IntGreaterThan(0)):
         """[Athena only] Starts a raid."""
+        self.raid_ongoing = True
         await self.bot.session.get(
             "https://raid.travitia.xyz/toggle",
             headers={"Authorization": self.bot.config.raidauth},
@@ -810,12 +829,15 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
             await ctx.send(
                 "The raid did not manage to kill Scylla within 45 Minutes... It disappeared!"
             )
+        self.raid_ongoing = False
 
     @is_god()
+    @raid_free()
     @commands.command()
     @locale_doc
     async def kvothespawn(self, ctx, scrael: IntGreaterThan(1)):
         """[Kvothe only] Starts a raid."""
+        self.raid_ongoing = True
         await self.bot.session.get(
             "https://raid.travitia.xyz/toggle",
             headers={"Authorization": self.bot.config.raidauth},
@@ -960,12 +982,15 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
             await ctx.send(
                 "The scrael have extinguished life in Kvothe's temple! All heroes died!"
             )
+        self.raid_ongoing = False
 
     @is_god()
+    @raid_free()
     @commands.command()
     @locale_doc
     async def chamburrspawn(self, ctx, hp: IntGreaterThan(0)):
         """[CHamburr only] Starts a raid."""
+        self.raid_ongoing = True
         await self.bot.session.get(
             "https://raid.travitia.xyz/toggle",
             headers={"Authorization": self.bot.config.raidauth},
@@ -1173,12 +1198,15 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
         await ctx.channel.set_permissions(
             ctx.guild.default_role, overwrite=self.deny_sending
         )
+        self.raid_ongoing = False
 
     @is_god()
+    @raid_free()
     @commands.command()
     @locale_doc
     async def salutationsspawn(self, ctx, hp: IntGreaterThan(0)):
         """[Salutations only] Starts a raid."""
+        self.raid_ongoing = True
         await self.bot.session.get(
             "https://raid.travitia.xyz/toggle",
             headers={"Authorization": self.bot.config.raidauth},
@@ -1471,12 +1499,15 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
         await ctx.channel.set_permissions(
             ctx.guild.default_role, overwrite=self.deny_sending
         )
+        self.raid_ongoing = False
 
     @is_god()
+    @raid_free()
     @commands.command()
     @locale_doc
     async def asmodeusspawn(self, ctx, hp: IntGreaterThan(0)):
         """[Asmodeus only] Starts a raid."""
+        self.raid_ongoing = True
         await self.bot.session.get(
             "https://raid.travitia.xyz/toggle",
             headers={"Authorization": self.bot.config.raidauth},
@@ -1602,12 +1633,15 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
             await ctx.send(
                 "The raid did not manage to kill Asmodeus within 45 Minutes... He disappeared!"
             )
+        self.raid_ongoing = False
 
     @is_god()
+    @raid_free()
     @commands.command()
     @locale_doc
     async def anankespawn(self, ctx, hp: IntGreaterThan(0)):
         """[Ananke only] Starts a raid."""
+        self.raid_ongoing = True
         await self.bot.session.get(
             "https://raid.travitia.xyz/toggle",
             headers={"Authorization": self.bot.config.raidauth},
@@ -1757,12 +1791,15 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
         await ctx.channel.set_permissions(
             ctx.guild.default_role, overwrite=self.deny_sending
         )
+        self.raid_ongoing = False
 
     @is_god()
+    @raid_free()
     @commands.command()
     @locale_doc
     async def jesusspawn(self, ctx, hp: IntGreaterThan(0)):
         """[Jesus only] Starts a raid."""
+        self.raid_ongoing = True
         await self.bot.session.get(
             "https://raid.travitia.xyz/toggle",
             headers={"Authorization": self.bot.config.raidauth},
@@ -1969,12 +2006,15 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
         await ctx.channel.set_permissions(
             ctx.guild.default_role, overwrite=self.deny_sending
         )
+        self.raid_ongoing = False
 
     @is_god()
+    @raid_free()
     @commands.command()
     @locale_doc
     async def gambitspawn(self, ctx):
         """[Gambit only] Starts a raid."""
+        self.raid_ongoing = True
         await self.bot.session.get(
             "https://raid.travitia.xyz/toggle",
             headers={"Authorization": self.bot.config.raidauth},
@@ -2056,6 +2096,7 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
             castle.add_player(Player(user, stats))
 
         await castle.run()
+        self.raid_ongoing = False
 
     def getpriceto(self, level: float):
         return sum(i * 25000 for i in range(1, int(level * 10) - 9))
