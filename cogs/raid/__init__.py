@@ -56,6 +56,7 @@ class Raid(commands.Cog):
         self.bot = bot
 
         self.raid_ongoing = False
+        self.boss = None
         self.allow_sending = discord.PermissionOverwrite(
             send_messages=True, read_messages=True
         )
@@ -65,6 +66,29 @@ class Raid(commands.Cog):
         self.read_only = discord.PermissionOverwrite(
             send_messages=False, read_messages=True
         )
+        
+    @is_admin()
+    @commands.command()
+    @locale_doc
+    async def alterraid(self, ctx, newhp: IntGreaterThan(0)):
+        if not self.boss:
+            return await ctx.send(_("No Boss active!"))
+        self.boss.update(hp=newhp)
+        spawnmsg = await ctx.guild.fetch_message(self.boss["message"])
+        try:
+            await spawnmsg.edit(
+                f"""
+**ATTENTION! ZEREKIEL HAS SPAWNED!**
+This boss has {self.boss['hp']} HP and has high-end loot!
+The dragon will be vulnerable in 15 Minutes
+Use https://raid.travitia.xyz/ to join the raid!
+
+Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=453963965521985536&scope=identify&response_type=code&redirect_uri=https://raid.travitia.xyz/callback>
+"""
+            )
+        except:
+            pass
+        await ctx.send(_("Boss HP updated!"))
 
     @is_admin()
     @raid_channel()
@@ -78,14 +102,14 @@ class Raid(commands.Cog):
             "https://raid.travitia.xyz/toggle",
             headers={"Authorization": self.bot.config.raidauth},
         )
-        boss = {"hp": hp, "min_dmg": 100, "max_dmg": 500}
+        self.boss = {"hp": hp, "min_dmg": 100, "max_dmg": 500}
         await ctx.channel.set_permissions(
             ctx.guild.default_role, overwrite=self.read_only
         )
-        await ctx.send(
+        spawnmsg = await ctx.send(
             f"""
 **ATTENTION! ZEREKIEL HAS SPAWNED!**
-This boss has {boss['hp']} HP and has high-end loot!
+This boss has {self.boss['hp']} HP and has high-end loot!
 The dragon will be vulnerable in 15 Minutes
 Use https://raid.travitia.xyz/ to join the raid!
 
@@ -93,6 +117,7 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
 """,
             file=discord.File("assets/other/dragon.jpg"),
         )
+        self.boss.update(message=spawnmessage.id)
         if not self.bot.config.is_beta:
             await self.bot.get_channel(506_167_065_464_406_041).send(
                 "@everyone Zerekiel spawned! 15 Minutes until he is vulnerable...\nUse https://raid.travitia.xyz/ to join the raid!"
@@ -166,13 +191,13 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
         start = datetime.datetime.utcnow()
 
         while (
-            boss["hp"] > 0
+            self.boss["hp"] > 0
             and len(raid) > 0
             and datetime.datetime.utcnow() < start + datetime.timedelta(minutes=45)
         ):
             target = random.choice(list(raid.keys()))  # the guy it will attack
             dmg = random.randint(
-                boss["min_dmg"], boss["max_dmg"]
+                self.boss["min_dmg"], boss["max_dmg"]
             )  # effective damage the dragon does
             dmg -= raid[target]["armor"]  # let's substract the shield, ouch
             raid[target]["hp"] -= dmg  # damage dealt
@@ -197,13 +222,13 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
             if raid[target]["hp"] <= 0:
                 del raid[target]
             dmg_to_take = sum(i["damage"] for i in raid.values())
-            boss["hp"] -= dmg_to_take
+            self.boss["hp"] -= dmg_to_take
             await asyncio.sleep(4)
             em = discord.Embed(title="The raid attacked Zerekiel!", colour=0xFF5C00)
             em.set_thumbnail(url=f"{self.bot.BASE_URL}/knight.jpg")
             em.add_field(name="Damage", value=dmg_to_take)
-            if boss["hp"] > 0:
-                em.add_field(name="HP left", value=boss["hp"])
+            if self.boss["hp"] > 0:
+                em.add_field(name="HP left", value=self.boss["hp"])
             else:
                 em.add_field(name="HP left", value="Dead!")
             await ctx.send(embed=em)
@@ -212,7 +237,7 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
         if len(raid) == 0:
             m = await ctx.send("The raid was all wiped!")
             await m.add_reaction("\U0001F1EB")
-        elif boss["hp"] < 1:
+        elif self.boss["hp"] < 1:
             await ctx.channel.set_permissions(
                 ctx.guild.default_role, overwrite=self.allow_sending
             )
@@ -296,6 +321,7 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
             ctx.guild.default_role, overwrite=self.deny_sending
         )
         self.raid_ongoing = False
+        self.boss = None
 
     @is_admin()
     @ikhdosa_channel()
