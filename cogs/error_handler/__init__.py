@@ -150,6 +150,12 @@ class Errorhandler(commands.Cog):
                         "You need to be a donator to use this command. Please head to `{prefix}donate` and make sure you joined the support server if you decide to support us."
                     ).format(prefix=ctx.prefix)
                 )
+            elif type(error) == utils.checks.AlreadyRaiding:
+                await ctx.send(
+                    _(
+                        "There is another raid already ongoing. Try again at a later time."
+                    )
+                )
             else:
                 await ctx.send(
                     embed=discord.Embed(

@@ -107,6 +107,11 @@ class NotNothing(commands.CheckFailure):
 
     pass
 
+class AlreadyRaiding(commands.CheckFailure):
+    """Exception raised when a user tries starting a raid while another is ongoing."""
+
+    pass
+
 
 def has_char():
     """Checks for a user to have a character."""
