@@ -27,7 +27,7 @@ from discord.ext import commands
 
 from classes.converters import IntGreaterThan
 from utils.castle import Castle, Player
-from utils.checks import has_char, is_admin, is_god, AlreadyRaiding
+from utils.checks import AlreadyRaiding, has_char, is_admin, is_god
 
 
 def raid_channel():
@@ -43,6 +43,7 @@ def ikhdosa_channel():
 
     return commands.check(predicate)
 
+
 def raid_free():
     def predicate(ctx):
         if ctx.bot.cogs["Raid"].raid_ongoing:
@@ -50,6 +51,7 @@ def raid_free():
         return True
 
     return commands.check(predicate)
+
 
 class Raid(commands.Cog):
     def __init__(self, bot):

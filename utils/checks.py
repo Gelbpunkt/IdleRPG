@@ -107,6 +107,7 @@ class NotNothing(commands.CheckFailure):
 
     pass
 
+
 class AlreadyRaiding(commands.CheckFailure):
     """Exception raised when a user tries starting a raid while another is ongoing."""
 
