@@ -247,10 +247,10 @@ class Admin(commands.Cog):
             )
 
         if result == 1:
-            await ctx.send("The cooldown has been updated!")
+            await ctx.send(_("The cooldown has been updated!"))
         else:
             await ctx.send(
-                "Cooldown setting unsuccessful (maybe you mistyped the command name or there is no cooldown for the user?)."
+                _("Cooldown setting unsuccessful (maybe you mistyped the command name or there is no cooldown for the user?).")
             )
 
 
