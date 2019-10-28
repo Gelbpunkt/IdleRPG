@@ -250,7 +250,9 @@ class Admin(commands.Cog):
             await ctx.send(_("The cooldown has been updated!"))
         else:
             await ctx.send(
-                _("Cooldown setting unsuccessful (maybe you mistyped the command name or there is no cooldown for the user?).")
+                _(
+                    "Cooldown setting unsuccessful (maybe you mistyped the command name or there is no cooldown for the user?)."
+                )
             )
         await self.bot.http.send_message(
             self.bot.config.admin_log_channel,
