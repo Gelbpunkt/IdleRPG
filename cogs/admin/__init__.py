@@ -16,6 +16,7 @@ You should have received a copy of the GNU Affero General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
 import asyncio
+from typing import Union
 
 import discord
 
@@ -221,6 +222,36 @@ class Admin(commands.Cog):
             self.bot.config.admin_log_channel,
             f"**{ctx.author}** reset **{target}**'s class.",
         )
+
+    @is_admin()
+    @commands.command(aliases=["asetcooldown", "asetcd"], hidden=True)
+    @locale_doc
+    async def adminsetcooldown(
+        self, ctx, user: Union[discord.User, int], command: str, cooldown: int = 0
+    ):
+        _(
+            """[Bot Admin only] Sets someone's cooldown to a specific time in seconds (by default removes the cooldown)"""
+        )
+        if not isinstance(user, int):
+            user_id = user.id
+        else:
+            user_id = user
+
+        if cooldown < 0:
+            raise commands.BadArgument("The cooldown arg cannot be negative.")
+        elif cooldown == 0:
+            result = await self.bot.redis.execute("DEL", f"cd:{user_id}:{command}")
+        else:
+            result = await self.bot.redis.execute(
+                "EXPIRE", f"cd:{user_id}:{command}", cooldown
+            )
+
+        if result == 1:
+            await ctx.send("The cooldown has been updated!")
+        else:
+            await ctx.send(
+                "Cooldown setting unsuccessful (maybe you mistyped the command name or there is no cooldown for the user?)."
+            )
 
 
 def setup(bot):
