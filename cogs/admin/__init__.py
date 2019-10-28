@@ -252,6 +252,10 @@ class Admin(commands.Cog):
             await ctx.send(
                 _("Cooldown setting unsuccessful (maybe you mistyped the command name or there is no cooldown for the user?).")
             )
+        await self.bot.http.send_message(
+            self.bot.config.admin_log_channel,
+            f"**{ctx.author}** set **{user}**'s cooldown to {cooldown}.",
+        )
 
 
 def setup(bot):
