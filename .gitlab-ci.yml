@@ -1,6 +1,7 @@
 image: "python:3.8.0-alpine3.10"
 
 before_script:
+  - apk add --no-cache git
   - python --version
   - pip install -r requirements-dev.txt
 
