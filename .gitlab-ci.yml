@@ -1,3 +1,23 @@
-# This file is a template, and might need editing before it works on your project.
-include:
-  template: Jobs/Code-Quality.gitlab-ci.yml
+image: "python:3.8.0-alpine3.10"
+
+before_script:
+  - python --version
+  - pip install -r requirements-dev.txt
+
+stages:
+  - Static Analysis
+
+black:
+  stage: Static Analysis
+  script:
+  - black .
+
+isort:
+  stage: Static Analysis
+  script:
+  - isort -rc .
+
+flake8:
+  stage: Static Analysis
+  script:
+  - flake8
