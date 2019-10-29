@@ -22,7 +22,7 @@ import discord
 
 from discord.ext import commands
 
-from classes.converters import UserWithCharacter
+from classes.converters import UserWithCharacter, IntGreaterThan
 from utils.checks import is_admin
 
 
@@ -227,7 +227,11 @@ class Admin(commands.Cog):
     @commands.command(aliases=["asetcooldown", "asetcd"], hidden=True)
     @locale_doc
     async def adminsetcooldown(
-        self, ctx, user: Union[discord.User, int], command: str, cooldown: int = 0
+        self,
+        ctx,
+        user: Union[discord.User, int],
+        command: str,
+        cooldown: IntGreaterThan(-1) = 0,
     ):
         _(
             """[Bot Admin only] Sets someone's cooldown to a specific time in seconds (by default removes the cooldown)"""
@@ -237,9 +241,7 @@ class Admin(commands.Cog):
         else:
             user_id = user
 
-        if cooldown < 0:
-            raise commands.BadArgument("The cooldown arg cannot be negative.")
-        elif cooldown == 0:
+        if cooldown == 0:
             result = await self.bot.redis.execute("DEL", f"cd:{user_id}:{command}")
         else:
             result = await self.bot.redis.execute(
@@ -248,16 +250,16 @@ class Admin(commands.Cog):
 
         if result == 1:
             await ctx.send(_("The cooldown has been updated!"))
+            await self.bot.http.send_message(
+                self.bot.config.admin_log_channel,
+                f"**{ctx.author}** set **{user}**'s cooldown to {cooldown}.",
+            )
         else:
             await ctx.send(
                 _(
                     "Cooldown setting unsuccessful (maybe you mistyped the command name or there is no cooldown for the user?)."
                 )
             )
-        await self.bot.http.send_message(
-            self.bot.config.admin_log_channel,
-            f"**{ctx.author}** set **{user}**'s cooldown to {cooldown}.",
-        )
 
 
 def setup(bot):
