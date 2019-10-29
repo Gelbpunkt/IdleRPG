@@ -18,6 +18,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 import asyncio
 import datetime
 import random
+import re
 
 from decimal import Decimal
 
@@ -58,6 +59,7 @@ class Raid(commands.Cog):
         self.bot = bot
 
         self.raid_ongoing = False
+        self.boss = None
         self.allow_sending = discord.PermissionOverwrite(
             send_messages=True, read_messages=True
         )
@@ -67,6 +69,20 @@ class Raid(commands.Cog):
         self.read_only = discord.PermissionOverwrite(
             send_messages=False, read_messages=True
         )
+
+    @is_admin()
+    @commands.command()
+    @locale_doc
+    async def alterraid(self, ctx, newhp: IntGreaterThan(0)):
+        if not self.boss:
+            return await ctx.send(_("No Boss active!"))
+        self.boss.update(hp=newhp)
+        try:
+            spawnmsg = await ctx.channel.fetch_message(self.boss["message"])
+            await spawnmsg.edit(re.sub("\d+ HP", f"{newhp} HP"))
+        except:
+            return await ctx.send(_("Could not edit Boss HP!"))
+        await ctx.send(_("Boss HP updated!"))
 
     @is_admin()
     @raid_channel()
@@ -80,14 +96,14 @@ class Raid(commands.Cog):
             "https://raid.travitia.xyz/toggle",
             headers={"Authorization": self.bot.config.raidauth},
         )
-        boss = {"hp": hp, "min_dmg": 100, "max_dmg": 500}
+        self.boss = {"hp": hp, "min_dmg": 100, "max_dmg": 500}
         await ctx.channel.set_permissions(
             ctx.guild.default_role, overwrite=self.read_only
         )
-        await ctx.send(
+        spawnmsg = await ctx.send(
             f"""
 **ATTENTION! ZEREKIEL HAS SPAWNED!**
-This boss has {boss['hp']} HP and has high-end loot!
+This boss has {self.boss['hp']} HP and has high-end loot!
 The dragon will be vulnerable in 15 Minutes
 Use https://raid.travitia.xyz/ to join the raid!
 
@@ -95,6 +111,7 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
 """,
             file=discord.File("assets/other/dragon.jpg"),
         )
+        self.boss.update(message=spawnmsg.id)
         if not self.bot.config.is_beta:
             await self.bot.get_channel(506_167_065_464_406_041).send(
                 "@everyone Zerekiel spawned! 15 Minutes until he is vulnerable...\nUse https://raid.travitia.xyz/ to join the raid!"
@@ -168,13 +185,13 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
         start = datetime.datetime.utcnow()
 
         while (
-            boss["hp"] > 0
+            self.boss["hp"] > 0
             and len(raid) > 0
             and datetime.datetime.utcnow() < start + datetime.timedelta(minutes=45)
         ):
             target = random.choice(list(raid.keys()))  # the guy it will attack
             dmg = random.randint(
-                boss["min_dmg"], boss["max_dmg"]
+                self.boss["min_dmg"], self.boss["max_dmg"]
             )  # effective damage the dragon does
             dmg -= raid[target]["armor"]  # let's substract the shield, ouch
             raid[target]["hp"] -= dmg  # damage dealt
@@ -199,13 +216,13 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
             if raid[target]["hp"] <= 0:
                 del raid[target]
             dmg_to_take = sum(i["damage"] for i in raid.values())
-            boss["hp"] -= dmg_to_take
+            self.boss["hp"] -= dmg_to_take
             await asyncio.sleep(4)
             em = discord.Embed(title="The raid attacked Zerekiel!", colour=0xFF5C00)
             em.set_thumbnail(url=f"{self.bot.BASE_URL}/knight.jpg")
             em.add_field(name="Damage", value=dmg_to_take)
-            if boss["hp"] > 0:
-                em.add_field(name="HP left", value=boss["hp"])
+            if self.boss["hp"] > 0:
+                em.add_field(name="HP left", value=self.boss["hp"])
             else:
                 em.add_field(name="HP left", value="Dead!")
             await ctx.send(embed=em)
@@ -214,7 +231,7 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
         if len(raid) == 0:
             m = await ctx.send("The raid was all wiped!")
             await m.add_reaction("\U0001F1EB")
-        elif boss["hp"] < 1:
+        elif self.boss["hp"] < 1:
             await ctx.channel.set_permissions(
                 ctx.guild.default_role, overwrite=self.allow_sending
             )
@@ -298,6 +315,7 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
             ctx.guild.default_role, overwrite=self.deny_sending
         )
         self.raid_ongoing = False
+        self.boss = None
 
     @is_admin()
     @ikhdosa_channel()
@@ -318,7 +336,7 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
         await ctx.send(
             """
 *Arrow shot*
-**Lieutenant**: We've spotted a group of Bandii...
+**Lieutenant**: We've spotted a group of Bandi...
 **Bandit Officer**: Listen up! We demand all of your resources or else we gonna have to use our heavy halberds! We kill for War God Fox!!!
 The Bandit Officers gonna arrive in 30 minutes, prepare of heavy armed Bandits.
 
@@ -635,7 +653,7 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
             "https://raid.travitia.xyz/toggle",
             headers={"Authorization": self.bot.config.raidauth},
         )
-        boss = {"hp": hp, "min_dmg": 100, "max_dmg": 500}
+        self.boss = {"hp": hp, "min_dmg": 100, "max_dmg": 500}
         await ctx.channel.set_permissions(
             ctx.guild.default_role, overwrite=self.read_only
         )
@@ -711,13 +729,13 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
         start = datetime.datetime.utcnow()
 
         while (
-            boss["hp"] > 0
+            self.boss["hp"] > 0
             and len(raid) > 0
             and datetime.datetime.utcnow() < start + datetime.timedelta(minutes=45)
         ):
             target = random.choice(list(raid.keys()))  # the guy it will attack
             dmg = random.randint(
-                boss["min_dmg"], boss["max_dmg"]
+                self.boss["min_dmg"], self.boss["max_dmg"]
             )  # effective damage scylla does
             dmg -= raid[target]["armor"]  # let's substract the shield, ouch
             raid[target]["hp"] -= dmg  # damage dealt
@@ -742,13 +760,13 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
             if raid[target]["hp"] <= 0:
                 del raid[target]
             dmg_to_take = sum(i["damage"] for i in raid.values())
-            boss["hp"] -= dmg_to_take
+            self.boss["hp"] -= dmg_to_take
             await asyncio.sleep(4)
             em = discord.Embed(title="The raid attacked Scylla!", colour=0xFF5C00)
             em.set_thumbnail(url=f"{self.bot.BASE_URL}/knight.jpg")
             em.add_field(name="Damage", value=dmg_to_take)
-            if boss["hp"] > 0:
-                em.add_field(name="HP left", value=boss["hp"])
+            if self.boss["hp"] > 0:
+                em.add_field(name="HP left", value=self.boss["hp"])
             else:
                 em.add_field(name="HP left", value="Dead!")
             await ctx.send(embed=em)
@@ -756,7 +774,7 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
 
         if len(raid) == 0:
             await ctx.send("The raid was all wiped!")
-        elif boss["hp"] < 1:
+        elif self.boss["hp"] < 1:
             msg = await ctx.send(
                 "Scylla was defeated and left a chest. Be the first to react with 📫 to win it."
             )
@@ -832,6 +850,7 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
                 "The raid did not manage to kill Scylla within 45 Minutes... It disappeared!"
             )
         self.raid_ongoing = False
+        self.boss = None
 
     @is_god()
     @raid_free()
@@ -997,7 +1016,7 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
             "https://raid.travitia.xyz/toggle",
             headers={"Authorization": self.bot.config.raidauth},
         )
-        boss = {"hp": hp, "min_dmg": 100, "max_dmg": 500}
+        self.boss = {"hp": hp, "min_dmg": 100, "max_dmg": 500}
         await ctx.channel.set_permissions(
             ctx.guild.default_role, overwrite=self.read_only
         )
@@ -1005,7 +1024,7 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
             f"""
 *Time to eat the hamburger! No, this time, the hamburger will eat you up...*
 
-This boss has {boss['hp']} HP and has high-end loot!
+This boss has {self.boss['hp']} HP and has high-end loot!
 The hamburger will be vulnerable in 15 Minutes
 Use https://raid.travitia.xyz/ to join the raid!
 **Only followers of CHamburr may join.**
@@ -1073,12 +1092,12 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
         start = datetime.datetime.utcnow()
 
         while (
-            boss["hp"] > 0
+            self.boss["hp"] > 0
             and len(raid) > 0
             and datetime.datetime.utcnow() < start + datetime.timedelta(minutes=45)
         ):
             target = random.choice(list(raid.keys()))  # the guy it will attack
-            dmg = random.randint(boss["min_dmg"], boss["max_dmg"])
+            dmg = random.randint(self.boss["min_dmg"], self.boss["max_dmg"])
             dmg -= raid[target]["armor"]
             raid[target]["hp"] -= dmg  # damage dealt
             if raid[target]["hp"] > 0:
@@ -1102,15 +1121,15 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
             if raid[target]["hp"] <= 0:
                 del raid[target]
             dmg_to_take = sum(i["damage"] for i in raid.values())
-            boss["hp"] -= dmg_to_take
+            self.boss["hp"] -= dmg_to_take
             await asyncio.sleep(4)
             em = discord.Embed(
                 title="The raid attacked the hamburger!", colour=0xFF5C00
             )
             em.set_thumbnail(url=f"{self.bot.BASE_URL}/knight.jpg")
             em.add_field(name="Damage", value=dmg_to_take)
-            if boss["hp"] > 0:
-                em.add_field(name="HP left", value=boss["hp"])
+            if self.boss["hp"] > 0:
+                em.add_field(name="HP left", value=self.boss["hp"])
             else:
                 em.add_field(name="HP left", value="Dead!")
             await ctx.send(embed=em)
@@ -1118,7 +1137,7 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
 
         if len(raid) == 0:
             await ctx.send("The raid was all wiped!")
-        elif boss["hp"] < 1:
+        elif self.boss["hp"] < 1:
             await ctx.channel.set_permissions(
                 ctx.guild.default_role, overwrite=self.allow_sending
             )
@@ -1201,6 +1220,7 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
             ctx.guild.default_role, overwrite=self.deny_sending
         )
         self.raid_ongoing = False
+        self.boss = None
 
     @is_god()
     @raid_free()
@@ -1213,7 +1233,7 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
             "https://raid.travitia.xyz/toggle",
             headers={"Authorization": self.bot.config.raidauth},
         )
-        boss = {"hp": hp, "min_dmg": 100, "max_dmg": 500}
+        self.boss = {"hp": hp, "min_dmg": 100, "max_dmg": 500}
         await ctx.channel.set_permissions(
             ctx.guild.default_role, overwrite=self.read_only
         )
@@ -1289,7 +1309,7 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
         start = datetime.datetime.utcnow()
 
         while (
-            boss["hp"] > 0
+            self.boss["hp"] > 0
             and len(raid) > 0
             and datetime.datetime.utcnow() < start + datetime.timedelta(minutes=45)
         ):
@@ -1320,7 +1340,7 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
             else:
                 if cyberus_skill == "enragement":
                     dmg = round(
-                        random.randint(boss["min_dmg"], boss["max_dmg"]) * 1.4
+                        random.randint(self.boss["min_dmg"], self.boss["max_dmg"]) * 1.4
                     )  # 40% more
                     dmg -= raid[target]["armor"]
                     raid[target]["hp"] -= dmg  # damage dealt
@@ -1366,7 +1386,7 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
                         text = "Cyberus failed to use **assassinate**."
                     else:
                         text = "Cyberus used **howl** to lower player damage by 30%."
-                    dmg = random.randint(boss["min_dmg"], boss["max_dmg"])
+                    dmg = random.randint(self.boss["min_dmg"], self.boss["max_dmg"])
                     dmg -= raid[target]["armor"]
                     raid[target]["hp"] -= dmg  # damage dealt
                     if raid[target]["hp"] > 0:
@@ -1405,13 +1425,13 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
                 dmg_to_take -= round(dmg_to_take * Decimal("0.3"))
             if not action:
                 text = f"{text}No skill selected!"
-            boss["hp"] -= dmg_to_take
+            self.boss["hp"] -= dmg_to_take
             await asyncio.sleep(4)
             em = discord.Embed(title="The raid attacked Cyberus!", colour=0xFF5C00)
             em.set_thumbnail(url=f"{self.bot.BASE_URL}/knight.jpg")
             em.add_field(name="Damage", value=dmg_to_take)
-            if boss["hp"] > 0:
-                em.add_field(name="HP left", value=boss["hp"])
+            if self.boss["hp"] > 0:
+                em.add_field(name="HP left", value=self.boss["hp"])
             else:
                 em.add_field(name="HP left", value="Dead!")
             await ctx.send(text, embed=em)
@@ -1419,7 +1439,7 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
 
         if len(raid) == 0:
             await ctx.send("The raid was all wiped!")
-        elif boss["hp"] < 1:
+        elif self.boss["hp"] < 1:
             await ctx.channel.set_permissions(
                 ctx.guild.default_role, overwrite=self.allow_sending
             )
@@ -1502,6 +1522,7 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
             ctx.guild.default_role, overwrite=self.deny_sending
         )
         self.raid_ongoing = False
+        self.boss = None
 
     @is_god()
     @raid_free()
@@ -1514,7 +1535,7 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
             "https://raid.travitia.xyz/toggle",
             headers={"Authorization": self.bot.config.raidauth},
         )
-        boss = {"hp": hp, "min_dmg": 100, "max_dmg": 500}
+        self.boss = {"hp": hp, "min_dmg": 100, "max_dmg": 500}
         await ctx.channel.set_permissions(
             ctx.guild.default_role, overwrite=self.read_only
         )
@@ -1588,16 +1609,16 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
         start = datetime.datetime.utcnow()
 
         while (
-            boss["hp"] > 0
+            self.boss["hp"] > 0
             and len(raid) > 0
             and datetime.datetime.utcnow() < start + datetime.timedelta(minutes=45)
         ):
             target = random.choice(list(raid.keys()))
-            dmg = random.randint(boss["min_dmg"], boss["max_dmg"])
+            dmg = random.randint(self.boss["min_dmg"], self.boss["max_dmg"])
             dmg -= raid[target]["armor"]
             raid[target]["hp"] -= dmg
             raid_dmg = sum(i["damage"] for i in raid.values())
-            boss["hp"] -= raid_dmg
+            self.boss["hp"] -= raid_dmg
             em = discord.Embed(title="Asmodeus Raid", colour=0xFFB900)
             if (hp := raid[target]["hp"]) > 0:
                 em.add_field(name="Attack Target", value=f"{target} ({hp} HP)")
@@ -1611,7 +1632,7 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
             em.add_field(name="Raid Damage", value=raid_dmg)
             em.add_field(
                 name="Asmodeus HP",
-                value=boss_hp if (boss_hp := boss["hp"]) > 0 else "Dead!",
+                value=boss_hp if (boss_hp := self.boss["hp"]) > 0 else "Dead!",
             )
             await ctx.send(embed=em)
             if raid[target]["hp"] <= 0:
@@ -1621,7 +1642,7 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
 
         if len(raid) == 0:
             await ctx.send("The raid was all wiped!")
-        elif boss["hp"] < 1:
+        elif self.boss["hp"] < 1:
             winner = random.choice(list(raid.keys()))
             await self.bot.pool.execute(
                 'UPDATE profile SET "crates_legendary"="crates_legendary"+1 WHERE "user"=$1;',
@@ -1636,6 +1657,7 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
                 "The raid did not manage to kill Asmodeus within 45 Minutes... He disappeared!"
             )
         self.raid_ongoing = False
+        self.boss = None
 
     @is_god()
     @raid_free()
@@ -1648,7 +1670,7 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
             "https://raid.travitia.xyz/toggle",
             headers={"Authorization": self.bot.config.raidauth},
         )
-        boss = {"hp": hp, "min_dmg": 10, "max_dmg": 50}
+        self.boss = {"hp": hp, "min_dmg": 10, "max_dmg": 50}
         await ctx.channel.set_permissions(
             ctx.guild.default_role, overwrite=self.read_only
         )
@@ -1735,11 +1757,11 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
 
         start = datetime.datetime.utcnow()
 
-        while boss[
+        while self.boss[
             "hp"
         ] > 0 and datetime.datetime.utcnow() < start + datetime.timedelta(minutes=45):
             target = random.choice(list(raid.keys()))
-            dmg = random.randint(boss["min_dmg"], boss["max_dmg"])
+            dmg = random.randint(self.boss["min_dmg"], self.boss["max_dmg"])
             dmg -= raid[target]["armor"]
             raid[target]["damage"] -= dmg
             raid[target]["armor"] -= dmg
@@ -1748,7 +1770,7 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
             if raid[target]["armor"] < 0:
                 raid[target]["armor"] = 0
             raid_dmg = sum(i["damage"] for i in raid.values())
-            boss["hp"] -= raid_dmg
+            self.boss["hp"] -= raid_dmg
             em = discord.Embed(title="Convincing a Windows® user", colour=0xFFB900)
             em.add_field(
                 name="Attack Target",
@@ -1763,13 +1785,13 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
             em.add_field(name="Raid Conviction", value=raid_dmg)
             em.add_field(
                 name="Windows® User Conviction Of Windows®",
-                value=boss_hp if (boss_hp := boss["hp"]) > 0 else "Convinced!",
+                value=boss_hp if (boss_hp := self.boss["hp"]) > 0 else "Convinced!",
             )
             await ctx.send(embed=em)
 
             await asyncio.sleep(4)
 
-        if boss["hp"] < 1:
+        if self.boss["hp"] < 1:
             winner = random.choice(list(raid.keys()))
             await self.bot.pool.execute(
                 'UPDATE profile SET "crates_legendary"="crates_legendary"+1 WHERE "user"=$1;',
@@ -1794,6 +1816,7 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
             ctx.guild.default_role, overwrite=self.deny_sending
         )
         self.raid_ongoing = False
+        self.boss = None
 
     @is_god()
     @raid_free()
@@ -1806,7 +1829,7 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
             "https://raid.travitia.xyz/toggle",
             headers={"Authorization": self.bot.config.raidauth},
         )
-        boss = {"hp": hp, "min_dmg": 100, "max_dmg": 500}
+        self.boss = {"hp": hp, "min_dmg": 100, "max_dmg": 500}
         await ctx.channel.set_permissions(
             ctx.guild.default_role, overwrite=self.read_only
         )
@@ -1814,7 +1837,7 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
             f"""
 **Atheistus the Tormentor has returned to earth to punish humanity for their belief.**
 
-This boss has {boss['hp']} HP and has high-end loot!
+This boss has {self.boss['hp']} HP and has high-end loot!
 Atheistus will be vulnerable in 15 Minutes
 
 Use https://raid.travitia.xyz/ to join the raid!
@@ -1883,12 +1906,12 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
         start = datetime.datetime.utcnow()
 
         while (
-            boss["hp"] > 0
+            self.boss["hp"] > 0
             and len(raid) > 0
             and datetime.datetime.utcnow() < start + datetime.timedelta(minutes=45)
         ):
             target = random.choice(list(raid.keys()))
-            dmg = random.randint(boss["min_dmg"], boss["max_dmg"])
+            dmg = random.randint(self.boss["min_dmg"], self.boss["max_dmg"])
             dmg -= raid[target]["armor"]
             raid[target]["hp"] -= dmg
             if raid[target]["hp"] > 0:
@@ -1912,13 +1935,13 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
             if raid[target]["hp"] <= 0:
                 del raid[target]
             dmg_to_take = sum(i["damage"] for i in raid.values())
-            boss["hp"] -= dmg_to_take
+            self.boss["hp"] -= dmg_to_take
             await asyncio.sleep(4)
             em = discord.Embed(title="The raid attacked Atheistus!", colour=0xFF5C00)
             em.set_thumbnail(url=f"{self.bot.BASE_URL}/knight.jpg")
             em.add_field(name="Damage", value=dmg_to_take)
-            if boss["hp"] > 0:
-                em.add_field(name="HP left", value=boss["hp"])
+            if self.boss["hp"] > 0:
+                em.add_field(name="HP left", value=self.boss["hp"])
             else:
                 em.add_field(name="HP left", value="Dead!")
             await ctx.send(embed=em)
@@ -1926,7 +1949,7 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
 
         if len(raid) == 0:
             await ctx.send("The raid was all wiped!")
-        elif boss["hp"] < 1:
+        elif self.boss["hp"] < 1:
             await ctx.channel.set_permissions(
                 ctx.guild.default_role, overwrite=self.allow_sending
             )
@@ -2009,6 +2032,7 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
             ctx.guild.default_role, overwrite=self.deny_sending
         )
         self.raid_ongoing = False
+        self.boss = None
 
     @is_god()
     @raid_free()
