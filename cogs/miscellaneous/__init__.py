@@ -734,7 +734,7 @@ Average hours of work: **{hours}**"""
             )
         try:
             page = (await self.bot.idlewiki.opensearch(query))[0]
-            text = await page.text()
+            text = await page.summary()
         except (aiowiki.exceptions.PageNotFound, IndexError):
             return await ctx.send(_("No entry found."))
         else:
