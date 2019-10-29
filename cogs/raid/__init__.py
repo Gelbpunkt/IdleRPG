@@ -1,4 +1,4 @@
-bandits"""
+"""
 The IdleRPG Discord Bot
 Copyright (C) 2018-2019 Diniboy and Gelbpunkt
 
@@ -18,6 +18,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 import asyncio
 import datetime
 import random
+import re
 
 from decimal import Decimal
 
@@ -27,7 +28,7 @@ from discord.ext import commands
 
 from classes.converters import IntGreaterThan
 from utils.castle import Castle, Player
-from utils.checks import has_char, is_admin, is_god, AlreadyRaiding
+from utils.checks import AlreadyRaiding, has_char, is_admin, is_god
 
 
 def raid_channel():
@@ -43,6 +44,7 @@ def ikhdosa_channel():
 
     return commands.check(predicate)
 
+
 def raid_free():
     def predicate(ctx):
         if ctx.bot.cogs["Raid"].raid_ongoing:
@@ -50,6 +52,7 @@ def raid_free():
         return True
 
     return commands.check(predicate)
+
 
 class Raid(commands.Cog):
     def __init__(self, bot):
@@ -76,18 +79,9 @@ class Raid(commands.Cog):
         self.boss.update(hp=newhp)
         try:
             spawnmsg = await ctx.channel.fetch_message(self.boss["message"])
-            await spawnmsg.edit(
-                f"""
-**ATTENTION! ZEREKIEL HAS SPAWNED!**
-This boss has {self.boss['hp']} HP and has high-end loot!
-The dragon will be vulnerable in 15 Minutes
-Use https://raid.travitia.xyz/ to join the raid!
-
-Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=453963965521985536&scope=identify&response_type=code&redirect_uri=https://raid.travitia.xyz/callback>
-"""
-            )
+            await spawnmsg.edit(re.sub("\d+ HP", f"{newhp} HP"))
         except:
-            pass
+            return await ctx.send(_("Could not edit Boss HP!"))
         await ctx.send(_("Boss HP updated!"))
 
     @is_admin()
@@ -117,7 +111,7 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
 """,
             file=discord.File("assets/other/dragon.jpg"),
         )
-        self.boss.update(message=spawnmessage.id)
+        self.boss.update(message=spawnmsg.id)
         if not self.bot.config.is_beta:
             await self.bot.get_channel(506_167_065_464_406_041).send(
                 "@everyone Zerekiel spawned! 15 Minutes until he is vulnerable...\nUse https://raid.travitia.xyz/ to join the raid!"
@@ -197,7 +191,7 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
         ):
             target = random.choice(list(raid.keys()))  # the guy it will attack
             dmg = random.randint(
-                self.boss["min_dmg"], boss["max_dmg"]
+                self.boss["min_dmg"], self.boss["max_dmg"]
             )  # effective damage the dragon does
             dmg -= raid[target]["armor"]  # let's substract the shield, ouch
             raid[target]["hp"] -= dmg  # damage dealt
