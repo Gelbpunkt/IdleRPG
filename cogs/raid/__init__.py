@@ -70,25 +70,27 @@ class Raid(commands.Cog):
             send_messages=False, read_messages=True
         )
 
+    def getfinaldmg(self, damage: Decimal, defense):
+        return v if (v := damage - defense) > 0 else 0
+
     @is_admin()
     @commands.command()
-    @locale_doc
     async def alterraid(self, ctx, newhp: IntGreaterThan(0)):
+        """[Bot Admin only] Change a raid boss' HP."""
         if not self.boss:
-            return await ctx.send(_("No Boss active!"))
+            return await ctx.send("No Boss active!")
         self.boss.update(hp=newhp)
         try:
             spawnmsg = await ctx.channel.fetch_message(self.boss["message"])
             await spawnmsg.edit(re.sub("\d+ HP", f"{newhp} HP"))
         except:
-            return await ctx.send(_("Could not edit Boss HP!"))
-        await ctx.send(_("Boss HP updated!"))
+            return await ctx.send("Could not edit Boss HP!")
+        await ctx.send("Boss HP updated!")
 
     @is_admin()
     @raid_channel()
     @raid_free()
     @commands.command()
-    @locale_doc
     async def spawn(self, ctx, hp: IntGreaterThan(0)):
         """[Bot Admin only] Starts a raid."""
         self.raid_ongoing = True
@@ -193,8 +195,11 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
             dmg = random.randint(
                 self.boss["min_dmg"], self.boss["max_dmg"]
             )  # effective damage the dragon does
-            dmg -= raid[target]["armor"]  # let's substract the shield, ouch
-            raid[target]["hp"] -= dmg  # damage dealt
+            israge = (
+                True if (dmg - raid[target]["armor"] < 0) else False
+            )  # set flag for later
+            finaldmg = self.getfinaldmg(dmg, raid[target]["armor"])
+            raid[target]["hp"] -= finaldmg  # damage dealt
             if raid[target]["hp"] > 0:
                 em = discord.Embed(
                     title="Zerekiel attacked!",
@@ -207,9 +212,14 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
                     description=f"{target} died!",
                     colour=0xFFB900,
                 )
-            em.add_field(name="Theoretical Damage", value=dmg + raid[target]["armor"])
+            em.add_field(
+                name="Theoretical Damage", value=finaldmg + raid[target]["armor"]
+            )
             em.add_field(name="Shield", value=raid[target]["armor"])
-            em.add_field(name="Effective Damage", value=dmg)
+            if israge:
+                em.add_field(name="Effective Rage Damage", value=finaldmg)
+            else:
+                em.add_field(name="Effective Damage", value=finaldmg)
             em.set_author(name=str(target), icon_url=target.avatar_url)
             em.set_thumbnail(url=f"{self.bot.BASE_URL}/dragon.png")
             await ctx.send(embed=em)
@@ -321,7 +331,6 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
     @ikhdosa_channel()
     @raid_free()
     @commands.command()
-    @locale_doc
     async def raiddefend(self, ctx, bandits: IntGreaterThan(1), group: str = "I"):
         """[Bot Admin only] Starts a bandit raid in Ikhdosa."""
         self.raid_ongoing = True
@@ -336,9 +345,8 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
         await ctx.send(
             """
 *Arrow shot*
-**Lieutenant**: We've spotted a group of Bandi...
-**Bandit Officer**: Listen up! We demand all of your resources or else we gonna have to use our heavy halberds! We kill for War God Fox!!!
-The Bandit Officers gonna arrive in 30 minutes, prepare of heavy armed Bandits.
+**Lieutenant**: We've spotted a group of Bandits!
+The Bandits gonna arrive in 15 minutes.
 
 Use https://raid.travitia.xyz/ to join the raid!
 
@@ -347,36 +355,25 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
             file=discord.File("assets/other/bandits1.jpg"),
         )
         await asyncio.sleep(300)
-        await ctx.send("**The bandit officers arrive in 25 minutes**")
+        await ctx.send("**The bandit officers arrive in 10 minutes**")
         await asyncio.sleep(150)
         await ctx.send(
             "**Bandit Officer**: This is our last warning. Hand out all your goods and gold!"
         )
         await asyncio.sleep(150)
-        await ctx.send("**The bandit officers arrive in 20 minutes**")
-        await asyncio.sleep(300)
-        await ctx.send("**The bandit officers arrive in 15 minutes**")
-        await asyncio.sleep(150)
-        await ctx.send("**Bandit Officer**: You all gathering fast together. I see.")
-        await asyncio.sleep(150)
-        await ctx.send("**The bandit officers arrive in 10 minutes**")
-        await asyncio.sleep(300)
-        await ctx.send("**The bandit officers arrive in 5 minutes**")
-        await asyncio.sleep(120)
-        await ctx.send("**The bandit officers arrive in 3 minutes**")
+        await ctx.send("**The Bandits arrive in 5 minutes**")
+        await asyncio.sleep(180)
+        await ctx.send("**The Bandits arrive in 2 minutes**")
         await asyncio.sleep(60)
-        await ctx.send("**Bandit Officer**: Ready to charge!!")
-        await asyncio.sleep(60)
-        await ctx.send("**The bandit officers arrive in 1 minute**")
+        await ctx.send("**The Bandits arrive in 1 minute**")
         await asyncio.sleep(30)
-        await ctx.send("**Friendly gods gave all defenders some more HP!**")
+        await ctx.send("**The Bandits arrive in 30 seconds**")
+        await asyncio.sleep(20)
+        await ctx.send("**The Bandits arrive in 10 seconds**")
         await asyncio.sleep(10)
-        await ctx.send("**The bandit officers arrive in 20 seconds**")
-        await asyncio.sleep(10)
-        await ctx.send("**Bandit Officer**: For our lord and savior, War God Fox!!")
-        await asyncio.sleep(10)
+
         await ctx.send(
-            "**The bandit officers are charging! Fetching participant data... Hang on!**"
+            "**The bandits are charging! Fetching participant data... Hang on!**"
         )
 
         async with self.bot.session.get(
@@ -421,7 +418,7 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
                 defmultiply = j["defmultiply"]
             deff = j["armor"] * defmultiply if j else 0
             dmg, deff = await self.bot.generate_stats(i, dmg, deff)
-            raid[u] = {"hp": 200, "armor": deff, "damage": dmg}
+            raid[u] = {"hp": 150, "armor": deff, "damage": dmg}
 
         await ctx.send("**Done getting data!**")
 
@@ -431,14 +428,12 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
         while len(
             bandits
         ) > 0 and datetime.datetime.utcnow() < start + datetime.timedelta(minutes=45):
-            dmg = random.randint(80, 150)  # effective damage the bandit does
-            dmg -= target_data["armor"] * Decimal(
-                random.choice(["0.1", "0.2"])
-            )  # let's substract the shield, ouch
-            target_data["hp"] -= dmg  # damage dealt
-            em = discord.Embed(
-                title=f"Bandit officers left: `{len(bandits)}`", colour=0x000000
+            dmg = random.randint(70, 100)  # effective damage the bandit does
+            dmg = self.getfinaldmg(
+                dmg, target_data["armor"] * Decimal(random.choice(["0.1", "0.2"]))
             )
+            target_data["hp"] -= dmg  # damage dealt
+            em = discord.Embed(title=f"Bandits left: `{len(bandits)}`", colour=0x000000)
             em.set_author(
                 name=f"Bandit officers {group}",
                 icon_url=f"{self.bot.BASE_URL}/bandits1.jpg",
@@ -446,11 +441,10 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
             em.add_field(name="Bandit HP", value=f"{bandits[0]['hp']} HP left")
             if target_data["hp"] > 0:
                 em.add_field(
-                    name="Attack",
-                    value=f"Bandit officer is fighting against `{target}`",
+                    name="Attack", value=f"Bandit is fighting against `{target}`"
                 )
             else:
-                em.add_field(name="Attack", value=f"Bandit officer killed `{target}`")
+                em.add_field(name="Attack", value=f"Bandit killed `{target}`")
             em.add_field(
                 name="Bandit Damage",
                 value=f"Has dealt `{dmg}` damage to the swordsman `{target}`",
@@ -475,10 +469,10 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
             if bandits[0]["hp"] > 0:
                 em.add_field(
                     name="Swordsman attack",
-                    value=f"Is attacking the bandit officer and dealt `{target_data['damage']}` damage",
+                    value=f"Is attacking the bandit and dealt `{target_data['damage']}` damage",
                 )
             else:
-                money = random.randint(15000, 30000)
+                money = random.randint(4000, 8000)
                 await self.bot.pool.execute(
                     'UPDATE profile SET "money"="money"+$1 WHERE "user"=$2;',
                     money,
@@ -487,7 +481,7 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
                 bandits.pop(0)
                 em.add_field(
                     name="Swordsman attack",
-                    value=f"Killed the bandit officer and received ${money}",
+                    value=f"Killed the bandit and received ${money}",
                 )
             em.set_image(url=f"{self.bot.BASE_URL}/swordsman2.jpg")
             await ctx.send(embed=em)
@@ -495,7 +489,7 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
 
         if len(bandits) == 0:
             await ctx.send(
-                "The bandit officers got defeated, War God Fox won't be proud of the bandits."
+                "The bandits got defeated, Ikhdosa is safe again!"
                 "Sending the rewards of the survivors their money..."
             )
             await self.bot.pool.execute(
@@ -504,15 +498,12 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
                 [u.id for u in raid.keys()],
             )
         elif len(raid) == 0:
-            await ctx.send(
-                "The bandit officers plundered the whole town! War God Fox is proud!\nAll swordsmen died!"
-            )
+            await ctx.send("The bandits plundered the town!\nAll swordsmen died!")
         self.raid_ongoing = False
 
     @is_god()
     @raid_free()
     @commands.command()
-    @locale_doc
     async def guiltspawn(self, ctx):
         """[Guilt only] Starts a raid."""
         self.raid_ongoing = True
@@ -645,7 +636,6 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
     @is_god()
     @raid_free()
     @commands.command()
-    @locale_doc
     async def athenaspawn(self, ctx, hp: IntGreaterThan(0)):
         """[Athena only] Starts a raid."""
         self.raid_ongoing = True
@@ -737,7 +727,7 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
             dmg = random.randint(
                 self.boss["min_dmg"], self.boss["max_dmg"]
             )  # effective damage scylla does
-            dmg -= raid[target]["armor"]  # let's substract the shield, ouch
+            dmg = self.getfinaldmg(dmg, raid[target]["armor"])
             raid[target]["hp"] -= dmg  # damage dealt
             if raid[target]["hp"] > 0:
                 em = discord.Embed(
@@ -855,7 +845,6 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
     @is_god()
     @raid_free()
     @commands.command()
-    @locale_doc
     async def kvothespawn(self, ctx, scrael: IntGreaterThan(1)):
         """[Kvothe only] Starts a raid."""
         self.raid_ongoing = True
@@ -939,7 +928,9 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
         ):
             target, target_data = random.choice(list(raid.items()))
             dmg = random.randint(35, 65)
-            dmg -= target_data["armor"] * Decimal(random.choice(["0.4", "0.5"]))
+            dmg = self.getfinaldmg(
+                dmg, target_data["armor"] * Decimal(random.choice(["0.4", "0.5"]))
+            )
             target_data["hp"] -= dmg
             em = discord.Embed(title=f"Scrael left: `{len(scrael)}`", colour=0x000000)
             em.add_field(name="Scrael HP", value=f"{scrael[0]['hp']} HP left")
@@ -1008,7 +999,6 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
     @is_god()
     @raid_free()
     @commands.command()
-    @locale_doc
     async def chamburrspawn(self, ctx, hp: IntGreaterThan(0)):
         """[CHamburr only] Starts a raid."""
         self.raid_ongoing = True
@@ -1098,7 +1088,7 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
         ):
             target = random.choice(list(raid.keys()))  # the guy it will attack
             dmg = random.randint(self.boss["min_dmg"], self.boss["max_dmg"])
-            dmg -= raid[target]["armor"]
+            dmg = self.getfinaldmg(dmg, raid[target]["armor"])
             raid[target]["hp"] -= dmg  # damage dealt
             if raid[target]["hp"] > 0:
                 em = discord.Embed(
@@ -1225,7 +1215,6 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
     @is_god()
     @raid_free()
     @commands.command()
-    @locale_doc
     async def salutationsspawn(self, ctx, hp: IntGreaterThan(0)):
         """[Salutations only] Starts a raid."""
         self.raid_ongoing = True
@@ -1342,7 +1331,7 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
                     dmg = round(
                         random.randint(self.boss["min_dmg"], self.boss["max_dmg"]) * 1.4
                     )  # 40% more
-                    dmg -= raid[target]["armor"]
+                    dmg = self.getfinaldmg(dmg, raid[target]["armor"])
                     raid[target]["hp"] -= dmg  # damage dealt
                     if raid[target]["hp"] > 0:
                         em = discord.Embed(
@@ -1387,7 +1376,7 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
                     else:
                         text = "Cyberus used **howl** to lower player damage by 30%."
                     dmg = random.randint(self.boss["min_dmg"], self.boss["max_dmg"])
-                    dmg -= raid[target]["armor"]
+                    dmg = self.getfinaldmg(dmg, raid[target]["armor"])
                     raid[target]["hp"] -= dmg  # damage dealt
                     if raid[target]["hp"] > 0:
                         em = discord.Embed(
@@ -1527,7 +1516,6 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
     @is_god()
     @raid_free()
     @commands.command()
-    @locale_doc
     async def asmodeusspawn(self, ctx, hp: IntGreaterThan(0)):
         """[Asmodeus only] Starts a raid."""
         self.raid_ongoing = True
@@ -1615,7 +1603,7 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
         ):
             target = random.choice(list(raid.keys()))
             dmg = random.randint(self.boss["min_dmg"], self.boss["max_dmg"])
-            dmg -= raid[target]["armor"]
+            dmg = self.getfinaldmg(dmg, raid[target]["armor"])
             raid[target]["hp"] -= dmg
             raid_dmg = sum(i["damage"] for i in raid.values())
             self.boss["hp"] -= raid_dmg
@@ -1662,7 +1650,6 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
     @is_god()
     @raid_free()
     @commands.command()
-    @locale_doc
     async def anankespawn(self, ctx, hp: IntGreaterThan(0)):
         """[Ananke only] Starts a raid."""
         self.raid_ongoing = True
@@ -1762,7 +1749,7 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
         ] > 0 and datetime.datetime.utcnow() < start + datetime.timedelta(minutes=45):
             target = random.choice(list(raid.keys()))
             dmg = random.randint(self.boss["min_dmg"], self.boss["max_dmg"])
-            dmg -= raid[target]["armor"]
+            dmg = self.getfinaldmg(dmg, raid[target]["armor"])
             raid[target]["damage"] -= dmg
             raid[target]["armor"] -= dmg
             if raid[target]["damage"] < 0:
@@ -1821,7 +1808,6 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
     @is_god()
     @raid_free()
     @commands.command()
-    @locale_doc
     async def jesusspawn(self, ctx, hp: IntGreaterThan(0)):
         """[Jesus only] Starts a raid."""
         self.raid_ongoing = True
@@ -1912,7 +1898,7 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
         ):
             target = random.choice(list(raid.keys()))
             dmg = random.randint(self.boss["min_dmg"], self.boss["max_dmg"])
-            dmg -= raid[target]["armor"]
+            dmg = self.getfinaldmg(dmg, raid[target]["armor"])
             raid[target]["hp"] -= dmg
             if raid[target]["hp"] > 0:
                 em = discord.Embed(
