@@ -1,4 +1,3 @@
-
 <a name="v4.1.10"></a>
 ## [v4.1.10](https://git.travitia.xyz/Adrian/IdleRPG/compare/v4.1.9...v4.1.10)
 
