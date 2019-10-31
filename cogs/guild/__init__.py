@@ -1001,7 +1001,7 @@ Time it will take: **{time}**
         )
         await self.bot.http.send_message(
             guild["channel"],
-            f"**Guild adventure with difficulty **{difficulty}**, lasting {time}, started",
+            f"Guild adventure with difficulty **{difficulty}**, lasting **{time}**, started",
         )
 
     @has_guild()
