@@ -16,13 +16,14 @@ You should have received a copy of the GNU Affero General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
 import asyncio
+
 from typing import Union
 
 import discord
 
 from discord.ext import commands
 
-from classes.converters import UserWithCharacter, IntGreaterThan
+from classes.converters import IntGreaterThan, UserWithCharacter
 from utils.checks import is_admin
 
 

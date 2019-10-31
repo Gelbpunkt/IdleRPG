@@ -82,8 +82,8 @@ class Raid(commands.Cog):
         self.boss.update(hp=newhp)
         try:
             spawnmsg = await ctx.channel.fetch_message(self.boss["message"])
-            await spawnmsg.edit(re.sub("\d+ HP", f"{newhp} HP"))
-        except:
+            await spawnmsg.edit(re.sub(r"\d+ HP", f"{newhp} HP"))
+        except discord.NotFound:
             return await ctx.send("Could not edit Boss HP!")
         await ctx.send("Boss HP updated!")
 
