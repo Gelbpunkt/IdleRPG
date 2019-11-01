@@ -84,12 +84,6 @@ class NeedsGod(commands.CheckFailure):
     pass
 
 
-class NeedsNoGod(commands.CheckFailure):
-    """Exception raised when you need to have no god to use a command."""
-
-    pass
-
-
 class PetDied(commands.CheckFailure):
     """Exception raised when the pet died."""
 
@@ -98,12 +92,6 @@ class PetDied(commands.CheckFailure):
 
 class PetRanAway(commands.CheckFailure):
     """Exception raised when the pet ran away."""
-
-    pass
-
-
-class NotNothing(commands.CheckFailure):
-    """Exception raised when a user is not a human."""
 
     pass
 
@@ -253,19 +241,11 @@ def is_class(class_):
     return commands.check(predicate)
 
 
-def is_nothing():
+def is_nothing(ctx):
     """Checks for a user to be human and not taken cv yet."""
-
-    async def predicate(ctx):
-        if not hasattr(ctx, "character_data"):
-            ctx.character_data = await ctx.bot.pool.fetchrow(
-                'SELECT * FROM profile WHERE "user"=$1;', ctx.author.id
-            )
-        if ctx.character_data["race"] == "Human" and ctx.character_data["cv"] == -1:
-            return True
-        raise NotNothing()
-
-    return commands.check(predicate)
+    if ctx.character_data["race"] == "Human" and ctx.character_data["cv"] == -1:
+        return True
+    return False
 
 
 def has_god():
@@ -283,19 +263,11 @@ def has_god():
     return commands.check(predicate)
 
 
-def has_no_god():
+def has_no_god(ctx):
     """Checks for a user to have no god."""
-
-    async def predicate(ctx):
-        if not hasattr(ctx, "character_data"):
-            ctx.character_data = await ctx.bot.pool.fetchrow(
-                'SELECT * FROM profile WHERE "user"=$1;', ctx.author.id
-            )
-        if not ctx.character_data["god"]:
-            return True
-        raise NeedsNoGod()
-
-    return commands.check(predicate)
+    if not ctx.character_data["god"]:
+        return True
+    return False
 
 
 def update_pet():

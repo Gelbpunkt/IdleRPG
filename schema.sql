@@ -302,7 +302,8 @@ CREATE TABLE public.profile (
     god character varying(50) DEFAULT NULL::character varying,
     favor bigint DEFAULT 0,
     race character varying(30) DEFAULT 'Human'::character varying,
-    cv bigint DEFAULT '-1'::integer
+    cv bigint DEFAULT '-1'::integer,
+    reset_points bigint DEFAULT 2 NOT NULL
 );
 
 
@@ -550,10 +551,88 @@ ALTER TABLE ONLY public.user_settings
 
 
 --
+-- Name: TABLE allitems; Type: ACL; Schema: public; Owner: jens
+--
+
+GRANT SELECT ON TABLE public.allitems TO prest;
+
+
+--
+-- Name: TABLE children; Type: ACL; Schema: public; Owner: jens
+--
+
+GRANT SELECT ON TABLE public.children TO prest;
+
+
+--
+-- Name: TABLE guild; Type: ACL; Schema: public; Owner: jens
+--
+
+GRANT SELECT ON TABLE public.guild TO prest;
+
+
+--
+-- Name: TABLE helpme; Type: ACL; Schema: public; Owner: jens
+--
+
+GRANT SELECT ON TABLE public.helpme TO prest;
+
+
+--
+-- Name: TABLE inventory; Type: ACL; Schema: public; Owner: jens
+--
+
+GRANT SELECT ON TABLE public.inventory TO prest;
+
+
+--
+-- Name: TABLE loot; Type: ACL; Schema: public; Owner: jens
+--
+
+GRANT SELECT ON TABLE public.loot TO prest;
+
+
+--
+-- Name: TABLE market; Type: ACL; Schema: public; Owner: jens
+--
+
+GRANT SELECT ON TABLE public.market TO prest;
+
+
+--
+-- Name: TABLE pets; Type: ACL; Schema: public; Owner: jens
+--
+
+GRANT SELECT ON TABLE public.pets TO prest;
+
+
+--
 -- Name: TABLE profile; Type: ACL; Schema: public; Owner: jens
 --
 
 GRANT ALL ON TABLE public.profile TO votehandler;
+GRANT SELECT ON TABLE public.profile TO prest;
+
+
+--
+-- Name: TABLE server; Type: ACL; Schema: public; Owner: jens
+--
+
+GRANT SELECT ON TABLE public.server TO prest;
+
+
+--
+-- Name: TABLE transactions; Type: ACL; Schema: public; Owner: jens
+--
+
+GRANT SELECT ON TABLE public.transactions TO prest;
+
+
+--
+-- Name: TABLE user_settings; Type: ACL; Schema: public; Owner: jens
+--
+
+GRANT SELECT ON TABLE public.user_settings TO prest;
 
 
 --

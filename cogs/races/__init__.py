@@ -16,6 +16,7 @@ import discord
 
 from discord.ext import commands
 
+from cogs.shard_communication import user_on_cooldown as user_cooldown
 from utils.checks import has_char, is_nothing
 
 
@@ -24,11 +25,20 @@ class Races(commands.Cog):
         self.bot = bot
 
     @has_char()
-    @is_nothing()
+    @user_cooldown(180)
     @commands.command()
     @locale_doc
     async def race(self, ctx):
         _("""Change your race. This is irreversible.""")
+        if not is_nothing(ctx):
+            if ctx.character_data["reset_points"] < 1:
+                return await ctx.send(_("You have no more reset points."))
+            if not await ctx.confirm(
+                _(
+                    "You already chose a race. This change now will cost you a reset point. Are you sure?"
+                )
+            ):
+                return
         embeds = [
             discord.Embed(
                 title=_("Human"),
@@ -119,12 +129,20 @@ class Races(commands.Cog):
         answer = await self.bot.paginator.Choose(
             title=cv["question"], entries=cv["answers"], return_index=True
         ).paginate(ctx)
-        await self.bot.pool.execute(
-            'UPDATE profile SET "race"=$1, "cv"=$2 WHERE "user"=$3;',
-            race_,
-            answer,
-            ctx.author.id,
-        )
+
+        async with self.bot.pool.acquire() as conn:
+            if not is_nothing(ctx):
+                await conn.execute(
+                    'UPDATE profile SET "reset_points"="reset_points"-$1 WHERE "user"=$2;',
+                    1,
+                    ctx.author.id,
+                )
+            await conn.execute(
+                'UPDATE profile SET "race"=$1, "cv"=$2 WHERE "user"=$3;',
+                race_,
+                answer,
+                ctx.author.id,
+            )
         await ctx.send(_("You are now a {race}.").format(race=race_))
 
 

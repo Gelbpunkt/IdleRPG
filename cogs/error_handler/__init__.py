@@ -100,8 +100,6 @@ class Errorhandler(commands.Cog):
                         "You need to be following a god for this command. Please use `{prefix}follow` to choose one."
                     ).format(prefix=ctx.prefix)
                 )
-            elif type(error) == utils.checks.NeedsNoGod:
-                await ctx.send(_("You are already following a god."))
             elif type(error) == utils.checks.NoGuild:
                 await ctx.send(_("You need to have a guild to use this command."))
             elif type(error) == utils.checks.NeedsNoGuild:

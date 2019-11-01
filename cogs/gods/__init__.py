@@ -68,12 +68,20 @@ class Gods(commands.Cog):
         )
 
     @has_char()
-    @has_no_god()
-    @user_cooldown(60)  # to prevent double invoke
+    @user_cooldown(180)  # to prevent double invoke
     @commands.command()
     @locale_doc
     async def follow(self, ctx):
         _("""Choose your deity. This cannot be undone.""")
+        if not has_no_god(ctx):
+            if ctx.character_data["reset_points"] < 1:
+                return await ctx.send(_("You have no more reset points."))
+            if not await ctx.confirm(
+                _(
+                    "You already chose a god. This change now will cost you a reset point. Are you sure?"
+                )
+            ):
+                return
         embeds = [
             discord.Embed(
                 title=name,
@@ -93,9 +101,16 @@ class Gods(commands.Cog):
         ):
             return
 
-        await self.bot.pool.execute(
-            'UPDATE profile SET "god"=$1 WHERE "user"=$2;', god, ctx.author.id
-        )
+        async with self.bot.pool.acquire() as conn:
+            if not has_no_god(ctx):
+                await conn.execute(
+                    'UPDATE profile SET "reset_points"="reset_points"-$1 WHERE "user"=$2;',
+                    1,
+                    ctx.author.id,
+                )
+            await conn.execute(
+                'UPDATE profile SET "god"=$1 WHERE "user"=$2;', god, ctx.author.id
+            )
 
         await ctx.send(_("You are now a follower of {god}.").format(god=god))
 
