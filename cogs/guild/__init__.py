@@ -25,7 +25,7 @@ import discord
 
 from discord.ext import commands
 
-from classes.converters import IntFromTo, IntGreaterThan, MemberWithCharacter, User
+from classes.converters import IntGreaterThan, MemberWithCharacter, User
 from cogs.shard_communication import guild_on_cooldown as guild_cooldown
 from cogs.shard_communication import user_on_cooldown as user_cooldown
 from utils import misc as rpgtools
@@ -1046,6 +1046,7 @@ Time it will take: **{time}**
                 )
             )
 
+    '''
     @has_guild()
     @guild.command()
     @locale_doc
@@ -1151,6 +1152,7 @@ Time it will take: **{time}**
                 amount=reward["price"]
             )
         )
+        '''
 
 
 def setup(bot):

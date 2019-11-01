@@ -465,11 +465,9 @@ Adventure name: `{adventure}`"""
                 )
 
             if (guild := ctx.character_data["guild"]) :
-                pumpkins = random.randint(num * 2, num * 5)
                 await conn.execute(
-                    'UPDATE guild SET "money"="money"+$1, "pumpkins"="pumpkins"+$2 WHERE "id"=$3;',
+                    'UPDATE guild SET "money"="money"+$1 WHERE "id"=$2;',
                     int(gold / 10),
-                    pumpkins,
                     guild,
                 )
 
@@ -492,13 +490,6 @@ Adventure name: `{adventure}`"""
                     "You have completed your adventure and received **${gold}** as well as a new item: **{item}**. Experience gained: **{xp}**."
                 ).format(gold=gold, item=item["name"], xp=xp)
             )
-
-            if guild:
-                await ctx.send(
-                    _(
-                        "On your adventure, you found **{amount}** 🎃! Your guild leader forced you to give them to the guild..."
-                    ).format(amount=pumpkins)
-                )
 
             new_level = int(rpgtools.xptolevel(ctx.character_data["xp"] + xp))
 
