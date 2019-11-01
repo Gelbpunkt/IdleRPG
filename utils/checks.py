@@ -272,6 +272,8 @@ def has_no_god(ctx):
 
 def update_pet():
     async def predicate(ctx):
+        if not ctx.pet_data:
+            raise PetGone()
         diff = (
             (now := datetime.datetime.now(pytz.utc)) - ctx.pet_data["last_update"]
         ) // datetime.timedelta(hours=2)

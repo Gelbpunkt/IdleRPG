@@ -124,6 +124,24 @@ class Errorhandler(commands.Cog):
                         "You need to be on an adventure to use this command. Try `{prefix}adventure`!"
                     ).format(prefix=ctx.prefix)
                 )
+            elif type(error) == utils.checks.PetGone:
+                await ctx.send(
+                    _(
+                        "Your pet has gone missing. Maybe some aliens abducted it? Since you can't find it anymore, you are no longer a {profession}"
+                    ).format(profession=_("Ranger"))
+                )
+                classes = ctx.character_data["class"]
+                for evolve in ["Caretaker"] + ctx.bot.get_class_evolves()["Ranger"]:
+                    if evolve in classes:
+                        idx = classes.index(evolve)
+                        break
+                classes[idx] = "No Class"
+                async with self.bot.pool.acquire() as conn:
+                    await conn.execute(
+                        'UPDATE profile SET "class"=$1 WHERE "user"=$2;',
+                        classes,
+                        ctx.author.id,
+                    )
             elif type(error) == utils.checks.PetDied:
                 await ctx.send(
                     _(
