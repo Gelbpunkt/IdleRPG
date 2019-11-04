@@ -1023,15 +1023,14 @@ Time it will take: **{time}**
             gold = random.randint(adventure[0] * 20, adventure[0] * 50)
 
             channel = await self.bot.pool.fetchval(
-                'UPDATE guild SET "money"="money"+$1, "pumpkins"="pumpkins"+$2 WHERE "id"=$3 RETURNING "channel";',
+                'UPDATE guild SET "money"="money"+$1 WHERE "id"=$2 RETURNING "channel";',
                 gold,
-                adventure[0] * 10,
                 ctx.character_data["guild"],
             )
             await ctx.send(
                 _(
-                    "Your guild has completed an adventure of difficulty `{difficulty}` and **${gold}** has been added to the bank. You also found **{pumpkins}** 🎃!"
-                ).format(difficulty=adventure[0], gold=gold, pumpkins=adventure[0] * 10)
+                    "Your guild has completed an adventure of difficulty `{difficulty}` and **${gold}** has been added to the bank."
+                ).format(difficulty=adventure[0], gold=gold)
             )
             await self.bot.http.send_message(
                 channel,
