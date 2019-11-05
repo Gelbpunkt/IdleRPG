@@ -92,7 +92,7 @@ def calcchance(sword, shield, dungeon, level, luck, returnsuccess=False, booster
         return randomn <= success
 
 
-async def lookup(bot, userid):
+async def lookup(bot, userid, return_none=False):
     userid = int(userid)
     member = await bot.get_user_global(userid)
     if member:
@@ -101,6 +101,9 @@ async def lookup(bot, userid):
         try:
             member = await bot.fetch_user(userid)
         except NotFound:
-            return "None"
+            if return_none:
+                return None
+            else:
+                return "None"
         else:
             return str(member)
