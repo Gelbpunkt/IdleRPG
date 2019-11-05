@@ -7,24 +7,24 @@
 
 This is the code for the IdleRPG Discord Bot.
 
-You may [submit an issue](https://github.com/Gelbpunkt/IdleRPG/issues) or [open a pull request](https://github.com/Gelbpunkt/IdleRPG/pulls) at any time.
+You may [submit an issue](https://git.travitia.xyz/Adrian/IdleRPG/issues) or [open a pull request](https://git.travitia.xyz/Adrian/IdleRPG/merge_requests) at any time.
 
 ## License
 
-The IdleRPG Project is licensed under the terms of the [GNU Affero General Public License 3.0](https://github.com/Gelbpunkt/IdleRPG/blob/v4/LICENSE) ("AGPL"). It is a GPLv3 with extra clause for use over networks (see section 13).
+The IdleRPG Project is licensed under the terms of the [GNU Affero General Public License 3.0](https://git.travitia.xyz/Adrian/IdleRPG/blob/v4/LICENSE) ("AGPL"). It is a GPLv3 with extra clause for use over networks (see section 13).
 
 [AGPL for humans](<https://tldrlegal.com/license/gnu-affero-general-public-license-v3-(agpl-3.0)>).
 
 ## Current goals
 
-Please see [#32](https://github.com/Gelbpunkt/IdleRPG/issues/32)
+Please see [#32](https://git.travitia.xyz/Adrian/IdleRPG/issues/32)
 
 ## Running it
 
 Note: This requires you to have Podman and Git working.
 
 ```sh
-git clone https://github.com/Gelbpunkt/IdleRPG
+git clone https://git.travitia.xyz/Adrian/IdleRPG.git
 cd IdleRPG
 ./scripts/setup.sh
 systemctl start "podman-*"

@@ -3,7 +3,7 @@
 podman pod create idlerpg
 podman run --rm --pod idlerpg --name redis redis:5-alpine
 cat <<EOF > start.sh
-wget https://github.com/Gelbpunkt/IdleRPG/raw/v4/schema.sql
+wget https://git.travitia.xyz/Adrian/IdleRPG/raw/v4/schema.sql
 chown postgres schema.sql
 su postgres
 createdb idlerpg

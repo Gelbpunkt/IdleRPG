@@ -11,6 +11,6 @@ RUN apk add --no-cache curl git && \
 COPY . /idlerpg
 
 # fix git remote url from ssh to https
-RUN git remote set-url origin https://github.com/Gelbpunkt/IdleRPG
+RUN git remote set-url origin https://git.travitia.xyz/Adrian/IdleRPG
 
 CMD python launcher.py
