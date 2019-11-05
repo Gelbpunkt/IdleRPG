@@ -112,6 +112,16 @@ class Errorhandler(commands.Cog):
                 await ctx.send(
                     _("You mustn't be the owner of a guild to use this command.")
                 )
+            elif type(error) == utils.checks.WrongClass:
+                await ctx.send(
+                    embed=discord.Embed(
+                        title=_("Permission denied"),
+                        description=_(
+                            ":x: You don't have the permissions to use this command. It is thought for {error} class users."
+                        ).format(error=error),
+                        colour=0xFF0000,
+                    )
+                )
             elif type(error) == utils.checks.NeedsNoAdventure:
                 await ctx.send(
                     _(

@@ -60,6 +60,12 @@ class NeedsNoGuildLeader(commands.CheckFailure):
     pass
 
 
+class WrongClass(commands.CheckFailure):
+    """Exception raised when a user does not meet the class requirement."""
+
+    pass
+
+
 class NeedsNoAdventure(commands.CheckFailure):
     """Exception raised when a user needs to be on no adventure."""
 
@@ -80,6 +86,12 @@ class NoPatron(commands.CheckFailure):
 
 class NeedsGod(commands.CheckFailure):
     """Exception raised when you need to have a god to use a command."""
+
+    pass
+
+
+class PetGone(commands.CheckFailure):
+    """Exception raised in case of the pet purgatory bug."""
 
     pass
 
@@ -236,7 +248,9 @@ def is_class(class_):
                 ctx.pet_data = await conn.fetchrow(
                     'SELECT * FROM pets WHERE "user"=$1;', ctx.author.id
                 )
-        return check
+        if not check:
+            raise WrongClass(class_)
+        return True
 
     return commands.check(predicate)
 
