@@ -20,13 +20,6 @@ import discord
 from discord.ext import commands
 
 
-def is_meliodas():
-    def predicate(ctx):
-        return ctx.author.id == 150323474014011399
-
-    return commands.check(predicate)
-
-
 def is_zinquo():
     def predicate(ctx):
         return ctx.author.id == 189929542465355776
@@ -67,14 +60,6 @@ class Custom(commands.Cog):
                 url="https://media.discordapp.net/attachments/439779845673844739/625403834033766428/kill.gif"
             )
         )
-
-    @is_meliodas()
-    @commands.command(hidden=True)
-    async def meliodas(self, ctx):
-        """Will he lose his money?"""
-        msg = await ctx.send("Will Meliodas lose all his money today?")
-        await msg.add_reaction("\U00002705")
-        await msg.add_reaction("\U0000274e")
 
     @is_zinquo()
     @commands.command(hidden=True)
