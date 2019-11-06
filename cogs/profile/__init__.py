@@ -150,8 +150,8 @@ IdleRPG is a global bot, your characters are valid everywhere"""
                     "level": rpgtools.xptolevel(profile["xp"]),
                     "money": f"{profile['money']}",
                     "pvpWins": f"{profile['pvpwins']}",
-                    "marriage": str(i)
-                    if (i := await rpgtools.lookup(profile["marriage"], return_none=True))
+                    "marriage": i
+                    if (i := await rpgtools.lookup(self.bot, profile["marriage"], return_none=True))
                     else _("Not Married"),
                     "guild": guild or _("No Guild"),
                     "god": profile["god"] or _("No God"),
