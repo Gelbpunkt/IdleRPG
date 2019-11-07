@@ -656,8 +656,7 @@ class Guild(commands.Cog):
                 'SELECT * FROM guild WHERE "id"=$1;', ctx.character_data["guild"]
             )
             currentlimit = guild["banklimit"]
-            level = int(currentlimit / 250_000)
-            if level == 4:
+            if guild["upgrade"] == 4:
                 return await ctx.send(
                     _("Your guild already reached the maximum upgrade.")
                 )
@@ -675,8 +674,9 @@ class Guild(commands.Cog):
             ):
                 return
             await conn.execute(
-                'UPDATE guild SET banklimit=banklimit+$1 WHERE "id"=$2;',
+                'UPDATE guild SET "banklimit"="banklimit"+$1, "upgrade"="upgrade"+$2 WHERE "id"=$3;',
                 250_000,
+                1,
                 guild["id"],
             )
             await conn.execute(
