@@ -47,6 +47,8 @@ class Trading(commands.Cog):
                         itemid=itemid
                     )
                 )
+            if item["modified"]:
+                return await ctx.send(_("You may not sell donator-modified items."))
             if item["value"] > price:
                 return await ctx.send(
                     _(
@@ -253,6 +255,9 @@ class Trading(commands.Cog):
                     itemid=itemid
                 )
             )
+
+        if item["modified"]:
+            return await ctx.send(_("You may not sell donator-modified items."))
 
         if item["equipped"]:
             if not await ctx.confirm(
