@@ -52,13 +52,43 @@ class Patreon(commands.Cog):
                     )
                 )
             await conn.execute(
-                'UPDATE allitems SET "name"=$1 WHERE "id"=$2;', newname, itemid
+                'UPDATE allitems SET "name"=$1, "modified"=$2 WHERE "id"=$3;', newname, True, itemid
             )
         await ctx.send(
             _("The item with the ID `{itemid}` is now called `{newname}`.").format(
                 itemid=itemid, newname=newname
             )
         )
+
+    @is_patron("Bronze Donators")
+    @has_char()
+    @commands.command()
+    @locale_doc
+    async def weapontype(self, ctx, itemid: int, new_type: str.title):
+        _("""[Patreon Only] Changes an item type.""")
+        if new_type not in ["Sword", "Shield"]:
+            return await ctx.send(_("Invalid type. Try Sword or Shield."))
+        async with self.bot.pool.acquire() as conn:
+            item = await conn.fetchrow(
+                'SELECT * FROM allitems WHERE "owner"=$1 and "id"=$2;',
+                ctx.author.id,
+                itemid,
+            )
+            if not item:
+                return await ctx.send(
+                    _("You don't have an item with the ID `{itemid}`.").format(
+                        itemid=itemid
+                    )
+                )
+            await conn.execute(
+                    'UPDATE allitems SET "type"=$1, "modified"=$2, "damage"=$3, "armor"=$4 WHERE "id"=$5;', new_type, True, item["armor"], item["damage"], itemid
+            )
+        await ctx.send(
+            _("The item with the ID `{itemid}` is now a `{itemtype}`.").format(
+                itemid=itemid, itemtype=new_type
+            )
+        )
+
 
     @has_char()
     @commands.command()

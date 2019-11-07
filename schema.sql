@@ -46,7 +46,9 @@ CREATE TABLE public.allitems (
     value integer NOT NULL,
     type character varying(10) NOT NULL,
     damage numeric(5,2) NOT NULL,
-    armor numeric(5,2) NOT NULL
+    armor numeric(5,2) NOT NULL,
+    modified boolean DEFAULT false NOT NULL,
+    signature character varying(50) DEFAULT NULL::character varying
 );
 
 
