@@ -36,6 +36,7 @@ import config
 
 from classes.context import Context
 from utils import i18n, paginator
+from utils.checks import user_is_patron
 
 
 class Bot(commands.AutoShardedBot):
@@ -67,9 +68,22 @@ class Bot(commands.AutoShardedBot):
         self.launch_time = (
             datetime.datetime.now()
         )  # we assume the bot is created for use right now
+        self.eligible_for_cooldown_reduce = {} # caching
+        self.not_eligible_for_cooldown_reduce = {} # caching
 
     async def global_cooldown(self, ctx: commands.Context):
-        bucket = self.config.cooldown.get_bucket(ctx.message)
+        if ctx.author.id in self.not_eligible_for_cooldown_reduce:
+            bucket = self.config.cooldown.get_bucket(ctx.message)
+        elif ctx.author.id in self.eligible_for_cooldown_reduce:
+            bucket = self.config.donator_cooldown.get_bucket(ctx.message)
+        else:
+            if await user_is_patron(self, ctx.author, "Bronze Donators"):
+                self.eligible_for_cooldown_reduce.add(ctx.author.id)
+                bucket = self.config.donator_cooldown.get_bucket(ctx.message)
+            else:
+                self.not_eligible_for_cooldown_reduce.add(ctx.author.id)
+                bucket = self.config.cooldown.get_bucket(ctx.message)
+
         retry_after = bucket.update_rate_limit()
 
         if retry_after:

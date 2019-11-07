@@ -160,6 +160,21 @@ version = "4.1.10"
 """Global cooldown (rate, per, [.user, .channel, .guild])"""
 cooldown = commands.CooldownMapping.from_cooldown(1, 3, commands.BucketType.user)
 
+"""Bronze donator cooldown (rate, per, [.user, .channel, .guild])"""
+donator_cooldown = commands.CooldownMapping.from_cooldown(
+    1, 2, commands.BucketType.user
+)
+
+"""Donator role order"""
+donator_roles = [
+    "Donators",
+    "Bronze Donators",
+    "Silver Donators",
+    "Gold Donators",
+    "Ruby Donators",
+    "Emerald Donators",
+    "Diamond Donators",
+]
 
 """Adventure times."""
 adventure_times = {

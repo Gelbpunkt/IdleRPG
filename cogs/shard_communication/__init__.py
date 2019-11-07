@@ -155,7 +155,7 @@ class Sharding(commands.Cog):
             if payload.get("output") and payload["command_id"] in self._messages:
                 self._messages[payload["command_id"]].append(payload["output"])
 
-    async def user_is_patreon(self, member_id: int, command_id: str):
+    async def user_is_patreon(self, member_id: int, command_id: str, role: str):
         if not self.bot.get_user(member_id):
             return  # if the instance cannot see them, we can't do much
         member = self.bot.get_guild(self.bot.config.support_server_id).get_member(
@@ -164,17 +164,30 @@ class Sharding(commands.Cog):
         if not member:
             return  # when the bot can only see DMs with the user
 
-        if any(
-            (
-                discord.utils.get(member.roles, name="Donators"),
-                discord.utils.get(member.roles, name="Administrators"),
-                discord.utils.get(member.roles, name="Nitro Booster"),
-                discord.utils.get(member.roles, name="Designer"),
-            )
-        ):
-            payload = {"output": True, "command_id": command_id}
+        if role == "Donators":
+            if any(
+                (
+                    discord.utils.get(member.roles, name="Donators"),
+                    discord.utils.get(member.roles, name="Administrators"),
+                    discord.utils.get(member.roles, name="Nitro Booster"),
+                    discord.utils.get(member.roles, name="Designer"),
+                )
+            ):
+                payload = {"output": True, "command_id": command_id}
+            else:
+                payload = {"output": False, "command_id": command_id}
         else:
-            payload = {"output": False, "command_id": command_id}
+            idx = self.bot.config.donator_roles.index(role)
+            roles = [
+                self.bot.config.donator_roles.index(r.name)
+                for r in member.roles
+                if r.name.endswith("Donators")
+            ]
+            if any([r >= idx for r in roles]):
+                payload = {"output": True, "command_id": command_id}
+            else:
+                payload = {"output": False, "command_id": command_id}
+
         await self.bot.redis.execute(
             "PUBLISH", self.communication_channel, json.dumps(payload)
         )
