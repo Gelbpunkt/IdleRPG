@@ -39,7 +39,7 @@ from discord.ext.commands import BucketType
 from classes.converters import DateNewerThan, IntFromTo, IntGreaterThan
 from cogs.help import chunks
 from cogs.shard_communication import user_on_cooldown as user_cooldown
-from utils.checks import has_char
+from utils.checks import has_char, user_is_patron
 
 
 class Miscellaneous(commands.Cog):
@@ -74,6 +74,9 @@ class Miscellaneous(commands.Cog):
         # Either money or crates
         if secrets.randbelow(3) > 0:
             money = 2 ** ((streak + 9) % 10) * 50
+            # Silver = 1.5x
+            if await user_is_patron(self.bot, ctx.author, "Silver Donators"):
+                money = round(money * 1.5)
             await self.bot.pool.execute(
                 'UPDATE profile SET money=money+$1 WHERE "user"=$2;',
                 money,
