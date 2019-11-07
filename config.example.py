@@ -155,7 +155,7 @@ base_url = "https://idlerpg.travitia.xyz"
 okapi_url = "https://okapi.travitia.xyz"
 
 """The Version of the Bot."""
-version = "4.1.10"
+version = "4.2.0"
 
 """Global cooldown (rate, per, [.user, .channel, .guild])"""
 cooldown = commands.CooldownMapping.from_cooldown(1, 3, commands.BucketType.user)
