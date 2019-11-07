@@ -380,7 +380,7 @@ def is_admin():
     return commands.check(predicate)
 
 
-def is_patron(role = "Donators"):
+def is_patron(role="Donators"):
     async def predicate(ctx):
         response = await ctx.bot.cogs["Sharding"].handler(
             "user_is_patreon", 1, args={"member_id": ctx.author.id, "role": role}
@@ -392,7 +392,7 @@ def is_patron(role = "Donators"):
     return commands.check(predicate)
 
 
-async def user_is_patron(bot, user, role = "Donators"):
+async def user_is_patron(bot, user, role="Donators"):
     response = await bot.cogs["Sharding"].handler(
         "user_is_patreon", 1, args={"member_id": user.id, "role": role}
     )

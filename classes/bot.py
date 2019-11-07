@@ -68,8 +68,8 @@ class Bot(commands.AutoShardedBot):
         self.launch_time = (
             datetime.datetime.now()
         )  # we assume the bot is created for use right now
-        self.eligible_for_cooldown_reduce = set() # caching
-        self.not_eligible_for_cooldown_reduce = set() # caching
+        self.eligible_for_cooldown_reduce = set()  # caching
+        self.not_eligible_for_cooldown_reduce = set()  # caching
 
     async def global_cooldown(self, ctx: commands.Context):
         if ctx.author.id in self.not_eligible_for_cooldown_reduce:

@@ -106,7 +106,6 @@ CREATE TABLE public.guild (
     badges text[],
     badge character varying(100) DEFAULT NULL::character varying,
     description character varying(200) DEFAULT 'No Description set yet'::character varying NOT NULL,
-    pumpkins bigint DEFAULT 0,
     channel bigint
 );
 
@@ -293,8 +292,6 @@ CREATE TABLE public.profile (
     puzzles bigint DEFAULT 0,
     atkmultiply numeric DEFAULT 1.0,
     defmultiply numeric DEFAULT 1.0,
-    trickortreat bigint DEFAULT 0,
-    eastereggs bigint DEFAULT 0,
     crates_common bigint DEFAULT 0,
     crates_uncommon bigint DEFAULT 0,
     crates_rare bigint DEFAULT 0,

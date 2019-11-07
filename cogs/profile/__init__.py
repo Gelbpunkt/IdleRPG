@@ -151,7 +151,11 @@ IdleRPG is a global bot, your characters are valid everywhere"""
                     "money": f"{profile['money']}",
                     "pvpWins": f"{profile['pvpwins']}",
                     "marriage": i
-                    if (i := await rpgtools.lookup(self.bot, profile["marriage"], return_none=True))
+                    if (
+                        i := await rpgtools.lookup(
+                            self.bot, profile["marriage"], return_none=True
+                        )
+                    )
                     else _("Not Married"),
                     "guild": guild or _("No Guild"),
                     "god": profile["god"] or _("No God"),

@@ -52,7 +52,10 @@ class Patreon(commands.Cog):
                     )
                 )
             await conn.execute(
-                'UPDATE allitems SET "name"=$1, "modified"=$2 WHERE "id"=$3;', newname, True, itemid
+                'UPDATE allitems SET "name"=$1, "modified"=$2 WHERE "id"=$3;',
+                newname,
+                True,
+                itemid,
             )
         await ctx.send(
             _("The item with the ID `{itemid}` is now called `{newname}`.").format(
@@ -81,14 +84,18 @@ class Patreon(commands.Cog):
                     )
                 )
             await conn.execute(
-                    'UPDATE allitems SET "type"=$1, "modified"=$2, "damage"=$3, "armor"=$4 WHERE "id"=$5;', new_type, True, item["armor"], item["damage"], itemid
+                'UPDATE allitems SET "type"=$1, "modified"=$2, "damage"=$3, "armor"=$4 WHERE "id"=$5;',
+                new_type,
+                True,
+                item["armor"],
+                item["damage"],
+                itemid,
             )
         await ctx.send(
             _("The item with the ID `{itemid}` is now a `{itemtype}`.").format(
                 itemid=itemid, itemtype=new_type
             )
         )
-
 
     @has_char()
     @commands.command()
