@@ -16,6 +16,7 @@ You should have received a copy of the GNU Affero General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
 import copy
+import random
 
 from io import BytesIO
 
@@ -24,6 +25,7 @@ import discord
 from asyncpg.exceptions import StringDataRightTruncationError
 from discord.ext import commands
 
+from cogs.shard_communication import user_on_cooldown as user_cooldown
 from utils.checks import has_char, is_guild_leader, is_patron, user_is_patron
 
 
@@ -96,6 +98,20 @@ class Patreon(commands.Cog):
                 itemid=itemid, itemtype=new_type
             )
         )
+
+    @is_patron("Ruby Donator")
+    @has_char()
+    @user_cooldown(86400)
+    @commands.command()
+    @locale_doc
+    async def donatordaily(self, ctx):
+        _("""[Patreon Only] Receive a daily booster.""")
+        type_ = random.choice(["time", "money", "luck"])
+        await self.bot.pool.execute(
+            f'UPDATE profile SET "{type_}_booster"="{type_}_booster"+1 WHERE "user"=$2;',
+            ctx.author.id,
+        )
+        await ctx.send(_("You received a daily {type_} booster!").format(type_=type_))
 
     @has_char()
     @commands.command()
@@ -173,11 +189,32 @@ class Patreon(commands.Cog):
     @commands.command()
     @locale_doc
     async def updateguild(self, ctx):
-        _("""[Patreon Only] Update your guild member limit.""")
-        await self.bot.pool.execute(
-            'UPDATE guild SET memberlimit=$1 WHERE "leader"=$2;', 100, ctx.author.id
-        )
-        await ctx.send(_("Your guild member limit is now 100."))
+        _("""[Patreon Only] Update your guild member limit and bank size.""")
+        # Silver x2, Gold x5
+        if await user_is_patron(self.bot, ctx.author, "Gold Donators"):
+            m = 5
+        elif await user_is_patron(self.bot, ctx.author, "Silver Donators"):
+            m = 2
+        else:
+            m = 1
+        async with self.bot.pool.acquire() as conn:
+            old = await conn.fetchrow(
+                'SELECT * FROM guild WHERE "leader"=$1;', ctx.author.id
+            )
+            if old["memberlimit"] < 100:
+                await conn.execute(
+                    'UPDATE guild SET "memberlimit"=$1, "banklimit"="banklimit"*$2 WHERE "leader"=$3;',
+                    100,
+                    m,
+                    ctx.author.id,
+                )
+            else:
+                await conn.execute(
+                    'UPDATE guild SET "banklimit"="banklimit"*$1 WHERE "leader"=$2;',
+                    m,
+                    ctx.author.id,
+                )
+        await ctx.send(_("Your guild was updated."))
 
     @has_char()
     @commands.command()

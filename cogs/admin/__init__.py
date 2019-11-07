@@ -24,6 +24,7 @@ import discord
 from discord.ext import commands
 
 from classes.converters import IntGreaterThan, UserWithCharacter
+from cogs.shard_communication import user_on_cooldown as user_cooldown
 from utils.checks import is_admin
 
 
@@ -222,6 +223,23 @@ class Admin(commands.Cog):
         await self.bot.http.send_message(
             self.bot.config.admin_log_channel,
             f"**{ctx.author}** reset **{target}**'s class.",
+        )
+
+    @is_admin()
+    @user_cooldown(259200)  # 3 days
+    @commands.command(aliades=["asign"], hidden=True)
+    @locale_doc
+    async def adminsign(self, ctx, itemid: int, *, text: str):
+        _("""[Bot Admin only] Sign an item""")
+        text = f"{text} (signed by {ctx.author})"
+        if len(text) > 50:
+            return await ctx.send(_("Text exceeds 50 characters."))
+        await self.bot.pool.execute(
+            'UPDATE allitems SET "signature"=$1 WHERE "id"=$2;', text, itemid
+        )
+        await self.bot.http.send_message(
+            self.bot.config.admin_log_channel,
+            f"**{ctx.author}** signed {itemid} with *{text}*.",
         )
 
     @is_admin()

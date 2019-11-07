@@ -656,6 +656,7 @@ class Guild(commands.Cog):
                 'SELECT * FROM guild WHERE "id"=$1;', ctx.character_data["guild"]
             )
             currentlimit = guild["banklimit"]
+            newlimit = (guild["upgrade"] + 1) * 250000
             if guild["upgrade"] == 4:
                 return await ctx.send(
                     _("Your guild already reached the maximum upgrade.")
@@ -669,29 +670,23 @@ class Guild(commands.Cog):
 
             if not await ctx.confirm(
                 _(
-                    "This will upgrade your guild bank limit to **${limit}** for **${cost}**. Proceed?"
-                ).format(limit=currentlimit + 250_000, cost=int(currentlimit / 2))
+                    "This will upgrade your guild bank limit to **${newlimit}** for **${cost}**. Proceed?"
+                ).format(limit=newlimit, cost=int(currentlimit / 2))
             ):
                 return
             await conn.execute(
-                'UPDATE guild SET "banklimit"="banklimit"+$1, "upgrade"="upgrade"+$2 WHERE "id"=$3;',
-                250_000,
+                'UPDATE guild SET "banklimit"=$1, "upgrade"="upgrade"+$2, "money"="money"-$3 WHERE "id"=$4;',
+                newlimit,
                 1,
-                guild["id"],
-            )
-            await conn.execute(
-                'UPDATE guild SET money=money-$1 WHERE "id"=$2;',
                 int(currentlimit / 2),
                 guild["id"],
             )
         await ctx.send(
-            _("Your new guild bank limit is now **${limit}**.").format(
-                limit=currentlimit + 250_000
-            )
+            _("Your new guild bank limit is now **${limit}**.").format(limit=newlimit)
         )
         await self.bot.http.send_message(
             guild["channel"],
-            f"**{ctx.author}** upgraded the guild bank to **${currentlimit + 250000}**",
+            f"**{ctx.author}** upgraded the guild bank to **${newlimit}**",
         )
 
     @is_guild_officer()

@@ -100,10 +100,12 @@ class Adventure(commands.Cog):
         time = self.bot.config.adventure_times[dungeonnumber]
         if time_booster:
             time = time / 2
-        # Silver = -5%, Gold = -10%, Ruby = -25%
+        # Silver = -5%, Gold = -10%, Emerald = -25%
         # TODO: Maybe make a func to get the actual rank
-        if await user_is_patron(self.bot, ctx.author): # save calls for normal people :)
-            if await user_is_patron(self.bot, ctx.author, "Ruby Donator"):
+        if await user_is_patron(
+            self.bot, ctx.author
+        ):  # save calls for normal people :)
+            if await user_is_patron(self.bot, ctx.author, "Emerald Donator"):
                 time = time * 0.75
             elif await user_is_patron(self.bot, ctx.author, "Gold Donator"):
                 time = time * 0.9

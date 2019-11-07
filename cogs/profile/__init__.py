@@ -290,15 +290,21 @@ IdleRPG is a global bot, your characters are valid everywhere"""
                 if weapon[4] == "Sword"
                 else _("Armor: `{armor}`").format(armor=weapon["armor"])
             )
+            signature = (
+                _("\nSignature: *{signature}*").format(signature=y)
+                if (y := weapon["signature"])
+                else ""
+            )
             result.add_field(
                 name=f"{weapon[2]} {eq}",
                 value=_(
-                    "ID: `{id}`, Type: `{type_}` with {statstr}. Value is **${value}**"
+                    "ID: `{id}`, Type: `{type_}` with {statstr}. Value is **${value}**{signature}"
                 ).format(
                     id=weapon["id"],
                     type_=weapon["type"],
                     statstr=statstr,
                     value=weapon["value"],
+                    signature=signature,
                 ),
             )
         result.set_footer(

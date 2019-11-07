@@ -171,8 +171,8 @@ donator_roles = [
     "Bronze Donators",
     "Silver Donators",
     "Gold Donators",
-    "Ruby Donators",
     "Emerald Donators",
+    "Ruby Donators",
     "Diamond Donators",
 ]
 
