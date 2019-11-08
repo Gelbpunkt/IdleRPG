@@ -341,11 +341,7 @@ class Marriage(commands.Cog):
                 marriage,
             )
             return await ctx.send(
-                _(
-                    "You had a lovely night and gained {ls} lovescore. 😏".format(
-                        ls=ls
-                    )
-                )
+                _("You had a lovely night and gained {ls} lovescore. 😏".format(ls=ls))
             )
         gender = random.choice(["m", "f"])
         if gender == "m":

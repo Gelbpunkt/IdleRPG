@@ -93,6 +93,9 @@ class Patreon(commands.Cog):
                 item["damage"],
                 itemid,
             )
+            await conn.execute(
+                'UPDATE inventory SET "equipped"=$1 WHERE "id"=$2;', False, itemid
+            )
         await ctx.send(
             _("The item with the ID `{itemid}` is now a `{itemtype}`.").format(
                 itemid=itemid, itemtype=new_type
