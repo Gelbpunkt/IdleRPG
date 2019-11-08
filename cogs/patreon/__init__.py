@@ -206,7 +206,7 @@ class Patreon(commands.Cog):
             )
             if old["memberlimit"] < 100:
                 await conn.execute(
-                    'UPDATE guild SET "memberlimit"=$1, "banklimit"="banklimit"*$2 WHERE "leader"=$3;',
+                    'UPDATE guild SET "memberlimit"=$1, "banklimit"="upgrade"*250000*$2 WHERE "leader"=$3;',
                     100,
                     m,
                     ctx.author.id,
