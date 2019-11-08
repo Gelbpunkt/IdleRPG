@@ -105,11 +105,11 @@ class Adventure(commands.Cog):
         if await user_is_patron(
             self.bot, ctx.author
         ):  # save calls for normal people :)
-            if await user_is_patron(self.bot, ctx.author, "Emerald Donator"):
+            if await user_is_patron(self.bot, ctx.author, "Emerald Donators"):
                 time = time * 0.75
-            elif await user_is_patron(self.bot, ctx.author, "Gold Donator"):
+            elif await user_is_patron(self.bot, ctx.author, "Gold Donators"):
                 time = time * 0.9
-            elif await user_is_patron(self.bot, ctx.author, "Silver Donator"):
+            elif await user_is_patron(self.bot, ctx.author, "Silver Donators"):
                 time = time * 0.95
         await self.bot.start_adventure(ctx.author, dungeonnumber, time)
         await ctx.send(

@@ -237,6 +237,7 @@ class Admin(commands.Cog):
         await self.bot.pool.execute(
             'UPDATE allitems SET "signature"=$1 WHERE "id"=$2;', text, itemid
         )
+        await ctx.send(_("Item successfully signed."))
         await self.bot.http.send_message(
             self.bot.config.admin_log_channel,
             f"**{ctx.author}** signed {itemid} with *{text}*.",
