@@ -281,13 +281,13 @@ IdleRPG is a global bot, your characters are valid everywhere"""
             colour=discord.Colour.blurple(),
         )
         for weapon in ret:
-            if weapon[7]:
+            if weapon["equipped"]:
                 eq = _("(**Equipped**)")
             else:
                 eq = ""
             statstr = (
                 _("Damage: `{damage}`").format(damage=weapon["damage"])
-                if weapon[4] == "Sword"
+                if weapon["type"] == "Sword"
                 else _("Armor: `{armor}`").format(armor=weapon["armor"])
             )
             signature = (
@@ -296,7 +296,7 @@ IdleRPG is a global bot, your characters are valid everywhere"""
                 else ""
             )
             result.add_field(
-                name=f"{weapon[2]} {eq}",
+                name=f"{weapon['name']} {eq}",
                 value=_(
                     "ID: `{id}`, Type: `{type_}` with {statstr}. Value is **${value}**{signature}"
                 ).format(
