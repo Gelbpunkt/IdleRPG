@@ -256,6 +256,7 @@ class Guild(commands.Cog):
             )
         ):
             return
+        m = 100 if await user_is_patron(self.bot, member) else 50
         async with self.bot.pool.acquire() as conn:
             await conn.execute(
                 'UPDATE profile SET "guildrank"=$1 WHERE "user"=$2;',
@@ -268,8 +269,9 @@ class Guild(commands.Cog):
                 member.id,
             )
             name, channel = await conn.fetchval(
-                'UPDATE guild SET "leader"=$1 WHERE "id"=$2 RETURNING ("name", "channel");',
+                'UPDATE guild SET "leader"=$1, "banklimit"="upgrade"*250000, "memberlimit"=$2 WHERE "id"=$3 RETURNING ("name", "channel");',
                 member.id,
+                m,
                 ctx.character_data["guild"],
             )
 
