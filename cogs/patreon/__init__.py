@@ -111,7 +111,7 @@ class Patreon(commands.Cog):
         _("""[Patreon Only] Receive a daily booster.""")
         type_ = random.choice(["time", "money", "luck"])
         await self.bot.pool.execute(
-            f'UPDATE profile SET "{type_}_booster"="{type_}_booster"+1 WHERE "user"=$2;',
+            f'UPDATE profile SET "{type_}_booster"="{type_}_booster"+1 WHERE "user"=$1;',
             ctx.author.id,
         )
         await ctx.send(_("You received a daily {type_} booster!").format(type_=type_))
