@@ -33,6 +33,23 @@ class Patreon(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
+    @has_char()
+    @commands.command()
+    @locale_doc
+    async def resetitem(self, ctx, itemid: int):
+        _("""Reset an item's type and name, if modified.""")
+        async with self.bot.pool.acquire() as conn:
+            item = await conn.fetchrow('SELECT * FROM allitems WHERE "id"=$1;', itemid)
+            if not item or item["owner"] != ctx.author.id:
+                return await ctx.send(_("You do not own this item."))
+            if not item["original_name"] and not item["original_type"]:
+                return await ctx.send(_("Nothing to do..."))
+            await conn.execute(
+                'UPDATE allitems SET "name"=CASE WHEN "original_name" IS NULL THEN "name" ELSE "original_name" END, "original_name"=NULL, "type"=CASE WHEN "original_type" IS NULL THEN "type" ELSE "original_type" END, "original_name"=NULL WHERE "id"=$1;',
+                itemid,
+            )
+        await ctx.send(_("Item reset."))
+
     @is_patron()
     @has_char()
     @commands.command()
@@ -54,9 +71,8 @@ class Patreon(commands.Cog):
                     )
                 )
             await conn.execute(
-                'UPDATE allitems SET "name"=$1, "modified"=$2 WHERE "id"=$3;',
+                'UPDATE allitems SET "name"=$1, "original_name"=CASE WHEN "original_name" IS NULL THEN "name" ELSE "original_name" END WHERE "id"=$2;',
                 newname,
-                True,
                 itemid,
             )
         await ctx.send(
@@ -86,9 +102,8 @@ class Patreon(commands.Cog):
                     )
                 )
             await conn.execute(
-                'UPDATE allitems SET "type"=$1, "modified"=$2, "damage"=$3, "armor"=$4 WHERE "id"=$5;',
+                'UPDATE allitems SET "type"=$1, "original_type"=CASE WHEN "original_type" IS NULL THEN "type" ELSE "original_type" END, "damage"=$2, "armor"=$3 WHERE "id"=$4;',
                 new_type,
-                True,
                 item["armor"],
                 item["damage"],
                 itemid,
