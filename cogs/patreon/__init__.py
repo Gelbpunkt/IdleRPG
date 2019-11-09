@@ -45,7 +45,7 @@ class Patreon(commands.Cog):
             if not item["original_name"] and not item["original_type"]:
                 return await ctx.send(_("Nothing to do..."))
             await conn.execute(
-                'UPDATE allitems SET "name"=CASE WHEN "original_name" IS NULL THEN "name" ELSE "original_name" END, "original_name"=NULL, "type"=CASE WHEN "original_type" IS NULL THEN "type" ELSE "original_type" END, "original_name"=NULL WHERE "id"=$1;',
+                'UPDATE allitems SET "name"=CASE WHEN "original_name" IS NULL THEN "name" ELSE "original_name" END, "original_name"=NULL, "type"=CASE WHEN "original_type" IS NULL THEN "type" ELSE "original_type" END, "original_type"=NULL WHERE "id"=$1;',
                 itemid,
             )
         await ctx.send(_("Item reset."))
