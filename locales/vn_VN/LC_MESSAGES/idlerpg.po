@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-11-08 05:51-0800\n"
+"POT-Creation-Date: 2019-11-09 14:59-0800\n"
 "PO-Revision-Date: 2019-11-08 20:06+0700\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -25,7 +25,7 @@ msgstr "Bắt đầu giải đấu."
 #: cogs/tournament/__init__.py:41 cogs/battles/__init__.py:45
 #: cogs/battles/__init__.py:148 cogs/gambling/__init__.py:327
 #: cogs/profile/__init__.py:610 cogs/transaction/__init__.py:251
-#: cogs/transaction/__init__.py:297
+#: cogs/transaction/__init__.py:299
 msgid "You are too poor."
 msgstr "Bạn quá nghèo."
 
@@ -1244,7 +1244,7 @@ msgstr "Bạn chỉ có thể gửi một hình ảnh trong một lần"
 msgid "This is not a valid image file."
 msgstr "Hình ảnh không hợp lệ."
 
-#: cogs/miscellaneous/__init__.py:153 cogs/patreon/__init__.py:182
+#: cogs/miscellaneous/__init__.py:153 cogs/patreon/__init__.py:197
 msgid "Error when uploading to Imgur."
 msgstr "Lỗi khi tải lên Imgur."
 
@@ -2109,56 +2109,72 @@ msgstr "Hiển thị trợ giúp về bot."
 msgid "Sorry, that command does not exist."
 msgstr "Xin lỗi, lệnh đó không tồn tại."
 
-#: cogs/patreon/__init__.py:41
+#: cogs/patreon/__init__.py:40
+msgid "Reset an item's type and name, if modified."
+msgstr ""
+
+#: cogs/patreon/__init__.py:44 cogs/transaction/__init__.py:277
+msgid "You do not own this item."
+msgstr "Bạn không sở hữu trang bị này"
+
+#: cogs/patreon/__init__.py:46
+msgid "Nothing to do..."
+msgstr ""
+
+#: cogs/patreon/__init__.py:51
+msgid "Item reset."
+msgstr ""
+
+#: cogs/patreon/__init__.py:58
 msgid "[Patreon Only] Changes an item name."
 msgstr "[Chỉ dành cho Patreon] Thay đổi tên vật phẩm."
 
-#: cogs/patreon/__init__.py:43
+#: cogs/patreon/__init__.py:60
 msgid "Name too long."
 msgstr "Tên quá dài."
 
-#: cogs/patreon/__init__.py:52 cogs/patreon/__init__.py:84
+#: cogs/patreon/__init__.py:69 cogs/patreon/__init__.py:100
 #: cogs/trading/__init__.py:254
 #, python-brace-format
 msgid "You don't have an item with the ID `{itemid}`."
 msgstr "Bạn không có một vật phẩm với ID `{itemid}`."
 
-#: cogs/patreon/__init__.py:63
+#: cogs/patreon/__init__.py:79
 #, python-brace-format
 msgid "The item with the ID `{itemid}` is now called `{newname}`."
 msgstr "Vật phẩm với ID `{itemid}` bây giờ được gọi là `{newname}`."
 
-#: cogs/patreon/__init__.py:73
+#: cogs/patreon/__init__.py:89
 msgid "[Patreon Only] Changes an item type."
 msgstr ""
 
-#: cogs/patreon/__init__.py:75
+#: cogs/patreon/__init__.py:91
 msgid "Invalid type. Try Sword or Shield."
 msgstr ""
 
-#: cogs/patreon/__init__.py:100
+#: cogs/patreon/__init__.py:115
 #, python-brace-format
 msgid "The item with the ID `{itemid}` is now a `{itemtype}`."
 msgstr ""
 
-#: cogs/patreon/__init__.py:111
+#: cogs/patreon/__init__.py:126
 msgid "[Patreon Only] Receive a daily booster."
 msgstr ""
 
-#: cogs/patreon/__init__.py:117
+#: cogs/patreon/__init__.py:132
 #, python-brace-format
 msgid "You received a daily {type_} booster!"
 msgstr ""
 
-#: cogs/patreon/__init__.py:123
+#: cogs/patreon/__init__.py:138
 msgid "[Patreon Only] Changes your profile background."
 msgstr "[Chỉ Patreon] Thay đổi nền hồ sơ của bạn."
 
-#: cogs/patreon/__init__.py:135
+#: cogs/patreon/__init__.py:150
 msgid "That is not a valid premade background."
 msgstr "Đó không phải là một nền tảng tiền đề hợp lệ."
 
-#: cogs/patreon/__init__.py:139 cogs/patreon/__init__.py:167
+#: cogs/patreon/__init__.py:154 cogs/patreon/__init__.py:182
 #: cogs/classes/__init__.py:490 cogs/guild/__init__.py:475
 msgid ""
 "I couldn't read that URL. Does it start with `http://` or `https://` and is "
@@ -2167,11 +2183,11 @@ msgstr ""
 "Không thể đọc URL đó. Nó có bắt đầu bằng `http://` hay `https://` và là png "
 "hay jpeg?"
 
-#: cogs/patreon/__init__.py:151
+#: cogs/patreon/__init__.py:166
 msgid "The URL is too long."
 msgstr "URL quá dài."
 
-#: cogs/patreon/__init__.py:153
+#: cogs/patreon/__init__.py:168
 #, python-brace-format
 msgid ""
 "Your new profile picture is now:\n"
@@ -2180,15 +2196,15 @@ msgstr ""
 "Hình ảnh hồ sơ mới của bạn bây giờ là:\n"
 "{url}"
 
-#: cogs/patreon/__init__.py:155
+#: cogs/patreon/__init__.py:170
 msgid "Your profile picture has been reset."
 msgstr "Ảnh hồ sơ của bạn đã được thiết lập lại."
 
-#: cogs/patreon/__init__.py:161
+#: cogs/patreon/__init__.py:176
 msgid "[Patreon Only] Generates a profile background based on an image."
 msgstr "[Chỉ dành cho Patreon] Tạo nền hồ sơ dựa trên hình ảnh."
 
-#: cogs/patreon/__init__.py:184
+#: cogs/patreon/__init__.py:199
 #, python-brace-format
 msgid ""
 "Imgur Link for `{prefix}background`\n"
@@ -2197,30 +2213,30 @@ msgstr ""
 "Liên kết Imgur cho nền`{prefix}background`\n"
 "<{link}>"
 
-#: cogs/patreon/__init__.py:195
+#: cogs/patreon/__init__.py:210
 msgid "[Patreon Only] Update your guild member limit and bank size."
 msgstr ""
 
-#: cogs/patreon/__init__.py:220
+#: cogs/patreon/__init__.py:235
 msgid "Your guild was updated."
 msgstr ""
 
-#: cogs/patreon/__init__.py:226
+#: cogs/patreon/__init__.py:241
 msgid "Update your background to one from the events."
 msgstr "Cập nhật nền của bạn từ các sự kiện."
 
-#: cogs/patreon/__init__.py:234
+#: cogs/patreon/__init__.py:249
 msgid ""
 "You do not have an eventbackground. They can be acquired on seasonal events."
 msgstr "Bạn không có eventbackground. Chúng có thể được tặng vào các sự kiện."
 
-#: cogs/patreon/__init__.py:242
+#: cogs/patreon/__init__.py:257
 #, python-brace-format
 msgid ""
 "The background number {number} is not valid, you only have {total} available."
 msgstr "Số nền {number} không hợp lệ, bạn chỉ có sẵn  {total}"
 
-#: cogs/patreon/__init__.py:248
+#: cogs/patreon/__init__.py:263
 msgid "Background updated!"
 msgstr "Cập nhật Background thành công!"
 
@@ -5282,8 +5298,8 @@ msgid ""
 "Success!\n"
 "{other} now has **${othermoney}**, you now have **${authormoney}**."
 msgstr ""
-"Thành công!\n{other} bây giờ có **${othermoney}**, Còn bây giờ bạn có **"
-"${authormoney}**"
+"Thành công!\n"
+"{other} bây giờ có **${othermoney}**, Còn bây giờ bạn có **${authormoney}**"
 
 #: cogs/profile/__init__.py:637
 msgid "Renames your character."
@@ -5664,7 +5680,7 @@ msgstr "Thêm tiền vào để giao dịch"
 msgid "Adds crates to a trade."
 msgstr "Thêm thùng vào giao dịch"
 
-#: cogs/transaction/__init__.py:264 cogs/transaction/__init__.py:308
+#: cogs/transaction/__init__.py:264 cogs/transaction/__init__.py:310
 msgid "You do not have enough crates."
 msgstr "Bạn không có đủ thùng."
 
@@ -5672,59 +5688,59 @@ msgstr "Bạn không có đủ thùng."
 msgid "Adds items to a trade."
 msgstr "Thêm trang bị để giao dịch"
 
-#: cogs/transaction/__init__.py:275
-msgid "You do not own this item."
-msgstr "Bạn không sở hữu trang bị này"
+#: cogs/transaction/__init__.py:273
+msgid "You may not sell modified items."
+msgstr ""
 
-#: cogs/transaction/__init__.py:281
+#: cogs/transaction/__init__.py:283
 msgid "Sets a value to a trade instead of adding onto it."
 msgstr "Đặt giá trị cho một giao dịch thay vì thêm nó vào."
 
-#: cogs/transaction/__init__.py:284
+#: cogs/transaction/__init__.py:286
 #, python-brace-format
 msgid "Please select something to set. Example: `{prefix}trade set money 1337`"
 msgstr "Chọn một thứ gì đó để đặt lại. Ví dụ: `{prefix}trade set money 1337`"
 
-#: cogs/transaction/__init__.py:292
+#: cogs/transaction/__init__.py:294
 msgid "Sets money in a trade."
 msgstr "Đặt lại tiền trong một cuộc giao dịch."
 
-#: cogs/transaction/__init__.py:303
+#: cogs/transaction/__init__.py:305
 msgid "Sets crates in a trade."
 msgstr "Đặt lại thùng trong một cuộc giao dịch"
 
-#: cogs/transaction/__init__.py:314
+#: cogs/transaction/__init__.py:316
 msgid "Removes something from a trade."
 msgstr "Lấy ra một thừ gì đó trong cuộc giao dịch"
 
-#: cogs/transaction/__init__.py:317
+#: cogs/transaction/__init__.py:319
 #, python-brace-format
 msgid ""
 "Please select something to remove. Example: `{prefix}trade remove money 1337`"
 msgstr ""
 "Hãy chọn một thứ gì đó để lấy ra. Ví dụ: `{prefix}trade remove money 1337`"
 
-#: cogs/transaction/__init__.py:325
+#: cogs/transaction/__init__.py:327
 msgid "Removes money from a trade."
 msgstr "Lấy tiền ra từ một cuộc giao dịch"
 
-#: cogs/transaction/__init__.py:330
+#: cogs/transaction/__init__.py:332
 msgid "Resulting amount is negative."
 msgstr "Kết quả là số âm."
 
-#: cogs/transaction/__init__.py:336
+#: cogs/transaction/__init__.py:338
 msgid "Removes crates from a trade."
 msgstr "Lấy ra một số thùng nhất định."
 
-#: cogs/transaction/__init__.py:344
+#: cogs/transaction/__init__.py:346
 msgid "The resulting amount would be negative."
 msgstr "Số lượng kết quả sẽ là âm."
 
-#: cogs/transaction/__init__.py:350
+#: cogs/transaction/__init__.py:352
 msgid "Removes items from a trade."
 msgstr "Lấy một trang bị ra. "
 
-#: cogs/transaction/__init__.py:356
+#: cogs/transaction/__init__.py:358
 msgid "This item is not in the trade."
 msgstr "Trang bị đó không trong cuộc giao dịch"
 
@@ -6120,8 +6136,10 @@ msgstr "Bạn đã tìm được lối ra!"
 #~ "Bot miễn phí 100%.\n"
 #~ "Bot này được phát triển bởi những người thích viết code.\n"
 #~ "\n"
-#~ "\n**Link**\n"
-#~ "\n<https://git.travitia.xyz/Adrian/IdleRPG> - Nguồn\n"
+#~ "\n"
+#~ "**Link**\n"
+#~ "\n"
+#~ "<https://git.travitia.xyz/Adrian/IdleRPG> - Nguồn\n"
 #~ "<https://idlerpg.travitia.xyz> - Bot Website\n"
 #~ "<https://wiki.travitia.xyz> - IdleRPG wiki\n"
 #~ "<https://raid.travitia.xyz> - Raid Website\n"

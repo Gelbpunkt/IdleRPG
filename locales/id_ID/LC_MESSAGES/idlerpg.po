@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-11-08 05:51-0800\n"
+"POT-Creation-Date: 2019-11-09 14:59-0800\n"
 "PO-Revision-Date: 2019-07-09 18:37+0700\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -25,7 +25,7 @@ msgstr "Memulai turnamen baru."
 #: cogs/tournament/__init__.py:41 cogs/battles/__init__.py:45
 #: cogs/battles/__init__.py:148 cogs/gambling/__init__.py:327
 #: cogs/profile/__init__.py:610 cogs/transaction/__init__.py:251
-#: cogs/transaction/__init__.py:297
+#: cogs/transaction/__init__.py:299
 msgid "You are too poor."
 msgstr "Anda terlalu miskin."
 
@@ -1219,7 +1219,7 @@ msgstr ""
 msgid "This is not a valid image file."
 msgstr ""
 
-#: cogs/miscellaneous/__init__.py:153 cogs/patreon/__init__.py:182
+#: cogs/miscellaneous/__init__.py:153 cogs/patreon/__init__.py:197
 msgid "Error when uploading to Imgur."
 msgstr "Error terjadi ketika mengunggah ke Imgur."
 
@@ -2058,56 +2058,72 @@ msgstr "Menunjukan pertolongan tentang robot."
 msgid "Sorry, that command does not exist."
 msgstr "Maaf, perintah tersebut tidak tersedia."
 
-#: cogs/patreon/__init__.py:41
+#: cogs/patreon/__init__.py:40
+msgid "Reset an item's type and name, if modified."
+msgstr ""
+
+#: cogs/patreon/__init__.py:44 cogs/transaction/__init__.py:277
+msgid "You do not own this item."
+msgstr ""
+
+#: cogs/patreon/__init__.py:46
+msgid "Nothing to do..."
+msgstr ""
+
+#: cogs/patreon/__init__.py:51
+msgid "Item reset."
+msgstr ""
+
+#: cogs/patreon/__init__.py:58
 msgid "[Patreon Only] Changes an item name."
 msgstr "[Khusus Patreon] Mengubah nama item."
 
-#: cogs/patreon/__init__.py:43
+#: cogs/patreon/__init__.py:60
 msgid "Name too long."
 msgstr "Nama terlalu panjang."
 
-#: cogs/patreon/__init__.py:52 cogs/patreon/__init__.py:84
+#: cogs/patreon/__init__.py:69 cogs/patreon/__init__.py:100
 #: cogs/trading/__init__.py:254
 #, python-brace-format
 msgid "You don't have an item with the ID `{itemid}`."
 msgstr "Anda tidak memiliki benda dengan ID `{itemid}`."
 
-#: cogs/patreon/__init__.py:63
+#: cogs/patreon/__init__.py:79
 #, python-brace-format
 msgid "The item with the ID `{itemid}` is now called `{newname}`."
 msgstr "Item dengan ID `{itemid}` sekarang bernama `{newname}`."
 
-#: cogs/patreon/__init__.py:73
+#: cogs/patreon/__init__.py:89
 msgid "[Patreon Only] Changes an item type."
 msgstr ""
 
-#: cogs/patreon/__init__.py:75
+#: cogs/patreon/__init__.py:91
 msgid "Invalid type. Try Sword or Shield."
 msgstr ""
 
-#: cogs/patreon/__init__.py:100
+#: cogs/patreon/__init__.py:115
 #, python-brace-format
 msgid "The item with the ID `{itemid}` is now a `{itemtype}`."
 msgstr ""
 
-#: cogs/patreon/__init__.py:111
+#: cogs/patreon/__init__.py:126
 msgid "[Patreon Only] Receive a daily booster."
 msgstr ""
 
-#: cogs/patreon/__init__.py:117
+#: cogs/patreon/__init__.py:132
 #, python-brace-format
 msgid "You received a daily {type_} booster!"
 msgstr ""
 
-#: cogs/patreon/__init__.py:123
+#: cogs/patreon/__init__.py:138
 msgid "[Patreon Only] Changes your profile background."
 msgstr "[Khusus Patreon] Mengubah latar belakang profil."
 
-#: cogs/patreon/__init__.py:135
+#: cogs/patreon/__init__.py:150
 msgid "That is not a valid premade background."
 msgstr "Itu bukan merupakan latar belakang yang sudah kami buat."
 
-#: cogs/patreon/__init__.py:139 cogs/patreon/__init__.py:167
+#: cogs/patreon/__init__.py:154 cogs/patreon/__init__.py:182
 #: cogs/classes/__init__.py:490 cogs/guild/__init__.py:475
 msgid ""
 "I couldn't read that URL. Does it start with `http://` or `https://` and is "
@@ -2116,11 +2132,11 @@ msgstr ""
 "Saya tidak dapat membaca URL tersebut. Apakah itu dimulai dengan `http://` "
 "or `https://` dan apakah berakhir dengan png atau jpeg?"
 
-#: cogs/patreon/__init__.py:151
+#: cogs/patreon/__init__.py:166
 msgid "The URL is too long."
 msgstr "URL terlalu panjang."
 
-#: cogs/patreon/__init__.py:153
+#: cogs/patreon/__init__.py:168
 #, python-brace-format
 msgid ""
 "Your new profile picture is now:\n"
@@ -2129,15 +2145,15 @@ msgstr ""
 "Latar belakang baru anda sekarang adalah:\n"
 "{url}"
 
-#: cogs/patreon/__init__.py:155
+#: cogs/patreon/__init__.py:170
 msgid "Your profile picture has been reset."
 msgstr "Profil anda telah dikembalikan seperti semula."
 
-#: cogs/patreon/__init__.py:161
+#: cogs/patreon/__init__.py:176
 msgid "[Patreon Only] Generates a profile background based on an image."
 msgstr ""
 
-#: cogs/patreon/__init__.py:184
+#: cogs/patreon/__init__.py:199
 #, python-brace-format
 msgid ""
 "Imgur Link for `{prefix}background`\n"
@@ -2146,26 +2162,26 @@ msgstr ""
 "Link Imgur untuk `{prefix}background`\n"
 "<{link}>"
 
-#: cogs/patreon/__init__.py:195
+#: cogs/patreon/__init__.py:210
 msgid "[Patreon Only] Update your guild member limit and bank size."
 msgstr ""
 
-#: cogs/patreon/__init__.py:220
+#: cogs/patreon/__init__.py:235
 msgid "Your guild was updated."
 msgstr ""
 
-#: cogs/patreon/__init__.py:226
+#: cogs/patreon/__init__.py:241
 msgid "Update your background to one from the events."
 msgstr "Memperbarui latar belakang anda dengan yang dari event sebelumnya."
 
-#: cogs/patreon/__init__.py:234
+#: cogs/patreon/__init__.py:249
 msgid ""
 "You do not have an eventbackground. They can be acquired on seasonal events."
 msgstr ""
 "Anda tidak memiliki latar belakang event. Latar belakang bisa didapatkan di "
 "event tertentu."
 
-#: cogs/patreon/__init__.py:242
+#: cogs/patreon/__init__.py:257
 #, python-brace-format
 msgid ""
 "The background number {number} is not valid, you only have {total} available."
@@ -2173,7 +2189,7 @@ msgstr ""
 "Latar belakang bernomor {number} tidak valid, anda memiliki {total} latar "
 "belakang."
 
-#: cogs/patreon/__init__.py:248
+#: cogs/patreon/__init__.py:263
 msgid "Background updated!"
 msgstr "Latar belakang telah diperbarui!"
 
@@ -5510,7 +5526,7 @@ msgstr ""
 msgid "Adds crates to a trade."
 msgstr ""
 
-#: cogs/transaction/__init__.py:264 cogs/transaction/__init__.py:308
+#: cogs/transaction/__init__.py:264 cogs/transaction/__init__.py:310
 msgid "You do not have enough crates."
 msgstr ""
 
@@ -5518,58 +5534,58 @@ msgstr ""
 msgid "Adds items to a trade."
 msgstr ""
 
-#: cogs/transaction/__init__.py:275
-msgid "You do not own this item."
+#: cogs/transaction/__init__.py:273
+msgid "You may not sell modified items."
 msgstr ""
 
-#: cogs/transaction/__init__.py:281
+#: cogs/transaction/__init__.py:283
 msgid "Sets a value to a trade instead of adding onto it."
 msgstr ""
 
-#: cogs/transaction/__init__.py:284
+#: cogs/transaction/__init__.py:286
 #, python-brace-format
 msgid "Please select something to set. Example: `{prefix}trade set money 1337`"
 msgstr ""
 
-#: cogs/transaction/__init__.py:292
+#: cogs/transaction/__init__.py:294
 msgid "Sets money in a trade."
 msgstr ""
 
-#: cogs/transaction/__init__.py:303
+#: cogs/transaction/__init__.py:305
 msgid "Sets crates in a trade."
 msgstr ""
 
-#: cogs/transaction/__init__.py:314
+#: cogs/transaction/__init__.py:316
 msgid "Removes something from a trade."
 msgstr ""
 
-#: cogs/transaction/__init__.py:317
+#: cogs/transaction/__init__.py:319
 #, python-brace-format
 msgid ""
 "Please select something to remove. Example: `{prefix}trade remove money 1337`"
 msgstr ""
 
-#: cogs/transaction/__init__.py:325
+#: cogs/transaction/__init__.py:327
 msgid "Removes money from a trade."
 msgstr ""
 
-#: cogs/transaction/__init__.py:330
+#: cogs/transaction/__init__.py:332
 msgid "Resulting amount is negative."
 msgstr ""
 
-#: cogs/transaction/__init__.py:336
+#: cogs/transaction/__init__.py:338
 msgid "Removes crates from a trade."
 msgstr ""
 
-#: cogs/transaction/__init__.py:344
+#: cogs/transaction/__init__.py:346
 msgid "The resulting amount would be negative."
 msgstr ""
 
-#: cogs/transaction/__init__.py:350
+#: cogs/transaction/__init__.py:352
 msgid "Removes items from a trade."
 msgstr ""
 
-#: cogs/transaction/__init__.py:356
+#: cogs/transaction/__init__.py:358
 msgid "This item is not in the trade."
 msgstr ""
 

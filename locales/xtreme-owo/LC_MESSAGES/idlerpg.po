@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-11-08 05:51-0800\n"
+"POT-Creation-Date: 2019-11-09 14:59-0800\n"
 "PO-Revision-Date: 2019-11-08 16:54+0700\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -24,7 +24,7 @@ msgstr "Stawts a nyew touwnyament."
 #: cogs/tournament/__init__.py:41 cogs/battles/__init__.py:45
 #: cogs/battles/__init__.py:148 cogs/gambling/__init__.py:327
 #: cogs/profile/__init__.py:610 cogs/transaction/__init__.py:251
-#: cogs/transaction/__init__.py:297
+#: cogs/transaction/__init__.py:299
 msgid "You are too poor."
 msgstr "You awe too poow."
 
@@ -1239,7 +1239,7 @@ msgstr ""
 msgid "This is not a valid image file."
 msgstr ""
 
-#: cogs/miscellaneous/__init__.py:153 cogs/patreon/__init__.py:182
+#: cogs/miscellaneous/__init__.py:153 cogs/patreon/__init__.py:197
 msgid "Error when uploading to Imgur."
 msgstr "Ewwow when upwoading to Imguw."
 
@@ -2079,56 +2079,72 @@ msgstr "Shows hewp about the bot."
 msgid "Sorry, that command does not exist."
 msgstr "Sowwy, that command does nyot exist."
 
-#: cogs/patreon/__init__.py:41
+#: cogs/patreon/__init__.py:40
+msgid "Reset an item's type and name, if modified."
+msgstr ""
+
+#: cogs/patreon/__init__.py:44 cogs/transaction/__init__.py:277
+msgid "You do not own this item."
+msgstr "You do not own this item _:(´ཀ`」 ∠):_"
+
+#: cogs/patreon/__init__.py:46
+msgid "Nothing to do..."
+msgstr ""
+
+#: cogs/patreon/__init__.py:51
+msgid "Item reset."
+msgstr ""
+
+#: cogs/patreon/__init__.py:58
 msgid "[Patreon Only] Changes an item name."
 msgstr "[Patweon Only] Changes an item nyame."
 
-#: cogs/patreon/__init__.py:43
+#: cogs/patreon/__init__.py:60
 msgid "Name too long."
 msgstr "Nyame too long."
 
-#: cogs/patreon/__init__.py:52 cogs/patreon/__init__.py:84
+#: cogs/patreon/__init__.py:69 cogs/patreon/__init__.py:100
 #: cogs/trading/__init__.py:254
 #, python-brace-format
 msgid "You don't have an item with the ID `{itemid}`."
 msgstr "You don't have an item with the ID `{itemid}`."
 
-#: cogs/patreon/__init__.py:63
+#: cogs/patreon/__init__.py:79
 #, python-brace-format
 msgid "The item with the ID `{itemid}` is now called `{newname}`."
 msgstr "The item with the ID `{itemid}` is nyow cawwed `{newname}`."
 
-#: cogs/patreon/__init__.py:73
+#: cogs/patreon/__init__.py:89
 msgid "[Patreon Only] Changes an item type."
 msgstr ""
 
-#: cogs/patreon/__init__.py:75
+#: cogs/patreon/__init__.py:91
 msgid "Invalid type. Try Sword or Shield."
 msgstr ""
 
-#: cogs/patreon/__init__.py:100
+#: cogs/patreon/__init__.py:115
 #, python-brace-format
 msgid "The item with the ID `{itemid}` is now a `{itemtype}`."
 msgstr ""
 
-#: cogs/patreon/__init__.py:111
+#: cogs/patreon/__init__.py:126
 msgid "[Patreon Only] Receive a daily booster."
 msgstr ""
 
-#: cogs/patreon/__init__.py:117
+#: cogs/patreon/__init__.py:132
 #, python-brace-format
 msgid "You received a daily {type_} booster!"
 msgstr ""
 
-#: cogs/patreon/__init__.py:123
+#: cogs/patreon/__init__.py:138
 msgid "[Patreon Only] Changes your profile background."
 msgstr "[Patweon Only] Changes youw pwofiwe backgwound."
 
-#: cogs/patreon/__init__.py:135
+#: cogs/patreon/__init__.py:150
 msgid "That is not a valid premade background."
 msgstr "That is nyot a vawid pwemade backgwound."
 
-#: cogs/patreon/__init__.py:139 cogs/patreon/__init__.py:167
+#: cogs/patreon/__init__.py:154 cogs/patreon/__init__.py:182
 #: cogs/classes/__init__.py:490 cogs/guild/__init__.py:475
 msgid ""
 "I couldn't read that URL. Does it start with `http://` or `https://` and is "
@@ -2137,11 +2153,11 @@ msgstr ""
 "I couwdn't wead that URL. Does it stawt with `http://` ow `https://` and is "
 "eithew a png ow jpeg?"
 
-#: cogs/patreon/__init__.py:151
+#: cogs/patreon/__init__.py:166
 msgid "The URL is too long."
 msgstr "The URL is too long."
 
-#: cogs/patreon/__init__.py:153
+#: cogs/patreon/__init__.py:168
 #, python-brace-format
 msgid ""
 "Your new profile picture is now:\n"
@@ -2150,15 +2166,15 @@ msgstr ""
 "Youw nyew pwofiwe pictuwe is nyow: \n"
 "{url}"
 
-#: cogs/patreon/__init__.py:155
+#: cogs/patreon/__init__.py:170
 msgid "Your profile picture has been reset."
 msgstr "Youw pwofiwe pictuwe has been weset."
 
-#: cogs/patreon/__init__.py:161
+#: cogs/patreon/__init__.py:176
 msgid "[Patreon Only] Generates a profile background based on an image."
 msgstr ""
 
-#: cogs/patreon/__init__.py:184
+#: cogs/patreon/__init__.py:199
 #, python-brace-format
 msgid ""
 "Imgur Link for `{prefix}background`\n"
@@ -2167,26 +2183,26 @@ msgstr ""
 "Imguw Wink (･ω<)☆ fow `{prefix}backgwound`\n"
 "<{link}>"
 
-#: cogs/patreon/__init__.py:195
+#: cogs/patreon/__init__.py:210
 msgid "[Patreon Only] Update your guild member limit and bank size."
 msgstr ""
 
-#: cogs/patreon/__init__.py:220
+#: cogs/patreon/__init__.py:235
 msgid "Your guild was updated."
 msgstr ""
 
-#: cogs/patreon/__init__.py:226
+#: cogs/patreon/__init__.py:241
 msgid "Update your background to one from the events."
 msgstr "Update youw backgwound to onye fwom the events."
 
-#: cogs/patreon/__init__.py:234
+#: cogs/patreon/__init__.py:249
 msgid ""
 "You do not have an eventbackground. They can be acquired on seasonal events."
 msgstr ""
 "You do nyot have an eventbackgwound. They can be acquiwed on seasonyaw "
 "events."
 
-#: cogs/patreon/__init__.py:242
+#: cogs/patreon/__init__.py:257
 #, python-brace-format
 msgid ""
 "The background number {number} is not valid, you only have {total} available."
@@ -2194,7 +2210,7 @@ msgstr ""
 "The backgwound nyumbew {number} is nyot vawid, you onwy have {total} "
 "avaiwabwe."
 
-#: cogs/patreon/__init__.py:248
+#: cogs/patreon/__init__.py:263
 msgid "Background updated!"
 msgstr "Backgwound updated (・`ω´・)"
 
@@ -5580,7 +5596,7 @@ msgstr "Adds monyey to a twade ヽ(・∀・)ﾉ"
 msgid "Adds crates to a trade."
 msgstr "Adds cwates to a twade ( ◐ω◐ )"
 
-#: cogs/transaction/__init__.py:264 cogs/transaction/__init__.py:308
+#: cogs/transaction/__init__.py:264 cogs/transaction/__init__.py:310
 msgid "You do not have enough crates."
 msgstr "You do not have enough cwates ( ; ω ; )"
 
@@ -5588,59 +5604,59 @@ msgstr "You do not have enough cwates ( ; ω ; )"
 msgid "Adds items to a trade."
 msgstr "Adds items to a twade (・`ω´・)"
 
-#: cogs/transaction/__init__.py:275
-msgid "You do not own this item."
-msgstr "You do not own this item _:(´ཀ`」 ∠):_"
+#: cogs/transaction/__init__.py:273
+msgid "You may not sell modified items."
+msgstr ""
 
-#: cogs/transaction/__init__.py:281
+#: cogs/transaction/__init__.py:283
 msgid "Sets a value to a trade instead of adding onto it."
 msgstr "Sets a vawue to a twade instead of adding onto it (´｡• ω •｡`)"
 
-#: cogs/transaction/__init__.py:284
+#: cogs/transaction/__init__.py:286
 #, python-brace-format
 msgid "Please select something to set. Example: `{prefix}trade set money 1337`"
 msgstr "Pls sewect something to set. Exampwe: `{prefix}trade set money 1337`"
 
-#: cogs/transaction/__init__.py:292
+#: cogs/transaction/__init__.py:294
 msgid "Sets money in a trade."
 msgstr "Sets monyey to a twade ヽ(・∀・)ﾉ"
 
-#: cogs/transaction/__init__.py:303
+#: cogs/transaction/__init__.py:305
 msgid "Sets crates in a trade."
 msgstr "Sets cwates to a twade ( ◐ω◐ )"
 
-#: cogs/transaction/__init__.py:314
+#: cogs/transaction/__init__.py:316
 msgid "Removes something from a trade."
 msgstr "Wemoves something fwom a twade ( ◐ω◐ )"
 
-#: cogs/transaction/__init__.py:317
+#: cogs/transaction/__init__.py:319
 #, python-brace-format
 msgid ""
 "Please select something to remove. Example: `{prefix}trade remove money 1337`"
 msgstr ""
 "Pls sewect something to wemove. Exampwe: `{prefix}trade remove money 1337`"
 
-#: cogs/transaction/__init__.py:325
+#: cogs/transaction/__init__.py:327
 msgid "Removes money from a trade."
 msgstr "Wemoves monyey fwom a twade ヽ(・∀・)ﾉ"
 
-#: cogs/transaction/__init__.py:330
+#: cogs/transaction/__init__.py:332
 msgid "Resulting amount is negative."
 msgstr "Wesuwting amount is negative ( ; ω ; )"
 
-#: cogs/transaction/__init__.py:336
+#: cogs/transaction/__init__.py:338
 msgid "Removes crates from a trade."
 msgstr "Wemoves cwates fwom a twade _:(´ཀ`」 ∠):_"
 
-#: cogs/transaction/__init__.py:344
+#: cogs/transaction/__init__.py:346
 msgid "The resulting amount would be negative."
 msgstr "The wesuwting amount wouwd be negative ( ; ω ; )"
 
-#: cogs/transaction/__init__.py:350
+#: cogs/transaction/__init__.py:352
 msgid "Removes items from a trade."
 msgstr "Wemoves items fowm a twade (・`ω´・)"
 
-#: cogs/transaction/__init__.py:356
+#: cogs/transaction/__init__.py:358
 msgid "This item is not in the trade."
 msgstr "This item is not in the twade ( ; ω ; )"
 

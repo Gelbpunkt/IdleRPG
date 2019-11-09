@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-11-08 05:51-0800\n"
+"POT-Creation-Date: 2019-11-09 14:59-0800\n"
 "PO-Revision-Date: 2019-08-23 21:55+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -25,7 +25,7 @@ msgstr "Startet ein neues Turnier."
 #: cogs/tournament/__init__.py:41 cogs/battles/__init__.py:45
 #: cogs/battles/__init__.py:148 cogs/gambling/__init__.py:327
 #: cogs/profile/__init__.py:610 cogs/transaction/__init__.py:251
-#: cogs/transaction/__init__.py:297
+#: cogs/transaction/__init__.py:299
 msgid "You are too poor."
 msgstr "Du hast nicht genug Geld."
 
@@ -1242,7 +1242,7 @@ msgstr ""
 msgid "This is not a valid image file."
 msgstr ""
 
-#: cogs/miscellaneous/__init__.py:153 cogs/patreon/__init__.py:182
+#: cogs/miscellaneous/__init__.py:153 cogs/patreon/__init__.py:197
 msgid "Error when uploading to Imgur."
 msgstr "B31m Upl04d zu 1m6ur 64b 35 31n Pr0bl3m."
 
@@ -2095,56 +2095,72 @@ msgstr "Z3167 d13 B07-H1lf3"
 msgid "Sorry, that command does not exist."
 msgstr "50rry, d13535 K0mm4nd0 61b7 35 n1ch7."
 
-#: cogs/patreon/__init__.py:41
+#: cogs/patreon/__init__.py:40
+msgid "Reset an item's type and name, if modified."
+msgstr ""
+
+#: cogs/patreon/__init__.py:44 cogs/transaction/__init__.py:277
+msgid "You do not own this item."
+msgstr "D1r 63hör7 d1353r 6363n574nd n1ch7."
+
+#: cogs/patreon/__init__.py:46
+msgid "Nothing to do..."
+msgstr ""
+
+#: cogs/patreon/__init__.py:51
+msgid "Item reset."
+msgstr ""
+
+#: cogs/patreon/__init__.py:58
 msgid "[Patreon Only] Changes an item name."
 msgstr "[P47r30n-r353rv13r7] Änd3r3 d3n N4m3n 31n35 173m5."
 
-#: cogs/patreon/__init__.py:43
+#: cogs/patreon/__init__.py:60
 msgid "Name too long."
 msgstr "D3r N4m3 157 zu l4n6."
 
-#: cogs/patreon/__init__.py:52 cogs/patreon/__init__.py:84
+#: cogs/patreon/__init__.py:69 cogs/patreon/__init__.py:100
 #: cogs/trading/__init__.py:254
 #, python-brace-format
 msgid "You don't have an item with the ID `{itemid}`."
 msgstr "Du h457 k31n 173m m17 d3r 1D `{itemid}`."
 
-#: cogs/patreon/__init__.py:63
+#: cogs/patreon/__init__.py:79
 #, python-brace-format
 msgid "The item with the ID `{itemid}` is now called `{newname}`."
 msgstr "D31n 173m m17 d3r 1D `{itemid}` h31ß7 j37z7 `{newname}`."
 
-#: cogs/patreon/__init__.py:73
+#: cogs/patreon/__init__.py:89
 msgid "[Patreon Only] Changes an item type."
 msgstr ""
 
-#: cogs/patreon/__init__.py:75
+#: cogs/patreon/__init__.py:91
 msgid "Invalid type. Try Sword or Shield."
 msgstr ""
 
-#: cogs/patreon/__init__.py:100
+#: cogs/patreon/__init__.py:115
 #, python-brace-format
 msgid "The item with the ID `{itemid}` is now a `{itemtype}`."
 msgstr ""
 
-#: cogs/patreon/__init__.py:111
+#: cogs/patreon/__init__.py:126
 msgid "[Patreon Only] Receive a daily booster."
 msgstr ""
 
-#: cogs/patreon/__init__.py:117
+#: cogs/patreon/__init__.py:132
 #, python-brace-format
 msgid "You received a daily {type_} booster!"
 msgstr ""
 
-#: cogs/patreon/__init__.py:123
+#: cogs/patreon/__init__.py:138
 msgid "[Patreon Only] Changes your profile background."
 msgstr "[P47r30n-r353rv13r7] Änd3r7 d3n H1n73r6rund d31n35 Pr0f1l5."
 
-#: cogs/patreon/__init__.py:135
+#: cogs/patreon/__init__.py:150
 msgid "That is not a valid premade background."
 msgstr "D45 157 k31n 6ül7163r v0r63f3r71673r H1n73r6rund."
 
-#: cogs/patreon/__init__.py:139 cogs/patreon/__init__.py:167
+#: cogs/patreon/__init__.py:154 cogs/patreon/__init__.py:182
 #: cogs/classes/__init__.py:490 cogs/guild/__init__.py:475
 msgid ""
 "I couldn't read that URL. Does it start with `http://` or `https://` and is "
@@ -2153,11 +2169,11 @@ msgstr ""
 "1ch k0nn73 d3n L1nk n1ch7 l353n. 63h3 51ch3r, d455 h3r m17 `h77p://` 0d3r "
 "`h77p5://` 574r737, und m17 `.jp6` 0d3r `.pn6` 3nd37."
 
-#: cogs/patreon/__init__.py:151
+#: cogs/patreon/__init__.py:166
 msgid "The URL is too long."
 msgstr "D3r L1nk 157 zu l4n6."
 
-#: cogs/patreon/__init__.py:153
+#: cogs/patreon/__init__.py:168
 #, python-brace-format
 msgid ""
 "Your new profile picture is now:\n"
@@ -2166,15 +2182,15 @@ msgstr ""
 "D31n n3u3r Pr0f1l-H1n73r6rund 157 j37z7:\n"
 "{url}"
 
-#: cogs/patreon/__init__.py:155
+#: cogs/patreon/__init__.py:170
 msgid "Your profile picture has been reset."
 msgstr "D31n H1n73r6rundb1ld wurd3 zurück63537z7."
 
-#: cogs/patreon/__init__.py:161
+#: cogs/patreon/__init__.py:176
 msgid "[Patreon Only] Generates a profile background based on an image."
 msgstr ""
 
-#: cogs/patreon/__init__.py:184
+#: cogs/patreon/__init__.py:199
 #, python-brace-format
 msgid ""
 "Imgur Link for `{prefix}background`\n"
@@ -2183,26 +2199,26 @@ msgstr ""
 "1m6ur L1nk für `{prefix}background`\n"
 "<{link}>"
 
-#: cogs/patreon/__init__.py:195
+#: cogs/patreon/__init__.py:210
 msgid "[Patreon Only] Update your guild member limit and bank size."
 msgstr ""
 
-#: cogs/patreon/__init__.py:220
+#: cogs/patreon/__init__.py:235
 msgid "Your guild was updated."
 msgstr ""
 
-#: cogs/patreon/__init__.py:226
+#: cogs/patreon/__init__.py:241
 msgid "Update your background to one from the events."
 msgstr "Änd3r3 d31n3n Pr0f1l-H1n73r6rund zu 31n3m d3r 3v3n75."
 
-#: cogs/patreon/__init__.py:234
+#: cogs/patreon/__init__.py:249
 msgid ""
 "You do not have an eventbackground. They can be acquired on seasonal events."
 msgstr ""
 "Du h457 k31n3n 3v3n7-H1n73r6rund. 513 könn3n 1n 54150n4l3n 3v3n75, z.B. "
 "W31hn4ch73n 63w0nn3n w3rd3n."
 
-#: cogs/patreon/__init__.py:242
+#: cogs/patreon/__init__.py:257
 #, python-brace-format
 msgid ""
 "The background number {number} is not valid, you only have {total} available."
@@ -2210,7 +2226,7 @@ msgstr ""
 "D13 H1n73r6rund-Numm3r `{number}` 157 un6ül716, Du h457 bl0ß {total} "
 "3rhäl7l1ch."
 
-#: cogs/patreon/__init__.py:248
+#: cogs/patreon/__init__.py:263
 msgid "Background updated!"
 msgstr "H1n73r6rund 63änd3r7!"
 
@@ -5603,7 +5619,7 @@ msgstr "Fü67 63ld zu 31n3m H4nd3l h1nzu."
 msgid "Adds crates to a trade."
 msgstr "Fü67 K1573n zu 31n3m H4nd3l h1nzu."
 
-#: cogs/transaction/__init__.py:264 cogs/transaction/__init__.py:308
+#: cogs/transaction/__init__.py:264 cogs/transaction/__init__.py:310
 msgid "You do not have enough crates."
 msgstr "Du h457 n1ch7 63nu6 K1573n."
 
@@ -5611,34 +5627,34 @@ msgstr "Du h457 n1ch7 63nu6 K1573n."
 msgid "Adds items to a trade."
 msgstr "Fü67 6363n57änd3 zu 31n3m H4nd3l h1nzu."
 
-#: cogs/transaction/__init__.py:275
-msgid "You do not own this item."
-msgstr "D1r 63hör7 d1353r 6363n574nd n1ch7."
+#: cogs/transaction/__init__.py:273
+msgid "You may not sell modified items."
+msgstr ""
 
-#: cogs/transaction/__init__.py:281
+#: cogs/transaction/__init__.py:283
 msgid "Sets a value to a trade instead of adding onto it."
 msgstr "537z7 31n3n W3r7 1n 31n3m H4nd3l, 57477 zu d3m W3r7 h1nzuzufü63n."
 
-#: cogs/transaction/__init__.py:284
+#: cogs/transaction/__init__.py:286
 #, python-brace-format
 msgid "Please select something to set. Example: `{prefix}trade set money 1337`"
 msgstr ""
 "B1773 wähl3 37w45, d45 63537z7 w3rd3n 50ll. B315p13l: `{prefix}trade set "
 "money 1337`"
 
-#: cogs/transaction/__init__.py:292
+#: cogs/transaction/__init__.py:294
 msgid "Sets money in a trade."
 msgstr "537z7 63ld 1n 31n3m H4nd3l."
 
-#: cogs/transaction/__init__.py:303
+#: cogs/transaction/__init__.py:305
 msgid "Sets crates in a trade."
 msgstr "537z7 K1573n 1n 31n3m H4nd3l."
 
-#: cogs/transaction/__init__.py:314
+#: cogs/transaction/__init__.py:316
 msgid "Removes something from a trade."
 msgstr "3n7f3rn7 37w45 v0n 31n3m H4nd3l."
 
-#: cogs/transaction/__init__.py:317
+#: cogs/transaction/__init__.py:319
 #, python-brace-format
 msgid ""
 "Please select something to remove. Example: `{prefix}trade remove money 1337`"
@@ -5646,27 +5662,27 @@ msgstr ""
 "B1773 wähl3 37w45 4u5, w45 3n7f3rn7 w3rd3n 50ll. B315p13l: `{prefix}trade "
 "remove money 1337`"
 
-#: cogs/transaction/__init__.py:325
+#: cogs/transaction/__init__.py:327
 msgid "Removes money from a trade."
 msgstr "3n7f3rn7 63ld v0n 31n3m H4nd3l."
 
-#: cogs/transaction/__init__.py:330
+#: cogs/transaction/__init__.py:332
 msgid "Resulting amount is negative."
 msgstr "D13 r35ul713r3nd3 M3n63 157 n36471v."
 
-#: cogs/transaction/__init__.py:336
+#: cogs/transaction/__init__.py:338
 msgid "Removes crates from a trade."
 msgstr "3n7f3rn7 K1573n v0n 31n3m H4nd3l."
 
-#: cogs/transaction/__init__.py:344
+#: cogs/transaction/__init__.py:346
 msgid "The resulting amount would be negative."
 msgstr "D13 r35ul713r3nd3 M3n63 wär3 n36471v."
 
-#: cogs/transaction/__init__.py:350
+#: cogs/transaction/__init__.py:352
 msgid "Removes items from a trade."
 msgstr "3n7f3rn7 6363n57änd3 v0n 31n3m H4nd3l."
 
-#: cogs/transaction/__init__.py:356
+#: cogs/transaction/__init__.py:358
 msgid "This item is not in the trade."
 msgstr "D1353r 6363n574nd 157 n1ch7 1m H4nd3l."
 
