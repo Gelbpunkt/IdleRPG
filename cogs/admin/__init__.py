@@ -227,7 +227,7 @@ class Admin(commands.Cog):
 
     @is_admin()
     @user_cooldown(259200)  # 3 days
-    @commands.command(aliades=["asign"], hidden=True)
+    @commands.command(aliases=["asign"], hidden=True)
     @locale_doc
     async def adminsign(self, ctx, itemid: int, *, text: str):
         _("""[Bot Admin only] Sign an item""")
