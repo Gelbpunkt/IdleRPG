@@ -673,7 +673,7 @@ class Guild(commands.Cog):
             if not await ctx.confirm(
                 _(
                     "This will upgrade your guild bank limit to **${newlimit}** for **${cost}**. Proceed?"
-                ).format(limit=newlimit, cost=int(currentlimit / 2))
+                ).format(newlimit=newlimit, cost=int(currentlimit / 2))
             ):
                 return
             await conn.execute(
