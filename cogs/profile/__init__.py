@@ -370,57 +370,106 @@ IdleRPG is a global bot, your characters are valid everywhere"""
     @locale_doc
     async def exchange(self, ctx, *loot_ids: int):
         _("""Exchange one or more loot items for money or xp.""")
-        async with self.bot.pool.acquire() as conn:
-            value, amount = await conn.fetchval(
-                'SELECT (SUM("value"), COUNT("value")) FROM loot WHERE "id"=ANY($1) AND "user"=$2;',
-                loot_ids,
-                ctx.author.id,
+        if len(loot_ids) == 0:
+            async with self.bot.pool.acquire() as conn:
+                value, count = await conn.fetchval(
+                    'SELECT (SUM("value"), COUNT(*)) FROM loot WHERE "user"=$1',
+                    ctx.author.id,
+                )
+                if count == 0:
+                    await self.bot.reset_cooldown(ctx)
+                    return await ctx.send(_("You don't have any loot."))
+                reward = await self.bot.paginator.Choose(
+                    title=_("Select a reward"),
+                    footer=_("Do you want favor? {prefix}sacrifice instead").format(
+                        prefix=ctx.prefix
+                    ),
+                    return_index=True,
+                    entries=[_("**Money**"), _("**EXP**")],
+                ).paginate(ctx)
+                reward = ["money", "xp"][reward]
+                if not await ctx.confirm(
+                    _("Exchange **all {count}** loot items for **{reward}**?").format(
+                        count=count,
+                        reward=f"${count}"
+                        if reward == "money"
+                        else _("{count} EXP").format(count=count),
+                    )
+                ):
+                    return await self.bot.reset_cooldown(ctx)
+
+                async with conn.transaction():
+                    await conn.execute(
+                        'DELETE FROM loot WHERE "user"=$1;', ctx.author.id
+                    )
+                    await conn.execute(
+                        f'UPDATE profile SET {reward}={reward}+$1 WHERE "user"=$2;',
+                        value,
+                        ctx.author.id,
+                    )
+            await ctx.send(
+                _("Exchanged {count} items for {reward}.").format(
+                    count=count,
+                    reward=f"${count}"
+                    if reward == "money"
+                    else _("{count} EXP").format(count=count),
+                )
             )
 
-            if not amount:
-                return await ctx.send(
-                    _("You don't own any loot items with the IDs: {itemids}").format(
-                        itemids=", ".join([str(loot_id) for loot_id in loot_ids])
-                    )
+        else:
+            async with self.bot.pool.acquire() as conn:
+                value, amount = await conn.fetchval(
+                    'SELECT (SUM("value"), COUNT("value")) FROM loot WHERE "id"=ANY($1) AND "user"=$2;',
+                    loot_ids,
+                    ctx.author.id,
                 )
 
-        reward = await self.bot.paginator.Choose(
-            title=_("Select a reward"),
-            footer=_("Do you want favor? {prefix}sacrifice instead").format(
-                prefix=ctx.prefix
-            ),
-            return_index=True,
-            entries=[f"**${value}**", _("**{amount} XP**").format(amount=value)],
-        ).paginate(ctx)
-        reward = ["money", "xp"][reward]
-        if reward == "xp":
-            old_level = int(rpgtools.xptolevel(ctx.character_data["xp"]))
+                if not amount:
+                    return await ctx.send(
+                        _(
+                            "You don't own any loot items with the IDs: {itemids}"
+                        ).format(
+                            itemids=", ".join([str(loot_id) for loot_id in loot_ids])
+                        )
+                    )
 
-        async with self.bot.pool.acquire() as conn:
-            await conn.execute(
-                'DELETE FROM loot WHERE "id"=ANY($1) AND "user"=$2;',
-                loot_ids,
-                ctx.author.id,
-            )
-            await conn.execute(
-                f'UPDATE profile SET "{reward}"="{reward}"+$1 WHERE "user"=$2;',
-                value,
-                ctx.author.id,
-            )
+            reward = await self.bot.paginator.Choose(
+                title=_("Select a reward"),
+                footer=_("Do you want favor? {prefix}sacrifice instead").format(
+                    prefix=ctx.prefix
+                ),
+                return_index=True,
+                entries=[f"**${value}**", _("**{amount} XP**").format(amount=value)],
+            ).paginate(ctx)
+            reward = ["money", "xp"][reward]
+            if reward == "xp":
+                old_level = int(rpgtools.xptolevel(ctx.character_data["xp"]))
 
-        await ctx.send(
-            _(
-                "You received **{reward}** when exchanging loot item(s) `{loot_ids}`. {additional}"
-            ).format(
-                reward=f"${value}" if reward == "money" else f"{value} XP",
-                loot_ids=", ".join([str(lootid) for lootid in loot_ids]),
-                additional=_(
-                    "Skipped `{amount}` because they did not belong to you."
-                ).format(amount=len(loot_ids) - amount)
-                if len(loot_ids) > amount
-                else "",
+            async with self.bot.pool.acquire() as conn:
+                await conn.execute(
+                    'DELETE FROM loot WHERE "id"=ANY($1) AND "user"=$2;',
+                    loot_ids,
+                    ctx.author.id,
+                )
+                await conn.execute(
+                    f'UPDATE profile SET "{reward}"="{reward}"+$1 WHERE "user"=$2;',
+                    value,
+                    ctx.author.id,
+                )
+
+            await ctx.send(
+                _(
+                    "You received **{reward}** when exchanging loot item(s) `{loot_ids}`. {additional}"
+                ).format(
+                    reward=f"${value}" if reward == "money" else f"{value} XP",
+                    loot_ids=", ".join([str(lootid) for lootid in loot_ids]),
+                    additional=_(
+                        "Skipped `{amount}` because they did not belong to you."
+                    ).format(amount=len(loot_ids) - amount)
+                    if len(loot_ids) > amount
+                    else "",
+                )
             )
-        )
 
         if reward == "xp":
             new_level = int(rpgtools.xptolevel(ctx.character_data["xp"] + value))
@@ -428,55 +477,6 @@ IdleRPG is a global bot, your characters are valid everywhere"""
                 await self.bot.process_levelup(ctx, new_level)
 
         await self.bot.reset_cooldown(ctx)
-
-    @checks.has.char()
-    @user_cooldown(1800)
-    @commands.command()
-    @locale_doc
-    async def exchangeall(self, ctx):
-        _("""Exchanges all currently owned loot items.""")
-        async with self.bot.pool.acquire() as conn:
-            value, count = await conn.fetchval(
-                'SELECT (SUM(l.value), COUNT(*)) FROM loot l WHERE "user"=$1',
-                ctx.author.id,
-            )
-            if count == 0:
-                await self.bot.reset_cooldown(ctx)
-                return await ctx.send(_("You don't have any loot."))
-            reward = await self.bot.paginator.Choose(
-                title=_("Select a reward"),
-                footer=_("Do you want favor? {prefix}sacrifice instead").format(
-                    prefix=ctx.prefix
-                ),
-                return_index=True,
-                entries=[_("**Money**"), _("**EXP**")],
-            ).paginate(ctx)
-            reward = ["money", "xp"][reward]
-            if not await ctx.confirm(
-                _("Exchange **{count}** loot items for **{reward}**?").format(
-                    count=count,
-                    reward=f"${count}"
-                    if reward == "money"
-                    else _("{count} EXP").format(count=count),
-                )
-            ):
-                return await self.bot.reset_cooldown(ctx)
-
-            async with conn.transaction():
-                await conn.execute('DELETE FROM loot WHERE "user"=$1;', ctx.author.id)
-                await conn.execute(
-                    f'UPDATE profile SET {reward}={reward}+$1 WHERE "user"=$2;',
-                    value,
-                    ctx.author.id,
-                )
-        await ctx.send(
-            _("Exchanged {count} items for {reward}.").format(
-                count=count,
-                reward=f"${count}"
-                if reward == "money"
-                else _("{count} EXP").format(count=count),
-            )
-        )
 
     @checks.has_char()
     @commands.command(aliases=["use"])
