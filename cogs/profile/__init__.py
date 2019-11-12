@@ -372,7 +372,7 @@ IdleRPG is a global bot, your characters are valid everywhere"""
         _("""Exchange one or more loot items for money or xp.""")
         async with self.bot.pool.acquire() as conn:
             value, amount = await conn.fetchval(
-                'SELECT (SUM(l.value), COUNT(*)) FROM loot l WHERE l.id=ANY($1) AND "user"=$2;',
+                'SELECT (SUM("value"), COUNT("value")) FROM loot WHERE "id"=ANY($1) AND "user"=$2;',
                 loot_ids,
                 ctx.author.id,
             )
