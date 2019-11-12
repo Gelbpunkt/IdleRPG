@@ -101,9 +101,24 @@ class Guild(commands.Cog):
 
     @guild.command()
     @locale_doc
-    async def info(self, ctx, *, name: str):
-        _("""Look up a guild by name.""")
-        await self.get_guild_info(ctx, name=name)
+    async def info(self, ctx, *, by: Union[MemberWithCharacter, str]):
+        _("""Look up a guild by its name or by a player.""")
+        if isinstance(by, str):
+            guildname = by
+        else:
+            async with self.bot.pool.acquire() as conn:
+                guild_id = await conn.fetchval(
+                    'SELECT guild FROM profile WHERE "user"=$1;', by.id
+                )
+                if guild_id == 0:
+                    return await ctx.send(
+                        _("**{user}** does not have a guild.").format(by.name)
+                    )
+                guildname = await conn.fetchval(
+                    "SELECT name FROM guild WHERE id=$1;", guild_id
+                )
+        await self.get_guild_info(ctx, name=guildname)
+
 
     @guild.command()
     @locale_doc
