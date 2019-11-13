@@ -220,7 +220,13 @@ class Battles(commands.Cog):
                 players[idx]["hp"] += 20  # ranger bonus HP
             dmg = player["damage"] * atkmultiply
             deff = player["armor"] * defmultiply
-            dmg, deff = await self.bot.generate_stats(player["user"], dmg, deff)
+            dmg, deff = await self.bot.generate_stats(
+                player["user"],
+                dmg,
+                deff,
+                classes=player["classes"],
+                race=player["race"],
+            )
             players[idx].update(armor=deff, damage=dmg)
         # now players have their raidstats, classes and optional extra HP added on
         # players[0] is the author, players[1] is the enemy
