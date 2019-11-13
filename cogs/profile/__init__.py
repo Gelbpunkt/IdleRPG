@@ -396,10 +396,7 @@ IdleRPG is a global bot, your characters are valid everywhere"""
                         )
                     )
         reward = await self.bot.paginator.Choose(
-            title=_("Select a reward"),
-            description=_("**{amount}** loot items will be exchanged.").format(
-                amount=count
-            ),
+            title=_("Select a reward for the {amount} items".format(amount=count)),
             footer=_("Do you want favor? {prefix}sacrifice instead").format(
                 prefix=ctx.prefix
             ),
