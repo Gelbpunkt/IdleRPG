@@ -231,7 +231,7 @@ class Battles(commands.Cog):
             [
                 _(
                     "Battle {p1} vs. {p2} started!".format(
-                        p1=player[0]["user"], p2=player[1]["user"]
+                        p1=players[0]["user"], p2=players[1]["user"]
                     )
                 )
             ],
