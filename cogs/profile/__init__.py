@@ -365,48 +365,83 @@ IdleRPG is a global bot, your characters are valid everywhere"""
         await self.bot.paginator.Paginator(extras=embeds).paginate(ctx)
 
     @checks.has_char()
-    @user_cooldown(60)
+    @user_cooldown(600)
     @commands.command(aliases=["ex"])
     @locale_doc
-    async def exchange(self, ctx, loot_id: int):
-        _("""Exchange an item for money or xp.""")
-        if not (
-            item := await self.bot.pool.fetchrow(
-                'SELECT * FROM loot WHERE "user"=$1 AND "id"=$2;',
-                ctx.author.id,
-                loot_id,
-            )
-        ):
-            return await ctx.send(_("You do not own this loot item."))
-        value = item["value"]
+    async def exchange(self, ctx, *loot_ids: int):
+        _("""Exchange one or more loot items for money or xp.""")
+        if len(loot_ids) == 0:
+            async with self.bot.pool.acquire() as conn:
+                value, count = await conn.fetchval(
+                    'SELECT (SUM("value"), COUNT(*)) FROM loot WHERE "user"=$1',
+                    ctx.author.id,
+                )
+                if count == 0:
+                    await self.bot.reset_cooldown(ctx)
+                    return await ctx.send(_("You don't have any loot."))
+        else:
+            async with self.bot.pool.acquire() as conn:
+                value, count = await conn.fetchval(
+                    'SELECT (SUM("value"), COUNT("value")) FROM loot WHERE "id"=ANY($1) AND "user"=$2;',
+                    loot_ids,
+                    ctx.author.id,
+                )
+
+                if not count:
+                    return await ctx.send(
+                        _(
+                            "You don't own any loot items with the IDs: {itemids}"
+                        ).format(
+                            itemids=", ".join([str(loot_id) for loot_id in loot_ids])
+                        )
+                    )
         reward = await self.bot.paginator.Choose(
             title=_("Select a reward"),
+            description=_("**{amount}** loot items will be exchanged.").format(amount=count)
             footer=_("Do you want favor? {prefix}sacrifice instead").format(
                 prefix=ctx.prefix
             ),
             return_index=True,
-            entries=[f"**${value}**", _("**{amount} XP**").format(amount=value)],
+            entries=[f"**${value}**", _("**{value} XP**").format(value=value)],
         ).paginate(ctx)
         reward = ["money", "xp"][reward]
         if reward == "xp":
             old_level = int(rpgtools.xptolevel(ctx.character_data["xp"]))
+
         async with self.bot.pool.acquire() as conn:
-            thing = await conn.fetchrow(
-                'DELETE FROM loot WHERE "id"=$1 RETURNING *;', loot_id
-            )
-            if not thing:
-                return await ctx.send(_("You sacrificed in the meantime."))
+            if len(loot_ids) == 0:
+                await conn.execute('DELETE FROM loot WHERE "user"=$1;', ctx.author.id)
+            else:
+                await conn.execute(
+                    'DELETE FROM loot WHERE "id"=ANY($1) AND "user"=$2;',
+                    loot_ids,
+                    ctx.author.id,
+                )
             await conn.execute(
                 f'UPDATE profile SET "{reward}"="{reward}"+$1 WHERE "user"=$2;',
                 value,
-                ctx.author.id,
+                ctx.author.id
             )
-        await ctx.send(_("Reward gained!"))
+        await ctx.send(
+            _(
+                "You received **{reward}** when exchanging loot item(s) `{loot_ids}`. {additional}"
+            ).format(
+                reward=f"${value}" if reward == "money" else f"{value} XP",
+                loot_ids=", ".join([str(lootid) for lootid in loot_ids]),
+                additional=_(
+                    "Skipped `{amount}` because they did not belong to you."
+                ).format(amount=len(loot_ids) - count)
+                if len(loot_ids) > count
+                else "",
+            )
+        )
 
         if reward == "xp":
             new_level = int(rpgtools.xptolevel(ctx.character_data["xp"] + value))
             if old_level != new_level:
                 await self.bot.process_levelup(ctx, new_level)
+
+        await self.bot.reset_cooldown(ctx)
 
     @checks.has_char()
     @commands.command(aliases=["use"])

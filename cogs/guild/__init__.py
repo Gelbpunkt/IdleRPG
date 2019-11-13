@@ -125,6 +125,7 @@ To look up a guild, use guild:name.""")
         await self.get_guild_info(ctx, name=guildname)
 
 
+
     @guild.command()
     @locale_doc
     async def ladder(self, ctx):
