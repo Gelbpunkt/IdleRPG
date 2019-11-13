@@ -264,7 +264,9 @@ class Battles(commands.Cog):
             if defender["hp"] < 0:
                 defender["hp"] = 0
             battle_log.append(
-                _("{attacker} attacks! {defender} takes **{dmg}HP** damage.")
+                _("{attacker} attacks! {defender} takes **{dmg}HP** damage.").format(
+                    attacker["user"].mention, defender=defender["user"].mention, dmg=dmg
+                )
             )
 
             embed = discord.Embed(
