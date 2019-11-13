@@ -225,7 +225,7 @@ class Battles(commands.Cog):
                 player["user"],
                 dmg,
                 deff,
-                classes=player["classes"],
+                classes=player["class"],
                 race=player["race"],
             )
             players[idx].update(armor=deff, damage=dmg)
