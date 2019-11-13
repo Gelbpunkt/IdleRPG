@@ -102,9 +102,11 @@ class Guild(commands.Cog):
     @guild.command()
     @locale_doc
     async def info(self, ctx, *, by: Union[MemberWithCharacter, str]):
-        _("""\
+        _(
+            """\
 Look up a guild by its name or by a player.
-To look up a guild, use guild:name.""")
+To look up a guild, use guild:name."""
+        )
         if isinstance(by, str):
             if by.lower().startswith("guild:"):
                 guildname = by[6:]
@@ -123,8 +125,6 @@ To look up a guild, use guild:name.""")
                     "SELECT name FROM guild WHERE id=$1;", guild_id
                 )
         await self.get_guild_info(ctx, name=guildname)
-
-
 
     @guild.command()
     @locale_doc

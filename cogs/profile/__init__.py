@@ -397,7 +397,9 @@ IdleRPG is a global bot, your characters are valid everywhere"""
                     )
         reward = await self.bot.paginator.Choose(
             title=_("Select a reward"),
-            description=_("**{amount}** loot items will be exchanged.").format(amount=count)
+            description=_("**{amount}** loot items will be exchanged.").format(
+                amount=count
+            ),
             footer=_("Do you want favor? {prefix}sacrifice instead").format(
                 prefix=ctx.prefix
             ),
@@ -420,7 +422,7 @@ IdleRPG is a global bot, your characters are valid everywhere"""
             await conn.execute(
                 f'UPDATE profile SET "{reward}"="{reward}"+$1 WHERE "user"=$2;',
                 value,
-                ctx.author.id
+                ctx.author.id,
             )
         await ctx.send(
             _(

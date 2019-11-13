@@ -337,8 +337,7 @@ class Battles(commands.Cog):
                     ctx.author.id,
                 )
                 await conn.execute(
-                    'UPDATE profile SET pvpwins=pvpwins+1 WHERE "user"=$1;',
-                    enemy.id,
+                    'UPDATE profile SET pvpwins=pvpwins+1 WHERE "user"=$1;', enemy.id
                 )
             await ctx.send(
                 _("{p1} won the battle vs {p2}! Congratulations!").format(
