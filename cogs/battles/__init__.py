@@ -218,8 +218,9 @@ class Battles(commands.Cog):
                 defmultiply = player["defmultiply"]
             if self.bot.in_class_line(player["class"], "Ranger"):
                 players[idx]["hp"] += 20  # ranger bonus HP
-            dmg = player["damage"] * atkmultiply
-            deff = player["armor"] * defmultiply
+            sword, shield = await self.bot.get_equipped_items_for(player["user"])
+            dmg = 0 if not sword else sword["damage"] * atkmultiply
+            deff = 0 if not shield else shield["armor"] * defmultiply
             dmg, deff = await self.bot.generate_stats(
                 player["user"],
                 dmg,
@@ -260,7 +261,9 @@ class Battles(commands.Cog):
             attacker, defender = random.sample(
                 players, k=2
             )  # decide a random attacker and defender from the two players
-            dmg = attacker["damage"] + random.randint(0, 100) - defender["armor"]
+            dmg = (
+                attacker["damage"] + Decimal(random.randint(0, 100)) - defender["armor"]
+            )
             dmg = 1 if dmg <= 0 else dmg  # make sure no negative damage happens
             defender["hp"] -= dmg
             if defender["hp"] < 0:
