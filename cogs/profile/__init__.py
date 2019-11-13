@@ -397,24 +397,16 @@ IdleRPG is a global bot, your characters are valid everywhere"""
                     )
         reward = await self.bot.paginator.Choose(
             title=_("Select a reward"),
+            description=_("**{amount}** loot items will be exchanged.").format(amount=count)
             footer=_("Do you want favor? {prefix}sacrifice instead").format(
                 prefix=ctx.prefix
             ),
             return_index=True,
-            entries=[_("**Money**"), _("**EXP**")],
+            entries=[f"**${value}**", _("**{value} XP**").format(value=value)],
         ).paginate(ctx)
         reward = ["money", "xp"][reward]
         if reward == "xp":
             old_level = int(rpgtools.xptolevel(ctx.character_data["xp"]))
-        if not await ctx.confirm(
-            _("Exchange **{count}** loot items for **{reward}**?").format(
-                count=count,
-                reward=f"${count}"
-                if reward == "money"
-                else _("{count} EXP").format(count=count),
-            )
-        ):
-            return await self.bot.reset_cooldown(ctx)
 
         async with self.bot.pool.acquire() as conn:
             if len(loot_ids) == 0:
@@ -426,7 +418,9 @@ IdleRPG is a global bot, your characters are valid everywhere"""
                     ctx.author.id,
                 )
             await conn.execute(
-                f'UPDATE profile SET "{reward}"="{reward}"+$1 WHERE "user"=$2;', value
+                f'UPDATE profile SET "{reward}"="{reward}"+$1 WHERE "user"=$2;',
+                value,
+                ctx.author.id
             )
         await ctx.send(
             _(
