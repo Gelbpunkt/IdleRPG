@@ -270,7 +270,7 @@ class Battles(commands.Cog):
                 defender["hp"] = 0
             battle_log.append(
                 _("{attacker} attacks! {defender} takes **{dmg}HP** damage.").format(
-                    attacker["user"].mention, defender=defender["user"].mention, dmg=dmg
+                    attacker=attacker["user"].mention, defender=defender["user"].mention, dmg=dmg
                 )
             )
 
