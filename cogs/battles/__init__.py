@@ -292,7 +292,7 @@ class Battles(commands.Cog):
             await log_message.edit(embed=embed)
             await asyncio.sleep(4)
 
-        if players[0]["hp"] == 0:  # command author wins
+        if players[1]["hp"] == 0:  # command author wins
             if not await has_money(
                 self.bot, ctx.author.id, money
             ) or not await has_money(self.bot, enemy.id, money):
@@ -321,7 +321,7 @@ class Battles(commands.Cog):
                     p1=players[0]["user"], p2=players[1]["user"]
                 )
             )
-        elif players[1]["hp"] == 0:  # enemy wins
+        elif players[0]["hp"] == 0:  # enemy wins
             if not await has_money(
                 self.bot, ctx.author.id, money
             ) or not await has_money(self.bot, enemy.id, money):
