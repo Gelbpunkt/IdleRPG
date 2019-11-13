@@ -231,7 +231,7 @@ class Battles(commands.Cog):
                     p1=players[0]["user"], p2=players[1]["user"]
                 )
             ],
-            3,
+            maxlen=3,
         )
 
         embed = discord.Embed(
