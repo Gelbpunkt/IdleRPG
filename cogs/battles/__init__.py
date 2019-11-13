@@ -201,8 +201,8 @@ class Battles(commands.Cog):
 
         rawplayers = [ctx.character_data, enemy_data]
         players = [
-            {"hp": 250, "armor": 0, "damage": 0},
-            {"hp": 250, "armor": 0, "damage": 0},
+            {"user": ctx.author, "hp": 250, "armor": 0, "damage": 0},
+            {"user": enemy, "hp": 250, "armor": 0, "damage": 0},
         ]
 
         for idx, player in enumerate(rawplayers):
@@ -221,18 +221,14 @@ class Battles(commands.Cog):
             dmg = player["damage"] * atkmultiply
             deff = player["armor"] * defmultiply
             dmg, deff = await self.bot.generate_stats(player["user"], dmg, deff)
-            players[idx].update(
-                user=ctx.guild.get_member(player["user"]), armor=deff, damage=dmg
-            )
+            players[idx].update(armor=deff, damage=dmg)
         # now players have their raidstats, classes and optional extra HP added on
         # players[0] is the author, players[1] is the enemy
 
         battle_log = deque(
             [
-                _(
-                    "Battle {p1} vs. {p2} started!".format(
-                        p1=players[0]["user"], p2=players[1]["user"]
-                    )
+                _("Battle {p1} vs. {p2} started!").format(
+                    p1=players[0]["user"], p2=players[1]["user"]
                 )
             ],
             3,
