@@ -1,5 +1,5 @@
 <a name="v4.2.0"></a>
-## [v4.2.0](https://git.travitia.xyz/Adrian/IdleRPG/compare/v4.1.10...v4.2.0)
+## [v4.2.0](https://git.travitia.xyz/kenvyra/IdleRPG/compare/v4.1.10...v4.2.0)
 
 > 2019-11-07
 
@@ -8,7 +8,7 @@
 * Fix dict -> set for caches
 * Fix beta.sh script
 * Fix profile issues and replace "None" with useful info
-* Fix [#384](https://git.travitia.xyz/Adrian/IdleRPG/issues/384)
+* Fix [#384](https://git.travitia.xyz/kenvyra/IdleRPG/issues/384)
 
 ### Guild
 
@@ -57,7 +57,7 @@
 * Merge branch 'pet-fix' into 'v4'
 
 <a name="v4.1.10"></a>
-## [v4.1.10](https://git.travitia.xyz/Adrian/IdleRPG/compare/v4.1.9...v4.1.10)
+## [v4.1.10](https://git.travitia.xyz/kenvyra/IdleRPG/compare/v4.1.9...v4.1.10)
 
 > 2019-10-31
 

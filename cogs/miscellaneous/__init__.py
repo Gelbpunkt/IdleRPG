@@ -180,7 +180,7 @@ Even $1 can help us.
     @locale_doc
     async def source(self, ctx):
         _("""Shows the source code and license.""")
-        await ctx.send("AGPLv3+\nhttps://git.travitia.xyz/Adrian/IdleRPG")
+        await ctx.send("AGPLv3+\nhttps://git.travitia.xyz/kenvyra/IdleRPG")
 
     @commands.command()
     @locale_doc
@@ -766,7 +766,7 @@ The bot is 100% free to use and open source.
 This bot is developed by people who love to code for a good cause and improving your gameplay experience.
 
 **Links**
-<https://git.travitia.xyz/Adrian/IdleRPG> - Source Code
+<https://git.travitia.xyz/kenvyra/IdleRPG> - Source Code
 <https://git.travitia.xyz> - GitLab (Public)
 <https://idlerpg.travitia.xyz> - Bot Website
 <https://wiki.travitia.xyz> - IdleRPG wiki
