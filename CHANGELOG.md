@@ -1,3 +1,53 @@
+<a name="v4.2.1"></a>
+## [v4.2.1](https://git.travitia.xyz/kenvyra/IdleRPG/compare/v4.2.0...v4.2.1)
+
+> 2019-11-13
+
+### New Features
+
+* allow exchanging multiple items by tying `$exchange`
+* allow seeing guild info by mentioning a user (force guild by using `guild:name`)
+* BlackJack will only ask for insurance if needed
+* Raid battles will account for your raid stats and classes (`$raidbattle`)
+
+## Changes
+
+* Change git URL
+* Exploit fixes
+
+### Fixes
+
+* Fix yesno by working around aiohttp
+* Fix logic issue for raidbattle winner
+* Fix classes in raidbattles
+* Fix raidbattles beginning
+* Fix aliases for adminsign
+* Fix donator daily
+
+### Code Style
+
+* flake8 fix
+* less code duplication
+* Refactor inv code
+
+### Locales
+
+* Locales updated
+
+### Admins
+
+* Remove old admins
+
+### Merge Requests
+
+* Merge branch 'patch-1' into 'v4'
+* Merge branch 'exc-all' into 'v4'
+* Merge branch 'guild-info-user' into 'v4'
+* Merge branch 'patch-1' into 'v4'
+* Merge branch 'patch-1' into 'v4'
+* Merge branch 'raidbattles' into 'v4'
+* Merge branch 'patch-1' into 'v4'
+
 <a name="v4.2.0"></a>
 ## [v4.2.0](https://git.travitia.xyz/kenvyra/IdleRPG/compare/v4.1.10...v4.2.0)
 
