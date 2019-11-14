@@ -490,7 +490,7 @@ IdleRPG is a global bot, your characters are valid everywhere"""
         _("""Unequip one of your equipped items""")
         async with self.bot.pool.acquire() as conn:
             item = await conn.fetchrow(
-                'SELECT ai.* FROM inventory i JOIN allitems ai ON (i."item"=ai."id") WHERE ai."owner"=$1 and ai."id"=$2;',
+                'SELECT * FROM inventory i JOIN allitems ai ON (i."item"=ai."id") WHERE ai."owner"=$1 and ai."id"=$2;',
                 ctx.author.id,
                 itemid,
             )
