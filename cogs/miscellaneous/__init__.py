@@ -609,13 +609,55 @@ Average hours of work: **{hours}**"""
     @locale_doc
     async def yesno(self, ctx, *, question: str):
         _("""An alternative to 8ball, but has more bitchy answers.""")
-        async with self.bot.session.get("http://gelbpunkt.troet.org/api/") as r:
-            res = await r.json()
-        em = discord.Embed(
-            title=question, description=res.get("result"), colour=ctx.author.colour
-        )
+        possible_answers = [
+            "Maybe",
+            "I think so",
+            "Why are you asking?",
+            "I'd say yes",
+            "Sure!",
+            "I don't think so",
+            "Leave me alone",
+            "I need some time for myself",
+            "Let's please talk about something else",
+            "I like it",
+            "Do you know what love is?",
+            "I don't want to answer this",
+            "Definitely",
+            "Noone cares about that",
+            "Let's talk about you and me",
+            "Stop it and let's have fun together",
+            "Life is a lie",
+            "Are you gay?",
+            "Do you know I am female?",
+            "42",
+            "No, just no",
+            "What is the meaning of life?",
+            "Ohhh, of course!",
+            "Kiss me pleeeease",
+            "I am tending to no",
+            "Are you kidding me?",
+            "Uhm... Yes",
+            "Can I be your waifu?",
+            "I don't care at all",
+            "Sorry, sweetie, I am busy",
+            "Let me sleep!",
+            "Do you have plans for today?",
+            "A biscuit is more entertaining than you",
+            "Suicide isn't always the answer",
+            "It could be yes, but I don't know",
+            "Who knows?",
+            "Actually you bore me",
+            "Are you really that boring?",
+            "Having sex with you is like waking up: BORING",
+            "Orum sed non laborum",
+            "Eyo noone is intered in that",
+            "Possibly yes",
+            "Wanna have a drink?",
+        ]
+        result = secrets.choice(possible_answers)
+        em = discord.Embed(title=question, description=result, colour=ctx.author.colour)
         em.set_thumbnail(url=ctx.author.avatar_url)
-        em.timestamp = datetime.datetime.strptime(res.get("time"), "%Y-%m-%dT%H:%M:%SZ")
+        em.timestamp = datetime.datetime.now()
         await ctx.send(embed=em)
 
     @commands.command(aliases=["cb", "chat"])
