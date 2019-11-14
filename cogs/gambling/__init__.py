@@ -183,7 +183,7 @@ class BlackJack:
         self.dealer = [self.deal()]
         await self.send()
         # Insurance?
-        if await self.ctx.confirm(
+        if self.dealer[0][0] > 9 and await self.ctx.confirm(
             _(
                 "Would you like insurance? It will cost half your bet and will get you 2:1 back if the dealer has a blackjack. Else it is gone."
             )
@@ -232,7 +232,7 @@ class BlackJack:
                     "reaction_add", check=check, timeout=20
                 )
             except asyncio.TimeoutError:
-                await self.bot.reset_cooldown(self.ctx)
+                await self.ctx.bot.reset_cooldown(self.ctx)
                 return await self.ctx.send(
                     _("Blackjack timed out... You lost your money!")
                 )

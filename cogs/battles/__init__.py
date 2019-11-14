@@ -222,11 +222,7 @@ class Battles(commands.Cog):
             dmg = 0 if not sword else sword["damage"] * atkmultiply
             deff = 0 if not shield else shield["armor"] * defmultiply
             dmg, deff = await self.bot.generate_stats(
-                player["user"],
-                dmg,
-                deff,
-                classes=player["class"],
-                race=player["race"],
+                player["user"], dmg, deff, classes=player["class"], race=player["race"]
             )
             players[idx].update(armor=deff, damage=dmg)
         # now players have their raidstats, classes and optional extra HP added on
@@ -270,7 +266,9 @@ class Battles(commands.Cog):
                 defender["hp"] = 0
             battle_log.append(
                 _("{attacker} attacks! {defender} takes **{dmg}HP** damage.").format(
-                    attacker=attacker["user"].mention, defender=defender["user"].mention, dmg=dmg
+                    attacker=attacker["user"].mention,
+                    defender=defender["user"].mention,
+                    dmg=dmg,
                 )
             )
 
