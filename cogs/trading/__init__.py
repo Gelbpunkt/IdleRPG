@@ -67,6 +67,16 @@ class Trading(commands.Cog):
                         "Your price is too high. Try adjusting it to be up to `{limit}`."
                     ).format(limit=item[6] * 1000)
                 )
+            tax = round(price * 0.05)
+            if ctx.character_data["money"] < tax:
+                return await ctx.send(
+                    _("You cannot afford the tax of 5% (${amount}).").format(amount=tax)
+                )
+            await conn.execute(
+                'UPDATE profile SET "money"="money"-$1 WHERE "user"=$2;',
+                tax,
+                ctx.author.id,
+            )
             await conn.execute(
                 "DELETE FROM inventory i USING allitems ai WHERE i.item=ai.id AND ai.id=$1 AND ai.owner=$2;",
                 itemid,
@@ -77,7 +87,7 @@ class Trading(commands.Cog):
             )
         await ctx.send(
             _(
-                "Successfully added your item to the shop! Use `{prefix}shop` to view it in the market!"
+                "Successfully added your item to the shop! Use `{prefix}shop` to view it in the market! The tax of 5% has been deduced from your account."
             ).format(prefix=ctx.prefix)
         )
 
@@ -99,7 +109,8 @@ class Trading(commands.Cog):
                 )
             if item["owner"] == ctx.author:
                 return await ctx.send(_("You may not buy your own items."))
-            if ctx.character_data["money"] < item["price"]:
+            tax = round(item["price"] * 0.05)
+            if ctx.character_data["money"] < item["price"] + tax:
                 return await ctx.send(_("You're too poor to buy this item."))
             await conn.execute(
                 "DELETE FROM market m USING allitems ai WHERE m.item=ai.id AND ai.id=$1 RETURNING *;",
@@ -115,7 +126,7 @@ class Trading(commands.Cog):
             )
             await conn.execute(
                 'UPDATE profile SET money=money-$1 WHERE "user"=$2;',
-                item["price"],
+                item["price"] + tax,
                 ctx.author.id,
             )
             await conn.execute(
@@ -225,7 +236,10 @@ class Trading(commands.Cog):
             .add_field(name=_("Damage"), value=item["damage"])
             .add_field(name=_("Armor"), value=item["armor"])
             .add_field(name=_("Value"), value=f"${item['value']}")
-            .add_field(name=_("Price"), value=f"${item['price']}")
+            .add_field(
+                name=_("Price"),
+                value=f"${item['price']} (+${round(item['price'] * 0.05)} (5%) tax)",
+            )
             .set_footer(
                 text=_("Item {num} of {total}").format(num=idx + 1, total=len(items))
             )
