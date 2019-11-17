@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-11-15 06:48-0800\n"
+"POT-Creation-Date: 2019-11-17 14:19-0800\n"
 "PO-Revision-Date: 2019-11-15 15:35+0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -181,31 +181,31 @@ msgstr "Şeker-ya-da-şaka torbası açarken yeni eşya buldun!"
 
 #: cogs/halloween/__init__.py:157 cogs/crates/__init__.py:137
 #: cogs/classes/__init__.py:309 cogs/classes/__init__.py:529
-#: cogs/trading/__init__.py:223 cogs/trading/__init__.py:430
+#: cogs/trading/__init__.py:234 cogs/trading/__init__.py:444
 msgid "Name"
 msgstr "İsim"
 
 #: cogs/halloween/__init__.py:158 cogs/crates/__init__.py:138
-#: cogs/classes/__init__.py:530 cogs/trading/__init__.py:224
-#: cogs/trading/__init__.py:431
+#: cogs/classes/__init__.py:530 cogs/trading/__init__.py:235
+#: cogs/trading/__init__.py:445
 msgid "Type"
 msgstr "Tür"
 
 #: cogs/halloween/__init__.py:159 cogs/crates/__init__.py:139
-#: cogs/classes/__init__.py:532 cogs/trading/__init__.py:225
-#: cogs/trading/__init__.py:432
+#: cogs/classes/__init__.py:532 cogs/trading/__init__.py:236
+#: cogs/trading/__init__.py:446
 msgid "Damage"
 msgstr "Hasar"
 
 #: cogs/halloween/__init__.py:160 cogs/crates/__init__.py:140
-#: cogs/classes/__init__.py:534 cogs/trading/__init__.py:226
-#: cogs/trading/__init__.py:433
+#: cogs/classes/__init__.py:534 cogs/trading/__init__.py:237
+#: cogs/trading/__init__.py:447
 msgid "Armor"
 msgstr "Zırh"
 
 #: cogs/halloween/__init__.py:161 cogs/crates/__init__.py:141
-#: cogs/classes/__init__.py:535 cogs/trading/__init__.py:227
-#: cogs/trading/__init__.py:434 cogs/profile/__init__.py:357
+#: cogs/classes/__init__.py:535 cogs/trading/__init__.py:238
+#: cogs/trading/__init__.py:448 cogs/profile/__init__.py:357
 msgid "Value"
 msgstr "Değer"
 
@@ -970,7 +970,7 @@ msgstr ""
 ":x: Bu komutu kullanmaya yetkin yok. Bu, diğer kullanıcılar için düşünülmüş."
 
 #. prevent cooldown reset
-#: cogs/error_handler/__init__.py:196 cogs/trading/__init__.py:473
+#: cogs/error_handler/__init__.py:196 cogs/trading/__init__.py:487
 msgid "You did not choose anything."
 msgstr "Herhangi bir şey seçmedin."
 
@@ -1295,7 +1295,7 @@ msgstr "Lütfen tek seferde sadece bir resim kullan."
 msgid "This is not a valid image file."
 msgstr "Bu geçerli bir resim dosyası değil."
 
-#: cogs/miscellaneous/__init__.py:153 cogs/patreon/__init__.py:198
+#: cogs/miscellaneous/__init__.py:153 cogs/patreon/__init__.py:203
 msgid "Error when uploading to Imgur."
 msgstr "Imgur'a yüklerken hata."
 
@@ -2196,60 +2196,60 @@ msgstr "Bu eşyaya sahip değilsin."
 msgid "Nothing to do..."
 msgstr "Yapacak bir şey yok..."
 
-#: cogs/patreon/__init__.py:52
+#: cogs/patreon/__init__.py:57
 msgid "Item reset."
 msgstr "Eşya sıfırlandı."
 
-#: cogs/patreon/__init__.py:59
+#: cogs/patreon/__init__.py:64
 msgid "[Patreon Only] Changes an item name."
 msgstr "[Patreon'a Özel] Eşya adını değiştirir."
 
-#: cogs/patreon/__init__.py:61
+#: cogs/patreon/__init__.py:66
 msgid "Name too long."
 msgstr "İsim çok uzun."
 
-#: cogs/patreon/__init__.py:70 cogs/patreon/__init__.py:101
-#: cogs/trading/__init__.py:254
+#: cogs/patreon/__init__.py:75 cogs/patreon/__init__.py:106
+#: cogs/trading/__init__.py:268
 #, python-brace-format
 msgid "You don't have an item with the ID `{itemid}`."
 msgstr "ID'si `{itemid}` olan bir eşyan yok."
 
-#: cogs/patreon/__init__.py:80
+#: cogs/patreon/__init__.py:85
 #, python-brace-format
 msgid "The item with the ID `{itemid}` is now called `{newname}`."
 msgstr "ID'si `{itemid}` olan eşyanın ismi şimdi `{newname}`."
 
-#: cogs/patreon/__init__.py:90
+#: cogs/patreon/__init__.py:95
 msgid "[Patreon Only] Changes an item type."
 msgstr "[Patreon'a Özel] Bir eşyanın türünü değiştirir."
 
-#: cogs/patreon/__init__.py:92
+#: cogs/patreon/__init__.py:97
 msgid "Invalid type. Try Sword or Shield."
 msgstr "Geçersiz tür. Kılıç ya da Kalkan dene."
 
-#: cogs/patreon/__init__.py:116
+#: cogs/patreon/__init__.py:121
 #, python-brace-format
 msgid "The item with the ID `{itemid}` is now a `{itemtype}`."
 msgstr "ID'si `{itemid}` olan eşya artık bir `{itemtype}`."
 
-#: cogs/patreon/__init__.py:127
+#: cogs/patreon/__init__.py:132
 msgid "[Patreon Only] Receive a daily booster."
 msgstr "[Patreon'a Özel] Günlük güçlendirici al."
 
-#: cogs/patreon/__init__.py:133
+#: cogs/patreon/__init__.py:138
 #, python-brace-format
 msgid "You received a daily {type_} booster!"
 msgstr "Günlük {type_} güçlendirici aldın!"
 
-#: cogs/patreon/__init__.py:139
+#: cogs/patreon/__init__.py:144
 msgid "[Patreon Only] Changes your profile background."
 msgstr "[Patreon'a Özel] Profilinin arkaplanını değiştirir."
 
-#: cogs/patreon/__init__.py:151
+#: cogs/patreon/__init__.py:156
 msgid "That is not a valid premade background."
 msgstr "Bu geçerli bir önceden yapılmış arkaplan değil."
 
-#: cogs/patreon/__init__.py:155 cogs/patreon/__init__.py:183
+#: cogs/patreon/__init__.py:160 cogs/patreon/__init__.py:188
 #: cogs/classes/__init__.py:490 cogs/guild/__init__.py:496
 msgid ""
 "I couldn't read that URL. Does it start with `http://` or `https://` and is "
@@ -2258,11 +2258,11 @@ msgstr ""
 "URL'yi okuyamadım. `http://` ya da`https://` ile mi başlıyor ve png ya da "
 "jpeg mi?"
 
-#: cogs/patreon/__init__.py:167
+#: cogs/patreon/__init__.py:172
 msgid "The URL is too long."
 msgstr "URL çok uzun."
 
-#: cogs/patreon/__init__.py:169
+#: cogs/patreon/__init__.py:174
 #, python-brace-format
 msgid ""
 "Your new profile picture is now:\n"
@@ -2271,15 +2271,15 @@ msgstr ""
 "Yeni profil resmin artık:\n"
 "{url}"
 
-#: cogs/patreon/__init__.py:171
+#: cogs/patreon/__init__.py:176
 msgid "Your profile picture has been reset."
 msgstr "Profil resmin sıfırlandı."
 
-#: cogs/patreon/__init__.py:177
+#: cogs/patreon/__init__.py:182
 msgid "[Patreon Only] Generates a profile background based on an image."
 msgstr "[Patreon'a Özel] Resme dayalı bir profil arka planı oluşturur."
 
-#: cogs/patreon/__init__.py:200
+#: cogs/patreon/__init__.py:205
 #, python-brace-format
 msgid ""
 "Imgur Link for `{prefix}background`\n"
@@ -2288,30 +2288,30 @@ msgstr ""
 "`{prefix}background` için Imgur bağlantısı\n"
 "<{link}>"
 
-#: cogs/patreon/__init__.py:211
+#: cogs/patreon/__init__.py:216
 msgid "[Patreon Only] Update your guild member limit and bank size."
 msgstr "[Patreon'a Özel] Lonca üye sınırını ve banka boyutunu güncelle."
 
-#: cogs/patreon/__init__.py:236
+#: cogs/patreon/__init__.py:241
 msgid "Your guild was updated."
 msgstr "Loncan güncellendi."
 
-#: cogs/patreon/__init__.py:242
+#: cogs/patreon/__init__.py:247
 msgid "Update your background to one from the events."
 msgstr "Arkaplanını etkinliklerden biriyle güncelle."
 
-#: cogs/patreon/__init__.py:250
+#: cogs/patreon/__init__.py:255
 msgid ""
 "You do not have an eventbackground. They can be acquired on seasonal events."
 msgstr "Etkinlik arkaplanın yok. Mevsimsel etkinliklerden kazanılabilirler."
 
-#: cogs/patreon/__init__.py:258
+#: cogs/patreon/__init__.py:263
 #, python-brace-format
 msgid ""
 "The background number {number} is not valid, you only have {total} available."
 msgstr "Arkaplan numarası {number} geçerli değil, sende toplam {total} mevcut."
 
-#: cogs/patreon/__init__.py:264
+#: cogs/patreon/__init__.py:269
 msgid "Background updated!"
 msgstr "Arkaplan güncellendi!"
 
@@ -3401,7 +3401,7 @@ msgstr "Eşyanı markete koyar."
 msgid "You don't own an item with the ID: {itemid}"
 msgstr "ID'si {itemid} olan bir eşyan yok"
 
-#: cogs/trading/__init__.py:51 cogs/trading/__init__.py:260
+#: cogs/trading/__init__.py:51 cogs/trading/__init__.py:274
 msgid "You may not sell donator-modified items."
 msgstr "Bağışçı tarafından değiştirilen eşyaları satamazsın."
 
@@ -3426,33 +3426,36 @@ msgstr ""
 msgid "Your price is too high. Try adjusting it to be up to `{limit}`."
 msgstr "Fiyatın çok yüksek. `{limit}`e kadar ayarlamayı dene."
 
-#: cogs/trading/__init__.py:80
+#: cogs/trading/__init__.py:73
+#, python-brace-format
+msgid "You cannot afford the tax of 5% (${amount})."
+msgstr ""
+
+#: cogs/trading/__init__.py:90
 #, python-brace-format
 msgid ""
 "Successfully added your item to the shop! Use `{prefix}shop` to view it in "
-"the market!"
+"the market! The tax of 5% has been deduced from your account."
 msgstr ""
-"Eşyan dükkana başarılı bir şekilde eklendi! Markette bakmak için `{prefix}"
-"shop` kullan!"
 
-#: cogs/trading/__init__.py:88
+#: cogs/trading/__init__.py:98
 msgid "Buys an item from the global market."
 msgstr "Küresel marketten eşya satın alır."
 
-#: cogs/trading/__init__.py:96
+#: cogs/trading/__init__.py:106
 #, python-brace-format
 msgid "There is no item in the shop with the ID: {itemid}"
 msgstr "Dükkanda ID'si {itemid} olan bir eşya yok"
 
-#: cogs/trading/__init__.py:101
+#: cogs/trading/__init__.py:111
 msgid "You may not buy your own items."
 msgstr "Kendi eşyalarını satın alamazsın."
 
-#: cogs/trading/__init__.py:103
+#: cogs/trading/__init__.py:114
 msgid "You're too poor to buy this item."
 msgstr "Bu eşyayı satın almak için çok fakirsin."
 
-#: cogs/trading/__init__.py:128
+#: cogs/trading/__init__.py:139
 #, python-brace-format
 msgid ""
 "Successfully bought item `{id}`. Use `{prefix}inventory` to view your "
@@ -3461,23 +3464,23 @@ msgstr ""
 "`{id}` numaralı eşya başarılı bir şekilde satın alındı. Güncellenmiş "
 "envanterine bakmak için `{prefix}inventory` kullan."
 
-#: cogs/trading/__init__.py:135
+#: cogs/trading/__init__.py:146
 #, python-brace-format
 msgid "**{author}** bought your **{name}** for **${price}** from the market."
 msgstr ""
 "**{author}** senin **{name}** isimli eşyanı **${price}** karşılığında "
 "marketten satın aldı."
 
-#: cogs/trading/__init__.py:150
+#: cogs/trading/__init__.py:161
 msgid "Takes an item off the shop."
 msgstr "Dükkandan bir eşya çıkarır."
 
-#: cogs/trading/__init__.py:160
+#: cogs/trading/__init__.py:171
 #, python-brace-format
 msgid "You don't have an item of yours in the shop with the ID `{itemid}`."
 msgstr "Dükkanda sana ait ID'si `{itemid}` olan bir eşya yok."
 
-#: cogs/trading/__init__.py:173
+#: cogs/trading/__init__.py:184
 #, python-brace-format
 msgid ""
 "Successfully removed item `{itemid}` from the shop and put it in your "
@@ -3486,51 +3489,51 @@ msgstr ""
 "ID'si `{itemid}` olan eşya başarılı bir şekilde dükkandan çıkarıldı ve "
 "envanterine eklendi."
 
-#: cogs/trading/__init__.py:186
+#: cogs/trading/__init__.py:197
 msgid "Lists the buyable items on the market."
 msgstr "Marketteki satın alınabilir eşyaları listeler."
 
-#: cogs/trading/__init__.py:213
+#: cogs/trading/__init__.py:224
 msgid "No results."
 msgstr "Sonuç yok."
 
-#: cogs/trading/__init__.py:217
+#: cogs/trading/__init__.py:228
 msgid "IdleRPG Shop"
 msgstr "IdleRPG Dükkanı"
 
-#: cogs/trading/__init__.py:218 cogs/trading/__init__.py:425
+#: cogs/trading/__init__.py:229 cogs/trading/__init__.py:439
 #, python-brace-format
 msgid "Use `{prefix}buy {item}` to buy this."
 msgstr "Bunu satın almak için `{prefix}buy {item}` kullan."
 
-#: cogs/trading/__init__.py:228 cogs/trading/__init__.py:435
+#: cogs/trading/__init__.py:240 cogs/trading/__init__.py:449
 #: cogs/marriage/__init__.py:220
 msgid "Price"
 msgstr "Fiyat"
 
-#: cogs/trading/__init__.py:230 cogs/trading/__init__.py:437
+#: cogs/trading/__init__.py:244 cogs/trading/__init__.py:451
 #, python-brace-format
 msgid "Item {num} of {total}"
 msgstr "{total} içinden eşya {num}"
 
-#: cogs/trading/__init__.py:244
+#: cogs/trading/__init__.py:258
 msgid "Offer an item to a specific user."
 msgstr "Belirli kullanıcıya bir eşya teklif et."
 
-#: cogs/trading/__init__.py:246
+#: cogs/trading/__init__.py:260
 msgid "You may not offer items to yourself."
 msgstr "Kendine eşyalar teklif edemezsin."
 
-#: cogs/trading/__init__.py:264
+#: cogs/trading/__init__.py:278
 #, python-brace-format
 msgid "Are you sure you want to sell your equipped {item}?"
 msgstr "Giyilmiş {item} eşyanı satmak istediğinden emin misin?"
 
-#: cogs/trading/__init__.py:268
+#: cogs/trading/__init__.py:282
 msgid "Item selling cancelled."
 msgstr "Eşya satışı iptal edildi."
 
-#: cogs/trading/__init__.py:272
+#: cogs/trading/__init__.py:286
 #, python-brace-format
 msgid ""
 "{user}, {author} offered you an item! React to buy it! The price is **"
@@ -3541,21 +3544,21 @@ msgstr ""
 "${price}**. Ticareti kabul etmek için **2 Dakikan** var yoksa teklif iptal "
 "olacak."
 
-#: cogs/trading/__init__.py:277
+#: cogs/trading/__init__.py:291
 msgid "They didn't want it."
 msgstr "İstemediler."
 
-#: cogs/trading/__init__.py:281
+#: cogs/trading/__init__.py:295
 #, python-brace-format
 msgid "{user}, you're too poor to buy this item!"
 msgstr "{user}, bu eşyayı satın almak için çok fakirsin!"
 
-#: cogs/trading/__init__.py:292
+#: cogs/trading/__init__.py:306
 #, python-brace-format
 msgid "The owner sold the item with the ID `{itemid}` in the meantime."
 msgstr "Sahibi ID'si `{itemid}` olan eşyayı bu arada sattı."
 
-#: cogs/trading/__init__.py:311
+#: cogs/trading/__init__.py:325
 #, python-brace-format
 msgid ""
 "Successfully bought item `{itemid}`. Use `{prefix}inventory` to view your "
@@ -3564,44 +3567,44 @@ msgstr ""
 "ID'si `{itemid}` olan eşya başarılı bir şekilde satın alındı. Güncellenmiş "
 "envanterine bakmak için `{prefix}inventory` kullan."
 
-#: cogs/trading/__init__.py:324
+#: cogs/trading/__init__.py:338
 msgid "Sells items for their value."
 msgstr "Eşyayı değeri kadar satar."
 
-#: cogs/trading/__init__.py:333
+#: cogs/trading/__init__.py:347
 #, python-brace-format
 msgid "You don't own any items with the IDs: {itemids}"
 msgstr "Bu IDlerde olan herhangi bir eşyan yok: {itemids}"
 
-#: cogs/trading/__init__.py:341
+#: cogs/trading/__init__.py:355
 #, python-brace-format
 msgid "You are about to sell {amount} equipped items. Are you sure?"
 msgstr "{amount} giyilmiş eşyaları satmak üzeresin. Emin misin?"
 
-#: cogs/trading/__init__.py:345
+#: cogs/trading/__init__.py:359
 msgid "Cancelled."
 msgstr "İptal edildi."
 
-#: cogs/trading/__init__.py:358
+#: cogs/trading/__init__.py:372
 #, python-brace-format
 msgid ""
 "You received **${money}** when selling item(s) `{itemids}`. {additional}"
 msgstr "`{itemids}` eşya(ları)yı satarak **${money}** aldın. {additional}"
 
-#: cogs/trading/__init__.py:363 cogs/profile/__init__.py:431
+#: cogs/trading/__init__.py:377 cogs/profile/__init__.py:431
 #, python-brace-format
 msgid "Skipped `{amount}` because they did not belong to you."
 msgstr "`{amount}` atlandı çünkü sana ait değiller."
 
-#: cogs/trading/__init__.py:378
+#: cogs/trading/__init__.py:392
 msgid "Sells all your non-equipped items for their value."
 msgstr "Giyilmemiş bütün eşyalarını değeri kadar satar."
 
-#: cogs/trading/__init__.py:387
+#: cogs/trading/__init__.py:401
 msgid "Nothing to merch."
 msgstr "Tüccara verilecek bir şey yok."
 
-#: cogs/trading/__init__.py:390
+#: cogs/trading/__init__.py:404
 #, python-brace-format
 msgid ""
 "You are about to sell **{count} items!**\n"
@@ -3610,40 +3613,40 @@ msgstr ""
 "**{count} eşya** satmak üzeresin!\n"
 "Bunu yapmak istediğinden emin misin?"
 
-#: cogs/trading/__init__.py:407
+#: cogs/trading/__init__.py:421
 #, python-brace-format
 msgid "Merched **{count}** items for **${money}**."
 msgstr "Tüccara **{count}** eşya **${money}** karşılığında satıldı."
 
-#: cogs/trading/__init__.py:415
+#: cogs/trading/__init__.py:429
 msgid "View your pending shop offers."
 msgstr "Bekleyen dükkan tekliflerine bak."
 
-#: cogs/trading/__init__.py:421
+#: cogs/trading/__init__.py:435
 msgid "You don't have any pending shop offers."
 msgstr "Herhangi bir bekleyen dükkan teklifin yok."
 
-#: cogs/trading/__init__.py:424
+#: cogs/trading/__init__.py:438
 msgid "Your pending items"
 msgstr "Bekleyen eşyaların"
 
-#: cogs/trading/__init__.py:448
+#: cogs/trading/__init__.py:462
 msgid "Buys items at the trader."
 msgstr "Tüccardan eşyalar satın alır."
 
-#: cogs/trading/__init__.py:464
+#: cogs/trading/__init__.py:478
 msgid "The Trader"
 msgstr "Tüccar"
 
-#: cogs/trading/__init__.py:465
+#: cogs/trading/__init__.py:479
 msgid "Hit a button to buy it"
 msgstr "Satın almak için düğmeye bas"
 
-#: cogs/trading/__init__.py:477
+#: cogs/trading/__init__.py:491
 msgid "You are too poor to buy this item."
 msgstr "Bu eşyayı satın almak için çok fakirsin."
 
-#: cogs/trading/__init__.py:484
+#: cogs/trading/__init__.py:498
 #, python-brace-format
 msgid ""
 "Successfully bought offer **{offer}**. Use `{prefix}inventory` to view your "
@@ -6189,6 +6192,14 @@ msgstr "İçinde {emote} olan bir hazine buldun!"
 #: utils/castle.py:269
 msgid "You have reached the exit!"
 msgstr "Çıkışa ulaştın!"
+
+#, python-brace-format
+#~ msgid ""
+#~ "Successfully added your item to the shop! Use `{prefix}shop` to view it "
+#~ "in the market!"
+#~ msgstr ""
+#~ "Eşyan dükkana başarılı bir şekilde eklendi! Markette bakmak için `{prefix}"
+#~ "shop` kullan!"
 
 #~ msgid "Look up a guild by name."
 #~ msgstr "İsimle bir loncaya bak."
