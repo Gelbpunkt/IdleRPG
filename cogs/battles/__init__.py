@@ -99,7 +99,7 @@ class Battles(commands.Cog):
             ).format(author=ctx.disp, enemy=enemy_.display_name)
         )
         items_1 = await self.bot.get_equipped_items_for(ctx.author) or []
-        items_2 = await self.bot.get_equipped_items_for(enemy) or []
+        items_2 = await self.bot.get_equipped_items_for(enemy_) or []
         stats = [
             sum([i["armor"] + i["damage"] if i else 0 for i in items_1])
             + random.randint(1, 7),
