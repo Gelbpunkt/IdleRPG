@@ -33,6 +33,25 @@ class Admin(commands.Cog):
         self.bot = bot
 
     @is_admin()
+    @commands.command(aliases=["cleanshop", "cshop"], hidden=True)
+    @locale_doc
+    async def clearshop(self, ctx):
+        _("""[Bot Admin only] Clean up the shop.""")
+        async with self.bot.pool.acquire() as conn:
+            timed_out = await conn.fetch(
+                """DELETE FROM market WHERE "published" + '14 days'::interval < NOW() RETURNING *;""",
+                timeout=600,
+            )
+            await conn.executemany(
+                'INSERT INTO inventory ("item", "equipped") VALUES ($1, $2);',
+                [(i["item"], False) for i in timed_out],
+                timeout=600,
+            )
+        await ctx.send(
+            _("Cleared {num} shop items which timed out.").format(num=len(timed_out))
+        )
+
+    @is_admin()
     @commands.command(hidden=True)
     @locale_doc
     async def unban(self, ctx, *, other: discord.User):

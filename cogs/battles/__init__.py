@@ -236,7 +236,7 @@ class Battles(commands.Cog):
                     0,
                     _("Battle {p1} vs. {p2} started!").format(
                         p1=players[0]["user"], p2=players[1]["user"]
-                    )
+                    ),
                 )
             ],
             maxlen=3,
@@ -271,12 +271,14 @@ class Battles(commands.Cog):
                 defender["hp"] = 0
             battle_log.append(
                 (
-                    battle_log[-1][0]+1,
-                    _("{attacker} attacks! {defender} takes **{dmg}HP** damage.").format(
+                    battle_log[-1][0] + 1,
+                    _(
+                        "{attacker} attacks! {defender} takes **{dmg}HP** damage."
+                    ).format(
                         attacker=attacker["user"].mention,
                         defender=defender["user"].mention,
                         dmg=dmg,
-                    )
+                    ),
                 )
             )
 
@@ -297,7 +299,7 @@ class Battles(commands.Cog):
 
             await log_message.edit(embed=embed)
             await asyncio.sleep(4)
-            attacker, defender = defender, attacker # switch places
+            attacker, defender = defender, attacker  # switch places
 
         if players[1]["hp"] == 0:  # command author wins
             if not await has_money(

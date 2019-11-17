@@ -88,7 +88,7 @@ class Guild(commands.Cog):
             value=f"**${guild['money']}** / **${guild['banklimit']}**",
         )
         embed.set_thumbnail(url=guild["icon"])
-        embed.set_footer(text=_("Guild ID: {id}").format(id=guild['id']))
+        embed.set_footer(text=_("Guild ID: {id}").format(id=guild["id"]))
         if guild["badge"]:
             embed.set_image(url=guild["badge"])
         try:
@@ -112,11 +112,11 @@ To look up a guild by its ID, use id:number."""
         kwargs = {}
         if isinstance(by, str):
             if by.lower().startswith("guild:"):
-                kwargs.update(name = by[6:])
+                kwargs.update(name=by[6:])
             elif by.lower().startswith("id:"):
-                kwargs.update(guild_id = int(by[3:]))
+                kwargs.update(guild_id=int(by[3:]))
             else:
-                kwargs.update(name = by)
+                kwargs.update(name=by)
         else:
             async with self.bot.pool.acquire() as conn:
                 guild_id = await conn.fetchval(
@@ -126,7 +126,7 @@ To look up a guild by its ID, use id:number."""
                     return await ctx.send(
                         _("**{user}** does not have a guild.").format(by.name)
                     )
-                kwargs.update(guild_id = guild_id)
+                kwargs.update(guild_id=guild_id)
         await self.get_guild_info(ctx, **kwargs)
 
     @guild.command()

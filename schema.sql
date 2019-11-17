@@ -47,8 +47,9 @@ CREATE TABLE public.allitems (
     type character varying(10) NOT NULL,
     damage numeric(5,2) NOT NULL,
     armor numeric(5,2) NOT NULL,
-    modified boolean DEFAULT false NOT NULL,
-    signature character varying(50) DEFAULT NULL::character varying
+    signature character varying(50) DEFAULT NULL::character varying,
+    original_type character varying(10) DEFAULT NULL::character varying,
+    original_name character varying(200) DEFAULT NULL::character varying
 );
 
 
@@ -222,7 +223,8 @@ ALTER SEQUENCE public.loot_id_seq OWNED BY public.loot.id;
 CREATE TABLE public.market (
     id bigint NOT NULL,
     item bigint,
-    price integer NOT NULL
+    price integer NOT NULL,
+    published timestamp with time zone DEFAULT now()
 );
 
 
