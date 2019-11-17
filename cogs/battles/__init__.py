@@ -230,15 +230,18 @@ class Battles(commands.Cog):
 
         battle_log = deque(
             [
-                _("Battle {p1} vs. {p2} started!").format(
-                    p1=players[0]["user"], p2=players[1]["user"]
+                (
+                    0,
+                    _("Battle {p1} vs. {p2} started!").format(
+                        p1=players[0]["user"], p2=players[1]["user"]
+                    )
                 )
             ],
             maxlen=3,
         )
 
         embed = discord.Embed(
-            description=battle_log[0], color=self.bot.config.primary_colour
+            description=battle_log[0][1], color=self.bot.config.primary_colour
         )
 
         log_message = await ctx.send(
@@ -247,6 +250,9 @@ class Battles(commands.Cog):
         await asyncio.sleep(4)
 
         start = datetime.datetime.utcnow()
+        attacker, defender = random.sample(
+            players, k=2
+        )  # decide a random attacker and defender for the first iteration
 
         while (
             players[0]["hp"] > 0
@@ -254,9 +260,6 @@ class Battles(commands.Cog):
             and datetime.datetime.utcnow() < start + datetime.timedelta(minutes=5)
         ):
             # this is where the fun begins
-            attacker, defender = random.sample(
-                players, k=2
-            )  # decide a random attacker and defender from the two players
             dmg = (
                 attacker["damage"] + Decimal(random.randint(0, 100)) - defender["armor"]
             )
@@ -265,10 +268,13 @@ class Battles(commands.Cog):
             if defender["hp"] < 0:
                 defender["hp"] = 0
             battle_log.append(
-                _("{attacker} attacks! {defender} takes **{dmg}HP** damage.").format(
-                    attacker=attacker["user"].mention,
-                    defender=defender["user"].mention,
-                    dmg=dmg,
+                (
+                    battle_log[-1][0]+1,
+                    _("{attacker} attacks! {defender} takes **{dmg}HP** damage.").format(
+                        attacker=attacker["user"].mention,
+                        defender=defender["user"].mention,
+                        dmg=dmg,
+                    )
                 )
             )
 
@@ -284,11 +290,12 @@ class Battles(commands.Cog):
 
             for line in battle_log:
                 embed.add_field(
-                    name="Log #{}".format(battle_log.index(line) + 1), value=line
+                    name=_("Action #{number}").format(number=line[0]), value=line[1]
                 )
 
             await log_message.edit(embed=embed)
             await asyncio.sleep(4)
+            attacker, defender = defender, attacker # switch places
 
         if players[1]["hp"] == 0:  # command author wins
             if not await has_money(
@@ -316,7 +323,7 @@ class Battles(commands.Cog):
                 )
             await ctx.send(
                 _("{p1} won the battle vs {p2}! Congratulations!").format(
-                    p1=players[0]["user"], p2=players[1]["user"]
+                    p1=ctx.author.mention, p2=enemy.mention
                 )
             )
         elif players[0]["hp"] == 0:  # enemy wins
@@ -344,7 +351,7 @@ class Battles(commands.Cog):
                 )
             await ctx.send(
                 _("{p1} won the battle vs {p2}! Congratulations!").format(
-                    p1=players[1]["user"], p2=players[0]["user"]
+                    p1=enemy.mention, p2=ctx.author.mention
                 )
             )
 
