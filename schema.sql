@@ -244,7 +244,8 @@ CREATE TABLE public.market_history (
     armor numeric(5,2) NOT NULL,
     signature character varying(50) DEFAULT NULL::character varying,
     price bigint NOT NULL,
-    "timestamp" timestamp with time zone DEFAULT now()
+    "timestamp" timestamp with time zone DEFAULT now(),
+    offer bigint NOT NULL
 );
 
 

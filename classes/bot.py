@@ -627,7 +627,7 @@ Armor: {data['armor']}"""
             )
             if subject == "shop":
                 await conn.execute(
-                    'INSERT INTO market_history ("item", "name", "value", "type", "damage", "armor", "signature", "price") VALUES ($1, $2, $3, $4, $5, $6, $7, $8);',
+                    'INSERT INTO market_history ("item", "name", "value", "type", "damage", "armor", "signature", "price", "offer") VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9);',
                     data["id"],
                     data["name"],
                     data["value"],
@@ -636,4 +636,5 @@ Armor: {data['armor']}"""
                     data["armor"],
                     data["signature"],
                     data["price"],
+                    data["offer"],
                 )

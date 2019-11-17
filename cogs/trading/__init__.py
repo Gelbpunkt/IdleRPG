@@ -92,7 +92,7 @@ class Trading(commands.Cog):
         _("""Buys an item from the global market.""")
         async with self.bot.pool.acquire() as conn:
             item = await conn.fetchrow(
-                "SELECT * FROM market m JOIN allitems ai ON (m.item=ai.id) WHERE ai.id=$1;",
+                'SELECT *, m."id" AS "offer" FROM market m JOIN allitems ai ON (m."item"=ai."id") WHERE ai."id"=$1;',
                 itemid,
             )
             if not item:
