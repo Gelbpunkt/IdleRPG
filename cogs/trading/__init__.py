@@ -61,12 +61,6 @@ class Trading(commands.Cog):
                         "Your item is either equal to a Starter Item or worse. Noone would buy it."
                     )
                 )
-            elif price > item["value"] * 1000:
-                return await ctx.send(
-                    _(
-                        "Your price is too high. Try adjusting it to be up to `{limit}`."
-                    ).format(limit=item[6] * 1000)
-                )
             tax = round(price * 0.05)
             if ctx.character_data["money"] < tax:
                 return await ctx.send(
