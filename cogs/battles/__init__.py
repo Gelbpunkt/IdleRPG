@@ -77,7 +77,7 @@ class Battles(commands.Cog):
 
         while seeking:
             try:
-                reaction, enemy = await self.bot.wait_for(
+                reaction, enemy_ = await self.bot.wait_for(
                     "reaction_add", timeout=60, check=check
                 )
             except asyncio.TimeoutError:
@@ -87,15 +87,16 @@ class Battles(commands.Cog):
                         author=ctx.author.mention
                     )
                 )
-            if await has_money(self.bot, enemy.id, money):
+            if await has_money(self.bot, enemy_.id, money):
                 seeking = False
             else:
+                enemy_ = None
                 await ctx.send(_("You don't have enough money to join the battle."))
 
         await ctx.send(
             _(
                 "Battle **{author}** vs **{enemy}** started! 30 seconds of fighting will now start!"
-            ).format(author=ctx.disp, enemy=enemy.display_name)
+            ).format(author=ctx.disp, enemy=enemy_.display_name)
         )
         items_1 = await self.bot.get_equipped_items_for(ctx.author) or []
         items_2 = await self.bot.get_equipped_items_for(enemy) or []
@@ -105,7 +106,7 @@ class Battles(commands.Cog):
             sum([i["armor"] + i["damage"] if i else 0 for i in items_2])
             + random.randint(1, 7),
         ]
-        players = [ctx.author, enemy]
+        players = [ctx.author, enemy_]
         if stats[0] == stats[1]:
             winner = random.choice(players)
         else:
@@ -180,7 +181,7 @@ class Battles(commands.Cog):
 
         while seeking:
             try:
-                reaction, enemy = await self.bot.wait_for(
+                reaction, enemy_ = await self.bot.wait_for(
                     "reaction_add", timeout=60, check=check
                 )
             except asyncio.TimeoutError:
@@ -190,13 +191,14 @@ class Battles(commands.Cog):
                         author=ctx.author.mention
                     )
                 )
-            if await has_money(self.bot, enemy.id, money):
+            if await has_money(self.bot, enemy_.id, money):
                 seeking = False
             else:
+                enemy_ = None
                 await ctx.send(_("You don't have enough money to join the battle."))
 
         enemy_data = await self.bot.pool.fetchrow(
-            'SELECT * FROM profile WHERE "user"=$1;', enemy.id
+            'SELECT * FROM profile WHERE "user"=$1;', enemy_.id
         )
 
         rawplayers = [ctx.character_data, enemy_data]
@@ -230,15 +232,18 @@ class Battles(commands.Cog):
 
         battle_log = deque(
             [
-                _("Battle {p1} vs. {p2} started!").format(
-                    p1=players[0]["user"], p2=players[1]["user"]
+                (
+                    0,
+                    _("Battle {p1} vs. {p2} started!").format(
+                        p1=players[0]["user"], p2=players[1]["user"]
+                    )
                 )
             ],
             maxlen=3,
         )
 
         embed = discord.Embed(
-            description=battle_log[0], color=self.bot.config.primary_colour
+            description=battle_log[0][1], color=self.bot.config.primary_colour
         )
 
         log_message = await ctx.send(
@@ -247,6 +252,9 @@ class Battles(commands.Cog):
         await asyncio.sleep(4)
 
         start = datetime.datetime.utcnow()
+        attacker, defender = random.sample(
+            players, k=2
+        )  # decide a random attacker and defender for the first iteration
 
         while (
             players[0]["hp"] > 0
@@ -254,9 +262,6 @@ class Battles(commands.Cog):
             and datetime.datetime.utcnow() < start + datetime.timedelta(minutes=5)
         ):
             # this is where the fun begins
-            attacker, defender = random.sample(
-                players, k=2
-            )  # decide a random attacker and defender from the two players
             dmg = (
                 attacker["damage"] + Decimal(random.randint(0, 100)) - defender["armor"]
             )
@@ -265,10 +270,13 @@ class Battles(commands.Cog):
             if defender["hp"] < 0:
                 defender["hp"] = 0
             battle_log.append(
-                _("{attacker} attacks! {defender} takes **{dmg}HP** damage.").format(
-                    attacker=attacker["user"].mention,
-                    defender=defender["user"].mention,
-                    dmg=dmg,
+                (
+                    battle_log[-1][0]+1,
+                    _("{attacker} attacks! {defender} takes **{dmg}HP** damage.").format(
+                        attacker=attacker["user"].mention,
+                        defender=defender["user"].mention,
+                        dmg=dmg,
+                    )
                 )
             )
 
@@ -284,11 +292,12 @@ class Battles(commands.Cog):
 
             for line in battle_log:
                 embed.add_field(
-                    name="Log #{}".format(battle_log.index(line) + 1), value=line
+                    name=_("Action #{number}").format(number=line[0]), value=line[1]
                 )
 
             await log_message.edit(embed=embed)
             await asyncio.sleep(4)
+            attacker, defender = defender, attacker # switch places
 
         if players[1]["hp"] == 0:  # command author wins
             if not await has_money(
@@ -316,7 +325,7 @@ class Battles(commands.Cog):
                 )
             await ctx.send(
                 _("{p1} won the battle vs {p2}! Congratulations!").format(
-                    p1=players[0]["user"], p2=players[1]["user"]
+                    p1=ctx.author.mention, p2=enemy.mention
                 )
             )
         elif players[0]["hp"] == 0:  # enemy wins
@@ -344,7 +353,7 @@ class Battles(commands.Cog):
                 )
             await ctx.send(
                 _("{p1} won the battle vs {p2}! Congratulations!").format(
-                    p1=players[1]["user"], p2=players[0]["user"]
+                    p1=enemy.mention, p2=ctx.author.mention
                 )
             )
 
@@ -393,7 +402,7 @@ class Battles(commands.Cog):
 
         while seeking:
             try:
-                reaction, enemy = await self.bot.wait_for(
+                reaction, enemy_ = await self.bot.wait_for(
                     "reaction_add", timeout=60, check=check
                 )
             except asyncio.TimeoutError:
@@ -403,12 +412,13 @@ class Battles(commands.Cog):
                         author=ctx.author.mention
                     )
                 )
-            if await has_money(self.bot, enemy.id, money):
+            if await has_money(self.bot, enemy_.id, money):
                 seeking = False
             else:
+                enemy_ = None
                 await ctx.send(_("You don't have enough money to join the battle."))
 
-        PLAYERS = [ctx.author, enemy]
+        PLAYERS = [ctx.author, enemy_]
         HP = []
 
         DAMAGE = []
@@ -444,7 +454,7 @@ class Battles(commands.Cog):
                     "{player1}: **{hp1}** HP\n{player2}: **{hp2}** HP\nReact to play."
                 ).format(
                     player1=ctx.author.mention,
-                    player2=enemy.mention,
+                    player2=enemy_.mention,
                     hp1=HP[0],
                     hp2=HP[1],
                 )

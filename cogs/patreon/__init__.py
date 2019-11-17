@@ -49,7 +49,7 @@ class Patreon(commands.Cog):
             else:
                 dmg, armor = item["armor"], item["damage"]
             await conn.execute(
-                """UPDATE allitems SET "name"=CASE WHEN "original_name" IS NULL THEN "name" ELSE "original_name" END, "original_name"=NULL, "damage"=$2, "armor"=$3, "type"=CASE WHEN "original_type" IS NULL THEN "type" ELSE "original_type" END, "original_type"=NULL, WHERE "id"=$1;""",
+                """UPDATE allitems SET "name"=CASE WHEN "original_name" IS NULL THEN "name" ELSE "original_name" END, "original_name"=NULL, "damage"=$2, "armor"=$3, "type"=CASE WHEN "original_type" IS NULL THEN "type" ELSE "original_type" END, "original_type"=NULL WHERE "id"=$1;""",
                 itemid,
                 dmg,
                 armor,

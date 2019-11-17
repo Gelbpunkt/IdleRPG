@@ -88,6 +88,7 @@ class Guild(commands.Cog):
             value=f"**${guild['money']}** / **${guild['banklimit']}**",
         )
         embed.set_thumbnail(url=guild["icon"])
+        embed.set_footer(text=_("Guild ID: {id}").format(id=guild['id']))
         if guild["badge"]:
             embed.set_image(url=guild["badge"])
         try:
@@ -105,13 +106,17 @@ class Guild(commands.Cog):
         _(
             """\
 Look up a guild by its name or by a player.
-To look up a guild, use guild:name."""
+To look up a guild by its name, use guild:name.
+To look up a guild by its ID, use id:number."""
         )
+        kwargs = {}
         if isinstance(by, str):
             if by.lower().startswith("guild:"):
-                guildname = by[6:]
+                kwargs.update(name = by[6:])
+            elif by.lower().startswith("id:"):
+                kwargs.update(guild_id = int(by[3:]))
             else:
-                guildname = by
+                kwargs.update(name = by)
         else:
             async with self.bot.pool.acquire() as conn:
                 guild_id = await conn.fetchval(
@@ -121,10 +126,8 @@ To look up a guild, use guild:name."""
                     return await ctx.send(
                         _("**{user}** does not have a guild.").format(by.name)
                     )
-                guildname = await conn.fetchval(
-                    "SELECT name FROM guild WHERE id=$1;", guild_id
-                )
-        await self.get_guild_info(ctx, name=guildname)
+                kwargs.update(guild_id = guild_id)
+        await self.get_guild_info(ctx, **kwargs)
 
     @guild.command()
     @locale_doc
@@ -989,6 +992,7 @@ To look up a guild, use guild:name."""
                     await ctx.send(_("You aren't in their guild."))
             except asyncio.TimeoutError:
                 if len(joined) < 3:
+                    await self.bot.reset_guild_cooldown(ctx)
                     return await ctx.send(
                         _(
                             "You didn't get enough other players for the guild adventure."
