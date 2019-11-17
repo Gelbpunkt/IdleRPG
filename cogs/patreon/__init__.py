@@ -44,10 +44,15 @@ class Patreon(commands.Cog):
                 return await ctx.send(_("You do not own this item."))
             if not item["original_name"] and not item["original_type"]:
                 return await ctx.send(_("Nothing to do..."))
+            if (not (type_ := item["original_type"])) or type_ == "Shield":
+                dmg, armor = item["damage"], item["armor"]
+            else:
+                dmg, armor = item["armor"], item["damage"]
             await conn.execute(
-                """UPDATE allitems SET "name"=CASE WHEN "original_name" IS NULL THEN "name" ELSE "original_name" END, "original_name"=NULL, "damage"=CASE WHEN "original_type"='Sword' THEN $2 ELSE 0 END, "armor"=CASE WHEN "original_type"='Shield' THEN $2 ELSE 0 END, "type"=CASE WHEN "original_type" IS NULL THEN "type" ELSE "original_type" END, "original_type"=NULL, WHERE "id"=$1;""",
+                """UPDATE allitems SET "name"=CASE WHEN "original_name" IS NULL THEN "name" ELSE "original_name" END, "original_name"=NULL, "damage"=$2, "armor"=$3, "type"=CASE WHEN "original_type" IS NULL THEN "type" ELSE "original_type" END, "original_type"=NULL, WHERE "id"=$1;""",
                 itemid,
-                item["damage"] or item["armor"],
+                dmg,
+                armor,
             )
         await ctx.send(_("Item reset."))
 
