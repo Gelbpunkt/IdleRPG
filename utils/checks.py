@@ -368,9 +368,13 @@ async def user_has_char(bot, userid):
 
 async def has_money(bot, userid, money):
     async with bot.pool.acquire() as conn:
-        return await conn.fetchval(
+        res = await conn.fetchval(
             'SELECT money FROM profile WHERE "user"=$1 AND "money">=$2;', userid, money
         )
+        if isinstance(res, int):
+            return True
+        else:
+            return False
 
 
 def is_admin():
