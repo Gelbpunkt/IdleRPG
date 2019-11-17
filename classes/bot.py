@@ -616,11 +616,24 @@ ID: {data['id']}
 Type: {data['type']}
 Damage: {data['damage']}
 Armor: {data['armor']}"""
-        await self.pool.execute(
-            'INSERT INTO transactions ("from", "to", "subject", "info", "timestamp") VALUES ($1, $2, $3, $4, $5);',
-            from_,
-            to,
-            subject,
-            description,
-            timestamp,
-        )
+        async with self.pool.acquire() as conn:
+            await conn.execute(
+                'INSERT INTO transactions ("from", "to", "subject", "info", "timestamp") VALUES ($1, $2, $3, $4, $5);',
+                from_,
+                to,
+                subject,
+                description,
+                timestamp,
+            )
+            if subject == "shop":
+                await conn.execute(
+                    'INSERT INTO market_history ("item", "name", "value", "type", "damage", "armor", "signature", "price") VALUES ($1, $2, $3, $4, $5, $6, $7, $8);',
+                    data["id"],
+                    data["name"],
+                    data["value"],
+                    data["type"],
+                    data["damage"],
+                    data["armor"],
+                    data["signature"],
+                    data["price"],
+                )

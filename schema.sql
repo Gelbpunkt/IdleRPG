@@ -231,6 +231,48 @@ CREATE TABLE public.market (
 ALTER TABLE public.market OWNER TO jens;
 
 --
+-- Name: market_history; Type: TABLE; Schema: public; Owner: jens
+--
+
+CREATE TABLE public.market_history (
+    id integer NOT NULL,
+    item bigint NOT NULL,
+    name character varying(200) NOT NULL,
+    value integer NOT NULL,
+    type character varying(10) NOT NULL,
+    damage numeric(5,2) NOT NULL,
+    armor numeric(5,2) NOT NULL,
+    signature character varying(50) DEFAULT NULL::character varying,
+    price bigint NOT NULL,
+    "timestamp" timestamp with time zone DEFAULT now()
+);
+
+
+ALTER TABLE public.market_history OWNER TO jens;
+
+--
+-- Name: market_history_id_seq; Type: SEQUENCE; Schema: public; Owner: jens
+--
+
+CREATE SEQUENCE public.market_history_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.market_history_id_seq OWNER TO jens;
+
+--
+-- Name: market_history_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: jens
+--
+
+ALTER SEQUENCE public.market_history_id_seq OWNED BY public.market_history.id;
+
+
+--
 -- Name: market_id_seq; Type: SEQUENCE; Schema: public; Owner: jens
 --
 
@@ -410,6 +452,13 @@ ALTER TABLE ONLY public.market ALTER COLUMN id SET DEFAULT nextval('public.marke
 
 
 --
+-- Name: market_history id; Type: DEFAULT; Schema: public; Owner: jens
+--
+
+ALTER TABLE ONLY public.market_history ALTER COLUMN id SET DEFAULT nextval('public.market_history_id_seq'::regclass);
+
+
+--
 -- Name: transactions id; Type: DEFAULT; Schema: public; Owner: jens
 --
 
@@ -454,6 +503,14 @@ ALTER TABLE ONLY public.inventory
 
 ALTER TABLE ONLY public.loot
     ADD CONSTRAINT loot_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: market_history market_history_pkey; Type: CONSTRAINT; Schema: public; Owner: jens
+--
+
+ALTER TABLE ONLY public.market_history
+    ADD CONSTRAINT market_history_pkey PRIMARY KEY (id);
 
 
 --
