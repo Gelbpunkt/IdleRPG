@@ -45,7 +45,7 @@ class GlobalEvents(commands.Cog):
         print("Created by The IdleRPG Team")
         await self.load_settings()
         self.bot.loop.create_task(queue_manager(self.bot, self.bot.queue))
-        await self.bot.is_owner(self.bot.user.id)  # force getting the owners
+        await self.bot.is_owner(self.bot.user)  # force getting the owners
         await self.status_updater()
 
     @commands.Cog.listener()
