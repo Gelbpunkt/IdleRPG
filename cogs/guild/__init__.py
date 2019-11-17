@@ -989,6 +989,7 @@ To look up a guild, use guild:name."""
                     await ctx.send(_("You aren't in their guild."))
             except asyncio.TimeoutError:
                 if len(joined) < 3:
+                    await self.bot.reset_guild_cooldown(ctx)
                     return await ctx.send(
                         _(
                             "You didn't get enough other players for the guild adventure."
