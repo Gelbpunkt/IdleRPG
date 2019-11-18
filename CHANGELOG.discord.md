@@ -31,9 +31,9 @@
 
 **Updates**
 
-- Update tr\_TR
+- Update tr_TR
 - Update repo url
-- vn\_VN update
+- vn_VN update
 
 **Merge Requests**
 

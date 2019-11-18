@@ -307,19 +307,50 @@ Average hours of work: **{hours}**"""
         _("""Shows you the bots current version along with its new updates.""")
         await ctx.send(
             """\
-**IdleRPG v4.1.8 has been released :tada:**
+**v4.2.2**
+<https://git.travitia.xyz/Kenvyra/IdleRPG/compare/v4.2.1...v4.2.2>
 
-- Admin logging for crates is now showing rarity
-- Zemsu raid action timeout is now 20s (earlier 10s)
-- No success at producing a child is now "safer sex" and gives lovescore
-- Class images for the paragon line are added
-- Updated Swedish and Turkish (thanks to our amazing translators Wrench and Nya!)
-- Consistently resetting cooldowns mostly now
-- New command `$about` for quick links and about info
-- Pets can now be feeded sushi and vodka, filling the 50 points gap
-- `$activate all` will activate all boosters you got, not force you to own all types
+> 2019-11-17
 
-**Thank you for playing IdleRPG!**"""
+**Additions**
+
+- Add a tax for shop offers
+- Market has no price limit anymore (earlier 1000 - value) to enable trading expensive items
+- Shop items time out after 2 weeks
+- Timed out offers in shop will be moved to inventories again with `$clearshop` (Admin only)
+
+**Fixes**
+
+- Fix wikipedia and error properly if page content unparseable
+- Fix postgres syntax errors
+- Fix <https://git.travitia.xyz/Kenvyra/IdleRPG/issues/396>
+- Fix `$resetitem`
+- Fix an unneeded error on startup
+- Fix `$unequip`
+- Reset guild adventure cooldown is insufficient people join
+
+**Shop Log**
+
+- Log shop sales
+- Soon, a market dashboard will follow
+
+**Raid Battles**
+
+- Redesigned the raidbattle system
+
+**Updates**
+
+- Update tr_TR
+- Update repo url
+- vn_VN update
+
+**Merge Requests**
+
+- Merge branch 'guild-cooldown' into 'v4'
+- Merge branch 'battles-fix' into 'v4'
+- Merge branch 'raidbattle-redesign' into 'v4'
+- Merge branch 'guild-info' into 'v4'
+- Merge branch 'v4' into 'v4'"""
         )
 
     @commands.has_permissions(manage_messages=True)
