@@ -759,6 +759,8 @@ Average hours of work: **{hours}**"""
             text = await page.summary()
         except (aiowiki.exceptions.PageNotFound, IndexError):
             return await ctx.send(_("No wikipedia entry found."))
+        if not text:
+            return await ctx.send(_("Could not parse article summary."))
         p = commands.Paginator()
         for l in text.split("\n"):
             for i in chunks(l, 1900):

@@ -124,7 +124,7 @@ To look up a guild by its ID, use id:number."""
                 )
                 if guild_id == 0:
                     return await ctx.send(
-                        _("**{user}** does not have a guild.").format(by.name)
+                        _("**{user}** does not have a guild.").format(user=by.name)
                     )
                 kwargs.update(guild_id=guild_id)
         await self.get_guild_info(ctx, **kwargs)
