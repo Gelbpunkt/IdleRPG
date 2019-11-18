@@ -204,7 +204,7 @@ class Battles(commands.Cog):
         rawplayers = [ctx.character_data, enemy_data]
         players = [
             {"user": ctx.author, "hp": 250, "armor": 0, "damage": 0},
-            {"user": enemy, "hp": 250, "armor": 0, "damage": 0},
+            {"user": enemy_, "hp": 250, "armor": 0, "damage": 0},
         ]
 
         for idx, player in enumerate(rawplayers):
@@ -304,7 +304,7 @@ class Battles(commands.Cog):
         if players[1]["hp"] == 0:  # command author wins
             if not await has_money(
                 self.bot, ctx.author.id, money
-            ) or not await has_money(self.bot, enemy.id, money):
+            ) or not await has_money(self.bot, enemy_.id, money):
                 return await ctx.send(
                     _(
                         "One of you both can't pay the price for the battle because he spent money in the time of fighting."
@@ -319,7 +319,7 @@ class Battles(commands.Cog):
                 await conn.execute(
                     'UPDATE profile SET money=money-$1 WHERE "user"=$2;',
                     money,
-                    enemy.id,
+                    enemy_.id,
                 )
                 await conn.execute(
                     'UPDATE profile SET pvpwins=pvpwins+1 WHERE "user"=$1;',
@@ -327,13 +327,13 @@ class Battles(commands.Cog):
                 )
             await ctx.send(
                 _("{p1} won the battle vs {p2}! Congratulations!").format(
-                    p1=ctx.author.mention, p2=enemy.mention
+                    p1=ctx.author.mention, p2=enemy_.mention
                 )
             )
         elif players[0]["hp"] == 0:  # enemy wins
             if not await has_money(
                 self.bot, ctx.author.id, money
-            ) or not await has_money(self.bot, enemy.id, money):
+            ) or not await has_money(self.bot, enemy_.id, money):
                 return await ctx.send(
                     _(
                         "One of you both can't pay the price for the battle because he spent money in the time of fighting."
@@ -343,7 +343,7 @@ class Battles(commands.Cog):
                 await conn.execute(
                     'UPDATE profile SET money=money+$1 WHERE "user"=$2;',
                     money,
-                    enemy.id,
+                    enemy_.id,
                 )
                 await conn.execute(
                     'UPDATE profile SET money=money-$1 WHERE "user"=$2;',
@@ -351,11 +351,12 @@ class Battles(commands.Cog):
                     ctx.author.id,
                 )
                 await conn.execute(
-                    'UPDATE profile SET pvpwins=pvpwins+1 WHERE "user"=$1;', enemy.id
+                    'UPDATE profile SET pvpwins=pvpwins+1 WHERE "user"=$1;',
+                    enemy_.id
                 )
             await ctx.send(
                 _("{p1} won the battle vs {p2}! Congratulations!").format(
-                    p1=enemy.mention, p2=ctx.author.mention
+                    p1=enemy_.mention, p2=ctx.author.mention
                 )
             )
 
