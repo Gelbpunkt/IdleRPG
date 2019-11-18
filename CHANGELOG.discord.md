@@ -6,7 +6,7 @@
 **Additions**
 
 - Add a tax for shop offers
-- Market has no price limit anymore (earlier 1000 - value) to enable trading expensive items
+- Market has no price limit anymore (earlier 1000 \* value) to enable trading expensive items
 - Shop items time out after 2 weeks
 - Timed out offers in shop will be moved to inventories again with `$clearshop` (Admin only)
 
@@ -18,7 +18,7 @@
 - Fix `$resetitem`
 - Fix an unneeded error on startup
 - Fix `$unequip`
-- Reset guild adventure cooldown is insufficient people join
+- Reset guild adventure cooldown if insufficient people join
 
 **Shop Log**
 

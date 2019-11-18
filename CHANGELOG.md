@@ -18,7 +18,7 @@
 * Fix `$resetitem`
 * Fix an unneeded error on startup
 * Fix `$unequip`
-* Reset guild adventure cooldown is insufficient people join
+* Reset guild adventure cooldown if insufficient people join
 
 ### Shop Log
 
