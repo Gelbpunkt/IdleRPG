@@ -87,7 +87,7 @@ class Classes(commands.Cog):
             discord.Embed(
                 title=_("Ritualist"),
                 description=_(
-                    "A seer, a sacrificer and a follower.\nThe Ritualist devotes their life to the god they follow. For every evolution, their sacrifices are 5% more effective."
+                    "A seer, a sacrificer and a follower.\nThe Ritualist devotes their life to the god they follow. For every evolution, their sacrifices are 5% more effective. They have twice the chance to get loot from adventures."
                 ),
                 colour=self.bot.config.primary_colour,
             ),
