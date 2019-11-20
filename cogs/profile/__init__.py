@@ -341,26 +341,43 @@ IdleRPG is a global bot, your characters are valid everywhere"""
         ]
         await self.bot.paginator.Paginator(extras=embeds).paginate(ctx)
 
+    def lootembed(self, ctx, ret, currentpage, maxpage):
+        result = discord.Embed(
+            title=_("{user} has the following loot items.").format(user=ctx.disp),
+            colour=discord.Colour.blurple(),
+        )
+        for item in ret:
+            result.add_field(
+                name=item["name"],
+                value=_("ID: `{id}` Value is **${value}**").format(
+                    id=item["id"],
+                    value=item["value"]
+                ),
+                inline=False
+            )
+        result.set_footer(
+            text=_("Page {page} of {maxpages}").format(
+                page=currentpage + 1, maxpages=maxpage + 1
+            )
+        )
+        return result
+
     @checks.has_char()
     @commands.command(aliases=["loot"])
     @locale_doc
     async def items(self, ctx):
         _("""Shows your adventure loot that can be exchanged or sacrificed""")
-        if not (
-            loot := await self.bot.pool.fetch(
-                'SELECT * FROM loot WHERE "user"=$1;', ctx.author.id
-            )
-        ):
+        ret = await self.bot.pool.fetch(
+            'SELECT * FROM loot WHERE "user"=$1;',
+            ctx.author.id
+        )
+        if not ret:
             return await ctx.send(_("You do not have any loot at this moment."))
+        allitems = list(chunks(ret, 7))
+        maxpage = len(allitems) - 1
         embeds = [
-            discord.Embed(title=item["name"], colour=self.bot.config.primary_colour)
-            .add_field(name=_("Value"), value=f"{item['value']}")
-            .set_footer(
-                text=_(
-                    "Use {prefix}exchange {item} or {prefix}sacrifice {item}"
-                ).format(item=item["id"], prefix=ctx.prefix)
-            )
-            for item in loot
+            self.lootembed(ctx, chunk, idx, maxpage)
+            for idx, chunk in enumerate(allitems)
         ]
         await self.bot.paginator.Paginator(extras=embeds).paginate(ctx)
 
