@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-11-18 05:42-0800\n"
+"POT-Creation-Date: 2019-11-20 13:01-0800\n"
 "PO-Revision-Date: 2019-11-16 19:06+0700\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -23,7 +23,7 @@ msgid "Starts a new tournament."
 msgstr "Bắt đầu giải đấu."
 
 #: cogs/tournament/__init__.py:41 cogs/battles/__init__.py:49
-#: cogs/battles/__init__.py:153 cogs/battles/__init__.py:376
+#: cogs/battles/__init__.py:153 cogs/battles/__init__.py:377
 #: cogs/gambling/__init__.py:327 cogs/profile/__init__.py:644
 #: cogs/transaction/__init__.py:251 cogs/transaction/__init__.py:299
 msgid "You are too poor."
@@ -244,7 +244,7 @@ msgid "Battle against another player."
 msgstr "Đấu với người chơi khác."
 
 #: cogs/battles/__init__.py:47 cogs/battles/__init__.py:151
-#: cogs/battles/__init__.py:374
+#: cogs/battles/__init__.py:375
 msgid "You can't battle yourself."
 msgstr "Bạn không thể đấu với chính bạn."
 
@@ -267,13 +267,13 @@ msgstr ""
 "là **{money}**."
 
 #: cogs/battles/__init__.py:86 cogs/battles/__init__.py:190
-#: cogs/battles/__init__.py:413
+#: cogs/battles/__init__.py:414
 #, python-brace-format
 msgid "Noone wanted to join your battle, {author}!"
 msgstr "Không ai muốn tham gia vào trận đấu của bạn, {author}!"
 
 #: cogs/battles/__init__.py:94 cogs/battles/__init__.py:198
-#: cogs/battles/__init__.py:421
+#: cogs/battles/__init__.py:422
 msgid "You don't have enough money to join the battle."
 msgstr "Bạn không có đủ tiền để tham gia vào trận đấu."
 
@@ -346,7 +346,7 @@ msgid "Action #{number}"
 msgstr ""
 
 #: cogs/battles/__init__.py:310 cogs/battles/__init__.py:339
-#: cogs/battles/__init__.py:549
+#: cogs/battles/__init__.py:550
 msgid ""
 "One of you both can't pay the price for the battle because he spent money in "
 "the time of fighting."
@@ -354,21 +354,21 @@ msgstr ""
 "Một trong số các bạn không thể trả đủ tiền cho trận đấu bởi vì họ đã tiêu "
 "tiền trong lúc chiến đấu."
 
-#: cogs/battles/__init__.py:329 cogs/battles/__init__.py:357
+#: cogs/battles/__init__.py:329 cogs/battles/__init__.py:358
 #, python-brace-format
 msgid "{p1} won the battle vs {p2}! Congratulations!"
 msgstr "{p1} đã đánh bại {p2}! Chúc mừng nhaaa!"
 
 #. timeout after 5 min
-#: cogs/battles/__init__.py:363
+#: cogs/battles/__init__.py:364
 msgid "Battle took too long, aborting."
 msgstr "Trận chiến kéo dài quá lâu nên đã bị hủy bỏ."
 
-#: cogs/battles/__init__.py:372
+#: cogs/battles/__init__.py:373
 msgid "Reaction-based battle system."
 msgstr "Hệ thống chiến đấu dựa trên phản ứng."
 
-#: cogs/battles/__init__.py:381
+#: cogs/battles/__init__.py:382
 #, python-brace-format
 msgid ""
 "{author} seeks an active battle! React with ⚔ now to duel them! The price is "
@@ -377,7 +377,7 @@ msgstr ""
 "{author} tìm kiếm một trận đấu trực tiếp! Nhấn ⚔ để tham gia! Giải thưởng là "
 "**${money}**"
 
-#: cogs/battles/__init__.py:387
+#: cogs/battles/__init__.py:388
 #, python-brace-format
 msgid ""
 "{author} seeks an active battle with {enemy}! React with ⚔ now to duel them! "
@@ -386,7 +386,7 @@ msgstr ""
 "{author} mời {enemy} tham gia một trận đấu trực tiếp! Nhấn ⚔ để tham gia! "
 "Giải thưởng là **${money}**"
 
-#: cogs/battles/__init__.py:456
+#: cogs/battles/__init__.py:457
 #, python-brace-format
 msgid ""
 "{player1}: **{hp1}** HP\n"
@@ -397,35 +397,35 @@ msgstr ""
 "{player2}: **{hp2}** HP\n"
 "Nhấn để chơi."
 
-#: cogs/battles/__init__.py:474
+#: cogs/battles/__init__.py:475
 msgid "Someone refused to move. Battle stopped."
 msgstr "Một người nào đó đã từ chối lượt. Trận đấu kết thúc."
 
-#: cogs/battles/__init__.py:479
+#: cogs/battles/__init__.py:480
 #, python-brace-format
 msgid "{user}, you already moved!"
 msgstr "{user}, Bạn đã dùng lượt của mình!"
 
-#: cogs/battles/__init__.py:490
+#: cogs/battles/__init__.py:491
 #, python-brace-format
 msgid "{user} healed themselves for **{hp} HP**."
 msgstr "{user} đã hồi **{hp} HP**"
 
-#: cogs/battles/__init__.py:505 cogs/battles/__init__.py:529
+#: cogs/battles/__init__.py:506 cogs/battles/__init__.py:530
 #, python-brace-format
 msgid "{user} hit {enemy} for **{eff}** damage."
 msgstr "{user} tấn công {enemy} for **{eff}** sát thương."
 
-#: cogs/battles/__init__.py:535
+#: cogs/battles/__init__.py:536
 #, python-brace-format
 msgid "{user}'s attack on {enemy} failed!"
 msgstr "Đòn tấn công của {user} lên {enemy} thất bại!"
 
-#: cogs/battles/__init__.py:540
+#: cogs/battles/__init__.py:541
 msgid "You both died!"
 msgstr "Cả hai đã chết!"
 
-#: cogs/battles/__init__.py:563
+#: cogs/battles/__init__.py:564
 #, python-brace-format
 msgid "{winner} won the active battle vs {looser}! Congratulations!"
 msgstr "{winner} đã thắng trận đấu trực tiếp với {looser}! Chức mừng!"
@@ -1449,153 +1449,153 @@ msgstr ":1234: You đã quay **{num}**, {author}!"
 msgid "Shows you the bots current version along with its new updates."
 msgstr "Hiển thị cho bạn version của bot và những cái thay đổi, cập nhật"
 
-#: cogs/miscellaneous/__init__.py:330
+#: cogs/miscellaneous/__init__.py:361
 msgid ""
 "Deletes an amount of messages from the history, optionally only by one "
 "member."
 msgstr "Xóa một lượng tin nhắn khỏi lịch sử, chỉ tùy chọn bởi một thành viên."
 
-#: cogs/miscellaneous/__init__.py:340
+#: cogs/miscellaneous/__init__.py:371
 #, python-brace-format
 msgid "👍 Deleted **{num}** messages for you."
 msgstr "👍Đã xóa ** {num} ** tin nhắn cho bạn."
 
-#: cogs/miscellaneous/__init__.py:346
+#: cogs/miscellaneous/__init__.py:377
 msgid "The magic 8 ball answers your questions."
 msgstr "Bóng số 8 ma thuật trả lời câu hỏi của bạn."
 
-#: cogs/miscellaneous/__init__.py:348
+#: cogs/miscellaneous/__init__.py:379
 msgid "It is certain"
 msgstr "Chắc chắn"
 
-#: cogs/miscellaneous/__init__.py:349
+#: cogs/miscellaneous/__init__.py:380
 msgid "It is decidedly so"
 msgstr "Nó được quyết định như vậy"
 
-#: cogs/miscellaneous/__init__.py:350
+#: cogs/miscellaneous/__init__.py:381
 msgid "Without a doubt"
 msgstr "Đúng là như vậy."
 
-#: cogs/miscellaneous/__init__.py:351
+#: cogs/miscellaneous/__init__.py:382
 msgid "Yes, definitely"
 msgstr "Có, chắc chắn"
 
-#: cogs/miscellaneous/__init__.py:352
+#: cogs/miscellaneous/__init__.py:383
 #, fuzzy
 msgid "You may rely on it"
 msgstr "Bạn có thể dựa vào nó"
 
-#: cogs/miscellaneous/__init__.py:353
+#: cogs/miscellaneous/__init__.py:384
 msgid "As I see it, yes"
 msgstr "Theo tôi thấy, có"
 
-#: cogs/miscellaneous/__init__.py:354
+#: cogs/miscellaneous/__init__.py:385
 msgid "Most likely"
 msgstr "Nhiều khả năng"
 
-#: cogs/miscellaneous/__init__.py:355
+#: cogs/miscellaneous/__init__.py:386
 msgid "Outlook good"
 msgstr "Triển vọng tốt"
 
-#: cogs/miscellaneous/__init__.py:356 cogs/music/__init__.py:402
+#: cogs/miscellaneous/__init__.py:387 cogs/music/__init__.py:402
 #: cogs/music/__init__.py:405
 msgid "Yes"
 msgstr "Có"
 
-#: cogs/miscellaneous/__init__.py:357
+#: cogs/miscellaneous/__init__.py:388
 msgid "Signs point to yes"
 msgstr "Có"
 
-#: cogs/miscellaneous/__init__.py:358
+#: cogs/miscellaneous/__init__.py:389
 msgid "Reply hazy try again"
 msgstr "Hãy thử lại sau"
 
-#: cogs/miscellaneous/__init__.py:359
+#: cogs/miscellaneous/__init__.py:390
 msgid "Ask again later"
 msgstr "Hỏi lại sau"
 
-#: cogs/miscellaneous/__init__.py:360
+#: cogs/miscellaneous/__init__.py:391
 msgid "Better not tell you now"
 msgstr "Tốt hơn là không nên nói với bạn bây giờ"
 
-#: cogs/miscellaneous/__init__.py:361
+#: cogs/miscellaneous/__init__.py:392
 msgid "Cannot predict now"
 msgstr "Không thể dự đoán bây giờ"
 
-#: cogs/miscellaneous/__init__.py:362
+#: cogs/miscellaneous/__init__.py:393
 msgid "Concentrate and ask again"
 msgstr "Tập trung và hỏi lại lần nữa"
 
-#: cogs/miscellaneous/__init__.py:363
+#: cogs/miscellaneous/__init__.py:394
 msgid "Don't count on it"
 msgstr "Đừng tin vào điều đó"
 
-#: cogs/miscellaneous/__init__.py:364
+#: cogs/miscellaneous/__init__.py:395
 msgid "My reply is no"
 msgstr "Không"
 
-#: cogs/miscellaneous/__init__.py:365
+#: cogs/miscellaneous/__init__.py:396
 msgid "My sources say no"
 msgstr "Không"
 
-#: cogs/miscellaneous/__init__.py:366
+#: cogs/miscellaneous/__init__.py:397
 msgid "Outlook not so good"
 msgstr "Không được ổn cho lắm."
 
-#: cogs/miscellaneous/__init__.py:367
+#: cogs/miscellaneous/__init__.py:398
 msgid "Very doubtful"
 msgstr "Khá nghi ngờ"
 
-#: cogs/miscellaneous/__init__.py:370
+#: cogs/miscellaneous/__init__.py:401
 #, python-brace-format
 msgid "The :8ball: says: **{result}**."
 msgstr ":8ball: nói: **{result}**."
 
-#: cogs/miscellaneous/__init__.py:376
+#: cogs/miscellaneous/__init__.py:407
 msgid "Repeats what you said."
 msgstr "Lặp lại những gì bạn nói."
 
-#: cogs/miscellaneous/__init__.py:386
+#: cogs/miscellaneous/__init__.py:417
 msgid "Chooses a random option of supplied possiblies."
 msgstr "Chọn một tùy chọn ngẫu nhiên của cho các lựa chọn được cung cấp."
 
-#: cogs/miscellaneous/__init__.py:389
+#: cogs/miscellaneous/__init__.py:420
 msgid "Cannot choose from an empty list..."
 msgstr "Không thể chọn từ danh sách trống ..."
 
-#: cogs/miscellaneous/__init__.py:391
+#: cogs/miscellaneous/__init__.py:422
 #, python-brace-format
 msgid "My choice is: **{result}**."
 msgstr "Lựa chọn của tôi là: **{result}**."
 
-#: cogs/miscellaneous/__init__.py:399
+#: cogs/miscellaneous/__init__.py:430
 msgid "Calculates the potential love for 2 members."
 msgstr "Tính độ phù hợp giữa 2 người."
 
-#: cogs/miscellaneous/__init__.py:402
+#: cogs/miscellaneous/__init__.py:433
 #, python-brace-format
 msgid "Calculating Love for {first} and {second}..."
 msgstr "Tính toán tình yêu cho {first} và {second}..."
 
-#: cogs/miscellaneous/__init__.py:415
+#: cogs/miscellaneous/__init__.py:446
 msgid "Love Calculation"
 msgstr "Tính toán độ hợp cạ"
 
-#: cogs/miscellaneous/__init__.py:416
+#: cogs/miscellaneous/__init__.py:447
 #, python-brace-format
 msgid "Love for {first} and {second} is at **{love}%**! ❤"
 msgstr "Sự phù hợp của {first} và {second} là **{love}%**! ❤"
 
-#: cogs/miscellaneous/__init__.py:426
+#: cogs/miscellaneous/__init__.py:457
 #, fuzzy
 msgid "Fancies text with big emojis."
 msgstr "Một văn bản với những chữ cái lớn"
 
-#: cogs/miscellaneous/__init__.py:452
+#: cogs/miscellaneous/__init__.py:483
 msgid "A random bad meme."
 msgstr "Một meme ngẫu nhiên."
 
-#: cogs/miscellaneous/__init__.py:466
+#: cogs/miscellaneous/__init__.py:497
 msgid ""
 "Tabletop RPG-ready dice. Rolls in the ndx format (3d20 is 3 dice with 20 "
 "sides)."
@@ -1603,25 +1603,25 @@ msgstr ""
 "Máy tính bảng sẵn sàng . Rolls ở định dạng ndx (Ví dụ :3d20 là 3 con xúc xắc "
 "với 20 mặt)."
 
-#: cogs/miscellaneous/__init__.py:473
+#: cogs/miscellaneous/__init__.py:504
 msgid "Use the ndx format. E.g. `5d20` will roll 5 dices with 20 sides each."
 msgstr ""
 "Sử dụng định dạng ndx. Ví dụ. `5d20` sẽ cuộn 5 con xúc xắc với mỗi mặt 20 "
 "cái."
 
-#: cogs/miscellaneous/__init__.py:477
+#: cogs/miscellaneous/__init__.py:508
 msgid "Use the ndx format."
 msgstr "Sử dụng định dạng ndx."
 
-#: cogs/miscellaneous/__init__.py:479
+#: cogs/miscellaneous/__init__.py:510
 msgid "Too many dice."
 msgstr "Quá nhiều xúc xắc."
 
-#: cogs/miscellaneous/__init__.py:482
+#: cogs/miscellaneous/__init__.py:513
 msgid "Dice must have at least one side and not more than 10000."
 msgstr "Xúc xắc phải có ít nhất một mặt và không quá 10000."
 
-#: cogs/miscellaneous/__init__.py:497
+#: cogs/miscellaneous/__init__.py:528
 #, python-brace-format
 msgid ""
 "```Sum: {sumall}\n"
@@ -1634,102 +1634,102 @@ msgstr ""
 "Kết quả:\n"
 "{results}```"
 
-#: cogs/miscellaneous/__init__.py:505
+#: cogs/miscellaneous/__init__.py:536
 msgid "Sends you my nickname from a random server."
 msgstr "Gửi cho bạn nickname của tôi ở một server ngẫu nhiên"
 
-#: cogs/miscellaneous/__init__.py:511
+#: cogs/miscellaneous/__init__.py:542
 #, python-brace-format
 msgid "In **{server}** I am called **{name}**."
 msgstr "Trong **{server}** Tôi được gọi là **{name}**."
 
-#: cogs/miscellaneous/__init__.py:519
+#: cogs/miscellaneous/__init__.py:550
 msgid "Cat pics."
 msgstr "Bức ảnh mèo."
 
-#: cogs/miscellaneous/__init__.py:522
+#: cogs/miscellaneous/__init__.py:553
 msgid "Meow!"
 msgstr "Meow!"
 
-#: cogs/miscellaneous/__init__.py:531
+#: cogs/miscellaneous/__init__.py:562
 msgid "Dog pics."
 msgstr "Bức ảnh con chó."
 
-#: cogs/miscellaneous/__init__.py:538
+#: cogs/miscellaneous/__init__.py:569
 msgid "Wouff!"
 msgstr "Wouff!"
 
-#: cogs/miscellaneous/__init__.py:545
+#: cogs/miscellaneous/__init__.py:576
 msgid "Shows how long the bot has been connected to Discord."
 msgstr "Cho bạn xem thời gian bot đã được kết nối với Discord."
 
-#: cogs/miscellaneous/__init__.py:547
+#: cogs/miscellaneous/__init__.py:578
 #, python-brace-format
 msgid "I am online for **{time}**."
 msgstr "Tôi đã hoạt dông trong **{time}**."
 
-#: cogs/miscellaneous/__init__.py:555
+#: cogs/miscellaneous/__init__.py:586
 msgid "Every good software has an Easter egg."
 msgstr "Mỗi phần mềm tốt đều có một quả trứng Phục sinh."
 
-#: cogs/miscellaneous/__init__.py:556
+#: cogs/miscellaneous/__init__.py:587
 msgid "Find it!"
 msgstr "Đã tìm được nó!"
 
-#: cogs/miscellaneous/__init__.py:562
+#: cogs/miscellaneous/__init__.py:593
 msgid "Gives a cookie to a user."
 msgstr "Gửi bánh quy cho một người chơi."
 
-#: cogs/miscellaneous/__init__.py:565
+#: cogs/miscellaneous/__init__.py:596
 #, python-brace-format
 msgid "**{user}**, you've been given a cookie by **{author}**. :cookie:"
 msgstr "**{user}** bạn đã được gửi một cái bánh bởi **{author}** :cookie:"
 
-#: cogs/miscellaneous/__init__.py:573
+#: cogs/miscellaneous/__init__.py:604
 msgid "Gives ice cream to a user."
 msgstr "Tặng kem cho người dùng."
 
-#: cogs/miscellaneous/__init__.py:575
+#: cogs/miscellaneous/__init__.py:606
 #, python-brace-format
 msgid "{other}, here is your ice: :ice_cream:!"
 msgstr "{other}, Đây là que kem của bạn :ice_cream:!"
 
-#: cogs/miscellaneous/__init__.py:583
+#: cogs/miscellaneous/__init__.py:614
 msgid "User guessing game."
 msgstr "Người dùng đoán trò chơi."
 
-#: cogs/miscellaneous/__init__.py:586
+#: cogs/miscellaneous/__init__.py:617
 msgid "Can you guess who this is?"
 msgstr "Bạn có thể đoán người này là ai?"
 
-#: cogs/miscellaneous/__init__.py:587
+#: cogs/miscellaneous/__init__.py:618
 #, python-brace-format
 msgid "Their discriminant is `#{disc}`"
 msgstr "Phân biệt đối xử của họ là `#{disc}`"
 
-#: cogs/miscellaneous/__init__.py:604
+#: cogs/miscellaneous/__init__.py:635
 #, python-brace-format
 msgid "You didn't guess correctly! It was `{member}`!"
 msgstr "Bạn đã không đoán đúng! Đó là `{member}`!"
 
-#: cogs/miscellaneous/__init__.py:606
+#: cogs/miscellaneous/__init__.py:637
 #, python-brace-format
 msgid "{user}, you are correct!"
 msgstr "{user},Bạn đã đúng!"
 
-#: cogs/miscellaneous/__init__.py:611
+#: cogs/miscellaneous/__init__.py:642
 msgid "An alternative to 8ball, but has more bitchy answers."
 msgstr "Một cái thay thế cho 8ball nhưng có nhiêu câu trả lời hơn."
 
-#: cogs/miscellaneous/__init__.py:666
+#: cogs/miscellaneous/__init__.py:697
 msgid "Talk to me! (Supports only English)"
 msgstr "Nói chuyện với tôi! (Chỉ hỗ trợ cho tiếng Anh)"
 
-#: cogs/miscellaneous/__init__.py:670
+#: cogs/miscellaneous/__init__.py:701
 msgid "Text too long or too short. May be 3 to 60 characters."
 msgstr "Câu quá dài hoặc quá ngắn. Có thể là 3 đến 60 ký tự."
 
-#: cogs/miscellaneous/__init__.py:693
+#: cogs/miscellaneous/__init__.py:724
 msgid ""
 "Sends today's garfield comic if no date info is passed. Else, it will use "
 "YYYY MM DD or DD MM YYYY depending on where the year is, with the date parts "
@@ -1740,7 +1740,7 @@ msgstr ""
 "thuộc vào năm ở đâu, với các phần ngày, tháng, năm được tách biệt với khoảng "
 "trắng."
 
-#: cogs/miscellaneous/__init__.py:712
+#: cogs/miscellaneous/__init__.py:743
 msgid ""
 "Sends today's userfriendly comic if no date info is passed. Else, it will "
 "use YYYY MM DD or DD MM YYYY depending on where the year is, with the date "
@@ -1751,23 +1751,23 @@ msgstr ""
 "thuộc vào năm ở đâu, với các phần ngày, tháng, năm được tách biệt với khoảng "
 "trắng."
 
-#: cogs/miscellaneous/__init__.py:723
+#: cogs/miscellaneous/__init__.py:754
 msgid "Taken from userfriendly.org"
 msgstr "Được lấy từ userfriendly.org"
 
-#: cogs/miscellaneous/__init__.py:733
+#: cogs/miscellaneous/__init__.py:764
 msgid "Awesome bots by other coffee-drinking individuals."
 msgstr "Những con bot hộ trợ IdleRPG của các những người khác."
 
-#: cogs/miscellaneous/__init__.py:735
+#: cogs/miscellaneous/__init__.py:766
 msgid "Partnered Bots"
 msgstr "Cộng sự của bot"
 
-#: cogs/miscellaneous/__init__.py:736
+#: cogs/miscellaneous/__init__.py:767
 msgid "Awesome bots made by other people!"
 msgstr "Bot được thực hiện bởi những người khác!"
 
-#: cogs/miscellaneous/__init__.py:742
+#: cogs/miscellaneous/__init__.py:773
 msgid ""
 "Trivia, Hangman, Minesweeper, Connect 4 and more, right from your chat! A "
 "bot offering non-RPG games made by deprilula28 and Fin.\n"
@@ -1778,7 +1778,7 @@ msgstr ""
 "deprilula28 và Fin\n"
 "[top.gg Page](https://top.gg/bot/gamesrob)"
 
-#: cogs/miscellaneous/__init__.py:748
+#: cogs/miscellaneous/__init__.py:779
 msgid ""
 "Cautious Memory brings wiki-style pages to your server. Use it to document "
 "who's who in your server, inside jokes, or community lore. Includes a full "
@@ -1786,25 +1786,25 @@ msgid ""
 "[top.gg Page](https://top.gg/bot/541707781665718302)"
 msgstr ""
 
-#: cogs/miscellaneous/__init__.py:756
+#: cogs/miscellaneous/__init__.py:787
 #, fuzzy
 msgid "Searches Wikipedia for an entry."
 msgstr "Tìm kiếm một cái gì đó bạn cần trên Wikipedia"
 
-#: cogs/miscellaneous/__init__.py:761
+#: cogs/miscellaneous/__init__.py:792
 #, fuzzy
 msgid "No wikipedia entry found."
 msgstr "Không tìm thấy thứ này."
 
-#: cogs/miscellaneous/__init__.py:763
+#: cogs/miscellaneous/__init__.py:794
 msgid "Could not parse article summary."
 msgstr ""
 
-#: cogs/miscellaneous/__init__.py:775
+#: cogs/miscellaneous/__init__.py:806
 msgid "Searches IdleRPG Wiki for an entry."
 msgstr "Tìm một cái gì đó trên IdleRPG Wiki."
 
-#: cogs/miscellaneous/__init__.py:779
+#: cogs/miscellaneous/__init__.py:810
 msgid ""
 "Check out the official IdleRPG Wiki here:\n"
 "<https://wiki.travitia.xyz/index.php?title=Main_Page>"
@@ -1812,19 +1812,19 @@ msgstr ""
 "Trang web chính thức của IdleRPG Wiki:\n"
 "<https://wiki.travitia.xyz/index.php?title=Main_Page>"
 
-#: cogs/miscellaneous/__init__.py:786
+#: cogs/miscellaneous/__init__.py:817
 msgid "No entry found."
 msgstr "Không tìm thấy."
 
-#: cogs/miscellaneous/__init__.py:789
+#: cogs/miscellaneous/__init__.py:820
 msgid "No content to display."
 msgstr "Không có nội dung để hiển thị."
 
-#: cogs/miscellaneous/__init__.py:801
+#: cogs/miscellaneous/__init__.py:832
 msgid "About the bot and our websites."
 msgstr "Thông tin về bot và website của chúng tôi."
 
-#: cogs/miscellaneous/__init__.py:804
+#: cogs/miscellaneous/__init__.py:835
 #, python-format
 msgid ""
 "**IdleRPG** is Discord's most advanced medieval RPG bot.\n"
