@@ -36,26 +36,43 @@ class Gods(commands.Cog):
     @has_god()
     @commands.command()
     @locale_doc
-    async def sacrifice(self, ctx, loot_id: int):
+    async def sacrifice(self, ctx, *loot_ids: int):
         _("""Sacrifice an item for favor.""")
-        async with self.bot.pool.acquire() as conn:
-            if not (
-                item := await conn.fetchrow(
-                    'SELECT * FROM loot WHERE "id"=$1 AND "user"=$2;',
-                    loot_id,
+        if len(loot_ids) == 0:
+            async with self.bot.pool.acquire() as conn:
+                value, count = await conn.fetchval(
+                    'SELECT (SUM("value"), COUNT(*)) FROM loot WHERE "user"=$1',
                     ctx.author.id,
                 )
-            ):
-                return await ctx.send(_("You do not own this loot item."))
+                if count == 0:
+                    await self.bot.reset_cooldown(ctx)
+                    return await ctx.send(_("You don't have any loot."))
+        else:
+            async with self.bot.pool.acquire() as conn:
+                value, count = await conn.fetchval(
+                    'SELECT (SUM("value"), COUNT("value")) FROM loot WHERE "id"=ANY($1) AND "user"=$2;',
+                    loot_ids,
+                    ctx.author.id,
+                )
+
+                if not count:
+                    return await ctx.send(
+                        _(
+                            "You don't own any loot items with the IDs: {itemids}"
+                        ).format(
+                            itemids=", ".join([str(loot_id) for loot_id in loot_ids])
+                        )
+                    )
+
+        async with self.bot.pool.acquire() as conn:
             class_ = ctx.character_data["class"]
-            value = item["value"]
             if self.bot.in_class_line(class_, "Ritualist"):
                 value = round(
                     value
                     * (1 + 0.05 * self.bot.get_class_grade_from(class_, "Ritualist"))
                 )
 
-            await conn.execute('DELETE FROM loot WHERE "id"=$1;', loot_id)
+            await conn.execute('DELETE FROM loot WHERE "id"=ANY($1);', loot_ids)
             await conn.execute(
                 'UPDATE profile SET "favor"="favor"+$1 WHERE "user"=$2;',
                 value,
@@ -63,8 +80,8 @@ class Gods(commands.Cog):
             )
         await ctx.send(
             _(
-                "You prayed to {god}, and they accepted your sacrifice ({name}). Your standing with the god has increased by **{points}** points."
-            ).format(god=ctx.character_data["god"], name=item["name"], points=value)
+                "You prayed to {god}, and they accepted your {count} sacrificed loot item(s). Your standing with the god has increased by **{points}** points."
+            ).format(god=ctx.character_data["god"], count=count, points=value)
         )
 
     @has_char()
