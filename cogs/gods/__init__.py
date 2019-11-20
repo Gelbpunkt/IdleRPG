@@ -38,8 +38,8 @@ class Gods(commands.Cog):
     @locale_doc
     async def sacrifice(self, ctx, *loot_ids: int):
         _("""Sacrifice an item for favor.""")
-        if len(loot_ids) == 0:
-            async with self.bot.pool.acquire() as conn:
+        async with self.bot.pool.acquire() as conn:
+            if len(loot_ids) == 0:
                 value, count = await conn.fetchval(
                     'SELECT (SUM("value"), COUNT(*)) FROM loot WHERE "user"=$1',
                     ctx.author.id,
@@ -47,8 +47,7 @@ class Gods(commands.Cog):
                 if count == 0:
                     await self.bot.reset_cooldown(ctx)
                     return await ctx.send(_("You don't have any loot."))
-        else:
-            async with self.bot.pool.acquire() as conn:
+            else:
                 value, count = await conn.fetchval(
                     'SELECT (SUM("value"), COUNT("value")) FROM loot WHERE "id"=ANY($1) AND "user"=$2;',
                     loot_ids,
@@ -63,8 +62,6 @@ class Gods(commands.Cog):
                             itemids=", ".join([str(loot_id) for loot_id in loot_ids])
                         )
                     )
-
-        async with self.bot.pool.acquire() as conn:
             class_ = ctx.character_data["class"]
             if self.bot.in_class_line(class_, "Ritualist"):
                 value = round(
