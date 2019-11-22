@@ -268,6 +268,8 @@ class Transaction(commands.Cog):
     @locale_doc
     async def add_item(self, ctx, itemid: int):
         _("""Adds items to a trade.""")
+        if itemid in [x['id'] for x in ctx.transaction['items']]:
+            return await ctx.send(_("You already added this item!"))
         if (item := await self.bot.has_item(ctx.author.id, itemid)) :
             if item["original_name"] or item["original_type"]:
                 return await ctx.send(_("You may not sell modified items."))
