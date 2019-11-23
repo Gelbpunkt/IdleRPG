@@ -47,6 +47,10 @@ class Gods(commands.Cog):
                 if count == 0:
                     await self.bot.reset_cooldown(ctx)
                     return await ctx.send(_("You don't have any loot."))
+                if not await ctx.confirm(
+                    _("This will sacrifice all of your loot. Continue?")
+                ):
+                    return
             else:
                 value, count = await conn.fetchval(
                     'SELECT (SUM("value"), COUNT("value")) FROM loot WHERE "id"=ANY($1) AND "user"=$2;',
