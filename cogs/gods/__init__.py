@@ -69,7 +69,17 @@ class Gods(commands.Cog):
                     * (1 + 0.05 * self.bot.get_class_grade_from(class_, "Ritualist"))
                 )
 
-            await conn.execute('DELETE FROM loot WHERE "id"=ANY($1);', loot_ids)
+            if not len(loot_ids) == 0:
+                await conn.execute(
+                    'DELETE FROM loot WHERE "user"=$1;',
+                    ctx.author.id
+                )
+            else:
+                await conn.execute(
+                    'DELETE FROM loot WHERE "id"=ANY($1) AND "user"=$2;', 
+                    loot_ids,
+                    ctx.author.id
+                )
             await conn.execute(
                 'UPDATE profile SET "favor"="favor"+$1 WHERE "user"=$2;',
                 value,
