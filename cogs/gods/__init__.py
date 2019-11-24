@@ -73,7 +73,7 @@ class Gods(commands.Cog):
                     * (1 + 0.05 * self.bot.get_class_grade_from(class_, "Ritualist"))
                 )
 
-            if not len(loot_ids) == 0:
+            if len(loot_ids) > 0:
                 await conn.execute(
                     'DELETE FROM loot WHERE "user"=$1;',
                     ctx.author.id
