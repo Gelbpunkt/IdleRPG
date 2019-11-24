@@ -195,9 +195,6 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
             dmg = random.randint(
                 self.boss["min_dmg"], self.boss["max_dmg"]
             )  # effective damage the dragon does
-            israge = (
-                True if (dmg - raid[target]["armor"] < 0) else False
-            )  # set flag for later
             finaldmg = self.getfinaldmg(dmg, raid[target]["armor"])
             raid[target]["hp"] -= finaldmg  # damage dealt
             if raid[target]["hp"] > 0:
@@ -216,10 +213,7 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
                 name="Theoretical Damage", value=finaldmg + raid[target]["armor"]
             )
             em.add_field(name="Shield", value=raid[target]["armor"])
-            if israge:
-                em.add_field(name="Effective Rage Damage", value=finaldmg)
-            else:
-                em.add_field(name="Effective Damage", value=finaldmg)
+            em.add_field(name="Effective Damage", value=finaldmg)
             em.set_author(name=str(target), icon_url=target.avatar_url)
             em.set_thumbnail(url=f"{self.bot.BASE_URL}/dragon.png")
             await ctx.send(embed=em)
