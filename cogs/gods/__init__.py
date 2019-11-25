@@ -75,13 +75,13 @@ class Gods(commands.Cog):
 
             if len(loot_ids) > 0:
                 await conn.execute(
-                    'DELETE FROM loot WHERE "user"=$1;',
+                    'DELETE FROM loot WHERE id ANY($1) AND "user"=$2;',
+                    loot_ids
                     ctx.author.id
                 )
             else:
                 await conn.execute(
-                    'DELETE FROM loot WHERE "id"=ANY($1) AND "user"=$2;', 
-                    loot_ids,
+                    'DELETE FROM loot WHERE "user"=$1;',
                     ctx.author.id
                 )
             await conn.execute(
