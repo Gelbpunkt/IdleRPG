@@ -350,10 +350,9 @@ IdleRPG is a global bot, your characters are valid everywhere"""
             result.add_field(
                 name=item["name"],
                 value=_("ID: `{id}` Value is **${value}**").format(
-                    id=item["id"],
-                    value=item["value"]
+                    id=item["id"], value=item["value"]
                 ),
-                inline=False
+                inline=False,
             )
         result.set_footer(
             text=_("Page {page} of {maxpages}").format(
@@ -368,8 +367,7 @@ IdleRPG is a global bot, your characters are valid everywhere"""
     async def items(self, ctx):
         _("""Shows your adventure loot that can be exchanged or sacrificed""")
         ret = await self.bot.pool.fetch(
-            'SELECT * FROM loot WHERE "user"=$1;',
-            ctx.author.id
+            'SELECT * FROM loot WHERE "user"=$1;', ctx.author.id
         )
         if not ret:
             return await ctx.send(_("You do not have any loot at this moment."))
