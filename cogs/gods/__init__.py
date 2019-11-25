@@ -47,6 +47,10 @@ class Gods(commands.Cog):
                 if count == 0:
                     await self.bot.reset_cooldown(ctx)
                     return await ctx.send(_("You don't have any loot."))
+                if not await ctx.confirm(
+                    _("This will sacrifice all of your loot. Continue?")
+                ):
+                    return
             else:
                 value, count = await conn.fetchval(
                     'SELECT (SUM("value"), COUNT("value")) FROM loot WHERE "id"=ANY($1) AND "user"=$2;',
@@ -69,7 +73,17 @@ class Gods(commands.Cog):
                     * (1 + 0.05 * self.bot.get_class_grade_from(class_, "Ritualist"))
                 )
 
-            await conn.execute('DELETE FROM loot WHERE "id"=ANY($1);', loot_ids)
+            if len(loot_ids) > 0:
+                await conn.execute(
+                    'DELETE FROM loot WHERE id ANY($1) AND "user"=$2;',
+                    loot_ids
+                    ctx.author.id
+                )
+            else:
+                await conn.execute(
+                    'DELETE FROM loot WHERE "user"=$1;',
+                    ctx.author.id
+                )
             await conn.execute(
                 'UPDATE profile SET "favor"="favor"+$1 WHERE "user"=$2;',
                 value,
