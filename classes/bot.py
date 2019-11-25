@@ -248,7 +248,7 @@ class Bot(commands.AutoShardedBot):
             emoji = discord.PartialEmoji(
                 name=data["emoji"]["name"],
                 id=int(id_) if (id_ := data["emoji"]["id"]) else id_,
-                animated=data["emoji"]["animated"],
+                animated=data["emoji"].get("animated", False),
             )
             message = discord.utils.get(
                 self._connection._messages, id=int(data["message_id"])
