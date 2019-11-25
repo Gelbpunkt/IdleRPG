@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-11-20 13:01-0800\n"
+"POT-Creation-Date: 2019-11-25 12:20-0800\n"
 "PO-Revision-Date: 2019-05-30 21:16+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -23,9 +23,9 @@ msgid "Starts a new tournament."
 msgstr "Začni nový turnaj"
 
 #: cogs/tournament/__init__.py:41 cogs/battles/__init__.py:49
-#: cogs/battles/__init__.py:153 cogs/battles/__init__.py:377
-#: cogs/gambling/__init__.py:327 cogs/profile/__init__.py:644
-#: cogs/transaction/__init__.py:251 cogs/transaction/__init__.py:299
+#: cogs/battles/__init__.py:153 cogs/battles/__init__.py:376
+#: cogs/gambling/__init__.py:327 cogs/profile/__init__.py:659
+#: cogs/transaction/__init__.py:251 cogs/transaction/__init__.py:301
 msgid "You are too poor."
 msgstr "Jsi příliš chudý."
 
@@ -204,7 +204,7 @@ msgstr "Brnění"
 
 #: cogs/halloween/__init__.py:161 cogs/crates/__init__.py:141
 #: cogs/classes/__init__.py:535 cogs/trading/__init__.py:232
-#: cogs/trading/__init__.py:442 cogs/profile/__init__.py:357
+#: cogs/trading/__init__.py:442
 msgid "Value"
 msgstr "Hodnota"
 
@@ -247,7 +247,7 @@ msgid "Battle against another player."
 msgstr "Bojuj proti ostatním hráčům."
 
 #: cogs/battles/__init__.py:47 cogs/battles/__init__.py:151
-#: cogs/battles/__init__.py:375
+#: cogs/battles/__init__.py:374
 msgid "You can't battle yourself."
 msgstr "Nemůžeš bojovat proti sám sobě."
 
@@ -266,13 +266,13 @@ msgid ""
 msgstr ""
 
 #: cogs/battles/__init__.py:86 cogs/battles/__init__.py:190
-#: cogs/battles/__init__.py:414
+#: cogs/battles/__init__.py:413
 #, python-brace-format
 msgid "Noone wanted to join your battle, {author}!"
 msgstr "Nikdo se k tobě nepřipojil {author}!"
 
 #: cogs/battles/__init__.py:94 cogs/battles/__init__.py:198
-#: cogs/battles/__init__.py:422
+#: cogs/battles/__init__.py:421
 msgid "You don't have enough money to join the battle."
 msgstr "Nemáš dost peněz k boji!"
 
@@ -336,7 +336,7 @@ msgid "Action #{number}"
 msgstr ""
 
 #: cogs/battles/__init__.py:310 cogs/battles/__init__.py:339
-#: cogs/battles/__init__.py:550
+#: cogs/battles/__init__.py:549
 msgid ""
 "One of you both can't pay the price for the battle because he spent money in "
 "the time of fighting."
@@ -344,35 +344,35 @@ msgstr ""
 "Jeden z vás nemůže zaplatit cenu za souboj, protože peníze utratil během "
 "souboje"
 
-#: cogs/battles/__init__.py:329 cogs/battles/__init__.py:358
+#: cogs/battles/__init__.py:329 cogs/battles/__init__.py:357
 #, python-brace-format
 msgid "{p1} won the battle vs {p2}! Congratulations!"
 msgstr ""
 
 #. timeout after 5 min
-#: cogs/battles/__init__.py:364
+#: cogs/battles/__init__.py:363
 msgid "Battle took too long, aborting."
 msgstr ""
 
-#: cogs/battles/__init__.py:373
+#: cogs/battles/__init__.py:372
 msgid "Reaction-based battle system."
 msgstr "Bojový systém založen na reakcích"
 
-#: cogs/battles/__init__.py:382
+#: cogs/battles/__init__.py:381
 #, python-brace-format
 msgid ""
 "{author} seeks an active battle! React with ⚔ now to duel them! The price is "
 "**${money}**."
 msgstr ""
 
-#: cogs/battles/__init__.py:388
+#: cogs/battles/__init__.py:387
 #, python-brace-format
 msgid ""
 "{author} seeks an active battle with {enemy}! React with ⚔ now to duel them! "
 "The price is **${money}**."
 msgstr ""
 
-#: cogs/battles/__init__.py:457
+#: cogs/battles/__init__.py:456
 #, python-brace-format
 msgid ""
 "{player1}: **{hp1}** HP\n"
@@ -383,35 +383,35 @@ msgstr ""
 "{player2}: **{hp2}** HP\n"
 "Zareaguj pro hru."
 
-#: cogs/battles/__init__.py:475
+#: cogs/battles/__init__.py:474
 msgid "Someone refused to move. Battle stopped."
 msgstr "Někdo odmítl hrát. Souboj pozastaven."
 
-#: cogs/battles/__init__.py:480
+#: cogs/battles/__init__.py:479
 #, python-brace-format
 msgid "{user}, you already moved!"
 msgstr "{user}, Již jsi hrál"
 
-#: cogs/battles/__init__.py:491
+#: cogs/battles/__init__.py:490
 #, python-brace-format
 msgid "{user} healed themselves for **{hp} HP**."
 msgstr ""
 
-#: cogs/battles/__init__.py:506 cogs/battles/__init__.py:530
+#: cogs/battles/__init__.py:505 cogs/battles/__init__.py:529
 #, python-brace-format
 msgid "{user} hit {enemy} for **{eff}** damage."
 msgstr "{user} způsobil {enemy}  **{eff}** poškození"
 
-#: cogs/battles/__init__.py:536
+#: cogs/battles/__init__.py:535
 #, python-brace-format
 msgid "{user}'s attack on {enemy} failed!"
 msgstr "{user} útok na {enemy} selhal!"
 
-#: cogs/battles/__init__.py:541
+#: cogs/battles/__init__.py:540
 msgid "You both died!"
 msgstr "Oba jste umřeli"
 
-#: cogs/battles/__init__.py:564
+#: cogs/battles/__init__.py:563
 #, python-brace-format
 msgid "{winner} won the active battle vs {looser}! Congratulations!"
 msgstr "{winner} Vyhrál aktivní bitvu proti {looser}! Gratulujeme!"
@@ -1716,57 +1716,57 @@ msgid ""
 "> - Gambling Helpline"
 msgstr ""
 
-#: cogs/raid/__init__.py:2119
+#: cogs/raid/__init__.py:2113
 msgid "Upgrade your raid damage or defense multiplier."
 msgstr ""
 
-#: cogs/raid/__init__.py:2122
+#: cogs/raid/__init__.py:2116
 #, python-brace-format
 msgid ""
 "Use `{prefix}increase damage/defense` to upgrade your raid damage/defense "
 "multiplier by 10%."
 msgstr ""
 
-#: cogs/raid/__init__.py:2130
+#: cogs/raid/__init__.py:2124
 msgid "Increase your raid damage."
 msgstr ""
 
-#: cogs/raid/__init__.py:2136
+#: cogs/raid/__init__.py:2130
 #, python-brace-format
 msgid ""
 "Upgrading your weapon attack raid multiplier to {newlvl} costs **${price}**, "
 "you are too poor."
 msgstr ""
 
-#: cogs/raid/__init__.py:2147
+#: cogs/raid/__init__.py:2141
 #, python-brace-format
 msgid ""
 "You upgraded your weapon attack raid multiplier to {newlvl} for **${price}**."
 msgstr ""
 
-#: cogs/raid/__init__.py:2155
+#: cogs/raid/__init__.py:2149
 msgid "Increase your raid defense."
 msgstr ""
 
-#: cogs/raid/__init__.py:2161
+#: cogs/raid/__init__.py:2155
 #, python-brace-format
 msgid ""
 "Upgrading your shield defense raid multiplier to {newlvl} costs **${price}"
 "**, you are too poor."
 msgstr ""
 
-#: cogs/raid/__init__.py:2172
+#: cogs/raid/__init__.py:2166
 #, python-brace-format
 msgid ""
 "You upgraded your shield defense raid multiplier to {newlvl} for **${price}"
 "**."
 msgstr ""
 
-#: cogs/raid/__init__.py:2180
+#: cogs/raid/__init__.py:2174
 msgid "View your raid stats."
 msgstr ""
 
-#: cogs/raid/__init__.py:2191
+#: cogs/raid/__init__.py:2185
 #, python-brace-format
 msgid ""
 "**{author}'s raid multipliers**\n"
@@ -1774,11 +1774,11 @@ msgid ""
 "Defense Multiplier: x{deff} (Upgrading: ${deffp})"
 msgstr ""
 
-#: cogs/raid/__init__.py:2200
+#: cogs/raid/__init__.py:2194
 msgid "Informs you about joining raids."
 msgstr ""
 
-#: cogs/raid/__init__.py:2203
+#: cogs/raid/__init__.py:2197
 #, python-brace-format
 msgid ""
 "Did you ever want to join together with other players to defeat the dragon "
@@ -2009,7 +2009,7 @@ msgstr ""
 msgid "Reset an item's type and name, if modified."
 msgstr ""
 
-#: cogs/patreon/__init__.py:44 cogs/transaction/__init__.py:277
+#: cogs/patreon/__init__.py:44 cogs/transaction/__init__.py:279
 msgid "You do not own this item."
 msgstr ""
 
@@ -2206,7 +2206,8 @@ msgstr ""
 msgid ""
 "A seer, a sacrificer and a follower.\n"
 "The Ritualist devotes their life to the god they follow. For every "
-"evolution, their sacrifices are 5% more effective."
+"evolution, their sacrifices are 5% more effective. They have twice the "
+"chance to get loot from adventures."
 msgstr ""
 
 #: cogs/classes/__init__.py:99
@@ -3305,7 +3306,7 @@ msgid ""
 "You received **${money}** when selling item(s) `{itemids}`. {additional}"
 msgstr ""
 
-#: cogs/trading/__init__.py:371 cogs/profile/__init__.py:431
+#: cogs/trading/__init__.py:371 cogs/profile/__init__.py:446
 #, python-brace-format
 msgid "Skipped `{amount}` because they did not belong to you."
 msgstr ""
@@ -4788,7 +4789,7 @@ msgid ""
 "ID: `{id}`, Type: `{type_}` with {statstr}. Value is **${value}**{signature}"
 msgstr ""
 
-#: cogs/profile/__init__.py:311
+#: cogs/profile/__init__.py:311 cogs/profile/__init__.py:358
 #, python-brace-format
 msgid "Page {page} of {maxpages}"
 msgstr ""
@@ -4805,225 +4806,230 @@ msgstr ""
 msgid "Your inventory is empty."
 msgstr ""
 
-#: cogs/profile/__init__.py:348
+#: cogs/profile/__init__.py:346
+#, python-brace-format
+msgid "{user} has the following loot items."
+msgstr ""
+
+#: cogs/profile/__init__.py:352
+#, python-brace-format
+msgid "ID: `{id}` Value is **${value}**"
+msgstr ""
+
+#: cogs/profile/__init__.py:368
 msgid "Shows your adventure loot that can be exchanged or sacrificed"
 msgstr ""
 
-#: cogs/profile/__init__.py:354
+#: cogs/profile/__init__.py:373
 msgid "You do not have any loot at this moment."
 msgstr ""
 
-#: cogs/profile/__init__.py:360
-#, python-brace-format
-msgid "Use {prefix}exchange {item} or {prefix}sacrifice {item}"
-msgstr ""
-
-#: cogs/profile/__init__.py:372
+#: cogs/profile/__init__.py:387
 msgid "Exchange one or more loot items for money or xp."
 msgstr ""
 
-#: cogs/profile/__init__.py:381
+#: cogs/profile/__init__.py:396 cogs/gods/__init__.py:49
 msgid "You don't have any loot."
 msgstr ""
 
-#: cogs/profile/__init__.py:393
+#: cogs/profile/__init__.py:408 cogs/gods/__init__.py:64
 #, python-brace-format
 msgid "You don't own any loot items with the IDs: {itemids}"
 msgstr ""
 
-#: cogs/profile/__init__.py:399
+#: cogs/profile/__init__.py:414
 #, python-brace-format
 msgid "Select a reward for the {amount} items"
 msgstr ""
 
-#: cogs/profile/__init__.py:400
+#: cogs/profile/__init__.py:415
 #, python-brace-format
 msgid "Do you want favor? {prefix}sacrifice instead"
 msgstr ""
 
-#: cogs/profile/__init__.py:404
+#: cogs/profile/__init__.py:419
 #, python-brace-format
 msgid "**{value} XP**"
 msgstr ""
 
-#: cogs/profile/__init__.py:426
+#: cogs/profile/__init__.py:441
 #, python-brace-format
 msgid ""
 "You received **{reward}** when exchanging loot item(s) `{loot_ids}`. "
 "{additional}"
 msgstr ""
 
-#: cogs/profile/__init__.py:449
+#: cogs/profile/__init__.py:464
 msgid "Equips an item of yours by ID."
 msgstr ""
 
-#: cogs/profile/__init__.py:458 cogs/profile/__init__.py:499
-#: cogs/profile/__init__.py:584
+#: cogs/profile/__init__.py:473 cogs/profile/__init__.py:514
+#: cogs/profile/__init__.py:599
 #, python-brace-format
 msgid "You don't own an item with the ID `{itemid}`."
 msgstr ""
 
-#: cogs/profile/__init__.py:478
+#: cogs/profile/__init__.py:493
 #, python-brace-format
 msgid "Successfully equipped item `{itemid}` and put off item `{olditem}`."
 msgstr ""
 
-#: cogs/profile/__init__.py:483
+#: cogs/profile/__init__.py:498
 #, python-brace-format
 msgid "Successfully equipped item `{itemid}`."
 msgstr ""
 
-#: cogs/profile/__init__.py:490
+#: cogs/profile/__init__.py:505
 msgid "Unequip one of your equipped items"
 msgstr ""
 
-#: cogs/profile/__init__.py:504
+#: cogs/profile/__init__.py:519
 msgid "You don't have this item equipped."
 msgstr ""
 
-#: cogs/profile/__init__.py:509
+#: cogs/profile/__init__.py:524
 #, python-brace-format
 msgid "Successfully unequipped item `{itemid}`."
 msgstr ""
 
-#: cogs/profile/__init__.py:517
+#: cogs/profile/__init__.py:532
 msgid "Merges two items to a better one. Second one is consumed."
 msgstr ""
 
-#: cogs/profile/__init__.py:520
+#: cogs/profile/__init__.py:535
 msgid "Good luck with that."
 msgstr ""
 
-#: cogs/profile/__init__.py:534
+#: cogs/profile/__init__.py:549
 msgid "You don't own both of these items."
 msgstr ""
 
-#: cogs/profile/__init__.py:539
+#: cogs/profile/__init__.py:554
 msgid ""
 "The items are of unequal type. You may only merge a sword with a sword or a "
 "shield with a shield."
 msgstr ""
 
-#: cogs/profile/__init__.py:550
+#: cogs/profile/__init__.py:565
 msgid "This item is already on the maximum upgrade level."
 msgstr ""
 
-#: cogs/profile/__init__.py:556
+#: cogs/profile/__init__.py:571
 #, python-brace-format
 msgid ""
 "The second item's stat must be in the range of `{min_}` to `{max_}` to "
 "upgrade an item with the stat of `{stat}`."
 msgstr ""
 
-#: cogs/profile/__init__.py:565
+#: cogs/profile/__init__.py:580
 #, python-brace-format
 msgid ""
 "The {stat} of your **{item}** is now **{newstat}**. The other item was "
 "destroyed."
 msgstr ""
 
-#: cogs/profile/__init__.py:574
+#: cogs/profile/__init__.py:589
 msgid "Upgrades an item's stat by 1."
 msgstr ""
 
-#: cogs/profile/__init__.py:597
+#: cogs/profile/__init__.py:612
 msgid "Your weapon already reached the maximum upgrade level."
 msgstr ""
 
-#: cogs/profile/__init__.py:602
+#: cogs/profile/__init__.py:617
 #, python-brace-format
 msgid ""
 "Are you sure you want to upgrade this item: {item}? It will cost **"
 "${pricetopay}**."
 msgstr ""
 
-#: cogs/profile/__init__.py:605
+#: cogs/profile/__init__.py:620
 msgid "Weapon upgrade cancelled."
 msgstr ""
 
-#: cogs/profile/__init__.py:610
+#: cogs/profile/__init__.py:625
 #, python-brace-format
 msgid ""
 "You are too poor to upgrade this item. The upgrade costs **${pricetopay}**, "
 "but you only have **${money}**."
 msgstr ""
 
-#: cogs/profile/__init__.py:625
+#: cogs/profile/__init__.py:640
 #, python-brace-format
 msgid ""
 "The {stat} of your **{item}** is now **{newstat}**. **${pricetopay}** has "
 "been taken off your balance."
 msgstr ""
 
-#: cogs/profile/__init__.py:640
+#: cogs/profile/__init__.py:655
 msgid "Gift money!"
 msgstr ""
 
-#: cogs/profile/__init__.py:642
+#: cogs/profile/__init__.py:657
 msgid "No cheating!"
 msgstr ""
 
-#: cogs/profile/__init__.py:658
+#: cogs/profile/__init__.py:673
 #, python-brace-format
 msgid ""
 "Success!\n"
 "{other} now has **${othermoney}**, you now have **${authormoney}**."
 msgstr ""
 
-#: cogs/profile/__init__.py:671
+#: cogs/profile/__init__.py:686
 msgid "Renames your character."
 msgstr ""
 
-#: cogs/profile/__init__.py:673
+#: cogs/profile/__init__.py:688
 msgid "What shall your character's name be? (Minimum 3 Characters, Maximum 20)"
 msgstr ""
 
-#: cogs/profile/__init__.py:682
+#: cogs/profile/__init__.py:697
 msgid "Timeout expired. Retry!"
 msgstr ""
 
-#: cogs/profile/__init__.py:688
+#: cogs/profile/__init__.py:703
 msgid "Character name updated."
 msgstr ""
 
-#: cogs/profile/__init__.py:690
+#: cogs/profile/__init__.py:705
 msgid "Character names must be at least 3 characters!"
 msgstr ""
 
-#: cogs/profile/__init__.py:692
+#: cogs/profile/__init__.py:707
 msgid "Character names mustn't exceed 20 characters!"
 msgstr ""
 
-#: cogs/profile/__init__.py:698
+#: cogs/profile/__init__.py:713
 msgid "Deletes your character."
 msgstr ""
 
-#: cogs/profile/__init__.py:701
+#: cogs/profile/__init__.py:716
 msgid ""
 "Are you absolutely sure you want to delete your character? React in the next "
 "30 seconds to confirm.\n"
 "**This cannot be undone.**"
 msgstr ""
 
-#: cogs/profile/__init__.py:704
+#: cogs/profile/__init__.py:719
 msgid "Cancelled deletion of your character."
 msgstr ""
 
-#: cogs/profile/__init__.py:727
+#: cogs/profile/__init__.py:742
 msgid "Successfully deleted your character. Sorry to see you go :frowning:"
 msgstr ""
 
-#: cogs/profile/__init__.py:734
+#: cogs/profile/__init__.py:749
 msgid ""
 "Sets your profile text colour. The format may be #RRGGBB or a HTML-valid "
 "string like \"cyan\"."
 msgstr ""
 
-#: cogs/profile/__init__.py:738
+#: cogs/profile/__init__.py:753
 msgid "Format for colour is `#RRGGBB` or a colour code like `cyan`."
 msgstr ""
 
-#: cogs/profile/__init__.py:745
+#: cogs/profile/__init__.py:760
 #, python-brace-format
 msgid ""
 "Successfully set your profile colour to `{colour}`. Hint: If you used a hex "
@@ -5165,32 +5171,32 @@ msgstr ""
 msgid "Sacrifice an item for favor."
 msgstr ""
 
-#: cogs/gods/__init__.py:49
-msgid "You do not own this loot item."
+#: cogs/gods/__init__.py:51
+msgid "This will sacrifice all of your loot. Continue?"
 msgstr ""
 
-#: cogs/gods/__init__.py:66
+#: cogs/gods/__init__.py:91
 #, python-brace-format
 msgid ""
-"You prayed to {god}, and they accepted your sacrifice ({name}). Your "
-"standing with the god has increased by **{points}** points."
+"You prayed to {god}, and they accepted your {count} sacrificed loot item(s). "
+"Your standing with the god has increased by **{points}** points."
 msgstr ""
 
-#: cogs/gods/__init__.py:75
+#: cogs/gods/__init__.py:100
 msgid "Choose your deity. This cannot be undone."
 msgstr ""
 
-#: cogs/gods/__init__.py:78 cogs/races/__init__.py:35
+#: cogs/gods/__init__.py:103 cogs/races/__init__.py:35
 msgid "You have no more reset points."
 msgstr ""
 
-#: cogs/gods/__init__.py:81
+#: cogs/gods/__init__.py:106
 msgid ""
 "You already chose a god. This change now will cost you a reset point. Are "
 "you sure?"
 msgstr ""
 
-#: cogs/gods/__init__.py:99
+#: cogs/gods/__init__.py:124
 #, python-brace-format
 msgid ""
 "Warning: Gods/Goddesses are able to alter your luck (including decreasing "
@@ -5198,82 +5204,82 @@ msgid ""
 "follow {god}?"
 msgstr ""
 
-#: cogs/gods/__init__.py:115
+#: cogs/gods/__init__.py:140
 #, python-brace-format
 msgid "You are now a follower of {god}."
 msgstr ""
 
-#: cogs/gods/__init__.py:123
+#: cogs/gods/__init__.py:148
 msgid "Pray to your deity to gain favor."
 msgstr ""
 
-#: cogs/gods/__init__.py:127
+#: cogs/gods/__init__.py:152
 msgid "They obviously didn't like your prayer!"
 msgstr ""
 
-#: cogs/gods/__init__.py:128
+#: cogs/gods/__init__.py:153
 msgid "Noone heard you!"
 msgstr ""
 
-#: cogs/gods/__init__.py:129
+#: cogs/gods/__init__.py:154
 msgid "Your voice has made them screw off."
 msgstr ""
 
-#: cogs/gods/__init__.py:130
+#: cogs/gods/__init__.py:155
 msgid "Even a donkey would've been a better follower than you."
 msgstr ""
 
-#: cogs/gods/__init__.py:138
+#: cogs/gods/__init__.py:163
 msgid "„Rather lousy, but okay“, they said."
 msgstr ""
 
-#: cogs/gods/__init__.py:139
+#: cogs/gods/__init__.py:164
 msgid "You were a little sleepy."
 msgstr ""
 
-#: cogs/gods/__init__.py:140
+#: cogs/gods/__init__.py:165
 msgid "They were a little amused about your singing."
 msgstr ""
 
-#: cogs/gods/__init__.py:141
+#: cogs/gods/__init__.py:166
 msgid "Hearing the same prayer over and over again made them tired."
 msgstr ""
 
-#: cogs/gods/__init__.py:153
+#: cogs/gods/__init__.py:178
 msgid "Your Gregorian chants were amazingly well sung."
 msgstr ""
 
-#: cogs/gods/__init__.py:154
+#: cogs/gods/__init__.py:179
 msgid "Even the birds joined in your singing."
 msgstr ""
 
-#: cogs/gods/__init__.py:156
+#: cogs/gods/__init__.py:181
 msgid "The other gods applauded while your god noted down the best mark."
 msgstr ""
 
-#: cogs/gods/__init__.py:158
+#: cogs/gods/__init__.py:183
 msgid "Rarely have you had a better day!"
 msgstr ""
 
-#: cogs/gods/__init__.py:167
+#: cogs/gods/__init__.py:192
 #, python-brace-format
 msgid "Your prayer resulted in **{val}** favor. {message}"
 msgstr ""
 
-#: cogs/gods/__init__.py:177
+#: cogs/gods/__init__.py:202
 msgid "Shows your god and favor."
 msgstr ""
 
-#: cogs/gods/__init__.py:179
+#: cogs/gods/__init__.py:204
 #, python-brace-format
 msgid "Your god is **{god}** and you have **{favor}** favor with them."
 msgstr ""
 
-#: cogs/gods/__init__.py:189
+#: cogs/gods/__init__.py:214
 msgid "Lists top followers of your god (or yourself)."
 msgstr ""
 
-#: cogs/gods/__init__.py:194
+#: cogs/gods/__init__.py:219
 msgid "Normal followers may only view the top 25."
 msgstr ""
 
@@ -5339,7 +5345,7 @@ msgstr ""
 msgid "Adds crates to a trade."
 msgstr ""
 
-#: cogs/transaction/__init__.py:264 cogs/transaction/__init__.py:310
+#: cogs/transaction/__init__.py:264 cogs/transaction/__init__.py:312
 msgid "You do not have enough crates."
 msgstr ""
 
@@ -5347,58 +5353,62 @@ msgstr ""
 msgid "Adds items to a trade."
 msgstr ""
 
-#: cogs/transaction/__init__.py:273
+#: cogs/transaction/__init__.py:272
+msgid "You already added this item!"
+msgstr ""
+
+#: cogs/transaction/__init__.py:275
 msgid "You may not sell modified items."
 msgstr ""
 
-#: cogs/transaction/__init__.py:283
+#: cogs/transaction/__init__.py:285
 msgid "Sets a value to a trade instead of adding onto it."
 msgstr ""
 
-#: cogs/transaction/__init__.py:286
+#: cogs/transaction/__init__.py:288
 #, python-brace-format
 msgid "Please select something to set. Example: `{prefix}trade set money 1337`"
 msgstr ""
 
-#: cogs/transaction/__init__.py:294
+#: cogs/transaction/__init__.py:296
 msgid "Sets money in a trade."
 msgstr ""
 
-#: cogs/transaction/__init__.py:305
+#: cogs/transaction/__init__.py:307
 msgid "Sets crates in a trade."
 msgstr ""
 
-#: cogs/transaction/__init__.py:316
+#: cogs/transaction/__init__.py:318
 msgid "Removes something from a trade."
 msgstr ""
 
-#: cogs/transaction/__init__.py:319
+#: cogs/transaction/__init__.py:321
 #, python-brace-format
 msgid ""
 "Please select something to remove. Example: `{prefix}trade remove money 1337`"
 msgstr ""
 
-#: cogs/transaction/__init__.py:327
+#: cogs/transaction/__init__.py:329
 msgid "Removes money from a trade."
 msgstr ""
 
-#: cogs/transaction/__init__.py:332
+#: cogs/transaction/__init__.py:334
 msgid "Resulting amount is negative."
 msgstr ""
 
-#: cogs/transaction/__init__.py:338
+#: cogs/transaction/__init__.py:340
 msgid "Removes crates from a trade."
 msgstr ""
 
-#: cogs/transaction/__init__.py:346
+#: cogs/transaction/__init__.py:348
 msgid "The resulting amount would be negative."
 msgstr ""
 
-#: cogs/transaction/__init__.py:352
+#: cogs/transaction/__init__.py:354
 msgid "Removes items from a trade."
 msgstr ""
 
-#: cogs/transaction/__init__.py:358
+#: cogs/transaction/__init__.py:360
 msgid "This item is not in the trade."
 msgstr ""
 

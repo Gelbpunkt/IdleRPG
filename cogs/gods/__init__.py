@@ -14,6 +14,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
 import secrets
 
+from decimal import Decimal
 from io import BytesIO
 
 import discord
@@ -70,7 +71,9 @@ class Gods(commands.Cog):
             if self.bot.in_class_line(class_, "Ritualist"):
                 value = round(
                     value
-                    * (1 + 0.05 * self.bot.get_class_grade_from(class_, "Ritualist"))
+                    * Decimal(
+                        1 + 0.05 * self.bot.get_class_grade_from(class_, "Ritualist")
+                    )
                 )
 
             if len(loot_ids) > 0:
