@@ -544,6 +544,14 @@ Average hours of work: **{hours}**"""
             )
         )
 
+    @commands.command(aliases=["chuck", "cn", "norris", "theman"])
+    @locale_doc
+    async def chucknorris(self, ctx):
+        _("""Facts about Chuck Norris.""")
+        async with self.bot.session.get("https://api.chucknorris.io/jokes/random") as r:
+            content = await r.json()
+        await ctx.send(content["value"])
+
     @commands.command()
     @locale_doc
     async def cat(self, ctx):
