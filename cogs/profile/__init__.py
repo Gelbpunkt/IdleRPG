@@ -385,7 +385,7 @@ IdleRPG is a global bot, your characters are valid everywhere"""
     @locale_doc
     async def exchange(self, ctx, *loot_ids: int):
         _("""Exchange one or more loot items for money or xp.""")
-        if len(loot_ids) == 0:
+        if none_given := len(loot_ids) == 0:
             async with self.bot.pool.acquire() as conn:
                 value, count = await conn.fetchval(
                     'SELECT (SUM("value"), COUNT(*)) FROM loot WHERE "user"=$1',
@@ -436,19 +436,25 @@ IdleRPG is a global bot, your characters are valid everywhere"""
                 value,
                 ctx.author.id,
             )
-        await ctx.send(
-            _(
-                "You received **{reward}** when exchanging loot item(s) `{loot_ids}`. {additional}"
+        if none_given:
+            text = _(
+                "You received **{reward}** when exchanging all of your loot."
+            ).format(
+                reward=f"${value}" if reward == "money" else f"{value} XP",
+            )
+        else:
+            text = _(
+                "You received **{reward}** when exchanging loot item(s) `{loot_ids}`. "
             ).format(
                 reward=f"${value}" if reward == "money" else f"{value} XP",
                 loot_ids=", ".join([str(lootid) for lootid in loot_ids]),
-                additional=_(
-                    "Skipped `{amount}` because they did not belong to you."
-                ).format(amount=len(loot_ids) - count)
-                if len(loot_ids) > count
-                else "",
             )
-        )
+        additional=_(
+            "Skipped `{amount}` because they did not belong to you."
+        ).format(amount=len(loot_ids) - count)
+        #if len(loot_ids) > count else ""
+
+        await ctx.send(text + (additional if len(loot_ids) > count else ""))
 
         if reward == "xp":
             new_level = int(rpgtools.xptolevel(ctx.character_data["xp"] + value))
