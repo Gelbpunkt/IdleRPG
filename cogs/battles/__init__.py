@@ -187,7 +187,7 @@ class Battles(commands.Cog):
             except asyncio.TimeoutError:
                 await self.bot.reset_cooldown(ctx)
                 return await ctx.send(
-                    _("Noone wanted to join your battle, {author}!").format(
+                    _("Noone wanted to join your raidbattle, {author}!").format(
                         author=ctx.author.mention
                     )
                 )
@@ -195,7 +195,7 @@ class Battles(commands.Cog):
                 seeking = False
             else:
                 enemy_ = None
-                await ctx.send(_("You don't have enough money to join the battle."))
+                await ctx.send(_("You don't have enough money to join the raidbattle."))
 
         enemy_data = await self.bot.pool.fetchrow(
             'SELECT * FROM profile WHERE "user"=$1;', enemy_.id
@@ -234,7 +234,7 @@ class Battles(commands.Cog):
             [
                 (
                     0,
-                    _("Battle {p1} vs. {p2} started!").format(
+                    _("Raidbattle {p1} vs. {p2} started!").format(
                         p1=players[0]["user"], p2=players[1]["user"]
                     ),
                 )
@@ -307,7 +307,7 @@ class Battles(commands.Cog):
             ) or not await has_money(self.bot, enemy_.id, money):
                 return await ctx.send(
                     _(
-                        "One of you both can't pay the price for the battle because he spent money in the time of fighting."
+                        "One of you both can't pay the price for the raidbattle because he spent money in the time of fighting."
                     )
                 )
             async with self.bot.pool.acquire() as conn:
@@ -326,7 +326,7 @@ class Battles(commands.Cog):
                     ctx.author.id,
                 )
             await ctx.send(
-                _("{p1} won the battle vs {p2}! Congratulations!").format(
+                _("{p1} won the raidbattle vs {p2}! Congratulations!").format(
                     p1=ctx.author.mention, p2=enemy_.mention
                 )
             )
@@ -336,7 +336,7 @@ class Battles(commands.Cog):
             ) or not await has_money(self.bot, enemy_.id, money):
                 return await ctx.send(
                     _(
-                        "One of you both can't pay the price for the battle because he spent money in the time of fighting."
+                        "One of you both can't pay the price for the raidbattle because he spent money in the time of fighting."
                     )
                 )
             async with self.bot.pool.acquire() as conn:
@@ -354,13 +354,13 @@ class Battles(commands.Cog):
                     'UPDATE profile SET pvpwins=pvpwins+1 WHERE "user"=$1;', enemy_.id
                 )
             await ctx.send(
-                _("{p1} won the battle vs {p2}! Congratulations!").format(
+                _("{p1} won the raidbattle vs {p2}! Congratulations!").format(
                     p1=enemy_.mention, p2=ctx.author.mention
                 )
             )
 
         else:  # timeout after 5 min
-            await ctx.send(_("Battle took too long, aborting."))
+            await ctx.send(_("Raidbattle took too long, aborting."))
 
     @has_char()
     @user_cooldown(600)
