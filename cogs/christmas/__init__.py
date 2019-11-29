@@ -70,7 +70,7 @@ class Christmas(commands.Cog):
         today = datetime.datetime.now().day
         if today > 25 or today < 1:
             return await ctx.send(_("No calendar to show!"))
-        await ctx.send(file=discord.File(f"assets/calendar/Day {today - 1}.png"))
+        await ctx.send(file=discord.File(f"assets/calendar/24 days of IdleRPG - {today - 1} open.jpg"))
 
     @has_char()
     @user_cooldown(86401)  # truly make sure they use it once a day
@@ -79,8 +79,8 @@ class Christmas(commands.Cog):
     async def _open(self, ctx):
         _("""Open the Winter Calendar once every day.""")
         today = datetime.datetime.now().date()
-        christmas_too_late = datetime.date(2018, 12, 25)
-        first_dec = datetime.date(2018, 12, 1)
+        christmas_too_late = datetime.date(2019, 12, 25)
+        first_dec = datetime.date(2019, 12, 1)
         if today >= christmas_too_late or today < first_dec:
             return await ctx.send(_("It's not calendar time yet..."))
         reward = rewards[today.day]
@@ -88,29 +88,30 @@ class Christmas(commands.Cog):
         async with self.bot.pool.acquire() as conn:
             if reward["puzzle"]:
                 await conn.execute(
-                    'UPDATE profile SET puzzles=puzzles+1 WHERE "user"=$1;',
+                    'UPDATE profile SET "puzzles"="puzzles"+1 WHERE "user"=$1;',
                     ctx.author.id,
                 )
                 text = _("A mysterious puzzle piece")
                 reward_text = f"{reward_text}\n- {text}"
             if reward["crates"]:
+                rarity = random.choice(["rare", "uncommon", "common"])
                 await conn.execute(
-                    'UPDATE profile SET crates_common=crates_common+$1 WHERE "user"=$2;',
+                    f'UPDATE profile SET "crates_{rarity}"="crates_{rarity}"+$1 WHERE "user"=$2;',
                     reward["crates"],
                     ctx.author.id,
                 )
-                text = _("{crates} crates").format(crates=reward["crates"])
+                text = _("{crates} {rarity} crates").format(crates=reward["crates"], rarity=rarity)
                 reward_text = f"{reward_text}\n- {text}"
             if reward["money"]:
                 await conn.execute(
-                    'UPDATE profile SET money=money+$1 WHERE "user"=$2;',
+                    'UPDATE profile SET "money"="money"+$1 WHERE "user"=$2;',
                     reward["money"],
                     ctx.author.id,
                 )
                 reward_text = f"{reward_text}\n- ${reward['money']}"
             if today.day == 24:
                 await conn.execute(
-                    'UPDATE profile SET backgrounds=array_append(backgrounds, $1) WHERE "user"=$2;',
+                    'UPDATE profile SET "backgrounds"=array_append(backgrounds, $1) WHERE "user"=$2;',
                     "https://i.imgur.com/HuF0VbN.png",
                     ctx.author.id,
                 )
