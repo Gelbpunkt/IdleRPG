@@ -49,9 +49,9 @@ class Gods(commands.Cog):
                     await self.bot.reset_cooldown(ctx)
                     return await ctx.send(_("You don't have any loot."))
                 if not await ctx.confirm(
-                    _("This will sacrifice all of your loot and give {value} favor. Continue?").format(
-                        value=value
-                    )
+                    _(
+                        "This will sacrifice all of your loot and give {value} favor. Continue?"
+                    ).format(value=value)
                 ):
                     return
             else:

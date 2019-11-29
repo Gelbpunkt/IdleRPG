@@ -70,7 +70,11 @@ class Christmas(commands.Cog):
         today = datetime.datetime.now().day
         if today > 25 or today < 1:
             return await ctx.send(_("No calendar to show!"))
-        await ctx.send(file=discord.File(f"assets/calendar/24 days of IdleRPG - {today - 1} open.jpg"))
+        await ctx.send(
+            file=discord.File(
+                f"assets/calendar/24 days of IdleRPG - {today - 1} open.jpg"
+            )
+        )
 
     @has_char()
     @user_cooldown(86401)  # truly make sure they use it once a day
@@ -100,7 +104,9 @@ class Christmas(commands.Cog):
                     reward["crates"],
                     ctx.author.id,
                 )
-                text = _("{crates} {rarity} crates").format(crates=reward["crates"], rarity=rarity)
+                text = _("{crates} {rarity} crates").format(
+                    crates=reward["crates"], rarity=rarity
+                )
                 reward_text = f"{reward_text}\n- {text}"
             if reward["money"]:
                 await conn.execute(
