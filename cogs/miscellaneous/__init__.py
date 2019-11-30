@@ -307,50 +307,42 @@ Average hours of work: **{hours}**"""
         _("""Shows you the bots current version along with its new updates.""")
         await ctx.send(
             """\
-**v4.2.2**
-<https://git.travitia.xyz/Kenvyra/IdleRPG/compare/v4.2.1...v4.2.2>
+**v4.2.3**
+https://git.travitia.xyz/Kenvyra/IdleRPG/compare/v4.2.2...v4.2.3
 
-> 2019-11-17
+> 2019-11-30
 
 **Additions**
 
-- Add a tax for shop offers
-- Market has no price limit anymore (earlier 1000 \\* value) to enable trading expensive items
-- Shop items time out after 2 weeks
-- Timed out offers in shop will be moved to inventories again with `$clearshop` (Admin only)
+- ability to sacrifice multiple loot at once
+- Add Hungarian translation
+- add $chucknorris
+- blackjack revisit with splitting and fixes
+- Raid auto-join for Ruby Donators, nerf XP from exchanging
+- Redesign loot to resemble inventory
 
 **Fixes**
 
-- Fix wikipedia and error properly if page content unparseable
-- Fix postgres syntax errors
-- Fix <https://git.travitia.xyz/Kenvyra/IdleRPG/issues/396>
-- Fix `$resetitem`
-- Fix an unneeded error on startup
-- Fix `$unequip`
-- Reset guild adventure cooldown if insufficient people join
-
-**Shop Log**
-
-- Log shop sales
-- Soon, a market dashboard will follow
-
-**Raid Battles**
-
-- Redesigned the raidbattle system
-
-**Updates**
-
-- Update tr_TR
-- Update repo url
-- vn_VN update
+- fix a bug that allowed to add multiple of the same item in trades
+- Fix hungergames and some god raids
+- Fix syntax error
+- raidbattle patch
+- several formatting issues/clarifications adressed
+- Several fixes
+- smaller files
 
 **Merge Requests**
 
-- Merge branch 'guild-cooldown' into 'v4'
-- Merge branch 'battles-fix' into 'v4'
-- Merge branch 'raidbattle-redesign' into 'v4'
-- Merge branch 'guild-info' into 'v4'
-- Merge branch 'v4' into 'v4'"""
+- Merge branch 'blackjack-revisit' into 'v4'
+- Merge branch 'blackjack-patch' into 'v4'
+- Merge branch 'fix-mash' into 'v4'
+- Merge branch 'patch-1' into 'v4'
+- Merge branch 'patch-2' into 'v4'
+- Merge branch 'patch-1' into 'v4'
+- Merge branch 'sacrifice-multiple' into 'v4'
+- Merge branch 'informational' into 'v4'
+- Merge branch 'loot-redesign' into 'v4'
+- Merge branch 'patch-1' into 'v4'"""
         )
 
     @commands.has_permissions(manage_messages=True)
