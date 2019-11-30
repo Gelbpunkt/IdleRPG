@@ -93,6 +93,7 @@ class BlackJack:
         self.money = money
         self.insurance = False
         self.doubled = False
+        self.twodecks = False
 
     def prepare_deck(self):
         self.deck = []
@@ -139,15 +140,32 @@ class BlackJack:
     def has_bj(self, hand):
         return self.total(hand) == 21
 
+    def splittable(self, hand):
+        if hand[-1][0] in [card[0] for card in hand[:-1]]:
+            return True
+        return False
+
     def hit(self, hand):
         card = self.deal()
         hand.append(card)
         return hand
 
+    def split(self, hand):
+        hand1 = hand[:-1]
+        hand2 = [hand[-1]]
+        return [hand1, hand2]
+
     async def player_win(self):
         await self.ctx.bot.pool.execute(
             'UPDATE profile SET money=money+$1 WHERE "user"=$2;',
             self.money * 2,
+            self.ctx.author.id,
+        )
+
+    async def player_bj_win(self):
+        await self.ctx.bot.pool.execute(
+            'UPDATE profile SET money=money+$1 WHERE "user"=$2;',
+            self.money * 2.5,
             self.ctx.author.id,
         )
 
@@ -180,6 +198,7 @@ class BlackJack:
 
     async def run(self):
         self.player = [self.deal()]
+        self.player2 = None
         self.dealer = [self.deal()]
         await self.send()
         # Insurance?
@@ -201,11 +220,17 @@ class BlackJack:
                 )
             else:
                 return await self.send(
-                    additional=_("The dealer got a blackjack. You lost.")
+                    additional=_(
+                        "The dealer got a blackjack. You lost **${money}**."
+                    ).format(money=self.money)
                 )
         elif self.has_bj(self.player):
-            await self.player_win()
-            return await self.send(additional=_("You got a blackjack and won!"))
+            await self.player_bj_win()
+            return await self.send(
+                additional=_("You got a blackjack and won **${money}**!").format(
+                    money=self.money * 1.5
+                )
+            )
         else:
             await self.send()
         await self.msg.add_reaction("\U00002934")  # hit
@@ -219,6 +244,12 @@ class BlackJack:
             and self.total(self.player) < 22
             and not self.over
         ):
+            if self.twodecks:  # player has split
+                await self.msg.add_reaction("\U0001F501")  # change active deck
+                valid.append("\U0001F501")
+            if self.splittable(self.player):
+                await self.msg.add_reaction("\U00002194")  # split
+                valid.append("\U00002194")
 
             def check(reaction, user):
                 return (
@@ -242,7 +273,7 @@ class BlackJack:
                 pass
             while self.total(self.dealer) < 17:
                 self.dealer = self.hit(self.dealer)
-            if reaction.emoji == "\U00002934":
+            if reaction.emoji == "\U00002934":  # hit
                 if self.doubled:
                     valid.append("\U00002935")
                     valid.remove("\U00002934")
@@ -250,12 +281,21 @@ class BlackJack:
                     await self.msg.remove_reaction("\U00002934", self.ctx.bot.user)
                 self.player = self.hit(self.player)
                 await self.send()
-            elif reaction.emoji == "\U00002935":
+            elif reaction.emoji == "\U00002935":  # stand
                 self.over = True
-            else:
-                if not await has_money(
-                    self.ctx.bot, self.ctx.author.id, self.money * 2
-                ):
+            elif reaction.emoji == "\U00002194":  # split
+                self.player2, self.player = self.split(self.player)
+                self.twodecks = True
+                await self.send(
+                    additional=_("Split current hand and switched to the second side.")
+                )
+                valid.remove("\U00002194")
+                await self.msg.remove_reaction("\U00002194", self.ctx.bot.user)
+            elif reaction.emoji == "\U0001F501":  # change active side
+                self.player, self.player2 = self.player2, self.player
+                await self.send(additional=_("Switched to the other side."))
+            else:  # double down
+                if not await has_money(self.ctx.bot, self.ctx.author.id, self.money):
                     return await self.ctx.send(
                         _("Invalid. You're too poor and lose the match.")
                     )
@@ -277,26 +317,47 @@ class BlackJack:
                     )
                 )
 
+        try:
+            await self.msg.clear_reactions()
+        except discord.Forbidden:
+            pass
         player = self.total(self.player)
         dealer = self.total(self.dealer)
+
         if player > 21:
-            await self.send(additional=_("You busted and lose."))
+            await self.send(
+                additional=_("You busted and lost **${money}**.").format(
+                    money=self.money
+                )
+            )
         elif dealer > 21:
-            await self.send(additional=_("Dealer busts and you win!"))
+            await self.send(
+                additional=_("Dealer busts and you won **${money}**!").format(
+                    money=self.money
+                )
+            )
             await self.player_win()
         else:
             if player > dealer:
                 await self.send(
-                    additional=_("You have a higher score than the dealer and win.")
+                    additional=_(
+                        "You have a higher score than the dealer and have won **${money}**"
+                    ).format(money=self.money)
                 )
                 await self.player_win()
             elif dealer > player:
                 await self.send(
-                    additional=_("Dealer has a higher score than you and wins.")
+                    additional=_(
+                        "Dealer has a higher score than you and wins. You lost **${money}**."
+                    ).format(money=self.money)
                 )
             else:
                 await self.player_cashback()
-                await self.send(additional=_("It's a tie."))
+                await self.send(
+                    additional=_("It's a tie, you got your **${money}** back.").format(
+                        money=self.money
+                    )
+                )
 
 
 class Gambling(commands.Cog):
@@ -304,7 +365,7 @@ class Gambling(commands.Cog):
         self.bot = bot
         self.cards = os.listdir("assets/cards")
 
-    @commands.cooldown(1, 5, commands.BucketType.user)
+    @commands.cooldown(1, 15, commands.BucketType.user)
     @commands.command(aliases=["card"])
     @locale_doc
     async def draw(self, ctx):
@@ -355,7 +416,7 @@ class Gambling(commands.Cog):
             )
 
     @has_char()
-    @commands.cooldown(1, 5, commands.BucketType.user)
+    @commands.cooldown(1, 15, commands.BucketType.user)
     @commands.command()
     @locale_doc
     async def bet(
@@ -403,7 +464,7 @@ class Gambling(commands.Cog):
             )
 
     @has_char()
-    @commands.cooldown(1, 15, commands.BucketType.user)
+    @commands.cooldown(1, 5, commands.BucketType.user)
     @commands.command(aliases=["bj"])
     @locale_doc
     async def blackjack(self, ctx, amount: IntFromTo(0, 1000) = 0):
