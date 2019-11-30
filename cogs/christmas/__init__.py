@@ -117,8 +117,8 @@ class Christmas(commands.Cog):
                 reward_text = f"{reward_text}\n- ${reward['money']}"
             if today.day == 24:
                 await conn.execute(
-                    'UPDATE profile SET "backgrounds"=array_append(backgrounds, $1) WHERE "user"=$2;',
-                    "https://i.imgur.com/HuF0VbN.png",
+                    'UPDATE profile SET "backgrounds"=array_append("backgrounds", $1) WHERE "user"=$2;',
+                    "https://i.imgur.com/HAhZmqv.png",
                     ctx.author.id,
                 )
                 text = _(
@@ -146,12 +146,9 @@ class Christmas(commands.Cog):
                 )
             bg = random.choice(
                 [
-                    "https://i.imgur.com/PVYzp58.png",
-                    "https://i.imgur.com/yjBS7Y9.png",
-                    "https://i.imgur.com/gxMUpPm.png",
-                    "https://i.imgur.com/DjzhuRe.png",
-                    "https://i.imgur.com/l1ceMpq.png",
-                    "https://i.imgur.com/OH9rAON.png",
+                    "https://i.imgur.com/iLJEGOf.png",
+                    "https://i.imgur.com/LDax1ag.png",
+                    "https://i.imgur.com/FpWXBev.png",
                 ]
             )
             await conn.execute(

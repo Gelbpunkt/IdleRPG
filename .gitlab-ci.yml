@@ -12,14 +12,14 @@ stages:
 black:
   stage: Static Analysis
   script:
-  - black .
+    - black .
 
 isort:
   stage: Static Analysis
   script:
-  - isort -rc .
+    - isort -rc .
 
 flake8:
   stage: Static Analysis
   script:
-  - flake8
+    - flake8
