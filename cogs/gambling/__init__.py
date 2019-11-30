@@ -140,8 +140,18 @@ class BlackJack:
     def has_bj(self, hand):
         return self.total(hand) == 21
 
+    def samevalue(self, a: int, b: int):
+        if a == b:
+            return True
+        if a in [10, 11, 12, 13] and b in [10, 11, 12, 13]:
+            return True
+        return False
+
     def splittable(self, hand):
-        if hand[-1][0] in [card[0] for card in hand[:-1]]:
+        if (
+            self.samevalue(hand[0][0], hand[1][0])
+            and not self.twodecks
+        ):
             return True
         return False
 
@@ -165,7 +175,7 @@ class BlackJack:
     async def player_bj_win(self):
         await self.ctx.bot.pool.execute(
             'UPDATE profile SET money=money+$1 WHERE "user"=$2;',
-            self.money * 2.5,
+            int(self.money * 2.5),
             self.ctx.author.id,
         )
 
@@ -228,7 +238,7 @@ class BlackJack:
             await self.player_bj_win()
             return await self.send(
                 additional=_("You got a blackjack and won **${money}**!").format(
-                    money=self.money * 1.5
+                    money=int(self.money * 1.5)
                 )
             )
         else:
@@ -244,7 +254,7 @@ class BlackJack:
             and self.total(self.player) < 22
             and not self.over
         ):
-            if self.twodecks:  # player has split
+            if self.twodecks and not self.doubled:  # player has split
                 await self.msg.add_reaction("\U0001F501")  # change active deck
                 valid.append("\U0001F501")
             if self.splittable(self.player):
@@ -285,6 +295,8 @@ class BlackJack:
                 self.over = True
             elif reaction.emoji == "\U00002194":  # split
                 self.player2, self.player = self.split(self.player)
+                self.hit(self.player)
+                self.hit(self.player2)
                 self.twodecks = True
                 await self.send(
                     additional=_("Split current hand and switched to the second side.")
@@ -311,6 +323,9 @@ class BlackJack:
                 valid.remove("\U00002935")
                 await self.msg.remove_reaction("\U000023ec", self.ctx.bot.user)
                 await self.msg.remove_reaction("\U00002935", self.ctx.bot.user)
+                if self.twodecks:
+                    valid.remove("\U0001F501")
+                    await self.msg.remove_reaction("\U0001F501", self.ctx.bot.user)
                 await self.send(
                     additional=_(
                         "You doubled your bid in exchange for only receiving one more card."
