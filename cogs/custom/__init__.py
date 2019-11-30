@@ -15,6 +15,8 @@ GNU Affero General Public License for more details.
 You should have received a copy of the GNU Affero General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
+import secrets
+
 import discord
 
 from discord.ext import commands
@@ -36,6 +38,26 @@ class Custom(commands.Cog):
     async def onetruechild(self, ctx):
         _("""In loving memory of Mary Johanna, ex-developer.""")
         await ctx.send(_("His name is `#no homo` :heart:"))
+
+    @commands.command(hidden=True)
+    @locale_doc
+    async def jester(self, ctx):
+        _("""Use to have Jester cast a spell ✨""")
+        await ctx.send(
+            secrets.choice(
+                [
+                    _(
+                        "Jester casts Spirit Guardians on herself. She, and the spiritual hamster unicorns have a dance party."
+                    ),
+                    _(
+                        "Jester casts Spiritual Weapon. A comically large spectral lollipop🍭 suddenly appears."
+                    ),
+                    _(
+                        "Jester casts Invoke Duplicity.... Now there's twice the Jester for twice the pranks!"
+                    ),
+                ]
+            )
+        )
 
     @commands.command()
     @locale_doc

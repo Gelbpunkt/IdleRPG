@@ -416,7 +416,7 @@ IdleRPG is a global bot, your characters are valid everywhere"""
                 prefix=ctx.prefix
             ),
             return_index=True,
-            entries=[f"**${value}**", _("**{value // 4} XP**").format(value=value)],
+            entries=[f"**${value}**", _("**{value} XP**").format(value=value // 4)],
         ).paginate(ctx)
         reward = ["money", "xp"][reward]
         if reward == "xp":

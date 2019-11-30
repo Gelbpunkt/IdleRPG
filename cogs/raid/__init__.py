@@ -98,7 +98,7 @@ class Raid(commands.Cog):
             "https://raid.travitia.xyz/toggle",
             headers={"Authorization": self.bot.config.raidauth},
         )
-        role = discors.utils.get(ctx.guild.roles, name="Ruby Donators")
+        role = discord.utils.get(ctx.guild.roles, name="Ruby Donators")
         users = [u.id for u in ctx.guild.members if role in u.roles]
         await self.bot.session.post(
             "https://raid.travitia.xyz/autosignup",
