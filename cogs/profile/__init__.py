@@ -416,11 +416,12 @@ IdleRPG is a global bot, your characters are valid everywhere"""
                 prefix=ctx.prefix
             ),
             return_index=True,
-            entries=[f"**${value}**", _("**{value} XP**").format(value=value)],
+            entries=[f"**${value}**", _("**{value // 4} XP**").format(value=value)],
         ).paginate(ctx)
         reward = ["money", "xp"][reward]
         if reward == "xp":
             old_level = int(rpgtools.xptolevel(ctx.character_data["xp"]))
+            value = value // 4
 
         async with self.bot.pool.acquire() as conn:
             if len(loot_ids) == 0:

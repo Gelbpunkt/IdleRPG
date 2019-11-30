@@ -98,6 +98,13 @@ class Raid(commands.Cog):
             "https://raid.travitia.xyz/toggle",
             headers={"Authorization": self.bot.config.raidauth},
         )
+        role = discors.utils.get(ctx.guild.roles, name="Ruby Donators")
+        users = [u.id for u in ctx.guild.members if role in u.roles]
+        await self.bot.session.post(
+            "https://raid.travitia.xyz/autosignup",
+            headers={"Authorization": self.bot.config.raidauth},
+            data={"users": users},
+        )
         self.boss = {"hp": hp, "min_dmg": 100, "max_dmg": 500}
         await ctx.channel.set_permissions(
             ctx.guild.default_role, overwrite=self.read_only

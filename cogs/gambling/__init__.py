@@ -148,10 +148,7 @@ class BlackJack:
         return False
 
     def splittable(self, hand):
-        if (
-            self.samevalue(hand[0][0], hand[1][0])
-            and not self.twodecks
-        ):
+        if self.samevalue(hand[0][0], hand[1][0]) and not self.twodecks:
             return True
         return False
 
