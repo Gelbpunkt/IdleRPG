@@ -420,7 +420,7 @@ Next round starts in 5 seconds!
             'SELECT * FROM guild WHERE "leader"=$1;', ctx.author.id
         )
         d = [g["id"], g["name"]]
-        with open("tournament.json", "r+") as f:
+        with open("assets/data/tournament.json", "r+") as f:
             c = json.load(f)
             f.seek(0)
             if d in c["Participants"]:
@@ -437,7 +437,7 @@ Next round starts in 5 seconds!
     @locale_doc
     async def makematches(self, ctx):
         _("""Makes the snowball tournament matches""")
-        with open("tournament.json", "r+") as f:
+        with open("assets/data/tournament.json", "r+") as f:
             c = json.load(f)
             f.seek(0)
             d = c["Participants"]
@@ -453,7 +453,7 @@ Next round starts in 5 seconds!
     @locale_doc
     async def result(self, ctx, guild1, guild2, winner):
         _("""Save a result of a match if it is in the tournament""")
-        with open("tournament.json", "r+") as f:
+        with open("assets/data/tournament.json", "r+") as f:
             c = json.load(f)
             f.seek(0)
             for r in c["Matches"]:
@@ -483,7 +483,7 @@ Next round starts in 5 seconds!
     @locale_doc
     async def forceround(self, ctx):
         _("""Enforces a new snowball round.""")
-        with open("tournament.json", "r+") as f:
+        with open("assets/data/tournament.json", "r+") as f:
             c = json.load(f)
             f.seek(0)
             for r in c["Matches"]:
@@ -497,7 +497,7 @@ Next round starts in 5 seconds!
     @locale_doc
     async def matches(self, ctx):
         _("""Shows tournament matches.""")
-        with open("tournament.json", "r") as f:
+        with open("assets/data/tournament.json", "r") as f:
             c = json.load(f)
         text = _("Participants who are already in the next round")
         await ctx.send(f"**{text}**:\n{', '.join([i[1] for i in c['Participants']])}")
