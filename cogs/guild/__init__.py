@@ -244,6 +244,8 @@ To look up a guild by its ID, use id:number."""
                 _("A guild creation costs **$10000**, you are too poor.")
             )
         async with self.bot.pool.acquire() as conn:
+            if await conn.fetchrow('SELECT * FROM guild WHERE "name"=$1;', name):
+                return await ctx.send(_("The guild name is taken."))
             guild = await conn.fetchrow(
                 "INSERT INTO guild (name, memberlimit, leader, icon) VALUES ($1, $2, $3, $4) RETURNING *;",
                 name,
