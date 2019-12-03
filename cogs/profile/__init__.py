@@ -349,7 +349,7 @@ IdleRPG is a global bot, your characters are valid everywhere"""
         for item in ret:
             result.add_field(
                 name=item["name"],
-                value=_("ID: `{id}` Value is **${value}**").format(
+                value=_("ID: `{id}` Value is **{value}**").format(
                     id=item["id"], value=item["value"]
                 ),
                 inline=False,
