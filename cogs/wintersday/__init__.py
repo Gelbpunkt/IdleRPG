@@ -82,7 +82,7 @@ class Christmas(commands.Cog):
     @locale_doc
     async def _open(self, ctx):
         _("""Open the Winter Calendar once every day.""")
-        today = datetime.datetime.now().date()
+        today = datetime.datetime.utcnow().date()
         christmas_too_late = datetime.date(2019, 12, 25)
         first_dec = datetime.date(2019, 12, 1)
         if today >= christmas_too_late or today < first_dec:
