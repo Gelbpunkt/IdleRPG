@@ -467,7 +467,7 @@ Next round starts in 5 seconds!
                     id = the_r[0][0]
                 else:
                     id = the_r[1][0]
-            except IndexError:
+            except (IndexError, UnboundLocalError):
                 return await ctx.send(_("Those guilds are not in a match!"))
             c["Participants"].append([id, winner])
             json.dump(c, f)
