@@ -414,7 +414,7 @@ Next round starts in 5 seconds!
     @locale_doc
     async def signup(self, ctx):
         _("""Sign up for the snowball tournament.""")
-        if datetime.datetime.now().day >= 6:
+        if datetime.datetime.now().day >= 4:
             return await ctx.send(_("Too late, my friend."))
         g = await self.bot.pool.fetchrow(
             'SELECT * FROM guild WHERE "leader"=$1;', ctx.author.id
@@ -503,8 +503,8 @@ Next round starts in 5 seconds!
         await ctx.send(f"**{text}**:\n{', '.join([i[1] for i in c['Participants']])}")
         paginator = commands.Paginator()
         try:
-            for i in [f"{i[0][1]} vs {i[1][1]}" for i in c["Matches"]]:
-                paginator.add_line(i)
+            for i in c["Matches"]:
+                paginator.add_line(f"{i[0][1]} (ID: {i[0][0]}) vs {i[1][1]} (ID: {i[1][0]})")
         except IndexError:
             return await ctx.send(
                 _(
