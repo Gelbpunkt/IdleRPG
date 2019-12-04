@@ -504,7 +504,9 @@ Next round starts in 5 seconds!
         paginator = commands.Paginator()
         try:
             for i in c["Matches"]:
-                paginator.add_line(f"{i[0][1]} (ID: {i[0][0]}) vs {i[1][1]} (ID: {i[1][0]})")
+                paginator.add_line(
+                    f"{i[0][1]} (ID: {i[0][0]}) vs {i[1][1]} (ID: {i[1][0]})"
+                )
         except IndexError:
             return await ctx.send(
                 _(
