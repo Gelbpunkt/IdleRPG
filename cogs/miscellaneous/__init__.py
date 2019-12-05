@@ -38,7 +38,7 @@ from discord.ext.commands import BucketType
 
 from classes.converters import DateNewerThan, IntFromTo, IntGreaterThan
 from cogs.help import chunks
-from cogs.shard_communication import user_on_cooldown as user_cooldown
+from cogs.shard_communication import user_on_cooldown as user_cooldown, next_day_cooldown
 from utils.checks import has_char, user_is_patron
 
 
@@ -61,7 +61,7 @@ class Miscellaneous(commands.Cog):
         await ctx.send(_("No. Just no. I am a bot. What did you think?"))
 
     @has_char()
-    @user_cooldown(86400)
+    @next_day_cooldown()
     @commands.command()
     @locale_doc
     async def daily(self, ctx):

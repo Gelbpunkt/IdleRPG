@@ -82,6 +82,30 @@ def guild_on_cooldown(cooldown: int):
     return commands.check(predicate)
 
 
+def next_day_cooldown():
+        async def predicate(ctx):
+            command_ttl = await ctx.bot.redis.execute(
+                "TTL", f"cd:{ctx.author.id}:{ctx.command.qualified_name}"
+            )
+            if command_ttl == -1
+                now = datetime.utcnow()
+                tmr = datetime(now.year, now.month, now.day + 1, 0, 0, 0)
+                ctt = (tmr - now).seconds
+                await ctx.bot.redis.execute(
+                    "SET",
+                    f"cd:{ctx.author.id}:{ctx.command.qualified_name}",
+                    ctx.command.qualified_name,
+                    "EX",
+                    ctt
+                )
+                return True
+            else:
+                raise commands.CommandOnCooldown(ctx, command_ttl)
+                return False
+
+        return commands.check(predicate)  # TODO: Needs a redesign
+
+
 class Sharding(commands.Cog):
     def __init__(self, bot):
         self.bot = bot

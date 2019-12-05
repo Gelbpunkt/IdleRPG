@@ -26,7 +26,7 @@ import discord
 from discord.ext import commands
 
 from cogs.help import chunks
-from cogs.shard_communication import user_on_cooldown as user_cooldown
+from cogs.shard_communication import user_on_cooldown as user_cooldown, next_day_cooldown
 from utils.checks import has_char, is_admin, is_guild_leader, is_guild_officer
 
 rewards = {
@@ -77,12 +77,12 @@ class Christmas(commands.Cog):
         )
 
     @has_char()
-    @user_cooldown(86401)  # truly make sure they use it once a day
+    @next_day_cooldown()  # truly make sure they use it once a day
     @calendar.command(name="open")
     @locale_doc
     async def _open(self, ctx):
         _("""Open the Winter Calendar once every day.""")
-        today = datetime.datetime.now().date()
+        today = datetime.datetime.utcnow().date()
         christmas_too_late = datetime.date(2019, 12, 25)
         first_dec = datetime.date(2019, 12, 1)
         if today >= christmas_too_late or today < first_dec:
