@@ -87,9 +87,10 @@ def next_day_cooldown():
             command_ttl = await ctx.bot.redis.execute(
                 "TTL", f"cd:{ctx.author.id}:{ctx.command.qualified_name}"
             )
-            if command_ttl == -1:
-                tmr = datetime(datetime.utcnow().year, datetime.now().month, datetime.now().day + 1, 0, 0, 0)
-                ctt = (tmr - datetime.utcnow()).seconds
+            if command_ttl == -1
+                now = datetime.utcnow()
+                tmr = datetime(now.year, now.month, now.day + 1, 0, 0, 0)
+                ctt = (tmr - now).seconds
                 await ctx.bot.redis.execute(
                     "SET",
                     f"cd:{ctx.author.id}:{ctx.command.qualified_name}",
