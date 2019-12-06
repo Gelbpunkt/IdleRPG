@@ -38,7 +38,7 @@ from discord.ext.commands import BucketType
 
 from classes.converters import DateNewerThan, IntFromTo, IntGreaterThan
 from cogs.help import chunks
-from cogs.shard_communication import user_on_cooldown as user_cooldown, next_day_cooldown
+from cogs.shard_communication import next_day_cooldown
 from utils.checks import has_char, user_is_patron
 
 
