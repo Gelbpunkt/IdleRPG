@@ -489,6 +489,7 @@ Next round starts in 5 seconds!
             for r in c["Matches"]:
                 c["Participants"].append(random.choice(r))
             c["Matches"] = list(chunks(c["Participants"], 2))
+            c["Participants"] = []
             json.dump(c, f)
             f.truncate()
         await ctx.send(_("Round forced!"))
