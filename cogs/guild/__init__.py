@@ -174,7 +174,7 @@ To look up a guild by its ID, use id:number."""
     @guild.command()
     @locale_doc
     async def badge(self, ctx, number: IntGreaterThan(0)):
-        _("""[Guild owner only] Change the guild badge.""")
+        _("""[Guild Owner only] Change the guild badge.""")
         async with self.bot.pool.acquire() as conn:
             bgs, channel = await conn.fetchval(
                 'SELECT (badges, channel) FROM guild WHERE "leader"=$1;', ctx.author.id
