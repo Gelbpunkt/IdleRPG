@@ -890,27 +890,34 @@ To look up a guild by its ID, use id:number."""
                 )
             )
         async with self.bot.pool.acquire() as conn:
-            money1 = await conn.fetchval(
-                'SELECT money FROM guild WHERE "id"=$1;', guild1["id"]
+            money1, bank1 = await conn.fetchval(
+                'SELECT ("money", "banklimit") FROM guild WHERE "id"=$1;', guild1["id"]
             )
-            money2 = await conn.fetchval(
-                'SELECT money FROM guild WHERE "id"=$1;', guild2["id"]
+            money2, bank2 = await conn.fetchval(
+                'SELECT ("money", "banklimit") FROM guild WHERE "id"=$1;', guild2["id"]
             )
             if money1 < amount or money2 < amount:
                 return await ctx.send(_("Some guild spent the money??? Bad looser!"))
             if wins1 > wins2:
+                if money1 + amount <= bank1:
+                    await conn.execute(
+                        'UPDATE guild SET "money"="money"+$1 WHERE "id"=$2;',
+                        amount,
+                        guild1["id"],
+                    )
+                else:
+                    await conn.execute(
+                        'UPDATE profile SET "money"="money"+$1 WHERE "user"=$2;',
+                        amount,
+                        ctx.author.id,
+                    )
                 await conn.execute(
-                    'UPDATE guild SET money=money+$1 WHERE "id"=$2;',
-                    amount,
-                    guild1["id"],
-                )
-                await conn.execute(
-                    'UPDATE guild SET money=money-$1 WHERE "id"=$2;',
+                    'UPDATE guild SET "money"="money"-$1 WHERE "id"=$2;',
                     amount,
                     guild2["id"],
                 )
                 await conn.execute(
-                    'UPDATE guild SET wins=wins+1 WHERE "id"=$1;', guild1["id"]
+                    'UPDATE guild SET "wins"="wins"+1 WHERE "id"=$1;', guild1["id"]
                 )
                 await ctx.send(
                     _("{guild} won the battle! Congratulations!").format(
@@ -918,18 +925,25 @@ To look up a guild by its ID, use id:number."""
                     )
                 )
             elif wins2 > wins1:
+                if money2 + amount <= bank2:
+                    await conn.execute(
+                        'UPDATE guild SET "money"="money"+$1 WHERE "id"=$2;',
+                        amount,
+                        guild2["id"],
+                    )
+                else:
+                    await conn.execute(
+                        'UPDATE profile SET "money"="money"+$1 WHERE "user"=$2;',
+                        amount,
+                        enemy.id,
+                    )
                 await conn.execute(
-                    'UPDATE guild SET money=money+$1 WHERE "id"=$2;',
-                    amount,
-                    guild2["id"],
-                )
-                await conn.execute(
-                    'UPDATE guild SET money=money-$1 WHERE "id"=$2;',
+                    'UPDATE guild SET "money"="money"-$1 WHERE "id"=$2;',
                     amount,
                     guild1["id"],
                 )
                 await conn.execute(
-                    'UPDATE guild SET wins=wins+1 WHERE "id"=$1;', guild2["id"]
+                    'UPDATE guild SET "wins"="wins"+1 WHERE "id"=$1;', guild2["id"]
                 )
                 await ctx.send(
                     _("{guild} won the battle! Congratulations!").format(
