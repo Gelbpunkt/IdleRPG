@@ -259,12 +259,13 @@ IdleRPG is a global bot, your characters are valid everywhere"""
             )
         )
 
+    @has_char()
     @commands.command()
     @locale_doc
     async def xp(self, ctx, user: UserWithCharacter = Author):
         _("""Shows current XP and level of a player.""")
-        points = ctx.user_data["xp"]
         if user == ctx.author:
+            points = ctx.character_data["xp"]
             await ctx.send(
                 _(
                     "You currently have **{points} XP**, which means you are on Level **{level}**. Missing to next level: **{missing}**"
@@ -275,6 +276,7 @@ IdleRPG is a global bot, your characters are valid everywhere"""
                 )
             )
         else:
+            points = ctx.user_data["xp"]
             await ctx.send(
                 _(
                     "{user} has **{points} XP** and is on Level **{level}**. Missing to next level: **{missing}**"
