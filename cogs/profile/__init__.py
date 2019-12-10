@@ -24,7 +24,7 @@ import discord
 from discord.ext import commands
 from discord.ext.commands.default import Author
 
-from classes.converters import IntFromTo, MemberWithCharacter, User
+from classes.converters import IntFromTo, MemberWithCharacter, User, UserWithCharacter
 from cogs.help import chunks
 from cogs.shard_communication import user_on_cooldown as user_cooldown
 from utils import checks
@@ -259,21 +259,32 @@ IdleRPG is a global bot, your characters are valid everywhere"""
             )
         )
 
-    @checks.has_char()
     @commands.command()
     @locale_doc
-    async def xp(self, ctx):
-        _("""Shows your current XP and level.""")
-        points = ctx.character_data["xp"]
-        await ctx.send(
-            _(
-                "You currently have **{points} XP**, which means you are on Level **{level}**. Missing to next level: **{missing}**"
-            ).format(
-                points=points,
-                level=rpgtools.xptolevel(points),
-                missing=rpgtools.xptonextlevel(points),
+    async def xp(self, ctx, user: UserWithCharacter = Author):
+        _("""Shows current XP and level of a player.""")
+        points = ctx.user_data["xp"]
+        if user == ctx.author:
+            await ctx.send(
+                _(
+                    "You currently have **{points} XP**, which means you are on Level **{level}**. Missing to next level: **{missing}**"
+                ).format(
+                    points=points,
+                    level=rpgtools.xptolevel(points),
+                    missing=rpgtools.xptonextlevel(points),
+                )
             )
-        )
+        else:
+            await ctx.send(
+                _(
+                    "{user} has **{points} XP** and is on Level **{level}**. Missing to next level: **{missing}**"
+                ).format(
+                    user=user,
+                    points=points,
+                    level=rpgtools.xptolevel(points),
+                    missing=rpgtools.xptonextlevel(points),
+                )
+            )
 
     def invembed(self, ctx, ret, currentpage, maxpage):
         result = discord.Embed(
