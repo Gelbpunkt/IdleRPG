@@ -383,7 +383,7 @@ class Sharding(commands.Cog):
             cooldown = await self.bot.redis.execute("TTL", key)
             cmd = key.replace(f"cd:{ctx.author.id}:", "")
             text = _("{cmd} is on cooldown and will be available after {time}").format(
-                cmd=cmd, time=str(timedelta(seconds=cooldown)).split(".")[0]
+                cmd=cmd, time=timedelta(seconds=int(cooldown))
             )
             timers = f"{timers}\n{text}"
         if adv and not adv[2]:
