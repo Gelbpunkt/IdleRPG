@@ -264,7 +264,7 @@ IdleRPG is a global bot, your characters are valid everywhere"""
     @locale_doc
     async def xp(self, ctx, user: UserWithCharacter = Author):
         _("""Shows current XP and level of a player.""")
-        if user == ctx.author:
+        if user.id == ctx.author.id:
             points = ctx.character_data["xp"]
             await ctx.send(
                 _(
