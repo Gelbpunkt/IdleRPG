@@ -259,7 +259,7 @@ IdleRPG is a global bot, your characters are valid everywhere"""
             )
         )
 
-    @has_char()
+    @checks.has_char()
     @commands.command()
     @locale_doc
     async def xp(self, ctx, user: UserWithCharacter = Author):
