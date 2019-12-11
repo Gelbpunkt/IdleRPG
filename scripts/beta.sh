@@ -10,3 +10,4 @@ psql idlerpg -c "CREATE ROLE prest WITH PASSWORD 'placeholder';"
 psql idlerpg -c "CREATE ROLE votehandler WITH PASSWORD 'placeholder';"
 EOF
 podman run --rm -d --pod idlerpg --name postgres -v $(pwd)/start.sh:/docker-entrypoint-initdb.d/init.sh:z -v $(pwd)/schema.sql:/docker-entrypoint-initdb.d/init.sql:z postgres:12-alpine
+rm start.sh
