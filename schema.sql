@@ -31,6 +31,24 @@ SET xmloption = content;
 SET client_min_messages = warning;
 SET row_security = off;
 
+--
+-- Name: insert_alliance_default(); Type: FUNCTION; Schema: public; Owner: postgres
+--
+
+CREATE FUNCTION public.insert_alliance_default() RETURNS trigger
+    LANGUAGE plpgsql
+    AS $$
+begin
+if NEW.alliance is null then
+NEW.alliance := NEW.id;
+end if;
+return new;
+end;
+$$;
+
+
+ALTER FUNCTION public.insert_alliance_default() OWNER TO postgres;
+
 SET default_tablespace = '';
 
 SET default_table_access_method = heap;
@@ -108,7 +126,8 @@ CREATE TABLE public.guild (
     badge character varying(100) DEFAULT NULL::character varying,
     description character varying(200) DEFAULT 'No Description set yet'::character varying NOT NULL,
     channel bigint,
-    upgrade bigint DEFAULT 1 NOT NULL
+    upgrade bigint DEFAULT 1 NOT NULL,
+    alliance bigint
 );
 
 
@@ -555,11 +574,26 @@ ALTER TABLE ONLY public.user_settings
 
 
 --
+-- Name: guild insert_alliance_default; Type: TRIGGER; Schema: public; Owner: jens
+--
+
+CREATE TRIGGER insert_alliance_default BEFORE INSERT ON public.guild FOR EACH ROW EXECUTE FUNCTION public.insert_alliance_default();
+
+
+--
 -- Name: allitems allitems_owner_fkey; Type: FK CONSTRAINT; Schema: public; Owner: jens
 --
 
 ALTER TABLE ONLY public.allitems
     ADD CONSTRAINT allitems_owner_fkey FOREIGN KEY (owner) REFERENCES public.profile("user") ON DELETE CASCADE;
+
+
+--
+-- Name: guild guild_alliance_fkey; Type: FK CONSTRAINT; Schema: public; Owner: jens
+--
+
+ALTER TABLE ONLY public.guild
+    ADD CONSTRAINT guild_alliance_fkey FOREIGN KEY (alliance) REFERENCES public.guild(id);
 
 
 --
