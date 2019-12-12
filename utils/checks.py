@@ -59,6 +59,11 @@ class NeedsNoGuildLeader(commands.CheckFailure):
 
     pass
 
+class NoAlliancePermissions(commands.CheckFailure):
+    """Exception raised when a user does not have permissions in the alliance to use a command."""
+
+    pass
+
 
 class WrongClass(commands.CheckFailure):
     """Exception raised when a user does not meet the class requirement."""
@@ -232,6 +237,22 @@ def is_no_guild_leader():
         if ctx.character_data["guildrank"] != "Leader":
             return True
         raise NeedsNoGuildLeader()
+
+    return commands.check(predicate)
+
+
+def is_alliance_leader():
+    """Checks for a user to be the leader of an alliance."""
+
+    async def predicate(ctx):
+        async with ctx.bot.pool.acquire() as conn:
+            ctx.character_data = await conn.fetchrow(
+                'SELECT * FROM profile WHERE "user"=$1;', ctx.author.id
+            )
+            leading_guild = await conn.fetchval('SELECT alliance FROM guild WHERE "id"=$1;', ctx.character_data["guild"])
+        if leading_guild == ctx.character_data["guild"] and ctx.character_data["guildrank"] == "Leader":
+            return True
+        raise NoAlliancePermissions()
 
     return commands.check(predicate)
 

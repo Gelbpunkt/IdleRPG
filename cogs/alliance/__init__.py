@@ -23,7 +23,7 @@ from discord.ext import commands
 
 from classes.converters import MemberWithCharacter
 from utils import misc as rpgtools
-from utils.checks import has_char, has_guild, is_guild_leader
+from utils.checks import has_char, has_guild, is_guild_leader, is_alliance_leader
 
 
 class Alliance(commands.Cog):
@@ -35,9 +35,11 @@ class Alliance(commands.Cog):
     @commands.group(invoke_without_command=True)
     async def alliance(self, ctx):
         _("""This command contains all alliance-related commands.""")
-        allied_guilds = await self.bot.pool.fetch(
-            'SELECT * FROM guild WHERE "alliance"=$1;', ctx.character_data["guild"]
-        )
+        async with self.bot.pool.acquire() as conn:
+            alliance_id = await conn.fetchval('SELECT alliance FROM guild WHERE "id"=$1;', ctx.character_data["guild"])
+            allied_guilds = await conn.fetch(
+                'SELECT * FROM guild WHERE "alliance"=$1;', alliance_id
+            )
         if (
             len(allied_guilds) <= 1
         ):  # your guild is the only one OR error and query returns zero guilds
@@ -56,7 +58,7 @@ class Alliance(commands.Cog):
 
         await ctx.send(embed=alliance_embed)
 
-    @is_guild_leader()
+    @is_alliance_leader()
     @alliance.command()
     async def invite(self, ctx, newleader: MemberWithCharacter):
         if not ctx.user_data["guild"]:
@@ -89,8 +91,9 @@ class Alliance(commands.Cog):
             )
 
         await ctx.send(
-            _("**{newguild}** is now part of your alliance!").format(
-                newguild=newguild["name"]
+            _("**{newguild}** is now part of your alliance, {user}!").format(
+                newguild=newguild["name"],
+                user=ctx.author.mention,
             )
         )
 
@@ -130,7 +133,7 @@ class Alliance(commands.Cog):
 
         async with self.bot.pool.acquire() as conn:
             await conn.execute(
-                'UPDATE guild SET "alliance"="id" WHERE "id"=$1;', guild["id"]
+                'UPDATE guild SET "alliance"=$1 WHERE "id"=$1;', guild["id"]
             )
 
         await ctx.send(
