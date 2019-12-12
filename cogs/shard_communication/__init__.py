@@ -19,7 +19,8 @@ import asyncio
 import json
 import re
 
-from datetime import datetime, timedelta
+from datetime import timedelta
+from time import time
 from traceback import format_exc
 from uuid import uuid4
 
@@ -88,9 +89,7 @@ def next_day_cooldown():
             "TTL", f"cd:{ctx.author.id}:{ctx.command.qualified_name}"
         )
         if command_ttl == -2:
-            now = datetime.utcnow()
-            tmr = datetime(now.year, now.month, now.day + 1, 0, 0, 0)
-            ctt = (tmr - now).seconds
+            ctt = int(86400 - (time() % 86400)) # Calculate the number of seconds until next UTC midnight
             await ctx.bot.redis.execute(
                 "SET",
                 f"cd:{ctx.author.id}:{ctx.command.qualified_name}",
