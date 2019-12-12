@@ -89,7 +89,9 @@ def next_day_cooldown():
             "TTL", f"cd:{ctx.author.id}:{ctx.command.qualified_name}"
         )
         if command_ttl == -2:
-            ctt = int(86400 - (time() % 86400)) # Calculate the number of seconds until next UTC midnight
+            ctt = int(
+                86400 - (time() % 86400)
+            )  # Calculate the number of seconds until next UTC midnight
             await ctx.bot.redis.execute(
                 "SET",
                 f"cd:{ctx.author.id}:{ctx.command.qualified_name}",

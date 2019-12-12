@@ -23,7 +23,7 @@ from discord.ext import commands
 
 from classes.converters import MemberWithCharacter
 from utils import misc as rpgtools
-from utils.checks import has_char, has_guild, is_guild_leader, is_alliance_leader
+from utils.checks import has_char, has_guild, is_alliance_leader, is_guild_leader
 
 
 class Alliance(commands.Cog):
@@ -36,7 +36,9 @@ class Alliance(commands.Cog):
     async def alliance(self, ctx):
         _("""This command contains all alliance-related commands.""")
         async with self.bot.pool.acquire() as conn:
-            alliance_id = await conn.fetchval('SELECT alliance FROM guild WHERE "id"=$1;', ctx.character_data["guild"])
+            alliance_id = await conn.fetchval(
+                'SELECT alliance FROM guild WHERE "id"=$1;', ctx.character_data["guild"]
+            )
             allied_guilds = await conn.fetch(
                 'SELECT * FROM guild WHERE "alliance"=$1;', alliance_id
             )
@@ -92,8 +94,7 @@ class Alliance(commands.Cog):
 
         await ctx.send(
             _("**{newguild}** is now part of your alliance, {user}!").format(
-                newguild=newguild["name"],
-                user=ctx.author.mention,
+                newguild=newguild["name"], user=ctx.author.mention
             )
         )
 
