@@ -392,10 +392,15 @@ async def has_money(bot, userid, money):
         res = await conn.fetchval(
             'SELECT money FROM profile WHERE "user"=$1 AND "money">=$2;', userid, money
         )
-        if isinstance(res, int):
-            return True
-        else:
-            return False
+        return isinstance(res, int)
+
+
+async def guild_has_money(bot, guildid, money):
+    async with bot.pool.acquire() as conn:
+        res = await conn.fetchval(
+            'SELECT money FROM guild WHERE "id"=$1 and "money">=$2;', guildid, money
+        )
+        return isinstance(res, int)
 
 
 def is_admin():
