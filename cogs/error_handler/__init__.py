@@ -182,6 +182,8 @@ class Errorhandler(commands.Cog):
                         "There is another raid already ongoing. Try again at a later time."
                     )
                 )
+            elif type(error) == utils.checks.NoCityOwned:
+                await ctx.send(_("Your alliance does not own a city."))
             else:
                 await ctx.send(
                     embed=discord.Embed(
