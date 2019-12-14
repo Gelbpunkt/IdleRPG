@@ -281,27 +281,28 @@ class Alliance(commands.Cog):
 
         await ctx.send(_("Successfully built a {defense}.").format(defense=name))
 
-
     @has_char()
     @alliance.command()
     async def buildings(self, ctx):
         async with self.bot.pool.acquire() as conn:
             alliance = await conn.fetchval(
-                'SELECT alliance FROM guild WHERE "id"=$1;',
-                ctx.character_data["guild"]
+                'SELECT alliance FROM guild WHERE "id"=$1;', ctx.character_data["guild"]
             )
             buildings = await conn.fetchrow(
-                'SELECT * FROM city WHERE "owner"=$1;',
-                alliance
+                'SELECT * FROM city WHERE "owner"=$1;', alliance
             )
         if not buildings:
             return await ctx.send(_("Your alliance does not own a city."))
         embed = discord.Embed(
             title=_("{city}'s buildings").format(city=buildings["name"]),
-            colour=self.bot.config.primary_colour
+            colour=self.bot.config.primary_colour,
         )
         for i in ["thief", "raid", "trade", "adventure"]:
-            embed.add_field(name=f"{i.capitalize()} building", value="LV" + str(buildings[f"{i}_building"]), inline=True)
+            embed.add_field(
+                name=f"{i.capitalize()} building",
+                value="LVL " + str(buildings[f"{i}_building"]),
+                inline=True,
+            )
         await ctx.send(embed=embed)
 
     @has_char()
@@ -309,29 +310,35 @@ class Alliance(commands.Cog):
     async def defenses(self, ctx):
         async with self.bot.pool.acquire() as conn:
             alliance = await conn.fetchval(
-                'SELECT alliance FROM guild WHERE "id"=$1;',
-                ctx.character_data["guild"]
+                'SELECT alliance FROM guild WHERE "id"=$1;', ctx.character_data["guild"]
             )
             city_name = await conn.fetchval(
-                'SELECT name FROM city WHERE "owner"=$1;',
-                alliance
+                'SELECT name FROM city WHERE "owner"=$1;', alliance
             )
             defenses = await conn.fetchrow(
-                'SELECT * FROM defenses WHERE "city"=$1;',
-                city_name
+                'SELECT * FROM defenses WHERE "city"=$1;', city_name
             )
-            # this can probably be done way more effectively but
-            # I don't know how references and primary keys and such work
-            # ;-;
-        if not city_name or not defenses:
+        if not city_name:
             return await ctx.send(_("Your alliance does not own a city."))
         embed = discord.Embed(
             title=_("{city}'s defenses").format(city=city_name),
-            colour=self.bot.config.primary_colour
+            colour=self.bot.config.primary_colour,
         )
         for i in ["cannons", "archers", "outer wall"]:
-            embed.add_field(name=f"{i.capitalize()}", value="LV" + str(defenses[i.replace(" ", "_")]), inline=True)
+            embed.add_field(
+                name=f"{i.capitalize()}",
+                value="LV" + str(defenses[i.replace(" ", "_")]),
+                inline=True,
+            )
+        else:
+            embed.add_field(
+                name=_("None built"),
+                value=_("Use {prefix}alliance build defense [name]").format(
+                    prefix=ctx.prefix
+                ),
+            )
         await ctx.send(embed=embed)
+
 
 def setup(bot):
     bot.add_cog(Alliance(bot))
