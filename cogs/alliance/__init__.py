@@ -324,10 +324,10 @@ class Alliance(commands.Cog):
             title=_("{city}'s defenses").format(city=city_name),
             colour=self.bot.config.primary_colour,
         )
-        for i in ["cannons", "archers", "outer wall"]:
+        for i in defenses:
             embed.add_field(
-                name=f"{i.capitalize()}",
-                value="LV" + str(defenses[i.replace(" ", "_")]),
+                name=f"{i['name']}",
+                value=_("HP: {i['hp']}, Defense: {i['defense']}"),
                 inline=True,
             )
         else:
