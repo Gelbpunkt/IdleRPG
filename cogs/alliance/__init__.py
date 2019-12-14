@@ -38,6 +38,23 @@ class Alliance(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
+    @commands.command()
+    async def cities(self, ctx):
+        _("""Shows cities and owners.""")
+        async with self.bot.pool.acquire() as conn:
+            cities = await conn.fetch(
+                'SELECT c.*, g."name" AS "gname" FROM city c JOIN guild g ON c."owner"=g."id";'
+            )
+        em = discord.Embed(title=_("Cities"), color=self.bot.primary_color)
+        for city in cities:
+            em.add_field(
+                name=city["name"],
+                value=_("Owned by {alliance}'s alliance").format(
+                    alliance=city["gname"]
+                ),
+            )
+        await ctx.send(embed=em)
+
     @has_char()
     @has_guild()
     @commands.group(invoke_without_command=True)
