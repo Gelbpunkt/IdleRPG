@@ -327,7 +327,9 @@ class Alliance(commands.Cog):
         for i in defenses:
             embed.add_field(
                 name=f"{i['name']}",
-                value=_("HP: {i['hp']}, Defense: {i['defense']}"),
+                value=_("HP: {hp}, Defense: {defense}").format(
+                    hp=i["hp"], defense=i["defense"]
+                ),
                 inline=True,
             )
         else:
