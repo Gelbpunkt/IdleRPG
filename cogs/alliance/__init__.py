@@ -169,7 +169,6 @@ class Alliance(commands.Cog):
         )
 
     @is_alliance_leader()
-    @owns_city()
     @build.command()
     async def building(self, ctx, name: str):
         if not name.lower() in ["thief", "raid", "trade", "adventure"]:
@@ -211,7 +210,6 @@ class Alliance(commands.Cog):
 
 
     @is_alliance_leader()
-    @owns_city()
     @build.command()
     async def defense(self, ctx, *, name: str):
         if not name.lower() in ["cannons", "archers", "outer wall"]:
