@@ -22,8 +22,16 @@ import discord
 from discord.ext import commands
 
 from classes.converters import MemberWithCharacter
+from cogs.shard_communication import user_on_cooldown as user_cooldown
 from utils import misc as rpgtools
-from utils.checks import has_char, has_guild, is_guild_leader, is_alliance_leader, guild_has_money, owns_city
+from utils.checks import (
+    guild_has_money,
+    has_char,
+    has_guild,
+    is_alliance_leader,
+    is_guild_leader,
+    owns_city,
+)
 
 
 class Alliance(commands.Cog):
@@ -36,7 +44,9 @@ class Alliance(commands.Cog):
     async def alliance(self, ctx):
         _("""This command contains all alliance-related commands.""")
         async with self.bot.pool.acquire() as conn:
-            alliance_id = await conn.fetchval('SELECT alliance FROM guild WHERE "id"=$1;', ctx.character_data["guild"])
+            alliance_id = await conn.fetchval(
+                'SELECT alliance FROM guild WHERE "id"=$1;', ctx.character_data["guild"]
+            )
             allied_guilds = await conn.fetch(
                 'SELECT * FROM guild WHERE "alliance"=$1;', alliance_id
             )
@@ -56,9 +66,9 @@ class Alliance(commands.Cog):
                 inline=False,
             )
         alliance_embed.set_footer(
-            text=_("{prefix}alliance buildings | {prefix}alliance defenses").format(
-                prefix=ctx.prefix
-            )
+            text=_(
+                "{prefix}alliance buildings | {prefix}alliance defenses | {prefix}alliance attack"
+            ).format(prefix=ctx.prefix)
         )
 
         await ctx.send(embed=alliance_embed)
@@ -97,11 +107,9 @@ class Alliance(commands.Cog):
 
         await ctx.send(
             _("**{newguild}** is now part of your alliance, {user}!").format(
-                newguild=newguild["name"],
-                user=ctx.author.mention,
+                newguild=newguild["name"], user=ctx.author.mention
             )
         )
-
 
     @is_guild_leader()
     @alliance.command()
@@ -157,103 +165,122 @@ class Alliance(commands.Cog):
         # let's just make the price 1 until we have a sufficient formula
         return 1
 
-
     @alliance.group(invoke_without_command=True)
     async def build(self, ctx):
         _("""This command contains all alliance-building-related commands.""")
         subcommands = "```" + "\n".join(self.list_subcommands(ctx)) + "```"
-        await ctx.send(
-            _(
-                "Please use one of these subcommands:\n\n"
-            ) + subcommands
-        )
+        await ctx.send(_("Please use one of these subcommands:\n\n") + subcommands)
 
     @is_alliance_leader()
     @owns_city()
     @build.command()
     async def building(self, ctx, name: str):
         if not name.lower() in ["thief", "raid", "trade", "adventure"]:
-            return await ctx.send(_("Invalid building. Please use `{prefix}{cmd} [thief/raid/trade/adventure]`."))
+            return await ctx.send(
+                _(
+                    "Invalid building. Please use `{prefix}{cmd} [thief/raid/trade/adventure]`."
+                )
+            )
         async with self.bot.pool.acquire() as conn:
             cur_level = await conn.fetchval(
                 f'SELECT {name}_building FROM city WHERE "owner"=$1;',
-                ctx.character_data["guild"]  # can only be done by the leading guild so this works here
+                ctx.character_data[
+                    "guild"
+                ],  # can only be done by the leading guild so this works here
             )
             up_price = self.get_upgrade_price(cur_level)
             if not await ctx.confirm(
-                _("Are you sure you want to upgrade the **{name} building** to level {new_level}? This will cost $**{price}**.").format(
-                    name=name, new_level=cur_level+1, price=up_price
-                )
+                _(
+                    "Are you sure you want to upgrade the **{name} building** to level {new_level}? This will cost $**{price}**."
+                ).format(name=name, new_level=cur_level + 1, price=up_price)
             ):
                 return
-            if not await guild_has_money(self.bot, ctx.character_data["guild"], up_price):
+            if not await guild_has_money(
+                self.bot, ctx.character_data["guild"], up_price
+            ):
                 return await ctx.send(
-                    _("Your guild doesn't have enough money to upgrade the city's {name} building.").format(
-                        name=name
-                    )
+                    _(
+                        "Your guild doesn't have enough money to upgrade the city's {name} building."
+                    ).format(name=name)
                 )
 
             await conn.execute(
                 f'UPDATE city SET "{name}_building"="{name}_building"+1 WHERE "owner"=$1;',
-                ctx.character_data["guild"]
+                ctx.character_data["guild"],
             )
             await conn.execute(
                 'UPDATE guild SET "money"="money"-$1 WHERE "id"=$2;',
                 up_price,
-                ctx.character_data["guild"]
+                ctx.character_data["guild"],
             )
 
         await ctx.send(
-            _("Successfully upgraded the city's {name} building to level **{new_level}**").format(
-                name=name, new_level=cur_level+1
-            )
+            _(
+                "Successfully upgraded the city's {name} building to level **{new_level}**"
+            ).format(name=name, new_level=cur_level + 1)
         )
-
 
     @is_alliance_leader()
     @owns_city()
+    @user_cooldown(60)
     @build.command()
-    async def defense(self, ctx, *, name: str):
-        if not name.lower() in ["cannons", "archers", "outer wall"]:
-            return await ctx.send(_("Invalid defense. Please use `{prefix}{cmd} [cannons/archers/outer wall]`."))
+    async def defense(self, ctx, *, name: str.lower):
+        building_list = {
+            "cannons": {"hp": 150, "def": 120, "cost": 50000},
+            "archers": {"hp": 300, "def": 120, "cost": 75000},
+            "outer wall": {"hp": 750, "def": 50, "cost": 125000},
+            "inner wall": {"hp": 500, "def": 50, "cost": 80000},
+            "moat": {"hp": 250, "def": 750, "cost": 200000},
+            "tower": {"hp": 300, "def": 100, "cost": 50000},
+        }
+        if name not in building_list:
+            return await ctx.send(
+                _("Invalid defense. Please use `{prefix}{cmd} [{buildings}]`.").format(
+                    prefix=ctx.prefix,
+                    cmd=ctx.clean_command,
+                    buildings="/".join(building_list.keys()),
+                )
+            )
+        building = building_list[name]
         async with self.bot.pool.acquire() as conn:
             city_name = await conn.fetchval(
-                'SELECT name FROM city WHERE "owner"=$1;',
-                ctx.character_data["guild"]
+                'SELECT name FROM city WHERE "owner"=$1;', ctx.character_data["guild"]
             )
-            cur_level = await conn.fetchval(
-                f'SELECT {name.replace(" ", "_")} FROM defenses WHERE "city"=$1;',
-                city_name
+            cur_count = await conn.fetchval(
+                'SELECT COUNT(*) FROM defenses WHERE "city"=$1;', city_name
             )
-            up_price = self.get_upgrade_price(cur_level)  # maybe use another formula here?
+            if cur_count > 10:
+                return await ctx.send(_("You may only build up to 10 defenses."))
             if not await ctx.confirm(
-                _("Are you sure you want to upgrade the city's **{defense}** to level {new_level}? This will cost $**{price}**.").format(
-                    defense=name, new_level=cur_level+1, price=up_price
-                )
+                _(
+                    "Are you sure you want to build a **{defense}**? This will cost $**{price}**."
+                ).format(defense=name, price=building["cost"])
             ):
                 return
-            if not await guild_has_money(self.bot, ctx.character_data["guild"], up_price):
+            if not await guild_has_money(
+                self.bot, ctx.character_data["guild"], building["cost"]
+            ):
                 return await ctx.send(
-                    _("Your guild doesn't have enough money to upgrade the city's {defense}.").format(
-                        defense=name
-                    )
+                    _(
+                        "Your guild doesn't have enough money to build a {defense}."
+                    ).format(defense=name)
                 )
 
             await conn.execute(
-                f'UPDATE defenses SET "{name}"="{name}"+1 WHERE "city"=$1;',
-                city_name
+                'INSERT INTO defenses ("city", "name", "hp", "defense") VALUES ($1, $2, $3, $4);',
+                city_name,
+                name,
+                building["hp"],
+                building["def"],
             )
             await conn.execute(
                 'UPDATE guild SET "money"="money"-$1 WHERE "id"=$2;',
-                up_price,
-                ctx.character_data["guild"]
+                building["cost"],
+                ctx.character_data["guild"],
             )
 
-        await ctx.send(
-            _("Successfully upgraded the city's {defense} building to level **{new_level}**").format(
-                defense=name, new_level=cur_level+1
-            )
-        )
+        await ctx.send(_("Successfully built a {defense}.").format(defense=name))
+
 
 def setup(bot):
     bot.add_cog(Alliance(bot))
