@@ -64,6 +64,10 @@ class NoAlliancePermissions(commands.CheckFailure):
 
     pass
 
+class NoCityOwned(commands.CheckFailure):
+    """Exception raised when an alliance does not control a city."""
+
+    pass
 
 class WrongClass(commands.CheckFailure):
     """Exception raised when a user does not meet the class requirement."""
@@ -255,6 +259,27 @@ def is_alliance_leader():
         raise NoAlliancePermissions()
 
     return commands.check(predicate)
+
+
+def owns_city():
+    """"Checks whether an alliance owns a city."""
+
+    async def predicate(ctx):
+        async with ctx.bot.pool.acquire() as conn:
+            alliance = await conn.fetchval(
+                'SELECT alliance FROM guild WHERE "id"=$1',
+                ctx.character_data["guild"]
+            )
+            owned_city = await conn.fetchval(
+                'SELECT name FROM city WHERE "owner"=$1',
+                alliance
+            )
+            if not owned_city:
+                raise NoCityOwned()
+            ctx.city = owned_city
+            return True
+
+        return commands.check(predicate)
 
 
 def is_class(class_):
