@@ -205,9 +205,9 @@ class Alliance(commands.Cog):
         subcommands = "```" + "\n".join(self.list_subcommands(ctx)) + "```"
         await ctx.send(_("Please use one of these subcommands:\n\n") + subcommands)
 
+    @user_cooldown(300)
     @is_alliance_leader()
     @owns_city()
-    @user_cooldown(300)
     @build.command()
     async def building(self, ctx, name: str.lower):
         city = await self.bot.pool.fetchrow(

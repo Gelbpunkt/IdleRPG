@@ -285,7 +285,7 @@ def owns_city():
             ctx.city = owned_city
             return True
 
-        return commands.check(predicate)
+    return commands.check(predicate)
 
 
 def is_class(class_):
