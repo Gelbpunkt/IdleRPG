@@ -56,6 +56,7 @@ initial_extensions = [
     "cogs.hungergames",
     "cogs.maths",
     "cogs.shard_communication",
+    "cogs.alliance",
 ]
 
 """The channel where vote logging is sent from. This is an ID."""
@@ -123,10 +124,10 @@ cities = {
     "Mopra": ("raid", "trade"),
     "Setrond": ("thief", "trade"),
     "Armeles": ("adventure", "trade"),
-    "Weyeowen": "thief",
-    "Oltash": "trade",
-    "Kryvansk": "raid",
-    "Drutsk": "adventure",
+    "Weyeowen": ("thief",),
+    "Oltash": ("trade",),
+    "Kryvansk": ("raid",),
+    "Drutsk": ("adventure",),
 }
 
 """Credentials for the Lavalink server."""
