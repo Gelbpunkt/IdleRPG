@@ -350,9 +350,11 @@ class Alliance(commands.Cog):
             city_name = await conn.fetchval(
                 'SELECT name FROM city WHERE "owner"=$1;', alliance
             )
-            defenses = await conn.fetchrow(
-                'SELECT * FROM defenses WHERE "city"=$1;', city_name
-            )
+            defenses = (
+                await conn.fetchrow(
+                    'SELECT * FROM defenses WHERE "city"=$1;', city_name
+                )
+            ) or []
         if not city_name:
             return await ctx.send(_("Your alliance does not own a city."))
         embed = discord.Embed(
