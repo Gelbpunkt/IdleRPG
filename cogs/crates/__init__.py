@@ -145,11 +145,11 @@ class Crates(commands.Cog):
             )
         )
         await ctx.send(embed=embed)
-        if rartiy == "legendary":
+        if rarity == "legendary":
             await self.bot.public_log(
                 f"**{ctx.author}** opened a legendary crate and \
-                received {item[name]} with **{item[damage] or item[armor]} \
-                {'damage' if item[damage] else 'armor'}**."
+received {item['name']} with **{item['damage'] or item['armor']} \
+{'damage' if item['damage'] else 'armor'}**."
             )
 
     @has_char()

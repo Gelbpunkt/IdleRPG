@@ -846,7 +846,7 @@ To look up a guild by its ID, use id:number."""
                 )
 
         await self.bot.public_log(
-            f"Guild **{guild1[name]}** challenges Guild **{guild2[name]}** to a battle for a prize of **${amount}**.\n \
+            f"Guild **{guild1['name']}** challenges Guild **{guild2['name']}** to a battle for a prize of **${amount}**.\n \
             **{fightercount}** players entered."
         )
 
@@ -930,7 +930,7 @@ To look up a guild by its ID, use id:number."""
                     )
                 )
                 await self.bot.public_log(
-                    f"**{guild1[name]}** won against **{guild2[name]}**."
+                    f"**{guild1['name']}** won against **{guild2['name']}**."
                 )
             elif wins2 > wins1:
                 if money2 + amount <= bank2:
@@ -959,12 +959,12 @@ To look up a guild by its ID, use id:number."""
                     )
                 )
                 await self.bot.public_log(
-                    f"**{guild2[name]}** won against **{guild1[name]}**."
+                    f"**{guild2['name']}** won against **{guild1['name']}**."
                 )
             else:
                 await ctx.send(_("It's a tie!"))
                 await self.bot.public_log(
-                    f"**{guild1[name]}** and **{guild2[name]}** tied."
+                    f"**{guild1['name']}** and **{guild2['name']}** tied."
                 )
 
     @is_guild_officer()
