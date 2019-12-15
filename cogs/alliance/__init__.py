@@ -130,6 +130,24 @@ class Alliance(commands.Cog):
 
     @is_guild_leader()
     @alliance.command()
+    async def leave(self, ctx):
+        async with self.bot.pool.acquire() as conn:
+            alliance = await conn.fetchval(
+                'SELECT alliance from guild WHERE "id"=$1;',
+                ctx.character_data["guild"]
+            )
+            if alliance == ctx.character_data["guild"]:
+                return await ctx.send(
+                    _("You are the alliance's leading guild and cannot leave it!")
+                )
+            await conn.execute(
+                'UPDATE guild SET "alliance"="id" WHERE "id"=$1;',
+                ctx.character_data["guild"]
+            )
+        await ctx.send(_("Your guild left the alliance."))
+
+    @is_guild_leader()
+    @alliance.command()
     async def kick(self, ctx, *, guild_to_kick: Union[int, str]):
         _(
             """Kick a guild from your alliance.\n Use either the guild name or ID for guild_to_kick."""
