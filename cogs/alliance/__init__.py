@@ -119,7 +119,7 @@ class Alliance(commands.Cog):
                 'SELECT alliance from guild WHERE "id"=$1;',
                 ctx.character_data["guild"]
             )
-            if alliance = ctx.character_data["guild"]:
+            if alliance == ctx.character_data["guild"]:
                 return await ctx.send(
                     _("You are the alliance's leading guild and cannot leave it!")
                 )
