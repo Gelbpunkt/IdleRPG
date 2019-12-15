@@ -638,3 +638,9 @@ Armor: {data['armor']}"""
                     data["price"],
                     data["offer"],
                 )
+
+    async def public_log(self, event: str):
+        await self.http.send_message(
+            self.config.bot_event_channel,
+            event
+        )

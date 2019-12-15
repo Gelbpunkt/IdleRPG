@@ -463,6 +463,9 @@ class Gambling(commands.Cog):
                     "You won **${money}**! The random number was `{num}`, you tipped `{tip}`."
                 ).format(num=randomn, tip=tip, money=money * (maximum - 1))
             )
+            await self.bot.public_log(
+                f"**{ctx.author}** won **${money}** while betting with `{maximum}`. ({1/maximum}% chance)"
+            )
         else:
             await self.bot.pool.execute(
                 'UPDATE profile SET money=money-$1 WHERE "user"=$2;',
