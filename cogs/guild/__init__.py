@@ -846,8 +846,8 @@ To look up a guild by its ID, use id:number."""
                 )
 
         await self.bot.public_log(
-            f"Guild **{guild1['name']}** challenges Guild **{guild2['name']}** to a battle for a prize of **${amount}**.\n \
-            **{fightercount}** players entered."
+            f"Guild **{guild1['name']}** challenges Guild **{guild2['name']}** to a battle \
+for a prize of **${amount}**.\n **{fightercount}** players entered."
         )
 
         msg = await ctx.send(_("Fight started!\nGenerating battles..."))
