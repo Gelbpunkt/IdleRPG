@@ -44,7 +44,7 @@ class Alliance(commands.Cog):
         cities = await self.bot.pool.fetch(
             'SELECT c.*, g."name" AS "gname" FROM city c JOIN guild g ON c."owner"=g."id";'
         )
-        em = discord.Embed(title=_("Cities"), color=self.bot.config.primary_color)
+        em = discord.Embed(title=_("Cities"), colour=self.bot.config.primary_colour)
         for city in cities:
             em.add_field(
                 name=city["name"],
