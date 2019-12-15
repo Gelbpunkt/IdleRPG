@@ -115,6 +115,20 @@ admin_log_channel = 457_197_748_626_653_184
 """A channel ID to send public logs to."""
 bot_event_channel = 516_640_070_569_164_828
 
+"""City config (must be in db)"""
+cities = {
+    "Vopnafjor": ("thief", "raid", "trade", "adventure"),
+    "Medriguen": ("raid", "trade", "adventure"),
+    "Sulitere": ("raid", "trade", "thief"),
+    "Mopra": ("raid", "trade"),
+    "Setrond": ("thief", "trade"),
+    "Armeles": ("adventure", "trade"),
+    "Weyeowen": "thief",
+    "Oltash": "trade",
+    "Kryvansk": "raid",
+    "Drutsk": "adventure",
+}
+
 """Credentials for the Lavalink server."""
 lava_creds = {
     "password": "password",

@@ -133,8 +133,7 @@ class Alliance(commands.Cog):
     async def leave(self, ctx):
         async with self.bot.pool.acquire() as conn:
             alliance = await conn.fetchval(
-                'SELECT alliance from guild WHERE "id"=$1;',
-                ctx.character_data["guild"]
+                'SELECT alliance from guild WHERE "id"=$1;', ctx.character_data["guild"]
             )
             if alliance == ctx.character_data["guild"]:
                 return await ctx.send(
@@ -142,7 +141,7 @@ class Alliance(commands.Cog):
                 )
             await conn.execute(
                 'UPDATE guild SET "alliance"="id" WHERE "id"=$1;',
-                ctx.character_data["guild"]
+                ctx.character_data["guild"],
             )
         await ctx.send(_("Your guild left the alliance."))
 
@@ -208,37 +207,39 @@ class Alliance(commands.Cog):
 
     @is_alliance_leader()
     @owns_city()
+    @user_cooldown(300)
     @build.command()
-    async def building(self, ctx, name: str):
-        if not name.lower() in ["thief", "raid", "trade", "adventure"]:
+    async def building(self, ctx, name: str.lower):
+        city = await self.bot.pool.fetchrow(
+            'SELECT * FROM city WHERE "owner"=$1;',
+            ctx.character_data[
+                "guild"
+            ],  # can only be done by the leading g:uild so this works here
+        )
+        if name not in self.bot.config.cities[city["name"]]:
             return await ctx.send(
                 _(
-                    "Invalid building. Please use `{prefix}{cmd} [thief/raid/trade/adventure]`."
+                    "Invalid building. Please use `{prefix}{cmd} [thief/raid/trade/adventure]` or check the possible buildings in your city."
                 )
             )
-        async with self.bot.pool.acquire() as conn:
-            cur_level = await conn.fetchval(
-                f'SELECT {name}_building FROM city WHERE "owner"=$1;',
-                ctx.character_data[
-                    "guild"
-                ],  # can only be done by the leading guild so this works here
-            )
-            up_price = self.get_upgrade_price(cur_level)
-            if not await ctx.confirm(
+        cur_level = city[f"{name}_building"]
+        if cur_level == 10:
+            return await ctx.send(_("This building is fully upgraded."))
+        up_price = self.get_upgrade_price(cur_level)
+        if not await ctx.confirm(
+            _(
+                "Are you sure you want to upgrade the **{name} building** to level {new_level}? This will cost $**{price}**."
+            ).format(name=name, new_level=cur_level + 1, price=up_price)
+        ):
+            return
+        if not await guild_has_money(self.bot, ctx.character_data["guild"], up_price):
+            return await ctx.send(
                 _(
-                    "Are you sure you want to upgrade the **{name} building** to level {new_level}? This will cost $**{price}**."
-                ).format(name=name, new_level=cur_level + 1, price=up_price)
-            ):
-                return
-            if not await guild_has_money(
-                self.bot, ctx.character_data["guild"], up_price
-            ):
-                return await ctx.send(
-                    _(
-                        "Your guild doesn't have enough money to upgrade the city's {name} building."
-                    ).format(name=name)
-                )
+                    "Your guild doesn't have enough money to upgrade the city's {name} building."
+                ).format(name=name)
+            )
 
+        async with self.bot.pool.acquire() as conn:
             await conn.execute(
                 f'UPDATE city SET "{name}_building"="{name}_building"+1 WHERE "owner"=$1;',
                 ctx.character_data["guild"],
@@ -332,7 +333,7 @@ class Alliance(commands.Cog):
             title=_("{city}'s buildings").format(city=buildings["name"]),
             colour=self.bot.config.primary_colour,
         )
-        for i in ["thief", "raid", "trade", "adventure"]:
+        for i in self.bot.config.cities[buildings["name"]]:
             embed.add_field(
                 name=f"{i.capitalize()} building",
                 value="LVL " + str(buildings[f"{i}_building"]),
