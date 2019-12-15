@@ -17,8 +17,8 @@
 -- PostgreSQL database dump
 --
 
--- Dumped from database version 12.0
--- Dumped by pg_dump version 12.0
+-- Dumped from database version 12.1
+-- Dumped by pg_dump version 12.1
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -108,6 +108,36 @@ CREATE TABLE public.children (
 
 
 ALTER TABLE public.children OWNER TO jens;
+
+--
+-- Name: city; Type: TABLE; Schema: public; Owner: jens
+--
+
+CREATE TABLE public.city (
+    name character varying(25) NOT NULL,
+    owner bigint NOT NULL,
+    thief_building integer DEFAULT 0,
+    raid_building integer DEFAULT 0,
+    trade_building integer DEFAULT 0,
+    adventure_building integer DEFAULT 0
+);
+
+
+ALTER TABLE public.city OWNER TO jens;
+
+--
+-- Name: defenses; Type: TABLE; Schema: public; Owner: jens
+--
+
+CREATE TABLE public.defenses (
+    city character varying(25) NOT NULL,
+    name character varying(25) NOT NULL,
+    hp integer NOT NULL,
+    defense integer NOT NULL
+);
+
+
+ALTER TABLE public.defenses OWNER TO jens;
 
 --
 -- Name: guild; Type: TABLE; Schema: public; Owner: jens
@@ -494,6 +524,22 @@ ALTER TABLE ONLY public.allitems
 
 
 --
+-- Name: city city_pkey; Type: CONSTRAINT; Schema: public; Owner: jens
+--
+
+ALTER TABLE ONLY public.city
+    ADD CONSTRAINT city_pkey PRIMARY KEY (name);
+
+
+--
+-- Name: defenses defenses_pkey; Type: CONSTRAINT; Schema: public; Owner: jens
+--
+
+ALTER TABLE ONLY public.defenses
+    ADD CONSTRAINT defenses_pkey PRIMARY KEY (city);
+
+
+--
 -- Name: guild guild_pkey; Type: CONSTRAINT; Schema: public; Owner: jens
 --
 
@@ -586,6 +632,22 @@ CREATE TRIGGER insert_alliance_default BEFORE INSERT ON public.guild FOR EACH RO
 
 ALTER TABLE ONLY public.allitems
     ADD CONSTRAINT allitems_owner_fkey FOREIGN KEY (owner) REFERENCES public.profile("user") ON DELETE CASCADE;
+
+
+--
+-- Name: city city_owner_fkey; Type: FK CONSTRAINT; Schema: public; Owner: jens
+--
+
+ALTER TABLE ONLY public.city
+    ADD CONSTRAINT city_owner_fkey FOREIGN KEY (owner) REFERENCES public.guild(id);
+
+
+--
+-- Name: defenses defenses_city_fkey; Type: FK CONSTRAINT; Schema: public; Owner: jens
+--
+
+ALTER TABLE ONLY public.defenses
+    ADD CONSTRAINT defenses_city_fkey FOREIGN KEY (city) REFERENCES public.city(name);
 
 
 --

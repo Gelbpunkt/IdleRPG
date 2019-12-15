@@ -9,5 +9,9 @@ psql idlerpg -c "ALTER ROLE jens WITH LOGIN;"
 psql idlerpg -c "CREATE ROLE prest WITH PASSWORD 'placeholder';"
 psql idlerpg -c "CREATE ROLE votehandler WITH PASSWORD 'placeholder';"
 EOF
-podman run --rm -d --pod idlerpg --name postgres -v $(pwd)/start.sh:/docker-entrypoint-initdb.d/init.sh:z -v $(pwd)/schema.sql:/docker-entrypoint-initdb.d/init.sql:z postgres:12-alpine
+chmod 777 start.sh
+chmod 777 schema.sql
+podman run --rm -d --pod idlerpg --name postgres -v $(pwd)/start.sh:/docker-entrypoint-initdb.d/init.sh:Z -v $(pwd)/schema.sql:/docker-entrypoint-initdb.d/init.sql:Z postgres:12-alpine
+sleep 15
+chmod 600 schema.sql
 rm start.sh
