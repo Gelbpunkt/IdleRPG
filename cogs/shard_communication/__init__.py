@@ -89,7 +89,7 @@ def alliance_on_cooldown(cooldown: int):
         data = getattr(ctx, "character_data", None)
         if not data:
             alliance = await ctx.bot.pool.fetchval(
-                'SELECT alliance FROM guild WHERE "guild"=(SELECT guild FROM profile WHERE "user"=$1);',
+                'SELECT alliance FROM guild WHERE "id"=(SELECT guild FROM profile WHERE "user"=$1);',
                 ctx.author.id,
             )
         else:
