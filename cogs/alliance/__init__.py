@@ -119,6 +119,13 @@ class Alliance(commands.Cog):
             return
 
         async with self.bot.pool.acquire() as conn:
+            if (
+                await conn.fetchval(
+                    'SELECT COUNT(*) FROM guild WHERE "alliance"=$1;',
+                    ctx.character_data["guild"],
+                )
+            ) == 3:
+                return await ctx.send(_("Your alliance is full."))
             await conn.execute(
                 'UPDATE guild SET "alliance"=$1 WHERE "id"=$2;',
                 ctx.character_data["guild"],
