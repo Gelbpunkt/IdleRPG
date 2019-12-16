@@ -208,6 +208,7 @@ class Bot(commands.AutoShardedBot):
         defmultiply=None,
         classes=None,
         race=None,
+        guild=None,
         conn=None,
     ):
         v = thing.id if isinstance(thing, (discord.Member, discord.User)) else thing
@@ -216,7 +217,7 @@ class Bot(commands.AutoShardedBot):
             conn = await self.pool.acquire()
             local = True
         sword, shield = await self.get_equipped_items_for(v, conn=conn)
-        if atkmultiply is None or defmultiply is None or classes is None:
+        if atkmultiply is None or defmultiply is None or classes is None or guild is None:
             atkmultiply, defmultiply, classes, race, guild = await conn.fetchval(
                 'SELECT (atkmultiply, defmultiply, class, race, guild) FROM profile WHERE "user"=$1;',
                 v,

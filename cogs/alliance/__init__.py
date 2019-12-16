@@ -509,6 +509,7 @@ class Alliance(commands.Cog):
                     defmultiply=profile["defmultiply"],
                     classes=profile["class"],
                     race=profile["race"],
+                    guild=profile["guild"],
                     conn=conn,
                 )
                 if u not in attacking_users:
