@@ -24,7 +24,7 @@ import discord
 from discord.ext import commands
 
 from classes.converters import MemberWithCharacter
-from cogs.shard_communication import user_on_cooldown as user_cooldown
+from cogs.shard_communication import alliance_on_cooldown as alliance_cooldown
 from utils import misc as rpgtools
 from utils.checks import (
     guild_has_money,
@@ -230,7 +230,7 @@ class Alliance(commands.Cog):
         subcommands = "```" + "\n".join(self.list_subcommands(ctx)) + "```"
         await ctx.send(_("Please use one of these subcommands:\n\n") + subcommands)
 
-    @user_cooldown(300)
+    @alliance_cooldown(300)
     @owns_city()
     @is_alliance_leader()
     @build.command()
@@ -285,7 +285,7 @@ class Alliance(commands.Cog):
 
     @owns_city()
     @is_alliance_leader()
-    @user_cooldown(60)
+    @alliance_cooldown(60)
     @build.command()
     @locale_doc
     async def defense(self, ctx, *, name: str.lower):
@@ -445,7 +445,7 @@ class Alliance(commands.Cog):
             f"**{city}** was occupied by {ctx.author}'s alliance."
         )
 
-    @user_cooldown(7200)
+    @alliance_cooldown(7200)
     @is_guild_leader()
     @alliance.command()
     @locale_doc
