@@ -44,7 +44,7 @@ class Alliance(commands.Cog):
     async def cities(self, ctx):
         _("""Shows cities and owners.""")
         cities = await self.bot.pool.fetch(
-            'SELECT c.*, g."name" AS "gname", SUM(d."defense") AS "defense" FROM city c JOIN guild g ON c."owner"=g."id" JOIN defenses d ON c."name"=d."city" GROUP BY c."owner", c."name", g."name";'
+            'SELECT c.*, g."name" AS "gname", COALESCE(SUM(d."defense"), 0) AS "defense" FROM city c JOIN guild g ON c."owner"=g."id" JOIN defenses d ON c."name"=d."city" GROUP BY c."owner", c."name", g."name";'
         )
         em = discord.Embed(title=_("Cities"), colour=self.bot.config.primary_colour)
         for city in sorted(
