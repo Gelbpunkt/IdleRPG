@@ -496,7 +496,10 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
                 u = await self.bot.get_user_global(i)
                 if not u:
                     continue
-                dmg, deff = await self.bot.get_raidstats(u, conn=conn)
+                try:
+                    dmg, deff = await self.bot.get_raidstats(u, god="Guilt", conn=conn)
+                except ValueError:
+                    continue
                 raid[u] = {"hp": 250, "armor": deff, "damage": dmg}
 
         await ctx.send("**Done getting data!**")
@@ -613,7 +616,12 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
                 u = await self.bot.get_user_global(i)
                 if not u:
                     continue
-                dmg, deff = await self.bot.get_raidstats(u, conn=conn)
+                try:
+                    dmg, deff = await self.bot.get_raidstats(
+                        u, god="Athena, Goddess of Wisdom", conn=conn
+                    )
+                except ValueError:
+                    continue
                 raid[u] = {"hp": 250, "armor": deff, "damage": dmg}
 
         await ctx.send("**Done getting data!**")
@@ -796,7 +804,10 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
                 u = await self.bot.get_user_global(i)
                 if not u:
                     continue
-                dmg, deff = await self.bot.get_raidstats(u, conn=conn)
+                try:
+                    dmg, deff = await self.bot.get_raidstats(u, god="Kvothe", conn=conn)
+                except ValueError:
+                    continue
                 raid[u] = {"hp": 100, "armor": deff, "damage": dmg, "kills": 0}
 
         await ctx.send("**Done getting data!**")
@@ -936,7 +947,12 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
                 u = await self.bot.get_user_global(i)
                 if not u:
                     continue
-                dmg, deff = await self.bot.get_raidstats(u, conn=conn)
+                try:
+                    dmg, deff = await self.bot.get_raidstats(
+                        u, god="CHamburr", conn=conn
+                    )
+                except ValueError:
+                    continue
                 raid[u] = {"hp": 250, "armor": deff, "damage": dmg}
 
         await ctx.send("**Done getting data!**")
@@ -1132,7 +1148,12 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
                 u = await self.bot.get_user_global(i)
                 if not u:
                     continue
-                dmg, deff = await self.bot.get_raidstats(u, conn=conn)
+                try:
+                    dmg, deff = await self.bot.get_raidstats(
+                        u, god="Salutations", conn=conn
+                    )
+                except ValueError:
+                    continue
                 raid[u] = {"hp": 250, "armor": deff, "damage": dmg}
 
         await ctx.send("**Done getting data!**")
@@ -1666,7 +1687,10 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
                 u = await self.bot.get_user_global(i)
                 if not u:
                     continue
-                dmg, deff = await self.bot.get_raidstats(u, conn=conn)
+                try:
+                    dmg, deff = await self.bot.get_raidstats(u, god="Jesus", conn=conn)
+                except ValueError:
+                    continue
                 raid[u] = {"hp": 250, "armor": deff, "damage": dmg}
 
         await ctx.send("**Done getting data!**")
@@ -1858,7 +1882,10 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
                 u = await self.bot.get_user_global(i)
                 if not u:
                     continue
-                dmg, deff = await self.bot.get_raidstats(u, conn=conn)
+                try:
+                    dmg, deff = await self.bot.get_raidstats(u, god="Gambit", conn=conn)
+                except ValueError:
+                    continue
                 raid[u] = {"hp": 1000, "armor": deff, "damage": dmg}
 
         await ctx.send(

@@ -209,6 +209,7 @@ class Bot(commands.AutoShardedBot):
         classes=None,
         race=None,
         guild=None,
+        god=None,
         conn=None,
     ):
         v = thing.id if isinstance(thing, (discord.Member, discord.User)) else thing
@@ -223,10 +224,19 @@ class Bot(commands.AutoShardedBot):
             or classes is None
             or guild is None
         ):
-            atkmultiply, defmultiply, classes, race, guild = await conn.fetchval(
-                'SELECT (atkmultiply, defmultiply, class, race, guild) FROM profile WHERE "user"=$1;',
+            (
+                atkmultiply,
+                defmultiply,
+                classes,
+                race,
+                guild,
+                user_god,
+            ) = await conn.fetchval(
+                'SELECT (atkmultiply, defmultiply, class, race, guild, god) FROM profile WHERE "user"=$1;',
                 v,
             )
+            if god is not None and god != user_god:
+                raise ValueError()
         if (buildings := await self.get_city_buildings(guild)) :
             atkmultiply += buildings["raid_building"] * Decimal("0.1")
             defmultiply += buildings["raid_building"] * Decimal("0.1")
