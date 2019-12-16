@@ -470,6 +470,7 @@ class Alliance(commands.Cog):
                 "**{user}** wants to attack **{city}** with **{alliance_name}**'s alliance. React with ⚔ to join the attack!"
             ).format(user=ctx.author, city=city, alliance_name=alliance_name)
         )
+        await msg.add_reaction("\U00002694")
 
         while True:  # we leave on timeout
             try:
