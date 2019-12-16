@@ -221,8 +221,7 @@ class Alliance(commands.Cog):
         return [ctx.prefix + x.qualified_name for x in ctx.command.commands]
 
     def get_upgrade_price(self, current):
-        # let's just make the price 1 until we have a sufficient formula
-        return 1
+        return (current + 1) * 100000
 
     @alliance.group(invoke_without_command=True)
     @locale_doc
