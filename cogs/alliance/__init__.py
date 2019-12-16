@@ -78,7 +78,7 @@ class Alliance(commands.Cog):
         for guild in allied_guilds:
             alliance_embed.add_field(
                 name=guild[1],
-                value=_("Lead by {leader}").format(
+                value=_("Led by {leader}").format(
                     leader=await rpgtools.lookup(self.bot, guild["leader"])
                 ),
                 inline=False,
