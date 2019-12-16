@@ -133,11 +133,34 @@ CREATE TABLE public.defenses (
     city character varying(25) NOT NULL,
     name character varying(25) NOT NULL,
     hp integer NOT NULL,
-    defense integer NOT NULL
+    defense integer NOT NULL,
+    id integer NOT NULL
 );
 
 
 ALTER TABLE public.defenses OWNER TO jens;
+
+--
+-- Name: defenses_id_seq; Type: SEQUENCE; Schema: public; Owner: jens
+--
+
+CREATE SEQUENCE public.defenses_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.defenses_id_seq OWNER TO jens;
+
+--
+-- Name: defenses_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: jens
+--
+
+ALTER SEQUENCE public.defenses_id_seq OWNED BY public.defenses.id;
+
 
 --
 -- Name: guild; Type: TABLE; Schema: public; Owner: jens
@@ -474,6 +497,13 @@ ALTER TABLE ONLY public.allitems ALTER COLUMN id SET DEFAULT nextval('public.all
 
 
 --
+-- Name: defenses id; Type: DEFAULT; Schema: public; Owner: jens
+--
+
+ALTER TABLE ONLY public.defenses ALTER COLUMN id SET DEFAULT nextval('public.defenses_id_seq'::regclass);
+
+
+--
 -- Name: guild id; Type: DEFAULT; Schema: public; Owner: jens
 --
 
@@ -529,6 +559,14 @@ ALTER TABLE ONLY public.allitems
 
 ALTER TABLE ONLY public.city
     ADD CONSTRAINT city_pkey PRIMARY KEY (name);
+
+
+--
+-- Name: defenses defenses_pkey; Type: CONSTRAINT; Schema: public; Owner: jens
+--
+
+ALTER TABLE ONLY public.defenses
+    ADD CONSTRAINT defenses_pkey PRIMARY KEY (id);
 
 
 --

@@ -15,6 +15,8 @@ GNU Affero General Public License for more details.
 You should have received a copy of the GNU Affero General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
+import asyncio
+
 from typing import Union
 
 import discord
@@ -439,6 +441,210 @@ class Alliance(commands.Cog):
                 "Your alliance now rules **{city}**. You should immediately buy defenses."
             ).format(city=city)
         )
+
+    @user_cooldown(7200)
+    @is_guild_leader()
+    @alliance.command()
+    @locale_doc
+    async def attack(self, ctx, *, city: str):
+        _("""[Guild Leader only] Attack a city.""")
+        if city not in self.bot.config.cities:
+            return await ctx.send(_("Invalid city."))
+
+        if await self.bot.redis.execute("GET", f"city:{city}"):
+            return await ctx.send(_("**{city}** is already under attack."))
+
+        async with self.bot.pool.acquire() as conn:
+            alliance_id = await conn.fetchval(
+                'SELECT alliance FROM guild WHERE "id"=$1;', ctx.character_data["guild"]
+            )
+            alliance_name = await conn.fetchval(
+                'SELECT name FROM guild WHERE "id"=$1;', alliance_id
+            )
+
+        # Gather the fighters
+        attackers = []
+        attacking_users = []
+        msg = await ctx.send(
+            _(
+                "**{user}** wants to attack **{city}** with **{alliance_name}'s alliance. React with ⚔ to join the attack!"
+            ).format(user=ctx.author, city=city, alliance_name=alliance_name)
+        )
+
+        while True:  # we leave on timeout
+            try:
+                r, u = await self.bot.wait_for(
+                    "reaction_add",
+                    check=lambda r, u: u not in attacking_users
+                    and str(r.emoji) == "\U00002694"
+                    and r.message.id == msg.id,
+                    timeout=300,
+                )
+            except asyncio.TimeoutError:
+                break  # no more joins
+            async with self.bot.pool.acquire() as conn:
+                profile = await conn.fetchrow(
+                    'SELECT * FROM profile WHERE "user"=$1;', u.id
+                )
+                if not profile:
+                    continue  # not a player
+                user_alliance = await conn.fetchval(
+                    'SELECT alliance FROM guild WHERE "id"=$1;', profile["guild"]
+                )
+                if user_alliance != alliance_id:
+                    return await ctx.send(
+                        _(
+                            "You are not a member of **{alliance_name}'s alliance**, {user}."
+                        ).format(alliance_name=alliance_name, user=u)
+                    )
+                damage, defense = await self.bot.get_raidstats(
+                    u,
+                    atkmultiply=profile["atkmultiply"],
+                    defmultiply=profile["defmultiply"],
+                    classes=profile["classes"],
+                    race=profile["race"],
+                    conn=conn,
+                )
+                if u not in attacking_users:
+                    attacking_users.append(u)
+                    attackers.append(
+                        {"user": u, "damage": damage, "defense": defense, "hp": 250}
+                    )
+
+        if not attackers:
+            return await ctx.send(_("Noone joined."))
+
+        if await self.bot.redis.execute("GET", f"city:{city}"):
+            return await ctx.send(_("**{city}** is already under attack."))
+
+        # Set city as under attack
+        await self.bot.redis.execute("SET", f"city:{city}", "under attack", "EX", 7200)
+
+        # Get all defenses
+        defenses = await self.bot.pool.fetch(
+            'SELECT * FROM defenses WHERE "city"=$1;', city
+        )
+
+        await ctx.send(
+            _("Attack on **{city}** starting with **{amount}** attackers!").format(
+                city=city, amount=len(attacking_users)
+            )
+        )
+        await self.bot.public_log(
+            f"**{alliance_name}** is attacking **{city}** with {len(attackers)} attackers!"
+        )
+
+        while len(defenses) > 0 and len(attackers) > 0:
+            # choose the lowest HP defense
+            target = sorted(defenses, key=lambda x: x["hp"])[-1]
+            damage = sum(i["damage"] for i in attackers)
+            if target["hp"] - damage <= 0:
+                defenses.remove(target)
+                await self.bot.pool.execute(
+                    'DELETE FROM defenses WHERE "id"=$1;', target["id"]
+                )
+                await ctx.send(
+                    embed=discord.Embed(
+                        title=_("Alliance Wars"),
+                        description=_(
+                            "**{alliance_name}** destroyed a {defense} in {city}!"
+                        ).format(
+                            alliance_name=alliance_name,
+                            defense=target["name"],
+                            city=city,
+                        ),
+                        colour=self.bot.config.primary_colour,
+                    )
+                )
+            else:
+                target["hp"] -= damage
+                await self.bot.pool.execute(
+                    'UPDATE defenses SET "hp"="hp"-$1 WHERE "id"=$2;',
+                    damage,
+                    target["id"],
+                )
+                await ctx.send(
+                    embed=discord.Embed(
+                        title=_("Alliance Wars"),
+                        description=_(
+                            "**{alliance_name}** hit a {defense} in {city} for {damage} damage! (Now {hp} HP)"
+                        ).format(
+                            alliance_name=alliance_name,
+                            defense=target["name"],
+                            city=city,
+                            damage=damage,
+                            hp=target["hp"],
+                        ),
+                        colour=self.bot.config.primary_colour,
+                    )
+                )
+            if not defenses:  # gone
+                break
+
+            await asyncio.sleep(5)
+
+            damage = sum(i["defense"] for i in defenses)
+            # These are clever and attack low HP OR best damage
+            if len({i["hp"] for i in attackers}) == 0:
+                # all equal HP
+                target = sorted(attackers, key=lambda x: x["damage"])[-1]
+            else:
+                # lowest HP
+                target = sorted(attackers, key=lambda x: x["hp"])[0]
+            if target["hp"] - damage <= 0:
+                attackers.remove(target)
+                await ctx.send(
+                    embed=discord.Embed(
+                        title=_("Alliance Wars"),
+                        description=_("**{user}** got killed in {city}!").format(
+                            user=target["user"], city=city
+                        ),
+                        colour=self.bot.config.primary_colour,
+                    )
+                )
+            else:
+                target["hp"] -= damage
+                await ctx.send(
+                    embed=discord.Embed(
+                        title=_("Alliance Wars"),
+                        description=_(
+                            "**{user}** got hit in {city} for {damage} damage! (Now {hp} HP)"
+                        ).format(
+                            user=target["user"],
+                            defense=target["name"],
+                            city=city,
+                            damage=damage,
+                            hp=target["hp"],
+                        ),
+                        colour=self.bot.config.primary_colour,
+                    )
+                )
+
+            await asyncio.sleep(5)
+
+        await self.bot.redis.execute(
+            "SET", f"city:{city}", "cooldown", "EX", 600
+        )  # 10min attack cooldown
+
+        # it's over
+        if not defenses:
+            await ctx.send(
+                _("**{alliance_name}** destroyed defenses in **{city}**!").format(
+                    alliance_name=alliance_name, city=city
+                )
+            )
+            await self.bot.public_log(
+                f"**{alliance_name}** destroyed defenses in **{city}**!"
+            )
+        else:
+            await ctx.send(
+                _(
+                    "**{alliance_name}** failed to destroy defenses in **{city}**!"
+                ).format(alliance_name=alliance_name, city=city)
+            )
+            await self.bot.public_log(
+                f"**{alliance_name}** failed to destroy defenses in **{city}**!"
+            )
 
 
 def setup(bot):
