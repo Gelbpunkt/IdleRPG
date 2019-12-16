@@ -164,12 +164,6 @@ class Errorhandler(commands.Cog):
                         "Your pet **{pet}** ran away! You did not show it your love enough! Because of your bad treatment, you are no longer a {profession}."
                     ).format(pet=ctx.pet_data["name"], profession=_("Ranger"))
                 )
-            elif type(error) == utils.checks.NotNothing:
-                await ctx.send(
-                    _(
-                        "You have already selected a race and filled in your cv. This is irreversible."
-                    )
-                )
             elif type(error) == utils.checks.NoPatron:
                 await ctx.send(
                     _(
