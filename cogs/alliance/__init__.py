@@ -502,7 +502,7 @@ class Alliance(commands.Cog):
                     u,
                     atkmultiply=profile["atkmultiply"],
                     defmultiply=profile["defmultiply"],
-                    classes=profile["classes"],
+                    classes=profile["class"],
                     race=profile["race"],
                     conn=conn,
                 )
