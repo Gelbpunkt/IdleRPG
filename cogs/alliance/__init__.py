@@ -39,6 +39,7 @@ class Alliance(commands.Cog):
         self.bot = bot
 
     @commands.command()
+    @locale_doc
     async def cities(self, ctx):
         _("""Shows cities and owners.""")
         cities = await self.bot.pool.fetch(
@@ -57,6 +58,7 @@ class Alliance(commands.Cog):
     @has_char()
     @has_guild()
     @commands.group(invoke_without_command=True)
+    @locale_doc
     async def alliance(self, ctx):
         _("""This command contains all alliance-related commands.""")
         async with self.bot.pool.acquire() as conn:
@@ -91,7 +93,9 @@ class Alliance(commands.Cog):
 
     @is_alliance_leader()
     @alliance.command()
+    @locale_doc
     async def invite(self, ctx, newleader: MemberWithCharacter):
+        _("""[Alliance Leader only] Invite a guild leader to the alliance.""")
         if not ctx.user_data["guild"]:
             return await ctx.send(_("That member is not in a guild."))
         newguild = await self.bot.pool.fetchrow(
@@ -129,7 +133,9 @@ class Alliance(commands.Cog):
 
     @is_guild_leader()
     @alliance.command()
+    @locale_doc
     async def leave(self, ctx):
+        _("""[Guild Leader only] Leave your alliance.""")
         async with self.bot.pool.acquire() as conn:
             alliance = await conn.fetchval(
                 'SELECT alliance from guild WHERE "id"=$1;', ctx.character_data["guild"]
@@ -146,9 +152,10 @@ class Alliance(commands.Cog):
 
     @is_alliance_leader()
     @alliance.command()
+    @locale_doc
     async def kick(self, ctx, *, guild_to_kick: Union[int, str]):
         _(
-            """Kick a guild from your alliance.\n Use either the guild name or ID for guild_to_kick."""
+            """[Alliance Leader only] Kick a guild from your alliance.\n Use either the guild name or ID for guild_to_kick."""
         )
         if isinstance(guild_to_kick, str):
             guild = await self.bot.pool.fetchrow(
@@ -199,6 +206,7 @@ class Alliance(commands.Cog):
         return 1
 
     @alliance.group(invoke_without_command=True)
+    @locale_doc
     async def build(self, ctx):
         _("""This command contains all alliance-building-related commands.""")
         subcommands = "```" + "\n".join(self.list_subcommands(ctx)) + "```"
@@ -208,7 +216,9 @@ class Alliance(commands.Cog):
     @owns_city()
     @is_alliance_leader()
     @build.command()
+    @locale_doc
     async def building(self, ctx, name: str.lower):
+        _("""[Alliance Leader only] Upgrade a city beneficial building.""")
         city = await self.bot.pool.fetchrow(
             'SELECT * FROM city WHERE "owner"=$1;',
             ctx.character_data[
@@ -259,7 +269,11 @@ class Alliance(commands.Cog):
     @is_alliance_leader()
     @user_cooldown(60)
     @build.command()
+    @locale_doc
     async def defense(self, ctx, *, name: str.lower):
+        _(
+            """[Alliance Leader only] Build a defensive building or buy troops for the city."""
+        )
         building_list = {
             "cannons": {"hp": 150, "def": 120, "cost": 50000},
             "archers": {"hp": 300, "def": 120, "cost": 75000},
@@ -318,7 +332,9 @@ class Alliance(commands.Cog):
 
     @has_char()
     @alliance.command()
+    @locale_doc
     async def buildings(self, ctx):
+        _("""Lists buildings in your city.""")
         async with self.bot.pool.acquire() as conn:
             alliance = await conn.fetchval(
                 'SELECT alliance FROM guild WHERE "id"=$1;', ctx.character_data["guild"]
@@ -342,7 +358,9 @@ class Alliance(commands.Cog):
 
     @has_char()
     @alliance.command()
+    @locale_doc
     async def defenses(self, ctx):
+        _("""Lists defenses in your city.""")
         async with self.bot.pool.acquire() as conn:
             alliance = await conn.fetchval(
                 'SELECT alliance FROM guild WHERE "id"=$1;', ctx.character_data["guild"]
