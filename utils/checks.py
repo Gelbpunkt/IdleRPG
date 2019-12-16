@@ -259,9 +259,10 @@ def is_alliance_leader():
 
     async def predicate(ctx):
         async with ctx.bot.pool.acquire() as conn:
-            ctx.character_data = await conn.fetchrow(
-                'SELECT * FROM profile WHERE "user"=$1;', ctx.author.id
-            )
+            if not hasattr(ctx, "character_data"):
+                ctx.character_data = await conn.fetchrow(
+                    'SELECT * FROM profile WHERE "user"=$1;', ctx.author.id
+                )
             leading_guild = await conn.fetchval(
                 'SELECT alliance FROM guild WHERE "id"=$1;', ctx.character_data["guild"]
             )
