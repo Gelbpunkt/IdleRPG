@@ -746,6 +746,10 @@ IdleRPG is a global bot, your characters are valid everywhere"""
                     0,
                     g,
                 )
+                await conn.execute(
+                    'UPDATE city SET "owner"=(SELECT "alliance" FROM guild g WHERE NOT EXISTS (SELECT "name" FROM city WHERE "owner"=g."alliance") ORDER BY RANDOM() LIMIT 1) WHERE "owner"=$1;',
+                    g,
+                )
             await conn.execute(
                 'UPDATE profile SET "marriage"=$1 WHERE "marriage"=$2;',
                 0,
