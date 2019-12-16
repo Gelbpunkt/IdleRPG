@@ -232,7 +232,7 @@ class Bot(commands.AutoShardedBot):
             )
         deff = shield["armor"] * defmultiply if shield else 0
         if local:
-            await conn.release()
+            await conn.close()
         return await self.generate_stats(v, dmg, deff, classes=classes, race=race)
 
     async def get_equipped_items_for(self, thing, conn=None):
@@ -250,7 +250,7 @@ class Bot(commands.AutoShardedBot):
             v,
         )
         if local:
-            await conn.release()
+            await conn.close()
         return sword, shield
 
     async def get_context(self, message, *, cls=None):
