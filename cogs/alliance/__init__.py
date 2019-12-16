@@ -219,7 +219,7 @@ class Alliance(commands.Cog):
             return await ctx.send(
                 _(
                     "Invalid building. Please use `{prefix}{cmd} [thief/raid/trade/adventure]` or check the possible buildings in your city."
-                )
+                ).format(prefix=ctx.prefix, cmd=ctx.command.qualified_name)
             )
         cur_level = city[f"{name}_building"]
         if cur_level == 10:
@@ -272,7 +272,7 @@ class Alliance(commands.Cog):
             return await ctx.send(
                 _("Invalid defense. Please use `{prefix}{cmd} [{buildings}]`.").format(
                     prefix=ctx.prefix,
-                    cmd=ctx.clean_command,
+                    cmd=ctx.command.qualified_name,
                     buildings="/".join(building_list.keys()),
                 )
             )
@@ -359,15 +359,16 @@ class Alliance(commands.Cog):
             title=_("{city}'s defenses").format(city=city_name),
             colour=self.bot.config.primary_colour,
         )
+        i = None
         for i in defenses:
             embed.add_field(
-                name=f"{i['name']}",
+                name=i["name"].title(),
                 value=_("HP: {hp}, Defense: {defense}").format(
                     hp=i["hp"], defense=i["defense"]
                 ),
                 inline=True,
             )
-        else:
+        if i is None:
             embed.add_field(
                 name=_("None built"),
                 value=_("Use {prefix}alliance build defense [name]").format(
