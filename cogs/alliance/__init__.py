@@ -104,6 +104,7 @@ class Alliance(commands.Cog):
 
     @alliance_cooldown(300)
     @is_alliance_leader()
+    @has_char()
     @alliance.command()
     @locale_doc
     async def invite(self, ctx, newleader: MemberWithCharacter):
@@ -170,6 +171,7 @@ class Alliance(commands.Cog):
         await ctx.send(_("Your guild left the alliance."))
 
     @is_alliance_leader()
+    @has_char()
     @alliance.command()
     @locale_doc
     async def kick(self, ctx, *, guild_to_kick: Union[int, str]):
@@ -233,6 +235,7 @@ class Alliance(commands.Cog):
     @alliance_cooldown(300)
     @owns_city()
     @is_alliance_leader()
+    @has_char()
     @build.command()
     @locale_doc
     async def building(self, ctx, name: str.lower):
@@ -283,9 +286,10 @@ class Alliance(commands.Cog):
             ).format(name=name, new_level=cur_level + 1)
         )
 
+    @alliance_cooldown(60)
     @owns_city()
     @is_alliance_leader()
-    @alliance_cooldown(60)
+    @has_char()
     @build.command()
     @locale_doc
     async def defense(self, ctx, *, name: str.lower):
@@ -415,6 +419,7 @@ class Alliance(commands.Cog):
 
     @owns_no_city()
     @is_alliance_leader()
+    @has_char()
     @alliance.command()
     @locale_doc
     async def occupy(self, ctx, *, city: str.title):
