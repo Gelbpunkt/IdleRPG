@@ -523,9 +523,12 @@ class Alliance(commands.Cog):
         await self.bot.redis.execute("SET", f"city:{city}", "under attack", "EX", 7200)
 
         # Get all defenses
-        defenses = await self.bot.pool.fetch(
-            'SELECT * FROM defenses WHERE "city"=$1;', city
-        )
+        defenses = [
+            list(i)
+            for i in await self.bot.pool.fetch(
+                'SELECT * FROM defenses WHERE "city"=$1;', city
+            )
+        ]
 
         await ctx.send(
             _("Attack on **{city}** starting with **{amount}** attackers!").format(
