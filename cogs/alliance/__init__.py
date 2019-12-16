@@ -618,7 +618,6 @@ class Alliance(commands.Cog):
                             "**{user}** got hit in {city} for {damage} damage! (Now {hp} HP)"
                         ).format(
                             user=target["user"],
-                            defense=target["name"],
                             city=city,
                             damage=damage,
                             hp=target["hp"],
