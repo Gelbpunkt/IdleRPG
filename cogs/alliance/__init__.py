@@ -144,7 +144,7 @@ class Alliance(commands.Cog):
             )
         await ctx.send(_("Your guild left the alliance."))
 
-    @is_guild_leader()
+    @is_alliance_leader()
     @alliance.command()
     async def kick(self, ctx, *, guild_to_kick: Union[int, str]):
         _(
@@ -255,8 +255,8 @@ class Alliance(commands.Cog):
             ).format(name=name, new_level=cur_level + 1)
         )
 
-    @is_alliance_leader()
     @owns_city()
+    @is_alliance_leader()
     @user_cooldown(60)
     @build.command()
     async def defense(self, ctx, *, name: str.lower):
