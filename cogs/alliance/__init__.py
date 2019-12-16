@@ -498,11 +498,12 @@ class Alliance(commands.Cog):
                     'SELECT alliance FROM guild WHERE "id"=$1;', profile["guild"]
                 )
                 if user_alliance != alliance_id:
-                    return await ctx.send(
+                    await ctx.send(
                         _(
                             "You are not a member of **{alliance_name}'s alliance**, {user}."
                         ).format(alliance_name=alliance_name, user=u)
                     )
+                    continue
                 damage, defense = await self.bot.get_raidstats(
                     u,
                     atkmultiply=profile["atkmultiply"],
