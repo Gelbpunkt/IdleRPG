@@ -446,7 +446,7 @@ class Alliance(commands.Cog):
     @is_guild_leader()
     @alliance.command()
     @locale_doc
-    async def attack(self, ctx, *, city: str):
+    async def attack(self, ctx, *, city: str.title):
         _("""[Guild Leader only] Attack a city.""")
         if city not in self.bot.config.cities:
             return await ctx.send(_("Invalid city."))
@@ -467,7 +467,7 @@ class Alliance(commands.Cog):
         attacking_users = []
         msg = await ctx.send(
             _(
-                "**{user}** wants to attack **{city}** with **{alliance_name}'s alliance. React with ⚔ to join the attack!"
+                "**{user}** wants to attack **{city}** with **{alliance_name}**'s alliance. React with ⚔ to join the attack!"
             ).format(user=ctx.author, city=city, alliance_name=alliance_name)
         )
 
@@ -510,6 +510,7 @@ class Alliance(commands.Cog):
                     attackers.append(
                         {"user": u, "damage": damage, "defense": defense, "hp": 250}
                     )
+                    await ctx.send(_("{user} has joined the attack.").format(user=u))
 
         if not attackers:
             return await ctx.send(_("Noone joined."))
