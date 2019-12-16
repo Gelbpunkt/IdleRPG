@@ -611,6 +611,10 @@ class Alliance(commands.Cog):
             else:
                 # lowest HP
                 target = sorted(attackers, key=lambda x: x["hp"])[0]
+
+            damage -= target["defense"]
+            damage = 0 if damage < 0 else damage
+
             if target["hp"] - damage <= 0:
                 attackers.remove(target)
                 await ctx.send(
