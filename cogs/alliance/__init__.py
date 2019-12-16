@@ -47,13 +47,15 @@ class Alliance(commands.Cog):
             'SELECT c.*, g."name" AS "gname", SUM(d."defense") AS "defense" FROM city c JOIN guild g ON c."owner"=g."id" JOIN defenses d ON c."name"=d."city" GROUP BY c."owner", c."name", g."name";'
         )
         em = discord.Embed(title=_("Cities"), colour=self.bot.config.primary_colour)
-        for city in cities:
+        for city in sorted(
+            cities, key=lambda x: -len(self.bot.config.cities[x["name"]])
+        ):
             em.add_field(
                 name=_("{name} (Tier {tier})").format(
                     name=city["name"], tier=len(self.bot.config.cities[city["name"]])
                 ),
                 value=_(
-                    "Owned by {alliance}'s alliance\nVuildings: {buildings}\nTotal defense: {defense}"
+                    "Owned by {alliance}'s alliance\nBuildings: {buildings}\nTotal defense: {defense}"
                 ).format(
                     alliance=city["gname"],
                     buildings=", ".join(self.bot.config.cities[city["name"]]),
