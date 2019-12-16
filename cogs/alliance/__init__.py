@@ -484,7 +484,7 @@ class Alliance(commands.Cog):
                     check=lambda r, u: u not in attacking_users
                     and str(r.emoji) == "\U00002694"
                     and r.message.id == msg.id,
-                    timeout=15,
+                    timeout=300,
                 )
             except asyncio.TimeoutError:
                 break  # no more joins
