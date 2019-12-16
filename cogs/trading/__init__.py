@@ -359,8 +359,6 @@ class Trading(commands.Cog):
                     return await ctx.send(_("Cancelled."))
             if buildings := await self.bot.get_city_buildings(ctx.character_data["guild"]):
                 value = value * (1 + buildings["trade_building"] / 2)
-            else:
-                pass
             await conn.execute(
                 'DELETE FROM allitems WHERE "id"=ANY($1) AND "owner"=$2;',
                 itemids,
@@ -411,8 +409,6 @@ class Trading(commands.Cog):
                 return
             if buildings := await self.bot.get_city_buildings(ctx.character_data["guild"]):
                 money = money * (1 + buildings["trade_building"] / 2)
-            else:
-                pass
             async with conn.transaction():
                 await conn.execute(
                     "DELETE FROM allitems ai USING inventory i WHERE ai.id=i.item AND ai.owner=$1 AND i.equipped IS FALSE AND ai.armor+ai.damage BETWEEN $2 AND $3;",

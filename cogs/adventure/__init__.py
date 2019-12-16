@@ -103,8 +103,6 @@ class Adventure(commands.Cog):
 
         if buildings := await self.bot.get_city_buildings(ctx.character_data["guild"]):
             time -= time * (buildings["adventure_building"] / 100)
-        else:
-            pass
         # Silver = -5%, Gold = -10%, Emerald = -25%
         # TODO: Maybe make a func to get the actual rank
         if await user_is_patron(

@@ -224,8 +224,6 @@ class Bot(commands.AutoShardedBot):
         if buildings := await self.get_city_buildings(guild):
             atkmultiply += buildings["raid_building"] * 0.1
             defmultiply += buildings["raid_building"] * 0.1
-        else:
-            pass
         if self.in_class_line(classes, "Raider"):
             atkmultiply = atkmultiply + Decimal("0.1") * self.get_class_grade_from(
                 classes, "Raider"
