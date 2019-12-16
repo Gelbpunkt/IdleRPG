@@ -221,7 +221,7 @@ class Bot(commands.AutoShardedBot):
                 'SELECT (atkmultiply, defmultiply, class, race, guild) FROM profile WHERE "user"=$1;',
                 v,
             )
-        if buildings := await self.get_city_buildings(guild):
+        if (buildings := await self.get_city_buildings(guild)) :
             atkmultiply += buildings["raid_building"] * 0.1
             defmultiply += buildings["raid_building"] * 0.1
         if self.in_class_line(classes, "Raider"):
@@ -686,7 +686,7 @@ Armor: {data['armor']}"""
     async def public_log(self, event: str):
         await self.http.send_message(self.config.bot_event_channel, event)
 
-    async def get_city_buildings(guild_id):
+    async def get_city_buildings(self, guild_id):
         if not guild_id:  # also catches guild_id = 0
             return False
         res = await self.pool.fetchrow(

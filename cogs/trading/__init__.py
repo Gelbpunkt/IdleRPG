@@ -61,7 +61,7 @@ class Trading(commands.Cog):
                         "Your item is either equal to a Starter Item or worse. Noone would buy it."
                     )
                 )
-            if buildings := await self.bot.get_city_buildings(ctx.character_data["guild"]):
+            if await self.bot.get_city_buildings(ctx.character_data["guild"]):
                 tax = 0
             else:
                 tax = round(price * 0.05)
@@ -106,7 +106,7 @@ class Trading(commands.Cog):
                 )
             if item["owner"] == ctx.author:
                 return await ctx.send(_("You may not buy your own items."))
-            if buildings := await self.bot.get_city_buildings(ctx.character_data["guild"]):
+            if await self.bot.get_city_buildings(ctx.character_data["guild"]):
                 tax = 0
             else:
                 tax = round(item["price"] * 0.05)
@@ -357,7 +357,11 @@ class Trading(commands.Cog):
                     timeout=6,
                 ):
                     return await ctx.send(_("Cancelled."))
-            if buildings := await self.bot.get_city_buildings(ctx.character_data["guild"]):
+            if (
+                buildings := await self.bot.get_city_buildings(
+                    ctx.character_data["guild"]
+                )
+            ) :
                 value = value * (1 + buildings["trade_building"] / 2)
             await conn.execute(
                 'DELETE FROM allitems WHERE "id"=ANY($1) AND "owner"=$2;',
@@ -407,7 +411,11 @@ class Trading(commands.Cog):
                 ).format(count=count)
             ):
                 return
-            if buildings := await self.bot.get_city_buildings(ctx.character_data["guild"]):
+            if (
+                buildings := await self.bot.get_city_buildings(
+                    ctx.character_data["guild"]
+                )
+            ) :
                 money = money * (1 + buildings["trade_building"] / 2)
             async with conn.transaction():
                 await conn.execute(
