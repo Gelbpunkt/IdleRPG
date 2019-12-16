@@ -368,7 +368,7 @@ ALTER TABLE public.pets OWNER TO jens;
 CREATE TABLE public.profile (
     "user" bigint NOT NULL,
     name character varying(20),
-    money integer,
+    money bigint,
     xp integer,
     pvpwins bigint DEFAULT 0 NOT NULL,
     money_booster bigint DEFAULT 0,
