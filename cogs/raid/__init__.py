@@ -152,43 +152,13 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
         ) as r:
             raid_raw = await r.json()
         async with self.bot.pool.acquire() as conn:
-            dmgs = await conn.fetch(
-                'SELECT p."user", p.class, ai.damage, p.atkmultiply FROM profile p JOIN allitems ai ON (p.user=ai.owner) JOIN inventory i ON (ai.id=i.item) WHERE i.equipped IS TRUE AND p.user=ANY($2) AND type=$1;',
-                "Sword",
-                raid_raw,
-            )
-            deffs = await conn.fetch(
-                'SELECT p."user", p.class, ai.armor, p.defmultiply FROM profile p JOIN allitems ai ON (p.user=ai.owner) JOIN inventory i ON (ai.id=i.item) WHERE i.equipped IS TRUE AND p.user=ANY($2) AND type=$1;',
-                "Shield",
-                raid_raw,
-            )
-        raid = {}
-        for i in raid_raw:
-            u = await self.bot.get_user_global(i)
-            if not u:
-                continue
-            j = next(filter(lambda x: x["user"] == i, dmgs), None)
-            if j is None:
-                continue
-            if self.bot.in_class_line(j["class"], "Raider"):
-                atkmultiply = j["atkmultiply"] + Decimal(
-                    "0.1"
-                ) * self.bot.get_class_grade_from(j["class"], "Raider")
-            else:
-                atkmultiply = j["atkmultiply"]
-            dmg = j["damage"] * atkmultiply if j else 0
-            j = next(filter(lambda x: x["user"] == i, deffs), None)
-            if j is None:
-                continue
-            if self.bot.in_class_line(j["class"], "Raider"):
-                defmultiply = j["defmultiply"] + Decimal(
-                    "0.1"
-                ) * self.bot.get_class_grade_from(j["class"], "Raider")
-            else:
-                defmultiply = j["defmultiply"]
-            deff = j["armor"] * defmultiply if j else 0
-            dmg, deff = await self.bot.generate_stats(i, dmg, deff)
-            raid[u] = {"hp": 250, "armor": deff, "damage": dmg}
+            raid = {}
+            for i in raid_raw:
+                u = await self.bot.get_user_global(i)
+                if not u:
+                    continue
+                dmg, deff = await self.bot.get_raidstats(u.id, conn=conn)
+                raid[u] = {"hp": 250, "armor": deff, "damage": dmg}
 
         await ctx.send("**Done getting data!**")
 
@@ -384,43 +354,13 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
         ) as r:
             raid_raw = await r.json()
         async with self.bot.pool.acquire() as conn:
-            dmgs = await conn.fetch(
-                'SELECT p."user", p."class", ai.damage, p.atkmultiply FROM profile p JOIN allitems ai ON (p.user=ai.owner) JOIN inventory i ON (ai.id=i.item) WHERE i.equipped IS TRUE AND p.user=ANY($2) AND type=$1;',
-                "Sword",
-                raid_raw,
-            )
-            deffs = await conn.fetch(
-                'SELECT p."user", p."class", ai.armor, p.defmultiply FROM profile p JOIN allitems ai ON (p.user=ai.owner) JOIN inventory i ON (ai.id=i.item) WHERE i.equipped IS TRUE AND p.user=ANY($2) AND type=$1;',
-                "Shield",
-                raid_raw,
-            )
-        raid = {}
-        for i in raid_raw:
-            u = await self.bot.get_user_global(i)
-            if not u:
-                continue
-            j = next(filter(lambda x: x["user"] == i, dmgs), None)
-            if j is None:
-                continue
-            if self.bot.in_class_line(j["class"], "Raider"):
-                atkmultiply = j["atkmultiply"] + Decimal(
-                    "0.1"
-                ) * self.bot.get_class_grade_from(j["class"], "Raider")
-            else:
-                atkmultiply = j["atkmultiply"]
-            dmg = j["damage"] * atkmultiply if j else 0
-            j = next(filter(lambda x: x["user"] == i, deffs), None)
-            if j is None:
-                continue
-            if self.bot.in_class_line(j["class"], "Raider"):
-                defmultiply = j["defmultiply"] + Decimal(
-                    "0.1"
-                ) * self.bot.get_class_grade_from(j["class"], "Raider")
-            else:
-                defmultiply = j["defmultiply"]
-            deff = j["armor"] * defmultiply if j else 0
-            dmg, deff = await self.bot.generate_stats(i, dmg, deff)
-            raid[u] = {"hp": 150, "armor": deff, "damage": dmg}
+            raid = {}
+            for i in raid_raw:
+                u = await self.bot.get_user_global(i)
+                if not u:
+                    continue
+                dmg, deff = await self.bot.get_raidstats(u, conn=conn)
+                raid[u] = {"hp": 150, "armor": deff, "damage": dmg}
 
         await ctx.send("**Done getting data!**")
 
@@ -551,33 +491,13 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
         ) as r:
             raid_raw = await r.json()
         async with self.bot.pool.acquire() as conn:
-            dmgs = await conn.fetch(
-                'SELECT p."user", p.class, ai.damage, p.atkmultiply FROM profile p JOIN allitems ai ON (p.user=ai.owner) JOIN inventory i ON (ai.id=i.item) WHERE i.equipped IS TRUE AND p.user=ANY($2) AND type=$1 AND p.god=$3;',
-                "Sword",
-                raid_raw,
-                "Guilt",
-            )
-            deffs = await conn.fetch(
-                'SELECT p."user", p.class, ai.armor, p.defmultiply FROM profile p JOIN allitems ai ON (p.user=ai.owner) JOIN inventory i ON (ai.id=i.item) WHERE i.equipped IS TRUE AND p.user=ANY($2) AND type=$1 AND p.god=$3;',
-                "Shield",
-                raid_raw,
-                "Guilt",
-            )
-        raid = {}
-        for i in raid_raw:
-            u = await self.bot.get_user_global(i)
-            if not u:
-                continue
-            j = next(filter(lambda x: x["user"] == i, dmgs), None)
-            if j is None:
-                continue
-            dmg = j["damage"] if j else 0
-            j = next(filter(lambda x: x["user"] == i, deffs), None)
-            if j is None:
-                continue
-            deff = j["armor"] if j else 0
-            dmg, deff = await self.bot.generate_stats(i, dmg, deff)
-            raid[u] = {"hp": 250, "armor": deff, "damage": dmg}
+            raid = {}
+            for i in raid_raw:
+                u = await self.bot.get_user_global(i)
+                if not u:
+                    continue
+                dmg, deff = await self.bot.get_raidstats(u, conn=conn)
+                raid[u] = {"hp": 250, "armor": deff, "damage": dmg}
 
         await ctx.send("**Done getting data!**")
 
@@ -688,33 +608,13 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
         ) as r:
             raid_raw = await r.json()
         async with self.bot.pool.acquire() as conn:
-            dmgs = await conn.fetch(
-                'SELECT p."user", p.class, ai.damage, p.atkmultiply FROM profile p JOIN allitems ai ON (p.user=ai.owner) JOIN inventory i ON (ai.id=i.item) WHERE i.equipped IS TRUE AND p.user=ANY($2) AND type=$1 AND p.god=$3;',
-                "Sword",
-                raid_raw,
-                "Athena, Goddess of Wisdom",
-            )
-            deffs = await conn.fetch(
-                'SELECT p."user", p.class, ai.armor, p.defmultiply FROM profile p JOIN allitems ai ON (p.user=ai.owner) JOIN inventory i ON (ai.id=i.item) WHERE i.equipped IS TRUE AND p.user=ANY($2) AND type=$1 AND p.god=$3;',
-                "Shield",
-                raid_raw,
-                "Athena, Goddess of Wisdom",
-            )
-        raid = {}
-        for i in raid_raw:
-            u = await self.bot.get_user_global(i)
-            if not u:
-                continue
-            j = next(filter(lambda x: x["user"] == i, dmgs), None)
-            if j is None:
-                continue
-            dmg = j["damage"] * j["atkmultiply"] if j else 0
-            j = next(filter(lambda x: x["user"] == i, deffs), None)
-            if j is None:
-                continue
-            deff = j["armor"] * j["defmultiply"] if j else 0
-            dmg, deff = await self.bot.generate_stats(i, dmg, deff)
-            raid[u] = {"hp": 250, "armor": deff, "damage": dmg}
+            raid = {}
+            for i in raid_raw:
+                u = await self.bot.get_user_global(i)
+                if not u:
+                    continue
+                dmg, deff = await self.bot.get_raidstats(u, conn=conn)
+                raid[u] = {"hp": 250, "armor": deff, "damage": dmg}
 
         await ctx.send("**Done getting data!**")
 
@@ -891,33 +791,13 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
         ) as r:
             raid_raw = await r.json()
         async with self.bot.pool.acquire() as conn:
-            dmgs = await conn.fetch(
-                'SELECT p."user", ai.damage, p.atkmultiply FROM profile p JOIN allitems ai ON (p.user=ai.owner) JOIN inventory i ON (ai.id=i.item) WHERE i.equipped IS TRUE AND p.user=ANY($2) AND type=$1 AND p.god=$3;',
-                "Sword",
-                raid_raw,
-                "Kvothe",
-            )
-            deffs = await conn.fetch(
-                'SELECT p."user", ai.armor, p.defmultiply FROM profile p JOIN allitems ai ON (p.user=ai.owner) JOIN inventory i ON (ai.id=i.item) WHERE i.equipped IS TRUE AND p.user=ANY($2) AND type=$1 AND p.god=$3;',
-                "Shield",
-                raid_raw,
-                "Kvothe",
-            )
-        raid = {}
-        for i in raid_raw:
-            u = await self.bot.get_user_global(i)
-            if not u:
-                continue
-            j = next(filter(lambda x: x["user"] == i, dmgs), None)
-            if j is None:
-                continue
-            dmg = j["damage"] * j["atkmultiply"] if j else 0
-            j = next(filter(lambda x: x["user"] == i, deffs), None)
-            if j is None:
-                continue
-            deff = j["armor"] * j["defmultiply"] if j else 0
-            dmg, deff = await self.bot.generate_stats(i, dmg, deff)
-            raid[u] = {"hp": 100, "armor": deff, "damage": dmg, "kills": 0}
+            raid = {}
+            for i in raid_raw:
+                u = await self.bot.get_user_global(i)
+                if not u:
+                    continue
+                dmg, deff = await self.bot.get_raidstats(u, conn=conn)
+                raid[u] = {"hp": 100, "armor": deff, "damage": dmg, "kills": 0}
 
         await ctx.send("**Done getting data!**")
 
@@ -1051,33 +931,13 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
         ) as r:
             raid_raw = await r.json()
         async with self.bot.pool.acquire() as conn:
-            dmgs = await conn.fetch(
-                'SELECT p."user", p.class, ai.damage, p.atkmultiply FROM profile p JOIN allitems ai ON (p.user=ai.owner) JOIN inventory i ON (ai.id=i.item) WHERE i.equipped IS TRUE AND p.user=ANY($2) AND type=$1 AND p.god=$3;',
-                "Sword",
-                raid_raw,
-                "CHamburr",
-            )
-            deffs = await conn.fetch(
-                'SELECT p."user", p.class, ai.armor, p.defmultiply FROM profile p JOIN allitems ai ON (p.user=ai.owner) JOIN inventory i ON (ai.id=i.item) WHERE i.equipped IS TRUE AND p.user=ANY($2) AND type=$1 AND p.god=$3;',
-                "Shield",
-                raid_raw,
-                "CHamburr",
-            )
-        raid = {}
-        for i in raid_raw:
-            u = await self.bot.get_user_global(i)
-            if not u:
-                continue
-            j = next(filter(lambda x: x["user"] == i, dmgs), None)
-            if j is None:
-                continue
-            dmg = j["damage"] * j["atkmultiply"] if j else 0
-            j = next(filter(lambda x: x["user"] == i, deffs), None)
-            if j is None:
-                continue
-            deff = j["armor"] * j["defmultiply"] if j else 0
-            dmg, deff = await self.bot.generate_stats(i, dmg, deff)
-            raid[u] = {"hp": 250, "armor": deff, "damage": dmg}
+            raid = {}
+            for i in raid_raw:
+                u = await self.bot.get_user_global(i)
+                if not u:
+                    continue
+                dmg, deff = await self.bot.get_raidstats(u, conn=conn)
+                raid[u] = {"hp": 250, "armor": deff, "damage": dmg}
 
         await ctx.send("**Done getting data!**")
 
@@ -1267,33 +1127,13 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
         ) as r:
             raid_raw = await r.json()
         async with self.bot.pool.acquire() as conn:
-            dmgs = await conn.fetch(
-                'SELECT p."user", p.class, ai.damage, p.atkmultiply FROM profile p JOIN allitems ai ON (p.user=ai.owner) JOIN inventory i ON (ai.id=i.item) WHERE i.equipped IS TRUE AND p.user=ANY($2) AND type=$1 AND p.god=$3;',
-                "Sword",
-                raid_raw,
-                "Salutations",
-            )
-            deffs = await conn.fetch(
-                'SELECT p."user", p.class, ai.armor, p.defmultiply FROM profile p JOIN allitems ai ON (p.user=ai.owner) JOIN inventory i ON (ai.id=i.item) WHERE i.equipped IS TRUE AND p.user=ANY($2) AND type=$1 AND p.god=$3;',
-                "Shield",
-                raid_raw,
-                "Salutations",
-            )
-        raid = {}
-        for i in raid_raw:
-            u = await self.bot.get_user_global(i)
-            if not u:
-                continue
-            j = next(filter(lambda x: x["user"] == i, dmgs), None)
-            if j is None:
-                continue
-            dmg = j["damage"] * j["atkmultiply"] if j else 0
-            j = next(filter(lambda x: x["user"] == i, deffs), None)
-            if j is None:
-                continue
-            deff = j["armor"] * j["defmultiply"] if j else 0
-            dmg, deff = await self.bot.generate_stats(i, dmg, deff)
-            raid[u] = {"hp": 250, "armor": deff, "damage": dmg}
+            raid = {}
+            for i in raid_raw:
+                u = await self.bot.get_user_global(i)
+                if not u:
+                    continue
+                dmg, deff = await self.bot.get_raidstats(u, conn=conn)
+                raid[u] = {"hp": 250, "armor": deff, "damage": dmg}
 
         await ctx.send("**Done getting data!**")
 
@@ -1566,33 +1406,13 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
         ) as r:
             raid_raw = await r.json()
         async with self.bot.pool.acquire() as conn:
-            dmgs = await conn.fetch(
-                'SELECT p."user", p.class, ai.damage, p.atkmultiply FROM profile p JOIN allitems ai ON (p.user=ai.owner) JOIN inventory i ON (ai.id=i.item) WHERE i.equipped IS TRUE AND p.user=ANY($2) AND type=$1 AND p.god=$3;',
-                "Sword",
-                raid_raw,
-                "Asmodeus",
-            )
-            deffs = await conn.fetch(
-                'SELECT p."user", p.class, ai.armor, p.defmultiply FROM profile p JOIN allitems ai ON (p.user=ai.owner) JOIN inventory i ON (ai.id=i.item) WHERE i.equipped IS TRUE AND p.user=ANY($2) AND type=$1 AND p.god=$3;',
-                "Shield",
-                raid_raw,
-                "Asmodeus",
-            )
-        raid = {}
-        for i in raid_raw:
-            u = await self.bot.get_user_global(i)
-            if not u:
-                continue
-            j = next(filter(lambda x: x["user"] == i, dmgs), None)
-            if j is None:
-                continue
-            dmg = j["damage"] * j["atkmultiply"] if j else 0
-            j = next(filter(lambda x: x["user"] == i, deffs), None)
-            if j is None:
-                continue
-            deff = j["armor"] * j["defmultiply"] if j else 0
-            dmg, deff = await self.bot.generate_stats(i, dmg, deff)
-            raid[u] = {"hp": 250, "armor": deff, "damage": dmg}
+            raid = {}
+            for i in raid_raw:
+                u = await self.bot.get_user_global(i)
+                if not u:
+                    continue
+                dmg, deff = await self.bot.get_stats(u, conn=conn)
+                raid[u] = {"hp": 250, "armor": deff, "damage": dmg}
 
         await ctx.send("**Done getting data!**")
 
@@ -1714,33 +1534,13 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
         ) as r:
             raid_raw = await r.json()
         async with self.bot.pool.acquire() as conn:
-            dmgs = await conn.fetch(
-                'SELECT p."user", p.class, ai.damage, p.atkmultiply FROM profile p JOIN allitems ai ON (p.user=ai.owner) JOIN inventory i ON (ai.id=i.item) WHERE i.equipped IS TRUE AND p.user=ANY($2) AND type=$1 AND p.god=$3;',
-                "Sword",
-                raid_raw,
-                "Ananke",
-            )
-            deffs = await conn.fetch(
-                'SELECT p."user", p.class, ai.armor, p.defmultiply FROM profile p JOIN allitems ai ON (p.user=ai.owner) JOIN inventory i ON (ai.id=i.item) WHERE i.equipped IS TRUE AND p.user=ANY($2) AND type=$1 AND p.god=$3;',
-                "Shield",
-                raid_raw,
-                "Ananke",
-            )
-        raid = {}
-        for i in raid_raw:
-            u = await self.bot.get_user_global(i)
-            if not u:
-                continue
-            j = next(filter(lambda x: x["user"] == i, dmgs), None)
-            if j is None:
-                continue
-            dmg = j["damage"] * j["atkmultiply"] if j else 0
-            j = next(filter(lambda x: x["user"] == i, deffs), None)
-            if j is None:
-                continue
-            deff = j["armor"] * j["defmultiply"] if j else 0
-            dmg, deff = await self.bot.generate_stats(i, dmg, deff)
-            raid[u] = {"armor": deff, "damage": dmg}
+            raid = {}
+            for i in raid_raw:
+                u = await self.bot.get_user_global(i)
+                if not u:
+                    continue
+                dmg, deff = await self.bot.generate_stats(u, conn=conn)
+                raid[u] = {"armor": deff, "damage": dmg}
 
         await ctx.send("**Done getting data!**")
 
@@ -1861,33 +1661,13 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
         ) as r:
             raid_raw = await r.json()
         async with self.bot.pool.acquire() as conn:
-            dmgs = await conn.fetch(
-                'SELECT p."user", p.class, ai.damage, p.atkmultiply FROM profile p JOIN allitems ai ON (p.user=ai.owner) JOIN inventory i ON (ai.id=i.item) WHERE i.equipped IS TRUE AND p.user=ANY($2) AND type=$1 AND p.god=$3;',
-                "Sword",
-                raid_raw,
-                "Jesus",
-            )
-            deffs = await conn.fetch(
-                'SELECT p."user", p.class, ai.armor, p.defmultiply FROM profile p JOIN allitems ai ON (p.user=ai.owner) JOIN inventory i ON (ai.id=i.item) WHERE i.equipped IS TRUE AND p.user=ANY($2) AND type=$1 AND p.god=$3;',
-                "Shield",
-                raid_raw,
-                "Jesus",
-            )
-        raid = {}
-        for i in raid_raw:
-            u = await self.bot.get_user_global(i)
-            if not u:
-                continue
-            j = next(filter(lambda x: x["user"] == i, dmgs), None)
-            if j is None:
-                continue
-            dmg = j["damage"] * j["atkmultiply"] if j else 0
-            j = next(filter(lambda x: x["user"] == i, deffs), None)
-            if j is None:
-                continue
-            deff = j["armor"] * j["defmultiply"] if j else 0
-            dmg, deff = await self.bot.generate_stats(i, dmg, deff)
-            raid[u] = {"hp": 250, "armor": deff, "damage": dmg}
+            raid = {}
+            for i in raid_raw:
+                u = await self.bot.get_user_global(i)
+                if not u:
+                    continue
+                dmg, deff = await self.bot.get_raidstats(u, conn=conn)
+                raid[u] = {"hp": 250, "armor": deff, "damage": dmg}
 
         await ctx.send("**Done getting data!**")
 
@@ -2073,33 +1853,13 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
         ) as r:
             raid_raw = await r.json()
         async with self.bot.pool.acquire() as conn:
-            dmgs = await conn.fetch(
-                'SELECT p."user", p.class, ai.damage, p.atkmultiply FROM profile p JOIN allitems ai ON (p.user=ai.owner) JOIN inventory i ON (ai.id=i.item) WHERE i.equipped IS TRUE AND p.user=ANY($2) AND type=$1 AND p.god=$3;',
-                "Sword",
-                raid_raw,
-                "Gambit",
-            )
-            deffs = await conn.fetch(
-                'SELECT p."user", p.class, ai.armor, p.defmultiply FROM profile p JOIN allitems ai ON (p.user=ai.owner) JOIN inventory i ON (ai.id=i.item) WHERE i.equipped IS TRUE AND p.user=ANY($2) AND type=$1 AND p.god=$3;',
-                "Shield",
-                raid_raw,
-                "Gambit",
-            )
-        raid = {}
-        for i in raid_raw:
-            u = await self.bot.get_user_global(i)
-            if not u:
-                continue
-            j = next(filter(lambda x: x["user"] == i, dmgs), None)
-            if j is None:
-                continue
-            dmg = j["damage"] if j else 0
-            j = next(filter(lambda x: x["user"] == i, deffs), None)
-            if j is None:
-                continue
-            deff = j["armor"] if j else 0
-            dmg, deff = await self.bot.generate_stats(i, dmg, deff)
-            raid[u] = {"hp": 1000, "armor": deff, "damage": dmg}
+            raid = {}
+            for i in raid_raw:
+                u = await self.bot.get_user_global(i)
+                if not u:
+                    continue
+                dmg, deff = await self.bot.get_raidstats(u, conn=conn)
+                raid[u] = {"hp": 1000, "armor": deff, "damage": dmg}
 
         await ctx.send(
             "**Done getting data! Setting up castle and backend... The game will start in your DMs**"
