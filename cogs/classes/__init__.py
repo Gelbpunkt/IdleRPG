@@ -261,12 +261,12 @@ Priest   ->  Mysticist ->  Summoner    -> Seer           ->  Ritualist
     async def steal(self, ctx):
         _("""[Thief Only] Steal money!""")
         if not buildings := await self.bot.get_city_buildings(ctx.character_data["guild"]):
-            bonus = 0
-        else:
             bonus = buildings["thief_building"] * 5
+        else:
+            bonus = 0
         if secrets.randbelow(100) in range(
             1,
-            self.bot.get_class_grade_from(ctx.character_data["class"], "Thief") * 8 + 1 bonus,
+            self.bot.get_class_grade_from(ctx.character_data["class"], "Thief") * 8 + 1 + bonus,
         ):
             async with self.bot.pool.acquire() as conn:
                 usr = await conn.fetchrow(

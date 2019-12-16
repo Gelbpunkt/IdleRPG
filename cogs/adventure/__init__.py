@@ -101,10 +101,10 @@ class Adventure(commands.Cog):
         if time_booster:
             time = time / 2
 
-        if not buildings:= await self.bot.get_city_buildings(ctx.character_data["guild"]):
-            pass
-        else:
+        if buildings := await self.bot.get_city_buildings(ctx.character_data["guild"]):
             time -= time * (buildings["adventure_building"] / 100)
+        else:
+            pass
         # Silver = -5%, Gold = -10%, Emerald = -25%
         # TODO: Maybe make a func to get the actual rank
         if await user_is_patron(
@@ -419,10 +419,10 @@ Adventure name: `{adventure}`"""
         luck_booster = await self.bot.get_booster(ctx.author, "luck")
         current_level = int(rpgtools.xptolevel(ctx.character_data["xp"]))
         luck_multiply = ctx.character_data["luck"]
-        if not buildings := await self.bot.get_city_buildings(ctx.character_data["guild"])
-            bonus = 0
-        else:
+        if buildings := await self.bot.get_city_buildings(ctx.character_data["guild"])
             bonus = buildings["adventure_building"]
+        else:
+            bonus = 0
         success = rpgtools.calcchance(
             sword,
             shield,
