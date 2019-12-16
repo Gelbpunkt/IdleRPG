@@ -7,15 +7,15 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-12-15 21:42-0800\n"
-"PO-Revision-Date: 2019-11-08 16:54+0700\n"
+"POT-Creation-Date: 2019-12-16 05:16-0800\n"
+"PO-Revision-Date: 2019-12-16 13:24+0700\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: owo\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 2.2.3\n"
+"X-Generator: Poedit 2.2.4\n"
 
 #: cogs/tournament/__init__.py:39
 msgid "Starts a new tournament."
@@ -968,8 +968,8 @@ msgstr ""
 msgid "There is another raid already ongoing. Try again at a later time."
 msgstr ""
 
-#: cogs/error_handler/__init__.py:186 cogs/alliance/__init__.py:346
-#: cogs/alliance/__init__.py:375
+#: cogs/error_handler/__init__.py:186 cogs/alliance/__init__.py:353
+#: cogs/alliance/__init__.py:382
 msgid "Your alliance does not own a city."
 msgstr ""
 
@@ -5199,7 +5199,7 @@ msgstr "Shows youw adventuwe loot that can be exchanged or sacwificed ( ◐ω◐
 
 #: cogs/profile/__init__.py:386
 msgid "You do not have any loot at this moment."
-msgstr "You don't have any active coowdown at the moment ( ◐ω◐ )"
+msgstr "You don't have any loot at the moment ( ◐ω◐ )"
 
 #: cogs/profile/__init__.py:400
 msgid "Exchange one or more loot items for money or xp."
@@ -6205,155 +6205,159 @@ msgid ""
 "{newleader}, {author} invites you to join their alliance. React to join now."
 msgstr ""
 
-#: cogs/alliance/__init__.py:129
+#: cogs/alliance/__init__.py:128
+msgid "Your alliance is full."
+msgstr ""
+
+#: cogs/alliance/__init__.py:136
 #, python-brace-format
 msgid "**{newguild}** is now part of your alliance, {user}!"
 msgstr ""
 
-#: cogs/alliance/__init__.py:138
+#: cogs/alliance/__init__.py:145
 msgid "[Guild Leader only] Leave your alliance."
 msgstr ""
 
-#: cogs/alliance/__init__.py:145
+#: cogs/alliance/__init__.py:152
 msgid "You are the alliance's leading guild and cannot leave it!"
 msgstr ""
 
-#: cogs/alliance/__init__.py:151
+#: cogs/alliance/__init__.py:158
 msgid "Your guild left the alliance."
 msgstr ""
 
-#: cogs/alliance/__init__.py:158
+#: cogs/alliance/__init__.py:165
 msgid ""
 "[Alliance Leader only] Kick a guild from your alliance.\n"
 " Use either the guild name or ID for guild_to_kick."
 msgstr ""
 
-#: cogs/alliance/__init__.py:172
+#: cogs/alliance/__init__.py:179
 #, python-brace-format
 msgid ""
 "Cannot find guild `{guild_to_kick}`. Are you sure that's the right name/ID?"
 msgstr ""
 
-#: cogs/alliance/__init__.py:176
+#: cogs/alliance/__init__.py:183
 msgid "That won't work."
 msgstr ""
 
-#: cogs/alliance/__init__.py:179
+#: cogs/alliance/__init__.py:186
 msgid "This guild is not in your alliance."
 msgstr ""
 
-#: cogs/alliance/__init__.py:182
+#: cogs/alliance/__init__.py:189
 #, python-brace-format
 msgid "Do you really want to kick **{guild}** from your alliance?"
 msgstr ""
 
-#: cogs/alliance/__init__.py:194
+#: cogs/alliance/__init__.py:201
 #, python-brace-format
 msgid "**{guild}** is no longer part of your alliance."
 msgstr ""
 
-#: cogs/alliance/__init__.py:211
+#: cogs/alliance/__init__.py:218
 msgid "This command contains all alliance-building-related commands."
 msgstr ""
 
-#: cogs/alliance/__init__.py:213
+#: cogs/alliance/__init__.py:220
 msgid ""
 "Please use one of these subcommands:\n"
 "\n"
 msgstr ""
 
-#: cogs/alliance/__init__.py:221
+#: cogs/alliance/__init__.py:228
 msgid "[Alliance Leader only] Upgrade a city beneficial building."
 msgstr ""
 
-#: cogs/alliance/__init__.py:231
+#: cogs/alliance/__init__.py:238
 #, python-brace-format
 msgid ""
 "Invalid building. Please use `{prefix}{cmd} [thief/raid/trade/adventure]` or "
 "check the possible buildings in your city."
 msgstr ""
 
-#: cogs/alliance/__init__.py:236
+#: cogs/alliance/__init__.py:243
 msgid "This building is fully upgraded."
 msgstr ""
 
-#: cogs/alliance/__init__.py:240
+#: cogs/alliance/__init__.py:247
 #, python-brace-format
 msgid ""
 "Are you sure you want to upgrade the **{name} building** to level "
 "{new_level}? This will cost $**{price}**."
 msgstr ""
 
-#: cogs/alliance/__init__.py:247
+#: cogs/alliance/__init__.py:254
 #, python-brace-format
 msgid ""
 "Your guild doesn't have enough money to upgrade the city's {name} building."
 msgstr ""
 
-#: cogs/alliance/__init__.py:264
+#: cogs/alliance/__init__.py:271
 #, python-brace-format
 msgid ""
 "Successfully upgraded the city's {name} building to level **{new_level}**"
 msgstr ""
 
-#: cogs/alliance/__init__.py:275
+#: cogs/alliance/__init__.py:282
 msgid ""
 "[Alliance Leader only] Build a defensive building or buy troops for the city."
 msgstr ""
 
-#: cogs/alliance/__init__.py:287
+#: cogs/alliance/__init__.py:294
 #, python-brace-format
 msgid "Invalid defense. Please use `{prefix}{cmd} [{buildings}]`."
 msgstr ""
 
-#: cogs/alliance/__init__.py:302
+#: cogs/alliance/__init__.py:309
 msgid "You may only build up to 10 defenses."
 msgstr ""
 
-#: cogs/alliance/__init__.py:305
+#: cogs/alliance/__init__.py:312
 #, python-brace-format
 msgid ""
 "Are you sure you want to build a **{defense}**? This will cost $**{price}**."
 msgstr ""
 
-#: cogs/alliance/__init__.py:314
+#: cogs/alliance/__init__.py:321
 #, python-brace-format
 msgid "Your guild doesn't have enough money to build a {defense}."
 msgstr ""
 
-#: cogs/alliance/__init__.py:331
+#: cogs/alliance/__init__.py:338
 #, python-brace-format
 msgid "Successfully built a {defense}."
 msgstr ""
 
-#: cogs/alliance/__init__.py:337
+#: cogs/alliance/__init__.py:344
 msgid "Lists buildings in your city."
 msgstr ""
 
-#: cogs/alliance/__init__.py:348
+#: cogs/alliance/__init__.py:355
 #, python-brace-format
 msgid "{city}'s buildings"
 msgstr ""
 
-#: cogs/alliance/__init__.py:363
+#: cogs/alliance/__init__.py:370
 msgid "Lists defenses in your city."
-msgstr ""
-
-#: cogs/alliance/__init__.py:377
-#, python-brace-format
-msgid "{city}'s defenses"
 msgstr ""
 
 #: cogs/alliance/__init__.py:384
 #, python-brace-format
-msgid "HP: {hp}, Defense: {defense}"
+msgid "{city}'s defenses"
 msgstr ""
 
 #: cogs/alliance/__init__.py:391
+#, python-brace-format
+msgid "HP: {hp}, Defense: {defense}"
+msgstr ""
+
+#: cogs/alliance/__init__.py:398
 msgid "None built"
 msgstr ""
 
-#: cogs/alliance/__init__.py:392
+#: cogs/alliance/__init__.py:399
 #, python-brace-format
 msgid "Use {prefix}alliance build defense [name]"
 msgstr ""
@@ -6366,101 +6370,6 @@ msgstr "You found a tweasuwe with {emote} inside OwO"
 #: utils/castle.py:269
 msgid "You have reached the exit!"
 msgstr "You have weached the exit (ﾉ◕ヮ◕)ﾉ*:･ﾟ✧"
-
-#, python-brace-format
-#~ msgid "{crates} crates"
-#~ msgstr "{crates} cwates"
-
-#, python-brace-format
-#~ msgid ""
-#~ "Did you ever want to join together with other players to defeat the "
-#~ "dragon that roams this land? Raids got you covered!\n"
-#~ "Join the support server (`{prefix}support`) for more information."
-#~ msgstr ""
-#~ "Did you evew want to join togethew with othew pwayews to defeat the "
-#~ "dwagon that woams this wand? Waids got you cuvwed >w< \n"
-#~ "Join the suppowt sewvew (`{prefix}support`) fow mowe infowmation UwU"
-
-#~ msgid "The dealer got a blackjack. You lost."
-#~ msgstr "The deawew got a bwackjack. You lost."
-
-#~ msgid "You got a blackjack and won!"
-#~ msgstr "You got a bwackjack and won ^w^"
-
-#~ msgid "You busted and lose."
-#~ msgstr "You busted and lose."
-
-#~ msgid "Dealer busts and you win!"
-#~ msgstr "Deawew busts and you win ^w^"
-
-#~ msgid "You have a higher score than the dealer and win."
-#~ msgstr "You have a highew scowe than the deawew and win ^w^"
-
-#~ msgid "Dealer has a higher score than you and wins."
-#~ msgstr "Deawew has a highew scowe than you and wins ;;^;;"
-
-#~ msgid "It's a tie."
-#~ msgstr "It's a tie OwO"
-
-#~ msgid "[Guild owner only] Change the guild badge."
-#~ msgstr "[Guiwd ownyew onwy] Change the guiwd badge."
-
-#~ msgid "Shows your current XP and level."
-#~ msgstr "Shows youw cuwwent XP and wevew."
-
-#~ msgid ""
-#~ "A seer, a sacrificer and a follower.\n"
-#~ "The Ritualist devotes their life to the god they follow. For every "
-#~ "evolution, their sacrifices are 5% more effective."
-#~ msgstr ""
-#~ "A seew, a sacwificew and a fowwowew.\n"
-#~ "The Wituawist devotes theiw wife to the god they fowwow. \n"
-#~ "Fow evewy evowution, theiw sacwifices awe 5% mowe effective. (・`ω´・)"
-
-#, python-brace-format
-#~ msgid "Use {prefix}exchange {item} or {prefix}sacrifice {item}"
-#~ msgstr "Use `{prefix}buy {item}` to buy this."
-
-#~ msgid "You do not own this loot item."
-#~ msgstr "You do not own dis loot item ;;^;;"
-
-#, python-brace-format
-#~ msgid ""
-#~ "You prayed to {god}, and they accepted your sacrifice ({name}). Your "
-#~ "standing with the god has increased by **{points}** points."
-#~ msgstr ""
-#~ "You pwayed to {god}, and they accepted youw sacwifice ({name}). Youw "
-#~ "standing with the god has incweased by **{points}** points (ﾉ◕ヮ◕)ﾉ*:･ﾟ✧"
-
-#, python-brace-format
-#~ msgid "Your price is too high. Try adjusting it to be up to `{limit}`."
-#~ msgstr "Youw pwice is too high. Twy adjusting it to be up to `{limit}`."
-
-#, python-brace-format
-#~ msgid ""
-#~ "Successfully added your item to the shop! Use `{prefix}shop` to view it "
-#~ "in the market!"
-#~ msgstr ""
-#~ "Successfuwwy added youw item to the shop >w<! Use `{prefix}shop` to view "
-#~ "it in the mawket (・`ω´・)"
-
-#~ msgid "Look up a guild by name."
-#~ msgstr "Wook up a guiwd by nyame."
-
-#~ msgid "Exchange an item for money or xp."
-#~ msgstr ""
-#~ "**Wichest**: `{rank_money}`\n"
-#~ "**XP**: `{rank_xp}`"
-
-#~ msgid "Select a reward"
-#~ msgstr "Sewect a wewawd ( ◐ω◐ )"
-
-#, python-brace-format
-#~ msgid "**{amount} XP**"
-#~ msgstr "**{amount}XP**"
-
-#~ msgid "Reward gained!"
-#~ msgstr "Wewawd gained ( ◐ω◐ )"
 
 #, python-brace-format
 #~ msgid "{user} gave you additional $50!"
@@ -6494,6 +6403,10 @@ msgstr "You have weached the exit (ﾉ◕ヮ◕)ﾉ*:･ﾟ✧"
 
 #~ msgid "You are already following a god."
 #~ msgstr "You awe alweady fowwowing a god (・`ω´・)"
+
+#, python-brace-format
+#~ msgid "{crates} crates"
+#~ msgstr "{crates} cwates"
 
 #, python-brace-format
 #~ msgid ""
@@ -6560,6 +6473,16 @@ msgstr "You have weached the exit (ﾉ◕ヮ◕)ﾉ*:･ﾟ✧"
 #~ "cwean.\n"
 #~ "[discowdbots.owg Page](https://discordbots.org/bot/541707781665718302)"
 
+#, python-brace-format
+#~ msgid ""
+#~ "Did you ever want to join together with other players to defeat the "
+#~ "dragon that roams this land? Raids got you covered!\n"
+#~ "Join the support server (`{prefix}support`) for more information."
+#~ msgstr ""
+#~ "Did you evew want to join togethew with othew pwayews to defeat the "
+#~ "dwagon that woams this wand? Waids got you cuvwed >w< \n"
+#~ "Join the suppowt sewvew (`{prefix}support`) fow mowe infowmation UwU"
+
 #~ msgid "That is not a valid booster type. Must be `time/luck/money`."
 #~ msgstr "That is nyot a vawid boostew type. Must be `time/luck/money`."
 
@@ -6585,6 +6508,15 @@ msgstr "You have weached the exit (ﾉ◕ヮ◕)ﾉ*:･ﾟ✧"
 #~ msgstr ""
 #~ "A stwong wawwiow who gives theiw wive fow the fight against Zewekiew.\n"
 #~ "Evewy evowve boosts the waidstats by additionyaw 10% OwO"
+
+#~ msgid ""
+#~ "A seer, a sacrificer and a follower.\n"
+#~ "The Ritualist devotes their life to the god they follow. For every "
+#~ "evolution, their sacrifices are 5% more effective."
+#~ msgstr ""
+#~ "A seew, a sacwificew and a fowwowew.\n"
+#~ "The Wituawist devotes theiw wife to the god they fowwow. \n"
+#~ "Fow evewy evowution, theiw sacwifices awe 5% mowe effective. (・`ω´・)"
 
 #~ msgid "playing rugby :rugy_football:"
 #~ msgstr "pwaying wugby :rugy_football:"
@@ -6651,6 +6583,39 @@ msgstr "You have weached the exit (ﾉ◕ヮ◕)ﾉ*:･ﾟ✧"
 #~ "You weached a nyew wevew: **{new_level}** :staw: ^w^!  You weceived "
 #~ "{reward} as a wewawd :tada:"
 
+#~ msgid "The dealer got a blackjack. You lost."
+#~ msgstr "The deawew got a bwackjack. You lost."
+
+#~ msgid "You got a blackjack and won!"
+#~ msgstr "You got a bwackjack and won ^w^"
+
+#~ msgid "You busted and lose."
+#~ msgstr "You busted and lose."
+
+#~ msgid "Dealer busts and you win!"
+#~ msgstr "Deawew busts and you win ^w^"
+
+#~ msgid "You have a higher score than the dealer and win."
+#~ msgstr "You have a highew scowe than the deawew and win ^w^"
+
+#~ msgid "Dealer has a higher score than you and wins."
+#~ msgstr "Deawew has a highew scowe than you and wins ;;^;;"
+
+#~ msgid "It's a tie."
+#~ msgstr "It's a tie OwO"
+
+#, python-brace-format
+#~ msgid "Your price is too high. Try adjusting it to be up to `{limit}`."
+#~ msgstr "Youw pwice is too high. Twy adjusting it to be up to `{limit}`."
+
+#, python-brace-format
+#~ msgid ""
+#~ "Successfully added your item to the shop! Use `{prefix}shop` to view it "
+#~ "in the market!"
+#~ msgstr ""
+#~ "Successfuwwy added youw item to the shop >w<! Use `{prefix}shop` to view "
+#~ "it in the mawket (・`ω´・)"
+
 #, python-brace-format
 #~ msgid "<@{marriage}>, do you want to make a child with {author}?"
 #~ msgstr "<@{marriage}>, do you want to make a chiwd with {author}?"
@@ -6664,6 +6629,12 @@ msgstr "You have weached the exit (ﾉ◕ヮ◕)ﾉ*:･ﾟ✧"
 
 #~ msgid "Shard"
 #~ msgstr "Shawd"
+
+#~ msgid "Look up a guild by name."
+#~ msgstr "Wook up a guiwd by nyame."
+
+#~ msgid "[Guild owner only] Change the guild badge."
+#~ msgstr "[Guiwd ownyew onwy] Change the guiwd badge."
 
 #~ msgid ""
 #~ "Upvote me to receive a random crate! You will be rewarded a few seconds "
@@ -6692,13 +6663,46 @@ msgstr "You have weached the exit (ﾉ◕ヮ◕)ﾉ*:･ﾟ✧"
 #~ "Youw cuwwent wuck muwtipwiew is `{luck}x` (≈{percent}% mowe than usuaw "
 #~ "(usuaw=0)) ( ◐ω◐ )"
 
+#~ msgid "Shows your current XP and level."
+#~ msgstr "Shows youw cuwwent XP and wevew."
+
 #, python-brace-format
 #~ msgid "ID: `{id}`, Type: `{type_}` with {statstr}. Value is **${value}**"
 #~ msgstr "ID: `{id}`, Type: `{type_}` with {statstr}. Vawue is **${value}**"
 
 #, python-brace-format
+#~ msgid "Use {prefix}exchange {item} or {prefix}sacrifice {item}"
+#~ msgstr "Use `{prefix}buy {item}` to buy this."
+
+#~ msgid "Exchange an item for money or xp."
+#~ msgstr ""
+#~ "**Wichest**: `{rank_money}`\n"
+#~ "**XP**: `{rank_xp}`"
+
+#~ msgid "You do not own this loot item."
+#~ msgstr "You do not own dis loot item ;;^;;"
+
+#~ msgid "Select a reward"
+#~ msgstr "Sewect a wewawd ( ◐ω◐ )"
+
+#, python-brace-format
+#~ msgid "**{amount} XP**"
+#~ msgstr "**{amount}XP**"
+
+#~ msgid "Reward gained!"
+#~ msgstr "Wewawd gained ( ◐ω◐ )"
+
+#, python-brace-format
 #~ msgid "Successfully gave **${money}** to {other}."
 #~ msgstr "Successfuwwy gave **${money}** to {other}."
+
+#, python-brace-format
+#~ msgid ""
+#~ "You prayed to {god}, and they accepted your sacrifice ({name}). Your "
+#~ "standing with the god has increased by **{points}** points."
+#~ msgstr ""
+#~ "You pwayed to {god}, and they accepted youw sacwifice ({name}). Youw "
+#~ "standing with the god has incweased by **{points}** points (ﾉ◕ヮ◕)ﾉ*:･ﾟ✧"
 
 #, python-brace-format
 #~ msgid ""
