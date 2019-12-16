@@ -102,6 +102,7 @@ class Alliance(commands.Cog):
 
         await ctx.send(embed=alliance_embed)
 
+    @alliance_cooldown(300)
     @is_alliance_leader()
     @alliance.command()
     @locale_doc
@@ -534,6 +535,9 @@ class Alliance(commands.Cog):
                 'SELECT * FROM defenses WHERE "city"=$1;', city
             )
         ]
+
+        if not defenses:
+            return await ctx.send(_("The city is without defenses already."))
 
         await ctx.send(
             _("Attack on **{city}** starting with **{amount}** attackers!").format(
