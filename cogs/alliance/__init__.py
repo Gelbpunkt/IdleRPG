@@ -452,7 +452,9 @@ class Alliance(commands.Cog):
             return await ctx.send(_("Invalid city."))
 
         if await self.bot.redis.execute("GET", f"city:{city}"):
-            return await ctx.send(_("**{city}** is already under attack."))
+            return await ctx.send(
+                _("**{city}** is already under attack.").format(city=city)
+            )
 
         async with self.bot.pool.acquire() as conn:
             alliance_id = await conn.fetchval(
@@ -524,7 +526,7 @@ class Alliance(commands.Cog):
 
         # Get all defenses
         defenses = [
-            list(i)
+            dict(i)
             for i in await self.bot.pool.fetch(
                 'SELECT * FROM defenses WHERE "city"=$1;', city
             )
