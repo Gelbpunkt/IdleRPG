@@ -72,6 +72,12 @@ class NoCityOwned(commands.CheckFailure):
     pass
 
 
+class CityOwned(commands.CheckFailure):
+    """Exception raised when an alliance controls a city."""
+
+    pass
+
+
 class WrongClass(commands.CheckFailure):
     """Exception raised when a user does not meet the class requirement."""
 
@@ -283,6 +289,24 @@ def owns_city():
             if not owned_city:
                 raise NoCityOwned()
             ctx.city = owned_city
+            return True
+
+    return commands.check(predicate)
+
+
+def owns_no_city():
+    """"Checks whether an alliance owns no city."""
+
+    async def predicate(ctx):
+        async with ctx.bot.pool.acquire() as conn:
+            alliance = await conn.fetchval(
+                'SELECT alliance FROM guild WHERE "id"=$1', ctx.character_data["guild"]
+            )
+            owned_city = await conn.fetchval(
+                'SELECT name FROM city WHERE "owner"=$1', alliance
+            )
+            if owned_city:
+                raise CityOwned()
             return True
 
     return commands.check(predicate)

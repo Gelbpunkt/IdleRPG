@@ -31,6 +31,7 @@ from utils.checks import (
     is_alliance_leader,
     is_guild_leader,
     owns_city,
+    owns_no_city,
 )
 
 
@@ -401,6 +402,35 @@ class Alliance(commands.Cog):
                 ),
             )
         await ctx.send(embed=embed)
+
+    @owns_no_city()
+    @is_alliance_leader()
+    @alliance.command()
+    @locale_doc
+    async def occupy(self, ctx, *, city: str.title):
+        _("""[Alliance Leader only] Take control of an empty city.""")
+        if city not in self.bot.config.cities:
+            return await ctx.send(_("Invalid city name."))
+        async with self.bot.pool.acquire() as conn:
+            num_units = await conn.fetchval(
+                'SELECT COUNT(*) FROM defenses WHERE "city"=$1;', city
+            )
+            if num_units != 0:
+                return await ctx.send(
+                    _(
+                        "The city is occupied by **{amount}** defensive fortifications."
+                    ).format(amount=num_units)
+                )
+            await conn.execute(
+                'UPDATE city SET "owner"=$1 WHERE "name"=$2;',
+                ctx.character_data["guild"],
+                city,
+            )
+        await ctx.send(
+            _(
+                "Your alliance now rules **{city}**. You should immediately buy defenses."
+            ).format(city=city)
+        )
 
 
 def setup(bot):
