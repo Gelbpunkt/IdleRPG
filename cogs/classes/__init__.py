@@ -260,9 +260,9 @@ Priest   ->  Mysticist ->  Summoner    -> Seer           ->  Ritualist
     @locale_doc
     async def steal(self, ctx):
         _("""[Thief Only] Steal money!""")
-        if not (
+        if (
             buildings := await self.bot.get_city_buildings(ctx.character_data["guild"])
-        ):
+        ) :
             bonus = buildings["thief_building"] * 5
         else:
             bonus = 0
