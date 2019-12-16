@@ -532,14 +532,6 @@ ALTER TABLE ONLY public.city
 
 
 --
--- Name: defenses defenses_pkey; Type: CONSTRAINT; Schema: public; Owner: jens
---
-
-ALTER TABLE ONLY public.defenses
-    ADD CONSTRAINT defenses_pkey PRIMARY KEY (city);
-
-
---
 -- Name: guild guild_pkey; Type: CONSTRAINT; Schema: public; Owner: jens
 --
 
