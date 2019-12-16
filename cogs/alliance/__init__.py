@@ -205,8 +205,8 @@ class Alliance(commands.Cog):
         await ctx.send(_("Please use one of these subcommands:\n\n") + subcommands)
 
     @user_cooldown(300)
-    @is_alliance_leader()
     @owns_city()
+    @is_alliance_leader()
     @build.command()
     async def building(self, ctx, name: str.lower):
         city = await self.bot.pool.fetchrow(
@@ -351,9 +351,7 @@ class Alliance(commands.Cog):
                 'SELECT name FROM city WHERE "owner"=$1;', alliance
             )
             defenses = (
-                await conn.fetchrow(
-                    'SELECT * FROM defenses WHERE "city"=$1;', city_name
-                )
+                await conn.fetch('SELECT * FROM defenses WHERE "city"=$1;', city_name)
             ) or []
         if not city_name:
             return await ctx.send(_("Your alliance does not own a city."))
