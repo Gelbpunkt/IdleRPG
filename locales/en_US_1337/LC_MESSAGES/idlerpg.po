@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-12-10 02:50-0800\n"
+"POT-Creation-Date: 2019-12-15 17:00-0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -542,7 +542,7 @@ msgstr ""
 msgid "Opens a crate."
 msgstr "0p3n5 4 cr473."
 
-#: cogs/crates/__init__.py:77 cogs/crates/__init__.py:164
+#: cogs/crates/__init__.py:77 cogs/crates/__init__.py:170
 #: cogs/admin/__init__.py:157
 #, python-brace-format
 msgid "{rarity} is not a valid rarity."
@@ -569,23 +569,23 @@ msgstr "ID"
 msgid "Remaining {rarity} crates: {crates}"
 msgstr "R3m41n1n6 {rarity} cr4735: {crates}"
 
-#: cogs/crates/__init__.py:159
+#: cogs/crates/__init__.py:165
 msgid "Trades crates to a user."
 msgstr "7r4d35 cr4735 70 4 u53r."
 
 #. preserve deletion of admins
 #. preserve renaming of admins
-#: cogs/crates/__init__.py:161 cogs/guild/__init__.py:315
+#: cogs/crates/__init__.py:167 cogs/guild/__init__.py:315
 #: cogs/guild/__init__.py:343 cogs/admin/__init__.py:107
 #: cogs/admin/__init__.py:120
 msgid "Very funny..."
 msgstr "V3ry funny..."
 
-#: cogs/crates/__init__.py:167
+#: cogs/crates/__init__.py:173
 msgid "You don't have any crates of this rarity."
 msgstr "Y0u d0n'7 h4v3 4ny cr4735 0f 7h15 r4r17y."
 
-#: cogs/crates/__init__.py:180
+#: cogs/crates/__init__.py:186
 #, python-brace-format
 msgid "Successfully gave {amount} {rarity} crate(s) to {other}."
 msgstr "5ucc355fully 64v3 {amount} {rarity} cr473(5) 70 {other}."
@@ -847,7 +847,7 @@ msgid "You are on cooldown. Try again in {time}."
 msgstr "Y0u 4r3 0n c00ld0wn. 7ry 4641n 1n {time}."
 
 #: cogs/error_handler/__init__.py:81 cogs/error_handler/__init__.py:118
-#: cogs/error_handler/__init__.py:188
+#: cogs/error_handler/__init__.py:190
 msgid "Permission denied"
 msgstr "P3rm15510n d3n13d"
 
@@ -966,7 +966,12 @@ msgstr ""
 msgid "There is another raid already ongoing. Try again at a later time."
 msgstr ""
 
-#: cogs/error_handler/__init__.py:190
+#: cogs/error_handler/__init__.py:186 cogs/alliance/__init__.py:346
+#: cogs/alliance/__init__.py:375
+msgid "Your alliance does not own a city."
+msgstr ""
+
+#: cogs/error_handler/__init__.py:192
 msgid ""
 ":x: You don't have the permissions to use this command. It is thought for "
 "other users."
@@ -975,17 +980,17 @@ msgstr ""
 "07h3r u53r5."
 
 #. prevent cooldown reset
-#: cogs/error_handler/__init__.py:196 cogs/trading/__init__.py:481
+#: cogs/error_handler/__init__.py:198 cogs/trading/__init__.py:481
 msgid "You did not choose anything."
 msgstr "Y0u d1d n07 ch0053 4ny7h1n6."
 
-#: cogs/error_handler/__init__.py:215
+#: cogs/error_handler/__init__.py:217
 msgid ""
 "An argument or value you entered was far too high for me to handle properly!"
 msgstr ""
 "4n 4r6um3n7 0r v4lu3 y0u 3n73r3d w45 f4r 700 h16h f0r m3 70 h4ndl3 pr0p3rly!"
 
-#: cogs/error_handler/__init__.py:221
+#: cogs/error_handler/__init__.py:223
 msgid ""
 "The languages have been reloaded while you were using a command. The "
 "execution therefore had to be stopped. Please try again."
@@ -993,7 +998,7 @@ msgstr ""
 "7h3 l4n6u4635 h4v3 b33n r3l04d3d wh1l3 y0u w3r3 u51n6 4 c0mm4nd. 7h3 "
 "3x3cu710n 7h3r3f0r3 h4d 70 b3 570pp3d. Pl3453 7ry 4641n."
 
-#: cogs/error_handler/__init__.py:252
+#: cogs/error_handler/__init__.py:254
 msgid ""
 "The command you tried to use ran into an error. The incident has been "
 "reported and the team will work hard to fix the issue!"
@@ -1954,7 +1959,7 @@ msgid "Please either buy `time`, `luck` or `money`."
 msgstr "Pl3453 317h3r buy `71m3`, `luck` 0r `m0n3y`."
 
 #: cogs/store/__init__.py:62 cogs/gambling/__init__.py:453
-#: cogs/gambling/__init__.py:485 cogs/guild/__init__.py:619
+#: cogs/gambling/__init__.py:489 cogs/guild/__init__.py:619
 msgid "You're too poor."
 msgstr "Y0u'r3 700 p00r."
 
@@ -3082,7 +3087,7 @@ msgid "You hit the enemy for {dmg} damage"
 msgstr "Y0u h17 7h3 3n3my f0r {dmg} d4m463"
 
 #: cogs/adventure/__init__.py:359 cogs/adventure/__init__.py:365
-#: cogs/gambling/__init__.py:522 cogs/gambling/__init__.py:552
+#: cogs/gambling/__init__.py:526 cogs/gambling/__init__.py:556
 #: utils/castle.py:259 utils/castle.py:264
 msgid "Timed out."
 msgstr "71m3d 0u7."
@@ -3162,24 +3167,24 @@ msgstr ""
 "0u7 0f **{total}** 4dv3n7ur35, y0u d13d **{deaths}** 71m35 4nd 5urv1v3d "
 "**{completed}** 71m35, wh1ch 15 4 5ucc355 r473 0f **{rate}%**."
 
-#: cogs/shard_communication/__init__.py:373
+#: cogs/shard_communication/__init__.py:374
 msgid "Lists all your cooldowns."
 msgstr "L1575 4ll y0ur c00ld0wn5."
 
-#: cogs/shard_communication/__init__.py:378
+#: cogs/shard_communication/__init__.py:379
 msgid "You don't have any active cooldown at the moment."
 msgstr "Y0u d0n'7 h4v3 4ny 4c71v3 c00ld0wn 47 7h3 m0m3n7."
 
-#: cogs/shard_communication/__init__.py:380
+#: cogs/shard_communication/__init__.py:381
 msgid "Commands on cooldown:"
 msgstr "C0mm4nd5 0n c00ld0wn:"
 
-#: cogs/shard_communication/__init__.py:385
+#: cogs/shard_communication/__init__.py:386
 #, python-brace-format
 msgid "{cmd} is on cooldown and will be available after {time}"
 msgstr "{cmd} 15 0n c00ld0wn 4nd w1ll b3 4v41l4bl3 4f73r {time}"
 
-#: cogs/shard_communication/__init__.py:390
+#: cogs/shard_communication/__init__.py:391
 #, python-brace-format
 msgid "Adventure is running and will be done after {time}"
 msgstr "4dv3n7ur3 15 runn1n6 4nd w1ll b3 d0n3 4f73r {time}"
@@ -3306,18 +3311,18 @@ msgid ""
 msgstr ""
 "Y0u w0n **${money}**! 7h3 r4nd0m numb3r w45 `{num}`, y0u 71pp3d `{tip}`."
 
-#: cogs/gambling/__init__.py:474
+#: cogs/gambling/__init__.py:478
 #, python-brace-format
 msgid ""
 "You lost **${money}**! The random number was `{num}`, you tipped `{tip}`."
 msgstr ""
 "Y0u l057 **${money}**! 7h3 r4nd0m numb3r w45 `{num}`, y0u 71pp3d `{tip}`."
 
-#: cogs/gambling/__init__.py:483
+#: cogs/gambling/__init__.py:487
 msgid "[Alpha] Play blackjack against the dealer."
 msgstr "[4lph4] Pl4y bl4ckj4ck 4641n57 7h3 d34l3r."
 
-#: cogs/gambling/__init__.py:499
+#: cogs/gambling/__init__.py:503
 msgid ""
 "Play a double-or-steal game against someone. You start with $100 and can "
 "take it or double it with your money."
@@ -3325,40 +3330,40 @@ msgstr ""
 "Pl4y 4 d0ubl3-0r-5734l 64m3 4641n57 50m30n3. Y0u 574r7 w17h $100 4nd c4n "
 "74k3 17 0r d0ubl3 17 w17h y0ur m0n3y."
 
-#: cogs/gambling/__init__.py:502
+#: cogs/gambling/__init__.py:506
 #, python-brace-format
 msgid "React with 💰 to play double-or-steal with {user}!"
 msgstr "R34c7 w17h 💰 70 pl4y d0ubl3-0r-5734l w17h {user}!"
 
-#: cogs/gambling/__init__.py:525
+#: cogs/gambling/__init__.py:529
 #, python-brace-format
 msgid "{user} has no character."
 msgstr "{user} h45 n0 ch4r4c73r."
 
-#: cogs/gambling/__init__.py:532 cogs/gambling/__init__.py:573
+#: cogs/gambling/__init__.py:536 cogs/gambling/__init__.py:577
 #, python-brace-format
 msgid "{user} is too poor to double."
 msgstr "{user} 15 700 p00r 70 d0ubl3."
 
-#: cogs/gambling/__init__.py:542
+#: cogs/gambling/__init__.py:546
 #, python-brace-format
 msgid "Double or steal ${money}?"
 msgstr "D0ubl3 0r 5734l ${money}?"
 
-#: cogs/gambling/__init__.py:543
+#: cogs/gambling/__init__.py:547
 msgid "Double"
 msgstr "D0ubl3"
 
-#: cogs/gambling/__init__.py:543
+#: cogs/gambling/__init__.py:547
 msgid "Steal"
 msgstr "5734l"
 
-#: cogs/gambling/__init__.py:561
+#: cogs/gambling/__init__.py:565
 #, python-brace-format
 msgid "{user} stole **${money}**."
 msgstr "{user} 570l3 **${money}**."
 
-#: cogs/gambling/__init__.py:581
+#: cogs/gambling/__init__.py:585
 #, python-brace-format
 msgid "{user} doubled to **${money}**."
 msgstr "{user} d0ubl3d 70 **${money}**."
@@ -4773,7 +4778,7 @@ msgstr ""
 msgid "{user} has been added to your team, {enemy}."
 msgstr "{user} h45 b33n 4dd3d 70 y0ur 734m, {enemy}."
 
-#: cogs/guild/__init__.py:848
+#: cogs/guild/__init__.py:853
 msgid ""
 "Fight started!\n"
 "Generating battles..."
@@ -4781,7 +4786,7 @@ msgstr ""
 "F16h7 574r73d!\n"
 "63n3r471n6 b477l35..."
 
-#: cogs/guild/__init__.py:850
+#: cogs/guild/__init__.py:855
 msgid ""
 "Fight started!\n"
 "Generating battles... Done."
@@ -4789,7 +4794,7 @@ msgstr ""
 "F16h7 574r73d!\n"
 "63n3r471n6 b477l35... D0n3."
 
-#: cogs/guild/__init__.py:857
+#: cogs/guild/__init__.py:862
 #, python-brace-format
 msgid ""
 "Guild Battle Fight **{num}** of **{total}**.\n"
@@ -4800,7 +4805,7 @@ msgstr ""
 "**{user}** v5 **{user2}**!\n"
 "B477l3 runn1n6..."
 
-#: cogs/guild/__init__.py:887
+#: cogs/guild/__init__.py:892
 #, python-brace-format
 msgid ""
 "Winner of **{user}** vs **{user2}** is **{winner}**! Current points: "
@@ -4809,24 +4814,24 @@ msgstr ""
 "W1nn3r 0f **{user}** v5 **{user2}** 15 **{winner}**! Curr3n7 p01n75: "
 "**{wins1}** 70 **{wins2}**."
 
-#: cogs/guild/__init__.py:900
+#: cogs/guild/__init__.py:905
 msgid "Some guild spent the money??? Bad looser!"
 msgstr "50m3 6u1ld 5p3n7 7h3 m0n3y??? B4d l0053r!"
 
-#: cogs/guild/__init__.py:923 cogs/guild/__init__.py:949
+#: cogs/guild/__init__.py:928 cogs/guild/__init__.py:957
 #, python-brace-format
 msgid "{guild} won the battle! Congratulations!"
 msgstr "{guild} w0n 7h3 b477l3! C0n6r47ul4710n5!"
 
-#: cogs/guild/__init__.py:954
+#: cogs/guild/__init__.py:965
 msgid "It's a tie!"
 msgstr "17'5 4 713!"
 
-#: cogs/guild/__init__.py:961
+#: cogs/guild/__init__.py:975
 msgid "Starts a guild adventure."
 msgstr "574r75 4 6u1ld 4dv3n7ur3."
 
-#: cogs/guild/__init__.py:966
+#: cogs/guild/__init__.py:980
 #, python-brace-format
 msgid ""
 "Your guild is already on an adventure! Use `{prefix}guild status` to view "
@@ -4835,7 +4840,7 @@ msgstr ""
 "Y0ur 6u1ld 15 4lr34dy 0n 4n 4dv3n7ur3! U53 `{prefix}guild status` 70 v13w "
 "h0w l0n6 17 571ll l4575."
 
-#: cogs/guild/__init__.py:975
+#: cogs/guild/__init__.py:989
 #, python-brace-format
 msgid ""
 "{author} seeks a guild adventure for **{guild}**! React to join! Unlimited "
@@ -4844,20 +4849,20 @@ msgstr ""
 "{author} 533k5 4 6u1ld 4dv3n7ur3 f0r **{guild}**! R34c7 70 j01n! Unl1m173d "
 "pl4y3r5 c4n j01n 1n 7h3 n3x7 m1nu73. 7h3 m1n1mum 0f pl4y3r5 r3qu1r3d 15 3."
 
-#: cogs/guild/__init__.py:1003
+#: cogs/guild/__init__.py:1017
 #, python-brace-format
 msgid "Alright, {user}, you have been added."
 msgstr "4lr16h7, {user}, y0u h4v3 b33n 4dd3d."
 
-#: cogs/guild/__init__.py:1008
+#: cogs/guild/__init__.py:1022
 msgid "You aren't in their guild."
 msgstr "Y0u 4r3n'7 1n 7h31r 6u1ld."
 
-#: cogs/guild/__init__.py:1014
+#: cogs/guild/__init__.py:1028
 msgid "You didn't get enough other players for the guild adventure."
 msgstr "Y0u d1dn'7 637 3n0u6h 07h3r pl4y3r5 f0r 7h3 6u1ld 4dv3n7ur3."
 
-#: cogs/guild/__init__.py:1025
+#: cogs/guild/__init__.py:1039
 #, python-brace-format
 msgid ""
 "\n"
@@ -4876,11 +4881,11 @@ msgstr ""
 "D1ff1cul7y 15 **{difficulty}**\n"
 "71m3 17 w1ll 74k3: **{time}**\n"
 
-#: cogs/guild/__init__.py:1049
+#: cogs/guild/__init__.py:1063
 msgid "Views your guild adventure."
 msgstr "V13w5 y0ur 6u1ld 4dv3n7ur3."
 
-#: cogs/guild/__init__.py:1055
+#: cogs/guild/__init__.py:1069
 #, python-brace-format
 msgid ""
 "Your guild isn't on an adventure yet. Ask your guild leader to use `{prefix}"
@@ -4889,7 +4894,7 @@ msgstr ""
 "Y0ur 6u1ld 15n'7 0n 4n 4dv3n7ur3 y37. 45k y0ur 6u1ld l34d3r 70 u53 `{prefix}"
 "guild adventure` 70 574r7 0n3"
 
-#: cogs/guild/__init__.py:1070
+#: cogs/guild/__init__.py:1084
 #, python-brace-format
 msgid ""
 "Your guild has completed an adventure of difficulty `{difficulty}` and **"
@@ -4898,7 +4903,7 @@ msgstr ""
 "Y0ur 6u1ld h45 c0mpl373d 4n 4dv3n7ur3 0f d1ff1cul7y `{difficulty}` 4nd **"
 "${gold}** h45 b33n 4dd3d 70 7h3 b4nk."
 
-#: cogs/guild/__init__.py:1080
+#: cogs/guild/__init__.py:1094
 #, python-brace-format
 msgid ""
 "Your guild is currently in an adventure with difficulty `{difficulty}`.\n"
@@ -6170,6 +6175,219 @@ msgstr "L04d1n6..."
 #, python-brace-format
 msgid "Playing with {user}"
 msgstr "Pl4y1n6 w17h {user}"
+
+#: cogs/alliance/__init__.py:44
+msgid "Shows cities and owners."
+msgstr ""
+
+#: cogs/alliance/__init__.py:48
+msgid "Cities"
+msgstr ""
+
+#: cogs/alliance/__init__.py:52
+#, python-brace-format
+msgid "Owned by {alliance}'s alliance"
+msgstr ""
+
+#: cogs/alliance/__init__.py:63
+msgid "This command contains all alliance-related commands."
+msgstr ""
+
+#. your guild is the only one OR error and query returns zero guilds
+#: cogs/alliance/__init__.py:74
+msgid "You are not in an alliance."
+msgstr ""
+
+#: cogs/alliance/__init__.py:76
+msgid "Your allied guilds"
+msgstr ""
+
+#: cogs/alliance/__init__.py:81
+#, python-brace-format
+msgid "Lead by {leader}"
+msgstr ""
+
+#: cogs/alliance/__init__.py:88
+#, python-brace-format
+msgid ""
+"{prefix}alliance buildings | {prefix}alliance defenses | {prefix}alliance "
+"attack"
+msgstr ""
+
+#: cogs/alliance/__init__.py:98
+msgid "[Alliance Leader only] Invite a guild leader to the alliance."
+msgstr ""
+
+#: cogs/alliance/__init__.py:100
+msgid "That member is not in a guild."
+msgstr ""
+
+#: cogs/alliance/__init__.py:105
+msgid "That member is not the leader of their guild."
+msgstr ""
+
+#: cogs/alliance/__init__.py:110
+msgid "This member's guild is already part of your alliance."
+msgstr ""
+
+#: cogs/alliance/__init__.py:115
+#, python-brace-format
+msgid ""
+"{newleader}, {author} invites you to join their alliance. React to join now."
+msgstr ""
+
+#: cogs/alliance/__init__.py:129
+#, python-brace-format
+msgid "**{newguild}** is now part of your alliance, {user}!"
+msgstr ""
+
+#: cogs/alliance/__init__.py:138
+msgid "[Guild Leader only] Leave your alliance."
+msgstr ""
+
+#: cogs/alliance/__init__.py:145
+msgid "You are the alliance's leading guild and cannot leave it!"
+msgstr ""
+
+#: cogs/alliance/__init__.py:151
+msgid "Your guild left the alliance."
+msgstr ""
+
+#: cogs/alliance/__init__.py:158
+msgid ""
+"[Alliance Leader only] Kick a guild from your alliance.\n"
+" Use either the guild name or ID for guild_to_kick."
+msgstr ""
+
+#: cogs/alliance/__init__.py:172
+#, python-brace-format
+msgid ""
+"Cannot find guild `{guild_to_kick}`. Are you sure that's the right name/ID?"
+msgstr ""
+
+#: cogs/alliance/__init__.py:176
+msgid "That won't work."
+msgstr ""
+
+#: cogs/alliance/__init__.py:179
+msgid "This guild is not in your alliance."
+msgstr ""
+
+#: cogs/alliance/__init__.py:182
+#, python-brace-format
+msgid "Do you really want to kick **{guild}** from your alliance?"
+msgstr ""
+
+#: cogs/alliance/__init__.py:194
+#, python-brace-format
+msgid "**{guild}** is no longer part of your alliance."
+msgstr ""
+
+#: cogs/alliance/__init__.py:211
+msgid "This command contains all alliance-building-related commands."
+msgstr ""
+
+#: cogs/alliance/__init__.py:213
+msgid ""
+"Please use one of these subcommands:\n"
+"\n"
+msgstr ""
+
+#: cogs/alliance/__init__.py:221
+msgid "[Alliance Leader only] Upgrade a city beneficial building."
+msgstr ""
+
+#: cogs/alliance/__init__.py:231
+#, python-brace-format
+msgid ""
+"Invalid building. Please use `{prefix}{cmd} [thief/raid/trade/adventure]` or "
+"check the possible buildings in your city."
+msgstr ""
+
+#: cogs/alliance/__init__.py:236
+msgid "This building is fully upgraded."
+msgstr ""
+
+#: cogs/alliance/__init__.py:240
+#, python-brace-format
+msgid ""
+"Are you sure you want to upgrade the **{name} building** to level "
+"{new_level}? This will cost $**{price}**."
+msgstr ""
+
+#: cogs/alliance/__init__.py:247
+#, python-brace-format
+msgid ""
+"Your guild doesn't have enough money to upgrade the city's {name} building."
+msgstr ""
+
+#: cogs/alliance/__init__.py:264
+#, python-brace-format
+msgid ""
+"Successfully upgraded the city's {name} building to level **{new_level}**"
+msgstr ""
+
+#: cogs/alliance/__init__.py:275
+msgid ""
+"[Alliance Leader only] Build a defensive building or buy troops for the city."
+msgstr ""
+
+#: cogs/alliance/__init__.py:287
+#, python-brace-format
+msgid "Invalid defense. Please use `{prefix}{cmd} [{buildings}]`."
+msgstr ""
+
+#: cogs/alliance/__init__.py:302
+msgid "You may only build up to 10 defenses."
+msgstr ""
+
+#: cogs/alliance/__init__.py:305
+#, python-brace-format
+msgid ""
+"Are you sure you want to build a **{defense}**? This will cost $**{price}**."
+msgstr ""
+
+#: cogs/alliance/__init__.py:314
+#, python-brace-format
+msgid "Your guild doesn't have enough money to build a {defense}."
+msgstr ""
+
+#: cogs/alliance/__init__.py:331
+#, python-brace-format
+msgid "Successfully built a {defense}."
+msgstr ""
+
+#: cogs/alliance/__init__.py:337
+msgid "Lists buildings in your city."
+msgstr ""
+
+#: cogs/alliance/__init__.py:348
+#, python-brace-format
+msgid "{city}'s buildings"
+msgstr ""
+
+#: cogs/alliance/__init__.py:363
+msgid "Lists defenses in your city."
+msgstr ""
+
+#: cogs/alliance/__init__.py:377
+#, python-brace-format
+msgid "{city}'s defenses"
+msgstr ""
+
+#: cogs/alliance/__init__.py:384
+#, python-brace-format
+msgid "HP: {hp}, Defense: {defense}"
+msgstr ""
+
+#: cogs/alliance/__init__.py:391
+msgid "None built"
+msgstr ""
+
+#: cogs/alliance/__init__.py:392
+#, python-brace-format
+msgid "Use {prefix}alliance build defense [name]"
+msgstr ""
 
 #: utils/castle.py:164
 #, python-brace-format
