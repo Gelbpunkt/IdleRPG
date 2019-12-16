@@ -44,14 +44,20 @@ class Alliance(commands.Cog):
     async def cities(self, ctx):
         _("""Shows cities and owners.""")
         cities = await self.bot.pool.fetch(
-            'SELECT c.*, g."name" AS "gname" FROM city c JOIN guild g ON c."owner"=g."id";'
+            'SELECT c.*, g."name" AS "gname", SUM(d."defense") AS "defense" FROM city c JOIN guild g ON c."owner"=g."id" JOIN defenses d ON c."name"=d."city" GROUP BY c."owner", c."name", g."name";'
         )
         em = discord.Embed(title=_("Cities"), colour=self.bot.config.primary_colour)
         for city in cities:
             em.add_field(
-                name=city["name"],
-                value=_("Owned by {alliance}'s alliance").format(
-                    alliance=city["gname"]
+                name=_("{name} (Tier {tier})").format(
+                    name=city["name"], tier=len(self.bot.config.cities[city["name"]])
+                ),
+                value=_(
+                    "Owned by {alliance}'s alliance\nVuildings: {buildings}\nTotal defense: {defense}"
+                ).format(
+                    alliance=city["gname"],
+                    buildings=", ".join(self.bot.config.cities[city["name"]]),
+                    defense=city["defense"],
                 ),
             )
         await ctx.send(embed=em)
@@ -359,7 +365,7 @@ class Alliance(commands.Cog):
         for i in self.bot.config.cities[buildings["name"]]:
             embed.add_field(
                 name=f"{i.capitalize()} building",
-                value="LVL " + str(buildings[f"{i}_building"]),
+                value=_("Level {level}").format(level=buildings[f"{i}_building"]),
                 inline=True,
             )
         await ctx.send(embed=embed)
