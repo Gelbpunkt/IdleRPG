@@ -691,7 +691,7 @@ Armor: {data['armor']}"""
     async def get_city_buildings(guild_id):
         if not guild_id:  # also catches guild_id = 0
             return False
-        res = await ctx.bot.pool.fetchrow(
+        res = await self.pool.fetchrow(
             'SELECT c.* FROM city c JOIN guild g ON c."owner"=g."id" WHERE g."id"=(SELECT alliance FROM guild WHERE "id"=$1);',
             guild_id,
         )
