@@ -432,7 +432,7 @@ class Alliance(commands.Cog):
                     ).format(amount=num_units)
                 )
             await conn.execute(
-                'UPDATE city SET "owner"=$1 WHERE "name"=$2;',
+                'UPDATE city SET "owner"=$1, "raid_building"=0, "thief_building"=0, "trade_building"=0, "adventure_building"=0 WHERE "name"=$2;',
                 ctx.character_data["guild"],
                 city,
             )
