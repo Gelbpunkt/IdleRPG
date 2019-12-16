@@ -67,7 +67,7 @@ def xptonextlevel(xp):
         return str(nextxp - xp)
 
 
-def calcchance(sword, shield, dungeon, level, luck, returnsuccess=False, booster=False):
+def calcchance(sword, shield, dungeon, level, luck, returnsuccess=False, booster=False, bonus=0):
     if returnsuccess is False:
         val1 = sword + shield + 75 - dungeon * 10
         val2 = sword + shield + 75 - dungeon * 2
@@ -82,6 +82,7 @@ def calcchance(sword, shield, dungeon, level, luck, returnsuccess=False, booster
             + 75
             - (dungeon * (random.randint(2, 10)))
             + random.choice([level, -level])
+            + bonus 
         )
         if success >= 0:
             success = round(success * luck)
