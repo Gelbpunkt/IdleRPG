@@ -441,6 +441,9 @@ class Alliance(commands.Cog):
                 "Your alliance now rules **{city}**. You should immediately buy defenses."
             ).format(city=city)
         )
+        await self.bot.public_log(
+            f"**{city}** was occupied by {ctx.author}'s alliance."
+        )
 
     @user_cooldown(7200)
     @is_guild_leader()
