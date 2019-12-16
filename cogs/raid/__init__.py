@@ -1948,6 +1948,11 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
             tier = self.bot.get_class_grade_from(ctx.character_data["class"], "Raider")
             atk += Decimal("0.1") * tier
             deff += Decimal("0.1") * tier
+        if (
+            buildings := await self.bot.get_city_buildings(ctx.character_data["guild"])
+        ) :
+            atk += Decimal("0.1") * buildings["raid_building"]
+            deff += Decimal("0.1") * buildings["raid_building"]
         await ctx.send(
             _(
                 "**{author}'s raid multipliers**\nDamage Multiplier: x{atk} (Upgrading: ${atkp})\nDefense Multiplier: x{deff} (Upgrading: ${deffp})"
