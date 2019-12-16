@@ -2184,6 +2184,12 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
         deff = ctx.character_data["defmultiply"]
         atkp = self.getpriceto(atk + Decimal("0.1"))
         deffp = self.getpriceto(deff + Decimal("0.1"))
+        buildings = await self.bot.get_city_buildings(ctx)
+        if not buildings:
+            pass
+        else:
+            atk += buildings["raid_building"] * 0.1
+            deff += buildings["raid_building"] * 0.1
         if self.bot.in_class_line(ctx.character_data["class"], "Raider"):
             tier = self.bot.get_class_grade_from(ctx.character_data["class"], "Raider")
             atk += Decimal("0.1") * tier

@@ -217,10 +217,15 @@ class Bot(commands.AutoShardedBot):
             local = True
         sword, shield = await self.get_equipped_items_for(v, conn=conn)
         if atkmultiply is None or defmultiply is None or classes is None:
-            atkmultiply, defmultiply, classes, race = await conn.fetchval(
-                'SELECT (atkmultiply, defmultiply, class, race) FROM profile WHERE "user"=$1;',
+            atkmultiply, defmultiply, classes, race, guild = await conn.fetchval(
+                'SELECT (atkmultiply, defmultiply, class, race, guild) FROM profile WHERE "user"=$1;',
                 v,
             )
+        if not buildings := await self.get_city_buildings(guild):
+            pass
+        else:
+            atkmultiply += buildings["raid_building"] * 0.1
+            defmultiply += buildings["raid_building"] * 0.1
         if self.in_class_line(classes, "Raider"):
             atkmultiply = atkmultiply + Decimal("0.1") * self.get_class_grade_from(
                 classes, "Raider"
@@ -682,3 +687,15 @@ Armor: {data['armor']}"""
 
     async def public_log(self, event: str):
         await self.http.send_message(self.config.bot_event_channel, event)
+
+    async def get_city_buildings(guild_id):
+        if not guild_id:  # also catches guild_id = 0
+            return False
+        res = await ctx.bot.pool.fetchrow(
+            'SELECT c.* FROM city c JOIN guild g ON c."owner"=g."id" WHERE g."id"=(SELECT alliance FROM guild WHERE "id"=$1);',
+            guild_id,
+        )
+        if not res:
+            return False
+
+        return res
