@@ -139,6 +139,14 @@ class Alliance(commands.Cog):
                 )
             ) == 3:
                 return await ctx.send(_("Your alliance is full."))
+            if await conn.fetchrow(
+                'SELECT * FROM city WHERE "owner"=$1;', ctx.user_data["guild"]
+            ):
+                return await ctx.send(
+                    _(
+                        "**{user}'s guild is a single-guild alliance and owns a city."
+                    ).format(user=newleader)
+                )
             await conn.execute(
                 'UPDATE guild SET "alliance"=$1 WHERE "id"=$2;',
                 ctx.character_data["guild"],
