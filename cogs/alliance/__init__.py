@@ -82,7 +82,11 @@ class Alliance(commands.Cog):
         if (
             len(allied_guilds) <= 1
         ):  # your guild is the only one OR error and query returns zero guilds
-            return await ctx.send(_("You are not in an alliance."))
+            return await ctx.send(
+                _(
+                    "You are not in an alliance. You are alone and may still use all other alliance commands or invite a guild to create a bigger alliance."
+                )
+            )
         alliance_embed = discord.Embed(
             title=_("Your allied guilds"), color=self.bot.config.primary_colour
         )
@@ -96,7 +100,7 @@ class Alliance(commands.Cog):
             )
         alliance_embed.set_footer(
             text=_(
-                "{prefix}alliance buildings | {prefix}alliance defenses | {prefix}alliance attack"
+                "{prefix}alliance buildings | {prefix}alliance defenses | {prefix}alliance attack | {prefix}alliance occupy"
             ).format(prefix=ctx.prefix)
         )
 
