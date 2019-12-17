@@ -48,7 +48,9 @@ class Alliance(commands.Cog):
         cities = await self.bot.pool.fetch(
             'SELECT c.*, g."name" AS "gname", COALESCE(SUM(d."defense"), 0) AS "defense" FROM city c JOIN guild g ON c."owner"=g."id" LEFT JOIN defenses d ON c."name"=d."city" GROUP BY c."owner", c."name", g."name";'
         )
-        em = discord.Embed(title=_("Cities"), colour=self.bot.config.primary_colour)
+        em = discord.Embed(
+            title=_("Cities"), colour=self.bot.config.primary_colour
+        ).set_image(url="https://idlerpg.travitia.xyz/city.png")
         for city in sorted(
             cities, key=lambda x: -len(self.bot.config.cities[x["name"]])
         ):
@@ -89,7 +91,7 @@ class Alliance(commands.Cog):
             )
         alliance_embed = discord.Embed(
             title=_("Your allied guilds"), color=self.bot.config.primary_colour
-        )
+        ).set_image(url="https://idlerpg.travitia.xyz/alliance_banner.png")
         for guild in allied_guilds:
             alliance_embed.add_field(
                 name=guild[1],
