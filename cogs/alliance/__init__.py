@@ -569,9 +569,6 @@ class Alliance(commands.Cog):
         if await self.bot.redis.execute("GET", f"city:{city}"):
             return await ctx.send(_("**{city}** is already under attack."))
 
-        # Set city as under attack
-        await self.bot.redis.execute("SET", f"city:{city}", "under attack", "EX", 7200)
-
         # Get all defenses
         defenses = [
             dict(i)
@@ -582,6 +579,9 @@ class Alliance(commands.Cog):
 
         if not defenses:
             return await ctx.send(_("The city is without defenses already."))
+
+        # Set city as under attack
+        await self.bot.redis.execute("SET", f"city:{city}", "under attack", "EX", 7200)
 
         await ctx.send(
             _("Attack on **{city}** starting with **{amount}** attackers!").format(
