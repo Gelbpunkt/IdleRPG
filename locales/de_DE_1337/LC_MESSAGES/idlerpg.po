@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-12-17 07:59-0800\n"
+"POT-Creation-Date: 2019-12-17 08:19-0800\n"
 "PO-Revision-Date: 2019-08-23 21:55+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -969,8 +969,8 @@ msgstr ""
 msgid "There is another raid already ongoing. Try again at a later time."
 msgstr ""
 
-#: cogs/error_handler/__init__.py:180 cogs/alliance/__init__.py:380
-#: cogs/alliance/__init__.py:409
+#: cogs/error_handler/__init__.py:180 cogs/alliance/__init__.py:386
+#: cogs/alliance/__init__.py:415
 msgid "Your alliance does not own a city."
 msgstr ""
 
@@ -6361,170 +6361,174 @@ msgid "Invalid defense. Please use `{prefix}{cmd} [{buildings}]`."
 msgstr ""
 
 #: cogs/alliance/__init__.py:336
+msgid "Your city is under attack. Defenses cannot be built."
+msgstr ""
+
+#: cogs/alliance/__init__.py:342
 msgid "You may only build up to 10 defenses."
 msgstr ""
 
-#: cogs/alliance/__init__.py:339
+#: cogs/alliance/__init__.py:345
 #, python-brace-format
 msgid ""
 "Are you sure you want to build a **{defense}**? This will cost $**{price}**."
 msgstr ""
 
-#: cogs/alliance/__init__.py:348
+#: cogs/alliance/__init__.py:354
 #, python-brace-format
 msgid "Your guild doesn't have enough money to build a {defense}."
 msgstr ""
 
-#: cogs/alliance/__init__.py:365
+#: cogs/alliance/__init__.py:371
 #, python-brace-format
 msgid "Successfully built a {defense}."
 msgstr ""
 
-#: cogs/alliance/__init__.py:371
+#: cogs/alliance/__init__.py:377
 msgid "Lists buildings in your city."
-msgstr ""
-
-#: cogs/alliance/__init__.py:382
-#, python-brace-format
-msgid "{city}'s buildings"
 msgstr ""
 
 #: cogs/alliance/__init__.py:388
 #, python-brace-format
+msgid "{city}'s buildings"
+msgstr ""
+
+#: cogs/alliance/__init__.py:394
+#, python-brace-format
 msgid "Level {level}"
 msgstr ""
 
-#: cogs/alliance/__init__.py:397
+#: cogs/alliance/__init__.py:403
 msgid "Lists defenses in your city."
 msgstr ""
 
-#: cogs/alliance/__init__.py:411
+#: cogs/alliance/__init__.py:417
 #, python-brace-format
 msgid "{city}'s defenses"
 msgstr ""
 
-#: cogs/alliance/__init__.py:418
+#: cogs/alliance/__init__.py:424
 #, python-brace-format
 msgid "HP: {hp}, Defense: {defense}"
 msgstr ""
 
-#: cogs/alliance/__init__.py:425
+#: cogs/alliance/__init__.py:431
 msgid "None built"
 msgstr ""
 
-#: cogs/alliance/__init__.py:426
+#: cogs/alliance/__init__.py:432
 #, python-brace-format
 msgid "Use {prefix}alliance build defense [name]"
 msgstr ""
 
-#: cogs/alliance/__init__.py:438
+#: cogs/alliance/__init__.py:444
 msgid "[Alliance Leader only] Give up your city."
 msgstr ""
 
-#: cogs/alliance/__init__.py:440
+#: cogs/alliance/__init__.py:446
 msgid "Are you sure you want to give up control of your city?"
 msgstr ""
 
-#: cogs/alliance/__init__.py:447
+#: cogs/alliance/__init__.py:453
 #, python-brace-format
 msgid "{city} was abandoned."
 msgstr ""
 
-#: cogs/alliance/__init__.py:456
+#: cogs/alliance/__init__.py:462
 msgid "[Alliance Leader only] Take control of an empty city."
 msgstr ""
 
-#: cogs/alliance/__init__.py:458
+#: cogs/alliance/__init__.py:464
 msgid "Invalid city name."
 msgstr ""
 
-#: cogs/alliance/__init__.py:466
+#: cogs/alliance/__init__.py:472
 #, python-brace-format
 msgid "The city is occupied by **{amount}** defensive fortifications."
 msgstr ""
 
-#: cogs/alliance/__init__.py:476
+#: cogs/alliance/__init__.py:482
 #, python-brace-format
 msgid ""
 "Your alliance now rules **{city}**. You should immediately buy defenses."
 msgstr ""
 
-#: cogs/alliance/__init__.py:488
+#: cogs/alliance/__init__.py:494
 msgid "[Guild Leader only] Attack a city."
 msgstr ""
 
-#: cogs/alliance/__init__.py:490
+#: cogs/alliance/__init__.py:496
 msgid "Invalid city."
 msgstr ""
 
-#: cogs/alliance/__init__.py:494 cogs/alliance/__init__.py:562
+#: cogs/alliance/__init__.py:500 cogs/alliance/__init__.py:568
 #, python-brace-format
 msgid "**{city}** is already under attack."
 msgstr ""
 
-#: cogs/alliance/__init__.py:510
+#: cogs/alliance/__init__.py:516
 #, python-brace-format
 msgid ""
 "**{user}** wants to attack **{city}** with **{alliance_name}**'s alliance. "
 "React with ⚔ to join the attack!"
 msgstr ""
 
-#: cogs/alliance/__init__.py:538
+#: cogs/alliance/__init__.py:544
 #, python-brace-format
 msgid "You are not a member of **{alliance_name}'s alliance**, {user}."
 msgstr ""
 
-#: cogs/alliance/__init__.py:556
+#: cogs/alliance/__init__.py:562
 #, python-brace-format
 msgid "{user} has joined the attack."
 msgstr ""
 
-#: cogs/alliance/__init__.py:559
+#: cogs/alliance/__init__.py:565
 msgid "Noone joined."
 msgstr ""
 
-#: cogs/alliance/__init__.py:576
+#: cogs/alliance/__init__.py:582
 msgid "The city is without defenses already."
 msgstr ""
 
-#: cogs/alliance/__init__.py:579
+#: cogs/alliance/__init__.py:585
 #, python-brace-format
 msgid "Attack on **{city}** starting with **{amount}** attackers!"
 msgstr ""
 
-#: cogs/alliance/__init__.py:598 cogs/alliance/__init__.py:618
-#: cogs/alliance/__init__.py:652 cogs/alliance/__init__.py:663
+#: cogs/alliance/__init__.py:604 cogs/alliance/__init__.py:624
+#: cogs/alliance/__init__.py:658 cogs/alliance/__init__.py:669
 msgid "Alliance Wars"
 msgstr ""
 
-#: cogs/alliance/__init__.py:600
+#: cogs/alliance/__init__.py:606
 #, python-brace-format
 msgid "**{alliance_name}** destroyed a {defense} in {city}!"
 msgstr ""
 
-#: cogs/alliance/__init__.py:620
+#: cogs/alliance/__init__.py:626
 #, python-brace-format
 msgid ""
 "**{alliance_name}** hit a {defense} in {city} for {damage} damage! (Now {hp} "
 "HP)"
 msgstr ""
 
-#: cogs/alliance/__init__.py:653
+#: cogs/alliance/__init__.py:659
 #, python-brace-format
 msgid "**{user}** got killed in {city}!"
 msgstr ""
 
-#: cogs/alliance/__init__.py:665
+#: cogs/alliance/__init__.py:671
 #, python-brace-format
 msgid "**{user}** got hit in {city} for {damage} damage! (Now {hp} HP)"
 msgstr ""
 
-#: cogs/alliance/__init__.py:685
+#: cogs/alliance/__init__.py:691
 #, python-brace-format
 msgid "**{alliance_name}** destroyed defenses in **{city}**!"
 msgstr ""
 
-#: cogs/alliance/__init__.py:695
+#: cogs/alliance/__init__.py:701
 #, python-brace-format
 msgid "**{alliance_name}** failed to destroy defenses in **{city}**!"
 msgstr ""

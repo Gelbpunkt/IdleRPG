@@ -329,6 +329,12 @@ class Alliance(commands.Cog):
             city_name = await conn.fetchval(
                 'SELECT name FROM city WHERE "owner"=$1;', ctx.character_data["guild"]
             )
+            if (
+                await self.bot.redis.execute("GET", f"city:{city_name}")
+            ) == b"under attack":
+                return await ctx.send(
+                    _("Your city is under attack. Defenses cannot be built.")
+                )
             cur_count = await conn.fetchval(
                 'SELECT COUNT(*) FROM defenses WHERE "city"=$1;', city_name
             )
