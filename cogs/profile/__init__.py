@@ -318,7 +318,8 @@ IdleRPG is a global bot, your characters are valid everywhere"""
                     statstr=statstr,
                     value=weapon["value"],
                     signature=signature,
-                ),
+                )
+                inline=False
             )
         result.set_footer(
             text=_("Page {page} of {maxpages}").format(
