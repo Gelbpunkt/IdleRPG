@@ -307,42 +307,41 @@ Average hours of work: **{hours}**"""
         _("""Shows you the bots current version along with its new updates.""")
         await ctx.send(
             """\
-**v4.2.3**
-https://git.travitia.xyz/Kenvyra/IdleRPG/compare/v4.2.2...v4.2.3
+**v4.3.0**
+https://git.travitia.xyz/Kenvyra/IdleRPG/compare/v4.2.3...v4.3.0
 
-> 2019-11-30
+> 2019-12-17
 
-**Additions**
-
-- ability to sacrifice multiple loot at once
-- Add Hungarian translation
-- add $chucknorris
-- blackjack revisit with splitting and fixes
-- Raid auto-join for Ruby Donators, nerf XP from exchanging
-- Redesign loot to resemble inventory
+**New Features**
+- Alliances and cities (`$alliance`, `$cities`)
+- Allow viewing others' XP
+- Global event channel
+- Cooldowns which last until the next day UTC
 
 **Fixes**
-
-- fix a bug that allowed to add multiple of the same item in trades
-- Fix hungergames and some god raids
-- Fix syntax error
-- raidbattle patch
-- several formatting issues/clarifications adressed
-- Several fixes
-- smaller files
+- Calculate raidstats properly
+- Fix betting cooldown
+- Decorator order fixes for god commands
+- Error handling is fixed for many cases
+- Prevent duplicate guild names
+- Quick rework of XP viewing
+- Raid autojoin for diamond
 
 **Merge Requests**
 
-- Merge branch 'blackjack-revisit' into 'v4'
-- Merge branch 'blackjack-patch' into 'v4'
-- Merge branch 'fix-mash' into 'v4'
+- Merge branch 'v4' into 'guild-wars'
 - Merge branch 'patch-1' into 'v4'
-- Merge branch 'patch-2' into 'v4'
+- Merge branch 'guild-wars' into 'guild-wars'
 - Merge branch 'patch-1' into 'v4'
-- Merge branch 'sacrifice-multiple' into 'v4'
-- Merge branch 'informational' into 'v4'
-- Merge branch 'loot-redesign' into 'v4'
-- Merge branch 'patch-1' into 'v4'"""
+- Merge branch 'public-logs' into 'guild-wars'
+- Merge branch 'guild-wars' into 'guild-wars'
+- Merge branch 'guild-wars' into 'guild-wars'
+- Merge branch 'guild-wars' into 'guild-wars'
+- Merge branch 'patch-1' into 'v4'
+- Merge branch 'patch-1' into 'v4'
+- Merge branch 'v4' into 'v4'
+- Merge branch 'bettercd' into 'v4'
+"""
         )
 
     @commands.has_permissions(manage_messages=True)
