@@ -22,8 +22,9 @@ import discord
 from discord.ext import commands
 
 from classes.converters import IntGreaterThan, UserWithCharacter
+from cogs.shard_communication import next_day_cooldown
 from cogs.shard_communication import user_on_cooldown as user_cooldown
-from utils.checks import has_char, has_god, has_no_god, is_god, next_day_cooldown
+from utils.checks import has_char, has_god, has_no_god, is_god
 
 
 class Gods(commands.Cog):
