@@ -428,7 +428,7 @@ class Gambling(commands.Cog):
             )
 
     @has_char()
-    @commands.cooldown(1, 15, commands.BucketType.user)
+    @commands.cooldown(1, 5, commands.BucketType.user)
     @commands.command()
     @locale_doc
     async def bet(
