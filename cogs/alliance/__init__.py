@@ -311,9 +311,9 @@ class Alliance(commands.Cog):
         building_list = {
             "cannons": {"hp": 50, "def": 50, "cost": 180000},
             "archers": {"hp": 150, "def": 40, "cost": 150000},
-            "outer wall": {"hp": 600, "def": 0, "cost": 180000},
-            "inner wall": {"hp": 500, "def": 0, "cost": 150000},
-            "moat": {"hp": 300, "def": 20, "cost": 150000},
+            "outer wall": {"hp": 1000, "def": 0, "cost": 180000},
+            "inner wall": {"hp": 900, "def": 0, "cost": 150000},
+            "moat": {"hp": 400, "def": 20, "cost": 150000},
             "tower": {"hp": 200, "def": 40, "cost": 180000},
         }
         if name not in building_list:
