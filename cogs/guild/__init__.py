@@ -483,7 +483,7 @@ To look up a guild by its ID, use id:number."""
                 ctx.character_data["guild"],
             )
             await conn.execute(
-                'UPDATE city SET "owner"=(SELECT "alliance" FROM guild g WHERE NOT EXISTS (SELECT "name" FROM city WHERE "owner"=g."alliance") ORDER BY RANDOM() LIMIT 1) WHERE "owner"=$1;',
+                'UPDATE city SET "owner"=1 WHERE "owner"=$1;',
                 ctx.character_data["guild"],
             )
         await ctx.send(_("Successfully deleted your guild."))

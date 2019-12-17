@@ -318,8 +318,8 @@ IdleRPG is a global bot, your characters are valid everywhere"""
                     statstr=statstr,
                     value=weapon["value"],
                     signature=signature,
-                )
-                inline=False
+                ),
+                inline=False,
             )
         result.set_footer(
             text=_("Page {page} of {maxpages}").format(
@@ -747,10 +747,7 @@ IdleRPG is a global bot, your characters are valid everywhere"""
                     0,
                     g,
                 )
-                await conn.execute(
-                    'UPDATE city SET "owner"=(SELECT "alliance" FROM guild g WHERE NOT EXISTS (SELECT "name" FROM city WHERE "owner"=g."alliance") ORDER BY RANDOM() LIMIT 1) WHERE "owner"=$1;',
-                    g,
-                )
+                await conn.execute('UPDATE city SET "owner"=1 WHERE "owner"=$1;', g)
             await conn.execute(
                 'UPDATE profile SET "marriage"=$1 WHERE "marriage"=$2;',
                 0,
