@@ -591,8 +591,8 @@ class Alliance(commands.Cog):
         )
 
         while len(defenses) > 0 and len(attackers) > 0:
-            # choose the lowest HP defense
-            target = sorted(defenses, key=lambda x: x["hp"])[-1]
+            # choose the highest HP defense
+            target = sorted(defenses, key=lambda x: x["hp"])[0]
             damage = sum(i["damage"] for i in attackers)
             if target["hp"] - damage <= 0:
                 defenses.remove(target)
