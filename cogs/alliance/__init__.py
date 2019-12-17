@@ -389,7 +389,7 @@ class Alliance(commands.Cog):
         embed = discord.Embed(
             title=_("{city}'s buildings").format(city=buildings["name"]),
             colour=self.bot.config.primary_colour,
-        )
+        ).set_image(url="https://idlerpg.travitia.xyz/market.png")
         for i in self.bot.config.cities[buildings["name"]]:
             embed.add_field(
                 name=f"{i.capitalize()} building",
@@ -418,7 +418,7 @@ class Alliance(commands.Cog):
         embed = discord.Embed(
             title=_("{city}'s defenses").format(city=city_name),
             colour=self.bot.config.primary_colour,
-        )
+        ).set_thumbnail(url="https://idlerpg.travitia.xyz/fortress.png")
         i = None
         for i in defenses:
             embed.add_field(
