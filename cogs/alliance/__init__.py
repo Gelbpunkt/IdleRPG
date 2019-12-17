@@ -309,12 +309,12 @@ class Alliance(commands.Cog):
             """[Alliance Leader only] Build a defensive building or buy troops for the city."""
         )
         building_list = {
-            "cannons": {"hp": 150, "def": 120, "cost": 50000},
-            "archers": {"hp": 300, "def": 120, "cost": 75000},
-            "outer wall": {"hp": 750, "def": 50, "cost": 125000},
-            "inner wall": {"hp": 500, "def": 50, "cost": 80000},
-            "moat": {"hp": 250, "def": 750, "cost": 200000},
-            "tower": {"hp": 300, "def": 100, "cost": 50000},
+            "cannons": {"hp": 50, "def": 50, "cost": 180000},
+            "archers": {"hp": 150, "def": 40, "cost": 150000},
+            "outer wall": {"hp": 600, "def": 0, "cost": 180000},
+            "inner wall": {"hp": 500, "def": 0, "cost": 150000},
+            "moat": {"hp": 300, "def": 20, "cost": 150000},
+            "tower": {"hp": 200, "def": 40, "cost": 180000},
         }
         if name not in building_list:
             return await ctx.send(
@@ -338,7 +338,7 @@ class Alliance(commands.Cog):
             cur_count = await conn.fetchval(
                 'SELECT COUNT(*) FROM defenses WHERE "city"=$1;', city_name
             )
-            if cur_count > 10:
+            if cur_count >= 10:
                 return await ctx.send(_("You may only build up to 10 defenses."))
             if not await ctx.confirm(
                 _(
