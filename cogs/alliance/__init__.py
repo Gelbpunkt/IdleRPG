@@ -91,7 +91,7 @@ class Alliance(commands.Cog):
             )
         alliance_embed = discord.Embed(
             title=_("Your allied guilds"), color=self.bot.config.primary_colour
-        ).set_image(url="https://idlerpg.travitia.xyz/alliance_banner.png")
+        ).set_thumbnail(url="https://idlerpg.travitia.xyz/alliance_banner.png")
         for guild in allied_guilds:
             alliance_embed.add_field(
                 name=guild[1],
