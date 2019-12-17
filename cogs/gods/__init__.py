@@ -23,7 +23,7 @@ from discord.ext import commands
 
 from classes.converters import IntGreaterThan, UserWithCharacter
 from cogs.shard_communication import user_on_cooldown as user_cooldown
-from utils.checks import has_char, has_god, has_no_god, is_god
+from utils.checks import has_char, has_god, has_no_god, is_god, next_day_cooldown
 
 
 class Gods(commands.Cog):
@@ -146,7 +146,7 @@ class Gods(commands.Cog):
 
     @has_char()
     @has_god()
-    @user_cooldown(86_400)
+    @next_day_cooldown()
     @commands.command()
     @locale_doc
     async def pray(self, ctx):
