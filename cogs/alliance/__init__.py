@@ -429,6 +429,24 @@ class Alliance(commands.Cog):
             )
         await ctx.send(embed=embed)
 
+    @owns_city()
+    @is_alliance_leader()
+    @has_char()
+    @alliance.command()
+    @locale_doc
+    async def abandon(self, ctx):
+        _("""[Alliance Leader only] Give up your city.""")
+        if not await ctx.confirm(
+            _("Are you sure you want to give up control of your city?")
+        ):
+            return
+        name = await self.bot.pool.fetchval(
+            'UPDATE city SET "owner"=1 WHERE "owner"=$1 RETURNING "name";',
+            ctx.character_data["guild"],
+        )
+        await ctx.send(_("{city} was abandoned.").format(city=name))
+        await self.bot.public_log(f"**{ctx.author}** abandoned **{name}**.")
+
     @owns_no_city()
     @is_alliance_leader()
     @has_char()
