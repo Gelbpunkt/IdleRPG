@@ -60,6 +60,24 @@ class NeedsNoGuildLeader(commands.CheckFailure):
     pass
 
 
+class NoAlliancePermissions(commands.CheckFailure):
+    """Exception raised when a user does not have permissions in the alliance to use a command."""
+
+    pass
+
+
+class NoCityOwned(commands.CheckFailure):
+    """Exception raised when an alliance does not control a city."""
+
+    pass
+
+
+class CityOwned(commands.CheckFailure):
+    """Exception raised when an alliance controls a city."""
+
+    pass
+
+
 class WrongClass(commands.CheckFailure):
     """Exception raised when a user does not meet the class requirement."""
 
@@ -236,6 +254,65 @@ def is_no_guild_leader():
     return commands.check(predicate)
 
 
+def is_alliance_leader():
+    """Checks for a user to be the leader of an alliance."""
+
+    async def predicate(ctx):
+        async with ctx.bot.pool.acquire() as conn:
+            if not hasattr(ctx, "character_data"):
+                ctx.character_data = await conn.fetchrow(
+                    'SELECT * FROM profile WHERE "user"=$1;', ctx.author.id
+                )
+            leading_guild = await conn.fetchval(
+                'SELECT alliance FROM guild WHERE "id"=$1;', ctx.character_data["guild"]
+            )
+        if (
+            leading_guild == ctx.character_data["guild"]
+            and ctx.character_data["guildrank"] == "Leader"
+        ):
+            return True
+        raise NoAlliancePermissions()
+
+    return commands.check(predicate)
+
+
+def owns_city():
+    """"Checks whether an alliance owns a city."""
+
+    async def predicate(ctx):
+        async with ctx.bot.pool.acquire() as conn:
+            alliance = await conn.fetchval(
+                'SELECT alliance FROM guild WHERE "id"=$1', ctx.character_data["guild"]
+            )
+            owned_city = await conn.fetchval(
+                'SELECT name FROM city WHERE "owner"=$1', alliance
+            )
+            if not owned_city:
+                raise NoCityOwned()
+            ctx.city = owned_city
+            return True
+
+    return commands.check(predicate)
+
+
+def owns_no_city():
+    """"Checks whether an alliance owns no city."""
+
+    async def predicate(ctx):
+        async with ctx.bot.pool.acquire() as conn:
+            alliance = await conn.fetchval(
+                'SELECT alliance FROM guild WHERE "id"=$1', ctx.character_data["guild"]
+            )
+            owned_city = await conn.fetchval(
+                'SELECT name FROM city WHERE "owner"=$1', alliance
+            )
+            if owned_city:
+                raise CityOwned()
+            return True
+
+    return commands.check(predicate)
+
+
 def is_class(class_):
     """Checks for a user to be in a class line."""
 
@@ -371,10 +448,15 @@ async def has_money(bot, userid, money):
         res = await conn.fetchval(
             'SELECT money FROM profile WHERE "user"=$1 AND "money">=$2;', userid, money
         )
-        if isinstance(res, int):
-            return True
-        else:
-            return False
+        return isinstance(res, int)
+
+
+async def guild_has_money(bot, guildid, money):
+    async with bot.pool.acquire() as conn:
+        res = await conn.fetchval(
+            'SELECT money FROM guild WHERE "id"=$1 and "money">=$2;', guildid, money
+        )
+        return isinstance(res, int)
 
 
 def is_admin():

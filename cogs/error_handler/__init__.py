@@ -164,12 +164,6 @@ class Errorhandler(commands.Cog):
                         "Your pet **{pet}** ran away! You did not show it your love enough! Because of your bad treatment, you are no longer a {profession}."
                     ).format(pet=ctx.pet_data["name"], profession=_("Ranger"))
                 )
-            elif type(error) == utils.checks.NotNothing:
-                await ctx.send(
-                    _(
-                        "You have already selected a race and filled in your cv. This is irreversible."
-                    )
-                )
             elif type(error) == utils.checks.NoPatron:
                 await ctx.send(
                     _(
@@ -182,6 +176,12 @@ class Errorhandler(commands.Cog):
                         "There is another raid already ongoing. Try again at a later time."
                     )
                 )
+            elif type(error) == utils.checks.NoCityOwned:
+                await ctx.send(_("Your alliance does not own a city."))
+            elif type(error) == utils.checks.CityOwned:
+                await ctx.send(_("Your alliance already owns a city."))
+            elif type(error) == utils.checks.NoAlliancePermissions:
+                await ctx.send(_("Your alliance rank is too low."))
             else:
                 await ctx.send(
                     embed=discord.Embed(

@@ -83,13 +83,49 @@ def guild_on_cooldown(cooldown: int):
     return commands.check(predicate)
 
 
+# Cross-process cooldown check (pass this to commands)
+def alliance_on_cooldown(cooldown: int):
+    async def predicate(ctx):
+        data = getattr(ctx, "character_data", None)
+        if not data:
+            alliance = await ctx.bot.pool.fetchval(
+                'SELECT alliance FROM guild WHERE "id"=(SELECT guild FROM profile WHERE "user"=$1);',
+                ctx.author.id,
+            )
+        else:
+            guild = data["guild"]
+            alliance = await ctx.bot.pool.fetchval(
+                'SELECT alliance FROM guild WHERE "id"=$1;', guild
+            )
+
+        command_ttl = await ctx.bot.redis.execute(
+            "TTL", f"alliancecd:{alliance}:{ctx.command.qualified_name}"
+        )
+        if command_ttl == -2:
+            await ctx.bot.redis.execute(
+                "SET",
+                f"alliancecd:{alliance}:{ctx.command.qualified_name}",
+                ctx.command.qualified_name,
+                "EX",
+                cooldown,
+            )
+            return True
+        else:
+            raise commands.CommandOnCooldown(ctx, command_ttl)
+            return False
+
+    return commands.check(predicate)
+
+
 def next_day_cooldown():
     async def predicate(ctx):
         command_ttl = await ctx.bot.redis.execute(
             "TTL", f"cd:{ctx.author.id}:{ctx.command.qualified_name}"
         )
         if command_ttl == -2:
-            ctt = int(86400 - (time() % 86400)) # Calculate the number of seconds until next UTC midnight
+            ctt = int(
+                86400 - (time() % 86400)
+            )  # Calculate the number of seconds until next UTC midnight
             await ctx.bot.redis.execute(
                 "SET",
                 f"cd:{ctx.author.id}:{ctx.command.qualified_name}",

@@ -33,8 +33,8 @@ class Gods(commands.Cog):
             god["user"]: name for name, god in self.bot.config.gods.items()
         }
 
-    @has_char()
     @has_god()
+    @has_char()
     @commands.command()
     @locale_doc
     async def sacrifice(self, ctx, *loot_ids: int):
@@ -144,8 +144,8 @@ class Gods(commands.Cog):
 
         await ctx.send(_("You are now a follower of {god}.").format(god=god))
 
-    @has_char()
     @has_god()
+    @has_char()
     @next_day_cooldown()
     @commands.command()
     @locale_doc
@@ -199,8 +199,8 @@ class Gods(commands.Cog):
             )
         )
 
-    @has_char()
     @has_god()
+    @has_char()
     @commands.command(aliases=["favour"])
     @locale_doc
     async def favor(self, ctx):

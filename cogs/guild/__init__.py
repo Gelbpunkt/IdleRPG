@@ -482,6 +482,10 @@ To look up a guild by its ID, use id:number."""
                 "Member",
                 ctx.character_data["guild"],
             )
+            await conn.execute(
+                'UPDATE city SET "owner"=(SELECT "alliance" FROM guild g WHERE NOT EXISTS (SELECT "name" FROM city WHERE "owner"=g."alliance") ORDER BY RANDOM() LIMIT 1) WHERE "owner"=$1;',
+                ctx.character_data["guild"],
+            )
         await ctx.send(_("Successfully deleted your guild."))
         await self.bot.http.send_message(channel, f"Guild deleted by **{ctx.author}**")
 
@@ -845,6 +849,11 @@ To look up a guild by its ID, use id:number."""
                     _("Took to long to add members. Fight cancelled.")
                 )
 
+        await self.bot.public_log(
+            f"Guild **{guild1['name']}** challenges Guild **{guild2['name']}** to a battle \
+for a prize of **${amount}**.\n **{fightercount}** players entered."
+        )
+
         msg = await ctx.send(_("Fight started!\nGenerating battles..."))
         await asyncio.sleep(3)
         await msg.edit(content=_("Fight started!\nGenerating battles... Done."))
@@ -924,6 +933,9 @@ To look up a guild by its ID, use id:number."""
                         guild=guild1["name"]
                     )
                 )
+                await self.bot.public_log(
+                    f"**{guild1['name']}** won against **{guild2['name']}**."
+                )
             elif wins2 > wins1:
                 if money2 + amount <= bank2:
                     await conn.execute(
@@ -950,8 +962,14 @@ To look up a guild by its ID, use id:number."""
                         guild=guild2["name"]
                     )
                 )
+                await self.bot.public_log(
+                    f"**{guild2['name']}** won against **{guild1['name']}**."
+                )
             else:
                 await ctx.send(_("It's a tie!"))
+                await self.bot.public_log(
+                    f"**{guild1['name']}** and **{guild2['name']}** tied."
+                )
 
     @is_guild_officer()
     @guild_cooldown(3600)

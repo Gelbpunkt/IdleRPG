@@ -61,7 +61,10 @@ class Trading(commands.Cog):
                         "Your item is either equal to a Starter Item or worse. Noone would buy it."
                     )
                 )
-            tax = round(price * 0.05)
+            if await self.bot.get_city_buildings(ctx.character_data["guild"]):
+                tax = 0
+            else:
+                tax = round(price * 0.05)
             if ctx.character_data["money"] < tax:
                 return await ctx.send(
                     _("You cannot afford the tax of 5% (${amount}).").format(amount=tax)
@@ -103,7 +106,10 @@ class Trading(commands.Cog):
                 )
             if item["owner"] == ctx.author:
                 return await ctx.send(_("You may not buy your own items."))
-            tax = round(item["price"] * 0.05)
+            if await self.bot.get_city_buildings(ctx.character_data["guild"]):
+                tax = 0
+            else:
+                tax = round(item["price"] * 0.05)
             if ctx.character_data["money"] < item["price"] + tax:
                 return await ctx.send(_("You're too poor to buy this item."))
             await conn.execute(
@@ -351,6 +357,12 @@ class Trading(commands.Cog):
                     timeout=6,
                 ):
                     return await ctx.send(_("Cancelled."))
+            if (
+                buildings := await self.bot.get_city_buildings(
+                    ctx.character_data["guild"]
+                )
+            ) :
+                value = value * (1 + buildings["trade_building"] / 2)
             await conn.execute(
                 'DELETE FROM allitems WHERE "id"=ANY($1) AND "owner"=$2;',
                 itemids,
@@ -399,6 +411,12 @@ class Trading(commands.Cog):
                 ).format(count=count)
             ):
                 return
+            if (
+                buildings := await self.bot.get_city_buildings(
+                    ctx.character_data["guild"]
+                )
+            ) :
+                money = money * (1 + buildings["trade_building"] / 2)
             async with conn.transaction():
                 await conn.execute(
                     "DELETE FROM allitems ai USING inventory i WHERE ai.id=i.item AND ai.owner=$1 AND i.equipped IS FALSE AND ai.armor+ai.damage BETWEEN $2 AND $3;",

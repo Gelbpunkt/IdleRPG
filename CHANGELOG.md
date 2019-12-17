@@ -1,3 +1,40 @@
+<a name="v4.3.0"></a>
+
+## [v4.3.0](https://git.travitia.xyz/Kenvyra/IdleRPG/compare/v4.2.3...v4.3.0)
+
+> 2019-12-17
+
+### New Features
+- Alliances and cities (`$alliance`, `$cities`)
+- Allow viewing others' XP
+- Global event channel
+- Cooldowns which last until the next day UTC
+
+### Fixes
+- Calculate raidstats properly
+- Fix betting cooldown
+- Decorator order fixes for god commands
+- Error handling is fixed for many cases
+- Prevent duplicate guild names
+- Quick rework of XP viewing
+- Raid autojoin for diamond
+
+### Merge Requests
+
+- Merge branch 'v4' into 'guild-wars'
+- Merge branch 'patch-1' into 'v4'
+- Merge branch 'guild-wars' into 'guild-wars'
+- Merge branch 'patch-1' into 'v4'
+- Merge branch 'public-logs' into 'guild-wars'
+- Merge branch 'guild-wars' into 'guild-wars'
+- Merge branch 'guild-wars' into 'guild-wars'
+- Merge branch 'guild-wars' into 'guild-wars'
+- Merge branch 'patch-1' into 'v4'
+- Merge branch 'patch-1' into 'v4'
+- Merge branch 'v4' into 'v4'
+- Merge branch 'bettercd' into 'v4'
+
+
 <a name="v4.2.3"></a>
 
 ## [v4.2.3](https://git.travitia.xyz/Kenvyra/IdleRPG/compare/v4.2.2...v4.2.3)

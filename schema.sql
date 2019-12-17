@@ -17,8 +17,8 @@
 -- PostgreSQL database dump
 --
 
--- Dumped from database version 12.0
--- Dumped by pg_dump version 12.0
+-- Dumped from database version 12.1
+-- Dumped by pg_dump version 12.1
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -30,6 +30,24 @@ SET check_function_bodies = false;
 SET xmloption = content;
 SET client_min_messages = warning;
 SET row_security = off;
+
+--
+-- Name: insert_alliance_default(); Type: FUNCTION; Schema: public; Owner: postgres
+--
+
+CREATE FUNCTION public.insert_alliance_default() RETURNS trigger
+    LANGUAGE plpgsql
+    AS $$
+begin
+if NEW.alliance is null then
+NEW.alliance := NEW.id;
+end if;
+return new;
+end;
+$$;
+
+
+ALTER FUNCTION public.insert_alliance_default() OWNER TO postgres;
 
 SET default_tablespace = '';
 
@@ -92,6 +110,59 @@ CREATE TABLE public.children (
 ALTER TABLE public.children OWNER TO jens;
 
 --
+-- Name: city; Type: TABLE; Schema: public; Owner: jens
+--
+
+CREATE TABLE public.city (
+    name character varying(25) NOT NULL,
+    owner bigint NOT NULL,
+    thief_building integer DEFAULT 0,
+    raid_building integer DEFAULT 0,
+    trade_building integer DEFAULT 0,
+    adventure_building integer DEFAULT 0
+);
+
+
+ALTER TABLE public.city OWNER TO jens;
+
+--
+-- Name: defenses; Type: TABLE; Schema: public; Owner: jens
+--
+
+CREATE TABLE public.defenses (
+    city character varying(25) NOT NULL,
+    name character varying(25) NOT NULL,
+    hp integer NOT NULL,
+    defense integer NOT NULL,
+    id integer NOT NULL
+);
+
+
+ALTER TABLE public.defenses OWNER TO jens;
+
+--
+-- Name: defenses_id_seq; Type: SEQUENCE; Schema: public; Owner: jens
+--
+
+CREATE SEQUENCE public.defenses_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.defenses_id_seq OWNER TO jens;
+
+--
+-- Name: defenses_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: jens
+--
+
+ALTER SEQUENCE public.defenses_id_seq OWNED BY public.defenses.id;
+
+
+--
 -- Name: guild; Type: TABLE; Schema: public; Owner: jens
 --
 
@@ -108,7 +179,8 @@ CREATE TABLE public.guild (
     badge character varying(100) DEFAULT NULL::character varying,
     description character varying(200) DEFAULT 'No Description set yet'::character varying NOT NULL,
     channel bigint,
-    upgrade bigint DEFAULT 1 NOT NULL
+    upgrade bigint DEFAULT 1 NOT NULL,
+    alliance bigint
 );
 
 
@@ -319,7 +391,7 @@ ALTER TABLE public.pets OWNER TO jens;
 CREATE TABLE public.profile (
     "user" bigint NOT NULL,
     name character varying(20),
-    money integer,
+    money bigint,
     xp integer,
     pvpwins bigint DEFAULT 0 NOT NULL,
     money_booster bigint DEFAULT 0,
@@ -425,6 +497,13 @@ ALTER TABLE ONLY public.allitems ALTER COLUMN id SET DEFAULT nextval('public.all
 
 
 --
+-- Name: defenses id; Type: DEFAULT; Schema: public; Owner: jens
+--
+
+ALTER TABLE ONLY public.defenses ALTER COLUMN id SET DEFAULT nextval('public.defenses_id_seq'::regclass);
+
+
+--
 -- Name: guild id; Type: DEFAULT; Schema: public; Owner: jens
 --
 
@@ -472,6 +551,22 @@ ALTER TABLE ONLY public.transactions ALTER COLUMN id SET DEFAULT nextval('public
 
 ALTER TABLE ONLY public.allitems
     ADD CONSTRAINT allitems_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: city city_pkey; Type: CONSTRAINT; Schema: public; Owner: jens
+--
+
+ALTER TABLE ONLY public.city
+    ADD CONSTRAINT city_pkey PRIMARY KEY (name);
+
+
+--
+-- Name: defenses defenses_pkey; Type: CONSTRAINT; Schema: public; Owner: jens
+--
+
+ALTER TABLE ONLY public.defenses
+    ADD CONSTRAINT defenses_pkey PRIMARY KEY (id);
 
 
 --
@@ -555,11 +650,42 @@ ALTER TABLE ONLY public.user_settings
 
 
 --
+-- Name: guild insert_alliance_default; Type: TRIGGER; Schema: public; Owner: jens
+--
+
+CREATE TRIGGER insert_alliance_default BEFORE INSERT ON public.guild FOR EACH ROW EXECUTE FUNCTION public.insert_alliance_default();
+
+
+--
 -- Name: allitems allitems_owner_fkey; Type: FK CONSTRAINT; Schema: public; Owner: jens
 --
 
 ALTER TABLE ONLY public.allitems
     ADD CONSTRAINT allitems_owner_fkey FOREIGN KEY (owner) REFERENCES public.profile("user") ON DELETE CASCADE;
+
+
+--
+-- Name: city city_owner_fkey; Type: FK CONSTRAINT; Schema: public; Owner: jens
+--
+
+ALTER TABLE ONLY public.city
+    ADD CONSTRAINT city_owner_fkey FOREIGN KEY (owner) REFERENCES public.guild(id);
+
+
+--
+-- Name: defenses defenses_city_fkey; Type: FK CONSTRAINT; Schema: public; Owner: jens
+--
+
+ALTER TABLE ONLY public.defenses
+    ADD CONSTRAINT defenses_city_fkey FOREIGN KEY (city) REFERENCES public.city(name);
+
+
+--
+-- Name: guild guild_alliance_fkey; Type: FK CONSTRAINT; Schema: public; Owner: jens
+--
+
+ALTER TABLE ONLY public.guild
+    ADD CONSTRAINT guild_alliance_fkey FOREIGN KEY (alliance) REFERENCES public.guild(id);
 
 
 --

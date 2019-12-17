@@ -126,7 +126,7 @@ class Patreon(commands.Cog):
             )
         )
 
-    @is_patron("Ruby Donators")
+    @is_patron("Gold Donators")
     @has_char()
     @user_cooldown(86400)
     @commands.command()

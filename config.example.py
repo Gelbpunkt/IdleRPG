@@ -56,6 +56,7 @@ initial_extensions = [
     "cogs.hungergames",
     "cogs.maths",
     "cogs.shard_communication",
+    "cogs.alliance",
 ]
 
 """The channel where vote logging is sent from. This is an ID."""
@@ -112,6 +113,23 @@ support_server_id = 430_017_996_304_678_923
 """A channel ID to send admin logs to."""
 admin_log_channel = 457_197_748_626_653_184
 
+"""A channel ID to send public logs to."""
+bot_event_channel = 516_640_070_569_164_828
+
+"""City config (must be in db)"""
+cities = {
+    "Vopnafjor": ("thief", "raid", "trade", "adventure"),
+    "Medriguen": ("raid", "trade", "adventure"),
+    "Sulitere": ("raid", "trade", "thief"),
+    "Mopra": ("raid", "trade"),
+    "Setrond": ("thief", "trade"),
+    "Armeles": ("adventure", "trade"),
+    "Weyeowen": ("thief",),
+    "Oltash": ("trade",),
+    "Kryvansk": ("raid",),
+    "Drutsk": ("adventure",),
+}
+
 """Credentials for the Lavalink server."""
 lava_creds = {
     "password": "password",
@@ -147,7 +165,7 @@ base_url = "https://idlerpg.travitia.xyz"
 okapi_url = "https://okapi.travitia.xyz"
 
 """The Version of the Bot."""
-version = "4.2.3"
+version = "4.3.0"
 
 """Global cooldown (rate, per, [.user, .channel, .guild])"""
 cooldown = commands.CooldownMapping.from_cooldown(1, 3, commands.BucketType.user)

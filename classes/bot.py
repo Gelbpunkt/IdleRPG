@@ -24,6 +24,8 @@ import random
 import sys
 import traceback
 
+from decimal import Decimal
+
 import aiohttp
 import aioredis
 import asyncpg
@@ -199,17 +201,75 @@ class Bot(commands.AutoShardedBot):
             )
         return money, xp
 
-    async def get_equipped_items_for(self, thing):
+    async def get_raidstats(
+        self,
+        thing,
+        atkmultiply=None,
+        defmultiply=None,
+        classes=None,
+        race=None,
+        guild=None,
+        god=None,
+        conn=None,
+    ):
         v = thing.id if isinstance(thing, (discord.Member, discord.User)) else thing
-        async with self.pool.acquire() as conn:
-            sword = await conn.fetchrow(
-                "SELECT ai.* FROM profile p JOIN allitems ai ON (p.user=ai.owner) JOIN inventory i ON (ai.id=i.item) WHERE i.equipped IS TRUE AND p.user=$1 AND type='Sword';",
+        local = False
+        if conn is None:
+            conn = await self.pool.acquire()
+            local = True
+        sword, shield = await self.get_equipped_items_for(v, conn=conn)
+        if (
+            atkmultiply is None
+            or defmultiply is None
+            or classes is None
+            or guild is None
+        ):
+            (
+                atkmultiply,
+                defmultiply,
+                classes,
+                race,
+                guild,
+                user_god,
+            ) = await conn.fetchval(
+                'SELECT (atkmultiply, defmultiply, class, race, guild, god) FROM profile WHERE "user"=$1;',
                 v,
             )
-            shield = await conn.fetchrow(
-                "SELECT ai.* FROM profile p JOIN allitems ai ON (p.user=ai.owner) JOIN inventory i ON (ai.id=i.item) WHERE i.equipped IS TRUE AND p.user=$1 AND type='Shield';",
-                v,
+            if god is not None and god != user_god:
+                raise ValueError()
+        if (buildings := await self.get_city_buildings(guild)) :
+            atkmultiply += buildings["raid_building"] * Decimal("0.1")
+            defmultiply += buildings["raid_building"] * Decimal("0.1")
+        if self.in_class_line(classes, "Raider"):
+            atkmultiply = atkmultiply + Decimal("0.1") * self.get_class_grade_from(
+                classes, "Raider"
             )
+        dmg = sword["damage"] * atkmultiply if sword else 0
+        if self.in_class_line(classes, "Raider"):
+            defmultiply = defmultiply + Decimal("0.1") * self.get_class_grade_from(
+                classes, "Raider"
+            )
+        deff = shield["armor"] * defmultiply if shield else 0
+        if local:
+            await conn.close()
+        return await self.generate_stats(v, dmg, deff, classes=classes, race=race)
+
+    async def get_equipped_items_for(self, thing, conn=None):
+        v = thing.id if isinstance(thing, (discord.Member, discord.User)) else thing
+        local = False
+        if conn is None:
+            conn = await self.pool.acquire()
+            local = True
+        sword = await conn.fetchrow(
+            "SELECT ai.* FROM profile p JOIN allitems ai ON (p.user=ai.owner) JOIN inventory i ON (ai.id=i.item) WHERE i.equipped IS TRUE AND p.user=$1 AND type='Sword';",
+            v,
+        )
+        shield = await conn.fetchrow(
+            "SELECT ai.* FROM profile p JOIN allitems ai ON (p.user=ai.owner) JOIN inventory i ON (ai.id=i.item) WHERE i.equipped IS TRUE AND p.user=$1 AND type='Shield';",
+            v,
+        )
+        if local:
+            await conn.close()
         return sword, shield
 
     async def get_context(self, message, *, cls=None):
@@ -638,3 +698,18 @@ Armor: {data['armor']}"""
                     data["price"],
                     data["offer"],
                 )
+
+    async def public_log(self, event: str):
+        await self.http.send_message(self.config.bot_event_channel, event)
+
+    async def get_city_buildings(self, guild_id):
+        if not guild_id:  # also catches guild_id = 0
+            return False
+        res = await self.pool.fetchrow(
+            'SELECT c.* FROM city c JOIN guild g ON c."owner"=g."id" WHERE g."id"=(SELECT alliance FROM guild WHERE "id"=$1);',
+            guild_id,
+        )
+        if not res:
+            return False
+
+        return res
