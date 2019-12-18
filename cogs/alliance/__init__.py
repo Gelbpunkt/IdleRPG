@@ -524,7 +524,8 @@ class Alliance(commands.Cog):
             try:
                 r, u = await self.bot.wait_for(
                     "reaction_add",
-                    check=lambda r, u: u not in attacking_users
+                    check=lambda r, u: u not in attacking_user
+                    and not u.bot
                     and str(r.emoji) == "\U00002694"
                     and r.message.id == msg.id,
                     timeout=300,
