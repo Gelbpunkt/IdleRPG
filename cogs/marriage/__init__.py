@@ -515,7 +515,7 @@ class Marriage(commands.Cog):
                 return (
                     msg.author.id in [ctx.author.id, ctx.character_data["marriage"]]
                     and msg.channel.id == ctx.channel.id
-                    and len(msg.content) <= 20
+                    and 0 < len(msg.content) <= 20
                     and msg.content not in names
                 )
 
