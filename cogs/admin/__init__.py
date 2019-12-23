@@ -175,6 +175,8 @@ class Admin(commands.Cog):
         message = (
             f"{ctx.author} created a {item_type} with name {name} and stat {stat}.",
         )
+
+        await ctx.send(_("Done."))
         await self.bot.http.send_message(self.bot.config.admin_log_channel, message)
         for user in self.bot.owner_ids:
             user = await self.bot.get_user_global(user)
