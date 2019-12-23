@@ -173,7 +173,7 @@ class Admin(commands.Cog):
         )
 
         message = (
-            f"{ctx.author} created a {item_type} with name {name} and stat {stat}.",
+            f"{ctx.author} created a {item_type} with name {name} and stat {stat}."
         )
 
         await ctx.send(_("Done."))
