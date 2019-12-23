@@ -23,7 +23,7 @@ import discord
 
 from discord.ext import commands
 
-from classes.converters import IntGreaterThan, UserWithCharacter
+from classes.converters import IntFromTo, IntGreaterThan, UserWithCharacter
 from cogs.shard_communication import user_on_cooldown as user_cooldown
 from utils.checks import is_admin
 
@@ -144,6 +144,41 @@ class Admin(commands.Cog):
             self.bot.config.admin_log_channel,
             f"**{ctx.author}** renamed **{target}** to **{name.content}**.",
         )
+
+    @is_admin()
+    @commands.command(aliases=["aitem"], hidden=True)
+    @locale_doc
+    async def adminitem(
+        self,
+        ctx,
+        stat: int,
+        owner: UserWithCharacter,
+        item_type: str.title(),
+        value: IntFromTo(0, 100000000),
+        *,
+        name: str,
+    ):
+        _("""[Bot Admin only] Create an item.""")
+        if item_type not in ("Sword", "Shield"):
+            return await ctx.send(_("Invalid item type."))
+        if not 0 <= stat <= 100:
+            return await ctx.send(_("Invalid stat."))
+        await self.bot.create_item(
+            name=name,
+            value=value,
+            type_=item_type,
+            damage=stat if item_type == "Sword" else 0,
+            armor=stat if item_type == "Shield" else 0,
+            owner=owner,
+        )
+
+        message = (
+            f"{ctx.author} created a {item_type} with name {name} and stat {stat}.",
+        )
+        await self.bot.http.send_message(self.bot.config.admin_log_channel, message)
+        for user in self.bot.owner_ids:
+            user = await self.bot.get_user_global(user)
+            await user.send(message)
 
     @is_admin()
     @commands.command(aliases=["acrate"], hidden=True)
