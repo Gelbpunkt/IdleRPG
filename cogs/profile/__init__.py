@@ -332,7 +332,7 @@ IdleRPG is a global bot, your characters are valid everywhere"""
     @commands.command(aliases=["inv", "i"])
     @locale_doc
     async def inventory(
-        self, ctx, lowest: IntFromTo(0, 60) = 0, highest: IntFromTo(0, 60) = 60
+        self, ctx, lowest: IntFromTo(0, 100) = 0, highest: IntFromTo(0, 100) = 100
     ):
         _("""Shows your current inventory.""")
         if highest <= lowest:
