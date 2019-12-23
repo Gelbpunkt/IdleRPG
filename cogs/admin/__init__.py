@@ -153,7 +153,7 @@ class Admin(commands.Cog):
         ctx,
         stat: int,
         owner: UserWithCharacter,
-        item_type: str.title(),
+        item_type: str.title,
         value: IntFromTo(0, 100000000),
         *,
         name: str,
