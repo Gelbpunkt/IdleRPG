@@ -107,7 +107,12 @@ class Transaction(commands.Cog):
             await msg.add_reaction(r)
 
         def check(r, u):
-            return u in users and r.emoji in reacts and r.message.id == msg.id
+            return (
+                u in users
+                and r.emoji in reacts
+                and r.message.id == msg.id
+                and u not in acc
+            )
 
         while len(acc) < 2:
             try:
