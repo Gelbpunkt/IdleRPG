@@ -315,8 +315,9 @@ class Alliance(commands.Cog):
             "archers": {"hp": 150, "def": 40, "cost": 150000},
             "outer wall": {"hp": 5000, "def": 0, "cost": 500000},
             "inner wall": {"hp": 2500, "def": 0, "cost": 150000},
-            "moat": {"hp": 400, "def": 20, "cost": 150000},
-            "tower": {"hp": 200, "def": 40, "cost": 180000},
+            "moat": {"hp": 800, "def": 20, "cost": 150000},
+            "tower": {"hp": 250, "def": 40, "cost": 180000},
+            "ballista": {"hp": 50, "def": 30, "cost": 100000},
         }
         if name not in building_list:
             return await ctx.send(
