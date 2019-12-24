@@ -16,9 +16,9 @@ You should have received a copy of the GNU Affero General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
 import asyncio
+import datetime
 import math
 import random
-import datetime
 
 from collections import deque
 from decimal import Decimal
@@ -246,28 +246,30 @@ class Tournament(commands.Cog):
                     )
 
                     embed = discord.Embed(
-                        description=battle_log[0][1], color=self.bot.config.primary_colour
+                        description=battle_log[0][1],
+                        color=self.bot.config.primary_colour,
                     )
 
-                    log_message = await ctx.send(
-                        embed=embed
-                    )
+                    log_message = await ctx.send(embed=embed)
                     await asyncio.sleep(4)
 
                     start = datetime.datetime.utcnow()
-                    attacker, defender = random.sample(
-                         players, k=2
-                    )
+                    attacker, defender = random.sample(players, k=2)
                     while (
                         players[0]["hp"] > 0
                         and players[1]["hp"] > 0
-                        and datetime.datetime.utcnow() < start + datetime.timedelta(minutes=5)
+                        and datetime.datetime.utcnow()
+                        < start + datetime.timedelta(minutes=5)
                     ):
                         # this is where the fun begins
                         dmg = (
-                            attacker["damage"] + Decimal(random.randint(0, 100)) - defender["armor"]
+                            attacker["damage"]
+                            + Decimal(random.randint(0, 100))
+                            - defender["armor"]
                         )
-                        dmg = 1 if dmg <= 0 else dmg  # make sure no negative damage happens
+                        dmg = (
+                            1 if dmg <= 0 else dmg
+                        )  # make sure no negative damage happens
                         defender["hp"] -= dmg
                         if defender["hp"] < 0:
                             defender["hp"] = 0
@@ -285,7 +287,9 @@ class Tournament(commands.Cog):
                         )
 
                         embed = discord.Embed(
-                            description=_("{p1} - {hp1} HP left\n{p2} - {hp2} HP left").format(
+                            description=_(
+                                "{p1} - {hp1} HP left\n{p2} - {hp2} HP left"
+                            ).format(
                                 p1=players[0]["user"],
                                 hp1=players[0]["hp"],
                                 p2=players[1]["user"],
@@ -296,7 +300,8 @@ class Tournament(commands.Cog):
 
                         for line in battle_log:
                             embed.add_field(
-                                name=_("Action #{number}").format(number=line[0]), value=line[1]
+                                name=_("Action #{number}").format(number=line[0]),
+                                value=line[1],
                             )
 
                         await log_message.edit(embed=embed)
@@ -310,7 +315,9 @@ class Tournament(commands.Cog):
                         looser = match[1]
                     participants.remove(looser)
                     await ctx.send(
-                        _("Winner of this match is {winner}!").format(winner=winner.mention)
+                        _("Winner of this match is {winner}!").format(
+                            winner=winner.mention
+                        )
                     )
                     await asyncio.sleep(2)
 
