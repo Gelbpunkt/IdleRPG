@@ -417,6 +417,17 @@ class Trading(commands.Cog):
                 )
             ) :
                 money = money * (1 + buildings["trade_building"] / 2)
+            newcount = await self.bot.pool.fetchval( 
+                'SELECT count(value) FROM inventory i JOIN allitems ai ON (i.item=ai.id) WHERE ai.owner=$1 AND i.equipped IS FALSE AND ai.armor+ai.damage BETWEEN $2 AND $3;',
+                ctx.author.id,
+                minstat,
+                maxstat,
+            )
+            if newcount != count:
+                await ctx.send(
+                    _("Looks like you got more or less items in that range in the meantime. Please try again.")
+                )
+                return await self.bot.reset_cooldown(ctx)
             async with conn.transaction():
                 await conn.execute(
                     "DELETE FROM allitems ai USING inventory i WHERE ai.id=i.item AND ai.owner=$1 AND i.equipped IS FALSE AND ai.armor+ai.damage BETWEEN $2 AND $3;",
