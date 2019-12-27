@@ -298,8 +298,11 @@ Priest   ->  Mysticist ->  Summoner    -> Seer           ->  Ritualist
                 )
             user = await self.bot.get_user_global(usr["user"])
             await ctx.send(
-                _("You stole **${stolen}** from **{user}**.").format(
-                    stolen=stolen, user=user
+                _("You stole **${stolen}** from {user}.").format(
+                    stolen=stolen, 
+                    user=f"**{user}**" 
+                    if user 
+                    else _("a traveller just passing by")
                 )
             )
         else:
