@@ -520,7 +520,7 @@ class Marriage(commands.Cog):
                     _("finally found a job!"),
                     _("won a lottery."),
                     _("sold their toys."),
-                    _("got money from another kid that decided became communist."),
+                    _("got money from another kid that decided to become communist."),
                 ]
             )
             money = random.randint(1,5000)
