@@ -803,7 +803,7 @@ To look up a guild by its ID, use id:number."""
 
         while len(team1) != fightercount:
             try:
-                res = await self.bot.wait_for("message", timeout=30, check=simple1)
+                res = await self.bot.wait_for("message", timeout=90, check=simple1)
                 guild1check = await guildcheck(
                     team1, guild1["id"], res.content.split()[-1]
                 )
@@ -829,7 +829,7 @@ To look up a guild by its ID, use id:number."""
         )
         while len(team2) != fightercount:
             try:
-                res = await self.bot.wait_for("message", timeout=30, check=simple2)
+                res = await self.bot.wait_for("message", timeout=90, check=simple2)
                 guild2check = await guildcheck(
                     team2, guild2["id"], res.content.split()[-1]
                 )
