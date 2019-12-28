@@ -501,7 +501,7 @@ class Marriage(commands.Cog):
                 ]
             )
             money = random.randint(
-                0, int(ctx.character_data["money"] / 16)
+                0, int(ctx.character_data["money"] / 32)
             )
             await self.bot.pool.execute(
                 'UPDATE profile SET "money"="money"-$1 WHERE "user"=$2;',
