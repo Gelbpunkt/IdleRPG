@@ -116,27 +116,32 @@ class Alliance(commands.Cog):
     async def invite(self, ctx, newleader: MemberWithCharacter):
         _("""[Alliance Leader only] Invite a guild leader to the alliance.""")
         if not ctx.user_data["guild"]:
+            await self.bot.reset_alliance_cooldown(ctx)
             return await ctx.send(_("That member is not in a guild."))
         newguild = await self.bot.pool.fetchrow(
             'SELECT * FROM guild WHERE "id"=$1', ctx.user_data["guild"]
         )
         if newleader.id != newguild["leader"]:
+            await self.bot.reset_alliance_cooldown(ctx)
             return await ctx.send(_("That member is not the leader of their guild."))
         elif (
             newguild["alliance"] == ctx.character_data["guild"]
         ):  # already part of your alliance
+            await self.bot.reset_alliance_cooldown(ctx)
             return await ctx.send(
                 _("This member's guild is already part of your alliance.")
             )
 
         async with self.bot.pool.acquire() as conn:
             if newguild["alliance"] != newguild["id"]:
+                await self.bot.reset_alliance_cooldown(ctx)
                 return await ctx.send(_("This guild is already in an alliance."))
             else:
                 alliance_members = await conn.fetch(
                     'SELECT * FROM guild WHERE "alliance"=$1;', newguild["alliance"]
                 )
                 if len(alliance_members) > 1:
+                    await self.bot.reset_alliance_cooldown(ctx)
                     return await ctx.send(_("This guild is the leader of another alliance."))
 
             if not await ctx.confirm(
@@ -154,10 +159,12 @@ class Alliance(commands.Cog):
                     ctx.character_data["guild"],
                 )
             ) == 3:
+                await self.bot.reset_alliance_cooldown(ctx)
                 return await ctx.send(_("Your alliance is full."))
             if await conn.fetchrow(
                 'SELECT * FROM city WHERE "owner"=$1;', ctx.user_data["guild"]
             ):
+                await self.bot.reset_alliance_cooldown(ctx)
                 return await ctx.send(
                     _(
                         "**{user}'s guild is a single-guild alliance and owns a city."
@@ -271,6 +278,7 @@ class Alliance(commands.Cog):
             ],  # can only be done by the leading g:uild so this works here
         )
         if name not in self.bot.config.cities[city["name"]]:
+            await self.bot.reset_alliance_cooldown(ctx)
             return await ctx.send(
                 _(
                     "Invalid building. Please use `{prefix}{cmd} [thief/raid/trade/adventure]` or check the possible buildings in your city."
@@ -278,6 +286,7 @@ class Alliance(commands.Cog):
             )
         cur_level = city[f"{name}_building"]
         if cur_level == 10:
+            await self.bot.reset_alliance_cooldown(ctx)
             return await ctx.send(_("This building is fully upgraded."))
         up_price = self.get_upgrade_price(cur_level)
         if not await ctx.confirm(
@@ -287,6 +296,7 @@ class Alliance(commands.Cog):
         ):
             return
         if not await guild_has_money(self.bot, ctx.character_data["guild"], up_price):
+            await self.bot.reset_alliance_cooldown(ctx)
             return await ctx.send(
                 _(
                     "Your guild doesn't have enough money to upgrade the city's {name} building."
@@ -330,6 +340,7 @@ class Alliance(commands.Cog):
             "ballista": {"hp": 50, "def": 30, "cost": 100000},
         }
         if name not in building_list:
+            await self.bot.reset_alliance_cooldown(ctx)
             return await ctx.send(
                 _("Invalid defense. Please use `{prefix}{cmd} [{buildings}]`.").format(
                     prefix=ctx.prefix,
@@ -345,6 +356,7 @@ class Alliance(commands.Cog):
             if (
                 await self.bot.redis.execute("GET", f"city:{city_name}")
             ) == b"under attack":
+                await self.bot.reset_alliance_cooldown(ctx)
                 return await ctx.send(
                     _("Your city is under attack. Defenses cannot be built.")
                 )
@@ -352,6 +364,7 @@ class Alliance(commands.Cog):
                 'SELECT COUNT(*) FROM defenses WHERE "city"=$1;', city_name
             )
             if cur_count >= 10:
+                await self.bot.reset_alliance_cooldown(ctx)
                 return await ctx.send(_("You may only build up to 10 defenses."))
             if not await ctx.confirm(
                 _(
@@ -362,6 +375,7 @@ class Alliance(commands.Cog):
             if not await guild_has_money(
                 self.bot, ctx.character_data["guild"], building["cost"]
             ):
+                await self.bot.reset_alliance_cooldown(ctx)
                 return await ctx.send(
                     _(
                         "Your guild doesn't have enough money to build a {defense}."
@@ -506,9 +520,11 @@ class Alliance(commands.Cog):
     async def attack(self, ctx, *, city: str.title):
         _("""[Guild Leader only] Attack a city.""")
         if city not in self.bot.config.cities:
+            await self.bot.reset_alliance_cooldown(ctx)
             return await ctx.send(_("Invalid city."))
 
         if await self.bot.redis.execute("GET", f"city:{city}"):
+            await self.bot.reset_alliance_cooldown(ctx)
             return await ctx.send(
                 _("**{city}** is already under attack.").format(city=city)
             )
@@ -520,6 +536,23 @@ class Alliance(commands.Cog):
             alliance_name = await conn.fetchval(
                 'SELECT name FROM guild WHERE "id"=$1;', alliance_id
             )
+
+        # Get all defenses
+        defenses = [
+            dict(i)
+            for i in await self.bot.pool.fetch(
+                'SELECT * FROM defenses WHERE "city"=$1;', city
+            )
+        ]
+
+        if not defenses:
+            await self.bot.reset_alliance_cooldown(ctx)
+            return await ctx.send(_("The city is without defenses already."))
+
+
+        if await self.bot.redis.execute("GET", f"city:{city}"):
+            await self.bot.reset_alliance_cooldown(ctx)
+            return await ctx.send(_("**{city}** is already under attack."))
 
         # Gather the fighters
         attackers = []
@@ -576,21 +609,8 @@ class Alliance(commands.Cog):
                     await ctx.send(_("{user} has joined the attack.").format(user=u))
 
         if not attackers:
+            await self.bot.reset_alliance_cooldown(ctx)
             return await ctx.send(_("Noone joined."))
-
-        if await self.bot.redis.execute("GET", f"city:{city}"):
-            return await ctx.send(_("**{city}** is already under attack."))
-
-        # Get all defenses
-        defenses = [
-            dict(i)
-            for i in await self.bot.pool.fetch(
-                'SELECT * FROM defenses WHERE "city"=$1;', city
-            )
-        ]
-
-        if not defenses:
-            return await ctx.send(_("The city is without defenses already."))
 
         # Set city as under attack
         await self.bot.redis.execute("SET", f"city:{city}", "under attack", "EX", 7200)
