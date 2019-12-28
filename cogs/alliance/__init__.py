@@ -129,15 +129,25 @@ class Alliance(commands.Cog):
                 _("This member's guild is already part of your alliance.")
             )
 
-        if not await ctx.confirm(
-            _(
-                "{newleader}, {author} invites you to join their alliance. React to join now."
-            ).format(newleader=newleader.mention, author=ctx.author.mention),
-            user=newleader,
-        ):
-            return
-
         async with self.bot.pool.acquire() as conn:
+            if newguild["alliance"] != newguild["id"]:
+                return await ctx.send(_("This guild is already in an alliance."))
+            else:
+                alliance_members = await conn.fetch(
+                    'SELECT * FROM guild WHERE "alliance"=$1;', newguild["alliance"]
+                )
+                if len(alliance_members) > 1:
+                    return await ctx.send(_("This guild is the leader of another alliance."))
+
+            if not await ctx.confirm(
+                _(
+                    "{newleader}, {author} invites you to join their alliance. React to join now."
+                    ).format(newleader=newleader.mention, author=ctx.author.mention),
+                user=newleader,
+            ):
+                return
+
+
             if (
                 await conn.fetchval(
                     'SELECT COUNT(*) FROM guild WHERE "alliance"=$1;',
@@ -645,7 +655,7 @@ class Alliance(commands.Cog):
 
             damage = sum(i["defense"] for i in defenses)
             # These are clever and attack low HP OR best damage
-            if len({i["hp"] for i in attackers}) == 0:
+            if len({i["hp"] for i in attackers}) == 1:
                 # all equal HP
                 target = sorted(attackers, key=lambda x: x["damage"])[-1]
             else:
