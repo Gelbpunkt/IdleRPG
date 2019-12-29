@@ -481,6 +481,7 @@ class Alliance(commands.Cog):
         await ctx.send(_("{city} was abandoned.").format(city=name))
         await self.bot.public_log(f"**{ctx.author}** abandoned **{name}**.")
 
+    @alliance_cooldown(43200)  # 12 hours
     @owns_no_city()
     @is_alliance_leader()
     @has_char()
