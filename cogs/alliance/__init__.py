@@ -142,16 +142,17 @@ class Alliance(commands.Cog):
                 )
                 if len(alliance_members) > 1:
                     await self.bot.reset_alliance_cooldown(ctx)
-                    return await ctx.send(_("This guild is the leader of another alliance."))
+                    return await ctx.send(
+                        _("This guild is the leader of another alliance.")
+                    )
 
             if not await ctx.confirm(
                 _(
                     "{newleader}, {author} invites you to join their alliance. React to join now."
-                    ).format(newleader=newleader.mention, author=ctx.author.mention),
+                ).format(newleader=newleader.mention, author=ctx.author.mention),
                 user=newleader,
             ):
                 return
-
 
             if (
                 await conn.fetchval(
@@ -548,7 +549,6 @@ class Alliance(commands.Cog):
         if not defenses:
             await self.bot.reset_alliance_cooldown(ctx)
             return await ctx.send(_("The city is without defenses already."))
-
 
         if await self.bot.redis.execute("GET", f"city:{city}"):
             await self.bot.reset_alliance_cooldown(ctx)

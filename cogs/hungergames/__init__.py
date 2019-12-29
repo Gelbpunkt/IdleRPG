@@ -309,7 +309,10 @@ class HungerGames(commands.Cog):
 
         def check(reaction, user):
             return (
-                user not in players and reaction.message.id == msg.id and reaction.emoji == "\U0001f958" and not user.bot
+                user not in players
+                and reaction.message.id == msg.id
+                and reaction.emoji == "\U0001f958"
+                and not user.bot
             )
 
         self.games[ctx.channel.id] = "forming"

@@ -441,7 +441,7 @@ class Marriage(commands.Cog):
                 )
                 embeds.append(em)
             await self.bot.paginator.Paginator(extras=embeds).paginate(ctx)
-            
+
     @has_char()
     @user_cooldown(1800)
     @commands.command(aliases=["fe"])
@@ -456,7 +456,14 @@ class Marriage(commands.Cog):
         if not children:
             return await ctx.send(_("You don't have kids yet."))
         target = random.choice(children)
-        event = random.choice(["death"] + ["age"] * 8 + ["namechange"] * 4 + ["chest"] * 2 + ["moneylose"] * 4 + ["moneygain"] * 3)
+        event = random.choice(
+            ["death"]
+            + ["age"] * 8
+            + ["namechange"] * 4
+            + ["chest"] * 2
+            + ["moneylose"] * 4
+            + ["moneygain"] * 3
+        )
         if event == "death":
             cause = random.choice(
                 [
@@ -493,16 +500,16 @@ class Marriage(commands.Cog):
         elif event == "moneylose":
             cause = random.choice(
                 [
-                    _("fell in love with a woman on the internet, but the woman was a man and stole their money."),
+                    _(
+                        "fell in love with a woman on the internet, but the woman was a man and stole their money."
+                    ),
                     _("has been arrested and had to post bail."),
                     _("bought fortnite skins with your credit card."),
                     _("decided to become communist and gave the money to others."),
                     _("bought an inflatable loli."),
                 ]
             )
-            money = random.randint(
-                0, int(ctx.character_data["money"] / 32)
-            )
+            money = random.randint(0, int(ctx.character_data["money"] / 32))
             await self.bot.pool.execute(
                 'UPDATE profile SET "money"="money"-$1 WHERE "user"=$2;',
                 money,
@@ -523,7 +530,7 @@ class Marriage(commands.Cog):
                     _("got money from another kid that decided to become communist."),
                 ]
             )
-            money = random.randint(1,5000)
+            money = random.randint(1, 5000)
             await self.bot.pool.execute(
                 'UPDATE profile SET "money"="money"+$1 WHERE "user"=$2;',
                 money,
@@ -536,13 +543,17 @@ class Marriage(commands.Cog):
             )
         elif event == "chest":
             type_ = random.choice(
-                ["common"] * 500 + ["uncommon"] * 200 + ["rare"] * 50 + ["magic"] * 10 + ["legendary"]
+                ["common"] * 500
+                + ["uncommon"] * 200
+                + ["rare"] * 50
+                + ["magic"] * 10
+                + ["legendary"]
             )
             await self.bot.pool.execute(
                 f'UPDATE profile SET "crates_{type_}"="crates_{type_}"+1 WHERE "user"=$1;',
                 ctx.author.id,
             )
-            emoji = getattr(self.bot.cogs['Crates'].emotes, type_)
+            emoji = getattr(self.bot.cogs["Crates"].emotes, type_)
             return await ctx.send(
                 _("{name} found a {emoji} {type_} crate for you!").format(
                     name=target["name"], emoji=emoji, type_=type_
