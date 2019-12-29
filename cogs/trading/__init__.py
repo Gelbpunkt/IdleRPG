@@ -407,8 +407,8 @@ class Trading(commands.Cog):
                 return await ctx.send(_("Nothing to merch."))
             if not await ctx.confirm(
                 _(
-                    "You are about to sell **{count} items!**\nAre you sure you want to do this?"
-                ).format(count=count)
+                    "You are about to sell **{count} items for ${money}!**\nAre you sure you want to do this?"
+                ).format(count=count, money=money)
             ):
                 return
             if (
