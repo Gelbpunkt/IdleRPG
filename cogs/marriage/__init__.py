@@ -507,6 +507,11 @@ class Marriage(commands.Cog):
                     _("bought fortnite skins with your credit card."),
                     _("decided to become communist and gave the money to others."),
                     _("bought an inflatable loli."),
+                    _("was caught pickpocketing and you had to pay the fine."),
+                    _("gave it to a beggar."),
+                    _("borrowed it to attend the local knights course."),
+                    _("spent it in the shop."),
+                    _("bought some toys."),
                 ]
             )
             money = random.randint(0, int(ctx.character_data["money"] / 32))
@@ -528,6 +533,10 @@ class Marriage(commands.Cog):
                     _("won a lottery."),
                     _("sold their toys."),
                     _("got money from another kid that decided to become communist."),
+                    _("stole it from a traveller."),
+                    _("finished a quest with a money reward."),
+                    _("used dark magic to summon some money."),
+                    _("looted a local warehouse and sold the wares.")
                 ]
             )
             money = random.randint(1, 5000)
