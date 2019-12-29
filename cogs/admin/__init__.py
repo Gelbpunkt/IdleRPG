@@ -289,6 +289,7 @@ class Admin(commands.Cog):
         _("""[Bot Admin only] Sign an item""")
         text = f"{text} (signed by {ctx.author})"
         if len(text) > 50:
+            await self.bot.reset_cooldown(ctx)
             return await ctx.send(_("Text exceeds 50 characters."))
         await self.bot.pool.execute(
             'UPDATE allitems SET "signature"=$1 WHERE "id"=$2;', text, itemid
