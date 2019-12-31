@@ -1070,11 +1070,12 @@ Time it will take: **{time}**
         if not adventure:
             return await ctx.send(
                 _(
-                    "Your guild isn't on an adventure yet. Ask your guild leader to use `{prefix}guild adventure` to start one"
+                    "Your guild isn't on an adventure yet. Ask your guild officer to use `{prefix}guild adventure` to start one"
                 ).format(prefix=ctx.prefix)
             )
 
         if adventure[2]:
+            if await user_is_guild_officer:
             await self.bot.delete_guild_adventure(ctx.character_data["guild"])
             gold = random.randint(adventure[0] * 20, adventure[0] * 50)
 
@@ -1092,6 +1093,12 @@ Time it will take: **{time}**
                 channel,
                 f"**{ctx.author}** ended the guild adventure, reward was **${gold}**",
             )
+            else:
+            await ctx.send(
+                _(
+                    "Your guild has completed an adventure of difficulty `{difficulty}`, ask a guild officer to check their status.")
+                    ).format(difficulty=adventure[0])
+                    )
         else:
             await ctx.send(
                 _(
