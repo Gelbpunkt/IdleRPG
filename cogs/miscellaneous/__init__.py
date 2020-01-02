@@ -307,40 +307,54 @@ Average hours of work: **{hours}**"""
         _("""Shows you the bots current version along with its new updates.""")
         await ctx.send(
             """\
-**v4.3.0**
-https://git.travitia.xyz/Kenvyra/IdleRPG/compare/v4.2.3...v4.3.0
+**v4.3.1**
 
-> 2019-12-17
+https://git.travitia.xyz/Kenvyra/IdleRPG/compare/v4.3.0...v4.3.1
 
-**New Features**
-- Alliances and cities (`$alliance`, `$cities`)
-- Allow viewing others' XP
-- Global event channel
-- Cooldowns which last until the next day UTC
+> 2020-01-02
+
+**Additions**
+
+- New familyevents: 4/22 for money gain up to $5000, 3/22 for up to 1/64 of total money loss, 2/22 crate gain
+- add reset_alliance_cooldown(), change the order of some attacking code
+- add raid tournaments
+- Add $adminitem
 
 **Fixes**
-- Calculate raidstats properly
-- Fix betting cooldown
-- Decorator order fixes for god commands
-- Error handling is fixed for many cases
-- Prevent duplicate guild names
-- Quick rework of XP viewing
-- Raid autojoin for diamond
+
+- Fix formatting
+- Fix no decoder for composite type element issue (https://github.com/MagicStack/asyncpg/issues/360) (this issue affected raids)
+- Fix attack check order
+- Fix alliance attack target selection
+- fix a bug in alliance invite
+- fix an exploit
+- fix trade security
+- fix Asmodeus raid
+- fix child rename bug
+- prevent bots from joining alliance attacks
+- Prevent alliance occupy spam
+
+**QoL**
+
+- Show money in merchall confirmation
 
 **Merge Requests**
 
-- Merge branch 'v4' into 'guild-wars'
+- Merge branch 'patch-7' into 'v4'
+- Merge branch 'patch-4' into 'v4'
+- Merge branch 'familyevent' into 'v4'
 - Merge branch 'patch-1' into 'v4'
-- Merge branch 'guild-wars' into 'guild-wars'
+- Merge branch 'alliance-fix' into 'v4'
+- Merge branch 'alliance-fix' into 'v4'
+- Merge branch 'patch-4' into 'v4'
+- Merge branch 'multi-patch' into 'v4'
+- Merge branch 'patch-2' into 'v4'
 - Merge branch 'patch-1' into 'v4'
-- Merge branch 'public-logs' into 'guild-wars'
-- Merge branch 'guild-wars' into 'guild-wars'
-- Merge branch 'guild-wars' into 'guild-wars'
-- Merge branch 'guild-wars' into 'guild-wars'
+- Merge branch 'patch-3' into 'v4'
+- Merge branch 'raid-tournaments' into 'v4'
+- Merge branch 'trade-security' into 'v4'
 - Merge branch 'patch-1' into 'v4'
 - Merge branch 'patch-1' into 'v4'
-- Merge branch 'v4' into 'v4'
-- Merge branch 'bettercd' into 'v4'
 """
         )
 
