@@ -536,7 +536,7 @@ class Marriage(commands.Cog):
                     _("stole it from a traveller."),
                     _("finished a quest with a money reward."),
                     _("used dark magic to summon some money."),
-                    _("looted a local warehouse and sold the wares.")
+                    _("looted a local warehouse and sold the wares."),
                 ]
             )
             money = random.randint(1, 5000)

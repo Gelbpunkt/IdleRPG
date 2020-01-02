@@ -232,7 +232,7 @@ class Bot(commands.AutoShardedBot):
                 guild,
                 user_god,
             ) = await conn.fetchval(
-                    'SELECT (atkmultiply::decimal, defmultiply::decimal, class::text[], race::text, guild::integer, god::text) FROM profile WHERE "user"=$1;',
+                'SELECT (atkmultiply::decimal, defmultiply::decimal, class::text[], race::text, guild::integer, god::text) FROM profile WHERE "user"=$1;',
                 v,
             )
             if god is not None and god != user_god:
