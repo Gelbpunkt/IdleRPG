@@ -461,8 +461,8 @@ class Marriage(commands.Cog):
             + ["age"] * 8
             + ["namechange"] * 4
             + ["chest"] * 2
-            + ["moneylose"] * 4
-            + ["moneygain"] * 3
+            + ["moneylose"] * 3
+            + ["moneygain"] * 4
         )
         if event == "death":
             cause = random.choice(
@@ -514,7 +514,7 @@ class Marriage(commands.Cog):
                     _("bought some toys."),
                 ]
             )
-            money = random.randint(0, int(ctx.character_data["money"] / 32))
+            money = random.randint(0, int(ctx.character_data["money"] / 64))
             await self.bot.pool.execute(
                 'UPDATE profile SET "money"="money"-$1 WHERE "user"=$2;',
                 money,
