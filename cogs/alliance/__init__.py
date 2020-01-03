@@ -481,7 +481,6 @@ class Alliance(commands.Cog):
         await ctx.send(_("{city} was abandoned.").format(city=name))
         await self.bot.public_log(f"**{ctx.author}** abandoned **{name}**.")
 
-    @alliance_cooldown(43200)  # 12 hours
     @owns_no_city()
     @is_alliance_leader()
     @has_char()
@@ -495,11 +494,20 @@ class Alliance(commands.Cog):
             num_units = await conn.fetchval(
                 'SELECT COUNT(*) FROM defenses WHERE "city"=$1;', city
             )
+            occ_ttl = await self.bot.redis.execute(
+                "TTL", f"city:{city}:occ"
+            )
             if num_units != 0:
                 return await ctx.send(
                     _(
                         "The city is occupied by **{amount}** defensive fortifications."
                     ).format(amount=num_units)
+                )
+            if occ_ttl != -2:
+                return await ctx.send(
+                    _(
+                        "{city} was just occupied and stands under protection."
+                    ).format(city=city)
                 )
             await conn.execute(
                 'UPDATE city SET "owner"=$1, "raid_building"=0, "thief_building"=0, "trade_building"=0, "adventure_building"=0 WHERE "name"=$2;',
@@ -508,8 +516,11 @@ class Alliance(commands.Cog):
             )
         await ctx.send(
             _(
-                "Your alliance now rules **{city}**. You should immediately buy defenses."
+                "Your alliance now rules **{city}**. You should immediately buy defenses. You have **10 minutes** to build defenses before others can occupy the city!"
             ).format(city=city)
+        )
+        await self.bot.redis.execute(
+            "SET", f"city:{city}:occ", ctx.character_data["guild"], "EX", 600
         )
         await self.bot.public_log(
             f"**{city}** was occupied by {ctx.author}'s alliance."
