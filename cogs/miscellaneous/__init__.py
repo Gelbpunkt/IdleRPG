@@ -1,6 +1,6 @@
 """
 The IdleRPG Discord Bot
-Copyright (C) 2018-2019 Diniboy and Gelbpunkt
+Copyright (C) 2018-2020 Diniboy and Gelbpunkt
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU Affero General Public License as published by
@@ -866,6 +866,21 @@ This bot is developed by people who love to code for a good cause and improving 
 <https://github.com/Kenvyra> - Other IdleRPG related code
 <https://discordapp.com/terms> - Discord's ToS
 <https://www.ncpgambling.org/help-treatment/national-helpline-1-800-522-4700/> - Gambling Helpline"""
+            )
+        )
+
+    @commands.command()
+    async def rules(self, ctx):
+        await ctx.send(
+            _(
+                """\
+1) Only up to two characters per individual
+2) No abusing or benefiting from bugs or exploits
+3) Be friendly and kind to other players
+4) Trading in-game items or currency for real money is forbidden
+5) Giving or selling renamed items is forbidden
+
+IdleRPG is a global bot, your characters are valid everywhere"""
             )
         )
 
