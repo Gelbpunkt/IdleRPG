@@ -454,7 +454,7 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
             )
         elif len(raid) == 0:
             await ctx.send("The bandits plundered the town!\nAll swordsmen died!")
-        await self.clear_raid_timer
+        await self.clear_raid_timer()
 
     @is_god()
     @raid_free()
