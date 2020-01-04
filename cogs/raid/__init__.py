@@ -310,11 +310,9 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
             "https://raid.travitia.xyz/toggle",
             headers={"Authorization": self.bot.config.raidauth},
         )
-        bandits = [
-            {"hp": random.randint(5000, 7000), "id": i + 1} for i in range(bandits)
-        ]
-        payout = sum(i["hp"] for i in bandits)
+        bandits = [{"hp": random.randint(150, 250), "id": i + 1} for i in range(bandits)]
         await ctx.send(
+
             """
 *Arrow shot*
 **Lieutenant**: We've spotted a group of Bandits!
@@ -327,7 +325,7 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
             file=discord.File("assets/other/bandits1.jpg"),
         )
         await asyncio.sleep(300)
-        await ctx.send("**The bandit officers arrive in 10 minutes**")
+        await ctx.send("**The bandits arrive in 10 minutes**")
         await asyncio.sleep(150)
         await ctx.send(
             "**Bandit Officer**: This is our last warning. Hand out all your goods and gold!"
@@ -360,7 +358,7 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
                 if not u:
                     continue
                 dmg, deff = await self.bot.get_raidstats(u, conn=conn)
-                raid[u] = {"hp": 150, "armor": deff, "damage": dmg}
+                raid[u] = {"hp": 250, "armor": deff, "damage": dmg}
 
         await ctx.send("**Done getting data!**")
 
@@ -370,14 +368,14 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
         while len(
             bandits
         ) > 0 and datetime.datetime.utcnow() < start + datetime.timedelta(minutes=45):
-            dmg = random.randint(70, 100)  # effective damage the bandit does
+            dmg = random.randint(60, 100)  # effective damage the bandit does
             dmg = self.getfinaldmg(
-                dmg, target_data["armor"] * Decimal(random.choice(["0.1", "0.2"]))
+                dmg, target_data["armor"] * Decimal(random.choice(["0.1", "0.2", "0.3"]))
             )
             target_data["hp"] -= dmg  # damage dealt
             em = discord.Embed(title=f"Bandits left: `{len(bandits)}`", colour=0x000000)
             em.set_author(
-                name=f"Bandit officers {group}",
+                name=f"Bandit Raider Group {group}",
                 icon_url=f"{self.bot.BASE_URL}/bandits1.jpg",
             )
             em.add_field(name="Bandit HP", value=f"{bandits[0]['hp']} HP left")
@@ -414,7 +412,7 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
                     value=f"Is attacking the bandit and dealt `{target_data['damage']}` damage",
                 )
             else:
-                money = random.randint(4000, 8000)
+                money = random.randint(1500, 3000)
                 await self.bot.pool.execute(
                     'UPDATE profile SET "money"="money"+$1 WHERE "user"=$2;',
                     money,
