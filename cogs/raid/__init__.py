@@ -428,9 +428,10 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
             await asyncio.sleep(7)
 
         if len(bandits) == 0:
+            payout = random.randint(3000, 7500)
             await ctx.send(
                 "The bandits got defeated, Ikhdosa is safe again!"
-                "Sending the rewards of the survivors their money..."
+                "Survivors received ${payout} as a reward for the battle..."
             )
             await self.bot.pool.execute(
                 'UPDATE profile SET "money"="money"+$1 WHERE "user"=ANY($2);',
