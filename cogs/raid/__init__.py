@@ -112,38 +112,38 @@ class Raid(commands.Cog):
         )
         spawnmsg = await ctx.send(
             f"""
-**ATTENTION! FROSTY HAS SPAWNED!**
+**ATTENTION! ZEREKIEL HAS SPAWNED!**
 This boss has {self.boss['hp']} HP and has high-end loot!
-The evil snowman will be vulnerable in 15 Minutes
+The evil dragon will be vulnerable in 15 Minutes
 Use https://raid.travitia.xyz/ to join the raid!
 
 Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=453963965521985536&scope=identify&response_type=code&redirect_uri=https://raid.travitia.xyz/callback>
 """,
-            file=discord.File("assets/other/snowman.png"),
+            file=discord.File("assets/other/dragon.png"),
         )
         self.boss.update(message=spawnmsg.id)
         if not self.bot.config.is_beta:
             await self.bot.get_channel(506_167_065_464_406_041).send(
-                "@everyone Frosty spawned! 15 Minutes until he is vulnerable...\nUse https://raid.travitia.xyz/ to join the raid!"
+                "@everyone Zerekiel spawned! 15 Minutes until he is vulnerable...\nUse https://raid.travitia.xyz/ to join the raid!"
             )
         if not self.bot.config.is_beta:
             await asyncio.sleep(300)
-            await ctx.send("**The snowman will be vulnerable in 10 minutes**")
+            await ctx.send("**The dragon will be vulnerable in 10 minutes**")
             await asyncio.sleep(300)
-            await ctx.send("**The snowman will be vulnerable in 5 minutes**")
+            await ctx.send("**The dragon will be vulnerable in 5 minutes**")
             await asyncio.sleep(180)
-            await ctx.send("**The snowman will be vulnerable in 2 minutes**")
+            await ctx.send("**The dragon will be vulnerable in 2 minutes**")
             await asyncio.sleep(60)
-            await ctx.send("**The snowman will be vulnerable in 1 minute**")
+            await ctx.send("**The dragon will be vulnerable in 1 minute**")
             await asyncio.sleep(30)
-            await ctx.send("**The snowman will be vulnerable in 30 seconds**")
+            await ctx.send("**The dragon will be vulnerable in 30 seconds**")
             await asyncio.sleep(20)
-            await ctx.send("**The snowman will be vulnerable in 10 seconds**")
+            await ctx.send("**The dragon will be vulnerable in 10 seconds**")
             await asyncio.sleep(10)
         else:
             await asyncio.sleep(60)
         await ctx.send(
-            "**The snowman is vulnerable! Fetching participant data... Hang on!**"
+            "**The dragon is vulnerable! Fetching participant data... Hang on!**"
         )
 
         async with self.bot.session.get(
@@ -172,18 +172,18 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
             target = random.choice(list(raid.keys()))  # the guy it will attack
             dmg = random.randint(
                 self.boss["min_dmg"], self.boss["max_dmg"]
-            )  # effective damage the snowman does
+            )  # effective damage the dragon does
             finaldmg = self.getfinaldmg(dmg, raid[target]["armor"])
             raid[target]["hp"] -= finaldmg  # damage dealt
             if raid[target]["hp"] > 0:
                 em = discord.Embed(
-                    title="Frosty attacked!",
+                    title="Zerekiel attacked!",
                     description=f"{target} now has {raid[target]['hp']} HP!",
                     colour=0xFFB900,
                 )
             else:
                 em = discord.Embed(
-                    title="Frosty attacked!",
+                    title="Zerekiel attacked!",
                     description=f"{target} died!",
                     colour=0xFFB900,
                 )
@@ -193,14 +193,14 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
             em.add_field(name="Shield", value=raid[target]["armor"])
             em.add_field(name="Effective Damage", value=finaldmg)
             em.set_author(name=str(target), icon_url=target.avatar_url)
-            em.set_thumbnail(url=f"{self.bot.BASE_URL}/snowman.png")
+            em.set_thumbnail(url=f"{self.bot.BASE_URL}/dragon.png")
             await ctx.send(embed=em)
             if raid[target]["hp"] <= 0:
                 del raid[target]
             dmg_to_take = sum(i["damage"] for i in raid.values())
             self.boss["hp"] -= dmg_to_take
             await asyncio.sleep(4)
-            em = discord.Embed(title="The raid attacked Frosty!", colour=0xFF5C00)
+            em = discord.Embed(title="The raid attacked Zerekiel!", colour=0xFF5C00)
             em.set_thumbnail(url=f"{self.bot.BASE_URL}/knight.jpg")
             em.add_field(name="Damage", value=dmg_to_take)
             if self.boss["hp"] > 0:
@@ -283,12 +283,12 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
                 [u.id for u in raid.keys()],
             )
             await ctx.send(
-                f"**Gave ${cash} of Frosty's ${int(hp / 4)} drop to all survivors!**"
+                f"**Gave ${cash} of Zerekiel's ${int(hp / 4)} drop to all survivors!**"
             )
 
         else:
             m = await ctx.send(
-                "The raid did not manage to kill Frosty within 45 Minutes... He disappeared!"
+                "The raid did not manage to kill Zerekiel within 45 Minutes... He disappeared!"
             )
             await m.add_reaction("\U0001F1EB")
 
@@ -1994,7 +1994,7 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
         _("""Informs you about joining raids.""")
         await ctx.send(
             _(
-                "Did you ever want to join together with other players to defeat the snowman that roams this land? Raids got you covered!\nJoin the support server (`{prefix}support`) for more information."
+                "Did you ever want to join together with other players to defeat the dragon that roams this land? Raids got you covered!\nJoin the support server (`{prefix}support`) for more information."
             ).format(prefix=ctx.prefix)
         )
 

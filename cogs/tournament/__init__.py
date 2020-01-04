@@ -343,7 +343,7 @@ class Tournament(commands.Cog):
             )
         await msg.edit(
             content=_(
-                "Tournament ended! The winner is {winner}.\nMoney was given!"
+                "Raid Tournament ended! The winner is {winner}.\nMoney was given!"
             ).format(winner=participants[0].mention)
         )
 

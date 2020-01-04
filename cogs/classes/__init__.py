@@ -51,7 +51,7 @@ class Classes(commands.Cog):
             discord.Embed(
                 title=_("Warrior"),
                 description=_(
-                    "The tank class. Charge into battle with additional defense!\n+1 defense per evolution added onto your shield."
+                    "The tank class. Charge into battle with additional defense!\n+1 defense per evolution."
                 ),
                 color=self.bot.config.primary_colour,
             ),
@@ -66,7 +66,7 @@ class Classes(commands.Cog):
             discord.Embed(
                 title=_("Mage"),
                 description=_(
-                    "Utilise powerful magic for stronger attacks.\n+1 damage per evolution added onto your sword."
+                    "Utilise powerful magic for stronger attacks.\n+1 damage per evolution."
                 ),
                 color=self.bot.config.primary_colour,
             ),
@@ -98,7 +98,7 @@ class Classes(commands.Cog):
                 discord.Embed(
                     title=_("Paragon"),
                     description=_(
-                        "Absorb the appreciation of the devs into your soul to power up.\n+1 damage and defense per evolution added onto your items."
+                        "Absorb the appreciation of the devs into your soul to power up.\n+1 damage and defense per evolution."
                     ),
                     color=self.bot.config.primary_colour,
                 )
