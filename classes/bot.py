@@ -47,7 +47,6 @@ class Bot(commands.AutoShardedBot):
         super().__init__(
             command_prefix=config.global_prefix, **kwargs
         )  # we overwrite the prefix when it is connected
-
         # setup stuff
         self.queue = asyncio.Queue(loop=self.loop)  # global queue for ordered tasks
         self.config = config
@@ -342,9 +341,13 @@ class Bot(commands.AutoShardedBot):
         )
 
     async def reset_alliance_cooldown(self, ctx):
+        alliance = await self.pool.fetchval(
+            'SELECT alliance FROM guild WHERE "id"=$1;',
+            ctx.character_data["guild"]
+        )
         await self.redis.execute(
             "DEL",
-            f"alliancecd:{ctx.character_data['alliance']}:{ctx.command.qualified_name}",
+            f"alliancecd:{alliance}:{ctx.command.qualified_name}",
         )
 
     async def activate_booster(self, user, type_):
