@@ -1075,8 +1075,8 @@ Time it will take: **{time}**
             )
 
         if adventure[2]:
-            if await user_is_guild_officer:
-            await self.bot.delete_guild_adventure(ctx.character_data["guild"])
+            if ctx.character_data["guildrank"] in ["Leader", "Officer"]:
+                await self.bot.delete_guild_adventure(ctx.character_data["guild"])
             gold = random.randint(adventure[0] * 20, adventure[0] * 50)
 
             channel = await self.bot.pool.fetchval(
