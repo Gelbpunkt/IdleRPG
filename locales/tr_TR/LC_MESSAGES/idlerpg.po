@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-12-19 22:53-0800\n"
-"PO-Revision-Date: 2019-12-07 13:46+0300\n"
+"POT-Creation-Date: 2020-01-06 14:01-0800\n"
+"PO-Revision-Date: 2019-12-30 12:01+0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: tr_TR\n"
@@ -18,18 +18,19 @@ msgstr ""
 "X-Generator: Poedit 2.2.4\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: cogs/tournament/__init__.py:39
+#: cogs/tournament/__init__.py:45
 msgid "Starts a new tournament."
 msgstr "Yeni turnuva başlatır."
 
-#: cogs/tournament/__init__.py:41 cogs/battles/__init__.py:49
-#: cogs/battles/__init__.py:153 cogs/battles/__init__.py:376
-#: cogs/gambling/__init__.py:400 cogs/profile/__init__.py:678
-#: cogs/transaction/__init__.py:251 cogs/transaction/__init__.py:301
+#: cogs/tournament/__init__.py:47 cogs/tournament/__init__.py:167
+#: cogs/battles/__init__.py:49 cogs/battles/__init__.py:153
+#: cogs/battles/__init__.py:376 cogs/gambling/__init__.py:400
+#: cogs/profile/__init__.py:678 cogs/transaction/__init__.py:256
+#: cogs/transaction/__init__.py:306
 msgid "You are too poor."
 msgstr "Çok fakirsin."
 
-#: cogs/tournament/__init__.py:44
+#: cogs/tournament/__init__.py:50 cogs/tournament/__init__.py:170
 #, python-brace-format
 msgid ""
 "{author} started a tournament! Free entries, prize is **${prize}**! React "
@@ -38,21 +39,21 @@ msgstr ""
 "{author} turnuva başlattı! Girişler ücretsiz, ödül **${prize}**! Katılmak "
 "için ⚔ ile tepki verin!"
 
-#: cogs/tournament/__init__.py:67
+#: cogs/tournament/__init__.py:73 cogs/tournament/__init__.py:193
 msgid "Noone joined your tournament."
 msgstr "Turnuvana kimse katılmadı."
 
-#: cogs/tournament/__init__.py:75
+#: cogs/tournament/__init__.py:81 cogs/tournament/__init__.py:200
 #, python-brace-format
 msgid "{user} joined the tournament."
 msgstr "{user} turnuvaya katıldı."
 
-#: cogs/tournament/__init__.py:79
+#: cogs/tournament/__init__.py:85 cogs/tournament/__init__.py:204
 #, python-brace-format
 msgid "You don't have a character, {user}."
 msgstr "Karakterin yok, {user}."
 
-#: cogs/tournament/__init__.py:85
+#: cogs/tournament/__init__.py:91 cogs/tournament/__init__.py:210
 #, python-brace-format
 msgid ""
 "There are **{num}** entries, due to the fact we need a playable tournament, "
@@ -61,34 +62,34 @@ msgstr ""
 "**{num}** giriş var, oynanılabilir bir turnuva olması gerektiğinden son "
 "**{removed}** kaldırıldı."
 
-#: cogs/tournament/__init__.py:91
+#: cogs/tournament/__init__.py:97 cogs/tournament/__init__.py:216
 #, python-brace-format
 msgid "Tournament started with **{num}** entries."
 msgstr "Turnuva **{num}** girişle başladı."
 
-#: cogs/tournament/__init__.py:93
+#: cogs/tournament/__init__.py:99 cogs/tournament/__init__.py:218
 msgid "vs"
 msgstr "vs"
 
-#: cogs/tournament/__init__.py:124
+#: cogs/tournament/__init__.py:130 cogs/tournament/__init__.py:318
 #, python-brace-format
 msgid "Winner of this match is {winner}!"
 msgstr "Bu maçın kazananı {winner}!"
 
-#: cogs/tournament/__init__.py:128
+#: cogs/tournament/__init__.py:134 cogs/tournament/__init__.py:324
 msgid "Round Done!"
 msgstr "Raunt Bitti!"
 
-#: cogs/tournament/__init__.py:131
+#: cogs/tournament/__init__.py:137 cogs/tournament/__init__.py:327
 #, python-brace-format
 msgid "Tournament ended! The winner is {winner}."
 msgstr "Turnuva bitti! Kazanan {winner}."
 
-#: cogs/tournament/__init__.py:136
+#: cogs/tournament/__init__.py:142 cogs/tournament/__init__.py:332
 msgid "The creator spent money, prize can't be given!"
 msgstr "Kurucu parayı harcadı, ödül verilemez!"
 
-#: cogs/tournament/__init__.py:150
+#: cogs/tournament/__init__.py:156 cogs/tournament/__init__.py:346
 #, python-brace-format
 msgid ""
 "Tournament ended! The winner is {winner}.\n"
@@ -96,6 +97,34 @@ msgid ""
 msgstr ""
 "Turnuva bitti! Kazanan {winner}.\n"
 "Para verildi!"
+
+#: cogs/tournament/__init__.py:165
+msgid "Starts a new raid tournament."
+msgstr ""
+
+#: cogs/tournament/__init__.py:240 cogs/battles/__init__.py:237
+#, python-brace-format
+msgid "Raidbattle {p1} vs. {p2} started!"
+msgstr "Baskın savaşı {p1} vs. {p2} başladı!"
+
+#: cogs/tournament/__init__.py:280 cogs/battles/__init__.py:276
+#, python-brace-format
+msgid "{attacker} attacks! {defender} takes **{dmg}HP** damage."
+msgstr "{attacker} saldırıyor! {defender} **{dmg}HP** hasar alıyor."
+
+#: cogs/tournament/__init__.py:291 cogs/battles/__init__.py:286
+#, python-brace-format
+msgid ""
+"{p1} - {hp1} HP left\n"
+"{p2} - {hp2} HP left"
+msgstr ""
+"{p1} - {hp1} HP kaldı\n"
+"{p2} - {hp2} HP kaldı"
+
+#: cogs/tournament/__init__.py:303 cogs/battles/__init__.py:297
+#, python-brace-format
+msgid "Action #{number}"
+msgstr "Eylem #{number}"
 
 #: cogs/images/__init__.py:34
 msgid "Pixelfys an Avatar."
@@ -171,7 +200,7 @@ msgid "Seems you haven't got a trick or treat bag yet. Go get some!"
 msgstr "Görünüşe göre henüz şeker ya da şaka torban yok. Git biraz al!"
 
 #: cogs/halloween/__init__.py:152 cogs/crates/__init__.py:131
-#: cogs/classes/__init__.py:531
+#: cogs/classes/__init__.py:532
 msgid "You gained an item!"
 msgstr "Eşya kazandın!"
 
@@ -180,32 +209,32 @@ msgid "You found a new item when opening a trick-or-treat bag!"
 msgstr "Şeker-ya-da-şaka torbası açarken yeni eşya buldun!"
 
 #: cogs/halloween/__init__.py:157 cogs/crates/__init__.py:137
-#: cogs/classes/__init__.py:317 cogs/classes/__init__.py:537
-#: cogs/trading/__init__.py:234 cogs/trading/__init__.py:456
+#: cogs/classes/__init__.py:318 cogs/classes/__init__.py:538
+#: cogs/trading/__init__.py:234 cogs/trading/__init__.py:469
 msgid "Name"
 msgstr "İsim"
 
 #: cogs/halloween/__init__.py:158 cogs/crates/__init__.py:138
-#: cogs/classes/__init__.py:538 cogs/trading/__init__.py:235
-#: cogs/trading/__init__.py:457
+#: cogs/classes/__init__.py:539 cogs/trading/__init__.py:235
+#: cogs/trading/__init__.py:470
 msgid "Type"
 msgstr "Tür"
 
 #: cogs/halloween/__init__.py:159 cogs/crates/__init__.py:139
-#: cogs/classes/__init__.py:540 cogs/trading/__init__.py:236
-#: cogs/trading/__init__.py:458
+#: cogs/classes/__init__.py:541 cogs/trading/__init__.py:236
+#: cogs/trading/__init__.py:471
 msgid "Damage"
 msgstr "Hasar"
 
 #: cogs/halloween/__init__.py:160 cogs/crates/__init__.py:140
-#: cogs/classes/__init__.py:542 cogs/trading/__init__.py:237
-#: cogs/trading/__init__.py:459
+#: cogs/classes/__init__.py:543 cogs/trading/__init__.py:237
+#: cogs/trading/__init__.py:472
 msgid "Armor"
 msgstr "Zırh"
 
 #: cogs/halloween/__init__.py:161 cogs/crates/__init__.py:141
-#: cogs/classes/__init__.py:543 cogs/trading/__init__.py:238
-#: cogs/trading/__init__.py:460
+#: cogs/classes/__init__.py:544 cogs/trading/__init__.py:238
+#: cogs/trading/__init__.py:473
 msgid "Value"
 msgstr "Değer"
 
@@ -324,51 +353,29 @@ msgstr ""
 #: cogs/battles/__init__.py:190
 #, python-brace-format
 msgid "Noone wanted to join your raidbattle, {author}!"
-msgstr ""
+msgstr "Hiç kimse baskın savaşına katılmak istemedi, {author}!"
 
 #: cogs/battles/__init__.py:198
 msgid "You don't have enough money to join the raidbattle."
-msgstr ""
-
-#: cogs/battles/__init__.py:237
-#, python-brace-format
-msgid "Raidbattle {p1} vs. {p2} started!"
-msgstr ""
-
-#: cogs/battles/__init__.py:276
-#, python-brace-format
-msgid "{attacker} attacks! {defender} takes **{dmg}HP** damage."
-msgstr "{attacker} saldırıyor! {defender} **{dmg}HP** hasar alıyor."
-
-#: cogs/battles/__init__.py:286
-#, python-brace-format
-msgid ""
-"{p1} - {hp1} HP left\n"
-"{p2} - {hp2} HP left"
-msgstr ""
-"{p1} - {hp1} HP kaldı\n"
-"{p2} - {hp2} HP kaldı"
-
-#: cogs/battles/__init__.py:297
-#, python-brace-format
-msgid "Action #{number}"
-msgstr "Eylem #{number}"
+msgstr "Baskın savaşına katılmak için yeterli miktarda paran yok."
 
 #: cogs/battles/__init__.py:310 cogs/battles/__init__.py:339
 msgid ""
 "One of you both can't pay the price for the raidbattle because he spent "
 "money in the time of fighting."
 msgstr ""
+"Dövüş esnasında para harcadığı için ikinizden biri baskın savaşının fiyatını "
+"ödeyemiyor."
 
 #: cogs/battles/__init__.py:329 cogs/battles/__init__.py:357
 #, python-brace-format
 msgid "{p1} won the raidbattle vs {p2}! Congratulations!"
-msgstr ""
+msgstr "{p1}, {p2}'a karşı olan baskın savaşını kazandı! Tebrikler!"
 
 #. timeout after 5 min
 #: cogs/battles/__init__.py:363
 msgid "Raidbattle took too long, aborting."
-msgstr ""
+msgstr "Baskın savaşı çok uzun sürdü, durduruluyor."
 
 #: cogs/battles/__init__.py:372
 msgid "Reaction-based battle system."
@@ -558,7 +565,7 @@ msgid "Opens a crate."
 msgstr "Sandık açar."
 
 #: cogs/crates/__init__.py:77 cogs/crates/__init__.py:170
-#: cogs/admin/__init__.py:157
+#: cogs/admin/__init__.py:194
 #, python-brace-format
 msgid "{rarity} is not a valid rarity."
 msgstr "{rarity} geçerli bir nadirlik değil."
@@ -575,7 +582,7 @@ msgstr ""
 msgid "You found a new item when opening a crate!"
 msgstr "Sandık açarken yeni bir eşya buldun!"
 
-#: cogs/crates/__init__.py:136 cogs/classes/__init__.py:536
+#: cogs/crates/__init__.py:136 cogs/classes/__init__.py:537
 msgid "ID"
 msgstr "ID"
 
@@ -843,7 +850,7 @@ msgstr ""
 "{author} Açlık Oyunları oyunu başlattı! Oyuna katılmak için :"
 "shallow_pan_of_food: ile tepki verin! **{num} katıldı**"
 
-#: cogs/hungergames/__init__.py:332
+#: cogs/hungergames/__init__.py:335
 msgid "Not enough players joined..."
 msgstr "Yeteri kadar oyuncu katılmadı..."
 
@@ -980,18 +987,18 @@ msgstr ""
 msgid "There is another raid already ongoing. Try again at a later time."
 msgstr "Halen devam eden başka bir baskın var. Daha sonra tekrar dene."
 
-#: cogs/error_handler/__init__.py:180 cogs/alliance/__init__.py:388
-#: cogs/alliance/__init__.py:417
+#: cogs/error_handler/__init__.py:180 cogs/alliance/__init__.py:414
+#: cogs/alliance/__init__.py:443
 msgid "Your alliance does not own a city."
-msgstr ""
+msgstr "İttifakının bir şehri yok."
 
 #: cogs/error_handler/__init__.py:182
 msgid "Your alliance already owns a city."
-msgstr ""
+msgstr "İttifakının zaten bir şehri var."
 
 #: cogs/error_handler/__init__.py:184
 msgid "Your alliance rank is too low."
-msgstr ""
+msgstr "İttifak derecen çok düşük."
 
 #: cogs/error_handler/__init__.py:190
 msgid ""
@@ -1001,7 +1008,7 @@ msgstr ""
 ":x: Bu komutu kullanmaya yetkin yok. Bu, diğer kullanıcılar için düşünülmüş."
 
 #. prevent cooldown reset
-#: cogs/error_handler/__init__.py:196 cogs/trading/__init__.py:499
+#: cogs/error_handler/__init__.py:196 cogs/trading/__init__.py:512
 msgid "You did not choose anything."
 msgstr "Herhangi bir şey seçmedin."
 
@@ -1054,7 +1061,7 @@ msgstr "Gizemli yapboz parçası"
 #: cogs/wintersday/__init__.py:107
 #, python-brace-format
 msgid "{crates} {rarity} crates"
-msgstr ""
+msgstr "{crates} {rarity} sandıklar"
 
 #: cogs/wintersday/__init__.py:125
 #, python-brace-format
@@ -1468,177 +1475,177 @@ msgstr ":1234: **{num}** attın, {author}!"
 msgid "Shows you the bots current version along with its new updates."
 msgstr "Sana botun yeni güncellemeleriyle beraber mevcut sürümünü gösterir."
 
-#: cogs/miscellaneous/__init__.py:352
+#: cogs/miscellaneous/__init__.py:366
 msgid ""
 "Deletes an amount of messages from the history, optionally only by one "
 "member."
 msgstr ""
 "Geçmişten bir miktar mesaj siler, isteğe bağlı olarak sadece bir üyeden."
 
-#: cogs/miscellaneous/__init__.py:362
+#: cogs/miscellaneous/__init__.py:376
 #, python-brace-format
 msgid "👍 Deleted **{num}** messages for you."
 msgstr "👍 Senin için **{num}** mesaj sildim."
 
-#: cogs/miscellaneous/__init__.py:368
+#: cogs/miscellaneous/__init__.py:382
 msgid "The magic 8 ball answers your questions."
 msgstr "Sihirli 8 topu sorularını cevaplar."
 
-#: cogs/miscellaneous/__init__.py:370
+#: cogs/miscellaneous/__init__.py:384
 msgid "It is certain"
 msgstr "Bu kesin"
 
-#: cogs/miscellaneous/__init__.py:371
+#: cogs/miscellaneous/__init__.py:385
 msgid "It is decidedly so"
 msgstr "Bu kesinlikle öyle"
 
-#: cogs/miscellaneous/__init__.py:372
+#: cogs/miscellaneous/__init__.py:386
 msgid "Without a doubt"
 msgstr "Şüphesiz"
 
-#: cogs/miscellaneous/__init__.py:373
+#: cogs/miscellaneous/__init__.py:387
 msgid "Yes, definitely"
 msgstr "Evet, kesinlikle"
 
-#: cogs/miscellaneous/__init__.py:374
+#: cogs/miscellaneous/__init__.py:388
 msgid "You may rely on it"
 msgstr "Güvenebilirsin"
 
-#: cogs/miscellaneous/__init__.py:375
+#: cogs/miscellaneous/__init__.py:389
 msgid "As I see it, yes"
 msgstr "Gördüğüm kadarıyla, evet"
 
-#: cogs/miscellaneous/__init__.py:376
+#: cogs/miscellaneous/__init__.py:390
 msgid "Most likely"
 msgstr "Büyük ihtimalle"
 
-#: cogs/miscellaneous/__init__.py:377
+#: cogs/miscellaneous/__init__.py:391
 msgid "Outlook good"
 msgstr "İyi görünüyor"
 
-#: cogs/miscellaneous/__init__.py:378 cogs/music/__init__.py:402
+#: cogs/miscellaneous/__init__.py:392 cogs/music/__init__.py:402
 #: cogs/music/__init__.py:405
 msgid "Yes"
 msgstr "Evet"
 
-#: cogs/miscellaneous/__init__.py:379
+#: cogs/miscellaneous/__init__.py:393
 msgid "Signs point to yes"
 msgstr "İyiye işaret"
 
-#: cogs/miscellaneous/__init__.py:380
+#: cogs/miscellaneous/__init__.py:394
 msgid "Reply hazy try again"
 msgstr "Cevap bulanık tekrar dene"
 
-#: cogs/miscellaneous/__init__.py:381
+#: cogs/miscellaneous/__init__.py:395
 msgid "Ask again later"
 msgstr "Daha sonra tekrar sor"
 
-#: cogs/miscellaneous/__init__.py:382
+#: cogs/miscellaneous/__init__.py:396
 msgid "Better not tell you now"
 msgstr "Sana şu an söylememek daha iyi"
 
-#: cogs/miscellaneous/__init__.py:383
+#: cogs/miscellaneous/__init__.py:397
 msgid "Cannot predict now"
 msgstr "Şu anda tahmin edemem"
 
-#: cogs/miscellaneous/__init__.py:384
+#: cogs/miscellaneous/__init__.py:398
 msgid "Concentrate and ask again"
 msgstr "Konsantre ol ve tekrar sor"
 
-#: cogs/miscellaneous/__init__.py:385
+#: cogs/miscellaneous/__init__.py:399
 msgid "Don't count on it"
 msgstr "Buna güvenme"
 
-#: cogs/miscellaneous/__init__.py:386
+#: cogs/miscellaneous/__init__.py:400
 msgid "My reply is no"
 msgstr "Cevabım hayır"
 
-#: cogs/miscellaneous/__init__.py:387
+#: cogs/miscellaneous/__init__.py:401
 msgid "My sources say no"
 msgstr "Kaynaklarım hayır diyor"
 
-#: cogs/miscellaneous/__init__.py:388
+#: cogs/miscellaneous/__init__.py:402
 msgid "Outlook not so good"
 msgstr "Çok iyi görünmüyor"
 
-#: cogs/miscellaneous/__init__.py:389
+#: cogs/miscellaneous/__init__.py:403
 msgid "Very doubtful"
 msgstr "Çok şüpheli"
 
-#: cogs/miscellaneous/__init__.py:392
+#: cogs/miscellaneous/__init__.py:406
 #, python-brace-format
 msgid "The :8ball: says: **{result}**."
 msgstr ":8ball: diyor ki: **{result}**."
 
-#: cogs/miscellaneous/__init__.py:398
+#: cogs/miscellaneous/__init__.py:412
 msgid "Repeats what you said."
 msgstr "Dediğini tekrar ediyor."
 
-#: cogs/miscellaneous/__init__.py:408
+#: cogs/miscellaneous/__init__.py:422
 msgid "Chooses a random option of supplied possiblies."
 msgstr "Sağlanan olanaklardan rastgele bir seçenek seçer."
 
-#: cogs/miscellaneous/__init__.py:411
+#: cogs/miscellaneous/__init__.py:425
 msgid "Cannot choose from an empty list..."
 msgstr "Boş bir listeden seçemez..."
 
-#: cogs/miscellaneous/__init__.py:413
+#: cogs/miscellaneous/__init__.py:427
 #, python-brace-format
 msgid "My choice is: **{result}**."
 msgstr "Seçimim: **{result}**."
 
-#: cogs/miscellaneous/__init__.py:421
+#: cogs/miscellaneous/__init__.py:435
 msgid "Calculates the potential love for 2 members."
 msgstr "2 üye için potansiyel aşkı hesaplar."
 
-#: cogs/miscellaneous/__init__.py:424
+#: cogs/miscellaneous/__init__.py:438
 #, python-brace-format
 msgid "Calculating Love for {first} and {second}..."
 msgstr "{first} ve {second} için aşkı hesaplıyor..."
 
-#: cogs/miscellaneous/__init__.py:437
+#: cogs/miscellaneous/__init__.py:451
 msgid "Love Calculation"
 msgstr "Aşk Hesaplama"
 
-#: cogs/miscellaneous/__init__.py:438
+#: cogs/miscellaneous/__init__.py:452
 #, python-brace-format
 msgid "Love for {first} and {second} is at **{love}%**! ❤"
 msgstr "{first} ve {second} için aşk **{love}%** derecede! ❤"
 
-#: cogs/miscellaneous/__init__.py:448
+#: cogs/miscellaneous/__init__.py:462
 msgid "Fancies text with big emojis."
 msgstr "Mesajları büyük emojilerle güzelleştirir."
 
-#: cogs/miscellaneous/__init__.py:474
+#: cogs/miscellaneous/__init__.py:488
 msgid "A random bad meme."
 msgstr "Rastgele bir kötü meme."
 
-#: cogs/miscellaneous/__init__.py:488
+#: cogs/miscellaneous/__init__.py:502
 msgid ""
 "Tabletop RPG-ready dice. Rolls in the ndx format (3d20 is 3 dice with 20 "
 "sides)."
 msgstr ""
 "Masaüstü RPG-hazır zar. Ndx formatında atılır (3d20, 20 kenarlı 3 zardır)."
 
-#: cogs/miscellaneous/__init__.py:495
+#: cogs/miscellaneous/__init__.py:509
 msgid "Use the ndx format. E.g. `5d20` will roll 5 dices with 20 sides each."
 msgstr ""
 "Ndx formatı kullan. Örnek olarak `5d20` her birinde 20 kenar bulunan 5 zar "
 "atacaktır."
 
-#: cogs/miscellaneous/__init__.py:499
+#: cogs/miscellaneous/__init__.py:513
 msgid "Use the ndx format."
 msgstr "Ndx formatı kullan."
 
-#: cogs/miscellaneous/__init__.py:501
+#: cogs/miscellaneous/__init__.py:515
 msgid "Too many dice."
 msgstr "Zar çok fazla."
 
-#: cogs/miscellaneous/__init__.py:504
+#: cogs/miscellaneous/__init__.py:518
 msgid "Dice must have at least one side and not more than 10000."
 msgstr "Zar en az 1 kenarlı ve 10000'den yüksek olmamalı."
 
-#: cogs/miscellaneous/__init__.py:519
+#: cogs/miscellaneous/__init__.py:533
 #, python-brace-format
 msgid ""
 "```Sum: {sumall}\n"
@@ -1651,106 +1658,106 @@ msgstr ""
 "Sonuçlar:\n"
 "{results}```"
 
-#: cogs/miscellaneous/__init__.py:527
+#: cogs/miscellaneous/__init__.py:541
 msgid "Sends you my nickname from a random server."
 msgstr "Sana benim rastgele bir sunucudaki kullanıcı adımı gönderir."
 
-#: cogs/miscellaneous/__init__.py:533
+#: cogs/miscellaneous/__init__.py:547
 #, python-brace-format
 msgid "In **{server}** I am called **{name}**."
 msgstr "Bana **{server}** sunucusunda **{name}** denir."
 
-#: cogs/miscellaneous/__init__.py:541
+#: cogs/miscellaneous/__init__.py:555
 msgid "Facts about Chuck Norris."
-msgstr ""
+msgstr "Chuck Norris hakkında gerçekler."
 
-#: cogs/miscellaneous/__init__.py:549
+#: cogs/miscellaneous/__init__.py:563
 msgid "Cat pics."
 msgstr "Kedi resimleri."
 
-#: cogs/miscellaneous/__init__.py:552
+#: cogs/miscellaneous/__init__.py:566
 msgid "Meow!"
 msgstr "Miyav!"
 
-#: cogs/miscellaneous/__init__.py:561
+#: cogs/miscellaneous/__init__.py:575
 msgid "Dog pics."
 msgstr "Köpek resimleri."
 
-#: cogs/miscellaneous/__init__.py:568
+#: cogs/miscellaneous/__init__.py:582
 msgid "Wouff!"
 msgstr "Hav!"
 
-#: cogs/miscellaneous/__init__.py:575
+#: cogs/miscellaneous/__init__.py:589
 msgid "Shows how long the bot has been connected to Discord."
 msgstr "Botun ne kadar süredir Discord'a bağlı olduğunu gösterir."
 
-#: cogs/miscellaneous/__init__.py:577
+#: cogs/miscellaneous/__init__.py:591
 #, python-brace-format
 msgid "I am online for **{time}**."
 msgstr "**{time}** süredir çevrimiçiyim."
 
-#: cogs/miscellaneous/__init__.py:585
+#: cogs/miscellaneous/__init__.py:599
 msgid "Every good software has an Easter egg."
 msgstr "Bütün iyi yazılımlarda Easter egg vardır."
 
-#: cogs/miscellaneous/__init__.py:586
+#: cogs/miscellaneous/__init__.py:600
 msgid "Find it!"
 msgstr "Bul onu!"
 
-#: cogs/miscellaneous/__init__.py:592
+#: cogs/miscellaneous/__init__.py:606
 msgid "Gives a cookie to a user."
 msgstr "Kullanıcıya kurabiye verir."
 
-#: cogs/miscellaneous/__init__.py:595
+#: cogs/miscellaneous/__init__.py:609
 #, python-brace-format
 msgid "**{user}**, you've been given a cookie by **{author}**. :cookie:"
 msgstr "**{user}**, **{author}** sana kurabiye verdi. :cookie:"
 
-#: cogs/miscellaneous/__init__.py:603
+#: cogs/miscellaneous/__init__.py:617
 msgid "Gives ice cream to a user."
 msgstr "Kullanıcıya dondurma verir."
 
-#: cogs/miscellaneous/__init__.py:605
+#: cogs/miscellaneous/__init__.py:619
 #, python-brace-format
 msgid "{other}, here is your ice: :ice_cream:!"
 msgstr "{other}, işte senin dondurman: :ice_cream:!"
 
-#: cogs/miscellaneous/__init__.py:613
+#: cogs/miscellaneous/__init__.py:627
 msgid "User guessing game."
 msgstr "Kullanıcı tahmin oyunu."
 
-#: cogs/miscellaneous/__init__.py:616
+#: cogs/miscellaneous/__init__.py:630
 msgid "Can you guess who this is?"
 msgstr "Bunun kim olduğunu tahmin edebilir misin?"
 
-#: cogs/miscellaneous/__init__.py:617
+#: cogs/miscellaneous/__init__.py:631
 #, python-brace-format
 msgid "Their discriminant is `#{disc}`"
 msgstr "Onların numarası`#{disc}`"
 
-#: cogs/miscellaneous/__init__.py:634
+#: cogs/miscellaneous/__init__.py:648
 #, python-brace-format
 msgid "You didn't guess correctly! It was `{member}`!"
 msgstr "Doğru tahmin edemedin! O kişi buydu `{member}`!"
 
-#: cogs/miscellaneous/__init__.py:636
+#: cogs/miscellaneous/__init__.py:650
 #, python-brace-format
 msgid "{user}, you are correct!"
 msgstr "{user}, doğru bildin!"
 
-#: cogs/miscellaneous/__init__.py:641
+#: cogs/miscellaneous/__init__.py:655
 msgid "An alternative to 8ball, but has more bitchy answers."
 msgstr "8 topa alternatifidir, ama daha fazla kaba cevabı var."
 
-#: cogs/miscellaneous/__init__.py:696
+#: cogs/miscellaneous/__init__.py:710
 msgid "Talk to me! (Supports only English)"
 msgstr "Konuş benimle! (Sadece İngilizce destekler)"
 
-#: cogs/miscellaneous/__init__.py:700
+#: cogs/miscellaneous/__init__.py:714
 msgid "Text too long or too short. May be 3 to 60 characters."
 msgstr "Metin çok uzun ya da çok kısa. 3 ile 60 karakter olabilir."
 
-#: cogs/miscellaneous/__init__.py:723
+#: cogs/miscellaneous/__init__.py:737
 msgid ""
 "Sends today's garfield comic if no date info is passed. Else, it will use "
 "YYYY MM DD or DD MM YYYY depending on where the year is, with the date parts "
@@ -1760,7 +1767,7 @@ msgstr ""
 "gönderir. Yoksa, yılın nerede olduğuna göre YYYY AA GG ya da GG AA YYYY "
 "kullanır, tarih kısımları boşlukla ayrılmış bir şekilde."
 
-#: cogs/miscellaneous/__init__.py:742
+#: cogs/miscellaneous/__init__.py:756
 msgid ""
 "Sends today's userfriendly comic if no date info is passed. Else, it will "
 "use YYYY MM DD or DD MM YYYY depending on where the year is, with the date "
@@ -1770,23 +1777,23 @@ msgstr ""
 "romanını gönderir. Yoksa, yılın nerede olduğuna göre YYYY AA GG ya da GG AA "
 "YYYY kullanır, tarih kısımları boşlukla ayrılmış bir şekilde."
 
-#: cogs/miscellaneous/__init__.py:753
+#: cogs/miscellaneous/__init__.py:767
 msgid "Taken from userfriendly.org"
 msgstr "userfriendly.org'dan alınmıştır"
 
-#: cogs/miscellaneous/__init__.py:763
+#: cogs/miscellaneous/__init__.py:777
 msgid "Awesome bots by other coffee-drinking individuals."
 msgstr "Diğer kavhe-içici bireyler tarafından yapılmış müthiş botlar."
 
-#: cogs/miscellaneous/__init__.py:765
+#: cogs/miscellaneous/__init__.py:779
 msgid "Partnered Bots"
 msgstr "Ortak Olan Botlar"
 
-#: cogs/miscellaneous/__init__.py:766
+#: cogs/miscellaneous/__init__.py:780
 msgid "Awesome bots made by other people!"
 msgstr "Başka insanlar tarafından yapılmış müthiş botlar!"
 
-#: cogs/miscellaneous/__init__.py:772
+#: cogs/miscellaneous/__init__.py:786
 msgid ""
 "Trivia, Hangman, Minesweeper, Connect 4 and more, right from your chat! A "
 "bot offering non-RPG games made by deprilula28 and Fin.\n"
@@ -1796,7 +1803,7 @@ msgstr ""
 "RPG-olmayan oyunları sunan bot deprilula28 tarafından yapılmıştır ve Son.\n"
 "[top.gg Page](https://top.gg/bot/gamesrob)"
 
-#: cogs/miscellaneous/__init__.py:778
+#: cogs/miscellaneous/__init__.py:792
 msgid ""
 "Cautious Memory brings wiki-style pages to your server. Use it to document "
 "who's who in your server, inside jokes, or community lore. Includes a full "
@@ -1809,23 +1816,23 @@ msgstr ""
 "içerir.\n"
 "[top.gg Page](https://top.gg/bot/541707781665718302)"
 
-#: cogs/miscellaneous/__init__.py:786
+#: cogs/miscellaneous/__init__.py:800
 msgid "Searches Wikipedia for an entry."
 msgstr "Kayıt için Wikipedia'yı araştırır."
 
-#: cogs/miscellaneous/__init__.py:791
+#: cogs/miscellaneous/__init__.py:805
 msgid "No wikipedia entry found."
 msgstr "Wikipedia kaydı bulunamadı."
 
-#: cogs/miscellaneous/__init__.py:793
+#: cogs/miscellaneous/__init__.py:807
 msgid "Could not parse article summary."
 msgstr "Makale özeti ayrıştırılamadı."
 
-#: cogs/miscellaneous/__init__.py:805
+#: cogs/miscellaneous/__init__.py:819
 msgid "Searches IdleRPG Wiki for an entry."
 msgstr "Kayıt için IdleRPG Wiki'yi araştırır."
 
-#: cogs/miscellaneous/__init__.py:809
+#: cogs/miscellaneous/__init__.py:823
 msgid ""
 "Check out the official IdleRPG Wiki here:\n"
 "<https://wiki.travitia.xyz/index.php?title=Main_Page>"
@@ -1833,19 +1840,19 @@ msgstr ""
 "Resmi IdleRPG Wiki'ye buradan göz at:\n"
 "<https://wiki.travitia.xyz/index.php?title=Main_Page>"
 
-#: cogs/miscellaneous/__init__.py:816
+#: cogs/miscellaneous/__init__.py:830
 msgid "No entry found."
 msgstr "Kayıt bulunamadı."
 
-#: cogs/miscellaneous/__init__.py:819
+#: cogs/miscellaneous/__init__.py:833
 msgid "No content to display."
 msgstr "Gösterilecek içerik yok."
 
-#: cogs/miscellaneous/__init__.py:831
+#: cogs/miscellaneous/__init__.py:845
 msgid "About the bot and our websites."
 msgstr "Bot ve internet sitelerimiz hakkında."
 
-#: cogs/miscellaneous/__init__.py:834
+#: cogs/miscellaneous/__init__.py:848
 #, python-format
 msgid ""
 "**IdleRPG** is Discord's most advanced medieval RPG bot.\n"
@@ -1980,6 +1987,9 @@ msgid ""
 "that roams this land? Raids got you covered!\n"
 "Join the support server (`{prefix}support`) for more information."
 msgstr ""
+"Hiç bu topraklarda dolaşan kardan adamı yenmek için diğer oyuncularla bir "
+"araya gelmek istedin mi? Baskınlar bunun için burada!\n"
+"Daha fazla bilgi için destek sunucusuna (`{prefix}support`) katıl."
 
 #: cogs/store/__init__.py:33
 msgid "The booster store."
@@ -2224,7 +2234,7 @@ msgstr "Üzgünüm, böyle bir komut yok."
 msgid "Reset an item's type and name, if modified."
 msgstr "Bir eşyanın türünü ve ismini sıfırla, eğer değiştirildiyse."
 
-#: cogs/patreon/__init__.py:44 cogs/transaction/__init__.py:279
+#: cogs/patreon/__init__.py:44 cogs/transaction/__init__.py:284
 msgid "You do not own this item."
 msgstr "Bu eşyaya sahip değilsin."
 
@@ -2286,7 +2296,7 @@ msgid "That is not a valid premade background."
 msgstr "Bu geçerli bir önceden yapılmış arkaplan değil."
 
 #: cogs/patreon/__init__.py:163 cogs/patreon/__init__.py:191
-#: cogs/classes/__init__.py:498 cogs/guild/__init__.py:505
+#: cogs/classes/__init__.py:499 cogs/guild/__init__.py:505
 msgid ""
 "I couldn't read that URL. Does it start with `http://` or `https://` and is "
 "either a png or jpeg?"
@@ -2536,84 +2546,88 @@ msgstr "Bir bot VIP'den çalmaya çalıştın, ama korumalar seni yakaladı."
 
 #: cogs/classes/__init__.py:301
 #, python-brace-format
-msgid "You stole **${stolen}** from **{user}**."
-msgstr "**{user}**'dan **${stolen}** çaldın."
+msgid "You stole **${stolen}** from {user}."
+msgstr ""
 
-#: cogs/classes/__init__.py:306
+#: cogs/classes/__init__.py:303
+msgid "a traveller just passing by"
+msgstr ""
+
+#: cogs/classes/__init__.py:307
 msgid "Your attempt to steal money wasn't successful."
 msgstr "Para çalma girişimin başarısız oldu."
 
-#: cogs/classes/__init__.py:314
+#: cogs/classes/__init__.py:315
 msgid "[Ranger Only] View your pet or interact with it."
 msgstr "[Korucuya Özel] Evcil hayvanına bak ya da onunla etkileşime gir."
 
-#: cogs/classes/__init__.py:316
+#: cogs/classes/__init__.py:317
 #, python-brace-format
 msgid "{user}'s pet"
 msgstr "{user}'nın evcil hayvanı"
 
-#: cogs/classes/__init__.py:318
+#: cogs/classes/__init__.py:319
 msgid "Level"
 msgstr "Seviye"
 
-#: cogs/classes/__init__.py:319
+#: cogs/classes/__init__.py:320
 msgid "Food"
 msgstr "Yemek"
 
-#: cogs/classes/__init__.py:321
+#: cogs/classes/__init__.py:322
 msgid "Drinks"
 msgstr "İçecekler"
 
-#: cogs/classes/__init__.py:323
+#: cogs/classes/__init__.py:324
 msgid "Love"
 msgstr "Sevgi"
 
-#: cogs/classes/__init__.py:324
+#: cogs/classes/__init__.py:325
 msgid "Joy"
 msgstr "Neşe"
 
-#: cogs/classes/__init__.py:335
+#: cogs/classes/__init__.py:336
 msgid "[Ranger Only] Feed your pet."
 msgstr "[Korucuya Özel] Evcil hayvanını besle."
 
-#: cogs/classes/__init__.py:337
+#: cogs/classes/__init__.py:338
 msgid "Potato"
 msgstr "Patates"
 
-#: cogs/classes/__init__.py:338
+#: cogs/classes/__init__.py:339
 msgid "Apple"
 msgstr "Elma"
 
-#: cogs/classes/__init__.py:339
+#: cogs/classes/__init__.py:340
 msgid "Cucumber"
 msgstr "Salatalık"
 
-#: cogs/classes/__init__.py:340
+#: cogs/classes/__init__.py:341
 msgid "Meat"
 msgstr "Et"
 
-#: cogs/classes/__init__.py:341
+#: cogs/classes/__init__.py:342
 msgid "Salad"
 msgstr "Salata"
 
-#: cogs/classes/__init__.py:342
+#: cogs/classes/__init__.py:343
 msgid "Sushi"
 msgstr "Suşi"
 
-#: cogs/classes/__init__.py:343
+#: cogs/classes/__init__.py:344
 msgid "Adrian's Power Poop"
 msgstr "Adrian'ın Güç Dışkısı"
 
-#: cogs/classes/__init__.py:350
+#: cogs/classes/__init__.py:351
 msgid "Feed your pet"
 msgstr "Evcil hayvanını besle"
 
-#: cogs/classes/__init__.py:354 cogs/classes/__init__.py:397
+#: cogs/classes/__init__.py:355 cogs/classes/__init__.py:398
 #: cogs/marriage/__init__.py:234
 msgid "You are too poor to buy this."
 msgstr "Bunu satın almak için çok fakirsin."
 
-#: cogs/classes/__init__.py:368
+#: cogs/classes/__init__.py:369
 #, python-brace-format
 msgid ""
 "You bought **{item}** for your pet and increased its food bar by **{points}"
@@ -2622,43 +2636,43 @@ msgstr ""
 "Evcil hayvanın için **{item}** aldın ve yemek barını **{points}** puan "
 "yükselttin."
 
-#: cogs/classes/__init__.py:378
+#: cogs/classes/__init__.py:379
 msgid "[Ranger Only] Give your pet something to drink."
 msgstr "[Korucuya Özel] Evcil hayvanına içmesi için bir şey ver."
 
-#: cogs/classes/__init__.py:380
+#: cogs/classes/__init__.py:381
 msgid "Some Water"
 msgstr "Biraz Su"
 
-#: cogs/classes/__init__.py:381
+#: cogs/classes/__init__.py:382
 msgid "A bottle of water"
 msgstr "Bir şişe su"
 
-#: cogs/classes/__init__.py:382
+#: cogs/classes/__init__.py:383
 msgid "Cocktail"
 msgstr "Kokteyl"
 
-#: cogs/classes/__init__.py:383
+#: cogs/classes/__init__.py:384
 msgid "Wine"
 msgstr "Şarap"
 
-#: cogs/classes/__init__.py:384
+#: cogs/classes/__init__.py:385
 msgid "Beer"
 msgstr "Bira"
 
-#: cogs/classes/__init__.py:385
+#: cogs/classes/__init__.py:386
 msgid "Vodka"
 msgstr "Votka"
 
-#: cogs/classes/__init__.py:386
+#: cogs/classes/__init__.py:387
 msgid "Adrian's Cocktail"
 msgstr "Adrian'ın Kokteyli"
 
-#: cogs/classes/__init__.py:393
+#: cogs/classes/__init__.py:394
 msgid "Give your pet something to drink"
 msgstr "Evcil hayvanına içmesi için bir şey ver"
 
-#: cogs/classes/__init__.py:411
+#: cogs/classes/__init__.py:412
 #, python-brace-format
 msgid ""
 "You bought **{item}** for your pet and increased its drinks bar by **{points}"
@@ -2667,11 +2681,11 @@ msgstr ""
 "Evcil hayvanın için **{item}** aldın ve içecekler barını **{points}** puan "
 "yükselttin."
 
-#: cogs/classes/__init__.py:422
+#: cogs/classes/__init__.py:423
 msgid "[Ranger Only] Cuddle your pet to make it love you."
 msgstr "[Korucuya Özel] Seni sevmesi için evcil hayvanına sarıl."
 
-#: cogs/classes/__init__.py:431
+#: cogs/classes/__init__.py:432
 #, python-brace-format
 msgid ""
 "Your pet adores you! :heart: Cuddling it has increased its love for you by "
@@ -2680,88 +2694,88 @@ msgstr ""
 "Evcil hayvanın seni çok seviyor! :heart: Ona sarılmak sana olan sevgisini "
 "**{value}** puan yükseltti."
 
-#: cogs/classes/__init__.py:442
+#: cogs/classes/__init__.py:443
 msgid "[Ranger Only] Play with your pet to make it happier."
 msgstr "[Korucuya Özel] Evcil hayvanını mutlu etmek için onunla oyna."
 
-#: cogs/classes/__init__.py:451
+#: cogs/classes/__init__.py:452
 #, python-brace-format
 msgid "You have been {activity} with your pet and it gained **{value}** joy!"
 msgstr ""
 "Evcil hayvanınla {activity} aktivitesini yaptınız ve **{value}** neşe "
 "kazandı!"
 
-#: cogs/classes/__init__.py:455
+#: cogs/classes/__init__.py:456
 msgid "playing football :soccer:"
 msgstr "futbol oynuyorsunuz :soccer:"
 
-#: cogs/classes/__init__.py:456
+#: cogs/classes/__init__.py:457
 msgid "playing American football :football:"
 msgstr "Amerikan futbolu oynuyorsunuz :football:"
 
-#: cogs/classes/__init__.py:457
+#: cogs/classes/__init__.py:458
 msgid "playing rugby :rugby_football:"
 msgstr "ragbi oynuyorsunuz :rugby_football:"
 
-#: cogs/classes/__init__.py:458
+#: cogs/classes/__init__.py:459
 msgid "playing basketball :basketball:"
 msgstr "basketbol oynuyorsunuz :basketball:"
 
-#: cogs/classes/__init__.py:459
+#: cogs/classes/__init__.py:460
 msgid "playing tennis :tennis:"
 msgstr "tenis oynuyorsunuz :tennis:"
 
-#: cogs/classes/__init__.py:460
+#: cogs/classes/__init__.py:461
 msgid "playing ping-pong :ping_pong:"
 msgstr "masa tenisi oynuyorsunuz :ping_pong:"
 
-#: cogs/classes/__init__.py:461
+#: cogs/classes/__init__.py:462
 msgid "boxing :boxing_glove:"
 msgstr "boks yapıyorsunuz :boxing_glove:"
 
-#: cogs/classes/__init__.py:462
+#: cogs/classes/__init__.py:463
 msgid "skiing :ski:"
 msgstr "kayak yapıyorsunuz :ski:"
 
-#: cogs/classes/__init__.py:475
+#: cogs/classes/__init__.py:476
 msgid "[Ranger Only] Renames your pet."
 msgstr "[Korucuya Özel] Evcil hayvanını yeniden adlandırır."
 
-#: cogs/classes/__init__.py:477
+#: cogs/classes/__init__.py:478
 msgid "Please enter a name shorter than 20 characters."
 msgstr "Lütfen 20 karakterden kısa bir isim girin."
 
-#: cogs/classes/__init__.py:481
+#: cogs/classes/__init__.py:482
 msgid "Pet name updated."
 msgstr "Evcil hayvan adı güncellendi."
 
-#: cogs/classes/__init__.py:489
+#: cogs/classes/__init__.py:490
 msgid "[Ranger Only] Sets your pet's image by URL."
 msgstr "[Korucuya Özel] URL'ye göre evcil hayvanının resmini ayarlar."
 
-#: cogs/classes/__init__.py:491
+#: cogs/classes/__init__.py:492
 msgid "URLs mustn't exceed 60 characters ."
 msgstr "URL'ler 60 karakteri geçmemeli."
 
-#: cogs/classes/__init__.py:504
+#: cogs/classes/__init__.py:505
 msgid "Your pet's image was successfully updated."
 msgstr "Evcil hayvanının resmi başarılı bir şekilde güncellendi."
 
-#: cogs/classes/__init__.py:513
+#: cogs/classes/__init__.py:514
 msgid "[Ranger Only] Let your pet get a weapon for you!"
 msgstr "[Korucuya Özel] Evcil hayvanının senin için silah almasına izin ver!"
 
-#: cogs/classes/__init__.py:521
+#: cogs/classes/__init__.py:522
 msgid "Your pet is not happy enough to hunt an item. Try making it joyful!"
 msgstr ""
 "Evcil hayvanın eşya avlamak için yeterince mutlu değil. Onu neşelendirmeyi "
 "dene!"
 
-#: cogs/classes/__init__.py:532
+#: cogs/classes/__init__.py:533
 msgid "Your pet found an item!"
 msgstr "Evcil hayvanın eşya buldu!"
 
-#: cogs/classes/__init__.py:544
+#: cogs/classes/__init__.py:545
 msgid "Your pet needs to recover, wait a day to retry"
 msgstr ""
 "Evcil hayvanının dinlenmesi gerekiyor, yeniden denemek için bir gün bekle"
@@ -2956,7 +2970,7 @@ msgstr "Kilitli"
 
 #: cogs/music/__init__.py:402 cogs/music/__init__.py:405
 msgid "No"
-msgstr "Hayır"
+msgstr "Numara"
 
 #: cogs/music/__init__.py:405
 msgid "Looping"
@@ -3290,12 +3304,12 @@ msgstr "Satıcı blackjack aldı. Sigortan vardı ve bir şey kaybetmedin."
 #: cogs/gambling/__init__.py:231
 #, python-brace-format
 msgid "The dealer got a blackjack. You lost **${money}**."
-msgstr ""
+msgstr "Satıcı blackjack aldı. **${money}** kaybettin."
 
 #: cogs/gambling/__init__.py:237
 #, python-brace-format
 msgid "You got a blackjack and won **${money}**!"
-msgstr ""
+msgstr "Blackjack aldın ve **${money}** kazandın!"
 
 #: cogs/gambling/__init__.py:275
 msgid "Blackjack timed out... You lost your money!"
@@ -3303,11 +3317,11 @@ msgstr "Blackjack zaman aşımına uğradı... Paranı kaybettin!"
 
 #: cogs/gambling/__init__.py:299
 msgid "Split current hand and switched to the second side."
-msgstr ""
+msgstr "Mevcut eli ayır ve ikinci tarafa geç."
 
 #: cogs/gambling/__init__.py:305
 msgid "Switched to the other side."
-msgstr ""
+msgstr "Diğer tarafa geçildi."
 
 #: cogs/gambling/__init__.py:309
 msgid "Invalid. You're too poor and lose the match."
@@ -3320,27 +3334,29 @@ msgstr "Sadece bir kart daha alabilmek için bahsini iki katına çıkardın."
 #: cogs/gambling/__init__.py:341
 #, python-brace-format
 msgid "You busted and lost **${money}**."
-msgstr ""
+msgstr "Bust oldun ve **${money}** kaybettin."
 
 #: cogs/gambling/__init__.py:347
 #, python-brace-format
 msgid "Dealer busts and you won **${money}**!"
-msgstr ""
+msgstr "Satıcı bust oldu ve **${money}** kazandın!"
 
 #: cogs/gambling/__init__.py:356
 #, python-brace-format
 msgid "You have a higher score than the dealer and have won **${money}**"
-msgstr ""
+msgstr "Satıcıdan daha yüksek bir skorun var ve **${money}** kazandın"
 
 #: cogs/gambling/__init__.py:363
 #, python-brace-format
 msgid "Dealer has a higher score than you and wins. You lost **${money}**."
 msgstr ""
+"Satıcının senden daha yüksek bir skoru var ve kazandı. **${money}** "
+"kaybettin."
 
 #: cogs/gambling/__init__.py:369
 #, python-brace-format
 msgid "It's a tie, you got your **${money}** back."
-msgstr ""
+msgstr "Berabere, **${money}** geri aldın."
 
 #: cogs/gambling/__init__.py:384
 msgid "Draws a random card."
@@ -3550,17 +3566,17 @@ msgstr "Sonuç yok."
 msgid "IdleRPG Shop"
 msgstr "IdleRPG Dükkanı"
 
-#: cogs/trading/__init__.py:229 cogs/trading/__init__.py:451
+#: cogs/trading/__init__.py:229 cogs/trading/__init__.py:464
 #, python-brace-format
 msgid "Use `{prefix}buy {item}` to buy this."
 msgstr "Bunu satın almak için `{prefix}buy {item}` kullan."
 
-#: cogs/trading/__init__.py:240 cogs/trading/__init__.py:461
+#: cogs/trading/__init__.py:240 cogs/trading/__init__.py:474
 #: cogs/marriage/__init__.py:220
 msgid "Price"
 msgstr "Fiyat"
 
-#: cogs/trading/__init__.py:244 cogs/trading/__init__.py:463
+#: cogs/trading/__init__.py:244 cogs/trading/__init__.py:476
 #, python-brace-format
 msgid "Item {num} of {total}"
 msgstr "{total} içinden eşya {num}"
@@ -3656,46 +3672,50 @@ msgstr "Tüccara verilecek bir şey yok."
 #: cogs/trading/__init__.py:410
 #, python-brace-format
 msgid ""
-"You are about to sell **{count} items!**\n"
+"You are about to sell **{count} items for ${money}!**\n"
 "Are you sure you want to do this?"
 msgstr ""
-"**{count} eşya** satmak üzeresin!\n"
-"Bunu yapmak istediğinden emin misin?"
 
-#: cogs/trading/__init__.py:433
+#: cogs/trading/__init__.py:429
+msgid ""
+"Looks like you got more or less items in that range in the meantime. Please "
+"try again."
+msgstr ""
+
+#: cogs/trading/__init__.py:446
 #, python-brace-format
 msgid "Merched **{count}** items for **${money}**."
 msgstr "Tüccara **{count}** eşya **${money}** karşılığında satıldı."
 
-#: cogs/trading/__init__.py:441
+#: cogs/trading/__init__.py:454
 msgid "View your pending shop offers."
 msgstr "Bekleyen dükkan tekliflerine bak."
 
-#: cogs/trading/__init__.py:447
+#: cogs/trading/__init__.py:460
 msgid "You don't have any pending shop offers."
 msgstr "Herhangi bir bekleyen dükkan teklifin yok."
 
-#: cogs/trading/__init__.py:450
+#: cogs/trading/__init__.py:463
 msgid "Your pending items"
 msgstr "Bekleyen eşyaların"
 
-#: cogs/trading/__init__.py:474
+#: cogs/trading/__init__.py:487
 msgid "Buys items at the trader."
 msgstr "Tüccardan eşyalar satın alır."
 
-#: cogs/trading/__init__.py:490
+#: cogs/trading/__init__.py:503
 msgid "The Trader"
 msgstr "Tüccar"
 
-#: cogs/trading/__init__.py:491
+#: cogs/trading/__init__.py:504
 msgid "Hit a button to buy it"
 msgstr "Satın almak için düğmeye bas"
 
-#: cogs/trading/__init__.py:503
+#: cogs/trading/__init__.py:516
 msgid "You are too poor to buy this item."
 msgstr "Bu eşyayı satın almak için çok fakirsin."
 
-#: cogs/trading/__init__.py:510
+#: cogs/trading/__init__.py:523
 #, python-brace-format
 msgid ""
 "Successfully bought offer **{offer}**. Use `{prefix}inventory` to view your "
@@ -4091,7 +4111,7 @@ msgid ""
 "child."
 msgstr "Bu bir kız! Aşk gecen başarılıydı! Lütfen çocuğuna bir isim ver."
 
-#: cogs/marriage/__init__.py:372 cogs/marriage/__init__.py:526
+#: cogs/marriage/__init__.py:372 cogs/marriage/__init__.py:604
 msgid "You didn't enter a name."
 msgstr "İsim yazmadın."
 
@@ -4148,27 +4168,27 @@ msgstr "Yapayalnızsın."
 msgid "You don't have kids yet."
 msgstr "Henüz çocukların yok."
 
-#: cogs/marriage/__init__.py:463
+#: cogs/marriage/__init__.py:470
 msgid "They died because of a shampoo overdose!"
 msgstr "Aşırı şampuan dozundan öldüler!"
 
-#: cogs/marriage/__init__.py:464
+#: cogs/marriage/__init__.py:471
 msgid "They died of lovesickness..."
 msgstr "Sevgiden öldüler..."
 
-#: cogs/marriage/__init__.py:465
+#: cogs/marriage/__init__.py:472
 msgid "They've died of age."
 msgstr "Yaşlılıktan öldüler."
 
-#: cogs/marriage/__init__.py:466
+#: cogs/marriage/__init__.py:473
 msgid "They died of loneliness."
 msgstr "Yalnızlıktan öldüler."
 
-#: cogs/marriage/__init__.py:467
+#: cogs/marriage/__init__.py:474
 msgid "A horde of goblins got them."
 msgstr "Onları goblin sürüsü aldı."
 
-#: cogs/marriage/__init__.py:469
+#: cogs/marriage/__init__.py:476
 msgid ""
 "They have finally decided to move out after all these years, but couldn't "
 "survive a second alone."
@@ -4176,51 +4196,140 @@ msgstr ""
 "Sonunda bunca yıldan sonra taşınmaya karar verdiler, ama yalnız başlarına "
 "bir saniye hayatta kalamadılar."
 
-#: cogs/marriage/__init__.py:471
+#: cogs/marriage/__init__.py:478
 msgid "Spontaneous combustion removed them from existence."
 msgstr "Kendiliğinden yanma olayları onları varoluştan sildi."
 
-#: cogs/marriage/__init__.py:472
+#: cogs/marriage/__init__.py:479
 msgid "While exploring the forest, they have gotten lost."
 msgstr "Ormanı keşfederken kayboldular."
 
-#: cogs/marriage/__init__.py:473
+#: cogs/marriage/__init__.py:480
 msgid "They've left through a portal into another dimension..."
 msgstr "Portala girerek başka bir boyuta geçtiler..."
 
-#: cogs/marriage/__init__.py:475
+#: cogs/marriage/__init__.py:482
 msgid "The unbearable pain of stepping on a Lego\\© brick killed them."
 msgstr "Lego\\© parçasına basmanın dayanılmaz acısı onları öldürdü."
 
 #. noqa
-#: cogs/marriage/__init__.py:477
+#: cogs/marriage/__init__.py:484
 msgid "You heard a landmine going off nearby..."
 msgstr "Yakınlarda bir kara mayını patladığını duydun..."
 
-#: cogs/marriage/__init__.py:478
+#: cogs/marriage/__init__.py:485
 msgid "They have been abducted by aliens!"
 msgstr "Uzaylılar tarafından kaçırıldılar!"
 
-#: cogs/marriage/__init__.py:479
+#: cogs/marriage/__init__.py:486
 msgid "The Catholic Church got them..."
 msgstr "Katolik Kilisesi onları aldı..."
 
-#: cogs/marriage/__init__.py:489
+#: cogs/marriage/__init__.py:496
 #, python-brace-format
 msgid "{name} died at the age of {age}! {cause}"
 msgstr "{name} {age} yaşında öldü! {cause}"
 
-#: cogs/marriage/__init__.py:501
+#: cogs/marriage/__init__.py:504
+msgid ""
+"fell in love with a woman on the internet, but the woman was a man and stole "
+"their money."
+msgstr ""
+
+#: cogs/marriage/__init__.py:506
+msgid "has been arrested and had to post bail."
+msgstr ""
+
+#: cogs/marriage/__init__.py:507
+msgid "bought fortnite skins with your credit card."
+msgstr ""
+
+#: cogs/marriage/__init__.py:508
+msgid "decided to become communist and gave the money to others."
+msgstr ""
+
+#: cogs/marriage/__init__.py:509
+msgid "bought an inflatable loli."
+msgstr ""
+
+#: cogs/marriage/__init__.py:510
+msgid "was caught pickpocketing and you had to pay the fine."
+msgstr ""
+
+#: cogs/marriage/__init__.py:511
+msgid "gave it to a beggar."
+msgstr ""
+
+#: cogs/marriage/__init__.py:512
+msgid "borrowed it to attend the local knights course."
+msgstr ""
+
+#: cogs/marriage/__init__.py:513
+msgid "spent it in the shop."
+msgstr ""
+
+#: cogs/marriage/__init__.py:514
+msgid "bought some toys."
+msgstr ""
+
+#: cogs/marriage/__init__.py:525
+#, python-brace-format
+msgid "You lost ${money} because {name} {cause}"
+msgstr ""
+
+#: cogs/marriage/__init__.py:532
+msgid "finally found a job!"
+msgstr ""
+
+#: cogs/marriage/__init__.py:533
+msgid "won a lottery."
+msgstr ""
+
+#: cogs/marriage/__init__.py:534
+msgid "sold their toys."
+msgstr ""
+
+#: cogs/marriage/__init__.py:535
+msgid "got money from another kid that decided to become communist."
+msgstr ""
+
+#: cogs/marriage/__init__.py:536
+msgid "stole it from a traveller."
+msgstr ""
+
+#: cogs/marriage/__init__.py:537
+msgid "finished a quest with a money reward."
+msgstr ""
+
+#: cogs/marriage/__init__.py:538
+msgid "used dark magic to summon some money."
+msgstr ""
+
+#: cogs/marriage/__init__.py:539
+msgid "looted a local warehouse and sold the wares."
+msgstr ""
+
+#: cogs/marriage/__init__.py:549
+#, python-brace-format
+msgid "{name} gave you ${money}, they {cause}"
+msgstr ""
+
+#: cogs/marriage/__init__.py:567
+#, python-brace-format
+msgid "{name} found a {emoji} {type_} crate for you!"
+msgstr ""
+
+#: cogs/marriage/__init__.py:579
 #, python-brace-format
 msgid "{name} is now {age} years old."
 msgstr "{name} şimdi {age} yaşında."
 
-#: cogs/marriage/__init__.py:507
+#: cogs/marriage/__init__.py:585
 #, python-brace-format
 msgid "{name} can be renamed! Enter a new name:"
 msgstr "{name} yeniden adlandırılabilir! Yeni bir isim yaz:"
 
-#: cogs/marriage/__init__.py:536
+#: cogs/marriage/__init__.py:614
 #, python-brace-format
 msgid "{old_name} is now called {new_name}."
 msgstr "{old_name} ismi artık {new_name}."
@@ -4496,7 +4605,7 @@ msgstr "Lonca arkadaşların"
 
 #: cogs/guild/__init__.py:177
 msgid "[Guild Owner only] Change the guild badge."
-msgstr ""
+msgstr "[Lonca sahibine özel] Lonca rozetini değiştir."
 
 #: cogs/guild/__init__.py:183
 msgid "Your guild has no badges yet."
@@ -4551,7 +4660,7 @@ msgstr "Bir lonca kurmak **$10000** ediyor, çok fakirsin."
 
 #: cogs/guild/__init__.py:248
 msgid "The guild name is taken."
-msgstr ""
+msgstr "Lonca ismi alınmış."
 
 #: cogs/guild/__init__.py:265
 #, python-brace-format
@@ -5026,25 +5135,31 @@ msgstr "Adı `#no homo` :heart:"
 
 #: cogs/custom/__init__.py:45
 msgid "Use to have Jester cast a spell ✨"
-msgstr ""
+msgstr "Soytarı'nın büyü yapmasını sağla ✨"
 
 #: cogs/custom/__init__.py:50
 msgid ""
 "Jester casts Spirit Guardians on herself. She, and the spiritual hamster "
 "unicorns have a dance party."
 msgstr ""
+"Soytarı, Ruh Muhafızlarını kendi üzerinde çağırır. O, ve ruhsal hamster tek "
+"boynuzlu atlar bir dans partisi verir."
 
 #: cogs/custom/__init__.py:53
 msgid ""
 "Jester casts Spiritual Weapon. A comically large spectral lollipop🍭 suddenly "
 "appears."
 msgstr ""
+"Soytarı, Ruhsal Silah yapar. Komik biçimde büyük spektral bir lolipop🍭 "
+"aniden ortaya çıkar."
 
 #: cogs/custom/__init__.py:56
 msgid ""
 "Jester casts Invoke Duplicity.... Now there's twice the Jester for twice the "
 "pranks!"
 msgstr ""
+"Soytarı, Yinelemeyi Çağır yapar.... Şimdi iki katı eşek şakası için iki katı "
+"Soytarı var!"
 
 #: cogs/custom/__init__.py:65
 msgid "It's a secret."
@@ -5223,7 +5338,7 @@ msgstr "Şu anda **${money}** paran var, {author}!"
 
 #: cogs/profile/__init__.py:266
 msgid "Shows current XP and level of a player."
-msgstr ""
+msgstr "Oyuncunun geçerli TP ve seviyesini gösterir."
 
 #: cogs/profile/__init__.py:271
 #, python-brace-format
@@ -5240,6 +5355,8 @@ msgid ""
 "{user} has **{points} XP** and is on Level **{level}**. Missing to next "
 "level: **{missing}**"
 msgstr ""
+"{user}'ın **{points} TP**si var ve seviye **{level}**. Bir sonraki seviye "
+"için eksik: **{missing}**"
 
 #: cogs/profile/__init__.py:293
 #, python-brace-format
@@ -5301,7 +5418,7 @@ msgstr "{user} aşağıdaki ganimet eşyalarına sahip."
 #: cogs/profile/__init__.py:366
 #, python-brace-format
 msgid "ID: `{id}` Value is **{value}**"
-msgstr ""
+msgstr "ID: `{id}` Değeri **{value}**"
 
 #: cogs/profile/__init__.py:382
 msgid "Shows your adventure loot that can be exchanged or sacrificed"
@@ -5343,12 +5460,13 @@ msgstr "**{value} TP**"
 #: cogs/profile/__init__.py:456
 #, python-brace-format
 msgid "You received **{reward}** when exchanging all of your loot."
-msgstr ""
+msgstr "Tüm ganimetini değiş tokuş ederken **{reward}** aldın."
 
 #: cogs/profile/__init__.py:460
 #, python-brace-format
 msgid "You received **{reward}** when exchanging loot item(s) `{loot_ids}`. "
 msgstr ""
+"Gaminet eşyasını(larını) `{loot_ids}` değiş tokuş ederken **{reward}** aldın."
 
 #: cogs/profile/__init__.py:483
 msgid "Equips an item of yours by ID."
@@ -5619,31 +5737,47 @@ msgstr "Zaman aşımı süresi doldu."
 msgid "Renamed."
 msgstr "Yeniden adlandırıldı."
 
-#: cogs/admin/__init__.py:154
+#: cogs/admin/__init__.py:161
+msgid "[Bot Admin only] Create an item."
+msgstr ""
+
+#: cogs/admin/__init__.py:163
+msgid "Invalid item type."
+msgstr ""
+
+#: cogs/admin/__init__.py:165
+msgid "Invalid stat."
+msgstr ""
+
+#: cogs/admin/__init__.py:179
+msgid "Done."
+msgstr ""
+
+#: cogs/admin/__init__.py:191
 msgid "[Bot Admin only] Gives/removes crates to a user without loss."
 msgstr ""
 "[Bot Adminine özel] Bir şey kaybetmeden bir kullanıcıya sandık verir ya da "
 "kullanıcıdan sandık siler."
 
-#: cogs/admin/__init__.py:165
+#: cogs/admin/__init__.py:202
 #, python-brace-format
 msgid "Successfully gave **{amount}** {rarity} crates to **{target}**."
 msgstr "**{target}**'a başarılı bir şekilde **{amount}** {rarity} verildi."
 
-#: cogs/admin/__init__.py:178
+#: cogs/admin/__init__.py:215
 msgid "[Bot Admin only] Gives xp to a user."
 msgstr "[Bot Adminine özel] Bir kullanıcıya tp verir."
 
-#: cogs/admin/__init__.py:183
+#: cogs/admin/__init__.py:220
 #, python-brace-format
 msgid "Successfully gave **{amount}** XP to **{target}**."
 msgstr "**{target}**'a başarılı bir şekilde *{amount}** TP verildi."
 
-#: cogs/admin/__init__.py:196
+#: cogs/admin/__init__.py:233
 msgid "[Bot Admin only] Wipes someone's donator perks."
 msgstr "[Bot Adminine özel] Birinin donatör özelliklerini siler."
 
-#: cogs/admin/__init__.py:222
+#: cogs/admin/__init__.py:259
 #, python-brace-format
 msgid ""
 "Successfully reset {target}'s background, class, item names and guild member "
@@ -5652,28 +5786,28 @@ msgstr ""
 "{target}'in arkaplanı, sınıfı, eşya isimleri ve lonca üye limiti başarılı "
 "bir şekilde sıfırlandı."
 
-#: cogs/admin/__init__.py:234
+#: cogs/admin/__init__.py:271
 msgid "[Bot Admin only] Resets someone's class(es)."
 msgstr "[Bot Adminine özel] Birinin sınıfını(larını) sıfırlar."
 
-#: cogs/admin/__init__.py:241
+#: cogs/admin/__init__.py:278
 #, python-brace-format
 msgid "Successfully reset {target}'s class."
 msgstr "{target}'nın sınıfı başarılı bir şekilde sıfırlandı."
 
-#: cogs/admin/__init__.py:252
+#: cogs/admin/__init__.py:289
 msgid "[Bot Admin only] Sign an item"
 msgstr "[Bot Adminine özel] Bir eşyayı imzala"
 
-#: cogs/admin/__init__.py:255
+#: cogs/admin/__init__.py:293
 msgid "Text exceeds 50 characters."
 msgstr "Metin 50 karakteri aşıyor."
 
-#: cogs/admin/__init__.py:259
+#: cogs/admin/__init__.py:297
 msgid "Item successfully signed."
 msgstr "Eşya başarılı bir şekilde imzalandı."
 
-#: cogs/admin/__init__.py:276
+#: cogs/admin/__init__.py:314
 msgid ""
 "[Bot Admin only] Sets someone's cooldown to a specific time in seconds (by "
 "default removes the cooldown)"
@@ -5681,11 +5815,11 @@ msgstr ""
 "[Bot Adminine özel] Birinin bekleme süresini saniye şeklinde belirli bir "
 "süreye ayarlar (varsayılan olarak bekleme süresini kaldırır)"
 
-#: cogs/admin/__init__.py:291
+#: cogs/admin/__init__.py:329
 msgid "The cooldown has been updated!"
 msgstr "Bekleme süresi güncellendi!"
 
-#: cogs/admin/__init__.py:299
+#: cogs/admin/__init__.py:337
 msgid ""
 "Cooldown setting unsuccessful (maybe you mistyped the command name or there "
 "is no cooldown for the user?)."
@@ -5701,6 +5835,7 @@ msgstr "İyilik için bir eşya feda et."
 #, python-brace-format
 msgid "This will sacrifice all of your loot and give {value} favor. Continue?"
 msgstr ""
+"Bu, tüm ganimetini kurban edecek ve {value} iyilik verecek. Devam edilsin mi?"
 
 #: cogs/gods/__init__.py:97
 #, python-brace-format
@@ -5836,120 +5971,120 @@ msgstr ""
 "`{prefix}trade [add/set/remove] [money/crates/item] [amount/itemid] [crate "
 "rarity]` kullan"
 
-#: cogs/transaction/__init__.py:118
+#: cogs/transaction/__init__.py:123
 msgid "Trade timed out."
 msgstr "Ticaret zaman aşımına uğradı."
 
-#: cogs/transaction/__init__.py:125
+#: cogs/transaction/__init__.py:130
 #, python-brace-format
 msgid "{user} stopped the trade."
 msgstr "{user} ticareti durdurdu."
 
-#: cogs/transaction/__init__.py:143 cogs/transaction/__init__.py:161
-#: cogs/transaction/__init__.py:191
+#: cogs/transaction/__init__.py:148 cogs/transaction/__init__.py:166
+#: cogs/transaction/__init__.py:196
 msgid "Trade cancelled. Things were traded away in the meantime."
 msgstr "Ticaret iptal edildi. Bu sırada eşyalar satıldı."
 
-#: cogs/transaction/__init__.py:204
+#: cogs/transaction/__init__.py:209
 msgid "Trade successful."
 msgstr "Ticaret başarılı."
 
-#: cogs/transaction/__init__.py:210
+#: cogs/transaction/__init__.py:215
 msgid "Opens a trading session with a user."
 msgstr "Kullanıcıyla ticaret oturumu açar."
 
-#: cogs/transaction/__init__.py:212
+#: cogs/transaction/__init__.py:217
 msgid "You cannot trade with yourself."
 msgstr "Kendinle ticaret yapamazsın."
 
-#: cogs/transaction/__init__.py:214
+#: cogs/transaction/__init__.py:219
 #, python-brace-format
 msgid "{user} has requested a trade, {user2}."
 msgstr "{user} ticaret istedi, {user2}."
 
-#: cogs/transaction/__init__.py:235
+#: cogs/transaction/__init__.py:240
 msgid "Adds something to a trade."
 msgstr "Ticarete bir şey ekler."
 
-#: cogs/transaction/__init__.py:238
+#: cogs/transaction/__init__.py:243
 #, python-brace-format
 msgid "Please select something to add. Example: `{prefix}trade add money 1337`"
 msgstr "Lütfen ekleyecek bir şey seç. Örnek: `{prefix}trade add money 1337`"
 
-#: cogs/transaction/__init__.py:246
+#: cogs/transaction/__init__.py:251
 msgid "Adds money to a trade."
 msgstr "Ticarete para ekler."
 
-#: cogs/transaction/__init__.py:257
+#: cogs/transaction/__init__.py:262
 msgid "Adds crates to a trade."
 msgstr "Ticarete sandıklar ekler."
 
-#: cogs/transaction/__init__.py:264 cogs/transaction/__init__.py:312
+#: cogs/transaction/__init__.py:269 cogs/transaction/__init__.py:317
 msgid "You do not have enough crates."
 msgstr "Yeterli sandıkların yok."
 
-#: cogs/transaction/__init__.py:270
+#: cogs/transaction/__init__.py:275
 msgid "Adds items to a trade."
 msgstr "Ticarete eşyalar ekler."
 
-#: cogs/transaction/__init__.py:272
+#: cogs/transaction/__init__.py:277
 msgid "You already added this item!"
 msgstr "Bu eşyayı zaten ekledin!"
 
-#: cogs/transaction/__init__.py:275
+#: cogs/transaction/__init__.py:280
 msgid "You may not sell modified items."
 msgstr "Değiştirilmiş eşyalar satamazsın."
 
-#: cogs/transaction/__init__.py:285
+#: cogs/transaction/__init__.py:290
 msgid "Sets a value to a trade instead of adding onto it."
 msgstr "Ticarete üstüne değer eklemek yerine değer verir."
 
-#: cogs/transaction/__init__.py:288
+#: cogs/transaction/__init__.py:293
 #, python-brace-format
 msgid "Please select something to set. Example: `{prefix}trade set money 1337`"
 msgstr ""
 "Lütfen ayarlamak için bir şey seç. Örnek: `{prefix}trade set money 1337`"
 
-#: cogs/transaction/__init__.py:296
+#: cogs/transaction/__init__.py:301
 msgid "Sets money in a trade."
 msgstr "Ticaretteki parayı ayarlar."
 
-#: cogs/transaction/__init__.py:307
+#: cogs/transaction/__init__.py:312
 msgid "Sets crates in a trade."
 msgstr "Ticaretteki sandıkları ayarlar."
 
-#: cogs/transaction/__init__.py:318
+#: cogs/transaction/__init__.py:323
 msgid "Removes something from a trade."
 msgstr "Ticarette bir şey kaldırır."
 
-#: cogs/transaction/__init__.py:321
+#: cogs/transaction/__init__.py:326
 #, python-brace-format
 msgid ""
 "Please select something to remove. Example: `{prefix}trade remove money 1337`"
 msgstr ""
 "Lütfen kaldıracak bir şey seç. Örnek: `{prefix}trade remove money 1337`"
 
-#: cogs/transaction/__init__.py:329
+#: cogs/transaction/__init__.py:334
 msgid "Removes money from a trade."
 msgstr "Ticaretten para kaldırır."
 
-#: cogs/transaction/__init__.py:334
+#: cogs/transaction/__init__.py:339
 msgid "Resulting amount is negative."
 msgstr "Sonuç miktarı negatif."
 
-#: cogs/transaction/__init__.py:340
+#: cogs/transaction/__init__.py:345
 msgid "Removes crates from a trade."
 msgstr "Ticaretten sandıkları siler."
 
-#: cogs/transaction/__init__.py:348
+#: cogs/transaction/__init__.py:353
 msgid "The resulting amount would be negative."
 msgstr "Çıkan sonuç miktarı negatif olacaktır."
 
-#: cogs/transaction/__init__.py:354
+#: cogs/transaction/__init__.py:359
 msgid "Removes items from a trade."
 msgstr "Ticaretten eşyaları kaldırır."
 
-#: cogs/transaction/__init__.py:360
+#: cogs/transaction/__init__.py:365
 msgid "This item is not in the trade."
 msgstr "Bu eşya ticarette değil."
 
@@ -6295,16 +6430,16 @@ msgstr "{user} ile oynuyor"
 
 #: cogs/alliance/__init__.py:47
 msgid "Shows cities and owners."
-msgstr ""
+msgstr "Şehirleri ve sahiplerini gösterir."
 
 #: cogs/alliance/__init__.py:52
 msgid "Cities"
-msgstr ""
+msgstr "Şehirler"
 
 #: cogs/alliance/__init__.py:58
 #, python-brace-format
 msgid "{name} (Tier {tier})"
-msgstr ""
+msgstr "{name} (Rütbe {tier})"
 
 #: cogs/alliance/__init__.py:62
 #, python-brace-format
@@ -6313,25 +6448,31 @@ msgid ""
 "Buildings: {buildings}\n"
 "Total defense: {defense}"
 msgstr ""
+"{alliance}'ın ittifakına ait\n"
+"Binalar: {buildings}\n"
+"Toplam savunma: {defense}"
 
 #: cogs/alliance/__init__.py:76
 msgid "This command contains all alliance-related commands."
-msgstr ""
+msgstr "Bu komut, ittifakla ilgili tüm komutları içerir."
 
 #: cogs/alliance/__init__.py:89
 msgid ""
 "You are not in an alliance. You are alone and may still use all other "
 "alliance commands or invite a guild to create a bigger alliance."
 msgstr ""
+"İttifakta değilsin. Yalnızsın ve hala diğer tüm ittifak komutlarını "
+"kullanabilir veya daha büyük bir ittifak oluşturmak için bir lonca davet "
+"edebilirsin."
 
 #: cogs/alliance/__init__.py:93
 msgid "Your allied guilds"
-msgstr ""
+msgstr "Müttefik loncaların"
 
 #: cogs/alliance/__init__.py:98
 #, python-brace-format
 msgid "Led by {leader}"
-msgstr ""
+msgstr "{leader} liderliğinde"
 
 #: cogs/alliance/__init__.py:105
 #, python-brace-format
@@ -6339,311 +6480,343 @@ msgid ""
 "{prefix}alliance buildings | {prefix}alliance defenses | {prefix}alliance "
 "attack | {prefix}alliance occupy"
 msgstr ""
+"{prefix}alliance buildings | {prefix}alliance defenses | {prefix}alliance "
+"attack | {prefix}alliance occupy"
 
 #: cogs/alliance/__init__.py:117
 msgid "[Alliance Leader only] Invite a guild leader to the alliance."
-msgstr ""
+msgstr "[İttifak liderine özel] İttifaka bir lonca lideri davet et."
 
-#: cogs/alliance/__init__.py:119
+#: cogs/alliance/__init__.py:120
 msgid "That member is not in a guild."
-msgstr ""
+msgstr "Bu üye bir loncada değil."
 
-#: cogs/alliance/__init__.py:124
+#: cogs/alliance/__init__.py:126
 msgid "That member is not the leader of their guild."
-msgstr ""
+msgstr "Bu üye loncasının lideri değil."
 
-#: cogs/alliance/__init__.py:129
+#: cogs/alliance/__init__.py:132
 msgid "This member's guild is already part of your alliance."
+msgstr "Bu üyenin loncası zaten ittifakının bir parçası."
+
+#: cogs/alliance/__init__.py:138
+msgid "This guild is already in an alliance."
 msgstr ""
 
-#: cogs/alliance/__init__.py:134
+#: cogs/alliance/__init__.py:146
+msgid "This guild is the leader of another alliance."
+msgstr ""
+
+#: cogs/alliance/__init__.py:151
 #, python-brace-format
 msgid ""
 "{newleader}, {author} invites you to join their alliance. React to join now."
 msgstr ""
+"{newleader}, {author} seni kendi ittifakına katılmaya davet ediyor. Katılmak "
+"için şimdi tepki ver."
 
-#: cogs/alliance/__init__.py:147
+#: cogs/alliance/__init__.py:164
 msgid "Your alliance is full."
-msgstr ""
+msgstr "İttifakın dolu."
 
-#: cogs/alliance/__init__.py:153
+#: cogs/alliance/__init__.py:171
 #, python-brace-format
 msgid "**{user}'s guild is a single-guild alliance and owns a city."
-msgstr ""
+msgstr "**{user}'ın loncası tek lonca ittifakı ve bir şehri var."
 
-#: cogs/alliance/__init__.py:163
+#: cogs/alliance/__init__.py:181
 #, python-brace-format
 msgid "**{newguild}** is now part of your alliance, {user}!"
-msgstr ""
+msgstr "**{newguild}** artık ittifakının bir parçası, {user}!"
 
-#: cogs/alliance/__init__.py:172
+#: cogs/alliance/__init__.py:190
 msgid "[Guild Leader only] Leave your alliance."
-msgstr ""
+msgstr "[Lonca liderine özel] İttifakını terk et."
 
-#: cogs/alliance/__init__.py:179
+#: cogs/alliance/__init__.py:197
 msgid "You are the alliance's leading guild and cannot leave it!"
-msgstr ""
+msgstr "Sen ittifakın öncü loncasısın ve onu terk edemezsin!"
 
-#: cogs/alliance/__init__.py:185
+#: cogs/alliance/__init__.py:203
 msgid "Your guild left the alliance."
-msgstr ""
+msgstr "Loncan ittifakı terk etti."
 
-#: cogs/alliance/__init__.py:193
+#: cogs/alliance/__init__.py:211
 msgid ""
 "[Alliance Leader only] Kick a guild from your alliance.\n"
 " Use either the guild name or ID for guild_to_kick."
 msgstr ""
+"[İttifak liderine özel] İttifakından bir lonca at.\n"
+"guild_to_kick için lonca ismi ya da ID kullan."
 
-#: cogs/alliance/__init__.py:207
+#: cogs/alliance/__init__.py:225
 #, python-brace-format
 msgid ""
 "Cannot find guild `{guild_to_kick}`. Are you sure that's the right name/ID?"
 msgstr ""
-
-#: cogs/alliance/__init__.py:211
-msgid "That won't work."
-msgstr ""
-
-#: cogs/alliance/__init__.py:214
-msgid "This guild is not in your alliance."
-msgstr ""
-
-#: cogs/alliance/__init__.py:217
-#, python-brace-format
-msgid "Do you really want to kick **{guild}** from your alliance?"
-msgstr ""
+"Lonca `{guild_to_kick}` bulunamıyor. Bunun doğru isim/ID olduğundan emin "
+"misin?"
 
 #: cogs/alliance/__init__.py:229
-#, python-brace-format
-msgid "**{guild}** is no longer part of your alliance."
-msgstr ""
+msgid "That won't work."
+msgstr "Bu işe yaramaz."
 
-#: cogs/alliance/__init__.py:245
-msgid "This command contains all alliance-building-related commands."
-msgstr ""
+#: cogs/alliance/__init__.py:232
+msgid "This guild is not in your alliance."
+msgstr "Bu lonca senin ittifakında değil."
+
+#: cogs/alliance/__init__.py:235
+#, python-brace-format
+msgid "Do you really want to kick **{guild}** from your alliance?"
+msgstr "Gerçekten ittifakından **{guild}**'ı atmak istiyor musun?"
 
 #: cogs/alliance/__init__.py:247
+#, python-brace-format
+msgid "**{guild}** is no longer part of your alliance."
+msgstr "**{guild}** artık ittifakının bir parçası değil."
+
+#: cogs/alliance/__init__.py:263
+msgid "This command contains all alliance-building-related commands."
+msgstr "Bu komut, ittifak yapı ile ilgili tüm komutları içerir."
+
+#: cogs/alliance/__init__.py:265
 msgid ""
 "Please use one of these subcommands:\n"
 "\n"
 msgstr ""
+"Lütfen şu alt komutlardan birini kullan:\n"
+"\n"
 
-#: cogs/alliance/__init__.py:256
+#: cogs/alliance/__init__.py:274
 msgid "[Alliance Leader only] Upgrade a city beneficial building."
-msgstr ""
+msgstr "[İttifak liderine özel] Bir, şehre yararlı bina yükselt."
 
-#: cogs/alliance/__init__.py:266
+#: cogs/alliance/__init__.py:285
 #, python-brace-format
 msgid ""
 "Invalid building. Please use `{prefix}{cmd} [thief/raid/trade/adventure]` or "
 "check the possible buildings in your city."
 msgstr ""
+"Geçersiz bina. Lütfen `{prefix}{cmd} [thief/raid/trade/adventure]` kullan ya "
+"da şehrindeki mümkün binaları kontrol et."
 
-#: cogs/alliance/__init__.py:271
+#: cogs/alliance/__init__.py:291
 msgid "This building is fully upgraded."
-msgstr ""
+msgstr "Bu bina tamamen yükseltildi."
 
-#: cogs/alliance/__init__.py:275
+#: cogs/alliance/__init__.py:295
 #, python-brace-format
 msgid ""
 "Are you sure you want to upgrade the **{name} building** to level "
 "{new_level}? This will cost $**{price}**."
 msgstr ""
+"**{name} bina**yı {new_level} seviyesine yükseltmek istediğinden emin misin? "
+"Fiyatı $**{price}** ediyor."
 
-#: cogs/alliance/__init__.py:282
+#: cogs/alliance/__init__.py:303
 #, python-brace-format
 msgid ""
 "Your guild doesn't have enough money to upgrade the city's {name} building."
-msgstr ""
+msgstr "Loncanın, şehrin {name} binasını yükseltmek için yeterli parası yok."
 
-#: cogs/alliance/__init__.py:299
+#: cogs/alliance/__init__.py:320
 #, python-brace-format
 msgid ""
 "Successfully upgraded the city's {name} building to level **{new_level}**"
 msgstr ""
+"Şehrin {name} binası başarılı bir şekilde **{new_level}** seviyeye "
+"yükseltildi"
 
-#: cogs/alliance/__init__.py:311
+#: cogs/alliance/__init__.py:332
 msgid ""
 "[Alliance Leader only] Build a defensive building or buy troops for the city."
 msgstr ""
+"[İttifak liderine özel] Savunma binası inşa et ya da şehir için asker satın "
+"al."
 
-#: cogs/alliance/__init__.py:323
+#: cogs/alliance/__init__.py:346
 #, python-brace-format
 msgid "Invalid defense. Please use `{prefix}{cmd} [{buildings}]`."
-msgstr ""
+msgstr "Geçersiz savunma. Lütfen `{prefix}{cmd} [{buildings}]` kullan."
 
-#: cogs/alliance/__init__.py:338
+#: cogs/alliance/__init__.py:362
 msgid "Your city is under attack. Defenses cannot be built."
-msgstr ""
+msgstr "Şehrin saldırı altında. Savunmalar inşa edilemez."
 
-#: cogs/alliance/__init__.py:344
+#: cogs/alliance/__init__.py:369
 msgid "You may only build up to 10 defenses."
-msgstr ""
+msgstr "En fazla 10 savunma inşa edebilirsin."
 
-#: cogs/alliance/__init__.py:347
+#: cogs/alliance/__init__.py:372
 #, python-brace-format
 msgid ""
 "Are you sure you want to build a **{defense}**? This will cost $**{price}**."
 msgstr ""
+"Bir **{defense}** inşa etmek istediğinden emin misin? Fiyatı $**{price}** "
+"ediyor."
 
-#: cogs/alliance/__init__.py:356
+#: cogs/alliance/__init__.py:382
 #, python-brace-format
 msgid "Your guild doesn't have enough money to build a {defense}."
-msgstr ""
+msgstr "Loncanın, bir {defense} inşa etmek için yeterli parası yok."
 
-#: cogs/alliance/__init__.py:373
+#: cogs/alliance/__init__.py:399
 #, python-brace-format
 msgid "Successfully built a {defense}."
-msgstr ""
-
-#: cogs/alliance/__init__.py:379
-msgid "Lists buildings in your city."
-msgstr ""
-
-#: cogs/alliance/__init__.py:390
-#, python-brace-format
-msgid "{city}'s buildings"
-msgstr ""
-
-#: cogs/alliance/__init__.py:396
-#, python-brace-format
-msgid "Level {level}"
-msgstr ""
+msgstr "Bir {defense} başarılı bir şekilde inşa edildi."
 
 #: cogs/alliance/__init__.py:405
-msgid "Lists defenses in your city."
-msgstr ""
+msgid "Lists buildings in your city."
+msgstr "Şehrindeki binaları listeler."
 
-#: cogs/alliance/__init__.py:419
+#: cogs/alliance/__init__.py:416
+#, python-brace-format
+msgid "{city}'s buildings"
+msgstr "{city}'ın binaları"
+
+#: cogs/alliance/__init__.py:422
+#, python-brace-format
+msgid "Level {level}"
+msgstr "Seviye {level}"
+
+#: cogs/alliance/__init__.py:431
+msgid "Lists defenses in your city."
+msgstr "Şehrindeki savunmaları listeler."
+
+#: cogs/alliance/__init__.py:445
 #, python-brace-format
 msgid "{city}'s defenses"
-msgstr ""
+msgstr "{city}'ın savunmaları"
 
-#: cogs/alliance/__init__.py:426
+#: cogs/alliance/__init__.py:452
 #, python-brace-format
 msgid "HP: {hp}, Defense: {defense}"
-msgstr ""
+msgstr "HP: {hp}, Savunma: {defense}"
 
-#: cogs/alliance/__init__.py:433
+#: cogs/alliance/__init__.py:459
 msgid "None built"
-msgstr ""
+msgstr "Hiçbiri inşa edilmedi"
 
-#: cogs/alliance/__init__.py:434
+#: cogs/alliance/__init__.py:460
 #, python-brace-format
 msgid "Use {prefix}alliance build defense [name]"
-msgstr ""
+msgstr "{prefix}alliance build defense [isim] kullan"
 
-#: cogs/alliance/__init__.py:446
+#: cogs/alliance/__init__.py:472
 msgid "[Alliance Leader only] Give up your city."
-msgstr ""
-
-#: cogs/alliance/__init__.py:448
-msgid "Are you sure you want to give up control of your city?"
-msgstr ""
-
-#: cogs/alliance/__init__.py:455
-#, python-brace-format
-msgid "{city} was abandoned."
-msgstr ""
-
-#: cogs/alliance/__init__.py:464
-msgid "[Alliance Leader only] Take control of an empty city."
-msgstr ""
-
-#: cogs/alliance/__init__.py:466
-msgid "Invalid city name."
-msgstr ""
+msgstr "[İttifak liderine özel] Şehrinden vazgeç."
 
 #: cogs/alliance/__init__.py:474
+msgid "Are you sure you want to give up control of your city?"
+msgstr "Şehrinin kontrolünden vazgeçmek istediğinden emin misin?"
+
+#: cogs/alliance/__init__.py:481
+#, python-brace-format
+msgid "{city} was abandoned."
+msgstr "{city} terk edildi."
+
+#: cogs/alliance/__init__.py:491
+msgid "[Alliance Leader only] Take control of an empty city."
+msgstr "[İttifak liderine özel] Boş bir şehrin kontrolünü eline al."
+
+#: cogs/alliance/__init__.py:493
+msgid "Invalid city name."
+msgstr "Geçersiz şehir ismi."
+
+#: cogs/alliance/__init__.py:501
 #, python-brace-format
 msgid "The city is occupied by **{amount}** defensive fortifications."
-msgstr ""
+msgstr "Bu şehir **{amount}** savunma surları tarafından işgal edilmiş."
 
-#: cogs/alliance/__init__.py:484
+#: cogs/alliance/__init__.py:511
 #, python-brace-format
 msgid ""
 "Your alliance now rules **{city}**. You should immediately buy defenses."
-msgstr ""
+msgstr "İttifakın şimdi **{city}**'i yönetiyor. Hemen savunma satın almalısın."
 
-#: cogs/alliance/__init__.py:496
+#: cogs/alliance/__init__.py:523
 msgid "[Guild Leader only] Attack a city."
-msgstr ""
+msgstr "[Lonca liderine özel] Bir şehre saldır."
 
-#: cogs/alliance/__init__.py:498
+#: cogs/alliance/__init__.py:526
 msgid "Invalid city."
-msgstr ""
+msgstr "Geçersiz şehir."
 
-#: cogs/alliance/__init__.py:502 cogs/alliance/__init__.py:570
+#: cogs/alliance/__init__.py:531 cogs/alliance/__init__.py:556
 #, python-brace-format
 msgid "**{city}** is already under attack."
-msgstr ""
+msgstr "**{city}** zaten saldırı altında."
 
-#: cogs/alliance/__init__.py:518
+#: cogs/alliance/__init__.py:552
+msgid "The city is without defenses already."
+msgstr "Şehir zaten savunmasız."
+
+#: cogs/alliance/__init__.py:563
 #, python-brace-format
 msgid ""
 "**{user}** wants to attack **{city}** with **{alliance_name}**'s alliance. "
 "React with ⚔ to join the attack!"
 msgstr ""
+"**{user}**, **{city}**'e **{alliance_name}**'in ittifakı ile birlikte "
+"saldırmak istiyor. Saldırıya katılmak için ⚔ ile tepki ver!"
 
-#: cogs/alliance/__init__.py:546
+#: cogs/alliance/__init__.py:592
 #, python-brace-format
 msgid "You are not a member of **{alliance_name}'s alliance**, {user}."
-msgstr ""
+msgstr "**{alliance_name}'in ittifakı** üyesi değilsin, {user}."
 
-#: cogs/alliance/__init__.py:564
+#: cogs/alliance/__init__.py:610
 #, python-brace-format
 msgid "{user} has joined the attack."
-msgstr ""
+msgstr "{user} saldırıya katıldı."
 
-#: cogs/alliance/__init__.py:567
+#: cogs/alliance/__init__.py:614
 msgid "Noone joined."
-msgstr ""
+msgstr "Kimse katılmadı."
 
-#: cogs/alliance/__init__.py:581
-msgid "The city is without defenses already."
-msgstr ""
-
-#: cogs/alliance/__init__.py:587
+#: cogs/alliance/__init__.py:620
 #, python-brace-format
 msgid "Attack on **{city}** starting with **{amount}** attackers!"
-msgstr ""
+msgstr "**{city}**'e saldırı **{amount}** saldırgan ile başlıyor!"
 
-#: cogs/alliance/__init__.py:606 cogs/alliance/__init__.py:626
-#: cogs/alliance/__init__.py:660 cogs/alliance/__init__.py:671
+#: cogs/alliance/__init__.py:639 cogs/alliance/__init__.py:659
+#: cogs/alliance/__init__.py:693 cogs/alliance/__init__.py:704
 msgid "Alliance Wars"
-msgstr ""
+msgstr "İttifak Savaşları"
 
-#: cogs/alliance/__init__.py:608
+#: cogs/alliance/__init__.py:641
 #, python-brace-format
 msgid "**{alliance_name}** destroyed a {defense} in {city}!"
-msgstr ""
+msgstr "**{alliance_name}**, {city}'de bir {defense} yok etti!"
 
-#: cogs/alliance/__init__.py:628
+#: cogs/alliance/__init__.py:661
 #, python-brace-format
 msgid ""
 "**{alliance_name}** hit a {defense} in {city} for {damage} damage! (Now {hp} "
 "HP)"
 msgstr ""
+"**{alliance_name}**, {city}'de bir {defense}'a {damage} hasar verdi! (Şuanda "
+"{hp} HP)"
 
-#: cogs/alliance/__init__.py:661
+#: cogs/alliance/__init__.py:694
 #, python-brace-format
 msgid "**{user}** got killed in {city}!"
-msgstr ""
+msgstr "**{user}**, {city}'de öldürüldü!"
 
-#: cogs/alliance/__init__.py:673
+#: cogs/alliance/__init__.py:706
 #, python-brace-format
 msgid "**{user}** got hit in {city} for {damage} damage! (Now {hp} HP)"
-msgstr ""
+msgstr "**{user}**, {city}'de {damage} hasar aldı! (Şuanda {hp} HP)"
 
-#: cogs/alliance/__init__.py:693
+#: cogs/alliance/__init__.py:726
 #, python-brace-format
 msgid "**{alliance_name}** destroyed defenses in **{city}**!"
-msgstr ""
+msgstr "**{alliance_name}**, **{city}**'deki savunmaları yok etti!"
 
-#: cogs/alliance/__init__.py:703
+#: cogs/alliance/__init__.py:736
 #, python-brace-format
 msgid "**{alliance_name}** failed to destroy defenses in **{city}**!"
-msgstr ""
+msgstr "**{alliance_name}**, **{city}**'deki savunmaları yok edemedi!"
 
 #: utils/castle.py:164
 #, python-brace-format
@@ -6653,6 +6826,18 @@ msgstr "İçinde {emote} olan bir hazine buldun!"
 #: utils/castle.py:269
 msgid "You have reached the exit!"
 msgstr "Çıkışa ulaştın!"
+
+#, python-brace-format
+#~ msgid "You stole **${stolen}** from **{user}**."
+#~ msgstr "**{user}**'dan **${stolen}** çaldın."
+
+#, python-brace-format
+#~ msgid ""
+#~ "You are about to sell **{count} items!**\n"
+#~ "Are you sure you want to do this?"
+#~ msgstr ""
+#~ "**{count} eşya** satmak üzeresin!\n"
+#~ "Bunu yapmak istediğinden emin misin?"
 
 #~ msgid ""
 #~ "You have already selected a race and filled in your cv. This is "
