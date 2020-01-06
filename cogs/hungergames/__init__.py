@@ -336,7 +336,10 @@ class HungerGames(commands.Cog):
 
         game = GameBase(ctx, players=players)
         self.games[ctx.channel.id] = game
-        await game.main()
+        try:
+            await game.main()
+        except:
+            await ctx.send(_("An error happened during the hungergame. Please try again!"))
         try:
             del self.games[ctx.channel.id]
         except KeyError:  # got stuck in between
