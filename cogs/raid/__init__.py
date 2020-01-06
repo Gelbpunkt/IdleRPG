@@ -431,7 +431,7 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
             payout = random.randint(3000, 7500)
             await ctx.send(
                 "The bandits got defeated, Ikhdosa is safe again!"
-                "Survivors received ${payout} as a reward for the battle..."
+                f"Survivors received {payout} as a reward for the battle..."
             )
             await self.bot.pool.execute(
                 'UPDATE profile SET "money"="money"+$1 WHERE "user"=ANY($2);',
