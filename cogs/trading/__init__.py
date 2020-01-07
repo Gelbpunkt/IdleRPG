@@ -84,7 +84,7 @@ class Trading(commands.Cog):
             )
         await ctx.send(
             _(
-                "Successfully added your item to the shop! Use `{prefix}shop` to view it in the market! The tax of 5% has been deduced from your account."
+                "Successfully added your item to the shop! Use `{prefix}shop` to view it in the market! The tax of 5% has been deducted from your account."
             ).format(prefix=ctx.prefix)
         )
 
