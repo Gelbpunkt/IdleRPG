@@ -27,7 +27,6 @@ import discord
 from discord.ext import commands
 
 from classes.converters import IntGreaterThan
-from utils.castle import Castle, Player
 from utils.checks import AlreadyRaiding, has_char, is_admin, is_god
 
 
@@ -1891,7 +1890,7 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
             raid = {}
             for i in raid_raw:
                 u = await self.bot.get_user_global(i)
-                if not u or await self.bot.get_god(u) != "Gambit":
+                if not u or await self.bot.get_god(u, conn=conn) != "Gambit":
                     continue
                 raid[u] = "alive"
 
