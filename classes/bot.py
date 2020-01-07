@@ -342,12 +342,10 @@ class Bot(commands.AutoShardedBot):
 
     async def reset_alliance_cooldown(self, ctx):
         alliance = await self.pool.fetchval(
-            'SELECT alliance FROM guild WHERE "id"=$1;',
-            ctx.character_data["guild"]
+            'SELECT alliance FROM guild WHERE "id"=$1;', ctx.character_data["guild"]
         )
         await self.redis.execute(
-            "DEL",
-            f"alliancecd:{alliance}:{ctx.command.qualified_name}",
+            "DEL", f"alliancecd:{alliance}:{ctx.command.qualified_name}"
         )
 
     async def activate_booster(self, user, type_):

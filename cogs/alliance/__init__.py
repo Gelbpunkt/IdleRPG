@@ -494,9 +494,7 @@ class Alliance(commands.Cog):
             num_units = await conn.fetchval(
                 'SELECT COUNT(*) FROM defenses WHERE "city"=$1;', city
             )
-            occ_ttl = await self.bot.redis.execute(
-                "TTL", f"city:{city}:occ"
-            )
+            occ_ttl = await self.bot.redis.execute("TTL", f"city:{city}:occ")
             if num_units != 0:
                 return await ctx.send(
                     _(
@@ -505,9 +503,9 @@ class Alliance(commands.Cog):
                 )
             if occ_ttl != -2:
                 return await ctx.send(
-                    _(
-                        "{city} was just occupied and stands under protection."
-                    ).format(city=city)
+                    _("{city} was just occupied and stands under protection.").format(
+                        city=city
+                    )
                 )
             await conn.execute(
                 'UPDATE city SET "owner"=$1, "raid_building"=0, "thief_building"=0, "trade_building"=0, "adventure_building"=0 WHERE "name"=$2;',

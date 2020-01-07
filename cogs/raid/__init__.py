@@ -77,14 +77,13 @@ class Raid(commands.Cog):
         await self.bot.redis.execute(
             "SET",
             "special:raid",
-            ctx.command.qualified_name,
+            "running",  # ctx isn't available
             "EX",
             3600,  # signup period + time until timeout
         )
 
     async def clear_raid_timer(self):
         await self.bot.redis.execute("DEL", "special:raid")
-
 
     @is_admin()
     @commands.command()
@@ -132,7 +131,7 @@ Use https://raid.travitia.xyz/ to join the raid!
 
 Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=453963965521985536&scope=identify&response_type=code&redirect_uri=https://raid.travitia.xyz/callback>
 """,
-            file=discord.File("assets/other/dragon.png"),
+            file=discord.File("assets/other/dragon.jpg"),
         )
         self.boss.update(message=spawnmsg.id)
         if not self.bot.config.is_beta:
@@ -206,7 +205,7 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
             em.add_field(name="Shield", value=raid[target]["armor"])
             em.add_field(name="Effective Damage", value=finaldmg)
             em.set_author(name=str(target), icon_url=target.avatar_url)
-            em.set_thumbnail(url=f"{self.bot.BASE_URL}/dragon.png")
+            em.set_thumbnail(url=f"{self.bot.BASE_URL}/dragon.jpg")
             await ctx.send(embed=em)
             if raid[target]["hp"] <= 0:
                 del raid[target]
