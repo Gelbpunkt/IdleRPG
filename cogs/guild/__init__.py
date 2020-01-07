@@ -1093,12 +1093,12 @@ Time it will take: **{time}**
                 channel,
                 f"**{ctx.author}** ended the guild adventure, reward was **${gold}**",
             )
-        else:
-            await ctx.send(
-                _(
-                    "Your guild has completed an adventure of difficulty `{difficulty}`, ask a guild officer to check their status.")
-                    ).format(difficulty=adventure[0])
-                    )
+            else:
+                await ctx.send(
+                    _(
+                        "Your guild has completed an adventure of difficulty `{difficulty}`, ask a guild officer to check their status.")
+                        ).format(difficulty=adventure[0])
+                        )
         else:
             await ctx.send(
                 _(
