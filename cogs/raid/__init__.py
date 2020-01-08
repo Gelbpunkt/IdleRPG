@@ -27,7 +27,6 @@ import discord
 from discord.ext import commands
 
 from classes.converters import IntGreaterThan
-from utils.castle import Castle, Player
 from utils.checks import AlreadyRaiding, has_char, is_admin, is_god
 
 
@@ -1854,8 +1853,7 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
         )
         await ctx.send(
             """
-Gambit invites you to play a game. Inside this castle are rewards beyond your imagination, however all fun comes at a price. Inside lie countless tricks and traps. Take the risk and you could come out with riches beyond your imagination--however, be wary, as a wrong turn or bad luck could cause you to lose this game... for good.
-
+Gambit invites you to play a game. Feeling lucky?
 The game starts in 15 Minutes
 Use https://raid.travitia.xyz/ to join the raid!
 
@@ -1889,26 +1887,56 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
         ) as r:
             raid_raw = await r.json()
         async with self.bot.pool.acquire() as conn:
-            raid = {}
+            raid = []
             for i in raid_raw:
                 u = await self.bot.get_user_global(i)
-                if not u:
+                if not u or await self.bot.get_god(u, conn=conn) != "Gambit":
                     continue
-                try:
-                    dmg, deff = await self.bot.get_raidstats(u, god="Gambit", conn=conn)
-                except ValueError:
-                    continue
-                raid[u] = {"hp": 1000, "armor": deff, "damage": dmg}
+                raid.append(u)
 
         await ctx.send(
-            "**Done getting data! Setting up castle and backend... The game will start in your DMs**"
+            "**Done getting data! Preparing the roulette... The death game will begin**"
         )
 
-        castle = Castle(self.bot)
-        for user, stats in raid.items():
-            castle.add_player(Player(user, stats))
+        start = datetime.datetime.utcnow()
 
-        await castle.run()
+        while len(raid) > 1 and datetime.datetime.utcnow() < start + datetime.timedelta(
+            minutes=45
+        ):
+            target = random.choice(raid)
+            event = random.choice(5 * ["life"] + ["death"])
+            if event == "life":
+                em = discord.Embed(
+                    title="Choice: Life!",
+                    description=f"{target} survived this round!",
+                    colour=0xFFB900,
+                )
+                else:
+                em = discord.Embed(
+                    title="Choice: Death!",
+                    description=f"{target} died!",
+                    colour=0xFFB900,
+                )
+                raid.remove(target)
+            em.set_author(name=str(target), icon_url=target.avatar_url)
+            await ctx.send(embed=em)
+            await asyncio.sleep(4)
+
+        if len(raid) == 1:
+            survivor = raid[0]
+            await ctx.send(
+                f"The game is over! {survivor.mention} survived to the death game. They got a {self.bot.cogs['Crates'].emotes.legendary} Legendary Crate for being lucky!!!"
+            )
+            await self.bot.pool.execute(
+                'UPDATE profile SET "crates_legendary"="crates_legendary"+1 WHERE "user"=$1;',
+                survivor.id,
+            )
+
+        else:
+            await ctx.send(
+                "The death game did not manage to have a lone survivor within 45 Minutes... Game is over!"
+            )
+
         await self.clear_raid_timer()
 
     def getpriceto(self, level: float):

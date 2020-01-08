@@ -37,6 +37,7 @@ from discord.ext import commands
 import config
 
 from classes.context import Context
+from classes.converters import UserWithCharacter
 from utils import i18n, paginator
 from utils.checks import user_is_patron
 
@@ -252,6 +253,16 @@ class Bot(commands.AutoShardedBot):
         if local:
             await conn.close()
         return await self.generate_stats(v, dmg, deff, classes=classes, race=race)
+
+    async def get_god(self, user: UserWithCharacter, conn=None):
+        local = False
+        if conn is None:
+            conn = self.pool.acquire()
+            local = True
+        god = await conn.fetchval('SELECT god FROM profile WHERE "user"=$1;', user.id)
+        if local:
+            await conn.close()
+        return god
 
     async def get_equipped_items_for(self, thing, conn=None):
         v = thing.id if isinstance(thing, (discord.Member, discord.User)) else thing
