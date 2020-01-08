@@ -10,4 +10,7 @@ RUN apk add --no-cache curl git && \
 
 COPY . .
 
+# Fix git URL in Dockerhub
+RUN git remote set-url origin https://git.travitia.xyz/Kenvyra/IdleRPG.git
+
 CMD python launcher.py

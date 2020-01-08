@@ -322,9 +322,10 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
             "https://raid.travitia.xyz/toggle",
             headers={"Authorization": self.bot.config.raidauth},
         )
-        bandits = [{"hp": random.randint(150, 250), "id": i + 1} for i in range(bandits)]
+        bandits = [
+            {"hp": random.randint(150, 250), "id": i + 1} for i in range(bandits)
+        ]
         await ctx.send(
-
             """
 *Arrow shot*
 **Lieutenant**: We've spotted a group of Bandits!
@@ -382,7 +383,8 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
         ) > 0 and datetime.datetime.utcnow() < start + datetime.timedelta(minutes=45):
             dmg = random.randint(60, 100)  # effective damage the bandit does
             dmg = self.getfinaldmg(
-                dmg, target_data["armor"] * Decimal(random.choice(["0.1", "0.2", "0.3"]))
+                dmg,
+                target_data["armor"] * Decimal(random.choice(["0.1", "0.2", "0.3"])),
             )
             target_data["hp"] -= dmg  # damage dealt
             em = discord.Embed(title=f"Bandits left: `{len(bandits)}`", colour=0x000000)
