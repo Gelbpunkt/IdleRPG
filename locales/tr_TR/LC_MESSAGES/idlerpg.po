@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-01-06 14:01-0800\n"
+"POT-Creation-Date: 2020-01-08 05:32-0800\n"
 "PO-Revision-Date: 2019-12-30 12:01+0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -89,7 +89,7 @@ msgstr "Turnuva bitti! Kazanan {winner}."
 msgid "The creator spent money, prize can't be given!"
 msgstr "Kurucu parayı harcadı, ödül verilemez!"
 
-#: cogs/tournament/__init__.py:156 cogs/tournament/__init__.py:346
+#: cogs/tournament/__init__.py:156
 #, python-brace-format
 msgid ""
 "Tournament ended! The winner is {winner}.\n"
@@ -125,6 +125,13 @@ msgstr ""
 #, python-brace-format
 msgid "Action #{number}"
 msgstr "Eylem #{number}"
+
+#: cogs/tournament/__init__.py:346
+#, python-brace-format
+msgid ""
+"Raid Tournament ended! The winner is {winner}.\n"
+"Money was given!"
+msgstr ""
 
 #: cogs/images/__init__.py:34
 msgid "Pixelfys an Avatar."
@@ -853,6 +860,10 @@ msgstr ""
 #: cogs/hungergames/__init__.py:335
 msgid "Not enough players joined..."
 msgstr "Yeteri kadar oyuncu katılmadı..."
+
+#: cogs/hungergames/__init__.py:343
+msgid "An error happened during the hungergame. Please try again!"
+msgstr ""
 
 #: cogs/error_handler/__init__.py:62
 #, python-brace-format
@@ -1905,11 +1916,22 @@ msgstr ""
 "<https://www.ncpgambling.org/help-treatment/national-helpline-1-800-522-4700/"
 "> - Kumar Yardım Hattı"
 
-#: cogs/raid/__init__.py:1908
+#: cogs/miscellaneous/__init__.py:876
+msgid ""
+"1) Only up to two characters per individual\n"
+"2) No abusing or benefiting from bugs or exploits\n"
+"3) Be friendly and kind to other players\n"
+"4) Trading in-game items or currency for real money is forbidden\n"
+"5) Giving or selling renamed items is forbidden\n"
+"\n"
+"IdleRPG is a global bot, your characters are valid everywhere"
+msgstr ""
+
+#: cogs/raid/__init__.py:1919
 msgid "Upgrade your raid damage or defense multiplier."
 msgstr "Baskın hasar ya da savunma çarpanını yükselt."
 
-#: cogs/raid/__init__.py:1911
+#: cogs/raid/__init__.py:1922
 #, python-brace-format
 msgid ""
 "Use `{prefix}increase damage/defense` to upgrade your raid damage/defense "
@@ -1918,11 +1940,11 @@ msgstr ""
 "Baskın hasar/savunma çarpanını %10 yükseltmek için `{prefix}increase damage/"
 "defense` kullan."
 
-#: cogs/raid/__init__.py:1919
+#: cogs/raid/__init__.py:1930
 msgid "Increase your raid damage."
 msgstr "Baskın hasarını arttır."
 
-#: cogs/raid/__init__.py:1925
+#: cogs/raid/__init__.py:1936
 #, python-brace-format
 msgid ""
 "Upgrading your weapon attack raid multiplier to {newlvl} costs **${price}**, "
@@ -1931,7 +1953,7 @@ msgstr ""
 "Silah saldırısı baskın çarpanını {newlvl}'a yükseltmek **${price}** ediyor, "
 "çok fakirsin."
 
-#: cogs/raid/__init__.py:1936
+#: cogs/raid/__init__.py:1947
 #, python-brace-format
 msgid ""
 "You upgraded your weapon attack raid multiplier to {newlvl} for **${price}**."
@@ -1939,11 +1961,11 @@ msgstr ""
 "Silah saldırısı baskın çarpanını **${price}** karşılığında {newlvl}'a "
 "yükselttin."
 
-#: cogs/raid/__init__.py:1944
+#: cogs/raid/__init__.py:1955
 msgid "Increase your raid defense."
 msgstr "Baskın savunmanı arttır."
 
-#: cogs/raid/__init__.py:1950
+#: cogs/raid/__init__.py:1961
 #, python-brace-format
 msgid ""
 "Upgrading your shield defense raid multiplier to {newlvl} costs **${price}"
@@ -1952,7 +1974,7 @@ msgstr ""
 "Kalkan savunması baskın çarpanını {newlvl}'a yükseltmek **${price}** ediyor, "
 "çok fakirsin."
 
-#: cogs/raid/__init__.py:1961
+#: cogs/raid/__init__.py:1972
 #, python-brace-format
 msgid ""
 "You upgraded your shield defense raid multiplier to {newlvl} for **${price}"
@@ -1961,11 +1983,11 @@ msgstr ""
 "Kalkan savunması baskın çarpanını **${price}** karşılığında {newlvl}'a "
 "yükselttin."
 
-#: cogs/raid/__init__.py:1969
+#: cogs/raid/__init__.py:1980
 msgid "View your raid stats."
 msgstr "Baskın istatistiklerine bak."
 
-#: cogs/raid/__init__.py:1985
+#: cogs/raid/__init__.py:1996
 #, python-brace-format
 msgid ""
 "**{author}'s raid multipliers**\n"
@@ -1976,19 +1998,19 @@ msgstr ""
 "Hasar Çarpanı: x{atk} (Yükseltmek: ${atkp})\n"
 "Savunma Çarpanı: x{deff} (Yükseltmek: ${deffp})"
 
-#: cogs/raid/__init__.py:1994
+#: cogs/raid/__init__.py:2005
 msgid "Informs you about joining raids."
 msgstr "Baskınlara katılma konusunda seni bilgilendirir."
 
-#: cogs/raid/__init__.py:1997
+#: cogs/raid/__init__.py:2008
 #, python-brace-format
 msgid ""
-"Did you ever want to join together with other players to defeat the snowman "
+"Did you ever want to join together with other players to defeat the dragon "
 "that roams this land? Raids got you covered!\n"
 "Join the support server (`{prefix}support`) for more information."
 msgstr ""
-"Hiç bu topraklarda dolaşan kardan adamı yenmek için diğer oyuncularla bir "
-"araya gelmek istedin mi? Baskınlar bunun için burada!\n"
+"Hiç bu topraklarda dolaşan ejderhayı yenmek için diğer oyuncularla bir araya "
+"gelmek istedin mi? Baskınlar bunun için burada!\n"
 "Daha fazla bilgi için destek sunucusuna (`{prefix}support`) katıl."
 
 #: cogs/store/__init__.py:33
@@ -2384,10 +2406,8 @@ msgstr "Savaşçı"
 #: cogs/classes/__init__.py:54
 msgid ""
 "The tank class. Charge into battle with additional defense!\n"
-"+1 defense per evolution added onto your shield."
+"+1 defense per evolution."
 msgstr ""
-"Tank sınıfı. Savaşa ek defansla gir!\n"
-"Evrim başına kalkanına +1 defans eklenir."
 
 #: cogs/classes/__init__.py:59
 msgid "Thief"
@@ -2413,10 +2433,8 @@ msgstr "Büyücü"
 #: cogs/classes/__init__.py:69
 msgid ""
 "Utilise powerful magic for stronger attacks.\n"
-"+1 damage per evolution added onto your sword."
+"+1 damage per evolution."
 msgstr ""
-"Daha güçlü saldırılar için güçlü büyü kullan.\n"
-"Evrim başına kılıcına +1 hasar eklenir."
 
 #: cogs/classes/__init__.py:76
 #, python-brace-format
@@ -2465,10 +2483,8 @@ msgstr "Paragon"
 #: cogs/classes/__init__.py:101
 msgid ""
 "Absorb the appreciation of the devs into your soul to power up.\n"
-"+1 damage and defense per evolution added onto your items."
+"+1 damage and defense per evolution."
 msgstr ""
-"Güçlenmek için geliştiricilerin takdirini ruhuna em.\n"
-"Evrim başına eşyalarına +1 hasar ve defans eklenir."
 
 #: cogs/classes/__init__.py:134
 #, python-brace-format
@@ -3498,10 +3514,8 @@ msgstr "%5 vergiyi karşılayamazsın (${amount})."
 #, python-brace-format
 msgid ""
 "Successfully added your item to the shop! Use `{prefix}shop` to view it in "
-"the market! The tax of 5% has been deduced from your account."
+"the market! The tax of 5% has been deducted from your account."
 msgstr ""
-"Eşyan başarılı bir şekilde dükkana eklendi! Onu markette görmek için "
-"`{prefix}shop` kullan! %5 vergi hesabından düşüldü."
 
 #: cogs/trading/__init__.py:95
 msgid "Buys an item from the global market."
@@ -6715,11 +6729,11 @@ msgstr "Şehrinin kontrolünden vazgeçmek istediğinden emin misin?"
 msgid "{city} was abandoned."
 msgstr "{city} terk edildi."
 
-#: cogs/alliance/__init__.py:491
+#: cogs/alliance/__init__.py:490
 msgid "[Alliance Leader only] Take control of an empty city."
 msgstr "[İttifak liderine özel] Boş bir şehrin kontrolünü eline al."
 
-#: cogs/alliance/__init__.py:493
+#: cogs/alliance/__init__.py:492
 msgid "Invalid city name."
 msgstr "Geçersiz şehir ismi."
 
@@ -6728,30 +6742,36 @@ msgstr "Geçersiz şehir ismi."
 msgid "The city is occupied by **{amount}** defensive fortifications."
 msgstr "Bu şehir **{amount}** savunma surları tarafından işgal edilmiş."
 
-#: cogs/alliance/__init__.py:511
+#: cogs/alliance/__init__.py:506
+#, python-brace-format
+msgid "{city} was just occupied and stands under protection."
+msgstr ""
+
+#: cogs/alliance/__init__.py:517
 #, python-brace-format
 msgid ""
-"Your alliance now rules **{city}**. You should immediately buy defenses."
-msgstr "İttifakın şimdi **{city}**'i yönetiyor. Hemen savunma satın almalısın."
+"Your alliance now rules **{city}**. You should immediately buy defenses. You "
+"have **10 minutes** to build defenses before others can occupy the city!"
+msgstr ""
 
-#: cogs/alliance/__init__.py:523
+#: cogs/alliance/__init__.py:532
 msgid "[Guild Leader only] Attack a city."
 msgstr "[Lonca liderine özel] Bir şehre saldır."
 
-#: cogs/alliance/__init__.py:526
+#: cogs/alliance/__init__.py:535
 msgid "Invalid city."
 msgstr "Geçersiz şehir."
 
-#: cogs/alliance/__init__.py:531 cogs/alliance/__init__.py:556
+#: cogs/alliance/__init__.py:540 cogs/alliance/__init__.py:565
 #, python-brace-format
 msgid "**{city}** is already under attack."
 msgstr "**{city}** zaten saldırı altında."
 
-#: cogs/alliance/__init__.py:552
+#: cogs/alliance/__init__.py:561
 msgid "The city is without defenses already."
 msgstr "Şehir zaten savunmasız."
 
-#: cogs/alliance/__init__.py:563
+#: cogs/alliance/__init__.py:572
 #, python-brace-format
 msgid ""
 "**{user}** wants to attack **{city}** with **{alliance_name}**'s alliance. "
@@ -6760,36 +6780,36 @@ msgstr ""
 "**{user}**, **{city}**'e **{alliance_name}**'in ittifakı ile birlikte "
 "saldırmak istiyor. Saldırıya katılmak için ⚔ ile tepki ver!"
 
-#: cogs/alliance/__init__.py:592
+#: cogs/alliance/__init__.py:601
 #, python-brace-format
 msgid "You are not a member of **{alliance_name}'s alliance**, {user}."
 msgstr "**{alliance_name}'in ittifakı** üyesi değilsin, {user}."
 
-#: cogs/alliance/__init__.py:610
+#: cogs/alliance/__init__.py:619
 #, python-brace-format
 msgid "{user} has joined the attack."
 msgstr "{user} saldırıya katıldı."
 
-#: cogs/alliance/__init__.py:614
+#: cogs/alliance/__init__.py:623
 msgid "Noone joined."
 msgstr "Kimse katılmadı."
 
-#: cogs/alliance/__init__.py:620
+#: cogs/alliance/__init__.py:629
 #, python-brace-format
 msgid "Attack on **{city}** starting with **{amount}** attackers!"
 msgstr "**{city}**'e saldırı **{amount}** saldırgan ile başlıyor!"
 
-#: cogs/alliance/__init__.py:639 cogs/alliance/__init__.py:659
-#: cogs/alliance/__init__.py:693 cogs/alliance/__init__.py:704
+#: cogs/alliance/__init__.py:648 cogs/alliance/__init__.py:668
+#: cogs/alliance/__init__.py:702 cogs/alliance/__init__.py:713
 msgid "Alliance Wars"
 msgstr "İttifak Savaşları"
 
-#: cogs/alliance/__init__.py:641
+#: cogs/alliance/__init__.py:650
 #, python-brace-format
 msgid "**{alliance_name}** destroyed a {defense} in {city}!"
 msgstr "**{alliance_name}**, {city}'de bir {defense} yok etti!"
 
-#: cogs/alliance/__init__.py:661
+#: cogs/alliance/__init__.py:670
 #, python-brace-format
 msgid ""
 "**{alliance_name}** hit a {defense} in {city} for {damage} damage! (Now {hp} "
@@ -6798,22 +6818,22 @@ msgstr ""
 "**{alliance_name}**, {city}'de bir {defense}'a {damage} hasar verdi! (Şuanda "
 "{hp} HP)"
 
-#: cogs/alliance/__init__.py:694
+#: cogs/alliance/__init__.py:703
 #, python-brace-format
 msgid "**{user}** got killed in {city}!"
 msgstr "**{user}**, {city}'de öldürüldü!"
 
-#: cogs/alliance/__init__.py:706
+#: cogs/alliance/__init__.py:715
 #, python-brace-format
 msgid "**{user}** got hit in {city} for {damage} damage! (Now {hp} HP)"
 msgstr "**{user}**, {city}'de {damage} hasar aldı! (Şuanda {hp} HP)"
 
-#: cogs/alliance/__init__.py:726
+#: cogs/alliance/__init__.py:735
 #, python-brace-format
 msgid "**{alliance_name}** destroyed defenses in **{city}**!"
 msgstr "**{alliance_name}**, **{city}**'deki savunmaları yok etti!"
 
-#: cogs/alliance/__init__.py:736
+#: cogs/alliance/__init__.py:745
 #, python-brace-format
 msgid "**{alliance_name}** failed to destroy defenses in **{city}**!"
 msgstr "**{alliance_name}**, **{city}**'deki savunmaları yok edemedi!"
@@ -6826,6 +6846,51 @@ msgstr "İçinde {emote} olan bir hazine buldun!"
 #: utils/castle.py:269
 msgid "You have reached the exit!"
 msgstr "Çıkışa ulaştın!"
+
+#, python-brace-format
+#~ msgid ""
+#~ "Did you ever want to join together with other players to defeat the "
+#~ "snowman that roams this land? Raids got you covered!\n"
+#~ "Join the support server (`{prefix}support`) for more information."
+#~ msgstr ""
+#~ "Hiç bu topraklarda dolaşan kardan adamı yenmek için diğer oyuncularla bir "
+#~ "araya gelmek istedin mi? Baskınlar bunun için burada!\n"
+#~ "Daha fazla bilgi için destek sunucusuna (`{prefix}support`) katıl."
+
+#~ msgid ""
+#~ "The tank class. Charge into battle with additional defense!\n"
+#~ "+1 defense per evolution added onto your shield."
+#~ msgstr ""
+#~ "Tank sınıfı. Savaşa ek defansla gir!\n"
+#~ "Evrim başına kalkanına +1 defans eklenir."
+
+#~ msgid ""
+#~ "Utilise powerful magic for stronger attacks.\n"
+#~ "+1 damage per evolution added onto your sword."
+#~ msgstr ""
+#~ "Daha güçlü saldırılar için güçlü büyü kullan.\n"
+#~ "Evrim başına kılıcına +1 hasar eklenir."
+
+#~ msgid ""
+#~ "Absorb the appreciation of the devs into your soul to power up.\n"
+#~ "+1 damage and defense per evolution added onto your items."
+#~ msgstr ""
+#~ "Güçlenmek için geliştiricilerin takdirini ruhuna em.\n"
+#~ "Evrim başına eşyalarına +1 hasar ve defans eklenir."
+
+#, python-brace-format
+#~ msgid ""
+#~ "Successfully added your item to the shop! Use `{prefix}shop` to view it "
+#~ "in the market! The tax of 5% has been deduced from your account."
+#~ msgstr ""
+#~ "Eşyan başarılı bir şekilde dükkana eklendi! Onu markette görmek için "
+#~ "`{prefix}shop` kullan! %5 vergi hesabından düşüldü."
+
+#, python-brace-format
+#~ msgid ""
+#~ "Your alliance now rules **{city}**. You should immediately buy defenses."
+#~ msgstr ""
+#~ "İttifakın şimdi **{city}**'i yönetiyor. Hemen savunma satın almalısın."
 
 #, python-brace-format
 #~ msgid "You stole **${stolen}** from **{user}**."
@@ -6859,16 +6924,6 @@ msgstr "Çıkışa ulaştın!"
 #, python-brace-format
 #~ msgid "{crates} crates"
 #~ msgstr "{crates} sandıklar"
-
-#, python-brace-format
-#~ msgid ""
-#~ "Did you ever want to join together with other players to defeat the "
-#~ "dragon that roams this land? Raids got you covered!\n"
-#~ "Join the support server (`{prefix}support`) for more information."
-#~ msgstr ""
-#~ "Hiç bu topraklarda dolaşan ejderhayı yenmek için diğer oyuncularla bir "
-#~ "araya gelmek istedin mi? Baskınlar bunun için burada!\n"
-#~ "Daha fazla bilgi için destek sunucusuna (`{prefix}support`) katıl."
 
 #~ msgid "The dealer got a blackjack. You lost."
 #~ msgstr "Satıcı blackjack aldı. Kaybettin."

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 4.3.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-01-06 14:01-0800\n"
+"POT-Creation-Date: 2020-01-08 05:32-0800\n"
 "PO-Revision-Date: 2019-12-22 20:57+0100\n"
 "Last-Translator: Naya \"Nyathaleen\" Aldaine\n"
 "Language-Team:\n"
@@ -89,7 +89,7 @@ msgstr "Turneringen avslutades! Vinnaren är {winner}."
 msgid "The creator spent money, prize can't be given!"
 msgstr "Skaparen spenderade pengar, inget pris kan ges!"
 
-#: cogs/tournament/__init__.py:156 cogs/tournament/__init__.py:346
+#: cogs/tournament/__init__.py:156
 #, python-brace-format
 msgid ""
 "Tournament ended! The winner is {winner}.\n"
@@ -125,6 +125,13 @@ msgstr ""
 #, python-brace-format
 msgid "Action #{number}"
 msgstr "Handling #{number}"
+
+#: cogs/tournament/__init__.py:346
+#, python-brace-format
+msgid ""
+"Raid Tournament ended! The winner is {winner}.\n"
+"Money was given!"
+msgstr ""
 
 #: cogs/images/__init__.py:34
 msgid "Pixelfys an Avatar."
@@ -858,6 +865,10 @@ msgstr ""
 #: cogs/hungergames/__init__.py:335
 msgid "Not enough players joined..."
 msgstr "Inte tillräckligt med spelare gick med..."
+
+#: cogs/hungergames/__init__.py:343
+msgid "An error happened during the hungergame. Please try again!"
+msgstr ""
 
 #: cogs/error_handler/__init__.py:62
 #, python-brace-format
@@ -1918,11 +1929,22 @@ msgstr ""
 "<https://www.ncpgambling.org/help-treatment/national-helpline-1-800-522-4700/"
 "> - spelhjälplinjen"
 
-#: cogs/raid/__init__.py:1908
+#: cogs/miscellaneous/__init__.py:876
+msgid ""
+"1) Only up to two characters per individual\n"
+"2) No abusing or benefiting from bugs or exploits\n"
+"3) Be friendly and kind to other players\n"
+"4) Trading in-game items or currency for real money is forbidden\n"
+"5) Giving or selling renamed items is forbidden\n"
+"\n"
+"IdleRPG is a global bot, your characters are valid everywhere"
+msgstr ""
+
+#: cogs/raid/__init__.py:1919
 msgid "Upgrade your raid damage or defense multiplier."
 msgstr "Uppgradera din raidskada eller skyddsfaktor."
 
-#: cogs/raid/__init__.py:1911
+#: cogs/raid/__init__.py:1922
 #, python-brace-format
 msgid ""
 "Use `{prefix}increase damage/defense` to upgrade your raid damage/defense "
@@ -1931,11 +1953,11 @@ msgstr ""
 "Använd `{prefix}increase damage/defense` för att uppgradera din raidskada/"
 "skyddsfaktor med 10%."
 
-#: cogs/raid/__init__.py:1919
+#: cogs/raid/__init__.py:1930
 msgid "Increase your raid damage."
 msgstr "Öka din raidskada."
 
-#: cogs/raid/__init__.py:1925
+#: cogs/raid/__init__.py:1936
 #, python-brace-format
 msgid ""
 "Upgrading your weapon attack raid multiplier to {newlvl} costs **${price}**, "
@@ -1944,18 +1966,18 @@ msgstr ""
 "Att uppgradera din vapenattacksraidfaktor till {newlvl} kostar **${price}**, "
 "du är för fattig."
 
-#: cogs/raid/__init__.py:1936
+#: cogs/raid/__init__.py:1947
 #, python-brace-format
 msgid ""
 "You upgraded your weapon attack raid multiplier to {newlvl} for **${price}**."
 msgstr ""
 "Du har uppgraderat din vapenattacksraidfaktor till {newlvl} för **${price}**."
 
-#: cogs/raid/__init__.py:1944
+#: cogs/raid/__init__.py:1955
 msgid "Increase your raid defense."
 msgstr "Öka ditt raidskydd."
 
-#: cogs/raid/__init__.py:1950
+#: cogs/raid/__init__.py:1961
 #, python-brace-format
 msgid ""
 "Upgrading your shield defense raid multiplier to {newlvl} costs **${price}"
@@ -1964,7 +1986,7 @@ msgstr ""
 "Att uppgradera din sköldskyddsraidfaktor till {newlvl} kostar **${price}**, "
 "du är för fattig."
 
-#: cogs/raid/__init__.py:1961
+#: cogs/raid/__init__.py:1972
 #, python-brace-format
 msgid ""
 "You upgraded your shield defense raid multiplier to {newlvl} for **${price}"
@@ -1972,11 +1994,11 @@ msgid ""
 msgstr ""
 "Du har uppgraderat din sköldskyddsraidfaktor till {newlvl} för **${price}**."
 
-#: cogs/raid/__init__.py:1969
+#: cogs/raid/__init__.py:1980
 msgid "View your raid stats."
 msgstr "Visa dina raidstats."
 
-#: cogs/raid/__init__.py:1985
+#: cogs/raid/__init__.py:1996
 #, python-brace-format
 msgid ""
 "**{author}'s raid multipliers**\n"
@@ -1987,20 +2009,20 @@ msgstr ""
 "Skadefaktor: x{atk} (Uppgradera: ${atkp})\n"
 "Skyddsfaktor: x{deff} (Uppgradera: ${deffp})"
 
-#: cogs/raid/__init__.py:1994
+#: cogs/raid/__init__.py:2005
 msgid "Informs you about joining raids."
 msgstr "Informerar dig om att gå med i raider."
 
-#: cogs/raid/__init__.py:1997
+#: cogs/raid/__init__.py:2008
 #, python-brace-format
 msgid ""
-"Did you ever want to join together with other players to defeat the snowman "
+"Did you ever want to join together with other players to defeat the dragon "
 "that roams this land? Raids got you covered!\n"
 "Join the support server (`{prefix}support`) for more information."
 msgstr ""
-"Har du någonsin velat gå med andra spelare för att besegra snögubben som "
-"härjar i landet? Raids är för dig!\n"
-"Gå med i supportservern (`{prefix}support`) för mer information."
+"Har du någonsin velat gå med andra spelare för att slå draken som vandrar "
+"detta land? Då är raider för dig!\n"
+"Gå med supportservern (`{prefix}support`) för mer information."
 
 #: cogs/store/__init__.py:33
 msgid "The booster store."
@@ -2398,10 +2420,8 @@ msgstr "Krigare"
 #: cogs/classes/__init__.py:54
 msgid ""
 "The tank class. Charge into battle with additional defense!\n"
-"+1 defense per evolution added onto your shield."
+"+1 defense per evolution."
 msgstr ""
-"Tankklassen. Storma in i strid med ytterligare försvar!\n"
-"+1 försvar per evolution läggs på din sköld."
 
 #: cogs/classes/__init__.py:59
 msgid "Thief"
@@ -2427,10 +2447,8 @@ msgstr "Magiker"
 #: cogs/classes/__init__.py:69
 msgid ""
 "Utilise powerful magic for stronger attacks.\n"
-"+1 damage per evolution added onto your sword."
+"+1 damage per evolution."
 msgstr ""
-"Använder kraftfull magi för starkare attacker.\n"
-"+1 skada per evolution läggs på ditt svärd."
 
 #: cogs/classes/__init__.py:76
 #, python-brace-format
@@ -2479,10 +2497,8 @@ msgstr "Paragon"
 #: cogs/classes/__init__.py:101
 msgid ""
 "Absorb the appreciation of the devs into your soul to power up.\n"
-"+1 damage and defense per evolution added onto your items."
+"+1 damage and defense per evolution."
 msgstr ""
-"Absorbera utvecklarnas uppskattning i din själ för att förstärkas.\n"
-"+1 skada och försvar per evolution läggs på dina föremål."
 
 #: cogs/classes/__init__.py:134
 #, python-brace-format
@@ -3505,10 +3521,8 @@ msgstr "Du har inte råd med skatten på 5% (${amount})"
 #, python-brace-format
 msgid ""
 "Successfully added your item to the shop! Use `{prefix}shop` to view it in "
-"the market! The tax of 5% has been deduced from your account."
+"the market! The tax of 5% has been deducted from your account."
 msgstr ""
-"Ditt föremål är på marknaden! Använd `{prefix}shop` för att se det på "
-"marknaden! Skatten på %5 har dragits från ditt konto."
 
 #: cogs/trading/__init__.py:95
 msgid "Buys an item from the global market."
@@ -6699,11 +6713,11 @@ msgstr "Är du säker på att du vill kapitulera staden?"
 msgid "{city} was abandoned."
 msgstr "{city} har blivit övergiven."
 
-#: cogs/alliance/__init__.py:491
+#: cogs/alliance/__init__.py:490
 msgid "[Alliance Leader only] Take control of an empty city."
 msgstr "[Endast Alliansledare] Ta kontroll över en tom stad."
 
-#: cogs/alliance/__init__.py:493
+#: cogs/alliance/__init__.py:492
 msgid "Invalid city name."
 msgstr "Denna stad finns inte."
 
@@ -6712,30 +6726,36 @@ msgstr "Denna stad finns inte."
 msgid "The city is occupied by **{amount}** defensive fortifications."
 msgstr "Staden ockuperas av **{amount}** försvar."
 
-#: cogs/alliance/__init__.py:511
+#: cogs/alliance/__init__.py:506
+#, python-brace-format
+msgid "{city} was just occupied and stands under protection."
+msgstr ""
+
+#: cogs/alliance/__init__.py:517
 #, python-brace-format
 msgid ""
-"Your alliance now rules **{city}**. You should immediately buy defenses."
-msgstr "Er allians styr nu **{city}**. Ni borde genast skaffa försvar."
+"Your alliance now rules **{city}**. You should immediately buy defenses. You "
+"have **10 minutes** to build defenses before others can occupy the city!"
+msgstr ""
 
-#: cogs/alliance/__init__.py:523
+#: cogs/alliance/__init__.py:532
 msgid "[Guild Leader only] Attack a city."
 msgstr "[Endast Guildledare] Angrip en stad."
 
-#: cogs/alliance/__init__.py:526
+#: cogs/alliance/__init__.py:535
 msgid "Invalid city."
 msgstr "Denna stad finns inte."
 
-#: cogs/alliance/__init__.py:531 cogs/alliance/__init__.py:556
+#: cogs/alliance/__init__.py:540 cogs/alliance/__init__.py:565
 #, python-brace-format
 msgid "**{city}** is already under attack."
 msgstr "**{city}** är redan under attack."
 
-#: cogs/alliance/__init__.py:552
+#: cogs/alliance/__init__.py:561
 msgid "The city is without defenses already."
 msgstr "Staden har inga försvar."
 
-#: cogs/alliance/__init__.py:563
+#: cogs/alliance/__init__.py:572
 #, python-brace-format
 msgid ""
 "**{user}** wants to attack **{city}** with **{alliance_name}**'s alliance. "
@@ -6744,36 +6764,36 @@ msgstr ""
 "**{user}** vill attackera **{city}** med **{alliance_name}**s allians. "
 "Reagera med ⚔ för att delta i anfallet!"
 
-#: cogs/alliance/__init__.py:592
+#: cogs/alliance/__init__.py:601
 #, python-brace-format
 msgid "You are not a member of **{alliance_name}'s alliance**, {user}."
 msgstr "Du är inte med i **{alliance_name}s allians** {user}."
 
-#: cogs/alliance/__init__.py:610
+#: cogs/alliance/__init__.py:619
 #, python-brace-format
 msgid "{user} has joined the attack."
 msgstr "{user} har gått med i slaget."
 
-#: cogs/alliance/__init__.py:614
+#: cogs/alliance/__init__.py:623
 msgid "Noone joined."
 msgstr "Inget deltog."
 
-#: cogs/alliance/__init__.py:620
+#: cogs/alliance/__init__.py:629
 #, python-brace-format
 msgid "Attack on **{city}** starting with **{amount}** attackers!"
 msgstr "Slaget om **{city}** har satts igång med **{amount}** anfallare!"
 
-#: cogs/alliance/__init__.py:639 cogs/alliance/__init__.py:659
-#: cogs/alliance/__init__.py:693 cogs/alliance/__init__.py:704
+#: cogs/alliance/__init__.py:648 cogs/alliance/__init__.py:668
+#: cogs/alliance/__init__.py:702 cogs/alliance/__init__.py:713
 msgid "Alliance Wars"
 msgstr "Allianskrig"
 
-#: cogs/alliance/__init__.py:641
+#: cogs/alliance/__init__.py:650
 #, python-brace-format
 msgid "**{alliance_name}** destroyed a {defense} in {city}!"
 msgstr "**{alliance_name}** förstörde {defense} i {city}!"
 
-#: cogs/alliance/__init__.py:661
+#: cogs/alliance/__init__.py:670
 #, python-brace-format
 msgid ""
 "**{alliance_name}** hit a {defense} in {city} for {damage} damage! (Now {hp} "
@@ -6782,22 +6802,22 @@ msgstr ""
 "**{alliance_name}** anföll {defense} i {city} för {damage} skada! ({hp} liv "
 "kvar)"
 
-#: cogs/alliance/__init__.py:694
+#: cogs/alliance/__init__.py:703
 #, python-brace-format
 msgid "**{user}** got killed in {city}!"
 msgstr "**{user}** dog i {city}!"
 
-#: cogs/alliance/__init__.py:706
+#: cogs/alliance/__init__.py:715
 #, python-brace-format
 msgid "**{user}** got hit in {city} for {damage} damage! (Now {hp} HP)"
 msgstr "**{user}** blev träffad i {city} för {damage} skada! ({hp} liv kvar)"
 
-#: cogs/alliance/__init__.py:726
+#: cogs/alliance/__init__.py:735
 #, python-brace-format
 msgid "**{alliance_name}** destroyed defenses in **{city}**!"
 msgstr "**{alliance_name}** förstörde alla försvar i **{city}**!"
 
-#: cogs/alliance/__init__.py:736
+#: cogs/alliance/__init__.py:745
 #, python-brace-format
 msgid "**{alliance_name}** failed to destroy defenses in **{city}**!"
 msgstr "**{alliance_name}** misslyckades att förstöra försvaren i **{city}**!"
@@ -6810,6 +6830,50 @@ msgstr "Du hittade en skatt med {emote} i!"
 #: utils/castle.py:269
 msgid "You have reached the exit!"
 msgstr "Du har nått utgången!"
+
+#, python-brace-format
+#~ msgid ""
+#~ "Did you ever want to join together with other players to defeat the "
+#~ "snowman that roams this land? Raids got you covered!\n"
+#~ "Join the support server (`{prefix}support`) for more information."
+#~ msgstr ""
+#~ "Har du någonsin velat gå med andra spelare för att besegra snögubben som "
+#~ "härjar i landet? Raids är för dig!\n"
+#~ "Gå med i supportservern (`{prefix}support`) för mer information."
+
+#~ msgid ""
+#~ "The tank class. Charge into battle with additional defense!\n"
+#~ "+1 defense per evolution added onto your shield."
+#~ msgstr ""
+#~ "Tankklassen. Storma in i strid med ytterligare försvar!\n"
+#~ "+1 försvar per evolution läggs på din sköld."
+
+#~ msgid ""
+#~ "Utilise powerful magic for stronger attacks.\n"
+#~ "+1 damage per evolution added onto your sword."
+#~ msgstr ""
+#~ "Använder kraftfull magi för starkare attacker.\n"
+#~ "+1 skada per evolution läggs på ditt svärd."
+
+#~ msgid ""
+#~ "Absorb the appreciation of the devs into your soul to power up.\n"
+#~ "+1 damage and defense per evolution added onto your items."
+#~ msgstr ""
+#~ "Absorbera utvecklarnas uppskattning i din själ för att förstärkas.\n"
+#~ "+1 skada och försvar per evolution läggs på dina föremål."
+
+#, python-brace-format
+#~ msgid ""
+#~ "Successfully added your item to the shop! Use `{prefix}shop` to view it "
+#~ "in the market! The tax of 5% has been deduced from your account."
+#~ msgstr ""
+#~ "Ditt föremål är på marknaden! Använd `{prefix}shop` för att se det på "
+#~ "marknaden! Skatten på %5 har dragits från ditt konto."
+
+#, python-brace-format
+#~ msgid ""
+#~ "Your alliance now rules **{city}**. You should immediately buy defenses."
+#~ msgstr "Er allians styr nu **{city}**. Ni borde genast skaffa försvar."
 
 #~ msgid ""
 #~ "You have already selected a race and filled in your cv. This is "
@@ -6831,15 +6895,6 @@ msgstr "Du har nått utgången!"
 
 #~ msgid "{crates} crates"
 #~ msgstr "{crates} lådor"
-
-#~ msgid ""
-#~ "Did you ever want to join together with other players to defeat the "
-#~ "dragon that roams this land? Raids got you covered!\n"
-#~ "Join the support server (`{prefix}support`) for more information."
-#~ msgstr ""
-#~ "Har du någonsin velat gå med andra spelare för att slå draken som vandrar "
-#~ "detta land? Då är raider för dig!\n"
-#~ "Gå med supportservern (`{prefix}support`) för mer information."
 
 #~ msgid "The dealer got a blackjack. You lost."
 #~ msgstr "Croupiern fick en blackjack. Du förlorade."

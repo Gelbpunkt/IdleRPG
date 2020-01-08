@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-01-06 14:01-0800\n"
+"POT-Creation-Date: 2020-01-08 05:32-0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -88,7 +88,7 @@ msgstr "Tournament ended! The winner is {winner}."
 msgid "The creator spent money, prize can't be given!"
 msgstr "The creator spent money, prize can't be given!"
 
-#: cogs/tournament/__init__.py:156 cogs/tournament/__init__.py:346
+#: cogs/tournament/__init__.py:156
 #, python-brace-format
 msgid ""
 "Tournament ended! The winner is {winner}.\n"
@@ -121,6 +121,13 @@ msgstr ""
 #: cogs/tournament/__init__.py:303 cogs/battles/__init__.py:297
 #, python-brace-format
 msgid "Action #{number}"
+msgstr ""
+
+#: cogs/tournament/__init__.py:346
+#, python-brace-format
+msgid ""
+"Raid Tournament ended! The winner is {winner}.\n"
+"Money was given!"
 msgstr ""
 
 #: cogs/images/__init__.py:34
@@ -836,6 +843,10 @@ msgstr ""
 #: cogs/hungergames/__init__.py:335
 msgid "Not enough players joined..."
 msgstr "N07 3n0u6h pl4y3r5 j01n3d..."
+
+#: cogs/hungergames/__init__.py:343
+msgid "An error happened during the hungergame. Please try again!"
+msgstr ""
 
 #: cogs/error_handler/__init__.py:62
 #, python-brace-format
@@ -1848,11 +1859,22 @@ msgid ""
 "> - Gambling Helpline"
 msgstr ""
 
-#: cogs/raid/__init__.py:1908
+#: cogs/miscellaneous/__init__.py:876
+msgid ""
+"1) Only up to two characters per individual\n"
+"2) No abusing or benefiting from bugs or exploits\n"
+"3) Be friendly and kind to other players\n"
+"4) Trading in-game items or currency for real money is forbidden\n"
+"5) Giving or selling renamed items is forbidden\n"
+"\n"
+"IdleRPG is a global bot, your characters are valid everywhere"
+msgstr ""
+
+#: cogs/raid/__init__.py:1919
 msgid "Upgrade your raid damage or defense multiplier."
 msgstr "Up6r4d3 y0ur r41d d4m463 0r d3f3n53 mul71pl13r."
 
-#: cogs/raid/__init__.py:1911
+#: cogs/raid/__init__.py:1922
 #, python-brace-format
 msgid ""
 "Use `{prefix}increase damage/defense` to upgrade your raid damage/defense "
@@ -1861,11 +1883,11 @@ msgstr ""
 "U53 `{prefix}increase damage/defense` 70 up6r4d3 y0ur r41d d4m463/d3f3n53 "
 "mul71pl13r by 10%."
 
-#: cogs/raid/__init__.py:1919
+#: cogs/raid/__init__.py:1930
 msgid "Increase your raid damage."
 msgstr "1ncr3453 y0ur r41d d4m463."
 
-#: cogs/raid/__init__.py:1925
+#: cogs/raid/__init__.py:1936
 #, python-brace-format
 msgid ""
 "Upgrading your weapon attack raid multiplier to {newlvl} costs **${price}**, "
@@ -1874,18 +1896,18 @@ msgstr ""
 "Up6r4d1n6 y0ur w34p0n 4774ck r41d mul71pl13r 70 {newlvl} c0575 **${price}**, "
 "y0u 4r3 700 p00r."
 
-#: cogs/raid/__init__.py:1936
+#: cogs/raid/__init__.py:1947
 #, python-brace-format
 msgid ""
 "You upgraded your weapon attack raid multiplier to {newlvl} for **${price}**."
 msgstr ""
 "Y0u up6r4d3d y0ur w34p0n 4774ck r41d mul71pl13r 70 {newlvl} f0r **${price}**."
 
-#: cogs/raid/__init__.py:1944
+#: cogs/raid/__init__.py:1955
 msgid "Increase your raid defense."
 msgstr "1ncr3453 y0ur r41d d3f3n53."
 
-#: cogs/raid/__init__.py:1950
+#: cogs/raid/__init__.py:1961
 #, python-brace-format
 msgid ""
 "Upgrading your shield defense raid multiplier to {newlvl} costs **${price}"
@@ -1894,7 +1916,7 @@ msgstr ""
 "Up6r4d1n6 y0ur 5h13ld d3f3n53 r41d mul71pl13r 70 {newlvl} c0575 **${price}"
 "**, y0u 4r3 700 p00r."
 
-#: cogs/raid/__init__.py:1961
+#: cogs/raid/__init__.py:1972
 #, python-brace-format
 msgid ""
 "You upgraded your shield defense raid multiplier to {newlvl} for **${price}"
@@ -1903,11 +1925,11 @@ msgstr ""
 "Y0u up6r4d3d y0ur 5h13ld d3f3n53 r41d mul71pl13r 70 {newlvl} f0r **${price}"
 "**."
 
-#: cogs/raid/__init__.py:1969
+#: cogs/raid/__init__.py:1980
 msgid "View your raid stats."
 msgstr "V13w y0ur r41d 57475."
 
-#: cogs/raid/__init__.py:1985
+#: cogs/raid/__init__.py:1996
 #, python-brace-format
 msgid ""
 "**{author}'s raid multipliers**\n"
@@ -1918,17 +1940,20 @@ msgstr ""
 "D4m463 Mul71pl13r: x{atk} (Up6r4d1n6: ${atkp})\n"
 "D3f3n53 Mul71pl13r: x{deff} (Up6r4d1n6: ${deffp})"
 
-#: cogs/raid/__init__.py:1994
+#: cogs/raid/__init__.py:2005
 msgid "Informs you about joining raids."
 msgstr "1nf0rm5 y0u 4b0u7 j01n1n6 r41d5."
 
-#: cogs/raid/__init__.py:1997
+#: cogs/raid/__init__.py:2008
 #, python-brace-format
 msgid ""
-"Did you ever want to join together with other players to defeat the snowman "
+"Did you ever want to join together with other players to defeat the dragon "
 "that roams this land? Raids got you covered!\n"
 "Join the support server (`{prefix}support`) for more information."
 msgstr ""
+"D1d y0u 3v3r w4n7 70 j01n 70637h3r w17h 07h3r pl4y3r5 70 d3f347 7h3 dr460n "
+"7h47 r04m5 7h15 l4nd? R41d5 607 y0u c0v3r3d!\n"
+"J01n 7h3 5upp0r7 53rv3r (`{prefix}support`) f0r m0r3 1nf0rm4710n."
 
 #: cogs/store/__init__.py:33
 msgid "The booster store."
@@ -2319,10 +2344,8 @@ msgstr "W4rr10r"
 #: cogs/classes/__init__.py:54
 msgid ""
 "The tank class. Charge into battle with additional defense!\n"
-"+1 defense per evolution added onto your shield."
+"+1 defense per evolution."
 msgstr ""
-"7h3 74nk cl455. Ch4r63 1n70 b477l3 w17h 4dd1710n4l d3f3n53!\n"
-"+1 d3f3n53 p3r 3v0lu710n 4dd3d 0n70 y0ur 5h13ld."
 
 #: cogs/classes/__init__.py:59
 msgid "Thief"
@@ -2348,10 +2371,8 @@ msgstr "M463"
 #: cogs/classes/__init__.py:69
 msgid ""
 "Utilise powerful magic for stronger attacks.\n"
-"+1 damage per evolution added onto your sword."
+"+1 damage per evolution."
 msgstr ""
-"U71l153 p0w3rful m461c f0r 57r0n63r 4774ck5.\n"
-"+1 d4m463 p3r 3v0lu710n 4dd3d 0n70 y0ur 5w0rd."
 
 #: cogs/classes/__init__.py:76
 #, python-brace-format
@@ -2397,10 +2418,8 @@ msgstr "P4r460n"
 #: cogs/classes/__init__.py:101
 msgid ""
 "Absorb the appreciation of the devs into your soul to power up.\n"
-"+1 damage and defense per evolution added onto your items."
+"+1 damage and defense per evolution."
 msgstr ""
-"4b50rb 7h3 4ppr3c14710n 0f 7h3 d3v5 1n70 y0ur 50ul 70 p0w3r up.\n"
-"+1 d4m463 4nd d3f3n53 p3r 3v0lu710n 4dd3d 0n70 y0ur 173m5."
 
 #: cogs/classes/__init__.py:134
 #, python-brace-format
@@ -3416,7 +3435,7 @@ msgstr ""
 #, python-brace-format
 msgid ""
 "Successfully added your item to the shop! Use `{prefix}shop` to view it in "
-"the market! The tax of 5% has been deduced from your account."
+"the market! The tax of 5% has been deducted from your account."
 msgstr ""
 
 #: cogs/trading/__init__.py:95
@@ -6559,11 +6578,11 @@ msgstr ""
 msgid "{city} was abandoned."
 msgstr ""
 
-#: cogs/alliance/__init__.py:491
+#: cogs/alliance/__init__.py:490
 msgid "[Alliance Leader only] Take control of an empty city."
 msgstr ""
 
-#: cogs/alliance/__init__.py:493
+#: cogs/alliance/__init__.py:492
 msgid "Invalid city name."
 msgstr ""
 
@@ -6572,88 +6591,94 @@ msgstr ""
 msgid "The city is occupied by **{amount}** defensive fortifications."
 msgstr ""
 
-#: cogs/alliance/__init__.py:511
+#: cogs/alliance/__init__.py:506
 #, python-brace-format
-msgid ""
-"Your alliance now rules **{city}**. You should immediately buy defenses."
+msgid "{city} was just occupied and stands under protection."
 msgstr ""
 
-#: cogs/alliance/__init__.py:523
+#: cogs/alliance/__init__.py:517
+#, python-brace-format
+msgid ""
+"Your alliance now rules **{city}**. You should immediately buy defenses. You "
+"have **10 minutes** to build defenses before others can occupy the city!"
+msgstr ""
+
+#: cogs/alliance/__init__.py:532
 msgid "[Guild Leader only] Attack a city."
 msgstr ""
 
-#: cogs/alliance/__init__.py:526
+#: cogs/alliance/__init__.py:535
 msgid "Invalid city."
 msgstr ""
 
-#: cogs/alliance/__init__.py:531 cogs/alliance/__init__.py:556
+#: cogs/alliance/__init__.py:540 cogs/alliance/__init__.py:565
 #, python-brace-format
 msgid "**{city}** is already under attack."
 msgstr ""
 
-#: cogs/alliance/__init__.py:552
+#: cogs/alliance/__init__.py:561
 msgid "The city is without defenses already."
 msgstr ""
 
-#: cogs/alliance/__init__.py:563
+#: cogs/alliance/__init__.py:572
 #, python-brace-format
 msgid ""
 "**{user}** wants to attack **{city}** with **{alliance_name}**'s alliance. "
 "React with ⚔ to join the attack!"
 msgstr ""
 
-#: cogs/alliance/__init__.py:592
+#: cogs/alliance/__init__.py:601
 #, python-brace-format
 msgid "You are not a member of **{alliance_name}'s alliance**, {user}."
 msgstr ""
 
-#: cogs/alliance/__init__.py:610
+#: cogs/alliance/__init__.py:619
 #, python-brace-format
 msgid "{user} has joined the attack."
 msgstr ""
 
-#: cogs/alliance/__init__.py:614
+#: cogs/alliance/__init__.py:623
 msgid "Noone joined."
 msgstr ""
 
-#: cogs/alliance/__init__.py:620
+#: cogs/alliance/__init__.py:629
 #, python-brace-format
 msgid "Attack on **{city}** starting with **{amount}** attackers!"
 msgstr ""
 
-#: cogs/alliance/__init__.py:639 cogs/alliance/__init__.py:659
-#: cogs/alliance/__init__.py:693 cogs/alliance/__init__.py:704
+#: cogs/alliance/__init__.py:648 cogs/alliance/__init__.py:668
+#: cogs/alliance/__init__.py:702 cogs/alliance/__init__.py:713
 msgid "Alliance Wars"
 msgstr ""
 
-#: cogs/alliance/__init__.py:641
+#: cogs/alliance/__init__.py:650
 #, python-brace-format
 msgid "**{alliance_name}** destroyed a {defense} in {city}!"
 msgstr ""
 
-#: cogs/alliance/__init__.py:661
+#: cogs/alliance/__init__.py:670
 #, python-brace-format
 msgid ""
 "**{alliance_name}** hit a {defense} in {city} for {damage} damage! (Now {hp} "
 "HP)"
 msgstr ""
 
-#: cogs/alliance/__init__.py:694
+#: cogs/alliance/__init__.py:703
 #, python-brace-format
 msgid "**{user}** got killed in {city}!"
 msgstr ""
 
-#: cogs/alliance/__init__.py:706
+#: cogs/alliance/__init__.py:715
 #, python-brace-format
 msgid "**{user}** got hit in {city} for {damage} damage! (Now {hp} HP)"
 msgstr ""
 
-#: cogs/alliance/__init__.py:726
+#: cogs/alliance/__init__.py:735
 #, python-brace-format
 msgid "**{alliance_name}** destroyed defenses in **{city}**!"
 msgstr ""
 
-#: cogs/alliance/__init__.py:736
+#: cogs/alliance/__init__.py:745
 #, python-brace-format
 msgid "**{alliance_name}** failed to destroy defenses in **{city}**!"
 msgstr ""
@@ -6666,6 +6691,27 @@ msgstr "Y0u f0und 4 7r345ur3 w17h {emote} 1n51d3!"
 #: utils/castle.py:269
 msgid "You have reached the exit!"
 msgstr "Y0u h4v3 r34ch3d 7h3 3x17!"
+
+#~ msgid ""
+#~ "The tank class. Charge into battle with additional defense!\n"
+#~ "+1 defense per evolution added onto your shield."
+#~ msgstr ""
+#~ "7h3 74nk cl455. Ch4r63 1n70 b477l3 w17h 4dd1710n4l d3f3n53!\n"
+#~ "+1 d3f3n53 p3r 3v0lu710n 4dd3d 0n70 y0ur 5h13ld."
+
+#~ msgid ""
+#~ "Utilise powerful magic for stronger attacks.\n"
+#~ "+1 damage per evolution added onto your sword."
+#~ msgstr ""
+#~ "U71l153 p0w3rful m461c f0r 57r0n63r 4774ck5.\n"
+#~ "+1 d4m463 p3r 3v0lu710n 4dd3d 0n70 y0ur 5w0rd."
+
+#~ msgid ""
+#~ "Absorb the appreciation of the devs into your soul to power up.\n"
+#~ "+1 damage and defense per evolution added onto your items."
+#~ msgstr ""
+#~ "4b50rb 7h3 4ppr3c14710n 0f 7h3 d3v5 1n70 y0ur 50ul 70 p0w3r up.\n"
+#~ "+1 d4m463 4nd d3f3n53 p3r 3v0lu710n 4dd3d 0n70 y0ur 173m5."
 
 #, python-brace-format
 #~ msgid "You stole **${stolen}** from **{user}**."
@@ -6681,16 +6727,6 @@ msgstr "Y0u h4v3 r34ch3d 7h3 3x17!"
 #, python-brace-format
 #~ msgid "{crates} crates"
 #~ msgstr "{crates} cr4735"
-
-#, python-brace-format
-#~ msgid ""
-#~ "Did you ever want to join together with other players to defeat the "
-#~ "dragon that roams this land? Raids got you covered!\n"
-#~ "Join the support server (`{prefix}support`) for more information."
-#~ msgstr ""
-#~ "D1d y0u 3v3r w4n7 70 j01n 70637h3r w17h 07h3r pl4y3r5 70 d3f347 7h3 "
-#~ "dr460n 7h47 r04m5 7h15 l4nd? R41d5 607 y0u c0v3r3d!\n"
-#~ "J01n 7h3 5upp0r7 53rv3r (`{prefix}support`) f0r m0r3 1nf0rm4710n."
 
 #~ msgid "The dealer got a blackjack. You lost."
 #~ msgstr "7h3 d34l3r 607 4 bl4ckj4ck. Y0u l057."
