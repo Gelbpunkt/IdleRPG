@@ -465,7 +465,7 @@ class Gambling(commands.Cog):
             )
             if maximum >= 100:
                 await self.bot.public_log(
-                    f"**{ctx.author}** won **${money * (maximum - 1)}** while betting with `{maximum}`. ({round(1/maximum, 2)}% chance)"
+                    f"**{ctx.author}** won **${money * (maximum - 1)}** while betting with `{maximum}`. ({round(100/maximum, 2)}% chance)"
                 )
         else:
             await self.bot.pool.execute(
