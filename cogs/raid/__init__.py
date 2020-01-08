@@ -1908,10 +1908,10 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
             if event == "life":
                 em = discord.Embed(
                     title="Choice: Life!",
-                    description=f"{target} survived to this round!",
+                    description=f"{target} survived this round!",
                     colour=0xFFB900,
                 )
-            elif event == "death":
+                else:
                 em = discord.Embed(
                     title="Choice: Death!",
                     description=f"{target} died!",
