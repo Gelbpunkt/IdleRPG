@@ -439,7 +439,7 @@ class Gambling(commands.Cog):
         money: IntFromTo(0, 100_000) = 0,
     ):
         _(
-            """Bet on the outcome of a dice roll with [maximum] sides. [tip] specifies the side you bet on. You will win [maximum - 1] * [money] money if you are right and loose [money] if you are wrong."""
+            """Bet on the outcome of a dice roll with [maximum] sides. [tip] specifies the side you bet on. You will win [maximum - 1] * [money] money if you are right and lose [money] if you are wrong."""
         )
         if tip > maximum:
             return await ctx.send(
