@@ -110,6 +110,12 @@ class Patreon(commands.Cog):
                         itemid=itemid
                     )
                 )
+
+            if item["type"] == new_type:
+                return await ctx.send(
+                    _("The item is already a {item_type}.").format(item_type=new_type)
+                )
+
             await conn.execute(
                 'UPDATE allitems SET "type"=$1, "original_type"=CASE WHEN "original_type" IS NULL THEN "type" ELSE "original_type" END, "damage"=$2, "armor"=$3 WHERE "id"=$4;',
                 new_type,
@@ -118,7 +124,7 @@ class Patreon(commands.Cog):
                 itemid,
             )
             await conn.execute(
-                'UPDATE inventory SET "equipped"=$1 WHERE "id"=$2;', False, itemid
+                'UPDATE inventory SET "equipped"=$1 WHERE "item"=$2;', False, itemid
             )
         await ctx.send(
             _("The item with the ID `{itemid}` is now a `{itemtype}`.").format(
