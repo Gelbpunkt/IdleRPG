@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 4.3.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-01-10 05:46-0800\n"
+"POT-Creation-Date: 2020-01-10 10:14-0800\n"
 "PO-Revision-Date: 2020-01-10 08:37+0100\n"
 "Last-Translator: Naya \"Nyathaleen\" Aldaine\n"
 "Language-Team: \n"
@@ -5127,13 +5127,11 @@ msgstr "Visar ditt guildäventyr."
 #: cogs/guild/__init__.py:1073
 #, python-brace-format
 msgid ""
-"Your guild isn't on an adventure yet. Ask your guild leader to use `{prefix}"
+"Your guild isn't on an adventure yet. Ask your guild officer to use `{prefix}"
 "guild adventure` to start one"
 msgstr ""
-"Din guild är inte på ett äventyr än. Be din guildledare att använda `{prefix}"
-"guild adventure` för att starta ett"
 
-#: cogs/guild/__init__.py:1088
+#: cogs/guild/__init__.py:1089
 #, python-brace-format
 msgid ""
 "Your guild has completed an adventure of difficulty `{difficulty}` and **"
@@ -5142,7 +5140,14 @@ msgstr ""
 "Din guild har avslutat ett äventyr med svårigheten `{difficulty}` och **"
 "${gold}** har lagts till i banken."
 
-#: cogs/guild/__init__.py:1098
+#: cogs/guild/__init__.py:1099
+#, python-brace-format
+msgid ""
+"Your guild has completed an adventure of difficulty `{difficulty}`, ask a "
+"guild officer to check their status."
+msgstr ""
+
+#: cogs/guild/__init__.py:1105
 #, python-brace-format
 msgid ""
 "Your guild is currently in an adventure with difficulty `{difficulty}`.\n"
@@ -6856,6 +6861,14 @@ msgstr "Du hittade en skatt med {emote} i!"
 #: utils/castle.py:269
 msgid "You have reached the exit!"
 msgstr "Du har nått utgången!"
+
+#, python-brace-format
+#~ msgid ""
+#~ "Your guild isn't on an adventure yet. Ask your guild leader to use "
+#~ "`{prefix}guild adventure` to start one"
+#~ msgstr ""
+#~ "Din guild är inte på ett äventyr än. Be din guildledare att använda "
+#~ "`{prefix}guild adventure` för att starta ett"
 
 #~ msgid ""
 #~ "Bet on the outcome of a dice roll with [maximum] sides. [tip] specifies "

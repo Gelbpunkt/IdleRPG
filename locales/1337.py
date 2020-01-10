@@ -12,7 +12,7 @@ empty = input("Is the msgstr empty? (y/n) ")
 out = []
 is_in_msgstr = False
 is_in_b = False
-is_in_c = True
+is_in_c = False
 buf = ""
 mapping = {"a": "4", "e": "3", "g": "6", "i": "1", "o": "0", "s": "5", "t": "7"}
 for no, line in enumerate(cont):
@@ -69,6 +69,7 @@ for no, line in enumerate(cont):
                     else:
                         new_line = f"{new_line}{i}"
                 line = new_line
+                print(line)
         out.append(f"{prefix} {line}")
 
 

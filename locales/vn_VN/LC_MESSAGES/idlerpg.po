@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-01-10 05:46-0800\n"
+"POT-Creation-Date: 2020-01-10 10:14-0800\n"
 "PO-Revision-Date: 2019-11-16 19:06+0700\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -5087,13 +5087,11 @@ msgstr "Xem cuộc phiêu lưu bang hội của bạn."
 #: cogs/guild/__init__.py:1073
 #, python-brace-format
 msgid ""
-"Your guild isn't on an adventure yet. Ask your guild leader to use `{prefix}"
+"Your guild isn't on an adventure yet. Ask your guild officer to use `{prefix}"
 "guild adventure` to start one"
 msgstr ""
-"Bang hội của bạn chưa vào một cuộc phiêu lưu nào. Yêu cầu lãnh đạo bang hội "
-"của bạn sử dung `{prefix}guild adventure` để bắt đầu một cái"
 
-#: cogs/guild/__init__.py:1088
+#: cogs/guild/__init__.py:1089
 #, python-brace-format
 msgid ""
 "Your guild has completed an adventure of difficulty `{difficulty}` and **"
@@ -5102,7 +5100,14 @@ msgstr ""
 "Bang hội của bạn đã hoàn thành một cuộc phiêu lưu với độ khó `{difficulty}` "
 "và **${gold}** đã được thêm vào ngân quỹ bang hội."
 
-#: cogs/guild/__init__.py:1098
+#: cogs/guild/__init__.py:1099
+#, python-brace-format
+msgid ""
+"Your guild has completed an adventure of difficulty `{difficulty}`, ask a "
+"guild officer to check their status."
+msgstr ""
+
+#: cogs/guild/__init__.py:1105
 #, python-brace-format
 msgid ""
 "Your guild is currently in an adventure with difficulty `{difficulty}`.\n"
@@ -6800,6 +6805,14 @@ msgstr "Bạn đã tìm thấy một kho báu với {emote} bên trong!"
 #: utils/castle.py:269
 msgid "You have reached the exit!"
 msgstr "Bạn đã tìm được lối ra!"
+
+#, python-brace-format
+#~ msgid ""
+#~ "Your guild isn't on an adventure yet. Ask your guild leader to use "
+#~ "`{prefix}guild adventure` to start one"
+#~ msgstr ""
+#~ "Bang hội của bạn chưa vào một cuộc phiêu lưu nào. Yêu cầu lãnh đạo bang "
+#~ "hội của bạn sử dung `{prefix}guild adventure` để bắt đầu một cái"
 
 #~ msgid ""
 #~ "Bet on the outcome of a dice roll with [maximum] sides. [tip] specifies "

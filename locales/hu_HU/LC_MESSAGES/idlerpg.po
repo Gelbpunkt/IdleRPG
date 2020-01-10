@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-01-10 05:46-0800\n"
+"POT-Creation-Date: 2020-01-10 10:14-0800\n"
 "PO-Revision-Date: 2019-12-27 14:20+0100\n"
 "Last-Translator: Lilli\n"
 "Language-Team: \n"
@@ -5216,13 +5216,11 @@ msgstr "A céhed aktív kalandjának mutatása."
 #: cogs/guild/__init__.py:1073
 #, python-brace-format
 msgid ""
-"Your guild isn't on an adventure yet. Ask your guild leader to use `{prefix}"
+"Your guild isn't on an adventure yet. Ask your guild officer to use `{prefix}"
 "guild adventure` to start one"
 msgstr ""
-"A céh nem hirdetett még közös kalandot. Nyaggassad ezzel a céhmestert, aki a "
-"`{prefix}guild adventure` paranccsal tudja teljesíteni a kérést"
 
-#: cogs/guild/__init__.py:1088
+#: cogs/guild/__init__.py:1089
 #, python-brace-format
 msgid ""
 "Your guild has completed an adventure of difficulty `{difficulty}` and **"
@@ -5231,7 +5229,14 @@ msgstr ""
 "A céhed hatalmasat kalandozott a csapatépítőn. Ennyire volt brutális: "
 "`{difficulty}`, és ennyi kinccsel töltöttétek meg a kincstárat: **${gold}**. "
 
-#: cogs/guild/__init__.py:1098
+#: cogs/guild/__init__.py:1099
+#, python-brace-format
+msgid ""
+"Your guild has completed an adventure of difficulty `{difficulty}`, ask a "
+"guild officer to check their status."
+msgstr ""
+
+#: cogs/guild/__init__.py:1105
 #, python-brace-format
 msgid ""
 "Your guild is currently in an adventure with difficulty `{difficulty}`.\n"
@@ -7017,6 +7022,14 @@ msgstr "Találtál egy {emote} tartalmú kincsesládát!"
 #: utils/castle.py:269
 msgid "You have reached the exit!"
 msgstr "Elérted a kijáratot!"
+
+#, python-brace-format
+#~ msgid ""
+#~ "Your guild isn't on an adventure yet. Ask your guild leader to use "
+#~ "`{prefix}guild adventure` to start one"
+#~ msgstr ""
+#~ "A céh nem hirdetett még közös kalandot. Nyaggassad ezzel a céhmestert, "
+#~ "aki a `{prefix}guild adventure` paranccsal tudja teljesíteni a kérést"
 
 #~ msgid ""
 #~ "Bet on the outcome of a dice roll with [maximum] sides. [tip] specifies "
