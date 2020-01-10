@@ -1070,28 +1070,35 @@ Time it will take: **{time}**
         if not adventure:
             return await ctx.send(
                 _(
-                    "Your guild isn't on an adventure yet. Ask your guild leader to use `{prefix}guild adventure` to start one"
+                    "Your guild isn't on an adventure yet. Ask your guild officer to use `{prefix}guild adventure` to start one"
                 ).format(prefix=ctx.prefix)
             )
 
         if adventure[2]:
-            await self.bot.delete_guild_adventure(ctx.character_data["guild"])
-            gold = random.randint(adventure[0] * 20, adventure[0] * 50)
+            if ctx.character_data["guildrank"] in ["Leader", "Officer"]:
+                await self.bot.delete_guild_adventure(ctx.character_data["guild"])
+                gold = random.randint(adventure[0] * 20, adventure[0] * 50)
 
-            channel = await self.bot.pool.fetchval(
-                'UPDATE guild SET "money"="money"+$1 WHERE "id"=$2 RETURNING "channel";',
-                gold,
-                ctx.character_data["guild"],
-            )
-            await ctx.send(
-                _(
-                    "Your guild has completed an adventure of difficulty `{difficulty}` and **${gold}** has been added to the bank."
-                ).format(difficulty=adventure[0], gold=gold)
-            )
-            await self.bot.http.send_message(
-                channel,
-                f"**{ctx.author}** ended the guild adventure, reward was **${gold}**",
-            )
+                channel = await self.bot.pool.fetchval(
+                    'UPDATE guild SET "money"="money"+$1 WHERE "id"=$2 RETURNING "channel";',
+                    gold,
+                    ctx.character_data["guild"],
+                )
+                await ctx.send(
+                    _(
+                        "Your guild has completed an adventure of difficulty `{difficulty}` and **${gold}** has been added to the bank."
+                    ).format(difficulty=adventure[0], gold=gold)
+                )
+                await self.bot.http.send_message(
+                    channel,
+                    f"**{ctx.author}** ended the guild adventure, reward was **${gold}**",
+                )
+            else:
+                await ctx.send(
+                    _(
+                        "Your guild has completed an adventure of difficulty `{difficulty}`, ask a guild officer to check their status."
+                    ).format(difficulty=adventure[0])
+                )
         else:
             await ctx.send(
                 _(
