@@ -484,7 +484,7 @@ class Marriage(commands.Cog):
                     _("You heard a landmine going off nearby..."),
                     _("They have been abducted by aliens!"),
                     _("The Catholic Church got them..."),
-                    _("Starved after becoming a communist."),
+                    _("They starved after becoming a communist."),
                 ]
             )
             await self.bot.pool.execute(
