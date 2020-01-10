@@ -69,7 +69,6 @@ for no, line in enumerate(cont):
                     else:
                         new_line = f"{new_line}{i}"
                 line = new_line
-                print(line)
         out.append(f"{prefix} {line}")
 
 
