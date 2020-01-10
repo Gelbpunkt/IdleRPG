@@ -69,7 +69,7 @@ for no, line in enumerate(cont):
                     else:
                         new_line = f"{new_line}{i}"
                 line = new_line
-        out.append(f"{prefix} {line}")
+        out.append(f"{prefix + ' ' if prefix else ''}{line}")
 
 
 out = "\n".join(out).replace("\n\n\n", "\n\n")
