@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-01-08 05:32-0800\n"
+"POT-Creation-Date: 2020-01-10 05:46-0800\n"
 "PO-Revision-Date: 2019-08-23 21:55+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -1330,7 +1330,7 @@ msgstr ""
 msgid "This is not a valid image file."
 msgstr ""
 
-#: cogs/miscellaneous/__init__.py:153 cogs/patreon/__init__.py:206
+#: cogs/miscellaneous/__init__.py:153 cogs/patreon/__init__.py:212
 msgid "Error when uploading to Imgur."
 msgstr "B31m Upl04d zu 1m6ur 64b 35 31n Pr0bl3m."
 
@@ -1876,11 +1876,11 @@ msgid ""
 "IdleRPG is a global bot, your characters are valid everywhere"
 msgstr ""
 
-#: cogs/raid/__init__.py:1919
+#: cogs/raid/__init__.py:1948
 msgid "Upgrade your raid damage or defense multiplier."
 msgstr "V3rb3553r7 d31n3n R41d-5ch4d3n5 0d3r -V3r731d16un65-V3rv13lf4ch3r."
 
-#: cogs/raid/__init__.py:1922
+#: cogs/raid/__init__.py:1951
 #, python-brace-format
 msgid ""
 "Use `{prefix}increase damage/defense` to upgrade your raid damage/defense "
@@ -1889,11 +1889,11 @@ msgstr ""
 "Nu7z3 `{prefix}increase damage/defense` um d31n3n R41d-5ch4d3n5/"
 "V3r731d16un65-V3rv13lf4ch3r um 10% zu v3rb3553rn."
 
-#: cogs/raid/__init__.py:1930
+#: cogs/raid/__init__.py:1959
 msgid "Increase your raid damage."
 msgstr "3rhöh3 d31n3n R41d-5ch4d3n."
 
-#: cogs/raid/__init__.py:1936
+#: cogs/raid/__init__.py:1965
 #, python-brace-format
 msgid ""
 "Upgrading your weapon attack raid multiplier to {newlvl} costs **${price}**, "
@@ -1902,7 +1902,7 @@ msgstr ""
 "D31n3n W4ff3n5ch4d3n5-R41d-V3rv13lf4ch3r 4uf {newlvl} zu 3rhöh3n k05737 **"
 "${price}**, du h457 n1ch7 63nu6."
 
-#: cogs/raid/__init__.py:1947
+#: cogs/raid/__init__.py:1976
 #, python-brace-format
 msgid ""
 "You upgraded your weapon attack raid multiplier to {newlvl} for **${price}**."
@@ -1910,11 +1910,11 @@ msgstr ""
 "Du h457 d31n3n W4ff3n5ch4d3n5v3rv13lf4ch3r für R41d5 für **${price}** 4uf "
 "{newlvl} 3rhöh7."
 
-#: cogs/raid/__init__.py:1955
+#: cogs/raid/__init__.py:1984
 msgid "Increase your raid defense."
 msgstr "3rhöh3 d31n3 5ch1ld-V3r731d16un6."
 
-#: cogs/raid/__init__.py:1961
+#: cogs/raid/__init__.py:1990
 #, python-brace-format
 msgid ""
 "Upgrading your shield defense raid multiplier to {newlvl} costs **${price}"
@@ -1923,7 +1923,7 @@ msgstr ""
 "D31n3n 5ch1ld-V3r731d16un65-V3rv13lf4ch3r 4uf {newlvl} zu 3rhöh3n k05737 **"
 "${price}**, du h457 n1ch7 63nu6."
 
-#: cogs/raid/__init__.py:1972
+#: cogs/raid/__init__.py:2001
 #, python-brace-format
 msgid ""
 "You upgraded your shield defense raid multiplier to {newlvl} for **${price}"
@@ -1932,11 +1932,11 @@ msgstr ""
 "Du h457 d31n3n 5ch1ldv3r731d16un65v3rv13lf4ch3r für R41d5 für **${price}** "
 "4uf {newlvl} 3rhöh7."
 
-#: cogs/raid/__init__.py:1980
+#: cogs/raid/__init__.py:2009
 msgid "View your raid stats."
 msgstr "513h d31n3 R41d-V3rb3553run63n 4n."
 
-#: cogs/raid/__init__.py:1996
+#: cogs/raid/__init__.py:2025
 #, python-brace-format
 msgid ""
 "**{author}'s raid multipliers**\n"
@@ -1947,11 +1947,11 @@ msgstr ""
 "5ch4d3n: x{atk} (3rhöh3n: ${atkp})\n"
 "V3r731d16un6: x{deff} (3rhöh3n: ${deffp})"
 
-#: cogs/raid/__init__.py:2005
+#: cogs/raid/__init__.py:2034
 msgid "Informs you about joining raids."
 msgstr "1nf0rm13r7 d1ch üb3r d45 B317r373n b31 R41d5."
 
-#: cogs/raid/__init__.py:2008
+#: cogs/raid/__init__.py:2037
 #, python-brace-format
 msgid ""
 "Did you ever want to join together with other players to defeat the dragon "
@@ -2245,29 +2245,34 @@ msgstr ""
 msgid "Invalid type. Try Sword or Shield."
 msgstr ""
 
-#: cogs/patreon/__init__.py:124
+#: cogs/patreon/__init__.py:116
+#, python-brace-format
+msgid "The item is already a {item_type}."
+msgstr ""
+
+#: cogs/patreon/__init__.py:130
 #, python-brace-format
 msgid "The item with the ID `{itemid}` is now a `{itemtype}`."
 msgstr ""
 
-#: cogs/patreon/__init__.py:135
+#: cogs/patreon/__init__.py:141
 msgid "[Patreon Only] Receive a daily booster."
 msgstr ""
 
-#: cogs/patreon/__init__.py:141
+#: cogs/patreon/__init__.py:147
 #, python-brace-format
 msgid "You received a daily {type_} booster!"
 msgstr ""
 
-#: cogs/patreon/__init__.py:147
+#: cogs/patreon/__init__.py:153
 msgid "[Patreon Only] Changes your profile background."
 msgstr "[P47r30n-r353rv13r7] Änd3r7 d3n H1n73r6rund d31n35 Pr0f1l5."
 
-#: cogs/patreon/__init__.py:159
+#: cogs/patreon/__init__.py:165
 msgid "That is not a valid premade background."
 msgstr "D45 157 k31n 6ül7163r v0r63f3r71673r H1n73r6rund."
 
-#: cogs/patreon/__init__.py:163 cogs/patreon/__init__.py:191
+#: cogs/patreon/__init__.py:169 cogs/patreon/__init__.py:197
 #: cogs/classes/__init__.py:499 cogs/guild/__init__.py:505
 msgid ""
 "I couldn't read that URL. Does it start with `http://` or `https://` and is "
@@ -2276,11 +2281,11 @@ msgstr ""
 "1ch k0nn73 d3n L1nk n1ch7 l353n. 63h3 51ch3r, d455 h3r m17 `h77p://` 0d3r "
 "`h77p5://` 574r737, und m17 `.jp6` 0d3r `.pn6` 3nd37."
 
-#: cogs/patreon/__init__.py:175
+#: cogs/patreon/__init__.py:181
 msgid "The URL is too long."
 msgstr "D3r L1nk 157 zu l4n6."
 
-#: cogs/patreon/__init__.py:177
+#: cogs/patreon/__init__.py:183
 #, python-brace-format
 msgid ""
 "Your new profile picture is now:\n"
@@ -2289,15 +2294,15 @@ msgstr ""
 "D31n n3u3r Pr0f1l-H1n73r6rund 157 j37z7:\n"
 "{url}"
 
-#: cogs/patreon/__init__.py:179
+#: cogs/patreon/__init__.py:185
 msgid "Your profile picture has been reset."
 msgstr "D31n H1n73r6rundb1ld wurd3 zurück63537z7."
 
-#: cogs/patreon/__init__.py:185
+#: cogs/patreon/__init__.py:191
 msgid "[Patreon Only] Generates a profile background based on an image."
 msgstr ""
 
-#: cogs/patreon/__init__.py:208
+#: cogs/patreon/__init__.py:214
 #, python-brace-format
 msgid ""
 "Imgur Link for `{prefix}background`\n"
@@ -2306,26 +2311,26 @@ msgstr ""
 "1m6ur L1nk für `{prefix}background`\n"
 "<{link}>"
 
-#: cogs/patreon/__init__.py:219
+#: cogs/patreon/__init__.py:225
 msgid "[Patreon Only] Update your guild member limit and bank size."
 msgstr ""
 
-#: cogs/patreon/__init__.py:244
+#: cogs/patreon/__init__.py:250
 msgid "Your guild was updated."
 msgstr ""
 
-#: cogs/patreon/__init__.py:250
+#: cogs/patreon/__init__.py:256
 msgid "Update your background to one from the events."
 msgstr "Änd3r3 d31n3n Pr0f1l-H1n73r6rund zu 31n3m d3r 3v3n75."
 
-#: cogs/patreon/__init__.py:258
+#: cogs/patreon/__init__.py:264
 msgid ""
 "You do not have an eventbackground. They can be acquired on seasonal events."
 msgstr ""
 "Du h457 k31n3n 3v3n7-H1n73r6rund. 513 könn3n 1n 54150n4l3n 3v3n75, z.B. "
 "W31hn4ch73n 63w0nn3n w3rd3n."
 
-#: cogs/patreon/__init__.py:266
+#: cogs/patreon/__init__.py:272
 #, python-brace-format
 msgid ""
 "The background number {number} is not valid, you only have {total} available."
@@ -2333,7 +2338,7 @@ msgstr ""
 "D13 H1n73r6rund-Numm3r `{number}` 157 un6ül716, Du h457 bl0ß {total} "
 "3rhäl7l1ch."
 
-#: cogs/patreon/__init__.py:272
+#: cogs/patreon/__init__.py:278
 msgid "Background updated!"
 msgstr "H1n73r6rund 63änd3r7!"
 
@@ -3321,11 +3326,8 @@ msgstr "{result[1]} 35 157 **{result[0]}**! Du v3rl13r57 **${amount}**!"
 msgid ""
 "Bet on the outcome of a dice roll with [maximum] sides. [tip] specifies the "
 "side you bet on. You will win [maximum - 1] * [money] money if you are right "
-"and loose [money] if you are wrong."
+"and lose [money] if you are wrong."
 msgstr ""
-"71pp3 4uf d45 3r63bn15 31n35 Würf3lwurf35 m17 [m4x1mum] 53173n. [71p] 157 "
-"d13 53173, 4uf d13 du 537z7. Du w1r57 [m4x1mum - 1] * [m0n3y] 63ld 63w1nn3n, "
-"w3nn du r1ch716 l13657, und [m0n3y] v3rl13r3n, w3nn du f4l5ch l13657."
 
 #: cogs/gambling/__init__.py:446
 #, python-brace-format
@@ -6693,6 +6695,16 @@ msgstr "Du h457 31n3n 5ch47z m17 {emote} 1nn3ndr1n 63fund3n!"
 #: utils/castle.py:269
 msgid "You have reached the exit!"
 msgstr "Du h457 d3n 4u564n6 3rr31ch7!"
+
+#~ msgid ""
+#~ "Bet on the outcome of a dice roll with [maximum] sides. [tip] specifies "
+#~ "the side you bet on. You will win [maximum - 1] * [money] money if you "
+#~ "are right and loose [money] if you are wrong."
+#~ msgstr ""
+#~ "71pp3 4uf d45 3r63bn15 31n35 Würf3lwurf35 m17 [m4x1mum] 53173n. [71p] 157 "
+#~ "d13 53173, 4uf d13 du 537z7. Du w1r57 [m4x1mum - 1] * [m0n3y] 63ld "
+#~ "63w1nn3n, w3nn du r1ch716 l13657, und [m0n3y] v3rl13r3n, w3nn du f4l5ch "
+#~ "l13657."
 
 #~ msgid ""
 #~ "The tank class. Charge into battle with additional defense!\n"

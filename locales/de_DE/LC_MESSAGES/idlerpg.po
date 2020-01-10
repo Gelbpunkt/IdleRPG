@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 4.3.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-01-08 05:32-0800\n"
+"POT-Creation-Date: 2020-01-10 05:46-0800\n"
 "PO-Revision-Date: 2019-12-30 21:16+0100\n"
 "Last-Translator: Chippy\n"
 "Language-Team: Fanta Claus, Chippy\n"
@@ -1351,7 +1351,7 @@ msgstr "Bitte nutze nicht mehrere Anhänge auf einmal."
 msgid "This is not a valid image file."
 msgstr "Das ist keine gültige Bild-Datei."
 
-#: cogs/miscellaneous/__init__.py:153 cogs/patreon/__init__.py:206
+#: cogs/miscellaneous/__init__.py:153 cogs/patreon/__init__.py:212
 msgid "Error when uploading to Imgur."
 msgstr "Beim Upload zu Imgur gab es ein Problem."
 
@@ -1932,11 +1932,11 @@ msgid ""
 "IdleRPG is a global bot, your characters are valid everywhere"
 msgstr ""
 
-#: cogs/raid/__init__.py:1919
+#: cogs/raid/__init__.py:1948
 msgid "Upgrade your raid damage or defense multiplier."
 msgstr "Verbessert deinen Raid-Schadens oder -Verteidigungs-Vervielfacher."
 
-#: cogs/raid/__init__.py:1922
+#: cogs/raid/__init__.py:1951
 #, python-brace-format
 msgid ""
 "Use `{prefix}increase damage/defense` to upgrade your raid damage/defense "
@@ -1945,11 +1945,11 @@ msgstr ""
 "Nutze `{prefix}increase damage/defense` um deinen Raid-Schadens/"
 "Verteidigungs-Vervielfacher um 10% zu verbessern."
 
-#: cogs/raid/__init__.py:1930
+#: cogs/raid/__init__.py:1959
 msgid "Increase your raid damage."
 msgstr "Erhöhe deinen Raid-Schaden."
 
-#: cogs/raid/__init__.py:1936
+#: cogs/raid/__init__.py:1965
 #, python-brace-format
 msgid ""
 "Upgrading your weapon attack raid multiplier to {newlvl} costs **${price}**, "
@@ -1958,7 +1958,7 @@ msgstr ""
 "Deinen Waffenschadens-Raid-Vervielfacher auf {newlvl} zu erhöhen kostet **"
 "${price}**, du hast nicht genug."
 
-#: cogs/raid/__init__.py:1947
+#: cogs/raid/__init__.py:1976
 #, python-brace-format
 msgid ""
 "You upgraded your weapon attack raid multiplier to {newlvl} for **${price}**."
@@ -1966,11 +1966,11 @@ msgstr ""
 "Du hast deinen Waffenschadensvervielfacher für Raids für **${price}** auf "
 "{newlvl} erhöht."
 
-#: cogs/raid/__init__.py:1955
+#: cogs/raid/__init__.py:1984
 msgid "Increase your raid defense."
 msgstr "Erhöhe deine Schild-Verteidigung."
 
-#: cogs/raid/__init__.py:1961
+#: cogs/raid/__init__.py:1990
 #, python-brace-format
 msgid ""
 "Upgrading your shield defense raid multiplier to {newlvl} costs **${price}"
@@ -1979,7 +1979,7 @@ msgstr ""
 "Deinen Schild-Verteidigungs-Vervielfacher auf {newlvl} zu erhöhen kostet **"
 "${price}**, du hast nicht genug."
 
-#: cogs/raid/__init__.py:1972
+#: cogs/raid/__init__.py:2001
 #, python-brace-format
 msgid ""
 "You upgraded your shield defense raid multiplier to {newlvl} for **${price}"
@@ -1988,11 +1988,11 @@ msgstr ""
 "Du hast deinen Schildverteidigungsvervielfacher für Raids für **${price}** "
 "auf {newlvl} erhöht."
 
-#: cogs/raid/__init__.py:1980
+#: cogs/raid/__init__.py:2009
 msgid "View your raid stats."
 msgstr "Sieh deine Raid-Verbesserungen an."
 
-#: cogs/raid/__init__.py:1996
+#: cogs/raid/__init__.py:2025
 #, python-brace-format
 msgid ""
 "**{author}'s raid multipliers**\n"
@@ -2003,11 +2003,11 @@ msgstr ""
 "Schaden: x{atk} (Erhöhen: ${atkp})\n"
 "Verteidigung: x{deff} (Erhöhen: ${deffp})"
 
-#: cogs/raid/__init__.py:2005
+#: cogs/raid/__init__.py:2034
 msgid "Informs you about joining raids."
 msgstr "Informiert dich über das Beitreten bei Raids."
 
-#: cogs/raid/__init__.py:2008
+#: cogs/raid/__init__.py:2037
 #, python-brace-format
 msgid ""
 "Did you ever want to join together with other players to defeat the dragon "
@@ -2302,29 +2302,34 @@ msgstr "[Patreon-reserviert] Ändert den Typ eines Items."
 msgid "Invalid type. Try Sword or Shield."
 msgstr "Ungültiger Typ. Nutze Sword oder Shield."
 
-#: cogs/patreon/__init__.py:124
+#: cogs/patreon/__init__.py:116
+#, python-brace-format
+msgid "The item is already a {item_type}."
+msgstr ""
+
+#: cogs/patreon/__init__.py:130
 #, python-brace-format
 msgid "The item with the ID `{itemid}` is now a `{itemtype}`."
 msgstr "Das Item mit der ID `{itemid}` ist jetzt ein `{itemtype}`."
 
-#: cogs/patreon/__init__.py:135
+#: cogs/patreon/__init__.py:141
 msgid "[Patreon Only] Receive a daily booster."
 msgstr "[Patreon-reserviert] Erhalte einmal täglich einen Booster."
 
-#: cogs/patreon/__init__.py:141
+#: cogs/patreon/__init__.py:147
 #, python-brace-format
 msgid "You received a daily {type_} booster!"
 msgstr "Du hast einen {type_} Booster erhalten!"
 
-#: cogs/patreon/__init__.py:147
+#: cogs/patreon/__init__.py:153
 msgid "[Patreon Only] Changes your profile background."
 msgstr "[Patreon-reserviert] Ändert den Hintergrund deines Profils."
 
-#: cogs/patreon/__init__.py:159
+#: cogs/patreon/__init__.py:165
 msgid "That is not a valid premade background."
 msgstr "Das ist kein gültiger vorgefertigter Hintergrund."
 
-#: cogs/patreon/__init__.py:163 cogs/patreon/__init__.py:191
+#: cogs/patreon/__init__.py:169 cogs/patreon/__init__.py:197
 #: cogs/classes/__init__.py:499 cogs/guild/__init__.py:505
 msgid ""
 "I couldn't read that URL. Does it start with `http://` or `https://` and is "
@@ -2333,11 +2338,11 @@ msgstr ""
 "Ich konnte den Link nicht lesen. Gehe sicher, dass her mit `http://` oder "
 "`https://` startet, und mit `.jpg` oder `.png` endet."
 
-#: cogs/patreon/__init__.py:175
+#: cogs/patreon/__init__.py:181
 msgid "The URL is too long."
 msgstr "Der Link ist zu lang."
 
-#: cogs/patreon/__init__.py:177
+#: cogs/patreon/__init__.py:183
 #, python-brace-format
 msgid ""
 "Your new profile picture is now:\n"
@@ -2346,17 +2351,17 @@ msgstr ""
 "Dein neuer Profil-Hintergrund ist jetzt:\n"
 "{url}"
 
-#: cogs/patreon/__init__.py:179
+#: cogs/patreon/__init__.py:185
 msgid "Your profile picture has been reset."
 msgstr "Dein Hintergrundbild wurde zurückgesetzt."
 
-#: cogs/patreon/__init__.py:185
+#: cogs/patreon/__init__.py:191
 msgid "[Patreon Only] Generates a profile background based on an image."
 msgstr ""
 "[Patreon-reserviert] Generiert einen Profil-Hintergrund basierend auf einem "
 "Bild."
 
-#: cogs/patreon/__init__.py:208
+#: cogs/patreon/__init__.py:214
 #, python-brace-format
 msgid ""
 "Imgur Link for `{prefix}background`\n"
@@ -2365,28 +2370,28 @@ msgstr ""
 "Imgur Link für `{prefix}background`\n"
 "<{link}>"
 
-#: cogs/patreon/__init__.py:219
+#: cogs/patreon/__init__.py:225
 msgid "[Patreon Only] Update your guild member limit and bank size."
 msgstr ""
 "[Patreon-reserviert] Erweitere das Mitgliederlimit und die Größe deiner "
 "Gildenbank."
 
-#: cogs/patreon/__init__.py:244
+#: cogs/patreon/__init__.py:250
 msgid "Your guild was updated."
 msgstr "Deine Gilde wurde aktualisiert."
 
-#: cogs/patreon/__init__.py:250
+#: cogs/patreon/__init__.py:256
 msgid "Update your background to one from the events."
 msgstr "Ändere deinen Profil-Hintergrund zu einem der Events."
 
-#: cogs/patreon/__init__.py:258
+#: cogs/patreon/__init__.py:264
 msgid ""
 "You do not have an eventbackground. They can be acquired on seasonal events."
 msgstr ""
 "Du hast keinen Event-Hintergrund. Sie können in saisonalen Events, z.B. "
 "Weihnachten gewonnen werden."
 
-#: cogs/patreon/__init__.py:266
+#: cogs/patreon/__init__.py:272
 #, python-brace-format
 msgid ""
 "The background number {number} is not valid, you only have {total} available."
@@ -2394,7 +2399,7 @@ msgstr ""
 "Die Hintergrund-Nummer `{number}` ist ungültig, Du hast bloß {total} "
 "erhältlich."
 
-#: cogs/patreon/__init__.py:272
+#: cogs/patreon/__init__.py:278
 msgid "Background updated!"
 msgstr "Hintergrund geändert!"
 
@@ -3418,11 +3423,8 @@ msgstr "{result[1]} Es ist **{result[0]}**! Du verlierst **${amount}**!"
 msgid ""
 "Bet on the outcome of a dice roll with [maximum] sides. [tip] specifies the "
 "side you bet on. You will win [maximum - 1] * [money] money if you are right "
-"and loose [money] if you are wrong."
+"and lose [money] if you are wrong."
 msgstr ""
-"Tippe auf das Ergebnis eines Würfelwurfes mit [maximum] Seiten. [tip] ist "
-"die Seite, auf die du setzt. Du wirst [maximum - 1] * [money] Geld gewinnen, "
-"wenn du richtig liegst, und [money] verlieren, wenn du falsch liegst."
 
 #: cogs/gambling/__init__.py:446
 #, python-brace-format
@@ -6874,6 +6876,16 @@ msgstr "Du hast einen Schatz mit {emote} innendrin gefunden!"
 #: utils/castle.py:269
 msgid "You have reached the exit!"
 msgstr "Du hast den Ausgang erreicht!"
+
+#~ msgid ""
+#~ "Bet on the outcome of a dice roll with [maximum] sides. [tip] specifies "
+#~ "the side you bet on. You will win [maximum - 1] * [money] money if you "
+#~ "are right and loose [money] if you are wrong."
+#~ msgstr ""
+#~ "Tippe auf das Ergebnis eines Würfelwurfes mit [maximum] Seiten. [tip] ist "
+#~ "die Seite, auf die du setzt. Du wirst [maximum - 1] * [money] Geld "
+#~ "gewinnen, wenn du richtig liegst, und [money] verlieren, wenn du falsch "
+#~ "liegst."
 
 #, python-brace-format
 #~ msgid ""

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-01-08 05:32-0800\n"
+"POT-Creation-Date: 2020-01-10 05:46-0800\n"
 "PO-Revision-Date: 2019-12-30 12:01+0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -1344,7 +1344,7 @@ msgstr "Lütfen tek seferde sadece bir resim kullan."
 msgid "This is not a valid image file."
 msgstr "Bu geçerli bir resim dosyası değil."
 
-#: cogs/miscellaneous/__init__.py:153 cogs/patreon/__init__.py:206
+#: cogs/miscellaneous/__init__.py:153 cogs/patreon/__init__.py:212
 msgid "Error when uploading to Imgur."
 msgstr "Imgur'a yüklerken hata."
 
@@ -1927,11 +1927,11 @@ msgid ""
 "IdleRPG is a global bot, your characters are valid everywhere"
 msgstr ""
 
-#: cogs/raid/__init__.py:1919
+#: cogs/raid/__init__.py:1948
 msgid "Upgrade your raid damage or defense multiplier."
 msgstr "Baskın hasar ya da savunma çarpanını yükselt."
 
-#: cogs/raid/__init__.py:1922
+#: cogs/raid/__init__.py:1951
 #, python-brace-format
 msgid ""
 "Use `{prefix}increase damage/defense` to upgrade your raid damage/defense "
@@ -1940,11 +1940,11 @@ msgstr ""
 "Baskın hasar/savunma çarpanını %10 yükseltmek için `{prefix}increase damage/"
 "defense` kullan."
 
-#: cogs/raid/__init__.py:1930
+#: cogs/raid/__init__.py:1959
 msgid "Increase your raid damage."
 msgstr "Baskın hasarını arttır."
 
-#: cogs/raid/__init__.py:1936
+#: cogs/raid/__init__.py:1965
 #, python-brace-format
 msgid ""
 "Upgrading your weapon attack raid multiplier to {newlvl} costs **${price}**, "
@@ -1953,7 +1953,7 @@ msgstr ""
 "Silah saldırısı baskın çarpanını {newlvl}'a yükseltmek **${price}** ediyor, "
 "çok fakirsin."
 
-#: cogs/raid/__init__.py:1947
+#: cogs/raid/__init__.py:1976
 #, python-brace-format
 msgid ""
 "You upgraded your weapon attack raid multiplier to {newlvl} for **${price}**."
@@ -1961,11 +1961,11 @@ msgstr ""
 "Silah saldırısı baskın çarpanını **${price}** karşılığında {newlvl}'a "
 "yükselttin."
 
-#: cogs/raid/__init__.py:1955
+#: cogs/raid/__init__.py:1984
 msgid "Increase your raid defense."
 msgstr "Baskın savunmanı arttır."
 
-#: cogs/raid/__init__.py:1961
+#: cogs/raid/__init__.py:1990
 #, python-brace-format
 msgid ""
 "Upgrading your shield defense raid multiplier to {newlvl} costs **${price}"
@@ -1974,7 +1974,7 @@ msgstr ""
 "Kalkan savunması baskın çarpanını {newlvl}'a yükseltmek **${price}** ediyor, "
 "çok fakirsin."
 
-#: cogs/raid/__init__.py:1972
+#: cogs/raid/__init__.py:2001
 #, python-brace-format
 msgid ""
 "You upgraded your shield defense raid multiplier to {newlvl} for **${price}"
@@ -1983,11 +1983,11 @@ msgstr ""
 "Kalkan savunması baskın çarpanını **${price}** karşılığında {newlvl}'a "
 "yükselttin."
 
-#: cogs/raid/__init__.py:1980
+#: cogs/raid/__init__.py:2009
 msgid "View your raid stats."
 msgstr "Baskın istatistiklerine bak."
 
-#: cogs/raid/__init__.py:1996
+#: cogs/raid/__init__.py:2025
 #, python-brace-format
 msgid ""
 "**{author}'s raid multipliers**\n"
@@ -1998,11 +1998,11 @@ msgstr ""
 "Hasar Çarpanı: x{atk} (Yükseltmek: ${atkp})\n"
 "Savunma Çarpanı: x{deff} (Yükseltmek: ${deffp})"
 
-#: cogs/raid/__init__.py:2005
+#: cogs/raid/__init__.py:2034
 msgid "Informs you about joining raids."
 msgstr "Baskınlara katılma konusunda seni bilgilendirir."
 
-#: cogs/raid/__init__.py:2008
+#: cogs/raid/__init__.py:2037
 #, python-brace-format
 msgid ""
 "Did you ever want to join together with other players to defeat the dragon "
@@ -2295,29 +2295,34 @@ msgstr "[Patreon'a Özel] Bir eşyanın türünü değiştirir."
 msgid "Invalid type. Try Sword or Shield."
 msgstr "Geçersiz tür. Kılıç ya da Kalkan dene."
 
-#: cogs/patreon/__init__.py:124
+#: cogs/patreon/__init__.py:116
+#, python-brace-format
+msgid "The item is already a {item_type}."
+msgstr ""
+
+#: cogs/patreon/__init__.py:130
 #, python-brace-format
 msgid "The item with the ID `{itemid}` is now a `{itemtype}`."
 msgstr "ID'si `{itemid}` olan eşya artık bir `{itemtype}`."
 
-#: cogs/patreon/__init__.py:135
+#: cogs/patreon/__init__.py:141
 msgid "[Patreon Only] Receive a daily booster."
 msgstr "[Patreon'a Özel] Günlük güçlendirici al."
 
-#: cogs/patreon/__init__.py:141
+#: cogs/patreon/__init__.py:147
 #, python-brace-format
 msgid "You received a daily {type_} booster!"
 msgstr "Günlük {type_} güçlendirici aldın!"
 
-#: cogs/patreon/__init__.py:147
+#: cogs/patreon/__init__.py:153
 msgid "[Patreon Only] Changes your profile background."
 msgstr "[Patreon'a Özel] Profilinin arkaplanını değiştirir."
 
-#: cogs/patreon/__init__.py:159
+#: cogs/patreon/__init__.py:165
 msgid "That is not a valid premade background."
 msgstr "Bu geçerli bir önceden yapılmış arkaplan değil."
 
-#: cogs/patreon/__init__.py:163 cogs/patreon/__init__.py:191
+#: cogs/patreon/__init__.py:169 cogs/patreon/__init__.py:197
 #: cogs/classes/__init__.py:499 cogs/guild/__init__.py:505
 msgid ""
 "I couldn't read that URL. Does it start with `http://` or `https://` and is "
@@ -2326,11 +2331,11 @@ msgstr ""
 "URL'yi okuyamadım. `http://` ya da`https://` ile mi başlıyor ve png ya da "
 "jpeg mi?"
 
-#: cogs/patreon/__init__.py:175
+#: cogs/patreon/__init__.py:181
 msgid "The URL is too long."
 msgstr "URL çok uzun."
 
-#: cogs/patreon/__init__.py:177
+#: cogs/patreon/__init__.py:183
 #, python-brace-format
 msgid ""
 "Your new profile picture is now:\n"
@@ -2339,15 +2344,15 @@ msgstr ""
 "Yeni profil resmin artık:\n"
 "{url}"
 
-#: cogs/patreon/__init__.py:179
+#: cogs/patreon/__init__.py:185
 msgid "Your profile picture has been reset."
 msgstr "Profil resmin sıfırlandı."
 
-#: cogs/patreon/__init__.py:185
+#: cogs/patreon/__init__.py:191
 msgid "[Patreon Only] Generates a profile background based on an image."
 msgstr "[Patreon'a Özel] Resme dayalı bir profil arka planı oluşturur."
 
-#: cogs/patreon/__init__.py:208
+#: cogs/patreon/__init__.py:214
 #, python-brace-format
 msgid ""
 "Imgur Link for `{prefix}background`\n"
@@ -2356,30 +2361,30 @@ msgstr ""
 "`{prefix}background` için Imgur bağlantısı\n"
 "<{link}>"
 
-#: cogs/patreon/__init__.py:219
+#: cogs/patreon/__init__.py:225
 msgid "[Patreon Only] Update your guild member limit and bank size."
 msgstr "[Patreon'a Özel] Lonca üye sınırını ve banka boyutunu güncelle."
 
-#: cogs/patreon/__init__.py:244
+#: cogs/patreon/__init__.py:250
 msgid "Your guild was updated."
 msgstr "Loncan güncellendi."
 
-#: cogs/patreon/__init__.py:250
+#: cogs/patreon/__init__.py:256
 msgid "Update your background to one from the events."
 msgstr "Arkaplanını etkinliklerden biriyle güncelle."
 
-#: cogs/patreon/__init__.py:258
+#: cogs/patreon/__init__.py:264
 msgid ""
 "You do not have an eventbackground. They can be acquired on seasonal events."
 msgstr "Etkinlik arkaplanın yok. Mevsimsel etkinliklerden kazanılabilirler."
 
-#: cogs/patreon/__init__.py:266
+#: cogs/patreon/__init__.py:272
 #, python-brace-format
 msgid ""
 "The background number {number} is not valid, you only have {total} available."
 msgstr "Arkaplan numarası {number} geçerli değil, sende toplam {total} mevcut."
 
-#: cogs/patreon/__init__.py:272
+#: cogs/patreon/__init__.py:278
 msgid "Background updated!"
 msgstr "Arkaplan güncellendi!"
 
@@ -3396,11 +3401,8 @@ msgstr "{result[1]} Sonuç **{result[0]}**! **${amount}** kaybettin!"
 msgid ""
 "Bet on the outcome of a dice roll with [maximum] sides. [tip] specifies the "
 "side you bet on. You will win [maximum - 1] * [money] money if you are right "
-"and loose [money] if you are wrong."
+"and lose [money] if you are wrong."
 msgstr ""
-"[maximum] tarafı olan bir zar atışının sonucuna bahis yap. [tip] bahis "
-"yaptığın tarafı belirtir. Doğruysa [maximum - 1] * [money] para kazanacaksın "
-"ve yanlışsa [money] kaybedeceksin."
 
 #: cogs/gambling/__init__.py:446
 #, python-brace-format
@@ -6846,6 +6848,15 @@ msgstr "İçinde {emote} olan bir hazine buldun!"
 #: utils/castle.py:269
 msgid "You have reached the exit!"
 msgstr "Çıkışa ulaştın!"
+
+#~ msgid ""
+#~ "Bet on the outcome of a dice roll with [maximum] sides. [tip] specifies "
+#~ "the side you bet on. You will win [maximum - 1] * [money] money if you "
+#~ "are right and loose [money] if you are wrong."
+#~ msgstr ""
+#~ "[maximum] tarafı olan bir zar atışının sonucuna bahis yap. [tip] bahis "
+#~ "yaptığın tarafı belirtir. Doğruysa [maximum - 1] * [money] para "
+#~ "kazanacaksın ve yanlışsa [money] kaybedeceksin."
 
 #, python-brace-format
 #~ msgid ""

@@ -7,10 +7,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 4.3.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-01-08 05:32-0800\n"
-"PO-Revision-Date: 2019-12-22 20:57+0100\n"
+"POT-Creation-Date: 2020-01-10 05:46-0800\n"
+"PO-Revision-Date: 2020-01-10 08:37+0100\n"
 "Last-Translator: Naya \"Nyathaleen\" Aldaine\n"
-"Language-Team:\n"
+"Language-Team: \n"
 "Language: sv_SE\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -100,7 +100,7 @@ msgstr ""
 
 #: cogs/tournament/__init__.py:165
 msgid "Starts a new raid tournament."
-msgstr ""
+msgstr "Påbörjar en ny raidturnering."
 
 #: cogs/tournament/__init__.py:240 cogs/battles/__init__.py:237
 #, python-brace-format
@@ -132,6 +132,8 @@ msgid ""
 "Raid Tournament ended! The winner is {winner}.\n"
 "Money was given!"
 msgstr ""
+"Raidturnering avslutades! Vinnaren är {winner}.\n"
+"Pengar gavs!"
 
 #: cogs/images/__init__.py:34
 msgid "Pixelfys an Avatar."
@@ -868,7 +870,7 @@ msgstr "Inte tillräckligt med spelare gick med..."
 
 #: cogs/hungergames/__init__.py:343
 msgid "An error happened during the hungergame. Please try again!"
-msgstr ""
+msgstr "Ett fel uppstod under hungerspelen. Försök igen!"
 
 #: cogs/error_handler/__init__.py:62
 #, python-brace-format
@@ -1007,15 +1009,15 @@ msgstr "Det finns en annan raid igång. Försök igen senare."
 #: cogs/error_handler/__init__.py:180 cogs/alliance/__init__.py:414
 #: cogs/alliance/__init__.py:443
 msgid "Your alliance does not own a city."
-msgstr ""
+msgstr "Din allians äger ingen stad."
 
 #: cogs/error_handler/__init__.py:182
 msgid "Your alliance already owns a city."
-msgstr ""
+msgstr "Er allians äger redan en stad."
 
 #: cogs/error_handler/__init__.py:184
 msgid "Your alliance rank is too low."
-msgstr ""
+msgstr "Din alliansrang är för låg."
 
 #: cogs/error_handler/__init__.py:190
 msgid ""
@@ -1355,7 +1357,7 @@ msgstr "Vänligen använd enbart en bild åt gången."
 msgid "This is not a valid image file."
 msgstr "Det är inte en giltig bildfil."
 
-#: cogs/miscellaneous/__init__.py:153 cogs/patreon/__init__.py:206
+#: cogs/miscellaneous/__init__.py:153 cogs/patreon/__init__.py:212
 msgid "Error when uploading to Imgur."
 msgstr "Fel vid uppladdning till Imgur."
 
@@ -1939,12 +1941,19 @@ msgid ""
 "\n"
 "IdleRPG is a global bot, your characters are valid everywhere"
 msgstr ""
+"1) Endast två karaktärer per person\n"
+"2) Utnyttja inte buggar\n"
+"3) Var vänlig mot andra spelare\n"
+"4) Att byta föremål i spelet mot verkliga pengar är inte tillåtet\n"
+"5) Att ge eller sälja omdöpta föremål är förbjudet\n"
+"\n"
+"IdleRPG är en global bot, dina karaktärer fungerar överallt"
 
-#: cogs/raid/__init__.py:1919
+#: cogs/raid/__init__.py:1948
 msgid "Upgrade your raid damage or defense multiplier."
 msgstr "Uppgradera din raidskada eller skyddsfaktor."
 
-#: cogs/raid/__init__.py:1922
+#: cogs/raid/__init__.py:1951
 #, python-brace-format
 msgid ""
 "Use `{prefix}increase damage/defense` to upgrade your raid damage/defense "
@@ -1953,11 +1962,11 @@ msgstr ""
 "Använd `{prefix}increase damage/defense` för att uppgradera din raidskada/"
 "skyddsfaktor med 10%."
 
-#: cogs/raid/__init__.py:1930
+#: cogs/raid/__init__.py:1959
 msgid "Increase your raid damage."
 msgstr "Öka din raidskada."
 
-#: cogs/raid/__init__.py:1936
+#: cogs/raid/__init__.py:1965
 #, python-brace-format
 msgid ""
 "Upgrading your weapon attack raid multiplier to {newlvl} costs **${price}**, "
@@ -1966,18 +1975,18 @@ msgstr ""
 "Att uppgradera din vapenattacksraidfaktor till {newlvl} kostar **${price}**, "
 "du är för fattig."
 
-#: cogs/raid/__init__.py:1947
+#: cogs/raid/__init__.py:1976
 #, python-brace-format
 msgid ""
 "You upgraded your weapon attack raid multiplier to {newlvl} for **${price}**."
 msgstr ""
 "Du har uppgraderat din vapenattacksraidfaktor till {newlvl} för **${price}**."
 
-#: cogs/raid/__init__.py:1955
+#: cogs/raid/__init__.py:1984
 msgid "Increase your raid defense."
 msgstr "Öka ditt raidskydd."
 
-#: cogs/raid/__init__.py:1961
+#: cogs/raid/__init__.py:1990
 #, python-brace-format
 msgid ""
 "Upgrading your shield defense raid multiplier to {newlvl} costs **${price}"
@@ -1986,7 +1995,7 @@ msgstr ""
 "Att uppgradera din sköldskyddsraidfaktor till {newlvl} kostar **${price}**, "
 "du är för fattig."
 
-#: cogs/raid/__init__.py:1972
+#: cogs/raid/__init__.py:2001
 #, python-brace-format
 msgid ""
 "You upgraded your shield defense raid multiplier to {newlvl} for **${price}"
@@ -1994,11 +2003,11 @@ msgid ""
 msgstr ""
 "Du har uppgraderat din sköldskyddsraidfaktor till {newlvl} för **${price}**."
 
-#: cogs/raid/__init__.py:1980
+#: cogs/raid/__init__.py:2009
 msgid "View your raid stats."
 msgstr "Visa dina raidstats."
 
-#: cogs/raid/__init__.py:1996
+#: cogs/raid/__init__.py:2025
 #, python-brace-format
 msgid ""
 "**{author}'s raid multipliers**\n"
@@ -2009,11 +2018,11 @@ msgstr ""
 "Skadefaktor: x{atk} (Uppgradera: ${atkp})\n"
 "Skyddsfaktor: x{deff} (Uppgradera: ${deffp})"
 
-#: cogs/raid/__init__.py:2005
+#: cogs/raid/__init__.py:2034
 msgid "Informs you about joining raids."
 msgstr "Informerar dig om att gå med i raider."
 
-#: cogs/raid/__init__.py:2008
+#: cogs/raid/__init__.py:2037
 #, python-brace-format
 msgid ""
 "Did you ever want to join together with other players to defeat the dragon "
@@ -2306,29 +2315,34 @@ msgstr "[Patreon Endast] Ändrar föremålstyp."
 msgid "Invalid type. Try Sword or Shield."
 msgstr "Ogiltig typ. Testa Sword eller Shield."
 
-#: cogs/patreon/__init__.py:124
+#: cogs/patreon/__init__.py:116
+#, python-brace-format
+msgid "The item is already a {item_type}."
+msgstr ""
+
+#: cogs/patreon/__init__.py:130
 #, python-brace-format
 msgid "The item with the ID `{itemid}` is now a `{itemtype}`."
 msgstr "Föremålet med ID `{itemid}` är nu en `{itemtype}`."
 
-#: cogs/patreon/__init__.py:135
+#: cogs/patreon/__init__.py:141
 msgid "[Patreon Only] Receive a daily booster."
 msgstr "[Patreon Endast] Få en daglig booster."
 
-#: cogs/patreon/__init__.py:141
+#: cogs/patreon/__init__.py:147
 #, python-brace-format
 msgid "You received a daily {type_} booster!"
 msgstr "Du har fått en daglig {type_} booster!"
 
-#: cogs/patreon/__init__.py:147
+#: cogs/patreon/__init__.py:153
 msgid "[Patreon Only] Changes your profile background."
 msgstr "[Patreon Only] Ändrar din profilbakgrund."
 
-#: cogs/patreon/__init__.py:159
+#: cogs/patreon/__init__.py:165
 msgid "That is not a valid premade background."
 msgstr "Det är inte en giltig bakgrund."
 
-#: cogs/patreon/__init__.py:163 cogs/patreon/__init__.py:191
+#: cogs/patreon/__init__.py:169 cogs/patreon/__init__.py:197
 #: cogs/classes/__init__.py:499 cogs/guild/__init__.py:505
 msgid ""
 "I couldn't read that URL. Does it start with `http://` or `https://` and is "
@@ -2337,11 +2351,11 @@ msgstr ""
 "Jag kunde inte läsa den URLen. Startar den med `http://` eller `https://` "
 "och är det en png eller jpeg?"
 
-#: cogs/patreon/__init__.py:175
+#: cogs/patreon/__init__.py:181
 msgid "The URL is too long."
 msgstr "URLen är för lång."
 
-#: cogs/patreon/__init__.py:177
+#: cogs/patreon/__init__.py:183
 #, python-brace-format
 msgid ""
 "Your new profile picture is now:\n"
@@ -2350,15 +2364,15 @@ msgstr ""
 "Din nya profilbild är nu:\n"
 "{url}"
 
-#: cogs/patreon/__init__.py:179
+#: cogs/patreon/__init__.py:185
 msgid "Your profile picture has been reset."
 msgstr "Din profilbild har blivit återställd."
 
-#: cogs/patreon/__init__.py:185
+#: cogs/patreon/__init__.py:191
 msgid "[Patreon Only] Generates a profile background based on an image."
 msgstr "[Patreon Endast] Genererar en profilbackgrund från en bild."
 
-#: cogs/patreon/__init__.py:208
+#: cogs/patreon/__init__.py:214
 #, python-brace-format
 msgid ""
 "Imgur Link for `{prefix}background`\n"
@@ -2367,25 +2381,25 @@ msgstr ""
 "Imgur Länk för `{prefix}background`\n"
 "<{link}>"
 
-#: cogs/patreon/__init__.py:219
+#: cogs/patreon/__init__.py:225
 msgid "[Patreon Only] Update your guild member limit and bank size."
 msgstr "[Patreon Endast] Uppgradera din guildmedlemsgräns och bankstorlek."
 
-#: cogs/patreon/__init__.py:244
+#: cogs/patreon/__init__.py:250
 msgid "Your guild was updated."
 msgstr "Din guild har blivit uppgraderad."
 
-#: cogs/patreon/__init__.py:250
+#: cogs/patreon/__init__.py:256
 msgid "Update your background to one from the events."
 msgstr "Uppdatera din bakgrund till en från evenemangen."
 
-#: cogs/patreon/__init__.py:258
+#: cogs/patreon/__init__.py:264
 msgid ""
 "You do not have an eventbackground. They can be acquired on seasonal events."
 msgstr ""
 "Du har ingen evenemangsbakgrund. De kan bli skaffade under säsongsevenemang."
 
-#: cogs/patreon/__init__.py:266
+#: cogs/patreon/__init__.py:272
 #, python-brace-format
 msgid ""
 "The background number {number} is not valid, you only have {total} available."
@@ -2393,7 +2407,7 @@ msgstr ""
 "Bakgrundsnumret {number} är inte tillgängligt, du har bara {total} "
 "tillgängliga."
 
-#: cogs/patreon/__init__.py:272
+#: cogs/patreon/__init__.py:278
 msgid "Background updated!"
 msgstr "Bakgrund uppdaterad!"
 
@@ -2422,6 +2436,8 @@ msgid ""
 "The tank class. Charge into battle with additional defense!\n"
 "+1 defense per evolution."
 msgstr ""
+"Tankklassen. Gå in i striden med ytterligare försvar!\n"
+"+1 försvar per utveckling."
 
 #: cogs/classes/__init__.py:59
 msgid "Thief"
@@ -2449,6 +2465,8 @@ msgid ""
 "Utilise powerful magic for stronger attacks.\n"
 "+1 damage per evolution."
 msgstr ""
+"Använd kraftfull magi för starkare attacker!\n"
+"+1 skada per utveckling"
 
 #: cogs/classes/__init__.py:76
 #, python-brace-format
@@ -2499,6 +2517,8 @@ msgid ""
 "Absorb the appreciation of the devs into your soul to power up.\n"
 "+1 damage and defense per evolution."
 msgstr ""
+"Absorbera utvecklarnas uppskattning och förstärk din själ!\n"
+"+1 skada och skydd per utveckling."
 
 #: cogs/classes/__init__.py:134
 #, python-brace-format
@@ -2576,11 +2596,11 @@ msgstr "Du försökte stjäla från en botVIP och livvakterna fångade dig!"
 #: cogs/classes/__init__.py:301
 #, python-brace-format
 msgid "You stole **${stolen}** from {user}."
-msgstr ""
+msgstr "Du stal **${stolen}** från {user}."
 
 #: cogs/classes/__init__.py:303
 msgid "a traveller just passing by"
-msgstr ""
+msgstr "En joggare som går förbi"
 
 #: cogs/classes/__init__.py:307
 msgid "Your attempt to steal money wasn't successful."
@@ -3404,11 +3424,8 @@ msgstr "{result[1]} Det är **{result[0]}**! Du förlora **${amount}**!"
 msgid ""
 "Bet on the outcome of a dice roll with [maximum] sides. [tip] specifies the "
 "side you bet on. You will win [maximum - 1] * [money] money if you are right "
-"and loose [money] if you are wrong."
+"and lose [money] if you are wrong."
 msgstr ""
-"Satsa på resultatet av ett tärningskast med [maximum] sidor. [tip] "
-"specificerar sidan du satsar på. Du vinner [maximum - 1] * [money] pengar om "
-"du har rätt och förlorar [money] om du har fel."
 
 #: cogs/gambling/__init__.py:446
 #, python-brace-format
@@ -3523,6 +3540,8 @@ msgid ""
 "Successfully added your item to the shop! Use `{prefix}shop` to view it in "
 "the market! The tax of 5% has been deducted from your account."
 msgstr ""
+"Ditt föremål har lagts till i affären! Använd `{prefix}shop` för att se den! "
+"Skatten på 5% har dragits från ditt konto."
 
 #: cogs/trading/__init__.py:95
 msgid "Buys an item from the global market."
@@ -3693,12 +3712,15 @@ msgid ""
 "You are about to sell **{count} items for ${money}!**\n"
 "Are you sure you want to do this?"
 msgstr ""
+"Du är på väg att sälja **{count}** föremål för **${money}**!\n"
+"Är du säker på att du vill göra det?"
 
 #: cogs/trading/__init__.py:429
 msgid ""
 "Looks like you got more or less items in that range in the meantime. Please "
 "try again."
 msgstr ""
+"Ser ut som att du fick fler eller färre föremål under tiden. Försök igen."
 
 #: cogs/trading/__init__.py:446
 #, python-brace-format
@@ -4257,89 +4279,91 @@ msgid ""
 "fell in love with a woman on the internet, but the woman was a man and stole "
 "their money."
 msgstr ""
+"blev förälskad i en kvinna på nätet men det visade sig vara en man som stjäl "
+"deras pengar."
 
 #: cogs/marriage/__init__.py:506
 msgid "has been arrested and had to post bail."
-msgstr ""
+msgstr "har blivit arresterad och var tvungen att betala borgen."
 
 #: cogs/marriage/__init__.py:507
 msgid "bought fortnite skins with your credit card."
-msgstr ""
+msgstr "köpte fortnite skins med ditt kreditkort."
 
 #: cogs/marriage/__init__.py:508
 msgid "decided to become communist and gave the money to others."
-msgstr ""
+msgstr "valde att bli kommunist och gav bort pengarna till andra människor."
 
 #: cogs/marriage/__init__.py:509
 msgid "bought an inflatable loli."
-msgstr ""
+msgstr "köpte en uppblåsbar loli."
 
 #: cogs/marriage/__init__.py:510
 msgid "was caught pickpocketing and you had to pay the fine."
-msgstr ""
+msgstr "blev påkommen när de försökte stjäla och du behövde betala böter."
 
 #: cogs/marriage/__init__.py:511
 msgid "gave it to a beggar."
-msgstr ""
+msgstr "gav det till en tiggare."
 
 #: cogs/marriage/__init__.py:512
 msgid "borrowed it to attend the local knights course."
-msgstr ""
+msgstr "lånade det för att delta i en riddarkurs."
 
 #: cogs/marriage/__init__.py:513
 msgid "spent it in the shop."
-msgstr ""
+msgstr "spenderade det i affären."
 
 #: cogs/marriage/__init__.py:514
 msgid "bought some toys."
-msgstr ""
+msgstr "köpte leksaker."
 
 #: cogs/marriage/__init__.py:525
 #, python-brace-format
 msgid "You lost ${money} because {name} {cause}"
-msgstr ""
+msgstr "Du förlorade **${money}** för att {name} {cause}"
 
 #: cogs/marriage/__init__.py:532
 msgid "finally found a job!"
-msgstr ""
+msgstr "fick äntligen ett jobb!"
 
 #: cogs/marriage/__init__.py:533
 msgid "won a lottery."
-msgstr ""
+msgstr "vann lotteriet."
 
 #: cogs/marriage/__init__.py:534
 msgid "sold their toys."
-msgstr ""
+msgstr "sålde sina leksaker."
 
 #: cogs/marriage/__init__.py:535
 msgid "got money from another kid that decided to become communist."
-msgstr ""
+msgstr "fick pengar från någon annan som beslöt sig bli kommunist."
 
 #: cogs/marriage/__init__.py:536
 msgid "stole it from a traveller."
-msgstr ""
+msgstr "stal det från en vandrare."
 
 #: cogs/marriage/__init__.py:537
 msgid "finished a quest with a money reward."
-msgstr ""
+msgstr "avklarade ett uppdrag och fick det som en belöning."
 
 #: cogs/marriage/__init__.py:538
 msgid "used dark magic to summon some money."
-msgstr ""
+msgstr "använde förbjuden magi för att skapa pengar."
 
 #: cogs/marriage/__init__.py:539
 msgid "looted a local warehouse and sold the wares."
-msgstr ""
+msgstr "plundrade ett lager och sålde varorna."
 
 #: cogs/marriage/__init__.py:549
 #, python-brace-format
 msgid "{name} gave you ${money}, they {cause}"
-msgstr ""
+msgstr "{name} gav dig **${money}**, de {cause}"
 
 #: cogs/marriage/__init__.py:567
 #, python-brace-format
 msgid "{name} found a {emoji} {type_} crate for you!"
-msgstr ""
+msgstr "{name} hittade en {emoji} {type_} åt dig!"
 
 #: cogs/marriage/__init__.py:579
 #, python-brace-format
@@ -5738,19 +5762,19 @@ msgstr "Omdöpt."
 
 #: cogs/admin/__init__.py:161
 msgid "[Bot Admin only] Create an item."
-msgstr ""
+msgstr "[Endast Botadmin] Skapa ett föremål."
 
 #: cogs/admin/__init__.py:163
 msgid "Invalid item type."
-msgstr ""
+msgstr "Ogiltig föremålstyp."
 
 #: cogs/admin/__init__.py:165
 msgid "Invalid stat."
-msgstr ""
+msgstr "Ogiltiga stats."
 
 #: cogs/admin/__init__.py:179
 msgid "Done."
-msgstr ""
+msgstr "Färdigt."
 
 #: cogs/admin/__init__.py:191
 msgid "[Bot Admin only] Gives/removes crates to a user without loss."
@@ -6499,11 +6523,11 @@ msgstr "Spelarens guild är redan med i er allians."
 
 #: cogs/alliance/__init__.py:138
 msgid "This guild is already in an alliance."
-msgstr ""
+msgstr "Guilden är redan i en allians."
 
 #: cogs/alliance/__init__.py:146
 msgid "This guild is the leader of another alliance."
-msgstr ""
+msgstr "Guilden är ledaren av en annan allians."
 
 #: cogs/alliance/__init__.py:151
 #, python-brace-format
@@ -6729,7 +6753,7 @@ msgstr "Staden ockuperas av **{amount}** försvar."
 #: cogs/alliance/__init__.py:506
 #, python-brace-format
 msgid "{city} was just occupied and stands under protection."
-msgstr ""
+msgstr "{city} blev nyligen ockuperad och har skydd."
 
 #: cogs/alliance/__init__.py:517
 #, python-brace-format
@@ -6737,6 +6761,8 @@ msgid ""
 "Your alliance now rules **{city}**. You should immediately buy defenses. You "
 "have **10 minutes** to build defenses before others can occupy the city!"
 msgstr ""
+"Er allians kontrollerar nu **{city}**. Ni borde skaffa försvar direkt. Ni "
+"har **10 minuter** på er innan andra kan ockupera staden!"
 
 #: cogs/alliance/__init__.py:532
 msgid "[Guild Leader only] Attack a city."
@@ -6831,7 +6857,15 @@ msgstr "Du hittade en skatt med {emote} i!"
 msgid "You have reached the exit!"
 msgstr "Du har nått utgången!"
 
-#, python-brace-format
+#~ msgid ""
+#~ "Bet on the outcome of a dice roll with [maximum] sides. [tip] specifies "
+#~ "the side you bet on. You will win [maximum - 1] * [money] money if you "
+#~ "are right and loose [money] if you are wrong."
+#~ msgstr ""
+#~ "Satsa på resultatet av ett tärningskast med [maximum] sidor. [tip] "
+#~ "specificerar sidan du satsar på. Du vinner [maximum - 1] * [money] pengar "
+#~ "om du har rätt och förlorar [money] om du har fel."
+
 #~ msgid ""
 #~ "Did you ever want to join together with other players to defeat the "
 #~ "snowman that roams this land? Raids got you covered!\n"
@@ -6862,7 +6896,6 @@ msgstr "Du har nått utgången!"
 #~ "Absorbera utvecklarnas uppskattning i din själ för att förstärkas.\n"
 #~ "+1 skada och försvar per evolution läggs på dina föremål."
 
-#, python-brace-format
 #~ msgid ""
 #~ "Successfully added your item to the shop! Use `{prefix}shop` to view it "
 #~ "in the market! The tax of 5% has been deduced from your account."
@@ -6870,7 +6903,6 @@ msgstr "Du har nått utgången!"
 #~ "Ditt föremål är på marknaden! Använd `{prefix}shop` för att se det på "
 #~ "marknaden! Skatten på %5 har dragits från ditt konto."
 
-#, python-brace-format
 #~ msgid ""
 #~ "Your alliance now rules **{city}**. You should immediately buy defenses."
 #~ msgstr "Er allians styr nu **{city}**. Ni borde genast skaffa försvar."
@@ -6881,11 +6913,9 @@ msgstr "Du har nått utgången!"
 #~ msgstr ""
 #~ "Du har redan valt en ras och fyllt i ditt CV. Detta är går inte att ändra."
 
-#, python-brace-format
 #~ msgid "You stole **${stolen}** from **{user}**."
 #~ msgstr "Du stal **${stolen}** från **{user}**."
 
-#, python-brace-format
 #~ msgid ""
 #~ "You are about to sell **{count} items!**\n"
 #~ "Are you sure you want to do this?"
