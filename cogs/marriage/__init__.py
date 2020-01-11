@@ -484,6 +484,7 @@ class Marriage(commands.Cog):
                     _("You heard a landmine going off nearby..."),
                     _("They have been abducted by aliens!"),
                     _("The Catholic Church got them..."),
+                    _("They starved after becoming a communist."),
                 ]
             )
             await self.bot.pool.execute(
@@ -512,6 +513,7 @@ class Marriage(commands.Cog):
                     _("borrowed it to attend the local knights course."),
                     _("spent it in the shop."),
                     _("bought some toys."),
+                    _("has gambling addiction and lost the money..."),
                 ]
             )
             money = random.randint(0, int(ctx.character_data["money"] / 64))
@@ -537,6 +539,7 @@ class Marriage(commands.Cog):
                     _("finished a quest with a money reward."),
                     _("used dark magic to summon some money."),
                     _("looted a local warehouse and sold the wares."),
+                    _("solved an enigma with a money reward."),
                 ]
             )
             money = random.randint(1, 5000)
