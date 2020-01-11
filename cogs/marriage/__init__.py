@@ -513,7 +513,7 @@ class Marriage(commands.Cog):
                     _("borrowed it to attend the local knights course."),
                     _("spent it in the shop."),
                     _("bought some toys."),
-                    _("has gambler addiction and is losing everything..."),
+                    _("has gambling addiction and lost the money..."),
                 ]
             )
             money = random.randint(0, int(ctx.character_data["money"] / 64))
