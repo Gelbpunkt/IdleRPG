@@ -105,6 +105,26 @@ class Admin(commands.Cog):
         _("""[Bot Admin only] Deletes any user's account.""")
         if other.id in ctx.bot.config.admins:  # preserve deletion of admins
             return await ctx.send(_("Very funny..."))
+        async with self.bot.pool.acquire() as conn:
+            g = await conn.fetchval(
+                'DELETE FROM guild WHERE "leader"=$1 RETURNING id;', other.id
+            )
+            if g:
+                await conn.execute(
+                    'UPDATE profile SET "guildrank"=$1, "guild"=$2 WHERE "guild"=$3;',
+                    "Member",
+                    0,
+                    g,
+                )
+                await conn.execute('UPDATE city SET "owner"=1 WHERE "owner"=$1;', g)
+            await conn.execute(
+                'UPDATE profile SET "marriage"=$1 WHERE "marriage"=$2;',
+                0,
+                other.id,
+            )
+            await conn.execute(
+                'DELETE FROM children WHERE "father"=$1 OR "mother"=$1;', other.id
+            )
         await self.bot.pool.execute('DELETE FROM profile WHERE "user"=$1;', other.id)
         await ctx.send(_("Successfully deleted the character."))
         await self.bot.http.send_message(
