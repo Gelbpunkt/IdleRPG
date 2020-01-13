@@ -335,7 +335,7 @@ IdleRPG is a global bot, your characters are valid everywhere"""
         self, ctx, lowest: IntFromTo(0, 100) = 0, highest: IntFromTo(0, 100) = 100
     ):
         _("""Shows your current inventory.""")
-        if highest <= lowest:
+        if highest < lowest:
             return await ctx.send(
                 _("Make sure that the `highest` value is greater than `lowest`.")
             )
