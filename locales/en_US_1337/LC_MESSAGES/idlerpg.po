@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-01-10 12:22-0800\n"
+"POT-Creation-Date: 2020-01-13 11:49-0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -574,7 +574,7 @@ msgid "Opens a crate."
 msgstr "0p3n5 4 cr473."
 
 #: cogs/crates/__init__.py:77 cogs/crates/__init__.py:170
-#: cogs/admin/__init__.py:194
+#: cogs/admin/__init__.py:214
 #, python-brace-format
 msgid "{rarity} is not a valid rarity."
 msgstr "{rarity} 15 n07 4 v4l1d r4r17y."
@@ -608,7 +608,7 @@ msgstr "7r4d35 cr4735 70 4 u53r."
 #. preserve renaming of admins
 #: cogs/crates/__init__.py:167 cogs/guild/__init__.py:315
 #: cogs/guild/__init__.py:343 cogs/admin/__init__.py:107
-#: cogs/admin/__init__.py:120
+#: cogs/admin/__init__.py:140
 msgid "Very funny..."
 msgstr "V3ry funny..."
 
@@ -2041,9 +2041,9 @@ msgid ""
 "`#2` Luck Booster\t**$500**\tBoosts adventure luck by 25%\n"
 "`#3` Money Booster\t**$1000**\tBoosts adventure money rewards by 25%"
 msgstr ""
-"`#1` 71m3 B00573r\7**$1000**\7B00575 4dv3n7ur3 71m3 by 50%\n"
-"`#2` Luck B00573r\7**$500**\7B00575 4dv3n7ur3 luck by 25%\n"
-"`#3` M0n3y B00573r\7**$1000**\7B00575 4dv3n7ur3 m0n3y r3w4rd5 by 25%"
+"`#1` 71m3 B00573r\t**$1000**\tB00575 4dv3n7ur3 71m3 by 50%\n"
+"`#2` Luck B00573r\t**$500**\tB00575 4dv3n7ur3 luck by 25%\n"
+"`#3` M0n3y B00573r\t**$1000**\tB00575 4dv3n7ur3 m0n3y r3w4rd5 by 25%"
 
 #: cogs/store/__init__.py:55
 msgid "Buy a booster from the store."
@@ -2136,7 +2136,8 @@ msgstr ""
 
 #: cogs/store/__init__.py:161
 msgid "This will overwrite all active boosters and refresh them. Are you sure?"
-msgstr "7h15 w1ll 0v3rwr173 4ll 4c71v3 b00573r5 4nd r3fr35h 7h3m. 4r3 y0u 5ur3?"
+msgstr ""
+"7h15 w1ll 0v3rwr173 4ll 4c71v3 b00573r5 4nd r3fr35h 7h3m. 4r3 y0u 5ur3?"
 
 #: cogs/store/__init__.py:173
 msgid "Nothing to activate."
@@ -2187,12 +2188,14 @@ msgstr "53nd5 4 l1nk 70 7h3 0ff1c14l d0cum3n74710n."
 #: cogs/help/__init__.py:109
 #, python-brace-format
 msgid "<:blackcheck:441826948919066625> **Check {url} for a list of commands**"
-msgstr "<:bl4ckch3ck:441826948919066625> **Ch3ck {url} f0r 4 l157 0f c0mm4nd5**"
+msgstr ""
+"<:bl4ckch3ck:441826948919066625> **Ch3ck {url} f0r 4 l157 0f c0mm4nd5**"
 
 #: cogs/help/__init__.py:119
 #, python-brace-format
 msgid "<:blackcheck:441826948919066625> **Check {url} for a tutorial and FAQ**"
-msgstr "<:bl4ckch3ck:441826948919066625> **Ch3ck {url} f0r 4 7u70r14l 4nd F4Q**"
+msgstr ""
+"<:bl4ckch3ck:441826948919066625> **Ch3ck {url} f0r 4 7u70r14l 4nd F4Q**"
 
 #: cogs/help/__init__.py:127
 msgid "Unban an entitiy from using $helpme."
@@ -4133,7 +4136,7 @@ msgstr ""
 "17'5 4 61rl! Y0ur n16h7 0f l0v3 w45 5ucc355ful! Pl3453 3n73r 4 n4m3 f0r y0ur "
 "ch1ld."
 
-#: cogs/marriage/__init__.py:372 cogs/marriage/__init__.py:604
+#: cogs/marriage/__init__.py:372 cogs/marriage/__init__.py:607
 msgid "You didn't enter a name."
 msgstr "Y0u d1dn'7 3n73r 4 n4m3."
 
@@ -4247,12 +4250,16 @@ msgstr "7h3y h4v3 b33n 4bduc73d by 4l13n5!"
 msgid "The Catholic Church got them..."
 msgstr "7h3 C47h0l1c Church 607 7h3m..."
 
-#: cogs/marriage/__init__.py:496
+#: cogs/marriage/__init__.py:487
+msgid "They starved after becoming a communist."
+msgstr ""
+
+#: cogs/marriage/__init__.py:497
 #, python-brace-format
 msgid "{name} died at the age of {age}! {cause}"
 msgstr "{name} d13d 47 7h3 463 0f {age}! {cause}"
 
-#: cogs/marriage/__init__.py:504
+#: cogs/marriage/__init__.py:505
 msgid ""
 "fell in love with a woman on the internet, but the woman was a man and stole "
 "their money."
@@ -4260,100 +4267,108 @@ msgstr ""
 "f3ll 1n l0v3 w17h 4 w0m4n 0n 7h3 1n73rn37, bu7 7h3 w0m4n w45 4 m4n 4nd 570l3 "
 "7h31r m0n3y."
 
-#: cogs/marriage/__init__.py:506
+#: cogs/marriage/__init__.py:507
 msgid "has been arrested and had to post bail."
 msgstr "h45 b33n 4rr3573d 4nd h4d 70 p057 b41l."
 
-#: cogs/marriage/__init__.py:507
+#: cogs/marriage/__init__.py:508
 msgid "bought fortnite skins with your credit card."
 msgstr "b0u6h7 f0r7n173 5k1n5 w17h y0ur cr3d17 c4rd."
 
-#: cogs/marriage/__init__.py:508
+#: cogs/marriage/__init__.py:509
 msgid "decided to become communist and gave the money to others."
 msgstr "d3c1d3d 70 b3c0m3 c0mmun157 4nd 64v3 7h3 m0n3y 70 07h3r5."
 
-#: cogs/marriage/__init__.py:509
+#: cogs/marriage/__init__.py:510
 msgid "bought an inflatable loli."
 msgstr "b0u6h7 4n 1nfl474bl3 l0l1."
 
-#: cogs/marriage/__init__.py:510
+#: cogs/marriage/__init__.py:511
 msgid "was caught pickpocketing and you had to pay the fine."
 msgstr "w45 c4u6h7 p1ckp0ck371n6 4nd y0u h4d 70 p4y 7h3 f1n3."
 
-#: cogs/marriage/__init__.py:511
+#: cogs/marriage/__init__.py:512
 msgid "gave it to a beggar."
 msgstr "64v3 17 70 4 b3664r."
 
-#: cogs/marriage/__init__.py:512
+#: cogs/marriage/__init__.py:513
 msgid "borrowed it to attend the local knights course."
 msgstr "b0rr0w3d 17 70 4773nd 7h3 l0c4l kn16h75 c0ur53."
 
-#: cogs/marriage/__init__.py:513
+#: cogs/marriage/__init__.py:514
 msgid "spent it in the shop."
 msgstr "5p3n7 17 1n 7h3 5h0p."
 
-#: cogs/marriage/__init__.py:514
+#: cogs/marriage/__init__.py:515
 msgid "bought some toys."
 msgstr "b0u6h7 50m3 70y5."
 
-#: cogs/marriage/__init__.py:525
+#: cogs/marriage/__init__.py:516
+msgid "has gambling addiction and lost the money..."
+msgstr ""
+
+#: cogs/marriage/__init__.py:527
 #, python-brace-format
 msgid "You lost ${money} because {name} {cause}"
 msgstr "Y0u l057 ${money} b3c4u53 {name} {cause}"
 
-#: cogs/marriage/__init__.py:532
+#: cogs/marriage/__init__.py:534
 msgid "finally found a job!"
 msgstr "f1n4lly f0und 4 j0b!"
 
-#: cogs/marriage/__init__.py:533
+#: cogs/marriage/__init__.py:535
 msgid "won a lottery."
 msgstr "w0n 4 l0773ry."
 
-#: cogs/marriage/__init__.py:534
+#: cogs/marriage/__init__.py:536
 msgid "sold their toys."
 msgstr "50ld 7h31r 70y5."
 
-#: cogs/marriage/__init__.py:535
+#: cogs/marriage/__init__.py:537
 msgid "got money from another kid that decided to become communist."
 msgstr "607 m0n3y fr0m 4n07h3r k1d 7h47 d3c1d3d 70 b3c0m3 c0mmun157."
 
-#: cogs/marriage/__init__.py:536
+#: cogs/marriage/__init__.py:538
 msgid "stole it from a traveller."
 msgstr "570l3 17 fr0m 4 7r4v3ll3r."
 
-#: cogs/marriage/__init__.py:537
+#: cogs/marriage/__init__.py:539
 msgid "finished a quest with a money reward."
 msgstr "f1n15h3d 4 qu357 w17h 4 m0n3y r3w4rd."
 
-#: cogs/marriage/__init__.py:538
+#: cogs/marriage/__init__.py:540
 msgid "used dark magic to summon some money."
 msgstr "u53d d4rk m461c 70 5umm0n 50m3 m0n3y."
 
-#: cogs/marriage/__init__.py:539
+#: cogs/marriage/__init__.py:541
 msgid "looted a local warehouse and sold the wares."
 msgstr "l0073d 4 l0c4l w4r3h0u53 4nd 50ld 7h3 w4r35."
 
-#: cogs/marriage/__init__.py:549
+#: cogs/marriage/__init__.py:542
+msgid "solved an enigma with a money reward."
+msgstr ""
+
+#: cogs/marriage/__init__.py:552
 #, python-brace-format
 msgid "{name} gave you ${money}, they {cause}"
 msgstr "{name} 64v3 y0u ${money}, 7h3y {cause}"
 
-#: cogs/marriage/__init__.py:567
+#: cogs/marriage/__init__.py:570
 #, python-brace-format
 msgid "{name} found a {emoji} {type_} crate for you!"
 msgstr "{name} f0und 4 {emoji} {type_} cr473 f0r y0u!"
 
-#: cogs/marriage/__init__.py:579
+#: cogs/marriage/__init__.py:582
 #, python-brace-format
 msgid "{name} is now {age} years old."
 msgstr "{name} 15 n0w {age} y34r5 0ld."
 
-#: cogs/marriage/__init__.py:585
+#: cogs/marriage/__init__.py:588
 #, python-brace-format
 msgid "{name} can be renamed! Enter a new name:"
 msgstr "{name} c4n b3 r3n4m3d! 3n73r 4 n3w n4m3:"
 
-#: cogs/marriage/__init__.py:614
+#: cogs/marriage/__init__.py:617
 #, python-brace-format
 msgid "{old_name} is now called {new_name}."
 msgstr "{old_name} 15 n0w c4ll3d {new_name}."
@@ -5629,7 +5644,8 @@ msgstr "R3n4m35 y0ur ch4r4c73r."
 
 #: cogs/profile/__init__.py:707
 msgid "What shall your character's name be? (Minimum 3 Characters, Maximum 20)"
-msgstr "Wh47 5h4ll y0ur ch4r4c73r'5 n4m3 b3? (M1n1mum 3 Ch4r4c73r5, M4x1mum 20)"
+msgstr ""
+"Wh47 5h4ll y0ur ch4r4c73r'5 n4m3 b3? (M1n1mum 3 Ch4r4c73r5, M4x1mum 20)"
 
 #: cogs/profile/__init__.py:716
 msgid "Timeout expired. Retry!"
@@ -5735,65 +5751,65 @@ msgstr "5ucc355fully r3m0v3d **${money}** fr0m **{other}**."
 msgid "[Bot Admin only] Deletes any user's account."
 msgstr "[B07 4dm1n 0nly] D3l3735 4ny u53r'5 4cc0un7."
 
-#: cogs/admin/__init__.py:109
+#: cogs/admin/__init__.py:129
 msgid "Successfully deleted the character."
 msgstr "5ucc355fully d3l373d 7h3 ch4r4c73r."
 
-#: cogs/admin/__init__.py:118
+#: cogs/admin/__init__.py:138
 msgid "[Bot Admin only] Renames a character."
 msgstr "[B07 4dm1n 0nly] R3n4m35 4 ch4r4c73r."
 
-#: cogs/admin/__init__.py:123
+#: cogs/admin/__init__.py:143
 msgid "What shall the character's name be? (min. 3 letters, max. 20)"
 msgstr "Wh47 5h4ll 7h3 ch4r4c73r'5 n4m3 b3? (m1n. 3 l3773r5, m4x. 20)"
 
-#: cogs/admin/__init__.py:137
+#: cogs/admin/__init__.py:157
 msgid "Timeout expired."
 msgstr "71m30u7 3xp1r3d."
 
-#: cogs/admin/__init__.py:142
+#: cogs/admin/__init__.py:162
 msgid "Renamed."
 msgstr "R3n4m3d."
 
-#: cogs/admin/__init__.py:161
+#: cogs/admin/__init__.py:181
 msgid "[Bot Admin only] Create an item."
 msgstr "[B07 4dm1n 0nly] Cr3473 4n 173m."
 
-#: cogs/admin/__init__.py:163
+#: cogs/admin/__init__.py:183
 msgid "Invalid item type."
 msgstr "1nv4l1d 173m 7yp3."
 
-#: cogs/admin/__init__.py:165
+#: cogs/admin/__init__.py:185
 msgid "Invalid stat."
 msgstr "1nv4l1d 5747."
 
-#: cogs/admin/__init__.py:179
+#: cogs/admin/__init__.py:199
 msgid "Done."
 msgstr "D0n3."
 
-#: cogs/admin/__init__.py:191
+#: cogs/admin/__init__.py:211
 msgid "[Bot Admin only] Gives/removes crates to a user without loss."
 msgstr "[B07 4dm1n 0nly] 61v35/r3m0v35 cr4735 70 4 u53r w17h0u7 l055."
 
-#: cogs/admin/__init__.py:202
+#: cogs/admin/__init__.py:222
 #, python-brace-format
 msgid "Successfully gave **{amount}** {rarity} crates to **{target}**."
 msgstr "5ucc355fully 64v3 **{amount}** {rarity} cr4735 70 **{target}**."
 
-#: cogs/admin/__init__.py:215
+#: cogs/admin/__init__.py:235
 msgid "[Bot Admin only] Gives xp to a user."
 msgstr "[B07 4dm1n 0nly] 61v35 xp 70 4 u53r."
 
-#: cogs/admin/__init__.py:220
+#: cogs/admin/__init__.py:240
 #, python-brace-format
 msgid "Successfully gave **{amount}** XP to **{target}**."
 msgstr "5ucc355fully 64v3 **{amount}** XP 70 **{target}**."
 
-#: cogs/admin/__init__.py:233
+#: cogs/admin/__init__.py:253
 msgid "[Bot Admin only] Wipes someone's donator perks."
 msgstr "[B07 4dm1n 0nly] W1p35 50m30n3'5 d0n470r p3rk5."
 
-#: cogs/admin/__init__.py:259
+#: cogs/admin/__init__.py:279
 #, python-brace-format
 msgid ""
 "Successfully reset {target}'s background, class, item names and guild member "
@@ -5802,28 +5818,28 @@ msgstr ""
 "5ucc355fully r3537 {target}'5 b4ck6r0und, cl455, 173m n4m35 4nd 6u1ld m3mb3r "
 "l1m17."
 
-#: cogs/admin/__init__.py:271
+#: cogs/admin/__init__.py:291
 msgid "[Bot Admin only] Resets someone's class(es)."
 msgstr "[B07 4dm1n 0nly] R35375 50m30n3'5 cl455(35)."
 
-#: cogs/admin/__init__.py:278
+#: cogs/admin/__init__.py:298
 #, python-brace-format
 msgid "Successfully reset {target}'s class."
 msgstr "5ucc355fully r3537 {target}'5 cl455."
 
-#: cogs/admin/__init__.py:289
+#: cogs/admin/__init__.py:309
 msgid "[Bot Admin only] Sign an item"
 msgstr "[B07 4dm1n 0nly] 516n 4n 173m"
 
-#: cogs/admin/__init__.py:293
+#: cogs/admin/__init__.py:313
 msgid "Text exceeds 50 characters."
 msgstr "73x7 3xc33d5 50 ch4r4c73r5."
 
-#: cogs/admin/__init__.py:297
+#: cogs/admin/__init__.py:317
 msgid "Item successfully signed."
 msgstr "173m 5ucc355fully 516n3d."
 
-#: cogs/admin/__init__.py:314
+#: cogs/admin/__init__.py:334
 msgid ""
 "[Bot Admin only] Sets someone's cooldown to a specific time in seconds (by "
 "default removes the cooldown)"
@@ -5831,11 +5847,11 @@ msgstr ""
 "[B07 4dm1n 0nly] 5375 50m30n3'5 c00ld0wn 70 4 5p3c1f1c 71m3 1n 53c0nd5 (by "
 "d3f4ul7 r3m0v35 7h3 c00ld0wn)"
 
-#: cogs/admin/__init__.py:329
+#: cogs/admin/__init__.py:349
 msgid "The cooldown has been updated!"
 msgstr "7h3 c00ld0wn h45 b33n upd473d!"
 
-#: cogs/admin/__init__.py:337
+#: cogs/admin/__init__.py:357
 msgid ""
 "Cooldown setting unsuccessful (maybe you mistyped the command name or there "
 "is no cooldown for the user?)."
@@ -6023,7 +6039,8 @@ msgstr "4dd5 50m37h1n6 70 4 7r4d3."
 #: cogs/transaction/__init__.py:243
 #, python-brace-format
 msgid "Please select something to add. Example: `{prefix}trade add money 1337`"
-msgstr "Pl3453 53l3c7 50m37h1n6 70 4dd. 3x4mpl3: `{prefix}trade add money 1337`"
+msgstr ""
+"Pl3453 53l3c7 50m37h1n6 70 4dd. 3x4mpl3: `{prefix}trade add money 1337`"
 
 #: cogs/transaction/__init__.py:251
 msgid "Adds money to a trade."
@@ -6056,7 +6073,8 @@ msgstr "5375 4 v4lu3 70 4 7r4d3 1n5734d 0f 4dd1n6 0n70 17."
 #: cogs/transaction/__init__.py:293
 #, python-brace-format
 msgid "Please select something to set. Example: `{prefix}trade set money 1337`"
-msgstr "Pl3453 53l3c7 50m37h1n6 70 537. 3x4mpl3: `{prefix}trade set money 1337`"
+msgstr ""
+"Pl3453 53l3c7 50m37h1n6 70 537. 3x4mpl3: `{prefix}trade set money 1337`"
 
 #: cogs/transaction/__init__.py:301
 msgid "Sets money in a trade."
