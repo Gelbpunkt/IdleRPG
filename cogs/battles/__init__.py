@@ -197,10 +197,6 @@ class Battles(commands.Cog):
                 enemy_ = None
                 await ctx.send(_("You don't have enough money to join the raidbattle."))
 
-        enemy_data = await self.bot.pool.fetchrow(
-            'SELECT * FROM profile WHERE "user"=$1;', enemy_.id
-        )
-
         players = []
 
         async with self.bot.pool.acquire() as conn:
