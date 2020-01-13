@@ -17,6 +17,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
 import asyncio
 
+from datetime import timedelta
 from typing import Union
 
 import discord
@@ -748,6 +749,31 @@ class Alliance(commands.Cog):
             await self.bot.public_log(
                 f"**{alliance_name}** failed to destroy defenses in **{city}**!"
             )
+
+    @has_char()
+    @alliance.command(aliases=["cooldowns", "t", "cds"])
+    @locale_doc
+    async def timers(self, ctx):
+        _("""Lists all your cooldowns.""")
+        alliance = await self.bot.pool.fetchval(
+            'SELECT alliance FROM guild WHERE "id"=(SELECT guild FROM profile WHERE "user"=$1);',
+            ctx.author.id,
+        )
+        cooldowns = await self.bot.redis.execute("KEYS", f"alliancecd:{alliance}:*")
+        if not cooldowns:
+            return await ctx.send(
+                _("Your alliance does not have any active cooldown at the moment.")
+            )
+        timers = _("Commands on cooldown:")
+        for key in cooldowns:
+            key = key.decode()
+            cooldown = await self.bot.redis.execute("TTL", key)
+            cmd = key.replace(f"alliancecd:{alliance}:", "")
+            text = _("{cmd} is on cooldown and will be available after {time}").format(
+                cmd=cmd, time=timedelta(seconds=int(cooldown))
+            )
+            timers = f"{timers}\n{text}"
+        await ctx.send(f"```{timers}```")
 
 
 def setup(bot):

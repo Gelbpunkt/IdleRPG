@@ -253,6 +253,11 @@ class Errorhandler(commands.Cog):
                     )
                 )
         await ctx.bot.reset_cooldown(ctx)
+        if ctx.command.parent:
+            if ctx.command.root_parent.name == "guild":
+                await self.bot.reset_guild_cooldown(ctx)
+            elif ctx.command.root_parent.name == "alliance":
+                await self.bot.reset_alliance_cooldown(ctx)
 
     async def initialize_cog(self):
         """Saves the original cmd error handler"""

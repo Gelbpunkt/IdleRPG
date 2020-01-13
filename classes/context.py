@@ -81,7 +81,11 @@ class Context(commands.Context):
         # by bot shutdown/cancellation of command
         await cleanup()
 
-        return bool(emojis.index(str(reaction.emoji)))
+        confirmed = bool(emojis.index(str(reaction.emoji)))
+        if not confirmed:
+            await self.bot.reset_cooldown(self)
+
+        return confirmed
 
     async def send(self, content=None, *args, **kwargs):
         if content is not None:

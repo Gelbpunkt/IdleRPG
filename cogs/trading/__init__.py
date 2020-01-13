@@ -405,18 +405,18 @@ class Trading(commands.Cog):
             )
             if count == 0:
                 return await ctx.send(_("Nothing to merch."))
+            if (
+                buildings := await self.bot.get_city_buildings(
+                    ctx.character_data["guild"]
+                )
+            ) :
+                money = int(money * (1 + buildings["trade_building"] / 2))
             if not await ctx.confirm(
                 _(
                     "You are about to sell **{count} items for ${money}!**\nAre you sure you want to do this?"
                 ).format(count=count, money=money)
             ):
                 return
-            if (
-                buildings := await self.bot.get_city_buildings(
-                    ctx.character_data["guild"]
-                )
-            ) :
-                money = money * (1 + buildings["trade_building"] / 2)
             newcount = await self.bot.pool.fetchval(
                 "SELECT count(value) FROM inventory i JOIN allitems ai ON (i.item=ai.id) WHERE ai.owner=$1 AND i.equipped IS FALSE AND ai.armor+ai.damage BETWEEN $2 AND $3;",
                 ctx.author.id,
