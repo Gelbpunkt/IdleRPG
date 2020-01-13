@@ -201,33 +201,14 @@ class Battles(commands.Cog):
             'SELECT * FROM profile WHERE "user"=$1;', enemy_.id
         )
 
-        rawplayers = [ctx.character_data, enemy_data]
-        players = [
-            {"user": ctx.author, "hp": 250, "armor": 0, "damage": 0},
-            {"user": enemy_, "hp": 250, "armor": 0, "damage": 0},
-        ]
+        players = []
 
-        for idx, player in enumerate(rawplayers):
-            if self.bot.in_class_line(player["class"], "Raider"):
-                atkmultiply = player["atkmultiply"] + Decimal(
-                    "0.1"
-                ) * self.bot.get_class_grade_from(player["class"], "Raider")
-                defmultiply = player["defmultiply"] + Decimal(
-                    "0.1"
-                ) * self.bot.get_class_grade_from(player["class"], "Raider")
-            else:
-                atkmultiply = player["atkmultiply"]
-                defmultiply = player["defmultiply"]
-            if self.bot.in_class_line(player["class"], "Ranger"):
-                players[idx]["hp"] += 20  # ranger bonus HP
-            sword, shield = await self.bot.get_equipped_items_for(player["user"])
-            dmg = 0 if not sword else sword["damage"] * atkmultiply
-            deff = 0 if not shield else shield["armor"] * defmultiply
-            dmg, deff = await self.bot.generate_stats(
-                player["user"], dmg, deff, classes=player["class"], race=player["race"]
-            )
-            players[idx].update(armor=deff, damage=dmg)
-        # now players have their raidstats, classes and optional extra HP added on
+        async with self.bot.pool.acquire() as conn:
+            for player in (ctx.author, enemy_):
+                dmg, deff = await self.bot.get_raidstats(player, conn=conn)
+                u = {"user": player, "hp": 250, "armor": deff, "damage": dmg}
+                players.append(u)
+
         # players[0] is the author, players[1] is the enemy
 
         battle_log = deque(

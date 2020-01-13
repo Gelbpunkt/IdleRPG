@@ -225,14 +225,19 @@ class Tournament(commands.Cog):
                 for match in matches:
                     await ctx.send(f"{match[0].mention} {text} {match[1].mention}")
 
-                    players = [
-                        {"user": match[0], "hp": 250, "armor": 0, "damage": 0},
-                        {"user": match[1], "hp": 250, "armor": 0, "damage": 0},
-                    ]
+                    players = []
 
-                    for idx, player in enumerate(match):
-                        damage, armor = await self.bot.get_raidstats(player, conn=conn)
-                        players[idx].update(armor=armor, damage=damage)
+                    async with self.bot.pool.acquire() as conn:
+                        for player in match:
+                            dmg, deff = await self.bot.get_raidstats(player, conn=conn)
+                            u = {
+                                "user": player,
+                                "hp": 250,
+                                "armor": deff,
+                                "damage": dmg,
+                            }
+                            players.append(u)
+
                     battle_log = deque(
                         [
                             (

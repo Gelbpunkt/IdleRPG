@@ -95,7 +95,7 @@ class Patreon(commands.Cog):
     @commands.command()
     @locale_doc
     async def weapontype(self, ctx, itemid: int, new_type: str.title):
-        _("""[Patreon Only] Changes an item type.""")
+        _("""[Patreon Only, Bronze and above] Changes an item type.""")
         if new_type not in ["Sword", "Shield"]:
             return await ctx.send(_("Invalid type. Try Sword or Shield."))
         async with self.bot.pool.acquire() as conn:
@@ -138,7 +138,7 @@ class Patreon(commands.Cog):
     @commands.command()
     @locale_doc
     async def donatordaily(self, ctx):
-        _("""[Patreon Only] Receive a daily booster.""")
+        _("""[Patreon Only, Gold and above] Receive a daily booster.""")
         type_ = random.choice(["time", "money", "luck"])
         await self.bot.pool.execute(
             f'UPDATE profile SET "{type_}_booster"="{type_}_booster"+1 WHERE "user"=$1;',

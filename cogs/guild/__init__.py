@@ -804,19 +804,22 @@ To look up a guild by its ID, use id:number."""
         while len(team1) != fightercount:
             try:
                 res = await self.bot.wait_for("message", timeout=90, check=simple1)
-                guild1check = await guildcheck(
-                    team1, guild1["id"], res.content.split()[-1]
-                )
-                if guild1check:
-                    team1.append(guild1check)
-                    await ctx.send(
-                        _("{user} has been added to your team, {author}.").format(
-                            user=guild1check, author=ctx.author.mention
-                        )
+                try:
+                    guild1check = await guildcheck(
+                        team1, guild1["id"], res.content.split()[-1]
                     )
-                else:
-                    await ctx.send(_("User not found."))
-                    continue
+                    if guild1check:
+                        team1.append(guild1check)
+                        await ctx.send(
+                            _("{user} has been added to your team, {author}.").format(
+                                user=guild1check, author=ctx.author.mention
+                            )
+                        )
+                    else:
+                        await ctx.send(_("User not found."))
+                except AttributeError:
+                    await ctx.send(_("Error when adding this user, please try again"))
+                continue
             except asyncio.TimeoutError:
                 await self.bot.reset_guild_cooldown(ctx)
                 return await ctx.send(
@@ -1107,6 +1110,35 @@ Time it will take: **{time}**
                     difficulty=adventure[0], remain=str(adventure[1]).split(".")[0]
                 )
             )
+
+    @has_guild()
+    @guild.command(aliases=["cooldowns", "t", "cds"])
+    @locale_doc
+    async def timers(self, ctx):
+        _("""Lists all your cooldowns.""")
+        cooldowns = await self.bot.redis.execute(
+            "KEYS", f"guildcd:{ctx.character_data['guild']}:*"
+        )
+        adv = await self.bot.get_guild_adventure(ctx.character_data["guild"])
+        if not cooldowns and (not adv or adv[2]):
+            return await ctx.send(
+                _("You don't have any active cooldown at the moment.")
+            )
+        timers = _("Commands on cooldown:")
+        for key in cooldowns:
+            key = key.decode()
+            cooldown = await self.bot.redis.execute("TTL", key)
+            cmd = key.replace(f"guildcd:{ctx.character_data['guild']}:", "")
+            text = _("{cmd} is on cooldown and will be available after {time}").format(
+                cmd=cmd, time=timedelta(seconds=int(cooldown))
+            )
+            timers = f"{timers}\n{text}"
+        if adv and not adv[2]:
+            text = _("Guild adventure is running and will be done after {time}").format(
+                time=adv[1]
+            )
+            timers = f"{timers}\n{text}"
+        await ctx.send(f"```{timers}```")
 
     '''
     @has_guild()

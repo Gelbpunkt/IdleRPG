@@ -284,6 +284,24 @@ class Transaction(commands.Cog):
             await ctx.send(_("You do not own this item."))
 
     @has_transaction()
+    @add.command(name="items")
+    @locale_doc
+    async def add_items(self, ctx, *itemids: int):
+        _("""Adds multiple items to a trade.""")
+        if any([(x in [x["id"] for x in ctx.transaction["items"]]) for x in itemids]):
+            return await ctx.send(_("You already added one or more of these items!"))
+        items = await self.bot.pool.fetch(
+            'SELECT * FROM allitems WHERE "id"=ANY($1) AND "owner"=$2;',
+            itemids,
+            ctx.author.id,
+        )
+        for item in items:
+            if item["original_name"] or item["original_type"]:
+                return await ctx.send(_("You may not sell modified items."))
+            ctx.transaction["items"].append(item)
+        await ctx.message.add_reaction(":blackcheck:441826948919066625")
+
+    @has_transaction()
     @trade.group(invoke_without_command=True, name="set")
     @locale_doc
     async def set_(self, ctx):
@@ -363,6 +381,19 @@ class Transaction(commands.Cog):
             await ctx.message.add_reaction(":blackcheck:441826948919066625")
         else:
             await ctx.send(_("This item is not in the trade."))
+
+    @has_transaction()
+    @remove.command(name="items")
+    @locale_doc
+    async def remove_items(self, ctx, *itemids: int):
+        _("""Removes multiple items to a trade.""")
+        for itemid in itemids:
+            item = discord.utils.find(
+                lambda x: x["id"] == itemid, ctx.transaction["items"]
+            )
+            if item:
+                ctx.transaction["items"].remove(item)
+        await ctx.message.add_reaction(":blackcheck:441826948919066625")
 
     async def cog_after_invoke(self, ctx):
         if hasattr(ctx, "transaction"):
