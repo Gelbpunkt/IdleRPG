@@ -118,9 +118,7 @@ class Admin(commands.Cog):
                 )
                 await conn.execute('UPDATE city SET "owner"=1 WHERE "owner"=$1;', g)
             await conn.execute(
-                'UPDATE profile SET "marriage"=$1 WHERE "marriage"=$2;',
-                0,
-                other.id,
+                'UPDATE profile SET "marriage"=$1 WHERE "marriage"=$2;', 0, other.id
             )
             await conn.execute(
                 'DELETE FROM children WHERE "father"=$1 OR "mother"=$1;', other.id
