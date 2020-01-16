@@ -286,3 +286,53 @@ gods = {
         "description": "Sent from God to end the suffering and to bring light back where it is needed the most.",
     },
 }
+
+classes = {
+    "Warrior": [
+        "Infanterist",
+        "Footman",
+        "Shieldbearer",
+        "Knight",
+        "Warmaster",
+        "Templar",
+        "Paladin",
+    ],
+    "Thief": ["Mugger", "Thief", "Rogue", "Bandit", "Chunin", "Renegade", "Assassin"],
+    "Mage": [
+        "Juggler",
+        "Witcher",
+        "Enchanter",
+        "Mage",
+        "Warlock",
+        "Dark Caster",
+        "White Sorcerer",
+    ],
+    "Paragon": [
+        "Novice",
+        "Proficient",
+        "Artisan",
+        "Master",
+        "Champion",
+        "Vindicator",
+        "Paragon",
+    ],
+    "Ranger": ["Caretaker", "Tamer", "Trainer", "Bowman", "Hunter", "Warden", "Ranger"],
+    "Raider": [
+        "Adventurer",
+        "Swordsman",
+        "Fighter",
+        "Swashbuckler",
+        "Dragonslayer",
+        "Raider",
+        "Eternal Hero",
+    ],
+    "Ritualist": [
+        "Priest",
+        "Mysticist",
+        "Doomsayer",
+        "Seer",
+        "Oracle",
+        "Prophet",
+        "Ritualist",
+    ],
+}

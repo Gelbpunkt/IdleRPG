@@ -558,69 +558,21 @@ class Bot(commands.AutoShardedBot):
         return None
 
     def get_class_line(self, class_):
-        if class_ in ["Mage", "Wizard", "Pyromancer", "Elementalist", "Dark Caster"]:
-            return "Mage"
-        elif class_ in ["Warrior", "Swordsman", "Knight", "Warlord", "Berserker"]:
-            return "Warrior"
-        elif class_ in ["Thief", "Rogue", "Chunin", "Renegade", "Assassin"]:
-            return "Thief"
-        elif class_ in ["Caretaker", "Trainer", "Bowman", "Hunter", "Ranger"]:
-            return "Ranger"
-        elif class_ in ["Novice", "Proficient", "Artisan", "Master", "Paragon"]:
-            return "Paragon"
-        elif class_ in ["Stabber", "Fighter", "Hero", "Dragonslayer", "Raider"]:
-            return "Raider"
-        elif class_ in ["Priest", "Mysticist", "Summoner", "Seer", "Ritualist"]:
-            return "Ritualist"
-        else:
-            return "None"
+        for line, evos in self.config.classes.items():
+            if class_ in evos:
+                return line
+        return "None"
 
     def get_class_evolves(self):
-        return {
-            "Mage": ["Wizard", "Pyromancer", "Elementalist", "Dark Caster"],
-            "Thief": ["Rogue", "Chunin", "Renegade", "Assassin"],
-            "Warrior": ["Swordsman", "Knight", "Warlord", "Berserker"],
-            "Paragon": ["Proficient", "Artisan", "Master", "Paragon"],
-            "Ranger": ["Trainer", "Bowman", "Hunter", "Ranger"],
-            "Raider": ["Fighter", "Hero", "Dragonslayer", "Raider"],
-            "Ritualist": ["Mysticist", "Summoner", "Seer", "Ritualist"],
-        }
+        return {line: evos[1:] for line, evos in self.config.classes.items()}
 
     def get_class_grade(self, class_):
-        if class_ in ["Mage", "Wizard", "Pyromancer", "Elementalist", "Dark Caster"]:
-            return [
-                "Mage",
-                "Wizard",
-                "Pyromancer",
-                "Elementalist",
-                "Dark Caster",
-            ].index(class_) + 1
-        elif class_ in ["Warrior", "Swordsman", "Knight", "Warlord", "Berserker"]:
-            return ["Warrior", "Swordsman", "Knight", "Warlord", "Berserker"].index(
-                class_
-            ) + 1
-        elif class_ in ["Thief", "Rogue", "Chunin", "Renegade", "Assassin"]:
-            return ["Thief", "Rogue", "Chunin", "Renegade", "Assassin"].index(
-                class_
-            ) + 1
-        elif class_ in ["Caretaker", "Trainer", "Bowman", "Hunter", "Ranger"]:
-            return ["Caretaker", "Trainer", "Bowman", "Hunter", "Ranger"].index(
-                class_
-            ) + 1
-        elif class_ in ["Novice", "Proficient", "Artisan", "Master", "Paragon"]:
-            return ["Novice", "Proficient", "Artisan", "Master", "Paragon"].index(
-                class_
-            ) + 1
-        elif class_ in ["Stabber", "Fighter", "Hero", "Dragonslayer", "Raider"]:
-            return ["Stabber", "Fighter", "Hero", "Dragonslayer", "Raider"].index(
-                class_
-            ) + 1
-        elif class_ in ["Priest", "Mysticist", "Summoner", "Seer", "Ritualist"]:
-            return ["Priest", "Mysticist", "Summoner", "Seer", "Ritualist"].index(
-                class_
-            ) + 1
-        else:
-            return 0
+        for line, evos in self.config.classes.items():
+            try:
+                return evos.index(class_) + 1
+            except IndexError:
+                pass
+        return 0
 
     async def generate_stats(self, user, damage, armor, classes=None, race=None):
         user = user.id if isinstance(user, (discord.User, discord.Member)) else user

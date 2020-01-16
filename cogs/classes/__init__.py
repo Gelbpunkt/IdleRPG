@@ -241,15 +241,15 @@ class Classes(commands.Cog):
         _("""Evolve tree.""")
         await ctx.send(
             """```
-Level 0      |  Level 5     |    Level 10    |   Level 15    | Level 20 |   Level 25   |     Level 30
+Level 0      |  Level 5    |    Level 10   |   Level 15    | Level 20      |   Level 25   | Level 30
 ------------------------------------------------------------------------------------------------------------
-Infanterist -> Footman     ->  Shieldbearer -> Knight       -> Warmaster    ->  Templar    -> Paladin
-Mugger      -> Thief       ->  Rogue        -> Bandit       -> Chunin       -> Renegade    -> Assassin
-Juggler     -> Witcher     -> Enchanter     -> Mage         -> Warlock      -> Dark Caster -> White Sorcerer
-Novice      ->  Proficient ->  Artisan      -> Master       -> Champion     ->  Vindicator -> Paragon
-Caretaker   ->  Tamer      -> Trainer       -> Bowman       -> Hunter       ->  Warden     -> Ranger
-Adventurer  -> Swordsman   ->  Fighter      -> Swashbuckler -> Dragonslayer ->  Raider     -> Eternal Hero
-Priest      ->  Mysticist  -> Doomsayer     -> Seer         -> Oracle       ->  Prophet    -> Ritualist
+Infanterist -> Footman    -> Shieldbearer -> Knight       -> Warmaster    ->  Templar    -> Paladin
+Mugger      -> Thief      -> Rogue        -> Bandit       -> Chunin       -> Renegade    -> Assassin
+Juggler     -> Witcher    -> Enchanter    -> Mage         -> Warlock      -> Dark Caster -> White Sorcerer
+Novice      -> Proficient -> Artisan      -> Master       -> Champion     ->  Vindicator -> Paragon
+Caretaker   -> Tamer      -> Trainer      -> Bowman       -> Hunter       ->  Warden     -> Ranger
+Adventurer  -> Swordsman  -> Fighter      -> Swashbuckler -> Dragonslayer ->  Raider     -> Eternal Hero
+Priest      -> Mysticist  -> Doomsayer    -> Seer         -> Oracle       ->  Prophet    -> Ritualist
 ```"""
         )
 
