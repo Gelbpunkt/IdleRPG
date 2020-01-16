@@ -443,9 +443,7 @@ Adventure name: `{adventure}`"""
             )
             return await ctx.send(_("You died on your mission. Try again!"))
 
-        gold = round(
-            random.randint(20 * (num - 1) or 1, 60 * (num - 1) or 70) * luck_multiply
-        )
+        gold = round(random.randint(20 * num, 60 * num) * luck_multiply)
 
         if await self.bot.get_booster(ctx.author, "money"):
             gold = int(gold * 1.25)
