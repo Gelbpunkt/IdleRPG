@@ -337,7 +337,7 @@ To look up a guild by its ID, use id:number."""
     @is_guild_leader()
     @guild.command()
     @locale_doc
-    async def demote(self, ctx, member: MemberWithCharacter):
+    async def demote(self, ctx, member: UserWithCharacter):
         _("""Demotes someone from the officer rank""")
         if member == ctx.author:
             return await ctx.send(_("Very funny..."))
