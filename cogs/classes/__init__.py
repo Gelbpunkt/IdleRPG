@@ -118,15 +118,7 @@ class Classes(commands.Cog):
         profession = await self.bot.paginator.ChoosePaginator(
             extras=embeds, choices=choices
         ).paginate(ctx)
-        profession_ = profession
-        if profession == "Paragon":
-            profession_ = "Novice"
-        elif profession == "Ranger":
-            profession_ = "Caretaker"
-        elif profession == "Raider":
-            profession_ = "Stabber"
-        elif profession == "Ritualist":
-            profession_ = "Priest"
+        profession_ = self.bot.config.classes[profession][0]
         new_classes = copy(ctx.character_data["class"])
         new_classes[val] = profession_
         if not await ctx.confirm(
