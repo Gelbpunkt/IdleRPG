@@ -570,7 +570,7 @@ class Bot(commands.AutoShardedBot):
         for line, evos in self.config.classes.items():
             try:
                 return evos.index(class_) + 1
-            except IndexError:
+            except ValueError:
                 pass
         return 0
 
