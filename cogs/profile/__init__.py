@@ -39,11 +39,12 @@ class Profile(commands.Cog):
     @user_cooldown(3600)
     @commands.command(aliases=["new", "c", "start"])
     @locale_doc
-    async def create(self, ctx):
+    async def create(self, ctx, name: str = None):
         _("""Creates a new character.""")
-        await ctx.send(
-            _(
-                """\
+        if not name:
+            await ctx.send(
+                _(
+                    """\
 What shall your character's name be? (Minimum 3 Characters, Maximum 20)
 
 **Please note that with the creation of a character, you agree to these rules:**
@@ -54,18 +55,33 @@ What shall your character's name be? (Minimum 3 Characters, Maximum 20)
 5) Giving or selling renamed items is forbidden
 
 IdleRPG is a global bot, your characters are valid everywhere"""
+                )
             )
-        )
 
-        def mycheck(amsg):
-            return amsg.author == ctx.author and amsg.channel == ctx.channel
+            def mycheck(amsg):
+                return amsg.author == ctx.author and amsg.channel == ctx.channel
 
-        try:
-            name = await self.bot.wait_for("message", timeout=60, check=mycheck)
-        except asyncio.TimeoutError:
-            await self.bot.reset_cooldown(ctx)
-            return await ctx.send(_("Timeout expired. Please retry!"))
-        name = name.content
+            try:
+                name = await self.bot.wait_for("message", timeout=60, check=mycheck)
+            except asyncio.TimeoutError:
+                await self.bot.reset_cooldown(ctx)
+                return await ctx.send(_("Timeout expired. Please retry!"))
+            name = name.content
+        else:
+            if not await ctx.confirm(
+                _(
+                    """\
+**Please note that with the creation of a character, you agree to these rules:**
+1) Only up to two characters per individual
+2) No abusing or benefiting from bugs or exploits
+3) Be friendly and kind to other players
+4) Trading in-game items or currency for real money is forbidden
+5) Giving or selling renamed items is forbidden
+
+IdleRPG is a global bot, your characters are valid everywhere"""
+                )
+            ):
+                return await ctx.send(_("Creation of your character cancelled."))
         if len(name) > 2 and len(name) < 21:
             await self.bot.pool.execute(
                 "INSERT INTO profile VALUES ($1, $2, $3, $4);",
@@ -701,20 +717,23 @@ IdleRPG is a global bot, your characters are valid everywhere"""
     @checks.has_char()
     @commands.command()
     @locale_doc
-    async def rename(self, ctx):
+    async def rename(self, ctx, name: str = None):
         _("""Renames your character.""")
-        await ctx.send(
-            _("What shall your character's name be? (Minimum 3 Characters, Maximum 20)")
-        )
+        if not name:
+            await ctx.send(
+                _(
+                    "What shall your character's name be? (Minimum 3 Characters, Maximum 20)"
+                )
+            )
 
-        def mycheck(amsg):
-            return amsg.author == ctx.author
+            def mycheck(amsg):
+                return amsg.author == ctx.author
 
-        try:
-            name = await self.bot.wait_for("message", timeout=60, check=mycheck)
-        except asyncio.TimeoutError:
-            return await ctx.send(_("Timeout expired. Retry!"))
-        name = name.content
+            try:
+                name = await self.bot.wait_for("message", timeout=60, check=mycheck)
+            except asyncio.TimeoutError:
+                return await ctx.send(_("Timeout expired. Retry!"))
+            name = name.content
         if len(name) > 2 and len(name) < 21:
             await self.bot.pool.execute(
                 'UPDATE profile SET "name"=$1 WHERE "user"=$2;', name, ctx.author.id
