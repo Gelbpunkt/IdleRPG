@@ -503,11 +503,11 @@ class Bot(commands.AutoShardedBot):
                 column = "crates_uncommon"
                 amount = round(new_level / 2)
                 reward_text = f"**{amount}** <:CrateUncommon:598094865397579797>"
-            elif new_level < 15:
+            elif new_level < 18:
                 column = "crates_rare"
                 amount = 2
                 reward_text = "**2** <:CrateRare:598094865485791233>"
-            elif new_level < 20:
+            elif new_level < 27:
                 column = "crates_rare"
                 amount = 3
                 reward_text = "**3** <:CrateRare:598094865485791233>"
