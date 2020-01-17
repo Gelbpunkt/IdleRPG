@@ -39,7 +39,7 @@ class Profile(commands.Cog):
     @user_cooldown(3600)
     @commands.command(aliases=["new", "c", "start"])
     @locale_doc
-    async def create(self, ctx, name: str = None):
+    async def create(self, ctx, *, name: str = None):
         _("""Creates a new character.""")
         if not name:
             await ctx.send(
@@ -717,7 +717,7 @@ IdleRPG is a global bot, your characters are valid everywhere"""
     @checks.has_char()
     @commands.command()
     @locale_doc
-    async def rename(self, ctx, name: str = None):
+    async def rename(self, ctx, *, name: str = None):
         _("""Renames your character.""")
         if not name:
             await ctx.send(
