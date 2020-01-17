@@ -25,7 +25,12 @@ import discord
 
 from discord.ext import commands
 
-from classes.converters import IntGreaterThan, MemberWithCharacter, User
+from classes.converters import (
+    IntGreaterThan,
+    MemberWithCharacter,
+    User,
+    UserWithCharacter,
+)
 from cogs.shard_communication import guild_on_cooldown as guild_cooldown
 from cogs.shard_communication import user_on_cooldown as user_cooldown
 from utils import misc as rpgtools
