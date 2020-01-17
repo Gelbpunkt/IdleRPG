@@ -231,26 +231,16 @@ class Classes(commands.Cog):
     @locale_doc
     async def tree(self, ctx):
         _("""Evolve tree.""")
-        '''
-        await ctx.send(
-            """```
-Level 0      |  Level 5    |    Level 10   |   Level 15    | Level 20      |   Level 25   | Level 30
-------------------------------------------------------------------------------------------------------------
-Infanterist -> Footman    -> Shieldbearer -> Knight       -> Warmaster    -> Templar     -> Paladin
-Mugger      -> Thief      -> Rogue        -> Bandit       -> Chunin       -> Renegade    -> Assassin
-Juggler     -> Witcher    -> Enchanter    -> Mage         -> Warlock      -> Dark Caster -> White Sorcerer
-Novice      -> Proficient -> Artisan      -> Master       -> Champion     -> Vindicator  -> Paragon
-Caretaker   -> Tamer      -> Trainer      -> Bowman       -> Hunter       -> Warden      -> Ranger
-Adventurer  -> Swordsman  -> Fighter      -> Swashbuckler -> Dragonslayer -> Raider      -> Eternal Hero
-Priest      -> Mysticist  -> Doomsayer    -> Seer         -> Oracle       -> Prophet     -> Ritualist
-```"""
-        )
-        '''
         embeds = []
         for class_ in self.bot.config.classes:
+            evos = [
+                f"Level {self.bot.config.classes[class_].index(evo) * 5}: {evo}"
+                for evo
+                in self.bot.config.classes[class_]
+            ]
             embed = discord.Embed(
                 title=class_,
-                description="\n".join(self.bot.config.classes[class_]),
+                description="\n".join(evos),
                 colour=self.bot.config.primary_colour,
             )
             embeds.append(embed)
