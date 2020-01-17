@@ -231,6 +231,7 @@ class Classes(commands.Cog):
     @locale_doc
     async def tree(self, ctx):
         _("""Evolve tree.""")
+        '''
         await ctx.send(
             """```
 Level 0      |  Level 5    |    Level 10   |   Level 15    | Level 20      |   Level 25   | Level 30
@@ -244,6 +245,16 @@ Adventurer  -> Swordsman  -> Fighter      -> Swashbuckler -> Dragonslayer -> Rai
 Priest      -> Mysticist  -> Doomsayer    -> Seer         -> Oracle       -> Prophet     -> Ritualist
 ```"""
         )
+        '''
+        embeds = []
+        for class_ in self.bot.config.classes:
+            embed = discord.Embed(
+                title=class_,
+                description="\n".join(self.bot.config.classes[class_]),
+                colour=self.bot.config.primary_colour,
+            )
+            embeds.append(embed)
+        await self.bot.paginator.Paginator(extras=embeds).paginate(ctx)
 
     @has_char()
     @is_class("Thief")
