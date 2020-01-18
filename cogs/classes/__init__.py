@@ -185,7 +185,7 @@ class Classes(commands.Cog):
                 try:
                     await ctx.send(
                         file=discord.File(
-                            f"assets/classes/{class_.lower().replace(' ', '_')}.jpg"
+                            f"assets/classes/{class_.lower().replace(' ', '_')}.png"
                         )
                     )
                 except FileNotFoundError:
