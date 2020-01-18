@@ -17,6 +17,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
 import copy
 import io
+import random
 import re
 import textwrap
 import traceback
@@ -97,7 +98,47 @@ class Owner(commands.Cog):
             await ctx.send("```" + "\n".join([str(x) for x in top_stats[:10]]) + "```")
 
     @commands.command(hidden=True)
-    @locale_doc
+    async def setluck(self, ctx):
+        """Sets the luck for all gods to a random value and give bonus luck to the top 25 followers."""
+        async with self.bot.pool.acquire() as conn:
+            for god in self.bot.config.gods:
+                luck = random.randint(1, 20) / 10
+                await conn.execute(
+                    'UPDATE profile SET "luck"=$1 WHERE "god"=$2;', luck, god
+                )
+                top_followers = await conn.fetch(
+                    'SELECT user FROM profile WHERE "god"=$1 ORDER BY "favor" LIMIT 25;',
+                    god,
+                )
+                await conn.execute(
+                    'UPDATE profile SET "luck"=CASE WHEN "luck"+$1>=2.0 THEN 2.0 ELSE "luck"+$1 END WHERE "user"=ANY($2);',
+                    0.5,
+                    top_followers[:5],
+                )
+                await conn.execute(
+                    'UPDATE profile SET "luck"=CASE WHEN "lucl"+$1>=2.0 THEN 2.0 ELSE "luck"+$1 END WHERE "user"=ANY($2);',
+                    0.4,
+                    top_followers[5:10],
+                )
+                await conn.execute(
+                    'UPDATE profile SET "luck"=CASE WHEN "lucl"+$1>=2.0 THEN 2.0 ELSE "luck"+$1 END WHERE "user"=ANY($2);',
+                    0.3,
+                    top_followers[10:15],
+                )
+                await conn.execute(
+                    'UPDATE profile SET "luck"=CASE WHEN "lucl"+$1>=2.0 THEN 2.0 ELSE "luck"+$1 END WHERE "user"=ANY($2);',
+                    0.2,
+                    top_followers[15:20],
+                )
+                await conn.execute(
+                    'UPDATE profile SET "luck"=CASE WHEN "lucl"+$1>=2.0 THEN 2.0 ELSE "luck"+$1 END WHERE "user"=ANY($2);',
+                    0.1,
+                    top_followers[20:25],
+                )
+                await ctx.send(f"{god} set to {luck}.")
+        await conn.execute('UPDATE profile SET "favor"=0 WHERE "god" IS NOT NULL;')
+
+    @commands.command(hidden=True)
     async def shutdown(self, ctx):
         embed = discord.Embed(color=0xFF0000)
         embed.add_field(name="Shutting down...", value="Goodbye!", inline=False)
