@@ -232,11 +232,11 @@ class Classes(commands.Cog):
     async def tree(self, ctx):
         _("""Evolve tree.""")
         embeds = []
-        for class_ in self.bot.config.classes:
+        for class_, evos in self.bot.config.classes.items():
             evos = [
-                f"Level {self.bot.config.classes[class_].index(evo) * 5}: {evo}"
-                for evo
-                in self.bot.config.classes[class_]
+                f"Level {idx * 5}: {evo}"
+                for idx, evo
+                in enumerate(evos)
             ]
             embed = discord.Embed(
                 title=class_,
