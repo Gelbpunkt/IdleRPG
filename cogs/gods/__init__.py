@@ -240,7 +240,7 @@ class Gods(commands.Cog):
         )
 
     @is_god()
-    @commands.command(aliases=["resetfavour"])
+    @commands.command(aliases=["resetfavour"], disabled=True)
     async def resetfavor(self, ctx):
         """[Gods Only] Reset all your followers' favor."""
         god = self.bot.gods[ctx.author.id]
@@ -248,7 +248,7 @@ class Gods(commands.Cog):
         await ctx.send("Done.")
 
     @is_god()
-    @commands.command()
+    @commands.command(disabled=True)
     async def setluck(self, ctx, amount: float, target: UserWithCharacter = "all"):
         """[Gods Only] Gives luck to all of your followers or specific ones."""
         god = self.bot.gods[ctx.author.id]

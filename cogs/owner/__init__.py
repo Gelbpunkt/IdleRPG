@@ -98,7 +98,7 @@ class Owner(commands.Cog):
             await ctx.send("```" + "\n".join([str(x) for x in top_stats[:10]]) + "```")
 
     @commands.command(hidden=True)
-    async def setluck(self, ctx):
+    async def makeluck(self, ctx):
         """Sets the luck for all gods to a random value and give bonus luck to the top 25 followers."""
         async with self.bot.pool.acquire() as conn:
             for god in self.bot.config.gods:
