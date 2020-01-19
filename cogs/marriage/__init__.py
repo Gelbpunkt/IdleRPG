@@ -458,13 +458,11 @@ class Marriage(commands.Cog):
         target = random.choice(children)
         event = random.choice(
             ["death"]
-            + ["age"] * 9
-            + ["namechange"] * 2
-            + ["chest"] * 3
-            + ["moneylose"] * 2
-            + ["moneygain"] * 3
-            + ["gender"] * 2
-            + ["exp"] * 3
+            + ["age"] * 8
+            + ["namechange"] * 4
+            + ["chest"] * 2
+            + ["moneylose"] * 3
+            + ["moneygain"] * 4
         )
         if event == "death":
             cause = random.choice(
@@ -620,54 +618,7 @@ class Marriage(commands.Cog):
                     old_name=target["name"], new_name=name
                 )
             )
-    elif event == "gender"
-        if gender == "m":
-            await self.bot.pool.execute(
-                'UPDATE children SET "gender"=f WHERE "name"=$1 AND ("mother"=$2 OR "father"=$2) AND "gender"=$3;',
-                target["name"],
-                ctx.author.id,
-                target["age"],
-            )
-            return await ctx.send(
-                _("{name} finally come out of the closet and is now a girl").format(
-                    name=target["name"]
-                )
-            )
-        elif gender == "f":
-            await self.bot.pool.execute(
-                'UPDATE children SET "gender"=m WHERE "name"=$1 AND ("mother"=$2 OR "father"=$2) AND "gender"=$3;',
-                target["name"],
-                ctx.author.id,
-                target["age"],
-            )
-            return await ctx.send(
-                _("{name} finally come out of the closet and is now a boy").format(
-                    name=target["name"]
-                )
-            )
-    elif event == "exp"
-            xp = random.randint (200, 500)
-            cause = random.choice(
-                [
-                    _("finished a quest with xp reward"),
-                    _("solved a enigma with xp reward."),
-                    _("learned from they mistakes and passed that knowledge on to you"),
-                ]
-           await self.bot.pool.execute(
-                'UPDATE profile SET "xp"="xp"+$1 WHERE "user"=$2;',
-                exp,
-                ctx.author.id,
-            )
-            return await ctx.send(
-                _("{name} got {exp} xp for you, they {cause}").format(
-                    name=target["name"], money=money, cause=cause
-                )
-            )
 
-        new_level = int(rpgtools.xptolevel(ctx.character_data["xp"] + xp))
-
-        if current_level != new_level:
-            await self.bot.process_levelup(ctx, new_level)
 
 def setup(bot):
     bot.add_cog(Marriage(bot))
