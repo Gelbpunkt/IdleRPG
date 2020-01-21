@@ -104,7 +104,7 @@ class Owner(commands.Cog):
             for god in self.bot.config.gods:
                 luck = random.randint(1, 20) / 10
                 await conn.execute(
-                    'UPDATE profile SET "luck"=$1 WHERE "god"=$2;', luck, god
+                    'UPDATE profile SET "luck"=round($1, 2) WHERE "god"=$2;', luck, god
                 )
                 top_followers = [
                     u["user"]
@@ -114,27 +114,27 @@ class Owner(commands.Cog):
                     )
                 ]
                 await conn.execute(
-                    'UPDATE profile SET "luck"=CASE WHEN "luck"+$1>=2.0 THEN 2.0 ELSE "luck"+$1 END WHERE "user"=ANY($2);',
+                    'UPDATE profile SET "luck"=CASE WHEN "luck"+round($1, 2)>=2.0 THEN 2.0 ELSE "luck"+round($1, 2) END WHERE "user"=ANY($2);',
                     0.5,
                     top_followers[:5],
                 )
                 await conn.execute(
-                    'UPDATE profile SET "luck"=CASE WHEN "lucl"+$1>=2.0 THEN 2.0 ELSE "luck"+$1 END WHERE "user"=ANY($2);',
+                    'UPDATE profile SET "luck"=CASE WHEN "luck"+round($1, 2)>=2.0 THEN 2.0 ELSE "luck"+round($1, 2) END WHERE "user"=ANY($2);',
                     0.4,
                     top_followers[5:10],
                 )
                 await conn.execute(
-                    'UPDATE profile SET "luck"=CASE WHEN "lucl"+$1>=2.0 THEN 2.0 ELSE "luck"+$1 END WHERE "user"=ANY($2);',
+                    'UPDATE profile SET "luck"=CASE WHEN "luck"+round($1, 2)>=2.0 THEN 2.0 ELSE "luck"+round($1, 2) END WHERE "user"=ANY($2);',
                     0.3,
                     top_followers[10:15],
                 )
                 await conn.execute(
-                    'UPDATE profile SET "luck"=CASE WHEN "lucl"+$1>=2.0 THEN 2.0 ELSE "luck"+$1 END WHERE "user"=ANY($2);',
+                    'UPDATE profile SET "luck"=CASE WHEN "luck"+round($1, 2)>=2.0 THEN 2.0 ELSE "luck"+round($1, 2) END WHERE "user"=ANY($2);',
                     0.2,
                     top_followers[15:20],
                 )
                 await conn.execute(
-                    'UPDATE profile SET "luck"=CASE WHEN "lucl"+$1>=2.0 THEN 2.0 ELSE "luck"+$1 END WHERE "user"=ANY($2);',
+                    'UPDATE profile SET "luck"=CASE WHEN "luck"+round($1, 2)>=2.0 THEN 2.0 ELSE "luck"+round($1, 2) END WHERE "user"=ANY($2);',
                     0.1,
                     top_followers[20:25],
                 )
