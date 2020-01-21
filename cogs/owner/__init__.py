@@ -109,7 +109,7 @@ class Owner(commands.Cog):
                 top_followers = [
                     u["user"]
                     for u in await conn.fetch(
-                        'SELECT user FROM profile WHERE "god"=$1 ORDER BY "favor" LIMIT 25;',
+                        'SELECT "user" FROM profile WHERE "god"=$1 ORDER BY "favor" LIMIT 25;',
                         god,
                     )
                 ]
@@ -139,7 +139,7 @@ class Owner(commands.Cog):
                     top_followers[20:25],
                 )
                 await ctx.send(f"{god} set to {luck}.")
-        await conn.execute('UPDATE profile SET "favor"=0 WHERE "god" IS NOT NULL;')
+            await conn.execute('UPDATE profile SET "favor"=0 WHERE "god" IS NOT NULL;')
 
     @commands.command(hidden=True)
     async def shutdown(self, ctx):
