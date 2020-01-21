@@ -106,10 +106,13 @@ class Owner(commands.Cog):
                 await conn.execute(
                     'UPDATE profile SET "luck"=$1 WHERE "god"=$2;', luck, god
                 )
-                top_followers = await conn.fetch(
-                    'SELECT user FROM profile WHERE "god"=$1 ORDER BY "favor" LIMIT 25;',
-                    god,
-                )
+                top_followers = [
+                    u["user"]
+                    for u in await conn.fetch(
+                        'SELECT user FROM profile WHERE "god"=$1 ORDER BY "favor" LIMIT 25;',
+                        god,
+                    )
+                ]
                 await conn.execute(
                     'UPDATE profile SET "luck"=CASE WHEN "luck"+$1>=2.0 THEN 2.0 ELSE "luck"+$1 END WHERE "user"=ANY($2);',
                     0.5,
