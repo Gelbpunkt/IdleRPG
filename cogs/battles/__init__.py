@@ -40,7 +40,7 @@ class Battles(commands.Cog):
     @commands.command()
     @locale_doc
     async def battle(
-        self, ctx, money: IntGreaterThan(-1), enemy: discord.Member = None
+        self, ctx, money: IntGreaterThan(-1) = 0, enemy: discord.Member = None
     ):
         _("""Battle against another player.""")
         if enemy == ctx.author:
@@ -144,7 +144,7 @@ class Battles(commands.Cog):
     @commands.command()
     @locale_doc
     async def raidbattle(
-        self, ctx, money: IntGreaterThan(-1), enemy: discord.Member = None
+        self, ctx, money: IntGreaterThan(-1) = 0, enemy: discord.Member = None
     ):
         _("""Battle system based on raids.""")
         if enemy == ctx.author:
