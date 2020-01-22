@@ -449,23 +449,13 @@ Adventure name: `{adventure}`"""
             gold = int(gold * 1.25)
 
         xp = random.randint(250 * num, 500 * num)
-        chance_of_loot = 90 - num * 4
+        chance_of_loot = 5 if num == 1 else 5 + 1.5 * num
+        if self.bot.in_class_line(ctx.character_data["class"], "Ritualist"):
+            chance_of_loot *= 2  # can be 100 in a 30
 
         async with self.bot.pool.acquire() as conn:
 
-            if (
-                random.randint(
-                    1,
-                    (
-                        chance_of_loot // 2
-                        if self.bot.in_class_line(
-                            ctx.character_data["class"], "Ritualist"
-                        )
-                        else chance_of_loot
-                    ),
-                )
-                != 1
-            ):
+            if (random.randint(1, 1000)) > chance_of_loot * 10:
                 minstat = round(num * luck_multiply)
                 maxstat = round(5 + int(num * 1.5) * luck_multiply)
 
