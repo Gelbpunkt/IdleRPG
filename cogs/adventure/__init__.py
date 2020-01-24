@@ -88,7 +88,7 @@ class Adventure(commands.Cog):
     @has_no_adventure()
     @commands.command(aliases=["mission", "a", "dungeon"])
     @locale_doc
-    async def adventure(self, ctx, dungeonnumber: IntFromTo(1, 20)):
+    async def adventure(self, ctx, dungeonnumber: IntFromTo(1, 30)):
         _("""Sends your character on an adventure.""")
         if dungeonnumber > int(rpgtools.xptolevel(ctx.character_data["xp"])):
             return await ctx.send(
