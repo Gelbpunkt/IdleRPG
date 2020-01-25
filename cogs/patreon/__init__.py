@@ -44,7 +44,7 @@ class Patreon(commands.Cog):
                 return await ctx.send(_("You do not own this item."))
             if not item["original_name"] and not item["original_type"]:
                 return await ctx.send(_("Nothing to do..."))
-            if (not (type_ := item["original_type"])) or type_ == "Shield":
+            if item["original_type"] == item["type"]:
                 dmg, armor = item["damage"], item["armor"]
             else:
                 dmg, armor = item["armor"], item["damage"]
