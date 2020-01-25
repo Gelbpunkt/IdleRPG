@@ -841,6 +841,7 @@ https://git.travitia.xyz/Kenvyra/IdleRPG/compare/v4.3.1...v4.4.0
         _("""About the bot and our websites.""")
         await ctx.send(
             _(
+                # xgettext: no-python-format
                 """\
 **IdleRPG** is Discord's most advanced medieval RPG bot.
 We aim to provide the perfect experience at RPG in Discord with minimum effort for the user.
@@ -856,7 +857,7 @@ This bot is developed by people who love to code for a good cause and improving 
 <https://wiki.travitia.xyz> - IdleRPG wiki
 <https://raid.travitia.xyz> - Raid Website
 <https://travitia.xyz> - IdleRPG's next major upgrade
-<https://idlerpg.xyz> - Our link shortener
+<https://idlerpg.xyz> - Our forums
 <https://public-api.travitia.xyz> - Our public API
 <https://cloud.idlerpg.xyz> - VPS hosting by IdleRPG
 <https://github.com/Kenvyra> - Other IdleRPG related code
