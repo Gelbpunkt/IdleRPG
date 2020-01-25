@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-01-24 15:41-0800\n"
-"PO-Revision-Date: 2019-12-30 12:01+0300\n"
+"POT-Creation-Date: 2020-01-25 02:37-0800\n"
+"PO-Revision-Date: 2020-01-25 13:19+0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: tr_TR\n"
@@ -100,7 +100,7 @@ msgstr ""
 
 #: cogs/tournament/__init__.py:165
 msgid "Starts a new raid tournament."
-msgstr ""
+msgstr "Yeni bir baskın turnuvası başlatır."
 
 #: cogs/tournament/__init__.py:245 cogs/battles/__init__.py:214
 #, python-brace-format
@@ -132,6 +132,8 @@ msgid ""
 "Raid Tournament ended! The winner is {winner}.\n"
 "Money was given!"
 msgstr ""
+"Baskın Turnuvası sona erdi! Kazanan {winner}.\n"
+"Para verildi!"
 
 #: cogs/images/__init__.py:34
 msgid "Pixelfys an Avatar."
@@ -863,7 +865,7 @@ msgstr "Yeteri kadar oyuncu katılmadı..."
 
 #: cogs/hungergames/__init__.py:343
 msgid "An error happened during the hungergame. Please try again!"
-msgstr ""
+msgstr "Açlıkoyunu sırasında bir hata oldu. Lütfen tekrar dene!"
 
 #: cogs/error_handler/__init__.py:62
 #, python-brace-format
@@ -1209,8 +1211,8 @@ msgid ""
 "It's hangman time! In 3 seconds, I'll send a hangman-style word and you will "
 "have to either send your full word as the guess or a letter to check for!"
 msgstr ""
-"Adam asmaca zamanı! 3 saniye içinde adam asmaca-tarzı kelime yollayacağım ve "
-"ya tahmin için kelimenin tamamını yollayacaksınız ya da kontrol etmek için "
+"Adam asmaca zamanı! 3 saniye içinde adam asmaca-tarzı kelime yollayacağım "
+"veya tahmin için kelimenin tamamını yollayacaksınız ya da kontrol etmek için "
 "bir harf!"
 
 #: cogs/wintersday/__init__.py:383
@@ -1921,7 +1923,8 @@ msgid ""
 "1) Only up to two characters per individual\n"
 "2) No abusing or benefiting from bugs or exploits\n"
 "3) Be friendly and kind to other players\n"
-"4) Trading in-game items or currency for real money is forbidden\n"
+"4) Trading in-game items or currency for real money or items directly "
+"comparable to currency is forbidden\n"
 "5) Giving or selling renamed items is forbidden\n"
 "\n"
 "IdleRPG is a global bot, your characters are valid everywhere"
@@ -2289,7 +2292,7 @@ msgstr "ID'si `{itemid}` olan eşyanın ismi şimdi `{newname}`."
 
 #: cogs/patreon/__init__.py:98
 msgid "[Patreon Only, Bronze and above] Changes an item type."
-msgstr ""
+msgstr "[Patreon'a Özel, Bronz ve üstü] Eşya türünü değiştirir."
 
 #: cogs/patreon/__init__.py:100
 msgid "Invalid type. Try Sword or Shield."
@@ -2298,7 +2301,7 @@ msgstr "Geçersiz tür. Kılıç ya da Kalkan dene."
 #: cogs/patreon/__init__.py:116
 #, python-brace-format
 msgid "The item is already a {item_type}."
-msgstr ""
+msgstr "Bu eşya zaten bir {item_type}."
 
 #: cogs/patreon/__init__.py:130
 #, python-brace-format
@@ -2307,7 +2310,7 @@ msgstr "ID'si `{itemid}` olan eşya artık bir `{itemtype}`."
 
 #: cogs/patreon/__init__.py:141
 msgid "[Patreon Only, Gold and above] Receive a daily booster."
-msgstr ""
+msgstr "[Patreon'a Özel, Altın ve üstü] Günlük güçlendirici al."
 
 #: cogs/patreon/__init__.py:147
 #, python-brace-format
@@ -2413,6 +2416,8 @@ msgid ""
 "The tank class. Charge into battle with additional defense!\n"
 "+1 defense per evolution."
 msgstr ""
+"Tank sınıfı. Savaşa ek savunmayla gir!\n"
+"Evrim başına +1 savunma."
 
 #: cogs/classes/__init__.py:59
 msgid "Thief"
@@ -2440,6 +2445,8 @@ msgid ""
 "Utilise powerful magic for stronger attacks.\n"
 "+1 damage per evolution."
 msgstr ""
+"Daha güçlü saldırılar için güçlü büyü kullan.\n"
+"Evrim başına +1 hasar."
 
 #: cogs/classes/__init__.py:76
 #, python-brace-format
@@ -2490,6 +2497,8 @@ msgid ""
 "Absorb the appreciation of the devs into your soul to power up.\n"
 "+1 damage and defense per evolution."
 msgstr ""
+"Güçlenmek için geliştiricilerin takdirini ruhuna em.\n"
+"Evrim başına +1 hasar ve savunma."
 
 #: cogs/classes/__init__.py:126
 #, python-brace-format
@@ -2568,11 +2577,11 @@ msgstr "Bir bot VIP'den çalmaya çalıştın, ama korumalar seni yakaladı."
 #: cogs/classes/__init__.py:290
 #, python-brace-format
 msgid "You stole **${stolen}** from {user}."
-msgstr ""
+msgstr "{user}'dan **${stolen}** çaldın."
 
 #: cogs/classes/__init__.py:292
 msgid "a traveller just passing by"
-msgstr ""
+msgstr "sadece geçen bir gezgin"
 
 #: cogs/classes/__init__.py:296
 msgid "Your attempt to steal money wasn't successful."
@@ -3406,6 +3415,9 @@ msgid ""
 "side you bet on. You will win [maximum - 1] * [money] money if you are right "
 "and lose [money] if you are wrong."
 msgstr ""
+"[maximum] tarafı olan bir zar atışının sonucuna bahis yap. [tip] bahis "
+"yaptığın tarafı belirtir. Doğruysa [maximum - 1] * [money] para kazanacaksın "
+"ve yanlışsa [money] kaybedeceksin."
 
 #: cogs/gambling/__init__.py:446
 #, python-brace-format
@@ -3521,6 +3533,8 @@ msgid ""
 "Successfully added your item to the shop! Use `{prefix}shop` to view it in "
 "the market! The tax of 5% has been deducted from your account."
 msgstr ""
+"Eşyan başarılı bir şekilde dükkana eklendi! Onu markette görmek için "
+"`{prefix}shop` kullan! %5 vergi hesabından düşüldü."
 
 #: cogs/trading/__init__.py:95
 msgid "Buys an item from the global market."
@@ -3694,12 +3708,16 @@ msgid ""
 "You are about to sell **{count} items for ${money}!**\n"
 "Are you sure you want to do this?"
 msgstr ""
+"**{count} eşyayı ${money} için** satmak üzeresin!\n"
+"Bunu yapmak istediğinden emin misin?"
 
 #: cogs/trading/__init__.py:429
 msgid ""
 "Looks like you got more or less items in that range in the meantime. Please "
 "try again."
 msgstr ""
+"Görünüşe göre bu aralıkta daha fazla veya daha az eşyan var. Lütfen tekrar "
+"dene."
 
 #: cogs/trading/__init__.py:446
 #, python-brace-format
@@ -4246,7 +4264,7 @@ msgstr "Katolik Kilisesi onları aldı..."
 
 #: cogs/marriage/__init__.py:487
 msgid "They starved after becoming a communist."
-msgstr ""
+msgstr "Komünist olduktan sonra açlıktan öldüler."
 
 #: cogs/marriage/__init__.py:497
 #, python-brace-format
@@ -4258,97 +4276,99 @@ msgid ""
 "fell in love with a woman on the internet, but the woman was a man and stole "
 "their money."
 msgstr ""
+"internetten bir kadına aşık oldu, ama kadın bir erkekti ve paralarını çaldı."
 
 #: cogs/marriage/__init__.py:507
 msgid "has been arrested and had to post bail."
-msgstr ""
+msgstr "tutuklandı ve kefaletle göndermek zorunda kaldı."
 
 #: cogs/marriage/__init__.py:508
 msgid "bought fortnite skins with your credit card."
-msgstr ""
+msgstr "senin kredi kartınla fortnite görünüşleri satın aldı."
 
 #: cogs/marriage/__init__.py:509
 msgid "decided to become communist and gave the money to others."
-msgstr ""
+msgstr "komünist olmaya karar verdi ve parayı başkalarına verdi."
 
 #: cogs/marriage/__init__.py:510
 msgid "bought an inflatable loli."
-msgstr ""
+msgstr "şişme bir loli satın aldı."
 
 #: cogs/marriage/__init__.py:511
 msgid "was caught pickpocketing and you had to pay the fine."
 msgstr ""
+"yankesicilik yaparken yakalandı ve para cezasını ödemek zorunda kaldın."
 
 #: cogs/marriage/__init__.py:512
 msgid "gave it to a beggar."
-msgstr ""
+msgstr "bir dilenciye verdi."
 
 #: cogs/marriage/__init__.py:513
 msgid "borrowed it to attend the local knights course."
-msgstr ""
+msgstr "yerel şövalyeler kursuna katılmak için ödünç aldı."
 
 #: cogs/marriage/__init__.py:514
 msgid "spent it in the shop."
-msgstr ""
+msgstr "dükkanda harcadı."
 
 #: cogs/marriage/__init__.py:515
 msgid "bought some toys."
-msgstr ""
+msgstr "birkaç oyuncak satın aldı."
 
 #: cogs/marriage/__init__.py:516
 msgid "has gambling addiction and lost the money..."
-msgstr ""
+msgstr "kumar bağımlılığı var ve para kaybetti..."
 
 #: cogs/marriage/__init__.py:527
 #, python-brace-format
 msgid "You lost ${money} because {name} {cause}"
-msgstr ""
+msgstr "{name} {cause} yüzünden ${money} kaybettin"
 
 #: cogs/marriage/__init__.py:534
 msgid "finally found a job!"
-msgstr ""
+msgstr "sonunda bir iş buldu!"
 
 #: cogs/marriage/__init__.py:535
 msgid "won a lottery."
-msgstr ""
+msgstr "bir piyango kazandı."
 
 #: cogs/marriage/__init__.py:536
 msgid "sold their toys."
-msgstr ""
+msgstr "oyuncaklarını sattı."
 
 #: cogs/marriage/__init__.py:537
 msgid "got money from another kid that decided to become communist."
-msgstr ""
+msgstr "komünist olmaya karar veren başka bir çocuktan para aldı."
 
 #: cogs/marriage/__init__.py:538
 msgid "stole it from a traveller."
-msgstr ""
+msgstr "bir gezginden çaldı."
 
 #: cogs/marriage/__init__.py:539
 msgid "finished a quest with a money reward."
-msgstr ""
+msgstr "para ödüllü bir görevi bitirdi."
 
 #: cogs/marriage/__init__.py:540
 msgid "used dark magic to summon some money."
-msgstr ""
+msgstr "biraz para çağırmak için kara büyü kullandı."
 
 #: cogs/marriage/__init__.py:541
 msgid "looted a local warehouse and sold the wares."
-msgstr ""
+msgstr "yerel bir depoyu yağmaladı ve malları sattı."
 
 #: cogs/marriage/__init__.py:542
 msgid "solved an enigma with a money reward."
-msgstr ""
+msgstr "para ödüllü bir gizem çözdü."
 
 #: cogs/marriage/__init__.py:552
 #, python-brace-format
 msgid "{name} gave you ${money}, they {cause}"
-msgstr ""
+msgstr "{name} sana ${money} verdi, onlar {cause}"
 
 #: cogs/marriage/__init__.py:570
 #, python-brace-format
 msgid "{name} found a {emoji} {type_} crate for you!"
-msgstr ""
+msgstr "{name} senin için {emoji} {type_} sandık buldu!"
 
 #: cogs/marriage/__init__.py:582
 #, python-brace-format
@@ -4991,7 +5011,7 @@ msgstr "Kullanıcı bulunamadı."
 
 #: cogs/guild/__init__.py:826
 msgid "Error when adding this user, please try again"
-msgstr ""
+msgstr "Bu kullanıcı eklenirken hata oluştu, lütfen tekrar dene."
 
 #: cogs/guild/__init__.py:831 cogs/guild/__init__.py:857
 msgid "Took to long to add members. Fight cancelled."
@@ -5125,6 +5145,8 @@ msgid ""
 "Your guild isn't on an adventure yet. Ask your guild officer to use `{prefix}"
 "guild adventure` to start one"
 msgstr ""
+"Loncan henüz bir macerada değil. Bir tane başlatmak için lonca subayından "
+"`{prefix}guild adventure` kullanmasını iste"
 
 #: cogs/guild/__init__.py:1097
 #, python-brace-format
@@ -5141,6 +5163,8 @@ msgid ""
 "Your guild has completed an adventure of difficulty `{difficulty}`, ask a "
 "guild officer to check their status."
 msgstr ""
+"Loncan `{difficulty}` zorluğunda bir macera tamamladı, bir lonca subayından "
+"durumu kontrol etmesini iste."
 
 #: cogs/guild/__init__.py:1113
 #, python-brace-format
@@ -5154,7 +5178,7 @@ msgstr ""
 #: cogs/guild/__init__.py:1142
 #, python-brace-format
 msgid "Guild adventure is running and will be done after {time}"
-msgstr ""
+msgstr "Lonca macerası devam ediyor ve {time} sonra bitecek"
 
 #: cogs/vote/__init__.py:28
 msgid "Vote me up to get a random crate!"
@@ -5231,23 +5255,12 @@ msgid ""
 "1) Only up to two characters per individual\n"
 "2) No abusing or benefiting from bugs or exploits\n"
 "3) Be friendly and kind to other players\n"
-"4) Trading in-game items or currency for real money is forbidden\n"
+"4) Trading in-game items or currency for real money or items directly "
+"comparable to currency is forbidden\n"
 "5) Giving or selling renamed items is forbidden\n"
 "\n"
 "IdleRPG is a global bot, your characters are valid everywhere"
 msgstr ""
-"Karakterinin adı ne olmalı? (Minimum 3 Karakter, Maksimum 20)\n"
-"\n"
-"**Şunu lütfen bilin ki karakter oluşturduğunuzda bu kuralları kabul "
-"edersiniz:**\n"
-"1) Kişi başına sadece 2 karakter\n"
-"2) Bugları ya da açıkları suistimal etmek ya da onlardan avantaj sağlamak "
-"yasak\n"
-"3) Diğer oyunculara karşı arkadaş canlısı ve nazik olun\n"
-"4) Oyun-içi eşyaları ya da parayı gerçek para ile alışveriş etmek yasak\n"
-"5) Yeniden adlandırılmış eşyaları vermek ya da satmak yasak\n"
-"\n"
-"IdleRPG evrensel bir bot, karakterlerin her yerde geçerli"
 
 #: cogs/profile/__init__.py:68
 msgid "Timeout expired. Please retry!"
@@ -5801,19 +5814,19 @@ msgstr "Yeniden adlandırıldı."
 
 #: cogs/admin/__init__.py:179
 msgid "[Bot Admin only] Create an item."
-msgstr ""
+msgstr "[Bot Adminine özel] Eşya oluştur."
 
 #: cogs/admin/__init__.py:181
 msgid "Invalid item type."
-msgstr ""
+msgstr "Geçersiz eşya türü."
 
 #: cogs/admin/__init__.py:183
 msgid "Invalid stat."
-msgstr ""
+msgstr "Geçersiz istatistik."
 
 #: cogs/admin/__init__.py:197
 msgid "Done."
-msgstr ""
+msgstr "Bitti."
 
 #: cogs/admin/__init__.py:209
 msgid "[Bot Admin only] Gives/removes crates to a user without loss."
@@ -6099,11 +6112,11 @@ msgstr "Değiştirilmiş eşyalar satamazsın."
 
 #: cogs/transaction/__init__.py:290
 msgid "Adds multiple items to a trade."
-msgstr ""
+msgstr "Bir ticarete birden fazla eşya ekler."
 
 #: cogs/transaction/__init__.py:292
 msgid "You already added one or more of these items!"
-msgstr ""
+msgstr "Bu eşyalardan birini veya daha fazlasını zaten ekledin!"
 
 #: cogs/transaction/__init__.py:308
 msgid "Sets a value to a trade instead of adding onto it."
@@ -6160,7 +6173,7 @@ msgstr "Bu eşya ticarette değil."
 
 #: cogs/transaction/__init__.py:389
 msgid "Removes multiple items to a trade."
-msgstr ""
+msgstr "Bir ticarette birden fazla eşya kaldırır."
 
 #: cogs/races/__init__.py:32
 msgid "Change your race. This is irreversible."
@@ -6575,11 +6588,11 @@ msgstr "Bu üyenin loncası zaten ittifakının bir parçası."
 
 #: cogs/alliance/__init__.py:139
 msgid "This guild is already in an alliance."
-msgstr ""
+msgstr "Bu lonca zaten bir ittifakta."
 
 #: cogs/alliance/__init__.py:147
 msgid "This guild is the leader of another alliance."
-msgstr ""
+msgstr "Bu lonca başka ittifakın lideri."
 
 #: cogs/alliance/__init__.py:152
 #, python-brace-format
@@ -6805,7 +6818,7 @@ msgstr "Bu şehir **{amount}** savunma surları tarafından işgal edilmiş."
 #: cogs/alliance/__init__.py:507
 #, python-brace-format
 msgid "{city} was just occupied and stands under protection."
-msgstr ""
+msgstr "{city} işgal edildi ve koruma altında."
 
 #: cogs/alliance/__init__.py:518
 #, python-brace-format
@@ -6813,6 +6826,9 @@ msgid ""
 "Your alliance now rules **{city}**. You should immediately buy defenses. You "
 "have **10 minutes** to build defenses before others can occupy the city!"
 msgstr ""
+"İttifakın şimdi **{city}**'i yönetiyor. Hemen savunma satın almalısın. "
+"Diğerleri şehri işgal etmeden önce savunma inşa etmek için **10 dakikan** "
+"var!"
 
 #: cogs/alliance/__init__.py:533
 msgid "[Guild Leader only] Attack a city."
@@ -6900,7 +6916,7 @@ msgstr "**{alliance_name}**, **{city}**'deki savunmaları yok edemedi!"
 
 #: cogs/alliance/__init__.py:765
 msgid "Your alliance does not have any active cooldown at the moment."
-msgstr ""
+msgstr "İttifakının şu anda aktif bir bekleme süresi yok."
 
 #: utils/castle.py:164
 #, python-brace-format
@@ -6910,6 +6926,49 @@ msgstr "İçinde {emote} olan bir hazine buldun!"
 #: utils/castle.py:269
 msgid "You have reached the exit!"
 msgstr "Çıkışa ulaştın!"
+
+#~ msgid ""
+#~ "1) Only up to two characters per individual\n"
+#~ "2) No abusing or benefiting from bugs or exploits\n"
+#~ "3) Be friendly and kind to other players\n"
+#~ "4) Trading in-game items or currency for real money is forbidden\n"
+#~ "5) Giving or selling renamed items is forbidden\n"
+#~ "\n"
+#~ "IdleRPG is a global bot, your characters are valid everywhere"
+#~ msgstr ""
+#~ "1) Kişi başına sadece en fazla iki karakter\n"
+#~ "2) Hata veya açıklardan yararlanmak veya suistimal etmek yasak\n"
+#~ "3) Diğer oyunculara karşı dostça ve nazik ol\n"
+#~ "4) Gerçek para karşılığında oyun için eşya veya para ticareti yasak\n"
+#~ "5) Yeniden adlandırılmış eşyaların verilmesi veya satılması yasak\n"
+#~ "\n"
+#~ "IdleRPG evrensel bir bot, karakterlerin her yerde geçerlidir."
+
+#~ msgid ""
+#~ "What shall your character's name be? (Minimum 3 Characters, Maximum 20)\n"
+#~ "\n"
+#~ "**Please note that with the creation of a character, you agree to these "
+#~ "rules:**\n"
+#~ "1) Only up to two characters per individual\n"
+#~ "2) No abusing or benefiting from bugs or exploits\n"
+#~ "3) Be friendly and kind to other players\n"
+#~ "4) Trading in-game items or currency for real money is forbidden\n"
+#~ "5) Giving or selling renamed items is forbidden\n"
+#~ "\n"
+#~ "IdleRPG is a global bot, your characters are valid everywhere"
+#~ msgstr ""
+#~ "Karakterinin adı ne olmalı? (Minimum 3 Karakter, Maksimum 20)\n"
+#~ "\n"
+#~ "**Şunu lütfen bilin ki karakter oluşturduğunuzda bu kuralları kabul "
+#~ "edersiniz:**\n"
+#~ "1) Kişi başına sadece 2 karakter\n"
+#~ "2) Bugları ya da açıkları suistimal etmek ya da onlardan avantaj sağlamak "
+#~ "yasak\n"
+#~ "3) Diğer oyunculara karşı arkadaş canlısı ve nazik olun\n"
+#~ "4) Oyun-içi eşyaları ya da parayı gerçek para ile alışveriş etmek yasak\n"
+#~ "5) Yeniden adlandırılmış eşyaları vermek ya da satmak yasak\n"
+#~ "\n"
+#~ "IdleRPG evrensel bir bot, karakterlerin her yerde geçerli"
 
 #~ msgid "[Patreon Only] Changes an item type."
 #~ msgstr "[Patreon'a Özel] Bir eşyanın türünü değiştirir."
