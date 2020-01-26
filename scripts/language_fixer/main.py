@@ -5,7 +5,7 @@ import re
 
 def replace(file: str, pattern: str, new: str):
     pattern = pattern.replace("�", "\\n")
-    with open(file, "r+", encoding="utf-8") as f:
+    with open(file, "r+", encoding="utf-8", errors="ignore") as f:
         cont = f.read()
         print(pattern in cont)
         cont = cont.replace(pattern, new)
@@ -19,7 +19,7 @@ def search(pattern: str):
         for file in files:
             if not file.endswith(".py"):
                 continue
-            with open(os.path.join(root, file), "r") as f:
+            with open(os.path.join(root, file), "r", errors="ignore") as f:
                 text = f.read()
 
                 pattern = pattern.replace("\\n", "�")
