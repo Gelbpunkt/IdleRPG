@@ -104,7 +104,7 @@ class Trading(commands.Cog):
                         itemid=itemid
                     )
                 )
-            if item["owner"] == ctx.author:
+            if item["owner"] == ctx.author.id:
                 return await ctx.send(_("You may not buy your own items."))
             if await self.bot.get_city_buildings(ctx.character_data["guild"]):
                 tax = 0
@@ -336,6 +336,9 @@ class Trading(commands.Cog):
     @locale_doc
     async def merchant(self, ctx, *itemids: int):
         _("""Sells items for their value.""")
+        if not itemids:
+            await self.bot.reset_cooldown(ctx)
+            return await ctx.send(_("You cannot sell nothing."))
         async with self.bot.pool.acquire() as conn:
             value, amount, equipped = await conn.fetchval(
                 "SELECT (sum(ai.value), count(*), SUM(CASE WHEN i.equipped THEN 1 END)) FROM inventory i JOIN allitems ai ON (i.item=ai.id) WHERE ai.id=ANY($1) AND ai.owner=$2;",
@@ -404,6 +407,7 @@ class Trading(commands.Cog):
                 maxstat,
             )
             if count == 0:
+                await self.bot.reset_cooldown(ctx)
                 return await ctx.send(_("Nothing to merch."))
             if (
                 buildings := await self.bot.get_city_buildings(
@@ -504,7 +508,7 @@ class Trading(commands.Cog):
                 footer=_("Hit a button to buy it"),
                 return_index=True,
                 entries=[
-                    f"**{i[0]['name']}** - {i[0]['damage'] if i[0]['type_'] == 'Sword' else i[0]['armor']} - **${i[1]}**"
+                    f"**{i[0]['name']}** - {i[0]['damage'] if i[0]['type_'] == 'Sword' else i[0]['armor']} {'damage' if i[0]['type_'] == 'Sword' else 'armor'} - **${i[1]}**"
                     for i in offers
                 ],
             ).paginate(ctx)
