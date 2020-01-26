@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-01-25 03:00-0800\n"
-"PO-Revision-Date: 2019-12-27 14:20+0100\n"
+"POT-Creation-Date: 2020-01-26 00:18-0800\n"
+"PO-Revision-Date: 2020-01-25 12:48+0100\n"
 "Last-Translator: Lilli\n"
 "Language-Team: \n"
 "Language: hu_HU\n"
@@ -100,7 +100,7 @@ msgstr ""
 
 #: cogs/tournament/__init__.py:165
 msgid "Starts a new raid tournament."
-msgstr ""
+msgstr "Új hajtóvadászattal egybekötött lovagi tornát hirdet."
 
 #: cogs/tournament/__init__.py:245 cogs/battles/__init__.py:214
 #, python-brace-format
@@ -133,6 +133,8 @@ msgid ""
 "Raid Tournament ended! The winner is {winner}.\n"
 "Money was given!"
 msgstr ""
+"A hajtóvadászattal egybekötött lovagi torna véget ért! A győztes: {winner}.\n"
+"A pénznyeremény átadásra került!"
 
 #: cogs/images/__init__.py:34
 msgid "Pixelfys an Avatar."
@@ -873,7 +875,7 @@ msgstr "Túl kevesen neveztek..."
 
 #: cogs/hungergames/__init__.py:343
 msgid "An error happened during the hungergame. Please try again!"
-msgstr ""
+msgstr "Az éhezők viadala meghiúsult egy szervezői hiba miatt. Próbáld újra!"
 
 #: cogs/error_handler/__init__.py:62
 #, python-brace-format
@@ -2311,6 +2313,8 @@ msgstr "A `{itemid}` sorszámú tárgy innentől `{newname}` néven ismert."
 #: cogs/patreon/__init__.py:98
 msgid "[Patreon Only, Bronze and above] Changes an item type."
 msgstr ""
+"[Kizárólag Patreonos támogatóknak, Bronze minősítéstől] Egy tárgy típusának "
+"megváltoztatása."
 
 #: cogs/patreon/__init__.py:100
 msgid "Invalid type. Try Sword or Shield."
@@ -2320,7 +2324,7 @@ msgstr ""
 #: cogs/patreon/__init__.py:116
 #, python-brace-format
 msgid "The item is already a {item_type}."
-msgstr ""
+msgstr "A kiválasztott tárgy típusa eddig is {item_type} volt."
 
 #: cogs/patreon/__init__.py:130
 #, python-brace-format
@@ -2330,6 +2334,8 @@ msgstr " A `{itemid}` számú tárgy innentől fogva egy `{itemtype}`."
 #: cogs/patreon/__init__.py:141
 msgid "[Patreon Only, Gold and above] Receive a daily booster."
 msgstr ""
+"[Kizárólag Patreonos támogatóknak, Gold minősítéstől] Napi felpörgető szérum "
+"kiadása."
 
 #: cogs/patreon/__init__.py:147
 #, python-brace-format
@@ -2443,6 +2449,8 @@ msgid ""
 "The tank class. Charge into battle with additional defense!\n"
 "+1 defense per evolution."
 msgstr ""
+"Támadást felfogó kaszt. Rohamra fel a megnövekedett védelemértékeddel!\n"
+"+1 védelemérték átalakulásonként."
 
 #: cogs/classes/__init__.py:59
 msgid "Thief"
@@ -2470,6 +2478,8 @@ msgid ""
 "Utilise powerful magic for stronger attacks.\n"
 "+1 damage per evolution."
 msgstr ""
+"Hívd segítségül a varázserőt, hogy megnövekedett erővel sújthass le!\n"
+"+1 sebzésérték átalakulásonként."
 
 #: cogs/classes/__init__.py:76
 #, python-brace-format
@@ -2524,6 +2534,9 @@ msgid ""
 "Absorb the appreciation of the devs into your soul to power up.\n"
 "+1 damage and defense per evolution."
 msgstr ""
+"A fejlesztők hálája kísérjen utadon, és érezd ahogy áldásuk új lángot "
+"támaszt szívedben!\n"
+"+1 védelem- és pajzsérték átalakulásonként."
 
 #: cogs/classes/__init__.py:126
 #, python-brace-format
@@ -2604,10 +2617,11 @@ msgstr "Megpróbáltad kifosztani a VIP botot, de a testőrei rajtakaptak."
 #, python-brace-format
 msgid "You stole **${stolen}** from {user}."
 msgstr ""
+"Sikeresen átvándorolt a zsebedbe **${stolen}**. **{user}** észre sem vette."
 
 #: cogs/classes/__init__.py:292
 msgid "a traveller just passing by"
-msgstr ""
+msgstr "A szerencsétlen épp erre járó"
 
 #: cogs/classes/__init__.py:296
 msgid "Your attempt to steal money wasn't successful."
@@ -3453,6 +3467,9 @@ msgid ""
 "side you bet on. You will win [maximum - 1] * [money] money if you are right "
 "and lose [money] if you are wrong."
 msgstr ""
+"Fogadj a kockadobás eredményére, [X] oldalú kockával. A [tip] kritérium "
+"megadja, hogy melyik oldalra tippelsz. A nyereményed összege, ha eltalálod: "
+"[maximum-1] * [tét], máskülönben elveszíted a téted összegét."
 
 #: cogs/gambling/__init__.py:446
 #, python-brace-format
@@ -3571,6 +3588,9 @@ msgid ""
 "Successfully added your item to the shop! Use `{prefix}shop` to view it in "
 "the market! The tax of 5% has been deducted from your account."
 msgstr ""
+"Sikeresen kiállítottad az árudat a piacon. Használd a `{prefix}shop` "
+"parancsot portéká(i)d megtekintéséhez! Az 5% ÁFA-t behajtotta rajtad az "
+"adóhatóság."
 
 #: cogs/trading/__init__.py:95
 msgid "Buys an item from the global market."
@@ -3751,12 +3771,16 @@ msgid ""
 "You are about to sell **{count} items for ${money}!**\n"
 "Are you sure you want to do this?"
 msgstr ""
+"Éppen túladni készülsz **{count} darab** jószágon **${money} összegért**.\n"
+"Biztos vagy benne, hogy ezt akarod?"
 
 #: cogs/trading/__init__.py:429
 msgid ""
 "Looks like you got more or less items in that range in the meantime. Please "
 "try again."
 msgstr ""
+"Úgy tűnik, a feltételeknek megfelelő tárgyaid száma idő közben megváltozott. "
+"Próbáld újra!"
 
 #: cogs/trading/__init__.py:446
 #, python-brace-format
@@ -4316,7 +4340,7 @@ msgstr "A Keresztény Egyház megpurgálta őket..."
 
 #: cogs/marriage/__init__.py:487
 msgid "They starved after becoming a communist."
-msgstr ""
+msgstr "A Kommunizmus Szelleméért éhhalált halt."
 
 #: cogs/marriage/__init__.py:497
 #, python-brace-format
@@ -4327,98 +4351,105 @@ msgstr "{name} elhúnyt {age}. életévében! {cause}"
 msgid ""
 "fell in love with a woman on the internet, but the woman was a man and stole "
 "their money."
-msgstr ""
+msgstr "Beleszeretett egy nőbe a Tinderen, de az jól kifosztotta."
 
 #: cogs/marriage/__init__.py:507
 msgid "has been arrested and had to post bail."
 msgstr ""
+"Letartóztatták, olyan csúnya volt, te meg inkább befizetted egy plasztikai "
+"műtétre."
 
 #: cogs/marriage/__init__.py:508
 msgid "bought fortnite skins with your credit card."
-msgstr ""
+msgstr "Lenyúlta a hitelkártyádat és bevásárolt Fortnite skinekből."
 
 #: cogs/marriage/__init__.py:509
 msgid "decided to become communist and gave the money to others."
 msgstr ""
+"Megszállta a Kommunista Szellem, és odaadta a pénzét a mocskos "
+"kapitalistáknak."
 
 #: cogs/marriage/__init__.py:510
 msgid "bought an inflatable loli."
-msgstr ""
+msgstr "Vett egy nyalókaalakú lufit."
 
 #: cogs/marriage/__init__.py:511
 msgid "was caught pickpocketing and you had to pay the fine."
 msgstr ""
+"Felismerték a CCTV felvételről, miközben kizsebelt valakit, és rajtad "
+"hajtotta be a sértett a kárt."
 
 #: cogs/marriage/__init__.py:512
 msgid "gave it to a beggar."
-msgstr ""
+msgstr "Az egészet odaadta egy hajléktalannak."
 
 #: cogs/marriage/__init__.py:513
 msgid "borrowed it to attend the local knights course."
 msgstr ""
+"Lenyúlta, hogy elvihessen belőle egy udvarhölgyet a Sir Lancelot étterembe."
 
 #: cogs/marriage/__init__.py:514
 msgid "spent it in the shop."
-msgstr ""
+msgstr "Elshoppingolta az egészet a Királyi Plázában."
 
 #: cogs/marriage/__init__.py:515
 msgid "bought some toys."
-msgstr ""
+msgstr "Játékokat vett belőle."
 
 #: cogs/marriage/__init__.py:516
 msgid "has gambling addiction and lost the money..."
-msgstr ""
+msgstr "Az egészet beledobálta az egykezű rablóba, hogy kielégítse függőségét."
 
 #: cogs/marriage/__init__.py:527
 #, python-brace-format
 msgid "You lost ${money} because {name} {cause}"
-msgstr ""
+msgstr "{name} nevű gyermeked ${money} kárt okozott neked. {cause}"
 
 #: cogs/marriage/__init__.py:534
 msgid "finally found a job!"
-msgstr ""
+msgstr "Végre talált magának munkát!"
 
 #: cogs/marriage/__init__.py:535
 msgid "won a lottery."
-msgstr ""
+msgstr "Ennyit nyert a lottón."
 
 #: cogs/marriage/__init__.py:536
 msgid "sold their toys."
-msgstr ""
+msgstr "Eladta a játékait."
 
 #: cogs/marriage/__init__.py:537
 msgid "got money from another kid that decided to become communist."
-msgstr ""
+msgstr "Mivel mocskos kapitalista, így egy komcsi hozzávágta az összes pénzét."
 
 #: cogs/marriage/__init__.py:538
 msgid "stole it from a traveller."
-msgstr ""
+msgstr "Kizsebelt egy arra járót."
 
 #: cogs/marriage/__init__.py:539
 msgid "finished a quest with a money reward."
-msgstr ""
+msgstr "Teljesített egy küldetést és ennyit kapott cserébe."
 
 #: cogs/marriage/__init__.py:540
 msgid "used dark magic to summon some money."
-msgstr ""
+msgstr "_Anyagi_ mágiát használt."
 
 #: cogs/marriage/__init__.py:541
 msgid "looted a local warehouse and sold the wares."
-msgstr ""
+msgstr "Kirabolt egy raktárat, és eladta a zsákmányt."
 
 #: cogs/marriage/__init__.py:542
 msgid "solved an enigma with a money reward."
-msgstr ""
+msgstr "Megfejtett egy készpénznyereményes keresztrejtvényt."
 
 #: cogs/marriage/__init__.py:552
 #, python-brace-format
 msgid "{name} gave you ${money}, they {cause}"
-msgstr ""
+msgstr "{name} kezedbe nyomott ${money} háztartási hozzájárulást. {cause}"
 
 #: cogs/marriage/__init__.py:570
 #, python-brace-format
 msgid "{name} found a {emoji} {type_} crate for you!"
-msgstr ""
+msgstr "{name} talált egy {emoji} {type_} ládát, és neked adta!"
 
 #: cogs/marriage/__init__.py:582
 #, python-brace-format
@@ -5075,7 +5106,7 @@ msgstr "Játékos nem található."
 
 #: cogs/guild/__init__.py:826
 msgid "Error when adding this user, please try again"
-msgstr ""
+msgstr "Nem sikerült hozzáadni a megadott játékost, próbáld újra!"
 
 #: cogs/guild/__init__.py:831 cogs/guild/__init__.py:857
 msgid "Took to long to add members. Fight cancelled."
@@ -5212,6 +5243,8 @@ msgid ""
 "Your guild isn't on an adventure yet. Ask your guild officer to use `{prefix}"
 "guild adventure` to start one"
 msgstr ""
+"A céh nem hirdetett még közös kalandot. Nyaggass ezzel egy céh tisztet, aki "
+"a `{prefix}guild adventure` paranccsal tudja teljesíteni a kérést"
 
 #: cogs/guild/__init__.py:1097
 #, python-brace-format
@@ -5228,6 +5261,9 @@ msgid ""
 "Your guild has completed an adventure of difficulty `{difficulty}`, ask a "
 "guild officer to check their status."
 msgstr ""
+"A céhed csapatépítője véget ért. Ennyire brutális volt az esemény: "
+"`{difficulty}`. Kérj meg egy céh tisztet, hogy takarítsanak el utánatok a "
+"státusz megtekintésével!"
 
 #: cogs/guild/__init__.py:1113
 #, python-brace-format
@@ -5243,6 +5279,8 @@ msgstr ""
 #, python-brace-format
 msgid "Guild adventure is running and will be done after {time}"
 msgstr ""
+"A céhed épp hatalmasat kalandozik a csapatépítőn. Záróráig még {time} van "
+"hátra"
 
 #: cogs/vote/__init__.py:28
 msgid "Vote me up to get a random crate!"
@@ -5343,10 +5381,19 @@ msgid ""
 "\n"
 "IdleRPG is a global bot, your characters are valid everywhere"
 msgstr ""
+"**Vedd figyelembe, hogy a karakterindítással beleegyezel az alábbi "
+"alapszabályokba:**\n"
+"1) Személyenként legfeljebb *két* karakter indítható\n"
+"2) A bugokból és más hibákból származó nyerészkedés szigorúan tilos!\n"
+"3) Légy barátságos játékostársaiddal!\n"
+"4) A játékon belül bármiből anyagi hasznot húzni tilos!\n"
+"5) Az egyéni (átkeresztelt) tárgyak nem el-, és nem átadhatóak!\n"
+"\n"
+"IdleRPG egy globálisan futó bot, így a karakterek minden csatornán elérhetőek"
 
 #: cogs/profile/__init__.py:84
 msgid "Creation of your character cancelled."
-msgstr ""
+msgstr "Karakter létrehozása félbehagyva."
 
 #: cogs/profile/__init__.py:94
 msgid "Starter Sword"
@@ -5889,19 +5936,19 @@ msgstr "Név sikeresen megváltoztatva."
 
 #: cogs/admin/__init__.py:179
 msgid "[Bot Admin only] Create an item."
-msgstr ""
+msgstr "[Kizárólag Bot Adminisztrátoroknak] Tárgy létrehozása."
 
 #: cogs/admin/__init__.py:181
 msgid "Invalid item type."
-msgstr ""
+msgstr "Érvénytelen tárgy típus."
 
 #: cogs/admin/__init__.py:183
 msgid "Invalid stat."
-msgstr ""
+msgstr "Érvénytelen minőségi érték."
 
 #: cogs/admin/__init__.py:197
 msgid "Done."
-msgstr ""
+msgstr "Kész."
 
 #: cogs/admin/__init__.py:209
 msgid "[Bot Admin only] Gives/removes crates to a user without loss."
@@ -6195,11 +6242,11 @@ msgstr "Megbütykölt, átalakított tárgyakat nem adhatsz el."
 
 #: cogs/transaction/__init__.py:290
 msgid "Adds multiple items to a trade."
-msgstr ""
+msgstr "Több tárgy együttes hozzáadása egy barterhez."
 
 #: cogs/transaction/__init__.py:292
 msgid "You already added one or more of these items!"
-msgstr ""
+msgstr "Egy vagy több ilyen tárgyat már hozzáadtál a barterhez!"
 
 #: cogs/transaction/__init__.py:308
 msgid "Sets a value to a trade instead of adding onto it."
@@ -6260,7 +6307,7 @@ msgstr "Ez a tárgy nem szerepel a barterben."
 
 #: cogs/transaction/__init__.py:389
 msgid "Removes multiple items to a trade."
-msgstr ""
+msgstr "Tárgyak együttes eltávolítása egy barterből."
 
 #: cogs/races/__init__.py:32
 msgid "Change your race. This is irreversible."
@@ -6685,11 +6732,11 @@ msgstr "Ez a Céhmester már belépett a közös szövetségetekbe."
 
 #: cogs/alliance/__init__.py:139
 msgid "This guild is already in an alliance."
-msgstr ""
+msgstr "Ez a céh már másokkal áll szövetségben."
 
 #: cogs/alliance/__init__.py:147
 msgid "This guild is the leader of another alliance."
-msgstr ""
+msgstr "Ez a céh egy másik Szövetség vezetője."
 
 #: cogs/alliance/__init__.py:152
 #, python-brace-format
@@ -6930,7 +6977,7 @@ msgstr ""
 #: cogs/alliance/__init__.py:507
 #, python-brace-format
 msgid "{city} was just occupied and stands under protection."
-msgstr ""
+msgstr "{city} ki lett sajátítva és jelenleg védelem alatt áll."
 
 #: cogs/alliance/__init__.py:518
 #, python-brace-format
@@ -6938,6 +6985,9 @@ msgid ""
 "Your alliance now rules **{city}**. You should immediately buy defenses. You "
 "have **10 minutes** to build defenses before others can occupy the city!"
 msgstr ""
+"**{city}** jelenleg Szövetséged irányítása alatt áll. Ajánlatos lenne "
+"azonnal belekezdeni a védelmi vonalak kiépítésébe. Erre **10 perc** áll "
+"rendelkezésre, mielőtt a következő támadó felépíthet egy ostromzárat."
 
 #: cogs/alliance/__init__.py:533
 msgid "[Guild Leader only] Attack a city."
@@ -7032,7 +7082,7 @@ msgstr ""
 
 #: cogs/alliance/__init__.py:765
 msgid "Your alliance does not have any active cooldown at the moment."
-msgstr ""
+msgstr "A szövetséged minden parancsa újra van töltve."
 
 #: utils/castle.py:164
 #, python-brace-format
@@ -7097,6 +7147,24 @@ msgstr "Elérted a kijáratot!"
 #~ "<https://discordapp.com/terms> - Discord ÁSZF\n"
 #~ "<https://www.ncpgambling.org/help-treatment/national-"
 #~ "helpline-1-800-522-4700/> - Szerencsejátékbetegség Segélyvonal"
+
+#~ msgid ""
+#~ "1) Only up to two characters per individual\n"
+#~ "2) No abusing or benefiting from bugs or exploits\n"
+#~ "3) Be friendly and kind to other players\n"
+#~ "4) Trading in-game items or currency for real money is forbidden\n"
+#~ "5) Giving or selling renamed items is forbidden\n"
+#~ "\n"
+#~ "IdleRPG is a global bot, your characters are valid everywhere"
+#~ msgstr ""
+#~ "1) Személyenként legfeljebb *két* karakter indítható\n"
+#~ "2) A bugok és más hibákból származó nyerészkedés szigorúan tilos!\n"
+#~ "3) Légy barátságos játékostársaiddal!\n"
+#~ "4) A játékon belül bármiből anyagi hasznot húzni tilos!\n"
+#~ "5) Az egyéni (átkeresztelt) tárgyak nem el-, és nem átadhatóak!\n"
+#~ "\n"
+#~ "IdleRPG egy globálisan futó bot, így a karakterek minden csatornán "
+#~ "elérhetőek!"
 
 #~ msgid ""
 #~ "What shall your character's name be? (Minimum 3 Characters, Maximum 20)\n"
