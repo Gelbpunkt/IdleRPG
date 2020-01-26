@@ -5,7 +5,7 @@ import re
 
 def replace(file: str, pattern: str, new: str):
     pattern = pattern.replace("�", "\\n")
-    with open(file, "r+") as f:
+    with open(file, "r+", encoding="utf-8") as f:
         cont = f.read()
         print(pattern in cont)
         cont = cont.replace(pattern, new)
