@@ -41,7 +41,7 @@ class Tournament(commands.Cog):
     @user_cooldown(1800)
     @commands.command()
     @locale_doc
-    async def tournament(self, ctx, prize: IntFromTo(0, 100_000_000)):
+    async def tournament(self, ctx, prize: IntFromTo(0, 100_000_000) = 0):
         _("""Starts a new tournament.""")
         if ctx.character_data["money"] < prize:
             return await ctx.send(_("You are too poor."))
@@ -161,7 +161,7 @@ class Tournament(commands.Cog):
     @user_cooldown(1800)
     @commands.command()
     @locale_doc
-    async def raidtournament(self, ctx, prize: IntFromTo(0, 100_000_000)):
+    async def raidtournament(self, ctx, prize: IntFromTo(0, 100_000_000) = 0):
         _("""Starts a new raid tournament.""")
         if ctx.character_data["money"] < prize:
             return await ctx.send(_("You are too poor."))

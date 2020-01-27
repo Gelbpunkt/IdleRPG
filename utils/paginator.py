@@ -407,6 +407,7 @@ class AdventurePaginator:
 
             try:
                 await self.base.delete()
+                self.files[self.current].reset()
                 self.base = await ctx.send(
                     embed=self.pages[self.current], file=self.files[self.current]
                 )

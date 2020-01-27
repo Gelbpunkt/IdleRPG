@@ -361,16 +361,22 @@ class Marriage(commands.Cog):
             return (
                 msg.author.id in [ctx.author.id, marriage]
                 and 1 <= len(msg.content) <= 20
-                and msg.content not in names
                 and msg.channel.id == ctx.channel.id
             )
 
-        try:
-            msg = await self.bot.wait_for("message", check=check, timeout=30)
-        except asyncio.TimeoutError:
-            await self.bot.reset_cooldown(ctx)
-            return await ctx.send(_("You didn't enter a name."))
-        name = msg.content.replace("@", "@\u200b")
+        name = None
+        while not name:
+            try:
+                msg = await self.bot.wait_for("message", check=check, timeout=30)
+                name = msg.content.replace("@", "@\u200b")
+            except asyncio.TimeoutError:
+                await self.bot.reset_cooldown(ctx)
+                return await ctx.send(_("You didn't enter a name."))
+            if name in names:
+                await ctx.send(
+                    _("One of your children already has that name, please choose another one.")
+                )
+                name = None
         async with self.bot.pool.acquire() as conn:
             await conn.execute(
                 'INSERT INTO children ("mother", "father", "name", "age", "gender") VALUES ($1, $2, $3, $4, $5);',
@@ -597,15 +603,21 @@ class Marriage(commands.Cog):
                     msg.author.id in [ctx.author.id, ctx.character_data["marriage"]]
                     and msg.channel.id == ctx.channel.id
                     and 0 < len(msg.content) <= 20
-                    and msg.content not in names
                 )
 
-            try:
-                msg = await self.bot.wait_for("message", check=check, timeout=30)
-            except asyncio.TimeoutError:
-                await self.bot.reset_cooldown(ctx)
-                return await ctx.send(_("You didn't enter a name."))
-            name = msg.content.replace("@", "@\u200b")
+            name = None
+            while not name:
+                try:
+                    msg = await self.bot.wait_for("message", check=check, timeout=30)
+                    name = msg.content.replace("@", "@\u200b")
+                except asyncio.TimeoutError:
+                    await self.bot.reset_cooldown(ctx)
+                    return await ctx.send(_("You didn't enter a name."))
+                if name in names:
+                    await ctx.send(
+                        _("One of your children already has that name, please choose another one.")
+                    )
+                    name = None
             await self.bot.pool.execute(
                 'UPDATE children SET "name"=$1 WHERE "name"=$2 AND ("mother"=$3 OR "father"=$3) AND "age"=$4;',
                 name,
@@ -613,6 +625,8 @@ class Marriage(commands.Cog):
                 ctx.author.id,
                 target["age"],
             )
+            if name == target["name"]:
+                return await ctx.send(_("You didn't change their name."))
             return await ctx.send(
                 _("{old_name} is now called {new_name}.").format(
                     old_name=target["name"], new_name=name

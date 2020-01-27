@@ -125,7 +125,7 @@ class Classes(commands.Cog):
             _(
                 "You are about to select the `{profession}` class for yourself. {textaddon} Proceed?"
             ).format(
-                textaddon=_("Changing it later will cost **$5000**.")
+                textaddon=_("This **costs nothing**, but changing it later will cost **$5000**.")
                 if ctx.character_data["class"][val] == "No Class"
                 else _("This will cost **$5000**."),
                 profession=profession,
