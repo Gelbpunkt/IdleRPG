@@ -344,7 +344,7 @@ class Battles(commands.Cog):
     @commands.command()
     @locale_doc
     async def activebattle(
-        self, ctx, money: IntGreaterThan(-1), enemy: discord.Member = None
+        self, ctx, money: IntGreaterThan(-1) = 0, enemy: discord.Member = None
     ):
         _("""Reaction-based battle system.""")
         if enemy == ctx.author:
