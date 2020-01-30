@@ -62,22 +62,6 @@ class Patreon(commands.Cog):
                 'UPDATE inventory SET "equipped"=$1 WHERE "item"=$2;', False, itemid
             )
 
-            # failsafe
-            resetitem = await conn.fetchrow(
-                'SELECT * FROM allitems WHERE "id"=$1;', itemid
-            )
-
-            if (resetitem["type"] == "Sword" and resetitem["damage"] == 0) or (
-                resetitem["type"] == "Shield" and resetitem["armor"] == 0
-            ):
-                newdmg, newarmor = resetitem["armor"], resetitem["damage"]
-                await conn.execute(
-                    'UPDATE allitems SET "name"=CASE WHEN "original_name" IS NULL THEN "name" ELSE "original_name" END, "original_name"=NULL, "damage"=$2, "armor"=$3, "type"=CASE WHEN "original_type" IS NULL THEN "type" ELSE "original_type" END, "original_type"=NULL WHERE "id"=$1;',
-                    itemid,
-                    newdmg,
-                    newarmor,
-                )
-
         await ctx.send(_("Item reset."))
 
     @is_patron()
