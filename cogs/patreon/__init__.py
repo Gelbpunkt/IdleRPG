@@ -40,14 +40,18 @@ class Patreon(commands.Cog):
         _("""Reset an item's type and name, if modified.""")
         async with self.bot.pool.acquire() as conn:
             item = await conn.fetchrow('SELECT * FROM allitems WHERE "id"=$1;', itemid)
+
             if not item or item["owner"] != ctx.author.id:
                 return await ctx.send(_("You do not own this item."))
+
             if not item["original_name"] and not item["original_type"]:
                 return await ctx.send(_("Nothing to do..."))
-            if item["original_type"] == item["type"]:
+
+            if not (type_ := item["original_type"]) or type_ == item["type"]:
                 dmg, armor = item["damage"], item["armor"]
             else:
-                dmg, armor = item["armor"], item["damage"]
+                armor, dmg = item["damage"], item["armor"]
+
             await conn.execute(
                 'UPDATE allitems SET "name"=CASE WHEN "original_name" IS NULL THEN "name" ELSE "original_name" END, "original_name"=NULL, "damage"=$2, "armor"=$3, "type"=CASE WHEN "original_type" IS NULL THEN "type" ELSE "original_type" END, "original_type"=NULL WHERE "id"=$1;',
                 itemid,
@@ -57,6 +61,7 @@ class Patreon(commands.Cog):
             await conn.execute(
                 'UPDATE inventory SET "equipped"=$1 WHERE "item"=$2;', False, itemid
             )
+
         await ctx.send(_("Item reset."))
 
     @is_patron()
