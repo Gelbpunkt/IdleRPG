@@ -109,7 +109,7 @@ class Owner(commands.Cog):
                 top_followers = [
                     u["user"]
                     for u in await conn.fetch(
-                        'SELECT "user" FROM profile WHERE "god"=$1 ORDER BY "favor" LIMIT 25;',
+                        'SELECT "user" FROM profile WHERE "god"=$1 ORDER BY "favor" DESC LIMIT 25;',
                         god,
                     )
                 ]
