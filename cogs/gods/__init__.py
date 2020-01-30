@@ -220,6 +220,8 @@ class Gods(commands.Cog):
         _("""Lists top followers of your god (or yourself).""")
         if ctx.author.id in self.bot.gods:
             god = self.bot.gods[ctx.author.id]
+        elif not ctx.character_data["god"]:
+            return await ctx.send(_("You are not following any god currently, therefore the list cannot be generated."))
         else:
             if limit > 25:
                 return await ctx.send(_("Normal followers may only view the top 25."))
