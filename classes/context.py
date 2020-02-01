@@ -84,6 +84,11 @@ class Context(commands.Context):
         confirmed = bool(emojis.index(str(reaction.emoji)))
         if not confirmed:
             await self.bot.reset_cooldown(self)
+            if self.command.parent:
+                if self.command.root_parent.name == "guild":
+                    await self.bot.reset_guild_cooldown(self)
+                elif self.command.root_parent.name == "alliance":
+                    await self.bot.reset_alliance_cooldown(self)
 
         return confirmed
 

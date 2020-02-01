@@ -493,7 +493,7 @@ class Bot(commands.AutoShardedBot):
             return await self.create_item(**item)
         return item
 
-    async def process_levelup(self, ctx, new_level):
+    async def process_levelup(self, ctx, new_level, old_level):
         if (reward := random.choice(["crates", "money", "item"])) == "crates":
             if new_level < 6:
                 column = "crates_common"
@@ -542,10 +542,14 @@ class Bot(commands.AutoShardedBot):
             )
             reward_text = f"**${money}**"
 
+        additional = _(
+            "You can now choose your second class using `{prefix}class`!"
+        ).format(prefix=ctx.prefix) if old_level < 12 and new_level >= 12 else ""
+
         await ctx.send(
             _(
-                "You reached a new level: **{new_level}** :star:! You received {reward} as a reward :tada:!"
-            ).format(new_level=new_level, reward=reward_text)
+                "You reached a new level: **{new_level}** :star:! You received {reward} as a reward :tada:! {additional}"
+            ).format(new_level=new_level, reward=reward_text, additional=additional)
         )
 
     def in_class_line(self, classes, line):
