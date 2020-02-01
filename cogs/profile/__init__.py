@@ -488,7 +488,7 @@ IdleRPG is a global bot, your characters are valid everywhere"""
         if reward == "xp":
             new_level = int(rpgtools.xptolevel(ctx.character_data["xp"] + value))
             if old_level != new_level:
-                await self.bot.process_levelup(ctx, new_level)
+                await self.bot.process_levelup(ctx, new_level, old_level)
 
         await self.bot.reset_cooldown(ctx)
 

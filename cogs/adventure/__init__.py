@@ -506,7 +506,7 @@ Adventure name: `{adventure}`"""
             new_level = int(rpgtools.xptolevel(ctx.character_data["xp"] + xp))
 
             if current_level != new_level:
-                await self.bot.process_levelup(ctx, new_level)
+                await self.bot.process_levelup(ctx, new_level, current_level)
 
     @has_char()
     @has_adventure()
