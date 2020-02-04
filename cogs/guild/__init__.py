@@ -874,17 +874,9 @@ for a prize of **${amount}**.\n **{fightercount}** players entered."
                     "Guild Battle Fight **{num}** of **{total}**.\n**{user}** vs **{user2}**!\nBattle running..."
                 ).format(num=idx + 1, total=len(team1), user=user, user2=user2)
             )
-            sw1, sh1 = await self.bot.get_equipped_items_for(user)
-            val1 = (
-                (sw1["damage"] if sw1 else 0)
-                + (sh1["armor"] if sh1 else 0)
-                + random.randint(1, 7)
-            )
-            sw2, sh2 = await self.bot.get_equipped_items_for(user2)
-            val2 = (
-                (sw2["damage"] if sw2 else 0)
-                + (sh2["armor"] if sh2 else 0)
-                + random.randint(1, 7)
+            val1 = sum(await self.bot.get_damage_armor_for(user)) + random.randint(1, 7)
+            val2 = sum(await self.bot.get_damage_armor_for(user2)) + random.randint(
+                1, 7
             )
             if val1 > val2:
                 winner = user

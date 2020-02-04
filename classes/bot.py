@@ -217,7 +217,7 @@ class Bot(commands.AutoShardedBot):
         if conn is None:
             conn = await self.pool.acquire()
             local = True
-        sword, shield = await self.get_equipped_items_for(v, conn=conn)
+        damage, armor = await self.get_damage_armor_for(v, conn=conn)
         if (
             atkmultiply is None
             or defmultiply is None
@@ -244,12 +244,12 @@ class Bot(commands.AutoShardedBot):
             atkmultiply = atkmultiply + Decimal("0.1") * self.get_class_grade_from(
                 classes, "Raider"
             )
-        dmg = sword["damage"] * atkmultiply if sword else 0
+        dmg = damage * atkmultiply
         if self.in_class_line(classes, "Raider"):
             defmultiply = defmultiply + Decimal("0.1") * self.get_class_grade_from(
                 classes, "Raider"
             )
-        deff = shield["armor"] * defmultiply if shield else 0
+        deff = armor * defmultiply
         if local:
             await conn.close()
         return await self.generate_stats(v, dmg, deff, classes=classes, race=race)
@@ -270,17 +270,19 @@ class Bot(commands.AutoShardedBot):
         if conn is None:
             conn = await self.pool.acquire()
             local = True
-        sword = await conn.fetchrow(
-            "SELECT ai.* FROM profile p JOIN allitems ai ON (p.user=ai.owner) JOIN inventory i ON (ai.id=i.item) WHERE i.equipped IS TRUE AND p.user=$1 AND type='Sword';",
-            v,
-        )
-        shield = await conn.fetchrow(
-            "SELECT ai.* FROM profile p JOIN allitems ai ON (p.user=ai.owner) JOIN inventory i ON (ai.id=i.item) WHERE i.equipped IS TRUE AND p.user=$1 AND type='Shield';",
+        items = await conn.fetch(
+            "SELECT ai.* FROM profile p JOIN allitems ai ON (p.user=ai.owner) JOIN inventory i ON (ai.id=i.item) WHERE i.equipped IS TRUE AND p.user=$1;",
             v,
         )
         if local:
             await conn.close()
-        return sword, shield
+        return items
+
+    async def get_damage_armor_for(self, thing, conn=None):
+        items = await self.get_equipped_items_for(thing, conn=conn)
+        damage = sum(i["damage"] for i in items)
+        defense = sum(i["armor"] for i in items)
+        return damage, defense
 
     async def get_context(self, message, *, cls=None):
         return await super().get_context(message, cls=Context)
@@ -484,7 +486,7 @@ class Bot(commands.AutoShardedBot):
         owner = owner.id if isinstance(owner, (discord.User, discord.Member)) else owner
         item = {}
         item["owner"] = owner
-        type_ = random.choice(["Sword", "Shield", "Axe", "Wand", "Dagger", "Knife", "Spear", "Bow", "Hammer", "Scythe", "Howlet"])
+        type_ = random.choice(self.config.item_types)
         if type_ in ["Scythe", "Bow", "Howlet"]:
             item["hand"] = "both"
         elif type_ in ["Spear", "Wand"]:
@@ -499,7 +501,9 @@ class Bot(commands.AutoShardedBot):
         item["value"] = random.randint(minvalue, maxvalue)
         item["name"] = fn.weapon_name(type_)
         if item["hand"] == "both":
-            item["damage"] = round(item["damage"] * 1.5) # both hands = higher damage, else they would be worse
+            item["damage"] = round(
+                item["damage"] * 1.5
+            )  # both hands = higher damage, else they would be worse
         if insert:
             return await self.create_item(**item)
         return item

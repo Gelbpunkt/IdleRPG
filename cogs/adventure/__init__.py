@@ -42,11 +42,9 @@ class Adventure(commands.Cog):
     @locale_doc
     async def adventures(self, ctx):
         _("""A list of all adventures with success rates, name and time it takes.""")
-        sword, shield = await self.bot.get_equipped_items_for(ctx.author)
+        damage, defense = await self.bot.get_damage_armor_for(ctx.author)
         all_dungeons = list(self.bot.config.adventure_times.keys())
         level = rpgtools.xptolevel(ctx.character_data["xp"])
-        damage = sword["damage"] if sword else 0
-        defense = shield["armor"] if shield else 0
 
         msg = await ctx.send(_("Loading images..."))
 
@@ -157,12 +155,8 @@ class Adventure(commands.Cog):
         x = 0
         y = 0
 
-        sword, shield = await self.bot.get_equipped_items_for(ctx.author)
-        attack, defense = await self.bot.generate_stats(
-            ctx.author,
-            float(sword["damage"] if sword else 0),
-            float(shield["armor"] if shield else 0),
-        )
+        attack, defense = await self.bot.get_damage_defense_for(ctx.author)
+        attack, defense = await self.bot.generate_stats(ctx.author, attack, defense)
 
         attack = int(attack)
         defense = int(defense)
@@ -407,11 +401,11 @@ Adventure name: `{adventure}`"""
                 )
             )
 
-        sword, shield = await self.bot.get_equipped_items_for(ctx.author)
-        sword, shield = await self.bot.generate_stats(
+        damage, armor = await self.bot.get_damage_armor_for(ctx.author)
+        damage, armor = await self.bot.generate_stats(
             ctx.author,
-            sword["damage"] if sword else 0,
-            shield["armor"] if shield else 0,
+            damage,
+            armor,
             classes=ctx.character_data["class"],
             race=ctx.character_data["race"],
         )
@@ -426,8 +420,8 @@ Adventure name: `{adventure}`"""
         else:
             bonus = 0
         success = rpgtools.calcchance(
-            sword,
-            shield,
+            damage,
+            armor,
             num,
             current_level,
             luck_multiply,

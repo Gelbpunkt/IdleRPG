@@ -356,3 +356,18 @@ classes = {
         "Ritualist",
     ],
 }
+
+"""All item types ingame."""
+item_types = [
+    "Sword",
+    "Shield",
+    "Axe",
+    "Wand",
+    "Dagger",
+    "Knife",
+    "Spear",
+    "Bow",
+    "Hammer",
+    "Scythe",
+    "Howlet",
+]

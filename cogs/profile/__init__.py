@@ -133,19 +133,40 @@ IdleRPG is a global bot, your characters are valid everywhere"""
                 return await ctx.send(
                     _("**{person}** does not have a character.").format(person=person)
                 )
-            sword, shield = await self.bot.get_equipped_items_for(targetid)
+            items = await self.bot.get_equipped_items_for(targetid)
             mission = await self.bot.get_adventure(targetid)
             guild = await conn.fetchval(
                 'SELECT name FROM guild WHERE "id"=$1;', profile["guild"]
             )
-            v1 = sword["damage"] if sword else 0.0
-            v2 = shield["armor"] if shield else 0.0
+            v1 = sum(i["damage"] for i in items)
+            v2 = sum(i["armor"] for i in items)
             damage, armor = await self.bot.generate_stats(
                 targetid, v1, v2, classes=profile["class"], race=profile["race"]
             )
             extras = (damage - v1, armor - v2)
             sworddmg = f"{v1}{' (+' + str(extras[0]) + ')' if extras[0] else ''}"
             shielddef = f"{v2}{' (+' + str(extras[1]) + ')' if extras[1] else ''}"
+
+            right_hand = "None Equipped"
+            left_hand = "None Equipped"
+
+            any_count = sum(1 for i in items if i["hand"] == "any")
+            if any_count == 1 and items[0]["hand"] == "any":
+                items = [items[1], items[0]]
+
+            for i in items:
+                if i["hand"] == "both":
+                    right_hand, left_hand = i["name"], i["name"]
+                elif i["hand"] == "left":
+                    left_hand = i["name"]
+                elif i["hand"] == "right":
+                    right_hand = i["name"]
+                elif i["hand"] == "any":
+                    if right_hand == "None Equipped":
+                        right_hand = i["name"]
+                    else:
+                        left_hand = i["name"]
+
             url = (
                 f"{self.bot.config.okapi_url}/api/genprofile/beta"
                 if self.bot.config.is_beta
@@ -161,8 +182,8 @@ IdleRPG is a global bot, your characters are valid everywhere"""
                     "classes": profile["class"],
                     "damage": sworddmg,
                     "defense": shielddef,
-                    "swordName": sword["name"] if sword else "None Equipped",
-                    "shieldName": shield["name"] if shield else "None Equipped",
+                    "swordName": right_hand,
+                    "shieldName": left_hand,
                     "level": rpgtools.xptolevel(profile["xp"]),
                     "money": f"{profile['money']}",
                     "pvpWins": f"{profile['pvpwins']}",
@@ -191,7 +212,8 @@ IdleRPG is a global bot, your characters are valid everywhere"""
     async def profile2(self, ctx, target: User = Author):
         _("""View someone's profile, not image based.""")
         rank_money, rank_xp = await self.bot.get_ranks_for(target)
-        sword, shield = await self.bot.get_equipped_items_for(target)
+
+        items = await self.bot.get_equipped_items_for(target)
         async with self.bot.pool.acquire() as conn:
             p_data = await conn.fetchrow(
                 'SELECT * FROM profile WHERE "user"=$1;', target.id
@@ -210,8 +232,37 @@ IdleRPG is a global bot, your characters are valid everywhere"""
             colour = 0x000000
         if mission:
             timeleft = str(mission[1]).split(".")[0] if not mission[2] else "Finished"
-        sword = f"{sword['name']} - {sword['damage']}" if sword else "No sword"
-        shield = f"{shield['name']} - {shield['armor']}" if shield else "No shield"
+
+        right_hand = None
+        left_hand = None
+
+        any_count = sum(1 for i in items if i["hand"] == "any")
+        if any_count == 1 and items[0]["hand"] == "any":
+            items = [items[1], items[0]]
+
+        for i in items:
+            if i["hand"] == "both":
+                right_hand, left_hand = i, i
+            elif i["hand"] == "left":
+                left_hand = i
+            elif i["hand"] == "right":
+                right_hand = i
+            elif i["hand"] == "any":
+                if right_hand == "None Equipped":
+                    right_hand = i
+                else:
+                    left_hand = i
+
+        right_hand = (
+            f"{right_hand['name']} - {right_hand['damage'] + right_hand['armor']}"
+            if right_hand
+            else _("None Equipped")
+        )
+        left_hand = (
+            f"{left_hand['name']} - {left_hand['damage'] + left_hand['armor']}"
+            if left_hand
+            else _("None Equipped")
+        )
         level = rpgtools.xptolevel(p_data["xp"])
         em = discord.Embed(colour=colour, title=f"{target}: {p_data['name']}")
         em.set_thumbnail(url=target.avatar_url)
@@ -242,8 +293,8 @@ IdleRPG is a global bot, your characters are valid everywhere"""
         )
         em.add_field(
             name=_("Equipment"),
-            value=_("Sword: {sword}\nShield: {shield}").format(
-                sword=sword, shield=shield
+            value=_("Right Hand: {right_hand}\nLeft Hand: {left_hand}").format(
+                right_hand=right_hand, left_hand=left_hand
             ),
         )
         if mission:

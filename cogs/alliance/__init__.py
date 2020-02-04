@@ -479,7 +479,7 @@ class Alliance(commands.Cog):
             'UPDATE city SET "owner"=1 WHERE "owner"=$1 RETURNING "name";',
             ctx.character_data["guild"],
         )
-        await self.bot.redis.execute("DEL", f"city:{city}:occ")
+        await self.bot.redis.execute("DEL", f"city:{name}:occ")
         await ctx.send(_("{city} was abandoned.").format(city=name))
         await self.bot.public_log(f"**{ctx.author}** abandoned **{name}**.")
 
@@ -516,7 +516,7 @@ class Alliance(commands.Cog):
             )
         await ctx.send(
             _(
-                "Your alliance now rules **{city}**. You should immediately buy defenses. You have **15 minutes** to build defenses before others can occupy the city!" 
+                "Your alliance now rules **{city}**. You should immediately buy defenses. You have **15 minutes** to build defenses before others can occupy the city!"
             ).format(city=city)
         )
         await self.bot.redis.execute(
@@ -536,10 +536,12 @@ class Alliance(commands.Cog):
             await self.bot.reset_alliance_cooldown(ctx)
             return await ctx.send(_("Invalid city."))
 
-        if y := await self.bot.redis.execute("GET", f"city:{city}"):
+        if (y := await self.bot.redis.execute("GET", f"city:{city}")) :
             y = y.decode()
             if y == "cooldown":
-                text = _("**{city}** has just been attacked. Have some mercy!").format(city=city)
+                text = _("**{city}** has just been attacked. Have some mercy!").format(
+                    city=city
+                )
             elif y == "under attack":
                 text = _("**{city}** is already under attack.").format(city=city)
             await self.bot.reset_alliance_cooldown(ctx)
@@ -565,10 +567,12 @@ class Alliance(commands.Cog):
             await self.bot.reset_alliance_cooldown(ctx)
             return await ctx.send(_("The city is without defenses already."))
 
-        if y := await self.bot.redis.execute("GET", f"city:{city}"):
+        if (y := await self.bot.redis.execute("GET", f"city:{city}")) :
             y = y.decode()
             if y == "cooldown":
-                text = _("**{city}** has just been attacked. Have some mercy!").format(city=city)
+                text = _("**{city}** has just been attacked. Have some mercy!").format(
+                    city=city
+                )
             elif y == "under attack":
                 text = _("**{city}** is already under attack.").format(city=city)
             await self.bot.reset_alliance_cooldown(ctx)

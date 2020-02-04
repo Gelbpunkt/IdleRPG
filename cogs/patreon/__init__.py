@@ -96,8 +96,8 @@ class Patreon(commands.Cog):
     @locale_doc
     async def weapontype(self, ctx, itemid: int, new_type: str.title):
         _("""[Patreon Only, Bronze and above] Changes an item type.""")
-        if new_type not in ["Sword", "Shield"]:
-            return await ctx.send(_("Invalid type. Try Sword or Shield."))
+        if new_type not in self.bot.config.item_types:
+            return await ctx.send(_("Invalid type."))
         async with self.bot.pool.acquire() as conn:
             item = await conn.fetchrow(
                 'SELECT * FROM allitems WHERE "owner"=$1 and "id"=$2;',

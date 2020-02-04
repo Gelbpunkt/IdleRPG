@@ -177,7 +177,7 @@ class Admin(commands.Cog):
         name: str,
     ):
         _("""[Bot Admin only] Create an item.""")
-        if item_type not in ("Sword", "Shield"):
+        if item_type not in self.bot.config.item_types:
             return await ctx.send(_("Invalid item type."))
         if not 0 <= stat <= 100:
             return await ctx.send(_("Invalid stat."))
@@ -185,7 +185,7 @@ class Admin(commands.Cog):
             name=name,
             value=value,
             type_=item_type,
-            damage=stat if item_type == "Sword" else 0,
+            damage=stat if item_type != "Shield" else 0,
             armor=stat if item_type == "Shield" else 0,
             owner=owner,
         )
@@ -257,16 +257,9 @@ class Admin(commands.Cog):
                 target.id,
             )
             await conn.execute(
-                'UPDATE allitems SET "name"=$1 WHERE "owner"=$2 AND "type"=$3;',
-                "Broken Sword",
+                'UPDATE allitems SET "name"=$1 WHERE "owner"=$2;',
+                "Broken Metal",
                 target.id,
-                "Sword",
-            )
-            await conn.execute(
-                'UPDATE allitems SET "name"=$1 WHERE "owner"=$2 AND "type"=$3;',
-                "Broken Shield",
-                target.id,
-                "Shield",
             )
             await conn.execute(
                 'UPDATE guild SET "memberlimit"=$1 WHERE "leader"=$2;', 50, target.id

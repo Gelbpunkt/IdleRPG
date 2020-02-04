@@ -98,13 +98,9 @@ class Battles(commands.Cog):
                 "Battle **{author}** vs **{enemy}** started! 30 seconds of fighting will now start!"
             ).format(author=ctx.disp, enemy=enemy_.display_name)
         )
-        items_1 = await self.bot.get_equipped_items_for(ctx.author) or []
-        items_2 = await self.bot.get_equipped_items_for(enemy_) or []
         stats = [
-            sum([i["armor"] + i["damage"] if i else 0 for i in items_1])
-            + random.randint(1, 7),
-            sum([i["armor"] + i["damage"] if i else 0 for i in items_2])
-            + random.randint(1, 7),
+            sum(await self.bot.get_damage_armor_for(ctx.author)) + random.randint(1, 7),
+            sum(await self.bot.get_damage_armor_for(enemy)) + random.randint(1, 7),
         ]
         players = [ctx.author, enemy_]
         if stats[0] == stats[1]:
@@ -412,9 +408,9 @@ class Battles(commands.Cog):
             else:
                 HP.append(100)
 
-            d, a = await self.bot.get_equipped_items_for(p)
-            DAMAGE.append(int(d["damage"]) if d else 0)
-            ARMOR.append(int(a["armor"]) if a else 0)
+            d, a = await self.bot.get_damage_armor_for(p)
+            DAMAGE.append(d)
+            ARMOR.append(a)
 
         moves = {
             "\U00002694": "attack",
