@@ -619,7 +619,7 @@ IdleRPG is a global bot, your characters are valid everywhere"""
         if olditems:
             await ctx.send(
                 _(
-                    "Successfully equipped item `{itemid}` and put off item(s) `{olditems}`."
+                    "Successfully equipped item `{itemid}` and put off item(s) {olditems}."
                 ).format(
                     olditems=", ".join(f"`{i}`" for i in put_off), itemid=item["id"]
                 )
