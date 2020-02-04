@@ -615,6 +615,7 @@ IdleRPG is a global bot, your characters are valid everywhere"""
             await conn.execute(
                 'UPDATE inventory SET "equipped"=True WHERE "item"=$1;', itemid
             )
+        await self.bot.reset_cooldown(ctx)
         if olditems:
             await ctx.send(
                 _(
