@@ -510,7 +510,7 @@ class Trading(commands.Cog):
                 footer=_("Hit a button to buy it"),
                 return_index=True,
                 entries=[
-                    f"**{i[0]['name']}** - {i[0]['armor'] if i[0]['type_'] == 'Shield' else i[0]['damage']} {'armor' if i[0]['type_'] == 'Shield' else 'damage'} - **${i[1]}**"
+                    f"**{i[0]['name']}** ({i[0]['type']}) - {i[0]['armor'] if i[0]['type_'] == 'Shield' else i[0]['damage']} {'armor' if i[0]['type_'] == 'Shield' else 'damage'} - **${i[1]}**"
                     for i in offers
                 ],
             ).paginate(ctx)

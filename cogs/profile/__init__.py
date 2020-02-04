@@ -581,8 +581,8 @@ IdleRPG is a global bot, your characters are valid everywhere"""
                     put_off = all_ids
                 else:
                     if (
-                        item["hand"] == "left"
-                        or item["hand"] == "right"
+                        (item["hand"] == "left"
+                        or item["hand"] == "right")
                         and num_any < 2
                     ):
                         item_to_remove = [

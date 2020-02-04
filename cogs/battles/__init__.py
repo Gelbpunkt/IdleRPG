@@ -409,8 +409,8 @@ class Battles(commands.Cog):
                 HP.append(100)
 
             d, a = await self.bot.get_damage_armor_for(p)
-            DAMAGE.append(d)
-            ARMOR.append(a)
+            DAMAGE.append(int(d))
+            ARMOR.append(int(a))
 
         moves = {
             "\U00002694": "attack",
