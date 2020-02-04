@@ -67,7 +67,8 @@ CREATE TABLE public.allitems (
     armor numeric(5,2) NOT NULL,
     signature character varying(50) DEFAULT NULL::character varying,
     original_type character varying(10) DEFAULT NULL::character varying,
-    original_name character varying(200) DEFAULT NULL::character varying
+    original_name character varying(200) DEFAULT NULL::character varying,
+    hand character varying(10) NOT NULL
 );
 
 
