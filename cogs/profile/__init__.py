@@ -97,6 +97,7 @@ IdleRPG is a global bot, your characters are valid everywhere"""
                 damage=3.0,
                 armor=0.0,
                 owner=ctx.author,
+                hand="any",
                 equipped=True,
             )
             await self.bot.create_item(
@@ -106,6 +107,7 @@ IdleRPG is a global bot, your characters are valid everywhere"""
                 damage=0.0,
                 armor=3.0,
                 owner=ctx.author,
+                hand="left",
                 equipped=True,
             )
             await ctx.send(
