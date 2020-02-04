@@ -169,11 +169,7 @@ IdleRPG is a global bot, your characters are valid everywhere"""
                     else:
                         left_hand = i["name"]
 
-            url = (
-                f"{self.bot.config.okapi_url}/api/genprofile/beta"
-                if self.bot.config.is_beta
-                else f"{self.bot.config.okapi_url}/api/genprofile"
-            )
+            url = f"{self.bot.config.okapi_url}/api/genprofile"
             async with self.bot.trusted_session.post(
                 url,
                 data={
@@ -250,7 +246,7 @@ IdleRPG is a global bot, your characters are valid everywhere"""
             elif i["hand"] == "right":
                 right_hand = i
             elif i["hand"] == "any":
-                if right_hand == "None Equipped":
+                if right_hand is None:
                     right_hand = i
                 else:
                     left_hand = i
@@ -380,10 +376,11 @@ IdleRPG is a global bot, your characters are valid everywhere"""
             result.add_field(
                 name=f"{weapon['name']} {eq}",
                 value=_(
-                    "ID: `{id}`, Type: `{type_}` with {statstr}. Value is **${value}**{signature}"
+                    "ID: `{id}`, Type: `{type_}` (uses {hand} hand(s)) with {statstr}. Value is **${value}**{signature}"
                 ).format(
                     id=weapon["id"],
                     type_=weapon["type"],
+                    hand=weapon["hand"],
                     statstr=statstr,
                     value=weapon["value"],
                     signature=signature,
@@ -566,7 +563,6 @@ IdleRPG is a global bot, your characters are valid everywhere"""
             olditems = await conn.fetch(
                 "SELECT ai.* FROM profile p JOIN allitems ai ON (p.user=ai.owner) JOIN inventory i ON (ai.id=i.item) WHERE i.equipped IS TRUE AND p.user=$1;",
                 ctx.author.id,
-                item["type"],
             )
             if olditems:
                 num_any = sum(1 for i in olditems if i["hand"] == "any")
