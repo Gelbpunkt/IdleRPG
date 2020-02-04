@@ -564,6 +564,7 @@ IdleRPG is a global bot, your characters are valid everywhere"""
                 "SELECT ai.* FROM profile p JOIN allitems ai ON (p.user=ai.owner) JOIN inventory i ON (ai.id=i.item) WHERE i.equipped IS TRUE AND p.user=$1;",
                 ctx.author.id,
             )
+            put_off = []
             if olditems:
                 num_any = sum(1 for i in olditems if i["hand"] == "any")
                 if len(olditems) == 1 and olditems[0]["hand"] == "both":
@@ -616,7 +617,7 @@ IdleRPG is a global bot, your characters are valid everywhere"""
                 'UPDATE inventory SET "equipped"=True WHERE "item"=$1;', itemid
             )
         await self.bot.reset_cooldown(ctx)
-        if olditems:
+        if put_off:
             await ctx.send(
                 _(
                     "Successfully equipped item `{itemid}` and put off item(s) {olditems}."
