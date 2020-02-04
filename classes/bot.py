@@ -457,18 +457,19 @@ class Bot(commands.AutoShardedBot):
         await self.redis.execute("DEL", f"guildadv:{guild}")
 
     async def create_item(
-        self, name, value, type_, damage, armor, owner, equipped=False
+        self, name, value, type_, damage, armor, owner, hand, equipped=False
     ):
         owner = owner.id if isinstance(owner, (discord.User, discord.Member)) else owner
         async with self.pool.acquire() as conn:
             item = await conn.fetchrow(
-                'INSERT INTO allitems ("owner", "name", "value", "type", "damage", "armor") VALUES ($1, $2, $3, $4, $5, $6) RETURNING *;',
+                'INSERT INTO allitems ("owner", "name", "value", "type", "damage", "armor", "hand") VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *;',
                 owner,
                 name,
                 value,
                 type_,
                 damage,
                 armor,
+                hand,
             )
             await conn.execute(
                 'INSERT INTO inventory ("item", "equipped") VALUES ($1, $2);',
@@ -483,12 +484,22 @@ class Bot(commands.AutoShardedBot):
         owner = owner.id if isinstance(owner, (discord.User, discord.Member)) else owner
         item = {}
         item["owner"] = owner
-        type_ = random.choice(["Sword", "Shield"])
+        type_ = random.choice(["Sword", "Shield", "Axe", "Wand", "Dagger", "Knife", "Spear", "Bow", "Hammer", "Scythe", "Howlet"])
+        if type_ in ["Scythe", "Bow", "Howlet"]:
+            item["hand"] = "both"
+        elif type_ in ["Spear", "Wand"]:
+            item["hand"] = "right"
+        elif type_ == "Shield":
+            item["hand"] = "left"
+        else:
+            item["hand"] = "any"
         item["type_"] = type_
-        item["damage"] = random.randint(minstat, maxstat) if type_ == "Sword" else 0
+        item["damage"] = random.randint(minstat, maxstat) if type_ != "Shield" else 0
         item["armor"] = random.randint(minstat, maxstat) if type_ == "Shield" else 0
         item["value"] = random.randint(minvalue, maxvalue)
         item["name"] = fn.weapon_name(type_)
+        if item["hand"] == "both":
+            item["damage"] = round(item["damage"] * 1.5) # both hands = higher damage, else they would be worse
         if insert:
             return await self.create_item(**item)
         return item
