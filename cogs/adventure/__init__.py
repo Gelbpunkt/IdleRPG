@@ -155,7 +155,7 @@ class Adventure(commands.Cog):
         x = 0
         y = 0
 
-        attack, defense = await self.bot.get_damage_defense_for(ctx.author)
+        attack, defense = await self.bot.get_damage_armor_for(ctx.author)
         attack, defense = await self.bot.generate_stats(ctx.author, attack, defense)
 
         attack = int(attack)
