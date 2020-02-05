@@ -44,15 +44,31 @@ class Patreon(commands.Cog):
                 return await ctx.send(_("You do not own this item."))
             if not item["original_name"] and not item["original_type"]:
                 return await ctx.send(_("Nothing to do..."))
-            if item["original_type"] == item["type"]:
-                dmg, armor = item["damage"], item["armor"]
-            else:
+
+            new_type = item["original_type"] or item["type"]
+            old_type = item["type"]
+
+            if old_type == "Shield" and new_type != "Shield":
                 dmg, armor = item["armor"], item["damage"]
+            else:
+                dmg, armor = item["damage"], item["armor"]
+
+            if new_type == "Shield":
+                hand = "left"
+            elif new_type in ("Spear", "Wand"):
+                hand = "right"
+            elif new_type in ("Bow", "Howlet", "Scythe"):
+                hand = "both"
+            else:
+                hand = "any"
+
             await conn.execute(
-                'UPDATE allitems SET "name"=CASE WHEN "original_name" IS NULL THEN "name" ELSE "original_name" END, "original_name"=NULL, "damage"=$2, "armor"=$3, "type"=CASE WHEN "original_type" IS NULL THEN "type" ELSE "original_type" END, "original_type"=NULL WHERE "id"=$1;',
+                'UPDATE allitems SET "name"=CASE WHEN "original_name" IS NULL THEN "name" ELSE "original_name" END, "original_name"=NULL, "damage"=$2, "armor"=$3, "type"=$4, "hand"=$5, "original_type"=NULL WHERE "id"=$1;',
                 itemid,
                 dmg,
                 armor,
+                new_type,
+                hand,
             )
             await conn.execute(
                 'UPDATE inventory SET "equipped"=$1 WHERE "item"=$2;', False, itemid
@@ -115,12 +131,21 @@ class Patreon(commands.Cog):
                 return await ctx.send(
                     _("The item is already a {item_type}.").format(item_type=new_type)
                 )
+            if new_type == "Shield":
+                hand = "left"
+            elif new_type in ("Spear", "Wand"):
+                hand = "right"
+            elif new_type in ("Bow", "Howlet", "Scythe"):
+                hand = "both"
+            else:
+                hand = "any"
 
             await conn.execute(
-                'UPDATE allitems SET "type"=$1, "original_type"=CASE WHEN "original_type" IS NULL THEN "type" ELSE "original_type" END, "damage"=$2, "armor"=$3 WHERE "id"=$4;',
+                'UPDATE allitems SET "type"=$1, "original_type"=CASE WHEN "original_type" IS NULL THEN "type" ELSE "original_type" END, "damage"=$2, "armor"=$3, "hand"=$4 WHERE "id"=$5;',
                 new_type,
-                item["armor"],
-                item["damage"],
+                item["armor"] if item["type"] == "Shield" else item["damage"],
+                item["damage"] if new_type == "Shield" else item["armor"],
+                hand,
                 itemid,
             )
             await conn.execute(
