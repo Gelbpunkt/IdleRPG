@@ -590,7 +590,7 @@ IdleRPG is a global bot, your characters are valid everywhere"""
                                 'UPDATE inventory SET "equipped"=False WHERE "item"=$1;',
                                 olditems[0]["id"],
                             )
-                            put_off = olditems[0]["id"]
+                            put_off = [olditems[0]["id"]]
                     elif (
                         item["hand"] == "left" or item["hand"] == "right"
                     ) and num_any < 2:
