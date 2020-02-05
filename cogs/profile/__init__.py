@@ -581,13 +581,23 @@ IdleRPG is a global bot, your characters are valid everywhere"""
                     )
                     put_off = all_ids
                 else:
-                    if (
+                    if len(olditems) < 2:
+                        if (
+                            item["hand"] != "any"
+                            and olditems[0]["hand"] == item["hand"]
+                        ):
+                            await conn.execute(
+                                'UPDATE inventory SET "equipped"=False WHERE "item"=$1;',
+                                olditems[0]["id"],
+                            )
+                            put_off = olditems[0]["id"]
+                    elif (
                         item["hand"] == "left" or item["hand"] == "right"
                     ) and num_any < 2:
                         item_to_remove = [
                             i for i in olditems if i["hand"] == item["hand"]
                         ]
-                        if not item_to_remove and len(olditems) == 2:
+                        if not item_to_remove:
                             item_to_remove = [i for i in olditems if i["hand"] == "any"]
                         item_to_remove = item_to_remove[0]["id"]
                         await conn.execute(
@@ -595,8 +605,6 @@ IdleRPG is a global bot, your characters are valid everywhere"""
                             item_to_remove,
                         )
                         put_off = [item_to_remove]
-                    elif item["hand"] == "any" and len(olditems) < 2:
-                        pass  # just so last won't trigger
                     else:
                         item_to_remove = await self.bot.paginator.Choose(
                             title=_("Select an item to unequip"),
