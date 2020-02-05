@@ -153,7 +153,7 @@ IdleRPG is a global bot, your characters are valid everywhere"""
             left_hand = "None Equipped"
 
             any_count = sum(1 for i in items if i["hand"] == "any")
-            if any_count == 1 and items[0]["hand"] == "any":
+            if len(items) == 2 and any_count == 1 and items[0]["hand"] == "any":
                 items = [items[1], items[0]]
 
             for i in items:
@@ -235,7 +235,7 @@ IdleRPG is a global bot, your characters are valid everywhere"""
         left_hand = None
 
         any_count = sum(1 for i in items if i["hand"] == "any")
-        if any_count == 1 and items[0]["hand"] == "any":
+        if len(items) == 2 and any_count == 1 and items[0]["hand"] == "any":
             items = [items[1], items[0]]
 
         for i in items:
