@@ -140,6 +140,13 @@ class Patreon(commands.Cog):
             else:
                 hand = "any"
 
+            if item["hand"] == "both" and hand != "both":
+                return await ctx.send(
+                    _(
+                        "You may not change a two-handed item to a single-handed one due to weapon damage reasons."
+                    )
+                )
+
             await conn.execute(
                 'UPDATE allitems SET "type"=$1, "original_type"=CASE WHEN "original_type" IS NULL THEN "type" ELSE "original_type" END, "damage"=$2, "armor"=$3, "hand"=$4 WHERE "id"=$5;',
                 new_type,
