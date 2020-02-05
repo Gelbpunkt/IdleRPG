@@ -165,7 +165,7 @@ base_url = "https://idlerpg.travitia.xyz"
 okapi_url = "https://okapi.travitia.xyz"
 
 """The Version of the Bot."""
-version = "4.4.0"
+version = "4.5.0"
 
 """Global cooldown (rate, per, [.user, .channel, .guild])"""
 cooldown = commands.CooldownMapping.from_cooldown(1, 3, commands.BucketType.user)
@@ -277,12 +277,12 @@ gods = {
     "Asmodeus": {
         "user": 318824057158107137,
         "description": "Asmodeus, god of death. The reason adventurers don't die is because they give up their loot to him in order for them to live again. Their loot is the price they pay for a second chance.",
-        "boundaries": (0.0, 2.0),
+        "boundaries": (0.7, 1.3),
     },
     "Salutations": {
         "user": 344227184438804480,
         "description": "Known for excelling at greetings and making mutual relationships with every deity and also gaining followers due to his history/characteristic. Despite his natural talent of mannerism and the swift making of relationships with not just gods, but humans as well, he is not to be easily fooled. Unironically, his most loyal follower is Cyberus, an ancient wolf general that has stood by and served him for the longest of times. Many fear Cyberus, but it only attacks when provoked or ordered to by Sal.",
-        "boundaries": (0.0, 2.0),
+        "boundaries": (0.5, 1.5),
     },
     "War God Fox": {
         "user": 254234402354233344,
