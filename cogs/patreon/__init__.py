@@ -49,7 +49,7 @@ class Patreon(commands.Cog):
             old_type = item["type"]
 
             if old_type == "Shield" and new_type != "Shield":
-                dmg, armor = item["armor"], item["damage"]
+                dmg, armor = item["armor"], 0
             else:
                 dmg, armor = item["damage"], item["armor"]
 
@@ -143,8 +143,8 @@ class Patreon(commands.Cog):
             await conn.execute(
                 'UPDATE allitems SET "type"=$1, "original_type"=CASE WHEN "original_type" IS NULL THEN "type" ELSE "original_type" END, "damage"=$2, "armor"=$3, "hand"=$4 WHERE "id"=$5;',
                 new_type,
-                item["armor"] if item["type"] == "Shield" else item["damage"],
-                item["damage"] if new_type == "Shield" else item["armor"],
+                0 if new_type == "Shield" else item["damage"],
+                item["damage"] if new_type == "Shield" else 0,
                 hand,
                 itemid,
             )
