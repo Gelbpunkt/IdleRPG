@@ -40,6 +40,12 @@ class Gods(commands.Cog):
     @locale_doc
     async def sacrifice(self, ctx, *loot_ids: int):
         _("""Sacrifice an item for favor.""")
+        if await self.bot.redis.execute("GET", f"cd:{ctx.author.id}:exchange"):
+            return await ctx.send(
+                _(
+                    "You cannot sacrifice while already exchanging loot. Please finish exchanging first, then try again."
+                )
+            )
         async with self.bot.pool.acquire() as conn:
             if len(loot_ids) == 0:
                 value, count = await conn.fetchval(
