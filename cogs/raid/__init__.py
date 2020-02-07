@@ -170,6 +170,10 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
                 u = await self.bot.get_user_global(i)
                 if not u:
                     continue
+                if not conn.fetchval(
+                    'SELECT "user" FROM profile WHERE "user"=$1', u.id
+                ):
+                    continue
                 dmg, deff = await self.bot.get_raidstats(u, conn=conn)
                 raid[u] = {"hp": 250, "armor": deff, "damage": dmg}
 
@@ -371,6 +375,10 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
                 u = await self.bot.get_user_global(i)
                 if not u:
                     continue
+                if not conn.fetchval(
+                    'SELECT "user" FROM profile WHERE "user"=$1', u.id
+                ):
+                    continue
                 dmg, deff = await self.bot.get_raidstats(u, conn=conn)
                 raid[u] = {"hp": 250, "armor": deff, "damage": dmg}
 
@@ -510,6 +518,10 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
                 u = await self.bot.get_user_global(i)
                 if not u:
                     continue
+                if not conn.fetchval(
+                    'SELECT "user" FROM profile WHERE "user"=$1', u.id
+                ):
+                    continue
                 try:
                     dmg, deff = await self.bot.get_raidstats(u, god="Guilt", conn=conn)
                 except ValueError:
@@ -629,6 +641,10 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
             for i in raid_raw:
                 u = await self.bot.get_user_global(i)
                 if not u:
+                    continue
+                if not conn.fetchval(
+                    'SELECT "user" FROM profile WHERE "user"=$1', u.id
+                ):
                     continue
                 try:
                     dmg, deff = await self.bot.get_raidstats(
@@ -818,6 +834,10 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
                 u = await self.bot.get_user_global(i)
                 if not u:
                     continue
+                if not conn.fetchval(
+                    'SELECT "user" FROM profile WHERE "user"=$1', u.id
+                ):
+                    continue
                 try:
                     dmg, deff = await self.bot.get_raidstats(u, god="Kvothe", conn=conn)
                 except ValueError:
@@ -960,6 +980,10 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
             for i in raid_raw:
                 u = await self.bot.get_user_global(i)
                 if not u:
+                    continue
+                if not conn.fetchval(
+                    'SELECT "user" FROM profile WHERE "user"=$1', u.id
+                ):
                     continue
                 try:
                     dmg, deff = await self.bot.get_raidstats(
@@ -1161,6 +1185,10 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
             for i in raid_raw:
                 u = await self.bot.get_user_global(i)
                 if not u:
+                    continue
+                if not conn.fetchval(
+                    'SELECT "user" FROM profile WHERE "user"=$1', u.id
+                ):
                     continue
                 try:
                     dmg, deff = await self.bot.get_raidstats(
@@ -1446,6 +1474,10 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
                 u = await self.bot.get_user_global(i)
                 if not u:
                     continue
+                if not conn.fetchval(
+                    'SELECT "user" FROM profile WHERE "user"=$1', u.id
+                ):
+                    continue
                 dmg, deff = await self.bot.get_raidstats(u, conn=conn)
                 raid[u] = {"hp": 250, "armor": deff, "damage": dmg}
 
@@ -1574,6 +1606,10 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
                 u = await self.bot.get_user_global(i)
                 if not u:
                     continue
+                if not conn.fetchval(
+                    'SELECT "user" FROM profile WHERE "user"=$1', u.id
+                ):
+                    continue
                 try:
                     dmg, deff = await self.bot.get_raidstats(u, conn=conn)
                 except ValueError:
@@ -1699,6 +1735,10 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
             for i in raid_raw:
                 u = await self.bot.get_user_global(i)
                 if not u:
+                    continue
+                if not conn.fetchval(
+                    'SELECT "user" FROM profile WHERE "user"=$1', u.id
+                ):
                     continue
                 try:
                     dmg, deff = await self.bot.get_raidstats(u, god="Jesus", conn=conn)
@@ -1893,6 +1933,10 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
             for i in raid_raw:
                 u = await self.bot.get_user_global(i)
                 if not u or await self.bot.get_god(u, conn=conn) != "Gambit":
+                    continue
+                if not conn.fetchval(
+                    'SELECT "user" FROM profile WHERE "user"=$1', u.id
+                ):
                     continue
                 raid.append(u)
 

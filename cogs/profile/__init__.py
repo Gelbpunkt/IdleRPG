@@ -538,7 +538,7 @@ IdleRPG is a global bot, your characters are valid everywhere"""
         if reward == "xp":
             new_level = int(rpgtools.xptolevel(ctx.character_data["xp"] + value))
             if old_level != new_level:
-                await self.bot.process_levelup(ctx, new_level)
+                await self.bot.process_levelup(ctx, new_level, old_level)
 
         await self.bot.reset_cooldown(ctx)
 
@@ -790,7 +790,7 @@ IdleRPG is a global bot, your characters are valid everywhere"""
     @commands.command()
     @locale_doc
     async def give(
-        self, ctx, money: IntFromTo(0, 100_000_000), other: MemberWithCharacter
+        self, ctx, money: IntFromTo(1, 100_000_000), other: MemberWithCharacter
     ):
         _("""Gift money!""")
         if other == ctx.author:

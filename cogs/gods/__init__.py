@@ -40,6 +40,12 @@ class Gods(commands.Cog):
     @locale_doc
     async def sacrifice(self, ctx, *loot_ids: int):
         _("""Sacrifice an item for favor.""")
+        if await self.bot.redis.execute("GET", f"cd:{ctx.author.id}:exchange"):
+            return await ctx.send(
+                _(
+                    "You cannot sacrifice while already exchanging loot. Please finish exchanging first, then try again."
+                )
+            )
         async with self.bot.pool.acquire() as conn:
             if len(loot_ids) == 0:
                 value, count = await conn.fetchval(
@@ -220,6 +226,8 @@ class Gods(commands.Cog):
         _("""Lists top followers of your god (or yourself).""")
         if ctx.author.id in self.bot.gods:
             god = self.bot.gods[ctx.author.id]
+        elif not ctx.character_data["god"]:
+            return await ctx.send(_("You are not following any god currently, therefore the list cannot be generated."))
         else:
             if limit > 25:
                 return await ctx.send(_("Normal followers may only view the top 25."))
