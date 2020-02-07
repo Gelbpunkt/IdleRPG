@@ -1,3 +1,71 @@
+<a name="v4.5.0"></a>
+
+## [v4.5.0](https://git.travitia.xyz/Kenvyra/IdleRPG/compare/v4.4.0...v4.5.0)
+
+> 2020-02-07
+
+### Fixes
+
+- a fix for the translator tool
+- Fix maxstat and minstat for merchall with new limits
+- Fix startup items
+- Fix the top follower order
+- Fix locales xgettext issue
+- Fix the rules
+- fix weapontype
+- fix a bug in command sacrifice
+- fix equip logic
+- fix activeadventure
+- fix itemtype and resetitem logic
+- fix some equip logic
+- fix profile for cases with one item equipped
+- fix some equip logic
+- fix trader, activebattle
+- fix equip formatting
+- fix itemreset bug
+- fix alterraid
+- fix images not loading on previously added pages
+- fix a bug with resetting changed type items
+- fix alteraid
+- include a profile check for every raid: prevents raids from crashing
+
+# Changes
+
+- adapt ingame stat calculations
+- Add information on level up to lv12; reset guild and alliance cooldown on ctx confirm deny
+- add luck boundaries for god luck
+- Change equip logic
+- extend occupy cooldown, better information for unable to attack city
+- fix weapontype
+- Force utf-8 for language fixer
+- generate items of other types
+- equipping is now based on hands, some types use one hand, any hand or two hands. Two-handed items have a 1.5x higher stat to balance them more with the rest
+- make beta.sh retain original ownerships
+- Not returning the follower list if the user doesn't follow anyone
+- Require sending at least $1 when using $give
+- Set $0 defaults for $activebattle, $tournament and $raidtournament
+- use python 3.9.0a3
+
+### Merge Requests
+
+- Merge branch 'v4.5' into 'v4'
+- Merge branch 'v4' into 'v4.5'
+- Merge branch 'patch-1' into 'v4'
+- Merge branch 'patch-1' into 'v4'
+- Merge branch 'sac-ex-fix' into 'v4'
+- Merge branch 'patch-2' into 'v4'
+- Merge branch 'additions' into 'v4'
+- Merge branch 'reset-item' into 'v4'
+- Merge branch 'zero-defaults' into 'v4'
+- Merge branch 'fixes' into 'v4'
+- Merge branch 'itemtype-fix' into 'v4'
+- Merge branch 'adventure-paginator-fix' into 'v4'
+- Merge branch 'tool-fix' into 'v4'
+- Merge branch 'patch-2' into 'v4'
+- Merge branch 'revert-f504c0fd' into 'v4'
+- Merge branch 'patch-8' into 'v4'
+
+
 <a name="v4.4.0"></a>
 
 ## [v4.4.0](https://git.travitia.xyz/Kenvyra/IdleRPG/compare/v4.3.1...v4.4.0)
