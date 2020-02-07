@@ -685,7 +685,7 @@ IdleRPG is a global bot, your characters are valid everywhere"""
     @commands.command()
     @locale_doc
     async def give(
-        self, ctx, money: IntFromTo(0, 100_000_000), other: MemberWithCharacter
+        self, ctx, money: IntFromTo(1, 100_000_000), other: MemberWithCharacter
     ):
         _("""Gift money!""")
         if other == ctx.author:
