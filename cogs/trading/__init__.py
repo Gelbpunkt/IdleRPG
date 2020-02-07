@@ -195,9 +195,11 @@ class Trading(commands.Cog):
         highestprice: IntGreaterThan(-1) = 1_000_000,
     ):
         _("""Lists the buyable items on the market.""")
-        if itemtype not in ["All", "Sword", "Shield"]:
+        if itemtype not in ["All"] + self.bot.config.item_types:
             return await ctx.send(
-                "Use either `All`, `Sword` or `Shield` as a type to filter for."
+                _("Use either {types} or `All` as a type to filter for.").format(
+                    types=", ".join(f"`{t}`" for t in self.bot.config.item_types)
+                )
             )
         if itemtype == "All":
             items = await self.bot.pool.fetch(
@@ -206,16 +208,16 @@ class Trading(commands.Cog):
                 minstat,
                 minstat,
             )
-        elif itemtype == "Sword":
+        elif itemtype == "Shield":
             items = await self.bot.pool.fetch(
-                'SELECT * FROM allitems ai JOIN market m ON (ai.id=m.item) WHERE ai."type"=$1 AND ai."damage">=$2 AND m."price"<=$3;',
+                'SELECT * FROM allitems ai JOIN market m ON (ai.id=m.item) WHERE ai."type"=$1 AND ai."armor">=$2 AND m."price"<=$3;',
                 itemtype,
                 minstat,
                 highestprice,
             )
-        elif itemtype == "Shield":
+        else:
             items = await self.bot.pool.fetch(
-                'SELECT * FROM allitems ai JOIN market m ON (ai.id=m.item) WHERE ai."type"=$1 AND ai."armor">=$2 AND m."price"<=$3;',
+                'SELECT * FROM allitems ai JOIN market m ON (ai.id=m.item) WHERE ai."type"=$1 AND ai."damage">=$2 AND m."price"<=$3;',
                 itemtype,
                 minstat,
                 highestprice,
@@ -396,7 +398,7 @@ class Trading(commands.Cog):
     @commands.command()
     @locale_doc
     async def merchall(
-        self, ctx, maxstat: IntFromTo(0, 60) = 60, minstat: IntFromTo(0, 60) = 0
+        self, ctx, maxstat: IntFromTo(0, 75) = 60, minstat: IntFromTo(0, 75) = 0
     ):
         _("""Sells all your non-equipped items for their value.""")
         async with self.bot.pool.acquire() as conn:
@@ -508,7 +510,7 @@ class Trading(commands.Cog):
                 footer=_("Hit a button to buy it"),
                 return_index=True,
                 entries=[
-                    f"**{i[0]['name']}** - {i[0]['damage'] if i[0]['type_'] == 'Sword' else i[0]['armor']} {'damage' if i[0]['type_'] == 'Sword' else 'armor'} - **${i[1]}**"
+                    f"**{i[0]['name']}** ({i[0]['type_']}) - {i[0]['armor'] if i[0]['type_'] == 'Shield' else i[0]['damage']} {'armor' if i[0]['type_'] == 'Shield' else 'damage'} - **${i[1]}**"
                     for i in offers
                 ],
             ).paginate(ctx)

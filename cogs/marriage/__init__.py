@@ -374,7 +374,9 @@ class Marriage(commands.Cog):
                 return await ctx.send(_("You didn't enter a name."))
             if name in names:
                 await ctx.send(
-                    _("One of your children already has that name, please choose another one.")
+                    _(
+                        "One of your children already has that name, please choose another one."
+                    )
                 )
                 name = None
         async with self.bot.pool.acquire() as conn:
@@ -615,7 +617,9 @@ class Marriage(commands.Cog):
                     return await ctx.send(_("You didn't enter a name."))
                 if name in names:
                     await ctx.send(
-                        _("One of your children already has that name, please choose another one.")
+                        _(
+                            "One of your children already has that name, please choose another one."
+                        )
                     )
                     name = None
             await self.bot.pool.execute(

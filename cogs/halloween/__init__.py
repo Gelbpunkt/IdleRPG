@@ -142,7 +142,7 @@ class Halloween(commands.Cog):
         )
         item[
             "name"
-        ] = f"{name} {random.choice(['Sword', 'Blade', 'Stich', 'Arm', 'Bone']) if item['type_'] == 'Sword' else random.choice(['Shield', 'Defender', 'Aegis', 'Shadow Shield', 'Giant Ginger'])}"
+        ] = f"{name} {random.choice(['Sword', 'Blade', 'Stich', 'Arm', 'Bone']) if item['type_'] == 'Sword' else random.choice(['Shield', 'Defender', 'Aegis', 'Shadow Shield', 'Giant Ginger'])}"  # TODO: Fix for other types
         await self.bot.create_item(**item)
         await self.bot.pool.execute(
             'UPDATE profile SET "trickortreat"="trickortreat"-1 WHERE "user"=$1;',

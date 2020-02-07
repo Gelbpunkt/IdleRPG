@@ -129,7 +129,7 @@ You have **{eggs}** <:easteregg:566251086986608650>."""
             )
             item["name"] = (
                 random.choice(["Bunny Ear", "Egg Cannon", "Chocolate Bar"])
-                if item["type_"] == "Sword"
+                if item["type_"] != "Shield"
                 else random.choice(["Giant Egg", "Sweet Defender"])
             )
             await self.bot.create_item(**item)

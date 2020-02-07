@@ -104,18 +104,12 @@ class Tournament(commands.Cog):
             for match in matches:
                 await ctx.send(f"{match[0].mention} {text} {match[1].mention}")
                 await asyncio.sleep(2)
-                sw1, sh1 = await self.bot.get_equipped_items_for(match[0])
-                sw2, sh2 = await self.bot.get_equipped_items_for(match[1])
-                val1 = (
-                    (sw1["damage"] if sw1 else 0)
-                    + (sh1["armor"] if sh1 else 0)
-                    + random.randint(1, 7)
-                )
-                val2 = (
-                    (sw2["damage"] if sw2 else 0)
-                    + (sh2["armor"] if sh2 else 0)
-                    + random.randint(1, 7)
-                )
+                val1 = sum(
+                    await self.bot.get_damage_armor_for(match[0])
+                ) + random.randint(1, 7)
+                val2 = sum(
+                    await self.bot.get_damage_armor_for(match[1])
+                ) + random.randint(1, 7)
                 if val1 > val2:
                     winner = match[0]
                     looser = match[1]

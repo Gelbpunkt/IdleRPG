@@ -47,16 +47,30 @@ class Patreon(commands.Cog):
             if not item["original_name"] and not item["original_type"]:
                 return await ctx.send(_("Nothing to do..."))
 
-            if not (type_ := item["original_type"]) or type_ == item["type"]:
-                dmg, armor = item["damage"], item["armor"]
+            new_type = item["original_type"] or item["type"]
+            old_type = item["type"]
+
+            if old_type == "Shield" and new_type != "Shield":
+                dmg, armor = item["armor"], 0
             else:
-                armor, dmg = item["damage"], item["armor"]
+                dmg, armor = item["damage"], item["armor"]
+
+            if new_type == "Shield":
+                hand = "left"
+            elif new_type in ("Spear", "Wand"):
+                hand = "right"
+            elif new_type in ("Bow", "Howlet", "Scythe"):
+                hand = "both"
+            else:
+                hand = "any"
 
             await conn.execute(
-                'UPDATE allitems SET "name"=CASE WHEN "original_name" IS NULL THEN "name" ELSE "original_name" END, "original_name"=NULL, "damage"=$2, "armor"=$3, "type"=CASE WHEN "original_type" IS NULL THEN "type" ELSE "original_type" END, "original_type"=NULL WHERE "id"=$1;',
+                'UPDATE allitems SET "name"=CASE WHEN "original_name" IS NULL THEN "name" ELSE "original_name" END, "original_name"=NULL, "damage"=$2, "armor"=$3, "type"=$4, "hand"=$5, "original_type"=NULL WHERE "id"=$1;',
                 itemid,
                 dmg,
                 armor,
+                new_type,
+                hand,
             )
             await conn.execute(
                 'UPDATE inventory SET "equipped"=$1 WHERE "item"=$2;', False, itemid
@@ -101,8 +115,8 @@ class Patreon(commands.Cog):
     @locale_doc
     async def weapontype(self, ctx, itemid: int, new_type: str.title):
         _("""[Patreon Only, Bronze and above] Changes an item type.""")
-        if new_type not in ["Sword", "Shield"]:
-            return await ctx.send(_("Invalid type. Try Sword or Shield."))
+        if new_type not in self.bot.config.item_types:
+            return await ctx.send(_("Invalid type."))
         async with self.bot.pool.acquire() as conn:
             item = await conn.fetchrow(
                 'SELECT * FROM allitems WHERE "owner"=$1 and "id"=$2;',
@@ -120,12 +134,30 @@ class Patreon(commands.Cog):
                 return await ctx.send(
                     _("The item is already a {item_type}.").format(item_type=new_type)
                 )
+            if new_type == "Shield":
+                hand = "left"
+            elif new_type in ("Spear", "Wand"):
+                hand = "right"
+            elif new_type in ("Bow", "Howlet", "Scythe"):
+                hand = "both"
+            else:
+                hand = "any"
+
+            if item["hand"] == "both" and hand != "both":
+                return await ctx.send(
+                    _(
+                        "You may not change a two-handed item to a single-handed one due to weapon damage reasons."
+                    )
+                )
+
+            stat = item["damage"] or item["armor"]
 
             await conn.execute(
-                'UPDATE allitems SET "type"=$1, "original_type"=CASE WHEN "original_type" IS NULL THEN "type" ELSE "original_type" END, "damage"=$2, "armor"=$3 WHERE "id"=$4;',
+                'UPDATE allitems SET "type"=$1, "original_type"=CASE WHEN "original_type" IS NULL THEN "type" ELSE "original_type" END, "damage"=$2, "armor"=$3, "hand"=$4 WHERE "id"=$5;',
                 new_type,
-                item["armor"],
-                item["damage"],
+                0 if new_type == "Shield" else stat,
+                stat if new_type == "Shield" else 0,
+                hand,
                 itemid,
             )
             await conn.execute(

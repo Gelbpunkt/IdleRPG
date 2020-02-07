@@ -165,7 +165,7 @@ base_url = "https://idlerpg.travitia.xyz"
 okapi_url = "https://okapi.travitia.xyz"
 
 """The Version of the Bot."""
-version = "4.4.0"
+version = "4.5.0"
 
 """Global cooldown (rate, per, [.user, .channel, .guild])"""
 cooldown = commands.CooldownMapping.from_cooldown(1, 3, commands.BucketType.user)
@@ -257,26 +257,32 @@ gods = {
     "Guilt": {
         "user": 463318425901596672,
         "description": "Guilt is the goddess of suffering, obsession, misfortune, and wickedness. Every evil act is said to originally be a thought in her head.  Many curse her name, but Guilt just smiles and continues to grow stronger from the misery--after all, happiness without hardship is no happiness at all.",
+        "boundaries": (0.0, 2.0),
     },
     "Gambit": {
         "user": 402603953453268992,
         "description": "A mercurial god, though not purposefully evil. As the god of chance and risk, Gambit is the patron of gamblers, thieves, and adventurers.  If you succeed in a risky venture, he is said to have smirked with amusement at your attempt.  However, dealing with him is like flipping a coin--which side will it be?",
+        "boundaries": (0.0, 2.0),
     },
     "The Assassin": {
         "user": 294894701708967936,
         "description": "Karmic retribution type. The judge, jury, and executioner. No one really knows of him or his real name. He is shrouded in mystery, but there are still those who offer to him to keep him at bay or to strike down their foes.",
+        "boundaries": (0.0, 2.0),
     },
     "Kvothe": {
         "user": 489637665633730560,
         "description": "I have been called Kvothe the Bloodless, Kvothe the Arcane, and Kvothe Kingkiller. I have earned those names. Bought and paid for them. I have stolen princesses back from sleeping barrow kings. I have spent the night with Felurian and left with both my sanity and my life. I tread paths by moonlight that others fear to speak of during day. I have talked to Gods, loved women, and written songs that make the minstrels weep. You may have heard of me.",
+        "boundaries": (0.7, 1.3),
     },
     "Asmodeus": {
         "user": 318824057158107137,
         "description": "Asmodeus, god of death. The reason adventurers don't die is because they give up their loot to him in order for them to live again. Their loot is the price they pay for a second chance.",
+        "boundaries": (0.7, 1.3),
     },
     "Salutations": {
         "user": 344227184438804480,
         "description": "Known for excelling at greetings and making mutual relationships with every deity and also gaining followers due to his history/characteristic. Despite his natural talent of mannerism and the swift making of relationships with not just gods, but humans as well, he is not to be easily fooled. Unironically, his most loyal follower is Cyberus, an ancient wolf general that has stood by and served him for the longest of times. Many fear Cyberus, but it only attacks when provoked or ordered to by Sal.",
+        "boundaries": (0.5, 1.5),
     },
     "War God Fox": {
         "user": 254234402354233344,
@@ -286,24 +292,29 @@ gods = {
         If you survive in a war, you'll gain my respect. But, if you die in a war, you'll lose everything~
 
         Choose wisely my friend, maybe the next war will be against you.""",
+        "boundaries": (0.5, 1.5),
     },
     "Athena, Goddess of Wisdom": {
         "user": 226038728211038208,
         "description": "Goddess of wisdom, war and the crafts, and favourite daughter of Zeus, Athena was, perhaps, the wisest, most courageous, and certainly the most resourceful of the Olympian gods. Follow in her footsteps and become a follower to live through this wretched mayhem. As she is not only wise, but a powerful Leader. You do not want to her have her as your enemy now, Do you?",
+        "boundaries": (0.5, 1.5),
     },
     "CHamburr": {
         "user": 446290930723717120,
         "description": "Omniscient. Omnipotent. Omnipresent. An all-round god powered by endless streams of blood, with the one goal -- of flowing it through all mankind. The day he was born, he promised to give his unexhaustive love equally to everyone...",
+        "boundaries": (0.0, 2.0),
     },
     "Ananke": {
         "user": 373797591395205122,
         "description": """Goddess of inevitability, compulsion, and necessity.
         Nothing exists without its other "weight" and Namara: Shadow and Light, Rise and Fall, etc.
         Follow to get fair rewards, and never be betrayed.""",
+        "boundaries": (0.0, 2.0),
     },
     "Jesus": {
         "user": 322354047162122243,
         "description": "Sent from God to end the suffering and to bring light back where it is needed the most.",
+        "boundaries": (0.0, 2.0),
     },
 }
 
@@ -356,3 +367,18 @@ classes = {
         "Ritualist",
     ],
 }
+
+"""All item types ingame."""
+item_types = [
+    "Sword",
+    "Shield",
+    "Axe",
+    "Wand",
+    "Dagger",
+    "Knife",
+    "Spear",
+    "Bow",
+    "Hammer",
+    "Scythe",
+    "Howlet",
+]

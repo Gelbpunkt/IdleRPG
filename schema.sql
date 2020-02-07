@@ -32,7 +32,7 @@ SET client_min_messages = warning;
 SET row_security = off;
 
 --
--- Name: insert_alliance_default(); Type: FUNCTION; Schema: public; Owner: postgres
+-- Name: insert_alliance_default(); Type: FUNCTION; Schema: public; Owner: jens
 --
 
 CREATE FUNCTION public.insert_alliance_default() RETURNS trigger
@@ -47,7 +47,7 @@ end;
 $$;
 
 
-ALTER FUNCTION public.insert_alliance_default() OWNER TO postgres;
+ALTER FUNCTION public.insert_alliance_default() OWNER TO jens;
 
 SET default_tablespace = '';
 
@@ -67,7 +67,8 @@ CREATE TABLE public.allitems (
     armor numeric(5,2) NOT NULL,
     signature character varying(50) DEFAULT NULL::character varying,
     original_type character varying(10) DEFAULT NULL::character varying,
-    original_name character varying(200) DEFAULT NULL::character varying
+    original_name character varying(200) DEFAULT NULL::character varying,
+    hand character varying(10) NOT NULL
 );
 
 
@@ -124,6 +125,43 @@ CREATE TABLE public.city (
 
 
 ALTER TABLE public.city OWNER TO jens;
+
+--
+-- Name: coupon; Type: TABLE; Schema: public; Owner: jens
+--
+
+CREATE TABLE public.coupon (
+    "from" bigint NOT NULL,
+    "to" bigint,
+    created_at timestamp with time zone DEFAULT now(),
+    code character varying(10) NOT NULL,
+    id integer NOT NULL
+);
+
+
+ALTER TABLE public.coupon OWNER TO jens;
+
+--
+-- Name: coupon_id_seq; Type: SEQUENCE; Schema: public; Owner: jens
+--
+
+CREATE SEQUENCE public.coupon_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.coupon_id_seq OWNER TO jens;
+
+--
+-- Name: coupon_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: jens
+--
+
+ALTER SEQUENCE public.coupon_id_seq OWNED BY public.coupon.id;
+
 
 --
 -- Name: defenses; Type: TABLE; Schema: public; Owner: jens
@@ -497,6 +535,13 @@ ALTER TABLE ONLY public.allitems ALTER COLUMN id SET DEFAULT nextval('public.all
 
 
 --
+-- Name: coupon id; Type: DEFAULT; Schema: public; Owner: jens
+--
+
+ALTER TABLE ONLY public.coupon ALTER COLUMN id SET DEFAULT nextval('public.coupon_id_seq'::regclass);
+
+
+--
 -- Name: defenses id; Type: DEFAULT; Schema: public; Owner: jens
 --
 
@@ -559,6 +604,14 @@ ALTER TABLE ONLY public.allitems
 
 ALTER TABLE ONLY public.city
     ADD CONSTRAINT city_pkey PRIMARY KEY (name);
+
+
+--
+-- Name: coupon coupon_pkey; Type: CONSTRAINT; Schema: public; Owner: jens
+--
+
+ALTER TABLE ONLY public.coupon
+    ADD CONSTRAINT coupon_pkey PRIMARY KEY (code);
 
 
 --

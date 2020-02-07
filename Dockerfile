@@ -1,10 +1,11 @@
-FROM python:3.8.1-alpine3.11
+FROM python:3.9.0a3-alpine3.10
 
 WORKDIR /idlerpg
 COPY requirements.txt .
 
-RUN apk add --no-cache curl git && \
-    curl -sL https://raw.githubusercontent.com/Gelbpunkt/alpine-python-3.8-wheels/master/index-order | while read p; do pip install "https://github.com/Gelbpunkt/alpine-python-3.8-wheels/raw/master/wheels/$p"; done && \
+RUN sed -i "s:v3.10:edge:g" /etc/apk/repositories && apk update && apk upgrade && \
+    apk add --no-cache curl git && \
+    curl -sL https://raw.githubusercontent.com/Gelbpunkt/alpine-python-wheels/3.9/index-order | while read p; do pip install "https://github.com/Gelbpunkt/alpine-python-wheels/raw/3.9/wheels/$p"; done && \
     apk del curl
 
 COPY . .
