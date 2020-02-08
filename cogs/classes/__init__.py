@@ -528,10 +528,10 @@ class Classes(commands.Cog):
         embed.add_field(name=_("ID"), value=item["id"], inline=False)
         embed.add_field(name=_("Name"), value=item["name"], inline=False)
         embed.add_field(name=_("Type"), value=item["type"], inline=False)
-        if item["type"] == "Sword":
-            embed.add_field(name=_("Damage"), value=item["damage"], inline=True)
-        else:
+        if item["type"] == "Shield":
             embed.add_field(name=_("Armor"), value=item["armor"], inline=True)
+        else:
+            embed.add_field(name=_("Damage"), value=item["damage"], inline=True)
         embed.add_field(name=_("Value"), value=f"${item['value']}", inline=False)
         embed.set_footer(text=_("Your pet needs to recover, wait a day to retry"))
         await ctx.send(embed=embed)
