@@ -100,7 +100,7 @@ class Battles(commands.Cog):
         )
         stats = [
             sum(await self.bot.get_damage_armor_for(ctx.author)) + random.randint(1, 7),
-            sum(await self.bot.get_damage_armor_for(enemy)) + random.randint(1, 7),
+            sum(await self.bot.get_damage_armor_for(enemy_)) + random.randint(1, 7),
         ]
         players = [ctx.author, enemy_]
         if stats[0] == stats[1]:
