@@ -52,6 +52,8 @@ class Patreon(commands.Cog):
 
             if old_type == "Shield" and new_type != "Shield":
                 dmg, armor = item["armor"], 0
+            elif old_type != "Shield" and new_type == "Shield":
+                dmg, armor = 0, item["damage"]
             else:
                 dmg, armor = item["damage"], item["armor"]
 
