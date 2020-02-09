@@ -557,9 +557,13 @@ class Bot(commands.AutoShardedBot):
             )
             reward_text = f"**${money}**"
 
-        additional = _(
-            "You can now choose your second class using `{prefix}class`!"
-        ).format(prefix=ctx.prefix) if old_level < 12 and new_level >= 12 else ""
+        additional = (
+            _("You can now choose your second class using `{prefix}class`!").format(
+                prefix=ctx.prefix
+            )
+            if old_level < 12 and new_level >= 12
+            else ""
+        )
 
         await ctx.send(
             _(

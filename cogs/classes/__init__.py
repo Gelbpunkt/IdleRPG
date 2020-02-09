@@ -38,7 +38,9 @@ class Classes(commands.Cog):
     @commands.command(name="class")
     @locale_doc
     async def _class(self, ctx):
-        _("""Change your primary or secondary class. Secondary class is available once you reach level 12.""")
+        _(
+            """Change your primary or secondary class. Secondary class is available once you reach level 12."""
+        )
         if int(rpgtools.xptolevel(ctx.character_data["xp"])) >= 12:
             val = await self.bot.paginator.Choose(
                 title=_("Select class to change"),

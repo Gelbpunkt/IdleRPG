@@ -356,7 +356,8 @@ https://git.travitia.xyz/Kenvyra/IdleRPG/compare/v4.4.0...v4.5.0
 
 **Merge Requests**
 
-*snip*""")
+*snip*"""
+        )
 
     @commands.has_permissions(manage_messages=True)
     @commands.command()

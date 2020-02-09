@@ -550,7 +550,7 @@ class Marriage(commands.Cog):
                     _("solved an enigma with a money reward."),
                 ]
             )
-            money = random.randint(1, 5000)
+            money = random.randint(0, int(ctx.character_data["money"] / 64))
             await self.bot.pool.execute(
                 'UPDATE profile SET "money"="money"+$1 WHERE "user"=$2;',
                 money,
