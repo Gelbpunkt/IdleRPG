@@ -32,42 +32,17 @@ class Valentine(commands.Cog):
         self.bot = bot
 
         self.valentine_items = {
-            "Sword": [
-                "Blade of Affection",
-            ],
-            "Shield": [
-                "Love Shield",
-                "Letter of Love",
-            ],
-            "Axe": [
-                "Kiss Kiss Chop Chop",
-            ],
-            "Scythe": [
-                "'Til Death do us part",
-                "Blade of Cuteness",
-            ],
-            "Bow": [
-                "Cupid's Bow",
-                "Lovestruck Crossbow",
-            ],
-            "Howlet": [
-                "Lovebird"
-            ],
-            "Spear": [
-                "Distant Kisses",
-            ],
-            "Wand": [
-                "Mindbender",
-            ],
-            "Knife": [
-                "Close Combat Kisses",
-            ],
-            "Dagger": [
-                "Thieve's Heart",
-            ],
-            "Hammer": [
-                "Heartfelt Bonk",
-            ]
+            "Sword": ["Blade of Affection"],
+            "Shield": ["Love Shield", "Letter of Love"],
+            "Axe": ["Kiss Kiss Chop Chop"],
+            "Scythe": ["'Til Death do us part", "Blade of Cuteness"],
+            "Bow": ["Cupid's Bow", "Lovestruck Crossbow"],
+            "Howlet": ["Lovebird"],
+            "Spear": ["Distant Kisses"],
+            "Wand": ["Mindbender"],
+            "Knife": ["Close Combat Kisses"],
+            "Dagger": ["Thieve's Heart"],
+            "Hammer": ["Heartfelt Bonk"],
         }
 
     def get_valentine_name(self, type_):
@@ -143,7 +118,7 @@ class Valentine(commands.Cog):
                 minvalue=1,
                 maxvalue=250,
                 owner=ctx.author,
-                insert=False
+                insert=False,
             )
             item["name"] = self.get_valentine_name(item["type_"])
             item = await self.bot.create_item(**item)

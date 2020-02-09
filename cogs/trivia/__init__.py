@@ -15,6 +15,7 @@ GNU Affero General Public License for more details.
 You should have received a copy of the GNU Affero General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
+import html
 import random
 
 from discord.ext import commands
@@ -33,11 +34,15 @@ class Trivia(commands.Cog):
             ret = await r.json()
         if ret["response_code"] != 0:
             raise Exception("response error")
-        return ret["results"][0]
+        ret = ret["results"][0]
+        ret["question"] = html.unescape(ret["question"])
+        ret["correct_answer"] = html.unescape(ret["correct_answer"])
+        ret["incorrect_answers"] = [html.unescape(i) for i in ret["incorrect_answers"]]
+        return ret
 
     async def get_response(self, ctx, question):
         entries = [question["correct_answer"]] + question["incorrect_answers"]
-        random.sort(entries)
+        random.shuffle(entries)
         answer = await self.bot.paginator.Choose(
             entries=entries,
             title=question["question"],
