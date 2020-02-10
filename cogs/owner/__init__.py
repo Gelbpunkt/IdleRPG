@@ -103,7 +103,7 @@ class Owner(commands.Cog):
         async with self.bot.pool.acquire() as conn:
             for god in self.bot.config.gods:
                 boundaries = self.bot.config.gods[god]["boundaries"]
-                luck = random.randint(boundaries[0] * 10, boundaries[1] * 10) / 10
+                luck = random.randint(boundaries[0] * 100, boundaries[1] * 100) / 100
                 await conn.execute(
                     'UPDATE profile SET "luck"=round($1, 2) WHERE "god"=$2;', luck, god
                 )

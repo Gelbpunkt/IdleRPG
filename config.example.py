@@ -267,7 +267,7 @@ gods = {
     "The Assassin": {
         "user": 294894701708967936,
         "description": "Karmic retribution type. The judge, jury, and executioner. No one really knows of him or his real name. He is shrouded in mystery, but there are still those who offer to him to keep him at bay or to strike down their foes.",
-        "boundaries": (0.0, 2.0),
+        "boundaries": (0.75, 1.25),
     },
     "Kvothe": {
         "user": 489637665633730560,
