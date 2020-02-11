@@ -384,7 +384,11 @@ class Marriage(commands.Cog):
                 name = msg.content.replace("@", "@\u200b")
             except asyncio.TimeoutError:
                 name = await self.get_random_name(gender, names)
-                await ctx.send(_("You didn't enter a name, so we chose {name} for you.").format(name=name))
+                await ctx.send(
+                    _("You didn't enter a name, so we chose {name} for you.").format(
+                        name=name
+                    )
+                )
                 break
             if name in names:
                 await ctx.send(
