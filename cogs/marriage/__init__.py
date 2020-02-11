@@ -293,6 +293,19 @@ class Marriage(commands.Cog):
         text = _("This increased your lovescore by {num}").format(num=num)
         await ctx.send(f"{scenario} {text}")
 
+    async def get_random_name(self, gender, avoid):
+        if gender == "f":
+            data = "assets/data/girlnames.txt"
+        else:
+            data = "assets/data/boynames.txt"
+        with open(data, "r") as file:
+            all_names = file.readlines()  # this is a list
+        file.close()
+        name = random.choice(all_names)
+        while name in avoid:
+            name = random.choice(all_names)  # avoid duplicate names
+        return name.strip("\n")
+
     @has_char()
     @commands.guild_only()
     @user_cooldown(3600)
@@ -370,8 +383,9 @@ class Marriage(commands.Cog):
                 msg = await self.bot.wait_for("message", check=check, timeout=30)
                 name = msg.content.replace("@", "@\u200b")
             except asyncio.TimeoutError:
-                await self.bot.reset_cooldown(ctx)
-                return await ctx.send(_("You didn't enter a name."))
+                name = await self.get_random_name(gender, names)
+                await ctx.send(_("You didn't enter a name, so we chose {name} for you.").format(name=name))
+                break
             if name in names:
                 await ctx.send(
                     _(

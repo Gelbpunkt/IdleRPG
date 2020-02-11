@@ -44,6 +44,7 @@ class Tournament(commands.Cog):
     async def tournament(self, ctx, prize: IntFromTo(0, 100_000_000) = 0):
         _("""Starts a new tournament.""")
         if ctx.character_data["money"] < prize:
+            await self.bot.reset_cooldown(ctx)
             return await ctx.send(_("You are too poor."))
         msg = await ctx.send(
             _(
@@ -158,6 +159,7 @@ class Tournament(commands.Cog):
     async def raidtournament(self, ctx, prize: IntFromTo(0, 100_000_000) = 0):
         _("""Starts a new raid tournament.""")
         if ctx.character_data["money"] < prize:
+            await self.bot.reset_cooldown(ctx)
             return await ctx.send(_("You are too poor."))
         msg = await ctx.send(
             _(

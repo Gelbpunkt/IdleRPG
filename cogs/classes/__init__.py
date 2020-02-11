@@ -203,7 +203,7 @@ class Classes(commands.Cog):
     @commands.command()
     @locale_doc
     async def evolve(self, ctx):
-        _("""Evolve to the next level of your classes.""")
+        _("""Evolve to the next level of your classes once every 5 levels.""")
         level = int(rpgtools.xptolevel(ctx.character_data["xp"]))
         if level < 5:
             return await ctx.send(_("Your level isn't high enough to evolve."))
