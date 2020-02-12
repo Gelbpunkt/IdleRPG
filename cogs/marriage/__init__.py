@@ -475,11 +475,13 @@ class Marriage(commands.Cog):
     async def familyevent(self, ctx):
         _("""Events happening to your family.""")
         if not ctx.character_data["marriage"]:
+            await self.bot.reset_cooldown(ctx)
             return await ctx.send(_("You're lonely."))
         children = await self.bot.pool.fetch(
             'SELECT * FROM children WHERE "mother"=$1 OR "father"=$1;', ctx.author.id
         )
         if not children:
+            await self.bot.reset_cooldown(ctx)
             return await ctx.send(_("You don't have kids yet."))
         target = random.choice(children)
         event = random.choice(
