@@ -33,12 +33,12 @@ from utils.checks import has_char
 class Marriage(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
-        with open("assets/data/boynames.txt") as BoyNames:
-            self.boynames = BoyNames.readlines()
-        BoyNames.close()
-        with open("assets/data/girlnames.txt") as GirlNames:
-            self.girlnames = GirlNames.readlines()
-        GirlNames.close()
+        with open("assets/data/boynames.txt") as boy_names:
+            self.boynames = boy_names.readlines()
+        boy_names.close()
+        with open("assets/data/girlnames.txt") as girl_names:
+            self.girlnames = girl_names.readlines()
+        girl_names.close()
 
     def get_max_kids(self, lovescore):
         return 10 + lovescore // 250_000
