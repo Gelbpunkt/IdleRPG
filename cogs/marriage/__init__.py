@@ -33,6 +33,12 @@ from utils.checks import has_char
 class Marriage(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
+        with open("asstes/data/boynames.txt") as BoyNames:
+            self.boynames = BoyNames.readlines()
+        BoyNames.close()
+        with open("asstes/data/girlnames.txt") as GirlNames:
+            self.girlnames = GirlNames.readlines()
+        GirlNames.close()
 
     def get_max_kids(self, lovescore):
         return 10 + lovescore // 250_000
@@ -295,15 +301,12 @@ class Marriage(commands.Cog):
 
     async def get_random_name(self, gender, avoid):
         if gender == "f":
-            data = "assets/data/girlnames.txt"
+            data = self.girlnames
         else:
-            data = "assets/data/boynames.txt"
-        with open(data, "r") as file:
-            all_names = file.readlines()  # this is a list
-        file.close()
-        name = random.choice(all_names)
+            data = self.boynames
+        name = random.choice(data)
         while name in avoid:
-            name = random.choice(all_names)  # avoid duplicate names
+            name = random.choice(data)  # avoid duplicate names
         return name.strip("\n")
 
     @has_char()

@@ -63,7 +63,8 @@ class Trading(commands.Cog):
                         "Your item is either equal to a Starter Item or worse. Noone would buy it."
                     )
                 )
-            if builds := await self.bot.get_city_buildings(ctx.character_data["guild"]):
+            if (builds := await self.bot.get_city_buildings(ctx.character_data["guild"])) and builds[
+                "trade_building"] != 0:
                 tax = 0
             else:
                 tax = round(price * 0.05)
@@ -90,7 +91,7 @@ class Trading(commands.Cog):
             ).format(
                 prefix=ctx.prefix,
                 additional=_("The tax of 5% has been deducted from your account.")
-                if not builds
+                if not builds["trade_building"] != 0
                 else "",
             )
         )
