@@ -33,10 +33,10 @@ from utils.checks import has_char
 class Marriage(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
-        with open("asstes/data/boynames.txt") as BoyNames:
+        with open("assets/data/boynames.txt") as BoyNames:
             self.boynames = BoyNames.readlines()
         BoyNames.close()
-        with open("asstes/data/girlnames.txt") as GirlNames:
+        with open("assets/data/girlnames.txt") as GirlNames:
             self.girlnames = GirlNames.readlines()
         GirlNames.close()
 
