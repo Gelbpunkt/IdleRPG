@@ -302,7 +302,7 @@ gods = {
     "CHamburr": {
         "user": 446290930723717120,
         "description": "Omniscient. Omnipotent. Omnipresent. An all-round god powered by endless streams of blood, with the one goal -- of flowing it through all mankind. The day he was born, he promised to give his unexhaustive love equally to everyone...",
-        "boundaries": (0.0, 2.0),
+        "boundaries": (0.8, 1.2),
     },
     "Ananke": {
         "user": 373797591395205122,
