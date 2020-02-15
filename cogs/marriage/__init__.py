@@ -35,10 +35,8 @@ class Marriage(commands.Cog):
         self.bot = bot
         with open("assets/data/boynames.txt") as boy_names:
             self.boynames = boy_names.readlines()
-        boy_names.close()
         with open("assets/data/girlnames.txt") as girl_names:
             self.girlnames = girl_names.readlines()
-        girl_names.close()
 
     def get_max_kids(self, lovescore):
         return 10 + lovescore // 250_000
@@ -304,10 +302,10 @@ class Marriage(commands.Cog):
             data = self.girlnames
         else:
             data = self.boynames
-        name = random.choice(data)
+        name = random.choice(data).strip("\n")
         while name in avoid:
             name = random.choice(data)  # avoid duplicate names
-        return name.strip("\n")
+        return name
 
     @has_char()
     @commands.guild_only()
