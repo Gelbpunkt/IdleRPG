@@ -18,6 +18,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 import asyncio
 
 from io import BytesIO
+from typing import Optional
 
 import discord
 
@@ -398,19 +399,38 @@ IdleRPG is a global bot, your characters are valid everywhere"""
     @commands.command(aliases=["inv", "i"])
     @locale_doc
     async def inventory(
-        self, ctx, lowest: IntFromTo(0, 100) = 0, highest: IntFromTo(0, 100) = 100
+            self,
+            ctx,
+            itemtype: Optional[str.title] = "All",
+            lowest: IntFromTo(0, 100) = 0,
+            highest: IntFromTo(0, 100) = 100,
     ):
         _("""Shows your current inventory.""")
         if highest < lowest:
             return await ctx.send(
                 _("Make sure that the `highest` value is greater than `lowest`.")
             )
-        ret = await self.bot.pool.fetch(
-            'SELECT ai.*, i.equipped FROM profile p JOIN allitems ai ON (p.user=ai.owner) JOIN inventory i ON (ai.id=i.item) WHERE p."user"=$1 AND ((ai."damage"+ai."armor" BETWEEN $2 AND $3) OR i."equipped") ORDER BY i."equipped" DESC, ai."damage"+ai."armor" DESC;',
-            ctx.author.id,
-            lowest,
-            highest,
-        )
+        if not itemtype in self.bot.config.item_types + ["All"]:
+            return await ctx.send(
+                _(
+                    "Please select a valid item type or `all`. Available types: `{all_types}`"
+                ).format(all_types=", ".join(self.bot.config.item_types))
+            )
+        if itemtype == "All":
+            ret = await self.bot.pool.fetch(
+                'SELECT ai.*, i.equipped FROM profile p JOIN allitems ai ON (p.user=ai.owner) JOIN inventory i ON (ai.id=i.item) WHERE p."user"=$1 AND ((ai."damage"+ai."armor" BETWEEN $2 AND $3) OR i."equipped") ORDER BY i."equipped" DESC, ai."damage"+ai."armor" DESC;',
+                ctx.author.id,
+                lowest,
+                highest,
+            )
+        else:
+            ret = await self.bot.pool.fetch(
+                'SELECT ai.*, i.equipped FROM profile p JOIN allitems ai ON (p.user=ai.owner) JOIN inventory i ON (ai.id=i.item) WHERE p."user"=$1 AND ((ai."damage"+ai."armor" BETWEEN $2 AND $3 AND ai."type"=$4)  OR i."equipped") ORDER BY i."equipped" DESC, ai."damage"+ai."armor" DESC;',
+                ctx.author.id,
+                lowest,
+                highest,
+                itemtype,
+            )
         if not ret:
             return await ctx.send(_("Your inventory is empty."))
         allitems = list(chunks(ret, 5))

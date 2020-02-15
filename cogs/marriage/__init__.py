@@ -33,6 +33,10 @@ from utils.checks import has_char
 class Marriage(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
+        with open("assets/data/boynames.txt") as boy_names:
+            self.boynames = boy_names.readlines()
+        with open("assets/data/girlnames.txt") as girl_names:
+            self.girlnames = girl_names.readlines()
 
     def get_max_kids(self, lovescore):
         return 10 + lovescore // 250_000
@@ -293,6 +297,16 @@ class Marriage(commands.Cog):
         text = _("This increased your lovescore by {num}").format(num=num)
         await ctx.send(f"{scenario} {text}")
 
+    async def get_random_name(self, gender, avoid):
+        if gender == "f":
+            data = self.girlnames
+        else:
+            data = self.boynames
+        name = random.choice(data).strip("\n")
+        while name in avoid:
+            name = random.choice(data)  # avoid duplicate names
+        return name
+
     @has_char()
     @commands.guild_only()
     @user_cooldown(3600)
@@ -370,8 +384,13 @@ class Marriage(commands.Cog):
                 msg = await self.bot.wait_for("message", check=check, timeout=30)
                 name = msg.content.replace("@", "@\u200b")
             except asyncio.TimeoutError:
-                await self.bot.reset_cooldown(ctx)
-                return await ctx.send(_("You didn't enter a name."))
+                name = await self.get_random_name(gender, names)
+                await ctx.send(
+                    _("You didn't enter a name, so we chose {name} for you.").format(
+                        name=name
+                    )
+                )
+                break
             if name in names:
                 await ctx.send(
                     _(
@@ -457,11 +476,13 @@ class Marriage(commands.Cog):
     async def familyevent(self, ctx):
         _("""Events happening to your family.""")
         if not ctx.character_data["marriage"]:
+            await self.bot.reset_cooldown(ctx)
             return await ctx.send(_("You're lonely."))
         children = await self.bot.pool.fetch(
             'SELECT * FROM children WHERE "mother"=$1 OR "father"=$1;', ctx.author.id
         )
         if not children:
+            await self.bot.reset_cooldown(ctx)
             return await ctx.send(_("You don't have kids yet."))
         target = random.choice(children)
         event = random.choice(

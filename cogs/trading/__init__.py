@@ -34,7 +34,9 @@ class Trading(commands.Cog):
     @commands.command()
     @locale_doc
     async def sell(self, ctx, itemid: int, price: IntGreaterThan(-1)):
-        _("""Puts your item into the market.""")
+        _(
+            """Puts your item into the market. Tax for selling items is 5% of the price."""
+        )
         async with self.bot.pool.acquire() as conn:
             item = await conn.fetchrow(
                 "SELECT * FROM inventory i JOIN allitems ai ON (i.item=ai.id) WHERE ai.id=$1 AND ai.owner=$2;",
@@ -61,7 +63,8 @@ class Trading(commands.Cog):
                         "Your item is either equal to a Starter Item or worse. Noone would buy it."
                     )
                 )
-            if await self.bot.get_city_buildings(ctx.character_data["guild"]):
+            if (builds := await self.bot.get_city_buildings(ctx.character_data["guild"])) and builds[
+                "trade_building"] != 0:
                 tax = 0
             else:
                 tax = round(price * 0.05)
@@ -84,8 +87,13 @@ class Trading(commands.Cog):
             )
         await ctx.send(
             _(
-                "Successfully added your item to the shop! Use `{prefix}shop` to view it in the market! The tax of 5% has been deducted from your account."
-            ).format(prefix=ctx.prefix)
+                "Successfully added your item to the shop! Use `{prefix}shop` to view it in the market! {additional}"
+            ).format(
+                prefix=ctx.prefix,
+                additional=_("The tax of 5% has been deducted from your account.")
+                if not builds["trade_building"] != 0
+                else "",
+            )
         )
 
     @has_char()

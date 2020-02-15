@@ -58,6 +58,7 @@ class Valentine(commands.Cog):
         if not 13 <= today <= 15:
             return await ctx.send(_("It's not time for that yet!"))
         if not ctx.character_data["marriage"]:
+            await self.bot.reset_cooldown(ctx)
             return await ctx.send(_("You're not married yet."))
 
         await self.bot.pool.execute(
