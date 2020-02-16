@@ -141,6 +141,8 @@ class Owner(commands.Cog):
                 )
                 await ctx.send(f"{god} set to {luck}.")
             await conn.execute('UPDATE profile SET "favor"=0 WHERE "god" IS NOT NULL;')
+            await ctx.send("Godless set to 1.0")
+            await conn.execute('UPDATE profile SET "luck"=1.0 WHERE "god" IS NULL;;')
 
     @commands.command(hidden=True)
     async def shutdown(self, ctx):
