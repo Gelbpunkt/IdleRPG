@@ -399,18 +399,18 @@ IdleRPG is a global bot, your characters are valid everywhere"""
     @commands.command(aliases=["inv", "i"])
     @locale_doc
     async def inventory(
-            self,
-            ctx,
-            itemtype: Optional[str.title] = "All",
-            lowest: IntFromTo(0, 100) = 0,
-            highest: IntFromTo(0, 100) = 100,
+        self,
+        ctx,
+        itemtype: Optional[str.title] = "All",
+        lowest: IntFromTo(0, 100) = 0,
+        highest: IntFromTo(0, 100) = 100,
     ):
         _("""Shows your current inventory.""")
         if highest < lowest:
             return await ctx.send(
                 _("Make sure that the `highest` value is greater than `lowest`.")
             )
-        if not itemtype in self.bot.config.item_types + ["All"]:
+        if itemtype not in self.bot.config.item_types + ["All"]:
             return await ctx.send(
                 _(
                     "Please select a valid item type or `all`. Available types: `{all_types}`"

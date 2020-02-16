@@ -40,6 +40,7 @@ from classes.converters import DateNewerThan, IntFromTo, IntGreaterThan
 from cogs.help import chunks
 from cogs.shard_communication import next_day_cooldown
 from utils.checks import has_char, user_is_patron
+from utils.shell import get_out
 
 
 class Miscellaneous(commands.Cog):
@@ -231,6 +232,12 @@ Even $1 can help us.
             await self.bot.cogs["Sharding"].handler("guild_count", self.bot.shard_count)
         )
         meminfo = psutil.virtual_memory()
+        cpu_freq = psutil.cpu_freq()
+        cpu_name = (
+            await get_out(
+                "cat /proc/cpuinfo | grep -m 1 \"model name\" | cut -d ' ' -f3-"
+            )
+        )[0]
 
         embed = discord.Embed(
             title=_("IdleRPG Statistics"),
@@ -247,6 +254,7 @@ Even $1 can help us.
             name=_("Hosting Statistics"),
             value=_(
                 """\
+CPU: **{cpu_name}**
 CPU Usage: **{cpu}%**, **{cores}** cores @ **{freq}** GHz
 RAM Usage: **{ram}%** (Total: **{total_ram}**)
 Python Version **{python}** <:python:445247273065250817>
@@ -255,9 +263,12 @@ Operating System: **{osname} {osversion}**
 Kernel Version: **{kernel}**
 PostgreSQL Version **{pg_version}**"""
             ).format(
+                cpu_name=cpu_name,
                 cpu=psutil.cpu_percent(),
                 cores=psutil.cpu_count(),
-                freq=psutil.cpu_freq().max / 1000,
+                freq=cpu_freq.max / 1000
+                if cpu_freq.max
+                else round(cpu_freq.current / 1000, 2),
                 ram=meminfo.percent,
                 total_ram=humanize.naturalsize(meminfo.total),
                 python=platform.python_version(),

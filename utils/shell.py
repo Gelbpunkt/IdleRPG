@@ -21,6 +21,14 @@ from asyncio.subprocess import DEVNULL, PIPE
 from utils.paginator import TextPaginator
 
 
+async def get_out(cmd):
+    proc = await asyncio.create_subprocess_shell(
+        cmd, stdout=asyncio.subprocess.PIPE, stderr=asyncio.subprocess.PIPE,
+    )
+    stdout, stderr = await proc.communicate()
+    return stdout.decode().strip(), stderr.decode().strip()
+
+
 async def run(cmd, ctx):
     pager = TextPaginator(ctx, prefix="```sh\n", suffix="```")
     await pager.add_line(f"$ {cmd}\n")

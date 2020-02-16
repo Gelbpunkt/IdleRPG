@@ -293,7 +293,7 @@ class Admin(commands.Cog):
         )
 
     @is_admin()
-    @user_cooldown(259200)  # 3 days
+    @user_cooldown(604800)  # 7 days
     @commands.command(aliases=["asign"], hidden=True)
     @locale_doc
     async def adminsign(self, ctx, itemid: int, *, text: str):
