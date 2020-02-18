@@ -170,7 +170,7 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
                 u = await self.bot.get_user_global(i)
                 if not u:
                     continue
-                if not conn.fetchval(
+                if not await conn.fetchval(
                     'SELECT "user" FROM profile WHERE "user"=$1', u.id
                 ):
                     continue
@@ -375,7 +375,7 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
                 u = await self.bot.get_user_global(i)
                 if not u:
                     continue
-                if not conn.fetchval(
+                if not await conn.fetchval(
                     'SELECT "user" FROM profile WHERE "user"=$1', u.id
                 ):
                     continue
@@ -518,7 +518,7 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
                 u = await self.bot.get_user_global(i)
                 if not u:
                     continue
-                if not conn.fetchval(
+                if not await conn.fetchval(
                     'SELECT "user" FROM profile WHERE "user"=$1', u.id
                 ):
                     continue
@@ -642,7 +642,7 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
                 u = await self.bot.get_user_global(i)
                 if not u:
                     continue
-                if not conn.fetchval(
+                if not await conn.fetchval(
                     'SELECT "user" FROM profile WHERE "user"=$1', u.id
                 ):
                     continue
@@ -834,7 +834,7 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
                 u = await self.bot.get_user_global(i)
                 if not u:
                     continue
-                if not conn.fetchval(
+                if not await conn.fetchval(
                     'SELECT "user" FROM profile WHERE "user"=$1', u.id
                 ):
                     continue
@@ -981,7 +981,7 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
                 u = await self.bot.get_user_global(i)
                 if not u:
                     continue
-                if not conn.fetchval(
+                if not await conn.fetchval(
                     'SELECT "user" FROM profile WHERE "user"=$1', u.id
                 ):
                     continue
@@ -1186,7 +1186,7 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
                 u = await self.bot.get_user_global(i)
                 if not u:
                     continue
-                if not conn.fetchval(
+                if not await conn.fetchval(
                     'SELECT "user" FROM profile WHERE "user"=$1', u.id
                 ):
                     continue
@@ -1474,7 +1474,7 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
                 u = await self.bot.get_user_global(i)
                 if not u:
                     continue
-                if not conn.fetchval(
+                if not await conn.fetchval(
                     'SELECT "user" FROM profile WHERE "user"=$1', u.id
                 ):
                     continue
@@ -1606,7 +1606,7 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
                 u = await self.bot.get_user_global(i)
                 if not u:
                     continue
-                if not conn.fetchval(
+                if not await conn.fetchval(
                     'SELECT "user" FROM profile WHERE "user"=$1', u.id
                 ):
                     continue
@@ -1736,7 +1736,7 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
                 u = await self.bot.get_user_global(i)
                 if not u:
                     continue
-                if not conn.fetchval(
+                if not await conn.fetchval(
                     'SELECT "user" FROM profile WHERE "user"=$1', u.id
                 ):
                     continue
@@ -1934,7 +1934,7 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
                 u = await self.bot.get_user_global(i)
                 if not u or await self.bot.get_god(u, conn=conn) != "Gambit":
                     continue
-                if not conn.fetchval(
+                if not await conn.fetchval(
                     'SELECT "user" FROM profile WHERE "user"=$1', u.id
                 ):
                     continue
