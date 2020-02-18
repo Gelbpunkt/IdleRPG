@@ -136,8 +136,8 @@ class Gods(commands.Cog):
         if not await ctx.confirm(
             _(
                 """\
-:warning: **Warning**: When you have a God, your luck will change (**including decreasing it!**) 
-This impacts your adventure success chances amongst other things. 
+:warning: **Warning**: When you have a God, your luck will change (**including decreasing it!**)
+This impacts your adventure success chances amongst other things.
 
 Are you sure you want to follow {god}?"""
             ).format(god=god)
@@ -145,7 +145,11 @@ Are you sure you want to follow {god}?"""
             return
 
         async with self.bot.pool.acquire() as conn:
-            if (await conn.fetchval('SELECT reset_points FROM profile WHERE "user"=$1', ctx.author.id)) < 0:
+            if (
+                await conn.fetchval(
+                    'SELECT reset_points FROM profile WHERE "user"=$1', ctx.author.id
+                )
+            ) < 0:
                 return await ctx.send(
                     _(
                         "You became Godless while using this command. Following a God is not allowed after that."
@@ -174,20 +178,24 @@ Are you sure you want to follow {god}?"""
             return await ctx.send(_("You already became Godless before."))
 
         if not await ctx.confirm(
-                _(
-                    """\
-    :warning: **Warning**: After unfollowing your God, **you cannot follow any God anymore** and will remain Godless. 
+            _(
+                """\
+    :warning: **Warning**: After unfollowing your God, **you cannot follow any God anymore** and will remain Godless.
     If your luck is below average and you decided to unfollow, know that **your luck will not return to 1.0 immediately**.
-                        
+
     Are you sure you want to become Godless?"""
-                )
+            )
         ):
-            return await ctx.send(_("{god} smiles proudly down upon you.").format(god=ctx.character_data["god"]))
+            return await ctx.send(
+                _("{god} smiles proudly down upon you.").format(
+                    god=ctx.character_data["god"]
+                )
+            )
 
         async with self.bot.pool.acquire() as conn:
             await conn.execute(
                 'UPDATE profile SET "favor"=0, "god"=NULL, "reset_points"=-1 WHERE "user"=$1;',
-                ctx.author.id
+                ctx.author.id,
             )
 
         await ctx.send(_("You are now Godless."))

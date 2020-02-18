@@ -92,7 +92,7 @@ class Trading(commands.Cog):
             ).format(
                 prefix=ctx.prefix,
                 additional=_("The tax of 5% has been deducted from your account.")
-                if not builds["trade_building"] != 0
+                if not builds or ["trade_building"] == 0
                 else "",
             )
         )
