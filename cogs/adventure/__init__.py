@@ -124,7 +124,7 @@ class Adventure(commands.Cog):
     @has_char()
     @has_no_adventure()
     @user_cooldown(7200)
-    @commands.command()
+    @commands.command(aliases=["aa"])
     @locale_doc
     async def activeadventure(self, ctx):
         _("""Go out on a docile adventure controlled by reactions.""")
