@@ -71,7 +71,11 @@ class Tournament(commands.Cog):
             except asyncio.TimeoutError:
                 if len(participants) < 2:
                     await self.bot.reset_cooldown(ctx)
-                    return await ctx.send(_("Noone joined your tournament."))
+                    return await ctx.send(
+                        _("Noone joined your tournament {author}.").format(
+                            user=ctx.author.mention
+                        )
+                    )
                 break
             if await user_has_char(self.bot, u.id):
                 if u in participants:
@@ -163,7 +167,7 @@ class Tournament(commands.Cog):
             return await ctx.send(_("You are too poor."))
         msg = await ctx.send(
             _(
-                "{author} started a tournament! Free entries, prize is **${prize}**! React with ⚔ to join!"
+                {author} started a raid tournament! Free entries, prize is **${prize}**! React with ⚔ to join!"
             ).format(author=ctx.author.mention, prize=prize)
         )
         participants = [ctx.author]
@@ -186,7 +190,11 @@ class Tournament(commands.Cog):
             except asyncio.TimeoutError:
                 if len(participants) < 2:
                     await self.bot.reset_cooldown(ctx)
-                    return await ctx.send(_("Noone joined your tournament."))
+                    return await ctx.send(
+                        _("Noone joined your raid tournament {author}.").format(
+                            user=ctx.author.mention
+                        )
+                    )
                 break
             if await user_has_char(self.bot, u.id):
                 if u in participants:
@@ -203,7 +211,7 @@ class Tournament(commands.Cog):
         if toremove != len(participants):
             await ctx.send(
                 _(
-                    "There are **{num}** entries, due to the fact we need a playable tournament, the last **{removed}** have been removed."
+                    "There are **{num}** entries, due to the fact we need a playable raid tournament, the last **{removed}** have been removed.
                 ).format(num=len(participants), removed=len(participants) - toremove)
             )
             participants = participants[: -(len(participants) - toremove)]
@@ -325,7 +333,7 @@ class Tournament(commands.Cog):
             await ctx.send(_("Round Done!"))
 
         msg = await ctx.send(
-            _("Tournament ended! The winner is {winner}.").format(
+            _("Raid Tournament ended! The winner is {winner}.").format(
                 winner=participants[0].mention
             )
         )
