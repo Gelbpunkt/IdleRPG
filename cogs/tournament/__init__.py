@@ -167,7 +167,7 @@ class Tournament(commands.Cog):
             return await ctx.send(_("You are too poor."))
         msg = await ctx.send(
             _(
-                {author} started a raid tournament! Free entries, prize is **${prize}**! React with ⚔ to join!"
+                "{author} started a raid tournament! Free entries, prize is **${prize}**! React with ⚔ to join!"
             ).format(author=ctx.author.mention, prize=prize)
         )
         participants = [ctx.author]
