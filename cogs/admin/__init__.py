@@ -181,12 +181,21 @@ class Admin(commands.Cog):
             return await ctx.send(_("Invalid item type."))
         if not 0 <= stat <= 100:
             return await ctx.send(_("Invalid stat."))
+        if item_type in ["Scythe", "Bow", "Howlet"]:
+            hand = "both"
+        elif item_type in ["Spear", "Wand"]:
+            hand = "right"
+        elif item_type == "Shield":
+            hand = "left"
+        else:
+            hand = "any"
         await self.bot.create_item(
             name=name,
             value=value,
             type_=item_type,
             damage=stat if item_type != "Shield" else 0,
             armor=stat if item_type == "Shield" else 0,
+            hand=hand,
             owner=owner,
         )
 
