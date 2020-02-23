@@ -211,7 +211,7 @@ class Tournament(commands.Cog):
         if toremove != len(participants):
             await ctx.send(
                 _(
-                    "There are **{num}** entries, due to the fact we need a playable raid tournament, the last **{removed}** have been removed.
+                    "There are **{num}** entries, due to the fact we need a playable raid tournament, the last **{removed}** have been removed."
                 ).format(num=len(participants), removed=len(participants) - toremove)
             )
             participants = participants[: -(len(participants) - toremove)]
