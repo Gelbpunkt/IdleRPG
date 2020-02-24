@@ -383,7 +383,7 @@ class Battles(commands.Cog):
             except asyncio.TimeoutError:
                 await self.bot.reset_cooldown(ctx)
                 return await ctx.send(
-                    _("Noone wanted to join your battle, {author}!").format(
+                    _("Noone wanted to join your activebattle, {author}!").format(
                         author=ctx.author.mention
                     )
                 )
@@ -391,7 +391,9 @@ class Battles(commands.Cog):
                 seeking = False
             else:
                 enemy_ = None
-                await ctx.send(_("You don't have enough money to join the battle."))
+                await ctx.send(
+                    _("You don't have enough money to join the activebattle.")
+                )
 
         PLAYERS = [ctx.author, enemy_]
         HP = []
@@ -444,7 +446,9 @@ class Battles(commands.Cog):
                     )
                 except asyncio.TimeoutError:
                     await self.bot.reset_cooldown(ctx)
-                    return await ctx.send(_("Someone refused to move. Battle stopped."))
+                    return await ctx.send(
+                        _("Someone refused to move. Activebattle stopped.")
+                    )
                 if u not in MOVES_DONE:
                     MOVES_DONE[u] = moves[str(r.emoji)]
                 else:
@@ -519,7 +523,7 @@ class Battles(commands.Cog):
         ):
             return await ctx.send(
                 _(
-                    "One of you both can't pay the price for the battle because he spent money in the time of fighting."
+                    "One of you both can't pay the price for the activebattle because he spent money in the time of fighting."
                 )
             )
         async with self.bot.pool.acquire() as conn:
