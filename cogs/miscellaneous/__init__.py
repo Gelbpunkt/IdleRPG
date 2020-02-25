@@ -518,27 +518,27 @@ https://git.travitia.xyz/Kenvyra/IdleRPG/compare/v4.4.0...v4.5.0
         except ValueError:
             return await ctx.send(
                 _(
-                    "Use the ndx format. E.g. `5d20` will roll 5 dices with 20 sides each."
+                    "Use the ndx format. E.g. `5d20` will roll 5 dice with 20 sides each."
                 )
             )
         if len(dice_type) != 2:
             return await ctx.send(_("Use the ndx format."))
-        if dice_type[0] > 100:
-            return await ctx.send(_("Too many dice."))
-        if dice_type[1] <= 0 or dice_type[1] > 10000:
+        if not 1 <= dice_type[0] <= 100:
+            return await ctx.send(
+                _("The number of dice to roll should be between 1 and 100.")
+            )
+        if not 1 <= dice_type[1] <= 10000:
             return await ctx.send(
                 _("Dice must have at least one side and not more than 10000.")
             )
         results = []
-        for x in range(dice_type[0]):
-            results.append(random.randint(1, dice_type[1]))
         sumall = 0
-        for i in results:
-            sumall += i
-        if results:
-            average = sumall / len(results)
-        else:
-            average = 0
+        for x in range(dice_type[0]):
+            diceroll = random.randint(1, dice_type[1])
+            results.append(diceroll)
+            sumall += diceroll
+
+        average = sumall / len(results)
         nl = "\n"
         results = [str(result) for result in results]
         await ctx.send(
