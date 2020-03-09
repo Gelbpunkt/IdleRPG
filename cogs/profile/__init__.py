@@ -208,7 +208,7 @@ IdleRPG is a global bot, your characters are valid everywhere"""
 
     @commands.command(aliases=["p2", "pp"])
     @locale_doc
-    async def profile2(self, ctx, target: User = Author):
+    async def profile2(self, ctx, *, target: User = Author):
         _("""View someone's profile, not image based.""")
         rank_money, rank_xp = await self.bot.get_ranks_for(target)
 
@@ -402,8 +402,8 @@ IdleRPG is a global bot, your characters are valid everywhere"""
         self,
         ctx,
         itemtype: Optional[str.title] = "All",
-        lowest: IntFromTo(0, 100) = 0,
-        highest: IntFromTo(0, 100) = 100,
+        lowest: IntFromTo(0, 101) = 0,
+        highest: IntFromTo(0, 101) = 101,
     ):
         _("""Shows your current inventory.""")
         if highest < lowest:
