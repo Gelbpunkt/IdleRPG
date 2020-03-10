@@ -235,7 +235,7 @@ Even $1 can help us.
         cpu_freq = psutil.cpu_freq()
         cpu_name = (
             await get_out(
-                "cat /proc/cpuinfo | grep -m 1 \"model name\" | cut -d ' ' -f3-"
+                "lscpu | grep \"Model name\" | cut -d ' ' -f3- | xargs"
             )
         )[0]
 
