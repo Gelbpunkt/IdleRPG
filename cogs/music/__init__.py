@@ -333,7 +333,7 @@ class Music2(commands.Cog):
             return await ctx.send(
                 _("Not a valid equalizer. May be flat, piano, metal or boost.")
             )
-        await ctx.player.set_eq(getattr(wavelink.Equalizer, eq)())
+        await ctx.player.set_eq(getattr(wavelink.Equalizer, eq.lower())())
         ctx.player.eq = eq.title()
         await ctx.message.add_reaction("✅")
 
