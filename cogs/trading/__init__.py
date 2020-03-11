@@ -404,7 +404,7 @@ class Trading(commands.Cog):
 
     @has_char()
     @user_cooldown(1800)
-    @commands.command()
+    @commands.command(enabled=False)
     @locale_doc
     async def merchall(
         self, ctx, maxstat: IntFromTo(0, 75) = 75, minstat: IntFromTo(0, 75) = 0
