@@ -22,6 +22,13 @@ import discord
 from discord.ext import commands
 
 
+def is_starlit():
+    def predicate(ctx):
+        return ctx.author.id == 549379625587834898
+
+    return commands.check(predicate)
+
+
 def is_zinquo():
     def predicate(ctx):
         return ctx.author.id == 189929542465355776
@@ -89,6 +96,23 @@ class Custom(commands.Cog):
         """Temporary placeholder."""
         await ctx.send(
             "> “When the bones settle and all the ash falls, the phoenix will be reborn, and life begins anew.”"
+        )
+
+    @is_starlit()
+    @commands.command(hidden=True)
+    async def lick(self, ctx, *, user: discord.Member):
+        """Get someone in sick and loving way."""
+        await ctx.send(
+            embed=discord.Embed(
+                title=f"{ctx.author} licks {user}!", colour=ctx.author.colour
+            ).set_image(
+                url=secrets.choice(
+                    [
+                        "https://i.imgur.com/LiLbLw0.gif",
+                        "https://i.imgur.com/9tU0AFl.gif",
+                    ]
+                )
+            )
         )
 
 

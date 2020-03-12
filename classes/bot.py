@@ -38,6 +38,7 @@ import config
 
 from classes.context import Context
 from classes.converters import UserWithCharacter
+from classes.enums import DonatorRank
 from utils import i18n, paginator
 from utils.checks import user_is_patron
 
@@ -79,13 +80,12 @@ class Bot(commands.AutoShardedBot):
         elif ctx.author.id in self.eligible_for_cooldown_reduce:
             bucket = self.config.donator_cooldown.get_bucket(ctx.message)
         else:
-            if await user_is_patron(self, ctx.author, "Bronze Donators"):
+            if await user_is_patron(self, ctx.author, "bronze"):
                 self.eligible_for_cooldown_reduce.add(ctx.author.id)
                 bucket = self.config.donator_cooldown.get_bucket(ctx.message)
             else:
                 self.not_eligible_for_cooldown_reduce.add(ctx.author.id)
                 bucket = self.config.cooldown.get_bucket(ctx.message)
-
         retry_after = bucket.update_rate_limit()
 
         if retry_after:
@@ -596,6 +596,18 @@ class Bot(commands.AutoShardedBot):
             except ValueError:
                 pass
         return 0
+
+    async def get_donator_rank(self, user):
+        user = user if isinstance(user, int) else user.id
+        try:
+            response = (
+                await self.cogs["Sharding"].handler(
+                    "get_user_patreon", 1, args={"member_id": user}
+                )
+            )[0]
+        except IndexError:
+            return None
+        return getattr(DonatorRank, response)
 
     async def generate_stats(self, user, damage, armor, classes=None, race=None):
         user = user.id if isinstance(user, (discord.User, discord.Member)) else user

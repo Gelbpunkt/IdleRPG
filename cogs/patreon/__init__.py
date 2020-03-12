@@ -111,7 +111,7 @@ class Patreon(commands.Cog):
             )
         )
 
-    @is_patron("Bronze Donators")
+    @is_patron("bronze")
     @has_char()
     @commands.command()
     @locale_doc
@@ -171,7 +171,7 @@ class Patreon(commands.Cog):
             )
         )
 
-    @is_patron("Gold Donators")
+    @is_patron("gold")
     @has_char()
     @user_cooldown(86400)
     @commands.command()
@@ -263,9 +263,9 @@ class Patreon(commands.Cog):
     async def updateguild(self, ctx):
         _("""[Patreon Only] Update your guild member limit and bank size.""")
         # Silver x2, Gold x5
-        if await user_is_patron(self.bot, ctx.author, "Gold Donators"):
+        if await user_is_patron(self.bot, ctx.author, "gold"):
             m = 5
-        elif await user_is_patron(self.bot, ctx.author, "Silver Donators"):
+        elif await user_is_patron(self.bot, ctx.author, "silver"):
             m = 2
         else:
             m = 1

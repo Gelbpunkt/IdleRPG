@@ -23,6 +23,8 @@ import pytz
 
 from discord.ext import commands
 
+from classes.enums import DonatorRank
+
 
 class NoCharacter(commands.CheckFailure):
     """Exception raised when a user has no character."""
@@ -466,23 +468,38 @@ def is_admin():
     return commands.check(predicate)
 
 
-def is_patron(role="Donators"):
+def is_patron(role="basic"):
     async def predicate(ctx):
-        response = await ctx.bot.cogs["Sharding"].handler(
-            "user_is_patreon", 1, args={"member_id": ctx.author.id, "role": role}
-        )
-        if any(response):
+        try:
+            response = (
+                await ctx.bot.cogs["Sharding"].handler(
+                    "get_user_patreon", 1, args={"member_id": ctx.author.id}
+                )
+            )[0]
+        except IndexError:
+            raise NoPatron()
+
+        actual_role = getattr(DonatorRank, role)
+        if getattr(DonatorRank, response) >= actual_role:
             return True
         raise NoPatron()
 
     return commands.check(predicate)
 
 
-async def user_is_patron(bot, user, role="Donators"):
-    response = await bot.cogs["Sharding"].handler(
-        "user_is_patreon", 1, args={"member_id": user.id, "role": role}
-    )
-    return any(response)
+async def user_is_patron(bot, user, role="basic"):
+    try:
+        response = (
+            await bot.cogs["Sharding"].handler(
+                "get_user_patreon", 1, args={"member_id": user.id}
+            )
+        )[0]
+    except IndexError:
+        return False
+    actual_role = getattr(DonatorRank, role)
+    if getattr(DonatorRank, response) >= actual_role:
+        return True
+    return False
 
 
 def is_supporter():

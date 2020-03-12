@@ -26,10 +26,11 @@ import discord
 from discord.ext import commands
 
 from classes.converters import IntFromTo
+from classes.enums import DonatorRank
 from cogs.shard_communication import user_on_cooldown as user_cooldown
 from utils import items
 from utils import misc as rpgtools
-from utils.checks import has_adventure, has_char, has_no_adventure, user_is_patron
+from utils.checks import has_adventure, has_char, has_no_adventure
 from utils.maze import Maze
 
 
@@ -105,14 +106,12 @@ class Adventure(commands.Cog):
             time -= time * (buildings["adventure_building"] / 100)
         # Silver = -5%, Gold = -10%, Emerald = -25%
         # TODO: Maybe make a func to get the actual rank
-        if await user_is_patron(
-            self.bot, ctx.author
-        ):  # save calls for normal people :)
-            if await user_is_patron(self.bot, ctx.author, "Emerald Donators"):
+        if (user_rank := await self.bot.get_donator_rank(ctx.author)) :
+            if user_rank >= DonatorRank.emerald:
                 time = time * 0.75
-            elif await user_is_patron(self.bot, ctx.author, "Gold Donators"):
+            elif user_rank >= DonatorRank.gold:
                 time = time * 0.9
-            elif await user_is_patron(self.bot, ctx.author, "Silver Donators"):
+            elif user_rank >= DonatorRank.silver:
                 time = time * 0.95
         await self.bot.start_adventure(ctx.author, dungeonnumber, time)
         await ctx.send(

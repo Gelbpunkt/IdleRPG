@@ -214,6 +214,32 @@ class Sharding(commands.Cog):
             if payload.get("output") and payload["command_id"] in self._messages:
                 self._messages[payload["command_id"]].append(payload["output"])
 
+    async def get_user_patreon(self, member_id: int, command_id: int):
+        if not self.bot.get_user(member_id):
+            return
+        member = self.bot.get_guild(self.bot.config.support_server_id).get_member(
+            member_id
+        )
+        if not member:
+            return
+
+        top_donator_role = None
+
+        for role, role_enum_val in zip(
+            self.bot.config.donator_roles, self.bot.config.donator_roles_short
+        ):
+            role = discord.utils.get(member.roles, name=role)
+            if role:
+                top_donator_role = role_enum_val
+        if top_donator_role is None:
+            payload = {"output": False, "command_id": command_id}
+        else:
+            payload = {"output": top_donator_role, "command_id": command_id}
+
+        await self.bot.redis.execute(
+            "PUBLISH", self.communication_channel, json.dumps(payload)
+        )
+
     async def user_is_patreon(self, member_id: int, command_id: str, role: str):
         if not self.bot.get_user(member_id):
             return  # if the instance cannot see them, we can't do much

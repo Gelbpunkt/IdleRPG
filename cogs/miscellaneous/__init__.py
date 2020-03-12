@@ -76,7 +76,7 @@ class Miscellaneous(commands.Cog):
         if secrets.randbelow(3) > 0:
             money = 2 ** ((streak + 9) % 10) * 50
             # Silver = 1.5x
-            if await user_is_patron(self.bot, ctx.author, "Silver Donators"):
+            if await user_is_patron(self.bot, ctx.author, "silver"):
                 money = round(money * 1.5)
             await self.bot.pool.execute(
                 'UPDATE profile SET money=money+$1 WHERE "user"=$2;',
@@ -234,9 +234,7 @@ Even $1 can help us.
         meminfo = psutil.virtual_memory()
         cpu_freq = psutil.cpu_freq()
         cpu_name = (
-            await get_out(
-                "lscpu | grep \"Model name\" | cut -d ' ' -f3- | xargs"
-            )
+            await get_out("lscpu | grep \"Model name\" | cut -d ' ' -f3- | xargs")
         )[0]
 
         embed = discord.Embed(

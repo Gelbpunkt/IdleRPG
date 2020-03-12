@@ -185,6 +185,15 @@ donator_roles = [
     "Ruby Donators",
     "Diamond Donators",
 ]
+donator_roles_short = [
+    "basic",
+    "bronze",
+    "silver",
+    "gold",
+    "emerald",
+    "ruby",
+    "diamond",
+]
 
 """Adventure times."""
 adventure_times = {
