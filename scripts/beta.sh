@@ -1,7 +1,7 @@
 #!/bin/bash
 # Adrian's script for setting up a quick test deployment
 podman pod create --name idlerpg
-podman run --rm -d --pod idlerpg --name redis redis:5-alpine
+podman run --rm -d --pod idlerpg --name redis redis:6.0-rc-alpine
 cat <<EOF > start.sh
 createdb idlerpg
 psql idlerpg -c "CREATE ROLE jens WITH PASSWORD 'owo';"
