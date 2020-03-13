@@ -719,7 +719,8 @@ IdleRPG is a global bot, your characters are valid everywhere"""
             main = item[stat]
             main2 = item2[stat]
             max_ = item[stat] + 5
-            if main > 40:
+            main_hand = item["hand"]
+            if (main > 40 and main_hand != "both") or (main > 61 and main_hand == "both"):
                 await self.bot.reset_cooldown(ctx)
                 return await ctx.send(
                     _("This item is already on the maximum upgrade level.")
@@ -766,7 +767,9 @@ IdleRPG is a global bot, your characters are valid everywhere"""
             elif item["type"] == "Shield":
                 stattoupgrade = "armor"
                 pricetopay = int(item["armor"] * 250)
-            if int(item[stattoupgrade]) > 40:
+            stat = int(item[stattoupgrade])
+            hand = item["hand"]
+            if (stat > 40 and hand != "both") or (stat > 61 and hand == "both"):
                 await self.bot.reset_cooldown(ctx)
                 return await ctx.send(
                     _("Your weapon already reached the maximum upgrade level.")
