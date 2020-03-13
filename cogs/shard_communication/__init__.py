@@ -240,45 +240,6 @@ class Sharding(commands.Cog):
             "PUBLISH", self.communication_channel, json.dumps(payload)
         )
 
-    async def user_is_patreon(self, member_id: int, command_id: str, role: str):
-        if not self.bot.get_user(member_id):
-            return  # if the instance cannot see them, we can't do much
-        member = self.bot.get_guild(self.bot.config.support_server_id).get_member(
-            member_id
-        )
-        if not member:
-            return  # when the bot can only see DMs with the user
-
-        if role == "Donators":
-            if any(
-                (
-                    discord.utils.get(member.roles, name="Donators"),
-                    discord.utils.get(member.roles, name="Administrators"),
-                    discord.utils.get(member.roles, name="Nitro Booster"),
-                    discord.utils.get(member.roles, name="Designer"),
-                    discord.utils.get(member.roles, name="Translator"),
-                    discord.utils.get(member.roles, name="Code Redeemed"),
-                )
-            ):
-                payload = {"output": True, "command_id": command_id}
-            else:
-                payload = {"output": False, "command_id": command_id}
-        else:
-            idx = self.bot.config.donator_roles.index(role)
-            roles = [
-                self.bot.config.donator_roles.index(r.name)
-                for r in member.roles
-                if r.name.endswith("Donators")
-            ]
-            if any([r >= idx for r in roles]):
-                payload = {"output": True, "command_id": command_id}
-            else:
-                payload = {"output": False, "command_id": command_id}
-
-        await self.bot.redis.execute(
-            "PUBLISH", self.communication_channel, json.dumps(payload)
-        )
-
     async def user_is_helper(self, member_id: int, command_id: str):
         if not self.bot.get_user(member_id):
             return  # if the instance cannot see them, we can't do much

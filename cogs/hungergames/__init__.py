@@ -115,7 +115,7 @@ class GameBase:
             (_("watch the others being dumb"), None),
             (_("kiss in the moonlight"), None),
             (
-                _("watch a movie together when USER suddely gets shot by a stranger"),
+                _("watch a movie together when USER suddenly gets shot by a stranger"),
                 ("killtogether", "USER"),
             ),
         ]
@@ -132,7 +132,7 @@ class GameBase:
                     await status.edit(content=f"{status.content}\n{text}")
                 except discord.errors.NotFound:
                     status = await self.ctx.send(
-                        f"{roundtext}\n{text}".format(round=self.round), delete_after=60
+                        f"{roundtext}\n{text}", delete_after=60
                     )
                 actions = random.sample(all_actions, 3)
                 possible_kills = [
