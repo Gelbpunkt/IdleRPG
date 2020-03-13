@@ -57,6 +57,7 @@ initial_extensions = [
     "cogs.maths",
     "cogs.shard_communication",
     "cogs.alliance",
+    "cogs.trivia",
 ]
 
 """The channel where vote logging is sent from. This is an ID."""

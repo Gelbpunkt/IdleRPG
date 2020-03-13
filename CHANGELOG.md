@@ -1,3 +1,62 @@
+<a name="v4.5.1"></a>
+
+## [v4.5.1](https://git.travitia.xyz/Kenvyra/IdleRPG/compare/v4.5.0...v4.5.1)
+
+> 2020-03-13
+
+### Changes
+
+- A couple QoL changes
+- Change CHamburr boundaries
+- Disable merchall
+- Blackjack bid increase to $10,000
+- Make gain/loose from familyevent both up to 1/64
+- Set Bot.max_messages to 10000
+- Several improvements to $dice code
+- Significant improvements to donator checks resulting in up to 10x faster donator command execution
+- tournament text consistency
+- Use more accurate CPU detection
+- use Redis 6 for significant performance increases on multi-threaded configs
+
+### Additions
+
+- add valentines commands
+- Add $aa as alias for $activeadventure
+- Add boundaries for Assassin
+- Add $trivia
+
+## Fixes
+
+- Bug with battle
+- consistency with active battle text
+- Fix equalizers
+- Fix visual bug in $pet hunt command
+- fix a bug in adminitem
+- fix raids
+- fix $sell
+- fix typo
+- fix trivia
+- fix resetitem
+- reset familyevent cooldown when you have no kids or spouse
+
+### Merge Requests
+
+- Merge branch 'patch-2' into 'v4'
+- Merge branch 'patch-1' into 'v4'
+- Merge branch 'patch-2' into 'v4'
+- Merge branch 'patch-3' into 'v4'
+- Merge branch 'patch-1' into 'v4'
+- Merge branch 'unfollowing' into 'v4'
+- Merge branch 'fixes' into 'v4'
+- Merge branch 'v4' into 'fixes'
+- Merge branch 'patch-1' into 'v4'
+- Merge branch 'patch-1' into 'v4'
+- Merge branch 'patch-2' into 'v4'
+- Merge branch 'valentine' into 'v4'
+- Merge branch 'patch-2' into 'v4'
+- Merge branch 'patch-10' into 'v4'
+
+
 <a name="v4.5.0"></a>
 
 ## [v4.5.0](https://git.travitia.xyz/Kenvyra/IdleRPG/compare/v4.4.0...v4.5.0)
