@@ -198,7 +198,7 @@ class Maths(commands.Cog):
             elif p[2] == "!":
                 if p[1] > 50:
                     raise Overflow()
-                p[0] = decimal.Decimal(math.factorial(p[1]))
+                p[0] = decimal.Decimal(math.gamma(p[1] + decimal.Decimal("1.0")))
 
         def p_expression_uminus(p):
             "expression : MINUS expression %prec UMINUS"
