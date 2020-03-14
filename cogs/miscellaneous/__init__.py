@@ -259,7 +259,8 @@ Python Version **{python}** <:python:445247273065250817>
 discord.py Version **{dpy}**
 Operating System: **{osname} {osversion}**
 Kernel Version: **{kernel}**
-PostgreSQL Version **{pg_version}**"""
+PostgreSQL Version: **{pg_version}**
+Redis Version: **{redis_version}**"""
             ).format(
                 cpu_name=cpu_name,
                 cpu=psutil.cpu_percent(),
@@ -275,6 +276,7 @@ PostgreSQL Version **{pg_version}**"""
                 osversion=sysinfo[1],
                 kernel=os.uname().release,
                 pg_version=pg_version,
+                redis_version=self.bot.redis_version,
             ),
             inline=False,
         )
