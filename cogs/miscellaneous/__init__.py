@@ -22,6 +22,7 @@ import platform
 import random
 import re
 import secrets
+import statistics
 
 from collections import defaultdict, deque
 from functools import partial
@@ -216,6 +217,9 @@ Even $1 can help us.
             characters = await conn.fetchval("SELECT COUNT(*) FROM profile;")
             items = await conn.fetchval("SELECT COUNT(*) FROM allitems;")
             pg_version = conn.get_server_version()
+        temps = psutil.sensors_temperatures()
+        temps = temps[list(temps.keys())[0]]
+        cpu_temp = statistics.mean(x.current for x in temps)
         pg_version = f"{pg_version.major}.{pg_version.micro} {pg_version.releaselevel}"
         d0 = self.bot.user.created_at
         d1 = datetime.datetime.now()
@@ -255,15 +259,18 @@ Even $1 can help us.
 CPU: **{cpu_name}**
 CPU Usage: **{cpu}%**, **{cores}** cores @ **{freq}** GHz
 RAM Usage: **{ram}%** (Total: **{total_ram}**)
+CPU Temperature: **{cpu_temp}°C**
 Python Version **{python}** <:python:445247273065250817>
 discord.py Version **{dpy}**
 Operating System: **{osname} {osversion}**
 Kernel Version: **{kernel}**
-PostgreSQL Version **{pg_version}**"""
+PostgreSQL Version: **{pg_version}**
+Redis Version: **{redis_version}**"""
             ).format(
                 cpu_name=cpu_name,
                 cpu=psutil.cpu_percent(),
                 cores=psutil.cpu_count(),
+                cpu_temp=round(cpu_temp, 2),
                 freq=cpu_freq.max / 1000
                 if cpu_freq.max
                 else round(cpu_freq.current / 1000, 2),
@@ -275,6 +282,7 @@ PostgreSQL Version **{pg_version}**"""
                 osversion=sysinfo[1],
                 kernel=os.uname().release,
                 pg_version=pg_version,
+                redis_version=self.bot.redis_version,
             ),
             inline=False,
         )

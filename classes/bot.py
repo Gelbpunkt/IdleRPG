@@ -117,7 +117,15 @@ class Bot(commands.AutoShardedBot):
                 print(f"Failed to load extension {extension}.", file=sys.stderr)
                 traceback.print_exc()
         # self.loop.create_task(self.reset_verified())
+        self.redis_version = await self.get_redis_version()
         await self.start(self.config.token)
+
+    async def get_redis_version(self):
+        info = (await self.redis.execute("INFO")).decode()
+        for line in info.split("\n"):
+            if line.startswith("redis_version"):
+                return line.split(":")[1]
+        return None
 
     async def reset_verified(self):
         await self.wait_until_ready()

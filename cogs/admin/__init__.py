@@ -262,12 +262,11 @@ class Admin(commands.Cog):
             await conn.execute(
                 'UPDATE profile SET "background"=$1, "class"=$2 WHERE "user"=$3;',
                 "0",
-                "No Class",
+                ["No Class", "No Class"],
                 target.id,
             )
             await conn.execute(
-                'UPDATE allitems SET "name"=$1 WHERE "owner"=$2;',
-                "Broken Metal",
+                'UPDATE allitems SET "name"=CASE WHEN "original_name" IS NULL THEN "name" ELSE "original_name" END, "type"=CASE WHEN "original_type" IS NULL THEN "type" ELSE "original_type" END WHERE "owner"=$1;',
                 target.id,
             )
             await conn.execute(

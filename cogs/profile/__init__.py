@@ -720,7 +720,9 @@ IdleRPG is a global bot, your characters are valid everywhere"""
             main2 = item2[stat]
             max_ = item[stat] + 5
             main_hand = item["hand"]
-            if (main > 40 and main_hand != "both") or (main > 61 and main_hand == "both"):
+            if (main > 40 and main_hand != "both") or (
+                main > 61 and main_hand == "both"
+            ):
                 await self.bot.reset_cooldown(ctx)
                 return await ctx.send(
                     _("This item is already on the maximum upgrade level.")
