@@ -67,8 +67,8 @@ You have **{eggs}** <:easteregg:566251086986608650>."""
     @has_char()
     @easter.command()
     @locale_doc
-    async def reward(self, ctx, reward_id: IntFromTo(1, 10)):
-        _("""Get your easter reward. ID may be 1 to 10.""")
+    async def reward(self, ctx, reward_id: IntFromTo(1, 9)):
+        _("""Get your easter reward. ID may be 1 to 9.""")
         reward = [
             (100, "crates", 10, "common"),
             (500, "money", 10000),
