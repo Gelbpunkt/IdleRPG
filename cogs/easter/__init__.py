@@ -56,7 +56,7 @@ Use `{prefix}easter reward [1-10]` to trade your eggs in.
 **2000 <:easteregg:566251086986608650>** - 25 common crates
 **2500 <:easteregg:566251086986608650>** - 10 boosters of each type
 **5000 <:easteregg:566251086986608650>** - 10 rare crates
-**7500 <:easteregg:566251086986608650>** - easter guild badge
+**7500 <:easteregg:566251086986608650>** - birthday guild badge
 **7500 <:easteregg:566251086986608650>** - 1 magic crate
 **10000 <:easteregg:566251086986608650>** - random 50 stat item
 
@@ -113,7 +113,7 @@ You have **{eggs}** <:easteregg:566251086986608650>."""
                 )
                 await conn.execute(
                     'UPDATE guilds SET "badges"=array_append("badges", $1) WHERE "id"=$2;',
-                    "https://i.imgur.com/LOM8JcY.png",
+                    "https://i.imgur.com/VHUDdTv.jpg",
                     ctx.character_data["guild"],
                 )
         elif reward[1] == "item":
