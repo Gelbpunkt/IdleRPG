@@ -140,9 +140,7 @@ class Halloween(commands.Cog):
                 "Glooming",
             ]
         )
-        item[
-            "name"
-        ] = f"{name} {item['type_']}"
+        item["name"] = f"{name} {item['type_']}"
         await self.bot.create_item(**item)
         await self.bot.pool.execute(
             'UPDATE profile SET "trickortreat"="trickortreat"-1 WHERE "user"=$1;',

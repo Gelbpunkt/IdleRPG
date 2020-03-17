@@ -25,12 +25,13 @@ from discord.ext import commands
 
 from classes.converters import IntFromTo, IntGreaterThan, UserWithCharacter
 from cogs.shard_communication import user_on_cooldown as user_cooldown
-from utils.checks import is_admin
+from utils.checks import has_char, is_admin
 
 
 class Admin(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
+        self.top_auction = None
 
     @is_admin()
     @commands.command(aliases=["cleanshop", "cshop"], hidden=True)
@@ -317,6 +318,62 @@ class Admin(commands.Cog):
         await self.bot.http.send_message(
             self.bot.config.admin_log_channel,
             f"**{ctx.author}** signed {itemid} with *{text}*.",
+        )
+
+    @is_admin()
+    @commands.command(aliases=["aauction"], hidden=True)
+    @locale_doc
+    async def adminauction(self, ctx, *, item: str):
+        _("""[Bot Admin only] Start an auction on something.""")
+        channel = discord.utils.get(
+            self.bot.get_guild(self.bot.config.support_server_id).channels,
+            name="auctions",
+        )
+        await channel.send(
+            f"{ctx.author.mention} started auction on **{item}**! Please use `{ctx.prefix}bid amount` to raise the bid. If no more bids are sent within a 30 minute timeframe, the auction is over."
+        )
+        self.top_auction = (ctx.author, 0)
+        last_top_bid = -1
+        while True:
+            await asyncio.sleep(60 * 1)
+            new_top_bid = self.top_auction[1]
+            if new_top_bid == last_top_bid:
+                break
+        await channel.send(
+            f"**{item}** sold to {self.top_auction[0].mention} for **${self.top_auction[1]}**!"
+        )
+        self.top_auction = None
+
+    @has_char()
+    @commands.command(hidden=True)
+    @locale_doc
+    async def bid(self, ctx, amount: IntGreaterThan(0)):
+        _("""Bid on an auction.""")
+        if self.top_auction is None:
+            return await ctx.send(_("No auction running."))
+        if amount <= self.top_auction[1]:
+            return await ctx.send(_("Bid too low."))
+        if ctx.character_data["money"] < amount:
+            return await ctx.send(_("You are too poor."))
+        async with self.bot.pool.acquire() as conn:
+            await conn.execute(
+                'UPDATE profile SET "money"="money"+$1 WHERE "user"=$2;',
+                self.top_auction[1],
+                self.top_auction[0].id,
+            )
+            self.top_auction = (ctx.author, amount)
+            await conn.execute(
+                'UPDATE profile SET "money"="money"-$1 WHERE "user"=$2;',
+                amount,
+                ctx.author.id,
+            )
+        await ctx.send(_("Bid submitted."))
+        channel = discord.utils.get(
+            self.bot.get_guild(self.bot.config.support_server_id).channels,
+            name="auctions",
+        )
+        await channel.send(
+            f"**{ctx.author.mention}** bids **${amount}**! Check above for what's being auctioned."
         )
 
     @is_admin()
