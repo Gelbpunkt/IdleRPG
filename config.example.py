@@ -179,6 +179,9 @@ donator_cooldown = commands.CooldownMapping.from_cooldown(
 """Donator role order"""
 donator_roles = [
     "Donators",
+    "Designer",
+    "Translator",
+    "Code Redeemed",
     "Bronze Donators",
     "Silver Donators",
     "Gold Donators",
@@ -187,6 +190,9 @@ donator_roles = [
     "Diamond Donators",
 ]
 donator_roles_short = [
+    "basic",
+    "basic",
+    "basic",
     "basic",
     "bronze",
     "silver",
