@@ -335,7 +335,7 @@ class Admin(commands.Cog):
         self.top_auction = (ctx.author, 0)
         last_top_bid = -1
         while True:
-            await asyncio.sleep(60 * 1)
+            await asyncio.sleep(60 * 30)
             new_top_bid = self.top_auction[1]
             if new_top_bid == last_top_bid:
                 break
