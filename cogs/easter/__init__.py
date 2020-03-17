@@ -35,7 +35,7 @@ class Easter(commands.Cog):
         )
         await ctx.send(
             _(
-                "**Easter event <:easteregg:566251086986608650>**\n\nLasts until the Tuesday after Easter!\nCollect eastereggs and use `{prefix}easter rewards` to check the rewards. <:bunny:566290173831151627>\nHappy hunting!"
+                "**Easter event <:easteregg:566251086986608650>**\n\nPart of Idle's birthday!\nCollect eastereggs and use `{prefix}easter rewards` to check the rewards. <:bunny:566290173831151627>\nHappy hunting!"
             ).format(prefix=ctx.prefix)
         )
 
@@ -50,15 +50,14 @@ class Easter(commands.Cog):
 **Easter event - rewards**
 Use `{prefix}easter reward [1-10]` to trade your eggs in.
 
-**100 <:easteregg:566251086986608650>** - 1 crate
+**100 <:easteregg:566251086986608650>** - 10 common crates
 **500 <:easteregg:566251086986608650>** - $10000
 **1000 <:easteregg:566251086986608650>** - random item 1-49
-**2000 <:easteregg:566251086986608650>** - 25 crates
+**2000 <:easteregg:566251086986608650>** - 25 common crates
 **2500 <:easteregg:566251086986608650>** - 10 boosters of each type
-**5000 <:easteregg:566251086986608650>** - 100 crates
+**5000 <:easteregg:566251086986608650>** - 10 rare crates
 **7500 <:easteregg:566251086986608650>** - easter guild badge
-**7500 <:easteregg:566251086986608650>** - 200 crates
-**7500 <:easteregg:566251086986608650>** - random item 40-50
+**7500 <:easteregg:566251086986608650>** - 1 magic crate
 **10000 <:easteregg:566251086986608650>** - random 50 stat item
 
 You have **{eggs}** <:easteregg:566251086986608650>."""
@@ -71,15 +70,14 @@ You have **{eggs}** <:easteregg:566251086986608650>."""
     async def reward(self, ctx, reward_id: IntFromTo(1, 10)):
         _("""Get your easter reward. ID may be 1 to 10.""")
         reward = [
-            (100, "crates", 1),
+            (100, "crates", 10, "common"),
             (500, "money", 10000),
             (1000, "item", 1, 49),
-            (2000, "crates", 25),
+            (2000, "crates", 25, "common"),
             (2500, "boosters", 10),
-            (5000, "crates", 100),
+            (5000, "crates", 10, "rare"),
             (7500, "badge"),
-            (7500, "crates", 200),
-            (7500, "item", 40, 50),
+            (7500, "crates", 1, "magic"),
             (10000, "item", 50, 50),
         ][reward_id - 1]
         if ctx.character_data["eastereggs"] < reward[0]:
@@ -87,7 +85,7 @@ You have **{eggs}** <:easteregg:566251086986608650>."""
 
         if reward[1] == "crates":
             await self.bot.pool.execute(
-                'UPDATE profile SET "crates_common"="crates_common"+$1, "eastereggs"="eastereggs"-$2 WHERE "user"=$3;',
+                f'UPDATE profile SET "crates_{reward[3]}"="crates_{reward[3]}"+$1, "eastereggs"="eastereggs"-$2 WHERE "user"=$3;',
                 reward[2],
                 reward[0],
                 ctx.author.id,

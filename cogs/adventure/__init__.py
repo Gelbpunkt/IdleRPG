@@ -476,11 +476,14 @@ Adventure name: `{adventure}`"""
                     guild,
                 )
 
+            eggs = random.randint(num * 15, num * 20)
+
             await conn.execute(
-                'UPDATE profile SET "money"="money"+$1, "xp"="xp"+$2, "completed"="completed"+1 WHERE "user"=$3;',
+                'UPDATE profile SET "money"="money"+$1, "xp"="xp"+$2, "completed"="completed"+1, "eastereggs"="eastereggs"+$4 WHERE "user"=$3;',
                 gold,
                 xp,
                 ctx.author.id,
+                eggs,
             )
 
             if (partner := ctx.character_data["marriage"]) :
@@ -492,8 +495,8 @@ Adventure name: `{adventure}`"""
 
             await ctx.send(
                 _(
-                    "You have completed your adventure and received **${gold}** as well as a new item: **{item}**. Experience gained: **{xp}**."
-                ).format(gold=gold, item=item["name"], xp=xp)
+                    "You have completed your adventure and received **${gold}** as well as a new item: **{item}**. Experience gained: **{xp}**. You found **{eggs}** <:easteregg:566251086986608650>!"
+                ).format(gold=gold, item=item["name"], xp=xp, eggs=eggs)
             )
 
             new_level = int(rpgtools.xptolevel(ctx.character_data["xp"] + xp))
