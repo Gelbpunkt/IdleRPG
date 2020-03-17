@@ -339,6 +339,7 @@ class Admin(commands.Cog):
             new_top_bid = self.top_auction[1]
             if new_top_bid == last_top_bid:
                 break
+            last_top_bid = new_top_bid
         await channel.send(
             f"**{item}** sold to {self.top_auction[0].mention} for **${self.top_auction[1]}**!"
         )
