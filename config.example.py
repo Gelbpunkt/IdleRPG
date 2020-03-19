@@ -181,6 +181,8 @@ donator_roles = [
     "Donators",
     "Designer",
     "Translator",
+    "Nitro Booster",
+    "Administrator",
     "Code Redeemed",
     "Bronze Donators",
     "Silver Donators",
@@ -190,6 +192,8 @@ donator_roles = [
     "Diamond Donators",
 ]
 donator_roles_short = [
+    "basic",
+    "basic",
     "basic",
     "basic",
     "basic",
