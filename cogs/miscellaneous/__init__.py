@@ -492,9 +492,9 @@ https://git.travitia.xyz/Kenvyra/IdleRPG/compare/v4.4.0...v4.5.0
         ]
         newtext = ""
         for letter in text:
-            if letter.lower() in list(map(chr, range(97, 123))):
+            if letter.lower() in "abcdefghijklmnopqrstuvwxyz":
                 newtext += f":regional_indicator_{letter.lower()}:"
-            elif letter in [str(anum) for anum in range(10)]:
+            elif letter in "0123456789":
                 newtext += f":{nums[int(letter)]}:"
             else:
                 newtext += letter
