@@ -483,7 +483,7 @@ class Gambling(commands.Cog):
     @commands.cooldown(1, 5, commands.BucketType.user)
     @commands.command(aliases=["bj"])
     @locale_doc
-    async def blackjack(self, ctx, amount: IntFromTo(0, 10000) = 0):
+    async def blackjack(self, ctx, amount: IntFromTo(0, 1000) = 0):
         _("""[Alpha] Play blackjack against the dealer.""")
         if ctx.character_data["money"] < amount:
             return await ctx.send(_("You're too poor."))
