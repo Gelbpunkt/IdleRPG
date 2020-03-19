@@ -182,7 +182,7 @@ donator_roles = [
     "Designer",
     "Translator",
     "Nitro Booster",
-    "Administrator",
+    "Administrators",
     "Code Redeemed",
     "Bronze Donators",
     "Silver Donators",
