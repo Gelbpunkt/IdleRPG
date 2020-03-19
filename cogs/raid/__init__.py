@@ -294,7 +294,7 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
                     f"{highest_bid[0].mention} spent the money in the meantime... Meh! Noone gets it then, pah!\nThis incident has been reported and they will get banned if it happens again. Cheers!"
                 )
             """
-            winner = random.choice(list(raid.keys())
+            winner = random.choice(list(raid.keys()))
             await self.bot.pool.execute(
                 'UPDATE profile SET "crates_legendary"="crates_legendary"+1 WHERE "user"=$1;',
                 winner.id,
