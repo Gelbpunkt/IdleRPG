@@ -210,15 +210,15 @@ class Bot(commands.AutoShardedBot):
         return money, xp
 
     async def get_raidstats(
-            self,
-            thing,
-            atkmultiply=None,
-            defmultiply=None,
-            classes=None,
-            race=None,
-            guild=None,
-            god=None,
-            conn=None,
+        self,
+        thing,
+        atkmultiply=None,
+        defmultiply=None,
+        classes=None,
+        race=None,
+        guild=None,
+        god=None,
+        conn=None,
     ):
         v = thing.id if isinstance(thing, (discord.Member, discord.User)) else thing
         local = False
@@ -227,10 +227,10 @@ class Bot(commands.AutoShardedBot):
             local = True
         damage, armor = await self.get_damage_armor_for(v, conn=conn)
         if (
-                atkmultiply is None
-                or defmultiply is None
-                or classes is None
-                or guild is None
+            atkmultiply is None
+            or defmultiply is None
+            or classes is None
+            or guild is None
         ):
             (
                 atkmultiply,
@@ -245,7 +245,7 @@ class Bot(commands.AutoShardedBot):
             )
             if god is not None and god != user_god:
                 raise ValueError()
-        if (buildings := await self.get_city_buildings(guild)):
+        if (buildings := await self.get_city_buildings(guild)) :
             atkmultiply += buildings["raid_building"] * Decimal("0.1")
             defmultiply += buildings["raid_building"] * Decimal("0.1")
         if self.in_class_line(classes, "Raider"):
@@ -320,8 +320,8 @@ class Bot(commands.AutoShardedBot):
         if event == "message":
             channel_id = int(data["channel_id"])
             channel = (
-                    self.get_channel(channel_id)
-                    or self.get_user(int(data["author"]["id"])).dm_channel
+                self.get_channel(channel_id)
+                or self.get_user(int(data["author"]["id"])).dm_channel
             )
             return discord.Message(state=self._connection, channel=channel, data=data)
         elif event == "reaction_add":
@@ -405,32 +405,32 @@ class Bot(commands.AutoShardedBot):
         user = user.id if isinstance(user, (discord.User, discord.Member)) else user
         if conn:
             return (
-                    await conn.fetchval('SELECT money FROM profile WHERE "user"=$1;', user)
-                    >= money
+                await conn.fetchval('SELECT money FROM profile WHERE "user"=$1;', user)
+                >= money
             )
         else:
             return (
-                    await self.pool.fetchval(
-                        'SELECT money FROM profile WHERE "user"=$1;', user
-                    )
-                    >= money
+                await self.pool.fetchval(
+                    'SELECT money FROM profile WHERE "user"=$1;', user
+                )
+                >= money
             )
 
     async def has_crates(self, user, crates, rarity, conn=None):
         user = user.id if isinstance(user, (discord.User, discord.Member)) else user
         if conn:
             return (
-                    await conn.fetchval(
-                        f'SELECT "crates_{rarity}" FROM profile WHERE "user"=$1;', user
-                    )
-                    >= crates
+                await conn.fetchval(
+                    f'SELECT "crates_{rarity}" FROM profile WHERE "user"=$1;', user
+                )
+                >= crates
             )
         else:
             return (
-                    await self.pool.fetchval(
-                        f'SELECT "crates_{rarity}" FROM profile WHERE "user"=$1;', user
-                    )
-                    >= crates
+                await self.pool.fetchval(
+                    f'SELECT "crates_{rarity}" FROM profile WHERE "user"=$1;', user
+                )
+                >= crates
             )
 
     async def has_item(self, user, item, conn=None):
@@ -467,7 +467,7 @@ class Bot(commands.AutoShardedBot):
         await self.redis.execute("DEL", f"guildadv:{guild}")
 
     async def create_item(
-            self, name, value, type_, damage, armor, owner, hand, equipped=False
+        self, name, value, type_, damage, armor, owner, hand, equipped=False
     ):
         owner = owner.id if isinstance(owner, (discord.User, discord.Member)) else owner
         async with self.pool.acquire() as conn:
@@ -489,7 +489,7 @@ class Bot(commands.AutoShardedBot):
         return item
 
     async def create_random_item(
-            self, minstat, maxstat, minvalue, maxvalue, owner, insert=True
+        self, minstat, maxstat, minvalue, maxvalue, owner, insert=True
     ):
         owner = owner.id if isinstance(owner, (discord.User, discord.Member)) else owner
         item = {}

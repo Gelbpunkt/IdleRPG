@@ -299,7 +299,9 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
                 'UPDATE profile SET "crates_legendary"="crates_legendary"+1 WHERE "user"=$1;',
                 winner.id,
             )
-            await ctx.send(f"The tort is defeated and apart from a ton of cake mass, we found a <:CrateLegendary:598094865678598144> inside. {winner.mention} was so heroic and lucky to stand nearby, they snagged it!")
+            await ctx.send(
+                f"The tort is defeated and apart from a ton of cake mass, we found a <:CrateLegendary:598094865678598144> inside. {winner.mention} was so heroic and lucky to stand nearby, they snagged it!"
+            )
 
             cash = int(hp / 4 / len(raid))  # what da hood gets per survivor
             await self.bot.pool.execute(
