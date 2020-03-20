@@ -48,18 +48,17 @@ class Easter(commands.Cog):
             _(
                 """
 **Easter event - rewards**
-Use `{prefix}easter reward [1-10]` to trade your eggs in.
+Use `{prefix}easter reward [1-9]` to trade your eggs in.
 
-**100 <:easteregg:566251086986608650>** - 10 common crates
-**500 <:easteregg:566251086986608650>** - $10000
-**1000 <:easteregg:566251086986608650>** - random item 1-49
-**2000 <:easteregg:566251086986608650>** - 25 common crates
-**2500 <:easteregg:566251086986608650>** - 10 boosters of each type
-**5000 <:easteregg:566251086986608650>** - 10 rare crates
-**7500 <:easteregg:566251086986608650>** - birthday guild badge
-**7500 <:easteregg:566251086986608650>** - 1 magic crate
-**10000 <:easteregg:566251086986608650>** - random 50 stat item
-
+**(1) 100 <:easteregg:566251086986608650>** - 10 common crates
+**(2) 500 <:easteregg:566251086986608650>** - $10000
+**(3) 1000 <:easteregg:566251086986608650>** - random item 1-49
+**(4) 2000 <:easteregg:566251086986608650>** - 250 common crates
+**(5) 2500 <:easteregg:566251086986608650>** - 10 boosters of each type
+**(6) 5000 <:easteregg:566251086986608650>** - 10 rare crates
+**(7) 7500 <:easteregg:566251086986608650>** - birthday guild badge
+**(8) 7500 <:easteregg:566251086986608650>** - 1 magic crate
+**(9) 10000 <:easteregg:566251086986608650>** - random 50 stat item
 You have **{eggs}** <:easteregg:566251086986608650>."""
             ).format(prefix=ctx.prefix, eggs=ctx.character_data["eastereggs"])
         )
@@ -73,7 +72,7 @@ You have **{eggs}** <:easteregg:566251086986608650>."""
             (100, "crates", 10, "common"),
             (500, "money", 10000),
             (1000, "item", 1, 49),
-            (2000, "crates", 25, "common"),
+            (2000, "crates", 250, "common"),
             (2500, "boosters", 10),
             (5000, "crates", 10, "rare"),
             (7500, "badge"),
