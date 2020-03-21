@@ -148,7 +148,7 @@ class Player:
         if cell.trap:
             damage = random.randint(30, 120) if random.randint(1, 3) == 1 else 1000
             await self.user.send(
-                _("You stepped on a trap and took {damage} damage!").format(
+                "You stepped on a trap and took {damage} damage!".format(
                     damage=damage
                 )
             )
@@ -161,7 +161,7 @@ class Player:
                 self.user.id,
             )
             await self.user.send(
-                _("You found a treasure with {emote} inside!").format(
+                "You found a treasure with {emote} inside!".format(
                     emote=self.bot.cogs["Crates"].emotes.magic
                 )
             )
@@ -264,6 +264,6 @@ class Player:
                 return await self.msg.edit(content=_("Timed out."))
 
         if self.hp <= 0:
-            return await self.user.send(_("You died."))
+            return await self.user.send("You died.")
 
-        await self.user.send(_("You have reached the exit!"))
+        await self.user.send("You have reached the exit!")

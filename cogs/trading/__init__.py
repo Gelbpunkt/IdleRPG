@@ -151,9 +151,9 @@ class Trading(commands.Cog):
         seller = await self.bot.get_user_global(item["owner"])
         if seller:
             await seller.send(
-                _(
-                    "**{author}** bought your **{name}** for **${price}** from the market."
-                ).format(author=ctx.author.name, name=item["name"], price=item["price"])
+                "**{author}** bought your **{name}** for **${price}** from the market.".format(
+                    author=ctx.author.name, name=item["name"], price=item["price"]
+                )
             )
         await self.bot.log_transaction(
             ctx,
