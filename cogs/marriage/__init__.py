@@ -489,8 +489,8 @@ class Marriage(commands.Cog):
             ["death"]
             + ["age"] * 8
             + ["namechange"] * 4
-            + ["chest"] * 2
-            + ["moneylose"] * 3
+            + ["crate"] * 2
+            + ["moneylose"] * 4
             + ["moneygain"] * 4
         )
         if event == "death":
@@ -536,7 +536,6 @@ class Marriage(commands.Cog):
                     _("has been arrested and had to post bail."),
                     _("bought fortnite skins with your credit card."),
                     _("decided to become communist and gave the money to others."),
-                    _("bought an inflatable loli."),
                     _("was caught pickpocketing and you had to pay the fine."),
                     _("gave it to a beggar."),
                     _("borrowed it to attend the local knights course."),
@@ -582,7 +581,7 @@ class Marriage(commands.Cog):
                     name=target["name"], money=money, cause=cause
                 )
             )
-        elif event == "chest":
+        elif event == "crate":
             type_ = random.choice(
                 ["common"] * 500
                 + ["uncommon"] * 200
