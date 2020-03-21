@@ -64,9 +64,9 @@ class Halloween(commands.Cog):
         try:
             if secrets.randbelow(2) == 1:
                 await waiting.send(
-                    _(
-                        "The waiting was worth it: {author} rang! That's a trick or treat bag for you, yay!"
-                    ).format(author=ctx.author)
+                    "The waiting was worth it: {author} rang! That's a trick or treat bag for you, yay!".format(
+                        author=ctx.author
+                    )
                 )
                 await self.bot.pool.execute(
                     'UPDATE profile SET trickortreat=trickortreat+1 WHERE "user"=$1;',
@@ -74,7 +74,7 @@ class Halloween(commands.Cog):
                 )
             else:
                 await waiting.send(
-                    _("{author} rings at your house, but... Nothing for you!").format(
+                    "{author} rings at your house, but... Nothing for you!".format(
                         author=ctx.author
                     )
                 )

@@ -260,9 +260,9 @@ class Marriage(commands.Cog):
                 _("Failed to DM your spouse, could not find their Discord account")
             )
         await user.send(
-            _(
-                "**{author}** bought you a **{item}** and increased your love score by **{points}** points!"
-            ).format(author=ctx.author, item=item[0], points=item[1])
+            "**{author}** bought you a **{item}** and increased your love score by **{points}** points!".format(
+                author=ctx.author, item=item[0], points=item[1]
+            )
         )
 
     @has_char()
