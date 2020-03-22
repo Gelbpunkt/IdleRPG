@@ -58,7 +58,7 @@ Use `{prefix}easter reward [1-9]` to trade your eggs in.
 **(6) 5000 <:easteregg:566251086986608650>** - 10 rare crates
 **(7) 7500 <:easteregg:566251086986608650>** - birthday guild badge
 **(8) 7500 <:easteregg:566251086986608650>** - 1 magic crate
-**(9) 10000 <:easteregg:566251086986608650>** - random 50 stat item
+**(9) 12500 <:easteregg:566251086986608650>** - 1 legendary crate
 You have **{eggs}** <:easteregg:566251086986608650>."""
             ).format(prefix=ctx.prefix, eggs=ctx.character_data["eastereggs"])
         )
@@ -77,7 +77,7 @@ You have **{eggs}** <:easteregg:566251086986608650>."""
             (5000, "crates", 10, "rare"),
             (7500, "badge"),
             (7500, "crates", 1, "magic"),
-            (10000, "item", 50, 50),
+            (12500, "crates", 1, "legendary"),
         ][reward_id - 1]
         if ctx.character_data["eastereggs"] < reward[0]:
             return await ctx.send(_("You don't have enough eggs to claim this."))

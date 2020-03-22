@@ -476,7 +476,7 @@ Adventure name: `{adventure}`"""
                     guild,
                 )
 
-            eggs = random.randint(num * 15, num * 20)
+            eggs = random.randint(num * 13, num * 17)
 
             await conn.execute(
                 'UPDATE profile SET "money"="money"+$1, "xp"="xp"+$2, "completed"="completed"+1, "eastereggs"="eastereggs"+$4 WHERE "user"=$3;',
