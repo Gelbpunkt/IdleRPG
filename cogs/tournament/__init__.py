@@ -50,7 +50,7 @@ class Tournament(commands.Cog):
         if ctx.channel.id == self.bot.config.official_tournament_channel_id:
             id_ = await self.bot.start_joins()
             await ctx.send(
-                f"A mass-tournament has been started. Please join at http://join.travitia.xyz/{id_} during the next 10 minutes! The prize is **${prize}**!"
+                f"A mass-tournament has been started. Please join at https://join.travitia.xyz/{id_} during the next 10 minutes! The prize is **${prize}**!"
             )
             await asyncio.sleep(60 * 10)
             a_participants = await self.bot.get_joins(id_)
