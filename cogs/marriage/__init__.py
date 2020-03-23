@@ -249,6 +249,13 @@ class Marriage(commands.Cog):
                 item[1],
                 ctx.author.id,
             )
+            await self.bot.log_transaction(
+                ctx,
+                from_=ctx.author.id,
+                to=2,
+                subject="money",
+                data={"Amount": item[1]},
+            )
         await ctx.send(
             _(
                 "You bought a **{item}** for your partner and increased their love score by **{points}** points!"

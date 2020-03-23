@@ -234,7 +234,7 @@ class Tournament(commands.Cog):
                         await self.bot.reset_cooldown(ctx)
                         return await ctx.send(
                             _("Noone joined your raid tournament {author}.").format(
-                                user=ctx.author.mention
+                                author=ctx.author.mention
                             )
                         )
                     break
