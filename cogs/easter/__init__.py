@@ -89,12 +89,26 @@ You have **{eggs}** <:easteregg:566251086986608650>."""
                 reward[0],
                 ctx.author.id,
             )
+            await self.bot.log_transaction(
+                ctx,
+                from_=1,
+                to=ctx.author.id,
+                subject="crates",
+                data={"Rarity": reward[3], "Amount": reward[2],},
+            )
         elif reward[1] == "money":
             await self.bot.pool.execute(
                 'UPDATE profile SET "money"="money"+$1, "eastereggs"="eastereggs"-$2 WHERE "user"=$3;',
                 reward[2],
                 reward[0],
                 ctx.author.id,
+            )
+            await self.bot.log_transaction(
+                ctx,
+                from_=1,
+                to=ctx.author.id,
+                subject="money",
+                data={"Amount": reward[2],},
             )
         elif reward[1] == "boosters":
             await self.bot.pool.execute(
@@ -134,6 +148,13 @@ You have **{eggs}** <:easteregg:566251086986608650>."""
                 'UPDATE profile SET "eastereggs"="eastereggs"-$1 WHERE "user"=$2;',
                 reward[0],
                 ctx.author.id,
+            )
+            await self.bot.log_transaction(
+                ctx,
+                from_=1,
+                to=ctx.author.id,
+                subject="item",
+                data={"Name": item["name"], "Value": item["value"],},
             )
         await ctx.send(
             _(

@@ -315,6 +315,13 @@ class Alliance(commands.Cog):
                 up_price,
                 ctx.character_data["guild"],
             )
+            await self.bot.log_transaction(
+                ctx,
+                from_=ctx.author.id,
+                to=2,
+                subject="alliance",
+                data={"Amount": up_price, "Building": name},
+            )
 
         await ctx.send(
             _(
@@ -395,6 +402,13 @@ class Alliance(commands.Cog):
                 'UPDATE guild SET "money"="money"-$1 WHERE "id"=$2;',
                 building["cost"],
                 ctx.character_data["guild"],
+            )
+            await self.bot.log_transaction(
+                ctx,
+                from_=ctx.author.id,
+                to=2,
+                subject="alliance",
+                data={"Amount": building["cost"], "Defense": name},
             )
 
         await ctx.send(_("Successfully built a {defense}.").format(defense=name))

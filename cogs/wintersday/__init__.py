@@ -104,6 +104,13 @@ class Christmas(commands.Cog):
                     reward["crates"],
                     ctx.author.id,
                 )
+                await self.bot.log_transaction(
+                    ctx,
+                    from_=1,
+                    to=ctx.author.id,
+                    subject="crates",
+                    data={"Rarity": rarity, "Amount": reward["crates"]},
+                )
                 text = _("{crates} {rarity} crates").format(
                     crates=reward["crates"], rarity=rarity
                 )
@@ -113,6 +120,13 @@ class Christmas(commands.Cog):
                     'UPDATE profile SET "money"="money"+$1 WHERE "user"=$2;',
                     reward["money"],
                     ctx.author.id,
+                )
+                await self.bot.log_transaction(
+                    ctx,
+                    from_=1,
+                    to=ctx.author.id,
+                    subject="money",
+                    data={"Amount": reward["money"]},
                 )
                 reward_text = f"{reward_text}\n- ${reward['money']}"
             if today.day == 24:

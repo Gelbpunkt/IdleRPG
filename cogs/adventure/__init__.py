@@ -253,6 +253,13 @@ class Adventure(commands.Cog):
                     money,
                     ctx.author.id,
                 )
+                await self.bot.log_transaction(
+                    ctx,
+                    from_=1,
+                    to=ctx.author.id,
+                    subject="money",
+                    data={"Amount": money},
+                )
                 await ctx.send(
                     _("You found a treasure with **${money}** inside!").format(
                         money=money
@@ -370,6 +377,9 @@ class Adventure(commands.Cog):
             'UPDATE profile SET "money"="money"+$1 WHERE "user"=$2;',
             money,
             ctx.author.id,
+        )
+        await self.bot.log_transaction(
+            ctx, from_=1, to=ctx.author.id, subject="money", data={"Amount": money}
         )
 
         await ctx.send(
@@ -492,6 +502,18 @@ Adventure name: `{adventure}`"""
                     int(gold / 2),
                     partner,
                 )
+
+            await self.bot.log_transaction(
+                ctx,
+                from_=1,
+                to=ctx.author.id,
+                subject="adventure",
+                data={
+                    "Gold": gold,
+                    "Item": item["name"],  # compare against loot names if necessary
+                    "Value": item["value"],
+                },
+            )
 
             await ctx.send(
                 _(

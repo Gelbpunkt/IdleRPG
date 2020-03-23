@@ -171,6 +171,9 @@ class Classes(commands.Cog):
                     await conn.execute(
                         'INSERT INTO pets ("user") VALUES ($1);', ctx.author.id
                     )
+            await self.bot.log_transaction(
+                ctx, from_=ctx.author.id, to=2, subject="money", data={"Amount": money}
+            )
             await ctx.send(
                 _(
                     "You selected the class `{profession}`. **$5000** was taken off your balance."
@@ -296,6 +299,13 @@ class Classes(commands.Cog):
                     user=f"**{user}**" if user else _("a traveller just passing by"),
                 )
             )
+            await self.bot.log_transaction(
+                ctx,
+                from_=usr["user"].id,
+                to=ctx.author.id,
+                subject="money",
+                data={"Amount": money},
+            )
         else:
             await ctx.send(_("Your attempt to steal money wasn't successful."))
 
@@ -357,6 +367,9 @@ class Classes(commands.Cog):
                 item[3],
                 ctx.author.id,
             )
+            await self.bot.log_transaction(
+                ctx, from_=ctx.author.id, to=2, subject="money", data={"Amount": money}
+            )
         await ctx.send(
             _(
                 "You bought **{item}** for your pet and increased its food bar by **{points}** points."
@@ -399,6 +412,9 @@ class Classes(commands.Cog):
                 'UPDATE pets SET "drink"=CASE WHEN "drink"+$1>=100 THEN 100 ELSE "drink"+$1 END WHERE "user"=$2;',
                 item[3],
                 ctx.author.id,
+            )
+            await self.bot.log_transaction(
+                ctx, from_=ctx.author.id, to=2, subject="money", data={"Amount": money}
             )
         await ctx.send(
             _(
@@ -537,6 +553,13 @@ class Classes(commands.Cog):
         embed.add_field(name=_("Value"), value=f"${item['value']}", inline=False)
         embed.set_footer(text=_("Your pet needs to recover, wait a day to retry"))
         await ctx.send(embed=embed)
+        await self.bot.log_transaction(
+            ctx,
+            from_=1,
+            to=ctx.author.id,
+            subject="item",
+            data={"Name": item["name"], "Value": item["value"],},
+        )
 
 
 def setup(bot):

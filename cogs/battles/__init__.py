@@ -129,6 +129,9 @@ class Battles(commands.Cog):
             await conn.execute(
                 'UPDATE profile SET money=money-$1 WHERE "user"=$2;', money, looser.id
             )
+        await self.bot.log_transaction(
+            ctx, from_=looser.id, to=winner.id, subject="money", data={"Amount": money}
+        )
         await ctx.send(
             _("{winner} won the battle vs {looser}! Congratulations!").format(
                 winner=winner.mention, looser=looser.mention
@@ -298,6 +301,13 @@ class Battles(commands.Cog):
                     'UPDATE profile SET pvpwins=pvpwins+1 WHERE "user"=$1;',
                     ctx.author.id,
                 )
+            await self.bot.log_transaction(
+                ctx,
+                from_=enemy_.id,
+                to=ctx.author.id,
+                subject="money",
+                data={"Amount": money},
+            )
             await ctx.send(
                 _("{p1} won the raidbattle vs {p2}! Congratulations!").format(
                     p1=ctx.author.mention, p2=enemy_.mention
@@ -326,6 +336,13 @@ class Battles(commands.Cog):
                 await conn.execute(
                     'UPDATE profile SET pvpwins=pvpwins+1 WHERE "user"=$1;', enemy_.id
                 )
+            await self.bot.log_transaction(
+                ctx,
+                from_=ctx.author.id,
+                to=enemy_.id,
+                subject="money",
+                data={"Amount": money},
+            )
             await ctx.send(
                 _("{p1} won the raidbattle vs {p2}! Congratulations!").format(
                     p1=enemy_.mention, p2=ctx.author.mention
@@ -536,6 +553,9 @@ class Battles(commands.Cog):
             await conn.execute(
                 'UPDATE profile SET money=money-$1 WHERE "user"=$2;', money, looser.id
             )
+        await self.bot.log_transaction(
+            ctx, from_=looser.id, to=winner.id, subject="money", data={"Amount": money}
+        )
         await ctx.send(
             _("{winner} won the active battle vs {looser}! Congratulations!").format(
                 winner=winner.mention, looser=looser.mention
