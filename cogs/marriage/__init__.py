@@ -550,6 +550,9 @@ class Marriage(commands.Cog):
                 money,
                 ctx.author.id,
             )
+            await self.bot.log_transaction(
+                ctx, from_=ctx.author.id, to=2, subject="money", data={"Amount": -money}
+            )
 
             return await ctx.send(
                 _("You lost ${money} because {name} {cause}").format(
@@ -576,6 +579,9 @@ class Marriage(commands.Cog):
                 money,
                 ctx.author.id,
             )
+            await self.bot.log_transaction(
+                ctx, from_=1, to=ctx.author.id, subject="money", data={"Amount": money}
+            )
             return await ctx.send(
                 _("{name} gave you ${money}, they {cause}").format(
                     name=target["name"], money=money, cause=cause
@@ -594,6 +600,13 @@ class Marriage(commands.Cog):
                 ctx.author.id,
             )
             emoji = getattr(self.bot.cogs["Crates"].emotes, type_)
+            await self.bot.log_transaction(
+                ctx,
+                from_=ctx.author.id,
+                to=2,
+                subject="crates",
+                data={"Rarity": type_, "Amount": 1},
+            )
             return await ctx.send(
                 _("{name} found a {emoji} {type_} crate for you!").format(
                     name=target["name"], emoji=emoji, type_=type_

@@ -539,6 +539,13 @@ class Bot(commands.AutoShardedBot):
                 column = "crates_magic"
                 amount = 1
                 reward_text = "**1** <:CrateMagic:598094865611358209>"
+            await self.log_transaction(
+                ctx,
+                from_=0,
+                to=ctx.author.id,
+                subject="crates",
+                data={"Rarity": column.split("_")[1], "Amount": amount},
+            )
             await self.pool.execute(
                 f'UPDATE profile SET {column}={column}+$1 WHERE "user"=$2;',
                 amount,
@@ -557,12 +564,22 @@ class Bot(commands.AutoShardedBot):
             item["name"] = _("Level {new_level} Memorial").format(new_level=new_level)
             reward_text = _("a special weapon")
             await self.create_item(**item)
+            await self.log_transaction(
+                ctx,
+                from_=1,
+                to=ctx.author.id,
+                subject="item",
+                data={"Name": item["name"], "Value": 1000},
+            )
         elif reward == "money":
             money = new_level * 1000
             await self.pool.execute(
                 'UPDATE profile SET "money"="money"+$1 WHERE "user"=$2;',
                 money,
                 ctx.author.id,
+            )
+            await self.log_transaction(
+                ctx, from_=1, to=ctx.author.id, subject="money", data={"Amount": money}
             )
             reward_text = f"**${money}**"
 
@@ -678,34 +695,41 @@ class Bot(commands.AutoShardedBot):
             "offer",
             "guild invest",
             "guild pay",
+            "gambling",
+            "bid",
+            "item",
+            "adventure",
+            "merch",
+            "sacrifice",
+            "exchange",
+            "trade",
+            "alliance",
         ]
-        if isinstance(data, int):
-            description = f"""\
-{ctx.channel} in {ctx.guild or 'DMs'}
-From: {(self.get_user(from_) or 'Unknown User') if from_ != 0 else 'Guild Bank'}
-To:   {(self.get_user(to) or 'Unknown User') if to != 0 else 'Guild Bank'}
+
+        id_map = {
+            0: "Guild Bank",
+            1: "Bot (added to player)",
+            2: "Bot (removed from player)",
+        }
+        from_readable = (
+            (self.get_user(from_) or "Unknown User")
+            if (from_ not in id_map)
+            else id_map[from_]
+        )
+        to_readable = (
+            (self.get_user(to) or "Unknown User") if (to not in id_map) else id_map[to]
+        )
+        data_ = "\n".join(
+            [f"{name}: {content}" for name, content in data.items()]
+        )  # data is expected to be a dict
+
+        description = f"""\
+From: {from_readable}
+To: {to_readable}
 Subject: {subject}
-Amount: {data}"""
-        elif isinstance(data, list):
-            description = f"""\
-{ctx.channel} in {ctx.guild or 'DMs'}
-From: {(self.get_user(from_) or 'Unknown User')}
-To:   {(self.get_user(to) or 'Unknown User')}
-Subject: {subject}
-Amount: {data[0]}
-Rarity: {data[1]}"""
-        else:
-            description = f"""\
-{ctx.channel} in {ctx.guild or 'DMs'}
-From: {self.get_user(from_) or 'Unknown User'}
-To:   {self.get_user(to) or 'Unknown User'}
-Subject: {subject} (Item)
-Name: {data['name']}
-Value: {data['value']}
-ID: {data['id']}
-Type: {data['type']}
-Damage: {data['damage']}
-Armor: {data['armor']}"""
+Command: {ctx.command.qualified_name}
+{data_}"""
+
         async with self.pool.acquire() as conn:
             await conn.execute(
                 'INSERT INTO transactions ("from", "to", "subject", "info", "timestamp") VALUES ($1, $2, $3, $4, $5);',

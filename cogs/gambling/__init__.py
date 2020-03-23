@@ -168,6 +168,13 @@ class BlackJack:
             self.money * 2,
             self.ctx.author.id,
         )
+        await self.bot.log_transaction(
+            self.ctx,
+            from_=1,
+            to=ctx.author.id,
+            subject="gambling",
+            data={"Amount": self.money * 2,},
+        )
 
     async def player_bj_win(self):
         await self.ctx.bot.pool.execute(
@@ -175,12 +182,26 @@ class BlackJack:
             int(self.money * 2.5),
             self.ctx.author.id,
         )
+        await self.bot.log_transaction(
+            self.ctx,
+            from_=1,
+            to=ctx.author.id,
+            subject="gambling",
+            data={"Amount": int(self.money * 2.5),},
+        )
 
     async def player_cashback(self):
         await self.ctx.bot.pool.execute(
             'UPDATE profile SET money=money+$1 WHERE "user"=$2;',
             self.money,
             self.ctx.author.id,
+        )
+        await self.bot.log_transaction(
+            self.ctx,
+            from_=1,
+            to=ctx.author.id,
+            subject="gambling",
+            data={"Amount": self.money,},
         )
 
     def pretty(self, hand):
@@ -314,6 +335,13 @@ class BlackJack:
                     self.money,
                     self.ctx.author.id,
                 )
+                await self.bot.log_transaction(
+                    self.ctx,
+                    from_=ctx.author.id,
+                    to=2,
+                    subject="gambling",
+                    data={"Amount": self.money,},
+                )
 
                 self.money *= 2
                 valid.remove("\U000023ec")
@@ -410,6 +438,13 @@ class Gambling(commands.Cog):
                 amount,
                 ctx.author.id,
             )
+            await self.bot.log_transaction(
+                ctx,
+                from_=1,
+                to=ctx.author.id,
+                subject="gambling",
+                data={"Amount": amount,},
+            )
             await ctx.send(
                 _("{result[1]} It's **{result[0]}**! You won **${amount}**!").format(
                     result=result, amount=amount
@@ -420,6 +455,13 @@ class Gambling(commands.Cog):
                 'UPDATE profile SET money=money-$1 WHERE "user"=$2;',
                 amount,
                 ctx.author.id,
+            )
+            await self.bot.log_transaction(
+                ctx,
+                from_=ctx.author.id,
+                to=2,
+                subject="gambling",
+                data={"Amount": amount,},
             )
             await ctx.send(
                 _("{result[1]} It's **{result[0]}**! You lost **${amount}**!").format(
@@ -458,6 +500,13 @@ class Gambling(commands.Cog):
                 money * (maximum - 1),
                 ctx.author.id,
             )
+            await self.bot.log_transaction(
+                ctx,
+                from_=1,
+                to=ctx.author.id,
+                subject="gambling",
+                data={"Amount": money * (maximum - 1),},
+            )
             await ctx.send(
                 _(
                     "You won **${money}**! The random number was `{num}`, you tipped `{tip}`."
@@ -472,6 +521,13 @@ class Gambling(commands.Cog):
                 'UPDATE profile SET money=money-$1 WHERE "user"=$2;',
                 money,
                 ctx.author.id,
+            )
+            await self.bot.log_transaction(
+                ctx,
+                from_=ctx.author.id,
+                to=2,
+                subject="gambling",
+                data={"Amount": amount,},
             )
             await ctx.send(
                 _(
@@ -491,6 +547,9 @@ class Gambling(commands.Cog):
             'UPDATE profile SET "money"="money"-$1 WHERE "user"=$2;',
             amount,
             ctx.author.id,
+        )
+        await self.bot.log_transaction(
+            ctx, from_=ctx.author.id, to=2, subject="gambling", data={"Amount": amount,}
         )
         bj = BlackJack(ctx, amount)
         await bj.run()
@@ -538,6 +597,13 @@ class Gambling(commands.Cog):
             await conn.execute(
                 'UPDATE profile SET "money"="money"-100 WHERE "user"=$1;', ctx.author.id
             )
+            await self.bot.log_transaction(
+                ctx,
+                from_=ctx.author.id,
+                to=2,
+                subject="gambling",
+                data={"Amount": 100,},
+            )
 
         while True:
             user, other = users
@@ -553,6 +619,13 @@ class Gambling(commands.Cog):
                     money,
                     other.id,
                 )
+                await self.bot.log_transaction(
+                    ctx,
+                    from_=1,
+                    to=other.id,
+                    subject="gambling",
+                    data={"Amount": money,},
+                )
                 return await ctx.send(_("Timed out."))
 
             if action:
@@ -560,6 +633,13 @@ class Gambling(commands.Cog):
                     'UPDATE profile SET "money"="money"+$1 WHERE "user"=$2;',
                     money,
                     user.id,
+                )
+                await self.bot.log_transaction(
+                    ctx,
+                    from_=1,
+                    to=user.id,
+                    subject="gambling",
+                    data={"Amount": amount,},
                 )
                 return await ctx.send(
                     _("{user} stole **${money}**.").format(user=user, money=money)
@@ -572,6 +652,13 @@ class Gambling(commands.Cog):
                         money,
                         other.id,
                     )
+                    await self.bot.log_transaction(
+                        ctx,
+                        from_=1,
+                        to=other.id,
+                        subject="gambling",
+                        data={"Amount": amount,},
+                    )
                     if not await self.bot.has_money(user.id, new_money, conn=conn):
                         return await ctx.send(
                             _("{user} is too poor to double.").format(user=user)
@@ -580,6 +667,13 @@ class Gambling(commands.Cog):
                         'UPDATE profile SET "money"="money"-$1 WHERE "user"=$2;',
                         new_money,
                         user.id,
+                    )
+                    await self.bot.log_transaction(
+                        ctx,
+                        from_=user.id,
+                        to=2,
+                        subject="gambling",
+                        data={"Amount": amount,},
                     )
                     await ctx.send(
                         _("{user} doubled to **${money}**.").format(

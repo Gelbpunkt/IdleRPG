@@ -362,11 +362,21 @@ class Admin(commands.Cog):
                 self.top_auction[1],
                 self.top_auction[0].id,
             )
+            await self.bot.log_transaction(
+                ctx,
+                from_=1,
+                to=self.top_auction[0].id,
+                subject="bid",
+                data={"Amount": self.top_auction[1]},
+            )
             self.top_auction = (ctx.author, amount)
             await conn.execute(
                 'UPDATE profile SET "money"="money"-$1 WHERE "user"=$2;',
                 amount,
                 ctx.author.id,
+            )
+            await self.bot.log_transaction(
+                ctx, from_=ctx.author.id, to=2, subject="bid", data={"Amount": amount}
             )
         await ctx.send(_("Bid submitted."))
         channel = discord.utils.get(

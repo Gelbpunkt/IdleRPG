@@ -67,12 +67,18 @@ class Store(commands.Cog):
                 price,
                 ctx.author.id,
             )
+            await self.bot.log_transaction(
+                ctx, from_=ctx.author.id, to=2, subject="money", data={"Amount": price}
+            )
         else:
             await self.bot.pool.execute(
                 'UPDATE profile SET "time_booster"="time_booster"+$1, "luck_booster"="luck_booster"+$1, "money_booster"="money_booster"+$1, "money"="money"-$2 WHERE "user"=$3;',
                 amount,
                 price,
                 ctx.author.id,
+            )
+            await self.bot.log_transaction(
+                ctx, from_=ctx.author.id, to=2, subject="money", data={"Amount": price}
             )
         await ctx.send(
             _(

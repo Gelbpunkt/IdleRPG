@@ -84,6 +84,9 @@ class Miscellaneous(commands.Cog):
                 money,
                 ctx.author.id,
             )
+            await self.bot.log_transaction(
+                ctx, from_=1, to=ctx.author.id, subject="money", data={"Amount": money}
+            )
             txt = f"**${money}**"
         else:
             num = round(((streak + 9) % 10 + 1) / 2)
@@ -105,6 +108,13 @@ class Miscellaneous(commands.Cog):
                 f'UPDATE profile SET "crates_{type_}"="crates_{type_}"+$1 WHERE "user"=$2;',
                 amt,
                 ctx.author.id,
+            )
+            await self.bot.log_transaction(
+                ctx,
+                from_=1,
+                to=ctx.author.id,
+                subject="crates",
+                data={"Rarity": type_, "Amount": amt},
             )
             txt = f"**{amt}** {getattr(self.bot.cogs['Crates'].emotes, type_)}"
 
