@@ -148,9 +148,7 @@ class Player:
         if cell.trap:
             damage = random.randint(30, 120) if random.randint(1, 3) == 1 else 1000
             await self.user.send(
-                "You stepped on a trap and took {damage} damage!".format(
-                    damage=damage
-                )
+                "You stepped on a trap and took {damage} damage!".format(damage=damage)
             )
             cell.trap = False  # Remove the trap
             self.hp -= damage

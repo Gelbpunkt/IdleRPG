@@ -111,6 +111,9 @@ bans = [
 """The support server ID."""
 support_server_id = 430_017_996_304_678_923
 
+"""The ID to allow mass tournaments from."""
+official_tournament_channel_id = 684_483_723_911_102_554
+
 """A channel ID to send admin logs to."""
 admin_log_channel = 457_197_748_626_653_184
 

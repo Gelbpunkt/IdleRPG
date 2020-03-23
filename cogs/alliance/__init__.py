@@ -581,26 +581,21 @@ class Alliance(commands.Cog):
         # Gather the fighters
         attackers = []
         attacking_users = []
-        msg = await ctx.send(
-            _(
-                "**{user}** wants to attack **{city}** with **{alliance_name}**'s alliance. React with ⚔ to join the attack!"
-            ).format(user=ctx.author, city=city, alliance_name=alliance_name)
-        )
-        await msg.add_reaction("\U00002694")
 
-        while True:  # we leave on timeout
-            try:
-                r, u = await self.bot.wait_for(
-                    "reaction_add",
-                    check=lambda r, u: u not in attacking_users
-                    and not u.bot
-                    and str(r.emoji) == "\U00002694"
-                    and r.message.id == msg.id,
-                    timeout=300,
-                )
-            except asyncio.TimeoutError:
-                break  # no more joins
-            async with self.bot.pool.acquire() as conn:
+        id_ = await self.bot.start_joins()
+
+        await ctx.send(
+            _(
+                "**{user}** wants to attack **{city}** with **{alliance_name}**'s alliance. Head to https://raid.travitia.xyz/{id_} to join the attack!"
+            ).format(user=ctx.author, city=city, alliance_name=alliance_name, id_=id_)
+        )
+
+        await asyncio.sleep(60 * 10)
+
+        a_users = await self.bot.get_joins(id_)
+
+        async with self.bot.pool.acquire() as conn:
+            for u in a_users:
                 profile = await conn.fetchrow(
                     'SELECT * FROM profile WHERE "user"=$1;', u.id
                 )
@@ -610,11 +605,6 @@ class Alliance(commands.Cog):
                     'SELECT alliance FROM guild WHERE "id"=$1;', profile["guild"]
                 )
                 if user_alliance != alliance_id:
-                    await ctx.send(
-                        _(
-                            "You are not a member of **{alliance_name}'s alliance**, {user}."
-                        ).format(alliance_name=alliance_name, user=u)
-                    )
                     continue
                 damage, defense = await self.bot.get_raidstats(
                     u,
@@ -630,7 +620,6 @@ class Alliance(commands.Cog):
                     attackers.append(
                         {"user": u, "damage": damage, "defense": defense, "hp": 250}
                     )
-                    await ctx.send(_("{user} has joined the attack.").format(user=u))
 
         if not attackers:
             await self.bot.reset_alliance_cooldown(ctx)

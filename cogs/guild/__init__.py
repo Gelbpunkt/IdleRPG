@@ -988,51 +988,35 @@ for a prize of **${amount}**.\n **{fightercount}** players entered."
             'SELECT * FROM guild WHERE "id"=$1;', ctx.character_data["guild"]
         )
 
-        msg = await ctx.send(
+        id_ = await self.bot.start_joins()
+
+        await ctx.send(
             _(
-                "{author} seeks a guild adventure for **{guild}**! React to join! Unlimited players can join in the next minute. The minimum of players required is 3."
-            ).format(author=ctx.author.mention, guild=guild["name"])
+                "{author} seeks a guild adventure for **{guild}**! React to join! Unlimited players can join in the next 10 minutes. The minimum of players required is 3.\nPlease go to https://join.travitia.xyz/{id_} to join the guild adventure."
+            ).format(author=ctx.author.mention, guild=guild["name"], id_=id_)
         )
 
-        await msg.add_reaction("\U00002694")
-
-        joined = [ctx.author]
         difficulty = int(rpgtools.xptolevel(ctx.character_data["xp"]))
-        started = False
 
-        def apply(r, u):
-            return (
-                r.message.id == msg.id
-                and str(r.emoji) == "\U00002694"
-                and u not in joined
-                and not u.bot
-            )
+        await asyncio.sleep(60 * 10)
 
-        while not started:
-            try:
-                r, u = await self.bot.wait_for("reaction_add", check=apply, timeout=300)
-                user = await self.bot.pool.fetchrow(
+        a_joined = await self.bot.get_joins(id_)
+        joined = []
+
+        async with self.bot.pool.acquire() as conn:
+            for u in a_joined:
+                user = await conn.fetchrow(
                     'SELECT guild, xp FROM profile WHERE "user"=$1;', u.id
                 )
                 if user and user["guild"] == guild["id"]:
                     difficulty += int(rpgtools.xptolevel(user["xp"]))
                     joined.append(u)
-                    await ctx.send(
-                        _("Alright, {user}, you have been added.").format(
-                            user=u.mention
-                        )
-                    )
-                else:
-                    await ctx.send(_("You aren't in their guild."))
-            except asyncio.TimeoutError:
-                if len(joined) < 3:
-                    await self.bot.reset_guild_cooldown(ctx)
-                    return await ctx.send(
-                        _(
-                            "You didn't get enough other players for the guild adventure."
-                        )
-                    )
-                started = True
+
+        if len(joined) < 3:
+            await self.bot.reset_guild_cooldown(ctx)
+            return await ctx.send(
+                _("You didn't get enough other players for the guild adventure.")
+            )
 
         time = timedelta(hours=difficulty * 0.5)
 
@@ -1050,7 +1034,7 @@ Time it will take: **{time}**
 """
             ).format(
                 guild=guild["name"],
-                participants=", ".join([m.mention for m in joined]),
+                participants=", ".join([str(u) for u in joined]),
                 difficulty=difficulty,
                 time=time,
             )
