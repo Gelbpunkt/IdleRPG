@@ -664,7 +664,7 @@ class Bot(commands.AutoShardedBot):
             headers={"Authorization": self.config.raidauth},
         ) as r:
             j = await r.json()
-        return [self.get_user_global(i) for i in j]
+        return [u for i in j if (u := await self.get_user_global(i)) is not None]
 
     async def log_transaction(self, ctx, from_, to, subject, data):
         """Logs a transaction."""
