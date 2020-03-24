@@ -111,6 +111,9 @@ IdleRPG is a global bot, your characters are valid everywhere"""
                 hand="left",
                 equipped=True,
             )
+            await self.bot.log_transaction(
+                ctx, from_=1, to=ctx.author.id, subject="money", data={"Amount": 100}
+            )
             await ctx.send(
                 _(
                     "Successfully added your character **{name}**! Now use `{prefix}profile` to view your character!"
@@ -537,6 +540,13 @@ IdleRPG is a global bot, your characters are valid everywhere"""
                 value,
                 ctx.author.id,
             )
+            await self.bot.log_transaction(
+                ctx,
+                from_=1,
+                to=ctx.author.id,
+                subject="exchange",
+                data={"Reward": reward, "Amount": value},
+            )
         if none_given:
             text = _(
                 "You received **{reward}** when exchanging all of your loot."
@@ -800,6 +810,9 @@ IdleRPG is a global bot, your characters are valid everywhere"""
                 pricetopay,
                 ctx.author.id,
             )
+        await self.bot.log_transaction(
+            ctx, from_=ctx.author.id, to=2, subject="money", data={"Amount": pricetopay}
+        )
         await ctx.send(
             _(
                 "The {stat} of your **{item}** is now **{newstat}**. **${pricetopay}** has been taken off your balance."
@@ -841,7 +854,7 @@ IdleRPG is a global bot, your characters are valid everywhere"""
             )
         )
         await self.bot.log_transaction(
-            ctx, from_=ctx.author, to=other, subject="money", data=money
+            ctx, from_=ctx.author, to=other, subject="money", data={"Amount": money}
         )
 
     @checks.has_char()

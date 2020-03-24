@@ -94,6 +94,9 @@ class Valentine(commands.Cog):
                 money,
                 ctx.author.id,
             )
+            await self.bot.log_transaction(
+                ctx, from_=1, to=ctx.author.id, subject="money", data={"Amount": money}
+            )
             return await ctx.send(
                 _("The chocolate box contained **${money}!**").format(money=money)
             )
@@ -123,6 +126,13 @@ class Valentine(commands.Cog):
             )
             item["name"] = self.get_valentine_name(item["type_"])
             item = await self.bot.create_item(**item)
+            await self.bot.log_transaction(
+                ctx,
+                from_=1,
+                to=ctx.author.id,
+                subject="item",
+                data={"Name": item["name"], "Value": item["value"]},
+            )
             embed = discord.Embed(
                 title=_("You gained an item!"),
                 description=_("The chocolate box contained an item!"),

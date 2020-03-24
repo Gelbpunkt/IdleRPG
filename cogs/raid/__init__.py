@@ -288,6 +288,7 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
                     highest_bid[1],
                     highest_bid[0].id,
                 )
+                await self.bot.log_transaction(ctx, from_=ctx.author.id, to=2, subject="bid", data={"Amount": highest_bid[1]})
                 await msg.edit(content=f"{msg.content} Done!")
             else:
                 await ctx.send(
@@ -451,6 +452,7 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
                     money,
                     target.id,
                 )
+                await self.bot.log_transaction(ctx, from_=1, to=target.id)
                 bandits.pop(0)
                 em.add_field(
                     name="Swordsman attack",
@@ -587,6 +589,13 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
             await self.bot.pool.execute(
                 'UPDATE profile SET "crates_legendary"="crates_legendary"+1 WHERE "user"=$1;',
                 survivor.id,
+            )
+            await self.bot.log_transaction(
+                ctx,
+                from_=1,
+                to=survivor.id,
+                subject="crates",
+                data={"Rarity": "legendary", "Amount": 1},
             )
         else:
             await ctx.send(
@@ -748,6 +757,13 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
                     inside[1],
                     u.id,
                 )
+                await self.bot.log_transaction(
+                    ctx,
+                    from_=1,
+                    to=survivor.id,
+                    subject="money",
+                    data={"Amount": inside[1]},
+                )
                 await ctx.send(f"The chest contained **${inside[1]}**.")
             elif cont == "item":
                 item = await self.bot.create_random_item(
@@ -766,6 +782,13 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
                     f'UPDATE profile SET "crates_{inside[1]}"="crates_{inside[1]}"+$1 WHERE "user"=$2;',
                     1,
                     u.id,
+                )
+                await self.bot.log_transaction(
+                    ctx,
+                    from_=1,
+                    to=u.id,
+                    subject="crates",
+                    data={"Rarity": inside[1], "Amount": 1},
                 )
                 await ctx.send(
                     f"The chest contained a {getattr(self.bot.cogs['Crates'].emotes, inside[1])}."
@@ -923,6 +946,13 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
                 'UPDATE profile SET "crates_legendary"="crates_legendary"+$1 WHERE "user"=$2;',
                 1,
                 most_kills.id,
+            )
+            await self.bot.log_transaction(
+                ctx,
+                from_=1,
+                to=most_kills.id,
+                subject="crates",
+                data={"Rarity": "legendary", "Amount": 1},
             )
             await ctx.send(
                 f"The scrael were defeated! Our most glorious hero, {most_kills.mention}, has received Kvothe's grace, a {self.bot.cogs['Crates'].emotes.legendary}."
@@ -1109,6 +1139,13 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
                     'UPDATE profile SET "money"="money"-$1, "crates_legendary"="crates_legendary"+1 WHERE "user"=$2;',
                     highest_bid[1],
                     highest_bid[0].id,
+                )
+                await self.bot.log_transaction(
+                    ctx,
+                    from_=1,
+                    to=highest_bid[0].id,
+                    subject="money",
+                    data={"Amount": highest_bid[1]},
                 )
                 await msg.edit(content=f"{msg.content} Done!")
             else:
@@ -1400,6 +1437,13 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
                     highest_bid[1],
                     highest_bid[0].id,
                 )
+                await self.bot.log_transaction(
+                    ctx,
+                    from_=1,
+                    to=highest_bid[0].id,
+                    subject="money",
+                    data={"Amount": highest_bid[1]},
+                )
                 await msg.edit(content=f"{msg.content} Done!")
             else:
                 await ctx.send(
@@ -1535,6 +1579,13 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
                 'UPDATE profile SET "crates_legendary"="crates_legendary"+1 WHERE "user"=$1;',
                 winner.id,
             )
+            await self.bot.log_transaction(
+                ctx,
+                from_=1,
+                to=winner.id,
+                subject="crates",
+                data={"Rarity": "legendary", "Amount": 1},
+            )
             await ctx.send(
                 f"Asmodeus has been defeated. He will lay low for now. He also left a {self.bot.cogs['Crates'].emotes.legendary} to a random survivor ({winner.mention}) for their bravery. They may not get a second chance next time."
             )
@@ -1669,6 +1720,13 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
             await self.bot.pool.execute(
                 'UPDATE profile SET "crates_legendary"="crates_legendary"+1 WHERE "user"=$1;',
                 winner.id,
+            )
+            await self.bot.log_transaction(
+                ctx,
+                from_=1,
+                to=winner.id,
+                subject="money",
+                data={"Rarity": "legendary", "Amount": 1},
             )
             await ctx.send(
                 f"The Windows® user has been convinced, he is happily using a Linux distribution now. He also left a {self.bot.cogs['Crates'].emotes.legendary} to a random survivor ({winner.mention}) as a thank you. Soon, the squad can convince more people from this planet!"
@@ -1861,6 +1919,13 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
                     highest_bid[1],
                     highest_bid[0].id,
                 )
+                await self.bot.log_transaction(
+                    ctx,
+                    from_=1,
+                    to=highest_bid[0].id,
+                    subject="money",
+                    data={"Amount": highest_bid[1]},
+                )
                 await msg.edit(content=f"{msg.content} Done!")
             else:
                 await ctx.send(
@@ -1987,6 +2052,13 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
                 'UPDATE profile SET "crates_legendary"="crates_legendary"+1 WHERE "user"=$1;',
                 survivor.id,
             )
+            await self.bot.log_transaction(
+                ctx,
+                from_=1,
+                to=survivor.id,
+                subject="crates",
+                data={"Rarity": "legendary", "Amount": 1},
+            )
 
         else:
             await ctx.send(
@@ -2027,6 +2099,9 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
             price,
             ctx.author.id,
         )
+        await self.bot.log_transaction(
+            ctx, from_=ctx.author.id, to=2, subject="money", data={"Amount": price}
+        )
         await ctx.send(
             _(
                 "You upgraded your weapon attack raid multiplier to {newlvl} for **${price}**."
@@ -2051,6 +2126,9 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
             newlvl,
             price,
             ctx.author.id,
+        )
+        await self.bot.log_transaction(
+            ctx, from_=ctx.author.id, to=2, subject="money", data={"Amount": price}
         )
         await ctx.send(
             _(

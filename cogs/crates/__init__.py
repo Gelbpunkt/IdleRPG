@@ -144,6 +144,13 @@ class Crates(commands.Cog):
                 crates=ctx.character_data[f"crates_{rarity}"] - 1, rarity=rarity
             )
         )
+        await self.bot.log_transaction(
+            ctx,
+            from_=1,
+            to=ctx.author.id,
+            subject="item",
+            data={"Name": item["name"], "Value": item["value"],},
+        )
         await ctx.send(embed=embed)
         if rarity == "legendary":
             await self.bot.public_log(
@@ -188,7 +195,11 @@ received {item['name']} with **{item['damage'] or item['armor']} \
             )
         )
         await self.bot.log_transaction(
-            ctx, from_=ctx.author, to=other, subject="crates", data=[amount, rarity]
+            ctx,
+            from_=ctx.author.id,
+            to=other.id,
+            subject="crates",
+            data={"Rarity": rarity, "Amount": amount},
         )
 
 

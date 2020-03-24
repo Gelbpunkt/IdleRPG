@@ -73,11 +73,19 @@ class Trading(commands.Cog):
                 return await ctx.send(
                     _("You cannot afford the tax of 5% (${amount}).").format(amount=tax)
                 )
-            await conn.execute(
-                'UPDATE profile SET "money"="money"-$1 WHERE "user"=$2;',
-                tax,
-                ctx.author.id,
-            )
+            if tax:
+                await conn.execute(
+                    'UPDATE profile SET "money"="money"-$1 WHERE "user"=$2;',
+                    tax,
+                    ctx.author.id,
+                )
+                await self.bot.log_transaction(
+                    ctx,
+                    from_=ctx.author.id,
+                    to=2,
+                    subject="money",
+                    data={"Amount": tax},
+                )
             await conn.execute(
                 "DELETE FROM inventory i USING allitems ai WHERE i.item=ai.id AND ai.id=$1 AND ai.owner=$2;",
                 itemid,
@@ -142,6 +150,21 @@ class Trading(commands.Cog):
                 "INSERT INTO inventory (item, equipped) VALUES ($1, $2);",
                 item["id"],
                 False,
+            )
+            if tax:
+                await self.bot.log_transaction(
+                    ctx,
+                    from_=ctx.author.id,
+                    to=2,
+                    subject="money",
+                    data={"Amount": item["price"] + tax},
+                )
+            await self.bot.log_transaction(
+                ctx,
+                from_=ctx.author.id,
+                to=item["owner"],
+                subject="money",
+                data={"Amount": item["price"]},
             )
         await ctx.send(
             _(
@@ -331,6 +354,13 @@ class Trading(commands.Cog):
             await conn.execute(
                 'UPDATE inventory SET "equipped"=$1 WHERE "item"=$2;', False, itemid
             )
+        await self.bot.log_transaction(
+            ctx,
+            from_=ctx.author.id,
+            to=user.id,
+            subject="item",
+            data={"Name": item["name"], "Value": item["value"]},
+        )
         await ctx.send(
             _(
                 "Successfully bought item `{itemid}`. Use `{prefix}inventory` to view your updated inventory."
@@ -387,6 +417,13 @@ class Trading(commands.Cog):
                 value,
                 ctx.author.id,
             )
+        await self.bot.log_transaction(
+            ctx,
+            from_=1,
+            to=ctx.author.id,
+            subject="merch",
+            data={"Amount": f"{len(itemids)} items", "Value": value},
+        )
         await ctx.send(
             _(
                 "You received **${money}** when selling item(s) `{itemids}`. {additional}"
@@ -457,6 +494,13 @@ class Trading(commands.Cog):
                     money,
                     ctx.author.id,
                 )
+            await self.bot.log_transaction(
+                ctx,
+                from_=1,
+                to=ctx.author.id,
+                subject="merch",
+                data={"Amount": f"{count} items", "Value": money},
+            )
             await ctx.send(
                 _("Merched **{count}** items for **${money}**.").format(
                     count=count, money=money
@@ -531,6 +575,13 @@ class Trading(commands.Cog):
             return await ctx.send(_("You are too poor to buy this item."))
         await self.bot.pool.execute(
             'UPDATE profile SET money=money-$1 WHERE "user"=$2;', item[1], ctx.author.id
+        )
+        await self.bot.log_transaction(
+            ctx,
+            from_=1,
+            to=ctx.author.id,
+            subject="item",
+            data={"Name": item[0]["name"], "Value": item[0]["value"], "Price": item[1]},
         )
         await self.bot.create_item(**item[0])
         await ctx.send(

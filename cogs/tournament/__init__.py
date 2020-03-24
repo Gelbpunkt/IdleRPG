@@ -168,6 +168,13 @@ class Tournament(commands.Cog):
                 prize,
                 participants[0].id,
             )
+        await self.bot.log_transaction(
+            ctx,
+            from_=ctx.author.id,
+            to=participants[0].id,
+            subject="money",
+            data={"Amount": prize},
+        )
         await msg.edit(
             content=_(
                 "Tournament ended! The winner is {winner}.\nMoney was given!"
@@ -385,6 +392,13 @@ class Tournament(commands.Cog):
                 prize,
                 participants[0].id,
             )
+        await self.bot.log_transaction(
+            ctx,
+            from_=ctx.author.id,
+            to=participants[0].id,
+            subject="money",
+            data={"Amount": prize},
+        )
         await msg.edit(
             content=_(
                 "Raid Tournament ended! The winner is {winner}.\nMoney was given!"

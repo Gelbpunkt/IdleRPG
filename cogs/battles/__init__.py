@@ -129,6 +129,9 @@ class Battles(commands.Cog):
             await conn.execute(
                 'UPDATE profile SET money=money-$1 WHERE "user"=$2;', money, looser.id
             )
+        await self.bot.log_transaction(
+            ctx, from_=looser.id, to=winner.id, subject="money", data={"Amount": money}
+        )
         await ctx.send(
             _("{winner} won the battle vs {looser}! Congratulations!").format(
                 winner=winner.mention, looser=looser.mention
@@ -298,6 +301,13 @@ class Battles(commands.Cog):
                     'UPDATE profile SET pvpwins=pvpwins+1 WHERE "user"=$1;',
                     ctx.author.id,
                 )
+            await self.bot.log_transaction(
+                ctx,
+                from_=enemy_.id,
+                to=ctx.author.id,
+                subject="money",
+                data={"Amount": money},
+            )
             await ctx.send(
                 _("{p1} won the raidbattle vs {p2}! Congratulations!").format(
                     p1=ctx.author.mention, p2=enemy_.mention
@@ -326,6 +336,13 @@ class Battles(commands.Cog):
                 await conn.execute(
                     'UPDATE profile SET pvpwins=pvpwins+1 WHERE "user"=$1;', enemy_.id
                 )
+            await self.bot.log_transaction(
+                ctx,
+                from_=ctx.author.id,
+                to=enemy_.id,
+                subject="money",
+                data={"Amount": money},
+            )
             await ctx.send(
                 _("{p1} won the raidbattle vs {p2}! Congratulations!").format(
                     p1=enemy_.mention, p2=ctx.author.mention
@@ -405,7 +422,7 @@ class Battles(commands.Cog):
             c = await self.bot.pool.fetchval(
                 'SELECT class FROM profile WHERE "user"=$1;', p.id
             )
-            if c in ["Caretaker", "Trainer", "Bowman", "Hunter", "Ranger"]:
+            if self.bot.in_class_line(c, "Ranger"):
                 HP.append(120)
             else:
                 HP.append(100)
@@ -425,11 +442,14 @@ class Battles(commands.Cog):
         def is_valid_move(r, u):
             return str(r.emoji) in moves and u in PLAYERS and r.message.id == last.id
 
+        actions = ["", ""]
+
         while HP[0] > 0 and HP[1] > 0:
             last = await ctx.send(
                 _(
-                    "{player1}: **{hp1}** HP\n{player2}: **{hp2}** HP\nReact to play."
+                    "{prevaction}\n{player1}: **{hp1}** HP\n{player2}: **{hp2}** HP\nReact to play."
                 ).format(
+                    prevaction="\n".join(actions),
                     player1=ctx.author.mention,
                     player2=enemy_.mention,
                     hp1=HP[0],
@@ -456,19 +476,15 @@ class Battles(commands.Cog):
                         _("{user}, you already moved!").format(user=u.mention)
                     )
             plz = list(MOVES_DONE.keys())
-            for u in plz:
-                o = plz[:]
-                o = o[1 - plz.index(u)]
-                idx = PLAYERS.index(u)
-                if MOVES_DONE[u] == "recover":
+            for idx, user in enumerate(plz):
+                other = plz[1 - idx]
+                if MOVES_DONE[user] == "recover":
                     heal_hp = round(DAMAGE[1 - idx] * 0.25) or 1
                     HP[idx] += heal_hp
-                    await ctx.send(
-                        _("{user} healed themselves for **{hp} HP**.").format(
-                            user=u.mention, hp=heal_hp
-                        )
+                    actions[idx] = _("{user} healed themselves for **{hp} HP**.").format(
+                        user=user.mention, hp=heal_hp
                     )
-                elif MOVES_DONE[u] == "attack" and MOVES_DONE[o] != "defend":
+                elif MOVES_DONE[user] == "attack" and MOVES_DONE[other] != "defend":
                     eff = random.choice(
                         [
                             DAMAGE[idx],
@@ -478,12 +494,10 @@ class Battles(commands.Cog):
                         ]
                     )
                     HP[1 - idx] -= eff
-                    await ctx.send(
-                        _("{user} hit {enemy} for **{eff}** damage.").format(
-                            user=u.mention, enemy=o.mention, eff=eff
-                        )
+                    actions[idx] = _("{user} hit {enemy} for **{eff}** damage.").format(
+                        user=user.mention, enemy=other.mention, eff=eff
                     )
-                elif MOVES_DONE[u] == "attack" and MOVES_DONE[o] == "defend":
+                elif MOVES_DONE[user] == "attack" and MOVES_DONE[other] == "defend":
                     eff = random.choice(
                         [
                             int(DAMAGE[idx]),
@@ -502,17 +516,15 @@ class Battles(commands.Cog):
                     )
                     if eff - eff2 > 0:
                         HP[1 - idx] -= eff - eff2
-                        await ctx.send(
-                            _("{user} hit {enemy} for **{eff}** damage.").format(
-                                user=u.mention, enemy=o.mention, eff=eff - eff2
-                            )
+                        actions[idx] = _("{user} hit {enemy} for **{eff}** damage.").format(
+                            user=user.mention, enemy=other.mention, eff=eff - eff2
                         )
+
                     else:
-                        await ctx.send(
-                            _("{user}'s attack on {enemy} failed!").format(
-                                user=u.mention, enemy=o.mention
-                            )
+                        actions[idx] = _("{user}'s attack on {enemy} failed!").format(
+                            user=user.mention, enemy=other.mention
                         )
+
         if HP[0] <= 0 and HP[1] <= 0:
             return await ctx.send(_("You both died!"))
         idx = HP.index([h for h in HP if h <= 0][0])
@@ -536,6 +548,9 @@ class Battles(commands.Cog):
             await conn.execute(
                 'UPDATE profile SET money=money-$1 WHERE "user"=$2;', money, looser.id
             )
+        await self.bot.log_transaction(
+            ctx, from_=looser.id, to=winner.id, subject="money", data={"Amount": money}
+        )
         await ctx.send(
             _("{winner} won the active battle vs {looser}! Congratulations!").format(
                 winner=winner.mention, looser=looser.mention

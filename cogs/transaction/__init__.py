@@ -206,6 +206,17 @@ class Transaction(commands.Cog):
                             False,
                             item["id"],
                         )
+                # await self.bot.log_transaction(
+                #    ctx,
+                #    from_=user.id,
+                #    to=user2.id,
+                #    subject="trade",
+                #    data={
+                #        "Money": money or "None",
+                #        "Crates": ", ".join([f"{crate[1]} {crate[0]}" for crate in crates]) or "None",
+                #        "Items": f"{len(items)} items - overall value {sum([item['value'] for item in items])}" or "None",
+                #    }
+                # )
             await chan.send(_("Trade successful."))
 
     @has_no_transaction()

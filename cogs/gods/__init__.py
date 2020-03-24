@@ -98,6 +98,13 @@ class Gods(commands.Cog):
                 value,
                 ctx.author.id,
             )
+        await self.bot.log_transaction(
+            ctx,
+            from_=user.id,
+            to=2,
+            subject="sacrifice",
+            data={"Item-Count": count, "Amount": value,},
+        )
         await ctx.send(
             _(
                 "You prayed to {god}, and they accepted your {count} sacrificed loot item(s). Your standing with the god has increased by **{points}** points."
