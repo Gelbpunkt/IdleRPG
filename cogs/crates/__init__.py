@@ -149,7 +149,7 @@ class Crates(commands.Cog):
             from_=1,
             to=ctx.author.id,
             subject="item",
-            data={"Name": item["name"], "Value": item["value"],},
+            data={"Name": item["name"], "Value": item["value"]},
         )
         await ctx.send(embed=embed)
         if rarity == "legendary":

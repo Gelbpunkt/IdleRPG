@@ -94,7 +94,7 @@ You have **{eggs}** <:easteregg:566251086986608650>."""
                 from_=1,
                 to=ctx.author.id,
                 subject="crates",
-                data={"Rarity": reward[3], "Amount": reward[2],},
+                data={"Rarity": reward[3], "Amount": reward[2]},
             )
         elif reward[1] == "money":
             await self.bot.pool.execute(
@@ -108,7 +108,7 @@ You have **{eggs}** <:easteregg:566251086986608650>."""
                 from_=1,
                 to=ctx.author.id,
                 subject="money",
-                data={"Amount": reward[2],},
+                data={"Amount": reward[2]},
             )
         elif reward[1] == "boosters":
             await self.bot.pool.execute(
@@ -154,7 +154,7 @@ You have **{eggs}** <:easteregg:566251086986608650>."""
                 from_=1,
                 to=ctx.author.id,
                 subject="item",
-                data={"Name": item["name"], "Value": item["value"],},
+                data={"Name": item["name"], "Value": item["value"]},
             )
         await ctx.send(
             _(

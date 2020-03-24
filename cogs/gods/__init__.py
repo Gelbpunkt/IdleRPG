@@ -100,10 +100,10 @@ class Gods(commands.Cog):
             )
         await self.bot.log_transaction(
             ctx,
-            from_=user.id,
+            from_=ctx.author.id,
             to=2,
             subject="sacrifice",
-            data={"Item-Count": count, "Amount": value,},
+            data={"Item-Count": count, "Amount": value},
         )
         await ctx.send(
             _(

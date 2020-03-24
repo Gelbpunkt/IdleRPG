@@ -481,9 +481,9 @@ class Battles(commands.Cog):
                 if MOVES_DONE[user] == "recover":
                     heal_hp = round(DAMAGE[1 - idx] * 0.25) or 1
                     HP[idx] += heal_hp
-                    actions[idx] = _("{user} healed themselves for **{hp} HP**.").format(
-                        user=user.mention, hp=heal_hp
-                    )
+                    actions[idx] = _(
+                        "{user} healed themselves for **{hp} HP**."
+                    ).format(user=user.mention, hp=heal_hp)
                 elif MOVES_DONE[user] == "attack" and MOVES_DONE[other] != "defend":
                     eff = random.choice(
                         [
@@ -516,9 +516,9 @@ class Battles(commands.Cog):
                     )
                     if eff - eff2 > 0:
                         HP[1 - idx] -= eff - eff2
-                        actions[idx] = _("{user} hit {enemy} for **{eff}** damage.").format(
-                            user=user.mention, enemy=other.mention, eff=eff - eff2
-                        )
+                        actions[idx] = _(
+                            "{user} hit {enemy} for **{eff}** damage."
+                        ).format(user=user.mention, enemy=other.mention, eff=eff - eff2)
 
                     else:
                         actions[idx] = _("{user}'s attack on {enemy} failed!").format(

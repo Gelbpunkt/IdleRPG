@@ -758,11 +758,7 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
                     u.id,
                 )
                 await self.bot.log_transaction(
-                    ctx,
-                    from_=1,
-                    to=survivor.id,
-                    subject="money",
-                    data={"Amount": inside[1]},
+                    ctx, from_=1, to=u.id, subject="money", data={"Amount": inside[1]}
                 )
                 await ctx.send(f"The chest contained **${inside[1]}**.")
             elif cont == "item":

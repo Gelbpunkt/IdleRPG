@@ -172,7 +172,7 @@ class Classes(commands.Cog):
                         'INSERT INTO pets ("user") VALUES ($1);', ctx.author.id
                     )
             await self.bot.log_transaction(
-                ctx, from_=ctx.author.id, to=2, subject="money", data={"Amount": money}
+                ctx, from_=ctx.author.id, to=2, subject="money", data={"Amount": 5000}
             )
             await ctx.send(
                 _(
@@ -304,7 +304,7 @@ class Classes(commands.Cog):
                 from_=usr["user"].id,
                 to=ctx.author.id,
                 subject="money",
-                data={"Amount": money},
+                data={"Amount": stolen},
             )
         else:
             await ctx.send(_("Your attempt to steal money wasn't successful."))
@@ -368,7 +368,11 @@ class Classes(commands.Cog):
                 ctx.author.id,
             )
             await self.bot.log_transaction(
-                ctx, from_=ctx.author.id, to=2, subject="money", data={"Amount": money}
+                ctx,
+                from_=ctx.author.id,
+                to=2,
+                subject="money",
+                data={"Amount": item[1]},
             )
         await ctx.send(
             _(
@@ -414,7 +418,11 @@ class Classes(commands.Cog):
                 ctx.author.id,
             )
             await self.bot.log_transaction(
-                ctx, from_=ctx.author.id, to=2, subject="money", data={"Amount": money}
+                ctx,
+                from_=ctx.author.id,
+                to=2,
+                subject="money",
+                data={"Amount": item[1]},
             )
         await ctx.send(
             _(
@@ -558,7 +566,7 @@ class Classes(commands.Cog):
             from_=1,
             to=ctx.author.id,
             subject="item",
-            data={"Name": item["name"], "Value": item["value"],},
+            data={"Name": item["name"], "Value": item["value"]},
         )
 
 
