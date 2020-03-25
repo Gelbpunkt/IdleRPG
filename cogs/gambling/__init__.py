@@ -197,7 +197,7 @@ class BlackJack:
             self.money,
             self.ctx.author.id,
         )
-        await self.bot.log_transaction(
+        await self.ctx.bot.log_transaction(
             self.ctx,
             from_=1,
             to=self.ctx.author.id,
@@ -336,7 +336,7 @@ class BlackJack:
                     self.money,
                     self.ctx.author.id,
                 )
-                await self.bot.log_transaction(
+                await self.ctx.bot.log_transaction(
                     self.ctx,
                     from_=self.ctx.author.id,
                     to=2,
