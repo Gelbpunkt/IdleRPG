@@ -301,7 +301,7 @@ class Classes(commands.Cog):
             )
             await self.bot.log_transaction(
                 ctx,
-                from_=usr["user"].id,
+                from_=usr["user"],
                 to=ctx.author.id,
                 subject="money",
                 data={"Amount": stolen},
