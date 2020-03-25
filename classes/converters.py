@@ -166,7 +166,7 @@ class IntFromTo(commands.Converter):
             raise commands.BadArgument("Converting to int failed.")
         if not self.from_ <= arg <= self.to_:
             raise NotInRange(
-                f"The supplied number must be in range of {self.from_} to {self.to_}.",
+                _("The supplied number must be in range of {from_} to {to_}.").format(from_=self.from_, to_=self.to_),
                 self.from_,
                 self.to_,
             )
@@ -184,7 +184,7 @@ class IntGreaterThan(commands.Converter):
             raise commands.BadArgument("Converting to int failed.")
         if not self.min_ < arg:
             raise NotInRange(
-                f"The supplied number must be greater than {self.min_}.",
+                ("The supplied number must be greater than {min_}.").format(min_=self.min_),
                 self.min_ + 1,
                 "infinity",
             )

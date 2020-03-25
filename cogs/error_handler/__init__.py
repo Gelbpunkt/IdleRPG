@@ -29,6 +29,7 @@ from discord.ext import commands
 
 import utils.checks
 
+from classes.converters import NotInRange
 from utils.paginator import NoChoice
 
 try:
@@ -64,7 +65,10 @@ class Errorhandler(commands.Cog):
                 )
             )
         elif isinstance(error, commands.BadArgument):
-            await ctx.send(_("You used a malformed argument!"))
+            if isinstance(error, NotInRange):
+                await ctx.send(error.text)
+            else:
+                await ctx.send(_("You used a malformed argument!"))
         elif isinstance(error, commands.CommandOnCooldown):
             return await ctx.send(
                 _("You are on cooldown. Try again in {time}.").format(
