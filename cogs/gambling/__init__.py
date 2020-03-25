@@ -420,23 +420,23 @@ class Gambling(commands.Cog):
     async def roulette(self, ctx, money: IntFromTo(0, 100), *, bid: str):
         _("""Play a game of French Roulette. 
 Possible simple bets:
-    - noir
-    - rouge
-    - pair
-    - impair
-    - manque
-    - passe
-    - premier
-    - milieu
-    - dernier
+    - noir    (all black numbers)
+    - rouge   (all red numbers)
+    - pair    (all even numbers)
+    - impair  (all odd numbers)
+    - manque  (1-18)
+    - passe   (19-36)
+    - premier (1-12)
+    - milieu  (13-24)
+    - dernier (25-36)
 Complicated bets:
-    - colonne (34/35/36)
-    - transversale (vertical low)-(vertical high)    This includes simple and pleine
-        - les trois premiers
-    - carre (low)-(high)
-        - les quatre premiers
-    - cheval (number 1) (number 2)
-    - plein (number)""")
+    - colonne (34/35/36) (all numbers in a row on the betting table, either 1, 4, ..., 34 or 2, 5, ..., 35 or 3, 6, ... 36)
+    - transversale (vertical low)-(vertical high)    This includes simple and pleine (a vertical row on the betting table, e.g. 19-21. can also be two rows, e.g. 4-9)
+        - les trois premiers (numbers 0, 1, 2)
+    - carre (low)-(high) (a section of four numbers in a square on the betting table, e.g. 23-27)
+        - les quatre premiers (numbers 0, 1, 2, 3)
+    - cheval (number 1) (number 2) (a simple bet on two numbers)
+    - plein (number) (a simple bet on one number)""")
         if ctx.character_data["money"] < money:
             return await ctx.send(_("You're too poor."))
         try:
