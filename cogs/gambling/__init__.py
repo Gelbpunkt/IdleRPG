@@ -436,7 +436,9 @@ Complicated bets:
     - carre (low)-(high) (a section of four numbers in a square on the betting table, e.g. 23-27)
         - les quatre premiers (numbers 0, 1, 2, 3)
     - cheval (number 1) (number 2) (a simple bet on two numbers)
-    - plein (number) (a simple bet on one number)""")
+    - plein (number) (a simple bet on one number)
+
+To visualize the rows and columns, use {prefix}roulette table""").format(prefix=ctx.prefix)
         if ctx.character_data["money"] < money:
             return await ctx.send(_("You're too poor."))
         try:
