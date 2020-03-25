@@ -418,7 +418,14 @@ class Gambling(commands.Cog):
     @locale_doc
     async def roulette(self, ctx, money: IntFromTo(0, 100), *, bid: str):
         _("""Play a game of French Roulette.""")
-        game = RouletteGame(money, bid)
+        try:
+            game = RouletteGame(money, bid)
+        except (ValueError, AssertionError):
+            return await ctx.send(
+                _(
+                    "Your bid input was invalid. Try the help on this command to view examples."
+                )
+            )
         await game.run(ctx)
 
     @has_char()
