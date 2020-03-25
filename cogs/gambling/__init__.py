@@ -413,6 +413,7 @@ class Gambling(commands.Cog):
         _("""Draws a random card.""")
         await ctx.send(file=discord.File(f"assets/cards/{secrets.choice(self.cards)}"))
 
+    @has_char()
     @commands.cooldown(1, 15, commands.BucketType.user)
     @commands.command(aliases=["rou"])
     @locale_doc
