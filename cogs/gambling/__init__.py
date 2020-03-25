@@ -415,7 +415,7 @@ class Gambling(commands.Cog):
 
     @has_char()
     @commands.cooldown(1, 15, commands.BucketType.user)
-    @commands.command(aliases=["rou"])
+    @commands.group(aliases=["rou"], invoke_without_command=True)
     @locale_doc
     async def roulette(self, ctx, money: IntFromTo(0, 100), *, bid: str):
         _("""Play a game of French Roulette. 
@@ -448,6 +448,12 @@ Complicated bets:
                 )
             )
         await game.run(ctx)
+
+    @roulette.command()
+    @locale_doc
+    async def table(self, ctx):
+        _("""Sends a picture of a French Roulette table.""")
+        await ctx.send(file=discord.File("assets/other/roulette.png"))
 
     @has_char()
     @commands.cooldown(1, 5, commands.BucketType.user)
