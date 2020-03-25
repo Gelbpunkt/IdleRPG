@@ -169,6 +169,13 @@ class RouletteGame:
                 money=self.money * self.payout,
             )
         )
+        await self.ctx.bot.log_transaction(
+            self.ctx,
+            from_=1,
+            to=self.ctx.author.id,
+            subject="gambling",
+            data={"Amount": self.money * self.payout},
+        )
 
     async def handle_loss(self):
         await self.message.edit(
@@ -177,4 +184,11 @@ class RouletteGame:
             ).format(
                 colour=get_colour(self.result), number=self.result, money=self.money
             )
+        )
+        await self.ctx.bot.log_transaction(
+            self.ctx,
+            from_=self.ctx.author.id,
+            to=2,
+            subject="gambling",
+            data={"Amount": self.money},
         )

@@ -418,6 +418,8 @@ class Gambling(commands.Cog):
     @locale_doc
     async def roulette(self, ctx, money: IntFromTo(0, 100), *, bid: str):
         _("""Play a game of French Roulette.""")
+        if ctx.character_data["money"] < money:
+            return await ctx.send(_("You're too poor."))
         try:
             game = RouletteGame(money, bid)
         except (ValueError, AssertionError):
