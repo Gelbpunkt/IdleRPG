@@ -28,6 +28,7 @@ from discord.ext import commands
 
 from classes.converters import CoinSide, IntFromTo, IntGreaterThan, MemberWithCharacter
 from utils.checks import has_char, has_money, user_has_char
+from utils.roulette import RouletteGame
 
 
 class BlackJack:
@@ -411,6 +412,14 @@ class Gambling(commands.Cog):
     async def draw(self, ctx):
         _("""Draws a random card.""")
         await ctx.send(file=discord.File(f"assets/cards/{secrets.choice(self.cards)}"))
+
+    @commands.cooldown(1, 15, commands.BucketType.user)
+    @commands.command(aliases=["rou"])
+    @locale_doc
+    async def roulette(self, ctx, money: IntFromTo(0, 100), *, bid: str):
+        _("""Play a game of French Roulette.""")
+        game = RouletteGame(money, bid)
+        await game.run(ctx)
 
     @has_char()
     @commands.cooldown(1, 5, commands.BucketType.user)
