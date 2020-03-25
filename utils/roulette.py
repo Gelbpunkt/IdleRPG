@@ -125,7 +125,7 @@ class RouletteGame:
             numbers = [int(chunks[1]), int(chunks[2])]
             assert verify_numbers(numbers)
             return bid_type, 17, numbers
-        elif bid_type == "pleine":
+        elif bid_type == "plein":
             assert len(chunks) == 2
             numbers = [int(chunks[1])]
             assert verify_numbers(numbers)

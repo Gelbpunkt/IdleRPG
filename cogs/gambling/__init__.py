@@ -441,7 +441,7 @@ Complicated bets:
             return await ctx.send(_("You're too poor."))
         try:
             game = RouletteGame(money, bid)
-        except (ValueError, AssertionError, IndexError):
+        except Exception:
             return await ctx.send(
                 _(
                     "Your bid input was invalid. Try the help on this command to view examples."
