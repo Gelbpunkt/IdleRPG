@@ -38,7 +38,9 @@ class Ranks(commands.Cog):
         for idx, profile in enumerate(players):
             username = await rpgtools.lookup(self.bot, profile["user"])
             text = _("{name}, a character by `{username}` with **${money}**").format(
-                name=profile["name"], username=username, money=profile["money"]
+                name=profile["name"],
+                username=discord.utils.escape_markdown(username, as_needed=False),
+                money=profile["money"],
             )
             result = f"{result}{idx + 1}. {text}\n"
         result = discord.Embed(
@@ -61,7 +63,7 @@ class Ranks(commands.Cog):
                 "{name}, a character by `{username}` with Level **{level}** (**{xp}** XP)"
             ).format(
                 name=profile["name"],
-                username=username,
+                username=discord.utils.escape_markdown(username, as_needed=False),
                 level=rpgtools.xptolevel(profile["xp"]),
                 xp=profile["xp"],
             )
@@ -83,7 +85,9 @@ class Ranks(commands.Cog):
         for idx, profile in enumerate(players):
             username = await rpgtools.lookup(self.bot, profile["user"])
             text = _("{name}, a character by `{username}` with **{wins}** wins").format(
-                name=profile["name"], username=username, wins=profile["pvpwins"]
+                name=profile["name"],
+                username=discord.utils.escape_markdown(username, as_needed=False),
+                wins=profile["pvpwins"],
             )
             result = f"{result}{idx + 1}. {text}\n"
         result = discord.Embed(
@@ -105,7 +109,11 @@ class Ranks(commands.Cog):
             lover = await rpgtools.lookup(self.bot, profile["marriage"])
             text = _(
                 "**{lover}** gifted their love **{lovee}** items worth **${points}**"
-            ).format(lover=lover, lovee=lovee, points=profile["lovescore"])
+            ).format(
+                lover=discord.utils.escape_markdown(lover, as_needed=False),
+                lovee=discord.utils.escape_markdown(lovee, as_needed=False),
+                points=profile["lovescore"],
+            )
             result = f"{result}**{idx + 1}**. {text}\n"
         result = discord.Embed(
             title=_("The Best lovers"), description=result, colour=0xE7CA01
