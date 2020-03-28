@@ -38,8 +38,8 @@ class Ranks(commands.Cog):
         for idx, profile in enumerate(players):
             username = await rpgtools.lookup(self.bot, profile["user"])
             text = _("{name}, a character by `{username}` with **${money}**").format(
-                name=profile["name"],
-                username=discord.utils.escape_markdown(username, as_needed=False),
+                name=discord.utils.escape_markdown(profile["name"]),
+                username=discord.utils.escape_markdown(username),
                 money=profile["money"],
             )
             result = f"{result}{idx + 1}. {text}\n"
@@ -62,8 +62,8 @@ class Ranks(commands.Cog):
             text = _(
                 "{name}, a character by `{username}` with Level **{level}** (**{xp}** XP)"
             ).format(
-                name=profile["name"],
-                username=discord.utils.escape_markdown(username, as_needed=False),
+                name=discord.utils.escape_markdown(profile["name"]),
+                username=discord.utils.escape_markdown(username),
                 level=rpgtools.xptolevel(profile["xp"]),
                 xp=profile["xp"],
             )
@@ -85,8 +85,8 @@ class Ranks(commands.Cog):
         for idx, profile in enumerate(players):
             username = await rpgtools.lookup(self.bot, profile["user"])
             text = _("{name}, a character by `{username}` with **{wins}** wins").format(
-                name=profile["name"],
-                username=discord.utils.escape_markdown(username, as_needed=False),
+                name=discord.utils.escape_markdown(profile["name"]),
+                username=discord.utils.escape_markdown(username),
                 wins=profile["pvpwins"],
             )
             result = f"{result}{idx + 1}. {text}\n"
@@ -110,8 +110,8 @@ class Ranks(commands.Cog):
             text = _(
                 "**{lover}** gifted their love **{lovee}** items worth **${points}**"
             ).format(
-                lover=discord.utils.escape_markdown(lover, as_needed=False),
-                lovee=discord.utils.escape_markdown(lovee, as_needed=False),
+                lover=discord.utils.escape_markdown(lover),
+                lovee=discord.utils.escape_markdown(lovee),
                 points=profile["lovescore"],
             )
             result = f"{result}**{idx + 1}**. {text}\n"
