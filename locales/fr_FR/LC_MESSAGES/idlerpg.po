@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-03-25 11:43-0700\n"
-"PO-Revision-Date: 2020-03-25 19:05+0100\n"
+"POT-Creation-Date: 2020-03-27 18:29+0100\n"
+"PO-Revision-Date: 2020-03-26 21:44+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: fr\n"
@@ -315,6 +315,8 @@ msgid ""
 "{author} seeks a battle! React with ⚔ now to duel them! The price is **"
 "${money}**."
 msgstr ""
+"{author} veut se battre ! Réagis avec ⚔ maintenant pour le défier ! La "
+"récompense est de **${money}**."
 
 #: cogs/battles/__init__.py:60
 #, python-brace-format
@@ -358,7 +360,7 @@ msgstr "{winner} a gagné le duel contre {looser}! Félicitations!"
 
 #: cogs/battles/__init__.py:148
 msgid "Battle system based on raids."
-msgstr ""
+msgstr "Systèmes de combats basé sur les raids."
 
 #: cogs/battles/__init__.py:157
 #, python-brace-format
@@ -366,6 +368,8 @@ msgid ""
 "{author} seeks a raidbattle! React with ⚔ now to duel them! The price is **"
 "${money}**."
 msgstr ""
+"{author} veut combattre en raid !  Réagis avec ⚔ maintenant pour le défier ! "
+"La récompense est de **${money}**."
 
 #: cogs/battles/__init__.py:163
 #, python-brace-format
@@ -373,31 +377,35 @@ msgid ""
 "{author} seeks a raidbattle with {enemy}! React with ⚔ now to duel them! The "
 "price is **${money}**."
 msgstr ""
+"{author} veut combattre en raid {enemy} ! Réagis avec ⚔ maintenant pour le "
+"défier ! La récompense est de **${money}**."
 
 #: cogs/battles/__init__.py:189
 #, python-brace-format
 msgid "Noone wanted to join your raidbattle, {author}!"
-msgstr ""
+msgstr "Personne ne souhaite rejoindre votre bataille en raid, {author}!"
 
 #: cogs/battles/__init__.py:197
 msgid "You don't have enough money to join the raidbattle."
-msgstr ""
+msgstr "Vous n'avez pas assez d'argent pour rejoindre cette bataille en raid."
 
 #: cogs/battles/__init__.py:286 cogs/battles/__init__.py:322
 msgid ""
 "One of you both can't pay the price for the raidbattle because he spent "
 "money in the time of fighting."
 msgstr ""
+"L'un de vous deux ne peut payer le prix de la bataille de raid car il a "
+"dépenser l'argent le temps du combat."
 
 #: cogs/battles/__init__.py:312 cogs/battles/__init__.py:347
 #, python-brace-format
 msgid "{p1} won the raidbattle vs {p2}! Congratulations!"
-msgstr ""
+msgstr "{p1} à gagner la bataille raid contre  {p2} ! Félicitation !"
 
 #. timeout after 5 min
 #: cogs/battles/__init__.py:353
 msgid "Raidbattle took too long, aborting."
-msgstr ""
+msgstr "La bataille en raid à durée trop longtemps, avortement."
 
 #: cogs/battles/__init__.py:362
 msgid "Reaction-based battle system."
@@ -409,6 +417,8 @@ msgid ""
 "{author} seeks an active battle! React with ⚔ now to duel them! The price is "
 "**${money}**."
 msgstr ""
+"{author} recherche une bataille active ! Réagit avec ⚔ maintenant pour le "
+"combattre ! La récompense est de **${money}**."
 
 #: cogs/battles/__init__.py:377
 #, python-brace-format
@@ -416,15 +426,17 @@ msgid ""
 "{author} seeks an active battle with {enemy}! React with ⚔ now to duel them! "
 "The price is **${money}**."
 msgstr ""
+"{author} recherche une bataille active avec {enemy} ! Réagit avec ⚔ "
+"maintenant pour le combattre ! La récompense est de **${money}**."
 
 #: cogs/battles/__init__.py:403
 #, python-brace-format
 msgid "Noone wanted to join your activebattle, {author}!"
-msgstr ""
+msgstr "Personne ne souhaite rejoindre votre bataille active, {author}!"
 
 #: cogs/battles/__init__.py:412
 msgid "You don't have enough money to join the activebattle."
-msgstr ""
+msgstr "Vous n’avez pas assez d’argent pour joindre cette bataille active."
 
 #: cogs/battles/__init__.py:450
 #, python-brace-format
@@ -434,10 +446,14 @@ msgid ""
 "{player2}: **{hp2}** HP\n"
 "React to play."
 msgstr ""
+"{prevaction}\n"
+"{player1}: **{hp1}** PV\n"
+"{player2}: **{hp2}** PV\n"
+"Réagissez pour jouer."
 
 #: cogs/battles/__init__.py:470
 msgid "Someone refused to move. Activebattle stopped."
-msgstr ""
+msgstr "Quelqu'un a refuser de bouger. Bataille active arrêté. "
 
 #: cogs/battles/__init__.py:476
 #, python-brace-format
@@ -447,7 +463,7 @@ msgstr "{user}, vous avez déjà effectuée une action!"
 #: cogs/battles/__init__.py:485
 #, python-brace-format
 msgid "{user} healed themselves for **{hp} HP**."
-msgstr ""
+msgstr "{user} viens de se soigner de **{hp} PV**."
 
 #: cogs/battles/__init__.py:497 cogs/battles/__init__.py:520
 #, python-brace-format
@@ -558,7 +574,7 @@ msgstr "Ouvre un coffre."
 #: cogs/admin/__init__.py:222
 #, python-brace-format
 msgid "{rarity} is not a valid rarity."
-msgstr ""
+msgstr "{rarity} n'est pas une rareté valide."
 
 #: cogs/crates/__init__.py:82
 msgid ""
@@ -594,7 +610,7 @@ msgstr "Très drôle…"
 
 #: cogs/crates/__init__.py:180
 msgid "You don't have any crates of this rarity."
-msgstr ""
+msgstr "Vous n'avez aucun boosters de cette rareté."
 
 #: cogs/crates/__init__.py:193
 #, python-brace-format
@@ -799,11 +815,11 @@ msgstr "essaye de tuer {user} mais échoue"
 
 #: cogs/hungergames/__init__.py:193
 msgid "Done"
-msgstr ""
+msgstr "Terminé"
 
 #: cogs/hungergames/__init__.py:218
 msgid "do nothing."
-msgstr ""
+msgstr "ne rien faire."
 
 #: cogs/hungergames/__init__.py:264
 msgid "Team"
@@ -1048,7 +1064,7 @@ msgstr "Une mystérieuse pièce de casse-tête"
 #: cogs/wintersday/__init__.py:114
 #, python-brace-format
 msgid "{crates} {rarity} crates"
-msgstr ""
+msgstr "{crates} {rarity} boosters"
 
 #: cogs/wintersday/__init__.py:139
 #, python-brace-format
@@ -1289,7 +1305,7 @@ msgstr ""
 
 #: cogs/miscellaneous/__init__.py:130
 msgid "Shows you the bot's current websocket latency."
-msgstr ""
+msgstr "Affiche la latence actuel de la websocket du bot."
 
 #: cogs/miscellaneous/__init__.py:133
 msgid "Pong!"
@@ -1314,7 +1330,7 @@ msgstr ""
 
 #: cogs/miscellaneous/__init__.py:154
 msgid "This is not a valid image file."
-msgstr ""
+msgstr "Ceci n'est pas un fichier d'image valide."
 
 #: cogs/miscellaneous/__init__.py:165 cogs/patreon/__init__.py:251
 msgid "Error when uploading to Imgur."
@@ -1323,7 +1339,7 @@ msgstr "Erreur durant l’upload vers Imgur."
 #: cogs/miscellaneous/__init__.py:166
 #, python-brace-format
 msgid "Here's your short image URL: <{link}>"
-msgstr ""
+msgstr "Voici l'URL raccourci de votre image : <{link}>"
 
 #: cogs/miscellaneous/__init__.py:171
 msgid "Support maintenance of the bot."
@@ -2579,7 +2595,7 @@ msgstr ""
 
 #: cogs/classes/__init__.py:391
 msgid "Some Water"
-msgstr ""
+msgstr "De l'eau"
 
 #: cogs/classes/__init__.py:392
 msgid "A bottle of water"
@@ -2591,19 +2607,19 @@ msgstr ""
 
 #: cogs/classes/__init__.py:394
 msgid "Wine"
-msgstr ""
+msgstr "Vin"
 
 #: cogs/classes/__init__.py:395
 msgid "Beer"
-msgstr ""
+msgstr "Bière"
 
 #: cogs/classes/__init__.py:396
 msgid "Vodka"
-msgstr ""
+msgstr "Vodka"
 
 #: cogs/classes/__init__.py:397
 msgid "Adrian's Cocktail"
-msgstr ""
+msgstr "Le cocktail d'Adrian"
 
 #: cogs/classes/__init__.py:404
 msgid "Give your pet something to drink"
@@ -2768,7 +2784,7 @@ msgstr ""
 #: cogs/akinator/__init__.py:213 cogs/akinator/__init__.py:245
 #: cogs/akinator/__init__.py:293
 msgid "No results..."
-msgstr ""
+msgstr "Aucune résultats..."
 
 #: cogs/music/__init__.py:236
 msgid ""
@@ -2781,7 +2797,7 @@ msgstr ""
 
 #: cogs/music/__init__.py:265
 msgid "Skip the currently playing song."
-msgstr ""
+msgstr "Passer la chanson courante."
 
 #: cogs/music/__init__.py:276
 msgid "Stops the music and leaves voice chat."
@@ -2827,7 +2843,7 @@ msgstr ""
 
 #: cogs/music/__init__.py:345
 msgid "Displays some information about the current song."
-msgstr ""
+msgstr "Afficher des informations sur la chanson actuel."
 
 #: cogs/music/__init__.py:359
 msgid "Now playing..."
@@ -2876,15 +2892,15 @@ msgstr "`⏸En pause`"
 
 #: cogs/music/__init__.py:400
 msgid "DJ"
-msgstr ""
+msgstr "DJ"
 
 #: cogs/music/__init__.py:402
 msgid "Locked"
-msgstr ""
+msgstr "Verrouiller"
 
 #: cogs/music/__init__.py:402 cogs/music/__init__.py:405
 msgid "No"
-msgstr ""
+msgstr "Non"
 
 #: cogs/music/__init__.py:405
 msgid "Looping"
@@ -2905,7 +2921,7 @@ msgstr "Musique demandé par: {user}"
 
 #: cogs/music/__init__.py:434
 msgid "Show the next (maximum 5) tracks in the queue."
-msgstr ""
+msgstr "Voir les prochaines chanson (maximum 5) de la file d'attente."
 
 #: cogs/music/__init__.py:447
 msgid "Upcoming entries"
@@ -2935,11 +2951,11 @@ msgstr ""
 
 #: cogs/music/__init__.py:482 cogs/music/__init__.py:485
 msgid ":warning: No results!"
-msgstr ""
+msgstr ":warning: Aucun résultat !"
 
 #: cogs/music/__init__.py:489
 msgid "No lyrics found!"
-msgstr ""
+msgstr "Aucune parole trouvée !"
 
 #: cogs/music/__init__.py:551
 #, python-brace-format
@@ -4301,48 +4317,48 @@ msgstr ""
 msgid "{name}, a character by `{username}` with **${money}**"
 msgstr "{name}, un personnage de `{username}` qui possède **{money}$**"
 
-#: cogs/ranks/__init__.py:45
+#: cogs/ranks/__init__.py:47
 msgid "The Richest Players"
 msgstr "Les joueurs les plus riches"
 
-#: cogs/ranks/__init__.py:52
+#: cogs/ranks/__init__.py:54
 msgid "The top 10 players by XP."
 msgstr "Le top 10 des joueurs avec le plus d’expérience."
 
-#: cogs/ranks/__init__.py:61
+#: cogs/ranks/__init__.py:63
 #, python-brace-format
 msgid ""
 "{name}, a character by `{username}` with Level **{level}** (**{xp}** XP)"
 msgstr ""
 "{name}, un personnage de `{username}` de niveau **{level}** (**{xp}** XP)"
 
-#: cogs/ranks/__init__.py:70
+#: cogs/ranks/__init__.py:72
 msgid "The Best Players"
 msgstr "Les meilleurs joueurs"
 
-#: cogs/ranks/__init__.py:77
+#: cogs/ranks/__init__.py:79
 msgid "Top 10 players by wins in PvP matches."
 msgstr "Top 10 des joueurs par victoires en matchs PvP."
 
-#: cogs/ranks/__init__.py:85
+#: cogs/ranks/__init__.py:87
 #, python-brace-format
 msgid "{name}, a character by `{username}` with **{wins}** wins"
 msgstr "{name}, un personnage de `{username}` avec **{wins}** victoires"
 
-#: cogs/ranks/__init__.py:90
+#: cogs/ranks/__init__.py:94
 msgid "The Best PvPers"
 msgstr "Les meilleurs joueurs en PvP"
 
-#: cogs/ranks/__init__.py:97
+#: cogs/ranks/__init__.py:101
 msgid "The top 10 lovers sorted by their spouse's lovescore."
 msgstr "Le top 10 des amoureux triés par le lovescore de leur partenaire."
 
-#: cogs/ranks/__init__.py:107
+#: cogs/ranks/__init__.py:111
 #, python-brace-format
 msgid "**{lover}** gifted their love **{lovee}** items worth **${points}**"
 msgstr "**{lover}** offre son amour **{lovee}** l'item vaut **{points}$**"
 
-#: cogs/ranks/__init__.py:111
+#: cogs/ranks/__init__.py:119
 msgid "The Best lovers"
 msgstr "Les meilleurs couples"
 
@@ -5117,7 +5133,7 @@ msgstr ""
 
 #: cogs/custom/__init__.py:72
 msgid "It's a secret."
-msgstr ""
+msgstr "C'est un secret."
 
 #: cogs/custom/__init__.py:75
 msgid "Gotcha"
