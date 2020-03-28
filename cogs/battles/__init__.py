@@ -425,8 +425,8 @@ class Battles(commands.Cog):
                 "damage": 0,
                 "defense": 0,
                 "lastmove": "",
-                "action": None
-            }
+                "action": None,
+            },
         }
 
         for p in players:
@@ -466,11 +466,16 @@ class Battles(commands.Cog):
                 )
             )
             players[ctx.author]["action"], players[enemy_]["action"] = None, None
-            players[ctx.author]["lastmove"], players[enemy_]["lastmove"] = f"{ctx.author.mention} does nothing...", f"{enemy_.mention} does nothing..."
+            players[ctx.author]["lastmove"], players[enemy_]["lastmove"] = (
+                f"{ctx.author.mention} does nothing...",
+                f"{enemy_.mention} does nothing...",
+            )
             for emoji in moves:
                 await last.add_reaction(emoji)
 
-            while (not players[ctx.author]["action"]) or (not players[enemy_]["action"]):
+            while (not players[ctx.author]["action"]) or (
+                not players[enemy_]["action"]
+            ):
                 try:
                     r, u = await self.bot.wait_for(
                         "reaction_add", timeout=30, check=is_valid_move
@@ -485,7 +490,9 @@ class Battles(commands.Cog):
                 else:
                     playerlist = list(players.keys())
                     await ctx.send(
-                        _("{user}, you already moved! Waiting for {other}'s move...").format(
+                        _(
+                            "{user}, you already moved! Waiting for {other}'s move..."
+                        ).format(
                             user=u.mention,
                             other=playerlist[1 - playerlist.index(u)].mention,
                         )
@@ -499,7 +506,10 @@ class Battles(commands.Cog):
                     players[user]["lastmove"] = _(
                         "{user} healed themselves for **{hp} HP**."
                     ).format(user=user.mention, hp=heal_hp)
-                elif players[user]["action"] == "attack" and players[other]["action"] != "defend":
+                elif (
+                    players[user]["action"] == "attack"
+                    and players[other]["action"] != "defend"
+                ):
                     eff = random.choice(
                         [
                             players[user]["damage"],
@@ -509,10 +519,13 @@ class Battles(commands.Cog):
                         ]
                     )
                     players[other]["hp"] -= eff
-                    players[user]["lastmove"] = _("{user} hit {enemy} for **{eff}** damage.").format(
-                        user=user.mention, enemy=other.mention, eff=eff
-                    )
-                elif players[user]["action"] == "attack" and players[other]["action"] == "defend":
+                    players[user]["lastmove"] = _(
+                        "{user} hit {enemy} for **{eff}** damage."
+                    ).format(user=user.mention, enemy=other.mention, eff=eff)
+                elif (
+                    players[user]["action"] == "attack"
+                    and players[other]["action"] == "defend"
+                ):
                     eff = random.choice(
                         [
                             int(players[user]["damage"]),
@@ -535,15 +548,19 @@ class Battles(commands.Cog):
                             "{user} hit {enemy} for **{eff}** damage."
                         ).format(user=user.mention, enemy=other.mention, eff=eff - eff2)
                         players[other]["lastmove"] = _(
-                            "{enemy} tried to defend, but failed.".format(enemy=other.mention)
+                            "{enemy} tried to defend, but failed.".format(
+                                enemy=other.mention
+                            )
                         )
 
                     else:
-                        players[user]["lastmove"] = _("{user}'s attack on {enemy} failed!").format(
-                            user=user.mention, enemy=other.mention
-                        )
+                        players[user]["lastmove"] = _(
+                            "{user}'s attack on {enemy} failed!"
+                        ).format(user=user.mention, enemy=other.mention)
                         players[other]["lastmove"] = _(
-                            "{enemy} blocked {user}'s attack.".format(enemy=other.mention, user=user.mention)
+                            "{enemy} blocked {user}'s attack.".format(
+                                enemy=other.mention, user=user.mention
+                            )
                         )
                 elif players[user]["action"] == players[other]["action"] == "defend":
                     players[ctx.author]["lastmove"] = _("You both tried to defend.")
@@ -577,7 +594,9 @@ class Battles(commands.Cog):
             ctx, from_=looser.id, to=winner.id, subject="money", data={"Amount": money}
         )
         await ctx.send(
-            _("{prevaction}\n{winner} won the active battle vs {looser}! Congratulations!").format(
+            _(
+                "{prevaction}\n{winner} won the active battle vs {looser}! Congratulations!"
+            ).format(
                 prevaction="\n".join([players[p]["lastmove"] for p in players]),
                 winner=winner.mention,
                 looser=looser.mention,
