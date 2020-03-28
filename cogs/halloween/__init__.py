@@ -164,6 +164,15 @@ class Halloween(commands.Cog):
         )
         await ctx.send(embed=embed)
 
+    @checks.has_char()
+    @commands.command(aliases=["totbags", "halloweenbags"])
+    async def bags(self, ctx):
+        _("""Shows your Trick or Treat Bags.""")
+        await ctx.send(
+            _("You currently have **${trickortreat}** Trick or Treat Bags, {author}!").format(
+                money=ctx.character_data["trickortreat"], author=ctx.author.mention
+            )
+        )
 
 def setup(bot):
     bot.add_cog(Halloween(bot))
