@@ -458,7 +458,7 @@ class Battles(commands.Cog):
                 _(
                     "{prevaction}\n{player1}: **{hp1}** HP\n{player2}: **{hp2}** HP\nReact to play."
                 ).format(
-                    prevaction="\n".join([players[p]["lastmove"] for p in players]),
+                    prevaction="\n".join([i["lastmove"] for i in players.values()]),
                     player1=ctx.author.mention,
                     player2=enemy_.mention,
                     hp1=players[ctx.author]["hp"],
