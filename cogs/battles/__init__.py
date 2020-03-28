@@ -412,24 +412,35 @@ class Battles(commands.Cog):
                     _("You don't have enough money to join the activebattle.")
                 )
 
-        PLAYERS = [ctx.author, enemy_]
-        HP = []
+        players = {
+            ctx.author: {
+                "hp": 0,
+                "damage": 0,
+                "defense": 0,
+                "lastmove": "",
+                "action": None,
+            },
+            enemy_: {
+                "hp": 0,
+                "damage": 0,
+                "defense": 0,
+                "lastmove": "",
+                "action": None,
+            },
+        }
 
-        DAMAGE = []
-        ARMOR = []
-
-        for p in PLAYERS:
+        for p in players:
             c = await self.bot.pool.fetchval(
                 'SELECT class FROM profile WHERE "user"=$1;', p.id
             )
             if self.bot.in_class_line(c, "Ranger"):
-                HP.append(120)
+                players[p]["hp"] = 120
             else:
-                HP.append(100)
+                players[p]["hp"] = 100
 
             d, a = await self.bot.get_damage_armor_for(p)
-            DAMAGE.append(int(d))
-            ARMOR.append(int(a))
+            players[p]["damage"] = int(d)
+            players[p]["defense"] = int(a)
 
         moves = {
             "\U00002694": "attack",
@@ -440,26 +451,31 @@ class Battles(commands.Cog):
         last = None
 
         def is_valid_move(r, u):
-            return str(r.emoji) in moves and u in PLAYERS and r.message.id == last.id
+            return str(r.emoji) in moves and u in players and r.message.id == last.id
 
-        actions = ["", ""]
-
-        while HP[0] > 0 and HP[1] > 0:
+        while players[ctx.author]["hp"] > 0 and players[enemy_]["hp"] > 0:
             last = await ctx.send(
                 _(
                     "{prevaction}\n{player1}: **{hp1}** HP\n{player2}: **{hp2}** HP\nReact to play."
                 ).format(
-                    prevaction="\n".join(actions),
+                    prevaction="\n".join([i["lastmove"] for i in players.values()]),
                     player1=ctx.author.mention,
                     player2=enemy_.mention,
-                    hp1=HP[0],
-                    hp2=HP[1],
+                    hp1=players[ctx.author]["hp"],
+                    hp2=players[enemy_]["hp"],
                 )
+            )
+            players[ctx.author]["action"], players[enemy_]["action"] = None, None
+            players[ctx.author]["lastmove"], players[enemy_]["lastmove"] = (
+                _("{user} does nothing...").format(user=ctx.author.mention),
+                _("{user} does nothing...").format(user=enemy_.mention),
             )
             for emoji in moves:
                 await last.add_reaction(emoji)
-            MOVES_DONE = {}
-            while len(MOVES_DONE) < 2:
+
+            while (not players[ctx.author]["action"]) or (
+                not players[enemy_]["action"]
+            ):
                 try:
                     r, u = await self.bot.wait_for(
                         "reaction_add", timeout=30, check=is_valid_move
@@ -469,67 +485,93 @@ class Battles(commands.Cog):
                     return await ctx.send(
                         _("Someone refused to move. Activebattle stopped.")
                     )
-                if u not in MOVES_DONE:
-                    MOVES_DONE[u] = moves[str(r.emoji)]
+                if not players[u]["action"]:
+                    players[u]["action"] = moves[str(r.emoji)]
                 else:
+                    playerlist = list(players.keys())
                     await ctx.send(
-                        _("{user}, you already moved!").format(user=u.mention)
+                        _(
+                            "{user}, you already moved! Waiting for {other}'s move..."
+                        ).format(
+                            user=u.mention,
+                            other=playerlist[1 - playerlist.index(u)].mention,
+                        )
                     )
-            plz = list(MOVES_DONE.keys())
+            plz = list(players.keys())
             for idx, user in enumerate(plz):
                 other = plz[1 - idx]
-                if MOVES_DONE[user] == "recover":
-                    heal_hp = round(DAMAGE[1 - idx] * 0.25) or 1
-                    HP[idx] += heal_hp
-                    actions[idx] = _(
+                if players[user]["action"] == "recover":
+                    heal_hp = round(players[user]["damage"] * 0.25) or 1
+                    players[user]["hp"] += heal_hp
+                    players[user]["lastmove"] = _(
                         "{user} healed themselves for **{hp} HP**."
                     ).format(user=user.mention, hp=heal_hp)
-                elif MOVES_DONE[user] == "attack" and MOVES_DONE[other] != "defend":
+                elif (
+                    players[user]["action"] == "attack"
+                    and players[other]["action"] != "defend"
+                ):
                     eff = random.choice(
                         [
-                            DAMAGE[idx],
-                            int(DAMAGE[idx] * 0.5),
-                            int(DAMAGE[idx] * 0.2),
-                            int(DAMAGE[idx] * 0.8),
+                            players[user]["damage"],
+                            int(players[user]["damage"] * 0.5),
+                            int(players[user]["damage"] * 0.2),
+                            int(players[user]["damage"] * 0.8),
                         ]
                     )
-                    HP[1 - idx] -= eff
-                    actions[idx] = _("{user} hit {enemy} for **{eff}** damage.").format(
-                        user=user.mention, enemy=other.mention, eff=eff
-                    )
-                elif MOVES_DONE[user] == "attack" and MOVES_DONE[other] == "defend":
+                    players[other]["hp"] -= eff
+                    players[user]["lastmove"] = _(
+                        "{user} hit {enemy} for **{eff}** damage."
+                    ).format(user=user.mention, enemy=other.mention, eff=eff)
+                elif (
+                    players[user]["action"] == "attack"
+                    and players[other]["action"] == "defend"
+                ):
                     eff = random.choice(
                         [
-                            int(DAMAGE[idx]),
-                            int(DAMAGE[idx] * 0.5),
-                            int(DAMAGE[idx] * 0.2),
-                            int(DAMAGE[idx] * 0.8),
+                            int(players[user]["damage"]),
+                            int(players[user]["damage"] * 0.5),
+                            int(players[user]["damage"] * 0.2),
+                            int(players[user]["damage"] * 0.8),
                         ]
                     )
                     eff2 = random.choice(
                         [
-                            int(ARMOR[idx]),
-                            int(ARMOR[idx] * 0.5),
-                            int(ARMOR[idx] * 0.2),
-                            int(ARMOR[idx] * 0.8),
+                            int(players[other]["defense"]),
+                            int(players[other]["defense"] * 0.5),
+                            int(players[other]["defense"] * 0.2),
+                            int(players[other]["defense"] * 0.8),
                         ]
                     )
                     if eff - eff2 > 0:
-                        HP[1 - idx] -= eff - eff2
-                        actions[idx] = _(
+                        players[other]["hp"] -= eff - eff2
+                        players[user]["lastmove"] = _(
                             "{user} hit {enemy} for **{eff}** damage."
                         ).format(user=user.mention, enemy=other.mention, eff=eff - eff2)
-
-                    else:
-                        actions[idx] = _("{user}'s attack on {enemy} failed!").format(
-                            user=user.mention, enemy=other.mention
+                        players[other]["lastmove"] = _(
+                            "{enemy} tried to defend, but failed.".format(
+                                enemy=other.mention
+                            )
                         )
 
-        if HP[0] <= 0 and HP[1] <= 0:
+                    else:
+                        players[user]["lastmove"] = _(
+                            "{user}'s attack on {enemy} failed!"
+                        ).format(user=user.mention, enemy=other.mention)
+                        players[other]["lastmove"] = _(
+                            "{enemy} blocked {user}'s attack.".format(
+                                enemy=other.mention, user=user.mention
+                            )
+                        )
+                elif players[user]["action"] == players[other]["action"] == "defend":
+                    players[ctx.author]["lastmove"] = _("You both tried to defend.")
+                    players[enemy_]["lastmove"] = _("It was not very effective...")
+
+        if players[ctx.author]["hp"] <= 0 and players[enemy_]["hp"] <= 0:
             return await ctx.send(_("You both died!"))
-        idx = HP.index([h for h in HP if h <= 0][0])
-        winner = PLAYERS[1 - idx]
-        looser = PLAYERS[idx]
+        if players[ctx.author]["hp"] > players[enemy_]["hp"]:
+            winner, looser = ctx.author, enemy_
+        else:
+            looser, winner = ctx.author, enemy_
         if not await has_money(self.bot, winner.id, money) or not await has_money(
             self.bot, looser.id, money
         ):
@@ -552,8 +594,12 @@ class Battles(commands.Cog):
             ctx, from_=looser.id, to=winner.id, subject="money", data={"Amount": money}
         )
         await ctx.send(
-            _("{winner} won the active battle vs {looser}! Congratulations!").format(
-                winner=winner.mention, looser=looser.mention
+            _(
+                "{prevaction}\n{winner} won the active battle vs {looser}! Congratulations!"
+            ).format(
+                prevaction="\n".join([players[p]["lastmove"] for p in players]),
+                winner=winner.mention,
+                looser=looser.mention,
             )
         )
 
