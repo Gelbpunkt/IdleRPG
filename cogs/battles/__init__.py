@@ -467,8 +467,8 @@ class Battles(commands.Cog):
             )
             players[ctx.author]["action"], players[enemy_]["action"] = None, None
             players[ctx.author]["lastmove"], players[enemy_]["lastmove"] = (
-                f"{ctx.author.mention} does nothing...",
-                f"{enemy_.mention} does nothing...",
+                _("{user} does nothing...").format(user=ctx.author.mention),
+                _("{user} does nothing...").format(user=enemy_.mention),
             )
             for emoji in moves:
                 await last.add_reaction(emoji)
