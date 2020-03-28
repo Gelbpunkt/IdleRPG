@@ -29,7 +29,13 @@ from discord.ext import commands
 
 import utils.checks
 
-from classes.converters import NotInRange
+from classes.converters import (
+    DateOutOfRange,
+    InvalidCoinSide,
+    InvalidCrateRarity,
+    NotInRange,
+    UserHasNoChar,
+)
 from utils.paginator import NoChoice
 
 try:
@@ -67,6 +73,30 @@ class Errorhandler(commands.Cog):
         elif isinstance(error, commands.BadArgument):
             if isinstance(error, NotInRange):
                 await ctx.send(error.text)
+            elif isinstance(error, UserHasNoChar):
+                await ctx.send(
+                    _(
+                        "The user you specified as a parameter does not have a character."
+                    )
+                )
+            elif isinstance(error, InvalidCrateRarity):
+                await ctx.send(
+                    _(
+                        "You did not enter a valid crate rarity. Possible ones are: common, uncommon, rare, magic and legendary."
+                    )
+                )
+            elif isinstance(error, InvalidCoinSide):
+                await ctx.send(
+                    _(
+                        "You did not enter a valid coin side. Please use `heads` or `tails`."
+                    )
+                )
+            elif isinstance(error, DateOutOfRange):
+                await ctx.send(
+                    _(
+                        "You entered a date that was out of range. It should be newer than {date}."
+                    ).format(date=error.min_)
+                )
             else:
                 await ctx.send(_("You used a malformed argument!"))
         elif isinstance(error, commands.CommandOnCooldown):

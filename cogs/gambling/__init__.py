@@ -418,7 +418,8 @@ class Gambling(commands.Cog):
     @commands.group(aliases=["rou"], invoke_without_command=True)
     @locale_doc
     async def roulette(self, ctx, money: IntFromTo(0, 100), *, bid: str):
-        _("""Play a game of French Roulette. 
+        _(
+            """Play a game of French Roulette.
 Possible simple bets:
     - noir    (all black numbers)
     - rouge   (all red numbers)
@@ -438,7 +439,8 @@ Complicated bets:
     - cheval (number 1) (number 2) (a simple bet on two numbers)
     - plein (number) (a simple bet on one number)
 
-To visualize the rows and columns, use the command: roulette table""")
+To visualize the rows and columns, use the command: roulette table"""
+        )
         if ctx.character_data["money"] < money:
             return await ctx.send(_("You're too poor."))
         try:

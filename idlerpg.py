@@ -16,6 +16,7 @@ You should have received a copy of the GNU Affero General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
 import asyncio
+import os
 import sys
 
 from json import loads
@@ -30,6 +31,9 @@ if sys.platform == "linux":  # uvloop requires linux
     import uvloop
 
     asyncio.set_event_loop_policy(uvloop.EventLoopPolicy())
+
+# Set the timezone to UTC
+os.environ["TZ"] = "UTC"
 
 bot = Bot(
     case_insensitive=True,

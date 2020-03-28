@@ -168,6 +168,10 @@ base_url = "https://idlerpg.travitia.xyz"
 """The base URL for okapi (IdleRPG's image API)."""
 okapi_url = "https://okapi.travitia.xyz"
 
+"""The proxy URL."""
+proxy_url = "http://my.proxy"
+proxy_auth = "proxy-auth-key"
+
 """The Version of the Bot."""
 version = "4.5.1"
 

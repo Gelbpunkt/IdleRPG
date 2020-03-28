@@ -40,6 +40,7 @@ import config
 from classes.context import Context
 from classes.converters import UserWithCharacter
 from classes.enums import DonatorRank
+from classes.http import ProxiedClientSession
 from utils import i18n, paginator
 from utils.checks import user_is_patron
 
@@ -102,7 +103,9 @@ class Bot(commands.AutoShardedBot):
                         self.linecount += len(f.readlines())
 
     async def connect_all(self):
-        self.session = aiohttp.ClientSession(trust_env=True)
+        self.session = ProxiedClientSession(
+            authorization=self.config.proxy_auth, proxy_url=self.config.proxy_url
+        )
         self.trusted_session = aiohttp.ClientSession()
         self.redis = await aioredis.create_pool(
             "redis://localhost", minsize=5, maxsize=10, loop=self.loop, db=0
