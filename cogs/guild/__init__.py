@@ -577,7 +577,7 @@ To look up a guild by its ID, use id:number."""
             text = _("a character by {charname} with **${money}**").format(
                 charname=escape_markdown(charname), money=profile["money"]
             )
-            result = f"{result}{idx + 1}. {profile['name']}, {text}\n"
+            result = f"{result}{idx + 1}. {escape_markdown(profile['name'])}, {text}\n"
         await ctx.send(
             embed=discord.Embed(
                 title=_("The Richest Players of {guild}").format(guild=guild["name"]),
