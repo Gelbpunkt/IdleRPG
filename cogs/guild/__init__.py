@@ -574,8 +574,8 @@ To look up a guild by its ID, use id:number."""
         result = ""
         for idx, profile in enumerate(players):
             charname = await rpgtools.lookup(self.bot, profile["user"])
-            text = _("a character by `{charname}` with **${money}**").format(
-                charname=charname, money=profile["money"]
+            text = _("a character by {charname} with **${money}**").format(
+                charname=escape_markdown(charname), money=profile["money"]
             )
             result = f"{result}{idx + 1}. {profile['name']}, {text}\n"
         await ctx.send(
@@ -604,10 +604,10 @@ To look up a guild by its ID, use id:number."""
         for idx, profile in enumerate(players):
             charname = await rpgtools.lookup(self.bot, profile[0])
             text = _(
-                "{name}, a character by `{charname}` with Level **{level}** (**{xp}** XP)"
+                "{name}, a character by {charname} with Level **{level}** (**{xp}** XP)"
             ).format(
-                charname=charname,
-                name=profile["name"],
+                charname=escape_markdown(charname),
+                name=escape_markdown(profile["name"]),
                 level=rpgtools.xptolevel(profile["xp"]),
                 xp=profile["xp"],
             )
