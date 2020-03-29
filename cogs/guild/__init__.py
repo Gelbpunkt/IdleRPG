@@ -34,6 +34,7 @@ from classes.converters import (
 from cogs.shard_communication import guild_on_cooldown as guild_cooldown
 from cogs.shard_communication import user_on_cooldown as user_cooldown
 from utils import misc as rpgtools
+from utils.markdown import escape_markdown
 from utils.checks import (
     has_char,
     has_guild,
@@ -144,8 +145,8 @@ To look up a guild by its ID, use id:number."""
         result = ""
         for idx, guild in enumerate(guilds):
             leader = await rpgtools.lookup(self.bot, guild["leader"])
-            text = _("a guild by `{leader}` with **{wins}** GvG Wins").format(
-                leader=leader, wins=guild["wins"]
+            text = _("a guild by {leader} with **{wins}** GvG Wins").format(
+                leader=escape_markdown(leader), wins=guild["wins"]
             )
             result = f"{result}{idx + 1}. {guild['name']}, {text}\n"
         await ctx.send(
@@ -169,7 +170,7 @@ To look up a guild by its ID, use id:number."""
                 await self.bot.get_user_global(m["user"])
                 or _("Unknown User (ID {id})").format(id=m["user"])
             )
-            members_fmt.append(f"{u} ({m['guildrank']})")
+            members_fmt.append(f"{escape_markdown(u)} ({m['guildrank']})")
         await self.bot.paginator.Paginator(
             entries=members_fmt, title=_("Your guild mates")
         ).paginate(ctx)
@@ -573,10 +574,10 @@ To look up a guild by its ID, use id:number."""
         result = ""
         for idx, profile in enumerate(players):
             charname = await rpgtools.lookup(self.bot, profile["user"])
-            text = _("a character by `{charname}` with **${money}**").format(
-                charname=charname, money=profile["money"]
+            text = _("a character by {charname} with **${money}**").format(
+                charname=escape_markdown(charname), money=profile["money"]
             )
-            result = f"{result}{idx + 1}. {profile['name']}, {text}\n"
+            result = f"{result}{idx + 1}. {escape_markdown(profile['name'])}, {text}\n"
         await ctx.send(
             embed=discord.Embed(
                 title=_("The Richest Players of {guild}").format(guild=guild["name"]),
@@ -603,10 +604,10 @@ To look up a guild by its ID, use id:number."""
         for idx, profile in enumerate(players):
             charname = await rpgtools.lookup(self.bot, profile[0])
             text = _(
-                "{name}, a character by `{charname}` with Level **{level}** (**{xp}** XP)"
+                "{name}, a character by {charname} with Level **{level}** (**{xp}** XP)"
             ).format(
-                charname=charname,
-                name=profile["name"],
+                charname=escape_markdown(charname),
+                name=escape_markdown(profile["name"]),
                 level=rpgtools.xptolevel(profile["xp"]),
                 xp=profile["xp"],
             )

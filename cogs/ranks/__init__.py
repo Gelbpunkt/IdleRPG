@@ -20,6 +20,7 @@ import discord
 from discord.ext import commands
 
 from utils import misc as rpgtools
+from utils.markdown import escape_markdown
 
 
 class Ranks(commands.Cog):
@@ -37,9 +38,9 @@ class Ranks(commands.Cog):
         result = ""
         for idx, profile in enumerate(players):
             username = await rpgtools.lookup(self.bot, profile["user"])
-            text = _("{name}, a character by `{username}` with **${money}**").format(
-                name=discord.utils.escape_markdown(profile["name"]),
-                username=discord.utils.escape_markdown(username),
+            text = _("{name}, a character by {username} with **${money}**").format(
+                name=escape_markdown(profile["name"]),
+                username=escape_markdown(username),
                 money=profile["money"],
             )
             result = f"{result}{idx + 1}. {text}\n"
@@ -60,10 +61,10 @@ class Ranks(commands.Cog):
         for idx, profile in enumerate(players):
             username = await rpgtools.lookup(self.bot, profile["user"])
             text = _(
-                "{name}, a character by `{username}` with Level **{level}** (**{xp}** XP)"
+                "{name}, a character by {username} with Level **{level}** (**{xp}** XP)"
             ).format(
-                name=discord.utils.escape_markdown(profile["name"]),
-                username=discord.utils.escape_markdown(username),
+                name=escape_markdown(profile["name"]),
+                username=escape_markdown(username),
                 level=rpgtools.xptolevel(profile["xp"]),
                 xp=profile["xp"],
             )
@@ -84,9 +85,9 @@ class Ranks(commands.Cog):
         result = ""
         for idx, profile in enumerate(players):
             username = await rpgtools.lookup(self.bot, profile["user"])
-            text = _("{name}, a character by `{username}` with **{wins}** wins").format(
-                name=discord.utils.escape_markdown(profile["name"]),
-                username=discord.utils.escape_markdown(username),
+            text = _("{name}, a character by {username} with **{wins}** wins").format(
+                name=escape_markdown(profile["name"]),
+                username=escape_markdown(username),
                 wins=profile["pvpwins"],
             )
             result = f"{result}{idx + 1}. {text}\n"
