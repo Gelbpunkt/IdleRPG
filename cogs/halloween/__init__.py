@@ -170,7 +170,7 @@ class Halloween(commands.Cog):
         _("""Shows your Trick or Treat Bags.""")
         await ctx.send(
             _("You currently have **${trickortreat}** Trick or Treat Bags, {author}!").format(
-                money=ctx.character_data["trickortreat"], author=ctx.author.mention
+                trickortreat=ctx.character_data["trickortreat"], author=ctx.author.mention
             )
         )
 
