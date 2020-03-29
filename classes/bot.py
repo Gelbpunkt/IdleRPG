@@ -154,6 +154,9 @@ class Bot(commands.AutoShardedBot):
         #    await self.create_captcha(message.author, message.channel)
         await self.process_commands(message)
 
+    async def on_message_edit(self, before, after):
+        await self.on_message(after)
+
     async def create_captcha(self, user, channel):
         async with self.session.get("https://captcha.travitia.xyz/v2") as r:
             data = await r.json()
