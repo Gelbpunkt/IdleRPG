@@ -116,7 +116,7 @@ class GlobalEvents(commands.Cog):
                 data=await self.get_bfd_payload(),
                 headers=self.auth_headers2,
             )
-            await asyncio.sleep(120)
+            await asyncio.sleep(60 * 10) # update once every 10 minutes
 
     async def load_settings(self):
         if self.bot.config.is_beta:
