@@ -289,7 +289,7 @@ gods = {
     "Tet": {
         "user": 125111809165230080,
         "description": "The patron of merchants and deity of trade. He is a nefarious swindler with incomparable persuasion. Legend says he can be found in the capital markets, selling enchanted items to those who deem worthy.",
-        "boundaries": (0.0, 2.0),
+        "boundaries": (0.8, 1.2),
     },
     "The Assassin": {
         "user": 294894701708967936,
@@ -329,7 +329,7 @@ gods = {
     "Eden": {
         "user": 693885967232139324,
         "description": "Eden is a goddess of sanctuary, protection and nature. People whisper prayers to her to keep them safe from danger and to find sanctuary from those who wish them harm. Her garden lays deep in the world filled with beauty and splendor. Those who seek it must travel into the depths of nature and pass the trails of the gatekeeper to enter.",
-        "boundaries": (0.0, 2.0),
+        "boundaries": (0.5, 1.5),
     },
     "Jesus": {
         "user": 322354047162122243,
