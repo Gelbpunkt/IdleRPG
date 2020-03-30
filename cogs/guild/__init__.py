@@ -34,7 +34,6 @@ from classes.converters import (
 from cogs.shard_communication import guild_on_cooldown as guild_cooldown
 from cogs.shard_communication import user_on_cooldown as user_cooldown
 from utils import misc as rpgtools
-from utils.markdown import escape_markdown
 from utils.checks import (
     has_char,
     has_guild,
@@ -46,6 +45,7 @@ from utils.checks import (
     is_no_guild_leader,
     user_is_patron,
 )
+from utils.markdown import escape_markdown
 
 
 class Guild(commands.Cog):

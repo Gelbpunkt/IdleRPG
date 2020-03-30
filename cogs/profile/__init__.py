@@ -53,7 +53,6 @@ What shall your character's name be? (Minimum 3 Characters, Maximum 20)
 2) No abusing or benefiting from bugs or exploits
 3) Be friendly and kind to other players
 4) Trading in-game items or currency for real money or items directly comparable to currency is forbidden
-5) Giving or selling renamed items is forbidden
 
 IdleRPG is a global bot, your characters are valid everywhere"""
                 )
@@ -76,8 +75,7 @@ IdleRPG is a global bot, your characters are valid everywhere"""
 1) Only up to two characters per individual
 2) No abusing or benefiting from bugs or exploits
 3) Be friendly and kind to other players
-4) Trading in-game items or currency for real money is forbidden
-5) Giving or selling renamed items is forbidden
+4) Trading in-game items or currency for real money or items directly comparable to currency is forbidden
 
 IdleRPG is a global bot, your characters are valid everywhere"""
                 )

@@ -36,6 +36,7 @@ from classes.converters import (
     NotInRange,
     UserHasNoChar,
 )
+from cogs.music import NeedsToBeInVoiceChat, VoteDidNotPass
 from utils.paginator import NoChoice
 
 try:
@@ -168,6 +169,10 @@ class Errorhandler(commands.Cog):
                         "You need to be on an adventure to use this command. Try `{prefix}adventure`!"
                     ).format(prefix=ctx.prefix)
                 )
+            elif type(error) == NeedsToBeInVoiceChat:
+                await ctx.send(_("You need to be in a voice chat to use this command."))
+            elif type(error) == VoteDidNotPass:
+                await ctx.send(_("The vote did not pass."))
             elif type(error) == utils.checks.PetGone:
                 await ctx.send(
                     _(

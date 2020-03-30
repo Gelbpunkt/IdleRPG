@@ -34,6 +34,10 @@ class VoteDidNotPass(commands.CheckFailure):
     pass
 
 
+class NeedsToBeInVoiceChat(commands.CheckFailure):
+    pass
+
+
 class Player(wavelink.Player):
     @property
     def position(self):
@@ -55,7 +59,7 @@ def is_in_vc():
         try:
             ctx.voice_channel = ctx.author.voice.channel.id
         except AttributeError:
-            return False
+            raise NeedsToBeInVoiceChat()
         return True
 
     return commands.check(predicate)
