@@ -125,7 +125,7 @@ You have **{eggs}** <:easteregg:566251086986608650>."""
                     ctx.author.id,
                 )
                 await conn.execute(
-                    'UPDATE guilds SET "badges"=array_append("badges", $1) WHERE "id"=$2;',
+                    'UPDATE guild SET "badges"=array_append("badges", $1) WHERE "id"=$2;',
                     "https://i.imgur.com/VHUDdTv.jpg",
                     ctx.character_data["guild"],
                 )
