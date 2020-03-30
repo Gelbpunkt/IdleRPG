@@ -286,9 +286,9 @@ gods = {
         "description": "Guilt is the goddess of suffering, obsession, misfortune, and wickedness. Every evil act is said to originally be a thought in her head.  Many curse her name, but Guilt just smiles and continues to grow stronger from the misery--after all, happiness without hardship is no happiness at all.",
         "boundaries": (0.0, 2.0),
     },
-    "Gambit": {
-        "user": 402603953453268992,
-        "description": "A mercurial god, though not purposefully evil. As the god of chance and risk, Gambit is the patron of gamblers, thieves, and adventurers.  If you succeed in a risky venture, he is said to have smirked with amusement at your attempt.  However, dealing with him is like flipping a coin--which side will it be?",
+    "Tet": {
+        "user": 125111809165230080,
+        "description": "The patron of merchants and deity of trade. He is a nefarious swindler with incomparable persuasion. Legend says he can be found in the capital markets, selling enchanted items to those who deem worthy.",
         "boundaries": (0.0, 2.0),
     },
     "The Assassin": {
@@ -321,21 +321,14 @@ gods = {
         Choose wisely my friend, maybe the next war will be against you.""",
         "boundaries": (0.5, 1.5),
     },
-    "Athena, Goddess of Wisdom": {
-        "user": 226038728211038208,
-        "description": "Goddess of wisdom, war and the crafts, and favourite daughter of Zeus, Athena was, perhaps, the wisest, most courageous, and certainly the most resourceful of the Olympian gods. Follow in her footsteps and become a follower to live through this wretched mayhem. As she is not only wise, but a powerful Leader. You do not want to her have her as your enemy now, Do you?",
-        "boundaries": (0.5, 1.5),
-    },
     "CHamburr": {
         "user": 446290930723717120,
         "description": "Omniscient. Omnipotent. Omnipresent. An all-round god powered by endless streams of blood, with the one goal -- of flowing it through all mankind. The day he was born, he promised to give his unexhaustive love equally to everyone...",
         "boundaries": (0.8, 1.2),
     },
-    "Ananke": {
-        "user": 373797591395205122,
-        "description": """Goddess of inevitability, compulsion, and necessity.
-        Nothing exists without its other "weight" and Namara: Shadow and Light, Rise and Fall, etc.
-        Follow to get fair rewards, and never be betrayed.""",
+    "Eden": {
+        "user": 693885967232139324,
+        "description": "Eden is a goddess of sanctuary, protection and nature. People whisper prayers to her to keep them safe from danger and to find sanctuary from those who wish them harm. Her garden lays deep in the world filled with beauty and splendor. Those who seek it must travel into the depths of nature and pass the trails of the gatekeeper to enter.",
         "boundaries": (0.0, 2.0),
     },
     "Jesus": {
