@@ -157,7 +157,7 @@ class Miscellaneous(commands.Cog):
         async with self.bot.session.post(
             "https://api.imgur.com/3/image",
             headers={"Authorization": f"Client-ID {self.bot.config.imgur_token}"},
-            data={"image": given_url},
+            json={"image": given_url},
         ) as r:
             try:
                 link = (await r.json())["data"]["link"]
