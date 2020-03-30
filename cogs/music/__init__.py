@@ -200,7 +200,6 @@ class Music2(commands.Cog):
         await asyncio.sleep(5)
         if not self.bot.wavelink.nodes or not self.bot.wavelink.nodes["MAIN"].is_available:
             print("FAILED to connect to andesite backend, unloading music cog...")
-            del self.bot.wavelink
             self.bot.unload_extension("cogs.music")
 
     @is_not_locked()
