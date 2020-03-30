@@ -193,12 +193,13 @@ class Music2(commands.Cog):
         self.bot.loop.create_task(self.connect())
 
     async def connect(self):
-        node = await self.bot.wavelink.initiate_node(
-            **self.bot.config.lava_creds_new
-        )
+        node = await self.bot.wavelink.initiate_node(**self.bot.config.lava_creds_new)
         node.set_hook(self.event_hook)
         await asyncio.sleep(5)
-        if not self.bot.wavelink.nodes or not self.bot.wavelink.nodes["MAIN"].is_available:
+        if (
+            not self.bot.wavelink.nodes
+            or not self.bot.wavelink.nodes["MAIN"].is_available
+        ):
             print("FAILED to connect to andesite backend, unloading music cog...")
             self.bot.unload_extension("cogs.music")
 

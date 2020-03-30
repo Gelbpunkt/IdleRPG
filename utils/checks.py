@@ -101,7 +101,8 @@ class NeedsAdventure(commands.CheckFailure):
 class NoPatron(commands.CheckFailure):
     """Exception raised when you need to donate to use a command."""
 
-    pass
+    def __init__(self, tier):
+        self.tier = tier
 
 
 class NeedsGod(commands.CheckFailure):
@@ -482,7 +483,7 @@ def is_patron(role="basic"):
         actual_role = getattr(DonatorRank, role)
         if getattr(DonatorRank, response) >= actual_role:
             return True
-        raise NoPatron()
+        raise NoPatron(role)
 
     return commands.check(predicate)
 

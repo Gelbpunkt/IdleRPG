@@ -18,7 +18,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 from aiohttp import ClientSession as AiohttpClientSession
 
 
-class ProxiedClientSession(AiohttpClientSession):
+class ProxiedClientSession:
     """A ClientSession that forwards requests through a custom proxy."""
 
     def __init__(self, *args, **kwargs):
@@ -28,16 +28,16 @@ class ProxiedClientSession(AiohttpClientSession):
             "Proxy-Authorization-Key": kwargs.pop("authorization"),
             "Accept": "application/json",
         }
-        super().__init__(*args, **kwargs)
+        self._session = AiohttpClientSession(*args, **kwargs)
 
     def get(self, url, *args, **kwargs):
         headers = kwargs.pop("headers", {})
         headers.update(self.permanent_headers)
         headers["Requested-URI"] = url
-        return super().get(self.proxy_url, headers=headers, *args, **kwargs)
+        return self._session.get(self.proxy_url, headers=headers, *args, **kwargs)
 
     def post(self, url, *args, **kwargs):
         headers = kwargs.pop("headers", {})
         headers.update(self.permanent_headers)
         headers["Requested-URI"] = url
-        return super().post(self.proxy_url, headers=headers, *args, **kwargs)
+        return self._session.post(self.proxy_url, headers=headers, *args, **kwargs)
