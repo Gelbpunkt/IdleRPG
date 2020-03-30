@@ -194,8 +194,15 @@ class Music2(commands.Cog):
 
     async def connect(self):
         await self.bot.wait_until_ready()
-        node = await self.bot.wavelink.initiate_node(**self.bot.config.lava_creds_new)
-        node.set_hook(self.event_hook)
+        try:
+            node = await self.bot.wavelink.initiate_node(
+                **self.bot.config.lava_creds_new
+            )
+            node.set_hook(self.event_hook)
+        except Exception:
+            print("FAILED to connect to andesite backend, unloading music cog...")
+            del self.bot.wavelink
+            self.bot.unload_extension("cogs.music")
 
     @is_not_locked()
     @get_player()
