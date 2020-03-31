@@ -756,6 +756,157 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
     @is_god()
     @raid_free()
     @commands.command()
+    async def edenspawn(self, ctx, hp: IntGreaterThan(0)):
+        """[Eden only] Starts a raid."""
+        await self.set_raid_timer()
+        await self.bot.session.get(
+            "https://raid.travitia.xyz/toggle",
+            headers={"Authorization": self.bot.config.raidauth},
+        )
+        self.boss = {"hp": hp, "min_dmg": 100, "max_dmg": 500}
+        await ctx.channel.set_permissions(
+            ctx.guild.default_role, overwrite=self.read_only
+        )
+        await ctx.send(
+            f"""
+The guardian of the gate to the garden has awoken! To gain entry to the Garden of Sanctuary that lays behind the gate you must defeat the guardian.
+
+This boss has {self.boss['hp']} HP and will be vulnerable in 15 Minutes
+Use https://raid.travitia.xyz/ to join the raid!
+**Only followers of Eden may join.**
+
+Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=453963965521985536&scope=identify&response_type=code&redirect_uri=https://raid.travitia.xyz/callback>
+""",
+            file=discord.File("assets/other/guardian.jpg"),
+        )
+        if not self.bot.config.is_beta:
+            await asyncio.sleep(300)
+            await ctx.send("**The guardian will be vulnerable in 10 minutes**")
+            await asyncio.sleep(300)
+            await ctx.send("**The guardian will be vulnerable in 5 minutes**")
+            await asyncio.sleep(180)
+            await ctx.send("**The guardian will be vulnerable in 2 minutes**")
+            await asyncio.sleep(60)
+            await ctx.send("**The guardian will be vulnerable in 1 minute**")
+            await asyncio.sleep(30)
+            await ctx.send("**The guardian will be vulnerable in 30 seconds**")
+            await asyncio.sleep(20)
+            await ctx.send("**The guardian will be vulnerable in 10 seconds**")
+            await asyncio.sleep(10)
+        else:
+            await asyncio.sleep(60)
+        await ctx.send(
+            "**The guardian is vulnerable! Fetching participant data... Hang on!**"
+        )
+
+        async with self.bot.session.get(
+            "https://raid.travitia.xyz/joined",
+            headers={"Authorization": self.bot.config.raidauth},
+        ) as r:
+            raid_raw = await r.json()
+        async with self.bot.pool.acquire() as conn:
+            raid = {}
+            for i in raid_raw:
+                u = await self.bot.get_user_global(i)
+                if not u:
+                    continue
+                if not await conn.fetchval(
+                    'SELECT "user" FROM profile WHERE "user"=$1', u.id
+                ):
+                    continue
+                try:
+                    dmg, deff = await self.bot.get_raidstats(
+                        u, god="Eden", conn=conn
+                    )
+                except ValueError:
+                    continue
+                raid[u] = {"hp": 250, "armor": deff, "damage": dmg}
+
+        await ctx.send("**Done getting data!**")
+
+        start = datetime.datetime.utcnow()
+
+        while (
+            self.boss["hp"] > 0
+            and len(raid) > 0
+            and datetime.datetime.utcnow() < start + datetime.timedelta(minutes=45)
+        ):
+            target = random.choice(list(raid.keys()))  # the guy it will attack
+            dmg = random.randint(self.boss["min_dmg"], self.boss["max_dmg"])
+            dmg = self.getfinaldmg(dmg, raid[target]["armor"])
+            raid[target]["hp"] -= dmg  # damage dealt
+            if raid[target]["hp"] > 0:
+                em = discord.Embed(
+                    title="The Guardian attacks the seekers of the garden!",
+                    description=f"{target} now has {raid[target]['hp']} HP!",
+                    colour=0xFFB900,
+                )
+            else:
+                em = discord.Embed(
+                    title="The Guardian attacks the seekers of the garden!",
+                    description=f"{target} died!",
+                    colour=0xFFB900,
+                )
+            em.add_field(name="Theoretical Damage", value=dmg + raid[target]["armor"])
+            em.add_field(name="Shield", value=raid[target]["armor"])
+            em.add_field(name="Effective Damage", value=dmg)
+            em.set_author(name=str(target), icon_url=target.avatar_url)
+            em.set_thumbnail(url=f"{self.bot.BASE_URL}/guardian_small.jpg")
+            await ctx.send(embed=em)
+            if raid[target]["hp"] <= 0:
+                del raid[target]
+            dmg_to_take = sum(i["damage"] for i in raid.values())
+            self.boss["hp"] -= dmg_to_take
+            await asyncio.sleep(4)
+            em = discord.Embed(
+                title="The seekers attacked the Guardian!", colour=0xFF5C00
+            )
+            em.set_thumbnail(url=f"{self.bot.BASE_URL}/eden_followers.jpg")
+            em.add_field(name="Damage", value=dmg_to_take)
+            if self.boss["hp"] > 0:
+                em.add_field(name="HP left", value=self.boss["hp"])
+            else:
+                em.add_field(name="HP left", value="Dead!")
+            await ctx.send(embed=em)
+            await asyncio.sleep(4)
+
+        if len(raid) == 0:
+            await ctx.send("The raid was all wiped!")
+        elif self.boss["hp"] < 1:
+            await ctx.channel.set_permissions(
+                ctx.guild.default_role, overwrite=self.allow_sending
+            )
+            winner = random.choice(list(raid.keys()))
+            await self.bot.pool.execute('UPDATE profile SET "crates_legendary"="crates_legendary"+1 WHERE "user"=$1;', winner.id)
+            await ctx.send(
+                f"The guardian was defeated, the seekers can enter the garden! Eden has gracefully given {winner.mention} a legendary crate for their efforts."
+            )
+
+            cash = int(hp / 4 / len(raid))  # what da hood gets per survivor
+            await self.bot.pool.execute(
+                'UPDATE profile SET money=money+$1 WHERE "user"=ANY($2);',
+                cash,
+                [u.id for u in raid.keys()],
+            )
+            await ctx.send(
+                f"**Gave ${cash} of the Guardian's ${int(hp / 4)} drop to all survivors!**"
+            )
+
+        else:
+            await ctx.send(
+                "The raid did not manage to kill the Guardian within 45 Minutes... The entrance remains blocked!"
+            )
+
+        await asyncio.sleep(30)
+        await ctx.channel.set_permissions(
+            ctx.guild.default_role, overwrite=self.deny_sending
+        )
+        await self.clear_raid_timer()
+        self.boss = None
+
+    @is_god()
+    @raid_free()
+    @commands.command()
     async def chamburrspawn(self, ctx, hp: IntGreaterThan(0)):
         """[CHamburr only] Starts a raid."""
         await self.set_raid_timer()
