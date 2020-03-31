@@ -23,6 +23,8 @@
 
 - Adjust halloween and easter
 - We have moved to aiohttp 4.0a1 and are using cchardet and aiodns to speed it up even more.
+- We have moved to Alpine Linux 3.12 alpha to use gcc 9.3
+- We have moved to Python 3.9a5
 - The Dockerfile now installs the dependency libraries based on the current architecture.
   Supported are x86\_64 and aarch64
 - We have balanced out the easter event
