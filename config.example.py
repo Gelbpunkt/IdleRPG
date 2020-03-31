@@ -288,7 +288,7 @@ gods = {
     },
     "Tet": {
         "user": 125111809165230080,
-        "description": "The patron of merchants and deity of trade. He is a nefarious swindler with incomparable persuasion. Legend says he can be found in the capital markets, selling enchanted items to those who deem worthy.",
+        "description": "Tet, god of play. Tired of seeing a world, where issues were resolved by war and violence, he introduced a new system where all trifles would be decided by games. But never mind that, let's have some fun now shall we.",
         "boundaries": (0.8, 1.2),
     },
     "The Assassin": {
