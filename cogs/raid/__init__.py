@@ -288,7 +288,7 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
                     highest_bid[1],
                     highest_bid[0].id,
                 )
-                await self.bot.log_transaction(ctx, from_=ctx.author.id, to=2, subject="bid", data={"Amount": highest_bid[1]})
+                await self.bot.log_transaction(ctx, from_=highest_bid[0].id, to=2, subject="money", data={"Amount": highest_bid[1]})
                 await msg.edit(content=f"{msg.content} Done!")
             else:
                 await ctx.send(
@@ -932,8 +932,8 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
                 )
                 await self.bot.log_transaction(
                     ctx,
-                    from_=1,
-                    to=highest_bid[0].id,
+                    from_=highest_bid[0].id,
+                    to=2,
                     subject="money",
                     data={"Amount": highest_bid[1]},
                 )
@@ -1229,8 +1229,8 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
                 )
                 await self.bot.log_transaction(
                     ctx,
-                    from_=1,
-                    to=highest_bid[0].id,
+                    from_=highest_bid[0].id,
+                    to=2,
                     subject="money",
                     data={"Amount": highest_bid[1]},
                 )
@@ -1563,8 +1563,8 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
                 )
                 await self.bot.log_transaction(
                     ctx,
-                    from_=1,
-                    to=highest_bid[0].id,
+                    from_=highest_bid[0].id,
+                    to=2,
                     subject="money",
                     data={"Amount": highest_bid[1]},
                 )
