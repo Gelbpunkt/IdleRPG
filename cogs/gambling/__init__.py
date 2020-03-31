@@ -164,46 +164,49 @@ class BlackJack:
         return [hand1, hand2]
 
     async def player_win(self):
-        await self.ctx.bot.pool.execute(
-            'UPDATE profile SET money=money+$1 WHERE "user"=$2;',
-            self.money * 2,
-            self.ctx.author.id,
-        )
-        await self.ctx.bot.log_transaction(
-            self.ctx,
-            from_=1,
-            to=self.ctx.author.id,
-            subject="gambling",
-            data={"Amount": self.money * 2},
-        )
+        if self.money > 0:
+            await self.ctx.bot.pool.execute(
+                'UPDATE profile SET money=money+$1 WHERE "user"=$2;',
+                self.money * 2,
+                self.ctx.author.id,
+            )
+            await self.ctx.bot.log_transaction(
+                self.ctx,
+                from_=1,
+                to=self.ctx.author.id,
+                subject="gambling",
+                data={"Amount": self.money * 2},
+            )
 
     async def player_bj_win(self):
-        await self.ctx.bot.pool.execute(
-            'UPDATE profile SET money=money+$1 WHERE "user"=$2;',
-            int(self.money * 2.5),
-            self.ctx.author.id,
-        )
-        await self.ctx.bot.log_transaction(
-            self.ctx,
-            from_=1,
-            to=self.ctx.author.id,
-            subject="gambling",
-            data={"Amount": int(self.money * 2.5)},
-        )
+        if self.money > 0:
+            await self.ctx.bot.pool.execute(
+                'UPDATE profile SET money=money+$1 WHERE "user"=$2;',
+                int(self.money * 2.5),
+                self.ctx.author.id,
+            )
+            await self.ctx.bot.log_transaction(
+                self.ctx,
+                from_=1,
+                to=self.ctx.author.id,
+                subject="gambling",
+                data={"Amount": int(self.money * 2.5)},
+            )
 
     async def player_cashback(self):
-        await self.ctx.bot.pool.execute(
-            'UPDATE profile SET money=money+$1 WHERE "user"=$2;',
-            self.money,
-            self.ctx.author.id,
-        )
-        await self.ctx.bot.log_transaction(
-            self.ctx,
-            from_=1,
-            to=self.ctx.author.id,
-            subject="gambling",
-            data={"Amount": self.money},
-        )
+        if self.money > 0:
+            await self.ctx.bot.pool.execute(
+                'UPDATE profile SET money=money+$1 WHERE "user"=$2;',
+                self.money,
+                self.ctx.author.id,
+            )
+            await self.ctx.bot.log_transaction(
+                self.ctx,
+                from_=1,
+                to=self.ctx.author.id,
+                subject="gambling",
+                data={"Amount": self.money},
+            )
 
     def pretty(self, hand):
         return " ".join([card[2] for card in hand])
@@ -331,18 +334,19 @@ class BlackJack:
                         _("Invalid. You're too poor and lose the match.")
                     )
                 self.doubled = True
-                await self.ctx.bot.pool.execute(
-                    'UPDATE profile SET "money"="money"-$1 WHERE "user"=$2;',
-                    self.money,
-                    self.ctx.author.id,
-                )
-                await self.ctx.bot.log_transaction(
-                    self.ctx,
-                    from_=self.ctx.author.id,
-                    to=2,
-                    subject="gambling",
-                    data={"Amount": self.money},
-                )
+                if self.money > 0:
+                    await self.ctx.bot.pool.execute(
+                        'UPDATE profile SET "money"="money"-$1 WHERE "user"=$2;',
+                        self.money,
+                        self.ctx.author.id,
+                    )
+                    await self.ctx.bot.log_transaction(
+                        self.ctx,
+                        from_=self.ctx.author.id,
+                        to=2,
+                        subject="gambling",
+                        data={"Amount": self.money},
+                    )
 
                 self.money *= 2
                 valid.remove("\U000023ec")
@@ -480,36 +484,38 @@ To visualize the rows and columns, use the command: roulette table"""
             ]
         )
         if result[0] == side:
-            await self.bot.pool.execute(
-                'UPDATE profile SET money=money+$1 WHERE "user"=$2;',
-                amount,
-                ctx.author.id,
-            )
-            await self.bot.log_transaction(
-                ctx,
-                from_=1,
-                to=ctx.author.id,
-                subject="gambling",
-                data={"Amount": amount},
-            )
+            if amount > 0:
+                await self.bot.pool.execute(
+                    'UPDATE profile SET money=money+$1 WHERE "user"=$2;',
+                    amount,
+                    ctx.author.id,
+                )
+                await self.bot.log_transaction(
+                    ctx,
+                    from_=1,
+                    to=ctx.author.id,
+                    subject="gambling",
+                    data={"Amount": amount},
+                )
             await ctx.send(
                 _("{result[1]} It's **{result[0]}**! You won **${amount}**!").format(
                     result=result, amount=amount
                 )
             )
         else:
-            await self.bot.pool.execute(
-                'UPDATE profile SET money=money-$1 WHERE "user"=$2;',
-                amount,
-                ctx.author.id,
-            )
-            await self.bot.log_transaction(
-                ctx,
-                from_=ctx.author.id,
-                to=2,
-                subject="gambling",
-                data={"Amount": amount},
-            )
+            if amount > 0:
+                await self.bot.pool.execute(
+                    'UPDATE profile SET money=money-$1 WHERE "user"=$2;',
+                    amount,
+                    ctx.author.id,
+                )
+                await self.bot.log_transaction(
+                    ctx,
+                    from_=ctx.author.id,
+                    to=2,
+                    subject="gambling",
+                    data={"Amount": amount},
+                )
             await ctx.send(
                 _("{result[1]} It's **{result[0]}**! You lost **${amount}**!").format(
                     result=result, amount=amount
@@ -542,18 +548,19 @@ To visualize the rows and columns, use the command: roulette table"""
             return await ctx.send(_("You're too poor."))
         randomn = secrets.randbelow(maximum + 1)
         if randomn == tip:
-            await self.bot.pool.execute(
-                'UPDATE profile SET money=money+$1 WHERE "user"=$2;',
-                money * (maximum - 1),
-                ctx.author.id,
-            )
-            await self.bot.log_transaction(
-                ctx,
-                from_=1,
-                to=ctx.author.id,
-                subject="gambling",
-                data={"Amount": money * (maximum - 1)},
-            )
+            if money > 0:
+                await self.bot.pool.execute(
+                    'UPDATE profile SET money=money+$1 WHERE "user"=$2;',
+                    money * (maximum - 1),
+                    ctx.author.id,
+                )
+                await self.bot.log_transaction(
+                    ctx,
+                    from_=1,
+                    to=ctx.author.id,
+                    subject="gambling",
+                    data={"Amount": money * (maximum - 1)},
+                )
             await ctx.send(
                 _(
                     "You won **${money}**! The random number was `{num}`, you tipped `{tip}`."
@@ -564,18 +571,19 @@ To visualize the rows and columns, use the command: roulette table"""
                     f"**{ctx.author}** won **${money * (maximum - 1)}** while betting with `{maximum}`. ({round(100/maximum, 2)}% chance)"
                 )
         else:
-            await self.bot.pool.execute(
-                'UPDATE profile SET money=money-$1 WHERE "user"=$2;',
-                money,
-                ctx.author.id,
-            )
-            await self.bot.log_transaction(
-                ctx,
-                from_=ctx.author.id,
-                to=2,
-                subject="gambling",
-                data={"Amount": money},
-            )
+            if money > 0:
+                await self.bot.pool.execute(
+                    'UPDATE profile SET money=money-$1 WHERE "user"=$2;',
+                    money,
+                    ctx.author.id,
+                )
+                await self.bot.log_transaction(
+                    ctx,
+                    from_=ctx.author.id,
+                    to=2,
+                    subject="gambling",
+                    data={"Amount": money},
+                )
             await ctx.send(
                 _(
                     "You lost **${money}**! The random number was `{num}`, you tipped `{tip}`."
@@ -595,9 +603,10 @@ To visualize the rows and columns, use the command: roulette table"""
             amount,
             ctx.author.id,
         )
-        await self.bot.log_transaction(
-            ctx, from_=ctx.author.id, to=2, subject="gambling", data={"Amount": amount}
-        )
+        if amount > 0:
+            await self.bot.log_transaction(
+                ctx, from_=ctx.author.id, to=2, subject="gambling", data={"Amount": amount}
+            )
         bj = BlackJack(ctx, amount)
         await bj.run()
 
