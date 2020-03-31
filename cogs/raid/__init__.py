@@ -756,14 +756,13 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
     @is_god()
     @raid_free()
     @commands.command()
-    async def edenspawn(self, ctx, hp: IntGreaterThan(0)):
-        """[Eden only] Starts a raid."""
+    async def tetspawn(self, ctx):
+        """[Tet only] Starts a raid."""
         await self.set_raid_timer()
         await self.bot.session.get(
             "https://raid.travitia.xyz/toggle",
             headers={"Authorization": self.bot.config.raidauth},
         )
-        self.boss = {"hp": hp, "min_dmg": 100, "max_dmg": 500}
         await ctx.channel.set_permissions(
             ctx.guild.default_role, overwrite=self.read_only
         )
@@ -779,24 +778,51 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
 """,
             file=discord.File("assets/other/guardian.jpg"),
         )
+
+    @is_god()
+    @raid_free()
+    @commands.command()
+    async def edenspawn(self, ctx, hp: IntGreaterThan(0)):
+        """[Eden only] Starts a raid."""
+        await self.set_raid_timer()
+        await self.bot.session.get(
+            "https://raid.travitia.xyz/toggle",
+            headers={"Authorization": self.bot.config.raidauth},
+        )
+        self.boss = {"hp": hp, "min_dmg": 100, "max_dmg": 500}
+        await ctx.channel.set_permissions(
+            ctx.guild.default_role, overwrite=self.read_only
+        )
+        await ctx.send(
+            """
+Let's play a game.
+
+The game will start in 15 Minutes...
+Use https://raid.travitia.xyz/ to join the raid!
+**Only followers of Tet may join.**
+
+Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=453963965521985536&scope=identify&response_type=code&redirect_uri=https://raid.travitia.xyz/callback>
+""",
+            file=discord.File("assets/other/tet.png"),
+        )
         if not self.bot.config.is_beta:
             await asyncio.sleep(300)
-            await ctx.send("**The guardian will be vulnerable in 10 minutes**")
+            await ctx.send("**The game starts in 10 minutes**")
             await asyncio.sleep(300)
-            await ctx.send("**The guardian will be vulnerable in 5 minutes**")
+            await ctx.send("**The game starts in 5 minutes**")
             await asyncio.sleep(180)
-            await ctx.send("**The guardian will be vulnerable in 2 minutes**")
+            await ctx.send("**The game starts in 2 minutes**")
             await asyncio.sleep(60)
-            await ctx.send("**The guardian will be vulnerable in 1 minute**")
+            await ctx.send("**The game starts in 1 minute**")
             await asyncio.sleep(30)
-            await ctx.send("**The guardian will be vulnerable in 30 seconds**")
+            await ctx.send("**The game starts in 30 seconds**")
             await asyncio.sleep(20)
-            await ctx.send("**The guardian will be vulnerable in 10 seconds**")
+            await ctx.send("**The game starts in 10 seconds**")
             await asyncio.sleep(10)
         else:
             await asyncio.sleep(60)
         await ctx.send(
-            "**The guardian is vulnerable! Fetching participant data... Hang on!**"
+            "**The game is starting! Fetching participant data... Hang on!**"
         )
 
         async with self.bot.session.get(
@@ -805,97 +831,82 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
         ) as r:
             raid_raw = await r.json()
         async with self.bot.pool.acquire() as conn:
-            raid = {}
+            raid = []
             for i in raid_raw:
                 u = await self.bot.get_user_global(i)
                 if not u:
                     continue
-                if not await conn.fetchval(
-                    'SELECT "user" FROM profile WHERE "user"=$1', u.id
+                if (
+                    await conn.fetchval(
+                        'SELECT "god" FROM profile WHERE "user"=$1', u.id
+                    )
+                    != "Tet"
                 ):
                     continue
-                try:
-                    dmg, deff = await self.bot.get_raidstats(
-                        u, god="Eden", conn=conn
-                    )
-                except ValueError:
-                    continue
-                raid[u] = {"hp": 250, "armor": deff, "damage": dmg}
+                raid.append(u)
 
         await ctx.send("**Done getting data!**")
 
         start = datetime.datetime.utcnow()
 
-        while (
-            self.boss["hp"] > 0
-            and len(raid) > 0
-            and datetime.datetime.utcnow() < start + datetime.timedelta(minutes=45)
+        games = {
+            "I wonder if I'll win this.": 1,
+            "Coin Flip": 50,
+            "Tic-Tac-Toe": 55,
+            "Hangman": 60,
+            "Battleship": 65,
+            "Connect Four": 70,
+            "Dots and Boxes": 75,
+            "Checkers": 80,
+            "Mancala": 85,
+            "Poker": 90,
+            "Chess": 95,
+            "You look boring.": 99,
+        }
+
+        while len(raid) > 1 and datetime.datetime.utcnow() < start + datetime.timedelta(
+            minutes=45
         ):
-            target = random.choice(list(raid.keys()))  # the guy it will attack
-            dmg = random.randint(self.boss["min_dmg"], self.boss["max_dmg"])
-            dmg = self.getfinaldmg(dmg, raid[target]["armor"])
-            raid[target]["hp"] -= dmg  # damage dealt
-            if raid[target]["hp"] > 0:
-                em = discord.Embed(
-                    title="The Guardian attacks the seekers of the garden!",
-                    description=f"{target} now has {raid[target]['hp']} HP!",
-                    colour=0xFFB900,
-                )
+            idx, target = random.choice([(i, j) for i, j in enumerate(raid)])
+            game, tet_success = random.choice(list(games.items()))
+            if tet_success in (1, 99):
+                text = game
+                if tet_success == 1:
+                    win_text, loss_text = "As expected. You won.", "Now way! You lost."
+                else:
+                    win_text, loss_text = (
+                        "Hmm maybe I'll give you another chance.",
+                        "Game Over. You lose.",
+                    )
             else:
-                em = discord.Embed(
-                    title="The Guardian attacks the seekers of the garden!",
-                    description=f"{target} died!",
-                    colour=0xFFB900,
-                )
-            em.add_field(name="Theoretical Damage", value=dmg + raid[target]["armor"])
-            em.add_field(name="Shield", value=raid[target]["armor"])
-            em.add_field(name="Effective Damage", value=dmg)
+                text = f"Tet challenges you to {game}."
+                win_text, loss_text = "Congrats. You won.", "Ah too bad. You lost."
+            randnum = random.randint(1, 100)
+            if randnum <= tet_success:  # the player looses
+                del raid[idx]
+                em = discord.Embed(title=text, description=loss_text, colour=0xFFB900,)
+            else:
+                em = discord.Embed(title=text, description=win_text, colour=0xFFB900,)
             em.set_author(name=str(target), icon_url=target.avatar_url)
-            em.set_thumbnail(url=f"{self.bot.BASE_URL}/guardian_small.jpg")
-            await ctx.send(embed=em)
-            if raid[target]["hp"] <= 0:
-                del raid[target]
-            dmg_to_take = sum(i["damage"] for i in raid.values())
-            self.boss["hp"] -= dmg_to_take
-            await asyncio.sleep(4)
-            em = discord.Embed(
-                title="The seekers attacked the Guardian!", colour=0xFF5C00
-            )
-            em.set_thumbnail(url=f"{self.bot.BASE_URL}/eden_followers.jpg")
-            em.add_field(name="Damage", value=dmg_to_take)
-            if self.boss["hp"] > 0:
-                em.add_field(name="HP left", value=self.boss["hp"])
-            else:
-                em.add_field(name="HP left", value="Dead!")
+            em.set_thumbnail(url=f"{self.bot.BASE_URL}/tet.png")
             await ctx.send(embed=em)
             await asyncio.sleep(4)
 
-        if len(raid) == 0:
-            await ctx.send("The raid was all wiped!")
-        elif self.boss["hp"] < 1:
+        if len(raid) == 1:
             await ctx.channel.set_permissions(
                 ctx.guild.default_role, overwrite=self.allow_sending
             )
-            winner = random.choice(list(raid.keys()))
-            await self.bot.pool.execute('UPDATE profile SET "crates_legendary"="crates_legendary"+1 WHERE "user"=$1;', winner.id)
-            await ctx.send(
-                f"The guardian was defeated, the seekers can enter the garden! Eden has gracefully given {winner.mention} a legendary crate for their efforts."
-            )
-
-            cash = int(hp / 4 / len(raid))  # what da hood gets per survivor
+            winner = raid[0]
             await self.bot.pool.execute(
-                'UPDATE profile SET money=money+$1 WHERE "user"=ANY($2);',
-                cash,
-                [u.id for u in raid.keys()],
+                'UPDATE profile SET "crates_legendary"="crates_legendary"+1 WHERE "user"=$1;',
+                winner.id,
             )
             await ctx.send(
-                f"**Gave ${cash} of the Guardian's ${int(hp / 4)} drop to all survivors!**"
+                f"The game is over. {winner.mention} has lasted the longest against Tet and received a legendary crate."
             )
 
         else:
-            await ctx.send(
-                "The raid did not manage to kill the Guardian within 45 Minutes... The entrance remains blocked!"
-            )
+            await ctx.send("The game lasted too long and Tet has stopped it.")
 
         await asyncio.sleep(30)
         await ctx.channel.set_permissions(

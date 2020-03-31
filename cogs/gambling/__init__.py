@@ -605,7 +605,11 @@ To visualize the rows and columns, use the command: roulette table"""
         )
         if amount > 0:
             await self.bot.log_transaction(
-                ctx, from_=ctx.author.id, to=2, subject="gambling", data={"Amount": amount}
+                ctx,
+                from_=ctx.author.id,
+                to=2,
+                subject="gambling",
+                data={"Amount": amount},
             )
         bj = BlackJack(ctx, amount)
         await bj.run()
