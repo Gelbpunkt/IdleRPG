@@ -1,3 +1,74 @@
+<a name="v4.6.0"></a>
+
+## [v4.6.0](https://git.travitia.xyz/Kenvyra/IdleRPG/compare/v4.5.1...v4.6.0)
+
+> 2020-03-31
+
+### Additions
+
+- Add $roulette and $roulette table. They use a French roulette board with only one zero and a full list of bidding options is in the help.
+  We do currently not support multiple bids.
+- Add redis version and CPU temperature to $stats
+- We have added two new gods (Tet and Eden) plus raids and removed 3 old gods who left the server. Their boundaries are 0.8-1.2 and 0.5-1.5.
+- The "You are not a donator" error now shows which donator rank is required for the command.
+- We have added https://join.travitia.xyz, a website for joining huge amounts of players outside of Discord to reduce spam.
+  This is used for tournaments and hungergames in the Support Server and guild adventures.
+- We have added $adminauction to auction items for Bot Administrators.
+- We moved to a new custom proxy solution and have added support for it.
+- Many converters for money and users have better error handling instead of "You used a bad argument!" now.
+- $bags shows the trick-or-treat-bags.
+- We are now logging every single transaction possible.
+
+### Changes
+
+- Adjust halloween and easter
+- We have moved to aiohttp 4.0a1 and are using cchardet and aiodns to speed it up even more.
+- The Dockerfile now installs the dependency libraries based on the current architecture.
+  Supported are x86\_64 and aarch64
+- We have balanced out the easter event
+- Be non-NSFW in marriage.py and adapted chance of money loss.
+- Handle wavelink connection issues differently
+- Rework active battles
+- Set upgrade and merge maximum for two-handed items to 62
+- Speed up implementation of $fancy
+- Take BlackJack back to 1000
+- Update rules, add error handler for some music checks
+- Update stats less often
+
+### Fixes
+
+- Add Nitro booster and Administrator as basic donator ranks
+- The default timezone is set to prevent DeprecationWarnings
+- uvloop is now compiled with Python 3.9 support to prevent DeprecationWarnings
+- Default DM messages to English
+- Escape username markdown in toplists (this is WIP)
+- Fix raid bids logging, no longer log zero gambles
+- Fix ikhdosa raid
+- Fix issue with bot.wavelink being undefined
+- Fix easter guild badge
+- Fix factorials in $math
+- Update makebackground to use JSON content type (fix)
+- Update imgur command to explicitely send JSON data
+- Update adminwipeperks command to current meta
+
+### Merge Requests
+
+- Merge branch 'logging' into 'v4'
+- Merge branch 'markdown' into 'v4'
+- Merge branch 'typos' into 'v4'
+- Merge branch 'battles' into 'v4'
+- Merge branch 'feature/extend\_french\_translation' into 'v4'
+- Merge branch 'fix-formatting' into 'v4'
+- Merge branch 'feature/extend\_french\_translation' into 'v4'
+- Merge branch 'active-battle' into 'v4'
+- Merge branch 'logging' into 'v4'
+- Merge branch 'english-in-dm' into 'v4'
+- Merge branch 'easter' into 'v4'
+- Merge branch 'patch-1' into 'v4'
+- Merge branch 'patch-1' into 'v4'
+- Merge branch 'awipeperks' into 'v4'
+
+
 <a name="v4.5.1"></a>
 
 ## [v4.5.1](https://git.travitia.xyz/Kenvyra/IdleRPG/compare/v4.5.0...v4.5.1)
