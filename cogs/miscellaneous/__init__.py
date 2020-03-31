@@ -334,56 +334,49 @@ Average hours of work: **{hours}**"""
         _("""Shows you the bots current version along with its new updates.""")
         await ctx.send(
             """\
-**v4.5.0**
-https://git.travitia.xyz/Kenvyra/IdleRPG/compare/v4.4.0...v4.5.0
+**v4.6.0**
+https://git.travitia.xyz/Kenvyra/IdleRPG/compare/v4.5.1...v4.6.0
 
-> 2020-02-07
+> 2020-03-31
 
-**Fixes**
-
-- a fix for the translator tool
-- Fix maxstat and minstat for merchall with new limits
-- Fix startup items
-- Fix the top follower order
-- Fix locales xgettext issue
-- Fix the rules
-- fix weapontype
-- fix a bug in command sacrifice
-- fix equip logic
-- fix activeadventure
-- fix itemtype and resetitem logic
-- fix some equip logic
-- fix profile for cases with one item equipped
-- fix some equip logic
-- fix trader, activebattle
-- fix equip formatting
-- fix itemreset bug
-- fix alterraid
-- fix images not loading on previously added pages
-- fix a bug with resetting changed type items
-- fix alteraid
-- include a profile check for every raid: prevents raids from crashing
+**Additions**
+- Add French $roulette and $roulette table. Bid options are in the help.
+- Add redis version and CPU temperature to $stats
+- We have added two new gods (Tet and Eden).
+- The "You are not a donator" error now shows which donator rank is required for the command.
+- We have added https://join.travitia.xyz, a website for joining huge amounts of players outside of Discord to reduce spam.
+- We moved to a new custom proxy solution and have added support for it.
+- Many converters for money and users have better error handling instead of "You used a bad argument!" now.
+- $bags shows the trick-or-treat-bags.
+- We are now logging every single transaction possible.
 
 **Changes**
+- Adjust halloween and easter
+- We have moved to aiohttp 4.0a1 and are using cchardet and aiodns to speed it up even more.
+- We have moved to Alpine Linux 3.12 alpha to use gcc 9.3
+- We have moved to Python 3.9a5
+- The Dockerfile now installs the dependency libraries based on the current architecture.
+  Supported are x86_64 and aarch64
+- We have balanced out the easter event
+- Be non-NSFW in marriage.py and adapted chance of money loss.
+- Handle wavelink connection issues differently
+- Rework active battles
+- Set upgrade and merge maximum for two-handed items to 62
+- Speed up implementation of $fancy
+- Take BlackJack back to 1000
+- Update rules, add error handler for some music checks
 
-- adapt ingame stat calculations
-- Add information on level up to lv12; reset guild and alliance cooldown on ctx confirm deny
-- add luck boundaries for god luck
-- Change equip logic
-- extend occupy cooldown, better information for unable to attack city
-- fix weapontype
-- Force utf-8 for language fixer
-- generate items of other types
-- equipping is now based on hands, some types use one hand, any hand or two hands. Two-handed items have a 1.5x higher stat to balance them more with the rest
-- make beta.sh retain original ownerships
-- Not returning the follower list if the user doesn't follow anyone
-- Require sending at least $1 when using $give
-- Set $0 defaults for $activebattle, $tournament and $raidtournament
-- use python 3.9.0a3
-
-**Merge Requests**
-
-*snip*"""
+**Fixes**
+- Add Nitro booster and Administrator as basic donator ranks
+- The default timezone is set to prevent DeprecationWarnings
+- uvloop is now compiled with Python 3.9 support to prevent DeprecationWarnings
+- Default DM messages to English
+- Escape username markdown in toplists (this is WIP)
+- Fix raid bids logging, no longer log zero gambles
+- Fix issue with bot.wavelink being undefined
+- Fix easter guild badge
+- Fix factorials in $math
+- Update adminwipeperks command to current meta"""
         )
 
     @commands.has_permissions(manage_messages=True)
