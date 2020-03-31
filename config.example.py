@@ -327,7 +327,7 @@ gods = {
         "boundaries": (0.8, 1.2),
     },
     "Eden": {
-        "user": 693885967232139324,
+        "user": 339217921576402956,
         "description": "Eden is a goddess of sanctuary, protection and nature. People whisper prayers to her to keep them safe from danger and to find sanctuary from those who wish them harm. Her garden lays deep in the world filled with beauty and splendor. Those who seek it must travel into the depths of nature and pass the trails of the gatekeeper to enter.",
         "boundaries": (0.5, 1.5),
     },
