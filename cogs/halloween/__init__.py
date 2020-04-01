@@ -34,7 +34,7 @@ class Halloween(commands.Cog):
 
     @checks.has_char()
     @user_cooldown(43200)
-    @commands.command(aliases=["tot"])
+    @commands.command(aliases=["tot"], enabled=False)
     @locale_doc
     async def trickortreat(self, ctx):
         _("""Trick or treat!""")
