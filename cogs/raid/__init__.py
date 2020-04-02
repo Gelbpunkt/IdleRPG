@@ -125,38 +125,39 @@ class Raid(commands.Cog):
         )
         spawnmsg = await ctx.send(
             f"""
-**ATTENTION! A GIANT TORT HAS SPAWNED!**
-This delicious beast of a product of human baking knowledge has {self.boss['hp']} HP and has high-end loot!
-The tasty cake will be vulnerable in 15 Minutes
+**ATTENTION! A ZEREKIEL HAS SPAWNED!**
+This boss has {self.boss['hp']} HP and has high-end loot!
+The evil dragon will be vulnerable in 15 Minutes
+
 Use https://raid.travitia.xyz/ to join the raid!
 
 Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=453963965521985536&scope=identify&response_type=code&redirect_uri=https://raid.travitia.xyz/callback>
 """,
-            file=discord.File("assets/other/tort.jpg"),
+            file=discord.File("assets/other/dragon.jpg"),
         )
         self.boss.update(message=spawnmsg.id)
         if not self.bot.config.is_beta:
             await self.bot.get_channel(506_167_065_464_406_041).send(
-                "@everyone A giant tort spawned! 15 Minutes until it is vulnerable...\nUse https://raid.travitia.xyz/ to join the raid!"
+                "@everyone Zerekiel spawned! 15 Minutes until he is vulnerable...\nUse https://raid.travitia.xyz/ to join the raid!"
             )
         if not self.bot.config.is_beta:
             await asyncio.sleep(300)
-            await ctx.send("**The cake will be vulnerable in 10 minutes**")
+            await ctx.send("**The dragon will be vulnerable in 10 minutes**")
             await asyncio.sleep(300)
-            await ctx.send("**The cake will be vulnerable in 5 minutes**")
+            await ctx.send("**The dragon will be vulnerable in 5 minutes**")
             await asyncio.sleep(180)
-            await ctx.send("**The cake will be vulnerable in 2 minutes**")
+            await ctx.send("**The dragon will be vulnerable in 2 minutes**")
             await asyncio.sleep(60)
-            await ctx.send("**The cake will be vulnerable in 1 minute**")
+            await ctx.send("**The dragon will be vulnerable in 1 minute**")
             await asyncio.sleep(30)
-            await ctx.send("**The cake will be vulnerable in 30 seconds**")
+            await ctx.send("**The dragon will be vulnerable in 30 seconds**")
             await asyncio.sleep(20)
-            await ctx.send("**The cake will be vulnerable in 10 seconds**")
+            await ctx.send("**The dragon will be vulnerable in 10 seconds**")
             await asyncio.sleep(10)
         else:
             await asyncio.sleep(60)
         await ctx.send(
-            "**The cake is vulnerable! Fetching participant data... Hang on!**"
+            "**The dragon is vulnerable! Fetching participant data... Hang on!**"
         )
 
         async with self.bot.session.get(
@@ -194,13 +195,13 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
             raid[target]["hp"] -= finaldmg  # damage dealt
             if raid[target]["hp"] > 0:
                 em = discord.Embed(
-                    title="Tort attacked!",
+                    title="Zerekiel attacked!",
                     description=f"{target} now has {raid[target]['hp']} HP!",
                     colour=0xFFB900,
                 )
             else:
                 em = discord.Embed(
-                    title="Tort attacked!",
+                    title="Zerekiel attacked!",
                     description=f"{target} died!",
                     colour=0xFFB900,
                 )
@@ -210,14 +211,14 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
             em.add_field(name="Shield", value=raid[target]["armor"])
             em.add_field(name="Effective Damage", value=finaldmg)
             em.set_author(name=str(target), icon_url=target.avatar_url)
-            em.set_thumbnail(url=f"{self.bot.BASE_URL}/torte.jpg")
+            em.set_thumbnail(url=f"{self.bot.BASE_URL}/dragon.jpg")
             await ctx.send(embed=em)
             if raid[target]["hp"] <= 0:
                 del raid[target]
             dmg_to_take = sum(i["damage"] for i in raid.values())
             self.boss["hp"] -= dmg_to_take
             await asyncio.sleep(4)
-            em = discord.Embed(title="The raid attacked the cake!", colour=0xFF5C00)
+            em = discord.Embed(title="The raid attacked Zerekiel!", colour=0xFF5C00)
             em.set_thumbnail(url=f"{self.bot.BASE_URL}/knight.jpg")
             em.add_field(name="Damage", value=dmg_to_take)
             if self.boss["hp"] > 0:
@@ -234,7 +235,6 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
             await ctx.channel.set_permissions(
                 ctx.guild.default_role, overwrite=self.allow_sending
             )
-            """
             highest_bid = [
                 ctx.guild.get_member(356_091_260_429_402_122),
                 0,
@@ -294,15 +294,6 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
                 await ctx.send(
                     f"{highest_bid[0].mention} spent the money in the meantime... Meh! Noone gets it then, pah!\nThis incident has been reported and they will get banned if it happens again. Cheers!"
                 )
-            """
-            winner = random.choice(list(raid.keys()))
-            await self.bot.pool.execute(
-                'UPDATE profile SET "crates_legendary"="crates_legendary"+1 WHERE "user"=$1;',
-                winner.id,
-            )
-            await ctx.send(
-                f"The tort is defeated and apart from a ton of cake mass, we found a <:CrateLegendary:598094865678598144> inside. {winner.mention} was so heroic and lucky to stand nearby, they snagged it!"
-            )
 
             cash = int(hp / 4 / len(raid))  # what da hood gets per survivor
             await self.bot.pool.execute(
@@ -311,12 +302,12 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
                 [u.id for u in raid.keys()],
             )
             await ctx.send(
-                f"**Gave ${cash} of the cake's ${int(hp / 4)} drop to all survivors!**"
+                f"**Gave ${cash} of the Zerekiel's ${int(hp / 4)} drop to all survivors!**"
             )
 
         else:
             m = await ctx.send(
-                "The raid did not manage to kill the cake within 45 Minutes... He disappeared!"
+                "The raid did not manage to kill Zerekiel within 45 Minutes... He disappeared!"
             )
             await m.add_reaction("\U0001F1EB")
 
