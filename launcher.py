@@ -182,16 +182,18 @@ class Main:
             # parse the JSON args
             if (args := payload.get("args", {})) :
                 args = json.loads(args)
-            if payload["action"] == "restart" and (id_ := args.get("id")) is not None:
+            id_ = args.get("id")
+            id_exists = id_ is not None
+            if payload["action"] == "restart" and id_exists:
                 print(f"[INFO] Restart requested for cluster #{id_}")
                 self.loop.create_task(self.get_instance(self.instances, id_).restart())
-            if payload["action"] == "stop" and (id_ := args.get("id")) is not None:
+            elif payload["action"] == "stop" and id_exists:
                 print(f"[INFO] Stop requested for cluster #{id_}")
                 self.loop.create_task(self.get_instance(self.instances, id_).stop())
-            if payload["action"] == "start" and (id_ := args.get("id")) is not None:
+            elif payload["action"] == "start" and id_exists:
                 print(f"[INFO] Start requested for cluster #{id_}")
                 self.loop.create_task(self.get_instance(self.instances, id_).start())
-            if payload["action"] == "statuses" and payload.get("command_id"):
+            elif payload["action"] == "statuses" and payload.get("command_id"):
                 statuses = {}
                 for instance in self.instances:
                     statuses[str(instance.id)] = {

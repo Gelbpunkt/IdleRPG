@@ -1,0 +1,7 @@
+FROM idlerpg:latest
+
+RUN apk add --no-cache --virtual .deps gcc musl-dev && \
+    pip3 install mypy && \
+    apk del .deps
+
+CMD mypy launcher.py

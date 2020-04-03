@@ -262,16 +262,15 @@ class GameBase:
         cast = list(self.chunks(cast, 2))
         self.cast = cast
         text = _("Team")
-        cast = "\n".join(
-            [
-                f"{text} #{i}: {team[0].mention} {team[1].mention}"
-                if len(team) == 2
-                else f"{text} #{i}: {team[0].mention}"
-                for i, team in enumerate(cast, start=1)
-            ]
-        )
-        text = _("The cast")
-        await self.ctx.send(f"**{text}**\n{cast}")
+        paginator = commands.Paginator()
+        paginator.add_line(_("**The cast**"))
+        for i, team in enumerate(cast, start=1):
+            if len(team) == 2:
+                paginator.add_line(f"{text} #{i}: {team[0].mention} {team[1].mention}")
+            else:
+                paginator.add_line(f"{text} #{i}: {team[0].mention}")
+        for page in paginator.pages:
+            await self.ctx.send(page)
 
     async def main(self):
         self.round = 1

@@ -135,7 +135,7 @@ class Maths(commands.Cog):
                 _("Illegal character '{character}'").format(character=t.value[0])
             )
 
-        self.lexer = lex(debug=True)
+        self.lexer = lex()
 
         # Precedence rules for the arithmetic operators
         precedence = (

@@ -315,7 +315,10 @@ class Sharding(commands.Cog):
         )
 
     async def latency(self, command_id: str):
-        payload = {"output": round(self.bot.latency * 1000, 2), "command_id": command_id}
+        payload = {
+            "output": round(self.bot.latency * 1000, 2),
+            "command_id": command_id,
+        }
         await self.bot.redis.execute(
             "PUBLISH", self.communication_channel, json.dumps(payload)
         )
