@@ -132,7 +132,7 @@ class GameBase:
                     await status.edit(content=f"{status.content}\n{text}")
                 except discord.errors.NotFound:
                     status = await self.ctx.send(
-                        f"{roundtext}\n{text}", delete_after=60
+                        f"{roundtext.format(round=self.round)}\n{text}", delete_after=60
                     )
                 actions = random.sample(all_actions, 3)
                 possible_kills = [
