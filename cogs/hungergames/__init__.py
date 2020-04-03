@@ -251,9 +251,11 @@ class GameBase:
                 self.players.remove(p)
             except ValueError:
                 pass
-        await self.ctx.send(
-            "\n".join([f"{u} {a}" for u, a in user_actions]), delete_after=60
-        )
+        paginator = commands.Paginator(prefix="", suffix="")
+        for u, a in user_actions:
+            paginator.add_line(f"{u} {a}")
+        for page in paginator.pages:
+            await self.ctx.send(page, delete_after=60)
         self.round += 1
 
     async def send_cast(self):
