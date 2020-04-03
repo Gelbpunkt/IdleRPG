@@ -192,7 +192,6 @@ class Main:
                 print(f"[INFO] Start requested for cluster #{id_}")
                 self.loop.create_task(self.get_instance(self.instances, id_).start())
             if payload["action"] == "statuses" and payload.get("command_id"):
-                print("[INFO] Sending statuses")
                 statuses = {}
                 for instance in self.instances:
                     statuses[str(instance.id)] = {
