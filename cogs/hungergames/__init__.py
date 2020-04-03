@@ -262,7 +262,7 @@ class GameBase:
         cast = list(self.chunks(cast, 2))
         self.cast = cast
         text = _("Team")
-        paginator = commands.Paginator()
+        paginator = commands.Paginator(prefix="", suffix="")
         paginator.add_line(_("**The cast**"))
         for i, team in enumerate(cast, start=1):
             if len(team) == 2:
