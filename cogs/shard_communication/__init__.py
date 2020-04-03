@@ -187,7 +187,7 @@ class Sharding(commands.Cog):
             if payload.get("action") and hasattr(self, payload.get("action")):
                 try:
                     if payload.get("scope") != "bot":
-                        return  # it's not our cup of tea
+                        continue  # it's not our cup of tea
                     if payload.get("args"):
                         self.bot.loop.create_task(
                             getattr(self, payload["action"])(
@@ -310,6 +310,12 @@ class Sharding(commands.Cog):
             code = "\n".join(code.split("\n")[1:-1])
         code = code.strip("` \n")
         payload = {"output": await _evaluate(self.bot, code), "command_id": command_id}
+        await self.bot.redis.execute(
+            "PUBLISH", self.communication_channel, json.dumps(payload)
+        )
+
+    async def latency(self, command_id: str):
+        payload = {"output": round(self.bot.latency * 1000, 2), "command_id": command_id}
         await self.bot.redis.execute(
             "PUBLISH", self.communication_channel, json.dumps(payload)
         )

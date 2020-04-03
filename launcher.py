@@ -32,7 +32,7 @@ from config import additional_shards, shard_announce_channel, shard_per_cluster,
 if sys.version_info < (3, 8):
     raise Exception("IdleRPG requires Python 3.8")
 
-__version__ = "0.7.0a"
+__version__ = "1.0.0"
 
 BOT_FILE = "idlerpg.py"
 
@@ -76,13 +76,13 @@ class Instance:
     ):
         self.main = main
         self.loop = loop
-        print(shard_list)
         self.shard_count = shard_count  # overall shard count
         self.started_at = None
         self.id = instance_id
         self.name = name
         self.command = f'{sys.executable} {Path.cwd() / BOT_FILE} "{shard_list}" {shard_count} {self.id} {self.name}'
         self._process = None
+        self.status = "initialized"
         loop.create_task(self.start())
 
     @property
@@ -104,11 +104,13 @@ class Instance:
         )
         task = self.loop.create_task(self._run())
         print(f"[Cluster #{self.id}] Started successfully")
+        self.status = "running"
         task.add_done_callback(
             self.main.dead_process_handler
         )  # TODO: simply use it inline
 
     async def stop(self):
+        self.status = "stopped"
         self._process.terminate()
         await asyncio.sleep(5)
         if self.is_active:
@@ -143,6 +145,10 @@ class Main:
         )
         if instance._process.returncode == 0:
             print(f"[Cluster #{instance.id} ({instance.name})] Stopped gracefully")
+        elif instance.status == "stopped":
+            print(
+                f"[Cluster #{instance.id} ({instance.name})] Stopped by command, not restarting"
+            )
         else:
             stderr = "\n".join(stderr.decode("utf-8").split("\n"))
             print(f"[Cluster #{instance.id} ({instance.name})] STDERR: {stderr}")
@@ -170,26 +176,31 @@ class Main:
             try:
                 payload = await channel.get_json(encoding="utf-8")
             except json.decoder.JSONDecodeError:
-                return  # not a valid JSON message
+                continue  # not a valid JSON message
             if payload.get("scope") != "launcher" or not payload.get("action"):
-                return  # not the launcher's task
-            if payload["action"] == "restart":
-                self.loop.create_task(
-                    self.get_instance(self.instances, payload["id"]).restart()
-                )
-                return
-            if payload["action"] == "stop":
-                self.loop.create_task(
-                    self.get_instance(self.instances, payload["id"]).stop()
-                )
-            if payload["action"] == "start":
-                self.loop.create_task(
-                    self.get_instance(self.instances, payload["id"]).start()
-                )
+                continue  # not the launcher's task
+            # parse the JSON args
+            if (args := payload.get("args", {})) :
+                args = json.loads(args)
+            if payload["action"] == "restart" and (id_ := args.get("id")) is not None:
+                print(f"[INFO] Restart requested for cluster #{id_}")
+                self.loop.create_task(self.get_instance(self.instances, id_).restart())
+            if payload["action"] == "stop" and (id_ := args.get("id")) is not None:
+                print(f"[INFO] Stop requested for cluster #{id_}")
+                self.loop.create_task(self.get_instance(self.instances, id_).stop())
+            if payload["action"] == "start" and (id_ := args.get("id")) is not None:
+                print(f"[INFO] Start requested for cluster #{id_}")
+                self.loop.create_task(self.get_instance(self.instances, id_).start())
             if payload["action"] == "statuses" and payload.get("command_id"):
+                print("[INFO] Sending statuses")
                 statuses = {}
                 for instance in self.instances:
-                    payload[instance.name] = instance.is_active
+                    statuses[str(instance.id)] = {
+                        "active": instance.is_active,
+                        "status": instance.status,
+                        "name": instance.name,
+                        "started_at": instance.started_at,
+                    }
                 await self.redis.execute(
                     "PUBLISH",
                     shard_announce_channel,
