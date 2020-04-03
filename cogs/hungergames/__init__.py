@@ -175,7 +175,8 @@ class GameBase:
                     await self.ctx.send(
                         _(
                             "I couldn't send a DM to {user}! Choosing random action..."
-                        ).format(user=p[0])
+                        ).format(user=p[0]),
+                        delete_after=30,
                     )
                     action = random.choice(actions2)
                 if okay or (not okay and isinstance(action[2], tuple)):
@@ -194,10 +195,7 @@ class GameBase:
                 try:
                     await status.edit(content=f"{status.content} {text}")
                 except discord.errors.NotFound:
-                    status = await self.ctx.send(
-                        f"**{roundtext}\n{text}".format(round=self.round),
-                        delete_after=60,
-                    )
+                    pass
             else:
                 possible_kills = [item for item in p if p not in killed_this_round]
                 if len(possible_kills) > 0:
