@@ -260,13 +260,14 @@ class Errorhandler(commands.Cog):
                         "The languages have been reloaded while you were using a command. The execution therefore had to be stopped. Please try again."
                     )
                 )
-            print("In {}:".format(ctx.command.qualified_name), file=sys.stderr)
-            traceback.print_tb(error.original.__traceback__)
-            print(
-                "{0}: {1}".format(error.original.__class__.__name__, error.original),
-                file=sys.stderr,
-            )
-            if self.client:
+            if not self.client:
+                print("In {}:".format(ctx.command.qualified_name), file=sys.stderr)
+                traceback.print_tb(error.original.__traceback__)
+                print(
+                    "{0}: {1}".format(error.original.__class__.__name__, error.original),
+                    file=sys.stderr,
+                )
+            else:
                 try:
                     raise error.original
                 except Exception:
