@@ -264,7 +264,9 @@ class Errorhandler(commands.Cog):
                 print("In {}:".format(ctx.command.qualified_name), file=sys.stderr)
                 traceback.print_tb(error.original.__traceback__)
                 print(
-                    "{0}: {1}".format(error.original.__class__.__name__, error.original),
+                    "{0}: {1}".format(
+                        error.original.__class__.__name__, error.original
+                    ),
                     file=sys.stderr,
                 )
             else:
