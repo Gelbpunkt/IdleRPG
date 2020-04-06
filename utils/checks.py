@@ -462,9 +462,9 @@ async def guild_has_money(bot, guildid, money):
         return isinstance(res, int)
 
 
-def is_admin():
+def is_gm():
     async def predicate(ctx):
-        return ctx.author.id in ctx.bot.config.admins
+        return ctx.author.id in ctx.bot.config.game_masters
 
     return commands.check(predicate)
 

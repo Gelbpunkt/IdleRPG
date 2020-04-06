@@ -25,19 +25,19 @@ from discord.ext import commands
 
 from classes.converters import IntFromTo, IntGreaterThan, UserWithCharacter
 from cogs.shard_communication import user_on_cooldown as user_cooldown
-from utils.checks import has_char, is_admin
+from utils.checks import has_char, is_gm
 
 
-class Admin(commands.Cog):
+class GameMaster(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
         self.top_auction = None
 
-    @is_admin()
+    @is_gm()
     @commands.command(aliases=["cleanshop", "cshop"], hidden=True)
     @locale_doc
     async def clearshop(self, ctx):
-        _("""[Bot Admin only] Clean up the shop.""")
+        _("""[Game Master only] Clean up the shop.""")
         async with self.bot.pool.acquire() as conn:
             timed_out = await conn.fetch(
                 """DELETE FROM market WHERE "published" + '14 days'::interval < NOW() RETURNING *;""",
@@ -52,22 +52,22 @@ class Admin(commands.Cog):
             _("Cleared {num} shop items which timed out.").format(num=len(timed_out))
         )
 
-    @is_admin()
+    @is_gm()
     @commands.command(hidden=True)
     @locale_doc
     async def unban(self, ctx, *, other: discord.User):
-        _("""[Bot Admin only] Unban someone from the bot.""")
+        _("""[Game Master only] Unban someone from the bot.""")
         try:
             self.bot.bans.remove(other.id)
             await ctx.send(_("Unbanned: {other}").format(other=other.name))
         except ValueError:
             await ctx.send(_("{other} is not banned.").format(other=other.name))
 
-    @is_admin()
-    @commands.command(aliases=["agive"], hidden=True)
+    @is_gm()
+    @commands.command(hidden=True)
     @locale_doc
-    async def admingive(self, ctx, money: int, other: UserWithCharacter):
-        _("""[Bot Admin only] Gives money to a user without loss.""")
+    async def gmgive(self, ctx, money: int, other: UserWithCharacter):
+        _("""[Game Master only] Gives money to a user without loss.""")
         await self.bot.pool.execute(
             'UPDATE profile SET money=money+$1 WHERE "user"=$2;', money, other.id
         )
@@ -77,15 +77,15 @@ class Admin(commands.Cog):
             ).format(money=money, other=other)
         )
         await self.bot.http.send_message(
-            self.bot.config.admin_log_channel,
+            self.bot.config.gm_log_channel,
             f"**{ctx.author}** gave **${money}** to **{other}**.",
         )
 
-    @is_admin()
-    @commands.command(aliases=["aremove"], hidden=True)
+    @is_gm()
+    @commands.command(hidden=True)
     @locale_doc
-    async def adminremove(self, ctx, money: int, other: UserWithCharacter):
-        _("""[Bot Admin only] Removes money from a user without gain.""")
+    async def gmremove(self, ctx, money: int, other: UserWithCharacter):
+        _("""[Game Master only] Removes money from a user without gain.""")
         await self.bot.pool.execute(
             'UPDATE profile SET money=money-$1 WHERE "user"=$2;', money, other.id
         )
@@ -95,16 +95,16 @@ class Admin(commands.Cog):
             )
         )
         await self.bot.http.send_message(
-            self.bot.config.admin_log_channel,
+            self.bot.config.gm_log_channel,
             f"**{ctx.author}** removed **${money}** from **{other}**.",
         )
 
-    @is_admin()
-    @commands.command(aliases=["adelete"], hidden=True)
+    @is_gm()
+    @commands.command(hidden=True)
     @locale_doc
-    async def admindelete(self, ctx, other: UserWithCharacter):
-        _("""[Bot Admin only] Deletes any user's account.""")
-        if other.id in ctx.bot.config.admins:  # preserve deletion of admins
+    async def gmdelete(self, ctx, other: UserWithCharacter):
+        _("""[Game Master only] Deletes any user's account.""")
+        if other.id in ctx.bot.config.game_masters:  # preserve deletion of admins
             return await ctx.send(_("Very funny..."))
         async with self.bot.pool.acquire() as conn:
             g = await conn.fetchval(
@@ -127,15 +127,15 @@ class Admin(commands.Cog):
         await self.bot.pool.execute('DELETE FROM profile WHERE "user"=$1;', other.id)
         await ctx.send(_("Successfully deleted the character."))
         await self.bot.http.send_message(
-            self.bot.config.admin_log_channel, f"**{ctx.author}** deleted **{other}**."
+            self.bot.config.gm_log_channel, f"**{ctx.author}** deleted **{other}**."
         )
 
-    @is_admin()
-    @commands.command(aliases=["arename"], hidden=True)
+    @is_gm()
+    @commands.command(hidden=True)
     @locale_doc
-    async def adminrename(self, ctx, target: UserWithCharacter):
-        _("""[Bot Admin only] Renames a character.""")
-        if target.id in ctx.bot.config.admins:  # preserve renaming of admins
+    async def gmrename(self, ctx, target: UserWithCharacter):
+        _("""[Game Master only] Renames a character.""")
+        if target.id in ctx.bot.config.game_masters:  # preserve renaming of admins
             return await ctx.send(_("Very funny..."))
 
         await ctx.send(
@@ -160,14 +160,14 @@ class Admin(commands.Cog):
         )
         await ctx.send(_("Renamed."))
         await self.bot.http.send_message(
-            self.bot.config.admin_log_channel,
+            self.bot.config.gm_log_channel,
             f"**{ctx.author}** renamed **{target}** to **{name.content}**.",
         )
 
-    @is_admin()
-    @commands.command(aliases=["aitem"], hidden=True)
+    @is_gm()
+    @commands.command(hidden=True)
     @locale_doc
-    async def adminitem(
+    async def gmitem(
         self,
         ctx,
         stat: int,
@@ -177,7 +177,7 @@ class Admin(commands.Cog):
         *,
         name: str,
     ):
-        _("""[Bot Admin only] Create an item.""")
+        _("""[Game Master only] Create an item.""")
         if item_type not in self.bot.config.item_types:
             return await ctx.send(_("Invalid item type."))
         if not 0 <= stat <= 100:
@@ -205,18 +205,18 @@ class Admin(commands.Cog):
         )
 
         await ctx.send(_("Done."))
-        await self.bot.http.send_message(self.bot.config.admin_log_channel, message)
+        await self.bot.http.send_message(self.bot.config.gm_log_channel, message)
         for user in self.bot.owner_ids:
             user = await self.bot.get_user_global(user)
             await user.send(message)
 
-    @is_admin()
-    @commands.command(aliases=["acrate"], hidden=True)
+    @is_gm()
+    @commands.command(hidden=True)
     @locale_doc
-    async def admincrate(
+    async def gmcrate(
         self, ctx, rarity: str.lower, amount: int, target: UserWithCharacter
     ):
-        _("""[Bot Admin only] Gives/removes crates to a user without loss.""")
+        _("""[Game Master only] Gives/removes crates to a user without loss.""")
         if rarity not in ["common", "uncommon", "rare", "magic", "legendary"]:
             return await ctx.send(
                 _("{rarity} is not a valid rarity.").format(rarity=rarity)
@@ -232,15 +232,15 @@ class Admin(commands.Cog):
             )
         )
         await self.bot.http.send_message(
-            self.bot.config.admin_log_channel,
+            self.bot.config.gm_log_channel,
             f"**{ctx.author}** gave **{amount}** {rarity} crates to **{target}**.",
         )
 
-    @is_admin()
-    @commands.command(aliases=["axp"], hidden=True)
+    @is_gm()
+    @commands.command(hidden=True)
     @locale_doc
-    async def adminxp(self, ctx, target: UserWithCharacter, amount: int):
-        _("""[Bot Admin only] Gives xp to a user.""")
+    async def gmxp(self, ctx, target: UserWithCharacter, amount: int):
+        _("""[Game Master only] Gives xp to a user.""")
         await self.bot.pool.execute(
             'UPDATE profile SET "xp"="xp"+$1 WHERE "user"=$2;', amount, target.id
         )
@@ -250,15 +250,15 @@ class Admin(commands.Cog):
             )
         )
         await self.bot.http.send_message(
-            self.bot.config.admin_log_channel,
+            self.bot.config.gm_log_channel,
             f"**{ctx.author}** gave **{amount}** XP to **{target}**.",
         )
 
-    @is_admin()
-    @commands.command(aliases=["awipeperks"], hidden=True)
+    @is_gm()
+    @commands.command(hidden=True)
     @locale_doc
-    async def adminwipeperks(self, ctx, target: UserWithCharacter):
-        _("""[Bot Admin only] Wipes someone's donator perks.""")
+    async def gmwipeperks(self, ctx, target: UserWithCharacter):
+        _("""[Game Master only] Wipes someone's donator perks.""")
         async with self.bot.pool.acquire() as conn:
             await conn.execute(
                 'UPDATE profile SET "background"=$1, "class"=$2 WHERE "user"=$3;',
@@ -280,15 +280,15 @@ class Admin(commands.Cog):
             ).format(target=target)
         )
         await self.bot.http.send_message(
-            self.bot.config.admin_log_channel,
+            self.bot.config.gm_log_channel,
             f"**{ctx.author}** reset **{target}**'s donator perks.",
         )
 
-    @is_admin()
-    @commands.command(aliases=["aresetclass"], hidden=True)
+    @is_gm()
+    @commands.command(hidden=True)
     @locale_doc
-    async def adminresetclass(self, ctx, target: UserWithCharacter):
-        _("""[Bot Admin only] Resets someone's class(es).""")
+    async def hmresetclass(self, ctx, target: UserWithCharacter):
+        _("""[Game Master only] Resets someone's class(es).""")
         async with self.bot.pool.acquire() as conn:
             await conn.execute(
                 """UPDATE profile SET "class"='{"No Class", "No Class"}' WHERE "user"=$1;""",
@@ -297,16 +297,16 @@ class Admin(commands.Cog):
 
         await ctx.send(_("Successfully reset {target}'s class.").format(target=target))
         await self.bot.http.send_message(
-            self.bot.config.admin_log_channel,
+            self.bot.config.gm_log_channel,
             f"**{ctx.author}** reset **{target}**'s class.",
         )
 
-    @is_admin()
+    @is_gm()
     @user_cooldown(604800)  # 7 days
-    @commands.command(aliases=["asign"], hidden=True)
+    @commands.command(hidden=True)
     @locale_doc
-    async def adminsign(self, ctx, itemid: int, *, text: str):
-        _("""[Bot Admin only] Sign an item""")
+    async def gmsign(self, ctx, itemid: int, *, text: str):
+        _("""[Game Master only] Sign an item""")
         text = f"{text} (signed by {ctx.author})"
         if len(text) > 50:
             await self.bot.reset_cooldown(ctx)
@@ -316,15 +316,15 @@ class Admin(commands.Cog):
         )
         await ctx.send(_("Item successfully signed."))
         await self.bot.http.send_message(
-            self.bot.config.admin_log_channel,
+            self.bot.config.gm_log_channel,
             f"**{ctx.author}** signed {itemid} with *{text}*.",
         )
 
-    @is_admin()
-    @commands.command(aliases=["aauction"], hidden=True)
+    @is_gm()
+    @commands.command(hidden=True)
     @locale_doc
-    async def adminauction(self, ctx, *, item: str):
-        _("""[Bot Admin only] Start an auction on something.""")
+    async def gmauction(self, ctx, *, item: str):
+        _("""[Game Master only] Start an auction on something.""")
         channel = discord.utils.get(
             self.bot.get_guild(self.bot.config.support_server_id).channels,
             name="auctions",
@@ -387,10 +387,10 @@ class Admin(commands.Cog):
             f"**{ctx.author.mention}** bids **${amount}**! Check above for what's being auctioned."
         )
 
-    @is_admin()
-    @commands.command(aliases=["asetcooldown", "asetcd"], hidden=True)
+    @is_gm()
+    @commands.command(aliases=["gmcd", "hmsetcd"], hidden=True)
     @locale_doc
-    async def adminsetcooldown(
+    async def gmsetcooldown(
         self,
         ctx,
         user: Union[discord.User, int],
@@ -398,7 +398,7 @@ class Admin(commands.Cog):
         cooldown: IntGreaterThan(-1) = 0,
     ):
         _(
-            """[Bot Admin only] Sets someone's cooldown to a specific time in seconds (by default removes the cooldown)"""
+            """[Game Master only] Sets someone's cooldown to a specific time in seconds (by default removes the cooldown)"""
         )
         if not isinstance(user, int):
             user_id = user.id
@@ -415,7 +415,7 @@ class Admin(commands.Cog):
         if result == 1:
             await ctx.send(_("The cooldown has been updated!"))
             await self.bot.http.send_message(
-                self.bot.config.admin_log_channel,
+                self.bot.config.gm_log_channel,
                 f"**{ctx.author}** set **{user}**'s cooldown to {cooldown}.",
             )
         else:
@@ -427,4 +427,4 @@ class Admin(commands.Cog):
 
 
 def setup(bot):
-    bot.add_cog(Admin(bot))
+    bot.add_cog(GameMaster(bot))

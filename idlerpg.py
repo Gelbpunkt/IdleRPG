@@ -53,6 +53,7 @@ if __name__ == "__main__":
     try:
         loop.run_until_complete(bot.connect_all())
     except KeyboardInterrupt:
+
         def shutdown_handler(_loop, context):
             if "exception" not in context or not isinstance(
                 context["exception"], asyncio.CancelledError
