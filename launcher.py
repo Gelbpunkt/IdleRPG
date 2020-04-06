@@ -48,7 +48,9 @@ async def get_shard_count() -> int:
     async with aiohttp.ClientSession() as session, session.get(
         "https://discordapp.com/api/gateway/bot", headers=payload
     ) as req:
-        return (await req.json()).get("shards")
+        gateway_json = await req.json()
+    shard_count: int = gateway_json["shards"]
+    return shard_count
 
 
 async def get_app_info() -> Tuple[str, int]:
@@ -74,7 +76,7 @@ class Instance:
         shard_count: int,
         name: str,
         loop: asyncio.AbstractEventLoop,
-        main: "Main" = None,
+        main: Optional["Main"] = None,
     ):
         self.main = main
         self.loop = loop
@@ -146,7 +148,7 @@ class Instance:
 
 
 class Main:
-    def __init__(self, loop: asyncio.AbstractEventLoop = None) -> None:
+    def __init__(self, loop: Optional[asyncio.AbstractEventLoop] = None) -> None:
         self.loop = loop or asyncio.get_event_loop()
         self.instances: List[Instance] = []
         self.redis: Optional[aioredis.Redis] = None
