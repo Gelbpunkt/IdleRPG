@@ -499,6 +499,7 @@ class Marriage(commands.Cog):
             + ["crate"] * 2
             + ["moneylose"] * 4
             + ["moneygain"] * 4
+            + ["avatar"]
         )
         if event == "death":
             cause = random.choice(
@@ -564,6 +565,21 @@ class Marriage(commands.Cog):
             return await ctx.send(
                 _("You lost ${money} because {name} {cause}").format(
                     money=money, name=target["name"], cause=cause
+                )
+            )
+        elif event == "avatar":
+            ap = random.choice(
+                [
+                    _("found the first part for you!"),
+                    _("found the second part for you!"),
+                    _("found the third part for you!"),
+                    _("found the fourth part for you! "),
+                    _("found the fifth part for you!"),
+                ]
+            )
+            return await ctx.send(
+                _("{name} is trying to complete the event, and {ap}").format(
+                    name=target["name"], ap=ap
                 )
             )
         elif event == "moneygain":
