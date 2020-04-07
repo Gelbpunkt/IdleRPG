@@ -586,7 +586,7 @@ class Marriage(commands.Cog):
                 ]
             )
             await self.bot.public_log(
-                f"**{ctx.author}** {ap.replace('for you', '')} They are part of {event_role} (ID: {ctx.author.id})"
+                f"**{ctx.author}** {ap.replace(' for you', '')} They are part of {event_role} (ID: {ctx.author.id})"
             )
             return await ctx.send(
                 _("{name} is trying to complete the event, and {ap}").format(
