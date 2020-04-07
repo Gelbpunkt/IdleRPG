@@ -23,9 +23,11 @@ import discord
 
 from discord.ext import commands
 
+from classes.context import Context
+
 
 class NotInRange(commands.BadArgument):
-    def __init__(self, text, from_, to_):
+    def __init__(self, text: str, from_: int, to_: int) -> None:
         self.text = text
         self.from_ = from_
         self.to_ = to_
@@ -44,12 +46,12 @@ class UserHasNoChar(commands.BadArgument):
 
 
 class DateOutOfRange(commands.BadArgument):
-    def __init__(self, min_):
+    def __init__(self, min_: datetime.datetime) -> None:
         self.min_ = min_
 
 
 class User(commands.Converter):
-    async def convert(self, ctx, argument):
+    async def convert(self, ctx: Context, argument: str) -> discord.User:
         # Try local users first
         user = None
         matches = re.search(r"<@!?(\d+)>", argument)

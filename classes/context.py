@@ -35,6 +35,7 @@ class Context(commands.Context):
     We use it to provide a shortcut to the display name and
     for escaping massmentions in ctx.send.
     """
+
     bot: Bot
 
     @property
