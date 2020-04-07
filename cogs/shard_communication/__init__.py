@@ -214,6 +214,25 @@ class Sharding(commands.Cog):
             if payload.get("output") and payload["command_id"] in self._messages:
                 self._messages[payload["command_id"]].append(payload["output"])
 
+    async def has_event_role(self, member_id: int, command_id: int):
+        if not self.bot.get_user(member_id):
+            return
+        member = self.bot.get_guild(self.bot.config.support_server_id).get_member(
+            member_id
+        )
+        if not member:
+            return
+
+        if discord.utils.get(member.roles, name="Event"):
+            answer = True
+        else:
+            answer = False
+        await self.bot.redis.execute(
+            "PUBLISH",
+            self.communication_channel,
+            json.dumps({"output": answer, "command_id": command_id}),
+        )
+
     async def get_user_patreon(self, member_id: int, command_id: int):
         if not self.bot.get_user(member_id):
             return
