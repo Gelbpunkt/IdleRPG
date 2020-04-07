@@ -223,8 +223,13 @@ class Sharding(commands.Cog):
         if not member:
             return
 
-        if discord.utils.get(member.roles, name="Event"):
-            answer = True
+        roles = [
+            discord.utils.get(member.roles, name=i)
+            for i in ("Fire", "Water", "Air", "Earth")
+        ]
+
+        if any(roles):
+            answer = [i for i in roles if i][0].name
         else:
             answer = False
         await self.bot.redis.execute(

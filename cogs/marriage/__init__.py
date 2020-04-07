@@ -504,6 +504,7 @@ class Marriage(commands.Cog):
             "has_event_role", 1, args={"member_id": ctx.author.id}
         )
         if process_output and process_output[0]:
+            event_role = process_output[0]
             options.append("avatar")
 
         event = random.choice(options)
@@ -584,7 +585,9 @@ class Marriage(commands.Cog):
                     _("found the fifth part for you!"),
                 ]
             )
-            await self.bot.public_log(f"**{ctx.author}** {ap.replace('for you', '')}")
+            await self.bot.public_log(
+                f"**{ctx.author}** {ap.replace('for you', '')} They are part of {event_role} (ID: {ctx.author.id})"
+            )
             return await ctx.send(
                 _("{name} is trying to complete the event, and {ap}").format(
                     name=target["name"], ap=ap
