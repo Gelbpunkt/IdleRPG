@@ -28,12 +28,14 @@ import os.path
 
 from glob import glob
 from os import getcwd
+from typing import Any, Callable, FrozenSet
 
 BASE_DIR = getcwd()
 default_locale = "en_US"
 locale_dir = "locales"
 
-locales = frozenset(
+# https://github.com/python/mypy/issues/1317
+locales: FrozenSet[str] = frozenset(
     map(
         os.path.basename,
         filter(os.path.isdir, glob(os.path.join(BASE_DIR, locale_dir, "*"))),
@@ -54,7 +56,7 @@ gettext_translations["en_US"] = gettext.NullTranslations()
 locales = locales | {"en_US"}
 
 
-def use_current_gettext(*args, **kwargs):
+def use_current_gettext(*args: Any, **kwargs: Any) -> str:
     if not gettext_translations:
         return gettext.gettext(*args, **kwargs)
 
@@ -64,15 +66,15 @@ def use_current_gettext(*args, **kwargs):
     ).gettext(*args, **kwargs)
 
 
-def i18n_docstring(func):
+def i18n_docstring(func: Callable[[Any], Any]) -> Callable[[Any], Any]:
     src = inspect.getsource(func)
     try:
-        tree = ast.parse(src)
+        parsed_tree = ast.parse(src)
     except IndentationError:
-        tree = ast.parse("class Foo:\n" + src)
-        tree = tree.body[0].body[0]  # ClassDef -> FunctionDef
+        parsed_tree = ast.parse("class Foo:\n" + src)
+        tree = parsed_tree.body[0].body[0]  # ClassDef -> FunctionDef
     else:
-        tree = tree.body[0]  # FunctionDef
+        tree = parsed_tree.body[0]  # FunctionDef
 
     if not isinstance(tree.body[0], ast.Expr):
         return func
@@ -91,7 +93,7 @@ def i18n_docstring(func):
     return func
 
 
-current_locale = contextvars.ContextVar("i18n")
+current_locale: contextvars.ContextVar[str] = contextvars.ContextVar("i18n")
 builtins._ = use_current_gettext
 builtins.locale_doc = i18n_docstring
 

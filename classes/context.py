@@ -19,14 +19,16 @@ import re
 
 from asyncio import TimeoutError
 from contextlib import suppress
-from typing import Any, Optional, Union
+from typing import TYPE_CHECKING, Any, Optional, Union
 
 import discord
 
 from discord.ext import commands
 
-from classes.bot import Bot
 from utils.paginator import NoChoice
+
+if TYPE_CHECKING:
+    from classes.bot import Bot
 
 
 class Context(commands.Context):
@@ -36,7 +38,7 @@ class Context(commands.Context):
     for escaping massmentions in ctx.send.
     """
 
-    bot: Bot
+    bot: "Bot"
 
     @property
     def disp(self) -> str:

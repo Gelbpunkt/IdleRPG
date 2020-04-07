@@ -38,14 +38,16 @@ DEALINGS IN THE SOFTWARE.
 """
 import asyncio
 
-from typing import Any, AsyncGenerator, List, Optional, Tuple, Union
+from typing import TYPE_CHECKING, Any, AsyncGenerator, List, Optional, Tuple, Union
 
 import discord
 
 from discord.ext import commands
 
-from classes.context import Context
 from config import primary_colour
+
+if TYPE_CHECKING:
+    from classes.context import Context
 
 
 async def pager(
@@ -63,7 +65,7 @@ class TextPaginator:
     __slots__ = ("ctx", "reactions", "_paginator", "current", "message", "update_lock")
 
     def __init__(
-        self, ctx: Context, prefix: Optional[str] = None, suffix: Optional[str] = None
+        self, ctx: "Context", prefix: Optional[str] = None, suffix: Optional[str] = None
     ) -> None:
         self._paginator = commands.Paginator(
             prefix=prefix, suffix=suffix, max_size=1950
@@ -213,7 +215,7 @@ class Paginator:
 
         self.controls = {"⏮": 0.0, "◀": -1, "⏹": "stop", "▶": +1, "⏭": None}
 
-    async def indexer(self, ctx: Context, ctrl: str) -> None:
+    async def indexer(self, ctx: "Context", ctrl: str) -> None:
         if self.base is None:
             raise Exception("Should not be called manually")
         if ctrl == "stop":
@@ -226,7 +228,7 @@ class Paginator:
         else:
             self.current = int(ctrl)
 
-    async def reaction_controller(self, ctx: Context) -> None:
+    async def reaction_controller(self, ctx: "Context") -> None:
         bot = ctx.bot
         author = ctx.author
 
