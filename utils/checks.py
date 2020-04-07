@@ -25,11 +25,11 @@ import pytz
 
 from discord.ext import commands
 
-from classes.bot import Bot
 from classes.context import Context
 from classes.enums import DonatorRank
 
 if TYPE_CHECKING:
+    from classes.bot import Bot
     from discord.ext.commands.core import _CheckDecorator
 
 
@@ -435,7 +435,7 @@ def is_god() -> "_CheckDecorator":
 # TODO: Pass context here and assign there?
 
 
-async def has_guild_(bot: Bot, userid: int) -> bool:
+async def has_guild_(bot: "Bot", userid: int) -> bool:
     return bool(
         await bot.pool.fetchval('SELECT guild FROM profile WHERE "user"=$1;', userid)
     )
@@ -452,14 +452,14 @@ async def is_member_of_author_guild(ctx: Context, userid: int) -> bool:
     return user1_guild == user2_guild
 
 
-async def user_has_char(bot: Bot, userid: int) -> bool:
+async def user_has_char(bot: "Bot", userid: int) -> bool:
     async with bot.pool.acquire() as conn:
         return bool(
             await conn.fetchrow('SELECT * FROM profile WHERE "user"=$1;', userid)
         )
 
 
-async def has_money(bot: Bot, userid: int, money: int) -> bool:
+async def has_money(bot: "Bot", userid: int, money: int) -> bool:
     async with bot.pool.acquire() as conn:
         res = await conn.fetchval(
             'SELECT money FROM profile WHERE "user"=$1 AND "money">=$2;', userid, money
@@ -467,7 +467,7 @@ async def has_money(bot: Bot, userid: int, money: int) -> bool:
         return isinstance(res, int)
 
 
-async def guild_has_money(bot: Bot, guildid: int, money: int) -> bool:
+async def guild_has_money(bot: "Bot", guildid: int, money: int) -> bool:
     async with bot.pool.acquire() as conn:
         res = await conn.fetchval(
             'SELECT money FROM guild WHERE "id"=$1 and "money">=$2;', guildid, money
@@ -501,7 +501,7 @@ def is_patron(role: str = "basic") -> "_CheckDecorator":
     return commands.check(predicate)
 
 
-async def user_is_patron(bot: Bot, user: discord.User, role: str = "basic") -> bool:
+async def user_is_patron(bot: "Bot", user: discord.User, role: str = "basic") -> bool:
     try:
         response = (
             await bot.cogs["Sharding"].handler(
