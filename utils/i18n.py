@@ -68,34 +68,40 @@ def use_current_gettext(*args: Any, **kwargs: Any) -> str:
 
 def i18n_docstring(func: Callable[[Any], Any]) -> Callable[[Any], Any]:
     src = inspect.getsource(func)
+    # We heavily rely on the content of the function to be correct
     try:
         parsed_tree = ast.parse(src)
     except IndentationError:
         parsed_tree = ast.parse("class Foo:\n" + src)
-        tree = parsed_tree.body[0].body[0]  # ClassDef -> FunctionDef
+        assert isinstance(parsed_tree.body[0], ast.ClassDef)
+        function_body: ast.ClassDef = parsed_tree.body[0]
+        assert isinstance(function_body.body[0], ast.FunctionDef)
+        tree: ast.FunctionDef = function_body.body[0]
     else:
-        tree = parsed_tree.body[0]  # FunctionDef
+        assert isinstance(parsed_tree.body[0], ast.FunctionDef)
+        tree = parsed_tree.body[0]
 
     if not isinstance(tree.body[0], ast.Expr):
         return func
 
-    tree = tree.body[0].value
-    if not isinstance(tree, ast.Call):
+    gettext_call = tree.body[0].value
+    if not isinstance(gettext_call, ast.Call):
         return func
 
-    if not isinstance(tree.func, ast.Name) or tree.func.id != "_":
+    if not isinstance(gettext_call.func, ast.Name) or gettext_call.func.id != "_":
         return func
 
-    assert len(tree.args) == 1
-    assert isinstance(tree.args[0], ast.Str)
+    assert len(gettext_call.args) == 1
+    assert isinstance(gettext_call.args[0], ast.Str)
 
-    func.__doc__ = tree.args[0].s
+    func.__doc__ = gettext_call.args[0].s
     return func
 
 
 current_locale: contextvars.ContextVar[str] = contextvars.ContextVar("i18n")
-builtins._ = use_current_gettext
-builtins.locale_doc = i18n_docstring
+# https://github.com/python/mypy/issues/7171
+setattr(builtins, "_", use_current_gettext)
+setattr(builtins, "locale_doc", i18n_docstring)
 
 current_locale.set(default_locale)
 
