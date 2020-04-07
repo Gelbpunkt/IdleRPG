@@ -30,12 +30,12 @@ from utils.paginator import NoChoice
 
 
 class Context(commands.Context):
-    bot = Bot
     """
     A custom version of the default Context.
     We use it to provide a shortcut to the display name and
     for escaping massmentions in ctx.send.
     """
+    bot: Bot
 
     @property
     def disp(self) -> str:
