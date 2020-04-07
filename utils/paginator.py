@@ -46,7 +46,7 @@ from discord.ext import commands
 
 from config import primary_colour
 
-from .classes.context import Context
+from classes.context import Context
 
 
 async def pager(
