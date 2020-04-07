@@ -25,22 +25,22 @@ class OrderedEnum(Enum):
     def __ge__(self, other: "OrderedEnum") -> bool:
         if self.__class__ is other.__class__:
             return self.value >= other.value
-        raise NotImplemented()
+        raise NotImplementedError()
 
     def __gt__(self, other: "OrderedEnum") -> bool:
         if self.__class__ is other.__class__:
             return self.value > other.value
-        raise NotImplemented()
+        raise NotImplementedError()
 
     def __le__(self, other: "OrderedEnum") -> bool:
         if self.__class__ is other.__class__:
             return self.value <= other.value
-        raise NotImplemented()
+        raise NotImplementedError()
 
     def __lt__(self, other: "OrderedEnum") -> bool:
         if self.__class__ is other.__class__:
             return self.value < other.value
-        raise NotImplemented()
+        raise NotImplementedError()
 
 
 class DonatorRank(OrderedEnum):

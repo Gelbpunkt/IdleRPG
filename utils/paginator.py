@@ -38,14 +38,20 @@ DEALINGS IN THE SOFTWARE.
 """
 import asyncio
 
+from typing import Any, AsyncGenerator, List, Optional, Tuple, Union
+
 import discord
 
 from discord.ext import commands
 
 from config import primary_colour
 
+from .classes.context import Context
 
-async def pager(entries, chunk: int):
+
+async def pager(
+    entries: Union[List[Any], Tuple[Any]], chunk: int
+) -> AsyncGenerator[Union[List[Any], Tuple[Any, ...]], None]:
     for x in range(0, len(entries), chunk):
         yield entries[x : x + chunk]
 
@@ -57,12 +63,14 @@ class NoChoice(discord.ext.commands.CommandInvokeError):
 class TextPaginator:
     __slots__ = ("ctx", "reactions", "_paginator", "current", "message", "update_lock")
 
-    def __init__(self, ctx, prefix=None, suffix=None):
+    def __init__(
+        self, ctx: Context, prefix: Optional[str] = None, suffix: Optional[str] = None
+    ) -> None:
         self._paginator = commands.Paginator(
             prefix=prefix, suffix=suffix, max_size=1950
         )
         self.current = 0
-        self.message = None
+        self.message: Optional[discord.Message] = None
         self.ctx = ctx
         self.update_lock = asyncio.Semaphore(value=2)
         self.reactions = {
@@ -74,21 +82,14 @@ class TextPaginator:
         }
 
     @property
-    def pages(self):
-        paginator_pages = list(self._paginator._pages)
-        if len(self._paginator._current_page) > 1:
-            paginator_pages.append(
-                "\n".join(self._paginator._current_page)
-                + "\n"
-                + (self._paginator.suffix or "")
-            )
-        return paginator_pages
+    def pages(self) -> List[str]:
+        return self._paginator.pages
 
     @property
-    def page_count(self):
+    def page_count(self) -> int:
         return len(self.pages)
 
-    async def add_line(self, line):
+    async def add_line(self, line: str) -> None:
         before = self.page_count
         if isinstance(line, str):
             self._paginator.add_line(line)
@@ -100,18 +101,20 @@ class TextPaginator:
             self.current = after - 1
         self.ctx.bot.loop.create_task(self.update())
 
-    async def react(self):
+    async def react(self) -> None:
+        if self.message is None:
+            raise Exception("May not be called before sending the message.")
         for emoji in self.reactions:
             await self.message.add_reaction(emoji)
 
-    async def send(self):
+    async def send(self) -> None:
         self.message = await self.ctx.send(
             self.pages[self.current] + f"Page {self.current + 1} / {self.page_count}"
         )
         self.ctx.bot.loop.create_task(self.react())
         self.ctx.bot.loop.create_task(self.listener())
 
-    async def update(self):
+    async def update(self) -> None:
         if self.update_lock.locked():
             return
 
@@ -126,10 +129,11 @@ class TextPaginator:
                     + f"Page {self.current + 1} / {self.page_count}"
                 )
 
-    async def listener(self):
-        def check(reaction, user):
+    async def listener(self) -> None:
+        def check(reaction: discord.Reaction, user: discord.User) -> bool:
             return (
                 user == self.ctx.author
+                and self.message is not None
                 and reaction.message.id == self.message.id
                 and reaction.emoji in self.reactions
             )
@@ -140,7 +144,8 @@ class TextPaginator:
                     "reaction_add", check=check, timeout=120
                 )
             except asyncio.TimeoutError:
-                await self.message.delete()
+                if self.message is not None:
+                    await self.message.delete()
                 return
             action = self.reactions[reaction.emoji]
             if action == "first":
@@ -152,7 +157,8 @@ class TextPaginator:
             elif action == "last":
                 self.current = self.page_count - 1
             elif action == "stop":
-                await self.message.delete()
+                if self.message is not None:
+                    await self.message.delete()
                 return
             await self.update()
 
@@ -182,7 +188,7 @@ class Paginator:
         "names",
     )
 
-    def __init__(self, **kwargs):
+    def __init__(self, **kwargs: Any) -> None:
         self.entries = kwargs.get("entries", None)
         self.extras = kwargs.get("extras", None)
 
@@ -199,9 +205,8 @@ class Paginator:
         self.ordered = kwargs.get("ordered", False)
 
         self.controller = None
-        self.pages = []
-        self.names = []
-        self.base = None
+        self.pages: List[discord.Embed] = []
+        self.base: Optional[discord.Message] = None
 
         self.current = 0
         self.previous = 0
@@ -209,7 +214,9 @@ class Paginator:
 
         self.controls = {"⏮": 0.0, "◀": -1, "⏹": "stop", "▶": +1, "⏭": None}
 
-    async def indexer(self, ctx, ctrl):
+    async def indexer(self, ctx: Context, ctrl: str) -> None:
+        if self.base is None:
+            raise Exception("Should not be called manually")
         if ctrl == "stop":
             ctx.bot.loop.create_task(self.stop_controller(self.base))
 
@@ -220,7 +227,7 @@ class Paginator:
         else:
             self.current = int(ctrl)
 
-    async def reaction_controller(self, ctx):
+    async def reaction_controller(self, ctx: Context) -> None:
         bot = ctx.bot
         author = ctx.author
 
@@ -235,7 +242,7 @@ class Paginator:
                 except discord.HTTPException:
                     return
 
-        def check(r, u):
+        def check(r: discord.Reaction, u: discord.User) -> bool:
             if str(r) not in self.controls.keys():
                 return False
             elif u.id == bot.user.id or r.message.id != self.base.id:
@@ -270,7 +277,7 @@ class Paginator:
             except KeyError:
                 pass
 
-    async def stop_controller(self, message):
+    async def stop_controller(self, message: discord.Message) -> None:
         try:
             await message.delete()
         except discord.HTTPException:

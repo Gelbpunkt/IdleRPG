@@ -19,15 +19,18 @@ import re
 
 from asyncio import TimeoutError
 from contextlib import suppress
+from typing import Any, Optional, Union
 
 import discord
 
 from discord.ext import commands
 
+from classes.bot import Bot
 from utils.paginator import NoChoice
 
 
 class Context(commands.Context):
+    bot = Bot
     """
     A custom version of the default Context.
     We use it to provide a shortcut to the display name and
@@ -35,17 +38,17 @@ class Context(commands.Context):
     """
 
     @property
-    def disp(self):
+    def disp(self) -> str:
         return self.author.display_name
 
     async def confirm(
         self,
-        message,
-        timeout=20,
-        user=None,
-        emoji_no="\U0000274e",
-        emoji_yes="\U00002705",
-    ):
+        message: str,
+        timeout: int = 20,
+        user: Optional[Union[discord.User, discord.Member]] = None,
+        emoji_no: str = "\U0000274e",
+        emoji_yes: str = "\U00002705",
+    ) -> bool:
         user = user or self.author
         emojis = (emoji_no, emoji_yes)
 
@@ -62,10 +65,10 @@ class Context(commands.Context):
         for emoji in emojis:
             await msg.add_reaction(emoji)
 
-        def check(r, u):
+        def check(r: discord.Reaction, u: discord.User) -> bool:
             return u == user and str(r.emoji) in emojis and r.message.id == msg.id
 
-        async def cleanup():
+        async def cleanup() -> None:
             with suppress(discord.HTTPException):
                 await msg.delete()
 
@@ -82,17 +85,20 @@ class Context(commands.Context):
         await cleanup()
 
         confirmed = bool(emojis.index(str(reaction.emoji)))
-        if not confirmed:
+        if confirmed:
+            return confirmed
+        else:
             await self.bot.reset_cooldown(self)
-            if self.command.parent:
+            if self.command.root_parent:
                 if self.command.root_parent.name == "guild":
                     await self.bot.reset_guild_cooldown(self)
                 elif self.command.root_parent.name == "alliance":
                     await self.bot.reset_alliance_cooldown(self)
+            return False
 
-        return confirmed
-
-    async def send(self, content=None, *args, **kwargs):
+    async def send(
+        self, content: Optional[Any] = None, *args: Any, **kwargs: Any
+    ) -> discord.Message:
         if content is not None:
             content = str(content)
 
