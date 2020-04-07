@@ -78,7 +78,7 @@ def i18n_docstring(func: Callable[[Any], Any]) -> Callable[[Any], Any]:
         assert isinstance(function_body.body[0], ast.AsyncFunctionDef)
         tree: ast.AsyncFunctionDef = function_body.body[0]
     else:
-        assert isinstance(parsed_tree.body[0], ast.FunctionDef)
+        assert isinstance(parsed_tree.body[0], ast.AsyncFunctionDef)
         tree = parsed_tree.body[0]
 
     if not isinstance(tree.body[0], ast.Expr):
