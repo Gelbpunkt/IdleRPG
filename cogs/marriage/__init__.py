@@ -653,7 +653,6 @@ class Marriage(commands.Cog):
                     msg = await self.bot.wait_for("message", check=check, timeout=30)
                     name = msg.content.replace("@", "@\u200b")
                 except asyncio.TimeoutError:
-                    await self.bot.reset_cooldown(ctx)
                     return await ctx.send(_("You didn't enter a name."))
                 if name in names:
                     await ctx.send(
