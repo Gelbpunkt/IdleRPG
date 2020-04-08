@@ -143,6 +143,12 @@ class Bot(commands.AutoShardedBot):
             return message.content.startswith(prefixes)
         return message.content.startswith(tuple(prefixes))
 
+    # https://github.com/Rapptz/discord.py/blob/master/discord/ext/commands/bot.py#L131
+    def dispatch(self, event_name, *args, **kwargs):
+        if event_name == "reaction_add" and args[1].id in bot.bans: # args[1] is user
+            return
+        super().dispatch(event_name, *args, **kwargs)
+
     async def on_message(self, message):
         if message.author.bot or message.author.id in self.bans:
             return
