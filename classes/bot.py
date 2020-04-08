@@ -145,7 +145,7 @@ class Bot(commands.AutoShardedBot):
 
     # https://github.com/Rapptz/discord.py/blob/master/discord/ext/commands/bot.py#L131
     def dispatch(self, event_name, *args, **kwargs):
-        if event_name == "reaction_add" and args[1].id in bot.bans: # args[1] is user
+        if event_name == "reaction_add" and args[1].id in self.bans: # args[1] is user
             return
         super().dispatch(event_name, *args, **kwargs)
 
