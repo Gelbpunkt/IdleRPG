@@ -534,5 +534,5 @@ def is_hypesquad(ctx: Context) -> bool:
         return False
     return (
         discord.utils.get(member.roles, name="Hypesquad") is not None
-        or discord.utils.get(member.roles, name="Administrators") is not None
+        or discord.utils.get(member.roles, name="Game Masters") is not None
     )
