@@ -27,7 +27,7 @@ import discord
 from discord.ext import commands
 
 from classes.converters import IntGreaterThan
-from utils.checks import AlreadyRaiding, has_char, is_admin, is_god
+from utils.checks import AlreadyRaiding, has_char, is_gm, is_god
 
 
 def raid_channel():
@@ -84,7 +84,7 @@ class Raid(commands.Cog):
     async def clear_raid_timer(self):
         await self.bot.redis.execute("DEL", "special:raid")
 
-    @is_admin()
+    @is_gm()
     @commands.command()
     async def alterraid(self, ctx, newhp: IntGreaterThan(0)):
         """[Bot Admin only] Change a raid boss' HP."""
@@ -100,7 +100,7 @@ class Raid(commands.Cog):
             return await ctx.send("Could not edit Boss HP!")
         await ctx.send("Boss HP updated!")
 
-    @is_admin()
+    @is_gm()
     @raid_channel()
     @raid_free()
     @commands.command()
@@ -324,7 +324,7 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
         await self.clear_raid_timer()
         self.boss = None
 
-    @is_admin()
+    @is_gm()
     @ikhdosa_channel()
     @raid_free()
     @commands.command()

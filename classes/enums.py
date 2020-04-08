@@ -19,25 +19,28 @@ from enum import Enum
 
 
 class OrderedEnum(Enum):
-    def __ge__(self, other):
+    # The default is Any, that breaks the comparisons
+    value: int
+
+    def __ge__(self, other: "OrderedEnum") -> bool:
         if self.__class__ is other.__class__:
             return self.value >= other.value
-        return NotImplemented
+        raise NotImplementedError()
 
-    def __gt__(self, other):
+    def __gt__(self, other: "OrderedEnum") -> bool:
         if self.__class__ is other.__class__:
             return self.value > other.value
-        return NotImplemented
+        raise NotImplementedError()
 
-    def __le__(self, other):
+    def __le__(self, other: "OrderedEnum") -> bool:
         if self.__class__ is other.__class__:
             return self.value <= other.value
-        return NotImplemented
+        raise NotImplementedError()
 
-    def __lt__(self, other):
+    def __lt__(self, other: "OrderedEnum") -> bool:
         if self.__class__ is other.__class__:
             return self.value < other.value
-        return NotImplemented
+        raise NotImplementedError()
 
 
 class DonatorRank(OrderedEnum):

@@ -34,19 +34,24 @@ class GlobalEvents(commands.Cog):
         self.stats_updates = bot.loop.create_task(
             self.stats_updater()
         )  # Initiate the stats updates and save it for the further close
+        self.is_first_ready = True
 
     @commands.Cog.listener()
     async def on_ready(self):
-        print(f"Logged in as {self.bot.user.name} (ID: {self.bot.user.id})")
-        print("--------")
-        print(f"Using discord.py {discord.__version__}")
-        print("--------")
-        print(f"You are running IdleRPG Bot {self.bot.version}")
-        print("Created by The IdleRPG Team")
-        await self.load_settings()
-        self.bot.loop.create_task(queue_manager(self.bot, self.bot.queue))
-        await self.bot.is_owner(self.bot.user)  # force getting the owners
-        await self.status_updater()
+        if self.is_first_ready:
+            self.is_first_ready = False
+            print(f"Logged in as {self.bot.user.name} (ID: {self.bot.user.id})")
+            print("--------")
+            print(f"Using discord.py {discord.__version__}")
+            print("--------")
+            print(f"You are running IdleRPG Bot {self.bot.version}")
+            print("Created by The IdleRPG Team")
+            await self.load_settings()
+            self.bot.loop.create_task(queue_manager(self.bot, self.bot.queue))
+            await self.bot.is_owner(self.bot.user)  # force getting the owners
+            await self.status_updater()
+        else:
+            print("[INFO] Discord fired on_ready...")
 
     @commands.Cog.listener()
     async def on_guild_remove(self, guild):

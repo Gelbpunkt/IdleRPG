@@ -132,7 +132,7 @@ class GameBase:
                     await status.edit(content=f"{status.content}\n{text}")
                 except discord.errors.NotFound:
                     status = await self.ctx.send(
-                        f"{roundtext}\n{text}", delete_after=60
+                        f"{roundtext.format(round=self.round)}\n{text}", delete_after=60
                     )
                 actions = random.sample(all_actions, 3)
                 possible_kills = [
@@ -175,7 +175,8 @@ class GameBase:
                     await self.ctx.send(
                         _(
                             "I couldn't send a DM to {user}! Choosing random action..."
-                        ).format(user=p[0])
+                        ).format(user=p[0]),
+                        delete_after=30,
                     )
                     action = random.choice(actions2)
                 if okay or (not okay and isinstance(action[2], tuple)):
@@ -194,10 +195,7 @@ class GameBase:
                 try:
                     await status.edit(content=f"{status.content} {text}")
                 except discord.errors.NotFound:
-                    status = await self.ctx.send(
-                        f"**{roundtext}\n{text}".format(round=self.round),
-                        delete_after=60,
-                    )
+                    pass
             else:
                 possible_kills = [item for item in p if p not in killed_this_round]
                 if len(possible_kills) > 0:
@@ -251,9 +249,11 @@ class GameBase:
                 self.players.remove(p)
             except ValueError:
                 pass
-        await self.ctx.send(
-            "\n".join([f"{u} {a}" for u, a in user_actions]), delete_after=60
-        )
+        paginator = commands.Paginator(prefix="", suffix="")
+        for u, a in user_actions:
+            paginator.add_line(f"{u} {a}")
+        for page in paginator.pages:
+            await self.ctx.send(page, delete_after=60)
         self.round += 1
 
     async def send_cast(self):
@@ -262,16 +262,15 @@ class GameBase:
         cast = list(self.chunks(cast, 2))
         self.cast = cast
         text = _("Team")
-        cast = "\n".join(
-            [
-                f"{text} #{i}: {team[0].mention} {team[1].mention}"
-                if len(team) == 2
-                else f"{text} #{i}: {team[0].mention}"
-                for i, team in enumerate(cast, start=1)
-            ]
-        )
-        text = _("The cast")
-        await self.ctx.send(f"**{text}**\n{cast}")
+        paginator = commands.Paginator(prefix="", suffix="")
+        paginator.add_line(_("**The cast**"))
+        for i, team in enumerate(cast, start=1):
+            if len(team) == 2:
+                paginator.add_line(f"{text} #{i}: {team[0].mention} {team[1].mention}")
+            else:
+                paginator.add_line(f"{text} #{i}: {team[0].mention}")
+        for page in paginator.pages:
+            await self.ctx.send(page)
 
     async def main(self):
         self.round = 1
