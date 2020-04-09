@@ -221,7 +221,6 @@ class Owner(commands.Cog):
             pretty_data = pretty_data[:1997] + "..."
         await ctx.send(pretty_data)
 
-
     @commands.command(hidden=True)
     @locale_doc
     async def bash(self, ctx, *, command_to_run: str):

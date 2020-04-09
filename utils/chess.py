@@ -190,7 +190,11 @@ class ChessGame:
         file_ = await self.get_board()
         game = chess.pgn.Game.from_board(self.board)
         game.headers["Event"] = "IdleRPG Chess"
-        game.headers["Site"] =  f"#{self.ctx.channel.name} in {self.ctx.guild.name}" if self.ctx.guild else "DMs"
+        game.headers["Site"] = (
+            f"#{self.ctx.channel.name} in {self.ctx.guild.name}"
+            if self.ctx.guild
+            else "DMs"
+        )
         game.headers["Date"] = datetime.date.today().isoformat()
         game.headers["Round"] = "1"
         game.headers["White"] = str(white) if white is not None else "AI"
@@ -224,5 +228,6 @@ class ChessGame:
             )
 
         await self.ctx.send(
-            "For the nerds:", file=discord.File(fp=io.BytesIO(game.encode()), filename="match.pgn")
+            "For the nerds:",
+            file=discord.File(fp=io.BytesIO(game.encode()), filename="match.pgn"),
         )
