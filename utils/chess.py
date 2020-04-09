@@ -1,0 +1,200 @@
+import asyncio
+import io
+
+from functools import partial
+from typing import Optional
+
+import cairosvg
+import chess
+import chess.engine
+import chess.svg
+import discord
+
+from classes.context import Context
+
+
+def calculate_player_elos(player1_elo, player2_elo, score):
+    """
+    Calculates Chess elos for 2 players after a match based on
+    their old elos and the match outcome.
+    Score shall be 1 if player 1 won, 0.5 if it's a tie and 0
+    if player 2 won.
+
+    newrating = oldrating + K ⋅(score − expectedscore)
+
+    Here K is the K-factor, which is the weight of the game. This is determined as following:
+
+    - It is 40 if the number of played games is smaller than 30.
+    - It is 20 if the number of played games is greater than 30 and the rating is less than 2400.
+    - It is 10 if the number of played games is greater than 30 and the rating is more than 2400.
+    - It is 40 if rating is less than 2300 and the age of the player is less than 18. We assume that everyone is 18+ and has played 30 games
+
+    The expected score is:
+    Ea = 1 / (1 + 10 ^ ((Rb - Ra) / 400))
+    """
+    expected_score_1 = 1 / (1 + 10 ** ((player2_elo - player1_elo) / 400))
+    expected_score_2 = 1 / (1 + 10 ** ((player1_elo - player2_elo) / 400))
+    k_1 = 20 if player1_elo < 2400 else 10  # just assuming
+    k_2 = 20 if player2_elo < 2400 else 10  # just assuming
+
+    new_rating_1 = player1_elo + k_1 * (score - expected_score_1)
+    new_rating_2 = player2_elo + k_2 * (1 - score - expected_score_2)
+
+    return round(new_rating_1), round(new_rating_2)
+
+
+class ChessGame:
+    def __init__(
+        self,
+        ctx: Context,
+        player: discord.User,
+        player_color: str = "white",
+        enemy: Optional[discord.User] = None,
+        difficulty: Optional[int] = None,
+    ):
+        self.player = player
+        self.enemy = enemy
+        self.ctx = ctx
+        self.board = chess.Board()
+        self.engine = ctx.bot.cogs["Chess"].engine
+        self.history = []
+        self.move_no = 0
+        self.status = "initialized"
+        self.colors = {
+            player: player_color,
+            enemy: ["white", "black"][1 - ["white", "black"].index(player_color)],
+        }
+
+        self.get_player_move = partial(self.get_move_from, player)
+        if self.enemy is None:
+            self.limit = chess.engine.Limit(time=float(difficulty))
+
+    def parse_move(self, move, color):
+        if move == "0-0":
+            if color == "white":
+                move = "e1g1"
+            else:
+                move = "e8g8"
+        elif move == "0-0-0":
+            if color == "white":
+                move = "e1c1"
+            else:
+                move = "e8c8"
+        elif move == "resign":
+            return "resign"
+        elif move == "draw":
+            return "draw"
+        try:
+            move = self.board.parse_san(move)
+        except ValueError:
+            move = chess.Move.from_uci(move)
+        if move not in self.board.legal_moves:
+            return False
+        return move
+
+    async def get_board(self):
+        def get_file():
+            file_ = io.BytesIO()
+            svg = chess.svg.board(board=self.board, flipped=self.board.turn == chess.BLACK)
+            cairosvg.svg2png(bytestring=svg, write_to=file_)
+            file_.seek(0)
+            return file_
+
+        return await self.ctx.bot.loop.run_in_executor(None, get_file)
+
+    async def get_move_from(self, player):
+        if player is None:
+            return await self.get_ai_move()
+        file_ = await self.get_board()
+        self.msg = await self.ctx.send(
+            f"**Move {self.move_no}: {player.mention}'s turn**\nSimply type your move. You have 2 minutes to enter a valid move. I accept normal notation as well as `resign` or `draw`.",
+            file=discord.File(fp=file_, filename="board.png"),
+        )
+
+        def check(msg):
+            if not (msg.author == player and msg.channel == self.ctx.channel):
+                return
+            try:
+                return bool(self.parse_move(msg.content, self.colors[player]))
+            except ValueError:
+                return False
+
+        try:
+            move = self.parse_move(
+                (
+                    await self.ctx.bot.wait_for("message", timeout=120, check=check)
+                ).content,
+                self.colors[player],
+            )
+        except asyncio.TimeoutError:
+            self.status = f"{self.colors[player]} resigned"
+            await self.ctx.send("You entered no valid move! You lost!")
+            move = "timeout"
+        finally:
+            if self.enemy is not None:
+                await self.msg.delete()
+            return move
+
+    async def get_ai_move(self):
+        await self.msg.edit(content=f"**Move {self.move_no}**\nLet me think...")
+        move = await self.engine.play(self.board, self.limit)
+        await self.msg.delete()
+        if move.draw_offered:
+            return "draw"
+        elif move.resigned:
+            return "resign"
+        else:
+            return move.move
+
+    def make_move(self, move):
+        self.board.push(move)
+
+    async def run(self):
+        self.status = "playing"
+        white, black = reversed(sorted(self.colors, key=lambda x: self.colors[x]))
+        current = white
+        while not self.board.is_game_over() and self.status == "playing":
+            self.move_no += 1
+            move = await self.get_move_from(current)
+            if move == "resign":
+                self.status = f"{self.colors[current]} resigned"
+                break
+            elif move == "timeout":
+                break
+            elif move == "draw":
+                self.status = "draw"  # TODO
+            else:
+                self.make_move(move)
+                if self.history and len(self.history[-1]) == 1:
+                    self.history[-1].append(move)
+                else:
+                    self.history.append([move])
+
+            # swap current player
+            current = black if current == white else white
+
+        file_ = await self.get_board()
+        if self.board.is_checkmate():
+            await self.ctx.send(
+                f"**Checkmate! {self.board.result()}**",
+                file=discord.File(fp=file_, filename="board.png"),
+            )
+        elif self.board.is_stalemate():
+            await self.ctx.send(
+                "**Stalemate!**", file=discord.File(fp=file_, filename="board.png")
+            )
+        elif self.board.is_insufficient_material():
+            await self.ctx.send(
+                "**Insufficient material. Tie!**",
+                file=discord.File(fp=file_, filename="board.png"),
+            )
+        elif self.status.endswith("resigned"):
+            await self.ctx.send(
+                f"**{self.status.title()}!**",
+                file=discord.File(fp=file_, filename="board.png"),
+            )
+        elif self.status == "draw":
+            await self.ctx.send(
+                "**You accepted a draw!**",
+                file=discord.File(fp=file_, filename="board.png"),
+            )
