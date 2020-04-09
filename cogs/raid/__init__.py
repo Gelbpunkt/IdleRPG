@@ -233,7 +233,8 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
             await m.add_reaction("\U0001F1EB")
         elif self.boss["hp"] < 1:
             await ctx.channel.set_permissions(
-                ctx.guild.get_role(self.bot.config.member_role), overwrite=self.allow_sending
+                ctx.guild.get_role(self.bot.config.member_role),
+                overwrite=self.allow_sending,
             )
             highest_bid = [
                 ctx.guild.get_member(356_091_260_429_402_122),
@@ -867,7 +868,8 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
             await ctx.send("The raid was all wiped!")
         elif self.boss["hp"] < 1:
             await ctx.channel.set_permissions(
-                ctx.guild.get_role(self.bot.config.member_role), overwrite=self.allow_sending
+                ctx.guild.get_role(self.bot.config.member_role),
+                overwrite=self.allow_sending,
             )
             winner = random.choice(list(raid.keys()))
             await self.bot.pool.execute(
@@ -1014,7 +1016,8 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
 
         if len(raid) == 1:
             await ctx.channel.set_permissions(
-                ctx.guild.get_role(self.bot.config.member_role), overwrite=self.allow_sending
+                ctx.guild.get_role(self.bot.config.member_role),
+                overwrite=self.allow_sending,
             )
             winner = raid[0]
             await self.bot.pool.execute(
@@ -1157,7 +1160,8 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
             await ctx.send("The raid was all wiped!")
         elif self.boss["hp"] < 1:
             await ctx.channel.set_permissions(
-                ctx.guild.get_role(self.bot.config.member_role), overwrite=self.allow_sending
+                ctx.guild.get_role(self.bot.config.member_role),
+                overwrite=self.allow_sending,
             )
             highest_bid = [
                 ctx.guild.get_member(356_091_260_429_402_122),
@@ -1454,7 +1458,8 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
             await ctx.send("The raid was all wiped!")
         elif self.boss["hp"] < 1:
             await ctx.channel.set_permissions(
-                ctx.guild.get_role(self.bot.config.member_role), overwrite=self.allow_sending
+                ctx.guild.get_role(self.bot.config.member_role),
+                overwrite=self.allow_sending,
             )
             highest_bid = [
                 ctx.guild.get_member(356_091_260_429_402_122),
@@ -1788,7 +1793,8 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
             await ctx.send("The raid was all wiped!")
         elif self.boss["hp"] < 1:
             await ctx.channel.set_permissions(
-                ctx.guild.get_role(self.bot.config.member_role), overwrite=self.allow_sending
+                ctx.guild.get_role(self.bot.config.member_role),
+                overwrite=self.allow_sending,
             )
             highest_bid = [
                 ctx.guild.get_member(356_091_260_429_402_122),
