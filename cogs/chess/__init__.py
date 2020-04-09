@@ -37,18 +37,47 @@ class Chess(commands.Cog):
         )
 
     @commands.group(invoke_without_command=True)
+    @locale_doc
+    async def chess(self, ctx):
+        _("""IdleRPG's Chess system. You can play against AI or other users and gain ELO.""")
+        await ctx.send(_("Please use `{prefix}chess match` to play!").format(prefix=ctx.prefix))
+
+    @chess.group(invoke_without_command=True)
     async def match(
         self,
         ctx,
         enemy: Optional[discord.Member] = None,
         difficulty: IntFromTo(1, 10) = 3,
     ):
+        emojis = {"\U00002b1c": "white", "\U00002b1b": "black"}
+        msg = await ctx.send(_("Please choose the colour you want to take."))
+        await msg.add_reaction("\U00002b1c")
+        await msg.add_reaction("\U00002b1b")
+
+        def check(r, u):
+            return u == ctx.author and r.message.id == msg.id and str(r.emoji) in emojis
+
+        try:
+            r, u = await self.bot.wait_for("reaction_add", timeout=30, check=check)
+        except asyncio.TimeoutError:
+            return await ctx.send(_("You took too long to choose a side."))
+
+        side = emojis[str(r.emoji)]
+
+        if enemy is not None:
+            if not await ctx.confirm(_("{user}, you have been challenged to a chess match by {author}. They will be {color}. Do you accept?").format(user=enemy.mention, author=ctx.author.mention, color=side), user=enemy):
+                return await ctx.send(_("{user} rejected the chess match.").format(user=enemy))
+
         if self.matches.get(ctx.channel.id):
             return await ctx.send(_("Wait for the match here to end."))
         self.matches[ctx.channel.id] = ChessGame(
-            ctx, ctx.author, "white", enemy, difficulty
+            ctx, ctx.author, side, enemy, difficulty
         )
-        await self.matches[ctx.channel.id].run()
+        try:
+            await self.matches[ctx.channel.id].run()
+        except Exception as e:
+            del self.matches[ctx.channel.id]
+            raise e
         del self.matches[ctx.channel.id]
 
     @match.command()

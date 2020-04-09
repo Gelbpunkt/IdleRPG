@@ -56,7 +56,7 @@ class Marriage(commands.Cog):
         msg = await ctx.send(
             embed=discord.Embed(
                 title=_("{author} has proposed for a marriage!").format(
-                    author=ctx.author.mention
+                    author=ctx.disp,
                 ),
                 description=_(
                     "{author} wants to marry you, {partner}! React with :heart: to marry them!"

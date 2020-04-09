@@ -1,4 +1,5 @@
 import asyncio
+import datetime
 import io
 
 from functools import partial
@@ -7,6 +8,7 @@ from typing import Optional
 import cairosvg
 import chess
 import chess.engine
+import chess.pgn
 import chess.svg
 import discord
 
@@ -62,7 +64,7 @@ class ChessGame:
         self.status = "initialized"
         self.colors = {
             player: player_color,
-            enemy: ["white", "black"][1 - ["white", "black"].index(player_color)],
+            enemy: "black" if player_color == "white" else "white",
         }
 
         self.get_player_move = partial(self.get_move_from, player)
@@ -95,7 +97,9 @@ class ChessGame:
     async def get_board(self):
         def get_file():
             file_ = io.BytesIO()
-            svg = chess.svg.board(board=self.board, flipped=self.board.turn == chess.BLACK)
+            svg = chess.svg.board(
+                board=self.board, flipped=self.board.turn == chess.BLACK
+            )
             cairosvg.svg2png(bytestring=svg, write_to=file_)
             file_.seek(0)
             return file_
@@ -107,7 +111,7 @@ class ChessGame:
             return await self.get_ai_move()
         file_ = await self.get_board()
         self.msg = await self.ctx.send(
-            f"**Move {self.move_no}: {player.mention}'s turn**\nSimply type your move. You have 2 minutes to enter a valid move. I accept normal notation as well as `resign` or `draw`.",
+            f"**Move {self.move_no}: {player.mention}'s turn**\nSimply type your move. You have 2 minutes to enter a valid move. I accept normal notation as well as `resign` or `draw`.\nExample: `g1f3`, `Nf3`, `0-0` or `xe3`",
             file=discord.File(fp=file_, filename="board.png"),
         )
 
@@ -131,12 +135,15 @@ class ChessGame:
             await self.ctx.send("You entered no valid move! You lost!")
             move = "timeout"
         finally:
-            if self.enemy is not None:
+            if self.enemy is not None or self.colors[self.player] == "black":
                 await self.msg.delete()
             return move
 
     async def get_ai_move(self):
-        await self.msg.edit(content=f"**Move {self.move_no}**\nLet me think...")
+        if self.colors[self.player] == "black":
+            self.msg = await self.ctx.send(f"**Move {self.move_no}**\nLet me think...")
+        else:
+            await self.msg.edit(content=f"**Move {self.move_no}**\nLet me think...")
         move = await self.engine.play(self.board, self.limit)
         await self.msg.delete()
         if move.draw_offered:
@@ -173,7 +180,24 @@ class ChessGame:
             # swap current player
             current = black if current == white else white
 
+        next_ = black if current == white else white
+        if self.status == "draw":
+            result = "1/2-1/2"
+        elif self.status.endswith("resigned"):
+            result = "1-0" if next_ == white else "0-1"
+        else:
+            result = self.board.result()
         file_ = await self.get_board()
+        game = chess.pgn.Game.from_board(self.board)
+        game.headers["Event"] = "IdleRPG Chess"
+        game.headers["Site"] =  f"#{self.ctx.channel.name} in {self.ctx.guild.name}" if self.ctx.guild else "DMs"
+        game.headers["Date"] = datetime.date.today().isoformat()
+        game.headers["Round"] = "1"
+        game.headers["White"] = str(white) if white is not None else "AI"
+        game.headers["Black"] = str(black) if black is not None else "AI"
+        game.headers["Result"] = result
+        game = f"{game}\n\n"
+
         if self.board.is_checkmate():
             await self.ctx.send(
                 f"**Checkmate! {self.board.result()}**",
@@ -198,3 +222,7 @@ class ChessGame:
                 "**You accepted a draw!**",
                 file=discord.File(fp=file_, filename="board.png"),
             )
+
+        await self.ctx.send(
+            "For the nerds:", file=discord.File(fp=io.BytesIO(game.encode()), filename="match.pgn")
+        )

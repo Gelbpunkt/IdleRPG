@@ -28,9 +28,11 @@ from contextvars_executor import ContextVarExecutor
 from classes.bot import Bot
 
 if sys.platform == "linux":  # uvloop requires linux
-    import uvloop
+    #import uvloop
+    import chess.engine
 
-    asyncio.set_event_loop_policy(uvloop.EventLoopPolicy())
+    #asyncio.set_event_loop_policy(uvloop.EventLoopPolicy())
+    asyncio.set_event_loop_policy(chess.engine.EventLoopPolicy())
 
 # Set the timezone to UTC
 os.environ["TZ"] = "UTC"
