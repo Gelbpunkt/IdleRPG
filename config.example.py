@@ -183,6 +183,9 @@ donator_cooldown = commands.CooldownMapping.from_cooldown(
     1, 2, commands.BucketType.user
 )
 
+"""Member role ID. Permissions will be overridden for this role during raids."""
+member_role = 674800989567451173
+
 """Donator role order"""
 donator_roles = [
     "Donators",
