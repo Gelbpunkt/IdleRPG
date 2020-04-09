@@ -41,6 +41,7 @@ from classes.converters import DateNewerThan, IntFromTo, IntGreaterThan
 from cogs.help import chunks
 from cogs.shard_communication import next_day_cooldown
 from utils.checks import has_char, user_is_patron
+from utils.misc import nice_join
 from utils.shell import get_out
 
 
@@ -237,7 +238,7 @@ Even $1 can help us.
         myhours = delta.days * 1.5
         sysinfo = distro.linux_distribution()
         if self.bot.owner_ids:
-            owner = " and ".join(
+            owner = nice_join(
                 [str(await self.bot.get_user_global(u)) for u in self.bot.owner_ids]
             )
         else:

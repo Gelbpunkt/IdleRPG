@@ -169,7 +169,7 @@ items = [
     ("Unicorn Horn", 777),
     ("Iron Ingot", 507),
     ("Hand Guard", 704),
-    ("Toilet Paper", 9999)
+    ("Toilet Paper", 9999),
 ]
 
 

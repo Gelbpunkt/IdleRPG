@@ -23,6 +23,8 @@ import discord
 
 from discord.ext import commands
 
+from utils.misc import nice_join
+
 
 class GameBase:
     def __init__(self, ctx, players: list):
@@ -41,9 +43,6 @@ class GameBase:
             num = random.randint(1, 4)
             yield l[i : i + num]
             idx += num
-
-    def nice_join(self, l):
-        return f"{', '.join(l[:-1])} and {l[-1]}"
 
     async def get_inputs(self):
         all_actions = [
@@ -208,37 +207,33 @@ class GameBase:
                     action = random.choice(team_actions_2)
                 users = [u for u in p if u != target]
                 if not action[1]:
-                    user_actions.append(
-                        (self.nice_join([u.name for u in p]), action[0])
-                    )
+                    user_actions.append((nice_join([u.name for u in p]), action[0]))
                 elif not target:  # fix
                     user_actions.append(
-                        (self.nice_join([u.name for u in p]), _("do nothing."))
+                        (nice_join([u.name for u in p]), _("do nothing."))
                     )
                 elif action[1] == "user":
                     user_actions.append(
                         (
-                            self.nice_join([u.name for u in users]),
+                            nice_join([u.name for u in users]),
                             action[0].replace("USER", target.name),
                         )
                     )
                 elif action[1] == "killall":
-                    user_actions.append(
-                        (self.nice_join([u.name for u in p]), action[0])
-                    )
+                    user_actions.append((nice_join([u.name for u in p]), action[0]))
                     killed_this_round.extend(p)
                 else:
                     if action[1][0] == "kill":
                         user_actions.append(
                             (
-                                self.nice_join([u.name for u in users]),
+                                nice_join([u.name for u in users]),
                                 action[0].replace("USER", target.name),
                             )
                         )
                     elif action[1][0] == "killtogether":
                         user_actions.append(
                             (
-                                self.nice_join([u.name for u in p]),
+                                nice_join([u.name for u in p]),
                                 action[0].replace("USER", target.name),
                             )
                         )
