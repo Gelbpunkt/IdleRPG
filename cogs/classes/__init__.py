@@ -249,8 +249,8 @@ class Classes(commands.Cog):
             embeds.append(embed)
         await self.bot.paginator.Paginator(extras=embeds).paginate(ctx)
 
-    @has_char()
     @is_class("Thief")
+    @has_char()
     @user_cooldown(3600)
     @commands.command()
     @locale_doc
@@ -309,8 +309,8 @@ class Classes(commands.Cog):
         else:
             await ctx.send(_("Your attempt to steal money wasn't successful."))
 
-    @has_char()
     @is_class("Ranger")
+    @has_char()
     @commands.group(invoke_without_command=True)
     @update_pet()
     @locale_doc
@@ -331,8 +331,8 @@ class Classes(commands.Cog):
         await ctx.send(embed=em)
 
     @update_pet()
-    @has_char()
     @is_class("Ranger")
+    @has_char()
     @pet.command()
     @locale_doc
     async def feed(self, ctx):
@@ -381,8 +381,8 @@ class Classes(commands.Cog):
         )
 
     @update_pet()
-    @has_char()
     @is_class("Ranger")
+    @has_char()
     @pet.command()
     @locale_doc
     async def drink(self, ctx):
@@ -431,8 +431,8 @@ class Classes(commands.Cog):
         )
 
     @update_pet()
-    @has_char()
     @is_class("Ranger")
+    @has_char()
     @user_cooldown(21600)
     @pet.command(aliases=["caress", "hug", "kiss"])
     @locale_doc
@@ -451,8 +451,8 @@ class Classes(commands.Cog):
         )
 
     @update_pet()
-    @has_char()
     @is_class("Ranger")
+    @has_char()
     @user_cooldown(21600)  # We are mean, indeed
     @pet.command(aliases=["fun"])
     @locale_doc
@@ -485,8 +485,8 @@ class Classes(commands.Cog):
         )
 
     @update_pet()
-    @has_char()
     @is_class("Ranger")
+    @has_char()
     @pet.command(aliases=["name"])
     @locale_doc
     async def rename(self, ctx, *, name: str):
@@ -499,8 +499,8 @@ class Classes(commands.Cog):
         await ctx.send(_("Pet name updated."))
 
     @update_pet()
-    @has_char()
     @is_class("Ranger")
+    @has_char()
     @pet.command()
     @locale_doc
     async def image(self, ctx, *, url: str):
@@ -522,8 +522,8 @@ class Classes(commands.Cog):
         await ctx.send(_("Your pet's image was successfully updated."))
 
     @update_pet()
-    @has_char()
     @is_class("Ranger")
+    @has_char()
     @user_cooldown(86400)
     @pet.command()
     @locale_doc

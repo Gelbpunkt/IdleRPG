@@ -34,19 +34,32 @@ class GlobalEvents(commands.Cog):
         self.stats_updates = bot.loop.create_task(
             self.stats_updater()
         )  # Initiate the stats updates and save it for the further close
+        self.is_first_ready = True
 
     @commands.Cog.listener()
     async def on_ready(self):
-        print(f"Logged in as {self.bot.user.name} (ID: {self.bot.user.id})")
-        print("--------")
-        print(f"Using discord.py {discord.__version__}")
-        print("--------")
-        print(f"You are running IdleRPG Bot {self.bot.version}")
-        print("Created by The IdleRPG Team")
-        await self.load_settings()
-        self.bot.loop.create_task(queue_manager(self.bot, self.bot.queue))
-        await self.bot.is_owner(self.bot.user)  # force getting the owners
-        await self.status_updater()
+        if self.is_first_ready:
+            self.is_first_ready = False
+            text1 = f"Logged in as {self.bot.user.name} (ID: {self.bot.user.id})"
+            text2 = f"Using discord.py {discord.__version__}"
+            text3 = f"You are running IdleRPG Bot {self.bot.version}"
+            text4 = "Created by Adrian#1337 and Mary Johanna#0420"
+            max_string = max([len(i) for i in (text1, text2, text3, text4)])
+            print(f"┌─{'─' * max_string}─┐")
+            print(f"│ {text1.center(max_string, ' ')} │")
+            print(f"│ {' ' * max_string} │")
+            print(f"│ {text2.center(max_string, ' ')} │")
+            print(f"│ {' ' * max_string} │")
+            print(f"│ {text3.center(max_string, ' ')} │")
+            print(f"│ {' ' * max_string} │")
+            print(f"│ {text4.center(max_string, ' ')} │")
+            print(f"└─{'─' * max_string}─┘")
+            await self.load_settings()
+            self.bot.loop.create_task(queue_manager(self.bot, self.bot.queue))
+            await self.bot.is_owner(self.bot.user)  # force getting the owners
+            await self.status_updater()
+        else:
+            print("[INFO] Discord fired on_ready...")
 
     @commands.Cog.listener()
     async def on_guild_remove(self, guild):

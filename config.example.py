@@ -26,7 +26,7 @@ bfdtoken = "bfdtoken"
 initial_extensions = [
     "cogs.locale",
     "cogs.owner",
-    "cogs.admin",
+    "cogs.game_master",
     "cogs.gambling",
     "cogs.adventure",
     "cogs.ranks",
@@ -78,8 +78,8 @@ join_channel = 441_821_532_696_870_922
 """Defines whether it is a beta version or not. This would disable some parts, e.g. no longer post the stats to DBL and BFD."""
 is_beta = False
 
-"""A list of Admins by ID."""
-admins = [
+"""A list of Game Masters by ID."""
+game_masters = [
     356_091_260_429_402_122,
     373_797_591_395_205_122,
     291_215_916_916_801_536,
@@ -114,8 +114,8 @@ support_server_id = 430_017_996_304_678_923
 """The ID to allow mass tournaments from."""
 official_tournament_channel_id = 684_483_723_911_102_554
 
-"""A channel ID to send admin logs to."""
-admin_log_channel = 457_197_748_626_653_184
+"""A channel ID to send GM logs to."""
+gm_log_channel = 457_197_748_626_653_184
 
 """A channel ID to send public logs to."""
 bot_event_channel = 516_640_070_569_164_828
@@ -183,13 +183,16 @@ donator_cooldown = commands.CooldownMapping.from_cooldown(
     1, 2, commands.BucketType.user
 )
 
+"""Member role ID. Permissions will be overridden for this role during raids."""
+member_role = 674800989567451173
+
 """Donator role order"""
 donator_roles = [
     "Donators",
     "Designer",
     "Translator",
     "Nitro Booster",
-    "Administrators",
+    "Game Masters",
     "Code Redeemed",
     "Bronze Donators",
     "Silver Donators",

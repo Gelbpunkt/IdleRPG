@@ -28,9 +28,11 @@ from contextvars_executor import ContextVarExecutor
 from classes.bot import Bot
 
 if sys.platform == "linux":  # uvloop requires linux
-    import uvloop
+    # import uvloop
+    import chess.engine
 
-    asyncio.set_event_loop_policy(uvloop.EventLoopPolicy())
+    # asyncio.set_event_loop_policy(uvloop.EventLoopPolicy())
+    asyncio.set_event_loop_policy(chess.engine.EventLoopPolicy())
 
 # Set the timezone to UTC
 os.environ["TZ"] = "UTC"
@@ -50,4 +52,26 @@ bot = Bot(
 if __name__ == "__main__":
     loop = asyncio.get_event_loop()
     loop.set_default_executor(ContextVarExecutor())
-    loop.run_until_complete(bot.connect_all())
+    try:
+        loop.run_until_complete(bot.connect_all())
+    except KeyboardInterrupt:
+
+        def shutdown_handler(_loop, context):
+            if "exception" not in context or not isinstance(
+                context["exception"], asyncio.CancelledError
+            ):
+                _loop.default_exception_handler(context)  # TODO: fix context
+
+        loop.set_exception_handler(shutdown_handler)
+        tasks = asyncio.gather(
+            *asyncio.all_tasks(loop=loop), loop=loop, return_exceptions=True
+        )
+        tasks.add_done_callback(lambda t: loop.stop())
+        tasks.cancel()
+
+        while not tasks.done() and not loop.is_closed():
+            loop.run_forever()
+    finally:
+        if hasattr(loop, "shutdown_asyncgens"):
+            loop.run_until_complete(loop.shutdown_asyncgens())
+        loop.close()

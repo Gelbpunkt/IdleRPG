@@ -50,7 +50,7 @@ class Help(commands.Cog):
     def make_pages(self):
         all_commands = {}
         for cog, instance in self.bot.cogs.items():
-            if cog in ["Admin", "Owner"]:
+            if cog in ["GameMaster", "Owner"]:
                 continue
             commands = list(chunks(list(instance.get_commands()), 10))
             if len(commands) == 1:

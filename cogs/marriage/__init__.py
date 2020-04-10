@@ -56,7 +56,7 @@ class Marriage(commands.Cog):
         msg = await ctx.send(
             embed=discord.Embed(
                 title=_("{author} has proposed for a marriage!").format(
-                    author=ctx.author.mention
+                    author=ctx.disp,
                 ),
                 description=_(
                     "{author} wants to marry you, {partner}! React with :heart: to marry them!"
@@ -492,7 +492,7 @@ class Marriage(commands.Cog):
             await self.bot.reset_cooldown(ctx)
             return await ctx.send(_("You don't have kids yet."))
         target = random.choice(children)
-        options = (
+        event = random.choice(
             ["death"]
             + ["age"] * 8
             + ["namechange"] * 4
@@ -500,15 +500,6 @@ class Marriage(commands.Cog):
             + ["moneylose"] * 4
             + ["moneygain"] * 4
         )
-        process_output = await ctx.bot.cogs["Sharding"].handler(
-            "has_event_role", 1, args={"member_id": ctx.author.id}
-        )
-        if process_output and process_output[0]:
-            event_role = process_output[0]
-            options.append("avatar")
-
-        event = random.choice(options)
-
         if event == "death":
             cause = random.choice(
                 [
@@ -573,24 +564,6 @@ class Marriage(commands.Cog):
             return await ctx.send(
                 _("You lost ${money} because {name} {cause}").format(
                     money=money, name=target["name"], cause=cause
-                )
-            )
-        elif event == "avatar":
-            ap = random.choice(
-                [
-                    _("found the first part for you!"),
-                    _("found the second part for you!"),
-                    _("found the third part for you!"),
-                    _("found the fourth part for you! "),
-                    _("found the fifth part for you!"),
-                ]
-            )
-            await self.bot.public_log(
-                f"**{ctx.author}** {ap.replace(' for you', '')} They are part of {event_role} (ID: {ctx.author.id})"
-            )
-            return await ctx.send(
-                _("{name} is trying to complete the event, and {ap}").format(
-                    name=target["name"], ap=ap
                 )
             )
         elif event == "moneygain":

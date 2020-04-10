@@ -187,7 +187,7 @@ class Sharding(commands.Cog):
             if payload.get("action") and hasattr(self, payload.get("action")):
                 try:
                     if payload.get("scope") != "bot":
-                        return  # it's not our cup of tea
+                        continue  # it's not our cup of tea
                     if payload.get("args"):
                         self.bot.loop.create_task(
                             getattr(self, payload["action"])(
@@ -213,30 +213,6 @@ class Sharding(commands.Cog):
                     continue
             if payload.get("output") and payload["command_id"] in self._messages:
                 self._messages[payload["command_id"]].append(payload["output"])
-
-    async def has_event_role(self, member_id: int, command_id: int):
-        if not self.bot.get_user(member_id):
-            return
-        member = self.bot.get_guild(self.bot.config.support_server_id).get_member(
-            member_id
-        )
-        if not member:
-            return
-
-        roles = [
-            discord.utils.get(member.roles, name=i)
-            for i in ("Fire", "Water", "Air", "Earth")
-        ]
-
-        if any(roles):
-            answer = [i for i in roles if i][0].name
-        else:
-            answer = False
-        await self.bot.redis.execute(
-            "PUBLISH",
-            self.communication_channel,
-            json.dumps({"output": answer, "command_id": command_id}),
-        )
 
     async def get_user_patreon(self, member_id: int, command_id: int):
         if not self.bot.get_user(member_id):
@@ -334,6 +310,15 @@ class Sharding(commands.Cog):
             code = "\n".join(code.split("\n")[1:-1])
         code = code.strip("` \n")
         payload = {"output": await _evaluate(self.bot, code), "command_id": command_id}
+        await self.bot.redis.execute(
+            "PUBLISH", self.communication_channel, json.dumps(payload)
+        )
+
+    async def latency(self, command_id: str):
+        payload = {
+            "output": round(self.bot.latency * 1000, 2),
+            "command_id": command_id,
+        }
         await self.bot.redis.execute(
             "PUBLISH", self.communication_channel, json.dumps(payload)
         )

@@ -209,14 +209,17 @@ class Owner(commands.Cog):
     @locale_doc
     async def evall(self, ctx, *, code: str):
         """[Owner only] Evaluates python code on all processes."""
-        data = "".join(
-            await self.bot.cogs["Sharding"].handler(
-                "evaluate", self.bot.shard_count, {"code": code}
-            )
+        data = await self.bot.cogs["Sharding"].handler(
+            "evaluate", self.bot.shard_count, {"code": code}
         )
-        if len(data) > 2000:
-            data = data[:1997] + "..."
-        await ctx.send(data)
+        filtered_data = {instance: data.count(instance) for instance in data}
+        pretty_data = "".join(
+            "```py\n{0}x | {1}".format(count, instance[6:])
+            for instance, count in filtered_data.items()
+        )
+        if len(pretty_data) > 2000:
+            pretty_data = pretty_data[:1997] + "..."
+        await ctx.send(pretty_data)
 
     @commands.command(hidden=True)
     @locale_doc

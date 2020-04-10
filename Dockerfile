@@ -2,8 +2,12 @@ FROM gelbpunkt/python:latest
 
 WORKDIR /idlerpg
 
-RUN apk add --no-cache curl git util-linux && \
+RUN apk add --no-cache curl git util-linux libgcc libstdc++ && \
     curl -sL "https://raw.githubusercontent.com/Gelbpunkt/alpine-python-wheels/3.9-$(uname -m)/index-order" | while read p; do pip install --no-deps "https://github.com/Gelbpunkt/alpine-python-wheels/raw/3.9-$(uname -m)/wheels/$p"; done && \
+    curl -L "https://github.com/Gelbpunkt/alpine-stockfish/raw/$(uname -m)/stockfish" -o stockfish && \
+    chmod +x stockfish && \
+    curl -L "https://github.com/Gelbpunkt/alpine-stockfish/raw/$(uname -m)/Vajolet" -o Vajolet && \
+    chmod +x Vajolet && \
     apk del curl
 
 COPY . .

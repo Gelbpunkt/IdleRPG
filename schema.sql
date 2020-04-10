@@ -17,8 +17,8 @@
 -- PostgreSQL database dump
 --
 
--- Dumped from database version 12.1
--- Dumped by pg_dump version 12.1
+-- Dumped from database version 12.2
+-- Dumped by pg_dump version 12.2
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -94,6 +94,55 @@ ALTER TABLE public.allitems_id_seq OWNER TO jens;
 
 ALTER SEQUENCE public.allitems_id_seq OWNED BY public.allitems.id;
 
+
+--
+-- Name: chess_matches; Type: TABLE; Schema: public; Owner: jens
+--
+
+CREATE TABLE public.chess_matches (
+    id integer NOT NULL,
+    player1 bigint,
+    player2 bigint,
+    result character varying(7) NOT NULL,
+    pgn text NOT NULL
+);
+
+
+ALTER TABLE public.chess_matches OWNER TO jens;
+
+--
+-- Name: chess_matches_id_seq; Type: SEQUENCE; Schema: public; Owner: jens
+--
+
+CREATE SEQUENCE public.chess_matches_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.chess_matches_id_seq OWNER TO jens;
+
+--
+-- Name: chess_matches_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: jens
+--
+
+ALTER SEQUENCE public.chess_matches_id_seq OWNED BY public.chess_matches.id;
+
+
+--
+-- Name: chess_players; Type: TABLE; Schema: public; Owner: jens
+--
+
+CREATE TABLE public.chess_players (
+    "user" bigint NOT NULL,
+    elo bigint DEFAULT 1000 NOT NULL
+);
+
+
+ALTER TABLE public.chess_players OWNER TO jens;
 
 --
 -- Name: children; Type: TABLE; Schema: public; Owner: jens
@@ -458,7 +507,10 @@ CREATE TABLE public.profile (
     favor bigint DEFAULT 0,
     race character varying(30) DEFAULT 'Human'::character varying,
     cv bigint DEFAULT '-1'::integer,
-    reset_points bigint DEFAULT 2 NOT NULL
+    reset_points bigint DEFAULT 2 NOT NULL,
+    chocolates integer DEFAULT 0,
+    trickortreat bigint DEFAULT 0,
+    eastereggs bigint DEFAULT 0
 );
 
 
@@ -535,6 +587,13 @@ ALTER TABLE ONLY public.allitems ALTER COLUMN id SET DEFAULT nextval('public.all
 
 
 --
+-- Name: chess_matches id; Type: DEFAULT; Schema: public; Owner: jens
+--
+
+ALTER TABLE ONLY public.chess_matches ALTER COLUMN id SET DEFAULT nextval('public.chess_matches_id_seq'::regclass);
+
+
+--
 -- Name: coupon id; Type: DEFAULT; Schema: public; Owner: jens
 --
 
@@ -596,6 +655,22 @@ ALTER TABLE ONLY public.transactions ALTER COLUMN id SET DEFAULT nextval('public
 
 ALTER TABLE ONLY public.allitems
     ADD CONSTRAINT allitems_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: chess_matches chess_matches_pkey; Type: CONSTRAINT; Schema: public; Owner: jens
+--
+
+ALTER TABLE ONLY public.chess_matches
+    ADD CONSTRAINT chess_matches_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: chess_players chess_players_pkey; Type: CONSTRAINT; Schema: public; Owner: jens
+--
+
+ALTER TABLE ONLY public.chess_players
+    ADD CONSTRAINT chess_players_pkey PRIMARY KEY ("user");
 
 
 --
@@ -715,6 +790,22 @@ CREATE TRIGGER insert_alliance_default BEFORE INSERT ON public.guild FOR EACH RO
 
 ALTER TABLE ONLY public.allitems
     ADD CONSTRAINT allitems_owner_fkey FOREIGN KEY (owner) REFERENCES public.profile("user") ON DELETE CASCADE;
+
+
+--
+-- Name: chess_matches chess_matches_player1_fkey; Type: FK CONSTRAINT; Schema: public; Owner: jens
+--
+
+ALTER TABLE ONLY public.chess_matches
+    ADD CONSTRAINT chess_matches_player1_fkey FOREIGN KEY (player1) REFERENCES public.chess_players("user");
+
+
+--
+-- Name: chess_matches chess_matches_player2_fkey; Type: FK CONSTRAINT; Schema: public; Owner: jens
+--
+
+ALTER TABLE ONLY public.chess_matches
+    ADD CONSTRAINT chess_matches_player2_fkey FOREIGN KEY (player2) REFERENCES public.chess_players("user");
 
 
 --

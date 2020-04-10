@@ -27,7 +27,7 @@ import discord
 from discord.ext import commands
 
 from classes.converters import IntGreaterThan
-from utils.checks import AlreadyRaiding, has_char, is_admin, is_god
+from utils.checks import AlreadyRaiding, has_char, is_gm, is_god
 
 
 def raid_channel():
@@ -84,7 +84,7 @@ class Raid(commands.Cog):
     async def clear_raid_timer(self):
         await self.bot.redis.execute("DEL", "special:raid")
 
-    @is_admin()
+    @is_gm()
     @commands.command()
     async def alterraid(self, ctx, newhp: IntGreaterThan(0)):
         """[Bot Admin only] Change a raid boss' HP."""
@@ -100,7 +100,7 @@ class Raid(commands.Cog):
             return await ctx.send("Could not edit Boss HP!")
         await ctx.send("Boss HP updated!")
 
-    @is_admin()
+    @is_gm()
     @raid_channel()
     @raid_free()
     @commands.command()
@@ -121,7 +121,7 @@ class Raid(commands.Cog):
         )
         self.boss = {"hp": hp, "min_dmg": 100, "max_dmg": 500}
         await ctx.channel.set_permissions(
-            ctx.guild.default_role, overwrite=self.read_only
+            ctx.guild.get_role(self.bot.config.member_role), overwrite=self.read_only
         )
         spawnmsg = await ctx.send(
             f"""
@@ -233,7 +233,8 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
             await m.add_reaction("\U0001F1EB")
         elif self.boss["hp"] < 1:
             await ctx.channel.set_permissions(
-                ctx.guild.default_role, overwrite=self.allow_sending
+                ctx.guild.get_role(self.bot.config.member_role),
+                overwrite=self.allow_sending,
             )
             highest_bid = [
                 ctx.guild.get_member(356_091_260_429_402_122),
@@ -319,12 +320,12 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
 
         await asyncio.sleep(30)
         await ctx.channel.set_permissions(
-            ctx.guild.default_role, overwrite=self.deny_sending
+            ctx.guild.get_role(self.bot.config.member_role), overwrite=self.deny_sending
         )
         await self.clear_raid_timer()
         self.boss = None
 
-    @is_admin()
+    @is_gm()
     @ikhdosa_channel()
     @raid_free()
     @commands.command()
@@ -487,7 +488,7 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
             headers={"Authorization": self.bot.config.raidauth},
         )
         await ctx.channel.set_permissions(
-            ctx.guild.default_role, overwrite=self.read_only
+            ctx.guild.get_role(self.bot.config.member_role), overwrite=self.read_only
         )
         await ctx.send(
             """
@@ -762,7 +763,7 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
         )
         self.boss = {"hp": hp, "min_dmg": 100, "max_dmg": 500}
         await ctx.channel.set_permissions(
-            ctx.guild.default_role, overwrite=self.read_only
+            ctx.guild.get_role(self.bot.config.member_role), overwrite=self.read_only
         )
         await ctx.send(
             f"""
@@ -867,7 +868,8 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
             await ctx.send("The raid was all wiped!")
         elif self.boss["hp"] < 1:
             await ctx.channel.set_permissions(
-                ctx.guild.default_role, overwrite=self.allow_sending
+                ctx.guild.get_role(self.bot.config.member_role),
+                overwrite=self.allow_sending,
             )
             winner = random.choice(list(raid.keys()))
             await self.bot.pool.execute(
@@ -895,7 +897,7 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
 
         await asyncio.sleep(30)
         await ctx.channel.set_permissions(
-            ctx.guild.default_role, overwrite=self.deny_sending
+            ctx.guild.get_role(self.bot.config.member_role), overwrite=self.deny_sending
         )
         await self.clear_raid_timer()
         self.boss = None
@@ -911,7 +913,7 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
             headers={"Authorization": self.bot.config.raidauth},
         )
         await ctx.channel.set_permissions(
-            ctx.guild.default_role, overwrite=self.read_only
+            ctx.guild.get_role(self.bot.config.member_role), overwrite=self.read_only
         )
         await ctx.send(
             """
@@ -1014,7 +1016,8 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
 
         if len(raid) == 1:
             await ctx.channel.set_permissions(
-                ctx.guild.default_role, overwrite=self.allow_sending
+                ctx.guild.get_role(self.bot.config.member_role),
+                overwrite=self.allow_sending,
             )
             winner = raid[0]
             await self.bot.pool.execute(
@@ -1030,7 +1033,7 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
 
         await asyncio.sleep(30)
         await ctx.channel.set_permissions(
-            ctx.guild.default_role, overwrite=self.deny_sending
+            ctx.guild.get_role(self.bot.config.member_role), overwrite=self.deny_sending
         )
         await self.clear_raid_timer()
         self.boss = None
@@ -1047,7 +1050,7 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
         )
         self.boss = {"hp": hp, "min_dmg": 100, "max_dmg": 500}
         await ctx.channel.set_permissions(
-            ctx.guild.default_role, overwrite=self.read_only
+            ctx.guild.get_role(self.bot.config.member_role), overwrite=self.read_only
         )
         await ctx.send(
             f"""
@@ -1157,7 +1160,8 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
             await ctx.send("The raid was all wiped!")
         elif self.boss["hp"] < 1:
             await ctx.channel.set_permissions(
-                ctx.guild.default_role, overwrite=self.allow_sending
+                ctx.guild.get_role(self.bot.config.member_role),
+                overwrite=self.allow_sending,
             )
             highest_bid = [
                 ctx.guild.get_member(356_091_260_429_402_122),
@@ -1242,7 +1246,7 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
 
         await asyncio.sleep(30)
         await ctx.channel.set_permissions(
-            ctx.guild.default_role, overwrite=self.deny_sending
+            ctx.guild.get_role(self.bot.config.member_role), overwrite=self.deny_sending
         )
         await self.clear_raid_timer()
         self.boss = None
@@ -1259,7 +1263,7 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
         )
         self.boss = {"hp": hp, "min_dmg": 100, "max_dmg": 500}
         await ctx.channel.set_permissions(
-            ctx.guild.default_role, overwrite=self.read_only
+            ctx.guild.get_role(self.bot.config.member_role), overwrite=self.read_only
         )
         await ctx.send(
             """
@@ -1454,7 +1458,8 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
             await ctx.send("The raid was all wiped!")
         elif self.boss["hp"] < 1:
             await ctx.channel.set_permissions(
-                ctx.guild.default_role, overwrite=self.allow_sending
+                ctx.guild.get_role(self.bot.config.member_role),
+                overwrite=self.allow_sending,
             )
             highest_bid = [
                 ctx.guild.get_member(356_091_260_429_402_122),
@@ -1539,7 +1544,7 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
 
         await asyncio.sleep(30)
         await ctx.channel.set_permissions(
-            ctx.guild.default_role, overwrite=self.deny_sending
+            ctx.guild.get_role(self.bot.config.member_role), overwrite=self.deny_sending
         )
         await self.clear_raid_timer()
         self.boss = None
@@ -1556,7 +1561,7 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
         )
         self.boss = {"hp": hp, "min_dmg": 100, "max_dmg": 500}
         await ctx.channel.set_permissions(
-            ctx.guild.default_role, overwrite=self.read_only
+            ctx.guild.get_role(self.bot.config.member_role), overwrite=self.read_only
         )
         await ctx.send(
             """
@@ -1681,7 +1686,7 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
         )
         self.boss = {"hp": hp, "min_dmg": 100, "max_dmg": 500}
         await ctx.channel.set_permissions(
-            ctx.guild.default_role, overwrite=self.read_only
+            ctx.guild.get_role(self.bot.config.member_role), overwrite=self.read_only
         )
         await ctx.send(
             f"""
@@ -1788,7 +1793,8 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
             await ctx.send("The raid was all wiped!")
         elif self.boss["hp"] < 1:
             await ctx.channel.set_permissions(
-                ctx.guild.default_role, overwrite=self.allow_sending
+                ctx.guild.get_role(self.bot.config.member_role),
+                overwrite=self.allow_sending,
             )
             highest_bid = [
                 ctx.guild.get_member(356_091_260_429_402_122),
@@ -1873,7 +1879,7 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
 
         await asyncio.sleep(30)
         await ctx.channel.set_permissions(
-            ctx.guild.default_role, overwrite=self.deny_sending
+            ctx.guild.get_role(self.bot.config.member_role), overwrite=self.deny_sending
         )
         await self.clear_raid_timer()
         self.boss = None

@@ -27,7 +27,7 @@ from discord.ext import commands
 
 from cogs.help import chunks
 from cogs.shard_communication import next_day_cooldown
-from utils.checks import has_char, is_admin, is_guild_leader, is_guild_officer
+from utils.checks import has_char, is_gm, is_guild_leader, is_guild_officer
 
 rewards = {
     1: {"crates": 0, "puzzle": False, "money": 500},
@@ -446,7 +446,7 @@ Next round starts in 5 seconds!
             f.truncate()
         await ctx.send(_("{guild} has been signed up.").format(guild=g["name"]))
 
-    @is_admin()
+    @is_gm()
     @commands.command()
     @locale_doc
     async def makematches(self, ctx):
@@ -462,7 +462,7 @@ Next round starts in 5 seconds!
             f.truncate()
         await ctx.send(_("Matches generated!"))
 
-    @is_admin()
+    @is_gm()
     @commands.command()
     @locale_doc
     async def result(self, ctx, guild1, guild2, winner):
@@ -492,7 +492,7 @@ Next round starts in 5 seconds!
             )
         )
 
-    @is_admin()
+    @is_gm()
     @commands.command()
     @locale_doc
     async def forceround(self, ctx):

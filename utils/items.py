@@ -14,6 +14,8 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
 import secrets
 
+from typing import Dict, Union
+
 items = [
     ("Punjabi Remix", 9500),
     ("Cold Shower", 8406),
@@ -167,9 +169,10 @@ items = [
     ("Unicorn Horn", 777),
     ("Iron Ingot", 507),
     ("Hand Guard", 704),
+    ("Toilet Paper", 9999),
 ]
 
 
-def get_item():
+def get_item() -> Dict[str, Union[str, int]]:
     item = secrets.choice(items)
     return {"name": item[0], "value": item[1]}
