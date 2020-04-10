@@ -14,6 +14,7 @@ import discord
 from async_timeout import timeout
 
 from classes.context import Context
+from utils.paginator import NoChoice
 
 
 def calculate_player_elos(player1_elo, player2_elo, score):
@@ -68,7 +69,6 @@ class ChessGame:
             enemy: "black" if player_color == "white" else "white",
         }
 
-        self.get_player_move = partial(self.get_move_from, player)
         if self.enemy is None:
             self.limit = chess.engine.Limit(depth=difficulty)
 
@@ -96,10 +96,10 @@ class ChessGame:
         return move
 
     async def get_board(self):
-        svg = chess.svg.board(
-            board=self.board, flipped=self.board.turn == chess.BLACK
-        )
-        async with self.ctx.bot.trusted_session.post(f"{self.ctx.bot.config.okapi_url}/api/genchess", data={"xml": svg}) as r:
+        svg = chess.svg.board(board=self.board, flipped=self.board.turn == chess.BLACK)
+        async with self.ctx.bot.trusted_session.post(
+            f"{self.ctx.bot.config.okapi_url}/api/genchess", data={"xml": svg}
+        ) as r:
             file_ = io.BytesIO(await r.read())
         return file_
 
@@ -134,13 +134,18 @@ class ChessGame:
         finally:
             if self.enemy is not None or self.colors[self.player] == "black":
                 await self.msg.delete()
+                self.msg = None
             return move
 
     async def get_ai_move(self):
         if self.colors[self.player] == "black":
-            self.msg = await self.ctx.send(f"**Move {self.move_no}**\nLet me think... This might take up to 2 minutes")
+            self.msg = await self.ctx.send(
+                f"**Move {self.move_no}**\nLet me think... This might take up to 2 minutes"
+            )
         else:
-            await self.msg.edit(content=f"**Move {self.move_no}**\nLet me think... This might take up to 2 minutes")
+            await self.msg.edit(
+                content=f"**Move {self.move_no}**\nLet me think... This might take up to 2 minutes"
+            )
         try:
             async with timeout(120):
                 move = await self.engine.play(self.board, self.limit)
@@ -157,6 +162,34 @@ class ChessGame:
     def make_move(self, move):
         self.board.push(move)
 
+    async def get_ai_draw_response(self):
+        msg = await self.ctx.send("Waiting for AI draw response...")
+        try:
+            async with timeout(120):
+                move = await self.engine.play(self.board, self.limit)
+        except asyncio.TimeoutError:
+            await msg.delete()
+            return False
+        await msg.delete()
+        return move.draw_offered
+
+    async def get_ai_draw_response(self):
+        try:
+            async with timeout(120):
+                move = await self.engine.play(self.board, self.limit)
+        except asyncio.TimeoutError:
+            return False
+        return move.draw_offered
+
+    async def get_player_draw_response(self, player):
+        try:
+            return await self.ctx.confirm(
+                f"Your enemy has proposed a draw, {player.mention}. Do you agree?",
+                user=player,
+            )
+        except NoChoice:
+            return False
+
     async def run(self):
         self.status = "playing"
         white, black = reversed(sorted(self.colors, key=lambda x: self.colors[x]))
@@ -170,7 +203,20 @@ class ChessGame:
             elif move == "timeout":
                 break
             elif move == "draw":
-                self.status = "draw"  # TODO
+                if self.enemy is None and current is not None:  # player offered AI
+                    draw_accepted = await self.get_ai_draw_response()
+                else:  # AI offered player or player offered player
+                    draw_accepted = await self.get_player_draw_response(
+                        black if current == white else white
+                    )
+                if draw_accepted:
+                    self.status = "draw"
+                else:
+                    if self.msg and self.enemy is None and current is not None:
+                        await self.msg.delete()
+                    await self.ctx.send("The draw was rejected.", delete_after=10)
+                    self.move_no -= 1
+                    continue
             else:
                 self.make_move(move)
                 if self.history and len(self.history[-1]) == 1:
@@ -228,7 +274,7 @@ class ChessGame:
                 file=discord.File(fp=file_, filename="board.png"),
             )
 
-        await self.ctx.send(
-            "For the nerds:",
-            file=discord.File(fp=io.BytesIO(game.encode()), filename="match.pgn"),
-        )
+            await self.ctx.send(
+                "For the nerds:",
+                file=discord.File(fp=io.BytesIO(game.encode()), filename="match.pgn"),
+            )
