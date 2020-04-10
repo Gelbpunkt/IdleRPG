@@ -507,7 +507,10 @@ CREATE TABLE public.profile (
     favor bigint DEFAULT 0,
     race character varying(30) DEFAULT 'Human'::character varying,
     cv bigint DEFAULT '-1'::integer,
-    reset_points bigint DEFAULT 2 NOT NULL
+    reset_points bigint DEFAULT 2 NOT NULL,
+    chocolates integer DEFAULT 0,
+    trickortreat bigint DEFAULT 0,
+    eastereggs bigint DEFAULT 0
 );
 
 
