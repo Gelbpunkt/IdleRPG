@@ -5,12 +5,13 @@ import io
 from functools import partial
 from typing import Optional
 
-import cairosvg
 import chess
 import chess.engine
 import chess.pgn
 import chess.svg
 import discord
+
+from async_timeout import timeout
 
 from classes.context import Context
 
@@ -69,7 +70,7 @@ class ChessGame:
 
         self.get_player_move = partial(self.get_move_from, player)
         if self.enemy is None:
-            self.limit = chess.engine.Limit(time=float(difficulty))
+            self.limit = chess.engine.Limit(depth=difficulty)
 
     def parse_move(self, move, color):
         if move == "0-0":
@@ -95,16 +96,12 @@ class ChessGame:
         return move
 
     async def get_board(self):
-        def get_file():
-            file_ = io.BytesIO()
-            svg = chess.svg.board(
-                board=self.board, flipped=self.board.turn == chess.BLACK
-            )
-            cairosvg.svg2png(bytestring=svg, write_to=file_)
-            file_.seek(0)
-            return file_
-
-        return await self.ctx.bot.loop.run_in_executor(None, get_file)
+        svg = chess.svg.board(
+            board=self.board, flipped=self.board.turn == chess.BLACK
+        )
+        async with self.ctx.bot.trusted_session.post(f"{self.ctx.bot.config.okapi_url}/api/genchess", data={"xml": svg}) as r:
+            file_ = io.BytesIO(await r.read())
+        return file_
 
     async def get_move_from(self, player):
         if player is None:
@@ -141,10 +138,14 @@ class ChessGame:
 
     async def get_ai_move(self):
         if self.colors[self.player] == "black":
-            self.msg = await self.ctx.send(f"**Move {self.move_no}**\nLet me think...")
+            self.msg = await self.ctx.send(f"**Move {self.move_no}**\nLet me think... This might take up to 2 minutes")
         else:
-            await self.msg.edit(content=f"**Move {self.move_no}**\nLet me think...")
-        move = await self.engine.play(self.board, self.limit)
+            await self.msg.edit(content=f"**Move {self.move_no}**\nLet me think... This might take up to 2 minutes")
+        try:
+            async with timeout(120):
+                move = await self.engine.play(self.board, self.limit)
+        except asyncio.TimeoutError:
+            move = random.choice(list(self.board.legal_moves))
         await self.msg.delete()
         if move.draw_offered:
             return "draw"
@@ -204,7 +205,7 @@ class ChessGame:
 
         if self.board.is_checkmate():
             await self.ctx.send(
-                f"**Checkmate! {self.board.result()}**",
+                f"**Checkmate! {result}**",
                 file=discord.File(fp=file_, filename="board.png"),
             )
         elif self.board.is_stalemate():
@@ -213,17 +214,17 @@ class ChessGame:
             )
         elif self.board.is_insufficient_material():
             await self.ctx.send(
-                "**Insufficient material. Tie!**",
+                "**Insufficient material! {result}**",
                 file=discord.File(fp=file_, filename="board.png"),
             )
         elif self.status.endswith("resigned"):
             await self.ctx.send(
-                f"**{self.status.title()}!**",
+                f"**{self.status.title()}! {result}**",
                 file=discord.File(fp=file_, filename="board.png"),
             )
         elif self.status == "draw":
             await self.ctx.send(
-                "**You accepted a draw!**",
+                "**You accepted a draw! {result}**",
                 file=discord.File(fp=file_, filename="board.png"),
             )
 
