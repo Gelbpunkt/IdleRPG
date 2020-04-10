@@ -17,8 +17,8 @@
 -- PostgreSQL database dump
 --
 
--- Dumped from database version 12.1
--- Dumped by pg_dump version 12.1
+-- Dumped from database version 12.2
+-- Dumped by pg_dump version 12.2
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -458,7 +458,10 @@ CREATE TABLE public.profile (
     favor bigint DEFAULT 0,
     race character varying(30) DEFAULT 'Human'::character varying,
     cv bigint DEFAULT '-1'::integer,
-    reset_points bigint DEFAULT 2 NOT NULL
+    reset_points bigint DEFAULT 2 NOT NULL,
+    chocolates integer DEFAULT 0,
+    trickortreat bigint DEFAULT 0,
+    eastereggs bigint DEFAULT 0
 );
 
 
