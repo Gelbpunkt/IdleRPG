@@ -96,7 +96,12 @@ class ChessGame:
         return move
 
     async def get_board(self):
-        svg = chess.svg.board(board=self.board, flipped=self.board.turn == chess.BLACK)
+        svg = chess.svg.board(
+            board=self.board,
+            flipped=self.board.turn == chess.BLACK,
+            lastmove=self.board.peek() if self.board.move_stack else None,
+            check=self.board.king(self.board.turn) if self.board.is_check() else None,
+        )
         async with self.ctx.bot.trusted_session.post(
             f"{self.ctx.bot.config.okapi_url}/api/genchess", data={"xml": svg}
         ) as r:
@@ -274,7 +279,7 @@ class ChessGame:
                 file=discord.File(fp=file_, filename="board.png"),
             )
 
-            await self.ctx.send(
-                "For the nerds:",
-                file=discord.File(fp=io.BytesIO(game.encode()), filename="match.pgn"),
-            )
+        await self.ctx.send(
+            "For the nerds:",
+            file=discord.File(fp=io.BytesIO(game.encode()), filename="match.pgn"),
+        )
