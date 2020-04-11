@@ -204,7 +204,7 @@ class ChessGame:
             return await self.get_ai_move()
         file_ = await self.get_board()
         self.msg = await self.ctx.send(
-            f"**Move {self.move_no}: {player.mention}'s turn**\nSimply type your move. You have 2 minutes to enter a valid move. I accept normal notation as well as `resign` or `draw`.\nExample: `g1f3`, `Nf3`, `0-0` or `xe3`",
+            _("**Move {move_no}: {player}'s turn**\nSimply type your move. You have 2 minutes to enter a valid move. I accept normal notation as well as `resign` or `draw`.\nExample: `g1f3`, `Nf3`, `0-0` or `xe3`.\nMoves are case-sensitive! Pieces uppercase: `N`, `Q` or `B`, fields lowercase: `a`, `b` or `h`. Casteling is `0-0` or `0-0-0`.").format(move_no=self.move_no, player=player.mention),
             file=discord.File(fp=file_, filename="board.png"),
         )
 
@@ -225,7 +225,7 @@ class ChessGame:
             )
         except asyncio.TimeoutError:
             self.status = f"{self.colors[player]} resigned"
-            await self.ctx.send("You entered no valid move! You lost!")
+            await self.ctx.send(_("You entered no valid move! You lost!"))
             move = "timeout"
         finally:
             if self.enemy is not None or self.colors[self.player] == "black":
@@ -236,11 +236,11 @@ class ChessGame:
     async def get_ai_move(self):
         if self.colors[self.player] == "black":
             self.msg = await self.ctx.send(
-                f"**Move {self.move_no}**\nLet me think... This might take up to 2 minutes"
+                _("**Move {move_no}**\nLet me think... This might take up to 2 minutes").format(move_no=self.move_no)
             )
         else:
             await self.msg.edit(
-                content=f"**Move {self.move_no}**\nLet me think... This might take up to 2 minutes"
+                content=_("**Move {move_no}**\nLet me think... This might take up to 2 minutes").format(move_no=self.move_no)
             )
         try:
             async with timeout(120):
@@ -259,7 +259,7 @@ class ChessGame:
         self.board.push(move)
 
     async def get_ai_draw_response(self):
-        msg = await self.ctx.send("Waiting for AI draw response...")
+        msg = await self.ctx.send(_("Waiting for AI draw response..."))
         try:
             async with timeout(120):
                 move = await self.engine.play(self.board, self.limit)
@@ -272,7 +272,7 @@ class ChessGame:
     async def get_player_draw_response(self, player):
         try:
             return await self.ctx.confirm(
-                f"Your enemy has proposed a draw, {player.mention}. Do you agree?",
+                _("Your enemy has proposed a draw, {player}. Do you agree?").format(player=player.mention),
                 user=player,
             )
         except NoChoice:
@@ -302,7 +302,7 @@ class ChessGame:
                 else:
                     if self.msg and self.enemy is None and current is not None:
                         await self.msg.delete()
-                    await self.ctx.send("The draw was rejected.", delete_after=10)
+                    await self.ctx.send(_("The draw was rejected."), delete_after=10)
                     self.move_no -= 1
                     continue
             else:
@@ -357,17 +357,17 @@ class ChessGame:
 
         if self.board.is_checkmate():
             await self.ctx.send(
-                f"**Checkmate! {result}**",
+                _("**Checkmate! {result}**").format(result=result),
                 file=discord.File(fp=file_, filename="board.png"),
             )
         elif self.board.is_stalemate():
             await self.ctx.send(
-                f"**Stalemate! {result}**",
+                _("**Stalemate! {result}**").format(result=result),
                 file=discord.File(fp=file_, filename="board.png"),
             )
         elif self.board.is_insufficient_material():
             await self.ctx.send(
-                f"**Insufficient material! {result}**",
+                _("**Insufficient material! {result}**").format(result=result),
                 file=discord.File(fp=file_, filename="board.png"),
             )
         elif self.status.endswith("resigned"):
@@ -377,11 +377,11 @@ class ChessGame:
             )
         elif self.status == "draw":
             await self.ctx.send(
-                "**Draw accepted! {result}**",
+                _("**Draw accepted! {result}**").format(result=result),
                 file=discord.File(fp=file_, filename="board.png"),
             )
 
         await self.ctx.send(
-            "For the nerds:",
+            _("For the nerds:"),
             file=discord.File(fp=io.BytesIO(game.encode()), filename="match.pgn"),
         )

@@ -24,7 +24,6 @@ import discord
 
 from discord.ext import commands
 
-from classes.converters import IntFromTo
 from utils.chess import ChessGame, ProtocolAdapter
 
 
@@ -106,12 +105,14 @@ class Chess(commands.Cog):
     async def match(
         self,
         ctx,
-        enemy: Optional[discord.Member] = None,
-        difficulty: IntFromTo(1, 10) = 3,
+        difficulty: Optional[int] = 3,
+        enemy: discord.Member = None,
     ):
         _("""Starts a game of chess, either against a player or AI from difficulty 1 to 10.""")
         if enemy == ctx.author:
             return await ctx.send(_("You cannot play against yourself."))
+        if difficulty < 1 or difficulty > 10:
+            return await ctx.send(_("Difficulty may be 1-10."))
         emojis = {"\U00002b1c": "white", "\U00002b1b": "black"}
         msg = await ctx.send(_("Please choose the colour you want to take."))
         await msg.add_reaction("\U00002b1c")
@@ -177,7 +178,7 @@ class Chess(commands.Cog):
         game = self.matches.get(ctx.channel.id)
         if not game:
             return await ctx.send("No game here.")
-        moves = "\n".join(game.pretty_moves)
+        moves = "\n".join(game.pretty_moves())
         await ctx.send(moves)
 
     def cog_unload(self):
