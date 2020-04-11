@@ -104,7 +104,8 @@ CREATE TABLE public.chess_matches (
     player1 bigint,
     player2 bigint,
     result character varying(7) NOT NULL,
-    pgn text NOT NULL
+    pgn text NOT NULL,
+    winner bigint NOT NULL
 );
 
 
@@ -806,6 +807,14 @@ ALTER TABLE ONLY public.chess_matches
 
 ALTER TABLE ONLY public.chess_matches
     ADD CONSTRAINT chess_matches_player2_fkey FOREIGN KEY (player2) REFERENCES public.chess_players("user");
+
+
+--
+-- Name: chess_matches chess_matches_winner_fkey; Type: FK CONSTRAINT; Schema: public; Owner: jens
+--
+
+ALTER TABLE ONLY public.chess_matches
+    ADD CONSTRAINT chess_matches_winner_fkey FOREIGN KEY (winner) REFERENCES public.chess_players("user");
 
 
 --
