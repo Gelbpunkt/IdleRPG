@@ -160,7 +160,7 @@ class ChessGame:
 
     def pretty_moves(self):
         history = chess.Board().variation_san(self.move_stack)
-        splitted = re.split("\s?\d+\.\s", history)[1:]
+        splitted = re.split(r"\s?\d+\.\s", history)[1:]
         return splitted
 
     def parse_move(self, move, color):
@@ -204,7 +204,9 @@ class ChessGame:
             return await self.get_ai_move()
         file_ = await self.get_board()
         self.msg = await self.ctx.send(
-            _("**Move {move_no}: {player}'s turn**\nSimply type your move. You have 2 minutes to enter a valid move. I accept normal notation as well as `resign` or `draw`.\nExample: `g1f3`, `Nf3`, `0-0` or `xe3`.\nMoves are case-sensitive! Pieces uppercase: `N`, `Q` or `B`, fields lowercase: `a`, `b` or `h`. Casteling is `0-0` or `0-0-0`.").format(move_no=self.move_no, player=player.mention),
+            _(
+                "**Move {move_no}: {player}'s turn**\nSimply type your move. You have 2 minutes to enter a valid move. I accept normal notation as well as `resign` or `draw`.\nExample: `g1f3`, `Nf3`, `0-0` or `xe3`.\nMoves are case-sensitive! Pieces uppercase: `N`, `Q` or `B`, fields lowercase: `a`, `b` or `h`. Casteling is `0-0` or `0-0-0`."
+            ).format(move_no=self.move_no, player=player.mention),
             file=discord.File(fp=file_, filename="board.png"),
         )
 
@@ -236,11 +238,15 @@ class ChessGame:
     async def get_ai_move(self):
         if self.colors[self.player] == "black":
             self.msg = await self.ctx.send(
-                _("**Move {move_no}**\nLet me think... This might take up to 2 minutes").format(move_no=self.move_no)
+                _(
+                    "**Move {move_no}**\nLet me think... This might take up to 2 minutes"
+                ).format(move_no=self.move_no)
             )
         else:
             await self.msg.edit(
-                content=_("**Move {move_no}**\nLet me think... This might take up to 2 minutes").format(move_no=self.move_no)
+                content=_(
+                    "**Move {move_no}**\nLet me think... This might take up to 2 minutes"
+                ).format(move_no=self.move_no)
             )
         try:
             async with timeout(120):
@@ -272,7 +278,9 @@ class ChessGame:
     async def get_player_draw_response(self, player):
         try:
             return await self.ctx.confirm(
-                _("Your enemy has proposed a draw, {player}. Do you agree?").format(player=player.mention),
+                _("Your enemy has proposed a draw, {player}. Do you agree?").format(
+                    player=player.mention
+                ),
                 user=player,
             )
         except NoChoice:

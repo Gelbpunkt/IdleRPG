@@ -96,19 +96,20 @@ class Chess(commands.Cog):
                     "SELECT position FROM (SELECT chess_players.*, ROW_NUMBER() OVER(ORDER BY chess_players.elo DESC) AS position FROM chess_players) s WHERE s.user = $1 LIMIT 1;",
                     ctx.author.id,
                 )
-                text = _("**{user}** with ELO **{elo}**").format(user=ctx.author, elo=player["elo"])
+                text = _("**{user}** with ELO **{elo}**").format(
+                    user=ctx.author, elo=player["elo"]
+                )
                 text = f"{player_pos}. {text}"
                 embed.add_field(name=_("Your position"), value=text)
             await ctx.send(embed=embed)
 
     @chess.group(invoke_without_command=True)
     async def match(
-        self,
-        ctx,
-        difficulty: Optional[int] = 3,
-        enemy: discord.Member = None,
+        self, ctx, difficulty: Optional[int] = 3, enemy: discord.Member = None,
     ):
-        _("""Starts a game of chess, either against a player or AI from difficulty 1 to 10.""")
+        _(
+            """Starts a game of chess, either against a player or AI from difficulty 1 to 10."""
+        )
         if enemy == ctx.author:
             return await ctx.send(_("You cannot play against yourself."))
         if difficulty < 1 or difficulty > 10:
@@ -151,7 +152,12 @@ class Chess(commands.Cog):
             if not await ctx.confirm(
                 _(
                     "{user}, you have been challenged to a chess match by {author}. They will be {color}. Do you accept? {extra}"
-                ).format(user=enemy.mention, author=ctx.author.mention, color=side, extra=_("**The match will be ELO rated!**") if rated else ""),
+                ).format(
+                    user=enemy.mention,
+                    author=ctx.author.mention,
+                    color=side,
+                    extra=_("**The match will be ELO rated!**") if rated else "",
+                ),
                 user=enemy,
             ):
                 return await ctx.send(
