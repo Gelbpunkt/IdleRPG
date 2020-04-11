@@ -2,6 +2,7 @@ import asyncio
 import datetime
 import io
 import random
+import re
 
 from typing import Optional
 
@@ -17,9 +18,9 @@ from classes.context import Context
 from utils.paginator import NoChoice
 
 
-def calculate_player_elos(player1_elo, player2_elo, score):
+async def update_player_elos(bot, player1, player2, outcome):
     """
-    Calculates Chess elos for 2 players after a match based on
+    Updates Chess elos for 2 players after a match based on
     their old elos and the match outcome.
     Score shall be 1 if player 1 won, 0.5 if it's a tie and 0
     if player 2 won.
@@ -31,20 +32,60 @@ def calculate_player_elos(player1_elo, player2_elo, score):
     - It is 40 if the number of played games is smaller than 30.
     - It is 20 if the number of played games is greater than 30 and the rating is less than 2400.
     - It is 10 if the number of played games is greater than 30 and the rating is more than 2400.
-    - It is 40 if rating is less than 2300 and the age of the player is less than 18. We assume that everyone is 18+ and has played 30 games
+    - It is 40 if rating is less than 2300 and the age of the player is less than 18. We assume that everyone is 18+.
 
     The expected score is:
     Ea = 1 / (1 + 10 ^ ((Rb - Ra) / 400))
     """
-    expected_score_1 = 1 / (1 + 10 ** ((player2_elo - player1_elo) / 400))
-    expected_score_2 = 1 / (1 + 10 ** ((player1_elo - player2_elo) / 400))
-    k_1 = 20 if player1_elo < 2400 else 10  # just assuming
-    k_2 = 20 if player2_elo < 2400 else 10  # just assuming
+    async with bot.pool.acquire() as conn:
+        player1_elo = await conn.fetchval(
+            'SELECT elo FROM chess_players WHERE "user"=$1;', player1.id
+        )
+        player2_elo = await conn.fetchval(
+            'SELECT elo FROM chess_players WHERE "user"=$1;', player2.id
+        )
+        num_matches_1 = await conn.fetchval(
+            'SELECT COUNT(*) FROM chess_matches WHERE "player1"=$1 OR "player2"=$1;',
+            player1.id,
+        )
+        num_matches_2 = await conn.fetchval(
+            'SELECT COUNT(*) FROM chess_matches WHERE "player1"=$1 OR "player2"=$1;',
+            player2.id,
+        )
+        if num_matches_1 < 30:
+            k_1 = 40
+        elif player1_elo < 2400:
+            k_1 = 20
+        else:
+            k_1 = 10
+        if num_matches_2 < 30:
+            k_2 = 40
+        elif player2_elo < 2400:
+            k_2 = 20
+        else:
+            k_2 = 10
+        if outcome == "1-0":
+            score = 1
+        elif outcome == "1/2-1/2":
+            score = 0.5
+        else:
+            score = 0
+        expected_score_1 = 1 / (1 + 10 ** ((player2_elo - player1_elo) / 400))
+        expected_score_2 = 1 / (1 + 10 ** ((player1_elo - player2_elo) / 400))
 
-    new_rating_1 = player1_elo + k_1 * (score - expected_score_1)
-    new_rating_2 = player2_elo + k_2 * (1 - score - expected_score_2)
+        new_rating_1 = round(player1_elo + k_1 * (score - expected_score_1))
+        new_rating_2 = round(player2_elo + k_2 * (1 - score - expected_score_2))
 
-    return round(new_rating_1), round(new_rating_2)
+        await conn.execute(
+            'UPDATE chess_players SET "elo"=$1 WHERE "user"=$2;',
+            new_rating_1,
+            player1.id,
+        )
+        await conn.execute(
+            'UPDATE chess_players SET "elo"=$1 WHERE "user"=$2;',
+            new_rating_2,
+            player2.id,
+        )
 
 
 # https://github.com/niklasf/python-chess/issues/492
@@ -98,6 +139,7 @@ class ChessGame:
         player_color: str = "white",
         enemy: Optional[discord.User] = None,
         difficulty: Optional[int] = None,
+        rated: bool = False,
     ):
         self.player = player
         self.enemy = enemy
@@ -111,9 +153,15 @@ class ChessGame:
             player: player_color,
             enemy: "black" if player_color == "white" else "white",
         }
+        self.rated = rated
 
         if self.enemy is None:
             self.limit = chess.engine.Limit(depth=difficulty)
+
+    def pretty_moves(self):
+        history = chess.Board().variation_san(self.move_stack)
+        splitted = re.split("\s?\d+\.\s", history)[1:]
+        return splitted
 
     def parse_move(self, move, color):
         if move == "0-0":
@@ -289,6 +337,24 @@ class ChessGame:
         game.headers["Result"] = result
         game = f"{game}\n\n"
 
+        if self.rated:
+            if result == "1-0":
+                winner = white.id
+            elif result == "1/2-1/2":
+                winner = None
+            else:
+                winner = black.id
+
+            await update_player_elos(self.ctx.bot, white, black, result)
+            await self.ctx.bot.pool.execute(
+                'INSERT INTO chess_matches ("player1", "player2", "result", "pgn", "winner") VALUES ($1, $2, $3, $4, $5);',
+                white.id,
+                black.id,
+                result,
+                game,
+                winner,
+            )
+
         if self.board.is_checkmate():
             await self.ctx.send(
                 f"**Checkmate! {result}**",
@@ -296,11 +362,12 @@ class ChessGame:
             )
         elif self.board.is_stalemate():
             await self.ctx.send(
-                "**Stalemate!**", file=discord.File(fp=file_, filename="board.png")
+                f"**Stalemate! {result}**",
+                file=discord.File(fp=file_, filename="board.png"),
             )
         elif self.board.is_insufficient_material():
             await self.ctx.send(
-                "**Insufficient material! {result}**",
+                f"**Insufficient material! {result}**",
                 file=discord.File(fp=file_, filename="board.png"),
             )
         elif self.status.endswith("resigned"):
@@ -310,7 +377,7 @@ class ChessGame:
             )
         elif self.status == "draw":
             await self.ctx.send(
-                "**You accepted a draw! {result}**",
+                "**Draw accepted! {result}**",
                 file=discord.File(fp=file_, filename="board.png"),
             )
 
