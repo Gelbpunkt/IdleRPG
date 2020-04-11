@@ -76,7 +76,7 @@ shard_per_cluster = 4
 join_channel = 441_821_532_696_870_922
 
 """Defines whether it is a beta version or not. This would disable some parts, e.g. no longer post the stats to DBL and BFD."""
-is_beta = False
+is_beta = True
 
 """A list of Game Masters by ID."""
 game_masters = [
@@ -173,7 +173,7 @@ proxy_url = "http://my.proxy"
 proxy_auth = "proxy-auth-key"
 
 """The Version of the Bot."""
-version = "4.6.0"
+version = "4.7.0a3"
 
 """Global cooldown (rate, per, [.user, .channel, .guild])"""
 cooldown = commands.CooldownMapping.from_cooldown(1, 3, commands.BucketType.user)

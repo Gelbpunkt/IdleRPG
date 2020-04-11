@@ -19,13 +19,13 @@ import asyncio
 
 from typing import Optional
 
-import chess
+import chess.engine
 import discord
 
 from discord.ext import commands
 
 from classes.converters import IntFromTo
-from utils.chess import ChessGame
+from utils.chess import ChessGame, ProtocolAdapter
 
 
 class Chess(commands.Cog):
@@ -35,7 +35,11 @@ class Chess(commands.Cog):
         bot.loop.create_task(self.initialize())
 
     async def initialize(self):
-        transport, self.engine = await chess.engine.popen_uci("/idlerpg/stockfish")
+        _, adapter = await self.bot.loop.create_connection(
+            lambda: ProtocolAdapter(chess.engine.UciProtocol()), "127.0.0.1", 4000
+        )
+        self.engine = adapter.protocol
+        await self.engine.initialize()
 
     @commands.group(invoke_without_command=True)
     @locale_doc

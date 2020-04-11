@@ -1,8 +1,8 @@
 import asyncio
 import datetime
 import io
+import random
 
-from functools import partial
 from typing import Optional
 
 import chess
@@ -45,6 +45,49 @@ def calculate_player_elos(player1_elo, player2_elo, score):
     new_rating_2 = player2_elo + k_2 * (1 - score - expected_score_2)
 
     return round(new_rating_1), round(new_rating_2)
+
+
+# https://github.com/niklasf/python-chess/issues/492
+class ProtocolAdapter(asyncio.Protocol):
+    def __init__(self, protocol):
+        self.protocol = protocol
+
+    def connection_made(self, transport):
+        self.transport = TransportAdapter(transport)
+        self.protocol.connection_made(self.transport)
+
+    def connection_lost(self, exc):
+        self.transport.alive = False
+        self.protocol.connection_lost(exc)
+
+    def data_received(self, data):
+        self.protocol.pipe_data_received(1, data)
+
+
+class TransportAdapter(
+    asyncio.SubprocessTransport, asyncio.ReadTransport, asyncio.WriteTransport
+):
+    def __init__(self, transport):
+        self.alive = True
+        self.transport = transport
+
+    def get_pipe_transport(self, fd):
+        return self
+
+    def write(self, data):
+        self.transport.write(data)
+
+    def get_returncode(self):
+        return None if self.alive else 0
+
+    def get_pid(self):
+        return None
+
+    def close(self):
+        self.transport.close()
+
+    # Unimplemented: kill(), send_signal(signal), terminate(), and various flow
+    # control methods.
 
 
 class ChessGame:
@@ -176,14 +219,6 @@ class ChessGame:
             await msg.delete()
             return False
         await msg.delete()
-        return move.draw_offered
-
-    async def get_ai_draw_response(self):
-        try:
-            async with timeout(120):
-                move = await self.engine.play(self.board, self.limit)
-        except asyncio.TimeoutError:
-            return False
         return move.draw_offered
 
     async def get_player_draw_response(self, player):
