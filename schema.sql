@@ -105,7 +105,7 @@ CREATE TABLE public.chess_matches (
     player2 bigint,
     result character varying(7) NOT NULL,
     pgn text NOT NULL,
-    winner bigint NOT NULL
+    winner bigint
 );
 
 
