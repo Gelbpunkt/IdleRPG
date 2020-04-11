@@ -159,7 +159,7 @@ class ChessGame:
             self.limit = chess.engine.Limit(depth=difficulty)
 
     def pretty_moves(self):
-        history = chess.Board().variation_san(self.move_stack)
+        history = chess.Board().variation_san(self.board.move_stack)
         splitted = re.split(r"\s?\d+\.\s", history)[1:]
         return splitted
 
