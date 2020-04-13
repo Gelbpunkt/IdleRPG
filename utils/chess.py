@@ -1,8 +1,9 @@
 import asyncio
 import datetime
 import io
+import random
+import re
 
-from functools import partial
 from typing import Optional
 
 import chess
@@ -17,9 +18,9 @@ from classes.context import Context
 from utils.paginator import NoChoice
 
 
-def calculate_player_elos(player1_elo, player2_elo, score):
+async def update_player_elos(bot, player1, player2, outcome):
     """
-    Calculates Chess elos for 2 players after a match based on
+    Updates Chess elos for 2 players after a match based on
     their old elos and the match outcome.
     Score shall be 1 if player 1 won, 0.5 if it's a tie and 0
     if player 2 won.
@@ -31,20 +32,103 @@ def calculate_player_elos(player1_elo, player2_elo, score):
     - It is 40 if the number of played games is smaller than 30.
     - It is 20 if the number of played games is greater than 30 and the rating is less than 2400.
     - It is 10 if the number of played games is greater than 30 and the rating is more than 2400.
-    - It is 40 if rating is less than 2300 and the age of the player is less than 18. We assume that everyone is 18+ and has played 30 games
+    - It is 40 if rating is less than 2300 and the age of the player is less than 18. We assume that everyone is 18+.
 
     The expected score is:
     Ea = 1 / (1 + 10 ^ ((Rb - Ra) / 400))
     """
-    expected_score_1 = 1 / (1 + 10 ** ((player2_elo - player1_elo) / 400))
-    expected_score_2 = 1 / (1 + 10 ** ((player1_elo - player2_elo) / 400))
-    k_1 = 20 if player1_elo < 2400 else 10  # just assuming
-    k_2 = 20 if player2_elo < 2400 else 10  # just assuming
+    async with bot.pool.acquire() as conn:
+        player1_elo = await conn.fetchval(
+            'SELECT elo FROM chess_players WHERE "user"=$1;', player1.id
+        )
+        player2_elo = await conn.fetchval(
+            'SELECT elo FROM chess_players WHERE "user"=$1;', player2.id
+        )
+        num_matches_1 = await conn.fetchval(
+            'SELECT COUNT(*) FROM chess_matches WHERE "player1"=$1 OR "player2"=$1;',
+            player1.id,
+        )
+        num_matches_2 = await conn.fetchval(
+            'SELECT COUNT(*) FROM chess_matches WHERE "player1"=$1 OR "player2"=$1;',
+            player2.id,
+        )
+        if num_matches_1 < 30:
+            k_1 = 40
+        elif player1_elo < 2400:
+            k_1 = 20
+        else:
+            k_1 = 10
+        if num_matches_2 < 30:
+            k_2 = 40
+        elif player2_elo < 2400:
+            k_2 = 20
+        else:
+            k_2 = 10
+        if outcome == "1-0":
+            score = 1
+        elif outcome == "1/2-1/2":
+            score = 0.5
+        else:
+            score = 0
+        expected_score_1 = 1 / (1 + 10 ** ((player2_elo - player1_elo) / 400))
+        expected_score_2 = 1 / (1 + 10 ** ((player1_elo - player2_elo) / 400))
 
-    new_rating_1 = player1_elo + k_1 * (score - expected_score_1)
-    new_rating_2 = player2_elo + k_2 * (1 - score - expected_score_2)
+        new_rating_1 = round(player1_elo + k_1 * (score - expected_score_1))
+        new_rating_2 = round(player2_elo + k_2 * (1 - score - expected_score_2))
 
-    return round(new_rating_1), round(new_rating_2)
+        await conn.execute(
+            'UPDATE chess_players SET "elo"=$1 WHERE "user"=$2;',
+            new_rating_1,
+            player1.id,
+        )
+        await conn.execute(
+            'UPDATE chess_players SET "elo"=$1 WHERE "user"=$2;',
+            new_rating_2,
+            player2.id,
+        )
+
+
+# https://github.com/niklasf/python-chess/issues/492
+class ProtocolAdapter(asyncio.Protocol):
+    def __init__(self, protocol):
+        self.protocol = protocol
+
+    def connection_made(self, transport):
+        self.transport = TransportAdapter(transport)
+        self.protocol.connection_made(self.transport)
+
+    def connection_lost(self, exc):
+        self.transport.alive = False
+        self.protocol.connection_lost(exc)
+
+    def data_received(self, data):
+        self.protocol.pipe_data_received(1, data)
+
+
+class TransportAdapter(
+    asyncio.SubprocessTransport, asyncio.ReadTransport, asyncio.WriteTransport
+):
+    def __init__(self, transport):
+        self.alive = True
+        self.transport = transport
+
+    def get_pipe_transport(self, fd):
+        return self
+
+    def write(self, data):
+        self.transport.write(data)
+
+    def get_returncode(self):
+        return None if self.alive else 0
+
+    def get_pid(self):
+        return None
+
+    def close(self):
+        self.transport.close()
+
+    # Unimplemented: kill(), send_signal(signal), terminate(), and various flow
+    # control methods.
 
 
 class ChessGame:
@@ -55,6 +139,7 @@ class ChessGame:
         player_color: str = "white",
         enemy: Optional[discord.User] = None,
         difficulty: Optional[int] = None,
+        rated: bool = False,
     ):
         self.player = player
         self.enemy = enemy
@@ -68,9 +153,15 @@ class ChessGame:
             player: player_color,
             enemy: "black" if player_color == "white" else "white",
         }
+        self.rated = rated
 
         if self.enemy is None:
             self.limit = chess.engine.Limit(depth=difficulty)
+
+    def pretty_moves(self):
+        history = chess.Board().variation_san(self.board.move_stack)
+        splitted = re.split(r"\s?\d+\.\s", history)[1:]
+        return splitted
 
     def parse_move(self, move, color):
         if move == "0-0":
@@ -113,7 +204,9 @@ class ChessGame:
             return await self.get_ai_move()
         file_ = await self.get_board()
         self.msg = await self.ctx.send(
-            f"**Move {self.move_no}: {player.mention}'s turn**\nSimply type your move. You have 2 minutes to enter a valid move. I accept normal notation as well as `resign` or `draw`.\nExample: `g1f3`, `Nf3`, `0-0` or `xe3`",
+            _(
+                "**Move {move_no}: {player}'s turn**\nSimply type your move. You have 2 minutes to enter a valid move. I accept normal notation as well as `resign` or `draw`.\nExample: `g1f3`, `Nf3`, `0-0` or `xe3`.\nMoves are case-sensitive! Pieces uppercase: `N`, `Q` or `B`, fields lowercase: `a`, `b` or `h`. Casteling is `0-0` or `0-0-0`."
+            ).format(move_no=self.move_no, player=player.mention),
             file=discord.File(fp=file_, filename="board.png"),
         )
 
@@ -134,7 +227,7 @@ class ChessGame:
             )
         except asyncio.TimeoutError:
             self.status = f"{self.colors[player]} resigned"
-            await self.ctx.send("You entered no valid move! You lost!")
+            await self.ctx.send(_("You entered no valid move! You lost!"))
             move = "timeout"
         finally:
             if self.enemy is not None or self.colors[self.player] == "black":
@@ -145,11 +238,15 @@ class ChessGame:
     async def get_ai_move(self):
         if self.colors[self.player] == "black":
             self.msg = await self.ctx.send(
-                f"**Move {self.move_no}**\nLet me think... This might take up to 2 minutes"
+                _(
+                    "**Move {move_no}**\nLet me think... This might take up to 2 minutes"
+                ).format(move_no=self.move_no)
             )
         else:
             await self.msg.edit(
-                content=f"**Move {self.move_no}**\nLet me think... This might take up to 2 minutes"
+                content=_(
+                    "**Move {move_no}**\nLet me think... This might take up to 2 minutes"
+                ).format(move_no=self.move_no)
             )
         try:
             async with timeout(120):
@@ -168,7 +265,7 @@ class ChessGame:
         self.board.push(move)
 
     async def get_ai_draw_response(self):
-        msg = await self.ctx.send("Waiting for AI draw response...")
+        msg = await self.ctx.send(_("Waiting for AI draw response..."))
         try:
             async with timeout(120):
                 move = await self.engine.play(self.board, self.limit)
@@ -178,18 +275,12 @@ class ChessGame:
         await msg.delete()
         return move.draw_offered
 
-    async def get_ai_draw_response(self):
-        try:
-            async with timeout(120):
-                move = await self.engine.play(self.board, self.limit)
-        except asyncio.TimeoutError:
-            return False
-        return move.draw_offered
-
     async def get_player_draw_response(self, player):
         try:
             return await self.ctx.confirm(
-                f"Your enemy has proposed a draw, {player.mention}. Do you agree?",
+                _("Your enemy has proposed a draw, {player}. Do you agree?").format(
+                    player=player.mention
+                ),
                 user=player,
             )
         except NoChoice:
@@ -219,7 +310,7 @@ class ChessGame:
                 else:
                     if self.msg and self.enemy is None and current is not None:
                         await self.msg.delete()
-                    await self.ctx.send("The draw was rejected.", delete_after=10)
+                    await self.ctx.send(_("The draw was rejected."), delete_after=10)
                     self.move_no -= 1
                     continue
             else:
@@ -254,18 +345,37 @@ class ChessGame:
         game.headers["Result"] = result
         game = f"{game}\n\n"
 
+        if self.rated:
+            if result == "1-0":
+                winner = white.id
+            elif result == "1/2-1/2":
+                winner = None
+            else:
+                winner = black.id
+
+            await update_player_elos(self.ctx.bot, white, black, result)
+            await self.ctx.bot.pool.execute(
+                'INSERT INTO chess_matches ("player1", "player2", "result", "pgn", "winner") VALUES ($1, $2, $3, $4, $5);',
+                white.id,
+                black.id,
+                result,
+                game,
+                winner,
+            )
+
         if self.board.is_checkmate():
             await self.ctx.send(
-                f"**Checkmate! {result}**",
+                _("**Checkmate! {result}**").format(result=result),
                 file=discord.File(fp=file_, filename="board.png"),
             )
         elif self.board.is_stalemate():
             await self.ctx.send(
-                "**Stalemate!**", file=discord.File(fp=file_, filename="board.png")
+                _("**Stalemate! {result}**").format(result=result),
+                file=discord.File(fp=file_, filename="board.png"),
             )
         elif self.board.is_insufficient_material():
             await self.ctx.send(
-                "**Insufficient material! {result}**",
+                _("**Insufficient material! {result}**").format(result=result),
                 file=discord.File(fp=file_, filename="board.png"),
             )
         elif self.status.endswith("resigned"):
@@ -275,11 +385,11 @@ class ChessGame:
             )
         elif self.status == "draw":
             await self.ctx.send(
-                "**You accepted a draw! {result}**",
+                _("**Draw accepted! {result}**").format(result=result),
                 file=discord.File(fp=file_, filename="board.png"),
             )
 
         await self.ctx.send(
-            "For the nerds:",
+            _("For the nerds:"),
             file=discord.File(fp=io.BytesIO(game.encode()), filename="match.pgn"),
         )
