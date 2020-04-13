@@ -58,10 +58,8 @@ initial_extensions = [
     "cogs.shard_communication",
     "cogs.alliance",
     "cogs.trivia",
+    "cogs.chess",
 ]
-
-"""The channel where vote logging is sent from. This is an ID."""
-upvote_channel = 453_948_653_913_112_609
 
 """The prefix to use if none is set custom or we are in DMs."""
 global_prefix = "$"
@@ -73,52 +71,28 @@ additional_shards = 4
 shard_per_cluster = 4
 
 """The channel ID to send join logs to."""
-join_channel = 441_821_532_696_870_922
+join_channel = 1234567890
 
 """Defines whether it is a beta version or not. This would disable some parts, e.g. no longer post the stats to DBL and BFD."""
 is_beta = True
 
 """A list of Game Masters by ID."""
-game_masters = [
-    356_091_260_429_402_122,
-    373_797_591_395_205_122,
-    291_215_916_916_801_536,
-    213_045_557_181_022_209,
-    210_510_122_810_605_569,
-    294_894_701_708_967_936,
-    254_234_402_354_233_344,
-    438_443_378_498_338_816,
-    322_354_047_162_122_243,
-    300_088_143_422_685_185,
-    266_845_673_176_039_424,
-]
+game_masters = [1234567890]
 
 """A list of banned users."""
-bans = [
-    314_210_539_498_897_418,
-    326_069_549_042_630_657,
-    416_072_373_750_595_584,
-    283_291_722_749_050_883,
-    298_267_992_221_810_689,
-    121_469_467_782_807_552,
-    155_696_684_716_785_664,
-    206_439_870_288_101_386,
-    448_987_127_712_317_465,
-    138_058_071_619_534_848,
-    440_648_947_850_149_888,
-]
+bans = [1234567890]
 
 """The support server ID."""
-support_server_id = 430_017_996_304_678_923
+support_server_id = 1234567890
 
 """The ID to allow mass tournaments from."""
-official_tournament_channel_id = 684_483_723_911_102_554
+official_tournament_channel_id = 1234567890
 
 """A channel ID to send GM logs to."""
-gm_log_channel = 457_197_748_626_653_184
+gm_log_channel = 1234567890
 
 """A channel ID to send public logs to."""
-bot_event_channel = 516_640_070_569_164_828
+bot_event_channel = 1234567890
 
 """City config (must be in db)"""
 cities = {
@@ -173,7 +147,7 @@ proxy_url = "http://my.proxy"
 proxy_auth = "proxy-auth-key"
 
 """The Version of the Bot."""
-version = "4.7.0a3"
+version = "4.7.0a4"
 
 """Global cooldown (rate, per, [.user, .channel, .guild])"""
 cooldown = commands.CooldownMapping.from_cooldown(1, 3, commands.BucketType.user)
@@ -184,7 +158,7 @@ donator_cooldown = commands.CooldownMapping.from_cooldown(
 )
 
 """Member role ID. Permissions will be overridden for this role during raids."""
-member_role = 674800989567451173
+member_role = 1234567890
 
 """Donator role order"""
 donator_roles = [
@@ -285,37 +259,37 @@ adventure_names = {
 
 gods = {
     "Guilt": {
-        "user": 463318425901596672,
+        "user": 1234567890,
         "description": "Guilt is the goddess of suffering, obsession, misfortune, and wickedness. Every evil act is said to originally be a thought in her head.  Many curse her name, but Guilt just smiles and continues to grow stronger from the misery--after all, happiness without hardship is no happiness at all.",
         "boundaries": (0.0, 2.0),
     },
     "Tet": {
-        "user": 125111809165230080,
+        "user": 1234567890,
         "description": "Tet, god of play. Tired of seeing a world, where issues were resolved by war and violence, he introduced a new system where all trifles would be decided by games. But never mind that, let's have some fun now shall we.",
         "boundaries": (0.8, 1.2),
     },
     "The Assassin": {
-        "user": 294894701708967936,
+        "user": 1234567890,
         "description": "Karmic retribution type. The judge, jury, and executioner. No one really knows of him or his real name. He is shrouded in mystery, but there are still those who offer to him to keep him at bay or to strike down their foes.",
         "boundaries": (0.75, 1.25),
     },
     "Kvothe": {
-        "user": 489637665633730560,
+        "user": 1234567890,
         "description": "I have been called Kvothe the Bloodless, Kvothe the Arcane, and Kvothe Kingkiller. I have earned those names. Bought and paid for them. I have stolen princesses back from sleeping barrow kings. I have spent the night with Felurian and left with both my sanity and my life. I tread paths by moonlight that others fear to speak of during day. I have talked to Gods, loved women, and written songs that make the minstrels weep. You may have heard of me.",
         "boundaries": (0.7, 1.3),
     },
     "Asmodeus": {
-        "user": 318824057158107137,
+        "user": 1234567890,
         "description": "Asmodeus, god of death. The reason adventurers don't die is because they give up their loot to him in order for them to live again. Their loot is the price they pay for a second chance.",
         "boundaries": (0.7, 1.3),
     },
     "Salutations": {
-        "user": 344227184438804480,
+        "user": 1234567890,
         "description": "Known for excelling at greetings and making mutual relationships with every deity and also gaining followers due to his history/characteristic. Despite his natural talent of mannerism and the swift making of relationships with not just gods, but humans as well, he is not to be easily fooled. Unironically, his most loyal follower is Cyberus, an ancient wolf general that has stood by and served him for the longest of times. Many fear Cyberus, but it only attacks when provoked or ordered to by Sal.",
         "boundaries": (0.5, 1.5),
     },
     "War God Fox": {
-        "user": 254234402354233344,
+        "user": 1234567890,
         "description": """And god said, there will be war!
         ...
         Do you see this mess on the battle field? It's my creation!
@@ -325,17 +299,17 @@ gods = {
         "boundaries": (0.5, 1.5),
     },
     "CHamburr": {
-        "user": 446290930723717120,
+        "user": 1234567890,
         "description": "Omniscient. Omnipotent. Omnipresent. An all-round god powered by endless streams of blood, with the one goal -- of flowing it through all mankind. The day he was born, he promised to give his unexhaustive love equally to everyone...",
         "boundaries": (0.8, 1.2),
     },
     "Eden": {
-        "user": 339217921576402956,
+        "user": 1234567890,
         "description": "Eden is a goddess of sanctuary, protection and nature. People whisper prayers to her to keep them safe from danger and to find sanctuary from those who wish them harm. Her garden lays deep in the world filled with beauty and splendor. Those who seek it must travel into the depths of nature and pass the trails of the gatekeeper to enter.",
         "boundaries": (0.5, 1.5),
     },
     "Jesus": {
-        "user": 322354047162122243,
+        "user": 1234567890,
         "description": "Sent from God to end the suffering and to bring light back where it is needed the most.",
         "boundaries": (0.0, 2.0),
     },
