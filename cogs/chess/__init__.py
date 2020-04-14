@@ -184,7 +184,9 @@ class Chess(commands.Cog):
         game = self.matches.get(ctx.channel.id)
         if not game:
             return await ctx.send("No game here.")
-        moves = "\n".join(game.pretty_moves())
+        moves = "\n".join(
+            [f"{idx + 1}. {i}" for idx, i in enumerate(game.pretty_moves())]
+        )
         await ctx.send(moves)
 
     def cog_unload(self):

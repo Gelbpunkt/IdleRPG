@@ -32,7 +32,6 @@ import random
 
 from enum import Enum
 from typing import List, Optional
-from pprint import pprint
 
 import discord
 
@@ -262,6 +261,7 @@ class Game:
             round_no += 1
         print(f"{self.winner()} won")
 
+
 class Player:
     def __init__(self, role: Role, game: Game) -> None:
         self.role = role
@@ -414,12 +414,20 @@ class Player:
                 ]
             )
         elif self.side == Side.WOLVES:
-            return all([player.side == Side.WOLVES or player.side == Side.WHITE_WOLF for player in self.game.alive_players])
+            return all(
+                [
+                    player.side == Side.WOLVES or player.side == Side.WHITE_WOLF
+                    for player in self.game.alive_players
+                ]
+            )
         elif self.side == Side.WHITE_WOLF:
             return len(self.game.players) == 1 and not self.dead
         elif self.side == Side.FLUTIST:
             return all(
-                [player.enchanted or player == self for player in self.game.alive_players]
+                [
+                    player.enchanted or player == self
+                    for player in self.game.alive_players
+                ]
             )
 
 

@@ -17,8 +17,6 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
 import random
 
-import discord
-
 from asyncpg.exceptions import StringDataRightTruncationError
 from discord.ext import commands
 
