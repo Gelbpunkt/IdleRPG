@@ -28,12 +28,17 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 # Thank you for making such an awesome game!
 from __future__ import annotations
 
+import asyncio
 import random
 
 from enum import Enum
 from typing import List, Optional
 
 import discord
+
+from async_timeout import timeout
+
+from classes.context import Context
 
 
 class Role(Enum):
@@ -48,21 +53,19 @@ class Role(Enum):
     HUNTER = 8
     HEALER = 9
     THE_OLD = 10
-    SCAPEGOAT = 11
-    FOOL = 12
-    SISTER = 13
-    BROTHER = 14
-    FOX = 15
-    JUDGE = 16
-    KNIGHT = 17
+    SISTER = 11
+    BROTHER = 12
+    FOX = 13
+    JUDGE = 14
+    KNIGHT = 15
 
-    WHITE_WOLF = 18
-    THIEF = 19
-    MAID = 20
-    WILD_CHILD = 21
-    WOLFHOUND = 22
+    WHITE_WOLF = 16
+    THIEF = 17
+    MAID = 18
+    WILD_CHILD = 19
+    WOLFHOUND = 20
 
-    FLUTIST = 23
+    FLUTIST = 21
 
 
 class Side(Enum):
@@ -73,14 +76,16 @@ class Side(Enum):
 
 
 class Game:
-    def __init__(self, number_of_players: int) -> None:
-        self.available_roles = get_roles(number_of_players)
+    def __init__(self, ctx: Context, players: List[discord.Member]) -> None:
+        self.ctx = ctx
+        self.available_roles = get_roles(len(players))
         self.available_roles, self.extra_roles = (
             self.available_roles[:-2],
             self.available_roles[-2:],
         )
         self.players: List[Player] = [
-            Player(role, self) for role in self.available_roles
+            Player(role, user, self)
+            for role, user in zip(self.available_roles, players)
         ]
         random.choice(self.players).is_sheriff = True
 
@@ -94,6 +99,9 @@ class Game:
 
     def get_players_with_role(self, role: Role) -> List[Player]:
         return [player for player in self.alive_players if player.role == role]
+
+    def get_player_with_role(self, role: Role) -> Optional[Player]:
+        return discord.utils.get(self.alive_players, role=role)
 
     def winner(self) -> Optional[Player]:
         objective_reached = discord.utils.get(self.alive_players, has_won=True)
@@ -109,10 +117,10 @@ class Game:
     def lovers(self) -> List[Player]:
         return [player for player in self.alive_players if player.in_love]
 
-    def wolves(self) -> Optional[Player]:
-        healer = discord.utils.get(self.alive_players, role=Role.HEALER)
+    async def wolves(self) -> Optional[Player]:
+        healer = self.get_player_with_role(Role.HEALER)
         if healer:
-            protected = healer.get_healer_target()
+            protected = await healer.get_healer_target()
         else:
             protected = None
         wolves = [
@@ -123,48 +131,60 @@ class Game:
         # Get target of wolves
         possible_targets = [p for p in self.alive_players if p not in wolves]
         target = random.choice(possible_targets)
-        print(f"Wolves chose {target}")
         if target == protected:
             return None
         else:
             return target
 
-    def initial_preparation(self) -> List[Player]:
+    async def initial_preparation(self) -> List[Player]:
+        await self.ctx.send("**Sending game roles...**")
         for player in self.players:
-            player.send_information()
-        wolfhound = self.get_players_with_role(Role.WOLFHOUND)
+            await player.send_information()
+        wolfhound = self.get_player_with_role(Role.WOLFHOUND)
         if wolfhound:
-            wolfhound[0].choose_role_from([Role.VILLAGER, Role.WEREWOLF])
-        thieves = self.get_players_with_role(Role.THIEF)
-        if thieves:
-            thieves[0].choose_role_from(self.extra_roles)
-        amor = self.get_players_with_role(Role.AMOR)
+            await self.ctx.send("**The Wolfhound awakes...**")
+            await wolfhound.choose_role_from([Role.VILLAGER, Role.WEREWOLF])
+        thief = self.get_player_with_role(Role.THIEF)
+        if thief:
+            await self.ctx.send("**The thief awakes...**")
+            await thief.choose_role_from(self.extra_roles)
+        amor = self.get_player_with_role(Role.AMOR)
         if amor:
-            amor[0].choose_lovers()
-        seer = self.get_players_with_role(Role.SEER)
+            await self.ctx.send("**Amor awakes and shoots his arrows...**")
+            await amor.choose_lovers()
+        seer = self.get_player_with_role(Role.SEER)
         if seer:
-            seer[0].check_player_card()
-        fox = self.get_players_with_role(Role.FOX)
+            await self.ctx.send("**The seer awakes...**")
+            await seer.check_player_card()
+        fox = self.get_player_with_role(Role.FOX)
         if fox:
-            fox[0].check_3_werewolves()
+            await self.ctx.send("**The fox awakes...**")
+            await fox.check_3_werewolves()
         if amor:
-            for player in self.lovers:
-                player.send_love_msg()
-        judge = self.get_players_with_role(Role.JUDGE)
+            lover1 = self.lovers[0]
+            lover2 = self.lovers[1]
+            await lover1.send_love_msg(lover2)
+            await lover2.send_love_msg(lover1)
+        judge = self.get_player_with_role(Role.JUDGE)
         if judge:
-            judge[0].get_judge_symbol()
+            await self.ctx.send("**The judge awakes...**")
+            self.judge_symbol = await judge.get_judge_symbol()
         sisters = self.get_players_with_role(Role.SISTER)
         if sisters:
+            await self.ctx.send("**The sisters awake...**")
             for player in sisters:
-                player.send_family_msg("sister", sisters)
+                await player.send_family_msg("sister", sisters)
         brothers = self.get_players_with_role(Role.BROTHER)
         if brothers:
+            await self.ctx.send("**The brothers awake...**")
             for player in brothers:
-                player.send_family_msg("brother", brothers)
-        wild_child = self.get_players_with_role(Role.WILD_CHILD)
+                await player.send_family_msg("brother", brothers)
+        wild_child = self.get_player_with_role(Role.WILD_CHILD)
         if wild_child:
-            wild_child[0].choose_idol()
-        target = self.wolves()
+            await self.ctx.send("**The wild child awakes and choses its idol...**")
+            await wild_child.choose_idol()
+        await self.ctx.send("**The werewolves awake...**")
+        target = await self.wolves()
         targets = [target] if target is not None else []
         if (
             sum(
@@ -174,37 +194,42 @@ class Game:
             )
             == 0
         ):
-            big_bad_wolf = self.get_players_with_role(Role.BIG_BAD_WOLF)
+            big_bad_wolf = self.get_player_with_role(Role.BIG_BAD_WOLF)
             if big_bad_wolf:
-                targets.append(big_bad_wolf[0].choose_villager_to_kill())
-        witch = self.get_players_with_role(Role.WITCH)
+                await self.ctx.send("**The big, bad wolf awakes...**")
+                targets.append(await big_bad_wolf.choose_villager_to_kill())
+        witch = self.get_player_with_role(Role.WITCH)
         if witch:
-            targets = witch[0].witch_actions(targets)
-        flutist = self.get_players_with_role(Role.FLUTIST)
+            await self.ctx.send("**The witch awakes...**")
+            targets = await witch.witch_actions(targets)
+        flutist = self.get_player_with_role(Role.FLUTIST)
         if flutist:
+            await self.ctx.send("**The flutist awakes...**")
             possible_targets = [
-                p for p in self.alive_players if not p.enchanted and p != flutist[0]
+                p for p in self.alive_players if not p.enchanted and p != flutist
             ]
-            flutist[0].enchant(possible_targets)
+            await flutist.enchant(possible_targets)
         final_targets = targets[:]
         for target in targets:
             if target.in_love:
                 final_targets.append([p for p in self.lovers if p != target][0])
         return final_targets
 
-    def night(self, white_wolf: bool) -> List[Player]:
-        seer = self.get_players_with_role(Role.SEER)
+    async def night(self, white_wolf: bool) -> List[Player]:
+        seer = self.get_player_with_role(Role.SEER)
         if seer:
-            seer[0].check_player_card()
-        fox = self.get_players_with_role(Role.FOX)
+            await self.ctx.send("**The seer awakes...**")
+            await seer.check_player_card()
+        fox = self.get_player_with_role(Role.FOX)
         if fox:
-            fox[0].check_3_werewolves()
-        print(self.alive_players)
-        target = self.wolves()
+            await self.ctx.send("**The fox awakes...**")
+            await fox.check_3_werewolves()
+        await self.ctx.send("**The werewolves awake...**")
+        target = await self.wolves()
         targets = [target] if target is not None else []
-        white_wolf = self.get_players_with_role(Role.WHITE_WOLF)
+        white_wolf = self.get_player_with_role(Role.WHITE_WOLF)
         if white_wolf:
-            target = white_wolf[0].choose_werewolf()
+            target = await white_wolf.choose_werewolf()
             if target:
                 targets.append(target)
         if (
@@ -215,57 +240,99 @@ class Game:
             )
             == 0
         ):
-            big_bad_wolf = self.get_players_with_role(Role.BIG_BAD_WOLF)
+            big_bad_wolf = self.get_player_with_role(Role.BIG_BAD_WOLF)
             if big_bad_wolf:
-                targets.append(big_bad_wolf[0].choose_villager_to_kill())
-        flutist = self.get_players_with_role(Role.FLUTIST)
+                targets.append(await big_bad_wolf.choose_villager_to_kill())
+        flutist = self.get_player_with_role(Role.FLUTIST)
         if flutist:
             possible_targets = [
                 p for p in self.alive_players if not p.enchanted and p != flutist[0]
             ]
-            flutist[0].enchant(possible_targets)
+            await flutist.enchant(possible_targets)
         return targets
 
-    def day(self, deaths: List[Player]) -> None:
+    async def election(self) -> Optional[Player]:
+        await self.ctx.send(
+            "You may now submit someone (up to 10 total) for the election who to kill by mentioning their name below. You have 3 minutes of discussion during this time."
+        )
+        nominated = []
+        eligible_players = [player.user for player in self.alive_players]
+        try:
+            async with timeout(180):
+                while len(nominated) < 10:
+                    msg = await self.ctx.bot.wait_for(
+                        "message",
+                        check=lambda x: x.author in eligible_players
+                        and x.channel.id == self.ctx.channel.id
+                        and len(x.mentions) > 0,
+                    )
+                    for user in msg.mentions:
+                        if user in eligible_players:
+                            nominated.append(user)
+                    await self.ctx.send(f"{msg.author} nominated someone.")
+        except asyncio.TimeoutError:
+            pass
+        emojis = ([f"{index+1}\u20e3" for index in range(10)] + ["\U0001f51f"])[
+            : len(nominated)
+        ]
+        texts = "\n".join(
+            [f"{emoji} - {user.mention}" for emoji, user in zip(emojis, nominated)]
+        )
+        msg = await self.ctx.send(
+            f"**React to vote for killing someone. You have 60 seconds.**\n{texts}"
+        )
+        for emoji in emojis:
+            await msg.add_reaction(emoji)
+        await asyncio.sleep(60)
+        nominated = {u: 0 for u in nominated}
+        mapping = {emoji: user for emoji, user in zip(emojis, nominated)}
+        for reaction in msg.reactions:
+            if str(reaction.emoji) in emojis:
+                nominated[mapping[str(reaction.emoji)]] = sum(
+                    1 async for user in reaction.users if user in eligible_players
+                )
+        new_mapping = sorted(list(mapping.keys()), key=lambda x: -mapping[x])
+        return (
+            new_mapping[0]
+            if mapping[new_mapping[0]] > mapping[new_mapping[1]]
+            else None
+        )
+
+    async def day(self, deaths: List[Player]) -> None:
         for death in deaths:
             death.kill()
-            print(f"{death} lost a life.")
+            if death.dead:
+                await self.ctx.send(f"**{death.user}** died and has left us.")
         if len(self.alive_players) < 2:
             return
-        to_kill = random.choice(self.alive_players)
-        to_kill.kill()
+        to_kill = await self.election()
+        await self.ctx.send(f"The community has decided to kill {to_kill.mention}.")
+        to_kill = discord.utils.get(self.alive_players, user=to_kill)
         if to_kill.dead:
-            maid = self.get_players_with_role(Role.MAID)
+            maid = self.get_player_with_role(Role.MAID)
             if maid:
-                maid[0].handle_maid(to_kill)
-        judge = self.get_players_with_role(Role.JUDGE)
-        if judge and random.randint(1, 2) == 1:  # new election by decision of judge
-            to_kill = random.choice(self.alive_players)
-            to_kill.kill()
-            if to_kill.dead:
-                maid = self.get_players_with_role(Role.MAID)
-                if maid:
-                    maid[0].handle_maid(to_kill)
+                await maid.handle_maid(to_kill)
 
-    def run(self):
+    async def run(self):
         # Handle thief etc and first night
-        deaths = self.initial_preparation()
+        deaths = await self.initial_preparation()
         round_no = 1
         night_no = 1
         while self.winner() is None:
             if round_no % 2 == 1:
-                self.day(deaths)
+                await self.day(deaths)
             else:
                 night_no += 1
-                deaths = self.night(white_wolf=night_no % 2 == 0)
+                deaths = await self.night(white_wolf=night_no % 2 == 0)
             round_no += 1
-        print(f"{self.winner()} won")
+        await self.ctx.send(f"{self.winner().user.mention} won!")
 
 
 class Player:
-    def __init__(self, role: Role, game: Game) -> None:
+    def __init__(self, role: Role, user: discord.Member, game: Game) -> None:
         self.role = role
         self.initial_role = role
+        self.user = user
         self.game = game
         self.is_sheriff = False
         self.enchanted = False
@@ -275,6 +342,9 @@ class Player:
         # Witch
         self.can_heal = True
         self.can_kill = True
+
+        # Healer
+        self.last_target = None
 
         if role == Role.THE_OLD:
             self.lives = 2
@@ -287,105 +357,231 @@ class Player:
     def __repr__(self):
         return f"<Player role={self.role} initial_role={self.initial_role} is_sheriff={self.is_sheriff} lives={self.lives} side={self.side} dead={self.dead} won={self.has_won}>"
 
-    def send_information(self) -> None:
-        pass
+    async def send(self, *args, **kwargs):
+        try:
+            await self.user.send(*args, **kwargs)
+        except discord.Forbidden:
+            pass
 
-    def send_love_msg(self) -> None:
-        print("Received love msg")
+    async def choose_users(
+        self, title: str, list_of_users: List[Player], amount: int
+    ) -> List[Player]:
+        fmt = [f"{idx}. {p.user}" for idx, p in enumerate(list_of_users, 1)]
+        paginator = commands.Paginator(prefix="", suffix="")
+        paginator.add_line(f"**{title}**")
+        for i in fmt:
+            paginator.add_line(i)
+        for page in paginator.pages:
+            await self.send(page)
+        mymsg = await self.send(
+            f"**Type the number of the user to choose for this action. You need to choose {amount} more."
+        )
+        chosen = []
+        while len(chosen) < amount:
+            msg = await self.game.ctx.bot.wait_for_dms(
+                "message",
+                check={
+                    "author": {"id": str(self.user.id)},
+                    "content": [str(i) for i in range(1, len(list_of_users) + 1)],
+                },
+            )
+            player = list_of_users[int(msg.content) - 1]
+            chosen.append(player)
+            await mymsg.edit(
+                content=f"**Type the number of the user to choose for this action. You need to choose {amount - len(chosen)} more."
+            )
+        return chosen
 
-    def choose_idol(self) -> None:
-        idol = random.choice(self.game.players)
-        print(f"Chose idol {idol}.")
+    async def send_information(self) -> None:
+        await self.send(f"You are a {self.role}")
 
-    def get_judge_symbol(self) -> str:
-        symbol = "hahayes"
-        print(f"Judge symbol is {symbol}.")
+    async def send_love_msg(self, lover: Player) -> None:
+        await self.send(f"You are in love with {lover.user}!")
+
+    async def choose_idol(self) -> None:
+        try:
+            idol = await self.choose_users(
+                "Choose your Idol. You will turn into a Werewolf if they die.",
+                list_of_users=self.game.players,
+                amount=1,
+            )
+        except asyncio.TimeoutError:
+            idol = [random.choice(self.game.players)]
+        return idol[0]
+
+    async def get_judge_symbol(self) -> str:
+        await self.send(
+            "Please enter a phrase that will trigger a second election. It is case sensitive."
+        )
+        try:
+            msg = await self.game.ctx.bot.wait_for_dms(
+                "message", check={"author": {"id": str(self.user.id)}}
+            )
+            symbol = msg.content
+        except asyncio.TimeoutError:
+            symbol = "hahayes"
+        await self.user.send(
+            f"The phrase is **{symbol}**. Enter it right within 10 seconds after an election to trigger another one."
+        )
         return symbol
 
-    def handle_maid(self, death: Player) -> None:
-        if random.randint(1, 2) == 1 and not self.in_love:
-            print(f"Maid swaps cards with {death}")
+    async def handle_maid(self, death: Player) -> None:
+        if self.in_love:
+            return
+        try:
+            action = await self.game.ctx.bot.paginator.Choose(
+                entries=["Yes", "No"],
+                return_index=True,
+                title=f"Would you like to swap cards with {death.user}?",
+            ).paginate(self.game.ctx, location=self.user)
+        except self.game.ctx.bot.paginator.NoChoice:
+            return
+        if action == 0:
             self.enchanted = False
             if self.is_sheriff:
                 self.is_sheriff = False
                 random.choice(self.game.alive_players).is_sheriff = True
             self.role = death.role
-        else:
-            print("Maid does nothing.")
 
-    def get_healer_target(self) -> Player:
-        target = random.choice(self.game.alive_players)
-        print(f"Healer protects {target}.")
-        return target
+    async def get_healer_target(self) -> Player:
+        available = [
+            player for player in self.game.alive_players if player != self.last_target
+        ]
+        try:
+            target = await self.choose_users(
+                "Choose a user to protect from Werewolves.",
+                list_of_users=available,
+                amount=1,
+            )
+        except asyncio.TimeoutError:
+            target = [random.choice(available)]
+        self.last_target = target[0]
 
-    def choose_werewolf(self) -> Optional[Player]:
+        return target[0]
+
+    async def choose_werewolf(self) -> Optional[Player]:
         possible_targets = [p for p in self.game.alive_players if p.side == Side.WOLVES]
-        if random.randint(1, 2) == 1 and possible_targets:
-            target = random.choice(possible_targets)
-            print(f"White wolf chose {target}")
-            return target
-        else:
+        try:
+            target = await self.choose_users(
+                "Choose a Werewolf to kill.", list_of_users=possible_targets, amount=1
+            )
+        except asyncio.TimeoutError:
             return None
+        return target[0]
 
-    def choose_villager_to_kill(self) -> Player:
-        target = random.choice(
-            [p for p in self.game.alive_players if p.side == Side.VILLAGERS]
-        )
-        print(f"Big bad wolf chose {target}")
-        return target
+    async def choose_villager_to_kill(self) -> Player:
+        possible_targets = [
+            p
+            for p in self.game.alive_players
+            if p.side not in (Side.WOLVES, Side.WHITE_WOLF)
+        ]
+        try:
+            target = await self.choose_users(
+                "Choose a Villager to kill.", list_of_users=possible_targets, amount=1
+            )
+        except asyncio.TimeoutError:
+            return None
+        return target[0]
 
-    def witch_actions(self, targets: List[Player]) -> Player:
-        if random.randint(1, 2) == 1 and targets and self.can_heal:
-            to_heal = random.choice(targets)
-            targets.remove(to_heal)
-            print(f"Witch healed {to_heal}")
-            self.can_heal = False
-        if random.randint(1, 2) == 1 and self.can_kill:
+    async def witch_actions(self, targets: List[Player]) -> Player:
+        if targets and self.can_heal:
+            try:
+                to_heal = await self.choose_users(
+                    "Choose someone to heal.", list_of_users=targets, amount=1
+                )
+                targets.remove(to_heal)
+                self.can_heal = False
+            except asyncio.TimeoutError:
+                pass
+        if self.can_kill:
             possible_targets = [
                 p for p in self.game.alive_players if p != self and p not in targets
             ]
-            targets.append(random.choice(possible_targets))
-            self.can_kill = False
-            print(f"Witch killed {targets}")
+            try:
+                to_kill = await self.choose_users(
+                    "Choose someone to poison.",
+                    list_of_users=possible_targets,
+                    amount=1,
+                )
+                targets.append(to_kill)
+                self.can_kill = False
+            except asyncio.TimeoutError:
+                pass
         return targets
 
-    def enchant(self, possible_targets: List[Player]) -> None:
+    async def enchant(self, possible_targets: List[Player]) -> None:
         if len(possible_targets) > 2:
-            to_enchant = random.sample(possible_targets, 2)
+            try:
+                to_enchant = await self.choose_users(
+                    "Choose 2 people to enchant.",
+                    list_of_users=possible_targets,
+                    amount=2,
+                )
+            except asyncio.TimeoutError:
+                to_enchant = []
         else:
             to_enchant = possible_targets
         for p in to_enchant:
             p.enchanted = True
-            print(f"Flutist enchanted {p}")
 
-    def send_family_msg(self, relationship: str, family: List[Player]) -> None:
-        print(f"Sending {relationship} msg...")
+    async def send_family_msg(self, relationship: str, family: List[Player]) -> None:
+        await self.send(
+            f"Your {relationships}(s) are/is: {'and'.join([str(u.user) for u in family])}"
+        )
 
-    def check_player_card(self) -> None:
-        target = random.choice(self.game.alive_players)
-        print(f"Chose {target} for seer inspection")
+    async def check_player_card(self) -> None:
+        try:
+            to_inspect = (
+                await self.choose_users(
+                    "Choose someone whose identity you would like to see.",
+                    list_of_users=[u for u in self.game.alive_players if u != self],
+                    amount=1,
+                )
+            )[0]
+        except asyncio.TimeoutError:
+            return
+        await self.send(
+            f"{to_inspect} is a **{to_inspect.role.name.lower().replace('_', ' ')}**"
+        )
 
-    def choose_role_from(self, roles: List[Role]) -> None:
-        role = random.choice(roles)
-        print(f"{self} chose {role} out of {roles}")
+    async def choose_role_from(self, roles: List[Role]) -> None:
+        try:
+            role = await self.game.ctx.bot.paginator.Choose(
+                entries=[role.name.lower().replace("_", " ") for role in roles],
+                return_index=True,
+                title="Choose a new role",
+            ).paginate(self.game.ctx, location=self.user)
+            role = roles[role]
+        except self.game.ctx.bot.paginator.NoChoice:
+            role = random.choice(roles)
         self.role = role
 
-    def check_3_werewolves(self):
-        if random.randint(1, 2) == 1:
-            targets = random.sample(self.game.alive_players, 3)
-            if not any([target.side == Side.WOLVES for target in targets]):
-                self.role = Role.VILLAGER
-                print("Fox found no wolf.")
-            else:
-                print(f"Fox inspected {targets}.")
+    async def check_3_werewolves(self):
+        try:
+            targets = await self.choose_users(
+                "Choose 3 people who you want to see if any if a werewolf.",
+                list_of_users=[u for u in self.game.alive_players if u != self],
+                amount=3,
+            )
+        except asyncio.TimeoutError:
+            return
+        if not any(
+            [target.side in (Side.WOLVES, Side.WHITE_WOLF) for target in targets]
+        ):
+            self.role = Role.VILLAGER
+            await self.send("You found no Werewolf and are now a villager.")
         else:
-            print("Fox refused to check anyone")
+            await self.send("One of them is a Werewolf.")
 
-    def choose_lovers(self) -> None:
-        lovers = random.sample(self.game.players, 2)
+    async def choose_lovers(self) -> None:
+        try:
+            targets = await self.choose_users(
+                "Choose 2 lovers", list_of_users=self.game.players, amount=2
+            )
+        except asyncio.TimeoutError:
+            lovers = random.sample(self.game.players)
         for lover in lovers:
             lover.in_love = True
-        print(f"Chose {lovers} as lovers")
 
     @property
     def dead(self) -> bool:
@@ -393,12 +589,15 @@ class Player:
 
     def kill(self) -> None:
         self.lives -= 1
+        if self.dead:
+            if self.role == Role.HUNTER:
+                random.choice(self.game.alive_players).kill()
 
     @property
     def side(self) -> Side:
         if 1 <= self.role.value <= 2:
             return Side.WOLVES
-        if 3 <= self.role.value <= 17:
+        if 3 <= self.role.value <= 15:
             return Side.VILLAGERS
         else:
             return getattr(Side, self.role.name, "NAN")
@@ -458,8 +657,6 @@ ROLES_FOR_PLAYERS: List[Role] = [
     Role.THE_OLD,
     Role.WEREWOLF,
     Role.WOLFHOUND,
-    Role.SCAPEGOAT,
-    Role.FOOL,
     Role.WEREWOLF,
     Role.FOX,
     Role.BROTHER,
