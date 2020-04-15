@@ -93,6 +93,10 @@ DESCRIPTIONS = {
     Role.JUDGE: "You are the Judge. You love the law and can arrange a second daily vote after the first one by mentioning the secret sign we will agree on later during the vote. Use it wisely...",
     Role.KNIGHT: "You are the Knight. You will do your best to protect the Villagers from the Werewolves. When you die, a Werewolf will die with you.",
     Role.WHITE_WOLF: "You are the White Wolf. Your objective is to kill everyone else. Additionally to the nightly killing spree with the Werewolves, you may kill one of them later on the night.",
+    Role.THIEF: "You are the thief and can choose your identity soon.",
+    Role.WILD_CHILD: "You are the wild child and will choose an idol. Once it dies, you turn into a Werewolf, until then, you are a normal Villager...",
+    Role.WOLFHOUND: "You are something between a Werewolf and a Villager. Choose your side wisely...",
+    Role.MAID: "You are the maid who raised the children. It would hurt you to see any of them die - after the daily election, you may once take their identity role.",
     Role.FLUTIST: "You are the flutist. Your goal is to enchant the players with your music to take revenge for being expelt many years ago. Every night, you get to enchant two of them. Gotta catch them all...",
 }
 
@@ -342,8 +346,6 @@ class Game:
     async def day(self, deaths: List[Player]) -> None:
         for death in deaths:
             await death.kill()
-            if death.dead:
-                await self.ctx.send(f"**{death.user}** died and has left us.")
         if len(self.alive_players) < 2:
             return
         to_kill, second_election = await self.election()
@@ -673,7 +675,7 @@ class Player:
                 except asyncio.TimeoutError:
                     return
                 await self.game.ctx.send("The hunter is firing.")
-                await target.kill()
+                await target[0].kill()
             elif self.role == Role.KNIGHT:
                 target = random.choice(
                     [
