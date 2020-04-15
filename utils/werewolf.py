@@ -76,6 +76,27 @@ class Side(Enum):
     FLUTIST = 4
 
 
+DESCRIPTIONS = {
+    Role.WEREWOLF: "Your objective is to kill all villagers together with the other Werewolves. Every night, you will get to choose one villager to kill - choose carefully!",
+    Role.BIG_BAD_WOLF: "Your objective is to kill all villagers together with the other Werewolves. Every night, you will get to choose one villager to kill together with them. After that, you will wake up once more to kill an additional villager.",
+    Role.VILLAGER: "You are an innocent soul. Your goal is to eradicate all Werewolves that are haunting the town at nights and survive yourself. At the daily elections, your voice makes the difference.",
+    Role.PURE_SOUL: "Everyone knows you are not a Werewolf. Your goal is to keep the town safe from Wolves and kill them all - at the daily elections, many will hear your voice, they know you will be honest.",
+    Role.SEER: "You are a villager with the special ability to view someone's identity every night - but don't tell the villagers too fast, else you will be targeted yourself.",
+    Role.AMOR: "You are the impersonification of the Greek god and get to choose two lovers at the beginning of the game - they will love each other so much that they will die once their beloved one bites the dust.",
+    Role.WITCH: "You are a powerful villager with two special brews: One will kill, one will heal. Use them wisely to influence the game in your favor.",
+    Role.HUNTER: "You are the Hunter. Do your best to protect the Community and your precise shot will trigger when you die, killing a target of your choice.",
+    Role.HEALER: "You are the Healer. Every night, you can protect one Villager from death to the Werewolves, but not the same person twice. Make sure the Villagers stay alive...",
+    Role.THE_OLD: "You are the oldest member of the community and the Werewolves have been hurting you for a long time. All the years have granted you a lot of resistance - you can survive one attack.",
+    Role.SISTER: "The two sisters know each other very well - together, you might be able to help the community find the Werewolves and eliminate them.",
+    Role.BROTHER: "The three brothers know each other very well - together, you might be able to help the community find the Werewolves and eliminate them.",
+    Role.FOX: "You are a clever little guy who can sense the presence of Werewolves. Every night, you get to choose 3 players and will be told if at least one of them is a Werewolf. If not, you loose your ability.",
+    Role.JUDGE: "You are the Judge. You love the law and can arrange a second daily vote after the first one by mentioning the secret sign we will agree on later during the vote. Use it wisely...",
+    Role.KNIGHT: "You are the Knight. You will do your best to protect the Villagers from the Werewolves. When you die, a Werewolf will die with you.",
+    Role.WHITE_WOLF: "You are the White Wolf. Your objective is to kill everyone else. Additionally to the nightly killing spree with the Werewolves, you may kill one of them later on the night.",
+    Role.FLUTIST: "You are the flutist. Your goal is to enchant the players with your music to take revenge for being expelt many years ago. Every night, you get to enchant two of them. Gotta catch them all...",
+}
+
+
 class Game:
     def __init__(self, ctx: Context, players: List[discord.Member]) -> None:
         self.ctx = ctx
@@ -320,7 +341,7 @@ class Game:
 
     async def day(self, deaths: List[Player]) -> None:
         for death in deaths:
-            death.kill()
+            await death.kill()
             if death.dead:
                 await self.ctx.send(f"**{death.user}** died and has left us.")
         if len(self.alive_players) < 2:
@@ -329,6 +350,7 @@ class Game:
         if to_kill is not None:
             await self.ctx.send(f"The community has decided to kill {to_kill.mention}.")
             to_kill = discord.utils.get(self.alive_players, user=to_kill)
+            await to_kill.kill()
             if to_kill.dead:
                 maid = self.get_player_with_role(Role.MAID)
                 if maid:
@@ -342,12 +364,15 @@ class Game:
                     f"The community has decided to kill {to_kill.mention}."
                 )
                 to_kill = discord.utils.get(self.alive_players, user=to_kill)
+                await to_kill.kill()
                 if to_kill.dead:
                     maid = self.get_player_with_role(Role.MAID)
                     if maid:
                         await maid.handle_maid(to_kill)
             else:
-                await self.ctx.send("Indecisively, the community has killed noone.")
+                await self.ctx.send(
+                    "Indecisively, the community has not lynched anyone."
+                )
 
     async def run(self):
         # Handle thief etc and first night
@@ -429,10 +454,14 @@ class Player:
         return chosen
 
     async def send_information(self) -> None:
-        await self.send(f"You are a **{self.role.name.lower().replace('_', ' ')}**")
+        await self.send(
+            f"You are a **{self.role.name.lower().replace('_', ' ')}**\n\n{DESCRIPTIONS[self.role]}"
+        )
 
     async def send_love_msg(self, lover: Player) -> None:
-        await self.send(f"You are in love with {lover.user}!")
+        await self.send(
+            f"You are in love with {lover.user}! Amor really knew you had an eye on them..."
+        )
 
     async def choose_idol(self) -> None:
         try:
@@ -443,7 +472,7 @@ class Player:
             )
         except asyncio.TimeoutError:
             idol = [random.choice(self.game.players)]
-        return idol[0]
+        self.idol = idol
 
     async def get_judge_symbol(self) -> str:
         await self.send(
@@ -625,11 +654,38 @@ class Player:
     def dead(self) -> bool:
         return self.lives < 1
 
-    def kill(self) -> None:
+    async def kill(self) -> None:
         self.lives -= 1
+        idol = [(p.idol, p) for p in self.game.players if p.idol is not None]
+        if idol and idol[0][0] == self:
+            idol[0][1].role = Role.WEREWOLF
         if self.dead:
+            await self.game.ctx.send(
+                f"{self.user.mention} has died. They were a **{self.role.name.lower().replace('_', ' ')}**!"
+            )
             if self.role == Role.HUNTER:
-                random.choice(self.game.alive_players).kill()
+                try:
+                    target = await self.choose_users(
+                        "Choose someone who shall die together with you.",
+                        list_of_users=self.game.alive_players,
+                        amount=1,
+                    )
+                except asyncio.TimeoutError:
+                    return
+                await self.game.ctx.send("The hunter is firing.")
+                await target.kill()
+            elif self.role == Role.KNIGHT:
+                target = random.choice(
+                    [
+                        p
+                        for p in self.game.alive_players
+                        if p.side in (Side.WOLVES, Side.WHITE_WOLF)
+                    ]
+                )
+                await self.game.ctx.send(
+                    "The Knight is striking a final time with his sword."
+                )
+                await target.kill()
 
     @property
     def side(self) -> Side:
