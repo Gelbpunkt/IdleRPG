@@ -37,6 +37,7 @@ from typing import List, Optional
 import discord
 
 from async_timeout import timeout
+from discord.ext import commands
 
 from classes.context import Context
 
@@ -88,6 +89,8 @@ class Game:
             for role, user in zip(self.available_roles, players)
         ]
         random.choice(self.players).is_sheriff = True
+        self.judge_spoken = False
+        self.judge_symbol = None
 
     @property
     def sheriff(self) -> Player:
@@ -252,10 +255,12 @@ class Game:
         return targets
 
     async def election(self) -> Optional[Player]:
+        text = " ".join([u.user.mention for u in self.alive_players])
         await self.ctx.send(
-            "You may now submit someone (up to 10 total) for the election who to kill by mentioning their name below. You have 3 minutes of discussion during this time."
+            f"{text}\nYou may now submit someone (up to 10 total) for the election who to kill by mentioning their name below. You have 3 minutes of discussion during this time."
         )
         nominated = []
+        second_election = False
         eligible_players = [player.user for player in self.alive_players]
         try:
             async with timeout(180):
@@ -264,14 +269,24 @@ class Game:
                         "message",
                         check=lambda x: x.author in eligible_players
                         and x.channel.id == self.ctx.channel.id
-                        and len(x.mentions) > 0,
+                        and (
+                            len(x.mentions) > 0
+                            or (
+                                x.content == self.judge_symbol and not self.judge_spoken
+                            )
+                        ),
                     )
+                    if msg.content == self.judge_symbol:
+                        second_election = True
+                        self.judge_spoken = True
                     for user in msg.mentions:
-                        if user in eligible_players:
+                        if user in eligible_players and user not in nominated:
                             nominated.append(user)
-                    await self.ctx.send(f"{msg.author} nominated someone.")
+                            await self.ctx.send(f"{msg.author} nominated someone.")
         except asyncio.TimeoutError:
             pass
+        if not nominated:
+            return None, second_election
         emojis = ([f"{index+1}\u20e3" for index in range(10)] + ["\U0001f51f"])[
             : len(nominated)
         ]
@@ -284,18 +299,23 @@ class Game:
         for emoji in emojis:
             await msg.add_reaction(emoji)
         await asyncio.sleep(60)
+        msg = await self.ctx.channel.fetch_message(msg.id)
         nominated = {u: 0 for u in nominated}
         mapping = {emoji: user for emoji, user in zip(emojis, nominated)}
         for reaction in msg.reactions:
             if str(reaction.emoji) in emojis:
                 nominated[mapping[str(reaction.emoji)]] = sum(
-                    1 async for user in reaction.users if user in eligible_players
+                    [1 async for user in reaction.users() if user in eligible_players]
                 )
-        new_mapping = sorted(list(mapping.keys()), key=lambda x: -mapping[x])
+        new_mapping = sorted(list(mapping.values()), key=lambda x: -nominated[x])
         return (
-            new_mapping[0]
-            if mapping[new_mapping[0]] > mapping[new_mapping[1]]
-            else None
+            (
+                new_mapping[0]
+                if len(new_mapping) == 1
+                or nominated[new_mapping[0]] > nominated[new_mapping[1]]
+                else None
+            ),
+            second_election,
         )
 
     async def day(self, deaths: List[Player]) -> None:
@@ -305,13 +325,29 @@ class Game:
                 await self.ctx.send(f"**{death.user}** died and has left us.")
         if len(self.alive_players) < 2:
             return
-        to_kill = await self.election()
-        await self.ctx.send(f"The community has decided to kill {to_kill.mention}.")
-        to_kill = discord.utils.get(self.alive_players, user=to_kill)
-        if to_kill.dead:
-            maid = self.get_player_with_role(Role.MAID)
-            if maid:
-                await maid.handle_maid(to_kill)
+        to_kill, second_election = await self.election()
+        if to_kill is not None:
+            await self.ctx.send(f"The community has decided to kill {to_kill.mention}.")
+            to_kill = discord.utils.get(self.alive_players, user=to_kill)
+            if to_kill.dead:
+                maid = self.get_player_with_role(Role.MAID)
+                if maid:
+                    await maid.handle_maid(to_kill)
+        else:
+            await self.ctx.send("Indecisively, the community has killed noone.")
+        if second_election:
+            to_kill, second_election = await self.election()
+            if to_kill is not None:
+                await self.ctx.send(
+                    f"The community has decided to kill {to_kill.mention}."
+                )
+                to_kill = discord.utils.get(self.alive_players, user=to_kill)
+                if to_kill.dead:
+                    maid = self.get_player_with_role(Role.MAID)
+                    if maid:
+                        await maid.handle_maid(to_kill)
+            else:
+                await self.ctx.send("Indecisively, the community has killed noone.")
 
     async def run(self):
         # Handle thief etc and first night
@@ -357,9 +393,9 @@ class Player:
     def __repr__(self):
         return f"<Player role={self.role} initial_role={self.initial_role} is_sheriff={self.is_sheriff} lives={self.lives} side={self.side} dead={self.dead} won={self.has_won}>"
 
-    async def send(self, *args, **kwargs):
+    async def send(self, *args, **kwargs) -> Optional[discord.Message]:
         try:
-            await self.user.send(*args, **kwargs)
+            return await self.user.send(*args, **kwargs)
         except discord.Forbidden:
             pass
 
@@ -374,7 +410,7 @@ class Player:
         for page in paginator.pages:
             await self.send(page)
         mymsg = await self.send(
-            f"**Type the number of the user to choose for this action. You need to choose {amount} more."
+            f"**Type the number of the user to choose for this action. You need to choose {amount} more.**"
         )
         chosen = []
         while len(chosen) < amount:
@@ -388,12 +424,12 @@ class Player:
             player = list_of_users[int(msg.content) - 1]
             chosen.append(player)
             await mymsg.edit(
-                content=f"**Type the number of the user to choose for this action. You need to choose {amount - len(chosen)} more."
+                content=f"**Type the number of the user to choose for this action. You need to choose {amount - len(chosen)} more.**"
             )
         return chosen
 
     async def send_information(self) -> None:
-        await self.send(f"You are a {self.role}")
+        await self.send(f"You are a **{self.role.name.lower().replace('_', ' ')}**")
 
     async def send_love_msg(self, lover: Player) -> None:
         await self.send(f"You are in love with {lover.user}!")
@@ -489,8 +525,9 @@ class Player:
                 to_heal = await self.choose_users(
                     "Choose someone to heal.", list_of_users=targets, amount=1
                 )
-                targets.remove(to_heal)
-                self.can_heal = False
+                if to_heal:
+                    targets.remove(to_heal[0])
+                    self.can_heal = False
             except asyncio.TimeoutError:
                 pass
         if self.can_kill:
@@ -503,8 +540,9 @@ class Player:
                     list_of_users=possible_targets,
                     amount=1,
                 )
-                targets.append(to_kill)
-                self.can_kill = False
+                if to_kill:
+                    targets.append(to_kill[0])
+                    self.can_kill = False
             except asyncio.TimeoutError:
                 pass
         return targets
@@ -526,7 +564,7 @@ class Player:
 
     async def send_family_msg(self, relationship: str, family: List[Player]) -> None:
         await self.send(
-            f"Your {relationships}(s) are/is: {'and'.join([str(u.user) for u in family])}"
+            f"Your {relationship}(s) are/is: {'and'.join([str(u.user) for u in family])}"
         )
 
     async def check_player_card(self) -> None:
@@ -541,7 +579,7 @@ class Player:
         except asyncio.TimeoutError:
             return
         await self.send(
-            f"{to_inspect} is a **{to_inspect.role.name.lower().replace('_', ' ')}**"
+            f"{to_inspect.user} is a **{to_inspect.role.name.lower().replace('_', ' ')}**"
         )
 
     async def choose_role_from(self, roles: List[Role]) -> None:
@@ -575,11 +613,11 @@ class Player:
 
     async def choose_lovers(self) -> None:
         try:
-            targets = await self.choose_users(
+            lovers = await self.choose_users(
                 "Choose 2 lovers", list_of_users=self.game.players, amount=2
             )
         except asyncio.TimeoutError:
-            lovers = random.sample(self.game.players)
+            lovers = random.sample(self.game.players, 2)
         for lover in lovers:
             lover.in_love = True
 

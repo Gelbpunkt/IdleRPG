@@ -15,9 +15,12 @@ GNU Affero General Public License for more details.
 You should have received a copy of the GNU Affero General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
+import asyncio
+
 from discord.ext import commands
 
 from utils.werewolf import Game
+
 
 class Werewolf(commands.Cog):
     def __init__(self, bot):
