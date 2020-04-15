@@ -48,6 +48,7 @@ from utils.checks import user_is_patron
 class Bot(commands.AutoShardedBot):
     def __init__(self, **kwargs):
         self.cluster_name = kwargs.pop("cluster_name")
+        self.cluster_id = kwargs.pop("cluster_id")
         super().__init__(
             command_prefix=config.global_prefix, **kwargs
         )  # we overwrite the prefix when it is connected

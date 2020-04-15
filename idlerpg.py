@@ -41,6 +41,7 @@ bot = Bot(
     description="The one and only IdleRPG bot for discord",
     shard_ids=loads(sys.argv[1]),
     shard_count=int(sys.argv[2]),
+    cluster_id=int(sys.argv[3]),
     cluster_name=sys.argv[4],
     max_messages=10000,  # We have a ton of incoming messages, higher cache means commands like activeadventure
     # or guild adventure joining will stay in cache so reactions are counted
