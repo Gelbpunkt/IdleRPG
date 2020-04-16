@@ -148,6 +148,7 @@ class Game:
     async def wolves(self) -> Optional[Player]:
         healer = self.get_player_with_role(Role.HEALER)
         if healer:
+            await self.ctx.send("**The healer awakes...**")
             protected = await healer.get_healer_target()
         else:
             protected = None
@@ -156,9 +157,67 @@ class Game:
             for p in self.alive_players
             if p.side == Side.WOLVES or p.side == Side.WHITE_WOLF
         ]
+        wolves_users = [str(p.user.id) for p in wolves]
+        await self.ctx.send("**The werewolves awake...**")
         # Get target of wolves
-        possible_targets = [p for p in self.alive_players if p not in wolves]
-        target = random.choice(possible_targets)
+        possible_targets = {
+            idx: p for idx, p in enumerate(self.alive_players, 1) if p not in wolves
+        }
+        fmt = commands.Paginator(prefix="", suffix="")
+        fmt.add_line("**It is time to choose a victim**")
+        fmt.add_line("All possible users are:")
+        for idx, p in possible_targets.items():
+            fmt.add_line(f"{idx}. {p.user}")
+        fmt.add_line("")
+        fmt.add_line(
+            "**I will relay all messages you send to the other Werewolves. Send a number to nominate them for killing (you can nominate up to 10 users), voting starts in 2 minutes**"
+        )
+        fmt.add_line(
+            "**Please do not spam and talk slowly! Relaying can take a while if there are many Werewolves!**"
+        )
+        for user in wolves:
+            for page in fmt.pages:
+                await user.send(page)
+        nominated = []
+        try:
+            async with timeout(120):
+                while len(nominated) < 10:
+                    msg = await self.ctx.bot.wait_for_dms(
+                        "message", check={"author": {"id": wolves_users}}
+                    )
+                    if msg.content.isdigit() and int(msg.content) in possible_targets:
+                        nominated.append(possible_targets[int(msg.content)])
+                        text = f"**{msg.author}** nominated {nominated[-1].user}**"
+                    else:
+                        text = f"**{msg.author}**: {msg.content}"
+                    for user in wolves:
+                        await user.send(text)
+        except asyncio.TimeoutError:
+            pass
+        if not nominated:
+            return None
+        nominated = {u: 0 for u in nominated}
+        nominated_users = [str(u) for u in nominated]
+        if len(nominated) > 1:
+            for user in wolves:
+                await user.send("The voting is starting, please wait for your turn...")
+            for user in wolves:
+                try:
+                    target = await self.ctx.bot.paginator.Choose(
+                        entries=nominated_users,
+                        return_index=True,
+                        title="Vote for a target",
+                    ).paginate(self.ctx, location=user)
+                except self.game.ctx.bot.paginator.NoChoice:
+                    continue
+                nominated[list(nominated.keys())[target]] += 1
+            targets = sorted(list(nominated.keys()), key=lambda x: -nominated[x])
+            if nominated[targets[0]] > nominated[targets[1]]:
+                target = targets[0]
+            else:
+                target = None
+        else:
+            target = nominated[0]
         if target == protected:
             return None
         else:
@@ -168,6 +227,11 @@ class Game:
         await self.ctx.send("**Sending game roles...**")
         for player in self.players:
             await player.send_information()
+        pure_soul = self.get_player_with_role(Role.PURE_SOUL)
+        if pure_soul:
+            await self.ctx.send(
+                f"{pure_soul.user.mention} is a pure soul and an innocent villager."
+            )
         wolfhound = self.get_player_with_role(Role.WOLFHOUND)
         if wolfhound:
             await self.ctx.send("**The Wolfhound awakes...**")
@@ -211,7 +275,6 @@ class Game:
         if wild_child:
             await self.ctx.send("**The wild child awakes and choses its idol...**")
             await wild_child.choose_idol()
-        await self.ctx.send("**The werewolves awake...**")
         target = await self.wolves()
         targets = [target] if target is not None else []
         if (
@@ -252,7 +315,6 @@ class Game:
         if fox:
             await self.ctx.send("**The fox awakes...**")
             await fox.check_3_werewolves()
-        await self.ctx.send("**The werewolves awake...**")
         target = await self.wolves()
         targets = [target] if target is not None else []
         white_wolf = self.get_player_with_role(Role.WHITE_WOLF)
