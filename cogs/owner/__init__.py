@@ -30,6 +30,7 @@ import discord
 
 from discord.ext import commands
 
+from tabulate import tabulate
 from utils import shell
 
 
@@ -231,15 +232,23 @@ class Owner(commands.Cog):
     @locale_doc
     async def sql(self, ctx, *, query: str):
         """[Owner Only] Very basic SQL command."""
-        async with self.bot.pool.acquire() as conn:
-            try:
-                ret = await conn.fetch(query)
-            except Exception:
-                return await ctx.send(f"```py\n{traceback.format_exc()}```")
-            if ret:
-                await ctx.send(f"```{ret}```")
-            else:
-                await ctx.send("No results to fetch.")
+        if "select" in query.lower() or "returning" in query.lower():
+            type_ = "fetch"
+        else:
+            type_ = "execute"
+        try:
+            ret = await (getattr(self.bot.pool, type_))(query)
+        except Exception:
+            return await ctx.send(f"```py\n{traceback.format_exc()}```")
+        if type_ == "fetch" and len(ret) == 0:
+            return await ctx.send("No results.")
+        elif type_ == "fetch" and len(ret) > 0:
+            ret.insert(0, ret[0].keys())
+            await ctx.send(
+                    f"```\n{tabulate(ret, headers='firstrow', tablefmt='psql')}\n```"
+            )
+        else:
+            await ctx.send(f"```{ret}```")
 
     @commands.command(hidden=True)
     @locale_doc

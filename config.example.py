@@ -59,6 +59,7 @@ initial_extensions = [
     "cogs.alliance",
     "cogs.trivia",
     "cogs.chess",
+    "cogs.werewolf",
 ]
 
 """The prefix to use if none is set custom or we are in DMs."""
@@ -147,7 +148,7 @@ proxy_url = "http://my.proxy"
 proxy_auth = "proxy-auth-key"
 
 """The Version of the Bot."""
-version = "4.7.0a4"
+version = "4.7.0a5"
 
 """Global cooldown (rate, per, [.user, .channel, .guild])"""
 cooldown = commands.CooldownMapping.from_cooldown(1, 3, commands.BucketType.user)

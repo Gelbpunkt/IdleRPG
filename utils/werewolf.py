@@ -187,7 +187,7 @@ class Game:
                     )
                     if msg.content.isdigit() and int(msg.content) in possible_targets:
                         nominated.append(possible_targets[int(msg.content)])
-                        text = f"**{msg.author}** nominated {nominated[-1].user}**"
+                        text = f"**{msg.author}** nominated **{nominated[-1].user}**"
                     else:
                         text = f"**{msg.author}**: {msg.content}"
                     for user in wolves:
@@ -197,7 +197,7 @@ class Game:
         if not nominated:
             return None
         nominated = {u: 0 for u in nominated}
-        nominated_users = [str(u) for u in nominated]
+        nominated_users = [str(u.user) for u in nominated]
         if len(nominated) > 1:
             for user in wolves:
                 await user.send("The voting is starting, please wait for your turn...")
@@ -207,8 +207,8 @@ class Game:
                         entries=nominated_users,
                         return_index=True,
                         title="Vote for a target",
-                    ).paginate(self.ctx, location=user)
-                except self.game.ctx.bot.paginator.NoChoice:
+                    ).paginate(self.ctx, location=user.user)
+                except self.ctx.bot.paginator.NoChoice:
                     continue
                 nominated[list(nominated.keys())[target]] += 1
             targets = sorted(list(nominated.keys()), key=lambda x: -nominated[x])
@@ -217,7 +217,7 @@ class Game:
             else:
                 target = None
         else:
-            target = nominated[0]
+            target = list(nominated.keys())[0]
         if target == protected:
             return None
         else:
@@ -227,11 +227,6 @@ class Game:
         await self.ctx.send("**Sending game roles...**")
         for player in self.players:
             await player.send_information()
-        pure_soul = self.get_player_with_role(Role.PURE_SOUL)
-        if pure_soul:
-            await self.ctx.send(
-                f"{pure_soul.user.mention} is a pure soul and an innocent villager."
-            )
         wolfhound = self.get_player_with_role(Role.WOLFHOUND)
         if wolfhound:
             await self.ctx.send("**The Wolfhound awakes...**")
@@ -244,6 +239,11 @@ class Game:
         if amor:
             await self.ctx.send("**Amor awakes and shoots his arrows...**")
             await amor.choose_lovers()
+        pure_soul = self.get_player_with_role(Role.PURE_SOUL)
+        if pure_soul:
+            await self.ctx.send(
+                f"{pure_soul.user.mention} is a pure soul and an innocent villager."
+            )
         seer = self.get_player_with_role(Role.SEER)
         if seer:
             await self.ctx.send("**The seer awakes...**")
@@ -319,6 +319,7 @@ class Game:
         targets = [target] if target is not None else []
         white_wolf = self.get_player_with_role(Role.WHITE_WOLF)
         if white_wolf:
+            await self.ctx.send("**The white wolf awakes...**")
             target = await white_wolf.choose_werewolf()
             if target:
                 targets.append(target)
@@ -332,12 +333,14 @@ class Game:
         ):
             big_bad_wolf = self.get_player_with_role(Role.BIG_BAD_WOLF)
             if big_bad_wolf:
+                await self.ctx.send("**The big, bad wolf awakes...**")
                 targets.append(await big_bad_wolf.choose_villager_to_kill())
         flutist = self.get_player_with_role(Role.FLUTIST)
         if flutist:
             possible_targets = [
                 p for p in self.alive_players if not p.enchanted and p != flutist[0]
             ]
+            await self.ctx.send("**The flutist awakes...**")
             await flutist.enchant(possible_targets)
         return targets
 
@@ -613,7 +616,7 @@ class Player:
         return target[0]
 
     async def witch_actions(self, targets: List[Player]) -> Player:
-        if targets and self.can_heal:
+        if any(targets) and self.can_heal:
             try:
                 to_heal = await self.choose_users(
                     "Choose someone to heal.", list_of_users=targets, amount=1
