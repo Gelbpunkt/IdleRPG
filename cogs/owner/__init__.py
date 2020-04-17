@@ -27,6 +27,7 @@ from contextlib import redirect_stdout
 from importlib import reload as importlib_reload
 
 import discord
+import import_expression
 
 from discord.ext import commands
 
@@ -181,7 +182,7 @@ class Owner(commands.Cog):
         to_compile = f'async def func():\n{textwrap.indent(body, "  ")}'
 
         try:
-            exec(to_compile, env)
+            import_expression.exec(to_compile, env)
         except Exception as e:
             return await ctx.send(f"```py\n{e.__class__.__name__}: {e}\n```")
 
