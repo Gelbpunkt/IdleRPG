@@ -600,7 +600,7 @@ class Alliance(commands.Cog):
 
         await ctx.send(
             _(
-                "**{user}** wants to attack **{city}** with **{alliance_name}**'s alliance. Head to https://raid.travitia.xyz/{id_} to join the attack!"
+                "**{user}** wants to attack **{city}** with **{alliance_name}**'s alliance. Head to https://join.travitia.xyz/{id_} to join the attack!"
             ).format(user=ctx.author, city=city, alliance_name=alliance_name, id_=id_)
         )
 
