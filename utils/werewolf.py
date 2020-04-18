@@ -344,7 +344,7 @@ class Game:
             await flutist.enchant(possible_targets)
         return targets
 
-    async def election(self) -> Optional[Player]:
+    async def election(self) -> Optional[discord.Member]:
         text = " ".join([u.user.mention for u in self.alive_players])
         await self.ctx.send(
             f"{text}\nYou may now submit someone (up to 10 total) for the election who to kill by mentioning their name below. You have 3 minutes of discussion during this time."
@@ -370,13 +370,15 @@ class Game:
                         second_election = True
                         self.judge_spoken = True
                     for user in msg.mentions:
-                        if user in eligible_players and user not in nominated:
+                        if user in eligible_players and user not in nominated and len(nominated) < 10:
                             nominated.append(user)
                             await self.ctx.send(f"{msg.author} nominated someone.")
         except asyncio.TimeoutError:
             pass
         if not nominated:
             return None, second_election
+        if len(nominated) == 1:
+            return nominated[0], second_election
         emojis = ([f"{index+1}\u20e3" for index in range(10)] + ["\U0001f51f"])[
             : len(nominated)
         ]
