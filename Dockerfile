@@ -11,6 +11,7 @@ RUN if [ -z "$beta" ]; then \
     sleep 3 && \
     set -ex && \
     adduser -S idle && \
+    apk upgrade --no-cache && \
     apk add --no-cache --virtual .fetch-deps curl && \
     if [[ "$(uname -m)" = "x86_64" && "$beta" ]]; then \
         BRANCH="3.9-x86_64-beta"; \
