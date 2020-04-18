@@ -10,7 +10,7 @@ before_install:
   - curl -L https://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable/xUbuntu_19.10/Release.key | sudo apt-key add -
   - sudo apt update
   - sudo apt upgrade -y
-  - sudo apt -y install podman
+  - sudo apt -y install podman uidmap
 
 script:
   - podman build -t gelbpunkt/idlerpg:latest .
