@@ -11,6 +11,10 @@ before_install:
   - sudo apt update
   - sudo apt upgrade -y
   - sudo apt -y install podman uidmap
+  - sudo touch /etc/sub{u,g}id
+  - sudo usermod --add-subuids 10000-75535 $(whoami)
+  - sudo usermod --add-subgids 10000-75535 $(whoami)
+
 
 script:
   - podman build -t gelbpunkt/idlerpg:latest .
