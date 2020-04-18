@@ -42,7 +42,7 @@ from cogs.help import chunks
 from cogs.shard_communication import next_day_cooldown
 from utils.checks import has_char, user_is_patron
 from utils.misc import nice_join
-from utils.shell import get_out
+from utils.shell import get_cpu_name
 
 
 class Miscellaneous(commands.Cog):
@@ -248,9 +248,7 @@ Even $1 can help us.
         )
         meminfo = psutil.virtual_memory()
         cpu_freq = psutil.cpu_freq()
-        cpu_name = (
-            await get_out("lscpu | grep \"Model name\" | cut -d ' ' -f3- | xargs")
-        )[0]
+        cpu_name = await get_cpu_name()
 
         embed = discord.Embed(
             title=_("IdleRPG Statistics"),

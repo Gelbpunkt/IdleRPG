@@ -370,7 +370,11 @@ class Game:
                         second_election = True
                         self.judge_spoken = True
                     for user in msg.mentions:
-                        if user in eligible_players and user not in nominated and len(nominated) < 10:
+                        if (
+                            user in eligible_players
+                            and user not in nominated
+                            and len(nominated) < 10
+                        ):
                             nominated.append(user)
                             await self.ctx.send(f"{msg.author} nominated someone.")
         except asyncio.TimeoutError:

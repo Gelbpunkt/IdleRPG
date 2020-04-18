@@ -246,7 +246,7 @@ class Owner(commands.Cog):
         elif type_ == "fetch" and len(ret) > 0:
             ret.insert(0, ret[0].keys())
             await ctx.send(
-                    f"```\n{tabulate(ret, headers='firstrow', tablefmt='psql')}\n```"
+                f"```\n{tabulate(ret, headers='firstrow', tablefmt='psql')}\n```"
             )
         else:
             await ctx.send(f"```{ret}```")
