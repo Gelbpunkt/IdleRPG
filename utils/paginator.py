@@ -263,7 +263,7 @@ class Paginator:
                 return (
                         msg.author.id == ctx.author.id
                         and msg.content.isdigit()
-                        and 0 < int(msg.content) <= self.eof
+                        and 0 < int(msg.content) <= int(self.eof)+1
                 )
 
             try:
@@ -434,7 +434,7 @@ class AdventurePaginator:
                 return (
                     msg.author.id == ctx.author.id
                     and msg.content.isdigit()
-                    and 0 < int(msg.content) <= self.eof
+                    and 0 < int(msg.content) <= int(self.eof)+1
                 )
 
             try:
@@ -594,7 +594,7 @@ class ChoosePaginator(Paginator):
                 return (
                         msg.author.id == ctx.author.id
                         and msg.content.isdigit()
-                        and 0 < int(msg.content) <= self.eof
+                        and 0 < int(msg.content) <= int(self.eof)+1
                 )
 
             try:
