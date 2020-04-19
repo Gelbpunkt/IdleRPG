@@ -34,9 +34,15 @@ class Chess(commands.Cog):
         bot.loop.create_task(self.initialize())
 
     async def initialize(self):
-        _, adapter = await self.bot.loop.create_connection(
-            lambda: ProtocolAdapter(chess.engine.UciProtocol()), "127.0.0.1", 4000
-        )
+        await self.bot.wait_until_ready()
+        try:
+            _, adapter = await self.bot.loop.create_connection(
+                lambda: ProtocolAdapter(chess.engine.UciProtocol()), "127.0.0.1", 4000
+            )
+        except ConnectionRefusedError:
+            print("FAILED to connect to stockfish backend, unloading chess cog...")
+            self.bot.unload_extension("cogs.chess")
+            return
         self.engine = adapter.protocol
         await self.engine.initialize()
 
@@ -190,7 +196,8 @@ class Chess(commands.Cog):
         await ctx.send(moves)
 
     def cog_unload(self):
-        self.bot.loop.create_task(self.engine.quit())
+        if hasattr(self, "engine"):
+            self.bot.loop.create_task(self.engine.quit())
 
 
 def setup(bot):
