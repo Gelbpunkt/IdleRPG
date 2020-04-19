@@ -168,6 +168,13 @@ class Sharding(commands.Cog):
             self.router.cancel()
         await self.bot.redis.execute_pubsub("UNSUBSCRIBE", self.communication_channel)
 
+    async def run_task(self, coro):
+        """Simple wrapper function to ignore any errors caused in local tasks, e.g. with unknown users."""
+        try:
+            await coro
+        except Exception as e:
+            pass
+
     async def event_handler(self):
         """
         main router
@@ -190,15 +197,19 @@ class Sharding(commands.Cog):
                         continue  # it's not our cup of tea
                     if payload.get("args"):
                         self.bot.loop.create_task(
-                            getattr(self, payload["action"])(
-                                **json.loads(payload["args"]),
-                                command_id=payload["command_id"],
+                            self.run_task(
+                                getattr(self, payload["action"])(
+                                    **json.loads(payload["args"]),
+                                    command_id=payload["command_id"],
+                                )
                             )
                         )
                     else:
                         self.bot.loop.create_task(
-                            getattr(self, payload["action"])(
-                                command_id=payload["command_id"]
+                            self.run_task(
+                                getattr(self, payload["action"])(
+                                    command_id=payload["command_id"]
+                                )
                             )
                         )
                 except Exception:
@@ -213,6 +224,12 @@ class Sharding(commands.Cog):
                     continue
             if payload.get("output") and payload["command_id"] in self._messages:
                 self._messages[payload["command_id"]].append(payload["output"])
+
+    async def temp_ban(self, user_id: int, command_id: int):
+        self.bot.bans.append(user_id)
+
+    async def temp_unban(self, user_id: int, command_id: int):
+        self.bot.bans.remove(user_id)
 
     async def get_user_patreon(self, member_id: int, command_id: int):
         if not self.bot.get_user(member_id):
