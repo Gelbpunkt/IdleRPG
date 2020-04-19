@@ -1609,7 +1609,12 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
                     'SELECT "user" FROM profile WHERE "user"=$1', u.id
                 ):
                     continue
-                dmg, deff = await self.bot.get_raidstats(u, conn=conn)
+                try:
+                    dmg, deff = await self.bot.get_raidstats(
+                        u, god="Asmodeus", conn=con
+                    )
+                except ValueError:
+                    continue
                 raid[u] = {"hp": 250, "armor": deff, "damage": dmg}
 
         await ctx.send("**Done getting data!**")
