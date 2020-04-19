@@ -80,6 +80,7 @@ class TextPaginator:
             "⏹": "stop",
             "▶": "next",
             "⏭": "last",
+            "🔢": "choose",
         }
 
     @property
@@ -161,6 +162,29 @@ class TextPaginator:
                 if self.message is not None:
                     await self.message.delete()
                 return
+            elif action == "choose":
+                choose_msg = await self.ctx.send(
+                    _(
+                        "Please send a number between 1 and {max_pages}"
+                    ).format(max_pages=self.page_count+1)
+                )
+
+                def check(msg):
+                    return (
+                        msg.author.id == self.ctx.author.id
+                        and msg.content.isdigit()
+                        and 0 < int(msg.content) <= self.page_count
+                    )
+
+                try:
+                    m = await self.ctx.bot.wait_for("message", check=check, timeout=30)
+                    await choose_msg.delete()
+                except TimeoutError:
+                    if self.message is not None:
+                        await self.message.delete()
+                    await self.ctx.send(_("Took too long to choose a number. Cancelling."))
+                    return
+                self.current = int(m.content)-1
             await self.update()
 
 
@@ -213,13 +237,44 @@ class Paginator:
         self.previous = 0
         self.eof = 0
 
-        self.controls = {"⏮": 0.0, "◀": -1, "⏹": "stop", "▶": +1, "⏭": None}
+        self.controls = {
+            "⏮": 0.0,
+            "◀": -1,
+            "⏹": "stop",
+            "▶": +1,
+            "⏭": None,
+            "🔢": "choose",
+        }
 
     async def indexer(self, ctx: "Context", ctrl: str) -> None:
         if self.base is None:
             raise Exception("Should not be called manually")
         if ctrl == "stop":
             ctx.bot.loop.create_task(self.stop_controller(self.base))
+
+        elif ctrl == "choose":
+            choose_msg = await ctx.send(
+                _(
+                    "Please send a number between 1 and {max_pages}"
+                ).format(max_pages=int(self.eof)+1)
+            )
+
+            def check(msg):
+                return (
+                        msg.author.id == ctx.author.id
+                        and msg.content.isdigit()
+                        and 0 < int(msg.content) <= self.eof
+                )
+
+            try:
+                m = await ctx.bot.wait_for("message", check=check, timeout=30)
+                await choose_msg.delete()
+            except TimeoutError:
+                if self.base is not None:
+                    await self.base.delete()
+                await ctx.send(_("Took too long to choose a number. Cancelling."))
+                return
+            self.current = int(m.content)-1
 
         elif isinstance(ctrl, int):
             self.current += ctrl
@@ -355,11 +410,42 @@ class AdventurePaginator:
         self.previous = 0
         self.eof = 0
 
-        self.controls = {"⏮": 0.0, "◀": -1, "⏹": "stop", "▶": +1, "⏭": None}
+        self.controls = {
+            "⏮": 0.0,
+            "◀": -1,
+            "⏹": "stop",
+            "▶": +1,
+            "⏭": None,
+            "🔢": "choose",
+        }
 
     async def indexer(self, ctx, ctrl):
         if ctrl == "stop":
             ctx.bot.loop.create_task(self.stop_controller(self.base))
+
+        elif ctrl == "choose":
+            choose_msg = await ctx.send(
+                _(
+                    "Please send a number between 1 and {max_pages}"
+                ).format(max_pages=int(self.eof)+1)
+            )
+
+            def check(msg):
+                return (
+                    msg.author.id == ctx.author.id
+                    and msg.content.isdigit()
+                    and 0 < int(msg.content) <= self.eof
+                )
+
+            try:
+                m = await ctx.bot.wait_for("message", check=check, timeout=30)
+                await choose_msg.delete()
+            except TimeoutError:
+                if self.base is not None:
+                    await self.base.delete()
+                await ctx.send(_("Took too long to choose a number. Cancelling."))
+                return
+            self.current = int(m.content)-1
 
         elif isinstance(ctrl, int):
             self.current += ctrl
@@ -486,6 +572,7 @@ class ChoosePaginator(Paginator):
             "▶": +1,
             "⏭": None,
             "\U0001f535": "choose",
+            "🔢": "input",
         }
         self.choices = kwargs.get("choices")
         items = self.entries or self.extras
@@ -495,6 +582,30 @@ class ChoosePaginator(Paginator):
         if ctrl == "stop":
             await self.stop_controller(self.base)
             raise NoChoice("You didn't choose anything.")
+
+        elif ctrl == "input":
+            choose_msg = await ctx.send(
+                _(
+                    "Please send a number between 1 and {max_pages}"
+                ).format(max_pages=int(self.eof)+1)
+            )
+
+            def check(msg):
+                return (
+                        msg.author.id == ctx.author.id
+                        and msg.content.isdigit()
+                        and 0 < int(msg.content) <= self.eof
+                )
+
+            try:
+                m = await ctx.bot.wait_for("message", check=check, timeout=30)
+                await choose_msg.delete()
+            except TimeoutError:
+                if self.base is not None:
+                    await self.base.delete()
+                await ctx.send(_("Took too long to choose a number. Cancelling."))
+                return
+            self.current = int(m.content)-1
 
         elif isinstance(ctrl, int):
             self.current += ctrl
