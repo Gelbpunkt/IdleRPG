@@ -1610,7 +1610,9 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
                 ):
                     continue
                 try:
-                    dmg, deff = await self.bot.get_raidstats(u, god="Asmodeus", conn=conn
+                    dmg, deff = await self.bot.get_raidstats(
+                        u, god="Asmodeus", conn=con
+                    )
                 except ValueError:
                     continue
                 raid[u] = {"hp": 250, "armor": deff, "damage": dmg}
