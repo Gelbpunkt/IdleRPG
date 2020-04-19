@@ -504,6 +504,7 @@ IdleRPG is a global bot, your characters are valid everywhere"""
                 )
 
                 if not count:
+                    await self.bot.reset_cooldown(ctx)
                     return await ctx.send(
                         _(
                             "You don't own any loot items with the IDs: {itemids}"
