@@ -1,20 +1,17 @@
 arch:
   - amd64
-  - arm64
+  #  seems to be fairly buggy as podman builds are not available for 18.04 ARM64
+  #  - arm64
 dist: bionic
 language: minimal
 
 before_install:
   - . /etc/os-release
-  - sudo sh -c "echo 'deb https://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable/xUbuntu_19.10/ /' > /etc/apt/sources.list.d/devel:kubic:libcontainers:stable.list"
-  - curl -L https://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable/xUbuntu_19.10/Release.key | sudo apt-key add -
+  - sudo sh -c "echo 'deb https://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable/xUbuntu_${VERSION_ID}/ /' > /etc/apt/sources.list.d/devel:kubic:libcontainers:stable.list"
+  - curl -L https://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable/xUbuntu_${VERSION_ID}/Release.key | sudo apt-key add -
   - sudo apt update
   - sudo apt upgrade -y
-  - sudo apt -y install podman uidmap
-  - sudo touch /etc/sub{u,g}id
-  - sudo usermod --add-subuids 10000-75535 $(whoami)
-  - sudo usermod --add-subgids 10000-75535 $(whoami)
-
+  - sudo apt -y install podman
 
 script:
   - podman build -t gelbpunkt/idlerpg:latest .
