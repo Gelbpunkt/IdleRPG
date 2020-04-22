@@ -169,7 +169,7 @@ class TextPaginator:
                     )
                 )
 
-                def check(msg):
+                def new_check(msg):
                     return (
                         msg.author.id == self.ctx.author.id
                         and msg.content.isdigit()
@@ -177,7 +177,7 @@ class TextPaginator:
                     )
 
                 try:
-                    m = await self.ctx.bot.wait_for("message", check=check, timeout=30)
+                    m = await self.ctx.bot.wait_for("message", check=new_check, timeout=30)
                     await choose_msg.delete()
                 except TimeoutError:
                     if self.message is not None:

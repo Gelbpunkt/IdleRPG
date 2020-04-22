@@ -1,4 +1,4 @@
-FROM gelbpunkt/python:latest
+FROM gelbpunkt/python:gcc10
 
 WORKDIR /idlerpg
 ARG beta

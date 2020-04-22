@@ -729,13 +729,18 @@ class Player:
 
     async def kill(self) -> None:
         self.lives -= 1
-        idol = [(p.idol, p) for p in self.game.players if p.idol is not None]
-        if idol and idol[0][0] == self:
-            idol[0][1].role = Role.WEREWOLF
         if self.dead:
             await self.game.ctx.send(
                 f"{self.user.mention} has died. They were a **{self.role.name.lower().replace('_', ' ')}**!"
             )
+            idol = discord.utils.find(lambda x: x.idol is not None, self.game.players)
+            if idol.idol == self:
+                idol.role = Role.WEREWOLF
+            lovers = self.game.lovers
+            if self in lovers:
+                other = discord.utils.find(lambda x: x != self, lovers)
+                if not other.dead:
+                    await other.kill()
             if self.role == Role.HUNTER:
                 try:
                     target = await self.choose_users(
