@@ -1921,6 +1921,12 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
             ).format(newlvl=newlvl, price=price)
         ):
             return
+        if not self.bot.has_money(ctx.author, price):
+            return await ctx.send(
+                _(
+                    "Upgrading your weapon attack raid multiplier to {newlvl} costs **${price}**, you are too poor."
+                ).format(newlvl=newlvl, price=price)
+            )
         await self.bot.pool.execute(
             'UPDATE profile SET "atkmultiply"=$1, "money"="money"-$2 WHERE "user"=$3;',
             newlvl,
@@ -1955,6 +1961,12 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
             ).format(newlvl=newlvl, price=price)
         ):
             return
+        if not self.bot.has_money(ctx.author, price):
+            return await ctx.send(
+                _(
+                    "Upgrading your shield defense raid multiplier to {newlvl} costs **${price}**, you are too poor."
+                ).format(newlvl=newlvl, price=price)
+            )
         await self.bot.pool.execute(
             'UPDATE profile SET "defmultiply"=$1, "money"="money"-$2 WHERE "user"=$3;',
             newlvl,
