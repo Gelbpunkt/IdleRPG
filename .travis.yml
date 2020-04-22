@@ -12,6 +12,7 @@ before_install:
   - sudo apt update
   - sudo apt upgrade -y
   - sudo apt -y install podman
+  - sudo loginctl enable-linger 2000
 
 script:
   - |
