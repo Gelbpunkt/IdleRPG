@@ -126,6 +126,16 @@ class Miscellaneous(commands.Cog):
             ).format(txt=txt, money=money, streak=streak)
         )
 
+    @has_char()
+    @commands.command()
+    @locale_doc
+    async def streak(self, ctx):
+        _("""See the current daily streak you are on.""")
+        streak = await self.bot.redis.execute("GET", f"idle:daily:{ctx.author.id}")
+        await ctx.send(
+            _("You are on a daily streak of **{streak}!**").format(streak=streak.decode())
+        )
+
     @commands.command()
     @locale_doc
     async def ping(self, ctx):

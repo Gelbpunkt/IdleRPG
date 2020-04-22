@@ -448,21 +448,31 @@ class Battles(commands.Cog):
             "\U00002764": "recover",
         }
 
-        last = None
+        msg = await ctx.send(
+            _("Battle {p1} vs {p2}").format(p1=ctx.author.mention, p2=enemy_.mention),
+            embed=discord.Embed(
+                title=_("Let the battle begin!"), color=self.bot.config.primary_colour,
+            ),
+        )
 
         def is_valid_move(r, u):
-            return str(r.emoji) in moves and u in players and r.message.id == last.id
+            return str(r.emoji) in moves and u in players and r.message.id == msg.id
+
+        for emoji in moves:
+            await msg.add_reaction(emoji)
 
         while players[ctx.author]["hp"] > 0 and players[enemy_]["hp"] > 0:
-            last = await ctx.send(
-                _(
-                    "{prevaction}\n{player1}: **{hp1}** HP\n{player2}: **{hp2}** HP\nReact to play."
-                ).format(
-                    prevaction="\n".join([i["lastmove"] for i in players.values()]),
-                    player1=ctx.author.mention,
-                    player2=enemy_.mention,
-                    hp1=players[ctx.author]["hp"],
-                    hp2=players[enemy_]["hp"],
+            await msg.edit(
+                embed=discord.Embed(
+                    description=_(
+                        "{prevaction}\n{player1}: **{hp1}** HP\n{player2}: **{hp2}** HP\nReact to play."
+                    ).format(
+                        prevaction="\n".join([i["lastmove"] for i in players.values()]),
+                        player1=ctx.author.mention,
+                        player2=enemy_.mention,
+                        hp1=players[ctx.author]["hp"],
+                        hp2=players[enemy_]["hp"],
+                    )
                 )
             )
             players[ctx.author]["action"], players[enemy_]["action"] = None, None
@@ -470,8 +480,6 @@ class Battles(commands.Cog):
                 _("{user} does nothing...").format(user=ctx.author.mention),
                 _("{user} does nothing...").format(user=enemy_.mention),
             )
-            for emoji in moves:
-                await last.add_reaction(emoji)
 
             while (not players[ctx.author]["action"]) or (
                 not players[enemy_]["action"]
@@ -480,6 +488,10 @@ class Battles(commands.Cog):
                     r, u = await self.bot.wait_for(
                         "reaction_add", timeout=30, check=is_valid_move
                     )
+                    try:
+                        await msg.remove_reaction(r.emoji, u)
+                    except discord.Forbidden:
+                        pass
                 except asyncio.TimeoutError:
                     await self.bot.reset_cooldown(ctx)
                     return await ctx.send(
@@ -593,13 +605,22 @@ class Battles(commands.Cog):
         await self.bot.log_transaction(
             ctx, from_=looser.id, to=winner.id, subject="money", data={"Amount": money}
         )
+        await msg.edit(
+            embed=discord.Embed(
+                description=_(
+                    "{prevaction}\n{player1}: **{hp1}** HP\n{player2}: **{hp2}** HP\nReact to play."
+                ).format(
+                    prevaction="\n".join([i["lastmove"] for i in players.values()]),
+                    player1=ctx.author.mention,
+                    player2=enemy_.mention,
+                    hp1=players[ctx.author]["hp"],
+                    hp2=players[enemy_]["hp"],
+                )
+            )
+        )
         await ctx.send(
-            _(
-                "{prevaction}\n{winner} won the active battle vs {looser}! Congratulations!"
-            ).format(
-                prevaction="\n".join([players[p]["lastmove"] for p in players]),
-                winner=winner.mention,
-                looser=looser.mention,
+            _("{winner} won the active battle vs {looser}! Congratulations!").format(
+                winner=winner.mention, looser=looser.mention,
             )
         )
 

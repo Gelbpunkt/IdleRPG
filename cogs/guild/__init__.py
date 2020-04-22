@@ -268,8 +268,8 @@ To look up a guild by its ID, use id:number."""
             )
         await ctx.send(
             _(
-                "Successfully added your guild **{name}** with a member limit of **{memberlimit}**."
-            ).format(name=name, memberlimit=memberlimit)
+                "Successfully added your guild **{name}** with a member limit of **{memberlimit}**.\n\nTip: You can use `{prefix}guild channel` in a server where you are the admin to set up the guild logging channel."
+            ).format(name=name, memberlimit=memberlimit, prefix=ctx.prefix)
         )
 
     @is_guild_leader()

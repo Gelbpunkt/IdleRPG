@@ -243,7 +243,7 @@ class Tournament(commands.Cog):
                         continue
                     participants.append(u)
                     await ctx.send(
-                        _("{user} joined the tournament.").format(user=u.mention)
+                        _("{user} joined the raidtournament.").format(user=u.mention)
                     )
                 else:
                     await ctx.send(

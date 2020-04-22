@@ -387,6 +387,7 @@ class Trading(commands.Cog):
                 ctx.author.id,
             )
             if not amount:
+                await self.bot.reset_cooldown(ctx)
                 return await ctx.send(
                     _("You don't own any items with the IDs: {itemids}").format(
                         itemids=", ".join([str(itemid) for itemid in itemids])
@@ -468,7 +469,8 @@ class Trading(commands.Cog):
                     "You are about to sell **{count} items for ${money}!**\nAre you sure you want to do this?"
                 ).format(count=count, money=money)
             ):
-                return
+                await self.bot.reset_cooldown(ctx)
+                return await ctx.send(_("Cancelled selling your items."))
             newcount = await self.bot.pool.fetchval(
                 "SELECT count(value) FROM inventory i JOIN allitems ai ON (i.item=ai.id) WHERE ai.owner=$1 AND i.equipped IS FALSE AND ai.armor+ai.damage BETWEEN $2 AND $3;",
                 ctx.author.id,
