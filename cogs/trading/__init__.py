@@ -221,10 +221,12 @@ class Trading(commands.Cog):
     @commands.command()
     @locale_doc
     async def removeall(self, ctx):
-        _("""Removes all of your items from the shop and places them back in your inventory""")
+        _(
+            """Removes all of your items from the shop and places them back in your inventory"""
+        )
         async with self.bot.pool.acquire() as conn:
             count = await conn.fetchval(
-                'SELECT COUNT(*) FROM market m JOIN allitems ai ON (m.item=ai.id) WHERE ai.owner=$1;',
+                "SELECT COUNT(*) FROM market m JOIN allitems ai ON (m.item=ai.id) WHERE ai.owner=$1;",
                 ctx.author.id,
             )
             if not count:
@@ -234,14 +236,18 @@ class Trading(commands.Cog):
             ):
                 return await ctx.send(_("Your items will stay in the market."))
             await conn.execute(
-                'INSERT INTO inventory (item, equipped) SELECT m.item, false FROM market m JOIN allitems ai ON m.item=ai.id WHERE ai.owner=$1;',
-                ctx.author.id
-            )
-            await conn.execute(
-                'DELETE FROM market m USING allitems ai WHERE m.item=ai.id AND ai.owner=$1;',
+                "INSERT INTO inventory (item, equipped) SELECT m.item, false FROM market m JOIN allitems ai ON m.item=ai.id WHERE ai.owner=$1;",
                 ctx.author.id,
             )
-        await ctx.send(_("Removed {count} items from the market and put them back into your inventory.").format(count=count))
+            await conn.execute(
+                "DELETE FROM market m USING allitems ai WHERE m.item=ai.id AND ai.owner=$1;",
+                ctx.author.id,
+            )
+        await ctx.send(
+            _(
+                "Removed {count} items from the market and put them back into your inventory."
+            ).format(count=count)
+        )
 
     @commands.command(aliases=["market", "m"])
     @locale_doc

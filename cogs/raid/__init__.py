@@ -1916,7 +1916,9 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
                 ).format(newlvl=newlvl, price=price)
             )
         if not await ctx.confirm(
-            _("Upgrading your weapon attack raid multiplier to {newlvl} costs **${price}**, proceed?").format(newlvl=newlvl, price=price)
+            _(
+                "Upgrading your weapon attack raid multiplier to {newlvl} costs **${price}**, proceed?"
+            ).format(newlvl=newlvl, price=price)
         ):
             return
         await self.bot.pool.execute(
@@ -1948,7 +1950,9 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
                 ).format(newlvl=newlvl, price=price)
             )
         if not await ctx.confirm(
-            _("Upgrading your shield defense raid multiplier to {newlvl} costs **${price}**, proceed?").format(newlvl=newlvl, price=price)
+            _(
+                "Upgrading your shield defense raid multiplier to {newlvl} costs **${price}**, proceed?"
+            ).format(newlvl=newlvl, price=price)
         ):
             return
         await self.bot.pool.execute(

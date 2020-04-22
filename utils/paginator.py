@@ -164,9 +164,9 @@ class TextPaginator:
                 return
             elif action == "choose":
                 choose_msg = await self.ctx.send(
-                    _(
-                        "Please send a number between 1 and {max_pages}"
-                    ).format(max_pages=self.page_count+1)
+                    _("Please send a number between 1 and {max_pages}").format(
+                        max_pages=self.page_count + 1
+                    )
                 )
 
                 def check(msg):
@@ -182,9 +182,11 @@ class TextPaginator:
                 except TimeoutError:
                     if self.message is not None:
                         await self.message.delete()
-                    await self.ctx.send(_("Took too long to choose a number. Cancelling."))
+                    await self.ctx.send(
+                        _("Took too long to choose a number. Cancelling.")
+                    )
                     return
-                self.current = int(m.content)-1
+                self.current = int(m.content) - 1
             await self.update()
 
 
@@ -254,16 +256,16 @@ class Paginator:
 
         elif ctrl == "choose":
             choose_msg = await ctx.send(
-                _(
-                    "Please send a number between 1 and {max_pages}"
-                ).format(max_pages=int(self.eof)+1)
+                _("Please send a number between 1 and {max_pages}").format(
+                    max_pages=int(self.eof) + 1
+                )
             )
 
             def check(msg):
                 return (
-                        msg.author.id == ctx.author.id
-                        and msg.content.isdigit()
-                        and 0 < int(msg.content) <= int(self.eof)+1
+                    msg.author.id == ctx.author.id
+                    and msg.content.isdigit()
+                    and 0 < int(msg.content) <= int(self.eof) + 1
                 )
 
             try:
@@ -274,7 +276,7 @@ class Paginator:
                     await self.base.delete()
                 await ctx.send(_("Took too long to choose a number. Cancelling."))
                 return
-            self.current = int(m.content)-1
+            self.current = int(m.content) - 1
 
         elif isinstance(ctrl, int):
             self.current += ctrl
@@ -425,16 +427,16 @@ class AdventurePaginator:
 
         elif ctrl == "choose":
             choose_msg = await ctx.send(
-                _(
-                    "Please send a number between 1 and {max_pages}"
-                ).format(max_pages=int(self.eof)+1)
+                _("Please send a number between 1 and {max_pages}").format(
+                    max_pages=int(self.eof) + 1
+                )
             )
 
             def check(msg):
                 return (
                     msg.author.id == ctx.author.id
                     and msg.content.isdigit()
-                    and 0 < int(msg.content) <= int(self.eof)+1
+                    and 0 < int(msg.content) <= int(self.eof) + 1
                 )
 
             try:
@@ -445,7 +447,7 @@ class AdventurePaginator:
                     await self.base.delete()
                 await ctx.send(_("Took too long to choose a number. Cancelling."))
                 return
-            self.current = int(m.content)-1
+            self.current = int(m.content) - 1
 
         elif isinstance(ctrl, int):
             self.current += ctrl
@@ -585,16 +587,16 @@ class ChoosePaginator(Paginator):
 
         elif ctrl == "input":
             choose_msg = await ctx.send(
-                _(
-                    "Please send a number between 1 and {max_pages}"
-                ).format(max_pages=int(self.eof)+1)
+                _("Please send a number between 1 and {max_pages}").format(
+                    max_pages=int(self.eof) + 1
+                )
             )
 
             def check(msg):
                 return (
-                        msg.author.id == ctx.author.id
-                        and msg.content.isdigit()
-                        and 0 < int(msg.content) <= int(self.eof)+1
+                    msg.author.id == ctx.author.id
+                    and msg.content.isdigit()
+                    and 0 < int(msg.content) <= int(self.eof) + 1
                 )
 
             try:
@@ -605,7 +607,7 @@ class ChoosePaginator(Paginator):
                     await self.base.delete()
                 await ctx.send(_("Took too long to choose a number. Cancelling."))
                 return
-            self.current = int(m.content)-1
+            self.current = int(m.content) - 1
 
         elif isinstance(ctrl, int):
             self.current += ctrl
