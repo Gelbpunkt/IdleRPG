@@ -132,6 +132,12 @@ class Miscellaneous(commands.Cog):
     async def streak(self, ctx):
         _("""See the current daily streak you are on.""")
         streak = await self.bot.redis.execute("GET", f"idle:daily:{ctx.author.id}")
+        if not streak:
+            return await ctx.send(
+                _(
+                    "You don't have a daily streak yet. You can get one going by using the command `{prefix}daily`!"
+                ).format(prefix=ctx.prefix)
+            )
         await ctx.send(
             _("You are on a daily streak of **{streak}!**").format(streak=streak.decode())
         )
