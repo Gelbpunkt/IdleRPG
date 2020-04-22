@@ -14,4 +14,9 @@ before_install:
   - sudo apt -y install podman
 
 script:
-  - podman build -t gelbpunkt/idlerpg:latest .
+  - |
+    if [ $TRAVIS_BRANCH == "v4" ]; then
+      podman build -t gelbpunkt/idlerpg:latest .;
+    else
+      podman build -t gelbpuntk/idlerpg:latest --build-arg beta=true .;
+    fi
