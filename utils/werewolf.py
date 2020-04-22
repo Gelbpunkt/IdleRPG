@@ -383,7 +383,7 @@ class Game:
             return None, second_election
         if len(nominated) == 1:
             return nominated[0], second_election
-        emojis = ([f"{index+1}\u20e3" for index in range(10)] + ["\U0001f51f"])[
+        emojis = ([f"{index+1}\u20e3" for index in range(9)] + ["\U0001f51f"])[
             : len(nominated)
         ]
         texts = "\n".join(
