@@ -1611,7 +1611,7 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
                     continue
                 try:
                     dmg, deff = await self.bot.get_raidstats(
-                        u, god="Asmodeus", conn=con
+                        u, god="Asmodeus", conn=conn
                     )
                 except ValueError:
                     continue

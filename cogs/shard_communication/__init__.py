@@ -172,7 +172,7 @@ class Sharding(commands.Cog):
         """Simple wrapper function to ignore any errors caused in local tasks, e.g. with unknown users."""
         try:
             await coro
-        except Exception as e:
+        except Exception:
             pass
 
     async def event_handler(self):

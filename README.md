@@ -15,9 +15,6 @@ The IdleRPG Project is licensed under the terms of the [GNU Affero General Publi
 
 [AGPL for humans](<https://tldrlegal.com/license/gnu-affero-general-public-license-v3-(agpl-3.0)>).
 
-## Current goals
-
-Please see [#32](https://git.travitia.xyz/Kenvyra/IdleRPG/issues/32)
 
 ## Running it
 

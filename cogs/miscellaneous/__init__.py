@@ -23,6 +23,7 @@ import random
 import re
 import secrets
 import statistics
+import sys
 
 from collections import defaultdict, deque
 from functools import partial
@@ -249,6 +250,7 @@ Even $1 can help us.
         meminfo = psutil.virtual_memory()
         cpu_freq = psutil.cpu_freq()
         cpu_name = await get_cpu_name()
+        compiler = re.search(r".*\[(.*)\]", sys.version)[1]
 
         embed = discord.Embed(
             title=_("IdleRPG Statistics"),
@@ -271,6 +273,7 @@ RAM Usage: **{ram}%** (Total: **{total_ram}**)
 CPU Temperature: **{cpu_temp}°C**
 Python Version **{python}** <:python:445247273065250817>
 discord.py Version **{dpy}**
+Compiler: **{compiler}**
 Operating System: **{osname} {osversion}**
 Kernel Version: **{kernel}**
 PostgreSQL Version: **{pg_version}**
@@ -287,6 +290,7 @@ Redis Version: **{redis_version}**"""
                 total_ram=humanize.naturalsize(meminfo.total),
                 python=platform.python_version(),
                 dpy=pkg.get_distribution("discord.py").version,
+                compiler=compiler,
                 osname=sysinfo[0].title(),
                 osversion=sysinfo[1],
                 kernel=os.uname().release,
