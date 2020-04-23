@@ -139,7 +139,7 @@ class Game:
             try:
                 return self.alive_players[0]
             except IndexError:
-                return "Noone"
+                return "No one"
 
     @property
     def lovers(self) -> List[Player]:
@@ -459,7 +459,12 @@ class Game:
                 night_no += 1
                 deaths = await self.night(white_wolf=night_no % 2 == 0)
             round_no += 1
-        await self.ctx.send(f"{self.winner().user.mention} won!")
+
+        winner = self.winner()
+        if isinstance(winner, Player):
+            await self.ctx.send(f"{winner.user.mention} won! They were a **{winner.role.name.lower().replace('_', ' ')}**!")
+        else:
+            await self.ctx.send(f"{winner} won!")
 
 
 class Player:
