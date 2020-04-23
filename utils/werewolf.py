@@ -739,7 +739,7 @@ class Player:
                 f"{self.user.mention} has died. They were a **{self.role.name.lower().replace('_', ' ')}**!"
             )
             idol = discord.utils.find(lambda x: x.idol is not None, self.game.players)
-            if idol.idol == self:
+            if idol and idol.idol == self:
                 idol.role = Role.WEREWOLF
             lovers = self.game.lovers
             if self in lovers:

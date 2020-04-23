@@ -83,6 +83,7 @@ class Werewolf(commands.Cog):
             await ctx.send(
                 _("An error happened during the Werewolf. Please try again!")
             )
+            del self.games[ctx.channel.id]
             raise e
         try:
             del self.games[ctx.channel.id]
