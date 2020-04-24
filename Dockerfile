@@ -24,7 +24,7 @@ RUN if [ -z "$beta" ]; then \
     fi && \
     curl -sL "https://raw.githubusercontent.com/Gelbpunkt/alpine-python-wheels/$BRANCH/index-order" \
     | while read p; do \
-        pip install --no-deps --no-cache-dir "https://github.com/Gelbpunkt/alpine-python-wheels/raw/$BRANCH/wheels/$p"; \
+        pip install --no-deps --no-cache-dir "https://raw.githubusercontent.com/Gelbpunkt/alpine-python-wheels/$BRANCH/wheels/$p"; \
     done && \
     apk del .fetch-deps --no-network && \
     apk add --no-cache git
