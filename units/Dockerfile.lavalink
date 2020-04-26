@@ -1,0 +1,6 @@
+FROM fedora:31
+
+RUN curl -L https://github.com/Frederikam/Lavalink/releases/download/3.3.1/Lavalink.jar -o Lavalink.jar && \
+    dnf install java-13-openjdk -y
+
+CMD java -jar Lavalink.jar
