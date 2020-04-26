@@ -579,7 +579,7 @@ class Music2(commands.Cog):
 
     async def on_track_end(self, player: wavelink.Player):
         if not player.loop:
-            self.queue[player.guild_id].pop(0) # remove the previous entry
+            self.queue[player.guild_id].pop(0, None) # remove the previous entry
         if (
             not self.get_queue_length(player.guild_id)
             or len(self.bot.get_channel(int(player.channel_id)).members) == 1
