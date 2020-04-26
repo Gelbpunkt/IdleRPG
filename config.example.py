@@ -115,6 +115,8 @@ lava_creds = {
     "ws_url": "ws://127.0.0.1:2333",
     "rest_url": "http://127.0.0.1:2333",
 }
+query_endpoint = "http://localhost:7000/search"
+resolve_endpoint = "http://localhost:7000/resolve"
 
 """This is the colour used in most embeds and for everything else. You know that yellow from somewhere ;)"""
 primary_colour = 0xFFBC00

@@ -17,6 +17,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 import asyncio
 import time
 
+from collections import defaultdict
 from datetime import timedelta
 from json import dumps, loads
 from typing import Union
@@ -28,6 +29,7 @@ from discord.ext import commands
 
 from classes.converters import IntFromTo
 from cogs.help import chunks
+from utils.misc import nice_join
 
 
 class VoteDidNotPass(commands.CheckFailure):
@@ -52,6 +54,48 @@ class Player(wavelink.Player):
         self.locked = False
         self.dj = None
         self.eq = "Flat"
+
+class Artist:
+    def __init__(self, raw_data):
+        self.url = raw_data.get("external_urls", {}).get("spotify", None)
+        self.id = raw_data.get("id", None)
+        self.name = raw_data.get("name", None)
+        self.uri = raw_data.get("uri", None)
+
+class Album:
+    def __init__(self, raw_data):
+        self.artists = [Artist(d) for d in raw_data.get("artists", [])]
+        self.url = raw_data.get("external_urls", {}).get("spotify", None)
+        self.id = raw_data.get("id", None)
+        self.images = raw_data.get("images", [])
+        self.name = raw_data.get("name", None)
+        self.release_date = raw_data.get("release_date", None)
+        self.total_tracks = raw_data.get("total_tracks", 0)
+        self.uri = raw_data.get("uri", None)
+
+
+class Track:
+    def __init__(self, raw_data, playlist_entry=False):
+        self.added_at = raw_data.get("added_at", None)
+        self.is_local = raw_data.get("is_local", False)
+        self.primary_color = raw_data.get("primary_color", None)
+        if playlist_entry:
+            raw_data = raw_data["track"]
+        if (album := raw_data.get("album", None)):
+            self.album = Album(album)
+        self.artists = [Artist(d) for d in raw_data.get("artists", [])]
+        self.disc_number = raw_data.get("disc_number", 1)
+        self.duration = raw_data.get("duration_ms", None) or raw_data.get("duration", None) or 0
+        self.episode = raw_data.get("episode", None)
+        self.explicit = raw_data.get("explicit", False)
+        self.url = raw_data.get("external_urls", {}).get("spotify", None)
+        self.id = raw_data.get("id", None)
+        self.is_playable = raw_data.get("is_playable", True)
+        self.name = raw_data.get("name", None)
+        self.popularity = raw_data.get("popularity", 0)
+        self.preview_url = raw_data.get("preview_url", None)
+        self.track_number = raw_data.get("track_number", 1)
+        self.uri = raw_data.get("uri", None)
 
 
 def is_in_vc():
@@ -174,18 +218,23 @@ class FakeTrack(wavelink.Track):
         "thumb",
         "requester_id",
         "channel_id",
+        "track_obj",
     )
 
     def __init__(self, *args, **kwargs):
         self.requester_id = kwargs.pop("requester_id", None)
         self.channel_id = kwargs.pop("channel_id", None)
+        self.id = kwargs.pop("id", None)
+        self.track_obj = kwargs.pop("track_obj", None)
         super().__init__(*args, **kwargs)
+        self.title = self.track_obj.name
+        self.length = self.track_obj.duration
 
 
 class Music2(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
-        self.music_prefix = "mp:idle2:" if not bot.config.is_beta else "mp:idlebeta2:"
+        self.queue = defaultdict(lambda: [])  # Redis is not needed because why
 
         if not hasattr(self.bot, "wavelink"):
             self.bot.wavelink = wavelink.Client(self.bot)
@@ -200,31 +249,30 @@ class Music2(commands.Cog):
             not self.bot.wavelink.nodes
             or not self.bot.wavelink.nodes["MAIN"].is_available
         ):
-            print("FAILED to connect to andesite backend, unloading music cog...")
+            print("FAILED to connect to lavalink backend, unloading music cog...")
             self.bot.unload_extension("cogs.music")
 
     @is_not_locked()
     @get_player()
     @is_in_vc()
-    @commands.command(aliases=["scsearch"])
+    @commands.command()
     @locale_doc
     async def play(self, ctx, *, query: str):
         _(
-            """Query YouTube or SoundCloud for a track and play it or add it to the playlist."""
+            """Query for a track and play it or add it to the playlist."""
         )
-        if ctx.invoked_with == "scsearch":
-            pre = "scsearch:"
-        else:
-            pre = "ytsearch:"
+        msg = await ctx.send(_("Downloading track... This might take up to 3 seconds..."))
+        async with self.bot.trusted_session.get(f"{self.bot.config.query_endpoint}?limit=1&q={query}") as r:
+            results = await r.json()
         try:
-            tracks = await self.bot.wavelink.get_tracks(f"{pre}{query}")
-            track = tracks[0] if isinstance(tracks, list) else tracks.tracks[0]
-            del tracks
+            track_obj = Track(results["items"][0])
+            tracks = await self.bot.wavelink.get_tracks(f"{self.bot.config.resolve_endpoint}?id={track_obj.uri}")
+            track = tracks[0]
             track = self.update_track(
-                track, requester_id=ctx.author.id, channel_id=ctx.channel.id
+                track, requester_id=ctx.author.id, channel_id=ctx.channel.id, track_obj=track_obj
             )
-        except IndexError:
-            return await ctx.send(_("No results..."))
+        except (KeyError, IndexError) as e:
+            return await msg.edit(content=_("No results..."))
 
         if not ctx.player.is_connected:
             await ctx.player.connect(ctx.voice_channel)
@@ -234,7 +282,7 @@ class Music2(commands.Cog):
             ctx.player.loop = False
             ctx.player.eq = "Flat"
 
-        await self.add_entry_to_queue(track, ctx.player)
+        await self.add_entry_to_queue(track, ctx.player, msg=msg)
 
     @is_dj()
     @get_player()
@@ -284,7 +332,7 @@ class Music2(commands.Cog):
     @locale_doc
     async def stop(self, ctx):
         _("""Stops the music and leaves voice chat.""")
-        await self.bot.redis.execute("DEL", f"{self.music_prefix}que:{ctx.guild.id}")
+        del self.queue[ctx.guild.id]
         await ctx.player.stop()
         await ctx.player.disconnect()
         ctx.player.cleanup()
@@ -353,13 +401,7 @@ class Music2(commands.Cog):
     @locale_doc
     async def now_playing(self, ctx):
         _("""Displays some information about the current song.""")
-        current_song = self.load_track(
-            loads(
-                await self.bot.redis.execute(
-                    "LINDEX", f"{self.music_prefix}que:{ctx.guild.id}", 0
-                )
-            )
-        )
+        current_song = self.queue[ctx.guild.id][0]
 
         if not (ctx.guild and ctx.author.color == discord.Color.default()):
             embed_color = ctx.author.color
@@ -370,12 +412,12 @@ class Music2(commands.Cog):
         playing_embed.add_field(
             name=_("Title"), value=f"```{current_song.title}```", inline=False
         )
-        if (author := current_song.info.get("author")) :
-            playing_embed.add_field(name=_("Uploader"), value=author)
-        if current_song.length and not current_song.is_stream:
+        if (author := current_song.info.get("author")):
+            playing_embed.add_field(name=_("Artist"), value=nice_join([a.name for a in current_song.track_obj.artists]))
+        if current_song.length:
             try:
                 playing_embed.add_field(
-                    name=_("Length"), value=timedelta(milliseconds=current_song.length)
+                    name=_("Length"), value=str(timedelta(milliseconds=current_song.length)).split(".")[0],
                 )
                 playing_embed.add_field(
                     name=_("Remaining"),
@@ -392,18 +434,17 @@ class Music2(commands.Cog):
                 )
             except OverflowError:  # we cannot do anything if C cannot handle it
                 pass
-        elif current_song.is_stream:
-            playing_embed.add_field(name=_("Length"), value="Live")
         else:
             playing_embed.add_field(name=_("Length"), value="N/A")
         text = _("Click me!")
         if current_song.uri:
             playing_embed.add_field(
                 name=_("Link to the original"),
-                value=f"**[{text}]({current_song.uri})**",
+                value=f"**[{text}]({current_song.track_obj.url})**",
             )
-        if current_song.thumb:
-            playing_embed.set_thumbnail(url=current_song.thumb)
+        if current_song.track_obj.album.images:
+            best_image = sorted(current_song.track_obj.album.images, key=lambda x: -x["width"])[0]
+            playing_embed.set_thumbnail(url=best_image["url"])
         playing_embed.add_field(name=_("Volume"), value=f"{ctx.player.volume} %")
         if ctx.player.paused:
             playing_embed.add_field(name=_("Playing status"), value=_("`⏸Paused`"))
@@ -415,18 +456,15 @@ class Music2(commands.Cog):
             name=_("Looping"), value=_("Yes") if ctx.player.loop else _("No")
         )
         playing_embed.add_field(name=_("Equalizer"), value=ctx.player.eq)
-        if not current_song.is_stream:
-            button_position = int(
-                100 * (ctx.player.position / current_song.length) / 2.5
-            )
-            controller = (
-                f"```ɴᴏᴡ ᴘʟᴀʏɪɴɢ: {current_song.title}\n"
-                f"{(button_position - 1) * '─'}⚪{(40 - button_position) * '─'}\n ◄◄⠀{'▐▐' if not ctx.player.paused else '▶'} ⠀►►⠀⠀　　⠀ "
-                f"{str(timedelta(milliseconds=ctx.player.position)).split('.')[0]} / {timedelta(seconds=int(current_song.length / 1000))}\n{11*' '}───○ 🔊⠀　　　ᴴᴰ ⚙ ❐ ⊏⊐```"
-            )
-            playing_embed.description = controller
-        else:
-            playing_embed.description = _("```No information```")
+        button_position = int(
+            100 * (ctx.player.position / current_song.length) / 2.5
+        )
+        controller = (
+            f"```ɴᴏᴡ ᴘʟᴀʏɪɴɢ: {current_song.title}\n"
+            f"{(button_position - 1) * '─'}⚪{(40 - button_position) * '─'}\n ◄◄⠀{'▐▐' if not ctx.player.paused else '▶'} ⠀►►⠀⠀　　⠀ "
+            f"{str(timedelta(milliseconds=ctx.player.position)).split('.')[0]} / {timedelta(seconds=int(current_song.length / 1000))}```"
+        )
+        playing_embed.description = controller
         if (
             user := ctx.guild.get_member(current_song.requester_id)
         ) :  # check to avoid errors on guild leave
@@ -442,18 +480,15 @@ class Music2(commands.Cog):
     @locale_doc
     async def queue(self, ctx):
         _("""Show the next (maximum 5) tracks in the queue.""")
-        entries = await self.bot.redis.execute(
-            "LRANGE", f"{self.music_prefix}que:{ctx.guild.id}", 1, 5
-        )
+        entries = self.queue[ctx.guild.id][1:6]
         if entries:
             paginator = commands.Paginator()
             for entry in entries:
-                entry = self.load_track(loads(entry))
                 paginator.add_line(
-                    f"• {entry.title} ({timedelta(milliseconds=entry.length)}) "
+                    f"• {entry.title} ({str(timedelta(milliseconds=entry.length)).split('.')[0]}) "
                     f"- {ctx.guild.get_member(entry.requester_id).display_name}"
                 )
-            queue_length = await self.get_queue_length(ctx.guild.id) - 1
+            queue_length = self.get_queue_length(ctx.guild.id) - 1
             text = _("Upcoming entries")
             await ctx.send(
                 embed=discord.Embed(
@@ -505,105 +540,55 @@ class Music2(commands.Cog):
             length=1,
         ).paginate(ctx)
 
-    def update_track(self, track: wavelink.Track, requester_id: int, channel_id: int):
+    def update_track(self, track: wavelink.Track, requester_id: int, channel_id: int, track_obj: Track):
         return FakeTrack(
             track.id,
             track.info,
             query=track.query,
             requester_id=requester_id,
             channel_id=channel_id,
+            track_obj=track_obj,
         )
 
-    def serialize_track(self, track: FakeTrack):
-        """Serializes a track to a dict."""
-        return {
-            "id": track.id,
-            "info": track.info,
-            "query": track.query,
-            "title": track.title,
-            "ytid": track.ytid,
-            "length": track.length,
-            "duration": track.duration,
-            "uri": track.uri,
-            "is_stream": track.is_stream,
-            "dead": track.dead,
-            "thumb": track.thumb,
-            "requester_id": track.requester_id,
-            "channel_id": track.channel_id,
-        }
-
-    def load_track(self, track: dict):
-        return FakeTrack(
-            track["id"],
-            track["info"],
-            query=track["query"],
-            requester_id=track["requester_id"],
-            channel_id=track["channel_id"],
-        )
-
-    async def add_entry_to_queue(self, track: FakeTrack, player: wavelink.Player):
-        """Plays a song or adds to the queue"""
-        if not await self.get_queue_length(player.guild_id):
-            await self.bot.redis.execute(
-                "RPUSH",
-                f"{self.music_prefix}que:{player.guild_id}",
-                dumps(self.serialize_track(track)),
-            )
-            await self.play_track(track, player)
+    async def add_entry_to_queue(self, track: FakeTrack, player: wavelink.Player, msg: discord.Message=None):
+        if not self.get_queue_length(player.guild_id):
+            self.queue[player.guild_id].append(track)
+            await self.play_track(track, player, msg=msg)
         else:
-            await self.bot.redis.execute(
-                "RPUSH",
-                f"{self.music_prefix}que:{player.guild_id}",
-                dumps(self.serialize_track(track)),
-            )
-            zws = "@\u200b"
-            await self.bot.get_channel(track.channel_id).send(
-                _("🎧 Added {title} to the queue...").format(
-                    title=track.title.replace("@", zws)
+            self.queue[player.guild_id].append(track)
+            await msg.edit(
+                content=_("🎧 Added {title} to the queue...").format(
+                    title=track.title,
                 )
             )
 
-    async def play_track(self, track: FakeTrack, player: wavelink.Player):
-        zws = "@\u200b"
-        await self.bot.get_channel(track.channel_id).send(
-            _("🎧 Playing {title}...").format(title=track.title.replace("@", zws))
-        )
+    async def play_track(self, track: FakeTrack, player: wavelink.Player, msg=None):
+        if msg is None:
+            await self.bot.get_channel(track.channel_id).send(
+                _("🎧 Playing {title}...").format(title=track.title)
+            )
+        else:
+            await msg.edit(content=_("🎧 Playing {title}...").format(title=track.title))
         await player.play(track)
 
-    async def get_queue_length(self, guild_id: int) -> Union[int, bool]:
+    def get_queue_length(self, guild_id: int) -> int:
         """Returns the queue's length or False if there is no upcoming songs"""
-        query_length = await self.bot.redis.execute(
-            "LLEN", f"{self.music_prefix}que:{guild_id}"
-        )
-        if not query_length or query_length > 0:
-            return query_length
-        else:
-            return False
+        return len(self.queue[guild_id])
 
     async def on_track_end(self, player: wavelink.Player):
         if not player.loop:
-            await self.bot.redis.execute(
-                "LPOP", f"{self.music_prefix}que:{player.guild_id}"
-            )  # remove the previous entry
+            self.queue[player.guild_id].pop(0) # remove the previous entry
         if (
-            not await self.get_queue_length(player.guild_id)
+            not self.get_queue_length(player.guild_id)
             or len(self.bot.get_channel(int(player.channel_id)).members) == 1
         ):
             # That was the last track
             await player.disconnect()
             player.cleanup()
-            await self.bot.redis.execute(
-                "DEL", f"{self.music_prefix}que:{player.guild_id}"
-            )
+            del self.queue[player.guild_id]
         else:
             await self.play_track(
-                self.load_track(
-                    loads(
-                        await self.bot.redis.execute(
-                            "LINDEX", f"{self.music_prefix}que:{player.guild_id}", 0
-                        )
-                    )
-                ),
+                self.queue[player.guild_id][0],
                 player,
             )
 
@@ -616,9 +601,6 @@ class Music2(commands.Cog):
         for player in self.bot.wavelink.players.values():
             await player.stop()
             await player.disconnect()
-        queue_keys = await self.bot.redis.execute("KEYS", "{self.music_prefix}que:*")
-        if queue_keys:
-            await self.bot.redis.execute("DEL", *[key for key in queue_keys])
 
     def cog_unload(self):
         self.bot.queue.put_nowait(self.cleanup())
