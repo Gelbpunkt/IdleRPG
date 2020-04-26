@@ -267,6 +267,8 @@ class Music2(commands.Cog):
         try:
             track_obj = Track(results["items"][0])
             tracks = await self.bot.wavelink.get_tracks(f"{self.bot.config.resolve_endpoint}?id={track_obj.uri}")
+            if not tracks:
+                return await msg.edit(content=_("No results..."))
             track = tracks[0]
             track = self.update_track(
                 track, requester_id=ctx.author.id, channel_id=ctx.channel.id, track_obj=track_obj
