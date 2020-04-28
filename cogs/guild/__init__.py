@@ -703,10 +703,10 @@ For example, distributing $500 to 5 members will give everyone of them $100.
             if guild["money"] < amount:
                 return await ctx.send(_("Your guild is too poor."))
 
-            for_each = int(amount/len(members))
-            amount = for_each*len(members)
             # int() rounds down as to not go over the money limit
             # we need to update the amount after rounding down too to avoid losing money
+            for_each = int(amount / len(members))
+            amount = for_each * len(members)
 
             await conn.execute(
                 'UPDATE profile SET "money"="money"+$1 WHERE "user"=ANY($2);',
