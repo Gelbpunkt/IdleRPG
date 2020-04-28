@@ -696,6 +696,11 @@ For example, distributing $500 to 5 members will give everyone of them $100.
         )
         if not members:
             return await ctx.send(_("You can't distribute money to nobody."))
+        # int() rounds down as to not go over the money limit
+        # we need to update the amount after rounding down too to avoid losing money
+        for_each = int(amount / len(members))
+        amount = for_each * len(members)
+        
         async with self.bot.pool.acquire() as conn:
             guild = await conn.fetchrow(
                 'SELECT * FROM guild WHERE "id"=$1;', ctx.character_data["guild"]
@@ -703,19 +708,15 @@ For example, distributing $500 to 5 members will give everyone of them $100.
             if guild["money"] < amount:
                 return await ctx.send(_("Your guild is too poor."))
 
-            # int() rounds down as to not go over the money limit
-            # we need to update the amount after rounding down too to avoid losing money
-            for_each = int(amount / len(members))
-            amount = for_each * len(members)
-
-            await conn.execute(
-                'UPDATE profile SET "money"="money"+$1 WHERE "user"=ANY($2);',
-                for_each, [member.id for member in members]
-            )
             await conn.execute(
                 'UPDATE guild SET "money"="money"-$1 WHERE "id"=$2;',
                 amount, ctx.character_data["guild"]
             )
+            await conn.execute(
+                'UPDATE profile SET "money"="money"+$1 WHERE "user"=ANY($2);',
+                for_each, [member.id for member in members]
+            )
+            
         nice_members = rpgtools.nice_join([str(member) for member in members])
         await ctx.send(
             _(
