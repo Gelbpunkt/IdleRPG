@@ -19,8 +19,7 @@ import time
 
 from collections import defaultdict
 from datetime import timedelta
-from json import dumps, loads
-from typing import Union
+from json import loads
 
 import discord
 import wavelink
@@ -55,12 +54,14 @@ class Player(wavelink.Player):
         self.dj = None
         self.eq = "Flat"
 
+
 class Artist:
     def __init__(self, raw_data):
         self.url = raw_data.get("external_urls", {}).get("spotify", None)
         self.id = raw_data.get("id", None)
         self.name = raw_data.get("name", None)
         self.uri = raw_data.get("uri", None)
+
 
 class Album:
     def __init__(self, raw_data):
@@ -81,11 +82,13 @@ class Track:
         self.primary_color = raw_data.get("primary_color", None)
         if playlist_entry:
             raw_data = raw_data["track"]
-        if (album := raw_data.get("album", None)):
+        if (album := raw_data.get("album", None)) :
             self.album = Album(album)
         self.artists = [Artist(d) for d in raw_data.get("artists", [])]
         self.disc_number = raw_data.get("disc_number", 1)
-        self.duration = raw_data.get("duration_ms", None) or raw_data.get("duration", None) or 0
+        self.duration = (
+            raw_data.get("duration_ms", None) or raw_data.get("duration", None) or 0
+        )
         self.episode = raw_data.get("episode", None)
         self.explicit = raw_data.get("explicit", False)
         self.url = raw_data.get("external_urls", {}).get("spotify", None)
@@ -258,22 +261,29 @@ class Music2(commands.Cog):
     @commands.command()
     @locale_doc
     async def play(self, ctx, *, query: str):
-        _(
-            """Query for a track and play it or add it to the playlist."""
+        _("""Query for a track and play it or add it to the playlist.""")
+        msg = await ctx.send(
+            _("Downloading track... This might take up to 3 seconds...")
         )
-        msg = await ctx.send(_("Downloading track... This might take up to 3 seconds..."))
-        async with self.bot.trusted_session.get(f"{self.bot.config.query_endpoint}?limit=1&q={query}") as r:
+        async with self.bot.trusted_session.get(
+            f"{self.bot.config.query_endpoint}?limit=1&q={query}"
+        ) as r:
             results = await r.json()
         try:
             track_obj = Track(results["items"][0])
-            tracks = await self.bot.wavelink.get_tracks(f"{self.bot.config.resolve_endpoint}?id={track_obj.uri}")
+            tracks = await self.bot.wavelink.get_tracks(
+                f"{self.bot.config.resolve_endpoint}?id={track_obj.uri}"
+            )
             if not tracks:
                 return await msg.edit(content=_("No results..."))
             track = tracks[0]
             track = self.update_track(
-                track, requester_id=ctx.author.id, channel_id=ctx.channel.id, track_obj=track_obj
+                track,
+                requester_id=ctx.author.id,
+                channel_id=ctx.channel.id,
+                track_obj=track_obj,
             )
-        except (KeyError, IndexError) as e:
+        except (KeyError, IndexError):
             return await msg.edit(content=_("No results..."))
 
         if not ctx.player.is_connected:
@@ -414,30 +424,10 @@ class Music2(commands.Cog):
         playing_embed.add_field(
             name=_("Title"), value=f"```{current_song.title}```", inline=False
         )
-        if (author := current_song.info.get("author")):
-            playing_embed.add_field(name=_("Artist"), value=nice_join([a.name for a in current_song.track_obj.artists]))
-        if current_song.length:
-            try:
-                playing_embed.add_field(
-                    name=_("Length"), value=str(timedelta(milliseconds=current_song.length)).split(".")[0],
-                )
-                playing_embed.add_field(
-                    name=_("Remaining"),
-                    value=str(
-                        timedelta(milliseconds=current_song.length)
-                        - timedelta(milliseconds=ctx.player.position)
-                    ).split(".")[0],
-                )
-                playing_embed.add_field(
-                    name=_("Position"),
-                    value=str(timedelta(milliseconds=ctx.player.position)).split(".")[
-                        0
-                    ],
-                )
-            except OverflowError:  # we cannot do anything if C cannot handle it
-                pass
-        else:
-            playing_embed.add_field(name=_("Length"), value="N/A")
+        playing_embed.add_field(
+            name=_("Artist"),
+            value=nice_join([a.name for a in current_song.track_obj.artists]),
+        )
         text = _("Click me!")
         if current_song.uri:
             playing_embed.add_field(
@@ -445,7 +435,9 @@ class Music2(commands.Cog):
                 value=f"**[{text}]({current_song.track_obj.url})**",
             )
         if current_song.track_obj.album.images:
-            best_image = sorted(current_song.track_obj.album.images, key=lambda x: -x["width"])[0]
+            best_image = sorted(
+                current_song.track_obj.album.images, key=lambda x: -x["width"]
+            )[0]
             playing_embed.set_thumbnail(url=best_image["url"])
         playing_embed.add_field(name=_("Volume"), value=f"{ctx.player.volume} %")
         if ctx.player.paused:
@@ -457,10 +449,12 @@ class Music2(commands.Cog):
         playing_embed.add_field(
             name=_("Looping"), value=_("Yes") if ctx.player.loop else _("No")
         )
-        playing_embed.add_field(name=_("Equalizer"), value=ctx.player.eq)
-        button_position = int(
-            100 * (ctx.player.position / current_song.length) / 2.5
+        playing_embed.add_field(
+            name=_("Explicit"),
+            value=_("Yes") if current_song.track_obj.explicit else _("No"),
         )
+        playing_embed.add_field(name=_("Equalizer"), value=ctx.player.eq)
+        button_position = int(100 * (ctx.player.position / current_song.length) / 2.5)
         controller = (
             f"```ɴᴏᴡ ᴘʟᴀʏɪɴɢ: {current_song.title}\n"
             f"{(button_position - 1) * '─'}⚪{(40 - button_position) * '─'}\n ◄◄⠀{'▐▐' if not ctx.player.paused else '▶'} ⠀►►⠀⠀　　⠀ "
@@ -542,7 +536,13 @@ class Music2(commands.Cog):
             length=1,
         ).paginate(ctx)
 
-    def update_track(self, track: wavelink.Track, requester_id: int, channel_id: int, track_obj: Track):
+    def update_track(
+        self,
+        track: wavelink.Track,
+        requester_id: int,
+        channel_id: int,
+        track_obj: Track,
+    ):
         return FakeTrack(
             track.id,
             track.info,
@@ -552,16 +552,16 @@ class Music2(commands.Cog):
             track_obj=track_obj,
         )
 
-    async def add_entry_to_queue(self, track: FakeTrack, player: wavelink.Player, msg: discord.Message=None):
+    async def add_entry_to_queue(
+        self, track: FakeTrack, player: wavelink.Player, msg: discord.Message = None
+    ):
         if not self.get_queue_length(player.guild_id):
             self.queue[player.guild_id].append(track)
             await self.play_track(track, player, msg=msg)
         else:
             self.queue[player.guild_id].append(track)
             await msg.edit(
-                content=_("🎧 Added {title} to the queue...").format(
-                    title=track.title,
-                )
+                content=_("🎧 Added {title} to the queue...").format(title=track.title,)
             )
 
     async def play_track(self, track: FakeTrack, player: wavelink.Player, msg=None):
@@ -579,7 +579,7 @@ class Music2(commands.Cog):
 
     async def on_track_end(self, player: wavelink.Player):
         if not player.loop:
-            self.queue[player.guild_id].pop(0, None) # remove the previous entry
+            self.queue[player.guild_id].pop(0, None)  # remove the previous entry
         if (
             not self.get_queue_length(player.guild_id)
             or len(self.bot.get_channel(int(player.channel_id)).members) == 1
@@ -590,8 +590,7 @@ class Music2(commands.Cog):
             del self.queue[player.guild_id]
         else:
             await self.play_track(
-                self.queue[player.guild_id][0],
-                player,
+                self.queue[player.guild_id][0], player,
             )
 
     async def event_hook(self, event):

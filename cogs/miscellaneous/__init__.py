@@ -139,7 +139,9 @@ class Miscellaneous(commands.Cog):
                 ).format(prefix=ctx.prefix)
             )
         await ctx.send(
-            _("You are on a daily streak of **{streak}!**").format(streak=streak.decode())
+            _("You are on a daily streak of **{streak}!**").format(
+                streak=streak.decode()
+            )
         )
 
     @commands.command()
