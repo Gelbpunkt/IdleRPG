@@ -684,6 +684,54 @@ To look up a guild by its ID, use id:number."""
             guild["channel"], f"**{ctx.author}** paid **${amount}** to **{member}**"
         )
 
+    @is_guild_officer()
+    @guild.command(aliases=["dis", "distrib"])
+    @locale_doc
+    async def distribute(
+        self, ctx, amount: IntGreaterThan(0), *members: MemberWithCharacter
+    ):
+        _(
+            """
+Distribute some money to multiple members. This will divide by the amount of players before distributing.
+For example, distributing $500 to 5 members will give everyone of them $100.
+"""
+        )
+        if not members:
+            return await ctx.send(_("You can't distribute money to nobody."))
+        # int() rounds down as to not go over the money limit
+        # we need to update the amount after rounding down too to avoid losing money
+        for_each = int(amount / len(members))
+        amount = for_each * len(members)
+
+        async with self.bot.pool.acquire() as conn:
+            guild = await conn.fetchrow(
+                'SELECT * FROM guild WHERE "id"=$1;', ctx.character_data["guild"]
+            )
+            if guild["money"] < amount:
+                return await ctx.send(_("Your guild is too poor."))
+
+            await conn.execute(
+                'UPDATE guild SET "money"="money"-$1 WHERE "id"=$2;',
+                amount,
+                ctx.character_data["guild"],
+            )
+            await conn.execute(
+                'UPDATE profile SET "money"="money"+$1 WHERE "user"=ANY($2);',
+                for_each,
+                [member.id for member in members],
+            )
+
+        nice_members = rpgtools.nice_join([str(member) for member in members])
+        await ctx.send(
+            _(
+                "Distributed **${money}** (${small_money} for each) to {members}."
+            ).format(money=amount, small_money=for_each, members=nice_members)
+        )
+        await self.bot.http.send_message(
+            guild["channel"],
+            f"**{ctx.author}** paid **${amount}** (${for_each} each) to **{nice_members}**",
+        )
+
     @is_guild_leader()
     @guild.command()
     @locale_doc

@@ -177,7 +177,9 @@ class TextPaginator:
                     )
 
                 try:
-                    m = await self.ctx.bot.wait_for("message", check=new_check, timeout=30)
+                    m = await self.ctx.bot.wait_for(
+                        "message", check=new_check, timeout=30
+                    )
                     await choose_msg.delete()
                 except TimeoutError:
                     if self.message is not None:

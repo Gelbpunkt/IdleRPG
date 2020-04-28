@@ -462,7 +462,9 @@ class Game:
 
         winner = self.winner()
         if isinstance(winner, Player):
-            await self.ctx.send(f"{winner.user.mention} won! They were a **{winner.role.name.lower().replace('_', ' ')}**!")
+            await self.ctx.send(
+                f"{winner.user.mention} won! They were a **{winner.role.name.lower().replace('_', ' ')}**!"
+            )
         else:
             await self.ctx.send(f"{winner} won!")
 
