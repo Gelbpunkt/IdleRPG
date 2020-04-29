@@ -506,6 +506,7 @@ class Music2(commands.Cog):
         _(
             """Retrieves song lyrics. If no song specified, will check the current playing song."""
         )
+        await ctx.trigger_typing()
         if query is None and ctx.guild:
             track = self.bot.wavelink.get_player(ctx.guild.id, cls=Player).current
             if not track:
