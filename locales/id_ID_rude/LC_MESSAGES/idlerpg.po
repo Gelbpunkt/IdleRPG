@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-04-30 03:44-0700\n"
+"POT-Creation-Date: 2020-04-30 03:47-0700\n"
 "PO-Revision-Date: 2020-04-06 22:20+0700\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -22,15 +22,15 @@ msgstr ""
 msgid "Starts a new tournament."
 msgstr "Memulai turnamen baru."
 
-#: cogs/tournament/__init__.py:48 cogs/tournament/__init__.py:192
-#: cogs/battles/__init__.py:49 cogs/battles/__init__.py:152
-#: cogs/battles/__init__.py:366 cogs/gambling/__init__.py:479
+#: cogs/tournament/__init__.py:48 cogs/tournament/__init__.py:193
+#: cogs/battles/__init__.py:49 cogs/battles/__init__.py:161
+#: cogs/battles/__init__.py:373 cogs/gambling/__init__.py:479
 #: cogs/profile/__init__.py:836 cogs/game_master/__init__.py:358
 #: cogs/transaction/__init__.py:267 cogs/transaction/__init__.py:335
 msgid "You are too poor."
 msgstr "Kamu terlalu miskin."
 
-#: cogs/tournament/__init__.py:68
+#: cogs/tournament/__init__.py:72
 #, python-brace-format
 msgid ""
 "{author} started a tournament! Free entries, prize is **${prize}**! React "
@@ -39,22 +39,22 @@ msgstr ""
 "{author} memulai sebuah turnamen! Entri gratis, hadiahnya adalah **${prize}"
 "**! Bereaksi dengan ⚔ untuk bergabung!"
 
-#: cogs/tournament/__init__.py:93
+#: cogs/tournament/__init__.py:102
 #, python-brace-format
 msgid "Noone joined your tournament {author}."
 msgstr "Tidak ada yang bergabung turnamen kamu {author}."
 
-#: cogs/tournament/__init__.py:104
+#: cogs/tournament/__init__.py:113
 #, python-brace-format
 msgid "{user} joined the tournament."
 msgstr "{user} bergabung ke turnamen."
 
-#: cogs/tournament/__init__.py:108 cogs/tournament/__init__.py:250
+#: cogs/tournament/__init__.py:117 cogs/tournament/__init__.py:260
 #, python-brace-format
 msgid "You don't have a character, {user}."
 msgstr "Kamu tidak mempunyai sebuah karakter, {user}."
 
-#: cogs/tournament/__init__.py:114
+#: cogs/tournament/__init__.py:123
 #, python-brace-format
 msgid ""
 "There are **{num}** entries, due to the fact we need a playable tournament, "
@@ -63,34 +63,30 @@ msgstr ""
 "Saat ini ada **{num}** entri, karena kami membutuhkan turnamen yang dapat "
 "dimainkan, **{removed}** yang terakhir telah dihapus."
 
-#: cogs/tournament/__init__.py:120 cogs/tournament/__init__.py:262
+#: cogs/tournament/__init__.py:129 cogs/tournament/__init__.py:272
 #, python-brace-format
 msgid "Tournament started with **{num}** entries."
 msgstr "Turnamen dimulai dengan **{num}** entri."
 
-#: cogs/tournament/__init__.py:122 cogs/tournament/__init__.py:264
+#: cogs/tournament/__init__.py:131 cogs/tournament/__init__.py:274
 msgid "vs"
 msgstr "versus"
 
-#: cogs/tournament/__init__.py:147 cogs/tournament/__init__.py:369
+#: cogs/tournament/__init__.py:156 cogs/tournament/__init__.py:379
 #, python-brace-format
 msgid "Winner of this match is {winner}!"
 msgstr "Pemenang dari pertandingan ini adalah {winner}!"
 
-#: cogs/tournament/__init__.py:151 cogs/tournament/__init__.py:375
+#: cogs/tournament/__init__.py:160 cogs/tournament/__init__.py:385
 msgid "Round Done!"
 msgstr "Ronde Selesai!"
 
-#: cogs/tournament/__init__.py:154
+#: cogs/tournament/__init__.py:163
 #, python-brace-format
 msgid "Tournament ended! The winner is {winner}."
 msgstr "Turnamen berakhir! Pemenangnya adalah {winner}."
 
-#: cogs/tournament/__init__.py:159 cogs/tournament/__init__.py:383
-msgid "The creator spent money, prize can't be given!"
-msgstr "Pembuat menghabiskan uangnya, hadiah tidak bisa diberikan!"
-
-#: cogs/tournament/__init__.py:180
+#: cogs/tournament/__init__.py:181
 #, python-brace-format
 msgid ""
 "Tournament ended! The winner is {winner}.\n"
@@ -99,11 +95,11 @@ msgstr ""
 "Turnamen berakhir! Pemenangnya adalah {winner}.\n"
 "Uang telah diberikan!"
 
-#: cogs/tournament/__init__.py:189
+#: cogs/tournament/__init__.py:190
 msgid "Starts a new raid tournament."
 msgstr "Memulai turnamen penyerangan baru."
 
-#: cogs/tournament/__init__.py:212
+#: cogs/tournament/__init__.py:217
 #, python-brace-format
 msgid ""
 "{author} started a raid tournament! Free entries, prize is **${prize}**! "
@@ -112,17 +108,17 @@ msgstr ""
 "{author} memulai sebuah turnamen penyerangan! Gratis entri, hadiahnya adalah "
 "**${prize}**! Bereaksi dengan ⚔ untuk bergabung!"
 
-#: cogs/tournament/__init__.py:236
+#: cogs/tournament/__init__.py:246
 #, python-brace-format
 msgid "Noone joined your raid tournament {author}."
 msgstr "Tidak ada yang bergabung ke turnamen penyerangan kamu {author}."
 
-#: cogs/tournament/__init__.py:246
+#: cogs/tournament/__init__.py:256
 #, python-brace-format
 msgid "{user} joined the raidtournament."
 msgstr ""
 
-#: cogs/tournament/__init__.py:256
+#: cogs/tournament/__init__.py:266
 #, python-brace-format
 msgid ""
 "There are **{num}** entries, due to the fact we need a playable raid "
@@ -131,17 +127,17 @@ msgstr ""
 "Saat ini ada **{num}** entri. karena kami membutuhkan turnamen penyerangan "
 "yang dapat dimainkan, **{removed}** yang terakhir telah dihapus."
 
-#: cogs/tournament/__init__.py:291 cogs/battles/__init__.py:213
+#: cogs/tournament/__init__.py:301 cogs/battles/__init__.py:235
 #, python-brace-format
 msgid "Raidbattle {p1} vs. {p2} started!"
 msgstr "Pertempuran {p1} versus {p2} dimulai!"
 
-#: cogs/tournament/__init__.py:331 cogs/battles/__init__.py:252
+#: cogs/tournament/__init__.py:341 cogs/battles/__init__.py:274
 #, python-brace-format
 msgid "{attacker} attacks! {defender} takes **{dmg}HP** damage."
 msgstr "{attacker} menyerang! {defender} terkena **{dmg}HP** serangan."
 
-#: cogs/tournament/__init__.py:342 cogs/battles/__init__.py:262
+#: cogs/tournament/__init__.py:352 cogs/battles/__init__.py:284
 #, python-brace-format
 msgid ""
 "{p1} - {hp1} HP left\n"
@@ -150,17 +146,17 @@ msgstr ""
 "{p1} - {hp1} HP tersisa\n"
 "{p2} - {hp2} HP tersisa"
 
-#: cogs/tournament/__init__.py:354 cogs/battles/__init__.py:273
+#: cogs/tournament/__init__.py:364 cogs/battles/__init__.py:295
 #, python-brace-format
 msgid "Action #{number}"
 msgstr "Aksi #{number}"
 
-#: cogs/tournament/__init__.py:378
+#: cogs/tournament/__init__.py:388
 #, python-brace-format
 msgid "Raid Tournament ended! The winner is {winner}."
 msgstr "Turnamen penyerangan berakhir! Pemenangnya adalah {winner}."
 
-#: cogs/tournament/__init__.py:404
+#: cogs/tournament/__init__.py:406
 #, python-brace-format
 msgid ""
 "Raid Tournament ended! The winner is {winner}.\n"
@@ -316,12 +312,12 @@ msgstr ""
 msgid "Battle against another player."
 msgstr "Pertarungan melawan pemain lain."
 
-#: cogs/battles/__init__.py:47 cogs/battles/__init__.py:150
-#: cogs/battles/__init__.py:364
+#: cogs/battles/__init__.py:47 cogs/battles/__init__.py:159
+#: cogs/battles/__init__.py:371
 msgid "You can't battle yourself."
 msgstr "Kamu tidak bisa bertarung dengan diri kamu sendiri."
 
-#: cogs/battles/__init__.py:54
+#: cogs/battles/__init__.py:58
 #, python-brace-format
 msgid ""
 "{author} seeks a battle! React with ⚔ now to duel them! The price is **"
@@ -330,7 +326,7 @@ msgstr ""
 "{author} mencari sebuah pertarungan! Reaksi dengan ⚔ untuk berduel dengan "
 "mereka! Harganya adalah **${money}**."
 
-#: cogs/battles/__init__.py:60
+#: cogs/battles/__init__.py:64
 #, python-brace-format
 msgid ""
 "{author} seeks a battle with {enemy}! React with ⚔ now to duel them! The "
@@ -339,16 +335,16 @@ msgstr ""
 "{author} mencari pertarungan dengan {enemy}! Reaksi dengan ⚔ untuk berduel "
 "dengan mereka! Harganya adalah **${money}**."
 
-#: cogs/battles/__init__.py:86
+#: cogs/battles/__init__.py:95
 #, python-brace-format
 msgid "Noone wanted to join your battle, {author}!"
 msgstr "Tidak ada yang ingin bergabung dengan pertarunganmu, {author}!"
 
-#: cogs/battles/__init__.py:94
+#: cogs/battles/__init__.py:103
 msgid "You don't have enough money to join the battle."
 msgstr "Kamu tidak memiliki cukup uang untuk bergabung dalam pertarungan."
 
-#: cogs/battles/__init__.py:98
+#: cogs/battles/__init__.py:107
 #, python-brace-format
 msgid ""
 "Battle **{author}** vs **{enemy}** started! 30 seconds of fighting will now "
@@ -357,24 +353,16 @@ msgstr ""
 "Pertarungan **{author}** melawan **{enemy}** telah dimulai! 30 detik lagi "
 "pertarungan akan dimulai!"
 
-#: cogs/battles/__init__.py:119
-msgid ""
-"One of you can't pay the price for the battle because he spent money in the "
-"time of fighting."
-msgstr ""
-"Salah satu dari kalian tidak dapat membayar harga untuk pertarungan karena "
-"dia menghabiskan uang pada saat pertarungan."
-
-#: cogs/battles/__init__.py:136
+#: cogs/battles/__init__.py:145
 #, python-brace-format
 msgid "{winner} won the battle vs {looser}! Congratulations!"
 msgstr "{winner} memenangkan pertarungannya melawan {looser}! Selamat!"
 
-#: cogs/battles/__init__.py:148
+#: cogs/battles/__init__.py:157
 msgid "Battle system based on raids."
 msgstr "Sistem pertarungan berbasis pertempuran."
 
-#: cogs/battles/__init__.py:157
+#: cogs/battles/__init__.py:170
 #, python-brace-format
 msgid ""
 "{author} seeks a raidbattle! React with ⚔ now to duel them! The price is **"
@@ -383,7 +371,7 @@ msgstr ""
 "{author} mencari pertempuran yang sedang aktif! Reaksi dengan ⚔ untuk "
 "berduel dengan mereka! Harganya adalah **${money}**."
 
-#: cogs/battles/__init__.py:163
+#: cogs/battles/__init__.py:176
 #, python-brace-format
 msgid ""
 "{author} seeks a raidbattle with {enemy}! React with ⚔ now to duel them! The "
@@ -392,38 +380,29 @@ msgstr ""
 "{author} mencari pertempuran dengan {enemy}! Reaksi dengan ⚔ untuk berduel "
 "dengan mereka! Harganya adalah **${money}**."
 
-#: cogs/battles/__init__.py:189
+#: cogs/battles/__init__.py:207
 #, python-brace-format
 msgid "Noone wanted to join your raidbattle, {author}!"
 msgstr "Tidak ada yang ingin bergabung dengan pertempuranmu, {author}!"
 
-#: cogs/battles/__init__.py:197
+#: cogs/battles/__init__.py:215
 msgid "You don't have enough money to join the raidbattle."
 msgstr "Kamu tidak memiliki cukup uang untuk bergabung dalam pertempuran."
 
-#: cogs/battles/__init__.py:286 cogs/battles/__init__.py:322
-msgid ""
-"One of you both can't pay the price for the raidbattle because he spent "
-"money in the time of fighting."
-msgstr ""
-"Salah satu dari kalian tidak bisa membayar harga untuk pertempuran karena "
-"dia menghabiskan uangnya pada saat pertempuran."
-
-#: cogs/battles/__init__.py:312 cogs/battles/__init__.py:347
+#: cogs/battles/__init__.py:321 cogs/battles/__init__.py:343
 #, python-brace-format
 msgid "{p1} won the raidbattle vs {p2}! Congratulations!"
 msgstr "{p1} memenangkan pertempuran melawan {p2}! Selamat!"
 
-#. timeout after 5 min
-#: cogs/battles/__init__.py:353
+#: cogs/battles/__init__.py:360
 msgid "Raidbattle took too long, aborting."
 msgstr "Pertempuran terlalu lama, membatalkan."
 
-#: cogs/battles/__init__.py:362
+#: cogs/battles/__init__.py:369
 msgid "Reaction-based battle system."
 msgstr "Sistem pertarungan berbasis reaksi."
 
-#: cogs/battles/__init__.py:371
+#: cogs/battles/__init__.py:382
 #, python-brace-format
 msgid ""
 "{author} seeks an active battle! React with ⚔ now to duel them! The price is "
@@ -432,7 +411,7 @@ msgstr ""
 "{author} mencari pertarungan yang sedang aktif! Reaksi dengan ⚔ untuk "
 "berduel dengan mereka! Harganya adalah **${money}**."
 
-#: cogs/battles/__init__.py:377
+#: cogs/battles/__init__.py:389
 #, python-brace-format
 msgid ""
 "{author} seeks an active battle with {enemy}! React with ⚔ now to duel them! "
@@ -441,26 +420,26 @@ msgstr ""
 "{author} mencari pertarungan yang aktif dengan {enemy}! Reaksi dengan ⚔ "
 "sekarang untuk berduel dengan mereka! Harganya adalah **${money}**."
 
-#: cogs/battles/__init__.py:403
+#: cogs/battles/__init__.py:420
 #, python-brace-format
 msgid "Noone wanted to join your activebattle, {author}!"
 msgstr "Tidak ada yang ingin bergabung dengan pertempuran aktifmu, {author}!"
 
-#: cogs/battles/__init__.py:412
+#: cogs/battles/__init__.py:429
 msgid "You don't have enough money to join the activebattle."
 msgstr ""
 "Kamu tidak memiliki cukup uang untuk bergabung dalam pertarungan aktif."
 
-#: cogs/battles/__init__.py:452
+#: cogs/battles/__init__.py:473
 #, python-brace-format
 msgid "Battle {p1} vs {p2}"
 msgstr ""
 
-#: cogs/battles/__init__.py:454
+#: cogs/battles/__init__.py:475
 msgid "Let the battle begin!"
 msgstr ""
 
-#: cogs/battles/__init__.py:468 cogs/battles/__init__.py:611
+#: cogs/battles/__init__.py:489 cogs/battles/__init__.py:634
 #, python-brace-format
 msgid ""
 "{prevaction}\n"
@@ -473,66 +452,58 @@ msgstr ""
 "{player2}: **{hp2}** HP\n"
 "Bereaksi untuk bermain."
 
-#: cogs/battles/__init__.py:480 cogs/battles/__init__.py:481
+#: cogs/battles/__init__.py:501 cogs/battles/__init__.py:502
 #, python-brace-format
 msgid "{user} does nothing..."
 msgstr "**{user}** tidak melakukan apa-apa..."
 
-#: cogs/battles/__init__.py:498
+#: cogs/battles/__init__.py:530
 msgid "Someone refused to move. Activebattle stopped."
 msgstr "Seseorang menolak untuk bergerak. Pertempuran aktif dihentikan."
 
-#: cogs/battles/__init__.py:506
+#: cogs/battles/__init__.py:538
 #, python-brace-format
 msgid "{user}, you already moved! Waiting for {other}'s move..."
 msgstr "{user}, kamu sudah bergerak! Menunggu untuk {other} bergerak..."
 
-#: cogs/battles/__init__.py:519
+#: cogs/battles/__init__.py:551
 #, python-brace-format
 msgid "{user} healed themselves for **{hp} HP**."
 msgstr "{user} menyembuhkan dirinya sendiri sebanyak **{hp} HP**."
 
-#: cogs/battles/__init__.py:535 cogs/battles/__init__.py:560
+#: cogs/battles/__init__.py:567 cogs/battles/__init__.py:592
 #, python-brace-format
 msgid "{user} hit {enemy} for **{eff}** damage."
 msgstr "{user} mengenai {enemy} sebanyak **{eff}** serangan."
 
-#: cogs/battles/__init__.py:563
+#: cogs/battles/__init__.py:595
 #, python-brace-format
 msgid "{enemy} tried to defend, but failed."
 msgstr "{enemy} mencoba untuk melindungi diri, tapi gagal."
 
-#: cogs/battles/__init__.py:570
+#: cogs/battles/__init__.py:602
 #, python-brace-format
 msgid "{user}'s attack on {enemy} failed!"
 msgstr "Serangan {user} pada {enemy} gagal!"
 
-#: cogs/battles/__init__.py:573
+#: cogs/battles/__init__.py:605
 #, python-brace-format
 msgid "{enemy} blocked {user}'s attack."
 msgstr "{enemy} memblokir serangan {user}."
 
-#: cogs/battles/__init__.py:578
+#: cogs/battles/__init__.py:610
 msgid "You both tried to defend."
 msgstr "Kalian berdua mencoba untuk melindungi diri."
 
-#: cogs/battles/__init__.py:579
+#: cogs/battles/__init__.py:611
 msgid "It was not very effective..."
 msgstr "Itu sangat tidak efektif..."
 
-#: cogs/battles/__init__.py:582
+#: cogs/battles/__init__.py:614
 msgid "You both died!"
 msgstr "Kalian berdua mati!"
 
-#: cogs/battles/__init__.py:592
-msgid ""
-"One of you both can't pay the price for the activebattle because he spent "
-"money in the time of fighting."
-msgstr ""
-"Salah satu dari kalian tidak bisa membayar harga untuk pertarungan aktif "
-"karena dia menghabiskan uangnya pada saat pertarungan."
-
-#: cogs/battles/__init__.py:622
+#: cogs/battles/__init__.py:645
 #, python-brace-format
 msgid "{winner} won the active battle vs {looser}! Congratulations!"
 msgstr ""
@@ -1669,8 +1640,8 @@ msgstr "Sangat mungkin"
 msgid "Outlook good"
 msgstr "Harapannya bagus"
 
-#: cogs/miscellaneous/__init__.py:434 cogs/music/__init__.py:447
-#: cogs/music/__init__.py:450 cogs/music/__init__.py:454
+#: cogs/miscellaneous/__init__.py:434 cogs/music/__init__.py:451
+#: cogs/music/__init__.py:454 cogs/music/__init__.py:458
 msgid "Yes"
 msgstr "Ya"
 
@@ -3001,7 +2972,7 @@ msgid "Your pet needs to recover, wait a day to retry"
 msgstr ""
 "Hewan peliharaanmu perlu pulih kembali, tunggu sehari untuk mencoba kembali"
 
-#: cogs/music/__init__.py:146
+#: cogs/music/__init__.py:147
 #, python-brace-format
 msgid ""
 "{user} wants to skip a track. React if you agree. **{current}/{total}** "
@@ -3010,7 +2981,7 @@ msgstr ""
 "{user} ingin melewatkan sebuah lagu. Bereaksi jika kamu setuju. **{current}/"
 "{total}** memilih untuk itu!"
 
-#: cogs/music/__init__.py:150
+#: cogs/music/__init__.py:151
 #, python-brace-format
 msgid ""
 "{user} wants to pause/resume the player. React if you agree. **{current}/"
@@ -3019,7 +2990,7 @@ msgstr ""
 "{user} ingin memberhentikan/melanjutkan lagunya. Bereaksi jika kamu setuju. "
 "**{current}/{total}** memilih untuk itu!"
 
-#: cogs/music/__init__.py:154
+#: cogs/music/__init__.py:155
 #, python-brace-format
 msgid ""
 "{user} wants to stop playback. React if you agree. **{current}/{total}** "
@@ -3028,7 +2999,7 @@ msgstr ""
 "{user} ingin memberhentikan pemutaran baliknya. Bereaksi jika kamu setuju. "
 "**{current}/{total}** memilih untuk itu!"
 
-#: cogs/music/__init__.py:158
+#: cogs/music/__init__.py:159
 #, python-brace-format
 msgid ""
 "{user} wants to change the volume. React if you agree. **{current}/{total}** "
@@ -3037,7 +3008,7 @@ msgstr ""
 "{user} ingin merubah volum suaranya. Bereaksi jika kamu setuju. **{current}/"
 "{total}** memilih untuk itu!"
 
-#: cogs/music/__init__.py:162
+#: cogs/music/__init__.py:163
 #, python-brace-format
 msgid ""
 "{user} wants to toggle repeating. React if you agree. **{current}/{total}** "
@@ -3046,7 +3017,7 @@ msgstr ""
 "{user} ingin menyalakan pengulangan. Bereaksi jika kamu setuju. **{current}/"
 "{total}** memilih untuk itu!"
 
-#: cogs/music/__init__.py:166
+#: cogs/music/__init__.py:167
 #, python-brace-format
 msgid ""
 "{user} wants to change the equalizer. React if you agree. **{current}/{total}"
@@ -3055,48 +3026,48 @@ msgstr ""
 "{user} ingin mengubah penstabil suaranya. Bereaksi jika kamu setuju. "
 "**{current}/{total}** memilih untuk itu!"
 
-#: cogs/music/__init__.py:203
+#: cogs/music/__init__.py:204
 msgid "Vote passed!"
 msgstr "Pemilihan telah selesai!"
 
-#: cogs/music/__init__.py:264
+#: cogs/music/__init__.py:268
 msgid "Query for a track and play it or add it to the playlist."
 msgstr ""
 
-#: cogs/music/__init__.py:266
+#: cogs/music/__init__.py:270
 msgid "Downloading track... This might take up to 3 seconds..."
 msgstr ""
 
-#: cogs/music/__init__.py:278 cogs/music/__init__.py:287
+#: cogs/music/__init__.py:282 cogs/music/__init__.py:291
 #: cogs/akinator/__init__.py:178 cogs/akinator/__init__.py:213
 #: cogs/akinator/__init__.py:245 cogs/akinator/__init__.py:293
 msgid "No results..."
 msgstr "Tidak ada hasil..."
 
-#: cogs/music/__init__.py:306
+#: cogs/music/__init__.py:310
 msgid ""
 "Lock/Unlock the player if you are the DJ. Allows noone else to control music."
 msgstr ""
 "Mengkunci/membuka kunci pengguna jika kamu adalah DJ nya. Memperbolehkan "
 "tidak ada orang yang bisa mengkontrol musicnya."
 
-#: cogs/music/__init__.py:321
+#: cogs/music/__init__.py:325
 msgid "Toggle repeat of the current track."
 msgstr "Menyalakan atau tidak menyalakan pengulangan pada lagu sekarang ini."
 
-#: cogs/music/__init__.py:335
+#: cogs/music/__init__.py:339
 msgid "Skip the currently playing song."
 msgstr "Melewati lagu yang sedang diputar."
 
-#: cogs/music/__init__.py:346
+#: cogs/music/__init__.py:350
 msgid "Stops the music and leaves voice chat."
 msgstr "Menghentikan musik dan meninggalkan obrolan suara."
 
-#: cogs/music/__init__.py:360
+#: cogs/music/__init__.py:364
 msgid "Changes the playback's volume"
 msgstr "Mengubah volume pemutaran"
 
-#: cogs/music/__init__.py:364
+#: cogs/music/__init__.py:368
 #, python-brace-format
 msgid ""
 ":warning:`Playback volume is going to change to {volume} in 5 seconds. To "
@@ -3106,111 +3077,111 @@ msgstr ""
 "Untuk mencegah kebisingan suara secara tiba-tiba, kontrol volume di sisi "
 "klien!`"
 
-#: cogs/music/__init__.py:373
+#: cogs/music/__init__.py:377
 #, python-brace-format
 msgid ":white_check_mark:` Volume successfully changed to {volume}!`"
 msgstr ":white_check_mark:`Volume berhasil diganti ke {volume}!`"
 
-#: cogs/music/__init__.py:386
+#: cogs/music/__init__.py:390
 msgid "Toggles the music playback's paused state"
 msgstr "Mengaktifkan status jeda pemutaran musik"
 
-#: cogs/music/__init__.py:389
+#: cogs/music/__init__.py:393
 msgid ":white_check_mark:`Song paused!`"
 msgstr ":white_check_mark:`Lagu dihentikan!`"
 
-#: cogs/music/__init__.py:392
+#: cogs/music/__init__.py:396
 msgid ":white_check_mark:`Song resumed!`"
 msgstr ":white_check_mark:`Lagu dilanjutkan!`"
 
-#: cogs/music/__init__.py:401
+#: cogs/music/__init__.py:405
 msgid "Sets the equalizer. May be flat, piano, metal or boost."
 msgstr "Setel penstabil suara. Hanya bisa flat, piano, metal atau boost."
 
-#: cogs/music/__init__.py:404
+#: cogs/music/__init__.py:408
 msgid "Not a valid equalizer. May be flat, piano, metal or boost."
 msgstr ""
 "Bukan penstabil suara yang valid. Hanya bisa flat, piano, metal atau boost."
 
-#: cogs/music/__init__.py:415
+#: cogs/music/__init__.py:419
 msgid "Displays some information about the current song."
 msgstr "Menampilkan beberapa informasi mengenai lagu saat ini."
 
-#: cogs/music/__init__.py:423
+#: cogs/music/__init__.py:427
 msgid "Now playing..."
 msgstr "Sekarang memainkan..."
 
-#: cogs/music/__init__.py:425
+#: cogs/music/__init__.py:429
 msgid "Title"
 msgstr "Judul"
 
-#: cogs/music/__init__.py:428
+#: cogs/music/__init__.py:432
 msgid "Artist"
 msgstr ""
 
-#: cogs/music/__init__.py:431
+#: cogs/music/__init__.py:435
 msgid "Click me!"
 msgstr "Klik aku!"
 
-#: cogs/music/__init__.py:434
+#: cogs/music/__init__.py:438
 msgid "Link to the original"
 msgstr "Tautan ke aslinya"
 
-#: cogs/music/__init__.py:442
+#: cogs/music/__init__.py:446
 msgid "Volume"
 msgstr "Volum"
 
-#: cogs/music/__init__.py:444
+#: cogs/music/__init__.py:448
 msgid "Playing status"
 msgstr "Status dimainkan"
 
-#: cogs/music/__init__.py:444
+#: cogs/music/__init__.py:448
 msgid "`⏸Paused`"
 msgstr "`⏸Dihentikan`"
 
-#: cogs/music/__init__.py:445
+#: cogs/music/__init__.py:449
 msgid "DJ"
 msgstr "DJ"
 
-#: cogs/music/__init__.py:447
+#: cogs/music/__init__.py:451
 msgid "Locked"
 msgstr "Terkunci"
 
-#: cogs/music/__init__.py:447 cogs/music/__init__.py:450
-#: cogs/music/__init__.py:454
+#: cogs/music/__init__.py:451 cogs/music/__init__.py:454
+#: cogs/music/__init__.py:458
 msgid "No"
 msgstr "No"
 
-#: cogs/music/__init__.py:450
+#: cogs/music/__init__.py:454
 msgid "Looping"
 msgstr "Pengulangan"
 
-#: cogs/music/__init__.py:453
+#: cogs/music/__init__.py:457
 msgid "Explicit"
 msgstr ""
 
-#: cogs/music/__init__.py:456
+#: cogs/music/__init__.py:460
 msgid "Equalizer"
 msgstr "Penstabil suara"
 
-#: cogs/music/__init__.py:468
+#: cogs/music/__init__.py:472
 #, python-brace-format
 msgid "Song requested by: {user}"
 msgstr "Lagu diminta oleh: {user}"
 
-#: cogs/music/__init__.py:478
+#: cogs/music/__init__.py:482
 msgid "Show the next (maximum 5) tracks in the queue."
 msgstr "Menampilkan trek (maksimum 5) berikutnya dalam antrian."
 
-#: cogs/music/__init__.py:488
+#: cogs/music/__init__.py:492
 msgid "Upcoming entries"
 msgstr "Entri yang akan datang"
 
-#: cogs/music/__init__.py:497
+#: cogs/music/__init__.py:501
 msgid ":warning:`No more entries left.`"
 msgstr ":warning:`Tidak ada lagi entri yang tersisa.`"
 
-#: cogs/music/__init__.py:503
+#: cogs/music/__init__.py:507
 msgid ""
 "Retrieves song lyrics. If no song specified, will check the current playing "
 "song."
@@ -3218,34 +3189,30 @@ msgstr ""
 "Mengambil lirik lagu. Jika tidak ada lagu yang spesifik, akan mengecek lagu "
 "yang sedang diputar."
 
-#: cogs/music/__init__.py:509
+#: cogs/music/__init__.py:514
 msgid "I am not playing. Please specify a song to look for."
 msgstr ""
 "Aku tidak sedang memainkan sebuah lagu. Tolong berikan lagu yang spesifik "
 "untuk dicari."
 
-#: cogs/music/__init__.py:513
+#: cogs/music/__init__.py:518
 msgid "Please specify a song."
 msgstr "Tolong berikan lagu yang spesifik."
 
-#: cogs/music/__init__.py:515
+#: cogs/music/__init__.py:520
 msgid ":x: Look for a longer query!"
 msgstr ":x: Cari kata kunci yang lebih panjang!"
 
-#: cogs/music/__init__.py:523 cogs/music/__init__.py:526
+#: cogs/music/__init__.py:530
 msgid ":warning: No results!"
 msgstr ":warning: Tidak ada hasil!"
 
-#: cogs/music/__init__.py:530
-msgid "No lyrics found!"
-msgstr "Lirik tidak ditemukan!"
-
-#: cogs/music/__init__.py:564
+#: cogs/music/__init__.py:566
 #, python-brace-format
 msgid "🎧 Added {title} to the queue..."
 msgstr "🎧 Menambahkan {title} ke antrian..."
 
-#: cogs/music/__init__.py:570 cogs/music/__init__.py:573
+#: cogs/music/__init__.py:572 cogs/music/__init__.py:575
 #, python-brace-format
 msgid "🎧 Playing {title}..."
 msgstr "🎧 Memainkan {title}..."
@@ -7618,6 +7585,33 @@ msgstr ""
 #: utils/chess.py:410
 msgid "For the nerds:"
 msgstr ""
+
+#~ msgid "The creator spent money, prize can't be given!"
+#~ msgstr "Pembuat menghabiskan uangnya, hadiah tidak bisa diberikan!"
+
+#~ msgid ""
+#~ "One of you can't pay the price for the battle because he spent money in "
+#~ "the time of fighting."
+#~ msgstr ""
+#~ "Salah satu dari kalian tidak dapat membayar harga untuk pertarungan "
+#~ "karena dia menghabiskan uang pada saat pertarungan."
+
+#~ msgid ""
+#~ "One of you both can't pay the price for the raidbattle because he spent "
+#~ "money in the time of fighting."
+#~ msgstr ""
+#~ "Salah satu dari kalian tidak bisa membayar harga untuk pertempuran karena "
+#~ "dia menghabiskan uangnya pada saat pertempuran."
+
+#~ msgid ""
+#~ "One of you both can't pay the price for the activebattle because he spent "
+#~ "money in the time of fighting."
+#~ msgstr ""
+#~ "Salah satu dari kalian tidak bisa membayar harga untuk pertarungan aktif "
+#~ "karena dia menghabiskan uangnya pada saat pertarungan."
+
+#~ msgid "No lyrics found!"
+#~ msgstr "Lirik tidak ditemukan!"
 
 #, python-brace-format
 #~ msgid ""

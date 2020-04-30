@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-04-30 03:44-0700\n"
+"POT-Creation-Date: 2020-04-30 03:47-0700\n"
 "PO-Revision-Date: 2020-04-19 11:05-0500\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -22,15 +22,15 @@ msgstr ""
 msgid "Starts a new tournament."
 msgstr "Inicia un torneo."
 
-#: cogs/tournament/__init__.py:48 cogs/tournament/__init__.py:192
-#: cogs/battles/__init__.py:49 cogs/battles/__init__.py:152
-#: cogs/battles/__init__.py:366 cogs/gambling/__init__.py:479
+#: cogs/tournament/__init__.py:48 cogs/tournament/__init__.py:193
+#: cogs/battles/__init__.py:49 cogs/battles/__init__.py:161
+#: cogs/battles/__init__.py:373 cogs/gambling/__init__.py:479
 #: cogs/profile/__init__.py:836 cogs/game_master/__init__.py:358
 #: cogs/transaction/__init__.py:267 cogs/transaction/__init__.py:335
 msgid "You are too poor."
 msgstr "Eres demasiado pobre."
 
-#: cogs/tournament/__init__.py:68
+#: cogs/tournament/__init__.py:72
 #, python-brace-format
 msgid ""
 "{author} started a tournament! Free entries, prize is **${prize}**! React "
@@ -39,22 +39,22 @@ msgstr ""
 "¡{author} ha iniciado un torneo! ¡Registro gratis, el premio es **${prize}"
 "**! ¡Reaciona con ⚔ para unirte!"
 
-#: cogs/tournament/__init__.py:93
+#: cogs/tournament/__init__.py:102
 #, python-brace-format
 msgid "Noone joined your tournament {author}."
 msgstr "Nadie se unió al torneo {author}."
 
-#: cogs/tournament/__init__.py:104
+#: cogs/tournament/__init__.py:113
 #, python-brace-format
 msgid "{user} joined the tournament."
 msgstr "{user} se ha inscrito en el torneo."
 
-#: cogs/tournament/__init__.py:108 cogs/tournament/__init__.py:250
+#: cogs/tournament/__init__.py:117 cogs/tournament/__init__.py:260
 #, python-brace-format
 msgid "You don't have a character, {user}."
 msgstr "No tienes ningún personaje, {user}."
 
-#: cogs/tournament/__init__.py:114
+#: cogs/tournament/__init__.py:123
 #, python-brace-format
 msgid ""
 "There are **{num}** entries, due to the fact we need a playable tournament, "
@@ -63,35 +63,30 @@ msgstr ""
 "Se han inscrito **{num}** participantes, pero para jugabilidad del torneo, "
 "los últimos **{removed}** han sido eliminados."
 
-#: cogs/tournament/__init__.py:120 cogs/tournament/__init__.py:262
+#: cogs/tournament/__init__.py:129 cogs/tournament/__init__.py:272
 #, python-brace-format
 msgid "Tournament started with **{num}** entries."
 msgstr "El torneo ha comenzado, hay **{num}** participantes."
 
-#: cogs/tournament/__init__.py:122 cogs/tournament/__init__.py:264
+#: cogs/tournament/__init__.py:131 cogs/tournament/__init__.py:274
 msgid "vs"
 msgstr "contra"
 
-#: cogs/tournament/__init__.py:147 cogs/tournament/__init__.py:369
+#: cogs/tournament/__init__.py:156 cogs/tournament/__init__.py:379
 #, python-brace-format
 msgid "Winner of this match is {winner}!"
 msgstr "¡El ganador del duelo es {winner}!"
 
-#: cogs/tournament/__init__.py:151 cogs/tournament/__init__.py:375
+#: cogs/tournament/__init__.py:160 cogs/tournament/__init__.py:385
 msgid "Round Done!"
 msgstr "¡Ronda realizada!"
 
-#: cogs/tournament/__init__.py:154
+#: cogs/tournament/__init__.py:163
 #, python-brace-format
 msgid "Tournament ended! The winner is {winner}."
 msgstr "¡El torneo ha finalizado! El ganador es {winner}."
 
-#: cogs/tournament/__init__.py:159 cogs/tournament/__init__.py:383
-msgid "The creator spent money, prize can't be given!"
-msgstr ""
-"El creador del torneo ha gastado el dinero. ¡no se puede entregar el premio!"
-
-#: cogs/tournament/__init__.py:180
+#: cogs/tournament/__init__.py:181
 #, python-brace-format
 msgid ""
 "Tournament ended! The winner is {winner}.\n"
@@ -100,11 +95,11 @@ msgstr ""
 "¡Torneo finalizado! El ganador es {winner}.\n"
 "¡Premio entregado!"
 
-#: cogs/tournament/__init__.py:189
+#: cogs/tournament/__init__.py:190
 msgid "Starts a new raid tournament."
 msgstr "Comienza un nuevo torneo de incursiones."
 
-#: cogs/tournament/__init__.py:212
+#: cogs/tournament/__init__.py:217
 #, python-brace-format
 msgid ""
 "{author} started a raid tournament! Free entries, prize is **${prize}**! "
@@ -113,17 +108,17 @@ msgstr ""
 "¡{author} Ha empezado un torneo de incursiones! ¡La entrada es gratis, el "
 "premio es **${prize}**! ¡Reacciona con ⚔ para unirte!"
 
-#: cogs/tournament/__init__.py:236
+#: cogs/tournament/__init__.py:246
 #, python-brace-format
 msgid "Noone joined your raid tournament {author}."
 msgstr "Nadie se ha unido a tu torneo de incursiones {author}."
 
-#: cogs/tournament/__init__.py:246
+#: cogs/tournament/__init__.py:256
 #, python-brace-format
 msgid "{user} joined the raidtournament."
 msgstr ""
 
-#: cogs/tournament/__init__.py:256
+#: cogs/tournament/__init__.py:266
 #, python-brace-format
 msgid ""
 "There are **{num}** entries, due to the fact we need a playable raid "
@@ -133,17 +128,17 @@ msgstr ""
 "incursiones pueda ser procesado, los últimos **{removed}** participantes "
 "fueron eliminados."
 
-#: cogs/tournament/__init__.py:291 cogs/battles/__init__.py:213
+#: cogs/tournament/__init__.py:301 cogs/battles/__init__.py:235
 #, python-brace-format
 msgid "Raidbattle {p1} vs. {p2} started!"
 msgstr "¡La batalla entre {p1} y {p2} ha empezado!"
 
-#: cogs/tournament/__init__.py:331 cogs/battles/__init__.py:252
+#: cogs/tournament/__init__.py:341 cogs/battles/__init__.py:274
 #, python-brace-format
 msgid "{attacker} attacks! {defender} takes **{dmg}HP** damage."
 msgstr "¡{attacker} Ha atacado! {defender} recibió **{dmg}HP** de daño."
 
-#: cogs/tournament/__init__.py:342 cogs/battles/__init__.py:262
+#: cogs/tournament/__init__.py:352 cogs/battles/__init__.py:284
 #, python-brace-format
 msgid ""
 "{p1} - {hp1} HP left\n"
@@ -152,17 +147,17 @@ msgstr ""
 "A {p1} - le queda {hp1} HP \n"
 "A {p2} - le queda {hp2} HP"
 
-#: cogs/tournament/__init__.py:354 cogs/battles/__init__.py:273
+#: cogs/tournament/__init__.py:364 cogs/battles/__init__.py:295
 #, python-brace-format
 msgid "Action #{number}"
 msgstr "Acción #{number}"
 
-#: cogs/tournament/__init__.py:378
+#: cogs/tournament/__init__.py:388
 #, python-brace-format
 msgid "Raid Tournament ended! The winner is {winner}."
 msgstr "¡El torneo de incursiones ha terminado! El ganador es {winner}."
 
-#: cogs/tournament/__init__.py:404
+#: cogs/tournament/__init__.py:406
 #, python-brace-format
 msgid ""
 "Raid Tournament ended! The winner is {winner}.\n"
@@ -321,12 +316,12 @@ msgstr ""
 msgid "Battle against another player."
 msgstr "Lucha contra otro jugador."
 
-#: cogs/battles/__init__.py:47 cogs/battles/__init__.py:150
-#: cogs/battles/__init__.py:364
+#: cogs/battles/__init__.py:47 cogs/battles/__init__.py:159
+#: cogs/battles/__init__.py:371
 msgid "You can't battle yourself."
 msgstr "No puedes luchar contra ti mismo."
 
-#: cogs/battles/__init__.py:54
+#: cogs/battles/__init__.py:58
 #, python-brace-format
 msgid ""
 "{author} seeks a battle! React with ⚔ now to duel them! The price is **"
@@ -335,7 +330,7 @@ msgstr ""
 "¡{author} busca batalla! ¡Reacciona con ⚔ para un duelo! El premio es de **"
 "${money}**."
 
-#: cogs/battles/__init__.py:60
+#: cogs/battles/__init__.py:64
 #, python-brace-format
 msgid ""
 "{author} seeks a battle with {enemy}! React with ⚔ now to duel them! The "
@@ -344,40 +339,32 @@ msgstr ""
 "¡{author} busca batalla contra {enemy}! ¡Reacciona con ⚔ para un duelo! El "
 "premio es de **${money}**."
 
-#: cogs/battles/__init__.py:86
+#: cogs/battles/__init__.py:95
 #, python-brace-format
 msgid "Noone wanted to join your battle, {author}!"
 msgstr "¡Nadie quiso unirse a la batalla, {author}!"
 
-#: cogs/battles/__init__.py:94
+#: cogs/battles/__init__.py:103
 msgid "You don't have enough money to join the battle."
 msgstr "No tienes dinero suficiente para unirte a la batalla."
 
-#: cogs/battles/__init__.py:98
+#: cogs/battles/__init__.py:107
 #, python-brace-format
 msgid ""
 "Battle **{author}** vs **{enemy}** started! 30 seconds of fighting will now "
 "start!"
 msgstr "¡La batalla entre **{author}** y **{enemy}** comenzará en 30 segundos!"
 
-#: cogs/battles/__init__.py:119
-msgid ""
-"One of you can't pay the price for the battle because he spent money in the "
-"time of fighting."
-msgstr ""
-"Uno de los participantes no puede pagar el precio de la batalla ya que ha "
-"gastado el dinero durante el enfrentamiento."
-
-#: cogs/battles/__init__.py:136
+#: cogs/battles/__init__.py:145
 #, python-brace-format
 msgid "{winner} won the battle vs {looser}! Congratulations!"
 msgstr "¡{winner} ganó la batalla contra {looser}! ¡Felicidades!"
 
-#: cogs/battles/__init__.py:148
+#: cogs/battles/__init__.py:157
 msgid "Battle system based on raids."
 msgstr "Sistema de batalla basado en incursiones."
 
-#: cogs/battles/__init__.py:157
+#: cogs/battles/__init__.py:170
 #, python-brace-format
 msgid ""
 "{author} seeks a raidbattle! React with ⚔ now to duel them! The price is **"
@@ -386,7 +373,7 @@ msgstr ""
 "¡{author} busca una batalla de incursiones! Reacciona con ⚔ para luchar "
 "contra ellos! El precio es **${money}**."
 
-#: cogs/battles/__init__.py:163
+#: cogs/battles/__init__.py:176
 #, python-brace-format
 msgid ""
 "{author} seeks a raidbattle with {enemy}! React with ⚔ now to duel them! The "
@@ -395,38 +382,29 @@ msgstr ""
 "¡{author} busca una batalla de incursiones contra {enemy}! Reacciona con ⚔ "
 "para luchar contra ellos! El precio es **${money}**."
 
-#: cogs/battles/__init__.py:189
+#: cogs/battles/__init__.py:207
 #, python-brace-format
 msgid "Noone wanted to join your raidbattle, {author}!"
 msgstr "¡Nadie quiso unirse a la batalla de incursiones, {author}!"
 
-#: cogs/battles/__init__.py:197
+#: cogs/battles/__init__.py:215
 msgid "You don't have enough money to join the raidbattle."
 msgstr "No tienes suficiente dinero para unirte a la batalla de incursiones."
 
-#: cogs/battles/__init__.py:286 cogs/battles/__init__.py:322
-msgid ""
-"One of you both can't pay the price for the raidbattle because he spent "
-"money in the time of fighting."
-msgstr ""
-"Uno de los dos no puede pagar el precio de la batalla de incursiones porque "
-"se gastó el dinero durante la batalla."
-
-#: cogs/battles/__init__.py:312 cogs/battles/__init__.py:347
+#: cogs/battles/__init__.py:321 cogs/battles/__init__.py:343
 #, python-brace-format
 msgid "{p1} won the raidbattle vs {p2}! Congratulations!"
 msgstr "¡{p1} ha ganado la batalla de incursiones contra {p2}! ¡Enhorabuena!"
 
-#. timeout after 5 min
-#: cogs/battles/__init__.py:353
+#: cogs/battles/__init__.py:360
 msgid "Raidbattle took too long, aborting."
 msgstr "La batalla de incursiones ha tardado mucho tiempo, abortando."
 
-#: cogs/battles/__init__.py:362
+#: cogs/battles/__init__.py:369
 msgid "Reaction-based battle system."
 msgstr "Sistema de batalla basado en reacciones."
 
-#: cogs/battles/__init__.py:371
+#: cogs/battles/__init__.py:382
 #, python-brace-format
 msgid ""
 "{author} seeks an active battle! React with ⚔ now to duel them! The price is "
@@ -435,7 +413,7 @@ msgstr ""
 "{author} busca una batalla activa! Reacciona con ⚔ para aceptar el duelo! El "
 "premio es de **${money}**."
 
-#: cogs/battles/__init__.py:377
+#: cogs/battles/__init__.py:389
 #, python-brace-format
 msgid ""
 "{author} seeks an active battle with {enemy}! React with ⚔ now to duel them! "
@@ -444,25 +422,25 @@ msgstr ""
 "{author} busca una batalla activa contra {enemy}! Reacciona con ⚔ para "
 "aceptar el duelo! El premio es de **${money}**."
 
-#: cogs/battles/__init__.py:403
+#: cogs/battles/__init__.py:420
 #, python-brace-format
 msgid "Noone wanted to join your activebattle, {author}!"
 msgstr "¡Nadie quiso unirse a tu batalla activa, {author}!"
 
-#: cogs/battles/__init__.py:412
+#: cogs/battles/__init__.py:429
 msgid "You don't have enough money to join the activebattle."
 msgstr "No tienes dinero suficiente para unirte a la batalla activa."
 
-#: cogs/battles/__init__.py:452
+#: cogs/battles/__init__.py:473
 #, python-brace-format
 msgid "Battle {p1} vs {p2}"
 msgstr ""
 
-#: cogs/battles/__init__.py:454
+#: cogs/battles/__init__.py:475
 msgid "Let the battle begin!"
 msgstr ""
 
-#: cogs/battles/__init__.py:468 cogs/battles/__init__.py:611
+#: cogs/battles/__init__.py:489 cogs/battles/__init__.py:634
 #, python-brace-format
 msgid ""
 "{prevaction}\n"
@@ -475,66 +453,58 @@ msgstr ""
 "{player2}: **{hp2}** HP\n"
 "Reacciona para jugar."
 
-#: cogs/battles/__init__.py:480 cogs/battles/__init__.py:481
+#: cogs/battles/__init__.py:501 cogs/battles/__init__.py:502
 #, python-brace-format
 msgid "{user} does nothing..."
 msgstr "{user} no hizo nada..."
 
-#: cogs/battles/__init__.py:498
+#: cogs/battles/__init__.py:530
 msgid "Someone refused to move. Activebattle stopped."
 msgstr "Alguien no respondió. La batalla activa se ha detenido."
 
-#: cogs/battles/__init__.py:506
+#: cogs/battles/__init__.py:538
 #, python-brace-format
 msgid "{user}, you already moved! Waiting for {other}'s move..."
 msgstr "¡{user}, ya has movido tu pieza! Esperando al movimiento de {other}..."
 
-#: cogs/battles/__init__.py:519
+#: cogs/battles/__init__.py:551
 #, python-brace-format
 msgid "{user} healed themselves for **{hp} HP**."
 msgstr "{user} se ha sanado por **{hp} Puntos de Vida**."
 
-#: cogs/battles/__init__.py:535 cogs/battles/__init__.py:560
+#: cogs/battles/__init__.py:567 cogs/battles/__init__.py:592
 #, python-brace-format
 msgid "{user} hit {enemy} for **{eff}** damage."
 msgstr "{user} golpeó a {enemy} haciendo **{eff}** de daño."
 
-#: cogs/battles/__init__.py:563
+#: cogs/battles/__init__.py:595
 #, python-brace-format
 msgid "{enemy} tried to defend, but failed."
 msgstr "{enemy} ha intentado defenderse pero ha fallado."
 
-#: cogs/battles/__init__.py:570
+#: cogs/battles/__init__.py:602
 #, python-brace-format
 msgid "{user}'s attack on {enemy} failed!"
 msgstr "¡{user} atacó a {enemy} pero falló!"
 
-#: cogs/battles/__init__.py:573
+#: cogs/battles/__init__.py:605
 #, python-brace-format
 msgid "{enemy} blocked {user}'s attack."
 msgstr "{enemy} ha bloqueado el ataque de {user}."
 
-#: cogs/battles/__init__.py:578
+#: cogs/battles/__init__.py:610
 msgid "You both tried to defend."
 msgstr "Ambos habéis tratado de defenderos."
 
-#: cogs/battles/__init__.py:579
+#: cogs/battles/__init__.py:611
 msgid "It was not very effective..."
 msgstr "No ha sido muy efectivo..."
 
-#: cogs/battles/__init__.py:582
+#: cogs/battles/__init__.py:614
 msgid "You both died!"
 msgstr "¡Ambos habéis muerto!"
 
-#: cogs/battles/__init__.py:592
-msgid ""
-"One of you both can't pay the price for the activebattle because he spent "
-"money in the time of fighting."
-msgstr ""
-"Uno de los dos no puede pagar el precio de la batalla activa dado que gastó "
-"el dinero durante la batalla."
-
-#: cogs/battles/__init__.py:622
+#: cogs/battles/__init__.py:645
 #, python-brace-format
 msgid "{winner} won the active battle vs {looser}! Congratulations!"
 msgstr "¡{winner} ganó la batalla activa contra {looser}! ¡Felicidades!"
@@ -1667,8 +1637,8 @@ msgstr "Es muy probable"
 msgid "Outlook good"
 msgstr "Tiene buena pinta"
 
-#: cogs/miscellaneous/__init__.py:434 cogs/music/__init__.py:447
-#: cogs/music/__init__.py:450 cogs/music/__init__.py:454
+#: cogs/miscellaneous/__init__.py:434 cogs/music/__init__.py:451
+#: cogs/music/__init__.py:454 cogs/music/__init__.py:458
 msgid "Yes"
 msgstr "Sí"
 
@@ -2989,7 +2959,7 @@ msgstr "¡Tu mascota ha encontrado un objeto!"
 msgid "Your pet needs to recover, wait a day to retry"
 msgstr "Tu mascota necesita descansar, espera un día para intentarlo de nuevo"
 
-#: cogs/music/__init__.py:146
+#: cogs/music/__init__.py:147
 #, python-brace-format
 msgid ""
 "{user} wants to skip a track. React if you agree. **{current}/{total}** "
@@ -2998,7 +2968,7 @@ msgstr ""
 "{user} quiere saltarse una pista. Reacciona si estás de acuerdo. "
 "¡**{current}/{total}** han votado para ello!"
 
-#: cogs/music/__init__.py:150
+#: cogs/music/__init__.py:151
 #, python-brace-format
 msgid ""
 "{user} wants to pause/resume the player. React if you agree. **{current}/"
@@ -3007,7 +2977,7 @@ msgstr ""
 "{user} quiere pausar/reproducir la pista. Reacciona si estás de acuerdo. "
 "¡**{current}/{total}** han votado para ello!"
 
-#: cogs/music/__init__.py:154
+#: cogs/music/__init__.py:155
 #, python-brace-format
 msgid ""
 "{user} wants to stop playback. React if you agree. **{current}/{total}** "
@@ -3016,7 +2986,7 @@ msgstr ""
 "{user} quiere detener la reproducción. Reacciona si estás de acuerdo. "
 "¡**{current}/{total}** han votado para ello!"
 
-#: cogs/music/__init__.py:158
+#: cogs/music/__init__.py:159
 #, python-brace-format
 msgid ""
 "{user} wants to change the volume. React if you agree. **{current}/{total}** "
@@ -3025,7 +2995,7 @@ msgstr ""
 "{user} quiere modificar el volumen. Reacciona si estás de acuerdo. "
 "¡**{current}/{total}** han votado para ello!"
 
-#: cogs/music/__init__.py:162
+#: cogs/music/__init__.py:163
 #, python-brace-format
 msgid ""
 "{user} wants to toggle repeating. React if you agree. **{current}/{total}** "
@@ -3034,7 +3004,7 @@ msgstr ""
 "{user} quiere cambiar la reproducción repetida. Reacciona si estás de "
 "acuerdo. ¡**{current}/{total}** han votado para ello!"
 
-#: cogs/music/__init__.py:166
+#: cogs/music/__init__.py:167
 #, python-brace-format
 msgid ""
 "{user} wants to change the equalizer. React if you agree. **{current}/{total}"
@@ -3043,48 +3013,48 @@ msgstr ""
 "{user} quiere modificar el ecualizador. Reacciona si estás de acuerdo. "
 "¡**{current}/{total}** han votado para ello!"
 
-#: cogs/music/__init__.py:203
+#: cogs/music/__init__.py:204
 msgid "Vote passed!"
 msgstr "¡Votación exitosa!"
 
-#: cogs/music/__init__.py:264
+#: cogs/music/__init__.py:268
 msgid "Query for a track and play it or add it to the playlist."
 msgstr ""
 
-#: cogs/music/__init__.py:266
+#: cogs/music/__init__.py:270
 msgid "Downloading track... This might take up to 3 seconds..."
 msgstr ""
 
-#: cogs/music/__init__.py:278 cogs/music/__init__.py:287
+#: cogs/music/__init__.py:282 cogs/music/__init__.py:291
 #: cogs/akinator/__init__.py:178 cogs/akinator/__init__.py:213
 #: cogs/akinator/__init__.py:245 cogs/akinator/__init__.py:293
 msgid "No results..."
 msgstr "No hay resultados..."
 
-#: cogs/music/__init__.py:306
+#: cogs/music/__init__.py:310
 msgid ""
 "Lock/Unlock the player if you are the DJ. Allows noone else to control music."
 msgstr ""
 "Bloquea/Desbloquea el reproductor si eres el DJ. No permite que ninguna otra "
 "persona controle la música."
 
-#: cogs/music/__init__.py:321
+#: cogs/music/__init__.py:325
 msgid "Toggle repeat of the current track."
 msgstr "Alternar modo repetición de la pista actual."
 
-#: cogs/music/__init__.py:335
+#: cogs/music/__init__.py:339
 msgid "Skip the currently playing song."
 msgstr "Saltar la canción en reproducción."
 
-#: cogs/music/__init__.py:346
+#: cogs/music/__init__.py:350
 msgid "Stops the music and leaves voice chat."
 msgstr "Detiene la música y abandona el chat de voz."
 
-#: cogs/music/__init__.py:360
+#: cogs/music/__init__.py:364
 msgid "Changes the playback's volume"
 msgstr "Cambia el volumen de reproducción"
 
-#: cogs/music/__init__.py:364
+#: cogs/music/__init__.py:368
 #, python-brace-format
 msgid ""
 ":warning:`Playback volume is going to change to {volume} in 5 seconds. To "
@@ -3093,110 +3063,110 @@ msgstr ""
 ":warning:`El volumen de reproducción cambiará a {volume} en 5 segundos. Para "
 "evitar daños en el oído, ¡controla el volúmen en tu reproductor!`"
 
-#: cogs/music/__init__.py:373
+#: cogs/music/__init__.py:377
 #, python-brace-format
 msgid ":white_check_mark:` Volume successfully changed to {volume}!`"
 msgstr ":white_check_mark:` ¡El volúmen ha cambiado a {volume}!`"
 
-#: cogs/music/__init__.py:386
+#: cogs/music/__init__.py:390
 msgid "Toggles the music playback's paused state"
 msgstr "Activa/desactiva la pausa en la reproducción"
 
-#: cogs/music/__init__.py:389
+#: cogs/music/__init__.py:393
 msgid ":white_check_mark:`Song paused!`"
 msgstr ":white_check_mark:`¡Pausa activada!`"
 
-#: cogs/music/__init__.py:392
+#: cogs/music/__init__.py:396
 msgid ":white_check_mark:`Song resumed!`"
 msgstr ":white_check_mark:`Pausa desactivada!`"
 
-#: cogs/music/__init__.py:401
+#: cogs/music/__init__.py:405
 msgid "Sets the equalizer. May be flat, piano, metal or boost."
 msgstr "Configura el ecualizador. Puede ser flat, piano, metal o boost."
 
-#: cogs/music/__init__.py:404
+#: cogs/music/__init__.py:408
 msgid "Not a valid equalizer. May be flat, piano, metal or boost."
 msgstr "Ecualizador no válido. Puede ser flat, piano, metal o boost."
 
-#: cogs/music/__init__.py:415
+#: cogs/music/__init__.py:419
 msgid "Displays some information about the current song."
 msgstr "Muestra información acerca de la canción actual."
 
-#: cogs/music/__init__.py:423
+#: cogs/music/__init__.py:427
 msgid "Now playing..."
 msgstr "Reproduciendo..."
 
-#: cogs/music/__init__.py:425
+#: cogs/music/__init__.py:429
 msgid "Title"
 msgstr "Título"
 
-#: cogs/music/__init__.py:428
+#: cogs/music/__init__.py:432
 msgid "Artist"
 msgstr ""
 
-#: cogs/music/__init__.py:431
+#: cogs/music/__init__.py:435
 msgid "Click me!"
 msgstr "¡Cliqueame!"
 
-#: cogs/music/__init__.py:434
+#: cogs/music/__init__.py:438
 msgid "Link to the original"
 msgstr "Enlace al original"
 
-#: cogs/music/__init__.py:442
+#: cogs/music/__init__.py:446
 msgid "Volume"
 msgstr "Volumen"
 
-#: cogs/music/__init__.py:444
+#: cogs/music/__init__.py:448
 msgid "Playing status"
 msgstr "Estado de reproducción"
 
-#: cogs/music/__init__.py:444
+#: cogs/music/__init__.py:448
 msgid "`⏸Paused`"
 msgstr "`⏸En Pausa`"
 
-#: cogs/music/__init__.py:445
+#: cogs/music/__init__.py:449
 msgid "DJ"
 msgstr "DJ"
 
-#: cogs/music/__init__.py:447
+#: cogs/music/__init__.py:451
 msgid "Locked"
 msgstr "Bloqueado"
 
-#: cogs/music/__init__.py:447 cogs/music/__init__.py:450
-#: cogs/music/__init__.py:454
+#: cogs/music/__init__.py:451 cogs/music/__init__.py:454
+#: cogs/music/__init__.py:458
 msgid "No"
 msgstr "No"
 
-#: cogs/music/__init__.py:450
+#: cogs/music/__init__.py:454
 msgid "Looping"
 msgstr "Repitiendo"
 
-#: cogs/music/__init__.py:453
+#: cogs/music/__init__.py:457
 msgid "Explicit"
 msgstr ""
 
-#: cogs/music/__init__.py:456
+#: cogs/music/__init__.py:460
 msgid "Equalizer"
 msgstr "Ecualizador"
 
-#: cogs/music/__init__.py:468
+#: cogs/music/__init__.py:472
 #, python-brace-format
 msgid "Song requested by: {user}"
 msgstr "Canción solicitada por: {user}"
 
-#: cogs/music/__init__.py:478
+#: cogs/music/__init__.py:482
 msgid "Show the next (maximum 5) tracks in the queue."
 msgstr "Muestra las siguientes (máximo 5) pistas en cola."
 
-#: cogs/music/__init__.py:488
+#: cogs/music/__init__.py:492
 msgid "Upcoming entries"
 msgstr "Próximas entradas"
 
-#: cogs/music/__init__.py:497
+#: cogs/music/__init__.py:501
 msgid ":warning:`No more entries left.`"
 msgstr ":warning:`No hay más entradas.`"
 
-#: cogs/music/__init__.py:503
+#: cogs/music/__init__.py:507
 msgid ""
 "Retrieves song lyrics. If no song specified, will check the current playing "
 "song."
@@ -3204,32 +3174,28 @@ msgstr ""
 "Muestra la letra de la canción. Si no se especifica una, se mostrará la de "
 "la actual."
 
-#: cogs/music/__init__.py:509
+#: cogs/music/__init__.py:514
 msgid "I am not playing. Please specify a song to look for."
 msgstr "No estoy reproduciendo. Por favor especifica la canción a buscar."
 
-#: cogs/music/__init__.py:513
+#: cogs/music/__init__.py:518
 msgid "Please specify a song."
 msgstr "Por favor, especifica una canción."
 
-#: cogs/music/__init__.py:515
+#: cogs/music/__init__.py:520
 msgid ":x: Look for a longer query!"
 msgstr ":x: ¡Busca un texto más largo!"
 
-#: cogs/music/__init__.py:523 cogs/music/__init__.py:526
+#: cogs/music/__init__.py:530
 msgid ":warning: No results!"
 msgstr ":warning: ¡No hay resultados!"
 
-#: cogs/music/__init__.py:530
-msgid "No lyrics found!"
-msgstr "¡No se ha encontrado letra!"
-
-#: cogs/music/__init__.py:564
+#: cogs/music/__init__.py:566
 #, python-brace-format
 msgid "🎧 Added {title} to the queue..."
 msgstr "🎧 Agregado {title} a la cola..."
 
-#: cogs/music/__init__.py:570 cogs/music/__init__.py:573
+#: cogs/music/__init__.py:572 cogs/music/__init__.py:575
 #, python-brace-format
 msgid "🎧 Playing {title}..."
 msgstr "🎧 Reproduciendo {title}..."
@@ -7589,6 +7555,35 @@ msgstr "**¡Empate aceptado! {result}**"
 #: utils/chess.py:410
 msgid "For the nerds:"
 msgstr "Para los nerds:"
+
+#~ msgid "The creator spent money, prize can't be given!"
+#~ msgstr ""
+#~ "El creador del torneo ha gastado el dinero. ¡no se puede entregar el "
+#~ "premio!"
+
+#~ msgid ""
+#~ "One of you can't pay the price for the battle because he spent money in "
+#~ "the time of fighting."
+#~ msgstr ""
+#~ "Uno de los participantes no puede pagar el precio de la batalla ya que ha "
+#~ "gastado el dinero durante el enfrentamiento."
+
+#~ msgid ""
+#~ "One of you both can't pay the price for the raidbattle because he spent "
+#~ "money in the time of fighting."
+#~ msgstr ""
+#~ "Uno de los dos no puede pagar el precio de la batalla de incursiones "
+#~ "porque se gastó el dinero durante la batalla."
+
+#~ msgid ""
+#~ "One of you both can't pay the price for the activebattle because he spent "
+#~ "money in the time of fighting."
+#~ msgstr ""
+#~ "Uno de los dos no puede pagar el precio de la batalla activa dado que "
+#~ "gastó el dinero durante la batalla."
+
+#~ msgid "No lyrics found!"
+#~ msgstr "¡No se ha encontrado letra!"
 
 #, python-brace-format
 #~ msgid ""

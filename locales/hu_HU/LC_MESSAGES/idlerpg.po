@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-04-30 03:44-0700\n"
+"POT-Creation-Date: 2020-04-30 03:47-0700\n"
 "PO-Revision-Date: 2020-01-25 12:48+0100\n"
 "Last-Translator: Lilli\n"
 "Language-Team: \n"
@@ -22,15 +22,15 @@ msgstr ""
 msgid "Starts a new tournament."
 msgstr "Új bajnoki tornát hirdet."
 
-#: cogs/tournament/__init__.py:48 cogs/tournament/__init__.py:192
-#: cogs/battles/__init__.py:49 cogs/battles/__init__.py:152
-#: cogs/battles/__init__.py:366 cogs/gambling/__init__.py:479
+#: cogs/tournament/__init__.py:48 cogs/tournament/__init__.py:193
+#: cogs/battles/__init__.py:49 cogs/battles/__init__.py:161
+#: cogs/battles/__init__.py:373 cogs/gambling/__init__.py:479
 #: cogs/profile/__init__.py:836 cogs/game_master/__init__.py:358
 #: cogs/transaction/__init__.py:267 cogs/transaction/__init__.py:335
 msgid "You are too poor."
 msgstr "Túl szegény vagy."
 
-#: cogs/tournament/__init__.py:68
+#: cogs/tournament/__init__.py:72
 #, python-brace-format
 msgid ""
 "{author} started a tournament! Free entries, prize is **${prize}**! React "
@@ -39,22 +39,22 @@ msgstr ""
 "{author} új lovagi tornát hirdetett! Ingyenes nevezés, a nyeremény: **"
 "${prize}** ! Nevezéshez kattints a  ⚔ reakciójelre!"
 
-#: cogs/tournament/__init__.py:93
+#: cogs/tournament/__init__.py:102
 #, python-brace-format
 msgid "Noone joined your tournament {author}."
 msgstr ""
 
-#: cogs/tournament/__init__.py:104
+#: cogs/tournament/__init__.py:113
 #, python-brace-format
 msgid "{user} joined the tournament."
 msgstr "{user} benevezett a lovagi tornára."
 
-#: cogs/tournament/__init__.py:108 cogs/tournament/__init__.py:250
+#: cogs/tournament/__init__.py:117 cogs/tournament/__init__.py:260
 #, python-brace-format
 msgid "You don't have a character, {user}."
 msgstr "Nincs karaktered, {user}."
 
-#: cogs/tournament/__init__.py:114
+#: cogs/tournament/__init__.py:123
 #, python-brace-format
 msgid ""
 "There are **{num}** entries, due to the fact we need a playable tournament, "
@@ -63,34 +63,30 @@ msgstr ""
 "**{num}** nevezés érkezett a lovagi tornára. A mérkőzések lejátszhatósága "
 "érdekében az utolsó **{removed}** nevezés törölve lett."
 
-#: cogs/tournament/__init__.py:120 cogs/tournament/__init__.py:262
+#: cogs/tournament/__init__.py:129 cogs/tournament/__init__.py:272
 #, python-brace-format
 msgid "Tournament started with **{num}** entries."
 msgstr "A lovagi torna **{num}** nevezővel megkezdődött."
 
-#: cogs/tournament/__init__.py:122 cogs/tournament/__init__.py:264
+#: cogs/tournament/__init__.py:131 cogs/tournament/__init__.py:274
 msgid "vs"
 msgstr "kontra"
 
-#: cogs/tournament/__init__.py:147 cogs/tournament/__init__.py:369
+#: cogs/tournament/__init__.py:156 cogs/tournament/__init__.py:379
 #, python-brace-format
 msgid "Winner of this match is {winner}!"
 msgstr "A mérkőzés győztese: {winner}!"
 
-#: cogs/tournament/__init__.py:151 cogs/tournament/__init__.py:375
+#: cogs/tournament/__init__.py:160 cogs/tournament/__init__.py:385
 msgid "Round Done!"
 msgstr "Kör vége!"
 
-#: cogs/tournament/__init__.py:154
+#: cogs/tournament/__init__.py:163
 #, python-brace-format
 msgid "Tournament ended! The winner is {winner}."
 msgstr "A lovagi torna véget ért! A győztes: {winner}."
 
-#: cogs/tournament/__init__.py:159 cogs/tournament/__init__.py:383
-msgid "The creator spent money, prize can't be given!"
-msgstr "A szervező túlköltekezett, a pénznyeremény sajnos nem átnyújtható!"
-
-#: cogs/tournament/__init__.py:180
+#: cogs/tournament/__init__.py:181
 #, python-brace-format
 msgid ""
 "Tournament ended! The winner is {winner}.\n"
@@ -99,46 +95,46 @@ msgstr ""
 "A lovagi torna véget ért! A győztes: {winner}.\n"
 "A pénznyeremény átadásra került!"
 
-#: cogs/tournament/__init__.py:189
+#: cogs/tournament/__init__.py:190
 msgid "Starts a new raid tournament."
 msgstr "Új hajtóvadászattal egybekötött lovagi tornát hirdet."
 
-#: cogs/tournament/__init__.py:212
+#: cogs/tournament/__init__.py:217
 #, python-brace-format
 msgid ""
 "{author} started a raid tournament! Free entries, prize is **${prize}**! "
 "React with ⚔ to join!"
 msgstr ""
 
-#: cogs/tournament/__init__.py:236
+#: cogs/tournament/__init__.py:246
 #, python-brace-format
 msgid "Noone joined your raid tournament {author}."
 msgstr ""
 
-#: cogs/tournament/__init__.py:246
+#: cogs/tournament/__init__.py:256
 #, python-brace-format
 msgid "{user} joined the raidtournament."
 msgstr ""
 
-#: cogs/tournament/__init__.py:256
+#: cogs/tournament/__init__.py:266
 #, python-brace-format
 msgid ""
 "There are **{num}** entries, due to the fact we need a playable raid "
 "tournament, the last **{removed}** have been removed."
 msgstr ""
 
-#: cogs/tournament/__init__.py:291 cogs/battles/__init__.py:213
+#: cogs/tournament/__init__.py:301 cogs/battles/__init__.py:235
 #, python-brace-format
 msgid "Raidbattle {p1} vs. {p2} started!"
 msgstr "Hajtó-háború {p1} és {p2} között megkezdődött!"
 
-#: cogs/tournament/__init__.py:331 cogs/battles/__init__.py:252
+#: cogs/tournament/__init__.py:341 cogs/battles/__init__.py:274
 #, python-brace-format
 msgid "{attacker} attacks! {defender} takes **{dmg}HP** damage."
 msgstr ""
 "{attacker} támadásba lendült! {defender} **{dmg}ÉP** sebzést szenvedett el."
 
-#: cogs/tournament/__init__.py:342 cogs/battles/__init__.py:262
+#: cogs/tournament/__init__.py:352 cogs/battles/__init__.py:284
 #, python-brace-format
 msgid ""
 "{p1} - {hp1} HP left\n"
@@ -147,17 +143,17 @@ msgstr ""
 "{p1} - {hp1} ÉP-on áll\n"
 "{p2} - {hp2} ÉP-on áll"
 
-#: cogs/tournament/__init__.py:354 cogs/battles/__init__.py:273
+#: cogs/tournament/__init__.py:364 cogs/battles/__init__.py:295
 #, python-brace-format
 msgid "Action #{number}"
 msgstr "#{number} számú akció"
 
-#: cogs/tournament/__init__.py:378
+#: cogs/tournament/__init__.py:388
 #, python-brace-format
 msgid "Raid Tournament ended! The winner is {winner}."
 msgstr ""
 
-#: cogs/tournament/__init__.py:404
+#: cogs/tournament/__init__.py:406
 #, python-brace-format
 msgid ""
 "Raid Tournament ended! The winner is {winner}.\n"
@@ -314,12 +310,12 @@ msgstr ""
 msgid "Battle against another player."
 msgstr "Párbaj egy másik játékos ellen."
 
-#: cogs/battles/__init__.py:47 cogs/battles/__init__.py:150
-#: cogs/battles/__init__.py:364
+#: cogs/battles/__init__.py:47 cogs/battles/__init__.py:159
+#: cogs/battles/__init__.py:371
 msgid "You can't battle yourself."
 msgstr "Magaddal nem párbajozhatsz."
 
-#: cogs/battles/__init__.py:54
+#: cogs/battles/__init__.py:58
 #, python-brace-format
 msgid ""
 "{author} seeks a battle! React with ⚔ now to duel them! The price is **"
@@ -328,7 +324,7 @@ msgstr ""
 "{author} szeretne párbajra hívni! Az elfogadáshoz kattints a ⚔ reakciójelre! "
 "A nyeremény összege **${money}**."
 
-#: cogs/battles/__init__.py:60
+#: cogs/battles/__init__.py:64
 #, python-brace-format
 msgid ""
 "{author} seeks a battle with {enemy}! React with ⚔ now to duel them! The "
@@ -337,16 +333,16 @@ msgstr ""
 "{author} szeretné párbajra hívni {enemy}-t! Az elfogadáshoz kattints a ⚔ "
 "reakciójelre! A nyeremény összege **${money}**."
 
-#: cogs/battles/__init__.py:86
+#: cogs/battles/__init__.py:95
 #, python-brace-format
 msgid "Noone wanted to join your battle, {author}!"
 msgstr "Senki nem fogadta el a kihívásod, {author}!"
 
-#: cogs/battles/__init__.py:94
+#: cogs/battles/__init__.py:103
 msgid "You don't have enough money to join the battle."
 msgstr "Nincs elég pénzed a kihívás elfogadására."
 
-#: cogs/battles/__init__.py:98
+#: cogs/battles/__init__.py:107
 #, python-brace-format
 msgid ""
 "Battle **{author}** vs **{enemy}** started! 30 seconds of fighting will now "
@@ -355,24 +351,16 @@ msgstr ""
 "A párbaj **{author}** és **{enemy}** között megkezdődött! 30 másodpercnyi "
 "küzdelem veszi ezennel kezdetét!"
 
-#: cogs/battles/__init__.py:119
-msgid ""
-"One of you can't pay the price for the battle because he spent money in the "
-"time of fighting."
-msgstr ""
-"Valaki közületek nem tudja állni a párbaj költségét, mert a küzdelem ideje "
-"alatt túlköltekezett."
-
-#: cogs/battles/__init__.py:136
+#: cogs/battles/__init__.py:145
 #, python-brace-format
 msgid "{winner} won the battle vs {looser}! Congratulations!"
 msgstr "{winner} győzedelmeskedett {looser} felett! Dicsőség a bajnoknak!"
 
-#: cogs/battles/__init__.py:148
+#: cogs/battles/__init__.py:157
 msgid "Battle system based on raids."
 msgstr "Hajtóvadászat-jellegű háború."
 
-#: cogs/battles/__init__.py:157
+#: cogs/battles/__init__.py:170
 #, python-brace-format
 msgid ""
 "{author} seeks a raidbattle! React with ⚔ now to duel them! The price is **"
@@ -381,7 +369,7 @@ msgstr ""
 "{author} kihívna valakit egy Hajtó-háborúra! A ⚔ reakciógomb megnyomásával "
 "elfogadhatod a kihívást! A nevezési díj: **${money}**."
 
-#: cogs/battles/__init__.py:163
+#: cogs/battles/__init__.py:176
 #, python-brace-format
 msgid ""
 "{author} seeks a raidbattle with {enemy}! React with ⚔ now to duel them! The "
@@ -390,38 +378,29 @@ msgstr ""
 "{author} kihívta {enemy} karakterét egy Hajtó-háborúra! A ⚔ reakciógomb "
 "megnyomásával elfogadhatod a kihívást! A nevezési díj: **${money}**."
 
-#: cogs/battles/__init__.py:189
+#: cogs/battles/__init__.py:207
 #, python-brace-format
 msgid "Noone wanted to join your raidbattle, {author}!"
 msgstr "Mindenki megfutamodott a kihívásod elől, {author}!"
 
-#: cogs/battles/__init__.py:197
+#: cogs/battles/__init__.py:215
 msgid "You don't have enough money to join the raidbattle."
 msgstr "Nem tudod megfizetni a nevezési díjat."
 
-#: cogs/battles/__init__.py:286 cogs/battles/__init__.py:322
-msgid ""
-"One of you both can't pay the price for the raidbattle because he spent "
-"money in the time of fighting."
-msgstr ""
-"Valamelyikőtök a harcközben eljátszotta a nevezés összegét, így azt nem "
-"képes megfizetni."
-
-#: cogs/battles/__init__.py:312 cogs/battles/__init__.py:347
+#: cogs/battles/__init__.py:321 cogs/battles/__init__.py:343
 #, python-brace-format
 msgid "{p1} won the raidbattle vs {p2}! Congratulations!"
 msgstr "{p1} győzedelmeskedett {p2} fölött! Vivát!"
 
-#. timeout after 5 min
-#: cogs/battles/__init__.py:353
+#: cogs/battles/__init__.py:360
 msgid "Raidbattle took too long, aborting."
 msgstr "A Hajtó-háború túl hosszan elnyúlt, így le lett fújva."
 
-#: cogs/battles/__init__.py:362
+#: cogs/battles/__init__.py:369
 msgid "Reaction-based battle system."
 msgstr "Reakció-alapú harcrendszer."
 
-#: cogs/battles/__init__.py:371
+#: cogs/battles/__init__.py:382
 #, python-brace-format
 msgid ""
 "{author} seeks an active battle! React with ⚔ now to duel them! The price is "
@@ -430,7 +409,7 @@ msgstr ""
 "{author} szeretne aktív párbajra hívni! Az elfogadáshoz kattints a ⚔ "
 "reakciójelre! A nyeremény összege **${money}**."
 
-#: cogs/battles/__init__.py:377
+#: cogs/battles/__init__.py:389
 #, python-brace-format
 msgid ""
 "{author} seeks an active battle with {enemy}! React with ⚔ now to duel them! "
@@ -439,25 +418,25 @@ msgstr ""
 "{author} szeretné aktív párbajra hívni {enemy}-t! Az elfogadáshoz kattints a "
 "⚔ reakciójelre! A nyeremény összege **${money}**."
 
-#: cogs/battles/__init__.py:403
+#: cogs/battles/__init__.py:420
 #, python-brace-format
 msgid "Noone wanted to join your activebattle, {author}!"
 msgstr ""
 
-#: cogs/battles/__init__.py:412
+#: cogs/battles/__init__.py:429
 msgid "You don't have enough money to join the activebattle."
 msgstr ""
 
-#: cogs/battles/__init__.py:452
+#: cogs/battles/__init__.py:473
 #, python-brace-format
 msgid "Battle {p1} vs {p2}"
 msgstr ""
 
-#: cogs/battles/__init__.py:454
+#: cogs/battles/__init__.py:475
 msgid "Let the battle begin!"
 msgstr ""
 
-#: cogs/battles/__init__.py:468 cogs/battles/__init__.py:611
+#: cogs/battles/__init__.py:489 cogs/battles/__init__.py:634
 #, python-brace-format
 msgid ""
 "{prevaction}\n"
@@ -466,64 +445,58 @@ msgid ""
 "React to play."
 msgstr ""
 
-#: cogs/battles/__init__.py:480 cogs/battles/__init__.py:481
+#: cogs/battles/__init__.py:501 cogs/battles/__init__.py:502
 #, python-brace-format
 msgid "{user} does nothing..."
 msgstr ""
 
-#: cogs/battles/__init__.py:498
+#: cogs/battles/__init__.py:530
 msgid "Someone refused to move. Activebattle stopped."
 msgstr ""
 
-#: cogs/battles/__init__.py:506
+#: cogs/battles/__init__.py:538
 #, python-brace-format
 msgid "{user}, you already moved! Waiting for {other}'s move..."
 msgstr ""
 
-#: cogs/battles/__init__.py:519
+#: cogs/battles/__init__.py:551
 #, python-brace-format
 msgid "{user} healed themselves for **{hp} HP**."
 msgstr "{user} gyógyított magán **{hp} ÉP-t**."
 
-#: cogs/battles/__init__.py:535 cogs/battles/__init__.py:560
+#: cogs/battles/__init__.py:567 cogs/battles/__init__.py:592
 #, python-brace-format
 msgid "{user} hit {enemy} for **{eff}** damage."
 msgstr "{enemy} **{eff}** sebzést szenvedett {user}-től."
 
-#: cogs/battles/__init__.py:563
+#: cogs/battles/__init__.py:595
 #, python-brace-format
 msgid "{enemy} tried to defend, but failed."
 msgstr ""
 
-#: cogs/battles/__init__.py:570
+#: cogs/battles/__init__.py:602
 #, python-brace-format
 msgid "{user}'s attack on {enemy} failed!"
 msgstr "{user} támadása {enemy} ellen sikertelen volt!"
 
-#: cogs/battles/__init__.py:573
+#: cogs/battles/__init__.py:605
 #, python-brace-format
 msgid "{enemy} blocked {user}'s attack."
 msgstr ""
 
-#: cogs/battles/__init__.py:578
+#: cogs/battles/__init__.py:610
 msgid "You both tried to defend."
 msgstr ""
 
-#: cogs/battles/__init__.py:579
+#: cogs/battles/__init__.py:611
 msgid "It was not very effective..."
 msgstr ""
 
-#: cogs/battles/__init__.py:582
+#: cogs/battles/__init__.py:614
 msgid "You both died!"
 msgstr "Mindketten belehaltatok a küzdelembe!"
 
-#: cogs/battles/__init__.py:592
-msgid ""
-"One of you both can't pay the price for the activebattle because he spent "
-"money in the time of fighting."
-msgstr ""
-
-#: cogs/battles/__init__.py:622
+#: cogs/battles/__init__.py:645
 #, python-brace-format
 msgid "{winner} won the active battle vs {looser}! Congratulations!"
 msgstr "{winner} győzedelmeskedett {looser} felett! Dicsőség a bajnoknak!"
@@ -1627,8 +1600,8 @@ msgstr "Nagyon valószínű"
 msgid "Outlook good"
 msgstr "A csillagok állása kedvez neked"
 
-#: cogs/miscellaneous/__init__.py:434 cogs/music/__init__.py:447
-#: cogs/music/__init__.py:450 cogs/music/__init__.py:454
+#: cogs/miscellaneous/__init__.py:434 cogs/music/__init__.py:451
+#: cogs/music/__init__.py:454 cogs/music/__init__.py:458
 msgid "Yes"
 msgstr "Igen"
 
@@ -2945,7 +2918,7 @@ msgstr "A kisállatod valamit hazahozott!"
 msgid "Your pet needs to recover, wait a day to retry"
 msgstr "A kisállatod elfáradt a keresésben. Holnap próbáld újra!"
 
-#: cogs/music/__init__.py:146
+#: cogs/music/__init__.py:147
 #, python-brace-format
 msgid ""
 "{user} wants to skip a track. React if you agree. **{current}/{total}** "
@@ -2954,7 +2927,7 @@ msgstr ""
 "{user} szeretne átugrani egy számot. Ha egyetértesz vele, használd a "
 "reakciógombot. Jelenleg **{current}/{total}** játékos áll {user} mellett!"
 
-#: cogs/music/__init__.py:150
+#: cogs/music/__init__.py:151
 #, python-brace-format
 msgid ""
 "{user} wants to pause/resume the player. React if you agree. **{current}/"
@@ -2964,7 +2937,7 @@ msgstr ""
 "használd a reakciógombot. Jelenleg **{current}/{total}** játékos áll {user} "
 "mellett!"
 
-#: cogs/music/__init__.py:154
+#: cogs/music/__init__.py:155
 #, python-brace-format
 msgid ""
 "{user} wants to stop playback. React if you agree. **{current}/{total}** "
@@ -2973,7 +2946,7 @@ msgstr ""
 "{user} szeretné lekapcsolni a lejátszót. Ha egyetértesz vele, használd a "
 "reakciógombot. Jelenleg **{current}/{total}** játékos áll {user} mellett!"
 
-#: cogs/music/__init__.py:158
+#: cogs/music/__init__.py:159
 #, python-brace-format
 msgid ""
 "{user} wants to change the volume. React if you agree. **{current}/{total}** "
@@ -2982,7 +2955,7 @@ msgstr ""
 "{user} szeretne változtatni a hangerőn. Ha egyetértesz vele, használd a "
 "reakciógombot. Jelenleg **{current}/{total}** játékos áll {user} mellett!"
 
-#: cogs/music/__init__.py:162
+#: cogs/music/__init__.py:163
 #, python-brace-format
 msgid ""
 "{user} wants to toggle repeating. React if you agree. **{current}/{total}** "
@@ -2992,7 +2965,7 @@ msgstr ""
 "használd a reakciógombot. Jelenleg **{current}/{total}** játékos áll {user} "
 "mellett!"
 
-#: cogs/music/__init__.py:166
+#: cogs/music/__init__.py:167
 #, python-brace-format
 msgid ""
 "{user} wants to change the equalizer. React if you agree. **{current}/{total}"
@@ -3002,48 +2975,48 @@ msgstr ""
 "használd a reakciógombot. Jelenleg **{current}/{total}** játékos áll {user} "
 "mellett!"
 
-#: cogs/music/__init__.py:203
+#: cogs/music/__init__.py:204
 msgid "Vote passed!"
 msgstr "Megszavazva!"
 
-#: cogs/music/__init__.py:264
+#: cogs/music/__init__.py:268
 msgid "Query for a track and play it or add it to the playlist."
 msgstr ""
 
-#: cogs/music/__init__.py:266
+#: cogs/music/__init__.py:270
 msgid "Downloading track... This might take up to 3 seconds..."
 msgstr ""
 
-#: cogs/music/__init__.py:278 cogs/music/__init__.py:287
+#: cogs/music/__init__.py:282 cogs/music/__init__.py:291
 #: cogs/akinator/__init__.py:178 cogs/akinator/__init__.py:213
 #: cogs/akinator/__init__.py:245 cogs/akinator/__init__.py:293
 msgid "No results..."
 msgstr "Szám nem található..."
 
-#: cogs/music/__init__.py:306
+#: cogs/music/__init__.py:310
 msgid ""
 "Lock/Unlock the player if you are the DJ. Allows noone else to control music."
 msgstr ""
 "DJ-ként lehetőséged van rá, hogy lekorlátozd a lejátszó hozzáférhetőségét. "
 "Ilyenkor senki más nem tudja befolyásolni a zenét."
 
-#: cogs/music/__init__.py:321
+#: cogs/music/__init__.py:325
 msgid "Toggle repeat of the current track."
 msgstr "A jelenlegi zeneszám megismétlése."
 
-#: cogs/music/__init__.py:335
+#: cogs/music/__init__.py:339
 msgid "Skip the currently playing song."
 msgstr "A jelenlegi zeneszám átugrása."
 
-#: cogs/music/__init__.py:346
+#: cogs/music/__init__.py:350
 msgid "Stops the music and leaves voice chat."
 msgstr "A zene leállítása és hangüzenet hagyása."
 
-#: cogs/music/__init__.py:360
+#: cogs/music/__init__.py:364
 msgid "Changes the playback's volume"
 msgstr "Lejátszási hangerő módosítása"
 
-#: cogs/music/__init__.py:364
+#: cogs/music/__init__.py:368
 #, python-brace-format
 msgid ""
 ":warning:`Playback volume is going to change to {volume} in 5 seconds. To "
@@ -3053,115 +3026,115 @@ msgstr ""
 "következőre: {volume}. A hirtelen hangrobbanás elkerülése végett állítsd át "
 "a hangszórók hangerejét!`"
 
-#: cogs/music/__init__.py:373
+#: cogs/music/__init__.py:377
 #, python-brace-format
 msgid ":white_check_mark:` Volume successfully changed to {volume}!`"
 msgstr ""
 ":white_check_mark:` Hangerő sikeresen megváltoztatva! Új hangerő: {volume}!`"
 
-#: cogs/music/__init__.py:386
+#: cogs/music/__init__.py:390
 msgid "Toggles the music playback's paused state"
 msgstr "A lejátszás szüneteltetése folyamatban"
 
-#: cogs/music/__init__.py:389
+#: cogs/music/__init__.py:393
 msgid ":white_check_mark:`Song paused!`"
 msgstr ":white_check_mark:`Szám megállítva!`"
 
-#: cogs/music/__init__.py:392
+#: cogs/music/__init__.py:396
 msgid ":white_check_mark:`Song resumed!`"
 msgstr ":white_check_mark:`Szám újraindítva!`"
 
-#: cogs/music/__init__.py:401
+#: cogs/music/__init__.py:405
 msgid "Sets the equalizer. May be flat, piano, metal or boost."
 msgstr ""
 "Hangbeállítások megváltoztatása. A lehetséges hanghatások: mol [flat], "
 "zongora [piano], metálzene [metal], vagy turbó [boost]"
 
-#: cogs/music/__init__.py:404
+#: cogs/music/__init__.py:408
 msgid "Not a valid equalizer. May be flat, piano, metal or boost."
 msgstr ""
 "Érvénytelen hanghatás. A lehetséges hanghatások: mol [flat], zongora "
 "[piano], metálzene [metal], vagy turbó [boost]"
 
-#: cogs/music/__init__.py:415
+#: cogs/music/__init__.py:419
 msgid "Displays some information about the current song."
 msgstr "A jelenlegi zeneszámadatok megjelenítése."
 
-#: cogs/music/__init__.py:423
+#: cogs/music/__init__.py:427
 msgid "Now playing..."
 msgstr "Szám elindítva..."
 
-#: cogs/music/__init__.py:425
+#: cogs/music/__init__.py:429
 msgid "Title"
 msgstr "Cím"
 
-#: cogs/music/__init__.py:428
+#: cogs/music/__init__.py:432
 msgid "Artist"
 msgstr ""
 
-#: cogs/music/__init__.py:431
+#: cogs/music/__init__.py:435
 msgid "Click me!"
 msgstr "Katt rám!"
 
-#: cogs/music/__init__.py:434
+#: cogs/music/__init__.py:438
 msgid "Link to the original"
 msgstr "Eredeti szám belinkelése"
 
-#: cogs/music/__init__.py:442
+#: cogs/music/__init__.py:446
 msgid "Volume"
 msgstr "Hangerő"
 
-#: cogs/music/__init__.py:444
+#: cogs/music/__init__.py:448
 msgid "Playing status"
 msgstr "Lejátszásí státusz"
 
-#: cogs/music/__init__.py:444
+#: cogs/music/__init__.py:448
 msgid "`⏸Paused`"
 msgstr "`⏸Szüneteltetve`"
 
-#: cogs/music/__init__.py:445
+#: cogs/music/__init__.py:449
 msgid "DJ"
 msgstr "DJ"
 
-#: cogs/music/__init__.py:447
+#: cogs/music/__init__.py:451
 msgid "Locked"
 msgstr "Hozzáférhetetlen"
 
-#: cogs/music/__init__.py:447 cogs/music/__init__.py:450
-#: cogs/music/__init__.py:454
+#: cogs/music/__init__.py:451 cogs/music/__init__.py:454
+#: cogs/music/__init__.py:458
 msgid "No"
 msgstr "Szám"
 
-#: cogs/music/__init__.py:450
+#: cogs/music/__init__.py:454
 msgid "Looping"
 msgstr "Ismétlés"
 
-#: cogs/music/__init__.py:453
+#: cogs/music/__init__.py:457
 msgid "Explicit"
 msgstr ""
 
-#: cogs/music/__init__.py:456
+#: cogs/music/__init__.py:460
 msgid "Equalizer"
 msgstr "Hanghatás"
 
-#: cogs/music/__init__.py:468
+#: cogs/music/__init__.py:472
 #, python-brace-format
 msgid "Song requested by: {user}"
 msgstr "Zeneszám kiválasztója: {user}"
 
-#: cogs/music/__init__.py:478
+#: cogs/music/__init__.py:482
 msgid "Show the next (maximum 5) tracks in the queue."
 msgstr "A soron következő (legfeljebb 5 ) szám mutatása."
 
-#: cogs/music/__init__.py:488
+#: cogs/music/__init__.py:492
 msgid "Upcoming entries"
 msgstr "További kívánságok"
 
-#: cogs/music/__init__.py:497
+#: cogs/music/__init__.py:501
 msgid ":warning:`No more entries left.`"
 msgstr ":warning: `Nem várakozik több szám`"
 
-#: cogs/music/__init__.py:503
+#: cogs/music/__init__.py:507
 msgid ""
 "Retrieves song lyrics. If no song specified, will check the current playing "
 "song."
@@ -3169,32 +3142,28 @@ msgstr ""
 "Dalszöveg lekérése. Amennyiben nincs cím megadva, a jelenleg játszó szám "
 "szövegére keres rá."
 
-#: cogs/music/__init__.py:509
+#: cogs/music/__init__.py:514
 msgid "I am not playing. Please specify a song to look for."
 msgstr "Nincs aktív zeneszám. Válassz egy számot, amit berakhatunk!"
 
-#: cogs/music/__init__.py:513
+#: cogs/music/__init__.py:518
 msgid "Please specify a song."
 msgstr "Válassz egy konkrét számot!"
 
-#: cogs/music/__init__.py:515
+#: cogs/music/__init__.py:520
 msgid ":x: Look for a longer query!"
 msgstr ":x: Használj több, vagy konkrétabb kulcsszavakat!"
 
-#: cogs/music/__init__.py:523 cogs/music/__init__.py:526
+#: cogs/music/__init__.py:530
 msgid ":warning: No results!"
 msgstr ":warning: Nincs találat!"
 
-#: cogs/music/__init__.py:530
-msgid "No lyrics found!"
-msgstr "Dalszöveg nem található!"
-
-#: cogs/music/__init__.py:564
+#: cogs/music/__init__.py:566
 #, python-brace-format
 msgid "🎧 Added {title} to the queue..."
 msgstr "🎧  {title} hozzáadva a listához..."
 
-#: cogs/music/__init__.py:570 cogs/music/__init__.py:573
+#: cogs/music/__init__.py:572 cogs/music/__init__.py:575
 #, python-brace-format
 msgid "🎧 Playing {title}..."
 msgstr "🎧  {title} lejátszása..."
@@ -7521,6 +7490,26 @@ msgstr ""
 #: utils/chess.py:410
 msgid "For the nerds:"
 msgstr ""
+
+#~ msgid "The creator spent money, prize can't be given!"
+#~ msgstr "A szervező túlköltekezett, a pénznyeremény sajnos nem átnyújtható!"
+
+#~ msgid ""
+#~ "One of you can't pay the price for the battle because he spent money in "
+#~ "the time of fighting."
+#~ msgstr ""
+#~ "Valaki közületek nem tudja állni a párbaj költségét, mert a küzdelem "
+#~ "ideje alatt túlköltekezett."
+
+#~ msgid ""
+#~ "One of you both can't pay the price for the raidbattle because he spent "
+#~ "money in the time of fighting."
+#~ msgstr ""
+#~ "Valamelyikőtök a harcközben eljátszotta a nevezés összegét, így azt nem "
+#~ "képes megfizetni."
+
+#~ msgid "No lyrics found!"
+#~ msgstr "Dalszöveg nem található!"
 
 #~ msgid ""
 #~ "Query YouTube or SoundCloud for a track and play it or add it to the "
