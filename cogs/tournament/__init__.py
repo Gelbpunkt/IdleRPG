@@ -30,7 +30,7 @@ from discord.ext import commands
 from classes.converters import IntFromTo
 from cogs.help import chunks
 from cogs.shard_communication import user_on_cooldown as user_cooldown
-from utils.checks import has_char, has_money, user_has_char
+from utils.checks import has_char, user_has_char
 
 
 class Tournament(commands.Cog):
@@ -46,6 +46,10 @@ class Tournament(commands.Cog):
         if ctx.character_data["money"] < prize:
             await self.bot.reset_cooldown(ctx)
             return await ctx.send(_("You are too poor."))
+
+        await self.bot.pool.execute(
+            'UPDATE profile SET money=money-$1 WHERE "user"=$2;', prize, ctx.author.id,
+        )
 
         if ctx.channel.id == self.bot.config.official_tournament_channel_id:
             id_ = await self.bot.start_joins()
@@ -89,6 +93,11 @@ class Tournament(commands.Cog):
                 except asyncio.TimeoutError:
                     if len(participants) < 2:
                         await self.bot.reset_cooldown(ctx)
+                        await self.bot.pool.execute(
+                            'UPDATE profile SET money=money+$1 WHERE "user"=$2;',
+                            prize,
+                            ctx.author.id,
+                        )
                         return await ctx.send(
                             _("Noone joined your tournament {author}.").format(
                                 author=ctx.author.mention
@@ -155,19 +164,11 @@ class Tournament(commands.Cog):
                 winner=participants[0].mention
             )
         )
-        if not await has_money(self.bot, ctx.author.id, prize):
-            return await ctx.send(_("The creator spent money, prize can't be given!"))
-        async with self.bot.pool.acquire() as conn:
-            await conn.execute(
-                'UPDATE profile SET money=money-$1 WHERE "user"=$2;',
-                prize,
-                ctx.author.id,
-            )
-            await conn.execute(
-                'UPDATE profile SET money=money+$1 WHERE "user"=$2;',
-                prize,
-                participants[0].id,
-            )
+        await conn.execute(
+            'UPDATE profile SET money=money+$1 WHERE "user"=$2;',
+            prize,
+            participants[0].id,
+        )
         await self.bot.log_transaction(
             ctx,
             from_=ctx.author.id,
@@ -190,6 +191,10 @@ class Tournament(commands.Cog):
         if ctx.character_data["money"] < prize:
             await self.bot.reset_cooldown(ctx)
             return await ctx.send(_("You are too poor."))
+
+        await self.bot.pool.execute(
+            'UPDATE profile SET money=money-$1 WHERE "user"=$2;', prize, ctx.author.id,
+        )
 
         if ctx.channel.id == self.bot.config.official_tournament_channel_id:
             id_ = await self.bot.start_joins()
@@ -232,6 +237,11 @@ class Tournament(commands.Cog):
                 except asyncio.TimeoutError:
                     if len(participants) < 2:
                         await self.bot.reset_cooldown(ctx)
+                        await self.bot.pool.execute(
+                            'UPDATE profile SET money=money+$1 WHERE "user"=$2;',
+                            prize,
+                            ctx.author.id,
+                        )
                         return await ctx.send(
                             _("Noone joined your raid tournament {author}.").format(
                                 author=ctx.author.mention
@@ -379,19 +389,11 @@ class Tournament(commands.Cog):
                 winner=participants[0].mention
             )
         )
-        if not await has_money(self.bot, ctx.author.id, prize):
-            return await ctx.send(_("The creator spent money, prize can't be given!"))
-        async with self.bot.pool.acquire() as conn:
-            await conn.execute(
-                'UPDATE profile SET money=money-$1 WHERE "user"=$2;',
-                prize,
-                ctx.author.id,
-            )
-            await conn.execute(
-                'UPDATE profile SET money=money+$1 WHERE "user"=$2;',
-                prize,
-                participants[0].id,
-            )
+        await self.bot.pool.execute(
+            'UPDATE profile SET money=money+$1 WHERE "user"=$2;',
+            prize,
+            participants[0].id,
+        )
         await self.bot.log_transaction(
             ctx,
             from_=ctx.author.id,
