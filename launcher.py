@@ -232,6 +232,7 @@ class Main:
                         "status": instance.status,
                         "name": instance.name,
                         "started_at": instance.started_at,
+                        "shard_list": instance.shard_list,
                     }
                 await self.redis.execute(
                     "PUBLISH",

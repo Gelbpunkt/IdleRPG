@@ -19,7 +19,7 @@ import asyncio
 import json
 import re
 
-from datetime import timedelta
+from datetime import datetime, timedelta
 from time import time
 from traceback import format_exc
 from uuid import uuid4
@@ -30,6 +30,7 @@ from async_timeout import timeout
 from discord.ext import commands
 
 from utils.eval import evaluate as _evaluate
+from utils.misc import nice_join
 
 
 # Cross-process cooldown check (pass this to commands)
@@ -290,7 +291,13 @@ class Sharding(commands.Cog):
 
     async def send_latency_and_shard_count(self, command_id: str):
         payload = {
-            "output": {self.bot.cluster_name: [self.bot.shard_ids, self.bot.latency]},
+            "output": {
+                self.bot.cluster_id: [
+                    self.bot.cluster_name,
+                    self.bot.shard_ids,
+                    round(self.bot.latency * 1000),
+                ]
+            },
             "command_id": command_id,
         }
         await self.bot.redis.execute(
@@ -442,6 +449,44 @@ class Sharding(commands.Cog):
             )
             timers = f"{timers}\n{text}"
         await ctx.send(f"```{timers}```")
+
+    @commands.command(aliases=["botstatus", "shards"])
+    @locale_doc
+    async def clusters(self, ctx):
+        _("""Lists all clusters and their current status.""")
+        launcher_res = await self.handler("statuses", 1, scope="launcher")
+        if not launcher_res:
+            return await ctx.send(_("Launcher is dead, that is really bad."))
+        process_status = launcher_res[0]
+        # We have to calculate number of processes
+        processes, shards_left = divmod(
+            self.bot.shard_count, self.bot.config.shard_per_cluster
+        )
+        if shards_left:
+            processes += 1
+        process_res = await self.handler(
+            "send_latency_and_shard_count", processes, scope="bot"
+        )
+        actual_status = []
+        for cluster_id, cluster_data in process_status.items():
+            process_data = discord.utils.find(lambda x: cluster_id in x, process_res)
+            if process_data:
+                cluster_data["latency"] = f"{process_data[cluster_id][2]}ms"
+            else:
+                cluster_data["latency"] = "NaN"
+            cluster_data["cluster_id"] = cluster_id
+            cluster_data["started_at"] = datetime.fromtimestamp(
+                cluster_data["started_at"]
+            )
+            actual_status.append(cluster_data)
+        # actual_status.keys = active: bool, status: str, name: str, started_at: float, latency: str, cluster_id: int, shard_list: list[int]
+        status = "\n".join(
+            [
+                f"Cluster #{i['cluster_id']} ({i['name']}), shards {nice_join(i['shard_list'])}: {'Active' if i['active'] else 'Inactive'} {i['status']}, latency {i['latency']}. Started at: {i['started_at']}"
+                for i in actual_status
+            ]
+        )
+        await ctx.send(status)
 
 
 def setup(bot):

@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-04-19 22:09+0200\n"
-"PO-Revision-Date: 2020-03-26 21:44+0100\n"
+"POT-Creation-Date: 2020-04-30 03:44-0700\n"
+"PO-Revision-Date: 2020-04-29 00:10+0200\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: fr\n"
@@ -25,7 +25,7 @@ msgstr "Démarre un nouveau tournoi."
 #: cogs/tournament/__init__.py:48 cogs/tournament/__init__.py:192
 #: cogs/battles/__init__.py:49 cogs/battles/__init__.py:152
 #: cogs/battles/__init__.py:366 cogs/gambling/__init__.py:479
-#: cogs/profile/__init__.py:835 cogs/game_master/__init__.py:358
+#: cogs/profile/__init__.py:836 cogs/game_master/__init__.py:358
 #: cogs/transaction/__init__.py:267 cogs/transaction/__init__.py:335
 msgid "You are too poor."
 msgstr "Vous êtes trop pauvre."
@@ -36,18 +36,16 @@ msgid ""
 "{author} started a tournament! Free entries, prize is **${prize}**! React "
 "with ⚔ to join!"
 msgstr ""
-"{author} viens de lancer un tournois ! Entrée gratuite, la récompense est de "
-"**${prize}** ! Réagissez avec ⚔ pour rejoindre !"
 
 #: cogs/tournament/__init__.py:93
 #, python-brace-format
 msgid "Noone joined your tournament {author}."
-msgstr "Personne n'as rejoins votre tournois {author}."
+msgstr ""
 
-#: cogs/tournament/__init__.py:104 cogs/tournament/__init__.py:246
+#: cogs/tournament/__init__.py:104
 #, python-brace-format
 msgid "{user} joined the tournament."
-msgstr "{user} a joint le tournoi."
+msgstr "{user} a rejoint le tournoi."
 
 #: cogs/tournament/__init__.py:108 cogs/tournament/__init__.py:250
 #, python-brace-format
@@ -75,7 +73,7 @@ msgstr "contre"
 #: cogs/tournament/__init__.py:147 cogs/tournament/__init__.py:369
 #, python-brace-format
 msgid "Winner of this match is {winner}!"
-msgstr "Le vainqueur de cette partie est {winner}!"
+msgstr "Le vainqueur de ce match est {winner} !"
 
 #: cogs/tournament/__init__.py:151 cogs/tournament/__init__.py:375
 msgid "Round Done!"
@@ -84,11 +82,11 @@ msgstr "Round terminé !"
 #: cogs/tournament/__init__.py:154
 #, python-brace-format
 msgid "Tournament ended! The winner is {winner}."
-msgstr "Le tournoi est terminé! Le vainqueur est {winner}."
+msgstr "Le tournoi est terminé ! Le vainqueur est {winner}."
 
 #: cogs/tournament/__init__.py:159 cogs/tournament/__init__.py:383
 msgid "The creator spent money, prize can't be given!"
-msgstr "Le créateur a dépensé de l’argent, la récompense ne peut être donnée!"
+msgstr "Le créateur a dépensé de l’argent, la récompense ne peut être donnée !"
 
 #: cogs/tournament/__init__.py:180
 #, python-brace-format
@@ -96,12 +94,12 @@ msgid ""
 "Tournament ended! The winner is {winner}.\n"
 "Money was given!"
 msgstr ""
-"Le tournoi est terminé! Le gagnant est {winner}.\n"
-"La récompense a été donnée!"
+"Le tournoi est terminé ! Le gagnant est {winner}.\n"
+"La récompense a été donnée !"
 
 #: cogs/tournament/__init__.py:189
 msgid "Starts a new raid tournament."
-msgstr "Début d'un nouveau tournoi raid."
+msgstr ""
 
 #: cogs/tournament/__init__.py:212
 #, python-brace-format
@@ -109,13 +107,16 @@ msgid ""
 "{author} started a raid tournament! Free entries, prize is **${prize}**! "
 "React with ⚔ to join!"
 msgstr ""
-"{author} viens de lancer un tournois de raid! Entrée gratuite, la récompense "
-"est de **${prize}**! Réagissez avec ⚔ pour rejoindre !"
 
 #: cogs/tournament/__init__.py:236
 #, python-brace-format
 msgid "Noone joined your raid tournament {author}."
-msgstr "Personne n'as rejoins votre tournois raid {author}."
+msgstr ""
+
+#: cogs/tournament/__init__.py:246
+#, python-brace-format
+msgid "{user} joined the raidtournament."
+msgstr ""
 
 #: cogs/tournament/__init__.py:256
 #, python-brace-format
@@ -123,18 +124,16 @@ msgid ""
 "There are **{num}** entries, due to the fact we need a playable raid "
 "tournament, the last **{removed}** have been removed."
 msgstr ""
-"Il y a **{num}** inscris , afin d'avoir un tournois équitable, les "
-"**{removed}** dernier ont été supprimées."
 
 #: cogs/tournament/__init__.py:291 cogs/battles/__init__.py:213
 #, python-brace-format
 msgid "Raidbattle {p1} vs. {p2} started!"
-msgstr "La bataille Raid entre {p1} et {p2} viens de commencer !"
+msgstr ""
 
 #: cogs/tournament/__init__.py:331 cogs/battles/__init__.py:252
 #, python-brace-format
 msgid "{attacker} attacks! {defender} takes **{dmg}HP** damage."
-msgstr "{attacker} vous attaque! {defender} reçois **{dmg}HP** de dégâts."
+msgstr ""
 
 #: cogs/tournament/__init__.py:342 cogs/battles/__init__.py:262
 #, python-brace-format
@@ -142,18 +141,16 @@ msgid ""
 "{p1} - {hp1} HP left\n"
 "{p2} - {hp2} HP left"
 msgstr ""
-"{p1} - {hp1} HP restant\n"
-"{p2} - {hp2} HP restant"
 
 #: cogs/tournament/__init__.py:354 cogs/battles/__init__.py:273
 #, python-brace-format
 msgid "Action #{number}"
-msgstr "Action numéro {number}"
+msgstr ""
 
 #: cogs/tournament/__init__.py:378
 #, python-brace-format
 msgid "Raid Tournament ended! The winner is {winner}."
-msgstr "Tournois de raid terminée! Le vainqueur est {winner}."
+msgstr ""
 
 #: cogs/tournament/__init__.py:404
 #, python-brace-format
@@ -161,12 +158,10 @@ msgid ""
 "Raid Tournament ended! The winner is {winner}.\n"
 "Money was given!"
 msgstr ""
-"Le tournois de raid est terminé ! Le vainqueur est {winner}.\n"
-"La récompense lui a été donnée !"
 
 #: cogs/images/__init__.py:34
 msgid "Pixelfys an Avatar."
-msgstr "Pixelise un avatar."
+msgstr "Pixelise un Avatar."
 
 #: cogs/images/__init__.py:38
 msgid "Use 1, 2, 3, 4 or 5 as intensity value."
@@ -186,7 +181,7 @@ msgstr "Style peinture pour un avatar."
 
 #: cogs/halloween/__init__.py:40
 msgid "Trick or treat!"
-msgstr "Des bonbons ou un sort!"
+msgstr "Des bonbons ou un sort !"
 
 #: cogs/halloween/__init__.py:45
 msgid "You walk around the houses... Noone is there... *yet*"
@@ -198,8 +193,8 @@ msgid ""
 "You walk around the houses and ring at {waiting}'s house! That's a trick or "
 "treat bag for you, yay!"
 msgstr ""
-"Vous marchez près des maisons et sonnez chez {waiting}! C'est un sac "
-"surprise pour vous, yay!"
+"Vous marchez près des maisons et sonne chez {waiting} ! Tu reçois un sac "
+"surprise !"
 
 #: cogs/halloween/__init__.py:61
 #, python-brace-format
@@ -207,68 +202,66 @@ msgid ""
 "You walk around the houses and ring at {waiting}'s house! Sadly they don't "
 "have anything for you..."
 msgstr ""
-"Vous marchez près des maisons et sonne chez {waiting}! Malheureusement ils "
-"n'ont rien pour vous..."
+"Vous marchez près des maisons et sonne chez {waiting} ! Malheureusement tu "
+"ne reçois rien..."
 
 #: cogs/halloween/__init__.py:96
 #, python-brace-format
 msgid "A random stranger nearby, **{user}**, gave you additional $50!"
 msgstr ""
-"Un inconnu aléatoire proche, **{user}**, vous donne $50 supplémentaires !"
 
 #: cogs/halloween/__init__.py:105
 msgid "Open a trick or treat bag."
-msgstr "Ouvrir un sac surprise."
+msgstr ""
 
 #: cogs/halloween/__init__.py:109
 msgid "Seems you haven't got a trick or treat bag yet. Go get some!"
-msgstr ""
-"Il semblerait que vous n'ayez pas encore de sac surprise. Allez en collecter!"
+msgstr "On dirait que tu n'as pas encore de sac surprise. Va en collecter !"
 
 #: cogs/halloween/__init__.py:150 cogs/crates/__init__.py:131
 #: cogs/classes/__init__.py:549 cogs/valentine/__init__.py:137
 msgid "You gained an item!"
-msgstr "Vous avez obtenu un item!"
+msgstr "Vous avez obtenu un item !"
 
 #: cogs/halloween/__init__.py:151
 msgid "You found a new item when opening a trick-or-treat bag!"
-msgstr "Vous trouvez un nouvel objet en ouvrant un sac surprise!"
+msgstr "Tu trouve un nouveau item en ouvrant ton sac surprise !"
 
 #: cogs/halloween/__init__.py:155 cogs/crates/__init__.py:137
 #: cogs/classes/__init__.py:321 cogs/classes/__init__.py:555
-#: cogs/trading/__init__.py:268 cogs/trading/__init__.py:528
+#: cogs/trading/__init__.py:268 cogs/trading/__init__.py:530
 #: cogs/valentine/__init__.py:143
 msgid "Name"
 msgstr "Nom"
 
 #: cogs/halloween/__init__.py:156 cogs/crates/__init__.py:138
 #: cogs/classes/__init__.py:556 cogs/trading/__init__.py:269
-#: cogs/trading/__init__.py:529 cogs/valentine/__init__.py:144
+#: cogs/trading/__init__.py:531 cogs/valentine/__init__.py:144
 msgid "Type"
 msgstr "Type"
 
 #: cogs/halloween/__init__.py:157 cogs/crates/__init__.py:139
 #: cogs/classes/__init__.py:560 cogs/trading/__init__.py:270
-#: cogs/trading/__init__.py:530 cogs/valentine/__init__.py:148
+#: cogs/trading/__init__.py:532 cogs/valentine/__init__.py:148
 msgid "Damage"
 msgstr "Dégâts"
 
 #: cogs/halloween/__init__.py:158 cogs/crates/__init__.py:140
 #: cogs/classes/__init__.py:558 cogs/trading/__init__.py:271
-#: cogs/trading/__init__.py:531 cogs/valentine/__init__.py:146
+#: cogs/trading/__init__.py:533 cogs/valentine/__init__.py:146
 msgid "Armor"
 msgstr "Armure"
 
 #: cogs/halloween/__init__.py:159 cogs/crates/__init__.py:141
 #: cogs/classes/__init__.py:561 cogs/trading/__init__.py:272
-#: cogs/trading/__init__.py:532 cogs/valentine/__init__.py:149
+#: cogs/trading/__init__.py:534 cogs/valentine/__init__.py:149
 msgid "Value"
 msgstr "Valeur"
 
 #: cogs/halloween/__init__.py:161
 #, python-brace-format
 msgid "Remaining trick-or-treat bags: {bags}"
-msgstr "Sacs surprise restants : {bags}"
+msgstr "Sac surprise restant : {bags}"
 
 #: cogs/halloween/__init__.py:170
 msgid "Shows your Trick or Treat Bags."
@@ -298,7 +291,7 @@ msgstr "Change la langue."
 
 #: cogs/locale/__init__.py:86
 msgid "Not a valid language."
-msgstr "Langue invalide."
+msgstr "Langue non valide."
 
 #: cogs/locale/__init__.py:94
 #, python-brace-format
@@ -306,8 +299,6 @@ msgid ""
 "To permanently choose a language, please create a character and enter this "
 "command again. I set it to {language} temporarily."
 msgstr ""
-"Pour changer de façon permanente une langue, veuillez créer un personnage et "
-"entrez cette commande à nouveau. Je l'ai mis à {language} temporairement."
 
 #: cogs/battles/__init__.py:45
 msgid "Battle against another player."
@@ -324,8 +315,6 @@ msgid ""
 "{author} seeks a battle! React with ⚔ now to duel them! The price is **"
 "${money}**."
 msgstr ""
-"{author} veut se battre ! Réagis avec ⚔ maintenant pour le défier ! La "
-"récompense est de **${money}**."
 
 #: cogs/battles/__init__.py:60
 #, python-brace-format
@@ -333,17 +322,15 @@ msgid ""
 "{author} seeks a battle with {enemy}! React with ⚔ now to duel them! The "
 "price is **${money}**."
 msgstr ""
-"{author} veut combattre {enemy}! Réagit avec  ⚔ maintenant pour le "
-"combattre ! La récompense est de **${money}**."
 
 #: cogs/battles/__init__.py:86
 #, python-brace-format
 msgid "Noone wanted to join your battle, {author}!"
-msgstr "Personne n’a voulu joindre votre combat, {author}!"
+msgstr "Personne n’a voulu rejoindre votre combat, {author} !"
 
 #: cogs/battles/__init__.py:94
 msgid "You don't have enough money to join the battle."
-msgstr "Vous n’avez pas assez d’argent pour joindre ce combat."
+msgstr "Vous n’avez pas assez d’argent pour rejoindre ce combat."
 
 #: cogs/battles/__init__.py:98
 #, python-brace-format
@@ -351,8 +338,8 @@ msgid ""
 "Battle **{author}** vs **{enemy}** started! 30 seconds of fighting will now "
 "start!"
 msgstr ""
-"Le combat entre **{author}** et **{enemy}** a débuté! 30 secondes de combat "
-"vont maintenant commencer!"
+"Le combat entre **{author}** et **{enemy}** vient de commencer ! 30 secondes "
+"de combat vont maintenant commencer !"
 
 #: cogs/battles/__init__.py:119
 msgid ""
@@ -360,16 +347,16 @@ msgid ""
 "time of fighting."
 msgstr ""
 "L’un de vous ne peut pas payer le prix du duel car il a dépensé de l’argent "
-"durant le combat."
+"pendant le combat."
 
 #: cogs/battles/__init__.py:136
 #, python-brace-format
 msgid "{winner} won the battle vs {looser}! Congratulations!"
-msgstr "{winner} a gagné le duel contre {looser}! Félicitations!"
+msgstr "{winner} a gagné le duel contre {looser} ! Félicitations !"
 
 #: cogs/battles/__init__.py:148
 msgid "Battle system based on raids."
-msgstr "Systèmes de combats basé sur les raids."
+msgstr ""
 
 #: cogs/battles/__init__.py:157
 #, python-brace-format
@@ -377,8 +364,6 @@ msgid ""
 "{author} seeks a raidbattle! React with ⚔ now to duel them! The price is **"
 "${money}**."
 msgstr ""
-"{author} veut combattre en raid !  Réagis avec ⚔ maintenant pour le défier ! "
-"La récompense est de **${money}**."
 
 #: cogs/battles/__init__.py:163
 #, python-brace-format
@@ -386,35 +371,31 @@ msgid ""
 "{author} seeks a raidbattle with {enemy}! React with ⚔ now to duel them! The "
 "price is **${money}**."
 msgstr ""
-"{author} veut combattre en raid {enemy} ! Réagis avec ⚔ maintenant pour le "
-"défier ! La récompense est de **${money}**."
 
 #: cogs/battles/__init__.py:189
 #, python-brace-format
 msgid "Noone wanted to join your raidbattle, {author}!"
-msgstr "Personne ne souhaite rejoindre votre bataille en raid, {author}!"
+msgstr ""
 
 #: cogs/battles/__init__.py:197
 msgid "You don't have enough money to join the raidbattle."
-msgstr "Vous n'avez pas assez d'argent pour rejoindre cette bataille en raid."
+msgstr ""
 
 #: cogs/battles/__init__.py:286 cogs/battles/__init__.py:322
 msgid ""
 "One of you both can't pay the price for the raidbattle because he spent "
 "money in the time of fighting."
 msgstr ""
-"L'un de vous deux ne peut payer le prix de la bataille de raid car il a "
-"dépenser l'argent le temps du combat."
 
 #: cogs/battles/__init__.py:312 cogs/battles/__init__.py:347
 #, python-brace-format
 msgid "{p1} won the raidbattle vs {p2}! Congratulations!"
-msgstr "{p1} à gagner la bataille raid contre  {p2} ! Félicitation !"
+msgstr ""
 
 #. timeout after 5 min
 #: cogs/battles/__init__.py:353
 msgid "Raidbattle took too long, aborting."
-msgstr "La bataille en raid à durée trop longtemps, avortement."
+msgstr ""
 
 #: cogs/battles/__init__.py:362
 msgid "Reaction-based battle system."
@@ -426,8 +407,6 @@ msgid ""
 "{author} seeks an active battle! React with ⚔ now to duel them! The price is "
 "**${money}**."
 msgstr ""
-"{author} recherche une bataille active ! Réagit avec ⚔ maintenant pour le "
-"combattre ! La récompense est de **${money}**."
 
 #: cogs/battles/__init__.py:377
 #, python-brace-format
@@ -435,19 +414,26 @@ msgid ""
 "{author} seeks an active battle with {enemy}! React with ⚔ now to duel them! "
 "The price is **${money}**."
 msgstr ""
-"{author} recherche une bataille active avec {enemy} ! Réagit avec ⚔ "
-"maintenant pour le combattre ! La récompense est de **${money}**."
 
 #: cogs/battles/__init__.py:403
 #, python-brace-format
 msgid "Noone wanted to join your activebattle, {author}!"
-msgstr "Personne ne souhaite rejoindre votre bataille active, {author}!"
+msgstr ""
 
 #: cogs/battles/__init__.py:412
 msgid "You don't have enough money to join the activebattle."
-msgstr "Vous n’avez pas assez d’argent pour joindre cette bataille active."
+msgstr ""
 
-#: cogs/battles/__init__.py:459
+#: cogs/battles/__init__.py:452
+#, python-brace-format
+msgid "Battle {p1} vs {p2}"
+msgstr ""
+
+#: cogs/battles/__init__.py:454
+msgid "Let the battle begin!"
+msgstr ""
+
+#: cogs/battles/__init__.py:468 cogs/battles/__init__.py:611
 #, python-brace-format
 msgid ""
 "{prevaction}\n"
@@ -455,74 +441,68 @@ msgid ""
 "{player2}: **{hp2}** HP\n"
 "React to play."
 msgstr ""
-"{prevaction}\n"
-"{player1}: **{hp1}** PV\n"
-"{player2}: **{hp2}** PV\n"
-"Réagissez pour jouer."
 
-#: cogs/battles/__init__.py:470 cogs/battles/__init__.py:471
+#: cogs/battles/__init__.py:480 cogs/battles/__init__.py:481
 #, python-brace-format
 msgid "{user} does nothing..."
 msgstr ""
 
-#: cogs/battles/__init__.py:486
+#: cogs/battles/__init__.py:498
 msgid "Someone refused to move. Activebattle stopped."
-msgstr "Quelqu'un a refuser de bouger. Bataille active arrêté. "
+msgstr ""
 
-#: cogs/battles/__init__.py:494
+#: cogs/battles/__init__.py:506
 #, python-brace-format
 msgid "{user}, you already moved! Waiting for {other}'s move..."
 msgstr ""
 
-#: cogs/battles/__init__.py:507
+#: cogs/battles/__init__.py:519
 #, python-brace-format
 msgid "{user} healed themselves for **{hp} HP**."
-msgstr "{user} viens de se soigner de **{hp} PV**."
+msgstr ""
 
-#: cogs/battles/__init__.py:523 cogs/battles/__init__.py:548
+#: cogs/battles/__init__.py:535 cogs/battles/__init__.py:560
 #, python-brace-format
 msgid "{user} hit {enemy} for **{eff}** damage."
-msgstr "{user} inflige **{eff}** de dégâts à  {enemy}."
+msgstr "{user} inflige **{eff}** de dégâts à  {enemy} ."
 
-#: cogs/battles/__init__.py:551
+#: cogs/battles/__init__.py:563
 #, python-brace-format
 msgid "{enemy} tried to defend, but failed."
 msgstr ""
 
-#: cogs/battles/__init__.py:558
+#: cogs/battles/__init__.py:570
 #, python-brace-format
 msgid "{user}'s attack on {enemy} failed!"
-msgstr "L’attaque de {user} sur {enemy} a échoué!"
+msgstr "L’attaque de {user} sur {enemy} a échouée !"
 
-#: cogs/battles/__init__.py:561
+#: cogs/battles/__init__.py:573
 #, python-brace-format
 msgid "{enemy} blocked {user}'s attack."
 msgstr ""
 
-#: cogs/battles/__init__.py:566
+#: cogs/battles/__init__.py:578
 msgid "You both tried to defend."
 msgstr ""
 
-#: cogs/battles/__init__.py:567
+#: cogs/battles/__init__.py:579
 msgid "It was not very effective..."
 msgstr ""
 
-#: cogs/battles/__init__.py:570
+#: cogs/battles/__init__.py:582
 msgid "You both died!"
-msgstr "Vous êtes tous les deux morts!"
+msgstr "Vous êtes tous les deux morts !"
 
-#: cogs/battles/__init__.py:580
+#: cogs/battles/__init__.py:592
 msgid ""
 "One of you both can't pay the price for the activebattle because he spent "
 "money in the time of fighting."
 msgstr ""
 
-#: cogs/battles/__init__.py:598
+#: cogs/battles/__init__.py:622
 #, python-brace-format
-msgid ""
-"{prevaction}\n"
-"{winner} won the active battle vs {looser}! Congratulations!"
-msgstr ""
+msgid "{winner} won the active battle vs {looser}! Congratulations!"
+msgstr "{winner} a gagné contre {looser}! Félicitation!"
 
 #: cogs/easter/__init__.py:34
 msgid ""
@@ -571,20 +551,19 @@ msgstr ""
 
 #: cogs/easter/__init__.py:83
 msgid "You don't have enough eggs to claim this."
-msgstr "Vous n'avez pas assez d'œufs pour réclamer ceci."
+msgstr "Tu n'as pas assez d'œufs pour échanger contre cela."
 
 #: cogs/easter/__init__.py:161
 msgid ""
 "You claimed your reward. Check your inventory/boosters/crates/money/etc.! "
 "You can claim multiple rewards, keep hunting!"
 msgstr ""
-"Vous réclamez votre récompense. Vérifiez votre inventaire/boosters/coffres/"
-"argent/etc.! Vous pouvez réclamer plusieurs récompenses, continuez de "
-"chasser!"
+"Tu as reçu ta récompense. Vérifie ton inventaire/boosters/box/argent/etc ! "
+"Tu peux échanger plusieurs fois tes œufs, continue de chasser !"
 
 #: cogs/crates/__init__.py:45
 msgid "Shows your crates."
-msgstr "Montre vos coffres."
+msgstr "Montre vos box."
 
 #: cogs/crates/__init__.py:48
 #, python-brace-format
@@ -602,13 +581,13 @@ msgstr ""
 
 #: cogs/crates/__init__.py:74
 msgid "Opens a crate."
-msgstr "Ouvre un coffre."
+msgstr "Ouvre une box."
 
 #: cogs/crates/__init__.py:77 cogs/crates/__init__.py:177
 #: cogs/game_master/__init__.py:222
 #, python-brace-format
 msgid "{rarity} is not a valid rarity."
-msgstr "{rarity} n'est pas une rareté valide."
+msgstr ""
 
 #: cogs/crates/__init__.py:82
 msgid ""
@@ -618,7 +597,7 @@ msgstr ""
 
 #: cogs/crates/__init__.py:132
 msgid "You found a new item when opening a crate!"
-msgstr "Vous avez trouvé un nouvel item en ouvrant un coffre!"
+msgstr "Vous avez trouvé un nouvel item en ouvrant une box !"
 
 #: cogs/crates/__init__.py:136 cogs/classes/__init__.py:554
 #: cogs/valentine/__init__.py:142
@@ -632,7 +611,7 @@ msgstr ""
 
 #: cogs/crates/__init__.py:172
 msgid "Trades crates to a user."
-msgstr "Échange des coffres à un utilisateur."
+msgstr "Échange des box à un utilisateur."
 
 #. preserve deletion of admins
 #. preserve renaming of admins
@@ -640,11 +619,11 @@ msgstr "Échange des coffres à un utilisateur."
 #: cogs/guild/__init__.py:349 cogs/game_master/__init__.py:108
 #: cogs/game_master/__init__.py:139
 msgid "Very funny..."
-msgstr "Très drôle…"
+msgstr "Très drôle..."
 
 #: cogs/crates/__init__.py:180
 msgid "You don't have any crates of this rarity."
-msgstr "Vous n'avez aucun boosters de cette rareté."
+msgstr ""
 
 #: cogs/crates/__init__.py:193
 #, python-brace-format
@@ -657,7 +636,7 @@ msgstr "Récoltez autant de nourriture que possible"
 
 #: cogs/hungergames/__init__.py:51
 msgid "gathers as much food as they can"
-msgstr "récoltent autant de nourriture qu'ils peuvent"
+msgstr "récoltez autant de nourriture qu'ils peuvent"
 
 #: cogs/hungergames/__init__.py:55
 msgid "Grab a backpack and retreat"
@@ -665,7 +644,7 @@ msgstr "Prenez un sac à dos et retirez-vous"
 
 #: cogs/hungergames/__init__.py:56
 msgid "grabs a backpack and retreats"
-msgstr "prends un sac à dos et se retire"
+msgstr "prenez un sac à dos et retirez-vous"
 
 #: cogs/hungergames/__init__.py:59
 msgid "Take a pistol and suicide"
@@ -673,11 +652,11 @@ msgstr "Prenez un pistolet et suicidez vous"
 
 #: cogs/hungergames/__init__.py:59
 msgid "gives themselves the bullet"
-msgstr "se donne la balle"
+msgstr "se donnent la balle"
 
 #: cogs/hungergames/__init__.py:60
 msgid "Ram a knife in your body"
-msgstr "Plantez un couteau dans votre corps"
+msgstr "Se plante un couteau"
 
 #: cogs/hungergames/__init__.py:60
 msgid "commits suicide with a knife"
@@ -685,15 +664,15 @@ msgstr "commet un suicide avec le couteau"
 
 #: cogs/hungergames/__init__.py:62
 msgid "Run away from the Curnocopia"
-msgstr "Fuyez la corne d'abondance"
+msgstr "Fuit la corne d'abondance"
 
 #: cogs/hungergames/__init__.py:63
 msgid "runs away from the Cornucopia"
-msgstr "fuit la corne d'abondance"
+msgstr "fuient la corne d'abondance"
 
 #: cogs/hungergames/__init__.py:67
 msgid "Search for a pair of Explosives"
-msgstr "Cherchez des explosifs"
+msgstr "Cherche des explosifs"
 
 #: cogs/hungergames/__init__.py:68
 msgid "finds a bag full of explosives"
@@ -701,31 +680,31 @@ msgstr "trouve un sac rempli d'explosifs"
 
 #: cogs/hungergames/__init__.py:71
 msgid "Look for water"
-msgstr "Cherchez de l'eau"
+msgstr "Chercher de l'eau"
 
 #: cogs/hungergames/__init__.py:71
 msgid "finds a canteen full of water"
-msgstr "trouve une gourde remplie d'eau"
+msgstr "trouve un tonneau rempli d'eau"
 
 #: cogs/hungergames/__init__.py:73
 msgid "Get a first aid kit"
-msgstr "Recevez une trousse de premiers soins"
+msgstr "Reçois un kit de premier soins"
 
 #: cogs/hungergames/__init__.py:74
 msgid "clutches a first aid kit and runs away"
-msgstr "empoigne la trousse de premier soins et s'enfuit"
+msgstr "empoigne le kit de premier soins et s'enfuit"
 
 #: cogs/hungergames/__init__.py:78
 msgid "Grab a backpack"
-msgstr "Prenez un sac à dos"
+msgstr "Prends un sac à dos"
 
 #: cogs/hungergames/__init__.py:79
 msgid "grabs a backpack, not realizing it is empty"
-msgstr "prends le sac à dos sans réaliser qu'il est vide"
+msgstr "prends le sac à dos s'en savoir qu'il est vide"
 
 #: cogs/hungergames/__init__.py:82
 msgid "Try to assault USER"
-msgstr "Essayez d'attaquer {user}"
+msgstr "Essaye d'attaque {user}"
 
 #: cogs/hungergames/__init__.py:82
 msgid "kills USER"
@@ -733,27 +712,27 @@ msgstr "tue {user}"
 
 #: cogs/hungergames/__init__.py:84
 msgid "Kill USER at the water"
-msgstr "Tuez {user} au rivage"
+msgstr "Tue {user} dans l'eau"
 
 #: cogs/hungergames/__init__.py:85
 msgid "assaults USER while they were drinking water at the river"
-msgstr "attaque USER pendant qu'il buvait de l'eau à la rivière"
+msgstr "attaque USER pendant qu'il boit de l'eau dans la rivière"
 
 #: cogs/hungergames/__init__.py:89
 msgid "Try to hide some landmines"
-msgstr "Essayez de cacher des mines explosives"
+msgstr "Essaye de cacher des mines explosif"
 
 #: cogs/hungergames/__init__.py:90
 msgid "hides landmines at a few locations"
-msgstr "cache des mines explosif à quelques endroits"
+msgstr "cache des mines explosif a plusieurs endroits"
 
 #: cogs/hungergames/__init__.py:93
 msgid "Take a bath"
-msgstr "Prenez un bain"
+msgstr "Prends un bain"
 
 #: cogs/hungergames/__init__.py:93
 msgid "baths in the water and enjoys the silence"
-msgstr "se baigne dans l'eau et profite du silence"
+msgstr "baignade dans l'eau et profite du silence"
 
 #: cogs/hungergames/__init__.py:96
 msgid "kill USER"
@@ -761,7 +740,7 @@ msgstr "tue USER"
 
 #: cogs/hungergames/__init__.py:97
 msgid "grill at the fireplace and tell each other spooky stories"
-msgstr "allument un feu de camps en se racontant des histoires d'horreurs"
+msgstr "allume un feu de camps en se racontant des histoires d'horreurs"
 
 #: cogs/hungergames/__init__.py:98
 msgid "annoy USER"
@@ -769,15 +748,15 @@ msgstr "embête USER"
 
 #: cogs/hungergames/__init__.py:99 cogs/hungergames/__init__.py:108
 msgid "kill themselves by walking into a landmine"
-msgstr "se tuent eux même en marchant sur des mines explosives"
+msgstr "se tuent eux même en marchant sur des mines explosif"
 
 #: cogs/hungergames/__init__.py:100
 msgid "have a small party and get drunk"
-msgstr "ont une petite fête et deviennent saoul"
+msgstr "ont une petite fête et deviennent saoûl"
 
 #: cogs/hungergames/__init__.py:101
 msgid "watch animes together"
-msgstr "regardent des animes ensemble"
+msgstr "regardent une anime ensemble"
 
 #: cogs/hungergames/__init__.py:102
 msgid "enjoy the silence"
@@ -785,7 +764,7 @@ msgstr "apprécie le silence"
 
 #: cogs/hungergames/__init__.py:103
 msgid "attempt to kill USER but fail"
-msgstr "essaye de tuer {user} mais échoue"
+msgstr "essaye de tuer {user} mais rate"
 
 #: cogs/hungergames/__init__.py:104 cogs/hungergames/__init__.py:110
 msgid "watch a movie together"
@@ -793,7 +772,7 @@ msgstr "regardent un film ensemble"
 
 #: cogs/hungergames/__init__.py:105
 msgid "track down USER and kill them silently"
-msgstr "traque USER et le tue silencieusement"
+msgstr "traque USER et les tuent en silence"
 
 #: cogs/hungergames/__init__.py:109
 msgid "decide they want out of here and commit suicide"
@@ -801,7 +780,7 @@ msgstr "décide de vouloir partir d'ici et se suicident"
 
 #: cogs/hungergames/__init__.py:111
 msgid "dance YMCA together"
-msgstr "dancent YMCA ensemble"
+msgstr "dance YMCA ensemble"
 
 #: cogs/hungergames/__init__.py:112
 msgid "sing songs together"
@@ -809,7 +788,7 @@ msgstr "chantent des chansons ensemble"
 
 #: cogs/hungergames/__init__.py:113
 msgid "have a nice romantic evening"
-msgstr "ont une agréable soirée romantique"
+msgstr "ont une super soirée romantique"
 
 #: cogs/hungergames/__init__.py:114
 msgid "watch the others being dumb"
@@ -817,7 +796,7 @@ msgstr "regardent les autres être débile"
 
 #: cogs/hungergames/__init__.py:115
 msgid "kiss in the moonlight"
-msgstr "s'embrassent au clair de lune"
+msgstr "baiser au clair de lune"
 
 #: cogs/hungergames/__init__.py:117
 msgid "watch a movie together when USER suddenly gets shot by a stranger"
@@ -826,7 +805,7 @@ msgstr ""
 #: cogs/hungergames/__init__.py:122
 #, python-brace-format
 msgid "**Round {round}**"
-msgstr "**Tour {round}**"
+msgstr "**Round {round}**"
 
 #: cogs/hungergames/__init__.py:129
 #, python-brace-format
@@ -845,15 +824,15 @@ msgstr ""
 #: cogs/hungergames/__init__.py:185
 #, python-brace-format
 msgid "attempts to kill {user} but fails"
-msgstr "essaye de tuer {user} mais échoue"
+msgstr "essaye de tuer {user} mais rate"
 
 #: cogs/hungergames/__init__.py:193
 msgid "Done"
-msgstr "Terminé"
+msgstr ""
 
 #: cogs/hungergames/__init__.py:213
 msgid "do nothing."
-msgstr "ne rien faire."
+msgstr ""
 
 #: cogs/hungergames/__init__.py:259
 msgid "Team"
@@ -870,15 +849,15 @@ msgstr "Le gagnant du hunger game's est {winner}!"
 
 #: cogs/hungergames/__init__.py:283
 msgid "Everyone died!"
-msgstr "Tout le monde est mort!"
+msgstr "Tout le monde est mort !"
 
 #: cogs/hungergames/__init__.py:294
 msgid "Starts a game of hunger games."
-msgstr "Commence une partie de hunger games."
+msgstr "Commence une partie de Hunger games."
 
 #: cogs/hungergames/__init__.py:296 cogs/werewolf/__init__.py:35
 msgid "There is already a game in here!"
-msgstr "Il y a déjà une partie en cours ici!"
+msgstr "Il y a déjà une partie en cours ici !"
 
 #: cogs/hungergames/__init__.py:308
 #, python-brace-format
@@ -887,11 +866,11 @@ msgid ""
 "join the game! **{num} joined**"
 msgstr ""
 "{author} à commencé un Hunger Games! Réagis avec :shallow_pan_of_food: pour "
-"joindre la partie! **{num} joined**"
+"rejoindre le jeu ! **{num} joined**"
 
 #: cogs/hungergames/__init__.py:338 cogs/werewolf/__init__.py:76
 msgid "Not enough players joined..."
-msgstr "Pas assez de joueurs on joint..."
+msgstr "Pas assez de joueurs on rejoint..."
 
 #: cogs/hungergames/__init__.py:346
 msgid "An error happened during the hungergame. Please try again!"
@@ -900,7 +879,7 @@ msgstr ""
 #: cogs/error_handler/__init__.py:70
 #, python-brace-format
 msgid "Oops! You forgot a required argument: `{arg}`"
-msgstr "Oups! Vous avez oublié un argument requis: `{arg}`"
+msgstr "Oops! Vous avez oublié un argument requis: `{arg}`"
 
 #: cogs/error_handler/__init__.py:80
 msgid "The user you specified as a parameter does not have a character."
@@ -988,16 +967,16 @@ msgid ""
 "You are already on an adventure. Use `{prefix}status` to see how long it "
 "lasts."
 msgstr ""
-"Vous êtes déjà en aventure. Utilisez `{prefix}status` pour consulter le "
-"temps restant."
+"Vous êtes déjà parti à l’aventure. Utilisez `{prefix}status` pour consulter "
+"le temps restant."
 
 #: cogs/error_handler/__init__.py:169
 #, python-brace-format
 msgid ""
 "You need to be on an adventure to use this command. Try `{prefix}adventure`!"
 msgstr ""
-"Vous devez être parti en aventure pour utiliser cette commande. Essayez "
-"`{prefix}adventure`!"
+"Vous devez être parti à l’aventure pour utiliser cette commande. Essayez "
+"`{prefix}adventure` !"
 
 #: cogs/error_handler/__init__.py:173
 msgid "You need to be in a voice chat to use this command."
@@ -1067,7 +1046,7 @@ msgstr ""
 "réservée à d’autres utilisateurs."
 
 #. prevent cooldown reset
-#: cogs/error_handler/__init__.py:235 cogs/trading/__init__.py:571
+#: cogs/error_handler/__init__.py:235 cogs/trading/__init__.py:573
 msgid "You did not choose anything."
 msgstr "Vous n’avez rien choisi."
 
@@ -1075,55 +1054,48 @@ msgstr "Vous n’avez rien choisi."
 msgid ""
 "An argument or value you entered was far too high for me to handle properly!"
 msgstr ""
-"Un argument ou une valeur que vous avez entré était beaucoup trop élevé pour "
-"que je puisse le gérer correctement!"
 
 #: cogs/error_handler/__init__.py:260
 msgid ""
 "The languages have been reloaded while you were using a command. The "
 "execution therefore had to be stopped. Please try again."
 msgstr ""
-"Les langues ont été rechargée pendant que vous utilisiez la commande. "
-"L'exécution a donc été interrompue. Veuillez réessayer."
 
 #: cogs/error_handler/__init__.py:294
 msgid ""
 "The command you tried to use ran into an error. The incident has been "
 "reported and the team will work hard to fix the issue!"
 msgstr ""
-"La commande que vous avez essayé d'utiliser a rencontré une erreur. "
-"L'incident a été signalé et l'équipe travaillera dur pour résoudre le "
-"problème!"
 
 #: cogs/wintersday/__init__.py:69
 msgid "Look at your Winter Calendar"
-msgstr "Regardez votre calendrier de l'avent"
+msgstr ""
 
 #: cogs/wintersday/__init__.py:72
 msgid "No calendar to show!"
-msgstr "Aucun calendrier à afficher!"
+msgstr ""
 
 #: cogs/wintersday/__init__.py:84
 msgid "Open the Winter Calendar once every day."
-msgstr "Ouvrez le calendrier de l'avent une fois par jour."
+msgstr ""
 
 #: cogs/wintersday/__init__.py:89
 msgid "It's not calendar time yet..."
-msgstr "Ce n'est pas encore l'heure du calendrier ..."
+msgstr ""
 
 #: cogs/wintersday/__init__.py:91
 #, python-brace-format
 msgid "**You opened day {today}!**"
-msgstr "** Vous avez ouvert la journée {today}! **"
+msgstr ""
 
 #: cogs/wintersday/__init__.py:98
 msgid "A mysterious puzzle piece"
-msgstr "Une mystérieuse pièce de casse-tête"
+msgstr ""
 
 #: cogs/wintersday/__init__.py:114
 #, python-brace-format
 msgid "{crates} {rarity} crates"
-msgstr "{crates} {rarity} boosters"
+msgstr ""
 
 #: cogs/wintersday/__init__.py:139
 #, python-brace-format
@@ -1131,19 +1103,14 @@ msgid ""
 "A special surprise - check out `{prefix}eventbackground` for a new "
 "Wintersday background!"
 msgstr ""
-"Une surprise spéciale - consultez `{prefix}eventbackground` pour un nouveau "
-"fond d'écran du Jour de l'Hiver!"
 
-# Combine les mystérieuses pièces de puzzle.
 #: cogs/wintersday/__init__.py:148
 msgid "Combine the mysterious puzzle pieces."
-msgstr "Combine les pièces mystérieuses du puzzle."
+msgstr ""
 
 #: cogs/wintersday/__init__.py:158
 msgid "The mysterious puzzles don't fit together... Maybe some are missing?"
 msgstr ""
-"Les mystérieuses pièce de puzzle ne vont pas ensemble … Peut-être en manque "
-"t-il?"
 
 #: cogs/wintersday/__init__.py:178
 #, python-brace-format
@@ -1152,21 +1119,18 @@ msgid ""
 "`{prefix}eventbackground 1` to set your new background that you just "
 "acquired...*"
 msgstr ""
-"Vous avez combiné les puzzles! Dans votre tête, une voix murmure : *Bien "
-"joué. Maintenant, utilisez `{prefix}eventbackground 1` pour définir votre "
-"nouveau fond que vous venez d'acquérir…*"
 
 #: cogs/wintersday/__init__.py:186
 msgid "Make a snowball fights against another guild."
-msgstr "Faites une bataille de boule de neige contre les autres guilde."
+msgstr ""
 
 #: cogs/wintersday/__init__.py:188
 msgid "You may not fight yourself."
-msgstr "Vous ne pouvez pas vous battre."
+msgstr ""
 
 #: cogs/wintersday/__init__.py:197
 msgid "The enemy must be an officer or higher."
-msgstr "L'ennemi doit être au minimum officier."
+msgstr ""
 
 #: cogs/wintersday/__init__.py:215
 #, python-brace-format
@@ -1180,7 +1144,7 @@ msgstr ""
 #: cogs/wintersday/__init__.py:229 cogs/wintersday/__init__.py:254
 #: cogs/wintersday/__init__.py:274
 msgid "Timed out..."
-msgstr "Temps expiré..."
+msgstr ""
 
 #: cogs/wintersday/__init__.py:247
 #, python-brace-format
@@ -1188,16 +1152,14 @@ msgid ""
 "{author}, type `snowballfight nominate @user` to add one of your guild "
 "members to the fight!"
 msgstr ""
-"{author}, écrivez `snowballfight nominate @utilisateur` pour ajouter "
-"quelqu'un de votre guilde au combat!"
 
 #: cogs/wintersday/__init__.py:260 cogs/wintersday/__init__.py:280
 msgid "Not one of your guild members..."
-msgstr "Pas un de vos membre de guilde ..."
+msgstr ""
 
 #: cogs/wintersday/__init__.py:262 cogs/wintersday/__init__.py:282
 msgid "That's you!"
-msgstr "Ça c'est vous!"
+msgstr ""
 
 #: cogs/wintersday/__init__.py:267
 #, python-brace-format
@@ -1205,8 +1167,6 @@ msgid ""
 "{enemy}, use `snowballfight nominate @user` to add one of your guild members "
 "to the fight!"
 msgstr ""
-"{enemy}, utilisez `snowballfight nominate @utilisateur` pour ajouter "
-"quelqu'un de votre guilde au combat!"
 
 #: cogs/wintersday/__init__.py:300
 #, python-brace-format
@@ -1217,194 +1177,198 @@ msgid ""
 "{t2} - {enemy}\n"
 "Next round starts in 5 seconds!\n"
 msgstr ""
-"\n"
-"l'équipe de {author.mention} contre l'équipe de {enemy.mention}\n"
-"{t1} - {author}\n"
-"{t2} - {enemy}\n"
-"Prochain tour dans 5 secondes !\n"
 
 #: cogs/wintersday/__init__.py:323
 msgid ""
 "It's word typing time! In 3 seconds, I will send a word. Whoever types it "
 "fastest gets one point!"
 msgstr ""
-"C'est l'heure d'écrire des mots! Dans 3 secondes, j'enverrais un mot. Celui "
-"qui l'écrit le plus rapidement a un point!"
 
 #: cogs/wintersday/__init__.py:332 cogs/wintersday/__init__.py:368
 msgid "Noone managed to get it right, I'll cancel the fight!"
-msgstr "Personne n'a eut raison, j'annule le combat!"
+msgstr ""
 
 #: cogs/wintersday/__init__.py:339
 #, python-brace-format
 msgid "{author} got it right!"
-msgstr "{author} a raison !"
+msgstr ""
 
 #: cogs/wintersday/__init__.py:359
 msgid ""
 "It's maths time! In 3 seconds, I'll send a simple maths task to solve! Type "
 "the answer to get a point!"
 msgstr ""
-"C'est l'heure des maths ! Dans 3 secondes, j'enverrais une simple question "
-"de math a résoudre! Tapez la réponse pour avoir un point !"
 
 #: cogs/wintersday/__init__.py:374 cogs/wintersday/__init__.py:405
 #, python-brace-format
 msgid "{user} got it right!"
-msgstr "{user} a raison !"
+msgstr ""
 
 #: cogs/wintersday/__init__.py:387
 msgid ""
 "It's hangman time! In 3 seconds, I'll send a hangman-style word and you will "
 "have to either send your full word as the guess or a letter to check for!"
 msgstr ""
-"C'est l'heure du bonhomme pendu! Dans 3 secondes j'enverrais un mot et vous "
-"devrez soit envoyer votre mot complet ou une lettre pour deviner!"
 
 #: cogs/wintersday/__init__.py:397
 msgid "Noone participated, I'll cancel the fight!"
-msgstr "Personne n'a participé, j'annule le combat!"
+msgstr ""
 
 #: cogs/wintersday/__init__.py:422
 #, python-brace-format
 msgid "Team 1 ({user}) won!"
-msgstr "Equipe 1 ({user}) gagne!"
+msgstr ""
 
 #: cogs/wintersday/__init__.py:424
 #, python-brace-format
 msgid "Team 2 ({user}) won!"
-msgstr "Equipe 2 ({user}) gagne!"
+msgstr ""
 
 #: cogs/wintersday/__init__.py:430
 msgid "Sign up for the snowball tournament."
-msgstr "Inscrivez vous pour le tournois de boule de neige."
+msgstr ""
 
 #: cogs/wintersday/__init__.py:432
 msgid "Too late, my friend."
-msgstr "Trop tard, mon ami."
+msgstr ""
 
 #: cogs/wintersday/__init__.py:441
 msgid "You're already signed up!"
-msgstr "Vous êtes déjà inscrit!"
+msgstr ""
 
 #: cogs/wintersday/__init__.py:443
 msgid "Tournament is full!"
-msgstr "Le tournois est plein!"
+msgstr ""
 
 #: cogs/wintersday/__init__.py:447
 #, python-brace-format
 msgid "{guild} has been signed up."
-msgstr "{guild} s'est inscrite."
+msgstr ""
 
 #: cogs/wintersday/__init__.py:453
 msgid "Makes the snowball tournament matches"
-msgstr "Fait les combats du tournois de boule de neige"
+msgstr ""
 
 #: cogs/wintersday/__init__.py:463
 msgid "Matches generated!"
-msgstr "Combats générés!"
+msgstr ""
 
 #: cogs/wintersday/__init__.py:469
 msgid "Save a result of a match if it is in the tournament"
-msgstr "Sauvegarde le résultat d'un combat s'il est dans ce tournois"
+msgstr ""
 
 #: cogs/wintersday/__init__.py:485
 msgid "Those guilds are not in a match!"
-msgstr "Ces guildes ne sont pas dans un combat!"
+msgstr ""
 
 #: cogs/wintersday/__init__.py:490
 #, python-brace-format
 msgid "The winner of {guild1} vs {guild2} is now {winner}!"
-msgstr "Le gagnant de {guild1} contre {guild2} est {winner} !"
+msgstr ""
 
 #: cogs/wintersday/__init__.py:499
 msgid "Enforces a new snowball round."
-msgstr "Force un nouveau tour de boule de neige."
+msgstr ""
 
 #: cogs/wintersday/__init__.py:509
 msgid "Round forced!"
-msgstr "Tour forcé!"
+msgstr ""
 
 #: cogs/wintersday/__init__.py:514
 msgid "Shows tournament matches."
-msgstr "Montre les matchs du tournoi."
+msgstr ""
 
 #: cogs/wintersday/__init__.py:517
 msgid "Participants who are already in the next round"
-msgstr "Les participants déjà dans le prochain tour"
+msgstr ""
 
 #: cogs/wintersday/__init__.py:528
 msgid ""
 "No more matches to be done. Either it is over or it's time for a new round!"
 msgstr ""
-"Plus de match a faire. Soit c'est fini, soit c'est l'heure d'un nouveau tour!"
 
 #: cogs/wintersday/__init__.py:531
 msgid "**Matches to be done**:"
-msgstr "**Matchs restant**:"
-
-#: cogs/miscellaneous/__init__.py:63
-msgid "Let's dab together."
-msgstr "Faisons un dab ensemble."
+msgstr ""
 
 #: cogs/miscellaneous/__init__.py:64
+msgid "Let's dab together."
+msgstr ""
+
+#: cogs/miscellaneous/__init__.py:65
 msgid "No. Just no. I am a bot. What did you think?"
-msgstr "Non. Juste non. Je suis un bot. A quoi vous pensiez?"
+msgstr "Non. Juste non. Je suis un bot. A quoi vous pensiez ?"
 
-#: cogs/miscellaneous/__init__.py:71
+#: cogs/miscellaneous/__init__.py:72
 msgid "Receive a daily reward based on your streak."
-msgstr "Recevez une récompense quotidienne basée sur votre série."
+msgstr "Recevez une récompense journalière basée sur votre série."
 
-#: cogs/miscellaneous/__init__.py:124
+#: cogs/miscellaneous/__init__.py:125
 #, python-brace-format
 msgid ""
 "You received your daily {txt}!\n"
 "You are on a streak of **{streak}** days!"
 msgstr ""
 
-#: cogs/miscellaneous/__init__.py:131
-msgid "Shows you the bot's current websocket latency."
-msgstr "Affiche la latence actuel de la websocket du bot."
+#: cogs/miscellaneous/__init__.py:133
+msgid "See the current daily streak you are on."
+msgstr ""
 
-#: cogs/miscellaneous/__init__.py:134
+#: cogs/miscellaneous/__init__.py:138
+#, python-brace-format
+msgid ""
+"You don't have a daily streak yet. You can get one going by using the "
+"command `{prefix}daily`!"
+msgstr ""
+
+#: cogs/miscellaneous/__init__.py:142
+#, python-brace-format
+msgid "You are on a daily streak of **{streak}!**"
+msgstr ""
+
+#: cogs/miscellaneous/__init__.py:150
+msgid "Shows you the bot's current websocket latency."
+msgstr ""
+
+#: cogs/miscellaneous/__init__.py:153
 msgid "Pong!"
 msgstr "Pong !"
 
-#: cogs/miscellaneous/__init__.py:135
+#: cogs/miscellaneous/__init__.py:154
 #, python-brace-format
 msgid "My current latency is {lat}ms"
 msgstr "Ma latence actuelle est de {lat}ms"
 
-#: cogs/miscellaneous/__init__.py:145
+#: cogs/miscellaneous/__init__.py:164
 msgid "Gives you a short URL from an image or long URL"
 msgstr ""
 
-#: cogs/miscellaneous/__init__.py:147
+#: cogs/miscellaneous/__init__.py:166
 msgid "Please supply a URL or an image attachment"
 msgstr ""
 
-#: cogs/miscellaneous/__init__.py:150
+#: cogs/miscellaneous/__init__.py:169
 msgid "Please only use one image at a time."
 msgstr ""
 
-#: cogs/miscellaneous/__init__.py:155
+#: cogs/miscellaneous/__init__.py:174
 msgid "This is not a valid image file."
-msgstr "Ceci n'est pas un fichier d'image valide."
+msgstr ""
 
-#: cogs/miscellaneous/__init__.py:166 cogs/patreon/__init__.py:249
+#: cogs/miscellaneous/__init__.py:185 cogs/patreon/__init__.py:249
 msgid "Error when uploading to Imgur."
 msgstr "Erreur durant l’upload vers Imgur."
 
-#: cogs/miscellaneous/__init__.py:167
+#: cogs/miscellaneous/__init__.py:186
 #, python-brace-format
 msgid "Here's your short image URL: <{link}>"
-msgstr "Voici l'URL raccourci de votre image : <{link}>"
+msgstr ""
 
-#: cogs/miscellaneous/__init__.py:172
+#: cogs/miscellaneous/__init__.py:191
 msgid "Support maintenance of the bot."
 msgstr "Soutenir la maintenance du bot."
 
-#: cogs/miscellaneous/__init__.py:178
+#: cogs/miscellaneous/__init__.py:197
 #, python-brace-format
 msgid ""
 "This bot has its own patreon page.\n"
@@ -1421,63 +1385,60 @@ msgid ""
 msgstr ""
 "Ce bot a sa propre page patreon.\n"
 "\n"
-"**Pourquoi devrais-je faire une donation?**\n"
+"**Pourquoi devrais-je faire une donation ?**\n"
 "Ce bot est actuellement sur {guild_count} serveurs, et se développe "
 "rapidement.\n"
 "Héberger ce bot pour tous les utilisateurs n’est pas facile et coûte "
 "beaucoup d’argent.\n"
-"Même 1$ peut nous aider.\n"
-"**Merci!**\n"
+"Même $1 peut nous aider.\n"
+"**Merci !**\n"
 "\n"
 "<https://patreon.com/idlerpg>"
 
-#: cogs/miscellaneous/__init__.py:195
+#: cogs/miscellaneous/__init__.py:214
 msgid "Shows the source code and license."
 msgstr "Montre le code source ainsi que la licence."
 
-#: cogs/miscellaneous/__init__.py:201
+#: cogs/miscellaneous/__init__.py:220
 msgid "Invite link for the bot."
 msgstr "Lien pour inviter le bot."
 
-#: cogs/miscellaneous/__init__.py:204
+#: cogs/miscellaneous/__init__.py:223
 #, python-brace-format
 msgid ""
 "You are running version **{version}** by The IdleRPG Developers.\n"
 "Invite me! {url}"
 msgstr ""
 
-#: cogs/miscellaneous/__init__.py:216
+#: cogs/miscellaneous/__init__.py:235
 msgid "Sends you the link to the official IdleRPG Support server."
 msgstr ""
 
-#: cogs/miscellaneous/__init__.py:219
+#: cogs/miscellaneous/__init__.py:238
 msgid ""
 "Got problems or feature requests? Looking for people to play with? Join the "
 "support server:\n"
 "https://discord.gg/MSBatf6"
 msgstr ""
-"Vous avez un problème ou une idée de fonctionnalité à ajouter? Vous cherchez "
-"des personnes avec qui jouer? Rejoignez le serveur de support:\n"
-"https://discord.gg/MSBatf6"
 
-#: cogs/miscellaneous/__init__.py:226
+#: cogs/miscellaneous/__init__.py:245
 msgid "Statistics on the bot."
 msgstr "Statistiques à propos du bot."
 
-#: cogs/miscellaneous/__init__.py:254
+#: cogs/miscellaneous/__init__.py:274
 msgid "IdleRPG Statistics"
 msgstr "Statistiques IdleRPG"
 
-#: cogs/miscellaneous/__init__.py:257
+#: cogs/miscellaneous/__init__.py:277
 msgid "Official Support Server Invite: https://discord.gg/MSBatf6"
 msgstr ""
 "Invitation pour le serveur de support officiel: https://discord.gg/MSBatf6"
 
-#: cogs/miscellaneous/__init__.py:265
+#: cogs/miscellaneous/__init__.py:285
 msgid "Hosting Statistics"
 msgstr "Statistiques d’hébergement"
 
-#: cogs/miscellaneous/__init__.py:267
+#: cogs/miscellaneous/__init__.py:287
 #, python-brace-format
 msgid ""
 "CPU: **{cpu_name}**\n"
@@ -1486,17 +1447,18 @@ msgid ""
 "CPU Temperature: **{cpu_temp}°C**\n"
 "Python Version **{python}** <:python:445247273065250817>\n"
 "discord.py Version **{dpy}**\n"
+"Compiler: **{compiler}**\n"
 "Operating System: **{osname} {osversion}**\n"
 "Kernel Version: **{kernel}**\n"
 "PostgreSQL Version: **{pg_version}**\n"
 "Redis Version: **{redis_version}**"
 msgstr ""
 
-#: cogs/miscellaneous/__init__.py:299
+#: cogs/miscellaneous/__init__.py:321
 msgid "Bot Statistics"
 msgstr "Statistiques du bot"
 
-#: cogs/miscellaneous/__init__.py:301
+#: cogs/miscellaneous/__init__.py:323
 #, python-brace-format
 msgid ""
 "Code lines written: **{lines}**\n"
@@ -1510,193 +1472,193 @@ msgstr ""
 "Fragments: **{shards}**\n"
 "Serveurs: **{guild_count}**\n"
 "Personnages: **{characters}**\n"
-"Objets: **{items}**\n"
-"Moyenne d’heures de travail: **{hours}**"
+"Items: **{items}**\n"
+"Moyenne d’heure de travail: **{hours}**"
 
-#: cogs/miscellaneous/__init__.py:323
+#: cogs/miscellaneous/__init__.py:345
 msgid "Roll a random number."
 msgstr "Lance un nombre aléatoire."
 
-#: cogs/miscellaneous/__init__.py:325
+#: cogs/miscellaneous/__init__.py:347
 #, python-brace-format
 msgid ":1234: You rolled **{num}**, {author}!"
 msgstr ":1234: Vous avez lancé **{num}**, {author}!"
 
-#: cogs/miscellaneous/__init__.py:333
+#: cogs/miscellaneous/__init__.py:355
 msgid "Shows you the bots current version along with its new updates."
 msgstr ""
 
-#: cogs/miscellaneous/__init__.py:386
+#: cogs/miscellaneous/__init__.py:408
 msgid ""
 "Deletes an amount of messages from the history, optionally only by one "
 "member."
 msgstr ""
-"Supprime une quantité de messages de l'historique, falcultativement par un "
+"Supprime une quantité de messages de l'historique, éventuellement par un "
 "seul membre."
 
-#: cogs/miscellaneous/__init__.py:396
+#: cogs/miscellaneous/__init__.py:418
 #, python-brace-format
 msgid "👍 Deleted **{num}** messages for you."
-msgstr "👍 Supprimé **{num}** messages pour vous."
+msgstr "👍 Supprime **{num}** messages pour vous."
 
-#: cogs/miscellaneous/__init__.py:402
+#: cogs/miscellaneous/__init__.py:424
 msgid "The magic 8 ball answers your questions."
-msgstr "La boule 8 magique répond à vos questions."
+msgstr "Le Magic 8 Ball répond à vos questions."
 
-#: cogs/miscellaneous/__init__.py:404
+#: cogs/miscellaneous/__init__.py:426
 msgid "It is certain"
 msgstr "C'est certain"
 
-#: cogs/miscellaneous/__init__.py:405
+#: cogs/miscellaneous/__init__.py:427
 msgid "It is decidedly so"
 msgstr "C'est décidé"
 
-#: cogs/miscellaneous/__init__.py:406
+#: cogs/miscellaneous/__init__.py:428
 msgid "Without a doubt"
 msgstr "Sans aucun doute"
 
-#: cogs/miscellaneous/__init__.py:407
+#: cogs/miscellaneous/__init__.py:429
 msgid "Yes, definitely"
 msgstr "Oui, définitivement"
 
-#: cogs/miscellaneous/__init__.py:408
+#: cogs/miscellaneous/__init__.py:430
 msgid "You may rely on it"
 msgstr "Vous pouvez compter dessus"
 
-#: cogs/miscellaneous/__init__.py:409
+#: cogs/miscellaneous/__init__.py:431
 msgid "As I see it, yes"
 msgstr "De ce que je vois, oui"
 
-#: cogs/miscellaneous/__init__.py:410
+#: cogs/miscellaneous/__init__.py:432
 msgid "Most likely"
 msgstr "Probablement"
 
-#: cogs/miscellaneous/__init__.py:411
+#: cogs/miscellaneous/__init__.py:433
 msgid "Outlook good"
-msgstr "Une vision plutôt positive"
+msgstr "Une vision plutôt positif"
 
-#: cogs/miscellaneous/__init__.py:412 cogs/music/__init__.py:412
-#: cogs/music/__init__.py:415
+#: cogs/miscellaneous/__init__.py:434 cogs/music/__init__.py:447
+#: cogs/music/__init__.py:450 cogs/music/__init__.py:454
 msgid "Yes"
 msgstr "Oui"
 
-#: cogs/miscellaneous/__init__.py:413
+#: cogs/miscellaneous/__init__.py:435
 msgid "Signs point to yes"
 msgstr "Les signes disent oui"
 
-#: cogs/miscellaneous/__init__.py:414
+#: cogs/miscellaneous/__init__.py:436
 msgid "Reply hazy try again"
-msgstr "Réponse vague essayez à nouveau"
+msgstr "Réponse chelou essayez à nouveau"
 
-#: cogs/miscellaneous/__init__.py:415
+#: cogs/miscellaneous/__init__.py:437
 msgid "Ask again later"
-msgstr "Demandez plus tard"
+msgstr "Demande plus tard"
 
-#: cogs/miscellaneous/__init__.py:416
+#: cogs/miscellaneous/__init__.py:438
 msgid "Better not tell you now"
-msgstr "Il vaux mieux de ne pas vous le dire maintenant"
+msgstr "C'est mieux de ne pas te le dire maintenant"
 
-#: cogs/miscellaneous/__init__.py:417
+#: cogs/miscellaneous/__init__.py:439
 msgid "Cannot predict now"
 msgstr "Je ne peux pas le prédire maintenant"
 
-#: cogs/miscellaneous/__init__.py:418
+#: cogs/miscellaneous/__init__.py:440
 msgid "Concentrate and ask again"
-msgstr "Concentrez-vous et redemandez"
+msgstr "Concentre toi et redemande"
 
-#: cogs/miscellaneous/__init__.py:419
+#: cogs/miscellaneous/__init__.py:441
 msgid "Don't count on it"
-msgstr "Ne comptez pas sur ça"
+msgstr "Ne compte pas sur ça"
 
-#: cogs/miscellaneous/__init__.py:420
+#: cogs/miscellaneous/__init__.py:442
 msgid "My reply is no"
 msgstr "Ma réponse est non"
 
-#: cogs/miscellaneous/__init__.py:421
+#: cogs/miscellaneous/__init__.py:443
 msgid "My sources say no"
-msgstr "Mes sources disent non"
+msgstr "Mes sources d'info disent non"
 
-#: cogs/miscellaneous/__init__.py:422
+#: cogs/miscellaneous/__init__.py:444
 msgid "Outlook not so good"
 msgstr "Une vision peu sympa"
 
-#: cogs/miscellaneous/__init__.py:423
+#: cogs/miscellaneous/__init__.py:445
 msgid "Very doubtful"
 msgstr "Très douteux"
 
-#: cogs/miscellaneous/__init__.py:426
+#: cogs/miscellaneous/__init__.py:448
 #, python-brace-format
 msgid "The :8ball: says: **{result}**."
 msgstr "La :8ball: dit: **{result}**."
 
-#: cogs/miscellaneous/__init__.py:432
+#: cogs/miscellaneous/__init__.py:454
 msgid "Repeats what you said."
-msgstr "Répétez ce que vous avez dis."
+msgstr "Répète ce que tu as dis."
 
-#: cogs/miscellaneous/__init__.py:442
+#: cogs/miscellaneous/__init__.py:464
 msgid "Chooses a random option of supplied possiblies."
-msgstr "Choisissez une option aléatoire des possibilités fournies."
+msgstr "Choisit une option aléatoire des possibilités fournies."
 
-#: cogs/miscellaneous/__init__.py:445
+#: cogs/miscellaneous/__init__.py:467
 msgid "Cannot choose from an empty list..."
 msgstr "Impossible de choisir parmi une liste vide ..."
 
-#: cogs/miscellaneous/__init__.py:447
+#: cogs/miscellaneous/__init__.py:469
 #, python-brace-format
 msgid "My choice is: **{result}**."
-msgstr "Mon choix est: **{result}**."
+msgstr "Mon chois est: **{result}**."
 
-#: cogs/miscellaneous/__init__.py:455
+#: cogs/miscellaneous/__init__.py:477
 msgid "Calculates the potential love for 2 members."
 msgstr "Calcul le potentiel amoureux pour 2 membres."
 
-#: cogs/miscellaneous/__init__.py:458
+#: cogs/miscellaneous/__init__.py:480
 #, python-brace-format
 msgid "Calculating Love for {first} and {second}..."
-msgstr "Calcul d'amour pour {first} et {second}..."
+msgstr "Calcul d'amour est de {first} et {second}..."
 
-#: cogs/miscellaneous/__init__.py:471
+#: cogs/miscellaneous/__init__.py:493
 msgid "Love Calculation"
-msgstr "Calcul d'Amour"
+msgstr "Calcul d'amour"
 
-#: cogs/miscellaneous/__init__.py:472
+#: cogs/miscellaneous/__init__.py:494
 #, python-brace-format
 msgid "Love for {first} and {second} is at **{love}%**! ❤"
 msgstr "Taux d'amour pour {first} et {second} est de **{love}%**! ❤"
 
-#: cogs/miscellaneous/__init__.py:482
+#: cogs/miscellaneous/__init__.py:504
 msgid "Fancies text with big emojis."
 msgstr "Texte customisé avec des grands émojis."
 
-#: cogs/miscellaneous/__init__.py:508
+#: cogs/miscellaneous/__init__.py:530
 msgid "A random bad meme."
 msgstr "Un meme nul aléatoire."
 
-#: cogs/miscellaneous/__init__.py:522
+#: cogs/miscellaneous/__init__.py:544
 msgid ""
 "Tabletop RPG-ready dice. Rolls in the ndx format (3d20 is 3 dice with 20 "
 "sides)."
 msgstr ""
-"Des dés de table prêts pour le RPG. Roule au format ndx (3d20 correspond à 3 "
+"Des dés de table prêts pour le RPG. Rolls au format ndx (3d20 correspond à 3 "
 "dés avec 20 faces)."
 
-#: cogs/miscellaneous/__init__.py:529
+#: cogs/miscellaneous/__init__.py:551
 msgid "Use the ndx format. E.g. `5d20` will roll 5 dice with 20 sides each."
 msgstr ""
 
-#: cogs/miscellaneous/__init__.py:533
+#: cogs/miscellaneous/__init__.py:555
 msgid "Use the ndx format."
-msgstr "Utilise le format ndx."
+msgstr "Utilise le ndx format."
 
-#: cogs/miscellaneous/__init__.py:536
+#: cogs/miscellaneous/__init__.py:558
 msgid "The number of dice to roll should be between 1 and 100."
 msgstr ""
 
-#: cogs/miscellaneous/__init__.py:540
+#: cogs/miscellaneous/__init__.py:562
 msgid "Dice must have at least one side and not more than 10000."
-msgstr "Le dé doit avoir au moins un côté et pas plus de 10000."
+msgstr ""
 
-#: cogs/miscellaneous/__init__.py:553
+#: cogs/miscellaneous/__init__.py:575
 #, python-brace-format
 msgid ""
 "```Sum: {sumall}\n"
@@ -1704,148 +1666,148 @@ msgid ""
 "Results:\n"
 "{results}```"
 msgstr ""
-"```Somme: {sumall}\n"
+"```Sum: {sumall}\n"
 "Moyenne: {average}\n"
 "Résultat:\n"
 "{results}```"
 
-#: cogs/miscellaneous/__init__.py:561
+#: cogs/miscellaneous/__init__.py:583
 msgid "Sends you my nickname from a random server."
 msgstr ""
 
-#: cogs/miscellaneous/__init__.py:567
+#: cogs/miscellaneous/__init__.py:589
 #, python-brace-format
 msgid "In **{server}** I am called **{name}**."
 msgstr "Sur **{server}** je m’appelle **{name}**."
 
-#: cogs/miscellaneous/__init__.py:575
+#: cogs/miscellaneous/__init__.py:597
 msgid "Facts about Chuck Norris."
 msgstr ""
 
-#: cogs/miscellaneous/__init__.py:583
+#: cogs/miscellaneous/__init__.py:605
 msgid "Cat pics."
 msgstr "Photos de chats."
 
-#: cogs/miscellaneous/__init__.py:586
+#: cogs/miscellaneous/__init__.py:608
 msgid "Meow!"
-msgstr "Miaou!"
+msgstr "Miaou !"
 
-#: cogs/miscellaneous/__init__.py:595
+#: cogs/miscellaneous/__init__.py:617
 msgid "Dog pics."
 msgstr "Photos de chiens."
 
-#: cogs/miscellaneous/__init__.py:602
+#: cogs/miscellaneous/__init__.py:624
 msgid "Wouff!"
-msgstr "Wouf!"
+msgstr "Wouf !"
 
-#: cogs/miscellaneous/__init__.py:609
+#: cogs/miscellaneous/__init__.py:631
 msgid "Shows how long the bot has been connected to Discord."
 msgstr ""
 
-#: cogs/miscellaneous/__init__.py:611
+#: cogs/miscellaneous/__init__.py:633
 #, python-brace-format
 msgid "I am online for **{time}**."
 msgstr "Je suis en ligne depuis **{time}**."
 
-#: cogs/miscellaneous/__init__.py:619
+#: cogs/miscellaneous/__init__.py:641
 msgid "Every good software has an Easter egg."
 msgstr "Tout bon logiciel a un Easter Egg."
 
-#: cogs/miscellaneous/__init__.py:620
+#: cogs/miscellaneous/__init__.py:642
 msgid "Find it!"
-msgstr "Trouvez-le!"
+msgstr "Trouvez le !"
 
-#: cogs/miscellaneous/__init__.py:626
+#: cogs/miscellaneous/__init__.py:648
 msgid "Gives a cookie to a user."
 msgstr "Donne un cookie à un utilisateur."
 
-#: cogs/miscellaneous/__init__.py:629
+#: cogs/miscellaneous/__init__.py:651
 #, python-brace-format
 msgid "**{user}**, you've been given a cookie by **{author}**. :cookie:"
-msgstr "**{user}**, vous avez reçu un biscuit de **{author}**. :cookie:"
+msgstr "**{user}**, vous avez reçu un cookie de **{author}**. :cookie:"
 
-#: cogs/miscellaneous/__init__.py:637
+#: cogs/miscellaneous/__init__.py:659
 msgid "Gives ice cream to a user."
 msgstr "Donne une glace à un utilisateur."
 
-#: cogs/miscellaneous/__init__.py:639
+#: cogs/miscellaneous/__init__.py:661
 #, python-brace-format
 msgid "{other}, here is your ice: :ice_cream:!"
-msgstr "{other}, voici votre glace :ice_cream:!"
+msgstr "{other}, voici votre glace :ice_cream: !"
 
-#: cogs/miscellaneous/__init__.py:647
+#: cogs/miscellaneous/__init__.py:669
 msgid "User guessing game."
-msgstr "Un jeu de devinette d'utilisateur."
+msgstr "Utilisateur devinant le jeu."
 
-#: cogs/miscellaneous/__init__.py:650
+#: cogs/miscellaneous/__init__.py:672
 msgid "Can you guess who this is?"
-msgstr "Pouvez vous deviner de qui il s’agit?"
+msgstr "Pouvez vous deviner de qui il s’agit ?"
 
-#: cogs/miscellaneous/__init__.py:651
+#: cogs/miscellaneous/__init__.py:673
 #, python-brace-format
 msgid "Their discriminant is `#{disc}`"
 msgstr "Son discriminant est `#{disc}`"
 
-#: cogs/miscellaneous/__init__.py:668
+#: cogs/miscellaneous/__init__.py:690
 #, python-brace-format
 msgid "You didn't guess correctly! It was `{member}`!"
 msgstr "Vous n'avez pas deviné juste! C'était `{member}`!"
 
-#: cogs/miscellaneous/__init__.py:670
+#: cogs/miscellaneous/__init__.py:692
 #, python-brace-format
 msgid "{user}, you are correct!"
 msgstr "{user}, Vous avez raison!"
 
-#: cogs/miscellaneous/__init__.py:675
+#: cogs/miscellaneous/__init__.py:697
 msgid "An alternative to 8ball, but has more bitchy answers."
-msgstr "Une alternative à la boule8, mais a plus de réponses vaches."
+msgstr "Une alternative à 8ball, mais a plus de réponses garce."
 
-#: cogs/miscellaneous/__init__.py:730
+#: cogs/miscellaneous/__init__.py:752
 msgid "Talk to me! (Supports only English)"
-msgstr "Parlez-moi! (Supporte que l'Anglais)"
+msgstr ""
 
-#: cogs/miscellaneous/__init__.py:734
+#: cogs/miscellaneous/__init__.py:756
 msgid "Text too long or too short. May be 3 to 60 characters."
-msgstr "Texte trop long ou trop court. Peut être de 3 à 60 caractères."
+msgstr ""
 
-#: cogs/miscellaneous/__init__.py:757
+#: cogs/miscellaneous/__init__.py:779
 msgid ""
 "Sends today's garfield comic if no date info is passed. Else, it will use "
 "YYYY MM DD or DD MM YYYY depending on where the year is, with the date parts "
 "being seperated with spaces."
 msgstr ""
 
-#: cogs/miscellaneous/__init__.py:776
+#: cogs/miscellaneous/__init__.py:798
 msgid ""
 "Sends today's userfriendly comic if no date info is passed. Else, it will "
 "use YYYY MM DD or DD MM YYYY depending on where the year is, with the date "
 "parts being seperated with spaces."
 msgstr ""
 
-#: cogs/miscellaneous/__init__.py:787
+#: cogs/miscellaneous/__init__.py:809
 msgid "Taken from userfriendly.org"
 msgstr ""
 
-#: cogs/miscellaneous/__init__.py:797
+#: cogs/miscellaneous/__init__.py:819
 msgid "Awesome bots by other coffee-drinking individuals."
 msgstr "Des bots géniaux par d'autres personnes buvant du café."
 
-#: cogs/miscellaneous/__init__.py:799
+#: cogs/miscellaneous/__init__.py:821
 msgid "Partnered Bots"
 msgstr "Bots partenaires"
 
-#: cogs/miscellaneous/__init__.py:800
+#: cogs/miscellaneous/__init__.py:822
 msgid "Awesome bots made by other people!"
-msgstr "Des bots géniaux faits par d'autres personnes!"
+msgstr "Des bots géniaux fabriqués par d'autres personnes!"
 
-#: cogs/miscellaneous/__init__.py:806
+#: cogs/miscellaneous/__init__.py:828
 msgid ""
 "Trivia, Hangman, Minesweeper, Connect 4 and more, right from your chat! A "
 "bot offering non-RPG games made by deprilula28 and Fin.\n"
 "[top.gg Page](https://top.gg/bot/gamesrob)"
 msgstr ""
 
-#: cogs/miscellaneous/__init__.py:812
+#: cogs/miscellaneous/__init__.py:834
 msgid ""
 "Cautious Memory brings wiki-style pages to your server. Use it to document "
 "who's who in your server, inside jokes, or community lore. Includes a full "
@@ -1853,41 +1815,41 @@ msgid ""
 "[top.gg Page](https://top.gg/bot/541707781665718302)"
 msgstr ""
 
-#: cogs/miscellaneous/__init__.py:820
+#: cogs/miscellaneous/__init__.py:842
 msgid "Searches Wikipedia for an entry."
 msgstr ""
 
-#: cogs/miscellaneous/__init__.py:825
+#: cogs/miscellaneous/__init__.py:847
 msgid "No wikipedia entry found."
 msgstr ""
 
-#: cogs/miscellaneous/__init__.py:827
+#: cogs/miscellaneous/__init__.py:849
 msgid "Could not parse article summary."
 msgstr ""
 
-#: cogs/miscellaneous/__init__.py:839
+#: cogs/miscellaneous/__init__.py:861
 msgid "Searches IdleRPG Wiki for an entry."
 msgstr ""
 
-#: cogs/miscellaneous/__init__.py:843
+#: cogs/miscellaneous/__init__.py:865
 msgid ""
 "Check out the official IdleRPG Wiki here:\n"
 "<https://wiki.travitia.xyz/index.php?title=Main_Page>"
 msgstr ""
 
-#: cogs/miscellaneous/__init__.py:850
+#: cogs/miscellaneous/__init__.py:872
 msgid "No entry found."
 msgstr ""
 
-#: cogs/miscellaneous/__init__.py:853
+#: cogs/miscellaneous/__init__.py:875
 msgid "No content to display."
 msgstr ""
 
-#: cogs/miscellaneous/__init__.py:865
+#: cogs/miscellaneous/__init__.py:887
 msgid "About the bot and our websites."
 msgstr ""
 
-#: cogs/miscellaneous/__init__.py:869
+#: cogs/miscellaneous/__init__.py:891
 #, no-python-format
 msgid ""
 "**IdleRPG** is Discord's most advanced medieval RPG bot.\n"
@@ -1916,7 +1878,7 @@ msgid ""
 "> - Gambling Helpline"
 msgstr ""
 
-#: cogs/miscellaneous/__init__.py:897
+#: cogs/miscellaneous/__init__.py:919
 msgid ""
 "1) Only up to two characters per individual\n"
 "2) No abusing or benefiting from bugs or exploits\n"
@@ -1943,42 +1905,56 @@ msgstr ""
 msgid "Increase your raid damage."
 msgstr ""
 
-#: cogs/raid/__init__.py:1915
+#: cogs/raid/__init__.py:1915 cogs/raid/__init__.py:1928
 #, python-brace-format
 msgid ""
 "Upgrading your weapon attack raid multiplier to {newlvl} costs **${price}**, "
 "you are too poor."
 msgstr ""
 
-#: cogs/raid/__init__.py:1929
+#: cogs/raid/__init__.py:1920
+#, python-brace-format
+msgid ""
+"Upgrading your weapon attack raid multiplier to {newlvl} costs **${price}**, "
+"proceed?"
+msgstr ""
+
+#: cogs/raid/__init__.py:1942
 #, python-brace-format
 msgid ""
 "You upgraded your weapon attack raid multiplier to {newlvl} for **${price}**."
 msgstr ""
 
-#: cogs/raid/__init__.py:1937
+#: cogs/raid/__init__.py:1950
 msgid "Increase your raid defense."
 msgstr ""
 
-#: cogs/raid/__init__.py:1943
+#: cogs/raid/__init__.py:1956 cogs/raid/__init__.py:1969
 #, python-brace-format
 msgid ""
 "Upgrading your shield defense raid multiplier to {newlvl} costs **${price}"
 "**, you are too poor."
 msgstr ""
 
-#: cogs/raid/__init__.py:1957
+#: cogs/raid/__init__.py:1961
+#, python-brace-format
+msgid ""
+"Upgrading your shield defense raid multiplier to {newlvl} costs **${price}"
+"**, proceed?"
+msgstr ""
+
+#: cogs/raid/__init__.py:1983
 #, python-brace-format
 msgid ""
 "You upgraded your shield defense raid multiplier to {newlvl} for **${price}"
 "**."
 msgstr ""
 
-#: cogs/raid/__init__.py:1965
+#: cogs/raid/__init__.py:1991
 msgid "View your raid stats."
 msgstr ""
 
-#: cogs/raid/__init__.py:1981
+#: cogs/raid/__init__.py:2007
 #, python-brace-format
 msgid ""
 "**{author}'s raid multipliers**\n"
@@ -1986,11 +1962,11 @@ msgid ""
 "Defense Multiplier: x{deff} (Upgrading: ${deffp})"
 msgstr ""
 
-#: cogs/raid/__init__.py:1990
+#: cogs/raid/__init__.py:2016
 msgid "Informs you about joining raids."
 msgstr ""
 
-#: cogs/raid/__init__.py:1993
+#: cogs/raid/__init__.py:2019
 #, python-brace-format
 msgid ""
 "Did you ever want to join together with other players to defeat the dragon "
@@ -2010,7 +1986,7 @@ msgstr "Magasin IdleRPG"
 #, python-brace-format
 msgid "Welcome! Use `{prefix}purchase time/luck/money` to buy something."
 msgstr ""
-"Bienvenue! Utilisez `{prefix}purchase time/luck/money` pour acheter quelque "
+"Bienvenue ! Utilisez `{prefix}purchase time/luck/money` pour acheter quelque "
 "chose."
 
 #: cogs/store/__init__.py:42
@@ -2023,11 +1999,11 @@ msgid ""
 "`#2` Luck Booster\t**$500**\tBoosts adventure luck by 25%\n"
 "`#3` Money Booster\t**$1000**\tBoosts adventure money rewards by 25%"
 msgstr ""
-"`#1` Booster de durée\t**1000$**\tRéduit la durée requise pour compléter une "
+"`#1` Booster de durée\t**$1000**\tRéduit la durée requise pour compléter une "
 "aventure de 50%\n"
-"`#2` Booster de chance\t**500$**\tAugmente la chance durant une aventure de "
+"`#2` Booster de chance\t**$500**\tAugmente la chance durant une aventure de "
 "25%\n"
-"`#3` Booster d’argent\t**1000$**\tAugmente l’argent obtenu lors d’une "
+"`#3` Booster d’argent\t**$1000**\tAugmente l’argent obtenu lors d’une "
 "aventure de 25%"
 
 #: cogs/store/__init__.py:55
@@ -2117,7 +2093,7 @@ msgid ""
 "Successfully activated a **{booster} booster** for the next **24 hours**!"
 msgstr ""
 "Votre **booster {booster}** a été activé avec succès pour les prochaines "
-"**24 heures**!"
+"**24 heures** !"
 
 #: cogs/store/__init__.py:167
 msgid "This will overwrite all active boosters and refresh them. Are you sure?"
@@ -2142,16 +2118,11 @@ msgid ""
 "For more help, join the support server at https://discord.gg/MSBatf6.**\n"
 "Check out our partners using the partners command!"
 msgstr ""
-"**Bienvenue dans l’aide de IdleRPG. Utilisez les flèches pour vous "
-"déplacer.\n"
-"Pour plus d’aide, rejoignez le serveur de support sur https://discord.gg/"
-"MSBatf6.**\n"
-"Découvrez nos partenaires en utilisant la commande partners!"
 
 #: cogs/help/__init__.py:75
 #, python-brace-format
 msgid "IdleRPG Version {version}"
-msgstr "Version IdleRPG {version}"
+msgstr "IdleRPG Version {version}"
 
 #: cogs/help/__init__.py:84
 #, python-brace-format
@@ -2161,7 +2132,7 @@ msgstr "**{category} Commandes**"
 #: cogs/help/__init__.py:87
 #, python-brace-format
 msgid "IdleRPG Version {version} | Page {page} of {maxpages}"
-msgstr "Version IdleRPG {version} | Page {page} sur {maxpages}"
+msgstr "IdleRPG Version {version} | Page {page} sur {maxpages}"
 
 #: cogs/help/__init__.py:96
 msgid "No Description set"
@@ -2175,23 +2146,20 @@ msgstr "Envoie un lien vers la documentation officielle."
 #, python-brace-format
 msgid "<:blackcheck:441826948919066625> **Check {url} for a list of commands**"
 msgstr ""
-"<:blackcheck:441826948919066625> **Vérifiez {url} pour la liste des "
-"commandes**"
 
 #: cogs/help/__init__.py:119
 #, python-brace-format
 msgid "<:blackcheck:441826948919066625> **Check {url} for a tutorial and FAQ**"
 msgstr ""
-"<:blackcheck:441826948919066625> **Vérifiez {url} pour un tutoriel et FAQ**"
 
 #: cogs/help/__init__.py:127
 msgid "Unban an entitiy from using $helpme."
-msgstr "Débanni un utilisateur d'utiliser $helpme."
+msgstr ""
 
 #: cogs/help/__init__.py:135
 #, python-brace-format
 msgid "{thing} has been unbanned for the helpme command :ok_hand:"
-msgstr "{thing} a été débanni pour la commande helpme :ok_hand:"
+msgstr ""
 
 #: cogs/help/__init__.py:144
 msgid "Ban a user from using $helpme."
@@ -2199,42 +2167,38 @@ msgstr ""
 
 #: cogs/help/__init__.py:153
 msgid "Error... Maybe they're already banned?"
-msgstr "Erreur peut-être sont-ils déjà banni?"
+msgstr ""
 
 #: cogs/help/__init__.py:155
 #, python-brace-format
 msgid "{thing} has been banned for the helpme command :ok_hand:"
-msgstr "{thing} a été banni pour la commande helpme :ok_hand:"
+msgstr ""
 
 #: cogs/help/__init__.py:164
 msgid "Allows a support team member to join your server for individual help."
 msgstr ""
-"Autoriser un membre de l'équipe de support à rejoindre votre serveur pour "
-"une aide individuelle."
 
 #: cogs/help/__init__.py:172
 msgid "You or your server has been blacklisted for some reason."
-msgstr "Vous ou votre serveur a été blacklisté pour certaines raisons."
+msgstr ""
 
 #: cogs/help/__init__.py:177
 msgid ""
 "Are you sure? This will notify our support team and allow them to join the "
 "server."
 msgstr ""
-"En êtes vous sûr(e)? Cela va notifiez notre équipe de support et les "
-"autorisez a rejoindre le serveur."
 
 #: cogs/help/__init__.py:185
 msgid "Error when creating Invite."
-msgstr "Erreur lors de la création de l'invitation."
+msgstr ""
 
 #: cogs/help/__init__.py:197
 msgid "Support team has been notified and will join as soon as possible!"
-msgstr "L'équipe de support a été notifiée et joindra dès que possible!"
+msgstr ""
 
 #: cogs/help/__init__.py:205
 msgid "Shows help about the bot."
-msgstr "Montre l'aide à propos du bot."
+msgstr ""
 
 #: cogs/help/__init__.py:209
 msgid "Sorry, that command does not exist."
@@ -2258,7 +2222,7 @@ msgstr ""
 
 #: cogs/patreon/__init__.py:83
 msgid "[Patreon Only] Changes an item name."
-msgstr "[Patreon seulement] Change le nom d’un objet."
+msgstr "[Patreon seulement] Change le nom d’un item."
 
 #: cogs/patreon/__init__.py:85
 msgid "Name too long."
@@ -2323,7 +2287,7 @@ msgid ""
 "either a png or jpeg?"
 msgstr ""
 "Je n’ai pas pu lire cette URL. Est-ce qu’elle commence par `http://` ou "
-"`https://` et est un png ou un jpeg?"
+"`https://` et est un png ou un jpeg ?"
 
 #: cogs/patreon/__init__.py:215
 msgid "The URL is too long."
@@ -2340,7 +2304,7 @@ msgstr ""
 
 #: cogs/patreon/__init__.py:219
 msgid "Your profile picture has been reset."
-msgstr "Votre image de profil a été réinitialisée."
+msgstr "Votre image de profil a été reset."
 
 #: cogs/patreon/__init__.py:225
 msgid "[Patreon Only] Generates a profile background based on an image."
@@ -2363,15 +2327,12 @@ msgstr ""
 
 #: cogs/patreon/__init__.py:292
 msgid "Update your background to one from the events."
-msgstr ""
-"Mettez à jour votre image de fond avec l’une des images des événements."
+msgstr "Mets à jour votre image de fond avec l’une des images des événements."
 
 #: cogs/patreon/__init__.py:300
 msgid ""
 "You do not have an eventbackground. They can be acquired on seasonal events."
 msgstr ""
-"Vous n'avez pas d'image de fond d'événement. Ils peuvent être acquis durant "
-"les événements saisonniers."
 
 #: cogs/patreon/__init__.py:308
 #, python-brace-format
@@ -2383,7 +2344,7 @@ msgstr ""
 
 #: cogs/patreon/__init__.py:314
 msgid "Background updated!"
-msgstr "Image de fond mise à jour!"
+msgstr "Image de fond mise à jour !"
 
 #: cogs/classes/__init__.py:42
 msgid ""
@@ -2425,10 +2386,6 @@ msgid ""
 "successful.\n"
 "+8% success chance per evolution."
 msgstr ""
-"Le voleur d'argent sournois…\n"
-"Accédez aux commandes `{prefix}steal` pour voler 10% de l'argent de la "
-"cible, si c'est une réussite.\n"
-"+8% chance de succès par évolution."
 
 #: cogs/classes/__init__.py:69
 msgid "Mage"
@@ -2508,7 +2465,7 @@ msgstr "Votre nouvelle classe est maintenant `{profession}`."
 #: cogs/classes/__init__.py:159
 msgid "You're too poor for a class change, it costs **$5000**."
 msgstr ""
-"Vous êtes trop pauvre pour changer de classe, le coût est de **5000$**."
+"Vous êtes trop pauvre pour changer de classe, le coût est de **$5000**."
 
 #: cogs/classes/__init__.py:179
 #, python-brace-format
@@ -2550,7 +2507,7 @@ msgstr ""
 
 #: cogs/classes/__init__.py:258
 msgid "[Thief Only] Steal money!"
-msgstr "[Voleur seulement] Volez de l’argent!"
+msgstr "[Voleur seulement] Volez de l’argent !"
 
 #: cogs/classes/__init__.py:280
 msgid "You attempted to steal from a bot VIP, but the bodyguards caught you."
@@ -2584,47 +2541,47 @@ msgstr "Niveau"
 
 #: cogs/classes/__init__.py:323
 msgid "Food"
-msgstr "Nourriture"
+msgstr ""
 
 #: cogs/classes/__init__.py:325
 msgid "Drinks"
-msgstr "Boissons"
+msgstr ""
 
 #: cogs/classes/__init__.py:327
 msgid "Love"
-msgstr "Amour"
+msgstr ""
 
 #: cogs/classes/__init__.py:328
 msgid "Joy"
-msgstr "Joie"
+msgstr ""
 
 #: cogs/classes/__init__.py:339
 msgid "[Ranger Only] Feed your pet."
-msgstr "[Ranger uniquement] Nourrir votre animal."
+msgstr ""
 
 #: cogs/classes/__init__.py:341
 msgid "Potato"
-msgstr "Patate"
+msgstr ""
 
 #: cogs/classes/__init__.py:342
 msgid "Apple"
-msgstr "Pomme"
+msgstr ""
 
 #: cogs/classes/__init__.py:343
 msgid "Cucumber"
-msgstr "Concombre"
+msgstr ""
 
 #: cogs/classes/__init__.py:344
 msgid "Meat"
-msgstr "Viande"
+msgstr ""
 
 #: cogs/classes/__init__.py:345
 msgid "Salad"
-msgstr "Salade"
+msgstr ""
 
 #: cogs/classes/__init__.py:346
 msgid "Sushi"
-msgstr "Sushi"
+msgstr ""
 
 #: cogs/classes/__init__.py:347
 msgid "Adrian's Power Poop"
@@ -2632,7 +2589,7 @@ msgstr ""
 
 #: cogs/classes/__init__.py:354
 msgid "Feed your pet"
-msgstr "Nourrir votre animal"
+msgstr ""
 
 #: cogs/classes/__init__.py:358 cogs/classes/__init__.py:408
 #: cogs/marriage/__init__.py:238
@@ -2652,7 +2609,7 @@ msgstr ""
 
 #: cogs/classes/__init__.py:391
 msgid "Some Water"
-msgstr "De l'eau"
+msgstr ""
 
 #: cogs/classes/__init__.py:392
 msgid "A bottle of water"
@@ -2664,19 +2621,19 @@ msgstr ""
 
 #: cogs/classes/__init__.py:394
 msgid "Wine"
-msgstr "Vin"
+msgstr ""
 
 #: cogs/classes/__init__.py:395
 msgid "Beer"
-msgstr "Bière"
+msgstr ""
 
 #: cogs/classes/__init__.py:396
 msgid "Vodka"
-msgstr "Vodka"
+msgstr ""
 
 #: cogs/classes/__init__.py:397
 msgid "Adrian's Cocktail"
-msgstr "Le cocktail d'Adrian"
+msgstr ""
 
 #: cogs/classes/__init__.py:404
 msgid "Give your pet something to drink"
@@ -2769,7 +2726,7 @@ msgstr ""
 msgid "[Ranger Only] Let your pet get a weapon for you!"
 msgstr ""
 "[Ranger seulement] Envoyez votre animal de compagnie à la recherche d’une "
-"arme!"
+"arme !"
 
 #: cogs/classes/__init__.py:539
 msgid "Your pet is not happy enough to hunt an item. Try making it joyful!"
@@ -2777,7 +2734,7 @@ msgstr ""
 
 #: cogs/classes/__init__.py:550
 msgid "Your pet found an item!"
-msgstr "Votre animal de compagnie a trouvé un objet!"
+msgstr "Votre animal de compagnie a trouvé un item !"
 
 #: cogs/classes/__init__.py:562
 msgid "Your pet needs to recover, wait a day to retry"
@@ -2785,244 +2742,234 @@ msgstr ""
 "Votre animal de compagnie a besoin de repos, attendez une journée pour "
 "essayer à nouveau"
 
-#: cogs/music/__init__.py:99
+#: cogs/music/__init__.py:146
 #, python-brace-format
 msgid ""
 "{user} wants to skip a track. React if you agree. **{current}/{total}** "
 "voted for it!"
 msgstr ""
 
-#: cogs/music/__init__.py:103
+#: cogs/music/__init__.py:150
 #, python-brace-format
 msgid ""
 "{user} wants to pause/resume the player. React if you agree. **{current}/"
 "{total}** voted for it!"
 msgstr ""
 
-#: cogs/music/__init__.py:107
+#: cogs/music/__init__.py:154
 #, python-brace-format
 msgid ""
 "{user} wants to stop playback. React if you agree. **{current}/{total}** "
 "voted for it!"
 msgstr ""
 
-#: cogs/music/__init__.py:111
+#: cogs/music/__init__.py:158
 #, python-brace-format
 msgid ""
 "{user} wants to change the volume. React if you agree. **{current}/{total}** "
 "voted for it!"
 msgstr ""
 
-#: cogs/music/__init__.py:115
+#: cogs/music/__init__.py:162
 #, python-brace-format
 msgid ""
 "{user} wants to toggle repeating. React if you agree. **{current}/{total}** "
 "voted for it!"
 msgstr ""
 
-#: cogs/music/__init__.py:119
+#: cogs/music/__init__.py:166
 #, python-brace-format
 msgid ""
 "{user} wants to change the equalizer. React if you agree. **{current}/{total}"
 "** voted for it!"
 msgstr ""
 
-#: cogs/music/__init__.py:156
+#: cogs/music/__init__.py:203
 msgid "Vote passed!"
 msgstr ""
 
-#: cogs/music/__init__.py:213
-msgid ""
-"Query YouTube or SoundCloud for a track and play it or add it to the "
-"playlist."
+#: cogs/music/__init__.py:264
+msgid "Query for a track and play it or add it to the playlist."
 msgstr ""
 
-#: cogs/music/__init__.py:227 cogs/akinator/__init__.py:178
-#: cogs/akinator/__init__.py:213 cogs/akinator/__init__.py:245
-#: cogs/akinator/__init__.py:293
-msgid "No results..."
-msgstr "Aucune résultats..."
+#: cogs/music/__init__.py:266
+msgid "Downloading track... This might take up to 3 seconds..."
+msgstr ""
 
-#: cogs/music/__init__.py:246
+#: cogs/music/__init__.py:278 cogs/music/__init__.py:287
+#: cogs/akinator/__init__.py:178 cogs/akinator/__init__.py:213
+#: cogs/akinator/__init__.py:245 cogs/akinator/__init__.py:293
+msgid "No results..."
+msgstr ""
+
+#: cogs/music/__init__.py:306
 msgid ""
 "Lock/Unlock the player if you are the DJ. Allows noone else to control music."
 msgstr ""
 
-#: cogs/music/__init__.py:261
+#: cogs/music/__init__.py:321
 msgid "Toggle repeat of the current track."
 msgstr ""
 
-#: cogs/music/__init__.py:275
+#: cogs/music/__init__.py:335
 msgid "Skip the currently playing song."
-msgstr "Passer la chanson courante."
+msgstr ""
 
-#: cogs/music/__init__.py:286
+#: cogs/music/__init__.py:346
 msgid "Stops the music and leaves voice chat."
 msgstr ""
 
-#: cogs/music/__init__.py:300
+#: cogs/music/__init__.py:360
 msgid "Changes the playback's volume"
-msgstr "Change le volume de la lecture"
+msgstr "Change le volume du playback"
 
-#: cogs/music/__init__.py:304
+#: cogs/music/__init__.py:364
 #, python-brace-format
 msgid ""
 ":warning:`Playback volume is going to change to {volume} in 5 seconds. To "
 "avoid the sudden earrape, control the volume on client side!`"
 msgstr ""
-":warning:`Le volume de la lecture va changer à {volume} in 5 seconds. Afin "
-"d'éviter un viol d'oreille soudain, contrôlez le volume du côté du client!`"
+":warning:`Le volume de fond va changer à {volume} dans 5 secondes. Pour "
+"éviter d'être sourd, changer le son dans le client!`"
 
-#: cogs/music/__init__.py:313
+#: cogs/music/__init__.py:373
 #, python-brace-format
 msgid ":white_check_mark:` Volume successfully changed to {volume}!`"
-msgstr ":white_check_mark:` Le volume a changé avec succès à {volume}!`"
+msgstr ":white_check_mark:` Volume changé avec succès à {volume}!`"
 
-#: cogs/music/__init__.py:326
+#: cogs/music/__init__.py:386
 msgid "Toggles the music playback's paused state"
-msgstr "Mets la lecture de music en pause"
+msgstr "Bascule l'état de pause de la lecture de musique"
 
-#: cogs/music/__init__.py:329
+#: cogs/music/__init__.py:389
 msgid ":white_check_mark:`Song paused!`"
-msgstr ":white_check_mark:`Chanson en pause!`"
+msgstr ":white_check_mark:`Musique en pause!`"
 
-#: cogs/music/__init__.py:332
+#: cogs/music/__init__.py:392
 msgid ":white_check_mark:`Song resumed!`"
-msgstr ":white_check_mark:`La chanson a résumée!`"
+msgstr ":white_check_mark:`La chanson à repris!`"
 
-#: cogs/music/__init__.py:341
+#: cogs/music/__init__.py:401
 msgid "Sets the equalizer. May be flat, piano, metal or boost."
 msgstr ""
 
-#: cogs/music/__init__.py:344
+#: cogs/music/__init__.py:404
 msgid "Not a valid equalizer. May be flat, piano, metal or boost."
 msgstr ""
 
-#: cogs/music/__init__.py:355
+#: cogs/music/__init__.py:415
 msgid "Displays some information about the current song."
-msgstr "Afficher des informations sur la chanson actuel."
+msgstr ""
 
-#: cogs/music/__init__.py:369
+#: cogs/music/__init__.py:423
 msgid "Now playing..."
-msgstr "En train de jouer…"
+msgstr "En train de jouer..."
 
-#: cogs/music/__init__.py:371
+#: cogs/music/__init__.py:425
 msgid "Title"
 msgstr "Titre"
 
-#: cogs/music/__init__.py:374
-msgid "Uploader"
-msgstr "Téléchargement"
+#: cogs/music/__init__.py:428
+msgid "Artist"
+msgstr ""
 
-#: cogs/music/__init__.py:378 cogs/music/__init__.py:396
-#: cogs/music/__init__.py:398
-msgid "Length"
-msgstr "Durée"
-
-#: cogs/music/__init__.py:381
-msgid "Remaining"
-msgstr "Restant"
-
-#: cogs/music/__init__.py:388
-msgid "Position"
-msgstr "Position"
-
-#: cogs/music/__init__.py:399
+#: cogs/music/__init__.py:431
 msgid "Click me!"
-msgstr "Cliquez-moi!"
+msgstr "Clickez-moi !"
 
-#: cogs/music/__init__.py:402
+#: cogs/music/__init__.py:434
 msgid "Link to the original"
 msgstr "Lien vers l’original"
 
-#: cogs/music/__init__.py:407
+#: cogs/music/__init__.py:442
 msgid "Volume"
 msgstr "Volume"
 
-#: cogs/music/__init__.py:409
+#: cogs/music/__init__.py:444
 msgid "Playing status"
 msgstr "Status en cours"
 
-#: cogs/music/__init__.py:409
+#: cogs/music/__init__.py:444
 msgid "`⏸Paused`"
 msgstr "`⏸En pause`"
 
-#: cogs/music/__init__.py:410
+#: cogs/music/__init__.py:445
 msgid "DJ"
-msgstr "DJ"
+msgstr ""
 
-#: cogs/music/__init__.py:412
+#: cogs/music/__init__.py:447
 msgid "Locked"
-msgstr "Verrouiller"
+msgstr ""
 
-#: cogs/music/__init__.py:412 cogs/music/__init__.py:415
+#: cogs/music/__init__.py:447 cogs/music/__init__.py:450
+#: cogs/music/__init__.py:454
 msgid "No"
-msgstr "Non"
+msgstr ""
 
-#: cogs/music/__init__.py:415
+#: cogs/music/__init__.py:450
 msgid "Looping"
 msgstr ""
 
-#: cogs/music/__init__.py:417
+#: cogs/music/__init__.py:453
+msgid "Explicit"
+msgstr ""
+
+#: cogs/music/__init__.py:456
 msgid "Equalizer"
 msgstr ""
 
-#: cogs/music/__init__.py:429
-msgid "```No information```"
-msgstr "```Aucune information```"
-
-#: cogs/music/__init__.py:434
+#: cogs/music/__init__.py:468
 #, python-brace-format
 msgid "Song requested by: {user}"
 msgstr "Musique demandé par: {user}"
 
-#: cogs/music/__init__.py:444
+#: cogs/music/__init__.py:478
 msgid "Show the next (maximum 5) tracks in the queue."
-msgstr "Voir les prochaines chanson (maximum 5) de la file d'attente."
+msgstr ""
 
-#: cogs/music/__init__.py:457
+#: cogs/music/__init__.py:488
 msgid "Upcoming entries"
-msgstr "Les prochaines entrées"
+msgstr "Les pistes à venir"
 
-#: cogs/music/__init__.py:466
+#: cogs/music/__init__.py:497
 msgid ":warning:`No more entries left.`"
-msgstr ":warning:`Il ne reste plus d'entrée.`"
+msgstr ":warning:`Aucune entré restante`"
 
-#: cogs/music/__init__.py:472
+#: cogs/music/__init__.py:503
 msgid ""
 "Retrieves song lyrics. If no song specified, will check the current playing "
 "song."
 msgstr ""
 
-#: cogs/music/__init__.py:478
+#: cogs/music/__init__.py:509
 msgid "I am not playing. Please specify a song to look for."
 msgstr ""
 
-#: cogs/music/__init__.py:482
+#: cogs/music/__init__.py:513
 msgid "Please specify a song."
 msgstr ""
 
-#: cogs/music/__init__.py:484
+#: cogs/music/__init__.py:515
 msgid ":x: Look for a longer query!"
 msgstr ""
 
-#: cogs/music/__init__.py:492 cogs/music/__init__.py:495
+#: cogs/music/__init__.py:523 cogs/music/__init__.py:526
 msgid ":warning: No results!"
-msgstr ":warning: Aucun résultat !"
+msgstr ""
 
-#: cogs/music/__init__.py:499
+#: cogs/music/__init__.py:530
 msgid "No lyrics found!"
-msgstr "Aucune parole trouvée !"
+msgstr ""
 
-#: cogs/music/__init__.py:561
+#: cogs/music/__init__.py:564
 #, python-brace-format
 msgid "🎧 Added {title} to the queue..."
 msgstr "🎧 {title} ajouté à la file..."
 
-#: cogs/music/__init__.py:569
+#: cogs/music/__init__.py:570 cogs/music/__init__.py:573
 #, python-brace-format
 msgid "🎧 Playing {title}..."
-msgstr "🎧 Musique en cours {title}..."
+msgstr "🎧 musique en cours {title}..."
 
 #: cogs/adventure/__init__.py:45
 msgid "A list of all adventures with success rates, name and time it takes."
@@ -3032,7 +2979,7 @@ msgstr ""
 
 #: cogs/adventure/__init__.py:50
 msgid "Loading images..."
-msgstr "Chargement des image …"
+msgstr "Chargement des images..."
 
 #: cogs/adventure/__init__.py:91
 msgid "Sends your character on an adventure."
@@ -3163,7 +3110,7 @@ msgstr ""
 
 #: cogs/adventure/__init__.py:372
 msgid "You died."
-msgstr "Vous êtes mort(e)."
+msgstr "Vous êtes mort."
 
 #: cogs/adventure/__init__.py:387
 #, python-brace-format
@@ -3185,7 +3132,7 @@ msgstr ""
 
 #: cogs/adventure/__init__.py:447
 msgid "You died on your mission. Try again!"
-msgstr "Vous êtes mort(e) lors de votre mission. Essayez à nouveau!"
+msgstr "Vous êtes mort lors de votre mission. Essayez à nouveau !"
 
 #: cogs/adventure/__init__.py:517
 #, python-brace-format
@@ -3213,7 +3160,7 @@ msgid ""
 "one!"
 msgstr ""
 "Votre mission a été annulée. Utilisez `{prefix}adventure [missionID]` pour "
-"en commencer une nouvelle!"
+"en commencer une nouvelle !"
 
 #: cogs/adventure/__init__.py:550
 msgid ""
@@ -3226,33 +3173,41 @@ msgid ""
 "Out of **{total}** adventures, you died **{deaths}** times and survived "
 "**{completed}** times, which is a success rate of **{rate}%**."
 msgstr ""
-"Sur un total de **{total}** aventures, vous êtes mort(e) **{deaths}** fois "
-"et avez survécu **{completed}** fois, ce qui vous donne un taux de succès de "
+"Sur un total de **{total}** aventures, vous êtes morts **{deaths}** fois et "
+"avez survécu **{completed}** fois, ce qui vous donne un taux de succès de "
 "**{rate}%**."
 
-#: cogs/shard_communication/__init__.py:406 cogs/guild/__init__.py:1100
+#: cogs/shard_communication/__init__.py:430 cogs/guild/__init__.py:1148
 #: cogs/alliance/__init__.py:773
 msgid "Lists all your cooldowns."
 msgstr "Liste tous vos cooldowns."
 
-#: cogs/shard_communication/__init__.py:411 cogs/guild/__init__.py:1107
+#: cogs/shard_communication/__init__.py:435 cogs/guild/__init__.py:1155
 msgid "You don't have any active cooldown at the moment."
 msgstr "Vous n’avez aucun cooldown actif pour le moment."
 
-#: cogs/shard_communication/__init__.py:413 cogs/guild/__init__.py:1109
+#: cogs/shard_communication/__init__.py:437 cogs/guild/__init__.py:1157
 #: cogs/alliance/__init__.py:783
 msgid "Commands on cooldown:"
 msgstr "Commandes en cooldown:"
 
-#: cogs/shard_communication/__init__.py:418 cogs/guild/__init__.py:1114
+#: cogs/shard_communication/__init__.py:442 cogs/guild/__init__.py:1162
 #: cogs/alliance/__init__.py:788
 #, python-brace-format
 msgid "{cmd} is on cooldown and will be available after {time}"
 msgstr "{cmd} est en cooldown et sera disponible dans {time}"
 
-#: cogs/shard_communication/__init__.py:423
+#: cogs/shard_communication/__init__.py:447
 #, python-brace-format
 msgid "Adventure is running and will be done after {time}"
+msgstr ""
+
+#: cogs/shard_communication/__init__.py:456
+msgid "Lists all clusters and their current status."
+msgstr ""
+
+#: cogs/shard_communication/__init__.py:459
+msgid "Launcher is dead, that is really bad."
 msgstr ""
 
 #: cogs/gambling/__init__.py:218
@@ -3262,7 +3217,7 @@ msgid ""
 "You have a {pretty_player} for a total of {player}\n"
 "{additional}"
 msgstr ""
-"Le croupier a {pretty_dealer} pour un total de {dealer}\n"
+"Le dealer a {pretty_dealer} pour un total de {dealer}\n"
 "Vous avez {pretty_player} pour un total de {player}\n"
 "{additional}"
 
@@ -3271,12 +3226,13 @@ msgid ""
 "Would you like insurance? It will cost half your bet and will get you 2:1 "
 "back if the dealer has a blackjack. Else it is gone."
 msgstr ""
-"Voulez vous une assurance? Cela vous coûtera la moitié de votre pari et vous "
-"redonnera 2:1 en retour si le dealer a un blackjack. Sinon tout est perdu."
+"Voulez vous une assurance ? Cela vous coûtera la moitié de votre pari et "
+"vous redonnera 2:1 en retour si le dealer a un blackjack. Sinon tout est "
+"perdu."
 
 #: cogs/gambling/__init__.py:250
 msgid "The dealer got a blackjack. You had insurance and lost nothing."
-msgstr "Le croupier a un blackjack. Vous avez une assurance et ne perdez rien."
+msgstr "Le dealer a un blackjack. Vous avez une assurance et ne perdez rien."
 
 #: cogs/gambling/__init__.py:256
 #, python-brace-format
@@ -3335,7 +3291,7 @@ msgstr ""
 
 #: cogs/gambling/__init__.py:417
 msgid "Draws a random card."
-msgstr "Envoie une carte aléatoire."
+msgstr "Envois une carte aléatoire."
 
 #: cogs/gambling/__init__.py:426
 msgid ""
@@ -3382,12 +3338,12 @@ msgstr "Lancez une pièce et pariez sur le résultat."
 #: cogs/gambling/__init__.py:501
 #, python-brace-format
 msgid "{result[1]} It's **{result[0]}**! You won **${amount}**!"
-msgstr "{result[1]} C’est **{result[0]}** ! Vous avez gagné **{amount}$**!"
+msgstr "{result[1]} C’est **{result[0]}** ! Vous avez gagné **${amount}** !"
 
 #: cogs/gambling/__init__.py:520
 #, python-brace-format
 msgid "{result[1]} It's **{result[0]}**! You lost **${amount}**!"
-msgstr "{result[1]} C’est **{result[0]}** ! Vous avez perdu **{amount}$**!"
+msgstr "{result[1]} C’est **{result[0]}** ! Vous avez perdu **${amount}** !"
 
 #: cogs/gambling/__init__.py:537
 msgid ""
@@ -3403,14 +3359,14 @@ msgstr "Choix invalide. Choisissez entre `1` à `{maximum}`."
 
 #: cogs/gambling/__init__.py:546
 msgid "Spend it in a better way. C'mon!"
-msgstr "Dépensez votre argent d'une meilleur façon voyons!"
+msgstr "Dépensez votre argent d'une meilleur façon voyons !"
 
 #: cogs/gambling/__init__.py:566
 #, python-brace-format
 msgid ""
 "You won **${money}**! The random number was `{num}`, you tipped `{tip}`."
 msgstr ""
-"Vous avez gagné **{money}$**! Le numéro aléatoire était `{num}`,vous avez "
+"Vous avez gagné **${money}**! Le numéro aléatoire était `{num}`,vous avez "
 "choisi `{tip}`."
 
 #: cogs/gambling/__init__.py:589
@@ -3418,7 +3374,7 @@ msgstr ""
 msgid ""
 "You lost **${money}**! The random number was `{num}`, you tipped `{tip}`."
 msgstr ""
-"Vous avez perdu **{money}$**! Le numéro aléatoire était`{num}`, vous avez "
+"Vous avez perdu **${money}**! Le numéro aléatoire était`{num}`, vous avez "
 "choisi `{tip}`."
 
 #: cogs/gambling/__init__.py:598
@@ -3478,7 +3434,7 @@ msgstr ""
 #: cogs/trading/__init__.py:48
 #, python-brace-format
 msgid "You don't own an item with the ID: {itemid}"
-msgstr "Vous ne possédez aucun objet avec l’ID: {itemid}"
+msgstr "Vous ne possédez aucun item avec l’ID: {itemid}"
 
 #: cogs/trading/__init__.py:53 cogs/trading/__init__.py:308
 msgid "You may not sell donator-modified items."
@@ -3495,7 +3451,7 @@ msgstr ""
 msgid ""
 "Your item is either equal to a Starter Item or worse. Noone would buy it."
 msgstr ""
-"Votre objet est soit égal a un objet de base, ou pire. Personne ne "
+"Votre item est soit égal a un item de base, ou pire. Personne ne "
 "l’achèterait."
 
 #: cogs/trading/__init__.py:74
@@ -3516,12 +3472,12 @@ msgstr ""
 
 #: cogs/trading/__init__.py:112
 msgid "Buys an item from the global market."
-msgstr "Achète un objet sur le marché global."
+msgstr "Achète un item sur le marché global."
 
 #: cogs/trading/__init__.py:120
 #, python-brace-format
 msgid "There is no item in the shop with the ID: {itemid}"
-msgstr "Il n’y a aucun objet dans la magasin possédant l’ID: {itemid}"
+msgstr "Il n’y a aucun item dans la magasin possédant l’ID: {itemid}"
 
 #: cogs/trading/__init__.py:125
 msgid "You may not buy your own items."
@@ -3529,7 +3485,7 @@ msgstr ""
 
 #: cogs/trading/__init__.py:131
 msgid "You're too poor to buy this item."
-msgstr "Vous êtes trop pauvre pour acheter cet objet."
+msgstr "Vous êtes trop pauvre pour acheter cet item."
 
 #: cogs/trading/__init__.py:171
 #, python-brace-format
@@ -3537,18 +3493,18 @@ msgid ""
 "Successfully bought item `{id}`. Use `{prefix}inventory` to view your "
 "updated inventory."
 msgstr ""
-"Vous avez acheté l’objet `{id}` avec succès. Utilisez `{prefix}inventory` "
+"Vous avez acheté l’item `{id}` avec succès. Utilisez `{prefix}inventory` "
 "pour voir votre inventaire mis à jour."
 
 #: cogs/trading/__init__.py:193
 msgid "Takes an item off the shop."
-msgstr "Retire un objet du magasin."
+msgstr "Retire un item du magasin."
 
 #: cogs/trading/__init__.py:203
 #, python-brace-format
 msgid "You don't have an item of yours in the shop with the ID `{itemid}`."
 msgstr ""
-"Vous n’avez aucun de vos objets dans le magasin possédant l’ID `{itemid}`."
+"Vous n’avez aucun de vos items dans le magasin possédant l’ID `{itemid}`."
 
 #: cogs/trading/__init__.py:216
 #, python-brace-format
@@ -3556,7 +3512,7 @@ msgid ""
 "Successfully removed item `{itemid}` from the shop and put it in your "
 "inventory."
 msgstr ""
-"Votre objet `{itemid}` a été retiré du magasin avec succès et se trouve de "
+"Votre item `{itemid}` a été retiré du magasin avec succès et se trouve de "
 "nouveau dans votre inventaire."
 
 #: cogs/trading/__init__.py:229
@@ -3576,24 +3532,24 @@ msgstr "Aucun résultats."
 msgid "IdleRPG Shop"
 msgstr "Magasin IdleRPG"
 
-#: cogs/trading/__init__.py:263 cogs/trading/__init__.py:523
+#: cogs/trading/__init__.py:263 cogs/trading/__init__.py:525
 #, python-brace-format
 msgid "Use `{prefix}buy {item}` to buy this."
 msgstr "Utilisez `{prefix}buy {item}` pour acheter ceci."
 
-#: cogs/trading/__init__.py:274 cogs/trading/__init__.py:533
+#: cogs/trading/__init__.py:274 cogs/trading/__init__.py:535
 #: cogs/marriage/__init__.py:224
 msgid "Price"
 msgstr "Prix"
 
-#: cogs/trading/__init__.py:278 cogs/trading/__init__.py:535
+#: cogs/trading/__init__.py:278 cogs/trading/__init__.py:537
 #, python-brace-format
 msgid "Item {num} of {total}"
-msgstr "Objet {num} sur {total}"
+msgstr "Item {num} sur {total}"
 
 #: cogs/trading/__init__.py:292
 msgid "Offer an item to a specific user."
-msgstr "Offrez un objet a un utilisateur spécifique."
+msgstr "Offrez un item a un utilisateur spécifique."
 
 #: cogs/trading/__init__.py:294
 msgid "You may not offer items to yourself."
@@ -3602,11 +3558,11 @@ msgstr ""
 #: cogs/trading/__init__.py:312
 #, python-brace-format
 msgid "Are you sure you want to sell your equipped {item}?"
-msgstr "Êtes-vous sûr de vouloir vendre votre {item} actuellement équipé?"
+msgstr "Êtes-vous sûr de vouloir vendre votre {item} actuellement équipé ?"
 
 #: cogs/trading/__init__.py:316
 msgid "Item selling cancelled."
-msgstr "Vente de l'objet annulée."
+msgstr "Vente de l’item annulée."
 
 #: cogs/trading/__init__.py:320
 #, python-brace-format
@@ -3615,8 +3571,8 @@ msgid ""
 "${price}**. You have **2 Minutes** to accept the trade or the offer will be "
 "canceled."
 msgstr ""
-"{user}, {author} vous propose d’acheter un objet! Réagissez pour l’acheter! "
-"Le prix est de **{price}$**. Vous avez **2 Minutes** pour acceptez l’échange "
+"{user}, {author} vous propose d’acheter un item ! Réagissez pour l’acheter ! "
+"Le prix est de **${price}**. Vous avez **2 Minutes** pour acceptez l’échange "
 "ou l’offre sera annulée."
 
 #: cogs/trading/__init__.py:325
@@ -3626,12 +3582,12 @@ msgstr "Ils n’en ont pas voulu."
 #: cogs/trading/__init__.py:329
 #, python-brace-format
 msgid "{user}, you're too poor to buy this item!"
-msgstr "{user}, vous êtes trop pauvre pour acheter cet objet!"
+msgstr "{user}, vous êtes trop pauvre pour acheter cet item !"
 
 #: cogs/trading/__init__.py:340
 #, python-brace-format
 msgid "The owner sold the item with the ID `{itemid}` in the meantime."
-msgstr "Le propriétaire a vendu l’objet possédant l’ID `{itemid}` entre temps."
+msgstr "Le propriétaire a vendu l’item possédant l’ID `{itemid}` entre temps."
 
 #: cogs/trading/__init__.py:366
 #, python-brace-format
@@ -3639,8 +3595,8 @@ msgid ""
 "Successfully bought item `{itemid}`. Use `{prefix}inventory` to view your "
 "updated inventory."
 msgstr ""
-"Vous avez acheté l’objet `{itemid}` avec succès. Utilisez `{prefix}"
-"inventory` pour voir votre inventaire mis à jour."
+"Vous avez acheté l’item `{itemid}` avec succès. Utilisez `{prefix}inventory` "
+"pour voir votre inventaire mis à jour."
 
 #: cogs/trading/__init__.py:379
 msgid "Sells items for their value."
@@ -3650,86 +3606,90 @@ msgstr ""
 msgid "You cannot sell nothing."
 msgstr ""
 
-#: cogs/trading/__init__.py:391
+#: cogs/trading/__init__.py:392
 #, python-brace-format
 msgid "You don't own any items with the IDs: {itemids}"
 msgstr ""
 
-#: cogs/trading/__init__.py:399
+#: cogs/trading/__init__.py:400
 #, python-brace-format
 msgid "You are about to sell {amount} equipped items. Are you sure?"
 msgstr ""
 
-#: cogs/trading/__init__.py:403
+#: cogs/trading/__init__.py:404
 msgid "Cancelled."
 msgstr "Annulé."
 
-#: cogs/trading/__init__.py:429
+#: cogs/trading/__init__.py:430
 #, python-brace-format
 msgid ""
 "You received **${money}** when selling item(s) `{itemids}`. {additional}"
 msgstr ""
 
-#: cogs/trading/__init__.py:434 cogs/profile/__init__.py:559
+#: cogs/trading/__init__.py:435 cogs/profile/__init__.py:560
 #, python-brace-format
 msgid "Skipped `{amount}` because they did not belong to you."
 msgstr ""
 
-#: cogs/trading/__init__.py:449
+#: cogs/trading/__init__.py:450
 msgid "Sells all your non-equipped items for their value."
-msgstr "Vends tous vos objets qui ne sont pas équipés à leur valeur."
+msgstr "Vends tous vos items qui ne sont pas équipés à leur valeur."
 
-#: cogs/trading/__init__.py:459
+#: cogs/trading/__init__.py:460
 msgid "Nothing to merch."
 msgstr "Rien à vendre."
 
-#: cogs/trading/__init__.py:468
+#: cogs/trading/__init__.py:469
 #, python-brace-format
 msgid ""
 "You are about to sell **{count} items for ${money}!**\n"
 "Are you sure you want to do this?"
 msgstr ""
 
-#: cogs/trading/__init__.py:481
+#: cogs/trading/__init__.py:473
+msgid "Cancelled selling your items."
+msgstr ""
+
+#: cogs/trading/__init__.py:483
 msgid ""
 "Looks like you got more or less items in that range in the meantime. Please "
 "try again."
 msgstr ""
 
-#: cogs/trading/__init__.py:505
+#: cogs/trading/__init__.py:507
 #, python-brace-format
 msgid "Merched **{count}** items for **${money}**."
-msgstr "Vous avez vendu **{count}** objets pour **{money}$**."
+msgstr "Vous avez vendu **{count}** items pour **${money}**."
 
-#: cogs/trading/__init__.py:513
+#: cogs/trading/__init__.py:515
 msgid "View your pending shop offers."
 msgstr "Voir vos offres en cours sur le marché."
 
-#: cogs/trading/__init__.py:519
+#: cogs/trading/__init__.py:521
 msgid "You don't have any pending shop offers."
 msgstr "Vous n’avez aucune offre en cours sur le marché."
 
-#: cogs/trading/__init__.py:522
+#: cogs/trading/__init__.py:524
 msgid "Your pending items"
-msgstr "Vos objets en attente"
+msgstr "Vos items en attente"
 
-#: cogs/trading/__init__.py:546
+#: cogs/trading/__init__.py:548
 msgid "Buys items at the trader."
 msgstr ""
 
-#: cogs/trading/__init__.py:562
+#: cogs/trading/__init__.py:564
 msgid "The Trader"
 msgstr "Le Commerçant"
 
-#: cogs/trading/__init__.py:563
+#: cogs/trading/__init__.py:565
 msgid "Hit a button to buy it"
 msgstr "Appuyez sur un bouton pour l'acheter"
 
-#: cogs/trading/__init__.py:575
+#: cogs/trading/__init__.py:577
 msgid "You are too poor to buy this item."
-msgstr "Vous êtes trop pauvre pour acheter cet objet."
+msgstr "Vous êtes trop pauvre pour acheter cet item."
 
-#: cogs/trading/__init__.py:589
+#: cogs/trading/__init__.py:591
 #, python-brace-format
 msgid ""
 "Successfully bought offer **{offer}**. Use `{prefix}inventory` to view your "
@@ -3748,7 +3708,7 @@ msgstr "Vous devriez avoir un meilleur ami autre que vous-même."
 
 #: cogs/marriage/__init__.py:55
 msgid "One of you is married."
-msgstr "L’un(e) de vous est déjà marié(e)."
+msgstr "L’un de vous est déjà marié."
 
 #: cogs/marriage/__init__.py:58
 #, python-brace-format
@@ -3760,7 +3720,7 @@ msgstr "{author} à fait une demande en mariage!"
 msgid ""
 "{author} wants to marry you, {partner}! React with :heart: to marry them!"
 msgstr ""
-"{author} veut vous épouser, {partner}! Réagissez avec :heart: pour l'épouser!"
+"{author} veut vous épouser, {partner}! Réagi avec :heart: pour l'épouser!"
 
 #: cogs/marriage/__init__.py:85
 msgid "They didn't want to marry."
@@ -3769,12 +3729,12 @@ msgstr "Ils ne voulaient pas se marier."
 #: cogs/marriage/__init__.py:111
 #, python-brace-format
 msgid "Owwwwwww! :heart: {author} and {partner} are now married!"
-msgstr "Owwwwwww ! :heart: {author} et {partner} sont maintenant mariés!"
+msgstr "Owwwwwww ! :heart: {author} et {partner} sont maintenant mariés !"
 
 #: cogs/marriage/__init__.py:117
 msgid "Either you or your lovee married in the meantime... :broken_heart:"
 msgstr ""
-"Soit vous ou votre partenaire s'est marié(e) entre-temps ... :broken_heart:"
+"Soit vous ou votre partenaire s'est marié entre-temps ... :broken_heart:"
 
 #: cogs/marriage/__init__.py:125
 msgid "Break up with your partner."
@@ -3783,7 +3743,7 @@ msgstr "Divorcer de votre partenaire."
 #: cogs/marriage/__init__.py:127 cogs/marriage/__init__.py:155
 #: cogs/marriage/__init__.py:285
 msgid "You are not married yet."
-msgstr "Vous n’êtes pas encore marié(e)."
+msgstr "Vous n’êtes pas encore marié."
 
 #: cogs/marriage/__init__.py:130
 msgid ""
@@ -3797,7 +3757,7 @@ msgstr ""
 
 #: cogs/marriage/__init__.py:147
 msgid "You are now divorced."
-msgstr "Vous êtes maintenant divorcé(e)."
+msgstr "Vous êtes maintenant divorcé."
 
 #: cogs/marriage/__init__.py:153
 msgid "View who you're married to."
@@ -3806,7 +3766,7 @@ msgstr "Voir avec qui vous êtes marié(e)."
 #: cogs/marriage/__init__.py:158
 #, python-brace-format
 msgid "You are currently married to **{partner}**."
-msgstr "Vous êtes actuellement marié(e) à **{partner}**."
+msgstr "Vous êtes actuellement marié à **{partner}**."
 
 #: cogs/marriage/__init__.py:165
 msgid "Views someone's lovescore."
@@ -3863,7 +3823,7 @@ msgstr "Pêche :peach:"
 
 #: cogs/marriage/__init__.py:191
 msgid "Ice Cream :ice_cream:"
-msgstr "Crème Glacée :ice_cream:"
+msgstr "Glaces :ice_cream:"
 
 #: cogs/marriage/__init__.py:192
 msgid "Bento Box :bento:"
@@ -3875,15 +3835,15 @@ msgstr "Soirée Film :ticket:"
 
 #: cogs/marriage/__init__.py:194
 msgid "Video Game Night :video_game:"
-msgstr "Soirée Jeux Vidéo :video_game:"
+msgstr "Soirée jeux vidéo :video_game:"
 
 #: cogs/marriage/__init__.py:195
 msgid "Camping Night :fishing_pole_and_fish:"
-msgstr "Soirée Camping :fishing_pole_and_fish:"
+msgstr "Soirée camping :fishing_pole_and_fish:"
 
 #: cogs/marriage/__init__.py:196
 msgid "Couple Competition :trophy:"
-msgstr "Compétition de Couple :trophy:"
+msgstr "Compétition de couple :trophy:"
 
 #: cogs/marriage/__init__.py:197
 msgid "Concert Night :musical_keyboard:"
@@ -3895,7 +3855,7 @@ msgstr "Vélo :bike:"
 
 #: cogs/marriage/__init__.py:199
 msgid "Motorcycle :motorcycle:"
-msgstr "Moto :motorcycle:"
+msgstr "Moto :motocycle:"
 
 #: cogs/marriage/__init__.py:200
 msgid "Car :red_car:"
@@ -3927,7 +3887,7 @@ msgstr "Lit :bed:"
 
 #: cogs/marriage/__init__.py:207
 msgid "Home films :projector:"
-msgstr "Cinéma Maison :projector:"
+msgstr "DVD :projector:"
 
 #: cogs/marriage/__init__.py:208
 msgid "Satchel :school_satchel:"
@@ -3935,7 +3895,7 @@ msgstr "Sacoche :school_satchel:"
 
 #: cogs/marriage/__init__.py:209
 msgid "Purse :purse:"
-msgstr "Sac à main :purse:"
+msgstr "Porte monnaie :pure:"
 
 #: cogs/marriage/__init__.py:210
 msgid "Shoes :athletic_shoe:"
@@ -3943,7 +3903,7 @@ msgstr "Chaussures :athletic_shoe:"
 
 #: cogs/marriage/__init__.py:211
 msgid "Casual Attire :shirt:"
-msgstr "Tenue Décontractée :shirt:"
+msgstr "Tenue décontracté :shirt:"
 
 #: cogs/marriage/__init__.py:212
 msgid "Ring :ring:"
@@ -3955,23 +3915,23 @@ msgstr "Ballon :balloon:"
 
 #: cogs/marriage/__init__.py:214
 msgid "Flower Bouquet :bouquet:"
-msgstr "Bouquet de Fleurs :bouquet:"
+msgstr "Bouquet de fleurs :bouquet:"
 
 #: cogs/marriage/__init__.py:215
 msgid "Expensive Chocolates :chocolate_bar:"
-msgstr "Chocolats de Luxe :chocolate_bar:"
+msgstr "Chocolats de luxe :chocolate_bar:"
 
 #: cogs/marriage/__init__.py:216
 msgid "Declaration of Love :love_letter:"
-msgstr "Déclaration d’Amour :love_letter:"
+msgstr "Déclaration d’amour :love_letter:"
 
 #: cogs/marriage/__init__.py:217
 msgid "Key to Heart :key2:"
-msgstr "Clé du Coeur :key2:"
+msgstr "Clé du coeur :key2:"
 
 #: cogs/marriage/__init__.py:218
 msgid "Ancient Vase :amphora:"
-msgstr "Vase Ancien :amphora:"
+msgstr "Vase Ancien :amphore:"
 
 #: cogs/marriage/__init__.py:219
 msgid "House :house:"
@@ -3983,7 +3943,7 @@ msgstr "Super Ordinateur :computer:"
 
 #: cogs/marriage/__init__.py:221
 msgid "Precious Gemstone Collection :gem:"
-msgstr "Collection de Pierres Précieuses :gem:"
+msgstr "Collection de Pierre Précieuse :gem:"
 
 #: cogs/marriage/__init__.py:222
 msgid "Planet :earth_americas:"
@@ -3998,7 +3958,7 @@ msgstr ""
 
 #: cogs/marriage/__init__.py:240 cogs/valentine/__init__.py:62
 msgid "You're not married yet."
-msgstr "Vous n’êtes pas encore marié(e)."
+msgstr "Vous n’êtes pas encore marié."
 
 #: cogs/marriage/__init__.py:261
 #, python-brace-format
@@ -4006,8 +3966,8 @@ msgid ""
 "You bought a **{item}** for your partner and increased their love score by "
 "**{points}** points!"
 msgstr ""
-"Vous avez acheté un(e) **{item}** pour votre partenaire et augmenté le score "
-"de **{points}** points!"
+"Vous avez acheté **{item}** pour votre partenaire et augmenté le score de "
+"**{points}** points!"
 
 #: cogs/marriage/__init__.py:267
 msgid "Failed to DM your spouse, could not find their Discord account"
@@ -4015,7 +3975,7 @@ msgstr "DM votre partenaire échoué! ,on n'a pas pu trouver son compte Discord"
 
 #: cogs/marriage/__init__.py:280
 msgid "Take your loved one on a date to increase your lovescore."
-msgstr "Amenez votre bien-aimé(e) à une sortie pour augmenter votre amour."
+msgstr "Amenez votre bien-aimé(e) à une date pour augmenter votre amour."
 
 #: cogs/marriage/__init__.py:293
 #, python-brace-format
@@ -4040,7 +4000,7 @@ msgstr "Vous et {partner} êtes sortis voir un film romantique."
 #: cogs/marriage/__init__.py:297
 #, python-brace-format
 msgid "You and {partner} went out to get ice cream."
-msgstr "Vous et {partner} êtes sortis manger de la crème glacée."
+msgstr "Vous et {partner} êtes sortis manger des glaces."
 
 #: cogs/marriage/__init__.py:298
 #, python-brace-format
@@ -4050,7 +4010,7 @@ msgstr "Vous et {partner} avez eu un marathon d'anime."
 #: cogs/marriage/__init__.py:299
 #, python-brace-format
 msgid "You and {partner} went for a spontaneous hiking trip."
-msgstr "Vous et {partner} êtes allés faire une randonnée spontanée."
+msgstr "Vous et {partner} êtes allés faire une randonné spontané."
 
 #: cogs/marriage/__init__.py:300
 #, python-brace-format
@@ -4064,7 +4024,7 @@ msgstr "Vous et {partner} êtes allés à la patinoire ensemble."
 
 #: cogs/marriage/__init__.py:303
 msgid "Unknown User"
-msgstr "Utilisateur Inconnu"
+msgstr ""
 
 #: cogs/marriage/__init__.py:304
 #, python-brace-format
@@ -4073,11 +4033,11 @@ msgstr "Cela a augmenté votre score amoureux de {num}"
 
 #: cogs/marriage/__init__.py:323
 msgid "Make a child with your spouse."
-msgstr "Faites un enfant avec votre époux/épouse."
+msgstr "Faite un enfant avec votre partenaire."
 
 #: cogs/marriage/__init__.py:327
 msgid "Can't produce a child alone, can you?"
-msgstr "Vous ne pouvez faire un enfant seul, pas vrai?"
+msgstr "Vous pouvez faire un enfant seul, vous?"
 
 #: cogs/marriage/__init__.py:341
 #, python-brace-format
@@ -4097,7 +4057,7 @@ msgstr ""
 
 #: cogs/marriage/__init__.py:354
 msgid "O.o not in the mood today?"
-msgstr "O.o pas d’humeur aujourd’hui?"
+msgstr "O.o pas d’humeur aujourd’hui ?"
 
 #: cogs/marriage/__init__.py:365
 #, python-brace-format
@@ -4109,7 +4069,7 @@ msgid ""
 "It's a boy! Your night of love was successful! Please enter a name for your "
 "child."
 msgstr ""
-"C’est un garçon ! Votre nuit d’amour a été une réussite! Entrez un nom pour "
+"C’est un garçon ! Votre nuit d’amour a été une réussite ! Entrez un nom pour "
 "votre enfant."
 
 #: cogs/marriage/__init__.py:377
@@ -4117,7 +4077,7 @@ msgid ""
 "It's a girl! Your night of love was successful! Please enter a name for your "
 "child."
 msgstr ""
-"C’est une fille ! Votre nuit d’amour a été une réussite! Entrez un nom pour "
+"C’est une fille ! Votre nuit d’amour a été une réussite ! Entrez un nom pour "
 "votre enfant."
 
 #: cogs/marriage/__init__.py:396
@@ -4140,7 +4100,7 @@ msgstr "Voir votre enfant."
 
 #: cogs/marriage/__init__.py:426
 msgid "Lonely..."
-msgstr "Seul(e)…"
+msgstr "Seul(e)..."
 
 #: cogs/marriage/__init__.py:431 cogs/marriage/__init__.py:457
 msgid "Your family"
@@ -4158,7 +4118,7 @@ msgstr "Pas encore d’enfant"
 #: cogs/marriage/__init__.py:439
 #, python-brace-format
 msgid "Use {prefix}child to make one!"
-msgstr "Utilisez {prefix}child pour en faire un!"
+msgstr "Utilisez {prefix}child pour en faire un !"
 
 #: cogs/marriage/__init__.py:445 cogs/marriage/__init__.py:465
 #, python-brace-format
@@ -4176,7 +4136,7 @@ msgstr "Événements qui se passent dans votre famille."
 
 #: cogs/marriage/__init__.py:487
 msgid "You're lonely."
-msgstr "Vous êtes seul(e)."
+msgstr "Vous êtes seul."
 
 #: cogs/marriage/__init__.py:493
 msgid "You don't have kids yet."
@@ -4184,60 +4144,58 @@ msgstr "Vous n’avez pas encore d’enfants."
 
 #: cogs/marriage/__init__.py:506
 msgid "They died because of a shampoo overdose!"
-msgstr "Votre enfant est mort(e) d'un surdosage de shampoing!"
+msgstr ""
 
 #: cogs/marriage/__init__.py:507
 msgid "They died of lovesickness..."
-msgstr "Votre enfant est mort(e) d'un chagrin d'amour..."
+msgstr ""
 
 #: cogs/marriage/__init__.py:508
 msgid "They've died of age."
-msgstr "Votre enfant est mort(e) de vieil âge."
+msgstr ""
 
 #: cogs/marriage/__init__.py:509
 msgid "They died of loneliness."
-msgstr "Votre enfant est mort(e) de solitude."
+msgstr ""
 
 #: cogs/marriage/__init__.py:510
 msgid "A horde of goblins got them."
-msgstr "Une horde de goblins l'ont eu."
+msgstr ""
 
 #: cogs/marriage/__init__.py:512
 msgid ""
 "They have finally decided to move out after all these years, but couldn't "
 "survive a second alone."
 msgstr ""
-"Votre enfant a finalement décidé de déménager après toutes ces années mais, "
-"n'a pas pu survive une seconde seul(e)."
 
 #: cogs/marriage/__init__.py:514
 msgid "Spontaneous combustion removed them from existence."
-msgstr "Une combustion instantanée a mis fin à son existence."
+msgstr ""
 
 #: cogs/marriage/__init__.py:515
 msgid "While exploring the forest, they have gotten lost."
-msgstr "En explorant la forêt, votre enfant s'est perdu."
+msgstr ""
 
 #: cogs/marriage/__init__.py:516
 msgid "They've left through a portal into another dimension..."
-msgstr "Votre enfant a quitté par un portail dans une autre dimension..."
+msgstr ""
 
 #: cogs/marriage/__init__.py:518
 msgid "The unbearable pain of stepping on a Lego\\© brick killed them."
-msgstr "La douleur insupportable de marcher sur une pièce de Lego© l'a tué."
+msgstr ""
 
 #. noqa
 #: cogs/marriage/__init__.py:520
 msgid "You heard a landmine going off nearby..."
-msgstr "Vous entendez une mine exploser non loin..."
+msgstr ""
 
 #: cogs/marriage/__init__.py:521
 msgid "They have been abducted by aliens!"
-msgstr "Votre enfant s'est fait enlevé par des extraterrestres!"
+msgstr ""
 
 #: cogs/marriage/__init__.py:522
 msgid "The Catholic Church got them..."
-msgstr "L'église Catholique l'ont eu..."
+msgstr ""
 
 #: cogs/marriage/__init__.py:523
 msgid "They starved after becoming a communist."
@@ -4246,7 +4204,7 @@ msgstr ""
 #: cogs/marriage/__init__.py:533
 #, python-brace-format
 msgid "{name} died at the age of {age}! {cause}"
-msgstr "{name} est mort(e) à l’âge de {age}! {cause}"
+msgstr "{name} est mort(e) à l’âge de {age} ! {cause}"
 
 #: cogs/marriage/__init__.py:541
 msgid ""
@@ -4349,7 +4307,7 @@ msgstr "{name} a maintenant {age} ans."
 #: cogs/marriage/__init__.py:636
 #, python-brace-format
 msgid "{name} can be renamed! Enter a new name:"
-msgstr "{name} peut être renommé(e)! Entrez un nouveau nom:"
+msgstr "{name} peut être renommé ! Entrez un nouveau nom:"
 
 #: cogs/marriage/__init__.py:656
 msgid "You didn't enter a name."
@@ -4392,7 +4350,7 @@ msgstr "Les meilleurs joueurs"
 
 #: cogs/ranks/__init__.py:80
 msgid "Top 10 players by wins in PvP matches."
-msgstr "Top 10 des joueurs par victoires en matchs PvP."
+msgstr "Top 10 des joueurs par victoire en matchs PvP."
 
 #: cogs/ranks/__init__.py:88
 #, python-brace-format
@@ -4401,16 +4359,16 @@ msgstr ""
 
 #: cogs/ranks/__init__.py:95
 msgid "The Best PvPers"
-msgstr "Les meilleurs joueurs en PvP"
+msgstr "Les meilleurs joueurs PvP"
 
 #: cogs/ranks/__init__.py:102
 msgid "The top 10 lovers sorted by their spouse's lovescore."
-msgstr "Le top 10 des amoureux triés par le lovescore de leur partenaire."
+msgstr "Le top 10 des amoureux trié par le lovescore de leurs partenaires."
 
 #: cogs/ranks/__init__.py:112
 #, python-brace-format
 msgid "**{lover}** gifted their love **{lovee}** items worth **${points}**"
-msgstr "**{lover}** offre son amour **{lovee}** l'item vaut **{points}$**"
+msgstr "**{lover}** offre son amour **{lovee}** l'item vaut **${points}**"
 
 #: cogs/ranks/__init__.py:120
 msgid "The Best lovers"
@@ -4426,7 +4384,7 @@ msgstr "Lien"
 
 #: cogs/server/__init__.py:37
 msgid "`No icon has been set yet!`"
-msgstr "`Aucun icône n’a été attribuée pour le moment!`"
+msgstr "`Aucun icône n’a été attribué pour le moment !`"
 
 #: cogs/server/__init__.py:40
 msgid "Server Information"
@@ -4500,7 +4458,7 @@ msgstr "Remets à zéro les paramètres de ce serveur."
 
 #: cogs/server/__init__.py:125
 msgid "Done!"
-msgstr "C’est fait!"
+msgstr "C’est fait !"
 
 #: cogs/server/__init__.py:131
 msgid "Shows detailed information about a member in the server."
@@ -4646,7 +4604,7 @@ msgstr ""
 
 #: cogs/guild/__init__.py:201
 msgid "Badge updated!"
-msgstr "Badge mis à jour!"
+msgstr "Badgie mis à jour !"
 
 #: cogs/guild/__init__.py:212
 msgid "Creates a guild."
@@ -4677,11 +4635,11 @@ msgstr "Les URLs ne doivent pas dépasser 60 caractères."
 
 #: cogs/guild/__init__.py:245
 msgid "Are you sure? React to create a guild for **$10000**"
-msgstr "Êtes-vous sûr ? Réagissez afin de créer une guilde pour **10000$**"
+msgstr "Êtes-vous sûr ? Réagissez afin de créer une guilde pour **$10000**"
 
 #: cogs/guild/__init__.py:250
 msgid "A guild creation costs **$10000**, you are too poor."
-msgstr "La création d’une guilde coûte **10000$**, vous êtes trop pauvre."
+msgstr "La création d’une guilde coûte **$10000**, vous êtes trop pauvre."
 
 #: cogs/guild/__init__.py:254
 msgid "The guild name is taken."
@@ -4691,10 +4649,11 @@ msgstr ""
 #, python-brace-format
 msgid ""
 "Successfully added your guild **{name}** with a member limit of "
-"**{memberlimit}**."
+"**{memberlimit}**.\n"
+"\n"
+"Tip: You can use `{prefix}guild channel` in a server where you are the admin "
+"to set up the guild logging channel."
 msgstr ""
-"Votre guilde **{name}** a été créée avec succès avec une limite de "
-"**{memberlimit}** membres."
 
 #: cogs/guild/__init__.py:279
 msgid "Transfer guild ownership to someone else."
@@ -4720,7 +4679,7 @@ msgstr "Promouvoir quelqu’un au rang d’officier"
 
 #: cogs/guild/__init__.py:323 cogs/guild/__init__.py:351
 msgid "Target is not a member of your guild."
-msgstr "L'utilisateur n’est pas membre de votre guilde."
+msgstr "La cible n’est pas membre de votre guilde."
 
 #: cogs/guild/__init__.py:325
 msgid "This user is already an officer of your guild."
@@ -4768,7 +4727,7 @@ msgstr ""
 #: cogs/guild/__init__.py:406
 #, python-brace-format
 msgid "{newmember} is now a member of **{name}**. Welcome!"
-msgstr "{newmember} est maintenant membre de **{name}**. Bienvenue!"
+msgstr "{newmember} est maintenant membre de **{name}**. Bienvenue !"
 
 #: cogs/guild/__init__.py:419
 msgid "Leave your current guild."
@@ -4784,7 +4743,7 @@ msgstr "[Officier de guilde uniquement] Renvoyer quelqu’un de votre guilde."
 
 #: cogs/guild/__init__.py:442 cogs/guild/__init__.py:451
 msgid "Not your guild mate."
-msgstr "Ce n'est pas un membre de votre guilde."
+msgstr "Ce n'est pas un membre de ta guilde."
 
 #: cogs/guild/__init__.py:457
 msgid "You can only kick members."
@@ -4792,7 +4751,7 @@ msgstr "Vous pouvez uniquement renvoyer les membres."
 
 #: cogs/guild/__init__.py:466
 msgid "The person has been kicked!"
-msgstr "Cette personne a été renvoyée!"
+msgstr "Cette personne a été renvoyé(e) !"
 
 #: cogs/guild/__init__.py:475
 msgid "[Guild Owner only] Deletes the guild."
@@ -4830,7 +4789,7 @@ msgstr "Le texte ne peut pas dépasser 200 caractères."
 
 #: cogs/guild/__init__.py:536
 msgid "Updated!"
-msgstr "Mis à jour!"
+msgstr "Mis à jour !"
 
 #: cogs/guild/__init__.py:547
 msgid ""
@@ -4876,15 +4835,15 @@ msgstr "Investir une partie de votre argent dans la banque de guilde."
 
 #: cogs/guild/__init__.py:635
 msgid "The bank would be full."
-msgstr "La banque semblerait pleine."
+msgstr "La banque serait pleine."
 
 #: cogs/guild/__init__.py:648
 #, python-brace-format
 msgid ""
 "Done! Now you have `${profile_money}` and the guild has `${guild_money}`."
 msgstr ""
-"Vous avez maintenant `{profile_money}$` et la guilde possède "
-"`{guild_money}$`."
+"Vous avez maintenant `${profile_money}` et la guilde possède `${guild_money}"
+"`."
 
 #: cogs/guild/__init__.py:662
 msgid "[Guild Officer only] Pay money from the guild bank to a user."
@@ -4892,7 +4851,7 @@ msgstr ""
 "[Officier de guilde uniquement] Payer un utilisateur avec l’argent de la "
 "banque de guilde."
 
-#: cogs/guild/__init__.py:668
+#: cogs/guild/__init__.py:668 cogs/guild/__init__.py:711
 msgid "Your guild is too poor."
 msgstr "Votre guilde est trop pauvre."
 
@@ -4900,68 +4859,86 @@ msgstr "Votre guilde est trop pauvre."
 #, python-brace-format
 msgid "Successfully gave **${amount}** from your guild bank to {member}."
 msgstr ""
-"Vous avez donné **{amount}$** provenant de la banque de guilde à {member} "
+"Vous avez donné **${amount}** provenant de la banque de guilde à {member} "
 "avec succès."
 
-#: cogs/guild/__init__.py:691
+#: cogs/guild/__init__.py:694
+msgid ""
+"\n"
+"Distribute some money to multiple members. This will divide by the amount of "
+"players before distributing.\n"
+"For example, distributing $500 to 5 members will give everyone of them "
+"$100.\n"
+msgstr ""
+
+#: cogs/guild/__init__.py:700
+msgid "You can't distribute money to nobody."
+msgstr ""
+
+#: cogs/guild/__init__.py:727
+#, python-brace-format
+msgid "Distributed **${money}** (${small_money} for each) to {members}."
+msgstr ""
+
+#: cogs/guild/__init__.py:739
 msgid "Upgrades your guild bank's capacity."
 msgstr "Augmente la capacité de votre banque de guilde."
 
-#: cogs/guild/__init__.py:700
+#: cogs/guild/__init__.py:748
 msgid "Your guild already reached the maximum upgrade."
 msgstr "Votre guilde a déjà atteint l’amélioration maximale."
 
-#: cogs/guild/__init__.py:705
+#: cogs/guild/__init__.py:753
 #, python-brace-format
 msgid ""
 "Your guild is too poor, you got **${money}** but it costs **${price}** to "
 "upgrade."
 msgstr ""
-"Votre guilde est trop pauvre, vous possédez **{money}$**, mais "
-"l’amélioration coûte **{price}$**."
+"Votre guilde est trop pauvre, vous possédez **${money}**, mais "
+"l’amélioration coûte **${price}**."
 
-#: cogs/guild/__init__.py:711
+#: cogs/guild/__init__.py:759
 #, python-brace-format
 msgid ""
 "This will upgrade your guild bank limit to **${newlimit}** for **${cost}**. "
 "Proceed?"
 msgstr ""
 
-#: cogs/guild/__init__.py:723
+#: cogs/guild/__init__.py:771
 #, python-brace-format
 msgid "Your new guild bank limit is now **${limit}**."
-msgstr "La nouvelle limite de votre banque de guilde est de **{limit}$**."
+msgstr "La nouvelle limite de votre banque de guilde est de **${limit}**."
 
-#: cogs/guild/__init__.py:741
+#: cogs/guild/__init__.py:789
 msgid "Battle against another guild."
 msgstr "Combattez contre une autre guilde."
 
-#: cogs/guild/__init__.py:743
+#: cogs/guild/__init__.py:791
 msgid "Poor kiddo having no friendos."
 msgstr "Pauvre enfant, tu n'a pas d'amis."
 
-#: cogs/guild/__init__.py:747
+#: cogs/guild/__init__.py:795
 msgid "One of you both doesn't have a guild."
 msgstr "L’un de vous deux n’a pas de guilde."
 
-#: cogs/guild/__init__.py:752
+#: cogs/guild/__init__.py:800
 msgid "One of you both isn't an officer of their guild."
 msgstr "L’un de vous deux n’est pas officier au sein de sa guilde."
 
-#: cogs/guild/__init__.py:757
+#: cogs/guild/__init__.py:805
 msgid "One of the guilds can't pay the price."
 msgstr "L’une des guildes n’a pas assez d’argent pour payer."
 
-#: cogs/guild/__init__.py:765
+#: cogs/guild/__init__.py:813
 msgid "One of the guilds is too small."
 msgstr "L’une des guildes est trop petite."
 
-#: cogs/guild/__init__.py:773
+#: cogs/guild/__init__.py:821
 #, python-brace-format
 msgid "{enemy} didn't want to join your battle, {author}."
 msgstr "{enemy} décline l’invitation au combat, {author}."
 
-#: cogs/guild/__init__.py:780
+#: cogs/guild/__init__.py:828
 #, python-brace-format
 msgid ""
 "{enemy} accepted the challenge by {author}. Please now nominate members, "
@@ -4971,28 +4948,28 @@ msgstr ""
 "participants, {author}. Utilisez `battle nominate @user` pour ajouter "
 "quelqu’un à votre équipe."
 
-#: cogs/guild/__init__.py:796
+#: cogs/guild/__init__.py:844
 msgid "That person isn't in your guild."
 msgstr "Cette personne n’est pas dans votre guilde."
 
-#: cogs/guild/__init__.py:820
+#: cogs/guild/__init__.py:868
 #, python-brace-format
 msgid "{user} has been added to your team, {author}."
 msgstr "{user} a été ajouté(e) à votre équipe, {author}."
 
-#: cogs/guild/__init__.py:825 cogs/guild/__init__.py:853
+#: cogs/guild/__init__.py:873 cogs/guild/__init__.py:901
 msgid "User not found."
 msgstr "Impossible de trouver cet utilisateur."
 
-#: cogs/guild/__init__.py:827
+#: cogs/guild/__init__.py:875
 msgid "Error when adding this user, please try again"
 msgstr ""
 
-#: cogs/guild/__init__.py:832 cogs/guild/__init__.py:858
+#: cogs/guild/__init__.py:880 cogs/guild/__init__.py:906
 msgid "Took to long to add members. Fight cancelled."
 msgstr "L’ajout de membres a pris trop de temps. Combat annulé."
 
-#: cogs/guild/__init__.py:836
+#: cogs/guild/__init__.py:884
 #, python-brace-format
 msgid ""
 "Please now nominate members, {enemy}. Use `battle nominate @user` to add "
@@ -5001,20 +4978,20 @@ msgstr ""
 "Choisissez les membres participants, {enemy}. Utilisez `battle nominate "
 "@user` pour ajouter quelqu’un à votre équipe."
 
-#: cogs/guild/__init__.py:848
+#: cogs/guild/__init__.py:896
 #, python-brace-format
 msgid "{user} has been added to your team, {enemy}."
 msgstr "{user} a été ajouté(e) à votre équipe, {enemy}."
 
-#: cogs/guild/__init__.py:866
+#: cogs/guild/__init__.py:914
 msgid ""
 "Fight started!\n"
 "Generating battles..."
 msgstr ""
 "Duel commencé!\n"
-"Génération des duels…"
+"Génération des duels..."
 
-#: cogs/guild/__init__.py:868
+#: cogs/guild/__init__.py:916
 msgid ""
 "Fight started!\n"
 "Generating battles... Done."
@@ -5022,7 +4999,7 @@ msgstr ""
 "Le duel à commencé!\n"
 "Génération des batailles ... Fait."
 
-#: cogs/guild/__init__.py:875
+#: cogs/guild/__init__.py:923
 #, python-brace-format
 msgid ""
 "Guild Battle Fight **{num}** of **{total}**.\n"
@@ -5033,33 +5010,33 @@ msgstr ""
 "**{user}** vs **{user2}**!\n"
 "Duel en cours..."
 
-#: cogs/guild/__init__.py:897
+#: cogs/guild/__init__.py:945
 #, python-brace-format
 msgid ""
 "Winner of **{user}** vs **{user2}** is **{winner}**! Current points: "
 "**{wins1}** to **{wins2}**."
 msgstr ""
-"Gagnant du **{user}** vs **{user2}** est **{winner}**! Points actuels: "
+"Gagnant du **{user}** vs **{user2}** est **{winner}**! Point actuel: "
 "**{wins1}** to **{wins2}**."
 
-#: cogs/guild/__init__.py:910
+#: cogs/guild/__init__.py:958
 msgid "Some guild spent the money??? Bad looser!"
-msgstr "Une guilde a dépensé l’argent??? Mauvais perdants!"
+msgstr "Une guilde a dépensé l’argent ??? Mauvais perdants !"
 
-#: cogs/guild/__init__.py:933 cogs/guild/__init__.py:962
+#: cogs/guild/__init__.py:981 cogs/guild/__init__.py:1010
 #, python-brace-format
 msgid "{guild} won the battle! Congratulations!"
-msgstr "{guild} a remporté la bataille ! Félicitations!"
+msgstr "{guild} a remporté la bataille ! Félicitations !"
 
-#: cogs/guild/__init__.py:970
+#: cogs/guild/__init__.py:1018
 msgid "It's a tie!"
-msgstr "Match nul!"
+msgstr "Match nul !"
 
-#: cogs/guild/__init__.py:980
+#: cogs/guild/__init__.py:1028
 msgid "Starts a guild adventure."
 msgstr "Lancer une aventure de guilde."
 
-#: cogs/guild/__init__.py:985
+#: cogs/guild/__init__.py:1033
 #, python-brace-format
 msgid ""
 "Your guild is already on an adventure! Use `{prefix}guild status` to view "
@@ -5068,7 +5045,7 @@ msgstr ""
 "Votre guilde est déjà en aventure! Utilise `{prefix}guild status` pour voir "
 "combien de temps il reste avant la fin."
 
-#: cogs/guild/__init__.py:996
+#: cogs/guild/__init__.py:1044
 #, python-brace-format
 msgid ""
 "{author} seeks a guild adventure for **{guild}**! React to join! Unlimited "
@@ -5077,11 +5054,11 @@ msgid ""
 "Please go to https://join.travitia.xyz/{id_} to join the guild adventure."
 msgstr ""
 
-#: cogs/guild/__init__.py:1019
+#: cogs/guild/__init__.py:1067
 msgid "You didn't get enough other players for the guild adventure."
 msgstr "Vous n'avez pas assez de participants pour l'aventure de guilde."
 
-#: cogs/guild/__init__.py:1028
+#: cogs/guild/__init__.py:1076
 #, python-brace-format
 msgid ""
 "\n"
@@ -5100,34 +5077,34 @@ msgstr ""
 "Niveau de difficulté est de **{difficulty}**\n"
 "Temps requis: **{time}**\n"
 
-#: cogs/guild/__init__.py:1052
+#: cogs/guild/__init__.py:1100
 msgid "Views your guild adventure."
-msgstr "Regarder votre aventure de guilde."
+msgstr "Regardez votre aventure de guilde."
 
-#: cogs/guild/__init__.py:1058
+#: cogs/guild/__init__.py:1106
 #, python-brace-format
 msgid ""
 "Your guild isn't on an adventure yet. Ask your guild officer to use `{prefix}"
 "guild adventure` to start one"
 msgstr ""
 
-#: cogs/guild/__init__.py:1074
+#: cogs/guild/__init__.py:1122
 #, python-brace-format
 msgid ""
 "Your guild has completed an adventure of difficulty `{difficulty}` and **"
 "${gold}** has been added to the bank."
 msgstr ""
-"Votre guilde a fini l'aventure de niveau `{difficulty}` et **{gold}$** ont "
+"Votre guilde à fini l'aventure de niveau `{difficulty}` et **${gold}** ont "
 "été ajouté à la banque."
 
-#: cogs/guild/__init__.py:1084
+#: cogs/guild/__init__.py:1132
 #, python-brace-format
 msgid ""
 "Your guild has completed an adventure of difficulty `{difficulty}`, ask a "
 "guild officer to check their status."
 msgstr ""
 
-#: cogs/guild/__init__.py:1090
+#: cogs/guild/__init__.py:1138
 #, python-brace-format
 msgid ""
 "Your guild is currently in an adventure with difficulty `{difficulty}`.\n"
@@ -5137,7 +5114,7 @@ msgstr ""
 " de difficulté\n"
 "Temps restant: `{remain}`"
 
-#: cogs/guild/__init__.py:1119
+#: cogs/guild/__init__.py:1167
 #, python-brace-format
 msgid "Guild adventure is running and will be done after {time}"
 msgstr ""
@@ -5155,7 +5132,7 @@ msgstr ""
 
 #: cogs/custom/__init__.py:46
 msgid "In loving memory of Mary Johanna, ex-developer."
-msgstr "En la mémoire de notre très chère Mary Johanna, ex-développeuse."
+msgstr "En la mémoire de notre très cher Mary Johanna, ex-developer."
 
 #: cogs/custom/__init__.py:47
 msgid "His name is `#no homo` :heart:"
@@ -5185,7 +5162,7 @@ msgstr ""
 
 #: cogs/custom/__init__.py:72
 msgid "It's a secret."
-msgstr "C'est un secret."
+msgstr ""
 
 #: cogs/custom/__init__.py:75
 msgid "Gotcha"
@@ -5216,7 +5193,7 @@ msgstr ""
 
 #: cogs/profile/__init__.py:68
 msgid "Timeout expired. Please retry!"
-msgstr "Temps expiré. Veuillez réessayer!"
+msgstr "Temps expiré. Veuillez réessayer !"
 
 #: cogs/profile/__init__.py:73
 msgid ""
@@ -5249,7 +5226,7 @@ msgid ""
 "Successfully added your character **{name}**! Now use `{prefix}profile` to "
 "view your character!"
 msgstr ""
-"Votre personnage **{name}** a été ajouté avec succès! Désormais utilisez "
+"Votre personnage **{name}** a été ajouté avec succès!Maintenant utilisez "
 "`{prefix}profile` pour voir votre personnage !"
 
 #: cogs/profile/__init__.py:122
@@ -5355,7 +5332,7 @@ msgstr "Montre votre argent."
 #: cogs/profile/__init__.py:324
 #, python-brace-format
 msgid "You currently have **${money}**, {author}!"
-msgstr "Vous avez actuellement **{money}$**, {author}!"
+msgstr "Vous avez actuellement **${money}**, {author} !"
 
 #: cogs/profile/__init__.py:333
 msgid "Shows current XP and level of a player."
@@ -5459,230 +5436,230 @@ msgstr ""
 msgid "You don't have any loot."
 msgstr ""
 
-#: cogs/profile/__init__.py:509 cogs/gods/__init__.py:74
+#: cogs/profile/__init__.py:510 cogs/gods/__init__.py:74
 #, python-brace-format
 msgid "You don't own any loot items with the IDs: {itemids}"
 msgstr ""
 
-#: cogs/profile/__init__.py:515
+#: cogs/profile/__init__.py:516
 #, python-brace-format
 msgid "Select a reward for the {amount} items"
 msgstr ""
 
-#: cogs/profile/__init__.py:516
+#: cogs/profile/__init__.py:517
 #, python-brace-format
 msgid "Do you want favor? {prefix}sacrifice instead"
 msgstr ""
 
-#: cogs/profile/__init__.py:520
+#: cogs/profile/__init__.py:521
 #, python-brace-format
 msgid "**{value} XP**"
 msgstr ""
 
-#: cogs/profile/__init__.py:550
+#: cogs/profile/__init__.py:551
 #, python-brace-format
 msgid "You received **{reward}** when exchanging all of your loot."
 msgstr ""
 
-#: cogs/profile/__init__.py:554
+#: cogs/profile/__init__.py:555
 #, python-brace-format
 msgid "You received **{reward}** when exchanging loot item(s) `{loot_ids}`. "
 msgstr ""
 
-#: cogs/profile/__init__.py:578
+#: cogs/profile/__init__.py:579
 msgid "Equips an item of yours by ID."
 msgstr "Équipe un de vos item avec son ID."
 
-#: cogs/profile/__init__.py:587 cogs/profile/__init__.py:682
-#: cogs/profile/__init__.py:770
+#: cogs/profile/__init__.py:588 cogs/profile/__init__.py:683
+#: cogs/profile/__init__.py:771
 #, python-brace-format
 msgid "You don't own an item with the ID `{itemid}`."
 msgstr "Vous ne possédez pas d’item avec l’ID `{itemid}`."
 
-#: cogs/profile/__init__.py:638
+#: cogs/profile/__init__.py:639
 msgid "Select an item to unequip"
 msgstr ""
 
-#: cogs/profile/__init__.py:639
+#: cogs/profile/__init__.py:640
 msgid "Hit the button with the item you wish to remove"
 msgstr ""
 
-#: cogs/profile/__init__.py:659
+#: cogs/profile/__init__.py:660
 #, python-brace-format
 msgid "Successfully equipped item `{itemid}` and put off item(s) {olditems}."
 msgstr ""
 
-#: cogs/profile/__init__.py:666
+#: cogs/profile/__init__.py:667
 #, python-brace-format
 msgid "Successfully equipped item `{itemid}`."
-msgstr "Vous avez équipé l’objet `{itemid}` avec succès."
+msgstr "Vous avez équipé l’item `{itemid}` avec succès."
 
-#: cogs/profile/__init__.py:673
+#: cogs/profile/__init__.py:674
 msgid "Unequip one of your equipped items"
 msgstr ""
 
-#: cogs/profile/__init__.py:687
+#: cogs/profile/__init__.py:688
 msgid "You don't have this item equipped."
 msgstr ""
 
-#: cogs/profile/__init__.py:692
+#: cogs/profile/__init__.py:693
 #, python-brace-format
 msgid "Successfully unequipped item `{itemid}`."
 msgstr ""
 
-#: cogs/profile/__init__.py:700
+#: cogs/profile/__init__.py:701
 msgid "Merges two items to a better one. Second one is consumed."
 msgstr ""
-"Fusionne deux objets en un seul plus puissant. Le second objet est consommé "
+"Fusionne deux items en un seul plus puissant. Le second item est consommé "
 "durant le processus."
 
-#: cogs/profile/__init__.py:703
+#: cogs/profile/__init__.py:704
 msgid "Good luck with that."
 msgstr "Bonne chance avec ça."
 
-#: cogs/profile/__init__.py:717
+#: cogs/profile/__init__.py:718
 msgid "You don't own both of these items."
-msgstr "Vous ne possédez pas l’un des deux objets."
+msgstr "Vous ne possédez pas l’un des deux items."
 
-#: cogs/profile/__init__.py:722
+#: cogs/profile/__init__.py:723
 msgid ""
 "The items are of unequal type. You may only merge a sword with a sword or a "
 "shield with a shield."
 msgstr ""
 
-#: cogs/profile/__init__.py:736
+#: cogs/profile/__init__.py:737
 msgid "This item is already on the maximum upgrade level."
-msgstr "Cet objet est déjà amélioré au maximum."
+msgstr "Cet item est déjà amélioré au maximum."
 
-#: cogs/profile/__init__.py:742
+#: cogs/profile/__init__.py:743
 #, python-brace-format
 msgid ""
 "The second item's stat must be in the range of `{min_}` to `{max_}` to "
 "upgrade an item with the stat of `{stat}`."
 msgstr ""
-"La stat du second objet doit être comprise entre `{min_}` et `{max_}` pour "
-"améliorer un item avec une stat de `{stat}`."
+"La stat du second item doit être comprise entre `{min_}` et `{max_}` pour "
+"améliorer un item avec une station de `{stat}`."
 
-#: cogs/profile/__init__.py:751
+#: cogs/profile/__init__.py:752
 #, python-brace-format
 msgid ""
 "The {stat} of your **{item}** is now **{newstat}**. The other item was "
 "destroyed."
 msgstr ""
 "La stat de {stat} de votre **{item}** est maintenant de **{newstat}**. "
-"L’autre objet a été détruit."
+"L’autre item a été détruit."
 
-#: cogs/profile/__init__.py:760
+#: cogs/profile/__init__.py:761
 msgid "Upgrades an item's stat by 1."
 msgstr "Améliore la stat d’un item de 1."
 
-#: cogs/profile/__init__.py:785
+#: cogs/profile/__init__.py:786
 msgid "Your weapon already reached the maximum upgrade level."
 msgstr "Votre arme est déjà améliorée au maximum."
 
-#: cogs/profile/__init__.py:790
+#: cogs/profile/__init__.py:791
 #, python-brace-format
 msgid ""
 "Are you sure you want to upgrade this item: {item}? It will cost **"
 "${pricetopay}**."
 msgstr ""
-"Êtes-vous sûr de vouloir améliorer cet objet: {item}? Cela vous coûtera "
-"**{pricetopay}$**."
+"Êtes-vous sûr de vouloir améliorer cet item: {item} ? Cela vous coûtera **"
+"${pricetopay}**."
 
-#: cogs/profile/__init__.py:793
+#: cogs/profile/__init__.py:794
 msgid "Weapon upgrade cancelled."
 msgstr "Amélioration de l’arme annulée."
 
-#: cogs/profile/__init__.py:798
+#: cogs/profile/__init__.py:799
 #, python-brace-format
 msgid ""
 "You are too poor to upgrade this item. The upgrade costs **${pricetopay}**, "
 "but you only have **${money}**."
 msgstr ""
-"Vous êtes trop pauvre pour améliorer cet objet. L’amélioration coûte "
-"**{pricetopay}$**, mais vous n’avez que **{money}$**."
+"Vous êtes trop pauvre pour améliorer cet item. L’amélioration coûte **"
+"${pricetopay}**, mais vous n’avez que **${money}**."
 
-#: cogs/profile/__init__.py:816
+#: cogs/profile/__init__.py:817
 #, python-brace-format
 msgid ""
 "The {stat} of your **{item}** is now **{newstat}**. **${pricetopay}** has "
 "been taken off your balance."
 msgstr ""
-"Le {stat} de votre **{item}** est maintenant de **{newstat}**. "
-"**{pricetopay}$** ont été prélevés de votre argent."
+"Le {stat} de votre **{item}** est maintenant de **{newstat}**. **"
+"${pricetopay}** ont été prélevés de votre argent."
 
-#: cogs/profile/__init__.py:831
+#: cogs/profile/__init__.py:832
 msgid "Gift money!"
 msgstr "Don d'argent!"
 
-#: cogs/profile/__init__.py:833
+#: cogs/profile/__init__.py:834
 msgid "No cheating!"
-msgstr "Pas de tricherie!"
+msgstr "Pas de tricherie !"
 
-#: cogs/profile/__init__.py:849
+#: cogs/profile/__init__.py:850
 #, python-brace-format
 msgid ""
 "Success!\n"
 "{other} now has **${othermoney}**, you now have **${authormoney}**."
 msgstr ""
 
-#: cogs/profile/__init__.py:862
+#: cogs/profile/__init__.py:863
 msgid "Renames your character."
 msgstr "Renommer votre personnage."
 
-#: cogs/profile/__init__.py:866
+#: cogs/profile/__init__.py:867
 msgid "What shall your character's name be? (Minimum 3 Characters, Maximum 20)"
 msgstr ""
-"Quel est le nom de votre personnage? (Minimum 3 Charactères, Maximum 20)"
+"Quel est le nom de votre personnage ? (Minimum 3 Charactères, Maximum 20)"
 
-#: cogs/profile/__init__.py:876
+#: cogs/profile/__init__.py:877
 msgid "Timeout expired. Retry!"
-msgstr "Temps dépassé. Réessayez!"
+msgstr "Temps dépassé. Réessayez !"
 
-#: cogs/profile/__init__.py:882
+#: cogs/profile/__init__.py:883
 msgid "Character name updated."
 msgstr "Nom de personnage mis à jour."
 
-#: cogs/profile/__init__.py:884
+#: cogs/profile/__init__.py:885
 msgid "Character names must be at least 3 characters!"
-msgstr "Les noms de personnage doivent contenir au moins 3 caractères!"
+msgstr "Les noms de personnage doivent contenir au moins 3 caractères !"
 
-#: cogs/profile/__init__.py:886
+#: cogs/profile/__init__.py:887
 msgid "Character names mustn't exceed 20 characters!"
-msgstr "Les noms de personnage doivent contenir au maximum 20 caractères!"
+msgstr "Les noms de personnage doivent contenir au maximum 20 caractères !"
 
-#: cogs/profile/__init__.py:892
+#: cogs/profile/__init__.py:893
 msgid "Deletes your character."
 msgstr "Supprimer votre personnage."
 
-#: cogs/profile/__init__.py:895
+#: cogs/profile/__init__.py:896
 msgid ""
 "Are you absolutely sure you want to delete your character? React in the next "
 "30 seconds to confirm.\n"
 "**This cannot be undone.**"
 msgstr ""
 
-#: cogs/profile/__init__.py:898
+#: cogs/profile/__init__.py:899
 msgid "Cancelled deletion of your character."
 msgstr "La suppression de votre personnage a été annulée."
 
-#: cogs/profile/__init__.py:922
+#: cogs/profile/__init__.py:923
 msgid "Successfully deleted your character. Sorry to see you go :frowning:"
 msgstr ""
 "Votre personnage a été supprimé avec succès. Désolé de vous voir partir :"
 "frowning:"
 
-#: cogs/profile/__init__.py:929
+#: cogs/profile/__init__.py:930
 msgid ""
 "Sets your profile text colour. The format may be #RRGGBB or a HTML-valid "
 "string like \"cyan\"."
 msgstr ""
 
-#: cogs/profile/__init__.py:933
+#: cogs/profile/__init__.py:934
 msgid "Format for colour is `#RRGGBB` or a colour code like `cyan`."
 msgstr ""
 
-#: cogs/profile/__init__.py:940
+#: cogs/profile/__init__.py:941
 #, python-brace-format
 msgid ""
 "Successfully set your profile colour to `{colour}`. Hint: If you used a hex "
@@ -5719,7 +5696,7 @@ msgstr ""
 #: cogs/game_master/__init__.py:76
 #, python-brace-format
 msgid "Successfully gave **${money}** without a loss for you to **{other}**."
-msgstr "Vous avez donné **{money}$** à **{other}** avec succès, sans perte."
+msgstr "Vous avez donné **${money}** à **{other}** avec succès, sans perte."
 
 #: cogs/game_master/__init__.py:88
 msgid "[Game Master only] Removes money from a user without gain."
@@ -5728,7 +5705,7 @@ msgstr ""
 #: cogs/game_master/__init__.py:93
 #, python-brace-format
 msgid "Successfully removed **${money}** from **{other}**."
-msgstr "**{money}$** d'argent retiré avec succès de **{other}**."
+msgstr "**${money}** d'argent retiré avec succès de **{other}**."
 
 #: cogs/game_master/__init__.py:106
 msgid "[Game Master only] Deletes any user's account."
@@ -5744,7 +5721,7 @@ msgstr ""
 
 #: cogs/game_master/__init__.py:142
 msgid "What shall the character's name be? (min. 3 letters, max. 20)"
-msgstr "Quel est le nom d'utilisateur? (min. 3 letters, max. 20)"
+msgstr "Quel est le nom d'utilisateur ? (min. 3 letters, max. 20)"
 
 #: cogs/game_master/__init__.py:156
 msgid "Timeout expired."
@@ -5760,15 +5737,15 @@ msgstr ""
 
 #: cogs/game_master/__init__.py:182
 msgid "Invalid item type."
-msgstr "Type d'objet non valide."
+msgstr ""
 
 #: cogs/game_master/__init__.py:184
 msgid "Invalid stat."
-msgstr "Statistique non valide."
+msgstr ""
 
 #: cogs/game_master/__init__.py:207
 msgid "Done."
-msgstr "Terminé."
+msgstr ""
 
 #: cogs/game_master/__init__.py:219
 msgid "[Game Master only] Gives/removes crates to a user without loss."
@@ -5799,7 +5776,7 @@ msgid ""
 "limit."
 msgstr ""
 "Le profil de {target} à été remis de base avec succès ainsi que sa classe, "
-"noms d'items et la limite de membre de guilde."
+"nom d'item et la limite de membre de guilde."
 
 #: cogs/game_master/__init__.py:291
 msgid "[Game Master only] Resets someone's class(es)."
@@ -7084,128 +7061,61 @@ msgstr ""
 
 #, python-brace-format
 #~ msgid ""
-#~ "Imgur Link for `{prefix}background`\n"
-#~ "<{link}>"
+#~ "{author} started a tournament! Free entries, prize is **${prize}**! React "
+#~ "with \\U00002694 to join!"
 #~ msgstr ""
-#~ "Lien Imgur pour `{prefix}background`\n"
-#~ "<{link}>"
+#~ "{author} a démarré un tournoi ! Entrée gratuite, la récompense est de **"
+#~ "${prize}** ! Réagissez avec \\U00002694 pour rejoindre !"
 
-#~ msgid "The cast"
-#~ msgstr "Le casting"
-
-#~ msgid "[Bot Admin only] Gives money to a user without loss."
-#~ msgstr ""
-#~ "[Bot Admin seulement] Donne de l’argent à un utilisateur sans en perdre."
-
-#~ msgid "[Bot Admin only] Removes money from a user without gain."
-#~ msgstr "[Bot Admin only] Retire l'argent d'un utilisateur sans perte."
-
-#~ msgid "[Bot Admin only] Deletes any user's account."
-#~ msgstr "[Bot Admin seulement] Supprime tout compte d'utilisateur."
-
-#~ msgid "[Bot Admin only] Renames a character."
-#~ msgstr "[Bot Admin seulement] Renomme un utilisateur."
-
-#~ msgid "[Bot Admin only] Create an item."
-#~ msgstr "[Administrateur du Bot uniquement] Créer un objet."
-
-#~ msgid "[Bot Admin only] Gives/removes crates to a user without loss."
-#~ msgstr ""
-#~ "[Bot Admin seulement] Donne/retire les box d'un utilisateur sans perte."
-
-#~ msgid "[Bot Admin only] Gives xp to a user."
-#~ msgstr "[Bot Admin seulement] Donne xp à un utilisateur."
-
-#~ msgid "[Bot Admin only] Wipes someone's donator perks."
-#~ msgstr ""
-#~ "[Bot Admin seulement] Enlève les avantages de donateur de quelqu'un."
-
-#, python-brace-format
-#~ msgid ""
-#~ "You need to be a donator to use this command. Please head to `{prefix}"
-#~ "donate` and make sure you joined the support server if you decide to "
-#~ "support us."
-#~ msgstr ""
-#~ "Vous devez être un donateur pour utiliser cette commande. Veuillez "
-#~ "consulter `{prefix}donate` et soyez certain vous avez join le serveur de "
-#~ "support si vous décidez de nous supporter."
-
-#, python-brace-format
-#~ msgid "{name}, a character by `{username}` with **${money}**"
-#~ msgstr "{name}, un personnage de `{username}` qui possède **{money}$**"
-
-#, python-brace-format
-#~ msgid ""
-#~ "{name}, a character by `{username}` with Level **{level}** (**{xp}** XP)"
-#~ msgstr ""
-#~ "{name}, un personnage de `{username}` de niveau **{level}** (**{xp}** XP)"
-
-#, python-brace-format
-#~ msgid "{name}, a character by `{username}` with **{wins}** wins"
-#~ msgstr "{name}, un personnage de `{username}` avec **{wins}** victoires"
-
-#, python-brace-format
-#~ msgid "a guild by `{leader}` with **{wins}** GvG Wins"
-#~ msgstr "une guilde de `{leader}` avec **{wins}** victoires GvG"
-
-#, python-brace-format
-#~ msgid "a character by `{charname}` with **${money}**"
-#~ msgstr "un personnage de `{charname}` qui possède **{money}$**"
-
-#, python-brace-format
-#~ msgid ""
-#~ "{name}, a character by `{charname}` with Level **{level}** (**{xp}** XP)"
-#~ msgstr ""
-#~ "{name}, un personnage de `{charname}` de niveau **{level}** (**{xp}** XP)"
-
-#~ msgid ""
-#~ "What shall your character's name be? (Minimum 3 Characters, Maximum 20)\n"
-#~ "\n"
-#~ "**Please note that with the creation of a character, you agree to these "
-#~ "rules:**\n"
-#~ "1) Only up to two characters per individual\n"
-#~ "2) No abusing or benefiting from bugs or exploits\n"
-#~ "3) Be friendly and kind to other players\n"
-#~ "4) Trading in-game items or currency for real money or items directly "
-#~ "comparable to currency is forbidden\n"
-#~ "5) Giving or selling renamed items is forbidden\n"
-#~ "\n"
-#~ "IdleRPG is a global bot, your characters are valid everywhere"
-#~ msgstr ""
-#~ "Comment va être nommé votre personnage ? (Minimum 3 caractère, Maximum "
-#~ "20)\n"
-#~ "\n"
-#~ "**Veuillez noter que lors de la création de votre personnage vous "
-#~ "acceptez les règles suivantes :**\n"
-#~ "1) Maximum 2 personnages par personnes\n"
-#~ "2) Vous ne devez pas profiter ou abuser de bugs ou failles\n"
-#~ "3) Vous devez être gentil et courtois avec les autres joueurs\n"
-#~ "4) Il est interdit d'échanger des objets ou de l'argent du jeu contre des "
-#~ "biens ou de l'argent réel\n"
-#~ "5) Donner ou vendre un objets renommé est interndit\n"
-#~ "\n"
-#~ "IdleRPG est un bot global, votre personnage vous accompagnera sur tout "
-#~ "vos serveurs."
-
-#, python-brace-format
-#~ msgid "{user}, you already moved!"
-#~ msgstr "{user}, vous avez déjà effectuée une action!"
-
-#, python-brace-format
-#~ msgid "{winner} won the active battle vs {looser}! Congratulations!"
-#~ msgstr "{winner} a gagné contre {looser}! Félicitations!"
+#~ msgid "Noone joined your tournament."
+#~ msgstr "Personne n’a rejoint votre tournoi."
 
 #, python-brace-format
 #~ msgid ""
 #~ "The waiting was worth it: {author} rang! That's a trick or treat bag for "
 #~ "you, yay!"
 #~ msgstr ""
-#~ "L'attente en valait la peine : {author} sonne! C'est un sac surprise pour "
-#~ "vous, yay!"
+#~ "L'attente en valait la peine : {author} ! Tu reçois un sac surprise !"
 
 #, python-brace-format
 #~ msgid "{author} rings at your house, but... Nothing for you!"
-#~ msgstr "{author} sonne chez vous, mais… Rien pour vous!"
+#~ msgstr "{author} sonne chez toi, mais… tu ne reçois rien!"
+
+#, python-brace-format
+#~ msgid "{user} gave you additional $50!"
+#~ msgstr "{user} vous a donné $50 supplémentaires!"
+
+#, python-brace-format
+#~ msgid ""
+#~ "{author} seeks a battle! React with \\U00002694 now to duel them! The "
+#~ "price is **${money}**."
+#~ msgstr ""
+#~ "{author} veut se battre ! Réagissez avec \\U00002694 pour accepter le "
+#~ "duel ! La récompenser est de **${money}**."
+
+#, python-brace-format
+#~ msgid ""
+#~ "{author} seeks a battle with {enemy}! React with \\U00002694 now to duel "
+#~ "them! The price is **${money}**."
+#~ msgstr ""
+#~ "{author} veut se battre contre {enemy} ! Réagissez avec \\U00002694 pour "
+#~ "accepter le duel ! La récompenser est de **${money}**."
+
+#, python-brace-format
+#~ msgid ""
+#~ "{author} seeks an active battle! React with \\U00002694 now to duel them! "
+#~ "The price is **${money}**."
+#~ msgstr ""
+#~ "{author} a crée un combat actif ! Réagis avec \\U00002694 maintenant pour "
+#~ "le combattre! La récompense est de **${money}**."
+
+#, python-brace-format
+#~ msgid ""
+#~ "{author} seeks an active battle with {enemy}! React with \\U00002694 now "
+#~ "to duel them! The price is **${money}**."
+#~ msgstr ""
+#~ "{author} a crée un combat actif avec {enemy}! Réagis avec \\U00002694 "
+#~ "maintenant pour le combattre! La récompense est de : **${money}**."
 
 #, python-brace-format
 #~ msgid ""
@@ -7215,7 +7125,25 @@ msgstr ""
 #~ msgstr ""
 #~ "{player1}: **{hp1}** PV\n"
 #~ "{player2}: **{hp2}** PV\n"
-#~ "Réagissez pour jouer."
+#~ "Réagis pour jouer."
+
+#~ msgid "Someone refused to move. Battle stopped."
+#~ msgstr "Quelqu’un a refuser d’effectuer une action. Fin du combat."
+
+#, python-brace-format
+#~ msgid "{user}, you already moved!"
+#~ msgstr "{user}, vous avez déjà effectué une action !"
+
+#, python-brace-format
+#~ msgid "{user} healed themselves for **20 HP**."
+#~ msgstr "{user} s’est soigné de **20 PV**."
+
+#~ msgid ""
+#~ "One of you both can't pay the price for the battle because he spent money "
+#~ "in the time of fighting."
+#~ msgstr ""
+#~ "L’un de vous deux ne peut pas payer le prix du duel car il a dépensé de "
+#~ "l’argent pendant le combat."
 
 #, python-brace-format
 #~ msgid ""
@@ -7226,10 +7154,10 @@ msgstr ""
 #~ "<:bunny:566290173831151627>\n"
 #~ "Happy hunting!"
 #~ msgstr ""
-#~ "**Événement de Pâques <:easteregg:566251086986608650>**\n"
+#~ "**Easter event <:easteregg:566251086986608650>**\n"
 #~ "\n"
-#~ "Dure jusqu'à mardi après Pâques!\n"
-#~ "Collectez les œufs de Pâques et utilisez `{prefix}easter rewards` pour "
+#~ "Dernière chance jusqu'à mardi après Pâques!\n"
+#~ "Collecte les œufs de pâques aet utilise `{prefix}easter rewards` pour "
 #~ "voir les récompenses. <:bunny:566290173831151627>\n"
 #~ "Bonne chasse!"
 
@@ -7253,204 +7181,56 @@ msgstr ""
 #~ "You have **{eggs}** <:easteregg:566251086986608650>."
 #~ msgstr ""
 #~ "\n"
-#~ "**Événement de Pâques - récompenses**\n"
-#~ "Utilisez `{prefix}easter reward [1-10]` pour échanger vos œufs.\n"
+#~ "**Event' de Pâques - récompenses**\n"
+#~ "Utilise `{prefix}easter reward [1-10]` pour échanger vos oeufs.\n"
 #~ "\n"
-#~ "**100 <:easteregg:566251086986608650>** - 1 coffre\n"
-#~ "**500 <:easteregg:566251086986608650>** - 10000$\n"
+#~ "**100 <:easteregg:566251086986608650>** - 1 box\n"
+#~ "**500 <:easteregg:566251086986608650>** - $10000\n"
 #~ "**1000 <:easteregg:566251086986608650>** - item aléatoire 1-49\n"
-#~ "**2000 <:easteregg:566251086986608650>** - 25 coffres\n"
+#~ "**2000 <:easteregg:566251086986608650>** - 25 box\n"
 #~ "**2500 <:easteregg:566251086986608650>** - 10 boosters de chaque type\n"
-#~ "**5000 <:easteregg:566251086986608650>** - 100 coffres\n"
-#~ "**7500 <:easteregg:566251086986608650>** - badge pour guilde de Pâques\n"
-#~ "**7500 <:easteregg:566251086986608650>** - 200 coffres\n"
+#~ "**5000 <:easteregg:566251086986608650>** - 100 box\n"
+#~ "**7500 <:easteregg:566251086986608650>** - badge pour guilde spécial "
+#~ "Pâques\n"
+#~ "**7500 <:easteregg:566251086986608650>** - 200 box\n"
 #~ "**7500 <:easteregg:566251086986608650>** - item aléatoire 40-50\n"
 #~ "**10000 <:easteregg:566251086986608650>** - item aléatoire stat 50\n"
 #~ "\n"
-#~ "Vous avez : **{eggs}** <:easteregg:566251086986608650>."
+#~ "Tu as : **{eggs}** <:easteregg:566251086986608650>."
 
 #~ msgid "Get your easter reward. ID may be 1 to 10."
-#~ msgstr "Recevez votre récompense de Pâques. ID peut être 1 à 10."
-
-#, python-brace-format
-#~ msgid ""
-#~ "**{author}** bought your **{name}** for **${price}** from the market."
-#~ msgstr ""
-#~ "**{author}** a acheté votre **{name}** pour **{price}$** sur le marché."
-
-#, python-brace-format
-#~ msgid ""
-#~ "**{author}** bought you a **{item}** and increased your love score by "
-#~ "**{points}** points!"
-#~ msgstr ""
-#~ "**{author}** vous a acheté **{item}** et cela augmente votre score "
-#~ "amoureux de **{points}** points!"
-
-#, python-brace-format
-#~ msgid ""
-#~ "{author} seeks a guild adventure for **{guild}**! React to join! "
-#~ "Unlimited players can join in the next minute. The minimum of players "
-#~ "required is 3."
-#~ msgstr ""
-#~ "{author} à commencé une aventure de guilde pour **{guild}**! Réagissez "
-#~ "pour rejoindre! Pas de limite de joueurs pour rejoindre durant les "
-#~ "prochaines minutes. Le minimum de joueurs requis est de 3."
-
-#, python-brace-format
-#~ msgid "Alright, {user}, you have been added."
-#~ msgstr "D'accord, {user}, vous avez été ajouté."
-
-#~ msgid "You aren't in their guild."
-#~ msgstr "Vous n’êtes pas dans leur guilde."
-
-#~ msgid "Noone joined your tournament."
-#~ msgstr "Personne n’a joint votre tournoi."
-
-#~ msgid "Someone refused to move. Battle stopped."
-#~ msgstr "Quelqu’un a refusé d’effectuer une action. Fin du combat."
-
-#~ msgid ""
-#~ "One of you both can't pay the price for the battle because he spent money "
-#~ "in the time of fighting."
-#~ msgstr ""
-#~ "L’un de vous deux ne peut pas payer le prix du duel car il/elle a dépensé "
-#~ "de l’argent durant le combat."
-
-#~ msgid "watch a movie together when USER suddely gets shot by a stranger"
-#~ msgstr ""
-#~ "regardent un film ensemble quand USER se fait soudainement tirer par un "
-#~ "inconnu"
-
-#~ msgid ""
-#~ "Use the ndx format. E.g. `5d20` will roll 5 dices with 20 sides each."
-#~ msgstr ""
-#~ "Utilise le ndx format. E.g. `5d20` va lancer 5 dés avec 20 côtés chacun."
-
-#~ msgid "Too many dice."
-#~ msgstr "Trop de dés."
-
-#, python-brace-format
-#~ msgid ""
-#~ "Sword: {sword}\n"
-#~ "Shield: {shield}"
-#~ msgstr ""
-#~ "Épée: {sword}\n"
-#~ "Bouclier: {shield}"
-
-#, python-brace-format
-#~ msgid "Successfully equipped item `{itemid}` and put off item `{olditem}`."
-#~ msgstr ""
-#~ "Vous avez équipé l’objet `{itemid}` avec succès, l’objet `{olditem}` a "
-#~ "été placé dans votre inventaire."
-
-#, python-brace-format
-#~ msgid ""
-#~ "Your guild isn't on an adventure yet. Ask your guild leader to use "
-#~ "`{prefix}guild adventure` to start one"
-#~ msgstr ""
-#~ "Votre guilde n'est pas encore en aventure. demandez à votre leader de "
-#~ "guilde d'utiliser `{prefix}guild adventure` pour commencer une aventure"
-
-#~ msgid ""
-#~ "The tank class. Charge into battle with additional defense!\n"
-#~ "+1 defense per evolution added onto your shield."
-#~ msgstr ""
-#~ "La classe de tank. Chargez au combat avec de la défense supplémentaire!\n"
-#~ "+1 de défense par évolution ajoutée a votre bouclier."
-
-#~ msgid ""
-#~ "Utilise powerful magic for stronger attacks.\n"
-#~ "+1 damage per evolution added onto your sword."
-#~ msgstr ""
-#~ "Utilise la puissance de la magie afin de porter des attaques plus "
-#~ "puissantes.\n"
-#~ "+1 de dégâts par évolution ajoutée à votre épée."
-
-#~ msgid ""
-#~ "Absorb the appreciation of the devs into your soul to power up.\n"
-#~ "+1 damage and defense per evolution added onto your items."
-#~ msgstr ""
-#~ "Absorbez l’appréciation des devs dans votre âme afin de gagner en "
-#~ "puissance.\n"
-#~ "+1 de dégâts et de défense par évolution ajoutée à vos items."
-
-#, python-brace-format
-#~ msgid "You stole **${stolen}** from **{user}**."
-#~ msgstr "Vous avez volé **{stolen}$** à **{user}**."
-
-#, python-brace-format
-#~ msgid ""
-#~ "{author} started a tournament! Free entries, prize is **${prize}**! React "
-#~ "with \\U00002694 to join!"
-#~ msgstr ""
-#~ "{author} a démarré un tournoi! Entrée gratuite, la récompense est de "
-#~ "**{prize}$** ! Réagissez avec \\U00002694 pour joindre!"
-
-#, python-brace-format
-#~ msgid "{user} gave you additional $50!"
-#~ msgstr "{user} vous a donné 50$ supplémentaires!"
-
-#, python-brace-format
-#~ msgid ""
-#~ "{author} seeks a battle! React with \\U00002694 now to duel them! The "
-#~ "price is **${money}**."
-#~ msgstr ""
-#~ "{author} veut se battre! Réagissez avec \\U00002694 pour accepter le "
-#~ "duel! La récompenser est de **{money}$**."
-
-#, python-brace-format
-#~ msgid ""
-#~ "{author} seeks a battle with {enemy}! React with \\U00002694 now to duel "
-#~ "them! The price is **${money}**."
-#~ msgstr ""
-#~ "{author} veut se battre contre {enemy}! Réagissez avec \\U00002694 pour "
-#~ "accepter le duel! La récompenser est de **{money}$**."
-
-#, python-brace-format
-#~ msgid ""
-#~ "{author} seeks an active battle! React with \\U00002694 now to duel them! "
-#~ "The price is **${money}**."
-#~ msgstr ""
-#~ "{author} a créé un combat actif! Réagissez avec \\U00002694 maintenant "
-#~ "pour le combattre! La récompense est de **{money}$**."
-
-#, python-brace-format
-#~ msgid ""
-#~ "{author} seeks an active battle with {enemy}! React with \\U00002694 now "
-#~ "to duel them! The price is **${money}**."
-#~ msgstr ""
-#~ "{author} a créé un combat actif avec {enemy}! Réagissez avec \\U00002694 "
-#~ "maintenant pour le combattre! La récompense est de : **{money}$**."
-
-#, python-brace-format
-#~ msgid "{user} healed themselves for **20 HP**."
-#~ msgstr "{user} s’est soigné de **20 PV**."
+#~ msgstr "Reçois ta récompense de Pâques. ID entre 1 à 10."
 
 #, python-brace-format
 #~ msgid ""
 #~ "You currently have **{crates}** crates, {author}! Use `{prefix}open` to "
 #~ "open one!"
 #~ msgstr ""
-#~ "Vous avez actuellement **{crates}** coffre(s), {author}! Utilisez "
-#~ "`{prefix}open` pour en ouvrir une!"
+#~ "Vous avez actuellement **{crates}** box, {author} ! Utilisez `{prefix}"
+#~ "open` pour en ouvrir une !"
 
 #~ msgid ""
 #~ "Seems like you don't have a crate yet. Vote me up to get some or earn "
 #~ "them!"
 #~ msgstr ""
-#~ "Il semblerait que vous n’avez pas de coffre pour le moment. Votez pour en "
-#~ "obtenir, ou gagnez les!"
+#~ "Il semblerait que vous n’avez pas de box pour le moment. Votez pour en "
+#~ "obtenir, ou gagnez les !"
 
 #, python-brace-format
 #~ msgid "Remaining crates: {crates}"
-#~ msgstr "Coffres restantes: {crates}"
+#~ msgstr "Box restantes: {crates}"
 
 #~ msgid "You don't have any crates."
-#~ msgstr "Vous ne possédez aucun coffre."
+#~ msgstr "Vous ne possédez aucune box."
 
 #, python-brace-format
 #~ msgid "Successfully gave {amount} crate(s) to {other}."
-#~ msgstr "Vous avez donné {amount} coffres à {other} avec succès."
+#~ msgstr "Vous avez donné {amount} box à {other} avec succès."
+
+#~ msgid "watch a movie together when USER suddely gets shot by a stranger"
+#~ msgstr ""
+#~ "regardent un film ensemble quand USER se fait soudainement tiré dessus "
+#~ "par un inconnu"
 
 #, python-brace-format
 #~ msgid ""
@@ -7458,35 +7238,22 @@ msgstr ""
 #~ "didn't do anything) Choosing random action..."
 #~ msgstr ""
 #~ "Je n’ai pas pu envoyer de DM à {user} ! (Ceci est un bug connu si votre "
-#~ "réaction n’a rien fait) Choix d’une action aléatoire…"
+#~ "réaction n’a rien fait) Choix d’une action aléatoire..."
 
 #, python-brace-format
 #~ msgid "Letting {user} choose their action... Done"
 #~ msgstr "Laisse {user} choisir son action... Fini"
 
-#, python-brace-format
-#~ msgid "{crates} crates"
-#~ msgstr "{crates} coffres"
+#~ msgid "The cast"
+#~ msgstr "Le casting"
 
-#, python-brace-format
-#~ msgid ""
-#~ "{enemy}, {author} has challenged you for an epic snowball fight! If you "
-#~ "want to accept, react \\U00002744\n"
-#~ "**IMPORTANT: This is very spammy, make sure you are using a dedicated "
-#~ "channel!**"
-#~ msgstr ""
-#~ "{enemy}, {author} vous a défié dans une épique bataille de boule de "
-#~ "neige! Si vous voulez l'accepter, réagissez avec \\U00002744\n"
-#~ "**IMPORTANT: Ceci spam beaucoup, assurez vous que vous êtes dans un "
-#~ "channel dédié!**"
-
-#, python-brace-format
+#, fuzzy, python-brace-format
 #~ msgid ""
 #~ "You received your daily **${money}**!\n"
 #~ "You are on a streak of **{streak}** days!"
 #~ msgstr ""
-#~ "Vous avez reçu vos **{money}$** quotidiens!\n"
-#~ "Vous êtes sur une série de **{streak}** jours!"
+#~ "Vous avez reçu vos **${money}** journalier !\n"
+#~ "Vous êtes sur une série de **{steak}** jours !"
 
 #~ msgid "My current websocket latency."
 #~ msgstr "Ma latence websocket actuelle."
@@ -7497,10 +7264,19 @@ msgstr ""
 #~ "Invite me! {url}"
 #~ msgstr ""
 #~ "Vous utilisez la version **{version}** par Adrian.\n"
-#~ "Invitez-moi! {url}"
+#~ "Invitez-moi ! {url}"
 
 #~ msgid "Information on the support server."
 #~ msgstr "Informations sur le serveur de support."
+
+#~ msgid ""
+#~ "Got problems or feature requests? Looking for people to play with? Join "
+#~ "the support server:\n"
+#~ "https://discord.gg/axBKXBv"
+#~ msgstr ""
+#~ "Vous avez un problème ou une idée de fonctionnalité à ajouter ? Vous "
+#~ "cherchez des personnes avec qui jouer ? Rejoignez le serveur de support:\n"
+#~ "https://discord.gg/axBKXBv"
 
 #~ msgid "General Statistics (this instance only)"
 #~ msgstr "Statistiques générales (pour cette instance uniquement)"
@@ -7514,15 +7290,26 @@ msgstr ""
 #~ "Operating System: **{osname} {osversion}**\n"
 #~ "PostgreSQL Version **{pg_version}**"
 #~ msgstr ""
-#~ "Usage de CPU: **{cpu}%**\n"
-#~ "Usage de RAM: **{ram}%**\n"
-#~ "Version Python **{python}** <:python:445247273065250817>\n"
-#~ "Version discord.py **{dpy}**\n"
-#~ "Système d'Opération: **{osname} {osversion}**\n"
-#~ "Version PostgreSQL **{pg_version}**"
+#~ "CPU Usage: **{cpu}%**\n"
+#~ "RAM Usage: **{ram}%**\n"
+#~ "Python Version **{python}** <:python:445247273065250817>\n"
+#~ "discord.py Version **{dpy}**\n"
+#~ "Operating System: **{osname} {osversion}**\n"
+#~ "PostgreSQL Version **{pg_version}**"
 
 #~ msgid "The bot's update log."
 #~ msgstr "Le journal de mise à jour du bot."
+
+#~ msgid ""
+#~ "Use the ndx format. E.g. `5d20` will roll 5 dices with 20 sides each."
+#~ msgstr ""
+#~ "Utilise le ndx format. E.g. `5d20` va lancer 5 dés avec 20 côtés chacun."
+
+#~ msgid "Too many dice."
+#~ msgstr "Trop de dés."
+
+#~ msgid "Dice must have at least one side."
+#~ msgstr "Les dés doivent avoir au moins un côté."
 
 #~ msgid "Sends my nickname in a random server."
 #~ msgstr "Envoie mon surnom dans un serveur aléatoire."
@@ -7539,18 +7326,14 @@ msgstr ""
 #~ "chat! Un bot proposant des jeux non-RPG réalisés par deprilula28 et Fin.\n"
 #~ "[Page discordbots.org] (https://discordbots.org/bot/gamesrob)"
 
-#~ msgid ""
-#~ "Cautious Memory brings wiki-style pages to your server. Use it to "
-#~ "document who's who in your server, inside jokes, or community lore. "
-#~ "Includes a full featured permissions system to keep your pages squeaky "
-#~ "clean.\n"
-#~ "[discordbots.org Page](https://discordbots.org/bot/541707781665718302)"
-#~ msgstr ""
-#~ "Mémoire Prudente amène des pages style wiki à votre serveur. Utilisez le "
-#~ "pour documenter qui est qui dans votre serveur, blagues privées ou le "
-#~ "lore de la communauté. Inclus un système complètement personnalisé\n"
-#~ "pour garder vos pages vraiment propre. [discordbots.org Page](https://"
-#~ "discordbots.org/bot/541707781665718302)"
+#~ msgid "time"
+#~ msgstr "durée"
+
+#~ msgid "luck"
+#~ msgstr "chance"
+
+#~ msgid "money"
+#~ msgstr "argent"
 
 #, python-brace-format
 #~ msgid ""
@@ -7566,21 +7349,37 @@ msgstr ""
 #~ msgid "This booster is already running."
 #~ msgstr "Ce booster est déjà en cours d’utilisation."
 
-#~ msgid "Band a user from using $helpme."
-#~ msgstr "Banni un utilisateur d'utiliser $helpme."
+#~ msgid ""
+#~ "**Welcome to the IdleRPG help. Use the arrows to move.\n"
+#~ "For more help, join the support server at https://discord.gg/axBKXBv.**\n"
+#~ "Check out our partners using the partners command!"
+#~ msgstr ""
+#~ "**Bienvenue dans l’aide de IdleRPG. Utilisez les flèches pour vous "
+#~ "déplacer.\n"
+#~ "Pour plus d’aide, rejoignez le serveur de support sur https://discord.gg/"
+#~ "axBKXBv.**\n"
+#~ "Découvrez nos partenaires en utilisant la commande partners!"
 
 #~ msgid "reset"
-#~ msgstr "réinitialisation"
+#~ msgstr "reset"
 
 #~ msgid ""
 #~ "[Patreon Only] Generates a profile background based on an image. Valid "
 #~ "overlays are 1 or 2 for grey and black."
 #~ msgstr ""
-#~ "[Donateur seulement] Génère un fond de profil basé sur une image. Les "
-#~ "fonds valides sont 1 et 2 pour gris et noir."
+#~ "[Donateur seulement] Génère un fond de profil basé  sur un image. Les "
+#~ "fonds valide sont 1 et 2 pour gris et noir."
 
 #~ msgid "Use either `1` or `2` as the overlay type."
 #~ msgstr "Utilisez soit `1` ou `2` comme type d’overlay."
+
+#, python-brace-format
+#~ msgid ""
+#~ "Imgur Link for `{prefix}background`\n"
+#~ "<{link}>"
+#~ msgstr ""
+#~ "Lien Imgur pour `{prefix}background`\n"
+#~ "<{link}>"
 
 #~ msgid "[Patreon Only] Update your guild member limit."
 #~ msgstr "[Patreon seulement] Mets à jour votre limite de membre de guilde."
@@ -7591,6 +7390,33 @@ msgstr ""
 #~ msgid "Change your class."
 #~ msgstr "Change votre classe."
 
+#~ msgid ""
+#~ "The tank class. Charge into battle with additional defense!\n"
+#~ "+1 defense per evolution added onto your shield."
+#~ msgstr ""
+#~ "La classe de tank. Chargez au combat avec de la défense supplémentaire !\n"
+#~ "+1 de défense par évolution ajoutée a votre bouclier."
+
+#, python-format, python-brace-format
+#~ msgid ""
+#~ "The sneaky money stealer...\n"
+#~ "Get access to `{prefix}steal` to steal 10%% of the target's money, if "
+#~ "successful.\n"
+#~ "+8% success chance per evolution."
+#~ msgstr ""
+#~ "Le voleur d’argent sournois…\n"
+#~ "Accédez à la commande `{prefix}steal` afin de voler 10%% de l’argent de "
+#~ "votre cible en cas de succès.\n"
+#~ "+8% de chance de succès par évolution."
+
+#~ msgid ""
+#~ "Utilise powerful magic for stronger attacks.\n"
+#~ "+1 damage per evolution added onto your sword."
+#~ msgstr ""
+#~ "Utilise la puissance de la magie afin de porter des attaques plus "
+#~ "puissantes.\n"
+#~ "+1 de dégâts par évolution ajoutée à votre épée."
+
 #, python-brace-format
 #~ msgid ""
 #~ "Item hunter and trainer of their very own pet.\n"
@@ -7598,17 +7424,25 @@ msgstr ""
 #~ "a day.\n"
 #~ "+3 minimum stat and +6 maximum stat per evolution."
 #~ msgstr ""
-#~ "Chasseur d’objet et dompteur de leur propre animal de compagnie.\n"
+#~ "Chasseur d’item et dompteur de leur propre animal de compagnie.\n"
 #~ "Accédez aux commandes `{prefix}hunt` et `{prefix}pet` pour partir à la "
-#~ "chasse d’un objet aléatoire une fois par jour.\n"
+#~ "chasse d’un item aléatoire une fois par jour.\n"
 #~ "+3 aux stats minimales et +6 aux stats maximales par évolution."
+
+#~ msgid ""
+#~ "Absorb the appreciation of the devs into your soul to power up.\n"
+#~ "+1 damage and defense per evolution added onto your items."
+#~ msgstr ""
+#~ "Absorbez l’appréciation des devs dans votre âme afin de gagner en "
+#~ "puissance.\n"
+#~ "+1 de dégâts et de défense par évolution ajoutée à vos items."
 
 #, python-brace-format
 #~ msgid ""
 #~ "Your new class is now `{profession}`. **$5000** was taken off your "
 #~ "balance."
 #~ msgstr ""
-#~ "Votre nouvelle classe est maintenant `{profession}`. **5000$** ont été "
+#~ "Votre nouvelle classe est maintenant `{profession}`. **$5000** ont été "
 #~ "retirés de votre balance."
 
 #~ msgid "Views your class."
@@ -7621,26 +7455,30 @@ msgstr ""
 #~ msgid "You are now a `{newclass}`."
 #~ msgstr "Vous êtes maintenant un `{newclass}`."
 
+#, python-brace-format
+#~ msgid "You stole **${stolen}** from **{user}**."
+#~ msgstr "Vous avez volé **${stolen}** à **{user}**."
+
 #~ msgid "[Ranger Only] View your pet!"
-#~ msgstr "[Ranger seulement] Voir votre animal de compagnie!"
+#~ msgstr "[Ranger seulement] Voir votre animal de compagnie !"
 
 #~ msgid "Play some tunes"
-#~ msgstr "Joue quelques chansons"
+#~ msgstr "Joue quelques sons"
 
 #~ msgid ":warning:`No results...`"
 #~ msgstr ":warning: `Aucun résultat…`"
 
 #~ msgid ":warning:`Connect to a voice channel first!`"
-#~ msgstr ":warning:`Connectez vous d’abord à un canal vocal!`"
+#~ msgstr ":warning:`Connectez vous d’abord à un canal vocal !`"
 
 #~ msgid "Search and play some tunes from SoundCloud"
-#~ msgstr "Cherchez et jouez des musique venant du SoundCloud"
+#~ msgstr "Cherche et joue des musiques venant de SoundCloud"
 
 #~ msgid "Picks a random result, and plays for you"
-#~ msgstr "Choisit un résultat au hasard et le joue pour vous"
+#~ msgstr "Choisi aléatoirement, et joue pour vous"
 
 #~ msgid "Stops the music and leaves the channel"
-#~ msgstr "Arrête la musique et quitte le canal"
+#~ msgstr "Stop la musique et se déconnecte du channel"
 
 #~ msgid ":white_check_mark:` Done!`"
 #~ msgstr ":white_check_mark:` Fait!`"
@@ -7648,38 +7486,52 @@ msgstr ""
 #~ msgid ""
 #~ ":warning:`I am currently not connected to any channel in this guild...`"
 #~ msgstr ""
-#~ ":warning:`Je ne suis actuellement pas connecté à un canal dans cette "
-#~ "guilde...`"
+#~ ":warning:`Je ne suis actuellement connecté à aucun channel du server...`"
 
 #~ msgid "Show the next (maximum 5) tracks in the queue"
-#~ msgstr "Montre les prochaines (maximum 5) chansons en liste"
+#~ msgstr "Montre les prochaines pistes ( 5 max)"
 
 #~ msgid "Skips the current song"
-#~ msgstr "Passe la chanson en cours"
+#~ msgstr "Change la musique actuel"
 
 #~ msgid ":warning:`Nothing to skip...`"
 #~ msgstr ":warning:`Rien à passer...`"
 
 #~ msgid ":warning:`I am currently not playing anything here...`"
-#~ msgstr ":warning:`Je ne joue actuellement rien ici...`"
+#~ msgstr ":warning:`Je ne joue rien ici actuellement...`"
 
 #~ msgid ":warning:`The volume must between 0 and 100!`"
-#~ msgstr ":warning:`Le volume doit être entre 0 et 100!`"
+#~ msgstr ":warning:`Le volume doit être en 0 et 100!`"
 
 #~ msgid ":warning:`The song list is empty!`"
-#~ msgstr ":warning:`La liste de chansons est vide!`"
+#~ msgstr ":warning:`Liste de musique vide!`"
 
 #~ msgid "Displays some information about the current song"
-#~ msgstr "Affiche quelques information à propos de la chanson courante"
+#~ msgstr "Affiche des informations sur la chanson en cours"
 
 #~ msgid ":warning:`I'm not playing anything at the moment...`"
 #~ msgstr ":warning:`Je ne joue rien en ce moment...`"
+
+#~ msgid "Uploader"
+#~ msgstr "Téléchargement"
+
+#~ msgid "Length"
+#~ msgstr "Durée"
+
+#~ msgid "Remaining"
+#~ msgstr "Restant"
+
+#~ msgid "Position"
+#~ msgstr "Position"
+
+#~ msgid "```No information```"
+#~ msgstr "```Aucune information```"
 
 #~ msgid "Go out on an active, action based adventure."
 #~ msgstr "Partez pour une aventure active basée sur l'action."
 
 #~ msgid "**Active adventure loading...**"
-#~ msgstr "**Chargement de l'aventure active...**"
+#~ msgstr "**Chargement de l'aventure actif**"
 
 #, python-brace-format
 #~ msgid ""
@@ -7701,7 +7553,7 @@ msgstr ""
 #~ "Progrès: {progress}%\n"
 #~ "PV......: {hp}\n"
 #~ "\n"
-#~ "Ennemi\n"
+#~ "Enemi\n"
 #~ "PV......: {enemy_hp}\n"
 #~ "\n"
 #~ "Utilise la réaction attaque défense ou soin\n"
@@ -7712,16 +7564,16 @@ msgstr ""
 #~ "L’aventure s’est terminée car vous avez refusé d’effectuer une action."
 
 #~ msgid "You healed yourself for 20 HP."
-#~ msgstr "Vous vous êtes soigné pour 20 PV."
+#~ msgstr "Vous vous êtes soigné de 20 PV."
 
 #~ msgid "The enemy healed himself for 20 HP."
-#~ msgstr "L’ennemi s’est soigné pour 20 PV."
+#~ msgstr "L’ennemi s’est soigné de 20 PV."
 
 #~ msgid "Your attack was blocked!"
-#~ msgstr "Votre attaque a été bloquée!"
+#~ msgstr "Votre attaque a été bloquée !"
 
 #~ msgid "Enemy attack was blocked!"
-#~ msgstr "Vous avez bloqué l’attaque ennemie!"
+#~ msgstr "Vous avez bloqué l’attaque ennemie !"
 
 #~ msgid "Noone attacked."
 #~ msgstr "Personne n’a attaqué."
@@ -7747,7 +7599,7 @@ msgstr ""
 
 #~ msgid "You found a new item when finishing an active adventure!"
 #~ msgstr ""
-#~ "Vous avez trouvé un nouvel objet en terminant cette active aventure!"
+#~ "Vous avez trouvé un nouvel item en terminant cette active aventure !"
 
 #, python-brace-format
 #~ msgid "Your HP were {hp}"
@@ -7758,7 +7610,7 @@ msgstr ""
 #~ "You have completed your dungeon and received **${gold}** as well as a new "
 #~ "weapon: **{item}**. Experience gained: **{xp}**."
 #~ msgstr ""
-#~ "Vous avez complété votre donjon et avez reçu **{gold}$**, ainsi qu’une "
+#~ "Vous avez complété votre donjon et avez reçu **${gold}**, ainsi qu’une "
 #~ "nouvelle arme: **{item}**.Expérience gagnée: **{xp}**."
 
 #, python-brace-format
@@ -7767,16 +7619,16 @@ msgstr ""
 #~ "weapon: **{item}**. Experience gained: **{xp}**.\n"
 #~ "Your partner received **${gold2}**."
 #~ msgstr ""
-#~ "Vous avez complété votre donjon et avez reçu **{gold}$**, ainsi qu’une "
+#~ "Vous avez complété votre donjon et avez reçu **${gold}**, ainsi qu’une "
 #~ "nouvelle arme: **{item}**.Expérience gagnée: **{xp}**.\n"
-#~ "Votre partenaire a reçu **{gold2}$**."
+#~ "Votre partenaire a reçu **${gold2}**."
 
 #, python-brace-format
 #~ msgid "**{amount}** crates"
-#~ msgstr "**{amount}** coffres"
+#~ msgstr "**{amount}** caisses"
 
 #~ msgid "a special Item"
-#~ msgstr "un objet spécial"
+#~ msgstr "un item spécial"
 
 #, python-brace-format
 #~ msgid "Level {new_level} Memorial"
@@ -7787,8 +7639,8 @@ msgstr ""
 #~ "You reached a new level: **{new_level}** :star:! You received {reward} as "
 #~ "a reward :tada:!"
 #~ msgstr ""
-#~ "Vous avez atteint un nouveau niveau: **{new_level}** :star:! Vous avez "
-#~ "reçu {reward} comme récompense :tada:!"
+#~ "Vous avez atteint un nouveau niveau: **{new_level}** :star: ! Vous avez "
+#~ "reçu {reward} comme récompense :tada: !"
 
 #, python-brace-format
 #~ msgid ""
@@ -7804,7 +7656,7 @@ msgstr ""
 #~ msgstr "Vos statistiques de mort."
 
 #~ msgid "The dealer got a blackjack. You lost."
-#~ msgstr "Le croupier à un Blackjack. Vous perdez."
+#~ msgstr "Le dealer à un Blackjack. Vous perdez."
 
 #~ msgid "You got a blackjack and won!"
 #~ msgstr "Vous avez eu un Blackjack et gagnez!"
@@ -7813,13 +7665,13 @@ msgstr ""
 #~ msgstr "Vous avez sauté et perdez."
 
 #~ msgid "Dealer busts and you win!"
-#~ msgstr "Le croupier saute et vous gagnez!"
+#~ msgstr "Le Dealer saute et vous gagnez!"
 
 #~ msgid "You have a higher score than the dealer and win."
-#~ msgstr "Vous avez un meilleur score que le croupier, vous gagnez."
+#~ msgstr "Vous avez un meilleur score que le Dealer, vous gagnez."
 
 #~ msgid "Dealer has a higher score than you and wins."
-#~ msgstr "Le croupier à un meilleur score que vous et gagne."
+#~ msgstr "Le Dealer à un meilleur score que vous et gagne."
 
 #~ msgid "It's a tie. You lose your bet."
 #~ msgstr "Egalité. Vous avez perdu le pari."
@@ -7832,8 +7684,8 @@ msgstr ""
 #~ "[Alpha] Play blackjack against the dealer. Dealer rules, means wins in "
 #~ "case of tie."
 #~ msgstr ""
-#~ "[Alpha] Jouez au Blackjack contre le croupier. Faveur au croupier, "
-#~ "signifie qu'il gagne en cas d'égalité."
+#~ "[Alpha] Jouez au Blackjack contre le dealer. Règles du Dealer , signifie "
+#~ "gagné en cas d'égalité."
 
 #~ msgid "Puts an item into the player store."
 #~ msgstr "Mets un item en vente au magasin des joueurs."
@@ -7849,21 +7701,36 @@ msgstr ""
 #~ "Successfully added your item to the shop! Use `{prefix}shop` to view it "
 #~ "in the market!"
 #~ msgstr ""
-#~ "Votre objet a été ajouté au magasin avec succès ! Utilisez `{prefix}shop` "
-#~ "pour le voir sur le marché!"
+#~ "Votre item a été ajouté au magasin avec succès ! Utilisez `{prefix}shop` "
+#~ "pour le voir sur le marché !"
+
+#, python-brace-format
+#~ msgid ""
+#~ "**{author}** bought your **{name}** for **${price}** from the market."
+#~ msgstr ""
+#~ "**{author}** a acheté votre **{name}** pour **${price}** sur le marché."
 
 #~ msgid "Show the market with all items and prices."
-#~ msgstr "Montre le marché avec tous les objets ainsi que leur prix."
+#~ msgstr "Montre le marché avec tous les items ainsi que leur prix."
+
+#~ msgid "All"
+#~ msgstr "Tout"
+
+#~ msgid "Sword"
+#~ msgstr "Épée"
+
+#~ msgid "Shield"
+#~ msgstr "Bouclier"
 
 #~ msgid "Sells an item for its value."
-#~ msgstr "Vends un objet à sa valeur."
+#~ msgstr "Vends un item à sa valeur."
 
 #, python-brace-format
 #~ msgid "You received **${money}** when selling item `{itemid}`."
-#~ msgstr "Vous avez reçu **{money}$** en vendant l’objet `{itemid}`."
+#~ msgstr "Vous avez reçu **${money}** en vendant l’item `{itemid}`."
 
 #~ msgid "Buy items at the trader."
-#~ msgstr "Achète des objets au commerçant."
+#~ msgstr "Achète des items au commerçant."
 
 #~ msgid "Views your lovescore."
 #~ msgstr "Voir votre score d’amour."
@@ -7872,21 +7739,43 @@ msgstr ""
 #~ msgid ""
 #~ "Your overall love score is **{score}**. You are married to **{partner}**."
 #~ msgstr ""
-#~ "Votre score amoureux total est de **{score}**. Vous êtes marié(e) à "
+#~ "Votre score amoureux total est de **{score}**. Vous êtes marié à "
 #~ "**{partner}**."
+
+#, python-brace-format
+#~ msgid ""
+#~ "**{author}** bought you a **{item}** and increased your love score by "
+#~ "**{points}** points!"
+#~ msgstr ""
+#~ "**{author}** vous a acheté **{item}** et augmente votre score amoureux de "
+#~ "**{points}** points!"
 
 #~ msgid "You already have 10 children."
 #~ msgstr "Vous avez déjà 10 enfants."
 
 #, python-brace-format
 #~ msgid "<@{marriage}>, do you want to make a child with {author}?"
-#~ msgstr "<@{marriage}>, voulez-vous faire un enfant avec {author}?"
+#~ msgstr "<@{marriage}>, voulez-vous faire un enfant avec {author} ?"
 
 #~ msgid "You were unsuccessful at making a child."
 #~ msgstr "Vous n’avez pas réussi à faire un enfant."
 
 #~ msgid "The 10 richest players."
 #~ msgstr "Les 10 joueurs les plus riches."
+
+#, python-brace-format
+#~ msgid "{name}, a character by `{username}` with **${money}**"
+#~ msgstr "{name}, un personnage de `{username}` qui possède **${money}**"
+
+#, python-brace-format
+#~ msgid ""
+#~ "{name}, a character by `{username}` with Level **{level}** (**{xp}** XP)"
+#~ msgstr ""
+#~ "{name}, un personnage de `{username}` de niveau **{level}** (**{xp}** XP)"
+
+#, python-brace-format
+#~ msgid "{name}, a character by `{username}` with **{wins}** wins"
+#~ msgstr "{name}, un personnage de `{username}` avec **{wins}** victoires"
 
 #, python-brace-format
 #~ msgid "{num} of {total}"
@@ -7898,11 +7787,58 @@ msgstr ""
 #~ msgid "Look up a guild by name."
 #~ msgstr "Cherchez une guilde via son nom."
 
+#, python-brace-format
+#~ msgid "a guild by `{leader}` with **{wins}** GvG Wins"
+#~ msgstr "une guilde de `{leader}` avec **{wins}** victoires GvG"
+
 #~ msgid "List of your guild members."
 #~ msgstr "Liste des membres de votre guilde."
 
 #~ msgid "[Guild owner only] Change the guild badge."
 #~ msgstr "[Meneur de guilde uniquement] Modifie le badge de guilde."
+
+#, python-brace-format
+#~ msgid ""
+#~ "Successfully added your guild **{name}** with a member limit of "
+#~ "**{memberlimit}**."
+#~ msgstr ""
+#~ "Votre guilde **{name}** a été créée avec succès avec une limite de "
+#~ "**{memberlimit}** membres."
+
+#, python-brace-format
+#~ msgid "a character by `{charname}` with **${money}**"
+#~ msgstr "un personnage de `{charname}` qui possède **${money}**"
+
+#, python-brace-format
+#~ msgid ""
+#~ "{name}, a character by `{charname}` with Level **{level}** (**{xp}** XP)"
+#~ msgstr ""
+#~ "{name}, un personnage de `{charname}` de niveau **{level}** (**{xp}** XP)"
+
+#, python-brace-format
+#~ msgid ""
+#~ "{author} seeks a guild adventure for **{guild}**! React to join! "
+#~ "Unlimited players can join in the next minute. The minimum of players "
+#~ "required is 3."
+#~ msgstr ""
+#~ "{author} à commencé une aventure de guilde pour **{guild}**! Réagi pour "
+#~ "rejoindre! Pas de limite de joueurs pour rejoindre durant les prochaines "
+#~ "minutes. Le minimum de joueurs requis est de 3."
+
+#, python-brace-format
+#~ msgid "Alright, {user}, you have been added."
+#~ msgstr "Bien, {user}, vous avez été ajouté."
+
+#~ msgid "You aren't in their guild."
+#~ msgstr "Vous n’êtes pas dans leur guilde."
+
+#, python-brace-format
+#~ msgid ""
+#~ "Your guild isn't on an adventure yet. Ask your guild leader to use "
+#~ "`{prefix}guild adventure` to start one"
+#~ msgstr ""
+#~ "Votre guilde n'est pas encore en aventure. demandez à votre leader de "
+#~ "guilde d'utiliser `{prefix}guild adventure` pour commencer une aventure"
 
 #~ msgid "Vote me up to get a reward!"
 #~ msgstr "Votez pour moi afin d’obtenir une récompense !"
@@ -7912,18 +7848,18 @@ msgstr ""
 #~ "afterwards!\n"
 #~ "https://discordbots.org/bot/idlerpg"
 #~ msgstr ""
-#~ "Votez pour moi merci! Vous recevrez une récompense après !\n"
+#~ "Votez pour moi merci! Tu recevra une récompense après !\n"
 #~ "https://discordbots.org/bot/idlerpg"
 
 #~ msgid "[Ken only] Hug someone."
 #~ msgstr "[Ken uniquement] Faire un câlin à quelqu’un."
 
 #~ msgid "Ken Hug!"
-#~ msgstr "Câlin de Ken!"
+#~ msgstr "Câlin de Ken !"
 
 #, python-brace-format
 #~ msgid "{author} hugged {user}! Awww!"
-#~ msgstr "{author} fait un câlin à {user}! Awww!"
+#~ msgstr "{author} fait un câlin à {user} ! Awww !"
 
 #, python-brace-format
 #~ msgid ""
@@ -7933,32 +7869,40 @@ msgstr ""
 #~ "**PvP Wins**: `{pvp}`\n"
 #~ "**Guild**: `{guild}`"
 #~ msgstr ""
-#~ "**Argent**: `{money}$`\n"
+#~ "**Argent**: `${money}`\n"
 #~ "**Niveau**: `{level}`\n"
 #~ "**Classe**: `{class_}`\n"
 #~ "**Victoires PvP**: `{pvp}`\n"
 #~ "**Guilde**: `{guild}`"
+
+#, python-brace-format
+#~ msgid ""
+#~ "Sword: {sword}\n"
+#~ "Shield: {shield}"
+#~ msgstr ""
+#~ "Épée: {sword}\n"
+#~ "Bouclier: {shield}"
 
 #~ msgid "Shows your current XP and level."
 #~ msgstr "Montre votre XP actuelle ainsi que votre niveau."
 
 #, python-brace-format
 #~ msgid "ID: `{id}`, Type: `{type_}` with {statstr}. Value is **${value}**"
-#~ msgstr "ID: `{id}`, Type: `{type_}` avec {statstr}. Valeur: **{value}$**"
+#~ msgstr "ID: `{id}`, Type: `{type_}` avec {statstr}. Valeur: **${value}**"
+
+#, python-brace-format
+#~ msgid "Successfully equipped item `{itemid}` and put off item `{olditem}`."
+#~ msgstr ""
+#~ "Vous avez équipé l’item `{itemid}` avec succès, l’item `{olditem}` a été "
+#~ "placé dans votre inventaire."
 
 #, python-brace-format
 #~ msgid "Successfully gave **${money}** to {other}."
-#~ msgstr "Vous avez donné **{money}$** à {other} avec succès."
+#~ msgstr "Vous avez donné **${money}** à {other} avec succès."
 
-#~ msgid ""
-#~ "Are you absolutely sure you want to delete your character? React in the "
-#~ "next 30 seconds to confirm.\n"
-#~ "**This cannot be undone!!**"
+#~ msgid "Are you sure? React in the next 30 seconds to confirm."
 #~ msgstr ""
-#~ "Êtes-vous absolument certain de vouloir supprimer votre personnage? "
-#~ "Réagissez dans les prochains\n"
-#~ "30 secondes pour confirmer.\n"
-#~ "**Ceci est irréversible!!**"
+#~ "Êtes-vous sûr ? Réagissez dans les prochaines 30 secondes pour confirmer."
 
 #~ msgid "Sets your profile text colour."
 #~ msgstr "Modifie la couleur du texte sur votre profil."
@@ -7970,43 +7914,30 @@ msgstr ""
 #~ msgid "Successfully set your profile colour to `{colour}`."
 #~ msgstr "La couleur de votre profil a été remplacée par `{colour}`."
 
+#~ msgid "[Bot Admin only] Gives money to a user without loss."
+#~ msgstr ""
+#~ "[Bot Admin seulement] Donne de l’argent à un utilisateur sans en perdre."
+
+#~ msgid "[Bot Admin only] Removes money from a user without gain."
+#~ msgstr "[Bot Admin only] Retire l'argent d'un utilisateur sans perte."
+
+#~ msgid "[Bot Admin only] Deletes any user's account."
+#~ msgstr "[Bot Admin seulement] Supprime tout compte d'utilisateurs."
+
+#~ msgid "[Bot Admin only] Renames a character."
+#~ msgstr "[Bot Admin seulement] Renomme un utilisateur."
+
+#~ msgid "[Bot Admin only] Gives/removes crates to a user without loss."
+#~ msgstr ""
+#~ "[Bot Admin seulement] Donne/retire les box d'un utilisateur sans perte."
+
 #, python-brace-format
 #~ msgid "Successfully gave **{amount}** crates to **{target}**."
 #~ msgstr "**{amount}**box donné avec succès à **{target}**."
 
-#~ msgid "Are you sure? React in the next 30 seconds to confirm."
+#~ msgid "[Bot Admin only] Gives xp to a user."
+#~ msgstr "[Bot Admin seulement] Donne xp à un utilisateur."
+
+#~ msgid "[Bot Admin only] Wipes someone's donator perks."
 #~ msgstr ""
-#~ "Êtes-vous sûr ? Réagissez dans les prochaines 30 secondes pour confirmer."
-
-#~ msgid "Dice must have at least one side."
-#~ msgstr "Les dés doivent avoir au moins un côté."
-
-#~ msgid "time"
-#~ msgstr "durée"
-
-#~ msgid "luck"
-#~ msgstr "chance"
-
-#~ msgid "money"
-#~ msgstr "argent"
-
-#, fuzzy
-#~ msgid ""
-#~ "The sneaky money stealer...\n"
-#~ "Get access to `{prefix}steal` to steal 10%% of the target's money, if "
-#~ "successful.\n"
-#~ "+8% success chance per evolution."
-#~ msgstr ""
-#~ "Le voleur d’argent sournois…\n"
-#~ "Accédez à la commande `{prefix}steal` afin de voler 10%% de l’argent de "
-#~ "votre cible en cas de succès.\n"
-#~ "+8% de chance de succès par évolution."
-
-#~ msgid "All"
-#~ msgstr "Tout"
-
-#~ msgid "Sword"
-#~ msgstr "Épée"
-
-#~ msgid "Shield"
-#~ msgstr "Bouclier"
+#~ "[Bot Admin seulement] Enlève les avantages de donateur de quelqu'un."

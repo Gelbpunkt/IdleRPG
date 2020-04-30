@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 4.3.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-04-19 22:09+0200\n"
+"POT-Creation-Date: 2020-04-30 03:44-0700\n"
 "PO-Revision-Date: 2020-01-10 08:37+0100\n"
 "Last-Translator: Naya \"Nyathaleen\" Aldaine\n"
 "Language-Team: \n"
@@ -25,7 +25,7 @@ msgstr "Påbörjar en ny turnering."
 #: cogs/tournament/__init__.py:48 cogs/tournament/__init__.py:192
 #: cogs/battles/__init__.py:49 cogs/battles/__init__.py:152
 #: cogs/battles/__init__.py:366 cogs/gambling/__init__.py:479
-#: cogs/profile/__init__.py:835 cogs/game_master/__init__.py:358
+#: cogs/profile/__init__.py:836 cogs/game_master/__init__.py:358
 #: cogs/transaction/__init__.py:267 cogs/transaction/__init__.py:335
 msgid "You are too poor."
 msgstr "Du har inte råd."
@@ -44,7 +44,7 @@ msgstr ""
 msgid "Noone joined your tournament {author}."
 msgstr ""
 
-#: cogs/tournament/__init__.py:104 cogs/tournament/__init__.py:246
+#: cogs/tournament/__init__.py:104
 #, python-brace-format
 msgid "{user} joined the tournament."
 msgstr "{user} gick med i din turnering."
@@ -113,6 +113,11 @@ msgstr ""
 #: cogs/tournament/__init__.py:236
 #, python-brace-format
 msgid "Noone joined your raid tournament {author}."
+msgstr ""
+
+#: cogs/tournament/__init__.py:246
+#, python-brace-format
+msgid "{user} joined the raidtournament."
 msgstr ""
 
 #: cogs/tournament/__init__.py:256
@@ -233,32 +238,32 @@ msgstr "Du hittade ett nytt föremål när du öppnade en bus eller godis påse!
 
 #: cogs/halloween/__init__.py:155 cogs/crates/__init__.py:137
 #: cogs/classes/__init__.py:321 cogs/classes/__init__.py:555
-#: cogs/trading/__init__.py:268 cogs/trading/__init__.py:528
+#: cogs/trading/__init__.py:268 cogs/trading/__init__.py:530
 #: cogs/valentine/__init__.py:143
 msgid "Name"
 msgstr "Namn"
 
 #: cogs/halloween/__init__.py:156 cogs/crates/__init__.py:138
 #: cogs/classes/__init__.py:556 cogs/trading/__init__.py:269
-#: cogs/trading/__init__.py:529 cogs/valentine/__init__.py:144
+#: cogs/trading/__init__.py:531 cogs/valentine/__init__.py:144
 msgid "Type"
 msgstr "Typ"
 
 #: cogs/halloween/__init__.py:157 cogs/crates/__init__.py:139
 #: cogs/classes/__init__.py:560 cogs/trading/__init__.py:270
-#: cogs/trading/__init__.py:530 cogs/valentine/__init__.py:148
+#: cogs/trading/__init__.py:532 cogs/valentine/__init__.py:148
 msgid "Damage"
 msgstr "Skada"
 
 #: cogs/halloween/__init__.py:158 cogs/crates/__init__.py:140
 #: cogs/classes/__init__.py:558 cogs/trading/__init__.py:271
-#: cogs/trading/__init__.py:531 cogs/valentine/__init__.py:146
+#: cogs/trading/__init__.py:533 cogs/valentine/__init__.py:146
 msgid "Armor"
 msgstr "Rustning"
 
 #: cogs/halloween/__init__.py:159 cogs/crates/__init__.py:141
 #: cogs/classes/__init__.py:561 cogs/trading/__init__.py:272
-#: cogs/trading/__init__.py:532 cogs/valentine/__init__.py:149
+#: cogs/trading/__init__.py:534 cogs/valentine/__init__.py:149
 msgid "Value"
 msgstr "Värde"
 
@@ -444,7 +449,16 @@ msgstr ""
 msgid "You don't have enough money to join the activebattle."
 msgstr ""
 
-#: cogs/battles/__init__.py:459
+#: cogs/battles/__init__.py:452
+#, python-brace-format
+msgid "Battle {p1} vs {p2}"
+msgstr ""
+
+#: cogs/battles/__init__.py:454
+msgid "Let the battle begin!"
+msgstr ""
+
+#: cogs/battles/__init__.py:468 cogs/battles/__init__.py:611
 #, python-brace-format
 msgid ""
 "{prevaction}\n"
@@ -453,69 +467,67 @@ msgid ""
 "React to play."
 msgstr ""
 
-#: cogs/battles/__init__.py:470 cogs/battles/__init__.py:471
+#: cogs/battles/__init__.py:480 cogs/battles/__init__.py:481
 #, python-brace-format
 msgid "{user} does nothing..."
 msgstr ""
 
-#: cogs/battles/__init__.py:486
+#: cogs/battles/__init__.py:498
 msgid "Someone refused to move. Activebattle stopped."
 msgstr ""
 
-#: cogs/battles/__init__.py:494
+#: cogs/battles/__init__.py:506
 #, python-brace-format
 msgid "{user}, you already moved! Waiting for {other}'s move..."
 msgstr ""
 
-#: cogs/battles/__init__.py:507
+#: cogs/battles/__init__.py:519
 #, python-brace-format
 msgid "{user} healed themselves for **{hp} HP**."
 msgstr "{user} återhämtade **{hp} HP**."
 
-#: cogs/battles/__init__.py:523 cogs/battles/__init__.py:548
+#: cogs/battles/__init__.py:535 cogs/battles/__init__.py:560
 #, python-brace-format
 msgid "{user} hit {enemy} for **{eff}** damage."
 msgstr "{user} träffade {enemy} för **{eff}** skada."
 
-#: cogs/battles/__init__.py:551
+#: cogs/battles/__init__.py:563
 #, python-brace-format
 msgid "{enemy} tried to defend, but failed."
 msgstr ""
 
-#: cogs/battles/__init__.py:558
+#: cogs/battles/__init__.py:570
 #, python-brace-format
 msgid "{user}'s attack on {enemy} failed!"
 msgstr "{user}s attack mot {enemy} misslyckades!"
 
-#: cogs/battles/__init__.py:561
+#: cogs/battles/__init__.py:573
 #, python-brace-format
 msgid "{enemy} blocked {user}'s attack."
 msgstr ""
 
-#: cogs/battles/__init__.py:566
+#: cogs/battles/__init__.py:578
 msgid "You both tried to defend."
 msgstr ""
 
-#: cogs/battles/__init__.py:567
+#: cogs/battles/__init__.py:579
 msgid "It was not very effective..."
 msgstr ""
 
-#: cogs/battles/__init__.py:570
+#: cogs/battles/__init__.py:582
 msgid "You both died!"
 msgstr "Ni båda dog! Ajdå!"
 
-#: cogs/battles/__init__.py:580
+#: cogs/battles/__init__.py:592
 msgid ""
 "One of you both can't pay the price for the activebattle because he spent "
 "money in the time of fighting."
 msgstr ""
 
-#: cogs/battles/__init__.py:598
+#: cogs/battles/__init__.py:622
 #, python-brace-format
-msgid ""
-"{prevaction}\n"
-"{winner} won the active battle vs {looser}! Congratulations!"
-msgstr ""
+msgid "{winner} won the active battle vs {looser}! Congratulations!"
+msgstr "{winner} Vann den aktiva striden mot {looser}! Grattis!"
 
 #: cogs/easter/__init__.py:34
 msgid ""
@@ -1080,7 +1092,7 @@ msgstr ""
 "för andra användare."
 
 #. prevent cooldown reset
-#: cogs/error_handler/__init__.py:235 cogs/trading/__init__.py:571
+#: cogs/error_handler/__init__.py:235 cogs/trading/__init__.py:573
 msgid "You did not choose anything."
 msgstr "Du valde inget."
 
@@ -1359,19 +1371,19 @@ msgstr ""
 msgid "**Matches to be done**:"
 msgstr "**Matcher att göra**:"
 
-#: cogs/miscellaneous/__init__.py:63
+#: cogs/miscellaneous/__init__.py:64
 msgid "Let's dab together."
 msgstr "Låt oss göra en dab."
 
-#: cogs/miscellaneous/__init__.py:64
+#: cogs/miscellaneous/__init__.py:65
 msgid "No. Just no. I am a bot. What did you think?"
 msgstr "Föll du verkligen för den? Hah"
 
-#: cogs/miscellaneous/__init__.py:71
+#: cogs/miscellaneous/__init__.py:72
 msgid "Receive a daily reward based on your streak."
 msgstr "Få en daglig belöning baserat på din dagföljd."
 
-#: cogs/miscellaneous/__init__.py:124
+#: cogs/miscellaneous/__init__.py:125
 #, python-brace-format
 msgid ""
 "You received your daily {txt}!\n"
@@ -1380,49 +1392,65 @@ msgstr ""
 "Du har fått din dagliga {txt}!\n"
 "Din dagsföljd är på **{streak}** dagar!"
 
-#: cogs/miscellaneous/__init__.py:131
+#: cogs/miscellaneous/__init__.py:133
+msgid "See the current daily streak you are on."
+msgstr ""
+
+#: cogs/miscellaneous/__init__.py:138
+#, python-brace-format
+msgid ""
+"You don't have a daily streak yet. You can get one going by using the "
+"command `{prefix}daily`!"
+msgstr ""
+
+#: cogs/miscellaneous/__init__.py:142
+#, python-brace-format
+msgid "You are on a daily streak of **{streak}!**"
+msgstr ""
+
+#: cogs/miscellaneous/__init__.py:150
 msgid "Shows you the bot's current websocket latency."
 msgstr "Visar bottens nuvarande websocket latens."
 
-#: cogs/miscellaneous/__init__.py:134
+#: cogs/miscellaneous/__init__.py:153
 msgid "Pong!"
 msgstr "Pång!"
 
-#: cogs/miscellaneous/__init__.py:135
+#: cogs/miscellaneous/__init__.py:154
 #, python-brace-format
 msgid "My current latency is {lat}ms"
 msgstr "Min nuvarande latens är {lat}ms"
 
-#: cogs/miscellaneous/__init__.py:145
+#: cogs/miscellaneous/__init__.py:164
 msgid "Gives you a short URL from an image or long URL"
 msgstr "Ger dig en kort URL från en bild eller lång URL"
 
-#: cogs/miscellaneous/__init__.py:147
+#: cogs/miscellaneous/__init__.py:166
 msgid "Please supply a URL or an image attachment"
 msgstr "Vänligen ge en URL eller tillagd bild"
 
-#: cogs/miscellaneous/__init__.py:150
+#: cogs/miscellaneous/__init__.py:169
 msgid "Please only use one image at a time."
 msgstr "Vänligen använd enbart en bild åt gången."
 
-#: cogs/miscellaneous/__init__.py:155
+#: cogs/miscellaneous/__init__.py:174
 msgid "This is not a valid image file."
 msgstr "Det är inte en giltig bildfil."
 
-#: cogs/miscellaneous/__init__.py:166 cogs/patreon/__init__.py:249
+#: cogs/miscellaneous/__init__.py:185 cogs/patreon/__init__.py:249
 msgid "Error when uploading to Imgur."
 msgstr "Fel vid uppladdning till Imgur."
 
-#: cogs/miscellaneous/__init__.py:167
+#: cogs/miscellaneous/__init__.py:186
 #, python-brace-format
 msgid "Here's your short image URL: <{link}>"
 msgstr "Här är din korta bildURL: <{link}>"
 
-#: cogs/miscellaneous/__init__.py:172
+#: cogs/miscellaneous/__init__.py:191
 msgid "Support maintenance of the bot."
 msgstr "Stödunderhåll av botten."
 
-#: cogs/miscellaneous/__init__.py:178
+#: cogs/miscellaneous/__init__.py:197
 #, python-brace-format
 msgid ""
 "This bot has its own patreon page.\n"
@@ -1450,15 +1478,15 @@ msgstr ""
 "\n"
 "<https://patreon.com/idlerpg>"
 
-#: cogs/miscellaneous/__init__.py:195
+#: cogs/miscellaneous/__init__.py:214
 msgid "Shows the source code and license."
 msgstr "Visar källkoden och licenset."
 
-#: cogs/miscellaneous/__init__.py:201
+#: cogs/miscellaneous/__init__.py:220
 msgid "Invite link for the bot."
 msgstr "Inbjudanslänk till botten."
 
-#: cogs/miscellaneous/__init__.py:204
+#: cogs/miscellaneous/__init__.py:223
 #, python-brace-format
 msgid ""
 "You are running version **{version}** by The IdleRPG Developers.\n"
@@ -1467,11 +1495,11 @@ msgstr ""
 "Du kör version **{version}** av IdleRPG utvecklarna.\n"
 "Bjud in mig! {url}"
 
-#: cogs/miscellaneous/__init__.py:216
+#: cogs/miscellaneous/__init__.py:235
 msgid "Sends you the link to the official IdleRPG Support server."
 msgstr "Skickar länken till den officiella IdleRPG supportservern."
 
-#: cogs/miscellaneous/__init__.py:219
+#: cogs/miscellaneous/__init__.py:238
 msgid ""
 "Got problems or feature requests? Looking for people to play with? Join the "
 "support server:\n"
@@ -1481,24 +1509,24 @@ msgstr ""
 "supportservern:\n"
 "https://discord.gg/MSBatf6"
 
-#: cogs/miscellaneous/__init__.py:226
+#: cogs/miscellaneous/__init__.py:245
 msgid "Statistics on the bot."
 msgstr "Statistik på botten."
 
-#: cogs/miscellaneous/__init__.py:254
+#: cogs/miscellaneous/__init__.py:274
 msgid "IdleRPG Statistics"
 msgstr "IdleRPG Statistik"
 
-#: cogs/miscellaneous/__init__.py:257
+#: cogs/miscellaneous/__init__.py:277
 msgid "Official Support Server Invite: https://discord.gg/MSBatf6"
 msgstr ""
 "Inbjudan till den officiella supportservern: https://discord.gg/MSBatf6"
 
-#: cogs/miscellaneous/__init__.py:265
+#: cogs/miscellaneous/__init__.py:285
 msgid "Hosting Statistics"
 msgstr "Hosting Statistik"
 
-#: cogs/miscellaneous/__init__.py:267
+#: cogs/miscellaneous/__init__.py:287
 #, python-brace-format
 msgid ""
 "CPU: **{cpu_name}**\n"
@@ -1507,17 +1535,18 @@ msgid ""
 "CPU Temperature: **{cpu_temp}°C**\n"
 "Python Version **{python}** <:python:445247273065250817>\n"
 "discord.py Version **{dpy}**\n"
+"Compiler: **{compiler}**\n"
 "Operating System: **{osname} {osversion}**\n"
 "Kernel Version: **{kernel}**\n"
 "PostgreSQL Version: **{pg_version}**\n"
 "Redis Version: **{redis_version}**"
 msgstr ""
 
-#: cogs/miscellaneous/__init__.py:299
+#: cogs/miscellaneous/__init__.py:321
 msgid "Bot Statistics"
 msgstr "Botstatistik"
 
-#: cogs/miscellaneous/__init__.py:301
+#: cogs/miscellaneous/__init__.py:323
 #, python-brace-format
 msgid ""
 "Code lines written: **{lines}**\n"
@@ -1534,21 +1563,21 @@ msgstr ""
 "Föremål: **{items}**\n"
 "Genomsnittliga arbetstimmar: **{hours}**"
 
-#: cogs/miscellaneous/__init__.py:323
+#: cogs/miscellaneous/__init__.py:345
 msgid "Roll a random number."
 msgstr "Få ett slumpmässigt nummer."
 
-#: cogs/miscellaneous/__init__.py:325
+#: cogs/miscellaneous/__init__.py:347
 #, python-brace-format
 msgid ":1234: You rolled **{num}**, {author}!"
 msgstr ":1234: Du fick **{num}**, {author}!"
 
-#: cogs/miscellaneous/__init__.py:333
+#: cogs/miscellaneous/__init__.py:355
 msgid "Shows you the bots current version along with its new updates."
 msgstr ""
 "Visar bottens nuvarande version tillsammans med dens senaste uppdateringar."
 
-#: cogs/miscellaneous/__init__.py:386
+#: cogs/miscellaneous/__init__.py:408
 msgid ""
 "Deletes an amount of messages from the history, optionally only by one "
 "member."
@@ -1556,145 +1585,145 @@ msgstr ""
 "Tar bort en mängd meddelanden från historiken, alternativt endast av en "
 "medlem."
 
-#: cogs/miscellaneous/__init__.py:396
+#: cogs/miscellaneous/__init__.py:418
 #, python-brace-format
 msgid "👍 Deleted **{num}** messages for you."
 msgstr "👍 Raderade **{num}** meddelanden åt dig."
 
-#: cogs/miscellaneous/__init__.py:402
+#: cogs/miscellaneous/__init__.py:424
 msgid "The magic 8 ball answers your questions."
 msgstr "Den magiska 8-bollen svarar på dina frågor."
 
-#: cogs/miscellaneous/__init__.py:404
+#: cogs/miscellaneous/__init__.py:426
 msgid "It is certain"
 msgstr "Absolut inte"
 
-#: cogs/miscellaneous/__init__.py:405
+#: cogs/miscellaneous/__init__.py:427
 msgid "It is decidedly so"
 msgstr "Nja, tveksamt"
 
-#: cogs/miscellaneous/__init__.py:406
+#: cogs/miscellaneous/__init__.py:428
 msgid "Without a doubt"
 msgstr "Fy nej"
 
-#: cogs/miscellaneous/__init__.py:407
+#: cogs/miscellaneous/__init__.py:429
 msgid "Yes, definitely"
 msgstr "Självklart inte"
 
-#: cogs/miscellaneous/__init__.py:408
+#: cogs/miscellaneous/__init__.py:430
 msgid "You may rely on it"
 msgstr "Ehhhh, nej?"
 
-#: cogs/miscellaneous/__init__.py:409
+#: cogs/miscellaneous/__init__.py:431
 msgid "As I see it, yes"
 msgstr "Som jag ser det, nope"
 
-#: cogs/miscellaneous/__init__.py:410
+#: cogs/miscellaneous/__init__.py:432
 msgid "Most likely"
 msgstr "Mest troligt inte"
 
-#: cogs/miscellaneous/__init__.py:411
+#: cogs/miscellaneous/__init__.py:433
 msgid "Outlook good"
 msgstr "Ser inte bra ut"
 
-#: cogs/miscellaneous/__init__.py:412 cogs/music/__init__.py:412
-#: cogs/music/__init__.py:415
+#: cogs/miscellaneous/__init__.py:434 cogs/music/__init__.py:447
+#: cogs/music/__init__.py:450 cogs/music/__init__.py:454
 msgid "Yes"
 msgstr "Nä"
 
-#: cogs/miscellaneous/__init__.py:413
+#: cogs/miscellaneous/__init__.py:435
 msgid "Signs point to yes"
 msgstr "Tecken pekar på nej"
 
-#: cogs/miscellaneous/__init__.py:414
+#: cogs/miscellaneous/__init__.py:436
 msgid "Reply hazy try again"
 msgstr "Svarade dumt, försök igen"
 
-#: cogs/miscellaneous/__init__.py:415
+#: cogs/miscellaneous/__init__.py:437
 msgid "Ask again later"
 msgstr "Fråga igen senare"
 
-#: cogs/miscellaneous/__init__.py:416
+#: cogs/miscellaneous/__init__.py:438
 msgid "Better not tell you now"
 msgstr "Jag tror inte du vill veta"
 
-#: cogs/miscellaneous/__init__.py:417
+#: cogs/miscellaneous/__init__.py:439
 msgid "Cannot predict now"
 msgstr "Kan inte förutsäga nu"
 
-#: cogs/miscellaneous/__init__.py:418
+#: cogs/miscellaneous/__init__.py:440
 msgid "Concentrate and ask again"
 msgstr "Koncentrera dig och fråga igen"
 
-#: cogs/miscellaneous/__init__.py:419
+#: cogs/miscellaneous/__init__.py:441
 msgid "Don't count on it"
 msgstr "Räkna inte med det"
 
-#: cogs/miscellaneous/__init__.py:420
+#: cogs/miscellaneous/__init__.py:442
 msgid "My reply is no"
 msgstr "Mitt svar är nej"
 
-#: cogs/miscellaneous/__init__.py:421
+#: cogs/miscellaneous/__init__.py:443
 msgid "My sources say no"
 msgstr "Mina källor säger nej"
 
-#: cogs/miscellaneous/__init__.py:422
+#: cogs/miscellaneous/__init__.py:444
 msgid "Outlook not so good"
 msgstr "Ser inte så bra ut"
 
-#: cogs/miscellaneous/__init__.py:423
+#: cogs/miscellaneous/__init__.py:445
 msgid "Very doubtful"
 msgstr "Väldigt tveksamt"
 
-#: cogs/miscellaneous/__init__.py:426
+#: cogs/miscellaneous/__init__.py:448
 #, python-brace-format
 msgid "The :8ball: says: **{result}**."
 msgstr ":8ball: säger: **{result}**."
 
-#: cogs/miscellaneous/__init__.py:432
+#: cogs/miscellaneous/__init__.py:454
 msgid "Repeats what you said."
 msgstr "Upprepar vad du sa."
 
-#: cogs/miscellaneous/__init__.py:442
+#: cogs/miscellaneous/__init__.py:464
 msgid "Chooses a random option of supplied possiblies."
 msgstr "Väljer ett slumpmässigt alternativ från alternativen."
 
-#: cogs/miscellaneous/__init__.py:445
+#: cogs/miscellaneous/__init__.py:467
 msgid "Cannot choose from an empty list..."
 msgstr "Kan inte välja från en tom lista..."
 
-#: cogs/miscellaneous/__init__.py:447
+#: cogs/miscellaneous/__init__.py:469
 #, python-brace-format
 msgid "My choice is: **{result}**."
 msgstr "Mitt val är: **{result}**."
 
-#: cogs/miscellaneous/__init__.py:455
+#: cogs/miscellaneous/__init__.py:477
 msgid "Calculates the potential love for 2 members."
 msgstr "Beräknar den möjliga kärleken mellan 2 medlemmar."
 
-#: cogs/miscellaneous/__init__.py:458
+#: cogs/miscellaneous/__init__.py:480
 #, python-brace-format
 msgid "Calculating Love for {first} and {second}..."
 msgstr "Beräknar Kärleken mellan {first} och {second}..."
 
-#: cogs/miscellaneous/__init__.py:471
+#: cogs/miscellaneous/__init__.py:493
 msgid "Love Calculation"
 msgstr "Kärleksberäkning"
 
-#: cogs/miscellaneous/__init__.py:472
+#: cogs/miscellaneous/__init__.py:494
 #, python-brace-format
 msgid "Love for {first} and {second} is at **{love}%**! ❤"
 msgstr "Kärleken mellan {first} och {second} är på **{love}%**! ❤"
 
-#: cogs/miscellaneous/__init__.py:482
+#: cogs/miscellaneous/__init__.py:504
 msgid "Fancies text with big emojis."
 msgstr "Piffa till texten med stora emojis."
 
-#: cogs/miscellaneous/__init__.py:508
+#: cogs/miscellaneous/__init__.py:530
 msgid "A random bad meme."
 msgstr "En slumpmässig dålig meme."
 
-#: cogs/miscellaneous/__init__.py:522
+#: cogs/miscellaneous/__init__.py:544
 msgid ""
 "Tabletop RPG-ready dice. Rolls in the ndx format (3d20 is 3 dice with 20 "
 "sides)."
@@ -1702,23 +1731,23 @@ msgstr ""
 "Tabletop RPG-färdiga tärningar. Kastar i ndx-formatet (3d20 är 3 tärningar "
 "med 20 sidor)."
 
-#: cogs/miscellaneous/__init__.py:529
+#: cogs/miscellaneous/__init__.py:551
 msgid "Use the ndx format. E.g. `5d20` will roll 5 dice with 20 sides each."
 msgstr ""
 
-#: cogs/miscellaneous/__init__.py:533
+#: cogs/miscellaneous/__init__.py:555
 msgid "Use the ndx format."
 msgstr "Använd ndx-formatet."
 
-#: cogs/miscellaneous/__init__.py:536
+#: cogs/miscellaneous/__init__.py:558
 msgid "The number of dice to roll should be between 1 and 100."
 msgstr ""
 
-#: cogs/miscellaneous/__init__.py:540
+#: cogs/miscellaneous/__init__.py:562
 msgid "Dice must have at least one side and not more than 10000."
 msgstr "Tärningar måste ha minst en sida och inte fler än 10000."
 
-#: cogs/miscellaneous/__init__.py:553
+#: cogs/miscellaneous/__init__.py:575
 #, python-brace-format
 msgid ""
 "```Sum: {sumall}\n"
@@ -1731,106 +1760,106 @@ msgstr ""
 "Resultatet:\n"
 "{results}```"
 
-#: cogs/miscellaneous/__init__.py:561
+#: cogs/miscellaneous/__init__.py:583
 msgid "Sends you my nickname from a random server."
 msgstr "Skickar mitt smeknamn från en slumpmässig server."
 
-#: cogs/miscellaneous/__init__.py:567
+#: cogs/miscellaneous/__init__.py:589
 #, python-brace-format
 msgid "In **{server}** I am called **{name}**."
 msgstr "På **{server}** kallas jag **{name}**."
 
-#: cogs/miscellaneous/__init__.py:575
+#: cogs/miscellaneous/__init__.py:597
 msgid "Facts about Chuck Norris."
 msgstr "Fakta om Chuck Norris."
 
-#: cogs/miscellaneous/__init__.py:583
+#: cogs/miscellaneous/__init__.py:605
 msgid "Cat pics."
 msgstr "Kattbilder."
 
-#: cogs/miscellaneous/__init__.py:586
+#: cogs/miscellaneous/__init__.py:608
 msgid "Meow!"
 msgstr "Mjau! :3"
 
-#: cogs/miscellaneous/__init__.py:595
+#: cogs/miscellaneous/__init__.py:617
 msgid "Dog pics."
 msgstr "Hundbilder."
 
-#: cogs/miscellaneous/__init__.py:602
+#: cogs/miscellaneous/__init__.py:624
 msgid "Wouff!"
 msgstr "Voff!"
 
-#: cogs/miscellaneous/__init__.py:609
+#: cogs/miscellaneous/__init__.py:631
 msgid "Shows how long the bot has been connected to Discord."
 msgstr "Visar hur länge botten har varit kopplad till discord."
 
-#: cogs/miscellaneous/__init__.py:611
+#: cogs/miscellaneous/__init__.py:633
 #, python-brace-format
 msgid "I am online for **{time}**."
 msgstr "Jag har varit online i **{time}**."
 
-#: cogs/miscellaneous/__init__.py:619
+#: cogs/miscellaneous/__init__.py:641
 msgid "Every good software has an Easter egg."
 msgstr "Varje bra programvara har en gömd hemlighet."
 
-#: cogs/miscellaneous/__init__.py:620
+#: cogs/miscellaneous/__init__.py:642
 msgid "Find it!"
 msgstr "Hitta den!"
 
-#: cogs/miscellaneous/__init__.py:626
+#: cogs/miscellaneous/__init__.py:648
 msgid "Gives a cookie to a user."
 msgstr "Ger en kaka till en användare."
 
-#: cogs/miscellaneous/__init__.py:629
+#: cogs/miscellaneous/__init__.py:651
 #, python-brace-format
 msgid "**{user}**, you've been given a cookie by **{author}**. :cookie:"
 msgstr "**{user}**, du har fått en kaka av **{author}**. :cookie:"
 
-#: cogs/miscellaneous/__init__.py:637
+#: cogs/miscellaneous/__init__.py:659
 msgid "Gives ice cream to a user."
 msgstr "Ger glass till en användare."
 
-#: cogs/miscellaneous/__init__.py:639
+#: cogs/miscellaneous/__init__.py:661
 #, python-brace-format
 msgid "{other}, here is your ice: :ice_cream:!"
 msgstr "{other}, här är din glass: :ice_cream:!"
 
-#: cogs/miscellaneous/__init__.py:647
+#: cogs/miscellaneous/__init__.py:669
 msgid "User guessing game."
 msgstr "Användare gissningsspel."
 
-#: cogs/miscellaneous/__init__.py:650
+#: cogs/miscellaneous/__init__.py:672
 msgid "Can you guess who this is?"
 msgstr "Kan du gissa vem det är?"
 
-#: cogs/miscellaneous/__init__.py:651
+#: cogs/miscellaneous/__init__.py:673
 #, python-brace-format
 msgid "Their discriminant is `#{disc}`"
 msgstr "Deras diskriminant är `#{disc}`"
 
-#: cogs/miscellaneous/__init__.py:668
+#: cogs/miscellaneous/__init__.py:690
 #, python-brace-format
 msgid "You didn't guess correctly! It was `{member}`!"
 msgstr "Du gissade inte rätt! Det var `{member}`!"
 
-#: cogs/miscellaneous/__init__.py:670
+#: cogs/miscellaneous/__init__.py:692
 #, python-brace-format
 msgid "{user}, you are correct!"
 msgstr "{user}, Du har rätt!"
 
-#: cogs/miscellaneous/__init__.py:675
+#: cogs/miscellaneous/__init__.py:697
 msgid "An alternative to 8ball, but has more bitchy answers."
 msgstr "Ett alternativ till 8 bollen, men har mer uppkäftiga svar."
 
-#: cogs/miscellaneous/__init__.py:730
+#: cogs/miscellaneous/__init__.py:752
 msgid "Talk to me! (Supports only English)"
 msgstr "Prata med mig! (Stödjer endast engelska)"
 
-#: cogs/miscellaneous/__init__.py:734
+#: cogs/miscellaneous/__init__.py:756
 msgid "Text too long or too short. May be 3 to 60 characters."
 msgstr "Text för lång eller för kort. Får vara mellan 3 och 60 tecken."
 
-#: cogs/miscellaneous/__init__.py:757
+#: cogs/miscellaneous/__init__.py:779
 msgid ""
 "Sends today's garfield comic if no date info is passed. Else, it will use "
 "YYYY MM DD or DD MM YYYY depending on where the year is, with the date parts "
@@ -1840,7 +1869,7 @@ msgstr ""
 "DD eller DD MM YYYY beroende på var året står, med datumen separerade med "
 "mellanrum."
 
-#: cogs/miscellaneous/__init__.py:776
+#: cogs/miscellaneous/__init__.py:798
 msgid ""
 "Sends today's userfriendly comic if no date info is passed. Else, it will "
 "use YYYY MM DD or DD MM YYYY depending on where the year is, with the date "
@@ -1850,23 +1879,23 @@ msgstr ""
 "YYYY MM DD eller DD MM YYYY beroende på var året står, med datumen "
 "separerade med mellanrum."
 
-#: cogs/miscellaneous/__init__.py:787
+#: cogs/miscellaneous/__init__.py:809
 msgid "Taken from userfriendly.org"
 msgstr "Plockad från userfriendly.org"
 
-#: cogs/miscellaneous/__init__.py:797
+#: cogs/miscellaneous/__init__.py:819
 msgid "Awesome bots by other coffee-drinking individuals."
 msgstr "Fantastiska bottar av andra kaffedrickande individer."
 
-#: cogs/miscellaneous/__init__.py:799
+#: cogs/miscellaneous/__init__.py:821
 msgid "Partnered Bots"
 msgstr "Partnerbottar"
 
-#: cogs/miscellaneous/__init__.py:800
+#: cogs/miscellaneous/__init__.py:822
 msgid "Awesome bots made by other people!"
 msgstr "Fantastiska bottar gjorda av andra människor!"
 
-#: cogs/miscellaneous/__init__.py:806
+#: cogs/miscellaneous/__init__.py:828
 msgid ""
 "Trivia, Hangman, Minesweeper, Connect 4 and more, right from your chat! A "
 "bot offering non-RPG games made by deprilula28 and Fin.\n"
@@ -1876,7 +1905,7 @@ msgstr ""
 "bot som erbjuder icke-RPG spel gjorda av deprilula28 och Fin.\n"
 "[top.gg Page](https://top.gg/bot/gamesrob)"
 
-#: cogs/miscellaneous/__init__.py:812
+#: cogs/miscellaneous/__init__.py:834
 msgid ""
 "Cautious Memory brings wiki-style pages to your server. Use it to document "
 "who's who in your server, inside jokes, or community lore. Includes a full "
@@ -1889,23 +1918,23 @@ msgstr ""
 "rena.\n"
 "[top.gg Page](https://top.gg/bot/541707781665718302)"
 
-#: cogs/miscellaneous/__init__.py:820
+#: cogs/miscellaneous/__init__.py:842
 msgid "Searches Wikipedia for an entry."
 msgstr "Söker på Wikipedia efter en artikel."
 
-#: cogs/miscellaneous/__init__.py:825
+#: cogs/miscellaneous/__init__.py:847
 msgid "No wikipedia entry found."
 msgstr "Ingen Wikipedia artikel hittad."
 
-#: cogs/miscellaneous/__init__.py:827
+#: cogs/miscellaneous/__init__.py:849
 msgid "Could not parse article summary."
 msgstr "Kunde inte summera artikeln."
 
-#: cogs/miscellaneous/__init__.py:839
+#: cogs/miscellaneous/__init__.py:861
 msgid "Searches IdleRPG Wiki for an entry."
 msgstr "Söker efter en artikel på IdleRPGwikin."
 
-#: cogs/miscellaneous/__init__.py:843
+#: cogs/miscellaneous/__init__.py:865
 msgid ""
 "Check out the official IdleRPG Wiki here:\n"
 "<https://wiki.travitia.xyz/index.php?title=Main_Page>"
@@ -1913,19 +1942,19 @@ msgstr ""
 "Ta en titt på den officiella IdleRPGwikin här:\n"
 "<https://wiki.travitia.xyz/index.php?title=Main_Page>"
 
-#: cogs/miscellaneous/__init__.py:850
+#: cogs/miscellaneous/__init__.py:872
 msgid "No entry found."
 msgstr "Ingen artikel hittad."
 
-#: cogs/miscellaneous/__init__.py:853
+#: cogs/miscellaneous/__init__.py:875
 msgid "No content to display."
 msgstr "Inget innehåll att visa."
 
-#: cogs/miscellaneous/__init__.py:865
+#: cogs/miscellaneous/__init__.py:887
 msgid "About the bot and our websites."
 msgstr "Om botten och våra hemsidor."
 
-#: cogs/miscellaneous/__init__.py:869
+#: cogs/miscellaneous/__init__.py:891
 #, no-python-format
 msgid ""
 "**IdleRPG** is Discord's most advanced medieval RPG bot.\n"
@@ -1954,7 +1983,7 @@ msgid ""
 "> - Gambling Helpline"
 msgstr ""
 
-#: cogs/miscellaneous/__init__.py:897
+#: cogs/miscellaneous/__init__.py:919
 msgid ""
 "1) Only up to two characters per individual\n"
 "2) No abusing or benefiting from bugs or exploits\n"
@@ -1983,7 +2012,7 @@ msgstr ""
 msgid "Increase your raid damage."
 msgstr "Öka din raidskada."
 
-#: cogs/raid/__init__.py:1915
+#: cogs/raid/__init__.py:1915 cogs/raid/__init__.py:1928
 #, python-brace-format
 msgid ""
 "Upgrading your weapon attack raid multiplier to {newlvl} costs **${price}**, "
@@ -1992,18 +2021,25 @@ msgstr ""
 "Att uppgradera din vapenattacksraidfaktor till {newlvl} kostar **${price}**, "
 "du är för fattig."
 
-#: cogs/raid/__init__.py:1929
+#: cogs/raid/__init__.py:1920
+#, python-brace-format
+msgid ""
+"Upgrading your weapon attack raid multiplier to {newlvl} costs **${price}**, "
+"proceed?"
+msgstr ""
+
+#: cogs/raid/__init__.py:1942
 #, python-brace-format
 msgid ""
 "You upgraded your weapon attack raid multiplier to {newlvl} for **${price}**."
 msgstr ""
 "Du har uppgraderat din vapenattacksraidfaktor till {newlvl} för **${price}**."
 
-#: cogs/raid/__init__.py:1937
+#: cogs/raid/__init__.py:1950
 msgid "Increase your raid defense."
 msgstr "Öka ditt raidskydd."
 
-#: cogs/raid/__init__.py:1943
+#: cogs/raid/__init__.py:1956 cogs/raid/__init__.py:1969
 #, python-brace-format
 msgid ""
 "Upgrading your shield defense raid multiplier to {newlvl} costs **${price}"
@@ -2012,7 +2048,14 @@ msgstr ""
 "Att uppgradera din sköldskyddsraidfaktor till {newlvl} kostar **${price}**, "
 "du är för fattig."
 
-#: cogs/raid/__init__.py:1957
+#: cogs/raid/__init__.py:1961
+#, python-brace-format
+msgid ""
+"Upgrading your shield defense raid multiplier to {newlvl} costs **${price}"
+"**, proceed?"
+msgstr ""
+
+#: cogs/raid/__init__.py:1983
 #, python-brace-format
 msgid ""
 "You upgraded your shield defense raid multiplier to {newlvl} for **${price}"
@@ -2020,11 +2063,11 @@ msgid ""
 msgstr ""
 "Du har uppgraderat din sköldskyddsraidfaktor till {newlvl} för **${price}**."
 
-#: cogs/raid/__init__.py:1965
+#: cogs/raid/__init__.py:1991
 msgid "View your raid stats."
 msgstr "Visa dina raidstats."
 
-#: cogs/raid/__init__.py:1981
+#: cogs/raid/__init__.py:2007
 #, python-brace-format
 msgid ""
 "**{author}'s raid multipliers**\n"
@@ -2035,11 +2078,11 @@ msgstr ""
 "Skadefaktor: x{atk} (Uppgradera: ${atkp})\n"
 "Skyddsfaktor: x{deff} (Uppgradera: ${deffp})"
 
-#: cogs/raid/__init__.py:1990
+#: cogs/raid/__init__.py:2016
 msgid "Informs you about joining raids."
 msgstr "Informerar dig om att gå med i raider."
 
-#: cogs/raid/__init__.py:1993
+#: cogs/raid/__init__.py:2019
 #, python-brace-format
 msgid ""
 "Did you ever want to join together with other players to defeat the dragon "
@@ -2852,7 +2895,7 @@ msgstr "Ditt husdjur hittade ett föremål!"
 msgid "Your pet needs to recover, wait a day to retry"
 msgstr "Ditt husdjur måste återhämta sig, vänta en dag för att försöka igen"
 
-#: cogs/music/__init__.py:99
+#: cogs/music/__init__.py:146
 #, python-brace-format
 msgid ""
 "{user} wants to skip a track. React if you agree. **{current}/{total}** "
@@ -2861,7 +2904,7 @@ msgstr ""
 "{user} vill hoppa över en låt. Reagera om du håller med. **{current}/{total}"
 "** har röstat för det!"
 
-#: cogs/music/__init__.py:103
+#: cogs/music/__init__.py:150
 #, python-brace-format
 msgid ""
 "{user} wants to pause/resume the player. React if you agree. **{current}/"
@@ -2870,7 +2913,7 @@ msgstr ""
 "{user} vill pausa/fortsätta uppspelaren. Reagera om du håller med. "
 "**{current}/{total}** har röstat för det!"
 
-#: cogs/music/__init__.py:107
+#: cogs/music/__init__.py:154
 #, python-brace-format
 msgid ""
 "{user} wants to stop playback. React if you agree. **{current}/{total}** "
@@ -2879,7 +2922,7 @@ msgstr ""
 "{user} vill stoppa uppspelningen. Reagera om du håller med. **{current}/"
 "{total}** har röstat för det!"
 
-#: cogs/music/__init__.py:111
+#: cogs/music/__init__.py:158
 #, python-brace-format
 msgid ""
 "{user} wants to change the volume. React if you agree. **{current}/{total}** "
@@ -2888,7 +2931,7 @@ msgstr ""
 "{user} vill ändra volymen. Reagera om du håller med. **{current}/{total}** "
 "har röstat för det!"
 
-#: cogs/music/__init__.py:115
+#: cogs/music/__init__.py:162
 #, python-brace-format
 msgid ""
 "{user} wants to toggle repeating. React if you agree. **{current}/{total}** "
@@ -2897,7 +2940,7 @@ msgstr ""
 "{user} vill växla repeterande läge. Reagera om du håller med. **{current}/"
 "{total}** har röstat för det!"
 
-#: cogs/music/__init__.py:119
+#: cogs/music/__init__.py:166
 #, python-brace-format
 msgid ""
 "{user} wants to change the equalizer. React if you agree. **{current}/{total}"
@@ -2906,48 +2949,48 @@ msgstr ""
 "{user} vill ändra utjämnaren. Reagera om du håller med. **{current}/{total}"
 "** har röstat för det!"
 
-#: cogs/music/__init__.py:156
+#: cogs/music/__init__.py:203
 msgid "Vote passed!"
 msgstr "Röstningen har passerat!"
 
-#: cogs/music/__init__.py:213
-msgid ""
-"Query YouTube or SoundCloud for a track and play it or add it to the "
-"playlist."
+#: cogs/music/__init__.py:264
+msgid "Query for a track and play it or add it to the playlist."
 msgstr ""
-"Förfråga Youtube eller SoundCloud efter en låt för att spela den eller lägga "
-"till den i spellistan."
 
-#: cogs/music/__init__.py:227 cogs/akinator/__init__.py:178
-#: cogs/akinator/__init__.py:213 cogs/akinator/__init__.py:245
-#: cogs/akinator/__init__.py:293
+#: cogs/music/__init__.py:266
+msgid "Downloading track... This might take up to 3 seconds..."
+msgstr ""
+
+#: cogs/music/__init__.py:278 cogs/music/__init__.py:287
+#: cogs/akinator/__init__.py:178 cogs/akinator/__init__.py:213
+#: cogs/akinator/__init__.py:245 cogs/akinator/__init__.py:293
 msgid "No results..."
 msgstr "Inga resultat..."
 
-#: cogs/music/__init__.py:246
+#: cogs/music/__init__.py:306
 msgid ""
 "Lock/Unlock the player if you are the DJ. Allows noone else to control music."
 msgstr ""
 "Lås/lås upp uppspelaren om du är DJn. Tillåter ingen annan att kontrollera "
 "musiken."
 
-#: cogs/music/__init__.py:261
+#: cogs/music/__init__.py:321
 msgid "Toggle repeat of the current track."
 msgstr "Växla repetition av nuvarande låt."
 
-#: cogs/music/__init__.py:275
+#: cogs/music/__init__.py:335
 msgid "Skip the currently playing song."
 msgstr "Hoppar över nuvarande låt."
 
-#: cogs/music/__init__.py:286
+#: cogs/music/__init__.py:346
 msgid "Stops the music and leaves voice chat."
 msgstr "Stoppar musiken och lämnar röstchatten."
 
-#: cogs/music/__init__.py:300
+#: cogs/music/__init__.py:360
 msgid "Changes the playback's volume"
 msgstr "Ändrar uppspelningsvolymen"
 
-#: cogs/music/__init__.py:304
+#: cogs/music/__init__.py:364
 #, python-brace-format
 msgid ""
 ":warning:`Playback volume is going to change to {volume} in 5 seconds. To "
@@ -2957,122 +3000,110 @@ msgstr ""
 "För att undvika den plötsliga öronproppen, kontrollera volymen på "
 "klientsidan!`"
 
-#: cogs/music/__init__.py:313
+#: cogs/music/__init__.py:373
 #, python-brace-format
 msgid ":white_check_mark:` Volume successfully changed to {volume}!`"
 msgstr ":white_check_mark:` Volymen har ändrats till {volume}!`"
 
-#: cogs/music/__init__.py:326
+#: cogs/music/__init__.py:386
 msgid "Toggles the music playback's paused state"
 msgstr "Växlar musikuppspelningens pausade tillstånd"
 
-#: cogs/music/__init__.py:329
+#: cogs/music/__init__.py:389
 msgid ":white_check_mark:`Song paused!`"
 msgstr ":white_check_mark:`Song pausad!`"
 
-#: cogs/music/__init__.py:332
+#: cogs/music/__init__.py:392
 msgid ":white_check_mark:`Song resumed!`"
 msgstr ":white_check_mark:`Song återupptas!`"
 
-#: cogs/music/__init__.py:341
+#: cogs/music/__init__.py:401
 msgid "Sets the equalizer. May be flat, piano, metal or boost."
 msgstr "Ställer in utjämnaren. Kan vara flat, piano, metal eller boost."
 
-#: cogs/music/__init__.py:344
+#: cogs/music/__init__.py:404
 msgid "Not a valid equalizer. May be flat, piano, metal or boost."
 msgstr "Inte en giltig utjämnare. Måste vara flat, piano, metal eller boost."
 
-#: cogs/music/__init__.py:355
+#: cogs/music/__init__.py:415
 msgid "Displays some information about the current song."
 msgstr "Visar information om den nuvarande låten."
 
-#: cogs/music/__init__.py:369
+#: cogs/music/__init__.py:423
 msgid "Now playing..."
 msgstr "Nu spelas..."
 
-#: cogs/music/__init__.py:371
+#: cogs/music/__init__.py:425
 msgid "Title"
 msgstr "Titel"
 
-#: cogs/music/__init__.py:374
-msgid "Uploader"
-msgstr "Uppladdare"
+#: cogs/music/__init__.py:428
+msgid "Artist"
+msgstr ""
 
-#: cogs/music/__init__.py:378 cogs/music/__init__.py:396
-#: cogs/music/__init__.py:398
-msgid "Length"
-msgstr "Längd"
-
-#: cogs/music/__init__.py:381
-msgid "Remaining"
-msgstr "Återstående"
-
-#: cogs/music/__init__.py:388
-msgid "Position"
-msgstr "Position"
-
-#: cogs/music/__init__.py:399
+#: cogs/music/__init__.py:431
 msgid "Click me!"
 msgstr "Klicka mig!"
 
-#: cogs/music/__init__.py:402
+#: cogs/music/__init__.py:434
 msgid "Link to the original"
 msgstr "Länk till originalet"
 
-#: cogs/music/__init__.py:407
+#: cogs/music/__init__.py:442
 msgid "Volume"
 msgstr "Volym"
 
-#: cogs/music/__init__.py:409
+#: cogs/music/__init__.py:444
 msgid "Playing status"
 msgstr "Spelar"
 
-#: cogs/music/__init__.py:409
+#: cogs/music/__init__.py:444
 msgid "`⏸Paused`"
 msgstr "`⏸Pausad`"
 
-#: cogs/music/__init__.py:410
+#: cogs/music/__init__.py:445
 msgid "DJ"
 msgstr "DJ"
 
-#: cogs/music/__init__.py:412
+#: cogs/music/__init__.py:447
 msgid "Locked"
 msgstr "Låst"
 
-#: cogs/music/__init__.py:412 cogs/music/__init__.py:415
+#: cogs/music/__init__.py:447 cogs/music/__init__.py:450
+#: cogs/music/__init__.py:454
 msgid "No"
 msgstr "Nej"
 
-#: cogs/music/__init__.py:415
+#: cogs/music/__init__.py:450
 msgid "Looping"
 msgstr "Repeterar"
 
-#: cogs/music/__init__.py:417
+#: cogs/music/__init__.py:453
+msgid "Explicit"
+msgstr ""
+
+#: cogs/music/__init__.py:456
 msgid "Equalizer"
 msgstr "Utjämnare"
 
-#: cogs/music/__init__.py:429
-msgid "```No information```"
-msgstr "```Ingen information```"
-
-#: cogs/music/__init__.py:434
+#: cogs/music/__init__.py:468
 #, python-brace-format
 msgid "Song requested by: {user}"
 msgstr "Song begärd av: {user}"
 
-#: cogs/music/__init__.py:444
+#: cogs/music/__init__.py:478
 msgid "Show the next (maximum 5) tracks in the queue."
 msgstr "Visar de nästa (högst 5) låtarna i kön."
 
-#: cogs/music/__init__.py:457
+#: cogs/music/__init__.py:488
 msgid "Upcoming entries"
 msgstr "Kommande bidrag"
 
-#: cogs/music/__init__.py:466
+#: cogs/music/__init__.py:497
 msgid ":warning:`No more entries left.`"
 msgstr ":warning:`Inga fler bidrag kvar.`"
 
-#: cogs/music/__init__.py:472
+#: cogs/music/__init__.py:503
 msgid ""
 "Retrieves song lyrics. If no song specified, will check the current playing "
 "song."
@@ -3080,32 +3111,32 @@ msgstr ""
 "Framtar låttext. Om ingen låt specificeras, visar text för nuvarande "
 "spelande låt."
 
-#: cogs/music/__init__.py:478
+#: cogs/music/__init__.py:509
 msgid "I am not playing. Please specify a song to look for."
 msgstr "Jag spelar inte upp något. Vänligen specificera en låt att kolla upp."
 
-#: cogs/music/__init__.py:482
+#: cogs/music/__init__.py:513
 msgid "Please specify a song."
 msgstr "Vänligen specificera en låt."
 
-#: cogs/music/__init__.py:484
+#: cogs/music/__init__.py:515
 msgid ":x: Look for a longer query!"
 msgstr ":x: Leta efter en längre frågeställning!"
 
-#: cogs/music/__init__.py:492 cogs/music/__init__.py:495
+#: cogs/music/__init__.py:523 cogs/music/__init__.py:526
 msgid ":warning: No results!"
 msgstr ":warning: Inga resultat!"
 
-#: cogs/music/__init__.py:499
+#: cogs/music/__init__.py:530
 msgid "No lyrics found!"
 msgstr "Ingen låttext hittad!"
 
-#: cogs/music/__init__.py:561
+#: cogs/music/__init__.py:564
 #, python-brace-format
 msgid "🎧 Added {title} to the queue..."
 msgstr "🎧 Lade till {title} till kön."
 
-#: cogs/music/__init__.py:569
+#: cogs/music/__init__.py:570 cogs/music/__init__.py:573
 #, python-brace-format
 msgid "🎧 Playing {title}..."
 msgstr "🎧 Spelar {title}..."
@@ -3324,30 +3355,38 @@ msgstr ""
 "Utav **{total}** äventyr, dog du **{deaths}** gånger och överlevde "
 "**{completed}** gånger, vilket är en succéchans av **{rate}%**."
 
-#: cogs/shard_communication/__init__.py:406 cogs/guild/__init__.py:1100
+#: cogs/shard_communication/__init__.py:430 cogs/guild/__init__.py:1148
 #: cogs/alliance/__init__.py:773
 msgid "Lists all your cooldowns."
 msgstr "Visar alla dina cooldowns."
 
-#: cogs/shard_communication/__init__.py:411 cogs/guild/__init__.py:1107
+#: cogs/shard_communication/__init__.py:435 cogs/guild/__init__.py:1155
 msgid "You don't have any active cooldown at the moment."
 msgstr "Du har ingen aktiv cooldown just nu."
 
-#: cogs/shard_communication/__init__.py:413 cogs/guild/__init__.py:1109
+#: cogs/shard_communication/__init__.py:437 cogs/guild/__init__.py:1157
 #: cogs/alliance/__init__.py:783
 msgid "Commands on cooldown:"
 msgstr "Kommandon på cooldown:"
 
-#: cogs/shard_communication/__init__.py:418 cogs/guild/__init__.py:1114
+#: cogs/shard_communication/__init__.py:442 cogs/guild/__init__.py:1162
 #: cogs/alliance/__init__.py:788
 #, python-brace-format
 msgid "{cmd} is on cooldown and will be available after {time}"
 msgstr "{cmd} är på cooldown och kommer att vara tillgänglig om {time}"
 
-#: cogs/shard_communication/__init__.py:423
+#: cogs/shard_communication/__init__.py:447
 #, python-brace-format
 msgid "Adventure is running and will be done after {time}"
 msgstr "Äventyr pågår och kommer vara färdigt om {time}"
+
+#: cogs/shard_communication/__init__.py:456
+msgid "Lists all clusters and their current status."
+msgstr ""
+
+#: cogs/shard_communication/__init__.py:459
+msgid "Launcher is dead, that is really bad."
+msgstr ""
 
 #: cogs/gambling/__init__.py:218
 #, python-brace-format
@@ -3672,17 +3711,17 @@ msgstr "Inget resultat."
 msgid "IdleRPG Shop"
 msgstr "IdleRPG Butiken"
 
-#: cogs/trading/__init__.py:263 cogs/trading/__init__.py:523
+#: cogs/trading/__init__.py:263 cogs/trading/__init__.py:525
 #, python-brace-format
 msgid "Use `{prefix}buy {item}` to buy this."
 msgstr "Använd `{prefix}buy {item}` för att köpa detta."
 
-#: cogs/trading/__init__.py:274 cogs/trading/__init__.py:533
+#: cogs/trading/__init__.py:274 cogs/trading/__init__.py:535
 #: cogs/marriage/__init__.py:224
 msgid "Price"
 msgstr "Pris"
 
-#: cogs/trading/__init__.py:278 cogs/trading/__init__.py:535
+#: cogs/trading/__init__.py:278 cogs/trading/__init__.py:537
 #, python-brace-format
 msgid "Item {num} of {total}"
 msgstr "Föremål {num} av {total}"
@@ -3746,40 +3785,40 @@ msgstr "Sälj föremål för deras värde."
 msgid "You cannot sell nothing."
 msgstr ""
 
-#: cogs/trading/__init__.py:391
+#: cogs/trading/__init__.py:392
 #, python-brace-format
 msgid "You don't own any items with the IDs: {itemids}"
 msgstr "Du äger inte några föremål med ID: {itemids}"
 
-#: cogs/trading/__init__.py:399
+#: cogs/trading/__init__.py:400
 #, python-brace-format
 msgid "You are about to sell {amount} equipped items. Are you sure?"
 msgstr "Du är på väg att sälja {amount} föremål du använder. Är du säker?"
 
-#: cogs/trading/__init__.py:403
+#: cogs/trading/__init__.py:404
 msgid "Cancelled."
 msgstr "Avbrutit."
 
-#: cogs/trading/__init__.py:429
+#: cogs/trading/__init__.py:430
 #, python-brace-format
 msgid ""
 "You received **${money}** when selling item(s) `{itemids}`. {additional}"
 msgstr "Du tjänade **${money}** när du sålde föremål `{itemids}`. {additional}"
 
-#: cogs/trading/__init__.py:434 cogs/profile/__init__.py:559
+#: cogs/trading/__init__.py:435 cogs/profile/__init__.py:560
 #, python-brace-format
 msgid "Skipped `{amount}` because they did not belong to you."
 msgstr "Hoppade över `{amount}` eftersom de inte tillhör dig."
 
-#: cogs/trading/__init__.py:449
+#: cogs/trading/__init__.py:450
 msgid "Sells all your non-equipped items for their value."
 msgstr "Säljer alla dina icke-utrustade föremål för deras värde."
 
-#: cogs/trading/__init__.py:459
+#: cogs/trading/__init__.py:460
 msgid "Nothing to merch."
 msgstr "Ingenting att sälja."
 
-#: cogs/trading/__init__.py:468
+#: cogs/trading/__init__.py:469
 #, python-brace-format
 msgid ""
 "You are about to sell **{count} items for ${money}!**\n"
@@ -3788,47 +3827,51 @@ msgstr ""
 "Du är på väg att sälja **{count}** föremål för **${money}**!\n"
 "Är du säker på att du vill göra det?"
 
-#: cogs/trading/__init__.py:481
+#: cogs/trading/__init__.py:473
+msgid "Cancelled selling your items."
+msgstr ""
+
+#: cogs/trading/__init__.py:483
 msgid ""
 "Looks like you got more or less items in that range in the meantime. Please "
 "try again."
 msgstr ""
 "Ser ut som att du fick fler eller färre föremål under tiden. Försök igen."
 
-#: cogs/trading/__init__.py:505
+#: cogs/trading/__init__.py:507
 #, python-brace-format
 msgid "Merched **{count}** items for **${money}**."
 msgstr "Sålde **{count}** föremål för **${money}**."
 
-#: cogs/trading/__init__.py:513
+#: cogs/trading/__init__.py:515
 msgid "View your pending shop offers."
 msgstr "Se dina pågående butikserbjudanden."
 
-#: cogs/trading/__init__.py:519
+#: cogs/trading/__init__.py:521
 msgid "You don't have any pending shop offers."
 msgstr "Du har inga pågående butikserbjudanden."
 
-#: cogs/trading/__init__.py:522
+#: cogs/trading/__init__.py:524
 msgid "Your pending items"
 msgstr "Dina pågående föremål"
 
-#: cogs/trading/__init__.py:546
+#: cogs/trading/__init__.py:548
 msgid "Buys items at the trader."
 msgstr "Köper föremål hos försäljaren."
 
-#: cogs/trading/__init__.py:562
+#: cogs/trading/__init__.py:564
 msgid "The Trader"
 msgstr "Försäljaren"
 
-#: cogs/trading/__init__.py:563
+#: cogs/trading/__init__.py:565
 msgid "Hit a button to buy it"
 msgstr "Klicka på en knapp för att köpa den"
 
-#: cogs/trading/__init__.py:575
+#: cogs/trading/__init__.py:577
 msgid "You are too poor to buy this item."
 msgstr "Du är för fattig för att köpa det här föremålet."
 
-#: cogs/trading/__init__.py:589
+#: cogs/trading/__init__.py:591
 #, python-brace-format
 msgid ""
 "Successfully bought offer **{offer}**. Use `{prefix}inventory` to view your "
@@ -4792,9 +4835,11 @@ msgstr "Guildnamnet är taget."
 #, python-brace-format
 msgid ""
 "Successfully added your guild **{name}** with a member limit of "
-"**{memberlimit}**."
+"**{memberlimit}**.\n"
+"\n"
+"Tip: You can use `{prefix}guild channel` in a server where you are the admin "
+"to set up the guild logging channel."
 msgstr ""
-"Lade till din guild**{name}** med en medlemsgräns på **{memberlimit}**."
 
 #: cogs/guild/__init__.py:279
 msgid "Transfer guild ownership to someone else."
@@ -4990,7 +5035,7 @@ msgid "[Guild Officer only] Pay money from the guild bank to a user."
 msgstr ""
 "[Guildofficerare endast] Betala pengar från guildbanken till en användare."
 
-#: cogs/guild/__init__.py:668
+#: cogs/guild/__init__.py:668 cogs/guild/__init__.py:711
 msgid "Your guild is too poor."
 msgstr "Din guild är för fattig."
 
@@ -4999,15 +5044,33 @@ msgstr "Din guild är för fattig."
 msgid "Successfully gave **${amount}** from your guild bank to {member}."
 msgstr "Gav **${amount}** från din guild till {member}."
 
-#: cogs/guild/__init__.py:691
+#: cogs/guild/__init__.py:694
+msgid ""
+"\n"
+"Distribute some money to multiple members. This will divide by the amount of "
+"players before distributing.\n"
+"For example, distributing $500 to 5 members will give everyone of them "
+"$100.\n"
+msgstr ""
+
+#: cogs/guild/__init__.py:700
+msgid "You can't distribute money to nobody."
+msgstr ""
+
+#: cogs/guild/__init__.py:727
+#, python-brace-format
+msgid "Distributed **${money}** (${small_money} for each) to {members}."
+msgstr ""
+
+#: cogs/guild/__init__.py:739
 msgid "Upgrades your guild bank's capacity."
 msgstr "Uppgraderar din guilds bankkapacitet."
 
-#: cogs/guild/__init__.py:700
+#: cogs/guild/__init__.py:748
 msgid "Your guild already reached the maximum upgrade."
 msgstr "Din guild har redan nått den maximala uppgraderingen."
 
-#: cogs/guild/__init__.py:705
+#: cogs/guild/__init__.py:753
 #, python-brace-format
 msgid ""
 "Your guild is too poor, you got **${money}** but it costs **${price}** to "
@@ -5016,7 +5079,7 @@ msgstr ""
 "Din guild är för fattig, du har **${money}** men det kostar **${price}** för "
 "uppgradering."
 
-#: cogs/guild/__init__.py:711
+#: cogs/guild/__init__.py:759
 #, python-brace-format
 msgid ""
 "This will upgrade your guild bank limit to **${newlimit}** for **${cost}**. "
@@ -5025,41 +5088,41 @@ msgstr ""
 "Detta uppgraderar guildbankens gräns till **${newlimit}** för **${cost}**. "
 "Är du säker?"
 
-#: cogs/guild/__init__.py:723
+#: cogs/guild/__init__.py:771
 #, python-brace-format
 msgid "Your new guild bank limit is now **${limit}**."
 msgstr "Din nya guildbankgräns är nu**${limit}**."
 
-#: cogs/guild/__init__.py:741
+#: cogs/guild/__init__.py:789
 msgid "Battle against another guild."
 msgstr "Strid mot en annan guild."
 
-#: cogs/guild/__init__.py:743
+#: cogs/guild/__init__.py:791
 msgid "Poor kiddo having no friendos."
 msgstr "Stackars unge har inga vänner."
 
-#: cogs/guild/__init__.py:747
+#: cogs/guild/__init__.py:795
 msgid "One of you both doesn't have a guild."
 msgstr "En av er har ingen guild."
 
-#: cogs/guild/__init__.py:752
+#: cogs/guild/__init__.py:800
 msgid "One of you both isn't an officer of their guild."
 msgstr "En av er är inte en officerare i deras guild."
 
-#: cogs/guild/__init__.py:757
+#: cogs/guild/__init__.py:805
 msgid "One of the guilds can't pay the price."
 msgstr "En av guildarna kan inte betala priset."
 
-#: cogs/guild/__init__.py:765
+#: cogs/guild/__init__.py:813
 msgid "One of the guilds is too small."
 msgstr "En av guildarna är för små."
 
-#: cogs/guild/__init__.py:773
+#: cogs/guild/__init__.py:821
 #, python-brace-format
 msgid "{enemy} didn't want to join your battle, {author}."
 msgstr "{enemy} ville inte gå med din strid, {author}."
 
-#: cogs/guild/__init__.py:780
+#: cogs/guild/__init__.py:828
 #, python-brace-format
 msgid ""
 "{enemy} accepted the challenge by {author}. Please now nominate members, "
@@ -5068,28 +5131,28 @@ msgstr ""
 "{enemy} accepterade utmaningen av {author}. Vänligen nominera medlemmar nu, "
 "{author}. Använd `battle nominate @user` för att lägga till någon i ditt lag."
 
-#: cogs/guild/__init__.py:796
+#: cogs/guild/__init__.py:844
 msgid "That person isn't in your guild."
 msgstr "Den personen är inte med i din guild."
 
-#: cogs/guild/__init__.py:820
+#: cogs/guild/__init__.py:868
 #, python-brace-format
 msgid "{user} has been added to your team, {author}."
 msgstr "{user} har lagts till i ditt lag, {author}."
 
-#: cogs/guild/__init__.py:825 cogs/guild/__init__.py:853
+#: cogs/guild/__init__.py:873 cogs/guild/__init__.py:901
 msgid "User not found."
 msgstr "Användaren hittades inte."
 
-#: cogs/guild/__init__.py:827
+#: cogs/guild/__init__.py:875
 msgid "Error when adding this user, please try again"
 msgstr ""
 
-#: cogs/guild/__init__.py:832 cogs/guild/__init__.py:858
+#: cogs/guild/__init__.py:880 cogs/guild/__init__.py:906
 msgid "Took to long to add members. Fight cancelled."
 msgstr "Tog för lång tid för att lägga till medlemmar. Kampen avbrutits."
 
-#: cogs/guild/__init__.py:836
+#: cogs/guild/__init__.py:884
 #, python-brace-format
 msgid ""
 "Please now nominate members, {enemy}. Use `battle nominate @user` to add "
@@ -5098,12 +5161,12 @@ msgstr ""
 "Vänligen nominera medlemmar nu, {enemy}. Använd `battle nominate @user` för "
 "att lägga till någon i ditt lag."
 
-#: cogs/guild/__init__.py:848
+#: cogs/guild/__init__.py:896
 #, python-brace-format
 msgid "{user} has been added to your team, {enemy}."
 msgstr "{user} har lagts till i ditt lag, {enemy}."
 
-#: cogs/guild/__init__.py:866
+#: cogs/guild/__init__.py:914
 msgid ""
 "Fight started!\n"
 "Generating battles..."
@@ -5111,7 +5174,7 @@ msgstr ""
 "Strid startad!\n"
 "Genererar strider..."
 
-#: cogs/guild/__init__.py:868
+#: cogs/guild/__init__.py:916
 msgid ""
 "Fight started!\n"
 "Generating battles... Done."
@@ -5119,7 +5182,7 @@ msgstr ""
 "Strid startad!!\n"
 "Genererar strider... Klart."
 
-#: cogs/guild/__init__.py:875
+#: cogs/guild/__init__.py:923
 #, python-brace-format
 msgid ""
 "Guild Battle Fight **{num}** of **{total}**.\n"
@@ -5130,7 +5193,7 @@ msgstr ""
 "**{user}** vs **{user2}**!\n"
 "Striden körs..."
 
-#: cogs/guild/__init__.py:897
+#: cogs/guild/__init__.py:945
 #, python-brace-format
 msgid ""
 "Winner of **{user}** vs **{user2}** is **{winner}**! Current points: "
@@ -5139,24 +5202,24 @@ msgstr ""
 "Vinnaren av **{user}** vs **{user2}** är **{winner}**! Aktuella poäng: "
 "**{wins1}** to **{wins2}**."
 
-#: cogs/guild/__init__.py:910
+#: cogs/guild/__init__.py:958
 msgid "Some guild spent the money??? Bad looser!"
 msgstr "Någon guild spenderade pengarna??? Dålig förlorare!"
 
-#: cogs/guild/__init__.py:933 cogs/guild/__init__.py:962
+#: cogs/guild/__init__.py:981 cogs/guild/__init__.py:1010
 #, python-brace-format
 msgid "{guild} won the battle! Congratulations!"
 msgstr "{guild} vann striden! Grattis!"
 
-#: cogs/guild/__init__.py:970
+#: cogs/guild/__init__.py:1018
 msgid "It's a tie!"
 msgstr "Det är oavgjort!"
 
-#: cogs/guild/__init__.py:980
+#: cogs/guild/__init__.py:1028
 msgid "Starts a guild adventure."
 msgstr "Påbörjar ett guildäventyr."
 
-#: cogs/guild/__init__.py:985
+#: cogs/guild/__init__.py:1033
 #, python-brace-format
 msgid ""
 "Your guild is already on an adventure! Use `{prefix}guild status` to view "
@@ -5165,7 +5228,7 @@ msgstr ""
 "Din guild är redan på ett äventyr! Använd `{prefix}guild status` för att se "
 "hur länge det varar."
 
-#: cogs/guild/__init__.py:996
+#: cogs/guild/__init__.py:1044
 #, python-brace-format
 msgid ""
 "{author} seeks a guild adventure for **{guild}**! React to join! Unlimited "
@@ -5174,11 +5237,11 @@ msgid ""
 "Please go to https://join.travitia.xyz/{id_} to join the guild adventure."
 msgstr ""
 
-#: cogs/guild/__init__.py:1019
+#: cogs/guild/__init__.py:1067
 msgid "You didn't get enough other players for the guild adventure."
 msgstr "Du fick inte tillräckligt med andra spelare för guildäventyret."
 
-#: cogs/guild/__init__.py:1028
+#: cogs/guild/__init__.py:1076
 #, python-brace-format
 msgid ""
 "\n"
@@ -5197,18 +5260,18 @@ msgstr ""
 "Svårigheten är **{difficulty}**\n"
 "Tiden det tar: **{time}**\n"
 
-#: cogs/guild/__init__.py:1052
+#: cogs/guild/__init__.py:1100
 msgid "Views your guild adventure."
 msgstr "Visar ditt guildäventyr."
 
-#: cogs/guild/__init__.py:1058
+#: cogs/guild/__init__.py:1106
 #, python-brace-format
 msgid ""
 "Your guild isn't on an adventure yet. Ask your guild officer to use `{prefix}"
 "guild adventure` to start one"
 msgstr ""
 
-#: cogs/guild/__init__.py:1074
+#: cogs/guild/__init__.py:1122
 #, python-brace-format
 msgid ""
 "Your guild has completed an adventure of difficulty `{difficulty}` and **"
@@ -5217,14 +5280,14 @@ msgstr ""
 "Din guild har avslutat ett äventyr med svårigheten `{difficulty}` och **"
 "${gold}** har lagts till i banken."
 
-#: cogs/guild/__init__.py:1084
+#: cogs/guild/__init__.py:1132
 #, python-brace-format
 msgid ""
 "Your guild has completed an adventure of difficulty `{difficulty}`, ask a "
 "guild officer to check their status."
 msgstr ""
 
-#: cogs/guild/__init__.py:1090
+#: cogs/guild/__init__.py:1138
 #, python-brace-format
 msgid ""
 "Your guild is currently in an adventure with difficulty `{difficulty}`.\n"
@@ -5233,7 +5296,7 @@ msgstr ""
 "Din guild är för närvarande i ett äventyr med svårigheten `{difficulty}`.\n"
 "Återstående tid: `{remain}`"
 
-#: cogs/guild/__init__.py:1119
+#: cogs/guild/__init__.py:1167
 #, python-brace-format
 msgid "Guild adventure is running and will be done after {time}"
 msgstr ""
@@ -5570,90 +5633,90 @@ msgstr "Byta ut en eller fler föremål mot pengar eller erfarenhet."
 msgid "You don't have any loot."
 msgstr "Du har ingen loot."
 
-#: cogs/profile/__init__.py:509 cogs/gods/__init__.py:74
+#: cogs/profile/__init__.py:510 cogs/gods/__init__.py:74
 #, python-brace-format
 msgid "You don't own any loot items with the IDs: {itemids}"
 msgstr "Du har ingen loot med IDn: {itemids}"
 
-#: cogs/profile/__init__.py:515
+#: cogs/profile/__init__.py:516
 #, python-brace-format
 msgid "Select a reward for the {amount} items"
 msgstr "Välj en belöning för de {amount} sakerna"
 
-#: cogs/profile/__init__.py:516
+#: cogs/profile/__init__.py:517
 #, python-brace-format
 msgid "Do you want favor? {prefix}sacrifice instead"
 msgstr "Vill du ha förmån? Använd {prefix}sacrifice istället"
 
-#: cogs/profile/__init__.py:520
+#: cogs/profile/__init__.py:521
 #, python-brace-format
 msgid "**{value} XP**"
 msgstr "**{value} erfarenhet**"
 
-#: cogs/profile/__init__.py:550
+#: cogs/profile/__init__.py:551
 #, python-brace-format
 msgid "You received **{reward}** when exchanging all of your loot."
 msgstr "Du fick **{reward}** för att byta ut all din loot."
 
-#: cogs/profile/__init__.py:554
+#: cogs/profile/__init__.py:555
 #, python-brace-format
 msgid "You received **{reward}** when exchanging loot item(s) `{loot_ids}`. "
 msgstr "Du fick **{reward}** för att byta ut `{loot_ids}`. "
 
-#: cogs/profile/__init__.py:578
+#: cogs/profile/__init__.py:579
 msgid "Equips an item of yours by ID."
 msgstr "Utrustar ett av dina föremål genom ID."
 
-#: cogs/profile/__init__.py:587 cogs/profile/__init__.py:682
-#: cogs/profile/__init__.py:770
+#: cogs/profile/__init__.py:588 cogs/profile/__init__.py:683
+#: cogs/profile/__init__.py:771
 #, python-brace-format
 msgid "You don't own an item with the ID `{itemid}`."
 msgstr "Du äger inte ett föremål med ID `{itemid}`."
 
-#: cogs/profile/__init__.py:638
+#: cogs/profile/__init__.py:639
 msgid "Select an item to unequip"
 msgstr ""
 
-#: cogs/profile/__init__.py:639
+#: cogs/profile/__init__.py:640
 msgid "Hit the button with the item you wish to remove"
 msgstr ""
 
-#: cogs/profile/__init__.py:659
+#: cogs/profile/__init__.py:660
 #, python-brace-format
 msgid "Successfully equipped item `{itemid}` and put off item(s) {olditems}."
 msgstr ""
 
-#: cogs/profile/__init__.py:666
+#: cogs/profile/__init__.py:667
 #, python-brace-format
 msgid "Successfully equipped item `{itemid}`."
 msgstr "Utrustade föremål `{itemid}`."
 
-#: cogs/profile/__init__.py:673
+#: cogs/profile/__init__.py:674
 msgid "Unequip one of your equipped items"
 msgstr "Ta av en av dina utrustade föremål"
 
-#: cogs/profile/__init__.py:687
+#: cogs/profile/__init__.py:688
 msgid "You don't have this item equipped."
 msgstr "Du har inte detta föremål utrustat."
 
-#: cogs/profile/__init__.py:692
+#: cogs/profile/__init__.py:693
 #, python-brace-format
 msgid "Successfully unequipped item `{itemid}`."
 msgstr "Du har tagit av `{itemid}`."
 
-#: cogs/profile/__init__.py:700
+#: cogs/profile/__init__.py:701
 msgid "Merges two items to a better one. Second one is consumed."
 msgstr "Slå samman två föremål till en bättre. Den andra är konsumerad."
 
-#: cogs/profile/__init__.py:703
+#: cogs/profile/__init__.py:704
 msgid "Good luck with that."
 msgstr "Lycka till med det."
 
-#: cogs/profile/__init__.py:717
+#: cogs/profile/__init__.py:718
 msgid "You don't own both of these items."
 msgstr "Du äger inte båda dessa föremål."
 
-#: cogs/profile/__init__.py:722
+#: cogs/profile/__init__.py:723
 msgid ""
 "The items are of unequal type. You may only merge a sword with a sword or a "
 "shield with a shield."
@@ -5661,11 +5724,11 @@ msgstr ""
 "Dessa föremål är av olika typ. Du kan bara slå samman ett svärd med ett "
 "svärd och en sköld med en sköld."
 
-#: cogs/profile/__init__.py:736
+#: cogs/profile/__init__.py:737
 msgid "This item is already on the maximum upgrade level."
 msgstr "Det här föremålet är redan på den maximala uppgraderingsnivån."
 
-#: cogs/profile/__init__.py:742
+#: cogs/profile/__init__.py:743
 #, python-brace-format
 msgid ""
 "The second item's stat must be in the range of `{min_}` to `{max_}` to "
@@ -5674,7 +5737,7 @@ msgstr ""
 "Det andra föremålets stats måste ligga inom`{min_}` till `{max_}` för att "
 "uppgradera ett föremål med statistiken `{stat}`."
 
-#: cogs/profile/__init__.py:751
+#: cogs/profile/__init__.py:752
 #, python-brace-format
 msgid ""
 "The {stat} of your **{item}** is now **{newstat}**. The other item was "
@@ -5683,15 +5746,15 @@ msgstr ""
 "{stat} av din **{item}** är nu **{newstat}**. Det andra föremålet har "
 "förstörts."
 
-#: cogs/profile/__init__.py:760
+#: cogs/profile/__init__.py:761
 msgid "Upgrades an item's stat by 1."
 msgstr "Uppgraderar ett föremåls statistik med 1."
 
-#: cogs/profile/__init__.py:785
+#: cogs/profile/__init__.py:786
 msgid "Your weapon already reached the maximum upgrade level."
 msgstr "Ditt vapen har redan nått den maximala uppgraderingsnivån."
 
-#: cogs/profile/__init__.py:790
+#: cogs/profile/__init__.py:791
 #, python-brace-format
 msgid ""
 "Are you sure you want to upgrade this item: {item}? It will cost **"
@@ -5700,11 +5763,11 @@ msgstr ""
 "Är du säker på att du vill uppgradera det här föremålet: {item}? Det kommer "
 "att kosta **${pricetopay}**."
 
-#: cogs/profile/__init__.py:793
+#: cogs/profile/__init__.py:794
 msgid "Weapon upgrade cancelled."
 msgstr "Vapenuppgradering avbruten."
 
-#: cogs/profile/__init__.py:798
+#: cogs/profile/__init__.py:799
 #, python-brace-format
 msgid ""
 "You are too poor to upgrade this item. The upgrade costs **${pricetopay}**, "
@@ -5713,7 +5776,7 @@ msgstr ""
 "Du är för fattig för att uppgradera detta föremål. Uppgraderingen kostar **"
 "${pricetopay}** men du har endast **${money}**."
 
-#: cogs/profile/__init__.py:816
+#: cogs/profile/__init__.py:817
 #, python-brace-format
 msgid ""
 "The {stat} of your **{item}** is now **{newstat}**. **${pricetopay}** has "
@@ -5722,15 +5785,15 @@ msgstr ""
 "{stat} av **{item}** är nu **{newstat}**. **${pricetopay}** har tagits från "
 "dina pengar."
 
-#: cogs/profile/__init__.py:831
+#: cogs/profile/__init__.py:832
 msgid "Gift money!"
 msgstr "Ge pengar!"
 
-#: cogs/profile/__init__.py:833
+#: cogs/profile/__init__.py:834
 msgid "No cheating!"
 msgstr "Inget fusk!"
 
-#: cogs/profile/__init__.py:849
+#: cogs/profile/__init__.py:850
 #, python-brace-format
 msgid ""
 "Success!\n"
@@ -5739,35 +5802,35 @@ msgstr ""
 "Succé!\n"
 "{other} har nu **${othermoney}** och du har **${authormoney}**."
 
-#: cogs/profile/__init__.py:862
+#: cogs/profile/__init__.py:863
 msgid "Renames your character."
 msgstr "Byt namn på din karaktär."
 
-#: cogs/profile/__init__.py:866
+#: cogs/profile/__init__.py:867
 msgid "What shall your character's name be? (Minimum 3 Characters, Maximum 20)"
 msgstr "Vad ska din karaktärs namn vara? (Minst 3 tecken, maximalt 20)"
 
-#: cogs/profile/__init__.py:876
+#: cogs/profile/__init__.py:877
 msgid "Timeout expired. Retry!"
 msgstr "Tiden har utgått. Försök igen!"
 
-#: cogs/profile/__init__.py:882
+#: cogs/profile/__init__.py:883
 msgid "Character name updated."
 msgstr "Karaktärsnamn uppdaterat."
 
-#: cogs/profile/__init__.py:884
+#: cogs/profile/__init__.py:885
 msgid "Character names must be at least 3 characters!"
 msgstr "Karaktärsnamn måste vara minst 3 tecken!"
 
-#: cogs/profile/__init__.py:886
+#: cogs/profile/__init__.py:887
 msgid "Character names mustn't exceed 20 characters!"
 msgstr "Karaktärsnamn får inte överstiga 20 tecken!"
 
-#: cogs/profile/__init__.py:892
+#: cogs/profile/__init__.py:893
 msgid "Deletes your character."
 msgstr "Tar bort din karaktär."
 
-#: cogs/profile/__init__.py:895
+#: cogs/profile/__init__.py:896
 msgid ""
 "Are you absolutely sure you want to delete your character? React in the next "
 "30 seconds to confirm.\n"
@@ -5777,15 +5840,15 @@ msgstr ""
 "för att godkänna.\n"
 "**Detta kan inte ångras**"
 
-#: cogs/profile/__init__.py:898
+#: cogs/profile/__init__.py:899
 msgid "Cancelled deletion of your character."
 msgstr "Avbröt raderingen av din karaktär."
 
-#: cogs/profile/__init__.py:922
+#: cogs/profile/__init__.py:923
 msgid "Successfully deleted your character. Sorry to see you go :frowning:"
 msgstr "Har tagit bort din karaktär. Ledsen att se dig gå: frowning:"
 
-#: cogs/profile/__init__.py:929
+#: cogs/profile/__init__.py:930
 msgid ""
 "Sets your profile text colour. The format may be #RRGGBB or a HTML-valid "
 "string like \"cyan\"."
@@ -5793,11 +5856,11 @@ msgstr ""
 "Ändrar din profiltextfärg. Formatet kan vara #RRGGBB eller en HTML-giltig "
 "string som \"cyan\"."
 
-#: cogs/profile/__init__.py:933
+#: cogs/profile/__init__.py:934
 msgid "Format for colour is `#RRGGBB` or a colour code like `cyan`."
 msgstr "Format för färg är `#RRGGBB` eller en färgkod som `cyan`."
 
-#: cogs/profile/__init__.py:940
+#: cogs/profile/__init__.py:941
 #, python-brace-format
 msgid ""
 "Successfully set your profile colour to `{colour}`. Hint: If you used a hex "
@@ -7278,6 +7341,35 @@ msgstr ""
 msgid "For the nerds:"
 msgstr ""
 
+#~ msgid ""
+#~ "Query YouTube or SoundCloud for a track and play it or add it to the "
+#~ "playlist."
+#~ msgstr ""
+#~ "Förfråga Youtube eller SoundCloud efter en låt för att spela den eller "
+#~ "lägga till den i spellistan."
+
+#~ msgid "Uploader"
+#~ msgstr "Uppladdare"
+
+#~ msgid "Length"
+#~ msgstr "Längd"
+
+#~ msgid "Remaining"
+#~ msgstr "Återstående"
+
+#~ msgid "Position"
+#~ msgstr "Position"
+
+#~ msgid "```No information```"
+#~ msgstr "```Ingen information```"
+
+#, python-brace-format
+#~ msgid ""
+#~ "Successfully added your guild **{name}** with a member limit of "
+#~ "**{memberlimit}**."
+#~ msgstr ""
+#~ "Lade till din guild**{name}** med en medlemsgräns på **{memberlimit}**."
+
 #, python-brace-format
 #~ msgid ""
 #~ "Imgur Link for `{prefix}background`\n"
@@ -7374,10 +7466,6 @@ msgstr ""
 #, python-brace-format
 #~ msgid "{user}, you already moved!"
 #~ msgstr "{user}, du har redan agerat!"
-
-#, python-brace-format
-#~ msgid "{winner} won the active battle vs {looser}! Congratulations!"
-#~ msgstr "{winner} Vann den aktiva striden mot {looser}! Grattis!"
 
 #, python-brace-format
 #~ msgid ""
