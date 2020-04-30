@@ -136,8 +136,8 @@ imgur_token = "my secret imgur token"
 """The Travitia API token."""
 traviapi = "just a secret"
 
-"""The KSoft key."""
-ksoft_key = "my key"
+"""The Genius key."""
+genius_key = "my key"
 
 """The base URL for links."""
 base_url = "https://idlerpg.travitia.xyz"

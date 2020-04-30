@@ -117,7 +117,7 @@ class Raid(commands.Cog):
         await self.bot.session.post(
             "https://raid.travitia.xyz/autosignup",
             headers={"Authorization": self.bot.config.raidauth},
-            data={"users": users},
+            json={"users": users},
         )
         self.boss = {"hp": hp, "min_dmg": 100, "max_dmg": 500}
         await ctx.channel.set_permissions(
