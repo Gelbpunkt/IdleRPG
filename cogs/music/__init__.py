@@ -22,7 +22,6 @@ from datetime import timedelta
 from json import loads
 
 import discord
-import lyricsgenius
 import wavelink
 
 from discord.ext import commands
@@ -248,9 +247,6 @@ class Music2(commands.Cog):
     async def connect(self):
         node = await self.bot.wavelink.initiate_node(**self.bot.config.lava_creds_new)
         node.set_hook(self.event_hook)
-        self.lyrics_genius = lyricsgenius.Genius(self.bot.config.genius_key)
-        self.lyrics_genius.verbose = False
-        self.lyrics_genius.remove_section_headers = True
         await asyncio.sleep(5)
         if (
             not self.bot.wavelink.nodes
@@ -513,27 +509,21 @@ class Music2(commands.Cog):
                 return await ctx.send(
                     _("I am not playing. Please specify a song to look for.")
                 )
-            result = await self.lyrics_genius.search_song(track.title, track.artists[0].name)
+            query = f"{track.title} {track.artists[0].name}"
         elif query is None and not ctx.guild:
             return await ctx.send(_("Please specify a song."))
         elif len(query) < 3:
             return await ctx.send(_(":x: Look for a longer query!"), delete_after=5)
-        else:
-            search_json = await self.lyrics_genius.search_genius(query)
-            songs = [i for i in search_json.get("hits", []) if i["index"] == "song"]
-            if songs:
-                best_result = songs[0]["result"]
-                result = await self.lyrics_genius.search_song(best_result["title"], best_result["primary_artist"]["name"])
-            else:
-                result = None
-        if not result:
+        async with self.bot.session.get(f"https://lyrics.tsu.sh/v1?q={query}") as r:
+            result = await r.json()
+        if "error" in result:
             return await ctx.send(_(":warning: No results!"))
         p = commands.Paginator()
-        for l in result.lyrics.split("\n"):
+        for l in result["content"].split("\n"):
             for i in chunks(l, 1900):
                 p.add_line(i)
         await self.bot.paginator.Paginator(
-            title=f"{result.artist} - {result.title}",
+            title=result["song"]["full_title"],
             entries=p.pages,
             length=1,
         ).paginate(ctx)

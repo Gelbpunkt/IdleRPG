@@ -42,12 +42,15 @@ locales: FrozenSet[str] = frozenset(
     )
 )
 
-gettext_translations = {
-    locale: gettext.translation(
-        "idlerpg", languages=(locale,), localedir=os.path.join(BASE_DIR, locale_dir)
-    )
-    for locale in locales
-}
+try:
+    gettext_translations = {
+        locale: gettext.translation(
+            "idlerpg", languages=(locale,), localedir=os.path.join(BASE_DIR, locale_dir)
+        )
+        for locale in locales
+    }
+except:
+    print(locale)
 
 # source code is already in en_US.
 # we don't use default_locale as the key here
