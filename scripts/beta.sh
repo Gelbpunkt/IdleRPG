@@ -1,7 +1,7 @@
 #!/bin/bash
 # Adrian's script for setting up a quick test deployment
-podman pod create --name idlerpg-beta
-podman run --rm -d --pod idlerpg-beta --name redis-beta redis:6.0-rc-alpine
+podman pod create --name idlerpgbeta
+podman run --rm -d --pod idlerpgbeta --name redis-beta redis:6.0-rc-alpine
 cat <<EOF > start.sh
 createdb idlerpg
 psql idlerpg -c "CREATE ROLE jens WITH PASSWORD 'owo';"
@@ -15,6 +15,6 @@ DONE
 EOF
 
 chmod 777 start.sh
-podman run --rm -d --pod idlerpg-beta --name postgres-beta -e POSTGRES_PASSWORD="test" -v $(pwd)/start.sh:/docker-entrypoint-initdb.d/init.sh:Z postgres:12-alpine
+podman run --rm -d --pod idlerpgbeta --name postgres-beta -e POSTGRES_PASSWORD="test" -v $(pwd)/start.sh:/docker-entrypoint-initdb.d/init.sh:Z postgres:12-alpine
 sleep 15
 rm start.sh
