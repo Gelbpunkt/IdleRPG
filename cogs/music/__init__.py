@@ -19,7 +19,6 @@ import time
 
 from collections import defaultdict
 from datetime import timedelta
-from json import loads
 
 import discord
 import wavelink
@@ -86,9 +85,7 @@ class Track:
             self.album = Album(album)
         self.artists = [Artist(d) for d in raw_data.get("artists", [])]
         self.disc_number = raw_data.get("disc_number", 1)
-        self.duration = (
-            raw_data.get("duration_ms") or raw_data.get("duration") or 0
-        )
+        self.duration = raw_data.get("duration_ms") or raw_data.get("duration") or 0
         self.episode = raw_data.get("episode")
         self.explicit = raw_data.get("explicit", False)
         self.url = raw_data.get("external_urls", {}).get("spotify")
@@ -241,7 +238,7 @@ class Music2(commands.Cog):
         self.queue = defaultdict(lambda: [])  # Redis is not needed because why
 
         if not hasattr(self.bot, "wavelink"):
-            self.bot.wavelink = wavelink.Client(self.bot)
+            self.bot.wavelink = wavelink.Client(bot=self.bot)
 
         self.bot.loop.create_task(self.connect())
 
@@ -510,7 +507,7 @@ class Music2(commands.Cog):
                 return await ctx.send(
                     _("I am not playing. Please specify a song to look for.")
                 )
-            query = f"{track.title} {track.artists[0].name}"
+            query = f"{track.title} {track.track_obj.artists[0].name}"
         elif query is None and not ctx.guild:
             return await ctx.send(_("Please specify a song."))
         elif len(query) < 3:
@@ -524,9 +521,7 @@ class Music2(commands.Cog):
             for i in chunks(l, 1900):
                 p.add_line(i)
         await self.bot.paginator.Paginator(
-            title=result["song"]["full_title"],
-            entries=p.pages,
-            length=1,
+            title=result["song"]["full_title"], entries=p.pages, length=1,
         ).paginate(ctx)
 
     def update_track(
@@ -573,7 +568,7 @@ class Music2(commands.Cog):
     async def on_track_end(self, player: wavelink.Player):
         if not player.loop:
             try:
-                self.queue[player.guild_id].pop(0) # remove the previous entry
+                self.queue[player.guild_id].pop(0)  # remove the previous entry
             except IndexError:
                 pass
         if (
@@ -598,6 +593,7 @@ class Music2(commands.Cog):
         for player in self.bot.wavelink.players.values():
             await player.stop()
             await player.disconnect()
+        await self.bot.wavelink.destroy_node(identifier="MAIN")
 
     def cog_unload(self):
         self.bot.queue.put_nowait(self.cleanup())

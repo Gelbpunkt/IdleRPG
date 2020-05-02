@@ -24,8 +24,8 @@ import discord
 
 from discord.ext import commands
 
-from cogs.shard_communication import user_on_cooldown as user_cooldown
 from cogs.shard_communication import next_day_cooldown
+from cogs.shard_communication import user_on_cooldown as user_cooldown
 from utils import misc as rpgtools
 from utils.checks import has_char, has_money, is_class, update_pet, user_is_patron
 
