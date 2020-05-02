@@ -25,6 +25,7 @@ import discord
 from discord.ext import commands
 
 from cogs.shard_communication import user_on_cooldown as user_cooldown
+from cogs.shard_communication import next_day_cooldown
 from utils import misc as rpgtools
 from utils.checks import has_char, has_money, is_class, update_pet, user_is_patron
 
@@ -524,7 +525,7 @@ class Classes(commands.Cog):
     @update_pet()
     @is_class("Ranger")
     @has_char()
-    @user_cooldown(86400)
+    @next_day_cooldown()
     @pet.command()
     @locale_doc
     async def hunt(self, ctx):
