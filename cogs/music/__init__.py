@@ -57,48 +57,49 @@ class Player(wavelink.Player):
 
 class Artist:
     def __init__(self, raw_data):
-        self.url = raw_data.get("external_urls", {}).get("spotify", None)
-        self.id = raw_data.get("id", None)
-        self.name = raw_data.get("name", None)
-        self.uri = raw_data.get("uri", None)
+        self.url = raw_data.get("external_urls", {}).get("spotify")
+        self.id = raw_data.get("id")
+        self.name = raw_data.get("name")
+        self.uri = raw_data.get("uri")
 
 
 class Album:
     def __init__(self, raw_data):
         self.artists = [Artist(d) for d in raw_data.get("artists", [])]
-        self.url = raw_data.get("external_urls", {}).get("spotify", None)
-        self.id = raw_data.get("id", None)
+        self.url = raw_data.get("external_urls", {}).get("spotify")
+        self.id = raw_data.get("id")
         self.images = raw_data.get("images", [])
-        self.name = raw_data.get("name", None)
-        self.release_date = raw_data.get("release_date", None)
+        self.name = raw_data.get("name")
+        self.release_date = raw_data.get("release_date")
         self.total_tracks = raw_data.get("total_tracks", 0)
-        self.uri = raw_data.get("uri", None)
+        self.uri = raw_data.get("uri")
 
 
 class Track:
     def __init__(self, raw_data, playlist_entry=False):
-        self.added_at = raw_data.get("added_at", None)
+        self.added_at = raw_data.get("added_at")
         self.is_local = raw_data.get("is_local", False)
-        self.primary_color = raw_data.get("primary_color", None)
+        self.primary_color = raw_data.get("primary_color")
         if playlist_entry:
             raw_data = raw_data["track"]
-        if (album := raw_data.get("album", None)) :
+        if (album := raw_data.get("album")) :
             self.album = Album(album)
         self.artists = [Artist(d) for d in raw_data.get("artists", [])]
         self.disc_number = raw_data.get("disc_number", 1)
         self.duration = (
-            raw_data.get("duration_ms", None) or raw_data.get("duration", None) or 0
+            raw_data.get("duration_ms") or raw_data.get("duration") or 0
         )
-        self.episode = raw_data.get("episode", None)
+        self.episode = raw_data.get("episode")
         self.explicit = raw_data.get("explicit", False)
-        self.url = raw_data.get("external_urls", {}).get("spotify", None)
-        self.id = raw_data.get("id", None)
+        self.url = raw_data.get("external_urls", {}).get("spotify")
+        self.id = raw_data.get("id")
         self.is_playable = raw_data.get("is_playable", True)
-        self.name = raw_data.get("name", None)
+        self.name = raw_data.get("name")
+        self.isrc = raw_data.get("external_ids", {}).get("isrc")
         self.popularity = raw_data.get("popularity", 0)
-        self.preview_url = raw_data.get("preview_url", None)
+        self.preview_url = raw_data.get("preview_url")
         self.track_number = raw_data.get("track_number", 1)
-        self.uri = raw_data.get("uri", None)
+        self.uri = raw_data.get("uri")
 
 
 def is_in_vc():
@@ -272,7 +273,7 @@ class Music2(commands.Cog):
         try:
             track_obj = Track(results["items"][0])
             tracks = await self.bot.wavelink.get_tracks(
-                f"{self.bot.config.resolve_endpoint}?id={track_obj.uri}"
+                f"{self.bot.config.resolve_endpoint}?isrc={track_obj.isrc}"
             )
             if not tracks:
                 return await msg.edit(content=_("No results..."))
