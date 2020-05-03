@@ -276,7 +276,7 @@ class Music2(commands.Cog):
     @commands.command(aliases=["cp"])
     @locale_doc
     async def chooseplay(self, ctx, *, query: str):
-        _("""Query for a track and play or add the any result to the playlist.""")
+        _("""Query for a track and play or add any result to the playlist.""")
         async with self.bot.trusted_session.get(
             f"{self.bot.config.query_endpoint}?limit=5&q={query}"
         ) as r:

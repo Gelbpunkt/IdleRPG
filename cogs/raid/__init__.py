@@ -475,6 +475,12 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
             )
         elif len(raid) == 0:
             await ctx.send("The bandits plundered the town!\nAll swordsmen died!")
+        else:
+            m = await ctx.send(
+                "The war at the Gate of Ikhdosa took too long. The bandits fled."
+            )
+            await m.add_reaction("\U0001F1EB")
+
         await self.clear_raid_timer()
 
     @is_god()
