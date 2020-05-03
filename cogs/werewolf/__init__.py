@@ -27,7 +27,7 @@ class Werewolf(commands.Cog):
         self.bot = bot
         self.games = {}
 
-    @commands.command()
+    @commands.command(aliases=["ww"])
     @locale_doc
     async def werewolf(self, ctx):
         _("""Starts a game of Werewolf.""")
