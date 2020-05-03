@@ -36,7 +36,7 @@ from classes.converters import (
     NotInRange,
     UserHasNoChar,
 )
-from cogs.music import NeedsToBeInVoiceChat, VoteDidNotPass
+from cogs.music import NeedsToBeInVoiceChat, NeedsToBePlaying, VoteDidNotPass
 from utils.paginator import NoChoice
 
 try:
@@ -121,33 +121,33 @@ class Errorhandler(commands.Cog):
                 )
             )
         elif isinstance(error, commands.CheckFailure):
-            if type(error) == utils.checks.NoCharacter:
+            if isinstance(error, utils.checks.NoCharacter):
                 await ctx.send(_("You don't have a character yet."))
-            elif type(error) == utils.checks.NeedsNoCharacter:
+            elif isinstance(error, utils.checks.NeedsNoCharacter):
                 await ctx.send(
                     _(
                         "This command requires you to not have created a character yet. You already have one."
                     )
                 )
-            elif type(error) == utils.checks.NeedsGod:
+            elif isinstance(error, utils.checks.NeedsGod):
                 await ctx.send(
                     _(
                         "You need to be following a god for this command. Please use `{prefix}follow` to choose one."
                     ).format(prefix=ctx.prefix)
                 )
-            elif type(error) == utils.checks.NoGuild:
+            elif isinstance(error, utils.checks.NoGuild):
                 await ctx.send(_("You need to have a guild to use this command."))
-            elif type(error) == utils.checks.NeedsNoGuild:
+            elif isinstance(error, utils.checks.NeedsNoGuild):
                 await ctx.send(_("You need to be in no guild to use this command."))
-            elif type(error) == utils.checks.NoGuildPermissions:
+            elif isinstance(error, utils.checks.NoGuildPermissions):
                 await ctx.send(
                     _("Your rank in the guild is too low to use this command.")
                 )
-            elif type(error) == utils.checks.NeedsNoGuildLeader:
+            elif isinstance(error, utils.checks.NeedsNoGuildLeader):
                 await ctx.send(
                     _("You mustn't be the owner of a guild to use this command.")
                 )
-            elif type(error) == utils.checks.WrongClass:
+            elif isinstance(error, utils.checks.WrongClass):
                 await ctx.send(
                     embed=discord.Embed(
                         title=_("Permission denied"),
@@ -157,23 +157,29 @@ class Errorhandler(commands.Cog):
                         colour=0xFF0000,
                     )
                 )
-            elif type(error) == utils.checks.NeedsNoAdventure:
+            elif isinstance(error, utils.checks.NeedsNoAdventure):
                 await ctx.send(
                     _(
                         "You are already on an adventure. Use `{prefix}status` to see how long it lasts."
                     ).format(prefix=ctx.prefix)
                 )
-            elif type(error) == utils.checks.NeedsAdventure:
+            elif isinstance(error, utils.checks.NeedsAdventure):
                 await ctx.send(
                     _(
                         "You need to be on an adventure to use this command. Try `{prefix}adventure`!"
                     ).format(prefix=ctx.prefix)
                 )
-            elif type(error) == NeedsToBeInVoiceChat:
+            elif isinstance(error, NeedsToBeInVoiceChat):
                 await ctx.send(_("You need to be in a voice chat to use this command."))
-            elif type(error) == VoteDidNotPass:
+            elif isinstance(error, VoteDidNotPass):
                 await ctx.send(_("The vote did not pass."))
-            elif type(error) == utils.checks.PetGone:
+            elif isinstance(error, NeedsToBePlaying):
+                await ctx.send(
+                    _(
+                        "You need to be playing music, for example with `{prefix}play`, to use this command."
+                    ).format(prefix=ctx.prefix)
+                )
+            elif isinstance(error, utils.checks.PetGone):
                 await ctx.send(
                     _(
                         "Your pet has gone missing. Maybe some aliens abducted it? Since you can't find it anymore, you are no longer a {profession}"
@@ -191,35 +197,35 @@ class Errorhandler(commands.Cog):
                         classes,
                         ctx.author.id,
                     )
-            elif type(error) == utils.checks.PetDied:
+            elif isinstance(error, utils.checks.PetDied):
                 await ctx.send(
                     _(
                         "Your pet **{pet}** died! You did not give it enough to eat or drink. Because of your bad treatment, you are no longer a {profession}."
                     ).format(pet=ctx.pet_data["name"], profession=_("Ranger"))
                 )
-            elif type(error) == utils.checks.PetRanAway:
+            elif isinstance(error, utils.checks.PetRanAway):
                 await ctx.send(
                     _(
                         "Your pet **{pet}** ran away! You did not show it your love enough! Because of your bad treatment, you are no longer a {profession}."
                     ).format(pet=ctx.pet_data["name"], profession=_("Ranger"))
                 )
-            elif type(error) == utils.checks.NoPatron:
+            elif isinstance(error, utils.checks.NoPatron):
                 await ctx.send(
                     _(
                         "You need to be a {tier} tier donator to use this command. Please head to `{prefix}donate` and make sure you joined the support server if you decide to support us."
                     ).format(tier=error.tier, prefix=ctx.prefix)
                 )
-            elif type(error) == utils.checks.AlreadyRaiding:
+            elif isinstance(error, utils.checks.AlreadyRaiding):
                 await ctx.send(
                     _(
                         "There is another raid already ongoing. Try again at a later time."
                     )
                 )
-            elif type(error) == utils.checks.NoCityOwned:
+            elif isinstance(error, utils.checks.NoCityOwned):
                 await ctx.send(_("Your alliance does not own a city."))
-            elif type(error) == utils.checks.CityOwned:
+            elif isinstance(error, utils.checks.CityOwned):
                 await ctx.send(_("Your alliance already owns a city."))
-            elif type(error) == utils.checks.NoAlliancePermissions:
+            elif isinstance(error, utils.checks.NoAlliancePermissions):
                 await ctx.send(_("Your alliance rank is too low."))
             else:
                 await ctx.send(

@@ -38,6 +38,10 @@ class NeedsToBeInVoiceChat(commands.CheckFailure):
     pass
 
 
+class NeedsToBePlaying(commands.CheckFailure):
+    pass
+
+
 class Player(wavelink.Player):
     @property
     def position(self):
@@ -105,6 +109,19 @@ def is_in_vc():
             ctx.voice_channel = ctx.author.voice.channel.id
         except AttributeError:
             raise NeedsToBeInVoiceChat()
+        return True
+
+    return commands.check(predicate)
+
+
+def is_playing():
+    def predicate(ctx):
+        try:
+            ctx.voice_channel = ctx.author.voice.channel.id
+        except AttributeError:
+            raise NeedsToBeInVoiceChat()
+        if not ctx.guild.me.voice:
+            raise NeedsToBePlaying()
         return True
 
     return commands.check(predicate)
@@ -296,7 +313,7 @@ class Music2(commands.Cog):
 
     @is_dj()
     @get_player()
-    @is_in_vc()
+    @is_playing()
     @commands.command(aliases=["unlock"])
     @locale_doc
     async def lock(self, ctx):
@@ -312,7 +329,7 @@ class Music2(commands.Cog):
     @vote("loop")
     @is_not_locked()
     @get_player()
-    @is_in_vc()
+    @is_playing()
     @commands.command(aliases=["repeat"])
     @locale_doc
     async def loop(self, ctx):
@@ -326,7 +343,7 @@ class Music2(commands.Cog):
     @vote("skip")
     @is_not_locked()
     @get_player()
-    @is_in_vc()
+    @is_playing()
     @commands.command()
     @locale_doc
     async def skip(self, ctx):
@@ -337,7 +354,7 @@ class Music2(commands.Cog):
     @vote("stop")
     @is_not_locked()
     @get_player()
-    @is_in_vc()
+    @is_playing()
     @commands.command(aliases=["leave"])
     @locale_doc
     async def stop(self, ctx):
@@ -351,7 +368,7 @@ class Music2(commands.Cog):
     @vote("volume")
     @is_not_locked()
     @get_player()
-    @is_in_vc()
+    @is_playing()
     @commands.command(aliases=["vol"])
     @locale_doc
     async def volume(self, ctx, volume: IntFromTo(0, 100)):
@@ -377,7 +394,7 @@ class Music2(commands.Cog):
     @vote("pause_resume")
     @is_not_locked()
     @get_player()
-    @is_in_vc()
+    @is_playing()
     @commands.command(aliases=["resume"])
     @locale_doc
     async def pause(self, ctx):
@@ -392,7 +409,7 @@ class Music2(commands.Cog):
     @vote("equalizer")
     @is_not_locked()
     @get_player()
-    @is_in_vc()
+    @is_playing()
     @commands.command(aliases=["equaliser", "eq"])
     @locale_doc
     async def equalizer(self, ctx, eq: str.upper):
@@ -406,7 +423,7 @@ class Music2(commands.Cog):
         await ctx.message.add_reaction("✅")
 
     @get_player()
-    @is_in_vc()
+    @is_playing()
     @commands.command(aliases=["np"])
     @locale_doc
     async def now_playing(self, ctx):
@@ -469,7 +486,7 @@ class Music2(commands.Cog):
         await ctx.send(embed=playing_embed)
 
     @get_player()
-    @is_in_vc()
+    @is_playing()
     @commands.command(aliases=["q", "que", "cue"])
     @locale_doc
     async def queue(self, ctx):
