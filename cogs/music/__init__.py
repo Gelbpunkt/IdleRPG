@@ -273,10 +273,61 @@ class Music2(commands.Cog):
     @is_not_locked()
     @get_player()
     @is_in_vc()
+    @commands.command(aliases=["cp"])
+    @locale_doc
+    async def chooseplay(self, ctx, *, query: str):
+        _("""Query for a track and play or add the any result to the playlist.""")
+        async with self.bot.trusted_session.get(
+            f"{self.bot.config.query_endpoint}?limit=5&q={query}"
+        ) as r:
+            results = await r.json()
+        if not results or "items" not in results:
+            return await ctx.send(_("No results..."))
+        track_objs = [Track(i) for i in results["items"]]
+        track_idx = await self.bot.paginator.Choose(
+            title=_("Song results"),
+            footer=_("Hit a button to play one"),
+            return_index=True,
+            entries=[
+                f"**{i.name}** by {nice_join([a.name for a in i.artists])} on {i.album.name} ({timedelta(milliseconds=i.duration).split('.')[0]})"
+                for i in track_objs
+            ],
+        ).paginate(ctx)
+        track_obj = track_objs[track_idx]
+
+        msg = await ctx.send(
+            _("Downloading track... This might take up to 3 seconds...")
+        )
+        tracks = await self.bot.wavelink.get_tracks(
+            f"{self.bot.config.resolve_endpoint}?isrc={track_obj.isrc}"
+        )
+        if not tracks:
+            return await msg.edit(content=_("No results..."))
+        track = tracks[0]
+        track = self.update_track(
+            track,
+            requester_id=ctx.author.id,
+            channel_id=ctx.channel.id,
+            track_obj=track_obj,
+        )
+
+        if not ctx.player.is_connected:
+            await ctx.player.connect(ctx.voice_channel)
+            # Setup some attributes
+            ctx.player.dj = ctx.author
+            ctx.player.locked = False
+            ctx.player.loop = False
+            ctx.player.eq = "Flat"
+
+        await self.add_entry_to_queue(track, ctx.player, msg=msg)
+
+    @is_not_locked()
+    @get_player()
+    @is_in_vc()
     @commands.command()
     @locale_doc
     async def play(self, ctx, *, query: str):
-        _("""Query for a track and play it or add it to the playlist.""")
+        _("""Query for a track and play or add the first result to the playlist.""")
         msg = await ctx.send(
             _("Downloading track... This might take up to 3 seconds...")
         )
