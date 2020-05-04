@@ -45,7 +45,6 @@ initial_extensions = [
     "cogs.tournament",
     "cogs.classes",
     "cogs.images",
-    "cogs.error_handler",
     "cogs.global_events",
     "cogs.raid",
     "cogs.music",
@@ -60,6 +59,7 @@ initial_extensions = [
     "cogs.trivia",
     "cogs.chess",
     "cogs.werewolf",
+    "cogs.error_handler",
 ]
 
 """The prefix to use if none is set custom or we are in DMs."""

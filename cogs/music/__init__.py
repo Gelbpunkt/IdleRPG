@@ -249,7 +249,7 @@ class FakeTrack(wavelink.Track):
         self.length = self.track_obj.duration
 
 
-class Music2(commands.Cog):
+class Music(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
         self.queue = defaultdict(lambda: [])  # Redis is not needed because why
@@ -289,7 +289,7 @@ class Music2(commands.Cog):
             footer=_("Hit a button to play one"),
             return_index=True,
             entries=[
-                f"**{i.name}** by {nice_join([a.name for a in i.artists])} on {i.album.name} ({timedelta(milliseconds=i.duration).split('.')[0]})"
+                f"**{i.name}** by {nice_join([a.name for a in i.artists])} on {i.album.name} ({str(timedelta(milliseconds=i.duration)).split('.')[0]})"
                 for i in track_objs
             ],
         ).paginate(ctx)
