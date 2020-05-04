@@ -281,7 +281,7 @@ class Music(commands.Cog):
             f"{self.bot.config.query_endpoint}?limit=5&q={query}"
         ) as r:
             results = await r.json()
-        if not results or "items" not in results:
+        if not results.get("items"):
             return await ctx.send(_("No results..."))
         track_objs = [Track(i) for i in results["items"]]
         track_idx = await self.bot.paginator.Choose(
