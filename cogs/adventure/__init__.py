@@ -42,7 +42,9 @@ class Adventure(commands.Cog):
     @commands.command(aliases=["missions", "dungeons"])
     @locale_doc
     async def adventures(self, ctx):
-        _("""A list of all adventures with success rates, name and time it takes.""")
+        _(
+            """Shows a list of all available adventures with your individual success chances."""
+        )
         damage, defense = await self.bot.get_damage_armor_for(ctx.author)
         all_dungeons = list(self.bot.config.adventure_times.keys())
         level = rpgtools.xptolevel(ctx.character_data["xp"])
@@ -85,18 +87,18 @@ class Adventure(commands.Cog):
 
     @has_char()
     @has_no_adventure()
-    @commands.command(aliases=["mission", "a", "dungeon"])
+    @commands.command(aliases=["mission", "a"])
     @locale_doc
-    async def adventure(self, ctx, dungeonnumber: IntFromTo(1, 30)):
+    async def adventure(self, ctx, adventure_number: IntFromTo(1, 30)):
         _("""Sends your character on an adventure.""")
-        if dungeonnumber > int(rpgtools.xptolevel(ctx.character_data["xp"])):
+        if adventure_number > int(rpgtools.xptolevel(ctx.character_data["xp"])):
             return await ctx.send(
                 _("You must be on level **{level}** to do this adventure.").format(
-                    level=dungeonnumber
+                    level=adventure_number
                 )
             )
         time_booster = await self.bot.get_booster(ctx.author, "time")
-        time = self.bot.config.adventure_times[dungeonnumber]
+        time = self.bot.config.adventure_times[adventure_number]
         if time_booster:
             time = time / 2
 
@@ -104,8 +106,6 @@ class Adventure(commands.Cog):
             buildings := await self.bot.get_city_buildings(ctx.character_data["guild"])
         ) :
             time -= time * (buildings["adventure_building"] / 100)
-        # Silver = -5%, Gold = -10%, Emerald = -25%
-        # TODO: Maybe make a func to get the actual rank
         if (user_rank := await self.bot.get_donator_rank(ctx.author)) :
             if user_rank >= DonatorRank.emerald:
                 time = time * 0.75
@@ -113,7 +113,7 @@ class Adventure(commands.Cog):
                 time = time * 0.9
             elif user_rank >= DonatorRank.silver:
                 time = time * 0.95
-        await self.bot.start_adventure(ctx.author, dungeonnumber, time)
+        await self.bot.start_adventure(ctx.author, adventure_number, time)
         await ctx.send(
             _(
                 "Successfully sent your character out on an adventure. Use `{prefix}status` to see the current status of the mission."
@@ -393,10 +393,13 @@ class Adventure(commands.Cog):
     @commands.command(aliases=["s"])
     @locale_doc
     async def status(self, ctx):
-        _("""Checks your adventure status.""")
+        _(
+            """Checks your adventure status. You will receive your reward if finished, else you will see your progress."""
+        )
         num, time, done = ctx.adventure_data
 
         if not done:
+            # TODO: Embeds ftw
             return await ctx.send(
                 _(
                     """\
@@ -457,7 +460,6 @@ Adventure name: `{adventure}`"""
             chance_of_loot *= 2  # can be 100 in a 30
 
         async with self.bot.pool.acquire() as conn:
-
             if (random.randint(1, 1000)) > chance_of_loot * 10:
                 minstat = round(num * luck_multiply)
                 maxstat = round(5 + int(num * 1.5) * luck_multiply)
@@ -512,6 +514,7 @@ Adventure name: `{adventure}`"""
                 },
             )
 
+            # TODO: Embeds ftw
             await ctx.send(
                 _(
                     "You have completed your adventure and received **${gold}** as well as a new item: **{item}**. Experience gained: **{xp}**."
@@ -547,7 +550,7 @@ Adventure name: `{adventure}`"""
     @locale_doc
     async def deaths(self, ctx):
         _(
-            """Your death stats. Shows statictics from all your adventures ever completed."""
+            """Shows your overall adventure death and completed count, including your success rate."""
         )
         deaths, completed = await self.bot.pool.fetchval(
             'SELECT (deaths, completed) FROM profile WHERE "user"=$1;', ctx.author.id
