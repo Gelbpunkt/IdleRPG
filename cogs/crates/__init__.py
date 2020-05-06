@@ -158,6 +158,17 @@ class Crates(commands.Cog):
 received {item['name']} with **{item['damage'] or item['armor']} \
 {'damage' if item['damage'] else 'armor'}**."
             )
+        elif rarity == "magic":
+            if item["damage"] >= 41:
+                await self.bot.public_log(
+                    f"**{ctx.author}** opened a magic crate and \
+received {item['name']} with **{item['damage']} damage**."
+                )
+            elif item["armor"] >= 41:
+                await self.bot.public_log(
+                    f"**{ctx.author}** opened a magic crate and \
+received {item['name']} with **{item['armor']} armor**."
+                )
 
     @has_char()
     @commands.command()
