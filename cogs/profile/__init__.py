@@ -316,7 +316,7 @@ IdleRPG is a global bot, your characters are valid everywhere"""
         )
 
     @checks.has_char()
-    @commands.command(aliases=["money", "e"])
+    @commands.command(aliases=["money", "e", "balance", "bal"])
     @locale_doc
     async def economy(self, ctx):
         _("""Shows your balance.""")
