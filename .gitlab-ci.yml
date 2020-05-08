@@ -1,9 +1,7 @@
-image: "gelbpunkt/python:gcc10"
+image: "gelbpunkt/python:ci"
 
 before_script:
-  - apk add --no-cache git gcc musl-dev
   - python --version
-  - pip install -r requirements-dev.txt
 
 stages:
   - Static Analysis
