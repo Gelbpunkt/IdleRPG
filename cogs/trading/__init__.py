@@ -39,7 +39,8 @@ class Trading(commands.Cog):
         )
         async with self.bot.pool.acquire() as conn:
             item = await conn.fetchrow(
-                "SELECT * FROM inventory i JOIN allitems ai ON (i.item=ai.id) WHERE ai.id=$1 AND ai.owner=$2;",
+                "SELECT * FROM inventory i JOIN allitems ai ON (i.item=ai.id) WHERE"
+                " ai.id=$1 AND ai.owner=$2;",
                 itemid,
                 ctx.author.id,
             )
@@ -54,13 +55,15 @@ class Trading(commands.Cog):
             if item["value"] > price:
                 return await ctx.send(
                     _(
-                        "Selling an item below its value is a bad idea. You can always do `{prefix}merchant {itemid}` to get more money."
+                        "Selling an item below its value is a bad idea. You can always"
+                        " do `{prefix}merchant {itemid}` to get more money."
                     ).format(prefix=ctx.prefix, itemid=itemid)
                 )
             elif item["damage"] < 4 and item["armor"] < 4:
                 return await ctx.send(
                     _(
-                        "Your item is either equal to a Starter Item or worse. Noone would buy it."
+                        "Your item is either equal to a Starter Item or worse. Noone"
+                        " would buy it."
                     )
                 )
             if (
@@ -87,7 +90,8 @@ class Trading(commands.Cog):
                     data={"Amount": tax},
                 )
             await conn.execute(
-                "DELETE FROM inventory i USING allitems ai WHERE i.item=ai.id AND ai.id=$1 AND ai.owner=$2;",
+                "DELETE FROM inventory i USING allitems ai WHERE i.item=ai.id AND"
+                " ai.id=$1 AND ai.owner=$2;",
                 itemid,
                 ctx.author.id,
             )
@@ -96,7 +100,8 @@ class Trading(commands.Cog):
             )
         await ctx.send(
             _(
-                "Successfully added your item to the shop! Use `{prefix}shop` to view it in the market! {additional}"
+                "Successfully added your item to the shop! Use `{prefix}shop` to view"
+                " it in the market! {additional}"
             ).format(
                 prefix=ctx.prefix,
                 additional=_("The tax of 5% has been deducted from your account.")
@@ -112,7 +117,8 @@ class Trading(commands.Cog):
         _("""Buys an item from the global market.""")
         async with self.bot.pool.acquire() as conn:
             item = await conn.fetchrow(
-                'SELECT *, m."id" AS "offer" FROM market m JOIN allitems ai ON (m."item"=ai."id") WHERE ai."id"=$1;',
+                'SELECT *, m."id" AS "offer" FROM market m JOIN allitems ai ON'
+                ' (m."item"=ai."id") WHERE ai."id"=$1;',
                 itemid,
             )
             if not item:
@@ -130,7 +136,8 @@ class Trading(commands.Cog):
             if ctx.character_data["money"] < item["price"] + tax:
                 return await ctx.send(_("You're too poor to buy this item."))
             await conn.execute(
-                "DELETE FROM market m USING allitems ai WHERE m.item=ai.id AND ai.id=$1 RETURNING *;",
+                "DELETE FROM market m USING allitems ai WHERE m.item=ai.id AND ai.id=$1"
+                " RETURNING *;",
                 itemid,
             )
             await conn.execute(
@@ -168,15 +175,15 @@ class Trading(commands.Cog):
             )
         await ctx.send(
             _(
-                "Successfully bought item `{id}`. Use `{prefix}inventory` to view your updated inventory."
+                "Successfully bought item `{id}`. Use `{prefix}inventory` to view your"
+                " updated inventory."
             ).format(id=item["id"], prefix=ctx.prefix)
         )
         seller = await self.bot.get_user_global(item["owner"])
         if seller:
             await seller.send(
-                "**{author}** bought your **{name}** for **${price}** from the market.".format(
-                    author=ctx.author.name, name=item["name"], price=item["price"]
-                )
+                "**{author}** bought your **{name}** for **${price}** from the market."
+                .format(author=ctx.author.name, name=item["name"], price=item["price"])
             )
         await self.bot.log_transaction(
             ctx,
@@ -193,18 +200,21 @@ class Trading(commands.Cog):
         _("""Takes an item off the shop.""")
         async with self.bot.pool.acquire() as conn:
             item = await conn.fetchrow(
-                "SELECT * FROM market m JOIN allitems ai ON (m.item=ai.id) WHERE ai.id=$1 AND ai.owner=$2;",
+                "SELECT * FROM market m JOIN allitems ai ON (m.item=ai.id) WHERE"
+                " ai.id=$1 AND ai.owner=$2;",
                 itemid,
                 ctx.author.id,
             )
             if not item:
                 return await ctx.send(
                     _(
-                        "You don't have an item of yours in the shop with the ID `{itemid}`."
+                        "You don't have an item of yours in the shop with the ID"
+                        " `{itemid}`."
                     ).format(itemid=itemid)
                 )
             await conn.execute(
-                "DELETE FROM market m USING allitems ai WHERE m.item=ai.id AND ai.id=$1 AND ai.owner=$2;",
+                "DELETE FROM market m USING allitems ai WHERE m.item=ai.id AND ai.id=$1"
+                " AND ai.owner=$2;",
                 itemid,
                 ctx.author.id,
             )
@@ -213,7 +223,8 @@ class Trading(commands.Cog):
             )
         await ctx.send(
             _(
-                "Successfully removed item `{itemid}` from the shop and put it in your inventory."
+                "Successfully removed item `{itemid}` from the shop and put it in your"
+                " inventory."
             ).format(itemid=itemid)
         )
 
@@ -235,21 +246,24 @@ class Trading(commands.Cog):
             )
         if itemtype == "All":
             items = await self.bot.pool.fetch(
-                'SELECT * FROM allitems ai JOIN market m ON (ai.id=m.item) WHERE m."price"<=$1 AND (ai."damage">=$2 OR ai."armor">=$3);',
+                "SELECT * FROM allitems ai JOIN market m ON (ai.id=m.item) WHERE"
+                ' m."price"<=$1 AND (ai."damage">=$2 OR ai."armor">=$3);',
                 highestprice,
                 minstat,
                 minstat,
             )
         elif itemtype == "Shield":
             items = await self.bot.pool.fetch(
-                'SELECT * FROM allitems ai JOIN market m ON (ai.id=m.item) WHERE ai."type"=$1 AND ai."armor">=$2 AND m."price"<=$3;',
+                "SELECT * FROM allitems ai JOIN market m ON (ai.id=m.item) WHERE"
+                ' ai."type"=$1 AND ai."armor">=$2 AND m."price"<=$3;',
                 itemtype,
                 minstat,
                 highestprice,
             )
         else:
             items = await self.bot.pool.fetch(
-                'SELECT * FROM allitems ai JOIN market m ON (ai.id=m.item) WHERE ai."type"=$1 AND ai."damage">=$2 AND m."price"<=$3;',
+                "SELECT * FROM allitems ai JOIN market m ON (ai.id=m.item) WHERE"
+                ' ai."type"=$1 AND ai."damage">=$2 AND m."price"<=$3;',
                 itemtype,
                 minstat,
                 highestprice,
@@ -293,7 +307,8 @@ class Trading(commands.Cog):
         if user == ctx.author:
             return await ctx.send(_("You may not offer items to yourself."))
         item = await self.bot.pool.fetchrow(
-            "SELECT * FROM inventory i JOIN allitems ai ON (i.item=ai.id) WHERE ai.id=$1 AND ai.owner=$2;",
+            "SELECT * FROM inventory i JOIN allitems ai ON (i.item=ai.id) WHERE"
+            " ai.id=$1 AND ai.owner=$2;",
             itemid,
             ctx.author.id,
         )
@@ -317,7 +332,9 @@ class Trading(commands.Cog):
 
         if not await ctx.confirm(
             _(
-                "{user}, {author} offered you an item! React to buy it! The price is **${price}**. You have **2 Minutes** to accept the trade or the offer will be canceled."
+                "{user}, {author} offered you an item! React to buy it! The price is"
+                " **${price}**. You have **2 Minutes** to accept the trade or the offer"
+                " will be canceled."
             ).format(user=user.mention, author=ctx.author.mention, price=price),
             user=user,
             timeout=120,
@@ -330,14 +347,16 @@ class Trading(commands.Cog):
             )
         async with self.bot.pool.acquire() as conn:
             item = await conn.fetchrow(
-                "SELECT * FROM inventory i JOIN allitems ai ON (i.item=ai.id) WHERE ai.id=$1 AND ai.owner=$2;",
+                "SELECT * FROM inventory i JOIN allitems ai ON (i.item=ai.id) WHERE"
+                " ai.id=$1 AND ai.owner=$2;",
                 itemid,
                 ctx.author.id,
             )
             if not item:
                 return await ctx.send(
                     _(
-                        "The owner sold the item with the ID `{itemid}` in the meantime."
+                        "The owner sold the item with the ID `{itemid}` in the"
+                        " meantime."
                     ).format(itemid=itemid)
                 )
             await conn.execute(
@@ -363,7 +382,8 @@ class Trading(commands.Cog):
         )
         await ctx.send(
             _(
-                "Successfully bought item `{itemid}`. Use `{prefix}inventory` to view your updated inventory."
+                "Successfully bought item `{itemid}`. Use `{prefix}inventory` to view"
+                " your updated inventory."
             ).format(itemid=itemid, prefix=ctx.prefix)
         )
 
@@ -382,7 +402,9 @@ class Trading(commands.Cog):
             return await ctx.send(_("You cannot sell nothing."))
         async with self.bot.pool.acquire() as conn:
             value, amount, equipped = await conn.fetchval(
-                "SELECT (sum(ai.value), count(*), SUM(CASE WHEN i.equipped THEN 1 END)) FROM inventory i JOIN allitems ai ON (i.item=ai.id) WHERE ai.id=ANY($1) AND ai.owner=$2;",
+                "SELECT (sum(ai.value), count(*), SUM(CASE WHEN i.equipped THEN 1 END))"
+                " FROM inventory i JOIN allitems ai ON (i.item=ai.id) WHERE"
+                " ai.id=ANY($1) AND ai.owner=$2;",
                 itemids,
                 ctx.author.id,
             )
@@ -427,7 +449,8 @@ class Trading(commands.Cog):
         )
         await ctx.send(
             _(
-                "You received **${money}** when selling item(s) `{itemids}`. {additional}"
+                "You received **${money}** when selling item(s) `{itemids}`."
+                " {additional}"
             ).format(
                 money=value,
                 itemids=", ".join([str(itemid) for itemid in itemids]),
@@ -450,7 +473,9 @@ class Trading(commands.Cog):
         _("""Sells all your non-equipped items for their value.""")
         async with self.bot.pool.acquire() as conn:
             money, count = await conn.fetchval(
-                "SELECT (sum(value), count(value)) FROM inventory i JOIN allitems ai ON (i.item=ai.id) WHERE ai.owner=$1 AND i.equipped IS FALSE AND ai.armor+ai.damage BETWEEN $2 AND $3;",
+                "SELECT (sum(value), count(value)) FROM inventory i JOIN allitems ai ON"
+                " (i.item=ai.id) WHERE ai.owner=$1 AND i.equipped IS FALSE AND"
+                " ai.armor+ai.damage BETWEEN $2 AND $3;",
                 ctx.author.id,
                 minstat,
                 maxstat,
@@ -466,13 +491,16 @@ class Trading(commands.Cog):
                 money = int(money * (1 + buildings["trade_building"] / 2))
             if not await ctx.confirm(
                 _(
-                    "You are about to sell **{count} items for ${money}!**\nAre you sure you want to do this?"
+                    "You are about to sell **{count} items for ${money}!**\nAre you"
+                    " sure you want to do this?"
                 ).format(count=count, money=money)
             ):
                 await self.bot.reset_cooldown(ctx)
                 return await ctx.send(_("Cancelled selling your items."))
             newcount = await self.bot.pool.fetchval(
-                "SELECT count(value) FROM inventory i JOIN allitems ai ON (i.item=ai.id) WHERE ai.owner=$1 AND i.equipped IS FALSE AND ai.armor+ai.damage BETWEEN $2 AND $3;",
+                "SELECT count(value) FROM inventory i JOIN allitems ai ON"
+                " (i.item=ai.id) WHERE ai.owner=$1 AND i.equipped IS FALSE AND"
+                " ai.armor+ai.damage BETWEEN $2 AND $3;",
                 ctx.author.id,
                 minstat,
                 maxstat,
@@ -480,13 +508,16 @@ class Trading(commands.Cog):
             if newcount != count:
                 await ctx.send(
                     _(
-                        "Looks like you got more or less items in that range in the meantime. Please try again."
+                        "Looks like you got more or less items in that range in the"
+                        " meantime. Please try again."
                     )
                 )
                 return await self.bot.reset_cooldown(ctx)
             async with conn.transaction():
                 await conn.execute(
-                    "DELETE FROM allitems ai USING inventory i WHERE ai.id=i.item AND ai.owner=$1 AND i.equipped IS FALSE AND ai.armor+ai.damage BETWEEN $2 AND $3;",
+                    "DELETE FROM allitems ai USING inventory i WHERE ai.id=i.item AND"
+                    " ai.owner=$1 AND i.equipped IS FALSE AND ai.armor+ai.damage"
+                    " BETWEEN $2 AND $3;",
                     ctx.author.id,
                     minstat,
                     maxstat,
@@ -514,7 +545,8 @@ class Trading(commands.Cog):
     async def pending(self, ctx):
         _("""View your pending shop offers.""")
         items = await self.bot.pool.fetch(
-            'SELECT * FROM allitems ai JOIN market m ON (m.item=ai.id) WHERE ai."owner"=$1;',
+            "SELECT * FROM allitems ai JOIN market m ON (m.item=ai.id) WHERE"
+            ' ai."owner"=$1;',
             ctx.author.id,
         )
         if not items:
@@ -565,7 +597,10 @@ class Trading(commands.Cog):
                 footer=_("Hit a button to buy it"),
                 return_index=True,
                 entries=[
-                    f"**{i[0]['name']}** ({i[0]['type_']}) - {i[0]['armor'] if i[0]['type_'] == 'Shield' else i[0]['damage']} {'armor' if i[0]['type_'] == 'Shield' else 'damage'} - **${i[1]}**"
+                    f"**{i[0]['name']}** ({i[0]['type_']}) -"
+                    f" {i[0]['armor'] if i[0]['type_'] == 'Shield' else i[0]['damage']}"
+                    f" {'armor' if i[0]['type_'] == 'Shield' else 'damage'} -"
+                    f" **${i[1]}**"
                     for i in offers
                 ],
             ).paginate(ctx)
@@ -588,7 +623,8 @@ class Trading(commands.Cog):
         await self.bot.create_item(**item[0])
         await ctx.send(
             _(
-                "Successfully bought offer **{offer}**. Use `{prefix}inventory` to view your updated inventory."
+                "Successfully bought offer **{offer}**. Use `{prefix}inventory` to view"
+                " your updated inventory."
             ).format(offer=offerid + 1, prefix=ctx.prefix)
         )
 

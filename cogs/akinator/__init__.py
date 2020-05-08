@@ -77,7 +77,8 @@ class Akinator(commands.Cog):
         if self.games.get(ctx.channel.id):
             return await ctx.send(
                 _(
-                    ":warning: There is another akinator game in this channel currently... Please wait until it finishes!"
+                    ":warning: There is another akinator game in this channel"
+                    " currently... Please wait until it finishes!"
                 ),
                 delete_after=10,
             )
@@ -143,11 +144,17 @@ class GameBase:
             "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8",
             "Accept-Encoding": "gzip, deflate",
             "Accept-Language": "en-US,en;q=0.9",
-            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:61.0) Gecko/20100101 Firefox/61.0",
+            "User-Agent": (
+                "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:61.0) Gecko/20100101"
+                " Firefox/61.0"
+            ),
         }
 
     def __repr__(self):
-        return f"<GameBase step={self.step} progress={self.progress} userid={self.ctx.author.id} channelid={self.ctx.channel.id}>"
+        return (
+            f"<GameBase step={self.step} progress={self.progress}"
+            f" userid={self.ctx.author.id} channelid={self.ctx.channel.id}>"
+        )
 
     async def get_uid_ext_session(self):
         async with self.bot.session.get(
@@ -329,7 +336,8 @@ class GameBase:
         elif completion == "KO - SERVER DOWN":
             return await self.ctx.send(
                 _(
-                    "The server for the choosen language isn't available now... Please check back later or choose another language!"
+                    "The server for the choosen language isn't available now... Please"
+                    " check back later or choose another language!"
                 )
             )
         elif completion == "KO - ELEM LIST IS EMPTY":
@@ -337,7 +345,8 @@ class GameBase:
         else:
             await self.ctx.send(
                 _(
-                    ":x: Ouch, that's an unknown error... Please start a new session or notify the devs."
+                    ":x: Ouch, that's an unknown error... Please start a new session or"
+                    " notify the devs."
                 ),
                 delete_after=10,
             )

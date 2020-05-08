@@ -382,7 +382,10 @@ def update_pet() -> "_CheckDecorator":
             # Pets loose 2 food, 4 drinks, 1 joy and 1 love
             async with ctx.bot.pool.acquire() as conn:
                 data = await conn.fetchrow(
-                    'UPDATE pets SET "food"="food"-$1, "drink"="drink"-$2, "joy"=CASE WHEN "joy"-$3>=0 THEN "joy"-$3 ELSE 0 END, "love"=CASE WHEN "love"-$4>=0 THEN "love"-$4 ELSE 0 END, "last_update"=$5 WHERE "user"=$6 RETURNING *;',
+                    'UPDATE pets SET "food"="food"-$1, "drink"="drink"-$2, "joy"=CASE'
+                    ' WHEN "joy"-$3>=0 THEN "joy"-$3 ELSE 0 END, "love"=CASE WHEN'
+                    ' "love"-$4>=0 THEN "love"-$4 ELSE 0 END, "last_update"=$5 WHERE'
+                    ' "user"=$6 RETURNING *;',
                     diff * 2,
                     diff * 4,
                     diff,

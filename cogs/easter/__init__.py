@@ -35,7 +35,9 @@ class Easter(commands.Cog):
         )
         await ctx.send(
             _(
-                "**Easter event <:easteregg:566251086986608650>**\n\nPart of Idle's birthday!\nCollect eastereggs and use `{prefix}easter rewards` to check the rewards. <:bunny:566290173831151627>\nHappy hunting!"
+                "**Easter event <:easteregg:566251086986608650>**\n\nPart of Idle's"
+                " birthday!\nCollect eastereggs and use `{prefix}easter rewards` to"
+                " check the rewards. <:bunny:566290173831151627>\nHappy hunting!"
             ).format(prefix=ctx.prefix)
         )
 
@@ -84,7 +86,8 @@ You have **{eggs}** <:easteregg:566251086986608650>."""
 
         if reward[1] == "crates":
             await self.bot.pool.execute(
-                f'UPDATE profile SET "crates_{reward[3]}"="crates_{reward[3]}"+$1, "eastereggs"="eastereggs"-$2 WHERE "user"=$3;',
+                f'UPDATE profile SET "crates_{reward[3]}"="crates_{reward[3]}"+$1,'
+                ' "eastereggs"="eastereggs"-$2 WHERE "user"=$3;',
                 reward[2],
                 reward[0],
                 ctx.author.id,
@@ -98,7 +101,8 @@ You have **{eggs}** <:easteregg:566251086986608650>."""
             )
         elif reward[1] == "money":
             await self.bot.pool.execute(
-                'UPDATE profile SET "money"="money"+$1, "eastereggs"="eastereggs"-$2 WHERE "user"=$3;',
+                'UPDATE profile SET "money"="money"+$1, "eastereggs"="eastereggs"-$2'
+                ' WHERE "user"=$3;',
                 reward[2],
                 reward[0],
                 ctx.author.id,
@@ -112,7 +116,9 @@ You have **{eggs}** <:easteregg:566251086986608650>."""
             )
         elif reward[1] == "boosters":
             await self.bot.pool.execute(
-                'UPDATE profile SET "money_booster"="money_booster"+$1, "time_booster"="time_booster"+$1, "luck_booster"="luck_booster"+$1, "eastereggs"="eastereggs"-$2 WHERE "user"=$3;',
+                'UPDATE profile SET "money_booster"="money_booster"+$1,'
+                ' "time_booster"="time_booster"+$1, "luck_booster"="luck_booster"+$1,'
+                ' "eastereggs"="eastereggs"-$2 WHERE "user"=$3;',
                 reward[2],
                 reward[0],
                 ctx.author.id,
@@ -125,7 +131,8 @@ You have **{eggs}** <:easteregg:566251086986608650>."""
                     ctx.author.id,
                 )
                 await conn.execute(
-                    'UPDATE guild SET "badges"=array_append("badges", $1) WHERE "id"=$2;',
+                    'UPDATE guild SET "badges"=array_append("badges", $1) WHERE'
+                    ' "id"=$2;',
                     "https://i.imgur.com/VHUDdTv.jpg",
                     ctx.character_data["guild"],
                 )
@@ -158,7 +165,9 @@ You have **{eggs}** <:easteregg:566251086986608650>."""
             )
         await ctx.send(
             _(
-                "You claimed your reward. Check your inventory/boosters/crates/money/etc.! You can claim multiple rewards, keep hunting!"
+                "You claimed your reward. Check your"
+                " inventory/boosters/crates/money/etc.! You can claim multiple rewards,"
+                " keep hunting!"
             )
         )
 

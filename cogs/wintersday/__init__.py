@@ -100,7 +100,8 @@ class Christmas(commands.Cog):
             if reward["crates"]:
                 rarity = random.choice(["rare", "uncommon", "common"])
                 await conn.execute(
-                    f'UPDATE profile SET "crates_{rarity}"="crates_{rarity}"+$1 WHERE "user"=$2;',
+                    f'UPDATE profile SET "crates_{rarity}"="crates_{rarity}"+$1 WHERE'
+                    ' "user"=$2;',
                     reward["crates"],
                     ctx.author.id,
                 )
@@ -131,12 +132,14 @@ class Christmas(commands.Cog):
                 reward_text = f"{reward_text}\n- ${reward['money']}"
             if today.day == 24:
                 await conn.execute(
-                    'UPDATE profile SET "backgrounds"=array_append("backgrounds", $1) WHERE "user"=$2;',
+                    'UPDATE profile SET "backgrounds"=array_append("backgrounds", $1)'
+                    ' WHERE "user"=$2;',
                     "https://i.imgur.com/HAhZmqv.png",
                     ctx.author.id,
                 )
                 text = _(
-                    "A special surprise - check out `{prefix}eventbackground` for a new Wintersday background!"
+                    "A special surprise - check out `{prefix}eventbackground` for a new"
+                    " Wintersday background!"
                 ).format(prefix=ctx.prefix)
                 reward_text = f"{reward_text}\n- {text}"
         await ctx.send(reward_text)
@@ -155,7 +158,8 @@ class Christmas(commands.Cog):
             ):
                 return await ctx.send(
                     _(
-                        "The mysterious puzzles don't fit together... Maybe some are missing?"
+                        "The mysterious puzzles don't fit together... Maybe some are"
+                        " missing?"
                     )
                 )
             bg = random.choice(
@@ -166,7 +170,8 @@ class Christmas(commands.Cog):
                 ]
             )
             await conn.execute(
-                'UPDATE profile SET backgrounds=array_append(backgrounds, $1) WHERE "user"=$2;',
+                "UPDATE profile SET backgrounds=array_append(backgrounds, $1) WHERE"
+                ' "user"=$2;',
                 bg,
                 ctx.author.id,
             )
@@ -175,7 +180,9 @@ class Christmas(commands.Cog):
             )
         await ctx.send(
             _(
-                "You combined the puzzles! In your head a voice whispers: *Well done. Now use `{prefix}eventbackground 1` to set your new background that you just acquired...*"
+                "You combined the puzzles! In your head a voice whispers: *Well done."
+                " Now use `{prefix}eventbackground 1` to set your new background that"
+                " you just acquired...*"
             ).format(prefix=ctx.prefix)
         )
 
@@ -212,7 +219,9 @@ class Christmas(commands.Cog):
 
         msg = await ctx.send(
             _(
-                "{enemy}, {author} has challenged you for an epic snowball fight! If you want to accept, react ⚔\n**IMPORTANT: This is very spammy, make sure you are using a dedicated channel!**"
+                "{enemy}, {author} has challenged you for an epic snowball fight! If"
+                " you want to accept, react ⚔\n**IMPORTANT: This is very spammy, make"
+                " sure you are using a dedicated channel!**"
             ).format(enemy=enemy.mention, author=ctx.author.mention)
         )
 
@@ -244,7 +253,8 @@ class Christmas(commands.Cog):
 
         await ctx.send(
             _(
-                "{author}, type `snowballfight nominate @user` to add one of your guild members to the fight!"
+                "{author}, type `snowballfight nominate @user` to add one of your guild"
+                " members to the fight!"
             ).format(author=ctx.author.mention)
         )
         while len(team1) == 1:
@@ -264,7 +274,8 @@ class Christmas(commands.Cog):
                 team1.append(u)
         await ctx.send(
             _(
-                "{enemy}, use `snowballfight nominate @user` to add one of your guild members to the fight!"
+                "{enemy}, use `snowballfight nominate @user` to add one of your guild"
+                " members to the fight!"
             ).format(enemy=enemy.mention)
         )
         while len(team2) == 1:
@@ -320,7 +331,8 @@ Next round starts in 5 seconds!
 
                 await ctx.send(
                     _(
-                        "It's word typing time! In 3 seconds, I will send a word. Whoever types it fastest gets one point!"
+                        "It's word typing time! In 3 seconds, I will send a word."
+                        " Whoever types it fastest gets one point!"
                     )
                 )
                 await asyncio.sleep(3)
@@ -356,7 +368,8 @@ Next round starts in 5 seconds!
 
                 await ctx.send(
                     _(
-                        "It's maths time! In 3 seconds, I'll send a simple maths task to solve! Type the answer to get a point!"
+                        "It's maths time! In 3 seconds, I'll send a simple maths task"
+                        " to solve! Type the answer to get a point!"
                     )
                 )
                 await asyncio.sleep(3)
@@ -384,7 +397,9 @@ Next round starts in 5 seconds!
                 guessed = []
                 await ctx.send(
                     _(
-                        "It's hangman time! In 3 seconds, I'll send a hangman-style word and you will have to either send your full word as the guess or a letter to check for!"
+                        "It's hangman time! In 3 seconds, I'll send a hangman-style"
+                        " word and you will have to either send your full word as the"
+                        " guess or a letter to check for!"
                     )
                 )
                 await asyncio.sleep(3)
@@ -525,7 +540,8 @@ Next round starts in 5 seconds!
         except IndexError:
             return await ctx.send(
                 _(
-                    "No more matches to be done. Either it is over or it's time for a new round!"
+                    "No more matches to be done. Either it is over or it's time for a"
+                    " new round!"
                 )
             )
         await ctx.send(_("**Matches to be done**:"))

@@ -48,7 +48,8 @@ class Halloween(commands.Cog):
         if secrets.randbelow(2) == 1:
             await ctx.send(
                 _(
-                    "You walk around the houses and ring at {waiting}'s house! That's a trick or treat bag for you, yay!"
+                    "You walk around the houses and ring at {waiting}'s house! That's a"
+                    " trick or treat bag for you, yay!"
                 ).format(waiting=waiting)
             )
             await self.bot.pool.execute(
@@ -58,15 +59,15 @@ class Halloween(commands.Cog):
         else:
             await ctx.send(
                 _(
-                    "You walk around the houses and ring at {waiting}'s house! Sadly they don't have anything for you..."
+                    "You walk around the houses and ring at {waiting}'s house! Sadly"
+                    " they don't have anything for you..."
                 ).format(waiting=waiting)
             )
         try:
             if secrets.randbelow(2) == 1:
                 await waiting.send(
-                    "The waiting was worth it: {author} rang! That's a trick or treat bag for you, yay!".format(
-                        author=ctx.author
-                    )
+                    "The waiting was worth it: {author} rang! That's a trick or treat"
+                    " bag for you, yay!".format(author=ctx.author)
                 )
                 await self.bot.pool.execute(
                     'UPDATE profile SET trickortreat=trickortreat+1 WHERE "user"=$1;',
@@ -85,7 +86,8 @@ class Halloween(commands.Cog):
                 'UPDATE profile SET money=money+50 WHERE "user"=$1', ctx.author.id
             )
             usr = await conn.fetchval(
-                'SELECT "user" FROM profile WHERE "money">=50 AND "user"!=$1 ORDER BY RANDOM() LIMIT 1;',
+                'SELECT "user" FROM profile WHERE "money">=50 AND "user"!=$1 ORDER BY'
+                " RANDOM() LIMIT 1;",
                 ctx.author.id,
             )
             await conn.execute(

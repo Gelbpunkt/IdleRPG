@@ -116,7 +116,8 @@ class Adventure(commands.Cog):
         await self.bot.start_adventure(ctx.author, adventure_number, time)
         await ctx.send(
             _(
-                "Successfully sent your character out on an adventure. Use `{prefix}status` to see the current status of the mission."
+                "Successfully sent your character out on an adventure. Use"
+                " `{prefix}status` to see the current status of the mission."
             ).format(prefix=ctx.prefix)
         )
 
@@ -129,7 +130,10 @@ class Adventure(commands.Cog):
         _("""Go out on a docile adventure controlled by reactions.""")
         if not await ctx.confirm(
             _(
-                "You are going to be in a labyrinth of size 15x15. There are enemies, treasures and hidden traps. Reach the exit in the bottom right corner for a huge extra bonus!\nAre you ready?\n\nTip: Use a silent channel for this, you may want to read all the messages I will send."
+                "You are going to be in a labyrinth of size 15x15. There are enemies,"
+                " treasures and hidden traps. Reach the exit in the bottom right corner"
+                " for a huge extra bonus!\nAre you ready?\n\nTip: Use a silent channel"
+                " for this, you may want to read all the messages I will send."
             )
         ):
             return
@@ -384,7 +388,8 @@ class Adventure(commands.Cog):
 
         await ctx.send(
             _(
-                "You have reached the exit and were rewarded **${money}** for getting out!"
+                "You have reached the exit and were rewarded **${money}** for getting"
+                " out!"
             ).format(money=money)
         )
 
@@ -489,7 +494,8 @@ Adventure name: `{adventure}`"""
                 )
 
             await conn.execute(
-                'UPDATE profile SET "money"="money"+$1, "xp"="xp"+$2, "completed"="completed"+1 WHERE "user"=$3;',
+                'UPDATE profile SET "money"="money"+$1, "xp"="xp"+$2,'
+                ' "completed"="completed"+1 WHERE "user"=$3;',
                 gold,
                 xp,
                 ctx.author.id,
@@ -497,7 +503,8 @@ Adventure name: `{adventure}`"""
 
             if (partner := ctx.character_data["marriage"]) :
                 await conn.execute(
-                    'UPDATE profile SET "money"="money"+($1*(1+"lovescore"/1000000)) WHERE "user"=$2;',
+                    'UPDATE profile SET "money"="money"+($1*(1+"lovescore"/1000000))'
+                    ' WHERE "user"=$2;',
                     int(gold / 2),
                     partner,
                 )
@@ -517,7 +524,8 @@ Adventure name: `{adventure}`"""
             # TODO: Embeds ftw
             await ctx.send(
                 _(
-                    "You have completed your adventure and received **${gold}** as well as a new item: **{item}**. Experience gained: **{xp}**."
+                    "You have completed your adventure and received **${gold}** as well"
+                    " as a new item: **{item}**. Experience gained: **{xp}**."
                 ).format(gold=gold, item=item["name"], xp=xp)
             )
 
@@ -541,7 +549,8 @@ Adventure name: `{adventure}`"""
         await self.bot.delete_adventure(ctx.author)
         await ctx.send(
             _(
-                "Canceled your mission. Use `{prefix}adventure [missionID]` to start a new one!"
+                "Canceled your mission. Use `{prefix}adventure [missionID]` to start a"
+                " new one!"
             ).format(prefix=ctx.prefix)
         )
 
@@ -561,7 +570,9 @@ Adventure name: `{adventure}`"""
             rate = 100
         await ctx.send(
             _(
-                "Out of **{total}** adventures, you died **{deaths}** times and survived **{completed}** times, which is a success rate of **{rate}%**."
+                "Out of **{total}** adventures, you died **{deaths}** times and"
+                " survived **{completed}** times, which is a success rate of"
+                " **{rate}%**."
             ).format(
                 total=deaths + completed, deaths=deaths, completed=completed, rate=rate
             )

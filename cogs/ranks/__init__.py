@@ -33,7 +33,8 @@ class Ranks(commands.Cog):
         _("""The 10 most richest players in IdleRPG.""")
         await ctx.trigger_typing()
         players = await self.bot.pool.fetch(
-            'SELECT "user", "name", "money" FROM profile ORDER BY "money" DESC LIMIT 10;'
+            'SELECT "user", "name", "money" FROM profile ORDER BY "money" DESC'
+            " LIMIT 10;"
         )
         result = ""
         for idx, profile in enumerate(players):
@@ -80,7 +81,8 @@ class Ranks(commands.Cog):
         _("""Top 10 players by wins in PvP matches.""")
         await ctx.trigger_typing()
         players = await self.bot.pool.fetch(
-            'SELECT "user", "name", "pvpwins" from profile ORDER BY "pvpwins" DESC LIMIT 10;'
+            'SELECT "user", "name", "pvpwins" from profile ORDER BY "pvpwins" DESC'
+            " LIMIT 10;"
         )
         result = ""
         for idx, profile in enumerate(players):
@@ -102,7 +104,8 @@ class Ranks(commands.Cog):
         _("""The top 10 lovers sorted by their spouse's lovescore.""")
         await ctx.trigger_typing()
         players = await self.bot.pool.fetch(
-            'SELECT "user", "marriage", "lovescore" FROM profile ORDER BY "lovescore" DESC LIMIT 10;'
+            'SELECT "user", "marriage", "lovescore" FROM profile ORDER BY "lovescore"'
+            " DESC LIMIT 10;"
         )
         result = ""
         for idx, profile in enumerate(players):

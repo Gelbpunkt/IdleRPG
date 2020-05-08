@@ -69,9 +69,8 @@ class Valentine(commands.Cog):
         user = await self.bot.get_user_global(ctx.character_data["marriage"])
         if user:
             await user.send(
-                "Your spouse gave you some boxes of chocolates :heart:\nYou can open it with {prefix}chocolate.".format(
-                    prefix=ctx.prefix
-                )
+                "Your spouse gave you some boxes of chocolates :heart:\nYou can open it"
+                " with {prefix}chocolate.".format(prefix=ctx.prefix)
             )
 
     @has_char()

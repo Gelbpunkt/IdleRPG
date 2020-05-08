@@ -47,7 +47,9 @@ class Alliance(commands.Cog):
     async def cities(self, ctx):
         _("""Shows cities and owners.""")
         cities = await self.bot.pool.fetch(
-            'SELECT c.*, g."name" AS "gname", COALESCE(SUM(d."defense"), 0) AS "defense" FROM city c JOIN guild g ON c."owner"=g."id" LEFT JOIN defenses d ON c."name"=d."city" GROUP BY c."owner", c."name", g."name";'
+            'SELECT c.*, g."name" AS "gname", COALESCE(SUM(d."defense"), 0) AS'
+            ' "defense" FROM city c JOIN guild g ON c."owner"=g."id" LEFT JOIN defenses'
+            ' d ON c."name"=d."city" GROUP BY c."owner", c."name", g."name";'
         )
         em = discord.Embed(
             title=_("Cities"), colour=self.bot.config.primary_colour
@@ -60,7 +62,8 @@ class Alliance(commands.Cog):
                     name=city["name"], tier=len(self.bot.config.cities[city["name"]])
                 ),
                 value=_(
-                    "Owned by {alliance}'s alliance\nBuildings: {buildings}\nTotal defense: {defense}"
+                    "Owned by {alliance}'s alliance\nBuildings: {buildings}\nTotal"
+                    " defense: {defense}"
                 ).format(
                     alliance=city["gname"],
                     buildings=", ".join(self.bot.config.cities[city["name"]]),
@@ -87,7 +90,9 @@ class Alliance(commands.Cog):
         ):  # your guild is the only one OR error and query returns zero guilds
             return await ctx.send(
                 _(
-                    "You are not in an alliance. You are alone and may still use all other alliance commands or invite a guild to create a bigger alliance."
+                    "You are not in an alliance. You are alone and may still use all"
+                    " other alliance commands or invite a guild to create a bigger"
+                    " alliance."
                 )
             )
         alliance_embed = discord.Embed(
@@ -103,7 +108,8 @@ class Alliance(commands.Cog):
             )
         alliance_embed.set_footer(
             text=_(
-                "{prefix}alliance buildings | {prefix}alliance defenses | {prefix}alliance attack | {prefix}alliance occupy"
+                "{prefix}alliance buildings | {prefix}alliance defenses |"
+                " {prefix}alliance attack | {prefix}alliance occupy"
             ).format(prefix=ctx.prefix)
         )
 
@@ -149,7 +155,8 @@ class Alliance(commands.Cog):
 
             if not await ctx.confirm(
                 _(
-                    "{newleader}, {author} invites you to join their alliance. React to join now."
+                    "{newleader}, {author} invites you to join their alliance. React to"
+                    " join now."
                 ).format(newleader=newleader.mention, author=ctx.author.mention),
                 user=newleader,
             ):
@@ -223,7 +230,8 @@ class Alliance(commands.Cog):
         if not guild:
             return await ctx.send(
                 _(
-                    "Cannot find guild `{guild_to_kick}`. Are you sure that's the right name/ID?"
+                    "Cannot find guild `{guild_to_kick}`. Are you sure that's the right"
+                    " name/ID?"
                 ).format(guild_to_kick=guild_to_kick)
             )
         if guild["id"] == ctx.character_data["guild"]:
@@ -283,7 +291,9 @@ class Alliance(commands.Cog):
             await self.bot.reset_alliance_cooldown(ctx)
             return await ctx.send(
                 _(
-                    "Invalid building. Please use `{prefix}{cmd} [thief/raid/trade/adventure]` or check the possible buildings in your city."
+                    "Invalid building. Please use `{prefix}{cmd}"
+                    " [thief/raid/trade/adventure]` or check the possible buildings in"
+                    " your city."
                 ).format(prefix=ctx.prefix, cmd=ctx.command.qualified_name)
             )
         cur_level = city[f"{name}_building"]
@@ -293,7 +303,8 @@ class Alliance(commands.Cog):
         up_price = self.get_upgrade_price(cur_level)
         if not await ctx.confirm(
             _(
-                "Are you sure you want to upgrade the **{name} building** to level {new_level}? This will cost $**{price}**."
+                "Are you sure you want to upgrade the **{name} building** to level"
+                " {new_level}? This will cost $**{price}**."
             ).format(name=name, new_level=cur_level + 1, price=up_price)
         ):
             return
@@ -301,13 +312,15 @@ class Alliance(commands.Cog):
             await self.bot.reset_alliance_cooldown(ctx)
             return await ctx.send(
                 _(
-                    "Your guild doesn't have enough money to upgrade the city's {name} building."
+                    "Your guild doesn't have enough money to upgrade the city's {name}"
+                    " building."
                 ).format(name=name)
             )
 
         async with self.bot.pool.acquire() as conn:
             await conn.execute(
-                f'UPDATE city SET "{name}_building"="{name}_building"+1 WHERE "owner"=$1;',
+                f'UPDATE city SET "{name}_building"="{name}_building"+1 WHERE'
+                ' "owner"=$1;',
                 ctx.character_data["guild"],
             )
             await conn.execute(
@@ -325,7 +338,8 @@ class Alliance(commands.Cog):
 
         await ctx.send(
             _(
-                "Successfully upgraded the city's {name} building to level **{new_level}**"
+                "Successfully upgraded the city's {name} building to level"
+                " **{new_level}**"
             ).format(name=name, new_level=cur_level + 1)
         )
 
@@ -377,7 +391,8 @@ class Alliance(commands.Cog):
                 return await ctx.send(_("You may only build up to 10 defenses."))
             if not await ctx.confirm(
                 _(
-                    "Are you sure you want to build a **{defense}**? This will cost $**{price}**."
+                    "Are you sure you want to build a **{defense}**? This will cost"
+                    " $**{price}**."
                 ).format(defense=name, price=building["cost"])
             ):
                 return
@@ -392,7 +407,8 @@ class Alliance(commands.Cog):
                 )
 
             await conn.execute(
-                'INSERT INTO defenses ("city", "name", "hp", "defense") VALUES ($1, $2, $3, $4);',
+                'INSERT INTO defenses ("city", "name", "hp", "defense") VALUES ($1, $2,'
+                " $3, $4);",
                 city_name,
                 name,
                 building["hp"],
@@ -524,13 +540,16 @@ class Alliance(commands.Cog):
                     )
                 )
             await conn.execute(
-                'UPDATE city SET "owner"=$1, "raid_building"=0, "thief_building"=0, "trade_building"=0, "adventure_building"=0 WHERE "name"=$2;',
+                'UPDATE city SET "owner"=$1, "raid_building"=0, "thief_building"=0,'
+                ' "trade_building"=0, "adventure_building"=0 WHERE "name"=$2;',
                 ctx.character_data["guild"],
                 city,
             )
         await ctx.send(
             _(
-                "Your alliance now rules **{city}**. You should immediately buy defenses. You have **15 minutes** to build defenses before others can occupy the city!"
+                "Your alliance now rules **{city}**. You should immediately buy"
+                " defenses. You have **15 minutes** to build defenses before others can"
+                " occupy the city!"
             ).format(city=city)
         )
         await self.bot.redis.execute(
@@ -600,7 +619,8 @@ class Alliance(commands.Cog):
 
         await ctx.send(
             _(
-                "**{user}** wants to attack **{city}** with **{alliance_name}**'s alliance. Head to https://join.travitia.xyz/{id_} to join the attack!"
+                "**{user}** wants to attack **{city}** with **{alliance_name}**'s"
+                " alliance. Head to https://join.travitia.xyz/{id_} to join the attack!"
             ).format(user=ctx.author, city=city, alliance_name=alliance_name, id_=id_)
         )
 
@@ -648,7 +668,8 @@ class Alliance(commands.Cog):
             )
         )
         await self.bot.public_log(
-            f"**{alliance_name}** is attacking **{city}** with {len(attackers)} attackers!"
+            f"**{alliance_name}** is attacking **{city}** with {len(attackers)}"
+            " attackers!"
         )
 
         while len(defenses) > 0 and len(attackers) > 0:
@@ -684,7 +705,8 @@ class Alliance(commands.Cog):
                     embed=discord.Embed(
                         title=_("Alliance Wars"),
                         description=_(
-                            "**{alliance_name}** hit a {defense} in {city} for {damage} damage! (Now {hp} HP)"
+                            "**{alliance_name}** hit a {defense} in {city} for {damage}"
+                            " damage! (Now {hp} HP)"
                         ).format(
                             alliance_name=alliance_name,
                             defense=target["name"],
@@ -729,7 +751,8 @@ class Alliance(commands.Cog):
                     embed=discord.Embed(
                         title=_("Alliance Wars"),
                         description=_(
-                            "**{user}** got hit in {city} for {damage} damage! (Now {hp} HP)"
+                            "**{user}** got hit in {city} for {damage} damage! (Now"
+                            " {hp} HP)"
                         ).format(
                             user=target["user"],
                             city=city,
@@ -772,7 +795,8 @@ class Alliance(commands.Cog):
     async def timers(self, ctx):
         _("""Lists all your cooldowns.""")
         alliance = await self.bot.pool.fetchval(
-            'SELECT alliance FROM guild WHERE "id"=(SELECT guild FROM profile WHERE "user"=$1);',
+            'SELECT alliance FROM guild WHERE "id"=(SELECT guild FROM profile WHERE'
+            ' "user"=$1);',
             ctx.author.id,
         )
         cooldowns = await self.bot.redis.execute("KEYS", f"alliancecd:{alliance}:*")

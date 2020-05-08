@@ -102,7 +102,8 @@ class Guild(commands.Cog):
         except discord.errors.HTTPException:
             await ctx.send(
                 _(
-                    "The guild icon seems to be a bad URL. Use `{prefix}guild icon` to fix this."
+                    "The guild icon seems to be a bad URL. Use `{prefix}guild icon` to"
+                    " fix this."
                 ).format(prefix=ctx.prefix)
             )
 
@@ -192,7 +193,8 @@ To look up a guild by its ID, use id:number."""
             except IndexError:
                 return await ctx.send(
                     _(
-                        "The badge number {number} is not valid, your guild only has {amount} available."
+                        "The badge number {number} is not valid, your guild only has"
+                        " {amount} available."
                     ).format(amount=len(bgs), number=number)
                 )
             await conn.execute(
@@ -253,14 +255,16 @@ To look up a guild by its ID, use id:number."""
             if await conn.fetchrow('SELECT * FROM guild WHERE "name"=$1;', name):
                 return await ctx.send(_("The guild name is taken."))
             guild = await conn.fetchrow(
-                "INSERT INTO guild (name, memberlimit, leader, icon) VALUES ($1, $2, $3, $4) RETURNING *;",
+                "INSERT INTO guild (name, memberlimit, leader, icon) VALUES ($1, $2,"
+                " $3, $4) RETURNING *;",
                 name,
                 memberlimit,
                 ctx.author.id,
                 url,
             )
             await conn.execute(
-                'UPDATE profile SET "guild"=$1, "guildrank"=$2, "money"="money"-$3 WHERE "user"=$4;',
+                'UPDATE profile SET "guild"=$1, "guildrank"=$2, "money"="money"-$3'
+                ' WHERE "user"=$4;',
                 guild["id"],
                 "Leader",
                 10000,
@@ -268,7 +272,9 @@ To look up a guild by its ID, use id:number."""
             )
         await ctx.send(
             _(
-                "Successfully added your guild **{name}** with a member limit of **{memberlimit}**.\n\nTip: You can use `{prefix}guild channel` in a server where you are the admin to set up the guild logging channel."
+                "Successfully added your guild **{name}** with a member limit of"
+                " **{memberlimit}**.\n\nTip: You can use `{prefix}guild channel` in a"
+                " server where you are the admin to set up the guild logging channel."
             ).format(name=name, memberlimit=memberlimit, prefix=ctx.prefix)
         )
 
@@ -301,7 +307,8 @@ To look up a guild by its ID, use id:number."""
                 member.id,
             )
             name, channel = await conn.fetchval(
-                'UPDATE guild SET "leader"=$1, "banklimit"="upgrade"*250000, "memberlimit"=$2 WHERE "id"=$3 RETURNING ("name", "channel");',
+                'UPDATE guild SET "leader"=$1, "banklimit"="upgrade"*250000,'
+                ' "memberlimit"=$2 WHERE "id"=$3 RETURNING ("name", "channel");',
                 member.id,
                 m,
                 ctx.character_data["guild"],
@@ -392,7 +399,8 @@ To look up a guild by its ID, use id:number."""
 
         if not await ctx.confirm(
             _(
-                "{newmember}, {author} invites you to join **{name}**. React to join the guild."
+                "{newmember}, {author} invites you to join **{name}**. React to join"
+                " the guild."
             ).format(newmember=newmember.mention, author=ctx.author.mention, name=name),
             user=newmember,
         ):
@@ -508,7 +516,8 @@ To look up a guild by its ID, use id:number."""
         ):
             return await ctx.send(
                 _(
-                    "I couldn't read that URL. Does it start with `http://` or `https://` and is either a png or jpeg?"
+                    "I couldn't read that URL. Does it start with `http://` or"
+                    " `https://` and is either a png or jpeg?"
                 )
             )
         channel = await self.bot.pool.fetchval(
@@ -568,7 +577,8 @@ To look up a guild by its ID, use id:number."""
                 'SELECT * FROM guild WHERE "id"=$1;', ctx.character_data["guild"]
             )
             players = await conn.fetch(
-                'SELECT "user", "name", "money" from profile WHERE "guild"=$1 ORDER BY "money" DESC LIMIT 10;',
+                'SELECT "user", "name", "money" from profile WHERE "guild"=$1 ORDER BY'
+                ' "money" DESC LIMIT 10;',
                 guild["id"],
             )
         result = ""
@@ -597,7 +607,8 @@ To look up a guild by its ID, use id:number."""
                 'SELECT * FROM guild WHERE "id"=$1;', ctx.character_data["guild"]
             )
             players = await conn.fetch(
-                'SELECT "user", "name", "xp" FROM profile WHERE "guild"=$1 ORDER BY "xp" DESC LIMIT 10;',
+                'SELECT "user", "name", "xp" FROM profile WHERE "guild"=$1 ORDER BY'
+                ' "xp" DESC LIMIT 10;',
                 guild["id"],
             )
         result = ""
@@ -645,7 +656,8 @@ To look up a guild by its ID, use id:number."""
             )
         await ctx.send(
             _(
-                "Done! Now you have `${profile_money}` and the guild has `${guild_money}`."
+                "Done! Now you have `${profile_money}` and the guild has"
+                " `${guild_money}`."
             ).format(profile_money=profile_money, guild_money=guild_money)
         )
         await self.bot.log_transaction(
@@ -729,7 +741,8 @@ For example, distributing $500 to 5 members will give everyone of them $100.
         )
         await self.bot.http.send_message(
             guild["channel"],
-            f"**{ctx.author}** paid **${amount}** (${for_each} each) to **{nice_members}**",
+            f"**{ctx.author}** paid **${amount}** (${for_each} each) to"
+            f" **{nice_members}**",
         )
 
     @is_guild_leader()
@@ -750,18 +763,21 @@ For example, distributing $500 to 5 members will give everyone of them $100.
             if int(currentlimit / 2) > guild["money"]:
                 return await ctx.send(
                     _(
-                        "Your guild is too poor, you got **${money}** but it costs **${price}** to upgrade."
+                        "Your guild is too poor, you got **${money}** but it costs"
+                        " **${price}** to upgrade."
                     ).format(money=guild["money"], price=int(currentlimit / 2))
                 )
 
             if not await ctx.confirm(
                 _(
-                    "This will upgrade your guild bank limit to **${newlimit}** for **${cost}**. Proceed?"
+                    "This will upgrade your guild bank limit to **${newlimit}** for"
+                    " **${cost}**. Proceed?"
                 ).format(newlimit=newlimit, cost=int(currentlimit / 2))
             ):
                 return
             await conn.execute(
-                'UPDATE guild SET "banklimit"=$1, "upgrade"="upgrade"+$2, "money"="money"-$3 WHERE "id"=$4;',
+                'UPDATE guild SET "banklimit"=$1, "upgrade"="upgrade"+$2,'
+                ' "money"="money"-$3 WHERE "id"=$4;',
                 newlimit,
                 1,
                 int(currentlimit / 2),
@@ -813,7 +829,8 @@ For example, distributing $500 to 5 members will give everyone of them $100.
             return await ctx.send(_("One of the guilds is too small."))
 
         if not await ctx.confirm(
-            f"{enemy.mention}, {ctx.author.mention} invites you to fight in a guild battle. React to join the battle. You got **1 Minute to accept**.",
+            f"{enemy.mention}, {ctx.author.mention} invites you to fight in a guild"
+            " battle. React to join the battle. You got **1 Minute to accept**.",
             timeout=60,
             user=enemy,
         ):
@@ -825,7 +842,9 @@ For example, distributing $500 to 5 members will give everyone of them $100.
 
         await ctx.send(
             _(
-                "{enemy} accepted the challenge by {author}. Please now nominate members, {author}. Use `battle nominate @user` to add someone to your team."
+                "{enemy} accepted the challenge by {author}. Please now nominate"
+                " members, {author}. Use `battle nominate @user` to add someone to your"
+                " team."
             ).format(enemy=enemy.mention, author=ctx.author.mention)
         )
         team1 = []
@@ -881,7 +900,8 @@ For example, distributing $500 to 5 members will give everyone of them $100.
                 )
         await ctx.send(
             _(
-                "Please now nominate members, {enemy}. Use `battle nominate @user` to add someone to your team."
+                "Please now nominate members, {enemy}. Use `battle nominate @user` to"
+                " add someone to your team."
             ).format(enemy=enemy.mention)
         )
         while len(team2) != fightercount:
@@ -907,8 +927,9 @@ For example, distributing $500 to 5 members will give everyone of them $100.
                 )
 
         await self.bot.public_log(
-            f"Guild **{guild1['name']}** challenges Guild **{guild2['name']}** to a battle \
-for a prize of **${amount}**.\n **{fightercount}** players entered."
+            f"Guild **{guild1['name']}** challenges Guild **{guild2['name']}** to a"
+            f" battle for a prize of **${amount}**.\n **{fightercount}** players"
+            " entered."
         )
 
         msg = await ctx.send(_("Fight started!\nGenerating battles..."))
@@ -920,7 +941,8 @@ for a prize of **${amount}**.\n **{fightercount}** players entered."
             user2 = team2[idx]
             msg = await ctx.send(
                 _(
-                    "Guild Battle Fight **{num}** of **{total}**.\n**{user}** vs **{user2}**!\nBattle running..."
+                    "Guild Battle Fight **{num}** of **{total}**.\n**{user}** vs"
+                    " **{user2}**!\nBattle running..."
                 ).format(num=idx + 1, total=len(team1), user=user, user2=user2)
             )
             val1 = sum(await self.bot.get_damage_armor_for(user)) + random.randint(1, 7)
@@ -942,7 +964,8 @@ for a prize of **${amount}**.\n **{fightercount}** players entered."
             await asyncio.sleep(5)
             await ctx.send(
                 _(
-                    "Winner of **{user}** vs **{user2}** is **{winner}**! Current points: **{wins1}** to **{wins2}**."
+                    "Winner of **{user}** vs **{user2}** is **{winner}**! Current"
+                    " points: **{wins1}** to **{wins2}**."
                 ).format(
                     user=user, user2=user2, winner=winner, wins1=wins1, wins2=wins2
                 )
@@ -1030,7 +1053,8 @@ for a prize of **${amount}**.\n **{fightercount}** players entered."
             await self.bot.reset_guild_cooldown(ctx)
             return await ctx.send(
                 _(
-                    "Your guild is already on an adventure! Use `{prefix}guild status` to view how long it still lasts."
+                    "Your guild is already on an adventure! Use `{prefix}guild status`"
+                    " to view how long it still lasts."
                 ).format(prefix=ctx.prefix)
             )
         guild = await self.bot.pool.fetchrow(
@@ -1041,7 +1065,10 @@ for a prize of **${amount}**.\n **{fightercount}** players entered."
 
         await ctx.send(
             _(
-                "{author} seeks a guild adventure for **{guild}**! React to join! Unlimited players can join in the next 10 minutes. The minimum of players required is 3.\nPlease go to https://join.travitia.xyz/{id_} to join the guild adventure."
+                "{author} seeks a guild adventure for **{guild}**! React to join!"
+                " Unlimited players can join in the next 10 minutes. The minimum of"
+                " players required is 3.\nPlease go to https://join.travitia.xyz/{id_}"
+                " to join the guild adventure."
             ).format(author=ctx.author.mention, guild=guild["name"], id_=id_)
         )
 
@@ -1090,7 +1117,8 @@ Time it will take: **{time}**
         )
         await self.bot.http.send_message(
             guild["channel"],
-            f"Guild adventure with difficulty **{difficulty}**, lasting **{time}**, started",
+            f"Guild adventure with difficulty **{difficulty}**, lasting **{time}**,"
+            " started",
         )
 
     @has_guild()
@@ -1103,7 +1131,8 @@ Time it will take: **{time}**
         if not adventure:
             return await ctx.send(
                 _(
-                    "Your guild isn't on an adventure yet. Ask your guild officer to use `{prefix}guild adventure` to start one"
+                    "Your guild isn't on an adventure yet. Ask your guild officer to"
+                    " use `{prefix}guild adventure` to start one"
                 ).format(prefix=ctx.prefix)
             )
 
@@ -1113,29 +1142,34 @@ Time it will take: **{time}**
                 gold = random.randint(adventure[0] * 20, adventure[0] * 50)
 
                 channel = await self.bot.pool.fetchval(
-                    'UPDATE guild SET "money"="money"+$1 WHERE "id"=$2 RETURNING "channel";',
+                    'UPDATE guild SET "money"="money"+$1 WHERE "id"=$2 RETURNING'
+                    ' "channel";',
                     gold,
                     ctx.character_data["guild"],
                 )
                 await ctx.send(
                     _(
-                        "Your guild has completed an adventure of difficulty `{difficulty}` and **${gold}** has been added to the bank."
+                        "Your guild has completed an adventure of difficulty"
+                        " `{difficulty}` and **${gold}** has been added to the bank."
                     ).format(difficulty=adventure[0], gold=gold)
                 )
                 await self.bot.http.send_message(
                     channel,
-                    f"**{ctx.author}** ended the guild adventure, reward was **${gold}**",
+                    f"**{ctx.author}** ended the guild adventure, reward was"
+                    f" **${gold}**",
                 )
             else:
                 await ctx.send(
                     _(
-                        "Your guild has completed an adventure of difficulty `{difficulty}`, ask a guild officer to check their status."
+                        "Your guild has completed an adventure of difficulty"
+                        " `{difficulty}`, ask a guild officer to check their status."
                     ).format(difficulty=adventure[0])
                 )
         else:
             await ctx.send(
                 _(
-                    "Your guild is currently in an adventure with difficulty `{difficulty}`.\nTime remaining: `{remain}`"
+                    "Your guild is currently in an adventure with difficulty"
+                    " `{difficulty}`.\nTime remaining: `{remain}`"
                 ).format(
                     difficulty=adventure[0], remain=str(adventure[1]).split(".")[0]
                 )

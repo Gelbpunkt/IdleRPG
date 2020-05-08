@@ -222,7 +222,8 @@ class GameMaster(commands.Cog):
                 _("{rarity} is not a valid rarity.").format(rarity=rarity)
             )
         await self.bot.pool.execute(
-            f'UPDATE profile SET "crates_{rarity}"="crates_{rarity}"+$1 WHERE "user"=$2;',
+            f'UPDATE profile SET "crates_{rarity}"="crates_{rarity}"+$1 WHERE'
+            ' "user"=$2;',
             amount,
             target.id,
         )
@@ -267,7 +268,9 @@ class GameMaster(commands.Cog):
                 target.id,
             )
             await conn.execute(
-                'UPDATE allitems SET "name"=CASE WHEN "original_name" IS NULL THEN "name" ELSE "original_name" END, "type"=CASE WHEN "original_type" IS NULL THEN "type" ELSE "original_type" END WHERE "owner"=$1;',
+                'UPDATE allitems SET "name"=CASE WHEN "original_name" IS NULL THEN'
+                ' "name" ELSE "original_name" END, "type"=CASE WHEN "original_type" IS'
+                ' NULL THEN "type" ELSE "original_type" END WHERE "owner"=$1;',
                 target.id,
             )
             await conn.execute(
@@ -276,7 +279,8 @@ class GameMaster(commands.Cog):
 
         await ctx.send(
             _(
-                "Successfully reset {target}'s background, class, item names and guild member limit."
+                "Successfully reset {target}'s background, class, item names and guild"
+                " member limit."
             ).format(target=target)
         )
         await self.bot.http.send_message(
@@ -330,7 +334,9 @@ class GameMaster(commands.Cog):
             name="auctions",
         )
         await channel.send(
-            f"{ctx.author.mention} started auction on **{item}**! Please use `{ctx.prefix}bid amount` to raise the bid. If no more bids are sent within a 30 minute timeframe, the auction is over."
+            f"{ctx.author.mention} started auction on **{item}**! Please use"
+            f" `{ctx.prefix}bid amount` to raise the bid. If no more bids are sent"
+            " within a 30 minute timeframe, the auction is over."
         )
         self.top_auction = (ctx.author, 0)
         last_top_bid = -1
@@ -341,7 +347,8 @@ class GameMaster(commands.Cog):
                 break
             last_top_bid = new_top_bid
         await channel.send(
-            f"**{item}** sold to {self.top_auction[0].mention} for **${self.top_auction[1]}**!"
+            f"**{item}** sold to {self.top_auction[0].mention} for"
+            f" **${self.top_auction[1]}**!"
         )
         self.top_auction = None
 
@@ -384,7 +391,8 @@ class GameMaster(commands.Cog):
             name="auctions",
         )
         await channel.send(
-            f"**{ctx.author.mention}** bids **${amount}**! Check above for what's being auctioned."
+            f"**{ctx.author.mention}** bids **${amount}**! Check above for what's being"
+            " auctioned."
         )
 
     @is_gm()
@@ -421,7 +429,8 @@ class GameMaster(commands.Cog):
         else:
             await ctx.send(
                 _(
-                    "Cooldown setting unsuccessful (maybe you mistyped the command name or there is no cooldown for the user?)."
+                    "Cooldown setting unsuccessful (maybe you mistyped the command name"
+                    " or there is no cooldown for the user?)."
                 )
             )
 

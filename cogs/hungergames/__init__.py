@@ -298,14 +298,16 @@ class HungerGames(commands.Cog):
         if ctx.channel.id == self.bot.config.official_tournament_channel_id:
             id_ = await self.bot.start_joins()
             await ctx.send(
-                f"{ctx.author.mention} started a mass-game of Hunger Games! Go to https://join.travitia.xyz/{id_} to join in the next 10 minutes."
+                f"{ctx.author.mention} started a mass-game of Hunger Games! Go to"
+                f" https://join.travitia.xyz/{id_} to join in the next 10 minutes."
             )
             await asyncio.sleep(60 * 10)
             players = await self.bot.get_joins(id_)
         else:
             players = [ctx.author]
             text = _(
-                "{author} started a game of Hunger Games! React with :shallow_pan_of_food: to join the game! **{num} joined**"
+                "{author} started a game of Hunger Games! React with"
+                " :shallow_pan_of_food: to join the game! **{num} joined**"
             )
             msg = await ctx.send(text.format(author=ctx.author.mention, num=1))
             await msg.add_reaction("\U0001f958")

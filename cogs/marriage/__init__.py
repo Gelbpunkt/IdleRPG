@@ -59,7 +59,8 @@ class Marriage(commands.Cog):
                     author=ctx.disp,
                 ),
                 description=_(
-                    "{author} wants to marry you, {partner}! React with :heart: to marry them!"
+                    "{author} wants to marry you, {partner}! React with :heart: to"
+                    " marry them!"
                 ).format(author=ctx.author.mention, partner=partner.mention),
                 colour=0xFF0000,
             )
@@ -114,7 +115,8 @@ class Marriage(commands.Cog):
             else:
                 await ctx.send(
                     _(
-                        "Either you or your lovee married in the meantime... :broken_heart:"
+                        "Either you or your lovee married in the meantime..."
+                        " :broken_heart:"
                     )
                 )
 
@@ -127,7 +129,8 @@ class Marriage(commands.Cog):
             return await ctx.send(_("You are not married yet."))
         if not await ctx.confirm(
             _(
-                "Are you sure you want to divorce your partner? You will lose all your children!"
+                "Are you sure you want to divorce your partner? You will lose all your"
+                " children!"
             )
         ):
             return await ctx.send(
@@ -170,7 +173,8 @@ class Marriage(commands.Cog):
             partner = _("noone")
         await ctx.send(
             _(
-                "{user}'s overall love score is **{score}**. {user} is married to **{partner}**."
+                "{user}'s overall love score is **{score}**. {user} is married to"
+                " **{partner}**."
             ).format(user=user.name, score=data["lovescore"], partner=partner)
         )
 
@@ -258,7 +262,8 @@ class Marriage(commands.Cog):
             )
         await ctx.send(
             _(
-                "You bought a **{item}** for your partner and increased their love score by **{points}** points!"
+                "You bought a **{item}** for your partner and increased their love"
+                " score by **{points}** points!"
             ).format(item=item[0], points=item[1])
         )
         user = await self.bot.get_user_global(ctx.character_data["marriage"])
@@ -267,7 +272,8 @@ class Marriage(commands.Cog):
                 _("Failed to DM your spouse, could not find their Discord account")
             )
         await user.send(
-            "**{author}** bought you a **{item}** and increased your love score by **{points}** points!".format(
+            "**{author}** bought you a **{item}** and increased your love score by"
+            " **{points}** points!".format(
                 author=ctx.author, item=item[0], points=item[1]
             )
         )
@@ -338,7 +344,8 @@ class Marriage(commands.Cog):
             await self.bot.reset_cooldown(ctx)
             return await ctx.send(
                 _(
-                    "You already have {max_} children. You can increase this limit by increasing your lovescores."
+                    "You already have {max_} children. You can increase this limit by"
+                    " increasing your lovescores."
                 ).format(max_=max_)
             )
         names = [name["name"] for name in names]
@@ -356,7 +363,8 @@ class Marriage(commands.Cog):
         if random.choice([True, False]):
             ls = random.randint(10, 50)
             await self.bot.pool.execute(
-                'UPDATE profile SET "lovescore"="lovescore"+$1 WHERE "user"=$2 OR "user"=$3;',
+                'UPDATE profile SET "lovescore"="lovescore"+$1 WHERE "user"=$2 OR'
+                ' "user"=$3;',
                 ls,
                 ctx.author.id,
                 marriage,
@@ -368,13 +376,15 @@ class Marriage(commands.Cog):
         if gender == "m":
             await ctx.send(
                 _(
-                    "It's a boy! Your night of love was successful! Please enter a name for your child."
+                    "It's a boy! Your night of love was successful! Please enter a name"
+                    " for your child."
                 )
             )
         elif gender == "f":
             await ctx.send(
                 _(
-                    "It's a girl! Your night of love was successful! Please enter a name for your child."
+                    "It's a girl! Your night of love was successful! Please enter a"
+                    " name for your child."
                 )
             )
 
@@ -401,13 +411,15 @@ class Marriage(commands.Cog):
             if name in names:
                 await ctx.send(
                     _(
-                        "One of your children already has that name, please choose another one."
+                        "One of your children already has that name, please choose"
+                        " another one."
                     )
                 )
                 name = None
         async with self.bot.pool.acquire() as conn:
             await conn.execute(
-                'INSERT INTO children ("mother", "father", "name", "age", "gender") VALUES ($1, $2, $3, $4, $5);',
+                'INSERT INTO children ("mother", "father", "name", "age", "gender")'
+                " VALUES ($1, $2, $3, $4, $5);",
                 ctx.author.id,
                 marriage,
                 name,
@@ -509,7 +521,8 @@ class Marriage(commands.Cog):
                     _("They died of loneliness."),
                     _("A horde of goblins got them."),
                     _(
-                        "They have finally decided to move out after all these years, but couldn't survive a second alone."
+                        "They have finally decided to move out after all these years,"
+                        " but couldn't survive a second alone."
                     ),
                     _("Spontaneous combustion removed them from existence."),
                     _("While exploring the forest, they have gotten lost."),
@@ -524,7 +537,8 @@ class Marriage(commands.Cog):
                 ]
             )
             await self.bot.pool.execute(
-                'DELETE FROM children WHERE "name"=$1 AND ("mother"=$2 OR "father"=$2) AND "age"=$3;',
+                'DELETE FROM children WHERE "name"=$1 AND ("mother"=$2 OR "father"=$2)'
+                ' AND "age"=$3;',
                 target["name"],
                 ctx.author.id,
                 target["age"],
@@ -538,7 +552,8 @@ class Marriage(commands.Cog):
             cause = random.choice(
                 [
                     _(
-                        "fell in love with a woman on the internet, but the woman was a man and stole their money."
+                        "fell in love with a woman on the internet, but the woman was a"
+                        " man and stole their money."
                     ),
                     _("has been arrested and had to post bail."),
                     _("bought fortnite skins with your credit card."),
@@ -603,7 +618,8 @@ class Marriage(commands.Cog):
                 + ["legendary"]
             )
             await self.bot.pool.execute(
-                f'UPDATE profile SET "crates_{type_}"="crates_{type_}"+1 WHERE "user"=$1;',
+                f'UPDATE profile SET "crates_{type_}"="crates_{type_}"+1 WHERE'
+                ' "user"=$1;',
                 ctx.author.id,
             )
             emoji = getattr(self.bot.cogs["Crates"].emotes, type_)
@@ -621,7 +637,8 @@ class Marriage(commands.Cog):
             )
         elif event == "age":
             await self.bot.pool.execute(
-                'UPDATE children SET "age"="age"+1 WHERE "name"=$1 AND ("mother"=$2 OR "father"=$2) AND "age"=$3;',
+                'UPDATE children SET "age"="age"+1 WHERE "name"=$1 AND ("mother"=$2 OR'
+                ' "father"=$2) AND "age"=$3;',
                 target["name"],
                 ctx.author.id,
                 target["age"],
@@ -657,12 +674,14 @@ class Marriage(commands.Cog):
                 if name in names:
                     await ctx.send(
                         _(
-                            "One of your children already has that name, please choose another one."
+                            "One of your children already has that name, please choose"
+                            " another one."
                         )
                     )
                     name = None
             await self.bot.pool.execute(
-                'UPDATE children SET "name"=$1 WHERE "name"=$2 AND ("mother"=$3 OR "father"=$3) AND "age"=$4;',
+                'UPDATE children SET "name"=$1 WHERE "name"=$2 AND ("mother"=$3 OR'
+                ' "father"=$3) AND "age"=$4;',
                 name,
                 target["name"],
                 ctx.author.id,

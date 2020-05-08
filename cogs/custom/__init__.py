@@ -54,13 +54,16 @@ class Custom(commands.Cog):
             secrets.choice(
                 [
                     _(
-                        "Jester casts Spirit Guardians on herself. She, and the spiritual hamster unicorns have a dance party."
+                        "Jester casts Spirit Guardians on herself. She, and the"
+                        " spiritual hamster unicorns have a dance party."
                     ),
                     _(
-                        "Jester casts Spiritual Weapon. A comically large spectral lollipop🍭 suddenly appears."
+                        "Jester casts Spiritual Weapon. A comically large spectral"
+                        " lollipop🍭 suddenly appears."
                     ),
                     _(
-                        "Jester casts Invoke Duplicity.... Now there's twice the Jester for twice the pranks!"
+                        "Jester casts Invoke Duplicity.... Now there's twice the Jester"
+                        " for twice the pranks!"
                     ),
                 ]
             )
@@ -95,7 +98,8 @@ class Custom(commands.Cog):
     async def phoenix(self, ctx):
         """Temporary placeholder."""
         await ctx.send(
-            "> “When the bones settle and all the ash falls, the phoenix will be reborn, and life begins anew.”"
+            "> “When the bones settle and all the ash falls, the phoenix will be"
+            " reborn, and life begins anew.”"
         )
 
     @is_starlit()

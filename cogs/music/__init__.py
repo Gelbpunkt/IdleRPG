@@ -158,27 +158,33 @@ def vote(action):
             return True
         if action == "skip":
             text = _(
-                "{user} wants to skip a track. React if you agree. **{current}/{total}** voted for it!"
+                "{user} wants to skip a track. React if you agree."
+                " **{current}/{total}** voted for it!"
             )
         elif action == "pause_resume":
             text = _(
-                "{user} wants to pause/resume the player. React if you agree. **{current}/{total}** voted for it!"
+                "{user} wants to pause/resume the player. React if you agree."
+                " **{current}/{total}** voted for it!"
             )
         elif action == "stop":
             text = _(
-                "{user} wants to stop playback. React if you agree. **{current}/{total}** voted for it!"
+                "{user} wants to stop playback. React if you agree."
+                " **{current}/{total}** voted for it!"
             )
         elif action == "volume":
             text = _(
-                "{user} wants to change the volume. React if you agree. **{current}/{total}** voted for it!"
+                "{user} wants to change the volume. React if you agree."
+                " **{current}/{total}** voted for it!"
             )
         elif action == "loop":
             text = _(
-                "{user} wants to toggle repeating. React if you agree. **{current}/{total}** voted for it!"
+                "{user} wants to toggle repeating. React if you agree."
+                " **{current}/{total}** voted for it!"
             )
         elif action == "equalizer":
             text = _(
-                "{user} wants to change the equalizer. React if you agree. **{current}/{total}** voted for it!"
+                "{user} wants to change the equalizer. React if you agree."
+                " **{current}/{total}** voted for it!"
             )
         members = [
             m
@@ -289,7 +295,9 @@ class Music(commands.Cog):
             footer=_("Hit a button to play one"),
             return_index=True,
             entries=[
-                f"**{i.name}** by {nice_join([a.name for a in i.artists])} on {i.album.name} ({str(timedelta(milliseconds=i.duration)).split('.')[0]})"
+                f"**{i.name}** by {nice_join([a.name for a in i.artists])} on"
+                f" {i.album.name}"
+                f" ({str(timedelta(milliseconds=i.duration)).split('.')[0]})"
                 for i in track_objs
             ],
         ).paginate(ctx)
@@ -427,7 +435,9 @@ class Music(commands.Cog):
         if volume > ctx.player.volume:
             vol_warn = await ctx.send(
                 _(
-                    ":warning:`Playback volume is going to change to {volume} in 5 seconds. To avoid the sudden earrape, control the volume on client side!`"
+                    ":warning:`Playback volume is going to change to {volume} in 5"
+                    " seconds. To avoid the sudden earrape, control the volume on"
+                    " client side!`"
                 ).format(volume=volume)
             )
             await asyncio.sleep(5)
@@ -522,9 +532,11 @@ class Music(commands.Cog):
         playing_embed.add_field(name=_("Equalizer"), value=ctx.player.eq)
         button_position = int(100 * (ctx.player.position / current_song.length) / 2.5)
         controller = (
-            f"```ɴᴏᴡ ᴘʟᴀʏɪɴɢ: {current_song.title}\n"
-            f"{(button_position - 1) * '─'}⚪{(40 - button_position) * '─'}\n ◄◄⠀{'▐▐' if not ctx.player.paused else '▶'} ⠀►►⠀⠀　　⠀ "
-            f"{str(timedelta(milliseconds=ctx.player.position)).split('.')[0]} / {timedelta(seconds=int(current_song.length / 1000))}```"
+            "```ɴᴏᴡ ᴘʟᴀʏɪɴɢ:"
+            f" {current_song.title}\n{(button_position - 1) * '─'}⚪{(40 - button_position) * '─'}\n"
+            f" ◄◄⠀{'▐▐' if not ctx.player.paused else '▶'} ⠀►►⠀⠀　　⠀"
+            f" {str(timedelta(milliseconds=ctx.player.position)).split('.')[0]} /"
+            f" {timedelta(seconds=int(current_song.length / 1000))}```"
         )
         playing_embed.description = controller
         if (
@@ -547,8 +559,9 @@ class Music(commands.Cog):
             paginator = commands.Paginator()
             for entry in entries:
                 paginator.add_line(
-                    f"• {entry.title} ({str(timedelta(milliseconds=entry.length)).split('.')[0]}) "
-                    f"- {ctx.guild.get_member(entry.requester_id).display_name}"
+                    f"• {entry.title}"
+                    f" ({str(timedelta(milliseconds=entry.length)).split('.')[0]}) -"
+                    f" {ctx.guild.get_member(entry.requester_id).display_name}"
                 )
             queue_length = self.get_queue_length(ctx.guild.id) - 1
             text = _("Upcoming entries")

@@ -79,7 +79,8 @@ class Crates(commands.Cog):
         if ctx.character_data[f"crates_{rarity}"] < 1:
             return await ctx.send(
                 _(
-                    "Seems like you don't have any crate of this rarity yet. Vote me up to get a random one or find them!"
+                    "Seems like you don't have any crate of this rarity yet. Vote me up"
+                    " to get a random one or find them!"
                 )
             )
         # A number to detemine the crate item range
@@ -124,7 +125,8 @@ class Crates(commands.Cog):
             minstat=minstat, maxstat=maxstat, minvalue=1, maxvalue=250, owner=ctx.author
         )
         await self.bot.pool.execute(
-            f'UPDATE profile SET "crates_{rarity}"="crates_{rarity}"-1 WHERE "user"=$1;',
+            f'UPDATE profile SET "crates_{rarity}"="crates_{rarity}"-1 WHERE'
+            ' "user"=$1;',
             ctx.author.id,
         )
         embed = discord.Embed(
@@ -154,20 +156,20 @@ class Crates(commands.Cog):
         await ctx.send(embed=embed)
         if rarity == "legendary":
             await self.bot.public_log(
-                f"**{ctx.author}** opened a legendary crate and \
-received {item['name']} with **{item['damage'] or item['armor']} \
-{'damage' if item['damage'] else 'armor'}**."
+                f"**{ctx.author}** opened a legendary crate and received {item['name']}"
+                f" with **{item['damage'] or item['armor']}"
+                f" {'damage' if item['damage'] else 'armor'}**."
             )
         elif rarity == "magic":
             if item["damage"] >= 41:
                 await self.bot.public_log(
-                    f"**{ctx.author}** opened a magic crate and \
-received {item['name']} with **{item['damage']} damage**."
+                    f"**{ctx.author}** opened a magic crate and received {item['name']}"
+                    f" with **{item['damage']} damage**."
                 )
             elif item["armor"] >= 41:
                 await self.bot.public_log(
-                    f"**{ctx.author}** opened a magic crate and \
-received {item['name']} with **{item['armor']} armor**."
+                    f"**{ctx.author}** opened a magic crate and received {item['name']}"
+                    f" with **{item['armor']} armor**."
                 )
 
     @has_char()
@@ -191,12 +193,14 @@ received {item['name']} with **{item['armor']} armor**."
             return await ctx.send(_("You don't have any crates of this rarity."))
         async with self.bot.pool.acquire() as conn:
             await conn.execute(
-                f'UPDATE profile SET "crates_{rarity}"="crates_{rarity}"-$1 WHERE "user"=$2;',
+                f'UPDATE profile SET "crates_{rarity}"="crates_{rarity}"-$1 WHERE'
+                ' "user"=$2;',
                 amount,
                 ctx.author.id,
             )
             await conn.execute(
-                f'UPDATE profile SET "crates_{rarity}"="crates_{rarity}"+$1 WHERE "user"=$2;',
+                f'UPDATE profile SET "crates_{rarity}"="crates_{rarity}"+$1 WHERE'
+                ' "user"=$2;',
                 amount,
                 other.id,
             )

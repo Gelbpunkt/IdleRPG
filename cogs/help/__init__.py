@@ -67,7 +67,9 @@ class Help(commands.Cog):
             colour=self.bot.config.primary_colour,
             url=self.bot.BASE_URL,
             description=_(
-                "**Welcome to the IdleRPG help. Use the arrows to move.\nFor more help, join the support server at https://discord.gg/MSBatf6.**\nCheck out our partners using the partners command!"
+                "**Welcome to the IdleRPG help. Use the arrows to move.\nFor more help,"
+                " join the support server at https://discord.gg/MSBatf6.**\nCheck out"
+                " our partners using the partners command!"
             ),
         )
         embed.set_image(url=f"{self.bot.BASE_URL}/IdleRPG.png")
@@ -106,7 +108,8 @@ class Help(commands.Cog):
         _("""Sends a link to the official documentation.""")
         await ctx.send(
             _(
-                "<:blackcheck:441826948919066625> **Check {url} for a list of commands**"
+                "<:blackcheck:441826948919066625> **Check {url} for a list of"
+                " commands**"
             ).format(url=f"{self.bot.BASE_URL}/commands")
         )
 
@@ -116,7 +119,8 @@ class Help(commands.Cog):
         """Link to the bot tutorial."""
         await ctx.send(
             _(
-                "<:blackcheck:441826948919066625> **Check {url} for a tutorial and FAQ**"
+                "<:blackcheck:441826948919066625> **Check {url} for a tutorial and"
+                " FAQ**"
             ).format(url=f"{self.bot.BASE_URL}/tutorial")
         )
 
@@ -174,7 +178,8 @@ class Help(commands.Cog):
 
         if not await ctx.confirm(
             _(
-                "Are you sure? This will notify our support team and allow them to join the server."
+                "Are you sure? This will notify our support team and allow them to join"
+                " the server."
             )
         ):
             return
@@ -212,13 +217,18 @@ class Help(commands.Cog):
             if subcommands:
                 clean_subcommands = "\n".join(
                     [
-                        f"    {c.name.ljust(15, ' ')} {_(getattr(c.callback, '__doc__'))}"
+                        f"    {c.name.ljust(15, ' ')}"
+                        f" {_(getattr(c.callback, '__doc__'))}"
                         for c in subcommands
                     ]
                 )
-                fmt = f"```\n{ctx.prefix}{sig}\n\n{_(getattr(command.callback, '__doc__'))}\n\nCommands:\n{clean_subcommands}\n```"
+                fmt = (
+                    f"```\n{ctx.prefix}{sig}\n\n{_(getattr(command.callback, '__doc__'))}\n\nCommands:\n{clean_subcommands}\n```"
+                )
             else:
-                fmt = f"```\n{ctx.prefix}{sig}\n\n{_(getattr(command.callback, '__doc__'))}\n```"
+                fmt = (
+                    f"```\n{ctx.prefix}{sig}\n\n{_(getattr(command.callback, '__doc__'))}\n```"
+                )
 
             return await ctx.send(fmt)
 

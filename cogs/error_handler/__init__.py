@@ -77,25 +77,29 @@ class Errorhandler(commands.Cog):
             elif isinstance(error, UserHasNoChar):
                 await ctx.send(
                     _(
-                        "The user you specified as a parameter does not have a character."
+                        "The user you specified as a parameter does not have a"
+                        " character."
                     )
                 )
             elif isinstance(error, InvalidCrateRarity):
                 await ctx.send(
                     _(
-                        "You did not enter a valid crate rarity. Possible ones are: common, uncommon, rare, magic and legendary."
+                        "You did not enter a valid crate rarity. Possible ones are:"
+                        " common, uncommon, rare, magic and legendary."
                     )
                 )
             elif isinstance(error, InvalidCoinSide):
                 await ctx.send(
                     _(
-                        "You did not enter a valid coin side. Please use `heads` or `tails`."
+                        "You did not enter a valid coin side. Please use `heads` or"
+                        " `tails`."
                     )
                 )
             elif isinstance(error, DateOutOfRange):
                 await ctx.send(
                     _(
-                        "You entered a date that was out of range. It should be newer than {date}."
+                        "You entered a date that was out of range. It should be newer"
+                        " than {date}."
                     ).format(date=error.min_)
                 )
             else:
@@ -126,13 +130,15 @@ class Errorhandler(commands.Cog):
             elif isinstance(error, utils.checks.NeedsNoCharacter):
                 await ctx.send(
                     _(
-                        "This command requires you to not have created a character yet. You already have one."
+                        "This command requires you to not have created a character yet."
+                        " You already have one."
                     )
                 )
             elif isinstance(error, utils.checks.NeedsGod):
                 await ctx.send(
                     _(
-                        "You need to be following a god for this command. Please use `{prefix}follow` to choose one."
+                        "You need to be following a god for this command. Please use"
+                        " `{prefix}follow` to choose one."
                     ).format(prefix=ctx.prefix)
                 )
             elif isinstance(error, utils.checks.NoGuild):
@@ -152,7 +158,8 @@ class Errorhandler(commands.Cog):
                     embed=discord.Embed(
                         title=_("Permission denied"),
                         description=_(
-                            ":x: You don't have the permissions to use this command. It is thought for {error} class users."
+                            ":x: You don't have the permissions to use this command. It"
+                            " is thought for {error} class users."
                         ).format(error=error),
                         colour=0xFF0000,
                     )
@@ -160,13 +167,15 @@ class Errorhandler(commands.Cog):
             elif isinstance(error, utils.checks.NeedsNoAdventure):
                 await ctx.send(
                     _(
-                        "You are already on an adventure. Use `{prefix}status` to see how long it lasts."
+                        "You are already on an adventure. Use `{prefix}status` to see"
+                        " how long it lasts."
                     ).format(prefix=ctx.prefix)
                 )
             elif isinstance(error, utils.checks.NeedsAdventure):
                 await ctx.send(
                     _(
-                        "You need to be on an adventure to use this command. Try `{prefix}adventure`!"
+                        "You need to be on an adventure to use this command. Try"
+                        " `{prefix}adventure`!"
                     ).format(prefix=ctx.prefix)
                 )
             elif isinstance(error, NeedsToBeInVoiceChat):
@@ -176,13 +185,16 @@ class Errorhandler(commands.Cog):
             elif isinstance(error, NeedsToBePlaying):
                 await ctx.send(
                     _(
-                        "You need to be playing music, for example with `{prefix}play`, to use this command."
+                        "You need to be playing music, for example with `{prefix}play`,"
+                        " to use this command."
                     ).format(prefix=ctx.prefix)
                 )
             elif isinstance(error, utils.checks.PetGone):
                 await ctx.send(
                     _(
-                        "Your pet has gone missing. Maybe some aliens abducted it? Since you can't find it anymore, you are no longer a {profession}"
+                        "Your pet has gone missing. Maybe some aliens abducted it?"
+                        " Since you can't find it anymore, you are no longer a"
+                        " {profession}"
                     ).format(profession=_("Ranger"))
                 )
                 classes = ctx.character_data["class"]
@@ -200,25 +212,32 @@ class Errorhandler(commands.Cog):
             elif isinstance(error, utils.checks.PetDied):
                 await ctx.send(
                     _(
-                        "Your pet **{pet}** died! You did not give it enough to eat or drink. Because of your bad treatment, you are no longer a {profession}."
+                        "Your pet **{pet}** died! You did not give it enough to eat or"
+                        " drink. Because of your bad treatment, you are no longer a"
+                        " {profession}."
                     ).format(pet=ctx.pet_data["name"], profession=_("Ranger"))
                 )
             elif isinstance(error, utils.checks.PetRanAway):
                 await ctx.send(
                     _(
-                        "Your pet **{pet}** ran away! You did not show it your love enough! Because of your bad treatment, you are no longer a {profession}."
+                        "Your pet **{pet}** ran away! You did not show it your love"
+                        " enough! Because of your bad treatment, you are no longer a"
+                        " {profession}."
                     ).format(pet=ctx.pet_data["name"], profession=_("Ranger"))
                 )
             elif isinstance(error, utils.checks.NoPatron):
                 await ctx.send(
                     _(
-                        "You need to be a {tier} tier donator to use this command. Please head to `{prefix}donate` and make sure you joined the support server if you decide to support us."
+                        "You need to be a {tier} tier donator to use this command."
+                        " Please head to `{prefix}donate` and make sure you joined the"
+                        " support server if you decide to support us."
                     ).format(tier=error.tier, prefix=ctx.prefix)
                 )
             elif isinstance(error, utils.checks.AlreadyRaiding):
                 await ctx.send(
                     _(
-                        "There is another raid already ongoing. Try again at a later time."
+                        "There is another raid already ongoing. Try again at a later"
+                        " time."
                     )
                 )
             elif isinstance(error, utils.checks.NoCityOwned):
@@ -232,7 +251,8 @@ class Errorhandler(commands.Cog):
                     embed=discord.Embed(
                         title=_("Permission denied"),
                         description=_(
-                            ":x: You don't have the permissions to use this command. It is thought for other users."
+                            ":x: You don't have the permissions to use this command. It"
+                            " is thought for other users."
                         ),
                         colour=0xFF0000,
                     )
@@ -257,13 +277,16 @@ class Errorhandler(commands.Cog):
             elif isinstance(error.original, AsyncpgDataError):
                 return await ctx.send(
                     _(
-                        "An argument or value you entered was far too high for me to handle properly!"
+                        "An argument or value you entered was far too high for me to"
+                        " handle properly!"
                     )
                 )
             elif isinstance(error.original, LookupError):
                 await ctx.send(
                     _(
-                        "The languages have been reloaded while you were using a command. The execution therefore had to be stopped. Please try again."
+                        "The languages have been reloaded while you were using a"
+                        " command. The execution therefore had to be stopped. Please"
+                        " try again."
                     )
                 )
             if not self.client:
@@ -297,7 +320,9 @@ class Errorhandler(commands.Cog):
                     )
                 await ctx.send(
                     _(
-                        "The command you tried to use ran into an error. The incident has been reported and the team will work hard to fix the issue!"
+                        "The command you tried to use ran into an error. The incident"
+                        " has been reported and the team will work hard to fix the"
+                        " issue!"
                     )
                 )
         await ctx.bot.reset_cooldown(ctx)

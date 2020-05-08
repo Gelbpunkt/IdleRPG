@@ -172,7 +172,8 @@ class Bot(commands.AutoShardedBot):
         self.bans.append(user.id)  # prevent double captchas
         msg = await channel.send(
             _(
-                "{user}, we have to verify you're not a bot. Please react with the emoji you see. You have 15 seconds and one attempt."
+                "{user}, we have to verify you're not a bot. Please react with the"
+                " emoji you see. You have 15 seconds and one attempt."
             ).format(user=user.mention),
             file=discord.File(
                 filename="captcha.png",
@@ -215,11 +216,15 @@ class Bot(commands.AutoShardedBot):
         v = thing.id if isinstance(thing, (discord.Member, discord.User)) else thing
         async with self.pool.acquire() as conn:
             xp = await conn.fetchval(
-                "SELECT position FROM (SELECT profile.*, ROW_NUMBER() OVER(ORDER BY profile.xp DESC) AS position FROM profile) s WHERE s.user = $1 LIMIT 1;",
+                "SELECT position FROM (SELECT profile.*, ROW_NUMBER() OVER(ORDER BY"
+                " profile.xp DESC) AS position FROM profile) s WHERE s.user = $1"
+                " LIMIT 1;",
                 v,
             )
             money = await conn.fetchval(
-                "SELECT position FROM (SELECT profile.*, ROW_NUMBER() OVER(ORDER BY profile.money DESC) AS position FROM profile) s WHERE s.user = $1 LIMIT 1;",
+                "SELECT position FROM (SELECT profile.*, ROW_NUMBER() OVER(ORDER BY"
+                " profile.money DESC) AS position FROM profile) s WHERE s.user = $1"
+                " LIMIT 1;",
                 v,
             )
         return money, xp
@@ -255,7 +260,8 @@ class Bot(commands.AutoShardedBot):
                 guild,
                 user_god,
             ) = await conn.fetchval(
-                'SELECT (atkmultiply::decimal, defmultiply::decimal, class::text[], race::text, guild::integer, god::text) FROM profile WHERE "user"=$1;',
+                "SELECT (atkmultiply::decimal, defmultiply::decimal, class::text[],"
+                ' race::text, guild::integer, god::text) FROM profile WHERE "user"=$1;',
                 v,
             )
             if god is not None and god != user_god:
@@ -294,7 +300,8 @@ class Bot(commands.AutoShardedBot):
             conn = await self.pool.acquire()
             local = True
         items = await conn.fetch(
-            "SELECT ai.* FROM profile p JOIN allitems ai ON (p.user=ai.owner) JOIN inventory i ON (ai.id=i.item) WHERE i.equipped IS TRUE AND p.user=$1;",
+            "SELECT ai.* FROM profile p JOIN allitems ai ON (p.user=ai.owner) JOIN"
+            " inventory i ON (ai.id=i.item) WHERE i.equipped IS TRUE AND p.user=$1;",
             v,
         )
         if local:
@@ -487,7 +494,8 @@ class Bot(commands.AutoShardedBot):
         owner = owner.id if isinstance(owner, (discord.User, discord.Member)) else owner
         async with self.pool.acquire() as conn:
             item = await conn.fetchrow(
-                'INSERT INTO allitems ("owner", "name", "value", "type", "damage", "armor", "hand") VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *;',
+                'INSERT INTO allitems ("owner", "name", "value", "type", "damage",'
+                ' "armor", "hand") VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *;',
                 owner,
                 name,
                 value,
@@ -607,7 +615,8 @@ class Bot(commands.AutoShardedBot):
 
         await ctx.send(
             _(
-                "You reached a new level: **{new_level}** :star:! You received {reward} as a reward :tada:! {additional}"
+                "You reached a new level: **{new_level}** :star:! You received {reward}"
+                " as a reward :tada:! {additional}"
             ).format(new_level=new_level, reward=reward_text, additional=additional)
         )
 
@@ -754,7 +763,8 @@ Command: {ctx.command.qualified_name}
 
         async with self.pool.acquire() as conn:
             await conn.execute(
-                'INSERT INTO transactions ("from", "to", "subject", "info", "timestamp") VALUES ($1, $2, $3, $4, $5);',
+                'INSERT INTO transactions ("from", "to", "subject", "info",'
+                ' "timestamp") VALUES ($1, $2, $3, $4, $5);',
                 from_,
                 to,
                 subject,
@@ -763,7 +773,9 @@ Command: {ctx.command.qualified_name}
             )
             if subject == "shop":
                 await conn.execute(
-                    'INSERT INTO market_history ("item", "name", "value", "type", "damage", "armor", "signature", "price", "offer") VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9);',
+                    'INSERT INTO market_history ("item", "name", "value", "type",'
+                    ' "damage", "armor", "signature", "price", "offer") VALUES ($1, $2,'
+                    " $3, $4, $5, $6, $7, $8, $9);",
                     data["id"],
                     data["name"],
                     data["value"],
@@ -782,7 +794,8 @@ Command: {ctx.command.qualified_name}
         if not guild_id:  # also catches guild_id = 0
             return False
         res = await self.pool.fetchrow(
-            'SELECT c.* FROM city c JOIN guild g ON c."owner"=g."id" WHERE g."id"=(SELECT alliance FROM guild WHERE "id"=$1);',
+            'SELECT c.* FROM city c JOIN guild g ON c."owner"=g."id" WHERE'
+            ' g."id"=(SELECT alliance FROM guild WHERE "id"=$1);',
             guild_id,
         )
         if not res:

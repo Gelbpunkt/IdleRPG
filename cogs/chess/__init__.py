@@ -54,7 +54,8 @@ class Chess(commands.Cog):
         )
         await ctx.send(
             _(
-                "Please use `{prefix}chess match` to play.\nIf you want to play ELO-rated, you must use `{prefix}chess register` first."
+                "Please use `{prefix}chess match` to play.\nIf you want to play"
+                " ELO-rated, you must use `{prefix}chess register` first."
             ).format(prefix=ctx.prefix)
         )
 
@@ -72,7 +73,8 @@ class Chess(commands.Cog):
             )
         await ctx.send(
             _(
-                "You have been registered with an ELO of 1000 as a default. Play matches to increase it!"
+                "You have been registered with an ELO of 1000 as a default. Play"
+                " matches to increase it!"
             )
         )
 
@@ -99,7 +101,9 @@ class Chess(commands.Cog):
             )
             if player:
                 player_pos = await conn.fetchval(
-                    "SELECT position FROM (SELECT chess_players.*, ROW_NUMBER() OVER(ORDER BY chess_players.elo DESC) AS position FROM chess_players) s WHERE s.user = $1 LIMIT 1;",
+                    "SELECT position FROM (SELECT chess_players.*, ROW_NUMBER()"
+                    " OVER(ORDER BY chess_players.elo DESC) AS position FROM"
+                    " chess_players) s WHERE s.user = $1 LIMIT 1;",
                     ctx.author.id,
                 )
                 text = _("**{user}** with ELO **{elo}**").format(
@@ -147,7 +151,8 @@ class Chess(commands.Cog):
             if player_elo is not None and enemy_elo is not None:
                 rated = await ctx.confirm(
                     _(
-                        "{author}, would you like to play an ELO-rated match? Your elo is {elo1}, their elo is {elo2}."
+                        "{author}, would you like to play an ELO-rated match? Your elo"
+                        " is {elo1}, their elo is {elo2}."
                     ).format(
                         author=ctx.author.mention, elo1=player_elo, elo2=enemy_elo
                     ),
@@ -157,7 +162,8 @@ class Chess(commands.Cog):
 
             if not await ctx.confirm(
                 _(
-                    "{user}, you have been challenged to a chess match by {author}. They will be {color}. Do you accept? {extra}"
+                    "{user}, you have been challenged to a chess match by {author}."
+                    " They will be {color}. Do you accept? {extra}"
                 ).format(
                     user=enemy.mention,
                     author=ctx.author.mention,

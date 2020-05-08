@@ -215,7 +215,8 @@ class BlackJack:
         player = self.total(self.player)
         dealer = self.total(self.dealer)
         text = _(
-            "The dealer has a {pretty_dealer} for a total of {dealer}\nYou have a {pretty_player} for a total of {player}\n{additional}"
+            "The dealer has a {pretty_dealer} for a total of {dealer}\nYou have a"
+            " {pretty_player} for a total of {player}\n{additional}"
         ).format(
             pretty_dealer=self.pretty(self.dealer),
             dealer=dealer,
@@ -236,7 +237,8 @@ class BlackJack:
         # Insurance?
         if self.dealer[0][0] > 9 and await self.ctx.confirm(
             _(
-                "Would you like insurance? It will cost half your bet and will get you 2:1 back if the dealer has a blackjack. Else it is gone."
+                "Would you like insurance? It will cost half your bet and will get you"
+                " 2:1 back if the dealer has a blackjack. Else it is gone."
             )
         ):
             self.insurance = True
@@ -247,7 +249,8 @@ class BlackJack:
                 await self.player_cashback()
                 return await self.send(
                     additional=_(
-                        "The dealer got a blackjack. You had insurance and lost nothing."
+                        "The dealer got a blackjack. You had insurance and lost"
+                        " nothing."
                     )
                 )
             else:
@@ -358,7 +361,8 @@ class BlackJack:
                     await self.msg.remove_reaction("\U0001F501", self.ctx.bot.user)
                 await self.send(
                     additional=_(
-                        "You doubled your bid in exchange for only receiving one more card."
+                        "You doubled your bid in exchange for only receiving one more"
+                        " card."
                     )
                 )
 
@@ -386,14 +390,16 @@ class BlackJack:
             if player > dealer:
                 await self.send(
                     additional=_(
-                        "You have a higher score than the dealer and have won **${money}**"
+                        "You have a higher score than the dealer and have won"
+                        " **${money}**"
                     ).format(money=self.money)
                 )
                 await self.player_win()
             elif dealer > player:
                 await self.send(
                     additional=_(
-                        "Dealer has a higher score than you and wins. You lost **${money}**."
+                        "Dealer has a higher score than you and wins. You lost"
+                        " **${money}**."
                     ).format(money=self.money)
                 )
             else:
@@ -452,7 +458,8 @@ To visualize the rows and columns, use the command: roulette table"""
         except Exception:
             return await ctx.send(
                 _(
-                    "Your bid input was invalid. Try the help on this command to view examples."
+                    "Your bid input was invalid. Try the help on this command to view"
+                    " examples."
                 )
             )
         await game.run(ctx)
@@ -563,12 +570,14 @@ To visualize the rows and columns, use the command: roulette table"""
                 )
             await ctx.send(
                 _(
-                    "You won **${money}**! The random number was `{num}`, you tipped `{tip}`."
+                    "You won **${money}**! The random number was `{num}`, you tipped"
+                    " `{tip}`."
                 ).format(num=randomn, tip=tip, money=money * (maximum - 1))
             )
             if maximum >= 100:
                 await self.bot.public_log(
-                    f"**{ctx.author}** won **${money * (maximum - 1)}** while betting with `{maximum}`. ({round(100/maximum, 2)}% chance)"
+                    f"**{ctx.author}** won **${money * (maximum - 1)}** while betting"
+                    f" with `{maximum}`. ({round(100/maximum, 2)}% chance)"
                 )
         else:
             if money > 0:
@@ -586,7 +595,8 @@ To visualize the rows and columns, use the command: roulette table"""
                 )
             await ctx.send(
                 _(
-                    "You lost **${money}**! The random number was `{num}`, you tipped `{tip}`."
+                    "You lost **${money}**! The random number was `{num}`, you tipped"
+                    " `{tip}`."
                 ).format(num=randomn, tip=tip, money=money)
             )
 
@@ -619,7 +629,8 @@ To visualize the rows and columns, use the command: roulette table"""
     @locale_doc
     async def dos(self, ctx, user: MemberWithCharacter = None):
         _(
-            "Play a double-or-steal game against someone. You start with $100 and can take it or double it with your money."
+            "Play a double-or-steal game against someone. You start with $100 and can"
+            " take it or double it with your money."
         )
         msg = await ctx.send(
             _("React with 💰 to play double-or-steal with {user}!").format(

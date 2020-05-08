@@ -74,12 +74,18 @@ class GlobalEvents(commands.Cog):
         embed = discord.Embed(
             title="Thanks for adding me!",
             colour=0xEEC340,
-            description=f"Hi! I am **IdleRPG**, a Discord Bot by `Adrian#1337`.\nI simulate"
-            f" a whole Roleplay with everything it needs!\n\nVisit **{self.bot.BASE_URL}** for a documentation on all my commands. :innocent:\nTo get started, type "
-            f"`{self.bot.config.global_prefix}create`.\n\nA tutorial can be found on **{self.bot.BASE_URL}/tutorial**.\n\nDon't like my prefix? `{self.bot.config.global_prefix}"
-            "settings prefix` changes it.\n\n"
-            f"Not English? `{self.bot.config.global_prefix}language` and `{self.bot.config.global_prefix}language set` may include yours!\n\n"
-            "Have fun! :wink:",
+            description=(
+                "Hi! I am **IdleRPG**, a Discord Bot by `Adrian#1337`.\nI simulate a"
+                " whole Roleplay with everything it needs!\n\nVisit"
+                f" **{self.bot.BASE_URL}** for a documentation on all my commands."
+                " :innocent:\nTo get started, type"
+                f" `{self.bot.config.global_prefix}create`.\n\nA tutorial can be found"
+                f" on **{self.bot.BASE_URL}/tutorial**.\n\nDon't like my prefix?"
+                f" `{self.bot.config.global_prefix}settings prefix` changes it.\n\nNot"
+                f" English? `{self.bot.config.global_prefix}language` and"
+                f" `{self.bot.config.global_prefix}language set` may include"
+                " yours!\n\nHave fun! :wink:"
+            ),
         )
 
         embed.set_image(url=f"{self.bot.BASE_URL}/IdleRPG.png")
@@ -98,7 +104,8 @@ class GlobalEvents(commands.Cog):
             return
         await self.bot.http.send_message(
             self.bot.config.join_channel,
-            f"Joined a new server! **{guild.name}** with **{guild.member_count}** members!",
+            f"Joined a new server! **{guild.name}** with **{guild.member_count}**"
+            " members!",
         )
 
     async def status_updater(self):

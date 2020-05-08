@@ -29,7 +29,8 @@ from classes.bot import Bot
 
 if len(sys.argv) != 5:
     print(
-        f"Usage: {sys.executable} idlerpg.py [shard_ids] [shard_count] [cluster_id] [cluster_name]"
+        f"Usage: {sys.executable} idlerpg.py [shard_ids] [shard_count] [cluster_id]"
+        " [cluster_name]"
     )
     sys.exit(1)
 

@@ -85,7 +85,8 @@ class Transaction(commands.Cog):
             content
             + "\n\n"
             + _(
-                "Use `{prefix}trade [add/set/remove] [money/crates/item] [amount/itemid] [crate rarity]`"
+                "Use `{prefix}trade [add/set/remove] [money/crates/item]"
+                " [amount/itemid] [crate rarity]`"
             ).format(prefix=ctx.prefix)
         )
         if (base := self.transactions[id_]["base"]) is not None:
@@ -145,7 +146,8 @@ class Transaction(commands.Cog):
                         if not await self.bot.has_money(user.id, money, conn=conn):
                             return await chan.send(
                                 _(
-                                    "Trade cancelled. Things were traded away in the meantime."
+                                    "Trade cancelled. Things were traded away in the"
+                                    " meantime."
                                 )
                             )
                         await conn.execute(
@@ -163,7 +165,8 @@ class Transaction(commands.Cog):
                             if not await self.bot.has_crates(user.id, a, c, conn=conn):
                                 return await chan.send(
                                     _(
-                                        "Trade cancelled. Things were traded away in the meantime."
+                                        "Trade cancelled. Things were traded away in"
+                                        " the meantime."
                                     )
                                 )
                         c = ", ".join(
@@ -193,7 +196,8 @@ class Transaction(commands.Cog):
                         if not await self.bot.has_item(user.id, item["id"], conn=conn):
                             return await chan.send(
                                 _(
-                                    "Trade cancelled. Things were traded away in the meantime."
+                                    "Trade cancelled. Things were traded away in the"
+                                    " meantime."
                                 )
                             )
                         await conn.execute(
@@ -251,7 +255,8 @@ class Transaction(commands.Cog):
         _("""Adds something to a trade.""")
         await ctx.send(
             _(
-                "Please select something to add. Example: `{prefix}trade add money 1337`"
+                "Please select something to add. Example: `{prefix}trade add money"
+                " 1337`"
             ).format(prefix=ctx.prefix)
         )
 
@@ -319,7 +324,8 @@ class Transaction(commands.Cog):
         _("""Sets a value to a trade instead of adding onto it.""")
         await ctx.send(
             _(
-                "Please select something to set. Example: `{prefix}trade set money 1337`"
+                "Please select something to set. Example: `{prefix}trade set money"
+                " 1337`"
             ).format(prefix=ctx.prefix)
         )
 
@@ -352,7 +358,8 @@ class Transaction(commands.Cog):
         _("""Removes something from a trade.""")
         await ctx.send(
             _(
-                "Please select something to remove. Example: `{prefix}trade remove money 1337`"
+                "Please select something to remove. Example: `{prefix}trade remove"
+                " money 1337`"
             ).format(prefix=ctx.prefix)
         )
 

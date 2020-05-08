@@ -85,7 +85,10 @@ class Instance:
         self.started_at = 0.0
         self.id = instance_id
         self.name = name
-        self.command = f'{sys.executable} {Path.cwd() / BOT_FILE} "{shard_list}" {shard_count} {self.id} {self.name}'
+        self.command = (
+            f'{sys.executable} {Path.cwd() / BOT_FILE} "{shard_list}" {shard_count}'
+            f" {self.id} {self.name}"
+        )
         self._process: Optional[asyncio.subprocess.Process] = None
         self.status = "initialized"
         loop.create_task(self.start())
@@ -144,7 +147,10 @@ class Instance:
         return self, stdout, stderr
 
     def __repr__(self) -> str:
-        return f"<Cluster ID={self.id} name={self.name}, active={self.is_active}, shards={self.shard_list}, started={self.started_at}>"
+        return (
+            f"<Cluster ID={self.id} name={self.name}, active={self.is_active},"
+            f" shards={self.shard_list}, started={self.started_at}>"
+        )
 
 
 class Main:
@@ -162,13 +168,15 @@ class Main:
                 "This callback cannot run without a process that exited."
             )
         print(
-            f"[Cluster #{instance.id} ({instance.name})] Exited with code [{instance._process.returncode}]"
+            f"[Cluster #{instance.id} ({instance.name})] Exited with code"
+            f" [{instance._process.returncode}]"
         )
         if instance._process.returncode == 0:
             print(f"[Cluster #{instance.id} ({instance.name})] Stopped gracefully")
         elif instance.status == "stopped":
             print(
-                f"[Cluster #{instance.id} ({instance.name})] Stopped by command, not restarting"
+                f"[Cluster #{instance.id} ({instance.name})] Stopped by command, not"
+                " restarting"
             )
         else:
             decoded_stderr = "\n".join(stderr.decode("utf-8").split("\n"))

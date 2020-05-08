@@ -43,7 +43,8 @@ class Gods(commands.Cog):
         if await self.bot.redis.execute("GET", f"cd:{ctx.author.id}:exchange"):
             return await ctx.send(
                 _(
-                    "You cannot sacrifice while already exchanging loot. Please finish exchanging first, then try again."
+                    "You cannot sacrifice while already exchanging loot. Please finish"
+                    " exchanging first, then try again."
                 )
             )
         async with self.bot.pool.acquire() as conn:
@@ -57,13 +58,15 @@ class Gods(commands.Cog):
                     return await ctx.send(_("You don't have any loot."))
                 if not await ctx.confirm(
                     _(
-                        "This will sacrifice all of your loot and give {value} favor. Continue?"
+                        "This will sacrifice all of your loot and give {value} favor."
+                        " Continue?"
                     ).format(value=value)
                 ):
                     return
             else:
                 value, count = await conn.fetchval(
-                    'SELECT (SUM("value"), COUNT("value")) FROM loot WHERE "id"=ANY($1) AND "user"=$2;',
+                    'SELECT (SUM("value"), COUNT("value")) FROM loot WHERE "id"=ANY($1)'
+                    ' AND "user"=$2;',
                     loot_ids,
                     ctx.author.id,
                 )
@@ -107,7 +110,9 @@ class Gods(commands.Cog):
         )
         await ctx.send(
             _(
-                "You prayed to {god}, and they accepted your {count} sacrificed loot item(s). Your standing with the god has increased by **{points}** points."
+                "You prayed to {god}, and they accepted your {count} sacrificed loot"
+                " item(s). Your standing with the god has increased by **{points}**"
+                " points."
             ).format(god=ctx.character_data["god"], count=count, points=value)
         )
 
@@ -122,7 +127,8 @@ class Gods(commands.Cog):
                 return await ctx.send(_("You have no more reset points."))
             if not await ctx.confirm(
                 _(
-                    "You already chose a god. This change now will cost you a reset point. Are you sure?"
+                    "You already chose a god. This change now will cost you a reset"
+                    " point. Are you sure?"
                 )
             ):
                 return
@@ -159,12 +165,14 @@ Are you sure you want to follow {god}?"""
             ) < 0:
                 return await ctx.send(
                     _(
-                        "You became Godless while using this command. Following a God is not allowed after that."
+                        "You became Godless while using this command. Following a God"
+                        " is not allowed after that."
                     )
                 )
             if not has_no_god(ctx):
                 await conn.execute(
-                    'UPDATE profile SET "reset_points"="reset_points"-$1 WHERE "user"=$2;',
+                    'UPDATE profile SET "reset_points"="reset_points"-$1 WHERE'
+                    ' "user"=$2;',
                     1,
                     ctx.author.id,
                 )
@@ -201,7 +209,8 @@ Are you sure you want to follow {god}?"""
 
         async with self.bot.pool.acquire() as conn:
             await conn.execute(
-                'UPDATE profile SET "favor"=0, "god"=NULL, "reset_points"=-1 WHERE "user"=$1;',
+                'UPDATE profile SET "favor"=0, "god"=NULL, "reset_points"=-1 WHERE'
+                ' "user"=$1;',
                 ctx.author.id,
             )
 
@@ -246,7 +255,8 @@ Are you sure you want to follow {god}?"""
                     _("Your Gregorian chants were amazingly well sung."),
                     _("Even the birds joined in your singing."),
                     _(
-                        "The other gods applauded while your god noted down the best mark."
+                        "The other gods applauded while your god noted down the best"
+                        " mark."
                     ),
                     _("Rarely have you had a better day!"),
                 ]
@@ -285,7 +295,8 @@ Are you sure you want to follow {god}?"""
         elif not ctx.character_data["god"]:
             return await ctx.send(
                 _(
-                    "You are not following any god currently, therefore the list cannot be generated."
+                    "You are not following any god currently, therefore the list cannot"
+                    " be generated."
                 )
             )
         else:
@@ -336,7 +347,8 @@ Are you sure you want to follow {god}?"""
                 target.id,
             )
         await ctx.send(
-            f"Gave {amount} luck to {'all of your followers' if target == 'all' else target}."
+            f"Gave {amount} luck to"
+            f" {'all of your followers' if target == 'all' else target}."
         )
 
 

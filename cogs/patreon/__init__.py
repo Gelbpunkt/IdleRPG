@@ -62,7 +62,10 @@ class Patreon(commands.Cog):
                 hand = "any"
 
             await conn.execute(
-                'UPDATE allitems SET "name"=CASE WHEN "original_name" IS NULL THEN "name" ELSE "original_name" END, "original_name"=NULL, "damage"=$2, "armor"=$3, "type"=$4, "hand"=$5, "original_type"=NULL WHERE "id"=$1;',
+                'UPDATE allitems SET "name"=CASE WHEN "original_name" IS NULL THEN'
+                ' "name" ELSE "original_name" END, "original_name"=NULL, "damage"=$2,'
+                ' "armor"=$3, "type"=$4, "hand"=$5, "original_type"=NULL WHERE'
+                ' "id"=$1;',
                 itemid,
                 dmg,
                 armor,
@@ -96,7 +99,9 @@ class Patreon(commands.Cog):
                     )
                 )
             await conn.execute(
-                'UPDATE allitems SET "name"=$1, "original_name"=CASE WHEN "original_name" IS NULL THEN "name" ELSE "original_name" END WHERE "id"=$2;',
+                'UPDATE allitems SET "name"=$1, "original_name"=CASE WHEN'
+                ' "original_name" IS NULL THEN "name" ELSE "original_name" END WHERE'
+                ' "id"=$2;',
                 newname,
                 itemid,
             )
@@ -143,14 +148,17 @@ class Patreon(commands.Cog):
             if item["hand"] == "both" and hand != "both":
                 return await ctx.send(
                     _(
-                        "You may not change a two-handed item to a single-handed one due to weapon damage reasons."
+                        "You may not change a two-handed item to a single-handed one"
+                        " due to weapon damage reasons."
                     )
                 )
 
             stat = item["damage"] or item["armor"]
 
             await conn.execute(
-                'UPDATE allitems SET "type"=$1, "original_type"=CASE WHEN "original_type" IS NULL THEN "type" ELSE "original_type" END, "damage"=$2, "armor"=$3, "hand"=$4 WHERE "id"=$5;',
+                'UPDATE allitems SET "type"=$1, "original_type"=CASE WHEN'
+                ' "original_type" IS NULL THEN "type" ELSE "original_type" END,'
+                ' "damage"=$2, "armor"=$3, "hand"=$4 WHERE "id"=$5;',
                 new_type,
                 0 if new_type == "Shield" else stat,
                 stat if new_type == "Shield" else 0,
@@ -175,7 +183,8 @@ class Patreon(commands.Cog):
         _("""[Patreon Only, Gold and above] Receive a daily booster.""")
         type_ = random.choice(["time", "money", "luck"])
         await self.bot.pool.execute(
-            f'UPDATE profile SET "{type_}_booster"="{type_}_booster"+1 WHERE "user"=$1;',
+            f'UPDATE profile SET "{type_}_booster"="{type_}_booster"+1 WHERE'
+            ' "user"=$1;',
             ctx.author.id,
         )
         await ctx.send(_("You received a daily {type_} booster!").format(type_=type_))
@@ -200,7 +209,8 @@ class Patreon(commands.Cog):
         else:
             return await ctx.send(
                 _(
-                    "I couldn't read that URL. Does it start with `http://` or `https://` and is either a png or jpeg?"
+                    "I couldn't read that URL. Does it start with `http://` or"
+                    " `https://` and is either a png or jpeg?"
                 )
             )
         if url != 0 and not await user_is_patron(self.bot, ctx.author):
@@ -228,7 +238,8 @@ class Patreon(commands.Cog):
         ):
             return await ctx.send(
                 _(
-                    "I couldn't read that URL. Does it start with `http://` or `https://` and is either a png or jpeg?"
+                    "I couldn't read that URL. Does it start with `http://` or"
+                    " `https://` and is either a png or jpeg?"
                 )
             )
         async with self.bot.trusted_session.post(
@@ -272,7 +283,8 @@ class Patreon(commands.Cog):
             )
             if old["memberlimit"] < 100:
                 await conn.execute(
-                    'UPDATE guild SET "memberlimit"=$1, "banklimit"="upgrade"*250000*$2 WHERE "leader"=$3;',
+                    'UPDATE guild SET "memberlimit"=$1, "banklimit"="upgrade"*250000*$2'
+                    ' WHERE "leader"=$3;',
                     100,
                     m,
                     ctx.author.id,
@@ -297,7 +309,8 @@ class Patreon(commands.Cog):
             if not bgs:
                 return await ctx.send(
                     _(
-                        "You do not have an eventbackground. They can be acquired on seasonal events."
+                        "You do not have an eventbackground. They can be acquired on"
+                        " seasonal events."
                     )
                 )
             try:
@@ -305,7 +318,8 @@ class Patreon(commands.Cog):
             except IndexError:
                 return await ctx.send(
                     _(
-                        "The background number {number} is not valid, you only have {total} available."
+                        "The background number {number} is not valid, you only have"
+                        " {total} available."
                     ).format(number=number, total=len(bgs))
                 )
             await conn.execute(

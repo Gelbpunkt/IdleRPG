@@ -77,27 +77,98 @@ class Side(Enum):
 
 
 DESCRIPTIONS = {
-    Role.WEREWOLF: "Your objective is to kill all villagers together with the other Werewolves. Every night, you will get to choose one villager to kill - choose carefully!",
-    Role.BIG_BAD_WOLF: "Your objective is to kill all villagers together with the other Werewolves. Every night, you will get to choose one villager to kill together with them. After that, you will wake up once more to kill an additional villager.",
-    Role.VILLAGER: "You are an innocent soul. Your goal is to eradicate all Werewolves that are haunting the town at nights and survive yourself. At the daily elections, your voice makes the difference.",
-    Role.PURE_SOUL: "Everyone knows you are not a Werewolf. Your goal is to keep the town safe from Wolves and kill them all - at the daily elections, many will hear your voice, they know you will be honest.",
-    Role.SEER: "You are a villager with the special ability to view someone's identity every night - but don't tell the villagers too fast, else you will be targeted yourself.",
-    Role.AMOR: "You are the personification of the Greek god and get to choose two lovers at the beginning of the game - they will love each other so much that they will die once their beloved one bites the dust.",
-    Role.WITCH: "You are a powerful villager with two special brews: One will kill, one will heal. Use them wisely to influence the game in your favor.",
-    Role.HUNTER: "You are the Hunter. Do your best to protect the Community and your precise shot will trigger when you die, killing a target of your choice.",
-    Role.HEALER: "You are the Healer. Every night, you can protect one Villager from death to the Werewolves, but not the same person twice. Make sure the Villagers stay alive...",
-    Role.THE_OLD: "You are the oldest member of the community and the Werewolves have been hurting you for a long time. All the years have granted you a lot of resistance - you can survive one attack.",
-    Role.SISTER: "The two sisters know each other very well - together, you might be able to help the community find the Werewolves and eliminate them.",
-    Role.BROTHER: "The three brothers know each other very well - together, you might be able to help the community find the Werewolves and eliminate them.",
-    Role.FOX: "You are a clever little guy who can sense the presence of Werewolves. Every night, you get to choose 3 players and will be told if at least one of them is a Werewolf. If not, you lose your ability.",
-    Role.JUDGE: "You are the Judge. You love the law and can arrange a second daily vote after the first one by mentioning the secret sign we will agree on later during the vote. Use it wisely...",
-    Role.KNIGHT: "You are the Knight. You will do your best to protect the Villagers from the Werewolves. When you die, a Werewolf will die with you.",
-    Role.WHITE_WOLF: "You are the White Wolf. Your objective is to kill everyone else. Additionally to the nightly killing spree with the Werewolves, you may kill one of them later on in the night.",
+    Role.WEREWOLF: (
+        "Your objective is to kill all villagers together with the other Werewolves."
+        " Every night, you will get to choose one villager to kill - choose carefully!"
+    ),
+    Role.BIG_BAD_WOLF: (
+        "Your objective is to kill all villagers together with the other Werewolves."
+        " Every night, you will get to choose one villager to kill together with them."
+        " After that, you will wake up once more to kill an additional villager."
+    ),
+    Role.VILLAGER: (
+        "You are an innocent soul. Your goal is to eradicate all Werewolves that are"
+        " haunting the town at nights and survive yourself. At the daily elections,"
+        " your voice makes the difference."
+    ),
+    Role.PURE_SOUL: (
+        "Everyone knows you are not a Werewolf. Your goal is to keep the town safe from"
+        " Wolves and kill them all - at the daily elections, many will hear your voice,"
+        " they know you will be honest."
+    ),
+    Role.SEER: (
+        "You are a villager with the special ability to view someone's identity every"
+        " night - but don't tell the villagers too fast, else you will be targeted"
+        " yourself."
+    ),
+    Role.AMOR: (
+        "You are the personification of the Greek god and get to choose two lovers at"
+        " the beginning of the game - they will love each other so much that they will"
+        " die once their beloved one bites the dust."
+    ),
+    Role.WITCH: (
+        "You are a powerful villager with two special brews: One will kill, one will"
+        " heal. Use them wisely to influence the game in your favor."
+    ),
+    Role.HUNTER: (
+        "You are the Hunter. Do your best to protect the Community and your precise"
+        " shot will trigger when you die, killing a target of your choice."
+    ),
+    Role.HEALER: (
+        "You are the Healer. Every night, you can protect one Villager from death to"
+        " the Werewolves, but not the same person twice. Make sure the Villagers stay"
+        " alive..."
+    ),
+    Role.THE_OLD: (
+        "You are the oldest member of the community and the Werewolves have been"
+        " hurting you for a long time. All the years have granted you a lot of"
+        " resistance - you can survive one attack."
+    ),
+    Role.SISTER: (
+        "The two sisters know each other very well - together, you might be able to"
+        " help the community find the Werewolves and eliminate them."
+    ),
+    Role.BROTHER: (
+        "The three brothers know each other very well - together, you might be able to"
+        " help the community find the Werewolves and eliminate them."
+    ),
+    Role.FOX: (
+        "You are a clever little guy who can sense the presence of Werewolves. Every"
+        " night, you get to choose 3 players and will be told if at least one of them"
+        " is a Werewolf. If not, you lose your ability."
+    ),
+    Role.JUDGE: (
+        "You are the Judge. You love the law and can arrange a second daily vote after"
+        " the first one by mentioning the secret sign we will agree on later during the"
+        " vote. Use it wisely..."
+    ),
+    Role.KNIGHT: (
+        "You are the Knight. You will do your best to protect the Villagers from the"
+        " Werewolves. When you die, a Werewolf will die with you."
+    ),
+    Role.WHITE_WOLF: (
+        "You are the White Wolf. Your objective is to kill everyone else. Additionally"
+        " to the nightly killing spree with the Werewolves, you may kill one of them"
+        " later on in the night."
+    ),
     Role.THIEF: "You are the thief and can choose your identity soon.",
-    Role.WILD_CHILD: "You are the wild child and will choose an idol. Once it dies, you turn into a Werewolf, but until then, you are a normal Villager...",
-    Role.WOLFHOUND: "You are something between a Werewolf and a Villager. Choose your side wisely...",
-    Role.MAID: "You are the maid who raised the children. It would hurt you to see any of them die - after the daily election, you may take their identity role once.",
-    Role.FLUTIST: "You are the flutist. Your goal is to enchant the players with your music to take revenge for being expelled many years ago. Every night, you get to enchant two of them. Gotta catch them all...",
+    Role.WILD_CHILD: (
+        "You are the wild child and will choose an idol. Once it dies, you turn into a"
+        " Werewolf, but until then, you are a normal Villager..."
+    ),
+    Role.WOLFHOUND: (
+        "You are something between a Werewolf and a Villager. Choose your side"
+        " wisely..."
+    ),
+    Role.MAID: (
+        "You are the maid who raised the children. It would hurt you to see any of them"
+        " die - after the daily election, you may take their identity role once."
+    ),
+    Role.FLUTIST: (
+        "You are the flutist. Your goal is to enchant the players with your music to"
+        " take revenge for being expelled many years ago. Every night, you get to"
+        " enchant two of them. Gotta catch them all..."
+    ),
 }
 
 
@@ -170,10 +241,13 @@ class Game:
             fmt.add_line(f"{idx}. {p.user}")
         fmt.add_line("")
         fmt.add_line(
-            "**I will relay all messages you send to the other Werewolves. Send a number to nominate them for killing (you can nominate up to 10 users), voting starts in 2 minutes**"
+            "**I will relay all messages you send to the other Werewolves. Send a"
+            " number to nominate them for killing (you can nominate up to 10 users),"
+            " voting starts in 2 minutes**"
         )
         fmt.add_line(
-            "**Please do not spam and talk slowly! Relaying can take a while if there are many Werewolves!**"
+            "**Please do not spam and talk slowly! Relaying can take a while if there"
+            " are many Werewolves!**"
         )
         for user in wolves:
             for page in fmt.pages:
@@ -347,7 +421,9 @@ class Game:
     async def election(self) -> Optional[discord.Member]:
         text = " ".join([u.user.mention for u in self.alive_players])
         await self.ctx.send(
-            f"{text}\nYou may now submit someone (up to 10 total) for the election who to kill by mentioning their name below. You have 3 minutes of discussion during this time."
+            f"{text}\nYou may now submit someone (up to 10 total) for the election who"
+            " to kill by mentioning their name below. You have 3 minutes of discussion"
+            " during this time."
         )
         nominated = []
         second_election = False
@@ -463,7 +539,8 @@ class Game:
         winner = self.winner()
         if isinstance(winner, Player):
             await self.ctx.send(
-                f"{winner.user.mention} won! They were a **{winner.role.name.lower().replace('_', ' ')}**!"
+                f"{winner.user.mention} won! They were a"
+                f" **{winner.role.name.lower().replace('_', ' ')}**!"
             )
         else:
             await self.ctx.send(f"{winner} won!")
@@ -496,7 +573,11 @@ class Player:
             self.role = Role.VILLAGER
 
     def __repr__(self):
-        return f"<Player role={self.role} initial_role={self.initial_role} is_sheriff={self.is_sheriff} lives={self.lives} side={self.side} dead={self.dead} won={self.has_won}>"
+        return (
+            f"<Player role={self.role} initial_role={self.initial_role}"
+            f" is_sheriff={self.is_sheriff} lives={self.lives} side={self.side}"
+            f" dead={self.dead} won={self.has_won}>"
+        )
 
     async def send(self, *args, **kwargs) -> Optional[discord.Message]:
         try:
@@ -515,7 +596,8 @@ class Player:
         for page in paginator.pages:
             await self.send(page)
         mymsg = await self.send(
-            f"**Type the number of the user to choose for this action. You need to choose {amount} more.**"
+            "**Type the number of the user to choose for this action. You need to"
+            f" choose {amount} more.**"
         )
         chosen = []
         while len(chosen) < amount:
@@ -529,18 +611,23 @@ class Player:
             player = list_of_users[int(msg.content) - 1]
             chosen.append(player)
             await mymsg.edit(
-                content=f"**Type the number of the user to choose for this action. You need to choose {amount - len(chosen)} more.**"
+                content=(
+                    "**Type the number of the user to choose for this action. You need"
+                    f" to choose {amount - len(chosen)} more.**"
+                )
             )
         return chosen
 
     async def send_information(self) -> None:
         await self.send(
-            f"You are a **{self.role.name.lower().replace('_', ' ')}**\n\n{DESCRIPTIONS[self.role]}"
+            "You are a"
+            f" **{self.role.name.lower().replace('_', ' ')}**\n\n{DESCRIPTIONS[self.role]}"
         )
 
     async def send_love_msg(self, lover: Player) -> None:
         await self.send(
-            f"You are in love with {lover.user}! Amor really knew you had an eye on them..."
+            f"You are in love with {lover.user}! Amor really knew you had an eye on"
+            " them..."
         )
 
     async def choose_idol(self) -> None:
@@ -556,7 +643,8 @@ class Player:
 
     async def get_judge_symbol(self) -> str:
         await self.send(
-            "Please enter a phrase that will trigger a second election. It is case sensitive."
+            "Please enter a phrase that will trigger a second election. It is case"
+            " sensitive."
         )
         try:
             msg = await self.game.ctx.bot.wait_for_dms(
@@ -566,7 +654,8 @@ class Player:
         except asyncio.TimeoutError:
             symbol = "hahayes"
         await self.user.send(
-            f"The phrase is **{symbol}**. Enter it right within 10 seconds after an election to trigger another one."
+            f"The phrase is **{symbol}**. Enter it right within 10 seconds after an"
+            " election to trigger another one."
         )
         return symbol
 
@@ -673,7 +762,8 @@ class Player:
 
     async def send_family_msg(self, relationship: str, family: List[Player]) -> None:
         await self.send(
-            f"Your {relationship}(s) are/is: {'and'.join([str(u.user) for u in family])}"
+            f"Your {relationship}(s) are/is:"
+            f" {'and'.join([str(u.user) for u in family])}"
         )
 
     async def check_player_card(self) -> None:
@@ -688,7 +778,8 @@ class Player:
         except asyncio.TimeoutError:
             return
         await self.send(
-            f"{to_inspect.user} is a **{to_inspect.role.name.lower().replace('_', ' ')}**"
+            f"{to_inspect.user} is a"
+            f" **{to_inspect.role.name.lower().replace('_', ' ')}**"
         )
 
     async def choose_role_from(self, roles: List[Role]) -> None:
@@ -738,7 +829,8 @@ class Player:
         self.lives -= 1
         if self.dead:
             await self.game.ctx.send(
-                f"{self.user.mention} has died. They were a **{self.role.name.lower().replace('_', ' ')}**!"
+                f"{self.user.mention} has died. They were a"
+                f" **{self.role.name.lower().replace('_', ' ')}**!"
             )
             idol = discord.utils.find(lambda x: x.idol is not None, self.game.players)
             if idol and idol.idol == self:

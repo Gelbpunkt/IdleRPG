@@ -114,7 +114,8 @@ IdleRPG is a global bot, your characters are valid everywhere"""
             )
             await ctx.send(
                 _(
-                    "Successfully added your character **{name}**! Now use `{prefix}profile` to view your character!"
+                    "Successfully added your character **{name}**! Now use"
+                    " `{prefix}profile` to view your character!"
                 ).format(name=name, prefix=ctx.prefix)
             )
         elif len(name) < 3 or len(name) > 20:
@@ -199,7 +200,10 @@ IdleRPG is a global bot, your characters are valid everywhere"""
                     "icons": [
                         self.bot.get_class_line(c).lower() for c in profile["class"]
                     ],
-                    "adventure": f"Adventure {mission[0]}\n{mission[1] if not mission[2] else _('Finished')}"
+                    "adventure": (
+                        "Adventure"
+                        f" {mission[0]}\n{mission[1] if not mission[2] else _('Finished')}"
+                    )
                     if mission
                     else _("No Mission"),
                 },
@@ -308,7 +312,8 @@ IdleRPG is a global bot, your characters are valid everywhere"""
         _("""Shows your luck factor ranging from 0 to 2.""")
         await ctx.send(
             _(
-                "Your current luck multiplier is `{luck}x` (≈{percent}% more than usual (usual=1))."
+                "Your current luck multiplier is `{luck}x` (≈{percent}% more than usual"
+                " (usual=1))."
             ).format(
                 luck=ctx.character_data["luck"],
                 percent=(ctx.character_data["luck"] - 1) * 100,
@@ -335,7 +340,8 @@ IdleRPG is a global bot, your characters are valid everywhere"""
             points = ctx.character_data["xp"]
             await ctx.send(
                 _(
-                    "You currently have **{points} XP**, which means you are on Level **{level}**. Missing to next level: **{missing}**"
+                    "You currently have **{points} XP**, which means you are on Level"
+                    " **{level}**. Missing to next level: **{missing}**"
                 ).format(
                     points=points,
                     level=rpgtools.xptolevel(points),
@@ -346,7 +352,8 @@ IdleRPG is a global bot, your characters are valid everywhere"""
             points = ctx.user_data["xp"]
             await ctx.send(
                 _(
-                    "{user} has **{points} XP** and is on Level **{level}**. Missing to next level: **{missing}**"
+                    "{user} has **{points} XP** and is on Level **{level}**. Missing to"
+                    " next level: **{missing}**"
                 ).format(
                     user=user,
                     points=points,
@@ -378,7 +385,8 @@ IdleRPG is a global bot, your characters are valid everywhere"""
             result.add_field(
                 name=f"{weapon['name']} {eq}",
                 value=_(
-                    "ID: `{id}`, Type: `{type_}` (uses {hand} hand(s)) with {statstr}. Value is **${value}**{signature}"
+                    "ID: `{id}`, Type: `{type_}` (uses {hand} hand(s)) with {statstr}."
+                    " Value is **${value}**{signature}"
                 ).format(
                     id=weapon["id"],
                     type_=weapon["type"],
@@ -414,19 +422,28 @@ IdleRPG is a global bot, your characters are valid everywhere"""
         if itemtype not in self.bot.config.item_types + ["All"]:
             return await ctx.send(
                 _(
-                    "Please select a valid item type or `all`. Available types: `{all_types}`"
+                    "Please select a valid item type or `all`. Available types:"
+                    " `{all_types}`"
                 ).format(all_types=", ".join(self.bot.config.item_types))
             )
         if itemtype == "All":
             ret = await self.bot.pool.fetch(
-                'SELECT ai.*, i.equipped FROM profile p JOIN allitems ai ON (p.user=ai.owner) JOIN inventory i ON (ai.id=i.item) WHERE p."user"=$1 AND ((ai."damage"+ai."armor" BETWEEN $2 AND $3) OR i."equipped") ORDER BY i."equipped" DESC, ai."damage"+ai."armor" DESC;',
+                "SELECT ai.*, i.equipped FROM profile p JOIN allitems ai ON"
+                " (p.user=ai.owner) JOIN inventory i ON (ai.id=i.item) WHERE"
+                ' p."user"=$1 AND ((ai."damage"+ai."armor" BETWEEN $2 AND $3) OR'
+                ' i."equipped") ORDER BY i."equipped" DESC, ai."damage"+ai."armor"'
+                " DESC;",
                 ctx.author.id,
                 lowest,
                 highest,
             )
         else:
             ret = await self.bot.pool.fetch(
-                'SELECT ai.*, i.equipped FROM profile p JOIN allitems ai ON (p.user=ai.owner) JOIN inventory i ON (ai.id=i.item) WHERE p."user"=$1 AND ((ai."damage"+ai."armor" BETWEEN $2 AND $3 AND ai."type"=$4)  OR i."equipped") ORDER BY i."equipped" DESC, ai."damage"+ai."armor" DESC;',
+                "SELECT ai.*, i.equipped FROM profile p JOIN allitems ai ON"
+                " (p.user=ai.owner) JOIN inventory i ON (ai.id=i.item) WHERE"
+                ' p."user"=$1 AND ((ai."damage"+ai."armor" BETWEEN $2 AND $3 AND'
+                ' ai."type"=$4)  OR i."equipped") ORDER BY i."equipped" DESC,'
+                ' ai."damage"+ai."armor" DESC;',
                 ctx.author.id,
                 lowest,
                 highest,
@@ -498,7 +515,8 @@ IdleRPG is a global bot, your characters are valid everywhere"""
         else:
             async with self.bot.pool.acquire() as conn:
                 value, count = await conn.fetchval(
-                    'SELECT (SUM("value"), COUNT("value")) FROM loot WHERE "id"=ANY($1) AND "user"=$2;',
+                    'SELECT (SUM("value"), COUNT("value")) FROM loot WHERE "id"=ANY($1)'
+                    ' AND "user"=$2;',
                     loot_ids,
                     ctx.author.id,
                 )
@@ -579,7 +597,8 @@ IdleRPG is a global bot, your characters are valid everywhere"""
         _("""Equips an item of yours by ID.""")
         async with self.bot.pool.acquire() as conn:
             item = await conn.fetchrow(
-                'SELECT ai.* FROM inventory i JOIN allitems ai ON (i."item"=ai."id") WHERE ai."owner"=$1 and ai."id"=$2;',
+                'SELECT ai.* FROM inventory i JOIN allitems ai ON (i."item"=ai."id")'
+                ' WHERE ai."owner"=$1 and ai."id"=$2;',
                 ctx.author.id,
                 itemid,
             )
@@ -590,7 +609,9 @@ IdleRPG is a global bot, your characters are valid everywhere"""
                     )
                 )
             olditems = await conn.fetch(
-                "SELECT ai.* FROM profile p JOIN allitems ai ON (p.user=ai.owner) JOIN inventory i ON (ai.id=i.item) WHERE i.equipped IS TRUE AND p.user=$1;",
+                "SELECT ai.* FROM profile p JOIN allitems ai ON (p.user=ai.owner) JOIN"
+                " inventory i ON (ai.id=i.item) WHERE i.equipped IS TRUE AND"
+                " p.user=$1;",
                 ctx.author.id,
             )
             put_off = []
@@ -616,7 +637,8 @@ IdleRPG is a global bot, your characters are valid everywhere"""
                             and olditems[0]["hand"] == item["hand"]
                         ):
                             await conn.execute(
-                                'UPDATE inventory SET "equipped"=False WHERE "item"=$1;',
+                                'UPDATE inventory SET "equipped"=False WHERE'
+                                ' "item"=$1;',
                                 olditems[0]["id"],
                             )
                             put_off = [olditems[0]["id"]]
@@ -657,7 +679,8 @@ IdleRPG is a global bot, your characters are valid everywhere"""
         if put_off:
             await ctx.send(
                 _(
-                    "Successfully equipped item `{itemid}` and put off item(s) {olditems}."
+                    "Successfully equipped item `{itemid}` and put off item(s)"
+                    " {olditems}."
                 ).format(
                     olditems=", ".join(f"`{i}`" for i in put_off), itemid=item["id"]
                 )
@@ -674,7 +697,8 @@ IdleRPG is a global bot, your characters are valid everywhere"""
         _("""Unequip one of your equipped items""")
         async with self.bot.pool.acquire() as conn:
             item = await conn.fetchrow(
-                'SELECT * FROM inventory i JOIN allitems ai ON (i."item"=ai."id") WHERE ai."owner"=$1 and ai."id"=$2;',
+                'SELECT * FROM inventory i JOIN allitems ai ON (i."item"=ai."id") WHERE'
+                ' ai."owner"=$1 and ai."id"=$2;',
                 ctx.author.id,
                 itemid,
             )
@@ -720,7 +744,8 @@ IdleRPG is a global bot, your characters are valid everywhere"""
                 await self.bot.reset_cooldown(ctx)
                 return await ctx.send(
                     _(
-                        "The items are of unequal type. You may only merge a sword with a sword or a shield with a shield."
+                        "The items are of unequal type. You may only merge a sword with"
+                        " a sword or a shield with a shield."
                     )
                 )
             stat = "damage" if item["type"] != "Shield" else "armor"
@@ -740,7 +765,8 @@ IdleRPG is a global bot, your characters are valid everywhere"""
                 await self.bot.reset_cooldown(ctx)
                 return await ctx.send(
                     _(
-                        "The second item's stat must be in the range of `{min_}` to `{max_}` to upgrade an item with the stat of `{stat}`."
+                        "The second item's stat must be in the range of `{min_}` to"
+                        " `{max_}` to upgrade an item with the stat of `{stat}`."
                     ).format(min_=min_, max_=max_, stat=main)
                 )
             await conn.execute(
@@ -749,7 +775,8 @@ IdleRPG is a global bot, your characters are valid everywhere"""
             await conn.execute('DELETE FROM allitems WHERE "id"=$1;', seconditemid)
         await ctx.send(
             _(
-                "The {stat} of your **{item}** is now **{newstat}**. The other item was destroyed."
+                "The {stat} of your **{item}** is now **{newstat}**. The other item was"
+                " destroyed."
             ).format(stat=stat, item=item["name"], newstat=main + 1)
         )
 
@@ -788,7 +815,8 @@ IdleRPG is a global bot, your characters are valid everywhere"""
 
         if not await ctx.confirm(
             _(
-                "Are you sure you want to upgrade this item: {item}? It will cost **${pricetopay}**."
+                "Are you sure you want to upgrade this item: {item}? It will cost"
+                " **${pricetopay}**."
             ).format(item=item["name"], pricetopay=pricetopay)
         ):
             return await ctx.send(_("Weapon upgrade cancelled."))
@@ -796,7 +824,8 @@ IdleRPG is a global bot, your characters are valid everywhere"""
             await self.bot.reset_cooldown(ctx)
             return await ctx.send(
                 _(
-                    "You are too poor to upgrade this item. The upgrade costs **${pricetopay}**, but you only have **${money}**."
+                    "You are too poor to upgrade this item. The upgrade costs"
+                    " **${pricetopay}**, but you only have **${money}**."
                 ).format(pricetopay=pricetopay, money=ctx.character_data["money"])
             )
         async with self.bot.pool.acquire() as conn:
@@ -814,7 +843,8 @@ IdleRPG is a global bot, your characters are valid everywhere"""
         )
         await ctx.send(
             _(
-                "The {stat} of your **{item}** is now **{newstat}**. **${pricetopay}** has been taken off your balance."
+                "The {stat} of your **{item}** is now **{newstat}**. **${pricetopay}**"
+                " has been taken off your balance."
             ).format(
                 stat=stattoupgrade,
                 item=item["name"],
@@ -847,7 +877,8 @@ IdleRPG is a global bot, your characters are valid everywhere"""
             )
         await ctx.send(
             _(
-                "Success!\n{other} now has **${othermoney}**, you now have **${authormoney}**."
+                "Success!\n{other} now has **${othermoney}**, you now have"
+                " **${authormoney}**."
             ).format(
                 other=other.mention, othermoney=othermoney, authormoney=authormoney
             )
@@ -864,7 +895,8 @@ IdleRPG is a global bot, your characters are valid everywhere"""
         if not name:
             await ctx.send(
                 _(
-                    "What shall your character's name be? (Minimum 3 Characters, Maximum 20)"
+                    "What shall your character's name be? (Minimum 3 Characters,"
+                    " Maximum 20)"
                 )
             )
 
@@ -893,7 +925,8 @@ IdleRPG is a global bot, your characters are valid everywhere"""
         _("""Deletes your character.""")
         if not await ctx.confirm(
             _(
-                "Are you absolutely sure you want to delete your character? React in the next 30 seconds to confirm.\n**This cannot be undone.**"
+                "Are you absolutely sure you want to delete your character? React in"
+                " the next 30 seconds to confirm.\n**This cannot be undone.**"
             )
         ):
             return await ctx.send(_("Cancelled deletion of your character."))
@@ -938,7 +971,8 @@ IdleRPG is a global bot, your characters are valid everywhere"""
         )
         await ctx.send(
             _(
-                "Successfully set your profile colour to `{colour}`. Hint: If you used a hex colour code, you must include the `#`."
+                "Successfully set your profile colour to `{colour}`. Hint: If you used"
+                " a hex colour code, you must include the `#`."
             ).format(colour=colour)
         )
 

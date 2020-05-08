@@ -46,7 +46,10 @@ class Trivia(commands.Cog):
         answer = await self.bot.paginator.Choose(
             entries=entries,
             title=question["question"],
-            footer=f"Difficulty: {question['difficulty']} | Category: {question['category']}",
+            footer=(
+                f"Difficulty: {question['difficulty']} | Category:"
+                f" {question['category']}"
+            ),
             timeout=15,
         ).paginate(ctx)
         return answer == question["correct_answer"]

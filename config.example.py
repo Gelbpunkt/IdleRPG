@@ -263,32 +263,67 @@ adventure_names = {
 gods = {
     "Guilt": {
         "user": 1234567890,
-        "description": "Guilt is the goddess of suffering, obsession, misfortune, and wickedness. Every evil act is said to originally be a thought in her head.  Many curse her name, but Guilt just smiles and continues to grow stronger from the misery--after all, happiness without hardship is no happiness at all.",
+        "description": (
+            "Guilt is the goddess of suffering, obsession, misfortune, and wickedness."
+            " Every evil act is said to originally be a thought in her head.  Many"
+            " curse her name, but Guilt just smiles and continues to grow stronger from"
+            " the misery--after all, happiness without hardship is no happiness at all."
+        ),
         "boundaries": (0.0, 2.0),
     },
     "Tet": {
         "user": 1234567890,
-        "description": "Tet, god of play. Tired of seeing a world, where issues were resolved by war and violence, he introduced a new system where all trifles would be decided by games. But never mind that, let's have some fun now shall we.",
+        "description": (
+            "Tet, god of play. Tired of seeing a world, where issues were resolved by"
+            " war and violence, he introduced a new system where all trifles would be"
+            " decided by games. But never mind that, let's have some fun now shall we."
+        ),
         "boundaries": (0.8, 1.2),
     },
     "The Assassin": {
         "user": 1234567890,
-        "description": "Karmic retribution type. The judge, jury, and executioner. No one really knows of him or his real name. He is shrouded in mystery, but there are still those who offer to him to keep him at bay or to strike down their foes.",
+        "description": (
+            "Karmic retribution type. The judge, jury, and executioner. No one really"
+            " knows of him or his real name. He is shrouded in mystery, but there are"
+            " still those who offer to him to keep him at bay or to strike down their"
+            " foes."
+        ),
         "boundaries": (0.75, 1.25),
     },
     "Kvothe": {
         "user": 1234567890,
-        "description": "I have been called Kvothe the Bloodless, Kvothe the Arcane, and Kvothe Kingkiller. I have earned those names. Bought and paid for them. I have stolen princesses back from sleeping barrow kings. I have spent the night with Felurian and left with both my sanity and my life. I tread paths by moonlight that others fear to speak of during day. I have talked to Gods, loved women, and written songs that make the minstrels weep. You may have heard of me.",
+        "description": (
+            "I have been called Kvothe the Bloodless, Kvothe the Arcane, and Kvothe"
+            " Kingkiller. I have earned those names. Bought and paid for them. I have"
+            " stolen princesses back from sleeping barrow kings. I have spent the night"
+            " with Felurian and left with both my sanity and my life. I tread paths by"
+            " moonlight that others fear to speak of during day. I have talked to Gods,"
+            " loved women, and written songs that make the minstrels weep. You may have"
+            " heard of me."
+        ),
         "boundaries": (0.7, 1.3),
     },
     "Asmodeus": {
         "user": 1234567890,
-        "description": "Asmodeus, god of death. The reason adventurers don't die is because they give up their loot to him in order for them to live again. Their loot is the price they pay for a second chance.",
+        "description": (
+            "Asmodeus, god of death. The reason adventurers don't die is because they"
+            " give up their loot to him in order for them to live again. Their loot is"
+            " the price they pay for a second chance."
+        ),
         "boundaries": (0.7, 1.3),
     },
     "Salutations": {
         "user": 1234567890,
-        "description": "Known for excelling at greetings and making mutual relationships with every deity and also gaining followers due to his history/characteristic. Despite his natural talent of mannerism and the swift making of relationships with not just gods, but humans as well, he is not to be easily fooled. Unironically, his most loyal follower is Cyberus, an ancient wolf general that has stood by and served him for the longest of times. Many fear Cyberus, but it only attacks when provoked or ordered to by Sal.",
+        "description": (
+            "Known for excelling at greetings and making mutual relationships with"
+            " every deity and also gaining followers due to his history/characteristic."
+            " Despite his natural talent of mannerism and the swift making of"
+            " relationships with not just gods, but humans as well, he is not to be"
+            " easily fooled. Unironically, his most loyal follower is Cyberus, an"
+            " ancient wolf general that has stood by and served him for the longest of"
+            " times. Many fear Cyberus, but it only attacks when provoked or ordered to"
+            " by Sal."
+        ),
         "boundaries": (0.5, 1.5),
     },
     "War God Fox": {
@@ -303,17 +338,31 @@ gods = {
     },
     "CHamburr": {
         "user": 1234567890,
-        "description": "Omniscient. Omnipotent. Omnipresent. An all-round god powered by endless streams of blood, with the one goal -- of flowing it through all mankind. The day he was born, he promised to give his unexhaustive love equally to everyone...",
+        "description": (
+            "Omniscient. Omnipotent. Omnipresent. An all-round god powered by endless"
+            " streams of blood, with the one goal -- of flowing it through all mankind."
+            " The day he was born, he promised to give his unexhaustive love equally to"
+            " everyone..."
+        ),
         "boundaries": (0.8, 1.2),
     },
     "Eden": {
         "user": 1234567890,
-        "description": "Eden is a goddess of sanctuary, protection and nature. People whisper prayers to her to keep them safe from danger and to find sanctuary from those who wish them harm. Her garden lays deep in the world filled with beauty and splendor. Those who seek it must travel into the depths of nature and pass the trails of the gatekeeper to enter.",
+        "description": (
+            "Eden is a goddess of sanctuary, protection and nature. People whisper"
+            " prayers to her to keep them safe from danger and to find sanctuary from"
+            " those who wish them harm. Her garden lays deep in the world filled with"
+            " beauty and splendor. Those who seek it must travel into the depths of"
+            " nature and pass the trails of the gatekeeper to enter."
+        ),
         "boundaries": (0.5, 1.5),
     },
     "Jesus": {
         "user": 1234567890,
-        "description": "Sent from God to end the suffering and to bring light back where it is needed the most.",
+        "description": (
+            "Sent from God to end the suffering and to bring light back where it is"
+            " needed the most."
+        ),
         "boundaries": (0.0, 2.0),
     },
 }

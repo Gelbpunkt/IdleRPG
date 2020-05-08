@@ -150,7 +150,9 @@ Server created at: `{created_at}`"""
 `Game.....`: {game}"""
             ).format(
                 joined=str(member.joined_at).split(".")[0],
-                status=f"{statuses[str(member.status)]}{str(member.status).capitalize()}",
+                status=(
+                    f"{statuses[str(member.status)]}{str(member.status).capitalize()}"
+                ),
                 toprole=member.top_role.name,
                 roles=", ".join([role.name for role in member.roles]),
                 game=str(member.activity) if member.activity else _("No Game Playing"),
@@ -181,7 +183,8 @@ Server created at: `{created_at}`"""
         prefix_ = self.bot.all_prefixes.get(ctx.guild.id, self.bot.config.global_prefix)
         await ctx.send(
             _(
-                "The prefix for server **{server}** is `{serverprefix}`.\n\n`{prefix}settings prefix` changes it."
+                "The prefix for server **{server}** is"
+                " `{serverprefix}`.\n\n`{prefix}settings prefix` changes it."
             ).format(server=ctx.guild, serverprefix=prefix_, prefix=ctx.prefix)
         )
 

@@ -148,7 +148,7 @@ class Maths(commands.Cog):
 
         def p_statements(p):
             """statements : statement
-                          | statements NEWLINE statement"""
+            | statements NEWLINE statement"""
             if len(p) == 2:
                 new_thing = p[1]
             else:
@@ -175,12 +175,12 @@ class Maths(commands.Cog):
 
         def p_expression_binop(p):
             """expression : expression PLUS expression
-                          | expression MINUS expression
-                          | expression TIMES expression
-                          | expression DIVIDE expression
-                          | expression MODULO expression
-                          | expression SQUARE expression
-                          | expression FACTORIAL"""
+            | expression MINUS expression
+            | expression TIMES expression
+            | expression DIVIDE expression
+            | expression MODULO expression
+            | expression SQUARE expression
+            | expression FACTORIAL"""
             if p[2] == "+":
                 p[0] = p[1] + p[3]
             elif p[2] == "-":

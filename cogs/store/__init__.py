@@ -41,7 +41,9 @@ class Store(commands.Cog):
         shopembed.add_field(
             name=_("Boosters"),
             value=_(
-                "`#1` Time Booster\t**$1000**\tBoosts adventure time by 50%\n`#2` Luck Booster\t**$500**\tBoosts adventure luck by 25%\n`#3` Money Booster\t**$1000**\tBoosts adventure money rewards by 25%"
+                "`#1` Time Booster\t**$1000**\tBoosts adventure time by 50%\n`#2` Luck"
+                " Booster\t**$500**\tBoosts adventure luck by 25%\n`#3` Money"
+                " Booster\t**$1000**\tBoosts adventure money rewards by 25%"
             ),
             inline=False,
         )
@@ -62,7 +64,8 @@ class Store(commands.Cog):
             return await ctx.send(_("You're too poor."))
         if booster != "all":
             await self.bot.pool.execute(
-                f'UPDATE profile SET {booster}_booster={booster}_booster+$1, "money"="money"-$2 WHERE "user"=$3;',
+                f"UPDATE profile SET {booster}_booster={booster}_booster+$1,"
+                ' "money"="money"-$2 WHERE "user"=$3;',
                 amount,
                 price,
                 ctx.author.id,
@@ -72,7 +75,9 @@ class Store(commands.Cog):
             )
         else:
             await self.bot.pool.execute(
-                'UPDATE profile SET "time_booster"="time_booster"+$1, "luck_booster"="luck_booster"+$1, "money_booster"="money_booster"+$1, "money"="money"-$2 WHERE "user"=$3;',
+                'UPDATE profile SET "time_booster"="time_booster"+$1,'
+                ' "luck_booster"="luck_booster"+$1, "money_booster"="money_booster"+$1,'
+                ' "money"="money"-$2 WHERE "user"=$3;',
                 amount,
                 price,
                 ctx.author.id,
@@ -82,7 +87,8 @@ class Store(commands.Cog):
             )
         await ctx.send(
             _(
-                "Successfully bought **{amount}x** {booster} booster(s). Use `{prefix}boosters` to view your new boosters."
+                "Successfully bought **{amount}x** {booster} booster(s). Use"
+                " `{prefix}boosters` to view your new boosters."
             ).format(amount=amount, booster=booster, prefix=ctx.prefix)
         )
 
@@ -122,7 +128,10 @@ class Store(commands.Cog):
         await ctx.send(
             embed=discord.Embed(
                 title=_("Your Boosters"),
-                description=f"{desc}\n\n{a}: `{timeboosters}`\n{b}: `{luckboosters}`\n{c}: `{moneyboosters}`",
+                description=(
+                    f"{desc}\n\n{a}: `{timeboosters}`\n{b}: `{luckboosters}`\n{c}:"
+                    f" `{moneyboosters}`"
+                ),
                 colour=discord.Colour.blurple(),
             ).set_footer(
                 text=_("Use {prefix}activate to activate one").format(prefix=ctx.prefix)
@@ -146,25 +155,29 @@ class Store(commands.Cog):
             if check:
                 if not await ctx.confirm(
                     _(
-                        "This booster is already running. Do you want to refresh it anyways?"
+                        "This booster is already running. Do you want to refresh it"
+                        " anyways?"
                     )
                 ):
                     return
 
             await self.bot.pool.execute(
-                f'UPDATE profile SET "{boostertype}_booster"="{boostertype}_booster"-1 WHERE "user"=$1;',
+                f'UPDATE profile SET "{boostertype}_booster"="{boostertype}_booster"-1'
+                ' WHERE "user"=$1;',
                 ctx.author.id,
             )
             await self.bot.activate_booster(ctx.author, boostertype)
             await ctx.send(
                 _(
-                    "Successfully activated a **{booster} booster** for the next **24 hours**!"
+                    "Successfully activated a **{booster} booster** for the next **24"
+                    " hours**!"
                 ).format(booster=boostertype.title())
             )
         else:
             if not await ctx.confirm(
                 _(
-                    "This will overwrite all active boosters and refresh them. Are you sure?"
+                    "This will overwrite all active boosters and refresh them. Are you"
+                    " sure?"
                 )
             ):
                 return

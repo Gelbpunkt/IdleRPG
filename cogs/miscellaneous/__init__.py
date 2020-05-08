@@ -107,7 +107,8 @@ class Miscellaneous(commands.Cog):
                 [types[num - 3]] * 80 + [types[num - 2]] * 19 + [types[num - 1]] * 1
             )
             await self.bot.pool.execute(
-                f'UPDATE profile SET "crates_{type_}"="crates_{type_}"+$1 WHERE "user"=$2;',
+                f'UPDATE profile SET "crates_{type_}"="crates_{type_}"+$1 WHERE'
+                ' "user"=$2;',
                 amt,
                 ctx.author.id,
             )
@@ -122,7 +123,8 @@ class Miscellaneous(commands.Cog):
 
         await ctx.send(
             _(
-                "You received your daily {txt}!\nYou are on a streak of **{streak}** days!"
+                "You received your daily {txt}!\nYou are on a streak of **{streak}**"
+                " days!"
             ).format(txt=txt, money=money, streak=streak)
         )
 
@@ -135,7 +137,8 @@ class Miscellaneous(commands.Cog):
         if not streak:
             return await ctx.send(
                 _(
-                    "You don't have a daily streak yet. You can get one going by using the command `{prefix}daily`!"
+                    "You don't have a daily streak yet. You can get one going by using"
+                    " the command `{prefix}daily`!"
                 ).format(prefix=ctx.prefix)
             )
         await ctx.send(
@@ -220,7 +223,8 @@ Even $1 can help us.
         _("""Invite link for the bot.""")
         await ctx.send(
             _(
-                "You are running version **{version}** by The IdleRPG Developers.\nInvite me! {url}"
+                "You are running version **{version}** by The IdleRPG"
+                " Developers.\nInvite me! {url}"
             ).format(
                 version=self.bot.version,
                 url=discord.utils.oauth_url(
@@ -235,7 +239,8 @@ Even $1 can help us.
         _("""Sends you the link to the official IdleRPG Support server.""")
         await ctx.send(
             _(
-                "Got problems or feature requests? Looking for people to play with? Join the support server:\nhttps://discord.gg/MSBatf6"
+                "Got problems or feature requests? Looking for people to play with?"
+                " Join the support server:\nhttps://discord.gg/MSBatf6"
             )
         )
 
@@ -548,7 +553,8 @@ https://git.travitia.xyz/Kenvyra/IdleRPG/compare/v4.5.1...v4.6.0
         except ValueError:
             return await ctx.send(
                 _(
-                    "Use the ndx format. E.g. `5d20` will roll 5 dice with 20 sides each."
+                    "Use the ndx format. E.g. `5d20` will roll 5 dice with 20 sides"
+                    " each."
                 )
             )
         if len(dice_type) != 2:
@@ -825,13 +831,18 @@ https://git.travitia.xyz/Kenvyra/IdleRPG/compare/v4.5.1...v4.6.0
         em.add_field(
             name="GamesROB",
             value=_(
-                "Trivia, Hangman, Minesweeper, Connect 4 and more, right from your chat! A bot offering non-RPG games made by deprilula28 and Fin.\n[top.gg Page](https://top.gg/bot/gamesrob)"
+                "Trivia, Hangman, Minesweeper, Connect 4 and more, right from your"
+                " chat! A bot offering non-RPG games made by deprilula28 and"
+                " Fin.\n[top.gg Page](https://top.gg/bot/gamesrob)"
             ),
         )
         em.add_field(
             name="Cautious Memory",
             value=_(
-                "Cautious Memory brings wiki-style pages to your server. Use it to document who's who in your server, inside jokes, or community lore. Includes a full featured permissions system to keep your pages squeaky clean.\n[top.gg Page](https://top.gg/bot/541707781665718302)"
+                "Cautious Memory brings wiki-style pages to your server. Use it to"
+                " document who's who in your server, inside jokes, or community lore."
+                " Includes a full featured permissions system to keep your pages"
+                " squeaky clean.\n[top.gg Page](https://top.gg/bot/541707781665718302)"
             ),
         )
         await ctx.send(embed=em)
@@ -862,7 +873,8 @@ https://git.travitia.xyz/Kenvyra/IdleRPG/compare/v4.5.1...v4.6.0
         if not query:
             return await ctx.send(
                 _(
-                    "Check out the official IdleRPG Wiki here:\n<https://wiki.travitia.xyz/index.php?title=Main_Page>"
+                    "Check out the official IdleRPG Wiki"
+                    " here:\n<https://wiki.travitia.xyz/index.php?title=Main_Page>"
                 )
             )
         try:

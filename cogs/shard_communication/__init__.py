@@ -90,7 +90,8 @@ def alliance_on_cooldown(cooldown: int):
         data = getattr(ctx, "character_data", None)
         if not data:
             alliance = await ctx.bot.pool.fetchval(
-                'SELECT alliance FROM guild WHERE "id"=(SELECT guild FROM profile WHERE "user"=$1);',
+                'SELECT alliance FROM guild WHERE "id"=(SELECT guild FROM profile WHERE'
+                ' "user"=$1);',
                 ctx.author.id,
             )
         else:
@@ -482,7 +483,10 @@ class Sharding(commands.Cog):
         # actual_status.keys = active: bool, status: str, name: str, started_at: float, latency: str, cluster_id: int, shard_list: list[int]
         status = "\n".join(
             [
-                f"Cluster #{i['cluster_id']} ({i['name']}), shards {nice_join(i['shard_list'])}: {'Active' if i['active'] else 'Inactive'} {i['status']}, latency {i['latency']}. Started at: {i['started_at']}"
+                f"Cluster #{i['cluster_id']} ({i['name']}), shards"
+                f" {nice_join(i['shard_list'])}:"
+                f" {'Active' if i['active'] else 'Inactive'} {i['status']}, latency"
+                f" {i['latency']}. Started at: {i['started_at']}"
                 for i in actual_status
             ]
         )

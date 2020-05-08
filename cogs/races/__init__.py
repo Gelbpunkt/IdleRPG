@@ -35,7 +35,8 @@ class Races(commands.Cog):
                 return await ctx.send(_("You have no more reset points."))
             if not await ctx.confirm(
                 _(
-                    "You already chose a race. This change now will cost you a reset point. Are you sure?"
+                    "You already chose a race. This change now will cost you a reset"
+                    " point. Are you sure?"
                 )
             ):
                 return
@@ -43,35 +44,53 @@ class Races(commands.Cog):
             discord.Embed(
                 title=_("Human"),
                 description=_(
-                    "Humans are a team. They work and fight hand in hand and never give up, even when some of their friends already died. Their rage and hate against enemies makes them attack efficient and concentrated. Their attack and defense skills are pretty equal."
+                    "Humans are a team. They work and fight hand in hand and never give"
+                    " up, even when some of their friends already died. Their rage and"
+                    " hate against enemies makes them attack efficient and"
+                    " concentrated. Their attack and defense skills are pretty equal."
                 ),
                 color=self.bot.config.primary_colour,
             ),
             discord.Embed(
                 title=_("Dwarf"),
                 description=_(
-                    "Dwarves are the masters of their forge. Although they're very small, they can deal a lot of damage with their self-crafted equipment. Because of their reflexes, they have more defense than attack. Want an ale?"
+                    "Dwarves are the masters of their forge. Although they're very"
+                    " small, they can deal a lot of damage with their self-crafted"
+                    " equipment. Because of their reflexes, they have more defense than"
+                    " attack. Want an ale?"
                 ),
                 color=self.bot.config.primary_colour,
             ),
             discord.Embed(
                 title=_("Elf"),
                 description=_(
-                    "Elves are the masteres of camouflage. They melt with their enviroment to attack enemies without their knowing. Their bound to nature made them good friends of the wild spirits which they can call for help and protection. They have more attack than defense."
+                    "Elves are the masteres of camouflage. They melt with their"
+                    " enviroment to attack enemies without their knowing. Their bound"
+                    " to nature made them good friends of the wild spirits which they"
+                    " can call for help and protection. They have more attack than"
+                    " defense."
                 ),
                 color=self.bot.config.primary_colour,
             ),
             discord.Embed(
                 title=_("Orc"),
                 description=_(
-                    "Orcs are a friendly race based on their rituals of calling their ancestors to bless the rain and the deeds of their tribe. More ugly than nice, they mostly avoid being attacked by enemies. If they can't avoid a fight, then they have mostly no real damage, only a bit, but a huge armour. Who cares about the damage as long as you don't die?"
+                    "Orcs are a friendly race based on their rituals of calling their"
+                    " ancestors to bless the rain and the deeds of their tribe. More"
+                    " ugly than nice, they mostly avoid being attacked by enemies. If"
+                    " they can't avoid a fight, then they have mostly no real damage,"
+                    " only a bit, but a huge armour. Who cares about the damage as long"
+                    " as you don't die?"
                 ),
                 color=self.bot.config.primary_colour,
             ),
             discord.Embed(
                 title=_("Jikill"),
                 description=_(
-                    "Jikills are dwarflike creatures with one eye in the middle of their face, which lets them have a big and huge forehead, big enough for their brain which can kill enemies. These sensitive creatures are easily knocked out."
+                    "Jikills are dwarflike creatures with one eye in the middle of"
+                    " their face, which lets them have a big and huge forehead, big"
+                    " enough for their brain which can kill enemies. These sensitive"
+                    " creatures are easily knocked out."
                 ),
                 color=self.bot.config.primary_colour,
             ),
@@ -133,7 +152,8 @@ class Races(commands.Cog):
         async with self.bot.pool.acquire() as conn:
             if not is_nothing(ctx):
                 await conn.execute(
-                    'UPDATE profile SET "reset_points"="reset_points"-$1 WHERE "user"=$2;',
+                    'UPDATE profile SET "reset_points"="reset_points"-$1 WHERE'
+                    ' "user"=$2;',
                     1,
                     ctx.author.id,
                 )

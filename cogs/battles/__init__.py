@@ -55,13 +55,15 @@ class Battles(commands.Cog):
         if not enemy:
             msg = await ctx.send(
                 _(
-                    "{author} seeks a battle! React with ⚔ now to duel them! The price is **${money}**."
+                    "{author} seeks a battle! React with ⚔ now to duel them! The price"
+                    " is **${money}**."
                 ).format(author=ctx.author.mention, money=money)
             )
         else:
             msg = await ctx.send(
                 _(
-                    "{author} seeks a battle with {enemy}! React with ⚔ now to duel them! The price is **${money}**."
+                    "{author} seeks a battle with {enemy}! React with ⚔ now to duel"
+                    " them! The price is **${money}**."
                 ).format(author=ctx.author.mention, enemy=enemy.mention, money=money)
             )
 
@@ -104,7 +106,8 @@ class Battles(commands.Cog):
 
         await ctx.send(
             _(
-                "Battle **{author}** vs **{enemy}** started! 30 seconds of fighting will now start!"
+                "Battle **{author}** vs **{enemy}** started! 30 seconds of fighting"
+                " will now start!"
             ).format(author=ctx.disp, enemy=enemy_.display_name)
         )
 
@@ -167,13 +170,15 @@ class Battles(commands.Cog):
         if not enemy:
             msg = await ctx.send(
                 _(
-                    "{author} seeks a raidbattle! React with ⚔ now to duel them! The price is **${money}**."
+                    "{author} seeks a raidbattle! React with ⚔ now to duel them! The"
+                    " price is **${money}**."
                 ).format(author=ctx.author.mention, money=money)
             )
         else:
             msg = await ctx.send(
                 _(
-                    "{author} seeks a raidbattle with {enemy}! React with ⚔ now to duel them! The price is **${money}**."
+                    "{author} seeks a raidbattle with {enemy}! React with ⚔ now to duel"
+                    " them! The price is **${money}**."
                 ).format(author=ctx.author.mention, enemy=enemy.mention, money=money)
             )
 
@@ -379,14 +384,16 @@ class Battles(commands.Cog):
         if not enemy:
             msg = await ctx.send(
                 _(
-                    "{author} seeks an active battle! React with ⚔ now to duel them! The price is **${money}**."
+                    "{author} seeks an active battle! React with ⚔ now to duel them!"
+                    " The price is **${money}**."
                 ).format(author=ctx.author.mention, money=money)
             )
 
         else:
             msg = await ctx.send(
                 _(
-                    "{author} seeks an active battle with {enemy}! React with ⚔ now to duel them! The price is **${money}**."
+                    "{author} seeks an active battle with {enemy}! React with ⚔ now to"
+                    " duel them! The price is **${money}**."
                 ).format(author=ctx.author.mention, enemy=enemy.mention, money=money)
             )
 
@@ -486,7 +493,8 @@ class Battles(commands.Cog):
             await msg.edit(
                 embed=discord.Embed(
                     description=_(
-                        "{prevaction}\n{player1}: **{hp1}** HP\n{player2}: **{hp2}** HP\nReact to play."
+                        "{prevaction}\n{player1}: **{hp1}** HP\n{player2}: **{hp2}**"
+                        " HP\nReact to play."
                     ).format(
                         prevaction="\n".join([i["lastmove"] for i in players.values()]),
                         player1=ctx.author.mention,
@@ -631,7 +639,8 @@ class Battles(commands.Cog):
         await msg.edit(
             embed=discord.Embed(
                 description=_(
-                    "{prevaction}\n{player1}: **{hp1}** HP\n{player2}: **{hp2}** HP\nReact to play."
+                    "{prevaction}\n{player1}: **{hp1}** HP\n{player2}: **{hp2}**"
+                    " HP\nReact to play."
                 ).format(
                     prevaction="\n".join([i["lastmove"] for i in players.values()]),
                     player1=ctx.author.mention,

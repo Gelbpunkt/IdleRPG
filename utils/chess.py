@@ -222,7 +222,11 @@ class ChessGame:
         file_ = await self.get_board()
         self.msg = await self.ctx.send(
             _(
-                "**Move {move_no}: {player}'s turn**\nSimply type your move. You have 2 minutes to enter a valid move. I accept normal notation as well as `resign` or `draw`.\nExample: `g1f3`, `Nf3`, `0-0` or `xe3`.\nMoves are case-sensitive! Pieces uppercase: `N`, `Q` or `B`, fields lowercase: `a`, `b` or `h`. Casteling is `0-0` or `0-0-0`."
+                "**Move {move_no}: {player}'s turn**\nSimply type your move. You have 2"
+                " minutes to enter a valid move. I accept normal notation as well as"
+                " `resign` or `draw`.\nExample: `g1f3`, `Nf3`, `0-0` or `xe3`.\nMoves"
+                " are case-sensitive! Pieces uppercase: `N`, `Q` or `B`, fields"
+                " lowercase: `a`, `b` or `h`. Casteling is `0-0` or `0-0-0`."
             ).format(move_no=self.move_no, player=player.mention),
             file=discord.File(fp=file_, filename="board.png"),
         )
@@ -256,13 +260,15 @@ class ChessGame:
         if self.colors[self.player] == "black":
             self.msg = await self.ctx.send(
                 _(
-                    "**Move {move_no}**\nLet me think... This might take up to 2 minutes"
+                    "**Move {move_no}**\nLet me think... This might take up to 2"
+                    " minutes"
                 ).format(move_no=self.move_no)
             )
         else:
             await self.msg.edit(
                 content=_(
-                    "**Move {move_no}**\nLet me think... This might take up to 2 minutes"
+                    "**Move {move_no}**\nLet me think... This might take up to 2"
+                    " minutes"
                 ).format(move_no=self.move_no)
             )
         try:
@@ -372,7 +378,8 @@ class ChessGame:
 
             await update_player_elos(self.ctx.bot, white, black, result)
             await self.ctx.bot.pool.execute(
-                'INSERT INTO chess_matches ("player1", "player2", "result", "pgn", "winner") VALUES ($1, $2, $3, $4, $5);',
+                'INSERT INTO chess_matches ("player1", "player2", "result", "pgn",'
+                ' "winner") VALUES ($1, $2, $3, $4, $5);',
                 white.id,
                 black.id,
                 result,

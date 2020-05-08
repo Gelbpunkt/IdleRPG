@@ -54,7 +54,8 @@ class Classes(commands.Cog):
             discord.Embed(
                 title=_("Warrior"),
                 description=_(
-                    "The tank class. Charge into battle with additional defense!\n+1 defense per evolution."
+                    "The tank class. Charge into battle with additional defense!\n+1"
+                    " defense per evolution."
                 ),
                 color=self.bot.config.primary_colour,
             ),
@@ -62,35 +63,45 @@ class Classes(commands.Cog):
                 title=_("Thief"),
                 description=_(
                     # xgettext: no-python-format
-                    "The sneaky money stealer...\nGet access to `{prefix}steal` to steal 10% of the target's money, if successful.\n+8% success chance per evolution."
+                    "The sneaky money stealer...\nGet access to `{prefix}steal` to"
+                    " steal 10% of the target's money, if successful.\n+8% success"
+                    " chance per evolution."
                 ).format(prefix=ctx.prefix),
                 color=self.bot.config.primary_colour,
             ),
             discord.Embed(
                 title=_("Mage"),
                 description=_(
-                    "Utilise powerful magic for stronger attacks.\n+1 damage per evolution."
+                    "Utilise powerful magic for stronger attacks.\n+1 damage per"
+                    " evolution."
                 ),
                 color=self.bot.config.primary_colour,
             ),
             discord.Embed(
                 title=_("Ranger"),
                 description=_(
-                    "Item hunter and trainer of their very own pet.\nGet access to `{prefix}pet` to interact with your pet and let it get items for you.\n+3 minimum stat and +6 maximum stat per evolution."
+                    "Item hunter and trainer of their very own pet.\nGet access to"
+                    " `{prefix}pet` to interact with your pet and let it get items for"
+                    " you.\n+3 minimum stat and +6 maximum stat per evolution."
                 ).format(prefix=ctx.prefix),
                 colour=self.bot.config.primary_colour,
             ),
             discord.Embed(
                 title=_("Raider"),
                 description=_(
-                    "A strong warrior who gives their life for the fight against Zerekiel.\nEvery evolution boosts your raidstats by an additional 10%."
+                    "A strong warrior who gives their life for the fight against"
+                    " Zerekiel.\nEvery evolution boosts your raidstats by an additional"
+                    " 10%."
                 ),
                 colour=self.bot.config.primary_colour,
             ),
             discord.Embed(
                 title=_("Ritualist"),
                 description=_(
-                    "A seer, a sacrificer and a follower.\nThe Ritualist devotes their life to the god they follow. For every evolution, their sacrifices are 5% more effective. They have twice the chance to get loot from adventures."
+                    "A seer, a sacrificer and a follower.\nThe Ritualist devotes their"
+                    " life to the god they follow. For every evolution, their"
+                    " sacrifices are 5% more effective. They have twice the chance to"
+                    " get loot from adventures."
                 ),
                 colour=self.bot.config.primary_colour,
             ),
@@ -101,7 +112,8 @@ class Classes(commands.Cog):
                 discord.Embed(
                     title=_("Paragon"),
                     description=_(
-                        "Absorb the appreciation of the devs into your soul to power up.\n+1 damage and defense per evolution."
+                        "Absorb the appreciation of the devs into your soul to power"
+                        " up.\n+1 damage and defense per evolution."
                     ),
                     color=self.bot.config.primary_colour,
                 )
@@ -126,7 +138,8 @@ class Classes(commands.Cog):
         new_classes[val] = profession_
         if not await ctx.confirm(
             _(
-                "You are about to select the `{profession}` class for yourself. {textaddon} Proceed?"
+                "You are about to select the `{profession}` class for yourself."
+                " {textaddon} Proceed?"
             ).format(
                 textaddon=_(
                     "This **costs nothing**, but changing it later will cost **$5000**."
@@ -162,7 +175,8 @@ class Classes(commands.Cog):
 
             async with self.bot.pool.acquire() as conn:
                 await conn.execute(
-                    'UPDATE profile SET "class"=$1, "money"="money"-$2 WHERE "user"=$3;',
+                    'UPDATE profile SET "class"=$1, "money"="money"-$2 WHERE'
+                    ' "user"=$3;',
                     new_classes,
                     5000,
                     ctx.author.id,
@@ -177,7 +191,8 @@ class Classes(commands.Cog):
             )
             await ctx.send(
                 _(
-                    "You selected the class `{profession}`. **$5000** was taken off your balance."
+                    "You selected the class `{profession}`. **$5000** was taken off"
+                    " your balance."
                 ).format(profession=_(profession))
             )
 
@@ -199,7 +214,8 @@ class Classes(commands.Cog):
                 except FileNotFoundError:
                     await ctx.send(
                         _(
-                            "The image for your class **{class_}** hasn't been added yet."
+                            "The image for your class **{class_}** hasn't been added"
+                            " yet."
                         ).format(class_=class_)
                     )
 
@@ -271,14 +287,16 @@ class Classes(commands.Cog):
         ):
             async with self.bot.pool.acquire() as conn:
                 usr = await conn.fetchrow(
-                    'SELECT "user", "money" FROM profile WHERE "money">=10 AND "user"!=$1 ORDER BY RANDOM() LIMIT 1;',
+                    'SELECT "user", "money" FROM profile WHERE "money">=10 AND'
+                    ' "user"!=$1 ORDER BY RANDOM() LIMIT 1;',
                     ctx.author.id,
                 )
 
                 if usr["user"] in self.bot.owner_ids:
                     return await ctx.send(
                         _(
-                            "You attempted to steal from a bot VIP, but the bodyguards caught you."
+                            "You attempted to steal from a bot VIP, but the bodyguards"
+                            " caught you."
                         )
                     )
 
@@ -364,7 +382,8 @@ class Classes(commands.Cog):
                 ctx.author.id,
             )
             await conn.execute(
-                'UPDATE pets SET "food"=CASE WHEN "food"+$1>=100 THEN 100 ELSE "food"+$1 END WHERE "user"=$2;',
+                'UPDATE pets SET "food"=CASE WHEN "food"+$1>=100 THEN 100 ELSE'
+                ' "food"+$1 END WHERE "user"=$2;',
                 item[3],
                 ctx.author.id,
             )
@@ -377,7 +396,8 @@ class Classes(commands.Cog):
             )
         await ctx.send(
             _(
-                "You bought **{item}** for your pet and increased its food bar by **{points}** points."
+                "You bought **{item}** for your pet and increased its food bar by"
+                " **{points}** points."
             ).format(item=f"{item[2]} {item[0]}", points=item[3])
         )
 
@@ -414,7 +434,8 @@ class Classes(commands.Cog):
                 ctx.author.id,
             )
             await conn.execute(
-                'UPDATE pets SET "drink"=CASE WHEN "drink"+$1>=100 THEN 100 ELSE "drink"+$1 END WHERE "user"=$2;',
+                'UPDATE pets SET "drink"=CASE WHEN "drink"+$1>=100 THEN 100 ELSE'
+                ' "drink"+$1 END WHERE "user"=$2;',
                 item[3],
                 ctx.author.id,
             )
@@ -427,7 +448,8 @@ class Classes(commands.Cog):
             )
         await ctx.send(
             _(
-                "You bought **{item}** for your pet and increased its drinks bar by **{points}** points."
+                "You bought **{item}** for your pet and increased its drinks bar by"
+                " **{points}** points."
             ).format(item=f"{item[2]} {item[0]}", points=item[3])
         )
 
@@ -441,13 +463,15 @@ class Classes(commands.Cog):
         _("""[Ranger Only] Cuddle your pet to make it love you.""")
         value = secrets.randbelow(12) + 1  # On average, it'll stay as is
         await self.bot.pool.execute(
-            'UPDATE pets SET "love"=CASE WHEN "love"+$1>=100 THEN 100 ELSE "love"+$1 END WHERE "user"=$2;',
+            'UPDATE pets SET "love"=CASE WHEN "love"+$1>=100 THEN 100 ELSE "love"+$1'
+            ' END WHERE "user"=$2;',
             value,
             ctx.author.id,
         )
         await ctx.send(
             _(
-                "Your pet adores you! :heart: Cuddling it has increased its love for you by **{value}** points."
+                "Your pet adores you! :heart: Cuddling it has increased its love for"
+                " you by **{value}** points."
             ).format(value=value)
         )
 
@@ -461,7 +485,8 @@ class Classes(commands.Cog):
         _("""[Ranger Only] Play with your pet to make it happier.""")
         value = secrets.randbelow(12) + 1  # On average, it'll stay as is
         await self.bot.pool.execute(
-            'UPDATE pets SET "joy"=CASE WHEN "joy"+$1>=100 THEN 100 ELSE "joy"+$1 END WHERE "user"=$2;',
+            'UPDATE pets SET "joy"=CASE WHEN "joy"+$1>=100 THEN 100 ELSE "joy"+$1 END'
+            ' WHERE "user"=$2;',
             value,
             ctx.author.id,
         )
@@ -514,7 +539,8 @@ class Classes(commands.Cog):
         ):
             return await ctx.send(
                 _(
-                    "I couldn't read that URL. Does it start with `http://` or `https://` and is either a png or jpeg?"
+                    "I couldn't read that URL. Does it start with `http://` or"
+                    " `https://` and is either a png or jpeg?"
                 )
             )
         await self.bot.pool.execute(

@@ -74,7 +74,8 @@ class Locale(commands.Cog):
         )
         await ctx.send(
             _(
-                "Your current language is **{current_locale}**. Available options: {all_locales}"
+                "Your current language is **{current_locale}**. Available options:"
+                " {all_locales}"
             ).format(current_locale=current_locale, all_locales=all_locales)
         )
 
@@ -91,7 +92,8 @@ class Locale(commands.Cog):
             self.bot.locale_cache[ctx.author.id] = locale
             await ctx.send(
                 _(
-                    "To permanently choose a language, please create a character and enter this command again. I set it to {language} temporarily."
+                    "To permanently choose a language, please create a character and"
+                    " enter this command again. I set it to {language} temporarily."
                 ).format(language=locale)
             )
         await ctx.message.add_reaction("\U00002705")

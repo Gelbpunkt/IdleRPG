@@ -54,7 +54,9 @@ class Tournament(commands.Cog):
         if ctx.channel.id == self.bot.config.official_tournament_channel_id:
             id_ = await self.bot.start_joins()
             await ctx.send(
-                f"A mass-tournament has been started. Please join at https://join.travitia.xyz/{id_} during the next 10 minutes! The prize is **${prize}**!"
+                "A mass-tournament has been started. Please join at"
+                f" https://join.travitia.xyz/{id_} during the next 10 minutes! The"
+                f" prize is **${prize}**!"
             )
             await asyncio.sleep(60 * 10)
             a_participants = await self.bot.get_joins(id_)
@@ -69,7 +71,8 @@ class Tournament(commands.Cog):
         else:
             msg = await ctx.send(
                 _(
-                    "{author} started a tournament! Free entries, prize is **${prize}**! React with ⚔ to join!"
+                    "{author} started a tournament! Free entries, prize is"
+                    " **${prize}**! React with ⚔ to join!"
                 ).format(author=ctx.author.mention, prize=prize)
             )
 
@@ -120,7 +123,8 @@ class Tournament(commands.Cog):
         if toremove != len(participants):
             await ctx.send(
                 _(
-                    "There are **{num}** entries, due to the fact we need a playable tournament, the last **{removed}** have been removed."
+                    "There are **{num}** entries, due to the fact we need a playable"
+                    " tournament, the last **{removed}** have been removed."
                 ).format(num=len(participants), removed=len(participants) - toremove)
             )
             participants = participants[: -(len(participants) - toremove)]
@@ -199,7 +203,9 @@ class Tournament(commands.Cog):
         if ctx.channel.id == self.bot.config.official_tournament_channel_id:
             id_ = await self.bot.start_joins()
             await ctx.send(
-                f"A mass-raidtournament has been started. Please join at https://join.travitia.xyz/{id_} during the next 10 minutes! The prize is **${prize}**!"
+                "A mass-raidtournament has been started. Please join at"
+                f" https://join.travitia.xyz/{id_} during the next 10 minutes! The"
+                f" prize is **${prize}**!"
             )
             await asyncio.sleep(60 * 10)
             a_participants = await self.bot.get_joins(id_)
@@ -214,7 +220,8 @@ class Tournament(commands.Cog):
         else:
             msg = await ctx.send(
                 _(
-                    "{author} started a raid tournament! Free entries, prize is **${prize}**! React with ⚔ to join!"
+                    "{author} started a raid tournament! Free entries, prize is"
+                    " **${prize}**! React with ⚔ to join!"
                 ).format(author=ctx.author.mention, prize=prize)
             )
             participants = [ctx.author]
@@ -263,7 +270,8 @@ class Tournament(commands.Cog):
         if toremove != len(participants):
             await ctx.send(
                 _(
-                    "There are **{num}** entries, due to the fact we need a playable raid tournament, the last **{removed}** have been removed."
+                    "There are **{num}** entries, due to the fact we need a playable"
+                    " raid tournament, the last **{removed}** have been removed."
                 ).format(num=len(participants), removed=len(participants) - toremove)
             )
             participants = participants[: -(len(participants) - toremove)]
@@ -338,7 +346,8 @@ class Tournament(commands.Cog):
                             (
                                 battle_log[-1][0] + 1,
                                 _(
-                                    "{attacker} attacks! {defender} takes **{dmg}HP** damage."
+                                    "{attacker} attacks! {defender} takes **{dmg}HP**"
+                                    " damage."
                                 ).format(
                                     attacker=attacker["user"].mention,
                                     defender=defender["user"].mention,
