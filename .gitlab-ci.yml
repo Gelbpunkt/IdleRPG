@@ -12,11 +12,13 @@ black:
   stage: Static Analysis
   script:
     - black .
+    - [ -z "$(git status --porcelain)" ] || exit 1
 
 isort:
   stage: Static Analysis
   script:
     - isort -rc .
+    - [ -z "$(git status --porcelain)" ] || exit 1
 
 flake8:
   stage: Static Analysis
