@@ -598,8 +598,8 @@ class Music(commands.Cog):
         if "error" in result:
             return await ctx.send(_(":warning: No results!"))
         p = commands.Paginator()
-        for l in result["content"].split("\n"):
-            for i in chunks(l, 1900):
+        for line in result["content"].split("\n"):
+            for i in chunks(line, 1900):
                 p.add_line(i)
         await self.bot.paginator.Paginator(
             title=result["song"]["full_title"], entries=p.pages, length=1,

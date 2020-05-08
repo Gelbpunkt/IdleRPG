@@ -26,10 +26,10 @@ from classes.converters import User
 from utils.checks import is_supporter
 
 
-def chunks(l, n):
-    """Yield successive n-sized chunks from l."""
-    for i in range(0, len(l), n):
-        yield l[i : i + n]
+def chunks(iterable, size):
+    """Yield successive n-sized chunks from an iterable."""
+    for i in range(0, len(iterable), size):
+        yield iterable[i : i + size]
 
 
 class Help(commands.Cog):

@@ -859,8 +859,8 @@ https://git.travitia.xyz/Kenvyra/IdleRPG/compare/v4.5.1...v4.6.0
         if not text:
             return await ctx.send(_("Could not parse article summary."))
         p = commands.Paginator()
-        for l in text.split("\n"):
-            for i in chunks(l, 1900):
+        for line in text.split("\n"):
+            for i in chunks(line, 1900):
                 p.add_line(i)
         await self.bot.paginator.Paginator(
             title=page.title, entries=p.pages, length=1
@@ -886,8 +886,8 @@ https://git.travitia.xyz/Kenvyra/IdleRPG/compare/v4.5.1...v4.6.0
             if not text:
                 return await ctx.send(_("No content to display."))
         p = commands.Paginator()
-        for l in text.split("\n"):
-            for i in chunks(l, 1900):
+        for line in text.split("\n"):
+            for i in chunks(line, 1900):
                 p.add_line(i)
         await self.bot.paginator.Paginator(
             title=page.title, entries=p.pages, length=1

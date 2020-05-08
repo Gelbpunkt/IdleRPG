@@ -23,6 +23,7 @@ import discord
 
 from discord.ext import commands
 
+from cogs.help import chunks
 from utils.misc import nice_join
 
 
@@ -31,17 +32,13 @@ class GameBase:
         self.players = players
         self.ctx = ctx
 
-    def chunks(self, l, n):
-        for i in range(0, len(l), n):
-            yield l[i : i + n]
-
-    def rand_chunks(self, l):
+    def rand_chunks(self, iterable):
         idx = 0
-        for i in range(0, len(l)):
+        for i in range(0, len(iterable)):
             if i < idx:
                 continue
             num = random.randint(1, 4)
-            yield l[i : i + num]
+            yield iterable[i : i + num]
             idx += num
 
     async def get_inputs(self):
@@ -254,7 +251,7 @@ class GameBase:
     async def send_cast(self):
         cast = copy.copy(self.players)
         random.shuffle(cast)
-        cast = list(self.chunks(cast, 2))
+        cast = list(chunks(cast, 2))
         self.cast = cast
         text = _("Team")
         paginator = commands.Paginator(prefix="", suffix="")

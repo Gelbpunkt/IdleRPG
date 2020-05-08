@@ -1,4 +1,4 @@
 #!/bin/bash
-isort -rc .
+isort .
 black .
 flake8

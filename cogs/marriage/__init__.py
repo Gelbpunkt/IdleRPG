@@ -528,8 +528,8 @@ class Marriage(commands.Cog):
                     _("While exploring the forest, they have gotten lost."),
                     _("They've left through a portal into another dimension..."),
                     _(
-                        "The unbearable pain of stepping on a Lego\© brick killed them."
-                    ),  # noqa
+                        "The unbearable pain of stepping on a Lego\© brick killed them."  # noqa
+                    ),
                     _("You heard a landmine going off nearby..."),
                     _("They have been abducted by aliens!"),
                     _("The Catholic Church got them..."),

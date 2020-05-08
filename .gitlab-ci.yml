@@ -9,16 +9,19 @@ stages:
 black:
   stage: Static Analysis
   script:
+    - black --version
     - black .
     - ash -c '[ -z "$(git status --porcelain)" ] || exit 1'
 
 isort:
   stage: Static Analysis
   script:
-    - isort -rc .
+    - isort --version
+    - isort .
     - ash -c '[ -z "$(git status --porcelain)" ] || exit 1'
 
 flake8:
   stage: Static Analysis
   script:
+    - flake8 --version
     - flake8

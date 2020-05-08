@@ -29,8 +29,9 @@ from classes.context import Context
 from classes.enums import DonatorRank
 
 if TYPE_CHECKING:
-    from classes.bot import Bot
     from discord.ext.commands.core import _CheckDecorator
+
+    from classes.bot import Bot
 
 
 class NoCharacter(commands.CheckFailure):
