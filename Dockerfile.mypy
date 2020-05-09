@@ -1,5 +1,0 @@
-FROM idlerpg:latest
-
-RUN apk add --no-cache --virtual .deps gcc musl-dev && \
-    pip3 install git+https://github.com/CyberSaxosTiGER/mypy && \
-    apk del .deps
