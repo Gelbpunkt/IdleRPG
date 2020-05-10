@@ -291,7 +291,7 @@ class GameMaster(commands.Cog):
     @is_gm()
     @commands.command(hidden=True)
     @locale_doc
-    async def hmresetclass(self, ctx, target: UserWithCharacter):
+    async def gmresetclass(self, ctx, target: UserWithCharacter):
         _("""[Game Master only] Resets someone's class(es).""")
         async with self.bot.pool.acquire() as conn:
             await conn.execute(
@@ -396,7 +396,7 @@ class GameMaster(commands.Cog):
         )
 
     @is_gm()
-    @commands.command(aliases=["gmcd", "hmsetcd"], hidden=True)
+    @commands.command(aliases=["gmcd", "gmsetcd"], hidden=True)
     @locale_doc
     async def gmsetcooldown(
         self,
