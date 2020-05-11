@@ -57,7 +57,7 @@ class Bot(commands.AutoShardedBot):
         self.version = config.version
         self.paginator = paginator
         self.BASE_URL = config.base_url
-        self.bans = config.bans
+        self.bans = set(config.bans)
         self.remove_command("help")
         self.linecount = 0
         self.make_linecount()
@@ -147,14 +147,18 @@ class Bot(commands.AutoShardedBot):
         """Handler for every incoming message"""
         if message.author.bot or message.author.id in self.bans:
             return
-        locale = await self.get_cog("Locale").locale(message)
-        i18n.current_locale.set(locale)
         await self.process_commands(message)
 
     async def on_message_edit(self, before, after):
         """Handler for edited messages, re-executes commands"""
         if before.content != after.content:
             await self.on_message(after)
+
+    async def invoke(self, ctx):
+        """Handler for i18n, executes before any other commands or checks run"""
+        locale = await self.get_cog("Locale").locale(ctx.message)
+        i18n.current_locale.set(locale)
+        await super().invoke(ctx)
 
     @property
     def uptime(self):
