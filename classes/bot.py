@@ -16,9 +16,7 @@ You should have received a copy of the GNU Affero General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
 import asyncio
-import base64
 import datetime
-import io
 import os
 import random
 import string
@@ -40,6 +38,7 @@ import config
 from classes.context import Context
 from classes.converters import UserWithCharacter
 from classes.enums import DonatorRank
+from classes.exceptions import GlobalCooldown
 from classes.http import ProxiedClientSession
 from utils import i18n, paginator
 from utils.checks import user_is_patron
@@ -63,7 +62,6 @@ class Bot(commands.AutoShardedBot):
         self.linecount = 0
         self.make_linecount()
         self.all_prefixes = {}
-        # self.verified = []
         self.activity = discord.Game(
             name=f"IdleRPG v{config.version}" if config.is_beta else config.base_url
         )
@@ -78,6 +76,10 @@ class Bot(commands.AutoShardedBot):
         self.not_eligible_for_cooldown_reduce = set()  # caching
 
     async def global_cooldown(self, ctx: commands.Context):
+        """
+        A function that enables a global per-user cooldown
+        and raises a special exception based on CommandOnCooldown
+        """
         if ctx.author.id in self.not_eligible_for_cooldown_reduce:
             bucket = self.config.cooldown.get_bucket(ctx.message)
         elif ctx.author.id in self.eligible_for_cooldown_reduce:
@@ -92,11 +94,12 @@ class Bot(commands.AutoShardedBot):
         retry_after = bucket.update_rate_limit()
 
         if retry_after:
-            raise commands.CommandOnCooldown(bucket, retry_after)
+            raise GlobalCooldown(bucket, retry_after)
         else:
             return True
 
     def make_linecount(self):
+        """Generates a total linecount of all python files"""
         for root, dirs, files in os.walk(os.getcwd()):
             for file_ in files:
                 if file_.endswith(".py"):
@@ -104,12 +107,13 @@ class Bot(commands.AutoShardedBot):
                         self.linecount += len(f.readlines())
 
     async def connect_all(self):
+        """Connects all databases and initializes sessions"""
         self.session = ProxiedClientSession(
             authorization=self.config.proxy_auth, proxy_url=self.config.proxy_url
         )
         self.trusted_session = aiohttp.ClientSession()
         self.redis = await aioredis.create_pool(
-            "redis://localhost", minsize=5, maxsize=10, loop=self.loop, db=0
+            "redis://localhost", minsize=5, maxsize=10, loop=self.loop
         )
         self.pool = await asyncpg.create_pool(
             **self.config.database, max_size=20, command_timeout=60.0
@@ -121,98 +125,44 @@ class Bot(commands.AutoShardedBot):
             except Exception:
                 print(f"Failed to load extension {extension}.", file=sys.stderr)
                 traceback.print_exc()
-        # self.loop.create_task(self.reset_verified())
         self.redis_version = await self.get_redis_version()
         await self.start(self.config.token)
 
     async def get_redis_version(self):
+        """Parses the Redis version out of the INFO command"""
         info = (await self.redis.execute("INFO")).decode()
         for line in info.split("\n"):
             if line.startswith("redis_version"):
                 return line.split(":")[1]
         return None
 
-    async def reset_verified(self):
-        await self.wait_until_ready()
-        while not self.is_closed():
-            await asyncio.sleep(random.randint(60 * 30, 60 * 120))
-            self.verified = []
-
-    def matches_prefix(self, message):
-        prefixes = self._get_prefix(self, message)
-        if type(prefixes) == str:
-            return message.content.startswith(prefixes)
-        return message.content.startswith(tuple(prefixes))
-
     # https://github.com/Rapptz/discord.py/blob/master/discord/ext/commands/bot.py#L131
     def dispatch(self, event_name, *args, **kwargs):
+        """Overriden version of Bot.dispatch to ignore reactions by banned users"""
         if event_name == "reaction_add" and args[1].id in self.bans:  # args[1] is user
             return
         super().dispatch(event_name, *args, **kwargs)
 
     async def on_message(self, message):
+        """Handler for every incoming message"""
         if message.author.bot or message.author.id in self.bans:
             return
         locale = await self.get_cog("Locale").locale(message)
         i18n.current_locale.set(locale)
-        # if message.author.id in self.verified:
-        #    await self.process_commands(message)
-        # elif self.matches_prefix(message):
-        #    await self.create_captcha(message.author, message.channel)
         await self.process_commands(message)
 
     async def on_message_edit(self, before, after):
+        """Handler for edited messages, re-executes commands"""
         if before.content != after.content:
             await self.on_message(after)
 
-    async def create_captcha(self, user, channel):
-        async with self.session.get("https://captcha.travitia.xyz/v2") as r:
-            data = await r.json()
-        reactions = [data["solution"]] + data["others"]
-        self.bans.append(user.id)  # prevent double captchas
-        msg = await channel.send(
-            _(
-                "{user}, we have to verify you're not a bot. Please react with the"
-                " emoji you see. You have 15 seconds and one attempt."
-            ).format(user=user.mention),
-            file=discord.File(
-                filename="captcha.png",
-                fp=io.BytesIO(base64.b64decode(data["image"][22:])),
-            ),
-        )
-        random.shuffle(reactions)
-        for reaction in reactions:
-            await msg.add_reaction(reaction)
-
-        def check(r, u):
-            return r.emoji in reactions and r.message.id == msg.id and u == user
-
-        try:
-            r, u = await self.wait_for("reaction_add", check=check, timeout=15)
-        except asyncio.TimeoutError:
-            return await channel.send(
-                _("{user}, you took too long and were banned.").format(
-                    user=user.mention
-                )
-            )
-        if r.emoji == data["solution"]:
-            await channel.send(
-                _("{user}, you have been verified!").format(user=user.mention)
-            )
-            self.bans.remove(user.id)
-            self.verified.append(user.id)
-        else:
-            await channel.send(
-                _("{user}, that was wrong! I have banned you.").format(
-                    user=user.mention
-                )
-            )
-
     @property
     def uptime(self):
+        """Returns the current uptime of the bot"""
         return datetime.datetime.now() - self.launch_time
 
     async def get_ranks_for(self, thing):
+        """Returns the rank in money and xp for a user"""
         v = thing.id if isinstance(thing, (discord.Member, discord.User)) else thing
         async with self.pool.acquire() as conn:
             xp = await conn.fetchval(
@@ -240,6 +190,7 @@ class Bot(commands.AutoShardedBot):
         god=None,
         conn=None,
     ):
+        """Generates the raidstats for a user"""
         v = thing.id if isinstance(thing, (discord.Member, discord.User)) else thing
         local = False
         if conn is None:
@@ -284,6 +235,7 @@ class Bot(commands.AutoShardedBot):
         return await self.generate_stats(v, dmg, deff, classes=classes, race=race)
 
     async def get_god(self, user: UserWithCharacter, conn=None):
+        """Fetches the god for a user from the database"""
         local = False
         if conn is None:
             conn = self.pool.acquire()
@@ -294,6 +246,7 @@ class Bot(commands.AutoShardedBot):
         return god
 
     async def get_equipped_items_for(self, thing, conn=None):
+        """Fetches a list of equipped items of a user from the database"""
         v = thing.id if isinstance(thing, (discord.Member, discord.User)) else thing
         local = False
         if conn is None:
@@ -309,15 +262,23 @@ class Bot(commands.AutoShardedBot):
         return items
 
     async def get_damage_armor_for(self, thing, conn=None):
+        """Returns a user's weapon attack and defense value"""
         items = await self.get_equipped_items_for(thing, conn=conn)
         damage = sum(i["damage"] for i in items)
         defense = sum(i["armor"] for i in items)
         return damage, defense
 
     async def get_context(self, message, *, cls=None):
+        """Overrides the default Context with a custom Context"""
         return await super().get_context(message, cls=Context)
 
     def _get_prefix(self, bot, message):
+        """
+        Returns the prefix for a message
+        Will be the global_prefix in DMs,
+        in guilds it will use a custom set one
+        or the global_prefix
+        """
         if not message.guild:
             return self.config.global_prefix  # Use global prefix in DMs
         try:
@@ -328,6 +289,9 @@ class Bot(commands.AutoShardedBot):
             return commands.when_mentioned_or(self.config.global_prefix)(self, message)
 
     async def wait_for_dms(self, event, check, timeout=30):
+        """
+        Cross-process DM event handling, check is a dictionary
+        """
         try:
             data = (
                 await self.cogs["Sharding"].handler(
@@ -361,6 +325,7 @@ class Bot(commands.AutoShardedBot):
             return reaction, await self.get_user_global(int(data["user_id"]))
 
     async def get_user_global(self, user_id: int):
+        """Fetches Discord user data across multiple processes"""
         user = self.get_user(user_id)
         if user:
             return user
@@ -374,16 +339,19 @@ class Bot(commands.AutoShardedBot):
         return user
 
     async def reset_cooldown(self, ctx):
+        """Resets someone's cooldown for a Context"""
         await self.redis.execute(
             "DEL", f"cd:{ctx.author.id}:{ctx.command.qualified_name}"
         )
 
     async def reset_guild_cooldown(self, ctx):
+        """Resets a guild's cooldown for a Context"""
         await self.redis.execute(
             "DEL", f"guildcd:{ctx.character_data['guild']}:{ctx.command.qualified_name}"
         )
 
     async def reset_alliance_cooldown(self, ctx):
+        """Resets an alliance cooldown for a Context"""
         alliance = await self.pool.fetchval(
             'SELECT alliance FROM guild WHERE "id"=$1;', ctx.character_data["guild"]
         )
@@ -392,23 +360,27 @@ class Bot(commands.AutoShardedBot):
         )
 
     async def activate_booster(self, user, type_):
+        """Activates a boost of type_ for a user"""
         if type_ not in ["time", "luck", "money"]:
             raise ValueError("Not a valid booster type.")
         user = user.id if isinstance(user, (discord.User, discord.Member)) else user
         await self.redis.execute("SET", f"booster:{user}:{type_}", 1, "EX", 86400)
 
     async def get_booster(self, user, type_):
+        """Returns how longer a user has a booster running"""
         user = user.id if isinstance(user, (discord.User, discord.Member)) else user
         val = await self.redis.execute("TTL", f"booster:{user}:{type_}")
         return datetime.timedelta(seconds=val) if val != -2 else None
 
     async def start_adventure(self, user, number, time):
+        """Sends a user on an adventure"""
         user = user.id if isinstance(user, (discord.User, discord.Member)) else user
         await self.redis.execute(
             "SET", f"adv:{user}", number, "EX", int(time.total_seconds()) + 259_200
         )  # +3 days
 
     async def get_adventure(self, user):
+        """Returns a user's adventure"""
         user = user.id if isinstance(user, (discord.User, discord.Member)) else user
         ttl = await self.redis.execute("TTL", f"adv:{user}")
         if ttl == -2:
@@ -420,6 +392,7 @@ class Bot(commands.AutoShardedBot):
         return int(num.decode("ascii")), time, done
 
     async def delete_adventure(self, user):
+        """Deletes a user's adventure"""
         user = user.id if isinstance(user, (discord.User, discord.Member)) else user
         await self.redis.execute("DEL", f"adv:{user}")
 

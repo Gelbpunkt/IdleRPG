@@ -36,6 +36,7 @@ from classes.converters import (
     NotInRange,
     UserHasNoChar,
 )
+from classes.exceptions import GlobalCooldown
 from cogs.music import NeedsToBeInVoiceChat, NeedsToBePlaying, VoteDidNotPass
 from utils.paginator import NoChoice
 
@@ -104,6 +105,13 @@ class Errorhandler(commands.Cog):
                 )
             else:
                 await ctx.send(_("You used a malformed argument!"))
+        elif isinstance(error, GlobalCooldown):
+            return await ctx.send(
+                _(
+                    "You are being rate-limited. Chill down, you can use a command"
+                    " again in {time}."
+                ).format(time=timedelta(seconds=int(error.retry_after)))
+            )
         elif isinstance(error, commands.CommandOnCooldown):
             return await ctx.send(
                 _("You are on cooldown. Try again in {time}.").format(
