@@ -1,6 +1,6 @@
 FROM fedora:32
 
-RUN curl -L https://github.com/Frederikam/Lavalink/releases/download/3.3.1/Lavalink.jar -o Lavalink.jar && \
+RUN curl -L https://ftp.travitia.xyz/Lavalink.jar -o Lavalink.jar && \
     dnf install java-13-openjdk-headless -y
 
 CMD java -jar Lavalink.jar

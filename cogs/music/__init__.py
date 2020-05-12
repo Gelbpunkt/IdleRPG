@@ -15,7 +15,6 @@ You should have received a copy of the GNU Affero General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
 import asyncio
-import time
 
 from collections import defaultdict
 from datetime import timedelta
@@ -41,22 +40,6 @@ class NeedsToBeInVoiceChat(commands.CheckFailure):
 
 class NeedsToBePlaying(commands.CheckFailure):
     pass
-
-
-class Player(wavelink.Player):
-    @property
-    def position(self):
-        if self.paused:
-            return min(self.last_position, self.current.duration)
-
-        difference = (time.time() * 1000) - self.last_update
-        return min(self.last_position + difference, self.current.duration)
-
-    def cleanup(self):
-        self.loop = False
-        self.locked = False
-        self.dj = None
-        self.eq = "Flat"
 
 
 class Artist:
@@ -130,7 +113,7 @@ def is_playing():
 
 def get_player():
     def predicate(ctx):
-        ctx.player = ctx.bot.wavelink.get_player(ctx.guild.id, cls=Player)
+        ctx.player = ctx.bot.wavelink.get_player(ctx.guild.id)
         return True
 
     return commands.check(predicate)
@@ -420,9 +403,7 @@ class Music(commands.Cog):
     async def stop(self, ctx):
         _("""Stops the music and leaves voice chat.""")
         del self.queue[ctx.guild.id]
-        await ctx.player.stop()
-        await ctx.player.disconnect()
-        ctx.player.cleanup()
+        await ctx.player.destroy()
         await ctx.message.add_reaction("✅")
 
     @vote("volume")
@@ -584,7 +565,7 @@ class Music(commands.Cog):
         )
         await ctx.trigger_typing()
         if query is None and ctx.guild:
-            track = self.bot.wavelink.get_player(ctx.guild.id, cls=Player).current
+            track = self.bot.wavelink.get_player(ctx.guild.id).current
             if not track:
                 return await ctx.send(
                     _("I am not playing. Please specify a song to look for.")
@@ -658,8 +639,7 @@ class Music(commands.Cog):
             or len(self.bot.get_channel(int(player.channel_id)).members) == 1
         ):
             # That was the last track
-            await player.disconnect()
-            player.cleanup()
+            await player.destroy()
             del self.queue[player.guild_id]
         else:
             await self.play_track(
@@ -673,8 +653,7 @@ class Music(commands.Cog):
 
     async def cleanup(self):
         for player in self.bot.wavelink.players.values():
-            await player.stop()
-            await player.disconnect()
+            await player.destroy()
         await self.bot.wavelink.destroy_node(identifier="MAIN")
 
     def cog_unload(self):
