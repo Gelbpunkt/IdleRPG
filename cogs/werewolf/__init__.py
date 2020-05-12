@@ -93,8 +93,9 @@ class Werewolf(commands.Cog):
             pass
 
     @commands.command()
+    @locale_doc
     async def role(self, ctx):
-        ("""Check your role in the Werewolf game and have the bot DM it to you.""")
+        _("""Check your role in the Werewolf game and have the bot DM it to you.""")
         game = self.games.get(ctx.channel.id)
         if not game:
             return await ctx.send(f"There is no werewolf game here! {ctx.author.mention}")
@@ -103,7 +104,7 @@ class Werewolf(commands.Cog):
         if ctx.author not in [player.user for player in game.players]:
             return await ctx.send(f"You're not in the game {ctx.author.mention}.")
         else:
-            player = discord.utils.find(lambda p: p.user == ctx.author, game.players)
+            player = discord.utils.get(game.players, user=ctx.author) 
             if player is None:
                 return await ctx.send(
                     f"You asked for your role in {ctx.channel.mention}"

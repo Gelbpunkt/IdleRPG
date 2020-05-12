@@ -233,7 +233,7 @@ class Game:
             if p.side == Side.WOLVES or p.side == Side.WHITE_WOLF
         ]
         if len(wolves) == 0:
-            return None
+            return
         wolves_users = [str(p.user.id) for p in wolves]
         await self.ctx.send("**The werewolves awake...**")
         # Get target of wolves
@@ -481,8 +481,6 @@ class Game:
         )
         for emoji in emojis:
             await msg.add_reaction(emoji)
-        for player in self.alive_players:
-            await player.send(f"It's voting time! You may now cast your vote on who to kill today. Jump to {msg.jump_url}")
         await asyncio.sleep(60)
         msg = await self.ctx.channel.fetch_message(msg.id)
         nominated = {u: 0 for u in nominated}
