@@ -42,6 +42,7 @@ from classes.exceptions import GlobalCooldown
 from classes.http import ProxiedClientSession
 from utils import i18n, paginator
 from utils.checks import user_is_patron
+from utils.i18n import _
 
 
 class Bot(commands.AutoShardedBot):

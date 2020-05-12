@@ -23,6 +23,8 @@ import discord
 
 from discord.ext import commands
 
+from utils.i18n import _, locale_doc
+
 
 def get_colour(percent):
     rounded = (round(percent, -1) // 10) - 1

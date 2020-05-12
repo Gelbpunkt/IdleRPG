@@ -28,6 +28,7 @@ from discord.ext import commands
 from cogs.help import chunks
 from cogs.shard_communication import next_day_cooldown
 from utils.checks import has_char, is_gm, is_guild_leader, is_guild_officer
+from utils.i18n import _, locale_doc
 
 rewards = {
     1: {"crates": 0, "puzzle": False, "money": 500},

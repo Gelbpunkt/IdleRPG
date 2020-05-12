@@ -23,6 +23,8 @@ from discord.ext import commands
 from discord.ext.commands import BucketType
 from discord.ext.commands.default import Author
 
+from utils.i18n import _, locale_doc
+
 
 class Images(commands.Cog):
     def __init__(self, bot):

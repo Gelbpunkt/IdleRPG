@@ -42,6 +42,7 @@ from classes.converters import DateNewerThan, IntFromTo, IntGreaterThan
 from cogs.help import chunks
 from cogs.shard_communication import next_day_cooldown
 from utils.checks import has_char, user_is_patron
+from utils.i18n import _, locale_doc
 from utils.misc import nice_join
 from utils.shell import get_cpu_name
 

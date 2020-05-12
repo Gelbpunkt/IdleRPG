@@ -31,6 +31,7 @@ from classes.converters import IntFromTo
 from cogs.help import chunks
 from cogs.shard_communication import user_on_cooldown as user_cooldown
 from utils.checks import has_char, user_has_char
+from utils.i18n import _, locale_doc
 
 
 class Tournament(commands.Cog):

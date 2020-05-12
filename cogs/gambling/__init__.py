@@ -28,6 +28,7 @@ from discord.ext import commands
 
 from classes.converters import CoinSide, IntFromTo, IntGreaterThan, MemberWithCharacter
 from utils.checks import has_char, has_money, user_has_char
+from utils.i18n import _, locale_doc
 from utils.roulette import RouletteGame
 
 

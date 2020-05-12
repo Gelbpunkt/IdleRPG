@@ -25,6 +25,7 @@ import discord
 from discord.ext import commands
 
 from utils.chess import ChessGame, ProtocolAdapter
+from utils.i18n import _, locale_doc
 
 
 class Chess(commands.Cog):

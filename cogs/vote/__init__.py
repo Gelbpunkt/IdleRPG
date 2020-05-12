@@ -17,6 +17,8 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
 from discord.ext import commands
 
+from utils.i18n import _, locale_doc
+
 
 class Vote(commands.Cog):
     def __init__(self, bot):

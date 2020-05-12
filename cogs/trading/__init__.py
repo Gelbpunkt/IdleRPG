@@ -22,6 +22,7 @@ from discord.ext import commands
 from classes.converters import IntFromTo, IntGreaterThan
 from cogs.shard_communication import user_on_cooldown as user_cooldown
 from utils.checks import has_char, has_money
+from utils.i18n import _, locale_doc
 from utils.paginator import NoChoice
 
 

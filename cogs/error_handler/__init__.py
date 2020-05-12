@@ -38,6 +38,7 @@ from classes.converters import (
 )
 from classes.exceptions import GlobalCooldown
 from cogs.music import NeedsToBeInVoiceChat, NeedsToBePlaying, VoteDidNotPass
+from utils.i18n import _
 from utils.paginator import NoChoice
 
 try:

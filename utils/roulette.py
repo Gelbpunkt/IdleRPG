@@ -18,6 +18,8 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 import asyncio
 import secrets
 
+from utils.i18n import _
+
 ALL_NUMBERS = list(range(37))
 
 STATIC_BIDS = {

@@ -24,6 +24,7 @@ from discord.ext import commands
 
 from cogs.shard_communication import user_on_cooldown as user_cooldown
 from utils import checks as checks
+from utils.i18n import _, locale_doc
 
 
 class Halloween(commands.Cog):

@@ -22,6 +22,8 @@ from discord.ext import commands
 from ply.lex import lex
 from ply.yacc import yacc
 
+from utils.i18n import _, locale_doc
+
 
 class Overflow(Exception):
     pass

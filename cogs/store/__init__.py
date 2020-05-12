@@ -21,6 +21,7 @@ from discord.ext import commands
 
 from classes.converters import IntGreaterThan
 from utils.checks import has_char
+from utils.i18n import _, locale_doc
 
 
 class Store(commands.Cog):

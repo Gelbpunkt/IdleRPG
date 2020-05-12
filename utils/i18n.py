@@ -20,7 +20,6 @@ https://github.com/EmoteCollector/bot/blob/master/emote_collector/utils/i18n.py
 Thanks to lambda and Scragly for precious help!
 """
 import ast
-import builtins
 import contextvars
 import gettext
 import inspect
@@ -100,8 +99,8 @@ def i18n_docstring(func: Callable[[Any], Any]) -> Callable[[Any], Any]:
 
 current_locale: contextvars.ContextVar[str] = contextvars.ContextVar("i18n")
 # https://github.com/python/mypy/issues/7171
-setattr(builtins, "_", use_current_gettext)
-setattr(builtins, "locale_doc", i18n_docstring)
+_ = use_current_gettext
+locale_doc = i18n_docstring
 
 current_locale.set(default_locale)
 

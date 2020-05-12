@@ -31,6 +31,7 @@ from cogs.shard_communication import user_on_cooldown as user_cooldown
 from utils import items
 from utils import misc as rpgtools
 from utils.checks import has_adventure, has_char, has_no_adventure
+from utils.i18n import _, locale_doc
 from utils.maze import Maze
 
 

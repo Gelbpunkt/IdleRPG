@@ -45,6 +45,7 @@ import discord
 from discord.ext import commands
 
 from config import primary_colour
+from utils.i18n import _
 
 if TYPE_CHECKING:
     from classes.context import Context

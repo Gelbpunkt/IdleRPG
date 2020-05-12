@@ -18,6 +18,7 @@ from discord.ext import commands
 
 from cogs.shard_communication import user_on_cooldown as user_cooldown
 from utils.checks import has_char, is_nothing
+from utils.i18n import _, locale_doc
 
 
 class Races(commands.Cog):

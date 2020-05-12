@@ -25,6 +25,7 @@ from discord.ext import commands
 
 from cogs.shard_communication import next_day_cooldown
 from utils.checks import has_char
+from utils.i18n import _, locale_doc
 
 
 class Valentine(commands.Cog):

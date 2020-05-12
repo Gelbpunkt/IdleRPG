@@ -24,6 +24,7 @@ import discord
 from discord.ext import commands
 
 from classes.converters import CrateRarity, IntGreaterThan, MemberWithCharacter
+from utils.i18n import _, locale_doc
 
 
 def has_no_transaction():

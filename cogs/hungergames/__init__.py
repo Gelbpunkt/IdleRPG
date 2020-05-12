@@ -24,6 +24,7 @@ import discord
 from discord.ext import commands
 
 from cogs.help import chunks
+from utils.i18n import _, locale_doc
 from utils.misc import nice_join
 
 

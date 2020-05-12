@@ -45,6 +45,7 @@ from utils.checks import (
     is_no_guild_leader,
     user_is_patron,
 )
+from utils.i18n import _, locale_doc
 from utils.markdown import escape_markdown
 
 

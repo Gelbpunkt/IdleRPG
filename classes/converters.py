@@ -24,6 +24,7 @@ import discord
 from discord.ext import commands
 
 from classes.context import Context
+from utils.i18n import _
 
 
 class NotInRange(commands.BadArgument):

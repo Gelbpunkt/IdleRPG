@@ -24,6 +24,7 @@ from discord.ext import commands
 
 from classes.converters import User
 from utils.checks import is_supporter
+from utils.i18n import _, locale_doc
 
 
 def chunks(iterable, size):

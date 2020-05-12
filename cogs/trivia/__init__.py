@@ -20,6 +20,8 @@ import random
 
 from discord.ext import commands
 
+from utils.i18n import _, locale_doc
+
 
 class Trivia(commands.Cog):
     def __init__(self, bot):
@@ -55,6 +57,7 @@ class Trivia(commands.Cog):
         return answer == question["correct_answer"]
 
     @commands.command(aliases=["tr"])
+    @locale_doc
     async def trivia(self, ctx, difficulty: str.lower = "easy"):
         _(
             """Answer a trivia question of a given difficulty, which may be easy, medium or hard."""

@@ -19,6 +19,7 @@ from asyncpg.exceptions import ForeignKeyViolationError, UniqueViolationError
 from discord.ext import commands
 
 from utils import i18n
+from utils.i18n import _, locale_doc
 
 
 class Locale(commands.Cog):

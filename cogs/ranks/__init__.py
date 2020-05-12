@@ -20,6 +20,7 @@ import discord
 from discord.ext import commands
 
 from utils import misc as rpgtools
+from utils.i18n import _, locale_doc
 from utils.markdown import escape_markdown
 
 

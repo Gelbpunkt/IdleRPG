@@ -28,6 +28,7 @@ from discord.ext import commands
 
 from classes.converters import IntGreaterThan
 from utils.checks import AlreadyRaiding, has_char, is_gm, is_god
+from utils.i18n import _, locale_doc
 
 
 def raid_channel():

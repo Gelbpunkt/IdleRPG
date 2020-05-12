@@ -27,6 +27,7 @@ from discord.ext import commands
 
 from classes.converters import IntFromTo
 from cogs.help import chunks
+from utils.i18n import _, locale_doc
 from utils.misc import nice_join
 
 

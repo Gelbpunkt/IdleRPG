@@ -32,6 +32,7 @@ import discord
 from async_timeout import timeout
 
 from classes.context import Context
+from utils.i18n import _
 from utils.paginator import NoChoice
 
 

@@ -36,6 +36,7 @@ from utils.checks import (
     owns_city,
     owns_no_city,
 )
+from utils.i18n import _, locale_doc
 
 
 class Alliance(commands.Cog):

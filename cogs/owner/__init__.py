@@ -44,7 +44,6 @@ class Owner(commands.Cog):
         return await self.bot.is_owner(ctx.author)
 
     @commands.command(name="load", hidden=True)
-    @locale_doc
     async def _load(self, ctx, *, cog: str):
         """Command which Loads a Module.
         Remember to use dot path. e.g: cogs.owner"""
@@ -57,7 +56,6 @@ class Owner(commands.Cog):
             await ctx.send("**`SUCCESS`**")
 
     @commands.command(name="unload", hidden=True)
-    @locale_doc
     async def _unload(self, ctx, *, cog: str):
         """Command which Unloads a Module.
         Remember to use dot path. e.g: cogs.owner"""
@@ -70,7 +68,6 @@ class Owner(commands.Cog):
             await ctx.send("**`SUCCESS`**")
 
     @commands.command(name="reload", hidden=True)
-    @locale_doc
     async def _reload(self, ctx, *, cog: str):
         """Command which Reloads a Module.
         Remember to use dot path. e.g: cogs.owner"""
@@ -83,7 +80,6 @@ class Owner(commands.Cog):
             await ctx.send("**`SUCCESS`**")
 
     @commands.command(hidden=True)
-    @locale_doc
     async def reloadconf(self, ctx):
         try:
             importlib_reload(self.bot.config)
@@ -166,7 +162,6 @@ class Owner(commands.Cog):
         return content.strip("` \n")
 
     @commands.command(hidden=True, name="eval")
-    @locale_doc
     async def _eval(self, ctx, *, body: str):
         """Evaluates a code"""
 
@@ -214,7 +209,6 @@ class Owner(commands.Cog):
                 await ctx.send(f"```py\n{value}{ret}\n```")
 
     @commands.command(hidden=True)
-    @locale_doc
     async def evall(self, ctx, *, code: str):
         """[Owner only] Evaluates python code on all processes."""
         data = await self.bot.cogs["Sharding"].handler(
@@ -230,13 +224,11 @@ class Owner(commands.Cog):
         await ctx.send(pretty_data)
 
     @commands.command(hidden=True)
-    @locale_doc
     async def bash(self, ctx, *, command_to_run: str):
         """[Owner Only] Run shell commands."""
         await shell.run(command_to_run, ctx)
 
     @commands.command(hidden=True)
-    @locale_doc
     async def sql(self, ctx, *, query: str):
         """[Owner Only] Very basic SQL command."""
         if "select" in query.lower() or "returning" in query.lower():
@@ -258,7 +250,6 @@ class Owner(commands.Cog):
             await ctx.send(f"```{ret}```")
 
     @commands.command(hidden=True)
-    @locale_doc
     async def runas(self, ctx, member: discord.Member, *, command: str):
         """[Owner Only] Run a command as if you were the user."""
         fake_msg = copy.copy(ctx.message)
@@ -271,7 +262,6 @@ class Owner(commands.Cog):
             await ctx.send(f"```py\n{traceback.format_exc()}```")
 
     @commands.command(hidden=True)
-    @locale_doc
     async def makehtml(self, ctx):
         """Generates HTML for commands page."""
         with open("assets/html/commands.html", "r") as f:

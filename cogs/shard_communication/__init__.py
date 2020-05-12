@@ -30,6 +30,7 @@ from async_timeout import timeout
 from discord.ext import commands
 
 from utils.eval import evaluate as _evaluate
+from utils.i18n import _, locale_doc
 from utils.misc import nice_join
 
 
