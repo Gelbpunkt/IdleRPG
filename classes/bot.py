@@ -511,8 +511,13 @@ class Bot(commands.AutoShardedBot):
         item["name"] = fn.weapon_name(type_)
         if item["hand"] == "both":
             item["damage"] = round(
-                item["damage"] * 1.5
+                item["damage"] * 2
             )  # both hands = higher damage, else they would be worse
+            # The issue with multiplying by 2
+            # is that everything will be even
+            # so we have to force uneven ones
+            if random.randint(1, 2) == 1:
+                item["damage"] -= 1
         if insert:
             return await self.create_item(**item)
         return item
