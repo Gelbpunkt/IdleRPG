@@ -92,6 +92,33 @@ class Werewolf(commands.Cog):
         except KeyError:  # got stuck in between
             pass
 
+    @commands.command()
+    @locale_doc
+    async def role(self, ctx):
+        _("""Check your role in the Werewolf game and have the bot DM it to you.""")
+        game = self.games.get(ctx.channel.id)
+        if not game:
+            return await ctx.send(f"There is no werewolf game here! {ctx.author.mention}")
+        if game == "forming":
+            return await ctx.send(f"The game has yet to be started {ctx.author.mention}.")
+        if ctx.author not in [player.user for player in game.players]:
+            return await ctx.send(f"You're not in the game {ctx.author.mention}.")
+        else:
+            player = discord.utils.get(game.players, user=ctx.author) 
+            if player is None:
+                return await ctx.send(
+                    f"You asked for your role in {ctx.channel.mention}"
+                    f" but your info couldn't be found."
+                )
+            else:
+                try:
+                    return await ctx.author.send(
+                        f"Checking your role in {ctx.channel.mention}... You are a"
+                        f" **{player.role.name.title().replace('_', ' ')}**"
+                    )
+                except discord.Forbidden:
+                    return await ctx.send(f"I couldn't send a DM to you {ctx.author.mention}.")
+
 
 def setup(bot):
     bot.add_cog(Werewolf(bot))
