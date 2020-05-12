@@ -17,6 +17,8 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
 import asyncio
 
+import discord
+
 from discord.ext import commands
 
 from utils.werewolf import Game
@@ -98,17 +100,21 @@ class Werewolf(commands.Cog):
         _("""Check your role in the Werewolf game and have the bot DM it to you.""")
         game = self.games.get(ctx.channel.id)
         if not game:
-            return await ctx.send(f"There is no werewolf game here! {ctx.author.mention}")
+            return await ctx.send(
+                f"There is no werewolf game here! {ctx.author.mention}"
+            )
         if game == "forming":
-            return await ctx.send(f"The game has yet to be started {ctx.author.mention}.")
+            return await ctx.send(
+                f"The game has yet to be started {ctx.author.mention}."
+            )
         if ctx.author not in [player.user for player in game.players]:
             return await ctx.send(f"You're not in the game {ctx.author.mention}.")
         else:
-            player = discord.utils.get(game.players, user=ctx.author) 
+            player = discord.utils.get(game.players, user=ctx.author)
             if player is None:
                 return await ctx.send(
                     f"You asked for your role in {ctx.channel.mention}"
-                    f" but your info couldn't be found."
+                    " but your info couldn't be found."
                 )
             else:
                 try:
@@ -117,7 +123,9 @@ class Werewolf(commands.Cog):
                         f" **{player.role.name.title().replace('_', ' ')}**"
                     )
                 except discord.Forbidden:
-                    return await ctx.send(f"I couldn't send a DM to you {ctx.author.mention}.")
+                    return await ctx.send(
+                        f"I couldn't send a DM to you {ctx.author.mention}."
+                    )
 
 
 def setup(bot):
