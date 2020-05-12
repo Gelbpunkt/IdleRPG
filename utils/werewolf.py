@@ -216,6 +216,10 @@ class Game:
     def lovers(self) -> List[Player]:
         return [player for player in self.alive_players if player.in_love]
 
+    @property
+    def new_afk_players(self) -> List[Player]:
+        return [player for player in self.alive_players if player.to_check_afk]
+
     async def wolves(self) -> Optional[Player]:
         healer = self.get_player_with_role(Role.HEALER)
         if healer:
@@ -228,6 +232,8 @@ class Game:
             for p in self.alive_players
             if p.side == Side.WOLVES or p.side == Side.WHITE_WOLF
         ]
+        if len(wolves) == 0:
+            return None
         wolves_users = [str(p.user.id) for p in wolves]
         await self.ctx.send("**The werewolves awake...**")
         # Get target of wolves
@@ -301,14 +307,14 @@ class Game:
         await self.ctx.send("**Sending game roles...**")
         for player in self.players:
             await player.send_information()
-        wolfhound = self.get_player_with_role(Role.WOLFHOUND)
-        if wolfhound:
-            await self.ctx.send("**The Wolfhound awakes...**")
-            await wolfhound.choose_role_from([Role.VILLAGER, Role.WEREWOLF])
         thief = self.get_player_with_role(Role.THIEF)
         if thief:
             await self.ctx.send("**The thief awakes...**")
             await thief.choose_role_from(self.extra_roles)
+        wolfhound = self.get_player_with_role(Role.WOLFHOUND)
+        if wolfhound:
+            await self.ctx.send("**The Wolfhound awakes...**")
+            await wolfhound.choose_role_from([Role.VILLAGER, Role.WEREWOLF])
         amor = self.get_player_with_role(Role.AMOR)
         if amor:
             await self.ctx.send("**Amor awakes and shoots his arrows...**")
@@ -347,7 +353,7 @@ class Game:
                 await player.send_family_msg("brother", brothers)
         wild_child = self.get_player_with_role(Role.WILD_CHILD)
         if wild_child:
-            await self.ctx.send("**The wild child awakes and choses its idol...**")
+            await self.ctx.send("**The wild child awakes and chooses its idol...**")
             await wild_child.choose_idol()
         target = await self.wolves()
         targets = [target] if target is not None else []
@@ -380,7 +386,7 @@ class Game:
                 final_targets.append([p for p in self.lovers if p != target][0])
         return final_targets
 
-    async def night(self, white_wolf: bool) -> List[Player]:
+    async def night(self, white_wolf_ability: bool) -> List[Player]:
         seer = self.get_player_with_role(Role.SEER)
         if seer:
             await self.ctx.send("**The seer awakes...**")
@@ -391,12 +397,13 @@ class Game:
             await fox.check_3_werewolves()
         target = await self.wolves()
         targets = [target] if target is not None else []
-        white_wolf = self.get_player_with_role(Role.WHITE_WOLF)
-        if white_wolf:
-            await self.ctx.send("**The white wolf awakes...**")
-            target = await white_wolf.choose_werewolf()
-            if target:
-                targets.append(target)
+        if white_wolf_ability:
+            white_wolf = self.get_player_with_role(Role.WHITE_WOLF)
+            if white_wolf:
+                await self.ctx.send("**The white wolf awakes...**")
+                target = await white_wolf.choose_werewolf()
+                if target:
+                    targets.append(target)
         if (
             sum(
                 1
@@ -409,6 +416,10 @@ class Game:
             if big_bad_wolf:
                 await self.ctx.send("**The big, bad wolf awakes...**")
                 targets.append(await big_bad_wolf.choose_villager_to_kill())
+        witch = self.get_player_with_role(Role.WITCH)
+        if witch:
+            await self.ctx.send("**The witch awakes...**")
+            targets = await witch.witch_actions(targets)
         flutist = self.get_player_with_role(Role.FLUTIST)
         if flutist:
             possible_targets = [
@@ -470,15 +481,23 @@ class Game:
         )
         for emoji in emojis:
             await msg.add_reaction(emoji)
+        for player in self.alive_players:
+            await player.send(f"It's voting time! You may now cast your vote on who to kill today. Jump to {msg.jump_url}")
         await asyncio.sleep(60)
         msg = await self.ctx.channel.fetch_message(msg.id)
         nominated = {u: 0 for u in nominated}
         mapping = {emoji: user for emoji, user in zip(emojis, nominated)}
+        voters = []
         for reaction in msg.reactions:
             if str(reaction.emoji) in emojis:
                 nominated[mapping[str(reaction.emoji)]] = sum(
                     [1 async for user in reaction.users() if user in eligible_players]
                 )
+                voters += [user async for user in reaction.users() if user in eligible_players and user not in voters]
+        failed_voters = [failed_voter for failed_voter in eligible_players if failed_voter not in voters]
+        for player in self.alive_players:
+            if player.user in failed_voters:
+                player.to_check_afk = True
         new_mapping = sorted(list(mapping.values()), key=lambda x: -nominated[x])
         return (
             (
@@ -490,10 +509,38 @@ class Game:
             second_election,
         )
 
+    async def handle_afk(self) -> None:
+        if len(self.new_afk_players) < 1:
+            return
+        for player in self.new_afk_players:
+            player.to_check_afk = False
+            if await player.is_afk():
+                player.afk_strikes += 1
+                if player.afk_strikes >= 3:
+                    if not player.dead:
+                        await player.send(
+                            "Strike 3! You have been killed by the game after"
+                            " having 3 strikes of being AFK."
+                        )
+                        await self.ctx.send(
+                            f"**{player.user.mention}** has been killed by"
+                            f" the game due to having 3 strikes of AFK."
+                        )
+                        await player.kill()
+                else:
+                    await player.send(
+                        f"**Strike {player.afk_strikes}!** You have been marked"
+                        f" as AFK. You'll be killed after 3 strikes."
+                    )
+            else:
+                await player.send("You're not AFK.")
+
     async def day(self, deaths: List[Player]) -> None:
         for death in deaths:
             await death.kill()
         if len(self.alive_players) < 2:
+            return
+        if self.winner() is not None:
             return
         to_kill, second_election = await self.election()
         if to_kill is not None:
@@ -506,6 +553,7 @@ class Game:
                     await maid.handle_maid(to_kill)
         else:
             await self.ctx.send("Indecisively, the community has killed noone.")
+        await self.handle_afk()
         if second_election:
             to_kill, second_election = await self.election()
             if to_kill is not None:
@@ -522,6 +570,7 @@ class Game:
                 await self.ctx.send(
                     "Indecisively, the community has not lynched anyone."
                 )
+            await self.handle_afk()
 
     async def run(self):
         # Handle thief etc and first night
@@ -533,7 +582,7 @@ class Game:
                 await self.day(deaths)
             else:
                 night_no += 1
-                deaths = await self.night(white_wolf=night_no % 2 == 0)
+                deaths = await self.night(white_wolf_ability=night_no % 2 == 0)
             round_no += 1
 
         winner = self.winner()
@@ -542,6 +591,21 @@ class Game:
                 f"{winner.user.mention} won! They were a"
                 f" **{winner.role.name.lower().replace('_', ' ')}**!"
             )
+            if len(self.alive_players) > 1:
+                players_to_reveal = [
+                    "{player_name} were a **{role_name}**!{initial_role_info}".format(
+                        player_name=player.user.mention,
+                        role_name=player.role.name.lower().replace('_', ' '),
+                        initial_role_info=f" A **{player.initial_role.name.lower().replace('_', ' ')}** initially."
+                        if player.role != player.initial_role else ""
+                    )
+                    for player in self.alive_players if player != winner
+                ]
+                text_reveal = "\n ".join(players_to_reveal)
+                await self.ctx.send(
+                    f"The game has ended. I will now reveal the other living"
+                    f" players' roles:\n{text_reveal}"
+                )
         else:
             await self.ctx.send(f"{winner} won!")
 
@@ -569,8 +633,9 @@ class Player:
         else:
             self.lives = 1
 
-        if role == Role.WILD_CHILD:
-            self.role = Role.VILLAGER
+        # AFK check
+        self.afk_strikes = 0
+        self.to_check_afk = False
 
     def __repr__(self):
         return (
@@ -631,15 +696,21 @@ class Player:
         )
 
     async def choose_idol(self) -> None:
+        possible_idols = [
+            p for p in self.game.players if p != self
+        ]
         try:
             idol = await self.choose_users(
                 "Choose your Idol. You will turn into a Werewolf if they die.",
-                list_of_users=self.game.players,
+                list_of_users=possible_idols,
                 amount=1,
             )
         except asyncio.TimeoutError:
-            idol = [random.choice(self.game.players)]
-        self.idol = idol
+            idol = [random.choice(possible_idols)]
+            await self.send("You didn't choose anything. A random player will be chosen for you.")
+        if idol:
+            self.idol = idol[0]
+        await self.send(f"{self.idol.user} became your Idol.")
 
     async def get_judge_symbol(self) -> str:
         await self.send(
@@ -783,16 +854,29 @@ class Player:
         )
 
     async def choose_role_from(self, roles: List[Role]) -> None:
+        entries = [role.name.title().replace('_', ' ') for role in roles]
+        await self.send("You will be asked to choose a new role from these:\n**{choices}**".format(
+                choices=", ".join(entries)
+            )
+        )
         try:
+            can_dm = True
             role = await self.game.ctx.bot.paginator.Choose(
-                entries=[role.name.lower().replace("_", " ") for role in roles],
+                entries=entries,
                 return_index=True,
                 title="Choose a new role",
             ).paginate(self.game.ctx, location=self.user)
             role = roles[role]
         except self.game.ctx.bot.paginator.NoChoice:
             role = random.choice(roles)
+            await self.send("You didn't choose anything. A random role was chosen for you.")
+        except discord.Forbidden:
+            can_dm = False
+            role = random.choice(roles)
+            await self.game.ctx.send("I couldn't send a DM. A random role was chosen for them.")
         self.role = role
+        if can_dm:
+            await self.send(f"Your new role is now **{self.role.name.title().replace('_', ' ')}**.")
 
     async def check_3_werewolves(self):
         try:
@@ -818,8 +902,10 @@ class Player:
             )
         except asyncio.TimeoutError:
             lovers = random.sample(self.game.players, 2)
+            await self.send("Timed out. Lovers will be chosen randomly.")
         for lover in lovers:
             lover.in_love = True
+        await self.send(f"You've made **{lovers[0].user}** and **{lovers[1].user}** lovers.")
 
     @property
     def dead(self) -> bool:
@@ -832,14 +918,15 @@ class Player:
                 f"{self.user.mention} has died. They were a"
                 f" **{self.role.name.lower().replace('_', ' ')}**!"
             )
-            idol = discord.utils.find(lambda x: x.idol is not None, self.game.players)
-            if idol and idol.idol == self:
-                idol.role = Role.WEREWOLF
+            wild_child = discord.utils.find(lambda x: x.idol is not None, self.game.alive_players)
+            if wild_child and wild_child.idol == self:
+                wild_child.role = Role.WEREWOLF
+                await wild_child.send(f"Your idol {self.user} died, you turned into a **Werewolf**.")
             lovers = self.game.lovers
-            if self in lovers:
-                other = discord.utils.find(lambda x: x != self, lovers)
-                if not other.dead:
-                    await other.kill()
+            if self.in_love and len(lovers) == 1:
+                other = lovers[0]
+                await self.game.ctx.send(f"{self.user.mention}'s lover {other.user.mention} will die as well.")
+                await other.kill()
             if self.role == Role.HUNTER:
                 try:
                     target = await self.choose_users(
@@ -899,6 +986,53 @@ class Player:
                     for player in self.game.alive_players
                 ]
             )
+
+    async def is_afk(self) -> bool:
+        await self.send("You failed to vote. This is just an AFK check:")
+        async def for_reaction():
+            try:
+                answer = await self.game.ctx.bot.paginator.Choose(
+                    entries=["Yes", "I'm still in the game", "Of course I am", "Please don't kill me!"],
+                    return_index=True,
+                    title=f"Are you still in the game? You have 30 seconds to answer.",
+                ).paginate(self.game.ctx, location=self.user)
+            except (
+                self.game.ctx.bot.paginator.NoChoice,
+                discord.errors.Forbidden,
+                asyncio.TimeoutError,
+            ):
+                answer = None
+            return answer
+
+        async def for_dms():
+            try:
+                msg = await self.game.ctx.bot.wait_for(
+                    "message",
+                    check=lambda x: x.author.id == self.user.id
+                    and (
+                        x.channel.id == self.game.ctx.channel.id
+                        or x.channel.id == self.user.dm_channel.id
+                    )
+                )
+                answer = msg.content
+            except (
+                discord.errors.Forbidden,
+                asyncio.TimeoutError,
+            ):
+                answer = None
+            return answer
+
+        done, pending = await asyncio.wait([
+                for_reaction(),
+                for_dms(),
+            ],
+            return_when=asyncio.FIRST_COMPLETED
+        )
+        try:
+            answer = done.pop().result()
+        except asyncio.TimeoutError:
+            answer = None
+        return answer is None
 
 
 # A list of roles to give depending on the number of total players
