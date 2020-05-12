@@ -98,11 +98,7 @@ def i18n_docstring(func: Callable[[Any], Any]) -> Callable[[Any], Any]:
 
 
 current_locale: contextvars.ContextVar[str] = contextvars.ContextVar("i18n")
-# https://github.com/python/mypy/issues/7171
 _ = use_current_gettext
 locale_doc = i18n_docstring
 
 current_locale.set(default_locale)
-
-# only for <3.7
-# setup = aiocontextvars.enable_inherit
