@@ -110,8 +110,8 @@ class Errorhandler(commands.Cog):
             return await ctx.send(
                 _(
                     "You are being rate-limited. Chill down, you can use a command"
-                    " again in {time}."
-                ).format(time=timedelta(seconds=int(error.retry_after)))
+                    " again in {time}s."
+                ).format(time=error.retry_after)
             )
         elif isinstance(error, commands.CommandOnCooldown):
             return await ctx.send(
