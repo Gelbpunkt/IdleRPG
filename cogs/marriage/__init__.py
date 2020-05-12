@@ -109,9 +109,9 @@ class Marriage(commands.Cog):
                     partner.id,
                 )
                 await ctx.send(
-                    _(
-                        "Aww! :heart: {author} and {partner} are now married!"
-                    ).format(author=ctx.author.mention, partner=partner.mention)
+                    _("Aww! :heart: {author} and {partner} are now married!").format(
+                        author=ctx.author.mention, partner=partner.mention
+                    )
                 )
             else:
                 await ctx.send(

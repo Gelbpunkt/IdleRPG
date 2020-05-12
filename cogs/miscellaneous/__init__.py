@@ -846,6 +846,13 @@ https://git.travitia.xyz/Kenvyra/IdleRPG/compare/v4.5.1...v4.6.0
                 " squeaky clean.\n[top.gg Page](https://top.gg/bot/541707781665718302)"
             ),
         )
+        em.add_field(
+            name="Cleverbot",
+            value=_(
+                "Cleverbot is a Discord bot that will chat with you and your"
+                " friends.\n[top.gg Page](https://top.gg/bot/508012980194115595)"
+            ),
+        )
         await ctx.send(embed=em)
 
     @commands.command()
