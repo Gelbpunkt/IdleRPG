@@ -269,7 +269,7 @@ gods = {
             " curse her name, but Guilt just smiles and continues to grow stronger from"
             " the misery--after all, happiness without hardship is no happiness at all."
         ),
-        "boundaries": (0.0, 2.0),
+        "boundaries": (0.5, 1.5),
     },
     "Tet": {
         "user": 1234567890,
