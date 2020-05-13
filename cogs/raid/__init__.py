@@ -29,6 +29,7 @@ from discord.ext import commands
 from classes.converters import IntGreaterThan
 from utils.checks import AlreadyRaiding, has_char, is_gm, is_god
 from utils.i18n import _, locale_doc
+from utils.misc import nice_join
 
 
 def raid_channel():
@@ -551,15 +552,12 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
                 u = await self.bot.get_user_global(i)
                 if not u:
                     continue
-                if not await conn.fetchval(
-                    'SELECT "user" FROM profile WHERE "user"=$1', u.id
-                ):
+                user = await conn.fetchrow(
+                    'SELECT "user", "god" FROM profile WHERE "user"=$1', u.id
+                )
+                if not user or user["god"] != "Guilt":
                     continue
-                try:
-                    dmg, deff = await self.bot.get_raidstats(u, god="Guilt", conn=conn)
-                except ValueError:
-                    continue
-                raid[u] = {"hp": 250, "armor": deff, "damage": dmg}
+                raid[u] = 250
 
         await ctx.send("**Done getting data!**")
 
@@ -568,38 +566,43 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
         while len(raid) > 1 and datetime.datetime.utcnow() < start + datetime.timedelta(
             minutes=45
         ):
-            attacker, target = random.sample(list(raid.items()), 2)
-            dmg = random.randint(
-                round(attacker[1]["damage"] * Decimal("0.8")),
-                round(attacker[1]["damage"] * Decimal("1.2")),
-            )
-            dmg -= target[1]["armor"]
-            dmg = (
-                random.choices(range(0, 10), weights=range(0, 10)[::-1])[0]
-                if dmg < 0
-                else dmg
-            )
-            raid[target[0]]["hp"] -= dmg  # damage dealt
-            if raid[target[0]]["hp"] > 0:
+            if random.randint(1, 5) == 1 and len(raid) > 10:
+                # Insanity appears
+                targets = random.sample(list(raid.keys()), random.randint(2, 5))
+                for target in targets:
+                    del raid[target]
+                nice_names = nice_join([f"{u}" for u in targets])
+                await ctx.send(
+                    embed=discord.Embed(
+                        title="Insanity!",
+                        description=(
+                            f"{nice_names} were eliminated by a wave of insanity!"
+                        ),
+                        colour=0xFDB900,
+                    ).set_url(url=f"{self.bot.BASE_URL}/guilt.jpg")
+                )
+                await asyncio.sleep(5)
+            attacker, target = random.sample(list(raid.keys()), 2)
+            dmg = random.randint(30, 50)
+            raid[target] -= dmg  # damage dealt
+            if (hp := raid[target]) > 0:
                 em = discord.Embed(
-                    title=f"{attacker[0]} attacked {target[0]}!",
-                    description=f"{target[0]} now has {raid[target[0]]['hp']} HP!",
+                    title=f"{attacker} attacked {target}!",
+                    description=f"{target} now has {hp} HP!",
                     colour=0xFFB900,
                 )
             else:
                 em = discord.Embed(
-                    title=f"{attacker[0]} attacked {target[0]}!",
-                    description=f"{target[0]} died!",
+                    title=f"{attacker} attacked {target}!",
+                    description=f"{target} died!",
                     colour=0xFFB900,
                 )
-            em.add_field(name="Theoretical Damage", value=dmg + target[1]["armor"])
-            em.add_field(name="Shield", value=target[1]["armor"])
-            em.add_field(name="Effective Damage", value=dmg)
-            em.set_author(name=str(target[0]), icon_url=target[0].avatar_url)
+            em.add_field(name="Damage", value=dmg)
+            em.set_author(name=f"{target}", icon_url=target.avatar_url)
             em.set_thumbnail(url=f"{self.bot.BASE_URL}/guilt.jpg")
             await ctx.send(embed=em)
-            if raid[target[0]]["hp"] <= 0:
-                del raid[target[0]]
+            if hp <= 0:
+                del raid[target]
             await asyncio.sleep(4)
 
         if len(raid) == 1:
