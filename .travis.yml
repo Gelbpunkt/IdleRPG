@@ -1,8 +1,7 @@
 arch:
   - amd64
-  #  seems to be fairly buggy as podman builds are not available for 18.04 ARM64
-  #  - arm64
-dist: bionic
+  - arm64
+dist: focal
 language: minimal
 
 before_install:
