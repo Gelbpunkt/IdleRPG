@@ -718,6 +718,7 @@ class Bot(commands.AutoShardedBot):
             "exchange",
             "trade",
             "alliance",
+            "raid",
         ]
 
         id_map = {
