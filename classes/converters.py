@@ -77,7 +77,7 @@ class User(commands.Converter):
             "fetch_user", 1, {"user_inp": argument}
         )
         if not data:
-            raise commands.BadArgument(ctx.message, argument)
+            raise commands.BadArgument(f"User {argument} not found")
         data = data[0]
         data["username"] = data["name"]
         user = discord.User(state=ctx.bot._connection, data=data)
