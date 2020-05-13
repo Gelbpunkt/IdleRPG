@@ -965,6 +965,7 @@ IdleRPG is a global bot, your characters are valid everywhere"""
             _("Successfully deleted your character. Sorry to see you go :frowning:")
         )
 
+    @has_char()
     @commands.command(aliases=["color"])
     @locale_doc
     async def colour(self, ctx, *, colour: str):
