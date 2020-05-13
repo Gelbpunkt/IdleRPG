@@ -28,7 +28,7 @@ from discord.ext.commands.default import Author
 from classes.converters import IntFromTo, MemberWithCharacter, User, UserWithCharacter
 from cogs.help import chunks
 from cogs.shard_communication import user_on_cooldown as user_cooldown
-from utils import checks
+from utils import checks, colors
 from utils import misc as rpgtools
 from utils.i18n import _, locale_doc
 
@@ -173,12 +173,20 @@ IdleRPG is a global bot, your characters are valid everywhere"""
                     else:
                         left_hand = i["name"]
 
+            color = profile["colour"]
+            color = (
+                f"rgba({color['red']}, {color['green']}, {color['blue']},"
+                f" {color['alpha']})"
+            )
+
             url = f"{self.bot.config.okapi_url}/api/genprofile"
+            color = profile["colour"]
+
             async with self.bot.trusted_session.post(
                 url,
                 data={
                     "name": profile["name"],
-                    "color": profile["colour"],
+                    "color": color,
                     "image": profile["background"],
                     "race": profile["race"],
                     "classes": profile["class"],
@@ -960,22 +968,28 @@ IdleRPG is a global bot, your characters are valid everywhere"""
 
     @commands.command(aliases=["color"])
     @locale_doc
-    async def colour(self, ctx, colour: str):
+    async def colour(self, ctx, *, colour: str):
         _(
-            """Sets your profile text colour. The format may be #RRGGBB or a HTML-valid string like "cyan"."""
+            """Sets your profile text colour. The format may be #RGB, #RRGGBB, CSS3 defaults like "cyan", a rgb(r, g, b) tuple or a rgba(r, g, b, a) tuple."""
         )
-        if len(colour) > 15:
+        try:
+            rgba = colors.parse(colour)
+        except ValueError:
             return await ctx.send(
-                _("Format for colour is `#RRGGBB` or a colour code like `cyan`.")
+                _(
+                    "Format for colour is `#RGB`,. `#RRGGBB`, a colour code like `cyan`"
+                    " or rgb/rgba values like (255, 255, 255, 0.5)."
+                )
             )
         await self.bot.pool.execute(
-            'UPDATE profile SET "colour"=$1 WHERE "user"=$2;', colour, ctx.author.id
+            'UPDATE profile SET "colour"=$1 WHERE "user"=$2;',
+            (rgba.red, rgba.green, rgba.blue, rgba.alpha),
+            ctx.author.id,
         )
         await ctx.send(
-            _(
-                "Successfully set your profile colour to `{colour}`. Hint: If you used"
-                " a hex colour code, you must include the `#`."
-            ).format(colour=colour)
+            _("Successfully set your profile colour to `{colour}`.").format(
+                colour=colour
+            )
         )
 
 
