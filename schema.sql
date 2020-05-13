@@ -32,6 +32,20 @@ SET client_min_messages = warning;
 SET row_security = off;
 
 --
+-- Name: rgba; Type: TYPE; Schema: public; Owner: jens
+--
+
+CREATE TYPE public.rgba AS (
+	red integer,
+	green integer,
+	blue integer,
+	alpha real
+);
+
+
+ALTER TYPE public.rgba OWNER TO jens;
+
+--
 -- Name: insert_alliance_default(); Type: FUNCTION; Schema: public; Owner: jens
 --
 
@@ -486,7 +500,6 @@ CREATE TABLE public.profile (
     time_booster bigint DEFAULT 0,
     luck_booster bigint DEFAULT 0,
     marriage bigint DEFAULT 0,
-    colour character varying(7) DEFAULT '#000000'::character varying,
     background character varying(60) DEFAULT 0,
     guild bigint DEFAULT 0,
     class character varying(50)[] DEFAULT '{"No Class","No Class"}'::character varying[],
@@ -511,7 +524,8 @@ CREATE TABLE public.profile (
     reset_points bigint DEFAULT 2 NOT NULL,
     chocolates integer DEFAULT 0,
     trickortreat bigint DEFAULT 0,
-    eastereggs bigint DEFAULT 0
+    eastereggs bigint DEFAULT 0,
+    colour public.rgba DEFAULT '(0,0,0,1)'::public.rgba
 );
 
 
