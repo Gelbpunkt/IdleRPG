@@ -180,7 +180,6 @@ IdleRPG is a global bot, your characters are valid everywhere"""
             )
 
             url = f"{self.bot.config.okapi_url}/api/genprofile"
-            color = profile["colour"]
 
             async with self.bot.trusted_session.post(
                 url,
