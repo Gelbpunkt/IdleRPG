@@ -976,7 +976,7 @@ IdleRPG is a global bot, your characters are valid everywhere"""
         except ValueError:
             return await ctx.send(
                 _(
-                    "Format for colour is `#RGB`,. `#RRGGBB`, a colour code like `cyan`"
+                    "Format for colour is `#RGB`, `#RRGGBB`, a colour code like `cyan`"
                     " or rgb/rgba values like (255, 255, 255, 0.5)."
                 )
             )
