@@ -277,6 +277,8 @@ class ChessGame:
                 move = await self.engine.play(self.board, self.limit)
         except asyncio.TimeoutError:
             move = random.choice(list(self.board.legal_moves))
+            await self.msg.delete()
+            return move
         await self.msg.delete()
         if move.draw_offered:
             return "draw"
