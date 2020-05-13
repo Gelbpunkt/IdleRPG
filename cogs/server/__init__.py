@@ -85,9 +85,7 @@ Server created at: `{created_at}`"""
     async def settings(self, ctx):
         _("""Change the settings.""")
         await ctx.send(
-            _("Please use `{prefix}settings (prefix/unknown) value`").format(
-                prefix=ctx.prefix
-            )
+            _("Please use `{prefix}settings prefix value`").format(prefix=ctx.prefix)
         )
 
     @commands.has_permissions(manage_guild=True)
