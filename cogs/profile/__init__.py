@@ -239,7 +239,10 @@ IdleRPG is a global bot, your characters are valid everywhere"""
                 'SELECT name FROM guild WHERE "id"=$1;', p_data["guild"]
             )
         try:
-            colour = discord.Colour.from_rgb(*rpgtools.hex_to_rgb(p_data["colour"]))
+            colour = p_data["colour"]
+            colour = discord.Colour.from_rgb(
+                colour["red"], colour["green"], colour["blue"]
+            )
         except ValueError:
             colour = 0x000000
         if mission:

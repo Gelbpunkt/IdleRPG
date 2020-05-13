@@ -59,11 +59,6 @@ def nice_join(iterable):
     return f"{', '.join([str(i) for i in iterable[:-1]])} and {iterable[-1]}"
 
 
-def hex_to_rgb(hex_):
-    hex_ = hex_.lstrip("#")
-    return tuple(int(hex_[i : i + 2], 16) for i in (0, 2, 4))
-
-
 def xptolevel(xp):
     for point in list(levels.values()):
         if xp == point:
