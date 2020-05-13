@@ -1,6 +1,7 @@
 arch:
   - amd64
-  - arm64
+  # 20.04 aliases to 18.04 on ARM, until then disable it
+  # - arm64
 dist: focal
 language: minimal
 
@@ -8,15 +9,12 @@ before_install:
   - . /etc/os-release
   - sudo sh -c "echo 'deb https://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable/xUbuntu_${VERSION_ID}/ /' > /etc/apt/sources.list.d/devel:kubic:libcontainers:stable.list"
   - curl -L https://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable/xUbuntu_${VERSION_ID}/Release.key | sudo apt-key add -
-  - sudo apt update
-  - sudo apt upgrade -y
   - sudo apt -y install podman
-  - sudo loginctl enable-linger 2000
 
 script:
   - |
     if [ $TRAVIS_BRANCH == "v4" ]; then
       podman build -t gelbpunkt/idlerpg:latest .;
     else
-      podman build -t gelbpuntk/idlerpg:latest --build-arg beta=true .;
+      podman build -t gelbpunkt/idlerpg:latest --build-arg beta=true .;
     fi
