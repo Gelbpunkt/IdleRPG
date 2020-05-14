@@ -28,20 +28,7 @@ def sample(population, k):
 
 def shuffle(population):
     """Returns a shuffled list"""
-    if isinstance(population, Set):
-        population = tuple(population)
-    if not isinstance(population, Sequence):
-        raise TypeError(
-            "Population must be a sequence or set.  For dicts, use list(d)."
-        )
-
-    n = len(population)
-
-    results = []
-    for i in range(n):
-        results.append(population.pop(secrets.randbelow(n - i)))
-
-    return results
+    return sample(population, len(population))
 
 
 def randint(a, b):
