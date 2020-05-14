@@ -9,12 +9,12 @@ jobs:
       os: linux
       dist: focal
       arch: amd64
-    - name: "aarch64 Ubuntu 24.04"
+    - name: "aarch64 Ubuntu 20.04"
       os: linux
       dist: focal
       arch: arm64
   allow_failures:
-    - name: "aarch64 Ubuntu 24.04"
+    - name: "aarch64 Ubuntu 20.04"
 
 before_install:
   - . /etc/os-release
