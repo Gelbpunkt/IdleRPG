@@ -39,6 +39,7 @@ class Scheduler:
         self._tasks = []
         self._task = None
         self._next = None
+        self._added = asyncio.Event()
 
     def run(self):
         self._task = asyncio.create_task(self.loop())
@@ -47,8 +48,7 @@ class Scheduler:
         while True:
             if self._next is None:
                 # Wait for a task
-                while self._next is None:
-                    await asyncio.sleep(0.1)
+                await self._added.wait()
             # Sleep until task will be executed
             await asyncio.sleep((self._next[1] - datetime.now()).total_seconds())
             # Run it
@@ -74,6 +74,8 @@ class Scheduler:
                 self._tasks.append((coro, when))
         else:
             self._next = coro, when
+            self._added.set()
+            self._added.clear()
 
 
 if __name__ == "__main__":
