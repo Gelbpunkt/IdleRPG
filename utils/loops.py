@@ -58,9 +58,9 @@ class Scheduler:
                 ],
                 return_when=asyncio.FIRST_COMPLETED,
             )
-            for fut in done:
-                if fut.result() is True:  # restart event
-                    continue
+            fut = next(iter(done))  # to avoid using a for loop
+            if fut.result() is True:  # restart event
+                continue
             # Run it
             asyncio.create_task(self._next[0])
             # Get the next task
