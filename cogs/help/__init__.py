@@ -69,7 +69,7 @@ class Help(commands.Cog):
             url=self.bot.BASE_URL,
             description=_(
                 "**Welcome to the IdleRPG help. Use the arrows to move.\nFor more help,"
-                " join the support server at https://discord.gg/MSBatf6.**\nCheck out"
+                " join the support server at https://support.idlerpg.xyz.**\nCheck out"
                 " our partners using the partners command!"
             ),
         )

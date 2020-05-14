@@ -225,13 +225,8 @@ Even $1 can help us.
         await ctx.send(
             _(
                 "You are running version **{version}** by The IdleRPG"
-                " Developers.\nInvite me! {url}"
-            ).format(
-                version=self.bot.version,
-                url=discord.utils.oauth_url(
-                    self.bot.user.id, permissions=discord.Permissions(8)
-                ),
-            )
+                " Developers.\nInvite me! https://invite.idlerpg.xyz"
+            ).format(version=self.bot.version,)
         )
 
     @commands.command()
@@ -241,7 +236,7 @@ Even $1 can help us.
         await ctx.send(
             _(
                 "Got problems or feature requests? Looking for people to play with?"
-                " Join the support server:\nhttps://discord.gg/MSBatf6"
+                " Join the support server:\nhttps://support.idlerpg.xyz"
             )
         )
 
@@ -280,7 +275,9 @@ Even $1 can help us.
             title=_("IdleRPG Statistics"),
             colour=0xB8BBFF,
             url=self.bot.BASE_URL,
-            description=_("Official Support Server Invite: https://discord.gg/MSBatf6"),
+            description=_(
+                "Official Support Server Invite: https://support.idlerpg.xyz"
+            ),
         )
         embed.set_thumbnail(url=self.bot.user.avatar_url)
         embed.set_footer(
