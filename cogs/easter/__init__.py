@@ -15,11 +15,10 @@ GNU Affero General Public License for more details.
 You should have received a copy of the GNU Affero General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
-import random
-
 from discord.ext import commands
 
 from classes.converters import IntFromTo
+from utils import random
 from utils.checks import has_char
 from utils.i18n import _, locale_doc
 

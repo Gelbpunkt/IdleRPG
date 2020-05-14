@@ -16,7 +16,6 @@ You should have received a copy of the GNU Affero General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
 import datetime
-import secrets
 
 from typing import TYPE_CHECKING
 
@@ -27,6 +26,7 @@ from discord.ext import commands
 
 from classes.context import Context
 from classes.enums import DonatorRank
+from utils import random
 
 if TYPE_CHECKING:
     from discord.ext.commands.core import _CheckDecorator
@@ -411,7 +411,7 @@ def update_pet() -> "_CheckDecorator":
                         ctx.author.id,
                     )
                     raise PetDied()
-                elif data["love"] < 75 and secrets.randbelow(100) > data["love"]:
+                elif data["love"] < 75 and random.randint(0, 99) > data["love"]:
                     classes[idx] = "No Class"
                     await conn.execute(
                         'DELETE FROM pets WHERE "user"=$1;', ctx.author.id

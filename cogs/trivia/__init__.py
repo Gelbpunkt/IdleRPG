@@ -16,10 +16,10 @@ You should have received a copy of the GNU Affero General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
 import html
-import random
 
 from discord.ext import commands
 
+from utils import random
 from utils.i18n import _, locale_doc
 
 
@@ -44,7 +44,7 @@ class Trivia(commands.Cog):
 
     async def get_response(self, ctx, question):
         entries = [question["correct_answer"]] + question["incorrect_answers"]
-        random.shuffle(entries)
+        entries = random.shuffle(entries)
         answer = await self.bot.paginator.Choose(
             entries=entries,
             title=question["question"],

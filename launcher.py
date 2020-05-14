@@ -17,7 +17,6 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
 import asyncio
 import json
-import random
 import sys
 
 from pathlib import Path
@@ -30,6 +29,7 @@ import aiohttp
 import aioredis
 
 from config import additional_shards, shard_announce_channel, shard_per_cluster, token
+from utils import random
 
 if sys.version_info < (3, 8):
     raise Exception("IdleRPG requires Python 3.8")

@@ -16,7 +16,6 @@ You should have received a copy of the GNU Affero General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
 import asyncio
-import random
 
 import discord
 
@@ -27,6 +26,7 @@ from classes.converters import IntFromTo, MemberWithCharacter, UserWithCharacter
 from cogs.help import chunks
 from cogs.shard_communication import user_on_cooldown as user_cooldown
 from utils import misc as rpgtools
+from utils import random
 from utils.checks import has_char
 from utils.i18n import _, locale_doc
 

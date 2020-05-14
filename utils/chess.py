@@ -18,7 +18,6 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 import asyncio
 import datetime
 import io
-import random
 import re
 
 from typing import Optional
@@ -32,6 +31,7 @@ import discord
 from async_timeout import timeout
 
 from classes.context import Context
+from utils import random
 from utils.i18n import _
 from utils.paginator import NoChoice
 

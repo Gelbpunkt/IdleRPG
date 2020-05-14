@@ -991,4 +991,3 @@ GRANT SELECT ON TABLE public.user_settings TO prest;
 --
 -- PostgreSQL database dump complete
 --
-

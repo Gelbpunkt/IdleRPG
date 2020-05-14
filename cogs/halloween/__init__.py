@@ -15,15 +15,13 @@ GNU Affero General Public License for more details.
 You should have received a copy of the GNU Affero General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
-import random
-import secrets
-
 import discord
 
 from discord.ext import commands
 
 from cogs.shard_communication import user_on_cooldown as user_cooldown
 from utils import checks as checks
+from utils import random
 from utils.i18n import _, locale_doc
 
 
@@ -45,7 +43,7 @@ class Halloween(commands.Cog):
                 _("You walk around the houses... Noone is there... *yet*")
             )
         self.waiting = None
-        if secrets.randbelow(2) == 1:
+        if random.randint(0, 1) == 1:
             await ctx.send(
                 _(
                     "You walk around the houses and ring at {waiting}'s house! That's a"
@@ -64,7 +62,7 @@ class Halloween(commands.Cog):
                 ).format(waiting=waiting)
             )
         try:
-            if secrets.randbelow(2) == 1:
+            if random.randint(0, 1) == 1:
                 await waiting.send(
                     "The waiting was worth it: {author} rang! That's a trick or treat"
                     " bag for you, yay!".format(author=ctx.author)

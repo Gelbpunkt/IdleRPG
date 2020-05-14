@@ -17,7 +17,6 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
 import copy
 import io
-import random
 import re
 import textwrap
 import traceback
@@ -30,9 +29,9 @@ import discord
 import import_expression
 
 from discord.ext import commands
-
 from tabulate import tabulate
-from utils import shell
+
+from utils import random, shell
 
 
 class Owner(commands.Cog):

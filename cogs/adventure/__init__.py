@@ -16,7 +16,6 @@ You should have received a copy of the GNU Affero General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
 import asyncio
-import random
 
 from base64 import b64decode
 from io import BytesIO
@@ -30,6 +29,7 @@ from classes.enums import DonatorRank
 from cogs.shard_communication import user_on_cooldown as user_cooldown
 from utils import items
 from utils import misc as rpgtools
+from utils import random
 from utils.checks import has_adventure, has_char, has_no_adventure
 from utils.i18n import _, locale_doc
 from utils.maze import Maze

@@ -16,14 +16,13 @@ You should have received a copy of the GNU Affero General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
 import datetime
-import random
-import secrets
 
 import discord
 
 from discord.ext import commands
 
 from cogs.shard_communication import next_day_cooldown
+from utils import random
 from utils.checks import has_char
 from utils.i18n import _, locale_doc
 
@@ -47,7 +46,7 @@ class Valentine(commands.Cog):
         }
 
     def get_valentine_name(self, type_):
-        return secrets.choice(self.valentine_items[type_])
+        return random.choice(self.valentine_items[type_])
 
     @has_char()
     @next_day_cooldown()

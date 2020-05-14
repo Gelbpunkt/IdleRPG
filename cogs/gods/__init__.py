@@ -12,8 +12,6 @@ GNU Affero General Public License for more details.
 You should have received a copy of the GNU Affero General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
-import secrets
-
 from decimal import Decimal
 from io import BytesIO
 
@@ -24,6 +22,7 @@ from discord.ext import commands
 from classes.converters import IntGreaterThan, UserWithCharacter
 from cogs.shard_communication import next_day_cooldown
 from cogs.shard_communication import user_on_cooldown as user_cooldown
+from utils import random
 from utils.checks import has_char, has_god, has_no_god, is_god
 from utils.i18n import _, locale_doc
 
@@ -224,8 +223,8 @@ Are you sure you want to follow {god}?"""
     @locale_doc
     async def pray(self, ctx):
         _("""Pray to your deity to gain favor.""")
-        if (rand := secrets.randbelow(3)) == 0:
-            message = secrets.choice(
+        if (rand := random.randint(0, 2)) == 0:
+            message = random.choice(
                 [
                     _("They obviously didn't like your prayer!"),
                     _("Noone heard you!"),
@@ -235,8 +234,8 @@ Are you sure you want to follow {god}?"""
             )
             val = 0
         elif rand == 1:
-            val = secrets.randbelow(500) + 1
-            message = secrets.choice(
+            val = random.randint(0, 500)
+            message = random.choice(
                 [
                     _("„Rather lousy, but okay“, they said."),
                     _("You were a little sleepy."),
@@ -250,8 +249,8 @@ Are you sure you want to follow {god}?"""
                 ctx.author.id,
             )
         elif rand == 2:
-            val = secrets.randbelow(500) + 500
-            message = secrets.choice(
+            val = random.randint(0, 500) + 500
+            message = random.choice(
                 [
                     _("Your Gregorian chants were amazingly well sung."),
                     _("Even the birds joined in your singing."),

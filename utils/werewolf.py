@@ -29,7 +29,6 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 from __future__ import annotations
 
 import asyncio
-import random
 
 from enum import Enum
 from typing import List, Optional
@@ -40,6 +39,7 @@ from async_timeout import timeout
 from discord.ext import commands
 
 from classes.context import Context
+from utils import random
 
 
 class Role(Enum):
@@ -1122,7 +1122,7 @@ def get_roles(number_of_players: int) -> List[Role]:
         for idx, role in enumerate(roles):
             if role == Role.BROTHER:
                 roles[idx] = Role.VILLAGER
-    random.shuffle(roles)
+    roles = random.shuffle(roles)
     return roles
 
 

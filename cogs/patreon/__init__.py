@@ -15,12 +15,11 @@ GNU Affero General Public License for more details.
 You should have received a copy of the GNU Affero General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
-import random
-
 from asyncpg.exceptions import StringDataRightTruncationError
 from discord.ext import commands
 
 from cogs.shard_communication import user_on_cooldown as user_cooldown
+from utils import random
 from utils.checks import has_char, is_guild_leader, is_patron, user_is_patron
 from utils.i18n import _, locale_doc
 

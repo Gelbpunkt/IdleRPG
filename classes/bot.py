@@ -18,7 +18,6 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 import asyncio
 import datetime
 import os
-import random
 import string
 import sys
 import traceback
@@ -40,7 +39,7 @@ from classes.converters import UserWithCharacter
 from classes.enums import DonatorRank
 from classes.exceptions import GlobalCooldown
 from classes.http import ProxiedClientSession
-from utils import i18n, paginator
+from utils import i18n, paginator, random
 from utils.checks import user_is_patron
 from utils.i18n import _
 
