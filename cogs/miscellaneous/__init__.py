@@ -226,7 +226,7 @@ Even $1 can help us.
             _(
                 "You are running version **{version}** by The IdleRPG"
                 " Developers.\nInvite me! https://invite.idlerpg.xyz"
-            ).format(version=self.bot.version,)
+            ).format(version=self.bot.version)
         )
 
     @commands.command()
