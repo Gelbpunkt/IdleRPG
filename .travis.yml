@@ -1,4 +1,7 @@
-language: minimal
+arch: amd64
+language: shell
+os: linux
+dist: focal
 
 jobs:
   include:
@@ -10,8 +13,8 @@ jobs:
       os: linux
       dist: focal
       arch: arm64
-    - allow_failures:
-      - name: "aarch64 Ubuntu 24.04"
+  allow_failures:
+    - name: "aarch64 Ubuntu 24.04"
 
 before_install:
   - . /etc/os-release
