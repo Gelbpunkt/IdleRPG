@@ -64,7 +64,7 @@ class Scheduler:
             # Sleep until task will be executed
             done, pending = await asyncio.wait(
                 [
-                    asyncio.sleep((time - datetime.now()).total_seconds()),
+                    asyncio.sleep((time - datetime.utcnow()).total_seconds()),
                     self._restart.wait(),
                 ],
                 return_when=asyncio.FIRST_COMPLETED,
@@ -84,7 +84,7 @@ class Scheduler:
                 self._next = None
 
     def schedule(self, coro, when):
-        if when < datetime.now():
+        if when < datetime.utcnow():
             raise ValueError("May only be in the future.")
         if self._next:
             if when < self._next[1]:
@@ -109,10 +109,10 @@ if __name__ == "__main__":
         async def test(x):
             print(x)
 
-        sched.schedule(test(1), datetime.now() + timedelta(seconds=5))
-        sched.schedule(test(2), datetime.now() + timedelta(seconds=10))
+        sched.schedule(test(1), datetime.utcnow() + timedelta(seconds=5))
+        sched.schedule(test(2), datetime.utcnow() + timedelta(seconds=10))
         await asyncio.sleep(6)
-        sched.schedule(test(3), datetime.now() + timedelta(seconds=1))
+        sched.schedule(test(3), datetime.utcnow() + timedelta(seconds=1))
         await asyncio.sleep(30)
 
     asyncio.run(demo())
