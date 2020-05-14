@@ -17,13 +17,13 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
 import asyncio
 import copy
-import random
 
 import discord
 
 from discord.ext import commands
 
 from cogs.help import chunks
+from utils import random
 from utils.i18n import _, locale_doc
 from utils.misc import nice_join
 
@@ -251,7 +251,7 @@ class GameBase:
 
     async def send_cast(self):
         cast = copy.copy(self.players)
-        random.shuffle(cast)
+        cast = random.shuffle(cast)
         cast = list(chunks(cast, 2))
         self.cast = cast
         text = _("Team")

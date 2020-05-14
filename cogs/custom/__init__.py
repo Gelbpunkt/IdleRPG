@@ -15,12 +15,11 @@ GNU Affero General Public License for more details.
 You should have received a copy of the GNU Affero General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
-import secrets
-
 import discord
 
 from discord.ext import commands
 
+from utils import random
 from utils.i18n import _, locale_doc
 
 
@@ -53,7 +52,7 @@ class Custom(commands.Cog):
     async def jester(self, ctx):
         _("""Use to have Jester cast a spell ✨""")
         await ctx.send(
-            secrets.choice(
+            random.choice(
                 [
                     _(
                         "Jester casts Spirit Guardians on herself. She, and the"
@@ -112,7 +111,7 @@ class Custom(commands.Cog):
             embed=discord.Embed(
                 title=f"{ctx.author} licks {user}!", colour=ctx.author.colour
             ).set_image(
-                url=secrets.choice(
+                url=random.choice(
                     [
                         "https://i.imgur.com/LiLbLw0.gif",
                         "https://i.imgur.com/9tU0AFl.gif",

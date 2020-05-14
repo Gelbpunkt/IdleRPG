@@ -15,8 +15,6 @@ GNU Affero General Public License for more details.
 You should have received a copy of the GNU Affero General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
-import secrets
-
 from copy import copy
 from decimal import Decimal
 
@@ -27,6 +25,7 @@ from discord.ext import commands
 from cogs.shard_communication import next_day_cooldown
 from cogs.shard_communication import user_on_cooldown as user_cooldown
 from utils import misc as rpgtools
+from utils import random
 from utils.checks import has_char, has_money, is_class, update_pet, user_is_patron
 from utils.i18n import _, locale_doc
 
@@ -280,7 +279,7 @@ class Classes(commands.Cog):
             bonus = buildings["thief_building"] * 5
         else:
             bonus = 0
-        if secrets.randbelow(100) in range(
+        if random.randint(0, 99) in range(
             1,
             self.bot.get_class_grade_from(ctx.character_data["class"], "Thief") * 8
             + 1
@@ -462,7 +461,7 @@ class Classes(commands.Cog):
     @locale_doc
     async def cuddle(self, ctx):
         _("""[Ranger Only] Cuddle your pet to make it love you.""")
-        value = secrets.randbelow(12) + 1  # On average, it'll stay as is
+        value = random.randint(0, 11) + 1  # On average, it'll stay as is
         await self.bot.pool.execute(
             'UPDATE pets SET "love"=CASE WHEN "love"+$1>=100 THEN 100 ELSE "love"+$1'
             ' END WHERE "user"=$2;',
@@ -484,7 +483,7 @@ class Classes(commands.Cog):
     @locale_doc
     async def play(self, ctx):
         _("""[Ranger Only] Play with your pet to make it happier.""")
-        value = secrets.randbelow(12) + 1  # On average, it'll stay as is
+        value = random.randint(0, 11) + 1  # On average, it'll stay as is
         await self.bot.pool.execute(
             'UPDATE pets SET "joy"=CASE WHEN "joy"+$1>=100 THEN 100 ELSE "joy"+$1 END'
             ' WHERE "user"=$2;',
@@ -495,7 +494,7 @@ class Classes(commands.Cog):
             _(
                 "You have been {activity} with your pet and it gained **{value}** joy!"
             ).format(
-                activity=secrets.choice(
+                activity=random.choice(
                     [
                         _("playing football :soccer:"),
                         _("playing American football :football:"),

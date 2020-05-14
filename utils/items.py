@@ -12,9 +12,9 @@ GNU Affero General Public License for more details.
 You should have received a copy of the GNU Affero General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
-import secrets
-
 from typing import Dict, Union
+
+from utils import random
 
 items = [
     ("Punjabi Remix", 9500),
@@ -174,5 +174,5 @@ items = [
 
 
 def get_item() -> Dict[str, Union[str, int]]:
-    item = secrets.choice(items)
+    item = random.choice(items)
     return {"name": item[0], "value": item[1]}

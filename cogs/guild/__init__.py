@@ -16,7 +16,6 @@ You should have received a copy of the GNU Affero General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
 import asyncio
-import random
 
 from datetime import timedelta
 from typing import Union
@@ -34,6 +33,7 @@ from classes.converters import (
 from cogs.shard_communication import guild_on_cooldown as guild_cooldown
 from cogs.shard_communication import user_on_cooldown as user_cooldown
 from utils import misc as rpgtools
+from utils import random
 from utils.checks import (
     has_char,
     has_guild,

@@ -17,7 +17,6 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
 import asyncio
 import datetime
-import random
 import re
 
 from decimal import Decimal
@@ -27,6 +26,7 @@ import discord
 from discord.ext import commands
 
 from classes.converters import IntGreaterThan
+from utils import random
 from utils.checks import AlreadyRaiding, has_char, is_gm, is_god
 from utils.i18n import _, locale_doc
 from utils.misc import nice_join

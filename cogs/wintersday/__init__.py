@@ -18,7 +18,6 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 import asyncio
 import datetime
 import json
-import random
 import string
 
 import discord
@@ -27,6 +26,7 @@ from discord.ext import commands
 
 from cogs.help import chunks
 from cogs.shard_communication import next_day_cooldown
+from utils import random
 from utils.checks import has_char, is_gm, is_guild_leader, is_guild_officer
 from utils.i18n import _, locale_doc
 

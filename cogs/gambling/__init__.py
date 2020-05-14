@@ -17,8 +17,6 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
 import asyncio
 import os
-import random
-import secrets
 
 from typing import Optional
 
@@ -27,6 +25,7 @@ import discord
 from discord.ext import commands
 
 from classes.converters import CoinSide, IntFromTo, IntGreaterThan, MemberWithCharacter
+from utils import random
 from utils.checks import has_char, has_money, user_has_char
 from utils.i18n import _, locale_doc
 from utils.roulette import RouletteGame
@@ -113,7 +112,7 @@ class BlackJack:
                     card = str(value)
                 self.deck.append((value, colour, self.cards[f"{card}{colour}"]))
         self.deck = self.deck * 6  # BlackJack is played with 6 sets of cards
-        random.shuffle(self.deck)
+        self.deck = random.shuffle(self.deck)
 
     def deal(self):
         return self.deck.pop()
@@ -422,7 +421,7 @@ class Gambling(commands.Cog):
     @locale_doc
     async def draw(self, ctx):
         _("""Draws a random card.""")
-        await ctx.send(file=discord.File(f"assets/cards/{secrets.choice(self.cards)}"))
+        await ctx.send(file=discord.File(f"assets/cards/{random.choice(self.cards)}"))
 
     @has_char()
     @commands.cooldown(1, 15, commands.BucketType.user)
@@ -485,7 +484,7 @@ To visualize the rows and columns, use the command: roulette table"""
         _("""Flip a coin and bid on the outcome.""")
         if ctx.character_data["money"] < amount:
             return await ctx.send(_("You are too poor."))
-        result = secrets.choice(
+        result = random.choice(
             [
                 ("heads", "<:heads:437981551196897281>"),
                 ("tails", "<:tails:437981602518138890>"),
@@ -554,7 +553,7 @@ To visualize the rows and columns, use the command: roulette table"""
             return await ctx.send(_("Spend it in a better way. C'mon!"))
         if ctx.character_data["money"] < money:
             return await ctx.send(_("You're too poor."))
-        randomn = secrets.randbelow(maximum + 1)
+        randomn = random.randint(0, maximum)
         if randomn == tip:
             if money > 0:
                 await self.bot.pool.execute(

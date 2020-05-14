@@ -19,9 +19,7 @@ import asyncio
 import datetime
 import os
 import platform
-import random
 import re
-import secrets
 import statistics
 import sys
 
@@ -41,6 +39,7 @@ from discord.ext.commands import BucketType
 from classes.converters import DateNewerThan, IntFromTo, IntGreaterThan
 from cogs.help import chunks
 from cogs.shard_communication import next_day_cooldown
+from utils import random
 from utils.checks import has_char, user_is_patron
 from utils.i18n import _, locale_doc
 from utils.misc import nice_join
@@ -77,7 +76,7 @@ class Miscellaneous(commands.Cog):
         )  # 48h: after 2 days, they missed it
         money = 2 ** ((streak + 9) % 10) * 50
         # Either money or crates
-        if secrets.randbelow(3) > 0:
+        if random.randint(0, 2) > 0:
             money = 2 ** ((streak + 9) % 10) * 50
             # Silver = 1.5x
             if await user_is_patron(self.bot, ctx.author, "silver"):
@@ -104,7 +103,7 @@ class Miscellaneous(commands.Cog):
                 "common",
                 "common",
             ]  # Trick for -1
-            type_ = secrets.choice(
+            type_ = random.choice(
                 [types[num - 3]] * 80 + [types[num - 2]] * 19 + [types[num - 1]] * 1
             )
             await self.bot.pool.execute(
@@ -744,7 +743,7 @@ https://git.travitia.xyz/Kenvyra/IdleRPG/compare/v4.5.1...v4.6.0
             "Possibly yes",
             "Wanna have a drink?",
         ]
-        result = secrets.choice(possible_answers)
+        result = random.choice(possible_answers)
         em = discord.Embed(title=question, description=result, colour=ctx.author.colour)
         em.set_thumbnail(url=ctx.author.avatar_url)
         em.timestamp = datetime.datetime.now()
