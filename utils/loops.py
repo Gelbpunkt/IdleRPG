@@ -80,7 +80,7 @@ class Scheduler:
 
 if __name__ == "__main__":
 
-    async def test():
+    async def demo():
         sched = Scheduler()
         sched.run()
 
@@ -93,4 +93,4 @@ if __name__ == "__main__":
         sched.schedule(test(3), datetime.now() + timedelta(seconds=1))
         await asyncio.sleep(30)
 
-    asyncio.run(test())
+    asyncio.run(demo())
