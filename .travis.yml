@@ -2,6 +2,7 @@ arch:
   - amd64
   # 20.04 aliases to 18.04 on ARM, until then disable it
   # - arm64
+os: linux
 dist: focal
 language: minimal
 
@@ -19,3 +20,6 @@ script:
     else
       podman build -t gelbpunkt/idlerpg:latest --build-arg beta=true .;
     fi
+
+allow_failures:
+  - arch: arm64
