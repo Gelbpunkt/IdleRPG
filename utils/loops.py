@@ -35,11 +35,21 @@ async def queue_manager(bot: Bot, queue: asyncio.Queue[asyncio.Task]) -> None:
 
 
 class Scheduler:
+    """
+    A clever scheduler for scheduling coroutine execution
+    at a specific datetime within a single task
+    """
+
     def __init__(self):
+        # A list of all tasks, elements are (coro, datetime)
         self._tasks = []
+        # The internal loop task
         self._task = None
+        # The next task to run, (coro, datetime)
         self._next = None
+        # Event fired when a initial task is added
         self._added = asyncio.Event()
+        # Event fired when the loop needs to reset
         self._restart = asyncio.Event()
 
     def run(self):
@@ -50,10 +60,11 @@ class Scheduler:
             if self._next is None:
                 # Wait for a task
                 await self._added.wait()
+            coro, time = self._next
             # Sleep until task will be executed
             done, pending = await asyncio.wait(
                 [
-                    asyncio.sleep((self._next[1] - datetime.now()).total_seconds()),
+                    asyncio.sleep((time - datetime.now()).total_seconds()),
                     self._restart.wait(),
                 ],
                 return_when=asyncio.FIRST_COMPLETED,
@@ -62,12 +73,13 @@ class Scheduler:
             if fut.result() is True:  # restart event
                 continue
             # Run it
-            asyncio.create_task(self._next[0])
-            # Get the next task
-            next_tasks = sorted(list(enumerate(self._tasks)), key=lambda x: x[1][1])
+            asyncio.create_task(coro)
+            # Get the next task sorted by time
+            next_tasks = sorted(enumerate(self._tasks), key=lambda elem: elem[1][1])
             if next_tasks:
-                self._next = next_tasks[0][1]
-                del self._tasks[next_tasks[0][0]]
+                idx, task = next_tasks[0]
+                self._next = task
+                del self._tasks[idx]
             else:
                 self._next = None
 
