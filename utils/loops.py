@@ -40,6 +40,7 @@ class Scheduler:
         self._task = None
         self._next = None
         self._added = asyncio.Event()
+        self._restart = asyncio.Event()
 
     def run(self):
         self._task = asyncio.create_task(self.loop())
@@ -50,7 +51,16 @@ class Scheduler:
                 # Wait for a task
                 await self._added.wait()
             # Sleep until task will be executed
-            await asyncio.sleep((self._next[1] - datetime.now()).total_seconds())
+            done, pending = await asyncio.wait(
+                [
+                    asyncio.sleep((self._next[1] - datetime.now()).total_seconds()),
+                    self._restart.wait(),
+                ],
+                return_when=asyncio.FIRST_COMPLETED,
+            )
+            for fut in done:
+                if fut.result() is True:  # restart event
+                    continue
             # Run it
             asyncio.create_task(self._next[0])
             # Get the next task
@@ -68,8 +78,8 @@ class Scheduler:
             if when < self._next[1]:
                 self._tasks.append(self._next)
                 self._next = coro, when
-                self._task.cancel()
-                self._task = asyncio.create_task(self.loop())
+                self._restart.set()
+                self._restart.clear()
             else:
                 self._tasks.append((coro, when))
         else:
