@@ -45,6 +45,7 @@ class Scheduler:
         self._tasks = []
         # The internal loop task
         self._task = None
+        self._task_count = 0
         # The next task to run, (coro, datetime)
         self._next = None
         # Event fired when a initial task is added
@@ -80,12 +81,15 @@ class Scheduler:
                 idx, task = next_tasks[0]
                 self._next = task
                 del self._tasks[idx]
+                self._task_count -= 1
             else:
                 self._next = None
+                self._task_count = 0
 
     def schedule(self, coro, when):
         if when < datetime.utcnow():
             raise ValueError("May only be in the future.")
+        self._task_count += 1
         if self._next:
             if when < self._next[1]:
                 self._tasks.append(self._next)
@@ -100,19 +104,51 @@ class Scheduler:
             self._added.clear()
 
 
+class Manager:
+    """
+    A manager for multiple Schedulers
+    to balance load.
+    Can run up to ~20 schedulers
+    and ~1-10 million jobs just fine,
+    depending on the concurrent finishing
+    jobs.
+    """
+
+    def __init__(self, tasks=1):
+        self._schedulers = []
+        for i in range(tasks):
+            self._schedulers.append(Scheduler())
+
+    def run(self):
+        for sched in self._schedulers:
+            sched.run()
+
+    def schedule(self, *args, **kwargs):
+        # Find the scheduler with less load
+        sorted_by_load = sorted(self._schedulers, key=lambda x: x._task_count)
+        sorted_by_load[0].schedule(*args, **kwargs)
+
+
 if __name__ == "__main__":
+    import random
+
+    import uvloop
+
+    uvloop.install()
 
     async def demo():
-        sched = Scheduler()
+        sched = Manager(20)
         sched.run()
 
-        async def test(x):
-            print(x)
+        async def test(x, t):
+            print(f"Task #{x} finished with {t}")
 
-        sched.schedule(test(1), datetime.utcnow() + timedelta(seconds=5))
-        sched.schedule(test(2), datetime.utcnow() + timedelta(seconds=10))
-        await asyncio.sleep(6)
-        sched.schedule(test(3), datetime.utcnow() + timedelta(seconds=1))
-        await asyncio.sleep(30)
+        start = datetime.utcnow()
+
+        for i in range(10000000):
+            t = random.randint(120, 600000)
+            sched.schedule(test(i, t), start + timedelta(seconds=t))
+        print("done sched")
+        await asyncio.sleep(600)
 
     asyncio.run(demo())
