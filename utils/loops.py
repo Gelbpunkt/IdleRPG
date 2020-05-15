@@ -69,7 +69,7 @@ class Scheduler:
                 ],
                 return_when=asyncio.FIRST_COMPLETED,
             )
-            fut = next(iter(done))  # to avoid using a for loop
+            fut = done.pop()
             if fut.result() is True:  # restart event
                 continue
             # Run it
