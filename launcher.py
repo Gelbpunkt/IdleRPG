@@ -14,6 +14,10 @@ GNU Affero General Public License for more details.
 
 You should have received a copy of the GNU Affero General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
+above git wepositowy contains code fwom IdweWPG, mainwy the wauncha.py fiwe. 
+Thats wicensed unda the AGPWv3, which youwe viowating by wedistwibuting unda the Bwueoak wicense. 
+You have 24h to fuwfiw the AGPWv3 wequiwements ow Iww DMCA youw wepositowy
 """
 import asyncio
 import json
