@@ -274,18 +274,27 @@ class Music(commands.Cog):
         if not results.get("items"):
             return await ctx.send(_("No results..."))
         track_objs = [Track(i) for i in results["items"]]
-        track_idx = await self.bot.paginator.Choose(
-            title=_("Song results"),
-            footer=_("Hit a button to play one"),
-            return_index=True,
-            entries=[
-                f"**{i.name}** by {nice_join([a.name for a in i.artists])} on"
-                f" {i.album.name}"
-                f" ({str(timedelta(milliseconds=i.duration)).split('.')[0]})"
-                for i in track_objs
-            ],
-        ).paginate(ctx)
-        track_obj = track_objs[track_idx]
+        if len(track_objs) > 1:
+            track_idx = await self.bot.paginator.Choose(
+                title=_("Song results"),
+                footer=_("Hit a button to play one"),
+                return_index=True,
+                entries=[
+                    f"**{i.name}** by {nice_join([a.name for a in i.artists])} on"
+                    f" {i.album.name}"
+                    f" ({str(timedelta(milliseconds=i.duration)).split('.')[0]})"
+                    for i in track_objs
+                ],
+            ).paginate(ctx)
+            track_obj = track_objs[track_idx]
+        else:
+            track_obj = track_objs[0]
+            if not await ctx.confirm(
+                f"The only result was **{track_obj.name}** by"
+                f" {nice_join([a.name for a in track_obj.artists])} on"
+                f" {track_obj.album.name}. Play it?"
+            ):
+                return
 
         msg = await ctx.send(
             _("Downloading track... This might take up to 3 seconds...")
