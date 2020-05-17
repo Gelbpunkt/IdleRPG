@@ -15,6 +15,8 @@ GNU Affero General Public License for more details.
 You should have received a copy of the GNU Affero General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
+from __future__ import annotations
+
 import asyncio
 import json
 import sys
@@ -31,8 +33,8 @@ import aioredis
 from config import additional_shards, shard_announce_channel, shard_per_cluster, token
 from utils import random
 
-if sys.version_info < (3, 9):
-    raise Exception("IdleRPG requires Python 3.9")
+if sys.version_info < (3, 8):
+    raise Exception("IdleRPG requires Python 3.8")
 
 __version__ = "1.0.0"
 
