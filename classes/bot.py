@@ -103,7 +103,7 @@ class Bot(commands.AutoShardedBot):
         for root, dirs, files in os.walk(os.getcwd()):
             for file_ in files:
                 if file_.endswith(".py"):
-                    with open(f"{root}/{file_}") as f:
+                    with open(os.sep.join([root, file_]), "r", encoding="utf-8") as f:
                         self.linecount += len(f.readlines())
 
     async def connect_all(self):

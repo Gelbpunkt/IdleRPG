@@ -313,7 +313,7 @@ Redis Version: **{redis_version}**"""
                 compiler=compiler,
                 osname=sysinfo[0].title(),
                 osversion=sysinfo[1],
-                kernel=os.uname().release,
+                kernel=os.uname().release if os.name == "posix" else "NT",
                 pg_version=pg_version,
                 redis_version=self.bot.redis_version,
             ),
