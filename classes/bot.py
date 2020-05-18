@@ -648,7 +648,9 @@ class Bot(commands.AutoShardedBot):
             return None
         return getattr(DonatorRank, response)
 
-    async def generate_stats(self, user, damage, armor, classes=None, race=None, conn=None):
+    async def generate_stats(
+        self, user, damage, armor, classes=None, race=None, conn=None
+    ):
         user = user.id if isinstance(user, (discord.User, discord.Member)) else user
         local = False
         if conn is None:
