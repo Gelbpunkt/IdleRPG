@@ -316,7 +316,7 @@ class IdleHelp(commands.HelpCommand):
         allowed = []
         for cog in self.context.bot.cogs.keys():
             if (
-                self.context.author.id not in self.context.bot.config.game_master
+                self.context.author.id not in self.context.bot.config.game_masters
                 and cog in self.gm_exts
             ):
                 continue
