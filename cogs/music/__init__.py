@@ -296,9 +296,7 @@ class Music(commands.Cog):
             ):
                 return
 
-        msg = await ctx.send(
-            _("Downloading track... This might take up to 3 seconds...")
-        )
+        msg = await ctx.send(_("Loading track... This might take up to 3 seconds..."))
         tracks = await self.bot.wavelink.get_tracks(
             f"{self.bot.config.resolve_endpoint}?isrc={track_obj.isrc}"
         )
