@@ -295,7 +295,7 @@ class IdleHelp(commands.HelpCommand):
             name=self.context.bot.user,
             icon_url=self.context.bot.user.avatar_url_as(static_format="png"),
         )
-        e.set_thumbnail(url=self.icon)
+        # e.set_thumbnail(url=self.icon)
 
         return e
 
