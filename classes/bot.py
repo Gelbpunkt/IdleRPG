@@ -270,7 +270,7 @@ class Bot(commands.AutoShardedBot):
         items = await self.get_equipped_items_for(thing, conn=conn)
         damage = sum(i["damage"] for i in items)
         defense = sum(i["armor"] for i in items)
-        return damage, defense
+        return await self.generate_stats(thing, damage, defense, conn=conn)
 
     async def get_context(self, message, *, cls=None):
         """Overrides the default Context with a custom Context"""
@@ -648,13 +648,19 @@ class Bot(commands.AutoShardedBot):
             return None
         return getattr(DonatorRank, response)
 
-    async def generate_stats(self, user, damage, armor, classes=None, race=None):
+    async def generate_stats(self, user, damage, armor, classes=None, race=None, conn=None):
         user = user.id if isinstance(user, (discord.User, discord.Member)) else user
+        local = False
+        if conn is None:
+            conn = await self.pool.acquire()
+            local = True
         if not classes or not race:
-            classes, race = await self.pool.fetchval(
+            classes, race = await conn.fetchval(
                 'SELECT ("class"::text[], "race"::text) FROM profile WHERE "user"=$1;',
                 user,
             )
+        if local:
+            await conn.close()
         lines = [self.get_class_line(class_) for class_ in classes]
         grades = [self.get_class_grade(class_) for class_ in classes]
         for line, grade in zip(lines, grades):
