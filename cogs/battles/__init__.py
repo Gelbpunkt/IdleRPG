@@ -458,18 +458,18 @@ class Battles(commands.Cog):
             },
         }
 
-        for p in players:
-            c = await self.bot.pool.fetchval(
-                'SELECT class FROM profile WHERE "user"=$1;', p.id
-            )
-            if self.bot.in_class_line(c, "Ranger"):
-                players[p]["hp"] = 120
-            else:
-                players[p]["hp"] = 100
-
-            d, a = await self.bot.get_damage_armor_for(p)
-            players[p]["damage"] = int(d)
-            players[p]["defense"] = int(a)
+        async with self.bot.pool.acquire() as conn:
+            for p in players:
+                c = await self.bot.pool.fetchval(
+                    'SELECT class FROM profile WHERE "user"=$1;', p.id
+                )
+                if self.bot.in_class_line(c, "Ranger"):
+                    players[p]["hp"] = 120
+                else:
+                    players[p]["hp"] = 100
+                d, a = await self.bot.get_damage_armor_for(p, conn=conn)
+                players[p]["damage"] = int(d)
+                players[p]["defense"] = int(a)
 
         moves = {
             "\U00002694": "attack",
