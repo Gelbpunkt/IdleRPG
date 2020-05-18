@@ -76,8 +76,13 @@ class Locale(commands.Cog):
         await ctx.send(
             _(
                 "Your current language is **{current_locale}**. Available options:"
-                " {all_locales}"
-            ).format(current_locale=current_locale, all_locales=all_locales)
+                " {all_locales}\n\nPlease use `{prefix}locale set language_code` to"
+                " choose one."
+            ).format(
+                current_locale=current_locale,
+                all_locales=all_locales,
+                prefix=ctx.prefix,
+            )
         )
 
     @language.command(name="set")
