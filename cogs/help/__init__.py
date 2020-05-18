@@ -314,7 +314,7 @@ class IdleHelp(commands.HelpCommand):
         )
 
         allowed = []
-        for cog in mapping.keys():
+        for cog in sorted(mapping.keys()):
             if cog is None:
                 continue
             if (
@@ -333,7 +333,7 @@ class IdleHelp(commands.HelpCommand):
             ):
                 continue
             allowed.append(cog.qualified_name)
-        cogs = [sorted(allowed)[x : x + 4] for x in range(0, len(allowed), 4)]
+        cogs = [allowed[x : x + 3] for x in range(0, len(allowed), 3)]
         length_list = [len(element) for row in cogs for element in row]
         column_width = max(length_list)
         rows = []
