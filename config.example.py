@@ -168,6 +168,7 @@ donator_roles = [
     "Donators",
     "Designer",
     "Translator",
+    "Support Team",
     "Nitro Booster",
     "Game Masters",
     "Code Redeemed",
@@ -179,6 +180,7 @@ donator_roles = [
     "Diamond Donators",
 ]
 donator_roles_short = [
+    "basic",
     "basic",
     "basic",
     "basic",
