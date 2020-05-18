@@ -255,6 +255,8 @@ class Errorhandler(commands.Cog):
                 await ctx.send(_("Your alliance already owns a city."))
             elif isinstance(error, utils.checks.NoAlliancePermissions):
                 await ctx.send(_("Your alliance rank is too low."))
+            elif isinstance(error, utils.checks.NoOpenHelpRequest):
+                await ctx.send(_("Your server does not have an open help request."))
             else:
                 await ctx.send(
                     embed=discord.Embed(
