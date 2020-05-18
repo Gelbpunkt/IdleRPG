@@ -314,7 +314,7 @@ class IdleHelp(commands.HelpCommand):
         )
 
         allowed = []
-        for cog in sorted(mapping.keys(), key=lambda x: x.qualified_name):
+        for cog in sorted(mapping.keys(), key=lambda x: x.qualified_name if x else ""):
             if cog is None:
                 continue
             if (
