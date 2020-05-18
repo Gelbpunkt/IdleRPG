@@ -315,6 +315,8 @@ class IdleHelp(commands.HelpCommand):
 
         allowed = []
         for cog in mapping.keys():
+            if cog is None:
+                continue
             if (
                 self.context.author.id not in self.context.bot.config.game_masters
                 and cog.qualified_name in self.gm_exts
