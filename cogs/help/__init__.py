@@ -345,7 +345,7 @@ class IdleHelp(commands.HelpCommand):
 
     async def send_cog_help(self, cog):
         if (
-            self.context.author.id not in self.context.bot.config.game_master
+            self.context.author.id not in self.context.bot.config.game_masters
             and cog.qualified_name in self.gm_exts
         ):
             return await self.context.send(
@@ -364,7 +364,7 @@ class IdleHelp(commands.HelpCommand):
     async def send_command_help(self, command):
         if command.cog:
             if (
-                self.context.author.id not in self.context.bot.config.game_master
+                self.context.author.id not in self.context.bot.config.game_masters
                 and command.cog.qualified_name in self.gm_exts
             ):
                 return await self.context.send(
@@ -383,7 +383,7 @@ class IdleHelp(commands.HelpCommand):
     async def send_group_help(self, group):
         if group.cog:
             if (
-                self.context.author.id not in self.context.bot.config.game_master
+                self.context.author.id not in self.context.bot.config.game_masters
                 and group.cog.qualified_name in self.gm_exts
             ):
                 return await self.context.send(
