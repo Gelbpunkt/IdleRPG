@@ -293,7 +293,7 @@ class IdleHelp(commands.HelpCommand):
         e = discord.Embed(color=self.color, **kwargs)
         e.set_author(
             name=self.context.bot.user,
-            icon_url=self.context.bot.avatar_url_as(static_format="png"),
+            icon_url=self.context.bot.user.avatar_url_as(static_format="png"),
         )
         e.set_thumbnail(url=self.icon)
 
