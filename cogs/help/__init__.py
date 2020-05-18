@@ -260,28 +260,35 @@ class IdleHelp(commands.HelpCommand):
 
         maybe_coro = discord.utils.maybe_coroutine
 
-        keys = command.split(' ')
+        keys = command.split(" ")
         cmd = bot.all_commands.get(keys[0])
         if cmd is None:
-            string = await maybe_coro(self.command_not_found, self.remove_mentions(keys[0]))
+            string = await maybe_coro(
+                self.command_not_found, self.remove_mentions(keys[0])
+            )
             return await self.send_error_message(string)
 
         for key in keys[1:]:
             try:
                 found = cmd.all_commands.get(key)
             except AttributeError:
-                string = await maybe_coro(self.subcommand_not_found, cmd, self.remove_mentions(key))
+                string = await maybe_coro(
+                    self.subcommand_not_found, cmd, self.remove_mentions(key)
+                )
                 return await self.send_error_message(string)
             else:
                 if found is None:
-                    string = await maybe_coro(self.subcommand_not_found, cmd, self.remove_mentions(key))
+                    string = await maybe_coro(
+                        self.subcommand_not_found, cmd, self.remove_mentions(key)
+                    )
                     return await self.send_error_message(string)
                 cmd = found
 
-        if isinstance(cmd, Group):
+        if isinstance(cmd, commands.Group):
             return await self.send_group_help(cmd)
         else:
             return await self.send_command_help(cmd)
+
 
     def embedbase(self, *args, **kwargs):
         e = discord.Embed(color=self.color, **kwargs)
