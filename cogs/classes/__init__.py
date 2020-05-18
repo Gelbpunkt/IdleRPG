@@ -15,337 +15,587 @@ GNU Affero General Public License for more details.
 You should have received a copy of the GNU Affero General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
-
-from typing import Union
+from copy import copy
+from decimal import Decimal
 
 import discord
 
-from asyncpg import UniqueViolationError
 from discord.ext import commands
 
-from classes.converters import User
-from utils.checks import is_supporter
+from cogs.shard_communication import next_day_cooldown
+from cogs.shard_communication import user_on_cooldown as user_cooldown
+from utils import misc as rpgtools
+from utils import random
+from utils.checks import has_char, has_money, is_class, update_pet, user_is_patron
 from utils.i18n import _, locale_doc
 
 
-def chunks(iterable, size):
-    """Yield successive n-sized chunks from an iterable."""
-    for i in range(0, len(iterable), size):
-        yield iterable[i : i + size]
-
-
-class Help(commands.Cog):
+class Classes(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
-    def make_signature(self, command):
-        parent = command.full_parent_name
-        if len(command.aliases) > 0:
-            fmt = f"[{command.name}|{'|'.join(command.aliases)}]"
-            if parent:
-                fmt = f"{parent} {fmt}"
+    @has_char()
+    @user_cooldown(86400)
+    @commands.command(name="class")
+    @locale_doc
+    async def _class(self, ctx):
+        _(
+            """Change your primary or secondary class. Secondary class is available once you reach level 12."""
+        )
+        if int(rpgtools.xptolevel(ctx.character_data["xp"])) >= 12:
+            val = await self.bot.paginator.Choose(
+                title=_("Select class to change"),
+                entries=[_("Primary Class"), _("Secondary Class")],
+                return_index=True,
+            ).paginate(ctx)
         else:
-            fmt = command.name if not parent else f"{parent} {command.name}"
-        fmt = f"{fmt} {command.signature}"
-        return fmt
-
-    def make_pages(self):
-        all_commands = {}
-        for cog, instance in self.bot.cogs.items():
-            if cog in ["GameMaster", "Owner"]:
-                continue
-            commands = list(chunks(list(instance.get_commands()), 10))
-            if len(commands) == 1:
-                all_commands[cog] = commands[0]
-            else:
-                for i, j in enumerate(commands):
-                    all_commands[f"{cog} ({i + 1}/{len(commands)})"] = j
-
-        pages = []
-        maxpages = len(all_commands)
-
-        embed = discord.Embed(
-            title=_("IdleRPG Help"),
-            colour=self.bot.config.primary_colour,
-            url=self.bot.BASE_URL,
-            description=_(
-                "**Welcome to the IdleRPG help. Use the arrows to move.\nFor more help,"
-                " join the support server at https://support.idlerpg.xyz.**\nCheck out"
-                " our partners using the partners command!"
-            ),
-        )
-        embed.set_image(url=f"{self.bot.BASE_URL}/IdleRPG.png")
-        embed.set_footer(
-            text=_("IdleRPG Version {version}").format(version=self.bot.version),
-            icon_url=self.bot.user.avatar_url,
-        )
-        pages.append(embed)
-        for i, (cog, commands) in enumerate(all_commands.items()):
-            embed = discord.Embed(
-                title=_("IdleRPG Help"),
-                colour=self.bot.config.primary_colour,
-                url=self.bot.BASE_URL,
-                description=_("**{category} Commands**").format(category=cog),
-            )
-            embed.set_footer(
-                text=_("IdleRPG Version {version} | Page {page} of {maxpages}").format(
-                    version=self.bot.version, page=i + 1, maxpages=maxpages
+            val = 0
+        embeds = [
+            discord.Embed(
+                title=_("Warrior"),
+                description=_(
+                    "The tank class. Charge into battle with additional defense!\n+1"
+                    " defense per evolution."
                 ),
-                icon_url=self.bot.user.avatar_url,
-            )
-            for command in commands:
-                if hasattr(command.callback, "__doc__"):
-                    desc = _(command.callback.__doc__)
-                else:
-                    desc = _("No Description set")
-                embed.add_field(
-                    name=self.make_signature(command), value=desc, inline=False
+                color=self.bot.config.primary_colour,
+            ),
+            discord.Embed(
+                title=_("Thief"),
+                description=_(
+                    # xgettext: no-python-format
+                    "The sneaky money stealer...\nGet access to `{prefix}steal` to"
+                    " steal 10% of the target's money, if successful.\n+8% success"
+                    " chance per evolution."
+                ).format(prefix=ctx.prefix),
+                color=self.bot.config.primary_colour,
+            ),
+            discord.Embed(
+                title=_("Mage"),
+                description=_(
+                    "Utilise powerful magic for stronger attacks.\n+1 damage per"
+                    " evolution."
+                ),
+                color=self.bot.config.primary_colour,
+            ),
+            discord.Embed(
+                title=_("Ranger"),
+                description=_(
+                    "Item hunter and trainer of their very own pet.\nGet access to"
+                    " `{prefix}pet` to interact with your pet and let it get items for"
+                    " you.\n+3 minimum stat and +6 maximum stat per evolution."
+                ).format(prefix=ctx.prefix),
+                colour=self.bot.config.primary_colour,
+            ),
+            discord.Embed(
+                title=_("Raider"),
+                description=_(
+                    "A strong warrior who gives their life for the fight against"
+                    " Zerekiel.\nEvery evolution boosts your raidstats by an additional"
+                    " 10%."
+                ),
+                colour=self.bot.config.primary_colour,
+            ),
+            discord.Embed(
+                title=_("Ritualist"),
+                description=_(
+                    "A seer, a sacrificer and a follower.\nThe Ritualist devotes their"
+                    " life to the god they follow. For every evolution, their"
+                    " sacrifices are 5% more effective. They have twice the chance to"
+                    " get loot from adventures."
+                ),
+                colour=self.bot.config.primary_colour,
+            ),
+        ]
+        choices = ["Warrior", "Thief", "Mage", "Ranger", "Raider", "Ritualist"]
+        if await user_is_patron(self.bot, ctx.author):
+            embeds.append(
+                discord.Embed(
+                    title=_("Paragon"),
+                    description=_(
+                        "Absorb the appreciation of the devs into your soul to power"
+                        " up.\n+1 damage and defense per evolution."
+                    ),
+                    color=self.bot.config.primary_colour,
                 )
-            pages.append(embed)
-        return pages
-
-    @commands.command(aliases=["commands", "cmds"])
-    @locale_doc
-    async def documentation(self, ctx):
-        _("""Sends a link to the official documentation.""")
-        await ctx.send(
-            _(
-                "<:blackcheck:441826948919066625> **Check {url} for a list of"
-                " commands**"
-            ).format(url=f"{self.bot.BASE_URL}/commands")
-        )
-
-    @commands.command(aliases=["faq"])
-    @locale_doc
-    async def tutorial(self, ctx):
-        """Link to the bot tutorial."""
-        await ctx.send(
-            _(
-                "<:blackcheck:441826948919066625> **Check {url} for a tutorial and"
-                " FAQ**"
-            ).format(url=f"{self.bot.BASE_URL}/tutorial")
-        )
-
-    @is_supporter()
-    @commands.command()
-    @locale_doc
-    async def unbanfromhelpme(self, ctx, thing_to_unban: Union[User, int]):
-        _("""Unban an entitiy from using $helpme.""")
-        if isinstance(thing_to_unban, discord.User):
-            id = thing_to_unban.id
-        else:
-            id = thing_to_unban
-            thing_to_unban = self.bot.get_guild(id)
-        await self.bot.pool.execute('DELETE FROM helpme WHERE "id"=$1;', id)
-        await ctx.send(
-            _("{thing} has been unbanned for the helpme command :ok_hand:").format(
-                thing=thing_to_unban.name
             )
-        )
-
-    @is_supporter()
-    @commands.command()
-    @locale_doc
-    async def banfromhelpme(self, ctx, thing_to_ban: Union[User, int]):
-        _("""Ban a user from using $helpme.""")
-        if isinstance(thing_to_ban, discord.User):
-            id = thing_to_ban.id
-        else:
-            id = thing_to_ban
-            thing_to_ban = self.bot.get_guild(id)
-        try:
-            await self.bot.pool.execute('INSERT INTO helpme ("id") VALUES ($1);', id)
-        except UniqueViolationError:
-            return await ctx.send(_("Error... Maybe they're already banned?"))
-        await ctx.send(
-            _("{thing} has been banned for the helpme command :ok_hand:").format(
-                thing=thing_to_ban.name
-            )
-        )
-
-    @commands.guild_only()
-    @commands.command()
-    @locale_doc
-    async def helpme(self, ctx, *, text: str):
-        _("""Allows a support team member to join your server for individual help.""")
-        blocked = await self.bot.pool.fetchrow(
-            'SELECT * FROM helpme WHERE "id"=$1 OR "id"=$2;',
-            ctx.guild.id,
-            ctx.author.id,
-        )
-        if blocked:
-            return await ctx.send(
-                _("You or your server has been blacklisted for some reason.")
-            )
-
+            choices.append("Paragon")
+        lines = [
+            self.bot.get_class_line(class_) for class_ in ctx.character_data["class"]
+        ]
+        for line in lines:
+            for e in embeds:
+                if _(line) == e.title:
+                    embeds.remove(e)
+            try:
+                choices.remove(line)
+            except ValueError:
+                pass
+        profession = await self.bot.paginator.ChoosePaginator(
+            extras=embeds, choices=choices
+        ).paginate(ctx)
+        profession_ = self.bot.config.classes[profession][0]
+        new_classes = copy(ctx.character_data["class"])
+        new_classes[val] = profession_
         if not await ctx.confirm(
             _(
-                "Are you sure? This will notify our support team and allow them to join"
-                " the server."
+                "You are about to select the `{profession}` class for yourself."
+                " {textaddon} Proceed?"
+            ).format(
+                textaddon=_(
+                    "This **costs nothing**, but changing it later will cost **$5000**."
+                )
+                if ctx.character_data["class"][val] == "No Class"
+                else _("This will cost **$5000**."),
+                profession=profession,
             )
         ):
-            return
+            return await ctx.send(_("Class selection cancelled."))
+        if ctx.character_data["class"][val] == "No Class":
+            async with self.bot.pool.acquire() as conn:
+                await conn.execute(
+                    'UPDATE profile SET "class"=$1 WHERE "user"=$2;',
+                    new_classes,
+                    ctx.author.id,
+                )
+                if profession == "Ranger":
+                    await conn.execute(
+                        'INSERT INTO pets ("user") VALUES ($1);', ctx.author.id
+                    )
+            await ctx.send(
+                _("Your new class is now `{profession}`.").format(
+                    profession=_(profession)
+                )
+            )
+        else:
+            if not await self.bot.has_money(ctx.author.id, 5000):
+                await self.bot.reset_cooldown(ctx)
+                return await ctx.send(
+                    _("You're too poor for a class change, it costs **$5000**.")
+                )
 
-        try:
-            inv = await ctx.channel.create_invite()
-        except discord.Forbidden:
-            return await ctx.send(_("Error when creating Invite."))
-        em = discord.Embed(title="Help Request", colour=0xFF0000)
-        em.add_field(name="Requested by", value=f"{ctx.author}")
-        em.add_field(name="Requested in server", value=f"{ctx.guild.name}")
-        em.add_field(name="Requested in channel", value=f"#{ctx.channel}")
-        em.add_field(name="Content", value=text)
-        em.add_field(name="Invite", value=inv)
+            async with self.bot.pool.acquire() as conn:
+                await conn.execute(
+                    'UPDATE profile SET "class"=$1, "money"="money"-$2 WHERE'
+                    ' "user"=$3;',
+                    new_classes,
+                    5000,
+                    ctx.author.id,
+                )
+                await conn.execute('DELETE FROM pets WHERE "user"=$1;', ctx.author.id)
+                if profession == "Ranger":
+                    await conn.execute(
+                        'INSERT INTO pets ("user") VALUES ($1);', ctx.author.id
+                    )
+            await self.bot.log_transaction(
+                ctx, from_=ctx.author.id, to=2, subject="money", data={"Amount": 5000}
+            )
+            await ctx.send(
+                _(
+                    "You selected the class `{profession}`. **$5000** was taken off"
+                    " your balance."
+                ).format(profession=_(profession))
+            )
 
-        await self.bot.http.send_message(
-            453_551_307_249_418_254, None, embed=em.to_dict()
+    @has_char()
+    @commands.command()
+    @locale_doc
+    async def myclass(self, ctx):
+        _("""Views your classes.""")
+        if (classes := ctx.character_data["class"]) == ["No Class", "No Class"]:
+            return await ctx.send("You haven't got a class yet.")
+        for class_ in classes:
+            if class_ != "No Class":
+                try:
+                    await ctx.send(
+                        file=discord.File(
+                            f"assets/classes/{class_.lower().replace(' ', '_')}.png"
+                        )
+                    )
+                except FileNotFoundError:
+                    await ctx.send(
+                        _(
+                            "The image for your class **{class_}** hasn't been added"
+                            " yet."
+                        ).format(class_=class_)
+                    )
+
+    @has_char()
+    @commands.command()
+    @locale_doc
+    async def evolve(self, ctx):
+        _("""Evolve to the next level of your classes once every 5 levels.""")
+        level = int(rpgtools.xptolevel(ctx.character_data["xp"]))
+        if level < 5:
+            return await ctx.send(_("Your level isn't high enough to evolve."))
+        newindex = int(level / 5) - 1
+        updated = 0
+        new_classes = []
+        for class_ in ctx.character_data["class"]:
+            if class_ != "No Class":
+                new_classes.append(
+                    self.bot.get_class_evolves()[self.bot.get_class_line(class_)][
+                        newindex
+                    ]
+                )
+                updated += 1
+            else:
+                new_classes.append("No Class")
+        if updated == 0:
+            return await ctx.send(_("You haven't got a class yet."))
+        await self.bot.pool.execute(
+            'UPDATE profile SET "class"=$1 WHERE "user"=$2;', new_classes, ctx.author.id
         )
         await ctx.send(
-            _("Support team has been notified and will join as soon as possible!")
+            _("You are now a `{class1}` and a `{class2}`.").format(
+                class1=new_classes[0], class2=new_classes[1]
+            )
         )
 
-    # @commands.command()
-    # @locale_doc
-    # async def help(
-    #     self, ctx, *, command: commands.clean_content(escape_markdown=True) = None
-    # ):
-    #     _("""Shows help about the bot.""")
-    #     if command:
-    #         command = self.bot.get_command(command.lower())
-    #         if not command:
-    #             return await ctx.send(_("Sorry, that command does not exist."))
-    #         sig = self.make_signature(command)
-    #         subcommands = getattr(command, "commands", None)
-    #         if subcommands:
-    #             clean_subcommands = "\n".join(
-    #                 [
-    #                     f"    {c.name.ljust(15, ' ')}"
-    #                     f" {_(getattr(c.callback, '__doc__'))}"
-    #                     for c in subcommands
-    #                 ]
-    #             )
-    #             fmt = (
-    #                 f"```\n{ctx.prefix}{sig}\n\n{_(getattr(command.callback, '__doc__'))}\n\nCommands:\n{clean_subcommands}\n```"
-    #             )
-    #         else:
-    #             fmt = (
-    #                 f"```\n{ctx.prefix}{sig}\n\n{_(getattr(command.callback, '__doc__'))}\n```"
-    #             )
+    @commands.command()
+    @locale_doc
+    async def tree(self, ctx):
+        _("""Evolve tree.""")
+        embeds = []
+        for class_, evos in self.bot.config.classes.items():
+            evos = [f"Level {idx * 5}: {evo}" for idx, evo in enumerate(evos)]
+            embed = discord.Embed(
+                title=class_,
+                description="\n".join(evos),
+                colour=self.bot.config.primary_colour,
+            )
+            embeds.append(embed)
+        await self.bot.paginator.Paginator(extras=embeds).paginate(ctx)
 
-    #         return await ctx.send(fmt)
-
-    #     await self.bot.paginator.Paginator(extras=self.make_pages()).paginate(ctx)
-
-
-class IdleHelp(commands.HelpCommand):
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.verify_checks = False
-        self.gm_exts = {"GameMaster"}
-        self.owner_exts = {"GameMaster", "Owner"}
-        self.color = 0x4c2f43
-        self.icon = "https://media.discordapp.net/attachments/460568954968997890/711736595652280361/idlehelp.png"
-
-    async def command_callback(self, ctx, *, command=None):
-        await self.prepare_help_command(ctx, command)
-        bot = ctx.bot
-
-        if command is None:
-            mapping = self.get_bot_mapping()
-            return await self.send_bot_help(mapping)
-
-        cog = bot.get_cog(command.title())
-        if cog is not None:
-            return await self.send_cog_help(cog)
-
-        maybe_coro = discord.utils.maybe_coroutine
-
-        keys = command.split(' ')
-        cmd = bot.all_commands.get(keys[0])
-        if cmd is None:
-            string = await maybe_coro(self.command_not_found, self.remove_mentions(keys[0]))
-            return await self.send_error_message(string)
-
-        for key in keys[1:]:
-            try:
-                found = cmd.all_commands.get(key)
-            except AttributeError:
-                string = await maybe_coro(self.subcommand_not_found, cmd, self.remove_mentions(key))
-                return await self.send_error_message(string)
-            else:
-                if found is None:
-                    string = await maybe_coro(self.subcommand_not_found, cmd, self.remove_mentions(key))
-                    return await self.send_error_message(string)
-                cmd = found
-
-        if isinstance(cmd, Group):
-            return await self.send_group_help(cmd)
+    @is_class("Thief")
+    @has_char()
+    @user_cooldown(3600)
+    @commands.command()
+    @locale_doc
+    async def steal(self, ctx):
+        _("""[Thief Only] Steal money!""")
+        if (
+            buildings := await self.bot.get_city_buildings(ctx.character_data["guild"])
+        ) :
+            bonus = buildings["thief_building"] * 5
         else:
-            return await self.send_command_help(cmd)
+            bonus = 0
+        if random.randint(0, 99) in range(
+            1,
+            self.bot.get_class_grade_from(ctx.character_data["class"], "Thief") * 8
+            + 1
+            + bonus,
+        ):
+            async with self.bot.pool.acquire() as conn:
+                usr = await conn.fetchrow(
+                    'SELECT "user", "money" FROM profile WHERE "money">=10 AND'
+                    ' "user"!=$1 ORDER BY RANDOM() LIMIT 1;',
+                    ctx.author.id,
+                )
 
-    def embedbase(self, *args, **kwargs):
-        e = discord.Embed(color=self.color, **kwargs)
-        e.set_author(name=self.context.bot.user, icon_url=self.context.bot.user.avatar_url_as(static_format="png"))
-        e.set_thumbnail(url=self.icon)
+                if usr["user"] in self.bot.owner_ids:
+                    return await ctx.send(
+                        _(
+                            "You attempted to steal from a bot VIP, but the bodyguards"
+                            " caught you."
+                        )
+                    )
 
-        return e
+                stolen = int(usr["money"] * 0.1)
+                await conn.execute(
+                    'UPDATE profile SET money=money+$1 WHERE "user"=$2;',
+                    stolen,
+                    ctx.author.id,
+                )
+                await conn.execute(
+                    'UPDATE profile SET money=money-$1 WHERE "user"=$2;',
+                    stolen,
+                    usr["user"],
+                )
+            user = await self.bot.get_user_global(usr["user"])
+            await ctx.send(
+                _("You stole **${stolen}** from {user}.").format(
+                    stolen=stolen,
+                    user=f"**{user}**" if user else _("a traveller just passing by"),
+                )
+            )
+            await self.bot.log_transaction(
+                ctx,
+                from_=usr["user"],
+                to=ctx.author.id,
+                subject="money",
+                data={"Amount": stolen},
+            )
+        else:
+            await ctx.send(_("Your attempt to steal money wasn't successful."))
 
-    async def send_bot_help(self, mapping):
-        e = self.embedbase(title=_("IdleRPG Help"), url="https://idlerpg.travitia.xyz/")
-        e.set_image(url="https://media.discordapp.net/attachments/460568954968997890/711740723715637288/idle_banner.png")
-        e.description = _("**Welcome to the IdleRPG help.**\n") +
-                        _("Are you stuck? Ask for help in the support server!\n") +
-                        "- https://support.idlerpg.xyz/\n" + 
-                        _("Would you like to invite me to your server?\n") +
-                        "- https://invite.idlerpg.xyz/\n" +
-                        _("*See `help [command|extension]` for more info*")
+    @is_class("Ranger")
+    @has_char()
+    @commands.group(invoke_without_command=True)
+    @update_pet()
+    @locale_doc
+    async def pet(self, ctx):
+        _("""[Ranger Only] View your pet or interact with it.""")
+        petlvl = self.bot.get_class_grade_from(ctx.character_data["class"], "Ranger")
+        em = discord.Embed(title=_("{user}'s pet").format(user=ctx.disp))
+        em.add_field(name=_("Name"), value=ctx.pet_data["name"], inline=False)
+        em.add_field(name=_("Level"), value=petlvl, inline=False)
+        em.add_field(name=_("Food"), value=f"{ctx.pet_data['food']}/100", inline=False)
+        em.add_field(
+            name=_("Drinks"), value=f"{ctx.pet_data['drink']}/100", inline=False
+        )
+        em.add_field(name=_("Love"), value=f"{ctx.pet_data['love']}/100", inline=False)
+        em.add_field(name=_("Joy"), value=f"{ctx.pet_data['joy']}/100", inline=False)
+        em.set_thumbnail(url=ctx.author.avatar_url)
+        em.set_image(url=ctx.pet_data["image"])
+        await ctx.send(embed=em)
 
-        allowed = []
-        for cog in mapping.keys():
-            if self.context.author.id not in self.context.bot.config.game_masters and cog.qualified_name in self.gm_exts:
-                continue
-            if self.context.author.id not in self.context.bot.owner_ids and cog.qualified_name in self.owner_exts:
-                continue
-            if cog.qualified_name not in self.gm_exts and len([c for c in cog.get_commands() if not c.hidden]) == 0:
-                continue
-            allowed.append(cog.qualified_name)
-        cogs = [sorted(allowed)[x:x+4] for x in range(0, len(allowed), 4)]
-        length_list = [len(element) for row in cogs for element in row]
-        column_width = max(length_list)
-        rows = []
-        for row in cogs:
-            rows.append("".join(element.ljust(column_width + 2) for element in row))
-        e.add_field(name=_("Extensions"), value="```{}```".format("\n".join(rows)))
+    @update_pet()
+    @is_class("Ranger")
+    @has_char()
+    @pet.command()
+    @locale_doc
+    async def feed(self, ctx):
+        _("""[Ranger Only] Feed your pet.""")
+        items = [
+            (_("Potato"), 10, ":potato:", 1),
+            (_("Apple"), 30, ":apple:", 2),
+            (_("Cucumber"), 50, ":cucumber:", 4),
+            (_("Meat"), 150, ":meat_on_bone:", 10),
+            (_("Salad"), 250, ":salad:", 20),
+            (_("Sushi"), 800, ":sushi:", 50),
+            (_("Adrian's Power Poop"), 2000, ":poop:", 100),
+        ]
+        item = items[
+            await self.bot.paginator.Choose(
+                entries=[f"{i[2]} {i[0]} **${i[1]}** -> +{i[3]}" for i in items],
+                return_index=True,
+                timeout=30,
+                title=_("Feed your pet"),
+            ).paginate(ctx)
+        ]
+        if not await has_money(self.bot, ctx.author.id, item[1]):
+            return await ctx.send(_("You are too poor to buy this."))
+        async with self.bot.pool.acquire() as conn:
+            await conn.execute(
+                'UPDATE profile SET "money"="money"-$1 WHERE "user"=$2;',
+                item[1],
+                ctx.author.id,
+            )
+            await conn.execute(
+                'UPDATE pets SET "food"=CASE WHEN "food"+$1>=100 THEN 100 ELSE'
+                ' "food"+$1 END WHERE "user"=$2;',
+                item[3],
+                ctx.author.id,
+            )
+            await self.bot.log_transaction(
+                ctx,
+                from_=ctx.author.id,
+                to=2,
+                subject="money",
+                data={"Amount": item[1]},
+            )
+        await ctx.send(
+            _(
+                "You bought **{item}** for your pet and increased its food bar by"
+                " **{points}** points."
+            ).format(item=f"{item[2]} {item[0]}", points=item[3])
+        )
 
-        await self.context.send(embed=e)
+    @update_pet()
+    @is_class("Ranger")
+    @has_char()
+    @pet.command()
+    @locale_doc
+    async def drink(self, ctx):
+        _("""[Ranger Only] Give your pet something to drink.""")
+        items = [
+            (_("Some Water"), 10, ":droplet:", 1),
+            (_("A bottle of water"), 30, ":baby_bottle:", 2),
+            (_("Cocktail"), 50, ":cocktail:", 4),
+            (_("Wine"), 150, ":wine_glass:", 10),
+            (_("Beer"), 250, ":beer:", 20),
+            (_("Vodka"), 800, ":flag_ru:", 50),
+            (_("Adrian's Cocktail"), 2000, ":tropical_drink:", 100),
+        ]
+        item = items[
+            await self.bot.paginator.Choose(
+                entries=[f"{i[2]} {i[0]} **${i[1]}** -> +{i[3]}" for i in items],
+                return_index=True,
+                timeout=30,
+                title=_("Give your pet something to drink"),
+            ).paginate(ctx)
+        ]
+        if not await has_money(self.bot, ctx.author.id, item[1]):
+            return await ctx.send(_("You are too poor to buy this."))
+        async with self.bot.pool.acquire() as conn:
+            await conn.execute(
+                'UPDATE profile SET "money"="money"-$1 WHERE "user"=$2;',
+                item[1],
+                ctx.author.id,
+            )
+            await conn.execute(
+                'UPDATE pets SET "drink"=CASE WHEN "drink"+$1>=100 THEN 100 ELSE'
+                ' "drink"+$1 END WHERE "user"=$2;',
+                item[3],
+                ctx.author.id,
+            )
+            await self.bot.log_transaction(
+                ctx,
+                from_=ctx.author.id,
+                to=2,
+                subject="money",
+                data={"Amount": item[1]},
+            )
+        await ctx.send(
+            _(
+                "You bought **{item}** for your pet and increased its drinks bar by"
+                " **{points}** points."
+            ).format(item=f"{item[2]} {item[0]}", points=item[3])
+        )
 
-    async def send_cog_help(self, cog):
-        if self.context.author.id not in self.context.bot.config.game_master and cog.qualified_name in self.gm_exts:
-            return await self.context.send(_("You do not have access to these commands!"))
-        if self.context.author.id not in self.context.bot.owner_ids and cog.qualified_name in self.owner_exts:
-            return await self.context.send(_("You do not have access to these commands!"))
+    @update_pet()
+    @is_class("Ranger")
+    @has_char()
+    @user_cooldown(21600)
+    @pet.command(aliases=["caress", "hug", "kiss"])
+    @locale_doc
+    async def cuddle(self, ctx):
+        _("""[Ranger Only] Cuddle your pet to make it love you.""")
+        value = random.randint(0, 11) + 1  # On average, it'll stay as is
+        await self.bot.pool.execute(
+            'UPDATE pets SET "love"=CASE WHEN "love"+$1>=100 THEN 100 ELSE "love"+$1'
+            ' END WHERE "user"=$2;',
+            value,
+            ctx.author.id,
+        )
+        await ctx.send(
+            _(
+                "Your pet adores you! :heart: Cuddling it has increased its love for"
+                " you by **{value}** points."
+            ).format(value=value)
+        )
 
-        await self.context.send("Coming soon!")
+    @update_pet()
+    @is_class("Ranger")
+    @has_char()
+    @user_cooldown(21600)  # We are mean, indeed
+    @pet.command(aliases=["fun"])
+    @locale_doc
+    async def play(self, ctx):
+        _("""[Ranger Only] Play with your pet to make it happier.""")
+        value = random.randint(0, 11) + 1  # On average, it'll stay as is
+        await self.bot.pool.execute(
+            'UPDATE pets SET "joy"=CASE WHEN "joy"+$1>=100 THEN 100 ELSE "joy"+$1 END'
+            ' WHERE "user"=$2;',
+            value,
+            ctx.author.id,
+        )
+        await ctx.send(
+            _(
+                "You have been {activity} with your pet and it gained **{value}** joy!"
+            ).format(
+                activity=random.choice(
+                    [
+                        _("playing football :soccer:"),
+                        _("playing American football :football:"),
+                        _("playing rugby :rugby_football:"),
+                        _("playing basketball :basketball:"),
+                        _("playing tennis :tennis:"),
+                        _("playing ping-pong :ping_pong:"),
+                        _("boxing :boxing_glove:"),
+                        _("skiing :ski:"),
+                    ]
+                ),
+                value=value,
+            )
+        )
 
-    async def send_command_help(self, command):
-        if command.cog:
-            if self.context.author.id not in self.context.bot.config.game_master and command.cog.qualified_name in self.gm_exts:
-                return await self.context.send(_("You do not have access to this command!"))
-            if self.context.author.id not in self.context.bot.owner_ids and command.cog.qualified_name in self.owner_exts:
-                return await self.context.send(_("You do not have access to this command!"))
+    @update_pet()
+    @is_class("Ranger")
+    @has_char()
+    @pet.command(aliases=["name"])
+    @locale_doc
+    async def rename(self, ctx, *, name: str):
+        _("""[Ranger Only] Renames your pet.""")
+        if len(name) > 20:
+            return await ctx.send(_("Please enter a name shorter than 20 characters."))
+        await self.bot.pool.execute(
+            'UPDATE pets SET "name"=$1 WHERE "user"=$2;', name, ctx.author.id
+        )
+        await ctx.send(_("Pet name updated."))
 
-        await self.context.send("Coming soon!")
+    @update_pet()
+    @is_class("Ranger")
+    @has_char()
+    @pet.command()
+    @locale_doc
+    async def image(self, ctx, *, url: str):
+        _("""[Ranger Only] Sets your pet's image by URL.""")
+        if len(url) > 60:
+            return await ctx.send(_("URLs mustn't exceed 60 characters ."))
+        if not (
+            url.startswith("http")
+            and (url.endswith(".png") or url.endswith(".jpg") or url.endswith(".jpeg"))
+        ):
+            return await ctx.send(
+                _(
+                    "I couldn't read that URL. Does it start with `http://` or"
+                    " `https://` and is either a png or jpeg?"
+                )
+            )
+        await self.bot.pool.execute(
+            'UPDATE pets SET "image"=$1 WHERE "user"=$2;', url, ctx.author.id
+        )
+        await ctx.send(_("Your pet's image was successfully updated."))
 
-    async def send_group_help(self, group):
-        if group.cog:
-            if self.context.author.id not in self.context.bot.config.game_master and group.cog.qualified_name in self.gm_exts:
-                return await self.context.send(_("You do not have access to this command!"))
-            if self.context.author.id not in self.context.bot.owner_ids and group.cog.qualified_name in self.owner_exts:
-                return await self.context.send(_("You do not have access to this command!"))
-
-        await self.context.send("Coming soon!")
+    @update_pet()
+    @is_class("Ranger")
+    @has_char()
+    @next_day_cooldown()
+    @pet.command()
+    @locale_doc
+    async def hunt(self, ctx):
+        _("""[Ranger Only] Let your pet get a weapon for you!""")
+        petlvl = self.bot.get_class_grade_from(ctx.character_data["class"], "Ranger")
+        joy_multiply = Decimal(ctx.pet_data["joy"] / 100)
+        luck_multiply = ctx.character_data["luck"]
+        minstat = round(petlvl * 3 * luck_multiply * joy_multiply)
+        maxstat = round(petlvl * 6 * luck_multiply * joy_multiply)
+        if minstat < 1 or maxstat < 1:
+            return await ctx.send(
+                _("Your pet is not happy enough to hunt an item. Try making it joyful!")
+            )
+        item = await self.bot.create_random_item(
+            minstat=minstat if minstat < 30 else 30,
+            maxstat=maxstat if maxstat < 30 else 30,
+            minvalue=1,
+            maxvalue=250,
+            owner=ctx.author,
+        )
+        embed = discord.Embed(
+            title=_("You gained an item!"),
+            description=_("Your pet found an item!"),
+            color=0xFF0000,
+        )
+        embed.set_thumbnail(url=ctx.author.avatar_url)
+        embed.add_field(name=_("ID"), value=item["id"], inline=False)
+        embed.add_field(name=_("Name"), value=item["name"], inline=False)
+        embed.add_field(name=_("Type"), value=item["type"], inline=False)
+        if item["type"] == "Shield":
+            embed.add_field(name=_("Armor"), value=item["armor"], inline=True)
+        else:
+            embed.add_field(name=_("Damage"), value=item["damage"], inline=True)
+        embed.add_field(name=_("Value"), value=f"${item['value']}", inline=False)
+        embed.set_footer(text=_("Your pet needs to recover, wait a day to retry"))
+        await ctx.send(embed=embed)
+        await self.bot.log_transaction(
+            ctx,
+            from_=1,
+            to=ctx.author.id,
+            subject="item",
+            data={"Name": item["name"], "Value": item["value"]},
+        )
 
 
 def setup(bot):
-    bot.add_cog(Help(bot))
-    bot.help_command = IdleHelp()
+    bot.add_cog(Classes(bot))
