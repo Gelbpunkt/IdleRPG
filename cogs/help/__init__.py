@@ -15,6 +15,7 @@ GNU Affero General Public License for more details.
 You should have received a copy of the GNU Affero General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
+
 from typing import Union
 
 import discord
@@ -203,38 +204,120 @@ class Help(commands.Cog):
             _("Support team has been notified and will join as soon as possible!")
         )
 
-    @commands.command()
-    @locale_doc
-    async def help(
-        self, ctx, *, command: commands.clean_content(escape_markdown=True) = None
-    ):
-        _("""Shows help about the bot.""")
-        if command:
-            command = self.bot.get_command(command.lower())
-            if not command:
-                return await ctx.send(_("Sorry, that command does not exist."))
-            sig = self.make_signature(command)
-            subcommands = getattr(command, "commands", None)
-            if subcommands:
-                clean_subcommands = "\n".join(
-                    [
-                        f"    {c.name.ljust(15, ' ')}"
-                        f" {_(getattr(c.callback, '__doc__'))}"
-                        for c in subcommands
-                    ]
-                )
-                fmt = (
-                    f"```\n{ctx.prefix}{sig}\n\n{_(getattr(command.callback, '__doc__'))}\n\nCommands:\n{clean_subcommands}\n```"
-                )
+    # @commands.command()
+    # @locale_doc
+    # async def help(
+    #     self, ctx, *, command: commands.clean_content(escape_markdown=True) = None
+    # ):
+    #     _("""Shows help about the bot.""")
+    #     if command:
+    #         command = self.bot.get_command(command.lower())
+    #         if not command:
+    #             return await ctx.send(_("Sorry, that command does not exist."))
+    #         sig = self.make_signature(command)
+    #         subcommands = getattr(command, "commands", None)
+    #         if subcommands:
+    #             clean_subcommands = "\n".join(
+    #                 [
+    #                     f"    {c.name.ljust(15, ' ')}"
+    #                     f" {_(getattr(c.callback, '__doc__'))}"
+    #                     for c in subcommands
+    #                 ]
+    #             )
+    #             fmt = (
+    #                 f"```\n{ctx.prefix}{sig}\n\n{_(getattr(command.callback, '__doc__'))}\n\nCommands:\n{clean_subcommands}\n```"
+    #             )
+    #         else:
+    #             fmt = (
+    #                 f"```\n{ctx.prefix}{sig}\n\n{_(getattr(command.callback, '__doc__'))}\n```"
+    #             )
+
+    #         return await ctx.send(fmt)
+
+    #     await self.bot.paginator.Paginator(extras=self.make_pages()).paginate(ctx)
+
+
+class IdleHelp(commands.HelpCommand):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.verify_checks = False
+        self.gm_exts = {"GameMaster"}
+        self.owner_exts = {"GameMaster", "Owner"}
+        self.color = 0x4c2f43
+        self.icon = "https://media.discordapp.net/attachments/460568954968997890/711736595652280361/idlehelp.png"
+
+    async def command_callback(self, ctx, *, command=None):
+        await self.prepare_help_command(ctx, command)
+        bot = ctx.bot
+
+        if command is None:
+            mapping = self.get_bot_mapping()
+            return await self.send_bot_help(mapping)
+
+        cog = bot.get_cog(command.title())
+        if cog is not None:
+            return await self.send_cog_help(cog)
+
+        maybe_coro = discord.utils.maybe_coroutine
+
+        keys = command.split(' ')
+        cmd = bot.all_commands.get(keys[0])
+        if cmd is None:
+            string = await maybe_coro(self.command_not_found, self.remove_mentions(keys[0]))
+            return await self.send_error_message(string)
+
+        for key in keys[1:]:
+            try:
+                found = cmd.all_commands.get(key)
+            except AttributeError:
+                string = await maybe_coro(self.subcommand_not_found, cmd, self.remove_mentions(key))
+                return await self.send_error_message(string)
             else:
-                fmt = (
-                    f"```\n{ctx.prefix}{sig}\n\n{_(getattr(command.callback, '__doc__'))}\n```"
-                )
+                if found is None:
+                    string = await maybe_coro(self.subcommand_not_found, cmd, self.remove_mentions(key))
+                    return await self.send_error_message(string)
+                cmd = found
 
-            return await ctx.send(fmt)
+        if isinstance(cmd, Group):
+            return await self.send_group_help(cmd)
+        else:
+            return await self.send_command_help(cmd)
 
-        await self.bot.paginator.Paginator(extras=self.make_pages()).paginate(ctx)
+    def embedbase(self, *args, **kwargs):
+        e = discord.Embed(color=self.color, **kwargs)
+        e.set_author(name=self.context.bot.user, icon_url=self.context.bot.avatar_url_as(static_format="png"))
+        e.set_thumbnail(url=self.icon)
+
+        return e
+
+    async def send_bot_help(self, mapping):
+        e = self.embedbase(title=_("IdleRPG Help"), url="https://idlerpg.travitia.xyz/")
+        e.set_image(url="https://media.discordapp.net/attachments/460568954968997890/711740723715637288/idle_banner.png")
+        e.description = _("**Welcome to the IdleRPG help.**\n") +
+                        _("Are you stuck? Ask for help in the support server!\n") +
+                        "- https://support.idlerpg.xyz/\n" + 
+                        _("Would you like to invite me to your server?\n") +
+                        "- https://invite.idlerpg.xyz/\n" +
+                        _("*See `help [command|extension]` for more info*")
+
+        allowed = []
+        for cog in self.context.bot.cogs.keys():
+            if self.context.author.id not in self.context.bot.config.game_master and cog in self.gm_exts:
+                continue
+            if self.context.author.id not in self.context.bot.owner_ids and cog in self.owner_exts:
+                continue
+            allowed.append(cog)
+        cogs = [allowed[x:x+4] for x in range(0, len(allowed), 4)]
+        length_list = [len(element) for row in cogs for element in row]
+        column_width = max(length_list)
+        rows = []
+        for row in cogs:
+            rows.append("".join(element.ljust(column_width + 2) for element in row))
+        e.add_field(name=_("Extensions"), value="```{}```".format("\n".join(rows)))
+
+        await self.context.send(embed=e)
 
 
 def setup(bot):
     bot.add_cog(Help(bot))
+    bot.help_command = IdleHelp()
