@@ -15,7 +15,7 @@ GNU Affero General Public License for more details.
 You should have received a copy of the GNU Affero General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
-
+from datetime import timedelta
 from typing import Union
 
 import discord
@@ -24,7 +24,7 @@ from asyncpg import UniqueViolationError
 from discord.ext import commands
 
 from classes.converters import User
-from utils.checks import is_supporter
+from utils.checks import has_open_help_request, is_supporter
 from utils.i18n import _, locale_doc
 
 
@@ -164,10 +164,18 @@ class Help(commands.Cog):
         )
 
     @commands.guild_only()
-    @commands.command()
+    @commands.group(invoke_without_command=True)
     @locale_doc
     async def helpme(self, ctx, *, text: str):
         _("""Allows a support team member to join your server for individual help.""")
+        if (cd := await self.bot.redis.execute("TTL", f"helpme:{ctx.guild.id}")) != -2:
+            time = timedelta(seconds=cd)
+            return await ctx.send(
+                _(
+                    "You server already has a helpme request open! Please wait until"
+                    " the support team gets to you or wait {time} to try again. "
+                ).format(time=time)
+            )
         blocked = await self.bot.pool.fetchrow(
             'SELECT * FROM helpme WHERE "id"=$1 OR "id"=$2;',
             ctx.guild.id,
@@ -196,12 +204,84 @@ class Help(commands.Cog):
         em.add_field(name="Requested in channel", value=f"#{ctx.channel}")
         em.add_field(name="Content", value=text)
         em.add_field(name="Invite", value=inv)
+        em.set_footer(text=f"Server ID: {ctx.guild.id}")
 
-        await self.bot.http.send_message(
-            453_551_307_249_418_254, None, embed=em.to_dict()
+        message = await self.bot.http.send_message(
+            self.bot.config.helpme_channel, None, embed=em.to_dict()
+        )
+        await self.bot.redis.execute(
+            "SET", f"helpme:{ctx.guild.id}", message["id"], "EX", 172800,  # 48 hours
         )
         await ctx.send(
             _("Support team has been notified and will join as soon as possible!")
+        )
+
+    @is_supporter()
+    @helpme.command(hidden=True)
+    @locale_doc
+    async def finish(self, ctx, guild_id: int):
+        _("""[Support Team only] Clear a server's helpme cooldown.""")
+        await self.bot.redis.execute("DEL", f"helpme:{guild_id}")
+        await ctx.send("Clear!", delete_after=5)
+
+    @has_open_help_request()
+    @helpme.command(aliases=["correct"])
+    @locale_doc
+    async def edit(self, ctx, *, new_text: str):
+        _("""Edit the text on your open helpme request.""")
+        message = await self.bot.http.get_message(
+            self.bot.config.helpme_channel, ctx.helpme
+        )
+        inv = discord.utils.find(
+            lambda f: f["name"] == "Invite", message["embeds"][0]["fields"]
+        )["value"]
+        old_text = discord.utils.find(
+            lambda f: f["name"] == "Content", message["embeds"][0]["fields"]
+        )["value"]
+
+        em = discord.Embed(title="Help Request", colour=0xFF0000)
+        em.add_field(name="Requested by", value=f"{ctx.author}")
+        em.add_field(name="Requested in server", value=f"{ctx.guild.name}")
+        em.add_field(name="Requested in channel", value=f"#{ctx.channel}")
+        em.add_field(name="Content", value=new_text)
+        em.add_field(name="Invite", value=inv)
+        em.set_footer(text=f"Server ID: {ctx.guild.id}")
+
+        await self.bot.http.edit_message(
+            self.bot.config.helpme_channel, ctx.helpme, content=None, embed=em.to_dict()
+        )
+        await ctx.send(
+            _("Successfully changed your helpme text from `{old}` to `{new}`!").format(
+                old=old_text, new=new_text
+            )
+        )
+
+    @has_open_help_request()
+    @helpme.command(aliases=["revoke", "remove"])
+    @locale_doc
+    async def delete(self, ctx):
+        _("""Cancel your ongoing helpme request.""")
+        if not await ctx.confirm(
+            _("Are you sure you want to cancel your helpme request?")
+        ):
+            return await ctx.send(_("Cancelled cancellation."))
+        await self.bot.http.delete_message(self.bot.config.helpme_channel, ctx.helpme)
+        await self.bot.redis.execute("DEL", f"helpme:{ctx.guild.id}")
+        await ctx.send(_("Your helpme request has been cancelled."))
+
+    @has_open_help_request()
+    @helpme.command()
+    @locale_doc
+    async def view(self, ctx):
+        _("""View your server's current helpme request.""")
+        message = await self.bot.http.get_message(
+            self.bot.config.helpme_channel, ctx.helpme
+        )
+        embed = discord.Embed().from_dict(message["embeds"][0])
+
+        await ctx.send(
+            _("Your help request is visible to our support team like this:"),
+            embed=embed,
         )
 
     # @commands.command()

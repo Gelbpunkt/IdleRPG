@@ -143,6 +143,12 @@ class AlreadyRaiding(commands.CheckFailure):
     pass
 
 
+class NoOpenHelpRequest(commands.CheckFailure):
+    """Exception raised when a user tries to edit/remove an open help request but none exists."""
+
+    pass
+
+
 def has_char() -> "_CheckDecorator":
     """Checks for a user to have a character."""
 
@@ -526,6 +532,17 @@ def is_supporter() -> "_CheckDecorator":
             "user_is_helper", 1, args={"member_id": ctx.author.id}
         )
         return any(response)
+
+    return commands.check(predicate)
+
+
+def has_open_help_request() -> "_CheckDecorator":
+    async def predicate(ctx: Context) -> bool:
+        response = await ctx.bot.redis.execute("GET", f"helpme:{ctx.guild.id}")
+        if not response:
+            raise NoOpenHelpRequest()
+        ctx.helpme = response.decode()
+        return True
 
     return commands.check(predicate)
 

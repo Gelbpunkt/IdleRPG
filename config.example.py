@@ -86,6 +86,9 @@ bans = [1234567890]
 """The support server ID."""
 support_server_id = 1234567890
 
+"""The helpme channel ID."""
+helpme_channel = 1234567890
+
 """The ID to allow mass tournaments from."""
 official_tournament_channel_id = 1234567890
 
