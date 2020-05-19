@@ -452,7 +452,7 @@ class IdleHelp(commands.HelpCommand):
             [
                 f"{'👥' if isinstance(c, commands.Group) else '👤'}"
                 f" `{self.clean_prefix}{c.qualified_name} {c.signature}` - {c.brief}"
-                for c in cog.get_commands
+                for c in cog.get_commands()
             ]
         )
         e.set_footer(
