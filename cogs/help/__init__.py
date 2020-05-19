@@ -323,8 +323,8 @@ class IdleHelp(commands.HelpCommand):
         self.verify_checks = False
         self.gm_exts = {"GameMaster"}
         self.owner_exts = {"GameMaster", "Owner"}
-        self.color = 0x4C2F43
-        self.icon = "https://media.discordapp.net/attachments/460568954968997890/711736595652280361/idlehelp.png"
+        self.color = 0xCB735C
+        # self.icon = "https://media.discordapp.net/attachments/460568954968997890/711736595652280361/idlehelp.png"
 
     async def command_callback(self, ctx, *, command=None):
         await self.prepare_help_command(ctx, command)
@@ -380,7 +380,10 @@ class IdleHelp(commands.HelpCommand):
         return e
 
     async def send_bot_help(self, mapping):
-        e = self.embedbase(title=_("IdleRPG Help"), url="https://idlerpg.travitia.xyz/")
+        e = self.embedbase(
+            title=_("IdleRPG Help {version}").format(version=self.context.bot.version),
+            url="https://idlerpg.travitia.xyz/",
+        )
         e.set_image(
             url="https://media.discordapp.net/attachments/460568954968997890/711740723715637288/idle_banner.png"
         )
@@ -439,7 +442,24 @@ class IdleHelp(commands.HelpCommand):
                 _("You do not have access to these commands!")
             )
 
-        await self.context.send("Coming soon!")
+        e = self.embedbase(
+            title=(
+                f"[{cog.qualified_name.upper()}] {len(set(cog.walk_commands()))}"
+                " commands"
+            )
+        )
+        e.description = "\n".join(
+            [
+                f"{'👥' if isinstance(c, commands.Group) else '👤'}"
+                f" `{self.clean_prefix}{c.qualified_name} {c.signature}` - {c.brief}"
+                for c in cog.get_commands
+            ]
+        )
+        e.set_footer(
+            icon_url=self.context.bot.avatar_url_as(static_format="png"),
+            text=_("See 'help <command>' for more detailed info"),
+        )
+        await self.context.send(embed=e)
 
     async def send_command_help(self, command):
         if command.cog:
@@ -458,7 +478,14 @@ class IdleHelp(commands.HelpCommand):
                     _("You do not have access to this command!")
                 )
 
-        await self.context.send("Coming soon!")
+        e = self.embedbase(
+            title=(
+                f"[{command.cog.qualified_name.upper()}] {command.qualified_name}"
+                f" {command.signature}"
+            ),
+            description=command.help,
+        )
+        await self.context.send(embed=e)
 
     async def send_group_help(self, group):
         if group.cog:
@@ -477,7 +504,20 @@ class IdleHelp(commands.HelpCommand):
                     _("You do not have access to this command!")
                 )
 
-        await self.context.send("Coming soon!")
+        e = self.embedbase(
+            title=(
+                f"[{group.cog.qualified_name.upper()}] {group.qualified_name}"
+                f" {group.signature}"
+            ),
+            description=group.help,
+        )
+        e.add_field(
+            name="Subcommands",
+            value="\n".join(
+                [f"`{c.qualified_name}` - {c.brief}"] for c in group.commands
+            ),
+        )
+        await self.context.send(embed=e)
 
 
 def setup(bot):
