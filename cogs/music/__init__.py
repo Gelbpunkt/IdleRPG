@@ -340,8 +340,9 @@ class Music(commands.Cog):
             results = await r.json()
         try:
             track_obj = Track(results["items"][0])
+            b64 = b64encode(dumps(track_obj.media_data).encode()).decode()
             tracks = await self.bot.wavelink.get_tracks(
-                f"{self.bot.config.resolve_endpoint}?isrc={track_obj.isrc}"
+                f"{self.bot.config.resolve_endpoint}?data={b64}"
             )
             if not tracks:
                 return await msg.edit(content=_("No results..."))
