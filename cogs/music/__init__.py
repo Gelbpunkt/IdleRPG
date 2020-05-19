@@ -16,8 +16,10 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
 import asyncio
 
+from base64 import b64encode
 from collections import defaultdict
 from datetime import timedelta
+from json import dumps
 
 import discord
 import wavelink
@@ -298,7 +300,7 @@ class Music(commands.Cog):
                 return
 
         msg = await ctx.send(_("Loading track... This might take up to 3 seconds..."))
-        b64 = str(track_obj.media_data).encode("base64", "strict")
+        b64 = b64encode(dumps(track_obj.media_data).encode()).decode()
         tracks = await self.bot.wavelink.get_tracks(
             f"{self.bot.config.resolve_endpoint}?data={b64}"
         )
