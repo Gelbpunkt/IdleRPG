@@ -85,6 +85,7 @@ class Track:
         self.preview_url = raw_data.get("preview_url")
         self.track_number = raw_data.get("track_number", 1)
         self.uri = raw_data.get("uri")
+        self.media_data = raw_data["MEDIA_DATA"]
 
 
 def is_in_vc():
@@ -297,8 +298,9 @@ class Music(commands.Cog):
                 return
 
         msg = await ctx.send(_("Loading track... This might take up to 3 seconds..."))
+        b64 = str(track_obj.media_data).encode("base64", "strict")
         tracks = await self.bot.wavelink.get_tracks(
-            f"{self.bot.config.resolve_endpoint}?isrc={track_obj.isrc}"
+            f"{self.bot.config.resolve_endpoint}?data={b64}"
         )
         if not tracks:
             return await msg.edit(content=_("No results..."))
