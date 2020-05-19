@@ -233,30 +233,30 @@ class Patreon(commands.Cog):
         ):
             return await ctx.send(
                 _(
-                    "I couldn't read that URL. Does it start with `http://` or `https://` and is either a png or jpeg?"
+                    "I couldn't read that URL. Does it start with `http://` or"
+                    " `https://` and is either a png or jpeg?"
                 )
             )
         async with self.bot.trusted_session.post(
             f"{self.bot.config.okapi_url}/api/genoverlay", json={"url": url}
         ) as req:
-            background = BytesIO(await req.read())
+            background = await req.text()
         headers = {
             "Authorization": f"Client-ID {self.bot.config.imgur_token}",
             "Content-Type": "application/json",
         }
-        data = {"image": copy.copy(background)}
+        data = {"image": background, "type": "base64"}
         async with self.bot.session.post(
-            "https://api.imgur.com/3/image", data=data, headers=headers
+            "https://api.imgur.com/3/image", json=data, headers=headers
         ) as r:
             try:
                 link = (await r.json())["data"]["link"]
             except KeyError:
                 return await ctx.send(_("Error when uploading to Imgur."))
         await ctx.send(
-            _("Imgur Link for `{prefix}background`\n<{link}>").format(
+            _("Imgur Link for `{prefix}background`\n{link}").format(
                 prefix=ctx.prefix, link=link
-            ),
-            file=discord.File(fp=background, filename="GeneratedProfile.png"),
+            )
         )
 
     @is_patron()
