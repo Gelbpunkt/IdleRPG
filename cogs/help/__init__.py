@@ -456,7 +456,7 @@ class IdleHelp(commands.HelpCommand):
             ]
         )
         e.set_footer(
-            icon_url=self.context.bot.avatar_url_as(static_format="png"),
+            icon_url=self.context.bot.user.avatar_url_as(static_format="png"),
             text=_("See 'help <command>' for more detailed info"),
         )
         await self.context.send(embed=e)
