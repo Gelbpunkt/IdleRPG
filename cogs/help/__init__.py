@@ -243,8 +243,8 @@ class IdleHelp(commands.HelpCommand):
         self.verify_checks = False
         self.gm_exts = {"GameMaster"}
         self.owner_exts = {"GameMaster", "Owner"}
-        self.color = 0x4c2f43
-        self.icon = "https://media.discordapp.net/attachments/460568954968997890/711736595652280361/idlehelp.png"
+        self.color = 0xcb735c
+        # self.icon = "https://media.discordapp.net/attachments/460568954968997890/711736595652280361/idlehelp.png"
 
     async def command_callback(self, ctx, *, command=None):
         await self.prepare_help_command(ctx, command)
@@ -260,45 +260,38 @@ class IdleHelp(commands.HelpCommand):
 
         maybe_coro = discord.utils.maybe_coroutine
 
-        keys = command.split(" ")
+        keys = command.split(' ')
         cmd = bot.all_commands.get(keys[0])
         if cmd is None:
-            string = await maybe_coro(
-                self.command_not_found, self.remove_mentions(keys[0])
-            )
+            string = await maybe_coro(self.command_not_found, self.remove_mentions(keys[0]))
             return await self.send_error_message(string)
 
         for key in keys[1:]:
             try:
                 found = cmd.all_commands.get(key)
             except AttributeError:
-                string = await maybe_coro(
-                    self.subcommand_not_found, cmd, self.remove_mentions(key)
-                )
+                string = await maybe_coro(self.subcommand_not_found, cmd, self.remove_mentions(key))
                 return await self.send_error_message(string)
             else:
                 if found is None:
-                    string = await maybe_coro(
-                        self.subcommand_not_found, cmd, self.remove_mentions(key)
-                    )
+                    string = await maybe_coro(self.subcommand_not_found, cmd, self.remove_mentions(key))
                     return await self.send_error_message(string)
                 cmd = found
 
-        if isinstance(cmd, commands.Group):
+        if isinstance(cmd, Group):
             return await self.send_group_help(cmd)
         else:
             return await self.send_command_help(cmd)
 
-
     def embedbase(self, *args, **kwargs):
         e = discord.Embed(color=self.color, **kwargs)
         e.set_author(name=self.context.bot.user, icon_url=self.context.bot.user.avatar_url_as(static_format="png"))
-        e.set_thumbnail(url=self.icon)
+        # e.set_thumbnail(url=self.icon)
 
         return e
 
     async def send_bot_help(self, mapping):
-        e = self.embedbase(title=_("IdleRPG Help"), url="https://idlerpg.travitia.xyz/")
+        e = self.embedbase(title=_("IdleRPG Help {}").format(self.context.bot.version), url="https://idlerpg.travitia.xyz/")
         e.set_image(url="https://media.discordapp.net/attachments/460568954968997890/711740723715637288/idle_banner.png")
         e.description = _("**Welcome to the IdleRPG help.**\n") +
                         _("Are you stuck? Ask for help in the support server!\n") +
@@ -309,6 +302,8 @@ class IdleHelp(commands.HelpCommand):
 
         allowed = []
         for cog in mapping.keys():
+            if cog is None:
+                continue
             if self.context.author.id not in self.context.bot.config.game_masters and cog.qualified_name in self.gm_exts:
                 continue
             if self.context.author.id not in self.context.bot.owner_ids and cog.qualified_name in self.owner_exts:
@@ -316,7 +311,7 @@ class IdleHelp(commands.HelpCommand):
             if cog.qualified_name not in self.gm_exts and len([c for c in cog.get_commands() if not c.hidden]) == 0:
                 continue
             allowed.append(cog.qualified_name)
-        cogs = [sorted(allowed)[x:x+4] for x in range(0, len(allowed), 4)]
+        cogs = [sorted(allowed)[x:x+3] for x in range(0, len(allowed), 3)]
         length_list = [len(element) for row in cogs for element in row]
         column_width = max(length_list)
         rows = []
@@ -332,7 +327,10 @@ class IdleHelp(commands.HelpCommand):
         if self.context.author.id not in self.context.bot.owner_ids and cog.qualified_name in self.owner_exts:
             return await self.context.send(_("You do not have access to these commands!"))
 
-        await self.context.send("Coming soon!")
+        e = self.embedbase(title=f"[{cog.qualified_name.upper()}] {len(set(cog.walk_commands()))} commands")
+        e.description = "\n".join([f"{'👥' if isinstance(c, commands.Group) else '👤'} `{self.clean_prefix}{c.qualified_name} {c.signature}` - {c.brief}" for c in cog.get_commands])
+        e.set_footer(icon_url=self.context.bot.avatar_url_as(static_format="png"), text=_("See 'help <command>' for more detailed info"))
+        await self.context.send(embed=e)
 
     async def send_command_help(self, command):
         if command.cog:
@@ -341,7 +339,8 @@ class IdleHelp(commands.HelpCommand):
             if self.context.author.id not in self.context.bot.owner_ids and command.cog.qualified_name in self.owner_exts:
                 return await self.context.send(_("You do not have access to this command!"))
 
-        await self.context.send("Coming soon!")
+        e = self.embedbase(title=f"[{command.cog.qualified_name.upper()}] {command.qualified_name} {command.signature}", description=command.help)
+        await self.context.send(embed=e)
 
     async def send_group_help(self, group):
         if group.cog:
@@ -350,7 +349,9 @@ class IdleHelp(commands.HelpCommand):
             if self.context.author.id not in self.context.bot.owner_ids and group.cog.qualified_name in self.owner_exts:
                 return await self.context.send(_("You do not have access to this command!"))
 
-        await self.context.send("Coming soon!")
+        e = self.embedbase(title=f"[{group.cog.qualified_name.upper()}] {group.qualified_name} {group.signature}", description=group.help)
+        e.add_field(name="Subcommands", value="\n".join([f"`{c.qualified_name}` - {c.brief}"] for c in group.commands))
+        await self.context.send(embed=e)
 
 
 def setup(bot):
