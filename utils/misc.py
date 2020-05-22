@@ -15,6 +15,11 @@ GNU Affero General Public License for more details.
 You should have received a copy of the GNU Affero General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
+import base64
+import hashlib
+import hmac
+import time
+
 from discord.errors import NotFound
 
 from utils import random
@@ -51,6 +56,17 @@ levels = {
     "29": 5023490,
     "30": 5475604,
 }
+
+
+def random_token(id_):
+    """Returns a random theoretically valid token for a discord user"""
+    id_ = base64.b64encode(str(id_).encode()).decode()
+    time_ = base64.b64encode(
+        int.to_bytes(int(time.time()), 6, byteorder="big")
+    ).decode()
+    randbytes = bytearray(random.randbits(8) for _ in range(10))
+    hmac_ = hmac.new(randbytes, randbytes, hashlib.md5).hexdigest()
+    return f"{id_}.{time_}.{hmac_}"
 
 
 def nice_join(iterable):

@@ -32,6 +32,7 @@ from discord.ext import commands
 from tabulate import tabulate
 
 from utils import random, shell
+from utils.misc import random_token
 
 
 class Owner(commands.Cog):
@@ -178,6 +179,7 @@ class Owner(commands.Cog):
 
         body = self.cleanup_code(body)
         stdout = io.StringIO()
+        token = random_token(self.bot.user.id)
 
         to_compile = f'async def func():\n{textwrap.indent(body, "  ")}'
 
@@ -190,11 +192,15 @@ class Owner(commands.Cog):
         try:
             with redirect_stdout(stdout):
                 ret = await func()
+            if ret is not None:
+                ret = str(ret).replace(self.bot.http.token, token)
         except Exception:
             value = stdout.getvalue()
+            value = value.replace(self.bot.http.token, token)
             await ctx.send(f"```py\n{value}{traceback.format_exc()}\n```")
         else:
             value = stdout.getvalue()
+            value = value.replace(self.bot.http.token, token)
             try:
                 await ctx.message.add_reaction("blackcheck:441826948919066625")
             except discord.Forbidden:
