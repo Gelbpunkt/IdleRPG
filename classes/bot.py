@@ -113,10 +113,10 @@ class Bot(commands.AutoShardedBot):
         )
         self.trusted_session = aiohttp.ClientSession()
         self.redis = await aioredis.create_pool(
-            "redis://localhost", minsize=5, maxsize=10, loop=self.loop
+            "redis://localhost", minsize=10, maxsize=20, loop=self.loop
         )
         self.pool = await asyncpg.create_pool(
-            **self.config.database, max_size=20, command_timeout=60.0
+            **self.config.database, min_size=10, max_size=20, command_timeout=60.0
         )
 
         for extension in self.config.initial_extensions:
@@ -370,26 +370,47 @@ class Bot(commands.AutoShardedBot):
         user = user.id if isinstance(user, (discord.User, discord.Member)) else user
         await self.redis.execute("SET", f"booster:{user}:{type_}", 1, "EX", 86400)
 
-    async def get_booster(self, user, type_):
+    async def get_booster(self, user, type_, conn=None):
         """Returns how longer a user has a booster running"""
         user = user.id if isinstance(user, (discord.User, discord.Member)) else user
-        val = await self.redis.execute("TTL", f"booster:{user}:{type_}")
+        if conn is None:
+            local = True
+            conn = await self.redis.acquire()
+        else:
+            local = False
+        val = await conn.execute("TTL", f"booster:{user}:{type_}")
+        if local:
+            self.redis.release(conn)
         return datetime.timedelta(seconds=val) if val != -2 else None
 
-    async def start_adventure(self, user, number, time):
+    async def start_adventure(self, user, number, time, conn=None):
         """Sends a user on an adventure"""
         user = user.id if isinstance(user, (discord.User, discord.Member)) else user
-        await self.redis.execute(
+        if conn is None:
+            local = True
+            conn = await self.redis.acquire()
+        else:
+            local = False
+        await conn.execute(
             "SET", f"adv:{user}", number, "EX", int(time.total_seconds()) + 259_200
         )  # +3 days
+        if local:
+            self.redis.release(conn)
 
-    async def get_adventure(self, user):
+    async def get_adventure(self, user, conn=None):
         """Returns a user's adventure"""
         user = user.id if isinstance(user, (discord.User, discord.Member)) else user
-        ttl = await self.redis.execute("TTL", f"adv:{user}")
+        if conn is None:
+            local = True
+            conn = await self.redis.acquire()
+        else:
+            local = False
+        ttl = await conn.execute("TTL", f"adv:{user}")
         if ttl == -2:
             return
-        num = await self.redis.execute("GET", f"adv:{user}")
+        num = await conn.execute("GET", f"adv:{user}")
+        if local:
+            self.redis.release(conn)
         ttl = ttl - 259_200
         done = ttl <= 0
         time = datetime.timedelta(seconds=ttl)

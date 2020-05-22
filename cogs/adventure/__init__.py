@@ -98,10 +98,7 @@ class Adventure(commands.Cog):
                     level=adventure_number
                 )
             )
-        time_booster = await self.bot.get_booster(ctx.author, "time")
         time = self.bot.config.adventure_times[adventure_number]
-        if time_booster:
-            time = time / 2
 
         if (
             buildings := await self.bot.get_city_buildings(ctx.character_data["guild"])
@@ -114,7 +111,13 @@ class Adventure(commands.Cog):
                 time = time * 0.9
             elif user_rank >= DonatorRank.silver:
                 time = time * 0.95
-        await self.bot.start_adventure(ctx.author, adventure_number, time)
+        with await self.bot.redis as conn:
+            time_booster = await self.bot.get_booster(ctx.author, "time", conn=conn)
+            if time_booster:
+                time = time / 2
+            await self.bot.start_adventure(
+                ctx.author, adventure_number, time, conn=conn
+            )
         await ctx.send(
             _(
                 "Successfully sent your character out on an adventure. Use"
