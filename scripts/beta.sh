@@ -15,6 +15,6 @@ DONE
 EOF
 
 chmod 777 start.sh
-podman run --rm -d --pod idlerpgbeta --name postgres-beta -e POSTGRES_PASSWORD="test" -v $(pwd)/start.sh:/docker-entrypoint-initdb.d/init.sh:Z postgres:12-alpine
+podman run --rm -d --pod idlerpgbeta --name postgres-beta -e POSTGRES_PASSWORD="test" -v $(pwd)/start.sh:/docker-entrypoint-initdb.d/init.sh:Z postgres:13-alpine
 sleep 15
 rm start.sh
