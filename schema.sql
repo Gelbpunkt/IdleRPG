@@ -17,8 +17,8 @@
 -- PostgreSQL database dump
 --
 
--- Dumped from database version 12.2
--- Dumped by pg_dump version 12.2
+-- Dumped from database version 13beta1
+-- Dumped by pg_dump version 13beta1
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -991,3 +991,4 @@ GRANT SELECT ON TABLE public.user_settings TO prest;
 --
 -- PostgreSQL database dump complete
 --
+
