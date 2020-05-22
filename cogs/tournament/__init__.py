@@ -169,7 +169,7 @@ class Tournament(commands.Cog):
                 winner=participants[0].mention
             )
         )
-        await conn.execute(
+        await self.bot.pool.execute(
             'UPDATE profile SET money=money+$1 WHERE "user"=$2;',
             prize,
             participants[0].id,
@@ -326,8 +326,8 @@ class Tournament(commands.Cog):
                     start = datetime.datetime.utcnow()
                     attacker, defender = random.sample(players, k=2)
                     while (
-                        players[0]["hp"] > 0
-                        and players[1]["hp"] > 0
+                        attacker["hp"] > 0
+                        and defender["hp"] > 0
                         and datetime.datetime.utcnow()
                         < start + datetime.timedelta(minutes=5)
                     ):

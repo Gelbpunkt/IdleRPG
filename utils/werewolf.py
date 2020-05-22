@@ -464,7 +464,7 @@ class Game:
         elect_time_text = f"{elect_time} seconds"
         await self.ctx.send(
             f"{text}\nYou may now submit someone (up to 10 total) for the election who"
-            f" to kill by mentioning their name below. You have {elect_time_text} of "
+            f" to lynch by mentioning their name below. You have {elect_time_text} of "
             "discussion during this time."
         )
         nominated = []
@@ -669,7 +669,7 @@ class Game:
                 for player in self.alive_players
                 if player.has_won == has_won
             ]
-            return "\n ".join(players_to_reveal)
+            return "\n".join(players_to_reveal)
 
     async def reveal_others(self):
         if len([p for p in self.alive_players if p.has_won is False]) < 1:
@@ -1023,8 +1023,16 @@ class Player:
         self.lives -= 1
         if self.dead:
             await self.game.ctx.send(
-                f"{self.user.mention} has died. They were a"
-                f" **{self.role.name.lower().replace('_', ' ')}**!"
+                "{user} has died. They were a **{role}**!{initial_role_info}".format(
+                    user=self.user.mention,
+                    role=self.role.name.lower().replace("_", " "),
+                    initial_role_info=(
+                        f" A **{self.initial_role.name.lower().replace('_', ' ')}**"
+                        " initially."
+                    )
+                    if self.role != self.initial_role
+                    else "",
+                )
             )
             wild_child = discord.utils.find(
                 lambda x: x.idol is not None, self.game.alive_players

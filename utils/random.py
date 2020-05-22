@@ -38,7 +38,7 @@ def sample(population, k):
 
     results = []
     for i in range(k):
-        results.append(population.pop(secrets.randbelow(n - i)))
+        results.append(population[secrets.randbelow(n - i)])
 
     return results
 
