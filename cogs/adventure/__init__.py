@@ -111,7 +111,7 @@ class Adventure(commands.Cog):
                 time = time * 0.9
             elif user_rank >= DonatorRank.silver:
                 time = time * 0.95
-        with await self.bot.redis as conn:
+        async with self.bot.redis.get() as conn:
             time_booster = await self.bot.get_booster(ctx.author, "time", conn=conn)
             if time_booster:
                 time = time / 2

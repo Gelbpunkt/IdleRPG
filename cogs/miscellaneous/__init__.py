@@ -70,7 +70,7 @@ class Miscellaneous(commands.Cog):
     @locale_doc
     async def daily(self, ctx):
         _("""Receive a daily reward based on your streak.""")
-        with await self.bot.redis as redis:
+        async with self.bot.redis.get() as redis:
             streak = await redis.execute("INCR", f"idle:daily:{ctx.author.id}")
             await redis.execute(
                 "EXPIRE", f"idle:daily:{ctx.author.id}", 48 * 60 * 60
