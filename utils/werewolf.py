@@ -976,10 +976,7 @@ class Player:
             await self.send(
                 f"Your new role is now **{self.role.name.title().replace('_', ' ')}**."
             )
-<<<<<<< HEAD
-=======
             await self.send_information()
->>>>>>> Donny/IdleRPG-Donny-v4.7-werewolf-patch-1
 
     async def check_3_werewolves(self):
         possible_targets = [p for p in self.game.alive_players if p != self]
@@ -1041,16 +1038,10 @@ class Player:
             if self.in_love and len(lovers) == 1:
                 other = lovers[0]
                 await self.game.ctx.send(
-<<<<<<< HEAD
-                    f"{self.user.mention}'s lover {other.user.mention} will die as"
-                    " well."
-                )
-=======
                     f"{self.user.mention}'s lover, {other.user.mention}, will die as"
                     " well."
                 )
                 await asyncio.sleep(5)
->>>>>>> Donny/IdleRPG-Donny-v4.7-werewolf-patch-1
                 await other.kill()
             if self.role == Role.HUNTER:
                 try:
