@@ -32,8 +32,17 @@ class Werewolf(commands.Cog):
 
     @commands.command(aliases=["ww"])
     @locale_doc
-    async def werewolf(self, ctx):
-        _("""Starts a game of Werewolf.""")
+    async def werewolf(self, ctx, mode: str.title = "Classic"):
+        _(
+            """Starts a game of Werewolf.
+Game modes:
+    Classic - Play the classic werewolf game. (This is the default)
+    Blitz   - In Blitz mode, all action timers are limited to 30 seconds and number of days to play is dependent on the number of players plus 3 days. This means not killing anyone every night or every election will likely end the game with no winners."""
+        )
+        if mode not in ["Classic", "Blitz"]:
+            return await ctx.send(
+                _("Invalid game mode. View the help on this command.")
+            )
         if self.games.get(ctx.channel.id):
             return await ctx.send(_("There is already a game in here!"))
         if ctx.channel.id == self.bot.config.official_tournament_channel_id:
@@ -75,12 +84,21 @@ class Werewolf(commands.Cog):
                     content=text.format(author=ctx.author.mention, num=len(players))
                 )
 
+            # Check for not included participants
+            msg = await ctx.channel.fetch_message(msg.id)
+            for reaction in msg.reactions:
+                if reaction.emoji == "\U0001f43a":
+                    async for user in reaction.users():
+                        if user != ctx.me and user not in players:
+                            players.append(user)
+                    break
+
         if len(players) < 5:
             del self.games[ctx.channel.id]
             await self.bot.reset_cooldown(ctx)
             return await ctx.send(_("Not enough players joined..."))
 
-        game = Game(ctx, players)
+        game = Game(ctx, players, mode)
         self.games[ctx.channel.id] = game
         try:
             await game.run()
@@ -102,7 +120,7 @@ class Werewolf(commands.Cog):
         game = self.games.get(ctx.channel.id)
         if not game:
             return await ctx.send(
-                f"There is no werewolf game here! {ctx.author.mention}"
+                f"There is no werewolf game in this channel! {ctx.author.mention}"
             )
         if game == "forming":
             return await ctx.send(
@@ -119,9 +137,22 @@ class Werewolf(commands.Cog):
                 )
             else:
                 try:
-                    return await ctx.author.send(
+                    await ctx.author.send(
                         f"Checking your role in {ctx.channel.mention}... You are a"
-                        f" **{player.role.name.title().replace('_', ' ')}**"
+                        " **{role_name}**!{initial_role_info}".format(
+                            player_name=player.user.mention,
+                            role_name=player.role.name.title().replace("_", " "),
+                            initial_role_info=(
+                                f" A **{player.initial_role.name.title().replace('_', ' ')}**"
+                                " initially."
+                            )
+                            if player.role != player.initial_role
+                            else "",
+                        )
+                    )
+                    await player.send_information()
+                    return await ctx.send(
+                        f"I sent a DM containing your role info, {ctx.author.mention}."
                     )
                 except discord.Forbidden:
                     return await ctx.send(
