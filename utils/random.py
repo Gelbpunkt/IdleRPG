@@ -18,6 +18,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 import secrets
 
 from collections.abc import Sequence, Set
+from copy import copy
 
 choice = secrets.choice
 randbits = secrets.randbits
@@ -33,12 +34,14 @@ def sample(population, k):
         )
 
     n = len(population)
+    population = copy(population)
+
     if not 0 <= k <= n:
         raise ValueError("Sample larger than population or is negative")
 
     results = []
     for i in range(k):
-        results.append(population[secrets.randbelow(n - i)])
+        results.append(population.pop(secrets.randbelow(n - i)))
 
     return results
 

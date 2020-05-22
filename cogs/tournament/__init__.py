@@ -324,7 +324,7 @@ class Tournament(commands.Cog):
                     await asyncio.sleep(4)
 
                     start = datetime.datetime.utcnow()
-                    attacker, defender = random.sample(players, k=2)
+                    attacker, defender = random.shuffle(match)
                     while (
                         attacker["hp"] > 0
                         and defender["hp"] > 0
