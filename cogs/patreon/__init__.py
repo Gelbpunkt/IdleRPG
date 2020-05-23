@@ -145,7 +145,7 @@ class Patreon(commands.Cog):
             else:
                 hand = "any"
 
-            if item["hand"] == "both" and hand != "both":
+            if (item["hand"] == "both" and hand != "both") or (item["hand"] != "both" and hand == "both"):
                 return await ctx.send(
                     _(
                         "You may not change a two-handed item to a single-handed one due to weapon damage reasons."
