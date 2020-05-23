@@ -21,7 +21,6 @@ import re
 
 from datetime import datetime, timedelta
 from time import time
-from traceback import format_exc
 from uuid import uuid4
 
 import discord
@@ -171,13 +170,6 @@ class Sharding(commands.Cog):
             self.router.cancel()
         await self.bot.redis.execute_pubsub("UNSUBSCRIBE", self.communication_channel)
 
-    async def run_task(self, coro):
-        """Simple wrapper function to ignore any errors caused in local tasks, e.g. with unknown users."""
-        try:
-            await coro
-        except Exception:
-            pass
-
     async def event_handler(self):
         """
         main router
@@ -195,36 +187,21 @@ class Sharding(commands.Cog):
             except json.decoder.JSONDecodeError:
                 continue  # not a valid JSON message
             if payload.get("action") and hasattr(self, payload.get("action")):
-                try:
-                    if payload.get("scope") != "bot":
-                        continue  # it's not our cup of tea
-                    if payload.get("args"):
-                        self.bot.loop.create_task(
-                            self.run_task(
-                                getattr(self, payload["action"])(
-                                    **json.loads(payload["args"]),
-                                    command_id=payload["command_id"],
-                                )
-                            )
+                if payload.get("scope") != "bot":
+                    continue  # it's not our cup of tea
+                if payload.get("args"):
+                    self.bot.loop.create_task(
+                        getattr(self, payload["action"])(
+                            **json.loads(payload["args"]),
+                            command_id=payload["command_id"],
                         )
-                    else:
-                        self.bot.loop.create_task(
-                            self.run_task(
-                                getattr(self, payload["action"])(
-                                    command_id=payload["command_id"]
-                                )
-                            )
-                        )
-                except Exception:
-                    payload = {
-                        "error": True,
-                        "output": format_exc(),
-                        "command_id": payload["command_id"],
-                    }
-                    await self.bot.redis.execute(
-                        "PUBLISH", self.communication_channel, json.dumps(payload)
                     )
-                    continue
+                else:
+                    self.bot.loop.create_task(
+                        getattr(self, payload["action"])(
+                            command_id=payload["command_id"]
+                        )
+                    )
             if payload.get("output") and payload["command_id"] in self._messages:
                 self._messages[payload["command_id"]].append(payload["output"])
 
