@@ -370,47 +370,26 @@ class Bot(commands.AutoShardedBot):
         user = user.id if isinstance(user, (discord.User, discord.Member)) else user
         await self.redis.execute("SET", f"booster:{user}:{type_}", 1, "EX", 86400)
 
-    async def get_booster(self, user, type_, conn=None):
+    async def get_booster(self, user, type_):
         """Returns how longer a user has a booster running"""
         user = user.id if isinstance(user, (discord.User, discord.Member)) else user
-        if conn is None:
-            local = True
-            conn = await self.redis.acquire()
-        else:
-            local = False
-        val = await conn.execute("TTL", f"booster:{user}:{type_}")
-        if local:
-            self.redis.release(conn)
+        val = await self.redis.execute("TTL", f"booster:{user}:{type_}")
         return datetime.timedelta(seconds=val) if val != -2 else None
 
-    async def start_adventure(self, user, number, time, conn=None):
+    async def start_adventure(self, user, number, time):
         """Sends a user on an adventure"""
         user = user.id if isinstance(user, (discord.User, discord.Member)) else user
-        if conn is None:
-            local = True
-            conn = await self.redis.acquire()
-        else:
-            local = False
-        await conn.execute(
+        await self.redis.execute(
             "SET", f"adv:{user}", number, "EX", int(time.total_seconds()) + 259_200
         )  # +3 days
-        if local:
-            self.redis.release(conn)
 
-    async def get_adventure(self, user, conn=None):
+    async def get_adventure(self, user):
         """Returns a user's adventure"""
         user = user.id if isinstance(user, (discord.User, discord.Member)) else user
-        if conn is None:
-            local = True
-            conn = await self.redis.acquire()
-        else:
-            local = False
-        ttl = await conn.execute("TTL", f"adv:{user}")
+        ttl = await self.redis.execute("TTL", f"adv:{user}")
         if ttl == -2:
             return
-        num = await conn.execute("GET", f"adv:{user}")
-        if local:
-            self.redis.release(conn)
+        num = await self.redis.execute("GET", f"adv:{user}")
         ttl = ttl - 259_200
         done = ttl <= 0
         time = datetime.timedelta(seconds=ttl)

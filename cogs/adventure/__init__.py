@@ -111,13 +111,10 @@ class Adventure(commands.Cog):
                 time = time * 0.9
             elif user_rank >= DonatorRank.silver:
                 time = time * 0.95
-        async with self.bot.redis.get() as conn:
-            time_booster = await self.bot.get_booster(ctx.author, "time", conn=conn)
-            if time_booster:
-                time = time / 2
-            await self.bot.start_adventure(
-                ctx.author, adventure_number, time, conn=conn
-            )
+        time_booster = await self.bot.get_booster(ctx.author, "time")
+        if time_booster:
+            time = time / 2
+        await self.bot.start_adventure(ctx.author, adventure_number, time)
         await ctx.send(
             _(
                 "Successfully sent your character out on an adventure. Use"
