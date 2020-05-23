@@ -810,6 +810,8 @@ For example, distributing $500 to 5 members will give everyone of them $100.
         guild2 = ctx.user_data["guild"]
         if guild1 == 0 or guild2 == 0:
             return await ctx.send(_("One of you both doesn't have a guild."))
+        if guild1 == guild2:
+            return await ctx.send(_("Battling your own guild? :face_with_raised_eyebrow:"))
         if (
             ctx.character_data["guildrank"] == "Member"
             or ctx.user_data["guildrank"] == "Member"
