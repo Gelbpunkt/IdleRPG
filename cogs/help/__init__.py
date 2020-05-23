@@ -485,6 +485,11 @@ class IdleHelp(commands.HelpCommand):
             ),
             description=command.help,
         )
+        if command.aliases:
+            e.add_field(
+                name=_("Aliases"),
+                value="`{}`".format("`, `".join(command.aliases))
+            )
         await self.context.send(embed=e)
 
     async def send_group_help(self, group):
@@ -517,6 +522,11 @@ class IdleHelp(commands.HelpCommand):
                 [f"`{c.qualified_name}` - {c.brief}"] for c in group.commands
             ),
         )
+        if group.aliases:
+            e.add_field(
+                name=_("Aliases"),
+                value="`{}`".format("`, `".join(group.aliases))
+            )
         await self.context.send(embed=e)
 
 
