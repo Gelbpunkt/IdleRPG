@@ -300,7 +300,7 @@ class Music(commands.Cog):
                 return
 
         msg = await ctx.send(_("Loading track... This might take up to 3 seconds..."))
-        b64 = b64encode(dumps(track_obj.media_data).encode()).decode()
+        b64 = b64encode(dumps(track_obj.media_data)).decode()
         tracks = await self.bot.wavelink.get_tracks(
             f"{self.bot.config.resolve_endpoint}?data={b64}"
         )
@@ -340,7 +340,7 @@ class Music(commands.Cog):
             results = await r.json()
         try:
             track_obj = Track(results["items"][0])
-            b64 = b64encode(dumps(track_obj.media_data).encode()).decode()
+            b64 = b64encode(dumps(track_obj.media_data)).decode()
             tracks = await self.bot.wavelink.get_tracks(
                 f"{self.bot.config.resolve_endpoint}?data={b64}"
             )

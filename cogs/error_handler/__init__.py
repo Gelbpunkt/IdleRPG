@@ -42,8 +42,7 @@ from utils.i18n import _
 from utils.paginator import NoChoice
 
 try:
-    from raven import Client
-    from raven_aiohttp import AioHttpTransport
+    import sentry_sdk
 except ModuleNotFoundError:
     SENTRY_SUPPORT = False
 else:
@@ -54,8 +53,8 @@ class Errorhandler(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
         bot.on_command_error = self._on_command_error
-        self.client = None
-        bot.queue.put_nowait(self.initialize_cog())
+        if SENTRY_SUPPORT:
+            sentry_sdk.init(self.bot.config.sentry_url)
 
     async def _on_command_error(self, ctx, error, bypass=False):
         if (
@@ -300,7 +299,7 @@ class Errorhandler(commands.Cog):
                         " try again."
                     )
                 )
-            if not self.client:
+            if not SENTRY_SUPPORT:
                 print("In {}:".format(ctx.command.qualified_name), file=sys.stderr)
                 traceback.print_tb(error.original.__traceback__)
                 print(
@@ -312,23 +311,19 @@ class Errorhandler(commands.Cog):
             else:
                 try:
                     raise error.original
-                except Exception:
+                except Exception as e:
                     if ctx.guild:
                         guild_id = ctx.guild.id
                     else:
                         guild_id = "None"
-                    self.client.captureException(
-                        data={
-                            "message": ctx.message.content,
-                            "tags": {"command": ctx.command.name},
-                        },
-                        extra={
-                            "guild_id": str(guild_id),
-                            "channel_id": str(ctx.channel.id),
-                            "message_id": str(ctx.message.id),
-                            "user_id": str(ctx.author.id),
-                        },
-                    )
+                    with sentry_sdk.push_scope() as scope:
+                        scope.set_context("message", ctx.message.content)
+                        scope.set_extra("guild_id", str(guild_id))
+                        scope.set_extra("channel_id", str(ctx.channel.id))
+                        scope.set_extra("message_id", str(ctx.message.id))
+                        scope.set_extra("user_id", str(ctx.author.id))
+                        scope.set_tag("command", ctx.command.qualified_name)
+                        sentry_sdk.capture_exception(e)
                 await ctx.send(
                     _(
                         "The command you tried to use ran into an error. The incident"
@@ -340,24 +335,11 @@ class Errorhandler(commands.Cog):
         if ctx.command.parent:
             if (
                 ctx.command.root_parent.name == "guild"
-                and ctx.character_name is not None
+                and ctx.character_data is not None
             ):
                 await self.bot.reset_guild_cooldown(ctx)
             elif ctx.command.root_parent.name == "alliance":
                 await self.bot.reset_alliance_cooldown(ctx)
-
-    async def initialize_cog(self):
-        """Saves the original cmd error handler"""
-        if SENTRY_SUPPORT:
-            self.client = Client(self.bot.config.sentry_url, transport=AioHttpTransport)
-
-    async def unload_cog(self):
-        """Readds the original error handler"""
-        if SENTRY_SUPPORT:
-            await self.client.remote.get_transport().close()
-
-    def cog_unload(self):
-        self.bot.queue.put_nowait(self.unload_cog())
 
 
 def setup(bot):

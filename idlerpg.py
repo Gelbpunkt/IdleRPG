@@ -15,17 +15,23 @@ GNU Affero General Public License for more details.
 You should have received a copy of the GNU Affero General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
-import asyncio
-import os
+import logging
 import sys
 
-from json import loads
+import orjson
+
+# Ugly patch to use orjson globally
+sys.modules["json"] = orjson
+
+import asyncio
+import os
 
 import discord
 
 from contextvars_executor import ContextVarExecutor
 
 from classes.bot import Bot
+from classes.logger import ColoredLogger
 
 if len(sys.argv) != 5:
     print(
@@ -46,7 +52,7 @@ bot = Bot(
     case_insensitive=True,
     status=discord.Status.idle,
     description="The one and only IdleRPG bot for discord",
-    shard_ids=loads(sys.argv[1]),
+    shard_ids=orjson.loads(sys.argv[1]),
     shard_count=int(sys.argv[2]),
     cluster_id=int(sys.argv[3]),
     cluster_name=sys.argv[4],
@@ -56,6 +62,7 @@ bot = Bot(
 
 
 if __name__ == "__main__":
+    logging.setLoggerClass(ColoredLogger)
     loop = asyncio.get_event_loop()
     loop.set_default_executor(ContextVarExecutor())
     try:

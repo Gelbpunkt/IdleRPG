@@ -18,7 +18,6 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 from __future__ import annotations
 
 import asyncio
-import json
 import sys
 
 from pathlib import Path
@@ -29,6 +28,8 @@ from typing import Any, Dict, Iterable, List, Optional, Tuple, Union
 
 import aiohttp
 import aioredis
+
+import orjson
 
 from config import additional_shards, shard_announce_channel, shard_per_cluster, token
 from utils import random
@@ -208,13 +209,13 @@ class Main:
         while await channel.wait_message():
             try:
                 payload = await channel.get_json(encoding="utf-8")
-            except json.decoder.JSONDecodeError:
+            except orjson.JSONDecodeError:
                 continue  # not a valid JSON message
             if payload.get("scope") != "launcher" or not payload.get("action"):
                 continue  # not the launcher's task
             # parse the JSON args
             if (args := payload.get("args", {})) :
-                args = json.loads(args)
+                args = orjson.loads(args)
             id_ = args.get("id")
             id_exists = id_ is not None
 
@@ -247,7 +248,7 @@ class Main:
                 await self.redis.execute(
                     "PUBLISH",
                     shard_announce_channel,
-                    json.dumps(
+                    orjson.dumps(
                         {"command_id": payload["command_id"], "output": statuses}
                     ),
                 )

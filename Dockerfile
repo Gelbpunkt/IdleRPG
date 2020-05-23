@@ -27,7 +27,7 @@ RUN if [ -z "$beta" ]; then \
         pip install --no-deps --no-cache-dir "https://raw.githubusercontent.com/Gelbpunkt/alpine-python-wheels/$BRANCH/wheels/$p"; \
     done && \
     apk del .fetch-deps --no-network && \
-    apk add --no-cache git
+    apk add --no-cache git libgcc
 
 USER idle
 

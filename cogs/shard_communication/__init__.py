@@ -184,7 +184,7 @@ class Sharding(commands.Cog):
         while await channel.wait_message():
             try:
                 payload = await channel.get_json(encoding="utf-8")
-            except json.decoder.JSONDecodeError:
+            except json.JSONDecodeError:
                 continue  # not a valid JSON message
             if payload.get("action") and hasattr(self, payload.get("action")):
                 if payload.get("scope") != "bot":
@@ -390,7 +390,7 @@ class Sharding(commands.Cog):
         # Sending
         payload = {"scope": scope, "action": action, "command_id": command_id}
         if args:
-            payload["args"] = json.dumps(args)
+            payload["args"] = args
         await self.bot.redis.execute(
             "PUBLISH", self.communication_channel, json.dumps(payload)
         )

@@ -52,7 +52,7 @@ class Bot(commands.AutoShardedBot):
             command_prefix=config.global_prefix, **kwargs
         )  # we overwrite the prefix when it is connected
         # setup stuff
-        self.queue = asyncio.Queue(loop=self.loop)  # global queue for ordered tasks
+        self.queue = asyncio.Queue()  # global queue for ordered tasks
         self.config = config
         self.version = config.version
         self.paginator = paginator
@@ -113,7 +113,7 @@ class Bot(commands.AutoShardedBot):
         )
         self.trusted_session = aiohttp.ClientSession()
         self.redis = await aioredis.create_pool(
-            "redis://localhost", minsize=10, maxsize=20, loop=self.loop
+            "redis://localhost", minsize=10, maxsize=20
         )
         self.pool = await asyncpg.create_pool(
             **self.config.database, min_size=10, max_size=20, command_timeout=60.0
