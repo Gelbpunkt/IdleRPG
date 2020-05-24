@@ -24,6 +24,7 @@ import discord
 
 from discord.ext import commands
 
+from classes.converters import MemberWithCharacter
 from cogs.help import chunks
 from cogs.shard_communication import next_day_cooldown
 from utils import random
@@ -190,7 +191,7 @@ class Christmas(commands.Cog):
     @is_guild_officer()
     @commands.command()
     @locale_doc
-    async def snowballfight(self, ctx, enemy: discord.Member):
+    async def snowballfight(self, ctx, enemy: MemberWithCharacter):
         _("""Make a snowball fights against another guild.""")
         if enemy is ctx.author:
             return await ctx.send(_("You may not fight yourself."))

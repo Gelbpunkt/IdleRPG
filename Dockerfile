@@ -34,6 +34,7 @@ USER idle
 COPY . .
 
 # Fix git URL in Dockerhub
-RUN git remote set-url origin https://git.travitia.xyz/Kenvyra/IdleRPG.git
+RUN git init && \
+    git remote add origin https://git.travitia.xyz/Kenvyra/IdleRPG.git
 
 CMD python launcher.py

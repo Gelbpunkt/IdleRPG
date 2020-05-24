@@ -56,6 +56,7 @@ bot = Bot(
     shard_count=int(sys.argv[2]),
     cluster_id=int(sys.argv[3]),
     cluster_name=sys.argv[4],
+    fetch_offline_members=False,  # for intents to work
     max_messages=10000,  # We have a ton of incoming messages, higher cache means commands like activeadventure
     # or guild adventure joining will stay in cache so reactions are counted
 )

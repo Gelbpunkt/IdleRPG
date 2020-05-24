@@ -31,6 +31,7 @@ import import_expression
 from discord.ext import commands
 from tabulate import tabulate
 
+from classes.converters import MemberConverter
 from utils import random, shell
 from utils.misc import random_token
 
@@ -255,7 +256,7 @@ class Owner(commands.Cog):
             await ctx.send(f"```{ret}```")
 
     @commands.command(hidden=True)
-    async def runas(self, ctx, member: discord.Member, *, command: str):
+    async def runas(self, ctx, member: MemberConverter, *, command: str):
         """[Owner Only] Run a command as if you were the user."""
         fake_msg = copy.copy(ctx.message)
         fake_msg._update(dict(channel=ctx.channel, content=ctx.prefix + command))

@@ -24,6 +24,7 @@ import discord
 
 from discord.ext import commands
 
+from classes.converters import MemberConverter
 from utils.chess import ChessGame, ProtocolAdapter
 from utils.i18n import _, locale_doc
 
@@ -116,7 +117,7 @@ class Chess(commands.Cog):
 
     @chess.group(invoke_without_command=True)
     async def match(
-        self, ctx, difficulty: Optional[int] = 3, enemy: discord.Member = None,
+        self, ctx, difficulty: Optional[int] = 3, enemy: MemberConverter = None,
     ):
         _(
             """Starts a game of chess, either against a player or AI from difficulty 1 to 10."""

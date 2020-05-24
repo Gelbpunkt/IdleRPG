@@ -36,7 +36,7 @@ import psutil
 from discord.ext import commands
 from discord.ext.commands import BucketType
 
-from classes.converters import DateNewerThan, IntFromTo, IntGreaterThan
+from classes.converters import DateNewerThan, IntFromTo, IntGreaterThan, MemberConverter
 from cogs.help import chunks
 from cogs.shard_communication import next_day_cooldown
 from utils import random
@@ -405,7 +405,7 @@ https://git.travitia.xyz/Kenvyra/IdleRPG/compare/v4.5.1...v4.6.0
     @commands.has_permissions(manage_messages=True)
     @commands.command()
     @locale_doc
-    async def clear(self, ctx, num: IntFromTo(1, 1000), target: discord.Member = None):
+    async def clear(self, ctx, num: IntFromTo(1, 1000), target: MemberConverter = None):
         _(
             """Deletes an amount of messages from the history, optionally only by one member."""
         )
@@ -475,7 +475,7 @@ https://git.travitia.xyz/Kenvyra/IdleRPG/compare/v4.5.1...v4.6.0
     @commands.guild_only()
     @commands.command()
     @locale_doc
-    async def love(self, ctx, first: discord.Member, second: discord.Member):
+    async def love(self, ctx, first: MemberConverter, second: MemberConverter):
         _("""Calculates the potential love for 2 members.""")
         msg = await ctx.send(
             embed=discord.Embed(
@@ -647,7 +647,7 @@ https://git.travitia.xyz/Kenvyra/IdleRPG/compare/v4.5.1...v4.6.0
     @commands.guild_only()
     @commands.command()
     @locale_doc
-    async def cookie(self, ctx, user: discord.Member):
+    async def cookie(self, ctx, user: MemberConverter):
         _("""Gives a cookie to a user.""")
         await ctx.send(
             _(
@@ -658,7 +658,7 @@ https://git.travitia.xyz/Kenvyra/IdleRPG/compare/v4.5.1...v4.6.0
     @commands.guild_only()
     @commands.command(aliases=["ice-cream"])
     @locale_doc
-    async def ice(self, ctx, other: discord.Member):
+    async def ice(self, ctx, other: MemberConverter):
         _("""Gives ice cream to a user.""")
         await ctx.send(
             _("{other}, here is your ice: :ice_cream:!").format(other=other.mention)

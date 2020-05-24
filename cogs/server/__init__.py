@@ -20,6 +20,7 @@ import discord
 from discord.ext import commands
 from discord.ext.commands.default import Author
 
+from classes.converters import MemberConverter
 from utils.i18n import _, locale_doc
 
 
@@ -125,57 +126,6 @@ Server created at: `{created_at}`"""
         await ctx.send(_("Done!"))
 
     @commands.guild_only()
-    @commands.command(aliases=["user", "member", "memberinfo"])
-    @locale_doc
-    async def userinfo(self, ctx, member: discord.Member = Author):
-        _("""Shows detailed information about a member in the server.""")
-        ticks = {
-            "True": "<:check:314349398811475968>",
-            "False": "<:xmark:314349398824058880>",
-        }
-        statuses = {
-            "online": "<:online:313956277808005120>",
-            "idle": "<:away:313956277220802560>",
-            "dnd": "<:dnd:313956276893646850>",
-            "offline": "<:offline:313956277237710868>",
-        }
-        embed1 = discord.Embed(
-            title=str(member),
-            description=_(
-                """\
-`Joined at`: {joined}
-`Status...`: {status}
-`Top Role.`: {toprole}
-`Roles....`: {roles}
-`Game.....`: {game}"""
-            ).format(
-                joined=str(member.joined_at).split(".")[0],
-                status=(
-                    f"{statuses[str(member.status)]}{str(member.status).capitalize()}"
-                ),
-                toprole=member.top_role.name,
-                roles=", ".join([role.name for role in member.roles]),
-                game=str(member.activity) if member.activity else _("No Game Playing"),
-            ),
-            color=member.color,
-        ).set_thumbnail(url=member.avatar_url)
-        embed2 = discord.Embed(
-            title=_("Permissions"),
-            description="\n".join(
-                [
-                    "`"
-                    + _(value[0].replace("_", " ").title()).ljust(21, ".")
-                    + "`"
-                    + ": "
-                    + ticks[str(value[1])]
-                    for value in member.guild_permissions
-                ]
-            ),
-            color=member.color,
-        ).set_thumbnail(url=member.avatar_url)
-        await self.bot.paginator.Paginator(extras=[embed1, embed2]).paginate(ctx)
-
-    @commands.guild_only()
     @commands.command()
     @locale_doc
     async def prefix(self, ctx):
@@ -190,7 +140,7 @@ Server created at: `{created_at}`"""
 
     @commands.command()
     @locale_doc
-    async def avatar(self, ctx, target: discord.Member = Author):
+    async def avatar(self, ctx, target: MemberConverter = Author):
         _("""Shows someone's (or your) avatar.""")
         await ctx.send(
             embed=discord.Embed(

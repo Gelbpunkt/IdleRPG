@@ -19,7 +19,7 @@ import discord
 
 from discord.ext import commands
 
-from classes.converters import IntFromTo, IntGreaterThan
+from classes.converters import IntFromTo, IntGreaterThan, MemberWithCharacter
 from cogs.shard_communication import user_on_cooldown as user_cooldown
 from utils.checks import has_char, has_money
 from utils.i18n import _, locale_doc
@@ -302,7 +302,11 @@ class Trading(commands.Cog):
     @commands.command()
     @locale_doc
     async def offer(
-        self, ctx, itemid: int, price: IntFromTo(0, 100_000_000), user: discord.Member
+        self,
+        ctx,
+        itemid: int,
+        price: IntFromTo(0, 100_000_000),
+        user: MemberWithCharacter,
     ):
         _("""Offer an item to a specific user.""")
         if user == ctx.author:

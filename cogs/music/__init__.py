@@ -227,13 +227,13 @@ class FakeTrack(wavelink.Track):
         "is_stream",
         "dead",
         "thumb",
-        "requester_id",
+        "requester",
         "channel_id",
         "track_obj",
     )
 
     def __init__(self, *args, **kwargs):
-        self.requester_id = kwargs.pop("requester_id", None)
+        self.requester = kwargs.pop("requester", None)
         self.channel_id = kwargs.pop("channel_id", None)
         self.id = kwargs.pop("id", None)
         self.track_obj = kwargs.pop("track_obj", None)
@@ -308,10 +308,7 @@ class Music(commands.Cog):
             return await msg.edit(content=_("No results..."))
         track = tracks[0]
         track = self.update_track(
-            track,
-            requester_id=ctx.author.id,
-            channel_id=ctx.channel.id,
-            track_obj=track_obj,
+            track, requester=ctx.author, channel_id=ctx.channel.id, track_obj=track_obj,
         )
 
         if not ctx.player.is_connected:
@@ -349,7 +346,7 @@ class Music(commands.Cog):
             track = tracks[0]
             track = self.update_track(
                 track,
-                requester_id=ctx.author.id,
+                requester=ctx.author,
                 channel_id=ctx.channel.id,
                 track_obj=track_obj,
             )
@@ -533,13 +530,12 @@ class Music(commands.Cog):
             f" {timedelta(seconds=int(current_song.length / 1000))}```"
         )
         playing_embed.description = controller
-        if (
-            user := ctx.guild.get_member(current_song.requester_id)
-        ) :  # check to avoid errors on guild leave
-            playing_embed.set_footer(
-                text=_("Song requested by: {user}").format(user=user.display_name),
-                icon_url=user.avatar_url_as(format="png", size=64),
-            )
+        playing_embed.set_footer(
+            text=_("Song requested by: {user}").format(
+                user=current_song.requester.display_name
+            ),
+            icon_url=current_song.requester.avatar_url_as(format="png", size=64),
+        )
         await ctx.send(embed=playing_embed)
 
     @get_player()
@@ -555,7 +551,7 @@ class Music(commands.Cog):
                 paginator.add_line(
                     f"• {entry.title}"
                     f" ({str(timedelta(milliseconds=entry.length)).split('.')[0]}) -"
-                    f" {ctx.guild.get_member(entry.requester_id).display_name}"
+                    f" {entry.requester.display_name}"
                 )
             queue_length = self.get_queue_length(ctx.guild.id) - 1
             text = _("Upcoming entries")
@@ -602,7 +598,7 @@ class Music(commands.Cog):
     def update_track(
         self,
         track: wavelink.Track,
-        requester_id: int,
+        requester: discord.Member,
         channel_id: int,
         track_obj: Track,
     ):
@@ -610,7 +606,7 @@ class Music(commands.Cog):
             track.id,
             track.info,
             query=track.query,
-            requester_id=requester_id,
+            requester=requester,
             channel_id=channel_id,
             track_obj=track_obj,
         )

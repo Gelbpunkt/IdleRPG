@@ -24,7 +24,63 @@ import discord
 from discord.ext import commands
 
 from classes.context import Context
+from utils.cache import cache
 from utils.i18n import _
+
+
+class MemberConverter(commands.MemberConverter):
+    """Converts to a :class:`~discord.Member`.
+    All lookups are via the local cache, the gateway
+    and the HTTP API.
+    The lookup strategy is as follows (in order):
+    1. Lookup by ID.
+    2. Lookup by mention.
+    3. Lookup by name#discrim
+    4. Lookup by name
+    5. Lookup by nickname
+    Copied from https://github.com/Rapptz/discord.py/blob/sharding-rework/discord/ext/commands/converter.py
+    """
+
+    @cache(maxsize=8096)
+    async def convert(self, ctx, argument):
+        match = self._get_id_match(argument) or re.match(r"<@!?([0-9]+)>$", argument)
+        guild = ctx.guild
+        result = None
+        if guild is None:
+            return  # not much we can do here
+
+        if match is None:
+            # not a mention...
+            match = re.match(r"(.*)#(\d{4})", argument)
+            if match:
+                # it is Name#0001
+                name = match.group(1)
+                discrim = match.group(2)
+            else:
+                name = argument
+                discrim = None
+            members = await guild.query_members(name)
+            if members and discrim is not None:
+                result = discord.utils.get(members, discriminator=discrim)
+            elif members:
+                result = members[0]
+        else:
+            user_id = int(match.group(1))
+            result = discord.utils.get(ctx.message.mentions, id=user_id)
+            if result is None:
+                try:
+                    result = await guild.fetch_member(user_id)
+                except discord.NotFound:
+                    pass
+
+        if result is None:
+            raise commands.BadArgument(f'Member "{argument}" not found')
+
+        return result
+
+
+_member_converter = MemberConverter()
+_user_converter = commands.UserConverter()
 
 
 class NotInRange(commands.BadArgument):
@@ -51,70 +107,27 @@ class DateOutOfRange(commands.BadArgument):
         self.min_ = min_
 
 
-class User(commands.Converter):
+class User(commands.UserConverter):
+    @cache(maxsize=8096)
     async def convert(self, ctx: Context, argument: str) -> discord.User:
-        # Try local users first
-        user = None
-        matches = re.search(r"<@!?(\d+)>", argument)
-        if matches:
-            argument = matches.group(1)
-        if isinstance(argument, int) or (
-            isinstance(argument, str) and argument.isdigit()
-        ):
-            user = ctx.bot.get_user(int(argument))
-        else:
-            if len(argument) > 5 and argument[-5] == "#":
-                discrim = argument[-4:]
-                name = argument[:-5]
-                predicate = lambda u: u.name == name and u.discriminator == discrim
-                user = discord.utils.find(predicate, ctx.bot.users)
-            else:
-                predicate = lambda u: u.name == argument
-                user = discord.utils.find(predicate, ctx.bot.users)
-        if user:
-            return user
-        data = await ctx.bot.cogs["Sharding"].handler(
-            "fetch_user", 1, {"user_inp": argument}
-        )
-        if not data:
+        try:
+            return await _user_converter.convert(ctx, argument)
+        except commands.BadArgument:
+            pass
+
+        match = self._get_id_match(argument) or re.match(r"<@!?([0-9]+)>$", argument)
+        try:
+            return await ctx.bot.fetch_user(int(match.group(1)))
+        except discord.NotFound:
             raise commands.BadArgument(f"User {argument} not found")
-        data = data[0]
-        data["username"] = data["name"]
-        user = discord.User(state=ctx.bot._connection, data=data)
-        ctx.bot.users.append(user)
-        return user
+
+
+_custom_user_converter = User()
 
 
 class UserWithCharacter(commands.Converter):
     async def convert(self, ctx, argument):
-        # Try the local users first
-        user = None
-        matches = re.search(r"<@!?(\d+)>", argument)
-        if matches:
-            argument = matches.group(1)
-        if isinstance(argument, int) or (
-            isinstance(argument, str) and argument.isdigit()
-        ):
-            user = ctx.bot.get_user(int(argument))
-        else:
-            if len(argument) > 5 and argument[-5] == "#":
-                discrim = argument[-4:]
-                name = argument[:-5]
-                predicate = lambda u: u.name == name and u.discriminator == discrim
-                user = discord.utils.find(predicate, ctx.bot.users)
-            else:
-                predicate = lambda u: u.name == argument
-                user = discord.utils.find(predicate, ctx.bot.users)
-        if not user:
-            data = await ctx.bot.cogs["Sharding"].handler(
-                "fetch_user", 1, {"user_inp": argument}
-            )
-            if not data:
-                raise commands.BadArgument("Unknown user.", argument)
-            data = data[0]
-            data["username"] = data["name"]
-            user = discord.User(state=ctx.bot._connection, data=data)
-            ctx.bot.users.append(user)
+        user = await _custom_user_converter.convert(ctx, argument)  # error is ok here
         ctx.user_data = await ctx.bot.pool.fetchrow(
             'SELECT * FROM profile WHERE "user"=$1;', user.id
         )
@@ -126,35 +139,15 @@ class UserWithCharacter(commands.Converter):
 
 class MemberWithCharacter(commands.converter.IDConverter):
     async def convert(self, ctx, argument):
-        match = self._get_id_match(argument) or re.match(r"<@!?([0-9]+)>$", argument)
-        result = None
-        if match is None:
-            # not a mention...
-            if ctx.guild:
-                result = ctx.guild.get_member_named(argument)
-            else:
-                result = commands.converter._get_from_guilds(
-                    ctx.bot, "get_member_named", argument
-                )
-        else:
-            user_id = int(match.group(1))
-            if ctx.guild:
-                result = ctx.guild.get_member(user_id)
-            else:
-                result = commands.converter._get_from_guilds(
-                    ctx.bot, "get_member", user_id
-                )
-
-        if result is None:
-            raise commands.BadArgument(f"Member '{argument}' not found")
+        member = await _member_converter.convert(ctx, argument)  # error is ok here
 
         ctx.user_data = await ctx.bot.pool.fetchrow(
-            'SELECT * FROM profile WHERE "user"=$1;', result.id
+            'SELECT * FROM profile WHERE "user"=$1;', member.id
         )
         if ctx.user_data:
-            return result
+            return member
         else:
-            raise UserHasNoChar("User has no character.", result)
+            raise UserHasNoChar("User has no character.", member)
 
 
 class IntFromTo(commands.Converter):

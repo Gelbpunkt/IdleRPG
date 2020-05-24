@@ -46,6 +46,9 @@ class Context(commands.Context):
     def disp(self) -> str:
         return self.author.display_name
 
+    def __repr__(self):
+        return "<Context>"
+
     async def confirm(
         self,
         message: str,

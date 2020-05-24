@@ -25,7 +25,7 @@ import discord
 
 from discord.ext import commands
 
-from classes.converters import IntGreaterThan
+from classes.converters import IntGreaterThan, MemberConverter
 from cogs.shard_communication import user_on_cooldown as user_cooldown
 from utils import random
 from utils.checks import has_char, has_money
@@ -41,7 +41,7 @@ class Battles(commands.Cog):
     @commands.command()
     @locale_doc
     async def battle(
-        self, ctx, money: IntGreaterThan(-1) = 0, enemy: discord.Member = None
+        self, ctx, money: IntGreaterThan(-1) = 0, enemy: MemberConverter = None
     ):
         _("""Battle against another player.""")
         if enemy == ctx.author:
@@ -156,7 +156,7 @@ class Battles(commands.Cog):
     @commands.command()
     @locale_doc
     async def raidbattle(
-        self, ctx, money: IntGreaterThan(-1) = 0, enemy: discord.Member = None
+        self, ctx, money: IntGreaterThan(-1) = 0, enemy: MemberConverter = None
     ):
         _("""Battle system based on raids.""")
         if enemy == ctx.author:
@@ -370,7 +370,7 @@ class Battles(commands.Cog):
     @commands.command()
     @locale_doc
     async def activebattle(
-        self, ctx, money: IntGreaterThan(-1) = 0, enemy: discord.Member = None
+        self, ctx, money: IntGreaterThan(-1) = 0, enemy: MemberConverter = None
     ):
         _("""Reaction-based battle system.""")
         if enemy == ctx.author:

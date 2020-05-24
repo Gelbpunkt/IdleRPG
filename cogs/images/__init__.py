@@ -23,6 +23,7 @@ from discord.ext import commands
 from discord.ext.commands import BucketType
 from discord.ext.commands.default import Author
 
+from classes.converters import MemberConverter
 from utils.i18n import _, locale_doc
 
 
@@ -32,7 +33,7 @@ class Images(commands.Cog):
 
     @commands.command()
     @locale_doc
-    async def pixelfy(self, ctx, user: discord.Member = Author, size: int = 2):
+    async def pixelfy(self, ctx, user: MemberConverter = Author, size: int = 2):
         _("""Pixelfys an Avatar.""")
         try:
             size = [256, 128, 64, 32, 16][size - 1]
@@ -48,7 +49,7 @@ class Images(commands.Cog):
 
     @commands.command()
     @locale_doc
-    async def edgy(self, ctx, user: discord.Member = Author):
+    async def edgy(self, ctx, user: MemberConverter = Author):
         _("""Finds edges in an Avatar.""")
         async with self.bot.trusted_session.post(
             f"{self.bot.config.okapi_url}/api/imageops/edges",
@@ -60,7 +61,7 @@ class Images(commands.Cog):
     @commands.cooldown(1, 15, BucketType.channel)
     @commands.command()
     @locale_doc
-    async def invert(self, ctx, member: discord.Member = Author):
+    async def invert(self, ctx, member: MemberConverter = Author):
         _("""Inverts an avatar.""")
         async with self.bot.trusted_session.post(
             f"{self.bot.config.okapi_url}/api/imageops/invert",
@@ -72,7 +73,7 @@ class Images(commands.Cog):
     @commands.cooldown(1, 15, BucketType.channel)
     @commands.command()
     @locale_doc
-    async def oil(self, ctx, member: discord.Member = Author):
+    async def oil(self, ctx, member: MemberConverter = Author):
         _("""Oils an Avatar.""")
         async with self.bot.trusted_session.post(
             f"{self.bot.config.okapi_url}/api/imageops/oil",

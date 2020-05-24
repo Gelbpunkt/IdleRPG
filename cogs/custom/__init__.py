@@ -19,6 +19,7 @@ import discord
 
 from discord.ext import commands
 
+from classes.converters import MemberConverter
 from utils import random
 from utils.i18n import _, locale_doc
 
@@ -84,7 +85,7 @@ class Custom(commands.Cog):
         )
 
     @commands.command(hidden=True)
-    async def kill(self, ctx, target: discord.Member):
+    async def kill(self, ctx, target: MemberConverter):
         """Kill someone."""
         await ctx.send(
             embed=discord.Embed(
@@ -105,7 +106,7 @@ class Custom(commands.Cog):
 
     @is_starlit()
     @commands.command(hidden=True)
-    async def lick(self, ctx, *, user: discord.Member):
+    async def lick(self, ctx, *, user: MemberConverter):
         """Get someone in sick and loving way."""
         await ctx.send(
             embed=discord.Embed(
