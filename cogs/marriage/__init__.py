@@ -44,10 +44,18 @@ class Marriage(commands.Cog):
 
     @has_char()
     @commands.guild_only()
-    @commands.command(aliases=["marry"])
+    @commands.command(aliases=["marry"], brief=_("Propose to a player"))
     @locale_doc
     async def propose(self, ctx, partner: MemberWithCharacter):
-        _("""Propose for a marriage.""")
+        _(
+            """`<partner>` - A discord User with a character who is not yet married
+            
+            Propose to a player for marriage. Once they accept, you are married.
+            
+            When married, your partner will get bonuses from your adventures, you can have children, which can do different things (see `{prefix}help familyevent`) and increase your lovescore, which has an effect on the [adventure bonus](https://wiki.travitia.xyz/index.php?title=Family#Adventure_Bonus).
+            
+            Only players who are not already married can use this command."""
+        )
         if partner == ctx.author:
             return await ctx.send(
                 _("You should have a better friend than only yourself.")
@@ -122,10 +130,17 @@ class Marriage(commands.Cog):
                 )
 
     @has_char()
-    @commands.command()
+    @commands.command(brief=_("Break up with your partner"))
     @locale_doc
     async def divorce(self, ctx):
-        _("""Break up with your partner.""")
+        _(
+            """Divorce your partner, effectively un-marrying them.
+            
+            When divorcing, any kids you have with your partner will be deleted. 
+            You can marry another person right away, if you so choose. Divorcing has no negative consequences on gameplay.
+            
+            Only married players can use this command."""
+        )
         if not ctx.character_data["marriage"]:
             return await ctx.send(_("You are not married yet."))
         if not await ctx.confirm(
@@ -151,10 +166,10 @@ class Marriage(commands.Cog):
         await ctx.send(_("You are now divorced."))
 
     @has_char()
-    @commands.command()
+    @commands.command(brief=_("Show your partner"))
     @locale_doc
     async def relationship(self, ctx):
-        _("""View who you're married to.""")
+        _("""Show your partner's Discord Tag.""")
         if not ctx.character_data["marriage"]:
             return await ctx.send(_("You are not married yet."))
         partner = await rpgtools.lookup(self.bot, ctx.character_data["marriage"])
@@ -163,10 +178,16 @@ class Marriage(commands.Cog):
         )
 
     @has_char()
-    @commands.command()
+    @commands.command(brief=_("Show a player's lovescore"))
     @locale_doc
     async def lovescore(self, ctx, user: UserWithCharacter = Author):
-        _("""Views someone's lovescore.""")
+        _(
+            """`[user]` - The user whose lovescore to show; defaults to oneself
+            
+            Show the lovescore a player has. Lovescore can be increased by their partner spoiling them or going on dates.
+            
+            Lovescore affects the [adventure bonus](https://wiki.travitia.xyz/index.php?title=Family#Adventure_Bonus) and the amount of children you can have."""
+        )
         data = ctx.character_data if user == ctx.author else ctx.user_data
         if data["marriage"]:
             partner = await rpgtools.lookup(self.bot, data["marriage"])
@@ -180,10 +201,18 @@ class Marriage(commands.Cog):
         )
 
     @has_char()
-    @commands.command()
+    @commands.command(brief=_("Increase your partner's lovescore"))
     @locale_doc
     async def spoil(self, ctx, item: IntFromTo(1, 40) = None):
-        _("""Buy something for your spouse and increase their lovescore.""")
+        _(
+            """`[item]` - The item to buy, a whole number from 1 to 40; if not given, displays the list of items
+            
+            Buy something for your partner to increase *their* lovescore. To increase your own lovescore, your partner should spoil you.
+            
+            Please note that these items are not usable and do not have an effect on gameplay, beside increasing lovescore.
+            
+            Only players who are married can use this command."""
+        )
         items = [
             (_("Dog :dog2:"), 50),
             (_("Cat :cat2:"), 50),
@@ -280,11 +309,18 @@ class Marriage(commands.Cog):
         )
 
     @has_char()
-    @commands.command()
+    @commands.command(brief=_("Take your partner on a date"))
     @locale_doc
     @user_cooldown(43200)
     async def date(self, ctx):
-        _("""Take your loved one on a date to increase your lovescore.""")
+        _(
+            """Take your partner on a date to increase *their* lovescore. To increase your own lovescore, your partner should go on a date with you.
+            
+            The lovescore gained from dates can range from 10 to 150 in steps of 10.
+            
+            Only players who are married can use this command.
+            (This command has a cooldown of 12 hours.)"""
+        )
         num = random.randint(1, 15) * 10
         marriage = ctx.character_data["marriage"]
         if not marriage:
@@ -324,10 +360,28 @@ class Marriage(commands.Cog):
     @has_char()
     @commands.guild_only()
     @user_cooldown(3600)
-    @commands.command(aliases=["fuck", "sex", "breed"])
+    @commands.command(
+        aliases=["fuck", "sex", "breed"], brief=_("Have a child with your partner")
+    )
     @locale_doc
     async def child(self, ctx):
-        _("""Make a child with your spouse.""")
+        _(
+            """Have a child with your partner.
+            
+            Children on their own don't do much, but `{prefix}familyevent` can effect your money and crates.
+            To have a child, your partner has to be on the server to accept the checkbox.
+            
+            There is a 50% chance that you will have a child, and a 50% chance to just *have fun* (if you know what I'm saying) and gain between 10 and 50 lovescore.
+            When you have a child, there is a 50% chance for it to be a boy and a 50% chance to be a girl.
+            
+            Your partner and you can enter a name for your child once the bot prompts you to. (Do not include `{prefix}`)
+            If you fail to choose a name in time, we will choose one for you from about 500 pre-picked ones.
+            
+            For identification purposes, you cannot have two children with the same name in your family, so make sure to pick a unique one.
+            
+            Only players who are married can use this command.
+            (This command has a cooldown of 1 hour.)"""
+        )
         marriage = ctx.character_data["marriage"]
         if not marriage:
             await self.bot.reset_cooldown(ctx)
@@ -430,10 +484,10 @@ class Marriage(commands.Cog):
         await ctx.send(_("{name} was born.").format(name=name))
 
     @has_char()
-    @commands.command()
+    @commands.command(brief=_("View your children"))
     @locale_doc
     async def family(self, ctx):
-        _("""View your children.""")
+        _("""View your children. This will display their name, age and gender.""")
         marriage = ctx.character_data["marriage"]
         if not marriage:
             return await ctx.send(_("Lonely..."))
@@ -491,10 +545,30 @@ class Marriage(commands.Cog):
 
     @has_char()
     @user_cooldown(1800)
-    @commands.command(aliases=["fe"])
+    @commands.command(aliases=["fe"], brief=_("Events happening to your family"))
     @locale_doc
     async def familyevent(self, ctx):
-        _("""Events happening to your family.""")
+        _(
+            """Allow your children to do something, this includes a multitude of events.
+            
+            Every time you or your partner uses this command, your children:
+              - have an 8/23 chance to grow older by one year
+              - have a 4/23 chance to be renamed
+              - have a 4/23 chance to take up to 1/64th of your money
+              - have a 4/23 chance to give you up to 1/64th of your current money extra
+              - have a 2/23 chance to find a random crate for you:
+                + 500/761 (65%) chance for a common crate
+                + 200/761 (26%) chance for an uncommon crate
+                + 50/761 (6%) chance for a rare crate
+                + 10/761 (1%) chance for a magic crate
+                + 1/761 (0.1%) chance for a legendary crate
+              - have a 1/23 chance to die
+              
+            In each event you will know what happened.
+            
+            Only players who are married and have children can use this command.
+            (This command has a cooldown of 30 minutes.)"""
+        )
         if not ctx.character_data["marriage"]:
             await self.bot.reset_cooldown(ctx)
             return await ctx.send(_("You're lonely."))

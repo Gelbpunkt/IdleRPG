@@ -40,11 +40,15 @@ class Adventure(commands.Cog):
         self.bot = bot
 
     @has_char()
-    @commands.command(aliases=["missions", "dungeons"])
+    @commands.command(
+        aliases=["missions", "dungeons"], brief=_("Shows adventures and your chances")
+    )
     @locale_doc
     async def adventures(self, ctx):
         _(
-            """Shows a list of all available adventures with your individual success chances."""
+            """Shows all adventures, their names, descriptions, and your chances to beat them in picture form.
+            Your chances are determined by your equipped items, race and class bonuses, your level and your God-given luck.
+            The extra +25% added by luck boosters will *not* be displayed in these pictures."""
         )
         damage, defense = await self.bot.get_damage_armor_for(ctx.author)
         all_dungeons = list(self.bot.config.adventure_times.keys())
@@ -88,10 +92,25 @@ class Adventure(commands.Cog):
 
     @has_char()
     @has_no_adventure()
-    @commands.command(aliases=["mission", "a"])
+    @commands.command(
+        aliases=["mission", "a"], brief=_("Sends your character on an adventure.")
+    )
     @locale_doc
     async def adventure(self, ctx, adventure_number: IntFromTo(1, 30)):
-        _("""Sends your character on an adventure.""")
+        _(
+            """`<adventure_number>` - a whole number from 1 to 30
+
+            Send your character on an adventure with the difficulty `<adventure_number>`.
+            The adventure will take `<adventure_number>` hours if no time booster is used, and half as long if a time booster is used.
+
+            If you are in an alliance which owns a city with adventure buildings, your adventure time will be reduced by the adventure building level in %.
+            Donators' time will also be reduced:
+              - 5% reduction for Silver Donators
+              - 10% reduction for Gold Donators
+              - 25% reduction for Emerald Donators and above
+
+            Be sure to check `{prefix}status` to check how much time is left, or to check if you survived or died."""
+        )
         if adventure_number > int(rpgtools.xptolevel(ctx.character_data["xp"])):
             return await ctx.send(
                 _("You must be on level **{level}** to do this adventure.").format(
@@ -125,10 +144,29 @@ class Adventure(commands.Cog):
     @has_char()
     @has_no_adventure()
     @user_cooldown(7200)
-    @commands.command(aliases=["aa"])
+    @commands.command(aliases=["aa"], brief=_("Go out on an active adventure."))
     @locale_doc
     async def activeadventure(self, ctx):
-        _("""Go out on a docile adventure controlled by reactions.""")
+        _(
+            """Active adventures will put you into a 15x15 randomly generated maze. You will begin in the top left corner (0,0) and your goal is to find the exit in the bottom right corner (14,14)
+            You control your character with the arrow reactions below the message.
+
+            You have 1000HP. The adventure ends when you find the exit or your HP drop to zero.
+            You can lose HP by getting damaged by traps or enemies.
+
+            The maze contains safe spaces and treasures but also traps and enemies.
+            Each space has a 10% chance of being a trap. If a space does not have a trap, it has a 10% chance of having an enemy.
+            Each maze has 5 treasure chests.
+
+            Traps can damage you from 30 to 120 HP.
+            Enemy damage is based on your own damage. During enemy fights, you can attack (⚔️), defend (🛡️) or recover HP (❤️)
+            Treasure chests can have gold up to 25 times your attack + defense.
+
+            If you reach the end, you will receive a special treasure with gold up to 100 times your attack + defense.
+
+            (It is recommended to draw a map of the maze)
+            (This command has a cooldown of 30 minutes)"""
+        )
         if not await ctx.confirm(
             _(
                 "You are going to be in a labyrinth of size 15x15. There are enemies,"
@@ -396,11 +434,22 @@ class Adventure(commands.Cog):
 
     @has_char()
     @has_adventure()
-    @commands.command(aliases=["s"])
+    @commands.command(aliases=["s"], brief=_("Checks your adventure status."))
     @locale_doc
     async def status(self, ctx):
         _(
-            """Checks your adventure status. You will receive your reward if finished, else you will see your progress."""
+            """Checks the remaining time of your adventures, or if you survived or died. Your chance is checked here, not in {prefix}adventure.
+            Your chances are determined by your equipped items, race and class bonuses, your level, God-given luck and active luck boosters.
+
+            If you are in an alliance which owns a city with an adventure building, your chance will be increased by 5% per building level.
+
+            If you survive on your adventure, you will receive gold up to the adventure number times 60, XP up to 500 times the adventure number and either a loot or gear item.
+            The chance of loot is dependent on the adventure number and whether you use the Ritualist class, [check our wiki](https://wiki.travitia.xyz/index.php?title=Loot) for the exact chances.
+
+            God given luck affects the amount of gold and the gear items' damage/defense and value.
+
+            If you are in a guild, its guild bank will receive 10% of the amount of gold extra.
+            If you are married, your partner will receive a portion of your gold extra as well, [check the wiki](https://wiki.travitia.xyz/index.php?title=Family#Adventure_Bonus) for the exact portion."""
         )
         num, time, done = ctx.adventure_data
 
@@ -537,10 +586,12 @@ Adventure name: `{adventure}`"""
 
     @has_char()
     @has_adventure()
-    @commands.command()
+    @commands.command(brief=_("Cancels your current adventure."))
     @locale_doc
     async def cancel(self, ctx):
-        _("""Cancels your current adventure.""")
+        _(
+            """Cancels your ongoing adventure and allows you to start a new one right away. You will not receive any rewards if you cancel your adventure."""
+        )
         if not await ctx.confirm(
             _("Are you sure you want to cancel your current adventure?")
         ):
@@ -556,7 +607,7 @@ Adventure name: `{adventure}`"""
         )
 
     @has_char()
-    @commands.command()
+    @commands.command(brief=_("Show some adventure stats"))
     @locale_doc
     async def deaths(self, ctx):
         _(

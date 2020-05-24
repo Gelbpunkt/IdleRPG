@@ -40,10 +40,24 @@ class Tournament(commands.Cog):
 
     @has_char()
     @user_cooldown(1800)
-    @commands.command()
+    @commands.command(brief=_("Start a new tournament"))
     @locale_doc
     async def tournament(self, ctx, prize: IntFromTo(0, 100_000_000) = 0):
-        _("""Starts a new tournament.""")
+        _(
+            """`[prize]` - The amount of money the winner will get
+            
+            Start a new tournament. Players have 30 seconds to join via the reaction.
+            Tournament entries are free, only the tournament host has to pay the price.
+            
+            Only an exponent of 2 (2^n) users can join. If there are more than the nearest exponent, the last joined players will be disregarded.
+            
+            The match-ups will be decided at random, the battles themselves will be decided like regular battles (see `{prefix}help battle` for details).
+            
+            The winner of a match moves onto the next round, the losers get eliminated, until there is only one player left.
+            Tournaments in IdleRPG follow the single-elimination principle.
+            
+            (This command has a cooldown of 30 minutes.)"""
+        )
         if ctx.character_data["money"] < prize:
             await self.bot.reset_cooldown(ctx)
             return await ctx.send(_("You are too poor."))
@@ -192,7 +206,21 @@ class Tournament(commands.Cog):
     @commands.command()
     @locale_doc
     async def raidtournament(self, ctx, prize: IntFromTo(0, 100_000_000) = 0):
-        _("""Starts a new raid tournament.""")
+        _(
+            """`[prize]` - The amount of money the winner will get
+
+            Start a new raid tournament. Players have 30 seconds to join via the reaction.
+            Tournament entries are free, only the tournament host has to pay the price.
+
+            Only an exponent of 2 (2^n) users can join. If there are more than the nearest exponent, the last joined players will be disregarded.
+
+            The match-ups will be decided at random, the battles themselves will be decided like raid battles (see `{prefix}help raidbattle` for details).
+
+            The winner of a match moves onto the next round, the losers get eliminated, until there is only one player left.
+            Tournaments in IdleRPG follow the single-elimination principle.
+
+            (This command has a cooldown of 30 minutes.)"""
+        )
         if ctx.character_data["money"] < prize:
             await self.bot.reset_cooldown(ctx)
             return await ctx.send(_("You are too poor."))

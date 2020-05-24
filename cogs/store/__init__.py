@@ -28,10 +28,12 @@ class Store(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
-    @commands.command()
+    @commands.command(brief=_("Show the booster store"))
     @locale_doc
     async def store(self, ctx):
-        _("""The booster store.""")
+        _(
+            """Show the booster store. For a detailed explanation what the boosters do, check `{prefix}help boosters`."""
+        )
         shopembed = discord.Embed(
             title=_("IdleRPG Store"),
             description=_(
@@ -52,10 +54,15 @@ class Store(commands.Cog):
         await ctx.send(embed=shopembed)
 
     @has_char()
-    @commands.command()
+    @commands.command(brief=_("Buy some boosters"))
     @locale_doc
     async def purchase(self, ctx, booster: str.lower, amount: IntGreaterThan(0) = 1):
-        _("""Buy a booster from the store.""")
+        _(
+            """`<booster>` - The booster type to buy, can be time, luck, money or all
+            `[amount]` - Thw amount of boosters to buy; defaults to 1
+            
+            Buy one or more booster from the store. For a detailed explanation what the boosters do, check `{prefix}help boosters`."""
+        )
         if booster not in ["time", "luck", "money", "all"]:
             return await ctx.send(_("Please either buy `time`, `luck` or `money`."))
         price = {"time": 1000, "luck": 500, "money": 1000, "all": 2500}[
@@ -94,10 +101,18 @@ class Store(commands.Cog):
         )
 
     @has_char()
-    @commands.command(aliases=["b"])
+    @commands.command(aliases=["b"], brief=_("View your boosters"))
     @locale_doc
     async def boosters(self, ctx):
-        _("""View your boosters.""")
+        _(
+            """View your boosters and the active ones' status. Each one has a different effect.
+            
+              - Time boosters halve the adventures' times (must be active before starting an adventure)
+              - Luck boosters increase your adventure chances by 25%
+              - Money boosters increase the amount of gold gained from adventures by 25%
+              
+            Each booster lasts 24 hours after activation."""
+        )
         timeboosters = ctx.character_data["time_booster"]
         luckboosters = ctx.character_data["luck_booster"]
         moneyboosters = ctx.character_data["money_booster"]
@@ -140,10 +155,14 @@ class Store(commands.Cog):
         )
 
     @has_char()
-    @commands.command()
+    @commands.command(brief=_("Activate a booster"))
     @locale_doc
     async def activate(self, ctx, boostertype: str.lower):
-        _("""Activate a booster.""")
+        _(
+            """`<boostertype>` - The booster type to activate, can be time, luck, money or all
+            
+            Activate a booster. For a detailed explanation what the boosters do, check `{prefix}help boosters`."""
+        )
         if boostertype not in ["time", "luck", "money", "all"]:
             return await ctx.send(
                 _("That is not a valid booster type. Must be `time/luck/money/all`.")

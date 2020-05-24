@@ -39,10 +39,20 @@ class Crates(commands.Cog):
         )
 
     @has_char()
-    @commands.command(aliases=["boxes"])
+    @commands.command(aliases=["boxes"], brief=_("Show your crates."))
     @locale_doc
     async def crates(self, ctx):
-        _("""Shows your crates.""")
+        _(
+            """Shows all the crates you can have.
+
+            Common crates contain items ranging from stats 1 to 30
+            Uncommon crates contain items ranging from stats 10 to 35
+            Rare crates contain items ranging from stats 20 to 40
+            Magic crates contain items ranging from stats 30 to 45
+            Legendary crates contain items ranging from stats 41 to 50
+
+            You can receive crates by voting for the bot using `{prefix}vote`, using `{prefix}daily` and with a small chance from `{prefix}familyevent`, if you have children."""
+        )
         await ctx.send(
             _(
                 """\
@@ -68,10 +78,15 @@ class Crates(commands.Cog):
         )
 
     @has_char()
-    @commands.command(name="open")
+    @commands.command(name="open", brief=_("Open a crate"))
     @locale_doc
     async def _open(self, ctx, rarity: str.lower = "common"):
-        _("""Opens a crate.""")
+        _(
+            """`[rarity]` - the crate's rarity to open, can be common, uncommon, rare, magic or legendary; defaults to common
+
+            Open one of your crates to receive a weapon. To check which crates contain which items, check `{prefix}help crates`.
+            This command takes up a lot of space, so choose a spammy channel to open crates."""
+        )
         if rarity not in ["common", "uncommon", "rare", "magic", "legendary"]:
             return await ctx.send(
                 _("{rarity} is not a valid rarity.").format(rarity=rarity)
@@ -173,7 +188,7 @@ class Crates(commands.Cog):
                 )
 
     @has_char()
-    @commands.command()
+    @commands.command(brief=_("Give crates to someone"))
     @locale_doc
     async def tradecrate(
         self,
@@ -182,7 +197,15 @@ class Crates(commands.Cog):
         amount: IntGreaterThan(0) = 1,
         rarity: str.lower = "common",
     ):
-        _("""Trades crates to a user.""")
+        _(
+            """`<other>` - A user with a character
+            `[amount]` - A whole number greater than 0; defaults to 1
+            `[rarity]` - The crate's rarity to trade, can be common, uncommon, rare, magic or legendary; defaults to common
+
+            Give your crates to another person.
+
+            Players must combine this command with `{prefix}give` for a complete trade."""
+        )
         if other == ctx.author:
             return await ctx.send(_("Very funny..."))
         if rarity not in ["common", "uncommon", "rare", "magic", "legendary"]:

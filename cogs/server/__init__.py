@@ -29,10 +29,12 @@ class Server(commands.Cog):
         self.bot = bot
 
     @commands.guild_only()
-    @commands.command(aliases=["server"])
+    @commands.command(aliases=["server"], brief=_("Displays info on the server"))
     @locale_doc
     async def serverinfo(self, ctx):
-        _("""Shows information about your server.""")
+        _(
+            """Shows information about your server, from its region and membercount to its creation date and roles."""
+        )
         text = _("Link")
         urltext = (
             f"[{text} <:external_link:429288989560930314>]({ctx.guild.icon_url})"
@@ -81,19 +83,27 @@ Server created at: `{created_at}`"""
         await ctx.send(embed=em)
 
     @commands.guild_only()
-    @commands.group(invoke_without_command=True)
+    @commands.group(
+        invoke_without_command=True, brief=_("Change the server settings for the bot")
+    )
     @locale_doc
     async def settings(self, ctx):
-        _("""Change the settings.""")
+        _("""Change the server settings for the bot.""")
         await ctx.send(
             _("Please use `{prefix}settings prefix value`").format(prefix=ctx.prefix)
         )
 
     @commands.has_permissions(manage_guild=True)
-    @settings.command(name="prefix")
+    @settings.command(name="prefix", brief=_("Change the prefix"))
     @locale_doc
     async def prefix_(self, ctx, *, prefix: str):
-        _("""Change the server bot prefix.""")
+        _(
+            """`<prefix>` - The new prefix to use
+
+            Change the bot prefix, it cannot exceed 10 characters.
+
+            Only users with the Manage Server permission can use this command."""
+        )
         if len(prefix) > 10:
             return await ctx.send(_("Prefixes may not be longer than 10 characters."))
         if self.bot.all_prefixes.get(ctx.guild.id):
@@ -117,7 +127,7 @@ Server created at: `{created_at}`"""
         await ctx.send(_("Prefix changed to `{prefix}`.").format(prefix=prefix))
 
     @commands.has_permissions(manage_guild=True)
-    @settings.command()
+    @settings.command(brief=_("Reset the server settings"))
     @locale_doc
     async def reset(self, ctx):
         _("""Resets the server settings.""")
@@ -129,7 +139,7 @@ Server created at: `{created_at}`"""
     @commands.command()
     @locale_doc
     async def prefix(self, ctx):
-        _("""View the bot prefix.""")
+        _("""View the bot prefix for the server""")
         prefix_ = self.bot.all_prefixes.get(ctx.guild.id, self.bot.config.global_prefix)
         await ctx.send(
             _(
@@ -138,10 +148,14 @@ Server created at: `{created_at}`"""
             ).format(server=ctx.guild, serverprefix=prefix_, prefix=ctx.prefix)
         )
 
-    @commands.command()
+    @commands.command(brief=_("Show someone's avatar"))
     @locale_doc
     async def avatar(self, ctx, target: MemberConverter = Author):
-        _("""Shows someone's (or your) avatar.""")
+        _(
+            """`<target>` - The user whose avatar to show; defaults to oneself
+
+            Shows someone's avatar, also known as their icon or profile picture."""
+        )
         await ctx.send(
             embed=discord.Embed(
                 title=_("Download Link"),

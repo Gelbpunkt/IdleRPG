@@ -57,6 +57,8 @@ def raid_free():
 
 
 class Raid(commands.Cog):
+    """Raids are only available in the support server. Use the support command for an invite link."""
+
     def __init__(self, bot):
         self.bot = bot
 
@@ -105,7 +107,7 @@ class Raid(commands.Cog):
     @is_gm()
     @raid_channel()
     @raid_free()
-    @commands.command()
+    @commands.command(brief=_("Start a Zerekiel raid"))
     async def spawn(self, ctx, hp: IntGreaterThan(0)):
         """[Bot Admin only] Starts a raid."""
         await self.set_raid_timer()
@@ -340,7 +342,7 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
     @is_gm()
     @ikhdosa_channel()
     @raid_free()
-    @commands.command()
+    @commands.command(brief=_("Start a bandit raid"))
     async def raiddefend(self, ctx, bandits: IntGreaterThan(1), group: str = "I"):
         """[Bot Admin only] Starts a bandit raid in Ikhdosa."""
         await self.set_raid_timer()
@@ -501,7 +503,7 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
 
     @is_god()
     @raid_free()
-    @commands.command()
+    @commands.command(brief=_("Start a Guilt raid"))
     async def guiltspawn(self, ctx):
         """[Guilt only] Starts a raid."""
         await self.set_raid_timer()
@@ -633,7 +635,7 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
 
     @is_god()
     @raid_free()
-    @commands.command()
+    @commands.command(brief=_("Start a Kvothe raid"))
     async def kvothespawn(self, ctx, scrael: IntGreaterThan(1)):
         """[Kvothe only] Starts a raid."""
         await self.set_raid_timer()
@@ -787,7 +789,7 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
 
     @is_god()
     @raid_free()
-    @commands.command()
+    @commands.command(brief=_("Start an Eden raid"))
     async def edenspawn(self, ctx, hp: IntGreaterThan(0)):
         """[Eden only] Starts a raid."""
         await self.set_raid_timer()
@@ -943,7 +945,7 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
 
     @is_god()
     @raid_free()
-    @commands.command()
+    @commands.command(brief=_("Start a Tet raid"))
     async def tetspawn(self, ctx):
         """[Tet only] Starts a raid."""
         await self.set_raid_timer()
@@ -1081,7 +1083,7 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
 
     @is_god()
     @raid_free()
-    @commands.command()
+    @commands.command(brief=_("Start a CHamburr raid"))
     async def chamburrspawn(self, ctx, hp: IntGreaterThan(0)):
         """[CHamburr only] Starts a raid."""
         await self.set_raid_timer()
@@ -1303,7 +1305,7 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
 
     @is_god()
     @raid_free()
-    @commands.command()
+    @commands.command(brief=_("Start a Salutations raid"))
     async def salutationsspawn(self, ctx, hp: IntGreaterThan(0)):
         """[Salutations only] Starts a raid."""
         await self.set_raid_timer()
@@ -1615,7 +1617,7 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
 
     @is_god()
     @raid_free()
-    @commands.command()
+    @commands.command(brief=_("Start an Asmodeus raid"))
     async def asmodeusspawn(self, ctx, hp: IntGreaterThan(0)):
         """[Asmodeus only] Starts a raid."""
         await self.set_raid_timer()
@@ -1750,7 +1752,7 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
 
     @is_god()
     @raid_free()
-    @commands.command()
+    @commands.command(brief=_("Start a Jesus raid"))
     async def jesusspawn(self, ctx, hp: IntGreaterThan(0)):
         """[Jesus only] Starts a raid."""
         await self.set_raid_timer()
@@ -1970,10 +1972,12 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
     def getpriceto(self, level: float):
         return sum(i * 25000 for i in range(1, int(level * 10) - 9))
 
-    @commands.group(invoke_without_command=True)
+    @commands.group(invoke_without_command=True, brief=_("Increase your raidstats"))
     @locale_doc
     async def increase(self, ctx):
-        _("""Upgrade your raid damage or defense multiplier.""")
+        _(
+            """Upgrade your raid damage or defense multiplier. These will affect your performance in raids and raidbattles."""
+        )
         await ctx.send(
             _(
                 "Use `{prefix}increase damage/defense` to upgrade your raid"
@@ -1982,7 +1986,7 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
         )
 
     @has_char()
-    @increase.command()
+    @increase.command(brief=_("Upgrade your raid damage"))
     @locale_doc
     async def damage(self, ctx):
         _("""Increase your raid damage.""")
@@ -2028,7 +2032,7 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
         )
 
     @has_char()
-    @increase.command()
+    @increase.command(brief=_("Upgrade your raid defense"))
     @locale_doc
     async def defense(self, ctx):
         _("""Increase your raid defense.""")
@@ -2074,10 +2078,12 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
         )
 
     @has_char()
-    @commands.command()
+    @commands.command(brief=_("View your raid stats"))
     @locale_doc
     async def raidstats(self, ctx):
-        _("""View your raid stats.""")
+        _(
+            """View your raidstats. These will affect your performance in raids and raidbattles."""
+        )
         atk = ctx.character_data["atkmultiply"]
         deff = ctx.character_data["defmultiply"]
         atkp = self.getpriceto(atk + Decimal("0.1"))
@@ -2100,7 +2106,7 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
             )
         )
 
-    @commands.command()
+    @commands.command(brief=_("Did somebody say Raid?"))
     @locale_doc
     async def raid(self, ctx):
         _("""Informs you about joining raids.""")

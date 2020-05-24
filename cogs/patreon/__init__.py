@@ -25,14 +25,20 @@ from utils.i18n import _, locale_doc
 
 
 class Patreon(commands.Cog):
+    """[this] shows the necessary donator rank to use the commands"""
+
     def __init__(self, bot):
         self.bot = bot
 
     @has_char()
-    @commands.command()
+    @commands.command(brief=_("Reset a modified item"))
     @locale_doc
     async def resetitem(self, ctx, itemid: int):
-        _("""Reset an item's type and name, if modified.""")
+        _(
+            """`<itemid>` - The ID of the item to reset 
+            
+            Reset an item's type and name, if modified. Once an item is reset, it can be sold again."""
+        )
         async with self.bot.pool.acquire() as conn:
             item = await conn.fetchrow('SELECT * FROM allitems WHERE "id"=$1;', itemid)
 
@@ -80,10 +86,17 @@ class Patreon(commands.Cog):
 
     @is_patron()
     @has_char()
-    @commands.command()
+    @commands.command(brief=_("[basic] Change an item's name"))
     @locale_doc
     async def weaponname(self, ctx, itemid: int, *, newname: str):
-        _("""[Patreon Only] Changes an item name.""")
+        _(
+            """`<itemid>` - The ID of the item to rename
+            `<newname>` - The name to give the item, must be shorter than 40 characters
+            
+            Change an item's name. Once an item is renamed, it can no longer be sold.
+            
+            Only basic (or above) tier patrons can use this command."""
+        )
         if len(newname) > 40:
             return await ctx.send(_("Name too long."))
         async with self.bot.pool.acquire() as conn:
@@ -113,10 +126,20 @@ class Patreon(commands.Cog):
 
     @is_patron("bronze")
     @has_char()
-    @commands.command()
+    @commands.command(brief=_("[bronze] Change an item's type"))
     @locale_doc
     async def weapontype(self, ctx, itemid: int, new_type: str.title):
-        _("""[Patreon Only, Bronze and above] Changes an item type.""")
+        _(
+            """`<itemid>` - The ID of the item to change type
+            `<new_type>` - The type to transform the item into
+            
+            Change an item's type. Once the type changed, the item becomes unsellable.
+            
+            You may not change a two-handed item into a one-handed one, or vice versa.
+            This proves useful for merging items.
+            
+            Only bronze (or above) tier patrons can use this command."""
+        )
         if new_type not in self.bot.config.item_types:
             return await ctx.send(_("Invalid type."))
         async with self.bot.pool.acquire() as conn:
@@ -179,10 +202,14 @@ class Patreon(commands.Cog):
     @is_patron("gold")
     @has_char()
     @user_cooldown(86400)
-    @commands.command()
+    @commands.command(brief=_("[gold] Receive a daily booster"))
     @locale_doc
     async def donatordaily(self, ctx):
-        _("""[Patreon Only, Gold and above] Receive a daily booster.""")
+        _(
+            """Receive a daily booster. The booster can be a time, money or luck booster.
+            
+            (This command has a cooldown of 24 hours.)"""
+        )
         type_ = random.choice(["time", "money", "luck"])
         await self.bot.pool.execute(
             f'UPDATE profile SET "{type_}_booster"="{type_}_booster"+1 WHERE'
@@ -192,10 +219,19 @@ class Patreon(commands.Cog):
         await ctx.send(_("You received a daily {type_} booster!").format(type_=type_))
 
     @has_char()
-    @commands.command()
+    @commands.command(brief=_("[basic] Change your profile background"))
     @locale_doc
     async def background(self, ctx, url: str):
-        _("""[Patreon Only] Changes your profile background.""")
+        _(
+            """`<url>` - The image URL to use as the background, may not exceed 60 characters.
+            
+            Change your profile's background image. `{prefix}background reset` sets it to the default one again.
+            
+            This image should be formatted by the `{prefix}makebackground` command, however if you want to get creative and not use an overlay, or create your own, the image dimensions are 800x650.
+            Having trouble finding a short URL? Try following [this tutorial](https://wiki.travitia.xyz/index.php?title=Tutorial:_Short_Image_URLs)!
+            
+            Only basic (or above) tier patrons can use this command."""
+        )
         premade = [f"{self.bot.BASE_URL}/profile/premade{i}.png" for i in range(1, 14)]
         if url == "reset":
             url = 0
@@ -231,10 +267,17 @@ class Patreon(commands.Cog):
             await ctx.send(_("Your profile picture has been reset."))
 
     @is_patron()
-    @commands.command()
+    @commands.command(brief=_("[basic] Formats an image for background compatability"))
     @locale_doc
     async def makebackground(self, ctx, url: str):
-        _("""[Patreon Only] Generates a profile background based on an image.""")
+        _(
+            """`<url>` - The image URL to format
+            
+            Generate a profile background for you. This will stretch/compress your image to 800x650 pixels and layer on an overlay.
+            This will return a link you can then use for `{prefix}background`.
+            
+            Only basic (or above) tier patrons can use this command."""
+        )
         if not url.startswith("http") and (
             url.endswith(".png") or url.endswith(".jpg") or url.endswith(".jpeg")
         ):
@@ -268,10 +311,19 @@ class Patreon(commands.Cog):
 
     @is_patron()
     @is_guild_leader()
-    @commands.command()
+    @commands.command(brief=_("[basic] Upgrade your guild"))
     @locale_doc
     async def updateguild(self, ctx):
-        _("""[Patreon Only] Update your guild member limit and bank size.""")
+        _(
+            """Update your guild member limit and bank size according to your donation tier.
+            
+            Gold (and above) Donators have their bank space quintupled (x5), Silver Donators have theirs doubled.
+            The member limit is set to 100 regardless of donation tier.
+            
+            Important: To use this, you have to be the leader of a guild, not just a member.
+            
+            Only basic (or above) tier patrons can use this command."""
+        )
         # Silver x2, Gold x5
         if await user_is_patron(self.bot, ctx.author, "gold"):
             m = 5
@@ -300,10 +352,14 @@ class Patreon(commands.Cog):
         await ctx.send(_("Your guild was updated."))
 
     @has_char()
-    @commands.command()
+    @commands.command(brief=_("Change your background"))
     @locale_doc
     async def eventbackground(self, ctx, number: int):
-        _("""Update your background to one from the events.""")
+        _(
+            """`<number>` - The number of the eventbackground to use
+            
+            Update your background to one from the events."""
+        )
         async with self.bot.pool.acquire() as conn:
             bgs = await conn.fetchval(
                 'SELECT backgrounds FROM profile WHERE "user"=$1;', ctx.author.id

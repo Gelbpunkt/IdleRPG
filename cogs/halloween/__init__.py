@@ -32,10 +32,20 @@ class Halloween(commands.Cog):
 
     @checks.has_char()
     @user_cooldown(43200)
-    @commands.command(aliases=["tot"], enabled=False)
+    @commands.command(aliases=["tot"], enabled=False, brief=_("Trick or treat!"))
     @locale_doc
     async def trickortreat(self, ctx):
-        _("""Trick or treat!""")
+        _(
+            """Walk around the houses and scare the residents! Maybe they have a gift for you?
+
+            This command requires two players, one that is waiting and one that rings at the door.
+            If you are the one waiting, you will get a direct message from the bot later, otherwise you will get a reply immediately.
+
+            There is a 50% chance you will receive a halloween bag from the other person.
+            You will also receive an additional $50 from a random user.
+
+            (This command has a cooldown of 12h)"""
+        )
         waiting = self.waiting
         if not waiting:
             self.waiting = ctx.author
@@ -99,10 +109,15 @@ class Halloween(commands.Cog):
         )
 
     @checks.has_char()
-    @commands.command()
+    @commands.command(brief=_("Open a trick or treat bag"))
     @locale_doc
     async def yummy(self, ctx):
-        _("""Open a trick or treat bag.""")
+        _(
+            """Open a trick or treat bag, you can get some with `{prefix}trickortreat`.
+
+            Trick or treat bags contain halloween-themed items, ranging from 1 to 30 base stat.
+            Their value will be between 1 and 200."""
+        )
         # better name?
         if ctx.character_data["trickortreat"] < 1:
             return await ctx.send(
@@ -165,9 +180,13 @@ class Halloween(commands.Cog):
         await ctx.send(embed=embed)
 
     @checks.has_char()
-    @commands.command(aliases=["totbags", "halloweenbags"])
+    @commands.command(
+        aliases=["totbags", "halloweenbags"], brief=_("Shows your trick or treat bags")
+    )
     async def bags(self, ctx):
-        _("""Shows your Trick or Treat Bags.""")
+        _(
+            """Shows the amount of trick or treat bags you have. You can get more by using `{prefix}trickortreat`."""
+        )
         await ctx.send(
             _(
                 "You currently have **{trickortreat}** Trick or Treat Bags, {author}!"

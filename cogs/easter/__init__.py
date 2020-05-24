@@ -27,11 +27,13 @@ class Easter(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
-    @commands.group(invoke_without_command=True)
+    @commands.group(invoke_without_command=True, brief=_("Easter related commands"))
     @locale_doc
     async def easter(self, ctx):
         _(
-            """Easter related commands for trading your collected eastereggs in for rewards."""
+            """Contains all easter related commands. See `{prefix}help easter` for a list of commands.
+
+            During the easter event, users will find eastereggs when finishing adventures, which can be exchanged for several rewards, including crates, items, money, or special guild badges."""
         )
         await ctx.send(
             _(
@@ -42,10 +44,14 @@ class Easter(commands.Cog):
         )
 
     @has_char()
-    @easter.command()
+    @easter.command(brief=_("Lists all easter rewards"))
     @locale_doc
     async def rewards(self, ctx):
-        _("""See the rewards for easter event.""")
+        _(
+            """Shows all rewards available in the easter event, along with the reward ID.
+
+            To claim a reward, use `{prefix}easter reward <ID>`."""
+        )
         await ctx.send(
             _(
                 """
@@ -66,10 +72,16 @@ You have **{eggs}** <:easteregg:566251086986608650>."""
         )
 
     @has_char()
-    @easter.command()
+    @easter.command(brief=_("Claim an easter reward"))
     @locale_doc
     async def reward(self, ctx, reward_id: IntFromTo(1, 9)):
-        _("""Get your easter reward. ID may be 1 to 9.""")
+        _(
+            """`<reward_id>` - A whole number from 1 to 9
+
+            Claim a reward by its ID.
+
+            A list of rewards along with their ID can be seen with `{prefix}easter rewards`."""
+        )
         reward = [
             (100, "crates", 10, "common"),
             (500, "money", 10000),

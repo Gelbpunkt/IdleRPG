@@ -48,7 +48,7 @@ class Chess(commands.Cog):
         self.engine = adapter.protocol
         await self.engine.initialize()
 
-    @commands.group(invoke_without_command=True)
+    @commands.group(invoke_without_command=True, brief=_("Play chess."))
     @locale_doc
     async def chess(self, ctx):
         _(
@@ -61,10 +61,13 @@ class Chess(commands.Cog):
             ).format(prefix=ctx.prefix)
         )
 
-    @chess.command()
+    @chess.command(brief=_("Register for ELO-rating in IdleRPG."))
     @locale_doc
     async def register(self, ctx):
-        _("""Register an ELO-rating eligible account for Idle's Chess.""")
+        _(
+            """Register an ELO-rating eligible account for Idle's Chess. 
+            The rating determines your relative skill and can be increased/decreased by winning/losing matches."""
+        )
         async with self.bot.pool.acquire() as conn:
             if await conn.fetchrow(
                 'SELECT * FROM chess_players WHERE "user"=$1;', ctx.author.id
@@ -80,10 +83,12 @@ class Chess(commands.Cog):
             )
         )
 
-    @chess.command()
+    @chess.command(brief=_("Shows global ELO stats for IdleRPG chess."))
     @locale_doc
     async def elo(self, ctx):
-        _("""Show your ELO and the best chess players.""")
+        _(
+            """Shows your ELO and the best chess players' ELO rating limited to IdleRPG's chess."""
+        )
         async with self.bot.pool.acquire() as conn:
             player = await conn.fetchrow(
                 'SELECT * FROM chess_players WHERE "user"=$1;', ctx.author.id
@@ -115,12 +120,38 @@ class Chess(commands.Cog):
                 embed.add_field(name=_("Your position"), value=text)
             await ctx.send(embed=embed)
 
-    @chess.group(invoke_without_command=True)
+    @chess.group(invoke_without_command=True, brief=_("Play a chess match."))
     async def match(
         self, ctx, difficulty: Optional[int] = 3, enemy: MemberConverter = None,
     ):
         _(
-            """Starts a game of chess, either against a player or AI from difficulty 1 to 10."""
+            """`[difficulty]` - A whole number between 1 and 10; defaults to 3
+            `[enemy]` - A user; defaults to nobody
+            
+            Starts a game of chess.
+            If a difficulty is given, you will play against the Stockfish chess AI with the given difficulty.
+            If an enemy is given, you will play against that enemy, no matter if you set a difficulty or not.
+            
+            You are able to choose which side you want to play as at the beginning using the emojis.
+            If you play against an enemy and both of you are ELO-registered, you are given the choice to play ranked or not.
+            
+            There can only be one chess game in one channel at a time.
+            
+            Chess moves can be sent in several formats:
+              -`g1f3`
+              -`Nf3` :warning:
+              -`0-0`
+              -`xe3`
+              
+            *Keep in mind that these are case sensitive:*
+            Pieces are upper case: 
+              -King = K
+              -Queen = Q
+              -Bishop = B
+              -Knight = N
+              -Rook = R
+              -Pawn = no notation
+            Fields are lower case."""
         )
         if enemy == ctx.author:
             return await ctx.send(_("You cannot play against yourself."))
@@ -192,9 +223,11 @@ class Chess(commands.Cog):
             raise e
         del self.matches[ctx.channel.id]
 
-    @match.command()
+    @match.command(brief=_("Shows past moves for this game"))
     async def moves(self, ctx):
-        _("""Shows the moves of the current match in the channel.""")
+        _(
+            """Shows the moves of the current match in the channel that you and your opponent took."""
+        )
         game = self.matches.get(ctx.channel.id)
         if not game:
             return await ctx.send("No game here.")

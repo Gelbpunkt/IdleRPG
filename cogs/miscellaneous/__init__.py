@@ -58,7 +58,7 @@ class Miscellaneous(commands.Cog):
             "https://wiki.travitia.xyz/api.php", session=self.bot.session
         )
 
-    @commands.command()
+    @commands.command(brief=_("Evoke cringe"))
     @locale_doc
     async def dab(self, ctx):
         _("""Let's dab together.""")
@@ -66,14 +66,56 @@ class Miscellaneous(commands.Cog):
 
     @has_char()
     @next_day_cooldown()
-    @commands.command()
+    @commands.command(brief=_("Get your daily reward"))
     @locale_doc
     async def daily(self, ctx):
-        _("""Receive a daily reward based on your streak.""")
-        streak = await self.bot.redis.execute("INCR", f"idle:daily:{ctx.author.id}")
-        await self.bot.redis.execute(
-            "EXPIRE", f"idle:daily:{ctx.author.id}", 48 * 60 * 60
-        )  # 48h: after 2 days, they missed it
+        _(
+            """Get your daily reward. Depending on your streak, you will gain better rewards.
+
+            After ten days, your rewards will reset. Day 11 and day 1 have the same rewards.
+            The rewards will either be money (2/3 chance) or crates (1/3 chance).
+
+            The possible rewards are:
+
+              __Day 1__
+              $50 or 1-6 common crates
+
+              __Day 2__
+              $100 or 1-5 common crates
+
+              __Day 3__
+              $200 or 1-4 common (99%) or uncommon (1%) crates
+
+              __Day 4__
+              $400 or 1-4 common (99%) or uncommon (1%) crates
+
+              __Day 5__
+              $800 or 1-4 common (99%) or uncommon (1%) crates
+
+              __Day 6__
+              $1,600 or 1-3 common (80%), uncommon (19%) or rare (1%) crates
+
+              __Day 7__
+              $3,200 or 1-2 uncommon (80%), rare (19%) or magic (1%) crates
+
+              __Day 8__
+              $6,400 or 1-2 uncommon (80%), rare (19%) or magic (1%) crates
+
+              __Day 9__
+              $12,800 or 1-2 uncommon (80%), rare (19%) or magic (1%) crates
+
+              __Day 10__
+              $25,600 or 1 rare (80%), magic (19%) or legendary (1%) crate
+
+            If you don't use this command up to 48 hours after the first use, you will lose your streak.
+
+            (This command has a cooldown until 12am UTC.)"""
+        )
+        async with self.bot.redis.get() as redis:
+            streak = await redis.execute("INCR", f"idle:daily:{ctx.author.id}")
+            await redis.execute(
+                "EXPIRE", f"idle:daily:{ctx.author.id}", 48 * 60 * 60
+            )  # 48h: after 2 days, they missed it
         money = 2 ** ((streak + 9) % 10) * 50
         # Either money or crates
         if random.randint(0, 2) > 0:
@@ -129,10 +171,12 @@ class Miscellaneous(commands.Cog):
         )
 
     @has_char()
-    @commands.command()
+    @commands.command(brief=_("View your current streak"))
     @locale_doc
     async def streak(self, ctx):
-        _("""See the current daily streak you are on.""")
+        _(
+            """Want to flex your streak on someone or just check how many days in a row you've claimed your daily reward? This command is for you"""
+        )
         streak = await self.bot.redis.execute("GET", f"idle:daily:{ctx.author.id}")
         if not streak:
             return await ctx.send(
@@ -147,10 +191,10 @@ class Miscellaneous(commands.Cog):
             )
         )
 
-    @commands.command()
+    @commands.command(brief=_("Show the bot's ping"))
     @locale_doc
     async def ping(self, ctx):
-        _("""Shows you the bot's current websocket latency.""")
+        _("""Shows you the bot's current websocket latency in milliseconds.""")
         await ctx.send(
             embed=discord.Embed(
                 title=_("Pong!"),
@@ -161,10 +205,17 @@ class Miscellaneous(commands.Cog):
             )
         )
 
-    @commands.command(aliases=["shorten"])
+    @commands.command(aliases=["shorten"], brief=_("Shorten an image URL."))
     @locale_doc
     async def imgur(self, ctx, given_url: str = None):
-        _("""Gives you a short URL from an image or long URL""")
+        _(
+            """`[given_url]` - The URL to shorten; if not given, this command will look for image attachments
+
+            Get a short URL from a long one or an image attachment.
+
+            If both a URL and an attachment is given, the attachment is preferred. GIFs are not supported, only JPG and PNG.
+            In case this command fails, you can [manually upload your image to Imgur](imgur.com/upload)."""
+        )
         if not given_url and not ctx.message.attachments:
             return await ctx.send(_("Please supply a URL or an image attachment"))
         if ctx.message.attachments:
@@ -188,10 +239,15 @@ class Miscellaneous(commands.Cog):
                 return await ctx.send(_("Error when uploading to Imgur."))
         await ctx.send(_("Here's your short image URL: <{link}>").format(link=link))
 
-    @commands.command(aliases=["donate"])
+    @commands.command(aliases=["donate"], brief=_("Support the bot financially"))
     @locale_doc
     async def patreon(self, ctx):
-        _("""Support maintenance of the bot.""")
+        _(
+            """View the Patreon page of the bot. The different tiers will grant different rewards.
+            View `{prefix}help Patreon` (capital P) to find the different commands.
+
+            Thank you for supporting IdleRPG!"""
+        )
         guild_count = sum(
             await self.bot.cogs["Sharding"].handler("guild_count", self.bot.shard_count)
         )
@@ -211,16 +267,25 @@ Even $1 can help us.
             ).format(guild_count=guild_count)
         )
 
-    @commands.command(aliases=["license"])
+    @commands.command(
+        aliases=["license"], brief=_("Shows the source code and license.")
+    )
     @locale_doc
     async def source(self, ctx):
-        _("""Shows the source code and license.""")
+        _(
+            """Shows the our GitLab page and license.
+            If you want to contribute, feel free to create an account and submit issues and merge requests."""
+        )
         await ctx.send("AGPLv3+\nhttps://git.travitia.xyz/Kenvyra/IdleRPG")
 
-    @commands.command()
+    @commands.command(brief=_("Invite the bot to your server."))
     @locale_doc
     async def invite(self, ctx):
-        _("""Invite link for the bot.""")
+        _(
+            """Invite the bot to your server.
+
+            Use this [backup link](https://discordapp.com/oauth2/authorize?client_id=424606447867789312&scope=bot&permissions=8) in case the above does not work."""
+        )
         await ctx.send(
             _(
                 "You are running version **{version}** by The IdleRPG"
@@ -228,10 +293,14 @@ Even $1 can help us.
             ).format(version=self.bot.version)
         )
 
-    @commands.command()
+    @commands.command(brief=_("Join the Support server"))
     @locale_doc
     async def support(self, ctx):
-        _("""Sends you the link to the official IdleRPG Support server.""")
+        _(
+            """Sends you the link to join the official IdleRPG Support server.
+
+            Use this [backup link](https://discord.gg/MSBatf6) in case the above does not work."""
+        )
         await ctx.send(
             _(
                 "Got problems or feature requests? Looking for people to play with?"
@@ -239,10 +308,12 @@ Even $1 can help us.
             )
         )
 
-    @commands.command()
+    @commands.command(brief=_("Shows statistics about the bot"))
     @locale_doc
     async def stats(self, ctx):
-        _("""Statistics on the bot.""")
+        _(
+            """Show some stats about the bot, ranging from hard- and software statistics, over performance to ingame stats."""
+        )
         async with self.bot.pool.acquire() as conn:
             characters = await conn.fetchval("SELECT COUNT(*) FROM profile;")
             items = await conn.fetchval("SELECT COUNT(*) FROM allitems;")
@@ -341,20 +412,24 @@ Average hours of work: **{hours}**"""
         )
         await ctx.send(embed=embed)
 
-    @commands.command()
+    @commands.command(brief=_("Roll a dice"))
     @locale_doc
     async def roll(self, ctx, maximum: IntGreaterThan(0)):
-        _("""Roll a random number.""")
+        _(
+            """`<maximum>` - A whole number greater than 0
+
+            Roll a dice with `<maximum>` sides and let the bot display the outcome."""
+        )
         await ctx.send(
             _(":1234: You rolled **{num}**, {author}!").format(
                 num=random.randint(0, maximum), author=ctx.author.mention
             )
         )
 
-    @commands.command()
+    @commands.command(brief=_("View the changelog"))
     @locale_doc
     async def changelog(self, ctx):
-        _("""Shows you the bots current version along with its new updates.""")
+        _("""Shows you the bots current version along with its major updates.""")
         await ctx.send(
             """\
 **v4.6.0**
@@ -403,11 +478,20 @@ https://git.travitia.xyz/Kenvyra/IdleRPG/compare/v4.5.1...v4.6.0
         )
 
     @commands.has_permissions(manage_messages=True)
-    @commands.command()
+    @commands.command(brief=_("Delete messages"))
     @locale_doc
     async def clear(self, ctx, num: IntFromTo(1, 1000), target: MemberConverter = None):
         _(
-            """Deletes an amount of messages from the history, optionally only by one member."""
+            """`<num>` - A whole number from 1 to 1000
+            `[target]` - The user whose messages to delete; defaults to everyone
+
+            Deletes an amount of messages in the channel, optionally only by one member.
+            If no target is given, all messages are cleared.
+
+            Note that this will *scan* `<num>` messages and will only delete them, if they are from the target, if one is given.
+            If the target sent 30 messages, other people sent 70 messages and you cleared 100 messages by the target, only thoes 30 will be deleted.
+
+            Only users with the Manage Messages permission can use this command."""
         )
 
         def msgcheck(amsg):
@@ -420,10 +504,12 @@ https://git.travitia.xyz/Kenvyra/IdleRPG/compare/v4.5.1...v4.6.0
             _("👍 Deleted **{num}** messages for you.").format(num=num), delete_after=10
         )
 
-    @commands.command(name="8ball")
+    @commands.command(name="8ball", brief=_("Ask the magic 8ball a question"))
     @locale_doc
     async def _ball(self, ctx, *, question: str):
-        _("""The magic 8 ball answers your questions.""")
+        _(
+            """Provides a variety of answers to all of your questions. If in doubt, ask the magic 8ball."""
+        )
         results = [
             _("It is certain"),
             _("It is decidedly so"),
@@ -450,20 +536,28 @@ https://git.travitia.xyz/Kenvyra/IdleRPG/compare/v4.5.1...v4.6.0
             _("The :8ball: says: **{result}**.").format(result=random.choice(results))
         )
 
-    @commands.command(aliases=["say"])
+    @commands.command(aliases=["say"], brief=_("Repeat what you said."))
     @locale_doc
     async def echo(self, ctx, *, phrase: str):
-        _("""Repeats what you said.""")
+        _(
+            """`<phrase>` - The text to repeat
+
+            Repeats what you said. This will delete the command message if possible."""
+        )
         try:
             await ctx.message.delete()
         except discord.Forbidden:
             pass
         await ctx.send(phrase, escape_mentions=True)
 
-    @commands.command()
+    @commands.command(brief=_("Help you decide"))
     @locale_doc
     async def choose(self, ctx, *results: str):
-        _("""Chooses a random option of supplied possiblies.""")
+        _(
+            """`<results...>` - The options to choose from
+
+            Chooses a random option of supplied possiblies. For an option with multiple words, put it in "double quotes"."""
+        )
         results = list(filter(lambda a: a.lower() != "or", results))
         if not results:
             return await ctx.send(_("Cannot choose from an empty list..."))
@@ -473,10 +567,15 @@ https://git.travitia.xyz/Kenvyra/IdleRPG/compare/v4.5.1...v4.6.0
         )
 
     @commands.guild_only()
-    @commands.command()
+    @commands.command(brief=_("Calculates love for two users"))
     @locale_doc
     async def love(self, ctx, first: MemberConverter, second: MemberConverter):
-        _("""Calculates the potential love for 2 members.""")
+        _(
+            """`<first>` - A discord User
+            `<second>` - Also a discord User
+
+            Calculates the love between two people. Don't be disappointed when the result is low, you'll find your Romeo/Juliet someday."""
+        )
         msg = await ctx.send(
             embed=discord.Embed(
                 description=_("Calculating Love for {first} and {second}...").format(
@@ -500,10 +599,14 @@ https://git.travitia.xyz/Kenvyra/IdleRPG/compare/v4.5.1...v4.6.0
         )
         await msg.edit(embed=embed)
 
-    @commands.command()
+    @commands.command(brief=_("Replaces text with emoji"))
     @locale_doc
     async def fancy(self, ctx, *, text: str):
-        _("""Fancies text with big emojis.""")
+        _(
+            """`<text>` - The text to enlarge
+
+            Replaces text and numbers with emoji."""
+        )
         nums = [
             "zero",
             "one",
@@ -526,10 +629,10 @@ https://git.travitia.xyz/Kenvyra/IdleRPG/compare/v4.5.1...v4.6.0
                 newtext += letter
         await ctx.send(newtext)
 
-    @commands.command()
+    @commands.command(brief=_("Evoke cringe"))
     @locale_doc
     async def meme(self, ctx):
-        _("""A random bad meme.""")
+        _("""Sends a random meme from Some Random API.""")
         async with self.bot.session.get(
             f"https://some-random-api.ml/meme?lol={random.randint(1,1000000)}"
         ) as resp:
@@ -539,11 +642,13 @@ https://git.travitia.xyz/Kenvyra/IdleRPG/compare/v4.5.1...v4.6.0
                 )
             )
 
-    @commands.command()
+    @commands.command(brief=_("Roll some dice"))
     @locale_doc
     async def dice(self, ctx, dice_type: str):
         _(
-            """Tabletop RPG-ready dice. Rolls in the ndx format (3d20 is 3 dice with 20 sides)."""
+            """`<dice_type>` - The dice to roll, uses the ndx format
+
+            Rolls n dice with x sides (3d20 rolls 3 20-sided dice)."""
         )
         try:
             dice_type = list(map(int, dice_type.split("d")))
@@ -580,10 +685,14 @@ https://git.travitia.xyz/Kenvyra/IdleRPG/compare/v4.5.1...v4.6.0
             )
         )
 
-    @commands.command()
+    @commands.command(brief=_("Show my nickname in a random server"))
     @locale_doc
     async def randomname(self, ctx):
-        _("""Sends you my nickname from a random server.""")
+        _(
+            """Sends you my nickname from a random server.
+
+            :warning: Caution: may contain NSFW."""
+        )
         g = random.choice(
             [g for g in self.bot.guilds if g.me.display_name != self.bot.user.name]
         )
@@ -594,18 +703,23 @@ https://git.travitia.xyz/Kenvyra/IdleRPG/compare/v4.5.1...v4.6.0
             )
         )
 
-    @commands.command(aliases=["chuck", "cn", "norris", "theman"])
+    @commands.command(
+        aliases=["chuck", "cn", "norris", "theman"],
+        brief=_("Facts about Chuck Norris."),
+    )
     @locale_doc
     async def chucknorris(self, ctx):
-        _("""Facts about Chuck Norris.""")
+        _(
+            """Sends a random Chuck Norris ~~joke~~ fact from [The Chuck Norris API](https://api.chucknorris.io/)"""
+        )
         async with self.bot.session.get("https://api.chucknorris.io/jokes/random") as r:
             content = await r.json()
         await ctx.send(content["value"])
 
-    @commands.command()
+    @commands.command(brief=_("Cat pics"))
     @locale_doc
     async def cat(self, ctx):
-        _("""Cat pics.""")
+        _("""Sends cute cat pics from [The Cat API](https://thecatapi.com/).""")
         await ctx.send(
             embed=discord.Embed(
                 title=_("Meow!"), color=ctx.author.color.value
@@ -614,10 +728,10 @@ https://git.travitia.xyz/Kenvyra/IdleRPG/compare/v4.5.1...v4.6.0
             )
         )
 
-    @commands.command()
+    @commands.command(brief=_("Dog pics"))
     @locale_doc
     async def dog(self, ctx):
-        _("""Dog pics.""")
+        _("""Sends cute dog pics from [The Dog API](https://thedogapi.com/).""")
         async with self.bot.session.get(
             "https://api.thedogapi.com/v1/images/search"
         ) as r:
@@ -628,7 +742,7 @@ https://git.travitia.xyz/Kenvyra/IdleRPG/compare/v4.5.1...v4.6.0
             ).set_image(url=res[0]["url"])
         )
 
-    @commands.command()
+    @commands.command(brief=_("View the uptime"))
     @locale_doc
     async def uptime(self, ctx):
         _("""Shows how long the bot has been connected to Discord.""")
@@ -638,17 +752,21 @@ https://git.travitia.xyz/Kenvyra/IdleRPG/compare/v4.5.1...v4.6.0
             )
         )
 
-    @commands.command(hidden=True)
+    @commands.command(hidden=True, brief=_("Every good software has an Easter egg."))
     @locale_doc
     async def easteregg(self, ctx):
-        _("""Every good software has an Easter egg.""")
+        _("""Wouldn't be any fun if I told you how to find it, right?""")
         await ctx.send(_("Find it!"))
 
     @commands.guild_only()
-    @commands.command()
+    @commands.command(brief=_("Give a cookie to a user"))
     @locale_doc
     async def cookie(self, ctx, user: MemberConverter):
-        _("""Gives a cookie to a user.""")
+        _(
+            """`<user>` - the discord user to give the cookie to
+
+            Gives a cookie to a user. Sadly, this cookie does not have an effect on gameplay."""
+        )
         await ctx.send(
             _(
                 "**{user}**, you've been given a cookie by **{author}**. :cookie:"
@@ -656,20 +774,30 @@ https://git.travitia.xyz/Kenvyra/IdleRPG/compare/v4.5.1...v4.6.0
         )
 
     @commands.guild_only()
-    @commands.command(aliases=["ice-cream"])
+    @commands.command(aliases=["ice-cream"], brief=_("Give icecream to a user"))
     @locale_doc
     async def ice(self, ctx, other: MemberConverter):
-        _("""Gives ice cream to a user.""")
+        _(
+            """`<other>` - the discord user to give the icecream to
+
+            Gives icecream to a user. Sadly, this ice does not have an effect on gameplay."""
+        )
         await ctx.send(
             _("{other}, here is your ice: :ice_cream:!").format(other=other.mention)
         )
 
     @commands.guild_only()
     @commands.cooldown(1, 20, BucketType.channel)
-    @commands.command()
+    @commands.command(brief=_("User guessing game"))
     @locale_doc
     async def guess(self, ctx):
-        _("""User guessing game.""")
+        _(
+            """Guess a user by their avatar and discriminator (the four numbers after the # in a discord tag).
+
+            Both their tag and nickname are accepted as answers. You have 20 seconds to guess.
+
+            (This command has a channel cooldown of 20 seconds.)"""
+        )
         m = random.choice(ctx.guild.members)
         em = discord.Embed(
             title=_("Can you guess who this is?"),
@@ -694,10 +822,14 @@ https://git.travitia.xyz/Kenvyra/IdleRPG/compare/v4.5.1...v4.6.0
             )
         await ctx.send(_("{user}, you are correct!").format(user=msg.author.mention))
 
-    @commands.command(aliases=["yn"])
+    @commands.command(aliases=["yn"], brief=_("Get a yes/no answer"))
     @locale_doc
     async def yesno(self, ctx, *, question: str):
-        _("""An alternative to 8ball, but has more bitchy answers.""")
+        _(
+            """`<question>` - The question to answer
+
+            An alternative to `{prefix}8ball` with some more blunt answers."""
+        )
         possible_answers = [
             "Maybe",
             "I think so",
@@ -749,10 +881,14 @@ https://git.travitia.xyz/Kenvyra/IdleRPG/compare/v4.5.1...v4.6.0
         em.timestamp = datetime.datetime.now()
         await ctx.send(embed=em)
 
-    @commands.command(aliases=["cb", "chat"])
+    @commands.command(aliases=["cb", "chat"], brief=_("Talk to me"))
     @locale_doc
     async def talk(self, ctx, *, text: str):
-        _("""Talk to me! (Supports only English)""")
+        _(
+            """`<text>` - The text to say, must be between 3 and 60 characters.
+
+            Talk to me! This uses a chatbot AI backend."""
+        )
         await ctx.trigger_typing()
         if not (3 <= len(text) <= 60):
             return await ctx.send(
@@ -768,7 +904,7 @@ https://git.travitia.xyz/Kenvyra/IdleRPG/compare/v4.5.1...v4.6.0
             json = await req.json()
         await ctx.send(f"{ctx.author.mention}, {json['response']}")
 
-    @commands.command()
+    @commands.command(brief=_("Show a Garfield comic strip"))
     @locale_doc
     async def garfield(
         self,
@@ -779,7 +915,11 @@ https://git.travitia.xyz/Kenvyra/IdleRPG/compare/v4.5.1...v4.6.0
         ) = datetime.date.today(),
     ):
         _(
-            """Sends today's garfield comic if no date info is passed. Else, it will use YYYY MM DD or DD MM YYYY depending on where the year is, with the date parts being seperated with spaces."""
+            """`[date]` - The date on which the comic strip was released, see below for more info
+
+            Sends today's garfield comic if no date info is given.
+            Otherwise, the format is `YYYY MM DD` or `DD MM YYYY`, depending on where the year is, with the date parts being seperated with spaces.
+            For example: `2013 12 25` is the same as `25 12 2013`, both meaning December 25th 2013."""
         )
         await ctx.send(
             embed=discord.Embed(color=self.bot.config.primary_colour).set_image(
@@ -787,7 +927,7 @@ https://git.travitia.xyz/Kenvyra/IdleRPG/compare/v4.5.1...v4.6.0
             )
         )
 
-    @commands.command(aliases=["uf"])
+    @commands.command(aliases=["uf"], brief=_("Shows a userfriendly comic strip"))
     @locale_doc
     async def userfriendly(
         self,
@@ -798,7 +938,11 @@ https://git.travitia.xyz/Kenvyra/IdleRPG/compare/v4.5.1...v4.6.0
         ) = datetime.date.today(),
     ):
         _(
-            """Sends today's userfriendly comic if no date info is passed. Else, it will use YYYY MM DD or DD MM YYYY depending on where the year is, with the date parts being seperated with spaces."""
+            """`[date]` - The date on which the comic strip was released, see below for more info
+
+            Sends today's userfriendly comic if no date info is given.
+            Otherwise, the format is `YYYY MM DD` or `DD MM YYYY`, depending on where the year is, with the date parts being seperated with spaces.
+            For example: `2013 12 25` is the same as `25 12 2013`, both meaning December 25th 2013."""
         )
         async with self.bot.session.get(
             f"http://ars.userfriendly.org/cartoons/?id={date.strftime('%Y%m%d')}&mode=classic"
@@ -816,7 +960,7 @@ https://git.travitia.xyz/Kenvyra/IdleRPG/compare/v4.5.1...v4.6.0
             )
         )
 
-    @commands.command()
+    @commands.command(brief=_("Our partnered bots"))
     @locale_doc
     async def partners(self, ctx):
         _("""Awesome bots by other coffee-drinking individuals.""")
@@ -851,10 +995,14 @@ https://git.travitia.xyz/Kenvyra/IdleRPG/compare/v4.5.1...v4.6.0
         )
         await ctx.send(embed=em)
 
-    @commands.command()
+    @commands.command(brief=_("Search wikipedia"))
     @locale_doc
     async def wikipedia(self, ctx, *, query: str):
-        _("""Searches Wikipedia for an entry.""")
+        _(
+            """`<query>` - The wikipedia query to search for
+
+            Searches Wikipedia for an entry."""
+        )
         try:
             page = (await self.bot.wikipedia.opensearch(query))[0]
             text = await page.summary()
@@ -870,10 +1018,14 @@ https://git.travitia.xyz/Kenvyra/IdleRPG/compare/v4.5.1...v4.6.0
             title=page.title, entries=p.pages, length=1
         ).paginate(ctx)
 
-    @commands.command(aliases=["wiki"])
+    @commands.command(aliases=["wiki"], brief=_("Search the Idle Wiki"))
     @locale_doc
     async def idlewiki(self, ctx, *, query: str = None):
-        _("""Searches IdleRPG Wiki for an entry.""")
+        _(
+            """`[query]` - The idlewiki query to search for
+
+            Searches Idle's wiki for an entry."""
+        )
         if not query:
             return await ctx.send(
                 _(
@@ -897,7 +1049,9 @@ https://git.travitia.xyz/Kenvyra/IdleRPG/compare/v4.5.1...v4.6.0
             title=page.title, entries=p.pages, length=1
         ).paginate(ctx)
 
-    @commands.command(aliases=["pages", "about"])
+    @commands.command(
+        aliases=["pages", "about"], brief=_("Info about the bot and related sites")
+    )
     @locale_doc
     async def web(self, ctx):
         _("""About the bot and our websites.""")
@@ -928,8 +1082,11 @@ This bot is developed by people who love to code for a good cause and improving 
             )
         )
 
-    @commands.command()
+    @commands.command(brief=_("Show the rules again"))
     async def rules(self, ctx):
+        _(
+            """Shows the rules you consent to when creating a character. Don't forget them!"""
+        )
         await ctx.send(
             _(
                 """\
