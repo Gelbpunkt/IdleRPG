@@ -38,72 +38,6 @@ class Help(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
-    def make_signature(self, command):
-        parent = command.full_parent_name
-        if len(command.aliases) > 0:
-            fmt = f"[{command.name}|{'|'.join(command.aliases)}]"
-            if parent:
-                fmt = f"{parent} {fmt}"
-        else:
-            fmt = command.name if not parent else f"{parent} {command.name}"
-        fmt = f"{fmt} {command.signature}"
-        return fmt
-
-    def make_pages(self):
-        all_commands = {}
-        for cog, instance in self.bot.cogs.items():
-            if cog in ["GameMaster", "Owner"]:
-                continue
-            commands = list(chunks(list(instance.get_commands()), 10))
-            if len(commands) == 1:
-                all_commands[cog] = commands[0]
-            else:
-                for i, j in enumerate(commands):
-                    all_commands[f"{cog} ({i + 1}/{len(commands)})"] = j
-
-        pages = []
-        maxpages = len(all_commands)
-
-        embed = discord.Embed(
-            title=_("IdleRPG Help"),
-            colour=self.bot.config.primary_colour,
-            url=self.bot.BASE_URL,
-            description=_(
-                "**Welcome to the IdleRPG help. Use the arrows to move.\nFor more help,"
-                " join the support server at https://support.idlerpg.xyz.**\nCheck out"
-                " our partners using the partners command!"
-            ),
-        )
-        embed.set_image(url=f"{self.bot.BASE_URL}/IdleRPG.png")
-        embed.set_footer(
-            text=_("IdleRPG Version {version}").format(version=self.bot.version),
-            icon_url=self.bot.user.avatar_url,
-        )
-        pages.append(embed)
-        for i, (cog, commands) in enumerate(all_commands.items()):
-            embed = discord.Embed(
-                title=_("IdleRPG Help"),
-                colour=self.bot.config.primary_colour,
-                url=self.bot.BASE_URL,
-                description=_("**{category} Commands**").format(category=cog),
-            )
-            embed.set_footer(
-                text=_("IdleRPG Version {version} | Page {page} of {maxpages}").format(
-                    version=self.bot.version, page=i + 1, maxpages=maxpages
-                ),
-                icon_url=self.bot.user.avatar_url,
-            )
-            for command in commands:
-                if hasattr(command.callback, "__doc__"):
-                    desc = _(command.callback.__doc__).format(prefix=self.bot.config.global_prefix)
-                else:
-                    desc = _("No Description set")
-                embed.add_field(
-                    name=self.make_signature(command), value=desc, inline=False
-                )
-            pages.append(embed)
-        return pages
-
     @commands.command(aliases=["commands", "cmds"], brief=_("View the command list"))
     @locale_doc
     async def documentation(self, ctx):
@@ -306,38 +240,6 @@ class Help(commands.Cog):
             embed=embed,
         )
 
-    # @commands.command()
-    # @locale_doc
-    # async def help(
-    #     self, ctx, *, command: commands.clean_content(escape_markdown=True) = None
-    # ):
-    #     _("""Shows help about the bot.""")
-    #     if command:
-    #         command = self.bot.get_command(command.lower())
-    #         if not command:
-    #             return await ctx.send(_("Sorry, that command does not exist."))
-    #         sig = self.make_signature(command)
-    #         subcommands = getattr(command, "commands", None)
-    #         if subcommands:
-    #             clean_subcommands = "\n".join(
-    #                 [
-    #                     f"    {c.name.ljust(15, ' ')}"
-    #                     f" {_(getattr(c.callback, '__doc__'))}"
-    #                     for c in subcommands
-    #                 ]
-    #             )
-    #             fmt = (
-    #                 f"```\n{ctx.prefix}{sig}\n\n{_(getattr(command.callback, '__doc__'))}\n\nCommands:\n{clean_subcommands}\n```"
-    #             )
-    #         else:
-    #             fmt = (
-    #                 f"```\n{ctx.prefix}{sig}\n\n{_(getattr(command.callback, '__doc__'))}\n```"
-    #             )
-
-    #         return await ctx.send(fmt)
-
-    #     await self.bot.paginator.Paginator(extras=self.make_pages()).paginate(ctx)
-
 
 class IdleHelp(commands.HelpCommand):
     def __init__(self, *args, **kwargs):
@@ -505,7 +407,7 @@ class IdleHelp(commands.HelpCommand):
                 f"[{command.cog.qualified_name.upper()}] {command.qualified_name}"
                 f" {command.signature}"
             ),
-            description=command.help,
+            description=_(command.help).format(prefix=self.context.prefix),
         )
         if command.aliases:
             e.add_field(
