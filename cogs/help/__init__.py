@@ -487,8 +487,7 @@ class IdleHelp(commands.HelpCommand):
         )
         if command.aliases:
             e.add_field(
-                name=_("Aliases"),
-                value="`{}`".format("`, `".join(command.aliases))
+                name=_("Aliases"), value="`{}`".format("`, `".join(command.aliases))
             )
         await self.context.send(embed=e)
 
@@ -524,8 +523,7 @@ class IdleHelp(commands.HelpCommand):
         )
         if group.aliases:
             e.add_field(
-                name=_("Aliases"),
-                value="`{}`".format("`, `".join(group.aliases))
+                name=_("Aliases"), value="`{}`".format("`, `".join(group.aliases))
             )
         await self.context.send(embed=e)
 
