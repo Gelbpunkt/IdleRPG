@@ -95,7 +95,7 @@ class Help(commands.Cog):
             )
             for command in commands:
                 if hasattr(command.callback, "__doc__"):
-                    desc = _(command.callback.__doc__)
+                    desc = _(command.callback.__doc__).format(prefix=self.bot.config.global_prefix)
                 else:
                     desc = _("No Description set")
                 embed.add_field(
@@ -473,7 +473,7 @@ class IdleHelp(commands.HelpCommand):
         e.description = "\n".join(
             [
                 f"{'👥' if isinstance(c, commands.Group) else '👤'}"
-                f" `{self.clean_prefix}{c.qualified_name} {c.signature}` - {c.brief}"
+                f" `{self.clean_prefix}{c.qualified_name} {c.signature}` - {_(c.brief)}"
                 for c in cog.get_commands()
             ]
         )
@@ -540,7 +540,7 @@ class IdleHelp(commands.HelpCommand):
         e.add_field(
             name="Subcommands",
             value="\n".join(
-                [f"`{c.qualified_name}` - {c.brief}"] for c in group.commands
+                [f"`{c.qualified_name}` - {_(c.brief)}"] for c in group.commands
             ),
         )
         if group.aliases:

@@ -2007,7 +2007,7 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
         ):
             return
         async with self.bot.pool.acquire() as conn:
-            if not self.bot.has_money(ctx.author, price, conn):
+            if not await self.bot.has_money(ctx.author, price, conn):
                 return await ctx.send(
                     _(
                         "Upgrading your weapon attack raid multiplier to {newlvl} costs"
