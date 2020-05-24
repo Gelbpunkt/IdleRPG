@@ -31,7 +31,7 @@ import discord
 from contextvars_executor import ContextVarExecutor
 
 from classes.bot import Bot
-from classes.logger import ColoredLogger
+from classes.logger import file_handler, stream
 
 if len(sys.argv) != 5:
     print(
@@ -62,7 +62,10 @@ bot = Bot(
 
 
 if __name__ == "__main__":
-    logging.setLoggerClass(ColoredLogger)
+    log = logging.getLogger()
+    log.setLevel(logging.INFO)
+    log.addHandler(stream)
+    log.addHandler(file_handler)
     loop = asyncio.get_event_loop()
     loop.set_default_executor(ContextVarExecutor())
     try:

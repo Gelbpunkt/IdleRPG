@@ -49,21 +49,15 @@ class ColoredFormatter(logging.Formatter):
         return logging.Formatter.format(self, record)
 
 
-# Custom logger class with multiple destinations
-class ColoredLogger(logging.Logger):
-    FORMAT = (
-        "[$BOLD%(name)-20s$RESET][%(levelname)-18s]  %(message)s"
-        " ($BOLD%(filename)s$RESET:%(lineno)d)"
-    )
-    COLOR_FORMAT = formatter_message(FORMAT, True)
-
-    def __init__(self, name):
-        super().__init__(name, logging.INFO)
-
-        color_formatter = ColoredFormatter(self.COLOR_FORMAT)
-
-        console = logging.StreamHandler()
-        console.setFormatter(color_formatter)
-
-        self.addHandler(console)
-        return
+FORMAT = (
+    "[$BOLD%(name)-20s$RESET][%(levelname)-18s]  %(message)s"
+    " ($BOLD%(filename)s$RESET:%(lineno)d)"
+)
+COLOR_FORMAT = formatter_message(FORMAT, True)
+logging.root.setLevel(logging.DEBUG)
+color_formatter = ColoredFormatter(COLOR_FORMAT)
+stream = logging.StreamHandler()
+stream.setLevel(logging.DEBUG)
+stream.setFormatter(color_formatter)
+file_handler = logging.FileHandler(filename="idlerpg.log", encoding="utf-8", mode="w")
+file_handler.setFormatter(color_formatter)
