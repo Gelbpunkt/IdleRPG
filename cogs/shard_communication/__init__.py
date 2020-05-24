@@ -17,7 +17,6 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
 import asyncio
 import json
-import re
 
 from datetime import datetime, timedelta
 from time import time
@@ -211,59 +210,8 @@ class Sharding(commands.Cog):
     async def temp_unban(self, user_id: int, command_id: int):
         self.bot.bans.remove(user_id)
 
-    async def get_user_patreon(self, member_id: int, command_id: int):
-        if not self.bot.get_user(member_id):
-            return
-        member = self.bot.get_guild(self.bot.config.support_server_id).get_member(
-            member_id
-        )
-        if not member:
-            return
-
-        top_donator_role = None
-
-        for role, role_enum_val in zip(
-            self.bot.config.donator_roles, self.bot.config.donator_roles_short
-        ):
-            role = discord.utils.get(member.roles, name=role)
-            if role:
-                top_donator_role = role_enum_val
-        if top_donator_role is None:
-            payload = {"output": False, "command_id": command_id}
-        else:
-            payload = {"output": top_donator_role, "command_id": command_id}
-
-        await self.bot.redis.execute(
-            "PUBLISH", self.communication_channel, json.dumps(payload)
-        )
-
-    async def user_is_helper(self, member_id: int, command_id: str):
-        if not self.bot.get_user(member_id):
-            return  # if the instance cannot see them, we can't do much
-        member = self.bot.get_guild(self.bot.config.support_server_id).get_member(
-            member_id
-        )
-        if not member:
-            return  # when the bot can only see DMs with the user
-
-        if discord.utils.get(member.roles, name="Support Team"):
-            payload = {"output": True, "command_id": command_id}
-        else:
-            payload = {"output": False, "command_id": command_id}
-        await self.bot.redis.execute(
-            "PUBLISH", self.communication_channel, json.dumps(payload)
-        )
-
     async def guild_count(self, command_id: str):
         payload = {"output": len(self.bot.guilds), "command_id": command_id}
-        await self.bot.redis.execute(
-            "PUBLISH", self.communication_channel, json.dumps(payload)
-        )
-
-    async def get_user(self, user_id: int, command_id: str):
-        if not self.bot.get_user(user_id):
-            return
-        payload = {"output": self.bot.get_user(int(user_id)), "command_id": command_id}
         await self.bot.redis.execute(
             "PUBLISH", self.communication_channel, json.dumps(payload)
         )
@@ -279,31 +227,6 @@ class Sharding(commands.Cog):
             },
             "command_id": command_id,
         }
-        await self.bot.redis.execute(
-            "PUBLISH", self.communication_channel, json.dumps(payload)
-        )
-
-    async def fetch_user(self, user_inp, command_id: str):
-        user = None
-        matches = re.search(r"<@!?(\d+)>", user_inp)
-        if matches:
-            user_inp = matches.group(1)
-        if isinstance(user_inp, int) or (
-            isinstance(user_inp, str) and user_inp.isdigit()
-        ):
-            user = self.bot.get_user(int(user_inp))
-        else:
-            if len(user_inp) > 5 and user_inp[-5] == "#":
-                discrim = user_inp[-4:]
-                name = user_inp[:-5]
-                predicate = lambda u: u.name == name and u.discriminator == discrim
-                user = discord.utils.find(predicate, self.bot.users)
-            else:
-                predicate = lambda u: u.name == user_inp
-                user = discord.utils.find(predicate, self.bot.users)
-        if not user:
-            return
-        payload = {"output": user, "command_id": command_id}
         await self.bot.redis.execute(
             "PUBLISH", self.communication_channel, json.dumps(payload)
         )

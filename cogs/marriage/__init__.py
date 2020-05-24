@@ -404,9 +404,7 @@ class Marriage(commands.Cog):
                 ).format(max_=max_)
             )
         names = [name["name"] for name in names]
-        user = self.bot.get_user(marriage)
-        if not user:
-            return await ctx.send(_("Your spouse is not here."))
+        user = await self.bot.get_user_global(marriage)
         if not await ctx.confirm(
             _("{user}, do you want to make a child with {author}?").format(
                 user=user.mention, author=ctx.author.mention

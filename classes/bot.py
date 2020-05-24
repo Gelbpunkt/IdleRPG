@@ -40,6 +40,7 @@ from classes.enums import DonatorRank
 from classes.exceptions import GlobalCooldown
 from classes.http import ProxiedClientSession
 from utils import i18n, paginator, random
+from utils.cache import cache
 from utils.checks import user_is_patron
 from utils.i18n import _
 
@@ -309,11 +310,9 @@ class Bot(commands.AutoShardedBot):
             raise asyncio.TimeoutError()
         if event == "message":
             channel_id = int(data["channel_id"])
-            channel = (
-                self.get_channel(channel_id)
-                or self.get_user(int(data["author"]["id"])).dm_channel
+            return discord.Message(
+                state=self._connection, channel=discord.Object(channel_id), data=data
             )
-            return discord.Message(state=self._connection, channel=channel, data=data)
         elif event == "reaction_add":
             emoji = discord.PartialEmoji(
                 name=data["emoji"]["name"],
@@ -328,19 +327,17 @@ class Bot(commands.AutoShardedBot):
             )
             return reaction, await self.get_user_global(int(data["user_id"]))
 
+    @cache(maxsize=8096)
     async def get_user_global(self, user_id: int):
         """Fetches Discord user data across multiple processes"""
         user = self.get_user(user_id)
         if user:
             return user
-        data = await self.cogs["Sharding"].handler("get_user", 1, {"user_id": user_id})
-        if not data:
+
+        try:
+            return await self.fetch_user(user_id)
+        except discord.NotFound:
             return None
-        data = data[0]
-        data["username"] = data["name"]
-        user = discord.User(state=self._connection, data=data)
-        self.users.append(user)
-        return user
 
     async def reset_cooldown(self, ctx):
         """Resets someone's cooldown for a Context"""
@@ -733,14 +730,8 @@ class Bot(commands.AutoShardedBot):
             1: "Bot (added to player)",
             2: "Bot (removed from player)",
         }
-        from_readable = (
-            (self.get_user(from_) or "Unknown User")
-            if (from_ not in id_map)
-            else id_map[from_]
-        )
-        to_readable = (
-            (self.get_user(to) or "Unknown User") if (to not in id_map) else id_map[to]
-        )
+        from_readable = from_ if from_ not in id_map else id_map[from_]
+        to_readable = to if to not in id_map else id_map[to]
         data_ = "\n".join(
             [f"{name}: {content}" for name, content in data.items()]
         )  # data is expected to be a dict
