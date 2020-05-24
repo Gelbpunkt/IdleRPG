@@ -31,10 +31,15 @@ class Images(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
-    @commands.command()
+    @commands.command(brief=_("Pixelfy an avatar"))
     @locale_doc
     async def pixelfy(self, ctx, user: MemberConverter = Author, size: int = 2):
-        _("""Pixelfys an Avatar.""")
+        _(
+            """`[user]` - A discord User whose avatar to pixelfy; defaults to oneself
+            `[size]` - The pixelation rate to use, can be a number between 1 and 5; defaults to 2
+            
+            Pixelfies a user's avatar. If the user has an animated icon, the first frame is used."""
+        )
         try:
             size = [256, 128, 64, 32, 16][size - 1]
         except IndexError:
@@ -47,10 +52,14 @@ class Images(commands.Cog):
             img = BytesIO(await r.read())
         await ctx.send(file=discord.File(fp=img, filename="pixels.png"))
 
-    @commands.command()
+    @commands.command(brief=_("Defines an avatar's edges"))
     @locale_doc
     async def edgy(self, ctx, user: MemberConverter = Author):
-        _("""Finds edges in an Avatar.""")
+        _(
+            """`[user]` - A discord User whose avatar to edit; defaults to oneself
+            
+            Finds and exaggerates edges in a user's avatar, creating a cool image effect."""
+        )
         async with self.bot.trusted_session.post(
             f"{self.bot.config.okapi_url}/api/imageops/edges",
             data={"image": str(user.avatar_url_as(format="webp"))},
@@ -59,10 +68,16 @@ class Images(commands.Cog):
         await ctx.send(file=discord.File(fp=img, filename="edgy.png"))
 
     @commands.cooldown(1, 15, BucketType.channel)
-    @commands.command()
+    @commands.command(brief=_("Inverts a user's avatar"))
     @locale_doc
     async def invert(self, ctx, member: MemberConverter = Author):
-        _("""Inverts an avatar.""")
+        _(
+            """`[member]` - A discord User whose avatar to invert; defaults to oneself
+            
+            Invert the colors in someone's avatar.
+            
+            (This command has a channel cooldown of 15 seconds.)"""
+        )
         async with self.bot.trusted_session.post(
             f"{self.bot.config.okapi_url}/api/imageops/invert",
             data={"image": str(member.avatar_url_as(format="webp"))},
@@ -71,10 +86,16 @@ class Images(commands.Cog):
         await ctx.send(file=discord.File(fp=img, filename="inverted.png"))
 
     @commands.cooldown(1, 15, BucketType.channel)
-    @commands.command()
+    @commands.command(brief=_("oil-paint someone's avatar"))
     @locale_doc
     async def oil(self, ctx, member: MemberConverter = Author):
-        _("""Oils an Avatar.""")
+        _(
+            """`[member]` - A discord User whose avatar to oil-pain; defaults to oneself
+
+            Creatse an oil-painting effect on someone's avatar.
+
+            (This command has a channel cooldown of 15 seconds.)"""
+        )
         async with self.bot.trusted_session.post(
             f"{self.bot.config.okapi_url}/api/imageops/oil",
             data={"image": str(member.avatar_url_as(format="png"))},

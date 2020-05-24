@@ -32,11 +32,22 @@ class Trading(commands.Cog):
         self.markdown_escaper = commands.clean_content(escape_markdown=True)
 
     @has_char()
-    @commands.command()
+    @commands.command(brief=_("Put an item in the market"))
     @locale_doc
     async def sell(self, ctx, itemid: int, price: IntGreaterThan(-1)):
         _(
-            """Puts your item into the market. Tax for selling items is 5% of the price."""
+            """`<itemid>` - The ID of the item to sell
+            `<price>` - The price to sell the item for, can be 0 or above
+            
+            Puts your item into the market. Tax for selling items is 5% of the price.
+            
+            You may not sell modified items, items with a price higher than their value, or items below 4 stat.
+            If you are in an alliance with owns a city with a trade building, you do not have to pay the tax.
+            
+            Please note that you won't get the money right away, another player has to buy the item first.
+            With that being said, please choose a reasonable price.
+            
+            If your item has not been bought for 14 days, it will be removed from the market and put back into your inventory."""
         )
         async with self.bot.pool.acquire() as conn:
             item = await conn.fetchrow(
@@ -112,10 +123,16 @@ class Trading(commands.Cog):
         )
 
     @has_char()
-    @commands.command()
+    @commands.command(brief=_("Buy an item from the shop"))
     @locale_doc
     async def buy(self, ctx, itemid: int):
-        _("""Buys an item from the global market.""")
+        _(
+            """`<itemid>` - The ID of the item to buy
+            
+            Buy an item from the global market. Tax for buying is 5%.
+            
+            Buying your own items is impossible. You can find the item's ID in `{prefix}shop`."""
+        )
         async with self.bot.pool.acquire() as conn:
             item = await conn.fetchrow(
                 'SELECT *, m."id" AS "offer" FROM market m JOIN allitems ai ON'
@@ -195,10 +212,16 @@ class Trading(commands.Cog):
         )
 
     @has_char()
-    @commands.command()
+    @commands.command(brief=_("Remove your item from the shop."))
     @locale_doc
     async def remove(self, ctx, itemid: int):
-        _("""Takes an item off the shop.""")
+        _(
+            """`<itemid>` - The item to remove from the shop
+            
+            Takes an item off the shop. You may only remove your own items from the shop.
+            
+            You can check your items on the shop with `{prefix}pending`. Paid tax money will not be returned."""
+        )
         async with self.bot.pool.acquire() as conn:
             item = await conn.fetchrow(
                 "SELECT * FROM market m JOIN allitems ai ON (m.item=ai.id) WHERE"
@@ -229,7 +252,7 @@ class Trading(commands.Cog):
             ).format(itemid=itemid)
         )
 
-    @commands.command(aliases=["market", "m"])
+    @commands.command(aliases=["market", "m"], brief=_("View the global item market"))
     @locale_doc
     async def shop(
         self,
@@ -238,7 +261,13 @@ class Trading(commands.Cog):
         minstat: float = 0.00,
         highestprice: IntGreaterThan(-1) = 1_000_000,
     ):
-        _("""Lists the buyable items on the market.""")
+        _(
+            """`[itemtype]` - The type of item to filter; defaults to all item types
+            `[minstat]` - The minimum damage/defense an item has to have to show up; defaults to 0
+            `[highestprice]` - The highest price an item can have to show up; defaults to $1,000,000
+            
+            Lists the buyable items on the market. You can cleverly filter out items you don't want to see with these parameters."""
+        )
         if itemtype not in ["All"] + self.bot.config.item_types:
             return await ctx.send(
                 _("Use either {types} or `All` as a type to filter for.").format(
@@ -299,7 +328,7 @@ class Trading(commands.Cog):
 
     @has_char()
     @user_cooldown(180)
-    @commands.command()
+    @commands.command(brief=_("Offer an item to a user"))
     @locale_doc
     async def offer(
         self,
@@ -308,7 +337,14 @@ class Trading(commands.Cog):
         price: IntFromTo(0, 100_000_000),
         user: MemberWithCharacter,
     ):
-        _("""Offer an item to a specific user.""")
+        _(
+            """`<itemid>` - The ID of the item to offer
+            `<price>` - The price the other has to pay, can be a number from 0 to 100,000,000
+            `<user>` - The user to offre the item to 
+            
+            Offer an item to a specific user. You may not offer modified items. 
+            Once the other user accepts, the item belongs to them."""
+        )
         if user == ctx.author:
             return await ctx.send(_("You may not offer items to yourself."))
         item = await self.bot.pool.fetchrow(
@@ -398,10 +434,18 @@ class Trading(commands.Cog):
 
     @has_char()
     @user_cooldown(600)  # prevent too long sale times
-    @commands.command(aliases=["merch"])
+    @commands.command(aliases=["merch"], brief=_("Sell items for their value"))
     @locale_doc
     async def merchant(self, ctx, *itemids: int):
-        _("""Sells items for their value.""")
+        _(
+            """`<itemids>` - The IDs of the items to sell, seperated by space
+            
+            Sells items for their value. Items that you don't own will be filtered out.
+            
+            If you are in an alliance which owns a trade building, your winnings will be multiplied by 1.5 for each level.
+            
+            (This command has a cooldown of 10 minutes.)"""
+        )
         if not itemids:
             await self.bot.reset_cooldown(ctx)
             return await ctx.send(_("You cannot sell nothing."))
@@ -470,12 +514,22 @@ class Trading(commands.Cog):
 
     @has_char()
     @user_cooldown(1800)
-    @commands.command(enabled=False)
+    @commands.command(enabled=False, brief=_("Merch all non-equipped items"))
     @locale_doc
     async def merchall(
         self, ctx, maxstat: IntFromTo(0, 75) = 75, minstat: IntFromTo(0, 75) = 0
     ):
-        _("""Sells all your non-equipped items for their value.""")
+        _(
+            """`[maxstat]` - The highest damage/defense to include; defaults to 75
+            `[minstat]` - The lowest damage/defense to include; defaults to 0
+            
+            Sells all your non-equipped items for their value. A convenient way to sell a large amount of items at once.
+            If you are in an alliance which owns a trade building, your winnings will be multiplied by 1.5 for each level.
+            
+            :warning: This command is currently disabled.
+            
+            (This command has a cooldown of 30 minutes.)"""
+        )
         async with self.bot.pool.acquire() as conn:
             money, count = await conn.fetchval(
                 "SELECT (sum(value), count(value)) FROM inventory i JOIN allitems ai ON"
@@ -545,10 +599,12 @@ class Trading(commands.Cog):
                 )
             )
 
-    @commands.command()
+    @commands.command(brief=_("View your shop offers"))
     @locale_doc
     async def pending(self, ctx):
-        _("""View your pending shop offers.""")
+        _(
+            """View your pending shop offers. This is a convenient way to find IDs of items that you put on the market."""
+        )
         items = await self.bot.pool.fetch(
             "SELECT * FROM allitems ai JOIN market m ON (m.item=ai.id) WHERE"
             ' ai."owner"=$1;',
@@ -579,10 +635,15 @@ class Trading(commands.Cog):
 
     @has_char()
     @user_cooldown(3600)
-    @commands.command()
+    @commands.command(brief=_("Buys an item from the trader"))
     @locale_doc
     async def trader(self, ctx):
-        _("""Buys items at the trader.""")
+        _(
+            """Buys items at the trader. These items can range from 1 stat to 15 stat, with their price being 50 times their stat.
+            Useful for the early game.
+            
+            (This command has a cooldown of 1 hour.)"""
+        )
         offers = []
         for i in range(5):
             item = await self.bot.create_random_item(

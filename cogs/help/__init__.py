@@ -104,7 +104,7 @@ class Help(commands.Cog):
             pages.append(embed)
         return pages
 
-    @commands.command(aliases=["commands", "cmds"])
+    @commands.command(aliases=["commands", "cmds"], brief=_("View the command list"))
     @locale_doc
     async def documentation(self, ctx):
         _("""Sends a link to the official documentation.""")
@@ -115,10 +115,10 @@ class Help(commands.Cog):
             ).format(url=f"{self.bot.BASE_URL}/commands")
         )
 
-    @commands.command(aliases=["faq"])
+    @commands.command(aliases=["faq"], brief=_("View the tutorial"))
     @locale_doc
     async def tutorial(self, ctx):
-        """Link to the bot tutorial."""
+        _("""Link to the bot tutorial and FAQ.""")
         await ctx.send(
             _(
                 "<:blackcheck:441826948919066625> **Check {url} for a tutorial and"
@@ -127,10 +127,16 @@ class Help(commands.Cog):
         )
 
     @is_supporter()
-    @commands.command()
+    @commands.command(brief=_("Allow someone/-thing to use helpme again"))
     @locale_doc
     async def unbanfromhelpme(self, ctx, thing_to_unban: Union[User, int]):
-        _("""Unban an entitiy from using $helpme.""")
+        _(
+            """`<thing_to_unban>` - A discord User, their User ID, or a server ID
+
+            Unbans a previously banned user/server from using the `{prefix}helpme` command.
+
+            Only Support Team Members can use this command."""
+        )
         if isinstance(thing_to_unban, discord.User):
             id = thing_to_unban.id
         else:
@@ -144,10 +150,16 @@ class Help(commands.Cog):
         )
 
     @is_supporter()
-    @commands.command()
+    @commands.command(brief=_("Ban someone/-thing from using helpme"))
     @locale_doc
     async def banfromhelpme(self, ctx, thing_to_ban: Union[User, int]):
-        _("""Ban a user from using $helpme.""")
+        _(
+            """`<thing_to_ban>` - A discord User, their User ID, or a server ID
+
+            Bans a user/server from using the `{prefix}helpme` command.
+
+            Only Support Team Members can use this command."""
+        )
         if isinstance(thing_to_ban, discord.User):
             id = thing_to_ban.id
         else:
@@ -164,10 +176,20 @@ class Help(commands.Cog):
         )
 
     @commands.guild_only()
-    @commands.group(invoke_without_command=True)
+    @commands.group(
+        invoke_without_command=True, brief=_("Ask our Support Team for help")
+    )
     @locale_doc
     async def helpme(self, ctx, *, text: str):
-        _("""Allows a support team member to join your server for individual help.""")
+        _(
+            """`<text>` - The text to describe the question or the issue you are having
+
+            Ask our support team for help, allowing them to join your server and help you personally.
+            If they do not join within 48 hours, you may use the helpme command again.
+
+            Make sure the bot has permissions to create instant invites.
+            English is preferred."""
+        )
         if (cd := await self.bot.redis.execute("TTL", f"helpme:{ctx.guild.id}")) != -2:
             time = timedelta(seconds=cd)
             return await ctx.send(

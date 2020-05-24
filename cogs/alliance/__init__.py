@@ -43,10 +43,12 @@ class Alliance(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
-    @commands.command()
+    @commands.command(brief=_("Shows cities and owners."))
     @locale_doc
     async def cities(self, ctx):
-        _("""Shows cities and owners.""")
+        _(
+            """Show all cities, their tiers, owners, available buildings and current defense."""
+        )
         cities = await self.bot.pool.fetch(
             'SELECT c.*, g."name" AS "gname", COALESCE(SUM(d."defense"), 0) AS'
             ' "defense" FROM city c JOIN guild g ON c."owner"=g."id" LEFT JOIN defenses'
@@ -75,10 +77,18 @@ class Alliance(commands.Cog):
 
     @has_char()
     @has_guild()
-    @commands.group(invoke_without_command=True)
+    @commands.group(
+        invoke_without_command=True, brief=_("Interact with your alliance.")
+    )
     @locale_doc
     async def alliance(self, ctx):
-        _("""This command contains all alliance-related commands.""")
+        _(
+            """Alliances are groups of guilds. Just like a guild requires at least one member, an alliance requires at least one guild and is considered a single-guild alliance.
+            Alliances can occupy cities for passive bonuses given by the buildings.
+
+            If this command is used without subcommand, it shows your allied guilds.
+            See `{prefix}help alliance` for a list of commands to interact with your alliance!"""
+        )
         async with self.bot.pool.acquire() as conn:
             alliance_id = await conn.fetchval(
                 'SELECT alliance FROM guild WHERE "id"=$1;', ctx.character_data["guild"]
@@ -119,10 +129,18 @@ class Alliance(commands.Cog):
     @alliance_cooldown(300)
     @is_alliance_leader()
     @has_char()
-    @alliance.command()
+    @alliance.command(brief=_("Invite a guild to your alliance."))
     @locale_doc
     async def invite(self, ctx, newleader: MemberWithCharacter):
-        _("""[Alliance Leader only] Invite a guild leader to the alliance.""")
+        _(
+            """`<newleader>` - A user with a character who leads a guild.
+
+            Invite a guild to your alliance. All allied guilds will benefit from your city's buildings. Once you’re allied with another guild, it will be shown in {prefix}alliance.
+            The other guild can't be allied with another alliance or own a city in order to be invited.
+
+            Only the alliance leader can use this command.
+            (This command has a cooldown of 5 minutes.)"""
+        )
         if not ctx.user_data["guild"]:
             await self.bot.reset_alliance_cooldown(ctx)
             return await ctx.send(_("That member is not in a guild."))
@@ -193,10 +211,15 @@ class Alliance(commands.Cog):
         )
 
     @is_guild_leader()
-    @alliance.command()
+    @alliance.command(brief=_("Leave your alliance"))
     @locale_doc
     async def leave(self, ctx):
-        _("""[Guild Leader only] Leave your alliance.""")
+        _(
+            """Leave your alliance. Once you left your alliance, you will no longer benefit from an owned city's buildings.
+
+            If you lead an alliance, you cannot leave it (consider `{prefix}alliance kick`).
+            Only guild leaders can use this command."""
+        )
         async with self.bot.pool.acquire() as conn:
             alliance = await conn.fetchval(
                 'SELECT alliance from guild WHERE "id"=$1;', ctx.character_data["guild"]
@@ -213,11 +236,15 @@ class Alliance(commands.Cog):
 
     @is_alliance_leader()
     @has_char()
-    @alliance.command()
+    @alliance.command(brief=_("Kick a guild from your alliance"))
     @locale_doc
     async def kick(self, ctx, *, guild_to_kick: Union[int, str]):
         _(
-            """[Alliance Leader only] Kick a guild from your alliance.\n Use either the guild name or ID for guild_to_kick."""
+            """`<guild_to_kick>` -  A guild's name or ID
+
+            Remove a guild from your alliance. Once the guild was kicked, it will no longer benefit from an owned city's buildings.
+
+            Only the alliance leader can use this command."""
         )
         if isinstance(guild_to_kick, str):
             guild = await self.bot.pool.fetchrow(
@@ -267,10 +294,12 @@ class Alliance(commands.Cog):
     def get_upgrade_price(self, current):
         return (current + 1) * 100000
 
-    @alliance.group(invoke_without_command=True)
+    @alliance.group(invoke_without_command=True, brief=_("Build buildings or defenses"))
     @locale_doc
     async def build(self, ctx):
-        _("""This command contains all alliance-building-related commands.""")
+        _(
+            """Build buildings `{prefix}alliance build building` or defenses `{prefix}alliance build defense`."""
+        )
         subcommands = "```" + "\n".join(self.list_subcommands(ctx)) + "```"
         await ctx.send(_("Please use one of these subcommands:\n\n") + subcommands)
 
@@ -278,10 +307,22 @@ class Alliance(commands.Cog):
     @owns_city()
     @is_alliance_leader()
     @has_char()
-    @build.command()
+    @build.command(brief=_("Upgrade a building in your city."))
     @locale_doc
     async def building(self, ctx, name: str.lower):
-        _("""[Alliance Leader only] Upgrade a city beneficial building.""")
+        _(
+            """`<name>` - The name of the building to upgrade.
+
+            Upgrade one of your city's buildings, granting better passive bonuses. The maximum level of any building is 10.
+            Depending on the city's available buildings, `<name>` is either Thief, Raid, Trade, or Adventure. Use `{prefix}alliance buildings` to see which are available.
+
+            The upgrade price depends on the building's next level and is calculated as next_level * $100,000.
+            The upgrade price will be removed from the Alliance Leader's guild bank.
+
+            This command requires your alliance to own a city.
+            Only the alliance leader can use this command.
+            (This command has a cooldown of 5 minutes)"""
+        )
         city = await self.bot.pool.fetchrow(
             'SELECT * FROM city WHERE "owner"=$1;',
             ctx.character_data[
@@ -348,11 +389,26 @@ class Alliance(commands.Cog):
     @owns_city()
     @is_alliance_leader()
     @has_char()
-    @build.command()
+    @build.command(brief=_("Build a defense in your city."))
     @locale_doc
     async def defense(self, ctx, *, name: str.lower):
         _(
-            """[Alliance Leader only] Build a defensive building or buy troops for the city."""
+            """Build some defensive buildings or place troops in your cities. The following are available:
+
+            Cannons: 250HP, 60 defense for $200,000
+            Archers: 500HP, 50 defemse for $100,000
+            Outer Wall: 20,000HP, 0 defense for $500,000
+            Inner Wall: 10,000HP, 0 defense for $200,000
+            Moat: 5,000HP, 25 defense for $150,000
+            Tower: 1,000HP, 50 defense for $200,000
+            Ballista: 250HP, 30 defense for $100,000
+
+            Any city can have a maximum of 10 defenses. When attacked, the buildings with the most HP are targeted first.
+            You may not build defenses while your city is under attack. The price of the defense is removed from the leading guild's bank.
+
+            This command requires your alliance to own a city.
+            Only the alliance leader can use this command.
+            (This command has a cooldown of 1 minutes)"""
         )
         building_list = {
             "cannons": {"hp": 250, "def": 60, "cost": 200000},
@@ -431,10 +487,19 @@ class Alliance(commands.Cog):
         await ctx.send(_("Successfully built a {defense}.").format(defense=name))
 
     @has_char()
-    @alliance.command()
+    @alliance.command(brief=_("Lists your city's buildings."))
     @locale_doc
     async def buildings(self, ctx):
-        _("""Lists buildings in your city.""")
+        _(
+            """Lists all buildings in your city, along with their level. These buildings give passive rewards to all alliance members:
+
+            Thief buildings increase your chance to steal money as a thief, for every level, this increases your chance by 10%
+            Raid buildings increase a user's raidstats by 0.1 per level
+            Trade buildings remove the need to pay the 5% tax when selling or buying items when it reached at least Level 1. It also increases the amount of money you get from `{prefix}merch` and `{prefix}merchall` increasing the reward by 50% for each level
+            Adventure buildings shorten the adventure time by 1% per level and increase your succes chances by 1% per level.
+
+            Your alliance must own a city to use this command."""
+        )
         async with self.bot.pool.acquire() as conn:
             alliance = await conn.fetchval(
                 'SELECT alliance FROM guild WHERE "id"=$1;', ctx.character_data["guild"]
@@ -457,10 +522,14 @@ class Alliance(commands.Cog):
         await ctx.send(embed=embed)
 
     @has_char()
-    @alliance.command()
+    @alliance.command(brief=_("Lists your city's defenses."))
     @locale_doc
     async def defenses(self, ctx):
-        _("""Lists defenses in your city.""")
+        _(
+            """Lists your city’s defenses and view the HP left for each.
+
+            Your alliance must own a city to use this command."""
+        )
         async with self.bot.pool.acquire() as conn:
             alliance = await conn.fetchval(
                 'SELECT alliance FROM guild WHERE "id"=$1;', ctx.character_data["guild"]
@@ -498,10 +567,15 @@ class Alliance(commands.Cog):
     @owns_city()
     @is_alliance_leader()
     @has_char()
-    @alliance.command()
+    @alliance.command(brief=_("Abandon your city"))
     @locale_doc
     async def abandon(self, ctx):
-        _("""[Alliance Leader only] Give up your city.""")
+        _(
+            """Abandoning your city will immediately make all alliance members lose all passive bonuses offered by the city's buildings and the city ownership will be given back to the System Guild Alliance.
+
+            Your alliance must own a city to use this command.
+            Only the alliance leader can use this command."""
+        )
         if not await ctx.confirm(
             _("Are you sure you want to give up control of your city?")
         ):
@@ -517,10 +591,21 @@ class Alliance(commands.Cog):
     @owns_no_city()
     @is_alliance_leader()
     @has_char()
-    @alliance.command()
+    @alliance.command(brief=_("Take over a city."))
     @locale_doc
     async def occupy(self, ctx, *, city: str.title):
-        _("""[Alliance Leader only] Take control of an empty city.""")
+        _(
+            """`<city>` - The name of a city. You can check the city names with `{prefix}alliance cities`
+
+            Occupy a city. Your alliance will then own that city and will be able to build defenses and level up buildings.
+            You can only occupy a city of it has zero defenses left.
+
+            Occupying a city sets it on a cooldown of 10 minutes, during which time it cannot be occupied by another alliance.
+            Occupying a city also sets all of its buildings back to level 0.
+
+        You cannot occupy a city if your alliance already owns one.
+        Only the alliance leader can use this command."""
+        )
         if city not in self.bot.config.cities:
             return await ctx.send(_("Invalid city name."))
         async with self.bot.pool.acquire() as conn:
@@ -562,10 +647,29 @@ class Alliance(commands.Cog):
 
     @alliance_cooldown(7200)
     @is_guild_leader()
-    @alliance.command()
+    @alliance.command(brief=_("Attack a city"))
     @locale_doc
     async def attack(self, ctx, *, city: str.title):
-        _("""[Guild Leader only] Attack a city.""")
+        _(
+            """`<city>` - The name of a city. You can check the city names with `{prefix}alliance cities`
+
+            Attack a city, reducing its defenses to potentially take it over.
+            Attacking a city will activate a grace period of 10 minutes, during which time it cannot be attacked again.
+
+            When using this command, the bot will send a link used to join the attack. Each member of the alliance can join.
+            Ten minutes after the link was sent, the users who joined will be gathered, their attack and defense depending on their equipped items, class and raid bonuses and their raidstats, and start the attack.
+
+            During the attack, the highest HP defenses will be attacked first. All attackers' damage will be summed up.
+            The defenses' damage sum up and damage either the attacker with the lowest HP or the attacker with the highest damage.
+
+            If a defense reaches zero HP, it will be removed from the city, it will not regenerate HP after the attack is over.
+            Attackers reaching zero HP will be removed from the attack as well.
+
+            If a city's defenses were destoroyed, your alliance can take occupy the city right away (`{prefix}alliance occupy`)
+
+            Only the alliance leader can use this command.
+            (This command has a cooldown of 2 hours.)"""
+        )
         if city not in self.bot.config.cities:
             await self.bot.reset_alliance_cooldown(ctx)
             return await ctx.send(_("Invalid city."))
@@ -791,10 +895,14 @@ class Alliance(commands.Cog):
             )
 
     @has_char()
-    @alliance.command(aliases=["cooldowns", "t", "cds"])
+    @alliance.command(
+        aliases=["cooldowns", "t", "cds"], brief=_("Lists alliance-specific cooldowns")
+    )
     @locale_doc
     async def timers(self, ctx):
-        _("""Lists all your cooldowns.""")
+        _(
+            """Lists alliance-specific cooldowns, meaning all alliance members have these cooldowns and cannot use the commands."""
+        )
         alliance = await self.bot.pool.fetchval(
             'SELECT alliance FROM guild WHERE "id"=(SELECT guild FROM profile WHERE'
             ' "user"=$1);',

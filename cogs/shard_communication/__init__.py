@@ -403,10 +403,12 @@ class Sharding(commands.Cog):
             pass
         return self._messages.pop(command_id, None)  # Cleanup
 
-    @commands.command(aliases=["cooldowns", "t", "cds"])
+    @commands.command(
+        aliases=["cooldowns", "t", "cds"], brief=_("Lists all your cooldowns")
+    )
     @locale_doc
     async def timers(self, ctx):
-        _("""Lists all your cooldowns.""")
+        _("""Lists all your cooldowns, including your adventure timer.""")
         cooldowns = await self.bot.redis.execute("KEYS", f"cd:{ctx.author.id}:*")
         adv = await self.bot.get_adventure(ctx.author)
         if not cooldowns and (not adv or adv[2]):
@@ -429,7 +431,7 @@ class Sharding(commands.Cog):
             timers = f"{timers}\n{text}"
         await ctx.send(f"```{timers}```")
 
-    @commands.command(aliases=["botstatus", "shards"])
+    @commands.command(aliases=["botstatus", "shards"], brief=_("Show the clusters"))
     @locale_doc
     async def clusters(self, ctx):
         _("""Lists all clusters and their current status.""")

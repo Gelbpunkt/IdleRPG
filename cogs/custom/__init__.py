@@ -42,16 +42,28 @@ class Custom(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
-    @commands.command(hidden=True)
+    @commands.command(
+        hidden=True, brief=_("In loving memory of Mary Johanna, ex-developer.")
+    )
     @locale_doc
     async def onetruechild(self, ctx):
-        _("""In loving memory of Mary Johanna, ex-developer.""")
+        _(
+            """*In loving memory of Mary Johanna, ex-developer.*
+
+            This custom command was added on May 15th 2019 and references the name of the child (ex-)developer Mary Johanna had with User Terror.
+            Anyone can use this command."""
+        )
         await ctx.send(_("His name is `#no homo` :heart:"))
 
-    @commands.command(hidden=True)
+    @commands.command(hidden=True, brief=_("Use to have Jester cast a spell ✨"))
     @locale_doc
     async def jester(self, ctx):
-        _("""Use to have Jester cast a spell ✨""")
+        _(
+            """*Use to have Jester cast a spell ✨*
+
+            This custom command was added on November 30th 2019, requested by User Jester😈🍭LaVorre.
+            Anyone can use this command."""
+        )
         await ctx.send(
             random.choice(
                 [
@@ -71,10 +83,15 @@ class Custom(commands.Cog):
             )
         )
 
-    @commands.command()
+    @commands.command(brief=_("It's a secret."))
     @locale_doc
     async def secret(self, ctx):
-        _("""It's a secret.""")
+        _(
+            """*It's a secret.*
+
+            This custom command was added on August 22nd 2019, requested by User Terror.
+            Anyone can use this command."""
+        )
         await ctx.send(
             embed=discord.Embed(
                 title=_("Gotcha"), description=_("Shhh, it's a secret!")
@@ -84,9 +101,16 @@ class Custom(commands.Cog):
             delete_after=3,
         )
 
-    @commands.command(hidden=True)
+    @commands.command(hidden=True, brief=_("Kill someone."))
     async def kill(self, ctx, target: MemberConverter):
-        """Kill someone."""
+        _(
+            """`<target>` - A discord user
+
+            *Kill someone.*
+
+            This custom command was added on September 22nd 2019, requested by User Stevelion.
+            Anyone can use this command."""
+        )
         await ctx.send(
             embed=discord.Embed(
                 title=f"{target} has been killed by {ctx.author}."
@@ -96,18 +120,28 @@ class Custom(commands.Cog):
         )
 
     @is_zinquo()
-    @commands.command(hidden=True)
+    @commands.command(hidden=True, brief=_("Summon phoenix"))
     async def phoenix(self, ctx):
-        """Temporary placeholder."""
+        _(
+            """This custom command was added on October 23rd by User Zinquo, referencing Greek Mythology.
+            Only Zinquo can use this command."""
+        )
         await ctx.send(
             "> “When the bones settle and all the ash falls, the phoenix will be"
             " reborn, and life begins anew.”"
         )
 
     @is_starlit()
-    @commands.command(hidden=True)
+    @commands.command(hidden=True, brief=_("Lick someone"))
     async def lick(self, ctx, *, user: MemberConverter):
-        """Get someone in sick and loving way."""
+        _(
+            """`<target>` - A discord user
+
+            *Get someone in sick and loving way.*
+
+            This command was added on March 12th 2020, requested by User Little Starlit.
+            Only Little Starlit can use this command."""
+        )
         await ctx.send(
             embed=discord.Embed(
                 title=f"{ctx.author} licks {user}!", colour=ctx.author.colour

@@ -56,11 +56,13 @@ class Trivia(commands.Cog):
         ).paginate(ctx)
         return answer == question["correct_answer"]
 
-    @commands.command(aliases=["tr"])
+    @commands.command(aliases=["tr"], brief=_("Answer a trivia question"))
     @locale_doc
     async def trivia(self, ctx, difficulty: str.lower = "easy"):
         _(
-            """Answer a trivia question of a given difficulty, which may be easy, medium or hard."""
+            """`[difficulty]` - The difficulty of the question, may be easy, medium or hard
+            
+            Answer a trivia question from [OpenTDB](https://opentdb.com/). You control your answer with the emoji reactions."""
         )
         try:
             question = await self.get_question(difficulty)

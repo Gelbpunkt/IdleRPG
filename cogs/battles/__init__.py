@@ -38,12 +38,25 @@ class Battles(commands.Cog):
 
     @has_char()
     @user_cooldown(90)
-    @commands.command()
+    @commands.command(brief=_("Battle against another player"))
     @locale_doc
     async def battle(
         self, ctx, money: IntGreaterThan(-1) = 0, enemy: MemberConverter = None
     ):
-        _("""Battle against another player.""")
+        _(
+            """`[money]` - A whole number that can be 0 or greater; defaults to 0
+            `[enemy]` - A user who has a profile; defaults to anyone
+
+            Fight against another player while betting money.
+            To decide the fight, the players' items, race and class bonuses and an additional number from 1 to 7 are evaluated, this serves as a way to give players with lower stats a chance at winning.
+
+            The money is removed from both players at the start of the battle. Once a winner has been decided, they will receive their money, plus the enemy's money.
+            The battle lasts 30 seconds, after which the winner and loser will be mentioned.
+
+            If both players' stats + random number are the same, the winner is decided at random.
+            The battle's winner will receive a PvP win, which shows on their profile.
+            (This command has a cooldown of 90 seconds.)"""
+        )
         if enemy == ctx.author:
             return await ctx.send(_("You can't battle yourself."))
         if ctx.character_data["money"] < money:
@@ -153,12 +166,27 @@ class Battles(commands.Cog):
 
     @has_char()
     @user_cooldown(300)
-    @commands.command()
+    @commands.command(brief=_("Battle against a player (inclusdes raidstats)"))
     @locale_doc
     async def raidbattle(
         self, ctx, money: IntGreaterThan(-1) = 0, enemy: MemberConverter = None
     ):
-        _("""Battle system based on raids.""")
+        _(
+            """`[money]` - A whole number that can be 0 or greater; defaults to 0
+            `[enemy]` - A user who has a profile; defaults to anyone
+
+            Fight against another player while betting money.
+            To decide the players' stats, their items, race and class bonuses and raidstats are evaluated.
+
+            The money is removed from both players at the start of the battle. Once a winner has been decided, they will receive their money, plus the enemy's money.
+            The battle is divided into rounds, in which a player attacks. The first round's attacker is chosen randomly, all other rounds the attacker is the last round's defender.
+
+            The battle ends if one player's HP drops to 0 (winner decided), or if 5 minutes after the battle started pass (tie).
+            In case of a tie, both players will get their money back.
+
+            The battle's winner will receive a PvP win, which shows on their profile.
+            (This command has a cooldown of 5 minutes)"""
+        )
         if enemy == ctx.author:
             return await ctx.send(_("You can't battle yourself."))
         if ctx.character_data["money"] < money:
@@ -367,12 +395,28 @@ class Battles(commands.Cog):
 
     @has_char()
     @user_cooldown(600)
-    @commands.command()
+    @commands.command(brief=_("Battle against a player (active)"))
     @locale_doc
     async def activebattle(
         self, ctx, money: IntGreaterThan(-1) = 0, enemy: MemberConverter = None
     ):
-        _("""Reaction-based battle system.""")
+        _(
+            """`[money]` - A whole number that can be 0 or greater; defaults to 0
+            `[enemy]` - A user who has a profile; defaults to anyone
+
+            Fight against another player while betting money.
+            To decide players' stats, their items, race and class bonuses are evaluated.
+
+            The money is removed from both players at the start of the battle. Once a winner has been decided, they will receive their money, plus the enemy's money.
+            The battle takes place in rounds. Each round, both players have to choose their move using the reactions.
+            Players can attack (⚔️), defend (🛡️) or recover HP (❤️).
+
+            The battle ends if one player's HP drops to 0 (winner decided), or a player does not move (forfeit).
+            In case of a forfeit, neither of the players will get their money back.
+
+            The battle's winner will receive a PvP win, which shows on their profile.
+            (This command has a cooldown of 10 minutes.)"""
+        )
         if enemy == ctx.author:
             return await ctx.send(_("You can't battle yourself."))
         if ctx.character_data["money"] < money:
@@ -458,18 +502,23 @@ class Battles(commands.Cog):
             },
         }
 
-        async with self.bot.pool.acquire() as conn:
-            for p in players:
-                c = await self.bot.pool.fetchval(
-                    'SELECT class FROM profile WHERE "user"=$1;', p.id
-                )
-                if self.bot.in_class_line(c, "Ranger"):
-                    players[p]["hp"] = 120
-                else:
-                    players[p]["hp"] = 100
-                d, a = await self.bot.get_damage_armor_for(p, conn=conn)
-                players[p]["damage"] = int(d)
-                players[p]["defense"] = int(a)
+        for p in players:
+            c = await self.bot.pool.fetchval(
+                'SELECT class FROM profile WHERE "user"=$1;', p.id
+            )
+            if self.bot.in_class_line(c, "Ranger"):
+                players[p]["hp"] = 120
+            else:
+                players[p]["hp"] = 100
+
+            sword, shield = await self.bot.get_equipped_items_for(p)
+            attack, defense = await self.bot.generate_stats(
+                p,
+                float(sword["damage"] if sword else 0),
+                float(shield["armor"] if shield else 0),
+            )
+            players[p]["damage"] = int(attack)
+            players[p]["defense"] = int(defense)
 
         moves = {
             "\U00002694": "attack",

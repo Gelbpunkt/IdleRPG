@@ -67,12 +67,14 @@ class Akinator(commands.Cog):
         }
         self.games = {}
 
-    @commands.group(aliases=["aki"])
+    @commands.group(aliases=["aki"], brief=_("Starts an akinator session."))
     @locale_doc
     async def akinator(self, ctx):
         _(
-            """Starts an aki session.
-        Use 'aki language' to change your personal language"""
+            """Play akinator. The game is controlled via the reactions on the embed.
+            \U000021A9 stands for undo, \U00002139 shows the current info.
+
+            To change the language, use `{prefix}akinator language`."""
         )
         if ctx.invoked_subcommand:
             return

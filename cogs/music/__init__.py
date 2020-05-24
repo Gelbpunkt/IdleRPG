@@ -266,10 +266,14 @@ class Music(commands.Cog):
     @is_not_locked()
     @get_player()
     @is_in_vc()
-    @commands.command(aliases=["cp"])
+    @commands.command(aliases=["cp"], brief=_("Choose a result to play"))
     @locale_doc
     async def chooseplay(self, ctx, *, query: str):
-        _("""Query for a track and play or add any result to the playlist.""")
+        _(
+            """`<query>` - The query to search a song by
+            
+            Query for a track and play or add any result to the playlist, you can choose from a multitude of tracks."""
+        )
         async with self.bot.trusted_session.get(
             f"{self.bot.config.query_endpoint}?limit=5&q={query}"
         ) as r:
@@ -324,10 +328,15 @@ class Music(commands.Cog):
     @is_not_locked()
     @get_player()
     @is_in_vc()
-    @commands.command()
+    @commands.command(brief=_("Play a song"))
     @locale_doc
     async def play(self, ctx, *, query: str):
-        _("""Query for a track and play or add the first result to the playlist.""")
+        _(
+            """`<query>` - The query to search a song by
+            
+            Query for a track and play or add the first result to the playlist.
+            If this is not the song you were looking for, try `{prefix}chooseplay`."""
+        )
         msg = await ctx.send(
             _("Downloading track... This might take up to 3 seconds...")
         )
@@ -366,11 +375,13 @@ class Music(commands.Cog):
     @is_dj()
     @get_player()
     @is_playing()
-    @commands.command(aliases=["unlock"])
+    @commands.command(aliases=["unlock"], brief=_("Lock the player"))
     @locale_doc
     async def lock(self, ctx):
         _(
-            """Lock/Unlock the player if you are the DJ. Allows noone else to control music."""
+            """Lock/Unlock the player. This allows nobody else to control the music.
+            
+            Only the session's DJ can use this command."""
         )
         if ctx.player.locked:
             ctx.player.locked = False
@@ -382,10 +393,14 @@ class Music(commands.Cog):
     @is_not_locked()
     @get_player()
     @is_playing()
-    @commands.command(aliases=["repeat"])
+    @commands.command(aliases=["repeat"], brief=_("Toggle repeat"))
     @locale_doc
     async def loop(self, ctx):
-        _("""Toggle repeat of the current track.""")
+        _(
+            """Toggle repeat of the currently playing song. Queue loop is not supported.
+            
+            If there are more than one person in the session and a non-DJ uses this command, a vote has to pass first."""
+        )
         if ctx.player.loop:
             ctx.player.loop = False
         else:
@@ -396,10 +411,14 @@ class Music(commands.Cog):
     @is_not_locked()
     @get_player()
     @is_playing()
-    @commands.command()
+    @commands.command(brief=_("Skip the currently playing song."))
     @locale_doc
     async def skip(self, ctx):
-        _("""Skip the currently playing song.""")
+        _(
+            """Skip the currently playing song.
+            
+            If there are more than one person in the session and a non-DJ uses this command, a vote has to pass first."""
+        )
         await ctx.player.stop()
         await ctx.message.add_reaction("✅")
 
@@ -407,10 +426,14 @@ class Music(commands.Cog):
     @is_not_locked()
     @get_player()
     @is_playing()
-    @commands.command(aliases=["leave"])
+    @commands.command(aliases=["leave"], brief=_("Stops the music"))
     @locale_doc
     async def stop(self, ctx):
-        _("""Stops the music and leaves voice chat.""")
+        _(
+            """Stops the music and leaves voice chat.
+            
+            If there are more than one person in the session and a non-DJ uses this command, a vote has to pass first."""
+        )
         del self.queue[ctx.guild.id]
         await ctx.player.destroy()
         await ctx.message.add_reaction("✅")
@@ -419,10 +442,14 @@ class Music(commands.Cog):
     @is_not_locked()
     @get_player()
     @is_playing()
-    @commands.command(aliases=["vol"])
+    @commands.command(aliases=["vol"], brief=_("Change the volume"))
     @locale_doc
     async def volume(self, ctx, volume: IntFromTo(0, 100)):
-        _("""Changes the playback's volume""")
+        _(
+            """Changes the playback's volume.
+            
+            If there are more than one person in the session and a non-DJ uses this command, a vote has to pass first."""
+        )
         if volume > ctx.player.volume:
             vol_warn = await ctx.send(
                 _(
@@ -450,7 +477,11 @@ class Music(commands.Cog):
     @commands.command(aliases=["resume"])
     @locale_doc
     async def pause(self, ctx):
-        _("""Toggles the music playback's paused state""")
+        _(
+            """Toggles the music playback's paused state.
+            
+            If there are more than one person in the session and a non-DJ uses this command, a vote has to pass first."""
+        )
         if not ctx.player.paused:
             await ctx.player.set_pause(True)
             await ctx.send(_(":white_check_mark:`Song paused!`"), delete_after=5)
@@ -462,10 +493,17 @@ class Music(commands.Cog):
     @is_not_locked()
     @get_player()
     @is_playing()
-    @commands.command(aliases=["equaliser", "eq"])
+    @commands.command(aliases=["equaliser", "eq"], brief=_("Change the equalizer"))
     @locale_doc
     async def equalizer(self, ctx, eq: str.upper):
-        _("""Sets the equalizer. May be flat, piano, metal or boost.""")
+        _(
+            """`<eq>` - The equalizer to use
+            
+            Sets the equalizer. May be **flat, piano, metal or boost**.
+            Flat is the standard, piano is quiet, metal boosts high frequencies and boost boosts low frequencies.
+            
+            If there are more than one person in the session and a non-DJ uses this command, a vote has to pass first."""
+        )
         if eq not in ctx.player.equalizers:
             return await ctx.send(
                 _("Not a valid equalizer. May be flat, piano, metal or boost.")
@@ -476,10 +514,10 @@ class Music(commands.Cog):
 
     @get_player()
     @is_playing()
-    @commands.command(aliases=["np"])
+    @commands.command(aliases=["np"], brief=_("Shows the current song."))
     @locale_doc
     async def now_playing(self, ctx):
-        _("""Displays some information about the current song.""")
+        _("""Displays some information about the currently playing song.""")
         current_song = self.queue[ctx.guild.id][0]
 
         if not (ctx.guild and ctx.author.color == discord.Color.default()):
@@ -540,7 +578,7 @@ class Music(commands.Cog):
 
     @get_player()
     @is_playing()
-    @commands.command(aliases=["q", "que", "cue"])
+    @commands.command(aliases=["q", "que", "cue"], brief=_("Show upcoming songs"))
     @locale_doc
     async def queue(self, ctx):
         _("""Show the next (maximum 5) tracks in the queue.""")
@@ -569,7 +607,9 @@ class Music(commands.Cog):
     @locale_doc
     async def lyrics(self, ctx, *, query: str = None):
         _(
-            """Retrieves song lyrics. If no song specified, will check the current playing song."""
+            """`<query>` - The query to search the song by; defaults to the currently playing song
+            
+            Retrieves song lyrics. If no song specified, will check the current playing song."""
         )
         await ctx.trigger_typing()
         if query is None and ctx.guild:

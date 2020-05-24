@@ -39,10 +39,20 @@ class Profile(commands.Cog):
 
     @checks.has_no_char()
     @user_cooldown(3600)
-    @commands.command(aliases=["new", "c", "start"])
+    @commands.command(aliases=["new", "c", "start"], brief=_("Create a new character"))
     @locale_doc
     async def create(self, ctx, *, name: str = None):
-        _("""Creates a new character.""")
+        _(
+            """`[name]` - The name to give your character; will be interactive if not given
+            
+            Create a new character and start playing IdleRPG.
+            
+            By creating a character, you agree to the [bot rules](https://wiki.travitia.xyz/index.php?title=Rules#botrules).
+            No idea where to go from here? Check out our [tutorial](https://idlerpg.travitia.xyz/tutorial/).
+            If you still have questions afterward, feel free to ask us on the official [support server](https://support.travitia.xyz/).
+            
+            (This command has a cooldown of 1 hour.)"""
+        )
         if not name:
             await ctx.send(
                 _(
@@ -125,10 +135,15 @@ IdleRPG is a global bot, your characters are valid everywhere"""
             )
             await self.bot.reset_cooldown(ctx)
 
-    @commands.command(aliases=["me", "p"])
+    @commands.command(aliases=["me", "p"], brief=_("View someone's profile"))
     @locale_doc
     async def profile(self, ctx, *, person: User = Author):
-        _("""View someone's or your own profile.""")
+        _(
+            """`[person]` - The person whose profile to view; defaults to oneself
+            
+            View someone's profile. This will send an image.
+            For an explanation what all the fields mean, see [this picture](https://wiki.travitia.xyz/images/3/35/Profile_explained.png)"""
+        )
         await ctx.trigger_typing()
         targetid = person.id
         async with self.bot.pool.acquire() as conn:
@@ -219,10 +234,16 @@ IdleRPG is a global bot, your characters are valid everywhere"""
                 img = BytesIO(await req.read())
         await ctx.send(file=discord.File(fp=img, filename="Profile.png"))
 
-    @commands.command(aliases=["p2", "pp"])
+    @commands.command(
+        aliases=["p2", "pp"], brief=_("View someone's profile differently")
+    )
     @locale_doc
     async def profile2(self, ctx, *, target: User = Author):
-        _("""View someone's profile, not image based.""")
+        _(
+            """`[target]` - The person whose profile to view
+            
+            View someone's profile. This will send an embed rather than an image and is usually faster."""
+        )
         rank_money, rank_xp = await self.bot.get_ranks_for(target)
 
         items = await self.bot.get_equipped_items_for(target)
@@ -317,10 +338,26 @@ IdleRPG is a global bot, your characters are valid everywhere"""
         await ctx.send(embed=em)
 
     @checks.has_char()
-    @commands.command()
+    @commands.command(brief=_("Show your current luck"))
     @locale_doc
     async def luck(self, ctx):
-        _("""Shows your luck factor ranging from 0 to 2.""")
+        _(
+            """Shows your current luck value.
+            
+            Luck updates once a week for everyone, usually on Monday. It depends on your God. 
+            Luck influences your adventure survival chances as well as the rewards.
+            
+            Luck is decided randomly within the Gods' luck boundaries. You can find your God's boundaries [here](https://wiki.travitia.xyz/index.php?title=Gods#List_of_Deities).
+            
+            If you have enough favor to place in the top 25 followers, you will gain additional luck:
+              - The top 25 to 21 will gain +0.1 luck
+              - The top 20 to 16 will gain +0.2 luck
+              - The top 15 to 11 will gain +0.3 luck
+              - The top 10 to 6 will gain +0.4 luck
+              - The top 5 to 1 will gain +0.5 luck
+              
+            If you follow a new God (or become Godless), your luck will not update instantly, it will update with everyone else's luck on Monday."""
+        )
         await ctx.send(
             _(
                 "Your current luck multiplier is `{luck}x` (≈{percent}% {adj} than"
@@ -333,10 +370,19 @@ IdleRPG is a global bot, your characters are valid everywhere"""
         )
 
     @checks.has_char()
-    @commands.command(aliases=["money", "e", "balance", "bal"])
+    @commands.command(
+        aliases=["money", "e", "balance", "bal"], brief=_("Shows your balance")
+    )
     @locale_doc
     async def economy(self, ctx):
-        _("""Shows your balance.""")
+        _(
+            """Shows the amount of money you currently have.
+            
+            Among other ways, you can get more money by:
+              - Playing adventures
+              - Selling unused equipment
+              - Gambling"""
+        )
         await ctx.send(
             _("You currently have **${money}**, {author}!").format(
                 money=ctx.character_data["money"], author=ctx.author.mention
@@ -344,10 +390,18 @@ IdleRPG is a global bot, your characters are valid everywhere"""
         )
 
     @checks.has_char()
-    @commands.command()
+    @commands.command(brief=_("Show a player's current XP"))
     @locale_doc
     async def xp(self, ctx, user: UserWithCharacter = Author):
-        _("""Shows current XP and level of a player.""")
+        _(
+            """`[user]` - The player whose XP and level to show; defaults to oneself
+            
+            Show a player's XP and level.
+            
+            You can gain more XP by:
+              - Completing adventures
+              - Exchanging loot items for XP"""
+        )
         if user.id == ctx.author.id:
             points = ctx.character_data["xp"]
             await ctx.send(
@@ -417,7 +471,7 @@ IdleRPG is a global bot, your characters are valid everywhere"""
         return result
 
     @checks.has_char()
-    @commands.command(aliases=["inv", "i"])
+    @commands.command(aliases=["inv", "i"], brief=_("Show your gear items"))
     @locale_doc
     async def inventory(
         self,
@@ -426,7 +480,18 @@ IdleRPG is a global bot, your characters are valid everywhere"""
         lowest: IntFromTo(0, 101) = 0,
         highest: IntFromTo(0, 101) = 101,
     ):
-        _("""Shows your current inventory.""")
+        _(
+            """`[itemtype]` - The type of item to show; defaults to all items
+            `[lowest]` - The lower boundary of items to show; defaults to 0
+            `[highest]` - The upper boundary of items to show; defaults to 101
+            
+            Show your gear items. Items that are in the market will not be shown.
+            
+            Gear items can be equipped, sold and given away, or upgraded and merged to make them stronger. 
+            You can gain gear items by completing adventures, opening crates, or having your pet hunt for them, if you are a ranger.
+            
+            To sell unused items for their value, use `{prefix}merch`. To put them up on the global player market, use `{prefix}sell`."""
+        )
         if highest < lowest:
             return await ctx.send(
                 _("Make sure that the `highest` value is greater than `lowest`.")
@@ -492,10 +557,17 @@ IdleRPG is a global bot, your characters are valid everywhere"""
         return result
 
     @checks.has_char()
-    @commands.command(aliases=["loot"])
+    @commands.command(aliases=["loot"], brief=_("Show your loot items"))
     @locale_doc
     async def items(self, ctx):
-        _("""Shows your adventure loot that can be exchanged or sacrificed""")
+        _(
+            """Show your loot items.
+            
+            Loot items can be exchanged for money or XP, or sacrificed to your God to gain favor points.
+            
+            You can gain loot items by completing adventures. The higher the difficulty, the higher the chance to get loot.
+            If you are a Ritualist, your loot chances are doubled. Check [our wiki](https://wiki.travitia.xyz/index.php?title=Loot#Probability) for the exact chances."""
+        )
         ret = await self.bot.pool.fetch(
             'SELECT * FROM loot WHERE "user"=$1;', ctx.author.id
         )
@@ -511,10 +583,16 @@ IdleRPG is a global bot, your characters are valid everywhere"""
 
     @checks.has_char()
     @user_cooldown(600)
-    @commands.command(aliases=["ex"])
+    @commands.command(aliases=["ex"], brief=_("Exchange your loot for money or XP"))
     @locale_doc
     async def exchange(self, ctx, *loot_ids: int):
-        _("""Exchange one or more loot items for money or xp.""")
+        _(
+            """`[loot_ids]` - The loot IDs to exchange; defaults to all loot
+            
+            Exchange your loot for money or XP, the bot will let you choose.
+            
+            If you choose money, you will get the loots' combined value in cash. For XP, you will get 1/4th of the combined value in XP."""
+        )
         if (none_given := (len(loot_ids) == 0)) :
             async with self.bot.pool.acquire() as conn:
                 value, count = await conn.fetchval(
@@ -603,10 +681,21 @@ IdleRPG is a global bot, your characters are valid everywhere"""
 
     @user_cooldown(180)
     @checks.has_char()
-    @commands.command(aliases=["use"])
+    @commands.command(aliases=["use"], brief=_("Equip an item"))
     @locale_doc
     async def equip(self, ctx, itemid: int):
-        _("""Equips an item of yours by ID.""")
+        _(
+            """`<itemid>` - The ID of the item to equip
+            
+            Equip an item by its ID, you can find the item IDs in your inventory.
+            
+            Each item has an assigned hand slot, 
+              "any" meaning that the item can go in either hand, 
+              "both" meaning it takes both hands, 
+              "left" and "right" should be clear.
+            
+            You cannot equip two items that use the same hand, or a second item if the one your have equipped is two-handed."""
+        )
         async with self.bot.pool.acquire() as conn:
             item = await conn.fetchrow(
                 'SELECT ai.* FROM inventory i JOIN allitems ai ON (i."item"=ai."id")'
@@ -703,10 +792,14 @@ IdleRPG is a global bot, your characters are valid everywhere"""
             )
 
     @checks.has_char()
-    @commands.command()
+    @commands.command(brief=_("Unequip an item"))
     @locale_doc
     async def unequip(self, ctx, itemid: int):
-        _("""Unequip one of your equipped items""")
+        _(
+            """`<itemid>` - The ID of the item to unequip
+            
+            Unequip one of your equipped items. This has no benefit whatsoever."""
+        )
         async with self.bot.pool.acquire() as conn:
             item = await conn.fetchrow(
                 'SELECT * FROM inventory i JOIN allitems ai ON (i."item"=ai."id") WHERE'
@@ -731,10 +824,24 @@ IdleRPG is a global bot, your characters are valid everywhere"""
 
     @checks.has_char()
     @user_cooldown(3600)
-    @commands.command()
+    @commands.command(brief=_("Merge two items to make a stronger one"))
     @locale_doc
     async def merge(self, ctx, firstitemid: int, seconditemid: int):
-        _("""Merges two items to a better one. Second one is consumed.""")
+        _(
+            """`<firstitemid>` - The ID of the first item
+            `<seconditemid>` - The ID of the second item
+            
+            Merges two items to a better one.
+            
+            :warning: The first item will be upgraded by +1, the second item will be destroyed.
+            
+            The two items must be of the same item type and within a 5 stat range of each other.
+            For example, if the first item is a 23 damage Scythe, the second item must be a Scythe with damage 18 to 28.
+            
+            One handed weapons can be merged up to 41, two handed items up to 62
+            
+            (This command has a cooldown of 1 hour.)"""
+        )
         if firstitemid == seconditemid:
             await self.bot.reset_cooldown(ctx)
             return await ctx.send(_("Good luck with that."))
@@ -794,10 +901,19 @@ IdleRPG is a global bot, your characters are valid everywhere"""
 
     @checks.has_char()
     @user_cooldown(3600)
-    @commands.command(aliases=["upgrade"])
+    @commands.command(aliases=["upgrade"], brief=_("Upgrade an item"))
     @locale_doc
     async def upgradeweapon(self, ctx, itemid: int):
-        _("""Upgrades an item's stat by 1.""")
+        _(
+            """`<itemid>` - The ID of the item to upgrade
+            
+            Upgrades an item's stat by 1.
+            The price to upgrade an item is 250 times its current stat. For example, upgrading a 15 damage sword will cost $3,750.
+            
+            One handed weapons can be upgraded up to 41, two handed items up to 62.
+            
+            (This command has a cooldown of 1 hour.)"""
+        )
         async with self.bot.pool.acquire() as conn:
             item = await conn.fetchrow(
                 'SELECT * FROM allitems WHERE "id"=$1 AND "owner"=$2;',
@@ -866,12 +982,17 @@ IdleRPG is a global bot, your characters are valid everywhere"""
         )
 
     @checks.has_char()
-    @commands.command()
+    @commands.command(brief=_("Give someone money"))
     @locale_doc
     async def give(
         self, ctx, money: IntFromTo(1, 100_000_000), other: MemberWithCharacter
     ):
-        _("""Gift money!""")
+        _(
+            """`<money>` - The amount of money to give to the other person, cannot exceed 100,000,000
+            `[other]` - The person to give the money to
+            
+            Gift money! It will be removed from you and added to the other person."""
+        )
         if other == ctx.author:
             return await ctx.send(_("No cheating!"))
         if ctx.character_data["money"] < money:
@@ -900,10 +1021,14 @@ IdleRPG is a global bot, your characters are valid everywhere"""
         )
 
     @checks.has_char()
-    @commands.command()
+    @commands.command(brief=_("Rename your character"))
     @locale_doc
     async def rename(self, ctx, *, name: str = None):
-        _("""Renames your character.""")
+        _(
+            """`[name]` - The name to use; if not given, this will be interactive
+            
+            Renames your character. The name must be from 3 to 20 characters long."""
+        )
         if not name:
             await ctx.send(
                 _(
@@ -931,10 +1056,17 @@ IdleRPG is a global bot, your characters are valid everywhere"""
             await ctx.send(_("Character names mustn't exceed 20 characters!"))
 
     @checks.has_char()
-    @commands.command(aliases=["rm", "del"])
+    @commands.command(aliases=["rm", "del"], brief=_("Delete your character"))
     @locale_doc
     async def delete(self, ctx):
-        _("""Deletes your character.""")
+        _(
+            """Deletes your character. There is no way to get your character data back after deletion.
+            
+            Deleting your character also removes:
+              - Your guild if you own one
+              - Your alliance's city ownership
+              - Your partner and children"""
+        )
         if not await ctx.confirm(
             _(
                 "Are you absolutely sure you want to delete your character? React in"
@@ -969,11 +1101,15 @@ IdleRPG is a global bot, your characters are valid everywhere"""
         )
 
     @checks.has_char()
-    @commands.command(aliases=["color"])
+    @commands.command(aliases=["color"], brief=_("Update your profile color"))
     @locale_doc
     async def colour(self, ctx, *, colour: str):
         _(
-            """Sets your profile text colour. The format may be #RGB, #RRGGBB, CSS3 defaults like "cyan", a rgb(r, g, b) tuple or a rgba(r, g, b, a) tuple."""
+            """`<color>` - The color to use, see below for allowed format
+            
+            Sets your profile text colour. The format may be #RGB, #RRGGBB, CSS3 defaults like "cyan", a rgb(r, g, b) tuple or a rgba(r, g, b, a) tuple.
+            
+            This will change the text color in `{prefix}profile` and the embed color in `{prefix}profile2`."""
         )
         try:
             rgba = colors.parse(colour)

@@ -417,39 +417,56 @@ class Gambling(commands.Cog):
         self.cards = os.listdir("assets/cards")
 
     @commands.cooldown(1, 15, commands.BucketType.user)
-    @commands.command(aliases=["card"])
+    @commands.command(aliases=["card"], brief=_("Draw a card."))
     @locale_doc
     async def draw(self, ctx):
-        _("""Draws a random card.""")
+        _(
+            """Draws a random card of the 52 french playing cards.
+
+            This command has no effect on your balance.
+            (This command has a cooldown of 15 seconds.)"""
+        )
         await ctx.send(file=discord.File(f"assets/cards/{random.choice(self.cards)}"))
 
     @has_char()
     @commands.cooldown(1, 15, commands.BucketType.user)
-    @commands.group(aliases=["rou"], invoke_without_command=True)
+    @commands.group(
+        aliases=["rou"],
+        invoke_without_command=True,
+        brief=_("Play a game of French Roulette"),
+    )
     @locale_doc
     async def roulette(self, ctx, money: IntFromTo(0, 100), *, bid: str):
         _(
-            """Play a game of French Roulette.
-Possible simple bets:
-    - noir    (all black numbers)
-    - rouge   (all red numbers)
-    - pair    (all even numbers)
-    - impair  (all odd numbers)
-    - manque  (1-18)
-    - passe   (19-36)
-    - premier (1-12)
-    - milieu  (13-24)
-    - dernier (25-36)
-Complicated bets:
-    - colonne (34/35/36) (all numbers in a row on the betting table, either 1, 4, ..., 34 or 2, 5, ..., 35 or 3, 6, ... 36)
-    - transversale (vertical low)-(vertical high)    This includes simple and pleine (a vertical row on the betting table, e.g. 19-21. can also be two rows, e.g. 4-9)
-        - les trois premiers (numbers 0, 1, 2)
-    - carre (low)-(high) (a section of four numbers in a square on the betting table, e.g. 23-27)
-        - les quatre premiers (numbers 0, 1, 2, 3)
-    - cheval (number 1) (number 2) (a simple bet on two numbers)
-    - plein (number) (a simple bet on one number)
+            """`<money>` - A whole number from 0 to 100
+`<bid>` - What to bid on, see below for details
 
-To visualize the rows and columns, use the command: roulette table"""
+Play a game of French Roulette.
+
+Possible simple bets:
+    - noir    (all black numbers) (1:1 payout)
+    - rouge   (all red numbers) (1:1 payout)
+    - pair    (all even numbers) (1:1 payout)
+    - impair  (all odd numbers) (1:1 payout)
+    - manque  (1-18) (1:1 payout)
+    - passe   (19-36) (1:1 payout)
+    - premier (1-12) (2:1 payout)
+    - milieu  (13-24) (2:1 payout)
+    - dernier (25-36) (2:1 payout)
+
+Complicated bets:
+    - colonne (34/35/36) (all numbers in a row on the betting table, either 1, 4, ..., 34 or 2, 5, ..., 35 or 3, 6, ... 36) (2:1 payout)
+    - transversale (vertical low)-(vertical high)    This includes simple and pleine (a vertical row on the betting table, e.g. 19-21. can also be two rows, e.g. 4-9) (11:1 payout for pleine, 5:1 for simple)
+        - les trois premiers (numbers 0, 1, 2) (11:1 payout)
+    - carre (low)-(high) (a section of four numbers in a square on the betting table, e.g. 23-27) (8:1 payout)
+        - les quatre premiers (numbers 0, 1, 2, 3) (8:1 payout)
+    - cheval (number 1) (number 2) (a simple bet on two numbers) (17:1 payout)
+    - plein (number) (a simple bet on one number) (35:1 payout)
+
+To visualize the rows and columns, use the command: roulette table
+
+This command is in an alpha-stage, which means bugs are likely to happen. Play at your own risk.
+(This command has a cooldown of 15 seconds.)"""
         )
         if ctx.character_data["money"] < money:
             return await ctx.send(_("You're too poor."))
@@ -464,7 +481,7 @@ To visualize the rows and columns, use the command: roulette table"""
             )
         await game.run(ctx)
 
-    @roulette.command()
+    @roulette.command(brief=_("Show the roulette table"))
     @locale_doc
     async def table(self, ctx):
         _("""Sends a picture of a French Roulette table.""")
@@ -472,7 +489,7 @@ To visualize the rows and columns, use the command: roulette table"""
 
     @has_char()
     @commands.cooldown(1, 5, commands.BucketType.user)
-    @commands.command(aliases=["coin"])
+    @commands.command(aliases=["coin"], brief=_("Toss a coin"))
     @locale_doc
     async def flip(
         self,
@@ -481,7 +498,15 @@ To visualize the rows and columns, use the command: roulette table"""
         *,
         amount: IntFromTo(0, 100_000) = 0,
     ):
-        _("""Flip a coin and bid on the outcome.""")
+        _(
+            """`[side]` - The coin side to bet on, can be heads or tails; defaults to heads
+            `[amount]` - A whole number from 1 to 100,000; defaults to 0
+
+            Bet money on a coinflip.
+
+            If the coin lands on the side you bet on, you will receive the amount in cash. If it's the other side, you lose that amount.
+            (This command has a cooldown of 5 seconds.)"""
+        )
         if ctx.character_data["money"] < amount:
             return await ctx.send(_("You are too poor."))
         result = random.choice(
@@ -531,7 +556,7 @@ To visualize the rows and columns, use the command: roulette table"""
 
     @has_char()
     @commands.cooldown(1, 5, commands.BucketType.user)
-    @commands.command()
+    @commands.command(brief=_("Bet on a specific outcome of an n-sided dice."))
     @locale_doc
     async def bet(
         self,
@@ -541,7 +566,20 @@ To visualize the rows and columns, use the command: roulette table"""
         money: IntFromTo(0, 100_000) = 0,
     ):
         _(
-            """Bet on the outcome of a dice roll with [maximum] sides. [tip] specifies the side you bet on. You will win [maximum - 1] * [money] money if you are right and lose [money] if you are wrong."""
+            """`[maximum]` - The amount of sides the dice will have, must be greater than 1; defaults to 6
+            `[tip]` - The number to bet on, must be greater than 0 and lower than, or equal to `[maximum]`; defaults to 6
+            `[money]` - The amount of money to bet, must be between 0 and 100,000; defaults to 0
+
+            Bet on the outcome of an n-sided dice.
+
+            You will win [maximum - 1] * [money] money if you are right and lose [money] if you are wrong.
+            For example:
+              {prefix}bet 10 4 100
+              - Rolls a 10 sided dice
+              - If the dice lands on 4, you will receive $900
+              - If the dice lands on any other number, you will lose $100
+
+            (This command has a cooldown of 5 seconds.)"""
         )
         if tip > maximum:
             return await ctx.send(
@@ -602,10 +640,27 @@ To visualize the rows and columns, use the command: roulette table"""
 
     @has_char()
     @commands.cooldown(1, 5, commands.BucketType.user)
-    @commands.command(aliases=["bj"])
+    @commands.command(aliases=["bj"], brief=_("Play blackjack against the bot."))
     @locale_doc
     async def blackjack(self, ctx, amount: IntFromTo(0, 1000) = 0):
-        _("""[Alpha] Play blackjack against the dealer.""")
+        _(
+            """`[amount]` - The amount of money you bet, must be between 0 and 1000; defaults to 0
+
+            Play a round of blackjack against the bot, controlled by reactions.
+            The objective is to have a card value as close to 21 as possible, without exceeding it (known as bust).
+            Having a card value of exactly 21 is known as a blackjack.
+
+            \U00002934 Hit: Pick up another card
+            \U00002935 Stand: stay at your current card value
+            \U00002194 Split (if dealt two cards with the same value): Split your two cards into separate hands
+            \U0001F501 Switch (if split): Change the focussed hand
+            \U000023EC Double down: double the amount you bet in exchange for only one more card
+
+            If a player wins, they will get the amount in cash. If they lose, they will lose that amount.
+            If they win with a natural blackjack (first two dealt card get to a vlue of 21), the player wins 1.5 times the amount.
+
+            (This command has a cooldown of 5 seconds.)"""
+        )
         if ctx.character_data["money"] < amount:
             return await ctx.send(_("You're too poor."))
         await self.bot.pool.execute(
@@ -625,12 +680,15 @@ To visualize the rows and columns, use the command: roulette table"""
         await bj.run()
 
     @has_char()
-    @commands.command(aliases=["doubleorsteal"])
+    @commands.command(aliases=["doubleorsteal"], brief=_("Play double-or-steal"))
     @locale_doc
     async def dos(self, ctx, user: MemberWithCharacter = None):
         _(
-            "Play a double-or-steal game against someone. You start with $100 and can"
-            " take it or double it with your money."
+            """`[user]` - A discord user with a character; defaults to anyone
+
+            Play a round of double-or-steal against a player.
+
+            Each round, a player can double the bet played for, or steal, removing the bet from the other player and giving it to the first."""
         )
         msg = await ctx.send(
             _("React with 💰 to play double-or-steal with {user}!").format(

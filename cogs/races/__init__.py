@@ -27,10 +27,23 @@ class Races(commands.Cog):
 
     @has_char()
     @user_cooldown(180)
-    @commands.command()
+    @commands.command(brief=_("Pick or change your race"))
     @locale_doc
     async def race(self, ctx):
-        _("""Change your race. This is irreversible.""")
+        _(
+            """Pick or change your race. This can be chosen as long as you have reset points left.
+            
+            Each race has a different DMG/DEF distribution:
+              - Orc: +4 defense, +0 damage
+              - Dwarf: +3 defense, +1 damage
+              - Human: +2 defense, +2 damage
+              - Elf: +1 defense, +3 damage
+              - Jikill: +0 defense, +4 damage
+              
+            By default, you are a human.
+            
+            After picking the race, you will be asked a personal question, the answer may affect something."""
+        )
         if not is_nothing(ctx):
             if ctx.character_data["reset_points"] < 1:
                 return await ctx.send(_("You have no more reset points."))

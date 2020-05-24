@@ -36,10 +36,19 @@ class Gods(commands.Cog):
 
     @has_god()
     @has_char()
-    @commands.command()
+    @commands.command(brief=_("Sacrifice loot for favor"))
     @locale_doc
     async def sacrifice(self, ctx, *loot_ids: int):
-        _("""Sacrifice an item for favor.""")
+        _(
+            """`[loot_ids]` - The loot IDs to sacrifice, can be one or multiple IDs separated by space; defaults to all loot
+
+            Sacrifice loot to your God to gain favor points.
+
+            If no loot IDs are given with this command, all loot you own will be sacrificed.
+            You can see your current loot with `{prefix}loot`.
+
+            Only players, who follow a God can use this command."""
+        )
         if await self.bot.redis.execute("GET", f"cd:{ctx.author.id}:exchange"):
             return await ctx.send(
                 _(
@@ -118,10 +127,18 @@ class Gods(commands.Cog):
 
     @has_char()
     @user_cooldown(180)  # to prevent double invoke
-    @commands.command()
+    @commands.command(brief=_("Choose or change your God"))
     @locale_doc
     async def follow(self, ctx):
-        _("""Choose your deity.""")
+        _(
+            """Choose a God or change your current God for a reset point.
+            Every player gets 2 reset points when they start playing, you cannot get any more.
+
+            Following a God allows your `{prefix}luck` to fluctuate, check `{prefix}help luck` to see the exact effects this will have on your gameplay.
+            If you don't have any reset points left, or became Godless, you cannot follow another God.
+
+            (This command has a cooldown of 3 minutes.)"""
+        )
         if not has_no_god(ctx):
             if ctx.character_data["reset_points"] < 1:
                 return await ctx.send(_("You have no more reset points."))
@@ -184,10 +201,17 @@ Are you sure you want to follow {god}?"""
 
     @has_char()
     @has_god()
-    @commands.command()
+    @commands.command(brief=_("Unfollow your God and become Godless"))
     @locale_doc
     async def unfollow(self, ctx):
-        _("""Unfollow your deity to become Godless.""")
+        _(
+            """Unfollow your current God and become Godless. **This is permanent!**
+
+            Looking to change your God instead? Simply use `{prefix}follow` again.
+
+            Once you become Godless, all your reset points and your God are removed.
+            Becoming Godless does not mean that your luck returns to 1.00 immediately, it changes along with everyone else's luck on Monday."""
+        )
         if ctx.character_data["reset_points"] < 0:
             # this shouldn't happen in normal play, but you never know
             return await ctx.send(_("You already became Godless before."))
@@ -219,10 +243,16 @@ Are you sure you want to follow {god}?"""
     @has_god()
     @has_char()
     @next_day_cooldown()
-    @commands.command()
+    @commands.command(brief=_("Pray to your God to gain favor"))
     @locale_doc
     async def pray(self, ctx):
-        _("""Pray to your deity to gain favor.""")
+        _(
+            """Pray to your God in order to gain a random amont of favor points, ranging from 0 to 1000.
+
+            There is a 33% chance you will gain 0 favor, a 33% chance to gain anywhere from 0 to 500 favor and a 33% chance to gain anywhere from 500 to 1000 favor.
+
+            (This command has a cooldown until 12am UTC.)"""
+        )
         if (rand := random.randint(0, 2)) == 0:
             message = random.choice(
                 [
@@ -274,10 +304,22 @@ Are you sure you want to follow {god}?"""
 
     @has_god()
     @has_char()
-    @commands.command(aliases=["favour"])
+    @commands.command(aliases=["favour"], brief=_("Shows your God and favor"))
     @locale_doc
     async def favor(self, ctx):
-        _("""Shows your god and favor.""")
+        _(
+            """Shows your current God and how much favor you have with them at the time.
+
+            If you have enough favor to place in the top 25 of that God's followers, you will gain extra luck when the new luck is decided, this usually happens on Monday.
+              - The top 25 to 21 will gain +0.1 luck
+              - The top 20 to 16 will gain +0.2 luck
+              - The top 15 to 11 will gain +0.3 luck
+              - The top 10 to 6 will gain +0.4 luck
+              - The top 5 to 1 will gain +0.5 luck
+
+            These extra luck values are based off the chosen luck value, for example, if your God's luck value is chosen to be 1.2 and you are the 13th best follower, you will have 1.5 luck for that week.
+            All favor is reset to 0 when the new luck is decided to make it fair for everyone."""
+        )
         await ctx.send(
             _("Your god is **{god}** and you have **{favor}** favor with them.").format(
                 god=ctx.character_data["god"], favor=ctx.character_data["favor"]
@@ -286,10 +328,22 @@ Are you sure you want to follow {god}?"""
 
     # just like admin commands, these aren't translated
     @has_char()
-    @commands.command()
+    @commands.command(brief=_("Show the top followers of your God"))
     @locale_doc
     async def followers(self, ctx, limit: IntGreaterThan(0)):
-        _("""Lists top followers of your god (or yourself).""")
+        _(
+            """`<limit>` - A whole number from 0 to 25. If you are a God, the upper bound is lifted.
+
+            Display your God's (or your own, if you are a God) top followers, up to `<limit>`.
+
+            The format for this is as follows:
+              - Placement
+              - User ID
+              - Amount of favor
+              - current luck
+
+            The result is attached as a text file."""
+        )
         if ctx.author.id in self.bot.gods:
             god = self.bot.gods[ctx.author.id]
         elif not ctx.character_data["god"]:
@@ -319,17 +373,24 @@ Are you sure you want to follow {god}?"""
         )
 
     @is_god()
-    @commands.command(aliases=["resetfavour"], enabled=False)
+    @commands.command(
+        aliases=["resetfavour"],
+        enabled=False,
+        brief=_("Set all your followers favor to 0"),
+    )
     async def resetfavor(self, ctx):
-        """[Gods Only] Reset all your followers' favor."""
+        """Sets all your followers favor to 0. Only Gods can use this command."""
         god = self.bot.gods[ctx.author.id]
         await self.bot.pool.execute('UPDATE profile SET "favor"=0 WHERE "god"=$1;', god)
         await ctx.send("Done.")
 
     @is_god()
-    @commands.command(enabled=False)
+    @commands.command(enabled=False, brief=_("Set your followers' luck"))
     async def setluck(self, ctx, amount: float, target: UserWithCharacter = "all"):
-        """[Gods Only] Gives luck to all of your followers or specific ones."""
+        """´<amount>´ - a number from 0 to 2 with two decimal places
+        `[target]` - the follower's luck to set; defaults to all followers
+
+        Set your followers' luck to a specific value."""
         god = self.bot.gods[ctx.author.id]
         if target != "all" and ctx.user_data["god"] != god:
             return await ctx.send("Not a follower of yours.")

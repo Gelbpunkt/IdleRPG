@@ -301,13 +301,15 @@ class Maths(commands.Cog):
         del self.parser.TEMP[id]
         return res
 
-    @commands.command(aliases=["calculate", "math", "maths"])
+    @commands.command(aliases=["calculate", "math", "maths"], brief=_("Do some maths"))
     @locale_doc
     async def calc(self, ctx, *, expr: str):
         _(
-            """Calculates something. pi is pi, tau is tau and e is math.e
-        Supports round(), sin(), cos(), sqrt(), tan() and infinity (inf) and NaN (nan).
-        Works with variable assignment and multiline-statements."""
+            """`<expr>` - The mathematical expression to calculate
+            
+            Calculates something. pi is pi, tau is tau and e is math.e
+            Supports round(), sin(), cos(), sqrt(), tan() and infinity (inf) and NaN (nan).
+            Works with variable assignment and multiline-statements."""
         )
         try:
             ret = await self.bot.loop.run_in_executor(

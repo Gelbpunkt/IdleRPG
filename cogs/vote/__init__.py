@@ -24,10 +24,16 @@ class Vote(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
-    @commands.command()
+    @commands.command(brief=_("Vote for the bot on top.gg"))
     @locale_doc
     async def vote(self, ctx):
-        _("""Vote me up to get a random crate!""")
+        _(
+            """Vote me up to get a random crate!
+            
+            You may receive a common crate (89%), an uncommon crate (6%), a rare crate (4%), a magic crate (0.9%) or a legendary crate (0.1%)
+            
+            If your vote was not registered, make sure you are logged into the right account on https://discord.com/login and try again."""
+        )
         await ctx.send(
             _(
                 "Upvote me to receive a random crate! You will be rewarded a few"

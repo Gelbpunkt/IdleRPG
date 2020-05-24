@@ -54,10 +54,15 @@ class Guild(commands.Cog):
         self.bot = bot
 
     @has_char()
-    @commands.group(invoke_without_command=True)
+    @commands.group(invoke_without_command=True, brief=_("Interact with your guild."))
     @locale_doc
     async def guild(self, ctx):
-        _("""This command contains all guild-related commands.""")
+        _(
+            """Interact with your guild. If no subcommand is given, this will show your guild.
+
+            Guilds are groups of players, they have a guild bank where money can be kept safe from thieves and the guild's members can go on adventures to earn extra rewards.
+            Players cannot join guilds by themselves, they must be invited by the guild leader or one of its officers."""
+        )
         guild = await self.bot.pool.fetchrow(
             'SELECT * FROM guild WHERE "id"=$1;', ctx.character_data["guild"]
         )
@@ -108,14 +113,13 @@ class Guild(commands.Cog):
                 ).format(prefix=ctx.prefix)
             )
 
-    @guild.command()
+    @guild.command(brief=_("Show a specific guild"))
     @locale_doc
     async def info(self, ctx, *, by: Union[MemberWithCharacter, str]):
         _(
-            """\
-Look up a guild by its name or by a player.
-To look up a guild by its name, use guild:name.
-To look up a guild by its ID, use id:number."""
+            """`<by>` - The guild's name (format `guild:name`, i.e. `guild:Adrian's Refuge`), its ID (format `id:number`, i.e. `id:5003`), or a person in the guild.
+
+            Show a specific guild's info. You can look up guilds by its name, its ID, or a player in that guild."""
         )
         kwargs = {}
         if isinstance(by, str):
@@ -137,10 +141,14 @@ To look up a guild by its ID, use id:number."""
                 kwargs.update(guild_id=guild_id)
         await self.get_guild_info(ctx, **kwargs)
 
-    @guild.command()
+    @guild.command(brief=_("Show the best guilds by GvG wins"))
     @locale_doc
     async def ladder(self, ctx):
-        _("""The best GvG guilds.""")
+        _(
+            """Shows the top 10 guilds ordered by Guild vs Guild wins.
+
+            To get more GvG wins, the guild leader or its officers can use `{prefix}guild battle`."""
+        )
         guilds = await self.bot.pool.fetch(
             "SELECT * FROM guild ORDER BY wins DESC LIMIT 10;"
         )
@@ -158,10 +166,16 @@ To look up a guild by its ID, use id:number."""
         )
 
     @has_guild()
-    @guild.command()
+    @guild.command(brief=_("Show a list of your guild members."))
     @locale_doc
     async def members(self, ctx):
-        _("""Shows you a list of your guild members.""")
+        _(
+            """Show a list of your guild members. If a user's name cannot be found for whatever reason, their user ID is displayed.
+
+            This command can take a minute to load, depending on the amount of members in your guild. Please be patient.
+
+            Only players who are part of a guild can use this command."""
+        )
         members = await self.bot.pool.fetch(
             'SELECT "user", "guildrank" FROM profile WHERE "guild"=$1;',
             ctx.character_data["guild"],
@@ -179,10 +193,16 @@ To look up a guild by its ID, use id:number."""
 
     @has_char()
     @is_guild_leader()
-    @guild.command()
+    @guild.command(brief=_("Change your guild's badge"))
     @locale_doc
     async def badge(self, ctx, number: IntGreaterThan(0)):
-        _("""[Guild Owner only] Change the guild badge.""")
+        _(
+            """`<number>` - The number of the guild badge to use, ranging from 1 to the amount of available badges
+
+            Change your guild's badge, it will display in `{prefix}guild info`.
+
+            Only guild leaders can use this command."""
+        )
         async with self.bot.pool.acquire() as conn:
             bgs, channel = await conn.fetchval(
                 'SELECT (badges, channel) FROM guild WHERE "leader"=$1;', ctx.author.id
@@ -209,10 +229,25 @@ To look up a guild by its ID, use id:number."""
     @has_char()
     @has_no_guild()
     @user_cooldown(600)
-    @guild.command()
+    @guild.command(brief=_("Create a guild"))
     @locale_doc
     async def create(self, ctx):
-        _("""Creates a guild.""")
+        _(
+            """Create a guild for $10,000.
+
+            Creating a guild has no level requirements, as long as you have $10,000, you can create a guild.
+            To create a guild, you will need the following:
+              - A name with 20 characters or less
+              - An image URL with 60 characters or less to your guild's icon
+              - $10,000
+
+            Having trouble finding a short image URL? Check [this tutorial](https://wiki.travitia.xyz/index.php?title=Tutorial:_Short_Image_URLs)
+
+            The bot will ask for these separately. When you enter the guild's name or URL, don't include `{prefix}`.
+
+            Only players who are not already in a guild can use this command.
+            (This command has a cooldown of 10 minuets.)"""
+        )
 
         def mycheck(amsg):
             return amsg.author == ctx.author
@@ -280,10 +315,18 @@ To look up a guild by its ID, use id:number."""
         )
 
     @is_guild_leader()
-    @guild.command()
+    @guild.command(brief=_("Give your guild to someone else"))
     @locale_doc
     async def transfer(self, ctx, member: MemberWithCharacter):
-        _("""Transfer guild ownership to someone else.""")
+        _(
+            """`<member>` - A discord User with a character, must be a member of your guild.
+
+            Transfer your guild to someone else. This person will be the new guild leader, while you will become a regular member.
+
+            If the user you transfer the guild to is a patron, the guild's member limit will be set to 100, otherwise it will be set to 50.
+
+            Only guild leaders can use this command."""
+        )
         if (
             member == ctx.author
             or ctx.character_data["guild"] != ctx.user_data["guild"]
@@ -321,10 +364,25 @@ To look up a guild by its ID, use id:number."""
         )
 
     @is_guild_leader()
-    @guild.command()
+    @guild.command(brief=_("Promote a guild member to officer."))
     @locale_doc
     async def promote(self, ctx, member: MemberWithCharacter):
-        _("""Promote someone to the rank of officer""")
+        _(
+            """`<member>` - A discord User with a character, must be a member of your guild
+
+            Promote a member of your guild to the officer rank. This allows them to use certain guild commands. Officers can:
+              - Invite new members
+              - Kick members from the guild (cannot kick officers)
+              - Take money out of the guild bank
+              - Distribute money from the guild bank
+              - Start battles with other guilds
+              - Start and finish guild adventures
+
+            Officers cannot be kicked from your guild and must be demoted first.
+            Only promote members you trust. You can demote officers using `{prefix}guild demote`.
+
+            Only guild leaders can use this command."""
+        )
         if member == ctx.author:
             return await ctx.send(_("Very funny..."))
         if ctx.character_data["guild"] != ctx.user_data["guild"]:
@@ -349,10 +407,16 @@ To look up a guild by its ID, use id:number."""
         )
 
     @is_guild_leader()
-    @guild.command()
+    @guild.command(brief=_("Demote a guild officer to member."))
     @locale_doc
     async def demote(self, ctx, member: UserWithCharacter):
-        _("""Demotes someone from the officer rank""")
+        _(
+            """`<member>` - A discord User with a character, must be an officer of your guild
+
+            Demotes an officer of your guild to member rank. The user will lose their guild officer permissions immediately.
+
+            Only guild leaders can use this command."""
+        )
         if member == ctx.author:
             return await ctx.send(_("Very funny..."))
         if ctx.character_data["guild"] != ctx.user_data["guild"]:
@@ -377,10 +441,17 @@ To look up a guild by its ID, use id:number."""
         )
 
     @is_guild_officer()
-    @guild.command()
+    @guild.command(brief=_("Invite new members to your guild."))
     @locale_doc
     async def invite(self, ctx, newmember: MemberWithCharacter):
-        _("""[Guild officer only] Invite someone to your guild.""")
+        _(
+            """`<member>` - A discord user with a character who is not yet in a guild.
+
+            Invites a new member to your guild.
+            If your guild is in an alliance which owns a city, the new member will have its bonuses applied immediately.
+
+            Only guild leaders and officers can use this command."""
+        )
         if ctx.user_data["guild"]:
             return await ctx.send(_("That member already has a guild."))
         async with self.bot.pool.acquire() as conn:
@@ -422,10 +493,16 @@ To look up a guild by its ID, use id:number."""
 
     @has_guild()
     @is_no_guild_leader()
-    @guild.command()
+    @guild.command(brief=_("Leave your guild"))
     @locale_doc
     async def leave(self, ctx):
-        _("""Leave your current guild.""")
+        _(
+            """Leave your current guild
+
+            If your guild was in an alliance which owned a city, you will have its bonuses removed immediately.
+
+            Only players who are in a guild, beside guild leaders, can use this command."""
+        )
         async with self.bot.pool.acquire() as conn:
             await conn.execute(
                 'UPDATE profile SET "guild"=$1, "guildrank"=$2 WHERE "user"=$3;',
@@ -442,10 +519,19 @@ To look up a guild by its ID, use id:number."""
         await self.bot.http.send_message(channel, f"**{ctx.author}** left the guild.")
 
     @is_guild_officer()
-    @guild.command()
+    @guild.command(brief=_("Kick a member from your guild."))
     @locale_doc
     async def kick(self, ctx, member: Union[MemberWithCharacter, int]):
-        _("""[Guild Officer only] Kick someone from your guild.""")
+        _(
+            """`<member>` - A discord User with a character, must be a member of your guild
+
+            Kicks a member from your guild. Officers cannot be kicked.
+            If your guild is in an alliance which owns a city, the member will have its bonuses removed immediately.
+
+            If the member shares no server with you, you may use their [User ID](https://support.discordapp.com/hc/en-us/articles/206346498-Where-can-I-find-my-User-Server-Message-ID-) as the member parameter.
+
+            Only guild leaders and officers can use this command."""
+        )
         if hasattr(ctx, "user_data"):
             if ctx.user_data["guild"] != ctx.character_data["guild"]:
                 return await ctx.send(_("Not your guild mate."))
@@ -478,10 +564,18 @@ To look up a guild by its ID, use id:number."""
         )
 
     @is_guild_leader()
-    @guild.command()
+    @guild.command(brief=_("Delete your guild"))
     @locale_doc
     async def delete(self, ctx):
-        _("""[Guild Owner only] Deletes the guild.""")
+        _(
+            """Delete your guild.
+
+            If you would just like to leave the guild, consider transferring it to someone, then leaving normally.
+
+            If your guild was in an alliance which owned a city, all members will lose its bonuses immediately.
+
+            Only guild leaders can use this command."""
+        )
         if not await ctx.confirm(
             _("Are you sure to delete your guild? React to confirm the deletion.")
         ):
@@ -505,10 +599,19 @@ To look up a guild by its ID, use id:number."""
         await self.bot.http.send_message(channel, f"Guild deleted by **{ctx.author}**")
 
     @is_guild_leader()
-    @guild.command()
+    @guild.command(brief=_("Change your guild's icon"))
     @locale_doc
     async def icon(self, ctx, url: str):
-        _("""[Guild Leader only] Changes the guild icon.""")
+        _(
+            """`<url>` - The image URL to use as the icon
+
+            Change your guild's icon. The URL cannot exceed 60 characters.
+            :warning: This can be seen by anyone, do not use NSFW/innapropriate images. GIFs are not supported.
+
+            Having trouble finding short image URLs? Follow [this tutorial](https://wiki.travitia.xyz/index.php?title=Tutorial:_Short_Image_URLs)!
+
+            Only guild leaders can use this command."""
+        )
         if len(url) > 60:
             return await ctx.send(_("URLs musn't exceed 60 characters."))
         if not (
@@ -532,10 +635,17 @@ To look up a guild by its ID, use id:number."""
         )
 
     @is_guild_leader()
-    @guild.command()
+    @guild.command(brief=_("Change your guild description."))
     @locale_doc
     async def description(self, ctx, *, text: str):
-        _("""[Guild Owner only] Changes the guild description.""")
+        _(
+            """`<text>` - The text to use as the description. Cannot exceed 200 characters.
+
+            Change the description of your guild.
+            :warning: This can be seen by everyone, do not use NSFW/inappropriate text.
+
+            Only guild leaders can use this command."""
+        )
         if len(text) > 200:
             return await ctx.send(_("The text may be up to 200 characters only."))
         channel = await self.bot.pool.fetchval(
@@ -550,11 +660,31 @@ To look up a guild by its ID, use id:number."""
 
     @commands.has_permissions(administrator=True)
     @is_guild_leader()
-    @guild.command()
+    @guild.command(brief=_("Set/update the guild update channel."))
     @locale_doc
     async def channel(self, ctx):
         _(
-            """[Guild Owner only] Change the logging channel for the guild. You also need to be server admin."""
+            """Set or update the guild update channel. Relevant guild events will be sent here.
+            The channel the command is used in will become the guild log channel, `{prefix}guild channel #channel-name` will not work.
+
+            The following will be logged:
+              - Guild badge updated
+              - Guild transferred
+              - Guild promotions
+              - Guild demotions
+              - New member joins
+              - Members leaving the guild
+              - Member kicks
+              - Guild deletion
+              - Guild icon changes
+              - Guild description changes
+              - Money invests
+              - Money payouts
+              - Money distributions
+              - Guild bank upgrades
+              - Guild adventures (start and end)
+
+            Only guild leaders can use this command."""
         )
         if not await ctx.confirm(
             _("This will become the channel for all logs. Are you sure?")
@@ -568,10 +698,14 @@ To look up a guild by its ID, use id:number."""
         await ctx.send("**Guild logs will go here** ✅")
 
     @has_guild()
-    @guild.command()
+    @guild.command(brief=_("Show the richest guild members"))
     @locale_doc
     async def richest(self, ctx):
-        _("""Shows the richest players in your guild.""")
+        _(
+            """Displays the top 10 richest guild members of your guild.
+
+            Only players in a guild can use this command."""
+        )
         await ctx.trigger_typing()
         async with self.bot.pool.acquire() as conn:
             guild = await conn.fetchrow(
@@ -598,10 +732,16 @@ To look up a guild by its ID, use id:number."""
         )
 
     @has_guild()
-    @guild.command(aliases=["high", "top"])
+    @guild.command(
+        aliases=["high", "top"], brief=_("Show the best guild members by XP")
+    )
     @locale_doc
     async def best(self, ctx):
-        _("""Shows the best players of your guild by XP.""")
+        _(
+            """Displays the top 10 best guild members of your guild ordered by XP.
+
+            Only players in a guild can use this command."""
+        )
         await ctx.trigger_typing()
         async with self.bot.pool.acquire() as conn:
             guild = await conn.fetchrow(
@@ -633,10 +773,18 @@ To look up a guild by its ID, use id:number."""
         )
 
     @has_guild()
-    @guild.command()
+    @guild.command(brief=_("Add money to your guild bank"))
     @locale_doc
     async def invest(self, ctx, amount: IntGreaterThan(0)):
-        _("""Invest some of your money and put it to the guild bank.""")
+        _(
+            """`<amount>` - A whole number greater than 0
+
+            Invest money into your guild bank, keeping it safe from thieves.
+
+            Only guild officers can take money out of the guild bank.
+
+            The money in the guild bank can be used to upgrade the bank or upgrade buildings/build defenses in your alliance, if it owns a city."""
+        )
         if ctx.character_data["money"] < amount:
             return await ctx.send(_("You're too poor."))
         async with self.bot.pool.acquire() as conn:
@@ -669,10 +817,17 @@ To look up a guild by its ID, use id:number."""
         )
 
     @is_guild_officer()
-    @guild.command()
+    @guild.command(brief=_("Take money out of the guild bank"))
     @locale_doc
     async def pay(self, ctx, amount: IntGreaterThan(0), member: MemberWithCharacter):
-        _("""[Guild Officer only] Pay money from the guild bank to a user.""")
+        _(
+            """`<amount>` - The amount of money to take out of the bank, must be greater than 0 and smaller or equal the amount your guild has
+            `<member>` - A discord User with a character.
+
+            Take money out of the guild bank and give it to a user. The user does not have to be a member of your guild.
+
+            Only guild leaders and officers can use this command."""
+        )
         async with self.bot.pool.acquire() as conn:
             guild = await conn.fetchrow(
                 'SELECT * FROM guild WHERE "id"=$1;', ctx.character_data["guild"]
@@ -698,16 +853,23 @@ To look up a guild by its ID, use id:number."""
         )
 
     @is_guild_officer()
-    @guild.command(aliases=["dis", "distrib"])
+    @guild.command(
+        aliases=["dis", "distrib"], brief=_("Pay out money to multiple members")
+    )
     @locale_doc
     async def distribute(
         self, ctx, amount: IntGreaterThan(0), *members: MemberWithCharacter
     ):
         _(
-            """
-Distribute some money to multiple members. This will divide by the amount of players before distributing.
-For example, distributing $500 to 5 members will give everyone of them $100.
-"""
+            """`<amount>` - The amount of money to take out all together, must be greater than 0
+            `<members...>` - The discord users to give money to, can be multiple, separated by space.
+
+            Distribute some money to multiple members. This will divide by the amount of players before distributing.
+            For example, distributing $500 to 5 members will give everyone of them $100.
+
+            In case of a decimal result we will round down, i.e. $7 distributed to 3 members will give everyone $2.
+
+            Only guild leaders and officers can use this command."""
         )
         if not members:
             return await ctx.send(_("You can't distribute money to nobody."))
@@ -747,10 +909,21 @@ For example, distributing $500 to 5 members will give everyone of them $100.
         )
 
     @is_guild_leader()
-    @guild.command()
+    @guild.command(brief=_("Upgrade your guild bank"))
     @locale_doc
     async def upgrade(self, ctx):
-        _("""Upgrades your guild bank's capacity.""")
+        _(
+            """Upgrade your guild's bank, adding space for $25,000 each time.
+
+            Guilds can be upgraded 4 times which sets them to a maximum of $1,000,000.
+            Patrons will be able to upgrade their guild further:
+              - Silver donors can double their maximum bank space
+              - Gold donors can quintuple (x5) their maximum bank space
+
+            The price to upgrade the guild bank is always half of the maximum.
+
+            Only guild leaders can use this command."""
+        )
         async with self.bot.pool.acquire() as conn:
             guild = await conn.fetchrow(
                 'SELECT * FROM guild WHERE "id"=$1;', ctx.character_data["guild"]
@@ -794,7 +967,7 @@ For example, distributing $500 to 5 members will give everyone of them $100.
 
     @is_guild_officer()
     @guild_cooldown(1800)
-    @guild.command()
+    @guild.command(brief=_("Battle another guild"))
     @locale_doc
     async def battle(
         self,
@@ -803,7 +976,25 @@ For example, distributing $500 to 5 members will give everyone of them $100.
         amount: IntGreaterThan(-1),
         fightercount: IntGreaterThan(1),
     ):
-        _("""Battle against another guild.""")
+        _(
+            """`<enemy>` - A guild officer or leader
+            `<amount>` - The amount of money to battle for, must be 0 or above
+            `<fightercount>` - The amount of fighters to take into the battle
+
+            Fight against another guild, the winning guild will be awarded one GvG win.
+
+            While the battle is preparing, both players, you and the other player, will be asked to nominate guild members for the battle.
+            You can do this by writing `battle nominate @person` (not including `{prefix}`) until you hit the fightercount.
+
+            After the preparation is over, battles will be randomly matched between the two guilds.
+            These battles function exactly the same as regular battles, see `{prefix}help battle` for more details.
+
+            Each fight will give the guild who the winner is from one point. The guild with the most points in the end will win the guild battle.
+            In case of a tie, nobody gets the money or guild win. The money will be taken from the guild bank.
+
+            Only guild leaders and officers can use this command.
+            (This command has a guild cooldown of 30 minutes.)"""
+        )
         if enemy == ctx.author:
             return await ctx.send(_("Poor kiddo having no friendos."))
         guild1 = ctx.character_data["guild"]
@@ -1050,10 +1241,22 @@ For example, distributing $500 to 5 members will give everyone of them $100.
 
     @is_guild_officer()
     @guild_cooldown(3600)
-    @guild.command()
+    @guild.command(brief=_("Start a guild adventure"))
     @locale_doc
     async def adventure(self, ctx):
-        _("""Starts a guild adventure.""")
+        _(
+            """Start a guild adventure. Guild adventures can happen alongside regular adventures.
+
+            On guild adventures, you can gain additional gold for your guild bank.
+            hen using this command, the bot will send a link used to join the attack. Each member of the guild can join, at least 3 are required.
+            Ten minutes after the link was sent, the users who joined will be gathered.
+
+            The guild adventure's difficulty will depend solely on the users' levels, their equipped items and race/class bonuses are not considered.
+            The adventure's lentgh depends on the difficulty, +1 difficulty means +30 minutes time.
+
+            Only guild leaders and officers can use this command.
+            (This command has a guild cooldown of 1 hour.)"""
+        )
         if await self.bot.get_guild_adventure(ctx.character_data["guild"]):
             await self.bot.reset_guild_cooldown(ctx)
             return await ctx.send(
@@ -1127,10 +1330,15 @@ Time it will take: **{time}**
         )
 
     @has_guild()
-    @guild.command()
+    @guild.command(brief=_("View your guild adventure's status"))
     @locale_doc
     async def status(self, ctx):
-        _("""Views your guild adventure.""")
+        _(
+            """Check your guild adventure's status
+
+            This will either display the time left or the reward. The reward can range from 20 times the difficulty up to 50 times the difficulty.
+            Only guild leaders and officers can finish adventures, the status can be seen by every guild member."""
+        )
         adventure = await self.bot.get_guild_adventure(ctx.character_data["guild"])
 
         if not adventure:
@@ -1181,10 +1389,14 @@ Time it will take: **{time}**
             )
 
     @has_guild()
-    @guild.command(aliases=["cooldowns", "t", "cds"])
+    @guild.command(
+        aliases=["cooldowns", "t", "cds"], brief=_("Lists guild-specific cooldowns")
+    )
     @locale_doc
     async def timers(self, ctx):
-        _("""Lists all your cooldowns.""")
+        _(
+            """Lists guild-specific cooldowns, meaning all guild members have these cooldowns and cannot use the commands."""
+        )
         cooldowns = await self.bot.redis.execute(
             "KEYS", f"guildcd:{ctx.character_data['guild']}:*"
         )
@@ -1211,10 +1423,13 @@ Time it will take: **{time}**
 
     '''
     @has_guild()
-    @guild.command()
+    @guild.command(brief=_("Show your progress in the ongoing event.")
     @locale_doc
     async def event(self, ctx):
-        _("""View your guild's progress in the ongoing event.""")
+        _(
+            """Shows how many Pumpkins your guild currently has. Prizes can be claimed by the guild leader using `{prefix}guild claim <ID>`.
+            Your guild can gain more pumpkins from guild adventures."""
+        )
         pumpkins = await self.bot.pool.fetchval(
             'SELECT pumpkins FROM guild WHERE "id"=$1;', ctx.character_data["guild"]
         )
@@ -1252,10 +1467,17 @@ Time it will take: **{time}**
         )
 
     @is_guild_leader()
-    @guild.command()
+    @guild.command(brief=_("Claim an event reward"))
     @locale_doc
     async def claim(self, ctx, reward_id: IntFromTo(1, 10)):
-        _("""[Guild Leader only] Claim event rewards.""")
+        _(
+            """`<reward_id>` - The reward's ID to claim, must be a number from 1 to 10.
+
+            Claim an reward for your guild. These rewards can be money added to the guild bank, additional guild member slots or special guild badges.
+            Rewards can be claimed multiple times. To see the full list of rewards, use `{prefix}guild event`.
+
+            Only guild leaders can use this command."""
+        )
         reward = [
             {"price": 1000, "reward": "money", "data": 5000},
             {"price": 5000, "reward": "money", "data": 27500},
