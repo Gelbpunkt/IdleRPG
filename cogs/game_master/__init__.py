@@ -42,7 +42,7 @@ class GameMaster(commands.Cog):
     async def clearshop(self, ctx):
         _(
             """Remove items from the shop that have been there for more than 14 days, returning them to the owners' inventories.
-            
+
             Only Game Masters can use this command."""
         )
         async with self.bot.pool.acquire() as conn:
@@ -65,9 +65,9 @@ class GameMaster(commands.Cog):
     async def unban(self, ctx, *, other: discord.User):
         _(
             """`<other>` - A discord User
-            
+
             Unbans a user from the bot, allowing them to use commands and reactions again.
-            
+
             Only Game Masters can use this command."""
         )
         try:
@@ -83,9 +83,9 @@ class GameMaster(commands.Cog):
         _(
             """`<money>` - the amount of money to generate for the user
             `<other>` - A discord User with a character
-            
+
             Gives a user money without subtracting it from the command author's balance.
-            
+
             Only Game Masters can use this command."""
         )
         await self.bot.pool.execute(
@@ -108,9 +108,9 @@ class GameMaster(commands.Cog):
         _(
             """`<money>` - the amount of money to remove from the user
             `<other>` - a discord User with character
-            
+
             Removes money from a user without adding it to the command author's balance.
-            
+
             Only Game Masters can use this command."""
         )
         await self.bot.pool.execute(
@@ -132,9 +132,9 @@ class GameMaster(commands.Cog):
     async def gmdelete(self, ctx, other: UserWithCharacter):
         _(
             """`<other>` - a discord User with character
-            
+
             Delete a user's profile. The user cannot be a Game Master.
-            
+
             Only Game Masters can use this command."""
         )
         if other.id in ctx.bot.config.game_masters:  # preserve deletion of admins
@@ -222,9 +222,9 @@ class GameMaster(commands.Cog):
             `<item_type>` - the generated item's type, must be either Sword, Shield, Axe, Wand, Dagger, Knife, Spear, Bow, Hammer, Scythe or Howlet
             `<value>` - the generated item's value, a whole number from 0 to 100,000,000
             `<name>` - the generated item's name
-            
+
             Generate a custom item for a user.
-            
+
             Only Game Masters can use this command."""
         )
         if item_type not in self.bot.config.item_types:
@@ -269,9 +269,9 @@ class GameMaster(commands.Cog):
             """`<rarity>` - the crates' rarity, can be common, uncommon, rare, magic or legendary
             `<amount>` - the amount of crates to generate for the given user, can be negative
             `<target>` - A discord User with character
-            
+
             Generate a set amount of crates of one rarity for a user.
-            
+
             Only Game Masters can use this command."""
         )
         if rarity not in ["common", "uncommon", "rare", "magic", "legendary"]:
@@ -301,9 +301,9 @@ class GameMaster(commands.Cog):
         _(
             """`<target>` - A discord User with character
             `<amount>` - The amount of XP to generate, can be negative
-            
+
             Generates a set amount of XP for a user.
-            
+
             Only Game Masters can use this command."""
         )
         await self.bot.pool.execute(
@@ -325,13 +325,13 @@ class GameMaster(commands.Cog):
     async def gmwipeperks(self, ctx, target: UserWithCharacter):
         _(
             """`<target>` - A discord User with character
-            
+
             Wipe a user's donation perks. This will:
               - set their background to the default
               - set both their classes to No Class
               - reverts all items to their original type and name
               - sets their guild's member limit to 50
-              
+
             Only Game Masters can use this command."""
         )
         async with self.bot.pool.acquire() as conn:
@@ -368,9 +368,9 @@ class GameMaster(commands.Cog):
     async def gmresetclass(self, ctx, target: UserWithCharacter):
         _(
             """`<target>` - a discord User with character
-            
+
             Reset a user's classes to No Class. They can then choose their class again for free.
-            
+
             Only Game Masters can use this command."""
         )
         async with self.bot.pool.acquire() as conn:
@@ -393,9 +393,9 @@ class GameMaster(commands.Cog):
         _(
             """`<itemid>` - the item's ID to sign
             `<text>` - The signature to write, must be less than 50 characters combined with the Game Master's tag
-            
+
             Sign an item. The item's signature is visible in a user's inventory.
-            
+
             Only Game Masters can use this command.
             (This command has a cooldown of 7 days.)"""
         )
@@ -418,12 +418,12 @@ class GameMaster(commands.Cog):
     async def gmauction(self, ctx, *, item: str):
         _(
             """`<item>` - a description of what is being auctioned
-            
+
             Starts an auction on the support server. Users are able to bid. The auction timeframe extends by 30 minutes if users keep betting.
             The auction ends when no user bids in a 30 minute timeframe.
-            
+
             The item is not given automatically and the needs to be given manually.
-            
+
             Only Game Masters can use this command."""
         )
         channel = discord.utils.get(
@@ -455,9 +455,9 @@ class GameMaster(commands.Cog):
     async def bid(self, ctx, amount: IntGreaterThan(0)):
         _(
             """`<amount>` - the amount of money to bid, must be higher than the current highest bid
-            
+
             Bid on an ongoing auction.
-            
+
             The amount is removed from you as soon as you bid and given back if someone outbids you. This is to prevent bidding impossibly high and then not paying up."""
         )
         if self.top_auction is None:
@@ -514,9 +514,9 @@ class GameMaster(commands.Cog):
             """`<user>` - A discord User or their User ID
             `<command>` - the command which the cooldown is being set for (subcommands in double quotes, i.e. "guild create")
             `[cooldown]` - The cooldown to set for the command in seconds, must be greater than -1; defaults to 0
-            
+
             Set a cooldown for a user and commmand. If the cooldown is 0, it will be removed.
-            
+
             Only Game Masters can use this command."""
         )
         if not isinstance(user, int):

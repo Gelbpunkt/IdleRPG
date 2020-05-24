@@ -55,9 +55,9 @@ class Valentine(commands.Cog):
     async def valentine(self, ctx):
         _(
             """Gift your spouse three boxes of chocolates, they can contain lovescore, money or valentine's themed items.
-            
+
             Your spouse may open the boxes with `{prefix}chocolate`.
-            
+
             Only players who are married may use this command.
             This command may only be used from the 13th to the 15th February.
             (This command has a cooldown until 12am UTC.)"""

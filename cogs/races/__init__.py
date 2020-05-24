@@ -32,16 +32,16 @@ class Races(commands.Cog):
     async def race(self, ctx):
         _(
             """Pick or change your race. This can be chosen as long as you have reset points left.
-            
+
             Each race has a different DMG/DEF distribution:
               - Orc: +4 defense, +0 damage
               - Dwarf: +3 defense, +1 damage
               - Human: +2 defense, +2 damage
               - Elf: +1 defense, +3 damage
               - Jikill: +0 defense, +4 damage
-              
+
             By default, you are a human.
-            
+
             After picking the race, you will be asked a personal question, the answer may affect something."""
         )
         if not is_nothing(ctx):

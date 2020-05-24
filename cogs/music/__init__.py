@@ -271,7 +271,7 @@ class Music(commands.Cog):
     async def chooseplay(self, ctx, *, query: str):
         _(
             """`<query>` - The query to search a song by
-            
+
             Query for a track and play or add any result to the playlist, you can choose from a multitude of tracks."""
         )
         async with self.bot.trusted_session.get(
@@ -333,7 +333,7 @@ class Music(commands.Cog):
     async def play(self, ctx, *, query: str):
         _(
             """`<query>` - The query to search a song by
-            
+
             Query for a track and play or add the first result to the playlist.
             If this is not the song you were looking for, try `{prefix}chooseplay`."""
         )
@@ -380,7 +380,7 @@ class Music(commands.Cog):
     async def lock(self, ctx):
         _(
             """Lock/Unlock the player. This allows nobody else to control the music.
-            
+
             Only the session's DJ can use this command."""
         )
         if ctx.player.locked:
@@ -398,7 +398,7 @@ class Music(commands.Cog):
     async def loop(self, ctx):
         _(
             """Toggle repeat of the currently playing song. Queue loop is not supported.
-            
+
             If there are more than one person in the session and a non-DJ uses this command, a vote has to pass first."""
         )
         if ctx.player.loop:
@@ -416,7 +416,7 @@ class Music(commands.Cog):
     async def skip(self, ctx):
         _(
             """Skip the currently playing song.
-            
+
             If there are more than one person in the session and a non-DJ uses this command, a vote has to pass first."""
         )
         await ctx.player.stop()
@@ -431,7 +431,7 @@ class Music(commands.Cog):
     async def stop(self, ctx):
         _(
             """Stops the music and leaves voice chat.
-            
+
             If there are more than one person in the session and a non-DJ uses this command, a vote has to pass first."""
         )
         del self.queue[ctx.guild.id]
@@ -447,7 +447,7 @@ class Music(commands.Cog):
     async def volume(self, ctx, volume: IntFromTo(0, 100)):
         _(
             """Changes the playback's volume.
-            
+
             If there are more than one person in the session and a non-DJ uses this command, a vote has to pass first."""
         )
         if volume > ctx.player.volume:
@@ -479,7 +479,7 @@ class Music(commands.Cog):
     async def pause(self, ctx):
         _(
             """Toggles the music playback's paused state.
-            
+
             If there are more than one person in the session and a non-DJ uses this command, a vote has to pass first."""
         )
         if not ctx.player.paused:
@@ -498,10 +498,10 @@ class Music(commands.Cog):
     async def equalizer(self, ctx, eq: str.upper):
         _(
             """`<eq>` - The equalizer to use
-            
+
             Sets the equalizer. May be **flat, piano, metal or boost**.
             Flat is the standard, piano is quiet, metal boosts high frequencies and boost boosts low frequencies.
-            
+
             If there are more than one person in the session and a non-DJ uses this command, a vote has to pass first."""
         )
         if eq not in ctx.player.equalizers:
@@ -608,7 +608,7 @@ class Music(commands.Cog):
     async def lyrics(self, ctx, *, query: str = None):
         _(
             """`<query>` - The query to search the song by; defaults to the currently playing song
-            
+
             Retrieves song lyrics. If no song specified, will check the current playing song."""
         )
         await ctx.trigger_typing()

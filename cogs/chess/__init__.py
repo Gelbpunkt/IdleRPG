@@ -65,7 +65,7 @@ class Chess(commands.Cog):
     @locale_doc
     async def register(self, ctx):
         _(
-            """Register an ELO-rating eligible account for Idle's Chess. 
+            """Register an ELO-rating eligible account for Idle's Chess.
             The rating determines your relative skill and can be increased/decreased by winning/losing matches."""
         )
         async with self.bot.pool.acquire() as conn:
@@ -127,24 +127,24 @@ class Chess(commands.Cog):
         _(
             """`[difficulty]` - A whole number between 1 and 10; defaults to 3
             `[enemy]` - A user; defaults to nobody
-            
+
             Starts a game of chess.
             If a difficulty is given, you will play against the Stockfish chess AI with the given difficulty.
             If an enemy is given, you will play against that enemy, no matter if you set a difficulty or not.
-            
+
             You are able to choose which side you want to play as at the beginning using the emojis.
             If you play against an enemy and both of you are ELO-registered, you are given the choice to play ranked or not.
-            
+
             There can only be one chess game in one channel at a time.
-            
+
             Chess moves can be sent in several formats:
               -`g1f3`
               -`Nf3` :warning:
               -`0-0`
               -`xe3`
-              
+
             *Keep in mind that these are case sensitive:*
-            Pieces are upper case: 
+            Pieces are upper case:
               -King = K
               -Queen = Q
               -Bishop = B

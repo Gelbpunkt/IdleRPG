@@ -44,13 +44,13 @@ class Profile(commands.Cog):
     async def create(self, ctx, *, name: str = None):
         _(
             """`[name]` - The name to give your character; will be interactive if not given
-            
+
             Create a new character and start playing IdleRPG.
-            
+
             By creating a character, you agree to the [bot rules](https://wiki.travitia.xyz/index.php?title=Rules#botrules).
             No idea where to go from here? Check out our [tutorial](https://idlerpg.travitia.xyz/tutorial/).
             If you still have questions afterward, feel free to ask us on the official [support server](https://support.travitia.xyz/).
-            
+
             (This command has a cooldown of 1 hour.)"""
         )
         if not name:
@@ -140,7 +140,7 @@ IdleRPG is a global bot, your characters are valid everywhere"""
     async def profile(self, ctx, *, person: User = Author):
         _(
             """`[person]` - The person whose profile to view; defaults to oneself
-            
+
             View someone's profile. This will send an image.
             For an explanation what all the fields mean, see [this picture](https://wiki.travitia.xyz/images/3/35/Profile_explained.png)"""
         )
@@ -241,7 +241,7 @@ IdleRPG is a global bot, your characters are valid everywhere"""
     async def profile2(self, ctx, *, target: User = Author):
         _(
             """`[target]` - The person whose profile to view
-            
+
             View someone's profile. This will send an embed rather than an image and is usually faster."""
         )
         rank_money, rank_xp = await self.bot.get_ranks_for(target)
@@ -343,19 +343,19 @@ IdleRPG is a global bot, your characters are valid everywhere"""
     async def luck(self, ctx):
         _(
             """Shows your current luck value.
-            
-            Luck updates once a week for everyone, usually on Monday. It depends on your God. 
+
+            Luck updates once a week for everyone, usually on Monday. It depends on your God.
             Luck influences your adventure survival chances as well as the rewards.
-            
+
             Luck is decided randomly within the Gods' luck boundaries. You can find your God's boundaries [here](https://wiki.travitia.xyz/index.php?title=Gods#List_of_Deities).
-            
+
             If you have enough favor to place in the top 25 followers, you will gain additional luck:
               - The top 25 to 21 will gain +0.1 luck
               - The top 20 to 16 will gain +0.2 luck
               - The top 15 to 11 will gain +0.3 luck
               - The top 10 to 6 will gain +0.4 luck
               - The top 5 to 1 will gain +0.5 luck
-              
+
             If you follow a new God (or become Godless), your luck will not update instantly, it will update with everyone else's luck on Monday."""
         )
         await ctx.send(
@@ -377,7 +377,7 @@ IdleRPG is a global bot, your characters are valid everywhere"""
     async def economy(self, ctx):
         _(
             """Shows the amount of money you currently have.
-            
+
             Among other ways, you can get more money by:
               - Playing adventures
               - Selling unused equipment
@@ -395,9 +395,9 @@ IdleRPG is a global bot, your characters are valid everywhere"""
     async def xp(self, ctx, user: UserWithCharacter = Author):
         _(
             """`[user]` - The player whose XP and level to show; defaults to oneself
-            
+
             Show a player's XP and level.
-            
+
             You can gain more XP by:
               - Completing adventures
               - Exchanging loot items for XP"""
@@ -484,12 +484,12 @@ IdleRPG is a global bot, your characters are valid everywhere"""
             """`[itemtype]` - The type of item to show; defaults to all items
             `[lowest]` - The lower boundary of items to show; defaults to 0
             `[highest]` - The upper boundary of items to show; defaults to 101
-            
+
             Show your gear items. Items that are in the market will not be shown.
-            
-            Gear items can be equipped, sold and given away, or upgraded and merged to make them stronger. 
+
+            Gear items can be equipped, sold and given away, or upgraded and merged to make them stronger.
             You can gain gear items by completing adventures, opening crates, or having your pet hunt for them, if you are a ranger.
-            
+
             To sell unused items for their value, use `{prefix}merch`. To put them up on the global player market, use `{prefix}sell`."""
         )
         if highest < lowest:
@@ -562,9 +562,9 @@ IdleRPG is a global bot, your characters are valid everywhere"""
     async def items(self, ctx):
         _(
             """Show your loot items.
-            
+
             Loot items can be exchanged for money or XP, or sacrificed to your God to gain favor points.
-            
+
             You can gain loot items by completing adventures. The higher the difficulty, the higher the chance to get loot.
             If you are a Ritualist, your loot chances are doubled. Check [our wiki](https://wiki.travitia.xyz/index.php?title=Loot#Probability) for the exact chances."""
         )
@@ -588,9 +588,9 @@ IdleRPG is a global bot, your characters are valid everywhere"""
     async def exchange(self, ctx, *loot_ids: int):
         _(
             """`[loot_ids]` - The loot IDs to exchange; defaults to all loot
-            
+
             Exchange your loot for money or XP, the bot will let you choose.
-            
+
             If you choose money, you will get the loots' combined value in cash. For XP, you will get 1/4th of the combined value in XP."""
         )
         if (none_given := (len(loot_ids) == 0)) :
@@ -686,14 +686,14 @@ IdleRPG is a global bot, your characters are valid everywhere"""
     async def equip(self, ctx, itemid: int):
         _(
             """`<itemid>` - The ID of the item to equip
-            
+
             Equip an item by its ID, you can find the item IDs in your inventory.
-            
-            Each item has an assigned hand slot, 
-              "any" meaning that the item can go in either hand, 
-              "both" meaning it takes both hands, 
+
+            Each item has an assigned hand slot,
+              "any" meaning that the item can go in either hand,
+              "both" meaning it takes both hands,
               "left" and "right" should be clear.
-            
+
             You cannot equip two items that use the same hand, or a second item if the one your have equipped is two-handed."""
         )
         async with self.bot.pool.acquire() as conn:
@@ -797,7 +797,7 @@ IdleRPG is a global bot, your characters are valid everywhere"""
     async def unequip(self, ctx, itemid: int):
         _(
             """`<itemid>` - The ID of the item to unequip
-            
+
             Unequip one of your equipped items. This has no benefit whatsoever."""
         )
         async with self.bot.pool.acquire() as conn:
@@ -830,16 +830,16 @@ IdleRPG is a global bot, your characters are valid everywhere"""
         _(
             """`<firstitemid>` - The ID of the first item
             `<seconditemid>` - The ID of the second item
-            
+
             Merges two items to a better one.
-            
+
             :warning: The first item will be upgraded by +1, the second item will be destroyed.
-            
+
             The two items must be of the same item type and within a 5 stat range of each other.
             For example, if the first item is a 23 damage Scythe, the second item must be a Scythe with damage 18 to 28.
-            
+
             One handed weapons can be merged up to 41, two handed items up to 62
-            
+
             (This command has a cooldown of 1 hour.)"""
         )
         if firstitemid == seconditemid:
@@ -906,12 +906,12 @@ IdleRPG is a global bot, your characters are valid everywhere"""
     async def upgradeweapon(self, ctx, itemid: int):
         _(
             """`<itemid>` - The ID of the item to upgrade
-            
+
             Upgrades an item's stat by 1.
             The price to upgrade an item is 250 times its current stat. For example, upgrading a 15 damage sword will cost $3,750.
-            
+
             One handed weapons can be upgraded up to 41, two handed items up to 62.
-            
+
             (This command has a cooldown of 1 hour.)"""
         )
         async with self.bot.pool.acquire() as conn:
@@ -990,7 +990,7 @@ IdleRPG is a global bot, your characters are valid everywhere"""
         _(
             """`<money>` - The amount of money to give to the other person, cannot exceed 100,000,000
             `[other]` - The person to give the money to
-            
+
             Gift money! It will be removed from you and added to the other person."""
         )
         if other == ctx.author:
@@ -1026,7 +1026,7 @@ IdleRPG is a global bot, your characters are valid everywhere"""
     async def rename(self, ctx, *, name: str = None):
         _(
             """`[name]` - The name to use; if not given, this will be interactive
-            
+
             Renames your character. The name must be from 3 to 20 characters long."""
         )
         if not name:
@@ -1061,7 +1061,7 @@ IdleRPG is a global bot, your characters are valid everywhere"""
     async def delete(self, ctx):
         _(
             """Deletes your character. There is no way to get your character data back after deletion.
-            
+
             Deleting your character also removes:
               - Your guild if you own one
               - Your alliance's city ownership
@@ -1106,9 +1106,9 @@ IdleRPG is a global bot, your characters are valid everywhere"""
     async def colour(self, ctx, *, colour: str):
         _(
             """`<color>` - The color to use, see below for allowed format
-            
+
             Sets your profile text colour. The format may be #RGB, #RRGGBB, CSS3 defaults like "cyan", a rgb(r, g, b) tuple or a rgba(r, g, b, a) tuple.
-            
+
             This will change the text color in `{prefix}profile` and the embed color in `{prefix}profile2`."""
         )
         try:

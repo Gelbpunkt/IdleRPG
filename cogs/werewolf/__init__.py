@@ -35,12 +35,12 @@ class Werewolf(commands.Cog):
     async def werewolf(self, ctx, mode: str.title = "Classic"):
         _(
             """`[mode]` - The mode to play, see below for more info; defaults to Classic
-            
+
             Starts a game of Werewolf.
             Game modes:
                 Classic - Play the classic werewolf game. (This is the default)
                 Blitz   - In Blitz mode, all action timers are limited to 30 seconds and number of days to play is dependent on the number of players plus 3 days. This means not killing anyone every night or every election will likely end the game with no winners.
-                
+
             This game is mainly based around trust. The goal of the game is to find the werewolves in your community and lynch them."""
         )
         if mode not in ["Classic", "Blitz"]:
@@ -122,7 +122,7 @@ class Werewolf(commands.Cog):
     async def role(self, ctx):
         _(
             """Check your role in the Werewolf game and have the bot DM it to you.
-            
+
             You must be part of the ongoing game to get your role."""
         )
         game = self.games.get(ctx.channel.id)

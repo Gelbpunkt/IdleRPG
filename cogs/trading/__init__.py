@@ -38,15 +38,15 @@ class Trading(commands.Cog):
         _(
             """`<itemid>` - The ID of the item to sell
             `<price>` - The price to sell the item for, can be 0 or above
-            
+
             Puts your item into the market. Tax for selling items is 5% of the price.
-            
+
             You may not sell modified items, items with a price higher than their value, or items below 4 stat.
             If you are in an alliance with owns a city with a trade building, you do not have to pay the tax.
-            
+
             Please note that you won't get the money right away, another player has to buy the item first.
             With that being said, please choose a reasonable price.
-            
+
             If your item has not been bought for 14 days, it will be removed from the market and put back into your inventory."""
         )
         async with self.bot.pool.acquire() as conn:
@@ -128,9 +128,9 @@ class Trading(commands.Cog):
     async def buy(self, ctx, itemid: int):
         _(
             """`<itemid>` - The ID of the item to buy
-            
+
             Buy an item from the global market. Tax for buying is 5%.
-            
+
             Buying your own items is impossible. You can find the item's ID in `{prefix}shop`."""
         )
         async with self.bot.pool.acquire() as conn:
@@ -217,9 +217,9 @@ class Trading(commands.Cog):
     async def remove(self, ctx, itemid: int):
         _(
             """`<itemid>` - The item to remove from the shop
-            
+
             Takes an item off the shop. You may only remove your own items from the shop.
-            
+
             You can check your items on the shop with `{prefix}pending`. Paid tax money will not be returned."""
         )
         async with self.bot.pool.acquire() as conn:
@@ -265,7 +265,7 @@ class Trading(commands.Cog):
             """`[itemtype]` - The type of item to filter; defaults to all item types
             `[minstat]` - The minimum damage/defense an item has to have to show up; defaults to 0
             `[highestprice]` - The highest price an item can have to show up; defaults to $1,000,000
-            
+
             Lists the buyable items on the market. You can cleverly filter out items you don't want to see with these parameters."""
         )
         if itemtype not in ["All"] + self.bot.config.item_types:
@@ -340,9 +340,9 @@ class Trading(commands.Cog):
         _(
             """`<itemid>` - The ID of the item to offer
             `<price>` - The price the other has to pay, can be a number from 0 to 100,000,000
-            `<user>` - The user to offre the item to 
-            
-            Offer an item to a specific user. You may not offer modified items. 
+            `<user>` - The user to offre the item to
+
+            Offer an item to a specific user. You may not offer modified items.
             Once the other user accepts, the item belongs to them."""
         )
         if user == ctx.author:
@@ -439,11 +439,11 @@ class Trading(commands.Cog):
     async def merchant(self, ctx, *itemids: int):
         _(
             """`<itemids>` - The IDs of the items to sell, seperated by space
-            
+
             Sells items for their value. Items that you don't own will be filtered out.
-            
+
             If you are in an alliance which owns a trade building, your winnings will be multiplied by 1.5 for each level.
-            
+
             (This command has a cooldown of 10 minutes.)"""
         )
         if not itemids:
@@ -522,12 +522,12 @@ class Trading(commands.Cog):
         _(
             """`[maxstat]` - The highest damage/defense to include; defaults to 75
             `[minstat]` - The lowest damage/defense to include; defaults to 0
-            
+
             Sells all your non-equipped items for their value. A convenient way to sell a large amount of items at once.
             If you are in an alliance which owns a trade building, your winnings will be multiplied by 1.5 for each level.
-            
+
             :warning: This command is currently disabled.
-            
+
             (This command has a cooldown of 30 minutes.)"""
         )
         async with self.bot.pool.acquire() as conn:
@@ -641,7 +641,7 @@ class Trading(commands.Cog):
         _(
             """Buys items at the trader. These items can range from 1 stat to 15 stat, with their price being 50 times their stat.
             Useful for the early game.
-            
+
             (This command has a cooldown of 1 hour.)"""
         )
         offers = []

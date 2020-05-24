@@ -35,8 +35,8 @@ class Patreon(commands.Cog):
     @locale_doc
     async def resetitem(self, ctx, itemid: int):
         _(
-            """`<itemid>` - The ID of the item to reset 
-            
+            """`<itemid>` - The ID of the item to reset
+
             Reset an item's type and name, if modified. Once an item is reset, it can be sold again."""
         )
         async with self.bot.pool.acquire() as conn:
@@ -92,9 +92,9 @@ class Patreon(commands.Cog):
         _(
             """`<itemid>` - The ID of the item to rename
             `<newname>` - The name to give the item, must be shorter than 40 characters
-            
+
             Change an item's name. Once an item is renamed, it can no longer be sold.
-            
+
             Only basic (or above) tier patrons can use this command."""
         )
         if len(newname) > 40:
@@ -132,12 +132,12 @@ class Patreon(commands.Cog):
         _(
             """`<itemid>` - The ID of the item to change type
             `<new_type>` - The type to transform the item into
-            
+
             Change an item's type. Once the type changed, the item becomes unsellable.
-            
+
             You may not change a two-handed item into a one-handed one, or vice versa.
             This proves useful for merging items.
-            
+
             Only bronze (or above) tier patrons can use this command."""
         )
         if new_type not in self.bot.config.item_types:
@@ -207,7 +207,7 @@ class Patreon(commands.Cog):
     async def donatordaily(self, ctx):
         _(
             """Receive a daily booster. The booster can be a time, money or luck booster.
-            
+
             (This command has a cooldown of 24 hours.)"""
         )
         type_ = random.choice(["time", "money", "luck"])
@@ -224,12 +224,12 @@ class Patreon(commands.Cog):
     async def background(self, ctx, url: str):
         _(
             """`<url>` - The image URL to use as the background, may not exceed 60 characters.
-            
+
             Change your profile's background image. `{prefix}background reset` sets it to the default one again.
-            
+
             This image should be formatted by the `{prefix}makebackground` command, however if you want to get creative and not use an overlay, or create your own, the image dimensions are 800x650.
             Having trouble finding a short URL? Try following [this tutorial](https://wiki.travitia.xyz/index.php?title=Tutorial:_Short_Image_URLs)!
-            
+
             Only basic (or above) tier patrons can use this command."""
         )
         premade = [f"{self.bot.BASE_URL}/profile/premade{i}.png" for i in range(1, 14)]
@@ -272,10 +272,10 @@ class Patreon(commands.Cog):
     async def makebackground(self, ctx, url: str):
         _(
             """`<url>` - The image URL to format
-            
+
             Generate a profile background for you. This will stretch/compress your image to 800x650 pixels and layer on an overlay.
             This will return a link you can then use for `{prefix}background`.
-            
+
             Only basic (or above) tier patrons can use this command."""
         )
         if not url.startswith("http") and (
@@ -316,12 +316,12 @@ class Patreon(commands.Cog):
     async def updateguild(self, ctx):
         _(
             """Update your guild member limit and bank size according to your donation tier.
-            
+
             Gold (and above) Donators have their bank space quintupled (x5), Silver Donators have theirs doubled.
             The member limit is set to 100 regardless of donation tier.
-            
+
             Important: To use this, you have to be the leader of a guild, not just a member.
-            
+
             Only basic (or above) tier patrons can use this command."""
         )
         # Silver x2, Gold x5
@@ -357,7 +357,7 @@ class Patreon(commands.Cog):
     async def eventbackground(self, ctx, number: int):
         _(
             """`<number>` - The number of the eventbackground to use
-            
+
             Update your background to one from the events."""
         )
         async with self.bot.pool.acquire() as conn:

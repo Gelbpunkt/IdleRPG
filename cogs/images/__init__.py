@@ -37,7 +37,7 @@ class Images(commands.Cog):
         _(
             """`[user]` - A discord User whose avatar to pixelfy; defaults to oneself
             `[size]` - The pixelation rate to use, can be a number between 1 and 5; defaults to 2
-            
+
             Pixelfies a user's avatar. If the user has an animated icon, the first frame is used."""
         )
         try:
@@ -57,7 +57,7 @@ class Images(commands.Cog):
     async def edgy(self, ctx, user: MemberConverter = Author):
         _(
             """`[user]` - A discord User whose avatar to edit; defaults to oneself
-            
+
             Finds and exaggerates edges in a user's avatar, creating a cool image effect."""
         )
         async with self.bot.trusted_session.post(
@@ -73,9 +73,9 @@ class Images(commands.Cog):
     async def invert(self, ctx, member: MemberConverter = Author):
         _(
             """`[member]` - A discord User whose avatar to invert; defaults to oneself
-            
+
             Invert the colors in someone's avatar.
-            
+
             (This command has a channel cooldown of 15 seconds.)"""
         )
         async with self.bot.trusted_session.post(

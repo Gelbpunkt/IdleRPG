@@ -306,7 +306,7 @@ class Maths(commands.Cog):
     async def calc(self, ctx, *, expr: str):
         _(
             """`<expr>` - The mathematical expression to calculate
-            
+
             Calculates something. pi is pi, tau is tau and e is math.e
             Supports round(), sin(), cos(), sqrt(), tan() and infinity (inf) and NaN (nan).
             Works with variable assignment and multiline-statements."""

@@ -49,11 +49,11 @@ class Marriage(commands.Cog):
     async def propose(self, ctx, partner: MemberWithCharacter):
         _(
             """`<partner>` - A discord User with a character who is not yet married
-            
+
             Propose to a player for marriage. Once they accept, you are married.
-            
+
             When married, your partner will get bonuses from your adventures, you can have children, which can do different things (see `{prefix}help familyevent`) and increase your lovescore, which has an effect on the [adventure bonus](https://wiki.travitia.xyz/index.php?title=Family#Adventure_Bonus).
-            
+
             Only players who are not already married can use this command."""
         )
         if partner == ctx.author:
@@ -135,10 +135,10 @@ class Marriage(commands.Cog):
     async def divorce(self, ctx):
         _(
             """Divorce your partner, effectively un-marrying them.
-            
-            When divorcing, any kids you have with your partner will be deleted. 
+
+            When divorcing, any kids you have with your partner will be deleted.
             You can marry another person right away, if you so choose. Divorcing has no negative consequences on gameplay.
-            
+
             Only married players can use this command."""
         )
         if not ctx.character_data["marriage"]:
@@ -183,9 +183,9 @@ class Marriage(commands.Cog):
     async def lovescore(self, ctx, user: UserWithCharacter = Author):
         _(
             """`[user]` - The user whose lovescore to show; defaults to oneself
-            
+
             Show the lovescore a player has. Lovescore can be increased by their partner spoiling them or going on dates.
-            
+
             Lovescore affects the [adventure bonus](https://wiki.travitia.xyz/index.php?title=Family#Adventure_Bonus) and the amount of children you can have."""
         )
         data = ctx.character_data if user == ctx.author else ctx.user_data
@@ -206,11 +206,11 @@ class Marriage(commands.Cog):
     async def spoil(self, ctx, item: IntFromTo(1, 40) = None):
         _(
             """`[item]` - The item to buy, a whole number from 1 to 40; if not given, displays the list of items
-            
+
             Buy something for your partner to increase *their* lovescore. To increase your own lovescore, your partner should spoil you.
-            
+
             Please note that these items are not usable and do not have an effect on gameplay, beside increasing lovescore.
-            
+
             Only players who are married can use this command."""
         )
         items = [
@@ -315,9 +315,9 @@ class Marriage(commands.Cog):
     async def date(self, ctx):
         _(
             """Take your partner on a date to increase *their* lovescore. To increase your own lovescore, your partner should go on a date with you.
-            
+
             The lovescore gained from dates can range from 10 to 150 in steps of 10.
-            
+
             Only players who are married can use this command.
             (This command has a cooldown of 12 hours.)"""
         )
@@ -367,18 +367,18 @@ class Marriage(commands.Cog):
     async def child(self, ctx):
         _(
             """Have a child with your partner.
-            
+
             Children on their own don't do much, but `{prefix}familyevent` can effect your money and crates.
             To have a child, your partner has to be on the server to accept the checkbox.
-            
+
             There is a 50% chance that you will have a child, and a 50% chance to just *have fun* (if you know what I'm saying) and gain between 10 and 50 lovescore.
             When you have a child, there is a 50% chance for it to be a boy and a 50% chance to be a girl.
-            
+
             Your partner and you can enter a name for your child once the bot prompts you to. (Do not include `{prefix}`)
             If you fail to choose a name in time, we will choose one for you from about 500 pre-picked ones.
-            
+
             For identification purposes, you cannot have two children with the same name in your family, so make sure to pick a unique one.
-            
+
             Only players who are married can use this command.
             (This command has a cooldown of 1 hour.)"""
         )
@@ -550,7 +550,7 @@ class Marriage(commands.Cog):
     async def familyevent(self, ctx):
         _(
             """Allow your children to do something, this includes a multitude of events.
-            
+
             Every time you or your partner uses this command, your children:
               - have an 8/23 chance to grow older by one year
               - have a 4/23 chance to be renamed
@@ -563,9 +563,9 @@ class Marriage(commands.Cog):
                 + 10/761 (1%) chance for a magic crate
                 + 1/761 (0.1%) chance for a legendary crate
               - have a 1/23 chance to die
-              
+
             In each event you will know what happened.
-            
+
             Only players who are married and have children can use this command.
             (This command has a cooldown of 30 minutes.)"""
         )

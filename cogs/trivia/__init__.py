@@ -61,7 +61,7 @@ class Trivia(commands.Cog):
     async def trivia(self, ctx, difficulty: str.lower = "easy"):
         _(
             """`[difficulty]` - The difficulty of the question, may be easy, medium or hard
-            
+
             Answer a trivia question from [OpenTDB](https://opentdb.com/). You control your answer with the emoji reactions."""
         )
         try:

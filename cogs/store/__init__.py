@@ -60,7 +60,7 @@ class Store(commands.Cog):
         _(
             """`<booster>` - The booster type to buy, can be time, luck, money or all
             `[amount]` - Thw amount of boosters to buy; defaults to 1
-            
+
             Buy one or more booster from the store. For a detailed explanation what the boosters do, check `{prefix}help boosters`."""
         )
         if booster not in ["time", "luck", "money", "all"]:
@@ -106,11 +106,11 @@ class Store(commands.Cog):
     async def boosters(self, ctx):
         _(
             """View your boosters and the active ones' status. Each one has a different effect.
-            
+
               - Time boosters halve the adventures' times (must be active before starting an adventure)
               - Luck boosters increase your adventure chances by 25%
               - Money boosters increase the amount of gold gained from adventures by 25%
-              
+
             Each booster lasts 24 hours after activation."""
         )
         timeboosters = ctx.character_data["time_booster"]
@@ -160,7 +160,7 @@ class Store(commands.Cog):
     async def activate(self, ctx, boostertype: str.lower):
         _(
             """`<boostertype>` - The booster type to activate, can be time, luck, money or all
-            
+
             Activate a booster. For a detailed explanation what the boosters do, check `{prefix}help boosters`."""
         )
         if boostertype not in ["time", "luck", "money", "all"]:
