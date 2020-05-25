@@ -99,6 +99,7 @@ class Owner(commands.Cog):
     @commands.command(hidden=True)
     async def makeluck(self, ctx):
         """Sets the luck for all gods to a random value and give bonus luck to the top 25 followers."""
+        text_collection = []
         async with self.bot.pool.acquire() as conn:
             for god in self.bot.config.gods:
                 boundaries = self.bot.config.gods[god]["boundaries"]
@@ -144,10 +145,15 @@ class Owner(commands.Cog):
                     0.1,
                     top_followers[20:25],
                 )
-                await ctx.send(f"{god} set to {luck}.")
+                text_collection.append(f"{god} set to {luck}.")
             await conn.execute('UPDATE profile SET "favor"=0 WHERE "god" IS NOT NULL;')
-            await ctx.send("Godless set to 1.0")
-            await conn.execute('UPDATE profile SET "luck"=1.0 WHERE "god" IS NULL;;')
+            text_collection.append("Godless set to 1.0")
+            await conn.execute('UPDATE profile SET "luck"=1.0 WHERE "god" IS NULL;')
+            msg = await ctx.send("\n".join(text_collection))
+            try:
+                await msg.publish()
+            except (discord.Forbidden, discord.HTTPException) as e:
+                await ctx.send(f"Could not publish the message for some reason: `{e}`")
 
     @commands.command(hidden=True)
     async def shutdown(self, ctx):
