@@ -175,11 +175,11 @@ def vote(action):
             )
         members = [
             m
-            for m in ctx.bot.get_channel(int(ctx.player.channel_id)).members
-            if m != ctx.guild.me
+            for m in ctx.bot.get_channel(int(ctx.player.channel_id)).voice_states
+            if m != ctx.guild.me.id
         ]
-        accepted = {ctx.author}
-        needed = int(len(members) / 2) + 1
+        accepted = {ctx.author.id}
+        needed = len(members) // 2 + 1
 
         msg = await ctx.send(
             text.format(user=ctx.author.mention, current=len(accepted), total=needed)
@@ -187,8 +187,8 @@ def vote(action):
 
         def check(r, u):
             return (
-                u in members
-                and u not in accepted
+                u.id in members
+                and u.id not in accepted
                 and str(r.emoji) == "\U00002705"
                 and r.message.id == msg.id
             )
@@ -684,7 +684,7 @@ class Music(commands.Cog):
                 pass
             if (
                 not self.get_queue_length(player.guild_id)
-                or len(self.bot.get_channel(int(player.channel_id)).members) == 1
+                or len(self.bot.get_channel(int(player.channel_id)).voice_states) == 1
             ):
                 # That was the last track
                 await player.destroy()
@@ -695,7 +695,7 @@ class Music(commands.Cog):
                 )
         else:
             # VC empty?
-            if len(self.bot.get_channel(int(player.channel_id)).members) == 1:
+            if len(self.bot.get_channel(int(player.channel_id)).voice_states) == 1:
                 await player.destroy()
                 del self.queue[player.guild_id]
             # Cycle it so we still keep our format
