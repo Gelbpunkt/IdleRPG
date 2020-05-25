@@ -19,6 +19,7 @@ import asyncio
 import datetime
 import os
 import platform
+import random as random_
 import re
 import statistics
 import sys
@@ -585,11 +586,11 @@ https://git.travitia.xyz/Kenvyra/IdleRPG/compare/v4.5.1...v4.6.0
             )
         )
         await asyncio.sleep(5)
-        random.seed(int(str(first.id) + str(second.id)))
+        random_.seed(int(str(first.id) + str(second.id)))
         if first == second:
             love = 100.00
         else:
-            love = random.randint(1, 10000) / 100
+            love = random_.randint(1, 10000) / 100
         embed = discord.Embed(
             title=_("Love Calculation"),
             description=_("Love for {first} and {second} is at **{love}%**! ❤").format(
