@@ -54,10 +54,16 @@ FORMAT = (
     " ($BOLD%(filename)s$RESET:%(lineno)d)"
 )
 COLOR_FORMAT = formatter_message(FORMAT, True)
-logging.root.setLevel(logging.DEBUG)
+logging.root.setLevel(logging.INFO)
 color_formatter = ColoredFormatter(COLOR_FORMAT)
 stream = logging.StreamHandler()
-stream.setLevel(logging.DEBUG)
+stream.setLevel(logging.INFO)
 stream.setFormatter(color_formatter)
-file_handler = logging.FileHandler(filename="idlerpg.log", encoding="utf-8", mode="w")
-file_handler.setFormatter(color_formatter)
+
+
+def file_handler(id_):
+    file_handler_ = logging.FileHandler(
+        filename="idlerpg-{id_}.log", encoding="utf-8", mode="w"
+    )
+    file_handler_.setFormatter(color_formatter)
+    return file_handler_

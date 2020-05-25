@@ -48,14 +48,21 @@ if sys.platform == "linux":  # uvloop requires linux
 # Set the timezone to UTC
 os.environ["TZ"] = "UTC"
 
+# Sharding stuff
+shard_ids = orjson.loads(sys.argv[1])
+shard_count = int(sys.argv[2])
+cluster_id = int(sys.argv[3])
+cluster_name = sys.argv[4]
+
+
 bot = Bot(
     case_insensitive=True,
     status=discord.Status.idle,
     description="The one and only IdleRPG bot for discord",
-    shard_ids=orjson.loads(sys.argv[1]),
-    shard_count=int(sys.argv[2]),
-    cluster_id=int(sys.argv[3]),
-    cluster_name=sys.argv[4],
+    shard_ids=shard_ids,
+    shard_count=shard_count,
+    cluster_id=cluster_id,
+    cluster_name=cluster_name,
     fetch_offline_members=False,  # for intents to work
     max_messages=10000,  # We have a ton of incoming messages, higher cache means commands like activeadventure
     # or guild adventure joining will stay in cache so reactions are counted
@@ -66,7 +73,7 @@ if __name__ == "__main__":
     log = logging.getLogger()
     log.setLevel(logging.INFO)
     log.addHandler(stream)
-    log.addHandler(file_handler)
+    log.addHandler(file_handler(cluster_id))
     loop = asyncio.get_event_loop()
     loop.set_default_executor(ContextVarExecutor())
     try:
