@@ -542,15 +542,3 @@ def has_open_help_request() -> "_CheckDecorator":
         return True
 
     return commands.check(predicate)
-
-
-def is_hypesquad(ctx: Context) -> bool:
-    member = ctx.bot.get_guild(ctx.bot.config.support_server_id).get_member(
-        ctx.author.id
-    )  # cross server stuff
-    if not member:
-        return False
-    return (
-        discord.utils.get(member.roles, name="Hypesquad") is not None
-        or discord.utils.get(member.roles, name="Game Masters") is not None
-    )

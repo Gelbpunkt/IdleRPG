@@ -242,9 +242,9 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
                 overwrite=self.allow_sending,
             )
             highest_bid = [
-                ctx.guild.get_member(356_091_260_429_402_122),
+                356_091_260_429_402_122,
                 0,
-            ]  # user, amount
+            ]  # userid, amount
 
             def check(msg):
                 if (
@@ -256,7 +256,7 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
                 if not (int(msg.content) > highest_bid[1]):
                     return False
                 if (
-                    msg.author.id == highest_bid[0].id
+                    msg.author.id == highest_bid[0]
                 ):  # don't allow a player to outbid themselves
                     return False
                 return True
@@ -283,25 +283,25 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
                     'SELECT money FROM profile WHERE "user"=$1;', msg.author.id
                 )
                 if money and money >= bid:
-                    highest_bid = [msg.author, bid]
+                    highest_bid = [msg.author.id, bid]
                     await ctx.send(f"{msg.author.mention} bids **${msg.content}**!")
             msg = await ctx.send(
-                f"Auction done! Winner is {highest_bid[0].mention} with"
+                f"Auction done! Winner is <@{highest_bid[0]}> with"
                 f" **${highest_bid[1]}**!\nGiving Legendary Crate..."
             )
             money = await self.bot.pool.fetchval(
-                'SELECT money FROM profile WHERE "user"=$1;', highest_bid[0].id
+                'SELECT money FROM profile WHERE "user"=$1;', highest_bid[0]
             )
             if money >= highest_bid[1]:
                 await self.bot.pool.execute(
                     'UPDATE profile SET "money"="money"-$1,'
                     ' "crates_legendary"="crates_legendary"+1 WHERE "user"=$2;',
                     highest_bid[1],
-                    highest_bid[0].id,
+                    highest_bid[0],
                 )
                 await self.bot.log_transaction(
                     ctx,
-                    from_=highest_bid[0].id,
+                    from_=highest_bid[0],
                     to=2,
                     subject="money",
                     data={"Amount": highest_bid[1]},
@@ -309,7 +309,7 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
                 await msg.edit(content=f"{msg.content} Done!")
             else:
                 await ctx.send(
-                    f"{highest_bid[0].mention} spent the money in the meantime... Meh!"
+                    f"<@{highest_bid[0]}> spent the money in the meantime... Meh!"
                     " Noone gets it then, pah!\nThis incident has been reported and"
                     " they will get banned if it happens again. Cheers!"
                 )
@@ -1207,9 +1207,9 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
                 overwrite=self.allow_sending,
             )
             highest_bid = [
-                ctx.guild.get_member(356_091_260_429_402_122),
+                356_091_260_429_402_122,
                 0,
-            ]  # user, amount
+            ]  # userid, amount
 
             def check(msg):
                 if (
@@ -1221,7 +1221,7 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
                 if not (int(msg.content) > highest_bid[1]):
                     return False
                 if (
-                    msg.author.id == highest_bid[0].id
+                    msg.author.id == highest_bid[0]
                 ):  # don't allow a player to outbid themselves
                     return False
                 return True
@@ -1248,25 +1248,25 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
                     'SELECT money FROM profile WHERE "user"=$1;', msg.author.id
                 )
                 if money and money >= bid:
-                    highest_bid = [msg.author, bid]
+                    highest_bid = [msg.author.id, bid]
                     await ctx.send(f"{msg.author.mention} bids **${msg.content}**!")
             msg = await ctx.send(
-                f"Auction done! Winner is {highest_bid[0].mention} with"
+                f"Auction done! Winner is <@{highest_bid[0]}> with"
                 f" **${highest_bid[1]}**!\nGiving Legendary Crate..."
             )
             money = await self.bot.pool.fetchval(
-                'SELECT money FROM profile WHERE "user"=$1;', highest_bid[0].id
+                'SELECT money FROM profile WHERE "user"=$1;', highest_bid[0]
             )
             if money >= highest_bid[1]:
                 await self.bot.pool.execute(
                     'UPDATE profile SET "money"="money"-$1,'
                     ' "crates_legendary"="crates_legendary"+1 WHERE "user"=$2;',
                     highest_bid[1],
-                    highest_bid[0].id,
+                    highest_bid[0],
                 )
                 await self.bot.log_transaction(
                     ctx,
-                    from_=highest_bid[0].id,
+                    from_=highest_bid[0],
                     to=2,
                     subject="money",
                     data={"Amount": highest_bid[1]},
@@ -1274,7 +1274,7 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
                 await msg.edit(content=f"{msg.content} Done!")
             else:
                 await ctx.send(
-                    f"{highest_bid[0].mention} spent the money in the meantime... Meh!"
+                    f"<@{highest_bid[0]}> spent the money in the meantime... Meh!"
                     " Noone gets it then, pah!\nThis incident has been reported and"
                     " they will get banned if it happens again. Cheers!"
                 )
@@ -1519,9 +1519,9 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
                 overwrite=self.allow_sending,
             )
             highest_bid = [
-                ctx.guild.get_member(356_091_260_429_402_122),
+                356_091_260_429_402_122,
                 0,
-            ]  # user, amount
+            ]  # userid, amount
 
             def check(msg):
                 if (
@@ -1533,7 +1533,7 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
                 if not (int(msg.content) > highest_bid[1]):
                     return False
                 if (
-                    msg.author.id == highest_bid[0].id
+                    msg.author.id == highest_bid[0]
                 ):  # don't allow a player to outbid themselves
                     return False
                 return True
@@ -1560,25 +1560,25 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
                     'SELECT money FROM profile WHERE "user"=$1;', msg.author.id
                 )
                 if money and money >= bid:
-                    highest_bid = [msg.author, bid]
+                    highest_bid = [msg.author.id, bid]
                     await ctx.send(f"{msg.author.mention} bids **${msg.content}**!")
             msg = await ctx.send(
-                f"Auction done! Winner is {highest_bid[0].mention} with"
+                f"Auction done! Winner is <@{highest_bid[0]}> with"
                 f" **${highest_bid[1]}**!\nGiving Legendary Crate..."
             )
             money = await self.bot.pool.fetchval(
-                'SELECT money FROM profile WHERE "user"=$1;', highest_bid[0].id
+                'SELECT money FROM profile WHERE "user"=$1;', highest_bid[0]
             )
             if money >= highest_bid[1]:
                 await self.bot.pool.execute(
                     'UPDATE profile SET "money"="money"-$1,'
                     ' "crates_legendary"="crates_legendary"+1 WHERE "user"=$2;',
                     highest_bid[1],
-                    highest_bid[0].id,
+                    highest_bid[0],
                 )
                 await self.bot.log_transaction(
                     ctx,
-                    from_=highest_bid[0].id,
+                    from_=highest_bid[0],
                     to=2,
                     subject="money",
                     data={"Amount": highest_bid[1]},
@@ -1586,7 +1586,7 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
                 await msg.edit(content=f"{msg.content} Done!")
             else:
                 await ctx.send(
-                    f"{highest_bid[0].mention} spent the money in the meantime... Meh!"
+                    f"<@{highest_bid[0]}> spent the money in the meantime... Meh!"
                     " Noone gets it then, pah!\nThis incident has been reported and"
                     " they will get banned if it happens again. Cheers!"
                 )
@@ -1873,9 +1873,9 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
                 overwrite=self.allow_sending,
             )
             highest_bid = [
-                ctx.guild.get_member(356_091_260_429_402_122),
+                356_091_260_429_402_122,
                 0,
-            ]  # user, amount
+            ]  # userid, amount
 
             def check(msg):
                 if (
@@ -1887,7 +1887,7 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
                 if not (int(msg.content) > highest_bid[1]):
                     return False
                 if (
-                    msg.author.id == highest_bid[0].id
+                    msg.author.id == highest_bid[0]
                 ):  # don't allow a player to outbid themselves
                     return False
                 return True
@@ -1914,25 +1914,25 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
                     'SELECT money FROM profile WHERE "user"=$1;', msg.author.id
                 )
                 if money and money >= bid:
-                    highest_bid = [msg.author, bid]
+                    highest_bid = [msg.author.id, bid]
                     await ctx.send(f"{msg.author.mention} bids **${msg.content}**!")
             msg = await ctx.send(
-                f"Auction done! Winner is {highest_bid[0].mention} with"
+                f"Auction done! Winner is <@{highest_bid[0]}> with"
                 f" **${highest_bid[1]}**!\nGiving Legendary Crate..."
             )
             money = await self.bot.pool.fetchval(
-                'SELECT money FROM profile WHERE "user"=$1;', highest_bid[0].id
+                'SELECT money FROM profile WHERE "user"=$1;', highest_bid[0]
             )
             if money >= highest_bid[1]:
                 await self.bot.pool.execute(
                     'UPDATE profile SET "money"="money"-$1,'
                     ' "crates_legendary"="crates_legendary"+1 WHERE "user"=$2;',
                     highest_bid[1],
-                    highest_bid[0].id,
+                    highest_bid[0],
                 )
                 await self.bot.log_transaction(
                     ctx,
-                    from_=highest_bid[0].id,
+                    from_=highest_bid[0],
                     to=2,
                     subject="money",
                     data={"Amount": highest_bid[1]},
@@ -1940,7 +1940,7 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
                 await msg.edit(content=f"{msg.content} Done!")
             else:
                 await ctx.send(
-                    f"{highest_bid[0].mention} spent the money in the meantime... Meh!"
+                    f"<@{highest_bid[0]}> spent the money in the meantime... Meh!"
                     " Noone gets it then, pah!\nThis incident has been reported and"
                     " they will get banned if it happens again. Cheers!"
                 )
