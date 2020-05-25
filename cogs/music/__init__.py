@@ -682,17 +682,26 @@ class Music(commands.Cog):
                 self.queue[player.guild_id].pop(0)  # remove the previous entry
             except IndexError:
                 pass
-        if (
-            not self.get_queue_length(player.guild_id)
-            or len(self.bot.get_channel(int(player.channel_id)).members) == 1
-        ):
-            # That was the last track
-            await player.destroy()
-            del self.queue[player.guild_id]
+            if (
+                not self.get_queue_length(player.guild_id)
+                or len(self.bot.get_channel(int(player.channel_id)).members) == 1
+            ):
+                # That was the last track
+                await player.destroy()
+                del self.queue[player.guild_id]
+            else:
+                await self.play_track(
+                    self.queue[player.guild_id][0], player,
+                )
         else:
-            await self.play_track(
-                self.queue[player.guild_id][0], player,
-            )
+            # VC empty?
+            if len(self.bot.get_channel(int(player.channel_id)).members) == 1:
+                await player.destroy()
+                del self.queue[player.guild_id]
+            # Cycle it so we still keep our format
+            track = self.queue[player.guild_id].pop(0)
+            self.queue[player.guild_id].append(track)
+            await self.play_track(track, player)
 
     async def event_hook(self, event):
         """Handle wavelink events"""
