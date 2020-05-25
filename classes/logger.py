@@ -63,7 +63,7 @@ stream.setFormatter(color_formatter)
 
 def file_handler(id_):
     file_handler_ = logging.FileHandler(
-        filename="idlerpg-{id_}.log", encoding="utf-8", mode="w"
+        filename=f"idlerpg-{id_}.log", encoding="utf-8", mode="w"
     )
     file_handler_.setFormatter(color_formatter)
     return file_handler_
