@@ -219,7 +219,7 @@ class Sharding(commands.Cog):
     async def send_latency_and_shard_count(self, command_id: str):
         payload = {
             "output": {
-                self.bot.cluster_id: [
+                f"{self.bot.cluster_id}": [
                     self.bot.cluster_name,
                     self.bot.shard_ids,
                     round(self.bot.latency * 1000),
