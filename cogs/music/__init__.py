@@ -701,7 +701,7 @@ class Music(commands.Cog):
             # Cycle it so we still keep our format
             track = self.queue[player.guild_id].pop(0)
             self.queue[player.guild_id].append(track)
-            await self.play_track(track, player)
+            await self.play_track(self.queue[player.guild_id][0], player)
 
     async def event_hook(self, event):
         """Handle wavelink events"""
