@@ -17,6 +17,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
 import asyncio
 import datetime
+import logging
 import os
 import string
 import sys
@@ -66,6 +67,7 @@ class Bot(commands.AutoShardedBot):
         self.activity = discord.Game(
             name=f"IdleRPG v{config.version}" if config.is_beta else config.base_url
         )
+        self.logger = logging.getLogger()
 
         # global cooldown
         self.add_check(self.global_cooldown, call_once=True)

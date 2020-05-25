@@ -513,7 +513,8 @@ async def user_is_patron(bot: "Bot", user: discord.User, role: str = "basic") ->
         if role_id in member_roles:
             top_donator_role = role_enum_val
 
-    actual_role = getattr(DonatorRank, role)
+    if not top_donator_role:
+        return False
     if getattr(DonatorRank, top_donator_role) >= actual_role:
         return True
     return False
