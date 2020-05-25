@@ -33,7 +33,7 @@ class GameMaster(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
         self.top_auction = None
-        
+
     @is_gm()
     @commands.command(brief=_("Publish an announcement"))
     @locale_doc
