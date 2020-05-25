@@ -171,19 +171,19 @@ support_team_role = 1234567890
 
 """Donator role order"""
 donator_roles = [
-    1234, # Donators
-    1234, # Designer
-    1234, # Translator
-    1234, # Support Team
-    1234, # Nitro Booster
-    1234, # Game Masters
-    1234, # Code Redeemed
-    1234, # Bronze Donators
-    1234, # Silver Donators
-    1234, # Gold Donators
-    1234, # Emerald Donators
-    1234, # Ruby Donators
-    1234, # Diamond Donators
+    1234,  # Donators
+    1234,  # Designer
+    1234,  # Translator
+    1234,  # Support Team
+    1234,  # Nitro Booster
+    1234,  # Game Masters
+    1234,  # Code Redeemed
+    1234,  # Bronze Donators
+    1234,  # Silver Donators
+    1234,  # Gold Donators
+    1234,  # Emerald Donators
+    1234,  # Ruby Donators
+    1234,  # Diamond Donators
 ]
 donator_roles_short = [
     "basic",

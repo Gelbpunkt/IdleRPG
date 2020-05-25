@@ -502,19 +502,19 @@ def is_patron(role: str = "basic") -> "_CheckDecorator":
 async def user_is_patron(bot: "Bot", user: discord.User, role: str = "basic") -> bool:
     actual_role = getattr(DonatorRank, role)
     try:
-        member = await ctx.bot.http.get_member(ctx.bot.config.support_server_id, ctx.author.id)
+        member = await bot.http.get_member(bot.config.support_server_id, user.id)
     except discord.NotFound:
         raise NoPatron(actual_role)
     top_donator_role = None
     member_roles = [int(i) for i in member.get("roles", [])]
     for role_id, role_enum_val in zip(
-        self.bot.config.donator_roles, self.bot.config.donator_roles_short
+        bot.config.donator_roles, bot.config.donator_roles_short
     ):
         if role_id in member_roles:
             top_donator_role = role_enum_val
 
     actual_role = getattr(DonatorRank, role)
-    if getattr(DonatorRank, response) >= actual_role:
+    if getattr(DonatorRank, top_donator_role) >= actual_role:
         return True
     return False
 
@@ -522,7 +522,9 @@ async def user_is_patron(bot: "Bot", user: discord.User, role: str = "basic") ->
 def is_supporter() -> "_CheckDecorator":
     async def predicate(ctx: Context) -> bool:
         try:
-            member = await ctx.bot.http.get_member(ctx.bot.config.support_server_id, ctx.author.id)
+            member = await ctx.bot.http.get_member(
+                ctx.bot.config.support_server_id, ctx.author.id
+            )
         except discord.NotFound:
             return False
         member_roles = [int(i) for i in member.get("roles", [])]
