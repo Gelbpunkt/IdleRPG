@@ -33,6 +33,17 @@ class GameMaster(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
         self.top_auction = None
+        
+    @is_gm()
+    @commands.command(brief=_("Publish an announcement"))
+    @locale_doc
+    async def publish(self, ctx, message: discord.Message):
+        _("Publish a message from an announement channel")
+        try:
+            await message.publish()
+            await ctx.send(_("Message has been published!"))
+        except discord.Forbidden:
+            await ctx.send(_("This message is not from an announcement channel!"))
 
     @is_gm()
     @commands.command(
