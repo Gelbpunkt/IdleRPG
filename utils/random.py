@@ -53,4 +53,5 @@ def shuffle(population):
 
 def randint(a, b):
     """Return random integer in range [a, b], including both end points."""
+    a, b = int(a), int(b)
     return secrets.randbelow(b - a + 1) + a
