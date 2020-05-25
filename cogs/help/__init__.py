@@ -248,7 +248,6 @@ class IdleHelp(commands.HelpCommand):
         self.gm_exts = {"GameMaster"}
         self.owner_exts = {"GameMaster", "Owner"}
         self.color = 0xCB735C
-        # self.icon = "https://media.discordapp.net/attachments/460568954968997890/711736595652280361/idlehelp.png"
 
     async def command_callback(self, ctx, *, command=None):
         await self.prepare_help_command(ctx, command)
@@ -299,7 +298,6 @@ class IdleHelp(commands.HelpCommand):
             name=self.context.bot.user,
             icon_url=self.context.bot.user.avatar_url_as(static_format="png"),
         )
-        # e.set_thumbnail(url=self.icon)
 
         return e
 
@@ -381,7 +379,9 @@ class IdleHelp(commands.HelpCommand):
         )
         e.set_footer(
             icon_url=self.context.bot.user.avatar_url_as(static_format="png"),
-            text=_("See 'help <command>' for more detailed info"),
+            text=_("See '{prefix}help <command>' for more detailed info").format(
+                prefix=self.context.prefix
+            ),
         )
         await self.context.send(embed=e)
 
@@ -442,7 +442,7 @@ class IdleHelp(commands.HelpCommand):
         e.add_field(
             name="Subcommands",
             value="\n".join(
-                [f"`{c.qualified_name}` - {_(c.brief)}"] for c in group.commands
+                [f"`{c.qualified_name}` - {_(c.brief)}" for c in group.commands]
             ),
         )
         if group.aliases:
