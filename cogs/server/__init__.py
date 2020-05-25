@@ -37,7 +37,7 @@ class Server(commands.Cog):
         )
         text = _("Link")
         urltext = (
-            f"[{text} <:external_link:429288989560930314>]({ctx.guild.icon_url})"
+            f"[{text}]({ctx.guild.icon_url})"
             if ctx.guild.icon_url
             else _("`No icon has been set yet!`")
         )
@@ -56,19 +56,18 @@ Members Total: `{members}`
 ID: `{id}`
 Icon: {urltext}
 Owner: {owner}
+Roles: `{roles}`
 Server created at: `{created_at}`"""
             ).format(
                 name=ctx.guild.name,
                 region=ctx.guild.region,
                 members=ctx.guild.member_count,
                 urltext=urltext,
-                owner=ctx.guild.owner.mention,
+                owner=f"<@{ctx.guild.owner_id}>",
                 id=ctx.guild.id,
+                roles=len(ctx.guild.roles),
                 created_at=ctx.guild.created_at.__format__("%A %d. %B %Y at %H:%M:%S"),
             ),
-        )
-        em.add_field(
-            name=_("Roles"), value=", ".join([role.name for role in ctx.guild.roles])
         )
         text = _("{name}, Shard {num} of {total}")
         em.add_field(
