@@ -49,6 +49,29 @@ class ColoredFormatter(logging.Formatter):
         return logging.Formatter.format(self, record)
 
 
+class NoMoreReferencing(logging.Filter):
+    def __init__(self):
+        super().__init__(name="discord.state")
+
+    def filter(self, record):
+        if record.levelname == "WARNING" and "referencing an unknown" in record.msg:
+            return False
+        return True
+
+
+class NoMoreRatelimit(logging.Filter):
+    def __init__(self):
+        super().__init__(name="discord.http")
+
+    def filter(self, record):
+        if record.levelname == "WARNING" and "rate limit" in record.msg:
+            return False
+        return True
+
+
+logging.getLogger("discord.state").addFilter(NoMoreReferencing())
+logging.getLogger("discord.http").addFilter(NoMoreRatelimit())
+
 FORMAT = (
     "[$BOLD%(name)-20s$RESET][%(levelname)-18s]  %(message)s"
     " ($BOLD%(filename)s$RESET:%(lineno)d)"
