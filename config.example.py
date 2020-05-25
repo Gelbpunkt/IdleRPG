@@ -166,21 +166,24 @@ donator_cooldown = commands.CooldownMapping.from_cooldown(
 """Member role ID. Permissions will be overridden for this role during raids."""
 member_role = 1234567890
 
+"""The support team role ID."""
+support_team_role = 1234567890
+
 """Donator role order"""
 donator_roles = [
-    "Donators",
-    "Designer",
-    "Translator",
-    "Support Team",
-    "Nitro Booster",
-    "Game Masters",
-    "Code Redeemed",
-    "Bronze Donators",
-    "Silver Donators",
-    "Gold Donators",
-    "Emerald Donators",
-    "Ruby Donators",
-    "Diamond Donators",
+    1234, # Donators
+    1234, # Designer
+    1234, # Translator
+    1234, # Support Team
+    1234, # Nitro Booster
+    1234, # Game Masters
+    1234, # Code Redeemed
+    1234, # Bronze Donators
+    1234, # Silver Donators
+    1234, # Gold Donators
+    1234, # Emerald Donators
+    1234, # Ruby Donators
+    1234, # Diamond Donators
 ]
 donator_roles_short = [
     "basic",

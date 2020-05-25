@@ -494,32 +494,25 @@ def is_gm() -> "_CheckDecorator":
 
 def is_patron(role: str = "basic") -> "_CheckDecorator":
     async def predicate(ctx: Context) -> bool:
-        try:
-            response = (
-                await ctx.bot.cogs["Sharding"].handler(
-                    "get_user_patreon", 1, args={"member_id": ctx.author.id}
-                )
-            )[0]
-        except IndexError:
-            raise NoPatron(DonatorRank.basic)
-
-        actual_role = getattr(DonatorRank, role)
-        if getattr(DonatorRank, response) >= actual_role:
-            return True
-        raise NoPatron(actual_role)
+        return await user_is_patron(ctx.bot, ctx.author, role)
 
     return commands.check(predicate)
 
 
 async def user_is_patron(bot: "Bot", user: discord.User, role: str = "basic") -> bool:
+    actual_role = getattr(DonatorRank, role)
     try:
-        response = (
-            await bot.cogs["Sharding"].handler(
-                "get_user_patreon", 1, args={"member_id": user.id}
-            )
-        )[0]
-    except IndexError:
-        return False
+        member = await ctx.bot.http.get_member(ctx.bot.config.support_server_id, ctx.author.id)
+    except discord.NotFound:
+        raise NoPatron(actual_role)
+    top_donator_role = None
+    member_roles = [int(i) for i in member.get("roles", [])]
+    for role_id, role_enum_val in zip(
+        self.bot.config.donator_roles, self.bot.config.donator_roles_short
+    ):
+        if role_id in member_roles:
+            top_donator_role = role_enum_val
+
     actual_role = getattr(DonatorRank, role)
     if getattr(DonatorRank, response) >= actual_role:
         return True
@@ -528,10 +521,12 @@ async def user_is_patron(bot: "Bot", user: discord.User, role: str = "basic") ->
 
 def is_supporter() -> "_CheckDecorator":
     async def predicate(ctx: Context) -> bool:
-        response = await ctx.bot.cogs["Sharding"].handler(
-            "user_is_helper", 1, args={"member_id": ctx.author.id}
-        )
-        return any(response)
+        try:
+            member = await ctx.bot.http.get_member(ctx.bot.config.support_server_id, ctx.author.id)
+        except discord.NotFound:
+            return False
+        member_roles = [int(i) for i in member.get("roles", [])]
+        return ctx.bot.config.support_team_role in member_roles
 
     return commands.check(predicate)
 
