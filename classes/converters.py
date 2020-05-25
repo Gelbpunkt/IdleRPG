@@ -56,13 +56,12 @@ class MemberConverter(commands.MemberConverter):
                 # it is Name#0001
                 name = match.group(1)
                 discrim = match.group(2)
+                members = await guild.query_members(name)
+                result = discord.utils.get(members, discriminator=discrim)
             else:
                 name = argument
                 discrim = None
-            members = await guild.query_members(name)
-            if members and discrim is not None:
-                result = discord.utils.get(members, discriminator=discrim)
-            elif members:
+                members = await guild.query_members(name, limit=1)
                 result = members[0]
         else:
             user_id = int(match.group(1))
