@@ -78,6 +78,9 @@ class Bot(commands.AutoShardedBot):
         self.eligible_for_cooldown_reduce = set()  # caching
         self.not_eligible_for_cooldown_reduce = set()  # caching
 
+    def __repr__(self):
+        return "<Bot>"
+
     async def global_cooldown(self, ctx: commands.Context):
         """
         A function that enables a global per-user cooldown

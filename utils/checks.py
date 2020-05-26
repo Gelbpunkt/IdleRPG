@@ -27,6 +27,7 @@ from discord.ext import commands
 from classes.context import Context
 from classes.enums import DonatorRank
 from utils import random
+from utils.cache import cache
 
 if TYPE_CHECKING:
     from discord.ext.commands.core import _CheckDecorator
@@ -499,6 +500,7 @@ def is_patron(role: str = "basic") -> "_CheckDecorator":
     return commands.check(predicate)
 
 
+@cache(maxsize=8096)
 async def user_is_patron(bot: "Bot", user: discord.User, role: str = "basic") -> bool:
     actual_role = getattr(DonatorRank, role)
     try:
