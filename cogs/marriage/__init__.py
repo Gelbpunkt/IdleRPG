@@ -366,6 +366,7 @@ class Marriage(commands.Cog):
     @locale_doc
     async def child(self, ctx):
         _(
+            # xgettext: no-python-format
             """Have a child with your partner.
 
             Children on their own don't do much, but `{prefix}familyevent` can effect your money and crates.

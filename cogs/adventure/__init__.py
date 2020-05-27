@@ -148,6 +148,7 @@ class Adventure(commands.Cog):
     @locale_doc
     async def activeadventure(self, ctx):
         _(
+            # xgettext: no-python-format
             """Active adventures will put you into a 15x15 randomly generated maze. You will begin in the top left corner (0,0) and your goal is to find the exit in the bottom right corner (14,14)
             You control your character with the arrow reactions below the message.
 

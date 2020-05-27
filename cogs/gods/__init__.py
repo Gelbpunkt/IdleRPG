@@ -247,6 +247,7 @@ Are you sure you want to follow {god}?"""
     @locale_doc
     async def pray(self, ctx):
         _(
+            # xgettext: no-python-format
             """Pray to your God in order to gain a random amont of favor points, ranging from 0 to 1000.
 
             There is a 33% chance you will gain 0 favor, a 33% chance to gain anywhere from 0 to 500 favor and a 33% chance to gain anywhere from 500 to 1000 favor.

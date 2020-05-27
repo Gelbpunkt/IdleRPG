@@ -236,6 +236,7 @@ class Classes(commands.Cog):
     @locale_doc
     async def evolve(self, ctx):
         _(
+            # xgettext: no-python-format
             """Evolve your class, bringing it to the next level and giving better class bonuses.
 
             You can evolve every 5 levels, i.e. at level 5, level 10, level 15, level 20, level 25 and finally level 30.
@@ -634,6 +635,7 @@ class Classes(commands.Cog):
     @locale_doc
     async def hunt(self, ctx):
         _(
+            # xgettext: no-python-format
             """Make your pet hunt an item for you.
 
             The items stat depends on your pet's level (determined by class evolution) as well as its joy score.
