@@ -189,8 +189,7 @@ class Sharding(commands.Cog):
                 if payload.get("args"):
                     self.bot.loop.create_task(
                         getattr(self, payload["action"])(
-                            **json.loads(payload["args"]),
-                            command_id=payload["command_id"],
+                            **payload["args"], command_id=payload["command_id"],
                         )
                     )
                 else:
