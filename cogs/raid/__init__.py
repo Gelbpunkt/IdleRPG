@@ -26,6 +26,7 @@ import discord
 from discord.ext import commands
 
 from classes.converters import IntGreaterThan
+from cogs.shard_communication import user_on_cooldown as user_cooldown
 from utils import random
 from utils.checks import AlreadyRaiding, has_char, is_gm, is_god
 from utils.i18n import _, locale_doc
@@ -1985,6 +1986,7 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
             ).format(prefix=ctx.prefix)
         )
 
+    @user_cooldown(60, identifier="increase")
     @has_char()
     @increase.command(brief=_("Upgrade your raid damage"))
     @locale_doc
@@ -2031,6 +2033,7 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
             ).format(newlvl=newlvl, price=price)
         )
 
+    @user_cooldown(60, identifier="increase")
     @has_char()
     @increase.command(brief=_("Upgrade your raid defense"))
     @locale_doc

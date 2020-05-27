@@ -33,18 +33,16 @@ from utils.misc import nice_join
 
 
 # Cross-process cooldown check (pass this to commands)
-def user_on_cooldown(cooldown: int):
+def user_on_cooldown(cooldown: int, identifier: str = None):
     async def predicate(ctx):
-        command_ttl = await ctx.bot.redis.execute(
-            "TTL", f"cd:{ctx.author.id}:{ctx.command.qualified_name}"
-        )
+        if identifier is None:
+            cmd_id = ctx.command.qualified_name
+        else:
+            cmd_id = identifier
+        command_ttl = await ctx.bot.redis.execute("TTL", f"cd:{ctx.author.id}:{cmd_id}")
         if command_ttl == -2:
             await ctx.bot.redis.execute(
-                "SET",
-                f"cd:{ctx.author.id}:{ctx.command.qualified_name}",
-                ctx.command.qualified_name,
-                "EX",
-                cooldown,
+                "SET", f"cd:{ctx.author.id}:{cmd_id}", cmd_id, "EX", cooldown,
             )
             return True
         else:
