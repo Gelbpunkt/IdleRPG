@@ -638,17 +638,20 @@ class Bot(commands.AutoShardedBot):
         user = user if isinstance(user, int) else user.id
         await self.cogs["Sharding"].handler("temp_unban", 0, args={"user_id": user})
 
+    @cache(maxsize=8096)
     async def get_donator_rank(self, user):
-        user = user if isinstance(user, int) else user.id
         try:
-            response = (
-                await self.cogs["Sharding"].handler(
-                    "get_user_patreon", 1, args={"member_id": user}
-                )
-            )[0]
-        except IndexError:
-            return None
-        return getattr(DonatorRank, response)
+            member = await self.http.get_member(self.config.support_server_id, user.id)
+        except discord.NotFound:
+            return False
+        top_donator_role = None
+        member_roles = [int(i) for i in member.get("roles", [])]
+        for role_id, role_enum_val in zip(
+            self.config.donator_roles, self.config.donator_roles_short
+        ):
+            if role_id in member_roles:
+                top_donator_role = role_enum_val
+        return getattr(DonatorRank, top_donator_role) if top_donator_role else None
 
     async def generate_stats(
         self, user, damage, armor, classes=None, race=None, conn=None

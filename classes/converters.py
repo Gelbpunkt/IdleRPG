@@ -75,10 +75,9 @@ class MemberConverter(commands.MemberConverter):
                 ctx.message.mentions, id=user_id
             ) or discord.utils.get(guild.members, id=user_id)
             if result is None:
-                try:
-                    result = await guild.fetch_member(user_id)
-                except discord.NotFound:
-                    pass
+                results = await guild.query_members(user_ids=[user_id], limit=1)
+                if results:
+                    result = results[0]
 
         if result is None:
             raise commands.BadArgument(f'Member "{argument}" not found')

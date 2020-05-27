@@ -27,7 +27,6 @@ from discord.ext import commands
 from classes.context import Context
 from classes.enums import DonatorRank
 from utils import random
-from utils.cache import cache
 
 if TYPE_CHECKING:
     from discord.ext.commands.core import _CheckDecorator
@@ -495,29 +494,18 @@ def is_gm() -> "_CheckDecorator":
 
 def is_patron(role: str = "basic") -> "_CheckDecorator":
     async def predicate(ctx: Context) -> bool:
-        return await user_is_patron(ctx.bot, ctx.author, role)
+        if await user_is_patron(ctx.bot, ctx.author, role):
+            return True
+        else:
+            raise NoPatron(getattr(DonatorRank, role))
 
     return commands.check(predicate)
 
 
-@cache(maxsize=8096)
 async def user_is_patron(bot: "Bot", user: discord.User, role: str = "basic") -> bool:
     actual_role = getattr(DonatorRank, role)
-    try:
-        member = await bot.http.get_member(bot.config.support_server_id, user.id)
-    except discord.NotFound:
-        raise NoPatron(actual_role)
-    top_donator_role = None
-    member_roles = [int(i) for i in member.get("roles", [])]
-    for role_id, role_enum_val in zip(
-        bot.config.donator_roles, bot.config.donator_roles_short
-    ):
-        if role_id in member_roles:
-            top_donator_role = role_enum_val
-
-    if not top_donator_role:
-        return False
-    if getattr(DonatorRank, top_donator_role) >= actual_role:
+    rank = await bot.get_donator_rank(user)
+    if rank and rank >= actual_role:
         return True
     return False
 
