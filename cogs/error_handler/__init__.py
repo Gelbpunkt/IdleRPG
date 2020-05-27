@@ -317,7 +317,7 @@ class Errorhandler(commands.Cog):
                     else:
                         guild_id = "None"
                     with sentry_sdk.push_scope() as scope:
-                        scope.set_context("message", ctx.message.content)
+                        scope.set_context("message", {"content": ctx.message.content})
                         scope.set_extra("guild_id", str(guild_id))
                         scope.set_extra("channel_id", str(ctx.channel.id))
                         scope.set_extra("message_id", str(ctx.message.id))
