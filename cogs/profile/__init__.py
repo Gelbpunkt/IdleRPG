@@ -838,7 +838,7 @@ IdleRPG is a global bot, your characters are valid everywhere"""
             The two items must be of the same item type and within a 5 stat range of each other.
             For example, if the first item is a 23 damage Scythe, the second item must be a Scythe with damage 18 to 28.
 
-            One handed weapons can be merged up to 41, two handed items up to 62
+            One handed weapons can be merged up to 41, two handed items up to 82
 
             (This command has a cooldown of 1 hour.)"""
         )
@@ -874,7 +874,7 @@ IdleRPG is a global bot, your characters are valid everywhere"""
             max_ = item[stat] + 5
             main_hand = item["hand"]
             if (main > 40 and main_hand != "both") or (
-                main > 61 and main_hand == "both"
+                main > 81 and main_hand == "both"
             ):
                 await self.bot.reset_cooldown(ctx)
                 return await ctx.send(
@@ -910,7 +910,7 @@ IdleRPG is a global bot, your characters are valid everywhere"""
             Upgrades an item's stat by 1.
             The price to upgrade an item is 250 times its current stat. For example, upgrading a 15 damage sword will cost $3,750.
 
-            One handed weapons can be upgraded up to 41, two handed items up to 62.
+            One handed weapons can be upgraded up to 41, two handed items up to 82.
 
             (This command has a cooldown of 1 hour.)"""
         )
@@ -935,7 +935,7 @@ IdleRPG is a global bot, your characters are valid everywhere"""
                 pricetopay = int(item["armor"] * 250)
             stat = int(item[stattoupgrade])
             hand = item["hand"]
-            if (stat > 40 and hand != "both") or (stat > 61 and hand == "both"):
+            if (stat > 40 and hand != "both") or (stat > 81 and hand == "both"):
                 await self.bot.reset_cooldown(ctx)
                 return await ctx.send(
                     _("Your weapon already reached the maximum upgrade level.")
