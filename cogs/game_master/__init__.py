@@ -23,7 +23,12 @@ import discord
 
 from discord.ext import commands
 
-from classes.converters import IntFromTo, IntGreaterThan, UserWithCharacter
+from classes.converters import (
+    IntFromTo,
+    IntGreaterThan,
+    MemberConverter,
+    UserWithCharacter,
+)
 from cogs.shard_communication import user_on_cooldown as user_cooldown
 from utils.checks import has_char, is_gm
 from utils.i18n import _, locale_doc
@@ -71,7 +76,23 @@ class GameMaster(commands.Cog):
         )
 
     @is_gm()
-    @commands.command(hidden=True, brief=_("bot-unban a user"))
+    @commands.command(
+        hidden=True, aliases=["gmcdc"], brief=_("Clear donator cache for a user")
+    )
+    @locale_doc
+    async def gmcleardonatorcache(self, ctx, *, other: MemberConverter):
+        _(
+            """`<other>` - A server member
+
+            Clears the cached donator rank for a user globally, allowing them to use the new commands after donating.
+
+            Only Game Masters can use this command."""
+        )
+        await self.bot.clear_donator_cache(other)
+        await ctx.send(_("Done"))
+
+    @is_gm()
+    @commands.command(hidden=True, brief=_("Bot-unban a user"))
     @locale_doc
     async def unban(self, ctx, *, other: discord.User):
         _(

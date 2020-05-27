@@ -202,6 +202,9 @@ class Sharding(commands.Cog):
             if payload.get("output") and payload["command_id"] in self._messages:
                 self._messages[payload["command_id"]].append(payload["output"])
 
+    async def clear_donator_cache(self, user_id: int, command_id: int):
+        self.bot.get_donator_rank.invalidate(self.bot, user_id)
+
     async def temp_ban(self, user_id: int, command_id: int):
         self.bot.bans.append(user_id)
 

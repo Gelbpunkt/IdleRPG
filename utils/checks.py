@@ -504,7 +504,7 @@ def is_patron(role: str = "basic") -> "_CheckDecorator":
 
 async def user_is_patron(bot: "Bot", user: discord.User, role: str = "basic") -> bool:
     actual_role = getattr(DonatorRank, role)
-    rank = await bot.get_donator_rank(user)
+    rank = await bot.get_donator_rank(user.id)
     if rank and rank >= actual_role:
         return True
     return False

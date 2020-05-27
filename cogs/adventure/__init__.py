@@ -123,7 +123,7 @@ class Adventure(commands.Cog):
             buildings := await self.bot.get_city_buildings(ctx.character_data["guild"])
         ) :
             time -= time * (buildings["adventure_building"] / 100)
-        if (user_rank := await self.bot.get_donator_rank(ctx.author)) :
+        if user_rank := await self.bot.get_donator_rank(ctx.author.id):
             if user_rank >= DonatorRank.emerald:
                 time = time * 0.75
             elif user_rank >= DonatorRank.gold:

@@ -630,6 +630,12 @@ class Bot(commands.AutoShardedBot):
                 pass
         return 0
 
+    async def clear_donator_cache(self, user):
+        user = user if isinstance(user, int) else user.id
+        await self.cogs["Sharding"].handler(
+            "clear_donator_cache", 0, args={"user_id": user}
+        )
+
     async def start_transaction(self, user):
         user = user if isinstance(user, int) else user.id
         await self.cogs["Sharding"].handler("temp_ban", 0, args={"user_id": user})
@@ -639,9 +645,9 @@ class Bot(commands.AutoShardedBot):
         await self.cogs["Sharding"].handler("temp_unban", 0, args={"user_id": user})
 
     @cache(maxsize=8096)
-    async def get_donator_rank(self, user):
+    async def get_donator_rank(self, user_id):
         try:
-            member = await self.http.get_member(self.config.support_server_id, user.id)
+            member = await self.http.get_member(self.config.support_server_id, user_id)
         except discord.NotFound:
             return False
         top_donator_role = None
