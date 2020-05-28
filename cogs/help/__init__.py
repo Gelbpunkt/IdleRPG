@@ -260,7 +260,7 @@ class IdleHelp(commands.HelpCommand):
             return await self.send_bot_help(mapping)
 
         PREFER_COG = False
-        if command.lower.startswith(("module ", "module:")):
+        if command.lower().startswith(("module ", "module:")):
             command = command[7:]
             PREFER_COG = True
 
