@@ -439,7 +439,7 @@ class IdleHelp(commands.HelpCommand):
                 f"[{group.cog.qualified_name.upper()}] {group.qualified_name}"
                 f" {group.signature}"
             ),
-            description=_(group.help).format(prefix=self.content.prefix),
+            description=_(group.help).format(prefix=self.context.prefix),
         )
         e.add_field(
             name="Subcommands",
