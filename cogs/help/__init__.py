@@ -322,13 +322,11 @@ class IdleHelp(commands.HelpCommand):
             url="https://media.discordapp.net/attachments/460568954968997890/711740723715637288/idle_banner.png"
         )
         e.description = _(
-            "**Welcome to the IdleRPG help.**\n"
-            "Are you stuck? Ask for help in the support server!\n"
-            "- https://support.idlerpg.xyz/\n"
-            "Would you like to invite me to your server?\n"
-            "- https://invite.idlerpg.xyz/\n"
-            "*See `help [command|extension]` for more info*"
-        )
+            "**Welcome to the IdleRPG help.**\nAre you stuck? Ask for help in the"
+            " support server!\n- https://support.idlerpg.xyz/\nWould you like to invite"
+            " me to your server?\n- https://invite.idlerpg.xyz/\n*See `{prefix}help"
+            " [command]` and `{prefix}help module [module]` for more info*"
+        ).format(prefix=self.context.prefix)
 
         allowed = []
         for cog in sorted(mapping.keys(), key=lambda x: x.qualified_name if x else ""):
@@ -356,7 +354,7 @@ class IdleHelp(commands.HelpCommand):
         rows = []
         for row in cogs:
             rows.append("".join(element.ljust(column_width + 2) for element in row))
-        e.add_field(name=_("Extensions"), value="```{}```".format("\n".join(rows)))
+        e.add_field(name=_("Modules"), value="```{}```".format("\n".join(rows)))
 
         await self.context.send(embed=e)
 
