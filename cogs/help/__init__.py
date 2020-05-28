@@ -248,6 +248,8 @@ class IdleHelp(commands.HelpCommand):
         self.gm_exts = {"GameMaster"}
         self.owner_exts = {"GameMaster", "Owner"}
         self.color = 0xCB735C
+        self.group_emoji = "👥"
+        self.command_emoji = "👤"
 
     async def command_callback(self, ctx, *, command=None):
         await self.prepare_help_command(ctx, command)
@@ -372,7 +374,7 @@ class IdleHelp(commands.HelpCommand):
         )
         e.description = "\n".join(
             [
-                f"{'👥' if isinstance(c, commands.Group) else '👤'}"
+                f"{self.group_emoji if isinstance(c, commands.Group) else self.command_emoji}"
                 f" `{self.clean_prefix}{c.qualified_name} {c.signature}` - {_(c.brief)}"
                 for c in cog.get_commands()
             ]
@@ -437,12 +439,16 @@ class IdleHelp(commands.HelpCommand):
                 f"[{group.cog.qualified_name.upper()}] {group.qualified_name}"
                 f" {group.signature}"
             ),
-            description=_(group.help),
+            description=_(group.help).format(prefix=self.content.prefix),
         )
         e.add_field(
             name="Subcommands",
             value="\n".join(
-                [f"`{c.qualified_name}` - {_(c.brief)}" for c in group.commands]
+                [
+                    f"{self.group_emoji if isinstance(c, commands.Group) else self.command_emoji}"
+                    f" `{self.clean_prefix}{c.qualified_name}` - {_(c.brief)}"
+                    for c in group.commands
+                ]
             ),
         )
         if group.aliases:
