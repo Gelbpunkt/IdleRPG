@@ -320,8 +320,9 @@ class Game:
                 "seconds.**"
             )
         await self.ctx.send(
-            "**Sending game roles... "
-            f"You may use `{self.ctx.prefix}role` to check your role later.**"
+            f"**Sending game roles... You may use `{self.ctx.prefix}role` to check your"
+            " role later.**\n**Talking to other users privately in DMs is"
+            " prohibited!**"
         )
         for player in self.players:
             await player.send_information()
