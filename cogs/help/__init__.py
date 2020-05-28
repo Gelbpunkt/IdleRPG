@@ -248,8 +248,8 @@ class IdleHelp(commands.HelpCommand):
         self.gm_exts = {"GameMaster"}
         self.owner_exts = {"GameMaster", "Owner"}
         self.color = 0xCB735C
-        self.group_emoji = "👥"
-        self.command_emoji = "👤"
+        self.group_emoji = "💠"
+        self.command_emoji = "🔷"
 
     async def command_callback(self, ctx, *, command=None):
         await self.prepare_help_command(ctx, command)
