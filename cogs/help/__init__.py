@@ -259,15 +259,25 @@ class IdleHelp(commands.HelpCommand):
             mapping = self.get_bot_mapping()
             return await self.send_bot_help(mapping)
 
-        cog = bot.get_cog(command.title())
-        if cog is not None:
-            return await self.send_cog_help(cog)
+        PREFER_COG = False
+        if command.lower.startswith(("module ", "module:")):
+            command = command[7:]
+            PREFER_COG = True
+
+        if PREFER_COG:
+            cog = bot.get_cog(command.title())
+            if cog is not None:
+                return await self.send_cog_help(cog)
 
         maybe_coro = discord.utils.maybe_coroutine
 
         keys = command.split(" ")
         cmd = bot.all_commands.get(keys[0])
         if cmd is None:
+            cog = bot.get_cog(command.title())
+            if cog is not None:
+                return await self.send_cog_help(cog)
+
             string = await maybe_coro(
                 self.command_not_found, self.remove_mentions(keys[0])
             )
