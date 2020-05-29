@@ -163,7 +163,7 @@ traviapi = "just a secret"
 ksoft_key = "my key"
 
 """The base URL for links."""
-base_url = "https://idlerpg.travitia.xyz"
+base_url = "https://idlerpg.xyz"
 
 """The base URL for okapi (IdleRPG's image API)."""
 okapi_url = "https://okapi.travitia.xyz"

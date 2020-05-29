@@ -677,14 +677,14 @@ class Bot(commands.AutoShardedBot):
     async def start_joins(self):
         id_ = "".join(random.choice(string.ascii_letters) for i in range(7))
         await self.session.get(
-            f"https://join.travitia.xyz/toggle/{id_}",
+            f"https://join.idlerpg.xyz/toggle/{id_}",
             headers={"Authorization": self.config.raidauth},
         )
         return id_
 
     async def get_joins(self, id_):
         async with self.session.get(
-            f"https://join.travitia.xyz/joined/{id_}",
+            f"https://join.idlerpg.xyz/joined/{id_}",
             headers={"Authorization": self.config.raidauth},
         ) as r:
             j = await r.json()

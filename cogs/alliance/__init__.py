@@ -51,7 +51,7 @@ class Alliance(commands.Cog):
         )
         em = discord.Embed(
             title=_("Cities"), colour=self.bot.config.primary_colour
-        ).set_image(url="https://idlerpg.travitia.xyz/city.png")
+        ).set_image(url="https://idlerpg.xyz/city.png")
         for city in sorted(
             cities, key=lambda x: -len(self.bot.config.cities[x["name"]])
         ):
@@ -92,7 +92,7 @@ class Alliance(commands.Cog):
             )
         alliance_embed = discord.Embed(
             title=_("Your allied guilds"), color=self.bot.config.primary_colour
-        ).set_thumbnail(url="https://idlerpg.travitia.xyz/alliance_banner.png")
+        ).set_thumbnail(url="https://idlerpg.xyz/alliance_banner.png")
         for guild in allied_guilds:
             alliance_embed.add_field(
                 name=guild[1],
@@ -430,7 +430,7 @@ class Alliance(commands.Cog):
         embed = discord.Embed(
             title=_("{city}'s buildings").format(city=buildings["name"]),
             colour=self.bot.config.primary_colour,
-        ).set_image(url="https://idlerpg.travitia.xyz/market.png")
+        ).set_image(url="https://idlerpg.xyz/market.png")
         for i in self.bot.config.cities[buildings["name"]]:
             embed.add_field(
                 name=f"{i.capitalize()} building",
@@ -459,7 +459,7 @@ class Alliance(commands.Cog):
         embed = discord.Embed(
             title=_("{city}'s defenses").format(city=city_name),
             colour=self.bot.config.primary_colour,
-        ).set_thumbnail(url="https://idlerpg.travitia.xyz/fortress.png")
+        ).set_thumbnail(url="https://idlerpg.xyz/fortress.png")
         i = None
         for i in defenses:
             embed.add_field(
@@ -600,7 +600,7 @@ class Alliance(commands.Cog):
 
         await ctx.send(
             _(
-                "**{user}** wants to attack **{city}** with **{alliance_name}**'s alliance. Head to https://raid.travitia.xyz/{id_} to join the attack!"
+                "**{user}** wants to attack **{city}** with **{alliance_name}**'s alliance. Head to https://raid.idlerpg.xyz/{id_} to join the attack!"
             ).format(user=ctx.author, city=city, alliance_name=alliance_name, id_=id_)
         )
 

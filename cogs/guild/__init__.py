@@ -993,7 +993,7 @@ for a prize of **${amount}**.\n **{fightercount}** players entered."
 
         await ctx.send(
             _(
-                "{author} seeks a guild adventure for **{guild}**! React to join! Unlimited players can join in the next 10 minutes. The minimum of players required is 3.\nPlease go to https://join.travitia.xyz/{id_} to join the guild adventure."
+                "{author} seeks a guild adventure for **{guild}**! React to join! Unlimited players can join in the next 10 minutes. The minimum of players required is 3.\nPlease go to https://join.idlerpg.xyz/{id_} to join the guild adventure."
             ).format(author=ctx.author.mention, guild=guild["name"], id_=id_)
         )
 
@@ -1177,12 +1177,12 @@ Time it will take: **{time}**
             {
                 "price": 37500,
                 "reward": "badge",
-                "data": "https://idlerpg.travitia.xyz/halloween_2019_1.png",
+                "data": "https://idlerpg.xyz/halloween_2019_1.png",
             },
             {
                 "price": 50000,
                 "reward": "badge",
-                "data": "https://idlerpg.travitia.xyz/halloween_2019_2.png",
+                "data": "https://idlerpg.xyz/halloween_2019_2.png",
             },
             {"price": 10000, "reward": "members", "data": 2},
             {"price": 20000, "reward": "members", "data": 5},
