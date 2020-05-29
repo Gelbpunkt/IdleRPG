@@ -439,7 +439,7 @@ class Adventure(commands.Cog):
     @locale_doc
     async def status(self, ctx):
         _(
-            """Checks the remaining time of your adventures, or if you survived or died. Your chance is checked here, not in {prefix}adventure.
+            """Checks the remaining time of your adventures, or if you survived or died. Your chance is checked here, not in `{prefix}adventure`.
             Your chances are determined by your equipped items, race and class bonuses, your level, God-given luck and active luck boosters.
 
             If you are in an alliance which owns a city with an adventure building, your chance will be increased by 5% per building level.

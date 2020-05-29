@@ -30,7 +30,7 @@ class Werewolf(commands.Cog):
         self.bot = bot
         self.games = {}
 
-    @commands.command(aliases=["ww"], brief=_("Play a roumd of Werewolf"))
+    @commands.command(aliases=["ww"], brief=_("Starts a game of Werewolf"))
     @locale_doc
     async def werewolf(self, ctx, mode: str.title = "Classic"):
         _(
@@ -39,9 +39,7 @@ class Werewolf(commands.Cog):
             Starts a game of Werewolf.
             Game modes:
                 Classic - Play the classic werewolf game. (This is the default)
-                Blitz   - In Blitz mode, all action timers are limited to 30 seconds and number of days to play is dependent on the number of players plus 3 days. This means not killing anyone every night or every election will likely end the game with no winners.
-
-            This game is mainly based around trust. The goal of the game is to find the werewolves in your community and lynch them."""
+                Blitz   - In Blitz mode, all action timers are limited to 30 seconds and number of days to play is dependent on the number of players plus 3 days. This means not killing anyone every night or every election will likely end the game with no winners."""
         )
         if mode not in ["Classic", "Blitz"]:
             return await ctx.send(

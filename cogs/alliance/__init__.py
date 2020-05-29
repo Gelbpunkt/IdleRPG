@@ -603,8 +603,8 @@ class Alliance(commands.Cog):
             Occupying a city sets it on a cooldown of 10 minutes, during which time it cannot be occupied by another alliance.
             Occupying a city also sets all of its buildings back to level 0.
 
-        You cannot occupy a city if your alliance already owns one.
-        Only the alliance leader can use this command."""
+            You cannot occupy a city if your alliance already owns one.
+            Only the alliance leader can use this command."""
         )
         if city not in self.bot.config.cities:
             return await ctx.send(_("Invalid city name."))
@@ -665,7 +665,7 @@ class Alliance(commands.Cog):
             If a defense reaches zero HP, it will be removed from the city, it will not regenerate HP after the attack is over.
             Attackers reaching zero HP will be removed from the attack as well.
 
-            If a city's defenses were destoroyed, your alliance can take occupy the city right away (`{prefix}alliance occupy`)
+            If a city's defenses were destroyed, your alliance can take occupy the city right away (`{prefix}alliance occupy`)
 
             Only the alliance leader can use this command.
             (This command has a cooldown of 2 hours.)"""

@@ -296,7 +296,7 @@ class HungerGames(commands.Cog):
             The game is controlled via both random actions and possibly chosen actions.
             Players may choose an action if they get a direct message from the bot. If no action is chosen by the player, the bot chooses one for them.
 
-            Not every player will get the eopportunity to choose an action. Sometimes nobody gets to choose, so don't be discouraged. """
+            Not every player will get the opportunity to choose an action. Sometimes nobody gets to choose, so don't be discouraged. """
         )
         if self.games.get(ctx.channel.id):
             return await ctx.send(_("There is already a game in here!"))

@@ -340,7 +340,7 @@ class Trading(commands.Cog):
         _(
             """`<itemid>` - The ID of the item to offer
             `<price>` - The price the other has to pay, can be a number from 0 to 100,000,000
-            `<user>` - The user to offre the item to
+            `<user>` - The user to offer the item to
 
             Offer an item to a specific user. You may not offer modified items.
             Once the other user accepts, the item belongs to them."""

@@ -135,7 +135,7 @@ Server created at: `{created_at}`"""
         await ctx.send(_("Done!"))
 
     @commands.guild_only()
-    @commands.command()
+    @commands.command(brief=_("View this server's prefix"))
     @locale_doc
     async def prefix(self, ctx):
         _("""View the bot prefix for the server""")

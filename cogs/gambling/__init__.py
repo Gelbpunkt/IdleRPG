@@ -574,7 +574,7 @@ This command is in an alpha-stage, which means bugs are likely to happen. Play a
 
             You will win [maximum - 1] * [money] money if you are right and lose [money] if you are wrong.
             For example:
-              {prefix}bet 10 4 100
+              `{prefix}bet 10 4 100`
               - Rolls a 10 sided dice
               - If the dice lands on 4, you will receive $900
               - If the dice lands on any other number, you will lose $100

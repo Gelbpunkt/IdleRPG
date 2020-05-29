@@ -320,7 +320,7 @@ class Patreon(commands.Cog):
             Gold (and above) Donators have their bank space quintupled (x5), Silver Donators have theirs doubled.
             The member limit is set to 100 regardless of donation tier.
 
-            Important: To use this, you have to be the leader of a guild, not just a member.
+            :warning: To use this, you have to be the leader of a guild, not just a member.
 
             Only basic (or above) tier patrons can use this command."""
         )
@@ -358,7 +358,7 @@ class Patreon(commands.Cog):
         _(
             """`<number>` - The number of the eventbackground to use
 
-            Update your background to one from the events."""
+            Update your background to one from the events. You can get event backgrounds from special events, for example easter or christmas."""
         )
         async with self.bot.pool.acquire() as conn:
             bgs = await conn.fetchval(

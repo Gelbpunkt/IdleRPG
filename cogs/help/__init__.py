@@ -173,18 +173,28 @@ class Help(commands.Cog):
         )
 
     @is_supporter()
-    @helpme.command(hidden=True)
+    @helpme.command(hidden=True, brief=_("Finish the helpme request"))
     @locale_doc
     async def finish(self, ctx, guild_id: int):
-        _("""[Support Team only] Clear a server's helpme cooldown.""")
+        _(
+            """`<guild_id>` - The server ID of the requesting server
+
+            Clear a server's helpme cooldown. If this is not done, they will be on cooldown for 48 hours."""
+        )
         await self.bot.redis.execute("DEL", f"helpme:{guild_id}")
         await ctx.send("Clear!", delete_after=5)
 
     @has_open_help_request()
-    @helpme.command(aliases=["correct"])
+    @helpme.command(aliases=["correct"], brief=_("Change your helpme text"))
     @locale_doc
     async def edit(self, ctx, *, new_text: str):
-        _("""Edit the text on your open helpme request.""")
+        _(
+            """`<new_text>` - The new text to use in your helpme request
+
+            Edit the text on your open helpme request. Our Support Team will see the new text right away.
+
+            You can only use this command if your server has an open helpme request."""
+        )
         message = await self.bot.http.get_message(
             self.bot.config.helpme_channel, ctx.helpme
         )
@@ -213,10 +223,16 @@ class Help(commands.Cog):
         )
 
     @has_open_help_request()
-    @helpme.command(aliases=["revoke", "remove"])
+    @helpme.command(
+        aliases=["revoke", "remove"], brief=_("Cancel your open helpme request")
+    )
     @locale_doc
     async def delete(self, ctx):
-        _("""Cancel your ongoing helpme request.""")
+        _(
+            """Cancel your ongoing helpme request. Our Support Team will not join your server.
+
+            You can only use this command if your server has an open helpme request."""
+        )
         if not await ctx.confirm(
             _("Are you sure you want to cancel your helpme request?")
         ):
@@ -226,10 +242,14 @@ class Help(commands.Cog):
         await ctx.send(_("Your helpme request has been cancelled."))
 
     @has_open_help_request()
-    @helpme.command()
+    @helpme.command(brief=_("View your current helpme request"))
     @locale_doc
     async def view(self, ctx):
-        _("""View your server's current helpme request.""")
+        _(
+            """View how your server's current helpme request looks like to our Support Team.
+
+            You can only use this command if your server has an open helpme request."""
+        )
         message = await self.bot.http.get_message(
             self.bot.config.helpme_channel, ctx.helpme
         )

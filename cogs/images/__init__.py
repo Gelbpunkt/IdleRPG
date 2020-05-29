@@ -90,9 +90,9 @@ class Images(commands.Cog):
     @locale_doc
     async def oil(self, ctx, member: MemberConverter = Author):
         _(
-            """`[member]` - A discord User whose avatar to oil-pain; defaults to oneself
+            """`[member]` - A discord User whose avatar to oil-paint; defaults to oneself
 
-            Creatse an oil-painting effect on someone's avatar.
+            Creates an oil-painting effect on someone's avatar.
 
             (This command has a channel cooldown of 15 seconds.)"""
         )
