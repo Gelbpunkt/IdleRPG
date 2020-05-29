@@ -995,6 +995,10 @@ IdleRPG is a global bot, your characters are valid everywhere"""
         )
         if other == ctx.author:
             return await ctx.send(_("No cheating!"))
+        elif other == ctx.me:
+            return await ctx.send(
+                _("For me? I'm flattered, but I can't accept this...")
+            )
         if ctx.character_data["money"] < money:
             return await ctx.send(_("You are too poor."))
         async with self.bot.pool.acquire() as conn:

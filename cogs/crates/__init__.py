@@ -208,6 +208,10 @@ class Crates(commands.Cog):
         )
         if other == ctx.author:
             return await ctx.send(_("Very funny..."))
+        elif other == ctx.me:
+            return await ctx.send(
+                _("For me? I'm flattered, but I can't accept this...")
+            )
         if rarity not in ["common", "uncommon", "rare", "magic", "legendary"]:
             return await ctx.send(
                 _("{rarity} is not a valid rarity.").format(rarity=rarity)
