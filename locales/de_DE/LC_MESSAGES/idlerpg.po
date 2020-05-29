@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 4.3.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-03-31 08:40-0700\n"
+"POT-Creation-Date: 2020-05-29 16:53+0200\n"
 "PO-Revision-Date: 2020-01-25 22:55+0100\n"
 "Last-Translator: Chippy\n"
 "Language-Team: Fanta Claus, Chippy\n"
@@ -271,7 +271,7 @@ msgstr ""
 
 #: cogs/halloween/__init__.py:173
 #, python-brace-format
-msgid "You currently have **${trickortreat}** Trick or Treat Bags, {author}!"
+msgid "You currently have **{trickortreat}** Trick or Treat Bags, {author}!"
 msgstr ""
 
 #: cogs/locale/__init__.py:70
@@ -1405,7 +1405,7 @@ msgstr "Bitte nutze nicht mehrere Anhänge auf einmal."
 msgid "This is not a valid image file."
 msgstr "Das ist keine gültige Bild-Datei."
 
-#: cogs/miscellaneous/__init__.py:165 cogs/patreon/__init__.py:254
+#: cogs/miscellaneous/__init__.py:165 cogs/patreon/__init__.py:255
 msgid "Error when uploading to Imgur."
 msgstr "Beim Upload zu Imgur gab es ein Problem."
 
@@ -1990,11 +1990,11 @@ msgstr ""
 "\n"
 "IdleRPG ist ein globaler Bot, deine Charaktere sind überall gültig."
 
-#: cogs/raid/__init__.py:1890
+#: cogs/raid/__init__.py:1887
 msgid "Upgrade your raid damage or defense multiplier."
 msgstr "Verbessert deinen Raid-Schadens oder -Verteidigungs-Vervielfacher."
 
-#: cogs/raid/__init__.py:1893
+#: cogs/raid/__init__.py:1890
 #, python-brace-format
 msgid ""
 "Use `{prefix}increase damage/defense` to upgrade your raid damage/defense "
@@ -2003,11 +2003,11 @@ msgstr ""
 "Nutze `{prefix}increase damage/defense` um deinen Raid-Schadens/"
 "Verteidigungs-Vervielfacher um 10% zu verbessern."
 
-#: cogs/raid/__init__.py:1901
+#: cogs/raid/__init__.py:1898
 msgid "Increase your raid damage."
 msgstr "Erhöhe deinen Raid-Schaden."
 
-#: cogs/raid/__init__.py:1907
+#: cogs/raid/__init__.py:1904
 #, python-brace-format
 msgid ""
 "Upgrading your weapon attack raid multiplier to {newlvl} costs **${price}**, "
@@ -2016,7 +2016,7 @@ msgstr ""
 "Deinen Waffenschadens-Raid-Vervielfacher auf {newlvl} zu erhöhen kostet **"
 "${price}**, du hast nicht genug."
 
-#: cogs/raid/__init__.py:1921
+#: cogs/raid/__init__.py:1918
 #, python-brace-format
 msgid ""
 "You upgraded your weapon attack raid multiplier to {newlvl} for **${price}**."
@@ -2024,11 +2024,11 @@ msgstr ""
 "Du hast deinen Waffenschadensvervielfacher für Raids für **${price}** auf "
 "{newlvl} erhöht."
 
-#: cogs/raid/__init__.py:1929
+#: cogs/raid/__init__.py:1926
 msgid "Increase your raid defense."
 msgstr "Erhöhe deine Schild-Verteidigung."
 
-#: cogs/raid/__init__.py:1935
+#: cogs/raid/__init__.py:1932
 #, python-brace-format
 msgid ""
 "Upgrading your shield defense raid multiplier to {newlvl} costs **${price}"
@@ -2037,7 +2037,7 @@ msgstr ""
 "Deinen Schild-Verteidigungs-Vervielfacher auf {newlvl} zu erhöhen kostet **"
 "${price}**, du hast nicht genug."
 
-#: cogs/raid/__init__.py:1949
+#: cogs/raid/__init__.py:1946
 #, python-brace-format
 msgid ""
 "You upgraded your shield defense raid multiplier to {newlvl} for **${price}"
@@ -2046,11 +2046,11 @@ msgstr ""
 "Du hast deinen Schildverteidigungsvervielfacher für Raids für **${price}** "
 "auf {newlvl} erhöht."
 
-#: cogs/raid/__init__.py:1957
+#: cogs/raid/__init__.py:1954
 msgid "View your raid stats."
 msgstr "Sieh deine Raid-Verbesserungen an."
 
-#: cogs/raid/__init__.py:1973
+#: cogs/raid/__init__.py:1970
 #, python-brace-format
 msgid ""
 "**{author}'s raid multipliers**\n"
@@ -2061,11 +2061,11 @@ msgstr ""
 "Schaden: x{atk} (Erhöhen: ${atkp})\n"
 "Verteidigung: x{deff} (Erhöhen: ${deffp})"
 
-#: cogs/raid/__init__.py:1982
+#: cogs/raid/__init__.py:1979
 msgid "Informs you about joining raids."
 msgstr "Informiert dich über das Beitreten bei Raids."
 
-#: cogs/raid/__init__.py:1985
+#: cogs/raid/__init__.py:1982
 #, python-brace-format
 msgid ""
 "Did you ever want to join together with other players to defeat the dragon "
@@ -2427,14 +2427,12 @@ msgstr ""
 "[Patreon-reserviert] Generiert einen Profil-Hintergrund basierend auf einem "
 "Bild."
 
-#: cogs/patreon/__init__.py:256
+#: cogs/patreon/__init__.py:257
 #, python-brace-format
 msgid ""
 "Imgur Link for `{prefix}background`\n"
-"<{link}>"
+"{link}"
 msgstr ""
-"Imgur Link für `{prefix}background`\n"
-"<{link}>"
 
 #: cogs/patreon/__init__.py:267
 msgid "[Patreon Only] Update your guild member limit and bank size."
@@ -3328,27 +3326,28 @@ msgstr ""
 msgid "You died on your mission. Try again!"
 msgstr "Du bist während des Abenteuers gestorben. Versuch's nochmal!"
 
-#: cogs/adventure/__init__.py:520
+#: cogs/adventure/__init__.py:517
 #, python-brace-format
 msgid ""
 "You have completed your adventure and received **${gold}** as well as a new "
-"item: **{item}**. Experience gained: **{xp}**. You found **{eggs}** <:"
-"easteregg:566251086986608650>!"
+"item: **{item}**. Experience gained: **{xp}**."
 msgstr ""
+"Du hast dein Abenteuer beendet und **${gold}** und einen neuen Gegenstand "
+"erhalten: **{item}**. Erfahrungspunkte gesammelt: **{xp}**."
 
-#: cogs/adventure/__init__.py:534
+#: cogs/adventure/__init__.py:531
 msgid "Cancels your current adventure."
 msgstr "Bricht das laufende Abenteuer ab."
 
-#: cogs/adventure/__init__.py:536
+#: cogs/adventure/__init__.py:533
 msgid "Are you sure you want to cancel your current adventure?"
 msgstr "Bist du sicher, dass du dein aktuelles Abenteuer abbrechen willst?"
 
-#: cogs/adventure/__init__.py:539
+#: cogs/adventure/__init__.py:536
 msgid "Did not cancel your adventure. The journey continues..."
 msgstr "Ich habe dein Abenteuer nicht abgebrochen. Die Reise geht weiter..."
 
-#: cogs/adventure/__init__.py:544
+#: cogs/adventure/__init__.py:541
 #, python-brace-format
 msgid ""
 "Canceled your mission. Use `{prefix}adventure [missionID]` to start a new "
@@ -3357,14 +3356,14 @@ msgstr ""
 "Abenteuer abgebrochen. Nutze `{prefix}adventure [missionID]` um ein neues zu "
 "beginnen!"
 
-#: cogs/adventure/__init__.py:553
+#: cogs/adventure/__init__.py:550
 msgid ""
 "Your death stats. Shows statictics from all your adventures ever completed."
 msgstr ""
 "Deine Todesstatistiken. Zeigt Statistiken von allen deinen jemals "
 "abgeschlossenen Abenteuern."
 
-#: cogs/adventure/__init__.py:564
+#: cogs/adventure/__init__.py:561
 #, python-brace-format
 msgid ""
 "Out of **{total}** adventures, you died **{deaths}** times and survived "
@@ -3373,27 +3372,27 @@ msgstr ""
 "Von **{total}** Abenteuern hast du **{completed}** überlebt und bist auf "
 "**{deaths}** gestorben. Das kommt auf **{rate}%** heraus."
 
-#: cogs/shard_communication/__init__.py:397 cogs/guild/__init__.py:1100
+#: cogs/shard_communication/__init__.py:421 cogs/guild/__init__.py:1100
 #: cogs/alliance/__init__.py:773
 msgid "Lists all your cooldowns."
 msgstr "Eine Liste aller aktiven Cooldowns."
 
-#: cogs/shard_communication/__init__.py:402 cogs/guild/__init__.py:1107
+#: cogs/shard_communication/__init__.py:426 cogs/guild/__init__.py:1107
 msgid "You don't have any active cooldown at the moment."
 msgstr "Aktuell keine aktiven Cooldowns."
 
-#: cogs/shard_communication/__init__.py:404 cogs/guild/__init__.py:1109
+#: cogs/shard_communication/__init__.py:428 cogs/guild/__init__.py:1109
 #: cogs/alliance/__init__.py:783
 msgid "Commands on cooldown:"
 msgstr "Kommandos auf Cooldown:"
 
-#: cogs/shard_communication/__init__.py:409 cogs/guild/__init__.py:1114
+#: cogs/shard_communication/__init__.py:433 cogs/guild/__init__.py:1114
 #: cogs/alliance/__init__.py:788
 #, python-brace-format
 msgid "{cmd} is on cooldown and will be available after {time}"
 msgstr "{cmd} ist auf Cooldown und kann nach {time} benutzt werden"
 
-#: cogs/shard_communication/__init__.py:414
+#: cogs/shard_communication/__init__.py:438
 #, python-brace-format
 msgid "Adventure is running and will be done after {time}"
 msgstr "Abenteuer läuft und wird nach {time} abgeschlossen sein"
@@ -4289,7 +4288,7 @@ msgstr ""
 msgid "You didn't enter a name, so we chose {name} for you."
 msgstr ""
 
-#: cogs/marriage/__init__.py:404 cogs/marriage/__init__.py:661
+#: cogs/marriage/__init__.py:404 cogs/marriage/__init__.py:687
 msgid "One of your children already has that name, please choose another one."
 msgstr ""
 
@@ -4346,27 +4345,27 @@ msgstr "So einsam..."
 msgid "You don't have kids yet."
 msgstr "Du hast keine Kinder."
 
-#: cogs/marriage/__init__.py:506
+#: cogs/marriage/__init__.py:515
 msgid "They died because of a shampoo overdose!"
 msgstr "Es starb aufgrund einer Shampooüberdosis!"
 
-#: cogs/marriage/__init__.py:507
+#: cogs/marriage/__init__.py:516
 msgid "They died of lovesickness..."
 msgstr "Es starb aufgrund von Liebeskummer..."
 
-#: cogs/marriage/__init__.py:508
+#: cogs/marriage/__init__.py:517
 msgid "They've died of age."
 msgstr "Es starb aus Altersgründen."
 
-#: cogs/marriage/__init__.py:509
+#: cogs/marriage/__init__.py:518
 msgid "They died of loneliness."
 msgstr "Es starb aufgrund von Einsamkeit."
 
-#: cogs/marriage/__init__.py:510
+#: cogs/marriage/__init__.py:519
 msgid "A horde of goblins got them."
 msgstr "Eine Horde von Kobolden hat es verschleppt."
 
-#: cogs/marriage/__init__.py:512
+#: cogs/marriage/__init__.py:521
 msgid ""
 "They have finally decided to move out after all these years, but couldn't "
 "survive a second alone."
@@ -4374,48 +4373,48 @@ msgstr ""
 "Es entschied sich, nach all den Jahren endlich auszuziehen, aber konnte "
 "keine Sekunde alleine überleben."
 
-#: cogs/marriage/__init__.py:514
+#: cogs/marriage/__init__.py:523
 msgid "Spontaneous combustion removed them from existence."
 msgstr "Spontane Verbrennung hat es von dieser Welt genommen."
 
-#: cogs/marriage/__init__.py:515
+#: cogs/marriage/__init__.py:524
 msgid "While exploring the forest, they have gotten lost."
 msgstr "Während es den Wald erkundet hat, ist es verloren gegangen."
 
-#: cogs/marriage/__init__.py:516
+#: cogs/marriage/__init__.py:525
 msgid "They've left through a portal into another dimension..."
 msgstr ""
 "Es hat unsere Welt durch ein Portal in eine andere Dimension verlassen."
 
-#: cogs/marriage/__init__.py:518
+#: cogs/marriage/__init__.py:527
 msgid "The unbearable pain of stepping on a Lego\\© brick killed them."
 msgstr ""
 "Der unerträgliche Schmerz des Tretens auf einen Lego\\©-Stein hat es "
 "umgebracht."
 
 #. noqa
-#: cogs/marriage/__init__.py:520
+#: cogs/marriage/__init__.py:529
 msgid "You heard a landmine going off nearby..."
 msgstr "Du hast in der Nähe eine Landmine hochgehen gehört..."
 
-#: cogs/marriage/__init__.py:521
+#: cogs/marriage/__init__.py:530
 msgid "They have been abducted by aliens!"
 msgstr "Es wurde von Aliens entführt!"
 
-#: cogs/marriage/__init__.py:522
+#: cogs/marriage/__init__.py:531
 msgid "The Catholic Church got them..."
 msgstr "Die Katholische Kirche hat es in die Finger bekommen..."
 
-#: cogs/marriage/__init__.py:523
+#: cogs/marriage/__init__.py:532
 msgid "They starved after becoming a communist."
 msgstr "Es ist verhungert, nachdem es ein Kommunist wurde."
 
-#: cogs/marriage/__init__.py:533
+#: cogs/marriage/__init__.py:542
 #, python-brace-format
 msgid "{name} died at the age of {age}! {cause}"
 msgstr "{name} ist im Alter von {age} gestorben! {cause}"
 
-#: cogs/marriage/__init__.py:541
+#: cogs/marriage/__init__.py:550
 msgid ""
 "fell in love with a woman on the internet, but the woman was a man and stole "
 "their money."
@@ -4423,113 +4422,138 @@ msgstr ""
 "hat sich in eine Frau im Internet verliebt, doch die Frau war ein Mann und "
 "hat sein Geld gestohlen."
 
-#: cogs/marriage/__init__.py:543
+#: cogs/marriage/__init__.py:552
 msgid "has been arrested and had to post bail."
 msgstr "wurde verhaftet und hat die Kaution gezahlt."
 
-#: cogs/marriage/__init__.py:544
+#: cogs/marriage/__init__.py:553
 msgid "bought fortnite skins with your credit card."
 msgstr "hat Fortnite Skins mit deiner Kreditkarte gekauft."
 
-#: cogs/marriage/__init__.py:545
+#: cogs/marriage/__init__.py:554
 msgid "decided to become communist and gave the money to others."
 msgstr "wurde Kommunist und hat sein Geld an andere gegeben."
 
-#: cogs/marriage/__init__.py:546
+#: cogs/marriage/__init__.py:555
 msgid "was caught pickpocketing and you had to pay the fine."
 msgstr ""
 "wurde beim Taschendiebstahl entdeckt und du musstest die Strafe zahlen."
 
-#: cogs/marriage/__init__.py:547
+#: cogs/marriage/__init__.py:556
 msgid "gave it to a beggar."
 msgstr "hat es einem Bettler gegeben."
 
-#: cogs/marriage/__init__.py:548
+#: cogs/marriage/__init__.py:557
 msgid "borrowed it to attend the local knights course."
 msgstr "nahm es um dem Ritterkurs in der Stadt beizutreten."
 
-#: cogs/marriage/__init__.py:549
+#: cogs/marriage/__init__.py:558
 msgid "spent it in the shop."
 msgstr "hat es im laden ausgegeben."
 
-#: cogs/marriage/__init__.py:550
+#: cogs/marriage/__init__.py:559
 msgid "bought some toys."
 msgstr "hat sich Spielzeug gekauft."
 
-#: cogs/marriage/__init__.py:551
+#: cogs/marriage/__init__.py:560
 msgid "has gambling addiction and lost the money..."
 msgstr "hat es verzockt..."
 
-#: cogs/marriage/__init__.py:565
+#: cogs/marriage/__init__.py:574
 #, python-brace-format
 msgid "You lost ${money} because {name} {cause}"
 msgstr "Du hast ${money} verloren, weil {name} {cause}"
 
-#: cogs/marriage/__init__.py:572
+#: cogs/marriage/__init__.py:581
+msgid "found the first part for you!"
+msgstr ""
+
+#: cogs/marriage/__init__.py:582
+msgid "found the second part for you!"
+msgstr ""
+
+#: cogs/marriage/__init__.py:583
+msgid "found the third part for you!"
+msgstr ""
+
+#: cogs/marriage/__init__.py:584
+msgid "found the fourth part for you! "
+msgstr ""
+
+#: cogs/marriage/__init__.py:585
+msgid "found the fifth part for you!"
+msgstr ""
+
+#: cogs/marriage/__init__.py:592
+#, python-brace-format
+msgid "{name} is trying to complete the event, and {ap}"
+msgstr ""
+
+#: cogs/marriage/__init__.py:599
 msgid "finally found a job!"
 msgstr "hat endlich einen Job gefunden!"
 
-#: cogs/marriage/__init__.py:573
+#: cogs/marriage/__init__.py:600
 msgid "won a lottery."
 msgstr "hat die Lotterie gewonnen."
 
-#: cogs/marriage/__init__.py:574
+#: cogs/marriage/__init__.py:601
 msgid "sold their toys."
 msgstr "hat sein Spielzeug verkauft."
 
-#: cogs/marriage/__init__.py:575
+#: cogs/marriage/__init__.py:602
 msgid "got money from another kid that decided to become communist."
 msgstr "hat Geld von einem Kind bekommen, das Kommunist wurde."
 
-#: cogs/marriage/__init__.py:576
+#: cogs/marriage/__init__.py:603
 msgid "stole it from a traveller."
 msgstr "hat es von einem Reisendem gestohlen."
 
-#: cogs/marriage/__init__.py:577
+#: cogs/marriage/__init__.py:604
 msgid "finished a quest with a money reward."
 msgstr "hat eine Quest mit Geldbelohnung beendet."
 
-#: cogs/marriage/__init__.py:578
+#: cogs/marriage/__init__.py:605
 msgid "used dark magic to summon some money."
 msgstr "hat dunkle Magie verwendet, um Geld zu beschwören."
 
-#: cogs/marriage/__init__.py:579
+#: cogs/marriage/__init__.py:606
 msgid "looted a local warehouse and sold the wares."
 msgstr "hat ein Lagerhaus geplündert und die Beute verkauft."
 
-#: cogs/marriage/__init__.py:580
+#: cogs/marriage/__init__.py:607
 msgid "solved an enigma with a money reward."
 msgstr "hat ein Enigma mit Geldbelohnung gelöst."
 
-#: cogs/marriage/__init__.py:593
+#: cogs/marriage/__init__.py:620
 #, python-brace-format
 msgid "{name} gave you ${money}, they {cause}"
 msgstr "{name} gibt dir ${money}, es {cause}"
 
-#: cogs/marriage/__init__.py:618
+#: cogs/marriage/__init__.py:645
 #, python-brace-format
 msgid "{name} found a {emoji} {type_} crate for you!"
 msgstr "{name} hat eine {emoji}, {type_} Kiste für dich gefunden."
 
-#: cogs/marriage/__init__.py:630
+#: cogs/marriage/__init__.py:657
 #, python-brace-format
 msgid "{name} is now {age} years old."
 msgstr "{name} ist jetzt {age}."
 
-#: cogs/marriage/__init__.py:636
+#: cogs/marriage/__init__.py:663
 #, python-brace-format
 msgid "{name} can be renamed! Enter a new name:"
 msgstr "{name} kann umbenannt werden! Gib einen neuen Names an:"
 
-#: cogs/marriage/__init__.py:657
+#: cogs/marriage/__init__.py:683
 msgid "You didn't enter a name."
 msgstr "Du hast keinen Namen gegeben."
 
-#: cogs/marriage/__init__.py:673
+#: cogs/marriage/__init__.py:699
 msgid "You didn't change their name."
 msgstr ""
 
-#: cogs/marriage/__init__.py:675
+#: cogs/marriage/__init__.py:701
 #, python-brace-format
 msgid "{old_name} is now called {new_name}."
 msgstr "{old_name} heißt jetzt {new_name}."
@@ -7194,6 +7218,14 @@ msgstr ""
 
 #, python-brace-format
 #~ msgid ""
+#~ "Imgur Link for `{prefix}background`\n"
+#~ "<{link}>"
+#~ msgstr ""
+#~ "Imgur Link für `{prefix}background`\n"
+#~ "<{link}>"
+
+#, python-brace-format
+#~ msgid ""
 #~ "You need to be a donator to use this command. Please head to `{prefix}"
 #~ "donate` and make sure you joined the support server if you decide to "
 #~ "support us."
@@ -7365,14 +7397,6 @@ msgstr ""
 #~ msgstr ""
 #~ "Tausche Ostereier gegen Belohnungen. Die ID kann eine Zahl von 1 bis 10 "
 #~ "sein."
-
-#, python-brace-format
-#~ msgid ""
-#~ "You have completed your adventure and received **${gold}** as well as a "
-#~ "new item: **{item}**. Experience gained: **{xp}**."
-#~ msgstr ""
-#~ "Du hast dein Abenteuer beendet und **${gold}** und einen neuen Gegenstand "
-#~ "erhalten: **{item}**. Erfahrungspunkte gesammelt: **{xp}**."
 
 #, python-brace-format
 #~ msgid ""
