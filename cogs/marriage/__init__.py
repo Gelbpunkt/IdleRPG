@@ -380,7 +380,7 @@ class Marriage(commands.Cog):
             When you have a child, there is a 50% chance for it to be a boy and a 50% chance to be a girl.
 
             Your partner and you can enter a name for your child once the bot prompts you to. (Do not include `{prefix}`)
-            If you fail to choose a name in time, the bot wil choose one for you from about 500 pre-picked ones.
+            If you fail to choose a name in time, the bot will choose one for you from about 500 pre-picked ones.
 
             For identification purposes, you cannot have two children with the same name in your family, so make sure to pick a unique one.
 

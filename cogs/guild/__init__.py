@@ -867,7 +867,7 @@ class Guild(commands.Cog):
             Distribute some money to multiple members. This will divide by the amount of players before distributing.
             For example, distributing $500 to 5 members will give everyone of them $100.
 
-            In case of a decimal result the bot wil round down, i.e. $7 distributed to 3 members will give everyone $2.
+            In case of a decimal result the bot will round down, i.e. $7 distributed to 3 members will give everyone $2.
 
             Only guild leaders and officers can use this command."""
         )
