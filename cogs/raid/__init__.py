@@ -113,14 +113,14 @@ class Raid(commands.Cog):
         """[Bot Admin only] Starts a raid."""
         await self.set_raid_timer()
         await self.bot.session.get(
-            "https://raid.travitia.xyz/toggle",
+            "https://raid.idlerpg.xyz/toggle",
             headers={"Authorization": self.bot.config.raidauth},
         )
         role = discord.utils.get(ctx.guild.roles, name="Ruby Donators")
         role2 = discord.utils.get(ctx.guild.roles, name="Diamond Donators")
         users = [u.id for u in role.members + role2.members]
         await self.bot.session.post(
-            "https://raid.travitia.xyz/autosignup",
+            "https://raid.idlerpg.xyz/autosignup",
             headers={"Authorization": self.bot.config.raidauth},
             json={"users": users},
         )
@@ -134,9 +134,9 @@ class Raid(commands.Cog):
 This boss has {self.boss['hp']} HP and has high-end loot!
 The evil dragon will be vulnerable in 15 Minutes
 
-Use https://raid.travitia.xyz/ to join the raid!
+Use https://raid.idlerpg.xyz/ to join the raid!
 
-Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=453963965521985536&scope=identify&response_type=code&redirect_uri=https://raid.travitia.xyz/callback>
+Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=453963965521985536&scope=identify&response_type=code&redirect_uri=https://raid.idlerpg.xyz/callback>
 """,
             file=discord.File("assets/other/dragon.jpg"),
         )
@@ -144,7 +144,7 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
         if not self.bot.config.is_beta:
             await self.bot.get_channel(506_167_065_464_406_041).send(
                 "@everyone Zerekiel spawned! 15 Minutes until he is vulnerable...\nUse"
-                " https://raid.travitia.xyz/ to join the raid!"
+                " https://raid.idlerpg.xyz/ to join the raid!"
             )
         if not self.bot.config.is_beta:
             await asyncio.sleep(300)
@@ -167,7 +167,7 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
         )
 
         async with self.bot.session.get(
-            "https://raid.travitia.xyz/joined",
+            "https://raid.idlerpg.xyz/joined",
             headers={"Authorization": self.bot.config.raidauth},
         ) as r:
             raid_raw = await r.json()
@@ -348,7 +348,7 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
         """[Bot Admin only] Starts a bandit raid in Ikhdosa."""
         await self.set_raid_timer()
         await self.bot.session.get(
-            "https://raid.travitia.xyz/toggle",
+            "https://raid.idlerpg.xyz/toggle",
             headers={"Authorization": self.bot.config.raidauth},
         )
         bandits = [
@@ -360,9 +360,9 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
 **Lieutenant**: We've spotted a group of Bandits!
 The Bandits gonna arrive in 15 minutes.
 
-Use https://raid.travitia.xyz/ to join the raid!
+Use https://raid.idlerpg.xyz/ to join the raid!
 
-Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=453963965521985536&scope=identify&response_type=code&redirect_uri=https://raid.travitia.xyz/callback>
+Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=453963965521985536&scope=identify&response_type=code&redirect_uri=https://raid.idlerpg.xyz/callback>
 """,
             file=discord.File("assets/other/bandits1.jpg"),
         )
@@ -390,7 +390,7 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
         )
 
         async with self.bot.session.get(
-            "https://raid.travitia.xyz/joined",
+            "https://raid.idlerpg.xyz/joined",
             headers={"Authorization": self.bot.config.raidauth},
         ) as r:
             raid_raw = await r.json()
@@ -509,7 +509,7 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
         """[Guilt only] Starts a raid."""
         await self.set_raid_timer()
         await self.bot.session.get(
-            "https://raid.travitia.xyz/toggle",
+            "https://raid.idlerpg.xyz/toggle",
             headers={"Authorization": self.bot.config.raidauth},
         )
         await ctx.channel.set_permissions(
@@ -519,10 +519,10 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
             """
 The goddess Guilt has grown weak from the easy, summer days of the mortals below.  "There must be balance. Show me your guilts, obsessions, and hates. All that taint your soul, show them to me!  Show me your devotion!" she cries, raising a hand and summoning twisted, shadowy wraiths. Some of the mortals flee in terror, some break down in despair, and some reach for a knife and aim inwards.  Yet, many still stand against the shadows, their willpower strong... for now.
 
-Use https://raid.travitia.xyz/ to join the raid!
+Use https://raid.idlerpg.xyz/ to join the raid!
 **You must be a follower of Guilt.**
 
-Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=453963965521985536&scope=identify&response_type=code&redirect_uri=https://raid.travitia.xyz/callback>
+Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=453963965521985536&scope=identify&response_type=code&redirect_uri=https://raid.idlerpg.xyz/callback>
 """,
             file=discord.File("assets/other/guilt.jpg"),
         )
@@ -545,7 +545,7 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
         await ctx.send("**The terror begins! Fetching participant data... Hang on!**")
 
         async with self.bot.session.get(
-            "https://raid.travitia.xyz/joined",
+            "https://raid.idlerpg.xyz/joined",
             headers={"Authorization": self.bot.config.raidauth},
         ) as r:
             raid_raw = await r.json()
@@ -641,7 +641,7 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
         """[Kvothe only] Starts a raid."""
         await self.set_raid_timer()
         await self.bot.session.get(
-            "https://raid.travitia.xyz/toggle",
+            "https://raid.idlerpg.xyz/toggle",
             headers={"Authorization": self.bot.config.raidauth},
         )
         scrael = [{"hp": random.randint(80, 100), "id": i + 1} for i in range(scrael)]
@@ -649,10 +649,10 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
             """
 The cthae has gathered an army of scrael. Fight for your life!
 
-Use https://raid.travitia.xyz/ to join the raid!
+Use https://raid.idlerpg.xyz/ to join the raid!
 **Only Kvothe's followers may join.**
 
-Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=453963965521985536&scope=identify&response_type=code&redirect_uri=https://raid.travitia.xyz/callback>
+Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=453963965521985536&scope=identify&response_type=code&redirect_uri=https://raid.idlerpg.xyz/callback>
 """,
             file=discord.File("assets/other/cthae.jpg"),
         )
@@ -676,7 +676,7 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
         else:
             await asyncio.sleep(60)
         async with self.bot.session.get(
-            "https://raid.travitia.xyz/joined",
+            "https://raid.idlerpg.xyz/joined",
             headers={"Authorization": self.bot.config.raidauth},
         ) as r:
             raid_raw = await r.json()
@@ -795,7 +795,7 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
         """[Eden only] Starts a raid."""
         await self.set_raid_timer()
         await self.bot.session.get(
-            "https://raid.travitia.xyz/toggle",
+            "https://raid.idlerpg.xyz/toggle",
             headers={"Authorization": self.bot.config.raidauth},
         )
         self.boss = {"hp": hp, "min_dmg": 100, "max_dmg": 500}
@@ -806,9 +806,9 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
             f"""
 The guardian of the gate to the garden has awoken! To gain entry to the Garden of Sanctuary that lays behind the gate you must defeat the guardian.
 This boss has {self.boss['hp']} HP and will be vulnerable in 15 Minutes
-Use https://raid.travitia.xyz/ to join the raid!
+Use https://raid.idlerpg.xyz/ to join the raid!
 **Only followers of Eden may join.**
-Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=453963965521985536&scope=identify&response_type=code&redirect_uri=https://raid.travitia.xyz/callback>
+Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=453963965521985536&scope=identify&response_type=code&redirect_uri=https://raid.idlerpg.xyz/callback>
 """,
             file=discord.File("assets/other/guardian.jpg"),
         )
@@ -833,7 +833,7 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
         )
 
         async with self.bot.session.get(
-            "https://raid.travitia.xyz/joined",
+            "https://raid.idlerpg.xyz/joined",
             headers={"Authorization": self.bot.config.raidauth},
         ) as r:
             raid_raw = await r.json()
@@ -951,7 +951,7 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
         """[Tet only] Starts a raid."""
         await self.set_raid_timer()
         await self.bot.session.get(
-            "https://raid.travitia.xyz/toggle",
+            "https://raid.idlerpg.xyz/toggle",
             headers={"Authorization": self.bot.config.raidauth},
         )
         await ctx.channel.set_permissions(
@@ -962,10 +962,10 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
 Let's play a game.
 
 The game will start in 15 Minutes...
-Use https://raid.travitia.xyz/ to join the raid!
+Use https://raid.idlerpg.xyz/ to join the raid!
 **Only followers of Tet may join.**
 
-Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=453963965521985536&scope=identify&response_type=code&redirect_uri=https://raid.travitia.xyz/callback>
+Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=453963965521985536&scope=identify&response_type=code&redirect_uri=https://raid.idlerpg.xyz/callback>
 """,
             file=discord.File("assets/other/tet.png"),
         )
@@ -990,7 +990,7 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
         )
 
         async with self.bot.session.get(
-            "https://raid.travitia.xyz/joined",
+            "https://raid.idlerpg.xyz/joined",
             headers={"Authorization": self.bot.config.raidauth},
         ) as r:
             raid_raw = await r.json()
@@ -1089,7 +1089,7 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
         """[CHamburr only] Starts a raid."""
         await self.set_raid_timer()
         await self.bot.session.get(
-            "https://raid.travitia.xyz/toggle",
+            "https://raid.idlerpg.xyz/toggle",
             headers={"Authorization": self.bot.config.raidauth},
         )
         self.boss = {"hp": hp, "min_dmg": 100, "max_dmg": 500}
@@ -1102,10 +1102,10 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
 
 This boss has {self.boss['hp']} HP and has high-end loot!
 The hamburger will be vulnerable in 15 Minutes
-Use https://raid.travitia.xyz/ to join the raid!
+Use https://raid.idlerpg.xyz/ to join the raid!
 **Only followers of CHamburr may join.**
 
-Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=453963965521985536&scope=identify&response_type=code&redirect_uri=https://raid.travitia.xyz/callback>
+Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=453963965521985536&scope=identify&response_type=code&redirect_uri=https://raid.idlerpg.xyz/callback>
 """,
             file=discord.File("assets/other/hamburger.jpg"),
         )
@@ -1130,7 +1130,7 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
         )
 
         async with self.bot.session.get(
-            "https://raid.travitia.xyz/joined",
+            "https://raid.idlerpg.xyz/joined",
             headers={"Authorization": self.bot.config.raidauth},
         ) as r:
             raid_raw = await r.json()
@@ -1311,7 +1311,7 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
         """[Salutations only] Starts a raid."""
         await self.set_raid_timer()
         await self.bot.session.get(
-            "https://raid.travitia.xyz/toggle",
+            "https://raid.idlerpg.xyz/toggle",
             headers={"Authorization": self.bot.config.raidauth},
         )
         self.boss = {"hp": hp, "min_dmg": 100, "max_dmg": 500}
@@ -1323,11 +1323,11 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
 **ALERT! CYBERUS has been summoned and is ENRAGED! CYBERUS: "Those who dare defile and seek wealth and power from me shall be purished..."**
 
 The bestie will be vulnerable in 15 Minutes
-Use https://raid.travitia.xyz/ to join the raid!
+Use https://raid.idlerpg.xyz/ to join the raid!
 
 **Only followers of Salutations may join.**
 
-Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=453963965521985536&scope=identify&response_type=code&redirect_uri=https://raid.travitia.xyz/callback>
+Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=453963965521985536&scope=identify&response_type=code&redirect_uri=https://raid.idlerpg.xyz/callback>
 """,
             file=discord.File("assets/other/cyberus.jpg"),
         )
@@ -1352,7 +1352,7 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
         )
 
         async with self.bot.session.get(
-            "https://raid.travitia.xyz/joined",
+            "https://raid.idlerpg.xyz/joined",
             headers={"Authorization": self.bot.config.raidauth},
         ) as r:
             raid_raw = await r.json()
@@ -1623,7 +1623,7 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
         """[Asmodeus only] Starts a raid."""
         await self.set_raid_timer()
         await self.bot.session.get(
-            "https://raid.travitia.xyz/toggle",
+            "https://raid.idlerpg.xyz/toggle",
             headers={"Authorization": self.bot.config.raidauth},
         )
         self.boss = {"hp": hp, "min_dmg": 100, "max_dmg": 500}
@@ -1634,10 +1634,10 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
             """
 Asmodeus sends a wave of bloodlust throughout his followers and prepares himself for battle. Prepare yourselves as well, this will not be an easy fight. Join the raid now to battle him and reap the rewards.
 
-Use https://raid.travitia.xyz/ to join the raid!
+Use https://raid.idlerpg.xyz/ to join the raid!
 **Only followers of Asmodeus may join.**
 
-Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=453963965521985536&scope=identify&response_type=code&redirect_uri=https://raid.travitia.xyz/callback>
+Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=453963965521985536&scope=identify&response_type=code&redirect_uri=https://raid.idlerpg.xyz/callback>
 """,
             file=discord.File("assets/other/asmodeus.png"),
         )
@@ -1662,7 +1662,7 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
         )
 
         async with self.bot.session.get(
-            "https://raid.travitia.xyz/joined",
+            "https://raid.idlerpg.xyz/joined",
             headers={"Authorization": self.bot.config.raidauth},
         ) as r:
             raid_raw = await r.json()
@@ -1758,7 +1758,7 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
         """[Jesus only] Starts a raid."""
         await self.set_raid_timer()
         await self.bot.session.get(
-            "https://raid.travitia.xyz/toggle",
+            "https://raid.idlerpg.xyz/toggle",
             headers={"Authorization": self.bot.config.raidauth},
         )
         self.boss = {"hp": hp, "min_dmg": 100, "max_dmg": 500}
@@ -1772,10 +1772,10 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
 This boss has {self.boss['hp']} HP and has high-end loot!
 Atheistus will be vulnerable in 15 Minutes
 
-Use https://raid.travitia.xyz/ to join the raid!
+Use https://raid.idlerpg.xyz/ to join the raid!
 **Only followers of Jesus may join.**
 
-Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=453963965521985536&scope=identify&response_type=code&redirect_uri=https://raid.travitia.xyz/callback>
+Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=453963965521985536&scope=identify&response_type=code&redirect_uri=https://raid.idlerpg.xyz/callback>
 """,
             file=discord.File("assets/other/atheistus.jpg"),
         )
@@ -1800,7 +1800,7 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
         )
 
         async with self.bot.session.get(
-            "https://raid.travitia.xyz/joined",
+            "https://raid.idlerpg.xyz/joined",
             headers={"Authorization": self.bot.config.raidauth},
         ) as r:
             raid_raw = await r.json()

@@ -305,7 +305,7 @@ class HungerGames(commands.Cog):
             id_ = await self.bot.start_joins()
             await ctx.send(
                 f"{ctx.author.mention} started a mass-game of Hunger Games! Go to"
-                f" https://join.travitia.xyz/{id_} to join in the next 10 minutes."
+                f" https://join.idlerpg.xyz/{id_} to join in the next 10 minutes."
             )
             await asyncio.sleep(60 * 10)
             players = await self.bot.get_joins(id_)

@@ -228,7 +228,7 @@ class Patreon(commands.Cog):
             Change your profile's background image. `{prefix}background reset` sets it to the default one again.
 
             This image should be formatted by the `{prefix}makebackground` command, however if you want to get creative and not use an overlay, or create your own, the image dimensions are 800x650.
-            Having trouble finding a short URL? Try following [this tutorial](https://wiki.travitia.xyz/index.php?title=Tutorial:_Short_Image_URLs)!
+            Having trouble finding a short URL? Try following [this tutorial](https://wiki.idlerpg.xyz/index.php?title=Tutorial:_Short_Image_URLs)!
 
             Only basic (or above) tier patrons can use this command."""
         )

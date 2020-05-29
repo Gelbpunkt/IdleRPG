@@ -52,7 +52,7 @@ class Marriage(commands.Cog):
 
             Propose to a player for marriage. Once they accept, you are married.
 
-            When married, your partner will get bonuses from your adventures, you can have children, which can do different things (see `{prefix}help familyevent`) and increase your lovescore, which has an effect on the [adventure bonus](https://wiki.travitia.xyz/index.php?title=Family#Adventure_Bonus).
+            When married, your partner will get bonuses from your adventures, you can have children, which can do different things (see `{prefix}help familyevent`) and increase your lovescore, which has an effect on the [adventure bonus](https://wiki.idlerpg.xyz/index.php?title=Family#Adventure_Bonus).
 
             Only players who are not already married can use this command."""
         )
@@ -186,7 +186,7 @@ class Marriage(commands.Cog):
 
             Show the lovescore a player has. Lovescore can be increased by their partner spoiling them or going on dates.
 
-            Lovescore affects the [adventure bonus](https://wiki.travitia.xyz/index.php?title=Family#Adventure_Bonus) and the amount of children you can have."""
+            Lovescore affects the [adventure bonus](https://wiki.idlerpg.xyz/index.php?title=Family#Adventure_Bonus) and the amount of children you can have."""
         )
         data = ctx.character_data if user == ctx.author else ctx.user_data
         if data["marriage"]:

@@ -241,7 +241,7 @@ class Guild(commands.Cog):
               - An image URL with 60 characters or less to your guild's icon
               - $10,000
 
-            Having trouble finding a short image URL? Check [this tutorial](https://wiki.travitia.xyz/index.php?title=Tutorial:_Short_Image_URLs)
+            Having trouble finding a short image URL? Check [this tutorial](https://wiki.idlerpg.xyz/index.php?title=Tutorial:_Short_Image_URLs)
 
             The bot will ask for these separately. When you enter the guild's name or URL, don't include `{prefix}`.
 
@@ -608,7 +608,7 @@ class Guild(commands.Cog):
             Change your guild's icon. The URL cannot exceed 60 characters.
             :warning: This can be seen by anyone, do not use NSFW/innapropriate images. GIFs are not supported.
 
-            Having trouble finding short image URLs? Follow [this tutorial](https://wiki.travitia.xyz/index.php?title=Tutorial:_Short_Image_URLs)!
+            Having trouble finding short image URLs? Follow [this tutorial](https://wiki.idlerpg.xyz/index.php?title=Tutorial:_Short_Image_URLs)!
 
             Only guild leaders can use this command."""
         )
@@ -1275,7 +1275,7 @@ class Guild(commands.Cog):
             _(
                 "{author} seeks a guild adventure for **{guild}**! React to join!"
                 " Unlimited players can join in the next 10 minutes. The minimum of"
-                " players required is 3.\nPlease go to https://join.travitia.xyz/{id_}"
+                " players required is 3.\nPlease go to https://join.idlerpg.xyz/{id_}"
                 " to join the guild adventure."
             ).format(author=ctx.author.mention, guild=guild["name"], id_=id_)
         )
@@ -1486,12 +1486,12 @@ Time it will take: **{time}**
             {
                 "price": 37500,
                 "reward": "badge",
-                "data": "https://idlerpg.travitia.xyz/halloween_2019_1.png",
+                "data": "https://idlerpg.xyz/halloween_2019_1.png",
             },
             {
                 "price": 50000,
                 "reward": "badge",
-                "data": "https://idlerpg.travitia.xyz/halloween_2019_2.png",
+                "data": "https://idlerpg.xyz/halloween_2019_2.png",
             },
             {"price": 10000, "reward": "members", "data": 2},
             {"price": 20000, "reward": "members", "data": 5},

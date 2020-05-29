@@ -606,7 +606,7 @@ class Classes(commands.Cog):
         _(
             """Updates the image that shows in `{prefix}pet`. This can be any picture URL up to 60 characters.
 
-            Having trouble finding a short image link? Follow [this tutorial](https://wiki.travitia.xyz/index.php?title=Tutorial:_Short_Image_URLs)!
+            Having trouble finding a short image link? Follow [this tutorial](https://wiki.idlerpg.xyz/index.php?title=Tutorial:_Short_Image_URLs)!
 
             Only rangers can use this command."""
         )

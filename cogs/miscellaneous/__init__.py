@@ -56,7 +56,7 @@ class Miscellaneous(commands.Cog):
     async def make_wikis(self):
         self.bot.wikipedia = aiowiki.Wiki.wikipedia("en", session=self.bot.session)
         self.bot.idlewiki = aiowiki.Wiki(
-            "https://wiki.travitia.xyz/api.php", session=self.bot.session
+            "https://wiki.idlerpg.xyz/api.php", session=self.bot.session
         )
 
     @commands.command(brief=_("Evoke cringe"))
@@ -443,7 +443,7 @@ https://git.travitia.xyz/Kenvyra/IdleRPG/compare/v4.5.1...v4.6.0
 - Add redis version and CPU temperature to $stats
 - We have added two new gods (Tet and Eden).
 - The "You are not a donator" error now shows which donator rank is required for the command.
-- We have added https://join.travitia.xyz, a website for joining huge amounts of players outside of Discord to reduce spam.
+- We have added https://join.idlerpg.xyz, a website for joining huge amounts of players outside of Discord to reduce spam.
 - We moved to a new custom proxy solution and have added support for it.
 - Many converters for money and users have better error handling instead of "You used a bad argument!" now.
 - $bags shows the trick-or-treat-bags.
@@ -1031,7 +1031,7 @@ https://git.travitia.xyz/Kenvyra/IdleRPG/compare/v4.5.1...v4.6.0
             return await ctx.send(
                 _(
                     "Check out the official IdleRPG Wiki"
-                    " here:\n<https://wiki.travitia.xyz/index.php?title=Main_Page>"
+                    " here:\n<https://wiki.idlerpg.xyz/index.php?title=Main_Page>"
                 )
             )
         try:
@@ -1070,9 +1070,9 @@ This bot is developed by people who love to code for a good cause and improving 
 **Links**
 <https://git.travitia.xyz/Kenvyra/IdleRPG> - Source Code
 <https://git.travitia.xyz> - GitLab (Public)
-<https://idlerpg.travitia.xyz> - Bot Website
-<https://wiki.travitia.xyz> - IdleRPG wiki
-<https://raid.travitia.xyz> - Raid Website
+<https://idlerpg.xyz> - Bot Website
+<https://wiki.idlerpg.xyz> - IdleRPG wiki
+<https://raid.idlerpg.xyz> - Raid Website
 <https://travitia.xyz> - IdleRPG's next major upgrade
 <https://idlerpg.xyz> - Our forums
 <https://public-api.travitia.xyz> - Our public API

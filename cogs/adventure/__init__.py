@@ -445,12 +445,12 @@ class Adventure(commands.Cog):
             If you are in an alliance which owns a city with an adventure building, your chance will be increased by 5% per building level.
 
             If you survive on your adventure, you will receive gold up to the adventure number times 60, XP up to 500 times the adventure number and either a loot or gear item.
-            The chance of loot is dependent on the adventure number and whether you use the Ritualist class, [check our wiki](https://wiki.travitia.xyz/index.php?title=Loot) for the exact chances.
+            The chance of loot is dependent on the adventure number and whether you use the Ritualist class, [check our wiki](https://wiki.idlerpg.xyz/index.php?title=Loot) for the exact chances.
 
             God given luck affects the amount of gold and the gear items' damage/defense and value.
 
             If you are in a guild, its guild bank will receive 10% of the amount of gold extra.
-            If you are married, your partner will receive a portion of your gold extra as well, [check the wiki](https://wiki.travitia.xyz/index.php?title=Family#Adventure_Bonus) for the exact portion."""
+            If you are married, your partner will receive a portion of your gold extra as well, [check the wiki](https://wiki.idlerpg.xyz/index.php?title=Family#Adventure_Bonus) for the exact portion."""
         )
         num, time, done = ctx.adventure_data
 

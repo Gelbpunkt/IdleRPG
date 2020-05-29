@@ -316,7 +316,7 @@ class IdleHelp(commands.HelpCommand):
     async def send_bot_help(self, mapping):
         e = self.embedbase(
             title=_("IdleRPG Help {version}").format(version=self.context.bot.version),
-            url="https://idlerpg.travitia.xyz/",
+            url="https://idlerpg.xyz/",
         )
         e.set_image(
             url="https://media.discordapp.net/attachments/460568954968997890/711740723715637288/idle_banner.png"

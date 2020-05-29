@@ -47,9 +47,9 @@ class Profile(commands.Cog):
 
             Create a new character and start playing IdleRPG.
 
-            By creating a character, you agree to the [bot rules](https://wiki.travitia.xyz/index.php?title=Rules#botrules).
-            No idea where to go from here? Check out our [tutorial](https://idlerpg.travitia.xyz/tutorial/).
-            If you still have questions afterward, feel free to ask us on the official [support server](https://support.travitia.xyz/).
+            By creating a character, you agree to the [bot rules](https://wiki.idlerpg.xyz/index.php?title=Rules#botrules).
+            No idea where to go from here? Check out our [tutorial](https://idlerpg.xyz/tutorial/).
+            If you still have questions afterward, feel free to ask us on the official [support server](https://support.idlerpg.xyz/).
 
             (This command has a cooldown of 1 hour.)"""
         )
@@ -142,7 +142,7 @@ IdleRPG is a global bot, your characters are valid everywhere"""
             """`[person]` - The person whose profile to view; defaults to oneself
 
             View someone's profile. This will send an image.
-            For an explanation what all the fields mean, see [this picture](https://wiki.travitia.xyz/images/3/35/Profile_explained.png)"""
+            For an explanation what all the fields mean, see [this picture](https://wiki.idlerpg.xyz/images/3/35/Profile_explained.png)"""
         )
         await ctx.trigger_typing()
         targetid = person.id
@@ -347,7 +347,7 @@ IdleRPG is a global bot, your characters are valid everywhere"""
             Luck updates once a week for everyone, usually on Monday. It depends on your God.
             Luck influences your adventure survival chances as well as the rewards.
 
-            Luck is decided randomly within the Gods' luck boundaries. You can find your God's boundaries [here](https://wiki.travitia.xyz/index.php?title=Gods#List_of_Deities).
+            Luck is decided randomly within the Gods' luck boundaries. You can find your God's boundaries [here](https://wiki.idlerpg.xyz/index.php?title=Gods#List_of_Deities).
 
             If you have enough favor to place in the top 25 followers, you will gain additional luck:
               - The top 25 to 21 will gain +0.1 luck
@@ -566,7 +566,7 @@ IdleRPG is a global bot, your characters are valid everywhere"""
             Loot items can be exchanged for money or XP, or sacrificed to your God to gain favor points.
 
             You can gain loot items by completing adventures. The higher the difficulty, the higher the chance to get loot.
-            If you are a Ritualist, your loot chances are doubled. Check [our wiki](https://wiki.travitia.xyz/index.php?title=Loot#Probability) for the exact chances."""
+            If you are a Ritualist, your loot chances are doubled. Check [our wiki](https://wiki.idlerpg.xyz/index.php?title=Loot#Probability) for the exact chances."""
         )
         ret = await self.bot.pool.fetch(
             'SELECT * FROM loot WHERE "user"=$1;', ctx.author.id

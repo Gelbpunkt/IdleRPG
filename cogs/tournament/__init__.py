@@ -70,7 +70,7 @@ class Tournament(commands.Cog):
             id_ = await self.bot.start_joins()
             await ctx.send(
                 "A mass-tournament has been started. Please join at"
-                f" https://join.travitia.xyz/{id_} during the next 10 minutes! The"
+                f" https://join.idlerpg.xyz/{id_} during the next 10 minutes! The"
                 f" prize is **${prize}**!"
             )
             await asyncio.sleep(60 * 10)
@@ -233,7 +233,7 @@ class Tournament(commands.Cog):
             id_ = await self.bot.start_joins()
             await ctx.send(
                 "A mass-raidtournament has been started. Please join at"
-                f" https://join.travitia.xyz/{id_} during the next 10 minutes! The"
+                f" https://join.idlerpg.xyz/{id_} during the next 10 minutes! The"
                 f" prize is **${prize}**!"
             )
             await asyncio.sleep(60 * 10)
