@@ -96,7 +96,8 @@ IdleRPG is a global bot, your characters are valid everywhere"""
             if "`" in name:
                 return await ctx.send(
                     _(
-                        "Illegal character (`) found in the name. Please try again and choose another name."
+                        "Illegal character (`) found in the name. Please try again and"
+                        " choose another name."
                     )
                 )
             await self.bot.pool.execute(
@@ -1059,7 +1060,8 @@ IdleRPG is a global bot, your characters are valid everywhere"""
             if "`" in name:
                 return await ctx.send(
                     _(
-                        "Illegal character (`) found in the name. Please try again and choose another name."
+                        "Illegal character (`) found in the name. Please try again and"
+                        " choose another name."
                     )
                 )
             await self.bot.pool.execute(
