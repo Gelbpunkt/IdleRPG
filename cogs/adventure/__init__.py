@@ -53,6 +53,7 @@ class Adventure(commands.Cog):
         damage, defense = await self.bot.get_damage_armor_for(ctx.author)
         all_dungeons = list(self.bot.config.adventure_times.keys())
         level = rpgtools.xptolevel(ctx.character_data["xp"])
+        luck_booster = await self.bot.get_booster(ctx.author, "luck")
 
         msg = await ctx.send(_("Loading images..."))
 
@@ -64,6 +65,7 @@ class Adventure(commands.Cog):
                 adv,
                 int(level),
                 ctx.character_data["luck"],
+                booster=luck_booster,
                 returnsuccess=False,
             )
             chances.append((success[0] - success[2], success[1] + success[2]))

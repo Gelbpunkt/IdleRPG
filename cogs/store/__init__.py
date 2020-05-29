@@ -45,9 +45,10 @@ class Store(commands.Cog):
             name=_("Boosters"),
             value=_(
                 "`#1` Time Booster\t**$1000**\tBoosts adventure time by 50%\n`#2` Luck"
-                " Booster\t**$500**\tBoosts adventure luck by 25%\n`#3` Money"
-                " Booster\t**$1000**\tBoosts adventure money rewards by 25%"
-            ),
+                " Booster\t**$500**\tBoosts adventure luck (not `{prefix}luck`) by"
+                " 25%\n`#3` Money Booster\t**$1000**\tBoosts adventure money rewards"
+                " by 25%"
+            ).format(prefix=ctx.prefix),
             inline=False,
         )
         shopembed.set_thumbnail(url=f"{self.bot.BASE_URL}/business.png")

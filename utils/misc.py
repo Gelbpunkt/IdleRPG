@@ -102,6 +102,9 @@ def calcchance(
         val2 = sword + shield + 75 - dungeon * 2
         val1 = round(val1 * luck) if val1 >= 0 else round(val1 / luck)
         val2 = round(val2 * luck) if val2 >= 0 else round(val2 / luck)
+        if booster:
+            val1 += 25
+            val2 += 25
         return (val1, val2, level)
     else:
         randomn = random.randint(0, 100)
