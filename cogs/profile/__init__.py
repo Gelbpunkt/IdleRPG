@@ -93,6 +93,13 @@ IdleRPG is a global bot, your characters are valid everywhere"""
             ):
                 return await ctx.send(_("Creation of your character cancelled."))
         if len(name) > 2 and len(name) < 21:
+            if "`" in name:
+                return await ctx.send(
+                    _(
+                        "Illegal character (`) found in the name. Please try again and"
+                        " choose another name."
+                    )
+                )
             await self.bot.pool.execute(
                 "INSERT INTO profile VALUES ($1, $2, $3, $4);",
                 ctx.author.id,
@@ -995,6 +1002,10 @@ IdleRPG is a global bot, your characters are valid everywhere"""
         )
         if other == ctx.author:
             return await ctx.send(_("No cheating!"))
+        elif other == ctx.me:
+            return await ctx.send(
+                _("For me? I'm flattered, but I can't accept this...")
+            )
         if ctx.character_data["money"] < money:
             return await ctx.send(_("You are too poor."))
         async with self.bot.pool.acquire() as conn:
@@ -1046,6 +1057,13 @@ IdleRPG is a global bot, your characters are valid everywhere"""
                 return await ctx.send(_("Timeout expired. Retry!"))
             name = name.content
         if len(name) > 2 and len(name) < 21:
+            if "`" in name:
+                return await ctx.send(
+                    _(
+                        "Illegal character (`) found in the name. Please try again and"
+                        " choose another name."
+                    )
+                )
             await self.bot.pool.execute(
                 'UPDATE profile SET "name"=$1 WHERE "user"=$2;', name, ctx.author.id
             )
