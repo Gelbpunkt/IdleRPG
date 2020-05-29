@@ -62,7 +62,7 @@ class Trivia(commands.Cog):
         _(
             """`[difficulty]` - The difficulty of the question, may be easy, medium or hard
 
-            Answer a trivia question from [OpenTDB](https://opentdb.com/). You control your answer with the emoji reactions."""
+            Answer a trivia question from [OpenTDB](https://opentdb.com/). You select your answer with the emoji reactions."""
         )
         try:
             question = await self.get_question(difficulty)

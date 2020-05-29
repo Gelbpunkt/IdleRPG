@@ -867,7 +867,7 @@ class Guild(commands.Cog):
             Distribute some money to multiple members. This will divide by the amount of players before distributing.
             For example, distributing $500 to 5 members will give everyone of them $100.
 
-            In case of a decimal result we will round down, i.e. $7 distributed to 3 members will give everyone $2.
+            In case of a decimal result the bot will round down, i.e. $7 distributed to 3 members will give everyone $2.
 
             Only guild leaders and officers can use this command."""
         )
@@ -1248,7 +1248,7 @@ class Guild(commands.Cog):
             """Start a guild adventure. Guild adventures can happen alongside regular adventures.
 
             On guild adventures, you can gain additional gold for your guild bank.
-            hen using this command, the bot will send a link used to join the attack. Each member of the guild can join, at least 3 are required.
+            When using this command, the bot will send a link used to join the adventure. Each member of the guild can join, at least 3 are required.
             Ten minutes after the link was sent, the users who joined will be gathered.
 
             The guild adventure's difficulty will depend solely on the users' levels, their equipped items and race/class bonuses are not considered.

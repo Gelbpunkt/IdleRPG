@@ -78,7 +78,7 @@ class Valentine(commands.Cog):
         if user:
             await user.send(
                 "Your spouse gave you some boxes of chocolates :heart:\nYou can open it"
-                " with {prefix}chocolate.".format(prefix=ctx.prefix)
+                " with $chocolate."
             )
 
     @has_char()

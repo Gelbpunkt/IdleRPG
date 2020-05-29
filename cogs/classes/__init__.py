@@ -307,7 +307,7 @@ class Classes(commands.Cog):
             Your steal chance is increased by evolving your class and your alliance's thief buildings, if you have an alliance that owns a city.
             If you succeed in stealing, you will steal 10% of the target's money.
 
-            You *cannot* choose your target, it is always a random player. If we can't find the player's name, it will be replaced with "a traveller passing by".
+            You *cannot* choose your target, it is always a random player. If the bot can't find the player's name, it will be replaced with "a traveller passing by".
             The target cannot be anyone with less than $10, yourself, or one of the Game Masters.
 
             Only thieves can use this command.
@@ -543,7 +543,7 @@ class Classes(commands.Cog):
     @is_class("Ranger")
     @has_char()
     @user_cooldown(21600)  # We are mean, indeed
-    @pet.command(aliases=["fun"])
+    @pet.command(aliases=["fun"], brief=_("Play with your pet"))
     @locale_doc
     async def play(self, ctx):
         _(
@@ -604,7 +604,9 @@ class Classes(commands.Cog):
     @locale_doc
     async def image(self, ctx, *, url: str):
         _(
-            """Updates the image that shows in `{prefix}pet`. This can be any picture URL up to 60 characters.
+            """`<url>` - An image url for the pet's image, must be 60 characters or shorter
+
+            Updates the image that shows in `{prefix}pet`.
 
             Having trouble finding a short image link? Follow [this tutorial](https://wiki.idlerpg.xyz/index.php?title=Tutorial:_Short_Image_URLs)!
 

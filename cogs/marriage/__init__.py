@@ -169,7 +169,11 @@ class Marriage(commands.Cog):
     @commands.command(brief=_("Show your partner"))
     @locale_doc
     async def relationship(self, ctx):
-        _("""Show your partner's Discord Tag.""")
+        _(
+            """Show your partner's Discord Tag. This works fine across server.
+
+            Only married players can use this command."""
+        )
         if not ctx.character_data["marriage"]:
             return await ctx.send(_("You are not married yet."))
         partner = await rpgtools.lookup(self.bot, ctx.character_data["marriage"])
@@ -376,7 +380,7 @@ class Marriage(commands.Cog):
             When you have a child, there is a 50% chance for it to be a boy and a 50% chance to be a girl.
 
             Your partner and you can enter a name for your child once the bot prompts you to. (Do not include `{prefix}`)
-            If you fail to choose a name in time, we will choose one for you from about 500 pre-picked ones.
+            If you fail to choose a name in time, the bot will choose one for you from about 500 pre-picked ones.
 
             For identification purposes, you cannot have two children with the same name in your family, so make sure to pick a unique one.
 
@@ -502,7 +506,7 @@ class Marriage(commands.Cog):
         if not children:
             em.add_field(
                 name=_("No children yet"),
-                value=_("Use {prefix}child to make one!").format(prefix=ctx.prefix),
+                value=_("Use `{prefix}child` to make one!").format(prefix=ctx.prefix),
             )
         if len(children) <= 5:
             for child in children:

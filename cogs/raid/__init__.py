@@ -90,7 +90,7 @@ class Raid(commands.Cog):
         await self.bot.redis.execute("DEL", "special:raid")
 
     @is_gm()
-    @commands.command()
+    @commands.command(hidden=True)
     async def alterraid(self, ctx, newhp: IntGreaterThan(0)):
         """[Bot Admin only] Change a raid boss' HP."""
         if not self.boss:
@@ -108,7 +108,7 @@ class Raid(commands.Cog):
     @is_gm()
     @raid_channel()
     @raid_free()
-    @commands.command(brief=_("Start a Zerekiel raid"))
+    @commands.command(hidden=True, brief=_("Start a Zerekiel raid"))
     async def spawn(self, ctx, hp: IntGreaterThan(0)):
         """[Bot Admin only] Starts a raid."""
         await self.set_raid_timer()
@@ -343,7 +343,7 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
     @is_gm()
     @ikhdosa_channel()
     @raid_free()
-    @commands.command(brief=_("Start a bandit raid"))
+    @commands.command(hidden=True, brief=_("Start a bandit raid"))
     async def raiddefend(self, ctx, bandits: IntGreaterThan(1), group: str = "I"):
         """[Bot Admin only] Starts a bandit raid in Ikhdosa."""
         await self.set_raid_timer()
@@ -504,7 +504,7 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
 
     @is_god()
     @raid_free()
-    @commands.command(brief=_("Start a Guilt raid"))
+    @commands.command(hidden=True, brief=_("Start a Guilt raid"))
     async def guiltspawn(self, ctx):
         """[Guilt only] Starts a raid."""
         await self.set_raid_timer()
@@ -636,7 +636,7 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
 
     @is_god()
     @raid_free()
-    @commands.command(brief=_("Start a Kvothe raid"))
+    @commands.command(hidden=True, brief=_("Start a Kvothe raid"))
     async def kvothespawn(self, ctx, scrael: IntGreaterThan(1)):
         """[Kvothe only] Starts a raid."""
         await self.set_raid_timer()
@@ -790,7 +790,7 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
 
     @is_god()
     @raid_free()
-    @commands.command(brief=_("Start an Eden raid"))
+    @commands.command(hidden=True, brief=_("Start an Eden raid"))
     async def edenspawn(self, ctx, hp: IntGreaterThan(0)):
         """[Eden only] Starts a raid."""
         await self.set_raid_timer()
@@ -946,7 +946,7 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
 
     @is_god()
     @raid_free()
-    @commands.command(brief=_("Start a Tet raid"))
+    @commands.command(hidden=True, brief=_("Start a Tet raid"))
     async def tetspawn(self, ctx):
         """[Tet only] Starts a raid."""
         await self.set_raid_timer()
@@ -1084,7 +1084,7 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
 
     @is_god()
     @raid_free()
-    @commands.command(brief=_("Start a CHamburr raid"))
+    @commands.command(hidden=True, brief=_("Start a CHamburr raid"))
     async def chamburrspawn(self, ctx, hp: IntGreaterThan(0)):
         """[CHamburr only] Starts a raid."""
         await self.set_raid_timer()
@@ -1306,7 +1306,7 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
 
     @is_god()
     @raid_free()
-    @commands.command(brief=_("Start a Salutations raid"))
+    @commands.command(hidden=True, brief=_("Start a Salutations raid"))
     async def salutationsspawn(self, ctx, hp: IntGreaterThan(0)):
         """[Salutations only] Starts a raid."""
         await self.set_raid_timer()
@@ -1618,7 +1618,7 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
 
     @is_god()
     @raid_free()
-    @commands.command(brief=_("Start an Asmodeus raid"))
+    @commands.command(hidden=True, brief=_("Start an Asmodeus raid"))
     async def asmodeusspawn(self, ctx, hp: IntGreaterThan(0)):
         """[Asmodeus only] Starts a raid."""
         await self.set_raid_timer()
@@ -1753,7 +1753,7 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
 
     @is_god()
     @raid_free()
-    @commands.command(brief=_("Start a Jesus raid"))
+    @commands.command(hidden=True, brief=_("Start a Jesus raid"))
     async def jesusspawn(self, ctx, hp: IntGreaterThan(0)):
         """[Jesus only] Starts a raid."""
         await self.set_raid_timer()

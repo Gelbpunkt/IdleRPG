@@ -587,7 +587,7 @@ IdleRPG is a global bot, your characters are valid everywhere"""
     @locale_doc
     async def exchange(self, ctx, *loot_ids: int):
         _(
-            """`[loot_ids]` - The loot IDs to exchange; defaults to all loot
+            """`[loot_ids...]` - The loot IDs to exchange; defaults to all loot
 
             Exchange your loot for money or XP, the bot will let you choose.
 

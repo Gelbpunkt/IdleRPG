@@ -40,7 +40,7 @@ class Gods(commands.Cog):
     @locale_doc
     async def sacrifice(self, ctx, *loot_ids: int):
         _(
-            """`[loot_ids]` - The loot IDs to sacrifice, can be one or multiple IDs separated by space; defaults to all loot
+            """`[loot_ids...]` - The loot IDs to sacrifice, can be one or multiple IDs separated by space; defaults to all loot
 
             Sacrifice loot to your God to gain favor points.
 
@@ -318,7 +318,8 @@ Are you sure you want to follow {god}?"""
               - The top 10 to 6 will gain +0.4 luck
               - The top 5 to 1 will gain +0.5 luck
 
-            These extra luck values are based off the chosen luck value, for example, if your God's luck value is chosen to be 1.2 and you are the 13th best follower, you will have 1.5 luck for that week.
+            These extra luck values are based off the decided luck value.
+            For example, if your God's luck value is decided to be 1.2 and you are the 13th best follower, you will have 1.5 luck for that week.
             All favor is reset to 0 when the new luck is decided to make it fair for everyone."""
         )
         await ctx.send(
@@ -377,6 +378,7 @@ Are you sure you want to follow {god}?"""
     @commands.command(
         aliases=["resetfavour"],
         enabled=False,
+        hidden=True,
         brief=_("Set all your followers favor to 0"),
     )
     async def resetfavor(self, ctx):
@@ -386,9 +388,9 @@ Are you sure you want to follow {god}?"""
         await ctx.send("Done.")
 
     @is_god()
-    @commands.command(enabled=False, brief=_("Set your followers' luck"))
+    @commands.command(enabled=False, hidden=True, brief=_("Set your followers' luck"))
     async def setluck(self, ctx, amount: float, target: UserWithCharacter = "all"):
-        """´<amount>´ - a number from 0 to 2 with two decimal places
+        """`<amount>` - a number from 0 to 2 with two decimal places
         `[target]` - the follower's luck to set; defaults to all followers
 
         Set your followers' luck to a specific value."""

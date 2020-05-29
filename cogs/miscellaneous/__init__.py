@@ -215,7 +215,7 @@ class Miscellaneous(commands.Cog):
             Get a short URL from a long one or an image attachment.
 
             If both a URL and an attachment is given, the attachment is preferred. GIFs are not supported, only JPG and PNG.
-            In case this command fails, you can [manually upload your image to Imgur](imgur.com/upload)."""
+            In case this command fails, you can [manually upload your image to Imgur](https://imgur.com/upload)."""
         )
         if not given_url and not ctx.message.attachments:
             return await ctx.send(_("Please supply a URL or an image attachment"))
@@ -245,7 +245,7 @@ class Miscellaneous(commands.Cog):
     async def patreon(self, ctx):
         _(
             """View the Patreon page of the bot. The different tiers will grant different rewards.
-            View `{prefix}help Patreon` (capital P) to find the different commands.
+            View `{prefix}help module Patreon` to find the different commands.
 
             Thank you for supporting IdleRPG!"""
         )
@@ -274,7 +274,7 @@ Even $1 can help us.
     @locale_doc
     async def source(self, ctx):
         _(
-            """Shows the our GitLab page and license.
+            """Shows our GitLab page and license.
             If you want to contribute, feel free to create an account and submit issues and merge requests."""
         )
         await ctx.send("AGPLv3+\nhttps://git.travitia.xyz/Kenvyra/IdleRPG")
@@ -490,7 +490,7 @@ https://git.travitia.xyz/Kenvyra/IdleRPG/compare/v4.5.1...v4.6.0
             If no target is given, all messages are cleared.
 
             Note that this will *scan* `<num>` messages and will only delete them, if they are from the target, if one is given.
-            If the target sent 30 messages, other people sent 70 messages and you cleared 100 messages by the target, only thoes 30 will be deleted.
+            If the target sent 30 messages, other people sent 70 messages and you cleared 100 messages by the target, only those 30 will be deleted.
 
             Only users with the Manage Messages permission can use this command."""
         )
@@ -633,7 +633,9 @@ https://git.travitia.xyz/Kenvyra/IdleRPG/compare/v4.5.1...v4.6.0
     @commands.command(brief=_("Evoke cringe"))
     @locale_doc
     async def meme(self, ctx):
-        _("""Sends a random meme from Some Random API.""")
+        _(
+            """Sends a random meme from [Some Random API](https://some-random-api.ml/)."""
+        )
         async with self.bot.session.get(
             f"https://some-random-api.ml/meme?lol={random.randint(1,1000000)}"
         ) as resp:
