@@ -1,5 +1,9 @@
 #!/bin/bash
 # Adrian's script for setting up a quick test deployment
+podman pull redis:6-alpine
+podman pull postgres:13-alpine
+podman pull gelbpunkt/stockfish:latest
+podman pull gelbpunkt/okapi:latest
 podman pod create --name idlerpgbeta
 podman run --rm -d --pod idlerpgbeta --name redis-beta redis:6-alpine
 cat <<EOF > start.sh
@@ -18,3 +22,7 @@ chmod 777 start.sh
 podman run --rm -d --pod idlerpgbeta --name postgres-beta -e POSTGRES_PASSWORD="test" -v $(pwd)/start.sh:/docker-entrypoint-initdb.d/init.sh:Z postgres:13-alpine
 sleep 15
 rm start.sh
+podman run --rm -d --pod idlerpgbeta --name stockfish-beta gelbpunkt/stockfish:latest
+podman run --rm -d --pod idlerpgbeta --name okapi-beta -v $(pwd)/config.json:/okapi/config.json:Z gelbpunkt/okapi:latest
+podman build -t lavalink:latest -f units/Dockerfile.lavalink .
+podman run --rm -d --pod idlerpgbeta --name lavalink-beta lavalink:latest
