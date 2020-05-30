@@ -15,10 +15,23 @@ The IdleRPG Project is licensed under the terms of the [GNU Affero General Publi
 
 [AGPL for humans](<https://tldrlegal.com/license/gnu-affero-general-public-license-v3-(agpl-3.0)>).
 
-
 ## Running it
 
-Note: This requires you to have Podman and Git working.
+### For development
+
+Note: This requires you to have Podman and Git working. Development instances will wipe storage when stopped.
+
+```sh
+git clone https://git.travitia.xyz/Kenvyra/IdleRPG.git
+cd IdleRPG
+./scripts/beta.sh
+podman build -t idlerpg:latest --build-arg beta=yes .
+podman run --rm -it --name idlerpg --pod idlerpgbeta -v /path/to/config.py:/idlerpg/config.py idlerpg:latest
+```
+
+### For hosting permanently
+
+This is fully unsupported and we only provide basic tools. The setup script might be outdated and is unmaintained.
 
 ```sh
 git clone https://git.travitia.xyz/Kenvyra/IdleRPG.git
@@ -26,8 +39,6 @@ cd IdleRPG
 ./scripts/setup.sh
 systemctl start "podman-*"
 ```
-
-For a quick and ugly deploy, you might want to try `./scripts/beta.sh`. It is for a non-persistent storage.
 
 ## Utility
 
