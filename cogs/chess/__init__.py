@@ -121,6 +121,7 @@ class Chess(commands.Cog):
             await ctx.send(embed=embed)
 
     @chess.group(invoke_without_command=True, brief=_("Play a chess match."))
+    @locale_doc
     async def match(
         self, ctx, difficulty: Optional[int] = 3, enemy: MemberConverter = None,
     ):
@@ -224,13 +225,14 @@ class Chess(commands.Cog):
         del self.matches[ctx.channel.id]
 
     @match.command(brief=_("Shows past moves for this game"))
+    @locale_doc
     async def moves(self, ctx):
         _(
             """Shows the moves of the current match in the channel that you and your opponent took."""
         )
         game = self.matches.get(ctx.channel.id)
         if not game:
-            return await ctx.send("No game here.")
+            return await ctx.send(_("No game here."))
         moves = "\n".join(
             [f"{idx + 1}. {i}" for idx, i in enumerate(game.pretty_moves())]
         )
