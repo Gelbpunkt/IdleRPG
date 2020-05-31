@@ -165,7 +165,7 @@ class Main:
     def dead_process_handler(
         self, result: asyncio.Future[Tuple[Instance, bytes, bytes]]
     ) -> None:
-        instance, stdout, stderr = result.result()
+        instance, _, stderr = result.result()
         if instance._process is None:
             raise RuntimeError(
                 "This callback cannot run without a process that exited."

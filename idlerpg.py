@@ -43,7 +43,7 @@ if len(sys.argv) != 5:
 if sys.platform == "linux":  # uvloop requires linux
     import uvloop
 
-    asyncio.set_event_loop_policy(uvloop.EventLoopPolicy())
+    uvloop.install()
 
 # Set the timezone to UTC
 os.environ["TZ"] = "UTC"
@@ -80,11 +80,11 @@ if __name__ == "__main__":
         loop.run_until_complete(bot.connect_all())
     except KeyboardInterrupt:
 
-        def shutdown_handler(_loop, context):
+        def shutdown_handler(loop_, context):
             if "exception" not in context or not isinstance(
                 context["exception"], asyncio.CancelledError
             ):
-                _loop.default_exception_handler(context)  # TODO: fix context
+                loop_.default_exception_handler(context)  # TODO: fix context
 
         loop.set_exception_handler(shutdown_handler)
         tasks = asyncio.gather(
