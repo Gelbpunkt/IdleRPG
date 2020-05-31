@@ -42,7 +42,7 @@ class CogMenu(menus.Menu):
         self.footer = kwargs.pop("footer")
         self.per_page = kwargs.pop("per_page", 5)
         self.page = 1
-        super().__init__(*args, timeout=60.0, delete_message_after=True ** kwargs)
+        super().__init__(*args, timeout=60.0, delete_message_after=True, **kwargs)
 
     def embed(self, desc):
         e = discord.Embed(title=self.title, description="\n".join(desc))
@@ -56,7 +56,7 @@ class CogMenu(menus.Menu):
         return e
 
     def should_add_reactions(self):
-        return len(self.description) < self.per_page
+        return len(self.description) > self.per_page
 
     async def send_initial_message(self, ctx, channel):
         e = self.embed(self.description[0 : self.per_page])
