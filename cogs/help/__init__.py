@@ -21,7 +21,7 @@ from typing import Union
 import discord
 
 from asyncpg import UniqueViolationError
-from discord.ext import commands
+from discord.ext import commands, menus
 
 from classes.converters import User
 from utils.checks import has_open_help_request, is_supporter
@@ -33,6 +33,49 @@ def chunks(iterable, size):
     for i in range(0, len(iterable), size):
         yield iterable[i : i + size]
 
+class CogMenu(menus.Menu):
+    def __init__(self, *args, **kwargs):
+        self.title = kwargs.pop("title")
+        self.description = kwargs.pop("description")
+        self.bot = kwargs.pop("bot")
+        self.footer = kwargs.pop("footer")
+        self.per_page = kwargs.pop("per_page", 5)
+        self.page = 1
+        super().__init__(*args, **kwargs)
+
+    def embed(self, desc):
+        e = discord.Embed(title=self.title, description="\n".join(desc))
+        e.set_author(name=self.bot, icon_url=self.bot.user.avatar_url_as(static_format="png"))
+        e.set_footer(text=self.footer, icon_url=self.bot.user.avatar_url_as(static_format="png"))
+        return e
+
+    async def send_initial_message(self, ctx, channel):
+        e = self.embed(self.description[0:self.per_page])
+        return await channel.send(embed=e)
+
+    @menus.button('\N{BLACK LEFT-POINTING TRIANGLE}\ufe0f')
+    async def on_previous_page(self, payload):
+        if self.page != 1:
+            self.page -= 1
+            start = (self.page - 1)*self.per_page
+            end = self.page*self.per_page
+            items = self.description[start:end]
+            e = self.embed(items)
+            await self.message.edit(embed=e)
+
+    @menus.button('\N{BLACK SQUARE FOR STOP}\ufe0f')
+    async def on_stop(self, payload):
+        self.stop()
+
+    @menus.button('\N{BLACK RIGHT-POINTING TRIANGLE}\ufe0f')
+    async def on_next_page(self, payload):
+        if len(self.description) >= (self.page*self.per_page):
+            self.page += 1
+            start = (self.page - 1)*self.per_page
+            end = self.page*self.per_page
+            items = self.description[start:end]
+            e = self.embed(items)
+            await self.message.edit(embed=e)
 
 class Help(commands.Cog):
     def __init__(self, bot):
@@ -394,26 +437,22 @@ class IdleHelp(commands.HelpCommand):
                 _("You do not have access to these commands!")
             )
 
-        e = self.embedbase(
+        menu = CogMenu(
             title=(
                 f"[{cog.qualified_name.upper()}] {len(set(cog.walk_commands()))}"
                 " commands"
-            )
-        )
-        e.description = "\n".join(
-            [
+            ),
+            bot=self.context.bot,
+            description=[
                 f"{self.group_emoji if isinstance(c, commands.Group) else self.command_emoji}"
                 f" `{self.clean_prefix}{c.qualified_name} {c.signature}` - {_(c.brief)}"
                 for c in cog.get_commands()
-            ]
-        )
-        e.set_footer(
-            icon_url=self.context.bot.user.avatar_url_as(static_format="png"),
-            text=_("See '{prefix}help <command>' for more detailed info").format(
+            ],
+            footer=_("See '{prefix}help <command>' for more detailed info").format(
                 prefix=self.context.prefix
-            ),
-        )
-        await self.context.send(embed=e)
+            ))
+
+        await menu.start()
 
     async def send_command_help(self, command):
         if command.cog:
