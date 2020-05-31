@@ -79,7 +79,7 @@ class Chess(commands.Cog):
         await ctx.send(
             _(
                 "You have been registered with an ELO of 1000 as a default. Play"
-                " matches to increase it!"
+                " matches against other registered users to increase it!"
             )
         )
 

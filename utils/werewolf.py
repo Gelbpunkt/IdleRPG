@@ -321,7 +321,7 @@ class Game:
             )
         await self.ctx.send(
             f"**Sending game roles... You may use `{self.ctx.prefix}role` to check your"
-            " role later.**\n**Talking to other users privately in DMs is"
+            " role later.**\n**Talking to other users privately is"
             " prohibited!**"
         )
         for player in self.players:
