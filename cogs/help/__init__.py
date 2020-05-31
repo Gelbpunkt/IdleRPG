@@ -39,13 +39,16 @@ class CogMenu(menus.Menu):
         self.title = kwargs.pop("title")
         self.description = kwargs.pop("description")
         self.bot = kwargs.pop("bot")
+        self.color = kwargs.pop("color", 0xCB735C)
         self.footer = kwargs.pop("footer")
         self.per_page = kwargs.pop("per_page", 5)
         self.page = 1
         super().__init__(*args, timeout=60.0, delete_message_after=True, **kwargs)
 
     def embed(self, desc):
-        e = discord.Embed(title=self.title, description="\n".join(desc))
+        e = discord.Embed(
+            title=self.title, color=self.color, description="\n".join(desc)
+        )
         e.set_author(
             name=self.bot.user,
             icon_url=self.bot.user.avatar_url_as(static_format="png"),
@@ -453,6 +456,7 @@ class IdleHelp(commands.HelpCommand):
                 " commands"
             ),
             bot=self.context.bot,
+            color=self.color,
             description=[
                 f"{self.group_emoji if isinstance(c, commands.Group) else self.command_emoji}"
                 f" `{self.clean_prefix}{c.qualified_name} {c.signature}` - {_(c.brief)}"
