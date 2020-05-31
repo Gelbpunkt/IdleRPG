@@ -41,13 +41,16 @@ class CogMenu(menus.Menu):
         self.footer = kwargs.pop("footer")
         self.per_page = kwargs.pop("per_page", 5)
         self.page = 1
-        super().__init__(*args, **kwargs)
+        super().__init__(*args, timeout=60.0, delete_message_after=True **kwargs)
 
     def embed(self, desc):
         e = discord.Embed(title=self.title, description="\n".join(desc))
-        e.set_author(name=self.bot, icon_url=self.bot.user.avatar_url_as(static_format="png"))
+        e.set_author(name=self.bot.user, icon_url=self.bot.user.avatar_url_as(static_format="png"))
         e.set_footer(text=self.footer, icon_url=self.bot.user.avatar_url_as(static_format="png"))
         return e
+
+    def should_add_reactions(self):
+        return len(self.description) < self.per_page
 
     async def send_initial_message(self, ctx, channel):
         e = self.embed(self.description[0:self.per_page])
@@ -452,7 +455,7 @@ class IdleHelp(commands.HelpCommand):
                 prefix=self.context.prefix
             ))
 
-        await menu.start()
+        await menu.start(self.context)
 
     async def send_command_help(self, command):
         if command.cog:
