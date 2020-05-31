@@ -25,4 +25,4 @@ rm start.sh
 podman run --rm -d --pod idlerpgbeta --name stockfish-beta gelbpunkt/stockfish:latest
 podman run --rm -d --pod idlerpgbeta --name okapi-beta -v $(pwd)/config.json:/okapi/config.json:Z gelbpunkt/okapi:latest
 podman build -t lavalink:latest -f units/Dockerfile.lavalink .
-podman run --rm -d --pod idlerpgbeta --name lavalink-beta lavalink:latest
+podman run --rm -d --pod idlerpgbeta --name lavalink-beta -v $(pwd)/application.yml:/lavalink/application.yml:Z lavalink:latest
