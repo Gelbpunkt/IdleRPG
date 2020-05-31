@@ -319,6 +319,19 @@ class Help(commands.Cog):
 
 class IdleHelp(commands.HelpCommand):
     def __init__(self, *args, **kwargs):
+        kwargs["command_attrs"] = {
+            "brief": _("Views the help on a topic."),
+            "help": _(
+                """Views the help on a topic.
+
+            The topic may either be a command name or a module name.
+            Command names are always preferred, so for example, `{prefix}help adventure`
+            will show the help on the command, not the module.
+
+            To view the help on a module explicitely, use `{prefix}help module [name]`"""
+            ),
+        }
+
         super().__init__(*args, **kwargs)
         self.verify_checks = False
         self.gm_exts = {"GameMaster"}
@@ -543,3 +556,4 @@ class IdleHelp(commands.HelpCommand):
 def setup(bot):
     bot.add_cog(Help(bot))
     bot.help_command = IdleHelp()
+    bot.help_command.cog = bot.get_cog("Help")
