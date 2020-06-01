@@ -1,6 +1,5 @@
 FROM gelbpunkt/python:gcc10
 
-WORKDIR /idlerpg
 ARG beta
 
 RUN if [ -z "$beta" ]; then \
@@ -30,11 +29,19 @@ RUN if [ -z "$beta" ]; then \
     apk add --no-cache git libgcc
 
 USER idle
+WORKDIR /idlerpg
+
+# Faster than COPY . . with .git as that is the biggest directory
+RUN git init && \
+    git remote add origin https://git.travitia.xyz/Kenvyra/IdleRPG.git && \
+    if [[ "$beta" ]]; then \
+        git pull origin v4.7 && \
+        git checkout v4.7; \
+    else \
+        git pull origin v4 && \
+        git checkout v4; \
+    fi
 
 COPY . .
-
-# Fix git URL in Dockerhub
-RUN git init && \
-    git remote add origin https://git.travitia.xyz/Kenvyra/IdleRPG.git
 
 CMD python launcher.py
