@@ -89,6 +89,78 @@ class CogMenu(menus.Menu):
             e = self.embed(items)
             await self.message.edit(embed=e)
 
+class SubcommandMenu(menus.Menu):
+    def __init__(self, *args, **kwargs):
+        self.cmds = kwargs.pop("subcommands")
+        self.title = kwargs.pop("title")
+        self.description = kwargs.pop("description")
+        self.bot = kwargs.pop("bot")
+        self.color = kwargs.pop("color", 0xCB735C)
+        self.per_page = kwargs.pop("per_page", 5)
+        self.page = 1
+        super().__init__(self, *args, timeout=60.0, delete_message_after=True, **kwargs)
+
+    def embed(self, cmds):
+        e = discord.Embed(
+            title=self.title, color=self.color, description=self.description
+        )
+        e.set_author(
+            name=self.bot.user,
+            icon_url=self.bot.user.avatar_url_as(static_format="png"),
+        )
+        e.set_footer(
+            text=self.footer, icon_url=self.bot.user.avatar_url_as(static_format="png")
+        )
+        e.add_field(
+            name=_("Subcommands"),
+            description="`{subcommands}`".format(
+                "\n".join(
+                    [
+                        f"{self.group_emoji if isinstance(c, commands.Group) else self.command_emoji}"
+                        f" `{self.clean_prefix}{c.qualified_name}` - {_(c.brief)}"
+                        for c in cmds
+                    ]
+                )
+            )
+        )
+        if self.should_add_reactions():
+            e.set_footer(
+                icon_url=self.bot.user.avatar_url_as(static_format="png"),
+                text=_("Click on the reactions to see more subcommands.")
+            )
+        return e
+
+    def should_add_reactions(self):
+        return len(self.cmds) > self.per_page
+
+    async def send_initial_message(self, ctx, channel):
+        e = self.embed(self.cmds[0 : self.per_page])
+        return await channel.send(embed=e)
+
+    @menus.button("\N{BLACK LEFT-POINTING TRIANGLE}\ufe0f")
+    async def on_previous_page(self, payload):
+        if self.page != 1:
+            self.page -= 1
+            start = (self.page - 1) * self.per_page
+            end = self.page * self.per_page
+            items = self.cmds[start:end]
+            e = self.embed(items)
+            await self.message.edit(embed=e)
+
+    @menus.button("\N{BLACK SQUARE FOR STOP}\ufe0f")
+    async def on_stop(self, payload):
+        self.stop()
+
+    @menus.button("\N{BLACK RIGHT-POINTING TRIANGLE}\ufe0f")
+    async def on_next_page(self, payload):
+        if len(self.cmds) >= (self.page * self.per_page):
+            self.page += 1
+            start = (self.page - 1) * self.per_page
+            end = self.page * self.per_page
+            items = self.cmds[start:end]
+            e = self.embed(items)
+            await self.message.edit(embed=e)
+
 
 class Help(commands.Cog):
     def __init__(self, bot):
@@ -529,28 +601,17 @@ class IdleHelp(commands.HelpCommand):
                     _("You do not have access to this command!")
                 )
 
-        e = self.embedbase(
+        menu = SubcommandMenu(
             title=(
                 f"[{group.cog.qualified_name.upper()}] {group.qualified_name}"
                 f" {group.signature}"
             ),
+            bot=self.context.bot,
+            color=self.color,
             description=_(group.help).format(prefix=self.context.prefix),
+            cmds=group.commands
         )
-        e.add_field(
-            name="Subcommands",
-            value="\n".join(
-                [
-                    f"{self.group_emoji if isinstance(c, commands.Group) else self.command_emoji}"
-                    f" `{self.clean_prefix}{c.qualified_name}` - {_(c.brief)}"
-                    for c in group.commands
-                ]
-            ),
-        )
-        if group.aliases:
-            e.add_field(
-                name=_("Aliases"), value="`{}`".format("`, `".join(group.aliases))
-            )
-        await self.context.send(embed=e)
+        await menu.start(self.context)
 
 
 def setup(bot):
