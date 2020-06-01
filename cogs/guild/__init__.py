@@ -1273,10 +1273,10 @@ class Guild(commands.Cog):
 
         await ctx.send(
             _(
-                "{author} seeks a guild adventure for **{guild}**! Follow the link to join!"
-                " Unlimited players can join in the next 10 minutes. The minimum of"
-                " players required is 3.\nPlease go to https://join.idlerpg.xyz/{id_}"
-                " to join the guild adventure."
+                "{author} seeks a guild adventure for **{guild}**! Follow the link to"
+                " join! Unlimited players can join in the next 10 minutes. The minimum"
+                " of players required is 3.\nPlease go to"
+                " https://join.idlerpg.xyz/{id_} to join the guild adventure."
             ).format(author=ctx.author.mention, guild=guild["name"], id_=id_)
         )
 
