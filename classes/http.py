@@ -15,28 +15,30 @@ GNU Affero General Public License for more details.
 You should have received a copy of the GNU Affero General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
-from aiohttp import ClientSession as AiohttpClientSession
+from typing import Any
+
+from aiohttp.client import ClientSession, _RequestContextManager
 
 
 class ProxiedClientSession:
     """A ClientSession that forwards requests through a custom proxy."""
 
-    def __init__(self, *args, **kwargs):
+    def __init__(self, *args: Any, **kwargs: Any) -> None:
         self.proxy_url = kwargs.pop("proxy_url")
 
         self.permanent_headers = {
             "Proxy-Authorization-Key": kwargs.pop("authorization"),
             "Accept": "application/json",
         }
-        self._session = AiohttpClientSession(*args, **kwargs)
+        self._session = ClientSession(*args, **kwargs)
 
-    def get(self, url, *args, **kwargs):
+    def get(self, url: str, *args: Any, **kwargs: Any) -> _RequestContextManager:
         headers = kwargs.pop("headers", {})
         headers.update(self.permanent_headers)
         headers["Requested-URI"] = url
         return self._session.get(self.proxy_url, headers=headers, *args, **kwargs)
 
-    def post(self, url, *args, **kwargs):
+    def post(self, url: str, *args: Any, **kwargs: Any) -> _RequestContextManager:
         headers = kwargs.pop("headers", {})
         headers.update(self.permanent_headers)
         headers["Requested-URI"] = url

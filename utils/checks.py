@@ -16,14 +16,22 @@ You should have received a copy of the GNU Affero General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
 import datetime
-import secrets
+
+from typing import TYPE_CHECKING
 
 import discord
 import pytz
 
 from discord.ext import commands
 
+from classes.context import Context
 from classes.enums import DonatorRank
+from utils import random
+
+if TYPE_CHECKING:
+    from discord.ext.commands.core import _CheckDecorator
+
+    from classes.bot import Bot
 
 
 class NoCharacter(commands.CheckFailure):
@@ -101,7 +109,7 @@ class NeedsAdventure(commands.CheckFailure):
 class NoPatron(commands.CheckFailure):
     """Exception raised when you need to donate to use a command."""
 
-    def __init__(self, tier):
+    def __init__(self, tier: DonatorRank) -> None:
         self.tier = tier
 
 
@@ -135,10 +143,16 @@ class AlreadyRaiding(commands.CheckFailure):
     pass
 
 
-def has_char():
+class NoOpenHelpRequest(commands.CheckFailure):
+    """Exception raised when a user tries to edit/remove an open help request but none exists."""
+
+    pass
+
+
+def has_char() -> "_CheckDecorator":
     """Checks for a user to have a character."""
 
-    async def predicate(ctx):
+    async def predicate(ctx: Context) -> bool:
         ctx.character_data = await ctx.bot.pool.fetchrow(
             'SELECT * FROM profile WHERE "user"=$1;', ctx.author.id
         )
@@ -149,10 +163,10 @@ def has_char():
     return commands.check(predicate)
 
 
-def has_no_char():
+def has_no_char() -> "_CheckDecorator":
     """Checks for a user to have no character."""
 
-    async def predicate(ctx):
+    async def predicate(ctx: Context) -> bool:
         if await ctx.bot.pool.fetchrow(
             'SELECT * FROM profile WHERE "user"=$1;', ctx.author.id
         ):
@@ -162,10 +176,10 @@ def has_no_char():
     return commands.check(predicate)
 
 
-def has_adventure():
+def has_adventure() -> "_CheckDecorator":
     """Checks for a user to be on an adventure."""
 
-    async def predicate(ctx):
+    async def predicate(ctx: Context) -> bool:
         ctx.adventure_data = await ctx.bot.get_adventure(ctx.author)
         if ctx.adventure_data:
             return True
@@ -174,10 +188,10 @@ def has_adventure():
     return commands.check(predicate)
 
 
-def has_no_adventure():
+def has_no_adventure() -> "_CheckDecorator":
     """Checks for a user to be on no adventure."""
 
-    async def predicate(ctx):
+    async def predicate(ctx: Context) -> bool:
         if not await ctx.bot.get_adventure(ctx.author):
             return True
         raise NeedsNoAdventure()
@@ -185,10 +199,10 @@ def has_no_adventure():
     return commands.check(predicate)
 
 
-def has_no_guild():
+def has_no_guild() -> "_CheckDecorator":
     """Checks for a user to be in no guild."""
 
-    async def predicate(ctx):
+    async def predicate(ctx: Context) -> bool:
         if not await ctx.bot.pool.fetchval(
             'SELECT guild FROM profile WHERE "user"=$1;', ctx.author.id
         ):
@@ -198,10 +212,10 @@ def has_no_guild():
     return commands.check(predicate)
 
 
-def has_guild():
+def has_guild() -> "_CheckDecorator":
     """Checks for a user to be in a guild."""
 
-    async def predicate(ctx):
+    async def predicate(ctx: Context) -> bool:
         ctx.character_data = await ctx.bot.pool.fetchrow(
             'SELECT * FROM profile WHERE "user"=$1;', ctx.author.id
         )
@@ -212,10 +226,10 @@ def has_guild():
     return commands.check(predicate)
 
 
-def is_guild_officer():
+def is_guild_officer() -> "_CheckDecorator":
     """Checks for a user to be guild officer or leader."""
 
-    async def predicate(ctx):
+    async def predicate(ctx: Context) -> bool:
         ctx.character_data = await ctx.bot.pool.fetchrow(
             'SELECT * FROM profile WHERE "user"=$1;', ctx.author.id
         )
@@ -229,10 +243,10 @@ def is_guild_officer():
     return commands.check(predicate)
 
 
-def is_guild_leader():
+def is_guild_leader() -> "_CheckDecorator":
     """Checks for a user to be guild leader."""
 
-    async def predicate(ctx):
+    async def predicate(ctx: Context) -> bool:
         ctx.character_data = await ctx.bot.pool.fetchrow(
             'SELECT * FROM profile WHERE "user"=$1;', ctx.author.id
         )
@@ -243,10 +257,10 @@ def is_guild_leader():
     return commands.check(predicate)
 
 
-def is_no_guild_leader():
+def is_no_guild_leader() -> "_CheckDecorator":
     """Checks for a user not to be guild leader."""
 
-    async def predicate(ctx):
+    async def predicate(ctx: Context) -> bool:
         ctx.character_data = await ctx.bot.pool.fetchrow(
             'SELECT * FROM profile WHERE "user"=$1;', ctx.author.id
         )
@@ -257,10 +271,10 @@ def is_no_guild_leader():
     return commands.check(predicate)
 
 
-def is_alliance_leader():
+def is_alliance_leader() -> "_CheckDecorator":
     """Checks for a user to be the leader of an alliance."""
 
-    async def predicate(ctx):
+    async def predicate(ctx: Context) -> bool:
         async with ctx.bot.pool.acquire() as conn:
             if not hasattr(ctx, "character_data"):
                 ctx.character_data = await conn.fetchrow(
@@ -279,10 +293,10 @@ def is_alliance_leader():
     return commands.check(predicate)
 
 
-def owns_city():
+def owns_city() -> "_CheckDecorator":
     """"Checks whether an alliance owns a city."""
 
-    async def predicate(ctx):
+    async def predicate(ctx: Context) -> bool:
         async with ctx.bot.pool.acquire() as conn:
             alliance = await conn.fetchval(
                 'SELECT alliance FROM guild WHERE "id"=$1', ctx.character_data["guild"]
@@ -298,10 +312,10 @@ def owns_city():
     return commands.check(predicate)
 
 
-def owns_no_city():
+def owns_no_city() -> "_CheckDecorator":
     """"Checks whether an alliance owns no city."""
 
-    async def predicate(ctx):
+    async def predicate(ctx: Context) -> bool:
         async with ctx.bot.pool.acquire() as conn:
             alliance = await conn.fetchval(
                 'SELECT alliance FROM guild WHERE "id"=$1', ctx.character_data["guild"]
@@ -316,10 +330,10 @@ def owns_no_city():
     return commands.check(predicate)
 
 
-def is_class(class_):
+def is_class(class_: str) -> "_CheckDecorator":
     """Checks for a user to be in a class line."""
 
-    async def predicate(ctx):
+    async def predicate(ctx: Context) -> bool:
         async with ctx.bot.pool.acquire() as conn:
             ret = await conn.fetchval(
                 'SELECT class FROM profile WHERE "user"=$1;', ctx.author.id
@@ -335,17 +349,17 @@ def is_class(class_):
     return commands.check(predicate)
 
 
-def is_nothing(ctx):
+def is_nothing(ctx: Context) -> bool:
     """Checks for a user to be human and not taken cv yet."""
     if ctx.character_data["race"] == "Human" and ctx.character_data["cv"] == -1:
         return True
     return False
 
 
-def has_god():
+def has_god() -> "_CheckDecorator":
     """Checks for a user to have a god."""
 
-    async def predicate(ctx):
+    async def predicate(ctx: Context) -> bool:
         if not hasattr(ctx, "character_data"):
             ctx.character_data = await ctx.bot.pool.fetchrow(
                 'SELECT * FROM profile WHERE "user"=$1;', ctx.author.id
@@ -357,15 +371,15 @@ def has_god():
     return commands.check(predicate)
 
 
-def has_no_god(ctx):
+def has_no_god(ctx: Context) -> bool:
     """Checks for a user to have no god."""
     if not ctx.character_data["god"]:
         return True
     return False
 
 
-def update_pet():
-    async def predicate(ctx):
+def update_pet() -> "_CheckDecorator":
+    async def predicate(ctx: Context) -> bool:
         if not ctx.pet_data:
             raise PetGone()
         diff = (
@@ -375,7 +389,10 @@ def update_pet():
             # Pets loose 2 food, 4 drinks, 1 joy and 1 love
             async with ctx.bot.pool.acquire() as conn:
                 data = await conn.fetchrow(
-                    'UPDATE pets SET "food"="food"-$1, "drink"="drink"-$2, "joy"=CASE WHEN "joy"-$3>=0 THEN "joy"-$3 ELSE 0 END, "love"=CASE WHEN "love"-$4>=0 THEN "love"-$4 ELSE 0 END, "last_update"=$5 WHERE "user"=$6 RETURNING *;',
+                    'UPDATE pets SET "food"="food"-$1, "drink"="drink"-$2, "joy"=CASE'
+                    ' WHEN "joy"-$3>=0 THEN "joy"-$3 ELSE 0 END, "love"=CASE WHEN'
+                    ' "love"-$4>=0 THEN "love"-$4 ELSE 0 END, "last_update"=$5 WHERE'
+                    ' "user"=$6 RETURNING *;',
                     diff * 2,
                     diff * 4,
                     diff,
@@ -400,7 +417,7 @@ def update_pet():
                         ctx.author.id,
                     )
                     raise PetDied()
-                elif data["love"] < 75 and secrets.randbelow(100) > data["love"]:
+                elif data["love"] < 75 and random.randint(0, 99) > data["love"]:
                     classes[idx] = "No Class"
                     await conn.execute(
                         'DELETE FROM pets WHERE "user"=$1;', ctx.author.id
@@ -416,10 +433,10 @@ def update_pet():
     return commands.check(predicate)
 
 
-def is_god():
+def is_god() -> "_CheckDecorator":
     """Checks for a user to be a god."""
 
-    def predicate(ctx):
+    def predicate(ctx: Context) -> bool:
         return ctx.author.id in ctx.bot.gods
 
     return commands.check(predicate)
@@ -428,25 +445,31 @@ def is_god():
 # TODO: Pass context here and assign there?
 
 
-async def has_guild_(bot, userid):
-    return await bot.pool.fetchval('SELECT guild FROM profile WHERE "user"=$1;', userid)
+async def has_guild_(bot: "Bot", userid: int) -> bool:
+    return bool(
+        await bot.pool.fetchval('SELECT guild FROM profile WHERE "user"=$1;', userid)
+    )
 
 
-async def is_member_of_author_guild(ctx, userid):
+async def is_member_of_author_guild(ctx: Context, userid: int) -> bool:
     users = await ctx.bot.pool.fetch(
         'SELECT guild FROM profile WHERE "user"=$1 OR "user"=$2;', ctx.author.id, userid
     )
     if len(users) != 2:
         return False
-    return users[0]["guild"] == users[1]["guild"]
+    user1_guild = users[0]["guild"]
+    user2_guild = users[1]["guild"]
+    return user1_guild == user2_guild
 
 
-async def user_has_char(bot, userid):
+async def user_has_char(bot: "Bot", userid: int) -> bool:
     async with bot.pool.acquire() as conn:
-        return await conn.fetchrow('SELECT * FROM profile WHERE "user"=$1;', userid)
+        return bool(
+            await conn.fetchrow('SELECT * FROM profile WHERE "user"=$1;', userid)
+        )
 
 
-async def has_money(bot, userid, money):
+async def has_money(bot: "Bot", userid: int, money: int) -> bool:
     async with bot.pool.acquire() as conn:
         res = await conn.fetchval(
             'SELECT money FROM profile WHERE "user"=$1 AND "money">=$2;', userid, money
@@ -454,7 +477,7 @@ async def has_money(bot, userid, money):
         return isinstance(res, int)
 
 
-async def guild_has_money(bot, guildid, money):
+async def guild_has_money(bot: "Bot", guildid: int, money: int) -> bool:
     async with bot.pool.acquire() as conn:
         res = await conn.fetchval(
             'SELECT money FROM guild WHERE "id"=$1 and "money">=$2;', guildid, money
@@ -462,64 +485,51 @@ async def guild_has_money(bot, guildid, money):
         return isinstance(res, int)
 
 
-def is_admin():
-    async def predicate(ctx):
-        return ctx.author.id in ctx.bot.config.admins
+def is_gm() -> "_CheckDecorator":
+    async def predicate(ctx: Context) -> bool:
+        return ctx.author.id in ctx.bot.config.game_masters
 
     return commands.check(predicate)
 
 
-def is_patron(role="basic"):
-    async def predicate(ctx):
-        try:
-            response = (
-                await ctx.bot.cogs["Sharding"].handler(
-                    "get_user_patreon", 1, args={"member_id": ctx.author.id}
-                )
-            )[0]
-        except IndexError:
-            raise NoPatron()
-
-        actual_role = getattr(DonatorRank, role)
-        if getattr(DonatorRank, response) >= actual_role:
+def is_patron(role: str = "basic") -> "_CheckDecorator":
+    async def predicate(ctx: Context) -> bool:
+        if await user_is_patron(ctx.bot, ctx.author, role):
             return True
-        raise NoPatron(role)
+        else:
+            raise NoPatron(getattr(DonatorRank, role))
 
     return commands.check(predicate)
 
 
-async def user_is_patron(bot, user, role="basic"):
-    try:
-        response = (
-            await bot.cogs["Sharding"].handler(
-                "get_user_patreon", 1, args={"member_id": user.id}
-            )
-        )[0]
-    except IndexError:
-        return False
+async def user_is_patron(bot: "Bot", user: discord.User, role: str = "basic") -> bool:
     actual_role = getattr(DonatorRank, role)
-    if getattr(DonatorRank, response) >= actual_role:
+    rank = await bot.get_donator_rank(user.id)
+    if rank and rank >= actual_role:
         return True
     return False
 
 
-def is_supporter():
-    async def predicate(ctx):
-        response = await ctx.bot.cogs["Sharding"].handler(
-            "user_is_helper", 1, args={"member_id": ctx.author.id}
-        )
-        return any(response)
+def is_supporter() -> "_CheckDecorator":
+    async def predicate(ctx: Context) -> bool:
+        try:
+            member = await ctx.bot.http.get_member(
+                ctx.bot.config.support_server_id, ctx.author.id
+            )
+        except discord.NotFound:
+            return False
+        member_roles = [int(i) for i in member.get("roles", [])]
+        return ctx.bot.config.support_team_role in member_roles
 
     return commands.check(predicate)
 
 
-def is_hypesquad(ctx):
-    member = ctx.bot.get_guild(ctx.bot.config.support_server_id).get_member(
-        ctx.author.id
-    )  # cross server stuff
-    if not member:
-        return False
-    return (
-        discord.utils.get(member.roles, name="Hypesquad") is not None
-        or discord.utils.get(member.roles, name="Administrators") is not None
-    )
+def has_open_help_request() -> "_CheckDecorator":
+    async def predicate(ctx: Context) -> bool:
+        response = await ctx.bot.redis.execute("GET", f"helpme:{ctx.guild.id}")
+        if not response:
+            raise NoOpenHelpRequest()
+        ctx.helpme = response.decode()
+        return True
+
+    return commands.check(predicate)

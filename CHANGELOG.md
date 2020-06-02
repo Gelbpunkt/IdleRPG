@@ -1,3 +1,79 @@
+<a name="v4.7.0"></a>
+
+## [v4.7.0](https://git.travitia.xyz/Kenvyra/IdleRPG/compare/v4.6.0...v4.7.0)
+
+> 2020-06-02
+
+### Changes
+
+- Added a mention about `$locale set` in `$locale`
+- Added a new colour parser for `$colour`. Works with `color-name`, `#RRGGBB`, `rgb(r,g,b)` or even `rgba(r,g,b,a)` (this means transparency now works). All current colours had to be reset as the data structure significantly changed.
+- Added better check-handling for music, modernize error handling itself
+- Switched from Andesite to Lavalink
+- Added option to choose exact paginator page via reaction control
+- After all the months, we're now logging events
+- Added alias `$bal` and `$balance` to `$economy`
+- Added a new minigame: Werewolf (aka Mafia): Use `$werewolf` to play (there are modes, check the help on it)
+- Added a new game: Chess: Use `$chess match` to play either against AI or other users. `$chess register` allows you to play ELO rated. Leaderboard is `$chess elo`.
+- Added a new command `$guild distribute` that distributes money to multiple members
+- Added a warning/price information when upgrading raidstats
+- Added a removeall command that removes all of your items from the market and adds them back to your inventory
+- Aww is confirmed cuter than Owwwwww, so we changed the `$marry` text
+- Banned people who are bot banned from reacting
+- Calculate luck boosters into `$adventures`
+- Catch global cooldown exception, remove captcha code. You now get a different error message if you are being rate-limited
+- Condensed `$evall` command output, add a new loot item (toilet paper)
+- Deprecated `$dungeon` alias
+- Donator check logic was redone and now caches
+- We are now using gateway intents to reduce the load on the bot significantly and are caching a lot of member-related stuff
+- We are also using orjson now to speed up serializing and deserializing of gateway messages
+- `$helpme` requests can now be edited, deleted and much more. Check the help on it
+- Music was redone internally, featuring the fact that it works now (!), Spotify song querying, `$loop` now repeating the queue, `$chooseplay` to choose one of the search results and much more. YouTube links won't always work anymore. Oh and the `$lyrics` are more exact now
+- All command descriptions were significantly extended and are now much easier to understand
+- The `$help` command was completely redone to allow ease of use
+- We switched from raven to sentry-sdk
+- Added `$streak` to check your daily streak
+- `$hungergames` now works with a lot more players than before
+- Using a hardcoded ARM cpu name table now
+- `id_ID_rude` was the superior translation and replaced `id_ID`
+- Added a Ikhdosa Raid timeout message
+- Implemented graceful shutdown
+- Inform players about the guild channel command when creating a guild
+- Initial ugly version of `$clusters`
+- Two handed items now multiply times 2, not 1.5
+- Make less than 1.00 luck more user friendly
+- Move activebattles to embeds
+- New Partner: chr1s the boss
+- Overwrite permissions for the member role in raids instead of default role
+- Lots of performance improvements in the launcher
+- Prohibit using backticks in character names
+- Prohibit users from giving money and crates to the bot
+- Prohibit changing one handed to two handed in `$weapontype`
+- Publicly log when a magic crate opens a 41+ stat item
+- Redesign Guilt's raid and adjusted her boundaries
+- We are using true random number generation everywhere now
+- Rename Admins to Game Masters
+- Support Team now has donator perks
+- Update `$pet hunt` to use new midnight cooldown
+- Upgrade to Redis 6.0.4, PostgreSQL 13
+
+### Fixes
+
+- Prevented firing on_ready multiple times
+- Our CI script got fixed
+- Tons of fixes to IPC which caused processes to disconnect earlier
+- Fixed enum value displaying in donator error message
+- Fixed beta script database creation with dollar signs
+- Fixed Ikhdosa raid
+- Fixed typos in Game Master command names
+- Fixed autosignup for raids
+- Fixed issue with class decorator order
+- Fixed `$serverinfo`
+- Fixed `$makebackground`
+- Fixed familyevent namechange cooldown
+- Remove old script file
+- Support Team should have donator perks
+
 <a name="v4.6.0"></a>
 
 ## [v4.6.0](https://git.travitia.xyz/Kenvyra/IdleRPG/compare/v4.5.1...v4.6.0)
@@ -8,15 +84,15 @@
 
 - Add $roulette and $roulette table. They use a French roulette board with only one zero and a full list of bidding options is in the help.
   We do currently not support multiple bids.
-- Add redis version and CPU temperature to $stats
+- Add redis version and CPU temperature to \$stats
 - We have added two new gods (Tet and Eden) plus raids and removed 3 old gods who left the server. Their boundaries are 0.8-1.2 and 0.5-1.5.
 - The "You are not a donator" error now shows which donator rank is required for the command.
 - We have added https://join.travitia.xyz, a website for joining huge amounts of players outside of Discord to reduce spam.
   This is used for tournaments and hungergames in the Support Server and guild adventures.
-- We have added $adminauction to auction items for Bot Administrators.
+- We have added \$adminauction to auction items for Bot Administrators.
 - We moved to a new custom proxy solution and have added support for it.
 - Many converters for money and users have better error handling instead of "You used a bad argument!" now.
-- $bags shows the trick-or-treat-bags.
+- \$bags shows the trick-or-treat-bags.
 - We are now logging every single transaction possible.
 
 ### Changes
@@ -26,13 +102,13 @@
 - We have moved to Alpine Linux 3.12 alpha to use gcc 9.3
 - We have moved to Python 3.9a5
 - The Dockerfile now installs the dependency libraries based on the current architecture.
-  Supported are x86\_64 and aarch64
+  Supported are x86_64 and aarch64
 - We have balanced out the easter event
 - Be non-NSFW in marriage.py and adapted chance of money loss.
 - Handle wavelink connection issues differently
 - Rework active battles
 - Set upgrade and merge maximum for two-handed items to 62
-- Speed up implementation of $fancy
+- Speed up implementation of \$fancy
 - Take BlackJack back to 1000
 - Update rules, add error handler for some music checks
 - Update stats less often
@@ -48,7 +124,7 @@
 - Fix ikhdosa raid
 - Fix issue with bot.wavelink being undefined
 - Fix easter guild badge
-- Fix factorials in $math
+- Fix factorials in \$math
 - Update makebackground to use JSON content type (fix)
 - Update imgur command to explicitely send JSON data
 - Update adminwipeperks command to current meta
@@ -59,9 +135,9 @@
 - Merge branch 'markdown' into 'v4'
 - Merge branch 'typos' into 'v4'
 - Merge branch 'battles' into 'v4'
-- Merge branch 'feature/extend\_french\_translation' into 'v4'
+- Merge branch 'feature/extend_french_translation' into 'v4'
 - Merge branch 'fix-formatting' into 'v4'
-- Merge branch 'feature/extend\_french\_translation' into 'v4'
+- Merge branch 'feature/extend_french_translation' into 'v4'
 - Merge branch 'active-battle' into 'v4'
 - Merge branch 'logging' into 'v4'
 - Merge branch 'english-in-dm' into 'v4'
@@ -69,7 +145,6 @@
 - Merge branch 'patch-1' into 'v4'
 - Merge branch 'patch-1' into 'v4'
 - Merge branch 'awipeperks' into 'v4'
-
 
 <a name="v4.5.1"></a>
 
@@ -82,10 +157,10 @@
 - A couple QoL changes
 - Change CHamburr boundaries
 - Disable merchall
-- Blackjack bid increase to $10,000
+- Blackjack bid increase to \$10,000
 - Make gain/loose from familyevent both up to 1/64
 - Set Bot.max_messages to 10000
-- Several improvements to $dice code
+- Several improvements to \$dice code
 - Significant improvements to donator checks resulting in up to 10x faster donator command execution
 - tournament text consistency
 - Use more accurate CPU detection
@@ -96,17 +171,17 @@
 - add valentines commands
 - Add $aa as alias for $activeadventure
 - Add boundaries for Assassin
-- Add $trivia
+- Add \$trivia
 
 ## Fixes
 
 - Bug with battle
 - consistency with active battle text
 - Fix equalizers
-- Fix visual bug in $pet hunt command
+- Fix visual bug in \$pet hunt command
 - fix a bug in adminitem
 - fix raids
-- fix $sell
+- fix \$sell
 - fix typo
 - fix trivia
 - fix resetitem
@@ -128,7 +203,6 @@
 - Merge branch 'valentine' into 'v4'
 - Merge branch 'patch-2' into 'v4'
 - Merge branch 'patch-10' into 'v4'
-
 
 <a name="v4.5.0"></a>
 
@@ -197,7 +271,6 @@
 - Merge branch 'revert-f504c0fd' into 'v4'
 - Merge branch 'patch-8' into 'v4'
 
-
 <a name="v4.4.0"></a>
 
 ## [v4.4.0](https://git.travitia.xyz/Kenvyra/IdleRPG/compare/v4.3.1...v4.4.0)
@@ -225,8 +298,8 @@
 - Getting loot is more likely in high adventures (5% plus 1.5% per adventure level (+3% if Ritualist))
 - Disabled god commands. Luck is now generated by the bot and given extra to the top 25 followers weekly
 - Grant Translators donator perks
-- Make $battle and $raidbattle default to $0
-- paginate $tree
+- Make $battle and $raidbattle default to \$0
+- paginate \$tree
 
 ### Fixes
 
@@ -238,8 +311,8 @@
 - Fix 1337 indentions
 - Fix 1337 tool
 - Fix exploit in weapontype
-- Fix typo in $bet help message
-- Fix chance calculation of $bet
+- Fix typo in \$bet help message
+- Fix chance calculation of \$bet
 - Fix raids
 
 ### Also There
@@ -268,7 +341,6 @@
 - Merge branch 'text-fixes' into 'v4'
 - Merge branch 'rules' into 'v4'
 
-
 <a name="v4.3.1"></a>
 
 ## [v4.3.1](https://git.travitia.xyz/Kenvyra/IdleRPG/compare/v4.3.0...v4.3.1)
@@ -277,10 +349,10 @@
 
 ### Additions
 
-- New familyevents: 4/22 for money gain up to $5000, 3/22 for up to 1/64 of total money loss, 2/22 crate gain
+- New familyevents: 4/22 for money gain up to \$5000, 3/22 for up to 1/64 of total money loss, 2/22 crate gain
 - add reset_alliance_cooldown(), change the order of some attacking code
 - add raid tournaments
-- Add $adminitem
+- Add \$adminitem
 
 ### Fixes
 
@@ -318,7 +390,6 @@
 - Merge branch 'patch-1' into 'v4'
 - Merge branch 'patch-1' into 'v4'
 
-
 <a name="v4.3.0"></a>
 
 ## [v4.3.0](https://git.travitia.xyz/Kenvyra/IdleRPG/compare/v4.2.3...v4.3.0)
@@ -326,12 +397,14 @@
 > 2019-12-17
 
 ### New Features
+
 - Alliances and cities (`$alliance`, `$cities`)
 - Allow viewing others' XP
 - Global event channel
 - Cooldowns which last until the next day UTC
 
 ### Fixes
+
 - Calculate raidstats properly
 - Fix betting cooldown
 - Decorator order fixes for god commands
@@ -354,7 +427,6 @@
 - Merge branch 'patch-1' into 'v4'
 - Merge branch 'v4' into 'v4'
 - Merge branch 'bettercd' into 'v4'
-
 
 <a name="v4.2.3"></a>
 
@@ -393,7 +465,6 @@
 - Merge branch 'informational' into 'v4'
 - Merge branch 'loot-redesign' into 'v4'
 - Merge branch 'patch-1' into 'v4'
-
 
 <a name="v4.2.2"></a>
 

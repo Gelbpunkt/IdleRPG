@@ -16,7 +16,6 @@ You should have received a copy of the GNU Affero General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
 import asyncio
-import random
 
 from base64 import b64decode
 from io import BytesIO
@@ -30,7 +29,9 @@ from classes.enums import DonatorRank
 from cogs.shard_communication import user_on_cooldown as user_cooldown
 from utils import items
 from utils import misc as rpgtools
+from utils import random
 from utils.checks import has_adventure, has_char, has_no_adventure
+from utils.i18n import _, locale_doc
 from utils.maze import Maze
 
 
@@ -39,13 +40,20 @@ class Adventure(commands.Cog):
         self.bot = bot
 
     @has_char()
-    @commands.command(aliases=["missions", "dungeons"])
+    @commands.command(
+        aliases=["missions", "dungeons"], brief=_("Shows adventures and your chances")
+    )
     @locale_doc
     async def adventures(self, ctx):
-        _("""A list of all adventures with success rates, name and time it takes.""")
+        _(
+            """Shows all adventures, their names, descriptions, and your chances to beat them in picture form.
+            Your chances are determined by your equipped items, race and class bonuses, your level and your God-given luck.
+            The extra +25% added by luck boosters will *not* be displayed in these pictures."""
+        )
         damage, defense = await self.bot.get_damage_armor_for(ctx.author)
         all_dungeons = list(self.bot.config.adventure_times.keys())
         level = rpgtools.xptolevel(ctx.character_data["xp"])
+        luck_booster = await self.bot.get_booster(ctx.author, "luck")
 
         msg = await ctx.send(_("Loading images..."))
 
@@ -57,6 +65,7 @@ class Adventure(commands.Cog):
                 adv,
                 int(level),
                 ctx.character_data["luck"],
+                booster=luck_booster,
                 returnsuccess=False,
             )
             chances.append((success[0] - success[2], success[1] + success[2]))
@@ -85,51 +94,88 @@ class Adventure(commands.Cog):
 
     @has_char()
     @has_no_adventure()
-    @commands.command(aliases=["mission", "a", "dungeon"])
+    @commands.command(
+        aliases=["mission", "a"], brief=_("Sends your character on an adventure.")
+    )
     @locale_doc
-    async def adventure(self, ctx, dungeonnumber: IntFromTo(1, 30)):
-        _("""Sends your character on an adventure.""")
-        if dungeonnumber > int(rpgtools.xptolevel(ctx.character_data["xp"])):
+    async def adventure(self, ctx, adventure_number: IntFromTo(1, 30)):
+        _(
+            """`<adventure_number>` - a whole number from 1 to 30
+
+            Send your character on an adventure with the difficulty `<adventure_number>`.
+            The adventure will take `<adventure_number>` hours if no time booster is used, and half as long if a time booster is used.
+
+            If you are in an alliance which owns a city with adventure buildings, your adventure time will be reduced by the adventure building level in %.
+            Donators' time will also be reduced:
+              - 5% reduction for Silver Donators
+              - 10% reduction for Gold Donators
+              - 25% reduction for Emerald Donators and above
+
+            Be sure to check `{prefix}status` to check how much time is left, or to check if you survived or died."""
+        )
+        if adventure_number > int(rpgtools.xptolevel(ctx.character_data["xp"])):
             return await ctx.send(
                 _("You must be on level **{level}** to do this adventure.").format(
-                    level=dungeonnumber
+                    level=adventure_number
                 )
             )
-        time_booster = await self.bot.get_booster(ctx.author, "time")
-        time = self.bot.config.adventure_times[dungeonnumber]
-        if time_booster:
-            time = time / 2
+        time = self.bot.config.adventure_times[adventure_number]
 
         if (
             buildings := await self.bot.get_city_buildings(ctx.character_data["guild"])
         ) :
             time -= time * (buildings["adventure_building"] / 100)
-        # Silver = -5%, Gold = -10%, Emerald = -25%
-        # TODO: Maybe make a func to get the actual rank
-        if (user_rank := await self.bot.get_donator_rank(ctx.author)) :
+        if user_rank := await self.bot.get_donator_rank(ctx.author.id):
             if user_rank >= DonatorRank.emerald:
                 time = time * 0.75
             elif user_rank >= DonatorRank.gold:
                 time = time * 0.9
             elif user_rank >= DonatorRank.silver:
                 time = time * 0.95
-        await self.bot.start_adventure(ctx.author, dungeonnumber, time)
+        time_booster = await self.bot.get_booster(ctx.author, "time")
+        if time_booster:
+            time = time / 2
+        await self.bot.start_adventure(ctx.author, adventure_number, time)
         await ctx.send(
             _(
-                "Successfully sent your character out on an adventure. Use `{prefix}status` to see the current status of the mission."
+                "Successfully sent your character out on an adventure. Use"
+                " `{prefix}status` to see the current status of the mission."
             ).format(prefix=ctx.prefix)
         )
 
     @has_char()
     @has_no_adventure()
     @user_cooldown(7200)
-    @commands.command(aliases=["aa"])
+    @commands.command(aliases=["aa"], brief=_("Go out on an active adventure."))
     @locale_doc
     async def activeadventure(self, ctx):
-        _("""Go out on a docile adventure controlled by reactions.""")
+        _(
+            # xgettext: no-python-format
+            """Active adventures will put you into a 15x15 randomly generated maze. You will begin in the top left corner (0,0) and your goal is to find the exit in the bottom right corner (14,14)
+            You control your character with the arrow reactions below the message.
+
+            You have 1000HP. The adventure ends when you find the exit or your HP drop to zero.
+            You can lose HP by getting damaged by traps or enemies.
+
+            The maze contains safe spaces and treasures but also traps and enemies.
+            Each space has a 10% chance of being a trap. If a space does not have a trap, it has a 10% chance of having an enemy.
+            Each maze has 5 treasure chests.
+
+            Traps can damage you from 30 to 120 HP.
+            Enemy damage is based on your own damage. During enemy fights, you can attack (⚔️), defend (🛡️) or recover HP (❤️)
+            Treasure chests can have gold up to 25 times your attack + defense.
+
+            If you reach the end, you will receive a special treasure with gold up to 100 times your attack + defense.
+
+            (It is recommended to draw a map of the maze)
+            (This command has a cooldown of 30 minutes)"""
+        )
         if not await ctx.confirm(
             _(
-                "You are going to be in a labyrinth of size 15x15. There are enemies, treasures and hidden traps. Reach the exit in the bottom right corner for a huge extra bonus!\nAre you ready?\n\nTip: Use a silent channel for this, you may want to read all the messages I will send."
+                "You are going to be in a labyrinth of size 15x15. There are enemies,"
+                " treasures and hidden traps. Reach the exit in the bottom right corner"
+                " for a huge extra bonus!\nAre you ready?\n\nTip: Use a silent channel"
+                " for this, you may want to read all the messages I will send."
             )
         ):
             return
@@ -384,19 +430,34 @@ class Adventure(commands.Cog):
 
         await ctx.send(
             _(
-                "You have reached the exit and were rewarded **${money}** for getting out!"
+                "You have reached the exit and were rewarded **${money}** for getting"
+                " out!"
             ).format(money=money)
         )
 
     @has_char()
     @has_adventure()
-    @commands.command(aliases=["s"])
+    @commands.command(aliases=["s"], brief=_("Checks your adventure status."))
     @locale_doc
     async def status(self, ctx):
-        _("""Checks your adventure status.""")
+        _(
+            """Checks the remaining time of your adventures, or if you survived or died. Your chance is checked here, not in `{prefix}adventure`.
+            Your chances are determined by your equipped items, race and class bonuses, your level, God-given luck and active luck boosters.
+
+            If you are in an alliance which owns a city with an adventure building, your chance will be increased by 5% per building level.
+
+            If you survive on your adventure, you will receive gold up to the adventure number times 60, XP up to 500 times the adventure number and either a loot or gear item.
+            The chance of loot is dependent on the adventure number and whether you use the Ritualist class, [check our wiki](https://wiki.idlerpg.xyz/index.php?title=Loot) for the exact chances.
+
+            God given luck affects the amount of gold and the gear items' damage/defense and value.
+
+            If you are in a guild, its guild bank will receive 10% of the amount of gold extra.
+            If you are married, your partner will receive a portion of your gold extra as well, [check the wiki](https://wiki.idlerpg.xyz/index.php?title=Family#Adventure_Bonus) for the exact portion."""
+        )
         num, time, done = ctx.adventure_data
 
         if not done:
+            # TODO: Embeds ftw
             return await ctx.send(
                 _(
                     """\
@@ -457,7 +518,6 @@ Adventure name: `{adventure}`"""
             chance_of_loot *= 2  # can be 100 in a 30
 
         async with self.bot.pool.acquire() as conn:
-
             if (random.randint(1, 1000)) > chance_of_loot * 10:
                 minstat = round(num * luck_multiply)
                 maxstat = round(5 + int(num * 1.5) * luck_multiply)
@@ -487,7 +547,8 @@ Adventure name: `{adventure}`"""
                 )
 
             await conn.execute(
-                'UPDATE profile SET "money"="money"+$1, "xp"="xp"+$2, "completed"="completed"+1 WHERE "user"=$3;',
+                'UPDATE profile SET "money"="money"+$1, "xp"="xp"+$2,'
+                ' "completed"="completed"+1 WHERE "user"=$3;',
                 gold,
                 xp,
                 ctx.author.id,
@@ -495,7 +556,8 @@ Adventure name: `{adventure}`"""
 
             if (partner := ctx.character_data["marriage"]) :
                 await conn.execute(
-                    'UPDATE profile SET "money"="money"+($1*(1+"lovescore"/1000000)) WHERE "user"=$2;',
+                    'UPDATE profile SET "money"="money"+($1*(1+"lovescore"/1000000))'
+                    ' WHERE "user"=$2;',
                     int(gold / 2),
                     partner,
                 )
@@ -512,9 +574,11 @@ Adventure name: `{adventure}`"""
                 },
             )
 
+            # TODO: Embeds ftw
             await ctx.send(
                 _(
-                    "You have completed your adventure and received **${gold}** as well as a new item: **{item}**. Experience gained: **{xp}**."
+                    "You have completed your adventure and received **${gold}** as well"
+                    " as a new item: **{item}**. Experience gained: **{xp}**."
                 ).format(gold=gold, item=item["name"], xp=xp)
             )
 
@@ -525,10 +589,12 @@ Adventure name: `{adventure}`"""
 
     @has_char()
     @has_adventure()
-    @commands.command()
+    @commands.command(brief=_("Cancels your current adventure."))
     @locale_doc
     async def cancel(self, ctx):
-        _("""Cancels your current adventure.""")
+        _(
+            """Cancels your ongoing adventure and allows you to start a new one right away. You will not receive any rewards if you cancel your adventure."""
+        )
         if not await ctx.confirm(
             _("Are you sure you want to cancel your current adventure?")
         ):
@@ -538,16 +604,17 @@ Adventure name: `{adventure}`"""
         await self.bot.delete_adventure(ctx.author)
         await ctx.send(
             _(
-                "Canceled your mission. Use `{prefix}adventure [missionID]` to start a new one!"
+                "Canceled your mission. Use `{prefix}adventure [missionID]` to start a"
+                " new one!"
             ).format(prefix=ctx.prefix)
         )
 
     @has_char()
-    @commands.command()
+    @commands.command(brief=_("Show some adventure stats"))
     @locale_doc
     async def deaths(self, ctx):
         _(
-            """Your death stats. Shows statictics from all your adventures ever completed."""
+            """Shows your overall adventure death and completed count, including your success rate."""
         )
         deaths, completed = await self.bot.pool.fetchval(
             'SELECT (deaths, completed) FROM profile WHERE "user"=$1;', ctx.author.id
@@ -558,7 +625,9 @@ Adventure name: `{adventure}`"""
             rate = 100
         await ctx.send(
             _(
-                "Out of **{total}** adventures, you died **{deaths}** times and survived **{completed}** times, which is a success rate of **{rate}%**."
+                "Out of **{total}** adventures, you died **{deaths}** times and"
+                " survived **{completed}** times, which is a success rate of"
+                " **{rate}%**."
             ).format(
                 total=deaths + completed, deaths=deaths, completed=completed, rate=rate
             )

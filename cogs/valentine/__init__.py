@@ -16,15 +16,15 @@ You should have received a copy of the GNU Affero General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
 import datetime
-import random
-import secrets
 
 import discord
 
 from discord.ext import commands
 
 from cogs.shard_communication import next_day_cooldown
+from utils import random
 from utils.checks import has_char
+from utils.i18n import _, locale_doc
 
 
 class Valentine(commands.Cog):
@@ -46,14 +46,22 @@ class Valentine(commands.Cog):
         }
 
     def get_valentine_name(self, type_):
-        return secrets.choice(self.valentine_items[type_])
+        return random.choice(self.valentine_items[type_])
 
     @has_char()
     @next_day_cooldown()
-    @commands.command()
+    @commands.command(brief=_("Gift your partner some chocolate boxes"))
     @locale_doc
     async def valentine(self, ctx):
-        _("""Gift your spouse some boxes of chocolates""")
+        _(
+            """Gift your spouse three boxes of chocolates, they can contain lovescore, money or valentine's themed items.
+
+            Your spouse may open the boxes with `{prefix}chocolate`.
+
+            Only players who are married may use this command.
+            This command may only be used from the 13th to the 15th February.
+            (This command has a cooldown until 12am UTC.)"""
+        )
         today = datetime.datetime.now().day
         if not 13 <= today <= 15:
             return await ctx.send(_("It's not time for that yet!"))
@@ -69,16 +77,18 @@ class Valentine(commands.Cog):
         user = await self.bot.get_user_global(ctx.character_data["marriage"])
         if user:
             await user.send(
-                "Your spouse gave you some boxes of chocolates :heart:\nYou can open it with {prefix}chocolate.".format(
-                    prefix=ctx.prefix
-                )
+                "Your spouse gave you some boxes of chocolates :heart:\nYou can open it"
+                " with $chocolate."
             )
 
     @has_char()
-    @commands.command()
+    @commands.command(brief=_("Open one of your chocolate boxes"))
     @locale_doc
     async def chocolate(self, ctx):
-        _("""Opens one of your chocolate boxes""")
+        _(
+            """Opens one of your chocolate boxes.
+            These boxes have a 1/4 chance of containing money, a 1/4 chance for an item and a 2/4 chance for lovescore."""
+        )
         if ctx.character_data["chocolates"] <= 0:
             return await ctx.send(_("You have no chocolate boxes left."))
         await self.bot.pool.execute(

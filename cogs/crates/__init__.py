@@ -15,8 +15,6 @@ GNU Affero General Public License for more details.
 You should have received a copy of the GNU Affero General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
-import random
-
 from collections import namedtuple
 
 import discord
@@ -24,7 +22,9 @@ import discord
 from discord.ext import commands
 
 from classes.converters import IntGreaterThan, MemberWithCharacter
+from utils import random
 from utils.checks import has_char
+from utils.i18n import _, locale_doc
 
 
 class Crates(commands.Cog):
@@ -39,10 +39,20 @@ class Crates(commands.Cog):
         )
 
     @has_char()
-    @commands.command(aliases=["boxes"])
+    @commands.command(aliases=["boxes"], brief=_("Show your crates."))
     @locale_doc
     async def crates(self, ctx):
-        _("""Shows your crates.""")
+        _(
+            """Shows all the crates you can have.
+
+            Common crates contain items ranging from stats 1 to 30
+            Uncommon crates contain items ranging from stats 10 to 35
+            Rare crates contain items ranging from stats 20 to 40
+            Magic crates contain items ranging from stats 30 to 45
+            Legendary crates contain items ranging from stats 41 to 50
+
+            You can receive crates by voting for the bot using `{prefix}vote`, using `{prefix}daily` and with a small chance from `{prefix}familyevent`, if you have children."""
+        )
         await ctx.send(
             _(
                 """\
@@ -68,10 +78,15 @@ class Crates(commands.Cog):
         )
 
     @has_char()
-    @commands.command(name="open")
+    @commands.command(name="open", brief=_("Open a crate"))
     @locale_doc
     async def _open(self, ctx, rarity: str.lower = "common"):
-        _("""Opens a crate.""")
+        _(
+            """`[rarity]` - the crate's rarity to open, can be common, uncommon, rare, magic or legendary; defaults to common
+
+            Open one of your crates to receive a weapon. To check which crates contain which items, check `{prefix}help crates`.
+            This command takes up a lot of space, so choose a spammy channel to open crates."""
+        )
         if rarity not in ["common", "uncommon", "rare", "magic", "legendary"]:
             return await ctx.send(
                 _("{rarity} is not a valid rarity.").format(rarity=rarity)
@@ -79,7 +94,8 @@ class Crates(commands.Cog):
         if ctx.character_data[f"crates_{rarity}"] < 1:
             return await ctx.send(
                 _(
-                    "Seems like you don't have any crate of this rarity yet. Vote me up to get a random one or find them!"
+                    "Seems like you don't have any crate of this rarity yet. Vote me up"
+                    " to get a random one or find them!"
                 )
             )
         # A number to detemine the crate item range
@@ -124,7 +140,8 @@ class Crates(commands.Cog):
             minstat=minstat, maxstat=maxstat, minvalue=1, maxvalue=250, owner=ctx.author
         )
         await self.bot.pool.execute(
-            f'UPDATE profile SET "crates_{rarity}"="crates_{rarity}"-1 WHERE "user"=$1;',
+            f'UPDATE profile SET "crates_{rarity}"="crates_{rarity}"-1 WHERE'
+            ' "user"=$1;',
             ctx.author.id,
         )
         embed = discord.Embed(
@@ -154,13 +171,24 @@ class Crates(commands.Cog):
         await ctx.send(embed=embed)
         if rarity == "legendary":
             await self.bot.public_log(
-                f"**{ctx.author}** opened a legendary crate and \
-received {item['name']} with **{item['damage'] or item['armor']} \
-{'damage' if item['damage'] else 'armor'}**."
+                f"**{ctx.author}** opened a legendary crate and received {item['name']}"
+                f" with **{item['damage'] or item['armor']}"
+                f" {'damage' if item['damage'] else 'armor'}**."
             )
+        elif rarity == "magic":
+            if item["damage"] >= 41:
+                await self.bot.public_log(
+                    f"**{ctx.author}** opened a magic crate and received {item['name']}"
+                    f" with **{item['damage']} damage**."
+                )
+            elif item["armor"] >= 41:
+                await self.bot.public_log(
+                    f"**{ctx.author}** opened a magic crate and received {item['name']}"
+                    f" with **{item['armor']} armor**."
+                )
 
     @has_char()
-    @commands.command()
+    @commands.command(brief=_("Give crates to someone"))
     @locale_doc
     async def tradecrate(
         self,
@@ -169,9 +197,21 @@ received {item['name']} with **{item['damage'] or item['armor']} \
         amount: IntGreaterThan(0) = 1,
         rarity: str.lower = "common",
     ):
-        _("""Trades crates to a user.""")
+        _(
+            """`<other>` - A user with a character
+            `[amount]` - A whole number greater than 0; defaults to 1
+            `[rarity]` - The crate's rarity to trade, can be common, uncommon, rare, magic or legendary; defaults to common
+
+            Give your crates to another person.
+
+            Players must combine this command with `{prefix}give` for a complete trade."""
+        )
         if other == ctx.author:
             return await ctx.send(_("Very funny..."))
+        elif other == ctx.me:
+            return await ctx.send(
+                _("For me? I'm flattered, but I can't accept this...")
+            )
         if rarity not in ["common", "uncommon", "rare", "magic", "legendary"]:
             return await ctx.send(
                 _("{rarity} is not a valid rarity.").format(rarity=rarity)
@@ -180,12 +220,14 @@ received {item['name']} with **{item['damage'] or item['armor']} \
             return await ctx.send(_("You don't have any crates of this rarity."))
         async with self.bot.pool.acquire() as conn:
             await conn.execute(
-                f'UPDATE profile SET "crates_{rarity}"="crates_{rarity}"-$1 WHERE "user"=$2;',
+                f'UPDATE profile SET "crates_{rarity}"="crates_{rarity}"-$1 WHERE'
+                ' "user"=$2;',
                 amount,
                 ctx.author.id,
             )
             await conn.execute(
-                f'UPDATE profile SET "crates_{rarity}"="crates_{rarity}"+$1 WHERE "user"=$2;',
+                f'UPDATE profile SET "crates_{rarity}"="crates_{rarity}"+$1 WHERE'
+                ' "user"=$2;',
                 amount,
                 other.id,
             )

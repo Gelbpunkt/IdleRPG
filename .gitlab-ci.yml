@@ -1,10 +1,7 @@
-image: "python:3.8.0-alpine3.10"
+image: "gelbpunkt/python:ci"
 
 before_script:
-  - apk add --no-cache git gcc musl-dev
-  - pip install https://github.com/Gelbpunkt/alpine-python-3.8-wheels/raw/master/wheels/regex-2019.8.19-cp38-cp38-linux_x86_64.whl
   - python --version
-  - pip install -r requirements-dev.txt
 
 stages:
   - Static Analysis
@@ -12,14 +9,19 @@ stages:
 black:
   stage: Static Analysis
   script:
+    - black --version
     - black .
+    - ash -c '[ -z "$(git status --porcelain)" ] || exit 1'
 
 isort:
   stage: Static Analysis
   script:
-    - isort -rc .
+    - isort --version
+    - isort .
+    - ash -c '[ -z "$(git status --porcelain)" ] || exit 1'
 
 flake8:
   stage: Static Analysis
   script:
+    - flake8 --version
     - flake8

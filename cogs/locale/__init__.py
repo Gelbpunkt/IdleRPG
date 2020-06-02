@@ -19,6 +19,7 @@ from asyncpg.exceptions import ForeignKeyViolationError, UniqueViolationError
 from discord.ext import commands
 
 from utils import i18n
+from utils.i18n import _, locale_doc
 
 
 class Locale(commands.Cog):
@@ -64,24 +65,43 @@ class Locale(commands.Cog):
         self.bot.locale_cache[user.id] = lang
         return lang
 
-    @commands.group(invoke_without_command=True, aliases=["locale", "lang"])
+    @commands.group(
+        invoke_without_command=True,
+        aliases=["locale", "lang"],
+        brief=_("Check the available languages"),
+    )
     @locale_doc
     async def language(self, ctx):
-        _("""Change the bot language or view possible options.""")
+        _(
+            """View all available languages' locale codes. You can check if your language is available by comparing against [this list](https://saimana.com/list-of-country-locale-code/)
+
+            Some of these languages, like xtreme-owo or unplayable are no real languages but serve as a way to spice up the english text.
+            If something is not yet translated, the english original text is used."""
+        )
         all_locales = ", ".join(i18n.locales)
         current_locale = (
             self.bot.locale_cache.get(ctx.author.id, None) or i18n.default_locale
         )
         await ctx.send(
             _(
-                "Your current language is **{current_locale}**. Available options: {all_locales}"
-            ).format(current_locale=current_locale, all_locales=all_locales)
+                "Your current language is **{current_locale}**. Available options:"
+                " {all_locales}\n\nPlease use `{prefix}locale set language_code` to"
+                " choose one."
+            ).format(
+                current_locale=current_locale,
+                all_locales=all_locales,
+                prefix=ctx.prefix,
+            )
         )
 
-    @language.command(name="set")
+    @language.command(name="set", brief=_("Set your language"))
     @locale_doc
     async def set_(self, ctx, *, locale: str):
-        _("""Sets the language.""")
+        _(
+            """`<locale>` - The locale code of the language you want to use; full list can be found in `{prefix}language`
+
+            Changes the language the bot replies for you."""
+        )
         if locale not in i18n.locales:
             return await ctx.send(_("Not a valid language."))
         try:
@@ -91,7 +111,8 @@ class Locale(commands.Cog):
             self.bot.locale_cache[ctx.author.id] = locale
             await ctx.send(
                 _(
-                    "To permanently choose a language, please create a character and enter this command again. I set it to {language} temporarily."
+                    "To permanently choose a language, please create a character and"
+                    " enter this command again. I set it to {language} temporarily."
                 ).format(language=locale)
             )
         await ctx.message.add_reaction("\U00002705")

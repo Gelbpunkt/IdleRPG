@@ -20,7 +20,6 @@ https://github.com/EmoteCollector/bot/blob/master/emote_collector/utils/i18n.py
 Thanks to lambda and Scragly for precious help!
 """
 import ast
-import builtins
 import contextvars
 import gettext
 import inspect
@@ -28,12 +27,14 @@ import os.path
 
 from glob import glob
 from os import getcwd
+from typing import Any, Callable, FrozenSet
 
 BASE_DIR = getcwd()
 default_locale = "en_US"
 locale_dir = "locales"
 
-locales = frozenset(
+# https://github.com/python/mypy/issues/1317
+locales: FrozenSet[str] = frozenset(
     map(
         os.path.basename,
         filter(os.path.isdir, glob(os.path.join(BASE_DIR, locale_dir, "*"))),
@@ -54,7 +55,7 @@ gettext_translations["en_US"] = gettext.NullTranslations()
 locales = locales | {"en_US"}
 
 
-def use_current_gettext(*args, **kwargs):
+def use_current_gettext(*args: Any, **kwargs: Any) -> str:
     if not gettext_translations:
         return gettext.gettext(*args, **kwargs)
 
@@ -64,38 +65,40 @@ def use_current_gettext(*args, **kwargs):
     ).gettext(*args, **kwargs)
 
 
-def i18n_docstring(func):
+def i18n_docstring(func: Callable[[Any], Any]) -> Callable[[Any], Any]:
     src = inspect.getsource(func)
+    # We heavily rely on the content of the function to be correct
     try:
-        tree = ast.parse(src)
+        parsed_tree = ast.parse(src)
     except IndentationError:
-        tree = ast.parse("class Foo:\n" + src)
-        tree = tree.body[0].body[0]  # ClassDef -> FunctionDef
+        parsed_tree = ast.parse("class Foo:\n" + src)
+        assert isinstance(parsed_tree.body[0], ast.ClassDef)
+        function_body: ast.ClassDef = parsed_tree.body[0]
+        assert isinstance(function_body.body[0], ast.AsyncFunctionDef)
+        tree: ast.AsyncFunctionDef = function_body.body[0]
     else:
-        tree = tree.body[0]  # FunctionDef
+        assert isinstance(parsed_tree.body[0], ast.AsyncFunctionDef)
+        tree = parsed_tree.body[0]
 
     if not isinstance(tree.body[0], ast.Expr):
         return func
 
-    tree = tree.body[0].value
-    if not isinstance(tree, ast.Call):
+    gettext_call = tree.body[0].value
+    if not isinstance(gettext_call, ast.Call):
         return func
 
-    if not isinstance(tree.func, ast.Name) or tree.func.id != "_":
+    if not isinstance(gettext_call.func, ast.Name) or gettext_call.func.id != "_":
         return func
 
-    assert len(tree.args) == 1
-    assert isinstance(tree.args[0], ast.Str)
+    assert len(gettext_call.args) == 1
+    assert isinstance(gettext_call.args[0], ast.Str)
 
-    func.__doc__ = tree.args[0].s
+    func.__doc__ = gettext_call.args[0].s
     return func
 
 
-current_locale = contextvars.ContextVar("i18n")
-builtins._ = use_current_gettext
-builtins.locale_doc = i18n_docstring
+current_locale: contextvars.ContextVar[str] = contextvars.ContextVar("i18n")
+_ = use_current_gettext
+locale_doc = i18n_docstring
 
 current_locale.set(default_locale)
-
-# only for <3.7
-# setup = aiocontextvars.enable_inherit

@@ -20,19 +20,24 @@ import discord
 from discord.ext import commands
 from discord.ext.commands.default import Author
 
+from classes.converters import MemberConverter
+from utils.i18n import _, locale_doc
+
 
 class Server(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
     @commands.guild_only()
-    @commands.command(aliases=["server"])
+    @commands.command(aliases=["server"], brief=_("Displays info on the server"))
     @locale_doc
     async def serverinfo(self, ctx):
-        _("""Shows information about your server.""")
+        _(
+            """Shows information about your server, from its region and membercount to its creation date and roles."""
+        )
         text = _("Link")
         urltext = (
-            f"[{text} <:external_link:429288989560930314>]({ctx.guild.icon_url})"
+            f"[{text}]({ctx.guild.icon_url})"
             if ctx.guild.icon_url
             else _("`No icon has been set yet!`")
         )
@@ -51,19 +56,18 @@ Members Total: `{members}`
 ID: `{id}`
 Icon: {urltext}
 Owner: {owner}
+Roles: `{roles}`
 Server created at: `{created_at}`"""
             ).format(
                 name=ctx.guild.name,
                 region=ctx.guild.region,
                 members=ctx.guild.member_count,
                 urltext=urltext,
-                owner=ctx.guild.owner.mention,
+                owner=f"<@{ctx.guild.owner_id}>",
                 id=ctx.guild.id,
+                roles=len(ctx.guild.roles),
                 created_at=ctx.guild.created_at.__format__("%A %d. %B %Y at %H:%M:%S"),
             ),
-        )
-        em.add_field(
-            name=_("Roles"), value=", ".join([role.name for role in ctx.guild.roles])
         )
         text = _("{name}, Shard {num} of {total}")
         em.add_field(
@@ -78,21 +82,27 @@ Server created at: `{created_at}`"""
         await ctx.send(embed=em)
 
     @commands.guild_only()
-    @commands.group(invoke_without_command=True)
+    @commands.group(
+        invoke_without_command=True, brief=_("Change the server settings for the bot")
+    )
     @locale_doc
     async def settings(self, ctx):
-        _("""Change the settings.""")
+        _("""Change the server settings for the bot.""")
         await ctx.send(
-            _("Please use `{prefix}settings (prefix/unknown) value`").format(
-                prefix=ctx.prefix
-            )
+            _("Please use `{prefix}settings prefix value`").format(prefix=ctx.prefix)
         )
 
     @commands.has_permissions(manage_guild=True)
-    @settings.command(name="prefix")
+    @settings.command(name="prefix", brief=_("Change the prefix"))
     @locale_doc
     async def prefix_(self, ctx, *, prefix: str):
-        _("""Change the server bot prefix.""")
+        _(
+            """`<prefix>` - The new prefix to use
+
+            Change the bot prefix, it cannot exceed 10 characters.
+
+            Only users with the Manage Server permission can use this command."""
+        )
         if len(prefix) > 10:
             return await ctx.send(_("Prefixes may not be longer than 10 characters."))
         if self.bot.all_prefixes.get(ctx.guild.id):
@@ -116,7 +126,7 @@ Server created at: `{created_at}`"""
         await ctx.send(_("Prefix changed to `{prefix}`.").format(prefix=prefix))
 
     @commands.has_permissions(manage_guild=True)
-    @settings.command()
+    @settings.command(brief=_("Reset the server settings"))
     @locale_doc
     async def reset(self, ctx):
         _("""Resets the server settings.""")
@@ -125,70 +135,26 @@ Server created at: `{created_at}`"""
         await ctx.send(_("Done!"))
 
     @commands.guild_only()
-    @commands.command(aliases=["user", "member", "memberinfo"])
-    @locale_doc
-    async def userinfo(self, ctx, member: discord.Member = Author):
-        _("""Shows detailed information about a member in the server.""")
-        ticks = {
-            "True": "<:check:314349398811475968>",
-            "False": "<:xmark:314349398824058880>",
-        }
-        statuses = {
-            "online": "<:online:313956277808005120>",
-            "idle": "<:away:313956277220802560>",
-            "dnd": "<:dnd:313956276893646850>",
-            "offline": "<:offline:313956277237710868>",
-        }
-        embed1 = discord.Embed(
-            title=str(member),
-            description=_(
-                """\
-`Joined at`: {joined}
-`Status...`: {status}
-`Top Role.`: {toprole}
-`Roles....`: {roles}
-`Game.....`: {game}"""
-            ).format(
-                joined=str(member.joined_at).split(".")[0],
-                status=f"{statuses[str(member.status)]}{str(member.status).capitalize()}",
-                toprole=member.top_role.name,
-                roles=", ".join([role.name for role in member.roles]),
-                game=str(member.activity) if member.activity else _("No Game Playing"),
-            ),
-            color=member.color,
-        ).set_thumbnail(url=member.avatar_url)
-        embed2 = discord.Embed(
-            title=_("Permissions"),
-            description="\n".join(
-                [
-                    "`"
-                    + _(value[0].replace("_", " ").title()).ljust(21, ".")
-                    + "`"
-                    + ": "
-                    + ticks[str(value[1])]
-                    for value in member.guild_permissions
-                ]
-            ),
-            color=member.color,
-        ).set_thumbnail(url=member.avatar_url)
-        await self.bot.paginator.Paginator(extras=[embed1, embed2]).paginate(ctx)
-
-    @commands.guild_only()
-    @commands.command()
+    @commands.command(brief=_("View this server's prefix"))
     @locale_doc
     async def prefix(self, ctx):
-        _("""View the bot prefix.""")
+        _("""View the bot prefix for the server""")
         prefix_ = self.bot.all_prefixes.get(ctx.guild.id, self.bot.config.global_prefix)
         await ctx.send(
             _(
-                "The prefix for server **{server}** is `{serverprefix}`.\n\n`{prefix}settings prefix` changes it."
+                "The prefix for server **{server}** is"
+                " `{serverprefix}`.\n\n`{prefix}settings prefix` changes it."
             ).format(server=ctx.guild, serverprefix=prefix_, prefix=ctx.prefix)
         )
 
-    @commands.command()
+    @commands.command(brief=_("Show someone's avatar"))
     @locale_doc
-    async def avatar(self, ctx, target: discord.Member = Author):
-        _("""Shows someone's (or your) avatar.""")
+    async def avatar(self, ctx, target: MemberConverter = Author):
+        _(
+            """`<target>` - The user whose avatar to show; defaults to oneself
+
+            Shows someone's avatar, also known as their icon or profile picture."""
+        )
         await ctx.send(
             embed=discord.Embed(
                 title=_("Download Link"),

@@ -18,7 +18,6 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 import asyncio
 import datetime
 import math
-import random
 
 from collections import deque
 from decimal import Decimal
@@ -30,7 +29,9 @@ from discord.ext import commands
 from classes.converters import IntFromTo
 from cogs.help import chunks
 from cogs.shard_communication import user_on_cooldown as user_cooldown
-from utils.checks import has_char, has_money, user_has_char
+from utils import random
+from utils.checks import has_char, user_has_char
+from utils.i18n import _, locale_doc
 
 
 class Tournament(commands.Cog):
@@ -39,18 +40,38 @@ class Tournament(commands.Cog):
 
     @has_char()
     @user_cooldown(1800)
-    @commands.command()
+    @commands.command(brief=_("Start a new tournament"))
     @locale_doc
     async def tournament(self, ctx, prize: IntFromTo(0, 100_000_000) = 0):
-        _("""Starts a new tournament.""")
+        _(
+            """`[prize]` - The amount of money the winner will get
+
+            Start a new tournament. Players have 30 seconds to join via the reaction.
+            Tournament entries are free, only the tournament host has to pay the price.
+
+            Only an exponent of 2 (2^n) users can join. If there are more than the nearest exponent, the last joined players will be disregarded.
+
+            The match-ups will be decided at random, the battles themselves will be decided like regular battles (see `{prefix}help battle` for details).
+
+            The winner of a match moves onto the next round, the losers get eliminated, until there is only one player left.
+            Tournaments in IdleRPG follow the single-elimination principle.
+
+            (This command has a cooldown of 30 minutes.)"""
+        )
         if ctx.character_data["money"] < prize:
             await self.bot.reset_cooldown(ctx)
             return await ctx.send(_("You are too poor."))
 
+        await self.bot.pool.execute(
+            'UPDATE profile SET money=money-$1 WHERE "user"=$2;', prize, ctx.author.id,
+        )
+
         if ctx.channel.id == self.bot.config.official_tournament_channel_id:
             id_ = await self.bot.start_joins()
             await ctx.send(
-                f"A mass-tournament has been started. Please join at https://join.idlerpg.xyz/{id_} during the next 10 minutes! The prize is **${prize}**!"
+                "A mass-tournament has been started. Please join at"
+                f" https://join.idlerpg.xyz/{id_} during the next 10 minutes! The"
+                f" prize is **${prize}**!"
             )
             await asyncio.sleep(60 * 10)
             a_participants = await self.bot.get_joins(id_)
@@ -65,7 +86,8 @@ class Tournament(commands.Cog):
         else:
             msg = await ctx.send(
                 _(
-                    "{author} started a tournament! Free entries, prize is **${prize}**! React with ⚔ to join!"
+                    "{author} started a tournament! Free entries, prize is"
+                    " **${prize}**! React with ⚔ to join!"
                 ).format(author=ctx.author.mention, prize=prize)
             )
 
@@ -89,6 +111,11 @@ class Tournament(commands.Cog):
                 except asyncio.TimeoutError:
                     if len(participants) < 2:
                         await self.bot.reset_cooldown(ctx)
+                        await self.bot.pool.execute(
+                            'UPDATE profile SET money=money+$1 WHERE "user"=$2;',
+                            prize,
+                            ctx.author.id,
+                        )
                         return await ctx.send(
                             _("Noone joined your tournament {author}.").format(
                                 author=ctx.author.mention
@@ -111,7 +138,8 @@ class Tournament(commands.Cog):
         if toremove != len(participants):
             await ctx.send(
                 _(
-                    "There are **{num}** entries, due to the fact we need a playable tournament, the last **{removed}** have been removed."
+                    "There are **{num}** entries, due to the fact we need a playable"
+                    " tournament, the last **{removed}** have been removed."
                 ).format(num=len(participants), removed=len(participants) - toremove)
             )
             participants = participants[: -(len(participants) - toremove)]
@@ -121,7 +149,7 @@ class Tournament(commands.Cog):
             )
         text = _("vs")
         while len(participants) > 1:
-            random.shuffle(participants)
+            participants = random.shuffle(participants)
             matches = list(chunks(participants, 2))
 
             for match in matches:
@@ -155,19 +183,11 @@ class Tournament(commands.Cog):
                 winner=participants[0].mention
             )
         )
-        if not await has_money(self.bot, ctx.author.id, prize):
-            return await ctx.send(_("The creator spent money, prize can't be given!"))
-        async with self.bot.pool.acquire() as conn:
-            await conn.execute(
-                'UPDATE profile SET money=money-$1 WHERE "user"=$2;',
-                prize,
-                ctx.author.id,
-            )
-            await conn.execute(
-                'UPDATE profile SET money=money+$1 WHERE "user"=$2;',
-                prize,
-                participants[0].id,
-            )
+        await self.bot.pool.execute(
+            'UPDATE profile SET money=money+$1 WHERE "user"=$2;',
+            prize,
+            participants[0].id,
+        )
         await self.bot.log_transaction(
             ctx,
             from_=ctx.author.id,
@@ -186,15 +206,35 @@ class Tournament(commands.Cog):
     @commands.command()
     @locale_doc
     async def raidtournament(self, ctx, prize: IntFromTo(0, 100_000_000) = 0):
-        _("""Starts a new raid tournament.""")
+        _(
+            """`[prize]` - The amount of money the winner will get
+
+            Start a new raid tournament. Players have 30 seconds to join via the reaction.
+            Tournament entries are free, only the tournament host has to pay the price.
+
+            Only an exponent of 2 (2^n) users can join. If there are more than the nearest exponent, the last joined players will be disregarded.
+
+            The match-ups will be decided at random, the battles themselves will be decided like raid battles (see `{prefix}help raidbattle` for details).
+
+            The winner of a match moves onto the next round, the losers get eliminated, until there is only one player left.
+            Tournaments in IdleRPG follow the single-elimination principle.
+
+            (This command has a cooldown of 30 minutes.)"""
+        )
         if ctx.character_data["money"] < prize:
             await self.bot.reset_cooldown(ctx)
             return await ctx.send(_("You are too poor."))
 
+        await self.bot.pool.execute(
+            'UPDATE profile SET money=money-$1 WHERE "user"=$2;', prize, ctx.author.id,
+        )
+
         if ctx.channel.id == self.bot.config.official_tournament_channel_id:
             id_ = await self.bot.start_joins()
             await ctx.send(
-                f"A mass-raidtournament has been started. Please join at https://join.idlerpg.xyz/{id_} during the next 10 minutes! The prize is **${prize}**!"
+                "A mass-raidtournament has been started. Please join at"
+                f" https://join.idlerpg.xyz/{id_} during the next 10 minutes! The"
+                f" prize is **${prize}**!"
             )
             await asyncio.sleep(60 * 10)
             a_participants = await self.bot.get_joins(id_)
@@ -209,7 +249,8 @@ class Tournament(commands.Cog):
         else:
             msg = await ctx.send(
                 _(
-                    "{author} started a raid tournament! Free entries, prize is **${prize}**! React with ⚔ to join!"
+                    "{author} started a raid tournament! Free entries, prize is"
+                    " **${prize}**! React with ⚔ to join!"
                 ).format(author=ctx.author.mention, prize=prize)
             )
             participants = [ctx.author]
@@ -232,6 +273,11 @@ class Tournament(commands.Cog):
                 except asyncio.TimeoutError:
                     if len(participants) < 2:
                         await self.bot.reset_cooldown(ctx)
+                        await self.bot.pool.execute(
+                            'UPDATE profile SET money=money+$1 WHERE "user"=$2;',
+                            prize,
+                            ctx.author.id,
+                        )
                         return await ctx.send(
                             _("Noone joined your raid tournament {author}.").format(
                                 author=ctx.author.mention
@@ -243,7 +289,7 @@ class Tournament(commands.Cog):
                         continue
                     participants.append(u)
                     await ctx.send(
-                        _("{user} joined the tournament.").format(user=u.mention)
+                        _("{user} joined the raidtournament.").format(user=u.mention)
                     )
                 else:
                     await ctx.send(
@@ -253,7 +299,8 @@ class Tournament(commands.Cog):
         if toremove != len(participants):
             await ctx.send(
                 _(
-                    "There are **{num}** entries, due to the fact we need a playable raid tournament, the last **{removed}** have been removed."
+                    "There are **{num}** entries, due to the fact we need a playable"
+                    " raid tournament, the last **{removed}** have been removed."
                 ).format(num=len(participants), removed=len(participants) - toremove)
             )
             participants = participants[: -(len(participants) - toremove)]
@@ -263,7 +310,7 @@ class Tournament(commands.Cog):
             )
         text = _("vs")
         while len(participants) > 1:
-            random.shuffle(participants)
+            participants = random.shuffle(participants)
             matches = list(chunks(participants, 2))
 
             async with self.bot.pool.acquire() as conn:
@@ -305,10 +352,10 @@ class Tournament(commands.Cog):
                     await asyncio.sleep(4)
 
                     start = datetime.datetime.utcnow()
-                    attacker, defender = random.sample(players, k=2)
+                    attacker, defender = random.shuffle(players)
                     while (
-                        players[0]["hp"] > 0
-                        and players[1]["hp"] > 0
+                        attacker["hp"] > 0
+                        and defender["hp"] > 0
                         and datetime.datetime.utcnow()
                         < start + datetime.timedelta(minutes=5)
                     ):
@@ -328,7 +375,8 @@ class Tournament(commands.Cog):
                             (
                                 battle_log[-1][0] + 1,
                                 _(
-                                    "{attacker} attacks! {defender} takes **{dmg}HP** damage."
+                                    "{attacker} attacks! {defender} takes **{dmg}HP**"
+                                    " damage."
                                 ).format(
                                     attacker=attacker["user"].mention,
                                     defender=defender["user"].mention,
@@ -379,19 +427,11 @@ class Tournament(commands.Cog):
                 winner=participants[0].mention
             )
         )
-        if not await has_money(self.bot, ctx.author.id, prize):
-            return await ctx.send(_("The creator spent money, prize can't be given!"))
-        async with self.bot.pool.acquire() as conn:
-            await conn.execute(
-                'UPDATE profile SET money=money-$1 WHERE "user"=$2;',
-                prize,
-                ctx.author.id,
-            )
-            await conn.execute(
-                'UPDATE profile SET money=money+$1 WHERE "user"=$2;',
-                prize,
-                participants[0].id,
-            )
+        await self.bot.pool.execute(
+            'UPDATE profile SET money=money+$1 WHERE "user"=$2;',
+            prize,
+            participants[0].id,
+        )
         await self.bot.log_transaction(
             ctx,
             from_=ctx.author.id,

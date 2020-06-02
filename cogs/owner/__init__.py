@@ -17,7 +17,6 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
 import copy
 import io
-import random
 import re
 import textwrap
 import traceback
@@ -27,10 +26,14 @@ from contextlib import redirect_stdout
 from importlib import reload as importlib_reload
 
 import discord
+import import_expression
 
 from discord.ext import commands
+from tabulate import tabulate
 
-from utils import shell
+from classes.converters import MemberConverter
+from utils import random, shell
+from utils.misc import random_token
 
 
 class Owner(commands.Cog):
@@ -42,7 +45,6 @@ class Owner(commands.Cog):
         return await self.bot.is_owner(ctx.author)
 
     @commands.command(name="load", hidden=True)
-    @locale_doc
     async def _load(self, ctx, *, cog: str):
         """Command which Loads a Module.
         Remember to use dot path. e.g: cogs.owner"""
@@ -55,7 +57,6 @@ class Owner(commands.Cog):
             await ctx.send("**`SUCCESS`**")
 
     @commands.command(name="unload", hidden=True)
-    @locale_doc
     async def _unload(self, ctx, *, cog: str):
         """Command which Unloads a Module.
         Remember to use dot path. e.g: cogs.owner"""
@@ -68,7 +69,6 @@ class Owner(commands.Cog):
             await ctx.send("**`SUCCESS`**")
 
     @commands.command(name="reload", hidden=True)
-    @locale_doc
     async def _reload(self, ctx, *, cog: str):
         """Command which Reloads a Module.
         Remember to use dot path. e.g: cogs.owner"""
@@ -81,7 +81,6 @@ class Owner(commands.Cog):
             await ctx.send("**`SUCCESS`**")
 
     @commands.command(hidden=True)
-    @locale_doc
     async def reloadconf(self, ctx):
         try:
             importlib_reload(self.bot.config)
@@ -100,6 +99,7 @@ class Owner(commands.Cog):
     @commands.command(hidden=True)
     async def makeluck(self, ctx):
         """Sets the luck for all gods to a random value and give bonus luck to the top 25 followers."""
+        text_collection = []
         async with self.bot.pool.acquire() as conn:
             for god in self.bot.config.gods:
                 boundaries = self.bot.config.gods[god]["boundaries"]
@@ -110,39 +110,50 @@ class Owner(commands.Cog):
                 top_followers = [
                     u["user"]
                     for u in await conn.fetch(
-                        'SELECT "user" FROM profile WHERE "god"=$1 ORDER BY "favor" DESC LIMIT 25;',
+                        'SELECT "user" FROM profile WHERE "god"=$1 ORDER BY "favor"'
+                        " DESC LIMIT 25;",
                         god,
                     )
                 ]
                 await conn.execute(
-                    'UPDATE profile SET "luck"=CASE WHEN "luck"+round($1, 2)>=2.0 THEN 2.0 ELSE "luck"+round($1, 2) END WHERE "user"=ANY($2);',
+                    'UPDATE profile SET "luck"=CASE WHEN "luck"+round($1, 2)>=2.0 THEN'
+                    ' 2.0 ELSE "luck"+round($1, 2) END WHERE "user"=ANY($2);',
                     0.5,
                     top_followers[:5],
                 )
                 await conn.execute(
-                    'UPDATE profile SET "luck"=CASE WHEN "luck"+round($1, 2)>=2.0 THEN 2.0 ELSE "luck"+round($1, 2) END WHERE "user"=ANY($2);',
+                    'UPDATE profile SET "luck"=CASE WHEN "luck"+round($1, 2)>=2.0 THEN'
+                    ' 2.0 ELSE "luck"+round($1, 2) END WHERE "user"=ANY($2);',
                     0.4,
                     top_followers[5:10],
                 )
                 await conn.execute(
-                    'UPDATE profile SET "luck"=CASE WHEN "luck"+round($1, 2)>=2.0 THEN 2.0 ELSE "luck"+round($1, 2) END WHERE "user"=ANY($2);',
+                    'UPDATE profile SET "luck"=CASE WHEN "luck"+round($1, 2)>=2.0 THEN'
+                    ' 2.0 ELSE "luck"+round($1, 2) END WHERE "user"=ANY($2);',
                     0.3,
                     top_followers[10:15],
                 )
                 await conn.execute(
-                    'UPDATE profile SET "luck"=CASE WHEN "luck"+round($1, 2)>=2.0 THEN 2.0 ELSE "luck"+round($1, 2) END WHERE "user"=ANY($2);',
+                    'UPDATE profile SET "luck"=CASE WHEN "luck"+round($1, 2)>=2.0 THEN'
+                    ' 2.0 ELSE "luck"+round($1, 2) END WHERE "user"=ANY($2);',
                     0.2,
                     top_followers[15:20],
                 )
                 await conn.execute(
-                    'UPDATE profile SET "luck"=CASE WHEN "luck"+round($1, 2)>=2.0 THEN 2.0 ELSE "luck"+round($1, 2) END WHERE "user"=ANY($2);',
+                    'UPDATE profile SET "luck"=CASE WHEN "luck"+round($1, 2)>=2.0 THEN'
+                    ' 2.0 ELSE "luck"+round($1, 2) END WHERE "user"=ANY($2);',
                     0.1,
                     top_followers[20:25],
                 )
-                await ctx.send(f"{god} set to {luck}.")
+                text_collection.append(f"{god} set to {luck}.")
             await conn.execute('UPDATE profile SET "favor"=0 WHERE "god" IS NOT NULL;')
-            await ctx.send("Godless set to 1.0")
-            await conn.execute('UPDATE profile SET "luck"=1.0 WHERE "god" IS NULL;;')
+            text_collection.append("Godless set to 1.0")
+            await conn.execute('UPDATE profile SET "luck"=1.0 WHERE "god" IS NULL;')
+            msg = await ctx.send("\n".join(text_collection))
+            try:
+                await msg.publish()
+            except (discord.Forbidden, discord.HTTPException) as e:
+                await ctx.send(f"Could not publish the message for some reason: `{e}`")
 
     @commands.command(hidden=True)
     async def shutdown(self, ctx):
@@ -158,7 +169,6 @@ class Owner(commands.Cog):
         return content.strip("` \n")
 
     @commands.command(hidden=True, name="eval")
-    @locale_doc
     async def _eval(self, ctx, *, body: str):
         """Evaluates a code"""
 
@@ -176,11 +186,12 @@ class Owner(commands.Cog):
 
         body = self.cleanup_code(body)
         stdout = io.StringIO()
+        token = random_token(self.bot.user.id)
 
         to_compile = f'async def func():\n{textwrap.indent(body, "  ")}'
 
         try:
-            exec(to_compile, env)
+            import_expression.exec(to_compile, env)
         except Exception as e:
             return await ctx.send(f"```py\n{e.__class__.__name__}: {e}\n```")
 
@@ -188,11 +199,15 @@ class Owner(commands.Cog):
         try:
             with redirect_stdout(stdout):
                 ret = await func()
+            if ret is not None:
+                ret = str(ret).replace(self.bot.http.token, token)
         except Exception:
             value = stdout.getvalue()
+            value = value.replace(self.bot.http.token, token)
             await ctx.send(f"```py\n{value}{traceback.format_exc()}\n```")
         else:
             value = stdout.getvalue()
+            value = value.replace(self.bot.http.token, token)
             try:
                 await ctx.message.add_reaction("blackcheck:441826948919066625")
             except discord.Forbidden:
@@ -206,41 +221,48 @@ class Owner(commands.Cog):
                 await ctx.send(f"```py\n{value}{ret}\n```")
 
     @commands.command(hidden=True)
-    @locale_doc
     async def evall(self, ctx, *, code: str):
         """[Owner only] Evaluates python code on all processes."""
-        data = "".join(
-            await self.bot.cogs["Sharding"].handler(
-                "evaluate", self.bot.shard_count, {"code": code}
-            )
+        data = await self.bot.cogs["Sharding"].handler(
+            "evaluate", self.bot.shard_count, {"code": code}
         )
-        if len(data) > 2000:
-            data = data[:1997] + "..."
-        await ctx.send(data)
+        filtered_data = {instance: data.count(instance) for instance in data}
+        pretty_data = "".join(
+            "```py\n{0}x | {1}".format(count, instance[6:])
+            for instance, count in filtered_data.items()
+        )
+        if len(pretty_data) > 2000:
+            pretty_data = pretty_data[:1997] + "..."
+        await ctx.send(pretty_data)
 
     @commands.command(hidden=True)
-    @locale_doc
     async def bash(self, ctx, *, command_to_run: str):
         """[Owner Only] Run shell commands."""
         await shell.run(command_to_run, ctx)
 
     @commands.command(hidden=True)
-    @locale_doc
     async def sql(self, ctx, *, query: str):
         """[Owner Only] Very basic SQL command."""
-        async with self.bot.pool.acquire() as conn:
-            try:
-                ret = await conn.fetch(query)
-            except Exception:
-                return await ctx.send(f"```py\n{traceback.format_exc()}```")
-            if ret:
-                await ctx.send(f"```{ret}```")
-            else:
-                await ctx.send("No results to fetch.")
+        if "select" in query.lower() or "returning" in query.lower():
+            type_ = "fetch"
+        else:
+            type_ = "execute"
+        try:
+            ret = await (getattr(self.bot.pool, type_))(query)
+        except Exception:
+            return await ctx.send(f"```py\n{traceback.format_exc()}```")
+        if type_ == "fetch" and len(ret) == 0:
+            return await ctx.send("No results.")
+        elif type_ == "fetch" and len(ret) > 0:
+            ret.insert(0, ret[0].keys())
+            await ctx.send(
+                f"```\n{tabulate(ret, headers='firstrow', tablefmt='psql')}\n```"
+            )
+        else:
+            await ctx.send(f"```{ret}```")
 
     @commands.command(hidden=True)
-    @locale_doc
-    async def runas(self, ctx, member: discord.Member, *, command: str):
+    async def runas(self, ctx, member: MemberConverter, *, command: str):
         """[Owner Only] Run a command as if you were the user."""
         fake_msg = copy.copy(ctx.message)
         fake_msg._update(dict(channel=ctx.channel, content=ctx.prefix + command))
@@ -252,7 +274,6 @@ class Owner(commands.Cog):
             await ctx.send(f"```py\n{traceback.format_exc()}```")
 
     @commands.command(hidden=True)
-    @locale_doc
     async def makehtml(self, ctx):
         """Generates HTML for commands page."""
         with open("assets/html/commands.html", "r") as f:

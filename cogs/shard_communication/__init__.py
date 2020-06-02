@@ -17,11 +17,9 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
 import asyncio
 import json
-import re
 
-from datetime import timedelta
+from datetime import datetime, timedelta
 from time import time
-from traceback import format_exc
 from uuid import uuid4
 
 import discord
@@ -30,21 +28,21 @@ from async_timeout import timeout
 from discord.ext import commands
 
 from utils.eval import evaluate as _evaluate
+from utils.i18n import _, locale_doc
+from utils.misc import nice_join
 
 
 # Cross-process cooldown check (pass this to commands)
-def user_on_cooldown(cooldown: int):
+def user_on_cooldown(cooldown: int, identifier: str = None):
     async def predicate(ctx):
-        command_ttl = await ctx.bot.redis.execute(
-            "TTL", f"cd:{ctx.author.id}:{ctx.command.qualified_name}"
-        )
+        if identifier is None:
+            cmd_id = ctx.command.qualified_name
+        else:
+            cmd_id = identifier
+        command_ttl = await ctx.bot.redis.execute("TTL", f"cd:{ctx.author.id}:{cmd_id}")
         if command_ttl == -2:
             await ctx.bot.redis.execute(
-                "SET",
-                f"cd:{ctx.author.id}:{ctx.command.qualified_name}",
-                ctx.command.qualified_name,
-                "EX",
-                cooldown,
+                "SET", f"cd:{ctx.author.id}:{cmd_id}", cmd_id, "EX", cooldown,
             )
             return True
         else:
@@ -89,7 +87,8 @@ def alliance_on_cooldown(cooldown: int):
         data = getattr(ctx, "character_data", None)
         if not data:
             alliance = await ctx.bot.pool.fetchval(
-                'SELECT alliance FROM guild WHERE "id"=(SELECT guild FROM profile WHERE "user"=$1);',
+                'SELECT alliance FROM guild WHERE "id"=(SELECT guild FROM profile WHERE'
+                ' "user"=$1);',
                 ctx.author.id,
             )
         else:
@@ -182,104 +181,34 @@ class Sharding(commands.Cog):
         while await channel.wait_message():
             try:
                 payload = await channel.get_json(encoding="utf-8")
-            except json.decoder.JSONDecodeError:
+            except json.JSONDecodeError:
                 continue  # not a valid JSON message
             if payload.get("action") and hasattr(self, payload.get("action")):
-                try:
-                    if payload.get("scope") != "bot":
-                        return  # it's not our cup of tea
-                    if payload.get("args"):
-                        self.bot.loop.create_task(
-                            getattr(self, payload["action"])(
-                                **json.loads(payload["args"]),
-                                command_id=payload["command_id"],
-                            )
+                if payload.get("scope") != "bot":
+                    continue  # it's not our cup of tea
+                if payload.get("args"):
+                    self.bot.loop.create_task(
+                        getattr(self, payload["action"])(
+                            **payload["args"], command_id=payload["command_id"],
                         )
-                    else:
-                        self.bot.loop.create_task(
-                            getattr(self, payload["action"])(
-                                command_id=payload["command_id"]
-                            )
-                        )
-                except Exception:
-                    payload = {
-                        "error": True,
-                        "output": format_exc(),
-                        "command_id": payload["command_id"],
-                    }
-                    await self.bot.redis.execute(
-                        "PUBLISH", self.communication_channel, json.dumps(payload)
                     )
-                    continue
+                else:
+                    self.bot.loop.create_task(
+                        getattr(self, payload["action"])(
+                            command_id=payload["command_id"]
+                        )
+                    )
             if payload.get("output") and payload["command_id"] in self._messages:
                 self._messages[payload["command_id"]].append(payload["output"])
 
-    async def has_event_role(self, member_id: int, command_id: int):
-        if not self.bot.get_user(member_id):
-            return
-        member = self.bot.get_guild(self.bot.config.support_server_id).get_member(
-            member_id
-        )
-        if not member:
-            return
+    async def clear_donator_cache(self, user_id: int, command_id: int):
+        self.bot.get_donator_rank.invalidate(self.bot, user_id)
 
-        roles = [
-            discord.utils.get(member.roles, name=i)
-            for i in ("Fire", "Water", "Air", "Earth")
-        ]
+    async def temp_ban(self, user_id: int, command_id: int):
+        self.bot.bans.append(user_id)
 
-        if any(roles):
-            answer = [i for i in roles if i][0].name
-        else:
-            answer = False
-        await self.bot.redis.execute(
-            "PUBLISH",
-            self.communication_channel,
-            json.dumps({"output": answer, "command_id": command_id}),
-        )
-
-    async def get_user_patreon(self, member_id: int, command_id: int):
-        if not self.bot.get_user(member_id):
-            return
-        member = self.bot.get_guild(self.bot.config.support_server_id).get_member(
-            member_id
-        )
-        if not member:
-            return
-
-        top_donator_role = None
-
-        for role, role_enum_val in zip(
-            self.bot.config.donator_roles, self.bot.config.donator_roles_short
-        ):
-            role = discord.utils.get(member.roles, name=role)
-            if role:
-                top_donator_role = role_enum_val
-        if top_donator_role is None:
-            payload = {"output": False, "command_id": command_id}
-        else:
-            payload = {"output": top_donator_role, "command_id": command_id}
-
-        await self.bot.redis.execute(
-            "PUBLISH", self.communication_channel, json.dumps(payload)
-        )
-
-    async def user_is_helper(self, member_id: int, command_id: str):
-        if not self.bot.get_user(member_id):
-            return  # if the instance cannot see them, we can't do much
-        member = self.bot.get_guild(self.bot.config.support_server_id).get_member(
-            member_id
-        )
-        if not member:
-            return  # when the bot can only see DMs with the user
-
-        if discord.utils.get(member.roles, name="Support Team"):
-            payload = {"output": True, "command_id": command_id}
-        else:
-            payload = {"output": False, "command_id": command_id}
-        await self.bot.redis.execute(
-            "PUBLISH", self.communication_channel, json.dumps(payload)
-        )
+    async def temp_unban(self, user_id: int, command_id: int):
+        self.bot.bans.remove(user_id)
 
     async def guild_count(self, command_id: str):
         payload = {"output": len(self.bot.guilds), "command_id": command_id}
@@ -287,44 +216,17 @@ class Sharding(commands.Cog):
             "PUBLISH", self.communication_channel, json.dumps(payload)
         )
 
-    async def get_user(self, user_id: int, command_id: str):
-        if not self.bot.get_user(user_id):
-            return
-        payload = {"output": self.bot.get_user(int(user_id)), "command_id": command_id}
-        await self.bot.redis.execute(
-            "PUBLISH", self.communication_channel, json.dumps(payload)
-        )
-
     async def send_latency_and_shard_count(self, command_id: str):
         payload = {
-            "output": {self.bot.cluster_name: [self.bot.shard_ids, self.bot.latency]},
+            "output": {
+                f"{self.bot.cluster_id}": [
+                    self.bot.cluster_name,
+                    self.bot.shard_ids,
+                    round(self.bot.latency * 1000),
+                ]
+            },
             "command_id": command_id,
         }
-        await self.bot.redis.execute(
-            "PUBLISH", self.communication_channel, json.dumps(payload)
-        )
-
-    async def fetch_user(self, user_inp, command_id: str):
-        user = None
-        matches = re.search(r"<@!?(\d+)>", user_inp)
-        if matches:
-            user_inp = matches.group(1)
-        if isinstance(user_inp, int) or (
-            isinstance(user_inp, str) and user_inp.isdigit()
-        ):
-            user = self.bot.get_user(int(user_inp))
-        else:
-            if len(user_inp) > 5 and user_inp[-5] == "#":
-                discrim = user_inp[-4:]
-                name = user_inp[:-5]
-                predicate = lambda u: u.name == name and u.discriminator == discrim
-                user = discord.utils.find(predicate, self.bot.users)
-            else:
-                predicate = lambda u: u.name == user_inp
-                user = discord.utils.find(predicate, self.bot.users)
-        if not user:
-            return
-        payload = {"output": user, "command_id": command_id}
         await self.bot.redis.execute(
             "PUBLISH", self.communication_channel, json.dumps(payload)
         )
@@ -334,6 +236,15 @@ class Sharding(commands.Cog):
             code = "\n".join(code.split("\n")[1:-1])
         code = code.strip("` \n")
         payload = {"output": await _evaluate(self.bot, code), "command_id": command_id}
+        await self.bot.redis.execute(
+            "PUBLISH", self.communication_channel, json.dumps(payload)
+        )
+
+    async def latency(self, command_id: str):
+        payload = {
+            "output": round(self.bot.latency * 1000, 2),
+            "command_id": command_id,
+        }
         await self.bot.redis.execute(
             "PUBLISH", self.communication_channel, json.dumps(payload)
         )
@@ -402,7 +313,7 @@ class Sharding(commands.Cog):
         # Sending
         payload = {"scope": scope, "action": action, "command_id": command_id}
         if args:
-            payload["args"] = json.dumps(args)
+            payload["args"] = args
         await self.bot.redis.execute(
             "PUBLISH", self.communication_channel, json.dumps(payload)
         )
@@ -415,10 +326,12 @@ class Sharding(commands.Cog):
             pass
         return self._messages.pop(command_id, None)  # Cleanup
 
-    @commands.command(aliases=["cooldowns", "t", "cds"])
+    @commands.command(
+        aliases=["cooldowns", "t", "cds"], brief=_("Lists all your cooldowns")
+    )
     @locale_doc
     async def timers(self, ctx):
-        _("""Lists all your cooldowns.""")
+        _("""Lists all your cooldowns, including your adventure timer.""")
         cooldowns = await self.bot.redis.execute("KEYS", f"cd:{ctx.author.id}:*")
         adv = await self.bot.get_adventure(ctx.author)
         if not cooldowns and (not adv or adv[2]):
@@ -440,6 +353,47 @@ class Sharding(commands.Cog):
             )
             timers = f"{timers}\n{text}"
         await ctx.send(f"```{timers}```")
+
+    @commands.command(aliases=["botstatus", "shards"], brief=_("Show the clusters"))
+    @locale_doc
+    async def clusters(self, ctx):
+        _("""Lists all clusters and their current status.""")
+        launcher_res = await self.handler("statuses", 1, scope="launcher")
+        if not launcher_res:
+            return await ctx.send(_("Launcher is dead, that is really bad."))
+        process_status = launcher_res[0]
+        # We have to calculate number of processes
+        processes, shards_left = divmod(
+            self.bot.shard_count, self.bot.config.shard_per_cluster
+        )
+        if shards_left:
+            processes += 1
+        process_res = await self.handler(
+            "send_latency_and_shard_count", processes, scope="bot"
+        )
+        actual_status = []
+        for cluster_id, cluster_data in process_status.items():
+            process_data = discord.utils.find(lambda x: cluster_id in x, process_res)
+            if process_data:
+                cluster_data["latency"] = f"{process_data[cluster_id][2]}ms"
+            else:
+                cluster_data["latency"] = "NaN"
+            cluster_data["cluster_id"] = cluster_id
+            cluster_data["started_at"] = datetime.fromtimestamp(
+                cluster_data["started_at"]
+            )
+            actual_status.append(cluster_data)
+        # actual_status.keys = active: bool, status: str, name: str, started_at: float, latency: str, cluster_id: int, shard_list: list[int]
+        status = "\n".join(
+            [
+                f"Cluster #{i['cluster_id']} ({i['name']}), shards"
+                f" {nice_join(i['shard_list'])}:"
+                f" {'Active' if i['active'] else 'Inactive'} {i['status']}, latency"
+                f" {i['latency']}. Started at: {i['started_at']}"
+                for i in actual_status
+            ]
+        )
+        await ctx.send(status)
 
 
 def setup(bot):

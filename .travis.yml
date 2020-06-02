@@ -1,14 +1,32 @@
-dist: bionic
-language: minimal
+arch: amd64
+language: shell
+os: linux
+dist: focal
+
+jobs:
+  include:
+    - name: "x86_64 Ubuntu 20.04"
+      os: linux
+      dist: focal
+      arch: amd64
+    - name: "aarch64 Ubuntu 20.04"
+      os: linux
+      dist: focal
+      arch: arm64
+  allow_failures:
+    - name: "aarch64 Ubuntu 20.04"
 
 before_install:
+  - . /etc/os-release
+  - sudo sh -c "echo 'deb https://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable/xUbuntu_${VERSION_ID}/ /' > /etc/apt/sources.list.d/devel:kubic:libcontainers:stable.list"
+  - curl -L https://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable/xUbuntu_${VERSION_ID}/Release.key | sudo apt-key add -
   - sudo apt update
-  - sudo apt -y  install software-properties-common
-  - sudo add-apt-repository -y ppa:projectatomic/ppa
-  - sudo apt -y install podman
-  - sudo mkdir -p /etc/containers
-  - sudo curl https://raw.githubusercontent.com/projectatomic/registries/master/registries.fedora -o /etc/containers/registries.conf
-  - sudo curl https://raw.githubusercontent.com/containers/skopeo/master/default-policy.json -o /etc/containers/policy.json
+  - sudo apt -y install podman uidmap
 
 script:
-  - sudo podman build -t gelbpunkt/idlerpg:latest .
+  - |
+    if [ $TRAVIS_BRANCH == "v4" ]; then
+      podman build -t gelbpunkt/idlerpg:latest .;
+    else
+      podman build -t gelbpunkt/idlerpg:latest --build-arg beta=true .;
+    fi

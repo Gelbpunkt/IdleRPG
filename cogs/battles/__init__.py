@@ -17,7 +17,6 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
 import asyncio
 import datetime
-import random
 
 from collections import deque
 from decimal import Decimal
@@ -26,9 +25,11 @@ import discord
 
 from discord.ext import commands
 
-from classes.converters import IntGreaterThan
+from classes.converters import IntGreaterThan, MemberConverter
 from cogs.shard_communication import user_on_cooldown as user_cooldown
+from utils import random
 from utils.checks import has_char, has_money
+from utils.i18n import _, locale_doc
 
 
 class Battles(commands.Cog):
@@ -37,27 +38,46 @@ class Battles(commands.Cog):
 
     @has_char()
     @user_cooldown(90)
-    @commands.command()
+    @commands.command(brief=_("Battle against another player"))
     @locale_doc
     async def battle(
-        self, ctx, money: IntGreaterThan(-1) = 0, enemy: discord.Member = None
+        self, ctx, money: IntGreaterThan(-1) = 0, enemy: MemberConverter = None
     ):
-        _("""Battle against another player.""")
+        _(
+            """`[money]` - A whole number that can be 0 or greater; defaults to 0
+            `[enemy]` - A user who has a profile; defaults to anyone
+
+            Fight against another player while betting money.
+            To decide the fight, the players' items, race and class bonuses and an additional number from 1 to 7 are evaluated, this serves as a way to give players with lower stats a chance at winning.
+
+            The money is removed from both players at the start of the battle. Once a winner has been decided, they will receive their money, plus the enemy's money.
+            The battle lasts 30 seconds, after which the winner and loser will be mentioned.
+
+            If both players' stats + random number are the same, the winner is decided at random.
+            The battle's winner will receive a PvP win, which shows on their profile.
+            (This command has a cooldown of 90 seconds.)"""
+        )
         if enemy == ctx.author:
             return await ctx.send(_("You can't battle yourself."))
         if ctx.character_data["money"] < money:
             return await ctx.send(_("You are too poor."))
 
+        await self.bot.pool.execute(
+            'UPDATE profile SET money=money-$1 WHERE "user"=$2;', money, ctx.author.id,
+        )
+
         if not enemy:
             msg = await ctx.send(
                 _(
-                    "{author} seeks a battle! React with ⚔ now to duel them! The price is **${money}**."
+                    "{author} seeks a battle! React with ⚔ now to duel them! The price"
+                    " is **${money}**."
                 ).format(author=ctx.author.mention, money=money)
             )
         else:
             msg = await ctx.send(
                 _(
-                    "{author} seeks a battle with {enemy}! React with ⚔ now to duel them! The price is **${money}**."
+                    "{author} seeks a battle with {enemy}! React with ⚔ now to duel"
+                    " them! The price is **${money}**."
                 ).format(author=ctx.author.mention, enemy=enemy.mention, money=money)
             )
 
@@ -82,6 +102,11 @@ class Battles(commands.Cog):
                 )
             except asyncio.TimeoutError:
                 await self.bot.reset_cooldown(ctx)
+                await self.bot.pool.execute(
+                    'UPDATE profile SET money=money+$1 WHERE "user"=$2;',
+                    money,
+                    ctx.author.id,
+                )
                 return await ctx.send(
                     _("Noone wanted to join your battle, {author}!").format(
                         author=ctx.author.mention
@@ -95,9 +120,15 @@ class Battles(commands.Cog):
 
         await ctx.send(
             _(
-                "Battle **{author}** vs **{enemy}** started! 30 seconds of fighting will now start!"
+                "Battle **{author}** vs **{enemy}** started! 30 seconds of fighting"
+                " will now start!"
             ).format(author=ctx.disp, enemy=enemy_.display_name)
         )
+
+        await self.bot.pool.execute(
+            'UPDATE profile SET money=money-$1 WHERE "user"=$2;', money, enemy_.id
+        )
+
         stats = [
             sum(await self.bot.get_damage_armor_for(ctx.author)) + random.randint(1, 7),
             sum(await self.bot.get_damage_armor_for(enemy_)) + random.randint(1, 7),
@@ -111,27 +142,22 @@ class Battles(commands.Cog):
 
         await asyncio.sleep(30)
 
-        if not await has_money(self.bot, winner.id, money) or not await has_money(
-            self.bot, looser.id, money
-        ):
-            return await ctx.send(
-                _(
-                    "One of you can't pay the price for the battle because he spent money in the time of fighting."
-                )
-            )
         async with self.bot.pool.acquire() as conn:
             await conn.execute(
                 'UPDATE profile SET pvpwins=pvpwins+1 WHERE "user"=$1;', winner.id
             )
             await conn.execute(
-                'UPDATE profile SET money=money+$1 WHERE "user"=$2;', money, winner.id
+                'UPDATE profile SET money=money+$1 WHERE "user"=$2;',
+                money * 2,
+                winner.id,
             )
-            await conn.execute(
-                'UPDATE profile SET money=money-$1 WHERE "user"=$2;', money, looser.id
+            await self.bot.log_transaction(
+                ctx,
+                from_=looser.id,
+                to=winner.id,
+                subject="money",
+                data={"Amount": money},
             )
-        await self.bot.log_transaction(
-            ctx, from_=looser.id, to=winner.id, subject="money", data={"Amount": money}
-        )
         await ctx.send(
             _("{winner} won the battle vs {looser}! Congratulations!").format(
                 winner=winner.mention, looser=looser.mention
@@ -140,27 +166,48 @@ class Battles(commands.Cog):
 
     @has_char()
     @user_cooldown(300)
-    @commands.command()
+    @commands.command(brief=_("Battle against a player (inclusdes raidstats)"))
     @locale_doc
     async def raidbattle(
-        self, ctx, money: IntGreaterThan(-1) = 0, enemy: discord.Member = None
+        self, ctx, money: IntGreaterThan(-1) = 0, enemy: MemberConverter = None
     ):
-        _("""Battle system based on raids.""")
+        _(
+            """`[money]` - A whole number that can be 0 or greater; defaults to 0
+            `[enemy]` - A user who has a profile; defaults to anyone
+
+            Fight against another player while betting money.
+            To decide the players' stats, their items, race and class bonuses and raidstats are evaluated.
+
+            The money is removed from both players at the start of the battle. Once a winner has been decided, they will receive their money, plus the enemy's money.
+            The battle is divided into rounds, in which a player attacks. The first round's attacker is chosen randomly, all other rounds the attacker is the last round's defender.
+
+            The battle ends if one player's HP drops to 0 (winner decided), or if 5 minutes after the battle started pass (tie).
+            In case of a tie, both players will get their money back.
+
+            The battle's winner will receive a PvP win, which shows on their profile.
+            (This command has a cooldown of 5 minutes)"""
+        )
         if enemy == ctx.author:
             return await ctx.send(_("You can't battle yourself."))
         if ctx.character_data["money"] < money:
             return await ctx.send(_("You are too poor."))
 
+        await self.bot.pool.execute(
+            'UPDATE profile SET money=money-$1 WHERE "user"=$2;', money, ctx.author.id,
+        )
+
         if not enemy:
             msg = await ctx.send(
                 _(
-                    "{author} seeks a raidbattle! React with ⚔ now to duel them! The price is **${money}**."
+                    "{author} seeks a raidbattle! React with ⚔ now to duel them! The"
+                    " price is **${money}**."
                 ).format(author=ctx.author.mention, money=money)
             )
         else:
             msg = await ctx.send(
                 _(
-                    "{author} seeks a raidbattle with {enemy}! React with ⚔ now to duel them! The price is **${money}**."
+                    "{author} seeks a raidbattle with {enemy}! React with ⚔ now to duel"
+                    " them! The price is **${money}**."
                 ).format(author=ctx.author.mention, enemy=enemy.mention, money=money)
             )
 
@@ -185,6 +232,11 @@ class Battles(commands.Cog):
                 )
             except asyncio.TimeoutError:
                 await self.bot.reset_cooldown(ctx)
+                await self.bot.pool.execute(
+                    'UPDATE profile SET money=money+$1 WHERE "user"=$2;',
+                    money,
+                    ctx.author.id,
+                )
                 return await ctx.send(
                     _("Noone wanted to join your raidbattle, {author}!").format(
                         author=ctx.author.mention
@@ -195,6 +247,10 @@ class Battles(commands.Cog):
             else:
                 enemy_ = None
                 await ctx.send(_("You don't have enough money to join the raidbattle."))
+
+        await self.bot.pool.execute(
+            'UPDATE profile SET money=money-$1 WHERE "user"=$2;', money, enemy_.id
+        )
 
         players = []
 
@@ -278,24 +334,11 @@ class Battles(commands.Cog):
             attacker, defender = defender, attacker  # switch places
 
         if players[1]["hp"] == 0:  # command author wins
-            if not await has_money(
-                self.bot, ctx.author.id, money
-            ) or not await has_money(self.bot, enemy_.id, money):
-                return await ctx.send(
-                    _(
-                        "One of you both can't pay the price for the raidbattle because he spent money in the time of fighting."
-                    )
-                )
             async with self.bot.pool.acquire() as conn:
                 await conn.execute(
                     'UPDATE profile SET money=money+$1 WHERE "user"=$2;',
-                    money,
+                    money * 2,
                     ctx.author.id,
-                )
-                await conn.execute(
-                    'UPDATE profile SET money=money-$1 WHERE "user"=$2;',
-                    money,
-                    enemy_.id,
                 )
                 await conn.execute(
                     'UPDATE profile SET pvpwins=pvpwins+1 WHERE "user"=$1;',
@@ -314,24 +357,11 @@ class Battles(commands.Cog):
                 )
             )
         elif players[0]["hp"] == 0:  # enemy wins
-            if not await has_money(
-                self.bot, ctx.author.id, money
-            ) or not await has_money(self.bot, enemy_.id, money):
-                return await ctx.send(
-                    _(
-                        "One of you both can't pay the price for the raidbattle because he spent money in the time of fighting."
-                    )
-                )
             async with self.bot.pool.acquire() as conn:
                 await conn.execute(
                     'UPDATE profile SET money=money+$1 WHERE "user"=$2;',
-                    money,
+                    money * 2,
                     enemy_.id,
-                )
-                await conn.execute(
-                    'UPDATE profile SET money=money-$1 WHERE "user"=$2;',
-                    money,
-                    ctx.author.id,
                 )
                 await conn.execute(
                     'UPDATE profile SET pvpwins=pvpwins+1 WHERE "user"=$1;', enemy_.id
@@ -350,31 +380,65 @@ class Battles(commands.Cog):
             )
 
         else:  # timeout after 5 min
+            async with self.bot.pool.acquire() as conn:
+                await conn.execute(
+                    'UPDATE profile SET money=money+$1 WHERE "user"=$2;',
+                    money,
+                    ctx.author.id,
+                )
+                await conn.execute(
+                    'UPDATE profile SET money=money+$1 WHERE "user"=$2;',
+                    money,
+                    enemy_.id,
+                )
             await ctx.send(_("Raidbattle took too long, aborting."))
 
     @has_char()
     @user_cooldown(600)
-    @commands.command()
+    @commands.command(brief=_("Battle against a player (active)"))
     @locale_doc
     async def activebattle(
-        self, ctx, money: IntGreaterThan(-1) = 0, enemy: discord.Member = None
+        self, ctx, money: IntGreaterThan(-1) = 0, enemy: MemberConverter = None
     ):
-        _("""Reaction-based battle system.""")
+        _(
+            """`[money]` - A whole number that can be 0 or greater; defaults to 0
+            `[enemy]` - A user who has a profile; defaults to anyone
+
+            Fight against another player while betting money.
+            To decide players' stats, their items, race and class bonuses are evaluated.
+
+            The money is removed from both players at the start of the battle. Once a winner has been decided, they will receive their money, plus the enemy's money.
+            The battle takes place in rounds. Each round, both players have to choose their move using the reactions.
+            Players can attack (⚔️), defend (🛡️) or recover HP (❤️).
+
+            The battle ends if one player's HP drops to 0 (winner decided), or a player does not move (forfeit).
+            In case of a forfeit, neither of the players will get their money back.
+
+            The battle's winner will receive a PvP win, which shows on their profile.
+            (This command has a cooldown of 10 minutes.)"""
+        )
         if enemy == ctx.author:
             return await ctx.send(_("You can't battle yourself."))
         if ctx.character_data["money"] < money:
             return await ctx.send(_("You are too poor."))
 
+        await self.bot.pool.execute(
+            'UPDATE profile SET money=money-$1 WHERE "user"=$2;', money, ctx.author.id,
+        )
+
         if not enemy:
             msg = await ctx.send(
                 _(
-                    "{author} seeks an active battle! React with ⚔ now to duel them! The price is **${money}**."
+                    "{author} seeks an active battle! React with ⚔ now to duel them!"
+                    " The price is **${money}**."
                 ).format(author=ctx.author.mention, money=money)
             )
+
         else:
             msg = await ctx.send(
                 _(
-                    "{author} seeks an active battle with {enemy}! React with ⚔ now to duel them! The price is **${money}**."
+                    "{author} seeks an active battle with {enemy}! React with ⚔ now to"
+                    " duel them! The price is **${money}**."
                 ).format(author=ctx.author.mention, enemy=enemy.mention, money=money)
             )
 
@@ -399,6 +463,11 @@ class Battles(commands.Cog):
                 )
             except asyncio.TimeoutError:
                 await self.bot.reset_cooldown(ctx)
+                await self.bot.pool.execute(
+                    'UPDATE profile SET money=money+$1 WHERE "user"=$2;',
+                    money,
+                    ctx.author.id,
+                )
                 return await ctx.send(
                     _("Noone wanted to join your activebattle, {author}!").format(
                         author=ctx.author.mention
@@ -411,6 +480,10 @@ class Battles(commands.Cog):
                 await ctx.send(
                     _("You don't have enough money to join the activebattle.")
                 )
+
+        await self.bot.pool.execute(
+            'UPDATE profile SET money=money-$1 WHERE "user"=$2;', money, enemy_.id,
+        )
 
         players = {
             ctx.author: {
@@ -438,9 +511,14 @@ class Battles(commands.Cog):
             else:
                 players[p]["hp"] = 100
 
-            d, a = await self.bot.get_damage_armor_for(p)
-            players[p]["damage"] = int(d)
-            players[p]["defense"] = int(a)
+            sword, shield = await self.bot.get_equipped_items_for(p)
+            attack, defense = await self.bot.generate_stats(
+                p,
+                float(sword["damage"] if sword else 0),
+                float(shield["armor"] if shield else 0),
+            )
+            players[p]["damage"] = int(attack)
+            players[p]["defense"] = int(defense)
 
         moves = {
             "\U00002694": "attack",
@@ -448,21 +526,32 @@ class Battles(commands.Cog):
             "\U00002764": "recover",
         }
 
-        last = None
+        msg = await ctx.send(
+            _("Battle {p1} vs {p2}").format(p1=ctx.author.mention, p2=enemy_.mention),
+            embed=discord.Embed(
+                title=_("Let the battle begin!"), color=self.bot.config.primary_colour,
+            ),
+        )
 
         def is_valid_move(r, u):
-            return str(r.emoji) in moves and u in players and r.message.id == last.id
+            return str(r.emoji) in moves and u in players and r.message.id == msg.id
+
+        for emoji in moves:
+            await msg.add_reaction(emoji)
 
         while players[ctx.author]["hp"] > 0 and players[enemy_]["hp"] > 0:
-            last = await ctx.send(
-                _(
-                    "{prevaction}\n{player1}: **{hp1}** HP\n{player2}: **{hp2}** HP\nReact to play."
-                ).format(
-                    prevaction="\n".join([i["lastmove"] for i in players.values()]),
-                    player1=ctx.author.mention,
-                    player2=enemy_.mention,
-                    hp1=players[ctx.author]["hp"],
-                    hp2=players[enemy_]["hp"],
+            await msg.edit(
+                embed=discord.Embed(
+                    description=_(
+                        "{prevaction}\n{player1}: **{hp1}** HP\n{player2}: **{hp2}**"
+                        " HP\nReact to play."
+                    ).format(
+                        prevaction="\n".join([i["lastmove"] for i in players.values()]),
+                        player1=ctx.author.mention,
+                        player2=enemy_.mention,
+                        hp1=players[ctx.author]["hp"],
+                        hp2=players[enemy_]["hp"],
+                    )
                 )
             )
             players[ctx.author]["action"], players[enemy_]["action"] = None, None
@@ -470,8 +559,6 @@ class Battles(commands.Cog):
                 _("{user} does nothing...").format(user=ctx.author.mention),
                 _("{user} does nothing...").format(user=enemy_.mention),
             )
-            for emoji in moves:
-                await last.add_reaction(emoji)
 
             while (not players[ctx.author]["action"]) or (
                 not players[enemy_]["action"]
@@ -480,8 +567,23 @@ class Battles(commands.Cog):
                     r, u = await self.bot.wait_for(
                         "reaction_add", timeout=30, check=is_valid_move
                     )
+                    try:
+                        await msg.remove_reaction(r.emoji, u)
+                    except discord.Forbidden:
+                        pass
                 except asyncio.TimeoutError:
                     await self.bot.reset_cooldown(ctx)
+                    async with self.bot.pool.acquire() as conn:
+                        await conn.execute(
+                            'UPDATE profile SET money=money+$1 WHERE "user"=$2;',
+                            money,
+                            ctx.author.id,
+                        )
+                        await conn.execute(
+                            'UPDATE profile SET money=money+$1 WHERE "user"=$2;',
+                            money,
+                            enemy_.id,
+                        )
                     return await ctx.send(
                         _("Someone refused to move. Activebattle stopped.")
                     )
@@ -572,34 +674,35 @@ class Battles(commands.Cog):
             winner, looser = ctx.author, enemy_
         else:
             looser, winner = ctx.author, enemy_
-        if not await has_money(self.bot, winner.id, money) or not await has_money(
-            self.bot, looser.id, money
-        ):
-            return await ctx.send(
-                _(
-                    "One of you both can't pay the price for the activebattle because he spent money in the time of fighting."
-                )
-            )
         async with self.bot.pool.acquire() as conn:
             await conn.execute(
                 'UPDATE profile SET pvpwins=pvpwins+1 WHERE "user"=$1;', winner.id
             )
             await conn.execute(
-                'UPDATE profile SET money=money+$1 WHERE "user"=$2;', money, winner.id
-            )
-            await conn.execute(
-                'UPDATE profile SET money=money-$1 WHERE "user"=$2;', money, looser.id
+                'UPDATE profile SET money=money+$1 WHERE "user"=$2;',
+                money * 2,
+                winner.id,
             )
         await self.bot.log_transaction(
             ctx, from_=looser.id, to=winner.id, subject="money", data={"Amount": money}
         )
+        await msg.edit(
+            embed=discord.Embed(
+                description=_(
+                    "{prevaction}\n{player1}: **{hp1}** HP\n{player2}: **{hp2}**"
+                    " HP\nReact to play."
+                ).format(
+                    prevaction="\n".join([i["lastmove"] for i in players.values()]),
+                    player1=ctx.author.mention,
+                    player2=enemy_.mention,
+                    hp1=players[ctx.author]["hp"],
+                    hp2=players[enemy_]["hp"],
+                )
+            )
+        )
         await ctx.send(
-            _(
-                "{prevaction}\n{winner} won the active battle vs {looser}! Congratulations!"
-            ).format(
-                prevaction="\n".join([players[p]["lastmove"] for p in players]),
-                winner=winner.mention,
-                looser=looser.mention,
+            _("{winner} won the active battle vs {looser}! Congratulations!").format(
+                winner=winner.mention, looser=looser.mention,
             )
         )
 

@@ -16,7 +16,9 @@ You should have received a copy of the GNU Affero General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
 import asyncio
-import secrets
+
+from utils import random
+from utils.i18n import _
 
 ALL_NUMBERS = list(range(37))
 
@@ -154,7 +156,7 @@ class RouletteGame:
         # They pay for the roll
         await self.remove_money()
         # The result of the roll
-        self.result = secrets.choice(ALL_NUMBERS)
+        self.result = random.choice(ALL_NUMBERS)
         self.message = await ctx.send(
             _("<a:roulette:691749187284369419> Spinning the wheel...")
         )

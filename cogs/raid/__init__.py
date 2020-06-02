@@ -17,7 +17,6 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
 import asyncio
 import datetime
-import random
 import re
 
 from decimal import Decimal
@@ -27,7 +26,11 @@ import discord
 from discord.ext import commands
 
 from classes.converters import IntGreaterThan
-from utils.checks import AlreadyRaiding, has_char, is_admin, is_god
+from cogs.shard_communication import user_on_cooldown as user_cooldown
+from utils import random
+from utils.checks import AlreadyRaiding, has_char, is_gm, is_god
+from utils.i18n import _, locale_doc
+from utils.misc import nice_join
 
 
 def raid_channel():
@@ -55,6 +58,8 @@ def raid_free():
 
 
 class Raid(commands.Cog):
+    """Raids are only available in the support server. Use the support command for an invite link."""
+
     def __init__(self, bot):
         self.bot = bot
 
@@ -84,8 +89,8 @@ class Raid(commands.Cog):
     async def clear_raid_timer(self):
         await self.bot.redis.execute("DEL", "special:raid")
 
-    @is_admin()
-    @commands.command()
+    @is_gm()
+    @commands.command(hidden=True)
     async def alterraid(self, ctx, newhp: IntGreaterThan(0)):
         """[Bot Admin only] Change a raid boss' HP."""
         if not self.boss:
@@ -100,10 +105,10 @@ class Raid(commands.Cog):
             return await ctx.send("Could not edit Boss HP!")
         await ctx.send("Boss HP updated!")
 
-    @is_admin()
+    @is_gm()
     @raid_channel()
     @raid_free()
-    @commands.command()
+    @commands.command(hidden=True, brief=_("Start a Zerekiel raid"))
     async def spawn(self, ctx, hp: IntGreaterThan(0)):
         """[Bot Admin only] Starts a raid."""
         await self.set_raid_timer()
@@ -121,7 +126,7 @@ class Raid(commands.Cog):
         )
         self.boss = {"hp": hp, "min_dmg": 100, "max_dmg": 500}
         await ctx.channel.set_permissions(
-            ctx.guild.default_role, overwrite=self.read_only
+            ctx.guild.get_role(self.bot.config.member_role), overwrite=self.read_only
         )
         spawnmsg = await ctx.send(
             f"""
@@ -138,7 +143,8 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
         self.boss.update(message=spawnmsg.id)
         if not self.bot.config.is_beta:
             await self.bot.get_channel(506_167_065_464_406_041).send(
-                "@everyone Zerekiel spawned! 15 Minutes until he is vulnerable...\nUse https://raid.idlerpg.xyz/ to join the raid!"
+                "@everyone Zerekiel spawned! 15 Minutes until he is vulnerable...\nUse"
+                " https://raid.idlerpg.xyz/ to join the raid!"
             )
         if not self.bot.config.is_beta:
             await asyncio.sleep(300)
@@ -233,12 +239,13 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
             await m.add_reaction("\U0001F1EB")
         elif self.boss["hp"] < 1:
             await ctx.channel.set_permissions(
-                ctx.guild.default_role, overwrite=self.allow_sending
+                ctx.guild.get_role(self.bot.config.member_role),
+                overwrite=self.allow_sending,
             )
             highest_bid = [
-                ctx.guild.get_member(356_091_260_429_402_122),
+                356_091_260_429_402_122,
                 0,
-            ]  # user, amount
+            ]  # userid, amount
 
             def check(msg):
                 if (
@@ -250,7 +257,7 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
                 if not (int(msg.content) > highest_bid[1]):
                     return False
                 if (
-                    msg.author.id == highest_bid[0].id
+                    msg.author.id == highest_bid[0]
                 ):  # don't allow a player to outbid themselves
                     return False
                 return True
@@ -259,7 +266,10 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
             for u in list(raid.keys()):
                 page.add_line(u.mention)
             page.add_line(
-                "The raid killed the boss!\nHe dropped a <:CrateLegendary:598094865678598144> Legendary Crate!\nThe highest bid for it wins <:roosip:505447694408482846>\nSimply type how much you bid!"
+                "The raid killed the boss!\nHe dropped a"
+                " <:CrateLegendary:598094865678598144> Legendary Crate!\nThe highest"
+                " bid for it wins <:roosip:505447694408482846>\nSimply type how much"
+                " you bid!"
             )
             for p in page.pages:
                 await ctx.send(p[4:-4])
@@ -274,23 +284,25 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
                     'SELECT money FROM profile WHERE "user"=$1;', msg.author.id
                 )
                 if money and money >= bid:
-                    highest_bid = [msg.author, bid]
+                    highest_bid = [msg.author.id, bid]
                     await ctx.send(f"{msg.author.mention} bids **${msg.content}**!")
             msg = await ctx.send(
-                f"Auction done! Winner is {highest_bid[0].mention} with **${highest_bid[1]}**!\nGiving Legendary Crate..."
+                f"Auction done! Winner is <@{highest_bid[0]}> with"
+                f" **${highest_bid[1]}**!\nGiving Legendary Crate..."
             )
             money = await self.bot.pool.fetchval(
-                'SELECT money FROM profile WHERE "user"=$1;', highest_bid[0].id
+                'SELECT money FROM profile WHERE "user"=$1;', highest_bid[0]
             )
             if money >= highest_bid[1]:
                 await self.bot.pool.execute(
-                    'UPDATE profile SET "money"="money"-$1, "crates_legendary"="crates_legendary"+1 WHERE "user"=$2;',
+                    'UPDATE profile SET "money"="money"-$1,'
+                    ' "crates_legendary"="crates_legendary"+1 WHERE "user"=$2;',
                     highest_bid[1],
-                    highest_bid[0].id,
+                    highest_bid[0],
                 )
                 await self.bot.log_transaction(
                     ctx,
-                    from_=highest_bid[0].id,
+                    from_=highest_bid[0],
                     to=2,
                     subject="money",
                     data={"Amount": highest_bid[1]},
@@ -298,7 +310,9 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
                 await msg.edit(content=f"{msg.content} Done!")
             else:
                 await ctx.send(
-                    f"{highest_bid[0].mention} spent the money in the meantime... Meh! Noone gets it then, pah!\nThis incident has been reported and they will get banned if it happens again. Cheers!"
+                    f"<@{highest_bid[0]}> spent the money in the meantime... Meh!"
+                    " Noone gets it then, pah!\nThis incident has been reported and"
+                    " they will get banned if it happens again. Cheers!"
                 )
 
             cash = int(hp / 4 / len(raid))  # what da hood gets per survivor
@@ -308,26 +322,28 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
                 [u.id for u in raid.keys()],
             )
             await ctx.send(
-                f"**Gave ${cash} of the Zerekiel's ${int(hp / 4)} drop to all survivors!**"
+                f"**Gave ${cash} of the Zerekiel's ${int(hp / 4)} drop to all"
+                " survivors!**"
             )
 
         else:
             m = await ctx.send(
-                "The raid did not manage to kill Zerekiel within 45 Minutes... He disappeared!"
+                "The raid did not manage to kill Zerekiel within 45 Minutes... He"
+                " disappeared!"
             )
             await m.add_reaction("\U0001F1EB")
 
         await asyncio.sleep(30)
         await ctx.channel.set_permissions(
-            ctx.guild.default_role, overwrite=self.deny_sending
+            ctx.guild.get_role(self.bot.config.member_role), overwrite=self.deny_sending
         )
         await self.clear_raid_timer()
         self.boss = None
 
-    @is_admin()
+    @is_gm()
     @ikhdosa_channel()
     @raid_free()
-    @commands.command()
+    @commands.command(hidden=True, brief=_("Start a bandit raid"))
     async def raiddefend(self, ctx, bandits: IntGreaterThan(1), group: str = "I"):
         """[Bot Admin only] Starts a bandit raid in Ikhdosa."""
         await self.set_raid_timer()
@@ -354,7 +370,8 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
         await ctx.send("**The bandits arrive in 10 minutes**")
         await asyncio.sleep(150)
         await ctx.send(
-            "**Bandit Officer**: This is our last warning. Hand out all your goods and gold!"
+            "**Bandit Officer**: This is our last warning. Hand out all your goods and"
+            " gold!"
         )
         await asyncio.sleep(150)
         await ctx.send("**The Bandits arrive in 5 minutes**")
@@ -440,7 +457,10 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
             if bandits[0]["hp"] > 0:
                 em.add_field(
                     name="Swordsman attack",
-                    value=f"Is attacking the bandit and dealt `{target_data['damage']}` damage",
+                    value=(
+                        f"Is attacking the bandit and dealt `{target_data['damage']}`"
+                        " damage"
+                    ),
                 )
             else:
                 money = random.randint(1500, 3000)
@@ -474,11 +494,17 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
             )
         elif len(raid) == 0:
             await ctx.send("The bandits plundered the town!\nAll swordsmen died!")
+        else:
+            m = await ctx.send(
+                "The war at the Gate of Ikhdosa took too long. The bandits fled."
+            )
+            await m.add_reaction("\U0001F1EB")
+
         await self.clear_raid_timer()
 
     @is_god()
     @raid_free()
-    @commands.command()
+    @commands.command(hidden=True, brief=_("Start a Guilt raid"))
     async def guiltspawn(self, ctx):
         """[Guilt only] Starts a raid."""
         await self.set_raid_timer()
@@ -487,7 +513,7 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
             headers={"Authorization": self.bot.config.raidauth},
         )
         await ctx.channel.set_permissions(
-            ctx.guild.default_role, overwrite=self.read_only
+            ctx.guild.get_role(self.bot.config.member_role), overwrite=self.read_only
         )
         await ctx.send(
             """
@@ -529,15 +555,12 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
                 u = await self.bot.get_user_global(i)
                 if not u:
                     continue
-                if not await conn.fetchval(
-                    'SELECT "user" FROM profile WHERE "user"=$1', u.id
-                ):
+                user = await conn.fetchrow(
+                    'SELECT "user", "god" FROM profile WHERE "user"=$1', u.id
+                )
+                if not user or user["god"] != "Guilt":
                     continue
-                try:
-                    dmg, deff = await self.bot.get_raidstats(u, god="Guilt", conn=conn)
-                except ValueError:
-                    continue
-                raid[u] = {"hp": 250, "armor": deff, "damage": dmg}
+                raid[u] = 250
 
         await ctx.send("**Done getting data!**")
 
@@ -546,47 +569,55 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
         while len(raid) > 1 and datetime.datetime.utcnow() < start + datetime.timedelta(
             minutes=45
         ):
-            attacker, target = random.sample(list(raid.items()), 2)
-            dmg = random.randint(
-                round(attacker[1]["damage"] * Decimal("0.8")),
-                round(attacker[1]["damage"] * Decimal("1.2")),
-            )
-            dmg -= target[1]["armor"]
-            dmg = (
-                random.choices(range(0, 10), weights=range(0, 10)[::-1])[0]
-                if dmg < 0
-                else dmg
-            )
-            raid[target[0]]["hp"] -= dmg  # damage dealt
-            if raid[target[0]]["hp"] > 0:
+            if random.randint(1, 5) == 1 and len(raid) > 10:
+                # Insanity appears
+                targets = random.sample(list(raid.keys()), random.randint(2, 5))
+                for target in targets:
+                    del raid[target]
+                nice_names = nice_join([f"{u}" for u in targets])
+                await ctx.send(
+                    embed=discord.Embed(
+                        title="Insanity!",
+                        description=(
+                            f"{nice_names} were eliminated by a wave of insanity!"
+                        ),
+                        colour=0xFDB900,
+                    ).set_url(url=f"{self.bot.BASE_URL}/guilt.jpg")
+                )
+                await asyncio.sleep(5)
+            attacker, target = random.sample(list(raid.keys()), 2)
+            dmg = random.randint(30, 50)
+            raid[target] -= dmg  # damage dealt
+            if (hp := raid[target]) > 0:
                 em = discord.Embed(
-                    title=f"{attacker[0]} attacked {target[0]}!",
-                    description=f"{target[0]} now has {raid[target[0]]['hp']} HP!",
+                    title=f"{attacker} attacked {target}!",
+                    description=f"{target} now has {hp} HP!",
                     colour=0xFFB900,
                 )
             else:
                 em = discord.Embed(
-                    title=f"{attacker[0]} attacked {target[0]}!",
-                    description=f"{target[0]} died!",
+                    title=f"{attacker} attacked {target}!",
+                    description=f"{target} died!",
                     colour=0xFFB900,
                 )
-            em.add_field(name="Theoretical Damage", value=dmg + target[1]["armor"])
-            em.add_field(name="Shield", value=target[1]["armor"])
-            em.add_field(name="Effective Damage", value=dmg)
-            em.set_author(name=str(target[0]), icon_url=target[0].avatar_url)
+            em.add_field(name="Damage", value=dmg)
+            em.set_author(name=f"{target}", icon_url=target.avatar_url)
             em.set_thumbnail(url=f"{self.bot.BASE_URL}/guilt.jpg")
             await ctx.send(embed=em)
-            if raid[target[0]]["hp"] <= 0:
-                del raid[target[0]]
+            if hp <= 0:
+                del raid[target]
             await asyncio.sleep(4)
 
         if len(raid) == 1:
             survivor = list(raid.keys())[0]
             await ctx.send(
-                f"The massacre is over. {survivor.mention} survived as the strongest of all.\nGuilt gave a <:CrateLegendary:598094865678598144> Legendary Crate to them."
+                f"The massacre is over. {survivor.mention} survived as the strongest of"
+                " all.\nGuilt gave a <:CrateLegendary:598094865678598144> Legendary"
+                " Crate to them."
             )
             await self.bot.pool.execute(
-                'UPDATE profile SET "crates_legendary"="crates_legendary"+1 WHERE "user"=$1;',
+                'UPDATE profile SET "crates_legendary"="crates_legendary"+1 WHERE'
+                ' "user"=$1;',
                 survivor.id,
             )
             await self.bot.log_transaction(
@@ -598,13 +629,14 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
             )
         else:
             await ctx.send(
-                "The raid did not manage to finish within 45 Minutes... Guilt disappeared!"
+                "The raid did not manage to finish within 45 Minutes... Guilt"
+                " disappeared!"
             )
         await self.clear_raid_timer()
 
     @is_god()
     @raid_free()
-    @commands.command()
+    @commands.command(hidden=True, brief=_("Start a Kvothe raid"))
     async def kvothespawn(self, ctx, scrael: IntGreaterThan(1)):
         """[Kvothe only] Starts a raid."""
         await self.set_raid_timer()
@@ -708,7 +740,10 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
             if scrael[0]["hp"] > 0:
                 em.add_field(
                     name="Hero attack",
-                    value=f"Is attacking the scrael and dealt `{target_data['damage']}` damage",
+                    value=(
+                        f"Is attacking the scrael and dealt `{target_data['damage']}`"
+                        " damage"
+                    ),
                 )
             else:
                 money = random.randint(250, 750)
@@ -730,7 +765,8 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
         if len(scrael) == 0:
             most_kills = sorted(raid.items(), key=lambda x: -(x[1]["kills"]))[0][0]
             await self.bot.pool.execute(
-                'UPDATE profile SET "crates_legendary"="crates_legendary"+$1 WHERE "user"=$2;',
+                'UPDATE profile SET "crates_legendary"="crates_legendary"+$1 WHERE'
+                ' "user"=$2;',
                 1,
                 most_kills.id,
             )
@@ -742,7 +778,9 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
                 data={"Rarity": "legendary", "Amount": 1},
             )
             await ctx.send(
-                f"The scrael were defeated! Our most glorious hero, {most_kills.mention}, has received Kvothe's grace, a {self.bot.cogs['Crates'].emotes.legendary}."
+                "The scrael were defeated! Our most glorious hero,"
+                f" {most_kills.mention}, has received Kvothe's grace, a"
+                f" {self.bot.cogs['Crates'].emotes.legendary}."
             )
         elif len(raid) == 0:
             await ctx.send(
@@ -752,7 +790,7 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
 
     @is_god()
     @raid_free()
-    @commands.command()
+    @commands.command(hidden=True, brief=_("Start an Eden raid"))
     async def edenspawn(self, ctx, hp: IntGreaterThan(0)):
         """[Eden only] Starts a raid."""
         await self.set_raid_timer()
@@ -762,7 +800,7 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
         )
         self.boss = {"hp": hp, "min_dmg": 100, "max_dmg": 500}
         await ctx.channel.set_permissions(
-            ctx.guild.default_role, overwrite=self.read_only
+            ctx.guild.get_role(self.bot.config.member_role), overwrite=self.read_only
         )
         await ctx.send(
             f"""
@@ -867,15 +905,19 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
             await ctx.send("The raid was all wiped!")
         elif self.boss["hp"] < 1:
             await ctx.channel.set_permissions(
-                ctx.guild.default_role, overwrite=self.allow_sending
+                ctx.guild.get_role(self.bot.config.member_role),
+                overwrite=self.allow_sending,
             )
             winner = random.choice(list(raid.keys()))
             await self.bot.pool.execute(
-                'UPDATE profile SET "crates_legendary"="crates_legendary"+1 WHERE "user"=$1;',
+                'UPDATE profile SET "crates_legendary"="crates_legendary"+1 WHERE'
+                ' "user"=$1;',
                 winner.id,
             )
             await ctx.send(
-                f"The guardian was defeated, the seekers can enter the garden! Eden has gracefully given {winner.mention} a legendary crate for their efforts."
+                "The guardian was defeated, the seekers can enter the garden! Eden has"
+                f" gracefully given {winner.mention} a legendary crate for their"
+                " efforts."
             )
 
             cash = int(hp / 4 / len(raid))  # what da hood gets per survivor
@@ -885,24 +927,26 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
                 [u.id for u in raid.keys()],
             )
             await ctx.send(
-                f"**Gave ${cash} of the Guardian's ${int(hp / 4)} drop to all survivors!**"
+                f"**Gave ${cash} of the Guardian's ${int(hp / 4)} drop to all"
+                " survivors!**"
             )
 
         else:
             await ctx.send(
-                "The raid did not manage to kill the Guardian within 45 Minutes... The entrance remains blocked!"
+                "The raid did not manage to kill the Guardian within 45 Minutes... The"
+                " entrance remains blocked!"
             )
 
         await asyncio.sleep(30)
         await ctx.channel.set_permissions(
-            ctx.guild.default_role, overwrite=self.deny_sending
+            ctx.guild.get_role(self.bot.config.member_role), overwrite=self.deny_sending
         )
         await self.clear_raid_timer()
         self.boss = None
 
     @is_god()
     @raid_free()
-    @commands.command()
+    @commands.command(hidden=True, brief=_("Start a Tet raid"))
     async def tetspawn(self, ctx):
         """[Tet only] Starts a raid."""
         await self.set_raid_timer()
@@ -911,7 +955,7 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
             headers={"Authorization": self.bot.config.raidauth},
         )
         await ctx.channel.set_permissions(
-            ctx.guild.default_role, overwrite=self.read_only
+            ctx.guild.get_role(self.bot.config.member_role), overwrite=self.read_only
         )
         await ctx.send(
             """
@@ -1014,15 +1058,18 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
 
         if len(raid) == 1:
             await ctx.channel.set_permissions(
-                ctx.guild.default_role, overwrite=self.allow_sending
+                ctx.guild.get_role(self.bot.config.member_role),
+                overwrite=self.allow_sending,
             )
             winner = raid[0]
             await self.bot.pool.execute(
-                'UPDATE profile SET "crates_legendary"="crates_legendary"+1 WHERE "user"=$1;',
+                'UPDATE profile SET "crates_legendary"="crates_legendary"+1 WHERE'
+                ' "user"=$1;',
                 winner.id,
             )
             await ctx.send(
-                f"The game is over. {winner.mention} has lasted the longest against Tet and received a legendary crate."
+                f"The game is over. {winner.mention} has lasted the longest against Tet"
+                " and received a legendary crate."
             )
 
         else:
@@ -1030,14 +1077,14 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
 
         await asyncio.sleep(30)
         await ctx.channel.set_permissions(
-            ctx.guild.default_role, overwrite=self.deny_sending
+            ctx.guild.get_role(self.bot.config.member_role), overwrite=self.deny_sending
         )
         await self.clear_raid_timer()
         self.boss = None
 
     @is_god()
     @raid_free()
-    @commands.command()
+    @commands.command(hidden=True, brief=_("Start a CHamburr raid"))
     async def chamburrspawn(self, ctx, hp: IntGreaterThan(0)):
         """[CHamburr only] Starts a raid."""
         await self.set_raid_timer()
@@ -1047,7 +1094,7 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
         )
         self.boss = {"hp": hp, "min_dmg": 100, "max_dmg": 500}
         await ctx.channel.set_permissions(
-            ctx.guild.default_role, overwrite=self.read_only
+            ctx.guild.get_role(self.bot.config.member_role), overwrite=self.read_only
         )
         await ctx.send(
             f"""
@@ -1157,12 +1204,13 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
             await ctx.send("The raid was all wiped!")
         elif self.boss["hp"] < 1:
             await ctx.channel.set_permissions(
-                ctx.guild.default_role, overwrite=self.allow_sending
+                ctx.guild.get_role(self.bot.config.member_role),
+                overwrite=self.allow_sending,
             )
             highest_bid = [
-                ctx.guild.get_member(356_091_260_429_402_122),
+                356_091_260_429_402_122,
                 0,
-            ]  # user, amount
+            ]  # userid, amount
 
             def check(msg):
                 if (
@@ -1174,7 +1222,7 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
                 if not (int(msg.content) > highest_bid[1]):
                     return False
                 if (
-                    msg.author.id == highest_bid[0].id
+                    msg.author.id == highest_bid[0]
                 ):  # don't allow a player to outbid themselves
                     return False
                 return True
@@ -1183,7 +1231,10 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
             for u in list(raid.keys()):
                 page.add_line(u.mention)
             page.add_line(
-                "The raid killed the boss!\nHe dropped a <:CrateLegendary:598094865678598144> Legendary Crate!\nThe highest bid for it wins <:roosip:505447694408482846>\nSimply type how much you bid!"
+                "The raid killed the boss!\nHe dropped a"
+                " <:CrateLegendary:598094865678598144> Legendary Crate!\nThe highest"
+                " bid for it wins <:roosip:505447694408482846>\nSimply type how much"
+                " you bid!"
             )
             for p in page.pages:
                 await ctx.send(p[4:-4])
@@ -1198,23 +1249,25 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
                     'SELECT money FROM profile WHERE "user"=$1;', msg.author.id
                 )
                 if money and money >= bid:
-                    highest_bid = [msg.author, bid]
+                    highest_bid = [msg.author.id, bid]
                     await ctx.send(f"{msg.author.mention} bids **${msg.content}**!")
             msg = await ctx.send(
-                f"Auction done! Winner is {highest_bid[0].mention} with **${highest_bid[1]}**!\nGiving Legendary Crate..."
+                f"Auction done! Winner is <@{highest_bid[0]}> with"
+                f" **${highest_bid[1]}**!\nGiving Legendary Crate..."
             )
             money = await self.bot.pool.fetchval(
-                'SELECT money FROM profile WHERE "user"=$1;', highest_bid[0].id
+                'SELECT money FROM profile WHERE "user"=$1;', highest_bid[0]
             )
             if money >= highest_bid[1]:
                 await self.bot.pool.execute(
-                    'UPDATE profile SET "money"="money"-$1, "crates_legendary"="crates_legendary"+1 WHERE "user"=$2;',
+                    'UPDATE profile SET "money"="money"-$1,'
+                    ' "crates_legendary"="crates_legendary"+1 WHERE "user"=$2;',
                     highest_bid[1],
-                    highest_bid[0].id,
+                    highest_bid[0],
                 )
                 await self.bot.log_transaction(
                     ctx,
-                    from_=highest_bid[0].id,
+                    from_=highest_bid[0],
                     to=2,
                     subject="money",
                     data={"Amount": highest_bid[1]},
@@ -1222,7 +1275,9 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
                 await msg.edit(content=f"{msg.content} Done!")
             else:
                 await ctx.send(
-                    f"{highest_bid[0].mention} spent the money in the meantime... Meh! Noone gets it then, pah!\nThis incident has been reported and they will get banned if it happens again. Cheers!"
+                    f"<@{highest_bid[0]}> spent the money in the meantime... Meh!"
+                    " Noone gets it then, pah!\nThis incident has been reported and"
+                    " they will get banned if it happens again. Cheers!"
                 )
 
             cash = int(hp / 4 / len(raid))  # what da hood gets per survivor
@@ -1232,24 +1287,26 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
                 [u.id for u in raid.keys()],
             )
             await ctx.send(
-                f"**Gave ${cash} of the hamburger's ${int(hp / 4)} drop to all survivors!**"
+                f"**Gave ${cash} of the hamburger's ${int(hp / 4)} drop to all"
+                " survivors!**"
             )
 
         else:
             await ctx.send(
-                "The raid did not manage to kill the hamburger within 45 Minutes... He disappeared!"
+                "The raid did not manage to kill the hamburger within 45 Minutes... He"
+                " disappeared!"
             )
 
         await asyncio.sleep(30)
         await ctx.channel.set_permissions(
-            ctx.guild.default_role, overwrite=self.deny_sending
+            ctx.guild.get_role(self.bot.config.member_role), overwrite=self.deny_sending
         )
         await self.clear_raid_timer()
         self.boss = None
 
     @is_god()
     @raid_free()
-    @commands.command()
+    @commands.command(hidden=True, brief=_("Start a Salutations raid"))
     async def salutationsspawn(self, ctx, hp: IntGreaterThan(0)):
         """[Salutations only] Starts a raid."""
         await self.set_raid_timer()
@@ -1259,7 +1316,7 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
         )
         self.boss = {"hp": hp, "min_dmg": 100, "max_dmg": 500}
         await ctx.channel.set_permissions(
-            ctx.guild.default_role, overwrite=self.read_only
+            ctx.guild.get_role(self.bot.config.member_role), overwrite=self.read_only
         )
         await ctx.send(
             """
@@ -1377,7 +1434,8 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
                     em.set_author(name=str(target), icon_url=target.avatar_url)
                     em.set_thumbnail(url=f"{self.bot.BASE_URL}/cyberus.jpg")
                     await ctx.send(
-                        "Cyberus used **enragement**: Attack is increased by 40% but is more susceptible to damage by 10%.",
+                        "Cyberus used **enragement**: Attack is increased by 40% but is"
+                        " more susceptible to damage by 10%.",
                         embed=em,
                     )
                     if raid[target]["hp"] <= 0:
@@ -1385,7 +1443,8 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
                 elif cyberus_skill == "assassinate" and random.randint(1, 10) < 5:
                     del raid[target]
                     await ctx.send(
-                        "Cyberus successfully used **assassinate** and kills a player regardless of HP.",
+                        "Cyberus successfully used **assassinate** and kills a player"
+                        " regardless of HP.",
                         embed=discord.Embed(
                             title="Cyberus assassinated!",
                             description=f"{target} died.",
@@ -1431,7 +1490,10 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
                 text = "Cyberus takes **10%** more damage due to **enragement**.\n"
                 dmg_to_take += round(base_dmg * Decimal("0.1"))
             if action == "Second Wind":
-                text = f"{text}The players deal **50%** more damage due to **second wind**.\n"
+                text = (
+                    f"{text}The players deal **50%** more damage due to **second"
+                    " wind**.\n"
+                )
                 dmg_to_take += round(base_dmg * Decimal("0.5"))
             if cyberus_skill == "howl":
                 text = f"{text}Cyberus uses **howl** to reduce damage by 30%"
@@ -1454,12 +1516,13 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
             await ctx.send("The raid was all wiped!")
         elif self.boss["hp"] < 1:
             await ctx.channel.set_permissions(
-                ctx.guild.default_role, overwrite=self.allow_sending
+                ctx.guild.get_role(self.bot.config.member_role),
+                overwrite=self.allow_sending,
             )
             highest_bid = [
-                ctx.guild.get_member(356_091_260_429_402_122),
+                356_091_260_429_402_122,
                 0,
-            ]  # user, amount
+            ]  # userid, amount
 
             def check(msg):
                 if (
@@ -1471,7 +1534,7 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
                 if not (int(msg.content) > highest_bid[1]):
                     return False
                 if (
-                    msg.author.id == highest_bid[0].id
+                    msg.author.id == highest_bid[0]
                 ):  # don't allow a player to outbid themselves
                     return False
                 return True
@@ -1480,7 +1543,10 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
             for u in list(raid.keys()):
                 page.add_line(u.mention)
             page.add_line(
-                "The raid killed the boss!\nHe dropped a <:CrateLegendary:598094865678598144> Legendary Crate!\nThe highest bid for it wins <:roosip:505447694408482846>\nSimply type how much you bid!"
+                "The raid killed the boss!\nHe dropped a"
+                " <:CrateLegendary:598094865678598144> Legendary Crate!\nThe highest"
+                " bid for it wins <:roosip:505447694408482846>\nSimply type how much"
+                " you bid!"
             )
             for p in page.pages:
                 await ctx.send(p[4:-4])
@@ -1495,23 +1561,25 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
                     'SELECT money FROM profile WHERE "user"=$1;', msg.author.id
                 )
                 if money and money >= bid:
-                    highest_bid = [msg.author, bid]
+                    highest_bid = [msg.author.id, bid]
                     await ctx.send(f"{msg.author.mention} bids **${msg.content}**!")
             msg = await ctx.send(
-                f"Auction done! Winner is {highest_bid[0].mention} with **${highest_bid[1]}**!\nGiving Legendary Crate..."
+                f"Auction done! Winner is <@{highest_bid[0]}> with"
+                f" **${highest_bid[1]}**!\nGiving Legendary Crate..."
             )
             money = await self.bot.pool.fetchval(
-                'SELECT money FROM profile WHERE "user"=$1;', highest_bid[0].id
+                'SELECT money FROM profile WHERE "user"=$1;', highest_bid[0]
             )
             if money >= highest_bid[1]:
                 await self.bot.pool.execute(
-                    'UPDATE profile SET "money"="money"-$1, "crates_legendary"="crates_legendary"+1 WHERE "user"=$2;',
+                    'UPDATE profile SET "money"="money"-$1,'
+                    ' "crates_legendary"="crates_legendary"+1 WHERE "user"=$2;',
                     highest_bid[1],
-                    highest_bid[0].id,
+                    highest_bid[0],
                 )
                 await self.bot.log_transaction(
                     ctx,
-                    from_=highest_bid[0].id,
+                    from_=highest_bid[0],
                     to=2,
                     subject="money",
                     data={"Amount": highest_bid[1]},
@@ -1519,11 +1587,14 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
                 await msg.edit(content=f"{msg.content} Done!")
             else:
                 await ctx.send(
-                    f"{highest_bid[0].mention} spent the money in the meantime... Meh! Noone gets it then, pah!\nThis incident has been reported and they will get banned if it happens again. Cheers!"
+                    f"<@{highest_bid[0]}> spent the money in the meantime... Meh!"
+                    " Noone gets it then, pah!\nThis incident has been reported and"
+                    " they will get banned if it happens again. Cheers!"
                 )
 
             await self.bot.pool.execute(
-                'UPDATE profile SET "money"="money"+$1, "xp"="xp"+$2 WHERE "user"=ANY($3);',
+                'UPDATE profile SET "money"="money"+$1, "xp"="xp"+$2 WHERE'
+                ' "user"=ANY($3);',
                 5000,
                 1000,
                 [u.id for u in raid.keys()],
@@ -1534,19 +1605,20 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
 
         else:
             await ctx.send(
-                "The raid did not manage to kill Cyberus within 45 Minutes... He disappeared!"
+                "The raid did not manage to kill Cyberus within 45 Minutes... He"
+                " disappeared!"
             )
 
         await asyncio.sleep(30)
         await ctx.channel.set_permissions(
-            ctx.guild.default_role, overwrite=self.deny_sending
+            ctx.guild.get_role(self.bot.config.member_role), overwrite=self.deny_sending
         )
         await self.clear_raid_timer()
         self.boss = None
 
     @is_god()
     @raid_free()
-    @commands.command()
+    @commands.command(hidden=True, brief=_("Start an Asmodeus raid"))
     async def asmodeusspawn(self, ctx, hp: IntGreaterThan(0)):
         """[Asmodeus only] Starts a raid."""
         await self.set_raid_timer()
@@ -1556,7 +1628,7 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
         )
         self.boss = {"hp": hp, "min_dmg": 100, "max_dmg": 500}
         await ctx.channel.set_permissions(
-            ctx.guild.default_role, overwrite=self.read_only
+            ctx.guild.get_role(self.bot.config.member_role), overwrite=self.read_only
         )
         await ctx.send(
             """
@@ -1604,7 +1676,12 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
                     'SELECT "user" FROM profile WHERE "user"=$1', u.id
                 ):
                     continue
-                dmg, deff = await self.bot.get_raidstats(u, conn=conn)
+                try:
+                    dmg, deff = await self.bot.get_raidstats(
+                        u, god="Asmodeus", conn=conn
+                    )
+                except ValueError:
+                    continue
                 raid[u] = {"hp": 250, "armor": deff, "damage": dmg}
 
         await ctx.send("**Done getting data!**")
@@ -1648,7 +1725,8 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
         elif self.boss["hp"] < 1:
             winner = random.choice(list(raid.keys()))
             await self.bot.pool.execute(
-                'UPDATE profile SET "crates_legendary"="crates_legendary"+1 WHERE "user"=$1;',
+                'UPDATE profile SET "crates_legendary"="crates_legendary"+1 WHERE'
+                ' "user"=$1;',
                 winner.id,
             )
             await self.bot.log_transaction(
@@ -1659,19 +1737,23 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
                 data={"Rarity": "legendary", "Amount": 1},
             )
             await ctx.send(
-                f"Asmodeus has been defeated. He will lay low for now. He also left a {self.bot.cogs['Crates'].emotes.legendary} to a random survivor ({winner.mention}) for their bravery. They may not get a second chance next time."
+                "Asmodeus has been defeated. He will lay low for now. He also left a"
+                f" {self.bot.cogs['Crates'].emotes.legendary} to a random survivor"
+                f" ({winner.mention}) for their bravery. They may not get a second"
+                " chance next time."
             )
 
         else:
             await ctx.send(
-                "The raid did not manage to kill Asmodeus within 45 Minutes... He disappeared!"
+                "The raid did not manage to kill Asmodeus within 45 Minutes... He"
+                " disappeared!"
             )
         await self.clear_raid_timer()
         self.boss = None
 
     @is_god()
     @raid_free()
-    @commands.command()
+    @commands.command(hidden=True, brief=_("Start a Jesus raid"))
     async def jesusspawn(self, ctx, hp: IntGreaterThan(0)):
         """[Jesus only] Starts a raid."""
         await self.set_raid_timer()
@@ -1681,7 +1763,7 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
         )
         self.boss = {"hp": hp, "min_dmg": 100, "max_dmg": 500}
         await ctx.channel.set_permissions(
-            ctx.guild.default_role, overwrite=self.read_only
+            ctx.guild.get_role(self.bot.config.member_role), overwrite=self.read_only
         )
         await ctx.send(
             f"""
@@ -1788,12 +1870,13 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
             await ctx.send("The raid was all wiped!")
         elif self.boss["hp"] < 1:
             await ctx.channel.set_permissions(
-                ctx.guild.default_role, overwrite=self.allow_sending
+                ctx.guild.get_role(self.bot.config.member_role),
+                overwrite=self.allow_sending,
             )
             highest_bid = [
-                ctx.guild.get_member(356_091_260_429_402_122),
+                356_091_260_429_402_122,
                 0,
-            ]  # user, amount
+            ]  # userid, amount
 
             def check(msg):
                 if (
@@ -1805,7 +1888,7 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
                 if not (int(msg.content) > highest_bid[1]):
                     return False
                 if (
-                    msg.author.id == highest_bid[0].id
+                    msg.author.id == highest_bid[0]
                 ):  # don't allow a player to outbid themselves
                     return False
                 return True
@@ -1814,7 +1897,10 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
             for u in list(raid.keys()):
                 page.add_line(u.mention)
             page.add_line(
-                "The raid killed the boss!\nHe dropped a <:CrateLegendary:598094865678598144> Legendary Crate!\nThe highest bid for it wins <:roosip:505447694408482846>\nSimply type how much you bid!"
+                "The raid killed the boss!\nHe dropped a"
+                " <:CrateLegendary:598094865678598144> Legendary Crate!\nThe highest"
+                " bid for it wins <:roosip:505447694408482846>\nSimply type how much"
+                " you bid!"
             )
             for p in page.pages:
                 await ctx.send(p[4:-4])
@@ -1829,23 +1915,25 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
                     'SELECT money FROM profile WHERE "user"=$1;', msg.author.id
                 )
                 if money and money >= bid:
-                    highest_bid = [msg.author, bid]
+                    highest_bid = [msg.author.id, bid]
                     await ctx.send(f"{msg.author.mention} bids **${msg.content}**!")
             msg = await ctx.send(
-                f"Auction done! Winner is {highest_bid[0].mention} with **${highest_bid[1]}**!\nGiving Legendary Crate..."
+                f"Auction done! Winner is <@{highest_bid[0]}> with"
+                f" **${highest_bid[1]}**!\nGiving Legendary Crate..."
             )
             money = await self.bot.pool.fetchval(
-                'SELECT money FROM profile WHERE "user"=$1;', highest_bid[0].id
+                'SELECT money FROM profile WHERE "user"=$1;', highest_bid[0]
             )
             if money >= highest_bid[1]:
                 await self.bot.pool.execute(
-                    'UPDATE profile SET "money"="money"-$1, "crates_legendary"="crates_legendary"+1 WHERE "user"=$2;',
+                    'UPDATE profile SET "money"="money"-$1,'
+                    ' "crates_legendary"="crates_legendary"+1 WHERE "user"=$2;',
                     highest_bid[1],
-                    highest_bid[0].id,
+                    highest_bid[0],
                 )
                 await self.bot.log_transaction(
                     ctx,
-                    from_=highest_bid[0].id,
+                    from_=highest_bid[0],
                     to=2,
                     subject="money",
                     data={"Amount": highest_bid[1]},
@@ -1853,7 +1941,9 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
                 await msg.edit(content=f"{msg.content} Done!")
             else:
                 await ctx.send(
-                    f"{highest_bid[0].mention} spent the money in the meantime... Meh! Noone gets it then, pah!\nThis incident has been reported and they will get banned if it happens again. Cheers!"
+                    f"<@{highest_bid[0]}> spent the money in the meantime... Meh!"
+                    " Noone gets it then, pah!\nThis incident has been reported and"
+                    " they will get banned if it happens again. Cheers!"
                 )
 
             cash = int(hp / 4 / len(raid))  # what da hood gets per survivor
@@ -1863,17 +1953,19 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
                 [u.id for u in raid.keys()],
             )
             await ctx.send(
-                f"**Gave ${cash} of Atheistus' ${int(hp / 4)} drop to all survivors! Thanks to you, the world can live in peace and love again.**"
+                f"**Gave ${cash} of Atheistus' ${int(hp / 4)} drop to all survivors!"
+                " Thanks to you, the world can live in peace and love again.**"
             )
 
         else:
             await ctx.send(
-                "The raid did not manage to kill Atheistus within 45 Minutes... He disappeared!"
+                "The raid did not manage to kill Atheistus within 45 Minutes... He"
+                " disappeared!"
             )
 
         await asyncio.sleep(30)
         await ctx.channel.set_permissions(
-            ctx.guild.default_role, overwrite=self.deny_sending
+            ctx.guild.get_role(self.bot.config.member_role), overwrite=self.deny_sending
         )
         await self.clear_raid_timer()
         self.boss = None
@@ -1881,18 +1973,22 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
     def getpriceto(self, level: float):
         return sum(i * 25000 for i in range(1, int(level * 10) - 9))
 
-    @commands.group(invoke_without_command=True)
+    @commands.group(invoke_without_command=True, brief=_("Increase your raidstats"))
     @locale_doc
     async def increase(self, ctx):
-        _("""Upgrade your raid damage or defense multiplier.""")
+        _(
+            """Upgrade your raid damage or defense multiplier. These will affect your performance in raids and raidbattles."""
+        )
         await ctx.send(
             _(
-                "Use `{prefix}increase damage/defense` to upgrade your raid damage/defense multiplier by 10%."
+                "Use `{prefix}increase damage/defense` to upgrade your raid"
+                " damage/defense multiplier by 10%."
             ).format(prefix=ctx.prefix)
         )
 
+    @user_cooldown(60, identifier="increase")
     @has_char()
-    @increase.command()
+    @increase.command(brief=_("Upgrade your raid damage"))
     @locale_doc
     async def damage(self, ctx):
         _("""Increase your raid damage.""")
@@ -1901,26 +1997,45 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
         if ctx.character_data["money"] < price:
             return await ctx.send(
                 _(
-                    "Upgrading your weapon attack raid multiplier to {newlvl} costs **${price}**, you are too poor."
+                    "Upgrading your weapon attack raid multiplier to {newlvl} costs"
+                    " **${price}**, you are too poor."
                 ).format(newlvl=newlvl, price=price)
             )
-        await self.bot.pool.execute(
-            'UPDATE profile SET "atkmultiply"=$1, "money"="money"-$2 WHERE "user"=$3;',
-            newlvl,
-            price,
-            ctx.author.id,
-        )
+        if not await ctx.confirm(
+            _(
+                "Upgrading your weapon attack raid multiplier to {newlvl} costs"
+                " **${price}**, proceed?"
+            ).format(newlvl=newlvl, price=price)
+        ):
+            return
+        async with self.bot.pool.acquire() as conn:
+            if not await self.bot.has_money(ctx.author, price, conn):
+                return await ctx.send(
+                    _(
+                        "Upgrading your weapon attack raid multiplier to {newlvl} costs"
+                        " **${price}**, you are too poor."
+                    ).format(newlvl=newlvl, price=price)
+                )
+            await conn.execute(
+                'UPDATE profile SET "atkmultiply"=$1, "money"="money"-$2 WHERE'
+                ' "user"=$3;',
+                newlvl,
+                price,
+                ctx.author.id,
+            )
         await self.bot.log_transaction(
             ctx, from_=ctx.author.id, to=2, subject="money", data={"Amount": price}
         )
         await ctx.send(
             _(
-                "You upgraded your weapon attack raid multiplier to {newlvl} for **${price}**."
+                "You upgraded your weapon attack raid multiplier to {newlvl} for"
+                " **${price}**."
             ).format(newlvl=newlvl, price=price)
         )
 
+    @user_cooldown(60, identifier="increase")
     @has_char()
-    @increase.command()
+    @increase.command(brief=_("Upgrade your raid defense"))
     @locale_doc
     async def defense(self, ctx):
         _("""Increase your raid defense.""")
@@ -1929,29 +2044,49 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
         if ctx.character_data["money"] < price:
             return await ctx.send(
                 _(
-                    "Upgrading your shield defense raid multiplier to {newlvl} costs **${price}**, you are too poor."
+                    "Upgrading your shield defense raid multiplier to {newlvl} costs"
+                    " **${price}**, you are too poor."
                 ).format(newlvl=newlvl, price=price)
             )
-        await self.bot.pool.execute(
-            'UPDATE profile SET "defmultiply"=$1, "money"="money"-$2 WHERE "user"=$3;',
-            newlvl,
-            price,
-            ctx.author.id,
-        )
+        if not await ctx.confirm(
+            _(
+                "Upgrading your shield defense raid multiplier to {newlvl} costs"
+                " **${price}**, proceed?"
+            ).format(newlvl=newlvl, price=price)
+        ):
+            return
+        async with self.bot.pool.acquire() as conn:
+            if not self.bot.has_money(ctx.author, price, conn):
+                return await ctx.send(
+                    _(
+                        "Upgrading your shield defense raid multiplier to {newlvl}"
+                        " costs **${price}**, you are too poor."
+                    ).format(newlvl=newlvl, price=price)
+                )
+            await conn.execute(
+                'UPDATE profile SET "defmultiply"=$1, "money"="money"-$2 WHERE'
+                ' "user"=$3;',
+                newlvl,
+                price,
+                ctx.author.id,
+            )
         await self.bot.log_transaction(
             ctx, from_=ctx.author.id, to=2, subject="money", data={"Amount": price}
         )
         await ctx.send(
             _(
-                "You upgraded your shield defense raid multiplier to {newlvl} for **${price}**."
+                "You upgraded your shield defense raid multiplier to {newlvl} for"
+                " **${price}**."
             ).format(newlvl=newlvl, price=price)
         )
 
     @has_char()
-    @commands.command()
+    @commands.command(brief=_("View your raid stats"))
     @locale_doc
     async def raidstats(self, ctx):
-        _("""View your raid stats.""")
+        _(
+            """View your raidstats. These will affect your performance in raids and raidbattles."""
+        )
         atk = ctx.character_data["atkmultiply"]
         deff = ctx.character_data["defmultiply"]
         atkp = self.getpriceto(atk + Decimal("0.1"))
@@ -1967,19 +2102,22 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
             deff += Decimal("0.1") * buildings["raid_building"]
         await ctx.send(
             _(
-                "**{author}'s raid multipliers**\nDamage Multiplier: x{atk} (Upgrading: ${atkp})\nDefense Multiplier: x{deff} (Upgrading: ${deffp})"
+                "**{author}'s raid multipliers**\nDamage Multiplier: x{atk} (Upgrading:"
+                " ${atkp})\nDefense Multiplier: x{deff} (Upgrading: ${deffp})"
             ).format(
                 author=ctx.author.mention, atk=atk, atkp=atkp, deff=deff, deffp=deffp
             )
         )
 
-    @commands.command()
+    @commands.command(brief=_("Did somebody say Raid?"))
     @locale_doc
     async def raid(self, ctx):
         _("""Informs you about joining raids.""")
         await ctx.send(
             _(
-                "Did you ever want to join together with other players to defeat the dragon that roams this land? Raids got you covered!\nJoin the support server (`{prefix}support`) for more information."
+                "Did you ever want to join together with other players to defeat the"
+                " dragon that roams this land? Raids got you covered!\nJoin the support"
+                " server (`{prefix}support`) for more information."
             ).format(prefix=ctx.prefix)
         )
 

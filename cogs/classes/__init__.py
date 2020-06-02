@@ -15,8 +15,6 @@ GNU Affero General Public License for more details.
 You should have received a copy of the GNU Affero General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
-import secrets
-
 from copy import copy
 from decimal import Decimal
 
@@ -24,9 +22,12 @@ import discord
 
 from discord.ext import commands
 
+from cogs.shard_communication import next_day_cooldown
 from cogs.shard_communication import user_on_cooldown as user_cooldown
 from utils import misc as rpgtools
+from utils import random
 from utils.checks import has_char, has_money, is_class, update_pet, user_is_patron
+from utils.i18n import _, locale_doc
 
 
 class Classes(commands.Cog):
@@ -35,11 +36,23 @@ class Classes(commands.Cog):
 
     @has_char()
     @user_cooldown(86400)
-    @commands.command(name="class")
+    @commands.command(name="class", brief=_("Choose or change your class(es)"))
     @locale_doc
     async def _class(self, ctx):
         _(
-            """Change your primary or secondary class. Secondary class is available once you reach level 12."""
+            """Change or select your primary or secondary class.
+
+            - Warriors gain added defense
+            - Thieves gain access to `{prefix}steal`
+            - Mages gain added damage
+            - Rangers gain access to a pet which can hunt for gear items
+            - Raiders gain additional raidstats, used in raidbattles and raids
+            - Ritualists gain additional favor from sacrificing items and are twice as likely to receive loot from adventures
+            (- Paragons gain added damage *and* defense; the class is only available to donators)
+
+            The second class unlocks at level 12. Selecting a class the first time is free (No Class -> Class), but changing it later will cost $5,000 (Class -> another Class)
+
+            (This command has a cooldown of 24 hours)"""
         )
         if int(rpgtools.xptolevel(ctx.character_data["xp"])) >= 12:
             val = await self.bot.paginator.Choose(
@@ -53,7 +66,8 @@ class Classes(commands.Cog):
             discord.Embed(
                 title=_("Warrior"),
                 description=_(
-                    "The tank class. Charge into battle with additional defense!\n+1 defense per evolution."
+                    "The tank class. Charge into battle with additional defense!\n+1"
+                    " defense per evolution."
                 ),
                 color=self.bot.config.primary_colour,
             ),
@@ -61,35 +75,45 @@ class Classes(commands.Cog):
                 title=_("Thief"),
                 description=_(
                     # xgettext: no-python-format
-                    "The sneaky money stealer...\nGet access to `{prefix}steal` to steal 10% of the target's money, if successful.\n+8% success chance per evolution."
+                    "The sneaky money stealer...\nGet access to `{prefix}steal` to"
+                    " steal 10% of the target's money, if successful.\n+8% success"
+                    " chance per evolution."
                 ).format(prefix=ctx.prefix),
                 color=self.bot.config.primary_colour,
             ),
             discord.Embed(
                 title=_("Mage"),
                 description=_(
-                    "Utilise powerful magic for stronger attacks.\n+1 damage per evolution."
+                    "Utilise powerful magic for stronger attacks.\n+1 damage per"
+                    " evolution."
                 ),
                 color=self.bot.config.primary_colour,
             ),
             discord.Embed(
                 title=_("Ranger"),
                 description=_(
-                    "Item hunter and trainer of their very own pet.\nGet access to `{prefix}pet` to interact with your pet and let it get items for you.\n+3 minimum stat and +6 maximum stat per evolution."
+                    "Item hunter and trainer of their very own pet.\nGet access to"
+                    " `{prefix}pet` to interact with your pet and let it get items for"
+                    " you.\n+3 minimum stat and +6 maximum stat per evolution."
                 ).format(prefix=ctx.prefix),
                 colour=self.bot.config.primary_colour,
             ),
             discord.Embed(
                 title=_("Raider"),
                 description=_(
-                    "A strong warrior who gives their life for the fight against Zerekiel.\nEvery evolution boosts your raidstats by an additional 10%."
+                    "A strong warrior who gives their life for the fight against"
+                    " Zerekiel.\nEvery evolution boosts your raidstats by an additional"
+                    " 10%."
                 ),
                 colour=self.bot.config.primary_colour,
             ),
             discord.Embed(
                 title=_("Ritualist"),
                 description=_(
-                    "A seer, a sacrificer and a follower.\nThe Ritualist devotes their life to the god they follow. For every evolution, their sacrifices are 5% more effective. They have twice the chance to get loot from adventures."
+                    "A seer, a sacrificer and a follower.\nThe Ritualist devotes their"
+                    " life to the god they follow. For every evolution, their"
+                    " sacrifices are 5% more effective. They have twice the chance to"
+                    " get loot from adventures."
                 ),
                 colour=self.bot.config.primary_colour,
             ),
@@ -100,7 +124,8 @@ class Classes(commands.Cog):
                 discord.Embed(
                     title=_("Paragon"),
                     description=_(
-                        "Absorb the appreciation of the devs into your soul to power up.\n+1 damage and defense per evolution."
+                        "Absorb the appreciation of the devs into your soul to power"
+                        " up.\n+1 damage and defense per evolution."
                     ),
                     color=self.bot.config.primary_colour,
                 )
@@ -125,7 +150,8 @@ class Classes(commands.Cog):
         new_classes[val] = profession_
         if not await ctx.confirm(
             _(
-                "You are about to select the `{profession}` class for yourself. {textaddon} Proceed?"
+                "You are about to select the `{profession}` class for yourself."
+                " {textaddon} Proceed?"
             ).format(
                 textaddon=_(
                     "This **costs nothing**, but changing it later will cost **$5000**."
@@ -161,7 +187,8 @@ class Classes(commands.Cog):
 
             async with self.bot.pool.acquire() as conn:
                 await conn.execute(
-                    'UPDATE profile SET "class"=$1, "money"="money"-$2 WHERE "user"=$3;',
+                    'UPDATE profile SET "class"=$1, "money"="money"-$2 WHERE'
+                    ' "user"=$3;',
                     new_classes,
                     5000,
                     ctx.author.id,
@@ -176,15 +203,16 @@ class Classes(commands.Cog):
             )
             await ctx.send(
                 _(
-                    "You selected the class `{profession}`. **$5000** was taken off your balance."
+                    "You selected the class `{profession}`. **$5000** was taken off"
+                    " your balance."
                 ).format(profession=_(profession))
             )
 
     @has_char()
-    @commands.command()
+    @commands.command(brief=_("View your class(es)"))
     @locale_doc
     async def myclass(self, ctx):
-        _("""Views your classes.""")
+        _("""Show your class(es) and their added benefits, sent as images.""")
         if (classes := ctx.character_data["class"]) == ["No Class", "No Class"]:
             return await ctx.send("You haven't got a class yet.")
         for class_ in classes:
@@ -198,15 +226,30 @@ class Classes(commands.Cog):
                 except FileNotFoundError:
                     await ctx.send(
                         _(
-                            "The image for your class **{class_}** hasn't been added yet."
+                            "The image for your class **{class_}** hasn't been added"
+                            " yet."
                         ).format(class_=class_)
                     )
 
     @has_char()
-    @commands.command()
+    @commands.command(brief=_("Evolve your class(es)"))
     @locale_doc
     async def evolve(self, ctx):
-        _("""Evolve to the next level of your classes once every 5 levels.""")
+        _(
+            # xgettext: no-python-format
+            """Evolve your class, bringing it to the next level and giving better class bonuses.
+
+            You can evolve every 5 levels, i.e. at level 5, level 10, level 15, level 20, level 25 and finally level 30.
+
+            - Warriors gain +1 defense per evolution
+            - Thieves gain +8% for their success chance per evolution
+            - Mages gain +1 damage per evolution
+            - Rangers' pets' hunted item get +3 minimum stat and +6 maximum stat per evolution
+              - This means level 1 pets can hunt items from stat 3 to stat 6; level 2 pets from stat 6 to stat 12
+            - Raiders gain +0.1 defense and damage raidstats
+            - Ritualists gain +5% extra favor when sacrificing per evolution
+            (- Paragons gain +1 damage *and* +1 defense per evolution)"""
+        )
         level = int(rpgtools.xptolevel(ctx.character_data["xp"]))
         if level < 5:
             return await ctx.send(_("Your level isn't high enough to evolve."))
@@ -234,10 +277,13 @@ class Classes(commands.Cog):
             )
         )
 
-    @commands.command()
+    @commands.command(brief=_("Shows the evolution tree"))
     @locale_doc
     async def tree(self, ctx):
-        _("""Evolve tree.""")
+        _(
+            """Shows the evolution tree for each class.
+            This will only show the names, not the respective benefits."""
+        )
         embeds = []
         for class_, evos in self.bot.config.classes.items():
             evos = [f"Level {idx * 5}: {evo}" for idx, evo in enumerate(evos)]
@@ -249,20 +295,31 @@ class Classes(commands.Cog):
             embeds.append(embed)
         await self.bot.paginator.Paginator(extras=embeds).paginate(ctx)
 
-    @has_char()
     @is_class("Thief")
+    @has_char()
     @user_cooldown(3600)
-    @commands.command()
+    @commands.command(brief=_("Steal money"))
     @locale_doc
     async def steal(self, ctx):
-        _("""[Thief Only] Steal money!""")
+        _(
+            """Steal money from a random user.
+
+            Your steal chance is increased by evolving your class and your alliance's thief buildings, if you have an alliance that owns a city.
+            If you succeed in stealing, you will steal 10% of the target's money.
+
+            You *cannot* choose your target, it is always a random player. If the bot can't find the player's name, it will be replaced with "a traveller passing by".
+            The target cannot be anyone with less than $10, yourself, or one of the Game Masters.
+
+            Only thieves can use this command.
+            (This command has a cooldown of 1 hour.)"""
+        )
         if (
             buildings := await self.bot.get_city_buildings(ctx.character_data["guild"])
         ) :
             bonus = buildings["thief_building"] * 5
         else:
             bonus = 0
-        if secrets.randbelow(100) in range(
+        if random.randint(0, 99) in range(
             1,
             self.bot.get_class_grade_from(ctx.character_data["class"], "Thief") * 8
             + 1
@@ -270,14 +327,16 @@ class Classes(commands.Cog):
         ):
             async with self.bot.pool.acquire() as conn:
                 usr = await conn.fetchrow(
-                    'SELECT "user", "money" FROM profile WHERE "money">=10 AND "user"!=$1 ORDER BY RANDOM() LIMIT 1;',
+                    'SELECT "user", "money" FROM profile WHERE "money">=10 AND'
+                    ' "user"!=$1 ORDER BY RANDOM() LIMIT 1;',
                     ctx.author.id,
                 )
 
                 if usr["user"] in self.bot.owner_ids:
                     return await ctx.send(
                         _(
-                            "You attempted to steal from a bot VIP, but the bodyguards caught you."
+                            "You attempted to steal from a bot VIP, but the bodyguards"
+                            " caught you."
                         )
                     )
 
@@ -309,13 +368,24 @@ class Classes(commands.Cog):
         else:
             await ctx.send(_("Your attempt to steal money wasn't successful."))
 
-    @has_char()
     @is_class("Ranger")
-    @commands.group(invoke_without_command=True)
+    @has_char()
+    @commands.group(invoke_without_command=True, brief=_("Interact with your pet"))
     @update_pet()
     @locale_doc
     async def pet(self, ctx):
-        _("""[Ranger Only] View your pet or interact with it.""")
+        _(
+            """Interact with your pet. Be sure to see `{prefix}help pet`.
+
+            Every two hours, your pet will lose 2 food points, 4 drink points, 1 joy point and 1 love point.
+
+            If food or drink drop below zero, your pet dies and the ranger class is removed from you.
+            If love sinks below 75, your pet has a chance to run away which increases the lower its love drops.
+
+            Your pet's joy influences the items it hunts, acting as a multiplier for the item's stat.
+
+            Only rangers can use this command."""
+        )
         petlvl = self.bot.get_class_grade_from(ctx.character_data["class"], "Ranger")
         em = discord.Embed(title=_("{user}'s pet").format(user=ctx.disp))
         em.add_field(name=_("Name"), value=ctx.pet_data["name"], inline=False)
@@ -331,12 +401,16 @@ class Classes(commands.Cog):
         await ctx.send(embed=em)
 
     @update_pet()
-    @has_char()
     @is_class("Ranger")
-    @pet.command()
+    @has_char()
+    @pet.command(brief=_("Feed your pet"))
     @locale_doc
     async def feed(self, ctx):
-        _("""[Ranger Only] Feed your pet.""")
+        _(
+            """Feed your pet. This brings up an interactive menu where you can buy a food item.
+
+            Only rangers can use this command."""
+        )
         items = [
             (_("Potato"), 10, ":potato:", 1),
             (_("Apple"), 30, ":apple:", 2),
@@ -363,7 +437,8 @@ class Classes(commands.Cog):
                 ctx.author.id,
             )
             await conn.execute(
-                'UPDATE pets SET "food"=CASE WHEN "food"+$1>=100 THEN 100 ELSE "food"+$1 END WHERE "user"=$2;',
+                'UPDATE pets SET "food"=CASE WHEN "food"+$1>=100 THEN 100 ELSE'
+                ' "food"+$1 END WHERE "user"=$2;',
                 item[3],
                 ctx.author.id,
             )
@@ -376,17 +451,22 @@ class Classes(commands.Cog):
             )
         await ctx.send(
             _(
-                "You bought **{item}** for your pet and increased its food bar by **{points}** points."
+                "You bought **{item}** for your pet and increased its food bar by"
+                " **{points}** points."
             ).format(item=f"{item[2]} {item[0]}", points=item[3])
         )
 
     @update_pet()
-    @has_char()
     @is_class("Ranger")
-    @pet.command()
+    @has_char()
+    @pet.command(brief=_("Give your pet something to drink."))
     @locale_doc
     async def drink(self, ctx):
-        _("""[Ranger Only] Give your pet something to drink.""")
+        _(
+            """Give your pet something to drink. This brings up an interactive menu where you can buy a drink item.
+
+            Only rangers can use this command."""
+        )
         items = [
             (_("Some Water"), 10, ":droplet:", 1),
             (_("A bottle of water"), 30, ":baby_bottle:", 2),
@@ -413,7 +493,8 @@ class Classes(commands.Cog):
                 ctx.author.id,
             )
             await conn.execute(
-                'UPDATE pets SET "drink"=CASE WHEN "drink"+$1>=100 THEN 100 ELSE "drink"+$1 END WHERE "user"=$2;',
+                'UPDATE pets SET "drink"=CASE WHEN "drink"+$1>=100 THEN 100 ELSE'
+                ' "drink"+$1 END WHERE "user"=$2;',
                 item[3],
                 ctx.author.id,
             )
@@ -426,41 +507,55 @@ class Classes(commands.Cog):
             )
         await ctx.send(
             _(
-                "You bought **{item}** for your pet and increased its drinks bar by **{points}** points."
+                "You bought **{item}** for your pet and increased its drinks bar by"
+                " **{points}** points."
             ).format(item=f"{item[2]} {item[0]}", points=item[3])
         )
 
     @update_pet()
-    @has_char()
     @is_class("Ranger")
+    @has_char()
     @user_cooldown(21600)
-    @pet.command(aliases=["caress", "hug", "kiss"])
+    @pet.command(aliases=["caress", "hug", "kiss"], brief=_("Love your pet"))
     @locale_doc
     async def cuddle(self, ctx):
-        _("""[Ranger Only] Cuddle your pet to make it love you.""")
-        value = secrets.randbelow(12) + 1  # On average, it'll stay as is
+        _(
+            """Cuddle with your pet to raise its love points. Your pet can gain from 0 to 11 love points per cuddle.
+
+            Only rangers can use this command.
+            (This command has a cooldown of 6 hours.)"""
+        )
+        value = random.randint(0, 11) + 1  # On average, it'll stay as is
         await self.bot.pool.execute(
-            'UPDATE pets SET "love"=CASE WHEN "love"+$1>=100 THEN 100 ELSE "love"+$1 END WHERE "user"=$2;',
+            'UPDATE pets SET "love"=CASE WHEN "love"+$1>=100 THEN 100 ELSE "love"+$1'
+            ' END WHERE "user"=$2;',
             value,
             ctx.author.id,
         )
         await ctx.send(
             _(
-                "Your pet adores you! :heart: Cuddling it has increased its love for you by **{value}** points."
+                "Your pet adores you! :heart: Cuddling it has increased its love for"
+                " you by **{value}** points."
             ).format(value=value)
         )
 
     @update_pet()
-    @has_char()
     @is_class("Ranger")
+    @has_char()
     @user_cooldown(21600)  # We are mean, indeed
-    @pet.command(aliases=["fun"])
+    @pet.command(aliases=["fun"], brief=_("Play with your pet"))
     @locale_doc
     async def play(self, ctx):
-        _("""[Ranger Only] Play with your pet to make it happier.""")
-        value = secrets.randbelow(12) + 1  # On average, it'll stay as is
+        _(
+            """Cuddle with your pet to raise its joy points. Your pet can gain from 0 to 11 love points per play.
+
+            Only rangers can use this command.
+            (This command has a cooldown of 6 hours.)"""
+        )
+        value = random.randint(0, 11) + 1  # On average, it'll stay as is
         await self.bot.pool.execute(
-            'UPDATE pets SET "joy"=CASE WHEN "joy"+$1>=100 THEN 100 ELSE "joy"+$1 END WHERE "user"=$2;',
+            'UPDATE pets SET "joy"=CASE WHEN "joy"+$1>=100 THEN 100 ELSE "joy"+$1 END'
+            ' WHERE "user"=$2;',
             value,
             ctx.author.id,
         )
@@ -468,7 +563,7 @@ class Classes(commands.Cog):
             _(
                 "You have been {activity} with your pet and it gained **{value}** joy!"
             ).format(
-                activity=secrets.choice(
+                activity=random.choice(
                     [
                         _("playing football :soccer:"),
                         _("playing American football :football:"),
@@ -485,12 +580,16 @@ class Classes(commands.Cog):
         )
 
     @update_pet()
-    @has_char()
     @is_class("Ranger")
-    @pet.command(aliases=["name"])
+    @has_char()
+    @pet.command(aliases=["name"], brief=_("Rename your pet"))
     @locale_doc
     async def rename(self, ctx, *, name: str):
-        _("""[Ranger Only] Renames your pet.""")
+        _(
+            """Give your pet a new name. The name cannot be longer than 20 characters.
+
+            Only rangers can use this command."""
+        )
         if len(name) > 20:
             return await ctx.send(_("Please enter a name shorter than 20 characters."))
         await self.bot.pool.execute(
@@ -499,12 +598,20 @@ class Classes(commands.Cog):
         await ctx.send(_("Pet name updated."))
 
     @update_pet()
-    @has_char()
     @is_class("Ranger")
-    @pet.command()
+    @has_char()
+    @pet.command(brief=_("Set a new image for your pet"))
     @locale_doc
     async def image(self, ctx, *, url: str):
-        _("""[Ranger Only] Sets your pet's image by URL.""")
+        _(
+            """`<url>` - An image url for the pet's image, must be 60 characters or shorter
+
+            Updates the image that shows in `{prefix}pet`.
+
+            Having trouble finding a short image link? Follow [this tutorial](https://wiki.idlerpg.xyz/index.php?title=Tutorial:_Short_Image_URLs)!
+
+            Only rangers can use this command."""
+        )
         if len(url) > 60:
             return await ctx.send(_("URLs mustn't exceed 60 characters ."))
         if not (
@@ -513,7 +620,8 @@ class Classes(commands.Cog):
         ):
             return await ctx.send(
                 _(
-                    "I couldn't read that URL. Does it start with `http://` or `https://` and is either a png or jpeg?"
+                    "I couldn't read that URL. Does it start with `http://` or"
+                    " `https://` and is either a png or jpeg?"
                 )
             )
         await self.bot.pool.execute(
@@ -522,13 +630,31 @@ class Classes(commands.Cog):
         await ctx.send(_("Your pet's image was successfully updated."))
 
     @update_pet()
-    @has_char()
     @is_class("Ranger")
-    @user_cooldown(86400)
-    @pet.command()
+    @has_char()
+    @next_day_cooldown()
+    @pet.command(brief=_("Let your pet hunt a weapon"))
     @locale_doc
     async def hunt(self, ctx):
-        _("""[Ranger Only] Let your pet get a weapon for you!""")
+        _(
+            # xgettext: no-python-format
+            """Make your pet hunt an item for you.
+
+            The items stat depends on your pet's level (determined by class evolution) as well as its joy score.
+            The lowest base stat your pet can find is three times its level, the highest is 6 times its level.
+            Your pet's joy score in percent is multiplied with these base stats.
+
+            For example:
+              - Your pet is on level 2, its  joy score is 50.
+              - The item's base stats are (3x2) to (6x2), so 6 to 12.
+              - Its joy score in percent is multiplied: 50% x 6 to 50% x 12, so 3 to 6
+
+            In this example, your pet can hunt an item with stats 3 to 6. It has a hard cap at 30.
+            The item's value will be between 0 and 250.
+
+            Only rangers can use this command.
+            (This command has a cooldown until 12am UTC.)"""
+        )
         petlvl = self.bot.get_class_grade_from(ctx.character_data["class"], "Ranger")
         joy_multiply = Decimal(ctx.pet_data["joy"] / 100)
         luck_multiply = ctx.character_data["luck"]

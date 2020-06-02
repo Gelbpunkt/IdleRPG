@@ -15,16 +15,14 @@ GNU Affero General Public License for more details.
 You should have received a copy of the GNU Affero General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
-import random
-import secrets
-
 import discord
 
 from discord.ext import commands
 
-import utils.checks as checks
-
 from cogs.shard_communication import user_on_cooldown as user_cooldown
+from utils import checks as checks
+from utils import random
+from utils.i18n import _, locale_doc
 
 
 class Halloween(commands.Cog):
@@ -34,10 +32,20 @@ class Halloween(commands.Cog):
 
     @checks.has_char()
     @user_cooldown(43200)
-    @commands.command(aliases=["tot"], enabled=False)
+    @commands.command(aliases=["tot"], enabled=False, brief=_("Trick or treat!"))
     @locale_doc
     async def trickortreat(self, ctx):
-        _("""Trick or treat!""")
+        _(
+            """Walk around the houses and scare the residents! Maybe they have a gift for you?
+
+            This command requires two players, one that is waiting and one that rings at the door.
+            If you are the one waiting, you will get a direct message from the bot later, otherwise you will get a reply immediately.
+
+            There is a 50% chance you will receive a halloween bag from the other person.
+            You will also receive an additional $50 from a random user.
+
+            (This command has a cooldown of 12h)"""
+        )
         waiting = self.waiting
         if not waiting:
             self.waiting = ctx.author
@@ -45,10 +53,11 @@ class Halloween(commands.Cog):
                 _("You walk around the houses... Noone is there... *yet*")
             )
         self.waiting = None
-        if secrets.randbelow(2) == 1:
+        if random.randint(0, 1) == 1:
             await ctx.send(
                 _(
-                    "You walk around the houses and ring at {waiting}'s house! That's a trick or treat bag for you, yay!"
+                    "You walk around the houses and ring at {waiting}'s house! That's a"
+                    " trick or treat bag for you, yay!"
                 ).format(waiting=waiting)
             )
             await self.bot.pool.execute(
@@ -58,15 +67,15 @@ class Halloween(commands.Cog):
         else:
             await ctx.send(
                 _(
-                    "You walk around the houses and ring at {waiting}'s house! Sadly they don't have anything for you..."
+                    "You walk around the houses and ring at {waiting}'s house! Sadly"
+                    " they don't have anything for you..."
                 ).format(waiting=waiting)
             )
         try:
-            if secrets.randbelow(2) == 1:
+            if random.randint(0, 1) == 1:
                 await waiting.send(
-                    "The waiting was worth it: {author} rang! That's a trick or treat bag for you, yay!".format(
-                        author=ctx.author
-                    )
+                    "The waiting was worth it: {author} rang! That's a trick or treat"
+                    " bag for you, yay!".format(author=ctx.author)
                 )
                 await self.bot.pool.execute(
                     'UPDATE profile SET trickortreat=trickortreat+1 WHERE "user"=$1;',
@@ -85,7 +94,8 @@ class Halloween(commands.Cog):
                 'UPDATE profile SET money=money+50 WHERE "user"=$1', ctx.author.id
             )
             usr = await conn.fetchval(
-                'SELECT "user" FROM profile WHERE "money">=50 AND "user"!=$1 ORDER BY RANDOM() LIMIT 1;',
+                'SELECT "user" FROM profile WHERE "money">=50 AND "user"!=$1 ORDER BY'
+                " RANDOM() LIMIT 1;",
                 ctx.author.id,
             )
             await conn.execute(
@@ -99,10 +109,15 @@ class Halloween(commands.Cog):
         )
 
     @checks.has_char()
-    @commands.command()
+    @commands.command(brief=_("Open a trick or treat bag"))
     @locale_doc
     async def yummy(self, ctx):
-        _("""Open a trick or treat bag.""")
+        _(
+            """Open a trick or treat bag, you can get some with `{prefix}trickortreat`.
+
+            Trick or treat bags contain halloween-themed items, ranging from 1 to 30 base stat.
+            Their value will be between 1 and 200."""
+        )
         # better name?
         if ctx.character_data["trickortreat"] < 1:
             return await ctx.send(
@@ -165,9 +180,13 @@ class Halloween(commands.Cog):
         await ctx.send(embed=embed)
 
     @checks.has_char()
-    @commands.command(aliases=["totbags", "halloweenbags"])
+    @commands.command(
+        aliases=["totbags", "halloweenbags"], brief=_("Shows your trick or treat bags")
+    )
     async def bags(self, ctx):
-        _("""Shows your Trick or Treat Bags.""")
+        _(
+            """Shows the amount of trick or treat bags you have. You can get more by using `{prefix}trickortreat`."""
+        )
         await ctx.send(
             _(
                 "You currently have **{trickortreat}** Trick or Treat Bags, {author}!"

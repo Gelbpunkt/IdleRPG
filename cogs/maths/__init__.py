@@ -22,6 +22,8 @@ from discord.ext import commands
 from ply.lex import lex
 from ply.yacc import yacc
 
+from utils.i18n import _, locale_doc
+
 
 class Overflow(Exception):
     pass
@@ -135,7 +137,7 @@ class Maths(commands.Cog):
                 _("Illegal character '{character}'").format(character=t.value[0])
             )
 
-        self.lexer = lex(debug=True)
+        self.lexer = lex()
 
         # Precedence rules for the arithmetic operators
         precedence = (
@@ -148,7 +150,7 @@ class Maths(commands.Cog):
 
         def p_statements(p):
             """statements : statement
-                          | statements NEWLINE statement"""
+            | statements NEWLINE statement"""
             if len(p) == 2:
                 new_thing = p[1]
             else:
@@ -175,12 +177,12 @@ class Maths(commands.Cog):
 
         def p_expression_binop(p):
             """expression : expression PLUS expression
-                          | expression MINUS expression
-                          | expression TIMES expression
-                          | expression DIVIDE expression
-                          | expression MODULO expression
-                          | expression SQUARE expression
-                          | expression FACTORIAL"""
+            | expression MINUS expression
+            | expression TIMES expression
+            | expression DIVIDE expression
+            | expression MODULO expression
+            | expression SQUARE expression
+            | expression FACTORIAL"""
             if p[2] == "+":
                 p[0] = p[1] + p[3]
             elif p[2] == "-":
@@ -299,13 +301,15 @@ class Maths(commands.Cog):
         del self.parser.TEMP[id]
         return res
 
-    @commands.command(aliases=["calculate", "math", "maths"])
+    @commands.command(aliases=["calculate", "math", "maths"], brief=_("Do some maths"))
     @locale_doc
     async def calc(self, ctx, *, expr: str):
         _(
-            """Calculates something. pi is pi, tau is tau and e is math.e
-        Supports round(), sin(), cos(), sqrt(), tan() and infinity (inf) and NaN (nan).
-        Works with variable assignment and multiline-statements."""
+            """`<expr>` - The mathematical expression to calculate
+
+            Calculates something. pi is pi, tau is tau and e is math.e
+            Supports round(), sin(), cos(), sqrt(), tan() and infinity (inf) and NaN (nan).
+            Works with variable assignment and multiline-statements."""
         )
         try:
             ret = await self.bot.loop.run_in_executor(

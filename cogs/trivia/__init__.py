@@ -16,9 +16,11 @@ You should have received a copy of the GNU Affero General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
 import html
-import random
 
 from discord.ext import commands
+
+from utils import random
+from utils.i18n import _, locale_doc
 
 
 class Trivia(commands.Cog):
@@ -42,19 +44,25 @@ class Trivia(commands.Cog):
 
     async def get_response(self, ctx, question):
         entries = [question["correct_answer"]] + question["incorrect_answers"]
-        random.shuffle(entries)
+        entries = random.shuffle(entries)
         answer = await self.bot.paginator.Choose(
             entries=entries,
             title=question["question"],
-            footer=f"Difficulty: {question['difficulty']} | Category: {question['category']}",
+            footer=(
+                f"Difficulty: {question['difficulty']} | Category:"
+                f" {question['category']}"
+            ),
             timeout=15,
         ).paginate(ctx)
         return answer == question["correct_answer"]
 
-    @commands.command(aliases=["tr"])
+    @commands.command(aliases=["tr"], brief=_("Answer a trivia question"))
+    @locale_doc
     async def trivia(self, ctx, difficulty: str.lower = "easy"):
         _(
-            """Answer a trivia question of a given difficulty, which may be easy, medium or hard."""
+            """`[difficulty]` - The difficulty of the question, may be easy, medium or hard
+
+            Answer a trivia question from [OpenTDB](https://opentdb.com/). You select your answer with the emoji reactions."""
         )
         try:
             question = await self.get_question(difficulty)

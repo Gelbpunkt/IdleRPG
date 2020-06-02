@@ -17,11 +17,15 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
 import asyncio
 import copy
-import random
 
 import discord
 
 from discord.ext import commands
+
+from cogs.help import chunks
+from utils import random
+from utils.i18n import _, locale_doc
+from utils.misc import nice_join
 
 
 class GameBase:
@@ -29,21 +33,14 @@ class GameBase:
         self.players = players
         self.ctx = ctx
 
-    def chunks(self, l, n):
-        for i in range(0, len(l), n):
-            yield l[i : i + n]
-
-    def rand_chunks(self, l):
+    def rand_chunks(self, iterable):
         idx = 0
-        for i in range(0, len(l)):
+        for i in range(0, len(iterable)):
             if i < idx:
                 continue
             num = random.randint(1, 4)
-            yield l[i : i + num]
+            yield iterable[i : i + num]
             idx += num
-
-    def nice_join(self, l):
-        return f"{', '.join(l[:-1])} and {l[-1]}"
 
     async def get_inputs(self):
         all_actions = [
@@ -132,7 +129,7 @@ class GameBase:
                     await status.edit(content=f"{status.content}\n{text}")
                 except discord.errors.NotFound:
                     status = await self.ctx.send(
-                        f"{roundtext}\n{text}", delete_after=60
+                        f"{roundtext.format(round=self.round)}\n{text}", delete_after=60
                     )
                 actions = random.sample(all_actions, 3)
                 possible_kills = [
@@ -175,7 +172,8 @@ class GameBase:
                     await self.ctx.send(
                         _(
                             "I couldn't send a DM to {user}! Choosing random action..."
-                        ).format(user=p[0])
+                        ).format(user=p[0]),
+                        delete_after=30,
                     )
                     action = random.choice(actions2)
                 if okay or (not okay and isinstance(action[2], tuple)):
@@ -194,10 +192,7 @@ class GameBase:
                 try:
                     await status.edit(content=f"{status.content} {text}")
                 except discord.errors.NotFound:
-                    status = await self.ctx.send(
-                        f"**{roundtext}\n{text}".format(round=self.round),
-                        delete_after=60,
-                    )
+                    pass
             else:
                 possible_kills = [item for item in p if p not in killed_this_round]
                 if len(possible_kills) > 0:
@@ -210,37 +205,33 @@ class GameBase:
                     action = random.choice(team_actions_2)
                 users = [u for u in p if u != target]
                 if not action[1]:
-                    user_actions.append(
-                        (self.nice_join([u.name for u in p]), action[0])
-                    )
+                    user_actions.append((nice_join([u.name for u in p]), action[0]))
                 elif not target:  # fix
                     user_actions.append(
-                        (self.nice_join([u.name for u in p]), _("do nothing."))
+                        (nice_join([u.name for u in p]), _("do nothing."))
                     )
                 elif action[1] == "user":
                     user_actions.append(
                         (
-                            self.nice_join([u.name for u in users]),
+                            nice_join([u.name for u in users]),
                             action[0].replace("USER", target.name),
                         )
                     )
                 elif action[1] == "killall":
-                    user_actions.append(
-                        (self.nice_join([u.name for u in p]), action[0])
-                    )
+                    user_actions.append((nice_join([u.name for u in p]), action[0]))
                     killed_this_round.extend(p)
                 else:
                     if action[1][0] == "kill":
                         user_actions.append(
                             (
-                                self.nice_join([u.name for u in users]),
+                                nice_join([u.name for u in users]),
                                 action[0].replace("USER", target.name),
                             )
                         )
                     elif action[1][0] == "killtogether":
                         user_actions.append(
                             (
-                                self.nice_join([u.name for u in p]),
+                                nice_join([u.name for u in p]),
                                 action[0].replace("USER", target.name),
                             )
                         )
@@ -251,27 +242,28 @@ class GameBase:
                 self.players.remove(p)
             except ValueError:
                 pass
-        await self.ctx.send(
-            "\n".join([f"{u} {a}" for u, a in user_actions]), delete_after=60
-        )
+        paginator = commands.Paginator(prefix="", suffix="")
+        for u, a in user_actions:
+            paginator.add_line(f"{u} {a}")
+        for page in paginator.pages:
+            await self.ctx.send(page, delete_after=60)
         self.round += 1
 
     async def send_cast(self):
         cast = copy.copy(self.players)
-        random.shuffle(cast)
-        cast = list(self.chunks(cast, 2))
+        cast = random.shuffle(cast)
+        cast = list(chunks(cast, 2))
         self.cast = cast
         text = _("Team")
-        cast = "\n".join(
-            [
-                f"{text} #{i}: {team[0].mention} {team[1].mention}"
-                if len(team) == 2
-                else f"{text} #{i}: {team[0].mention}"
-                for i, team in enumerate(cast, start=1)
-            ]
-        )
-        text = _("The cast")
-        await self.ctx.send(f"**{text}**\n{cast}")
+        paginator = commands.Paginator(prefix="", suffix="")
+        paginator.add_line(_("**The cast**"))
+        for i, team in enumerate(cast, start=1):
+            if len(team) == 2:
+                paginator.add_line(f"{text} #{i}: {team[0].mention} {team[1].mention}")
+            else:
+                paginator.add_line(f"{text} #{i}: {team[0].mention}")
+        for page in paginator.pages:
+            await self.ctx.send(page)
 
     async def main(self):
         self.round = 1
@@ -294,24 +286,34 @@ class HungerGames(commands.Cog):
         self.bot = bot
         self.games = {}
 
-    @commands.command(aliases=["hg"])
+    @commands.command(aliases=["hg"], brief=_("Play a game of the hunger games"))
     @locale_doc
     async def hungergames(self, ctx):
-        _("""Starts a game of hunger games.""")
+        _(
+            """Starts a game of the hunger games (starts a hunger game?)
+
+            Players will be able to join via the :shallow_pan_of_food: emoji.
+            The game is controlled via both random actions and possibly chosen actions.
+            Players may choose an action if they get a direct message from the bot. If no action is chosen by the player, the bot chooses one for them.
+
+            Not every player will get the opportunity to choose an action. Sometimes nobody gets to choose, so don't be discouraged. """
+        )
         if self.games.get(ctx.channel.id):
             return await ctx.send(_("There is already a game in here!"))
 
         if ctx.channel.id == self.bot.config.official_tournament_channel_id:
             id_ = await self.bot.start_joins()
             await ctx.send(
-                f"{ctx.author.mention} started a mass-game of Hunger Games! Go to https://join.idlerpg.xyz/{id_} to join in the next 10 minutes."
+                f"{ctx.author.mention} started a mass-game of Hunger Games! Go to"
+                f" https://join.idlerpg.xyz/{id_} to join in the next 10 minutes."
             )
             await asyncio.sleep(60 * 10)
             players = await self.bot.get_joins(id_)
         else:
             players = [ctx.author]
             text = _(
-                "{author} started a game of Hunger Games! React with :shallow_pan_of_food: to join the game! **{num} joined**"
+                "{author} started a game of Hunger Games! React with"
+                " :shallow_pan_of_food: to join the game! **{num} joined**"
             )
             msg = await ctx.send(text.format(author=ctx.author.mention, num=1))
             await msg.add_reaction("\U0001f958")

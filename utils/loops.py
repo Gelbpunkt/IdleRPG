@@ -19,10 +19,10 @@ import asyncio
 
 from traceback import print_exc
 
-from discord.ext import commands
+from classes.bot import Bot
 
 
-async def queue_manager(bot: commands.Bot, queue: asyncio.Queue):
+async def queue_manager(bot: Bot, queue: asyncio.Queue[asyncio.Task]) -> None:
     """Basic loop to run things in order (async hack)"""
     await bot.wait_until_ready()
     while not bot.is_closed():

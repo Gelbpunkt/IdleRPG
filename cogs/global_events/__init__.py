@@ -34,19 +34,32 @@ class GlobalEvents(commands.Cog):
         self.stats_updates = bot.loop.create_task(
             self.stats_updater()
         )  # Initiate the stats updates and save it for the further close
+        self.is_first_ready = True
 
     @commands.Cog.listener()
     async def on_ready(self):
-        print(f"Logged in as {self.bot.user.name} (ID: {self.bot.user.id})")
-        print("--------")
-        print(f"Using discord.py {discord.__version__}")
-        print("--------")
-        print(f"You are running IdleRPG Bot {self.bot.version}")
-        print("Created by The IdleRPG Team")
-        await self.load_settings()
-        self.bot.loop.create_task(queue_manager(self.bot, self.bot.queue))
-        await self.bot.is_owner(self.bot.user)  # force getting the owners
-        await self.status_updater()
+        if self.is_first_ready:
+            self.is_first_ready = False
+            text1 = f"Logged in as {self.bot.user.name} (ID: {self.bot.user.id})"
+            text2 = f"Using discord.py {discord.__version__}"
+            text3 = f"You are running IdleRPG Bot {self.bot.version}"
+            text4 = "Created by Adrian#1337 and Mary Johanna#0420"
+            max_string = max([len(i) for i in (text1, text2, text3, text4)])
+            self.bot.logger.info(f"┌─{'─' * max_string}─┐")
+            self.bot.logger.info(f"│ {text1.center(max_string, ' ')} │")
+            self.bot.logger.info(f"│ {' ' * max_string} │")
+            self.bot.logger.info(f"│ {text2.center(max_string, ' ')} │")
+            self.bot.logger.info(f"│ {' ' * max_string} │")
+            self.bot.logger.info(f"│ {text3.center(max_string, ' ')} │")
+            self.bot.logger.info(f"│ {' ' * max_string} │")
+            self.bot.logger.info(f"│ {text4.center(max_string, ' ')} │")
+            self.bot.logger.info(f"└─{'─' * max_string}─┘")
+            await self.load_settings()
+            self.bot.loop.create_task(queue_manager(self.bot, self.bot.queue))
+            await self.bot.is_owner(self.bot.user)  # force getting the owners
+            await self.status_updater()
+        else:
+            self.bot.logger.warning("[INFO] Discord fired on_ready...")
 
     @commands.Cog.listener()
     async def on_guild_remove(self, guild):
@@ -61,12 +74,18 @@ class GlobalEvents(commands.Cog):
         embed = discord.Embed(
             title="Thanks for adding me!",
             colour=0xEEC340,
-            description=f"Hi! I am **IdleRPG**, a Discord Bot by `Adrian#1337`.\nI simulate"
-            f" a whole Roleplay with everything it needs!\n\nVisit **{self.bot.BASE_URL}** for a documentation on all my commands. :innocent:\nTo get started, type "
-            f"`{self.bot.config.global_prefix}create`.\n\nA tutorial can be found on **{self.bot.BASE_URL}/tutorial**.\n\nDon't like my prefix? `{self.bot.config.global_prefix}"
-            "settings prefix` changes it.\n\n"
-            f"Not English? `{self.bot.config.global_prefix}language` and `{self.bot.config.global_prefix}language set` may include yours!\n\n"
-            "Have fun! :wink:",
+            description=(
+                "Hi! I am **IdleRPG**, a Discord Bot by `Adrian#1337`.\nI simulate a"
+                " whole Roleplay with everything it needs!\n\nVisit"
+                f" **{self.bot.BASE_URL}** for a documentation on all my commands."
+                " :innocent:\nTo get started, type"
+                f" `{self.bot.config.global_prefix}create`.\n\nA tutorial can be found"
+                f" on **{self.bot.BASE_URL}/tutorial**.\n\nDon't like my prefix?"
+                f" `{self.bot.config.global_prefix}settings prefix` changes it.\n\nNot"
+                f" English? `{self.bot.config.global_prefix}language` and"
+                f" `{self.bot.config.global_prefix}language set` may include"
+                " yours!\n\nHave fun! :wink:"
+            ),
         )
 
         embed.set_image(url=f"{self.bot.BASE_URL}/IdleRPG.png")
@@ -85,7 +104,8 @@ class GlobalEvents(commands.Cog):
             return
         await self.bot.http.send_message(
             self.bot.config.join_channel,
-            f"Joined a new server! **{guild.name}** with **{guild.member_count}** members!",
+            f"Joined a new server! **{guild.name}** with **{guild.member_count}**"
+            " members!",
         )
 
     async def status_updater(self):
@@ -120,6 +140,9 @@ class GlobalEvents(commands.Cog):
 
     async def load_settings(self):
         if self.bot.config.is_beta:
+            self.bot.command_prefix = commands.when_mentioned_or(
+                self.bot.config.global_prefix
+            )
             return  # we're using the default prefix in beta
         ids = [g.id for g in self.bot.guilds]
         prefixes = await self.bot.pool.fetch("SELECT id, prefix FROM server;")

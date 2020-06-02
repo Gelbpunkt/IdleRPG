@@ -16,7 +16,6 @@ You should have received a copy of the GNU Affero General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
 import asyncio
-import random
 
 import discord
 
@@ -27,7 +26,9 @@ from classes.converters import IntFromTo, MemberWithCharacter, UserWithCharacter
 from cogs.help import chunks
 from cogs.shard_communication import user_on_cooldown as user_cooldown
 from utils import misc as rpgtools
+from utils import random
 from utils.checks import has_char
+from utils.i18n import _, locale_doc
 
 
 class Marriage(commands.Cog):
@@ -43,10 +44,18 @@ class Marriage(commands.Cog):
 
     @has_char()
     @commands.guild_only()
-    @commands.command(aliases=["marry"])
+    @commands.command(aliases=["marry"], brief=_("Propose to a player"))
     @locale_doc
     async def propose(self, ctx, partner: MemberWithCharacter):
-        _("""Propose for a marriage.""")
+        _(
+            """`<partner>` - A discord User with a character who is not yet married
+
+            Propose to a player for marriage. Once they accept, you are married.
+
+            When married, your partner will get bonuses from your adventures, you can have children, which can do different things (see `{prefix}help familyevent`) and increase your lovescore, which has an effect on the [adventure bonus](https://wiki.idlerpg.xyz/index.php?title=Family#Adventure_Bonus).
+
+            Only players who are not already married can use this command."""
+        )
         if partner == ctx.author:
             return await ctx.send(
                 _("You should have a better friend than only yourself.")
@@ -56,10 +65,11 @@ class Marriage(commands.Cog):
         msg = await ctx.send(
             embed=discord.Embed(
                 title=_("{author} has proposed for a marriage!").format(
-                    author=ctx.author.mention
+                    author=ctx.disp,
                 ),
                 description=_(
-                    "{author} wants to marry you, {partner}! React with :heart: to marry them!"
+                    "{author} wants to marry you, {partner}! React with :heart: to"
+                    " marry them!"
                 ).format(author=ctx.author.mention, partner=partner.mention),
                 colour=0xFF0000,
             )
@@ -107,27 +117,36 @@ class Marriage(commands.Cog):
                     partner.id,
                 )
                 await ctx.send(
-                    _(
-                        "Owwwwwww! :heart: {author} and {partner} are now married!"
-                    ).format(author=ctx.author.mention, partner=partner.mention)
+                    _("Aww! :heart: {author} and {partner} are now married!").format(
+                        author=ctx.author.mention, partner=partner.mention
+                    )
                 )
             else:
                 await ctx.send(
                     _(
-                        "Either you or your lovee married in the meantime... :broken_heart:"
+                        "Either you or your lovee married in the meantime..."
+                        " :broken_heart:"
                     )
                 )
 
     @has_char()
-    @commands.command()
+    @commands.command(brief=_("Break up with your partner"))
     @locale_doc
     async def divorce(self, ctx):
-        _("""Break up with your partner.""")
+        _(
+            """Divorce your partner, effectively un-marrying them.
+
+            When divorcing, any kids you have with your partner will be deleted.
+            You can marry another person right away, if you so choose. Divorcing has no negative consequences on gameplay.
+
+            Only married players can use this command."""
+        )
         if not ctx.character_data["marriage"]:
             return await ctx.send(_("You are not married yet."))
         if not await ctx.confirm(
             _(
-                "Are you sure you want to divorce your partner? You will lose all your children!"
+                "Are you sure you want to divorce your partner? You will lose all your"
+                " children!"
             )
         ):
             return await ctx.send(
@@ -147,10 +166,14 @@ class Marriage(commands.Cog):
         await ctx.send(_("You are now divorced."))
 
     @has_char()
-    @commands.command()
+    @commands.command(brief=_("Show your partner"))
     @locale_doc
     async def relationship(self, ctx):
-        _("""View who you're married to.""")
+        _(
+            """Show your partner's Discord Tag. This works fine across server.
+
+            Only married players can use this command."""
+        )
         if not ctx.character_data["marriage"]:
             return await ctx.send(_("You are not married yet."))
         partner = await rpgtools.lookup(self.bot, ctx.character_data["marriage"])
@@ -159,10 +182,16 @@ class Marriage(commands.Cog):
         )
 
     @has_char()
-    @commands.command()
+    @commands.command(brief=_("Show a player's lovescore"))
     @locale_doc
     async def lovescore(self, ctx, user: UserWithCharacter = Author):
-        _("""Views someone's lovescore.""")
+        _(
+            """`[user]` - The user whose lovescore to show; defaults to oneself
+
+            Show the lovescore a player has. Lovescore can be increased by their partner spoiling them or going on dates.
+
+            Lovescore affects the [adventure bonus](https://wiki.idlerpg.xyz/index.php?title=Family#Adventure_Bonus) and the amount of children you can have."""
+        )
         data = ctx.character_data if user == ctx.author else ctx.user_data
         if data["marriage"]:
             partner = await rpgtools.lookup(self.bot, data["marriage"])
@@ -170,15 +199,24 @@ class Marriage(commands.Cog):
             partner = _("noone")
         await ctx.send(
             _(
-                "{user}'s overall love score is **{score}**. {user} is married to **{partner}**."
+                "{user}'s overall love score is **{score}**. {user} is married to"
+                " **{partner}**."
             ).format(user=user.name, score=data["lovescore"], partner=partner)
         )
 
     @has_char()
-    @commands.command()
+    @commands.command(brief=_("Increase your partner's lovescore"))
     @locale_doc
     async def spoil(self, ctx, item: IntFromTo(1, 40) = None):
-        _("""Buy something for your spouse and increase their lovescore.""")
+        _(
+            """`[item]` - The item to buy, a whole number from 1 to 40; if not given, displays the list of items
+
+            Buy something for your partner to increase *their* lovescore. To increase your own lovescore, your partner should spoil you.
+
+            Please note that these items are not usable and do not have an effect on gameplay, beside increasing lovescore.
+
+            Only players who are married can use this command."""
+        )
         items = [
             (_("Dog :dog2:"), 50),
             (_("Cat :cat2:"), 50),
@@ -258,7 +296,8 @@ class Marriage(commands.Cog):
             )
         await ctx.send(
             _(
-                "You bought a **{item}** for your partner and increased their love score by **{points}** points!"
+                "You bought a **{item}** for your partner and increased their love"
+                " score by **{points}** points!"
             ).format(item=item[0], points=item[1])
         )
         user = await self.bot.get_user_global(ctx.character_data["marriage"])
@@ -267,17 +306,25 @@ class Marriage(commands.Cog):
                 _("Failed to DM your spouse, could not find their Discord account")
             )
         await user.send(
-            "**{author}** bought you a **{item}** and increased your love score by **{points}** points!".format(
+            "**{author}** bought you a **{item}** and increased your love score by"
+            " **{points}** points!".format(
                 author=ctx.author, item=item[0], points=item[1]
             )
         )
 
     @has_char()
-    @commands.command()
+    @commands.command(brief=_("Take your partner on a date"))
     @locale_doc
     @user_cooldown(43200)
     async def date(self, ctx):
-        _("""Take your loved one on a date to increase your lovescore.""")
+        _(
+            """Take your partner on a date to increase *their* lovescore. To increase your own lovescore, your partner should go on a date with you.
+
+            The lovescore gained from dates can range from 10 to 150 in steps of 10.
+
+            Only players who are married can use this command.
+            (This command has a cooldown of 12 hours.)"""
+        )
         num = random.randint(1, 15) * 10
         marriage = ctx.character_data["marriage"]
         if not marriage:
@@ -317,10 +364,29 @@ class Marriage(commands.Cog):
     @has_char()
     @commands.guild_only()
     @user_cooldown(3600)
-    @commands.command(aliases=["fuck", "sex", "breed"])
+    @commands.command(
+        aliases=["fuck", "sex", "breed"], brief=_("Have a child with your partner")
+    )
     @locale_doc
     async def child(self, ctx):
-        _("""Make a child with your spouse.""")
+        _(
+            # xgettext: no-python-format
+            """Have a child with your partner.
+
+            Children on their own don't do much, but `{prefix}familyevent` can effect your money and crates.
+            To have a child, your partner has to be on the server to accept the checkbox.
+
+            There is a 50% chance that you will have a child, and a 50% chance to just *have fun* (if you know what I'm saying) and gain between 10 and 50 lovescore.
+            When you have a child, there is a 50% chance for it to be a boy and a 50% chance to be a girl.
+
+            Your partner and you can enter a name for your child once the bot prompts you to. (Do not include `{prefix}`)
+            If you fail to choose a name in time, the bot will choose one for you from about 500 pre-picked ones.
+
+            For identification purposes, you cannot have two children with the same name in your family, so make sure to pick a unique one.
+
+            Only players who are married can use this command.
+            (This command has a cooldown of 1 hour.)"""
+        )
         marriage = ctx.character_data["marriage"]
         if not marriage:
             await self.bot.reset_cooldown(ctx)
@@ -338,13 +404,12 @@ class Marriage(commands.Cog):
             await self.bot.reset_cooldown(ctx)
             return await ctx.send(
                 _(
-                    "You already have {max_} children. You can increase this limit by increasing your lovescores."
+                    "You already have {max_} children. You can increase this limit by"
+                    " increasing your lovescores."
                 ).format(max_=max_)
             )
         names = [name["name"] for name in names]
-        user = self.bot.get_user(marriage)
-        if not user:
-            return await ctx.send(_("Your spouse is not here."))
+        user = await self.bot.get_user_global(marriage)
         if not await ctx.confirm(
             _("{user}, do you want to make a child with {author}?").format(
                 user=user.mention, author=ctx.author.mention
@@ -356,7 +421,8 @@ class Marriage(commands.Cog):
         if random.choice([True, False]):
             ls = random.randint(10, 50)
             await self.bot.pool.execute(
-                'UPDATE profile SET "lovescore"="lovescore"+$1 WHERE "user"=$2 OR "user"=$3;',
+                'UPDATE profile SET "lovescore"="lovescore"+$1 WHERE "user"=$2 OR'
+                ' "user"=$3;',
                 ls,
                 ctx.author.id,
                 marriage,
@@ -368,13 +434,15 @@ class Marriage(commands.Cog):
         if gender == "m":
             await ctx.send(
                 _(
-                    "It's a boy! Your night of love was successful! Please enter a name for your child."
+                    "It's a boy! Your night of love was successful! Please enter a name"
+                    " for your child."
                 )
             )
         elif gender == "f":
             await ctx.send(
                 _(
-                    "It's a girl! Your night of love was successful! Please enter a name for your child."
+                    "It's a girl! Your night of love was successful! Please enter a"
+                    " name for your child."
                 )
             )
 
@@ -401,13 +469,15 @@ class Marriage(commands.Cog):
             if name in names:
                 await ctx.send(
                     _(
-                        "One of your children already has that name, please choose another one."
+                        "One of your children already has that name, please choose"
+                        " another one."
                     )
                 )
                 name = None
         async with self.bot.pool.acquire() as conn:
             await conn.execute(
-                'INSERT INTO children ("mother", "father", "name", "age", "gender") VALUES ($1, $2, $3, $4, $5);',
+                'INSERT INTO children ("mother", "father", "name", "age", "gender")'
+                " VALUES ($1, $2, $3, $4, $5);",
                 ctx.author.id,
                 marriage,
                 name,
@@ -417,10 +487,10 @@ class Marriage(commands.Cog):
         await ctx.send(_("{name} was born.").format(name=name))
 
     @has_char()
-    @commands.command()
+    @commands.command(brief=_("View your children"))
     @locale_doc
     async def family(self, ctx):
-        _("""View your children.""")
+        _("""View your children. This will display their name, age and gender.""")
         marriage = ctx.character_data["marriage"]
         if not marriage:
             return await ctx.send(_("Lonely..."))
@@ -436,7 +506,7 @@ class Marriage(commands.Cog):
         if not children:
             em.add_field(
                 name=_("No children yet"),
-                value=_("Use {prefix}child to make one!").format(prefix=ctx.prefix),
+                value=_("Use `{prefix}child` to make one!").format(prefix=ctx.prefix),
             )
         if len(children) <= 5:
             for child in children:
@@ -478,10 +548,30 @@ class Marriage(commands.Cog):
 
     @has_char()
     @user_cooldown(1800)
-    @commands.command(aliases=["fe"])
+    @commands.command(aliases=["fe"], brief=_("Events happening to your family"))
     @locale_doc
     async def familyevent(self, ctx):
-        _("""Events happening to your family.""")
+        _(
+            """Allow your children to do something, this includes a multitude of events.
+
+            Every time you or your partner uses this command, your children:
+              - have an 8/23 chance to grow older by one year
+              - have a 4/23 chance to be renamed
+              - have a 4/23 chance to take up to 1/64th of your money
+              - have a 4/23 chance to give you up to 1/64th of your current money extra
+              - have a 2/23 chance to find a random crate for you:
+                + 500/761 (65%) chance for a common crate
+                + 200/761 (26%) chance for an uncommon crate
+                + 50/761 (6%) chance for a rare crate
+                + 10/761 (1%) chance for a magic crate
+                + 1/761 (0.1%) chance for a legendary crate
+              - have a 1/23 chance to die
+
+            In each event you will know what happened.
+
+            Only players who are married and have children can use this command.
+            (This command has a cooldown of 30 minutes.)"""
+        )
         if not ctx.character_data["marriage"]:
             await self.bot.reset_cooldown(ctx)
             return await ctx.send(_("You're lonely."))
@@ -492,7 +582,7 @@ class Marriage(commands.Cog):
             await self.bot.reset_cooldown(ctx)
             return await ctx.send(_("You don't have kids yet."))
         target = random.choice(children)
-        options = (
+        event = random.choice(
             ["death"]
             + ["age"] * 8
             + ["namechange"] * 4
@@ -500,15 +590,6 @@ class Marriage(commands.Cog):
             + ["moneylose"] * 4
             + ["moneygain"] * 4
         )
-        process_output = await ctx.bot.cogs["Sharding"].handler(
-            "has_event_role", 1, args={"member_id": ctx.author.id}
-        )
-        if process_output and process_output[0]:
-            event_role = process_output[0]
-            options.append("avatar")
-
-        event = random.choice(options)
-
         if event == "death":
             cause = random.choice(
                 [
@@ -518,14 +599,15 @@ class Marriage(commands.Cog):
                     _("They died of loneliness."),
                     _("A horde of goblins got them."),
                     _(
-                        "They have finally decided to move out after all these years, but couldn't survive a second alone."
+                        "They have finally decided to move out after all these years,"
+                        " but couldn't survive a second alone."
                     ),
                     _("Spontaneous combustion removed them from existence."),
                     _("While exploring the forest, they have gotten lost."),
                     _("They've left through a portal into another dimension..."),
                     _(
-                        "The unbearable pain of stepping on a Lego\© brick killed them."
-                    ),  # noqa
+                        "The unbearable pain of stepping on a Lego\© brick killed them."  # noqa
+                    ),
                     _("You heard a landmine going off nearby..."),
                     _("They have been abducted by aliens!"),
                     _("The Catholic Church got them..."),
@@ -533,7 +615,8 @@ class Marriage(commands.Cog):
                 ]
             )
             await self.bot.pool.execute(
-                'DELETE FROM children WHERE "name"=$1 AND ("mother"=$2 OR "father"=$2) AND "age"=$3;',
+                'DELETE FROM children WHERE "name"=$1 AND ("mother"=$2 OR "father"=$2)'
+                ' AND "age"=$3;',
                 target["name"],
                 ctx.author.id,
                 target["age"],
@@ -547,7 +630,8 @@ class Marriage(commands.Cog):
             cause = random.choice(
                 [
                     _(
-                        "fell in love with a woman on the internet, but the woman was a man and stole their money."
+                        "fell in love with a woman on the internet, but the woman was a"
+                        " man and stole their money."
                     ),
                     _("has been arrested and had to post bail."),
                     _("bought fortnite skins with your credit card."),
@@ -573,24 +657,6 @@ class Marriage(commands.Cog):
             return await ctx.send(
                 _("You lost ${money} because {name} {cause}").format(
                     money=money, name=target["name"], cause=cause
-                )
-            )
-        elif event == "avatar":
-            ap = random.choice(
-                [
-                    _("found the first part for you!"),
-                    _("found the second part for you!"),
-                    _("found the third part for you!"),
-                    _("found the fourth part for you! "),
-                    _("found the fifth part for you!"),
-                ]
-            )
-            await self.bot.public_log(
-                f"**{ctx.author}** {ap.replace(' for you', '')} They are part of {event_role} (ID: {ctx.author.id})"
-            )
-            return await ctx.send(
-                _("{name} is trying to complete the event, and {ap}").format(
-                    name=target["name"], ap=ap
                 )
             )
         elif event == "moneygain":
@@ -630,7 +696,8 @@ class Marriage(commands.Cog):
                 + ["legendary"]
             )
             await self.bot.pool.execute(
-                f'UPDATE profile SET "crates_{type_}"="crates_{type_}"+1 WHERE "user"=$1;',
+                f'UPDATE profile SET "crates_{type_}"="crates_{type_}"+1 WHERE'
+                ' "user"=$1;',
                 ctx.author.id,
             )
             emoji = getattr(self.bot.cogs["Crates"].emotes, type_)
@@ -648,7 +715,8 @@ class Marriage(commands.Cog):
             )
         elif event == "age":
             await self.bot.pool.execute(
-                'UPDATE children SET "age"="age"+1 WHERE "name"=$1 AND ("mother"=$2 OR "father"=$2) AND "age"=$3;',
+                'UPDATE children SET "age"="age"+1 WHERE "name"=$1 AND ("mother"=$2 OR'
+                ' "father"=$2) AND "age"=$3;',
                 target["name"],
                 ctx.author.id,
                 target["age"],
@@ -684,12 +752,14 @@ class Marriage(commands.Cog):
                 if name in names:
                     await ctx.send(
                         _(
-                            "One of your children already has that name, please choose another one."
+                            "One of your children already has that name, please choose"
+                            " another one."
                         )
                     )
                     name = None
             await self.bot.pool.execute(
-                'UPDATE children SET "name"=$1 WHERE "name"=$2 AND ("mother"=$3 OR "father"=$3) AND "age"=$4;',
+                'UPDATE children SET "name"=$1 WHERE "name"=$2 AND ("mother"=$3 OR'
+                ' "father"=$3) AND "age"=$4;',
                 name,
                 target["name"],
                 ctx.author.id,

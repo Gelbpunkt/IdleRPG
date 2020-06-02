@@ -15,116 +15,202 @@ GNU Affero General Public License for more details.
 You should have received a copy of the GNU Affero General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
+import math
+
+from datetime import timedelta
 from typing import Union
 
 import discord
 
 from asyncpg import UniqueViolationError
-from discord.ext import commands
+from discord.ext import commands, menus
 
 from classes.converters import User
-from utils.checks import is_supporter
+from utils.checks import has_open_help_request, is_supporter
+from utils.i18n import _, locale_doc
 
 
-def chunks(l, n):
-    """Yield successive n-sized chunks from l."""
-    for i in range(0, len(l), n):
-        yield l[i : i + n]
+def chunks(iterable, size):
+    """Yield successive n-sized chunks from an iterable."""
+    for i in range(0, len(iterable), size):
+        yield iterable[i : i + size]
+
+
+class CogMenu(menus.Menu):
+    def __init__(self, *args, **kwargs):
+        self.title = kwargs.pop("title")
+        self.description = kwargs.pop("description")
+        self.bot = kwargs.pop("bot")
+        self.color = kwargs.pop("color", 0xCB735C)
+        self.footer = kwargs.pop("footer")
+        self.per_page = kwargs.pop("per_page", 5)
+        self.page = 1
+        super().__init__(*args, timeout=60.0, delete_message_after=True, **kwargs)
+
+    @property
+    def pages(self):
+        return math.ceil(len(self.description) / self.per_page)
+
+    def embed(self, desc):
+        e = discord.Embed(
+            title=self.title, color=self.color, description="\n".join(desc)
+        )
+        e.set_author(
+            name=self.bot.user,
+            icon_url=self.bot.user.avatar_url_as(static_format="png"),
+        )
+        e.set_footer(
+            text=f"{self.footer} | Page {self.page}/{self.pages}",
+            icon_url=self.bot.user.avatar_url_as(static_format="png"),
+        )
+        return e
+
+    def should_add_reactions(self):
+        return len(self.description) > self.per_page
+
+    async def send_initial_message(self, ctx, channel):
+        e = self.embed(self.description[0 : self.per_page])
+        return await channel.send(embed=e)
+
+    @menus.button("\N{BLACK LEFT-POINTING TRIANGLE}\ufe0f")
+    async def on_previous_page(self, payload):
+        if self.page != 1:
+            self.page -= 1
+            start = (self.page - 1) * self.per_page
+            end = self.page * self.per_page
+            items = self.description[start:end]
+            e = self.embed(items)
+            await self.message.edit(embed=e)
+
+    @menus.button("\N{BLACK SQUARE FOR STOP}\ufe0f")
+    async def on_stop(self, payload):
+        self.stop()
+
+    @menus.button("\N{BLACK RIGHT-POINTING TRIANGLE}\ufe0f")
+    async def on_next_page(self, payload):
+        if len(self.description) >= (self.page * self.per_page):
+            self.page += 1
+            start = (self.page - 1) * self.per_page
+            end = self.page * self.per_page
+            items = self.description[start:end]
+            e = self.embed(items)
+            await self.message.edit(embed=e)
+
+
+class SubcommandMenu(menus.Menu):
+    def __init__(self, *args, **kwargs):
+        self.cmds = kwargs.pop("cmds")
+        self.title = kwargs.pop("title")
+        self.description = kwargs.pop("description")
+        self.bot = kwargs.pop("bot")
+        self.color = kwargs.pop("color", 0xCB735C)
+        self.per_page = kwargs.pop("per_page", 5)
+        self.page = 1
+        self.group_emoji = "💠"
+        self.command_emoji = "🔷"
+        super().__init__(*args, timeout=60.0, delete_message_after=True, **kwargs)
+
+    @property
+    def pages(self):
+        return math.ceil(len(self.cmds) / self.per_page)
+
+    def embed(self, cmds):
+        e = discord.Embed(
+            title=self.title, color=self.color, description=self.description
+        )
+        e.set_author(
+            name=self.bot.user,
+            icon_url=self.bot.user.avatar_url_as(static_format="png"),
+        )
+        e.add_field(
+            name=_("Subcommands"),
+            value="\n".join(
+                [
+                    f"{self.group_emoji if isinstance(c, commands.Group) else self.command_emoji}"
+                    f" `{self.ctx.prefix}{c.qualified_name}` - {_(c.brief)}"
+                    for c in cmds
+                ]
+            ),
+        )
+        if self.should_add_reactions():
+            e.set_footer(
+                icon_url=self.bot.user.avatar_url_as(static_format="png"),
+                text=_(
+                    "Click on the reactions to see more subcommands. | Page"
+                    " {start}/{end}"
+                ).format(start=self.page, end=self.pages),
+            )
+        return e
+
+    def should_add_reactions(self):
+        return len(self.cmds) > self.per_page
+
+    async def send_initial_message(self, ctx, channel):
+        e = self.embed(self.cmds[0 : self.per_page])
+        return await channel.send(embed=e)
+
+    @menus.button("\N{BLACK LEFT-POINTING TRIANGLE}\ufe0f")
+    async def on_previous_page(self, payload):
+        if self.page != 1:
+            self.page -= 1
+            start = (self.page - 1) * self.per_page
+            end = self.page * self.per_page
+            items = self.cmds[start:end]
+            e = self.embed(items)
+            await self.message.edit(embed=e)
+
+    @menus.button("\N{BLACK SQUARE FOR STOP}\ufe0f")
+    async def on_stop(self, payload):
+        self.stop()
+
+    @menus.button("\N{BLACK RIGHT-POINTING TRIANGLE}\ufe0f")
+    async def on_next_page(self, payload):
+        if len(self.cmds) >= (self.page * self.per_page):
+            self.page += 1
+            start = (self.page - 1) * self.per_page
+            end = self.page * self.per_page
+            items = self.cmds[start:end]
+            e = self.embed(items)
+            await self.message.edit(embed=e)
 
 
 class Help(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
-    def make_signature(self, command):
-        parent = command.full_parent_name
-        if len(command.aliases) > 0:
-            fmt = f"[{command.name}|{'|'.join(command.aliases)}]"
-            if parent:
-                fmt = f"{parent} {fmt}"
-        else:
-            fmt = command.name if not parent else f"{parent} {command.name}"
-        fmt = f"{fmt} {command.signature}"
-        return fmt
-
-    def make_pages(self):
-        all_commands = {}
-        for cog, instance in self.bot.cogs.items():
-            if cog in ["Admin", "Owner"]:
-                continue
-            commands = list(chunks(list(instance.get_commands()), 10))
-            if len(commands) == 1:
-                all_commands[cog] = commands[0]
-            else:
-                for i, j in enumerate(commands):
-                    all_commands[f"{cog} ({i + 1}/{len(commands)})"] = j
-
-        pages = []
-        maxpages = len(all_commands)
-
-        embed = discord.Embed(
-            title=_("IdleRPG Help"),
-            colour=self.bot.config.primary_colour,
-            url=self.bot.BASE_URL,
-            description=_(
-                "**Welcome to the IdleRPG help. Use the arrows to move.\nFor more help, join the support server at https://discord.gg/MSBatf6.**\nCheck out our partners using the partners command!"
-            ),
-        )
-        embed.set_image(url=f"{self.bot.BASE_URL}/IdleRPG.png")
-        embed.set_footer(
-            text=_("IdleRPG Version {version}").format(version=self.bot.version),
-            icon_url=self.bot.user.avatar_url,
-        )
-        pages.append(embed)
-        for i, (cog, commands) in enumerate(all_commands.items()):
-            embed = discord.Embed(
-                title=_("IdleRPG Help"),
-                colour=self.bot.config.primary_colour,
-                url=self.bot.BASE_URL,
-                description=_("**{category} Commands**").format(category=cog),
-            )
-            embed.set_footer(
-                text=_("IdleRPG Version {version} | Page {page} of {maxpages}").format(
-                    version=self.bot.version, page=i + 1, maxpages=maxpages
-                ),
-                icon_url=self.bot.user.avatar_url,
-            )
-            for command in commands:
-                if hasattr(command.callback, "__doc__"):
-                    desc = _(command.callback.__doc__)
-                else:
-                    desc = _("No Description set")
-                embed.add_field(
-                    name=self.make_signature(command), value=desc, inline=False
-                )
-            pages.append(embed)
-        return pages
-
-    @commands.command(aliases=["commands", "cmds"])
+    @commands.command(aliases=["commands", "cmds"], brief=_("View the command list"))
     @locale_doc
     async def documentation(self, ctx):
         _("""Sends a link to the official documentation.""")
         await ctx.send(
             _(
-                "<:blackcheck:441826948919066625> **Check {url} for a list of commands**"
+                "<:blackcheck:441826948919066625> **Check {url} for a list of"
+                " commands**"
             ).format(url=f"{self.bot.BASE_URL}/commands")
         )
 
-    @commands.command(aliases=["faq"])
+    @commands.command(aliases=["faq"], brief=_("View the tutorial"))
     @locale_doc
     async def tutorial(self, ctx):
-        """Link to the bot tutorial."""
+        _("""Link to the bot tutorial and FAQ.""")
         await ctx.send(
             _(
-                "<:blackcheck:441826948919066625> **Check {url} for a tutorial and FAQ**"
+                "<:blackcheck:441826948919066625> **Check {url} for a tutorial and"
+                " FAQ**"
             ).format(url=f"{self.bot.BASE_URL}/tutorial")
         )
 
     @is_supporter()
-    @commands.command()
+    @commands.command(brief=_("Allow someone/-thing to use helpme again"))
     @locale_doc
     async def unbanfromhelpme(self, ctx, thing_to_unban: Union[User, int]):
-        _("""Unban an entitiy from using $helpme.""")
+        _(
+            """`<thing_to_unban>` - A discord User, their User ID, or a server ID
+
+            Unbans a previously banned user/server from using the `{prefix}helpme` command.
+
+            Only Support Team Members can use this command."""
+        )
         if isinstance(thing_to_unban, discord.User):
             id = thing_to_unban.id
         else:
@@ -138,10 +224,16 @@ class Help(commands.Cog):
         )
 
     @is_supporter()
-    @commands.command()
+    @commands.command(brief=_("Ban someone/-thing from using helpme"))
     @locale_doc
     async def banfromhelpme(self, ctx, thing_to_ban: Union[User, int]):
-        _("""Ban a user from using $helpme.""")
+        _(
+            """`<thing_to_ban>` - A discord User, their User ID, or a server ID
+
+            Bans a user/server from using the `{prefix}helpme` command.
+
+            Only Support Team Members can use this command."""
+        )
         if isinstance(thing_to_ban, discord.User):
             id = thing_to_ban.id
         else:
@@ -158,10 +250,28 @@ class Help(commands.Cog):
         )
 
     @commands.guild_only()
-    @commands.command()
+    @commands.group(
+        invoke_without_command=True, brief=_("Ask our Support Team for help")
+    )
     @locale_doc
     async def helpme(self, ctx, *, text: str):
-        _("""Allows a support team member to join your server for individual help.""")
+        _(
+            """`<text>` - The text to describe the question or the issue you are having
+
+            Ask our support team for help, allowing them to join your server and help you personally.
+            If they do not join within 48 hours, you may use the helpme command again.
+
+            Make sure the bot has permissions to create instant invites.
+            English is preferred."""
+        )
+        if (cd := await self.bot.redis.execute("TTL", f"helpme:{ctx.guild.id}")) != -2:
+            time = timedelta(seconds=cd)
+            return await ctx.send(
+                _(
+                    "You server already has a helpme request open! Please wait until"
+                    " the support team gets to you or wait {time} to try again. "
+                ).format(time=time)
+            )
         blocked = await self.bot.pool.fetchrow(
             'SELECT * FROM helpme WHERE "id"=$1 OR "id"=$2;',
             ctx.guild.id,
@@ -174,7 +284,8 @@ class Help(commands.Cog):
 
         if not await ctx.confirm(
             _(
-                "Are you sure? This will notify our support team and allow them to join the server."
+                "Are you sure? This will notify our support team and allow them to join"
+                " the server."
             )
         ):
             return
@@ -189,41 +300,333 @@ class Help(commands.Cog):
         em.add_field(name="Requested in channel", value=f"#{ctx.channel}")
         em.add_field(name="Content", value=text)
         em.add_field(name="Invite", value=inv)
+        em.set_footer(text=f"Server ID: {ctx.guild.id}")
 
-        await self.bot.http.send_message(
-            453_551_307_249_418_254, None, embed=em.to_dict()
+        message = await self.bot.http.send_message(
+            self.bot.config.helpme_channel, None, embed=em.to_dict()
+        )
+        await self.bot.redis.execute(
+            "SET", f"helpme:{ctx.guild.id}", message["id"], "EX", 172800,  # 48 hours
         )
         await ctx.send(
             _("Support team has been notified and will join as soon as possible!")
         )
 
-    @commands.command()
+    @is_supporter()
+    @helpme.command(hidden=True, brief=_("Finish the helpme request"))
     @locale_doc
-    async def help(
-        self, ctx, *, command: commands.clean_content(escape_markdown=True) = None
-    ):
-        _("""Shows help about the bot.""")
-        if command:
-            command = self.bot.get_command(command.lower())
-            if not command:
-                return await ctx.send(_("Sorry, that command does not exist."))
-            sig = self.make_signature(command)
-            subcommands = getattr(command, "commands", None)
-            if subcommands:
-                clean_subcommands = "\n".join(
-                    [
-                        f"    {c.name.ljust(15, ' ')} {_(getattr(c.callback, '__doc__'))}"
-                        for c in subcommands
-                    ]
+    async def finish(self, ctx, guild_id: int):
+        _(
+            """`<guild_id>` - The server ID of the requesting server
+
+            Clear a server's helpme cooldown. If this is not done, they will be on cooldown for 48 hours."""
+        )
+        await self.bot.redis.execute("DEL", f"helpme:{guild_id}")
+        await ctx.send("Clear!", delete_after=5)
+
+    @has_open_help_request()
+    @helpme.command(aliases=["correct"], brief=_("Change your helpme text"))
+    @locale_doc
+    async def edit(self, ctx, *, new_text: str):
+        _(
+            """`<new_text>` - The new text to use in your helpme request
+
+            Edit the text on your open helpme request. Our Support Team will see the new text right away.
+
+            You can only use this command if your server has an open helpme request."""
+        )
+        message = await self.bot.http.get_message(
+            self.bot.config.helpme_channel, ctx.helpme
+        )
+        inv = discord.utils.find(
+            lambda f: f["name"] == "Invite", message["embeds"][0]["fields"]
+        )["value"]
+        old_text = discord.utils.find(
+            lambda f: f["name"] == "Content", message["embeds"][0]["fields"]
+        )["value"]
+
+        em = discord.Embed(title="Help Request", colour=0xFF0000)
+        em.add_field(name="Requested by", value=f"{ctx.author}")
+        em.add_field(name="Requested in server", value=f"{ctx.guild.name}")
+        em.add_field(name="Requested in channel", value=f"#{ctx.channel}")
+        em.add_field(name="Content", value=new_text)
+        em.add_field(name="Invite", value=inv)
+        em.set_footer(text=f"Server ID: {ctx.guild.id}")
+
+        await self.bot.http.edit_message(
+            self.bot.config.helpme_channel, ctx.helpme, content=None, embed=em.to_dict()
+        )
+        await ctx.send(
+            _("Successfully changed your helpme text from `{old}` to `{new}`!").format(
+                old=old_text, new=new_text
+            )
+        )
+
+    @has_open_help_request()
+    @helpme.command(
+        aliases=["revoke", "remove"], brief=_("Cancel your open helpme request")
+    )
+    @locale_doc
+    async def delete(self, ctx):
+        _(
+            """Cancel your ongoing helpme request. Our Support Team will not join your server.
+
+            You can only use this command if your server has an open helpme request."""
+        )
+        if not await ctx.confirm(
+            _("Are you sure you want to cancel your helpme request?")
+        ):
+            return await ctx.send(_("Cancelled cancellation."))
+        await self.bot.http.delete_message(self.bot.config.helpme_channel, ctx.helpme)
+        await self.bot.redis.execute("DEL", f"helpme:{ctx.guild.id}")
+        await ctx.send(_("Your helpme request has been cancelled."))
+
+    @has_open_help_request()
+    @helpme.command(brief=_("View your current helpme request"))
+    @locale_doc
+    async def view(self, ctx):
+        _(
+            """View how your server's current helpme request looks like to our Support Team.
+
+            You can only use this command if your server has an open helpme request."""
+        )
+        message = await self.bot.http.get_message(
+            self.bot.config.helpme_channel, ctx.helpme
+        )
+        embed = discord.Embed().from_dict(message["embeds"][0])
+
+        await ctx.send(
+            _("Your help request is visible to our support team like this:"),
+            embed=embed,
+        )
+
+
+class IdleHelp(commands.HelpCommand):
+    def __init__(self, *args, **kwargs):
+        kwargs["command_attrs"] = {
+            "brief": _("Views the help on a topic."),
+            "help": _(
+                """Views the help on a topic.
+
+            The topic may either be a command name or a module name.
+            Command names are always preferred, so for example, `{prefix}help adventure`
+            will show the help on the command, not the module.
+
+            To view the help on a module explicitely, use `{prefix}help module [name]`"""
+            ),
+        }
+
+        super().__init__(*args, **kwargs)
+        self.verify_checks = False
+        self.gm_exts = {"GameMaster"}
+        self.owner_exts = {"GameMaster", "Owner"}
+        self.color = 0xCB735C
+        self.group_emoji = "💠"
+        self.command_emoji = "🔷"
+
+    async def command_callback(self, ctx, *, command=None):
+        await self.prepare_help_command(ctx, command)
+        bot = ctx.bot
+
+        if command is None:
+            mapping = self.get_bot_mapping()
+            return await self.send_bot_help(mapping)
+
+        PREFER_COG = False
+        if command.lower().startswith(("module ", "module:")):
+            command = command[7:]
+            PREFER_COG = True
+
+        if PREFER_COG:
+            cog = bot.get_cog(command.title())
+            if cog is not None:
+                return await self.send_cog_help(cog)
+
+        maybe_coro = discord.utils.maybe_coroutine
+
+        keys = command.split(" ")
+        cmd = bot.all_commands.get(keys[0])
+        if cmd is None:
+            cog = bot.get_cog(command.title())
+            if cog is not None:
+                return await self.send_cog_help(cog)
+
+            string = await maybe_coro(
+                self.command_not_found, self.remove_mentions(keys[0])
+            )
+            return await self.send_error_message(string)
+
+        for key in keys[1:]:
+            try:
+                found = cmd.all_commands.get(key)
+            except AttributeError:
+                string = await maybe_coro(
+                    self.subcommand_not_found, cmd, self.remove_mentions(key)
                 )
-                fmt = f"```\n{ctx.prefix}{sig}\n\n{_(getattr(command.callback, '__doc__'))}\n\nCommands:\n{clean_subcommands}\n```"
+                return await self.send_error_message(string)
             else:
-                fmt = f"```\n{ctx.prefix}{sig}\n\n{_(getattr(command.callback, '__doc__'))}\n```"
+                if found is None:
+                    string = await maybe_coro(
+                        self.subcommand_not_found, cmd, self.remove_mentions(key)
+                    )
+                    return await self.send_error_message(string)
+                cmd = found
 
-            return await ctx.send(fmt)
+        if isinstance(cmd, commands.Group):
+            return await self.send_group_help(cmd)
+        else:
+            return await self.send_command_help(cmd)
 
-        await self.bot.paginator.Paginator(extras=self.make_pages()).paginate(ctx)
+    def embedbase(self, *args, **kwargs):
+        e = discord.Embed(color=self.color, **kwargs)
+        e.set_author(
+            name=self.context.bot.user,
+            icon_url=self.context.bot.user.avatar_url_as(static_format="png"),
+        )
+
+        return e
+
+    async def send_bot_help(self, mapping):
+        e = self.embedbase(
+            title=_("IdleRPG Help {version}").format(version=self.context.bot.version),
+            url="https://idlerpg.xyz/",
+        )
+        e.set_image(
+            url="https://media.discordapp.net/attachments/460568954968997890/711740723715637288/idle_banner.png"
+        )
+        e.description = _(
+            "**Welcome to the IdleRPG help.**\nAre you stuck? Ask for help in the"
+            " support server!\n- https://support.idlerpg.xyz/\nWould you like to invite"
+            " me to your server?\n- https://invite.idlerpg.xyz/\n*See `{prefix}help"
+            " [command]` and `{prefix}help module [module]` for more info*"
+        ).format(prefix=self.context.prefix)
+
+        allowed = []
+        for cog in sorted(mapping.keys(), key=lambda x: x.qualified_name if x else ""):
+            if cog is None:
+                continue
+            if (
+                self.context.author.id not in self.context.bot.config.game_masters
+                and cog.qualified_name in self.gm_exts
+            ):
+                continue
+            if (
+                self.context.author.id not in self.context.bot.owner_ids
+                and cog.qualified_name in self.owner_exts
+            ):
+                continue
+            if (
+                cog.qualified_name not in self.gm_exts
+                and len([c for c in cog.get_commands() if not c.hidden]) == 0
+            ):
+                continue
+            allowed.append(cog.qualified_name)
+        cogs = [allowed[x : x + 3] for x in range(0, len(allowed), 3)]
+        length_list = [len(element) for row in cogs for element in row]
+        column_width = max(length_list)
+        rows = []
+        for row in cogs:
+            rows.append("".join(element.ljust(column_width + 2) for element in row))
+        e.add_field(name=_("Modules"), value="```{}```".format("\n".join(rows)))
+
+        await self.context.send(embed=e)
+
+    async def send_cog_help(self, cog):
+        if (
+            self.context.author.id not in self.context.bot.config.game_masters
+            and cog.qualified_name in self.gm_exts
+        ):
+            return await self.context.send(
+                _("You do not have access to these commands!")
+            )
+        if (
+            self.context.author.id not in self.context.bot.owner_ids
+            and cog.qualified_name in self.owner_exts
+        ):
+            return await self.context.send(
+                _("You do not have access to these commands!")
+            )
+
+        menu = CogMenu(
+            title=(
+                f"[{cog.qualified_name.upper()}] {len(set(cog.walk_commands()))}"
+                " commands"
+            ),
+            bot=self.context.bot,
+            color=self.color,
+            description=[
+                f"{self.group_emoji if isinstance(c, commands.Group) else self.command_emoji}"
+                f" `{self.clean_prefix}{c.qualified_name} {c.signature}` - {_(c.brief)}"
+                for c in cog.get_commands()
+            ],
+            footer=_("See '{prefix}help <command>' for more detailed info").format(
+                prefix=self.context.prefix
+            ),
+        )
+
+        await menu.start(self.context)
+
+    async def send_command_help(self, command):
+        if command.cog:
+            if (
+                self.context.author.id not in self.context.bot.config.game_masters
+                and command.cog.qualified_name in self.gm_exts
+            ):
+                return await self.context.send(
+                    _("You do not have access to this command!")
+                )
+            if (
+                self.context.author.id not in self.context.bot.owner_ids
+                and command.cog.qualified_name in self.owner_exts
+            ):
+                return await self.context.send(
+                    _("You do not have access to this command!")
+                )
+
+        e = self.embedbase(
+            title=(
+                f"[{command.cog.qualified_name.upper()}] {command.qualified_name}"
+                f" {command.signature}"
+            ),
+            description=_(command.help).format(prefix=self.context.prefix),
+        )
+        if command.aliases:
+            e.add_field(
+                name=_("Aliases"), value="`{}`".format("`, `".join(command.aliases))
+            )
+        await self.context.send(embed=e)
+
+    async def send_group_help(self, group):
+        if group.cog:
+            if (
+                self.context.author.id not in self.context.bot.config.game_masters
+                and group.cog.qualified_name in self.gm_exts
+            ):
+                return await self.context.send(
+                    _("You do not have access to this command!")
+                )
+            if (
+                self.context.author.id not in self.context.bot.owner_ids
+                and group.cog.qualified_name in self.owner_exts
+            ):
+                return await self.context.send(
+                    _("You do not have access to this command!")
+                )
+
+        menu = SubcommandMenu(
+            title=(
+                f"[{group.cog.qualified_name.upper()}] {group.qualified_name}"
+                f" {group.signature}"
+            ),
+            bot=self.context.bot,
+            color=self.color,
+            description=_(group.help).format(prefix=self.context.prefix),
+            cmds=list(group.commands),
+        )
+        await menu.start(self.context)
 
 
 def setup(bot):
     bot.add_cog(Help(bot))
+    bot.help_command = IdleHelp()
+    bot.help_command.cog = bot.get_cog("Help")

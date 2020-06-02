@@ -15,9 +15,14 @@ GNU Affero General Public License for more details.
 You should have received a copy of the GNU Affero General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
-import random
+import base64
+import hashlib
+import hmac
+import time
 
 from discord.errors import NotFound
+
+from utils import random
 
 levels = {
     "1": 0,
@@ -53,9 +58,21 @@ levels = {
 }
 
 
-def hex_to_rgb(hex_):
-    hex_ = hex_.lstrip("#")
-    return tuple(int(hex_[i : i + 2], 16) for i in (0, 2, 4))
+def random_token(id_):
+    """Returns a random theoretically valid token for a discord user"""
+    id_ = base64.b64encode(str(id_).encode()).decode()
+    time_ = base64.b64encode(
+        int.to_bytes(int(time.time()), 6, byteorder="big")
+    ).decode()
+    randbytes = bytearray(random.randbits(8) for _ in range(10))
+    hmac_ = hmac.new(randbytes, randbytes, hashlib.md5).hexdigest()
+    return f"{id_}.{time_}.{hmac_}"
+
+
+def nice_join(iterable):
+    if len(iterable) == 1:
+        return iterable[0]
+    return f"{', '.join([str(i) for i in iterable[:-1]])} and {iterable[-1]}"
 
 
 def xptolevel(xp):
@@ -85,6 +102,9 @@ def calcchance(
         val2 = sword + shield + 75 - dungeon * 2
         val1 = round(val1 * luck) if val1 >= 0 else round(val1 / luck)
         val2 = round(val2 * luck) if val2 >= 0 else round(val2 / luck)
+        if booster:
+            val1 += 25
+            val2 += 25
         return (val1, val2, level)
     else:
         randomn = random.randint(0, 100)

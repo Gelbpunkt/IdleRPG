@@ -20,6 +20,7 @@ import discord
 from discord.ext import commands
 
 from utils import misc as rpgtools
+from utils.i18n import _, locale_doc
 from utils.markdown import escape_markdown
 
 
@@ -27,13 +28,14 @@ class Ranks(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
-    @commands.command()
+    @commands.command(brief=_("Show the top 10 richest"))
     @locale_doc
     async def richest(self, ctx):
         _("""The 10 most richest players in IdleRPG.""")
         await ctx.trigger_typing()
         players = await self.bot.pool.fetch(
-            'SELECT "user", "name", "money" FROM profile ORDER BY "money" DESC LIMIT 10;'
+            'SELECT "user", "name", "money" FROM profile ORDER BY "money" DESC'
+            " LIMIT 10;"
         )
         result = ""
         for idx, profile in enumerate(players):
@@ -49,10 +51,12 @@ class Ranks(commands.Cog):
         )
         await ctx.send(embed=result)
 
-    @commands.command(aliases=["best", "high", "top"])
+    @commands.command(aliases=["best", "high", "top"], brief=_("Show the top 10 by XP"))
     @locale_doc
     async def highscore(self, ctx):
-        _("""The top 10 players by XP.""")
+        _(
+            """Shows you the top 10 players by XP and displays the corresponding level."""
+        )
         await ctx.trigger_typing()
         players = await self.bot.pool.fetch(
             'SELECT "user", "name", "xp" from profile ORDER BY "xp" DESC LIMIT 10;'
@@ -74,13 +78,14 @@ class Ranks(commands.Cog):
         )
         await ctx.send(embed=result)
 
-    @commands.command(aliases=["pvp", "battles"])
+    @commands.command(aliases=["pvp", "battles"], brief=_("Show the top 10 PvPers"))
     @locale_doc
     async def pvpstats(self, ctx):
-        _("""Top 10 players by wins in PvP matches.""")
+        _("""Shows you the top 10 players by the amount of wins in PvP matches.""")
         await ctx.trigger_typing()
         players = await self.bot.pool.fetch(
-            'SELECT "user", "name", "pvpwins" from profile ORDER BY "pvpwins" DESC LIMIT 10;'
+            'SELECT "user", "name", "pvpwins" from profile ORDER BY "pvpwins" DESC'
+            " LIMIT 10;"
         )
         result = ""
         for idx, profile in enumerate(players):
@@ -96,13 +101,14 @@ class Ranks(commands.Cog):
         )
         await ctx.send(embed=result)
 
-    @commands.command()
+    @commands.command(brief=_("Show the top 10 lovers"))
     @locale_doc
     async def lovers(self, ctx):
         _("""The top 10 lovers sorted by their spouse's lovescore.""")
         await ctx.trigger_typing()
         players = await self.bot.pool.fetch(
-            'SELECT "user", "marriage", "lovescore" FROM profile ORDER BY "lovescore" DESC LIMIT 10;'
+            'SELECT "user", "marriage", "lovescore" FROM profile ORDER BY "lovescore"'
+            " DESC LIMIT 10;"
         )
         result = ""
         for idx, profile in enumerate(players):

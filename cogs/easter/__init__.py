@@ -15,35 +15,43 @@ GNU Affero General Public License for more details.
 You should have received a copy of the GNU Affero General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
-import random
-
 from discord.ext import commands
 
 from classes.converters import IntFromTo
+from utils import random
 from utils.checks import has_char
+from utils.i18n import _, locale_doc
 
 
 class Easter(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
-    @commands.group(invoke_without_command=True)
+    @commands.group(invoke_without_command=True, brief=_("Easter related commands"))
     @locale_doc
     async def easter(self, ctx):
         _(
-            """Easter related commands for trading your collected eastereggs in for rewards."""
+            """Contains all easter related commands. See `{prefix}help easter` for a list of commands.
+
+            During the easter event, users will find eastereggs when finishing adventures, which can be exchanged for several rewards, including crates, items, money, or special guild badges."""
         )
         await ctx.send(
             _(
-                "**Easter event <:easteregg:566251086986608650>**\n\nPart of Idle's birthday!\nCollect eastereggs and use `{prefix}easter rewards` to check the rewards. <:bunny:566290173831151627>\nHappy hunting!"
+                "**Easter event <:easteregg:566251086986608650>**\n\nPart of Idle's"
+                " birthday!\nCollect eastereggs and use `{prefix}easter rewards` to"
+                " check the rewards. <:bunny:566290173831151627>\nHappy hunting!"
             ).format(prefix=ctx.prefix)
         )
 
     @has_char()
-    @easter.command()
+    @easter.command(brief=_("Lists all easter rewards"))
     @locale_doc
     async def rewards(self, ctx):
-        _("""See the rewards for easter event.""")
+        _(
+            """Shows all rewards available in the easter event, along with the reward ID.
+
+            To claim a reward, use `{prefix}easter reward <ID>`."""
+        )
         await ctx.send(
             _(
                 """
@@ -64,10 +72,16 @@ You have **{eggs}** <:easteregg:566251086986608650>."""
         )
 
     @has_char()
-    @easter.command()
+    @easter.command(brief=_("Claim an easter reward"))
     @locale_doc
     async def reward(self, ctx, reward_id: IntFromTo(1, 9)):
-        _("""Get your easter reward. ID may be 1 to 9.""")
+        _(
+            """`<reward_id>` - A whole number from 1 to 9
+
+            Claim a reward by its ID.
+
+            A list of rewards along with their ID can be seen with `{prefix}easter rewards`."""
+        )
         reward = [
             (100, "crates", 10, "common"),
             (500, "money", 10000),
@@ -84,7 +98,8 @@ You have **{eggs}** <:easteregg:566251086986608650>."""
 
         if reward[1] == "crates":
             await self.bot.pool.execute(
-                f'UPDATE profile SET "crates_{reward[3]}"="crates_{reward[3]}"+$1, "eastereggs"="eastereggs"-$2 WHERE "user"=$3;',
+                f'UPDATE profile SET "crates_{reward[3]}"="crates_{reward[3]}"+$1,'
+                ' "eastereggs"="eastereggs"-$2 WHERE "user"=$3;',
                 reward[2],
                 reward[0],
                 ctx.author.id,
@@ -98,7 +113,8 @@ You have **{eggs}** <:easteregg:566251086986608650>."""
             )
         elif reward[1] == "money":
             await self.bot.pool.execute(
-                'UPDATE profile SET "money"="money"+$1, "eastereggs"="eastereggs"-$2 WHERE "user"=$3;',
+                'UPDATE profile SET "money"="money"+$1, "eastereggs"="eastereggs"-$2'
+                ' WHERE "user"=$3;',
                 reward[2],
                 reward[0],
                 ctx.author.id,
@@ -112,7 +128,9 @@ You have **{eggs}** <:easteregg:566251086986608650>."""
             )
         elif reward[1] == "boosters":
             await self.bot.pool.execute(
-                'UPDATE profile SET "money_booster"="money_booster"+$1, "time_booster"="time_booster"+$1, "luck_booster"="luck_booster"+$1, "eastereggs"="eastereggs"-$2 WHERE "user"=$3;',
+                'UPDATE profile SET "money_booster"="money_booster"+$1,'
+                ' "time_booster"="time_booster"+$1, "luck_booster"="luck_booster"+$1,'
+                ' "eastereggs"="eastereggs"-$2 WHERE "user"=$3;',
                 reward[2],
                 reward[0],
                 ctx.author.id,
@@ -125,7 +143,8 @@ You have **{eggs}** <:easteregg:566251086986608650>."""
                     ctx.author.id,
                 )
                 await conn.execute(
-                    'UPDATE guild SET "badges"=array_append("badges", $1) WHERE "id"=$2;',
+                    'UPDATE guild SET "badges"=array_append("badges", $1) WHERE'
+                    ' "id"=$2;',
                     "https://i.imgur.com/VHUDdTv.jpg",
                     ctx.character_data["guild"],
                 )
@@ -158,7 +177,9 @@ You have **{eggs}** <:easteregg:566251086986608650>."""
             )
         await ctx.send(
             _(
-                "You claimed your reward. Check your inventory/boosters/crates/money/etc.! You can claim multiple rewards, keep hunting!"
+                "You claimed your reward. Check your"
+                " inventory/boosters/crates/money/etc.! You can claim multiple rewards,"
+                " keep hunting!"
             )
         )
 

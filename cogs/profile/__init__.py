@@ -28,8 +28,9 @@ from discord.ext.commands.default import Author
 from classes.converters import IntFromTo, MemberWithCharacter, User, UserWithCharacter
 from cogs.help import chunks
 from cogs.shard_communication import user_on_cooldown as user_cooldown
-from utils import checks
+from utils import checks, colors
 from utils import misc as rpgtools
+from utils.i18n import _, locale_doc
 
 
 class Profile(commands.Cog):
@@ -38,10 +39,20 @@ class Profile(commands.Cog):
 
     @checks.has_no_char()
     @user_cooldown(3600)
-    @commands.command(aliases=["new", "c", "start"])
+    @commands.command(aliases=["new", "c", "start"], brief=_("Create a new character"))
     @locale_doc
     async def create(self, ctx, *, name: str = None):
-        _("""Creates a new character.""")
+        _(
+            """`[name]` - The name to give your character; will be interactive if not given
+
+            Create a new character and start playing IdleRPG.
+
+            By creating a character, you agree to the [bot rules](https://wiki.idlerpg.xyz/index.php?title=Rules#botrules).
+            No idea where to go from here? Check out our [tutorial](https://idlerpg.xyz/tutorial/).
+            If you still have questions afterward, feel free to ask us on the official [support server](https://support.idlerpg.xyz/).
+
+            (This command has a cooldown of 1 hour.)"""
+        )
         if not name:
             await ctx.send(
                 _(
@@ -82,6 +93,13 @@ IdleRPG is a global bot, your characters are valid everywhere"""
             ):
                 return await ctx.send(_("Creation of your character cancelled."))
         if len(name) > 2 and len(name) < 21:
+            if "`" in name:
+                return await ctx.send(
+                    _(
+                        "Illegal character (`) found in the name. Please try again and"
+                        " choose another name."
+                    )
+                )
             await self.bot.pool.execute(
                 "INSERT INTO profile VALUES ($1, $2, $3, $4);",
                 ctx.author.id,
@@ -114,7 +132,8 @@ IdleRPG is a global bot, your characters are valid everywhere"""
             )
             await ctx.send(
                 _(
-                    "Successfully added your character **{name}**! Now use `{prefix}profile` to view your character!"
+                    "Successfully added your character **{name}**! Now use"
+                    " `{prefix}profile` to view your character!"
                 ).format(name=name, prefix=ctx.prefix)
             )
         elif len(name) < 3 or len(name) > 20:
@@ -123,10 +142,15 @@ IdleRPG is a global bot, your characters are valid everywhere"""
             )
             await self.bot.reset_cooldown(ctx)
 
-    @commands.command(aliases=["me", "p"])
+    @commands.command(aliases=["me", "p"], brief=_("View someone's profile"))
     @locale_doc
     async def profile(self, ctx, *, person: User = Author):
-        _("""View someone's or your own profile.""")
+        _(
+            """`[person]` - The person whose profile to view; defaults to oneself
+
+            View someone's profile. This will send an image.
+            For an explanation what all the fields mean, see [this picture](https://wiki.idlerpg.xyz/images/3/35/Profile_explained.png)"""
+        )
         await ctx.trigger_typing()
         targetid = person.id
         async with self.bot.pool.acquire() as conn:
@@ -171,12 +195,19 @@ IdleRPG is a global bot, your characters are valid everywhere"""
                     else:
                         left_hand = i["name"]
 
+            color = profile["colour"]
+            color = (
+                f"rgba({color['red']}, {color['green']}, {color['blue']},"
+                f" {color['alpha']})"
+            )
+
             url = f"{self.bot.config.okapi_url}/api/genprofile"
+
             async with self.bot.trusted_session.post(
                 url,
                 data={
                     "name": profile["name"],
-                    "color": profile["colour"],
+                    "color": color,
                     "image": profile["background"],
                     "race": profile["race"],
                     "classes": profile["class"],
@@ -199,7 +230,10 @@ IdleRPG is a global bot, your characters are valid everywhere"""
                     "icons": [
                         self.bot.get_class_line(c).lower() for c in profile["class"]
                     ],
-                    "adventure": f"Adventure {mission[0]}\n{mission[1] if not mission[2] else _('Finished')}"
+                    "adventure": (
+                        "Adventure"
+                        f" {mission[0]}\n{mission[1] if not mission[2] else _('Finished')}"
+                    )
                     if mission
                     else _("No Mission"),
                 },
@@ -207,10 +241,16 @@ IdleRPG is a global bot, your characters are valid everywhere"""
                 img = BytesIO(await req.read())
         await ctx.send(file=discord.File(fp=img, filename="Profile.png"))
 
-    @commands.command(aliases=["p2", "pp"])
+    @commands.command(
+        aliases=["p2", "pp"], brief=_("View someone's profile differently")
+    )
     @locale_doc
     async def profile2(self, ctx, *, target: User = Author):
-        _("""View someone's profile, not image based.""")
+        _(
+            """`[target]` - The person whose profile to view
+
+            View someone's profile. This will send an embed rather than an image and is usually faster."""
+        )
         rank_money, rank_xp = await self.bot.get_ranks_for(target)
 
         items = await self.bot.get_equipped_items_for(target)
@@ -227,7 +267,10 @@ IdleRPG is a global bot, your characters are valid everywhere"""
                 'SELECT name FROM guild WHERE "id"=$1;', p_data["guild"]
             )
         try:
-            colour = discord.Colour.from_rgb(*rpgtools.hex_to_rgb(p_data["colour"]))
+            colour = p_data["colour"]
+            colour = discord.Colour.from_rgb(
+                colour["red"], colour["green"], colour["blue"]
+            )
         except ValueError:
             colour = 0x000000
         if mission:
@@ -302,24 +345,51 @@ IdleRPG is a global bot, your characters are valid everywhere"""
         await ctx.send(embed=em)
 
     @checks.has_char()
-    @commands.command()
+    @commands.command(brief=_("Show your current luck"))
     @locale_doc
     async def luck(self, ctx):
-        _("""Shows your luck factor ranging from 0 to 2.""")
+        _(
+            """Shows your current luck value.
+
+            Luck updates once a week for everyone, usually on Monday. It depends on your God.
+            Luck influences your adventure survival chances as well as the rewards.
+
+            Luck is decided randomly within the Gods' luck boundaries. You can find your God's boundaries [here](https://wiki.idlerpg.xyz/index.php?title=Gods#List_of_Deities).
+
+            If you have enough favor to place in the top 25 followers, you will gain additional luck:
+              - The top 25 to 21 will gain +0.1 luck
+              - The top 20 to 16 will gain +0.2 luck
+              - The top 15 to 11 will gain +0.3 luck
+              - The top 10 to 6 will gain +0.4 luck
+              - The top 5 to 1 will gain +0.5 luck
+
+            If you follow a new God (or become Godless), your luck will not update instantly, it will update with everyone else's luck on Monday."""
+        )
         await ctx.send(
             _(
-                "Your current luck multiplier is `{luck}x` (≈{percent}% more than usual (usual=1))."
+                "Your current luck multiplier is `{luck}x` (≈{percent}% {adj} than"
+                " usual (usual=1))."
             ).format(
                 luck=ctx.character_data["luck"],
-                percent=(ctx.character_data["luck"] - 1) * 100,
+                percent=abs((ctx.character_data["luck"] - 1) * 100),
+                adj=_("more") if ctx.character_data["luck"] > 1 else _("less"),
             )
         )
 
     @checks.has_char()
-    @commands.command(aliases=["money", "e"])
+    @commands.command(
+        aliases=["money", "e", "balance", "bal"], brief=_("Shows your balance")
+    )
     @locale_doc
     async def economy(self, ctx):
-        _("""Shows your balance.""")
+        _(
+            """Shows the amount of money you currently have.
+
+            Among other ways, you can get more money by:
+              - Playing adventures
+              - Selling unused equipment
+              - Gambling"""
+        )
         await ctx.send(
             _("You currently have **${money}**, {author}!").format(
                 money=ctx.character_data["money"], author=ctx.author.mention
@@ -327,15 +397,24 @@ IdleRPG is a global bot, your characters are valid everywhere"""
         )
 
     @checks.has_char()
-    @commands.command()
+    @commands.command(brief=_("Show a player's current XP"))
     @locale_doc
     async def xp(self, ctx, user: UserWithCharacter = Author):
-        _("""Shows current XP and level of a player.""")
+        _(
+            """`[user]` - The player whose XP and level to show; defaults to oneself
+
+            Show a player's XP and level.
+
+            You can gain more XP by:
+              - Completing adventures
+              - Exchanging loot items for XP"""
+        )
         if user.id == ctx.author.id:
             points = ctx.character_data["xp"]
             await ctx.send(
                 _(
-                    "You currently have **{points} XP**, which means you are on Level **{level}**. Missing to next level: **{missing}**"
+                    "You currently have **{points} XP**, which means you are on Level"
+                    " **{level}**. Missing to next level: **{missing}**"
                 ).format(
                     points=points,
                     level=rpgtools.xptolevel(points),
@@ -346,7 +425,8 @@ IdleRPG is a global bot, your characters are valid everywhere"""
             points = ctx.user_data["xp"]
             await ctx.send(
                 _(
-                    "{user} has **{points} XP** and is on Level **{level}**. Missing to next level: **{missing}**"
+                    "{user} has **{points} XP** and is on Level **{level}**. Missing to"
+                    " next level: **{missing}**"
                 ).format(
                     user=user,
                     points=points,
@@ -378,7 +458,8 @@ IdleRPG is a global bot, your characters are valid everywhere"""
             result.add_field(
                 name=f"{weapon['name']} {eq}",
                 value=_(
-                    "ID: `{id}`, Type: `{type_}` (uses {hand} hand(s)) with {statstr}. Value is **${value}**{signature}"
+                    "ID: `{id}`, Type: `{type_}` (uses {hand} hand(s)) with {statstr}."
+                    " Value is **${value}**{signature}"
                 ).format(
                     id=weapon["id"],
                     type_=weapon["type"],
@@ -397,7 +478,7 @@ IdleRPG is a global bot, your characters are valid everywhere"""
         return result
 
     @checks.has_char()
-    @commands.command(aliases=["inv", "i"])
+    @commands.command(aliases=["inv", "i"], brief=_("Show your gear items"))
     @locale_doc
     async def inventory(
         self,
@@ -406,7 +487,18 @@ IdleRPG is a global bot, your characters are valid everywhere"""
         lowest: IntFromTo(0, 101) = 0,
         highest: IntFromTo(0, 101) = 101,
     ):
-        _("""Shows your current inventory.""")
+        _(
+            """`[itemtype]` - The type of item to show; defaults to all items
+            `[lowest]` - The lower boundary of items to show; defaults to 0
+            `[highest]` - The upper boundary of items to show; defaults to 101
+
+            Show your gear items. Items that are in the market will not be shown.
+
+            Gear items can be equipped, sold and given away, or upgraded and merged to make them stronger.
+            You can gain gear items by completing adventures, opening crates, or having your pet hunt for them, if you are a ranger.
+
+            To sell unused items for their value, use `{prefix}merch`. To put them up on the global player market, use `{prefix}sell`."""
+        )
         if highest < lowest:
             return await ctx.send(
                 _("Make sure that the `highest` value is greater than `lowest`.")
@@ -414,19 +506,28 @@ IdleRPG is a global bot, your characters are valid everywhere"""
         if itemtype not in self.bot.config.item_types + ["All"]:
             return await ctx.send(
                 _(
-                    "Please select a valid item type or `all`. Available types: `{all_types}`"
+                    "Please select a valid item type or `all`. Available types:"
+                    " `{all_types}`"
                 ).format(all_types=", ".join(self.bot.config.item_types))
             )
         if itemtype == "All":
             ret = await self.bot.pool.fetch(
-                'SELECT ai.*, i.equipped FROM profile p JOIN allitems ai ON (p.user=ai.owner) JOIN inventory i ON (ai.id=i.item) WHERE p."user"=$1 AND ((ai."damage"+ai."armor" BETWEEN $2 AND $3) OR i."equipped") ORDER BY i."equipped" DESC, ai."damage"+ai."armor" DESC;',
+                "SELECT ai.*, i.equipped FROM profile p JOIN allitems ai ON"
+                " (p.user=ai.owner) JOIN inventory i ON (ai.id=i.item) WHERE"
+                ' p."user"=$1 AND ((ai."damage"+ai."armor" BETWEEN $2 AND $3) OR'
+                ' i."equipped") ORDER BY i."equipped" DESC, ai."damage"+ai."armor"'
+                " DESC;",
                 ctx.author.id,
                 lowest,
                 highest,
             )
         else:
             ret = await self.bot.pool.fetch(
-                'SELECT ai.*, i.equipped FROM profile p JOIN allitems ai ON (p.user=ai.owner) JOIN inventory i ON (ai.id=i.item) WHERE p."user"=$1 AND ((ai."damage"+ai."armor" BETWEEN $2 AND $3 AND ai."type"=$4)  OR i."equipped") ORDER BY i."equipped" DESC, ai."damage"+ai."armor" DESC;',
+                "SELECT ai.*, i.equipped FROM profile p JOIN allitems ai ON"
+                " (p.user=ai.owner) JOIN inventory i ON (ai.id=i.item) WHERE"
+                ' p."user"=$1 AND ((ai."damage"+ai."armor" BETWEEN $2 AND $3 AND'
+                ' ai."type"=$4)  OR i."equipped") ORDER BY i."equipped" DESC,'
+                ' ai."damage"+ai."armor" DESC;',
                 ctx.author.id,
                 lowest,
                 highest,
@@ -463,10 +564,17 @@ IdleRPG is a global bot, your characters are valid everywhere"""
         return result
 
     @checks.has_char()
-    @commands.command(aliases=["loot"])
+    @commands.command(aliases=["loot"], brief=_("Show your loot items"))
     @locale_doc
     async def items(self, ctx):
-        _("""Shows your adventure loot that can be exchanged or sacrificed""")
+        _(
+            """Show your loot items.
+
+            Loot items can be exchanged for money or XP, or sacrificed to your God to gain favor points.
+
+            You can gain loot items by completing adventures. The higher the difficulty, the higher the chance to get loot.
+            If you are a Ritualist, your loot chances are doubled. Check [our wiki](https://wiki.idlerpg.xyz/index.php?title=Loot#Probability) for the exact chances."""
+        )
         ret = await self.bot.pool.fetch(
             'SELECT * FROM loot WHERE "user"=$1;', ctx.author.id
         )
@@ -482,10 +590,16 @@ IdleRPG is a global bot, your characters are valid everywhere"""
 
     @checks.has_char()
     @user_cooldown(600)
-    @commands.command(aliases=["ex"])
+    @commands.command(aliases=["ex"], brief=_("Exchange your loot for money or XP"))
     @locale_doc
     async def exchange(self, ctx, *loot_ids: int):
-        _("""Exchange one or more loot items for money or xp.""")
+        _(
+            """`[loot_ids...]` - The loot IDs to exchange; defaults to all loot
+
+            Exchange your loot for money or XP, the bot will let you choose.
+
+            If you choose money, you will get the loots' combined value in cash. For XP, you will get 1/4th of the combined value in XP."""
+        )
         if (none_given := (len(loot_ids) == 0)) :
             async with self.bot.pool.acquire() as conn:
                 value, count = await conn.fetchval(
@@ -498,12 +612,14 @@ IdleRPG is a global bot, your characters are valid everywhere"""
         else:
             async with self.bot.pool.acquire() as conn:
                 value, count = await conn.fetchval(
-                    'SELECT (SUM("value"), COUNT("value")) FROM loot WHERE "id"=ANY($1) AND "user"=$2;',
+                    'SELECT (SUM("value"), COUNT("value")) FROM loot WHERE "id"=ANY($1)'
+                    ' AND "user"=$2;',
                     loot_ids,
                     ctx.author.id,
                 )
 
                 if not count:
+                    await self.bot.reset_cooldown(ctx)
                     return await ctx.send(
                         _(
                             "You don't own any loot items with the IDs: {itemids}"
@@ -572,13 +688,25 @@ IdleRPG is a global bot, your characters are valid everywhere"""
 
     @user_cooldown(180)
     @checks.has_char()
-    @commands.command(aliases=["use"])
+    @commands.command(aliases=["use"], brief=_("Equip an item"))
     @locale_doc
     async def equip(self, ctx, itemid: int):
-        _("""Equips an item of yours by ID.""")
+        _(
+            """`<itemid>` - The ID of the item to equip
+
+            Equip an item by its ID, you can find the item IDs in your inventory.
+
+            Each item has an assigned hand slot,
+              "any" meaning that the item can go in either hand,
+              "both" meaning it takes both hands,
+              "left" and "right" should be clear.
+
+            You cannot equip two items that use the same hand, or a second item if the one your have equipped is two-handed."""
+        )
         async with self.bot.pool.acquire() as conn:
             item = await conn.fetchrow(
-                'SELECT ai.* FROM inventory i JOIN allitems ai ON (i."item"=ai."id") WHERE ai."owner"=$1 and ai."id"=$2;',
+                'SELECT ai.* FROM inventory i JOIN allitems ai ON (i."item"=ai."id")'
+                ' WHERE ai."owner"=$1 and ai."id"=$2;',
                 ctx.author.id,
                 itemid,
             )
@@ -589,7 +717,9 @@ IdleRPG is a global bot, your characters are valid everywhere"""
                     )
                 )
             olditems = await conn.fetch(
-                "SELECT ai.* FROM profile p JOIN allitems ai ON (p.user=ai.owner) JOIN inventory i ON (ai.id=i.item) WHERE i.equipped IS TRUE AND p.user=$1;",
+                "SELECT ai.* FROM profile p JOIN allitems ai ON (p.user=ai.owner) JOIN"
+                " inventory i ON (ai.id=i.item) WHERE i.equipped IS TRUE AND"
+                " p.user=$1;",
                 ctx.author.id,
             )
             put_off = []
@@ -615,7 +745,8 @@ IdleRPG is a global bot, your characters are valid everywhere"""
                             and olditems[0]["hand"] == item["hand"]
                         ):
                             await conn.execute(
-                                'UPDATE inventory SET "equipped"=False WHERE "item"=$1;',
+                                'UPDATE inventory SET "equipped"=False WHERE'
+                                ' "item"=$1;',
                                 olditems[0]["id"],
                             )
                             put_off = [olditems[0]["id"]]
@@ -656,7 +787,8 @@ IdleRPG is a global bot, your characters are valid everywhere"""
         if put_off:
             await ctx.send(
                 _(
-                    "Successfully equipped item `{itemid}` and put off item(s) {olditems}."
+                    "Successfully equipped item `{itemid}` and put off item(s)"
+                    " {olditems}."
                 ).format(
                     olditems=", ".join(f"`{i}`" for i in put_off), itemid=item["id"]
                 )
@@ -667,13 +799,18 @@ IdleRPG is a global bot, your characters are valid everywhere"""
             )
 
     @checks.has_char()
-    @commands.command()
+    @commands.command(brief=_("Unequip an item"))
     @locale_doc
     async def unequip(self, ctx, itemid: int):
-        _("""Unequip one of your equipped items""")
+        _(
+            """`<itemid>` - The ID of the item to unequip
+
+            Unequip one of your equipped items. This has no benefit whatsoever."""
+        )
         async with self.bot.pool.acquire() as conn:
             item = await conn.fetchrow(
-                'SELECT * FROM inventory i JOIN allitems ai ON (i."item"=ai."id") WHERE ai."owner"=$1 and ai."id"=$2;',
+                'SELECT * FROM inventory i JOIN allitems ai ON (i."item"=ai."id") WHERE'
+                ' ai."owner"=$1 and ai."id"=$2;',
                 ctx.author.id,
                 itemid,
             )
@@ -694,10 +831,24 @@ IdleRPG is a global bot, your characters are valid everywhere"""
 
     @checks.has_char()
     @user_cooldown(3600)
-    @commands.command()
+    @commands.command(brief=_("Merge two items to make a stronger one"))
     @locale_doc
     async def merge(self, ctx, firstitemid: int, seconditemid: int):
-        _("""Merges two items to a better one. Second one is consumed.""")
+        _(
+            """`<firstitemid>` - The ID of the first item
+            `<seconditemid>` - The ID of the second item
+
+            Merges two items to a better one.
+
+            :warning: The first item will be upgraded by +1, the second item will be destroyed.
+
+            The two items must be of the same item type and within a 5 stat range of each other.
+            For example, if the first item is a 23 damage Scythe, the second item must be a Scythe with damage 18 to 28.
+
+            One handed weapons can be merged up to 41, two handed items up to 82
+
+            (This command has a cooldown of 1 hour.)"""
+        )
         if firstitemid == seconditemid:
             await self.bot.reset_cooldown(ctx)
             return await ctx.send(_("Good luck with that."))
@@ -719,7 +870,8 @@ IdleRPG is a global bot, your characters are valid everywhere"""
                 await self.bot.reset_cooldown(ctx)
                 return await ctx.send(
                     _(
-                        "The items are of unequal type. You may only merge a sword with a sword or a shield with a shield."
+                        "The items are of unequal type. You may only merge a sword with"
+                        " a sword or a shield with a shield."
                     )
                 )
             stat = "damage" if item["type"] != "Shield" else "armor"
@@ -729,7 +881,7 @@ IdleRPG is a global bot, your characters are valid everywhere"""
             max_ = item[stat] + 5
             main_hand = item["hand"]
             if (main > 40 and main_hand != "both") or (
-                main > 61 and main_hand == "both"
+                main > 81 and main_hand == "both"
             ):
                 await self.bot.reset_cooldown(ctx)
                 return await ctx.send(
@@ -739,7 +891,8 @@ IdleRPG is a global bot, your characters are valid everywhere"""
                 await self.bot.reset_cooldown(ctx)
                 return await ctx.send(
                     _(
-                        "The second item's stat must be in the range of `{min_}` to `{max_}` to upgrade an item with the stat of `{stat}`."
+                        "The second item's stat must be in the range of `{min_}` to"
+                        " `{max_}` to upgrade an item with the stat of `{stat}`."
                     ).format(min_=min_, max_=max_, stat=main)
                 )
             await conn.execute(
@@ -748,16 +901,26 @@ IdleRPG is a global bot, your characters are valid everywhere"""
             await conn.execute('DELETE FROM allitems WHERE "id"=$1;', seconditemid)
         await ctx.send(
             _(
-                "The {stat} of your **{item}** is now **{newstat}**. The other item was destroyed."
+                "The {stat} of your **{item}** is now **{newstat}**. The other item was"
+                " destroyed."
             ).format(stat=stat, item=item["name"], newstat=main + 1)
         )
 
     @checks.has_char()
     @user_cooldown(3600)
-    @commands.command(aliases=["upgrade"])
+    @commands.command(aliases=["upgrade"], brief=_("Upgrade an item"))
     @locale_doc
     async def upgradeweapon(self, ctx, itemid: int):
-        _("""Upgrades an item's stat by 1.""")
+        _(
+            """`<itemid>` - The ID of the item to upgrade
+
+            Upgrades an item's stat by 1.
+            The price to upgrade an item is 250 times its current stat. For example, upgrading a 15 damage sword will cost $3,750.
+
+            One handed weapons can be upgraded up to 41, two handed items up to 82.
+
+            (This command has a cooldown of 1 hour.)"""
+        )
         async with self.bot.pool.acquire() as conn:
             item = await conn.fetchrow(
                 'SELECT * FROM allitems WHERE "id"=$1 AND "owner"=$2;',
@@ -779,7 +942,7 @@ IdleRPG is a global bot, your characters are valid everywhere"""
                 pricetopay = int(item["armor"] * 250)
             stat = int(item[stattoupgrade])
             hand = item["hand"]
-            if (stat > 40 and hand != "both") or (stat > 61 and hand == "both"):
+            if (stat > 40 and hand != "both") or (stat > 81 and hand == "both"):
                 await self.bot.reset_cooldown(ctx)
                 return await ctx.send(
                     _("Your weapon already reached the maximum upgrade level.")
@@ -787,7 +950,8 @@ IdleRPG is a global bot, your characters are valid everywhere"""
 
         if not await ctx.confirm(
             _(
-                "Are you sure you want to upgrade this item: {item}? It will cost **${pricetopay}**."
+                "Are you sure you want to upgrade this item: {item}? It will cost"
+                " **${pricetopay}**."
             ).format(item=item["name"], pricetopay=pricetopay)
         ):
             return await ctx.send(_("Weapon upgrade cancelled."))
@@ -795,7 +959,8 @@ IdleRPG is a global bot, your characters are valid everywhere"""
             await self.bot.reset_cooldown(ctx)
             return await ctx.send(
                 _(
-                    "You are too poor to upgrade this item. The upgrade costs **${pricetopay}**, but you only have **${money}**."
+                    "You are too poor to upgrade this item. The upgrade costs"
+                    " **${pricetopay}**, but you only have **${money}**."
                 ).format(pricetopay=pricetopay, money=ctx.character_data["money"])
             )
         async with self.bot.pool.acquire() as conn:
@@ -813,7 +978,8 @@ IdleRPG is a global bot, your characters are valid everywhere"""
         )
         await ctx.send(
             _(
-                "The {stat} of your **{item}** is now **{newstat}**. **${pricetopay}** has been taken off your balance."
+                "The {stat} of your **{item}** is now **{newstat}**. **${pricetopay}**"
+                " has been taken off your balance."
             ).format(
                 stat=stattoupgrade,
                 item=item["name"],
@@ -823,14 +989,23 @@ IdleRPG is a global bot, your characters are valid everywhere"""
         )
 
     @checks.has_char()
-    @commands.command()
+    @commands.command(brief=_("Give someone money"))
     @locale_doc
     async def give(
         self, ctx, money: IntFromTo(1, 100_000_000), other: MemberWithCharacter
     ):
-        _("""Gift money!""")
+        _(
+            """`<money>` - The amount of money to give to the other person, cannot exceed 100,000,000
+            `[other]` - The person to give the money to
+
+            Gift money! It will be removed from you and added to the other person."""
+        )
         if other == ctx.author:
             return await ctx.send(_("No cheating!"))
+        elif other == ctx.me:
+            return await ctx.send(
+                _("For me? I'm flattered, but I can't accept this...")
+            )
         if ctx.character_data["money"] < money:
             return await ctx.send(_("You are too poor."))
         async with self.bot.pool.acquire() as conn:
@@ -846,7 +1021,8 @@ IdleRPG is a global bot, your characters are valid everywhere"""
             )
         await ctx.send(
             _(
-                "Success!\n{other} now has **${othermoney}**, you now have **${authormoney}**."
+                "Success!\n{other} now has **${othermoney}**, you now have"
+                " **${authormoney}**."
             ).format(
                 other=other.mention, othermoney=othermoney, authormoney=authormoney
             )
@@ -856,14 +1032,19 @@ IdleRPG is a global bot, your characters are valid everywhere"""
         )
 
     @checks.has_char()
-    @commands.command()
+    @commands.command(brief=_("Rename your character"))
     @locale_doc
     async def rename(self, ctx, *, name: str = None):
-        _("""Renames your character.""")
+        _(
+            """`[name]` - The name to use; if not given, this will be interactive
+
+            Renames your character. The name must be from 3 to 20 characters long."""
+        )
         if not name:
             await ctx.send(
                 _(
-                    "What shall your character's name be? (Minimum 3 Characters, Maximum 20)"
+                    "What shall your character's name be? (Minimum 3 Characters,"
+                    " Maximum 20)"
                 )
             )
 
@@ -876,6 +1057,13 @@ IdleRPG is a global bot, your characters are valid everywhere"""
                 return await ctx.send(_("Timeout expired. Retry!"))
             name = name.content
         if len(name) > 2 and len(name) < 21:
+            if "`" in name:
+                return await ctx.send(
+                    _(
+                        "Illegal character (`) found in the name. Please try again and"
+                        " choose another name."
+                    )
+                )
             await self.bot.pool.execute(
                 'UPDATE profile SET "name"=$1 WHERE "user"=$2;', name, ctx.author.id
             )
@@ -886,13 +1074,21 @@ IdleRPG is a global bot, your characters are valid everywhere"""
             await ctx.send(_("Character names mustn't exceed 20 characters!"))
 
     @checks.has_char()
-    @commands.command(aliases=["rm", "del"])
+    @commands.command(aliases=["rm", "del"], brief=_("Delete your character"))
     @locale_doc
     async def delete(self, ctx):
-        _("""Deletes your character.""")
+        _(
+            """Deletes your character. There is no way to get your character data back after deletion.
+
+            Deleting your character also removes:
+              - Your guild if you own one
+              - Your alliance's city ownership
+              - Your partner and children"""
+        )
         if not await ctx.confirm(
             _(
-                "Are you absolutely sure you want to delete your character? React in the next 30 seconds to confirm.\n**This cannot be undone.**"
+                "Are you absolutely sure you want to delete your character? React in"
+                " the next 30 seconds to confirm.\n**This cannot be undone.**"
             )
         ):
             return await ctx.send(_("Cancelled deletion of your character."))
@@ -922,23 +1118,35 @@ IdleRPG is a global bot, your characters are valid everywhere"""
             _("Successfully deleted your character. Sorry to see you go :frowning:")
         )
 
-    @commands.command(aliases=["color"])
+    @checks.has_char()
+    @commands.command(aliases=["color"], brief=_("Update your profile color"))
     @locale_doc
-    async def colour(self, ctx, colour: str):
+    async def colour(self, ctx, *, colour: str):
         _(
-            """Sets your profile text colour. The format may be #RRGGBB or a HTML-valid string like "cyan"."""
+            """`<color>` - The color to use, see below for allowed format
+
+            Sets your profile text colour. The format may be #RGB, #RRGGBB, CSS3 defaults like "cyan", a rgb(r, g, b) tuple or a rgba(r, g, b, a) tuple.
+
+            This will change the text color in `{prefix}profile` and the embed color in `{prefix}profile2`."""
         )
-        if len(colour) > 15:
+        try:
+            rgba = colors.parse(colour)
+        except ValueError:
             return await ctx.send(
-                _("Format for colour is `#RRGGBB` or a colour code like `cyan`.")
+                _(
+                    "Format for colour is `#RGB`, `#RRGGBB`, a colour code like `cyan`"
+                    " or rgb/rgba values like (255, 255, 255, 0.5)."
+                )
             )
         await self.bot.pool.execute(
-            'UPDATE profile SET "colour"=$1 WHERE "user"=$2;', colour, ctx.author.id
+            'UPDATE profile SET "colour"=$1 WHERE "user"=$2;',
+            (rgba.red, rgba.green, rgba.blue, rgba.alpha),
+            ctx.author.id,
         )
         await ctx.send(
-            _(
-                "Successfully set your profile colour to `{colour}`. Hint: If you used a hex colour code, you must include the `#`."
-            ).format(colour=colour)
+            _("Successfully set your profile colour to `{colour}`.").format(
+                colour=colour
+            )
         )
 
 
