@@ -1,3 +1,79 @@
+<a name="v4.7.0"></a>
+
+## [v4.7.0](https://git.travitia.xyz/Kenvyra/IdleRPG/compare/v4.6.0...v4.7.0)
+
+> 2020-06-02
+
+### Changes
+
+- Added a mention about `$locale set` in `$locale`
+- Added a new colour parser for `$colour`. Works with `color-name`, `#RRGGBB`, `rgb(r,g,b)` or even `rgba(r,g,b,a)` (this means transparency now works). All current colours had to be reset as the data structure significantly changed.
+- Added better check-handling for music, modernize error handling itself
+- Switched from Andesite to Lavalink
+- Added option to choose exact paginator page via reaction control
+- After all the months, we're now logging events
+- Added alias `$bal` and `$balance` to `$economy`
+- Added a new minigame: Werewolf (aka Mafia): Use `$werewolf` to play (there are modes, check the help on it)
+- Added a new game: Chess: Use `$chess match` to play either against AI or other users. `$chess register` allows you to play ELO rated. Leaderboard is `$chess elo`.
+- Added a new command `$guild distribute` that distributes money to multiple members
+- Added a warning/price information when upgrading raidstats
+- Added a removeall command that removes all of your items from the market and adds them back to your inventory
+- Aww is confirmed cuter than Owwwwww, so we changed the `$marry` text
+- Banned people who are bot banned from reacting
+- Calculate luck boosters into `$adventures`
+- Catch global cooldown exception, remove captcha code. You now get a different error message if you are being rate-limited
+- Condensed `$evall` command output, add a new loot item (toilet paper)
+- Deprecated `$dungeon` alias
+- Donator check logic was redone and now caches
+- We are now using gateway intents to reduce the load on the bot significantly and are caching a lot of member-related stuff
+- We are also using orjson now to speed up serializing and deserializing of gateway messages
+- `$helpme` requests can now be edited, deleted and much more. Check the help on it
+- Music was redone internally, featuring the fact that it works now (!), Spotify song querying, `$loop` now repeating the queue, `$chooseplay` to choose one of the search results and much more. YouTube links won't always work anymore. Oh and the `$lyrics` are more exact now
+- All command descriptions were significantly extended and are now much easier to understand
+- The `$help` command was completely redone to allow ease of use
+- We switched from raven to sentry-sdk
+- Added `$streak` to check your daily streak
+- `$hungergames` now works with a lot more players than before
+- Using a hardcoded ARM cpu name table now
+- `id_ID_rude` was the superior translation and replaced `id_ID`
+- Added a Ikhdosa Raid timeout message
+- Implemented graceful shutdown
+- Inform players about the guild channel command when creating a guild
+- Initial ugly version of `$clusters`
+- Two handed items now multiply times 2, not 1.5
+- Make less than 1.00 luck more user friendly
+- Move activebattles to embeds
+- New Partner: chr1s the boss
+- Overwrite permissions for the member role in raids instead of default role
+- Lots of performance improvements in the launcher
+- Prohibit using backticks in character names
+- Prohibit users from giving money and crates to the bot
+- Prohibit changing one handed to two handed in `$weapontype`
+- Publicly log when a magic crate opens a 41+ stat item
+- Redesign Guilt's raid and adjusted her boundaries
+- We are using true random number generation everywhere now
+- Rename Admins to Game Masters
+- Support Team now has donator perks
+- Update `$pet hunt` to use new midnight cooldown
+- Upgrade to Redis 6.0.4, PostgreSQL 13
+
+### Fixes
+
+- Prevented firing on_ready multiple times
+- Our CI script got fixed
+- Tons of fixes to IPC which caused processes to disconnect earlier
+- Fixed enum value displaying in donator error message
+- Fixed beta script database creation with dollar signs
+- Fixed Ikhdosa raid
+- Fixed typos in Game Master command names
+- Fixed autosignup for raids
+- Fixed issue with class decorator order
+- Fixed `$serverinfo`
+- Fixed `$makebackground`
+- Fixed familyevent namechange cooldown
+- Remove old script file
+- Support Team should have donator perks
+
 <a name="v4.6.0"></a>
 
 ## [v4.6.0](https://git.travitia.xyz/Kenvyra/IdleRPG/compare/v4.5.1...v4.6.0)
