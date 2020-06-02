@@ -28,11 +28,14 @@ RUN if [ -z "$beta" ]; then \
     apk del .fetch-deps --no-network && \
     apk add --no-cache git libgcc
 
-USER idle
 WORKDIR /idlerpg
 
 COPY . .
 
 RUN git remote set-url origin https://git.travitia.xyz/Kenvyra/IdleRPG.git
+
+USER idle
+
+RUN chown -R idle:idle .
 
 CMD python launcher.py
