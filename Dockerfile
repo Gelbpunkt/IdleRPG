@@ -33,4 +33,6 @@ WORKDIR /idlerpg
 
 COPY . .
 
+RUN git remote set-url origin https://git.travitia.xyz/Kenvyra/IdleRPG.git
+
 CMD python launcher.py
