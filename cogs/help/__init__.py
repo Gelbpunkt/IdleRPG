@@ -133,11 +133,6 @@ class SubcommandMenu(menus.Menu):
                 icon_url=self.bot.user.avatar_url_as(static_format="png"),
                 text=_("Click on the reactions to see more subcommands. | Page {start}/{end}").format(start=self.page, end=self.pages)
             )
-        else:
-            e.set_footer(
-                icon_url=self.bot.user.avatar_url_as(static_format="png"),
-                text=_("Page {start}/{end}").format(start=self.page, end=self.pages)
-            )
         return e
 
     def should_add_reactions(self):
