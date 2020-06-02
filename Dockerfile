@@ -36,6 +36,6 @@ RUN git remote set-url origin https://git.travitia.xyz/Kenvyra/IdleRPG.git
 
 USER idle
 
-RUN chown -R idle:idle .
+RUN chown -R idle .
 
 CMD python launcher.py
