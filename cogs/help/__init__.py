@@ -99,7 +99,7 @@ class SubcommandMenu(menus.Menu):
         self.color = kwargs.pop("color", 0xCB735C)
         self.per_page = kwargs.pop("per_page", 5)
         self.page = 1
-        super().__init__(self, *args, timeout=60.0, delete_message_after=True, **kwargs)
+        super().__init__(*args, timeout=60.0, delete_message_after=True, **kwargs)
 
     @property
     def pages(self):
@@ -112,9 +112,6 @@ class SubcommandMenu(menus.Menu):
         e.set_author(
             name=self.bot.user,
             icon_url=self.bot.user.avatar_url_as(static_format="png"),
-        )
-        e.set_footer(
-            text=self.footer, icon_url=self.bot.user.avatar_url_as(static_format="png")
         )
         e.add_field(
             name=_("Subcommands"),
@@ -614,7 +611,7 @@ class IdleHelp(commands.HelpCommand):
             bot=self.context.bot,
             color=self.color,
             description=_(group.help).format(prefix=self.context.prefix),
-            cmds=group.commands
+            cmds=list(group.commands)
         )
         await menu.start(self.context)
 
