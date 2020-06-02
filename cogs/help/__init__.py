@@ -17,6 +17,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
 from datetime import timedelta
 from typing import Union
+import math
 
 import discord
 
@@ -91,14 +92,18 @@ class CogMenu(menus.Menu):
 
 class SubcommandMenu(menus.Menu):
     def __init__(self, *args, **kwargs):
-        self.cmds = kwargs.pop("subcommands")
+        self.cmds = kwargs.pop("cmds")
         self.title = kwargs.pop("title")
         self.description = kwargs.pop("description")
         self.bot = kwargs.pop("bot")
         self.color = kwargs.pop("color", 0xCB735C)
         self.per_page = kwargs.pop("per_page", 5)
         self.page = 1
-        super().__init__(self, *args, timeout=60.0, delete_message_after=True, **kwargs)
+        super().__init__(*args, timeout=60.0, delete_message_after=True, **kwargs)
+
+    @property
+    def pages(self):
+        return math.ceil(len(self.cmds)/self.per_page)
 
     def embed(self, cmds):
         e = discord.Embed(
@@ -107,9 +112,6 @@ class SubcommandMenu(menus.Menu):
         e.set_author(
             name=self.bot.user,
             icon_url=self.bot.user.avatar_url_as(static_format="png"),
-        )
-        e.set_footer(
-            text=self.footer, icon_url=self.bot.user.avatar_url_as(static_format="png")
         )
         e.add_field(
             name=_("Subcommands"),
@@ -126,7 +128,7 @@ class SubcommandMenu(menus.Menu):
         if self.should_add_reactions():
             e.set_footer(
                 icon_url=self.bot.user.avatar_url_as(static_format="png"),
-                text=_("Click on the reactions to see more subcommands.")
+                text=_("Click on the reactions to see more subcommands. | Page {start}/{end}").format(start=self.page, end=self.pages)
             )
         return e
 
@@ -609,7 +611,7 @@ class IdleHelp(commands.HelpCommand):
             bot=self.context.bot,
             color=self.color,
             description=_(group.help).format(prefix=self.context.prefix),
-            cmds=group.commands
+            cmds=list(group.commands)
         )
         await menu.start(self.context)
 
