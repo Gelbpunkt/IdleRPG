@@ -32,10 +32,9 @@ WORKDIR /idlerpg
 
 COPY . .
 
-RUN git remote set-url origin https://git.travitia.xyz/Kenvyra/IdleRPG.git
+RUN git remote set-url origin https://git.travitia.xyz/Kenvyra/IdleRPG.git && \
+    chown -R idle:nogroup .
 
 USER idle
-
-RUN chown -R idle .
 
 CMD python launcher.py
