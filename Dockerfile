@@ -35,8 +35,8 @@ WORKDIR /idlerpg
 RUN git init && \
     git remote add origin https://git.travitia.xyz/Kenvyra/IdleRPG.git && \
     if [[ "$beta" ]]; then \
-        git pull origin v4.7 && \
-        git checkout v4.7; \
+        git pull origin v4.8 && \
+        git checkout v4.8; \
     else \
         git pull origin v4 && \
         git checkout v4; \
