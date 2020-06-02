@@ -15,9 +15,10 @@ GNU Affero General Public License for more details.
 You should have received a copy of the GNU Affero General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
+import math
+
 from datetime import timedelta
 from typing import Union
-import math
 
 import discord
 
@@ -46,6 +47,10 @@ class CogMenu(menus.Menu):
         self.page = 1
         super().__init__(*args, timeout=60.0, delete_message_after=True, **kwargs)
 
+    @property
+    def pages(self):
+        return math.ceil(len(self.description) / self.per_page)
+
     def embed(self, desc):
         e = discord.Embed(
             title=self.title, color=self.color, description="\n".join(desc)
@@ -55,7 +60,8 @@ class CogMenu(menus.Menu):
             icon_url=self.bot.user.avatar_url_as(static_format="png"),
         )
         e.set_footer(
-            text=self.footer, icon_url=self.bot.user.avatar_url_as(static_format="png")
+            text=f"{self.footer} | Page {self.page}/{self.pages}",
+            icon_url=self.bot.user.avatar_url_as(static_format="png"),
         )
         return e
 
@@ -90,6 +96,7 @@ class CogMenu(menus.Menu):
             e = self.embed(items)
             await self.message.edit(embed=e)
 
+
 class SubcommandMenu(menus.Menu):
     def __init__(self, *args, **kwargs):
         self.cmds = kwargs.pop("cmds")
@@ -99,11 +106,13 @@ class SubcommandMenu(menus.Menu):
         self.color = kwargs.pop("color", 0xCB735C)
         self.per_page = kwargs.pop("per_page", 5)
         self.page = 1
+        self.group_emoji = "💠"
+        self.command_emoji = "🔷"
         super().__init__(*args, timeout=60.0, delete_message_after=True, **kwargs)
 
     @property
     def pages(self):
-        return math.ceil(len(self.cmds)/self.per_page)
+        return math.ceil(len(self.cmds) / self.per_page)
 
     def embed(self, cmds):
         e = discord.Embed(
@@ -115,20 +124,21 @@ class SubcommandMenu(menus.Menu):
         )
         e.add_field(
             name=_("Subcommands"),
-            description="`{subcommands}`".format(
-                "\n".join(
-                    [
-                        f"{self.group_emoji if isinstance(c, commands.Group) else self.command_emoji}"
-                        f" `{self.clean_prefix}{c.qualified_name}` - {_(c.brief)}"
-                        for c in cmds
-                    ]
-                )
-            )
+            value="\n".join(
+                [
+                    f"{self.group_emoji if isinstance(c, commands.Group) else self.command_emoji}"
+                    f" `{self.ctx.prefix}{c.qualified_name}` - {_(c.brief)}"
+                    for c in cmds
+                ]
+            ),
         )
         if self.should_add_reactions():
             e.set_footer(
                 icon_url=self.bot.user.avatar_url_as(static_format="png"),
-                text=_("Click on the reactions to see more subcommands. | Page {start}/{end}").format(start=self.page, end=self.pages)
+                text=_(
+                    "Click on the reactions to see more subcommands. | Page"
+                    " {start}/{end}"
+                ).format(start=self.page, end=self.pages),
             )
         return e
 
@@ -611,7 +621,7 @@ class IdleHelp(commands.HelpCommand):
             bot=self.context.bot,
             color=self.color,
             description=_(group.help).format(prefix=self.context.prefix),
-            cmds=list(group.commands)
+            cmds=list(group.commands),
         )
         await menu.start(self.context)
 
