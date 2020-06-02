@@ -31,17 +31,6 @@ RUN if [ -z "$beta" ]; then \
 USER idle
 WORKDIR /idlerpg
 
-# Faster than COPY . . with .git as that is the biggest directory
-RUN git init && \
-    git remote add origin https://git.travitia.xyz/Kenvyra/IdleRPG.git && \
-    if [[ "$beta" ]]; then \
-        git pull origin v4.8 && \
-        git checkout v4.8; \
-    else \
-        git pull origin v4 && \
-        git checkout v4; \
-    fi
-
 COPY . .
 
 CMD python launcher.py
