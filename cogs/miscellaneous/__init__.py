@@ -646,8 +646,13 @@ This changelog is too big! Please go to https://git.travitia.xyz/Kenvyra/IdleRPG
         nl = "\n"
         results = [str(result) for result in results]
         await ctx.send(
-            _("```Sum: {sumall}\nAverage: {average}\nResults:\n{results}```").format(
-                sumall=sumall, average=average, results=nl.join(results)
+            _(
+                "{user}'s dice rolled:\n```Sum: {sumall}\nAverage: {average}\nResults:\n{results}```"
+            ).format(
+                user=ctx.author.mention,
+                sumall=sumall, 
+                average=average, 
+                results=nl.join(results)
             )
         )
 
