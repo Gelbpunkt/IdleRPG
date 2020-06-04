@@ -657,7 +657,7 @@ This command is in an alpha-stage, which means bugs are likely to happen. Play a
             \U000023EC Double down: double the amount you bet in exchange for only one more card
 
             If a player wins, they will get the amount in cash. If they lose, they will lose that amount.
-            If they win with a natural blackjack (first two dealt card get to a vlue of 21), the player wins 1.5 times the amount.
+            If they win with a natural blackjack (first two dealt card get to a value of 21), the player wins 1.5 times the amount.
 
             (This command has a cooldown of 5 seconds.)"""
         )
