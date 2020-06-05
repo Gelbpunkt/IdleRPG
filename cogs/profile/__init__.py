@@ -196,16 +196,13 @@ IdleRPG is a global bot, your characters are valid everywhere"""
                         left_hand = i["name"]
 
             color = profile["colour"]
-            color = (
-                f"rgba({color['red']}, {color['green']}, {color['blue']},"
-                f" {color['alpha']})"
-            )
+            color = [color["red"], color["green"], color["blue"], color["alpha"]]
 
             url = f"{self.bot.config.okapi_url}/api/genprofile"
 
             async with self.bot.trusted_session.post(
                 url,
-                data={
+                json={
                     "name": profile["name"],
                     "color": color,
                     "image": profile["background"],
@@ -213,11 +210,11 @@ IdleRPG is a global bot, your characters are valid everywhere"""
                     "classes": profile["class"],
                     "damage": sworddmg,
                     "defense": shielddef,
-                    "swordName": right_hand,
-                    "shieldName": left_hand,
+                    "sword_name": right_hand,
+                    "shield_name": left_hand,
                     "level": rpgtools.xptolevel(profile["xp"]),
                     "money": f"{profile['money']}",
-                    "pvpWins": f"{profile['pvpwins']}",
+                    "pvp_wins": f"{profile['pvpwins']}",
                     "marriage": i
                     if (
                         i := await rpgtools.lookup(
