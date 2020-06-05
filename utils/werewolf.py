@@ -31,7 +31,6 @@ from __future__ import annotations
 import asyncio
 
 from enum import Enum
-from random import sample
 from typing import List, Optional
 
 import discord
@@ -1008,7 +1007,7 @@ class Player:
                 amount=2,
             )
         except asyncio.TimeoutError:
-            lovers = sample(self.game.players, 2)
+            lovers = random.sample(self.game.players, 2)
             await self.send("Timed out. Lovers will be chosen randomly.")
         for lover in lovers:
             lover.in_love = True
