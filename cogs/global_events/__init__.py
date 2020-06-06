@@ -67,9 +67,9 @@ class GlobalEvents(commands.Cog):
         # Wipe the cache for the converters
         MemberConverter.convert.cache.invalidate_value(before)
         # If they were a donator, wipe that cache as well
-        if (
-            after.guild.id == self.bot.config.support_server_id
-            and discord.utils.get(after.roles, name="Donators") is not None
+        if after.guild.id == self.bot.config.support_server_id and (
+            discord.utils.get(after.roles, name="Donators") is not None
+            or discord.utils.get(before.roles, name="Donators") is not None
         ):
             await self.bot.clear_donator_cache(after)
 
