@@ -155,11 +155,23 @@ def cache(maxsize=128, strategy=Strategy.lru, ignore_kwargs=False):
                 except KeyError:
                     continue
 
+        def _invalidate_value(val):
+            to_remove = []
+            for k, v in _internal_cache.items():
+                if v == val:
+                    to_remove.append(k)
+            for k in to_remove:
+                try:
+                    del _internal_cache[k]
+                except KeyError:
+                    continue
+
         wrapper.cache = _internal_cache
         wrapper.get_key = lambda *args, **kwargs: _make_key(args, kwargs)
         wrapper.invalidate = _invalidate
         wrapper.get_stats = _stats
         wrapper.invalidate_containing = _invalidate_containing
+        wrapper.invalidate_value = _invalidate_value
         return wrapper
 
     return decorator
