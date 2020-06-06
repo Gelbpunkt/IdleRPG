@@ -582,7 +582,7 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
                             f"{nice_names} were eliminated by a wave of insanity!"
                         ),
                         colour=0xFDB900,
-                    ).set_url(url=f"{self.bot.BASE_URL}/guilt.jpg")
+                    ).set_thumbnail(url=f"{self.bot.BASE_URL}/guilt.jpg")
                 )
                 await asyncio.sleep(5)
             attacker, target = random.sample(list(raid.keys()), 2)
