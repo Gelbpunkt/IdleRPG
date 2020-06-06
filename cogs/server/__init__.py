@@ -95,9 +95,9 @@ Server created at: `{created_at}`"""
     @commands.has_permissions(manage_guild=True)
     @settings.command(name="prefix", brief=_("Change the prefix"))
     @locale_doc
-    async def prefix_(self, ctx, *, prefix: str):
+    async def prefix_(self, ctx, prefix: str):
         _(
-            """`<prefix>` - The new prefix to use
+            """`<prefix>` - The new prefix to use. Use "" quotes to surround it if you want multiple words or trailing spaces.
 
             Change the bot prefix, it cannot exceed 10 characters.
 
