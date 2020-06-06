@@ -65,7 +65,7 @@ class GlobalEvents(commands.Cog):
     @commands.Cog.listener()
     async def on_member_update(self, before, after):
         # Wipe the cache for the converters
-        MemberConverter.convert.cache.invalidate_value(before)
+        MemberConverter.convert.invalidate_value(before)
         # If they were a donator, wipe that cache as well
         if after.guild.id == self.bot.config.support_server_id and (
             discord.utils.get(after.roles, name="Donators") is not None
