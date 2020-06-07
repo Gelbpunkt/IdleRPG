@@ -25,36 +25,36 @@ from discord.errors import NotFound
 from utils import random
 
 levels = {
-    "1": 0,
-    "2": 1500,
-    "3": 9000,
-    "4": 22500,
-    "5": 42000,
-    "6": 67500,
-    "7": 99000,
-    "8": 136500,
-    "9": 180000,
-    "10": 229500,
-    "11": 285000,
-    "12": 346500,
-    "13": 414000,
-    "14": 487500,
-    "15": 567000,
-    "16": 697410,
-    "17": 857814,
-    "18": 1055112,
-    "19": 1297787,
-    "20": 1596278,
-    "21": 1931497,
-    "22": 2298481,
-    "23": 2689223,
-    "24": 3092606,
-    "25": 3494645,
-    "26": 3879056,
-    "27": 4228171,
-    "28": 4608707,
-    "29": 5023490,
-    "30": 5475604,
+    1: 0,
+    2: 1500,
+    3: 9000,
+    4: 22500,
+    5: 42000,
+    6: 67500,
+    7: 99000,
+    8: 136500,
+    9: 180000,
+    10: 229500,
+    11: 285000,
+    12: 346500,
+    13: 414000,
+    14: 487500,
+    15: 567000,
+    16: 697410,
+    17: 857814,
+    18: 1055112,
+    19: 1297787,
+    20: 1596278,
+    21: 1931497,
+    22: 2298481,
+    23: 2689223,
+    24: 3092606,
+    25: 3494645,
+    26: 3879056,
+    27: 4228171,
+    28: 4608707,
+    29: 5023490,
+    30: 5475604,
 }
 
 
@@ -76,22 +76,21 @@ def nice_join(iterable):
 
 
 def xptolevel(xp):
-    for point in list(levels.values()):
+    for level, point in levels.items():
         if xp == point:
-            return list(levels.keys())[list(levels.values()).index(point)]
+            return level
         elif xp < point:
-            return list(levels.keys())[list(levels.values()).index(point) - 1]
-        elif xp > list(levels.values())[-1]:
-            return list(levels.keys())[-1]
+            return level - 1
+    return 30
 
 
 def xptonextlevel(xp):
     level = xptolevel(xp)
-    if level == list(levels.keys())[-1]:
+    if level == 30:
         return "Infinity"
     else:
-        nextxp = levels[str(int(level) + 1)]
-        return str(nextxp - xp)
+        nextxp = levels[level + 1]
+        return f"{nextxp - xp}"
 
 
 def calcchance(
