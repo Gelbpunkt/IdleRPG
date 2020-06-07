@@ -777,12 +777,14 @@ class Alliance(commands.Cog):
             " attackers!"
         )
 
+        # choose the highest HP defense
+        target = sorted(defenses, key=lambda x: x["hp"])[-1]
         while len(defenses) > 0 and len(attackers) > 0:
-            # choose the highest HP defense
-            target = sorted(defenses, key=lambda x: x["hp"])[-1]
             damage = sum(i["damage"] for i in attackers)
             if target["hp"] - damage <= 0:
                 defenses.remove(target)
+                # choose the highest HP defense
+                target = sorted(defenses, key=lambda x: x["hp"])[-1]
                 await self.bot.pool.execute(
                     'DELETE FROM defenses WHERE "id"=$1;', target["id"]
                 )
