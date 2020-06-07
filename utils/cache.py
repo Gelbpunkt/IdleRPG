@@ -155,10 +155,10 @@ def cache(maxsize=128, strategy=Strategy.lru, ignore_kwargs=False):
                 except KeyError:
                     continue
 
-        def _invalidate_value(val):
+        def _invalidate_value(pred):
             to_remove = []
             for k, v in _internal_cache.items():
-                if v == val:
+                if pred(v):
                     to_remove.append(k)
             for k in to_remove:
                 try:

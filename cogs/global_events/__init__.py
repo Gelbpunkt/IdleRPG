@@ -63,15 +63,19 @@ class GlobalEvents(commands.Cog):
             self.bot.logger.warning("[INFO] Discord fired on_ready...")
 
     @commands.Cog.listener()
-    async def on_member_update(self, before, after):
+    async def on_socket_response(self, data):
+        if data["t"] != "GUILD_MEMBER_UPDATE":
+            return
+        user = data["d"]["user"]
+        user_id = int(user["id"])
+        roles = [int(i) for i in data["d"]["roles"]]
         # Wipe the cache for the converters
-        MemberConverter.convert.invalidate_value(before)
+        MemberConverter.convert.invalidate_value(lambda member: member.id == user_id)
         # If they were a donator, wipe that cache as well
-        if after.guild.id == self.bot.config.support_server_id and (
-            discord.utils.get(after.roles, name="Donators") is not None
-            or discord.utils.get(before.roles, name="Donators") is not None
+        if int(data["d"]["guild_id"]) == self.bot.config.support_server_id and any(
+            id_ in roles for id_ in self.bot.config.donator_roles
         ):
-            await self.bot.clear_donator_cache(after)
+            await self.bot.clear_donator_cache(user_id)
 
     @commands.Cog.listener()
     async def on_guild_remove(self, guild):
