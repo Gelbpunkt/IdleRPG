@@ -251,11 +251,10 @@ class ChessGame:
             self.status = f"{self.colors[player]} resigned"
             await self.ctx.send(_("You entered no valid move! You lost!"))
             move = "timeout"
-        finally:
-            if self.enemy is not None or self.colors[self.player] == "black":
-                await self.msg.delete()
-                self.msg = None
-            return move
+        if self.enemy is not None or self.colors[self.player] == "black":
+            await self.msg.delete()
+            self.msg = None
+        return move
 
     async def get_ai_move(self):
         if self.colors[self.player] == "black":
