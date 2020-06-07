@@ -212,7 +212,7 @@ IdleRPG is a global bot, your characters are valid everywhere"""
                     "defense": shielddef,
                     "sword_name": right_hand,
                     "shield_name": left_hand,
-                    "level": rpgtools.xptolevel(profile["xp"]),
+                    "level": f"{rpgtools.xptolevel(profile['xp'])}",
                     "money": f"{profile['money']}",
                     "pvp_wins": f"{profile['pvpwins']}",
                     "marriage": i
