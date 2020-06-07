@@ -227,7 +227,7 @@ class ChessGame:
                 " minutes to enter a valid move. I accept normal notation as well as"
                 " `resign` or `draw`.\nExample: `g1f3`, `Nf3`, `0-0` or `xe3`.\nMoves"
                 " are case-sensitive! Pieces uppercase: `N`, `Q` or `B`, fields"
-                " lowercase: `a`, `b` or `h`. Casteling is `0-0` or `0-0-0`."
+                " lowercase: `a`, `b` or `h`. Castling is `0-0` or `0-0-0`."
             ).format(move_no=self.move_no, player=player.mention),
             file=discord.File(fp=file_, filename="board.png"),
         )
