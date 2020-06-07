@@ -47,18 +47,16 @@ class Adventure(commands.Cog):
     async def adventures(self, ctx):
         _(
             """Shows all adventures, their names, descriptions, and your chances to beat them in picture form.
-            Your chances are determined by your equipped items, race and class bonuses, your level and your God-given luck.
-            The extra +25% added by luck boosters will *not* be displayed in these pictures."""
+            Your chances are determined by your equipped items, race and class bonuses, your level and your God-given luck."""
         )
         damage, defense = await self.bot.get_damage_armor_for(ctx.author)
-        all_dungeons = list(self.bot.config.adventure_times.keys())
         level = rpgtools.xptolevel(ctx.character_data["xp"])
         luck_booster = await self.bot.get_booster(ctx.author, "luck")
 
         msg = await ctx.send(_("Loading images..."))
 
         chances = []
-        for adv in all_dungeons:
+        for adv in self.bot.config.adventure_times:
             success = rpgtools.calcchance(
                 damage,
                 defense,
@@ -69,6 +67,7 @@ class Adventure(commands.Cog):
                 returnsuccess=False,
             )
             chances.append((success[0] - success[2], success[1] + success[2]))
+
         async with self.bot.trusted_session.post(
             f"{self.bot.config.okapi_url}/api/genadventures",
             json={"percentages": chances},
@@ -113,7 +112,7 @@ class Adventure(commands.Cog):
 
             Be sure to check `{prefix}status` to check how much time is left, or to check if you survived or died."""
         )
-        if adventure_number > int(rpgtools.xptolevel(ctx.character_data["xp"])):
+        if adventure_number > rpgtools.xptolevel(ctx.character_data["xp"]):
             return await ctx.send(
                 _("You must be on level **{level}** to do this adventure.").format(
                     level=adventure_number
@@ -121,9 +120,7 @@ class Adventure(commands.Cog):
             )
         time = self.bot.config.adventure_times[adventure_number]
 
-        if (
-            buildings := await self.bot.get_city_buildings(ctx.character_data["guild"])
-        ) :
+        if buildings := await self.bot.get_city_buildings(ctx.character_data["guild"]):
             time -= time * (buildings["adventure_building"] / 100)
         if user_rank := await self.bot.get_donator_rank(ctx.author.id):
             if user_rank >= DonatorRank.emerald:
@@ -132,8 +129,7 @@ class Adventure(commands.Cog):
                 time = time * 0.9
             elif user_rank >= DonatorRank.silver:
                 time = time * 0.95
-        time_booster = await self.bot.get_booster(ctx.author, "time")
-        if time_booster:
+        if await self.bot.get_booster(ctx.author, "time"):
             time = time / 2
         await self.bot.start_adventure(ctx.author, adventure_number, time)
         await ctx.send(

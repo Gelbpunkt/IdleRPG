@@ -49,12 +49,20 @@ else:
     SENTRY_SUPPORT = True
 
 
+def before_send(event, hint):
+    if "exc_info" in hint:
+        _exc_type, exc_value, _tb = hint["exc_info"]
+        if isinstance(exc_value, discord.HTTPException):
+            return None
+    return event
+
+
 class Errorhandler(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
         bot.on_command_error = self._on_command_error
         if SENTRY_SUPPORT:
-            sentry_sdk.init(self.bot.config.sentry_url)
+            sentry_sdk.init(self.bot.config.sentry_url, before_send=before_send)
 
     async def _on_command_error(self, ctx, error, bypass=False):
         if (

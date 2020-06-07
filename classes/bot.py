@@ -72,9 +72,8 @@ class Bot(commands.AutoShardedBot):
         # global cooldown
         self.add_check(self.global_cooldown, call_once=True)
 
-        self.launch_time = (
-            datetime.datetime.now()
-        )  # we assume the bot is created for use right now
+        # we assume the bot is created for use right now
+        self.launch_time = datetime.datetime.now()
         self.eligible_for_cooldown_reduce = set()  # caching
         self.not_eligible_for_cooldown_reduce = set()  # caching
 
@@ -106,7 +105,7 @@ class Bot(commands.AutoShardedBot):
 
     def make_linecount(self):
         """Generates a total linecount of all python files"""
-        for root, dirs, files in os.walk(os.getcwd()):
+        for root, _dirs, files in os.walk(os.getcwd()):
             for file_ in files:
                 if file_.endswith(".py"):
                     with open(os.sep.join([root, file_]), "r", encoding="utf-8") as f:
@@ -171,22 +170,28 @@ class Bot(commands.AutoShardedBot):
         """Returns the current uptime of the bot"""
         return datetime.datetime.now() - self.launch_time
 
-    async def get_ranks_for(self, thing):
+    async def get_ranks_for(self, thing, conn=None):
         """Returns the rank in money and xp for a user"""
         v = thing.id if isinstance(thing, (discord.Member, discord.User)) else thing
-        async with self.pool.acquire() as conn:
-            xp = await conn.fetchval(
-                "SELECT position FROM (SELECT profile.*, ROW_NUMBER() OVER(ORDER BY"
-                " profile.xp DESC) AS position FROM profile) s WHERE s.user = $1"
-                " LIMIT 1;",
-                v,
-            )
-            money = await conn.fetchval(
-                "SELECT position FROM (SELECT profile.*, ROW_NUMBER() OVER(ORDER BY"
-                " profile.money DESC) AS position FROM profile) s WHERE s.user = $1"
-                " LIMIT 1;",
-                v,
-            )
+        if conn is None:
+            conn = await self.pool.acquire()
+            local = True
+        else:
+            local = False
+        xp = await conn.fetchval(
+            "SELECT position FROM (SELECT profile.*, ROW_NUMBER() OVER(ORDER BY"
+            " profile.xp DESC) AS position FROM profile) s WHERE s.user = $1"
+            " LIMIT 1;",
+            v,
+        )
+        money = await conn.fetchval(
+            "SELECT position FROM (SELECT profile.*, ROW_NUMBER() OVER(ORDER BY"
+            " profile.money DESC) AS position FROM profile) s WHERE s.user = $1"
+            " LIMIT 1;",
+            v,
+        )
+        if local:
+            await self.pool.release(conn)
         return money, xp
 
     async def get_raidstats(
@@ -241,7 +246,7 @@ class Bot(commands.AutoShardedBot):
             )
         deff = armor * defmultiply
         if local:
-            await conn.close()
+            await self.pool.release(conn)
         return await self.generate_stats(v, dmg, deff, classes=classes, race=race)
 
     async def get_god(self, user: UserWithCharacter, conn=None):
@@ -252,7 +257,7 @@ class Bot(commands.AutoShardedBot):
             local = True
         god = await conn.fetchval('SELECT god FROM profile WHERE "user"=$1;', user.id)
         if local:
-            await conn.close()
+            await self.pool.release(conn)
         return god
 
     async def get_equipped_items_for(self, thing, conn=None):
@@ -268,7 +273,7 @@ class Bot(commands.AutoShardedBot):
             v,
         )
         if local:
-            await conn.close()
+            await self.pool.release(conn)
         return items
 
     async def get_damage_armor_for(self, thing, conn=None):
@@ -335,8 +340,7 @@ class Bot(commands.AutoShardedBot):
     @cache(maxsize=8096)
     async def get_user_global(self, user_id: int):
         """Fetches Discord user data across multiple processes"""
-        user = self.get_user(user_id)
-        if user:
+        if user := self.get_user(user_id):
             return user
 
         try:
@@ -468,30 +472,36 @@ class Bot(commands.AutoShardedBot):
         await self.redis.execute("DEL", f"guildadv:{guild}")
 
     async def create_item(
-        self, name, value, type_, damage, armor, owner, hand, equipped=False
+        self, name, value, type_, damage, armor, owner, hand, equipped=False, conn=None
     ):
         owner = owner.id if isinstance(owner, (discord.User, discord.Member)) else owner
-        async with self.pool.acquire() as conn:
-            item = await conn.fetchrow(
-                'INSERT INTO allitems ("owner", "name", "value", "type", "damage",'
-                ' "armor", "hand") VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *;',
-                owner,
-                name,
-                value,
-                type_,
-                damage,
-                armor,
-                hand,
-            )
-            await conn.execute(
-                'INSERT INTO inventory ("item", "equipped") VALUES ($1, $2);',
-                item["id"],
-                equipped,
-            )
+        if conn is None:
+            conn = await self.pool.acquire()
+            local = True
+        else:
+            local = False
+        item = await conn.fetchrow(
+            'INSERT INTO allitems ("owner", "name", "value", "type", "damage",'
+            ' "armor", "hand") VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *;',
+            owner,
+            name,
+            value,
+            type_,
+            damage,
+            armor,
+            hand,
+        )
+        await conn.execute(
+            'INSERT INTO inventory ("item", "equipped") VALUES ($1, $2);',
+            item["id"],
+            equipped,
+        )
+        if local:
+            await self.pool.release(conn)
         return item
 
     async def create_random_item(
-        self, minstat, maxstat, minvalue, maxvalue, owner, insert=True
+        self, minstat, maxstat, minvalue, maxvalue, owner, insert=True, conn=None
     ):
         owner = owner.id if isinstance(owner, (discord.User, discord.Member)) else owner
         item = {}
@@ -520,10 +530,13 @@ class Bot(commands.AutoShardedBot):
             if random.randint(1, 2) == 1:
                 item["damage"] -= 1
         if insert:
-            return await self.create_item(**item)
+            return await self.create_item(**item, conn=conn)
         return item
 
-    async def process_levelup(self, ctx, new_level, old_level):
+    async def process_levelup(self, ctx, new_level, old_level, conn=None):
+        if conn is None:
+            conn = await self.pool.acquire()
+            local = True
         if (reward := random.choice(["crates", "money", "item"])) == "crates":
             if new_level < 6:
                 column = "crates_common"
@@ -566,6 +579,7 @@ class Bot(commands.AutoShardedBot):
                 maxvalue=1000,
                 owner=ctx.author,
                 insert=False,
+                conn=conn,
             )
             item["name"] = _("Level {new_level} Memorial").format(new_level=new_level)
             reward_text = _("a special weapon")
@@ -576,16 +590,22 @@ class Bot(commands.AutoShardedBot):
                 to=ctx.author.id,
                 subject="item",
                 data={"Name": item["name"], "Value": 1000},
+                conn=conn,
             )
         elif reward == "money":
             money = new_level * 1000
-            await self.pool.execute(
+            await conn.execute(
                 'UPDATE profile SET "money"="money"+$1 WHERE "user"=$2;',
                 money,
                 ctx.author.id,
             )
             await self.log_transaction(
-                ctx, from_=1, to=ctx.author.id, subject="money", data={"Amount": money}
+                ctx,
+                from_=1,
+                to=ctx.author.id,
+                subject="money",
+                data={"Amount": money},
+                conn=conn,
             )
             reward_text = f"**${money}**"
 
@@ -596,6 +616,9 @@ class Bot(commands.AutoShardedBot):
             if old_level < 12 and new_level >= 12
             else ""
         )
+
+        if local:
+            await self.pool.release(conn)
 
         await ctx.send(
             _(
@@ -673,7 +696,7 @@ class Bot(commands.AutoShardedBot):
                 user,
             )
         if local:
-            await conn.close()
+            await self.pool.release(conn)
         lines = [self.get_class_line(class_) for class_ in classes]
         grades = [self.get_class_grade(class_) for class_ in classes]
         for line, grade in zip(lines, grades):
@@ -715,7 +738,7 @@ class Bot(commands.AutoShardedBot):
             j = await r.json()
         return [u for i in j if (u := await self.get_user_global(i)) is not None]
 
-    async def log_transaction(self, ctx, from_, to, subject, data):
+    async def log_transaction(self, ctx, from_, to, subject, data, conn=None):
         """Logs a transaction."""
         from_ = from_.id if isinstance(from_, (discord.Member, discord.User)) else from_
         to = to.id if isinstance(to, (discord.Member, discord.User)) else to
@@ -757,39 +780,46 @@ Subject: {subject}
 Command: {ctx.command.qualified_name}
 {data_}"""
 
-        async with self.pool.acquire() as conn:
+        if conn is None:
+            conn = await self.pool.acquire()
+            local = True
+        else:
+            local = False
+        await conn.execute(
+            'INSERT INTO transactions ("from", "to", "subject", "info",'
+            ' "timestamp") VALUES ($1, $2, $3, $4, $5);',
+            from_,
+            to,
+            subject,
+            description,
+            timestamp,
+        )
+        if subject == "shop":
             await conn.execute(
-                'INSERT INTO transactions ("from", "to", "subject", "info",'
-                ' "timestamp") VALUES ($1, $2, $3, $4, $5);',
-                from_,
-                to,
-                subject,
-                description,
-                timestamp,
+                'INSERT INTO market_history ("item", "name", "value", "type",'
+                ' "damage", "armor", "signature", "price", "offer") VALUES ($1, $2,'
+                " $3, $4, $5, $6, $7, $8, $9);",
+                data["id"],
+                data["name"],
+                data["value"],
+                data["type"],
+                data["damage"],
+                data["armor"],
+                data["signature"],
+                data["price"],
+                data["offer"],
             )
-            if subject == "shop":
-                await conn.execute(
-                    'INSERT INTO market_history ("item", "name", "value", "type",'
-                    ' "damage", "armor", "signature", "price", "offer") VALUES ($1, $2,'
-                    " $3, $4, $5, $6, $7, $8, $9);",
-                    data["id"],
-                    data["name"],
-                    data["value"],
-                    data["type"],
-                    data["damage"],
-                    data["armor"],
-                    data["signature"],
-                    data["price"],
-                    data["offer"],
-                )
+        if local:
+            await self.pool.release(conn)
 
     async def public_log(self, event: str):
         await self.http.send_message(self.config.bot_event_channel, event)
 
-    async def get_city_buildings(self, guild_id):
+    async def get_city_buildings(self, guild_id, conn=None):
         if not guild_id:  # also catches guild_id = 0
             return False
-        res = await self.pool.fetchrow(
+        obj = conn or self.pool
+        res = await obj.fetchrow(
             'SELECT c.* FROM city c JOIN guild g ON c."owner"=g."id" WHERE'
             ' g."id"=(SELECT alliance FROM guild WHERE "id"=$1);',
             guild_id,

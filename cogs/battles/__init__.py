@@ -227,7 +227,7 @@ class Battles(commands.Cog):
 
         while seeking:
             try:
-                reaction, enemy_ = await self.bot.wait_for(
+                _reaction, enemy_ = await self.bot.wait_for(
                     "reaction_add", timeout=60, check=check
                 )
             except asyncio.TimeoutError:
@@ -481,44 +481,43 @@ class Battles(commands.Cog):
                     _("You don't have enough money to join the activebattle.")
                 )
 
-        await self.bot.pool.execute(
-            'UPDATE profile SET money=money-$1 WHERE "user"=$2;', money, enemy_.id,
-        )
-
-        players = {
-            ctx.author: {
-                "hp": 0,
-                "damage": 0,
-                "defense": 0,
-                "lastmove": "",
-                "action": None,
-            },
-            enemy_: {
-                "hp": 0,
-                "damage": 0,
-                "defense": 0,
-                "lastmove": "",
-                "action": None,
-            },
-        }
-
-        for p in players:
-            c = await self.bot.pool.fetchval(
-                'SELECT class FROM profile WHERE "user"=$1;', p.id
+        async with self.bot.pool.acquire() as conn:
+            await conn.execute(
+                'UPDATE profile SET money=money-$1 WHERE "user"=$2;', money, enemy_.id,
             )
-            if self.bot.in_class_line(c, "Ranger"):
-                players[p]["hp"] = 120
-            else:
-                players[p]["hp"] = 100
 
-            sword, shield = await self.bot.get_equipped_items_for(p)
-            attack, defense = await self.bot.generate_stats(
-                p,
-                float(sword["damage"] if sword else 0),
-                float(shield["armor"] if shield else 0),
-            )
-            players[p]["damage"] = int(attack)
-            players[p]["defense"] = int(defense)
+            players = {
+                ctx.author: {
+                    "hp": 0,
+                    "damage": 0,
+                    "defense": 0,
+                    "lastmove": "",
+                    "action": None,
+                },
+                enemy_: {
+                    "hp": 0,
+                    "damage": 0,
+                    "defense": 0,
+                    "lastmove": "",
+                    "action": None,
+                },
+            }
+
+            for p in players:
+                c = await conn.fetchval(
+                    'SELECT class FROM profile WHERE "user"=$1;', p.id
+                )
+                if self.bot.in_class_line(c, "Ranger"):
+                    players[p]["hp"] = 120
+                else:
+                    players[p]["hp"] = 100
+
+                attack, defense = await self.bot.get_damage_armor_for(p, conn=conn)
+                attack, defense = await self.bot.generate_stats(
+                    p, attack, defense, conn=conn,
+                )
+                players[p]["damage"] = int(attack)
+                players[p]["defense"] = int(defense)
 
         moves = {
             "\U00002694": "attack",
