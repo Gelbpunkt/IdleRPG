@@ -638,7 +638,7 @@ IdleRPG is a global bot, your characters are valid everywhere"""
             value = value // 4
 
         async with self.bot.pool.acquire() as conn:
-            if len(loot_ids) == 0:
+            if none_given:
                 await conn.execute('DELETE FROM loot WHERE "user"=$1;', ctx.author.id)
             else:
                 await conn.execute(
