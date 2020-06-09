@@ -99,7 +99,7 @@ class Owner(commands.Cog):
     @commands.command(hidden=True)
     async def makeluck(self, ctx):
         """Sets the luck for all gods to a random value and give bonus luck to the top 25 followers."""
-        text_collection = []
+        text_collection = ["**This week's luck has been decided:**\n"]
         async with self.bot.pool.acquire() as conn:
             for god in self.bot.config.gods:
                 boundaries = self.bot.config.gods[god]["boundaries"]
