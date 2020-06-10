@@ -520,7 +520,7 @@ class Classes(commands.Cog):
     @locale_doc
     async def cuddle(self, ctx):
         _(
-            """Cuddle with your pet to raise its love points. Your pet can gain from 0 to 11 love points per cuddle.
+            """Cuddle with your pet to raise its love points. Your pet can gain from 1 to 12 Love points per cuddle.
 
             Only rangers can use this command.
             (This command has a cooldown of 6 hours.)"""
@@ -547,7 +547,7 @@ class Classes(commands.Cog):
     @locale_doc
     async def play(self, ctx):
         _(
-            """Cuddle with your pet to raise its joy points. Your pet can gain from 0 to 11 love points per play.
+            """Play with your pet to raise its joy points. Your pet can gain from 1 to 12 Joy points per play.
 
             Only rangers can use this command.
             (This command has a cooldown of 6 hours.)"""
