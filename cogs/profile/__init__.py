@@ -1122,7 +1122,10 @@ IdleRPG is a global bot, your characters are valid everywhere"""
         _(
             """`<color>` - The color to use, see below for allowed format
 
-            Sets your profile text colour. The format may be #RGB, #RRGGBB, CSS3 defaults like "cyan", a rgb(r, g, b) tuple or a rgba(r, g, b, a) tuple.
+            Sets your profile text colour. The format may be #RGB, #RRGGBB, CSS3 defaults like "cyan", a rgb(r, g, b) tuple or a rgba(r, g, b, a) tuple
+
+            A tuple is a data type consisting of multiple parts. To make a tuple for this command, seperate your values with a comma, and surround them with parantheses.
+            Here is an example of a tuple with four values: `(128,256,0,0.5)`
 
             This will change the text color in `{prefix}profile` and the embed color in `{prefix}profile2`."""
         )
