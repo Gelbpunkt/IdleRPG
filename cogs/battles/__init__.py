@@ -513,9 +513,6 @@ class Battles(commands.Cog):
                     players[p]["hp"] = 100
 
                 attack, defense = await self.bot.get_damage_armor_for(p, conn=conn)
-                attack, defense = await self.bot.generate_stats(
-                    p, attack, defense, conn=conn,
-                )
                 players[p]["damage"] = int(attack)
                 players[p]["defense"] = int(defense)
 

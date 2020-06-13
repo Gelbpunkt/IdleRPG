@@ -247,7 +247,7 @@ class Bot(commands.AutoShardedBot):
         deff = armor * defmultiply
         if local:
             await self.pool.release(conn)
-        return await self.generate_stats(v, dmg, deff, classes=classes, race=race)
+        return dmg, deff
 
     async def get_god(self, user: UserWithCharacter, conn=None):
         """Fetches the god for a user from the database"""
