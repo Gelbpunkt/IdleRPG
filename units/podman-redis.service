@@ -1,11 +1,12 @@
 [Unit]
 Description=Redis Container
-After=network.target
+Depends=podman-idlerpg-pod.service
 
 [Service]
 Type=simple
+TimeoutStartSec=300
 ExecStartPre=-/usr/bin/podman pull redis:6-alpine
-ExecStart=/usr/bin/podman run --rm --pod idlerpg --name redis -v /opt/redisdata:/data:z redis:5-alpine --appendonly yes
+ExecStart=/usr/bin/podman run --rm --pod idlerpg --name redis -v /home/idle/redisdata:/data:z redis:6-alpine --appendonly yes
 ExecReload=-/usr/bin/podman stop redis
 ExecStop=-/usr/bin/podman stop redis
 Restart=always

@@ -1,10 +1,12 @@
 [Unit]
 Description=Okapi Container
+Depends=podman-idlerpg-pod.service
 
 [Service]
 Type=simple
-ExecStartPre=/usr/bin/podman pull gelbpunkt/okapi:latest
-ExecStart=/usr/bin/podman run --rm --name okapi -v /opt/okapi/config.json:/okapi/config.json --pod idlerpg gelbpunkt/okapi:latest
+TimeoutStartSec=300
+ExecStartPre=/usr/bin/podman pull gelbpunkt/okapi-rewrite:latest
+ExecStart=/usr/bin/podman run --rm --name okapi -v /home/idle/okapi/config.json:/okapi/config.json:z --pod idlerpg gelbpunkt/okapi-rewrite:latest
 ExecReload=-/usr/bin/podman stop okapi
 ExecStop=-/usr/bin/podman stop okapi
 Restart=always

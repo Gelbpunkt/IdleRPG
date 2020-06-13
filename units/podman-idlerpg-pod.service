@@ -1,0 +1,15 @@
+[Unit]
+Description=IdleRPG Pod
+
+[Service]
+Type=simple
+TimeoutStartSec=300
+ExecStartPre=/usr/bin/podman pod stop idlerpg -t 10
+ExecStartPre=/usr/bin/podman pod rm idlerpg -f
+ExecStartPre=/usr/bin/podman pod create --name idlerpg
+ExecStop=-/usr/bin/podman pod stop idlerpg
+Restart=always
+RestartSec=30
+
+[Install]
+WantedBy=multi-user.target

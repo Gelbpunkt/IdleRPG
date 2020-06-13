@@ -1,11 +1,14 @@
 [Unit]
 Description=IdleRPG Container
+Depends=podman-idlerpg-pod.service
 After=podman-postgresql.service
+After=podman-redis.service
 
 [Service]
 Type=simple
+TimeoutStartSec=300
 ExecStartPre=/usr/bin/podman pull gelbpunkt/idlerpg:latest
-ExecStart=/usr/bin/podman run --rm --name idlerpgv4 -v /opt/idlerpg/config.py:/idlerpg/config.py --pod idlerpg gelbpunkt/idlerpg:latest
+ExecStart=/usr/bin/podman run --rm --name idlerpgv4 -v /home/idle/idlerpg/config.py:/idlerpg/config.py:z --pod idlerpg gelbpunkt/idlerpg:latest
 ExecReload=-/usr/bin/podman stop idlerpgv4
 ExecStop=-/usr/bin/podman stop idlerpgv4
 Restart=always
