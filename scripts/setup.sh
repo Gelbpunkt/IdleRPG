@@ -92,6 +92,7 @@ podman pod create --name idlerpg
 printf "Creating directories for mounting configs...\n"
 mkdir $BASEDIR/pgdata
 mkdir $BASEDIR/redisdata
+mkdir $BASEDIR/redisconf
 mkdir $BASEDIR/okapi
 mkdir $BASEDIR/pginit
 cd $BASEDIR/okapi
@@ -99,6 +100,7 @@ curl https://raw.githubusercontent.com/Kenvyra/okapi-rewrite/master/config.examp
 mkdir $BASEDIR/idlerpg
 cp $IDLEDIR/config.example.py config.py
 mv $IDLEDIR/init.sh $BASEDIR/pginit/init.sh
+cp $IDLEDIR/units/redis.conf $BASEDIR/redisconf/redis.conf
 chmod 0777 $BASEDIR/pgdata
 chmod 0777 $BASEDIR/redisdata
 
