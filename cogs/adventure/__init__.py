@@ -197,7 +197,6 @@ class Adventure(commands.Cog):
         y = 0
 
         attack, defense = await self.bot.get_damage_armor_for(ctx.author)
-        attack, defense = await self.bot.generate_stats(ctx.author, attack, defense)
 
         attack = int(attack)
         defense = int(defense)
@@ -468,13 +467,6 @@ Adventure name: `{adventure}`"""
             )
 
         damage, armor = await self.bot.get_damage_armor_for(ctx.author)
-        damage, armor = await self.bot.generate_stats(
-            ctx.author,
-            damage,
-            armor,
-            classes=ctx.character_data["class"],
-            race=ctx.character_data["race"],
-        )
 
         luck_booster = await self.bot.get_booster(ctx.author, "luck")
         current_level = int(rpgtools.xptolevel(ctx.character_data["xp"]))
