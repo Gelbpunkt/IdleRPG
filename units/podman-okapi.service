@@ -1,6 +1,6 @@
 [Unit]
 Description=Okapi Container
-Depends=podman-idlerpg-pod.service
+Requires=podman-idlerpg-pod.service
 
 [Service]
 Type=simple

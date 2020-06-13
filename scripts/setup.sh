@@ -105,8 +105,8 @@ chmod 0777 $BASEDIR/redisdata
 printf "Copying units...\n"
 
 loginctl enable-linger $(whoami)
-mkdir -p $BASEDIR/.config/systemd/user
-cp units/* $BASEDIR/.config/systemd/user/
+mkdir -p $BASEDIR/.config/systemd/user/
+cp $IDLEDIR/units/*.service $BASEDIR/.config/systemd/user/
 
 printf "Done. Please update these configs now:\n"
 printf "$BASEDIR/idlerpg/config.py\n"
