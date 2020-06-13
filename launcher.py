@@ -28,7 +28,6 @@ from typing import Any, Dict, Iterable, List, Optional, Tuple, Union
 
 import aiohttp
 import aioredis
-
 import orjson
 
 from config import additional_shards, shard_announce_channel, shard_per_cluster, token

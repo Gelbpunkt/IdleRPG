@@ -25,7 +25,7 @@ import discord
 
 from aiohttp import ClientOSError, ContentTypeError, ServerDisconnectedError
 from asyncpg.exceptions import DataError as AsyncpgDataError
-from discord.ext import commands
+from discord.ext import commands, menus
 
 import utils.checks
 
@@ -52,7 +52,9 @@ else:
 def before_send(event, hint):
     if "exc_info" in hint:
         _exc_type, exc_value, _tb = hint["exc_info"]
-        if isinstance(exc_value, discord.HTTPException):
+        if isinstance(
+            exc_value, (discord.HTTPException, menus.CannotSendMessages, TimeoutError)
+        ):
             return None
     return event
 
