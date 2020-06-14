@@ -785,9 +785,6 @@ class Alliance(commands.Cog):
                 for idx, item in enumerate(defenses):
                     if item["id"] == target["id"]:
                         del defenses[idx]
-                if defenses:
-                    # choose the highest HP defense
-                    target = sorted(defenses, key=lambda x: x["hp"])[-1]
                 await self.bot.pool.execute(
                     'DELETE FROM defenses WHERE "id"=$1;', target["id"]
                 )
@@ -804,6 +801,10 @@ class Alliance(commands.Cog):
                         colour=self.bot.config.primary_colour,
                     )
                 )
+                if defenses:
+                    # choose the highest HP defense
+                    target = sorted(defenses, key=lambda x: x["hp"])[-1]
+
             else:
                 target["hp"] -= damage
                 await self.bot.pool.execute(
