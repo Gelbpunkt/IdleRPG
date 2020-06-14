@@ -1195,10 +1195,8 @@ class Player:
                 msg = await self.game.ctx.bot.wait_for(
                     "message",
                     check=lambda x: x.author.id == self.user.id
-                    and (
-                        x.channel.id == self.game.ctx.channel.id
-                        or x.channel.id == self.user.dm_channel.id
-                    ),
+                    and x.channel.id == self.game.ctx.channel.id,
+                    timeout=30,
                 )
                 answer = msg.content
             except (
