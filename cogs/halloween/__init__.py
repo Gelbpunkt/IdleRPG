@@ -36,6 +36,7 @@ class Halloween(commands.Cog):
     @locale_doc
     async def trickortreat(self, ctx):
         _(
+            # xgettext: no-python-format
             """Walk around the houses and scare the residents! Maybe they have a gift for you?
 
             This command requires two players, one that is waiting and one that rings at the door.
