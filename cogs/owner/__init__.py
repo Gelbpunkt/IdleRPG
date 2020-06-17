@@ -287,7 +287,9 @@ class Owner(commands.Cog):
             out.append(i)
         reg = re.compile(r'\[(.+)\]\(([^ ]+?)( "(.+)")?\)')
         text = "".join(out)
-        return re.sub(reg, r'<a href="\2">\1</a>', text)
+        text = re.sub(reg, r'<a href="\2">\1</a>', text)
+        reg = re.compile(r"~~(.+)~~")
+        return re.sub(reg, r"<s>\1</s>", text)
 
     def make_signature(self, cmd):
         if cmd.aliases:
