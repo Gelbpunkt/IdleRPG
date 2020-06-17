@@ -273,7 +273,7 @@ class Owner(commands.Cog):
         except Exception:
             await ctx.send(f"```py\n{traceback.format_exc()}```")
 
-    def replace_code_tags(self, s):
+    def replace_md(self, s):
         opening = True
         out = []
         for i in s:
@@ -285,7 +285,17 @@ class Owner(commands.Cog):
                     opening = True
                     i = "</code>"
             out.append(i)
-        return "".join(out)
+        reg = re.compile(r'\[(.+)\]\(([^ ]+?)( "(.+)")?\)')
+        text = "".join(out)
+        return re.sub(reg, r'<a href="\2">\1</a>', text)
+
+    def make_signature(self, cmd):
+        if cmd.aliases:
+            actual_names = cmd.aliases + [cmd.name]
+            aliases = f"[{'|'.join(actual_names)}]"
+        else:
+            aliases = cmd.name
+        return f"${aliases} {cmd.signature}"
 
     @commands.command(hidden=True)
     async def makehtml(self, ctx):
@@ -308,7 +318,9 @@ class Owner(commands.Cog):
                 for cmd in commands:
                     html += command.format(
                         name=cmd.qualified_name,
-                        usage=cmd.signature.replace("<", "&lt;").replace(">", "&gt;"),
+                        usage=self.make_signature(cmd)
+                        .replace("<", "&lt;")
+                        .replace(">", "&gt;"),
                         checks=f"<b>Checks: {checks}</b>"
                         if (
                             checks := ", ".join(
@@ -333,8 +345,9 @@ class Owner(commands.Cog):
                             )
                         )
                         else "",
-                        description=self.replace_code_tags(
+                        description=self.replace_md(
                             (cmd.help or "No Description Set")
+                            .format(prefix="$")
                             .replace("<", "&lt;")
                             .replace(">", "&gt;")
                             .replace("\n", "<br>")
