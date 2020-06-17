@@ -606,7 +606,7 @@ class Guild(commands.Cog):
             """`<url>` - The image URL to use as the icon
 
             Change your guild's icon. The URL cannot exceed 60 characters.
-            :warning: This can be seen by anyone, do not use NSFW/innapropriate images. GIFs are not supported.
+            ⚠ This can be seen by anyone, do not use NSFW/innapropriate images. GIFs are not supported.
 
             Having trouble finding short image URLs? Follow [this tutorial](https://wiki.idlerpg.xyz/index.php?title=Tutorial:_Short_Image_URLs)!
 
@@ -642,7 +642,7 @@ class Guild(commands.Cog):
             """`<text>` - The text to use as the description. Cannot exceed 200 characters.
 
             Change the description of your guild.
-            :warning: This can be seen by everyone, do not use NSFW/inappropriate text.
+            ⚠ This can be seen by everyone, do not use NSFW/inappropriate text.
 
             Only guild leaders can use this command."""
         )

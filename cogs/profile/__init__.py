@@ -837,7 +837,7 @@ IdleRPG is a global bot, your characters are valid everywhere"""
 
             Merges two items to a better one.
 
-            :warning: The first item will be upgraded by +1, the second item will be destroyed.
+            ⚠ The first item will be upgraded by +1, the second item will be destroyed.
 
             The two items must be of the same item type and within a 5 stat range of each other.
             For example, if the first item is a 23 damage Scythe, the second item must be a Scythe with damage 18 to 28.

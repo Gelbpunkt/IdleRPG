@@ -526,7 +526,7 @@ class Trading(commands.Cog):
             Sells all your non-equipped items for their value. A convenient way to sell a large amount of items at once.
             If you are in an alliance which owns a trade building, your winnings will be multiplied by 1.5 for each level.
 
-            :warning: This command is currently disabled.
+            ⚠ This command is currently disabled.
 
             (This command has a cooldown of 30 minutes.)"""
         )

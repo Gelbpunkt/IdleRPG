@@ -292,6 +292,8 @@ class Owner(commands.Cog):
         text = re.sub(reg, r"<s>\1</s>", text)
         reg = re.compile(r"__(.+)__")
         text = re.sub(reg, r"<u>\1</u>", text)
+        reg = re.compile(r"\*\*(.+)\*\*")
+        text = re.sub(reg, r"<b>\1</b>", text)
         return text
 
     def make_signature(self, cmd):

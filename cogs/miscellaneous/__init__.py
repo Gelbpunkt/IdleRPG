@@ -663,7 +663,7 @@ This changelog is too big! Please go to https://git.travitia.xyz/Kenvyra/IdleRPG
         _(
             """Sends you my nickname from a random server.
 
-            :warning: Caution: may contain NSFW."""
+            ⚠ Caution: may contain NSFW."""
         )
         g = random.choice(
             [g for g in self.bot.guilds if g.me.display_name != self.bot.user.name]

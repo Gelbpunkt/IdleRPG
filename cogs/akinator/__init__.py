@@ -81,7 +81,7 @@ class Akinator(commands.Cog):
         if self.games.get(ctx.channel.id):
             return await ctx.send(
                 _(
-                    ":warning: There is another akinator game in this channel"
+                    "⚠ There is another akinator game in this channel"
                     " currently... Please wait until it finishes!"
                 ),
                 delete_after=10,

@@ -320,7 +320,7 @@ class Patreon(commands.Cog):
             Gold (and above) Donators have their bank space quintupled (x5), Silver Donators have theirs doubled.
             The member limit is set to 100 regardless of donation tier.
 
-            :warning: To use this, you have to be the leader of a guild, not just a member.
+            ⚠ To use this, you have to be the leader of a guild, not just a member.
 
             Only basic (or above) tier patrons can use this command."""
         )

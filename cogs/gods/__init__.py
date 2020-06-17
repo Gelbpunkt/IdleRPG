@@ -166,7 +166,7 @@ class Gods(commands.Cog):
         if not await ctx.confirm(
             _(
                 """\
-:warning: **Warning**: When you have a God, your luck will change (**including decreasing it!**)
+⚠ **Warning**: When you have a God, your luck will change (**including decreasing it!**)
 This impacts your adventure success chances amongst other things.
 
 Are you sure you want to follow {god}?"""
@@ -219,7 +219,7 @@ Are you sure you want to follow {god}?"""
         if not await ctx.confirm(
             _(
                 """\
-    :warning: **Warning**: After unfollowing your God, **you cannot follow any God anymore** and will remain Godless.
+    ⚠ **Warning**: After unfollowing your God, **you cannot follow any God anymore** and will remain Godless.
     If your luck is below average and you decided to unfollow, know that **your luck will not return to 1.0 immediately**.
 
     Are you sure you want to become Godless?"""

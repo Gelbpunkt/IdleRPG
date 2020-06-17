@@ -453,7 +453,7 @@ class Music(commands.Cog):
         if volume > ctx.player.volume:
             vol_warn = await ctx.send(
                 _(
-                    ":warning:`Playback volume is going to change to {volume} in 5"
+                    "⚠`Playback volume is going to change to {volume} in 5"
                     " seconds. To avoid the sudden earrape, control the volume on"
                     " client side!`"
                 ).format(volume=volume)
@@ -601,7 +601,7 @@ class Music(commands.Cog):
                 )
             )
         else:
-            await ctx.send(_(":warning:`No more entries left.`"))
+            await ctx.send(_("⚠`No more entries left.`"))
 
     @commands.command()
     @locale_doc
@@ -626,7 +626,7 @@ class Music(commands.Cog):
         async with self.bot.session.get(f"https://lyrics.tsu.sh/v1?q={query}") as r:
             result = await r.json()
         if "error" in result:
-            return await ctx.send(_(":warning: No results!"))
+            return await ctx.send(_("⚠ No results!"))
         p = commands.Paginator()
         for line in result["content"].split("\n"):
             for i in chunks(line, 1900):

@@ -140,7 +140,7 @@ class Chess(commands.Cog):
 
             Chess moves can be sent in several formats:
               -`g1f3`
-              -`Nf3` :warning:
+              -`Nf3` ⚠
               -`0-0`
               -`xe3`
 
