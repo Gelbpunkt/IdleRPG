@@ -306,7 +306,7 @@ class Owner(commands.Cog):
             actual_names = cmd.aliases + [cmd.name]
             aliases = f"{prelude}[{'|'.join(actual_names)}]"
         else:
-            aliases = cmd.name
+            aliases = cmd.qualified_name
         return f"${aliases} {cmd.signature}"
 
     @commands.command(hidden=True)
