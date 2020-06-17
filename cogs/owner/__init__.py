@@ -292,10 +292,7 @@ class Owner(commands.Cog):
                 for cmd in commands:
                     html += command.format(
                         name=cmd.qualified_name,
-                        usage=self.bot.cogs["Help"]
-                        .make_signature(cmd)
-                        .replace("<", "&lt;")
-                        .replace(">", "&gt;"),
+                        usage=cmd.signature.replace("<", "&lt;").replace(">", "&gt;"),
                         checks=f"<b>Checks: {checks}</b>"
                         if (
                             checks := ", ".join(
