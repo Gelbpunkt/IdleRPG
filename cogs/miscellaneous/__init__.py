@@ -1055,6 +1055,7 @@ This bot is developed by people who love to code for a good cause and improving 
         )
 
     @commands.command(brief=_("Show the rules again"))
+    @locale_doc
     async def rules(self, ctx):
         _(
             """Shows the rules you consent to when creating a character. Don't forget them!"""
