@@ -300,8 +300,11 @@ class Owner(commands.Cog):
 
     def make_signature(self, cmd):
         if cmd.aliases:
+            prelude = cmd.qualified_name.replace(cmd.name, "").strip()
+            if prelude:
+                prelude = f"{prelude} "
             actual_names = cmd.aliases + [cmd.name]
-            aliases = f"[{'|'.join(actual_names)}]"
+            aliases = f"{prelude}[{'|'.join(actual_names)}]"
         else:
             aliases = cmd.name
         return f"${aliases} {cmd.signature}"
