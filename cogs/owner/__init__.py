@@ -300,6 +300,8 @@ class Owner(commands.Cog):
         html = ""
 
         for cog_name, cog_ in self.bot.cogs.items():
+            if cog_name in ("GameMaster", "Owner", "Custom"):
+                continue
             commands = set(c for c in list(cog_.walk_commands()) if not c.hidden)
             if len(commands) > 0:
                 html += cog.format(name=cog_name)
@@ -332,7 +334,7 @@ class Owner(commands.Cog):
                         )
                         else "",
                         description=self.replace_code_tags(
-                            getattr(cmd.callback, "__doc__", "No Description Set")
+                            (cmd.help or "No Description Set")
                             .replace("<", "&lt;")
                             .replace(">", "&gt;")
                             .replace("\n", "<br>")
