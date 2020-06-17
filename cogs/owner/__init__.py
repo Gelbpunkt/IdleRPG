@@ -273,6 +273,20 @@ class Owner(commands.Cog):
         except Exception:
             await ctx.send(f"```py\n{traceback.format_exc()}```")
 
+    def replace_code_tags(self, s):
+        opening = True
+        out = []
+        for i in s:
+            if i == "`":
+                if opening is True:
+                    opening = False
+                    i = "<code>"
+                else:
+                    opening = True
+                    i = "</code>"
+            out.append(i)
+        return "".join(out)
+
     @commands.command(hidden=True)
     async def makehtml(self, ctx):
         """Generates HTML for commands page."""
@@ -317,8 +331,12 @@ class Owner(commands.Cog):
                             )
                         )
                         else "",
-                        description=getattr(cmd.callback, "__doc__", None)
-                        or "No Description Set",
+                        description=self.replace_code_tags(
+                            getattr(cmd.callback, "__doc__", "No Description Set")
+                            .replace("<", "&lt;")
+                            .replace(">", "&gt;")
+                            .replace("\n", "<br>")
+                        ),
                     )
 
         html = base.format(content=html)
