@@ -289,7 +289,10 @@ class Owner(commands.Cog):
         text = "".join(out)
         text = re.sub(reg, r'<a href="\2">\1</a>', text)
         reg = re.compile(r"~~(.+)~~")
-        return re.sub(reg, r"<s>\1</s>", text)
+        text = re.sub(reg, r"<s>\1</s>", text)
+        reg = re.compile(r"__(.+)__")
+        text = re.sub(reg, r"<u>\1</u>", text)
+        return text
 
     def make_signature(self, cmd):
         if cmd.aliases:
