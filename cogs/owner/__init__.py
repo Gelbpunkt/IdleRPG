@@ -350,8 +350,7 @@ class Owner(commands.Cog):
                             .format(prefix="$")
                             .replace("<", "&lt;")
                             .replace(">", "&gt;")
-                            .replace("\n", "<br>")
-                        ),
+                        ).replace("\n", "<br>"),
                     )
 
         html = base.format(content=html)
