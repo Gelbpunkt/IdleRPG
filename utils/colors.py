@@ -259,6 +259,8 @@ def parse_rgba(rgb_or_rgba) -> RGBA:
     rgba = RGBA(*match)
     if rgba.alpha > 1:
         raise ValueError("Alpha value too big")
+    if rgba.red > 255 or rgba.green > 255 or rgba.blue > 255:
+        raise ValueError("RGB values out of range")
     return rgba
 
 
