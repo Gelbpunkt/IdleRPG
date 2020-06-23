@@ -397,7 +397,9 @@ class Music(commands.Cog):
     @locale_doc
     async def loop(self, ctx):
         _(
-            """Toggle repeat of the currently playing song. Queue loop is not supported.
+            """Toggle repeat of the playing queue.
+
+            Once a song finishes, it will be added at the end of the queue automatically.
 
             If there are more than one person in the session and a non-DJ uses this command, a vote has to pass first."""
         )
