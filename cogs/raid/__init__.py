@@ -128,18 +128,24 @@ class Raid(commands.Cog):
         await ctx.channel.set_permissions(
             ctx.guild.get_role(self.bot.config.member_role), overwrite=self.read_only
         )
-        spawnmsg = await ctx.send(
-            f"""
-**ATTENTION! A ZEREKIEL HAS SPAWNED!**
-This boss has {self.boss['hp']} HP and has high-end loot!
-The evil dragon will be vulnerable in 15 Minutes
 
-Use https://raid.idlerpg.xyz/ to join the raid!
-
-Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=453963965521985536&scope=identify&response_type=code&redirect_uri=https://raid.idlerpg.xyz/callback>
-""",
-            file=discord.File("assets/other/dragon.jpg"),
+        fi = discord.File("assets/other/dragon.jpg")
+        em = discord.Embed(
+            title="Zerekiel Spawned",
+            url="https://raid.travitia.xyz",
+            description=(
+                f"This boss has {self.boss['hp']} HP and has high-end loot!\nThe evil"
+                " dragon will be vulnerable in 15 Minutes\n\nUse"
+                " https://raid.idlerpg.xyz/ to join the raid!\n\nFor a quick and ugly"
+                " join [click"
+                " here](https://discordapp.com/oauth2/authorize?client_id=453963965521985536&scope=identify&response_type=code&redirect_uri=https://raid.idlerpg.xyz/callback)!"
+            ),
+            color=self.bot.config.primary_colour,
         )
+        em.set_image(url="attachment://dragon.jpg")
+        em.set_thumbnail(url=ctx.author.avatar_url)
+
+        spawnmsg = await ctx.send(embed=em, file=fi)
         self.boss.update(message=spawnmsg.id)
         if not self.bot.config.is_beta:
             await self.bot.get_channel(506_167_065_464_406_041).send(
@@ -218,7 +224,7 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
             em.add_field(name="Effective Damage", value=finaldmg)
             em.set_author(name=str(target), icon_url=target.avatar_url)
             em.set_thumbnail(url=f"{self.bot.BASE_URL}/dragon.jpg")
-            await ctx.send(embed=em)
+            await ctx.send(target.mention, embed=em)
             if raid[target]["hp"] <= 0:
                 del raid[target]
             dmg_to_take = sum(i["damage"] for i in raid.values())
