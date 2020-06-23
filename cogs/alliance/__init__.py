@@ -693,13 +693,13 @@ class Alliance(commands.Cog):
                 'SELECT name FROM guild WHERE "id"=$1;', alliance_id
             )
 
-        # Get all defenses
-        defenses = [
-            dict(i)
-            for i in await self.bot.pool.fetch(
-                'SELECT * FROM defenses WHERE "city"=$1;', city
-            )
-        ]
+            # Get all defenses
+            defenses = [
+                dict(i)
+                for i in await conn.fetch(
+                    'SELECT * FROM defenses WHERE "city"=$1;', city
+                )
+            ]
 
         if not defenses:
             await self.bot.reset_alliance_cooldown(ctx)
@@ -807,11 +807,19 @@ class Alliance(commands.Cog):
 
             else:
                 target["hp"] -= damage
-                await self.bot.pool.execute(
-                    'UPDATE defenses SET "hp"="hp"-$1 WHERE "id"=$2;',
-                    damage,
-                    target["id"],
-                )
+                try:
+                    await self.bot.pool.execute(
+                        'UPDATE defenses SET "hp"="hp"-$1 WHERE "id"=$2;',
+                        damage,
+                        target["id"],
+                    )
+                except KeyError:
+                    await ctx.send(
+                        "This is a re-occuring bug that has been added to a list of"
+                        " critical issues. Please additionally send this in the"
+                        f" support server: `{target}` and `{defenses}`"
+                    )
+                    raise
                 await ctx.send(
                     embed=discord.Embed(
                         title=_("Alliance Wars"),
