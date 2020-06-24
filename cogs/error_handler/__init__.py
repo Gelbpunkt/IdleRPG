@@ -37,7 +37,13 @@ from classes.converters import (
     UserHasNoChar,
 )
 from classes.exceptions import GlobalCooldown
-from cogs.music import NeedsToBeInVoiceChat, NeedsToBePlaying, VoteDidNotPass
+from cogs.music import (
+    NeedsToBeInVoiceChat,
+    NeedsToBePlaying,
+    NotDJ,
+    PlayerLocked,
+    VoteDidNotPass,
+)
 from utils.i18n import _
 from utils.paginator import NoChoice
 
@@ -207,6 +213,10 @@ class Errorhandler(commands.Cog):
                         " to use this command."
                     ).format(prefix=ctx.prefix)
                 )
+            elif isinstance(error, PlayerLocked):
+                await ctx.send(_("The DJ has locked the music player."))
+            elif isinstance(error, NotDJ):
+                await ctx.send(_("You must be the DJ to use this command."))
             elif isinstance(error, utils.checks.PetGone):
                 await ctx.send(
                     _(

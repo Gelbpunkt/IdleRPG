@@ -44,6 +44,14 @@ class NeedsToBePlaying(commands.CheckFailure):
     pass
 
 
+class PlayerLocked(commands.CheckFailure):
+    pass
+
+
+class NotDJ(commands.CheckFailure):
+    pass
+
+
 class Artist:
     def __init__(self, raw_data):
         self.url = raw_data.get("external_urls", {}).get("spotify")
@@ -124,17 +132,21 @@ def get_player():
 
 def is_not_locked():
     def predicate(ctx):
-        return (
-            not getattr(ctx.player, "locked", False)
-            or getattr(ctx.player, "dj", None) == ctx.author
-        )
+        if (
+            getattr(ctx.player, "locked", False) is True
+            and not getattr(ctx.player, "dj", None) == ctx.author
+        ):
+            raise PlayerLocked()
+        return True
 
     return commands.check(predicate)
 
 
 def is_dj():
     def predicate(ctx):
-        return getattr(ctx.player, "dj", None) == ctx.author
+        if not getattr(ctx.player, "dj", None) == ctx.author:
+            raise NotDJ()
+        return True
 
     return commands.check(predicate)
 
