@@ -778,15 +778,15 @@ class Alliance(commands.Cog):
         )
 
         # choose the highest HP defense
-        target = sorted(defenses, key=lambda x: x["hp"])[-1]
+        defense_target = sorted(defenses, key=lambda x: x["hp"])[-1]
         while len(defenses) > 0 and len(attackers) > 0:
             damage = sum(i["damage"] for i in attackers)
-            if target["hp"] - damage <= 0:
+            if defense_target["hp"] - damage <= 0:
                 for idx, item in enumerate(defenses):
-                    if item["id"] == target["id"]:
+                    if item["id"] == defense_target["id"]:
                         del defenses[idx]
                 await self.bot.pool.execute(
-                    'DELETE FROM defenses WHERE "id"=$1;', target["id"]
+                    'DELETE FROM defenses WHERE "id"=$1;', defense_target["id"]
                 )
                 await ctx.send(
                     embed=discord.Embed(
@@ -795,7 +795,7 @@ class Alliance(commands.Cog):
                             "**{alliance_name}** destroyed a {defense} in {city}!"
                         ).format(
                             alliance_name=alliance_name,
-                            defense=target["name"],
+                            defense=defense_target["name"],
                             city=city,
                         ),
                         colour=self.bot.config.primary_colour,
@@ -803,23 +803,15 @@ class Alliance(commands.Cog):
                 )
                 if defenses:
                     # choose the highest HP defense
-                    target = sorted(defenses, key=lambda x: x["hp"])[-1]
+                    defense_target = sorted(defenses, key=lambda x: x["hp"])[-1]
 
             else:
-                target["hp"] -= damage
-                try:
-                    await self.bot.pool.execute(
-                        'UPDATE defenses SET "hp"="hp"-$1 WHERE "id"=$2;',
-                        damage,
-                        target["id"],
-                    )
-                except KeyError:
-                    await ctx.send(
-                        "This is a re-occuring bug that has been added to a list of"
-                        " critical issues. Please additionally send this in the"
-                        f" support server: `{target}` and `{defenses}`"
-                    )
-                    raise
+                defense_target["hp"] -= damage
+                await self.bot.pool.execute(
+                    'UPDATE defenses SET "hp"="hp"-$1 WHERE "id"=$2;',
+                    damage,
+                    defense_target["id"],
+                )
                 await ctx.send(
                     embed=discord.Embed(
                         title=_("Alliance Wars"),
@@ -828,10 +820,10 @@ class Alliance(commands.Cog):
                             " damage! (Now {hp} HP)"
                         ).format(
                             alliance_name=alliance_name,
-                            defense=target["name"],
+                            defense=defense_target["name"],
                             city=city,
                             damage=damage,
-                            hp=target["hp"],
+                            hp=defense_target["hp"],
                         ),
                         colour=self.bot.config.primary_colour,
                     )
@@ -845,27 +837,29 @@ class Alliance(commands.Cog):
             # These are clever and attack low HP OR best damage
             if len({i["hp"] for i in attackers}) == 1:
                 # all equal HP
-                target = sorted(attackers, key=lambda x: x["damage"])[-1]
+                attackers_target = sorted(attackers, key=lambda x: x["damage"])[-1]
             else:
                 # lowest HP
-                target = sorted(attackers, key=lambda x: x["hp"])[0]
+                attackers_target = sorted(attackers, key=lambda x: x["hp"])[0]
 
-            damage -= target["defense"]
+            damage -= attackers_target["defense"]
             damage = 0 if damage < 0 else damage
 
-            if target["hp"] - damage <= 0:
-                attackers.remove(target)
+            if attackers_target["hp"] - damage <= 0:
+                for idx, item in enumerate(attackers):
+                    if item["user"] == attackers_target["user"]:
+                        del attackers[idx]
                 await ctx.send(
                     embed=discord.Embed(
                         title=_("Alliance Wars"),
                         description=_("**{user}** got killed in {city}!").format(
-                            user=target["user"], city=city
+                            user=attackers_target["user"], city=city
                         ),
                         colour=self.bot.config.primary_colour,
                     )
                 )
             else:
-                target["hp"] -= damage
+                attackers_target["hp"] -= damage
                 await ctx.send(
                     embed=discord.Embed(
                         title=_("Alliance Wars"),
@@ -873,10 +867,10 @@ class Alliance(commands.Cog):
                             "**{user}** got hit in {city} for {damage} damage! (Now"
                             " {hp} HP)"
                         ).format(
-                            user=target["user"],
+                            user=attackers_target["user"],
                             city=city,
                             damage=damage,
-                            hp=target["hp"],
+                            hp=attackers_target["hp"],
                         ),
                         colour=self.bot.config.primary_colour,
                     )
