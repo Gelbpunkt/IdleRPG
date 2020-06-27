@@ -645,7 +645,7 @@ class Alliance(commands.Cog):
             f"**{city}** was occupied by {ctx.author}'s alliance."
         )
 
-    @alliance_cooldown(7200)
+    @alliance_cooldown(86400)
     @is_guild_leader()
     @alliance.command(brief=_("Attack a city"))
     @locale_doc
