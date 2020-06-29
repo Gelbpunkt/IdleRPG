@@ -95,12 +95,15 @@ class Raid(commands.Cog):
         """[Bot Admin only] Change a raid boss' HP."""
         if not self.boss:
             return await ctx.send("No Boss active!")
-        self.boss.update(hp=newhp)
+        self.boss.update(hp=newhp, initial_hp=newhp)
         try:
             spawnmsg = await ctx.channel.fetch_message(self.boss["message"])
-            await spawnmsg.edit(
-                content=re.sub(r"\d+ HP", f"{newhp} HP", spawnmsg.content)
+            edited_embed = spawnmsg.embeds[0]
+            edited_embed.description = re.sub(
+                r"\d+(,*\d)+ HP", f"{newhp:,.0f} HP", edited_embed.description
             )
+            edited_embed.set_image(url="attachment://dragon.jpg")
+            await spawnmsg.edit(embed=edited_embed)
         except discord.NotFound:
             return await ctx.send("Could not edit Boss HP!")
         await ctx.send("Boss HP updated!")
@@ -124,7 +127,7 @@ class Raid(commands.Cog):
             headers={"Authorization": self.bot.config.raidauth},
             json={"users": users},
         )
-        self.boss = {"hp": hp, "min_dmg": 100, "max_dmg": 500}
+        self.boss = {"hp": hp, "initial_hp": hp, "min_dmg": 100, "max_dmg": 500}
         await ctx.channel.set_permissions(
             ctx.guild.get_role(self.bot.config.member_role), overwrite=self.read_only
         )
@@ -134,8 +137,8 @@ class Raid(commands.Cog):
             title="Zerekiel Spawned",
             url="https://raid.travitia.xyz",
             description=(
-                f"This boss has {self.boss['hp']} HP and has high-end loot!\nThe evil"
-                " dragon will be vulnerable in 15 Minutes\n\nUse"
+                f"This boss has {self.boss['hp']:,.0f} HP and has high-end loot!\nThe"
+                " evil dragon will be vulnerable in 15 Minutes\n\nUse"
                 " https://raid.idlerpg.xyz/ to join the raid!\n\nFor a quick and ugly"
                 " join [click"
                 " here](https://discordapp.com/oauth2/authorize?client_id=453963965521985536&scope=identify&response_type=code&redirect_uri=https://raid.idlerpg.xyz/callback)!"
@@ -147,12 +150,25 @@ class Raid(commands.Cog):
 
         spawnmsg = await ctx.send(embed=em, file=fi)
         self.boss.update(message=spawnmsg.id)
+
         if not self.bot.config.is_beta:
-            await self.bot.get_channel(506_167_065_464_406_041).send(
+            summary_channel = self.bot.get_channel(506_167_065_464_406_041)
+            raid_ping = await summary_channel.send(
                 "@everyone Zerekiel spawned! 15 Minutes until he is vulnerable...\nUse"
                 " https://raid.idlerpg.xyz/ to join the raid!"
             )
-        if not self.bot.config.is_beta:
+            try:
+                await raid_ping.publish()
+            except discord.Forbidden:
+                await summary_channel.send(
+                    "Error! Couldn't publish message. Please publish manually"
+                    f" {ctx.author.mention}"
+                )
+            else:
+                await summary_channel.send(
+                    "Message has been published!", delete_after=10
+                )
+
             await asyncio.sleep(300)
             await ctx.send("**The dragon will be vulnerable in 10 minutes**")
             await asyncio.sleep(300)
@@ -190,8 +206,8 @@ class Raid(commands.Cog):
                 dmg, deff = await self.bot.get_raidstats(u, conn=conn)
                 raid[u] = {"hp": 250, "armor": deff, "damage": dmg}
 
-        await ctx.send("**Done getting data!**")
-
+        raiders_joined = len(raid)
+        await ctx.send(f"**Done getting data! {raiders_joined} Raiders joined.**")
         start = datetime.datetime.utcnow()
 
         while (
@@ -243,7 +259,16 @@ class Raid(commands.Cog):
         if len(raid) == 0:
             m = await ctx.send("The raid was all wiped!")
             await m.add_reaction("\U0001F1EB")
+            summary_text = (
+                "Emoji_here The raid was all wiped! Zerekiel had"
+                f" **{self.boss['hp']:,.0f}** health remaining. Better luck next time."
+            )
         elif self.boss["hp"] < 1:
+            raid_duration = datetime.datetime.utcnow() - start
+            minutes = (raid_duration.seconds % 3600) // 60
+            seconds = raid_duration.seconds % 60
+            summary_duration = f"{minutes} minutes, {seconds} seconds"
+
             await ctx.channel.set_permissions(
                 ctx.guild.get_role(self.bot.config.member_role),
                 overwrite=self.allow_sending,
@@ -314,22 +339,40 @@ class Raid(commands.Cog):
                     data={"Amount": highest_bid[1]},
                 )
                 await msg.edit(content=f"{msg.content} Done!")
+                summary_crate = (
+                    "Emoji_here Legendary crate <:CrateLegendary:598094865678598144> "
+                    f"sold to: **<@{highest_bid[0]}>** for **${highest_bid[1]:,.0f}**"
+                )
             else:
                 await ctx.send(
                     f"<@{highest_bid[0]}> spent the money in the meantime... Meh!"
                     " Noone gets it then, pah!\nThis incident has been reported and"
                     " they will get banned if it happens again. Cheers!"
                 )
+                summary_crate = (
+                    "Emoji_here The Legendary Crate was not given to anyone since the"
+                    f" supposed winning bidder <@{highest_bid[0]}> spent the money in"
+                    " the meantime. They will get banned if it happens again."
+                )
 
-            cash = int(hp / 4 / len(raid))  # what da hood gets per survivor
+            cash_pool = int(self.boss["initial_hp"] / 4)
+            survivors = len(raid)
+            cash = int(cash_pool / survivors)  # what da hood gets per survivor
             await self.bot.pool.execute(
                 'UPDATE profile SET money=money+$1 WHERE "user"=ANY($2);',
                 cash,
                 [u.id for u in raid.keys()],
             )
             await ctx.send(
-                f"**Gave ${cash} of the Zerekiel's ${int(hp / 4)} drop to all"
+                f"**Gave ${cash:,.0f} of the Zerekiel's ${cash_pool:,.0f} drop to all"
                 " survivors!**"
+            )
+
+            summary_text = (
+                f"Emoji_here Defeated in: **{summary_duration}**\n"
+                f"{summary_crate}\n"
+                f"Emoji_here Payout per survivor: **${cash:,.0f}**\n"
+                f"Emoji_here Survivors: **{survivors}**"
             )
 
         else:
@@ -338,12 +381,40 @@ class Raid(commands.Cog):
                 " disappeared!"
             )
             await m.add_reaction("\U0001F1EB")
+            summary_text = (
+                "Emoji_here The raid did not manage to kill Zerekiel within 45"
+                f" Minutes... He disappeared with **{self.boss['hp']:,.0f}** health"
+                " remaining."
+            )
 
         await asyncio.sleep(30)
         await ctx.channel.set_permissions(
             ctx.guild.get_role(self.bot.config.member_role), overwrite=self.deny_sending
         )
         await self.clear_raid_timer()
+
+        if not self.bot.config.is_beta:
+            summary = (
+                "**Raid result:**\n"
+                f"Emoji_here Health: **{self.boss['initial_hp']:,.0f}**\n"
+                f"{summary_text}\n"
+                f"Emoji_here Raiders joined: **{raiders_joined}**"
+            )
+            summary = summary.replace(
+                "Emoji_here",
+                ":small_blue_diamond:" if self.boss["hp"] < 1 else ":vibration_mode:",
+            )
+            summary_msg = await summary_channel.send(summary)
+            try:
+                await summary_msg.publish()
+            except discord.Forbidden:
+                await ctx.send(
+                    "Error! Couldn't publish message. Please publish manually"
+                    f" {ctx.author.mention}"
+                )
+            else:
+                await ctx.send("Message has been published!", delete_after=10)
+
         self.boss = None
 
     @is_gm()
