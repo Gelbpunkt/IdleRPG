@@ -261,7 +261,7 @@ class Raid(commands.Cog):
             await m.add_reaction("\U0001F1EB")
             summary_text = (
                 "Emoji_here The raid was all wiped! Zerekiel had"
-                f" **{self.boss['hp']:,.0f}** health remaining. Better luck next time."
+                f" **{self.boss['hp']:,.3f}** health remaining. Better luck next time."
             )
         elif self.boss["hp"] < 1:
             raid_duration = datetime.datetime.utcnow() - start
@@ -383,7 +383,7 @@ class Raid(commands.Cog):
             await m.add_reaction("\U0001F1EB")
             summary_text = (
                 "Emoji_here The raid did not manage to kill Zerekiel within 45"
-                f" Minutes... He disappeared with **{self.boss['hp']:,.0f}** health"
+                f" Minutes... He disappeared with **{self.boss['hp']:,.3f}** health"
                 " remaining."
             )
 
