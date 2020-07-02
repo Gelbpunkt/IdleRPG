@@ -533,16 +533,18 @@ class IdleHelp(commands.HelpCommand):
         await self.context.send(embed=e)
 
     async def send_cog_help(self, cog):
-        if (
-            (cog.qualified_name in self.gm_exts) and
-            (self.context.author.id not in self.context.bot.config.game_masters)
+        if (cog.qualified_name in self.gm_exts) and (
+            self.context.author.id not in self.context.bot.config.game_masters
         ):
-            return await self.context.send(_("You do not have access to these commands!"))
-        if (
-            (cog.qualified_name in self.owner_exts) and
-            (self.context.author.id not in self.context.bot.owner_ids)
+            return await self.context.send(
+                _("You do not have access to these commands!")
+            )
+        if (cog.qualified_name in self.owner_exts) and (
+            self.context.author.id not in self.context.bot.owner_ids
         ):
-            return await self.context.send(_("You do not have access to these commands!"))
+            return await self.context.send(
+                _("You do not have access to these commands!")
+            )
 
         menu = CogMenu(
             title=(
