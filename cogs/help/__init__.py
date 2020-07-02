@@ -26,6 +26,7 @@ from asyncpg import UniqueViolationError
 from discord.ext import commands, menus
 
 from classes.converters import User
+from config import primary_colour
 from utils.checks import has_open_help_request, is_supporter
 from utils.i18n import _, locale_doc
 
@@ -418,9 +419,9 @@ class IdleHelp(commands.HelpCommand):
 
         super().__init__(*args, **kwargs)
         self.verify_checks = False
-        self.gm_exts = {"GameMaster"}
-        self.owner_exts = {"GameMaster", "Owner"}
-        self.color = 0xCB735C
+        self.gm_exts = {"Gamemaster"}
+        self.owner_exts = {"Gamemaster", "Owner"}
+        self.color = primary_colour
         self.group_emoji = "💠"
         self.command_emoji = "🔷"
 
@@ -533,19 +534,15 @@ class IdleHelp(commands.HelpCommand):
 
     async def send_cog_help(self, cog):
         if (
-            self.context.author.id not in self.context.bot.config.game_masters
-            and cog.qualified_name in self.gm_exts
+            (cog.qualified_name in self.gm_exts) and
+            (self.context.author.id not in self.context.bot.config.game_masters)
         ):
-            return await self.context.send(
-                _("You do not have access to these commands!")
-            )
+            return await self.context.send(_("You do not have access to these commands!"))
         if (
-            self.context.author.id not in self.context.bot.owner_ids
-            and cog.qualified_name in self.owner_exts
+            (cog.qualified_name in self.owner_exts) and
+            (self.context.author.id not in self.context.bot.owner_ids)
         ):
-            return await self.context.send(
-                _("You do not have access to these commands!")
-            )
+            return await self.context.send(_("You do not have access to these commands!"))
 
         menu = CogMenu(
             title=(
@@ -567,21 +564,9 @@ class IdleHelp(commands.HelpCommand):
         await menu.start(self.context)
 
     async def send_command_help(self, command):
-        if command.cog:
-            if (
-                self.context.author.id not in self.context.bot.config.game_masters
-                and command.cog.qualified_name in self.gm_exts
-            ):
-                return await self.context.send(
-                    _("You do not have access to this command!")
-                )
-            if (
-                self.context.author.id not in self.context.bot.owner_ids
-                and command.cog.qualified_name in self.owner_exts
-            ):
-                return await self.context.send(
-                    _("You do not have access to this command!")
-                )
+        if not await command.can_run(self.context):
+            # this also handles disabled commands
+            return await self.context.send(_("You do not have access to this command!"))
 
         e = self.embedbase(
             title=(

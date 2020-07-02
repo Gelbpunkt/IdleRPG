@@ -34,7 +34,7 @@ from utils.checks import has_char, is_gm
 from utils.i18n import _, locale_doc
 
 
-class GameMaster(commands.Cog):
+class Gamemaster(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
         self.top_auction = None
@@ -579,4 +579,4 @@ class GameMaster(commands.Cog):
 
 
 def setup(bot):
-    bot.add_cog(GameMaster(bot))
+    bot.add_cog(Gamemaster(bot))

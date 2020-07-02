@@ -322,7 +322,7 @@ class Owner(commands.Cog):
         html = ""
 
         for cog_name, cog_ in self.bot.cogs.items():
-            if cog_name in ("GameMaster", "Owner", "Custom"):
+            if cog_name in ("Gamemaster", "Owner", "Custom"):
                 continue
             commands = set(c for c in list(cog_.walk_commands()) if not c.hidden)
             if len(commands) > 0:
