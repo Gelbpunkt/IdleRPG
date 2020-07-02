@@ -569,13 +569,13 @@ class IdleHelp(commands.HelpCommand):
         if not await command.can_run(self.context):
             if command.cog:
                 if (command.cog.qualified_name in self.gm_exts) and (
-                        self.context.author.id not in self.context.bot.config.game_masters
+                    self.context.author.id not in self.context.bot.config.game_masters
                 ):
                     return await self.context.send(
                         _("You do not have access to this command!")
                     )
                 if (command.cog.qualified_name in self.owner_exts) and (
-                        self.context.author.id not in self.context.bot.owner_ids
+                    self.context.author.id not in self.context.bot.owner_ids
                 ):
                     return await self.context.send(
                         _("You do not have access to this command!")
