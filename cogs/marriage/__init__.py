@@ -727,11 +727,6 @@ class Marriage(commands.Cog):
                 )
             )
         elif event == "namechange":
-            await ctx.send(
-                _("{name} can be renamed! Enter a new name:").format(
-                    name=target["name"]
-                )
-            )
             names = [c["name"] for c in children]
             names.remove(target["name"])
 
@@ -739,16 +734,27 @@ class Marriage(commands.Cog):
                 return (
                     msg.author.id in [ctx.author.id, ctx.character_data["marriage"]]
                     and msg.channel.id == ctx.channel.id
-                    and 0 < len(msg.content) <= 20
                 )
 
             name = None
             while not name:
+                await ctx.send(
+                    _(
+                        "{name} can be renamed! Within 30 seconds, enter a new"
+                        " name:\nType `cancel` to leave the name unchanged."
+                    ).format(name=target["name"])
+                )
                 try:
                     msg = await self.bot.wait_for("message", check=check, timeout=30)
                     name = msg.content.replace("@", "@\u200b")
                 except asyncio.TimeoutError:
                     return await ctx.send(_("You didn't enter a name."))
+                if name.lower() == "cancel":
+                    return await ctx.send(_("You didn't want to rename."))
+                if len(name) == 0 or len(name) > 20:
+                    await ctx.send(_("Name must be 1 to 20 characters only."))
+                    name = None
+                    continue
                 if name in names:
                     await ctx.send(
                         _(
@@ -757,6 +763,30 @@ class Marriage(commands.Cog):
                         )
                     )
                     name = None
+                    continue
+                try:
+                    if not await ctx.confirm(
+                        _(
+                            '{author} Are you sure you want to rename "{old_name}" to'
+                            ' "{new_name}"?'
+                        ).format(
+                            author=ctx.author.mention,
+                            old_name=target["name"],
+                            new_name=name,
+                        )
+                    ):
+                        await ctx.send(
+                            _('You didn\'t change the name to "{new_name}".').format(
+                                new_name=name
+                            )
+                        )
+                        name = None
+                except self.bot.paginator.NoChoice:
+                    await ctx.send(_("You didn't confirm."))
+                    name = None
+
+            if name == target["name"]:
+                return await ctx.send(_("You didn't change their name."))
             await self.bot.pool.execute(
                 'UPDATE children SET "name"=$1 WHERE "name"=$2 AND ("mother"=$3 OR'
                 ' "father"=$3) AND "age"=$4;',
@@ -765,8 +795,6 @@ class Marriage(commands.Cog):
                 ctx.author.id,
                 target["age"],
             )
-            if name == target["name"]:
-                return await ctx.send(_("You didn't change their name."))
             return await ctx.send(
                 _("{old_name} is now called {new_name}.").format(
                     old_name=target["name"], new_name=name
