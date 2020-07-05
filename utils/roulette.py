@@ -172,6 +172,7 @@ class RouletteGame:
             self.money,
             self.ctx.author.id,
         )
+        await self.ctx.bot.cache.wipe_profile(self.ctx.author.id)
 
     async def handle_win(self):
         await self.ctx.bot.pool.execute(
@@ -179,6 +180,7 @@ class RouletteGame:
             self.money * (self.payout + 1),
             self.ctx.author.id,
         )
+        await self.ctx.bot.cache.wipe_profile(self.ctx.author.id)
         await self.message.edit(
             content=_(
                 "It's a :{colour}_circle: {number}! You won **${money}**!"
