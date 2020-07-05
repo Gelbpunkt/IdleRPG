@@ -37,7 +37,6 @@ import config
 
 from classes.cache import RedisCache
 from classes.context import Context
-from classes.converters import UserWithCharacter
 from classes.enums import DonatorRank
 from classes.exceptions import GlobalCooldown
 from classes.http import ProxiedClientSession
@@ -212,7 +211,6 @@ class Bot(commands.AutoShardedBot):
         if conn is None:
             conn = await self.pool.acquire()
             local = True
-        damage, armor = await self.get_damage_armor_for(v, conn=conn)
         if (
             atkmultiply is None
             or defmultiply is None
@@ -230,6 +228,9 @@ class Bot(commands.AutoShardedBot):
             )
             if god is not None and god != user_god:
                 raise ValueError()
+        damage, armor = await self.get_damage_armor_for(
+            v, classes=classes, race=race, conn=conn
+        )
         if (buildings := await self.get_city_buildings(guild)) :
             atkmultiply += buildings["raid_building"] * Decimal("0.1")
             defmultiply += buildings["raid_building"] * Decimal("0.1")
@@ -263,12 +264,14 @@ class Bot(commands.AutoShardedBot):
             await self.pool.release(conn)
         return items
 
-    async def get_damage_armor_for(self, thing, conn=None):
+    async def get_damage_armor_for(self, thing, classes=None, race=None, conn=None):
         """Returns a user's weapon attack and defense value"""
         items = await self.get_equipped_items_for(thing, conn=conn)
         damage = sum(i["damage"] for i in items)
         defense = sum(i["armor"] for i in items)
-        return await self.generate_stats(thing, damage, defense, conn=conn)
+        return await self.generate_stats(
+            thing, damage, defense, classes=classes, race=race, conn=conn
+        )
 
     async def get_context(self, message, *, cls=None):
         """Overrides the default Context with a custom Context"""
