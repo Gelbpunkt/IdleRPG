@@ -54,7 +54,7 @@ class Classes(commands.Cog):
 
             (This command has a cooldown of 24 hours)"""
         )
-        if int(rpgtools.xptolevel(ctx.character_data["xp"])) >= 12:
+        if rpgtools.xptolevel(ctx.character_data["xp"]) >= 12:
             val = await self.bot.paginator.Choose(
                 title=_("Select class to change"),
                 entries=[_("Primary Class"), _("Secondary Class")],
@@ -169,6 +169,7 @@ class Classes(commands.Cog):
                     new_classes,
                     ctx.author.id,
                 )
+                await self.bot.cache.wipe_profile(ctx.author.id)
                 if profession == "Ranger":
                     await conn.execute(
                         'INSERT INTO pets ("user") VALUES ($1);', ctx.author.id
@@ -193,6 +194,7 @@ class Classes(commands.Cog):
                     5000,
                     ctx.author.id,
                 )
+                await self.bot.cache.wipe_profile(ctx.author.id)
                 await conn.execute('DELETE FROM pets WHERE "user"=$1;', ctx.author.id)
                 if profession == "Ranger":
                     await conn.execute(
@@ -250,7 +252,7 @@ class Classes(commands.Cog):
             - Ritualists gain +5% extra favor when sacrificing per evolution
             (- Paragons gain +1 damage *and* +1 defense per evolution)"""
         )
-        level = int(rpgtools.xptolevel(ctx.character_data["xp"]))
+        level = rpgtools.xptolevel(ctx.character_data["xp"])
         if level < 5:
             return await ctx.send(_("Your level isn't high enough to evolve."))
         newindex = int(level / 5) - 1
@@ -268,9 +270,12 @@ class Classes(commands.Cog):
                 new_classes.append("No Class")
         if updated == 0:
             return await ctx.send(_("You haven't got a class yet."))
+        if ctx.character_data["class"] == new_classes:
+            return await ctx.send(_("Nothing to evolve."))
         await self.bot.pool.execute(
             'UPDATE profile SET "class"=$1 WHERE "user"=$2;', new_classes, ctx.author.id
         )
+        await self.bot.cache.wipe_profile(ctx.author.id)
         await ctx.send(
             _("You are now a `{class1}` and a `{class2}`.").format(
                 class1=new_classes[0], class2=new_classes[1]
@@ -313,9 +318,7 @@ class Classes(commands.Cog):
             Only thieves can use this command.
             (This command has a cooldown of 1 hour.)"""
         )
-        if (
-            buildings := await self.bot.get_city_buildings(ctx.character_data["guild"])
-        ) :
+        if buildings := await self.bot.get_city_buildings(ctx.character_data["guild"]):
             bonus = buildings["thief_building"] * 5
         else:
             bonus = 0
@@ -351,6 +354,8 @@ class Classes(commands.Cog):
                     stolen,
                     usr["user"],
                 )
+                await self.bot.cache.wipe_profile(ctx.author.id)
+                await self.bot.cache.wipe_profile(usr["user"])
             user = await self.bot.get_user_global(usr["user"])
             await ctx.send(
                 _("You stole **${stolen}** from {user}.").format(
@@ -436,6 +441,7 @@ class Classes(commands.Cog):
                 item[1],
                 ctx.author.id,
             )
+            await self.bot.cache.wipe_profile(ctx.author.id)
             await conn.execute(
                 'UPDATE pets SET "food"=CASE WHEN "food"+$1>=100 THEN 100 ELSE'
                 ' "food"+$1 END WHERE "user"=$2;',
@@ -492,6 +498,7 @@ class Classes(commands.Cog):
                 item[1],
                 ctx.author.id,
             )
+            await self.bot.cache.wipe_profile(ctx.author.id)
             await conn.execute(
                 'UPDATE pets SET "drink"=CASE WHEN "drink"+$1>=100 THEN 100 ELSE'
                 ' "drink"+$1 END WHERE "user"=$2;',
