@@ -294,6 +294,7 @@ class Adventure(commands.Cog):
                     money,
                     ctx.author.id,
                 )
+                await self.bot.cache.wipe_profile(ctx.author.id)
                 await self.bot.log_transaction(
                     ctx,
                     from_=1,
@@ -419,6 +420,7 @@ class Adventure(commands.Cog):
             money,
             ctx.author.id,
         )
+        await self.bot.cache.wipe_profile(ctx.author.id)
         await self.bot.log_transaction(
             ctx, from_=1, to=ctx.author.id, subject="money", data={"Amount": money}
         )
@@ -493,6 +495,7 @@ Adventure name: `{adventure}`"""
             await self.bot.pool.execute(
                 'UPDATE profile SET "deaths"="deaths"+1 WHERE "user"=$1;', ctx.author.id
             )
+            await self.bot.cache.wipe_profile(ctx.author.id)
             return await ctx.send(_("You died on your mission. Try again!"))
 
         gold = round(random.randint(20 * num, 60 * num) * luck_multiply)
@@ -541,6 +544,7 @@ Adventure name: `{adventure}`"""
                 xp,
                 ctx.author.id,
             )
+            await self.bot.cache.wipe_profile(ctx.author.id)
 
             if (partner := ctx.character_data["marriage"]) :
                 await conn.execute(
@@ -549,6 +553,7 @@ Adventure name: `{adventure}`"""
                     int(gold / 2),
                     partner,
                 )
+                await self.bot.cache.wipe_profile(partner)
 
             await self.bot.log_transaction(
                 ctx,
@@ -604,8 +609,9 @@ Adventure name: `{adventure}`"""
         _(
             """Shows your overall adventure death and completed count, including your success rate."""
         )
-        deaths, completed = await self.bot.pool.fetchval(
-            'SELECT (deaths, completed) FROM profile WHERE "user"=$1;', ctx.author.id
+        deaths, completed = (
+            ctx.character_data["deaths"],
+            ctx.character_data["completed"],
         )
         if (deaths + completed) != 0:
             rate = round(completed / (deaths + completed) * 100, 2)
