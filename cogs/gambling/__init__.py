@@ -170,6 +170,7 @@ class BlackJack:
                 self.money * 2,
                 self.ctx.author.id,
             )
+            await self.ctx.bot.cache.wipe_profile(self.ctx.author.id)
             await self.ctx.bot.log_transaction(
                 self.ctx,
                 from_=1,
@@ -185,6 +186,7 @@ class BlackJack:
                 int(self.money * 2.5),
                 self.ctx.author.id,
             )
+            await self.ctx.bot.cache.wipe_profile(self.ctx.author.id)
             await self.ctx.bot.log_transaction(
                 self.ctx,
                 from_=1,
@@ -200,6 +202,7 @@ class BlackJack:
                 self.money,
                 self.ctx.author.id,
             )
+            await self.ctx.bot.cache.wipe_profile(self.ctx.author.id)
             await self.ctx.bot.log_transaction(
                 self.ctx,
                 from_=1,
@@ -343,6 +346,7 @@ class BlackJack:
                         self.money,
                         self.ctx.author.id,
                     )
+                    await self.ctx.bot.cache.wipe_profile(self.ctx.author.id)
                     await self.ctx.bot.log_transaction(
                         self.ctx,
                         from_=self.ctx.author.id,
@@ -522,6 +526,7 @@ This command is in an alpha-stage, which means bugs are likely to happen. Play a
                     amount,
                     ctx.author.id,
                 )
+                await self.bot.cache.wipe_profile(ctx.author.id)
                 await self.bot.log_transaction(
                     ctx,
                     from_=1,
@@ -541,6 +546,7 @@ This command is in an alpha-stage, which means bugs are likely to happen. Play a
                     amount,
                     ctx.author.id,
                 )
+                await self.bot.cache.wipe_profile(ctx.author.id)
                 await self.bot.log_transaction(
                     ctx,
                     from_=ctx.author.id,
@@ -599,6 +605,7 @@ This command is in an alpha-stage, which means bugs are likely to happen. Play a
                     money * (maximum - 1),
                     ctx.author.id,
                 )
+                await self.bot.cache.wipe_profile(ctx.author.id)
                 await self.bot.log_transaction(
                     ctx,
                     from_=1,
@@ -624,6 +631,7 @@ This command is in an alpha-stage, which means bugs are likely to happen. Play a
                     money,
                     ctx.author.id,
                 )
+                await self.bot.cache.wipe_profile(ctx.author.id)
                 await self.bot.log_transaction(
                     ctx,
                     from_=ctx.author.id,
@@ -668,6 +676,7 @@ This command is in an alpha-stage, which means bugs are likely to happen. Play a
             amount,
             ctx.author.id,
         )
+        await self.bot.cache.wipe_profile(ctx.author.id)
         if amount > 0:
             await self.bot.log_transaction(
                 ctx,
@@ -726,6 +735,7 @@ This command is in an alpha-stage, which means bugs are likely to happen. Play a
             await conn.execute(
                 'UPDATE profile SET "money"="money"-100 WHERE "user"=$1;', ctx.author.id
             )
+            await self.bot.cache.wipe_profile(ctx.author.id)
             await self.bot.log_transaction(
                 ctx, from_=ctx.author.id, to=2, subject="gambling", data={"Amount": 100}
             )
@@ -744,6 +754,7 @@ This command is in an alpha-stage, which means bugs are likely to happen. Play a
                     money,
                     other.id,
                 )
+                await self.bot.cache.wipe_profile(other.id)
                 await self.bot.log_transaction(
                     ctx,
                     from_=1,
@@ -759,6 +770,7 @@ This command is in an alpha-stage, which means bugs are likely to happen. Play a
                     money,
                     user.id,
                 )
+                await self.bot.cache.wipe_profile(user.id)
                 await self.bot.log_transaction(
                     ctx,
                     from_=other.id,
@@ -777,6 +789,7 @@ This command is in an alpha-stage, which means bugs are likely to happen. Play a
                         money,
                         other.id,
                     )
+                    await self.bot.cache.wipe_profile(other.id)
                     if not await self.bot.has_money(user.id, new_money, conn=conn):
                         return await ctx.send(
                             _("{user} is too poor to double.").format(user=user)
@@ -786,6 +799,7 @@ This command is in an alpha-stage, which means bugs are likely to happen. Play a
                         new_money,
                         user.id,
                     )
+                    await self.bot.cache.wipe_profile(user.id)
                     await ctx.send(
                         _("{user} doubled to **${money}**.").format(
                             user=user, money=new_money

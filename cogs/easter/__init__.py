@@ -104,6 +104,7 @@ You have **{eggs}** <:easteregg:566251086986608650>."""
                 reward[0],
                 ctx.author.id,
             )
+            await self.bot.cache.wipe_profile(ctx.author.id)
             await self.bot.log_transaction(
                 ctx,
                 from_=1,
@@ -119,6 +120,7 @@ You have **{eggs}** <:easteregg:566251086986608650>."""
                 reward[0],
                 ctx.author.id,
             )
+            await self.bot.cache.wipe_profile(ctx.author.id)
             await self.bot.log_transaction(
                 ctx,
                 from_=1,
@@ -135,6 +137,7 @@ You have **{eggs}** <:easteregg:566251086986608650>."""
                 reward[0],
                 ctx.author.id,
             )
+            await self.bot.cache.wipe_profile(ctx.author.id)
         elif reward[1] == "badge":
             async with self.bot.pool.acquire() as conn:
                 await conn.execute(
@@ -148,6 +151,7 @@ You have **{eggs}** <:easteregg:566251086986608650>."""
                     "https://i.imgur.com/VHUDdTv.jpg",
                     ctx.character_data["guild"],
                 )
+                await self.bot.cache.wipe_profile(ctx.author.id)
         elif reward[1] == "item":
             item = await self.bot.create_random_item(
                 minstat=reward[2],
@@ -168,6 +172,7 @@ You have **{eggs}** <:easteregg:566251086986608650>."""
                 reward[0],
                 ctx.author.id,
             )
+            await self.bot.cache.wipe_profile(ctx.author.id)
             await self.bot.log_transaction(
                 ctx,
                 from_=1,

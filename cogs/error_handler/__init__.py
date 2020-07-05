@@ -231,12 +231,12 @@ class Errorhandler(commands.Cog):
                         idx = classes.index(evolve)
                         break
                 classes[idx] = "No Class"
-                async with self.bot.pool.acquire() as conn:
-                    await conn.execute(
-                        'UPDATE profile SET "class"=$1 WHERE "user"=$2;',
-                        classes,
-                        ctx.author.id,
-                    )
+                await self.bot.pool.execute(
+                    'UPDATE profile SET "class"=$1 WHERE "user"=$2;',
+                    classes,
+                    ctx.author.id,
+                )
+                await self.bot.cache.wipe_profile(ctx.author.id)
             elif isinstance(error, utils.checks.PetDied):
                 await ctx.send(
                     _(
