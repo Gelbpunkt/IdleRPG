@@ -219,17 +219,14 @@ class Bot(commands.AutoShardedBot):
             or classes is None
             or guild is None
         ):
-            (
-                atkmultiply,
-                defmultiply,
-                classes,
-                race,
-                guild,
-                user_god,
-            ) = await conn.fetchval(
-                "SELECT (atkmultiply::decimal, defmultiply::decimal, class::text[],"
-                ' race::text, guild::integer, god::text) FROM profile WHERE "user"=$1;',
-                v,
+            row = await self.cache.get_profile(v, conn=conn)
+            atkmultiply, defmultiply, classes, race, guild, user_god = (
+                row["atkmultiply"],
+                row["defmultiply"],
+                row["class"],
+                row["race"],
+                row["guild"],
+                row["god"],
             )
             if god is not None and god != user_god:
                 raise ValueError()
@@ -249,17 +246,6 @@ class Bot(commands.AutoShardedBot):
         if local:
             await self.pool.release(conn)
         return dmg, deff
-
-    async def get_god(self, user: UserWithCharacter, conn=None):
-        """Fetches the god for a user from the database"""
-        local = False
-        if conn is None:
-            conn = self.pool.acquire()
-            local = True
-        god = await conn.fetchval('SELECT god FROM profile WHERE "user"=$1;', user.id)
-        if local:
-            await self.pool.release(conn)
-        return god
 
     async def get_equipped_items_for(self, thing, conn=None):
         """Fetches a list of equipped items of a user from the database"""
@@ -409,35 +395,14 @@ class Bot(commands.AutoShardedBot):
 
     async def has_money(self, user, money, conn=None):
         user = user.id if isinstance(user, (discord.User, discord.Member)) else user
-        if conn:
-            return (
-                await conn.fetchval('SELECT money FROM profile WHERE "user"=$1;', user)
-                >= money
-            )
-        else:
-            return (
-                await self.pool.fetchval(
-                    'SELECT money FROM profile WHERE "user"=$1;', user
-                )
-                >= money
-            )
+        return await self.cache.get_profile_col(user, "money", conn=conn) >= money
 
     async def has_crates(self, user, crates, rarity, conn=None):
         user = user.id if isinstance(user, (discord.User, discord.Member)) else user
-        if conn:
-            return (
-                await conn.fetchval(
-                    f'SELECT "crates_{rarity}" FROM profile WHERE "user"=$1;', user
-                )
-                >= crates
-            )
-        else:
-            return (
-                await self.pool.fetchval(
-                    f'SELECT "crates_{rarity}" FROM profile WHERE "user"=$1;', user
-                )
-                >= crates
-            )
+        return (
+            await self.cache.get_profile_col(user, f"crates_{rarity}", conn=conn)
+            >= crates
+        )
 
     async def has_item(self, user, item, conn=None):
         user = user.id if isinstance(user, (discord.User, discord.Member)) else user
@@ -571,6 +536,7 @@ class Bot(commands.AutoShardedBot):
                 amount,
                 ctx.author.id,
             )
+            await self.cache.wipe_profile(ctx.author.id)
         elif reward == "item":
             stat = round(new_level * 1.5)
             item = await self.create_random_item(
@@ -600,6 +566,7 @@ class Bot(commands.AutoShardedBot):
                 money,
                 ctx.author.id,
             )
+            await self.cache.wipe_profile(ctx.author.id)
             await self.log_transaction(
                 ctx,
                 from_=1,
@@ -687,17 +654,9 @@ class Bot(commands.AutoShardedBot):
         self, user, damage, armor, classes=None, race=None, conn=None
     ):
         user = user.id if isinstance(user, (discord.User, discord.Member)) else user
-        local = False
-        if conn is None:
-            conn = await self.pool.acquire()
-            local = True
         if not classes or not race:
-            classes, race = await conn.fetchval(
-                'SELECT ("class"::text[], "race"::text) FROM profile WHERE "user"=$1;',
-                user,
-            )
-        if local:
-            await self.pool.release(conn)
+            row = await self.cache.get_profile(user, conn=conn)
+            classes, race = row["class"], row["race"]
         lines = [self.get_class_line(class_) for class_ in classes]
         grades = [self.get_class_grade(class_) for class_ in classes]
         for line, grade in zip(lines, grades):
