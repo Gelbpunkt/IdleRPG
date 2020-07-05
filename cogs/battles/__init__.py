@@ -65,6 +65,7 @@ class Battles(commands.Cog):
         await self.bot.pool.execute(
             'UPDATE profile SET money=money-$1 WHERE "user"=$2;', money, ctx.author.id,
         )
+        await self.bot.cache.wipe_profile(ctx.author.id)
 
         if not enemy:
             msg = await ctx.send(
@@ -107,6 +108,7 @@ class Battles(commands.Cog):
                     money,
                     ctx.author.id,
                 )
+                await self.bot.cache.wipe_profile(ctx.author.id)
                 return await ctx.send(
                     _("Noone wanted to join your battle, {author}!").format(
                         author=ctx.author.mention
@@ -128,6 +130,7 @@ class Battles(commands.Cog):
         await self.bot.pool.execute(
             'UPDATE profile SET money=money-$1 WHERE "user"=$2;', money, enemy_.id
         )
+        await self.bot.cache.wipe_profile(enemy_.id)
 
         stats = [
             sum(await self.bot.get_damage_armor_for(ctx.author)) + random.randint(1, 7),
@@ -151,6 +154,7 @@ class Battles(commands.Cog):
                 money * 2,
                 winner.id,
             )
+            await self.cache.wipe_profile(winner.id)
             await self.bot.log_transaction(
                 ctx,
                 from_=looser.id,
@@ -195,6 +199,7 @@ class Battles(commands.Cog):
         await self.bot.pool.execute(
             'UPDATE profile SET money=money-$1 WHERE "user"=$2;', money, ctx.author.id,
         )
+        await self.bot.cache.wipe_profile(ctx.author.id)
 
         if not enemy:
             msg = await ctx.send(
@@ -237,6 +242,7 @@ class Battles(commands.Cog):
                     money,
                     ctx.author.id,
                 )
+                await self.bot.cache.wipe_profile(ctx.author.id)
                 return await ctx.send(
                     _("Noone wanted to join your raidbattle, {author}!").format(
                         author=ctx.author.mention
@@ -251,6 +257,7 @@ class Battles(commands.Cog):
         await self.bot.pool.execute(
             'UPDATE profile SET money=money-$1 WHERE "user"=$2;', money, enemy_.id
         )
+        await self.bot.cache.wipe_profile(ctx.author.id)
 
         players = []
 
@@ -344,6 +351,7 @@ class Battles(commands.Cog):
                     'UPDATE profile SET pvpwins=pvpwins+1 WHERE "user"=$1;',
                     ctx.author.id,
                 )
+                await self.bot.cache.wipe_profile(ctx.author.id)
             await self.bot.log_transaction(
                 ctx,
                 from_=enemy_.id,
@@ -366,6 +374,7 @@ class Battles(commands.Cog):
                 await conn.execute(
                     'UPDATE profile SET pvpwins=pvpwins+1 WHERE "user"=$1;', enemy_.id
                 )
+                await self.bot.cache.wipe_profile(enemy_.id)
             await self.bot.log_transaction(
                 ctx,
                 from_=ctx.author.id,
@@ -391,6 +400,8 @@ class Battles(commands.Cog):
                     money,
                     enemy_.id,
                 )
+                await self.bot.cache.wipe_profile(ctx.author.id)
+                await self.bot.cache.wipe_profile(enemy_.id)
             await ctx.send(_("Raidbattle took too long, aborting."))
 
     @has_char()
@@ -425,6 +436,7 @@ class Battles(commands.Cog):
         await self.bot.pool.execute(
             'UPDATE profile SET money=money-$1 WHERE "user"=$2;', money, ctx.author.id,
         )
+        await self.bot.cache.wipe_profile(ctx.author.id)
 
         if not enemy:
             msg = await ctx.send(
@@ -458,7 +470,7 @@ class Battles(commands.Cog):
 
         while seeking:
             try:
-                reaction, enemy_ = await self.bot.wait_for(
+                _reaction, enemy_ = await self.bot.wait_for(
                     "reaction_add", timeout=60, check=check
                 )
             except asyncio.TimeoutError:
@@ -468,6 +480,7 @@ class Battles(commands.Cog):
                     money,
                     ctx.author.id,
                 )
+                await self.bot.cache.wipe_profile(ctx.author.id)
                 return await ctx.send(
                     _("Noone wanted to join your activebattle, {author}!").format(
                         author=ctx.author.mention
@@ -485,6 +498,7 @@ class Battles(commands.Cog):
             await conn.execute(
                 'UPDATE profile SET money=money-$1 WHERE "user"=$2;', money, enemy_.id,
             )
+            await self.bot.cache.wipe_profile(enemy_.id)
 
             players = {
                 ctx.author: {
@@ -504,9 +518,7 @@ class Battles(commands.Cog):
             }
 
             for p in players:
-                c = await conn.fetchval(
-                    'SELECT class FROM profile WHERE "user"=$1;', p.id
-                )
+                c = await self.bot.cache.get_profile_col(p.id, "class", conn=conn)
                 if self.bot.in_class_line(c, "Ranger"):
                     players[p]["hp"] = 120
                 else:
@@ -580,6 +592,8 @@ class Battles(commands.Cog):
                             money,
                             enemy_.id,
                         )
+                        await self.bot.cache.wipe_profile(ctx.author.id)
+                        await self.bot.cache.wipe_profile(enemy_.id)
                     return await ctx.send(
                         _("Someone refused to move. Activebattle stopped.")
                     )
@@ -679,6 +693,7 @@ class Battles(commands.Cog):
                 money * 2,
                 winner.id,
             )
+            await self.bot.cache.wipe_profile(winner.id)
         await self.bot.log_transaction(
             ctx, from_=looser.id, to=winner.id, subject="money", data={"Amount": money}
         )
