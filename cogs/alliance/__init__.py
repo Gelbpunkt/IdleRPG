@@ -735,9 +735,7 @@ class Alliance(commands.Cog):
 
         async with self.bot.pool.acquire() as conn:
             for u in a_users:
-                profile = await conn.fetchrow(
-                    'SELECT * FROM profile WHERE "user"=$1;', u.id
-                )
+                profile = await self.bot.cache.get_profile(u.id, conn=conn)
                 if not profile:
                     continue  # not a player
                 user_alliance = await conn.fetchval(
@@ -912,9 +910,8 @@ class Alliance(commands.Cog):
             """Lists alliance-specific cooldowns, meaning all alliance members have these cooldowns and cannot use the commands."""
         )
         alliance = await self.bot.pool.fetchval(
-            'SELECT alliance FROM guild WHERE "id"=(SELECT guild FROM profile WHERE'
-            ' "user"=$1);',
-            ctx.author.id,
+            'SELECT alliance FROM guild WHERE "id"=$1;',
+            ctx.character_data["guild"],
         )
         cooldowns = await self.bot.redis.execute("KEYS", f"alliancecd:{alliance}:*")
         if not cooldowns:
