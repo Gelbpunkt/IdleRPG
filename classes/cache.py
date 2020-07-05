@@ -64,6 +64,10 @@ class RedisCache:
         self.postgres = bot.pool
 
     async def get_profile(self, user_id, conn=None):
+        """
+        Gets the profile database entry for a user, preferably from Redis.
+        If it is not in Redis, it gets the data from Postgres and inserts to Redis.
+        """
         row = await self.redis.execute("GET", f"profilecache:{user_id}")
         if row is None:
             if conn is None:
@@ -89,10 +93,16 @@ class RedisCache:
         return FakeRecord(loaded)
 
     async def wipe_profile(self, user_id):
+        """
+        Deletes the Redis cache for a profile.
+        """
         await self.redis.execute("DEL", f"profilecache:{user_id}")
 
     async def get_profile_col(self, user_id, column_name, conn=None):
-        profile = await self.get_profile(user_id, conn=None)
+        """
+        Gets a specific column from a user's profile utilizing the cache.
+        """
+        profile = await self.get_profile(user_id, conn=conn)
         if profile is None:
             return None
         return profile[column_name]
