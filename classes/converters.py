@@ -134,9 +134,7 @@ _custom_user_converter = User()
 class UserWithCharacter(commands.Converter):
     async def convert(self, ctx, argument):
         user = await _custom_user_converter.convert(ctx, argument)  # error is ok here
-        ctx.user_data = await ctx.bot.pool.fetchrow(
-            'SELECT * FROM profile WHERE "user"=$1;', user.id
-        )
+        ctx.user_data = await ctx.bot.cache.get_profile(user.id)
         if ctx.user_data:
             return user
         else:
@@ -147,9 +145,7 @@ class MemberWithCharacter(commands.converter.IDConverter):
     async def convert(self, ctx, argument):
         member = await _member_converter.convert(ctx, argument)  # error is ok here
 
-        ctx.user_data = await ctx.bot.pool.fetchrow(
-            'SELECT * FROM profile WHERE "user"=$1;', member.id
-        )
+        ctx.user_data = await ctx.bot.cache.get_profile(member.id)
         if ctx.user_data:
             return member
         else:
