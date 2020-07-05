@@ -123,6 +123,7 @@ class GameMaster(commands.Cog):
         await self.bot.pool.execute(
             'UPDATE profile SET money=money+$1 WHERE "user"=$2;', money, other.id
         )
+        await self.bot.cache.wipe_profile(other.id)
         await ctx.send(
             _(
                 "Successfully gave **${money}** without a loss for you to **{other}**."
@@ -148,6 +149,7 @@ class GameMaster(commands.Cog):
         await self.bot.pool.execute(
             'UPDATE profile SET money=money-$1 WHERE "user"=$2;', money, other.id
         )
+        await self.bot.cache.wipe_profile(other.id)
         await ctx.send(
             _("Successfully removed **${money}** from **{other}**.").format(
                 money=money, other=other
@@ -171,6 +173,7 @@ class GameMaster(commands.Cog):
         )
         if other.id in ctx.bot.config.game_masters:  # preserve deletion of admins
             return await ctx.send(_("Very funny..."))
+        await self.bot.cache.wipe_profile(other.id)
         async with self.bot.pool.acquire() as conn:
             g = await conn.fetchval(
                 'DELETE FROM guild WHERE "leader"=$1 RETURNING id;', other.id
@@ -190,6 +193,7 @@ class GameMaster(commands.Cog):
                 'DELETE FROM children WHERE "father"=$1 OR "mother"=$1;', other.id
             )
         await self.bot.pool.execute('DELETE FROM profile WHERE "user"=$1;', other.id)
+        await self.bot.cache.wipe_profile(other.id)
         await ctx.send(_("Successfully deleted the character."))
         await self.bot.http.send_message(
             self.bot.config.gm_log_channel, f"**{ctx.author}** deleted **{other}**."
@@ -229,6 +233,7 @@ class GameMaster(commands.Cog):
         await self.bot.pool.execute(
             'UPDATE profile SET "name"=$1 WHERE "user"=$2;', name.content, target.id
         )
+        await self.bot.cache.wipe_profile(target.id)
         await ctx.send(_("Renamed."))
         await self.bot.http.send_message(
             self.bot.config.gm_log_channel,
@@ -316,6 +321,7 @@ class GameMaster(commands.Cog):
             amount,
             target.id,
         )
+        await self.bot.cache.wipe_profile(target.id)
         await ctx.send(
             _("Successfully gave **{amount}** {rarity} crates to **{target}**.").format(
                 amount=amount, target=target, rarity=rarity
@@ -341,6 +347,7 @@ class GameMaster(commands.Cog):
         await self.bot.pool.execute(
             'UPDATE profile SET "xp"="xp"+$1 WHERE "user"=$2;', amount, target.id
         )
+        await self.bot.cache.wipe_profile(target.id)
         await ctx.send(
             _("Successfully gave **{amount}** XP to **{target}**.").format(
                 amount=amount, target=target
@@ -382,6 +389,7 @@ class GameMaster(commands.Cog):
             await conn.execute(
                 'UPDATE guild SET "memberlimit"=$1 WHERE "leader"=$2;', 50, target.id
             )
+        await self.bot.cache.wipe_profile(target.id)
 
         await ctx.send(
             _(
@@ -405,11 +413,11 @@ class GameMaster(commands.Cog):
 
             Only Game Masters can use this command."""
         )
-        async with self.bot.pool.acquire() as conn:
-            await conn.execute(
-                """UPDATE profile SET "class"='{"No Class", "No Class"}' WHERE "user"=$1;""",
-                target.id,
-            )
+        await self.bot.pool.execute(
+            """UPDATE profile SET "class"='{"No Class", "No Class"}' WHERE "user"=$1;""",
+            target.id,
+        )
+        await self.bot.cache.wipe_profile(target.id)
 
         await ctx.send(_("Successfully reset {target}'s class.").format(target=target))
         await self.bot.http.send_message(
@@ -504,6 +512,7 @@ class GameMaster(commands.Cog):
                 self.top_auction[1],
                 self.top_auction[0].id,
             )
+            await self.bot.cache.wipe_profile(self.top_auction[0].id)
             await self.bot.log_transaction(
                 ctx,
                 from_=1,
@@ -517,6 +526,7 @@ class GameMaster(commands.Cog):
                 amount,
                 ctx.author.id,
             )
+            await self.bot.cache.wipe_profile(ctx.author.id)
             await self.bot.log_transaction(
                 ctx, from_=ctx.author.id, to=2, subject="bid", data={"Amount": amount}
             )
