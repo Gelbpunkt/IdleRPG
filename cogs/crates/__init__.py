@@ -144,6 +144,7 @@ class Crates(commands.Cog):
             ' "user"=$1;',
             ctx.author.id,
         )
+        await self.bot.cache.wipe_profile(ctx.author.id)
         embed = discord.Embed(
             title=_("You gained an item!"),
             description=_("You found a new item when opening a crate!"),
@@ -231,6 +232,8 @@ class Crates(commands.Cog):
                 amount,
                 other.id,
             )
+        await self.bot.cache.wipe_profile(ctx.author.id)
+        await self.bot.cache.wipe_profile(other.id)
         await ctx.send(
             _("Successfully gave {amount} {rarity} crate(s) to {other}.").format(
                 amount=amount, other=other.mention, rarity=rarity
