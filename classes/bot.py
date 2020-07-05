@@ -35,6 +35,7 @@ from discord.ext import commands
 
 import config
 
+from classes.cache import RedisCache
 from classes.context import Context
 from classes.converters import UserWithCharacter
 from classes.enums import DonatorRank
@@ -60,7 +61,6 @@ class Bot(commands.AutoShardedBot):
         self.paginator = paginator
         self.BASE_URL = config.base_url
         self.bans = set(config.bans)
-        self.remove_command("help")
         self.linecount = 0
         self.make_linecount()
         self.all_prefixes = {}
@@ -123,6 +123,7 @@ class Bot(commands.AutoShardedBot):
         self.pool = await asyncpg.create_pool(
             **self.config.database, min_size=10, max_size=20, command_timeout=60.0
         )
+        self.cache = RedisCache(self)
 
         for extension in self.config.initial_extensions:
             try:
