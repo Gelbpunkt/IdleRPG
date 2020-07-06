@@ -419,8 +419,8 @@ class IdleHelp(commands.HelpCommand):
 
         super().__init__(*args, **kwargs)
         self.verify_checks = False
-        self.gm_exts = {"Gamemaster"}
-        self.owner_exts = {"Gamemaster", "Owner"}
+        self.gm_exts = {"GameMaster"}
+        self.owner_exts = {"GameMaster", "Owner"}
         self.color = primary_colour
         self.group_emoji = "💠"
         self.command_emoji = "🔷"
@@ -439,7 +439,11 @@ class IdleHelp(commands.HelpCommand):
             PREFER_COG = True
 
         if PREFER_COG:
-            cog = bot.get_cog(command.title())
+            if command.lower() == "gamemaster":
+                command = "GameMaster"
+            else:
+                command = command.title()
+            cog = bot.get_cog(command)
             if cog is not None:
                 return await self.send_cog_help(cog)
 
