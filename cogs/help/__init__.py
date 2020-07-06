@@ -26,6 +26,7 @@ from asyncpg import UniqueViolationError
 from discord.ext import commands, menus
 
 from classes.converters import User
+from config import primary_colour
 from utils.checks import has_open_help_request, is_supporter
 from utils.i18n import _, locale_doc
 
@@ -420,7 +421,7 @@ class IdleHelp(commands.HelpCommand):
         self.verify_checks = False
         self.gm_exts = {"GameMaster"}
         self.owner_exts = {"GameMaster", "Owner"}
-        self.color = 0xCB735C
+        self.color = primary_colour
         self.group_emoji = "💠"
         self.command_emoji = "🔷"
 
@@ -438,7 +439,11 @@ class IdleHelp(commands.HelpCommand):
             PREFER_COG = True
 
         if PREFER_COG:
-            cog = bot.get_cog(command.title())
+            if command.lower() == "gamemaster":
+                command = "GameMaster"
+            else:
+                command = command.title()
+            cog = bot.get_cog(command)
             if cog is not None:
                 return await self.send_cog_help(cog)
 
@@ -532,16 +537,14 @@ class IdleHelp(commands.HelpCommand):
         await self.context.send(embed=e)
 
     async def send_cog_help(self, cog):
-        if (
+        if (cog.qualified_name in self.gm_exts) and (
             self.context.author.id not in self.context.bot.config.game_masters
-            and cog.qualified_name in self.gm_exts
         ):
             return await self.context.send(
                 _("You do not have access to these commands!")
             )
-        if (
+        if (cog.qualified_name in self.owner_exts) and (
             self.context.author.id not in self.context.bot.owner_ids
-            and cog.qualified_name in self.owner_exts
         ):
             return await self.context.send(
                 _("You do not have access to these commands!")
@@ -568,16 +571,14 @@ class IdleHelp(commands.HelpCommand):
 
     async def send_command_help(self, command):
         if command.cog:
-            if (
+            if (command.cog.qualified_name in self.gm_exts) and (
                 self.context.author.id not in self.context.bot.config.game_masters
-                and command.cog.qualified_name in self.gm_exts
             ):
                 return await self.context.send(
                     _("You do not have access to this command!")
                 )
-            if (
+            if (command.cog.qualified_name in self.owner_exts) and (
                 self.context.author.id not in self.context.bot.owner_ids
-                and command.cog.qualified_name in self.owner_exts
             ):
                 return await self.context.send(
                     _("You do not have access to this command!")
