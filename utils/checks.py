@@ -337,9 +337,9 @@ def is_class(class_: str) -> "_CheckDecorator":
     async def predicate(ctx: Context) -> bool:
         if not hasattr(ctx, "character_data"):
             ctx.character_data = await ctx.bot.cache.get_profile(ctx.author.id)
-        if class_ == "Ranger" and (
+        if (
             check := ctx.bot.in_class_line(ctx.character_data["class"], class_)
-        ):
+        ) and class_ == "Ranger":
             ctx.pet_data = await ctx.bot.pool.fetchrow(
                 'SELECT * FROM pets WHERE "user"=$1;', ctx.author.id
             )

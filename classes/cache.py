@@ -20,11 +20,13 @@ import decimal
 import asyncpg
 import orjson
 
+DECIMAL_COLUMNS = ("atkmultiply", "defmultiply", "luck")
+
 
 def default(obj):
     """orjson fallback handler"""
     if isinstance(obj, decimal.Decimal):
-        return float(obj)
+        return str(obj)
     if isinstance(obj, asyncpg.Record):
         return dict(obj)
     raise TypeError
@@ -36,6 +38,8 @@ class FakeRecord(object):
     """
 
     def __init__(self, data):
+        for col in DECIMAL_COLUMNS:
+            data[col] = decimal.Decimal(data[col])
         self.__data = data
         self.__indices = list(data.keys())
 

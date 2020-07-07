@@ -63,7 +63,7 @@ class Battles(commands.Cog):
             return await ctx.send(_("You are too poor."))
 
         await self.bot.pool.execute(
-            'UPDATE profile SET "money""="money"-$1 WHERE "user"=$2;',
+            'UPDATE profile SET "money"="money"-$1 WHERE "user"=$2;',
             money,
             ctx.author.id,
         )
