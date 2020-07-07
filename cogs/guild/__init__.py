@@ -73,20 +73,21 @@ class Guild(commands.Cog):
     async def get_guild_info(
         self, ctx: commands.Context, *, guild_id: int = None, name: str = None
     ):
-        if name:
-            guild = await self.bot.pool.fetchrow(
-                'SELECT * FROM guild WHERE "name"=$1;', name
-            )
-        elif guild_id:
-            guild = await self.bot.pool.fetchrow(
-                'SELECT * FROM guild WHERE "id"=$1;', guild_id
-            )
-        if not guild:
-            return await ctx.send(_("No guild found."))
+        async with self.bot.pool.acquire() as conn:
+            if name:
+                guild = await conn.fetchrow(
+                    'SELECT * FROM guild WHERE "name"=$1;', name
+                )
+            elif guild_id:
+                guild = await conn.fetchrow(
+                    'SELECT * FROM guild WHERE "id"=$1;', guild_id
+                )
+            if not guild:
+                return await ctx.send(_("No guild found."))
 
-        membercount = await self.bot.pool.fetchval(
-            'SELECT count(*) FROM profile WHERE "guild"=$1;', guild["id"]
-        )
+            membercount = await conn.fetchval(
+                'SELECT count(*) FROM profile WHERE "guild"=$1;', guild["id"]
+            )
         text = _("Members")
         embed = discord.Embed(title=guild["name"], description=guild["description"])
         embed.add_field(
@@ -130,15 +131,12 @@ class Guild(commands.Cog):
             else:
                 kwargs.update(name=by)
         else:
-            async with self.bot.pool.acquire() as conn:
-                guild_id = await conn.fetchval(
-                    'SELECT guild FROM profile WHERE "user"=$1;', by.id
+            guild_id = await self.bot.cache.get_profile_col(by.id, "guild")
+            if not guild_id:
+                return await ctx.send(
+                    _("**{user}** does not have a guild.").format(user=by.name)
                 )
-                if guild_id == 0:
-                    return await ctx.send(
-                        _("**{user}** does not have a guild.").format(user=by.name)
-                    )
-                kwargs.update(guild_id=guild_id)
+            kwargs.update(guild_id=guild_id)
         await self.get_guild_info(ctx, **kwargs)
 
     @guild.command(brief=_("Show the best guilds by GvG wins"))
@@ -306,6 +304,7 @@ class Guild(commands.Cog):
                 10000,
                 ctx.author.id,
             )
+        await self.bot.cache.wipe_profile(ctx.author.id)
         await ctx.send(
             _(
                 "Successfully added your guild **{name}** with a member limit of"
@@ -350,6 +349,8 @@ class Guild(commands.Cog):
                 "Leader",
                 member.id,
             )
+            await self.bot.cache.wipe_profile(ctx.author.id)
+            await self.bot.cache.wipe_profile(member.id)
             name, channel = await conn.fetchval(
                 'UPDATE guild SET "leader"=$1, "banklimit"="upgrade"*250000,'
                 ' "memberlimit"=$2 WHERE "id"=$3 RETURNING ("name", "channel");',
@@ -357,7 +358,6 @@ class Guild(commands.Cog):
                 m,
                 ctx.character_data["guild"],
             )
-
         await ctx.send(_("{user} now leads {guild}.").format(user=member, guild=name))
         await self.bot.http.send_message(
             channel, f"Ownership changed from **{ctx.author}** to **{member}**"
@@ -393,6 +393,7 @@ class Guild(commands.Cog):
             await conn.execute(
                 'UPDATE profile SET guildrank=$1 WHERE "user"=$2;', "Officer", member.id
             )
+            await self.bot.cache.wipe_profile(member.id)
             channel = await conn.fetchval(
                 'SELECT "channel" FROM guild WHERE "id"=$1;',
                 ctx.character_data["guild"],
@@ -425,8 +426,11 @@ class Guild(commands.Cog):
             return await ctx.send(_("This user can't be demoted any further."))
         async with self.bot.pool.acquire() as conn:
             await conn.execute(
-                'UPDATE profile SET guildrank=$1 WHERE "user"=$2;', "Member", member.id
+                'UPDATE profile SET "guildrank"=$1 WHERE "user"=$2;',
+                "Member",
+                member.id,
             )
+            await self.bot.cache.wipe_profile(member.id)
             channel = await conn.fetchval(
                 'SELECT "channel" FROM guild WHERE "id"=$1;',
                 ctx.character_data["guild"],
@@ -455,14 +459,14 @@ class Guild(commands.Cog):
         if ctx.user_data["guild"]:
             return await ctx.send(_("That member already has a guild."))
         async with self.bot.pool.acquire() as conn:
-            id = await conn.fetchval(
-                'SELECT guild FROM profile WHERE "user"=$1;', ctx.author.id
+            id_ = await self.bot.cache.get_profile_col(
+                ctx.author.id, "guild", conn=conn
             )
             membercount = await conn.fetchval(
-                'SELECT COUNT(*) FROM profile WHERE "guild"=$1;', id
+                'SELECT COUNT(*) FROM profile WHERE "guild"=$1;', id_
             )
             limit, name, channel = await conn.fetchval(
-                'SELECT (memberlimit, name, channel) FROM guild WHERE "id"=$1;', id
+                'SELECT (memberlimit, name, channel) FROM guild WHERE "id"=$1;', id_
             )
         if membercount >= limit:
             return await ctx.send(
@@ -480,8 +484,9 @@ class Guild(commands.Cog):
         if await has_guild_(self.bot, newmember.id):
             return await ctx.send(_("That member already has a guild."))
         await self.bot.pool.execute(
-            'UPDATE profile SET guild=$1 WHERE "user"=$2;', id, newmember.id
+            'UPDATE profile SET guild=$1 WHERE "user"=$2;', id_, newmember.id
         )
+        await self.bot.cache.wipe_profile(newmember.id)
         await ctx.send(
             _("{newmember} is now a member of **{name}**. Welcome!").format(
                 newmember=newmember.mention, name=name
@@ -510,6 +515,7 @@ class Guild(commands.Cog):
                 "Member",
                 ctx.author.id,
             )
+            await self.bot.cache.wipe_profile(ctx.author.id)
             channel = await conn.fetchval(
                 'SELECT "channel" FROM guild WHERE "id"=$1;',
                 ctx.character_data["guild"],
@@ -532,29 +538,22 @@ class Guild(commands.Cog):
 
             Only guild leaders and officers can use this command."""
         )
-        if hasattr(ctx, "user_data"):
-            if ctx.user_data["guild"] != ctx.character_data["guild"]:
-                return await ctx.send(_("Not your guild mate."))
-            member = member.id
+        if not hasattr(ctx, "user_data"):
+            ctx.user_data = await self.bot.cache.get_profile(member)
         else:
-            if (
-                await self.bot.pool.fetchval(
-                    'SELECT guild FROM profile WHERE "user"=$1;', member
-                )
-                != ctx.character_data["guild"]
-            ):
-                return await ctx.send(_("Not your guild mate."))
+            member = member.id
+
+        if ctx.user_data["guild"] != ctx.character_data["guild"]:
+            return await ctx.send(_("Not your guild mate."))
+        if ctx.user_data["guildrank"] != "Member":
+            return await ctx.send(_("You can only kick members."))
         async with self.bot.pool.acquire() as conn:
-            target_rank = await conn.fetchval(
-                'SELECT guildrank FROM profile WHERE "user"=$1;', member
-            )
-            if target_rank != "Member":
-                return await ctx.send(_("You can only kick members."))
             await conn.execute(
                 'UPDATE profile SET "guild"=0, "guildrank"=$1 WHERE "user"=$2;',
                 "Member",
                 member,
             )
+            await self.bot.cache.wipe_profile(member)
             channel = await conn.fetchval(
                 'SELECT channel FROM guild WHERE "id"=$1;', ctx.character_data["guild"]
             )

@@ -92,11 +92,43 @@ class RedisCache:
         loaded = orjson.loads(row)
         return FakeRecord(loaded)
 
-    async def wipe_profile(self, user_id):
+    async def update_profile_cols_rel(self, user_id, **vals):
+        """
+        Updates profile columns in the cache by a relative difference.
+        """
+        row = await self.redis.execute("GET", f"profilecache:{user_id}")
+        if row is None:
+            return None
+        row = orjson.loads(row)
+        for key, val in vals.items():
+            if isinstance(val, int):
+                new_val = row[key] + val
+            else:
+                new_val = val
+            row[key] = new_val
+        await self.redis.execute(
+            "SET", f"profilecache:{user_id}", orjson.dumps(dict(row), default=default),
+        )
+
+    async def update_profile_cols_abs(self, user_id, **vals):
+        """
+        Updates profile columns in the cache by a relative difference.
+        """
+        row = await self.redis.execute("GET", f"profilecache:{user_id}")
+        if row is None:
+            return None
+        row = orjson.loads(row)
+        row.update(vals)
+        await self.redis.execute(
+            "SET", f"profilecache:{user_id}", orjson.dumps(dict(row), default=default),
+        )
+
+    async def wipe_profile(self, *user_ids):
         """
         Deletes the Redis cache for a profile.
         """
-        await self.redis.execute("DEL", f"profilecache:{user_id}")
+        user_ids = [f"profilecache:{i}" for i in user_ids]
+        await self.redis.execute("DEL", *user_ids)
 
     async def get_profile_col(self, user_id, column_name, conn=None):
         """
