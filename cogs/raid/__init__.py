@@ -208,7 +208,6 @@ class Raid(commands.Cog):
                     classes=profile["class"],
                     race=profile["race"],
                     guild=profile["guild"],
-                    god=profile["god"],
                     conn=conn,
                 )
                 raid[u] = {"hp": 250, "armor": deff, "damage": dmg}
@@ -488,11 +487,18 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
                 u = await self.bot.get_user_global(i)
                 if not u:
                     continue
-                if not await conn.fetchval(
-                    'SELECT "user" FROM profile WHERE "user"=$1', u.id
-                ):
+                if not (profile := await self.bot.cache.get_profile(u.id, conn=conn)):
                     continue
-                dmg, deff = await self.bot.get_raidstats(u, conn=conn)
+                dmg, deff = await self.bot.get_raidstats(
+                    u,
+                    atkmultiply=profile["atkmultiply"],
+                    defmultiply=profile["defmultiply"],
+                    classes=profile["class"],
+                    race=profile["race"],
+                    guild=profile["guild"],
+                    god=profile["god"],
+                    conn=conn,
+                )
                 raid[u] = {"hp": 250, "armor": deff, "damage": dmg}
 
         await ctx.send("**Done getting data!**")
@@ -552,14 +558,21 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
                 )
             else:
                 money = random.randint(1500, 3000)
-                await self.bot.pool.execute(
-                    'UPDATE profile SET "money"="money"+$1 WHERE "user"=$2;',
-                    money,
-                    target.id,
-                )
-                await self.bot.log_transaction(
-                    ctx, from_=1, to=target.id, subject="raid", data={"Amount": money}
-                )
+                async with self.bot.pool.acquire() as conn:
+                    await conn.execute(
+                        'UPDATE profile SET "money"="money"+$1 WHERE "user"=$2;',
+                        money,
+                        target.id,
+                    )
+                    await self.bot.log_transaction(
+                        ctx,
+                        from_=1,
+                        to=target.id,
+                        subject="raid",
+                        data={"Amount": money},
+                        conn=conn,
+                    )
+                await self.bot.cache.update_profile_cols_rel(target.id, money=money)
                 bandits.pop(0)
                 em.add_field(
                     name="Swordsman attack",
@@ -575,11 +588,14 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
                 "The bandits got defeated, Ikhdosa is safe again!"
                 f"Survivors received {payout} as a reward for the battle..."
             )
+            users = [u.id for u in raid]
             await self.bot.pool.execute(
                 'UPDATE profile SET "money"="money"+$1 WHERE "user"=ANY($2);',
                 payout,
-                [u.id for u in raid.keys()],
+                users,
             )
+            for user in users:
+                await self.bot.cache.update_profile_cols_rel(user, money=money)
         elif len(raid) == 0:
             await ctx.send("The bandits plundered the town!\nAll swordsmen died!")
         else:
@@ -643,10 +659,10 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
                 u = await self.bot.get_user_global(i)
                 if not u:
                     continue
-                user = await conn.fetchrow(
-                    'SELECT "user", "god" FROM profile WHERE "user"=$1', u.id
-                )
-                if not user or user["god"] != "Guilt":
+                if (
+                    not (profile := await self.bot.cache.get_profile(u.id, conn=conn))
+                    or profile["god"] != "Guilt"
+                ):
                     continue
                 raid[u] = 250
 
@@ -703,17 +719,22 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
                 " all.\nGuilt gave a <:CrateLegendary:598094865678598144> Legendary"
                 " Crate to them."
             )
-            await self.bot.pool.execute(
-                'UPDATE profile SET "crates_legendary"="crates_legendary"+1 WHERE'
-                ' "user"=$1;',
-                survivor.id,
-            )
-            await self.bot.log_transaction(
-                ctx,
-                from_=1,
-                to=survivor.id,
-                subject="crates",
-                data={"Rarity": "legendary", "Amount": 1},
+            async with self.bot.pool.acquire() as conn:
+                await conn.execute(
+                    'UPDATE profile SET "crates_legendary"="crates_legendary"+1 WHERE'
+                    ' "user"=$1;',
+                    survivor.id,
+                )
+                await self.bot.log_transaction(
+                    ctx,
+                    from_=1,
+                    to=survivor.id,
+                    subject="crates",
+                    data={"Rarity": "legendary", "Amount": 1},
+                    conn=conn,
+                )
+            await self.bot.cache.update_profile_cols_rel(
+                survivor.id, crates_legendary=1
             )
         else:
             await ctx.send(
@@ -774,12 +795,22 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
                 u = await self.bot.get_user_global(i)
                 if not u:
                     continue
-                if not await conn.fetchval(
-                    'SELECT "user" FROM profile WHERE "user"=$1', u.id
+                if (
+                    not (profile := await self.bot.cache.get_profile(u.id, conn=conn))
+                    or profile["god"] != "Kvothe"
                 ):
                     continue
                 try:
-                    dmg, deff = await self.bot.get_raidstats(u, god="Kvothe", conn=conn)
+                    dmg, deff = await self.bot.get_raidstats(
+                        u,
+                        atkmultiply=profile["atkmultiply"],
+                        defmultiply=profile["defmultiply"],
+                        classes=profile["class"],
+                        race=profile["race"],
+                        guild=profile["guild"],
+                        god=profile["god"],
+                        conn=conn,
+                    )
                 except ValueError:
                     continue
                 raid[u] = {"hp": 100, "armor": deff, "damage": dmg, "kills": 0}
@@ -840,6 +871,7 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
                     money,
                     target.id,
                 )
+                await self.bot.cache.update_profile_cols_rel(target.id, money=money)
                 scrael.pop(0)
                 em.add_field(
                     name="Hero attack", value=f"Killed the scrael and received ${money}"
@@ -852,18 +884,23 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
 
         if len(scrael) == 0:
             most_kills = sorted(raid.items(), key=lambda x: -(x[1]["kills"]))[0][0]
-            await self.bot.pool.execute(
-                'UPDATE profile SET "crates_legendary"="crates_legendary"+$1 WHERE'
-                ' "user"=$2;',
-                1,
-                most_kills.id,
-            )
-            await self.bot.log_transaction(
-                ctx,
-                from_=1,
-                to=most_kills.id,
-                subject="crates",
-                data={"Rarity": "legendary", "Amount": 1},
+            async with self.bot.pool.acquire() as conn:
+                await conn.execute(
+                    'UPDATE profile SET "crates_legendary"="crates_legendary"+$1 WHERE'
+                    ' "user"=$2;',
+                    1,
+                    most_kills.id,
+                )
+                await self.bot.log_transaction(
+                    ctx,
+                    from_=1,
+                    to=most_kills.id,
+                    subject="crates",
+                    data={"Rarity": "legendary", "Amount": 1},
+                    conn=conn,
+                )
+            await self.bot.cache.update_profile_cols_rel(
+                most_kills.id, crates_legendary=1
             )
             await ctx.send(
                 "The scrael were defeated! Our most glorious hero,"
@@ -931,12 +968,22 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
                 u = await self.bot.get_user_global(i)
                 if not u:
                     continue
-                if not await conn.fetchval(
-                    'SELECT "user" FROM profile WHERE "user"=$1', u.id
+                if (
+                    not (profile := await self.bot.cache.get_profile(u.id, conn=conn))
+                    or profile["god"] != "Eden"
                 ):
                     continue
                 try:
-                    dmg, deff = await self.bot.get_raidstats(u, god="Eden", conn=conn)
+                    dmg, deff = await self.bot.get_raidstats(
+                        u,
+                        atkmultiply=profile["atkmultiply"],
+                        defmultiply=profile["defmultiply"],
+                        classes=profile["class"],
+                        race=profile["race"],
+                        guild=profile["guild"],
+                        god=profile["god"],
+                        conn=conn,
+                    )
                 except ValueError:
                     continue
                 raid[u] = {"hp": 250, "armor": deff, "damage": dmg}
@@ -1002,6 +1049,7 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
                 ' "user"=$1;',
                 winner.id,
             )
+            await self.bot.cache.update_profile_cols_rel(winner.id, crates_legendary=1)
             await ctx.send(
                 "The guardian was defeated, the seekers can enter the garden! Eden has"
                 f" gracefully given {winner.mention} a legendary crate for their"
@@ -1009,11 +1057,12 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
             )
 
             cash = int(hp / 4 / len(raid))  # what da hood gets per survivor
+            users = [u.id for u in raid]
             await self.bot.pool.execute(
-                'UPDATE profile SET money=money+$1 WHERE "user"=ANY($2);',
-                cash,
-                [u.id for u in raid.keys()],
+                'UPDATE profile SET money=money+$1 WHERE "user"=ANY($2);', cash, users,
             )
+            for user in users:
+                await self.bot.cache.update_profile_cols_rel(user, money=cash)
             await ctx.send(
                 f"**Gave ${cash} of the Guardian's ${int(hp / 4)} drop to all"
                 " survivors!**"
@@ -1089,9 +1138,7 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
                 if not u:
                     continue
                 if (
-                    await conn.fetchval(
-                        'SELECT "god" FROM profile WHERE "user"=$1', u.id
-                    )
+                    await self.bot.cache.get_profile_col(u.id, "god", conn=conn)
                     != "Tet"
                 ):
                     continue
@@ -1155,6 +1202,7 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
                 ' "user"=$1;',
                 winner.id,
             )
+            await self.bot.cache.update_profile_cols_rel(winner.id, crates_legendary=1)
             await ctx.send(
                 f"The game is over. {winner.mention} has lasted the longest against Tet"
                 " and received a legendary crate."
@@ -1228,13 +1276,21 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
                 u = await self.bot.get_user_global(i)
                 if not u:
                     continue
-                if not await conn.fetchval(
-                    'SELECT "user" FROM profile WHERE "user"=$1', u.id
+                if (
+                    not (profile := await self.bot.cache.get_profile(u.id, conn=conn))
+                    or profile["god"] != "CHamburr"
                 ):
                     continue
                 try:
                     dmg, deff = await self.bot.get_raidstats(
-                        u, god="CHamburr", conn=conn
+                        u,
+                        atkmultiply=profile["atkmultiply"],
+                        defmultiply=profile["defmultiply"],
+                        classes=profile["class"],
+                        race=profile["race"],
+                        guild=profile["guild"],
+                        god=profile["god"],
+                        conn=conn,
                     )
                 except ValueError:
                     continue
@@ -1333,9 +1389,7 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
                 except asyncio.TimeoutError:
                     break
                 bid = int(msg.content)
-                money = await self.bot.pool.fetchval(
-                    'SELECT money FROM profile WHERE "user"=$1;', msg.author.id
-                )
+                money = await self.bot.cache.get_profile_col(msg.author.id, "money")
                 if money and money >= bid:
                     highest_bid = [msg.author.id, bid]
                     await ctx.send(f"{msg.author.mention} bids **${msg.content}**!")
@@ -1343,22 +1397,25 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
                 f"Auction done! Winner is <@{highest_bid[0]}> with"
                 f" **${highest_bid[1]}**!\nGiving Legendary Crate..."
             )
-            money = await self.bot.pool.fetchval(
-                'SELECT money FROM profile WHERE "user"=$1;', highest_bid[0]
-            )
+            money = await self.bot.cache.get_profile_col(highest_bid[0], "money")
             if money >= highest_bid[1]:
-                await self.bot.pool.execute(
-                    'UPDATE profile SET "money"="money"-$1,'
-                    ' "crates_legendary"="crates_legendary"+1 WHERE "user"=$2;',
-                    highest_bid[1],
-                    highest_bid[0],
-                )
-                await self.bot.log_transaction(
-                    ctx,
-                    from_=highest_bid[0],
-                    to=2,
-                    subject="money",
-                    data={"Amount": highest_bid[1]},
+                async with self.bot.pool.acquire() as conn:
+                    await conn.execute(
+                        'UPDATE profile SET "money"="money"-$1,'
+                        ' "crates_legendary"="crates_legendary"+1 WHERE "user"=$2;',
+                        highest_bid[1],
+                        highest_bid[0],
+                    )
+                    await self.bot.log_transaction(
+                        ctx,
+                        from_=highest_bid[0],
+                        to=2,
+                        subject="money",
+                        data={"Amount": highest_bid[1]},
+                        conn=conn,
+                    )
+                await self.bot.cache.update_profile_cols_rel(
+                    highest_bid[0], money=-highest_bid[1], crates_legendary=1
                 )
                 await msg.edit(content=f"{msg.content} Done!")
             else:
@@ -1369,11 +1426,12 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
                 )
 
             cash = int(hp / 4 / len(raid))  # what da hood gets per survivor
+            users = [u.id for u in raid]
             await self.bot.pool.execute(
-                'UPDATE profile SET money=money+$1 WHERE "user"=ANY($2);',
-                cash,
-                [u.id for u in raid.keys()],
+                'UPDATE profile SET money=money+$1 WHERE "user"=ANY($2);', cash, users,
             )
+            for user in users:
+                await self.bot.cache.update_profile_cols_rel(user, money=cash)
             await ctx.send(
                 f"**Gave ${cash} of the hamburger's ${int(hp / 4)} drop to all"
                 " survivors!**"
@@ -1450,13 +1508,21 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
                 u = await self.bot.get_user_global(i)
                 if not u:
                     continue
-                if not await conn.fetchval(
-                    'SELECT "user" FROM profile WHERE "user"=$1', u.id
+                if (
+                    not (profile := await self.bot.cache.get_profile(u.id, conn=conn))
+                    or profile["god"] != "Salutations"
                 ):
                     continue
                 try:
                     dmg, deff = await self.bot.get_raidstats(
-                        u, god="Salutations", conn=conn
+                        u,
+                        atkmultiply=profile["atkmultiply"],
+                        defmultiply=profile["defmultiply"],
+                        classes=profile["class"],
+                        race=profile["race"],
+                        guild=profile["guild"],
+                        god=profile["god"],
+                        conn=conn,
                     )
                 except ValueError:
                     continue
@@ -1645,9 +1711,7 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
                 except asyncio.TimeoutError:
                     break
                 bid = int(msg.content)
-                money = await self.bot.pool.fetchval(
-                    'SELECT money FROM profile WHERE "user"=$1;', msg.author.id
-                )
+                money = await self.bot.cache.get_profile_col(msg.author.id, "money")
                 if money and money >= bid:
                     highest_bid = [msg.author.id, bid]
                     await ctx.send(f"{msg.author.mention} bids **${msg.content}**!")
@@ -1655,22 +1719,25 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
                 f"Auction done! Winner is <@{highest_bid[0]}> with"
                 f" **${highest_bid[1]}**!\nGiving Legendary Crate..."
             )
-            money = await self.bot.pool.fetchval(
-                'SELECT money FROM profile WHERE "user"=$1;', highest_bid[0]
-            )
+            money = await self.bot.cache.get_profile_col(highest_bid[0], "money")
             if money >= highest_bid[1]:
-                await self.bot.pool.execute(
-                    'UPDATE profile SET "money"="money"-$1,'
-                    ' "crates_legendary"="crates_legendary"+1 WHERE "user"=$2;',
-                    highest_bid[1],
-                    highest_bid[0],
-                )
-                await self.bot.log_transaction(
-                    ctx,
-                    from_=highest_bid[0],
-                    to=2,
-                    subject="money",
-                    data={"Amount": highest_bid[1]},
+                async with self.bot.pool.acquire() as conn:
+                    await conn.execute(
+                        'UPDATE profile SET "money"="money"-$1,'
+                        ' "crates_legendary"="crates_legendary"+1 WHERE "user"=$2;',
+                        highest_bid[1],
+                        highest_bid[0],
+                    )
+                    await self.bot.log_transaction(
+                        ctx,
+                        from_=highest_bid[0],
+                        to=2,
+                        subject="money",
+                        data={"Amount": highest_bid[1]},
+                        conn=conn,
+                    )
+                await self.bot.cache.update_profile_cols_rel(
+                    highest_bid[0], money=-highest_bid[1], crates_legendary=1
                 )
                 await msg.edit(content=f"{msg.content} Done!")
             else:
@@ -1680,13 +1747,16 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
                     " they will get banned if it happens again. Cheers!"
                 )
 
+            users = [u.id for u in raid]
             await self.bot.pool.execute(
                 'UPDATE profile SET "money"="money"+$1, "xp"="xp"+$2 WHERE'
                 ' "user"=ANY($3);',
                 5000,
                 1000,
-                [u.id for u in raid.keys()],
+                users,
             )
+            for user in users:
+                await self.bot.cache.update_profile_cols_rel(user, money=5000, xp=1000)
             await ctx.send(
                 "**Gave $2000 and 1000XP of Cyberus' drop to all survivors!**"
             )
@@ -1760,13 +1830,21 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
                 u = await self.bot.get_user_global(i)
                 if not u:
                     continue
-                if not await conn.fetchval(
-                    'SELECT "user" FROM profile WHERE "user"=$1', u.id
+                if (
+                    not (profile := await self.bot.cache.get_profile(u.id, conn=conn))
+                    or profile["god"] != "Asmodeus"
                 ):
                     continue
                 try:
                     dmg, deff = await self.bot.get_raidstats(
-                        u, god="Asmodeus", conn=conn
+                        u,
+                        atkmultiply=profile["atkmultiply"],
+                        defmultiply=profile["defmultiply"],
+                        classes=profile["class"],
+                        race=profile["race"],
+                        guild=profile["guild"],
+                        god=profile["god"],
+                        conn=conn,
                     )
                 except ValueError:
                     continue
@@ -1812,18 +1890,21 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
             await ctx.send("The raid was all wiped!")
         elif self.boss["hp"] < 1:
             winner = random.choice(list(raid.keys()))
-            await self.bot.pool.execute(
-                'UPDATE profile SET "crates_legendary"="crates_legendary"+1 WHERE'
-                ' "user"=$1;',
-                winner.id,
-            )
-            await self.bot.log_transaction(
-                ctx,
-                from_=1,
-                to=winner.id,
-                subject="crates",
-                data={"Rarity": "legendary", "Amount": 1},
-            )
+            async with self.bot.pool.acquire() as conn:
+                await conn.execute(
+                    'UPDATE profile SET "crates_legendary"="crates_legendary"+1 WHERE'
+                    ' "user"=$1;',
+                    winner.id,
+                )
+                await self.bot.log_transaction(
+                    ctx,
+                    from_=1,
+                    to=winner.id,
+                    subject="crates",
+                    data={"Rarity": "legendary", "Amount": 1},
+                    conn=conn,
+                )
+            await self.bot.cache.update_profile_cols_rel(winner.id, crates_legendary=1)
             await ctx.send(
                 "Asmodeus has been defeated. He will lay low for now. He also left a"
                 f" {self.bot.cogs['Crates'].emotes.legendary} to a random survivor"
@@ -1898,8 +1979,9 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
                 u = await self.bot.get_user_global(i)
                 if not u:
                     continue
-                if not await conn.fetchval(
-                    'SELECT "user" FROM profile WHERE "user"=$1', u.id
+                if (
+                    not (profile := await self.bot.cache.get_profile(u.id, conn=conn))
+                    or profile["god"] != "Jesus"
                 ):
                     continue
                 try:
@@ -1999,9 +2081,7 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
                 except asyncio.TimeoutError:
                     break
                 bid = int(msg.content)
-                money = await self.bot.pool.fetchval(
-                    'SELECT money FROM profile WHERE "user"=$1;', msg.author.id
-                )
+                money = await self.bot.cache.get_profile_col(msg.author.id, "money")
                 if money and money >= bid:
                     highest_bid = [msg.author.id, bid]
                     await ctx.send(f"{msg.author.mention} bids **${msg.content}**!")
@@ -2009,22 +2089,25 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
                 f"Auction done! Winner is <@{highest_bid[0]}> with"
                 f" **${highest_bid[1]}**!\nGiving Legendary Crate..."
             )
-            money = await self.bot.pool.fetchval(
-                'SELECT money FROM profile WHERE "user"=$1;', highest_bid[0]
-            )
+            money = await self.bot.cache.get_profile_col(highest_bid[0], "money")
             if money >= highest_bid[1]:
-                await self.bot.pool.execute(
-                    'UPDATE profile SET "money"="money"-$1,'
-                    ' "crates_legendary"="crates_legendary"+1 WHERE "user"=$2;',
-                    highest_bid[1],
-                    highest_bid[0],
-                )
-                await self.bot.log_transaction(
-                    ctx,
-                    from_=highest_bid[0],
-                    to=2,
-                    subject="money",
-                    data={"Amount": highest_bid[1]},
+                async with self.bot.pool.acquire() as conn:
+                    await conn.execute(
+                        'UPDATE profile SET "money"="money"-$1,'
+                        ' "crates_legendary"="crates_legendary"+1 WHERE "user"=$2;',
+                        highest_bid[1],
+                        highest_bid[0],
+                    )
+                    await self.bot.log_transaction(
+                        ctx,
+                        from_=highest_bid[0],
+                        to=2,
+                        subject="money",
+                        data={"Amount": highest_bid[1]},
+                        conn=conn,
+                    )
+                await self.bot.cache.update_profile_cols_rel(
+                    highest_bid[0], money=-highest_bid[1], crates_legendary=1
                 )
                 await msg.edit(content=f"{msg.content} Done!")
             else:
@@ -2035,11 +2118,12 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
                 )
 
             cash = int(hp / 4 / len(raid))  # what da hood gets per survivor
+            users = [u.id for u in raid]
             await self.bot.pool.execute(
-                'UPDATE profile SET money=money+$1 WHERE "user"=ANY($2);',
-                cash,
-                [u.id for u in raid.keys()],
+                'UPDATE profile SET money=money+$1 WHERE "user"=ANY($2);', cash, users,
             )
+            for user in users:
+                await self.bot.cache.update_profile_cols_rel(user, money=cash)
             await ctx.send(
                 f"**Gave ${cash} of Atheistus' ${int(hp / 4)} drop to all survivors!"
                 " Thanks to you, the world can live in peace and love again.**"
@@ -2097,7 +2181,7 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
         ):
             return
         async with self.bot.pool.acquire() as conn:
-            if not await self.bot.has_money(ctx.author, price, conn):
+            if not await self.bot.has_money(ctx.author, price, conn=conn):
                 return await ctx.send(
                     _(
                         "Upgrading your weapon attack raid multiplier to {newlvl} costs"
@@ -2111,8 +2195,16 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
                 price,
                 ctx.author.id,
             )
-        await self.bot.log_transaction(
-            ctx, from_=ctx.author.id, to=2, subject="money", data={"Amount": price}
+            await self.bot.log_transaction(
+                ctx,
+                from_=ctx.author.id,
+                to=2,
+                subject="money",
+                data={"Amount": price},
+                conn=conn,
+            )
+        await self.bot.cache.update_profile_cols_rel(
+            ctx.author.id, atkmultiply=0.1, money=-price
         )
         await ctx.send(
             _(
@@ -2144,7 +2236,7 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
         ):
             return
         async with self.bot.pool.acquire() as conn:
-            if not self.bot.has_money(ctx.author, price, conn):
+            if not self.bot.has_money(ctx.author, price, conn=conn):
                 return await ctx.send(
                     _(
                         "Upgrading your shield defense raid multiplier to {newlvl}"
@@ -2158,8 +2250,16 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
                 price,
                 ctx.author.id,
             )
-        await self.bot.log_transaction(
-            ctx, from_=ctx.author.id, to=2, subject="money", data={"Amount": price}
+            await self.bot.log_transaction(
+                ctx,
+                from_=ctx.author.id,
+                to=2,
+                subject="money",
+                data={"Amount": price},
+                conn=conn,
+            )
+        await self.bot.cache.update_profile_cols_rel(
+            ctx.author.id, defmultiply=0.1, money=-price
         )
         await ctx.send(
             _(
@@ -2183,9 +2283,7 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
             tier = self.bot.get_class_grade_from(ctx.character_data["class"], "Raider")
             atk += Decimal("0.1") * tier
             deff += Decimal("0.1") * tier
-        if (
-            buildings := await self.bot.get_city_buildings(ctx.character_data["guild"])
-        ) :
+        if buildings := await self.bot.get_city_buildings(ctx.character_data["guild"]):
             atk += Decimal("0.1") * buildings["raid_building"]
             deff += Decimal("0.1") * buildings["raid_building"]
         await ctx.send(
