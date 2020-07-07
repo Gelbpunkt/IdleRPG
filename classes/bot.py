@@ -814,5 +814,6 @@ Command: {ctx.command.qualified_name}
             local = True
         await conn.execute('DELETE FROM inventory WHERE "item"=ANY($1);', items)
         await conn.execute('DELETE FROM market WHERE "item"=ANY($1);', items)
+        await conn.execute('DELETE FROM allitems WHERE "id"=ANY($1);', items)
         if local:
             await self.pool.release(conn)
