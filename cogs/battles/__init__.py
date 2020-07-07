@@ -369,7 +369,7 @@ class Battles(commands.Cog):
             )
         await ctx.send(
             _("{p1} won the raidbattle vs {p2}! Congratulations!").format(
-                p1=ctx.author.mention, p2=enemy_.mention
+                p1=winner.mention, p2=looser.mention
             )
         )
 
