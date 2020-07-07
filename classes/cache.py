@@ -35,6 +35,7 @@ def default(obj):
 def fix(json):
     for col in DECIMAL_COLUMNS:
         json[col] = decimal.Decimal(json[col])
+    return json
 
 
 class FakeRecord(object):
@@ -43,7 +44,7 @@ class FakeRecord(object):
     """
 
     def __init__(self, data):
-        fix(data)
+        data = fix(data)
         self.__data = data
         self.__indices = list(data.keys())
 
