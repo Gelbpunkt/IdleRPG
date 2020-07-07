@@ -294,7 +294,7 @@ class Adventure(commands.Cog):
                     money,
                     ctx.author.id,
                 )
-                await self.bot.cache.wipe_profile(ctx.author.id)
+                await self.bot.cache.update_profile_cols_rel(ctx.author.id, money=money)
                 await self.bot.log_transaction(
                     ctx,
                     from_=1,
@@ -420,7 +420,7 @@ class Adventure(commands.Cog):
             money,
             ctx.author.id,
         )
-        await self.bot.cache.wipe_profile(ctx.author.id)
+        await self.bot.cache.update_profile_cols_rel(ctx.author.id, money=money)
         await self.bot.log_transaction(
             ctx, from_=1, to=ctx.author.id, subject="money", data={"Amount": money}
         )
@@ -495,7 +495,7 @@ Adventure name: `{adventure}`"""
             await self.bot.pool.execute(
                 'UPDATE profile SET "deaths"="deaths"+1 WHERE "user"=$1;', ctx.author.id
             )
-            await self.bot.cache.wipe_profile(ctx.author.id)
+            await self.bot.cache.update_profile_cols_rel(ctx.author.id, deaths=1)
             return await ctx.send(_("You died on your mission. Try again!"))
 
         gold = round(random.randint(20 * num, 60 * num) * luck_multiply)
@@ -530,7 +530,7 @@ Adventure name: `{adventure}`"""
                     ctx.author.id,
                 )
 
-            if (guild := ctx.character_data["guild"]) :
+            if guild := ctx.character_data["guild"]:
                 await conn.execute(
                     'UPDATE guild SET "money"="money"+$1 WHERE "id"=$2;',
                     int(gold / 10),
@@ -544,16 +544,18 @@ Adventure name: `{adventure}`"""
                 xp,
                 ctx.author.id,
             )
-            await self.bot.cache.wipe_profile(ctx.author.id)
+            await self.bot.cache.update_profile_cols_rel(
+                ctx.author.id, money=gold, xp=xp, completed=1
+            )
 
-            if (partner := ctx.character_data["marriage"]) :
-                await conn.execute(
+            if partner := ctx.character_data["marriage"]:
+                new_money = await conn.fetchval(
                     'UPDATE profile SET "money"="money"+($1*(1+"lovescore"/1000000))'
-                    ' WHERE "user"=$2;',
+                    ' WHERE "user"=$2 RETURNING "money";',
                     int(gold / 2),
                     partner,
                 )
-                await self.bot.cache.wipe_profile(partner)
+                await self.bot.cache.update_profile_cols_abs(partner, money=new_money)
 
             await self.bot.log_transaction(
                 ctx,

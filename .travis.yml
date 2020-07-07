@@ -22,12 +22,11 @@ before_install:
   - curl -L https://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable/xUbuntu_${VERSION_ID}/Release.key | sudo apt-key add -
   - sudo apt update
   - sudo apt -y install podman uidmap
-  - sudo echo "cgroup_manager = \"cgroupfs\"" >> /etc/containers/libpod.conf
 
 script:
   - |
     if [ $TRAVIS_BRANCH == "v4" ]; then
-      podman build -t gelbpunkt/idlerpg:latest .;
+      podman build --cgroup-manager=cgroupfs -t gelbpunkt/idlerpg:latest .;
     else
-      podman build -t gelbpunkt/idlerpg:latest --build-arg beta=true .;
+      podman build --cgroup-manager=cgroupfs -t gelbpunkt/idlerpg:latest --build-arg beta=true .;
     fi
