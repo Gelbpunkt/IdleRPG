@@ -466,8 +466,8 @@ async def user_has_char(bot: "Bot", userid: int) -> bool:
 
 async def has_money(bot: "Bot", userid: int, money: int, conn=None) -> bool:
     return (
-        bal := await bot.cache.get_profile_col(userid, "money", conn=conn) is not None
-    ) and bal >= money
+        bal := await bot.cache.get_profile_col(userid, "money", conn=conn)
+    ) is not None and bal >= money
 
 
 async def guild_has_money(bot: "Bot", guildid: int, money: int) -> bool:
