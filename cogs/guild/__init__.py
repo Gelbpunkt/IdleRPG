@@ -816,14 +816,19 @@ class Guild(commands.Cog):
                 amount,
                 g["id"],
             )
+            await self.bot.log_transaction(
+                ctx,
+                from_=ctx.author,
+                to=0,
+                subject="guild invest",
+                data={"Amount": amount},
+                conn=conn,
+            )
         await ctx.send(
             _(
                 "Done! Now you have `${profile_money}` and the guild has"
                 " `${guild_money}`."
             ).format(profile_money=profile_money, guild_money=guild_money)
-        )
-        await self.bot.log_transaction(
-            ctx, from_=ctx.author, to=0, subject="guild invest", data={"Amount": amount}
         )
         await self.bot.http.send_message(
             g["channel"], f"**{ctx.author}** invested **${amount}**"
@@ -857,14 +862,19 @@ class Guild(commands.Cog):
                 amount,
                 member.id,
             )
+            await self.bot.log_transaction(
+                ctx,
+                from_=0,
+                to=member,
+                subject="guild pay",
+                data={"Amount": amount},
+                conn=conn,
+            )
         await self.bot.cache.update_profile_cols_rel(member.id, money=amount)
         await ctx.send(
             _(
                 "Successfully gave **${amount}** from your guild bank to {member}."
             ).format(amount=amount, member=member.mention)
-        )
-        await self.bot.log_transaction(
-            ctx, from_=0, to=member, subject="guild pay", data={"Amount": amount}
         )
         await self.bot.http.send_message(
             guild["channel"], f"**{ctx.author}** paid **${amount}** to **{member}**"
