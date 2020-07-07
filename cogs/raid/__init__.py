@@ -2204,7 +2204,7 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
                 conn=conn,
             )
         await self.bot.cache.update_profile_cols_rel(
-            ctx.author.id, atkmultiply=0.1, money=-price
+            ctx.author.id, atkmultiply=Decimal("0.1"), money=-price
         )
         await ctx.send(
             _(
@@ -2259,7 +2259,7 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
                 conn=conn,
             )
         await self.bot.cache.update_profile_cols_rel(
-            ctx.author.id, defmultiply=0.1, money=-price
+            ctx.author.id, defmultiply=Decimal("0.1"), money=-price
         )
         await ctx.send(
             _(

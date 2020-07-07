@@ -106,7 +106,7 @@ class RedisCache:
         row = orjson.loads(row)
         for key, val in vals.items():
             key = key.rstrip("_")
-            if isinstance(val, int):
+            if isinstance(val, (int, float, decimal.Decimal)):
                 new_val = row[key] + val
             else:
                 new_val = val
