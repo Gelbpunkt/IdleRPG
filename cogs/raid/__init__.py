@@ -199,11 +199,18 @@ class Raid(commands.Cog):
                 u = await self.bot.get_user_global(i)
                 if not u:
                     continue
-                if not await conn.fetchval(
-                    'SELECT "user" FROM profile WHERE "user"=$1', u.id
-                ):
+                if not (profile := await self.bot.cache.get_profile(u.id, conn=conn)):
                     continue
-                dmg, deff = await self.bot.get_raidstats(u, conn=conn)
+                dmg, deff = await self.bot.get_raidstats(
+                    u,
+                    atkmultiply=profile["atkmultiply"],
+                    defmultiply=profile["defmultiply"],
+                    classes=profile["class"],
+                    race=profile["race"],
+                    guild=profile["guild"],
+                    god=profile["god"],
+                    conn=conn,
+                )
                 raid[u] = {"hp": 250, "armor": deff, "damage": dmg}
 
         raiders_joined = len(raid)
@@ -311,9 +318,7 @@ class Raid(commands.Cog):
                 except asyncio.TimeoutError:
                     break
                 bid = int(msg.content)
-                money = await self.bot.pool.fetchval(
-                    'SELECT money FROM profile WHERE "user"=$1;', msg.author.id
-                )
+                money = await self.bot.cache.get_profile_col(msg.author.id, "money")
                 if money and money >= bid:
                     highest_bid = [msg.author.id, bid]
                     await ctx.send(f"{msg.author.mention} bids **${msg.content}**!")
@@ -321,22 +326,25 @@ class Raid(commands.Cog):
                 f"Auction done! Winner is <@{highest_bid[0]}> with"
                 f" **${highest_bid[1]}**!\nGiving Legendary Crate..."
             )
-            money = await self.bot.pool.fetchval(
-                'SELECT money FROM profile WHERE "user"=$1;', highest_bid[0]
-            )
+            money = await self.bot.cache.get_profile_col(highest_bid[0], "money")
             if money >= highest_bid[1]:
-                await self.bot.pool.execute(
-                    'UPDATE profile SET "money"="money"-$1,'
-                    ' "crates_legendary"="crates_legendary"+1 WHERE "user"=$2;',
-                    highest_bid[1],
-                    highest_bid[0],
-                )
-                await self.bot.log_transaction(
-                    ctx,
-                    from_=highest_bid[0],
-                    to=2,
-                    subject="money",
-                    data={"Amount": highest_bid[1]},
+                async with self.bot.pool.acquire() as conn:
+                    await conn.execute(
+                        'UPDATE profile SET "money"="money"-$1,'
+                        ' "crates_legendary"="crates_legendary"+1 WHERE "user"=$2;',
+                        highest_bid[1],
+                        highest_bid[0],
+                    )
+                    await self.bot.log_transaction(
+                        ctx,
+                        from_=highest_bid[0],
+                        to=2,
+                        subject="money",
+                        data={"Amount": highest_bid[1]},
+                        conn=conn,
+                    )
+                await self.bot.cache.update_profile_cols_rel(
+                    highest_bid[0], money=-highest_bid[1], crates_legendary=1
                 )
                 await msg.edit(content=f"{msg.content} Done!")
                 summary_crate = (
@@ -358,11 +366,14 @@ class Raid(commands.Cog):
             cash_pool = int(self.boss["initial_hp"] / 4)
             survivors = len(raid)
             cash = int(cash_pool / survivors)  # what da hood gets per survivor
+            users = [u.id for u in raid]
             await self.bot.pool.execute(
-                'UPDATE profile SET money=money+$1 WHERE "user"=ANY($2);',
+                'UPDATE profile SET "money"="money"+$1 WHERE "user"=ANY($2);',
                 cash,
-                [u.id for u in raid.keys()],
+                users,
             )
+            for user in users:
+                await self.bot.cache.update_profile_cols_rel(user, money=cash)
             await ctx.send(
                 f"**Gave ${cash:,.0f} of the Zerekiel's ${cash_pool:,.0f} drop to all"
                 " survivors!**"

@@ -25,8 +25,6 @@ from utils.i18n import _, locale_doc
 
 
 class Patreon(commands.Cog):
-    """[this] shows the necessary donator rank to use the commands"""
-
     def __init__(self, bot):
         self.bot = bot
 
@@ -216,6 +214,9 @@ class Patreon(commands.Cog):
             ' "user"=$1;',
             ctx.author.id,
         )
+        await self.bot.cache.update_profile_cols_rel(
+            ctx.author.id, **{f"{type_}_booster": 1}
+        )
         await ctx.send(_("You received a daily {type_} booster!").format(type_=type_))
 
     @has_char()
@@ -258,6 +259,9 @@ class Patreon(commands.Cog):
                 'UPDATE profile SET "background"=$1 WHERE "user"=$2;',
                 str(url),
                 ctx.author.id,
+            )
+            await self.bot.cache.update_profile_cols_abs(
+                ctx.author.id, background=str(url)
             )
         except StringDataRightTruncationError:
             return await ctx.send(_("The URL is too long."))
@@ -360,29 +364,26 @@ class Patreon(commands.Cog):
 
             Update your background to one from the events. You can get event backgrounds from special events, for example easter or christmas."""
         )
-        async with self.bot.pool.acquire() as conn:
-            bgs = await conn.fetchval(
-                'SELECT backgrounds FROM profile WHERE "user"=$1;', ctx.author.id
-            )
-            if not bgs:
-                return await ctx.send(
-                    _(
-                        "You do not have an eventbackground. They can be acquired on"
-                        " seasonal events."
-                    )
+        if not (bgs := ctx.profile_data["backgrounds"]):
+            return await ctx.send(
+                _(
+                    "You do not have an eventbackground. They can be acquired on"
+                    " seasonal events."
                 )
-            try:
-                bg = bgs[number - 1]
-            except IndexError:
-                return await ctx.send(
-                    _(
-                        "The background number {number} is not valid, you only have"
-                        " {total} available."
-                    ).format(number=number, total=len(bgs))
-                )
-            await conn.execute(
-                'UPDATE profile SET background=$1 WHERE "user"=$2;', bg, ctx.author.id
             )
+        try:
+            bg = bgs[number - 1]
+        except IndexError:
+            return await ctx.send(
+                _(
+                    "The background number {number} is not valid, you only have"
+                    " {total} available."
+                ).format(number=number, total=len(bgs))
+            )
+        await self.bot.pool.execute(
+            'UPDATE profile SET "background"=$1 WHERE "user"=$2;', bg, ctx.author.id
+        )
+        await self.bot.cache.update_profile_cols_abs(ctx.author.id, background=bg)
         await ctx.send(_("Background updated!"))
 
 

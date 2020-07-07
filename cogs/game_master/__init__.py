@@ -179,12 +179,17 @@ class GameMaster(commands.Cog):
                 'DELETE FROM guild WHERE "leader"=$1 RETURNING id;', other.id
             )
             if g:
-                await conn.execute(
-                    'UPDATE profile SET "guildrank"=$1, "guild"=$2 WHERE "guild"=$3;',
+                users = await conn.fetch(
+                    'UPDATE profile SET "guildrank"=$1, "guild"=$2 WHERE "guild"=$3'
+                    ' RETURNING "user";',
                     "Member",
                     0,
                     g,
                 )
+                for user in users:
+                    await self.bot.cache.update_profile_cols_abs(
+                        user["user"], guildrank="Member", guild=0
+                    )
                 await conn.execute('UPDATE city SET "owner"=1 WHERE "owner"=$1;', g)
             partner = await conn.fetchval(
                 'UPDATE profile SET "marriage"=$1 WHERE "marriage"=$2 RETURNING'

@@ -231,7 +231,7 @@ class Bot(commands.AutoShardedBot):
         damage, armor = await self.get_damage_armor_for(
             v, classes=classes, race=race, conn=conn
         )
-        if (buildings := await self.get_city_buildings(guild)) :
+        if (buildings := await self.get_city_buildings(guild, conn=conn)) :
             atkmultiply += buildings["raid_building"] * Decimal("0.1")
             defmultiply += buildings["raid_building"] * Decimal("0.1")
         if self.in_class_line(classes, "Raider"):

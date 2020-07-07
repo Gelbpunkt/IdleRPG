@@ -112,11 +112,10 @@ class Miscellaneous(commands.Cog):
 
             (This command has a cooldown until 12am UTC.)"""
         )
-        async with self.bot.redis.get() as redis:
-            streak = await redis.execute("INCR", f"idle:daily:{ctx.author.id}")
-            await redis.execute(
-                "EXPIRE", f"idle:daily:{ctx.author.id}", 48 * 60 * 60
-            )  # 48h: after 2 days, they missed it
+        streak = await self.bot.redis.execute("INCR", f"idle:daily:{ctx.author.id}")
+        await self.bot.redis.execute(
+            "EXPIRE", f"idle:daily:{ctx.author.id}", 48 * 60 * 60
+        )  # 48h: after 2 days, they missed it
         money = 2 ** ((streak + 9) % 10) * 50
         # Either money or crates
         if random.randint(0, 2) > 0:
@@ -124,14 +123,21 @@ class Miscellaneous(commands.Cog):
             # Silver = 1.5x
             if await user_is_patron(self.bot, ctx.author, "silver"):
                 money = round(money * 1.5)
-            await self.bot.pool.execute(
-                'UPDATE profile SET money=money+$1 WHERE "user"=$2;',
-                money,
-                ctx.author.id,
-            )
-            await self.bot.log_transaction(
-                ctx, from_=1, to=ctx.author.id, subject="money", data={"Amount": money}
-            )
+            async with self.bot.pool.acquire() as conn:
+                await conn.execute(
+                    'UPDATE profile SET "money"="money"+$1 WHERE "user"=$2;',
+                    money,
+                    ctx.author.id,
+                )
+                await self.bot.log_transaction(
+                    ctx,
+                    from_=1,
+                    to=ctx.author.id,
+                    subject="money",
+                    data={"Amount": money},
+                    conn=conn,
+                )
+            await self.bot.cache.update_profile_cols_rel(ctx.author.id, money=money)
             txt = f"**${money}**"
         else:
             num = round(((streak + 9) % 10 + 1) / 2)
@@ -149,18 +155,23 @@ class Miscellaneous(commands.Cog):
             type_ = random.choice(
                 [types[num - 3]] * 80 + [types[num - 2]] * 19 + [types[num - 1]] * 1
             )
-            await self.bot.pool.execute(
-                f'UPDATE profile SET "crates_{type_}"="crates_{type_}"+$1 WHERE'
-                ' "user"=$2;',
-                amt,
-                ctx.author.id,
-            )
-            await self.bot.log_transaction(
-                ctx,
-                from_=1,
-                to=ctx.author.id,
-                subject="crates",
-                data={"Rarity": type_, "Amount": amt},
+            async with self.bot.pool.acquire() as conn:
+                await conn.execute(
+                    f'UPDATE profile SET "crates_{type_}"="crates_{type_}"+$1 WHERE'
+                    ' "user"=$2;',
+                    amt,
+                    ctx.author.id,
+                )
+                await self.bot.log_transaction(
+                    ctx,
+                    from_=1,
+                    to=ctx.author.id,
+                    subject="crates",
+                    data={"Rarity": type_, "Amount": amt},
+                    conn=conn,
+                )
+            await self.bot.cache.update_profile_cols_rel(
+                ctx.author.id, **{f"crates_{type_}": amt}
             )
             txt = f"**{amt}** {getattr(self.bot.cogs['Crates'].emotes, type_)}"
 
