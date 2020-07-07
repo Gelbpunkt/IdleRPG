@@ -32,14 +32,18 @@ def default(obj):
     raise TypeError
 
 
+def fix(json):
+    for col in DECIMAL_COLUMNS:
+        json[col] = decimal.Decimal(json[col])
+
+
 class FakeRecord(object):
     """
     Object to mimic asyncpg.Record behavior.
     """
 
     def __init__(self, data):
-        for col in DECIMAL_COLUMNS:
-            data[col] = decimal.Decimal(data[col])
+        fix(data)
         self.__data = data
         self.__indices = list(data.keys())
 
@@ -103,7 +107,7 @@ class RedisCache:
         row = await self.redis.execute("GET", f"profilecache:{user_id}")
         if row is None:
             return None
-        row = orjson.loads(row)
+        row = fix(orjson.loads(row))
         for key, val in vals.items():
             key = key.rstrip("_")
             if isinstance(val, (int, float, decimal.Decimal)):

@@ -250,10 +250,10 @@ class Crates(commands.Cog):
                 conn=conn,
             )
         await self.bot.cache.update_profile_cols_rel(
-            ctx.author.id, **{f"crates_{rarity}": -1}
+            ctx.author.id, **{f"crates_{rarity}": -amount}
         )
         await self.bot.cache.update_profile_cols_rel(
-            other.id, **{f"crates_{rarity}": 1}
+            other.id, **{f"crates_{rarity}": amount}
         )
 
         await ctx.send(
