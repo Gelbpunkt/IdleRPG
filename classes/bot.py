@@ -791,3 +791,28 @@ Command: {ctx.command.qualified_name}
             return False
 
         return res
+
+    async def delete_profile(self, user: int, conn=None):
+        local = False
+        if conn is None:
+            conn = await self.pool.acquire()
+            local = True
+        items = await conn.fetch('SELECT id FROM allitems WHERE "owner"=$1;', user)
+        items = [i["id"] for i in items]
+        await self.delete_items(items, conn=conn)
+        await conn.execute('DELETE FROM pets WHERE "user"=$1;', user)
+        await conn.execute('DELETE FROM user_settings WHERE "user"=$1;', user)
+        await conn.execute('DELETE FROM loot WHERE "user"=$1;', user)
+        await conn.execute('DELETE FROM profile WHERE "user"=$1;', user)
+        if local:
+            await self.pool.release(conn)
+
+    async def delete_items(self, items, conn=None):
+        local = False
+        if conn is None:
+            conn = await self.pool.acquire()
+            local = True
+        await conn.execute('DELETE FROM inventory WHERE "item"=ANY($1);', items)
+        await conn.execute('DELETE FROM market WHERE "item"=ANY($1);', items)
+        if local:
+            await self.pool.release(conn)

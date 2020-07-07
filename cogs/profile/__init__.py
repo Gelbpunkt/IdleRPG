@@ -902,6 +902,7 @@ IdleRPG is a global bot, your characters are valid everywhere"""
             await conn.execute(
                 f'UPDATE allitems SET "{stat}"="{stat}"+1 WHERE "id"=$1;', firstitemid
             )
+            await conn.execute('DELETE FROM inventory WHERE "item"=$1;', seconditemid)
             await conn.execute('DELETE FROM allitems WHERE "id"=$1;', seconditemid)
         await ctx.send(
             _(
@@ -1136,7 +1137,7 @@ IdleRPG is a global bot, your characters are valid everywhere"""
             await conn.execute(
                 'DELETE FROM children WHERE "mother"=$1 OR "father"=$1;', ctx.author.id
             )
-            await conn.execute('DELETE FROM profile WHERE "user"=$1;', ctx.author.id)
+            await self.bot.delete_profile(ctx.author.id, conn=conn)
         await self.bot.cache.wipe_profile(ctx.author.id)
         if partner:
             await self.bot.cache.update_profile_cols_abs(partner, marriage=0)
