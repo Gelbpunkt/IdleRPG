@@ -22,7 +22,7 @@ before_install:
   - curl -L https://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable/xUbuntu_${VERSION_ID}/Release.key | sudo apt-key add -
   - sudo apt update
   - sudo apt -y install podman uidmap
-  - echo "cgroup_manager = \"cgroupfs\"" >> /etc/containers/libpod.conf
+  - sudo echo "cgroup_manager = \"cgroupfs\"" >> /etc/containers/libpod.conf
 
 script:
   - |
