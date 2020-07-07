@@ -112,7 +112,7 @@ class RedisCache:
 
     async def update_profile_cols_abs(self, user_id, **vals):
         """
-        Updates profile columns in the cache by a relative difference.
+        Updates profile columns in the cache by an absolute value.
         """
         row = await self.redis.execute("GET", f"profilecache:{user_id}")
         if row is None:
