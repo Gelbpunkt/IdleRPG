@@ -376,6 +376,7 @@ class Alliance(commands.Cog):
                 to=2,
                 subject="alliance",
                 data={"Amount": up_price, "Building": name},
+                conn=conn,
             )
 
         await ctx.send(
@@ -482,6 +483,7 @@ class Alliance(commands.Cog):
                 to=2,
                 subject="alliance",
                 data={"Amount": building["cost"], "Defense": name},
+                conn=conn,
             )
 
         await ctx.send(_("Successfully built a {defense}.").format(defense=name))

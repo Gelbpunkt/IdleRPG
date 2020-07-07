@@ -110,15 +110,16 @@ class Gods(commands.Cog):
                 value,
                 ctx.author.id,
             )
-            await self.bot.cache.wipe_profile(ctx.author.id)
+            await self.bot.cache.update_profile_cols_rel(ctx.author.id, favor=value)
 
-        await self.bot.log_transaction(
-            ctx,
-            from_=ctx.author.id,
-            to=2,
-            subject="sacrifice",
-            data={"Item-Count": count, "Amount": value},
-        )
+            await self.bot.log_transaction(
+                ctx,
+                from_=ctx.author.id,
+                to=2,
+                subject="sacrifice",
+                data={"Item-Count": count, "Amount": value},
+                conn=conn,
+            )
         await ctx.send(
             _(
                 "You prayed to {god}, and they accepted your {count} sacrificed loot"
@@ -196,10 +197,13 @@ Are you sure you want to follow {god}?"""
                     1,
                     ctx.author.id,
                 )
+                await self.bot.cache.update_profile_cols_rel(
+                    ctx.author.id, reset_points=-1
+                )
             await conn.execute(
                 'UPDATE profile SET "god"=$1 WHERE "user"=$2;', god, ctx.author.id
             )
-            await self.bot.cache.wipe_profile(ctx.author.id)
+            await self.bot.cache.update_profile_cols_abs(ctx.author.id, god=god)
 
         await ctx.send(_("You are now a follower of {god}.").format(god=god))
 
@@ -240,7 +244,9 @@ Are you sure you want to follow {god}?"""
             ' "user"=$1;',
             ctx.author.id,
         )
-        await self.bot.cache.wipe_profile(ctx.author.id)
+        await self.bot.cache.update_profile_cols_abs(
+            ctx.author.id, favor=0, god="", reset_points=-1
+        )
 
         await ctx.send(_("You are now Godless."))
 
@@ -269,7 +275,7 @@ Are you sure you want to follow {god}?"""
             )
             val = 0
         elif rand == 1:
-            val = random.randint(0, 500)
+            val = random.randint(1, 500)
             message = random.choice(
                 [
                     _("„Rather lousy, but okay“, they said."),
@@ -278,12 +284,6 @@ Are you sure you want to follow {god}?"""
                     _("Hearing the same prayer over and over again made them tired."),
                 ]
             )
-            await self.bot.pool.execute(
-                'UPDATE profile SET "favor"="favor"+$1 WHERE "user"=$2;',
-                val,
-                ctx.author.id,
-            )
-            await self.bot.cache.wipe_profile(ctx.author.id)
         elif rand == 2:
             val = random.randint(0, 500) + 500
             message = random.choice(
@@ -297,12 +297,13 @@ Are you sure you want to follow {god}?"""
                     _("Rarely have you had a better day!"),
                 ]
             )
+        if val > 0:
             await self.bot.pool.execute(
                 'UPDATE profile SET "favor"="favor"+$1 WHERE "user"=$2;',
                 val,
                 ctx.author.id,
             )
-            await self.bot.cache.wipe_profile(ctx.author.id)
+            await self.bot.cache.update_profile_cols_rel(ctx.author.id, favor=val)
         await ctx.send(
             _("Your prayer resulted in **{val}** favor. {message}").format(
                 val=val, message=message

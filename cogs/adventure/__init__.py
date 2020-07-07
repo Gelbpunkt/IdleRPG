@@ -289,19 +289,23 @@ class Adventure(commands.Cog):
             elif cell.treasure:
                 val = attack + defense
                 money = random.randint(val, val * 25)
-                await self.bot.pool.execute(
-                    'UPDATE profile SET "money"="money"+$1 WHERE "user"=$2;',
-                    money,
-                    ctx.author.id,
-                )
-                await self.bot.cache.update_profile_cols_rel(ctx.author.id, money=money)
-                await self.bot.log_transaction(
-                    ctx,
-                    from_=1,
-                    to=ctx.author.id,
-                    subject="money",
-                    data={"Amount": money},
-                )
+                async with self.bot.pool.acquire() as conn:
+                    await conn.execute(
+                        'UPDATE profile SET "money"="money"+$1 WHERE "user"=$2;',
+                        money,
+                        ctx.author.id,
+                    )
+                    await self.bot.cache.update_profile_cols_rel(
+                        ctx.author.id, money=money
+                    )
+                    await self.bot.log_transaction(
+                        ctx,
+                        from_=1,
+                        to=ctx.author.id,
+                        subject="money",
+                        data={"Amount": money},
+                        conn=conn,
+                    )
                 await ctx.send(
                     _("You found a treasure with **${money}** inside!").format(
                         money=money
@@ -415,15 +419,21 @@ class Adventure(commands.Cog):
 
         val = attack + defense
         money = random.randint(val * 5, val * 100)
-        await self.bot.pool.execute(
-            'UPDATE profile SET "money"="money"+$1 WHERE "user"=$2;',
-            money,
-            ctx.author.id,
-        )
-        await self.bot.cache.update_profile_cols_rel(ctx.author.id, money=money)
-        await self.bot.log_transaction(
-            ctx, from_=1, to=ctx.author.id, subject="money", data={"Amount": money}
-        )
+        async with self.bot.pool.acquire() as conn:
+            await conn.execute(
+                'UPDATE profile SET "money"="money"+$1 WHERE "user"=$2;',
+                money,
+                ctx.author.id,
+            )
+            await self.bot.cache.update_profile_cols_rel(ctx.author.id, money=money)
+            await self.bot.log_transaction(
+                ctx,
+                from_=1,
+                to=ctx.author.id,
+                subject="money",
+                data={"Amount": money},
+                conn=conn,
+            )
 
         await ctx.send(
             _(
@@ -567,6 +577,7 @@ Adventure name: `{adventure}`"""
                     "Item": item["name"],  # compare against loot names if necessary
                     "Value": item["value"],
                 },
+                conn=conn,
             )
 
             # TODO: Embeds ftw

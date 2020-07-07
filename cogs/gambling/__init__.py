@@ -165,50 +165,63 @@ class BlackJack:
 
     async def player_win(self):
         if self.money > 0:
-            await self.ctx.bot.pool.execute(
-                'UPDATE profile SET money=money+$1 WHERE "user"=$2;',
-                self.money * 2,
-                self.ctx.author.id,
-            )
-            await self.ctx.bot.cache.wipe_profile(self.ctx.author.id)
-            await self.ctx.bot.log_transaction(
-                self.ctx,
-                from_=1,
-                to=self.ctx.author.id,
-                subject="gambling",
-                data={"Amount": self.money * 2},
+            async with self.ctx.bot.pool.acquire() as conn:
+                await conn.execute(
+                    'UPDATE profile SET "money"="money"+$1 WHERE "user"=$2;',
+                    self.money * 2,
+                    self.ctx.author.id,
+                )
+                await self.ctx.bot.log_transaction(
+                    self.ctx,
+                    from_=1,
+                    to=self.ctx.author.id,
+                    subject="gambling",
+                    data={"Amount": self.money * 2},
+                    conn=conn,
+                )
+            await self.ctx.bot.cache.update_profile_cols_rel(
+                self.ctx.author.id, money=self.money * 2
             )
 
     async def player_bj_win(self):
         if self.money > 0:
-            await self.ctx.bot.pool.execute(
-                'UPDATE profile SET money=money+$1 WHERE "user"=$2;',
-                int(self.money * 2.5),
-                self.ctx.author.id,
-            )
-            await self.ctx.bot.cache.wipe_profile(self.ctx.author.id)
-            await self.ctx.bot.log_transaction(
-                self.ctx,
-                from_=1,
-                to=self.ctx.author.id,
-                subject="gambling",
-                data={"Amount": int(self.money * 2.5)},
+            total = int(self.money * 2.5)
+            async with self.ctx.bot.pool.acquire() as conn:
+                await conn.execute(
+                    'UPDATE profile SET "money"="money"+$1 WHERE "user"=$2;',
+                    total,
+                    self.ctx.author.id,
+                )
+                await self.ctx.bot.log_transaction(
+                    self.ctx,
+                    from_=1,
+                    to=self.ctx.author.id,
+                    subject="gambling",
+                    data={"Amount": total},
+                    conn=conn,
+                )
+            await self.ctx.bot.cache.update_profile_cols_rel(
+                self.ctx.author.id, money=total
             )
 
     async def player_cashback(self):
         if self.money > 0:
-            await self.ctx.bot.pool.execute(
-                'UPDATE profile SET money=money+$1 WHERE "user"=$2;',
-                self.money,
-                self.ctx.author.id,
-            )
-            await self.ctx.bot.cache.wipe_profile(self.ctx.author.id)
-            await self.ctx.bot.log_transaction(
-                self.ctx,
-                from_=1,
-                to=self.ctx.author.id,
-                subject="gambling",
-                data={"Amount": self.money},
+            async with self.ctx.bot.pool.acquire() as conn:
+                await conn.execute(
+                    'UPDATE profile SET "money"="money"+$1 WHERE "user"=$2;',
+                    self.money,
+                    self.ctx.author.id,
+                )
+                await self.ctx.bot.log_transaction(
+                    self.ctx,
+                    from_=1,
+                    to=self.ctx.author.id,
+                    subject="gambling",
+                    data={"Amount": self.money},
+                    conn=conn,
+                )
+            await self.ctx.bot.cache.update_profile_cols_rel(
+                self.ctx.author.id, money=self.money
             )
 
     def pretty(self, hand):
@@ -341,18 +354,22 @@ class BlackJack:
                     )
                 self.doubled = True
                 if self.money > 0:
-                    await self.ctx.bot.pool.execute(
-                        'UPDATE profile SET "money"="money"-$1 WHERE "user"=$2;',
-                        self.money,
-                        self.ctx.author.id,
-                    )
-                    await self.ctx.bot.cache.wipe_profile(self.ctx.author.id)
-                    await self.ctx.bot.log_transaction(
-                        self.ctx,
-                        from_=self.ctx.author.id,
-                        to=2,
-                        subject="gambling",
-                        data={"Amount": self.money},
+                    async with self.ctx.bot.pool.acquire() as conn:
+                        await conn.execute(
+                            'UPDATE profile SET "money"="money"-$1 WHERE "user"=$2;',
+                            self.money,
+                            self.ctx.author.id,
+                        )
+                        await self.ctx.bot.log_transaction(
+                            self.ctx,
+                            from_=self.ctx.author.id,
+                            to=2,
+                            subject="gambling",
+                            data={"Amount": self.money},
+                            conn=conn,
+                        )
+                    await self.ctx.bot.cache.update_profile_cols_rel(
+                        self.ctx.author.id, money=-self.money
                     )
 
                 self.money *= 2
@@ -521,18 +538,22 @@ This command is in an alpha-stage, which means bugs are likely to happen. Play a
         )
         if result[0] == side:
             if amount > 0:
-                await self.bot.pool.execute(
-                    'UPDATE profile SET money=money+$1 WHERE "user"=$2;',
-                    amount,
-                    ctx.author.id,
-                )
-                await self.bot.cache.wipe_profile(ctx.author.id)
-                await self.bot.log_transaction(
-                    ctx,
-                    from_=1,
-                    to=ctx.author.id,
-                    subject="gambling",
-                    data={"Amount": amount},
+                async with self.bot.pool.acquire() as conn:
+                    await conn.execute(
+                        'UPDATE profile SET "money"="money"+$1 WHERE "user"=$2;',
+                        amount,
+                        ctx.author.id,
+                    )
+                    await self.bot.log_transaction(
+                        ctx,
+                        from_=1,
+                        to=ctx.author.id,
+                        subject="gambling",
+                        data={"Amount": amount},
+                        conn=conn,
+                    )
+                await self.bot.cache.update_profile_cols_rel(
+                    ctx.author.id, money=amount
                 )
             await ctx.send(
                 _("{result[1]} It's **{result[0]}**! You won **${amount}**!").format(
@@ -541,18 +562,22 @@ This command is in an alpha-stage, which means bugs are likely to happen. Play a
             )
         else:
             if amount > 0:
-                await self.bot.pool.execute(
-                    'UPDATE profile SET money=money-$1 WHERE "user"=$2;',
-                    amount,
-                    ctx.author.id,
-                )
-                await self.bot.cache.wipe_profile(ctx.author.id)
-                await self.bot.log_transaction(
-                    ctx,
-                    from_=ctx.author.id,
-                    to=2,
-                    subject="gambling",
-                    data={"Amount": amount},
+                async with self.bot.pool.acquire() as conn:
+                    await conn.execute(
+                        'UPDATE profile SET "money"="money"-$1 WHERE "user"=$2;',
+                        amount,
+                        ctx.author.id,
+                    )
+                    await self.bot.log_transaction(
+                        ctx,
+                        from_=ctx.author.id,
+                        to=2,
+                        subject="gambling",
+                        data={"Amount": amount},
+                        conn=conn,
+                    )
+                await self.bot.cache.update_profile_cols_rel(
+                    ctx.author.id, money=-amount
                 )
             await ctx.send(
                 _("{result[1]} It's **{result[0]}**! You lost **${amount}**!").format(
@@ -600,18 +625,22 @@ This command is in an alpha-stage, which means bugs are likely to happen. Play a
         randomn = random.randint(0, maximum)
         if randomn == tip:
             if money > 0:
-                await self.bot.pool.execute(
-                    'UPDATE profile SET money=money+$1 WHERE "user"=$2;',
-                    money * (maximum - 1),
-                    ctx.author.id,
-                )
-                await self.bot.cache.wipe_profile(ctx.author.id)
-                await self.bot.log_transaction(
-                    ctx,
-                    from_=1,
-                    to=ctx.author.id,
-                    subject="gambling",
-                    data={"Amount": money * (maximum - 1)},
+                async with self.bot.pool.acquire() as conn:
+                    await conn.execute(
+                        'UPDATE profile SET "money"="money"+$1 WHERE "user"=$2;',
+                        money * (maximum - 1),
+                        ctx.author.id,
+                    )
+                    await self.bot.log_transaction(
+                        ctx,
+                        from_=1,
+                        to=ctx.author.id,
+                        subject="gambling",
+                        data={"Amount": money * (maximum - 1)},
+                        conn=conn,
+                    )
+                await self.bot.cache.update_profile_cols_rel(
+                    ctx.author.id, money=money * (maximum - 1)
                 )
             await ctx.send(
                 _(
@@ -626,18 +655,22 @@ This command is in an alpha-stage, which means bugs are likely to happen. Play a
                 )
         else:
             if money > 0:
-                await self.bot.pool.execute(
-                    'UPDATE profile SET money=money-$1 WHERE "user"=$2;',
-                    money,
-                    ctx.author.id,
-                )
-                await self.bot.cache.wipe_profile(ctx.author.id)
-                await self.bot.log_transaction(
-                    ctx,
-                    from_=ctx.author.id,
-                    to=2,
-                    subject="gambling",
-                    data={"Amount": money},
+                async with self.bot.pool.acquire() as conn:
+                    await conn.execute(
+                        'UPDATE profile SET "money"="money"-$1 WHERE "user"=$2;',
+                        money,
+                        ctx.author.id,
+                    )
+                    await self.bot.log_transaction(
+                        ctx,
+                        from_=ctx.author.id,
+                        to=2,
+                        subject="gambling",
+                        data={"Amount": money},
+                        conn=conn,
+                    )
+                await self.bot.cache.update_profile_cols_rel(
+                    ctx.author.id, money=-money
                 )
             await ctx.send(
                 _(
@@ -676,7 +709,7 @@ This command is in an alpha-stage, which means bugs are likely to happen. Play a
             amount,
             ctx.author.id,
         )
-        await self.bot.cache.wipe_profile(ctx.author.id)
+        await self.bot.cache.update_profile_cols_rel(ctx.author.id, money=-amount)
         if amount > 0:
             await self.bot.log_transaction(
                 ctx,
@@ -735,10 +768,15 @@ This command is in an alpha-stage, which means bugs are likely to happen. Play a
             await conn.execute(
                 'UPDATE profile SET "money"="money"-100 WHERE "user"=$1;', ctx.author.id
             )
-            await self.bot.cache.wipe_profile(ctx.author.id)
             await self.bot.log_transaction(
-                ctx, from_=ctx.author.id, to=2, subject="gambling", data={"Amount": 100}
+                ctx,
+                from_=ctx.author.id,
+                to=2,
+                subject="gambling",
+                data={"Amount": 100},
+                conn=conn,
             )
+        await self.bot.cache.update_profile_cols_rel(ctx.author.id, money=-100)
 
         while True:
             user, other = users
@@ -749,35 +787,39 @@ This command is in an alpha-stage, which means bugs are likely to happen. Play a
                     return_index=True,
                 ).paginate(ctx, user=user)
             except self.bot.paginator.NoChoice:
-                await self.bot.pool.execute(
-                    'UPDATE profile SET "money"="money"+$1 WHERE "user"=$2;',
-                    money,
-                    other.id,
-                )
-                await self.bot.cache.wipe_profile(other.id)
-                await self.bot.log_transaction(
-                    ctx,
-                    from_=1,
-                    to=other.id,
-                    subject="gambling",
-                    data={"Amount": money},
-                )
+                async with self.bot.pool.acquire() as conn:
+                    await conn.execute(
+                        'UPDATE profile SET "money"="money"+$1 WHERE "user"=$2;',
+                        money,
+                        other.id,
+                    )
+                    await self.bot.log_transaction(
+                        ctx,
+                        from_=1,
+                        to=other.id,
+                        subject="gambling",
+                        data={"Amount": money},
+                        conn=conn,
+                    )
+                await self.bot.cache.update_profile_cols_rel(other.id, money=money)
                 return await ctx.send(_("Timed out."))
 
             if action:
-                await self.bot.pool.execute(
-                    'UPDATE profile SET "money"="money"+$1 WHERE "user"=$2;',
-                    money,
-                    user.id,
-                )
-                await self.bot.cache.wipe_profile(user.id)
-                await self.bot.log_transaction(
-                    ctx,
-                    from_=other.id,
-                    to=user.id,
-                    subject="gambling",
-                    data={"Amount": money},
-                )
+                async with self.bot.pool.acquire() as conn:
+                    await conn.execute(
+                        'UPDATE profile SET "money"="money"+$1 WHERE "user"=$2;',
+                        money,
+                        user.id,
+                    )
+                    await self.bot.log_transaction(
+                        ctx,
+                        from_=other.id,
+                        to=user.id,
+                        subject="gambling",
+                        data={"Amount": money},
+                        conn=conn,
+                    )
+                await self.bot.cache.update_profile_cols_rel(user.id, money=money)
                 return await ctx.send(
                     _("{user} stole **${money}**.").format(user=user, money=money)
                 )
@@ -789,7 +831,7 @@ This command is in an alpha-stage, which means bugs are likely to happen. Play a
                         money,
                         other.id,
                     )
-                    await self.bot.cache.wipe_profile(other.id)
+                    await self.bot.cache.update_profile_cols_rel(other.id, money=money)
                     if not await self.bot.has_money(user.id, new_money, conn=conn):
                         return await ctx.send(
                             _("{user} is too poor to double.").format(user=user)
@@ -799,14 +841,14 @@ This command is in an alpha-stage, which means bugs are likely to happen. Play a
                         new_money,
                         user.id,
                     )
-                    await self.bot.cache.wipe_profile(user.id)
-                    await ctx.send(
-                        _("{user} doubled to **${money}**.").format(
-                            user=user, money=new_money
-                        )
+                await self.bot.cache.update_profile_cols_rel(user.id, money=-new_money)
+                await ctx.send(
+                    _("{user} doubled to **${money}**.").format(
+                        user=user, money=new_money
                     )
-                    money = new_money
-                    users = (other, user)
+                )
+                money = new_money
+                users = (other, user)
 
 
 def setup(bot):

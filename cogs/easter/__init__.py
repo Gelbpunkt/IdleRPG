@@ -97,36 +97,45 @@ You have **{eggs}** <:easteregg:566251086986608650>."""
             return await ctx.send(_("You don't have enough eggs to claim this."))
 
         if reward[1] == "crates":
-            await self.bot.pool.execute(
-                f'UPDATE profile SET "crates_{reward[3]}"="crates_{reward[3]}"+$1,'
-                ' "eastereggs"="eastereggs"-$2 WHERE "user"=$3;',
-                reward[2],
-                reward[0],
+            async with self.bot.pool.acquire() as conn:
+                await conn.execute(
+                    f'UPDATE profile SET "crates_{reward[3]}"="crates_{reward[3]}"+$1,'
+                    ' "eastereggs"="eastereggs"-$2 WHERE "user"=$3;',
+                    reward[2],
+                    reward[0],
+                    ctx.author.id,
+                )
+                await self.bot.log_transaction(
+                    ctx,
+                    from_=1,
+                    to=ctx.author.id,
+                    subject="crates",
+                    data={"Rarity": reward[3], "Amount": reward[2]},
+                    conn=conn,
+                )
+            await self.bot.cache.update_profile_cols_rel(
                 ctx.author.id,
-            )
-            await self.bot.cache.wipe_profile(ctx.author.id)
-            await self.bot.log_transaction(
-                ctx,
-                from_=1,
-                to=ctx.author.id,
-                subject="crates",
-                data={"Rarity": reward[3], "Amount": reward[2]},
+                **{f"crates_{reward[3]}": reward[2], "eastereggs": -[reward[0]]},
             )
         elif reward[1] == "money":
-            await self.bot.pool.execute(
-                'UPDATE profile SET "money"="money"+$1, "eastereggs"="eastereggs"-$2'
-                ' WHERE "user"=$3;',
-                reward[2],
-                reward[0],
-                ctx.author.id,
-            )
-            await self.bot.cache.wipe_profile(ctx.author.id)
-            await self.bot.log_transaction(
-                ctx,
-                from_=1,
-                to=ctx.author.id,
-                subject="money",
-                data={"Amount": reward[2]},
+            async with self.bot.pool.acquire() as conn:
+                await conn.execute(
+                    'UPDATE profile SET "money"="money"+$1,'
+                    ' "eastereggs"="eastereggs"-$2 WHERE "user"=$3;',
+                    reward[2],
+                    reward[0],
+                    ctx.author.id,
+                )
+                await self.bot.log_transaction(
+                    ctx,
+                    from_=1,
+                    to=ctx.author.id,
+                    subject="money",
+                    data={"Amount": reward[2]},
+                    conn=conn,
+                )
+            await self.bot.cache.update_profile_cols_rel(
+                ctx.author.id, money=reward[2], eastereggs=-reward[0]
             )
         elif reward[1] == "boosters":
             await self.bot.pool.execute(
@@ -137,7 +146,13 @@ You have **{eggs}** <:easteregg:566251086986608650>."""
                 reward[0],
                 ctx.author.id,
             )
-            await self.bot.cache.wipe_profile(ctx.author.id)
+            await self.bot.cache.update_profile_cols_rel(
+                ctx.author.id,
+                money_booster=reward[2],
+                time_booster=reward[2],
+                luck_booster=reward[2],
+                eastereggs=-reward[0],
+            )
         elif reward[1] == "badge":
             async with self.bot.pool.acquire() as conn:
                 await conn.execute(
@@ -151,7 +166,9 @@ You have **{eggs}** <:easteregg:566251086986608650>."""
                     "https://i.imgur.com/VHUDdTv.jpg",
                     ctx.character_data["guild"],
                 )
-                await self.bot.cache.wipe_profile(ctx.author.id)
+            await self.bot.cache.update_profile_cols_rel(
+                ctx.author.id, eastereggs=reward[0]
+            )
         elif reward[1] == "item":
             item = await self.bot.create_random_item(
                 minstat=reward[2],
@@ -166,20 +183,25 @@ You have **{eggs}** <:easteregg:566251086986608650>."""
                 if item["type_"] != "Shield"
                 else random.choice(["Giant Egg", "Sweet Defender"])
             )
-            await self.bot.create_item(**item)
-            await self.bot.pool.execute(
-                'UPDATE profile SET "eastereggs"="eastereggs"-$1 WHERE "user"=$2;',
-                reward[0],
-                ctx.author.id,
+            async with self.bot.pool.acquire() as conn:
+                await self.bot.create_item(**item, conn=conn)
+                await conn.execute(
+                    'UPDATE profile SET "eastereggs"="eastereggs"-$1 WHERE "user"=$2;',
+                    reward[0],
+                    ctx.author.id,
+                )
+                await self.bot.log_transaction(
+                    ctx,
+                    from_=1,
+                    to=ctx.author.id,
+                    subject="item",
+                    data={"Name": item["name"], "Value": item["value"]},
+                    conn=conn,
+                )
+            await self.bot.cache.update_profile_cols_rel(
+                ctx.author.id, eastereggs=-reward[0]
             )
-            await self.bot.cache.wipe_profile(ctx.author.id)
-            await self.bot.log_transaction(
-                ctx,
-                from_=1,
-                to=ctx.author.id,
-                subject="item",
-                data={"Name": item["name"], "Value": item["value"]},
-            )
+
         await ctx.send(
             _(
                 "You claimed your reward. Check your"

@@ -136,15 +136,31 @@ class Crates(commands.Cog):
             else:  # 50% 41-45
                 minstat, maxstat = (41, 45)
 
-        item = await self.bot.create_random_item(
-            minstat=minstat, maxstat=maxstat, minvalue=1, maxvalue=250, owner=ctx.author
-        )
-        await self.bot.pool.execute(
-            f'UPDATE profile SET "crates_{rarity}"="crates_{rarity}"-1 WHERE'
-            ' "user"=$1;',
-            ctx.author.id,
-        )
-        await self.bot.cache.wipe_profile(ctx.author.id)
+        async with self.bot.pool.acquire() as conn:
+            item = await self.bot.create_random_item(
+                minstat=minstat,
+                maxstat=maxstat,
+                minvalue=1,
+                maxvalue=250,
+                owner=ctx.author,
+                conn=conn,
+            )
+            await self.bot.pool.execute(
+                f'UPDATE profile SET "crates_{rarity}"="crates_{rarity}"-1 WHERE'
+                ' "user"=$1;',
+                ctx.author.id,
+            )
+            await self.bot.cache.update_profile_cols_rel(
+                ctx.author.id, **{f"crates_{rarity}": -1}
+            )
+            await self.bot.log_transaction(
+                ctx,
+                from_=1,
+                to=ctx.author.id,
+                subject="item",
+                data={"Name": item["name"], "Value": item["value"]},
+                conn=conn,
+            )
         embed = discord.Embed(
             title=_("You gained an item!"),
             description=_("You found a new item when opening a crate!"),
@@ -161,13 +177,6 @@ class Crates(commands.Cog):
             text=_("Remaining {rarity} crates: {crates}").format(
                 crates=ctx.character_data[f"crates_{rarity}"] - 1, rarity=rarity
             )
-        )
-        await self.bot.log_transaction(
-            ctx,
-            from_=1,
-            to=ctx.author.id,
-            subject="item",
-            data={"Name": item["name"], "Value": item["value"]},
         )
         await ctx.send(embed=embed)
         if rarity == "legendary":
@@ -232,19 +241,25 @@ class Crates(commands.Cog):
                 amount,
                 other.id,
             )
-        await self.bot.cache.wipe_profile(ctx.author.id)
-        await self.bot.cache.wipe_profile(other.id)
+            await self.bot.log_transaction(
+                ctx,
+                from_=ctx.author.id,
+                to=other.id,
+                subject="crates",
+                data={"Rarity": rarity, "Amount": amount},
+                conn=conn,
+            )
+        await self.bot.cache.update_profile_cols_rel(
+            ctx.author.id, **{f"crates_{rarity}": -1}
+        )
+        await self.bot.cache.update_profile_cols_rel(
+            other.id, **{f"crates_{rarity}": 1}
+        )
+
         await ctx.send(
             _("Successfully gave {amount} {rarity} crate(s) to {other}.").format(
                 amount=amount, other=other.mention, rarity=rarity
             )
-        )
-        await self.bot.log_transaction(
-            ctx,
-            from_=ctx.author.id,
-            to=other.id,
-            subject="crates",
-            data={"Rarity": rarity, "Amount": amount},
         )
 
 

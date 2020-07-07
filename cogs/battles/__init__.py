@@ -63,9 +63,11 @@ class Battles(commands.Cog):
             return await ctx.send(_("You are too poor."))
 
         await self.bot.pool.execute(
-            'UPDATE profile SET money=money-$1 WHERE "user"=$2;', money, ctx.author.id,
+            'UPDATE profile SET "money""="money"-$1 WHERE "user"=$2;',
+            money,
+            ctx.author.id,
         )
-        await self.bot.cache.wipe_profile(ctx.author.id)
+        await self.bot.cache.update_profile_cols_rel(ctx.author.id, money=-money)
 
         if not enemy:
             msg = await ctx.send(
@@ -98,17 +100,17 @@ class Battles(commands.Cog):
 
         while seeking:
             try:
-                reaction, enemy_ = await self.bot.wait_for(
+                _reaction, enemy_ = await self.bot.wait_for(
                     "reaction_add", timeout=60, check=check
                 )
             except asyncio.TimeoutError:
                 await self.bot.reset_cooldown(ctx)
                 await self.bot.pool.execute(
-                    'UPDATE profile SET money=money+$1 WHERE "user"=$2;',
+                    'UPDATE profile SET "money"="money"+$1 WHERE "user"=$2;',
                     money,
                     ctx.author.id,
                 )
-                await self.bot.cache.wipe_profile(ctx.author.id)
+                await self.bot.cache.update_profile_cols_rel(ctx.author.id, money=money)
                 return await ctx.send(
                     _("Noone wanted to join your battle, {author}!").format(
                         author=ctx.author.mention
@@ -128,9 +130,9 @@ class Battles(commands.Cog):
         )
 
         await self.bot.pool.execute(
-            'UPDATE profile SET money=money-$1 WHERE "user"=$2;', money, enemy_.id
+            'UPDATE profile SET "money"="money"-$1 WHERE "user"=$2;', money, enemy_.id
         )
-        await self.bot.cache.wipe_profile(enemy_.id)
+        await self.bot.cache.update_profile_cols_rel(enemy_.id, money=-money)
 
         stats = [
             sum(await self.bot.get_damage_armor_for(ctx.author)) + random.randint(1, 7),
@@ -147,20 +149,21 @@ class Battles(commands.Cog):
 
         async with self.bot.pool.acquire() as conn:
             await conn.execute(
-                'UPDATE profile SET pvpwins=pvpwins+1 WHERE "user"=$1;', winner.id
-            )
-            await conn.execute(
-                'UPDATE profile SET money=money+$1 WHERE "user"=$2;',
+                'UPDATE profile SET "pvpwins"="pvpwins"+1, "money"="money"+$1 WHERE'
+                ' "user"=$2;',
                 money * 2,
                 winner.id,
             )
-            await self.cache.wipe_profile(winner.id)
+            await self.bot.cache.update_profile_cols_rel(
+                winner.id, pvpwins=1, money=money * 2
+            )
             await self.bot.log_transaction(
                 ctx,
                 from_=looser.id,
                 to=winner.id,
                 subject="money",
                 data={"Amount": money},
+                conn=conn,
             )
         await ctx.send(
             _("{winner} won the battle vs {looser}! Congratulations!").format(
@@ -197,9 +200,11 @@ class Battles(commands.Cog):
             return await ctx.send(_("You are too poor."))
 
         await self.bot.pool.execute(
-            'UPDATE profile SET money=money-$1 WHERE "user"=$2;', money, ctx.author.id,
+            'UPDATE profile SET "money"="money"-$1 WHERE "user"=$2;',
+            money,
+            ctx.author.id,
         )
-        await self.bot.cache.wipe_profile(ctx.author.id)
+        await self.bot.cache.update_profile_cols_rel(ctx.author.id, money=-money)
 
         if not enemy:
             msg = await ctx.send(
@@ -238,11 +243,11 @@ class Battles(commands.Cog):
             except asyncio.TimeoutError:
                 await self.bot.reset_cooldown(ctx)
                 await self.bot.pool.execute(
-                    'UPDATE profile SET money=money+$1 WHERE "user"=$2;',
+                    'UPDATE profile SET "money"="money"+$1 WHERE "user"=$2;',
                     money,
                     ctx.author.id,
                 )
-                await self.bot.cache.wipe_profile(ctx.author.id)
+                await self.bot.cache.update_profile_cols_rel(ctx.author.id, money=money)
                 return await ctx.send(
                     _("Noone wanted to join your raidbattle, {author}!").format(
                         author=ctx.author.mention
@@ -255,9 +260,9 @@ class Battles(commands.Cog):
                 await ctx.send(_("You don't have enough money to join the raidbattle."))
 
         await self.bot.pool.execute(
-            'UPDATE profile SET money=money-$1 WHERE "user"=$2;', money, enemy_.id
+            'UPDATE profile SET "money"="money"-$1 WHERE "user"=$2;', money, enemy_.id
         )
-        await self.bot.cache.wipe_profile(ctx.author.id)
+        await self.bot.cache.update_profile_cols_rel(enemy_.id, money=-money)
 
         players = []
 
@@ -340,69 +345,33 @@ class Battles(commands.Cog):
             await asyncio.sleep(4)
             attacker, defender = defender, attacker  # switch places
 
-        if players[1]["hp"] == 0:  # command author wins
-            async with self.bot.pool.acquire() as conn:
-                await conn.execute(
-                    'UPDATE profile SET money=money+$1 WHERE "user"=$2;',
-                    money * 2,
-                    ctx.author.id,
-                )
-                await conn.execute(
-                    'UPDATE profile SET pvpwins=pvpwins+1 WHERE "user"=$1;',
-                    ctx.author.id,
-                )
-                await self.bot.cache.wipe_profile(ctx.author.id)
-            await self.bot.log_transaction(
-                ctx,
-                from_=enemy_.id,
-                to=ctx.author.id,
-                subject="money",
-                data={"Amount": money},
-            )
-            await ctx.send(
-                _("{p1} won the raidbattle vs {p2}! Congratulations!").format(
-                    p1=ctx.author.mention, p2=enemy_.mention
-                )
-            )
-        elif players[0]["hp"] == 0:  # enemy wins
-            async with self.bot.pool.acquire() as conn:
-                await conn.execute(
-                    'UPDATE profile SET money=money+$1 WHERE "user"=$2;',
-                    money * 2,
-                    enemy_.id,
-                )
-                await conn.execute(
-                    'UPDATE profile SET pvpwins=pvpwins+1 WHERE "user"=$1;', enemy_.id
-                )
-                await self.bot.cache.wipe_profile(enemy_.id)
-            await self.bot.log_transaction(
-                ctx,
-                from_=ctx.author.id,
-                to=enemy_.id,
-                subject="money",
-                data={"Amount": money},
-            )
-            await ctx.send(
-                _("{p1} won the raidbattle vs {p2}! Congratulations!").format(
-                    p1=enemy_.mention, p2=ctx.author.mention
-                )
-            )
+        players = sorted(players, key=lambda x: x["hp"])
+        winner = players[1]["user"]
+        looser = players[0]["user"]
 
-        else:  # timeout after 5 min
-            async with self.bot.pool.acquire() as conn:
-                await conn.execute(
-                    'UPDATE profile SET money=money+$1 WHERE "user"=$2;',
-                    money,
-                    ctx.author.id,
-                )
-                await conn.execute(
-                    'UPDATE profile SET money=money+$1 WHERE "user"=$2;',
-                    money,
-                    enemy_.id,
-                )
-                await self.bot.cache.wipe_profile(ctx.author.id)
-                await self.bot.cache.wipe_profile(enemy_.id)
-            await ctx.send(_("Raidbattle took too long, aborting."))
+        async with self.bot.pool.acquire() as conn:
+            await conn.execute(
+                'UPDATE profile SET "money"="money"+$1, "pvpwins"="pvpwins"+1 WHERE'
+                ' "user"=$2;',
+                money * 2,
+                winner.id,
+            )
+            await self.bot.cache.update_profile_cols_rel(
+                ctx.author.id, money=money * 2, pvpwins=1
+            )
+            await self.bot.log_transaction(
+                ctx,
+                from_=looser.id,
+                to=winner.id,
+                subject="money",
+                data={"Amount": money},
+                conn=conn,
+            )
+        await ctx.send(
+            _("{p1} won the raidbattle vs {p2}! Congratulations!").format(
+                p1=ctx.author.mention, p2=enemy_.mention
+            )
+        )
 
     @has_char()
     @user_cooldown(600)
@@ -434,9 +403,11 @@ class Battles(commands.Cog):
             return await ctx.send(_("You are too poor."))
 
         await self.bot.pool.execute(
-            'UPDATE profile SET money=money-$1 WHERE "user"=$2;', money, ctx.author.id,
+            'UPDATE profile SET "money"="money"-$1 WHERE "user"=$2;',
+            money,
+            ctx.author.id,
         )
-        await self.bot.cache.wipe_profile(ctx.author.id)
+        await self.bot.cache.update_profile_cols_rel(ctx.author.id, money=-money)
 
         if not enemy:
             msg = await ctx.send(
@@ -476,11 +447,11 @@ class Battles(commands.Cog):
             except asyncio.TimeoutError:
                 await self.bot.reset_cooldown(ctx)
                 await self.bot.pool.execute(
-                    'UPDATE profile SET money=money+$1 WHERE "user"=$2;',
+                    'UPDATE profile SET "money"="money"+$1 WHERE "user"=$2;',
                     money,
                     ctx.author.id,
                 )
-                await self.bot.cache.wipe_profile(ctx.author.id)
+                await self.bot.cache.update_profile_cols_rel(ctx.author.id, money=money)
                 return await ctx.send(
                     _("Noone wanted to join your activebattle, {author}!").format(
                         author=ctx.author.mention
@@ -494,28 +465,30 @@ class Battles(commands.Cog):
                     _("You don't have enough money to join the activebattle.")
                 )
 
+        players = {
+            ctx.author: {
+                "hp": 0,
+                "damage": 0,
+                "defense": 0,
+                "lastmove": "",
+                "action": None,
+            },
+            enemy_: {
+                "hp": 0,
+                "damage": 0,
+                "defense": 0,
+                "lastmove": "",
+                "action": None,
+            },
+        }
+
         async with self.bot.pool.acquire() as conn:
             await conn.execute(
-                'UPDATE profile SET money=money-$1 WHERE "user"=$2;', money, enemy_.id,
+                'UPDATE profile SET "money"="money"-$1 WHERE "user"=$2;',
+                money,
+                enemy_.id,
             )
-            await self.bot.cache.wipe_profile(enemy_.id)
-
-            players = {
-                ctx.author: {
-                    "hp": 0,
-                    "damage": 0,
-                    "defense": 0,
-                    "lastmove": "",
-                    "action": None,
-                },
-                enemy_: {
-                    "hp": 0,
-                    "damage": 0,
-                    "defense": 0,
-                    "lastmove": "",
-                    "action": None,
-                },
-            }
+            await self.bot.cache.update_profile_cols_rel(enemy_.id, money=-money)
 
             for p in players:
                 c = await self.bot.cache.get_profile_col(p.id, "class", conn=conn)
@@ -592,8 +565,12 @@ class Battles(commands.Cog):
                             money,
                             enemy_.id,
                         )
-                        await self.bot.cache.wipe_profile(ctx.author.id)
-                        await self.bot.cache.wipe_profile(enemy_.id)
+                        await self.bot.cache.update_profile_cols_rel(
+                            ctx.author.id, money=money
+                        )
+                        await self.bot.cache.update_profile_cols_rel(
+                            enemy_.id, money=money
+                        )
                     return await ctx.send(
                         _("Someone refused to move. Activebattle stopped.")
                     )
@@ -686,17 +663,22 @@ class Battles(commands.Cog):
             looser, winner = ctx.author, enemy_
         async with self.bot.pool.acquire() as conn:
             await conn.execute(
-                'UPDATE profile SET pvpwins=pvpwins+1 WHERE "user"=$1;', winner.id
-            )
-            await conn.execute(
-                'UPDATE profile SET money=money+$1 WHERE "user"=$2;',
+                'UPDATE profile SET "pvpwins"="pvpwins"+1, "money"="money"+$1 WHERE'
+                ' "user"=$2;',
                 money * 2,
                 winner.id,
             )
-            await self.bot.cache.wipe_profile(winner.id)
-        await self.bot.log_transaction(
-            ctx, from_=looser.id, to=winner.id, subject="money", data={"Amount": money}
-        )
+            await self.bot.cache.update_profile_cols_rel(
+                winner.id, pvpwins=1, money=money * 2
+            )
+            await self.bot.log_transaction(
+                ctx,
+                from_=looser.id,
+                to=winner.id,
+                subject="money",
+                data={"Amount": money},
+                conn=conn,
+            )
         await msg.edit(
             embed=discord.Embed(
                 description=_(

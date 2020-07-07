@@ -101,6 +101,7 @@ class RedisCache:
             return None
         row = orjson.loads(row)
         for key, val in vals.items():
+            key = key.rstrip("_")
             if isinstance(val, int):
                 new_val = row[key] + val
             else:
@@ -118,7 +119,8 @@ class RedisCache:
         if row is None:
             return None
         row = orjson.loads(row)
-        row.update(vals)
+        for key, val in vals.items():
+            row[key.rstrip("_")] = val
         await self.redis.execute(
             "SET", f"profilecache:{user_id}", orjson.dumps(dict(row), default=default),
         )

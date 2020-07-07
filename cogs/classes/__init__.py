@@ -169,7 +169,9 @@ class Classes(commands.Cog):
                     new_classes,
                     ctx.author.id,
                 )
-                await self.bot.cache.wipe_profile(ctx.author.id)
+                await self.bot.cache.update_profile_cols_abs(
+                    ctx.author.id, class_=new_classes
+                )
                 if profession == "Ranger":
                     await conn.execute(
                         'INSERT INTO pets ("user") VALUES ($1);', ctx.author.id
@@ -194,15 +196,22 @@ class Classes(commands.Cog):
                     5000,
                     ctx.author.id,
                 )
-                await self.bot.cache.wipe_profile(ctx.author.id)
+                await self.bot.cache.update_profile_cols_rel(
+                    ctx.author.id, class_=new_classes, money=-5000
+                )
                 await conn.execute('DELETE FROM pets WHERE "user"=$1;', ctx.author.id)
                 if profession == "Ranger":
                     await conn.execute(
                         'INSERT INTO pets ("user") VALUES ($1);', ctx.author.id
                     )
-            await self.bot.log_transaction(
-                ctx, from_=ctx.author.id, to=2, subject="money", data={"Amount": 5000}
-            )
+                await self.bot.log_transaction(
+                    ctx,
+                    from_=ctx.author.id,
+                    to=2,
+                    subject="money",
+                    data={"Amount": 5000},
+                    conn=conn,
+                )
             await ctx.send(
                 _(
                     "You selected the class `{profession}`. **$5000** was taken off"
@@ -275,7 +284,7 @@ class Classes(commands.Cog):
         await self.bot.pool.execute(
             'UPDATE profile SET "class"=$1 WHERE "user"=$2;', new_classes, ctx.author.id
         )
-        await self.bot.cache.wipe_profile(ctx.author.id)
+        await self.bot.cache.update_profile_cols_abs(ctx.author.id, class_=new_classes)
         await ctx.send(
             _("You are now a `{class1}` and a `{class2}`.").format(
                 class1=new_classes[0], class2=new_classes[1]
@@ -345,30 +354,33 @@ class Classes(commands.Cog):
 
                 stolen = int(usr["money"] * 0.1)
                 await conn.execute(
-                    'UPDATE profile SET money=money+$1 WHERE "user"=$2;',
+                    'UPDATE profile SET "money"="money"+$1 WHERE "user"=$2;',
                     stolen,
                     ctx.author.id,
                 )
                 await conn.execute(
-                    'UPDATE profile SET money=money-$1 WHERE "user"=$2;',
+                    'UPDATE profile SET "money"="money"-$1 WHERE "user"=$2;',
                     stolen,
                     usr["user"],
                 )
-                await self.bot.cache.wipe_profile(ctx.author.id)
-                await self.bot.cache.wipe_profile(usr["user"])
+                await self.bot.cache.update_profile_cols_rel(
+                    ctx.author.id, money=stolen
+                )
+                await self.bot.cache.update_profile_cols_rel(usr["user"], money=-stolen)
+                await self.bot.log_transaction(
+                    ctx,
+                    from_=usr["user"],
+                    to=ctx.author.id,
+                    subject="money",
+                    data={"Amount": stolen},
+                    conn=conn,
+                )
             user = await self.bot.get_user_global(usr["user"])
             await ctx.send(
                 _("You stole **${stolen}** from {user}.").format(
                     stolen=stolen,
                     user=f"**{user}**" if user else _("a traveller just passing by"),
                 )
-            )
-            await self.bot.log_transaction(
-                ctx,
-                from_=usr["user"],
-                to=ctx.author.id,
-                subject="money",
-                data={"Amount": stolen},
             )
         else:
             await ctx.send(_("Your attempt to steal money wasn't successful."))
@@ -441,7 +453,7 @@ class Classes(commands.Cog):
                 item[1],
                 ctx.author.id,
             )
-            await self.bot.cache.wipe_profile(ctx.author.id)
+            await self.bot.cache.update_profile_cols_rel(ctx.author.id, money=-item[1])
             await conn.execute(
                 'UPDATE pets SET "food"=CASE WHEN "food"+$1>=100 THEN 100 ELSE'
                 ' "food"+$1 END WHERE "user"=$2;',
@@ -454,6 +466,7 @@ class Classes(commands.Cog):
                 to=2,
                 subject="money",
                 data={"Amount": item[1]},
+                conn=conn,
             )
         await ctx.send(
             _(
@@ -498,7 +511,7 @@ class Classes(commands.Cog):
                 item[1],
                 ctx.author.id,
             )
-            await self.bot.cache.wipe_profile(ctx.author.id)
+            await self.bot.cache.update_profile_cols_rel(ctx.author.id, money=-item[1])
             await conn.execute(
                 'UPDATE pets SET "drink"=CASE WHEN "drink"+$1>=100 THEN 100 ELSE'
                 ' "drink"+$1 END WHERE "user"=$2;',
@@ -511,6 +524,7 @@ class Classes(commands.Cog):
                 to=2,
                 subject="money",
                 data={"Amount": item[1]},
+                conn=conn,
             )
         await ctx.send(
             _(
