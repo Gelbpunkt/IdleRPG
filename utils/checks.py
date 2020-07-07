@@ -415,7 +415,9 @@ def update_pet() -> "_CheckDecorator":
                         classes,
                         ctx.author.id,
                     )
-                    await ctx.bot.cache.wipe_profile(ctx.author.id)
+                    await ctx.bot.cache.update_profile_cols_abs(
+                        ctx.author.id, class_=classes
+                    )
                     raise PetDied()
                 elif data["love"] < 75 and random.randint(0, 99) > data["love"]:
                     classes[idx] = "No Class"
@@ -427,7 +429,9 @@ def update_pet() -> "_CheckDecorator":
                         classes,
                         ctx.author.id,
                     )
-                    await ctx.bot.cache.wipe_profile(ctx.author.id)
+                    await ctx.bot.cache.update_profile_cols_abs(
+                        ctx.author.id, class_=classes
+                    )
                     raise PetRanAway()
         return True
 
