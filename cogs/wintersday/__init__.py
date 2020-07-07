@@ -97,6 +97,7 @@ class Christmas(commands.Cog):
                     'UPDATE profile SET "puzzles"="puzzles"+1 WHERE "user"=$1;',
                     ctx.author.id,
                 )
+                await self.bot.cache.update_profile_cols_rel(ctx.author.id, puzzles=1)
                 text = _("A mysterious puzzle piece")
                 reward_text = f"{reward_text}\n- {text}"
             if reward["crates"]:
@@ -113,6 +114,10 @@ class Christmas(commands.Cog):
                     to=ctx.author.id,
                     subject="crates",
                     data={"Rarity": rarity, "Amount": reward["crates"]},
+                    conn=conn,
+                )
+                await self.bot.cache.update_profile_cols_rel(
+                    ctx.author.id, **{f"crates_{rarity}": reward["crates"]}
                 )
                 text = _("{crates} {rarity} crates").format(
                     crates=reward["crates"], rarity=rarity
@@ -130,14 +135,21 @@ class Christmas(commands.Cog):
                     to=ctx.author.id,
                     subject="money",
                     data={"Amount": reward["money"]},
+                    conn=conn,
+                )
+                await self.bot.cache.update_profile_cols_rel(
+                    ctx.author.id, money=reward["money"]
                 )
                 reward_text = f"{reward_text}\n- ${reward['money']}"
             if today.day == 24:
-                await conn.execute(
+                bgs = await conn.fetchval(
                     'UPDATE profile SET "backgrounds"=array_append("backgrounds", $1)'
-                    ' WHERE "user"=$2;',
+                    ' WHERE "user"=$2 RETURNING "backgrounds";',
                     "https://i.imgur.com/HAhZmqv.png",
                     ctx.author.id,
+                )
+                await self.bot.cache.update_profile_cols_abs(
+                    ctx.author.id, backgrounds=bgs
                 )
                 text = _(
                     "A special surprise - check out `{prefix}eventbackground` for a new"
@@ -151,35 +163,33 @@ class Christmas(commands.Cog):
     @locale_doc
     async def combine(self, ctx):
         _("""Combine the mysterious puzzle pieces.""")
-        async with self.bot.pool.acquire() as conn:
-            if (
-                await conn.fetchval(
-                    'SELECT puzzles FROM profile WHERE "user"=$1;', ctx.author.id
+        if ctx.character_data["puzzles"] != 6:
+            return await ctx.send(
+                _(
+                    "The mysterious puzzles don't fit together... Maybe some are"
+                    " missing?"
                 )
-                != 6
-            ):
-                return await ctx.send(
-                    _(
-                        "The mysterious puzzles don't fit together... Maybe some are"
-                        " missing?"
-                    )
-                )
-            bg = random.choice(
-                [
-                    "https://i.imgur.com/iLJEGOf.png",
-                    "https://i.imgur.com/LDax1ag.png",
-                    "https://i.imgur.com/FpWXBev.png",
-                ]
             )
-            await conn.execute(
+        bg = random.choice(
+            [
+                "https://i.imgur.com/iLJEGOf.png",
+                "https://i.imgur.com/LDax1ag.png",
+                "https://i.imgur.com/FpWXBev.png",
+            ]
+        )
+        async with self.bot.pool.acquire() as conn:
+            bgs = await conn.fetchval(
                 "UPDATE profile SET backgrounds=array_append(backgrounds, $1) WHERE"
-                ' "user"=$2;',
+                ' "user"=$2 RETURNING "backgrounds";',
                 bg,
                 ctx.author.id,
             )
             await conn.execute(
-                'UPDATE profile SET puzzles=0 WHERE "user"=$1;', ctx.author.id
+                'UPDATE profile SET "puzzles"=0 WHERE "user"=$1;', ctx.author.id
             )
+        await self.bot.cache.update_profile_cols_abs(
+            ctx.author.id, backgrounds=bgs, puzzles=0
+        )
         await ctx.send(
             _(
                 "You combined the puzzles! In your head a voice whispers: *Well done."
@@ -195,15 +205,11 @@ class Christmas(commands.Cog):
         _("""Make a snowball fights against another guild.""")
         if enemy is ctx.author:
             return await ctx.send(_("You may not fight yourself."))
+        guild1 = ctx.character_data["guild"]
+        guild2, rank2 = ctx.user_data["guild"], ctx.user_data["guildrank"]
+        if rank2 == "Member":
+            return await ctx.send(_("The enemy must be an officer or higher."))
         async with self.bot.pool.acquire() as conn:
-            guild1, rank1 = await conn.fetchval(
-                'SELECT (guild, guildrank) FROM profile WHERE "user"=$1;', ctx.author.id
-            )
-            guild2, rank2 = await conn.fetchval(
-                'SELECT (guild, guildrank) FROM profile WHERE "user"=$1;', enemy.id
-            )
-            if rank2 == "Member":
-                return await ctx.send(_("The enemy must be an officer or higher."))
             guild1 = await conn.fetchrow('SELECT * FROM guild WHERE "id"=$1;', guild1)
             guild2 = await conn.fetchrow('SELECT * FROM guild WHERE "id"=$1;', guild2)
             guild1_members = [

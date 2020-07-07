@@ -172,15 +172,28 @@ class RouletteGame:
             self.money,
             self.ctx.author.id,
         )
-        await self.ctx.bot.cache.wipe_profile(self.ctx.author.id)
+        await self.ctx.bot.cache.update_profile_cols_rel(
+            self.ctx.author.id, money=-self.money
+        )
 
     async def handle_win(self):
-        await self.ctx.bot.pool.execute(
-            'UPDATE profile SET "money"="money"+$1 WHERE "user"=$2;',
-            self.money * (self.payout + 1),
-            self.ctx.author.id,
+        async with self.ctx.bot.pool.acquire() as conn:
+            await conn.execute(
+                'UPDATE profile SET "money"="money"+$1 WHERE "user"=$2;',
+                self.money * (self.payout + 1),
+                self.ctx.author.id,
+            )
+            await self.ctx.bot.log_transaction(
+                self.ctx,
+                from_=1,
+                to=self.ctx.author.id,
+                subject="gambling",
+                data={"Amount": self.money * self.payout},
+                conn=conn,
+            )
+        await self.ctx.bot.cache.update_profile_cols_rel(
+            self.ctx.author.id, money=self.money * (self.payout + 1)
         )
-        await self.ctx.bot.cache.wipe_profile(self.ctx.author.id)
         await self.message.edit(
             content=_(
                 "It's a :{colour}_circle: {number}! You won **${money}**!"
@@ -189,13 +202,6 @@ class RouletteGame:
                 number=self.result,
                 money=self.money * self.payout,
             )
-        )
-        await self.ctx.bot.log_transaction(
-            self.ctx,
-            from_=1,
-            to=self.ctx.author.id,
-            subject="gambling",
-            data={"Amount": self.money * self.payout},
         )
 
     async def handle_loss(self):

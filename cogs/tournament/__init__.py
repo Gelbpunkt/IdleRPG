@@ -63,8 +63,11 @@ class Tournament(commands.Cog):
             return await ctx.send(_("You are too poor."))
 
         await self.bot.pool.execute(
-            'UPDATE profile SET money=money-$1 WHERE "user"=$2;', prize, ctx.author.id,
+            'UPDATE profile SET "money"="money"-$1 WHERE "user"=$2;',
+            prize,
+            ctx.author.id,
         )
+        await self.bot.cache.update_profile_cols_rel(ctx.author.id, money=-prize)
 
         if ctx.channel.id == self.bot.config.official_tournament_channel_id:
             id_ = await self.bot.start_joins()
@@ -78,9 +81,7 @@ class Tournament(commands.Cog):
             participants = []
             async with self.bot.pool.acquire() as conn:
                 for u in a_participants:
-                    if await conn.fetchrow(
-                        'SELECT "user" FROM profile WHERE "user"=$1;', u.id
-                    ):
+                    if await self.bot.cache.get_profile(u.id, conn=conn):
                         participants.append(u)
 
         else:
@@ -112,9 +113,12 @@ class Tournament(commands.Cog):
                     if len(participants) < 2:
                         await self.bot.reset_cooldown(ctx)
                         await self.bot.pool.execute(
-                            'UPDATE profile SET money=money+$1 WHERE "user"=$2;',
+                            'UPDATE profile SET "money"="money"+$1 WHERE "user"=$2;',
                             prize,
                             ctx.author.id,
+                        )
+                        await self.bot.cache.update_profile_cols_rel(
+                            ctx.author.id, money=prize
                         )
                         return await ctx.send(
                             _("Noone joined your tournament {author}.").format(
@@ -155,12 +159,13 @@ class Tournament(commands.Cog):
             for match in matches:
                 await ctx.send(f"{match[0].mention} {text} {match[1].mention}")
                 await asyncio.sleep(2)
-                val1 = sum(
-                    await self.bot.get_damage_armor_for(match[0])
-                ) + random.randint(1, 7)
-                val2 = sum(
-                    await self.bot.get_damage_armor_for(match[1])
-                ) + random.randint(1, 7)
+                async with self.bot.pool.acquire() as conn:
+                    val1 = sum(
+                        await self.bot.get_damage_armor_for(match[0], conn=conn)
+                    ) + random.randint(1, 7)
+                    val2 = sum(
+                        await self.bot.get_damage_armor_for(match[1], conn=conn)
+                    ) + random.randint(1, 7)
                 if val1 > val2:
                     winner = match[0]
                     looser = match[1]
@@ -183,18 +188,22 @@ class Tournament(commands.Cog):
                 winner=participants[0].mention
             )
         )
-        await self.bot.pool.execute(
-            'UPDATE profile SET money=money+$1 WHERE "user"=$2;',
-            prize,
-            participants[0].id,
-        )
-        await self.bot.log_transaction(
-            ctx,
-            from_=ctx.author.id,
-            to=participants[0].id,
-            subject="money",
-            data={"Amount": prize},
-        )
+
+        async with self.bot.pool.acquire() as conn:
+            await conn.execute(
+                'UPDATE profile SET "money"="money"+$1 WHERE "user"=$2;',
+                prize,
+                participants[0].id,
+            )
+            await self.bot.log_transaction(
+                ctx,
+                from_=ctx.author.id,
+                to=participants[0].id,
+                subject="money",
+                data={"Amount": prize},
+                conn=conn,
+            )
+        await self.bot.cache.update_profile_cols_rel(participants[0].id, money=prize)
         await msg.edit(
             content=_(
                 "Tournament ended! The winner is {winner}.\nMoney was given!"
@@ -226,8 +235,11 @@ class Tournament(commands.Cog):
             return await ctx.send(_("You are too poor."))
 
         await self.bot.pool.execute(
-            'UPDATE profile SET money=money-$1 WHERE "user"=$2;', prize, ctx.author.id,
+            'UPDATE profile SET "money"="money"-$1 WHERE "user"=$2;',
+            prize,
+            ctx.author.id,
         )
+        await self.bot.cache.update_profile_cols_rel(ctx.author.id, money=-prize)
 
         if ctx.channel.id == self.bot.config.official_tournament_channel_id:
             id_ = await self.bot.start_joins()
@@ -241,9 +253,7 @@ class Tournament(commands.Cog):
             participants = []
             async with self.bot.pool.acquire() as conn:
                 for u in a_participants:
-                    if await conn.fetchrow(
-                        'SELECT "user" FROM profile WHERE "user"=$1;', u.id
-                    ):
+                    if await self.bot.cache.get_profile(u.id, conn=conn):
                         participants.append(u)
 
         else:
@@ -274,9 +284,12 @@ class Tournament(commands.Cog):
                     if len(participants) < 2:
                         await self.bot.reset_cooldown(ctx)
                         await self.bot.pool.execute(
-                            'UPDATE profile SET money=money+$1 WHERE "user"=$2;',
+                            'UPDATE profile SET "money"="money"+$1 WHERE "user"=$2;',
                             prize,
                             ctx.author.id,
+                        )
+                        await self.bot.cache.update_profile_cols_rel(
+                            ctx.author.id, money=prize
                         )
                         return await ctx.send(
                             _("Noone joined your raid tournament {author}.").format(
@@ -313,132 +326,129 @@ class Tournament(commands.Cog):
             participants = random.shuffle(participants)
             matches = list(chunks(participants, 2))
 
-            async with self.bot.pool.acquire() as conn:
+            for match in matches:
+                await ctx.send(f"{match[0].mention} {text} {match[1].mention}")
 
-                for match in matches:
-                    await ctx.send(f"{match[0].mention} {text} {match[1].mention}")
+                players = []
 
-                    players = []
+                async with self.bot.pool.acquire() as conn:
+                    for player in match:
+                        dmg, deff = await self.bot.get_raidstats(player, conn=conn)
+                        u = {
+                            "user": player,
+                            "hp": 250,
+                            "armor": deff,
+                            "damage": dmg,
+                        }
+                        players.append(u)
 
-                    async with self.bot.pool.acquire() as conn:
-                        for player in match:
-                            dmg, deff = await self.bot.get_raidstats(player, conn=conn)
-                            u = {
-                                "user": player,
-                                "hp": 250,
-                                "armor": deff,
-                                "damage": dmg,
-                            }
-                            players.append(u)
+                battle_log = deque(
+                    [
+                        (
+                            0,
+                            _("Raidbattle {p1} vs. {p2} started!").format(
+                                p1=players[0]["user"], p2=players[1]["user"]
+                            ),
+                        )
+                    ],
+                    maxlen=3,
+                )
 
-                    battle_log = deque(
-                        [
-                            (
-                                0,
-                                _("Raidbattle {p1} vs. {p2} started!").format(
-                                    p1=players[0]["user"], p2=players[1]["user"]
-                                ),
-                            )
-                        ],
-                        maxlen=3,
+                embed = discord.Embed(
+                    description=battle_log[0][1], color=self.bot.config.primary_colour,
+                )
+
+                log_message = await ctx.send(embed=embed)
+                await asyncio.sleep(4)
+
+                start = datetime.datetime.utcnow()
+                attacker, defender = random.shuffle(players)
+                while (
+                    attacker["hp"] > 0
+                    and defender["hp"] > 0
+                    and datetime.datetime.utcnow()
+                    < start + datetime.timedelta(minutes=5)
+                ):
+                    # this is where the fun begins
+                    dmg = (
+                        attacker["damage"]
+                        + Decimal(random.randint(0, 100))
+                        - defender["armor"]
+                    )
+                    dmg = 1 if dmg <= 0 else dmg  # make sure no negative damage happens
+                    defender["hp"] -= dmg
+                    if defender["hp"] < 0:
+                        defender["hp"] = 0
+                    battle_log.append(
+                        (
+                            battle_log[-1][0] + 1,
+                            _(
+                                "{attacker} attacks! {defender} takes **{dmg}HP**"
+                                " damage."
+                            ).format(
+                                attacker=attacker["user"].mention,
+                                defender=defender["user"].mention,
+                                dmg=dmg,
+                            ),
+                        )
                     )
 
                     embed = discord.Embed(
-                        description=battle_log[0][1],
+                        description=_(
+                            "{p1} - {hp1} HP left\n{p2} - {hp2} HP left"
+                        ).format(
+                            p1=players[0]["user"],
+                            hp1=players[0]["hp"],
+                            p2=players[1]["user"],
+                            hp2=players[1]["hp"],
+                        ),
                         color=self.bot.config.primary_colour,
                     )
 
-                    log_message = await ctx.send(embed=embed)
+                    for line in battle_log:
+                        embed.add_field(
+                            name=_("Action #{number}").format(number=line[0]),
+                            value=line[1],
+                        )
+
+                    await log_message.edit(embed=embed)
                     await asyncio.sleep(4)
+                    attacker, defender = defender, attacker  # switch places
+                if players[0]["hp"] == 0:
+                    winner = match[1]
+                    looser = match[0]
+                else:
+                    winner = match[0]
+                    looser = match[1]
+                participants.remove(looser)
+                await ctx.send(
+                    _("Winner of this match is {winner}!").format(winner=winner.mention)
+                )
+                await asyncio.sleep(2)
 
-                    start = datetime.datetime.utcnow()
-                    attacker, defender = random.shuffle(players)
-                    while (
-                        attacker["hp"] > 0
-                        and defender["hp"] > 0
-                        and datetime.datetime.utcnow()
-                        < start + datetime.timedelta(minutes=5)
-                    ):
-                        # this is where the fun begins
-                        dmg = (
-                            attacker["damage"]
-                            + Decimal(random.randint(0, 100))
-                            - defender["armor"]
-                        )
-                        dmg = (
-                            1 if dmg <= 0 else dmg
-                        )  # make sure no negative damage happens
-                        defender["hp"] -= dmg
-                        if defender["hp"] < 0:
-                            defender["hp"] = 0
-                        battle_log.append(
-                            (
-                                battle_log[-1][0] + 1,
-                                _(
-                                    "{attacker} attacks! {defender} takes **{dmg}HP**"
-                                    " damage."
-                                ).format(
-                                    attacker=attacker["user"].mention,
-                                    defender=defender["user"].mention,
-                                    dmg=dmg,
-                                ),
-                            )
-                        )
-
-                        embed = discord.Embed(
-                            description=_(
-                                "{p1} - {hp1} HP left\n{p2} - {hp2} HP left"
-                            ).format(
-                                p1=players[0]["user"],
-                                hp1=players[0]["hp"],
-                                p2=players[1]["user"],
-                                hp2=players[1]["hp"],
-                            ),
-                            color=self.bot.config.primary_colour,
-                        )
-
-                        for line in battle_log:
-                            embed.add_field(
-                                name=_("Action #{number}").format(number=line[0]),
-                                value=line[1],
-                            )
-
-                        await log_message.edit(embed=embed)
-                        await asyncio.sleep(4)
-                        attacker, defender = defender, attacker  # switch places
-                    if players[0]["hp"] == 0:
-                        winner = match[1]
-                        looser = match[0]
-                    else:
-                        winner = match[0]
-                        looser = match[1]
-                    participants.remove(looser)
-                    await ctx.send(
-                        _("Winner of this match is {winner}!").format(
-                            winner=winner.mention
-                        )
-                    )
-                    await asyncio.sleep(2)
-
-            await ctx.send(_("Round Done!"))
+        await ctx.send(_("Round Done!"))
 
         msg = await ctx.send(
             _("Raid Tournament ended! The winner is {winner}.").format(
                 winner=participants[0].mention
             )
         )
-        await self.bot.pool.execute(
-            'UPDATE profile SET money=money+$1 WHERE "user"=$2;',
-            prize,
-            participants[0].id,
-        )
-        await self.bot.log_transaction(
-            ctx,
-            from_=ctx.author.id,
-            to=participants[0].id,
-            subject="money",
-            data={"Amount": prize},
-        )
+
+        async with self.bot.pool.acquire() as conn:
+            await conn.execute(
+                'UPDATE profile SET "money"="money"+$1 WHERE "user"=$2;',
+                prize,
+                participants[0].id,
+            )
+            await self.bot.log_transaction(
+                ctx,
+                from_=ctx.author.id,
+                to=participants[0].id,
+                subject="money",
+                data={"Amount": prize},
+                conn=conn,
+            )
+        await self.bot.cache.update_profile_cols_rel(participants[0].id, money=prize)
         await msg.edit(
             content=_(
                 "Raid Tournament ended! The winner is {winner}.\nMoney was given!"
