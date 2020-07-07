@@ -200,7 +200,7 @@ class GameMaster(commands.Cog):
             await conn.execute(
                 'DELETE FROM children WHERE "father"=$1 OR "mother"=$1;', other.id
             )
-        await self.bot.pool.execute('DELETE FROM profile WHERE "user"=$1;', other.id)
+            await self.bot.delete_profile(other.id, conn=conn)
         await self.bot.cache.wipe_profile(other.id)
         if partner:
             await self.bot.cache.update_profile_cols_abs(partner, marriage=0)
