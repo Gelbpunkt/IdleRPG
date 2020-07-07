@@ -510,7 +510,7 @@ class Trading(commands.Cog):
                 data={"Amount": f"{len(itemids)} items", "Value": value},
                 conn=conn,
             )
-        await self.bot.cache.update_profile_cols_rel(ctx.author, money=value)
+        await self.bot.cache.update_profile_cols_rel(ctx.author.id, money=value)
         await ctx.send(
             _(
                 "You received **${money}** when selling item(s) `{itemids}`."

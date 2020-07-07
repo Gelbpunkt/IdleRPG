@@ -355,9 +355,8 @@ class Errorhandler(commands.Cog):
                 )
         await ctx.bot.reset_cooldown(ctx)
         if ctx.command.parent:
-            if (
-                ctx.command.root_parent.name == "guild"
-                and getattr(ctx, "character_data") is not None
+            if ctx.command.root_parent.name == "guild" and hasattr(
+                ctx, "character_data"
             ):
                 await self.bot.reset_guild_cooldown(ctx)
             elif ctx.command.root_parent.name == "alliance":
