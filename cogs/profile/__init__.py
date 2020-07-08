@@ -1141,7 +1141,6 @@ IdleRPG is a global bot, your characters are valid everywhere"""
         await self.bot.cache.wipe_profile(ctx.author.id)
         if partner:
             await self.bot.cache.update_profile_cols_abs(partner, marriage=0)
-        await ctx.send(_("Successfully deleted the character."))
         await self.bot.delete_adventure(ctx.author)
         await ctx.send(
             _("Successfully deleted your character. Sorry to see you go :frowning:")
