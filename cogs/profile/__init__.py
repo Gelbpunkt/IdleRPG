@@ -1104,7 +1104,7 @@ IdleRPG is a global bot, your characters are valid everywhere"""
             Deleting your character also removes:
               - Your guild if you own one
               - Your alliance's city ownership
-              - Your partner and children"""
+              - Your marriage and children"""
         )
         if not await ctx.confirm(
             _(
