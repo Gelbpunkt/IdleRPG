@@ -20,7 +20,6 @@ import asyncio
 import discord
 
 from discord import utils
-from discord.activity import create_activity
 from discord.ext import commands
 
 from classes.converters import MemberConverter, User
@@ -68,67 +67,31 @@ class GlobalEvents(commands.Cog):
         """Replacement for hacky https://github.com/Rapptz/discord.py/blob/master/discord/state.py#L547"""
         guild_id = utils._get_as_snowflake(data, "guild_id")
         guild = self.bot._connection._get_guild(guild_id)
-        if guild is None:
-            print("NO GUILD")
+        user_data = data["user"]
+        member_id = int(user_data["id"])
+        user = self.bot.get_user(member_id)
+        if guild is None and user is None:
             return
-
-        user = data["user"]
-        member_id = int(user["id"])
-        member = guild.get_member(member_id)
-        if member is None:
-            if "username" not in user:
-                # sometimes we receive 'incomplete' member data post-removal.
-                # skip these useless cases.
-                print("NO USERNAME")
-                return
-
-            # https://github.com/Rapptz/discord.py/blob/master/discord/member.py#L214
-            clone = discord.Member(data=data, guild=guild, state=self.bot._connection)
-            to_return = discord.Member(
-                data=data, guild=guild, state=self.bot._connection
-            )
-            to_return._client_status = {
-                key: value for key, value in data.get("client_status", {}).items()
-            }
-            # to_return._client_status[None] = data['status']
-            to_return._client_status[None] = "online"
-            member, old_member = to_return, clone
-
-            print("ADDED MEMBER TO GUILD")
-            guild._add_member(member)
+        elif guild is None and user is not None:
+            user.name = user_data["username"]
+            user.discriminator = user_data["discriminator"]
+            user.avatar = user_data["avatar"]
         else:
-            old_member = discord.Member._copy(member)
+            member = guild.get_member(member_id)
+            if member is None:
+                if "username" not in user_data:
+                    # sometimes we receive 'incomplete' member data post-removal.
+                    # skip these useless cases.
+                    return
 
-            # https://github.com/Rapptz/discord.py/blob/master/discord/member.py#L260
-            member.activities = tuple(map(create_activity, data.get("activities", [])))
-            member._client_status = {
-                key: value for key, value in data.get("client_status", {}).items()
-            }
-            # member._client_status[None] = data['status']
-            member._client_status[None] = "online"
-
-            if len(user) > 1:
-                u = member._user
-                original = (u.name, u.avatar, u.discriminator)
-                # These keys seem to always be available
-                modified = (user["username"], user["avatar"], user["discriminator"])
-                if original != modified:
-                    to_return = discord.User._copy(member._user)
-                    u.name, u.avatar, u.discriminator = modified
-                    # Signal to dispatch on_user_update
-                    user_update = to_return, u
-                else:
-                    user_update = False
-            else:
-                user_update = False
-            if user_update:
-                self.bot._connection.dispatch(
-                    "user_update", user_update[0], user_update[1]
+                # https://github.com/Rapptz/discord.py/blob/master/discord/member.py#L214
+                member = discord.Member(
+                    data=data, guild=guild, state=self.bot._connection
                 )
-
-            print("COPIED MEMBER")
-
-        self.bot._connection.dispatch("member_update", old_member, member)
+                guild._add_member(member)
+            member._user.name = user_data["username"]
+            member._user.discriminator = user_data["discriminator"]
+            member._user.avatar = user_data["avatar"]
 
     @commands.Cog.listener()
     async def on_socket_response(self, data):
