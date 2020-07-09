@@ -19,6 +19,8 @@ import asyncio
 
 import discord
 
+from discord import utils
+from discord.activity import create_activity
 from discord.ext import commands
 
 from classes.converters import MemberConverter, User
@@ -62,6 +64,72 @@ class GlobalEvents(commands.Cog):
         else:
             self.bot.logger.warning("[INFO] Discord fired on_ready...")
 
+    def parse_member_update(self, data):
+        """Replacement for hacky https://github.com/Rapptz/discord.py/blob/master/discord/state.py#L547"""
+        guild_id = utils._get_as_snowflake(data, "guild_id")
+        guild = self.bot._connection._get_guild(guild_id)
+        if guild is None:
+            print("NO GUILD")
+            return
+
+        user = data["user"]
+        member_id = int(user["id"])
+        member = guild.get_member(member_id)
+        if member is None:
+            if "username" not in user:
+                # sometimes we receive 'incomplete' member data post-removal.
+                # skip these useless cases.
+                print("NO USERNAME")
+                return
+
+            # https://github.com/Rapptz/discord.py/blob/master/discord/member.py#L214
+            clone = discord.Member(data=data, guild=guild, state=self.bot._connection)
+            to_return = discord.Member(
+                data=data, guild=guild, state=self.bot._connection
+            )
+            to_return._client_status = {
+                key: value for key, value in data.get("client_status", {}).items()
+            }
+            # to_return._client_status[None] = data['status']
+            to_return._client_status[None] = "online"
+            member, old_member = to_return, clone
+
+            print("ADDED MEMBER TO GUILD")
+            guild._add_member(member)
+        else:
+            old_member = discord.Member._copy(member)
+
+            # https://github.com/Rapptz/discord.py/blob/master/discord/member.py#L260
+            member.activities = tuple(map(create_activity, data.get("activities", [])))
+            member._client_status = {
+                key: value for key, value in data.get("client_status", {}).items()
+            }
+            # member._client_status[None] = data['status']
+            member._client_status[None] = "online"
+
+            if len(user) > 1:
+                u = member._user
+                original = (u.name, u.avatar, u.discriminator)
+                # These keys seem to always be available
+                modified = (user["username"], user["avatar"], user["discriminator"])
+                if original != modified:
+                    to_return = discord.User._copy(member._user)
+                    u.name, u.avatar, u.discriminator = modified
+                    # Signal to dispatch on_user_update
+                    user_update = to_return, u
+                else:
+                    user_update = False
+            else:
+                user_update = False
+            if user_update:
+                self.bot._connection.dispatch(
+                    "user_update", user_update[0], user_update[1]
+                )
+
+            print("COPIED MEMBER")
+
+        self.bot._connection.dispatch("member_update", old_member, member)
+
     @commands.Cog.listener()
     async def on_socket_response(self, data):
         if data["t"] != "GUILD_MEMBER_UPDATE":
@@ -70,6 +138,7 @@ class GlobalEvents(commands.Cog):
         user = data["d"]["user"]
         user_id = int(user["id"])
 
+        self.parse_member_update(data["d"])
         # Wipe the cache for the converters
         MemberConverter.convert.invalidate_value(lambda member: member.id == user_id)
         User.convert.invalidate_value(lambda user: user.id == user_id)
