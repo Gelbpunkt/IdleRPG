@@ -418,12 +418,14 @@ class Raid(commands.Cog):
             try:
                 await summary_msg.publish()
             except discord.Forbidden:
-                await ctx.send(
+                await summary_channel.send(
                     "Error! Couldn't publish message. Please publish manually"
                     f" {ctx.author.mention}"
                 )
             else:
-                await ctx.send("Message has been published!", delete_after=10)
+                await summary_channel.send(
+                    "Message has been published!", delete_after=10
+                )
 
         self.boss = None
 
