@@ -77,6 +77,7 @@ class Crates(commands.Cog):
             )
         )
 
+    @commands.cooldown(1, 10, commands.BucketType.user)
     @has_char()
     @commands.command(name="open", brief=_("Open a crate"))
     @locale_doc
