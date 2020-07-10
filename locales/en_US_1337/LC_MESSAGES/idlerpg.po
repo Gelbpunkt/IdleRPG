@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-07-07 17:02+0200\n"
+"POT-Creation-Date: 2020-07-10 20:08+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -67,7 +67,7 @@ msgstr ""
 #: cogs/tournament/__init__.py:63 cogs/tournament/__init__.py:235
 #: cogs/battles/__init__.py:63 cogs/battles/__init__.py:200
 #: cogs/battles/__init__.py:403 cogs/gambling/__init__.py:532
-#: cogs/profile/__init__.py:1020 cogs/game_master/__init__.py:524
+#: cogs/profile/__init__.py:1021 cogs/game_master/__init__.py:524
 #: cogs/transaction/__init__.py:293 cogs/transaction/__init__.py:362
 msgid "You are too poor."
 msgstr "Y0u 4r3 700 p00r."
@@ -407,7 +407,7 @@ msgstr ""
 msgid "Seems you haven't got a trick or treat bag yet. Go get some!"
 msgstr "533m5 y0u h4v3n'7 607 4 7r1ck 0r 7r347 b46 y37. 60 637 50m3!"
 
-#: cogs/halloween/__init__.py:178 cogs/crates/__init__.py:165
+#: cogs/halloween/__init__.py:178 cogs/crates/__init__.py:174
 #: cogs/classes/__init__.py:696 cogs/valentine/__init__.py:164
 msgid "You gained an item!"
 msgstr "Y0u 641n3d 4n 173m!"
@@ -416,32 +416,32 @@ msgstr "Y0u 641n3d 4n 173m!"
 msgid "You found a new item when opening a trick-or-treat bag!"
 msgstr "Y0u f0und 4 n3w 173m wh3n 0p3n1n6 4 7r1ck-0r-7r347 b46!"
 
-#: cogs/halloween/__init__.py:183 cogs/crates/__init__.py:171
+#: cogs/halloween/__init__.py:183 cogs/crates/__init__.py:180
 #: cogs/classes/__init__.py:408 cogs/classes/__init__.py:702
 #: cogs/trading/__init__.py:321 cogs/trading/__init__.py:638
 #: cogs/valentine/__init__.py:170
 msgid "Name"
 msgstr "N4m3"
 
-#: cogs/halloween/__init__.py:184 cogs/crates/__init__.py:172
+#: cogs/halloween/__init__.py:184 cogs/crates/__init__.py:181
 #: cogs/classes/__init__.py:703 cogs/trading/__init__.py:322
 #: cogs/trading/__init__.py:639 cogs/valentine/__init__.py:171
 msgid "Type"
 msgstr "7yp3"
 
-#: cogs/halloween/__init__.py:185 cogs/crates/__init__.py:173
+#: cogs/halloween/__init__.py:185 cogs/crates/__init__.py:182
 #: cogs/classes/__init__.py:707 cogs/trading/__init__.py:323
 #: cogs/trading/__init__.py:640 cogs/valentine/__init__.py:175
 msgid "Damage"
 msgstr "D4m463"
 
-#: cogs/halloween/__init__.py:186 cogs/crates/__init__.py:174
+#: cogs/halloween/__init__.py:186 cogs/crates/__init__.py:183
 #: cogs/classes/__init__.py:705 cogs/trading/__init__.py:324
 #: cogs/trading/__init__.py:641 cogs/valentine/__init__.py:173
 msgid "Armor"
 msgstr "4rm0r"
 
-#: cogs/halloween/__init__.py:187 cogs/crates/__init__.py:175
+#: cogs/halloween/__init__.py:187 cogs/crates/__init__.py:184
 #: cogs/classes/__init__.py:708 cogs/trading/__init__.py:325
 #: cogs/trading/__init__.py:642 cogs/valentine/__init__.py:176
 msgid "Value"
@@ -1041,62 +1041,74 @@ msgstr ""
 "\n"
 " U53 `{prefix}open [rarity]` 70 0p3n 0n3!"
 
-#: cogs/crates/__init__.py:81
+#: cogs/crates/__init__.py:82
 msgid "Open a crate"
 msgstr "0p3n 4 cr473"
 
-#: cogs/crates/__init__.py:85
+#: cogs/crates/__init__.py:88
 #, python-brace-format
 msgid ""
 "`[rarity]` - the crate's rarity to open, can be common, uncommon, rare, "
 "magic or legendary; defaults to common\n"
+"            `[amount]` - the amount of crates to open, may be in range from "
+"1 to 100 at once\n"
 "\n"
 "            Open one of your crates to receive a weapon. To check which "
 "crates contain which items, check `{prefix}help crates`.\n"
 "            This command takes up a lot of space, so choose a spammy channel "
 "to open crates."
 msgstr ""
-"`[r4r17y]` - 7h3 cr473'5 r4r17y 70 0p3n, c4n b3 c0mm0n, unc0mm0n, r4r3, "
-"m461c 0r l363nd4ry; d3f4ul75 70 c0mm0n\n"
-"\n"
-"            0p3n 0n3 0f y0ur cr4735 70 r3c31v3 4 w34p0n. 70 ch3ck wh1ch "
-"cr4735 c0n741n wh1ch 173m5, ch3ck `{prefix}help crates`.\n"
-"            7h15 c0mm4nd 74k35 up 4 l07 0f 5p4c3, 50 ch0053 4 5p4mmy ch4nn3l "
-"70 0p3n cr4735."
 
-#: cogs/crates/__init__.py:92 cogs/crates/__init__.py:227
+#: cogs/crates/__init__.py:96 cogs/crates/__init__.py:268
 #: cogs/game_master/__init__.py:326
 #, python-brace-format
 msgid "{rarity} is not a valid rarity."
 msgstr "{rarity} 15 n07 4 v4l1d r4r17y."
 
-#: cogs/crates/__init__.py:97
+#: cogs/crates/__init__.py:101
+#, python-brace-format
 msgid ""
-"Seems like you don't have any crate of this rarity yet. Vote me up to get a "
-"random one or find them!"
+"Seems like you don't have {amount} crate(s) of this rarity yet. Vote me up "
+"to get a random one or find them!"
 msgstr ""
-"533m5 l1k3 y0u d0n'7 h4v3 4ny cr473 0f 7h15 r4r17y y37. V073 m3 up 70 637 4 "
-"r4nd0m 0n3 0r f1nd 7h3m!"
 
-#: cogs/crates/__init__.py:166
+#: cogs/crates/__init__.py:175
 msgid "You found a new item when opening a crate!"
 msgstr "Y0u f0und 4 n3w 173m wh3n 0p3n1n6 4 cr473!"
 
-#: cogs/crates/__init__.py:170 cogs/classes/__init__.py:701
+#: cogs/crates/__init__.py:179 cogs/classes/__init__.py:701
 #: cogs/valentine/__init__.py:169
 msgid "ID"
 msgstr "1D"
 
-#: cogs/crates/__init__.py:177
+#: cogs/crates/__init__.py:186
 #, python-brace-format
 msgid "Remaining {rarity} crates: {crates}"
 msgstr "R3m41n1n6 {rarity} cr4735: {crates}"
 
-#: cogs/crates/__init__.py:201
+#: cogs/crates/__init__.py:218
+#, python-brace-format
+msgid ""
+"Successfully opened {amount} {rarity} crates. Average stat: {average_stat}\n"
+"Most common stats:\n"
+"```\n"
+"{most_common}\n"
+"```\n"
+"Best stats:\n"
+"```\n"
+"{top}\n"
+"```\n"
+"Types:\n"
+"```\n"
+"{most_common_types}\n"
+"```"
+msgstr ""
+
+#: cogs/crates/__init__.py:242
 msgid "Give crates to someone"
 msgstr "61v3 cr4735 70 50m30n3"
 
-#: cogs/crates/__init__.py:211
+#: cogs/crates/__init__.py:252
 #, python-brace-format
 msgid ""
 "`<other>` - A user with a character\n"
@@ -1121,21 +1133,21 @@ msgstr ""
 
 #. preserve deletion of admins
 #. preserve renaming of admins
-#: cogs/crates/__init__.py:220 cogs/guild/__init__.py:388
+#: cogs/crates/__init__.py:261 cogs/guild/__init__.py:388
 #: cogs/guild/__init__.py:425 cogs/game_master/__init__.py:175
 #: cogs/game_master/__init__.py:224
 msgid "Very funny..."
 msgstr "V3ry funny..."
 
-#: cogs/crates/__init__.py:223 cogs/profile/__init__.py:1017
+#: cogs/crates/__init__.py:264 cogs/profile/__init__.py:1018
 msgid "For me? I'm flattered, but I can't accept this..."
 msgstr "F0r m3? 1'm fl4773r3d, bu7 1 c4n'7 4cc3p7 7h15..."
 
-#: cogs/crates/__init__.py:230
+#: cogs/crates/__init__.py:271
 msgid "You don't have any crates of this rarity."
 msgstr "Y0u d0n'7 h4v3 4ny cr4735 0f 7h15 r4r17y."
 
-#: cogs/crates/__init__.py:260
+#: cogs/crates/__init__.py:301
 #, python-brace-format
 msgid "Successfully gave {amount} {rarity} crate(s) to {other}."
 msgstr "5ucc355fully 64v3 {amount} {rarity} cr473(5) 70 {other}."
@@ -3407,48 +3419,48 @@ msgstr "N07h1n6 70 4c71v473."
 msgid "Successfully activated {types} for the next **24 hours**!"
 msgstr "5ucc355fully 4c71v473d {types} f0r 7h3 n3x7 **24 h0ur5**!"
 
-#: cogs/help/__init__.py:126
+#: cogs/help/__init__.py:127
 msgid "Subcommands"
 msgstr ""
 
-#: cogs/help/__init__.py:139
+#: cogs/help/__init__.py:140
 #, python-brace-format
 msgid "Click on the reactions to see more subcommands. | Page {start}/{end}"
 msgstr ""
 
-#: cogs/help/__init__.py:181
+#: cogs/help/__init__.py:182
 msgid "View the command list"
 msgstr "V13w 7h3 c0mm4nd l157"
 
-#: cogs/help/__init__.py:184
+#: cogs/help/__init__.py:185
 msgid "Sends a link to the official documentation."
 msgstr "53nd5 4 l1nk 70 7h3 0ff1c14l d0cum3n74710n."
 
-#: cogs/help/__init__.py:187
+#: cogs/help/__init__.py:188
 #, python-brace-format
 msgid "<:blackcheck:441826948919066625> **Check {url} for a list of commands**"
 msgstr ""
 "<:bl4ckch3ck:441826948919066625> **Ch3ck {url} f0r 4 l157 0f c0mm4nd5**"
 
-#: cogs/help/__init__.py:192
+#: cogs/help/__init__.py:193
 msgid "View the tutorial"
 msgstr "V13w 7h3 7u70r14l"
 
-#: cogs/help/__init__.py:195
+#: cogs/help/__init__.py:196
 msgid "Link to the bot tutorial and FAQ."
 msgstr "L1nk 70 7h3 b07 7u70r14l 4nd F4Q."
 
-#: cogs/help/__init__.py:198
+#: cogs/help/__init__.py:199
 #, python-brace-format
 msgid "<:blackcheck:441826948919066625> **Check {url} for a tutorial and FAQ**"
 msgstr ""
 "<:bl4ckch3ck:441826948919066625> **Ch3ck {url} f0r 4 7u70r14l 4nd F4Q**"
 
-#: cogs/help/__init__.py:204
+#: cogs/help/__init__.py:205
 msgid "Allow someone/-thing to use helpme again"
 msgstr "4ll0w 50m30n3/-7h1n6 70 u53 h3lpm3 4641n"
 
-#: cogs/help/__init__.py:208
+#: cogs/help/__init__.py:209
 #, python-brace-format
 msgid ""
 "`<thing_to_unban>` - A discord User, their User ID, or a server ID\n"
@@ -3465,16 +3477,16 @@ msgstr ""
 "\n"
 "            0nly 5upp0r7 734m M3mb3r5 c4n u53 7h15 c0mm4nd."
 
-#: cogs/help/__init__.py:221
+#: cogs/help/__init__.py:222
 #, python-brace-format
 msgid "{thing} has been unbanned for the helpme command :ok_hand:"
 msgstr "{thing} h45 b33n unb4nn3d f0r 7h3 h3lpm3 c0mm4nd :0k_h4nd:"
 
-#: cogs/help/__init__.py:227
+#: cogs/help/__init__.py:228
 msgid "Ban someone/-thing from using helpme"
 msgstr "B4n 50m30n3/-7h1n6 fr0m u51n6 h3lpm3"
 
-#: cogs/help/__init__.py:231
+#: cogs/help/__init__.py:232
 #, python-brace-format
 msgid ""
 "`<thing_to_ban>` - A discord User, their User ID, or a server ID\n"
@@ -3489,20 +3501,20 @@ msgstr ""
 "\n"
 "            0nly 5upp0r7 734m M3mb3r5 c4n u53 7h15 c0mm4nd."
 
-#: cogs/help/__init__.py:245
+#: cogs/help/__init__.py:246
 msgid "Error... Maybe they're already banned?"
 msgstr "3rr0r... M4yb3 7h3y'r3 4lr34dy b4nn3d?"
 
-#: cogs/help/__init__.py:247
+#: cogs/help/__init__.py:248
 #, python-brace-format
 msgid "{thing} has been banned for the helpme command :ok_hand:"
 msgstr "{thing} h45 b33n b4nn3d f0r 7h3 h3lpm3 c0mm4nd :0k_h4nd:"
 
-#: cogs/help/__init__.py:254
+#: cogs/help/__init__.py:255
 msgid "Ask our Support Team for help"
 msgstr "45k 0ur 5upp0r7 734m f0r h3lp"
 
-#: cogs/help/__init__.py:259
+#: cogs/help/__init__.py:260
 msgid ""
 "`<text>` - The text to describe the question or the issue you are having\n"
 "\n"
@@ -3524,7 +3536,7 @@ msgstr ""
 "            M4k3 5ur3 7h3 b07 h45 p3rm15510n5 70 cr3473 1n574n7 1nv1735.\n"
 "            3n6l15h 15 pr3f3rr3d."
 
-#: cogs/help/__init__.py:271
+#: cogs/help/__init__.py:272
 #, python-brace-format
 msgid ""
 "You server already has a helpme request open! Please wait until the support "
@@ -3533,11 +3545,11 @@ msgstr ""
 "Y0u 53rv3r 4lr34dy h45 4 h3lpm3 r3qu357 0p3n! Pl3453 w417 un71l 7h3 5upp0r7 "
 "734m 6375 70 y0u 0r w417 {time} 70 7ry 4641n. "
 
-#: cogs/help/__init__.py:282
+#: cogs/help/__init__.py:283
 msgid "You or your server has been blacklisted for some reason."
 msgstr "Y0u 0r y0ur 53rv3r h45 b33n bl4ckl1573d f0r 50m3 r3450n."
 
-#: cogs/help/__init__.py:287
+#: cogs/help/__init__.py:288
 msgid ""
 "Are you sure? This will notify our support team and allow them to join the "
 "server."
@@ -3545,19 +3557,19 @@ msgstr ""
 "4r3 y0u 5ur3? 7h15 w1ll n071fy 0ur 5upp0r7 734m 4nd 4ll0w 7h3m 70 j01n 7h3 "
 "53rv3r."
 
-#: cogs/help/__init__.py:296
+#: cogs/help/__init__.py:297
 msgid "Error when creating Invite."
 msgstr "3rr0r wh3n cr3471n6 1nv173."
 
-#: cogs/help/__init__.py:312
+#: cogs/help/__init__.py:313
 msgid "Support team has been notified and will join as soon as possible!"
 msgstr "5upp0r7 734m h45 b33n n071f13d 4nd w1ll j01n 45 500n 45 p0551bl3!"
 
-#: cogs/help/__init__.py:316
+#: cogs/help/__init__.py:317
 msgid "Finish the helpme request"
 msgstr "F1n15h 7h3 h3lpm3 r3qu357"
 
-#: cogs/help/__init__.py:320
+#: cogs/help/__init__.py:321
 msgid ""
 "`<guild_id>` - The server ID of the requesting server\n"
 "\n"
@@ -3569,11 +3581,11 @@ msgstr ""
 "            Cl34r 4 53rv3r'5 h3lpm3 c00ld0wn. 1f 7h15 15 n07 d0n3, 7h3y w1ll "
 "b3 0n c00ld0wn f0r 48 h0ur5."
 
-#: cogs/help/__init__.py:328
+#: cogs/help/__init__.py:329
 msgid "Change your helpme text"
 msgstr "Ch4n63 y0ur h3lpm3 73x7"
 
-#: cogs/help/__init__.py:332
+#: cogs/help/__init__.py:333
 msgid ""
 "`<new_text>` - The new text to use in your helpme request\n"
 "\n"
@@ -3591,16 +3603,16 @@ msgstr ""
 "            Y0u c4n 0nly u53 7h15 c0mm4nd 1f y0ur 53rv3r h45 4n 0p3n h3lpm3 "
 "r3qu357."
 
-#: cogs/help/__init__.py:360
+#: cogs/help/__init__.py:361
 #, python-brace-format
 msgid "Successfully changed your helpme text from `{old}` to `{new}`!"
 msgstr "5ucc355fully ch4n63d y0ur h3lpm3 73x7 fr0m `{old}` 70 `{new}`!"
 
-#: cogs/help/__init__.py:367
+#: cogs/help/__init__.py:368
 msgid "Cancel your open helpme request"
 msgstr "C4nc3l y0ur 0p3n h3lpm3 r3qu357"
 
-#: cogs/help/__init__.py:372
+#: cogs/help/__init__.py:373
 msgid ""
 "Cancel your ongoing helpme request. Our Support Team will not join your "
 "server.\n"
@@ -3614,23 +3626,23 @@ msgstr ""
 "            Y0u c4n 0nly u53 7h15 c0mm4nd 1f y0ur 53rv3r h45 4n 0p3n h3lpm3 "
 "r3qu357."
 
-#: cogs/help/__init__.py:377
+#: cogs/help/__init__.py:378
 msgid "Are you sure you want to cancel your helpme request?"
 msgstr "4r3 y0u 5ur3 y0u w4n7 70 c4nc3l y0ur h3lpm3 r3qu357?"
 
-#: cogs/help/__init__.py:379
+#: cogs/help/__init__.py:380
 msgid "Cancelled cancellation."
 msgstr "C4nc3ll3d c4nc3ll4710n."
 
-#: cogs/help/__init__.py:382
+#: cogs/help/__init__.py:383
 msgid "Your helpme request has been cancelled."
 msgstr "Y0ur h3lpm3 r3qu357 h45 b33n c4nc3ll3d."
 
-#: cogs/help/__init__.py:385
+#: cogs/help/__init__.py:386
 msgid "View your current helpme request"
 msgstr "V13w y0ur curr3n7 h3lpm3 r3qu357"
 
-#: cogs/help/__init__.py:389
+#: cogs/help/__init__.py:390
 msgid ""
 "View how your server's current helpme request looks like to our Support "
 "Team.\n"
@@ -3644,15 +3656,15 @@ msgstr ""
 "            Y0u c4n 0nly u53 7h15 c0mm4nd 1f y0ur 53rv3r h45 4n 0p3n h3lpm3 "
 "r3qu357."
 
-#: cogs/help/__init__.py:399
+#: cogs/help/__init__.py:400
 msgid "Your help request is visible to our support team like this:"
 msgstr "Y0ur h3lp r3qu357 15 v151bl3 70 0ur 5upp0r7 734m l1k3 7h15:"
 
-#: cogs/help/__init__.py:407
+#: cogs/help/__init__.py:408
 msgid "Views the help on a topic."
 msgstr "V13w5 7h3 h3lp 0n 4 70p1c."
 
-#: cogs/help/__init__.py:409
+#: cogs/help/__init__.py:410
 #, python-brace-format
 msgid ""
 "Views the help on a topic.\n"
@@ -3675,12 +3687,12 @@ msgstr ""
 "            70 v13w 7h3 h3lp 0n 4 m0dul3 3xpl1c173ly, u53 `{prefix}help "
 "module [name]`"
 
-#: cogs/help/__init__.py:491
+#: cogs/help/__init__.py:496
 #, python-brace-format
 msgid "IdleRPG Help {version}"
 msgstr "1dl3RP6 H3lp {version}"
 
-#: cogs/help/__init__.py:498
+#: cogs/help/__init__.py:503
 #, python-brace-format
 msgid ""
 "**Welcome to the IdleRPG help.**\n"
@@ -3699,25 +3711,25 @@ msgstr ""
 "*533 `{prefix}help [command]` 4nd `{prefix}help module [module]` f0r m0r3 "
 "1nf0*"
 
-#: cogs/help/__init__.py:530
+#: cogs/help/__init__.py:535
 msgid "Modules"
 msgstr "M0dul35"
 
-#: cogs/help/__init__.py:540 cogs/help/__init__.py:547
+#: cogs/help/__init__.py:544 cogs/help/__init__.py:550
 msgid "You do not have access to these commands!"
 msgstr "Y0u d0 n07 h4v3 4cc355 70 7h353 c0mm4nd5!"
 
-#: cogs/help/__init__.py:562
+#: cogs/help/__init__.py:565
 #, python-brace-format
 msgid "See '{prefix}help <command>' for more detailed info"
 msgstr "533 '{prefix}h3lp <c0mm4nd>' f0r m0r3 d3741l3d 1nf0"
 
-#: cogs/help/__init__.py:576 cogs/help/__init__.py:583
-#: cogs/help/__init__.py:606 cogs/help/__init__.py:613
+#: cogs/help/__init__.py:578 cogs/help/__init__.py:584
+#: cogs/help/__init__.py:607 cogs/help/__init__.py:614
 msgid "You do not have access to this command!"
 msgstr "Y0u d0 n07 h4v3 4cc355 70 7h15 c0mm4nd!"
 
-#: cogs/help/__init__.py:595
+#: cogs/help/__init__.py:596
 msgid "Aliases"
 msgstr "4l14535"
 
@@ -6218,37 +6230,37 @@ msgstr ""
 msgid "You cannot sell nothing."
 msgstr "Y0u c4nn07 53ll n07h1n6."
 
-#: cogs/trading/__init__.py:476
+#: cogs/trading/__init__.py:482
 #, python-brace-format
 msgid "You don't own any items with the IDs: {itemids}"
 msgstr "Y0u d0n'7 0wn 4ny 173m5 w17h 7h3 1D5: {itemids}"
 
-#: cogs/trading/__init__.py:484
+#: cogs/trading/__init__.py:490
 #, python-brace-format
 msgid "You are about to sell {amount} equipped items. Are you sure?"
 msgstr "Y0u 4r3 4b0u7 70 53ll {amount} 3qu1pp3d 173m5. 4r3 y0u 5ur3?"
 
-#: cogs/trading/__init__.py:488
+#: cogs/trading/__init__.py:494
 msgid "Cancelled."
 msgstr "C4nc3ll3d."
 
-#: cogs/trading/__init__.py:516
+#: cogs/trading/__init__.py:522
 #, python-brace-format
 msgid ""
 "You received **${money}** when selling item(s) `{itemids}`. {additional}"
 msgstr ""
 "Y0u r3c31v3d **${money}** wh3n 53ll1n6 173m(5) `{itemids}`. {additional}"
 
-#: cogs/trading/__init__.py:522 cogs/profile/__init__.py:679
+#: cogs/trading/__init__.py:528 cogs/profile/__init__.py:679
 #, python-brace-format
 msgid "Skipped `{amount}` because they did not belong to you."
 msgstr "5k1pp3d `{amount}` b3c4u53 7h3y d1d n07 b3l0n6 70 y0u."
 
-#: cogs/trading/__init__.py:532
+#: cogs/trading/__init__.py:538
 msgid "Merch all non-equipped items"
 msgstr "M3rch 4ll n0n-3qu1pp3d 173m5"
 
-#: cogs/trading/__init__.py:538
+#: cogs/trading/__init__.py:544
 msgid ""
 "`[maxstat]` - The highest damage/defense to include; defaults to 75\n"
 "            `[minstat]` - The lowest damage/defense to include; defaults to "
@@ -6264,11 +6276,11 @@ msgid ""
 "            (This command has a cooldown of 30 minutes.)"
 msgstr ""
 
-#: cogs/trading/__init__.py:559
+#: cogs/trading/__init__.py:566
 msgid "Nothing to merch."
 msgstr "N07h1n6 70 m3rch."
 
-#: cogs/trading/__init__.py:566
+#: cogs/trading/__init__.py:573
 #, python-brace-format
 msgid ""
 "You are about to sell **{count} items for ${money}!**\n"
@@ -6277,11 +6289,11 @@ msgstr ""
 "Y0u 4r3 4b0u7 70 53ll **{count} 173m5 f0r ${money}!**\n"
 "4r3 y0u 5ur3 y0u w4n7 70 d0 7h15?"
 
-#: cogs/trading/__init__.py:571
+#: cogs/trading/__init__.py:578
 msgid "Cancelled selling your items."
 msgstr "C4nc3ll3d 53ll1n6 y0ur 173m5."
 
-#: cogs/trading/__init__.py:583
+#: cogs/trading/__init__.py:590
 msgid ""
 "Looks like you got more or less items in that range in the meantime. Please "
 "try again."
@@ -8815,7 +8827,7 @@ msgstr ""
 msgid "Creation of your character cancelled."
 msgstr "Cr34710n 0f y0ur ch4r4c73r c4nc3ll3d."
 
-#: cogs/profile/__init__.py:99 cogs/profile/__init__.py:1082
+#: cogs/profile/__init__.py:99 cogs/profile/__init__.py:1083
 msgid ""
 "Illegal character (`) found in the name. Please try again and choose another "
 "name."
@@ -9318,7 +9330,7 @@ msgstr ""
 "173m 1f 7h3 0n3 y0ur h4v3 3qu1pp3d 15 7w0-h4nd3d."
 
 #: cogs/profile/__init__.py:719 cogs/profile/__init__.py:823
-#: cogs/profile/__init__.py:937
+#: cogs/profile/__init__.py:938
 #, python-brace-format
 msgid "You don't own an item with the ID `{itemid}`."
 msgstr "Y0u d0n'7 0wn 4n 173m w17h 7h3 1D `{itemid}`."
@@ -9420,7 +9432,7 @@ msgstr ""
 "7h3 53c0nd 173m'5 5747 mu57 b3 1n 7h3 r4n63 0f `{min_}` 70 `{max_}` 70 "
 "up6r4d3 4n 173m w17h 7h3 5747 0f `{stat}`."
 
-#: cogs/profile/__init__.py:908
+#: cogs/profile/__init__.py:909
 #, python-brace-format
 msgid ""
 "The {stat} of your **{item}** is now **{newstat}**. The other item was "
@@ -9429,11 +9441,11 @@ msgstr ""
 "7h3 {stat} 0f y0ur **{item}** 15 n0w **{newstat}**. 7h3 07h3r 173m w45 "
 "d357r0y3d."
 
-#: cogs/profile/__init__.py:915
+#: cogs/profile/__init__.py:916
 msgid "Upgrade an item"
 msgstr "Up6r4d3 4n 173m"
 
-#: cogs/profile/__init__.py:919
+#: cogs/profile/__init__.py:920
 msgid ""
 "`<itemid>` - The ID of the item to upgrade\n"
 "\n"
@@ -9457,11 +9469,11 @@ msgstr ""
 "\n"
 "            (7h15 c0mm4nd h45 4 c00ld0wn 0f 1 h0ur.)"
 
-#: cogs/profile/__init__.py:952
+#: cogs/profile/__init__.py:953
 msgid "Your weapon already reached the maximum upgrade level."
 msgstr "Y0ur w34p0n 4lr34dy r34ch3d 7h3 m4x1mum up6r4d3 l3v3l."
 
-#: cogs/profile/__init__.py:957
+#: cogs/profile/__init__.py:958
 #, python-brace-format
 msgid ""
 "Are you sure you want to upgrade this item: {item}? It will cost **"
@@ -9470,11 +9482,11 @@ msgstr ""
 "4r3 y0u 5ur3 y0u w4n7 70 up6r4d3 7h15 173m: {item}? 17 w1ll c057 **"
 "${pricetopay}**."
 
-#: cogs/profile/__init__.py:961
+#: cogs/profile/__init__.py:962
 msgid "Weapon upgrade cancelled."
 msgstr "W34p0n up6r4d3 c4nc3ll3d."
 
-#: cogs/profile/__init__.py:966
+#: cogs/profile/__init__.py:967
 #, python-brace-format
 msgid ""
 "You are too poor to upgrade this item. The upgrade costs **${pricetopay}**, "
@@ -9483,7 +9495,7 @@ msgstr ""
 "Y0u 4r3 700 p00r 70 up6r4d3 7h15 173m. 7h3 up6r4d3 c0575 **${pricetopay}**, "
 "bu7 y0u 0nly h4v3 **${money}**."
 
-#: cogs/profile/__init__.py:991
+#: cogs/profile/__init__.py:992
 #, python-brace-format
 msgid ""
 "The {stat} of your **{item}** is now **{newstat}**. **${pricetopay}** has "
@@ -9492,11 +9504,11 @@ msgstr ""
 "7h3 {stat} 0f y0ur **{item}** 15 n0w **{newstat}**. **${pricetopay}** h45 "
 "b33n 74k3n 0ff y0ur b4l4nc3."
 
-#: cogs/profile/__init__.py:1002
+#: cogs/profile/__init__.py:1003
 msgid "Give someone money"
 msgstr "61v3 50m30n3 m0n3y"
 
-#: cogs/profile/__init__.py:1008
+#: cogs/profile/__init__.py:1009
 msgid ""
 "`<money>` - The amount of money to give to the other person, cannot exceed "
 "100,000,000\n"
@@ -9512,11 +9524,11 @@ msgstr ""
 "            61f7 m0n3y! 17 w1ll b3 r3m0v3d fr0m y0u 4nd 4dd3d 70 7h3 07h3r "
 "p3r50n."
 
-#: cogs/profile/__init__.py:1014
+#: cogs/profile/__init__.py:1015
 msgid "No cheating!"
 msgstr "N0 ch3471n6!"
 
-#: cogs/profile/__init__.py:1046
+#: cogs/profile/__init__.py:1047
 #, python-brace-format
 msgid ""
 "Success!\n"
@@ -9525,11 +9537,11 @@ msgstr ""
 "5ucc355!\n"
 "{other} n0w h45 **${othermoney}**, y0u n0w h4v3 **${authormoney}**."
 
-#: cogs/profile/__init__.py:1054
+#: cogs/profile/__init__.py:1055
 msgid "Rename your character"
 msgstr "R3n4m3 y0ur ch4r4c73r"
 
-#: cogs/profile/__init__.py:1058
+#: cogs/profile/__init__.py:1059
 msgid ""
 "`[name]` - The name to use; if not given, this will be interactive\n"
 "\n"
@@ -9541,32 +9553,32 @@ msgstr ""
 "            R3n4m35 y0ur ch4r4c73r. 7h3 n4m3 mu57 b3 fr0m 3 70 20 ch4r4c73r5 "
 "l0n6."
 
-#: cogs/profile/__init__.py:1065
+#: cogs/profile/__init__.py:1066
 msgid "What shall your character's name be? (Minimum 3 Characters, Maximum 20)"
 msgstr ""
 "Wh47 5h4ll y0ur ch4r4c73r'5 n4m3 b3? (M1n1mum 3 Ch4r4c73r5, M4x1mum 20)"
 
-#: cogs/profile/__init__.py:1076
+#: cogs/profile/__init__.py:1077
 msgid "Timeout expired. Retry!"
 msgstr "71m30u7 3xp1r3d. R37ry!"
 
-#: cogs/profile/__init__.py:1090
+#: cogs/profile/__init__.py:1091
 msgid "Character name updated."
 msgstr "Ch4r4c73r n4m3 upd473d."
 
-#: cogs/profile/__init__.py:1092
+#: cogs/profile/__init__.py:1093
 msgid "Character names must be at least 3 characters!"
 msgstr "Ch4r4c73r n4m35 mu57 b3 47 l3457 3 ch4r4c73r5!"
 
-#: cogs/profile/__init__.py:1094
+#: cogs/profile/__init__.py:1095
 msgid "Character names mustn't exceed 20 characters!"
 msgstr "Ch4r4c73r n4m35 mu57n'7 3xc33d 20 ch4r4c73r5!"
 
-#: cogs/profile/__init__.py:1097
+#: cogs/profile/__init__.py:1098
 msgid "Delete your character"
 msgstr "D3l373 y0ur ch4r4c73r"
 
-#: cogs/profile/__init__.py:1101
+#: cogs/profile/__init__.py:1102
 msgid ""
 "Deletes your character. There is no way to get your character data back "
 "after deletion.\n"
@@ -9574,17 +9586,10 @@ msgid ""
 "            Deleting your character also removes:\n"
 "              - Your guild if you own one\n"
 "              - Your alliance's city ownership\n"
-"              - Your partner and children"
+"              - Your marriage and children"
 msgstr ""
-"D3l3735 y0ur ch4r4c73r. 7h3r3 15 n0 w4y 70 637 y0ur ch4r4c73r d474 b4ck "
-"4f73r d3l3710n.\n"
-"\n"
-"            D3l371n6 y0ur ch4r4c73r 4l50 r3m0v35:\n"
-"              - Y0ur 6u1ld 1f y0u 0wn 0n3\n"
-"              - Y0ur 4ll14nc3'5 c17y 0wn3r5h1p\n"
-"              - Y0ur p4r7n3r 4nd ch1ldr3n"
 
-#: cogs/profile/__init__.py:1110
+#: cogs/profile/__init__.py:1111
 msgid ""
 "Are you absolutely sure you want to delete your character? React in the next "
 "30 seconds to confirm.\n"
@@ -9594,13 +9599,9 @@ msgstr ""
 "30 53c0nd5 70 c0nf1rm.\n"
 "**7h15 c4nn07 b3 und0n3.**"
 
-#: cogs/profile/__init__.py:1114
+#: cogs/profile/__init__.py:1115
 msgid "Cancelled deletion of your character."
 msgstr "C4nc3ll3d d3l3710n 0f y0ur ch4r4c73r."
-
-#: cogs/profile/__init__.py:1143 cogs/game_master/__init__.py:207
-msgid "Successfully deleted the character."
-msgstr "5ucc355fully d3l373d 7h3 ch4r4c73r."
 
 #: cogs/profile/__init__.py:1146
 msgid "Successfully deleted your character. Sorry to see you go :frowning:"
@@ -9800,6 +9801,10 @@ msgstr ""
 "            D3l373 4 u53r'5 pr0f1l3. 7h3 u53r c4nn07 b3 4 64m3 M4573r.\n"
 "\n"
 "            0nly 64m3 M4573r5 c4n u53 7h15 c0mm4nd."
+
+#: cogs/game_master/__init__.py:207
+msgid "Successfully deleted the character."
+msgstr "5ucc355fully d3l373d 7h3 ch4r4c73r."
 
 #: cogs/game_master/__init__.py:213
 msgid "Rename a character"
@@ -12149,6 +12154,48 @@ msgstr "**Dr4w 4cc3p73d! {result}**"
 #: utils/chess.py:419
 msgid "For the nerds:"
 msgstr "F0r 7h3 n3rd5:"
+
+#, python-brace-format
+#~ msgid ""
+#~ "`[rarity]` - the crate's rarity to open, can be common, uncommon, rare, "
+#~ "magic or legendary; defaults to common\n"
+#~ "\n"
+#~ "            Open one of your crates to receive a weapon. To check which "
+#~ "crates contain which items, check `{prefix}help crates`.\n"
+#~ "            This command takes up a lot of space, so choose a spammy "
+#~ "channel to open crates."
+#~ msgstr ""
+#~ "`[r4r17y]` - 7h3 cr473'5 r4r17y 70 0p3n, c4n b3 c0mm0n, unc0mm0n, r4r3, "
+#~ "m461c 0r l363nd4ry; d3f4ul75 70 c0mm0n\n"
+#~ "\n"
+#~ "            0p3n 0n3 0f y0ur cr4735 70 r3c31v3 4 w34p0n. 70 ch3ck wh1ch "
+#~ "cr4735 c0n741n wh1ch 173m5, ch3ck `{prefix}help crates`.\n"
+#~ "            7h15 c0mm4nd 74k35 up 4 l07 0f 5p4c3, 50 ch0053 4 5p4mmy "
+#~ "ch4nn3l 70 0p3n cr4735."
+
+#~ msgid ""
+#~ "Seems like you don't have any crate of this rarity yet. Vote me up to get "
+#~ "a random one or find them!"
+#~ msgstr ""
+#~ "533m5 l1k3 y0u d0n'7 h4v3 4ny cr473 0f 7h15 r4r17y y37. V073 m3 up 70 637 "
+#~ "4 r4nd0m 0n3 0r f1nd 7h3m!"
+
+#~ msgid ""
+#~ "Deletes your character. There is no way to get your character data back "
+#~ "after deletion.\n"
+#~ "\n"
+#~ "            Deleting your character also removes:\n"
+#~ "              - Your guild if you own one\n"
+#~ "              - Your alliance's city ownership\n"
+#~ "              - Your partner and children"
+#~ msgstr ""
+#~ "D3l3735 y0ur ch4r4c73r. 7h3r3 15 n0 w4y 70 637 y0ur ch4r4c73r d474 b4ck "
+#~ "4f73r d3l3710n.\n"
+#~ "\n"
+#~ "            D3l371n6 y0ur ch4r4c73r 4l50 r3m0v35:\n"
+#~ "              - Y0ur 6u1ld 1f y0u 0wn 0n3\n"
+#~ "              - Y0ur 4ll14nc3'5 c17y 0wn3r5h1p\n"
+#~ "              - Y0ur p4r7n3r 4nd ch1ldr3n"
 
 #~ msgid "Raidbattle took too long, aborting."
 #~ msgstr "R41db477l3 700k 700 l0n6, 4b0r71n6."

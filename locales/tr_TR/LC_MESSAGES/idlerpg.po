@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-07-07 17:02+0200\n"
+"POT-Creation-Date: 2020-07-10 20:08+0200\n"
 "PO-Revision-Date: 2020-01-25 13:19+0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -49,7 +49,7 @@ msgstr ""
 #: cogs/tournament/__init__.py:63 cogs/tournament/__init__.py:235
 #: cogs/battles/__init__.py:63 cogs/battles/__init__.py:200
 #: cogs/battles/__init__.py:403 cogs/gambling/__init__.py:532
-#: cogs/profile/__init__.py:1020 cogs/game_master/__init__.py:524
+#: cogs/profile/__init__.py:1021 cogs/game_master/__init__.py:524
 #: cogs/transaction/__init__.py:293 cogs/transaction/__init__.py:362
 msgid "You are too poor."
 msgstr "Çok fakirsin."
@@ -328,7 +328,7 @@ msgstr ""
 msgid "Seems you haven't got a trick or treat bag yet. Go get some!"
 msgstr "Görünüşe göre henüz şeker ya da şaka torban yok. Git biraz al!"
 
-#: cogs/halloween/__init__.py:178 cogs/crates/__init__.py:165
+#: cogs/halloween/__init__.py:178 cogs/crates/__init__.py:174
 #: cogs/classes/__init__.py:696 cogs/valentine/__init__.py:164
 msgid "You gained an item!"
 msgstr "Eşya kazandın!"
@@ -337,32 +337,32 @@ msgstr "Eşya kazandın!"
 msgid "You found a new item when opening a trick-or-treat bag!"
 msgstr "Şeker-ya-da-şaka torbası açarken yeni eşya buldun!"
 
-#: cogs/halloween/__init__.py:183 cogs/crates/__init__.py:171
+#: cogs/halloween/__init__.py:183 cogs/crates/__init__.py:180
 #: cogs/classes/__init__.py:408 cogs/classes/__init__.py:702
 #: cogs/trading/__init__.py:321 cogs/trading/__init__.py:638
 #: cogs/valentine/__init__.py:170
 msgid "Name"
 msgstr "İsim"
 
-#: cogs/halloween/__init__.py:184 cogs/crates/__init__.py:172
+#: cogs/halloween/__init__.py:184 cogs/crates/__init__.py:181
 #: cogs/classes/__init__.py:703 cogs/trading/__init__.py:322
 #: cogs/trading/__init__.py:639 cogs/valentine/__init__.py:171
 msgid "Type"
 msgstr "Tür"
 
-#: cogs/halloween/__init__.py:185 cogs/crates/__init__.py:173
+#: cogs/halloween/__init__.py:185 cogs/crates/__init__.py:182
 #: cogs/classes/__init__.py:707 cogs/trading/__init__.py:323
 #: cogs/trading/__init__.py:640 cogs/valentine/__init__.py:175
 msgid "Damage"
 msgstr "Hasar"
 
-#: cogs/halloween/__init__.py:186 cogs/crates/__init__.py:174
+#: cogs/halloween/__init__.py:186 cogs/crates/__init__.py:183
 #: cogs/classes/__init__.py:705 cogs/trading/__init__.py:324
 #: cogs/trading/__init__.py:641 cogs/valentine/__init__.py:173
 msgid "Armor"
 msgstr "Zırh"
 
-#: cogs/halloween/__init__.py:187 cogs/crates/__init__.py:175
+#: cogs/halloween/__init__.py:187 cogs/crates/__init__.py:184
 #: cogs/classes/__init__.py:708 cogs/trading/__init__.py:325
 #: cogs/trading/__init__.py:642 cogs/valentine/__init__.py:176
 msgid "Value"
@@ -832,15 +832,17 @@ msgstr ""
 "\n"
 "Bir tane açmak için `{prefix}open [rarity]` kullan!"
 
-#: cogs/crates/__init__.py:81
+#: cogs/crates/__init__.py:82
 msgid "Open a crate"
 msgstr ""
 
-#: cogs/crates/__init__.py:85
+#: cogs/crates/__init__.py:88
 #, python-brace-format
 msgid ""
 "`[rarity]` - the crate's rarity to open, can be common, uncommon, rare, "
 "magic or legendary; defaults to common\n"
+"            `[amount]` - the amount of crates to open, may be in range from "
+"1 to 100 at once\n"
 "\n"
 "            Open one of your crates to receive a weapon. To check which "
 "crates contain which items, check `{prefix}help crates`.\n"
@@ -848,39 +850,56 @@ msgid ""
 "to open crates."
 msgstr ""
 
-#: cogs/crates/__init__.py:92 cogs/crates/__init__.py:227
+#: cogs/crates/__init__.py:96 cogs/crates/__init__.py:268
 #: cogs/game_master/__init__.py:326
 #, python-brace-format
 msgid "{rarity} is not a valid rarity."
 msgstr "{rarity} geçerli bir nadirlik değil."
 
-#: cogs/crates/__init__.py:97
+#: cogs/crates/__init__.py:101
+#, python-brace-format
 msgid ""
-"Seems like you don't have any crate of this rarity yet. Vote me up to get a "
-"random one or find them!"
+"Seems like you don't have {amount} crate(s) of this rarity yet. Vote me up "
+"to get a random one or find them!"
 msgstr ""
-"Görünüşe göre bu nadirlikte bir sandığın henüz yok. Rastgele bir tane almak "
-"için bana oy ver ya da onları bul!"
 
-#: cogs/crates/__init__.py:166
+#: cogs/crates/__init__.py:175
 msgid "You found a new item when opening a crate!"
 msgstr "Sandık açarken yeni bir eşya buldun!"
 
-#: cogs/crates/__init__.py:170 cogs/classes/__init__.py:701
+#: cogs/crates/__init__.py:179 cogs/classes/__init__.py:701
 #: cogs/valentine/__init__.py:169
 msgid "ID"
 msgstr "ID"
 
-#: cogs/crates/__init__.py:177
+#: cogs/crates/__init__.py:186
 #, python-brace-format
 msgid "Remaining {rarity} crates: {crates}"
 msgstr "Kalan {rarity} sandıkların: {crates}"
 
-#: cogs/crates/__init__.py:201
+#: cogs/crates/__init__.py:218
+#, python-brace-format
+msgid ""
+"Successfully opened {amount} {rarity} crates. Average stat: {average_stat}\n"
+"Most common stats:\n"
+"```\n"
+"{most_common}\n"
+"```\n"
+"Best stats:\n"
+"```\n"
+"{top}\n"
+"```\n"
+"Types:\n"
+"```\n"
+"{most_common_types}\n"
+"```"
+msgstr ""
+
+#: cogs/crates/__init__.py:242
 msgid "Give crates to someone"
 msgstr ""
 
-#: cogs/crates/__init__.py:211
+#: cogs/crates/__init__.py:252
 #, python-brace-format
 msgid ""
 "`<other>` - A user with a character\n"
@@ -896,21 +915,21 @@ msgstr ""
 
 #. preserve deletion of admins
 #. preserve renaming of admins
-#: cogs/crates/__init__.py:220 cogs/guild/__init__.py:388
+#: cogs/crates/__init__.py:261 cogs/guild/__init__.py:388
 #: cogs/guild/__init__.py:425 cogs/game_master/__init__.py:175
 #: cogs/game_master/__init__.py:224
 msgid "Very funny..."
 msgstr "Çok komik..."
 
-#: cogs/crates/__init__.py:223 cogs/profile/__init__.py:1017
+#: cogs/crates/__init__.py:264 cogs/profile/__init__.py:1018
 msgid "For me? I'm flattered, but I can't accept this..."
 msgstr ""
 
-#: cogs/crates/__init__.py:230
+#: cogs/crates/__init__.py:271
 msgid "You don't have any crates of this rarity."
 msgstr "Bu nadirlikte herhangi bir sandığın yok."
 
-#: cogs/crates/__init__.py:260
+#: cogs/crates/__init__.py:301
 #, python-brace-format
 msgid "Successfully gave {amount} {rarity} crate(s) to {other}."
 msgstr "{other}'a başarılı bir şekilde {amount} {rarity} sandık(lar) verildi."
@@ -2919,46 +2938,46 @@ msgid "Successfully activated {types} for the next **24 hours**!"
 msgstr ""
 "{types} önümüzdeki **24 saat** için başarılı bir şekilde etkinleştirildi!"
 
-#: cogs/help/__init__.py:126
+#: cogs/help/__init__.py:127
 msgid "Subcommands"
 msgstr ""
 
-#: cogs/help/__init__.py:139
+#: cogs/help/__init__.py:140
 #, python-brace-format
 msgid "Click on the reactions to see more subcommands. | Page {start}/{end}"
 msgstr ""
 
-#: cogs/help/__init__.py:181
+#: cogs/help/__init__.py:182
 msgid "View the command list"
 msgstr ""
 
-#: cogs/help/__init__.py:184
+#: cogs/help/__init__.py:185
 msgid "Sends a link to the official documentation."
 msgstr "Resmî belgeleme için bağlantı gönderir."
 
-#: cogs/help/__init__.py:187
+#: cogs/help/__init__.py:188
 #, python-brace-format
 msgid "<:blackcheck:441826948919066625> **Check {url} for a list of commands**"
 msgstr "<:blackcheck:441826948919066625> **Komutların listesi için {url} bak**"
 
-#: cogs/help/__init__.py:192
+#: cogs/help/__init__.py:193
 msgid "View the tutorial"
 msgstr ""
 
-#: cogs/help/__init__.py:195
+#: cogs/help/__init__.py:196
 msgid "Link to the bot tutorial and FAQ."
 msgstr ""
 
-#: cogs/help/__init__.py:198
+#: cogs/help/__init__.py:199
 #, python-brace-format
 msgid "<:blackcheck:441826948919066625> **Check {url} for a tutorial and FAQ**"
 msgstr "<:blackcheck:441826948919066625> **Öğretici ve SSS için {url} bak**"
 
-#: cogs/help/__init__.py:204
+#: cogs/help/__init__.py:205
 msgid "Allow someone/-thing to use helpme again"
 msgstr ""
 
-#: cogs/help/__init__.py:208
+#: cogs/help/__init__.py:209
 #, python-brace-format
 msgid ""
 "`<thing_to_unban>` - A discord User, their User ID, or a server ID\n"
@@ -2969,16 +2988,16 @@ msgid ""
 "            Only Support Team Members can use this command."
 msgstr ""
 
-#: cogs/help/__init__.py:221
+#: cogs/help/__init__.py:222
 #, python-brace-format
 msgid "{thing} has been unbanned for the helpme command :ok_hand:"
 msgstr "{thing} helpme komutu için yasağı kaldırıldı :ok_hand:"
 
-#: cogs/help/__init__.py:227
+#: cogs/help/__init__.py:228
 msgid "Ban someone/-thing from using helpme"
 msgstr ""
 
-#: cogs/help/__init__.py:231
+#: cogs/help/__init__.py:232
 #, python-brace-format
 msgid ""
 "`<thing_to_ban>` - A discord User, their User ID, or a server ID\n"
@@ -2988,20 +3007,20 @@ msgid ""
 "            Only Support Team Members can use this command."
 msgstr ""
 
-#: cogs/help/__init__.py:245
+#: cogs/help/__init__.py:246
 msgid "Error... Maybe they're already banned?"
 msgstr "Hata... Belki de çoktan yasaklandılar?"
 
-#: cogs/help/__init__.py:247
+#: cogs/help/__init__.py:248
 #, python-brace-format
 msgid "{thing} has been banned for the helpme command :ok_hand:"
 msgstr "{thing} helpme komutu için yasaklandı :ok_hand:"
 
-#: cogs/help/__init__.py:254
+#: cogs/help/__init__.py:255
 msgid "Ask our Support Team for help"
 msgstr ""
 
-#: cogs/help/__init__.py:259
+#: cogs/help/__init__.py:260
 msgid ""
 "`<text>` - The text to describe the question or the issue you are having\n"
 "\n"
@@ -3014,18 +3033,18 @@ msgid ""
 "            English is preferred."
 msgstr ""
 
-#: cogs/help/__init__.py:271
+#: cogs/help/__init__.py:272
 #, python-brace-format
 msgid ""
 "You server already has a helpme request open! Please wait until the support "
 "team gets to you or wait {time} to try again. "
 msgstr ""
 
-#: cogs/help/__init__.py:282
+#: cogs/help/__init__.py:283
 msgid "You or your server has been blacklisted for some reason."
 msgstr "Sen ya da senin sunucun bir sebepten dolayı kara listeye alındı."
 
-#: cogs/help/__init__.py:287
+#: cogs/help/__init__.py:288
 msgid ""
 "Are you sure? This will notify our support team and allow them to join the "
 "server."
@@ -3033,19 +3052,19 @@ msgstr ""
 "Emin misin? Bu eylem destek ekibine haber verecek ve onların sunucuya "
 "katılmalarına izin verecek."
 
-#: cogs/help/__init__.py:296
+#: cogs/help/__init__.py:297
 msgid "Error when creating Invite."
 msgstr "Davet oluştururken hata."
 
-#: cogs/help/__init__.py:312
+#: cogs/help/__init__.py:313
 msgid "Support team has been notified and will join as soon as possible!"
 msgstr "Destek ekibine haber verildi ve en kısa sürede katılacak!"
 
-#: cogs/help/__init__.py:316
+#: cogs/help/__init__.py:317
 msgid "Finish the helpme request"
 msgstr ""
 
-#: cogs/help/__init__.py:320
+#: cogs/help/__init__.py:321
 msgid ""
 "`<guild_id>` - The server ID of the requesting server\n"
 "\n"
@@ -3053,11 +3072,11 @@ msgid ""
 "be on cooldown for 48 hours."
 msgstr ""
 
-#: cogs/help/__init__.py:328
+#: cogs/help/__init__.py:329
 msgid "Change your helpme text"
 msgstr ""
 
-#: cogs/help/__init__.py:332
+#: cogs/help/__init__.py:333
 msgid ""
 "`<new_text>` - The new text to use in your helpme request\n"
 "\n"
@@ -3068,16 +3087,16 @@ msgid ""
 "request."
 msgstr ""
 
-#: cogs/help/__init__.py:360
+#: cogs/help/__init__.py:361
 #, python-brace-format
 msgid "Successfully changed your helpme text from `{old}` to `{new}`!"
 msgstr ""
 
-#: cogs/help/__init__.py:367
+#: cogs/help/__init__.py:368
 msgid "Cancel your open helpme request"
 msgstr ""
 
-#: cogs/help/__init__.py:372
+#: cogs/help/__init__.py:373
 msgid ""
 "Cancel your ongoing helpme request. Our Support Team will not join your "
 "server.\n"
@@ -3086,23 +3105,23 @@ msgid ""
 "request."
 msgstr ""
 
-#: cogs/help/__init__.py:377
+#: cogs/help/__init__.py:378
 msgid "Are you sure you want to cancel your helpme request?"
 msgstr ""
 
-#: cogs/help/__init__.py:379
+#: cogs/help/__init__.py:380
 msgid "Cancelled cancellation."
 msgstr ""
 
-#: cogs/help/__init__.py:382
+#: cogs/help/__init__.py:383
 msgid "Your helpme request has been cancelled."
 msgstr ""
 
-#: cogs/help/__init__.py:385
+#: cogs/help/__init__.py:386
 msgid "View your current helpme request"
 msgstr ""
 
-#: cogs/help/__init__.py:389
+#: cogs/help/__init__.py:390
 msgid ""
 "View how your server's current helpme request looks like to our Support "
 "Team.\n"
@@ -3111,15 +3130,15 @@ msgid ""
 "request."
 msgstr ""
 
-#: cogs/help/__init__.py:399
+#: cogs/help/__init__.py:400
 msgid "Your help request is visible to our support team like this:"
 msgstr ""
 
-#: cogs/help/__init__.py:407
+#: cogs/help/__init__.py:408
 msgid "Views the help on a topic."
 msgstr ""
 
-#: cogs/help/__init__.py:409
+#: cogs/help/__init__.py:410
 #, python-brace-format
 msgid ""
 "Views the help on a topic.\n"
@@ -3133,12 +3152,12 @@ msgid ""
 "module [name]`"
 msgstr ""
 
-#: cogs/help/__init__.py:491
+#: cogs/help/__init__.py:496
 #, python-brace-format
 msgid "IdleRPG Help {version}"
 msgstr ""
 
-#: cogs/help/__init__.py:498
+#: cogs/help/__init__.py:503
 #, python-brace-format
 msgid ""
 "**Welcome to the IdleRPG help.**\n"
@@ -3150,25 +3169,25 @@ msgid ""
 "info*"
 msgstr ""
 
-#: cogs/help/__init__.py:530
+#: cogs/help/__init__.py:535
 msgid "Modules"
 msgstr ""
 
-#: cogs/help/__init__.py:540 cogs/help/__init__.py:547
+#: cogs/help/__init__.py:544 cogs/help/__init__.py:550
 msgid "You do not have access to these commands!"
 msgstr ""
 
-#: cogs/help/__init__.py:562
+#: cogs/help/__init__.py:565
 #, python-brace-format
 msgid "See '{prefix}help <command>' for more detailed info"
 msgstr ""
 
-#: cogs/help/__init__.py:576 cogs/help/__init__.py:583
-#: cogs/help/__init__.py:606 cogs/help/__init__.py:613
+#: cogs/help/__init__.py:578 cogs/help/__init__.py:584
+#: cogs/help/__init__.py:607 cogs/help/__init__.py:614
 msgid "You do not have access to this command!"
 msgstr ""
 
-#: cogs/help/__init__.py:595
+#: cogs/help/__init__.py:596
 msgid "Aliases"
 msgstr ""
 
@@ -5270,36 +5289,36 @@ msgstr ""
 msgid "You cannot sell nothing."
 msgstr ""
 
-#: cogs/trading/__init__.py:476
+#: cogs/trading/__init__.py:482
 #, python-brace-format
 msgid "You don't own any items with the IDs: {itemids}"
 msgstr "Bu IDlerde olan herhangi bir eşyan yok: {itemids}"
 
-#: cogs/trading/__init__.py:484
+#: cogs/trading/__init__.py:490
 #, python-brace-format
 msgid "You are about to sell {amount} equipped items. Are you sure?"
 msgstr "{amount} giyilmiş eşyaları satmak üzeresin. Emin misin?"
 
-#: cogs/trading/__init__.py:488
+#: cogs/trading/__init__.py:494
 msgid "Cancelled."
 msgstr "İptal edildi."
 
-#: cogs/trading/__init__.py:516
+#: cogs/trading/__init__.py:522
 #, python-brace-format
 msgid ""
 "You received **${money}** when selling item(s) `{itemids}`. {additional}"
 msgstr "`{itemids}` eşya(ları)yı satarak **${money}** aldın. {additional}"
 
-#: cogs/trading/__init__.py:522 cogs/profile/__init__.py:679
+#: cogs/trading/__init__.py:528 cogs/profile/__init__.py:679
 #, python-brace-format
 msgid "Skipped `{amount}` because they did not belong to you."
 msgstr "`{amount}` atlandı çünkü sana ait değiller."
 
-#: cogs/trading/__init__.py:532
+#: cogs/trading/__init__.py:538
 msgid "Merch all non-equipped items"
 msgstr ""
 
-#: cogs/trading/__init__.py:538
+#: cogs/trading/__init__.py:544
 msgid ""
 "`[maxstat]` - The highest damage/defense to include; defaults to 75\n"
 "            `[minstat]` - The lowest damage/defense to include; defaults to "
@@ -5315,11 +5334,11 @@ msgid ""
 "            (This command has a cooldown of 30 minutes.)"
 msgstr ""
 
-#: cogs/trading/__init__.py:559
+#: cogs/trading/__init__.py:566
 msgid "Nothing to merch."
 msgstr "Tüccara verilecek bir şey yok."
 
-#: cogs/trading/__init__.py:566
+#: cogs/trading/__init__.py:573
 #, python-brace-format
 msgid ""
 "You are about to sell **{count} items for ${money}!**\n"
@@ -5328,11 +5347,11 @@ msgstr ""
 "**{count} eşyayı ${money} için** satmak üzeresin!\n"
 "Bunu yapmak istediğinden emin misin?"
 
-#: cogs/trading/__init__.py:571
+#: cogs/trading/__init__.py:578
 msgid "Cancelled selling your items."
 msgstr ""
 
-#: cogs/trading/__init__.py:583
+#: cogs/trading/__init__.py:590
 msgid ""
 "Looks like you got more or less items in that range in the meantime. Please "
 "try again."
@@ -7455,7 +7474,7 @@ msgstr ""
 msgid "Creation of your character cancelled."
 msgstr ""
 
-#: cogs/profile/__init__.py:99 cogs/profile/__init__.py:1082
+#: cogs/profile/__init__.py:99 cogs/profile/__init__.py:1083
 msgid ""
 "Illegal character (`) found in the name. Please try again and choose another "
 "name."
@@ -7863,7 +7882,7 @@ msgid ""
 msgstr ""
 
 #: cogs/profile/__init__.py:719 cogs/profile/__init__.py:823
-#: cogs/profile/__init__.py:937
+#: cogs/profile/__init__.py:938
 #, python-brace-format
 msgid "You don't own an item with the ID `{itemid}`."
 msgstr "ID'si `{itemid}` olan bir eşyaya sahip değilsin."
@@ -7961,7 +7980,7 @@ msgstr ""
 "Gücü `{stat}` olan bir eşyayı yükseltmek için kullanılan ikinci eşyanın gücü "
 "`{min_}` ile `{max_}` arasında olmalı."
 
-#: cogs/profile/__init__.py:908
+#: cogs/profile/__init__.py:909
 #, python-brace-format
 msgid ""
 "The {stat} of your **{item}** is now **{newstat}**. The other item was "
@@ -7970,11 +7989,11 @@ msgstr ""
 "Türü {stat} olan **{item}**'nın gücü artık **{newstat}**. Diğer eşya yok "
 "edildi."
 
-#: cogs/profile/__init__.py:915
+#: cogs/profile/__init__.py:916
 msgid "Upgrade an item"
 msgstr ""
 
-#: cogs/profile/__init__.py:919
+#: cogs/profile/__init__.py:920
 msgid ""
 "`<itemid>` - The ID of the item to upgrade\n"
 "\n"
@@ -7988,11 +8007,11 @@ msgid ""
 "            (This command has a cooldown of 1 hour.)"
 msgstr ""
 
-#: cogs/profile/__init__.py:952
+#: cogs/profile/__init__.py:953
 msgid "Your weapon already reached the maximum upgrade level."
 msgstr "Silahın zaten maksimum yükseltme seviyesine ulaştı."
 
-#: cogs/profile/__init__.py:957
+#: cogs/profile/__init__.py:958
 #, python-brace-format
 msgid ""
 "Are you sure you want to upgrade this item: {item}? It will cost **"
@@ -8001,11 +8020,11 @@ msgstr ""
 "Bu eşyayı yükseltmek istediğine emin misin: {item}? Fiyatı **${pricetopay}** "
 "ediyor."
 
-#: cogs/profile/__init__.py:961
+#: cogs/profile/__init__.py:962
 msgid "Weapon upgrade cancelled."
 msgstr "Silah yükseltmesi iptal edildi."
 
-#: cogs/profile/__init__.py:966
+#: cogs/profile/__init__.py:967
 #, python-brace-format
 msgid ""
 "You are too poor to upgrade this item. The upgrade costs **${pricetopay}**, "
@@ -8014,7 +8033,7 @@ msgstr ""
 "Bu eşyayı yükseltmek için çok fakirsin. Yükseltme **${pricetopay}** ediyor, "
 "ama sende sadece **${money}** var."
 
-#: cogs/profile/__init__.py:991
+#: cogs/profile/__init__.py:992
 #, python-brace-format
 msgid ""
 "The {stat} of your **{item}** is now **{newstat}**. **${pricetopay}** has "
@@ -8023,11 +8042,11 @@ msgstr ""
 "Türü {stat} olan **{item}**'nın gücü artık **{newstat}**. Bakiyenden **"
 "${pricetopay}** alındı."
 
-#: cogs/profile/__init__.py:1002
+#: cogs/profile/__init__.py:1003
 msgid "Give someone money"
 msgstr ""
 
-#: cogs/profile/__init__.py:1008
+#: cogs/profile/__init__.py:1009
 msgid ""
 "`<money>` - The amount of money to give to the other person, cannot exceed "
 "100,000,000\n"
@@ -8037,11 +8056,11 @@ msgid ""
 "person."
 msgstr ""
 
-#: cogs/profile/__init__.py:1014
+#: cogs/profile/__init__.py:1015
 msgid "No cheating!"
 msgstr "Hile yok!"
 
-#: cogs/profile/__init__.py:1046
+#: cogs/profile/__init__.py:1047
 #, python-brace-format
 msgid ""
 "Success!\n"
@@ -8050,11 +8069,11 @@ msgstr ""
 "Başarı!\n"
 "{other}'da şimdi **${othermoney}** var, sende şimdi **${authormoney}** var."
 
-#: cogs/profile/__init__.py:1054
+#: cogs/profile/__init__.py:1055
 msgid "Rename your character"
 msgstr ""
 
-#: cogs/profile/__init__.py:1058
+#: cogs/profile/__init__.py:1059
 msgid ""
 "`[name]` - The name to use; if not given, this will be interactive\n"
 "\n"
@@ -8062,31 +8081,31 @@ msgid ""
 "long."
 msgstr ""
 
-#: cogs/profile/__init__.py:1065
+#: cogs/profile/__init__.py:1066
 msgid "What shall your character's name be? (Minimum 3 Characters, Maximum 20)"
 msgstr "Karakterinin adı ne olmalı? (Minimum 3 Karakter, Maksimum 20)"
 
-#: cogs/profile/__init__.py:1076
+#: cogs/profile/__init__.py:1077
 msgid "Timeout expired. Retry!"
 msgstr "Zaman aşımı süresi doldu. Tekrar dene!"
 
-#: cogs/profile/__init__.py:1090
+#: cogs/profile/__init__.py:1091
 msgid "Character name updated."
 msgstr "Karakter ismi güncellendi."
 
-#: cogs/profile/__init__.py:1092
+#: cogs/profile/__init__.py:1093
 msgid "Character names must be at least 3 characters!"
 msgstr "Karakter isimleri en az 3 karakter olmalı!"
 
-#: cogs/profile/__init__.py:1094
+#: cogs/profile/__init__.py:1095
 msgid "Character names mustn't exceed 20 characters!"
 msgstr "Karakter isimleri 20 karakteri geçmemeli!"
 
-#: cogs/profile/__init__.py:1097
+#: cogs/profile/__init__.py:1098
 msgid "Delete your character"
 msgstr ""
 
-#: cogs/profile/__init__.py:1101
+#: cogs/profile/__init__.py:1102
 msgid ""
 "Deletes your character. There is no way to get your character data back "
 "after deletion.\n"
@@ -8094,10 +8113,10 @@ msgid ""
 "            Deleting your character also removes:\n"
 "              - Your guild if you own one\n"
 "              - Your alliance's city ownership\n"
-"              - Your partner and children"
+"              - Your marriage and children"
 msgstr ""
 
-#: cogs/profile/__init__.py:1110
+#: cogs/profile/__init__.py:1111
 msgid ""
 "Are you absolutely sure you want to delete your character? React in the next "
 "30 seconds to confirm.\n"
@@ -8107,13 +8126,9 @@ msgstr ""
 "saniye içinde tepki ver.\n"
 "**Geri alınamaz.**"
 
-#: cogs/profile/__init__.py:1114
+#: cogs/profile/__init__.py:1115
 msgid "Cancelled deletion of your character."
 msgstr "Karakterinin silinmesi iptal edildi."
-
-#: cogs/profile/__init__.py:1143 cogs/game_master/__init__.py:207
-msgid "Successfully deleted the character."
-msgstr "Karakter başarılı bir şekilde silindi."
 
 #: cogs/profile/__init__.py:1146
 msgid "Successfully deleted your character. Sorry to see you go :frowning:"
@@ -8279,6 +8294,10 @@ msgid ""
 "\n"
 "            Only Game Masters can use this command."
 msgstr ""
+
+#: cogs/game_master/__init__.py:207
+msgid "Successfully deleted the character."
+msgstr "Karakter başarılı bir şekilde silindi."
 
 #: cogs/game_master/__init__.py:213
 msgid "Rename a character"
@@ -10259,6 +10278,13 @@ msgstr ""
 #: utils/chess.py:419
 msgid "For the nerds:"
 msgstr ""
+
+#~ msgid ""
+#~ "Seems like you don't have any crate of this rarity yet. Vote me up to get "
+#~ "a random one or find them!"
+#~ msgstr ""
+#~ "Görünüşe göre bu nadirlikte bir sandığın henüz yok. Rastgele bir tane "
+#~ "almak için bana oy ver ya da onları bul!"
 
 #~ msgid "Raidbattle took too long, aborting."
 #~ msgstr "Baskın savaşı çok uzun sürdü, durduruluyor."
