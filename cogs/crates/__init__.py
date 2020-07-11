@@ -22,8 +22,9 @@ import discord
 from discord.ext import commands
 
 from classes.converters import IntFromTo, IntGreaterThan, MemberWithCharacter
+from cogs.shard_communication import user_on_cooldown as user_cooldown
 from utils import random
-from utils.checks import has_char
+from utils.checks import has_char, has_money
 from utils.i18n import _, locale_doc
 
 
@@ -300,6 +301,170 @@ class Crates(commands.Cog):
         await ctx.send(
             _("Successfully gave {amount} {rarity} crate(s) to {other}.").format(
                 amount=amount, other=other.mention, rarity=rarity
+            )
+        )
+
+    @has_char()
+    @user_cooldown(180)
+    @commands.command(
+        aliases=["offercrates", "oc"], brief=_("Offer crates to another player")
+    )
+    @locale_doc
+    async def offercrate(
+        self,
+        ctx,
+        quantity: IntGreaterThan(0),
+        rarity: str.lower,
+        price: IntFromTo(0, 100_000_000),
+        buyer: MemberWithCharacter,
+    ):
+        _(
+            """`<quantity>` - The quantity of crates to offer
+            `<rarity>` - The rarity of crate to offer. First letter of the rarity is also accepted.
+            `<price>` - The price to be paid by the buyer, can be a number from 0 to 100000000
+            `<buyer>` - Another IdleRPG player to offer the crates to
+
+            Offer crates to another player. Once the other player accepts, they will receive the crates and you will receive their payment.
+            Example:
+            `{prefix}offercrate 5 common 75000 @buyer#1234`
+            `{prefix}oc 5 c 75000 @buyer#1234`"""
+        )
+        if buyer == ctx.author:
+            return await ctx.send(_("You may not offer crates to yourself."))
+        elif buyer == ctx.me:
+            await ctx.send(_("No I don't want any crates."))
+            return await self.bot.reset_cooldown(ctx)
+
+        rarities = {
+            "c": "common",
+            "u": "uncommon",
+            "r": "rare",
+            "m": "magic",
+            "l": "legendary",
+        }
+        rarity = rarities.get(rarity, rarity)
+        if rarity not in rarities.values():
+            await ctx.send(_("{rarity} is not a valid rarity.").format(rarity=rarity))
+            return await self.bot.reset_cooldown(ctx)
+
+        if ctx.character_data[f"crates_{rarity}"] < quantity:
+            await ctx.send(
+                _(
+                    "You don't have {quantity} {rarity} crate(s). Check"
+                    " `{prefix}crates`."
+                ).format(quantity=quantity, rarity=rarity, prefix=ctx.prefix)
+            )
+            return await self.bot.reset_cooldown(ctx)
+
+        if not await ctx.confirm(
+            _(
+                "{author}, are you sure you want to offer **{quantity} {rarity}**"
+                " crate(s) for **${price:,.0f}**?"
+            ).format(
+                author=ctx.author.mention, quantity=quantity, rarity=rarity, price=price
+            )
+        ):
+            await ctx.send(_("Offer cancelled."))
+            return await self.bot.reset_cooldown(ctx)
+
+        try:
+            if not await ctx.confirm(
+                _(
+                    "{buyer}, {author} offered you **{quantity} {rarity}** crate(s) for"
+                    " **${price:,.0f}!** React to buy it! You have **2 Minutes** to"
+                    " accept the trade or the offer will be cancelled."
+                ).format(
+                    buyer=buyer.mention,
+                    author=ctx.author.mention,
+                    quantity=quantity,
+                    rarity=rarity,
+                    price=price,
+                ),
+                user=buyer,
+                timeout=120,
+            ):
+                await ctx.send(
+                    _("They didn't want to buy the crate(s). Offer cancelled.")
+                )
+                return await self.bot.reset_cooldown(ctx)
+        except self.bot.paginator.NoChoice:
+            await ctx.send(_("They couldn't make up their mind. Offer cancelled."))
+            return await self.bot.reset_cooldown(ctx)
+
+        if not await has_money(self.bot, buyer.id, price):
+            await ctx.send(
+                _("{buyer}, you're too poor to buy the crate(s)!").format(
+                    buyer=buyer.mention
+                )
+            )
+            return await self.bot.reset_cooldown(ctx)
+        async with self.bot.pool.acquire() as conn:
+            crates = await conn.fetchrow(
+                f'SELECT "crates_{rarity}" FROM profile WHERE "user"=$1', ctx.author.id,
+            )
+            if crates[f"crates_{rarity}"] < quantity:
+                return await ctx.send(
+                    _(
+                        "The seller traded/opened the crate(s) in the meantime. Offer"
+                        " cancelled."
+                    )
+                )
+            await conn.execute(
+                f'UPDATE profile SET "crates_{rarity}"="crates_{rarity}"-$1 WHERE'
+                ' "user"=$2;',
+                quantity,
+                ctx.author.id,
+            )
+            await conn.execute(
+                f'UPDATE profile SET "crates_{rarity}"="crates_{rarity}"+$1 WHERE'
+                ' "user"=$2;',
+                quantity,
+                buyer.id,
+            )
+            await self.bot.log_transaction(
+                ctx,
+                from_=ctx.author.id,
+                to=buyer.id,
+                subject="crates",
+                data={"Quantity": quantity, "Rarity": rarity, "Price": price,},
+                conn=conn,
+            )
+            await conn.execute(
+                'UPDATE profile SET "money"="money"+$1 WHERE "user"=$2;',
+                price,
+                ctx.author.id,
+            )
+            await conn.execute(
+                'UPDATE profile SET "money"="money"-$1 WHERE "user"=$2;',
+                price,
+                buyer.id,
+            )
+            await self.bot.log_transaction(
+                ctx,
+                from_=buyer.id,
+                to=ctx.author.id,
+                subject="money",
+                data={"Price": price, "Quantity": quantity, "Rarity": rarity,},
+                conn=conn,
+            )
+
+        await self.bot.cache.update_profile_cols_rel(
+            ctx.author.id, money=price, **{f"crates_{rarity}": -quantity}
+        )
+        await self.bot.cache.update_profile_cols_rel(
+            buyer.id, money=-price, **{f"crates_{rarity}": quantity}
+        )
+
+        await ctx.send(
+            _(
+                "{buyer}, you've successfully bought {quantity} {rarity} crate(s) from"
+                " {seller}. Use `{prefix}crates` to view your updated crates."
+            ).format(
+                buyer=buyer.mention,
+                quantity=quantity,
+                rarity=rarity,
+                seller=ctx.author.mention,
+                prefix=ctx.prefix,
             )
         )
 
