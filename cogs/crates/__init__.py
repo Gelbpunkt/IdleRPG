@@ -332,7 +332,7 @@ class Crates(commands.Cog):
         if buyer == ctx.author:
             return await ctx.send(_("You may not offer crates to yourself."))
         elif buyer == ctx.me:
-            await ctx.send(_("No I don't want any crates."))
+            await ctx.send(_("No, I don't want any crates."))
             return await self.bot.reset_cooldown(ctx)
 
         rarities = {
@@ -358,10 +358,14 @@ class Crates(commands.Cog):
 
         if not await ctx.confirm(
             _(
-                "{author}, are you sure you want to offer **{quantity} {rarity}**"
-                " crate(s) for **${price:,.0f}**?"
+                "{author}, are you sure you want to offer **{quantity} {emoji}"
+                " {rarity}** crate(s) for **${price:,.0f}**?"
             ).format(
-                author=ctx.author.mention, quantity=quantity, rarity=rarity, price=price
+                author=ctx.author.mention,
+                quantity=quantity,
+                emoji=getattr(self.emotes, rarity),
+                rarity=rarity,
+                price=price,
             )
         ):
             await ctx.send(_("Offer cancelled."))
@@ -370,13 +374,14 @@ class Crates(commands.Cog):
         try:
             if not await ctx.confirm(
                 _(
-                    "{buyer}, {author} offered you **{quantity} {rarity}** crate(s) for"
-                    " **${price:,.0f}!** React to buy it! You have **2 Minutes** to"
-                    " accept the trade or the offer will be cancelled."
+                    "{buyer}, {author} offered you **{quantity} {emoji} {rarity}**"
+                    " crate(s) for **${price:,.0f}!** React to buy it! You have **2"
+                    " Minutes** to accept the trade or the offer will be cancelled."
                 ).format(
                     buyer=buyer.mention,
                     author=ctx.author.mention,
                     quantity=quantity,
+                    emoji=getattr(self.emotes, rarity),
                     rarity=rarity,
                     price=price,
                 ),
@@ -391,18 +396,18 @@ class Crates(commands.Cog):
             await ctx.send(_("They couldn't make up their mind. Offer cancelled."))
             return await self.bot.reset_cooldown(ctx)
 
-        if not await has_money(self.bot, buyer.id, price):
-            await ctx.send(
-                _("{buyer}, you're too poor to buy the crate(s)!").format(
-                    buyer=buyer.mention
-                )
-            )
-            return await self.bot.reset_cooldown(ctx)
         async with self.bot.pool.acquire() as conn:
-            crates = await conn.fetchrow(
-                f'SELECT "crates_{rarity}" FROM profile WHERE "user"=$1', ctx.author.id,
+            if not await has_money(self.bot, buyer.id, price, conn=conn):
+                await ctx.send(
+                    _("{buyer}, you're too poor to buy the crate(s)!").format(
+                        buyer=buyer.mention
+                    )
+                )
+                return await self.bot.reset_cooldown(ctx)
+            crates = await self.bot.cache.get_profile_col(
+                ctx.author.id, f"crates_{rarity}"
             )
-            if crates[f"crates_{rarity}"] < quantity:
+            if crates < quantity:
                 return await ctx.send(
                     _(
                         "The seller traded/opened the crate(s) in the meantime. Offer"
@@ -410,15 +415,17 @@ class Crates(commands.Cog):
                     )
                 )
             await conn.execute(
-                f'UPDATE profile SET "crates_{rarity}"="crates_{rarity}"-$1 WHERE'
-                ' "user"=$2;',
+                f'UPDATE profile SET "crates_{rarity}"="crates_{rarity}"-$1,'
+                ' "money"="money"+$2 WHERE "user"=$3;',
                 quantity,
+                price,
                 ctx.author.id,
             )
             await conn.execute(
-                f'UPDATE profile SET "crates_{rarity}"="crates_{rarity}"+$1 WHERE'
-                ' "user"=$2;',
+                f'UPDATE profile SET "crates_{rarity}"="crates_{rarity}"+$1,'
+                ' "money"="money"-$2 WHERE "user"=$3;',
                 quantity,
+                price,
                 buyer.id,
             )
             await self.bot.log_transaction(
@@ -428,16 +435,6 @@ class Crates(commands.Cog):
                 subject="crates",
                 data={"Quantity": quantity, "Rarity": rarity, "Price": price,},
                 conn=conn,
-            )
-            await conn.execute(
-                'UPDATE profile SET "money"="money"+$1 WHERE "user"=$2;',
-                price,
-                ctx.author.id,
-            )
-            await conn.execute(
-                'UPDATE profile SET "money"="money"-$1 WHERE "user"=$2;',
-                price,
-                buyer.id,
             )
             await self.bot.log_transaction(
                 ctx,
@@ -457,11 +454,13 @@ class Crates(commands.Cog):
 
         await ctx.send(
             _(
-                "{buyer}, you've successfully bought {quantity} {rarity} crate(s) from"
-                " {seller}. Use `{prefix}crates` to view your updated crates."
+                "{buyer}, you've successfully bought **{quantity} {emoji} {rarity}**"
+                " crate(s) from {seller}. Use `{prefix}crates` to view your updated"
+                " crates."
             ).format(
                 buyer=buyer.mention,
                 quantity=quantity,
+                emoji=getattr(self.emotes, rarity),
                 rarity=rarity,
                 seller=ctx.author.mention,
                 prefix=ctx.prefix,
