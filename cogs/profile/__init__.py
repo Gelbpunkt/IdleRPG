@@ -1135,7 +1135,10 @@ IdleRPG is a global bot, your characters are valid everywhere"""
                     'UPDATE profile SET "marriage"=$1 WHERE "user"=$2;', 0, partner,
                 )
             await conn.execute(
-                'DELETE FROM children WHERE "mother"=$1 OR "father"=$1;', ctx.author.id
+                'UPDATE children SET "mother"=$1, "father"=0 WHERE ("father"=$1 AND'
+                ' "mother"=$2) OR ("father"=$2 AND "mother"=$1);',
+                partner,
+                ctx.author.id,
             )
             await self.bot.delete_profile(ctx.author.id, conn=conn)
         await self.bot.cache.wipe_profile(ctx.author.id)

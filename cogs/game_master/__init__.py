@@ -198,7 +198,10 @@ class GameMaster(commands.Cog):
                 other.id,
             )
             await conn.execute(
-                'DELETE FROM children WHERE "father"=$1 OR "mother"=$1;', other.id
+                'UPDATE children SET "mother"=$1, "father"=0 WHERE ("father"=$1 AND'
+                ' "mother"=$2) OR ("father"=$2 AND "mother"=$1);',
+                partner,
+                other.id,
             )
             await self.bot.delete_profile(other.id, conn=conn)
         await self.bot.cache.wipe_profile(other.id)
