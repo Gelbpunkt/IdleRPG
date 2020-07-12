@@ -53,6 +53,7 @@ class Marriage(commands.Cog):
             Propose to a player for marriage. Once they accept, you are married.
 
             When married, your partner will get bonuses from your adventures, you can have children, which can do different things (see `{prefix}help familyevent`) and increase your lovescore, which has an effect on the [adventure bonus](https://wiki.idlerpg.xyz/index.php?title=Family#Adventure_Bonus).
+            If any of you has children, they will be brought together to one family.
 
             Only players who are not already married can use this command."""
         )
@@ -111,8 +112,22 @@ class Marriage(commands.Cog):
                 ctx.author.id,
                 partner.id,
             )
+            await conn.execute(
+                'UPDATE children SET "father"=$1 WHERE "father"=0 AND "mother"=$2;',
+                partner.id,
+                ctx.author.id,
+            )
+            await conn.execute(
+                'UPDATE children SET "father"=$1 WHERE "father"=0 AND "mother"=$2;',
+                ctx.author.id,
+                partner.id,
+            )
         await self.bot.cache.update_profile_cols_abs(ctx.author.id, marriage=partner.id)
         await self.bot.cache.update_profile_cols_abs(partner.id, marriage=ctx.author.id)
+        # we give familyevent cooldown to the new partner to avoid exploitation
+        await ctx.bot.redis.execute(
+            "SET", f"cd:{partner.id}:familyevent", "familyevent", "EX", 1800,
+        )
         await ctx.send(
             _("Aww! :heart: {author} and {partner} are now married!").format(
                 author=ctx.author.mention, partner=partner.mention
@@ -126,7 +141,7 @@ class Marriage(commands.Cog):
         _(
             """Divorce your partner, effectively un-marrying them.
 
-            When divorcing, any kids you have with your partner will be deleted.
+            When divorcing, any kids you have will be split between you and your partner. Each partner will get the children born with their `{prefix}child` commands.
             You can marry another person right away, if you so choose. Divorcing has no negative consequences on gameplay.
 
             Only married players can use this command."""
@@ -135,8 +150,8 @@ class Marriage(commands.Cog):
             return await ctx.send(_("You are not married yet."))
         if not await ctx.confirm(
             _(
-                "Are you sure you want to divorce your partner? You will lose all your"
-                " children!"
+                "Are you sure you want to divorce your partner? Some of your children"
+                " may be given to your partner."
             )
         ):
             return await ctx.send(
@@ -151,7 +166,11 @@ class Marriage(commands.Cog):
                 ctx.character_data["marriage"],
             )
             await conn.execute(
-                'DELETE FROM children WHERE "father"=$1 OR "mother"=$1;', ctx.author.id
+                'UPDATE children SET "father"=0 WHERE "mother"=$1;', ctx.author.id
+            )
+            await conn.execute(
+                'UPDATE children SET "father"=0 WHERE "mother"=$1;',
+                ctx.character_data["marriage"],
             )
         await self.bot.cache.update_profile_cols_abs(ctx.author.id, marriage=0)
         await self.bot.cache.update_profile_cols_abs(
@@ -493,21 +512,34 @@ class Marriage(commands.Cog):
     async def family(self, ctx):
         _("""View your children. This will display their name, age and gender.""")
         marriage = ctx.character_data["marriage"]
-        if not marriage:
-            return await ctx.send(_("Lonely..."))
         children = await self.bot.pool.fetch(
-            'SELECT * FROM children WHERE "mother"=$1 OR "father"=$1;', ctx.author.id
+            'SELECT * FROM children WHERE ("mother"=$1 AND "father"=$2) OR ("father"=$1'
+            ' AND "mother"=$2);',
+            ctx.author.id,
+            marriage,
+        )
+
+        additional = (
+            _("{amount} children").format(amount=len(children))
+            if len(children) != 1
+            else _("one child")
         )
         em = discord.Embed(
-            title=_("Your family"),
-            description=_("Family of {author} and <@{marriage}>").format(
+            title=_("Your family, {additional}.").format(additional=additional),
+            description=_("{author}'s family").format(author=ctx.author.mention)
+            if not marriage
+            else _("Family of {author} and <@{marriage}>").format(
                 author=ctx.author.mention, marriage=marriage
             ),
         )
         if not children:
             em.add_field(
                 name=_("No children yet"),
-                value=_("Use `{prefix}child` to make one!").format(prefix=ctx.prefix),
+                value=_("Use `{prefix}child` to make one!").format(prefix=ctx.prefix)
+                if marriage
+                else _(
+                    "Get yourself a partner and use `{prefix}child` to make one!"
+                ).format(prefix=ctx.prefix),
             )
         if len(children) <= 5:
             for child in children:
@@ -525,8 +557,10 @@ class Marriage(commands.Cog):
             children_lists = list(chunks(children, 9))
             for small_list in children_lists:
                 em = discord.Embed(
-                    title=_("Your family"),
-                    description=_("Family of {author} and <@{marriage}>").format(
+                    title=_("Your family, {additional}.").format(additional=additional),
+                    description=_("{author}'s family").format(author=ctx.author.mention)
+                    if not marriage
+                    else _("Family of {author} and <@{marriage}>").format(
                         author=ctx.author.mention, marriage=marriage
                     ),
                 )
@@ -573,11 +607,11 @@ class Marriage(commands.Cog):
             Only players who are married and have children can use this command.
             (This command has a cooldown of 30 minutes.)"""
         )
-        if not ctx.character_data["marriage"]:
-            await self.bot.reset_cooldown(ctx)
-            return await ctx.send(_("You're lonely."))
         children = await self.bot.pool.fetch(
-            'SELECT * FROM children WHERE "mother"=$1 OR "father"=$1;', ctx.author.id
+            'SELECT * FROM children WHERE ("mother"=$1 AND "father"=$2) OR ("father"=$1'
+            ' AND "mother"=$2);',
+            ctx.author.id,
+            ctx.character_data["marriage"],
         )
         if not children:
             await self.bot.reset_cooldown(ctx)
@@ -616,11 +650,12 @@ class Marriage(commands.Cog):
                 ]
             )
             await self.bot.pool.execute(
-                'DELETE FROM children WHERE "name"=$1 AND ("mother"=$2 OR "father"=$2)'
-                ' AND "age"=$3;',
+                'DELETE FROM children WHERE "name"=$1 AND (("mother"=$2 AND'
+                ' "father"=$4) OR ("father"=$2 AND "mother"=$4)) AND "age"=$3;',
                 target["name"],
                 ctx.author.id,
                 target["age"],
+                ctx.character_data["marriage"],
             )
             return await ctx.send(
                 _("{name} died at the age of {age}! {cause}").format(
@@ -735,11 +770,12 @@ class Marriage(commands.Cog):
             )
         elif event == "age":
             await self.bot.pool.execute(
-                'UPDATE children SET "age"="age"+1 WHERE "name"=$1 AND ("mother"=$2 OR'
-                ' "father"=$2) AND "age"=$3;',
+                'UPDATE children SET "age"="age"+1 WHERE "name"=$1 AND (("mother"=$2'
+                ' AND "father"=$4) OR ("father"=$2 AND "mother"=$4)) AND "age"=$3;',
                 target["name"],
                 ctx.author.id,
                 target["age"],
+                ctx.character_data["marriage"],
             )
             return await ctx.send(
                 _("{name} is now {age} years old.").format(
@@ -808,12 +844,13 @@ class Marriage(commands.Cog):
             if name == target["name"]:
                 return await ctx.send(_("You didn't change their name."))
             await self.bot.pool.execute(
-                'UPDATE children SET "name"=$1 WHERE "name"=$2 AND ("mother"=$3 OR'
-                ' "father"=$3) AND "age"=$4;',
+                'UPDATE children SET "name"=$1 WHERE "name"=$2 AND (("mother"=$3 AND'
+                ' "father"=$5) OR ("father"=$3 AND "mother"=$5)) AND "age"=$4;',
                 name,
                 target["name"],
                 ctx.author.id,
                 target["age"],
+                ctx.character_data["marriage"],
             )
             return await ctx.send(
                 _("{old_name} is now called {new_name}.").format(
