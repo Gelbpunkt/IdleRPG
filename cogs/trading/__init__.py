@@ -324,7 +324,7 @@ class Trading(commands.Cog):
         prices = [i["price"] for i in sales]
         max_price = max(prices)
         min_price = min(prices)
-        avg_price = sum(prices) / len(prices)
+        avg_price = round(sum(prices) / len(prices), 2)
 
         items = [
             discord.Embed(
