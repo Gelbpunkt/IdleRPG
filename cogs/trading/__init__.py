@@ -15,11 +15,18 @@ GNU Affero General Public License for more details.
 You should have received a copy of the GNU Affero General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
+import datetime
+
 import discord
 
 from discord.ext import commands
 
-from classes.converters import IntFromTo, IntGreaterThan, MemberWithCharacter
+from classes.converters import (
+    DateNewerThan,
+    IntFromTo,
+    IntGreaterThan,
+    MemberWithCharacter,
+)
 from cogs.shard_communication import user_on_cooldown as user_cooldown
 from utils.checks import has_char, has_money
 from utils.i18n import _, locale_doc
@@ -261,6 +268,99 @@ class Trading(commands.Cog):
             ).format(itemid=itemid)
         )
 
+    @commands.command(
+        aliases=["mh", "markethistory"],
+        brief=_("View sale history for the item market"),
+    )
+    @locale_doc
+    async def shophistory(
+        self,
+        ctx,
+        itemtype: str.title = "All",
+        minstat: float = 0.00,
+        after_date: DateNewerThan(
+            datetime.date(year=2018, month=3, day=17)
+        ) = datetime.date(year=2018, month=3, day=17),
+    ):
+        _(
+            """`[itemtype]` - The type of item to filter; defaults to all item types
+             `[minstat]` - The minimum damage/defense an item has to have to show up; defaults to 0
+             `[after_date]` - Show sales only after this date, defaults to bot creation date, which means all
+
+            Lists the past successful sales on the market by criteria and shows average, minimum and highest prices by category."""
+        )
+        if itemtype not in ["All"] + self.bot.config.item_types:
+            return await ctx.send(
+                _("Use either {types} or `All` as a type to filter for.").format(
+                    types=", ".join(f"`{t}`" for t in self.bot.config.item_types)
+                )
+            )
+        if itemtype == "All":
+            sales = await self.bot.pool.fetch(
+                "SELECT * FROM market_history WHERE"
+                ' ("damage">=$1 OR "armor">=$1) AND "timestamp">=$2;',
+                minstat,
+                after_date,
+            )
+        elif itemtype == "Shield":
+            sales = await self.bot.pool.fetch(
+                "SELECT * FROM market_history WHERE"
+                ' "armor">=$1 AND "timestamp">=$2 AND "type"=$3;',
+                minstat,
+                after_date,
+                "Shield",
+            )
+        else:
+            sales = await self.bot.pool.fetch(
+                "SELECT * FROM market_history WHERE"
+                ' "damage">=$1 AND "timestamp">=$2 AND "type"=$3;',
+                minstat,
+                after_date,
+                itemtype,
+            )
+        if not sales:
+            return await ctx.send(_("No results."))
+
+        prices = [i["price"] for i in sales]
+        max_price = max(prices)
+        min_price = min(prices)
+        avg_price = sum(prices) / len(prices)
+
+        items = [
+            discord.Embed(
+                title=_("IdleRPG Shop History"), colour=discord.Colour.blurple(),
+            )
+            .add_field(name=_("Name"), value=item["name"])
+            .add_field(name=_("Type"), value=item["type"])
+            .add_field(name=_("Damage"), value=item["damage"])
+            .add_field(name=_("Armor"), value=item["armor"])
+            .add_field(name=_("Value"), value=f"${item['value']}")
+            .add_field(name=_("Price"), value=f"${item['price']}",)
+            .set_footer(
+                text=_("Item {num} of {total}").format(num=idx + 1, total=len(sales))
+            )
+            for idx, item in enumerate(sales)
+        ]
+        items.insert(
+            0,
+            discord.Embed(
+                title=_("Search results"),
+                color=discord.Colour.blurple(),
+                description=_(
+                    "The search found {amount} sales starting at ${min_price}, ending"
+                    " at ${max_price}. The average sale price was"
+                    " ${avg_price}.\n\nNavigate to see the sales."
+                ).format(
+                    amount=len(prices),
+                    min_price=min_price,
+                    max_price=max_price,
+                    avg_price=avg_price,
+                ),
+            ),
+        )
+
+        await self.bot.paginator.Paginator(extras=items).paginate(ctx)
+
     @commands.command(aliases=["market", "m"], brief=_("View the global item market"))
     @locale_doc
     async def shop(
@@ -492,22 +592,17 @@ class Trading(commands.Cog):
                     timeout=6,
                 ):
                     return await ctx.send(_("Cancelled."))
-            if (
-                buildings := await self.bot.get_city_buildings(
-                    ctx.character_data["guild"]
-                )
-            ) :
+            if buildings := await self.bot.get_city_buildings(
+                ctx.character_data["guild"]
+            ):
                 value = value * (1 + buildings["trade_building"] / 2)
-            await conn.execute(
-                'DELETE FROM allitems WHERE "id"=ANY($1) AND "owner"=$2;',
-                itemids,
-                ctx.author.id,
-            )
-            await conn.execute(
-                'UPDATE profile SET "money"="money"+$1 WHERE "user"=$2;',
-                value,
-                ctx.author.id,
-            )
+            async with conn.transaction():
+                await self.bot.delete_items([i["id"] for i in allitems], conn=conn)
+                await conn.execute(
+                    'UPDATE profile SET "money"="money"+$1 WHERE "user"=$2;',
+                    value,
+                    ctx.author.id,
+                )
             await self.bot.log_transaction(
                 ctx,
                 from_=1,
