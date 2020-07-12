@@ -793,6 +793,27 @@ ALTER TABLE ONLY public.user_settings
 
 
 --
+-- Name: allitems_id_idx; Type: INDEX; Schema: public; Owner: jens
+--
+
+CREATE INDEX allitems_id_idx ON public.allitems USING btree (id);
+
+
+--
+-- Name: inventory_item_idx; Type: INDEX; Schema: public; Owner: jens
+--
+
+CREATE INDEX inventory_item_idx ON public.inventory USING btree (item);
+
+
+--
+-- Name: market_item_idx; Type: INDEX; Schema: public; Owner: jens
+--
+
+CREATE INDEX market_item_idx ON public.market USING btree (item);
+
+
+--
 -- Name: guild insert_alliance_default; Type: TRIGGER; Schema: public; Owner: jens
 --
 
