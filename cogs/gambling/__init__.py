@@ -440,14 +440,173 @@ class Gambling(commands.Cog):
     @commands.cooldown(1, 15, commands.BucketType.user)
     @commands.command(aliases=["card"], brief=_("Draw a card."))
     @locale_doc
-    async def draw(self, ctx):
+    async def draw(
+        self, ctx, enemy: MemberWithCharacter = None, money: IntGreaterThan(-1) = 0
+    ):
         _(
-            """Draws a random card of the 52 french playing cards.
+            """`[enemy]` - A user who has a profile; defaults to None
+            `[money]` - The bet money. A whole number that can be 0 or greater; defaults to 0
 
-            This command has no effect on your balance.
+            Draws a random card from the 52 French playing cards. Playing Draw with someone for money is also available if the enemy is mentioned. The player with higher value of the drawn cards will win the bet money.
+
+            This command has no effect on your balance if done with no enemy mentioned.
             (This command has a cooldown of 15 seconds.)"""
         )
-        await ctx.send(file=discord.File(f"assets/cards/{random.choice(self.cards)}"))
+        if not enemy:
+            return await ctx.send(
+                content=f"{ctx.author.mention} you drew:",
+                file=discord.File(f"assets/cards/{random.choice(self.cards)}"),
+            )
+        else:
+            if enemy == ctx.author:
+                return await ctx.send(_("Please choose someone else."))
+            if enemy == ctx.me:
+                return await ctx.send(_("You should choose a human to play with you."))
+
+            if not await user_has_char(self.bot, ctx.author.id):
+                return await ctx.send(
+                    _(
+                        "You don't have a character yet. Create now using"
+                        " `{prefix}create`."
+                    ).format(prefix=ctx.prefix)
+                )
+            else:
+                ctx.character_data = await self.bot.cache.get_profile(ctx.author.id)
+            if ctx.character_data["money"] < money:
+                return await ctx.send(_("You are too poor."))
+
+            await self.bot.pool.execute(
+                'UPDATE profile SET "money"="money"-$1 WHERE "user"=$2;',
+                money,
+                ctx.author.id,
+            )
+            await self.bot.cache.update_profile_cols_rel(ctx.author.id, money=-money)
+
+            async def money_back():
+                await self.bot.pool.execute(
+                    'UPDATE profile SET "money"="money"+$1 WHERE "user"=$2;',
+                    money,
+                    ctx.author.id,
+                )
+                await self.bot.cache.update_profile_cols_rel(ctx.author.id, money=money)
+                return await self.bot.reset_cooldown(ctx)
+
+            try:
+                if not await ctx.confirm(
+                    _(
+                        "{author} challenges {enemy} to a game of Draw for"
+                        " **${money:,.0f}**. Do you accept?"
+                    ).format(
+                        author=ctx.author.mention, enemy=enemy.mention, money=money,
+                    ),
+                    user=enemy,
+                    timeout=15,
+                ):
+                    await money_back()
+                    return await ctx.send(
+                        _(
+                            "They declined. They don't want to play a game of Draw with"
+                            " you {author}."
+                        ).format(author=ctx.author.mention)
+                    )
+            except self.bot.paginator.NoChoice:
+                await money_back()
+                return await ctx.send(
+                    _(
+                        "They didn't choose anything. It seems they're not interested"
+                        " to play a game of Draw with you {author}."
+                    ).format(author=ctx.author.mention)
+                )
+
+            if not await has_money(self.bot, enemy.id, money):
+                await money_back()
+                return await ctx.send(
+                    _("{enemy} You don't have enough money to play.").format(
+                        enemy=enemy.mention
+                    )
+                )
+
+            await self.bot.pool.execute(
+                'UPDATE profile SET "money"="money"-$1 WHERE "user"=$2;',
+                money,
+                enemy.id,
+            )
+            await self.bot.cache.update_profile_cols_rel(enemy.id, money=-money)
+
+            cards = self.cards.copy()
+            cards = random.shuffle(cards)
+            author_card = cards.pop()
+            enemy_card = cards.pop()
+            rank1 = author_card[: author_card.find("_")]
+            rank2 = enemy_card[: enemy_card.find("_")]
+            rank_values = {
+                "jack": 11,
+                "queen": 12,
+                "king": 13,
+                "ace": 14,
+            }
+            drawn_values = [
+                int(rank_values.get(rank1, rank1)),
+                int(rank_values.get(rank2, rank2)),
+            ]
+            async with self.bot.pool.acquire() as conn:
+                if drawn_values[0] == drawn_values[1]:
+                    await conn.execute(
+                        'UPDATE profile SET "money"="money"+$1 WHERE "user"=$2;',
+                        money,
+                        ctx.author.id,
+                    )
+                    await self.bot.cache.update_profile_cols_rel(
+                        ctx.author.id, money=money
+                    )
+                    await conn.execute(
+                        'UPDATE profile SET "money"="money"+$1 WHERE "user"=$2;',
+                        money,
+                        enemy.id,
+                    )
+                    await self.bot.cache.update_profile_cols_rel(enemy.id, money=money)
+                    text = _("{author} and {enemy} tied in the Draw game.").format(
+                        author=ctx.author.mention, enemy=enemy.mention,
+                    )
+                else:
+                    players = [ctx.author, enemy]
+                    winner = players[drawn_values.index(max(drawn_values))]
+                    loser = players[players.index(winner) - 1]
+                    await conn.execute(
+                        'UPDATE profile SET "money"="money"+$1 WHERE "user"=$2;',
+                        money * 2,
+                        winner.id,
+                    )
+                    await self.bot.cache.update_profile_cols_rel(
+                        winner.id, money=money * 2
+                    )
+                    await self.bot.log_transaction(
+                        ctx,
+                        from_=loser.id,
+                        to=winner.id,
+                        subject="gambling",
+                        data={"Amount": money},
+                        conn=conn,
+                    )
+                    text = _(
+                        "{winner} won the Draw vs {loser}! Congratulations!"
+                    ).format(winner=winner.mention, loser=loser.mention)
+
+            await ctx.send(
+                content=(
+                    f"{ctx.author.mention}, while playing against {enemy.mention}, you"
+                    " drew:"
+                ),
+                file=discord.File(f"assets/cards/{author_card}"),
+            )
+            await ctx.send(
+                content=(
+                    f"{enemy.mention}, while playing against {ctx.author.mention}, you"
+                    " drew:"
+                ),
+                file=discord.File(f"assets/cards/{enemy_card}"),
+            )
+            return await ctx.send(text)
 
     @has_char()
     @commands.cooldown(1, 15, commands.BucketType.user)
