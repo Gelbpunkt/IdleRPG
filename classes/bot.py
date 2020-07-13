@@ -35,8 +35,8 @@ from discord.ext import commands
 
 import config
 
+from classes.cache import RedisCache
 from classes.context import Context
-from classes.converters import UserWithCharacter
 from classes.enums import DonatorRank
 from classes.exceptions import GlobalCooldown
 from classes.http import ProxiedClientSession
@@ -60,7 +60,6 @@ class Bot(commands.AutoShardedBot):
         self.paginator = paginator
         self.BASE_URL = config.base_url
         self.bans = set(config.bans)
-        self.remove_command("help")
         self.linecount = 0
         self.make_linecount()
         self.all_prefixes = {}
@@ -123,6 +122,7 @@ class Bot(commands.AutoShardedBot):
         self.pool = await asyncpg.create_pool(
             **self.config.database, min_size=10, max_size=20, command_timeout=60.0
         )
+        self.cache = RedisCache(self)
 
         for extension in self.config.initial_extensions:
             try:
@@ -211,28 +211,27 @@ class Bot(commands.AutoShardedBot):
         if conn is None:
             conn = await self.pool.acquire()
             local = True
-        damage, armor = await self.get_damage_armor_for(v, conn=conn)
         if (
             atkmultiply is None
             or defmultiply is None
             or classes is None
             or guild is None
         ):
-            (
-                atkmultiply,
-                defmultiply,
-                classes,
-                race,
-                guild,
-                user_god,
-            ) = await conn.fetchval(
-                "SELECT (atkmultiply::decimal, defmultiply::decimal, class::text[],"
-                ' race::text, guild::integer, god::text) FROM profile WHERE "user"=$1;',
-                v,
+            row = await self.cache.get_profile(v, conn=conn)
+            atkmultiply, defmultiply, classes, race, guild, user_god = (
+                row["atkmultiply"],
+                row["defmultiply"],
+                row["class"],
+                row["race"],
+                row["guild"],
+                row["god"],
             )
             if god is not None and god != user_god:
                 raise ValueError()
-        if (buildings := await self.get_city_buildings(guild)) :
+        damage, armor = await self.get_damage_armor_for(
+            v, classes=classes, race=race, conn=conn
+        )
+        if (buildings := await self.get_city_buildings(guild, conn=conn)) :
             atkmultiply += buildings["raid_building"] * Decimal("0.1")
             defmultiply += buildings["raid_building"] * Decimal("0.1")
         if self.in_class_line(classes, "Raider"):
@@ -248,17 +247,6 @@ class Bot(commands.AutoShardedBot):
         if local:
             await self.pool.release(conn)
         return dmg, deff
-
-    async def get_god(self, user: UserWithCharacter, conn=None):
-        """Fetches the god for a user from the database"""
-        local = False
-        if conn is None:
-            conn = self.pool.acquire()
-            local = True
-        god = await conn.fetchval('SELECT god FROM profile WHERE "user"=$1;', user.id)
-        if local:
-            await self.pool.release(conn)
-        return god
 
     async def get_equipped_items_for(self, thing, conn=None):
         """Fetches a list of equipped items of a user from the database"""
@@ -276,12 +264,14 @@ class Bot(commands.AutoShardedBot):
             await self.pool.release(conn)
         return items
 
-    async def get_damage_armor_for(self, thing, conn=None):
+    async def get_damage_armor_for(self, thing, classes=None, race=None, conn=None):
         """Returns a user's weapon attack and defense value"""
         items = await self.get_equipped_items_for(thing, conn=conn)
         damage = sum(i["damage"] for i in items)
         defense = sum(i["armor"] for i in items)
-        return await self.generate_stats(thing, damage, defense, conn=conn)
+        return await self.generate_stats(
+            thing, damage, defense, classes=classes, race=race, conn=conn
+        )
 
     async def get_context(self, message, *, cls=None):
         """Overrides the default Context with a custom Context"""
@@ -408,35 +398,14 @@ class Bot(commands.AutoShardedBot):
 
     async def has_money(self, user, money, conn=None):
         user = user.id if isinstance(user, (discord.User, discord.Member)) else user
-        if conn:
-            return (
-                await conn.fetchval('SELECT money FROM profile WHERE "user"=$1;', user)
-                >= money
-            )
-        else:
-            return (
-                await self.pool.fetchval(
-                    'SELECT money FROM profile WHERE "user"=$1;', user
-                )
-                >= money
-            )
+        return await self.cache.get_profile_col(user, "money", conn=conn) >= money
 
     async def has_crates(self, user, crates, rarity, conn=None):
         user = user.id if isinstance(user, (discord.User, discord.Member)) else user
-        if conn:
-            return (
-                await conn.fetchval(
-                    f'SELECT "crates_{rarity}" FROM profile WHERE "user"=$1;', user
-                )
-                >= crates
-            )
-        else:
-            return (
-                await self.pool.fetchval(
-                    f'SELECT "crates_{rarity}" FROM profile WHERE "user"=$1;', user
-                )
-                >= crates
-            )
+        return (
+            await self.cache.get_profile_col(user, f"crates_{rarity}", conn=conn)
+            >= crates
+        )
 
     async def has_item(self, user, item, conn=None):
         user = user.id if isinstance(user, (discord.User, discord.Member)) else user
@@ -570,6 +539,7 @@ class Bot(commands.AutoShardedBot):
                 amount,
                 ctx.author.id,
             )
+            await self.cache.update_profile_cols_rel(ctx.author.id, **{column: amount})
         elif reward == "item":
             stat = round(new_level * 1.5)
             item = await self.create_random_item(
@@ -599,6 +569,7 @@ class Bot(commands.AutoShardedBot):
                 money,
                 ctx.author.id,
             )
+            await self.cache.update_profile_cols_rel(ctx.author.id, money=money)
             await self.log_transaction(
                 ctx,
                 from_=1,
@@ -686,17 +657,9 @@ class Bot(commands.AutoShardedBot):
         self, user, damage, armor, classes=None, race=None, conn=None
     ):
         user = user.id if isinstance(user, (discord.User, discord.Member)) else user
-        local = False
-        if conn is None:
-            conn = await self.pool.acquire()
-            local = True
         if not classes or not race:
-            classes, race = await conn.fetchval(
-                'SELECT ("class"::text[], "race"::text) FROM profile WHERE "user"=$1;',
-                user,
-            )
-        if local:
-            await self.pool.release(conn)
+            row = await self.cache.get_profile(user, conn=conn)
+            classes, race = row["class"], row["race"]
         lines = [self.get_class_line(class_) for class_ in classes]
         grades = [self.get_class_grade(class_) for class_ in classes]
         for line, grade in zip(lines, grades):
@@ -828,3 +791,29 @@ Command: {ctx.command.qualified_name}
             return False
 
         return res
+
+    async def delete_profile(self, user: int, conn=None):
+        local = False
+        if conn is None:
+            conn = await self.pool.acquire()
+            local = True
+        items = await conn.fetch('SELECT id FROM allitems WHERE "owner"=$1;', user)
+        items = [i["id"] for i in items]
+        await self.delete_items(items, conn=conn)
+        await conn.execute('DELETE FROM pets WHERE "user"=$1;', user)
+        await conn.execute('DELETE FROM user_settings WHERE "user"=$1;', user)
+        await conn.execute('DELETE FROM loot WHERE "user"=$1;', user)
+        await conn.execute('DELETE FROM profile WHERE "user"=$1;', user)
+        if local:
+            await self.pool.release(conn)
+
+    async def delete_items(self, items, conn=None):
+        local = False
+        if conn is None:
+            conn = await self.pool.acquire()
+            local = True
+        await conn.execute('DELETE FROM inventory WHERE "item"=ANY($1);', items)
+        await conn.execute('DELETE FROM market WHERE "item"=ANY($1);', items)
+        await conn.execute('DELETE FROM allitems WHERE "id"=ANY($1);', items)
+        if local:
+            await self.pool.release(conn)

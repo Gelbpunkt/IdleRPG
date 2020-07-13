@@ -100,13 +100,15 @@ class Owner(commands.Cog):
     async def makeluck(self, ctx):
         """Sets the luck for all gods to a random value and give bonus luck to the top 25 followers."""
         text_collection = ["**This week's luck has been decided:**\n"]
+        all_ids = []
         async with self.bot.pool.acquire() as conn:
             for god in self.bot.config.gods:
                 boundaries = self.bot.config.gods[god]["boundaries"]
                 luck = random.randint(boundaries[0] * 100, boundaries[1] * 100) / 100
-                await conn.execute(
+                ids = await conn.execute(
                     'UPDATE profile SET "luck"=round($1, 2) WHERE "god"=$2;', luck, god
                 )
+                all_ids.extend([u["user"] for u in ids])
                 top_followers = [
                     u["user"]
                     for u in await conn.fetch(
@@ -149,11 +151,12 @@ class Owner(commands.Cog):
             await conn.execute('UPDATE profile SET "favor"=0 WHERE "god" IS NOT NULL;')
             text_collection.append("Godless set to 1.0")
             await conn.execute('UPDATE profile SET "luck"=1.0 WHERE "god" IS NULL;')
-            msg = await ctx.send("\n".join(text_collection))
-            try:
-                await msg.publish()
-            except (discord.Forbidden, discord.HTTPException) as e:
-                await ctx.send(f"Could not publish the message for some reason: `{e}`")
+        await self.bot.cache.wipe_profile(*all_ids)
+        msg = await ctx.send("\n".join(text_collection))
+        try:
+            await msg.publish()
+        except (discord.Forbidden, discord.HTTPException) as e:
+            await ctx.send(f"Could not publish the message for some reason: `{e}`")
 
     @commands.command(hidden=True)
     async def shutdown(self, ctx):

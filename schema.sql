@@ -17,8 +17,8 @@
 -- PostgreSQL database dump
 --
 
--- Dumped from database version 13beta1
--- Dumped by pg_dump version 13beta1
+-- Dumped from database version 13beta2
+-- Dumped by pg_dump version 13beta2
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -793,6 +793,34 @@ ALTER TABLE ONLY public.user_settings
 
 
 --
+-- Name: allitems_id_idx; Type: INDEX; Schema: public; Owner: jens
+--
+
+CREATE INDEX allitems_id_idx ON public.allitems USING btree (id);
+
+
+--
+-- Name: loot_id_idx; Type: INDEX; Schema: public; Owner: jens
+--
+
+CREATE INDEX loot_id_idx ON public.loot USING btree (id);
+
+
+--
+-- Name: inventory_item_idx; Type: INDEX; Schema: public; Owner: jens
+--
+
+CREATE INDEX inventory_item_idx ON public.inventory USING btree (item);
+
+
+--
+-- Name: market_item_idx; Type: INDEX; Schema: public; Owner: jens
+--
+
+CREATE INDEX market_item_idx ON public.market USING btree (item);
+
+
+--
 -- Name: guild insert_alliance_default; Type: TRIGGER; Schema: public; Owner: jens
 --
 
@@ -804,7 +832,7 @@ CREATE TRIGGER insert_alliance_default BEFORE INSERT ON public.guild FOR EACH RO
 --
 
 ALTER TABLE ONLY public.allitems
-    ADD CONSTRAINT allitems_owner_fkey FOREIGN KEY (owner) REFERENCES public.profile("user") ON DELETE CASCADE;
+    ADD CONSTRAINT allitems_owner_fkey FOREIGN KEY (owner) REFERENCES public.profile("user");
 
 
 --
@@ -868,7 +896,7 @@ ALTER TABLE ONLY public.guild
 --
 
 ALTER TABLE ONLY public.inventory
-    ADD CONSTRAINT inventory_item_fkey FOREIGN KEY (item) REFERENCES public.allitems(id) ON DELETE CASCADE;
+    ADD CONSTRAINT inventory_item_fkey FOREIGN KEY (item) REFERENCES public.allitems(id);
 
 
 --
@@ -876,7 +904,7 @@ ALTER TABLE ONLY public.inventory
 --
 
 ALTER TABLE ONLY public.loot
-    ADD CONSTRAINT loot_user_fkey FOREIGN KEY ("user") REFERENCES public.profile("user") ON DELETE CASCADE;
+    ADD CONSTRAINT loot_user_fkey FOREIGN KEY ("user") REFERENCES public.profile("user");
 
 
 --
@@ -884,7 +912,7 @@ ALTER TABLE ONLY public.loot
 --
 
 ALTER TABLE ONLY public.market
-    ADD CONSTRAINT market_item_fkey FOREIGN KEY (item) REFERENCES public.allitems(id) ON DELETE CASCADE;
+    ADD CONSTRAINT market_item_fkey FOREIGN KEY (item) REFERENCES public.allitems(id);
 
 
 --
@@ -892,7 +920,7 @@ ALTER TABLE ONLY public.market
 --
 
 ALTER TABLE ONLY public.pets
-    ADD CONSTRAINT pets_user_fkey FOREIGN KEY ("user") REFERENCES public.profile("user") ON DELETE CASCADE;
+    ADD CONSTRAINT pets_user_fkey FOREIGN KEY ("user") REFERENCES public.profile("user");
 
 
 --
@@ -900,7 +928,7 @@ ALTER TABLE ONLY public.pets
 --
 
 ALTER TABLE ONLY public.user_settings
-    ADD CONSTRAINT user_settings_user_fkey FOREIGN KEY ("user") REFERENCES public.profile("user") ON DELETE CASCADE;
+    ADD CONSTRAINT user_settings_user_fkey FOREIGN KEY ("user") REFERENCES public.profile("user");
 
 
 --
@@ -991,3 +1019,4 @@ GRANT SELECT ON TABLE public.user_settings TO prest;
 --
 -- PostgreSQL database dump complete
 --
+

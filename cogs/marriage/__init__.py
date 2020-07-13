@@ -53,6 +53,7 @@ class Marriage(commands.Cog):
             Propose to a player for marriage. Once they accept, you are married.
 
             When married, your partner will get bonuses from your adventures, you can have children, which can do different things (see `{prefix}help familyevent`) and increase your lovescore, which has an effect on the [adventure bonus](https://wiki.idlerpg.xyz/index.php?title=Family#Adventure_Bonus).
+            If any of you has children, they will be brought together to one family.
 
             Only players who are not already married can use this command."""
         )
@@ -88,46 +89,50 @@ class Marriage(commands.Cog):
             )
 
         try:
-            reaction, user = await self.bot.wait_for(
+            _reaction, _user = await self.bot.wait_for(
                 "reaction_add", timeout=120.0, check=reactioncheck
             )
         except asyncio.TimeoutError:
             return await ctx.send(_("They didn't want to marry."))
         # check if someone married in the meantime
+        check1 = await self.bot.cache.get_profile_col(ctx.author.id, "marriage")
+        check2 = await self.bot.cache.get_profile_col(partner.id, "marriage")
+        if check1 or check2:
+            return await ctx.send(
+                _("Either you or your lovee married in the meantime... :broken_heart:")
+            )
         async with self.bot.pool.acquire() as conn:
-            check1 = await conn.fetchrow(
-                'SELECT * FROM profile WHERE "user"=$1 AND "marriage"=$2;',
-                ctx.author.id,
-                0,
-            )
-            check2 = await conn.fetchrow(
-                'SELECT * FROM profile WHERE "user"=$1 AND "marriage"=$2;',
+            await conn.execute(
+                'UPDATE profile SET "marriage"=$1 WHERE "user"=$2;',
                 partner.id,
-                0,
+                ctx.author.id,
             )
-            if check1 and check2:
-                await conn.execute(
-                    'UPDATE profile SET "marriage"=$1 WHERE "user"=$2;',
-                    partner.id,
-                    ctx.author.id,
-                )
-                await conn.execute(
-                    'UPDATE profile SET "marriage"=$1 WHERE "user"=$2;',
-                    ctx.author.id,
-                    partner.id,
-                )
-                await ctx.send(
-                    _("Aww! :heart: {author} and {partner} are now married!").format(
-                        author=ctx.author.mention, partner=partner.mention
-                    )
-                )
-            else:
-                await ctx.send(
-                    _(
-                        "Either you or your lovee married in the meantime..."
-                        " :broken_heart:"
-                    )
-                )
+            await conn.execute(
+                'UPDATE profile SET "marriage"=$1 WHERE "user"=$2;',
+                ctx.author.id,
+                partner.id,
+            )
+            await conn.execute(
+                'UPDATE children SET "father"=$1 WHERE "father"=0 AND "mother"=$2;',
+                partner.id,
+                ctx.author.id,
+            )
+            await conn.execute(
+                'UPDATE children SET "father"=$1 WHERE "father"=0 AND "mother"=$2;',
+                ctx.author.id,
+                partner.id,
+            )
+        await self.bot.cache.update_profile_cols_abs(ctx.author.id, marriage=partner.id)
+        await self.bot.cache.update_profile_cols_abs(partner.id, marriage=ctx.author.id)
+        # we give familyevent cooldown to the new partner to avoid exploitation
+        await ctx.bot.redis.execute(
+            "SET", f"cd:{partner.id}:familyevent", "familyevent", "EX", 1800,
+        )
+        await ctx.send(
+            _("Aww! :heart: {author} and {partner} are now married!").format(
+                author=ctx.author.mention, partner=partner.mention
+            )
+        )
 
     @has_char()
     @commands.command(brief=_("Break up with your partner"))
@@ -136,7 +141,7 @@ class Marriage(commands.Cog):
         _(
             """Divorce your partner, effectively un-marrying them.
 
-            When divorcing, any kids you have with your partner will be deleted.
+            When divorcing, any kids you have will be split between you and your partner. Each partner will get the children born with their `{prefix}child` commands.
             You can marry another person right away, if you so choose. Divorcing has no negative consequences on gameplay.
 
             Only married players can use this command."""
@@ -145,8 +150,8 @@ class Marriage(commands.Cog):
             return await ctx.send(_("You are not married yet."))
         if not await ctx.confirm(
             _(
-                "Are you sure you want to divorce your partner? You will lose all your"
-                " children!"
+                "Are you sure you want to divorce your partner? Some of your children"
+                " may be given to your partner."
             )
         ):
             return await ctx.send(
@@ -161,8 +166,16 @@ class Marriage(commands.Cog):
                 ctx.character_data["marriage"],
             )
             await conn.execute(
-                'DELETE FROM children WHERE "father"=$1 OR "mother"=$1;', ctx.author.id
+                'UPDATE children SET "father"=0 WHERE "mother"=$1;', ctx.author.id
             )
+            await conn.execute(
+                'UPDATE children SET "father"=0 WHERE "mother"=$1;',
+                ctx.character_data["marriage"],
+            )
+        await self.bot.cache.update_profile_cols_abs(ctx.author.id, marriage=0)
+        await self.bot.cache.update_profile_cols_abs(
+            ctx.character_data["marriage"], marriage=0
+        )
         await ctx.send(_("You are now divorced."))
 
     @has_char()
@@ -278,12 +291,12 @@ class Marriage(commands.Cog):
             return await ctx.send(_("You're not married yet."))
         async with self.bot.pool.acquire() as conn:
             await conn.execute(
-                'UPDATE profile SET lovescore=lovescore+$1 WHERE "user"=$2;',
+                'UPDATE profile SET "lovescore"="lovescore"+$1 WHERE "user"=$2;',
                 item[1],
                 ctx.character_data["marriage"],
             )
             await conn.execute(
-                'UPDATE profile SET money=money-$1 WHERE "user"=$2;',
+                'UPDATE profile SET "money"="money"-$1 WHERE "user"=$2;',
                 item[1],
                 ctx.author.id,
             )
@@ -293,7 +306,12 @@ class Marriage(commands.Cog):
                 to=2,
                 subject="money",
                 data={"Amount": item[1]},
+                conn=conn,
             )
+        await self.bot.cache.update_profile_cols_rel(ctx.author.id, money=-item[1])
+        await self.bot.cache.update_profile_cols_rel(
+            ctx.character_data["marriage"], lovescore=item[1]
+        )
         await ctx.send(
             _(
                 "You bought a **{item}** for your partner and increased their love"
@@ -331,8 +349,11 @@ class Marriage(commands.Cog):
             await self.bot.reset_cooldown(ctx)
             return await ctx.send(_("You are not married yet."))
         await self.bot.pool.execute(
-            'UPDATE profile SET lovescore=lovescore+$1 WHERE "user"=$2;', num, marriage
+            'UPDATE profile SET "lovescore"="lovescore"+$1 WHERE "user"=$2;',
+            num,
+            marriage,
         )
+        await self.bot.cache.update_profile_cols_rel(marriage, lovescore=num)
 
         partner = await self.bot.get_user_global(marriage)
         scenario = random.choice(
@@ -396,8 +417,8 @@ class Marriage(commands.Cog):
                 'SELECT name FROM children WHERE "mother"=$1 OR "father"=$1;',
                 ctx.author.id,
             )
-            spouse = await conn.fetchval(
-                'SELECT lovescore FROM profile WHERE "user"=$1;', marriage
+            spouse = await self.bot.cache.get_profile_col(
+                marriage, "lovescore", conn=conn
             )
         max_ = self.get_max_kids(ctx.character_data["lovescore"] + spouse)
         if len(names) >= max_:
@@ -474,16 +495,15 @@ class Marriage(commands.Cog):
                     )
                 )
                 name = None
-        async with self.bot.pool.acquire() as conn:
-            await conn.execute(
-                'INSERT INTO children ("mother", "father", "name", "age", "gender")'
-                " VALUES ($1, $2, $3, $4, $5);",
-                ctx.author.id,
-                marriage,
-                name,
-                0,
-                gender,
-            )
+        await self.bot.pool.execute(
+            'INSERT INTO children ("mother", "father", "name", "age", "gender")'
+            " VALUES ($1, $2, $3, $4, $5);",
+            ctx.author.id,
+            marriage,
+            name,
+            0,
+            gender,
+        )
         await ctx.send(_("{name} was born.").format(name=name))
 
     @has_char()
@@ -492,21 +512,34 @@ class Marriage(commands.Cog):
     async def family(self, ctx):
         _("""View your children. This will display their name, age and gender.""")
         marriage = ctx.character_data["marriage"]
-        if not marriage:
-            return await ctx.send(_("Lonely..."))
         children = await self.bot.pool.fetch(
-            'SELECT * FROM children WHERE "mother"=$1 OR "father"=$1;', ctx.author.id
+            'SELECT * FROM children WHERE ("mother"=$1 AND "father"=$2) OR ("father"=$1'
+            ' AND "mother"=$2);',
+            ctx.author.id,
+            marriage,
+        )
+
+        additional = (
+            _("{amount} children").format(amount=len(children))
+            if len(children) != 1
+            else _("one child")
         )
         em = discord.Embed(
-            title=_("Your family"),
-            description=_("Family of {author} and <@{marriage}>").format(
+            title=_("Your family, {additional}.").format(additional=additional),
+            description=_("{author}'s family").format(author=ctx.author.mention)
+            if not marriage
+            else _("Family of {author} and <@{marriage}>").format(
                 author=ctx.author.mention, marriage=marriage
             ),
         )
         if not children:
             em.add_field(
                 name=_("No children yet"),
-                value=_("Use `{prefix}child` to make one!").format(prefix=ctx.prefix),
+                value=_("Use `{prefix}child` to make one!").format(prefix=ctx.prefix)
+                if marriage
+                else _(
+                    "Get yourself a partner and use `{prefix}child` to make one!"
+                ).format(prefix=ctx.prefix),
             )
         if len(children) <= 5:
             for child in children:
@@ -524,8 +557,10 @@ class Marriage(commands.Cog):
             children_lists = list(chunks(children, 9))
             for small_list in children_lists:
                 em = discord.Embed(
-                    title=_("Your family"),
-                    description=_("Family of {author} and <@{marriage}>").format(
+                    title=_("Your family, {additional}.").format(additional=additional),
+                    description=_("{author}'s family").format(author=ctx.author.mention)
+                    if not marriage
+                    else _("Family of {author} and <@{marriage}>").format(
                         author=ctx.author.mention, marriage=marriage
                     ),
                 )
@@ -572,11 +607,11 @@ class Marriage(commands.Cog):
             Only players who are married and have children can use this command.
             (This command has a cooldown of 30 minutes.)"""
         )
-        if not ctx.character_data["marriage"]:
-            await self.bot.reset_cooldown(ctx)
-            return await ctx.send(_("You're lonely."))
         children = await self.bot.pool.fetch(
-            'SELECT * FROM children WHERE "mother"=$1 OR "father"=$1;', ctx.author.id
+            'SELECT * FROM children WHERE ("mother"=$1 AND "father"=$2) OR ("father"=$1'
+            ' AND "mother"=$2);',
+            ctx.author.id,
+            ctx.character_data["marriage"],
         )
         if not children:
             await self.bot.reset_cooldown(ctx)
@@ -615,11 +650,12 @@ class Marriage(commands.Cog):
                 ]
             )
             await self.bot.pool.execute(
-                'DELETE FROM children WHERE "name"=$1 AND ("mother"=$2 OR "father"=$2)'
-                ' AND "age"=$3;',
+                'DELETE FROM children WHERE "name"=$1 AND (("mother"=$2 AND'
+                ' "father"=$4) OR ("father"=$2 AND "mother"=$4)) AND "age"=$3;',
                 target["name"],
                 ctx.author.id,
                 target["age"],
+                ctx.character_data["marriage"],
             )
             return await ctx.send(
                 _("{name} died at the age of {age}! {cause}").format(
@@ -645,14 +681,21 @@ class Marriage(commands.Cog):
                 ]
             )
             money = random.randint(0, int(ctx.character_data["money"] / 64))
-            await self.bot.pool.execute(
-                'UPDATE profile SET "money"="money"-$1 WHERE "user"=$2;',
-                money,
-                ctx.author.id,
-            )
-            await self.bot.log_transaction(
-                ctx, from_=ctx.author.id, to=2, subject="money", data={"Amount": -money}
-            )
+            async with self.bot.pool.acquire() as conn:
+                await conn.execute(
+                    'UPDATE profile SET "money"="money"-$1 WHERE "user"=$2;',
+                    money,
+                    ctx.author.id,
+                )
+                await self.bot.log_transaction(
+                    ctx,
+                    from_=ctx.author.id,
+                    to=2,
+                    subject="money",
+                    data={"Amount": -money},
+                    conn=conn,
+                )
+            await self.bot.cache.update_profile_cols_rel(ctx.author.id, money=-money)
 
             return await ctx.send(
                 _("You lost ${money} because {name} {cause}").format(
@@ -674,14 +717,21 @@ class Marriage(commands.Cog):
                 ]
             )
             money = random.randint(0, int(ctx.character_data["money"] / 64))
-            await self.bot.pool.execute(
-                'UPDATE profile SET "money"="money"+$1 WHERE "user"=$2;',
-                money,
-                ctx.author.id,
-            )
-            await self.bot.log_transaction(
-                ctx, from_=1, to=ctx.author.id, subject="money", data={"Amount": money}
-            )
+            async with self.bot.pool.acquire() as conn:
+                await conn.execute(
+                    'UPDATE profile SET "money"="money"+$1 WHERE "user"=$2;',
+                    money,
+                    ctx.author.id,
+                )
+                await self.bot.log_transaction(
+                    ctx,
+                    from_=1,
+                    to=ctx.author.id,
+                    subject="money",
+                    data={"Amount": money},
+                    conn=conn,
+                )
+            await self.bot.cache.update_profile_cols_rel(ctx.author.id, money=money)
             return await ctx.send(
                 _("{name} gave you ${money}, they {cause}").format(
                     name=target["name"], money=money, cause=cause
@@ -695,19 +745,24 @@ class Marriage(commands.Cog):
                 + ["magic"] * 10
                 + ["legendary"]
             )
-            await self.bot.pool.execute(
-                f'UPDATE profile SET "crates_{type_}"="crates_{type_}"+1 WHERE'
-                ' "user"=$1;',
-                ctx.author.id,
+            async with self.bot.pool.acquire() as conn:
+                await conn.execute(
+                    f'UPDATE profile SET "crates_{type_}"="crates_{type_}"+1 WHERE'
+                    ' "user"=$1;',
+                    ctx.author.id,
+                )
+                await self.bot.log_transaction(
+                    ctx,
+                    from_=ctx.author.id,
+                    to=2,
+                    subject="crates",
+                    data={"Rarity": type_, "Amount": 1},
+                    conn=conn,
+                )
+            await self.bot.cache.update_profile_cols_rel(
+                ctx.author.id, **{f"crates_{type_}": 1}
             )
             emoji = getattr(self.bot.cogs["Crates"].emotes, type_)
-            await self.bot.log_transaction(
-                ctx,
-                from_=ctx.author.id,
-                to=2,
-                subject="crates",
-                data={"Rarity": type_, "Amount": 1},
-            )
             return await ctx.send(
                 _("{name} found a {emoji} {type_} crate for you!").format(
                     name=target["name"], emoji=emoji, type_=type_
@@ -715,11 +770,12 @@ class Marriage(commands.Cog):
             )
         elif event == "age":
             await self.bot.pool.execute(
-                'UPDATE children SET "age"="age"+1 WHERE "name"=$1 AND ("mother"=$2 OR'
-                ' "father"=$2) AND "age"=$3;',
+                'UPDATE children SET "age"="age"+1 WHERE "name"=$1 AND (("mother"=$2'
+                ' AND "father"=$4) OR ("father"=$2 AND "mother"=$4)) AND "age"=$3;',
                 target["name"],
                 ctx.author.id,
                 target["age"],
+                ctx.character_data["marriage"],
             )
             return await ctx.send(
                 _("{name} is now {age} years old.").format(
@@ -788,12 +844,13 @@ class Marriage(commands.Cog):
             if name == target["name"]:
                 return await ctx.send(_("You didn't change their name."))
             await self.bot.pool.execute(
-                'UPDATE children SET "name"=$1 WHERE "name"=$2 AND ("mother"=$3 OR'
-                ' "father"=$3) AND "age"=$4;',
+                'UPDATE children SET "name"=$1 WHERE "name"=$2 AND (("mother"=$3 AND'
+                ' "father"=$5) OR ("father"=$3 AND "mother"=$5)) AND "age"=$4;',
                 name,
                 target["name"],
                 ctx.author.id,
                 target["age"],
+                ctx.character_data["marriage"],
             )
             return await ctx.send(
                 _("{old_name} is now called {new_name}.").format(

@@ -54,54 +54,64 @@ class Halloween(commands.Cog):
                 _("You walk around the houses... Noone is there... *yet*")
             )
         self.waiting = None
-        if random.randint(0, 1) == 1:
-            await ctx.send(
-                _(
-                    "You walk around the houses and ring at {waiting}'s house! That's a"
-                    " trick or treat bag for you, yay!"
-                ).format(waiting=waiting)
-            )
-            await self.bot.pool.execute(
-                'UPDATE profile SET trickortreat=trickortreat+1 WHERE "user"=$1;',
-                ctx.author.id,
-            )
-        else:
-            await ctx.send(
-                _(
-                    "You walk around the houses and ring at {waiting}'s house! Sadly"
-                    " they don't have anything for you..."
-                ).format(waiting=waiting)
-            )
-        try:
+        async with self.bot.pool.acquire() as conn:
             if random.randint(0, 1) == 1:
-                await waiting.send(
-                    "The waiting was worth it: {author} rang! That's a trick or treat"
-                    " bag for you, yay!".format(author=ctx.author)
+                await ctx.send(
+                    _(
+                        "You walk around the houses and ring at {waiting}'s house!"
+                        " That's a trick or treat bag for you, yay!"
+                    ).format(waiting=waiting)
                 )
-                await self.bot.pool.execute(
-                    'UPDATE profile SET trickortreat=trickortreat+1 WHERE "user"=$1;',
-                    waiting.id,
+                await conn.execute(
+                    'UPDATE profile SET "trickortreat"="trickortreat"+1 WHERE'
+                    ' "user"=$1;',
+                    ctx.author.id,
+                )
+                await self.bot.cache.update_profile_cols_rel(
+                    ctx.author.id, trickortreat=1
                 )
             else:
-                await waiting.send(
-                    "{author} rings at your house, but... Nothing for you!".format(
-                        author=ctx.author
-                    )
+                await ctx.send(
+                    _(
+                        "You walk around the houses and ring at {waiting}'s house!"
+                        " Sadly they don't have anything for you..."
+                    ).format(waiting=waiting)
                 )
-        except discord.Forbidden:
-            pass
-        async with self.bot.pool.acquire() as conn:
+            try:
+                if random.randint(0, 1) == 1:
+                    await waiting.send(
+                        "The waiting was worth it: {author} rang! That's a trick or"
+                        " treat bag for you, yay!".format(author=ctx.author)
+                    )
+                    await conn.execute(
+                        'UPDATE profile SET "trickortreat"="trickortreat"+1 WHERE'
+                        ' "user"=$1;',
+                        waiting.id,
+                    )
+                    await self.bot.cache.update_profile_cols_rel(
+                        waiting.id, trickortreat=1
+                    )
+                else:
+                    await waiting.send(
+                        "{author} rings at your house, but... Nothing for you!".format(
+                            author=ctx.author
+                        )
+                    )
+            except discord.Forbidden:
+                pass
             await conn.execute(
-                'UPDATE profile SET money=money+50 WHERE "user"=$1', ctx.author.id
+                'UPDATE profile SET "money"="money"+50 WHERE "user"=$1', ctx.author.id
             )
+            await self.bot.cache.update_profile_cols_rel(ctx.author.id, money=50)
             usr = await conn.fetchval(
                 'SELECT "user" FROM profile WHERE "money">=50 AND "user"!=$1 ORDER BY'
                 " RANDOM() LIMIT 1;",
                 ctx.author.id,
             )
             await conn.execute(
-                'UPDATE profile SET money=money-50 WHERE "user"=$1;', usr
+                'UPDATE profile SET "money"="money"-50 WHERE "user"=$1;', usr
             )
+            await self.bot.cache.update_profile_cols_rel(usr, money=-50)
         usr = await self.bot.get_user_global(usr) or "Unknown User"
         await ctx.send(
             _("A random stranger nearby, **{user}**, gave you additional $50!").format(
@@ -157,11 +167,13 @@ class Halloween(commands.Cog):
             ]
         )
         item["name"] = f"{name} {item['type_']}"
-        await self.bot.create_item(**item)
-        await self.bot.pool.execute(
-            'UPDATE profile SET "trickortreat"="trickortreat"-1 WHERE "user"=$1;',
-            ctx.author.id,
-        )
+        async with self.bot.pool.acquire() as conn:
+            await self.bot.create_item(**item, conn=conn)
+            await conn.execute(
+                'UPDATE profile SET "trickortreat"="trickortreat"-1 WHERE "user"=$1;',
+                ctx.author.id,
+            )
+        await self.bot.cache.update_profile_cols_rel(ctx.author.id, trickortreat=-1)
         embed = discord.Embed(
             title=_("You gained an item!"),
             description=_("You found a new item when opening a trick-or-treat bag!"),

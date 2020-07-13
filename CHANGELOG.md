@@ -1,3 +1,62 @@
+<a name="v4.8.0"></a>
+
+## [v4.8.0](https://git.travitia.xyz/Kenvyra/IdleRPG/compare/v4.7.0...v4.8.0)
+
+> 2020-07-13
+
+### Changes
+
+- 24h cooldown on alliance attacks
+- Added more music error handling
+- Enhanced HTML generation
+- Fixed cache wiping, many thanks to Danny, ImRock and Luke, you guys *rock*
+- Fixed Travis
+- Clarified `$color` and `$loop`
+- Cooldown to crate opening
+- Many database optimizations using indexes
+- A minor exploit fix
+- Lots of translation updates, thanks guys!
+- Fixed `$alliance attack` logic
+- `$merchall` is available again
+- Automatic raid outcome announcements
+- Fix typos for help info of `$pet play` and `$pet cuddle`
+- Fix insanity wave for Guilt
+- Fix command access logic for game master and owner commands
+- Prohibit rgb values over 255
+
+### Additions
+
+- Added `$markethistory` to search past market sales
+- Added options to `$draw` to play a draw game with someone for money
+- Allow opening up to 100 crates at once using `$open rarity amount`
+- New command `$offercrate` to offer crates safely
+- New profile data caching in Redis to increase performance
+
+### Merge Requests
+
+- Merge branch 'patch-14' into 'redis-cache'
+- Merge branch 'children-no-delete' into 'redis-cache'
+- Merge branch 'patch-13' into 'redis-cache'
+- Merge branch 'patch-12' into 'redis-cache'
+- Merge branch 'patch-2' into 'redis-cache'
+- Merge branch 'no-cascade' into 'redis-cache'
+- Merge branch 'fix-gm-help' into 'v4'
+- Merge branch 'patch-6' into 'v4'
+- Merge branch 'patch-10' into 'v4'
+- Merge branch 'patch-9' into 'v4'
+- Merge branch 'patch-5' into 'v4'
+- Merge branch 'patch-2' into 'v4'
+- Merge branch 'generate-stats-patch' into 'v4'
+- Merge branch 'patch-1' into 'v4'
+- Merge branch 'patch-2' into 'v4'
+- Merge branch 'patch-1' into 'v4'
+- Merge branch 'patch-1' into 'v4'
+- Merge branch 'patch-1' into 'v4'
+- Merge branch 'patch-1' into 'v4'
+- Merge branch 'okapi-rewrite' into 'v4'
+- Merge branch 'patch-2' into 'v4'
+
+
 <a name="v4.7.0"></a>
 
 ## [v4.7.0](https://git.travitia.xyz/Kenvyra/IdleRPG/compare/v4.6.0...v4.7.0)

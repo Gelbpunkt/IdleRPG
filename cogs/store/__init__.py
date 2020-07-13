@@ -72,27 +72,50 @@ class Store(commands.Cog):
         if ctx.character_data["money"] < price:
             return await ctx.send(_("You're too poor."))
         if booster != "all":
-            await self.bot.pool.execute(
-                f"UPDATE profile SET {booster}_booster={booster}_booster+$1,"
-                ' "money"="money"-$2 WHERE "user"=$3;',
-                amount,
-                price,
-                ctx.author.id,
-            )
-            await self.bot.log_transaction(
-                ctx, from_=ctx.author.id, to=2, subject="money", data={"Amount": price}
+            async with self.bot.pool.acquire() as conn:
+                await conn.execute(
+                    f"UPDATE profile SET {booster}_booster={booster}_booster+$1,"
+                    ' "money"="money"-$2 WHERE "user"=$3;',
+                    amount,
+                    price,
+                    ctx.author.id,
+                )
+                await self.bot.log_transaction(
+                    ctx,
+                    from_=ctx.author.id,
+                    to=2,
+                    subject="money",
+                    data={"Amount": price},
+                    conn=conn,
+                )
+            await self.bot.cache.update_profile_cols_rel(
+                ctx.author.id, **{f"{booster}_booster": amount, "money": -price}
             )
         else:
-            await self.bot.pool.execute(
-                'UPDATE profile SET "time_booster"="time_booster"+$1,'
-                ' "luck_booster"="luck_booster"+$1, "money_booster"="money_booster"+$1,'
-                ' "money"="money"-$2 WHERE "user"=$3;',
-                amount,
-                price,
+            async with self.bot.pool.acquire() as conn:
+                await conn.execute(
+                    'UPDATE profile SET "time_booster"="time_booster"+$1,'
+                    ' "luck_booster"="luck_booster"+$1,'
+                    ' "money_booster"="money_booster"+$1, "money"="money"-$2 WHERE'
+                    ' "user"=$3;',
+                    amount,
+                    price,
+                    ctx.author.id,
+                )
+                await self.bot.log_transaction(
+                    ctx,
+                    from_=ctx.author.id,
+                    to=2,
+                    subject="money",
+                    data={"Amount": price},
+                    conn=conn,
+                )
+            await self.bot.cache.update_profile_cols_rel(
                 ctx.author.id,
-            )
-            await self.bot.log_transaction(
-                ctx, from_=ctx.author.id, to=2, subject="money", data={"Amount": price}
+                time_booster=amount,
+                luck_booster=amount,
+                money_booster=amount,
+                money=-price,
             )
         await ctx.send(
             _(
@@ -216,6 +239,9 @@ class Store(commands.Cog):
 
             await self.bot.pool.execute(
                 f'UPDATE profile SET {to_reduce} WHERE "user"=$1;', ctx.author.id
+            )
+            await self.bot.cache.update_profile_cols_rel(
+                ctx.author.id, **{f"{i}_booster": -1 for i in reducible}
             )
 
             for i in reducible:

@@ -3,7 +3,7 @@
 podman pull redis:6-alpine
 podman pull postgres:13-alpine
 podman pull gelbpunkt/stockfish:latest
-podman pull gelbpunkt/okapi:latest
+podman pull gelbpunkt/okapi-rewrite:latest
 podman pod create --name idlerpgbeta
 podman run --rm -d --pod idlerpgbeta --name redis-beta redis:6-alpine
 cat <<EOF > start.sh
@@ -24,5 +24,6 @@ sleep 15
 rm start.sh
 podman run --rm -d --pod idlerpgbeta --name stockfish-beta gelbpunkt/stockfish:latest
 podman run --rm -d --pod idlerpgbeta --name okapi-beta -v $(pwd)/config.json:/okapi/config.json:Z gelbpunkt/okapi-rewrite:latest
-podman build -t lavalink:latest -f units/Dockerfile.lavalink .
-podman run --rm -d --pod idlerpgbeta --name lavalink-beta -v $(pwd)/application.yml:/lavalink/application.yml:Z lavalink:latest
+# uncomment to enable lavalink
+# podman build -t lavalink:latest -f units/Dockerfile.lavalink .
+# podman run --rm -d --pod idlerpgbeta --name lavalink-beta -v $(pwd)/application.yml:/lavalink/application.yml:Z lavalink:latest

@@ -26,7 +26,7 @@ before_install:
 script:
   - |
     if [ $TRAVIS_BRANCH == "v4" ]; then
-      podman build -t gelbpunkt/idlerpg:latest .;
+      podman build --cgroup-manager=cgroupfs -t gelbpunkt/idlerpg:latest .;
     else
-      podman build -t gelbpunkt/idlerpg:latest --build-arg beta=true .;
+      podman build --cgroup-manager=cgroupfs -t gelbpunkt/idlerpg:latest --build-arg beta=true .;
     fi

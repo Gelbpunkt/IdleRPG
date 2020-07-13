@@ -19,11 +19,11 @@ import discord
 
 from discord.ext import commands
 
-from classes.converters import IntGreaterThan, UserWithCharacter
+from classes.converters import IntGreaterThan
 from cogs.shard_communication import next_day_cooldown
 from cogs.shard_communication import user_on_cooldown as user_cooldown
 from utils import random
-from utils.checks import has_char, has_god, has_no_god, is_god
+from utils.checks import has_char, has_god, has_no_god
 from utils.i18n import _, locale_doc
 
 
@@ -110,13 +110,16 @@ class Gods(commands.Cog):
                 value,
                 ctx.author.id,
             )
-        await self.bot.log_transaction(
-            ctx,
-            from_=ctx.author.id,
-            to=2,
-            subject="sacrifice",
-            data={"Item-Count": count, "Amount": value},
-        )
+            await self.bot.cache.update_profile_cols_rel(ctx.author.id, favor=value)
+
+            await self.bot.log_transaction(
+                ctx,
+                from_=ctx.author.id,
+                to=2,
+                subject="sacrifice",
+                data={"Item-Count": count, "Amount": value},
+                conn=conn,
+            )
         await ctx.send(
             _(
                 "You prayed to {god}, and they accepted your {count} sacrificed loot"
@@ -176,10 +179,11 @@ Are you sure you want to follow {god}?"""
 
         async with self.bot.pool.acquire() as conn:
             if (
-                await conn.fetchval(
-                    'SELECT reset_points FROM profile WHERE "user"=$1', ctx.author.id
+                await self.bot.cache.get_profile_col(
+                    ctx.author.id, "reset_points", conn=conn
                 )
-            ) < 0:
+                < 0
+            ):
                 return await ctx.send(
                     _(
                         "You became Godless while using this command. Following a God"
@@ -193,9 +197,13 @@ Are you sure you want to follow {god}?"""
                     1,
                     ctx.author.id,
                 )
+                await self.bot.cache.update_profile_cols_rel(
+                    ctx.author.id, reset_points=-1
+                )
             await conn.execute(
                 'UPDATE profile SET "god"=$1 WHERE "user"=$2;', god, ctx.author.id
             )
+            await self.bot.cache.update_profile_cols_abs(ctx.author.id, god=god)
 
         await ctx.send(_("You are now a follower of {god}.").format(god=god))
 
@@ -231,12 +239,14 @@ Are you sure you want to follow {god}?"""
                 )
             )
 
-        async with self.bot.pool.acquire() as conn:
-            await conn.execute(
-                'UPDATE profile SET "favor"=0, "god"=NULL, "reset_points"=-1 WHERE'
-                ' "user"=$1;',
-                ctx.author.id,
-            )
+        await self.bot.pool.execute(
+            'UPDATE profile SET "favor"=0, "god"=NULL, "reset_points"=-1 WHERE'
+            ' "user"=$1;',
+            ctx.author.id,
+        )
+        await self.bot.cache.update_profile_cols_abs(
+            ctx.author.id, favor=0, god="", reset_points=-1
+        )
 
         await ctx.send(_("You are now Godless."))
 
@@ -265,7 +275,7 @@ Are you sure you want to follow {god}?"""
             )
             val = 0
         elif rand == 1:
-            val = random.randint(0, 500)
+            val = random.randint(1, 500)
             message = random.choice(
                 [
                     _("„Rather lousy, but okay“, they said."),
@@ -273,11 +283,6 @@ Are you sure you want to follow {god}?"""
                     _("They were a little amused about your singing."),
                     _("Hearing the same prayer over and over again made them tired."),
                 ]
-            )
-            await self.bot.pool.execute(
-                'UPDATE profile SET "favor"="favor"+$1 WHERE "user"=$2;',
-                val,
-                ctx.author.id,
             )
         elif rand == 2:
             val = random.randint(0, 500) + 500
@@ -292,11 +297,13 @@ Are you sure you want to follow {god}?"""
                     _("Rarely have you had a better day!"),
                 ]
             )
+        if val > 0:
             await self.bot.pool.execute(
                 'UPDATE profile SET "favor"="favor"+$1 WHERE "user"=$2;',
                 val,
                 ctx.author.id,
             )
+            await self.bot.cache.update_profile_cols_rel(ctx.author.id, favor=val)
         await ctx.send(
             _("Your prayer resulted in **{val}** favor. {message}").format(
                 val=val, message=message
@@ -372,47 +379,6 @@ Are you sure you want to follow {god}?"""
         )
         await ctx.send(
             file=discord.File(filename="followers.txt", fp=BytesIO(formatted.encode()))
-        )
-
-    @is_god()
-    @commands.command(
-        aliases=["resetfavour"],
-        enabled=False,
-        hidden=True,
-        brief=_("Set all your followers favor to 0"),
-    )
-    async def resetfavor(self, ctx):
-        """Sets all your followers favor to 0. Only Gods can use this command."""
-        god = self.bot.gods[ctx.author.id]
-        await self.bot.pool.execute('UPDATE profile SET "favor"=0 WHERE "god"=$1;', god)
-        await ctx.send("Done.")
-
-    @is_god()
-    @commands.command(enabled=False, hidden=True, brief=_("Set your followers' luck"))
-    async def setluck(self, ctx, amount: float, target: UserWithCharacter = "all"):
-        """`<amount>` - a number from 0 to 2 with two decimal places
-        `[target]` - the follower's luck to set; defaults to all followers
-
-        Set your followers' luck to a specific value."""
-        god = self.bot.gods[ctx.author.id]
-        if target != "all" and ctx.user_data["god"] != god:
-            return await ctx.send("Not a follower of yours.")
-        amount = round(amount, 2)
-        if amount < 0 or amount > 2:
-            return await ctx.send("Be fair.")
-        if target == "all":
-            await self.bot.pool.execute(
-                'UPDATE profile SET "luck"=round($1, 2) WHERE "god"=$2;', amount, god
-            )
-        else:
-            await self.bot.pool.execute(
-                'UPDATE profile SET "luck"=round($1, 2) WHERE "user"=$2;',
-                amount,
-                target.id,
-            )
-        await ctx.send(
-            f"Gave {amount} luck to"
-            f" {'all of your followers' if target == 'all' else target}."
         )
 
 

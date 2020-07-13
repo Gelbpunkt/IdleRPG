@@ -73,6 +73,9 @@ class Valentine(commands.Cog):
             'UPDATE profile SET "chocolates"="chocolates"+3 WHERE "user"=$1;',
             ctx.character_data["marriage"],
         )
+        await self.bot.cache.update_profile_cols_rel(
+            ctx.character_data["marriage"], chocolates=3
+        )
         await ctx.send(_("You gave your spouse some boxes of chocolates :heart:"))
         user = await self.bot.get_user_global(ctx.character_data["marriage"])
         if user:
@@ -95,18 +98,26 @@ class Valentine(commands.Cog):
             'UPDATE profile SET "chocolates"="chocolates"-1 WHERE "user"=$1',
             ctx.author.id,
         )
+        await self.bot.cache.update_profile_cols_rel(ctx.author.id, chocolates=-1)
 
         prize = random.choice(["money", "item", "lovescore", "lovescore"])
         if prize == "money":
             money = random.randint(1, 10) * 1000
-            await self.bot.pool.execute(
-                'UPDATE profile SET "money"="money"+$1 WHERE "user"=$2;',
-                money,
-                ctx.author.id,
-            )
-            await self.bot.log_transaction(
-                ctx, from_=1, to=ctx.author.id, subject="money", data={"Amount": money}
-            )
+            async with self.bot.pool.acquire() as conn:
+                await conn.execute(
+                    'UPDATE profile SET "money"="money"+$1 WHERE "user"=$2;',
+                    money,
+                    ctx.author.id,
+                )
+                await self.bot.log_transaction(
+                    ctx,
+                    from_=1,
+                    to=ctx.author.id,
+                    subject="money",
+                    data={"Amount": money},
+                    conn=conn,
+                )
+            await self.bot.cache.update_profile_cols_rel(ctx.author.id, money=money)
             return await ctx.send(
                 _("The chocolate box contained **${money}!**").format(money=money)
             )
@@ -116,6 +127,9 @@ class Valentine(commands.Cog):
                 'UPDATE profile SET "lovescore"="lovescore"+$1 WHERE "user"=$2;',
                 lovescore,
                 ctx.author.id,
+            )
+            await self.bot.cache.update_profile_cols_rel(
+                ctx.author.id, lovescore=lovescore
             )
             return await ctx.send(
                 _(
@@ -135,14 +149,17 @@ class Valentine(commands.Cog):
                 insert=False,
             )
             item["name"] = self.get_valentine_name(item["type_"])
-            item = await self.bot.create_item(**item)
-            await self.bot.log_transaction(
-                ctx,
-                from_=1,
-                to=ctx.author.id,
-                subject="item",
-                data={"Name": item["name"], "Value": item["value"]},
-            )
+
+            async with self.bot.pool.acquire() as conn:
+                item = await self.bot.create_item(**item, conn=conn)
+                await self.bot.log_transaction(
+                    ctx,
+                    from_=1,
+                    to=ctx.author.id,
+                    subject="item",
+                    data={"Name": item["name"], "Value": item["value"]},
+                    conn=conn,
+                )
             embed = discord.Embed(
                 title=_("You gained an item!"),
                 description=_("The chocolate box contained an item!"),

@@ -143,7 +143,7 @@ class Transaction(commands.Cog):
                     user2 = (keys := list(trans["content"].keys()))[
                         keys.index(user) - 1
                     ]
-                    if (money := cont["money"]) :
+                    if money := cont["money"]:
                         if not await self.bot.has_money(user.id, money, conn=conn):
                             return await chan.send(
                                 _(
@@ -161,7 +161,13 @@ class Transaction(commands.Cog):
                             money,
                             user.id,
                         )
-                    if (crates := cont["crates"]) :
+                        await self.bot.cache.update_profile_cols_rel(
+                            user.id, money=-money
+                        )
+                        await self.bot.cache.update_profile_cols_rel(
+                            user2.id, money=money
+                        )
+                    if crates := cont["crates"]:
                         for c, a in crates.items():
                             if not await self.bot.has_crates(user.id, a, c, conn=conn):
                                 return await chan.send(
@@ -192,6 +198,20 @@ class Transaction(commands.Cog):
                             f'UPDATE profile SET {c2} WHERE "user"=${largs + 1};',
                             *list(crates.values()),
                             user.id,
+                        )
+                        await self.bot.cache.update_profile_cols_rel(
+                            user.id,
+                            **{
+                                f"crates_{rarity}": -amount
+                                for rarity, amount in crates.items()
+                            },
+                        )
+                        await self.bot.cache.update_profile_cols_rel(
+                            user2.id,
+                            **{
+                                f"crates_{rarity}": amount
+                                for rarity, amount in crates.items()
+                            },
                         )
                     for item in cont["items"]:
                         if not await self.bot.has_item(user.id, item["id"], conn=conn):

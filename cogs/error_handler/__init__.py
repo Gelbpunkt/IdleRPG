@@ -231,12 +231,14 @@ class Errorhandler(commands.Cog):
                         idx = classes.index(evolve)
                         break
                 classes[idx] = "No Class"
-                async with self.bot.pool.acquire() as conn:
-                    await conn.execute(
-                        'UPDATE profile SET "class"=$1 WHERE "user"=$2;',
-                        classes,
-                        ctx.author.id,
-                    )
+                await self.bot.pool.execute(
+                    'UPDATE profile SET "class"=$1 WHERE "user"=$2;',
+                    classes,
+                    ctx.author.id,
+                )
+                await self.bot.cache.update_profile_cols_abs(
+                    ctx.author.id, class_=classes
+                )
             elif isinstance(error, utils.checks.PetDied):
                 await ctx.send(
                     _(
@@ -353,9 +355,8 @@ class Errorhandler(commands.Cog):
                 )
         await ctx.bot.reset_cooldown(ctx)
         if ctx.command.parent:
-            if (
-                ctx.command.root_parent.name == "guild"
-                and getattr(ctx, "character_data") is not None
+            if ctx.command.root_parent.name == "guild" and hasattr(
+                ctx, "character_data"
             ):
                 await self.bot.reset_guild_cooldown(ctx)
             elif ctx.command.root_parent.name == "alliance":

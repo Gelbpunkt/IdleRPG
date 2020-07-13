@@ -628,6 +628,7 @@ class IdleHelp(commands.HelpCommand):
 
 
 def setup(bot):
+    bot.remove_command("help")
     bot.add_cog(Help(bot))
     bot.help_command = IdleHelp()
     bot.help_command.cog = bot.get_cog("Help")

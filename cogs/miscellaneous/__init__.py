@@ -112,11 +112,10 @@ class Miscellaneous(commands.Cog):
 
             (This command has a cooldown until 12am UTC.)"""
         )
-        async with self.bot.redis.get() as redis:
-            streak = await redis.execute("INCR", f"idle:daily:{ctx.author.id}")
-            await redis.execute(
-                "EXPIRE", f"idle:daily:{ctx.author.id}", 48 * 60 * 60
-            )  # 48h: after 2 days, they missed it
+        streak = await self.bot.redis.execute("INCR", f"idle:daily:{ctx.author.id}")
+        await self.bot.redis.execute(
+            "EXPIRE", f"idle:daily:{ctx.author.id}", 48 * 60 * 60
+        )  # 48h: after 2 days, they missed it
         money = 2 ** ((streak + 9) % 10) * 50
         # Either money or crates
         if random.randint(0, 2) > 0:
@@ -124,14 +123,21 @@ class Miscellaneous(commands.Cog):
             # Silver = 1.5x
             if await user_is_patron(self.bot, ctx.author, "silver"):
                 money = round(money * 1.5)
-            await self.bot.pool.execute(
-                'UPDATE profile SET money=money+$1 WHERE "user"=$2;',
-                money,
-                ctx.author.id,
-            )
-            await self.bot.log_transaction(
-                ctx, from_=1, to=ctx.author.id, subject="money", data={"Amount": money}
-            )
+            async with self.bot.pool.acquire() as conn:
+                await conn.execute(
+                    'UPDATE profile SET "money"="money"+$1 WHERE "user"=$2;',
+                    money,
+                    ctx.author.id,
+                )
+                await self.bot.log_transaction(
+                    ctx,
+                    from_=1,
+                    to=ctx.author.id,
+                    subject="money",
+                    data={"Amount": money},
+                    conn=conn,
+                )
+            await self.bot.cache.update_profile_cols_rel(ctx.author.id, money=money)
             txt = f"**${money}**"
         else:
             num = round(((streak + 9) % 10 + 1) / 2)
@@ -149,18 +155,23 @@ class Miscellaneous(commands.Cog):
             type_ = random.choice(
                 [types[num - 3]] * 80 + [types[num - 2]] * 19 + [types[num - 1]] * 1
             )
-            await self.bot.pool.execute(
-                f'UPDATE profile SET "crates_{type_}"="crates_{type_}"+$1 WHERE'
-                ' "user"=$2;',
-                amt,
-                ctx.author.id,
-            )
-            await self.bot.log_transaction(
-                ctx,
-                from_=1,
-                to=ctx.author.id,
-                subject="crates",
-                data={"Rarity": type_, "Amount": amt},
+            async with self.bot.pool.acquire() as conn:
+                await conn.execute(
+                    f'UPDATE profile SET "crates_{type_}"="crates_{type_}"+$1 WHERE'
+                    ' "user"=$2;',
+                    amt,
+                    ctx.author.id,
+                )
+                await self.bot.log_transaction(
+                    ctx,
+                    from_=1,
+                    to=ctx.author.id,
+                    subject="crates",
+                    data={"Rarity": type_, "Amount": amt},
+                    conn=conn,
+                )
+            await self.bot.cache.update_profile_cols_rel(
+                ctx.author.id, **{f"crates_{type_}": amt}
             )
             txt = f"**{amt}** {getattr(self.bot.cogs['Crates'].emotes, type_)}"
 
@@ -433,12 +444,38 @@ Average hours of work: **{hours}**"""
         _("""Shows you the bots current version along with its major updates.""")
         await ctx.send(
             """\
-**v4.7.0**
-https://git.travitia.xyz/Kenvyra/IdleRPG/compare/v4.6.0...v4.7.0
+**v4.8.0**
+https://git.travitia.xyz/Kenvyra/IdleRPG/compare/v4.7.0...v4.8.0
 
-> 2020-06-02
+> 2020-07-13
 
-This changelog is too big! Please go to https://git.travitia.xyz/Kenvyra/IdleRPG/-/releases/v4.7.0 to view it."""
+**Changes**
+
+- 24h cooldown on alliance attacks
+- Added more music error handling
+- Enhanced HTML generation
+- Fixed cache wiping, many thanks to Danny, ImRock and Luke, you guys *rock*
+- Fixed Travis
+- Clarified `$color` and `$loop`
+- Cooldown to crate opening
+- Many database optimizations using indexes
+- A minor exploit fix
+- Lots of translation updates, thanks guys!
+- Fixed `$alliance attack` logic
+- `$merchall` is available again
+- Automatic raid outcome announcements
+- Fix typos for help info of `$pet play` and `$pet cuddle`
+- Fix insanity wave for Guilt
+- Fix command access logic for game master and owner commands
+- Prohibit rgb values over 255
+
+**Additions**
+
+- Added `$markethistory` to search past market sales
+- Added options to `$draw` to play a draw game with someone for money
+- Allow opening up to 100 crates at once using `$open rarity amount`
+- New command `$offercrate` to offer crates safely
+- New profile data caching in Redis to increase performance"""
         )
 
     @commands.has_permissions(manage_messages=True)

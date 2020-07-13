@@ -15,11 +15,18 @@ GNU Affero General Public License for more details.
 You should have received a copy of the GNU Affero General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
+import datetime
+
 import discord
 
 from discord.ext import commands
 
-from classes.converters import IntFromTo, IntGreaterThan, MemberWithCharacter
+from classes.converters import (
+    DateNewerThan,
+    IntFromTo,
+    IntGreaterThan,
+    MemberWithCharacter,
+)
 from cogs.shard_communication import user_on_cooldown as user_cooldown
 from utils.checks import has_char, has_money
 from utils.i18n import _, locale_doc
@@ -100,7 +107,9 @@ class Trading(commands.Cog):
                     to=2,
                     subject="money",
                     data={"Amount": tax},
+                    conn=conn,
                 )
+                await self.bot.cache.update_profile_cols_rel(ctx.author.id, money=-tax)
             await conn.execute(
                 "DELETE FROM inventory i USING allitems ai WHERE i.item=ai.id AND"
                 " ai.id=$1 AND ai.owner=$2;",
@@ -162,12 +171,12 @@ class Trading(commands.Cog):
                 "UPDATE allitems SET owner=$1 WHERE id=$2;", ctx.author.id, item["id"]
             )
             await conn.execute(
-                'UPDATE profile SET money=money+$1 WHERE "user"=$2;',
+                'UPDATE profile SET "money"="money"+$1 WHERE "user"=$2;',
                 item["price"],
                 item["owner"],
             )
             await conn.execute(
-                'UPDATE profile SET money=money-$1 WHERE "user"=$2;',
+                'UPDATE profile SET "money"="money"-$1 WHERE "user"=$2;',
                 item["price"] + tax,
                 ctx.author.id,
             )
@@ -183,6 +192,7 @@ class Trading(commands.Cog):
                     to=2,
                     subject="money",
                     data={"Amount": item["price"] + tax},
+                    conn=conn,
                 )
             await self.bot.log_transaction(
                 ctx,
@@ -190,26 +200,32 @@ class Trading(commands.Cog):
                 to=item["owner"],
                 subject="money",
                 data={"Amount": item["price"]},
+                conn=conn,
             )
+            seller = await self.bot.get_user_global(item["owner"])
+            await self.bot.log_transaction(
+                ctx,
+                from_=(seller if seller else item["owner"]),
+                to=ctx.author,
+                subject="shop",
+                data=item,
+                conn=conn,
+            )
+        await self.bot.cache.update_profile_cols_rel(
+            ctx.author.id, money=-(item["price"] + tax)
+        )
+        await self.bot.cache.update_profile_cols_rel(item["owner"], money=item["price"])
         await ctx.send(
             _(
                 "Successfully bought item `{id}`. Use `{prefix}inventory` to view your"
                 " updated inventory."
             ).format(id=item["id"], prefix=ctx.prefix)
         )
-        seller = await self.bot.get_user_global(item["owner"])
         if seller:
             await seller.send(
                 "**{author}** bought your **{name}** for **${price}** from the market."
                 .format(author=ctx.author.name, name=item["name"], price=item["price"])
             )
-        await self.bot.log_transaction(
-            ctx,
-            from_=(seller if seller else item["owner"]),
-            to=ctx.author,
-            subject="shop",
-            data=item,
-        )
 
     @has_char()
     @commands.command(brief=_("Remove your item from the shop."))
@@ -251,6 +267,99 @@ class Trading(commands.Cog):
                 " inventory."
             ).format(itemid=itemid)
         )
+
+    @commands.command(
+        aliases=["mh", "markethistory"],
+        brief=_("View sale history for the item market"),
+    )
+    @locale_doc
+    async def shophistory(
+        self,
+        ctx,
+        itemtype: str.title = "All",
+        minstat: float = 0.00,
+        after_date: DateNewerThan(
+            datetime.date(year=2018, month=3, day=17)
+        ) = datetime.date(year=2018, month=3, day=17),
+    ):
+        _(
+            """`[itemtype]` - The type of item to filter; defaults to all item types
+             `[minstat]` - The minimum damage/defense an item has to have to show up; defaults to 0
+             `[after_date]` - Show sales only after this date, defaults to bot creation date, which means all
+
+            Lists the past successful sales on the market by criteria and shows average, minimum and highest prices by category."""
+        )
+        if itemtype not in ["All"] + self.bot.config.item_types:
+            return await ctx.send(
+                _("Use either {types} or `All` as a type to filter for.").format(
+                    types=", ".join(f"`{t}`" for t in self.bot.config.item_types)
+                )
+            )
+        if itemtype == "All":
+            sales = await self.bot.pool.fetch(
+                "SELECT * FROM market_history WHERE"
+                ' ("damage">=$1 OR "armor">=$1) AND "timestamp">=$2;',
+                minstat,
+                after_date,
+            )
+        elif itemtype == "Shield":
+            sales = await self.bot.pool.fetch(
+                "SELECT * FROM market_history WHERE"
+                ' "armor">=$1 AND "timestamp">=$2 AND "type"=$3;',
+                minstat,
+                after_date,
+                "Shield",
+            )
+        else:
+            sales = await self.bot.pool.fetch(
+                "SELECT * FROM market_history WHERE"
+                ' "damage">=$1 AND "timestamp">=$2 AND "type"=$3;',
+                minstat,
+                after_date,
+                itemtype,
+            )
+        if not sales:
+            return await ctx.send(_("No results."))
+
+        prices = [i["price"] for i in sales]
+        max_price = max(prices)
+        min_price = min(prices)
+        avg_price = round(sum(prices) / len(prices), 2)
+
+        items = [
+            discord.Embed(
+                title=_("IdleRPG Shop History"), colour=discord.Colour.blurple(),
+            )
+            .add_field(name=_("Name"), value=item["name"])
+            .add_field(name=_("Type"), value=item["type"])
+            .add_field(name=_("Damage"), value=item["damage"])
+            .add_field(name=_("Armor"), value=item["armor"])
+            .add_field(name=_("Value"), value=f"${item['value']}")
+            .add_field(name=_("Price"), value=f"${item['price']}",)
+            .set_footer(
+                text=_("Item {num} of {total}").format(num=idx + 1, total=len(sales))
+            )
+            for idx, item in enumerate(sales)
+        ]
+        items.insert(
+            0,
+            discord.Embed(
+                title=_("Search results"),
+                color=discord.Colour.blurple(),
+                description=_(
+                    "The search found {amount} sales starting at ${min_price}, ending"
+                    " at ${max_price}. The average sale price was"
+                    " ${avg_price}.\n\nNavigate to see the sales."
+                ).format(
+                    amount=len(prices),
+                    min_price=min_price,
+                    max_price=max_price,
+                    avg_price=avg_price,
+                ),
+            ),
+        )
+
+        await self.bot.paginator.Paginator(extras=items).paginate(ctx)
 
     @commands.command(aliases=["market", "m"], brief=_("View the global item market"))
     @locale_doc
@@ -382,11 +491,13 @@ class Trading(commands.Cog):
         ):
             return await ctx.send(_("They didn't want it."))
 
-        if not await has_money(self.bot, user.id, price):
-            return await ctx.send(
-                _("{user}, you're too poor to buy this item!").format(user=user.mention)
-            )
         async with self.bot.pool.acquire() as conn:
+            if not await has_money(self.bot, user.id, price, conn=conn):
+                return await ctx.send(
+                    _("{user}, you're too poor to buy this item!").format(
+                        user=user.mention
+                    )
+                )
             item = await conn.fetchrow(
                 "SELECT * FROM inventory i JOIN allitems ai ON (i.item=ai.id) WHERE"
                 " ai.id=$1 AND ai.owner=$2;",
@@ -414,22 +525,24 @@ class Trading(commands.Cog):
             await conn.execute(
                 'UPDATE inventory SET "equipped"=$1 WHERE "item"=$2;', False, itemid
             )
-        await self.bot.log_transaction(
-            ctx,
-            from_=ctx.author.id,
-            to=user.id,
-            subject="item",
-            data={"Name": item["name"], "Value": item["value"]},
-        )
+            await self.bot.log_transaction(
+                ctx,
+                from_=ctx.author.id,
+                to=user.id,
+                subject="item",
+                data={"Name": item["name"], "Value": item["value"]},
+                conn=conn,
+            )
+            await self.bot.log_transaction(
+                ctx, from_=ctx.author, to=user, subject="offer", data=item, conn=conn
+            )
+        await self.bot.cache.update_profile_cols_rel(ctx.author.id, money=price)
+        await self.bot.cache.update_profile_cols_rel(user.id, money=-price)
         await ctx.send(
             _(
                 "Successfully bought item `{itemid}`. Use `{prefix}inventory` to view"
                 " your updated inventory."
             ).format(itemid=itemid, prefix=ctx.prefix)
-        )
-
-        await self.bot.log_transaction(
-            ctx, from_=ctx.author, to=user, subject="offer", data=item
         )
 
     @has_char()
@@ -450,13 +563,19 @@ class Trading(commands.Cog):
             await self.bot.reset_cooldown(ctx)
             return await ctx.send(_("You cannot sell nothing."))
         async with self.bot.pool.acquire() as conn:
-            value, amount, equipped = await conn.fetchval(
-                "SELECT (sum(ai.value), count(*), SUM(CASE WHEN i.equipped THEN 1 END))"
-                " FROM inventory i JOIN allitems ai ON (i.item=ai.id) WHERE"
-                " ai.id=ANY($1) AND ai.owner=$2;",
+            allitems = await conn.fetch(
+                "SELECT ai.id, value, equipped FROM inventory i JOIN allitems ai ON"
+                " (i.item=ai.id) WHERE ai.id=ANY($1) AND ai.owner=$2",
                 itemids,
                 ctx.author.id,
             )
+
+            value, amount, equipped = (
+                sum([i["value"] for i in allitems]),
+                len(allitems),
+                len([i for i in allitems if i["equipped"]]),
+            )
+
             if not amount:
                 await self.bot.reset_cooldown(ctx)
                 return await ctx.send(
@@ -473,29 +592,26 @@ class Trading(commands.Cog):
                     timeout=6,
                 ):
                     return await ctx.send(_("Cancelled."))
-            if (
-                buildings := await self.bot.get_city_buildings(
-                    ctx.character_data["guild"]
-                )
-            ) :
+            if buildings := await self.bot.get_city_buildings(
+                ctx.character_data["guild"]
+            ):
                 value = value * (1 + buildings["trade_building"] / 2)
-            await conn.execute(
-                'DELETE FROM allitems WHERE "id"=ANY($1) AND "owner"=$2;',
-                itemids,
-                ctx.author.id,
+            async with conn.transaction():
+                await self.bot.delete_items([i["id"] for i in allitems], conn=conn)
+                await conn.execute(
+                    'UPDATE profile SET "money"="money"+$1 WHERE "user"=$2;',
+                    value,
+                    ctx.author.id,
+                )
+            await self.bot.log_transaction(
+                ctx,
+                from_=1,
+                to=ctx.author.id,
+                subject="merch",
+                data={"Amount": f"{len(itemids)} items", "Value": value},
+                conn=conn,
             )
-            await conn.execute(
-                'UPDATE profile SET money=money+$1 WHERE "user"=$2;',
-                value,
-                ctx.author.id,
-            )
-        await self.bot.log_transaction(
-            ctx,
-            from_=1,
-            to=ctx.author.id,
-            subject="merch",
-            data={"Amount": f"{len(itemids)} items", "Value": value},
-        )
+        await self.bot.cache.update_profile_cols_rel(ctx.author.id, money=value)
         await ctx.send(
             _(
                 "You received **${money}** when selling item(s) `{itemids}`."
@@ -514,10 +630,10 @@ class Trading(commands.Cog):
 
     @has_char()
     @user_cooldown(1800)
-    @commands.command(enabled=False, brief=_("Merch all non-equipped items"))
+    @commands.command(brief=_("Merch all non-equipped items"))
     @locale_doc
     async def merchall(
-        self, ctx, maxstat: IntFromTo(0, 75) = 75, minstat: IntFromTo(0, 75) = 0
+        self, ctx, maxstat: IntFromTo(0, 100) = 100, minstat: IntFromTo(0, 100) = 0
     ):
         _(
             """`[maxstat]` - The highest damage/defense to include; defaults to 75
@@ -526,27 +642,24 @@ class Trading(commands.Cog):
             Sells all your non-equipped items for their value. A convenient way to sell a large amount of items at once.
             If you are in an alliance which owns a trade building, your winnings will be multiplied by 1.5 for each level.
 
-            ⚠ This command is currently disabled.
-
             (This command has a cooldown of 30 minutes.)"""
         )
         async with self.bot.pool.acquire() as conn:
-            money, count = await conn.fetchval(
-                "SELECT (sum(value), count(value)) FROM inventory i JOIN allitems ai ON"
+            allitems = await conn.fetch(
+                "SELECT ai.id, value FROM inventory i JOIN allitems ai ON"
                 " (i.item=ai.id) WHERE ai.owner=$1 AND i.equipped IS FALSE AND"
                 " ai.armor+ai.damage BETWEEN $2 AND $3;",
                 ctx.author.id,
                 minstat,
                 maxstat,
             )
+            count, money = len(allitems), sum([i["value"] for i in allitems])
             if count == 0:
                 await self.bot.reset_cooldown(ctx)
                 return await ctx.send(_("Nothing to merch."))
-            if (
-                buildings := await self.bot.get_city_buildings(
-                    ctx.character_data["guild"]
-                )
-            ) :
+            if buildings := await self.bot.get_city_buildings(
+                ctx.character_data["guild"]
+            ):
                 money = int(money * (1 + buildings["trade_building"] / 2))
             if not await ctx.confirm(
                 _(
@@ -556,7 +669,7 @@ class Trading(commands.Cog):
             ):
                 await self.bot.reset_cooldown(ctx)
                 return await ctx.send(_("Cancelled selling your items."))
-            newcount = await self.bot.pool.fetchval(
+            newcount = await conn.fetchval(
                 "SELECT count(value) FROM inventory i JOIN allitems ai ON"
                 " (i.item=ai.id) WHERE ai.owner=$1 AND i.equipped IS FALSE AND"
                 " ai.armor+ai.damage BETWEEN $2 AND $3;",
@@ -573,31 +686,26 @@ class Trading(commands.Cog):
                 )
                 return await self.bot.reset_cooldown(ctx)
             async with conn.transaction():
-                await conn.execute(
-                    "DELETE FROM allitems ai USING inventory i WHERE ai.id=i.item AND"
-                    " ai.owner=$1 AND i.equipped IS FALSE AND ai.armor+ai.damage"
-                    " BETWEEN $2 AND $3;",
-                    ctx.author.id,
-                    minstat,
-                    maxstat,
-                )
+                await self.bot.delete_items([i["id"] for i in allitems], conn=conn)
                 await conn.execute(
                     'UPDATE profile SET "money"="money"+$1 WHERE "user"=$2;',
                     money,
                     ctx.author.id,
                 )
+            await self.bot.cache.update_profile_cols_rel(ctx.author.id, money=money)
             await self.bot.log_transaction(
                 ctx,
                 from_=1,
                 to=ctx.author.id,
                 subject="merch",
                 data={"Amount": f"{count} items", "Value": money},
+                conn=conn,
             )
-            await ctx.send(
-                _("Merched **{count}** items for **${money}**.").format(
-                    count=count, money=money
-                )
+        await ctx.send(
+            _("Merched **{count}** items for **${money}**.").format(
+                count=count, money=money
             )
+        )
 
     @commands.command(brief=_("View your shop offers"))
     @locale_doc
@@ -674,19 +782,29 @@ class Trading(commands.Cog):
             return await ctx.send(_("You did not choose anything."))
 
         item = offers[offerid]
-        if not await has_money(self.bot, ctx.author.id, item[1]):
-            return await ctx.send(_("You are too poor to buy this item."))
-        await self.bot.pool.execute(
-            'UPDATE profile SET money=money-$1 WHERE "user"=$2;', item[1], ctx.author.id
-        )
-        await self.bot.log_transaction(
-            ctx,
-            from_=1,
-            to=ctx.author.id,
-            subject="item",
-            data={"Name": item[0]["name"], "Value": item[0]["value"], "Price": item[1]},
-        )
-        await self.bot.create_item(**item[0])
+
+        async with self.bot.pool.acquire() as conn:
+            if not await has_money(self.bot, ctx.author.id, item[1], conn=conn):
+                return await ctx.send(_("You are too poor to buy this item."))
+            await conn.execute(
+                'UPDATE profile SET "money"="money"-$1 WHERE "user"=$2;',
+                item[1],
+                ctx.author.id,
+            )
+            await self.bot.log_transaction(
+                ctx,
+                from_=1,
+                to=ctx.author.id,
+                subject="item",
+                data={
+                    "Name": item[0]["name"],
+                    "Value": item[0]["value"],
+                    "Price": item[1],
+                },
+                conn=conn,
+            )
+            await self.bot.create_item(**item[0], conn=conn)
+        await self.bot.cache.update_profile_cols_rel(ctx.author.id, money=-item[1])
         await ctx.send(
             _(
                 "Successfully bought offer **{offer}**. Use `{prefix}inventory` to view"
