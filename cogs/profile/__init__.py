@@ -603,33 +603,29 @@ IdleRPG is a global bot, your characters are valid everywhere"""
             If you choose money, you will get the loots' combined value in cash. For XP, you will get 1/4th of the combined value in XP."""
         )
         if (none_given := (len(loot_ids) == 0)) :
-            async with self.bot.pool.acquire() as conn:
-                value, count = await conn.fetchval(
-                    'SELECT (SUM("value"), COUNT(*)) FROM loot WHERE "user"=$1',
-                    ctx.author.id,
-                )
-                if count == 0:
-                    await self.bot.reset_cooldown(ctx)
-                    return await ctx.send(_("You don't have any loot."))
+            value, count = await self.bot.pool.fetchval(
+                'SELECT (SUM("value"), COUNT(*)) FROM loot WHERE "user"=$1',
+                ctx.author.id,
+            )
+            if count == 0:
+                await self.bot.reset_cooldown(ctx)
+                return await ctx.send(_("You don't have any loot."))
         else:
-            async with self.bot.pool.acquire() as conn:
-                value, count = await conn.fetchval(
-                    'SELECT (SUM("value"), COUNT("value")) FROM loot WHERE "id"=ANY($1)'
-                    ' AND "user"=$2;',
-                    loot_ids,
-                    ctx.author.id,
-                )
-                value = int(value)
-
-                if not count:
-                    await self.bot.reset_cooldown(ctx)
-                    return await ctx.send(
-                        _(
-                            "You don't own any loot items with the IDs: {itemids}"
-                        ).format(
-                            itemids=", ".join([str(loot_id) for loot_id in loot_ids])
-                        )
+            value, count = await self.bot.pool.fetchval(
+                'SELECT (SUM("value"), COUNT("value")) FROM loot WHERE "id"=ANY($1)'
+                ' AND "user"=$2;',
+                loot_ids,
+                ctx.author.id,
+            )
+            if not count:
+                await self.bot.reset_cooldown(ctx)
+                return await ctx.send(
+                    _("You don't own any loot items with the IDs: {itemids}").format(
+                        itemids=", ".join([str(loot_id) for loot_id in loot_ids])
                     )
+                )
+
+        value = int(value)
         reward = await self.bot.paginator.Choose(
             title=_("Select a reward for the {amount} items".format(amount=count)),
             footer=_("Do you want favor? {prefix}sacrifice instead").format(
