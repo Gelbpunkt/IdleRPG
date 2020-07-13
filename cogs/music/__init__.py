@@ -335,7 +335,6 @@ class Music(commands.Cog):
             ctx.player.dj = ctx.author
             ctx.player.locked = False
             ctx.player.loop = False
-            ctx.player.eq = "Flat"
 
         await self.add_entry_to_queue(track, ctx.player, msg=msg)
 
