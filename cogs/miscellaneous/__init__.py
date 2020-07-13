@@ -444,12 +444,38 @@ Average hours of work: **{hours}**"""
         _("""Shows you the bots current version along with its major updates.""")
         await ctx.send(
             """\
-**v4.7.0**
-https://git.travitia.xyz/Kenvyra/IdleRPG/compare/v4.6.0...v4.7.0
+**v4.8.0**
+https://git.travitia.xyz/Kenvyra/IdleRPG/compare/v4.7.0...v4.8.0
 
-> 2020-06-02
+> 2020-07-13
 
-This changelog is too big! Please go to https://git.travitia.xyz/Kenvyra/IdleRPG/-/releases/v4.7.0 to view it."""
+**Changes**
+
+- 24h cooldown on alliance attacks
+- Added more music error handling
+- Enhanced HTML generation
+- Fixed cache wiping, many thanks to Danny, ImRock and Luke, you guys *rock*
+- Fixed Travis
+- Clarified `$color` and `$loop`
+- Cooldown to crate opening
+- Many database optimizations using indexes
+- A minor exploit fix
+- Lots of translation updates, thanks guys!
+- Fixed `$alliance attack` logic
+- `$merchall` is available again
+- Automatic raid outcome announcements
+- Fix typos for help info of `$pet play` and `$pet cuddle`
+- Fix insanity wave for Guilt
+- Fix command access logic for game master and owner commands
+- Prohibit rgb values over 255
+
+**Additions**
+
+- Added `$markethistory` to search past market sales
+- Added options to `$draw` to play a draw game with someone for money
+- Allow opening up to 100 crates at once using `$open rarity amount`
+- New command `$offercrate` to offer crates safely
+- New profile data caching in Redis to increase performance"""
         )
 
     @commands.has_permissions(manage_messages=True)
