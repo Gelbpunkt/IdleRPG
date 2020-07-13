@@ -167,7 +167,7 @@ You have **{eggs}** <:easteregg:566251086986608650>."""
                     ctx.character_data["guild"],
                 )
             await self.bot.cache.update_profile_cols_rel(
-                ctx.author.id, eastereggs=reward[0]
+                ctx.author.id, eastereggs=-reward[0]
             )
         elif reward[1] == "item":
             item = await self.bot.create_random_item(
