@@ -619,6 +619,7 @@ IdleRPG is a global bot, your characters are valid everywhere"""
                     loot_ids,
                     ctx.author.id,
                 )
+                value = int(value)
 
                 if not count:
                     await self.bot.reset_cooldown(ctx)
@@ -639,7 +640,7 @@ IdleRPG is a global bot, your characters are valid everywhere"""
         ).paginate(ctx)
         reward = ["money", "xp"][reward]
         if reward == "xp":
-            old_level = int(rpgtools.xptolevel(ctx.character_data["xp"]))
+            old_level = rpgtools.xptolevel(ctx.character_data["xp"])
             value = value // 4
 
         async with self.bot.pool.acquire() as conn:
