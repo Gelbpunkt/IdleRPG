@@ -800,7 +800,7 @@ CREATE INDEX allitems_id_idx ON public.allitems USING btree (id);
 
 
 --
--- Name: concurrent; Type: INDEX; Schema: public; Owner: jens
+-- Name: loot_id_idx; Type: INDEX; Schema: public; Owner: jens
 --
 
 CREATE INDEX loot_id_idx ON public.loot USING btree (id);
