@@ -42,7 +42,9 @@ class Chess(commands.Cog):
                 lambda: ProtocolAdapter(chess.engine.UciProtocol()), "127.0.0.1", 4000
             )
         except ConnectionRefusedError:
-            self.bot.logger.warning("FAILED to connect to stockfish backend, unloading chess cog...")
+            self.bot.logger.warning(
+                "FAILED to connect to stockfish backend, unloading chess cog..."
+            )
             self.bot.unload_extension("cogs.chess")
             return
         self.engine = adapter.protocol

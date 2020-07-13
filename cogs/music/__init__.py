@@ -272,7 +272,9 @@ class Music(commands.Cog):
             not self.bot.wavelink.nodes
             or not self.bot.wavelink.nodes["MAIN"].is_available
         ):
-            self.bot.logger.warning("FAILED to connect to lavalink backend, unloading music cog...")
+            self.bot.logger.warning(
+                "FAILED to connect to lavalink backend, unloading music cog..."
+            )
             self.bot.unload_extension("cogs.music")
 
     @is_not_locked()
