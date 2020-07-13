@@ -110,7 +110,9 @@ class Gods(commands.Cog):
                 value,
                 ctx.author.id,
             )
-            await self.bot.cache.update_profile_cols_rel(ctx.author.id, favor=value)
+            await self.bot.cache.update_profile_cols_rel(
+                ctx.author.id, favor=int(value)
+            )
 
             await self.bot.log_transaction(
                 ctx,
