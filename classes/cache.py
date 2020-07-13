@@ -17,24 +17,27 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
 import decimal
 
-import asyncpg
 import orjson
 
 DECIMAL_COLUMNS = ("atkmultiply", "defmultiply", "luck")
+BIGINT_COLUMNS = ("marriage",)
+RECORD_COLUMNS = ("colour",)
 
 
-def default(obj):
-    """orjson fallback handler"""
-    if isinstance(obj, decimal.Decimal):
-        return str(obj)
-    if isinstance(obj, asyncpg.Record):
-        return dict(obj)
-    raise TypeError
+def preprocess(obj):
+    for key in obj:
+        if key in DECIMAL_COLUMNS or key in BIGINT_COLUMNS:
+            obj[key] = str(obj[key])
+        elif key in RECORD_COLUMNS:
+            obj[key] = dict(obj[key])
+    return obj
 
 
 def fix(json):
     for col in DECIMAL_COLUMNS:
         json[col] = decimal.Decimal(json[col])
+    for col in BIGINT_COLUMNS:
+        json[col] = int(json[col])
     return json
 
 
@@ -93,9 +96,7 @@ class RedisCache:
             if row is None:
                 return None
             await self.redis.execute(
-                "SET",
-                f"profilecache:{user_id}",
-                orjson.dumps(dict(row), default=default),
+                "SET", f"profilecache:{user_id}", orjson.dumps(preprocess(dict(row))),
             )
             return row
         loaded = orjson.loads(row)
@@ -117,7 +118,7 @@ class RedisCache:
                 new_val = val
             row[key] = new_val
         await self.redis.execute(
-            "SET", f"profilecache:{user_id}", orjson.dumps(dict(row), default=default),
+            "SET", f"profilecache:{user_id}", preprocess(orjson.dumps(dict(row))),
         )
 
     async def update_profile_cols_abs(self, user_id, **vals):
@@ -131,7 +132,7 @@ class RedisCache:
         for key, val in vals.items():
             row[key.rstrip("_")] = val
         await self.redis.execute(
-            "SET", f"profilecache:{user_id}", orjson.dumps(dict(row), default=default),
+            "SET", f"profilecache:{user_id}", orjson.dumps(preprocess(dict(row))),
         )
 
     async def wipe_profile(self, *user_ids):
