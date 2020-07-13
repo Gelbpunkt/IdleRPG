@@ -118,7 +118,7 @@ class RedisCache:
                 new_val = val
             row[key] = new_val
         await self.redis.execute(
-            "SET", f"profilecache:{user_id}", preprocess(orjson.dumps(dict(row))),
+            "SET", f"profilecache:{user_id}", orjson.dumps(preprocess(dict(row))),
         )
 
     async def update_profile_cols_abs(self, user_id, **vals):
