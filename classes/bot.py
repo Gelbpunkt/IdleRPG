@@ -539,7 +539,7 @@ class Bot(commands.AutoShardedBot):
                 amount,
                 ctx.author.id,
             )
-            await self.cache.wipe_profile(ctx.author.id)
+            await self.cache.update_profile_cols_rel(ctx.author.id, **{column: amount})
         elif reward == "item":
             stat = round(new_level * 1.5)
             item = await self.create_random_item(
@@ -569,7 +569,7 @@ class Bot(commands.AutoShardedBot):
                 money,
                 ctx.author.id,
             )
-            await self.cache.wipe_profile(ctx.author.id)
+            await self.cache.update_profile_cols_rel(ctx.author.id, money=money)
             await self.log_transaction(
                 ctx,
                 from_=1,
