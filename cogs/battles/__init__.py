@@ -357,7 +357,7 @@ class Battles(commands.Cog):
                 winner.id,
             )
             await self.bot.cache.update_profile_cols_rel(
-                ctx.author.id, money=money * 2, pvpwins=1
+                winner.id, money=money * 2, pvpwins=1
             )
             await self.bot.log_transaction(
                 ctx,
