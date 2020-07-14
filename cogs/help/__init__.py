@@ -420,7 +420,7 @@ class IdleHelp(commands.HelpCommand):
         super().__init__(*args, **kwargs)
         self.verify_checks = False
         self.gm_exts = {"GameMaster"}
-        self.owner_exts = {"GameMaster", "Owner"}
+        self.owner_exts = {"Owner"}
         self.color = primary_colour
         self.group_emoji = "💠"
         self.command_emoji = "🔷"
@@ -540,9 +540,12 @@ class IdleHelp(commands.HelpCommand):
         if (cog.qualified_name in self.gm_exts) and (
             self.context.author.id not in self.context.bot.config.game_masters
         ):
-            return await self.context.send(
-                _("You do not have access to these commands!")
-            )
+            if self.context.author.id in self.context.bot.owner_ids:
+                pass  # owners don't have restrictions
+            else:
+                return await self.context.send(
+                    _("You do not have access to these commands!")
+                )
         if (cog.qualified_name in self.owner_exts) and (
             self.context.author.id not in self.context.bot.owner_ids
         ):
@@ -574,9 +577,12 @@ class IdleHelp(commands.HelpCommand):
             if (command.cog.qualified_name in self.gm_exts) and (
                 self.context.author.id not in self.context.bot.config.game_masters
             ):
-                return await self.context.send(
-                    _("You do not have access to this command!")
-                )
+                if self.context.author.id in self.context.bot.owner_ids:
+                    pass  # owners don't have restrictions
+                else:
+                    return await self.context.send(
+                        _("You do not have access to this command!")
+                    )
             if (command.cog.qualified_name in self.owner_exts) and (
                 self.context.author.id not in self.context.bot.owner_ids
             ):
