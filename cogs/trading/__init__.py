@@ -595,7 +595,7 @@ class Trading(commands.Cog):
             if buildings := await self.bot.get_city_buildings(
                 ctx.character_data["guild"]
             ):
-                value = value * (1 + buildings["trade_building"] / 2)
+                value = int(value * (1 + buildings["trade_building"] / 2))
             async with conn.transaction():
                 await self.bot.delete_items([i["id"] for i in allitems], conn=conn)
                 await conn.execute(
