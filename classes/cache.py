@@ -20,7 +20,7 @@ import decimal
 import orjson
 
 DECIMAL_COLUMNS = ("atkmultiply", "defmultiply", "luck")
-BIGINT_COLUMNS = ("marriage",)
+BIGINT_COLUMNS = ("marriage", "user")
 RECORD_COLUMNS = ("colour",)
 
 
