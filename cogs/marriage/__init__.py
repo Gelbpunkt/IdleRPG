@@ -448,6 +448,10 @@ class Marriage(commands.Cog):
                 ctx.author.id,
                 marriage,
             )
+            await self.bot.cache.update_profile_cols_rel(
+                ctx.character_data["marriage"], lovescore=ls
+            )
+            await self.bot.cache.update_profile_cols_rel(ctx.author.id, lovescore=ls)
             return await ctx.send(
                 _("You had a lovely night and gained {ls} lovescore. 😏".format(ls=ls))
             )
