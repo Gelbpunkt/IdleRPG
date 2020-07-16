@@ -466,15 +466,18 @@ class Adventure(commands.Cog):
         if not done:
             # TODO: Embeds ftw
             return await ctx.send(
-                _(
-                    """\
-You are currently on an adventure with difficulty `{difficulty}`.
-Time until it completes: `{time_left}`
-Adventure name: `{adventure}`"""
-                ).format(
-                    difficulty=num,
-                    time_left=time,
-                    adventure=self.bot.config.adventure_names[num],
+                embed=discord.Embed(
+                    title=_("Adventure Status"),
+                    description=_(
+                        "You are currently on an adventure with difficulty"
+                        " **{difficulty}**.\nTime until it completes:"
+                        " **{time_left}**\nAdventure name: **{adventure}**"
+                    ).format(
+                        difficulty=num,
+                        time_left=time,
+                        adventure=self.bot.config.adventure_names[num],
+                    ),
+                    colour=self.bot.config.primary_colour,
                 )
             )
 
@@ -506,7 +509,13 @@ Adventure name: `{adventure}`"""
                 'UPDATE profile SET "deaths"="deaths"+1 WHERE "user"=$1;', ctx.author.id
             )
             await self.bot.cache.update_profile_cols_rel(ctx.author.id, deaths=1)
-            return await ctx.send(_("You died on your mission. Try again!"))
+            return await ctx.send(
+                embed=discord.Embed(
+                    title=_("Adventure Failed"),
+                    description=_("You died on your mission. Try again!"),
+                    colour=0xFF0000,
+                )
+            )
 
         gold = round(random.randint(20 * num, 60 * num) * luck_multiply)
 
@@ -530,6 +539,7 @@ Adventure name: `{adventure}`"""
                     maxvalue=round(num * 50 * luck_multiply),
                     owner=ctx.author,
                 )
+                storage_type = "inventory"
 
             else:
                 item = items.get_item()
@@ -539,6 +549,7 @@ Adventure name: `{adventure}`"""
                     item["value"],
                     ctx.author.id,
                 )
+                storage_type = "loot"
 
             if guild := ctx.character_data["guild"]:
                 await conn.execute(
@@ -582,10 +593,29 @@ Adventure name: `{adventure}`"""
 
             # TODO: Embeds ftw
             await ctx.send(
-                _(
-                    "You have completed your adventure and received **${gold}** as well"
-                    " as a new item: **{item}**. Experience gained: **{xp}**."
-                ).format(gold=gold, item=item["name"], xp=xp)
+                embed=discord.Embed(
+                    title=_("Adventure Completed"),
+                    description=_(
+                        "You have completed your adventure and received **${gold}** as"
+                        " well as a new item:\n**{item}** added to your"
+                        " `{prefix}{storage_type}`\nType: **{type}**\n{stat}Value:"
+                        " **{value}**\nExperience gained: **{xp}**."
+                    ).format(
+                        gold=gold,
+                        type=_("Loot item") if storage_type == "loot" else item["type"],
+                        item=item["name"],
+                        stat=""
+                        if storage_type == "loot"
+                        else _("Damage: **{damage}**\n").format(damage=item["damage"])
+                        if item["damage"]
+                        else _("Armor: **{armor}**\n").format(armor=item["armor"]),
+                        value=item["value"],
+                        prefix=ctx.prefix,
+                        storage_type=storage_type,
+                        xp=xp,
+                    ),
+                    colour=0x00FF00,
+                )
             )
 
             new_level = int(rpgtools.xptolevel(ctx.character_data["xp"] + xp))
