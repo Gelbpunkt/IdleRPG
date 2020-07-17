@@ -18,6 +18,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 import asyncio
 import os
 
+from contextlib import suppress
 from typing import Optional
 
 import discord
@@ -535,78 +536,180 @@ class Gambling(commands.Cog):
 
             cards = self.cards.copy()
             cards = random.shuffle(cards)
-            author_card = cards.pop()
-            enemy_card = cards.pop()
-            rank1 = author_card[: author_card.find("_")]
-            rank2 = enemy_card[: enemy_card.find("_")]
             rank_values = {
                 "jack": 11,
                 "queen": 12,
                 "king": 13,
                 "ace": 14,
             }
-            drawn_values = [
-                int(rank_values.get(rank1, rank1)),
-                int(rank_values.get(rank2, rank2)),
-            ]
-            async with self.bot.pool.acquire() as conn:
-                if drawn_values[0] == drawn_values[1]:
-                    await conn.execute(
-                        'UPDATE profile SET "money"="money"+$1 WHERE "user"=$2;',
+
+            while True:
+                try:
+                    author_card = cards.pop()
+                    enemy_card = cards.pop()
+                except IndexError:
+                    return await ctx.send(
+                        _(
+                            "Cards ran out. This is a very rare issue that could mean"
+                            " image files for cards have become insufficient. Please"
+                            " report this issue to the bot developers."
+                        )
+                    )
+
+                rank1 = author_card[: author_card.find("_")]
+                rank2 = enemy_card[: enemy_card.find("_")]
+                drawn_values = [
+                    int(rank_values.get(rank1, rank1)),
+                    int(rank_values.get(rank2, rank2)),
+                ]
+
+                async with self.bot.pool.acquire() as conn:
+                    if drawn_values[0] == drawn_values[1]:
+                        await conn.execute(
+                            'UPDATE profile SET "money"="money"+$1 WHERE "user"=$2 OR'
+                            ' "user"=$3;',
+                            money,
+                            ctx.author.id,
+                            enemy.id,
+                        )
+                        await self.bot.cache.update_profile_cols_rel(
+                            ctx.author.id, money=money
+                        )
+                        await self.bot.cache.update_profile_cols_rel(
+                            enemy.id, money=money
+                        )
+                        text = _("Nobody won. {author} and {enemy} tied.").format(
+                            author=ctx.author.mention, enemy=enemy.mention,
+                        )
+                    else:
+                        players = [ctx.author, enemy]
+                        winner = players[drawn_values.index(max(drawn_values))]
+                        loser = players[players.index(winner) - 1]
+                        await conn.execute(
+                            'UPDATE profile SET "money"="money"+$1 WHERE "user"=$2;',
+                            money * 2,
+                            winner.id,
+                        )
+                        await self.bot.cache.update_profile_cols_rel(
+                            winner.id, money=money * 2
+                        )
+                        await self.bot.log_transaction(
+                            ctx,
+                            from_=loser.id,
+                            to=winner.id,
+                            subject="gambling",
+                            data={"Amount": money},
+                            conn=conn,
+                        )
+                        text = _(
+                            "{winner} won the Draw vs {loser}! Congratulations!"
+                        ).format(winner=winner.mention, loser=loser.mention)
+
+                await ctx.send(
+                    content=(
+                        _("{author}, while playing against {enemy}, you drew:").format(
+                            author=ctx.author.mention, enemy=enemy.mention
+                        )
+                    ),
+                    file=discord.File(f"assets/cards/{author_card}"),
+                )
+                await ctx.send(
+                    content=(
+                        _("{enemy}, while playing against {author}, you drew:").format(
+                            enemy=enemy.mention, author=ctx.author.mention
+                        )
+                    ),
+                    file=discord.File(f"assets/cards/{enemy_card}"),
+                )
+                await ctx.send(text)
+
+                if drawn_values[0] != drawn_values[1]:
+                    break
+                else:
+                    msg = await ctx.send(
+                        content=f"{ctx.author.mention}, {enemy.mention}",
+                        embed=discord.Embed(
+                            title=_("Break the tie?"),
+                            description=_(
+                                "{author}, {enemy} You tied. Do you want to break the"
+                                " tie by playing again for **${money:,.0f}**?"
+                            ).format(
+                                author=ctx.author.mention,
+                                enemy=enemy.mention,
+                                money=money,
+                            ),
+                            colour=discord.Colour.blurple(),
+                        ),
+                    )
+
+                    emoji_no = "\U0000274e"
+                    emoji_yes = "\U00002705"
+                    emojis = (emoji_no, emoji_yes)
+
+                    for emoji in emojis:
+                        await msg.add_reaction(emoji)
+
+                    def check(r, u):
+                        return (
+                            str(r.emoji) in emojis
+                            and r.message.id == msg.id
+                            and u in [ctx.author, enemy]
+                            and not u.bot
+                        )
+
+                    async def cleanup() -> None:
+                        with suppress(discord.HTTPException):
+                            await msg.delete()
+
+                    accept_redraws = {}
+
+                    while len(accept_redraws) < 2:
+                        try:
+                            reaction, user = await self.bot.wait_for(
+                                "reaction_add", timeout=15, check=check
+                            )
+                        except asyncio.TimeoutError:
+                            await cleanup()
+                            return await ctx.send(
+                                _("One of you or both didn't react on time.")
+                            )
+                        else:
+                            if not (accept := bool(emojis.index(str(reaction.emoji)))):
+                                await cleanup()
+                                return await ctx.send(
+                                    _("{user} declined to break the tie.").format(
+                                        user=user.mention
+                                    )
+                                )
+                            if user.id not in accept_redraws:
+                                accept_redraws[user.id] = accept
+
+                    await cleanup()
+
+                    if not await has_money(self.bot, ctx.author.id, money):
+                        return await ctx.send(
+                            _("{author} You don't have enough money to play.").format(
+                                author=ctx.author.mention
+                            )
+                        )
+                    if not await has_money(self.bot, enemy.id, money):
+                        return await ctx.send(
+                            _("{enemy} You don't have enough money to play.").format(
+                                enemy=enemy.mention
+                            )
+                        )
+
+                    await self.bot.pool.execute(
+                        'UPDATE profile SET "money"="money"-$1 WHERE "user"=$2 OR'
+                        ' "user"=$3;',
                         money,
                         ctx.author.id,
-                    )
-                    await self.bot.cache.update_profile_cols_rel(
-                        ctx.author.id, money=money
-                    )
-                    await conn.execute(
-                        'UPDATE profile SET "money"="money"+$1 WHERE "user"=$2;',
-                        money,
                         enemy.id,
                     )
-                    await self.bot.cache.update_profile_cols_rel(enemy.id, money=money)
-                    text = _("{author} and {enemy} tied in the Draw game.").format(
-                        author=ctx.author.mention, enemy=enemy.mention,
-                    )
-                else:
-                    players = [ctx.author, enemy]
-                    winner = players[drawn_values.index(max(drawn_values))]
-                    loser = players[players.index(winner) - 1]
-                    await conn.execute(
-                        'UPDATE profile SET "money"="money"+$1 WHERE "user"=$2;',
-                        money * 2,
-                        winner.id,
-                    )
                     await self.bot.cache.update_profile_cols_rel(
-                        winner.id, money=money * 2
+                        ctx.author.id, money=-money
                     )
-                    await self.bot.log_transaction(
-                        ctx,
-                        from_=loser.id,
-                        to=winner.id,
-                        subject="gambling",
-                        data={"Amount": money},
-                        conn=conn,
-                    )
-                    text = _(
-                        "{winner} won the Draw vs {loser}! Congratulations!"
-                    ).format(winner=winner.mention, loser=loser.mention)
-
-            await ctx.send(
-                content=(
-                    f"{ctx.author.mention}, while playing against {enemy.mention}, you"
-                    " drew:"
-                ),
-                file=discord.File(f"assets/cards/{author_card}"),
-            )
-            await ctx.send(
-                content=(
-                    f"{enemy.mention}, while playing against {ctx.author.mention}, you"
-                    " drew:"
-                ),
-                file=discord.File(f"assets/cards/{enemy_card}"),
-            )
-            return await ctx.send(text)
+                    await self.bot.cache.update_profile_cols_rel(enemy.id, money=-money)
 
     @has_char()
     @commands.cooldown(1, 15, commands.BucketType.user)
