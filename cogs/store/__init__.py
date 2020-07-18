@@ -193,7 +193,7 @@ class Store(commands.Cog):
             )
         if boostertype != "all":
             boosters = ctx.character_data[f"{boostertype}_booster"]
-            if not boosters:
+            if boosters <= 0:
                 return await ctx.send(_("You don't have any of these boosters."))
             check = await self.bot.get_booster(ctx.author, boostertype)
             if check:
@@ -209,6 +209,9 @@ class Store(commands.Cog):
                 f'UPDATE profile SET "{boostertype}_booster"="{boostertype}_booster"-1'
                 ' WHERE "user"=$1;',
                 ctx.author.id,
+            )
+            await self.bot.cache.update_profile_cols_rel(
+                ctx.author.id, **{f"{boostertype}_booster": -1}
             )
             await self.bot.activate_booster(ctx.author, boostertype)
             await ctx.send(
