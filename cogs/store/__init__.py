@@ -210,6 +210,9 @@ class Store(commands.Cog):
                 ' WHERE "user"=$1;',
                 ctx.author.id,
             )
+            await self.bot.cache.update_profile_cols_rel(
+                ctx.author.id, **{f"{boostertype}_booster": -1}
+            )
             await self.bot.activate_booster(ctx.author, boostertype)
             await ctx.send(
                 _(
