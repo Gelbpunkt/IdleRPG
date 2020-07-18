@@ -193,7 +193,7 @@ class Store(commands.Cog):
             )
         if boostertype != "all":
             boosters = ctx.character_data[f"{boostertype}_booster"]
-            if not boosters:
+            if boosters <= 0:
                 return await ctx.send(_("You don't have any of these boosters."))
             check = await self.bot.get_booster(ctx.author, boostertype)
             if check:
