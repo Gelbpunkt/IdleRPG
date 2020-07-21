@@ -500,10 +500,13 @@ class IdleHelp(commands.HelpCommand):
             url="https://media.discordapp.net/attachments/460568954968997890/711740723715637288/idle_banner.png"
         )
         e.description = _(
-            "**Welcome to the IdleRPG help.**\nAre you stuck? Ask for help in the"
-            " support server!\n- https://support.idlerpg.xyz/\nWould you like to invite"
-            " me to your server?\n- https://invite.idlerpg.xyz/\n*See `{prefix}help"
-            " [command]` and `{prefix}help module [module]` for more info*"
+            "**Welcome to the IdleRPG help.**\nCheck out our tutorial!\n-"
+            " https://idlerpg.xyz/tutorial/\nAre you stuck? Ask for help in the support"
+            " server!\n- https://support.idlerpg.xyz/\nDo you need personal help?\n-"
+            " Contact our support team using `{prefix}helpme`.\nWould you like to"
+            " invite me to your server?\n- https://invite.idlerpg.xyz/\n*See"
+            " `{prefix}help [command]` and `{prefix}help module [module]` for more"
+            " info*"
         ).format(prefix=self.context.prefix)
 
         allowed = []
