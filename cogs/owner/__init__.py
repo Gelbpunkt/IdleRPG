@@ -105,8 +105,11 @@ class Owner(commands.Cog):
             for god in self.bot.config.gods:
                 boundaries = self.bot.config.gods[god]["boundaries"]
                 luck = random.randint(boundaries[0] * 100, boundaries[1] * 100) / 100
-                ids = await conn.execute(
-                    'UPDATE profile SET "luck"=round($1, 2) WHERE "god"=$2;', luck, god
+                ids = await conn.fetch(
+                    'UPDATE profile SET "luck"=round($1, 2) WHERE "god"=$2 RETURNING'
+                    ' "user";',
+                    luck,
+                    god,
                 )
                 all_ids.extend([u["user"] for u in ids])
                 top_followers = [
