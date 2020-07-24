@@ -178,7 +178,7 @@ class Miscellaneous(commands.Cog):
         await ctx.send(
             _(
                 "You received your daily {txt}!\nYou are on a streak of **{streak}**"
-                " days!\n*Tip: `{prefix}vote every 12 hours to get an up to legendary"
+                " days!\n*Tip: `{prefix}vote` every 12 hours to get an up to legendary"
                 " crate with possibly rare items!*"
             ).format(txt=txt, money=money, streak=streak, prefix=ctx.prefix)
         )
