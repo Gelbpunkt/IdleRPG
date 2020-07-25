@@ -1,4 +1,4 @@
-FROM gelbpunkt/python:3.10
+FROM docker.io/gelbpunkt/python:3.10
 
 ARG beta
 
