@@ -1,4 +1,4 @@
-FROM gelbpunkt/python:gcc10
+FROM gelbpunkt/python:3.10
 
 ARG beta
 
@@ -13,11 +13,11 @@ RUN if [ -z "$beta" ]; then \
     apk upgrade --no-cache && \
     apk add --no-cache --virtual .fetch-deps curl && \
     if [[ "$(uname -m)" = "x86_64" && "$beta" ]]; then \
-        BRANCH="3.9-x86_64-beta"; \
+        BRANCH="3.10-x86_64-beta"; \
     elif [ "$(uname -m)" = "x86_64" ]; then \
-        BRANCH="3.9-x86_64"; \
+        BRANCH="3.10-x86_64"; \
     elif [ "$(uname -m)" = "aarch64" ]; then \
-        BRANCH="3.9-aarch64"; \
+        BRANCH="3.10-aarch64"; \
     else \
         echo "Unsupport architecture" && exit 1; \
     fi && \

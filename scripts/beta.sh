@@ -1,9 +1,9 @@
 #!/bin/bash
 # Adrian's script for setting up a quick test deployment
-podman pull redis:6-alpine
-podman pull postgres:13-alpine
-podman pull gelbpunkt/stockfish:latest
-podman pull gelbpunkt/okapi-rewrite:latest
+podman pull docker://docker.io/library/redis:6-alpine
+podman pull docker://docker.io/library/postgres:13-alpine
+podman pull docker://docker.io/gelbpunkt/stockfish:latest
+podman pull docker://docker.io/gelbpunkt/okapi-rewrite:latest
 podman pod create --name idlerpgbeta
 podman run --rm -d --pod idlerpgbeta --name redis-beta redis:6-alpine
 cat <<EOF > start.sh
