@@ -10,4 +10,4 @@ WORKDIR /lavalink
 
 RUN curl -L https://ftp.travitia.xyz/Lavalink.jar -o Lavalink.jar
 
-CMD java -jar Lavalink.jar
+CMD java -jar Lavalink.jar -Xms8G -Xmx8G
