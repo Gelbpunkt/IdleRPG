@@ -538,6 +538,7 @@ class Adventure(commands.Cog):
                     minvalue=round(num * luck_multiply),
                     maxvalue=round(num * 50 * luck_multiply),
                     owner=ctx.author,
+                    conn=conn,
                 )
                 storage_type = "inventory"
 

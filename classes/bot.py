@@ -630,14 +630,6 @@ class Bot(commands.AutoShardedBot):
             "clear_donator_cache", 0, args={"user_id": user}
         )
 
-    async def start_transaction(self, user):
-        user = user if isinstance(user, int) else user.id
-        await self.cogs["Sharding"].handler("temp_ban", 0, args={"user_id": user})
-
-    async def end_transaction(self, user):
-        user = user if isinstance(user, int) else user.id
-        await self.cogs["Sharding"].handler("temp_unban", 0, args={"user_id": user})
-
     @cache(maxsize=8096)
     async def get_donator_rank(self, user_id):
         try:

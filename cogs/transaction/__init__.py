@@ -139,109 +139,166 @@ class Transaction(commands.Cog):
         await base.delete()
         async with self.bot.pool.acquire() as conn:
             async with conn.transaction():
-                for user, cont in trans["content"].items():
-                    user2 = (keys := list(trans["content"].keys()))[
-                        keys.index(user) - 1
+                # Lock both users for now
+                (user1, user1_gives), (user2, user2_gives) = trans["content"].items()
+                user1_item_ids = [i["id"] for i in user1_gives["items"]]
+                user2_item_ids = [i["id"] for i in user2_gives["items"]]
+                user1_row = await conn.fetchrow(
+                    'SELECT * FROM profile WHERE "user"=$1 FOR UPDATE;', user1.id
+                )
+                user2_row = await conn.fetchrow(
+                    'SELECT * FROM profile WHERE "user"=$1 FOR UPDATE;', user2.id
+                )
+                # Lock their traded items
+                user1_items = await conn.fetchrow(
+                    'SELECT * FROM allitems WHERE "id"=ANY($1) FOR UPDATE;',
+                    user1_item_ids,
+                )
+                user2_items = await conn.fetchrow(
+                    'SELECT * FROM allitems WHERE "id"=ANY($1) FOR UPDATE;',
+                    user2_item_ids,
+                )
+                relative_money_difference_user1 = user2_gives.get(
+                    "money", 0
+                ) - user1_gives.get("money", 0)
+                relative_money_difference_user2 = user1_gives.get(
+                    "money", 0
+                ) - user2_gives.get("money", 0)
+                # Just to normalize
+                all_crate_rarities = {
+                    "common": 0,
+                    "uncommon": 0,
+                    "rare": 0,
+                    "magic": 0,
+                    "legendary": 0,
+                }
+                normalized_crates_user1 = all_crate_rarities | user1_gives["crates"]
+                normalized_crates_user2 = all_crate_rarities | user2_gives["crates"]
+                relative_crate_difference_user1 = {
+                    r: a - normalized_crates_user1[r]
+                    for r, a in normalized_crates_user2.items()
+                }
+                relative_crate_difference_user2 = {
+                    r: a - normalized_crates_user2[r]
+                    for r, a in normalized_crates_user1.items()
+                }
+                profile_cols_to_change_user1 = {
+                    f"crates_{col}": val
+                    for col, val in relative_crate_difference_user1
+                    if val
+                }
+                if relative_money_difference_user1:
+                    profile_cols_to_change_user1[
+                        "money"
+                    ] = relative_money_difference_user1
+                profile_cols_to_change_user2 = {
+                    f"crates_{col}": val
+                    for col, val in relative_crate_difference_user2
+                    if val
+                }
+                if relative_money_difference_user2:
+                    profile_cols_to_change_user2[
+                        "money"
+                    ] = relative_money_difference_user2
+                # Now, verify nothing has been traded away
+                # Items are most obvious
+                if len(user1_items) < len(user1_gives["items"]) or len(
+                    user2_items
+                ) < len(user2_gives["items"]):
+                    return await chan.send(
+                        _("Trade cancelled. Things were traded away in the meantime.")
+                    )
+                # Profile columns need to be checked if they are negative and substracting would be negative
+                for col, val in profile_cols_to_change_user1:
+                    if (
+                        val < 0 and user1_row[col] + val < 0
+                    ):  # substracting is smaller 0
+                        return await chan.send(
+                            _(
+                                "Trade cancelled. Things were traded away in the"
+                                " meantime."
+                            )
+                        )
+                for col, val in profile_cols_to_change_user2:
+                    if val < 0 and user2_row[col] + val < 0:
+                        return await chan.send(
+                            _(
+                                "Trade cancelled. Things were traded away in the"
+                                " meantime."
+                            )
+                        )
+
+                # Everything OK, do transaction
+                if user1_items:
+                    await conn.execute(
+                        'UPDATE allitems SET "owner"=$1 WHERE "id"=ANY($2);',
+                        user2.id,
+                        user1_item_ids,
+                    )
+                    await conn.execute(
+                        'UPDATE inventory SET "equipped"=$1 WHERE "item"=ANY($2);',
+                        False,
+                        user1_item_ids,
+                    )
+                if user2_items:
+                    await conn.execute(
+                        'UPDATE allitems SET "owner"=$1 WHERE "id"=ANY($2);',
+                        user1.id,
+                        user2_item_ids,
+                    )
+                    await conn.execute(
+                        'UPDATE inventory SET "equipped"=$1 WHERE "item"=ANY($2);',
+                        False,
+                        user2_item_ids,
+                    )
+
+                row_string_user1 = ", ".join(
+                    [
+                        f'"{col}""="{col}"+${n + 1}'
+                        if val > 0
+                        else f'"{col}""="{col}"-${n + 1}'
+                        for n, (col, val) in enumerate(
+                            profile_cols_to_change_user1.items()
+                        )
                     ]
-                    if money := cont["money"]:
-                        if not await self.bot.has_money(user.id, money, conn=conn):
-                            return await chan.send(
-                                _(
-                                    "Trade cancelled. Things were traded away in the"
-                                    " meantime."
-                                )
-                            )
-                        await conn.execute(
-                            'UPDATE profile SET "money"="money"+$1 WHERE "user"=$2;',
-                            money,
-                            user2.id,
+                )
+                row_string_user2 = ", ".join(
+                    [
+                        f'"{col}""="{col}"+${n + 1}'
+                        if val > 0
+                        else f'"{col}""="{col}"-${n + 1}'
+                        for n, (col, val) in enumerate(
+                            profile_cols_to_change_user1.items()
                         )
-                        await conn.execute(
-                            'UPDATE profile SET "money"="money"-$1 WHERE "user"=$2;',
-                            money,
-                            user.id,
-                        )
-                        await self.bot.cache.update_profile_cols_rel(
-                            user.id, money=-money
-                        )
-                        await self.bot.cache.update_profile_cols_rel(
-                            user2.id, money=money
-                        )
-                    if crates := cont["crates"]:
-                        for c, a in crates.items():
-                            if not await self.bot.has_crates(user.id, a, c, conn=conn):
-                                return await chan.send(
-                                    _(
-                                        "Trade cancelled. Things were traded away in"
-                                        " the meantime."
-                                    )
-                                )
-                        c = ", ".join(
-                            [
-                                f'"crates_{rarity}"="crates_{rarity}"+${i + 1}'
-                                for i, rarity in enumerate(crates)
-                            ]
-                        )
-                        c2 = ", ".join(
-                            [
-                                f'"crates_{rarity}"="crates_{rarity}"-${i + 1}'
-                                for i, rarity in enumerate(crates)
-                            ]
-                        )
-                        largs = len(crates)
-                        await conn.execute(
-                            f'UPDATE profile SET {c} WHERE "user"=${largs + 1};',
-                            *list(crates.values()),
-                            user2.id,
-                        )
-                        await conn.execute(
-                            f'UPDATE profile SET {c2} WHERE "user"=${largs + 1};',
-                            *list(crates.values()),
-                            user.id,
-                        )
-                        await self.bot.cache.update_profile_cols_rel(
-                            user.id,
-                            **{
-                                f"crates_{rarity}": -amount
-                                for rarity, amount in crates.items()
-                            },
-                        )
-                        await self.bot.cache.update_profile_cols_rel(
-                            user2.id,
-                            **{
-                                f"crates_{rarity}": amount
-                                for rarity, amount in crates.items()
-                            },
-                        )
-                    for item in cont["items"]:
-                        if not await self.bot.has_item(user.id, item["id"], conn=conn):
-                            return await chan.send(
-                                _(
-                                    "Trade cancelled. Things were traded away in the"
-                                    " meantime."
-                                )
-                            )
-                        await conn.execute(
-                            'UPDATE allitems SET "owner"=$1 WHERE "id"=$2;',
-                            user2.id,
-                            item["id"],
-                        )
-                        await conn.execute(
-                            'UPDATE inventory SET "equipped"=$1 WHERE "item"=$2;',
-                            False,
-                            item["id"],
-                        )
-                # await self.bot.log_transaction(
-                #    ctx,
-                #    from_=user.id,
-                #    to=user2.id,
-                #    subject="trade",
-                #    data={
-                #        "Money": money or "None",
-                #        "Crates": ", ".join([f"{crate[1]} {crate[0]}" for crate in crates]) or "None",
-                #        "Items": f"{len(items)} items - overall value {sum([item['value'] for item in items])}" or "None",
-                #    }
-                # )
+                    ]
+                )
+                query_args_user_1 = [
+                    abs(i) for i in profile_cols_to_change_user1.values()
+                ]
+                query_args_user_1.append(user1.id)
+                query_args_user_2 = [
+                    abs(i) for i in profile_cols_to_change_user2.values()
+                ]
+                query_args_user_2.append(user2.id)
+
+                n_1 = len(profile_cols_to_change_user1) + 1
+                n_2 = len(profile_cols_to_change_user2) + 1
+
+                await conn.execute(
+                    f'UPDATE profile SET {row_string_user1} WHERE "user"=${n_1};',
+                    *query_args_user_1,
+                )
+                await conn.execute(
+                    f'UPDATE profile SET {row_string_user2} WHERE "user"=${n_2};',
+                    *query_args_user_2,
+                )
+
+                await self.bot.cache.update_profile_cols_rel(
+                    user1.id, **profile_cols_to_change_user1
+                )
+                await self.bot.cache.update_profile_cols_rel(
+                    user2.id, **profile_cols_to_change_user2
+                )
             await chan.send(_("Trade successful."))
 
     @has_no_transaction()

@@ -36,6 +36,7 @@ class Gods(commands.Cog):
 
     @has_god()
     @has_char()
+    @user_cooldown(180, identifier="sacrificeexchange")
     @commands.command(brief=_("Sacrifice loot for favor"))
     @locale_doc
     async def sacrifice(self, ctx, *loot_ids: int):
@@ -49,17 +50,10 @@ class Gods(commands.Cog):
 
             Only players, who follow a God can use this command."""
         )
-        if await self.bot.redis.execute("GET", f"cd:{ctx.author.id}:exchange"):
-            return await ctx.send(
-                _(
-                    "You cannot sacrifice while already exchanging loot. Please finish"
-                    " exchanging first, then try again."
-                )
-            )
         async with self.bot.pool.acquire() as conn:
-            if len(loot_ids) == 0:
+            if not loot_ids:
                 value, count = await conn.fetchval(
-                    'SELECT (SUM("value"), COUNT(*)) FROM loot WHERE "user"=$1',
+                    'SELECT (SUM("value"), COUNT(*)) FROM loot WHERE "user"=$1;',
                     ctx.author.id,
                 )
                 if count == 0:
