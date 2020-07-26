@@ -597,7 +597,7 @@ class Alliance(commands.Cog):
     @locale_doc
     async def occupy(self, ctx, *, city: str.title):
         _(
-            """`<city>` - The name of a city. You can check the city names with `{prefix}alliance cities`
+            """`<city>` - The name of a city. You can check the city names with `{prefix}cities`
 
             Occupy a city. Your alliance will then own that city and will be able to build defenses and level up buildings.
             You can only occupy a city of it has zero defenses left.
@@ -653,7 +653,7 @@ class Alliance(commands.Cog):
     @locale_doc
     async def attack(self, ctx, *, city: str.title):
         _(
-            """`<city>` - The name of a city. You can check the city names with `{prefix}alliance cities`
+            """`<city>` - The name of a city. You can check the city names with `{prefix}cities`
 
             Attack a city, reducing its defenses to potentially take it over.
             Attacking a city will activate a grace period of 10 minutes, during which time it cannot be attacked again.
