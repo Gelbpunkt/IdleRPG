@@ -944,7 +944,7 @@ class Guild(commands.Cog):
     @locale_doc
     async def upgrade(self, ctx):
         _(
-            """Upgrade your guild's bank, adding space for $25,000 each time.
+            """Upgrade your guild's bank, adding space for $250,000 each time.
 
             Guilds can be upgraded 4 times which sets them to a maximum of $1,000,000.
             Patrons will be able to upgrade their guild further:
