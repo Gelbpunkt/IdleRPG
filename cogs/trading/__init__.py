@@ -48,7 +48,7 @@ class Trading(commands.Cog):
 
             Puts your item into the market. Tax for selling items is 5% of the price.
 
-            You may not sell modified items, items with a price higher than their value, or items below 4 stat.
+            You may not sell modified items, items with a price lower than their value, or items below 4 stat.
             If you are in an alliance with owns a city with a trade building, you do not have to pay the tax.
 
             Please note that you won't get the money right away, another player has to buy the item first.
