@@ -125,9 +125,7 @@ class Marriage(commands.Cog):
         await self.bot.cache.update_profile_cols_abs(ctx.author.id, marriage=partner.id)
         await self.bot.cache.update_profile_cols_abs(partner.id, marriage=ctx.author.id)
         # we give familyevent cooldown to the new partner to avoid exploitation
-        await ctx.bot.redis.execute(
-            "SET", f"cd:{partner.id}:familyevent", "familyevent", "EX", 1800,
-        )
+        await self.bot.set_cooldown(partner.id, 1800, "familyevent")
         await ctx.send(
             _("Aww! :heart: {author} and {partner} are now married!").format(
                 author=ctx.author.mention, partner=partner.mention
@@ -841,6 +839,7 @@ class Marriage(commands.Cog):
                             )
                         )
                         name = None
+                        await self.bot.set_cooldown(ctx, 1800)
                 except self.bot.paginator.NoChoice:
                     await ctx.send(_("You didn't confirm."))
                     name = None
