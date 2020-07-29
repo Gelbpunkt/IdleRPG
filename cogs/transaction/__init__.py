@@ -330,24 +330,26 @@ class Transaction(commands.Cog):
             await chan.send(_("Trade successful."))
 
     @has_no_transaction()
-    @commands.group(invoke_without_command=True, brief=_("Opens a trading session with a user."))
+    @commands.group(
+        invoke_without_command=True, brief=_("Opens a trading session with a user.")
+    )
     @locale_doc
     async def trade(self, ctx, user: MemberWithCharacter):
         _(
-            """Opens a trading session for you and another player. 
-            Using `{prefix}trade <user>`, then the user accepting the checkbox will start the trading session. 
-            
+            """Opens a trading session for you and another player.
+            Using `{prefix}trade <user>`, then the user accepting the checkbox will start the trading session.
+
             While the trading session is open, you and the other player can add or remove items, money and crates as you choose.
-            
+
             Here are some examples to familiarize you with the concept:
              - {prefix}trade add crates 10 common
              - {prefix}trade set money 1000
              - {prefix}trade remove item 13377331 (this only works if you added this item before)
              - {prefix}trade add items 1234 2345 3456
-             
+
             To accept the trade, both players need to react with the ✅ emoji.
             Accepting the trade will transfer all items in the trade session to the other player.
-            
+
             You cannot trade with yourself, or have more than one trade session open at once.
             Giving away any items, crates or money during the trade will render it invalid and it will not complete."""
         )
@@ -380,8 +382,8 @@ class Transaction(commands.Cog):
     @locale_doc
     async def add(self, ctx):
         _(
-            """Adds something to trade session. 
-            You can specifiy what item you want to add to the trade by using one of the subcommands below. 
+            """Adds something to trade session.
+            You can specifiy what item you want to add to the trade by using one of the subcommands below.
 
             You need to have an open trading session to use this command."""
         )
@@ -486,12 +488,16 @@ class Transaction(commands.Cog):
         await ctx.message.add_reaction(":blackcheck:441826948919066625")
 
     @has_transaction()
-    @trade.group(invoke_without_command=True, name="set", brief=_("Sets a value to a trade instead of adding onto it."))
+    @trade.group(
+        invoke_without_command=True,
+        name="set",
+        brief=_("Sets a value to a trade instead of adding onto it."),
+    )
     @locale_doc
     async def set_(self, ctx):
         _(
-            """Sets a sepcific value in the trade session. 
-            You can specifiy what item you want to set in the trade by using one of the subcommands below. 
+            """Sets a sepcific value in the trade session.
+            You can specifiy what item you want to set in the trade by using one of the subcommands below.
 
             You need to have an open trading session to use this command."""
         )
@@ -540,11 +546,15 @@ class Transaction(commands.Cog):
             await ctx.send(_("You do not have enough crates."))
 
     @has_transaction()
-    @trade.group(invoke_without_command=True, aliases=["del", "rem", "delete"], brief=_("Removes something from a trade."))
+    @trade.group(
+        invoke_without_command=True,
+        aliases=["del", "rem", "delete"],
+        brief=_("Removes something from a trade."),
+    )
     @locale_doc
     async def remove(self, ctx):
         _(
-            """Removes something from a trade session. 
+            """Removes something from a trade session.
             You can remove something of your choice by using one of the subcommands below.
 
             You need to have an open trading session to use this command."""
@@ -582,7 +592,7 @@ class Transaction(commands.Cog):
             """`<amount>` - The amount of crates to remove, must be greater than 0
             `<rarity>` - The crate rarity to remove, can be common, uncommon, rare, magic or legendary
 
-            Removes crates from the trading session. You cannot remove more crates than you added. 
+            Removes crates from the trading session. You cannot remove more crates than you added.
             To add crates, consider `{prefix}trade add crates`.
 
             You need to have an open trading session to use this command."""
