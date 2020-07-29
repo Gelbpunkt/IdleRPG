@@ -152,15 +152,21 @@ class Transaction(commands.Cog):
                 # Lock their traded items
                 user1_items = (
                     await conn.fetchrow(
-                        'SELECT * FROM allitems WHERE "id"=ANY($1) FOR UPDATE;',
+                        "SELECT * FROM allitems ai JOIN inventory i ON"
+                        ' (ai."id"=i."item") WHERE ai."id"=ANY($1) AND ai."owner"=$2'
+                        " FOR UPDATE;",
                         user1_item_ids,
+                        user1.id,
                     )
                     or []
                 )
                 user2_items = (
                     await conn.fetchrow(
-                        'SELECT * FROM allitems WHERE "id"=ANY($1) FOR UPDATE;',
+                        "SELECT * FROM allitems ai JOIN inventory i ON"
+                        ' (ai."id"=i."item") WHERE ai."id"=ANY($1) AND ai."owner"=$2'
+                        " FOR UPDATE;",
                         user2_item_ids,
+                        user2.id,
                     )
                     or []
                 )
