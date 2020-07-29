@@ -118,7 +118,7 @@ class Transaction(commands.Cog):
 
         while len(acc) < 2:
             try:
-                r, u = await self.bot.wait_for("reaction_add", check=check, timeout=30)
+                r, u = await self.bot.wait_for("reaction_add", check=check, timeout=60)
             except asyncio.TimeoutError:
                 await msg.delete()
                 del self.transactions[key]
@@ -150,13 +150,19 @@ class Transaction(commands.Cog):
                     'SELECT * FROM profile WHERE "user"=$1 FOR UPDATE;', user2.id
                 )
                 # Lock their traded items
-                user1_items = await conn.fetchrow(
-                    'SELECT * FROM allitems WHERE "id"=ANY($1) FOR UPDATE;',
-                    user1_item_ids,
+                user1_items = (
+                    await conn.fetchrow(
+                        'SELECT * FROM allitems WHERE "id"=ANY($1) FOR UPDATE;',
+                        user1_item_ids,
+                    )
+                    or []
                 )
-                user2_items = await conn.fetchrow(
-                    'SELECT * FROM allitems WHERE "id"=ANY($1) FOR UPDATE;',
-                    user2_item_ids,
+                user2_items = (
+                    await conn.fetchrow(
+                        'SELECT * FROM allitems WHERE "id"=ANY($1) FOR UPDATE;',
+                        user2_item_ids,
+                    )
+                    or []
                 )
                 relative_money_difference_user1 = user2_gives.get(
                     "money", 0
@@ -184,7 +190,7 @@ class Transaction(commands.Cog):
                 }
                 profile_cols_to_change_user1 = {
                     f"crates_{col}": val
-                    for col, val in relative_crate_difference_user1
+                    for col, val in relative_crate_difference_user1.items()
                     if val
                 }
                 if relative_money_difference_user1:
@@ -193,7 +199,7 @@ class Transaction(commands.Cog):
                     ] = relative_money_difference_user1
                 profile_cols_to_change_user2 = {
                     f"crates_{col}": val
-                    for col, val in relative_crate_difference_user2
+                    for col, val in relative_crate_difference_user2.items()
                     if val
                 }
                 if relative_money_difference_user2:
@@ -209,7 +215,7 @@ class Transaction(commands.Cog):
                         _("Trade cancelled. Things were traded away in the meantime.")
                     )
                 # Profile columns need to be checked if they are negative and substracting would be negative
-                for col, val in profile_cols_to_change_user1:
+                for col, val in profile_cols_to_change_user1.items():
                     if (
                         val < 0 and user1_row[col] + val < 0
                     ):  # substracting is smaller 0
@@ -219,7 +225,7 @@ class Transaction(commands.Cog):
                                 " meantime."
                             )
                         )
-                for col, val in profile_cols_to_change_user2:
+                for col, val in profile_cols_to_change_user2.items():
                     if val < 0 and user2_row[col] + val < 0:
                         return await chan.send(
                             _(
@@ -254,9 +260,9 @@ class Transaction(commands.Cog):
 
                 row_string_user1 = ", ".join(
                     [
-                        f'"{col}""="{col}"+${n + 1}'
+                        f'"{col}"="{col}"+${n + 1}'
                         if val > 0
-                        else f'"{col}""="{col}"-${n + 1}'
+                        else f'"{col}"="{col}"-${n + 1}'
                         for n, (col, val) in enumerate(
                             profile_cols_to_change_user1.items()
                         )
@@ -264,9 +270,9 @@ class Transaction(commands.Cog):
                 )
                 row_string_user2 = ", ".join(
                     [
-                        f'"{col}""="{col}"+${n + 1}'
+                        f'"{col}"="{col}"+${n + 1}'
                         if val > 0
-                        else f'"{col}""="{col}"-${n + 1}'
+                        else f'"{col}"="{col}"-${n + 1}'
                         for n, (col, val) in enumerate(
                             profile_cols_to_change_user1.items()
                         )
@@ -284,21 +290,23 @@ class Transaction(commands.Cog):
                 n_1 = len(profile_cols_to_change_user1) + 1
                 n_2 = len(profile_cols_to_change_user2) + 1
 
-                await conn.execute(
-                    f'UPDATE profile SET {row_string_user1} WHERE "user"=${n_1};',
-                    *query_args_user_1,
-                )
-                await conn.execute(
-                    f'UPDATE profile SET {row_string_user2} WHERE "user"=${n_2};',
-                    *query_args_user_2,
-                )
+                if profile_cols_to_change_user1:
+                    await conn.execute(
+                        f'UPDATE profile SET {row_string_user1} WHERE "user"=${n_1};',
+                        *query_args_user_1,
+                    )
+                    await self.bot.cache.update_profile_cols_rel(
+                        user1.id, **profile_cols_to_change_user1
+                    )
+                if profile_cols_to_change_user2:
+                    await conn.execute(
+                        f'UPDATE profile SET {row_string_user2} WHERE "user"=${n_2};',
+                        *query_args_user_2,
+                    )
+                    await self.bot.cache.update_profile_cols_rel(
+                        user2.id, **profile_cols_to_change_user2
+                    )
 
-                await self.bot.cache.update_profile_cols_rel(
-                    user1.id, **profile_cols_to_change_user1
-                )
-                await self.bot.cache.update_profile_cols_rel(
-                    user2.id, **profile_cols_to_change_user2
-                )
             await chan.send(_("Trade successful."))
 
     @has_no_transaction()
@@ -315,6 +323,10 @@ class Transaction(commands.Cog):
             user=user,
         ):
             return
+        if any([str(user.id) in key for key in self.transactions]) or any(
+            [str(ctx.author.id) in key for key in self.transactions]
+        ):
+            return await ctx.send(_("Someone is already in a trade."))
         identifier = f"{ctx.author.id}-{user.id}"
         self.transactions[identifier] = {
             "content": {

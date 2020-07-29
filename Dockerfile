@@ -6,15 +6,15 @@ RUN adduser -S idle && \
     apk upgrade --no-cache && \
     apk add --no-cache git libgcc
 
+USER idle
 WORKDIR /idlerpg
 
-COPY . .
-
-RUN git remote set-url origin https://git.travitia.xyz/Kenvyra/IdleRPG.git && \
-    chown -R idle:nogroup .
-
-USER idle
+COPY requirements.txt /idlerpg/
 
 RUN pip install --no-cache-dir -i https://packages.travitia.xyz/root/idle/+simple/ --no-warn-script-location --pre -r requirements.txt
+
+COPY . /idlerpg/
+
+RUN git remote set-url origin https://git.travitia.xyz/Kenvyra/IdleRPG.git
 
 CMD python launcher.py
