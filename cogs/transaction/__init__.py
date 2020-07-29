@@ -220,6 +220,20 @@ class Transaction(commands.Cog):
                     return await chan.send(
                         _("Trade cancelled. Things were traded away in the meantime.")
                     )
+                if any(
+                    [
+                        (item["original_name"] or item["original_type"])
+                        for item in user1_items
+                    ]
+                ) or any(
+                    [
+                        (item["original_name"] or item["original_type"])
+                        for item in user2_items
+                    ]
+                ):
+                    return await chan.send(
+                        _("Some item was modified in the meanwhile.")
+                    )
                 # Profile columns need to be checked if they are negative and substracting would be negative
                 for col, val in profile_cols_to_change_user1.items():
                     if (
@@ -403,7 +417,8 @@ class Transaction(commands.Cog):
         if any([(x in [x["id"] for x in ctx.transaction["items"]]) for x in itemids]):
             return await ctx.send(_("You already added one or more of these items!"))
         items = await self.bot.pool.fetch(
-            'SELECT * FROM allitems WHERE "id"=ANY($1) AND "owner"=$2;',
+            'SELECT * FROM allitems ai JOIN inventory i ON (ai."id"=i."item") WHERE'
+            ' ai."id"=ANY($1) AND ai."owner"=$2;',
             itemids,
             ctx.author.id,
         )
