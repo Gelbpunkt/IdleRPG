@@ -24,6 +24,7 @@ import sys
 import traceback
 
 from decimal import Decimal
+from typing import Union
 
 import aiohttp
 import aioredis
@@ -357,6 +358,23 @@ class Bot(commands.AutoShardedBot):
         )
         await self.redis.execute(
             "DEL", f"alliancecd:{alliance}:{ctx.command.qualified_name}"
+        )
+
+    async def set_cooldown(
+        self, ctx_or_user_id: Union[Context, int], cooldown: int, identifier: str = None
+    ):
+        """Sets someone's cooldown or overwrite it if the cd already exists"""
+        if identifier is None:
+            cmd_id = ctx_or_user_id.command.qualified_name
+        else:
+            cmd_id = identifier
+        if isinstance(ctx_or_user_id, Context):
+            user_id = ctx_or_user_id.author.id
+        else:
+            user_id = ctx_or_user_id
+
+        await self.redis.execute(
+            "SET", f"cd:{user_id}:{cmd_id}", cmd_id, "EX", cooldown,
         )
 
     async def activate_booster(self, user, type_):
