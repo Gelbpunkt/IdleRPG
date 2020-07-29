@@ -330,10 +330,27 @@ class Transaction(commands.Cog):
             await chan.send(_("Trade successful."))
 
     @has_no_transaction()
-    @commands.group(invoke_without_command=True)
+    @commands.group(invoke_without_command=True, brief=_("Opens a trading session with a user."))
     @locale_doc
     async def trade(self, ctx, user: MemberWithCharacter):
-        _("""Opens a trading session with a user.""")
+        _(
+            """Opens a trading session for you and another player. 
+            Using `{prefix}trade <user>`, then the user accepting the checkbox will start the trading session. 
+            
+            While the trading session is open, you and the other player can add or remove items, money and crates as you choose.
+            
+            Here are some examples to familiarize you with the concept:
+             - {prefix}trade add crates 10 common
+             - {prefix}trade set money 1000
+             - {prefix}trade remove item 13377331 (this only works if you added this item before)
+             - {prefix}trade add items 1234 2345 3456
+             
+            To accept the trade, both players need to react with the ✅ emoji.
+            Accepting the trade will transfer all items in the trade session to the other player.
+            
+            You cannot trade with yourself, or have more than one trade session open at once.
+            Giving away any items, crates or money during the trade will render it invalid and it will not complete."""
+        )
         if user == ctx.author:
             return await ctx.send(_("You cannot trade with yourself."))
         if not await ctx.confirm(
@@ -359,10 +376,15 @@ class Transaction(commands.Cog):
         await self.update(ctx)
 
     @has_transaction()
-    @trade.group(invoke_without_command=True)
+    @trade.group(invoke_without_command=True, brief=_("Adds something to a trade."))
     @locale_doc
     async def add(self, ctx):
-        _("""Adds something to a trade.""")
+        _(
+            """Adds something to trade session. 
+            You can specifiy what item you want to add to the trade by using one of the subcommands below. 
+
+            You need to have an open trading session to use this command."""
+        )
         await ctx.send(
             _(
                 "Please select something to add. Example: `{prefix}trade add money"
@@ -371,10 +393,17 @@ class Transaction(commands.Cog):
         )
 
     @has_transaction()
-    @add.command(name="money")
+    @add.command(name="money", brief=_("Adds money to a trade."))
     @locale_doc
     async def add_money(self, ctx, amount: IntGreaterThan(0)):
-        _("""Adds money to a trade.""")
+        _(
+            """`<amount>` - The amount of money to add, must be greater than 0
+
+            Adds money to the trading session. You cannot add more money than you have.
+            To remove money, consider `{prefix}trade remove money`.
+
+            You need to have an open trading session to use this command."""
+        )
         if await self.bot.has_money(ctx.author.id, ctx.transaction["money"] + amount):
             ctx.transaction["money"] += amount
             await ctx.message.add_reaction(":blackcheck:441826948919066625")
@@ -382,10 +411,18 @@ class Transaction(commands.Cog):
             await ctx.send(_("You are too poor."))
 
     @has_transaction()
-    @add.command(name="crates")
+    @add.command(name="crates", brief=_("Adds crates to a trade."))
     @locale_doc
     async def add_crates(self, ctx, amount: IntGreaterThan(0), rarity: CrateRarity):
-        _("""Adds crates to a trade.""")
+        _(
+            """`<amount>` - The amount of crates to add, must be greater than 0
+            `<rarity>` - The crate rarity to add, can be common, uncommon, rare, magic or legendary
+
+            Adds crate to the trading session. You cannot add more crates than you have.
+            To remove crates, consider `{prefix}trade remove crates`.
+
+            You need to have an open trading session to use this command."""
+        )
         if await self.bot.has_crates(
             ctx.author.id, ctx.transaction["crates"][rarity] + amount, rarity
         ):
@@ -395,10 +432,17 @@ class Transaction(commands.Cog):
             await ctx.send(_("You do not have enough crates."))
 
     @has_transaction()
-    @add.command(name="item")
+    @add.command(name="item", brief=_("Adds items to a trade."))
     @locale_doc
     async def add_item(self, ctx, itemid: int):
-        _("""Adds items to a trade.""")
+        _(
+            """`<itemid>` - The ID of the item to add
+
+            Add an item to the trading session. The item needs to be in your inevntory.
+            To remove an item, consider `{prefix}trade remove item`.
+
+            You need to have an open trading session to use this command."""
+        )
         if itemid in [x["id"] for x in ctx.transaction["items"]]:
             return await ctx.send(_("You already added this item!"))
         if item := await self.bot.pool.fetchrow(
@@ -415,10 +459,18 @@ class Transaction(commands.Cog):
             await ctx.send(_("You do not own this item."))
 
     @has_transaction()
-    @add.command(name="items")
+    @add.command(name="items", brief=_("Adds multiple items to a trade."))
     @locale_doc
     async def add_items(self, ctx, *itemids: int):
-        _("""Adds multiple items to a trade.""")
+        _(
+            """`<itemids...>` - The IDs of the item to add, separated by space
+
+            Adds multiple items to the trading session. The items cannot already be in the trading session.
+            Items that are not in your inventory will be automatically filtered out.
+            To remove an item, consider `{prefix}trade remove item`.
+
+            You need to have an open trading session to use this command."""
+        )
         if any([(x in [x["id"] for x in ctx.transaction["items"]]) for x in itemids]):
             return await ctx.send(_("You already added one or more of these items!"))
         items = await self.bot.pool.fetch(
@@ -434,10 +486,15 @@ class Transaction(commands.Cog):
         await ctx.message.add_reaction(":blackcheck:441826948919066625")
 
     @has_transaction()
-    @trade.group(invoke_without_command=True, name="set")
+    @trade.group(invoke_without_command=True, name="set", brief=_("Sets a value to a trade instead of adding onto it."))
     @locale_doc
     async def set_(self, ctx):
-        _("""Sets a value to a trade instead of adding onto it.""")
+        _(
+            """Sets a sepcific value in the trade session. 
+            You can specifiy what item you want to set in the trade by using one of the subcommands below. 
+
+            You need to have an open trading session to use this command."""
+        )
         await ctx.send(
             _(
                 "Please select something to set. Example: `{prefix}trade set money"
@@ -446,10 +503,17 @@ class Transaction(commands.Cog):
         )
 
     @has_transaction()
-    @set_.command(name="money")
+    @set_.command(name="money", brief=_("Sets money in a trade."))
     @locale_doc
     async def set_money(self, ctx, amount: IntGreaterThan(-1)):
-        _("""Sets money in a trade.""")
+        _(
+            """`<amount>` - The amount of money to set, must be greater than -1
+
+            Sets an amount of money in the trading session. You cannot set more money than you have.
+            To add or remove money, consider `{prefix}trade add/remove money`.
+
+            You need to have an open trading session to use this command."""
+        )
         if await self.bot.has_money(ctx.author.id, amount):
             ctx.transaction["money"] = amount
             await ctx.message.add_reaction(":blackcheck:441826948919066625")
@@ -457,10 +521,18 @@ class Transaction(commands.Cog):
             await ctx.send(_("You are too poor."))
 
     @has_transaction()
-    @set_.command(name="crates")
+    @set_.command(name="crates", brief=_("Sets crates in a trade."))
     @locale_doc
     async def set_crates(self, ctx, amount: IntGreaterThan(-1), rarity: CrateRarity):
-        _("""Sets crates in a trade.""")
+        _(
+            """`<amount>` - The amount of crates to set, must be greater than -1
+            `<rarity>` - The crate rarity to set, can be common, uncommon, rare, magic or legendary
+
+            Sets an amount of crates in the trading session. You cannot set more crates than you have.
+            To add or remove crates, consider `{prefix}trade add/remove crates`.
+
+            You need to have an open trading session to use this command."""
+        )
         if await self.bot.has_crates(ctx.author.id, amount, rarity):
             ctx.transaction["crates"][rarity] = amount
             await ctx.message.add_reaction(":blackcheck:441826948919066625")
@@ -468,10 +540,15 @@ class Transaction(commands.Cog):
             await ctx.send(_("You do not have enough crates."))
 
     @has_transaction()
-    @trade.group(invoke_without_command=True, aliases=["del", "rem", "delete"])
+    @trade.group(invoke_without_command=True, aliases=["del", "rem", "delete"], brief=_("Removes something from a trade."))
     @locale_doc
     async def remove(self, ctx):
-        _("""Removes something from a trade.""")
+        _(
+            """Removes something from a trade session. 
+            You can remove something of your choice by using one of the subcommands below.
+
+            You need to have an open trading session to use this command."""
+        )
         await ctx.send(
             _(
                 "Please select something to remove. Example: `{prefix}trade remove"
@@ -480,10 +557,17 @@ class Transaction(commands.Cog):
         )
 
     @has_transaction()
-    @remove.command(name="money")
+    @remove.command(name="money", brief=_("Removes money from a trade."))
     @locale_doc
     async def remove_money(self, ctx, amount: IntGreaterThan(0)):
-        _("""Removes money from a trade.""")
+        _(
+            """`<amount>` - The amount of money to remove, must be greater than 0
+
+            Removes money from the trading session. You cannot remove more money than you added.
+            To add money, consider `{prefix}trade add money`.
+
+            You need to have an open trading session to use this command."""
+        )
         if ctx.transaction["money"] - amount >= 0:
             ctx.transaction["money"] -= amount
             await ctx.message.add_reaction(":blackcheck:441826948919066625")
@@ -491,10 +575,18 @@ class Transaction(commands.Cog):
             await ctx.send(_("Resulting amount is negative."))
 
     @has_transaction()
-    @remove.command(name="crates")
+    @remove.command(name="crates", brief=_("Removes crates from a trade."))
     @locale_doc
     async def remove_crates(self, ctx, amount: IntGreaterThan(0), rarity: CrateRarity):
-        _("""Removes crates from a trade.""")
+        _(
+            """`<amount>` - The amount of crates to remove, must be greater than 0
+            `<rarity>` - The crate rarity to remove, can be common, uncommon, rare, magic or legendary
+
+            Removes crates from the trading session. You cannot remove more crates than you added. 
+            To add crates, consider `{prefix}trade add crates`.
+
+            You need to have an open trading session to use this command."""
+        )
         if (res := ctx.transaction["crates"][rarity] - amount) >= 0:
             if res == 0:
                 del ctx.transaction["crates"][rarity]
@@ -505,10 +597,17 @@ class Transaction(commands.Cog):
             await ctx.send(_("The resulting amount would be negative."))
 
     @has_transaction()
-    @remove.command(name="item")
+    @remove.command(name="item", brief=_("Removes items from a trade."))
     @locale_doc
     async def remove_item(self, ctx, itemid: int):
-        _("""Removes items from a trade.""")
+        _(
+            """`<itemid>` - The ID of the item to remove
+
+            Remove an item from the trading session. The item needs to be in the trade to remove it.
+            To add an item, consider `{prefix}trade add item`.
+
+            You need to have an open trading session to use this command."""
+        )
         item = discord.utils.find(lambda x: x["id"] == itemid, ctx.transaction["items"])
         if item:
             ctx.transaction["items"].remove(item)
@@ -517,10 +616,18 @@ class Transaction(commands.Cog):
             await ctx.send(_("This item is not in the trade."))
 
     @has_transaction()
-    @remove.command(name="items")
+    @remove.command(name="items", brief=_("Removes multiple items to a trade."))
     @locale_doc
     async def remove_items(self, ctx, *itemids: int):
-        _("""Removes multiple items to a trade.""")
+        _(
+            """`<itemids...>` - The IDs of the item to remove, separated by space
+
+            Remove multiple items from the trading session. The items must be in the trading session already.
+            Items that are not in the trade will be automatically filtered out.
+            To remove an item, consider `{prefix}trade remove item`.
+
+            You need to have an open trading session to use this command."""
+        )
         for itemid in itemids:
             item = discord.utils.find(
                 lambda x: x["id"] == itemid, ctx.transaction["items"]
