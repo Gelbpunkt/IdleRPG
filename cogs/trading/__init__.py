@@ -511,6 +511,8 @@ class Trading(commands.Cog):
                         " meantime."
                     ).format(itemid=itemid)
                 )
+            if item["original_name"] or item["original_type"]:
+                return await ctx.send(_("You may not sell donator-modified items."))
             await conn.execute(
                 "UPDATE allitems SET owner=$1 WHERE id=$2;", user.id, itemid
             )
