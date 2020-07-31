@@ -946,7 +946,7 @@ class Guild(commands.Cog):
         _(
             """Upgrade your guild's bank, adding space for $250,000 each time.
 
-            Guilds can be upgraded 4 times which sets them to a maximum of $1,000,000.
+            Guilds can be upgraded 9 times which sets them to a maximum of $2,500,000.
             Patrons will be able to upgrade their guild further:
               - Silver donors can double their maximum bank space
               - Gold donors can quintuple (x5) their maximum bank space
@@ -961,7 +961,7 @@ class Guild(commands.Cog):
             )
             currentlimit = guild["banklimit"]
             newlimit = (guild["upgrade"] + 1) * 250000
-            if guild["upgrade"] == 4:
+            if guild["upgrade"] == 10:
                 return await ctx.send(
                     _("Your guild already reached the maximum upgrade.")
                 )
