@@ -901,6 +901,7 @@ class Guild(commands.Cog):
         )
         if not members:
             return await ctx.send(_("You can't distribute money to nobody."))
+        members = set(members)  # removes dupes
         # int() rounds down as to not go over the money limit
         # we need to update the amount after rounding down too to avoid losing money
         for_each = int(amount / len(members))
