@@ -98,8 +98,8 @@ class Werewolf(commands.Cog):
         additional_text = _(
             "Use `{prefix}help ww` to get help on werewolf commands. Use `{prefix}ww"
             " roles` to view descriptions of game roles and their goals to win. Use"
-            " `{prefix}ww modes and {prefix}ww speeds` to see info about available game"
-            " modes and speeds. Use `{prefix}ww updates` to read the new updates."
+            " `{prefix}ww modes` and `{prefix}ww speeds` to see info about available"
+            " game modes and speeds. Use `{prefix}ww updates` to read the new updates."
         ).format(prefix=ctx.prefix)
         if ctx.channel.id == self.bot.config.official_tournament_channel_id:
             # TODO: Determine threshold players when wolves can kill 2 villagers per night in mass-games
