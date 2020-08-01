@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: 4.7.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-07-30 20:51+0200\n"
+"POT-Creation-Date: 2020-08-01 18:52+0200\n"
 "PO-Revision-Date: 2020-07-06 22:34+0200\n"
 "Last-Translator: Chippy\n"
 "Language-Team: \n"
@@ -1216,7 +1216,7 @@ msgid ""
 "Sometimes nobody gets to choose, so don't be discouraged. "
 msgstr "​"
 
-#: cogs/hungergames/__init__.py:302 cogs/werewolf/__init__.py:49
+#: cogs/hungergames/__init__.py:302 cogs/werewolf/__init__.py:74
 msgid "There is already a game in here!"
 msgstr "​"
 
@@ -1227,7 +1227,7 @@ msgid ""
 "join the game! **{num} joined**"
 msgstr "​"
 
-#: cogs/hungergames/__init__.py:346 cogs/werewolf/__init__.py:101
+#: cogs/hungergames/__init__.py:346
 msgid "Not enough players joined..."
 msgstr "​"
 
@@ -4589,16 +4589,16 @@ msgstr "​"
 msgid "Lists all your cooldowns, including your adventure timer."
 msgstr "​"
 
-#: cogs/shard_communication/__init__.py:333 cogs/guild/__init__.py:1439
+#: cogs/shard_communication/__init__.py:333 cogs/guild/__init__.py:1440
 msgid "You don't have any active cooldown at the moment."
 msgstr "​"
 
-#: cogs/shard_communication/__init__.py:335 cogs/guild/__init__.py:1441
+#: cogs/shard_communication/__init__.py:335 cogs/guild/__init__.py:1442
 #: cogs/alliance/__init__.py:922
 msgid "Commands on cooldown:"
 msgstr "​"
 
-#: cogs/shard_communication/__init__.py:340 cogs/guild/__init__.py:1446
+#: cogs/shard_communication/__init__.py:340 cogs/guild/__init__.py:1447
 #: cogs/alliance/__init__.py:927
 #, python-brace-format
 msgid "{cmd} is on cooldown and will be available after {time}"
@@ -6992,7 +6992,7 @@ msgid ""
 "            Only guild leaders and officers can use this command."
 msgstr "​"
 
-#: cogs/guild/__init__.py:854 cogs/guild/__init__.py:914
+#: cogs/guild/__init__.py:854 cogs/guild/__init__.py:915
 msgid "Your guild is too poor."
 msgstr "​"
 
@@ -7027,21 +7027,21 @@ msgstr "​"
 msgid "You can't distribute money to nobody."
 msgstr "​"
 
-#: cogs/guild/__init__.py:933
+#: cogs/guild/__init__.py:934
 #, python-brace-format
 msgid "Distributed **${money}** (${small_money} for each) to {members}."
 msgstr "​"
 
-#: cogs/guild/__init__.py:943
+#: cogs/guild/__init__.py:944
 msgid "Upgrade your guild bank"
 msgstr "​"
 
-#: cogs/guild/__init__.py:947
+#: cogs/guild/__init__.py:948
 msgid ""
 "Upgrade your guild's bank, adding space for $250,000 each time.\n"
 "\n"
-"            Guilds can be upgraded 4 times which sets them to a maximum of "
-"$1,000,000.\n"
+"            Guilds can be upgraded 9 times which sets them to a maximum of "
+"$2,500,000.\n"
 "            Patrons will be able to upgrade their guild further:\n"
 "              - Silver donors can double their maximum bank space\n"
 "              - Gold donors can quintuple (x5) their maximum bank space\n"
@@ -7052,34 +7052,34 @@ msgid ""
 "            Only guild leaders can use this command."
 msgstr ""
 
-#: cogs/guild/__init__.py:966
+#: cogs/guild/__init__.py:967
 msgid "Your guild already reached the maximum upgrade."
 msgstr "​"
 
-#: cogs/guild/__init__.py:971
+#: cogs/guild/__init__.py:972
 #, python-brace-format
 msgid ""
 "Your guild is too poor, you got **${money}** but it costs **${price}** to "
 "upgrade."
 msgstr "​"
 
-#: cogs/guild/__init__.py:978
+#: cogs/guild/__init__.py:979
 #, python-brace-format
 msgid ""
 "This will upgrade your guild bank limit to **${newlimit}** for **${cost}**. "
 "Proceed?"
 msgstr "​"
 
-#: cogs/guild/__init__.py:992
+#: cogs/guild/__init__.py:993
 #, python-brace-format
 msgid "Your new guild bank limit is now **${limit}**."
 msgstr "​"
 
-#: cogs/guild/__init__.py:1001
+#: cogs/guild/__init__.py:1002
 msgid "Battle another guild"
 msgstr "​"
 
-#: cogs/guild/__init__.py:1011
+#: cogs/guild/__init__.py:1012
 #, python-brace-format
 msgid ""
 "`<enemy>` - A guild officer or leader\n"
@@ -7110,88 +7110,88 @@ msgid ""
 "            (This command has a guild cooldown of 30 minutes.)"
 msgstr "​"
 
-#: cogs/guild/__init__.py:1030
+#: cogs/guild/__init__.py:1031
 msgid "Poor kiddo having no friendos."
 msgstr "​"
 
-#: cogs/guild/__init__.py:1034
+#: cogs/guild/__init__.py:1035
 msgid "One of you both doesn't have a guild."
 msgstr "​"
 
-#: cogs/guild/__init__.py:1037
+#: cogs/guild/__init__.py:1038
 msgid "Battling your own guild? :face_with_raised_eyebrow:"
 msgstr "​"
 
-#: cogs/guild/__init__.py:1043
+#: cogs/guild/__init__.py:1044
 msgid "One of you both isn't an officer of their guild."
 msgstr "​"
 
-#: cogs/guild/__init__.py:1048
+#: cogs/guild/__init__.py:1049
 msgid "One of the guilds can't pay the price."
 msgstr "​"
 
-#: cogs/guild/__init__.py:1056
+#: cogs/guild/__init__.py:1057
 msgid "One of the guilds is too small."
 msgstr "​"
 
-#: cogs/guild/__init__.py:1065
+#: cogs/guild/__init__.py:1066
 #, python-brace-format
 msgid "{enemy} didn't want to join your battle, {author}."
 msgstr "​"
 
-#: cogs/guild/__init__.py:1072
+#: cogs/guild/__init__.py:1073
 #, python-brace-format
 msgid ""
 "{enemy} accepted the challenge by {author}. Please now nominate members, "
 "{author}. Use `battle nominate @user` to add someone to your team."
 msgstr "​"
 
-#: cogs/guild/__init__.py:1088
+#: cogs/guild/__init__.py:1089
 msgid "That person isn't in your guild."
 msgstr "​"
 
-#: cogs/guild/__init__.py:1112
+#: cogs/guild/__init__.py:1113
 #, python-brace-format
 msgid "{user} has been added to your team, {author}."
 msgstr "​"
 
-#: cogs/guild/__init__.py:1117 cogs/guild/__init__.py:1146
+#: cogs/guild/__init__.py:1118 cogs/guild/__init__.py:1147
 msgid "User not found."
 msgstr "​"
 
-#: cogs/guild/__init__.py:1119
+#: cogs/guild/__init__.py:1120
 msgid "Error when adding this user, please try again"
 msgstr "​"
 
-#: cogs/guild/__init__.py:1124 cogs/guild/__init__.py:1151
+#: cogs/guild/__init__.py:1125 cogs/guild/__init__.py:1152
 msgid "Took to long to add members. Fight cancelled."
 msgstr "​"
 
-#: cogs/guild/__init__.py:1128
+#: cogs/guild/__init__.py:1129
 #, python-brace-format
 msgid ""
 "Please now nominate members, {enemy}. Use `battle nominate @user` to add "
 "someone to your team."
 msgstr "​"
 
-#: cogs/guild/__init__.py:1141
+#: cogs/guild/__init__.py:1142
 #, python-brace-format
 msgid "{user} has been added to your team, {enemy}."
 msgstr "​"
 
-#: cogs/guild/__init__.py:1160
+#: cogs/guild/__init__.py:1161
 msgid ""
 "Fight started!\n"
 "Generating battles..."
 msgstr "​"
 
-#: cogs/guild/__init__.py:1162
+#: cogs/guild/__init__.py:1163
 msgid ""
 "Fight started!\n"
 "Generating battles... Done."
 msgstr "​"
 
-#: cogs/guild/__init__.py:1169
+#: cogs/guild/__init__.py:1170
 #, python-brace-format
 msgid ""
 "Guild Battle Fight **{num}** of **{total}**.\n"
@@ -7199,31 +7199,31 @@ msgid ""
 "Battle running..."
 msgstr "​"
 
-#: cogs/guild/__init__.py:1192
+#: cogs/guild/__init__.py:1193
 #, python-brace-format
 msgid ""
 "Winner of **{user}** vs **{user2}** is **{winner}**! Current points: "
 "**{wins1}** to **{wins2}**."
 msgstr "​"
 
-#: cogs/guild/__init__.py:1206
+#: cogs/guild/__init__.py:1207
 msgid "Some guild spent the money??? Bad looser!"
 msgstr "​"
 
-#: cogs/guild/__init__.py:1232 cogs/guild/__init__.py:1264
+#: cogs/guild/__init__.py:1233 cogs/guild/__init__.py:1265
 #, python-brace-format
 msgid "{guild} won the battle! Congratulations!"
 msgstr "​"
 
-#: cogs/guild/__init__.py:1272
+#: cogs/guild/__init__.py:1273
 msgid "It's a tie!"
 msgstr "​"
 
-#: cogs/guild/__init__.py:1279
+#: cogs/guild/__init__.py:1280
 msgid "Start a guild adventure"
 msgstr "​"
 
-#: cogs/guild/__init__.py:1283
+#: cogs/guild/__init__.py:1284
 msgid ""
 "Start a guild adventure. Guild adventures can happen alongside regular "
 "adventures.\n"
@@ -7245,14 +7245,14 @@ msgid ""
 "            (This command has a guild cooldown of 1 hour.)"
 msgstr "​"
 
-#: cogs/guild/__init__.py:1299
+#: cogs/guild/__init__.py:1300
 #, python-brace-format
 msgid ""
 "Your guild is already on an adventure! Use `{prefix}guild status` to view "
 "how long it still lasts."
 msgstr "​"
 
-#: cogs/guild/__init__.py:1311
+#: cogs/guild/__init__.py:1312
 #, python-brace-format
 msgid ""
 "{author} seeks a guild adventure for **{guild}**! Follow the link to join! "
@@ -7261,11 +7261,11 @@ msgid ""
 "Please go to https://join.idlerpg.xyz/{id_} to join the guild adventure."
 msgstr "​"
 
-#: cogs/guild/__init__.py:1335
+#: cogs/guild/__init__.py:1336
 msgid "You didn't get enough other players for the guild adventure."
 msgstr "​"
 
-#: cogs/guild/__init__.py:1344
+#: cogs/guild/__init__.py:1345
 #, python-brace-format
 msgid ""
 "\n"
@@ -7279,11 +7279,11 @@ msgstr ""
 "\n"
 "​\n"
 
-#: cogs/guild/__init__.py:1366
+#: cogs/guild/__init__.py:1367
 msgid "View your guild adventure's status"
 msgstr "​"
 
-#: cogs/guild/__init__.py:1370
+#: cogs/guild/__init__.py:1371
 msgid ""
 "Check your guild adventure's status\n"
 "\n"
@@ -7293,45 +7293,45 @@ msgid ""
 "status can be seen by every guild member."
 msgstr "​"
 
-#: cogs/guild/__init__.py:1380
+#: cogs/guild/__init__.py:1381
 #, python-brace-format
 msgid ""
 "Your guild isn't on an adventure yet. Ask your guild officer to use `{prefix}"
 "guild adventure` to start one"
 msgstr "​"
 
-#: cogs/guild/__init__.py:1398
+#: cogs/guild/__init__.py:1399
 #, python-brace-format
 msgid ""
 "Your guild has completed an adventure of difficulty `{difficulty}` and **"
 "${gold}** has been added to the bank."
 msgstr "​"
 
-#: cogs/guild/__init__.py:1410
+#: cogs/guild/__init__.py:1411
 #, python-brace-format
 msgid ""
 "Your guild has completed an adventure of difficulty `{difficulty}`, ask a "
 "guild officer to check their status."
 msgstr "​"
 
-#: cogs/guild/__init__.py:1417
+#: cogs/guild/__init__.py:1418
 #, python-brace-format
 msgid ""
 "Your guild is currently in an adventure with difficulty `{difficulty}`.\n"
 "Time remaining: `{remain}`"
 msgstr "​"
 
-#: cogs/guild/__init__.py:1426
+#: cogs/guild/__init__.py:1427
 msgid "Lists guild-specific cooldowns"
 msgstr "​"
 
-#: cogs/guild/__init__.py:1431
+#: cogs/guild/__init__.py:1432
 msgid ""
 "Lists guild-specific cooldowns, meaning all guild members have these "
 "cooldowns and cannot use the commands."
 msgstr "​"
 
-#: cogs/guild/__init__.py:1451
+#: cogs/guild/__init__.py:1452
 #, python-brace-format
 msgid "Guild adventure is running and will be done after {time}"
 msgstr "​"
@@ -10210,49 +10210,380 @@ msgstr "​"
 msgid "No game here."
 msgstr "​"
 
-#: cogs/werewolf/__init__.py:33
+#: cogs/werewolf/__init__.py:44
 msgid "Starts a game of Werewolf"
 msgstr "​"
 
-#: cogs/werewolf/__init__.py:37
-msgid ""
-"`[mode]` - The mode to play, see below for more info; defaults to Classic\n"
-"\n"
-"            Starts a game of Werewolf.\n"
-"            Game modes:\n"
-"                Classic - Play the classic werewolf game. (This is the "
-"default)\n"
-"                Blitz   - In Blitz mode, all action timers are limited to 30 "
-"seconds and number of days to play is dependent on the number of players "
-"plus 3 days. This means not killing anyone every night or every election "
-"will likely end the game with no winners."
-msgstr "​"
-
-#: cogs/werewolf/__init__.py:46
-msgid "Invalid game mode. View the help on this command."
-msgstr "​"
-
-#: cogs/werewolf/__init__.py:61
+#: cogs/werewolf/__init__.py:51
 #, python-brace-format
 msgid ""
-"{author} started a game of Werewolf! React with :wolf: to join the game! "
-"**{num} joined**"
-msgstr "​"
+"\n"
+"            `[mode]` - The mode to play, see below for available options. "
+"(optional and defaults to Classic)\n"
+"            `[speed]` - The game speed to play, see below available options. "
+"(optional and defaults to Normal)\n"
+"\n"
+"            Starts a game of Werewolf. Find the werewolves, before they find "
+"you!\n"
+"            Your goal to win is indicated on the role you have.\n"
+"            **Game modes:** `Classic` (default), `Imbalanced`, `Huntergame`, "
+"`Villagergame`, `Valentines`. Use `{prefix}ww modes` for detailed info.\n"
+"            **Game speeds** (in seconds): `Normal`: 60 (default), "
+"`Extended`: 90, `Fast`: 45, `Blitz`: 30. Use `{prefix}ww speeds` for "
+"detailed info.\n"
+"            **Aliases:**\n"
+"            `ww`\n"
+"            **Examples:**\n"
+"            `{prefix}ww Blitz` for Classic mode on Blitz speed\n"
+"            `{prefix}ww Imbalanced` for Imbalanced mode on Normal speed\n"
+"            `{prefix}ww Valentines Extended` for Valentines mode on Extended "
+"speed\n"
+"            `{prefix}ww Huntergame Fast` for Huntergame mode on Fast speed\n"
+"            "
+msgstr ""
+
+#: cogs/werewolf/__init__.py:85
+#, python-brace-format
+msgid "Invalid game mode. Use `{prefix}help ww` to get help on this command."
+msgstr ""
+
+#: cogs/werewolf/__init__.py:93
+#, python-brace-format
+msgid "Invalid game speed. Use `{prefix}help ww` to get help on this command."
+msgstr ""
+
+#: cogs/werewolf/__init__.py:99
+#, python-brace-format
+msgid ""
+"Use `{prefix}help ww` to get help on werewolf commands. Use `{prefix}ww "
+"roles` to view descriptions of game roles and their goals to win. Use "
+"`{prefix}ww modes and {prefix}ww speeds` to see info about available game "
+"modes and speeds. Use `{prefix}ww updates` to read the new updates."
+msgstr ""
 
 #: cogs/werewolf/__init__.py:109
+#, python-brace-format
+msgid ""
+"**{author} started a mass-game of Werewolf!**\n"
+"**{mode}** mode on **{speed}** speed. Go to {url} to join in the next 10 "
+"minutes. **Minimum of 5 players are required.**"
+msgstr ""
+
+#: cogs/werewolf/__init__.py:115
+msgid "Werewolf Mass-game!"
+msgstr ""
+
+#: cogs/werewolf/__init__.py:125 cogs/werewolf/__init__.py:151
+#: cogs/werewolf/__init__.py:185
+msgid "New to Werewolf?"
+msgstr ""
+
+#: cogs/werewolf/__init__.py:130
+msgid "Werewolf game!"
+msgstr ""
+
+#: cogs/werewolf/__init__.py:132
+#, python-brace-format
+msgid ""
+"**{author} started a game of Werewolf!**\n"
+"**{mode}** mode on **{speed}** speed. React with :wolf: to join the game! "
+"**Minimum of 5 players are required. Starting in 30 seconds.\n"
+"{num} joined**"
+msgstr ""
+
+#: cogs/werewolf/__init__.py:200 cogs/werewolf/__init__.py:221
 msgid "An error happened during the Werewolf. Please try again!"
 msgstr "​"
 
-#: cogs/werewolf/__init__.py:118
+#: cogs/werewolf/__init__.py:209
+msgid "Not enough players joined... We didn't reach the minimum 5 players. 🙁"
+msgstr ""
+
+#: cogs/werewolf/__init__.py:230
+msgid "See available werewolf game modes"
+msgstr ""
+
+#: cogs/werewolf/__init__.py:233
+msgid "Used to see the list of available werewolf game modes."
+msgstr ""
+
+#: cogs/werewolf/__init__.py:236
+msgid "Werewolf Game Modes"
+msgstr ""
+
+#: cogs/werewolf/__init__.py:238
+msgid ""
+"**Game modes:** `Classic` (default), `Imbalanced`, `Huntergame`, "
+"`Villagergame`, `Valentines`.\n"
+"`Classic`: Play the classic werewolf game. (default)\n"
+"`Imbalanced`: Some roles that are only available in larger games have "
+"chances to join even in smaller games. (The size of the game being referred "
+"here is about the number of players, i.e. 5-player game is small)\n"
+"`Huntergame`: Only Hunters and Werewolves are available.\n"
+"`Villagergame`: No special roles, only Villagers and Werewolves are "
+"available.\n"
+"`Valentines`: (Experimental) There are multiple lovers randomly chosen in "
+"this mode. A chain of lovers might exist. If remaining players are in a "
+"single cluster of lovers, they all win."
+msgstr ""
+
+#: cogs/werewolf/__init__.py:252
+msgid "See available werewolf game speeds"
+msgstr ""
+
+#: cogs/werewolf/__init__.py:255
+msgid "Used to see the list of available werewolf game speeds."
+msgstr ""
+
+#: cogs/werewolf/__init__.py:258
+msgid "Werewolf Game Speeds"
+msgstr ""
+
+#: cogs/werewolf/__init__.py:260
+msgid ""
+"**Game speeds** (in seconds): `Normal`: 60 (default), `Extended`: 90, "
+"`Fast`: 45, `Blitz`: 30\n"
+"`Normal`: All major action timers are limited to 60 seconds and number of "
+"days to play is unlimited.\n"
+"`Extended`: All major action timers are limited to 90 seconds and number of "
+"days to play is unlimited.\n"
+"`Fast`: All major action timers are limited to 45 seconds and number of days "
+"to play is dependent on the number of players plus 3 days. This means not "
+"killing anyone every night or every election will likely end the game with "
+"no winners.\n"
+"`Blitz`: Warning: This is a faster game speed suitable for experienced "
+"players. All action timers are limited to 30 seconds and number of days to "
+"play is dependent on the number of players plus 3 days. This means not "
+"killing anyone every night or every election will likely end the game with "
+"no winners."
+msgstr ""
+
+#: cogs/werewolf/__init__.py:273
 msgid "Check your werewolf role"
 msgstr "​"
 
-#: cogs/werewolf/__init__.py:122
+#: cogs/werewolf/__init__.py:277
 msgid ""
 "Check your role in the Werewolf game and have the bot DM it to you.\n"
 "\n"
 "            You must be part of the ongoing game to get your role."
 msgstr "​"
+
+#: cogs/werewolf/__init__.py:284
+#, python-brace-format
+msgid "There is no werewolf game in this channel! {author}"
+msgstr ""
+
+#: cogs/werewolf/__init__.py:290
+#, python-brace-format
+msgid "The game has yet to be started {author}."
+msgstr ""
+
+#: cogs/werewolf/__init__.py:296
+#, python-brace-format
+msgid "You're not in the game {author}."
+msgstr ""
+
+#: cogs/werewolf/__init__.py:303
+#, python-brace-format
+msgid "You asked for your role in {channel} but your info couldn't be found."
+msgstr ""
+
+#: cogs/werewolf/__init__.py:311 utils/werewolf.py:993 utils/werewolf.py:1636
+#, python-brace-format
+msgid " A **{initial_roles}** initially"
+msgstr ""
+
+#: cogs/werewolf/__init__.py:324
+#, python-brace-format
+msgid ""
+"Checking your role in {ww_channel}... You are a **{role_name}**!"
+"{initial_role_info}\n"
+"\n"
+"{description}"
+msgstr ""
+
+#: cogs/werewolf/__init__.py:334
+#, python-brace-format
+msgid "I sent a DM containing your role info, {author}."
+msgstr ""
+
+#: cogs/werewolf/__init__.py:340
+#, python-brace-format
+msgid "I couldn't send a DM to you {author}."
+msgstr ""
+
+#: cogs/werewolf/__init__.py:345
+msgid "View descriptions of game roles"
+msgstr ""
+
+#: cogs/werewolf/__init__.py:349
+#, python-brace-format
+msgid ""
+"View the descriptions of roles in the Werewolf game.\n"
+"            `{prefix}roles` to see all roles.\n"
+"            `{prefix}roles <role name here>` to view info about a role.\n"
+"            "
+msgstr ""
+
+#: cogs/werewolf/__init__.py:356
+msgid "The Werewolves"
+msgstr ""
+
+#: cogs/werewolf/__init__.py:358
+msgid "Must eliminate all other villagers"
+msgstr ""
+
+#: cogs/werewolf/__init__.py:361
+msgid "The Villagers"
+msgstr ""
+
+#: cogs/werewolf/__init__.py:366
+msgid "Must find and eliminate the werewolves"
+msgstr ""
+
+#: cogs/werewolf/__init__.py:369
+msgid "The Ambiguous"
+msgstr ""
+
+#: cogs/werewolf/__init__.py:371
+msgid "Make their side win"
+msgstr ""
+
+#: cogs/werewolf/__init__.py:374
+msgid "The Loners"
+msgstr ""
+
+#: cogs/werewolf/__init__.py:379
+msgid "Must complete their own objective"
+msgstr ""
+
+#: cogs/werewolf/__init__.py:385
+msgid "Werewolf Roles"
+msgstr ""
+
+#: cogs/werewolf/__init__.py:387
+msgid ""
+"Roles are grouped into \n"
+"1. the Werewolves,\n"
+"2. the Villagers,\n"
+"3. the Ambiguous, and\n"
+"4. the Loners.\n"
+"**The available roles are:**"
+msgstr ""
+
+#: cogs/werewolf/__init__.py:396
+#, python-brace-format
+msgid ""
+"Use `{prefix}ww roles <role>` to view the description on a specific role."
+msgstr ""
+
+#: cogs/werewolf/__init__.py:414
+#, python-brace-format
+msgid "{role}? I couldn't find that role."
+msgstr ""
+
+#: cogs/werewolf/__init__.py:424
+msgid "Side:"
+msgstr ""
+
+#: cogs/werewolf/__init__.py:435
+msgid "Goal:"
+msgstr ""
+
+#: cogs/werewolf/__init__.py:450 cogs/werewolf/__init__.py:453
+msgid "Read the updates for Werewolf game."
+msgstr ""
+
+#: cogs/werewolf/__init__.py:455
+msgid ""
+"**Bug Fixes:**\n"
+"1. Fix double deaths when Hunter kills the target of Witch or White Wolf. A "
+"bug showing 2 death messages for Witch-killed or White Wolf-killed player "
+"after it has been killed by the Hunter has been fixed. Second death will not "
+"occur anymore.\n"
+"\n"
+"**Enhancements and Changes:**\n"
+"1. Revised minor details on description of Fox, Big Bad Wolf, and Healer "
+"roles.\n"
+"2. Changed `role` command to `ww myrole` subcommand. (It's the command that "
+"direct messages the player about their current role in a game.)\n"
+"3. Made few adjustments to prevent more than one game instance in a channel "
+"where more than one users attempted to start a werewolf game at the same "
+"time.\n"
+"4. Now users can start a new Werewolf game after failure of getting the "
+"joining message for reasons such as accidental deletion of said message.\n"
+"5. The players are now being shuffled before the start of the game.\n"
+"6. Thief choosing of new role is now optional, but if given with 2 Werewolf "
+"roles as choices, Thief should become a Werewolf. Thief will win with "
+"Villagers' side if Thief's role was retained.\n"
+"7. Improved proper numbering of werewolves' possible victims.\n"
+"8. Now mentions the users in choices of players selection in dm's. This is "
+"to work around users who change their name mid-game which is different from "
+"the cached name.\n"
+"9. Now messages you when you timed out while choosing a player.\n"
+"10. Changed the default 90-seconds discussion time in classic mode. It's now "
+"defaulted to 60 seconds as \"Normal\" speed.\n"
+"11. AFK check has been reworked for lesser time consumption.\n"
+"12. Now shows all the player's previous roles upon player's death or when "
+"game's over. Previously, only the first role is being shown as initial role. "
+"(Works on Thief and Maid)\n"
+"\n"
+"**Additions:**\n"
+"1. Sheriff has been added to the game! The game will randomly choose a "
+"player at the start to become the Sheriff that has double count of vote. An "
+"eliminated Sheriff should choose a new Sheriff as his successor.\n"
+"2. Added subcommand `ww roles` that shows the list of available roles. `ww "
+"roles <role_name>` can be used to view the description or abilities of the "
+"role and see the goal and side it belongs.\n"
+"3. Added new game modes and speeds: (use `ww modes` and `ww speeds` commands "
+"for detailed info)\n"
+"  - Added Game modes: `Imbalanced`, `Huntergame`, `Villagergame`, "
+"`Valentines`.\n"
+"  - Added Game speeds: `Normal` (60 seconds), `Extended` (90 seconds), "
+"`Fast` (45 seconds).\n"
+"4. Now open for massive werewolf games in experimental phase.\n"
+"5. The welcome message now displays the number of players and mentions them "
+"(several messages might be shown for too many players suitable with mass "
+"werewolf game, aka: paginated)\n"
+"6. Major messages that need pagination of players like during daily "
+"elections or when the game is over have been implemented in preparation for "
+"mass werewolf games.\n"
+"7. Now displays the number of in-game days and the limit of days to play if "
+"it's on Fast or Blitz speed.\n"
+"8. Now mentions the werewolf game channel in DM's as shortcut link to easily "
+"go back and forth with the channels.\n"
+"9. Werewolves will now see who the other werewolves are and their count "
+"during the victim selection in DM's.\n"
+"10. Now shows the roles of revealed players next to their names during "
+"players selection in dm's. Pure soul's role will be shown to all players "
+"with ability to choose a player in DM's. Seer will now be shown with the "
+"roles previously revealed to them.\n"
+"11. Werewolves will now see the current number of votes for nominated "
+"victims before they vote.\n"
+"12. Now has detection for sneaky lynching nomination.\n"
+"13. Now has workaround on non-players or dead players influencing the game "
+"by nuisance voting.\n"
+"14. Maid will now be asked whether to swap role with the player about to be "
+"lynched and not after the player's death. The game will announce the Maid's "
+"name that took the player's role. The new role of the Maid will not be "
+"revealed. The role of the eliminated player will be shown as Maid since they "
+"were exchanged.\n"
+"15. The former Maid will have her role be called the following night if "
+"needed as if it's the first night (e.g: Announced as new Pure Soul, choose "
+"from 2 extra roles as Thief (if Thief didn't take other role), choose an "
+"Idol if she took Wild Child, etc.)\n"
+"16. The former Maid can choose another pair of lovers if she took Amor's "
+"role hence a possibility of 2 sets of lovers. A player could get caught "
+"between 2 lovers in the game.\n"
+"17. Judge will now receive a message if he successfully triggered a second "
+"election.\n"
+"18. Added `ww updates` command to see all of these updates."
+msgstr ""
+
+#: cogs/werewolf/__init__.py:499
+msgid "Werewolf Updates"
+msgstr ""
 
 #: utils/chess.py:226
 #, python-brace-format
@@ -10312,6 +10643,857 @@ msgstr "​"
 #: utils/chess.py:419
 msgid "For the nerds:"
 msgstr "​"
+
+#: utils/werewolf.py:84
+msgid ""
+"Your objective is to kill all villagers together with the other Werewolves. "
+"Every night, you will get to choose one villager to kill - choose carefully!"
+msgstr ""
+
+#: utils/werewolf.py:88
+msgid ""
+"Your objective is to kill all villagers together with the other Werewolves. "
+"Every night, you will get to choose one villager to kill together with them. "
+"After that, you will wake up once more to kill an additional villager, but "
+"as long as no Werewolf or Wild Child has been killed."
+msgstr ""
+
+#: utils/werewolf.py:94
+msgid ""
+"You are an innocent soul. Your goal is to eradicate all Werewolves that are "
+"haunting the town at nights and survive yourself. At the daily elections, "
+"your voice makes the difference."
+msgstr ""
+
+#: utils/werewolf.py:99
+msgid ""
+"Everyone knows you are not a Werewolf. Your goal is to keep the town safe "
+"from Wolves and kill them all - at the daily elections, many will hear your "
+"voice, they know you will be honest."
+msgstr ""
+
+#: utils/werewolf.py:104
+msgid ""
+"You are a villager with the special ability to view someone's identity every "
+"night - but don't tell the villagers too fast, else you will be targeted "
+"yourself."
+msgstr ""
+
+#: utils/werewolf.py:109
+msgid ""
+"You are the personification of the Greek god and get to choose two lovers at "
+"the beginning of the game - they will love each other so much that they will "
+"die once their beloved one bites the dust."
+msgstr ""
+
+#: utils/werewolf.py:114
+msgid ""
+"You are a powerful villager with two special brews: One will kill, one will "
+"heal. Use them wisely to influence the game in your favor."
+msgstr ""
+
+#: utils/werewolf.py:118
+msgid ""
+"You are the Hunter. Do your best to protect the Community and your precise "
+"shot will trigger when you die, killing a target of your choice."
+msgstr ""
+
+#: utils/werewolf.py:122
+msgid ""
+"You are the Healer. Every night, you can protect one Villager from death to "
+"the Werewolves, but not the same person twice in a row. Make sure the "
+"Villagers stay alive..."
+msgstr ""
+
+#: utils/werewolf.py:127
+msgid ""
+"You are the oldest member of the community and the Werewolves have been "
+"hurting you for a long time. All the years have granted you a lot of "
+"resistance - you can survive one attack."
+msgstr ""
+
+#: utils/werewolf.py:132
+msgid ""
+"The two sisters know each other very well - together, you might be able to "
+"help the community find the Werewolves and eliminate them."
+msgstr ""
+
+#: utils/werewolf.py:136
+msgid ""
+"The three brothers know each other very well - together, you might be able "
+"to help the community find the Werewolves and eliminate them."
+msgstr ""
+
+#: utils/werewolf.py:140
+msgid ""
+"You are a clever little guy who can sense the presence of Werewolves. Every "
+"night, you get to choose 3 players and will be told if at least one of them "
+"is a Werewolf. If you do not find a Werewolf, you lose your ability."
+msgstr ""
+
+#: utils/werewolf.py:145
+msgid ""
+"You are the Judge. You love the law and can arrange a second daily vote "
+"after the first one by mentioning the secret sign we will agree on later "
+"during the vote. Use it wisely..."
+msgstr ""
+
+#: utils/werewolf.py:150
+msgid ""
+"You are the Knight. You will do your best to protect the Villagers from the "
+"Werewolves. When you die, a Werewolf will die with you."
+msgstr ""
+
+#: utils/werewolf.py:154
+msgid ""
+"You are the White Wolf. Your objective is to kill everyone else. "
+"Additionally to the nightly killing spree with the Werewolves, you may kill "
+"one of them later on in the night."
+msgstr ""
+
+#: utils/werewolf.py:158
+msgid "You are the thief and can choose your identity soon."
+msgstr ""
+
+#: utils/werewolf.py:160
+msgid ""
+"You are the wild child and will choose an idol. Once it dies, you turn into "
+"a Werewolf, but until then, you are a normal Villager..."
+msgstr ""
+
+#: utils/werewolf.py:164
+msgid ""
+"You are something between a Werewolf and a Villager. Choose your side "
+"wisely..."
+msgstr ""
+
+#: utils/werewolf.py:168
+msgid ""
+"You are the maid who raised the children. It would hurt you to see any of "
+"them die - after the daily election, you may take their identity role once."
+msgstr ""
+
+#: utils/werewolf.py:172
+msgid ""
+"You are the flutist. Your goal is to enchant the players with your music to "
+"take revenge for being expelled many years ago. Every night, you get to "
+"enchant two of them. Gotta catch them all..."
+msgstr ""
+
+#: utils/werewolf.py:188
+#, python-brace-format
+msgid "Shortcut back to {ww_channel}"
+msgstr ""
+
+#: utils/werewolf.py:258
+msgid "No one"
+msgstr ""
+
+#: utils/werewolf.py:267
+msgid "**The Healer awakes...**"
+msgstr ""
+
+#: utils/werewolf.py:277
+msgid "**The Werewolves awake...**"
+msgstr ""
+
+#: utils/werewolf.py:282
+msgid "Hey **"
+msgstr ""
+
+#: utils/werewolf.py:291
+#, python-brace-format
+msgid "__{count}__ Werewolves"
+msgstr ""
+
+#: utils/werewolf.py:293
+msgid "lone Werewolf"
+msgstr ""
+
+#: utils/werewolf.py:295
+#, python-brace-format
+msgid "**🐺 Wake up {greet_text}! It is time to choose a victim**"
+msgstr ""
+
+#: utils/werewolf.py:299
+msgid "All possible victims are:"
+msgstr ""
+
+#: utils/werewolf.py:308
+#, python-brace-format
+msgid ""
+"**I will relay all messages you send to the other Werewolves. Send a number "
+"to nominate them for killing (you can nominate up to 10 users), voting "
+"starts in {timer} seconds.**"
+msgstr ""
+
+#: utils/werewolf.py:315
+msgid ""
+"**Please do not spam and talk slowly! Relaying can take a while if there are "
+"many Werewolves!**"
+msgstr ""
+
+#: utils/werewolf.py:340
+#, python-brace-format
+msgid "**{werewolf}** nominated **{victim}**"
+msgstr ""
+
+#: utils/werewolf.py:353
+#, python-brace-format
+msgid ""
+"Not a single one of you wanted to attack a villager. No fresh meat tonight "
+"😆.\n"
+"{game_link}"
+msgstr ""
+
+#: utils/werewolf.py:359
+#, python-brace-format
+msgid " Votes: {votes}"
+msgstr ""
+
+#: utils/werewolf.py:364
+msgid "The voting is starting, please wait for your turn..."
+msgstr ""
+
+#: utils/werewolf.py:373
+#, python-brace-format
+msgid "React to vote for a target. You have {timer} seconds."
+msgstr ""
+
+#: utils/werewolf.py:383
+msgid "You didn't vote."
+msgstr ""
+
+#: utils/werewolf.py:399
+#, python-brace-format
+msgid ""
+"Werewolves, you are all indecisive. No fresh meat tonight 😆.\n"
+"{game_link}"
+msgstr ""
+
+#: utils/werewolf.py:409
+#, python-brace-format
+msgid ""
+"Werewolves, you have decided to kill **{target}** tonight and be your meal.\n"
+"{game_link}"
+msgstr ""
+
+#: utils/werewolf.py:420
+#, python-brace-format
+msgid "{pure_soul} is a **{role}** and an innocent villager."
+msgstr ""
+
+#: utils/werewolf.py:428
+#, python-brace-format
+msgid ""
+"📢 {sheriff} got randomly chosen as the new **Sheriff** 🎖️. **The vote of the "
+"Sheriff counts as double.**"
+msgstr ""
+
+#: utils/werewolf.py:454
+#, python-brace-format
+msgid "**The __{num}__ inhabitants of the Village:**"
+msgstr ""
+
+#: utils/werewolf.py:468
+#, python-brace-format
+msgid ""
+"**Welcome to Werewolf {mode}!\n"
+"{speed} speed activated - All action timers are limited to {timer} seconds.**"
+msgstr ""
+
+#: utils/werewolf.py:477
+msgid ""
+"📜⚠️ Talking to other users privately is prohibited! Posting any screenshots "
+"of my messages containing your role is also forbidden.**"
+msgstr ""
+
+#: utils/werewolf.py:483
+#, python-brace-format
+msgid ""
+"**Sending game roles... You may use `{prefix}ww myrole` to check your role "
+"later.\n"
+"{house_rules}"
+msgstr ""
+
+#: utils/werewolf.py:489
+#, python-brace-format
+msgid ""
+"Welcome to Werewolf {mode}! {house_rules}\n"
+"{game_link}"
+msgstr ""
+
+#: utils/werewolf.py:495
+msgid "🌘 💤 **Night falls, the town is asleep...**"
+msgstr ""
+
+#: utils/werewolf.py:511 utils/werewolf.py:596
+msgid "**The Seer awakes...**"
+msgstr ""
+
+#: utils/werewolf.py:515 utils/werewolf.py:600
+msgid "**The Fox awakes...**"
+msgstr ""
+
+#: utils/werewolf.py:522
+msgid "**The Sisters awake...**"
+msgstr ""
+
+#: utils/werewolf.py:527
+msgid "**The Brothers awake...**"
+msgstr ""
+
+#: utils/werewolf.py:546 utils/werewolf.py:622
+msgid "**The Big Bad Wolf awakes...**"
+msgstr ""
+
+#: utils/werewolf.py:556 utils/werewolf.py:632
+msgid "**The Witch awakes...**"
+msgstr ""
+
+#: utils/werewolf.py:560 utils/werewolf.py:636
+msgid "**The Flutist awakes...**"
+msgstr ""
+
+#: utils/werewolf.py:566
+msgid " 💤 **Night falls, the town is asleep...**"
+msgstr ""
+
+#: utils/werewolf.py:607
+msgid "**The White Wolf awakes...**"
+msgstr ""
+
+#: utils/werewolf.py:655
+#, python-brace-format
+msgid ""
+"You may now submit someone (up to 10 total) for the election who to lynch by "
+"mentioning their name below. You have {timer} seconds of discussion during "
+"this time."
+msgstr ""
+
+#: utils/werewolf.py:686
+msgid ""
+"I received your secret phrase. We will hold another election after this."
+msgstr ""
+
+#: utils/werewolf.py:707
+#, python-brace-format
+msgid "Seems sneaky, I added {time_to_add} seconds talk time."
+msgstr ""
+
+#: utils/werewolf.py:712
+#, python-brace-format
+msgid "**{player}** nominated **{nominee}**."
+msgstr ""
+
+#: utils/werewolf.py:733
+#, python-brace-format
+msgid ""
+"**React to vote for killing someone. You have {timer} seconds.**\n"
+"{texts}"
+msgstr ""
+
+#: utils/werewolf.py:799
+msgid ""
+"**You should not vote since you're not in the game. Please do not try to "
+"influence the game by voting unnecessarily. I will remove your reactions.**"
+msgstr ""
+
+#: utils/werewolf.py:814
+#, python-brace-format
+msgid ""
+"Checking AFK players if they're still in the game... Should be done in "
+"{timer} seconds."
+msgstr ""
+
+#: utils/werewolf.py:823
+#, python-brace-format
+msgid ""
+"You failed to vote. This is just an AFK check:\n"
+"**Send any message until I acknowledged that you're not AFK. You have "
+"{timer} seconds.**"
+msgstr ""
+
+#: utils/werewolf.py:850
+#, python-brace-format
+msgid ""
+"☑️ You're not AFK. You can stop sending message now.\n"
+"{game_link}"
+msgstr ""
+
+#: utils/werewolf.py:866
+msgid ""
+"**Strike 3!** You will now be killed by the game for having 3 strikes of "
+"being AFK. Goodbye!"
+msgstr ""
+
+#: utils/werewolf.py:874
+#, python-brace-format
+msgid ""
+"⚠️ **Strike {strikes}!** You have been marked as AFK. __You'll be killed "
+"after 3 strikes.__"
+msgstr ""
+
+#: utils/werewolf.py:881
+#, python-brace-format
+msgid ""
+"**{afk_player}** has been killed by the game due to having 3 strikes of AFK."
+msgstr ""
+
+#: utils/werewolf.py:889
+#, python-brace-format
+msgid "The community has decided to kill {to_kill}."
+msgstr ""
+
+#: utils/werewolf.py:912
+msgid "🌤️ **The sun rises...**"
+msgstr ""
+
+#: utils/werewolf.py:917
+msgid "Indecisively, the community has killed noone."
+msgstr ""
+
+#: utils/werewolf.py:922
+msgid ""
+"📢 **The Judge used the secret phrase to hold another election to lynch "
+"someone. The Judge's decision cannot be debated.**"
+msgstr ""
+
+#: utils/werewolf.py:931
+msgid "Indecisively, the community has not lynched anyone."
+msgstr ""
+
+#: utils/werewolf.py:943
+#, python-brace-format
+msgid "Day {day_count:.0f} of {days_limit}"
+msgstr ""
+
+#: utils/werewolf.py:947
+#, python-brace-format
+msgid "Day {day_count:.0f}"
+msgstr ""
+
+#: utils/werewolf.py:958
+#, python-brace-format
+msgid "{day_count:.0f} days have already passed. Stopping game..."
+msgstr ""
+
+#: utils/werewolf.py:967
+#, python-brace-format
+msgid "**The {winning_team} won!** 🎉 Congratulations:"
+msgstr ""
+
+#: utils/werewolf.py:978
+msgid "**No one won!**"
+msgstr ""
+
+#. Due to IndexError, no need to reveal players
+#: utils/werewolf.py:982
+#, python-brace-format
+msgid "{winner} won!"
+msgstr ""
+
+#: utils/werewolf.py:1005
+#, python-brace-format
+msgid "{player} is a **{role}**!{initial_role_info}"
+msgstr ""
+
+#: utils/werewolf.py:1018
+msgid "The game has ended. I will now reveal the other living players' roles:"
+msgstr ""
+
+#: utils/werewolf.py:1093 utils/werewolf.py:1112
+#, python-brace-format
+msgid ""
+"**Type the number of the user to choose for this action. You need to choose "
+"{amount} more.**"
+msgstr ""
+
+#: utils/werewolf.py:1121
+#, python-brace-format
+msgid ""
+"You are a **{role}**\n"
+"\n"
+"{description}"
+msgstr ""
+
+#: utils/werewolf.py:1129
+#, python-brace-format
+msgid ""
+"💕 You are in love with **{lover}**! 💘 Amor really knew you had an eye on "
+"them... You can eliminate all others and survive as Lovers. Try to protect "
+"your lover as best as you can. You will immediately commit suicide once they "
+"die.\n"
+"{game_link}"
+msgstr ""
+
+#: utils/werewolf.py:1137
+msgid "**The Wild Child awakes and chooses its idol...**"
+msgstr ""
+
+#: utils/werewolf.py:1141
+msgid "Choose your Idol. You will turn into a Werewolf if they die."
+msgstr ""
+
+#: utils/werewolf.py:1149
+msgid "You didn't choose anyone. A random player will be chosen for you."
+msgstr ""
+
+#: utils/werewolf.py:1153
+#, python-brace-format
+msgid "**{idol}** became your Idol.\n"
+msgstr ""
+
+#: utils/werewolf.py:1158
+msgid "**The Judge awakes...**"
+msgstr ""
+
+#: utils/werewolf.py:1162
+msgid ""
+"🧑‍⚖️ Please enter a phrase that will trigger a second election. Its is case "
+"sensitive."
+msgstr ""
+
+#: utils/werewolf.py:1177
+#, python-brace-format
+msgid ""
+"The phrase is **{symbol}**. Enter it right during an election to trigger "
+"another one.\n"
+msgstr ""
+
+#: utils/werewolf.py:1191
+#, python-brace-format
+msgid "Would you like to swap roles with {dying_one}?"
+msgstr ""
+
+#: utils/werewolf.py:1197
+msgid "You didn't choose anything."
+msgstr ""
+
+#: utils/werewolf.py:1202
+msgid ""
+"I couldn't send a DM to someone. Too bad they missed to use their power."
+msgstr ""
+
+#: utils/werewolf.py:1217
+#, python-brace-format
+msgid ""
+"**{maid}** reveals themselves as the **{role}** and exchanged roles with "
+"{dying_one}."
+msgstr ""
+
+#: utils/werewolf.py:1233
+msgid "Choose a player to protect from Werewolves."
+msgstr ""
+
+#: utils/werewolf.py:1242
+msgid ""
+"You didn't choose anyone, slowpoke. No one will be protected from werewolves "
+"tonight.\n"
+msgstr ""
+
+#: utils/werewolf.py:1251
+#, python-brace-format
+msgid "**{protected}** won't die from werewolves tonight.\n"
+msgstr ""
+
+#: utils/werewolf.py:1261
+msgid "Choose a Werewolf to kill."
+msgstr ""
+
+#: utils/werewolf.py:1267
+msgid "You didn't choose any werewolf to kill.\n"
+msgstr ""
+
+#: utils/werewolf.py:1271
+#, python-brace-format
+msgid "You chose to kill **{werewolf}**.\n"
+msgstr ""
+
+#: utils/werewolf.py:1284
+msgid "Choose a Villager to kill."
+msgstr ""
+
+#: utils/werewolf.py:1291
+msgid "You didn't choose any villager to kill, slowpoke.\n"
+msgstr ""
+
+#: utils/werewolf.py:1296
+#, python-brace-format
+msgid "You've decided to kill **{villager}**.\n"
+msgstr ""
+
+#: utils/werewolf.py:1310
+msgid ""
+"Choose someone to heal 🧪. You can rescue a player attacked by the wolves "
+"once throughout the game. You can opt not to use this ability for now."
+msgstr ""
+
+#: utils/werewolf.py:1321
+#, python-brace-format
+msgid "You chose to heal **{healed}**."
+msgstr ""
+
+#: utils/werewolf.py:1328
+msgid ""
+"You didn't choose to heal anyone from the list, slowpoke. They're likely to "
+"die."
+msgstr ""
+
+#: utils/werewolf.py:1339
+msgid ""
+"Choose someone to poison ☠️. You can kill a player once throughout the game. "
+"You can opt not to use this ability for now."
+msgstr ""
+
+#: utils/werewolf.py:1355
+#, python-brace-format
+msgid "You've decided to poison **{poisoned}**."
+msgstr ""
+
+#: utils/werewolf.py:1361
+msgid "You've ran out of time and missed to poison anyone, slowpoke."
+msgstr ""
+
+#: utils/werewolf.py:1375
+msgid "Choose 2 people to enchant."
+msgstr ""
+
+#: utils/werewolf.py:1382
+msgid "You didn't choose enough players to enchant, slowpoke."
+msgstr ""
+
+#: utils/werewolf.py:1388
+#, python-brace-format
+msgid ""
+"The last {count} possible targets have been automatically enchanted for you."
+msgstr ""
+
+#: utils/werewolf.py:1396
+#, python-brace-format
+msgid "You have enchanted **{enchanted}**."
+msgstr ""
+
+#: utils/werewolf.py:1400
+msgid ""
+"You have been enchanted by the Flutist. Claim being enchanted to narrow him "
+"down.\n"
+msgstr ""
+
+#: utils/werewolf.py:1408
+#, python-brace-format
+msgid "Your {relationship}(s) are/is: {members}"
+msgstr ""
+
+#: utils/werewolf.py:1419
+#, python-brace-format
+msgid ""
+"Your new {relationship} is: **{new_member}**. They don't know yet the other "
+"members of the family."
+msgstr ""
+
+#: utils/werewolf.py:1428
+msgid "👁️ Choose someone whose identity you would like to see."
+msgstr ""
+
+#: utils/werewolf.py:1436
+msgid "You've ran out of time and missed to see someone's role, slowpoke.\n"
+msgstr ""
+
+#: utils/werewolf.py:1444
+#, python-brace-format
+msgid "**{player}** is a **{role}**.\n"
+msgstr ""
+
+#: utils/werewolf.py:1455 utils/werewolf.py:1509
+#, python-brace-format
+msgid ""
+"You will be asked to choose a new role from these:\n"
+"**{choices}**"
+msgstr ""
+
+#: utils/werewolf.py:1461
+msgid ""
+"But it seems you don't have a choice. Whether you choose or not, you will "
+"become a Werewolf."
+msgstr ""
+
+#: utils/werewolf.py:1466
+msgid "Choose nothing and stay as Thief."
+msgstr ""
+
+#: utils/werewolf.py:1471 utils/werewolf.py:1517
+msgid "Choose a new role"
+msgstr ""
+
+#: utils/werewolf.py:1478
+msgid "You chose to stay as Thief.\n"
+msgstr ""
+
+#: utils/werewolf.py:1482
+msgid "You didn't choose anything. You will stay as Thief.\n"
+msgstr ""
+
+#: utils/werewolf.py:1488
+msgid "I couldn't send a DM to this player. They will stay as Thief."
+msgstr ""
+
+#: utils/werewolf.py:1497 utils/werewolf.py:1538
+#, python-brace-format
+msgid "Your new role is now **{new_role}**.\n"
+msgstr ""
+
+#: utils/werewolf.py:1505
+msgid "**The Wolfhound awakes...**"
+msgstr ""
+
+#: utils/werewolf.py:1524
+msgid "You didn't choose anything. A random role was chosen for you.\n"
+msgstr ""
+
+#: utils/werewolf.py:1531
+msgid "I couldn't send a DM. A random role was chosen for them."
+msgstr ""
+
+#: utils/werewolf.py:1555
+msgid "🦊 Choose 3 people who you want to see if any is a werewolf."
+msgstr ""
+
+#: utils/werewolf.py:1561
+msgid "You didn't choose enough players, slowpoke.\n"
+msgstr ""
+
+#: utils/werewolf.py:1572
+msgid "You found no Werewolf so you lost your ability.\n"
+msgstr ""
+
+#: utils/werewolf.py:1576
+msgid "One of them is a Werewolf.\n"
+msgstr ""
+
+#: utils/werewolf.py:1579
+msgid "**Amor awakes and shoots his arrows...**"
+msgstr ""
+
+#: utils/werewolf.py:1588
+msgid "You've ran out of time, slowpoke. Lovers will be chosen randomly."
+msgstr ""
+
+#: utils/werewolf.py:1592
+#, python-brace-format
+msgid "You've made **{lover1}** and **{lover2}** lovers\n"
+msgstr ""
+
+#: utils/werewolf.py:1634
+msgid " Initial roles hidden."
+msgstr ""
+
+#: utils/werewolf.py:1649
+msgid "You are going to die. Use your last breath to choose a new Sheriff."
+msgstr ""
+
+#: utils/werewolf.py:1655
+#, python-brace-format
+msgid "{user} has died. They were a **{role}**!{initial_role_info}"
+msgstr ""
+
+#: utils/werewolf.py:1672
+#, python-brace-format
+msgid "Your idol **{idol}** died, you turned into a **{new_role}**.\n"
+msgstr ""
+
+#: utils/werewolf.py:1681
+msgid "The Hunter grabs their gun."
+msgstr ""
+
+#: utils/werewolf.py:1683
+msgid "Choose someone who shall die with you."
+msgstr ""
+
+#: utils/werewolf.py:1689
+msgid "The Hunter couldn't find the trigger 😆."
+msgstr ""
+
+#: utils/werewolf.py:1694
+#, python-brace-format
+msgid "You chose to shoot **{target}**"
+msgstr ""
+
+#: utils/werewolf.py:1697
+#, python-brace-format
+msgid "The Hunter is firing. **{target}** got hit!"
+msgstr ""
+
+#: utils/werewolf.py:1714
+msgid "The Knight is striking a final time with his sword."
+msgstr ""
+
+#: utils/werewolf.py:1726
+#, python-brace-format
+msgid ""
+"The villagers killed **{role}**. The villagers lost all their special powers "
+"and became normal villagers."
+msgstr ""
+
+#: utils/werewolf.py:1732
+msgid ""
+"💀 You have been eliminated. Please do not communicate with the other players "
+"until the end of the game.💀\n"
+msgstr ""
+
+#: utils/werewolf.py:1741
+#, python-brace-format
+msgid "{dead_player}'s lover, {lover}, will die of sorrow."
+msgstr ""
+
+#: utils/werewolf.py:1780
+msgid "Lovers"
+msgstr ""
+
+#: utils/werewolf.py:1835
+msgid "Choose the new Sheriff 🎖️."
+msgstr ""
+
+#: utils/werewolf.py:1843
+msgid ""
+"You didn't choose anyone. A random player will be chosen to be your "
+"successor."
+msgstr ""
+
+#: utils/werewolf.py:1850
+#, python-brace-format
+msgid "**{sheriff}** became the new Sheriff."
+msgstr ""
+
+#: utils/werewolf.py:1856
+#, python-brace-format
+msgid ""
+"📢 {sheriff} got chosen to be the new **Sheriff** 🎖️. **The vote of the "
+"Sheriff counts as double.**"
+msgstr ""
+
+#~ msgid ""
+#~ "`[mode]` - The mode to play, see below for more info; defaults to "
+#~ "Classic\n"
+#~ "\n"
+#~ "            Starts a game of Werewolf.\n"
+#~ "            Game modes:\n"
+#~ "                Classic - Play the classic werewolf game. (This is the "
+#~ "default)\n"
+#~ "                Blitz   - In Blitz mode, all action timers are limited to "
+#~ "30 seconds and number of days to play is dependent on the number of "
+#~ "players plus 3 days. This means not killing anyone every night or every "
+#~ "election will likely end the game with no winners."
+#~ msgstr "​"
+
+#~ msgid "Invalid game mode. View the help on this command."
+#~ msgstr "​"
+
+#, python-brace-format
+#~ msgid ""
+#~ "{author} started a game of Werewolf! React with :wolf: to join the game! "
+#~ "**{num} joined**"
+#~ msgstr "​"
 
 #, python-brace-format
 #~ msgid ""
