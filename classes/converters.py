@@ -113,6 +113,10 @@ class DateOutOfRange(commands.BadArgument):
         self.min_ = min_
 
 
+class InvalidWerewolfMode(commands.BadArgument):
+    pass
+
+
 class User(commands.UserConverter):
     @cache(maxsize=8096)
     async def convert(self, ctx: Context, argument: str) -> discord.User:
@@ -222,3 +226,18 @@ class DateNewerThan(commands.Converter):
         if date < self.min_date or date > datetime.date.today():
             raise DateOutOfRange(self.min_date)
         return date
+
+
+class WerewolfMode(commands.Converter):
+    async def convert(self, ctx, arg):
+        mode = arg.title()
+        game_modes = [
+            "Classic",
+            "Imbalanced",
+            "Huntergame",
+            "Villagergame",
+            "Valentines",
+        ]
+        if mode not in game_modes:
+            raise InvalidWerewolfMode()
+        return mode
