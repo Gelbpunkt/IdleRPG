@@ -59,7 +59,7 @@ def raid_free():
 
 def is_cm():
     def predicate(ctx) -> bool:
-        return ctx.guild.id == ctx.bot.support_server_id and 491353140042530826 in [
+        return ctx.guild.id == ctx.bot.config.support_server_id and 491353140042530826 in [
             r.id for r in ctx.author.roles
         ]
 
