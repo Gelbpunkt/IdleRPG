@@ -76,11 +76,11 @@ class SnowballFight(commands.Cog):
 
         await ctx.send(
             _(
-                "{author}, type `snowballfight nominate @user` to add one of your guild"
-                " members to the fight!"
+                "{author}, type `snowballfight nominate @user` to add one of your"
+                " comrades to the fight. You need 10 total!"
             ).format(author=ctx.author.mention)
         )
-        while len(team1) == 1:
+        while len(team1) < 10:
             try:
                 msg = await self.bot.wait_for("message", check=check1, timeout=30)
             except asyncio.TimeoutError:
@@ -95,11 +95,11 @@ class SnowballFight(commands.Cog):
                 team1.append(u)
         await ctx.send(
             _(
-                "{enemy}, use `snowballfight nominate @user` to add one of your guild"
-                " members to the fight!"
+                "{enemy}, use `snowballfight nominate @user` to add one of your"
+                " comrades to the fight. You need 10 total!"
             ).format(enemy=enemy.mention)
         )
-        while len(team2) == 1:
+        while len(team2) < 10:
             try:
                 msg = await self.bot.wait_for("message", check=check2, timeout=30)
             except asyncio.TimeoutError:
