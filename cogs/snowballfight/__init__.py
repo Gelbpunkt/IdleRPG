@@ -92,6 +92,11 @@ class SnowballFight(commands.Cog):
                 await ctx.send(_("That's you!"))
             else:
                 team1.append(u)
+                await ctx.send(
+                    _("{user} has been added to your team, {user2}.").format(
+                        user=u.mention, user2=ctx.author.mention
+                    )
+                )
         await ctx.send(
             _(
                 "{enemy}, use `snowballfight nominate @user` to add one of your"
@@ -111,6 +116,11 @@ class SnowballFight(commands.Cog):
                 await ctx.send(_("That's you!"))
             else:
                 team2.append(u)
+                await ctx.send(
+                    _("{user} has been added to your team, {user2}.").format(
+                        user=u.mention, user2=enemy.mention
+                    )
+                )
         points1 = 1
         points2 = 1
         while points1 < 10 and points2 < 10:
