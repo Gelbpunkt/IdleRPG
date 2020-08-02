@@ -498,7 +498,7 @@ class Raid(commands.Cog):
         raiders_joined = len(raid)
         await ctx.send(f"**Done getting data! {raiders_joined} Raiders joined.**")
 
-        while self.boss["hp"] > 0 and len(raid) > 0:
+        while boss_hp > 0 and len(raid) > 0:
             target = random.choice(list(raid.keys()))  # the guy it will attack
             dmg = random.randint(0, 450)  # effective damage the dragon does
             finaldmg = self.getfinaldmg(dmg, raid[target]["armor"])

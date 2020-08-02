@@ -179,8 +179,8 @@ Next round starts in 5 seconds!
                     _("{author} got it right!").format(author=ctx.author.mention)
                 )
             elif game_mode == "maths":
-                m = random.randint(1, 20)
-                x = random.randint(1, 30)
+                m = random.randint(1, 10)
+                x = random.randint(1, 10)
                 c = random.choice([2, 4, 5])
                 d = random.randint(1, 100)
                 res = (m * x) / c + d
@@ -201,7 +201,7 @@ Next round starts in 5 seconds!
                     )
                 )
                 await asyncio.sleep(3)
-                await ctx.send(f"`({m} * {x}) / {c} + {d}`")
+                await ctx.send(f"`({m} *\u200b {x}) \u200b/ {c} + \u200b{d}`")
                 try:
                     msg = await self.bot.wait_for("message", check=corr, timeout=45)
                 except asyncio.TimeoutError:
