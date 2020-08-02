@@ -57,6 +57,15 @@ def raid_free():
     return commands.check(predicate)
 
 
+def is_cm():
+    def predicate(ctx) -> bool:
+        return ctx.guild.id == ctx.bot.support_server_id and 491353140042530826 in [
+            r.id for r in ctx.author.roles
+        ]
+
+    return commands.check(predicate)
+
+
 class Raid(commands.Cog):
     """Raids are only available in the support server. Use the support command for an invite link."""
 
@@ -428,6 +437,117 @@ class Raid(commands.Cog):
                 )
 
         self.boss = None
+
+    @is_cm()
+    @raid_channel()
+    @raid_free()
+    @commands.command(hidden=True, brief=_("Start a Cthulhu raid"))
+    async def starwarsspawn(self, ctx):
+        """[Bot Admin only] Starts a raid."""
+        id_ = await self.bot.start_joins()
+        fi = discord.File("assets/other/cthulhu.jpg")
+        em = discord.Embed(
+            title="Cthulhu Spawned",
+            url="https://raid.travitia.xyz",
+            description=(
+                "The evil god will be vulnerable in 15 Minutes\n\nUse"
+                f" https://join.idlerpg.xyz/{id_} to join the fight!"
+            ),
+            color=self.bot.config.primary_colour,
+        )
+        em.set_image(url="attachment://cthulhu.jpg")
+        em.set_thumbnail(url=ctx.author.avatar_url)
+
+        await ctx.send(embed=em, file=fi)
+
+        await asyncio.sleep(300)
+        await ctx.send("**The dragon will be vulnerable in 10 minutes**")
+        await asyncio.sleep(300)
+        await ctx.send("**The dragon will be vulnerable in 5 minutes**")
+        await asyncio.sleep(180)
+        await ctx.send("**The dragon will be vulnerable in 2 minutes**")
+        await asyncio.sleep(60)
+        await ctx.send("**The dragon will be vulnerable in 1 minute**")
+        await asyncio.sleep(30)
+        await ctx.send("**The dragon will be vulnerable in 30 seconds**")
+        await asyncio.sleep(20)
+        await ctx.send("**The dragon will be vulnerable in 10 seconds**")
+        await asyncio.sleep(10)
+        await ctx.send(
+            "**The god is vulnerable! Fetching participant data... Hang on!**"
+        )
+
+        a_joined = await self.bot.get_joins(id_)
+        boss_hp = len(a_joined) * 1500
+
+        async with self.bot.pool.acquire() as conn:
+            raid = {}
+            for u in a_joined:
+                if not (profile := await self.bot.cache.get_profile(u.id, conn=conn)):
+                    continue
+                dmg, deff = await self.bot.get_raidstats(
+                    u,
+                    atkmultiply=profile["atkmultiply"],
+                    defmultiply=profile["defmultiply"],
+                    classes=profile["class"],
+                    race=profile["race"],
+                    guild=profile["guild"],
+                    conn=conn,
+                )
+                raid[u] = {"hp": 250, "armor": deff, "damage": dmg}
+
+        raiders_joined = len(raid)
+        await ctx.send(f"**Done getting data! {raiders_joined} Raiders joined.**")
+
+        while self.boss["hp"] > 0 and len(raid) > 0:
+            target = random.choice(list(raid.keys()))  # the guy it will attack
+            dmg = random.randint(0, 450)  # effective damage the dragon does
+            finaldmg = self.getfinaldmg(dmg, raid[target]["armor"])
+            raid[target]["hp"] -= finaldmg  # damage dealt
+            if raid[target]["hp"] > 0:
+                em = discord.Embed(
+                    title="Cthulhu attacked!",
+                    description=f"{target} now has {raid[target]['hp']} HP!",
+                    colour=0xFFB900,
+                )
+            else:
+                em = discord.Embed(
+                    title="Cthulhu attacked!",
+                    description=f"{target} died!",
+                    colour=0xFFB900,
+                )
+            em.add_field(
+                name="Theoretical Damage", value=finaldmg + raid[target]["armor"]
+            )
+            em.add_field(name="Shield", value=raid[target]["armor"])
+            em.add_field(name="Effective Damage", value=finaldmg)
+            em.set_author(name=str(target), icon_url=target.avatar_url)
+            em.set_thumbnail(url=f"{self.bot.BASE_URL}/cthulhu.jpg")
+            await ctx.send(target.mention, embed=em)
+            if raid[target]["hp"] <= 0:
+                del raid[target]
+            dmg_to_take = sum(i["damage"] for i in raid.values())
+            boss_hp -= dmg_to_take
+            await asyncio.sleep(4)
+            em = discord.Embed(title="The raid attacked Cthulhu!", colour=0xFF5C00)
+            em.set_thumbnail(url=f"{self.bot.BASE_URL}/knight.jpg")
+            em.add_field(name="Damage", value=dmg_to_take)
+            if boss_hp > 0:
+                em.add_field(name="HP left", value=boss_hp)
+            else:
+                em.add_field(name="HP left", value="Dead!")
+            await ctx.send(embed=em)
+            await asyncio.sleep(4)
+
+        if len(raid) == 0:
+            await ctx.send("The raid was all wiped!")
+        else:
+            page = commands.Paginator()
+            for u in list(raid.keys()):
+                page.add_line(u.mention)
+            page.add_line("The raid killed the boss! Please now figure who survived :S")
+            for p in page.pages:
+                await ctx.send(p[4:-4])
 
     @is_gm()
     @ikhdosa_channel()
