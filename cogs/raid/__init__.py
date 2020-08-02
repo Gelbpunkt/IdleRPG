@@ -439,8 +439,6 @@ class Raid(commands.Cog):
         self.boss = None
 
     @is_cm()
-    @raid_channel()
-    @raid_free()
     @commands.command(hidden=True, brief=_("Start a Cthulhu raid"))
     async def starwarsspawn(self, ctx):
         """[Bot Admin only] Starts a raid."""
