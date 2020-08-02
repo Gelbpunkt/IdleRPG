@@ -147,7 +147,7 @@ Next round starts in 5 seconds!
             await asyncio.sleep(5)
             game_mode = random.choice(["typeit", "maths", "hangman"])
             if game_mode == "typeit":
-                w = random.sample(string.ascii_letters, 15)
+                w = random.sample(list(string.ascii_letters), 15)
                 w.insert(random.randint(1, 14), "\u200b")
                 word = "".join(w)
                 real = word.replace("\u200b", "")
