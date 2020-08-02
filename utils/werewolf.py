@@ -476,17 +476,17 @@ class Game:
         house_rules = _(
             "📜⚠️ Talking to other users privately is"
             " prohibited! Posting any screenshots of my messages"
-            " containing your role is also forbidden.**"
+            " containing your role is also forbidden."
         )
         await self.ctx.send(
             _(
                 "**Sending game roles... You may use `{prefix}ww myrole` to check"
-                " your role later.\n{house_rules}"
+                " your role later.\n{house_rules}**"
             ).format(prefix=self.ctx.prefix, house_rules=house_rules)
         )
         for player in self.players:
             await player.send(
-                _("Welcome to Werewolf {mode}! {house_rules}\n{game_link}").format(
+                _("**Welcome to Werewolf {mode}! {house_rules}\n{game_link}**").format(
                     mode=self.mode, house_rules=house_rules, game_link=self.game_link
                 )
             )
@@ -1448,7 +1448,7 @@ class Player:
         )
 
     async def choose_thief_role(self) -> None:
-        await self.game.ctx.send("**The thief awakes...**")
+        await self.game.ctx.send("**The Thief awakes...**")
         entries = [self.game.get_role_name(role) for role in self.game.extra_roles]
         await self.send(
             _(
