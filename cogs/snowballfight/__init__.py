@@ -56,7 +56,7 @@ class SnowballFight(commands.Cog):
         await msg.add_reaction("\U00002744")
 
         try:
-            await self.bot.wait_for("reaction_add", check=check, timeout=30)
+            await self.bot.wait_for("reaction_add", check=check, timeout=60)
         except asyncio.TimeoutError:
             return await ctx.send(_("Timed out..."))
         team1 = [ctx.author]
@@ -75,21 +75,21 @@ class SnowballFight(commands.Cog):
 
         await ctx.send(
             _(
-                "{author}, type `snowballfight nominate @user` to add one of your"
+                "{author}, type `snowballfight nominate @user` to add ten of your"
                 " comrades to the fight. You need 10 total!"
             ).format(author=ctx.author.mention)
         )
         while len(team1) < 10:
             try:
-                msg = await self.bot.wait_for("message", check=check1, timeout=30)
+                msg = await self.bot.wait_for("message", check=check1, timeout=60)
             except asyncio.TimeoutError:
                 return await ctx.send(_("Timed out..."))
             try:
                 u = msg.mentions[0]
             except IndexError:
                 continue
-            if u in team1:
-                await ctx.send(_("That's you!"))
+            if u in team1 or u in team1:
+                await ctx.send(_("Taken!"))
             else:
                 team1.append(u)
                 await ctx.send(
@@ -99,7 +99,7 @@ class SnowballFight(commands.Cog):
                 )
         await ctx.send(
             _(
-                "{enemy}, use `snowballfight nominate @user` to add one of your"
+                "{enemy}, use `snowballfight nominate @user` to add ten of your"
                 " comrades to the fight. You need 10 total!"
             ).format(enemy=enemy.mention)
         )
@@ -112,8 +112,8 @@ class SnowballFight(commands.Cog):
                 u = msg.mentions[0]
             except commands.BadArgument:
                 continue
-            if u in team2:
-                await ctx.send(_("That's you!"))
+            if u in team2 or u in team1:
+                await ctx.send(_("Taken!"))
             else:
                 team2.append(u)
                 await ctx.send(

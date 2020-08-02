@@ -460,17 +460,17 @@ class Raid(commands.Cog):
         await ctx.send(embed=em, file=fi)
 
         await asyncio.sleep(300)
-        await ctx.send("**The dragon will be vulnerable in 10 minutes**")
+        await ctx.send("**The god will be vulnerable in 10 minutes**")
         await asyncio.sleep(300)
-        await ctx.send("**The dragon will be vulnerable in 5 minutes**")
+        await ctx.send("**The god will be vulnerable in 5 minutes**")
         await asyncio.sleep(180)
-        await ctx.send("**The dragon will be vulnerable in 2 minutes**")
+        await ctx.send("**The god will be vulnerable in 2 minutes**")
         await asyncio.sleep(60)
-        await ctx.send("**The dragon will be vulnerable in 1 minute**")
+        await ctx.send("**The god will be vulnerable in 1 minute**")
         await asyncio.sleep(30)
-        await ctx.send("**The dragon will be vulnerable in 30 seconds**")
+        await ctx.send("**The god will be vulnerable in 30 seconds**")
         await asyncio.sleep(20)
-        await ctx.send("**The dragon will be vulnerable in 10 seconds**")
+        await ctx.send("**The god will be vulnerable in 10 seconds**")
         await asyncio.sleep(10)
         await ctx.send(
             "**The god is vulnerable! Fetching participant data... Hang on!**"
