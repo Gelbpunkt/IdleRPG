@@ -59,7 +59,6 @@ class SnowballFight(commands.Cog):
             await self.bot.wait_for("reaction_add", check=check, timeout=30)
         except asyncio.TimeoutError:
             return await ctx.send(_("Timed out..."))
-        conv = MemberConverter()
         team1 = [ctx.author]
         team2 = [enemy]
 
@@ -86,8 +85,8 @@ class SnowballFight(commands.Cog):
             except asyncio.TimeoutError:
                 return await ctx.send(_("Timed out..."))
             try:
-                u = await conv.convert(ctx, msg.content.split()[-1])
-            except commands.BadArgument:
+                u = msg.mentions[0]
+            except IndexError:
                 continue
             if u in team1:
                 await ctx.send(_("That's you!"))
@@ -105,7 +104,7 @@ class SnowballFight(commands.Cog):
             except asyncio.TimeoutError:
                 return await ctx.send(_("Timed out..."))
             try:
-                u = await conv.convert(ctx, msg.content.split()[-1])
+                u = msg.mentions[0]
             except commands.BadArgument:
                 continue
             if u in team2:
