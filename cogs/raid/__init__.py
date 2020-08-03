@@ -541,7 +541,6 @@ class Raid(commands.Cog):
             for p in page.pages:
                 await ctx.send(p[4:-4])
 
-
     @is_god()
     @raid_free()
     @commands.command(hidden=True, brief=_("Start a Guilt raid"))
