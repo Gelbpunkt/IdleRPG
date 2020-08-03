@@ -153,7 +153,7 @@ class Owner(commands.Cog):
                 text_collection.append(f"{god} set to {luck}.")
             await conn.execute('UPDATE profile SET "favor"=0 WHERE "god" IS NOT NULL;')
             text_collection.append("Godless set to 1.0")
-            ids = await conn.fetch
+            ids = await conn.fetch(
                 'UPDATE profile SET "luck"=1.0 WHERE "god" IS NULL RETURNING "user";'
             )
             all_ids.extend([u["user"] for u in ids])
