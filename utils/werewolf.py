@@ -1271,21 +1271,26 @@ class Player:
 
     async def choose_werewolf(self) -> Optional[Player]:
         possible_targets = [p for p in self.game.alive_players if p.side == Side.WOLVES]
-        try:
-            target = await self.choose_users(
-                _("Choose a Werewolf to kill."),
-                list_of_users=possible_targets,
-                amount=1,
-            )
-        except asyncio.TimeoutError:
+        if len(possible_targets) < 1:
             await self.send(
-                _("You didn't choose any werewolf to kill.\n") + self.game.game_link
+                _("There's no other werewolf left to kill.\n") + self.game.game_link
             )
-            return
-        await self.send(
-            _("You chose to kill **{werewolf}**.\n").format(werewolf=target[0].user)
-            + self.game.game_link
-        )
+        else:
+            try:
+                target = await self.choose_users(
+                    _("Choose a Werewolf to kill."),
+                    list_of_users=possible_targets,
+                    amount=1,
+                )
+            except asyncio.TimeoutError:
+                await self.send(
+                    _("You didn't choose any werewolf to kill.\n") + self.game.game_link
+                )
+                return
+            await self.send(
+                _("You chose to kill **{werewolf}**.\n").format(werewolf=target[0].user)
+                + self.game.game_link
+            )
         return target[0]
 
     async def choose_villager_to_kill(self, targets: List[Player]) -> Player:
