@@ -40,19 +40,22 @@ def raid_channel():
     return commands.check(predicate)
 
 
-def ikhdosa_channel():
-    def predicate(ctx):
-        return ctx.channel.id == 561_929_996_952_797_217
-
-    return commands.check(predicate)
-
-
 def raid_free():
     async def predicate(ctx):
         ttl = await ctx.bot.redis.execute("TTL", "special:raid")
         if ttl != -2:
             raise AlreadyRaiding("There is already a raid ongoing.")
         return True
+
+    return commands.check(predicate)
+
+
+def is_cm():
+    def predicate(ctx) -> bool:
+        return (
+            ctx.guild.id == ctx.bot.config.support_server_id
+            and 491353140042530826 in [r.id for r in ctx.author.roles]
+        )
 
     return commands.check(predicate)
 
@@ -429,66 +432,49 @@ class Raid(commands.Cog):
 
         self.boss = None
 
-    @is_gm()
-    @ikhdosa_channel()
-    @raid_free()
-    @commands.command(hidden=True, brief=_("Start a bandit raid"))
-    async def raiddefend(self, ctx, bandits: IntGreaterThan(1), group: str = "I"):
-        """[Bot Admin only] Starts a bandit raid in Ikhdosa."""
-        await self.set_raid_timer()
-        await self.bot.session.get(
-            "https://raid.idlerpg.xyz/toggle",
-            headers={"Authorization": self.bot.config.raidauth},
+    @is_cm()
+    @commands.command(hidden=True, brief=_("Start a Cthulhu raid"))
+    async def starwarsspawn(self, ctx):
+        """[Bot Admin only] Starts a raid."""
+        id_ = await self.bot.start_joins()
+        fi = discord.File("assets/other/cthulhu.jpg")
+        em = discord.Embed(
+            title="Cthulhu Spawned",
+            url="https://raid.travitia.xyz",
+            description=(
+                "The evil god will be vulnerable in 15 Minutes\n\nUse"
+                f" https://join.idlerpg.xyz/{id_} to join the fight!"
+            ),
+            color=self.bot.config.primary_colour,
         )
-        bandits = [
-            {"hp": random.randint(150, 250), "id": i + 1} for i in range(bandits)
-        ]
-        await ctx.send(
-            """
-*Arrow shot*
-**Lieutenant**: We've spotted a group of Bandits!
-The Bandits gonna arrive in 15 minutes.
+        em.set_image(url="attachment://cthulhu.jpg")
+        em.set_thumbnail(url=ctx.author.avatar_url)
 
-Use https://raid.idlerpg.xyz/ to join the raid!
+        await ctx.send(embed=em, file=fi)
 
-Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=453963965521985536&scope=identify&response_type=code&redirect_uri=https://raid.idlerpg.xyz/callback>
-""",
-            file=discord.File("assets/other/bandits1.jpg"),
-        )
         await asyncio.sleep(300)
-        await ctx.send("**The bandits arrive in 10 minutes**")
-        await asyncio.sleep(150)
-        await ctx.send(
-            "**Bandit Officer**: This is our last warning. Hand out all your goods and"
-            " gold!"
-        )
-        await asyncio.sleep(150)
-        await ctx.send("**The Bandits arrive in 5 minutes**")
+        await ctx.send("**The god will be vulnerable in 10 minutes**")
+        await asyncio.sleep(300)
+        await ctx.send("**The god will be vulnerable in 5 minutes**")
         await asyncio.sleep(180)
-        await ctx.send("**The Bandits arrive in 2 minutes**")
+        await ctx.send("**The god will be vulnerable in 2 minutes**")
         await asyncio.sleep(60)
-        await ctx.send("**The Bandits arrive in 1 minute**")
+        await ctx.send("**The god will be vulnerable in 1 minute**")
         await asyncio.sleep(30)
-        await ctx.send("**The Bandits arrive in 30 seconds**")
+        await ctx.send("**The god will be vulnerable in 30 seconds**")
         await asyncio.sleep(20)
-        await ctx.send("**The Bandits arrive in 10 seconds**")
+        await ctx.send("**The god will be vulnerable in 10 seconds**")
         await asyncio.sleep(10)
-
         await ctx.send(
-            "**The bandits are charging! Fetching participant data... Hang on!**"
+            "**The god is vulnerable! Fetching participant data... Hang on!**"
         )
 
-        async with self.bot.session.get(
-            "https://raid.idlerpg.xyz/joined",
-            headers={"Authorization": self.bot.config.raidauth},
-        ) as r:
-            raid_raw = await r.json()
+        a_joined = await self.bot.get_joins(id_)
+        boss_hp = len(a_joined) * 1500
+
         async with self.bot.pool.acquire() as conn:
             raid = {}
-            for i in raid_raw:
-                u = await self.bot.get_user_global(i)
-                if not u:
-                    continue
+            for u in a_joined:
                 if not (profile := await self.bot.cache.get_profile(u.id, conn=conn)):
                     continue
                 dmg, deff = await self.bot.get_raidstats(
@@ -498,115 +484,62 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
                     classes=profile["class"],
                     race=profile["race"],
                     guild=profile["guild"],
-                    god=profile["god"],
                     conn=conn,
                 )
                 raid[u] = {"hp": 250, "armor": deff, "damage": dmg}
 
-        await ctx.send("**Done getting data!**")
+        raiders_joined = len(raid)
+        await ctx.send(f"**Done getting data! {raiders_joined} Raiders joined.**")
 
-        start = datetime.datetime.utcnow()
-
-        target, target_data = random.choice(list(raid.items()))
-        while len(
-            bandits
-        ) > 0 and datetime.datetime.utcnow() < start + datetime.timedelta(minutes=45):
-            dmg = random.randint(60, 100)  # effective damage the bandit does
-            dmg = self.getfinaldmg(
-                dmg,
-                target_data["armor"] * Decimal(random.choice(["0.1", "0.2", "0.3"])),
-            )
-            target_data["hp"] -= dmg  # damage dealt
-            em = discord.Embed(title=f"Bandits left: `{len(bandits)}`", colour=0x000000)
-            em.set_author(
-                name=f"Bandit Raider Group {group}",
-                icon_url=f"{self.bot.BASE_URL}/bandits1.jpg",
-            )
-            em.add_field(name="Bandit HP", value=f"{bandits[0]['hp']} HP left")
-            if target_data["hp"] > 0:
-                em.add_field(
-                    name="Attack", value=f"Bandit is fighting against `{target}`"
+        while boss_hp > 0 and len(raid) > 0:
+            target = random.choice(list(raid.keys()))  # the guy it will attack
+            dmg = random.randint(0, 450)  # effective damage the dragon does
+            finaldmg = self.getfinaldmg(dmg, raid[target]["armor"])
+            raid[target]["hp"] -= finaldmg  # damage dealt
+            if raid[target]["hp"] > 0:
+                em = discord.Embed(
+                    title="Cthulhu attacked!",
+                    description=f"{target} now has {raid[target]['hp']} HP!",
+                    colour=0xFFB900,
                 )
             else:
-                em.add_field(name="Attack", value=f"Bandit killed `{target}`")
+                em = discord.Embed(
+                    title="Cthulhu attacked!",
+                    description=f"{target} died!",
+                    colour=0xFFB900,
+                )
             em.add_field(
-                name="Bandit Damage",
-                value=f"Has dealt `{dmg}` damage to the swordsman `{target}`",
+                name="Theoretical Damage", value=finaldmg + raid[target]["armor"]
             )
-            em.set_image(url=f"{self.bot.BASE_URL}/bandits2.jpg")
-            await ctx.send(embed=em)
-            if target_data["hp"] <= 0:
+            em.add_field(name="Shield", value=raid[target]["armor"])
+            em.add_field(name="Effective Damage", value=finaldmg)
+            em.set_author(name=str(target), icon_url=target.avatar_url)
+            em.set_thumbnail(url=f"{self.bot.BASE_URL}/cthulhu.jpg")
+            await ctx.send(target.mention, embed=em)
+            if raid[target]["hp"] <= 0:
                 del raid[target]
-                if len(raid) == 0:  # no more raiders
-                    break
-                target, target_data = random.choice(list(raid.items()))
-            bandits[0]["hp"] -= target_data["damage"]
-            await asyncio.sleep(7)
-            em = discord.Embed(title=f"Swordsmen left: `{len(raid)}`", colour=0x009900)
-            em.set_author(
-                name=f"Swordsman ({target})",
-                icon_url=f"{self.bot.BASE_URL}/swordsman1.jpg",
-            )
-            em.add_field(
-                name="Swordsman HP", value=f"`{target}` got {target_data['hp']} HP left"
-            )
-            if bandits[0]["hp"] > 0:
-                em.add_field(
-                    name="Swordsman attack",
-                    value=(
-                        f"Is attacking the bandit and dealt `{target_data['damage']}`"
-                        " damage"
-                    ),
-                )
+            dmg_to_take = sum(i["damage"] for i in raid.values())
+            boss_hp -= dmg_to_take
+            await asyncio.sleep(4)
+            em = discord.Embed(title="The raid attacked Cthulhu!", colour=0xFF5C00)
+            em.set_thumbnail(url=f"{self.bot.BASE_URL}/knight.jpg")
+            em.add_field(name="Damage", value=dmg_to_take)
+            if boss_hp > 0:
+                em.add_field(name="HP left", value=boss_hp)
             else:
-                money = random.randint(1500, 3000)
-                async with self.bot.pool.acquire() as conn:
-                    await conn.execute(
-                        'UPDATE profile SET "money"="money"+$1 WHERE "user"=$2;',
-                        money,
-                        target.id,
-                    )
-                    await self.bot.log_transaction(
-                        ctx,
-                        from_=1,
-                        to=target.id,
-                        subject="raid",
-                        data={"Amount": money},
-                        conn=conn,
-                    )
-                await self.bot.cache.update_profile_cols_rel(target.id, money=money)
-                bandits.pop(0)
-                em.add_field(
-                    name="Swordsman attack",
-                    value=f"Killed the bandit and received ${money}",
-                )
-            em.set_image(url=f"{self.bot.BASE_URL}/swordsman2.jpg")
+                em.add_field(name="HP left", value="Dead!")
             await ctx.send(embed=em)
-            await asyncio.sleep(7)
+            await asyncio.sleep(4)
 
-        if len(bandits) == 0:
-            payout = random.randint(3000, 7500)
-            await ctx.send(
-                "The bandits got defeated, Ikhdosa is safe again!"
-                f"Survivors received {payout} as a reward for the battle..."
-            )
-            users = [u.id for u in raid]
-            await self.bot.pool.execute(
-                'UPDATE profile SET "money"="money"+$1 WHERE "user"=ANY($2);',
-                payout,
-                users,
-            )
-            for user in users:
-                await self.bot.cache.update_profile_cols_rel(user, money=money)
-        elif len(raid) == 0:
-            await ctx.send("The bandits plundered the town!\nAll swordsmen died!")
+        if len(raid) == 0:
+            await ctx.send("The raid was all wiped!")
         else:
-            m = await ctx.send(
-                "The war at the Gate of Ikhdosa took too long. The bandits fled."
-            )
-            await m.add_reaction("\U0001F1EB")
-
-        await self.clear_raid_timer()
+            page = commands.Paginator()
+            for u in list(raid.keys()):
+                page.add_line(u.mention)
+            page.add_line("The raid killed the boss! Please now figure who survived :S")
+            for p in page.pages:
+                await ctx.send(p[4:-4])
 
     @is_god()
     @raid_free()
