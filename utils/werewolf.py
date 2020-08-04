@@ -780,6 +780,7 @@ class Game:
             await asyncio.sleep(int(self.timer / repeat))
             msg = await self.ctx.channel.fetch_message(msg.id)
             nuisance_voters = set()
+            is_lacking_permission = None
             for reaction in msg.reactions:
                 if str(reaction.emoji) in emojis:
                     nuisance_users = [
@@ -789,7 +790,14 @@ class Game:
                     ]
                     nuisance_voters.update(nuisance_users)
                     for to_remove in nuisance_users:
-                        await msg.remove_reaction(reaction.emoji, to_remove)
+                        try:
+                            await msg.remove_reaction(reaction.emoji, to_remove)
+                        except discord.Forbidden:
+                            is_lacking_permission = True
+                            continue
+                        except Exception as e:
+                            self.ctx.send(_("An unexpected error occurred."))
+                            raise e
             if len(nuisance_voters):
                 paginator = commands.Paginator(prefix="", suffix="")
                 for nuisance_voter in nuisance_voters:
@@ -801,6 +809,13 @@ class Game:
                         " remove your reactions.**"
                     )
                 )
+                if is_lacking_permission:
+                    paginator.add_line(
+                        _(
+                            "**{author} I couldn't remove reactions. Please give me the"
+                            " proper permissions to remove reactions.**"
+                        ).format(author=self.ctx.author.mention)
+                    )
                 for page in paginator.pages:
                     await self.ctx.send(page)
 
@@ -1217,7 +1232,7 @@ class Player:
                     "**{maid}** reveals themselves as the **{role}** and exchanged"
                     " roles with {dying_one}."
                 ).format(
-                    maid=self.user, role=self.role_name, dying_one=death.user.mention
+                    maid=self.user, role=death.role_name, dying_one=death.user.mention
                 )
             )
             if self.is_sheriff:
