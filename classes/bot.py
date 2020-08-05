@@ -32,6 +32,7 @@ import asyncpg
 import discord
 import fantasy_names as fn
 
+from aioscheduler import TimedScheduler
 from discord.ext import commands
 
 import config
@@ -56,6 +57,7 @@ class Bot(commands.AutoShardedBot):
         )  # we overwrite the prefix when it is connected
         # setup stuff
         self.queue = asyncio.Queue()  # global queue for ordered tasks
+        self.schedule_manager = TimedScheduler()
         self.config = config
         self.version = config.version
         self.paginator = paginator
@@ -162,7 +164,7 @@ class Bot(commands.AutoShardedBot):
 
     async def invoke(self, ctx):
         """Handler for i18n, executes before any other commands or checks run"""
-        locale = await self.get_cog("Locale").locale(ctx.message)
+        locale = await self.get_cog("Locale").locale(ctx.message.author.id)
         i18n.current_locale.set(locale)
         await super().invoke(ctx)
 
