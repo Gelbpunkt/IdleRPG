@@ -98,8 +98,8 @@ class Werewolf(commands.Cog):
         additional_text = _(
             "Use `{prefix}help ww` to get help on werewolf commands. Use `{prefix}ww"
             " roles` to view descriptions of game roles and their goals to win. Use"
-            " `{prefix}ww modes and {prefix}ww speeds` to see info about available game"
-            " modes and speeds. Use `{prefix}ww updates` to read the new updates."
+            " `{prefix}ww modes` and `{prefix}ww speeds` to see info about available"
+            " game modes and speeds. Use `{prefix}ww updates` to read the new updates."
         ).format(prefix=ctx.prefix)
         if ctx.channel.id == self.bot.config.official_tournament_channel_id:
             # TODO: Determine threshold players when wolves can kill 2 villagers per night in mass-games
@@ -241,7 +241,7 @@ class Werewolf(commands.Cog):
 `Imbalanced`: Some roles that are only available in larger games have chances to join even in smaller games. (The size of the game being referred here is about the number of players, i.e. 5-player game is small)
 `Huntergame`: Only Hunters and Werewolves are available.
 `Villagergame`: No special roles, only Villagers and Werewolves are available.
-`Valentines`: (Experimental) There are multiple lovers randomly chosen in this mode. A chain of lovers might exist. If remaining players are in a single cluster of lovers, they all win."""
+`Valentines`: (Experimental) There are multiple lovers or couples randomly chosen at the start of the game. A chain of lovers might exist upon the Amor's arrows. If the remaining players are in a single chain of lovers, they all win."""
                 ),
                 colour=self.bot.config.primary_colour,
             ).set_author(

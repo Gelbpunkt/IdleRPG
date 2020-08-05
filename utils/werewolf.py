@@ -476,17 +476,17 @@ class Game:
         house_rules = _(
             "📜⚠️ Talking to other users privately is"
             " prohibited! Posting any screenshots of my messages"
-            " containing your role is also forbidden.**"
+            " containing your role is also forbidden."
         )
         await self.ctx.send(
             _(
                 "**Sending game roles... You may use `{prefix}ww myrole` to check"
-                " your role later.\n{house_rules}"
+                " your role later.\n{house_rules}**"
             ).format(prefix=self.ctx.prefix, house_rules=house_rules)
         )
         for player in self.players:
             await player.send(
-                _("Welcome to Werewolf {mode}! {house_rules}\n{game_link}").format(
+                _("**Welcome to Werewolf {mode}! {house_rules}\n{game_link}**").format(
                     mode=self.mode, house_rules=house_rules, game_link=self.game_link
                 )
             )
@@ -780,6 +780,7 @@ class Game:
             await asyncio.sleep(int(self.timer / repeat))
             msg = await self.ctx.channel.fetch_message(msg.id)
             nuisance_voters = set()
+            is_lacking_permission = None
             for reaction in msg.reactions:
                 if str(reaction.emoji) in emojis:
                     nuisance_users = [
@@ -789,7 +790,14 @@ class Game:
                     ]
                     nuisance_voters.update(nuisance_users)
                     for to_remove in nuisance_users:
-                        await msg.remove_reaction(reaction.emoji, to_remove)
+                        try:
+                            await msg.remove_reaction(reaction.emoji, to_remove)
+                        except discord.Forbidden:
+                            is_lacking_permission = True
+                            continue
+                        except Exception as e:
+                            self.ctx.send(_("An unexpected error occurred."))
+                            raise e
             if len(nuisance_voters):
                 paginator = commands.Paginator(prefix="", suffix="")
                 for nuisance_voter in nuisance_voters:
@@ -801,6 +809,13 @@ class Game:
                         " remove your reactions.**"
                     )
                 )
+                if is_lacking_permission:
+                    paginator.add_line(
+                        _(
+                            "**{author} I couldn't remove reactions. Please give me the"
+                            " proper permissions to remove reactions.**"
+                        ).format(author=self.ctx.author.mention)
+                    )
                 for page in paginator.pages:
                     await self.ctx.send(page)
 
@@ -1217,7 +1232,7 @@ class Player:
                     "**{maid}** reveals themselves as the **{role}** and exchanged"
                     " roles with {dying_one}."
                 ).format(
-                    maid=self.user, role=self.role_name, dying_one=death.user.mention
+                    maid=self.user, role=death.role_name, dying_one=death.user.mention
                 )
             )
             if self.is_sheriff:
@@ -1256,21 +1271,26 @@ class Player:
 
     async def choose_werewolf(self) -> Optional[Player]:
         possible_targets = [p for p in self.game.alive_players if p.side == Side.WOLVES]
-        try:
-            target = await self.choose_users(
-                _("Choose a Werewolf to kill."),
-                list_of_users=possible_targets,
-                amount=1,
-            )
-        except asyncio.TimeoutError:
+        if len(possible_targets) < 1:
             await self.send(
-                _("You didn't choose any werewolf to kill.\n") + self.game.game_link
+                _("There's no other werewolf left to kill.\n") + self.game.game_link
             )
-            return
-        await self.send(
-            _("You chose to kill **{werewolf}**.\n").format(werewolf=target[0].user)
-            + self.game.game_link
-        )
+        else:
+            try:
+                target = await self.choose_users(
+                    _("Choose a Werewolf to kill."),
+                    list_of_users=possible_targets,
+                    amount=1,
+                )
+            except asyncio.TimeoutError:
+                await self.send(
+                    _("You didn't choose any werewolf to kill.\n") + self.game.game_link
+                )
+                return
+            await self.send(
+                _("You chose to kill **{werewolf}**.\n").format(werewolf=target[0].user)
+                + self.game.game_link
+            )
         return target[0]
 
     async def choose_villager_to_kill(self, targets: List[Player]) -> Player:
@@ -1448,7 +1468,7 @@ class Player:
         )
 
     async def choose_thief_role(self) -> None:
-        await self.game.ctx.send("**The thief awakes...**")
+        await self.game.ctx.send("**The Thief awakes...**")
         entries = [self.game.get_role_name(role) for role in self.game.extra_roles]
         await self.send(
             _(
