@@ -1,6 +1,6 @@
 # IdleRPG
 
-[![Build Status](https://api.travis-ci.com/Gelbpunkt/IdleRPG.svg)](https://travis-ci.com/Gelbpunkt/IdleRPG)
+[![CI](https://git.travitia.xyz/Kenvyra/IdleRPG/badges/v4/pipeline.svg)](https://git.travitia.xyz/Kenvyra/IdleRPG)
 [![Dockerhub](https://img.shields.io/badge/Pull%20IdleRPG-from%20Dockerhub-orange)](https://hub.docker.com/r/gelbpunkt/idlerpg)
 [![okapi](https://img.shields.io/badge/Pull%20okapi-from%20Dockerhub-black)](https://hub.docker.com/r/gelbpunkt/okapi)
 [![teatro](https://img.shields.io/badge/Pull%20teatro-from%20Dockerhub-green)](https://hub.docker.com/r/gelbpunkt/teatro)
