@@ -53,16 +53,15 @@ class Locale(commands.Cog):
     async def get_locale(self, user):
         """Gets the locale for a user from DB."""
         return await self.bot.pool.fetchval(
-            'SELECT "locale" FROM user_settings WHERE "user"=$1;', user.id
+            'SELECT "locale" FROM user_settings WHERE "user"=$1;', user
         )
 
-    async def locale(self, message):
-        user = message.author
-        lang = self.bot.locale_cache.get(user.id, None)
+    async def locale(self, user):
+        lang = self.bot.locale_cache.get(user, None)
         if lang:
             return lang
         lang = await self.get_locale(user)
-        self.bot.locale_cache[user.id] = lang
+        self.bot.locale_cache[user] = lang
         return lang
 
     @commands.group(
