@@ -445,38 +445,36 @@ Average hours of work: **{hours}**"""
         _("""Shows you the bots current version along with its major updates.""")
         await ctx.send(
             """\
-**v4.8.0**
-https://git.travitia.xyz/Kenvyra/IdleRPG/compare/v4.7.0...v4.8.0
+**v4.9.0**
+https://git.travitia.xyz/Kenvyra/IdleRPG/compare/v4.8.0...v4.9.0
 
-> 2020-07-13
+> 2020-08-06
 
-**Changes**
+**New features**
 
-- 24h cooldown on alliance attacks
-- Added more music error handling
-- Enhanced HTML generation
-- Fixed cache wiping, many thanks to Danny, ImRock and Luke, you guys *rock*
-- Fixed Travis
-- Clarified `$color` and `$loop`
-- Cooldown to crate opening
-- Many database optimizations using indexes
-- A minor exploit fix
-- Lots of translation updates, thanks guys!
-- Fixed `$alliance attack` logic
-- `$merchall` is available again
-- Automatic raid outcome announcements
-- Fix typos for help info of `$pet play` and `$pet cuddle`
-- Fix insanity wave for Guilt
-- Fix command access logic for game master and owner commands
-- Prohibit rgb values over 255
+- Reminders using aioscheduler, a library built by us for this purpose. `$remind 3min do your homework`, `$remind cancel` and `$remind list`
+- Embed in `$status` message instead of text
+- `$werewolf` had a rather big update with new game modes and time variants, please check it out
+- The maximum guild bank size is now $2,500,000, i.e. further `$guild upgrade`s are available
 
-**Additions**
+**Fixes**
 
-- Added `$markethistory` to search past market sales
-- Added options to `$draw` to play a draw game with someone for money
-- Allow opening up to 100 crates at once using `$open rarity amount`
-- New command `$offercrate` to offer crates safely
-- New profile data caching in Redis to increase performance"""
+- After a long revision time, `$trade` is available again and unexploitable. Many thanks go to my Dad for precious SQL knowledge
+- All inconsistencies with the 4.8.0 release and the new caching metholodgy should be resolved
+- Several potential exploit fixes that I discovered when redoing `$trade`
+
+**Internal changes**
+
+- We moved CI builds from Travis to Gitlab CI entirely
+- The entire build now uses a custom package index rather than hacky GitHub-hosted index files
+
+**Removals**
+
+- Removed Ikhdosa raid
+
+**Translations**
+
+- Brazilian and French have been revised and updated"""
         )
 
     @commands.has_permissions(manage_messages=True)

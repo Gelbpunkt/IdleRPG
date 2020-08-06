@@ -532,6 +532,45 @@ CREATE TABLE public.profile (
 ALTER TABLE public.profile OWNER TO jens;
 
 --
+-- Name: reminders; Type: TABLE; Schema: public; Owner: jens
+--
+
+CREATE TABLE public.reminders (
+    "user" bigint NOT NULL,
+    content character varying(100) NOT NULL,
+    internal_id uuid,
+    id integer NOT NULL,
+    "end" timestamp without time zone NOT NULL,
+    channel bigint NOT NULL,
+    start timestamp without time zone NOT NULL
+);
+
+
+ALTER TABLE public.reminders OWNER TO jens;
+
+--
+-- Name: reminders_id_seq; Type: SEQUENCE; Schema: public; Owner: jens
+--
+
+CREATE SEQUENCE public.reminders_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+ALTER TABLE public.reminders_id_seq OWNER TO jens;
+
+--
+-- Name: reminders_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: jens
+--
+
+ALTER SEQUENCE public.reminders_id_seq OWNED BY public.reminders.id;
+
+
+--
 -- Name: server; Type: TABLE; Schema: public; Owner: jens
 --
 
@@ -658,6 +697,13 @@ ALTER TABLE ONLY public.market_history ALTER COLUMN id SET DEFAULT nextval('publ
 
 
 --
+-- Name: reminders id; Type: DEFAULT; Schema: public; Owner: jens
+--
+
+ALTER TABLE ONLY public.reminders ALTER COLUMN id SET DEFAULT nextval('public.reminders_id_seq'::regclass);
+
+
+--
 -- Name: transactions id; Type: DEFAULT; Schema: public; Owner: jens
 --
 
@@ -777,6 +823,14 @@ ALTER TABLE ONLY public.profile
 
 
 --
+-- Name: reminders reminders_pkey; Type: CONSTRAINT; Schema: public; Owner: jens
+--
+
+ALTER TABLE ONLY public.reminders
+    ADD CONSTRAINT reminders_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: transactions transactions_pkey; Type: CONSTRAINT; Schema: public; Owner: jens
 --
 
@@ -800,17 +854,17 @@ CREATE INDEX allitems_id_idx ON public.allitems USING btree (id);
 
 
 --
--- Name: loot_id_idx; Type: INDEX; Schema: public; Owner: jens
---
-
-CREATE INDEX loot_id_idx ON public.loot USING btree (id);
-
-
---
 -- Name: inventory_item_idx; Type: INDEX; Schema: public; Owner: jens
 --
 
 CREATE INDEX inventory_item_idx ON public.inventory USING btree (item);
+
+
+--
+-- Name: loot_id_idx; Type: INDEX; Schema: public; Owner: jens
+--
+
+CREATE INDEX loot_id_idx ON public.loot USING btree (id);
 
 
 --

@@ -59,6 +59,7 @@ initial_extensions = [
     "cogs.trivia",
     "cogs.chess",
     "cogs.werewolf",
+    "cogs.scheduler",
     "cogs.error_handler",
 ]
 
@@ -153,7 +154,7 @@ proxy_url = "http://my.proxy"
 proxy_auth = "proxy-auth-key"
 
 """The Version of the Bot."""
-version = "4.8.0"
+version = "4.9.0"
 
 """Global cooldown (rate, per, [.user, .channel, .guild])"""
 cooldown = commands.CooldownMapping.from_cooldown(1, 3, commands.BucketType.user)

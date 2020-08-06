@@ -2,9 +2,11 @@ image: "gelbpunkt/python:ci"
 
 before_script:
   - python --version
+  - echo "https://dl-cdn.alpinelinux.org/alpine/edge/testing" >> /etc/apk/repositories && apk add podman
 
 stages:
   - Static Analysis
+  - Test Podman Build
 
 black:
   stage: Static Analysis
@@ -25,3 +27,9 @@ flake8:
   script:
     - flake8 --version
     - flake8
+
+build:
+  stage: Test Podman Build
+  script:
+    - podman --version
+    - podman build --storage-driver vfs --runtime runc -t idlerpg:latest .

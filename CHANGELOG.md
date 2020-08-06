@@ -1,3 +1,58 @@
+<a name="v4.9.0"></a>
+## [v4.9.0](https://git.travitia.xyz/Kenvyra/IdleRPG/compare/v4.8.0...v4.9.0)
+
+> 2020-08-06
+
+### New features
+
+* Reminders using [aioscheduler](https://github.com/Gelbpunkt/aioscheduler), a library built by us for this purpose. `$remind 3min do your homework`, `$remind cancel` and `$remind list`
+* Embed in `$status` message instead of text
+* `$werewolf` had a rather big update with new game modes and time variants, please check it out
+* The maximum guild bank size is now $2,500,000, i.e. further `$guild upgrade`s are available
+
+### Fixes
+
+* After a long revision time, `$trade` is available again and unexploitable. Many thanks go to my Dad for precious SQL knowledge
+* All inconsistencies with the 4.8.0 release and the new caching metholodgy should be resolved
+* Several potential exploit fixes that I discovered when redoing `$trade`
+
+### Internal changes
+
+* We moved CI builds from Travis to Gitlab CI entirely
+* The entire build now uses a custom package index rather than hacky GitHub-hosted index files
+
+### Removals
+
+* Removed Ikhdosa raid
+
+### Translations
+
+* Brazilian and French have been revised and updated
+
+### Merge Requests
+
+* Merge branch 'scheduler' into 'experiments'
+* Merge branch 'patch-22' into 'experiments'
+* Merge branch 'patch-21' into 'experiments'
+* Merge branch 'patch-1' into 'v4'
+* Merge branch 'raid-rm' into 'v4'
+* Merge branch 'patch-20' into 'experiments'
+* Merge branch 'patch-19' into 'experiments'
+* Merge branch 'patch-18' into 'experiments'
+* Merge branch 'patch-1' into 'v4'
+* Merge branch 'trade-text' into 'experiments'
+* Merge branch 'patch-15' into 'v4'
+* Merge branch 'patch-17' into 'v4'
+* Merge branch 'typo-patch' into 'v4'
+* Merge branch 'patch-1' into 'v4'
+* Merge branch 'patch-1' into 'v4'
+* Merge branch 'help' into 'v4'
+* Merge branch 'patch-2' into 'v4'
+* Merge branch 'patch-16' into 'v4'
+* Merge branch 'patch-1' into 'v4'
+* Merge branch 'patch-1' into 'v4'
+* Merge branch 'patch-1' into 'v4'
+
 <a name="v4.8.0"></a>
 
 ## [v4.8.0](https://git.travitia.xyz/Kenvyra/IdleRPG/compare/v4.7.0...v4.8.0)

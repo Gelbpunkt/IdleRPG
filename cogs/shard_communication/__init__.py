@@ -204,12 +204,6 @@ class Sharding(commands.Cog):
     async def clear_donator_cache(self, user_id: int, command_id: int):
         self.bot.get_donator_rank.invalidate(self.bot, user_id)
 
-    async def temp_ban(self, user_id: int, command_id: int):
-        self.bot.bans.append(user_id)
-
-    async def temp_unban(self, user_id: int, command_id: int):
-        self.bot.bans.remove(user_id)
-
     async def guild_count(self, command_id: str):
         payload = {"output": len(self.bot.guilds), "command_id": command_id}
         await self.bot.redis.execute(

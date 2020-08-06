@@ -113,6 +113,15 @@ class DateOutOfRange(commands.BadArgument):
         self.min_ = min_
 
 
+class InvalidTime(commands.BadArgument):
+    def __init__(self, text: str) -> None:
+        self.text = text
+
+
+class InvalidWerewolfMode(commands.BadArgument):
+    pass
+
+
 class User(commands.UserConverter):
     @cache(maxsize=8096)
     async def convert(self, ctx: Context, argument: str) -> discord.User:
@@ -222,3 +231,52 @@ class DateNewerThan(commands.Converter):
         if date < self.min_date or date > datetime.date.today():
             raise DateOutOfRange(self.min_date)
         return date
+
+
+def parse_date(date_string):
+    return dateparser.parse(
+        date_string,
+        settings={
+            "TO_TIMEZONE": "UTC",
+            "PREFER_DATES_FROM": "future",
+            "RETURN_AS_TIMEZONE_AWARE": False,
+        },
+        languages=["en"],
+    )
+
+
+class DateTimeScheduler(commands.Converter):
+    async def convert(self, ctx, content):
+        if content.startswith("me"):
+            content = content.replace("me", "", 1).strip()
+            # catches "remind me"
+        if time := parse_date(content):
+            subject = _("something")
+        else:
+            stuff = content.split()
+            worked = False
+            for i in range(len(stuff) - 1, -1, -1):
+                time, subject = " ".join(stuff[:i]), " ".join(stuff[i:])
+                if time := parse_date(time):
+                    worked = True
+                    break
+            if not worked:
+                raise InvalidTime(_("Could not determine a time from this."))
+        if time < datetime.datetime.utcnow():
+            raise InvalidTime(_("That time is in the past."))
+        return time + datetime.timedelta(seconds=1), subject
+
+
+class WerewolfMode(commands.Converter):
+    async def convert(self, ctx, arg):
+        mode = arg.title()
+        game_modes = [
+            "Classic",
+            "Imbalanced",
+            "Huntergame",
+            "Villagergame",
+            "Valentines",
+        ]
+        if mode not in game_modes:
+            raise InvalidWerewolfMode()
+        return mode

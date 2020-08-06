@@ -16,6 +16,7 @@ You should have received a copy of the GNU Affero General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
 import asyncio
+import datetime
 
 import discord
 
@@ -23,6 +24,8 @@ from discord import utils
 from discord.ext import commands
 
 from classes.converters import MemberConverter, User
+from utils import i18n
+from utils.i18n import _
 from utils.loops import queue_manager
 
 
@@ -60,6 +63,8 @@ class GlobalEvents(commands.Cog):
             self.bot.loop.create_task(queue_manager(self.bot, self.bot.queue))
             await self.bot.is_owner(self.bot.user)  # force getting the owners
             await self.status_updater()
+            await self.reschedule_reminders()
+            self.bot.schedule_manager.start()
         else:
             self.bot.logger.warning("[INFO] Discord fired on_ready...")
 
@@ -222,6 +227,43 @@ class GlobalEvents(commands.Cog):
                 )
             )
         }
+
+    async def reschedule_reminders(self):
+        valid_channels = [channel.id for channel in self.bot.get_all_channels()]
+        all_reminders = await self.bot.pool.fetch("SELECT * FROM reminders;")
+        now = datetime.datetime.utcnow()
+        invalid_reminders = []
+        new_reminders = {}
+        for reminder in all_reminders:
+            if reminder["end"] < now:
+                invalid_reminders.append(reminder["id"])
+            elif reminder["channel"] not in valid_channels:
+                pass  # don't schedule channels that the bot won't be able to send to
+            else:
+                locale = await self.bot.get_cog("Locale").locale(reminder["user"])
+                i18n.current_locale.set(locale)
+                task = self.bot.schedule_manager.schedule(
+                    self.bot.get_channel(reminder["channel"]).send(
+                        _(
+                            "{user}, you wanted to be reminded about {subject} {diff}"
+                            " ago."
+                        ).format(
+                            user=f"<@{reminder['user']}>",
+                            subject=reminder["content"],
+                            diff=str(reminder["end"] - reminder["start"]).split(".")[0],
+                        )
+                    ),
+                    reminder["end"],
+                )
+                new_reminders.update({reminder["id"]: task.uuid})
+        async with self.bot.pool.acquire() as conn:
+            await conn.execute(
+                'DELETE FROM reminders WHERE "id"=ANY($1);', invalid_reminders
+            )
+            await conn.executemany(
+                'UPDATE reminders SET "internal_id"=$2 WHERE "id"=$1',
+                new_reminders.items(),
+            )
 
     def cog_unload(self):
         self.stats_updates.cancel()

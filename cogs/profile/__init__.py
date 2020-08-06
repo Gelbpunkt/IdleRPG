@@ -591,7 +591,7 @@ IdleRPG is a global bot, your characters are valid everywhere"""
         await self.bot.paginator.Paginator(extras=embeds).paginate(ctx)
 
     @checks.has_char()
-    @user_cooldown(600)
+    @user_cooldown(180, identifier="sacrificeexchange")
     @commands.command(aliases=["ex"], brief=_("Exchange your loot for money or XP"))
     @locale_doc
     async def exchange(self, ctx, *loot_ids: int):

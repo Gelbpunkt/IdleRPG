@@ -518,7 +518,7 @@ class Music(commands.Cog):
 
             If there are more than one person in the session and a non-DJ uses this command, a vote has to pass first."""
         )
-        if eq not in ctx.player.equalizers:
+        if eq not in ("FLAT", "PIANO", "METAL", "BOOST"):
             return await ctx.send(
                 _("Not a valid equalizer. May be flat, piano, metal or boost.")
             )

@@ -33,6 +33,7 @@ from classes.converters import (
     DateOutOfRange,
     InvalidCoinSide,
     InvalidCrateRarity,
+    InvalidTime,
     NotInRange,
     UserHasNoChar,
 )
@@ -119,6 +120,8 @@ class Errorhandler(commands.Cog):
                         " than {date}."
                     ).format(date=error.min_)
                 )
+            elif isinstance(error, InvalidTime):
+                await ctx.send(error.text)
             else:
                 await ctx.send(_("You used a malformed argument!"))
         elif isinstance(error, GlobalCooldown):

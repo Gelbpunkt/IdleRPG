@@ -110,7 +110,7 @@ class SnowballFight(commands.Cog):
                 return await ctx.send(_("Timed out..."))
             try:
                 u = msg.mentions[0]
-            except commands.BadArgument:
+            except IndexError:
                 continue
             if u in team2 or u in team1:
                 await ctx.send(_("Taken!"))
