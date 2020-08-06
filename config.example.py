@@ -59,6 +59,7 @@ initial_extensions = [
     "cogs.trivia",
     "cogs.chess",
     "cogs.werewolf",
+    "cogs.scheduler",
     "cogs.error_handler",
 ]
 

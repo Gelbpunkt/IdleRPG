@@ -92,7 +92,7 @@ class Scheduling(commands.Cog):
         embeds = []
         for chunk in reminder_chunks:
             embed = discord.Embed(
-                title=_("{user}'s reminders").format(user=str(ctx.author)),
+                title=_("{user}'s reminders").format(user=ctx.disp),
                 color=self.bot.config.primary_colour,
             )
             for reminder in chunk:
