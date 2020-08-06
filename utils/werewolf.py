@@ -126,7 +126,10 @@ DESCRIPTIONS = {
     Role.THE_OLD: _(
         "You are the oldest member of the community and the Werewolves have been"
         " hurting you for a long time. All the years have granted you a lot of"
-        " resistance - you can survive one attack."
+        " resistance - you can survive one attack from the Werewolves.  The Village's"
+        " Vote, Witch, and Hunter will kill you on the first time, and upon dying, all"
+        " the other Villagers will lose their special powers and become normal"
+        " villagers."
     ),
     Role.SISTER: _(
         "The two sisters know each other very well - together, you might be able to"
@@ -221,7 +224,7 @@ class Game:
             lovers = list(chunks(random.shuffle(self.players), 2))
             for couple in lovers:
                 if len(couple) == 2:
-                    self.lovers.append(couple)
+                    self.lovers.append(set(couple))
         random.choice(self.players).is_sheriff = True
 
     @property
@@ -432,6 +435,7 @@ class Game:
 
     async def send_love_msgs(self) -> None:
         for couple in self.lovers:
+            couple = list(couple)
             for lover in couple:
                 await lover.send_love_msg(couple[couple.index(lover) - 1])
 
@@ -449,6 +453,8 @@ class Game:
         return chained
 
     async def initial_preparation(self) -> List[Player]:
+        mode_emojis = {"Huntergame": "🔫", "Valentines": "💕"}
+        mode_emoji = mode_emojis.get(self.mode, "")
         paginator = commands.Paginator(prefix="", suffix="")
         paginator.add_line(
             _("**The __{num}__ inhabitants of the Village:**").format(
@@ -468,7 +474,9 @@ class Game:
                 "**Welcome to Werewolf {mode}!\n{speed} speed activated - All action"
                 " timers are limited to {timer} seconds.**"
             ).format(
-                mode=self.mode, speed=self.speed, timer=self.timer,
+                mode=mode_emoji + self.mode + mode_emoji,
+                speed=self.speed,
+                timer=self.timer,
             )
         )
         for page in paginator.pages:
@@ -487,7 +495,9 @@ class Game:
         for player in self.players:
             await player.send(
                 _("**Welcome to Werewolf {mode}! {house_rules}\n{game_link}**").format(
-                    mode=self.mode, house_rules=house_rules, game_link=self.game_link
+                    mode=mode_emoji + self.mode + mode_emoji,
+                    house_rules=house_rules,
+                    game_link=self.game_link,
                 )
             )
             await player.send_information()
@@ -910,8 +920,6 @@ class Game:
         if maid := self.get_player_with_role(Role.MAID):
             if maid != to_kill:
                 await maid.handle_maid(to_kill)
-        if to_kill.is_sheriff:
-            await to_kill.choose_new_sheriff()
         if to_kill.role == Role.THE_OLD:
             to_kill.died_from_villagers = True
             to_kill.lives = 1
@@ -1275,6 +1283,7 @@ class Player:
             await self.send(
                 _("There's no other werewolf left to kill.\n") + self.game.game_link
             )
+            return
         else:
             try:
                 target = await self.choose_users(
@@ -1291,7 +1300,7 @@ class Player:
                 _("You chose to kill **{werewolf}**.\n").format(werewolf=target[0].user)
                 + self.game.game_link
             )
-        return target[0]
+            return target[0]
 
     async def choose_villager_to_kill(self, targets: List[Player]) -> Player:
         possible_targets = [
@@ -1299,24 +1308,33 @@ class Player:
             for p in self.game.alive_players
             if p.side not in (Side.WOLVES, Side.WHITE_WOLF) and p not in targets
         ]
-        try:
-            target = await self.choose_users(
-                _("Choose a Villager to kill."),
-                list_of_users=possible_targets,
-                amount=1,
-            )
-            target = target[0]
-        except asyncio.TimeoutError:
+        if len(possible_targets) < 1:
             await self.send(
-                _("You didn't choose any villager to kill, slowpoke.\n")
+                _("There's no other possible villagers left to kill.\n")
                 + self.game.game_link
             )
             return
-        await self.send(
-            _("You've decided to kill **{villager}**.\n").format(villager=target.user)
-            + self.game.game_link
-        )
-        return target
+        else:
+            try:
+                target = await self.choose_users(
+                    _("Choose a Villager to kill."),
+                    list_of_users=possible_targets,
+                    amount=1,
+                )
+                target = target[0]
+            except asyncio.TimeoutError:
+                await self.send(
+                    _("You didn't choose any villager to kill, slowpoke.\n")
+                    + self.game.game_link
+                )
+                return
+            await self.send(
+                _("You've decided to kill **{villager}**.\n").format(
+                    villager=target.user
+                )
+                + self.game.game_link
+            )
+            return target
 
     async def witch_actions(self, targets: List[Player]) -> Player:
         if not self.can_heal and not self.can_kill:
@@ -1617,7 +1635,7 @@ class Player:
         if lovers[0] in lovers[1].own_lovers:
             # They're already lovers.
             return
-        self.game.lovers.append(lovers)
+        self.game.lovers.append(set(lovers))
         await lovers[0].send_love_msg(lovers[1])
         await lovers[1].send_love_msg(lovers[0])
 
@@ -1629,6 +1647,7 @@ class Player:
     def own_lovers(self) -> List[Player]:
         own_lovers = []
         for couple in self.game.lovers:
+            couple = list(couple)
             if self in couple:
                 own_lovers.append(couple[couple.index(self) - 1])
         return own_lovers
@@ -1664,12 +1683,6 @@ class Player:
             else:
                 initial_role_info = ""
             if self.is_sheriff:
-                await self.send(
-                    _(
-                        "You are going to die. Use your last breath to choose a new"
-                        " Sheriff."
-                    )
-                )
                 await self.choose_new_sheriff()
             await self.game.ctx.send(
                 _("{user} has died. They were a **{role}**!{initial_role_info}").format(
@@ -1696,11 +1709,12 @@ class Player:
                     + self.game.game_link,
                 )
                 await wild_child.send_information()
+            additional_deaths = []
             if self.role == Role.HUNTER:
                 try:
                     await self.game.ctx.send(_("The Hunter grabs their gun."))
                     target = await self.choose_users(
-                        _("Choose someone who shall die with you."),
+                        _("Choose someone who shall die with you. 🔫"),
                         list_of_users=self.game.alive_players,
                         amount=1,
                     )
@@ -1721,19 +1735,19 @@ class Player:
                     if target.role == Role.THE_OLD:
                         target.died_from_villagers = True
                         target.lives = 1
-                    await target.kill()
+                    additional_deaths.append(target)
             elif self.role == Role.KNIGHT:
-                target = random.choice(
-                    [
-                        p
-                        for p in self.game.alive_players
-                        if p.side in (Side.WOLVES, Side.WHITE_WOLF)
-                    ]
-                )
-                await self.game.ctx.send(
-                    _("The Knight is striking a final time with his sword.")
-                )
-                await target.kill()
+                possible_werewolves = [
+                    p
+                    for p in self.game.alive_players
+                    if p.side in (Side.WOLVES, Side.WHITE_WOLF)
+                ]
+                if len(possible_werewolves) > 0:
+                    target = random.choice(possible_werewolves)
+                    await self.game.ctx.send(
+                        _("The Knight is striking a final time with his sword.")
+                    )
+                    additional_deaths.append(target)
             elif self.role == Role.THE_OLD and self.died_from_villagers:
                 for p in self.game.alive_players:
                     if p.side == Side.VILLAGERS:
@@ -1754,20 +1768,23 @@ class Player:
                 )
                 + self.game.game_link
             )
+            for for_killing in additional_deaths:
+                await for_killing.kill()
             if self.in_love and len(self.own_lovers) > 0:
                 lovers_to_kill = self.own_lovers
                 for lover in lovers_to_kill:
-                    await self.game.ctx.send(
-                        _("{dead_player}'s lover, {lover}, will die of sorrow.").format(
-                            dead_player=self.user.mention, lover=lover.user.mention
+                    if set([self, lover]) in self.game.lovers:
+                        self.game.lovers.remove(set([self, lover]))
+                    if not lover.dead:
+                        await self.game.ctx.send(
+                            _(
+                                "{dead_player}'s lover, {lover}, will die of sorrow."
+                            ).format(
+                                dead_player=self.user.mention, lover=lover.user.mention
+                            )
                         )
-                    )
-                    await asyncio.sleep(3)
-                    if [self, lover] in self.game.lovers:
-                        self.game.lovers.remove([self, lover])
-                    if [lover, self] in self.game.lovers:
-                        self.game.lovers.remove([lover, self])
-                    await lover.kill()
+                        await asyncio.sleep(3)
+                        await lover.kill()
 
     @property
     def side(self) -> Side:
@@ -1841,12 +1858,23 @@ class Player:
         return False
 
     async def choose_new_sheriff(self, exclude: Player = None) -> None:
-        self.is_sheriff = False
         possible_sheriff = [
             p for p in self.game.alive_players if p != self and p != exclude
         ]
         if not len(possible_sheriff):
             return
+        if self.dead:
+            await self.send(
+                _("You are going to die. Use your last breath to choose a new Sheriff.")
+            )
+        elif exclude is not None:
+            await self.send(
+                _(
+                    "You exchanged roles with **{dying_user}**. You should choose the"
+                    " new Sheriff."
+                ).format(dying_user=exclude.user)
+            )
+        self.is_sheriff = False
         await self.game.ctx.send(
             f"The **Sheriff {self.user}** should choose their next successor."
         )

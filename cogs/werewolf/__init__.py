@@ -23,7 +23,7 @@ import discord
 
 from discord.ext import commands
 
-from classes.converters import WerewolfMode
+from classes.converters import IntGreaterThan, WerewolfMode
 from cogs.help import chunks
 from utils import random
 from utils.i18n import _, locale_doc
@@ -45,12 +45,17 @@ class Werewolf(commands.Cog):
     )
     @locale_doc
     async def werewolf(
-        self, ctx, mode: Optional[WerewolfMode] = "Classic", speed: str.title = "Normal"
+        self,
+        ctx,
+        mode: Optional[WerewolfMode] = "Classic",
+        speed: str.title = "Normal",
+        min_players: IntGreaterThan(1) = None,
     ):
         _(
             """
             `[mode]` - The mode to play, see below for available options. (optional and defaults to Classic)
             `[speed]` - The game speed to play, see below available options. (optional and defaults to Normal)
+            `[min_players]` - The minimum players needed to play. (optional and defaults depending on the game mode: Classic: 5, Imbalanced: 5, Huntergame: 8, Villagergame: 5, Valentines: 8)
 
             Starts a game of Werewolf. Find the werewolves, before they find you!
             Your goal to win is indicated on the role you have.
@@ -94,6 +99,18 @@ class Werewolf(commands.Cog):
                     " command."
                 ).format(prefix=ctx.prefix)
             )
+        minimum_players = {
+            "Classic": 5,
+            "Imbalanced": 5,
+            "Huntergame": 8,
+            "Villagergame": 5,
+            "Valentines": 8,
+        }
+        if not min_players:
+            default_min_players = (
+                5  # Get default of Classic mode if unexpected value happened
+            )
+            min_players = minimum_players.get(mode, default_min_players)
         self.games[ctx.channel.id] = "forming"
         additional_text = _(
             "Use `{prefix}help ww` to get help on werewolf commands. Use `{prefix}ww"
@@ -101,6 +118,8 @@ class Werewolf(commands.Cog):
             " `{prefix}ww modes` and `{prefix}ww speeds` to see info about available"
             " game modes and speeds. Use `{prefix}ww updates` to read the new updates."
         ).format(prefix=ctx.prefix)
+        mode_emojis = {"Huntergame": ":gun:", "Valentines": ":two_hearts:"}
+        mode_emoji = mode_emojis.get(mode, "")
         if ctx.channel.id == self.bot.config.official_tournament_channel_id:
             # TODO: Determine threshold players when wolves can kill 2 villagers per night in mass-games
             id_ = await self.bot.start_joins()
@@ -108,13 +127,17 @@ class Werewolf(commands.Cog):
             text = _(
                 "**{author} started a mass-game of Werewolf!**\n**{mode}** mode on"
                 " **{speed}** speed. Go to {url} to join in the next 10 minutes."
-                " **Minimum of 5 players are required.**"
+                " **Minimum of {min_players} players are required.**"
             )
             await ctx.send(
                 embed=discord.Embed(
                     title=_("Werewolf Mass-game!"),
                     description=text.format(
-                        author=ctx.author.mention, mode=mode, speed=speed, url=url,
+                        author=ctx.author.mention,
+                        mode=mode_emoji + mode,
+                        speed=speed,
+                        url=url,
+                        min_players=min_players,
                     ),
                     url=url,
                     colour=self.bot.config.primary_colour,
@@ -130,8 +153,9 @@ class Werewolf(commands.Cog):
             title = _("Werewolf game!")
             text = _(
                 "**{author} started a game of Werewolf!**\n**{mode}** mode on"
-                " **{speed}** speed. React with :wolf: to join the game! **Minimum of 5"
-                " players are required. Starting in 30 seconds.\n{num} joined**"
+                " **{speed}** speed. React with :wolf: to join the game! **Minimum of"
+                " {min_players} players are required. Starting in 30 seconds.\n{num}"
+                " joined**"
             )
             players = [ctx.author]
             msg = await ctx.send(
@@ -139,8 +163,9 @@ class Werewolf(commands.Cog):
                     title=title,
                     description=text.format(
                         author=ctx.author.mention,
-                        mode=mode,
+                        mode=mode_emoji + mode,
                         speed=speed,
+                        min_players=min_players,
                         num=len(players),
                     ),
                     colour=self.bot.config.primary_colour,
@@ -173,8 +198,9 @@ class Werewolf(commands.Cog):
                         title=title,
                         description=text.format(
                             author=ctx.author.mention,
-                            mode=mode,
+                            mode=mode_emoji + mode,
                             speed=speed,
+                            min_players=min_players,
                             num=len(players),
                         ),
                         colour=self.bot.config.primary_colour,
@@ -201,14 +227,14 @@ class Werewolf(commands.Cog):
                 )
                 return
 
-        if len(players) < 5:
+        if len(players) < min_players:
             del self.games[ctx.channel.id]
             await self.bot.reset_cooldown(ctx)
             return await ctx.send(
                 _(
-                    "Not enough players joined... We didn't reach the minimum 5"
-                    " players. 🙁"
-                )
+                    "Not enough players joined... We didn't reach the minimum"
+                    " {min_players} players. 🙁"
+                ).format(min_players=min_players)
             )
 
         players = random.shuffle(players)
@@ -490,7 +516,12 @@ class Werewolf(commands.Cog):
 15. The former Maid will have her role be called the following night if needed as if it's the first night (e.g: Announced as new Pure Soul, choose from 2 extra roles as Thief (if Thief didn't take other role), choose an Idol if she took Wild Child, etc.)
 16. The former Maid can choose another pair of lovers if she took Amor's role hence a possibility of 2 sets of lovers. A player could get caught between 2 lovers in the game.
 17. Judge will now receive a message if he successfully triggered a second election.
-18. Added `ww updates` command to see all of these updates."""
+18. White Wolf update: Removed choosing werewolf phase if there's no other werewolf left.
+19. Big Bad Wolf update: Removed choosing villagers victim phase if there's no other possible villagers left to kill.
+20. Added 8 players as default minimum number of players for Huntergame and Valentines game modes.
+21. Added option to customize minimum number of players.
+22. Added more details on description of The Old.
+23. Added `ww updates` command to see all of these updates."""
         )
         p = commands.Paginator(prefix="", suffix="")
         for i in chunks(updates, 1900):
