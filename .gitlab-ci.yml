@@ -7,6 +7,7 @@ before_script:
 stages:
   - Static Analysis
   - Test Podman Build
+  - Release
 
 black:
   stage: Static Analysis
@@ -32,4 +33,14 @@ build:
   stage: Test Podman Build
   script:
     - podman --version
-    - podman build --storage-driver vfs --runtime runc -t idlerpg:latest .
+    - podman build --storage-driver vfs --runtime runc --format docker -t gelbpunkt/idlerpg:latest .
+
+upload:
+  stage: Release
+  only:
+    - v4
+    - tags
+  script:
+    - podman build --storage-driver vfs --runtime runc --format docker -t gelbpunkt/idlerpg:latest .
+    - podman login docker.io --username $DOCKERHUB_USERNAME --password $DOCKERHUB_PASSWORD
+    - podman push gelbpunkt/idlerpg:latest docker.io/gelbpunkt/idlerpg:latest

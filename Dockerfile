@@ -1,7 +1,5 @@
 FROM docker.io/gelbpunkt/python:gcc10
 
-ARG beta
-
 RUN adduser -S idle && \
     apk upgrade --no-cache && \
     apk add --no-cache git libgcc
