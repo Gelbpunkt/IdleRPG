@@ -380,9 +380,10 @@ class Help(commands.Cog):
             return await ctx.send(_("Cancelled cancellation."))
         await self.bot.http.delete_message(self.bot.config.helpme_channel, ctx.helpme)
         await self.bot.redis.execute("DEL", f"helpme:{ctx.guild.id}")
-        message = await self.bot.http.send_message(
-            self.bot.config.helpme_channel, 
-            f"Helpme request for server {ctx.guild} (ctx.guild.id) was cancelled by {ctx.author}"
+        await self.bot.http.send_message(
+            self.bot.config.helpme_channel,
+            f"Helpme request for server {ctx.guild} ({ctx.guild.id}) was cancelled by"
+            f" {ctx.author}",
         )
         await ctx.send(_("Your helpme request has been cancelled."))
 
