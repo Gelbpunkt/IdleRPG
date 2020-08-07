@@ -40,7 +40,11 @@ class Scheduling(commands.Cog):
             )
         )
 
-    @commands.group(aliases=["r", "reminder", "remindme"], invoke_without_command=True)
+    @commands.group(
+        aliases=["r", "reminder", "remindme"],
+        invoke_without_command=True,
+        brief=_("Reminds you about something"),
+    )
     @locale_doc
     async def remind(self, ctx, *, when_and_what: DateTimeScheduler):
         _(
@@ -80,8 +84,14 @@ class Scheduling(commands.Cog):
             )
         )
 
-    @remind.command()
+    @remind.command(brief=_("Shows a list of your running reminders."))
+    @locale_doc
     async def list(self, ctx):
+        _(
+            """Shows you a list of your currently running reminders
+
+            Reminders can be cancelled using `{prefix}reminder cancel <id>`."""
+        )
         reminders = await self.bot.pool.fetch(
             'SELECT * FROM reminders WHERE "user"=$1 ORDER BY "end" ASC;', ctx.author.id
         )
@@ -106,8 +116,18 @@ class Scheduling(commands.Cog):
             embeds.append(embed)
         await self.bot.paginator.Paginator(extras=embeds).paginate(ctx)
 
-    @remind.command(aliases=["remove", "rm", "delete", "del"])
+    @remind.command(
+        aliases=["remove", "rm", "delete", "del"], brief=_("Remove running reminders")
+    )
+    @locale_doc
     async def cancel(self, ctx, *ids: IntGreaterThan(0)):
+        _(
+            """`[ids...]` - A list of reminder IDs, separated by space
+
+            Cancels running reminders using their IDs.
+
+            To find a reminder's ID, use `{prefix}reminder list`."""
+        )
         reminders = await self.bot.pool.fetch(
             'SELECT id, internal_id FROM reminders WHERE "id"=ANY($1) AND "user"=$2;',
             ids,
@@ -125,6 +145,18 @@ class Scheduling(commands.Cog):
         await ctx.send(
             _("Removed the following reminders: `{ids}`").format(ids=nice_join(ids))
         )
+
+    @commands.command(brief=_("Shows a list of your running reminders."))
+    @locale_doc
+    async def reminders(self, ctx):
+        _(
+            """Shows you a list of your currently running reminders
+
+            Reminders can be cancelled using `{prefix}reminder cancel <id>`.
+
+            (serves as an alias for `{prefix}reminder list`)"""
+        )
+        await ctx.invoke(self.bot.get_command("reminder list"))
 
 
 def setup(bot):
