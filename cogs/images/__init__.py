@@ -62,7 +62,7 @@ class Images(commands.Cog):
         )
         async with self.bot.trusted_session.post(
             f"{self.bot.config.okapi_url}/api/imageops/edges",
-            json={"image": str(user.avatar_url_as(format="webp"))},
+            json={"image": str(user.avatar_url_as(format="png"))},
         ) as r:
             img = BytesIO(await r.read())
         await ctx.send(file=discord.File(fp=img, filename="edgy.png"))
