@@ -364,7 +364,7 @@ class Patreon(commands.Cog):
 
             Update your background to one from the events. You can get event backgrounds from special events, for example easter or christmas."""
         )
-        if not (bgs := ctx.profile_data["backgrounds"]):
+        if not (bgs := ctx.character_data["backgrounds"]):
             return await ctx.send(
                 _(
                     "You do not have an eventbackground. They can be acquired on"
