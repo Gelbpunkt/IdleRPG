@@ -479,6 +479,31 @@ class Werewolf(commands.Cog):
         _("""Read the updates for Werewolf game.""")
         updates = _(
             """\
+**Updates:**
+
+**Bugfixes:**
+1. Wild Child: Fixed wrong initial role for Wild Child after becoming a Werewolf upon idol's death.
+2. Maid: Fixed choosing new Idol when Maid took Wild Child's role. Now excludes dead players from choices.
+3. Amor: Making a player fall in love to the same player is now not allowed.
+4. The Old: Fixed prevention of one werewolf attack to the player when becoming The Old from being Thief or Maid.
+5. The Old should now also die when their Lover dies.
+6. Prevent killing of one's own lover mostly by Werewolves. Removed Lover from the choices of Witch's poison and Hunter's targets.
+
+**Changes:**
+1. Knight became Rusty Sword Knight who, upon death from werewolf, will make a werewolf diseased from the rusty sword and will die the following night.
+  - Description changed to: You are the Rusty Sword Knight. You will do your best to protect the Villagers. If you died from the Werewolves, a random Werewolf who caused your death becomes diseased from your rusty sword and will die the following night.
+2. Fox will now choose a center player only for a group of 3 neighboring players for checking.
+  - Description changed to: You are a clever little guy who can sense the presence of Werewolves. Every night, you get to choose a group of 3 neighboring players of which you point the center player and will be told if at least one of them is a Werewolf. If you do not find a Werewolf, you lose your ability for good.
+3. Maid turned Wolfhound will now be able to choose which role to get during the following night.
+4. Added Dismiss option to non-required selection of target players.
+5. Improved prevention of lone Sister/Brother appearance
+6. Improved love messages in preliminary phase of Valentines mode.
+7. Show the player's name as response on each successful selection if more than one is being asked.
+8. Show message if Sheriff is randomly chosen when former Sheriff didn't choose their successor.
+9. Now DMs the Sheriff with his temporary special title.
+
+**Previous updates:** (will be removed in the next update.)
+
 **Bug Fixes:**
 1. Fix double deaths when Hunter kills the target of Witch or White Wolf. A bug showing 2 death messages for Witch-killed or White Wolf-killed player after it has been killed by the Hunter has been fixed. Second death will not occur anymore.
 
