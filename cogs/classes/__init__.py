@@ -22,6 +22,7 @@ import discord
 
 from discord.ext import commands
 
+from classes.converters import ImageFormat, ImageUrl
 from cogs.shard_communication import next_day_cooldown
 from cogs.shard_communication import user_on_cooldown as user_cooldown
 from utils import misc as rpgtools
@@ -623,30 +624,36 @@ class Classes(commands.Cog):
     @has_char()
     @pet.command(brief=_("Set a new image for your pet"))
     @locale_doc
-    async def image(self, ctx, *, url: str):
+    async def image(self, ctx, *, url: ImageUrl(ImageFormat.all) = ""):
         _(
-            """`<url>` - An image url for the pet's image, must be 60 characters or shorter
+            """`[url]` - An image url for the pet's image, must be 60 characters or shorter
 
             Updates the image that shows in `{prefix}pet`.
 
-            Having trouble finding a short image link? Follow [this tutorial](https://wiki.idlerpg.xyz/index.php?title=Tutorial:_Short_Image_URLs)!
+            Having trouble finding a short image link? Follow [this tutorial](https://wiki.idlerpg.xyz/index.php?title=Tutorial:_Short_Image_URLs) or just attach the image you want to use (png, jpg, webp and gif are supported)!
 
             Only rangers can use this command."""
         )
-        if len(url) > 60:
-            return await ctx.send(_("URLs mustn't exceed 60 characters ."))
-        if not (
-            url.startswith("http")
-            and (url.endswith(".png") or url.endswith(".jpg") or url.endswith(".jpeg"))
-        ):
-            return await ctx.send(
-                _(
-                    "I couldn't read that URL. Does it start with `http://` or"
-                    " `https://` and is either a png or jpeg?"
+        if (urllength := len(url)) == 0:
+            if not ctx.message.attachments:
+                current_icon = ctx.pet_data["image"]
+                return await ctx.send(
+                    _("Your current pet image is: {url}").format(url=current_icon)
                 )
+            file_url = await ImageUrl(ImageFormat.all).convert(
+                ctx, ctx.message.attachments[0].url
             )
+            await ctx.send(
+                _("No image URL found in your message, using image attachment...")
+            )
+            icon_url = await self.bot.cogs["Miscellaneous"].get_imgur_url(file_url)
+        elif urllength > 60:
+            await ctx.send(_("Image URL too long, shortening..."))
+            icon_url = await self.bot.cogs["Miscellaneous"].get_imgur_url(url)
+        else:
+            icon_url = url
         await self.bot.pool.execute(
-            'UPDATE pets SET "image"=$1 WHERE "user"=$2;', url, ctx.author.id
+            'UPDATE pets SET "image"=$1 WHERE "user"=$2;', icon_url, ctx.author.id
         )
         await ctx.send(_("Your pet's image was successfully updated."))
 

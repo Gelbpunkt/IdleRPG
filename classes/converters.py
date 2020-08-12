@@ -18,10 +18,13 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 import datetime
 import re
 
+from enum import Flag
+
 import dateparser
 import discord
 
 from discord.ext import commands
+from yarl import URL
 
 from classes.context import Context
 from utils.cache import cache
@@ -119,6 +122,10 @@ class InvalidTime(commands.BadArgument):
 
 
 class InvalidWerewolfMode(commands.BadArgument):
+    pass
+
+
+class InvalidUrl(commands.BadArgument):
     pass
 
 
@@ -280,3 +287,41 @@ class WerewolfMode(commands.Converter):
         if mode not in game_modes:
             raise InvalidWerewolfMode()
         return mode
+
+
+class ImageFormat(Flag):
+    png = 1
+    jpg = 2
+    jpeg = 2
+    webp = 4
+    all_static = 7
+    gif = 8
+    all = 15
+
+
+class ImageUrl(commands.Converter):
+    def __init__(self, valid_types: ImageFormat = None):
+        self.valid_types = valid_types
+
+    async def convert(self, ctx, passed_url, *, silent: bool = False):
+        url = URL(passed_url)
+        if not all(
+            [
+                url.scheme,  # http, https, etc.
+                url.host,  # i.imgur.com
+                url.path,  # 123abc.png
+            ]
+        ):
+            raise InvalidUrl()
+        if self.valid_types:
+            file_type = url.parts[-1].split(".")[-1]  # this ignores ?height=x&width=y
+            try:
+                if not (getattr(ImageFormat, file_type) & self.valid_types).value > 0:
+                    raise ValueError
+            except ValueError:
+                if silent:
+                    return None
+                else:
+                    raise InvalidUrl
+
+        return str(url)

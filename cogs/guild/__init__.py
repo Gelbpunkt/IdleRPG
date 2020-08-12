@@ -25,6 +25,8 @@ import discord
 from discord.ext import commands
 
 from classes.converters import (
+    ImageFormat,
+    ImageUrl,
     IntGreaterThan,
     MemberWithCharacter,
     User,
@@ -97,19 +99,15 @@ class Guild(commands.Cog):
             name="Guild Bank",
             value=f"**${guild['money']}** / **${guild['banklimit']}**",
         )
-        embed.set_thumbnail(url=guild["icon"])
+        url = await ImageUrl(ImageFormat.all_static).convert(
+            ctx, guild["icon"], silent=True
+        )
+        if url:
+            embed.set_thumbnail(url=str(url))
         embed.set_footer(text=_("Guild ID: {id}").format(id=guild["id"]))
         if guild["badge"]:
             embed.set_image(url=guild["badge"])
-        try:
-            await ctx.send(embed=embed)
-        except discord.errors.HTTPException:
-            await ctx.send(
-                _(
-                    "The guild icon seems to be a bad URL. Use `{prefix}guild icon` to"
-                    " fix this."
-                ).format(prefix=ctx.prefix)
-            )
+        await ctx.send(embed=embed)
 
     @guild.command(brief=_("Show a specific guild"))
     @locale_doc
@@ -262,13 +260,29 @@ class Guild(commands.Cog):
             _("Send a link to the guild's icon. Maximum length is 60 characters.")
         )
         try:
-            url = await self.bot.wait_for("message", timeout=60, check=mycheck)
+            urlmsg = await self.bot.wait_for("message", timeout=60, check=mycheck)
         except asyncio.TimeoutError:
             await self.bot.reset_cooldown(ctx)
             return await ctx.send(_("Cancelled guild creation."))
-        url = url.content
-        if len(url) > 60:
-            return await ctx.send(_("URLs mustn't exceed 60 characters."))
+        url = urlmsg.content
+        if (urllength := len(url)) == 0:
+            if not urlmsg.attachments:
+                #  no idea how this would happen but eh
+                await self.bot.reset_cooldown(ctx)
+                return await ctx.send(_("Cancelled guild creation."))
+            file_url = await ImageUrl(ImageFormat.all_static).convert(
+                ctx, urlmsg.attachments[0].url
+            )
+            await ctx.send(
+                _("No image URL found in your message, using image attachment...")
+            )
+            icon_url = await self.bot.cogs["Miscellaneous"].get_imgur_url(file_url)
+        elif urllength > 60:
+            url = await ImageUrl(ImageFormat.all_static).convert(ctx, url)
+            await ctx.send(_("Image URL too long, shortening..."))
+            icon_url = await self.bot.cogs["Miscellaneous"].get_imgur_url(url)
+        else:
+            icon_url = await ImageUrl(ImageFormat.all_static).convert(ctx, url)
         if await user_is_patron(self.bot, ctx.author):
             memberlimit = 100
         else:
@@ -291,7 +305,7 @@ class Guild(commands.Cog):
                 name,
                 memberlimit,
                 ctx.author.id,
-                url,
+                icon_url,
             )
             await conn.execute(
                 'UPDATE profile SET "guild"=$1, "guildrank"=$2, "money"="money"-$3'
@@ -459,6 +473,10 @@ class Guild(commands.Cog):
 
             Only guild leaders and officers can use this command."""
         )
+        if newmember == ctx.me:
+            return await ctx.send(
+                _("...me? I'm flattered, but I can't accept this invitation...")
+            )
         if ctx.user_data["guild"]:
             return await ctx.send(_("That member already has a guild."))
         async with self.bot.pool.acquire() as conn:
@@ -612,32 +630,40 @@ class Guild(commands.Cog):
     @is_guild_leader()
     @guild.command(brief=_("Change your guild's icon"))
     @locale_doc
-    async def icon(self, ctx, url: str):
+    async def icon(self, ctx, url: ImageUrl(ImageFormat.all_static) = ""):
         _(
-            """`<url>` - The image URL to use as the icon
+            """`[url]` - The image URL to use as the icon
 
             Change your guild's icon. The URL cannot exceed 60 characters.
             ⚠ This can be seen by anyone, do not use NSFW/innapropriate images. GIFs are not supported.
 
-            Having trouble finding short image URLs? Follow [this tutorial](https://wiki.idlerpg.xyz/index.php?title=Tutorial:_Short_Image_URLs)!
+            Having trouble finding short image URLs? Follow [this tutorial](https://wiki.idlerpg.xyz/index.php?title=Tutorial:_Short_Image_URLs) or just attach the image you want to use (png, jpg and gif are supported)!
 
             Only guild leaders can use this command."""
         )
-        if len(url) > 60:
-            return await ctx.send(_("URLs musn't exceed 60 characters."))
-        if not (
-            url.startswith("http")
-            and (url.endswith(".png") or url.endswith(".jpg") or url.endswith(".jpeg"))
-        ):
-            return await ctx.send(
-                _(
-                    "I couldn't read that URL. Does it start with `http://` or"
-                    " `https://` and is either a png or jpeg?"
+        if (urllength := len(url)) == 0:
+            if not ctx.message.attachments:
+                current_icon = await self.bot.pool.fetchval(
+                    'SELECT icon FROM guild WHERE "id"=$1;', ctx.character_data["guild"]
                 )
+                return await ctx.send(
+                    _("Your current guild icon is: {url}").format(url=current_icon)
+                )
+            file_url = await ImageUrl(ImageFormat.all_static).convert(
+                ctx, ctx.message.attachments[0].url
             )
+            await ctx.send(
+                _("No image URL found in your message, using image attachment...")
+            )
+            icon_url = await self.bot.cogs["Miscellaneous"].get_imgur_url(file_url)
+        elif urllength > 60:
+            await ctx.send(_("Image URL too long, shortening..."))
+            icon_url = await self.bot.cogs["Miscellaneous"].get_imgur_url(url)
+        else:
+            icon_url = url
         channel = await self.bot.pool.fetchval(
             'UPDATE guild SET "icon"=$1 WHERE "id"=$2 RETURNING "channel";',
-            url,
+            icon_url,
             ctx.character_data["guild"],
         )
         await ctx.send(_("Successfully updated the guild icon."))
@@ -673,9 +699,11 @@ class Guild(commands.Cog):
     @is_guild_leader()
     @guild.command(brief=_("Set/update the guild update channel."))
     @locale_doc
-    async def channel(self, ctx):
+    async def channel(self, ctx, channel: discord.TextChannel = None):
         _(
-            """Set or update the guild update channel. Relevant guild events will be sent here.
+            """`[channel]` - The channel to send guild logs to, defaults to the channel the command is used in
+
+            Set or update the guild update channel. Relevant guild events will be sent here.
             The channel the command is used in will become the guild log channel, `{prefix}guild channel #channel-name` will not work.
 
             The following will be logged:
@@ -697,16 +725,28 @@ class Guild(commands.Cog):
 
             Only guild leaders can use this command."""
         )
+        channel = channel or ctx.channel
         if not await ctx.confirm(
-            _("This will become the channel for all logs. Are you sure?")
+            _("{channel} will become the channel for all logs. Are you sure?").format(
+                channel=channel.mention
+            )
         ):
             return
+        if not channel.permissions_for(ctx.me).send_messages:
+            return await ctx.send(
+                _(
+                    "I cannot send messages there! This channel cannot be the guild log"
+                    " channel."
+                )
+            )
         await self.bot.pool.execute(
             'UPDATE guild SET "channel"=$1 WHERE "leader"=$2;',
-            ctx.channel.id,
+            channel.id,
             ctx.author.id,
         )
-        await ctx.send("**Guild logs will go here** ✅")
+        await ctx.send(
+            _("**Guild logs will go to {channel} ** ✅").format(channel=channel.mention)
+        )
 
     @has_guild()
     @guild.command(brief=_("Show the richest guild members"))
@@ -846,6 +886,10 @@ class Guild(commands.Cog):
 
             Only guild leaders and officers can use this command."""
         )
+        if member == ctx.me:
+            return await ctx.send(
+                _("For me? I'm flattered, but I can't accept this...")
+            )
         async with self.bot.pool.acquire() as conn:
             guild = await conn.fetchrow(
                 'SELECT * FROM guild WHERE "id"=$1;', ctx.character_data["guild"]
@@ -895,17 +939,28 @@ class Guild(commands.Cog):
             Distribute some money to multiple members. This will divide by the amount of players before distributing.
             For example, distributing $500 to 5 members will give everyone of them $100.
 
+            Members that are mentioned multiple times will receive multiple payouts.
+
             In case of a decimal result the bot will round down, i.e. $7 distributed to 3 members will give everyone $2.
 
             Only guild leaders and officers can use this command."""
         )
+        members = list(members)
+        if ctx.me in members:
+            members.remove(ctx.me)
         if not members:
             return await ctx.send(_("You can't distribute money to nobody."))
-        members = set(members)  # removes dupes
+
         # int() rounds down as to not go over the money limit
         # we need to update the amount after rounding down too to avoid losing money
         for_each = int(amount / len(members))
         amount = for_each * len(members)
+
+        members_dupes = {i: members.count(i) for i in members}
+        amounts = {for_each * i: [] for i in members_dupes.values()}
+        for member in members_dupes.items():
+            amounts[for_each * member[1]].append(member[0].id)
+        # a bit ugly, but we get a dict {amount: [list of players]}
 
         async with self.bot.pool.acquire() as conn:
             guild = await conn.fetchrow(
@@ -919,10 +974,9 @@ class Guild(commands.Cog):
                 amount,
                 ctx.character_data["guild"],
             )
-            await conn.execute(
+            await conn.executemany(
                 'UPDATE profile SET "money"="money"+$1 WHERE "user"=ANY($2);',
-                for_each,
-                [member.id for member in members],
+                amounts.items(),
             )
 
         for member in members:

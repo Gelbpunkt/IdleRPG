@@ -34,6 +34,7 @@ from classes.converters import (
     InvalidCoinSide,
     InvalidCrateRarity,
     InvalidTime,
+    InvalidUrl,
     NotInRange,
     UserHasNoChar,
 )
@@ -122,6 +123,13 @@ class Errorhandler(commands.Cog):
                 )
             elif isinstance(error, InvalidTime):
                 await ctx.send(error.text)
+            elif isinstance(error, InvalidUrl):
+                await ctx.send(
+                    _(
+                        "You sent an invalid URL. Make sure to send the full URL; it"
+                        ' should start with "http" and end with ".png" or ".jpeg".'
+                    )
+                )
             else:
                 await ctx.send(_("You used a malformed argument!"))
         elif isinstance(error, GlobalCooldown):
@@ -281,6 +289,14 @@ class Errorhandler(commands.Cog):
                 await ctx.send(_("Your alliance rank is too low."))
             elif isinstance(error, utils.checks.NoOpenHelpRequest):
                 await ctx.send(_("Your server does not have an open help request."))
+            elif isinstance(error, utils.checks.ImgurUploadError):
+                await ctx.send(
+                    _(
+                        "There was an error when uploading to Imgur. Please try again"
+                        " or visit <https://imgur.com/upload> to manually upload your"
+                        " image."
+                    )
+                )
             else:
                 await ctx.send(
                     embed=discord.Embed(
