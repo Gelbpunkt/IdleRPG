@@ -37,11 +37,18 @@ import psutil
 from discord.ext import commands
 from discord.ext.commands import BucketType
 
-from classes.converters import DateNewerThan, IntFromTo, IntGreaterThan, MemberConverter
+from classes.converters import (
+    DateNewerThan,
+    ImageFormat,
+    ImageUrl,
+    IntFromTo,
+    IntGreaterThan,
+    MemberConverter,
+)
 from cogs.help import chunks
 from cogs.shard_communication import next_day_cooldown
 from utils import random
-from utils.checks import has_char, user_is_patron
+from utils.checks import ImgurUploadError, has_char, user_is_patron
 from utils.i18n import _, locale_doc
 from utils.misc import nice_join
 from utils.shell import get_cpu_name
@@ -58,6 +65,18 @@ class Miscellaneous(commands.Cog):
         self.bot.idlewiki = aiowiki.Wiki(
             "https://wiki.idlerpg.xyz/api.php", session=self.bot.session
         )
+
+    async def get_imgur_url(self, url: str):
+        async with self.bot.session.post(
+            "https://api.imgur.com/3/image",
+            headers={"Authorization": f"Client-ID {self.bot.config.imgur_token}"},
+            json={"image": url},
+        ) as r:
+            try:
+                short_url = (await r.json())["data"]["link"]
+            except KeyError:
+                raise ImgurUploadError()
+        return short_url
 
     @commands.command(brief=_("Evoke cringe"))
     @locale_doc
@@ -220,7 +239,7 @@ class Miscellaneous(commands.Cog):
 
     @commands.command(aliases=["shorten"], brief=_("Shorten an image URL."))
     @locale_doc
-    async def imgur(self, ctx, given_url: str = None):
+    async def imgur(self, ctx, given_url: ImageUrl(ImageFormat.all) = None):
         _(
             """`[given_url]` - The URL to shorten; if not given, this command will look for image attachments
 
@@ -234,22 +253,11 @@ class Miscellaneous(commands.Cog):
         if ctx.message.attachments:
             if len(ctx.message.attachments) > 1:
                 return await ctx.send(_("Please only use one image at a time."))
-            url = ctx.message.attachments[0].url
-            if not (
-                url.endswith(".png") or url.endswith(".jpg") or url.endswith(".jpeg")
-            ):
-                return await ctx.send(_("This is not a valid image file."))
-            given_url = url
+            given_url = await ImageUrl(ImageFormat.all).convert(
+                ctx, ctx.message.attachments[0].url
+            )
 
-        async with self.bot.session.post(
-            "https://api.imgur.com/3/image",
-            headers={"Authorization": f"Client-ID {self.bot.config.imgur_token}"},
-            json={"image": given_url},
-        ) as r:
-            try:
-                link = (await r.json())["data"]["link"]
-            except KeyError:
-                return await ctx.send(_("Error when uploading to Imgur."))
+        link = await self.get_imgur_url(given_url)
         await ctx.send(_("Here's your short image URL: <{link}>").format(link=link))
 
     @commands.command(aliases=["donate"], brief=_("Support the bot financially"))

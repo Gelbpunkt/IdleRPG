@@ -149,6 +149,12 @@ class NoOpenHelpRequest(commands.CheckFailure):
     pass
 
 
+class ImgurUploadError(commands.CheckFailure):
+    """Exception raised when an Imgur upload failed to return a short URL."""
+
+    pass
+
+
 def has_char() -> "_CheckDecorator":
     """Checks for a user to have a character."""
 
