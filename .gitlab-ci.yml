@@ -38,7 +38,7 @@ build:
 upload:
   stage: Release
   only:
-    - v4
+    - current
     - tags
   script:
     - podman build --storage-driver vfs --runtime runc --format docker -t gelbpunkt/idlerpg:latest .
