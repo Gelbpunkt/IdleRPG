@@ -318,7 +318,7 @@ class ImageUrl(commands.Converter):
             try:
                 if not (getattr(ImageFormat, file_type) & self.valid_types).value > 0:
                     raise ValueError
-            except ValueError:
+            except (ValueError, AttributeError):
                 if silent:
                     return None
                 else:
