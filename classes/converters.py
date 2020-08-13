@@ -316,9 +316,9 @@ class ImageUrl(commands.Converter):
         if self.valid_types:
             file_type = url.parts[-1].split(".")[-1]  # this ignores ?height=x&width=y
             try:
-                if not (getattr(ImageFormat, file_type) & self.valid_types).value > 0:
+                if not (ImageFormat[file_type] & self.valid_types).value > 0:
                     raise ValueError
-            except (ValueError, AttributeError):
+            except (ValueError, KeyError):
                 if silent:
                     return None
                 else:
