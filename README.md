@@ -1,6 +1,6 @@
 # IdleRPG
 
-[![CI](https://git.travitia.xyz/Kenvyra/IdleRPG/badges/v4/pipeline.svg)](https://git.travitia.xyz/Kenvyra/IdleRPG)
+[![CI](https://git.travitia.xyz/Kenvyra/IdleRPG/badges/current/pipeline.svg)](https://git.travitia.xyz/Kenvyra/IdleRPG)
 [![Dockerhub](https://img.shields.io/badge/Pull%20IdleRPG-from%20Dockerhub-orange)](https://hub.docker.com/r/gelbpunkt/idlerpg)
 [![okapi](https://img.shields.io/badge/Pull%20okapi-from%20Dockerhub-black)](https://hub.docker.com/r/gelbpunkt/okapi)
 [![teatro](https://img.shields.io/badge/Pull%20teatro-from%20Dockerhub-green)](https://hub.docker.com/r/gelbpunkt/teatro)
@@ -11,7 +11,7 @@ You may [submit an issue](https://git.travitia.xyz/Kenvyra/IdleRPG/issues) or [o
 
 ## License
 
-The IdleRPG Project is licensed under the terms of the [GNU Affero General Public License 3.0](https://git.travitia.xyz/Kenvyra/IdleRPG/blob/v4/LICENSE) ("AGPL"). It is a GPLv3 with extra clause for use over networks (see section 13).
+The IdleRPG Project is licensed under the terms of the [GNU Affero General Public License 3.0](https://git.travitia.xyz/Kenvyra/IdleRPG/blob/current/LICENSE) ("AGPL"). It is a GPLv3 with extra clause for use over networks (see section 13).
 
 [AGPL for humans](<https://tldrlegal.com/license/gnu-affero-general-public-license-v3-(agpl-3.0)>).
 
