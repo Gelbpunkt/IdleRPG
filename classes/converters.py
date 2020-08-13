@@ -312,7 +312,11 @@ class ImageUrl(commands.Converter):
                 url.path,  # 123abc.png
             ]
         ):
-            raise InvalidUrl()
+            if silent:
+                return None
+            else:
+                raise InvalidUrl()
+
         if self.valid_types:
             file_type = url.parts[-1].split(".")[-1]  # this ignores ?height=x&width=y
             try:
@@ -322,6 +326,6 @@ class ImageUrl(commands.Converter):
                 if silent:
                     return None
                 else:
-                    raise InvalidUrl
+                    raise InvalidUrl()
 
         return str(url)
