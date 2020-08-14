@@ -242,16 +242,16 @@ class Adventure(commands.Cog):
                 for direction in possible:
                     await msg.add_reaction(direction_emojis[direction])
 
-            def check(r, u):
+            def check(evt):
                 return (
-                    u == ctx.author
-                    and r.message.id == msg.id
-                    and direction_emojis_inverse.get(str(r.emoji), None) in possible
+                    evt.user_id == ctx.author.id
+                    and evt.message_id == msg.id
+                    and direction_emojis_inverse.get(str(evt.emoji), None) in possible
                 )
 
-            r, u = await self.bot.wait_for("reaction_add", check=check, timeout=30)
+            evt = await self.bot.wait_for("raw_reaction_add", check=check, timeout=30)
 
-            return direction_emojis_inverse[str(r.emoji)]
+            return direction_emojis_inverse[str(evt.emoji)]
 
         async def update():
             text = ""
@@ -313,23 +313,23 @@ class Adventure(commands.Cog):
                 )
                 cell.treasure = False
             elif cell.enemy:
-
-                def to_bar(hp):
-                    fields = hp // 100
-                    return f"[{'▯' * fields}{'▮' * (10 - fields)}]"
-
-                def is_valid_move(r, u):
-                    return (
-                        r.message.id == msg.id
-                        and u == ctx.author
-                        and str(r.emoji) in emojis
-                    )
-
                 emojis = {
                     "\U00002694": "attack",
                     "\U0001f6e1": "defend",
                     "\U00002764": "recover",
                 }
+
+                def to_bar(hp):
+                    fields = hp // 100
+                    return f"[{'▯' * fields}{'▮' * (10 - fields)}]"
+
+                def is_valid_move(evt):
+                    return (
+                        evt.message_id == msg.id
+                        and evt.user_id == ctx.author.id
+                        and str(evt.emoji) in emojis
+                    )
+
                 enemy = _("Enemy")
                 enemy_hp = 1000
                 heal_hp = round(attack * 0.25) or 1
@@ -355,17 +355,19 @@ class Adventure(commands.Cog):
 ```"""
                     )
 
-                    r, u = await self.bot.wait_for(
-                        "reaction_add", check=is_valid_move, timeout=30
+                    evt = await self.bot.wait_for(
+                        "raw_reaction_add", check=is_valid_move, timeout=30
                     )
 
                     try:
-                        await msg.remove_reaction(r, u)
+                        await msg.remove_reaction(
+                            evt.emoji, discord.Object(evt.user_id)
+                        )
                     except discord.Forbidden:
                         pass
 
                     enemy_move = random.choice(["attack", "defend", "recover"])
-                    player_move = emojis[str(r.emoji)]
+                    player_move = emojis[str(evt.emoji)]
 
                     if enemy_move == "recover":
                         enemy_hp += heal_hp
