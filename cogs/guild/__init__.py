@@ -605,21 +605,22 @@ class Guild(commands.Cog):
         ):
             return
         async with self.bot.pool.acquire() as conn:
-            channel = await conn.fetchval(
-                'DELETE FROM guild WHERE "leader"=$1 RETURNING "channel";',
-                ctx.author.id,
-            )
-            users = await conn.fetch(
-                'UPDATE profile SET "guild"=$1, "guildrank"=$2 WHERE "guild"=$3'
-                ' RETURNING "user";',
-                0,
-                "Member",
-                ctx.character_data["guild"],
-            )
-            await conn.execute(
-                'UPDATE city SET "owner"=1 WHERE "owner"=$1;',
-                ctx.character_data["guild"],
-            )
+            async with conn.transaction():
+                await conn.execute(
+                    'UPDATE city SET "owner"=1 WHERE "owner"=$1;',
+                    ctx.character_data["guild"],
+                )
+                channel = await conn.fetchval(
+                    'DELETE FROM guild WHERE "leader"=$1 RETURNING "channel";',
+                    ctx.author.id,
+                )
+                users = await conn.fetch(
+                    'UPDATE profile SET "guild"=$1, "guildrank"=$2 WHERE "guild"=$3'
+                    ' RETURNING "user";',
+                    0,
+                    "Member",
+                    ctx.character_data["guild"],
+                )
         for user in users:
             await self.bot.cache.update_profile_cols_abs(
                 user["user"], guild=0, guildrank="Member"

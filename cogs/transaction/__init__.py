@@ -448,7 +448,7 @@ class Transaction(commands.Cog):
         if itemid in [x["id"] for x in ctx.transaction["items"]]:
             return await ctx.send(_("You already added this item!"))
         if item := await self.bot.pool.fetchrow(
-            'SELECT * FROM allitems ai JOIN inventory i ON (ai."id"=i."item") WHERE'
+            'SELECT ai.* FROM allitems ai JOIN inventory i ON (ai."id"=i."item") WHERE'
             ' ai."id"=$1 AND ai."owner"=$2;',
             itemid,
             ctx.author.id,
@@ -476,7 +476,7 @@ class Transaction(commands.Cog):
         if any([(x in [x["id"] for x in ctx.transaction["items"]]) for x in itemids]):
             return await ctx.send(_("You already added one or more of these items!"))
         items = await self.bot.pool.fetch(
-            'SELECT * FROM allitems ai JOIN inventory i ON (ai."id"=i."item") WHERE'
+            'SELECT ai.* FROM allitems ai JOIN inventory i ON (ai."id"=i."item") WHERE'
             ' ai."id"=ANY($1) AND ai."owner"=$2;',
             itemids,
             ctx.author.id,
