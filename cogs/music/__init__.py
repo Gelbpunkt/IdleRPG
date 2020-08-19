@@ -289,7 +289,7 @@ class Music(commands.Cog):
             Query for a track and play or add any result to the playlist, you can choose from a multitude of tracks."""
         )
         async with self.bot.trusted_session.get(
-            f"{self.bot.config.query_endpoint}?limit=5&q={query}"
+            f"{self.bot.config.query_endpoint}", params={"limit": 5, "q": query},
         ) as r:
             results = await r.json()
         if not results.get("items"):
@@ -354,7 +354,7 @@ class Music(commands.Cog):
             _("Downloading track... This might take up to 3 seconds...")
         )
         async with self.bot.trusted_session.get(
-            f"{self.bot.config.query_endpoint}?limit=1&q={query}"
+            f"{self.bot.config.query_endpoint}", params={"limit": 1, "q": query},
         ) as r:
             results = await r.json()
         try:
