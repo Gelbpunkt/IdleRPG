@@ -294,7 +294,7 @@ class Transaction(commands.Cog):
                         if val > 0
                         else f'"{col}"="{col}"-${n + 1}'
                         for n, (col, val) in enumerate(
-                            profile_cols_to_change_user1.items()
+                            profile_cols_to_change_user2.items()
                         )
                     ]
                 )
