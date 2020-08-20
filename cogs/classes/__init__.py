@@ -323,7 +323,7 @@ class Classes(commands.Cog):
             If you succeed in stealing, you will steal 10% of the target's money.
 
             You *cannot* choose your target, it is always a random player. If the bot can't find the player's name, it will be replaced with "a traveller passing by".
-            The target cannot be anyone with less than $10, yourself, or one of the Game Masters.
+            The target cannot be anyone with less than $10, yourself, or one of the bot owners.
 
             Only thieves can use this command.
             (This command has a cooldown of 1 hour.)"""
