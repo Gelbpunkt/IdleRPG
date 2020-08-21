@@ -1129,7 +1129,9 @@ IdleRPG is a global bot, your characters are valid everywhere"""
                 await conn.execute('UPDATE city SET "owner"=1 WHERE "owner"=$1;', g)
             if partner := ctx.character_data["marriage"]:
                 await conn.execute(
-                    'UPDATE profile SET "marriage"=$1 WHERE "user"=$2;', 0, partner,
+                    'UPDATE profile SET "marriage"=$1 WHERE "user"=$2;',
+                    0,
+                    partner,
                 )
             await conn.execute(
                 'UPDATE children SET "mother"=$1, "father"=0 WHERE ("father"=$1 AND'

@@ -376,7 +376,11 @@ class Bot(commands.AutoShardedBot):
             user_id = ctx_or_user_id
 
         await self.redis.execute(
-            "SET", f"cd:{user_id}:{cmd_id}", cmd_id, "EX", cooldown,
+            "SET",
+            f"cd:{user_id}:{cmd_id}",
+            cmd_id,
+            "EX",
+            cooldown,
         )
 
     async def activate_booster(self, user, type_):

@@ -125,7 +125,10 @@ class Chess(commands.Cog):
     @chess.group(invoke_without_command=True, brief=_("Play a chess match."))
     @locale_doc
     async def match(
-        self, ctx, difficulty: Optional[int] = 3, enemy: MemberConverter = None,
+        self,
+        ctx,
+        difficulty: Optional[int] = 3,
+        enemy: MemberConverter = None,
     ):
         _(
             """`[difficulty]` - A whole number between 1 and 10; defaults to 3

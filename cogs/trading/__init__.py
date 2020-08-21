@@ -223,8 +223,9 @@ class Trading(commands.Cog):
         )
         if seller:
             await seller.send(
-                "**{author}** bought your **{name}** for **${price}** from the market."
-                .format(author=ctx.author.name, name=item["name"], price=item["price"])
+                "**{author}** bought your **{name}** for **${price}** from the market.".format(
+                    author=ctx.author.name, name=item["name"], price=item["price"]
+                )
             )
 
     @has_char()
@@ -328,14 +329,18 @@ class Trading(commands.Cog):
 
         items = [
             discord.Embed(
-                title=_("IdleRPG Shop History"), colour=discord.Colour.blurple(),
+                title=_("IdleRPG Shop History"),
+                colour=discord.Colour.blurple(),
             )
             .add_field(name=_("Name"), value=item["name"])
             .add_field(name=_("Type"), value=item["type"])
             .add_field(name=_("Damage"), value=item["damage"])
             .add_field(name=_("Armor"), value=item["armor"])
             .add_field(name=_("Value"), value=f"${item['value']}")
-            .add_field(name=_("Price"), value=f"${item['price']}",)
+            .add_field(
+                name=_("Price"),
+                value=f"${item['price']}",
+            )
             .set_footer(
                 text=_("Item {num} of {total}").format(num=idx + 1, total=len(sales))
             )

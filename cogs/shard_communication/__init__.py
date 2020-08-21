@@ -42,7 +42,11 @@ def user_on_cooldown(cooldown: int, identifier: str = None):
         command_ttl = await ctx.bot.redis.execute("TTL", f"cd:{ctx.author.id}:{cmd_id}")
         if command_ttl == -2:
             await ctx.bot.redis.execute(
-                "SET", f"cd:{ctx.author.id}:{cmd_id}", cmd_id, "EX", cooldown,
+                "SET",
+                f"cd:{ctx.author.id}:{cmd_id}",
+                cmd_id,
+                "EX",
+                cooldown,
             )
             return True
         else:
@@ -189,7 +193,8 @@ class Sharding(commands.Cog):
                 if payload.get("args"):
                     self.bot.loop.create_task(
                         getattr(self, payload["action"])(
-                            **payload["args"], command_id=payload["command_id"],
+                            **payload["args"],
+                            command_id=payload["command_id"],
                         )
                     )
                 else:
