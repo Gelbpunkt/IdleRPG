@@ -283,6 +283,7 @@ class WerewolfMode(commands.Converter):
             "Huntergame",
             "Villagergame",
             "Valentines",
+            "Idlerpg",
         ]
         if mode not in game_modes:
             raise InvalidWerewolfMode()

@@ -24,7 +24,6 @@ import discord
 from discord.ext import commands
 
 from classes.converters import IntGreaterThan, WerewolfMode
-from cogs.help import chunks
 from utils import random
 from utils.i18n import _, locale_doc
 from utils.werewolf import DESCRIPTIONS as ROLE_DESC
@@ -55,11 +54,11 @@ class Werewolf(commands.Cog):
             """
             `[mode]` - The mode to play, see below for available options. (optional and defaults to Classic)
             `[speed]` - The game speed to play, see below available options. (optional and defaults to Normal)
-            `[min_players]` - The minimum players needed to play. (optional and defaults depending on the game mode: Classic: 5, Imbalanced: 5, Huntergame: 8, Villagergame: 5, Valentines: 8)
+            `[min_players]` - The minimum players needed to play. (optional and defaults depending on the game mode: Classic: 5, Imbalanced: 5, Huntergame: 8, Villagergame: 5, Valentines: 8, IdleRPG: 5)
 
             Starts a game of Werewolf. Find the werewolves, before they find you!
             Your goal to win is indicated on the role you have.
-            **Game modes:** `Classic` (default), `Imbalanced`, `Huntergame`, `Villagergame`, `Valentines`. Use `{prefix}ww modes` for detailed info.
+            **Game modes:** `Classic` (default), `Imbalanced`, `Huntergame`, `Villagergame`, `Valentines`, `IdleRPG`. Use `{prefix}ww modes` for detailed info.
             **Game speeds** (in seconds): `Normal`: 60 (default), `Extended`: 90, `Fast`: 45, `Blitz`: 30. Use `{prefix}ww speeds` for detailed info.
             **Aliases:**
             `ww`
@@ -73,7 +72,6 @@ class Werewolf(commands.Cog):
         # TODO:
         # Bizarro: Roles are flipped.
         # Random: Roles are reassigned randomly every night.
-        # IdleRPG: New roles available (most likely based on Imbalanced mode): Paragon, Raider, Ritualist, Were-Shaman, Zombie, Lawyer.
         # Zombie (Classic-based, another team) - There's a chance that a random player will be randomly resurrected as Zombie and they can devour any villagers or werewolves with the other zombies.
         if self.games.get(ctx.channel.id):
             return await ctx.send(_("There is already a game in here!"))
@@ -83,6 +81,7 @@ class Werewolf(commands.Cog):
             "Huntergame",
             "Villagergame",
             "Valentines",
+            "Idlerpg",
         ]
         if mode not in game_modes:
             return await ctx.send(
@@ -91,6 +90,8 @@ class Werewolf(commands.Cog):
                     " command."
                 ).format(prefix=ctx.prefix)
             )
+        elif mode == "Idlerpg":
+            mode = "IdleRPG"
         game_speeds = ["Normal", "Extended", "Fast", "Blitz"]
         if speed not in game_speeds:
             return await ctx.send(
@@ -105,6 +106,7 @@ class Werewolf(commands.Cog):
             "Huntergame": 8,
             "Villagergame": 5,
             "Valentines": 8,
+            "IdleRPG": 5,
         }
         if not min_players:
             default_min_players = (
@@ -116,7 +118,7 @@ class Werewolf(commands.Cog):
             "Use `{prefix}help ww` to get help on werewolf commands. Use `{prefix}ww"
             " roles` to view descriptions of game roles and their goals to win. Use"
             " `{prefix}ww modes` and `{prefix}ww speeds` to see info about available"
-            " game modes and speeds. Use `{prefix}ww updates` to read the new updates."
+            " game modes and speeds."
         ).format(prefix=ctx.prefix)
         mode_emojis = {"Huntergame": ":gun:", "Valentines": ":two_hearts:"}
         mode_emoji = mode_emojis.get(mode, "")
@@ -129,24 +131,34 @@ class Werewolf(commands.Cog):
                 " **{speed}** speed. Go to {url} to join in the next 10 minutes."
                 " **Minimum of {min_players} players are required.**"
             )
-            await ctx.send(
-                embed=discord.Embed(
-                    title=_("Werewolf Mass-game!"),
-                    description=text.format(
-                        author=ctx.author.mention,
-                        mode=mode_emoji + mode,
-                        speed=speed,
+            try:
+                await ctx.send(
+                    embed=discord.Embed(
+                        title=_("Werewolf Mass-game!"),
+                        description=text.format(
+                            author=ctx.author.mention,
+                            mode=mode_emoji + mode,
+                            speed=speed,
+                            url=url,
+                            min_players=min_players,
+                        ),
                         url=url,
-                        min_players=min_players,
-                    ),
-                    url=url,
-                    colour=self.bot.config.primary_colour,
+                        colour=self.bot.config.primary_colour,
+                    )
+                    .set_author(
+                        name=str(ctx.author), icon_url=ctx.author.avatar_url_as(size=64)
+                    )
+                    .add_field(name=_("New to Werewolf?"), value=additional_text)
                 )
-                .set_author(
-                    name=str(ctx.author), icon_url=ctx.author.avatar_url_as(size=64)
+            except discord.errors.Forbidden:
+                del self.games[ctx.channel.id]
+                return await ctx.send(
+                    _(
+                        "An error happened during the Werewolf. Missing Permission:"
+                        " `Embed Links` . Please check the **Edit Channel >"
+                        " Permissions** and **Server Settings > Roles** then try again!"
+                    )
                 )
-                .add_field(name=_("New to Werewolf?"), value=additional_text)
-            )
             await asyncio.sleep(60 * 10)
             players = await self.bot.get_joins(id_)
         else:
@@ -158,24 +170,34 @@ class Werewolf(commands.Cog):
                 " joined**"
             )
             players = [ctx.author]
-            msg = await ctx.send(
-                embed=discord.Embed(
-                    title=title,
-                    description=text.format(
-                        author=ctx.author.mention,
-                        mode=mode_emoji + mode,
-                        speed=speed,
-                        min_players=min_players,
-                        num=len(players),
-                    ),
-                    colour=self.bot.config.primary_colour,
+            try:
+                msg = await ctx.send(
+                    embed=discord.Embed(
+                        title=title,
+                        description=text.format(
+                            author=ctx.author.mention,
+                            mode=mode_emoji + mode,
+                            speed=speed,
+                            min_players=min_players,
+                            num=len(players),
+                        ),
+                        colour=self.bot.config.primary_colour,
+                    )
+                    .set_author(
+                        name=str(ctx.author), icon_url=ctx.author.avatar_url_as(size=64)
+                    )
+                    .add_field(name=_("New to Werewolf?"), value=additional_text)
                 )
-                .set_author(
-                    name=str(ctx.author), icon_url=ctx.author.avatar_url_as(size=64)
+                await msg.add_reaction("\U0001f43a")
+            except discord.errors.Forbidden:
+                del self.games[ctx.channel.id]
+                return await ctx.send(
+                    _(
+                        "An error happened during the Werewolf. Missing Permission:"
+                        " `Embed Links` . Please check the **Edit Channel >"
+                        " Permissions** and **Server Settings > Roles** then try again!"
+                    )
                 )
-                .add_field(name=_("New to Werewolf?"), value=additional_text)
-            )
-            await msg.add_reaction("\U0001f43a")
 
             def check(reaction, user):
                 return (
@@ -262,12 +284,13 @@ class Werewolf(commands.Cog):
                 title=_("Werewolf Game Modes"),
                 description=_(
                     """\
-**Game modes:** `Classic` (default), `Imbalanced`, `Huntergame`, `Villagergame`, `Valentines`.
+**Game modes:** `Classic` (default), `Imbalanced`, `Huntergame`, `Villagergame`, `Valentines`, `IdleRPG`.
 `Classic`: Play the classic werewolf game. (default)
 `Imbalanced`: Some roles that are only available in larger games have chances to join even in smaller games. (The size of the game being referred here is about the number of players, i.e. 5-player game is small)
 `Huntergame`: Only Hunters and Werewolves are available.
 `Villagergame`: No special roles, only Villagers and Werewolves are available.
-`Valentines`: (Experimental) There are multiple lovers or couples randomly chosen at the start of the game. A chain of lovers might exist upon the Amor's arrows. If the remaining players are in a single chain of lovers, they all win."""
+`Valentines`: There are multiple lovers or couples randomly chosen at the start of the game. A chain of lovers might exist upon the Amor's arrows. If the remaining players are in a single chain of lovers, they all win.
+`IdleRPG`: (based on Imbalanced mode) New roles are available: Paragon, Raider, Ritualist, Lawyer, Troublemaker, War Veteran, Wolf Shaman, Wolf Necromancer."""
                 ),
                 colour=self.bot.config.primary_colour,
             ).set_author(
@@ -377,23 +400,31 @@ class Werewolf(commands.Cog):
             `{prefix}roles <role name here>` to view info about a role.
             """
         )
+        restriction = _("(IdleRPG mode only)")
         role_groups = [
             {
                 "side": _("The Werewolves"),
-                "members": "Werewolf, White Wolf, Big Bad Wolf",
+                "members": (
+                    "Werewolf, White Wolf, Cursed Wolf Father, Big Bad Wolf, Wolf"
+                    f" Shaman - {restriction}, Wolf Necromancer - {restriction}"
+                ),
                 "goal": _("Must eliminate all other villagers"),
             },
             {
                 "side": _("The Villagers"),
                 "members": (
                     "Villager, Pure Soul, Seer, Witch, Hunter, Healer, Amor, Knight,"
-                    " Sister, Brother, The Old, Fox, Judge"
+                    f" Sister, Brother, The Old, Fox, Judge, Paragon - {restriction},"
+                    f" Ritualist - {restriction}, Troublemaker - {restriction}, Lawyer"
+                    f" - {restriction}, War Veteran - {restriction}"
                 ),
                 "goal": _("Must find and eliminate the werewolves"),
             },
             {
                 "side": _("The Ambiguous"),
-                "members": "Thief, Wild Child, Maid, Wolfhound",
+                "members": (
+                    f"Thief, Wild Child, Maid, Wolfhound, Raider - {restriction}"
+                ),
                 "goal": _("Make their side win"),
             },
             {
@@ -472,91 +503,6 @@ class Werewolf(commands.Cog):
                 name=str(ctx.author), icon_url=ctx.author.avatar_url_as(size=64)
             )
         )
-
-    @werewolf.command(brief=_("Read the updates for Werewolf game."))
-    @locale_doc
-    async def updates(self, ctx):
-        _("""Read the updates for Werewolf game.""")
-        updates = _(
-            """\
-**Updates:**
-
-**Bugfixes:**
-1. Wild Child: Fixed wrong initial role for Wild Child after becoming a Werewolf upon idol's death.
-2. Maid: Fixed choosing new Idol when Maid took Wild Child's role. Now excludes dead players from choices.
-3. Amor: Making a player fall in love to the same player is now not allowed.
-4. The Old: Fixed prevention of one werewolf attack to the player when becoming The Old from being Thief or Maid.
-5. The Old should now also die when their Lover dies.
-6. Prevent killing of one's own lover mostly by Werewolves. Removed Lover from the choices of Witch's poison and Hunter's targets.
-
-**Changes:**
-1. Knight became Rusty Sword Knight who, upon death from werewolf, will make a werewolf diseased from the rusty sword and will die the following night.
-  - Description changed to: You are the Rusty Sword Knight. You will do your best to protect the Villagers. If you died from the Werewolves, a random Werewolf who caused your death becomes diseased from your rusty sword and will die the following night.
-2. Fox will now choose a center player only for a group of 3 neighboring players for checking.
-  - Description changed to: You are a clever little guy who can sense the presence of Werewolves. Every night, you get to choose a group of 3 neighboring players of which you point the center player and will be told if at least one of them is a Werewolf. If you do not find a Werewolf, you lose your ability for good.
-3. Maid turned Wolfhound will now be able to choose which role to get during the following night.
-4. Added Dismiss option to non-required selection of target players.
-5. Improved prevention of lone Sister/Brother appearance
-6. Improved love messages in preliminary phase of Valentines mode.
-7. Show the player's name as response on each successful selection if more than one is being asked.
-8. Show message if Sheriff is randomly chosen when former Sheriff didn't choose their successor.
-9. Now DMs the Sheriff with his temporary special title.
-
-**Previous updates:** (will be removed in the next update.)
-
-**Bug Fixes:**
-1. Fix double deaths when Hunter kills the target of Witch or White Wolf. A bug showing 2 death messages for Witch-killed or White Wolf-killed player after it has been killed by the Hunter has been fixed. Second death will not occur anymore.
-
-**Enhancements and Changes:**
-1. Revised minor details on description of Fox, Big Bad Wolf, and Healer roles.
-2. Changed `role` command to `ww myrole` subcommand. (It's the command that direct messages the player about their current role in a game.)
-3. Made few adjustments to prevent more than one game instance in a channel where more than one users attempted to start a werewolf game at the same time.
-4. Now users can start a new Werewolf game after failure of getting the joining message for reasons such as accidental deletion of said message.
-5. The players are now being shuffled before the start of the game.
-6. Thief choosing of new role is now optional, but if given with 2 Werewolf roles as choices, Thief should become a Werewolf. Thief will win with Villagers' side if Thief's role was retained.
-7. Improved proper numbering of werewolves' possible victims.
-8. Now mentions the users in choices of players selection in dm's. This is to work around users who change their name mid-game which is different from the cached name.
-9. Now messages you when you timed out while choosing a player.
-10. Changed the default 90-seconds discussion time in classic mode. It's now defaulted to 60 seconds as "Normal" speed.
-11. AFK check has been reworked for lesser time consumption.
-12. Now shows all the player's previous roles upon player's death or when game's over. Previously, only the first role is being shown as initial role. (Works on Thief and Maid)
-
-**Additions:**
-1. Sheriff has been added to the game! The game will randomly choose a player at the start to become the Sheriff that has double count of vote. An eliminated Sheriff should choose a new Sheriff as his successor.
-2. Added subcommand `ww roles` that shows the list of available roles. `ww roles <role_name>` can be used to view the description or abilities of the role and see the goal and side it belongs.
-3. Added new game modes and speeds: (use `ww modes` and `ww speeds` commands for detailed info)
-  - Added Game modes: `Imbalanced`, `Huntergame`, `Villagergame`, `Valentines`.
-  - Added Game speeds: `Normal` (60 seconds), `Extended` (90 seconds), `Fast` (45 seconds).
-4. Now open for massive werewolf games in experimental phase.
-5. The welcome message now displays the number of players and mentions them (several messages might be shown for too many players suitable with mass werewolf game, aka: paginated)
-6. Major messages that need pagination of players like during daily elections or when the game is over have been implemented in preparation for mass werewolf games.
-7. Now displays the number of in-game days and the limit of days to play if it's on Fast or Blitz speed.
-8. Now mentions the werewolf game channel in DM's as shortcut link to easily go back and forth with the channels.
-9. Werewolves will now see who the other werewolves are and their count during the victim selection in DM's.
-10. Now shows the roles of revealed players next to their names during players selection in dm's. Pure soul's role will be shown to all players with ability to choose a player in DM's. Seer will now be shown with the roles previously revealed to them.
-11. Werewolves will now see the current number of votes for nominated victims before they vote.
-12. Now has detection for sneaky lynching nomination.
-13. Now has workaround on non-players or dead players influencing the game by nuisance voting.
-14. Maid will now be asked whether to swap role with the player about to be lynched and not after the player's death. The game will announce the Maid's name that took the player's role. The new role of the Maid will not be revealed. The role of the eliminated player will be shown as Maid since they were exchanged.
-15. The former Maid will have her role be called the following night if needed as if it's the first night (e.g: Announced as new Pure Soul, choose from 2 extra roles as Thief (if Thief didn't take other role), choose an Idol if she took Wild Child, etc.)
-16. The former Maid can choose another pair of lovers if she took Amor's role hence a possibility of 2 sets of lovers. A player could get caught between 2 lovers in the game.
-17. Judge will now receive a message if he successfully triggered a second election.
-18. White Wolf update: Removed choosing werewolf phase if there's no other werewolf left.
-19. Big Bad Wolf update: Removed choosing villagers victim phase if there's no other possible villagers left to kill.
-20. Added 8 players as default minimum number of players for Huntergame and Valentines game modes.
-21. Added option to customize minimum number of players.
-22. Added more details on description of The Old.
-23. Added `ww updates` command to see all of these updates."""
-        )
-        p = commands.Paginator(prefix="", suffix="")
-        for i in chunks(updates, 1900):
-            p.add_line(i)
-        await self.bot.paginator.Paginator(
-            title=_("Werewolf Updates"),
-            entries=p.pages,
-            length=1,
-            colour=self.bot.config.primary_colour,
-        ).paginate(ctx)
 
 
 def setup(bot):
