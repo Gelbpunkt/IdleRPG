@@ -84,6 +84,9 @@ game_masters = [1234567890]
 """A list of banned users."""
 bans = [1234567890]
 
+"""A list of banned guilds."""
+banned_guilds = [1234567890]
+
 """The support server ID."""
 support_server_id = 1234567890
 

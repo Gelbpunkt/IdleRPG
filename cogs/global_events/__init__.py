@@ -128,6 +128,9 @@ class GlobalEvents(commands.Cog):
 
     @commands.Cog.listener()
     async def on_guild_join(self, guild):
+        if guild.id in self.bot.config.banned_guilds:
+            await guild.leave()
+            return
         embed = discord.Embed(
             title="Thanks for adding me!",
             colour=0xEEC340,
