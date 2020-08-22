@@ -510,7 +510,8 @@ class Battles(commands.Cog):
         msg = await ctx.send(
             _("Battle {p1} vs {p2}").format(p1=ctx.author.mention, p2=enemy_.mention),
             embed=discord.Embed(
-                title=_("Let the battle begin!"), color=self.bot.config.primary_colour,
+                title=_("Let the battle begin!"),
+                color=self.bot.config.primary_colour,
             ),
         )
 
@@ -695,7 +696,8 @@ class Battles(commands.Cog):
         )
         await ctx.send(
             _("{winner} won the active battle vs {looser}! Congratulations!").format(
-                winner=winner.mention, looser=looser.mention,
+                winner=winner.mention,
+                looser=looser.mention,
             )
         )
 
