@@ -307,11 +307,7 @@ class Help(commands.Cog):
             self.bot.config.helpme_channel, None, embed=em.to_dict()
         )
         await self.bot.redis.execute(
-            "SET",
-            f"helpme:{ctx.guild.id}",
-            message["id"],
-            "EX",
-            172800,  # 48 hours
+            "SET", f"helpme:{ctx.guild.id}", message["id"], "EX", 172800,  # 48 hours
         )
         await ctx.send(
             _("Support team has been notified and will join as soon as possible!")

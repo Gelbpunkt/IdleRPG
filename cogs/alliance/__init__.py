@@ -912,8 +912,7 @@ class Alliance(commands.Cog):
             """Lists alliance-specific cooldowns, meaning all alliance members have these cooldowns and cannot use the commands."""
         )
         alliance = await self.bot.pool.fetchval(
-            'SELECT alliance FROM guild WHERE "id"=$1;',
-            ctx.character_data["guild"],
+            'SELECT alliance FROM guild WHERE "id"=$1;', ctx.character_data["guild"],
         )
         cooldowns = await self.bot.redis.execute("KEYS", f"alliancecd:{alliance}:*")
         if not cooldowns:
