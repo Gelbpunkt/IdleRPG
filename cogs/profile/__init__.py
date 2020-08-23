@@ -578,7 +578,8 @@ IdleRPG is a global bot, your characters are valid everywhere"""
             If you are a Ritualist, your loot chances are doubled. Check [our wiki](https://wiki.idlerpg.xyz/index.php?title=Loot#Probability) for the exact chances."""
         )
         ret = await self.bot.pool.fetch(
-            'SELECT * FROM loot WHERE "user"=$1;', ctx.author.id
+            'SELECT * FROM loot WHERE "user"=$1 ORDER BY "value" DESC, "id" DESC;',
+            ctx.author.id,
         )
         if not ret:
             return await ctx.send(_("You do not have any loot at this moment."))
@@ -1129,9 +1130,7 @@ IdleRPG is a global bot, your characters are valid everywhere"""
                 await conn.execute('UPDATE city SET "owner"=1 WHERE "owner"=$1;', g)
             if partner := ctx.character_data["marriage"]:
                 await conn.execute(
-                    'UPDATE profile SET "marriage"=$1 WHERE "user"=$2;',
-                    0,
-                    partner,
+                    'UPDATE profile SET "marriage"=$1 WHERE "user"=$2;', 0, partner,
                 )
             await conn.execute(
                 'UPDATE children SET "mother"=$1, "father"=0 WHERE ("father"=$1 AND'

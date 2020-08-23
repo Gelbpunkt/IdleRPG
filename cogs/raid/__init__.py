@@ -994,9 +994,7 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
             cash = int(hp / 4 / len(raid))  # what da hood gets per survivor
             users = [u.id for u in raid]
             await self.bot.pool.execute(
-                'UPDATE profile SET money=money+$1 WHERE "user"=ANY($2);',
-                cash,
-                users,
+                'UPDATE profile SET money=money+$1 WHERE "user"=ANY($2);', cash, users,
             )
             for user in users:
                 await self.bot.cache.update_profile_cols_rel(user, money=cash)
@@ -1120,17 +1118,9 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
             randnum = random.randint(1, 100)
             if randnum <= tet_success:  # the player looses
                 del raid[idx]
-                em = discord.Embed(
-                    title=text,
-                    description=loss_text,
-                    colour=0xFFB900,
-                )
+                em = discord.Embed(title=text, description=loss_text, colour=0xFFB900,)
             else:
-                em = discord.Embed(
-                    title=text,
-                    description=win_text,
-                    colour=0xFFB900,
-                )
+                em = discord.Embed(title=text, description=win_text, colour=0xFFB900,)
             em.set_author(name=str(target), icon_url=target.avatar_url)
             em.set_thumbnail(url=f"{self.bot.BASE_URL}/tet.png")
             await ctx.send(embed=em)
@@ -1373,9 +1363,7 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
             cash = int(hp / 4 / len(raid))  # what da hood gets per survivor
             users = [u.id for u in raid]
             await self.bot.pool.execute(
-                'UPDATE profile SET money=money+$1 WHERE "user"=ANY($2);',
-                cash,
-                users,
+                'UPDATE profile SET money=money+$1 WHERE "user"=ANY($2);', cash, users,
             )
             for user in users:
                 await self.bot.cache.update_profile_cols_rel(user, money=cash)
@@ -2067,9 +2055,7 @@ Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=4539639655219
             cash = int(hp / 4 / len(raid))  # what da hood gets per survivor
             users = [u.id for u in raid]
             await self.bot.pool.execute(
-                'UPDATE profile SET money=money+$1 WHERE "user"=ANY($2);',
-                cash,
-                users,
+                'UPDATE profile SET money=money+$1 WHERE "user"=ANY($2);', cash, users,
             )
             for user in users:
                 await self.bot.cache.update_profile_cols_rel(user, money=cash)

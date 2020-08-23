@@ -433,11 +433,7 @@ class Crates(commands.Cog):
                 from_=ctx.author.id,
                 to=buyer.id,
                 subject="crates",
-                data={
-                    "Quantity": quantity,
-                    "Rarity": rarity,
-                    "Price": price,
-                },
+                data={"Quantity": quantity, "Rarity": rarity, "Price": price,},
                 conn=conn,
             )
             await self.bot.log_transaction(
@@ -445,11 +441,7 @@ class Crates(commands.Cog):
                 from_=buyer.id,
                 to=ctx.author.id,
                 subject="money",
-                data={
-                    "Price": price,
-                    "Quantity": quantity,
-                    "Rarity": rarity,
-                },
+                data={"Price": price, "Quantity": quantity, "Rarity": rarity,},
                 conn=conn,
             )
 
