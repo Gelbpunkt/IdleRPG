@@ -117,7 +117,9 @@ class RedisCache:
                 new_val = val
             row[key] = new_val
         await self.redis.execute(
-            "SET", f"profilecache:{user_id}", orjson.dumps(dict(row), default=default),
+            "SET",
+            f"profilecache:{user_id}",
+            orjson.dumps(dict(row), default=default),
         )
 
     async def update_profile_cols_abs(self, user_id, **vals):
@@ -131,7 +133,9 @@ class RedisCache:
         for key, val in vals.items():
             row[key.rstrip("_")] = val
         await self.redis.execute(
-            "SET", f"profilecache:{user_id}", orjson.dumps(dict(row), default=default),
+            "SET",
+            f"profilecache:{user_id}",
+            orjson.dumps(dict(row), default=default),
         )
 
     async def wipe_profile(self, *user_ids):

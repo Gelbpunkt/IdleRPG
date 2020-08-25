@@ -477,7 +477,9 @@ class Game:
                             return voted, target
 
                 done, pending = await asyncio.wait(
-                    {get_vote(),},
+                    {
+                        get_vote(),
+                    },
                     timeout=self.timer,
                     return_when=asyncio.FIRST_COMPLETED,
                 )

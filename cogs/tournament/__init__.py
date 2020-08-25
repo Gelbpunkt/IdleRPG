@@ -355,7 +355,8 @@ class Tournament(commands.Cog):
                 )
 
                 embed = discord.Embed(
-                    description=battle_log[0][1], color=self.bot.config.primary_colour,
+                    description=battle_log[0][1],
+                    color=self.bot.config.primary_colour,
                 )
 
                 log_message = await ctx.send(embed=embed)

@@ -498,7 +498,9 @@ class Gambling(commands.Cog):
                         "{author} challenges {enemy} to a game of Draw for"
                         " **${money:,.0f}**. Do you accept?"
                     ).format(
-                        author=ctx.author.mention, enemy=enemy.mention, money=money,
+                        author=ctx.author.mention,
+                        enemy=enemy.mention,
+                        money=money,
                     ),
                     user=enemy,
                     timeout=15,
@@ -579,7 +581,8 @@ class Gambling(commands.Cog):
                             enemy.id, money=money
                         )
                         text = _("Nobody won. {author} and {enemy} tied.").format(
-                            author=ctx.author.mention, enemy=enemy.mention,
+                            author=ctx.author.mention,
+                            enemy=enemy.mention,
                         )
                     else:
                         players = [ctx.author, enemy]
