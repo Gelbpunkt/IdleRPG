@@ -231,6 +231,25 @@ class GlobalEvents(commands.Cog):
             )
         }
 
+    async def send_reminder(
+        self,
+        reminder_id: int,
+        channel_id: int,
+        user_id: int,
+        reminder_text: str,
+        time_diff: str,
+    ):
+        await self.bot.pool.execute('DELETE FROM reminders WHERE "id"=$1;', reminder_id)
+        locale = await self.bot.get_cog("Locale").locale(user_id)
+        i18n.current_locale.set(locale)
+        await self.bot.get_channel(channel_id).send(
+            _("{user}, you wanted to be reminded about {subject} {diff} ago.").format(
+                user=f"<@{user_id}>",
+                subject=reminder_text,
+                diff=time_diff,
+            ),
+        )
+
     async def reschedule_reminders(self):
         valid_channels = [channel.id for channel in self.bot.get_all_channels()]
         all_reminders = await self.bot.pool.fetch("SELECT * FROM reminders;")
@@ -238,27 +257,26 @@ class GlobalEvents(commands.Cog):
         invalid_reminders = []
         new_reminders = {}
         for reminder in all_reminders:
-            if reminder["end"] < now:
-                invalid_reminders.append(reminder["id"])
-            elif reminder["channel"] not in valid_channels:
-                pass  # don't schedule channels that the bot won't be able to send to
-            else:
-                locale = await self.bot.get_cog("Locale").locale(reminder["user"])
-                i18n.current_locale.set(locale)
-                task = self.bot.schedule_manager.schedule(
-                    self.bot.get_channel(reminder["channel"]).send(
-                        _(
-                            "{user}, you wanted to be reminded about {subject} {diff}"
-                            " ago."
-                        ).format(
-                            user=f"<@{reminder['user']}>",
-                            subject=reminder["content"],
-                            diff=str(reminder["end"] - reminder["start"]).split(".")[0],
-                        )
-                    ),
-                    reminder["end"],
-                )
-                new_reminders.update({reminder["id"]: task.uuid})
+            try:
+                if reminder["end"] < now:
+                    invalid_reminders.append(reminder["id"])
+                elif reminder["channel"] not in valid_channels:
+                    pass  # don't schedule channels that the bot won't be able to send to
+                else:
+                    task = self.bot.schedule_manager.schedule(
+                        self.send_reminder(
+                            reminder["id"],
+                            reminder["channel"],
+                            reminder["user"],
+                            reminder["content"],
+                            str(reminder["end"] - reminder["start"]).split(".")[0],
+                        ),
+                        reminder["end"],
+                    )
+                    new_reminders.update({reminder["id"]: task.uuid})
+            except (KeyError, ValueError, TypeError) as e:
+                self.bot.logger.warning(f"{type(e).__name__}: {e}")
+                pass
         async with self.bot.pool.acquire() as conn:
             await conn.execute(
                 'DELETE FROM reminders WHERE "id"=ANY($1);', invalid_reminders

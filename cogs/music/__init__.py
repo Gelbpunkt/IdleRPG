@@ -289,7 +289,8 @@ class Music(commands.Cog):
             Query for a track and play or add any result to the playlist, you can choose from a multitude of tracks."""
         )
         async with self.bot.trusted_session.get(
-            f"{self.bot.config.query_endpoint}", params={"limit": 5, "q": query},
+            f"{self.bot.config.query_endpoint}",
+            params={"limit": 5, "q": query},
         ) as r:
             results = await r.json()
         if not results.get("items"):
@@ -326,7 +327,10 @@ class Music(commands.Cog):
             return await msg.edit(content=_("No results..."))
         track = tracks[0]
         track = self.update_track(
-            track, requester=ctx.author, channel_id=ctx.channel.id, track_obj=track_obj,
+            track,
+            requester=ctx.author,
+            channel_id=ctx.channel.id,
+            track_obj=track_obj,
         )
 
         if not ctx.player.is_connected:
@@ -354,7 +358,8 @@ class Music(commands.Cog):
             _("Downloading track... This might take up to 3 seconds...")
         )
         async with self.bot.trusted_session.get(
-            f"{self.bot.config.query_endpoint}", params={"limit": 1, "q": query},
+            f"{self.bot.config.query_endpoint}",
+            params={"limit": 1, "q": query},
         ) as r:
             results = await r.json()
         try:
@@ -645,7 +650,9 @@ class Music(commands.Cog):
             for i in chunks(line, 1900):
                 p.add_line(i)
         await self.bot.paginator.Paginator(
-            title=result["song"]["full_title"], entries=p.pages, length=1,
+            title=result["song"]["full_title"],
+            entries=p.pages,
+            length=1,
         ).paginate(ctx)
 
     def update_track(
@@ -673,7 +680,9 @@ class Music(commands.Cog):
         else:
             self.queue[player.guild_id].append(track)
             await msg.edit(
-                content=_("🎧 Added {title} to the queue...").format(title=track.title,)
+                content=_("🎧 Added {title} to the queue...").format(
+                    title=track.title,
+                )
             )
 
     async def play_track(self, track: FakeTrack, player: wavelink.Player, msg=None):
@@ -704,7 +713,8 @@ class Music(commands.Cog):
                 del self.queue[player.guild_id]
             else:
                 await self.play_track(
-                    self.queue[player.guild_id][0], player,
+                    self.queue[player.guild_id][0],
+                    player,
                 )
         else:
             # VC empty?
