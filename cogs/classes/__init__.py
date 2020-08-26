@@ -77,7 +77,7 @@ class Classes(commands.Cog):
                 description=_(
                     # xgettext: no-python-format
                     "The sneaky money stealer...\nGet access to `{prefix}steal` to"
-                    " steal 10% of the target's money, if successful.\n+8% success"
+                    " steal 10% of a random player's money, if successful.\n+8% success"
                     " chance per evolution."
                 ).format(prefix=ctx.prefix),
                 color=self.bot.config.primary_colour,
@@ -320,10 +320,10 @@ class Classes(commands.Cog):
             """Steal money from a random user.
 
             Your steal chance is increased by evolving your class and your alliance's thief buildings, if you have an alliance that owns a city.
-            If you succeed in stealing, you will steal 10% of the target's money.
+            If you succeed in stealing, you will steal 10% of a random player's money.
 
             You *cannot* choose your target, it is always a random player. If the bot can't find the player's name, it will be replaced with "a traveller passing by".
-            The target cannot be anyone with less than $10, yourself, or one of the bot owners.
+            The random player cannot be anyone with money less than $10, yourself, or one of the bot owners.
 
             Only thieves can use this command.
             (This command has a cooldown of 1 hour.)"""
