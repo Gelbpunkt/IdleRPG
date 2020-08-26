@@ -16,10 +16,8 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
 import asyncio
 
-from base64 import b64encode
 from collections import defaultdict
 from datetime import timedelta
-from json import dumps
 
 import discord
 import wavelink
@@ -29,7 +27,6 @@ from discord.ext import commands
 from classes.converters import IntFromTo
 from cogs.help import chunks
 from utils.i18n import _, locale_doc
-from utils.misc import nice_join
 
 
 class VoteDidNotPass(commands.CheckFailure):
@@ -54,48 +51,25 @@ class NotDJ(commands.CheckFailure):
 
 class Artist:
     def __init__(self, raw_data):
-        self.url = raw_data.get("external_urls", {}).get("spotify")
-        self.id = raw_data.get("id")
-        self.name = raw_data.get("name")
-        self.uri = raw_data.get("uri")
+        self.id = raw_data["id"]
+        self.name = raw_data["name"]
 
 
 class Album:
     def __init__(self, raw_data):
-        self.artists = [Artist(d) for d in raw_data.get("artists", [])]
-        self.url = raw_data.get("external_urls", {}).get("spotify")
-        self.id = raw_data.get("id")
-        self.images = raw_data.get("images", [])
-        self.name = raw_data.get("name")
-        self.release_date = raw_data.get("release_date")
-        self.total_tracks = raw_data.get("total_tracks", 0)
-        self.uri = raw_data.get("uri")
+        self.id = raw_data["id"]
+        self.title = raw_data["title"]
+        self.cover = raw_data["cover"]
 
 
 class Track:
-    def __init__(self, raw_data, playlist_entry=False):
-        self.added_at = raw_data.get("added_at")
-        self.is_local = raw_data.get("is_local", False)
-        self.primary_color = raw_data.get("primary_color")
-        if playlist_entry:
-            raw_data = raw_data["track"]
-        if (album := raw_data.get("album")) :
-            self.album = Album(album)
-        self.artists = [Artist(d) for d in raw_data.get("artists", [])]
-        self.disc_number = raw_data.get("disc_number", 1)
-        self.duration = raw_data.get("duration_ms") or raw_data.get("duration") or 0
-        self.episode = raw_data.get("episode")
-        self.explicit = raw_data.get("explicit", False)
-        self.url = raw_data.get("external_urls", {}).get("spotify")
-        self.id = raw_data.get("id")
-        self.is_playable = raw_data.get("is_playable", True)
-        self.name = raw_data.get("name")
-        self.isrc = raw_data.get("external_ids", {}).get("isrc")
-        self.popularity = raw_data.get("popularity", 0)
-        self.preview_url = raw_data.get("preview_url")
-        self.track_number = raw_data.get("track_number", 1)
-        self.uri = raw_data.get("uri")
-        self.media_data = raw_data["MEDIA_DATA"]
+    def __init__(self, raw_data):
+        self.id = raw_data["id"]
+        self.title = raw_data["title"]
+        self.duration = raw_data["duration"]
+        self.explicit = raw_data["explicit_lyrics"]
+        self.artist = Artist(raw_data["artist"])
+        self.album = Album(raw_data["album"])
 
 
 def is_in_vc():
@@ -302,9 +276,9 @@ class Music(commands.Cog):
                 footer=_("Hit a button to play one"),
                 return_index=True,
                 entries=[
-                    f"**{i.name}** by {nice_join([a.name for a in i.artists])} on"
-                    f" {i.album.name}"
-                    f" ({str(timedelta(milliseconds=i.duration)).split('.')[0]})"
+                    f"**{i.title}** by {i.artist.name} on"
+                    f" {i.album.title}"
+                    f" ({timedelta(seconds=i.duration)})"
                     for i in track_objs
                 ],
             ).paginate(ctx)
@@ -312,16 +286,15 @@ class Music(commands.Cog):
         else:
             track_obj = track_objs[0]
             if not await ctx.confirm(
-                f"The only result was **{track_obj.name}** by"
-                f" {nice_join([a.name for a in track_obj.artists])} on"
-                f" {track_obj.album.name}. Play it?"
+                f"The only result was **{track_obj.title}** by"
+                f" {track_obj.artist.name} on"
+                f" {track_obj.album.title}. Play it?"
             ):
                 return
 
         msg = await ctx.send(_("Loading track... This might take up to 3 seconds..."))
-        b64 = b64encode(dumps(track_obj.media_data)).decode()
         tracks = await self.bot.wavelink.get_tracks(
-            f"{self.bot.config.resolve_endpoint}?data={b64}"
+            f"{self.bot.config.resolve_endpoint}?id={track_obj.id}"
         )
         if not tracks:
             return await msg.edit(content=_("No results..."))
@@ -364,9 +337,8 @@ class Music(commands.Cog):
             results = await r.json()
         try:
             track_obj = Track(results["items"][0])
-            b64 = b64encode(dumps(track_obj.media_data)).decode()
             tracks = await self.bot.wavelink.get_tracks(
-                f"{self.bot.config.resolve_endpoint}?data={b64}"
+                f"{self.bot.config.resolve_endpoint}?id={track_obj.id}"
             )
             if not tracks:
                 return await msg.edit(content=_("No results..."))
@@ -545,23 +517,13 @@ class Music(commands.Cog):
 
         playing_embed = discord.Embed(title=_("Now playing..."), colour=embed_color)
         playing_embed.add_field(
-            name=_("Title"), value=f"```{current_song.title}```", inline=False
+            name=_("Title"), value=f"```{current_song.track_obj.title}```", inline=False
         )
         playing_embed.add_field(
             name=_("Artist"),
-            value=nice_join([a.name for a in current_song.track_obj.artists]),
+            value=current_song.track_obj.artist.name,
         )
-        text = _("Click me!")
-        if current_song.uri:
-            playing_embed.add_field(
-                name=_("Link to the original"),
-                value=f"**[{text}]({current_song.track_obj.url})**",
-            )
-        if current_song.track_obj.album.images:
-            best_image = sorted(
-                current_song.track_obj.album.images, key=lambda x: -x["width"]
-            )[0]
-            playing_embed.set_thumbnail(url=best_image["url"])
+        playing_embed.set_thumbnail(url=current_song.track_obj.album.cover)
         playing_embed.add_field(name=_("Volume"), value=f"{ctx.player.volume} %")
         if ctx.player.paused:
             playing_embed.add_field(name=_("Playing status"), value=_("`⏸Paused`"))
@@ -580,10 +542,10 @@ class Music(commands.Cog):
         button_position = int(100 * (ctx.player.position / current_song.length) / 2.5)
         controller = (
             "```ɴᴏᴡ ᴘʟᴀʏɪɴɢ:"
-            f" {current_song.title}\n{(button_position - 1) * '─'}⚪{(40 - button_position) * '─'}\n"
+            f" {current_song.track_obj.title}\n{(button_position - 1) * '─'}⚪{(40 - button_position) * '─'}\n"
             f" ◄◄⠀{'▐▐' if not ctx.player.paused else '▶'} ⠀►►⠀⠀　　⠀"
             f" {str(timedelta(milliseconds=ctx.player.position)).split('.')[0]} /"
-            f" {timedelta(seconds=int(current_song.length / 1000))}```"
+            f" {timedelta(seconds=current_song.track_obj.duration)}```"
         )
         playing_embed.description = controller
         playing_embed.set_footer(
@@ -606,7 +568,7 @@ class Music(commands.Cog):
             for entry in entries:
                 paginator.add_line(
                     f"• {entry.title}"
-                    f" ({str(timedelta(milliseconds=entry.length)).split('.')[0]}) -"
+                    f" ({timedelta(seconds=entry.duration)}) -"
                     f" {entry.requester.display_name}"
                 )
             queue_length = self.get_queue_length(ctx.guild.id) - 1
