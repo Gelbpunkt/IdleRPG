@@ -286,11 +286,11 @@ class HungerGames(commands.Cog):
         self.bot = bot
         self.games = {}
 
-    @commands.command(aliases=["hg"], brief=_("Play a game of the hunger games"))
+    @commands.command(aliases=["hg"], brief=_("Play the hunger games"))
     @locale_doc
     async def hungergames(self, ctx):
         _(
-            """Starts a game of the hunger games (starts a hunger game?)
+            """Starts the hunger games
 
             Players will be able to join via the :shallow_pan_of_food: emoji.
             The game is controlled via both random actions and possibly chosen actions.
@@ -338,6 +338,21 @@ class HungerGames(commands.Cog):
                 players.append(user)
                 await msg.edit(
                     content=text.format(author=ctx.author.mention, num=len(players))
+                )
+
+            # Check for not included players
+            try:
+                msg = await ctx.channel.fetch_message(msg.id)
+                for reaction in msg.reactions:
+                    if reaction.emoji == "\U0001f958":
+                        async for user in reaction.users():
+                            if user != ctx.me and user not in players:
+                                players.append(user)
+                        break
+            except discord.errors.NotFound:
+                del self.games[ctx.channel.id]
+                return await ctx.send(
+                    _("An error happened during the hungergames. Please try again!")
                 )
 
         if len(players) < 2:
