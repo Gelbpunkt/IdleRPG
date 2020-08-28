@@ -17,6 +17,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
 import asyncio
 
+from contextlib import suppress
 from datetime import timedelta
 from typing import Union
 
@@ -214,10 +215,12 @@ class Guild(commands.Cog):
             await conn.execute(
                 'UPDATE guild SET badge=$1 WHERE "leader"=$2;', bg, ctx.author.id
             )
+        if channel:
+            with suppress(discord.Forbidden, discord.HTTPException):
+                await self.bot.http.send_message(
+                    channel, f"**{ctx.author}** changed the guild badge."
+                )
         await ctx.send(_("Badge updated!"))
-        await self.bot.http.send_message(
-            channel, f"**{ctx.author}** changed the guild badge."
-        )
 
     @has_char()
     @has_no_guild()
@@ -373,10 +376,12 @@ class Guild(commands.Cog):
                 m,
                 ctx.character_data["guild"],
             )
+        if channel:
+            with suppress(discord.Forbidden, discord.HTTPException):
+                await self.bot.http.send_message(
+                    channel, f"Ownership changed from **{ctx.author}** to **{member}**"
+                )
         await ctx.send(_("{user} now leads {guild}.").format(user=member, guild=name))
-        await self.bot.http.send_message(
-            channel, f"Ownership changed from **{ctx.author}** to **{member}**"
-        )
 
     @is_guild_leader()
     @guild.command(brief=_("Promote a guild member to officer."))
@@ -415,13 +420,16 @@ class Guild(commands.Cog):
                 'SELECT "channel" FROM guild WHERE "id"=$1;',
                 ctx.character_data["guild"],
             )
+        if channel:
+            with suppress(discord.Forbidden, discord.HTTPException):
+                await self.bot.http.send_message(
+                    channel,
+                    f"**{ctx.author}** promoted **{member}** to the rank of Officer.",
+                )
         await ctx.send(
             _("Done! {member} has been promoted to the rank of `Officer`.").format(
                 member=member
             )
-        )
-        await self.bot.http.send_message(
-            channel, f"**{ctx.author}** promoted **{member}** to the rank of Officer."
         )
 
     @is_guild_leader()
@@ -452,13 +460,16 @@ class Guild(commands.Cog):
                 'SELECT "channel" FROM guild WHERE "id"=$1;',
                 ctx.character_data["guild"],
             )
+        if channel:
+            with suppress(discord.Forbidden, discord.HTTPException):
+                await self.bot.http.send_message(
+                    channel,
+                    f"**{ctx.author}** demoted **{member}** to the rank of Member.",
+                )
         await ctx.send(
             _("Done! {member} has been demoted to the rank of `Member`.").format(
                 member=member
             )
-        )
-        await self.bot.http.send_message(
-            channel, f"**{ctx.author}** demoted **{member}** to the rank of Member."
         )
 
     @is_guild_officer()
@@ -508,13 +519,15 @@ class Guild(commands.Cog):
             'UPDATE profile SET "guild"=$1 WHERE "user"=$2;', id_, newmember.id
         )
         await self.bot.cache.update_profile_cols_abs(newmember.id, guild=id_)
+        if channel:
+            with suppress(discord.Forbidden, discord.HTTPException):
+                await self.bot.http.send_message(
+                    channel, f"**{ctx.author}** invited **{newmember}** to the guild"
+                )
         await ctx.send(
             _("{newmember} is now a member of **{name}**. Welcome!").format(
                 newmember=newmember.mention, name=name
             )
-        )
-        await self.bot.http.send_message(
-            channel, f"**{ctx.author}** invited **{newmember}** to the guild"
         )
 
     @has_guild()
@@ -544,8 +557,12 @@ class Guild(commands.Cog):
                 ctx.character_data["guild"],
             )
 
+        if channel:
+            with suppress(discord.Forbidden, discord.HTTPException):
+                await self.bot.http.send_message(
+                    channel, f"**{ctx.author}** left the guild."
+                )
         await ctx.send(_("You left your guild."))
-        await self.bot.http.send_message(channel, f"**{ctx.author}** left the guild.")
 
     @is_guild_officer()
     @guild.command(brief=_("Kick a member from your guild."))
@@ -582,10 +599,12 @@ class Guild(commands.Cog):
             channel = await conn.fetchval(
                 'SELECT channel FROM guild WHERE "id"=$1;', ctx.character_data["guild"]
             )
+        if channel:
+            with suppress(discord.Forbidden, discord.HTTPException):
+                await self.bot.http.send_message(
+                    channel, f"**{ctx.author}** kicked user with ID **{member}**"
+                )
         await ctx.send(_("The person has been kicked!"))
-        await self.bot.http.send_message(
-            channel, f"**{ctx.author}** kicked user with ID **{member}**"
-        )
 
     @is_guild_leader()
     @guild.command(brief=_("Delete your guild"))
@@ -625,8 +644,12 @@ class Guild(commands.Cog):
             await self.bot.cache.update_profile_cols_abs(
                 user["user"], guild=0, guildrank="Member"
             )
+        if channel:
+            with suppress(discord.Forbidden, discord.HTTPException):
+                await self.bot.http.send_message(
+                    channel, f"Guild deleted by **{ctx.author}**"
+                )
         await ctx.send(_("Successfully deleted your guild."))
-        await self.bot.http.send_message(channel, f"Guild deleted by **{ctx.author}**")
 
     @is_guild_leader()
     @guild.command(brief=_("Change your guild's icon"))
@@ -667,10 +690,12 @@ class Guild(commands.Cog):
             icon_url,
             ctx.character_data["guild"],
         )
+        if channel:
+            with suppress(discord.Forbidden, discord.HTTPException):
+                await self.bot.http.send_message(
+                    channel, f"**{ctx.author}** changed the guild icon"
+                )
         await ctx.send(_("Successfully updated the guild icon."))
-        await self.bot.http.send_message(
-            channel, f"**{ctx.author}** changed the guild icon"
-        )
 
     @is_guild_leader()
     @guild.command(brief=_("Change your guild description."))
@@ -691,10 +716,12 @@ class Guild(commands.Cog):
             text,
             ctx.author.id,
         )
+        if channel:
+            with suppress(discord.Forbidden, discord.HTTPException):
+                await self.bot.http.send_message(
+                    channel, f"**{ctx.author}** changed the description"
+                )
         await ctx.send(_("Updated!"))
-        await self.bot.http.send_message(
-            channel, f"**{ctx.author}** changed the description"
-        )
 
     @commands.has_permissions(administrator=True)
     @is_guild_leader()
@@ -865,14 +892,16 @@ class Guild(commands.Cog):
                 data={"Amount": amount},
                 conn=conn,
             )
+        if g["channel"]:
+            with suppress(discord.Forbidden, discord.HTTPException):
+                await self.bot.http.send_message(
+                    g["channel"], f"**{ctx.author}** invested **${amount}**"
+                )
         await ctx.send(
             _(
                 "Done! Now you have `${profile_money}` and the guild has"
                 " `${guild_money}`."
             ).format(profile_money=profile_money, guild_money=guild_money)
-        )
-        await self.bot.http.send_message(
-            g["channel"], f"**{ctx.author}** invested **${amount}**"
         )
 
     @is_guild_officer()
@@ -916,13 +945,16 @@ class Guild(commands.Cog):
                 conn=conn,
             )
         await self.bot.cache.update_profile_cols_rel(member.id, money=amount)
+        if guild["channel"]:
+            with suppress(discord.Forbidden, discord.HTTPException):
+                await self.bot.http.send_message(
+                    guild["channel"],
+                    f"**{ctx.author}** paid **${amount}** to **{member}**",
+                )
         await ctx.send(
             _(
                 "Successfully gave **${amount}** from your guild bank to {member}."
             ).format(amount=amount, member=member.mention)
-        )
-        await self.bot.http.send_message(
-            guild["channel"], f"**{ctx.author}** paid **${amount}** to **{member}**"
         )
 
     @is_guild_officer()
@@ -984,15 +1016,17 @@ class Guild(commands.Cog):
             await self.bot.cache.update_profile_cols_rel(member.id, money=for_each)
 
         nice_members = rpgtools.nice_join([str(member) for member in members])
+        if guild["channel"]:
+            with suppress(discord.Forbidden, discord.HTTPException):
+                await self.bot.http.send_message(
+                    guild["channel"],
+                    f"**{ctx.author}** paid **${amount}** (${for_each} each) to"
+                    f" **{nice_members}**",
+                )
         await ctx.send(
             _(
                 "Distributed **${money}** (${small_money} for each) to {members}."
             ).format(money=amount, small_money=for_each, members=nice_members)
-        )
-        await self.bot.http.send_message(
-            guild["channel"],
-            f"**{ctx.author}** paid **${amount}** (${for_each} each) to"
-            f" **{nice_members}**",
         )
 
     @is_guild_leader()
@@ -1044,12 +1078,14 @@ class Guild(commands.Cog):
                 int(currentlimit / 2),
                 guild["id"],
             )
+        if guild["channel"]:
+            with suppress(discord.Forbidden, discord.HTTPException):
+                await self.bot.http.send_message(
+                    guild["channel"],
+                    f"**{ctx.author}** upgraded the guild bank to **${newlimit}**",
+                )
         await ctx.send(
             _("Your new guild bank limit is now **${limit}**.").format(limit=newlimit)
-        )
-        await self.bot.http.send_message(
-            guild["channel"],
-            f"**{ctx.author}** upgraded the guild bank to **${newlimit}**",
         )
 
     @is_guild_officer()
@@ -1395,6 +1431,13 @@ class Guild(commands.Cog):
 
         await self.bot.start_guild_adventure(guild["id"], difficulty, time)
 
+        if guild["channel"]:
+            with suppress(discord.Forbidden, discord.HTTPException):
+                await self.bot.http.send_message(
+                    guild["channel"],
+                    f"Guild adventure with difficulty **{difficulty}**, lasting **{time}**,"
+                    " started",
+                )
         await ctx.send(
             _(
                 """
@@ -1411,11 +1454,6 @@ Time it will take: **{time}**
                 difficulty=difficulty,
                 time=time,
             )
-        )
-        await self.bot.http.send_message(
-            guild["channel"],
-            f"Guild adventure with difficulty **{difficulty}**, lasting **{time}**,"
-            " started",
         )
 
     @has_guild()
@@ -1449,16 +1487,18 @@ Time it will take: **{time}**
                     gold,
                     ctx.character_data["guild"],
                 )
+                if channel:
+                    with suppress(discord.Forbidden, discord.HTTPException):
+                        await self.bot.http.send_message(
+                            channel,
+                            f"**{ctx.author}** ended the guild adventure, reward was"
+                            f" **${gold}**",
+                        )
                 await ctx.send(
                     _(
                         "Your guild has completed an adventure of difficulty"
                         " `{difficulty}` and **${gold}** has been added to the bank."
                     ).format(difficulty=adventure[0], gold=gold)
-                )
-                await self.bot.http.send_message(
-                    channel,
-                    f"**{ctx.author}** ended the guild adventure, reward was"
-                    f" **${gold}**",
                 )
             else:
                 await ctx.send(
