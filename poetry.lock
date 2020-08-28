@@ -141,6 +141,17 @@ multidict = "4.7.6"
 
 [[package]]
 category = "main"
+description = "A simple to use command handler for Hikari"
+name = "hikari-lightbulb"
+optional = false
+python-versions = ">=3.8.0,<3.10"
+version = "0.0.43"
+
+[package.dependencies]
+hikari = ">=2.0.0.dev70,<2.1.0"
+
+[[package]]
+category = "main"
 description = "Internationalized Domain Names in Applications (IDNA)"
 name = "idna"
 optional = false
@@ -280,7 +291,7 @@ idna = ">=2.0"
 multidict = ">=4.0"
 
 [metadata]
-content-hash = "e15fabbbaa41c06916a4d10935914ee372d10661c6f49581751454bfd98d9dd7"
+content-hash = "ad7b945da6a35acb7bf3b12e1b4bdc1eea3b07ed060371c6d5619b2776b041f6"
 lock-version = "1.0"
 python-versions = ">=3.9,<3.10"
 
@@ -338,6 +349,10 @@ flake9 = [
 hikari = [
     {file = "hikari-2.0.0.dev73-py3-none-any.whl", hash = "sha256:7e2f0584bb970e12ea174a590fcf35b995202b2593fb2c300a582f06a0d4e683"},
     {file = "hikari-2.0.0.dev73.tar.gz", hash = "sha256:9da4857ec6df1a33f6df096f03dca6c7e17a46f7b33634378e9b1b6a63a868a2"},
+]
+hikari-lightbulb = [
+    {file = "hikari-lightbulb-0.0.43.tar.gz", hash = "sha256:2e02c79e6856ad315abb94c66919d129428216057a18169fc74d390dde0265f5"},
+    {file = "hikari_lightbulb-0.0.43-py3-none-any.whl", hash = "sha256:878eba97d24fa87f9adbe5fdd1e0556930700af74e1bcd242a2877ef8bfdb695"},
 ]
 idna = [
     {file = "idna-2.10-py2.py3-none-any.whl", hash = "sha256:b97d804b1e9b523befed77c48dacec60e6dcb0b5391d57af6a65a312a90648c0"},
