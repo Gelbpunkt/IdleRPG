@@ -265,9 +265,9 @@ class Music(commands.Cog):
             params={"limit": 5, "q": query},
         ) as r:
             results = await r.json()
-        if not results.get("items"):
+        if not results:
             return await ctx.send(_("No results..."))
-        track_objs = [Track(i) for i in results["items"]]
+        track_objs = [Track(i) for i in results]
         if len(track_objs) > 1:
             track_idx = await self.bot.paginator.Choose(
                 title=_("Song results"),
@@ -334,7 +334,7 @@ class Music(commands.Cog):
         ) as r:
             results = await r.json()
         try:
-            track_obj = Track(results["items"][0])
+            track_obj = Track(results[0])
             tracks = await self.bot.wavelink.get_tracks(
                 f"{self.bot.config.resolve_endpoint}?id={track_obj.id}"
             )
