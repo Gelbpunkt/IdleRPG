@@ -224,7 +224,7 @@ class FakeTrack(wavelink.Track):
         self.id = kwargs.pop("id", None)
         self.track_obj = kwargs.pop("track_obj", None)
         super().__init__(*args, **kwargs)
-        self.title = self.track_obj.name
+        self.title = self.track_obj.title
         self.length = self.track_obj.duration
 
 
