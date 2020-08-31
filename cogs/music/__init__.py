@@ -239,8 +239,9 @@ class Music(commands.Cog):
 
     async def connect(self):
         for conf in self.bot.config.music_nodes:
-            node = await self.bot.wavelink.initiate_node(**conf)
-            node.set_hook(self.event_hook)
+            if conf["identifier"] not in self.bot.wavelink.nodes:
+                node = await self.bot.wavelink.initiate_node(**conf)
+                node.set_hook(self.event_hook)
         await asyncio.sleep(5)
         if not self.bot.wavelink.nodes:
             self.bot.logger.warning(
