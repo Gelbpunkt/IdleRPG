@@ -225,7 +225,6 @@ class FakeTrack(wavelink.Track):
         self.track_obj = kwargs.pop("track_obj", None)
         super().__init__(*args, **kwargs)
         self.title = self.track_obj.title
-        self.length = self.track_obj.duration
 
 
 class Music(commands.Cog):
@@ -566,7 +565,7 @@ class Music(commands.Cog):
             for entry in entries:
                 paginator.add_line(
                     f"• {entry.title}"
-                    f" ({timedelta(seconds=entry.duration)}) -"
+                    f" ({timedelta(seconds=entry.track_obj.duration)}) -"
                     f" {entry.requester.display_name}"
                 )
             queue_length = self.get_queue_length(ctx.guild.id) - 1
