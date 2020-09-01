@@ -79,6 +79,7 @@ class Role(Enum):
     RAIDER = 29
 
     FLUTIST = 30
+    SUPERSPREADER = 31
 
 
 class Side(Enum):
@@ -86,6 +87,7 @@ class Side(Enum):
     WOLVES = 2
     WHITE_WOLF = 3
     FLUTIST = 4
+    SUPERSPREADER = 5
 
 
 DESCRIPTIONS = {
@@ -204,11 +206,13 @@ DESCRIPTIONS = {
     ),
     Role.RAIDER: _(
         "You're a lone Raider. As a Raider, you can loot a dead player and take their"
-        " role as yours. However, only those who died last night and recently lynched"
-        " players will be available for you to raid."
+        " role as yours. However, only those who were recently lynched and last night's"
+        " dead players are available for you to raid."
     ),
     Role.RITUALIST: _(
-        "You are the Ritualist who can resurrect a Villager once per game."
+        "You are the Ritualist who can resurrect a Villager once per game. However,"
+        " only those who were recently lynched and last night's dead players are"
+        " available for you to resurrect."
     ),
     Role.TROUBLEMAKER: _(
         "You are the Troublemaker of the Village. You can exchange the roles of two"
@@ -236,7 +240,14 @@ DESCRIPTIONS = {
         " Every night, you will get to choose one villager to kill together with them."
         " Since you have learned from your shape-shifting ancestors the magic of"
         " summoning the dead, you have the ability to resurrect a dead werewolf at"
-        " night once per game."
+        " night once per game. However, only those who were recently lynched and last"
+        " night's dead players are available for you to resurrect."
+    ),
+    Role.SUPERSPREADER: _(
+        "Your goal is to infect all the players with your virus. Every night, you get"
+        " to sneeze and cough on one of them. Each day that passes increases the"
+        " players you can infect by one more. Make it Pandemic! (Note: If an infected"
+        " player died and is resurrected, they are free from the virus.)"
     ),
 }
 
@@ -277,8 +288,6 @@ class Game:
                 if role not in [Role.WEREWOLF, Role.WHITE_WOLF, Role.BIG_BAD_WOLF]:
                     self.available_roles[idx] = Role.VILLAGER
 
-        if roles := force_role(self, Role.WEREWOLF):
-            self.available_roles, self.extra_roles = roles
         self.players: List[Player] = [
             Player(role, user, self)
             for role, user in zip(self.available_roles, players)
@@ -436,8 +445,10 @@ class Game:
                 )
             return
         nominated = {u: 0 for u in nominated}
-        nominated_users_text = [str(u.user) + _(" Votes: {votes}") for u in nominated]
-        nominated_users = [text.format(votes=0) for text in nominated_users_text]
+        nominated_users = [
+            _("{player_name} Votes: {votes}").format(player_name=u.user, votes=0)
+            for u in nominated
+        ]
         if len(nominated) > 1:
             for werewolf in wolves:
                 await werewolf.send(
@@ -493,8 +504,8 @@ class Game:
                     voted = None
                 if voted:
                     nominated[voted] += 1
-                    nominated_users[target] = nominated_users_text[target].format(
-                        votes=nominated[voted]
+                    nominated_users[target] = _("{player_name} Votes: {votes}").format(
+                        player_name=voted.user, votes=nominated[voted]
                     )
             targets = sorted(list(nominated.keys()), key=lambda x: -nominated[x])
             if nominated[targets[0]] > nominated[targets[1]]:
@@ -675,6 +686,8 @@ class Game:
             targets = await witch.witch_actions(targets)
         if flutist := self.get_player_with_role(Role.FLUTIST):
             await flutist.enchant()
+        if superspreader := self.get_player_with_role(Role.SUPERSPREADER):
+            await superspreader.infect_virus()
         return targets
 
     async def night(self, white_wolf_ability: bool) -> List[Player]:
@@ -752,6 +765,8 @@ class Game:
             targets = await witch.witch_actions(targets)
         if flutist := self.get_player_with_role(Role.FLUTIST):
             await flutist.enchant()
+        if superspreader := self.get_player_with_role(Role.SUPERSPREADER):
+            await superspreader.infect_virus()
         return targets
 
     async def election(self) -> Optional[discord.Member]:
@@ -825,23 +840,40 @@ class Game:
                                 " election after this."
                             )
                         )
+                    paragon = discord.utils.get(
+                        self.alive_players, role=Role.PARAGON, user=msg.author
+                    )
                     for user in msg.mentions:
-                        if (
-                            user in eligible_players
-                            and user not in nominated
-                            and len(nominated) < 10
+                        if user in eligible_players and (
+                            (user not in nominated and len(nominated) < 10)
+                            or (
+                                user not in nominated_by_paragon
+                                and len(nominated_by_paragon) < 10
+                                and paragon
+                            )
                         ):
-                            if discord.utils.get(
-                                self.alive_players, role=Role.PARAGON, user=msg.author
-                            ):
+                            if paragon:
                                 nominated_by_paragon.append(user)
-                            nominated.append(user)
+                                announce = _(
+                                    "**{role} {player}** nominated **{nominee}**."
+                                ).format(
+                                    role=paragon.role_name,
+                                    player=msg.author,
+                                    nominee=user,
+                                )
+                                if user not in nominated:
+                                    nominated.append(user)
+                            else:
+                                nominated.append(user)
+                                announce = _(
+                                    "**{player}** nominated **{nominee}**."
+                                ).format(player=msg.author, nominee=user)
                             if len(nominated) == 1:
-                                # Seems sneaky, extend talk time when there's only 10 seconds left
                                 mention_time = datetime.datetime.utcnow()
                                 if (mention_time - start) >= datetime.timedelta(
                                     seconds=self.timer - 10
                                 ):
+                                    # Seems sneaky, extend talk time when there's only 10 seconds left
                                     time_to_add = int(self.timer / 2)
                                     cm.shift_by(time_to_add)
                                     await self.ctx.send(
@@ -850,11 +882,7 @@ class Game:
                                             " seconds talk time."
                                         ).format(time_to_add=time_to_add)
                                     )
-                            await self.ctx.send(
-                                _("**{player}** nominated **{nominee}**.").format(
-                                    player=msg.author, nominee=user
-                                )
-                            )
+                            await self.ctx.send(announce)
         except asyncio.TimeoutError:
             pass
         if len(nominated_by_paragon) > 0:
@@ -1073,6 +1101,10 @@ class Game:
         self.rusty_sword_disease_night = None
         await to_die.kill()
 
+    async def handle_resurrection(self, to_resurrect: Player) -> None:
+        to_resurrect.lives = 1 if to_resurrect.role != Role.THE_OLD else 2
+        to_resurrect.died_from_villagers = False
+
     async def day(self, deaths: List[Player]) -> None:
         await self.ctx.send(_("🌤️ **The sun rises...**"))
         for death in deaths:
@@ -1110,34 +1142,37 @@ class Game:
 
     async def run(self):
         # Handle thief etc and first night
-        deaths = await self.initial_preparation()
         round_no = 1
-        night_no = 1
+        self.night_no = 1
+        deaths = await self.initial_preparation()
         while True:
             if round_no % 2 == 1:
-                if self.speed in ["Fast", "Blitz"]:
-                    day_count = _("Day {day_count:.0f} of {days_limit}").format(
-                        day_count=night_no, days_limit=len(self.players) + 3
+                if self.speed in ("Fast", "Blitz"):
+                    day_count = _("**Day {day_count:.0f} of {days_limit}**").format(
+                        day_count=self.night_no, days_limit=len(self.players) + 3
                     )
                 else:
-                    day_count = _("Day {day_count:.0f}").format(day_count=night_no)
+                    day_count = _("**Day {day_count:.0f}**").format(
+                        day_count=self.night_no
+                    )
                 await self.ctx.send(day_count)
                 await self.day(deaths)
+                if self.winner() is not None:
+                    break
+                if self.speed in ("Fast", "Blitz"):
+                    if self.night_no == len(self.players) + 3:
+                        await self.ctx.send(
+                            _(
+                                "{day_count:.0f} days have already passed. Stopping"
+                                " game..."
+                            ).format(day_count=self.night_no)
+                        )
+                        break
             else:
-                night_no += 1
-                deaths = await self.night(white_wolf_ability=night_no % 2 == 0)
+                self.night_no += 1
+                deaths = await self.night(white_wolf_ability=self.night_no % 2 == 0)
                 self.recent_deaths = []
             round_no += 1
-            if self.speed in ["Fast", "Blitz"]:
-                if round_no / 2 == len(self.players) + 3:
-                    await self.ctx.send(
-                        _(
-                            "{day_count:.0f} days have already passed. Stopping game..."
-                        ).format(day_count=round_no / 2)
-                    )
-                    break
-            if self.winner() is not None:
-                break
 
         winner = self.winner()
         results_pretext = _("Werewolf {mode} results:").format(mode=self.mode)
@@ -1227,6 +1262,7 @@ class Player:
         self.game = game
         self.is_sheriff = False
         self.enchanted = False
+        self.infected_with_virus = False
         self.idol = None
         self.is_protected = False
         self.cursed = False
@@ -1332,6 +1368,13 @@ class Player:
                     "content": [
                         str(i) for i in range(start_num, len(list_of_users) + 1)
                     ],
+                    "channel_id": [
+                        str(
+                            self.user.dm_channel.id
+                            if self.user.dm_channel is not None
+                            else ""
+                        )
+                    ],
                 },
                 timeout=self.game.timer,
             )
@@ -1411,14 +1454,23 @@ class Player:
         self.game.judge_spoken = False
         await self.send(
             _(
-                "🧑‍⚖️ Please enter a phrase that will trigger a second election. Its is"
-                " case sensitive."
+                "🧑‍⚖️ Please enter a secret phrase that will trigger a second election."
+                " It is case sensitive."
             )
         )
         try:
             msg = await self.game.ctx.bot.wait_for_dms(
                 "message",
-                check={"author": {"id": str(self.user.id)}},
+                check={
+                    "author": {"id": str(self.user.id)},
+                    "channel_id": [
+                        str(
+                            self.user.dm_channel.id
+                            if self.user.dm_channel is not None
+                            else ""
+                        )
+                    ],
+                },
                 timeout=self.game.timer,
             )
             symbol = msg.content
@@ -1544,7 +1596,7 @@ class Player:
             for p in self.game.alive_players
             if p.side == Side.WOLVES and p not in self.own_lovers
         ]
-        if len(possible_targets) < 1:
+        if not possible_targets:
             await self.send(
                 _("There's no other werewolf left to kill.\n{game_link}").format(
                     game_link=self.game.game_link
@@ -1592,7 +1644,7 @@ class Player:
             if p.side not in (Side.WOLVES, Side.WHITE_WOLF)
             and p not in targets + self.own_lovers
         ]
-        if len(possible_targets) < 1:
+        if not possible_targets:
             await self.send(
                 _(
                     "There's no other possible villagers left to kill.\n{game_link}"
@@ -1720,6 +1772,13 @@ class Player:
             for p in self.game.alive_players
             if not p.enchanted and p != self and p not in self.own_lovers
         ]
+        if not possible_targets:
+            await self.send(
+                _(
+                    "There's no other possible players left to enchant.\n{game_link}"
+                ).format(game_link=self.game.game_link)
+            )
+            return
         if len(possible_targets) > 2:
             try:
                 to_enchant = await self.choose_users(
@@ -2101,11 +2160,11 @@ class Player:
             self.lives = 2
 
     async def resurrect(self) -> None:
-        if not self.has_ritualist_ability:
+        if not self.has_ritualist_ability or len(self.game.recent_deaths) == 0:
             return
         dead_non_wolves = [
             p
-            for p in self.game.dead_players
+            for p in self.game.recent_deaths
             if p.side != Side.WOLVES and p.side != Side.WHITE_WOLF
         ]
         if len(dead_non_wolves) == 0:
@@ -2136,7 +2195,7 @@ class Player:
                 )
             )
             return
-        to_resurrect.lives = 1 if to_resurrect.role != Role.THE_OLD else 2
+        await self.game.handle_resurrection(to_resurrect)
         self.has_ritualist_ability = False
         await self.send(
             _(
@@ -2154,11 +2213,11 @@ class Player:
         )
 
     async def resurrect_werewolf(self) -> None:
-        if not self.has_wolf_necro_ability:
+        if not self.has_wolf_necro_ability or len(self.game.recent_deaths) == 0:
             return
         dead_wolves = [
             p
-            for p in self.game.dead_players
+            for p in self.game.recent_deaths
             if p.side == Side.WOLVES or p.side == Side.WHITE_WOLF
         ]
         if len(dead_wolves) == 0:
@@ -2189,7 +2248,7 @@ class Player:
                 )
             )
             return
-        to_resurrect.lives = 1
+        await self.game.handle_resurrection(to_resurrect)
         self.has_wolf_necro_ability = False
         await self.send(
             _(
@@ -2320,13 +2379,12 @@ class Player:
                 "**{protected}** is now protected to block one death.\n{game_link}"
             ).format(protected=protected.user, game_link=self.game.game_link)
         )
-        if protected != self:
-            await protected.send(
-                _(
-                    "The **{role}** sent you a spiritual protection to block one"
-                    " death.\n{game_link}"
-                ).format(role=self.role_name, game_link=self.game.game_link)
-            )
+        await protected.send(
+            _(
+                "The **{role}** sent you a spiritual protection to block one"
+                " death.\n{game_link}"
+            ).format(role=self.role_name, game_link=self.game.game_link)
+        )
 
     async def infect_target(self, target: Player) -> None:
         if not self.has_cursed_wolf_father_ability or discord.utils.get(
@@ -2390,6 +2448,67 @@ class Player:
             )
         return
 
+    async def infect_virus(self) -> None:
+        await self.game.ctx.send(
+            _("**The {role} awakes...**").format(role=self.role_name)
+        )
+        possible_targets = [
+            p
+            for p in self.game.alive_players
+            if not p.infected_with_virus and p != self and p not in self.own_lovers
+        ]
+        if not possible_targets:
+            await self.send(
+                _(
+                    "There's no other possible players left to infect.\n{game_link}"
+                ).format(game_link=self.game.game_link)
+            )
+            return
+        if len(possible_targets) > self.game.night_no:
+            try:
+                to_infect = await self.choose_users(
+                    _("Choose {num} player(s) to infect with your virus.").format(
+                        num=self.game.night_no
+                    ),
+                    list_of_users=possible_targets,
+                    amount=self.game.night_no,
+                    required=False,
+                )
+                if not to_infect:
+                    await self.send(
+                        _("You didn't want to use your ability.\n{game_link}").format(
+                            game_link=self.game.game_link
+                        )
+                    )
+            except asyncio.TimeoutError:
+                to_infect = []
+                await self.send(
+                    _(
+                        "You didn't choose enough players to infect,"
+                        " slowpoke.\n{game_link}"
+                    ).format(game_link=self.game.game_link)
+                )
+                return
+        else:
+            await self.send(
+                _(
+                    "The last {count} possible targets have been"
+                    " automatically infected for you."
+                ).format(count=len(possible_targets))
+            )
+            to_infect = possible_targets
+        for p in to_infect:
+            p.infected_with_virus = True
+            await self.send(
+                _("You have infected **{infected}**.").format(infected=p.user)
+            )
+            await p.send(
+                _("You have been infected by the {role}.\n{game_link}").format(
+                    role=self.role_name, game_link=self.game.game_link
+                )
+            )
+        await self.send(self.game.game_link)
+
     @property
     def role_name(self) -> str:
         return self.game.get_role_name(self.role)
@@ -2446,6 +2565,13 @@ class Player:
                     initial_role_info=initial_role_info,
                 )
             )
+            if self.infected_with_virus:
+                self.infected_with_virus = False
+                await self.game.ctx.send(
+                    _("**{user}** lost the disease from viral infection.").format(
+                        user=self.user,
+                    )
+                )
             wild_child = discord.utils.find(
                 lambda x: x.idol is not None and x.role == Role.WILD_CHILD,
                 self.game.alive_players,
@@ -2516,14 +2642,14 @@ class Player:
                     )
             elif self.role == Role.WAR_VETERAN:
                 if self.died_from_villagers:
+                    target = random.choice(
+                        [p for p in self.game.alive_players if p not in self.own_lovers]
+                    )
                     await self.game.ctx.send(
                         _(
                             "The **{role}** was lynched by the Village, a random"
-                            " villager was shot."
-                        ).format(role=self.role_name)
-                    )
-                    target = random.choice(
-                        [p for p in self.game.alive_players if p not in self.own_lovers]
+                            " villager **{target}** was shot."
+                        ).format(role=self.role_name, target=target.user)
                     )
                     if target.role == Role.THE_OLD:
                         target.died_from_villagers = True
@@ -2616,6 +2742,19 @@ class Player:
                 ]
             ):
                 self.game.winning_team = "Flutist"
+                return True
+        if self.side == Side.SUPERSPREADER:
+            # Another win stealer but loses to Flutist as it's later called on wake order
+            if (
+                all(
+                    [
+                        p.infected_with_virus or p == self or p in self.own_lovers
+                        for p in self.game.alive_players
+                    ]
+                )
+                and self.game.winning_team != "Flutist"
+            ):
+                self.game.winning_team = self.role_name
                 return True
         elif self.side == Side.VILLAGERS:
             if (
@@ -2769,6 +2908,7 @@ def get_roles(number_of_players: int, mode: str = None) -> List[Role]:
                 Role.WAR_VETERAN,
                 Role.WOLF_SHAMAN,
                 Role.WOLF_NECROMANCER,
+                Role.SUPERSPREADER,
             ]
         )
         roles_to_give = random.shuffle(roles_to_give)
@@ -2783,36 +2923,40 @@ def get_roles(number_of_players: int, mode: str = None) -> List[Role]:
     else:
         roles = roles_to_give[:number_of_players]
     roles = random.shuffle(roles)
+    if not any([1 <= role.value <= 5 for role in roles[:-2]]):
+        roles = force_role(roles, Role.WEREWOLF)
     available_roles = roles[:-2]
-    if available_roles.count(Role.SISTER) == 1:
+    if roles.count(Role.SISTER) > 0 and available_roles.count(Role.SISTER) < 2:
         for idx, role in enumerate(roles):
             if role == Role.SISTER:
                 roles[idx] = Role.VILLAGER
-    if available_roles.count(Role.BROTHER) < 2:
+    if roles.count(Role.BROTHER) > 0 and available_roles.count(Role.BROTHER) < 2:
         for idx, role in enumerate(roles):
             if role == Role.BROTHER:
                 roles[idx] = Role.VILLAGER
     return roles
 
 
-def force_role(game: Game, role_to_force: Role) -> Optional[Role]:
+def force_role(roles: List[Role], role_to_force: Role) -> Optional[Role]:
     # Make sure a role is to be played, force it otherwise
     # Warning: This can replace previously forced role
-    if role_to_force in game.available_roles:
-        return
+    available_roles = roles[:-2]
+    extra_roles = roles[-2:]
+    if role_to_force in available_roles:
+        return roles
     else:
-        idx = 0  # Let's replace the first role in game.available_roles
-        if role_to_force in game.extra_roles:
-            # Get it by swapping with game.extra_roles's
-            swap_idx = game.extra_roles.index(role_to_force)
-            game.available_roles[idx], game.extra_roles[swap_idx] = (
-                game.extra_roles[swap_idx],
-                game.available_roles[idx],
+        idx = 0  # Let's replace the first role in available_roles
+        if role_to_force in extra_roles:
+            # Get it by swapping with extra_roles's
+            swap_idx = extra_roles.index(role_to_force)
+            available_roles[idx], extra_roles[swap_idx] = (
+                extra_roles[swap_idx],
+                available_roles[idx],
             )
         else:
             # Or just force it manually
-            game.available_roles[idx] = role_to_force
-    return random.shuffle(game.available_roles), random.shuffle(game.extra_roles)
+            available_roles[idx] = role_to_force
+    return random.shuffle(available_roles) + random.shuffle(extra_roles)
 
 
 if __name__ == "__main__":
