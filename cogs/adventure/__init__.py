@@ -490,7 +490,7 @@ class Adventure(commands.Cog):
         luck_multiply = ctx.character_data["luck"]
         if (
             buildings := await self.bot.get_city_buildings(ctx.character_data["guild"])
-        ) :
+        ):
             bonus = buildings["adventure_building"]
         else:
             bonus = 0

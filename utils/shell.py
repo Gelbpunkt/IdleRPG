@@ -82,10 +82,10 @@ async def get_cpu_name():
     lines = {
         (j := i.split(":"))[0].strip(): j[1].strip() for i in stdout.split("\n") if i
     }
-    if (model_name := lines.get("model name", None)) :
+    if (model_name := lines.get("model name", None)):
         # any normal x86_64 CPU
         return model_name
-    elif (cpu_part := lines.get("CPU part", None)) :
+    elif (cpu_part := lines.get("CPU part", None)):
         # it's ARM
         # https://github.com/karelzak/util-linux/blob/master/sys-utils/lscpu-arm.c#L33
         return ARM_CPUS.get(cpu_part, "NaN")
