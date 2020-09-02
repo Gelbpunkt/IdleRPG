@@ -495,7 +495,7 @@ class Alliance(commands.Cog):
         _(
             """Lists all buildings in your city, along with their level. These buildings give passive rewards to all alliance members:
 
-            Thief buildings increase your chance to steal money as a thief, for every level, this increases your chance by 10%
+            Thief buildings increase your chance to steal money as a thief, for every level, this increases your chance by 5%
             Raid buildings increase a user's raidstats by 0.1 per level
             Trade buildings remove the need to pay the 5% tax when selling or buying items when it reached at least Level 1. It also increases the amount of money you get from `{prefix}merch` and `{prefix}merchall` increasing the reward by 50% for each level
             Adventure buildings shorten the adventure time by 1% per level and increase your succes chances by 1% per level.
