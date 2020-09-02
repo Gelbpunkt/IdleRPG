@@ -578,7 +578,8 @@ IdleRPG is a global bot, your characters are valid everywhere"""
             If you are a Ritualist, your loot chances are doubled. Check [our wiki](https://wiki.idlerpg.xyz/index.php?title=Loot#Probability) for the exact chances."""
         )
         ret = await self.bot.pool.fetch(
-            'SELECT * FROM loot WHERE "user"=$1;', ctx.author.id
+            'SELECT * FROM loot WHERE "user"=$1 ORDER BY "value" DESC, "id" DESC;',
+            ctx.author.id,
         )
         if not ret:
             return await ctx.send(_("You do not have any loot at this moment."))
@@ -602,7 +603,7 @@ IdleRPG is a global bot, your characters are valid everywhere"""
 
             If you choose money, you will get the loots' combined value in cash. For XP, you will get 1/4th of the combined value in XP."""
         )
-        if (none_given := (len(loot_ids) == 0)) :
+        if (none_given := (len(loot_ids) == 0)):
             value, count = await self.bot.pool.fetchval(
                 'SELECT (SUM("value"), COUNT(*)) FROM loot WHERE "user"=$1',
                 ctx.author.id,

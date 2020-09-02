@@ -116,12 +116,17 @@ cities = {
     "Drutsk": ("adventure",),
 }
 
-"""Credentials for the Lavalink server."""
-lava_creds = {
-    "password": "password",
-    "ws_url": "ws://127.0.0.1:2333",
-    "rest_url": "http://127.0.0.1:2333",
-}
+"""Music stuff"""
+music_nodes = [
+    {
+        "host": "127.0.0.1",
+        "port": 2333,
+        "rest_uri": "http://127.0.0.1:2333",
+        "password": "mypass",
+        "region": "frankfurt",
+        "identifier": "DE",
+    }
+]
 query_endpoint = "http://localhost:7000/search"
 resolve_endpoint = "http://localhost:7000/resolve"
 

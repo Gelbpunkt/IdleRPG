@@ -120,7 +120,7 @@ class Werewolf(commands.Cog):
             " `{prefix}ww modes` and `{prefix}ww speeds` to see info about available"
             " game modes and speeds."
         ).format(prefix=ctx.prefix)
-        mode_emojis = {"Huntergame": ":gun:", "Valentines": ":two_hearts:"}
+        mode_emojis = {"Huntergame": "🔫", "Valentines": "💕"}
         mode_emoji = mode_emojis.get(mode, "")
         if ctx.channel.id == self.bot.config.official_tournament_channel_id:
             # TODO: Determine threshold players when wolves can kill 2 villagers per night in mass-games
@@ -165,7 +165,7 @@ class Werewolf(commands.Cog):
             title = _("Werewolf game!")
             text = _(
                 "**{author} started a game of Werewolf!**\n**{mode}** mode on"
-                " **{speed}** speed. React with :wolf: to join the game! **Minimum of"
+                " **{speed}** speed. React with 🐺 to join the game! **Minimum of"
                 " {min_players} players are required. Starting in 30 seconds.\n{num}"
                 " joined**"
             )
@@ -290,7 +290,7 @@ class Werewolf(commands.Cog):
 `Huntergame`: Only Hunters and Werewolves are available.
 `Villagergame`: No special roles, only Villagers and Werewolves are available.
 `Valentines`: There are multiple lovers or couples randomly chosen at the start of the game. A chain of lovers might exist upon the Amor's arrows. If the remaining players are in a single chain of lovers, they all win.
-`IdleRPG`: (based on Imbalanced mode) New roles are available: Paragon, Raider, Ritualist, Lawyer, Troublemaker, War Veteran, Wolf Shaman, Wolf Necromancer."""
+`IdleRPG`: (based on Imbalanced mode) New roles are available: Paragon, Raider, Ritualist, Lawyer, Troublemaker, War Veteran, Wolf Shaman, Wolf Necromancer, Superspreader."""
                 ),
                 colour=self.bot.config.primary_colour,
             ).set_author(
@@ -431,7 +431,8 @@ class Werewolf(commands.Cog):
                 "side": _("The Loners"),
                 "members": (
                     f"White Wolf - {_('Be the sole survivor')}, Flutist -"
-                    f" {_('Must enchant every living inhabitants')}"
+                    f" {_('Must enchant every living inhabitants')}, Superspreader -"
+                    f" {_('Infect all the players with your virus')} {restriction}"
                 ),
                 "goal": _("Must complete their own objective"),
             },

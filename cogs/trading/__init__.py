@@ -366,6 +366,7 @@ class Trading(commands.Cog):
 
         await self.bot.paginator.Paginator(extras=items).paginate(ctx)
 
+    @has_char()
     @commands.command(aliases=["market", "m"], brief=_("View the global item market"))
     @locale_doc
     async def shop(
@@ -380,7 +381,9 @@ class Trading(commands.Cog):
             `[minstat]` - The minimum damage/defense an item has to have to show up; defaults to 0
             `[highestprice]` - The highest price an item can have to show up; defaults to $1,000,000
 
-            Lists the buyable items on the market. You can cleverly filter out items you don't want to see with these parameters."""
+            Lists the buyable items on the market. You can cleverly filter out items you don't want to see with these parameters.
+
+            To quickly buy an item, you can use the 💰 emoji."""
         )
         if itemtype not in ["All"] + self.bot.config.item_types:
             return await ctx.send(
@@ -415,7 +418,7 @@ class Trading(commands.Cog):
         if not items:
             return await ctx.send(_("No results."))
 
-        items = [
+        entries = [
             discord.Embed(
                 title=_("IdleRPG Shop"),
                 description=_("Use `{prefix}buy {item}` to buy this.").format(
@@ -432,13 +435,14 @@ class Trading(commands.Cog):
                 name=_("Price"),
                 value=f"${item['price']} (+${round(item['price'] * 0.05)} (5%) tax)",
             )
-            .set_footer(
-                text=_("Item {num} of {total}").format(num=idx + 1, total=len(items))
-            )
             for idx, item in enumerate(items)
         ]
 
-        await self.bot.paginator.Paginator(extras=items).paginate(ctx)
+        items = [item["item"] for item in items]
+
+        await self.bot.paginator.ShopPaginator(extras=entries, items=items).paginate(
+            ctx
+        )
 
     @has_char()
     @user_cooldown(180)

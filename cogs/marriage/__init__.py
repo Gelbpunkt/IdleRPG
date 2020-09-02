@@ -40,7 +40,8 @@ class Marriage(commands.Cog):
             self.girlnames = girl_names.readlines()
 
     def get_max_kids(self, lovescore):
-        return 10 + lovescore // 250_000
+        max_, missing = divmod(lovescore, 250_000)
+        return 10 + max_, 250_000 - missing
 
     @has_char()
     @commands.guild_only()
@@ -380,6 +381,33 @@ class Marriage(commands.Cog):
             name = random.choice(data)  # avoid duplicate names
         return name
 
+    async def lovescore_up(self, ctx, marriage, max_, missing, toomany):
+        additional = (
+            ""
+            if not toomany
+            else _(
+                "You already have {max_} children. You can increase this limit"
+                " by increasing your lovescores to get {amount} more."
+            ).format(max_=max_, amount=f"{missing:,}")
+        )
+        ls = random.randint(10, 50)
+        await self.bot.pool.execute(
+            'UPDATE profile SET "lovescore"="lovescore"+$1 WHERE "user"=$2 OR'
+            ' "user"=$3;',
+            ls,
+            ctx.author.id,
+            marriage,
+        )
+        await self.bot.cache.update_profile_cols_rel(marriage, lovescore=ls)
+        await self.bot.cache.update_profile_cols_rel(ctx.author.id, lovescore=ls)
+        return await ctx.send(
+            _(
+                "You had a lovely night and gained {ls} lovescore. 😏\n\n{additional}".format(
+                    ls=ls, additional=additional
+                )
+            )
+        )
+
     @has_char()
     @commands.guild_only()
     @user_cooldown(3600)
@@ -418,15 +446,7 @@ class Marriage(commands.Cog):
             spouse = await self.bot.cache.get_profile_col(
                 marriage, "lovescore", conn=conn
             )
-        max_ = self.get_max_kids(ctx.character_data["lovescore"] + spouse)
-        if len(names) >= max_:
-            await self.bot.reset_cooldown(ctx)
-            return await ctx.send(
-                _(
-                    "You already have {max_} children. You can increase this limit by"
-                    " increasing your lovescores."
-                ).format(max_=max_)
-            )
+        max_, missing = self.get_max_kids(ctx.character_data["lovescore"] + spouse)
         names = [name["name"] for name in names]
         user = await self.bot.get_user_global(marriage)
         if not await ctx.confirm(
@@ -437,22 +457,11 @@ class Marriage(commands.Cog):
         ):
             return await ctx.send(_("O.o not in the mood today?"))
 
+        if len(names) >= max_:
+            return await self.lovescore_up(ctx, marriage, max_, missing, True)
+
         if random.choice([True, False]):
-            ls = random.randint(10, 50)
-            await self.bot.pool.execute(
-                'UPDATE profile SET "lovescore"="lovescore"+$1 WHERE "user"=$2 OR'
-                ' "user"=$3;',
-                ls,
-                ctx.author.id,
-                marriage,
-            )
-            await self.bot.cache.update_profile_cols_rel(
-                ctx.character_data["marriage"], lovescore=ls
-            )
-            await self.bot.cache.update_profile_cols_rel(ctx.author.id, lovescore=ls)
-            return await ctx.send(
-                _("You had a lovely night and gained {ls} lovescore. 😏".format(ls=ls))
-            )
+            return await self.lovescore_up(ctx, marriage, max_, missing, False)
         gender = random.choice(["m", "f"])
         if gender == "m":
             await ctx.send(

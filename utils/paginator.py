@@ -383,6 +383,218 @@ class Paginator:
         self.controller = ctx.bot.loop.create_task(self.reaction_controller(ctx))
 
 
+class ShopPaginator:
+
+    __slots__ = (
+        "entries",
+        "extras",
+        "title",
+        "description",
+        "colour",
+        "footer",
+        "length",
+        "prepend",
+        "append",
+        "fmt",
+        "timeout",
+        "ordered",
+        "controls",
+        "controller",
+        "pages",
+        "current",
+        "previous",
+        "eof",
+        "base",
+        "names",
+        "items",
+    )
+
+    def __init__(self, **kwargs: Any) -> None:
+        self.entries = kwargs.get("entries", None)
+        self.extras = kwargs.get("extras", None)
+        self.items = kwargs.get("items", None)
+
+        self.title = kwargs.get("title", None)
+        self.description = kwargs.get("description", None)
+        self.colour = kwargs.get("colour", primary_colour)
+        self.footer = kwargs.get("footer", None)
+
+        self.length = kwargs.get("length", 10)
+        self.prepend = kwargs.get("prepend", "")
+        self.append = kwargs.get("append", "")
+        self.fmt = kwargs.get("fmt", "")
+        self.timeout = kwargs.get("timeout", 90)
+        self.ordered = kwargs.get("ordered", False)
+
+        self.controller = None
+        self.pages: List[discord.Embed] = []
+        self.base: Optional[discord.Message] = None
+
+        self.current = 0
+        self.previous = 0
+        self.eof = 0
+
+        self.controls = {
+            "⏮": 0.0,
+            "◀": -1,
+            "⏹": "stop",
+            "▶": +1,
+            "⏭": None,
+            "🔢": "choose",
+            "💰": "buy",
+        }
+
+    async def indexer(self, ctx: "Context", ctrl: str) -> None:
+        if self.base is None:
+            raise Exception("Should not be called manually")
+        if ctrl == "stop":
+            ctx.bot.loop.create_task(self.stop_controller(self.base))
+
+        elif ctrl == "choose":
+            choose_msg = await ctx.send(
+                _("Please send a number between 1 and {max_pages}").format(
+                    max_pages=int(self.eof) + 1
+                )
+            )
+
+            def check(msg):
+                return (
+                    msg.author.id == ctx.author.id
+                    and msg.content.isdigit()
+                    and 0 < int(msg.content) <= int(self.eof) + 1
+                )
+
+            try:
+                m = await ctx.bot.wait_for("message", check=check, timeout=30)
+                await choose_msg.delete()
+            except TimeoutError:
+                if self.base is not None:
+                    await self.base.delete()
+                await ctx.send(_("Took too long to choose a number. Cancelling."))
+                return
+            self.current = int(m.content) - 1
+
+        elif ctrl == "buy":
+            item_id = self.items[self.current]
+            await self.buy(ctx, item_id)
+
+        elif isinstance(ctrl, int):
+            self.current += ctrl
+            if self.current > self.eof or self.current < 0:
+                self.current -= ctrl
+        else:
+            self.current = int(ctrl)
+
+    async def buy(self, ctx: "Context", item_id: int):
+        await ctx.invoke(ctx.bot.get_command("buy"), itemid=item_id)
+        del self.pages[self.current]
+        if len(self.pages) == 0:
+            ctx.bot.loop.create_task(self.stop_controller(self.base))
+        self.current -= 1
+        self.eof -= 1
+        await self.base.edit(embed=self.pages[self.current])
+
+    async def reaction_controller(self, ctx: "Context") -> None:
+        bot = ctx.bot
+        author = ctx.author
+
+        self.base = await ctx.send(embed=self.pages[0])
+
+        if len(self.pages) == 1:
+            await self.base.add_reaction("⏹")
+            await self.base.add_reaction("💰")
+        else:
+            for reaction in self.controls:
+                try:
+                    await self.base.add_reaction(reaction)
+                except discord.HTTPException:
+                    return
+
+        def check(r: discord.Reaction, u: discord.User) -> bool:
+            if str(r) not in self.controls.keys():
+                return False
+            elif u.id == bot.user.id or r.message.id != self.base.id:
+                return False
+            elif u.id != author.id:
+                return False
+            return True
+
+        while True:
+            try:
+                react, user = await bot.wait_for(
+                    "reaction_add", check=check, timeout=self.timeout
+                )
+            except asyncio.TimeoutError:
+                return ctx.bot.loop.create_task(self.stop_controller(self.base))
+
+            control = self.controls.get(str(react))
+
+            try:
+                await self.base.remove_reaction(react, user)
+            except discord.HTTPException:
+                pass
+
+            self.previous = self.current
+            await self.indexer(ctx, control)
+
+            if self.previous == self.current:
+                continue
+
+            try:
+                self.pages[self.current].set_footer(
+                    text=_("Item {num} of {total}").format(
+                        num=self.current, total=int(self.eof)
+                    )
+                )
+                await self.base.edit(embed=self.pages[self.current])
+            except KeyError:
+                pass
+
+    async def stop_controller(self, message: discord.Message) -> None:
+        try:
+            await message.delete()
+        except discord.HTTPException:
+            pass
+
+        try:
+            self.controller.cancel()
+        except Exception:
+            pass
+
+    def formmater(self, chunk):
+        return "\n".join(
+            f"{self.prepend}{self.fmt}{value}{self.fmt[::-1]}{self.append}"
+            for value in chunk
+        )
+
+    async def paginate(self, ctx):
+        if self.extras:
+            self.pages = [p for p in self.extras if isinstance(p, discord.Embed)]
+
+        if self.entries:
+            chunks = [c async for c in pager(self.entries, self.length)]
+
+            for index, chunk in enumerate(chunks):
+                page = discord.Embed(
+                    title=f"{self.title} - {index + 1}/{len(chunks)}", color=self.colour
+                )
+                page.description = self.formmater(chunk)
+
+                if hasattr(self, "footer"):
+                    if self.footer:
+                        page.set_footer(text=self.footer)
+                self.pages.append(page)
+
+        if not self.pages:
+            raise ValueError(
+                "There must be enough data to create at least 1 page for pagination."
+            )
+
+        self.eof = float(len(self.pages) - 1)
+        self.controls["⏭"] = self.eof
+        self.controller = ctx.bot.loop.create_task(self.reaction_controller(ctx))
+
+
 class AdventurePaginator:
 
     __slots__ = (

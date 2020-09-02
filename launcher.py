@@ -213,7 +213,7 @@ class Main:
             if payload.get("scope") != "launcher" or not payload.get("action"):
                 continue  # not the launcher's task
             # parse the JSON args
-            if (args := payload.get("args", {})) :
+            if (args := payload.get("args", {})):
                 args = orjson.loads(args)
             id_ = args.get("id")
             id_exists = id_ is not None
