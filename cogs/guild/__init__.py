@@ -74,14 +74,16 @@ class Guild(commands.Cog):
         self, ctx: commands.Context, *, guild_id: int = None, name: str = None
     ):
         async with self.bot.pool.acquire() as conn:
-            if name:
+            if name is not None:
                 guild = await conn.fetchrow(
                     'SELECT * FROM guild WHERE "name"=$1;', name
                 )
-            elif guild_id:
+            elif guild_id is not None:
                 guild = await conn.fetchrow(
                     'SELECT * FROM guild WHERE "id"=$1;', guild_id
                 )
+            else:
+                raise ValueError("Either guild_id or name must be given")
             if not guild:
                 return await ctx.send(_("No guild found."))
 
