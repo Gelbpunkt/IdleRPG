@@ -36,9 +36,6 @@ class GlobalEvents(commands.Cog):
             "Authorization": bot.config.dbltoken
         }  # needed for DBL requests
         self.auth_headers2 = {"Authorization": bot.config.bfdtoken}
-        self.stats_updates = bot.loop.create_task(
-            self.stats_updater()
-        )  # Initiate the stats updates and save it for the further close
         self.is_first_ready = True
 
     @commands.Cog.listener()
@@ -61,8 +58,8 @@ class GlobalEvents(commands.Cog):
             self.bot.logger.info(f"└─{'─' * max_string}─┘")
             await self.load_settings()
             self.bot.loop.create_task(queue_manager(self.bot, self.bot.queue))
+            self.stats_updates = self.bot.loop.create_task(self.stats_updater())
             await self.bot.is_owner(self.bot.user)  # force getting the owners
-            await self.status_updater()
             await self.reschedule_reminders()
             self.bot.schedule_manager.start()
         else:
@@ -168,24 +165,13 @@ class GlobalEvents(commands.Cog):
             " members!",
         )
 
-    async def status_updater(self):
-        await self.bot.wait_until_ready()
-        await self.bot.change_presence(
-            activity=discord.Game(
-                name=f"IdleRPG v{self.bot.version}"
-                if self.bot.config.is_beta
-                else self.bot.BASE_URL
-            ),
-            status=discord.Status.idle,
-        )
-
     async def stats_updater(self):
         await self.bot.wait_until_ready()
         if (
             self.bot.shard_count - 1 not in self.bot.shards.keys()
         ) or self.bot.config.is_beta:
             return
-        while True:
+        while not self.bot.is_closed():
             await self.bot.session.post(
                 f"https://top.gg/api/bots/{self.bot.user.id}/stats",
                 data=await self.get_dbl_payload(),
@@ -204,11 +190,11 @@ class GlobalEvents(commands.Cog):
                 self.bot.config.global_prefix
             )
             return  # we're using the default prefix in beta
-        # ids = [g.id for g in self.bot.guilds]
-        prefixes = await self.bot.pool.fetch("SELECT id, prefix FROM server;")
+        ids = [g.id for g in self.bot.guilds]
+        prefixes = await self.bot.pool.fetch(
+            'SELECT id, prefix FROM server WHERE "id"=ANY($1);', ids
+        )
         for row in prefixes:
-            # Temporary intents fix
-            # if row["id"] in ids:
             self.bot.all_prefixes[row["id"]] = row["prefix"]
         self.bot.command_prefix = self.bot._get_prefix
 
@@ -242,7 +228,8 @@ class GlobalEvents(commands.Cog):
         await self.bot.pool.execute('DELETE FROM reminders WHERE "id"=$1;', reminder_id)
         locale = await self.bot.get_cog("Locale").locale(user_id)
         i18n.current_locale.set(locale)
-        await self.bot.get_channel(channel_id).send(
+        await self.bot.http.send_message(
+            channel_id,
             _("{user}, you wanted to be reminded about {subject} {diff} ago.").format(
                 user=f"<@{user_id}>",
                 subject=reminder_text,
