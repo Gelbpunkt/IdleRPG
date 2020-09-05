@@ -210,11 +210,19 @@ class IntGreaterThan(commands.Converter):
 
 
 class CrateRarity(commands.Converter):
-    async def convert(self, ctx, arg):
+    async def convert(self, ctx, arg) -> str:
         stuff = arg.lower()
-        if stuff not in ["common", "uncommon", "rare", "magic", "legendary"]:
+        rarities = {
+            "c": "common",
+            "u": "uncommon",
+            "r": "rare",
+            "m": "magic",
+            "l": "legendary",
+        }
+        rarity = rarities.get(stuff, stuff)
+        if rarity not in rarities.values():
             raise InvalidCrateRarity()
-        return stuff
+        return rarity
 
 
 class CoinSide(commands.Converter):
