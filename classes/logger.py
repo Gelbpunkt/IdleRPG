@@ -49,16 +49,6 @@ class ColoredFormatter(logging.Formatter):
         return logging.Formatter.format(self, record)
 
 
-class NoMoreReferencing(logging.Filter):
-    def __init__(self):
-        super().__init__(name="discord.state")
-
-    def filter(self, record):
-        if record.levelname == "WARNING" and "referencing an unknown" in record.msg:
-            return False
-        return True
-
-
 class NoMoreRatelimit(logging.Filter):
     def __init__(self):
         super().__init__(name="discord.http")
@@ -69,7 +59,6 @@ class NoMoreRatelimit(logging.Filter):
         return True
 
 
-logging.getLogger("discord.state").addFilter(NoMoreReferencing())
 logging.getLogger("discord.http").addFilter(NoMoreRatelimit())
 
 FORMAT = (
