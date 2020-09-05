@@ -54,6 +54,13 @@ shard_count = int(sys.argv[2])
 cluster_id = int(sys.argv[3])
 cluster_name = sys.argv[4]
 
+# Configure intents
+intents = discord.Intents.none()
+intents.guilds = True
+intents.members = True
+intents.voice_states = True
+intents.messages = True
+intents.reactions = True
 
 bot = Bot(
     case_insensitive=True,
@@ -63,7 +70,8 @@ bot = Bot(
     shard_count=shard_count,
     cluster_id=cluster_id,
     cluster_name=cluster_name,
-    fetch_offline_members=False,  # for intents to work
+    intents=intents,
+    fetch_offline_members=False,  # chunking is nerfed
     max_messages=10000,  # We have a ton of incoming messages, higher cache means commands like activeadventure
     # or guild adventure joining will stay in cache so reactions are counted
 )
