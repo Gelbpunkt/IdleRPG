@@ -21,7 +21,12 @@ import discord
 
 from discord.ext import commands
 
-from classes.converters import CrateRarity, IntFromTo, IntGreaterThan, MemberWithCharacter
+from classes.converters import (
+    CrateRarity,
+    IntFromTo,
+    IntGreaterThan,
+    MemberWithCharacter,
+)
 from cogs.shard_communication import user_on_cooldown as user_cooldown
 from utils import random
 from utils.checks import has_char, has_money
