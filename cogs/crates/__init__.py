@@ -21,7 +21,7 @@ import discord
 
 from discord.ext import commands
 
-from classes.converters import IntFromTo, IntGreaterThan, MemberWithCharacter
+from classes.converters import CrateRarity, IntFromTo, IntGreaterThan, MemberWithCharacter
 from cogs.shard_communication import user_on_cooldown as user_cooldown
 from utils import random
 from utils.checks import has_char, has_money
@@ -83,7 +83,7 @@ class Crates(commands.Cog):
     @commands.command(name="open", brief=_("Open a crate"))
     @locale_doc
     async def _open(
-        self, ctx, rarity: str.lower = "common", amount: IntFromTo(1, 100) = 1
+        self, ctx, rarity: CrateRarity = "common", amount: IntFromTo(1, 100) = 1
     ):
         _(
             """`[rarity]` - the crate's rarity to open, can be common, uncommon, rare, magic or legendary; defaults to common
@@ -92,10 +92,6 @@ class Crates(commands.Cog):
             Open one of your crates to receive a weapon. To check which crates contain which items, check `{prefix}help crates`.
             This command takes up a lot of space, so choose a spammy channel to open crates."""
         )
-        if rarity not in ["common", "uncommon", "rare", "magic", "legendary"]:
-            return await ctx.send(
-                _("{rarity} is not a valid rarity.").format(rarity=rarity)
-            )
         if ctx.character_data[f"crates_{rarity}"] < amount:
             return await ctx.send(
                 _(
@@ -240,14 +236,14 @@ class Crates(commands.Cog):
                 )
 
     @has_char()
-    @commands.command(brief=_("Give crates to someone"))
+    @commands.command(aliases=["tc"], brief=_("Give crates to someone"))
     @locale_doc
     async def tradecrate(
         self,
         ctx,
         other: MemberWithCharacter,
         amount: IntGreaterThan(0) = 1,
-        rarity: str.lower = "common",
+        rarity: CrateRarity = "common",
     ):
         _(
             """`<other>` - A user with a character
@@ -263,10 +259,6 @@ class Crates(commands.Cog):
         elif other == ctx.me:
             return await ctx.send(
                 _("For me? I'm flattered, but I can't accept this...")
-            )
-        if rarity not in ["common", "uncommon", "rare", "magic", "legendary"]:
-            return await ctx.send(
-                _("{rarity} is not a valid rarity.").format(rarity=rarity)
             )
         if ctx.character_data[f"crates_{rarity}"] < amount:
             return await ctx.send(_("You don't have any crates of this rarity."))
@@ -314,7 +306,7 @@ class Crates(commands.Cog):
         self,
         ctx,
         quantity: IntGreaterThan(0),
-        rarity: str.lower,
+        rarity: CrateRarity,
         price: IntFromTo(0, 100_000_000),
         buyer: MemberWithCharacter,
     ):
@@ -330,21 +322,10 @@ class Crates(commands.Cog):
             `{prefix}oc 5 c 75000 @buyer#1234`"""
         )
         if buyer == ctx.author:
-            return await ctx.send(_("You may not offer crates to yourself."))
+            await ctx.send(_("You may not offer crates to yourself."))
+            return await self.bot.reset_cooldown(ctx)
         elif buyer == ctx.me:
             await ctx.send(_("No, I don't want any crates."))
-            return await self.bot.reset_cooldown(ctx)
-
-        rarities = {
-            "c": "common",
-            "u": "uncommon",
-            "r": "rare",
-            "m": "magic",
-            "l": "legendary",
-        }
-        rarity = rarities.get(rarity, rarity)
-        if rarity not in rarities.values():
-            await ctx.send(_("{rarity} is not a valid rarity.").format(rarity=rarity))
             return await self.bot.reset_cooldown(ctx)
 
         if ctx.character_data[f"crates_{rarity}"] < quantity:

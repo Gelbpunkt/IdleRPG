@@ -24,6 +24,7 @@ import discord
 from discord.ext import commands
 
 from classes.converters import (
+    CrateRarity,
     IntFromTo,
     IntGreaterThan,
     MemberConverter,
@@ -313,7 +314,7 @@ class GameMaster(commands.Cog):
     @commands.command(hidden=True, brief=_("Create crates"))
     @locale_doc
     async def gmcrate(
-        self, ctx, rarity: str.lower, amount: int, target: UserWithCharacter
+        self, ctx, rarity: CrateRarity, amount: int, target: UserWithCharacter
     ):
         _(
             """`<rarity>` - the crates' rarity, can be common, uncommon, rare, magic or legendary
@@ -324,10 +325,6 @@ class GameMaster(commands.Cog):
 
             Only Game Masters can use this command."""
         )
-        if rarity not in ["common", "uncommon", "rare", "magic", "legendary"]:
-            return await ctx.send(
-                _("{rarity} is not a valid rarity.").format(rarity=rarity)
-            )
         await self.bot.pool.execute(
             f'UPDATE profile SET "crates_{rarity}"="crates_{rarity}"+$1 WHERE'
             ' "user"=$2;',
