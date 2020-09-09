@@ -22,6 +22,7 @@ from typing import Optional
 
 import discord
 
+from aiohttp import ContentTypeError
 from discord.ext import commands
 from discord.ext.commands.default import Author
 
@@ -242,7 +243,27 @@ IdleRPG is a global bot, your characters are valid everywhere"""
                     else _("No Mission"),
                 },
             ) as req:
-                img = BytesIO(await req.read())
+                if req.status == 200:
+                    img = BytesIO(await req.read())
+                else:
+                    # Error, means try reading the response JSON error
+                    try:
+                        error_json = await req.json()
+                        return await ctx.send(
+                            _(
+                                "There was an error processing your image. Reason: {reason} ({detail})"
+                            ).format(
+                                reason=error_json["reason"], detail=error_json["detail"]
+                            )
+                        )
+                    except ContentTypeError:
+                        return await ctx.send(
+                            _("Unexpected internal error when generating image.")
+                        )
+                    except Exception:
+                        return await ctx.send(
+                            _("Unexpected error when generating image.")
+                        )
         await ctx.send(file=discord.File(fp=img, filename="Profile.png"))
 
     @commands.command(
