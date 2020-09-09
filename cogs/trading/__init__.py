@@ -16,6 +16,7 @@ You should have received a copy of the GNU Affero General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
 import datetime
+from contextlib import suppress
 
 import discord
 
@@ -149,19 +150,22 @@ class Trading(commands.Cog):
                 itemid,
             )
             if not item:
-                return await ctx.send(
+                await ctx.send(
                     _("There is no item in the shop with the ID: {itemid}").format(
                         itemid=itemid
                     )
                 )
+                return False
             if item["owner"] == ctx.author.id:
-                return await ctx.send(_("You may not buy your own items."))
+                await ctx.send(_("You may not buy your own items."))
+                return False
             if await self.bot.get_city_buildings(ctx.character_data["guild"]):
                 tax = 0
             else:
                 tax = round(item["price"] * 0.05)
             if ctx.character_data["money"] < item["price"] + tax:
-                return await ctx.send(_("You're too poor to buy this item."))
+                await ctx.send(_("You're too poor to buy this item."))
+                return False
             await conn.execute(
                 "DELETE FROM market m USING allitems ai WHERE m.item=ai.id AND ai.id=$1"
                 " RETURNING *;",
@@ -222,11 +226,13 @@ class Trading(commands.Cog):
             ).format(id=item["id"], prefix=ctx.prefix)
         )
         if seller:
-            await seller.send(
-                "**{author}** bought your **{name}** for **${price}** from the market.".format(
-                    author=ctx.author.name, name=item["name"], price=item["price"]
+            with suppress(discord.Forbidden, discord.HTTPException):
+                await seller.send(
+                    "**{author}** bought your **{name}** for **${price}** from the market.".format(
+                        author=ctx.aguthor.name, name=item["name"], price=item["price"]
+                    )
                 )
-            )
+        return True
 
     @has_char()
     @commands.command(brief=_("Remove your item from the shop."))
@@ -419,30 +425,34 @@ class Trading(commands.Cog):
             return await ctx.send(_("No results."))
 
         entries = [
-            discord.Embed(
-                title=_("IdleRPG Shop"),
-                description=_("Use `{prefix}buy {item}` to buy this.").format(
-                    prefix=ctx.prefix, item=item["item"]
+            (
+                discord.Embed(
+                    title=_("IdleRPG Shop"),
+                    description=_("Use `{prefix}buy {item}` to buy this.").format(
+                        prefix=ctx.prefix, item=item["item"]
+                    ),
+                    colour=discord.Colour.blurple(),
+                )
+                .add_field(name=_("Name"), value=item["name"])
+                .add_field(name=_("Type"), value=item["type"])
+                .add_field(name=_("Damage"), value=item["damage"])
+                .add_field(name=_("Armor"), value=item["armor"])
+                .add_field(name=_("Value"), value=f"${item['value']}")
+                .add_field(
+                    name=_("Price"),
+                    value=f"${item['price']} (+${round(item['price'] * 0.05)} (5%) tax)",
+                )
+                .set_footer(
+                    text=_("Item {num} of {total}").format(
+                        num=idx + 1, total=len(items)
+                    )
                 ),
-                colour=discord.Colour.blurple(),
-            )
-            .add_field(name=_("Name"), value=item["name"])
-            .add_field(name=_("Type"), value=item["type"])
-            .add_field(name=_("Damage"), value=item["damage"])
-            .add_field(name=_("Armor"), value=item["armor"])
-            .add_field(name=_("Value"), value=f"${item['value']}")
-            .add_field(
-                name=_("Price"),
-                value=f"${item['price']} (+${round(item['price'] * 0.05)} (5%) tax)",
+                item["item"],
             )
             for idx, item in enumerate(items)
         ]
 
-        items = [item["item"] for item in items]
-
-        await self.bot.paginator.ShopPaginator(extras=entries, items=items).paginate(
-            ctx
-        )
+        await self.bot.paginator.ShopPaginator(entries=entries).paginate(ctx)
 
     @has_char()
     @user_cooldown(180)
