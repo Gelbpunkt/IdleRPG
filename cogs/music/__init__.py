@@ -596,7 +596,7 @@ class Music(commands.Cog):
                 return await ctx.send(
                     _("I am not playing. Please specify a song to look for.")
                 )
-            query = f"{track.title} {track.track_obj.artists[0].name}"
+            query = f"{track.title} {track.track_obj.artist.name}"
         elif query is None and not ctx.guild:
             return await ctx.send(_("Please specify a song."))
         elif len(query) < 3:
