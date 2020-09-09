@@ -144,7 +144,7 @@ class Raid(commands.Cog):
                 " evil dragon will be vulnerable in 15 Minutes\n\nUse"
                 " https://raid.idlerpg.xyz/ to join the raid!\n\nFor a quick and ugly"
                 " join [click"
-                " here](https://discordapp.com/oauth2/authorize?client_id=453963965521985536&scope=identify&response_type=code&redirect_uri=https://raid.idlerpg.xyz/callback)!"
+                " here](https://discord.com/oauth2/authorize?client_id=453963965521985536&scope=identify&response_type=code&redirect_uri=https://raid.idlerpg.xyz/callback)!"
             ),
             color=self.bot.config.primary_colour,
         )
@@ -561,7 +561,7 @@ The goddess Guilt has grown weak from the easy, summer days of the mortals below
 Use https://raid.idlerpg.xyz/ to join the raid!
 **You must be a follower of Guilt.**
 
-Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=453963965521985536&scope=identify&response_type=code&redirect_uri=https://raid.idlerpg.xyz/callback>
+Quick and ugly: <https://discord.com/oauth2/authorize?client_id=453963965521985536&scope=identify&response_type=code&redirect_uri=https://raid.idlerpg.xyz/callback>
 """,
             file=discord.File("assets/other/guilt.jpg"),
         )
@@ -696,7 +696,7 @@ The cthae has gathered an army of scrael. Fight for your life!
 Use https://raid.idlerpg.xyz/ to join the raid!
 **Only Kvothe's followers may join.**
 
-Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=453963965521985536&scope=identify&response_type=code&redirect_uri=https://raid.idlerpg.xyz/callback>
+Quick and ugly: <https://discord.com/oauth2/authorize?client_id=453963965521985536&scope=identify&response_type=code&redirect_uri=https://raid.idlerpg.xyz/callback>
 """,
             file=discord.File("assets/other/cthae.jpg"),
         )
@@ -868,7 +868,7 @@ The guardian of the gate to the garden has awoken! To gain entry to the Garden o
 This boss has {self.boss['hp']} HP and will be vulnerable in 15 Minutes
 Use https://raid.idlerpg.xyz/ to join the raid!
 **Only followers of Eden may join.**
-Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=453963965521985536&scope=identify&response_type=code&redirect_uri=https://raid.idlerpg.xyz/callback>
+Quick and ugly: <https://discord.com/oauth2/authorize?client_id=453963965521985536&scope=identify&response_type=code&redirect_uri=https://raid.idlerpg.xyz/callback>
 """,
             file=discord.File("assets/other/guardian.jpg"),
         )
@@ -1039,7 +1039,7 @@ The game will start in 15 Minutes...
 Use https://raid.idlerpg.xyz/ to join the raid!
 **Only followers of Tet may join.**
 
-Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=453963965521985536&scope=identify&response_type=code&redirect_uri=https://raid.idlerpg.xyz/callback>
+Quick and ugly: <https://discord.com/oauth2/authorize?client_id=453963965521985536&scope=identify&response_type=code&redirect_uri=https://raid.idlerpg.xyz/callback>
 """,
             file=discord.File("assets/other/tet.png"),
         )
@@ -1186,7 +1186,7 @@ The hamburger will be vulnerable in 15 Minutes
 Use https://raid.idlerpg.xyz/ to join the raid!
 **Only followers of CHamburr may join.**
 
-Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=453963965521985536&scope=identify&response_type=code&redirect_uri=https://raid.idlerpg.xyz/callback>
+Quick and ugly: <https://discord.com/oauth2/authorize?client_id=453963965521985536&scope=identify&response_type=code&redirect_uri=https://raid.idlerpg.xyz/callback>
 """,
             file=discord.File("assets/other/hamburger.jpg"),
         )
@@ -1420,7 +1420,7 @@ Use https://raid.idlerpg.xyz/ to join the raid!
 
 **Only followers of Salutations may join.**
 
-Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=453963965521985536&scope=identify&response_type=code&redirect_uri=https://raid.idlerpg.xyz/callback>
+Quick and ugly: <https://discord.com/oauth2/authorize?client_id=453963965521985536&scope=identify&response_type=code&redirect_uri=https://raid.idlerpg.xyz/callback>
 """,
             file=discord.File("assets/other/cyberus.jpg"),
         )
@@ -1742,7 +1742,7 @@ Asmodeus sends a wave of bloodlust throughout his followers and prepares himself
 Use https://raid.idlerpg.xyz/ to join the raid!
 **Only followers of Asmodeus may join.**
 
-Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=453963965521985536&scope=identify&response_type=code&redirect_uri=https://raid.idlerpg.xyz/callback>
+Quick and ugly: <https://discord.com/oauth2/authorize?client_id=453963965521985536&scope=identify&response_type=code&redirect_uri=https://raid.idlerpg.xyz/callback>
 """,
             file=discord.File("assets/other/asmodeus.png"),
         )
@@ -1891,7 +1891,7 @@ Atheistus will be vulnerable in 15 Minutes
 Use https://raid.idlerpg.xyz/ to join the raid!
 **Only followers of Jesus may join.**
 
-Quick and ugly: <https://discordapp.com/oauth2/authorize?client_id=453963965521985536&scope=identify&response_type=code&redirect_uri=https://raid.idlerpg.xyz/callback>
+Quick and ugly: <https://discord.com/oauth2/authorize?client_id=453963965521985536&scope=identify&response_type=code&redirect_uri=https://raid.idlerpg.xyz/callback>
 """,
             file=discord.File("assets/other/atheistus.jpg"),
         )

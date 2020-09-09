@@ -576,7 +576,7 @@ class Guild(commands.Cog):
             Kicks a member from your guild. Officers cannot be kicked.
             If your guild is in an alliance which owns a city, the member will have its bonuses removed immediately.
 
-            If the member shares no server with you, you may use their [User ID](https://support.discordapp.com/hc/en-us/articles/206346498-Where-can-I-find-my-User-Server-Message-ID-) as the member parameter.
+            If the member shares no server with you, you may use their [User ID](https://support.discord.com/hc/en-us/articles/206346498-Where-can-I-find-my-User-Server-Message-ID-) as the member parameter.
 
             Only guild leaders and officers can use this command."""
         )

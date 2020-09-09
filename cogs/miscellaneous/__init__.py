@@ -305,7 +305,7 @@ Even $1 can help us.
         _(
             """Invite the bot to your server.
 
-            Use this [backup link](https://discordapp.com/oauth2/authorize?client_id=424606447867789312&scope=bot&permissions=8) in case the above does not work."""
+            Use this [backup link](https://discord.com/oauth2/authorize?client_id=424606447867789312&scope=bot&permissions=8) in case the above does not work."""
         )
         await ctx.send(
             _(
@@ -1093,7 +1093,7 @@ This bot is developed by people who love to code for a good cause and improving 
 <https://public-api.travitia.xyz> - Our public API
 <https://cloud.idlerpg.xyz> - VPS hosting by IdleRPG
 <https://github.com/Kenvyra> - Other IdleRPG related code
-<https://discordapp.com/terms> - Discord's ToS
+<https://discord.com/terms> - Discord's ToS
 <https://www.ncpgambling.org/help-treatment/national-helpline-1-800-522-4700/> - Gambling Helpline"""
             )
         )
