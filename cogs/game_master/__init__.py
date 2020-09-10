@@ -482,6 +482,8 @@ class GameMaster(commands.Cog):
 
             Only Game Masters can use this command."""
         )
+        if self.top_auction is not None:
+            return await ctx.send(_("There's still an auction running."))
         channel = discord.utils.get(
             self.bot.get_guild(self.bot.config.support_server_id).channels,
             name="auctions",
