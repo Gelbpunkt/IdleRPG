@@ -220,7 +220,7 @@ def has_guild() -> "_CheckDecorator":
     async def predicate(ctx: Context) -> bool:
         if not hasattr(ctx, "character_data"):
             ctx.character_data = await ctx.bot.cache.get_profile(ctx.author.id)
-        if ctx.character_data["guild"]:
+        if ctx.character_data and ctx.character_data["guild"]:
             return True
         raise NoGuild()
 
