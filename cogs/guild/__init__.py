@@ -332,6 +332,28 @@ class Guild(commands.Cog):
         )
 
     @is_guild_leader()
+    @guild.command(brief=_("Renames your guild"))
+    @locale_doc
+    async def rename(self, ctx, *, new_name: str):
+        _(
+            """`<new_name>` - The new name for the guild.
+
+            This renames your guild to something else.
+
+            The name may not exceed 20 characters.
+
+            Only guild leaders can use this command."""
+        )
+        if len(new_name) > 20:
+            return await ctx.send(_("Guild names musn't exceed 20 characters."))
+        await self.bot.pool.execute(
+            'UPDATE guild SET "name"=$1 WHERE "leader"=$2;', new_name, ctx.author.id
+        )
+        await ctx.send(
+            _("Successfully renamed your guild to {new_name}").format(new_name=new_name)
+        )
+
+    @is_guild_leader()
     @guild.command(brief=_("Give your guild to someone else"))
     @locale_doc
     async def transfer(self, ctx, member: MemberWithCharacter):
