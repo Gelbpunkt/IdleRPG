@@ -555,23 +555,16 @@ class Battles(commands.Cog):
                         pass
                 except asyncio.TimeoutError:
                     await self.bot.reset_cooldown(ctx)
-                    async with self.bot.pool.acquire() as conn:
-                        await conn.execute(
-                            'UPDATE profile SET money=money+$1 WHERE "user"=$2;',
-                            money,
-                            ctx.author.id,
-                        )
-                        await conn.execute(
-                            'UPDATE profile SET money=money+$1 WHERE "user"=$2;',
-                            money,
-                            enemy_.id,
-                        )
-                        await self.bot.cache.update_profile_cols_rel(
-                            ctx.author.id, money=money
-                        )
-                        await self.bot.cache.update_profile_cols_rel(
-                            enemy_.id, money=money
-                        )
+                    await self.bot.pool.execute(
+                        'UPDATE profile SET "money"="money"+$1 WHERE "user"=$2 or "user"=$3;',
+                        money,
+                        ctx.author.id,
+                        enemy_.id,
+                    )
+                    await self.bot.cache.update_profile_cols_rel(
+                        ctx.author.id, money=money
+                    )
+                    await self.bot.cache.update_profile_cols_rel(enemy_.id, money=money)
                     return await ctx.send(
                         _("Someone refused to move. Activebattle stopped.")
                     )
@@ -657,6 +650,14 @@ class Battles(commands.Cog):
                     players[enemy_]["lastmove"] = _("It was not very effective...")
 
         if players[ctx.author]["hp"] <= 0 and players[enemy_]["hp"] <= 0:
+            await self.bot.pool.execute(
+                'UPDATE profile SET "money"="money"+$1 WHERE "user"=$2 or "user"=$3;',
+                money,
+                ctx.author.id,
+                enemy_.id,
+            )
+            await self.bot.cache.update_profile_cols_rel(ctx.author.id, money=money)
+            await self.bot.cache.update_profile_cols_rel(enemy_.id, money=money)
             return await ctx.send(_("You both died!"))
         if players[ctx.author]["hp"] > players[enemy_]["hp"]:
             winner, looser = ctx.author, enemy_
