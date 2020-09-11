@@ -912,7 +912,7 @@ class Game:
             await msg.add_reaction(emoji)
         # Check for nuisance voters twice, first at half of action timer, and lastly just before counting votes
         await self.check_nuisances(msg, eligible_players, emojis, repeat=2)
-        msg = await self.ctx.channel.fetch_message(msg.id)
+        msg = await self.ctx.channel.fetch_message_fast(msg.id)
         nominated = {u: 0 for u in nominated}
         mapping = {emoji: user for emoji, user in zip(emojis, nominated)}
         voters = []
@@ -950,7 +950,7 @@ class Game:
     async def check_nuisances(self, msg, eligible_players, emojis, repeat: int) -> None:
         for i in range(repeat):
             await asyncio.sleep(int(self.timer / repeat))
-            msg = await self.ctx.channel.fetch_message(msg.id)
+            msg = await self.ctx.channel.fetch_message_fast(msg.id)
             nuisance_voters = set()
             is_lacking_permission = None
             for reaction in msg.reactions:

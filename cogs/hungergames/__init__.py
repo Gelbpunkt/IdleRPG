@@ -342,7 +342,7 @@ class HungerGames(commands.Cog):
 
             # Check for not included players
             try:
-                msg = await ctx.channel.fetch_message(msg.id)
+                msg = await ctx.channel.fetch_message_fast(msg.id)
                 for reaction in msg.reactions:
                     if reaction.emoji == "\U0001f958":
                         async for user in reaction.users():
