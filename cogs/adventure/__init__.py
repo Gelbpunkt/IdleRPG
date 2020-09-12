@@ -408,13 +408,11 @@ class Adventure(commands.Cog):
             try:
                 direction = await wait_for_move()
             except asyncio.TimeoutError:
-                await self.bot.reset_cooldown(ctx)
                 return await msg.edit(content=_("Timed out."))
             x, y = move(x, y, direction)  # Python namespacing sucks, to be honest
             try:
                 hp = await handle_specials(hp)  # Should've used a class for this
             except asyncio.TimeoutError:
-                await self.bot.reset_cooldown(ctx)
                 return await msg.edit(content=_("Timed out."))
             if hp <= 0:
                 return await ctx.send(_("You died."))
