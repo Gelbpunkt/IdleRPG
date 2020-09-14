@@ -53,8 +53,6 @@ class Adventure(commands.Cog):
         level = rpgtools.xptolevel(ctx.character_data["xp"])
         luck_booster = await self.bot.get_booster(ctx.author, "luck")
 
-        msg = await ctx.send(_("Loading images..."))
-
         chances = []
         for adv in self.bot.config.adventure_times:
             success = rpgtools.calcchance(
@@ -73,8 +71,6 @@ class Adventure(commands.Cog):
             json={"percentages": chances},
         ) as r:
             images = await r.json()
-
-        await msg.delete()
 
         files = [
             discord.File(
