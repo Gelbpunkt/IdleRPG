@@ -100,7 +100,7 @@ class Raid(commands.Cog):
             return await ctx.send("No Boss active!")
         self.boss.update(hp=newhp, initial_hp=newhp)
         try:
-            spawnmsg = await ctx.channel.fetch_message_fast(self.boss["message"])
+            spawnmsg = await ctx.channel.fetch_message(self.boss["message"])
             edited_embed = spawnmsg.embeds[0]
             edited_embed.description = re.sub(
                 r"\d+(,*\d)+ HP", f"{newhp:,.0f} HP", edited_embed.description
