@@ -57,7 +57,7 @@ class GameBase:
             (_("Take a pistol and suicide"), _("gives themselves the bullet"), "leave"),
             (_("Ram a knife in your body"), _("commits suicide with a knife"), "leave"),
             (
-                _("Run away from the Curnocopia"),
+                _("Run away from the Cornucopia"),
                 _("runs away from the Cornucopia"),
                 None,
             ),

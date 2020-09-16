@@ -53,8 +53,6 @@ class Adventure(commands.Cog):
         level = rpgtools.xptolevel(ctx.character_data["xp"])
         luck_booster = await self.bot.get_booster(ctx.author, "luck")
 
-        msg = await ctx.send(_("Loading images..."))
-
         chances = []
         for adv in self.bot.config.adventure_times:
             success = rpgtools.calcchance(
@@ -73,8 +71,6 @@ class Adventure(commands.Cog):
             json={"percentages": chances},
         ) as r:
             images = await r.json()
-
-        await msg.delete()
 
         files = [
             discord.File(
@@ -408,13 +404,11 @@ class Adventure(commands.Cog):
             try:
                 direction = await wait_for_move()
             except asyncio.TimeoutError:
-                await self.bot.reset_cooldown(ctx)
                 return await msg.edit(content=_("Timed out."))
             x, y = move(x, y, direction)  # Python namespacing sucks, to be honest
             try:
                 hp = await handle_specials(hp)  # Should've used a class for this
             except asyncio.TimeoutError:
-                await self.bot.reset_cooldown(ctx)
                 return await msg.edit(content=_("Timed out."))
             if hp <= 0:
                 return await ctx.send(_("You died."))

@@ -264,7 +264,7 @@ class Game:
         self.game_link = _("Shortcut back to {ww_channel}").format(
             ww_channel=self.ctx.channel.mention
         )
-        self.winning_team = None
+        self.winning_side = None
         self.judge_spoken = False
         self.judge_symbol = None
         self.ex_maid = None
@@ -280,7 +280,12 @@ class Game:
         if self.mode == "Huntergame":
             # Replace all non-Werewolf to Hunters
             for idx, role in enumerate(self.available_roles):
-                if role not in [Role.WEREWOLF, Role.WHITE_WOLF, Role.BIG_BAD_WOLF]:
+                if (
+                    Role.BIG_BAD_WOLF.value <= role.value <= Role.WOLF_NECROMANCER.value
+                    or role == Role.WHITE_WOLF
+                ):
+                    self.available_roles[idx] = Role.WEREWOLF
+                elif role != Role.WEREWOLF:
                     self.available_roles[idx] = Role.HUNTER
         elif self.mode == "Villagergame":
             # Replace all non-Werewolf to Villagers
@@ -318,8 +323,12 @@ class Game:
             role = player_or_role
         elif isinstance(player_or_role, Player):
             role = player_or_role.role
-            if player_or_role.cursed and role != Role.WEREWOLF:
-                role_name = "Cursed "
+            if player_or_role.cursed:
+                if not (
+                    Role.WEREWOLF.value <= role.value <= Role.WOLF_NECROMANCER.value
+                    or role.value == Role.WHITE_WOLF.value
+                ):
+                    role_name = "Cursed "
         else:
             raise TypeError("Wrong type: player_or_role. Only Player or Role allowed")
         role_name += role.name.title().replace("_", " ")
@@ -530,12 +539,19 @@ class Game:
                     ).format(target=target.user, game_link=self.game_link)
                 )
             if cursed_wolf_father := self.get_player_with_role(Role.CURSED_WOLF_FATHER):
-                target = await cursed_wolf_father.infect_target(target)
+                target = await cursed_wolf_father.curse_target(target)
         await asyncio.sleep(5)  # Give them time to read
         return target
 
-    async def announce_pure_soul(self, pure_soul: Player) -> None:
+    async def announce_pure_soul(
+        self, pure_soul: Player, ex_pure_soul: Optional[Player] = None
+    ) -> None:
         for p in self.players:
+            if ex_pure_soul:
+                try:
+                    p.revealed_roles.pop(ex_pure_soul)
+                except KeyError:
+                    pass
             p.revealed_roles.update({pure_soul: pure_soul.role})
         await self.ctx.send(
             _("{pure_soul} is a **{role}** and an innocent villager.").format(
@@ -560,6 +576,7 @@ class Game:
                 " Sheriff.**"
             )
         )
+        await asyncio.sleep(5)  # Give them time to read
 
     async def send_love_msgs(self) -> None:
         for couple in self.lovers:
@@ -633,6 +650,7 @@ class Game:
             await player.send_information()
         await self.announce_sheriff()
         await self.ctx.send(_("🌘 💤 **Night falls, the town is asleep...**"))
+        await asyncio.sleep(5)  # Give them time to read the rules and their roles
         await self.send_love_msgs()  # Send to lovers used on Valentines mode
         if thief := self.get_player_with_role(Role.THIEF):
             await thief.choose_thief_role()
@@ -1177,14 +1195,14 @@ class Game:
         winner = self.winner()
         results_pretext = _("Werewolf {mode} results:").format(mode=self.mode)
         if isinstance(winner, Player):
-            if not self.winning_team:
-                self.winning_team = winner.role_name
+            if not self.winning_side:
+                self.winning_side = winner.role_name
             paginator = commands.Paginator(prefix="", suffix="")
             paginator.add_line(
                 _(
-                    "{results_pretext} **The {winning_team} won!** 🎉 Congratulations:"
+                    "{results_pretext} **The {winning_side} won!** 🎉 Congratulations:"
                 ).format(
-                    results_pretext=results_pretext, winning_team=self.winning_team
+                    results_pretext=results_pretext, winning_side=self.winning_side
                 )
             )
             winners = self.get_players_roles(has_won=True)
@@ -1359,6 +1377,13 @@ class Player:
         for page in paginator.pages:
             await self.send(page)
         mymsg = await self.send(prompt_msg.format(amount=amount))
+        if mymsg is None:
+            await self.game.ctx.send(
+                _(
+                    "I couldn't send a DM to someone. All players should allow me to"
+                    " send Direct Messages to them."
+                )
+            )
         chosen = []
         while len(chosen) < amount:
             msg = await self.game.ctx.bot.wait_for_dms(
@@ -1768,9 +1793,7 @@ class Player:
             _("**The {role} awakes...**").format(role=self.role_name)
         )
         possible_targets = [
-            p
-            for p in self.game.alive_players
-            if not p.enchanted and p != self and p not in self.own_lovers
+            p for p in self.game.alive_players if not p.enchanted and p != self
         ]
         if not possible_targets:
             await self.send(
@@ -2037,17 +2060,26 @@ class Player:
                     " automatically selected for you."
                 ).format(count=len(possible_targets))
             )
+        names = ", ".join([str(p.user) for p in group])
         if not any([target.side in (Side.WOLVES, Side.WHITE_WOLF) for target in group]):
             self.has_fox_ability = False
             await self.send(
                 _(
-                    "You found no Werewolf so you lost your ability.\n{game_link}"
-                ).format(game_link=self.game.game_link)
+                    "You chose the group of **{names}**. You found no Werewolf so you"
+                    " lost your ability.\n{game_link}"
+                ).format(
+                    names=names,
+                    game_link=self.game.game_link,
+                )
             )
         else:
             await self.send(
-                _("One of them is a Werewolf.\n{game_link}").format(
-                    game_link=self.game.game_link
+                _(
+                    "You chose the group of **{names}**. One of them is a"
+                    " **Werewolf**.\n{game_link}"
+                ).format(
+                    names=names,
+                    game_link=self.game.game_link,
                 )
             )
         await asyncio.sleep(3)  # Give time to read
@@ -2087,6 +2119,9 @@ class Player:
         await lovers[1].send_love_msg(lovers[0])
 
     async def choose_to_raid(self) -> None:
+        self.game.recent_deaths = list(
+            set(self.game.recent_deaths) - set(self.game.alive_players)
+        )
         if self.has_raided or len(self.game.recent_deaths) == 0:
             return
         await self.game.ctx.send(
@@ -2207,7 +2242,7 @@ class Player:
             _("{player} has been resurrected!").format(player=to_resurrect.user.mention)
         )
         await to_resurrect.send(
-            _("You have been resurrected as **{role}!**.\n{game_link}").format(
+            _("You have been resurrected as **{role}!**\n{game_link}").format(
                 role=to_resurrect.role_name, game_link=self.game.game_link
             )
         )
@@ -2294,6 +2329,7 @@ class Player:
                 )
             )
             return
+        ex_pure_soul = discord.utils.get(exchanged, role=Role.PURE_SOUL)
         role = exchanged[0].role
         if exchanged[0].initial_roles[-1] != exchanged[0].role:
             exchanged[0].initial_roles.append(exchanged[0].role)
@@ -2334,6 +2370,9 @@ class Player:
             )
         )
         await exchanged[1].send_information()
+        if ex_pure_soul:
+            new_pure_soul = exchanged[exchanged.index(ex_pure_soul) - 1]
+            await self.game.announce_pure_soul(new_pure_soul, ex_pure_soul)
 
     async def protect_werewolf(self) -> None:
         if not self.has_wolf_shaman_ability:
@@ -2386,7 +2425,7 @@ class Player:
             ).format(role=self.role_name, game_link=self.game.game_link)
         )
 
-    async def infect_target(self, target: Player) -> None:
+    async def curse_target(self, target: Player) -> None:
         if not self.has_cursed_wolf_father_ability or discord.utils.get(
             self.game.players, cursed=True
         ):
@@ -2420,17 +2459,17 @@ class Player:
         self.has_cursed_wolf_father_ability = False
         await self.send(
             _(
-                "You have successfully infected **{target}**. They are now **Cursed**"
-                " and will join each night in the Werewolves' feast.\n"
+                "You have successfully **Cursed {target}**. They will now join each"
+                " night in the Werewolves' feast.\n"
             ).format(target=target.user)
         )
         await target.send(
             _(
-                "You have been infected by the **{role}**. You will now join in the"
+                "You have been cursed by the **{role}**. You will now join in the"
                 " Werewolves' nightly killings and feast.\n{game_link}"
             ).format(role=self.role_name, game_link=self.game.game_link)
         )
-        if target.role == Role.FLUTIST:
+        if target.role in (Role.FLUTIST, Role.SUPERSPREADER):
             if target.initial_roles[-1] != target.role:
                 target.initial_roles.append(target.role)
             target.role = Role.WEREWOLF
@@ -2455,7 +2494,7 @@ class Player:
         possible_targets = [
             p
             for p in self.game.alive_players
-            if not p.infected_with_virus and p != self and p not in self.own_lovers
+            if not p.infected_with_virus and p != self
         ]
         if not possible_targets:
             await self.send(
@@ -2702,9 +2741,9 @@ class Player:
 
     @property
     def side(self) -> Side:
-        if self.cursed:
-            return Side.WOLVES
         if 1 <= self.role.value <= 5:
+            return Side.WOLVES
+        if self.cursed and self.role.value != 27:
             return Side.WOLVES
         if 6 <= self.role.value <= 26:
             return Side.VILLAGERS
@@ -2714,47 +2753,32 @@ class Player:
     @property
     def has_won(self) -> bool:
         # Returns whether the player has reached their goal or not
-        flutist = self.game.get_player_with_role(Role.FLUTIST)
-        if (
-            flutist
-            and self != flutist
-            and flutist.has_won
-            and flutist in self.own_lovers
-        ):
-            # For Flutist's lover
-            self.game.winning_team = "Flutist"
-            return True
         if self.in_love:
             # Special objective for Lovers: The pair must eliminate all other players
             # if one of the lovers is in the Villagers side and the other is in the
             # Wolves or Flutist side.
             # This also checks chain of lovers
             if len(self.game.get_chained_lovers(self)) == len(self.game.alive_players):
-                self.game.winning_team = _("Lovers")
+                self.game.winning_side = _("Lovers")
                 return True
         if self.side == Side.FLUTIST:
             # The win stealer: If the Flutist would win at the same time as another
-            # team, the Flutist takes precedence
-            if all(
-                [
-                    p.enchanted or p == self or p in self.own_lovers
-                    for p in self.game.alive_players
-                ]
-            ):
-                self.game.winning_team = "Flutist"
+            # side, the Flutist takes precedence
+            if all([p.enchanted or p == self for p in self.game.alive_players]):
+                self.game.winning_side = self.role_name
                 return True
         if self.side == Side.SUPERSPREADER:
             # Another win stealer but loses to Flutist as it's later called on wake order
             if (
                 all(
                     [
-                        p.infected_with_virus or p == self or p in self.own_lovers
+                        p.infected_with_virus or p == self
                         for p in self.game.alive_players
                     ]
                 )
-                and self.game.winning_team != "Flutist"
+                and self.game.winning_side != "Flutist"
             ):
-                self.game.winning_team = self.role_name
+                self.game.winning_side = self.role_name
                 return True
         elif self.side == Side.VILLAGERS:
             if (
@@ -2764,13 +2788,13 @@ class Player:
                         for player in self.game.alive_players
                     ]
                 )
-                and self.game.winning_team != "Flutist"
+                and self.game.winning_side != "Flutist"
             ):
-                self.game.winning_team = "Villagers"
+                self.game.winning_side = "Villagers"
                 return True
         elif self.side == Side.WHITE_WOLF:
             if len(self.game.alive_players) == 1 and not self.dead:
-                self.game.winning_team = "White Wolf"
+                self.game.winning_side = "White Wolf"
                 return True
         elif self.side == Side.WOLVES or self.side == Side.WHITE_WOLF:
             if (
@@ -2780,9 +2804,9 @@ class Player:
                         for player in self.game.alive_players
                     ]
                 )
-                and self.game.winning_team != "Flutist"
+                and self.game.winning_side != "Flutist"
             ):
-                self.game.winning_team = "Werewolves"
+                self.game.winning_side = "Werewolves"
                 return True
         return False
 

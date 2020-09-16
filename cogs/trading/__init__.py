@@ -16,6 +16,7 @@ You should have received a copy of the GNU Affero General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
 import datetime
+
 from contextlib import suppress
 
 import discord
@@ -229,7 +230,7 @@ class Trading(commands.Cog):
             with suppress(discord.Forbidden, discord.HTTPException):
                 await seller.send(
                     "**{author}** bought your **{name}** for **${price}** from the market.".format(
-                        author=ctx.aguthor.name, name=item["name"], price=item["price"]
+                        author=ctx.author.name, name=item["name"], price=item["price"]
                     )
                 )
         return True

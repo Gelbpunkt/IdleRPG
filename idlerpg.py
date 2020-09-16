@@ -57,7 +57,6 @@ cluster_name = sys.argv[4]
 # Configure intents
 intents = discord.Intents.none()
 intents.guilds = True
-intents.members = True
 intents.voice_states = True
 intents.messages = True
 intents.reactions = True

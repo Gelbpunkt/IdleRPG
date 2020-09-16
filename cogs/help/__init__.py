@@ -235,20 +235,12 @@ class Help(commands.Cog):
 
             Only Support Team Members can use this command."""
         )
-        if isinstance(thing_to_ban, discord.User):
-            id = thing_to_ban.id
-        else:
-            id = thing_to_ban
-            thing_to_ban = self.bot.get_guild(id)
+        id = thing_to_ban.id if isinstance(thing_to_ban, discord.User) else thing_to_ban
         try:
             await self.bot.pool.execute('INSERT INTO helpme ("id") VALUES ($1);', id)
         except UniqueViolationError:
             return await ctx.send(_("Error... Maybe they're already banned?"))
-        await ctx.send(
-            _("{thing} has been banned for the helpme command :ok_hand:").format(
-                thing=thing_to_ban.name
-            )
-        )
+        await ctx.send(_("They have been banned for the helpme command :ok_hand:"))
 
     @commands.guild_only()
     @commands.group(

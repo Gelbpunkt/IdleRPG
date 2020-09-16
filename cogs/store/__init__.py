@@ -60,7 +60,7 @@ class Store(commands.Cog):
     async def purchase(self, ctx, booster: str.lower, amount: IntGreaterThan(0) = 1):
         _(
             """`<booster>` - The booster type to buy, can be time, luck, money or all
-            `[amount]` - Thw amount of boosters to buy; defaults to 1
+            `[amount]` - The amount of boosters to buy; defaults to 1
 
             Buy one or more booster from the store. For a detailed explanation what the boosters do, check `{prefix}help boosters`."""
         )
