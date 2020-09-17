@@ -104,43 +104,6 @@ class Crates(commands.Cog):
                     " Vote me up to get a random one or find them!"
                 ).format(amount=amount)
             )
-        # A number to detemine the crate item range
-        rand = random.randint(0, 9)
-        if rarity == "common":
-            if rand < 2:  # 20% 20-30
-                minstat, maxstat = (20, 30)
-            elif rand < 5:  # 30% 10-19
-                minstat, maxstat = (10, 19)
-            else:  # 50% 1-9
-                minstat, maxstat = (1, 9)
-        elif rarity == "uncommon":
-            if rand < 2:  # 20% 30-35
-                minstat, maxstat = (30, 35)
-            elif rand < 5:  # 30% 20-29
-                minstat, maxstat = (20, 29)
-            else:  # 50% 10-19
-                minstat, maxstat = (10, 19)
-        elif rarity == "rare":
-            if rand < 2:  # 20% 35-40
-                minstat, maxstat = (35, 40)
-            elif rand < 5:  # 30% 30-34
-                minstat, maxstat = (30, 34)
-            else:  # 50% 20-29
-                minstat, maxstat = (20, 29)
-        elif rarity == "magic":
-            if rand < 2:  # 20% 41-45
-                minstat, maxstat = (41, 45)
-            elif rand < 5:  # 30% 35-40
-                minstat, maxstat = (35, 40)
-            else:
-                minstat, maxstat = (30, 34)
-        elif rarity == "legendary":  # no else because why
-            if rand < 2:  # 20% 49-50
-                minstat, maxstat = (49, 50)
-            elif rand < 5:  # 30% 46-48
-                minstat, maxstat = (46, 48)
-            else:  # 50% 41-45
-                minstat, maxstat = (41, 45)
 
         items = []
         async with self.bot.pool.acquire() as conn:
@@ -154,6 +117,44 @@ class Crates(commands.Cog):
                 ctx.author.id, **{f"crates_{rarity}": -amount}
             )
             for _i in range(amount):
+                # A number to detemine the crate item range
+                rand = random.randint(0, 9)
+                if rarity == "common":
+                    if rand < 2:  # 20% 20-30
+                        minstat, maxstat = (20, 30)
+                    elif rand < 5:  # 30% 10-19
+                        minstat, maxstat = (10, 19)
+                    else:  # 50% 1-9
+                        minstat, maxstat = (1, 9)
+                elif rarity == "uncommon":
+                    if rand < 2:  # 20% 30-35
+                        minstat, maxstat = (30, 35)
+                    elif rand < 5:  # 30% 20-29
+                        minstat, maxstat = (20, 29)
+                    else:  # 50% 10-19
+                        minstat, maxstat = (10, 19)
+                elif rarity == "rare":
+                    if rand < 2:  # 20% 35-40
+                        minstat, maxstat = (35, 40)
+                    elif rand < 5:  # 30% 30-34
+                        minstat, maxstat = (30, 34)
+                    else:  # 50% 20-29
+                        minstat, maxstat = (20, 29)
+                elif rarity == "magic":
+                    if rand < 2:  # 20% 41-45
+                        minstat, maxstat = (41, 45)
+                    elif rand < 5:  # 30% 35-40
+                        minstat, maxstat = (35, 40)
+                    else:
+                        minstat, maxstat = (30, 34)
+                elif rarity == "legendary":  # no else because why
+                    if rand < 2:  # 20% 49-50
+                        minstat, maxstat = (49, 50)
+                    elif rand < 5:  # 30% 46-48
+                        minstat, maxstat = (46, 48)
+                    else:  # 50% 41-45
+                        minstat, maxstat = (41, 45)
+
                 item = await self.bot.create_random_item(
                     minstat=minstat,
                     maxstat=maxstat,
