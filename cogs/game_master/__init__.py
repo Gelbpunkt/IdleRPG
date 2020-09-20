@@ -21,6 +21,7 @@ from typing import Union
 
 import discord
 
+from async_timeout import timeout
 from discord.ext import commands
 
 from classes.converters import (
@@ -38,7 +39,7 @@ from utils.i18n import _, locale_doc
 class GameMaster(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
-        self.top_auction = None
+        self.top_auction = self.auction_cm = None
 
     @is_gm()
     @commands.command(brief=_("Publish an announcement"))
@@ -484,28 +485,32 @@ class GameMaster(commands.Cog):
         )
         if self.top_auction is not None:
             return await ctx.send(_("There's still an auction running."))
-        channel = discord.utils.get(
-            self.bot.get_guild(self.bot.config.support_server_id).channels,
-            name="auctions",
-        )
+        try:
+            channel = discord.utils.get(
+                self.bot.get_guild(self.bot.config.support_server_id).channels,
+                name="auctions",
+            )
+        except AttributeError:
+            return await ctx.send(_("Auctions channel wasn't found."))
         await channel.send(
             f"{ctx.author.mention} started auction on **{item}**! Please use"
             f" `{ctx.prefix}bid amount` to raise the bid. If no more bids are sent"
             " within a 30 minute timeframe, the auction is over."
         )
         self.top_auction = (ctx.author, 0)
-        last_top_bid = -1
-        while True:
-            await asyncio.sleep(60 * 30)
-            new_top_bid = self.top_auction[1]
-            if new_top_bid == last_top_bid:
-                break
-            last_top_bid = new_top_bid
+        timer = 60 * 30
+        try:
+            async with timeout(timer) as cm:
+                self.auction_cm = cm
+                while True:
+                    await asyncio.sleep(timer)
+        except asyncio.TimeoutError:
+            pass
         await channel.send(
             f"**{item}** sold to {self.top_auction[0].mention} for"
             f" **${self.top_auction[1]}**!"
         )
-        self.top_auction = None
+        self.top_auction = self.auction_cm = None
 
     @has_char()
     @commands.command(hidden=True, brief=_("Bid on an auction"))
@@ -542,6 +547,7 @@ class GameMaster(commands.Cog):
                 conn=conn,
             )
             self.top_auction = (ctx.author, amount)
+            self.auction_cm.shift_by(60 * 30)
             await conn.execute(
                 'UPDATE profile SET "money"="money"-$1 WHERE "user"=$2;',
                 amount,

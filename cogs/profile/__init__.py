@@ -1106,7 +1106,7 @@ IdleRPG is a global bot, your characters are valid everywhere"""
             await self.bot.pool.execute(
                 'UPDATE profile SET "name"=$1 WHERE "user"=$2;', name, ctx.author.id
             )
-            await self.bot.cache.update_profile_cols_rel(ctx.author.id, name=name)
+            await self.bot.cache.update_profile_cols_abs(ctx.author.id, name=name)
             await ctx.send(_("Character name updated."))
         elif len(name) < 3:
             await ctx.send(_("Character names must be at least 3 characters!"))

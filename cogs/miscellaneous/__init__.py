@@ -732,19 +732,21 @@ https://git.travitia.xyz/Kenvyra/IdleRPG/compare/v4.8.0...v4.9.0
             content = await r.json()
         await ctx.send(content["value"])
 
-    @commands.command(brief=_("Cat pics"))
+    @commands.command(brief=_("Cat pics"), aliases=["meow"])
     @locale_doc
     async def cat(self, ctx):
         _("""Sends cute cat pics from [The Cat API](https://thecatapi.com/).""")
+        async with self.bot.session.get(
+            "https://api.thecatapi.com/v1/images/search"
+        ) as r:
+            res = await r.json()
         await ctx.send(
             embed=discord.Embed(
                 title=_("Meow!"), color=ctx.author.color.value
-            ).set_image(
-                url=f"http://thecatapi.com/api/images/get?results_per_page=1&anticache={random.randint(1,10000)}"
-            )
+            ).set_image(url=res[0]["url"])
         )
 
-    @commands.command(brief=_("Dog pics"))
+    @commands.command(brief=_("Dog pics"), aliases=["woof"])
     @locale_doc
     async def dog(self, ctx):
         _("""Sends cute dog pics from [The Dog API](https://thedogapi.com/).""")
