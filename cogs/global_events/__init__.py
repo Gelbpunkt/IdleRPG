@@ -191,6 +191,7 @@ class GlobalEvents(commands.Cog):
             )
             return  # we're using the default prefix in beta
         ids = [g.id for g in self.bot.guilds]
+        self.bot.logger.info(f"Fetching prefixes for {len(ids)} guilds")
         prefixes = await self.bot.pool.fetch('SELECT "id", "prefix" FROM server;')
         for row in prefixes:
             if row["id"] in ids:
