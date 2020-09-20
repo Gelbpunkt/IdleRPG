@@ -1,3 +1,81 @@
+<a name="v4.10.0"></a>
+## [v4.10.0](https://git.travitia.xyz/Kenvyra/IdleRPG/compare/v4.9.0...v4.10.0)
+
+> 2020-09-20
+
+### Additions
+
+* Added `$guild rename`
+* Added a buy-item-button to the `$shop`
+* Several command helps were added and/or reworked
+* Check for not included players in Hungergames
+* The bot now uses our new and enhanced music backend
+* `$profile` custom images that error the backend will display information how to fix it
+* Again, `$werewolf` got new features (too many to list) and a few bugfixes
+
+### Changes
+
+* We have reworked the formulas for adventure success calculation - more on that [here](https://git.travitia.xyz/Kenvyra/IdleRPG/-/issues/551#note_3441)
+* Corrected wrong info in the `$steal` help message
+* The use of eventbackgrounds is now possible again
+* Active adventures were fixed
+* Fixed a bug in the `$cat` command
+* Fixed misleading text in `$date`
+* Fixed `$banfromhelpme`
+* Fixed a few typos
+* Fixed `$lyrics`
+* Fixed guild logs send order
+* Fixed an exploit in `$trade`
+* Fixed active battle bug when both players died and no money returned
+* Fix bug with `$guild info id:0`
+* Fixed guild deletion if city is owned
+* Fixes for `$trade`
+* Minor changes to prefix loading
+* Ordered `$loot`
+* Rephrase "Target" to "Random Player" in `$steal`'s info
+
+### Merge Requests
+
+* Merge branch 'next' into 'current'
+* Merge branch 'patch-35' into 'next'
+* Merge branch 'text-fix' into 'next'
+* Merge branch 'cat-pics' into 'next'
+* Merge branch 'change_adventure_chance' into 'next'
+* Merge branch 'next' into 'next'
+* Merge branch 'fix_mass_crates' into 'current'
+* Merge branch 'next' into 'current'
+* Merge branch 'patch-1' into 'next'
+* Merge branch 'next' into 'next'
+* Merge branch 'patch-33' into 'next'
+* Merge branch 'patch-32' into 'next'
+* Merge branch 'fix' into 'current'
+* Merge branch 'next' into 'current'
+* Merge branch 'crate-rarity' into 'next'
+* Merge branch 'patch-1' into 'current'
+* Merge branch 'next' into 'current'
+* Merge branch 'patch-29' into 'next'
+* Merge branch 'lovescore-change' into 'next'
+* Merge branch 'guild-log-fix' into 'next'
+* Merge branch 'buy-button' into 'next'
+* Merge branch 'patch-28' into 'next'
+* Merge branch 'patch-27' into 'next'
+* Merge branch 'scheduler-revisit' into 'next'
+* Merge branch 'order-loot' into 'next'
+* Merge branch 'next' into 'current'
+* Merge branch 'patch-26' into 'next'
+* Merge branch 'patch-2' into 'next'
+* Merge branch 'next' into 'current'
+* Merge branch 'patch-1' into 'current'
+* Merge branch 'next' into 'current'
+* Merge branch 'next' into 'current'
+* Merge branch 'patch-1' into 'current'
+* Merge branch 'guild-patch' into 'v4'
+* Merge branch 'patch-24' into 'v4'
+* Merge branch 'patch-3' into 'v4'
+* Merge branch 'patch-2' into 'v4'
+* Merge branch 'patch-3' into 'v4'
+* Merge branch 'patch-23' into 'v4'
+
 <a name="v4.9.0"></a>
 ## [v4.9.0](https://git.travitia.xyz/Kenvyra/IdleRPG/compare/v4.8.0...v4.9.0)
 

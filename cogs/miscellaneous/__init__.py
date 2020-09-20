@@ -453,36 +453,40 @@ Average hours of work: **{hours}**"""
         _("""Shows you the bots current version along with its major updates.""")
         await ctx.send(
             """\
-**v4.9.0**
-https://git.travitia.xyz/Kenvyra/IdleRPG/compare/v4.8.0...v4.9.0
+**v4.10.0**
 
-> 2020-08-06
+> 2020-09-20
 
-**New features**
+**Additions**
 
-- Reminders using aioscheduler, a library built by us for this purpose. `$remind 3min do your homework`, `$remind cancel` and `$remind list`
-- Embed in `$status` message instead of text
-- `$werewolf` had a rather big update with new game modes and time variants, please check it out
-- The maximum guild bank size is now $2,500,000, i.e. further `$guild upgrade`s are available
+* Added `$guild rename`
+* Added a buy-item-button to the `$shop`
+* Several command helps were added and/or reworked
+* Check for not included players in Hungergames
+* The bot now uses our new and enhanced music backend
+* `$profile` custom images that error the backend will display information how to fix it
+* Again, `$werewolf` got new features (too many to list) and a few bugfixes
 
-**Fixes**
+**Changes**
 
-- After a long revision time, `$trade` is available again and unexploitable. Many thanks go to my Dad for precious SQL knowledge
-- All inconsistencies with the 4.8.0 release and the new caching metholodgy should be resolved
-- Several potential exploit fixes that I discovered when redoing `$trade`
-
-**Internal changes**
-
-- We moved CI builds from Travis to Gitlab CI entirely
-- The entire build now uses a custom package index rather than hacky GitHub-hosted index files
-
-**Removals**
-
-- Removed Ikhdosa raid
-
-**Translations**
-
-- Brazilian and French have been revised and updated"""
+* We have reworked the formulas for adventure success calculation - more on that at https://git.travitia.xyz/Kenvyra/IdleRPG/-/issues/551#note_3441
+* Corrected wrong info in the `$steal` help message
+* The use of eventbackgrounds is now possible again
+* Active adventures were fixed
+* Fixed a bug in the `$cat` command
+* Fixed misleading text in `$date`
+* Fixed `$banfromhelpme`
+* Fixed a few typos
+* Fixed `$lyrics`
+* Fixed guild logs send order
+* Fixed an exploit in `$trade`
+* Fixed active battle bug when both players died and no money returned
+* Fix bug with `$guild info id:0`
+* Fixed guild deletion if city is owned
+* Fixes for `$trade`
+* Minor changes to prefix loading
+* Ordered `$loot`
+* Rephrase "Target" to "Random Player" in `$steal`'s info"""
         )
 
     @commands.has_permissions(manage_messages=True)
