@@ -368,7 +368,7 @@ class Marriage(commands.Cog):
                 _("You and {partner} went ice skating together."),
             ]
         ).format(partner=(partner.mention if partner else _("Unknown User")))
-        text = _("This increased your lovescore by {num}").format(num=num)
+        text = _("This increased their lovescore by {num}").format(num=num)
         await ctx.send(f"{scenario} {text}")
 
     async def get_random_name(self, gender, avoid):
