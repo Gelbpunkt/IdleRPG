@@ -64,12 +64,55 @@ class GlobalEvents(commands.Cog):
         else:
             self.bot.logger.warning("[INFO] Discord fired on_ready...")
 
+    def parse_member_update(self, data):
+        """Replacement for hacky https://github.com/Rapptz/discord.py/blob/master/discord/state.py#L547"""
+        guild_id = utils._get_as_snowflake(data, "guild_id")
+        guild = self.bot._connection._get_guild(guild_id)
+        user_data = data["user"]
+        member_id = int(user_data["id"])
+        user = self.bot.get_user(member_id)
+        if guild is None and user is None:
+            return
+        elif guild is None and user is not None:
+            user.name = user_data["username"]
+            user.discriminator = user_data["discriminator"]
+            user.avatar = user_data["avatar"]
+        else:
+            member = guild.get_member(member_id)
+            if member is None:
+                if "username" not in user_data:
+                    # sometimes we receive 'incomplete' member data post-removal.
+                    # skip these useless cases.
+                    return
+
+                # https://github.com/Rapptz/discord.py/blob/master/discord/member.py#L214
+                member = discord.Member(
+                    data=data, guild=guild, state=self.bot._connection
+                )
+                guild._add_member(member)
+            member._user.name = user_data["username"]
+            member._user.discriminator = user_data["discriminator"]
+            member._user.avatar = user_data["avatar"]
+
     @commands.Cog.listener()
-    async def on_user_update(self, before, after):
-        self.bot.logger.info(f"User updated fired for {after}")
-        MemberConverter.convert.invalidate_value(lambda member: member.id == after.id)
-        User.convert.invalidate_value(lambda user: user.id == after.id)
-        await self.bot.clear_donator_cache(after.id)
+    async def on_socket_response(self, data):
+        if data["t"] != "GUILD_MEMBER_UPDATE":
+            return
+
+        user = data["d"]["user"]
+        user_id = int(user["id"])
+
+        self.parse_member_update(data["d"])
+        # Wipe the cache for the converters
+        MemberConverter.convert.invalidate_value(lambda member: member.id == user_id)
+        User.convert.invalidate_value(lambda user: user.id == user_id)
+
+        # If they were a donator, wipe that cache as well
+        roles = [int(i) for i in data["d"]["roles"]]
+        if int(data["d"]["guild_id"]) == self.bot.config.support_server_id and any(
+            id_ in roles for id_ in self.bot.config.donator_roles
+        ):
+            await self.bot.clear_donator_cache(user_id)
 
     @commands.Cog.listener()
     async def on_guild_remove(self, guild):
