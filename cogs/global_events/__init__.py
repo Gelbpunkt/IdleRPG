@@ -65,14 +65,11 @@ class GlobalEvents(commands.Cog):
             self.bot.logger.warning("[INFO] Discord fired on_ready...")
 
     @commands.Cog.listener()
-    async def on_member_update(self, before, after):
+    async def on_user_update(self, before, after):
+        self.bot.logger.info(f"User updated fired for {after}")
         MemberConverter.convert.invalidate_value(lambda member: member.id == after.id)
         User.convert.invalidate_value(lambda user: user.id == after.id)
-        role_ids = [r.id for r in after.roles]
-        if after.guild.id == self.bot.config.support_server_id and any(
-            id_ in role_ids for id_ in self.bot.config.donator_roles
-        ):
-            await self.bot.clear_donator_cache(after.id)
+        await self.bot.clear_donator_cache(after.id)
 
     @commands.Cog.listener()
     async def on_guild_remove(self, guild):
