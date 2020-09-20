@@ -20,6 +20,8 @@ import hashlib
 import hmac
 import time
 
+from decimal import Decimal
+
 from discord.errors import NotFound
 
 from utils import random
@@ -114,7 +116,7 @@ def calcchance(
             + shield
             + 75
             - (dungeon * (random.randint(1, 7)))
-            + random.choice([level, -level / 2])
+            + random.choice([level, -level / Decimal("2")])
             + bonus
         )
         if success >= 0:
