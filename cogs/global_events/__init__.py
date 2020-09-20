@@ -147,11 +147,10 @@ class GlobalEvents(commands.Cog):
             )
             return  # we're using the default prefix in beta
         ids = [g.id for g in self.bot.guilds]
-        prefixes = await self.bot.pool.fetch(
-            'SELECT id, prefix FROM server WHERE "id"=ANY($1);', ids
-        )
+        prefixes = await self.bot.pool.fetch('SELECT "id", "prefix" FROM server;')
         for row in prefixes:
-            self.bot.all_prefixes[row["id"]] = row["prefix"]
+            if row["id"] in ids:
+                self.bot.all_prefixes[row["id"]] = row["prefix"]
         self.bot.command_prefix = self.bot._get_prefix
 
     async def get_dbl_payload(self):

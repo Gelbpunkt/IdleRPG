@@ -114,7 +114,7 @@ def calcchance(
             + shield
             + 75
             - (dungeon * (random.randint(1, 7)))
-            + random.choice([level, -level/2])
+            + random.choice([level, -level / 2])
             + bonus
         )
         if success >= 0:
