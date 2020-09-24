@@ -1,4 +1,4 @@
-FROM docker.io/gelbpunkt/python:gcc10
+FROM docker.io/gelbpunkt/python:latest
 
 RUN adduser -S idle && \
     apk upgrade --no-cache && \
