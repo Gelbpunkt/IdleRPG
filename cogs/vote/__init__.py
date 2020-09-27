@@ -36,8 +36,12 @@ class Vote(commands.Cog):
         )
         await ctx.send(
             _(
-                "Upvote me to receive a random crate! You will be rewarded a few"
-                " seconds afterwards!\nhttps://top.gg/bot/idlerpg"
+                """"\
+Upvote me to receive a random crate! You will be rewarded a few seconds afterwards!
+Each of the following links will reward you with one random crate upon voting:
+
+- https://top.gg/bot/idlerpg
+- https://discord.ly/idlerpg"""
             )
         )
 
