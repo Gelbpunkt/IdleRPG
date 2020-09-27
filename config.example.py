@@ -16,7 +16,10 @@ database = {
     "host": "localhost",
 }
 
-"""A token for the Discord Bot List (DBL)."""
+"""A token for top.gg."""
+topggtoken = "topggtoken"
+
+"""A token for the Discord Bot List (discord.ly)."""
 dbltoken = "dbltoken"
 
 """A token for the Bots For Discord Website (BFD)."""

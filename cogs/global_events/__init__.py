@@ -32,10 +32,9 @@ from utils.loops import queue_manager
 class GlobalEvents(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
-        self.auth_headers = {
-            "Authorization": bot.config.dbltoken
-        }  # needed for DBL requests
-        self.auth_headers2 = {"Authorization": bot.config.bfdtoken}
+        self.topgg_auth_headers = {"Authorization": bot.config.topggtoken}
+        self.bfd_auth_headers = {"Authorization": bot.config.bfdtoken}
+        self.dbl_auth_headers = {"Authorization": bot.config.dbltoken}
         self.is_first_ready = True
 
     @commands.Cog.listener()
@@ -174,13 +173,18 @@ class GlobalEvents(commands.Cog):
         while not self.bot.is_closed():
             await self.bot.session.post(
                 f"https://top.gg/api/bots/{self.bot.user.id}/stats",
-                data=await self.get_dbl_payload(),
-                headers=self.auth_headers,
+                data=await self.get_topgg_payload(),
+                headers=self.topgg_auth_headers,
             )
             await self.bot.session.post(
                 f"https://botsfordiscord.com/api/bot/{self.bot.user.id}",
                 data=await self.get_bfd_payload(),
-                headers=self.auth_headers2,
+                headers=self.bfd_auth_headers,
+            )
+            await self.bot.session.post(
+                f"https://discordbotlist.com/api/v1/bots/{self.bot.user.id}/stats",
+                data=await self.get_dbl_payload(),
+                headers=self.dbl_auth_headers,
             )
             await asyncio.sleep(60 * 10)  # update once every 10 minutes
 
@@ -198,7 +202,7 @@ class GlobalEvents(commands.Cog):
                 self.bot.all_prefixes[row["id"]] = row["prefix"]
         self.bot.command_prefix = self.bot._get_prefix
 
-    async def get_dbl_payload(self):
+    async def get_topgg_payload(self):
         return {
             "server_count": sum(
                 await self.bot.cogs["Sharding"].handler(
@@ -211,6 +215,15 @@ class GlobalEvents(commands.Cog):
     async def get_bfd_payload(self):
         return {
             "server_count": sum(
+                await self.bot.cogs["Sharding"].handler(
+                    "guild_count", self.bot.shard_count
+                )
+            )
+        }
+
+    async def get_dbl_payload(self):
+        return {
+            "guilds": sum(
                 await self.bot.cogs["Sharding"].handler(
                     "guild_count", self.bot.shard_count
                 )
