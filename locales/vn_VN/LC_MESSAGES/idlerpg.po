@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-09-20 19:42+0200\n"
-"PO-Revision-Date: 2020-09-17 15:54-0500\n"
+"POT-Creation-Date: 2020-09-29 20:18+0200\n"
+"PO-Revision-Date: 2020-09-27 03:24-0500\n"
 "Last-Translator: Katakara\n"
 "Language-Team: \n"
 "Language: vi\n"
@@ -3520,7 +3520,7 @@ msgstr "Không có gì để kích hoạt."
 msgid "Successfully activated {types} for the next **24 hours**!"
 msgstr "Kích hoạt thành công {types} cho 24 giờ kế tiếp!"
 
-#: cogs/global_events/__init__.py:231 cogs/scheduler/__init__.py:38
+#: cogs/global_events/__init__.py:246 cogs/scheduler/__init__.py:38
 #, python-brace-format
 msgid "{user}, you wanted to be reminded about {subject} {diff} ago."
 msgstr "{user}, bạn muốn được nhắc về {subject} {diff} trước."
@@ -3914,7 +3914,7 @@ msgstr "Bạn không có vũ khí với ID `{itemid}`."
 #: cogs/patreon/__init__.py:120
 #, python-brace-format
 msgid "The item with the ID `{itemid}` is now called `{newname}`."
-msgstr "Vật phẩm với ID `{itemid}` bây giờ được gọi là `{newname}`."
+msgstr "Món đồ với ID `{itemid}` bây giờ được gọi là `{newname}`."
 
 #: cogs/patreon/__init__.py:127
 msgid "[bronze] Change an item's type"
@@ -4197,7 +4197,7 @@ msgstr ""
 "            - Raider tăng các chỉ số raid, áp dụng trong các raid và trận "
 "đấu raid\n"
 "            - Tư tế được nhận thêm ưu ái khi hiến tế vật phẩm và có gấp đôi "
-"cơ hội nhận được vật phẩm từ các cuộc phiêu lưu\n"
+"cơ hội nhận được vật hiến tế từ các cuộc phiêu lưu\n"
 "            (- Tinh binh tăng sức tấn công **và** phòng thủ; nghề này chỉ "
 "dành cho các nhà tài trợ)\n"
 "\n"
@@ -4295,8 +4295,8 @@ msgid ""
 msgstr ""
 "Một nhà tiên tri, người hiến tế và người theo hầu.\n"
 "Tư tế cống hiến cả cuộc đời họ cho vị thần họ tôn sùng. Mỗi lần tiến hóa, "
-"hiến tế của họ sẽ tăng 5% tác dụng. Họ có gấp đôi cơ hội nhận được vật phẩm "
-"từ các cuộc phiêu lưu."
+"hiến tế của họ sẽ tăng 5% tác dụng. Họ có gấp đôi cơ hội nhận được vật hiến "
+"tế từ các cuộc phiêu lưu."
 
 #: cogs/classes/__init__.py:126
 msgid "Paragon"
@@ -5599,7 +5599,7 @@ msgstr ""
 
 #: cogs/adventure/__init__.py:602
 msgid "Loot item"
-msgstr "Vật phẩm"
+msgstr "Vật hiến tế"
 
 #: cogs/adventure/__init__.py:606
 #, python-brace-format
@@ -9078,11 +9078,12 @@ msgstr ""
 msgid ""
 "Upvote me to receive a random crate! You will be rewarded a few seconds "
 "afterwards!\n"
-"https://top.gg/bot/idlerpg"
+"Each of the following links will reward you with one random crate upon "
+"voting:\n"
+"\n"
+"- <https://top.gg/bot/idlerpg>\n"
+"- <https://discord.ly/idlerpg>"
 msgstr ""
-"Bình chọn cho tôi để được nhận một thùng ngẫu nhiên! Bạn sẽ được thưởng vài "
-"giây sau đó!\n"
-"https://top.gg/bot/idlerpg"
 
 #: cogs/custom/__init__.py:28
 msgid "In loving memory of Mary Johanna, ex-developer."
@@ -9466,7 +9467,7 @@ msgstr ""
 "\n"
 "            Bạn có thể kiếm thêm XP bằng cách:\n"
 "              - Hoàn thành các cuộc phiêu lưu\n"
-"              - Đổi vật phẩm để nhận XP"
+"              - Đổi vật hiến tế để nhận XP"
 
 #: cogs/profile/__init__.py:439
 #, python-brace-format
@@ -9588,7 +9589,7 @@ msgstr "Túi đồ của bạn đang trống."
 #: cogs/profile/__init__.py:571
 #, python-brace-format
 msgid "{user} has the following loot items."
-msgstr "{user} có những vật phẩm sau."
+msgstr "{user} có những vật hiến tế sau."
 
 #: cogs/profile/__init__.py:577
 #, python-brace-format
@@ -9597,7 +9598,7 @@ msgstr "ID: `{id}` Giá trị là **{value}**"
 
 #: cogs/profile/__init__.py:590
 msgid "Show your loot items"
-msgstr "Hiển thị vật phẩm của bạn"
+msgstr "Hiển thị vật hiến tế của bạn"
 
 #: cogs/profile/__init__.py:594
 msgid ""
@@ -9612,24 +9613,24 @@ msgid ""
 "[our wiki](https://wiki.idlerpg.xyz/index.php?title=Loot#Probability) for "
 "the exact chances."
 msgstr ""
-"Hiển thị vật phẩm của bạn.\n"
+"Hiển thị vật hiến tế của bạn.\n"
 "\n"
-"            Vật phẩm có thể dùng để đổi tiền hoặc XP, hoặc hiến tế cho thần "
-"để nhận được điểm ưu ái.\n"
+"            Vật hiến tế có thể dùng để đổi tiền hoặc XP, hoặc hiến tế cho "
+"thần để nhận được điểm ưu ái.\n"
 "\n"
-"            Bạn có thể tìm kiếm vật phẩm bằng cách hoàn thành các cuộc phiêu "
-"lưu. Độ khó càng cao thì xác suất nhận được vật phẩm càng cao.\n"
-"            Nếu bạn là Tư tế, xác suất nhận được vật phẩm của bạn tăng gấp "
-"đôi. Hãy xem [wiki của chúng tôi](https://wiki.idlerpg.xyz/index.php?"
+"            Bạn có thể tìm kiếm vật hiến tế bằng cách hoàn thành các cuộc "
+"phiêu lưu. Độ khó càng cao thì xác suất nhận được vật hiến tế càng cao.\n"
+"            Nếu bạn là Tư tế, xác suất nhận được vật hiến tế của bạn tăng "
+"gấp đôi. Hãy xem [wiki của chúng tôi](https://wiki.idlerpg.xyz/index.php?"
 "title=Loot#Probability) để biết xác suất cụ thể."
 
 #: cogs/profile/__init__.py:606
 msgid "You do not have any loot at this moment."
-msgstr "Bạn hiện không có bất kỳ vật phẩm nào."
+msgstr "Bạn hiện không có bất kỳ vật hiến tế nào."
 
 #: cogs/profile/__init__.py:617
 msgid "Exchange your loot for money or XP"
-msgstr "Đổi vật phẩm để nhận tiền hoặc XP"
+msgstr "Đổi vật hiến tế để nhận tiền hoặc XP"
 
 #: cogs/profile/__init__.py:621
 msgid ""
@@ -9641,26 +9642,26 @@ msgid ""
 "            If you choose money, you will get the loots' combined value in "
 "cash. For XP, you will get 1/4th of the combined value in XP."
 msgstr ""
-"`[loot_ids...]` - ID vật phẩm bạn muốn đổi; mặc định là tất cả\n"
+"`[loot_ids...]` - ID vật hiến tế bạn muốn đổi; mặc định là tất cả\n"
 "\n"
-"            Đổi vật phẩm để nhận tiền hoặc XP, bot sẽ cho bạn chọn.\n"
+"            Đổi vật hiến tế để nhận tiền hoặc XP, bot sẽ cho bạn chọn.\n"
 "\n"
 "            Nếu bạn chọn tiền, bạn sẽ nhận số tiền bằng tổng giá trị các vật "
-"phẩm. Nếu là XP, bạn sẽ nhận số XP bằng 1/4 tổng giá trị các vật phẩm."
+"hiến tế. Nếu là XP, bạn sẽ nhận số XP bằng 1/4 tổng giá trị các vật hiến tế."
 
 #: cogs/profile/__init__.py:634 cogs/gods/__init__.py:61
 msgid "You don't have any loot."
-msgstr "Bạn không có vật phẩm nào."
+msgstr "Bạn không có vật hiến tế nào."
 
 #: cogs/profile/__init__.py:645 cogs/gods/__init__.py:80
 #, python-brace-format
 msgid "You don't own any loot items with the IDs: {itemids}"
-msgstr "Bạn không có vật phẩm với ID: {itemids}"
+msgstr "Bạn không có vật hiến tế với ID: {itemids}"
 
 #: cogs/profile/__init__.py:652
 #, python-brace-format
 msgid "Select a reward for the {amount} items"
-msgstr "Chọn một phần thưởng cho {amount} vật phẩm"
+msgstr "Chọn một phần thưởng cho {amount} vật hiến tế"
 
 #: cogs/profile/__init__.py:653
 #, python-brace-format
@@ -9675,12 +9676,12 @@ msgstr "**{value} XP**"
 #: cogs/profile/__init__.py:689
 #, python-brace-format
 msgid "You received **{reward}** when exchanging all of your loot."
-msgstr "Bạn nhận **{reward}** khi đổi tất cả vật phẩm."
+msgstr "Bạn nhận **{reward}** khi đổi tất cả vật hiến tế."
 
 #: cogs/profile/__init__.py:693
 #, python-brace-format
 msgid "You received **{reward}** when exchanging loot item(s) `{loot_ids}`. "
-msgstr "Bạn nhận **{reward}** khi đổi các vật phẩm `{loot_ids}`. "
+msgstr "Bạn nhận **{reward}** khi đổi các vật hiến tế `{loot_ids}`. "
 
 #: cogs/profile/__init__.py:714
 msgid "Equip an item"
@@ -10578,14 +10579,14 @@ msgid ""
 "\n"
 "            Only players, who follow a God can use this command."
 msgstr ""
-"`[loot_ids...]` - ID vật phẩm bạn muốn hiến tế, có thể là một hoặc nhiều ID "
-"cách nhau bởi khoảng trắng; mặc định là tất cả vật phẩm\n"
+"`[loot_ids...]` - ID vật hiến tế bạn muốn hiến tế, có thể là một hoặc nhiều "
+"ID cách nhau bởi khoảng trắng; mặc định là tất cả vật hiến tế\n"
 "\n"
 "            Hiến tế vật phẩm cho Thần của bạn để nhận điểm ưu ái.\n"
 "\n"
 "            Nếu không có ID nào được nhập cho lệnh này, tất cả vật phẩm sẽ "
 "được hiến tế.\n"
-"            Bạn có thể xem các vật phẩm đang sở hữu bằng lệnh `{prefix}"
+"            Bạn có thể xem các vật hiến tế đang sở hữu bằng lệnh `{prefix}"
 "loot`.\n"
 "\n"
 "            Chỉ người chơi có theo đuổi Thần mới có thể sử dụng lệnh này."
@@ -10594,8 +10595,8 @@ msgstr ""
 #, python-brace-format
 msgid "This will sacrifice all of your loot and give {value} favor. Continue?"
 msgstr ""
-"Lệnh này sẽ hiến tế tất cả vật phẩm của bạn và cho bạn {value} điểm ưu ái. "
-"Tiếp tục?"
+"Lệnh này sẽ hiến tế tất cả vật hiến tế của bạn và cho bạn {value} điểm ưu "
+"ái. Tiếp tục?"
 
 #: cogs/gods/__init__.py:121
 #, python-brace-format
@@ -10980,6 +10981,29 @@ msgid ""
 "            Giving away any items, crates or money during the trade will "
 "render it invalid and it will not complete."
 msgstr ""
+"Mở một phiên giao dịch cho bạn và một người chơi khác.\n"
+"            Sử dụng `{prefix}trade <user>`, phiên giao dịch sẽ bắt đầu khi "
+"người chơi nhấn đồng ý.\n"
+"\n"
+"            Khi phiên giao dịch đang diễn ra, bạn và người kia có thể thêm "
+"hoặc bớt vũ khí, tiền và thùng tùy ý.\n"
+"\n"
+"            Đây là một vài ví dụ để bạn làm quen với lệnh:\n"
+"             - {prefix}trade add crates 10 common\n"
+"             - {prefix}trade set money 1000\n"
+"             - {prefix}trade remove item 13377331 (lệnh này chỉ có tác dụng "
+"nếu bạn đã thêm món vũ khí này trước đó)\n"
+"             - {prefix}trade add items 1234 2345 3456\n"
+"\n"
+"            Để chấp nhận giao dịch, cả hai người chơi phải nhấn emoji ✅.\n"
+"            Chấp nhận giao dịch sẽ chuyển tất cả các vật trong phiên giao "
+"dịch cho người chơi còn lại.\n"
+"\n"
+"            Bạn không thể giao dịch với bản thân hoặc có nhiều phiên giao "
+"dịch diễn ra cùng lúc.\n"
+"            Đưa bất cứ vũ khí, thùng hay tiền cho người khác trong lúc phiên "
+"giao dịch đang diễn ra sẽ khiến phiên giao dịch không hợp lệ và không thể "
+"hoàn thành."
 
 #: cogs/transaction/__init__.py:357
 msgid "You cannot trade with yourself."
@@ -11006,6 +11030,11 @@ msgid ""
 "\n"
 "            You need to have an open trading session to use this command."
 msgstr ""
+"Thêm thứ gì đó vào phiên giao dịch.\n"
+"            Bạn có thể ghi rõ vật bạn muốn thêm vào phiên giao dịch bằng "
+"cách sử dụng một trong các lệnh phụ bên dưới.\n"
+"\n"
+"            Bạn phải đang trong một phiên giao dịch để sử dụng lệnh này."
 
 #: cogs/transaction/__init__.py:392
 #, python-brace-format
@@ -11027,6 +11056,14 @@ msgid ""
 "\n"
 "            You need to have an open trading session to use this command."
 msgstr ""
+"`<amount>` - Số tiền bạn muốn thêm vào phiên giao dịch, phải lớn hơn 0\n"
+"\n"
+"            Thêm tiền vào phiên giao dịch. Bạn không thể thêm nhiều hơn số "
+"tiền bạn có.\n"
+"            Để lấy tiền ra khỏi phiên giao dịch, sử dụng `{prefix}trade "
+"remove money`.\n"
+"\n"
+"            Bạn phải đang trong một phiên giao dịch để sử dụng lệnh này."
 
 #: cogs/transaction/__init__.py:416
 msgid "Adds crates to a trade."
@@ -11045,6 +11082,16 @@ msgid ""
 "\n"
 "            You need to have an open trading session to use this command."
 msgstr ""
+"`<amount>` - Số thùng bạn muốn thêm vào phiên giao dịch, phải lớn hơn 0\n"
+"            `<rarity>` - Loại thùng để thêm, có thể là common, uncommon, "
+"rare, magic hoặc legendary\n"
+"\n"
+"            Thêm thùng vào phiên giao dịch. Bạn không thể thêm nhiều hơn số "
+"thùng bạn có.\n"
+"            Để lấy thùng ra khỏi phiên giao dịch, sử dụng `{prefix}trade "
+"remove crates`.\n"
+"\n"
+"            Bạn phải đang trong một phiên giao dịch để sử dụng lệnh này."
 
 #: cogs/transaction/__init__.py:434 cogs/transaction/__init__.py:546
 msgid "You do not have enough crates."
@@ -11065,6 +11112,14 @@ msgid ""
 "\n"
 "            You need to have an open trading session to use this command."
 msgstr ""
+"`<itemid>` - ID vũ khí bạn muốn thêm\n"
+"\n"
+"            Thêm một món vũ khí vào phiên giao dịch. Vũ khí phải nằm trong "
+"túi đồ của bạn.\n"
+"            Để lấy vũ khí ra khỏi phiên giao dịch, sử dụng `{prefix}trade "
+"remove item`.\n"
+"\n"
+"            Bạn phải đang trong một phiên giao dịch để sử dụng lệnh này."
 
 #: cogs/transaction/__init__.py:449
 msgid "You already added this item!"
@@ -11091,6 +11146,17 @@ msgid ""
 "\n"
 "            You need to have an open trading session to use this command."
 msgstr ""
+"`<itemids...>` - ID của những món vũ khí bạn muốn thêm, cách bởi khoảng "
+"trắng\n"
+"\n"
+"            Thêm nhiều món vũ khí vào phiên giao dịch. Các món vũ khí này "
+"phải chưa nằm trong phiên giao dịch.\n"
+"            Các vũ khí không nằm trong túi đồ của bạn sẽ tự động bị loại "
+"bỏ.\n"
+"            Để lấy vũ khí ra khỏi phiên giao dịch, sử dụng `{prefix}trade "
+"remove item`.\n"
+"\n"
+"            Bạn phải đang trong một phiên giao dịch để sử dụng lệnh này."
 
 #: cogs/transaction/__init__.py:477
 msgid "You already added one or more of these items!"
@@ -11098,7 +11164,7 @@ msgstr "Bạn đã thêm một hoặc nhiều món này!"
 
 #: cogs/transaction/__init__.py:494
 msgid "Sets a value to a trade instead of adding onto it."
-msgstr "Đặt giá tiền cho một phiên giao dịch thay vì thêm tiền vào."
+msgstr "Đặt số lượng cho một phiên giao dịch thay vì thêm vào."
 
 #: cogs/transaction/__init__.py:499
 msgid ""
@@ -11108,12 +11174,17 @@ msgid ""
 "\n"
 "            You need to have an open trading session to use this command."
 msgstr ""
+"Đặt một số lượng cụ thể cho phiên giao dịch.\n"
+"            Bạn có thể đặt số lượng cho một món đồ trong phiên giao dịch "
+"bằng một trong các lệnh phụ bên dưới.\n"
+"\n"
+"            Bạn phải đang trong một phiên giao dịch để sử dụng lệnh này."
 
 #: cogs/transaction/__init__.py:506
 #, python-brace-format
 msgid "Please select something to set. Example: `{prefix}trade set money 1337`"
 msgstr ""
-"Chọn một thứ gì đó để đặt giá tiền. Ví dụ: `{prefix}trade set money 1337`"
+"Chọn một thứ gì đó để đặt số lượng. Ví dụ: `{prefix}trade set money 1337`"
 
 #: cogs/transaction/__init__.py:512
 msgid "Sets money in a trade."
@@ -11131,6 +11202,13 @@ msgid ""
 "\n"
 "            You need to have an open trading session to use this command."
 msgstr ""
+"`<amount>` - Số tiền để đặt, phải lớn hơn -1\n"
+"\n"
+"            Đặt số tiền cho một phiên giao dịch. Bạn không thể đặt số tiền "
+"lớn hơn số bạn có.\n"
+"            Để thêm hay bớt tiền, sử dụng `{prefix}trade add/remove money`.\n"
+"\n"
+"            Bạn phải đang trong một phiên giao dịch để sử dụng lệnh này."
 
 #: cogs/transaction/__init__.py:530
 msgid "Sets crates in a trade."
@@ -11150,10 +11228,18 @@ msgid ""
 "\n"
 "            You need to have an open trading session to use this command."
 msgstr ""
+"`<amount>` - Số thùng để đặt, phải lớn hơn -1\n"
+"\n"
+"            Đặt số thùng cho một phiên giao dịch. Bạn không thể đặt số thùng "
+"lớn hơn số bạn có.\n"
+"            Để thêm hay bớt thùng, sử dụng `{prefix}trade add/remove "
+"money`.\n"
+"\n"
+"            Bạn phải đang trong một phiên giao dịch để sử dụng lệnh này."
 
 #: cogs/transaction/__init__.py:552
 msgid "Removes something from a trade."
-msgstr "Lấy ra một thừ gì đó từ phiên giao dịch."
+msgstr "Lấy ra một thứ gì đó từ phiên giao dịch."
 
 #: cogs/transaction/__init__.py:557
 msgid ""
@@ -11163,6 +11249,11 @@ msgid ""
 "\n"
 "            You need to have an open trading session to use this command."
 msgstr ""
+"Lấy ra một thứ gì đó từ phiên giao dịch.\n"
+"            Bạn có thể tùy ý lấy ra một thứ gì đó từ phiên giao dịch bằng "
+"cách sử dụng một trong các lệnh phụ bên dưới.\n"
+"\n"
+"            Bạn phải đang trong một phiên giao dịch để sử dụng lệnh này."
 
 #: cogs/transaction/__init__.py:564
 #, python-brace-format
@@ -11173,7 +11264,7 @@ msgstr ""
 
 #: cogs/transaction/__init__.py:570
 msgid "Removes money from a trade."
-msgstr "Lấy tiền ra từ một phiên giao dịch."
+msgstr "Lấy tiền ra khỏi một phiên giao dịch."
 
 #: cogs/transaction/__init__.py:574
 #, python-brace-format
@@ -11186,6 +11277,14 @@ msgid ""
 "\n"
 "            You need to have an open trading session to use this command."
 msgstr ""
+"`<amount>` - Số tiền bạn muốn lấy ra khỏi phiên giao dịch, phải lớn hơn 0\n"
+"\n"
+"            Lấy tiền ra khỏi phiên giao dịch. Bạn không thể lấy ra nhiều hơn "
+"số tiền bạn đã thêm vào.\n"
+"            Để thêm tiền vào phiên giao dịch, sử dụng `{prefix}trade add "
+"money`.\n"
+"\n"
+"            Bạn phải đang trong một phiên giao dịch để sử dụng lệnh này."
 
 #: cogs/transaction/__init__.py:585
 msgid "Resulting amount is negative."
@@ -11193,7 +11292,7 @@ msgstr "Kết quả là số âm."
 
 #: cogs/transaction/__init__.py:588
 msgid "Removes crates from a trade."
-msgstr "Lấy thùng ra từ một phiên giao dịch."
+msgstr "Lấy thùng ra khỏi một phiên giao dịch."
 
 #: cogs/transaction/__init__.py:592
 #, python-brace-format
@@ -11208,6 +11307,16 @@ msgid ""
 "\n"
 "            You need to have an open trading session to use this command."
 msgstr ""
+"`<amount>` - Số thùng bạn muốn lấy ra khỏi phiên giao dịch, phải lớn hơn 0\n"
+"            `<rarity>` - Loại thùng bạn muốn lấy ra khỏi phiên giao dịch, có "
+"thể là common, uncommon, rare, magic hoặc legendary\n"
+"\n"
+"            Lấy thùng ra khỏi phiên giao dịch. Bạn không thể lấy ra nhiều "
+"hơn số thùng bạn đã thêm vào.\n"
+"            Để thêm thùng vào phiên giao dịch, sử dụng `{prefix}trade add "
+"crates`.\n"
+"\n"
+"            Bạn phải đang trong một phiên giao dịch để sử dụng lệnh này."
 
 #: cogs/transaction/__init__.py:607
 msgid "The resulting amount would be negative."
@@ -11215,7 +11324,7 @@ msgstr "Kết quả sẽ là số âm."
 
 #: cogs/transaction/__init__.py:610
 msgid "Removes items from a trade."
-msgstr "Lấy vũ khí ra từ một phiên giao dịch."
+msgstr "Lấy vũ khí ra khỏi một phiên giao dịch."
 
 #: cogs/transaction/__init__.py:614
 #, python-brace-format
@@ -11228,14 +11337,22 @@ msgid ""
 "\n"
 "            You need to have an open trading session to use this command."
 msgstr ""
+"`<itemid>` - ID vũ khí bạn muốn lấy ra\n"
+"\n"
+"            Lấy vũ khí ra khỏi phiên giao dịch. Vũ khí phải nằm trong phiên "
+"giao dịch để được lấy ra.\n"
+"            Để thêm vũ khí vào phiên giao dịch, sử dụng `{prefix}trade add "
+"item`.\n"
+"\n"
+"            Bạn phải đang trong một phiên giao dịch để sử dụng lệnh này."
 
 #: cogs/transaction/__init__.py:626
 msgid "This item is not in the trade."
-msgstr "Trang bị đó không nằm trong phiên giao dịch"
+msgstr "Vũ khí này không nằm trong phiên giao dịch."
 
 #: cogs/transaction/__init__.py:629
 msgid "Removes multiple items to a trade."
-msgstr "Lấy nhiều trang bị ra từ một phiên giao dịch."
+msgstr "Lấy nhiều vũ khí ra khỏi một phiên giao dịch."
 
 #: cogs/transaction/__init__.py:633
 #, python-brace-format
@@ -11250,6 +11367,15 @@ msgid ""
 "\n"
 "            You need to have an open trading session to use this command."
 msgstr ""
+"`<itemid>` - ID các vũ khí bạn muốn lấy ra, cách bởi khoảng trắng\n"
+"\n"
+"            Lấy nhiều món vũ khí ra khỏi phiên giao dịch. Các món vũ khí "
+"phải nằm trong phiên giao dịch để được lấy ra.\n"
+"            Các vũ khí không nằm trong phiên giao dịch sẽ tự động bị loại "
+"bỏ.\n"
+"            Để lấy ra một món vũ khí, sử dụng `{prefix}trade remove item`.\n"
+"\n"
+"            Bạn phải đang trong một phiên giao dịch để sử dụng lệnh này."
 
 #: cogs/races/__init__.py:30
 msgid "Pick or change your race"
@@ -11272,18 +11398,32 @@ msgid ""
 "            After picking the race, you will be asked a personal question, "
 "the answer may affect something."
 msgstr ""
+"Chọn hoặc đổi chủng tộc của bạn. Bạn có thể dùng lệnh này nếu còn điểm "
+"reset.\n"
+"\n"
+"            Mỗi chủng tộc có phân bố điểm tấn công/phòng thủ khác nhau:\n"
+"              - Orc: +4 phòng thủ , +0 tấn công\n"
+"              - Dwarf: +3 phòng thủ , +1 tấn công\n"
+"              - Loài người: +2 phòng thủ , +2 tấn công\n"
+"              - Elf: +1 phòng thủ , +3 tấn công\n"
+"              - Jikill: +0 phòng thủ , +4 tấn công\n"
+"\n"
+"            Mặc định là loài người.\n"
+"\n"
+"            Sau khi chọn chủng tộc, bạn sẽ được hỏi một câu hỏi cá nhân, câu "
+"trả lời có lẽ sẽ ảnh hưởng đến điều gì đó."
 
 #: cogs/races/__init__.py:52
 msgid ""
 "You already chose a race. This change now will cost you a reset point. Are "
 "you sure?"
 msgstr ""
-"Bạn đã chọn một chủng tộc. Sự thay đổi này sẽ tốn 1 lần đổi (Bạn có 2 lần "
-"đổi). Bạn có chắc không?"
+"Bạn đã chọn một chủng tộc. Sự thay đổi này sẽ tốn 1 điểm reset. Bạn có chắc "
+"không?"
 
 #: cogs/races/__init__.py:59
 msgid "Human"
-msgstr "Con người"
+msgstr "Loài người"
 
 #: cogs/races/__init__.py:61
 msgid ""
@@ -11292,14 +11432,14 @@ msgid ""
 "makes them attack efficient and concentrated. Their attack and defense "
 "skills are pretty equal."
 msgstr ""
-"Con người là một đội. Họ làm việc và chiến đấu tay trong tay và không bao "
-"giờ bỏ cuộc, ngay cả khi một số bạn bè của họ đã chết. Cơn thịnh nộ và sự "
-"tức giận của họ chống lại kẻ thù làm cho họ tấn công hiệu quả và tập trung. "
-"Kỹ năng tấn công và phòng thủ của họ ngang nhau."
+"Loài người là một đội. Họ làm việc và chiến đấu cùng nhau và không bao giờ "
+"bỏ cuộc, ngay cả khi một số bạn bè của họ đã chết. Cơn thịnh nộ và sự tức "
+"giận của họ đối với kẻ thù làm cho họ tấn công hiệu quả và tập trung. Kỹ "
+"năng tấn công và phòng thủ của họ ngang nhau."
 
 #: cogs/races/__init__.py:69
 msgid "Dwarf"
-msgstr "Người lùn"
+msgstr "Dwarf"
 
 #: cogs/races/__init__.py:71
 msgid ""
@@ -11307,33 +11447,31 @@ msgid ""
 "can deal a lot of damage with their self-crafted equipment. Because of their "
 "reflexes, they have more defense than attack. Want an ale?"
 msgstr ""
-"Người lùn là bậc thầy của lò rèn của họ. Mặc dù chúng rất nhỏ, nhưng chúng "
-"có thể gây ra nhiều thiệt hại với thiết bị tự chế tạo của chúng. Vì phản xạ "
-"của họ, họ có nhiều phòng thủ hơn là tấn công."
+"Dwarf là bậc thầy của lò rèn. Mặc dù họ rất nhỏ con, nhưng có thể gây ra "
+"nhiều thiệt hại với các thiết bị tự chế tạo. Vì khả năng phản xạ của họ, họ "
+"có nhiều phòng thủ hơn là tấn công. Một ly bia không?"
 
 #: cogs/races/__init__.py:79
 msgid "Elf"
 msgstr "Elf"
 
 #: cogs/races/__init__.py:81
-#, fuzzy
 msgid ""
 "Elves are the masteres of camouflage. They melt with their enviroment to "
 "attack enemies without their knowing. Their bound to nature made them good "
 "friends of the wild spirits which they can call for help and protection. "
 "They have more attack than defense."
 msgstr ""
-"Elf là bậc thầy của ngụy trang. Chúng tan chảy với môi trường để tấn công kẻ "
-"thù . Sự ràng buộc với thiên nhiên của họ khiến họ trở thành những người bạn "
-"tốt của những linh hồn hoang dã mà họ có thể kêu gọi giúp đỡ và bảo vệ. Họ "
-"có điểm tấn công hơn là phòng thủ."
+"Elf là bậc thầy của ngụy trang. Họ hòa mình vào môi trường để đánh lén kẻ "
+"thù. Sự ràng buộc với thiên nhiên khiến họ trở thành những người bạn tốt của "
+"những tinh linh tự do mà họ có thể kêu gọi giúp đỡ và bảo vệ. Họ có nhiều "
+"điểm tấn công hơn là phòng thủ."
 
 #: cogs/races/__init__.py:90
 msgid "Orc"
 msgstr "Orc"
 
 #: cogs/races/__init__.py:92
-#, fuzzy
 msgid ""
 "Orcs are a friendly race based on their rituals of calling their ancestors "
 "to bless the rain and the deeds of their tribe. More ugly than nice, they "
@@ -11341,86 +11479,81 @@ msgid ""
 "they have mostly no real damage, only a bit, but a huge armour. Who cares "
 "about the damage as long as you don't die?"
 msgstr ""
-"Loài Orc là một chủng tộc thân thiện dựa trên các nghi thức của chúng để gọi "
-"tổ tiên của chúng để ban phước cho mưa và hành động của bộ lạc của chúng. "
-"Xấu hơn là đẹp, họ chủ yếu tránh bị kẻ thù tấn công. Nếu họ không thể tránh "
-"được một cuộc chiến, thì họ hầu như không có thiệt hại thực sự, chỉ một "
-"chút, mà là một bộ giáp khổng lồ. Ai quan tâm đến thiệt hại chừng nào bạn "
-"không chết?"
+"Orc là một chủng tộc thân thiện bởi vì các nghi thức để gọi tổ tiên ban mưa "
+"và ban phước cho các hành động của bộ lạc. Chủ yếu vì xấu chứ không phải vì "
+"tốt, họ hầu như luôn tránh bị kẻ thù tấn công. Nếu không thể tránh được một "
+"trận chiến, họ hầu như không có sức sát thương, chỉ một chút, nhưng có sức "
+"phòng thủ khổng lồ. Ai quan tâm đến sát thương nếu bạn còn không chết?"
 
 #: cogs/races/__init__.py:102
 msgid "Jikill"
 msgstr "Jikill"
 
 #: cogs/races/__init__.py:104
-#, fuzzy
 msgid ""
 "Jikills are dwarflike creatures with one eye in the middle of their face, "
 "which lets them have a big and huge forehead, big enough for their brain "
 "which can kill enemies. These sensitive creatures are easily knocked out."
 msgstr ""
-"Jikills là những sinh vật lùn có một mắt ở giữa mặt, cho phép chúng có một "
-"cái trán to và to, đủ lớn để não của chúng có thể tiêu diệt kẻ thù. Những "
-"sinh vật yếu ớt dễ dàng bị đánh gục."
+"Jikill là những sinh vật lùn có một mắt ở giữa mặt, cho phép họ có một cái "
+"trán to bự, đủ lớn cho bộ não có thể tiêu diệt kẻ thù của họ. Những sinh vật "
+"yếu ớt này rất dễ dàng bị đánh gục."
 
 #: cogs/races/__init__.py:115
 msgid "One of my biggest regrets is..."
-msgstr "Một trong những tiếc nuối lớn nhất của tôi là ..."
+msgstr "Một trong những tiếc nuối lớn nhất của tôi là..."
 
 #: cogs/races/__init__.py:117
 msgid "...that I never confessed my true love, and now she is dead."
-msgstr ""
-"... rằng tôi chưa bao giờ thú nhận tình yêu đích thực của mình, và giờ cô ấy "
-"đã chết."
+msgstr "...tôi chưa bao giờ tỏ tình, và giờ cô ấy đã chết."
 
 #: cogs/races/__init__.py:118
 msgid "...that I have never been to the funeral of my parents."
-msgstr "... rằng tôi chưa bao giờ đến đám tang của cha mẹ tôi."
+msgstr "...tôi chưa bao giờ đến đám tang của cha mẹ tôi."
 
 #: cogs/races/__init__.py:119
 msgid "...that I betrayed my best friend."
-msgstr "... rằng tôi đã phản bội người bạn thân nhất của mình."
+msgstr "...tôi đã phản bội người bạn thân nhất của mình."
 
 #: cogs/races/__init__.py:123
 msgid "One of my proudest creations is..."
-msgstr "Một trong những sáng tạo đáng tự hào nhất của tôi là ..."
+msgstr "Một trong những sáng tạo đáng tự hào nhất của tôi là..."
 
 #: cogs/races/__init__.py:125
 msgid "...a perfected ale keg."
-msgstr "... ale keg hoàn hảo."
+msgstr "...một thùng bia hoàn hảo."
 
 #: cogs/races/__init__.py:126
 msgid "...a magical infused glove."
-msgstr "... một chiếc găng tay ma thuật."
+msgstr "...một chiếc găng tay ma thuật."
 
 #: cogs/races/__init__.py:127
 msgid "...a bone-forged axe."
-msgstr "... một cái rìu."
+msgstr "...một cái rìu bằng xương."
 
 #: cogs/races/__init__.py:131
 msgid "My favourite spirit of the wild is..."
-msgstr "Linh hồn của con vật mà tôi yêu thích nhất là..."
+msgstr "Tinh linh hoang dã mà tôi yêu thích nhất là..."
 
 #: cogs/races/__init__.py:133
 msgid "...Beringor, the bear spirit."
-msgstr "... Beringor, linh hồn gấu."
+msgstr "...Beringor, tinh linh gấu."
 
 #: cogs/races/__init__.py:134
 msgid "...Neysa, the tiger spirit."
-msgstr "... Neysa, linh hồn hổ."
+msgstr "... Neysa, tinh linh hổ."
 
 #: cogs/races/__init__.py:135
 msgid "...Avril, the wolf spirit."
-msgstr "... Avril, linh hồn sói."
+msgstr "... Avril, tinh linh sói."
 
 #: cogs/races/__init__.py:136
 msgid "...Sambuca, the eagle spirit."
-msgstr "... Sambuca, linh hồn đại bàng."
+msgstr "... Sambuca, tinh linh đại bàng."
 
 #: cogs/races/__init__.py:140
-#, fuzzy
 msgid "The ancestor that gives me my strength is..."
-msgstr "Người mà tôi thân yêu nhất là..."
+msgstr "Người tổ tiên cho tôi sức mạnh là..."
 
 #: cogs/races/__init__.py:142
 msgid "...my sister."
@@ -11428,11 +11561,11 @@ msgstr "...chị tôi."
 
 #: cogs/races/__init__.py:143
 msgid "...my father."
-msgstr "... cha tôi"
+msgstr "...cha tôi."
 
 #: cogs/races/__init__.py:144
 msgid "...my grandmother."
-msgstr "...Bà tôi."
+msgstr "...bà tôi."
 
 #: cogs/races/__init__.py:145
 msgid "...my uncle."
@@ -11444,32 +11577,32 @@ msgstr "Thứ có thể đánh gục tôi là..."
 
 #: cogs/races/__init__.py:151
 msgid "...noise"
-msgstr "...tiếng ồn"
+msgstr "...tiếng ồn."
 
 #: cogs/races/__init__.py:152
 msgid "...spiritual pain"
-msgstr "... nỗi đau tinh thần"
+msgstr "...nỗi đau tinh thần."
 
 #: cogs/races/__init__.py:153
 msgid "...extreme temperatures."
-msgstr "...nhiệt độ quá cao."
+msgstr "...nhiệt độ khắc nghiệt."
 
 #: cogs/races/__init__.py:154
 msgid "...strange and powerful smells."
-msgstr "...Những thứ mùi khó ngửi và kinh tởm."
+msgstr "...những mùi khó ngửi và kinh tởm."
 
 #: cogs/races/__init__.py:186
 #, python-brace-format
 msgid "You are now a {race}."
-msgstr "Từ bây giờ bạn là {race}"
+msgstr "Bạn bây giờ là {race}."
 
 #: cogs/maths/__init__.py:51
-#, fuzzy, python-brace-format
+#, python-brace-format
 msgid "Variable {var} referenced before assignment."
 msgstr "Biến {var} được tham chiếu trước khi gán."
 
 #: cogs/maths/__init__.py:137
-#, fuzzy, python-brace-format
+#, python-brace-format
 msgid "Illegal character '{character}'"
 msgstr "Kí tự không hợp lệ `{character}`"
 
@@ -11485,7 +11618,7 @@ msgstr "Lỗi xảy ra ở `{character}`"
 
 #: cogs/maths/__init__.py:304
 msgid "Do some maths"
-msgstr ""
+msgstr "Làm phép toán"
 
 #: cogs/maths/__init__.py:308
 msgid ""
@@ -11496,33 +11629,37 @@ msgid ""
 "and NaN (nan).\n"
 "            Works with variable assignment and multiline-statements."
 msgstr ""
+"`<expr>` - Biểu thức toán để tính toán\n"
+"\n"
+"            Tính toán thứ gì đó. Số pi là pi, tau là tau và e là math.e\n"
+"            Hỗ trợ round(), sin(), cos(), sqrt(), tan() và vô cực (inf) và "
+"giá trị không phải số hợp lệ (nan).\n"
+"            Có thể hoạt động với các giá trị biến được gán và phép toán có "
+"nhiều dòng."
 
 #: cogs/maths/__init__.py:321
 msgid "Overflow! Try a smaller number for your power or factorial."
-msgstr "Hãy thử một số nhỏ hơn."
+msgstr "Tràn dữ liệu! Hãy thử một số nhỏ hơn cho số mũ hoặc giai thừa của bạn."
 
 #: cogs/maths/__init__.py:328
-#, fuzzy
 msgid "Your expression contains left open brackets."
-msgstr "Biểu thức của bạn chứa dấu ngoặc mở trái."
+msgstr "Biểu thức của bạn thiếu dấu ngoặc đóng lại."
 
 #: cogs/maths/__init__.py:330
-#, fuzzy
 msgid "Your expression contains empty brackets."
 msgstr "Biểu thức của bạn chứa dấu ngoặc rỗng."
 
 #: cogs/maths/__init__.py:332
 msgid "Invalid operation on these numbers."
-msgstr "Con số không hợp lệ."
+msgstr "Phép tính không hợp lệ với các con số này."
 
 #: cogs/maths/__init__.py:334
 msgid "Can't divide by Zero."
 msgstr "Không thể chia cho 0."
 
 #: cogs/maths/__init__.py:337
-#, fuzzy
 msgid "The variable name starts with a reserved keyword."
-msgstr "Tên biến bắt đầu bằng một từ khóa dành riêng."
+msgstr "Tên biến bắt đầu bằng một từ khóa đã được để dành."
 
 #: cogs/maths/__init__.py:339
 msgid "Unknown Error Occured"
@@ -11530,7 +11667,7 @@ msgstr "Đã xảy ra lỗi"
 
 #: cogs/akinator/__init__.py:70
 msgid "Starts an akinator session."
-msgstr ""
+msgstr "Bắt đầu một buổi Akinator."
 
 #: cogs/akinator/__init__.py:74
 #, python-brace-format
@@ -11541,30 +11678,36 @@ msgid ""
 "\n"
 "            To change the language, use `{prefix}akinator language`."
 msgstr ""
+"Chơi Akinator. Trò chơi được điều khiển bằng các nút emoji có sẵn.\n"
+"            \\U000021A9 đợi hoàn tác, \\U00002139 hiển thị thông tin hiện "
+"tại.\n"
+"\n"
+"            Để đổi ngôn ngữ, sử dụng `{prefix}akinator language`."
 
 #: cogs/akinator/__init__.py:84
 msgid ""
 "⚠ There is another akinator game in this channel currently... Please wait "
 "until it finishes!"
 msgstr ""
+"⚠ Đang có một buổi Akinator khác trong kênh này... Xin hãy đợi đến khi nó "
+"kết thúc!"
 
 #: cogs/akinator/__init__.py:108
 msgid "Set your preferred language for the Akinator games."
-msgstr "Đặt ngôn ngữ ưa thích của bạn cho trò chơi Akinator."
+msgstr "Cài đặt ngôn ngữ bạn muốn cho trò chơi Akinator."
 
 #: cogs/akinator/__init__.py:114
 msgid "Pick your language!"
 msgstr "Chọn ngôn ngữ của bạn!"
 
 #: cogs/akinator/__init__.py:126
-#, fuzzy
 msgid ":white_check_mark: Your language has been updated succcessfully"
-msgstr ":white_check_mark: Ngôn ngữ của bạn đã được cập nhật"
+msgstr ":white_check_mark: Ngôn ngữ của bạn đã được cập nhật thành công"
 
 #: cogs/akinator/__init__.py:199 cogs/akinator/__init__.py:233
 #: cogs/akinator/__init__.py:265 cogs/akinator/__init__.py:324
 msgid ":x: Response error (reason: `missing keys`)"
-msgstr ":x: Phản hồi lỗi (lý do: `thiếu chìa khóa`)"
+msgstr ":x: Phản hồi lỗi (lý do: `thiếu từ khóa`)"
 
 #. session timed out
 #: cogs/akinator/__init__.py:204 cogs/akinator/__init__.py:280
@@ -11576,13 +11719,12 @@ msgid "Bravo, you defeated me! :blush:"
 msgstr "Chúc mừng, bạn đã đánh bại tôi! :blush:"
 
 #: cogs/akinator/__init__.py:343
-#, fuzzy
 msgid ""
 "The server for the choosen language isn't available now... Please check back "
 "later or choose another language!"
 msgstr ""
-"Ngôn ngữ được chọn hiện không khả dụng ... Vui lòng kiểm tra lại sau hoặc "
-"chọn ngôn ngữ khác!"
+"Server với ngôn ngữ được chọn hiện không khả dụng... Vui lòng kiểm tra lại "
+"sau hoặc chọn ngôn ngữ khác!"
 
 #: cogs/akinator/__init__.py:348
 msgid "There are no results."
@@ -11593,17 +11735,17 @@ msgid ""
 ":x: Ouch, that's an unknown error... Please start a new session or notify "
 "the devs."
 msgstr ""
-": x: Ouch, đó là một lỗi không xác định ... Vui lòng bắt đầu một cái khác "
-"hoặc thông báo cho những nhà phát triển IdleRPG."
+": x: Ouch, đó là một lỗi không xác định… Xin hãy bắt đầu một buổi khác hoặc "
+"thông báo cho những nhà phát triển."
 
 #: cogs/akinator/__init__.py:357
 msgid "Bad API response"
-msgstr "Phản hồi của API khá tệ."
+msgstr "Phản hồi của API khá tệ"
 
 #: cogs/akinator/__init__.py:363
-#, fuzzy, python-brace-format
+#, python-brace-format
 msgid "My guess is {name}"
-msgstr "Tôi đoán nó là {name}"
+msgstr "Tôi đoán là {name}"
 
 #: cogs/akinator/__init__.py:365
 #, python-brace-format
@@ -11611,7 +11753,7 @@ msgid ""
 "Extra information: {description}\n"
 "Ranking: {ranking}"
 msgstr ""
-"Thông tin: {description}\n"
+"Thông tin thêm: {description}\n"
 "Thứ hang: {ranking}"
 
 #: cogs/akinator/__init__.py:382
@@ -11677,21 +11819,34 @@ msgid ""
 "            See `{prefix}help alliance` for a list of commands to interact "
 "with your alliance!"
 msgstr ""
+"Liên minh là tập hợp các bang hội. Tương tự như bang hội cần có ít nhất 1 "
+"thành viên, liên minh cần có ít nhất 1 bang hội và sẽ được xem như liên minh "
+"một bang.\n"
+"            Liên minh có thể chiếm hữu thành phố để nhận lợi ích từ các tòa "
+"nhà.\n"
+"\n"
+"            Nếu được dùng mà không có lệnh phụ, lệnh này sẽ hiển thị các "
+"bang hội trong liên minh của bạn.\n"
+"            Xem `{prefix}help alliance` để biết danh sách các lệnh tương tác "
+"với liên minh của bạn!"
 
 #: cogs/alliance/__init__.py:104
 msgid ""
 "You are not in an alliance. You are alone and may still use all other "
 "alliance commands or invite a guild to create a bigger alliance."
 msgstr ""
+"Bạn hiện không ở trong một liên minh. Bạn chỉ có một mình và vẫn có thể sử "
+"dụng các lệnh dành cho liên minh khác hoặc mời bang hội khác để tạo thành "
+"một liên minh lớn hơn."
 
 #: cogs/alliance/__init__.py:110
 msgid "Your allied guilds"
-msgstr ""
+msgstr "Các bang hội trong liên minh của bạn"
 
 #: cogs/alliance/__init__.py:115
 #, python-brace-format
 msgid "Led by {leader}"
-msgstr ""
+msgstr "Dẫn đầu bởi {leader}"
 
 #: cogs/alliance/__init__.py:122
 #, python-brace-format
@@ -11699,10 +11854,12 @@ msgid ""
 "{prefix}alliance buildings | {prefix}alliance defenses | {prefix}alliance "
 "attack | {prefix}alliance occupy"
 msgstr ""
+"{prefix}alliance buildings | {prefix}alliance defenses | {prefix}alliance "
+"attack | {prefix}alliance occupy"
 
 #: cogs/alliance/__init__.py:132
 msgid "Invite a guild to your alliance."
-msgstr ""
+msgstr "Mời bang hội vào liên minh của bạn."
 
 #: cogs/alliance/__init__.py:136
 #, python-brace-format
@@ -11718,50 +11875,63 @@ msgid ""
 "            Only the alliance leader can use this command.\n"
 "            (This command has a cooldown of 5 minutes.)"
 msgstr ""
+"`<newleader>` - Một người dùng có nhân vật và là bang chủ.\n"
+"\n"
+"            Mời một bang hội vào liên minh của bạn. Các bang hội trong liên "
+"minh sẽ được nhận lợi ích từ các tòa nhà trong thành phố của bạn. Một khi "
+"bạn liên minh với bang hội khác, điều này sẽ hiển thị trong {prefix}"
+"alliance.\n"
+"            Để có thể mời, bang hội kia không thể đã có liên minh hoặc sở "
+"hữu một thành phố.\n"
+"\n"
+"            Chỉ bang chủ có thể sử dụng lệnh này.\n"
+"            (Lệnh này có thời gian chờ là 5 phút.)"
 
 #: cogs/alliance/__init__.py:146
 msgid "That member is not in a guild."
-msgstr ""
+msgstr "Thành viên này không có bang hội."
 
 #: cogs/alliance/__init__.py:152
 msgid "That member is not the leader of their guild."
-msgstr ""
+msgstr "Thành viên này không phải bang chủ."
 
 #: cogs/alliance/__init__.py:158
 msgid "This member's guild is already part of your alliance."
-msgstr ""
+msgstr "Bang hội của thành viên này đã nằm trong liên minh của bạn."
 
 #: cogs/alliance/__init__.py:164
 msgid "This guild is already in an alliance."
-msgstr ""
+msgstr "Bang hội này đã có liên minh."
 
 #: cogs/alliance/__init__.py:172
 msgid "This guild is the leader of another alliance."
-msgstr ""
+msgstr "Bang hội này là bang dẫn đầu của một liên minh khác."
 
 #: cogs/alliance/__init__.py:177
 #, python-brace-format
 msgid ""
 "{newleader}, {author} invites you to join their alliance. React to join now."
 msgstr ""
+"{newleader}, {author} mời bạn tham gia liên minh của họ. Nhất emoji để tham "
+"gia."
 
 #: cogs/alliance/__init__.py:191
 msgid "Your alliance is full."
-msgstr ""
+msgstr "Liên minh của bạn đã đầy."
 
 #: cogs/alliance/__init__.py:198
 #, python-brace-format
 msgid "**{user}'s guild is a single-guild alliance and owns a city."
-msgstr ""
+msgstr "Bang hội của **{user}** là liên minh một bang và sở hữu một thành phố."
 
 #: cogs/alliance/__init__.py:208
 #, python-brace-format
 msgid "**{newguild}** is now part of your alliance, {user}!"
-msgstr ""
+msgstr "**{newguild}** bây giờ đã nằm trong liên minh của bạn, {user}!"
 
 #: cogs/alliance/__init__.py:214
 msgid "Leave your alliance"
-msgstr ""
+msgstr "Rời khỏi liên minh"
 
 #: cogs/alliance/__init__.py:218
 #, python-brace-format
@@ -11773,18 +11943,24 @@ msgid ""
 "alliance kick`).\n"
 "            Only guild leaders can use this command."
 msgstr ""
+"Rời khỏi liên minh của bạn. Một khi rời khỏi, bạn sẽ không còn được nhận lợi "
+"ích từ các tòa nhà trong thành phố do liên minh sở hữu.\n"
+"\n"
+"            Nếu bạn dẫn đầu một liên minh, bạn không thể rời khỏi nó (hãy "
+"thử `{prefix}alliance kick`).\n"
+"            Chỉ bang chủ có thể sử dụng lệnh này."
 
 #: cogs/alliance/__init__.py:229
 msgid "You are the alliance's leading guild and cannot leave it!"
-msgstr ""
+msgstr "Bạn là bang hội dẫn đầu liên minh và không thể rời khỏi!"
 
 #: cogs/alliance/__init__.py:235
 msgid "Your guild left the alliance."
-msgstr ""
+msgstr "Bang hội của bạng đã rời khỏi liên minh."
 
 #: cogs/alliance/__init__.py:239
 msgid "Kick a guild from your alliance"
-msgstr ""
+msgstr "Đá một bang khỏi liên minh"
 
 #: cogs/alliance/__init__.py:243
 msgid ""
@@ -11795,34 +11971,42 @@ msgid ""
 "\n"
 "            Only the alliance leader can use this command."
 msgstr ""
+"`<guild_to_kick>` - Tên hoặc ID bang\n"
+"\n"
+"            Đá một bang khỏi liên minh của bạn. Một khi bị đá, bang hội đó "
+"sẽ không còn được nhận lợi ích từ các tòa nhà trong thành phố do liên minh "
+"sở hữu.\n"
+"\n"
+"            Chỉ người đứng đầu liên minh có thể sử dụng lệnh này."
 
 #: cogs/alliance/__init__.py:261
 #, python-brace-format
 msgid ""
 "Cannot find guild `{guild_to_kick}`. Are you sure that's the right name/ID?"
 msgstr ""
+"Không tìm thấy bang `{guild_to_kick}`. Bạng có chắc tên/ID này đúng chứ?"
 
 #: cogs/alliance/__init__.py:266
 msgid "That won't work."
-msgstr ""
+msgstr "Không được."
 
 #: cogs/alliance/__init__.py:269
 msgid "This guild is not in your alliance."
-msgstr ""
+msgstr "Bang này không nằm trong liên minh của bạn."
 
 #: cogs/alliance/__init__.py:272
 #, python-brace-format
 msgid "Do you really want to kick **{guild}** from your alliance?"
-msgstr ""
+msgstr "Bạn có chắc chắn muốn đá **{guild}** khỏi liên minh của bạn?"
 
 #: cogs/alliance/__init__.py:284
 #, python-brace-format
 msgid "**{guild}** is no longer part of your alliance."
-msgstr ""
+msgstr "**{guild}** không còn nằm trong liên minh của bạn."
 
 #: cogs/alliance/__init__.py:297
 msgid "Build buildings or defenses"
-msgstr ""
+msgstr "Xây dựng tòa nhà và phòng thủ"
 
 #: cogs/alliance/__init__.py:301
 #, python-brace-format
@@ -11830,16 +12014,20 @@ msgid ""
 "Build buildings `{prefix}alliance build building` or defenses `{prefix}"
 "alliance build defense`."
 msgstr ""
+"Xây dựng tòa nhà `{prefix}alliance build building` hoặc phòng thủ `{prefix}"
+"alliance build defense`."
 
 #: cogs/alliance/__init__.py:304
 msgid ""
 "Please use one of these subcommands:\n"
 "\n"
 msgstr ""
+"Xin hãy dùng một trong các lệnh phụ sau:\n"
+"\n"
 
 #: cogs/alliance/__init__.py:310
 msgid "Upgrade a building in your city."
-msgstr ""
+msgstr "Nâng cấp một tòa nhà trong thành phố của bạn."
 
 #: cogs/alliance/__init__.py:314
 #, python-brace-format
@@ -11861,6 +12049,21 @@ msgid ""
 "            Only the alliance leader can use this command.\n"
 "            (This command has a cooldown of 5 minutes)"
 msgstr ""
+"`<name>` - Tên tòa nhà để nâng cấp.\n"
+"\n"
+"            Nâng cấp một tòa nhà trong thành phố của bạn để được nhận lợi "
+"ích tốt hơn. Cấp bậc tối đa của các tòa nhà là 10.\n"
+"            Dựa theo các tòa nhà có thể xây trong thành phố của bạn, "
+"`<name>` sẽ là Thief, Raid, Trade, hoặc Adventure. Sử dụng `{prefix}alliance "
+"buildings` để xem tòa nhà nào có thể xây.\n"
+"\n"
+"            Giá nâng cấp phụ thuộc vào cấp bậc kế tiếp của tòa nhà và tính "
+"bằng cấp_kế_tiếp * $100,000.\n"
+"            Giá nâng cấp sẽ bị trừ khỏi kho bạc của bang dẫn đầu liên minh.\n"
+"\n"
+"            Lệnh này yêu cầu liên minh bạn phải sở hữu thành phố.\n"
+"            Chỉ người đứng đầu liên minh có thể sử dụng lệnh này.\n"
+"            (Lệnh này có thời gian chờ là 5 phút)"
 
 #: cogs/alliance/__init__.py:336
 #, python-brace-format
@@ -11868,10 +12071,12 @@ msgid ""
 "Invalid building. Please use `{prefix}{cmd} [thief/raid/trade/adventure]` or "
 "check the possible buildings in your city."
 msgstr ""
+"Tòa nhà không hợp lệ. Xin hãy sử dụng `{prefix}{cmd} [thief/raid/trade/"
+"adventure]` hoặc kiểm tra xem tòa nhà nào có thể xây trong thành phố của bạn."
 
 #: cogs/alliance/__init__.py:344
 msgid "This building is fully upgraded."
-msgstr ""
+msgstr "Tòa nhà này đã được nâng cấp tối đa."
 
 #: cogs/alliance/__init__.py:348
 #, python-brace-format
@@ -11879,22 +12084,25 @@ msgid ""
 "Are you sure you want to upgrade the **{name} building** to level "
 "{new_level}? This will cost $**{price}**."
 msgstr ""
+"Bạn có chắc chắn muốn nâng cấp **tòa nhà {name}** lên cấp {new_level}? Nó sẽ "
+"tốn $**{price}**."
 
 #: cogs/alliance/__init__.py:357
 #, python-brace-format
 msgid ""
 "Your guild doesn't have enough money to upgrade the city's {name} building."
 msgstr ""
+"Bang hội của bạn không có đủ tiền để nâng cấp tòa nhà {name} trong thành phố."
 
 #: cogs/alliance/__init__.py:384
 #, python-brace-format
 msgid ""
 "Successfully upgraded the city's {name} building to level **{new_level}**"
-msgstr ""
+msgstr "Nâng cấp thành công tòa nhà {name} lên **{new_level}**"
 
 #: cogs/alliance/__init__.py:393
 msgid "Build a defense in your city."
-msgstr ""
+msgstr "Xây dựng phòng thủ trong thành phố."
 
 #: cogs/alliance/__init__.py:397
 msgid ""
@@ -11918,39 +12126,59 @@ msgid ""
 "            Only the alliance leader can use this command.\n"
 "            (This command has a cooldown of 1 minutes)"
 msgstr ""
+"Xây dựng các tòa nhà phòng thủ hoặc đặt quân lính trong thành phố của bạn. "
+"Những thứ có thể xây là:\n"
+"\n"
+"            Cannons: 250HP, 60 phòng thủ với giá $200,000\n"
+"            Archers: 500HP, 50 phòng thủ với giá $100,000\n"
+"            Outer Wall: 20,000HP, 0 phòng thủ với giá $500,000\n"
+"            Inner Wall: 10,000HP, 0 phòng thủ với giá $200,000\n"
+"            Moat: 5,000HP, 25 phòng thủ với giá $150,000\n"
+"            Tower: 1,000HP, 50 phòng thủ với giá $200,000\n"
+"            Ballista: 250HP, 30 phòng thủ với giá $100,000\n"
+"\n"
+"            Mọi thành phố đều có thể có tối đa 10 loại phòng thủ. Khi bị tấn "
+"công, tòa nhà với nhiều HP nhất sẽ bị tấn công trước.\n"
+"            Bạn không thể xây dựng phòng thủ khi thành phố đang bị tấn công. "
+"Giá của phòng thủ sẽ bị trừ vào kho bạc của bang dẫn đầu.\n"
+"\n"
+"            Lệnh này yêu cầu liên minh bạn phải sở hữu thành phố.\n"
+"            Chỉ người đứng đầu liên minh có thể sử dụng lệnh này.\n"
+"            (Lệnh này có thời gian chờ là 1 phút)"
 
 #: cogs/alliance/__init__.py:426
 #, python-brace-format
 msgid "Invalid defense. Please use `{prefix}{cmd} [{buildings}]`."
 msgstr ""
+"Loại phòng thủ không hợp lệ. Xin hãy sử dụng `{prefix}{cmd} [{buildings}]`."
 
 #: cogs/alliance/__init__.py:442
 msgid "Your city is under attack. Defenses cannot be built."
-msgstr ""
+msgstr "Thành phố của bạn đang bị tấn công. Không thể xây dựng phòng thủ."
 
 #: cogs/alliance/__init__.py:449
 msgid "You may only build up to 10 defenses."
-msgstr ""
+msgstr "Bạn chỉ có thể xây tối đa 10 loại phòng thủ."
 
 #: cogs/alliance/__init__.py:452
 #, python-brace-format
 msgid ""
 "Are you sure you want to build a **{defense}**? This will cost $**{price}**."
-msgstr ""
+msgstr "Bạn có chắc chắn muốn xây dựng **{defense}**? Nó sẽ tốn $**{price}**."
 
 #: cogs/alliance/__init__.py:463
 #, python-brace-format
 msgid "Your guild doesn't have enough money to build a {defense}."
-msgstr ""
+msgstr "Bang hội của bạn không có đủ tiền để xây dựng {defense}."
 
 #: cogs/alliance/__init__.py:489
 #, python-brace-format
 msgid "Successfully built a {defense}."
-msgstr ""
+msgstr "Xây dựng thành công một {defense}."
 
 #: cogs/alliance/__init__.py:492
 msgid "Lists your city's buildings."
-msgstr ""
+msgstr "Liệt kê các tòa nhà trong thành phố"
 
 #: cogs/alliance/__init__.py:496
 #, python-brace-format
@@ -11974,16 +12202,16 @@ msgstr ""
 #: cogs/alliance/__init__.py:515
 #, python-brace-format
 msgid "{city}'s buildings"
-msgstr ""
+msgstr "Các tòa nhà trong {city}"
 
 #: cogs/alliance/__init__.py:521
 #, python-brace-format
 msgid "Level {level}"
-msgstr ""
+msgstr "Cấp {level}"
 
 #: cogs/alliance/__init__.py:527
 msgid "Lists your city's defenses."
-msgstr ""
+msgstr "Danh sách các phòng thủ trong thành phố."
 
 #: cogs/alliance/__init__.py:531
 msgid ""
@@ -11991,29 +12219,32 @@ msgid ""
 "\n"
 "            Your alliance must own a city to use this command."
 msgstr ""
+"Liệt kê các phòng thủ trong thành phố và lượng HP còn lại.\n"
+"\n"
+"            Liên minh của bạn phải sở hữu thành phố để sử dụng lệnh này."
 
 #: cogs/alliance/__init__.py:548
 #, python-brace-format
 msgid "{city}'s defenses"
-msgstr ""
+msgstr "Phòng thủ của {city}"
 
 #: cogs/alliance/__init__.py:555
 #, python-brace-format
 msgid "HP: {hp}, Defense: {defense}"
-msgstr ""
+msgstr "HP: {hp}, Phòng thủ: {defense}"
 
 #: cogs/alliance/__init__.py:562
 msgid "None built"
-msgstr ""
+msgstr "Chưa có cái nào được xây."
 
 #: cogs/alliance/__init__.py:563
 #, python-brace-format
 msgid "Use {prefix}alliance build defense [name]"
-msgstr ""
+msgstr "Sử dụng {prefix}alliance build defense [tên]"
 
 #: cogs/alliance/__init__.py:572
 msgid "Abandon your city"
-msgstr ""
+msgstr "Bỏ thành phố"
 
 #: cogs/alliance/__init__.py:576
 msgid ""
@@ -12024,19 +12255,25 @@ msgid ""
 "            Your alliance must own a city to use this command.\n"
 "            Only the alliance leader can use this command."
 msgstr ""
+"Bỏ thành phố sẽ khiến các thành viên trong liên minh lập tức mất đi lợi ích "
+"từ các tòa nhà trong thành phố và quyền sở hữu thành phố sẽ được trả lại cho "
+"Liên minh Bang hội Hệ thống.\n"
+"\n"
+"            Liên minh của bạn phải sở hữu thành phố để sử dụng lệnh này.\n"
+"            Chỉ người đứng đầu liên minh có thể sử dụng lệnh này."
 
 #: cogs/alliance/__init__.py:582
 msgid "Are you sure you want to give up control of your city?"
-msgstr ""
+msgstr "Bạn có chắc muốn bỏ quyền sở hữu thành phố?"
 
 #: cogs/alliance/__init__.py:590
 #, python-brace-format
 msgid "{city} was abandoned."
-msgstr ""
+msgstr "{city} đã bị bỏ."
 
 #: cogs/alliance/__init__.py:596
 msgid "Take over a city."
-msgstr ""
+msgstr "Chiếm thành phố."
 
 #: cogs/alliance/__init__.py:600
 #, python-brace-format
@@ -12056,20 +12293,34 @@ msgid ""
 "            You cannot occupy a city if your alliance already owns one.\n"
 "            Only the alliance leader can use this command."
 msgstr ""
+"`<city>` - Tên thành phố. Bạn có thể kiểm tra tên các thành phố bằng "
+"`{prefix}cities`\n"
+"\n"
+"            Chiếm một thành phố. Liên minh của bạn sẽ sở hữu thành phố và có "
+"thể xây dựng các phòng thủ và nâng cấp các tòa nhà.\n"
+"            Bạn chỉ có thể chiếm một thành phố có 0 phòng thủ.\n"
+"\n"
+"            Chiếm thành phố sẽ làm nó có thời gian chờ là 10 phút, trong "
+"khoảng thời gian này, nó không thể bị chiếm bởi liên minh khác.\n"
+"            Chiếm thành phố cũng sẽ khiến cấp bậc của các tòa nhà về 0.\n"
+"\n"
+"            Bạn không thể chiếm thành phố nếu liên minh của bạn đã sở hữu "
+"một.\n"
+"            Chỉ người đứng đầu liên minh có thể sử dụng lệnh này."
 
 #: cogs/alliance/__init__.py:612
 msgid "Invalid city name."
-msgstr ""
+msgstr "Tên thành phố không hợp lệ"
 
 #: cogs/alliance/__init__.py:621
 #, python-brace-format
 msgid "The city is occupied by **{amount}** defensive fortifications."
-msgstr ""
+msgstr "Thành phố sở hữu **{amount}** loại phòng thủ."
 
 #: cogs/alliance/__init__.py:626
 #, python-brace-format
 msgid "{city} was just occupied and stands under protection."
-msgstr ""
+msgstr "{city} vừa bị chiếm và đang được bảo hộ."
 
 #: cogs/alliance/__init__.py:638
 #, python-brace-format
@@ -12077,10 +12328,13 @@ msgid ""
 "Your alliance now rules **{city}**. You should immediately buy defenses. You "
 "have **15 minutes** to build defenses before others can occupy the city!"
 msgstr ""
+"Liên minh của bạn bây giờ sở hữu **{city}**. Bạn nên xây dựng phòng thủ ngay "
+"lập tức. Bạn có **15 phút** để xây dựng phòng thủ trước khi người khác chiếm "
+"thành phố!"
 
 #: cogs/alliance/__init__.py:652
 msgid "Attack a city"
-msgstr ""
+msgstr "Tấn công thành phố"
 
 #: cogs/alliance/__init__.py:656
 #, python-brace-format
@@ -12115,24 +12369,51 @@ msgid ""
 "            Only the alliance leader can use this command.\n"
 "            (This command has a cooldown of 2 hours.)"
 msgstr ""
+"`<city>` - Tên thành phố. Bạn có thể kiểm tra tên các thành phố bằng "
+"`{prefix}cities`\n"
+"\n"
+"            Tấn công một thành phố, giảm phòng thủ của nó để xâm chiếm.\n"
+"            Tấn công một thành phố sẽ khởi động thời gian chờ là 10 phút, "
+"trong lúc đó, thành phố không thể bị tấn công một lần nữa.\n"
+"\n"
+"            Khi sử dụng lệnh này, bot sẽ gửi bạn một link để tham gia tấn "
+"công. Mọi thành viên trong liên minh đều có thể tham gia.\n"
+"            10 phút sau khi gửi link, những người tham gia sẽ được tập hợp, "
+"lượng tấn công và phòng thủ của họ phụ thuộc vào vũ khí, nghề nghiệp, chỉ số "
+"raid và điểm thưởng cho chỉ số raid, và bắt đầu tấn công.\n"
+"\n"
+"            Trong lúc tấn công, phòng thủ có HP cao nhất sẽ bị tấn công "
+"trước. Điểm tấn công của mọi người phe tấn công sẽ được cộng lại.\n"
+"            Điểm tấn công của mọi người phe phòng thủ sẽ được cộng lại và "
+"tấn công người có HP cao thất hoặc người có HP thấp nhất của phe tấn công.\n"
+"\n"
+"            Nếu một loại phòng thủ còn 0 HP, nó sẽ bị loại khỏi thành phố và "
+"không hồi HP sau khi cuộc tấn công kết thúc.\n"
+"            Người tấn công còn 0 HP cũng sẽ bị loại khỏi cuộc chiến.\n"
+"\n"
+"            Nếu phòng thủ của một thành phố bị phá hủy hoàn toàn, liên minh "
+"của bạn có thể lập tức chiếm thành phố (`{prefix}alliance occupy`)\n"
+"\n"
+"            Chỉ người đứng đầu liên minh có thể sử dụng lệnh này.\n"
+"            (Lệnh này có thời gian chờ là 2 tiếng.)"
 
 #: cogs/alliance/__init__.py:677
 msgid "Invalid city."
-msgstr ""
+msgstr "Thành phố không hợp lệ."
 
 #: cogs/alliance/__init__.py:682 cogs/alliance/__init__.py:713
 #, python-brace-format
 msgid "**{city}** has just been attacked. Have some mercy!"
-msgstr ""
+msgstr "**{city}** mới vừa bị tấn công. Hãy nhân từ nào!"
 
 #: cogs/alliance/__init__.py:686 cogs/alliance/__init__.py:717
 #, python-brace-format
 msgid "**{city}** is already under attack."
-msgstr ""
+msgstr "**{city}** đang bị tấn công."
 
 #: cogs/alliance/__init__.py:708
 msgid "The city is without defenses already."
-msgstr ""
+msgstr "Thành phố hiện không có phòng thủ."
 
 #: cogs/alliance/__init__.py:729
 #, python-brace-format
@@ -12140,25 +12421,28 @@ msgid ""
 "**{user}** wants to attack **{city}** with **{alliance_name}**'s alliance. "
 "Head to https://join.idlerpg.xyz/{id_} to join the attack!"
 msgstr ""
+"**{user}** muốn tấn công **{city}** với liên minh **{alliance_name}**. Hãy "
+"vào https://join.idlerpg.xyz/{id_} để tham gia tấn công!"
 
 #: cogs/alliance/__init__.py:765
 msgid "Noone joined."
-msgstr ""
+msgstr "Không ai tham gia."
 
 #: cogs/alliance/__init__.py:771
 #, python-brace-format
 msgid "Attack on **{city}** starting with **{amount}** attackers!"
 msgstr ""
+"Cuộc tấn công **{city}** bắt đầu với **{amount}** người tham gia tấn công!"
 
 #: cogs/alliance/__init__.py:793 cogs/alliance/__init__.py:817
 #: cogs/alliance/__init__.py:854 cogs/alliance/__init__.py:865
 msgid "Alliance Wars"
-msgstr ""
+msgstr "Trận chiến Liên Minh"
 
 #: cogs/alliance/__init__.py:795
 #, python-brace-format
 msgid "**{alliance_name}** destroyed a {defense} in {city}!"
-msgstr ""
+msgstr "**{alliance_name}** phá hủy {defense} ở {city}!"
 
 #: cogs/alliance/__init__.py:819
 #, python-brace-format
@@ -12166,44 +12450,50 @@ msgid ""
 "**{alliance_name}** hit a {defense} in {city} for {damage} damage! (Now {hp} "
 "HP)"
 msgstr ""
+"**{alliance_name}** tấn công {defense} ở {city} với {damage} sát thương! "
+"(Giờ còn {hp} HP)"
 
 #: cogs/alliance/__init__.py:855
 #, python-brace-format
 msgid "**{user}** got killed in {city}!"
-msgstr ""
+msgstr "**{user}** bị giết ở {city}!"
 
 #: cogs/alliance/__init__.py:867
 #, python-brace-format
 msgid "**{user}** got hit in {city} for {damage} damage! (Now {hp} HP)"
 msgstr ""
+"**{user}** bị tấn công ở {city} với {damage} sát thương! (Giờ còn {hp} HP)"
 
 #: cogs/alliance/__init__.py:888
 #, python-brace-format
 msgid "**{alliance_name}** destroyed defenses in **{city}**!"
-msgstr ""
+msgstr "**{alliance_name}** phá hủy phòng thủ của **{city}**!"
 
 #: cogs/alliance/__init__.py:898
 #, python-brace-format
 msgid "**{alliance_name}** failed to destroy defenses in **{city}**!"
 msgstr ""
+"**{alliance_name}** thất bại trong việc phá hủy phòng thủ của **{city}**!"
 
 #: cogs/alliance/__init__.py:907
 msgid "Lists alliance-specific cooldowns"
-msgstr ""
+msgstr "Liệt kê thời gian chờ của liên minh"
 
 #: cogs/alliance/__init__.py:912
 msgid ""
 "Lists alliance-specific cooldowns, meaning all alliance members have these "
 "cooldowns and cannot use the commands."
 msgstr ""
+"Liệt kê thời gian chờ của liên minh, nghĩa là tất cả thành viên liên minh "
+"đều có thời gian chờ này và không thể sử dụng các lệnh liên quan."
 
 #: cogs/alliance/__init__.py:921
 msgid "Your alliance does not have any active cooldown at the moment."
-msgstr ""
+msgstr "Liên minh của bạn hiện không có thời gian chờ nào."
 
 #: cogs/valentine/__init__.py:53
 msgid "Gift your partner some chocolate boxes"
-msgstr ""
+msgstr "Tặng bạn đời vài hộp sô-cô-la"
 
 #: cogs/valentine/__init__.py:57
 #, python-brace-format
@@ -12218,18 +12508,26 @@ msgid ""
 "February.\n"
 "            (This command has a cooldown until 12am UTC.)"
 msgstr ""
+"Tặng bạn đời của bạn ba hộp sô-cô-la, chúng có thể chứa điểm tình yêu, tiền "
+"hoặc món đồ chủ đề Lễ Tình nhân.\n"
+"\n"
+"            Bạn đời của bạn có thể mở các hộp bằng `{prefix}chocolate`.\n"
+"\n"
+"            Chỉ người chơi đã kết hôn có thể sử dụng lệnh này.\n"
+"            Lệnh này chỉ có thể được sử dụng từ 13 tới 15 tháng 2.\n"
+"            (Lệnh này có thời gian chờ tới 12 giờ sáng theo múi giờ UTC.)"
 
 #: cogs/valentine/__init__.py:67
 msgid "It's not time for that yet!"
-msgstr ""
+msgstr "Chưa tới giờ đâu!"
 
 #: cogs/valentine/__init__.py:79
 msgid "You gave your spouse some boxes of chocolates :heart:"
-msgstr ""
+msgstr "Bạn tặng bạn đời vài hộp sô-cô-la :heart:"
 
 #: cogs/valentine/__init__.py:88
 msgid "Open one of your chocolate boxes"
-msgstr ""
+msgstr "Mở một hộp sô-cô-la của bạn"
 
 #: cogs/valentine/__init__.py:92
 msgid ""
@@ -12237,33 +12535,36 @@ msgid ""
 "            These boxes have a 1/4 chance of containing money, a 1/4 chance "
 "for an item and a 2/4 chance for lovescore."
 msgstr ""
+"Mở một hộp sô-cô-la của bạn.\n"
+"            Các hộp này có 1/4 xác suất chứa tiền, a 1/4 xác suất chứa vũ "
+"khí và 2/4 xác suất chứa điểm tình yêu."
 
 #: cogs/valentine/__init__.py:96
 msgid "You have no chocolate boxes left."
-msgstr ""
+msgstr "Bạn không còn hộp sô-cô-la nào cả."
 
 #: cogs/valentine/__init__.py:122
 #, python-brace-format
 msgid "The chocolate box contained **${money}!**"
-msgstr ""
+msgstr "Hộp sô-cô-la chứa **${money}!**"
 
 #: cogs/valentine/__init__.py:136
 #, python-brace-format
 msgid "The chocolate box contained **{lovescore} lovescore points!**"
-msgstr ""
+msgstr "Hộp sô-cô-la chứa **{lovescore} điểm tình yêu!**"
 
 #: cogs/valentine/__init__.py:165
 msgid "The chocolate box contained an item!"
-msgstr ""
+msgstr "Hộp sô-cô-la chứa một vũ khí!"
 
 #: cogs/valentine/__init__.py:178
 #, python-brace-format
 msgid "You have {chocolates} left"
-msgstr ""
+msgstr "Bạn còn {chocolates}"
 
 #: cogs/trivia/__init__.py:59
 msgid "Answer a trivia question"
-msgstr ""
+msgstr "Trả lời một câu đố vui"
 
 #: cogs/trivia/__init__.py:63
 msgid ""
@@ -12273,33 +12574,39 @@ msgid ""
 "            Answer a trivia question from [OpenTDB](https://opentdb.com/). "
 "You select your answer with the emoji reactions."
 msgstr ""
+"`[difficulty]` - Độ khó của câu đố, có thể là easy, medium hoặc hard\n"
+"\n"
+"            Trả lời một câu đố vui từ [OpenTDB](https://opentdb.com/). Bạn "
+"chọn câu trả lời bằng cách nhấn emoji."
 
 #: cogs/trivia/__init__.py:70
 msgid "Invalid difficulty."
-msgstr ""
+msgstr "Độ khó không hợp lệ."
 
 #: cogs/trivia/__init__.py:72
 msgid "Error generating question."
-msgstr ""
+msgstr "Gặp lỗi khi tạo câu đố."
 
 #: cogs/trivia/__init__.py:74
 #, python-brace-format
 msgid "{author}, correct!"
-msgstr ""
+msgstr "{author}, chính xác!"
 
 #: cogs/trivia/__init__.py:77
 #, python-brace-format
 msgid "{author}, wrong! Correct would have been: `{solution}`."
-msgstr ""
+msgstr "{author}, sai rồi! Câu trả lời đúng là: `{solution}`."
 
 #: cogs/chess/__init__.py:53
 msgid "Play chess."
-msgstr ""
+msgstr "Chơi cờ vua."
 
 #: cogs/chess/__init__.py:57
 msgid ""
 "IdleRPG's Chess system. You can play against AI or other users and gain ELO."
 msgstr ""
+"Hệ thống cờ vua của IdleRPG. Bạn có thể chơi với AI hoặc người chơi khác và "
+"nhận điểm ELO."
 
 #: cogs/chess/__init__.py:61
 #, python-brace-format
@@ -12307,10 +12614,13 @@ msgid ""
 "Please use `{prefix}chess match` to play.\n"
 "If you want to play ELO-rated, you must use `{prefix}chess register` first."
 msgstr ""
+"Xin hãy sử dụng `{prefix}chess match` để chơi.\n"
+"Nếu bạn muốn chơi có xếp hạng ELO, bạn phải sử dụng `{prefix}chess register` "
+"trước."
 
 #: cogs/chess/__init__.py:66
 msgid "Register for ELO-rating in IdleRPG."
-msgstr ""
+msgstr "Đăng ký xếp hạng ELO trong IdleRPG."
 
 #: cogs/chess/__init__.py:70
 msgid ""
@@ -12318,47 +12628,54 @@ msgid ""
 "            The rating determines your relative skill and can be increased/"
 "decreased by winning/losing matches."
 msgstr ""
+"Đăng ký một tài khoản để xếp hạng ELO cho Cờ vua Idle.\n"
+"            Thứ hạng phụ thuộc vào khả năng của bạn và có thể tăng/giảm dựa "
+"theo số trận thắng/thua."
 
 #: cogs/chess/__init__.py:77
 msgid "You are already registered."
-msgstr ""
+msgstr "Bạn đã đăng ký rồi."
 
 #: cogs/chess/__init__.py:83
 msgid ""
 "You have been registered with an ELO of 1000 as a default. Play matches "
 "against other registered users to increase it!"
 msgstr ""
+"Bạn đã đăng ký với số ELO mặc định là 1000. Hãy đấu cờ với những người chơi "
+"khác để tăng nó!"
 
 #: cogs/chess/__init__.py:88
 msgid "Shows global ELO stats for IdleRPG chess."
-msgstr ""
+msgstr "Hiển thị thống kê ELO toàn cầu của Cờ vua IdleRPG."
 
 #: cogs/chess/__init__.py:92
 msgid ""
 "Shows your ELO and the best chess players' ELO rating limited to IdleRPG's "
 "chess."
 msgstr ""
+"Hiển thị ELO của bạn và của những người chơi cờ tốt nhất trong Cờ vua "
+"IdleRPG."
 
 #: cogs/chess/__init__.py:104 cogs/chess/__init__.py:118
 #, python-brace-format
 msgid "**{user}** with ELO **{elo}**"
-msgstr ""
+msgstr "**{user}** có **{elo}** ELO"
 
 #: cogs/chess/__init__.py:108
 msgid "Chess ELOs"
-msgstr ""
+msgstr "ELO cờ vua"
 
 #: cogs/chess/__init__.py:109
 msgid "Top 15"
-msgstr ""
+msgstr "Top 15"
 
 #: cogs/chess/__init__.py:122
 msgid "Your position"
-msgstr ""
+msgstr "Thứ hạng của bạn"
 
 #: cogs/chess/__init__.py:125
 msgid "Play a chess match."
-msgstr ""
+msgstr "Chơi một ván cờ."
 
 #: cogs/chess/__init__.py:134
 msgid ""
@@ -12394,22 +12711,52 @@ msgid ""
 "              -Pawn = no notation\n"
 "            Fields are lower case."
 msgstr ""
+"`[difficulty]` - Một số nguyên từ 1 tới 10; mặc định là 3\n"
+"            `[enemy]` - Một người dùng; mặc định là không ai cả\n"
+"\n"
+"            Bắt đầu một ván cờ.\n"
+"            Nếu có chọn lựa độ khó, bạn sẽ đấu với AI cờ vua Stockfish ở độ "
+"khó đã chọn.\n"
+"            Nếu có chọn lựa đối thủ, bạn sẽ đấu cờ với người đó, dù cho bạn "
+"có chọn độ khó hay không.\n"
+"\n"
+"            Bạn có thể chọn màu cờ lúc đầu trận bằng cách nhấn emoji.\n"
+"            Nếu bạn đấu với người chơi khác và cả hai đã đăng ký ELO, bạn sẽ "
+"được chọn có muốn thi đấu thứ hạng hay không.\n"
+"\n"
+"            Một kênh chỉ có thể có một trận cờ diễn ra ở một thời điểm.\n"
+"\n"
+"            Nước cờ có thể được nhập với các cách thức sau:\n"
+"              -`g1f3`\n"
+"              -`Nf3` ⚠\n"
+"              -`0-0`\n"
+"              -`xe3`\n"
+"\n"
+"            *Hãy nhớ là các lệnh này có phân biệt viết hoa viết thường:*\n"
+"            Quân cờ là viết hoa:\n"
+"              -Vua (King) = K\n"
+"              -Hậu (Queen) = Q\n"
+"              -Tượng (Bishop) = B\n"
+"              -Mã (Knight) = N\n"
+"              -Xe (Rook) = R\n"
+"              -Tốt (Pawn) = không có\n"
+"            Ô cờ là viết thường."
 
 #: cogs/chess/__init__.py:163
 msgid "You cannot play against yourself."
-msgstr ""
+msgstr "Bạn không thể đấu với chính mình."
 
 #: cogs/chess/__init__.py:165
 msgid "Difficulty may be 1-10."
-msgstr ""
+msgstr "Độ khó có thể là từ 1-10."
 
 #: cogs/chess/__init__.py:167
 msgid "Please choose the colour you want to take."
-msgstr ""
+msgstr "Xin hãy chọn màu quân cờ bạn muốn."
 
 #: cogs/chess/__init__.py:177
 msgid "You took too long to choose a side."
-msgstr ""
+msgstr "Bạn chọn màu quân cờ quá lâu."
 
 #: cogs/chess/__init__.py:193
 #, python-brace-format
@@ -12417,6 +12764,8 @@ msgid ""
 "{author}, would you like to play an ELO-rated match? Your elo is {elo1}, "
 "their elo is {elo2}."
 msgstr ""
+"{author}, bạn có muốn chơi một ván xếp hạng ELO không? ELO của bạn là "
+"{elo1}, ELO của người kia là {elo2}."
 
 #: cogs/chess/__init__.py:204
 #, python-brace-format
@@ -12424,37 +12773,41 @@ msgid ""
 "{user}, you have been challenged to a chess match by {author}. They will be "
 "{color}. Do you accept? {extra}"
 msgstr ""
+"{user}, bạn được thách đấu cờ vua bởi {author}. Họ sẽ là màu {color}. Bạn có "
+"muốn chấp nhận? {extra}"
 
 #: cogs/chess/__init__.py:210
 msgid "**The match will be ELO rated!**"
-msgstr ""
+msgstr "**Trận đấu sẽ xếp hạng ELO!**"
 
 #: cogs/chess/__init__.py:215
 #, python-brace-format
 msgid "{user} rejected the chess match."
-msgstr ""
+msgstr "{user} từ chối đấu cờ."
 
 #: cogs/chess/__init__.py:221
 msgid "Wait for the match here to end."
-msgstr ""
+msgstr "Đợi ván đấu ở đây kết thúc đã."
 
 #: cogs/chess/__init__.py:232
 msgid "Shows past moves for this game"
-msgstr ""
+msgstr "Hiển thị các nước cờ trước của ván cờ"
 
 #: cogs/chess/__init__.py:236
 msgid ""
 "Shows the moves of the current match in the channel that you and your "
 "opponent took."
 msgstr ""
+"Hiển thị các nước cờ trước của ván cờ hiện tại trong kênh mà bạn và đối thủ "
+"thi đấu."
 
 #: cogs/chess/__init__.py:240
 msgid "No game here."
-msgstr ""
+msgstr "Không có ván cờ nào ở đây."
 
 #: cogs/werewolf/__init__.py:43
 msgid "Starts a game of Werewolf"
-msgstr ""
+msgstr "Bắt đầu một trận Người Sói"
 
 #: cogs/werewolf/__init__.py:54
 #, python-brace-format
@@ -12492,11 +12845,15 @@ msgstr ""
 #, python-brace-format
 msgid "Invalid game mode. Use `{prefix}help ww` to get help on this command."
 msgstr ""
+"Mode trò chơi không hợp lệ. Sử dụng `{prefix}help ww` để được giúp đỡ về "
+"lệnh này."
 
 #: cogs/werewolf/__init__.py:99
 #, python-brace-format
 msgid "Invalid game speed. Use `{prefix}help ww` to get help on this command."
 msgstr ""
+"Tốc độ trò chơi không hợp lệ. Sử dụng `{prefix}help ww` để được giúp đỡ về "
+"lệnh này."
 
 #: cogs/werewolf/__init__.py:118
 #, python-brace-format
@@ -12517,12 +12874,12 @@ msgstr ""
 
 #: cogs/werewolf/__init__.py:137
 msgid "Werewolf Mass-game!"
-msgstr ""
+msgstr "Trò chơi Người Sói cỡ lớn!"
 
 #: cogs/werewolf/__init__.py:151 cogs/werewolf/__init__.py:189
 #: cogs/werewolf/__init__.py:233
 msgid "New to Werewolf?"
-msgstr ""
+msgstr "Mới chơi Người Sói?"
 
 #: cogs/werewolf/__init__.py:157 cogs/werewolf/__init__.py:196
 msgid ""
@@ -12533,7 +12890,7 @@ msgstr ""
 
 #: cogs/werewolf/__init__.py:165
 msgid "Werewolf game!"
-msgstr ""
+msgstr "Trò chơi Người Sói!"
 
 #: cogs/werewolf/__init__.py:167
 #, python-brace-format
@@ -12546,7 +12903,7 @@ msgstr ""
 
 #: cogs/werewolf/__init__.py:248 cogs/werewolf/__init__.py:269
 msgid "An error happened during the Werewolf. Please try again!"
-msgstr ""
+msgstr "Có lỗi khi đang trong trò chơi Người Sói. Xin hãy thử lại!"
 
 #: cogs/werewolf/__init__.py:257
 #, python-brace-format
@@ -12557,15 +12914,15 @@ msgstr ""
 
 #: cogs/werewolf/__init__.py:278
 msgid "See available werewolf game modes"
-msgstr ""
+msgstr "Xem các mode có thể chọn của Người Sói"
 
 #: cogs/werewolf/__init__.py:281
 msgid "Used to see the list of available werewolf game modes."
-msgstr ""
+msgstr "Sử dụng để xem các mode có thể chọn của Người Sói."
 
 #: cogs/werewolf/__init__.py:284
 msgid "Werewolf Game Modes"
-msgstr ""
+msgstr "Mode trò chơi Người Sói"
 
 #: cogs/werewolf/__init__.py:286
 msgid ""
@@ -12588,15 +12945,15 @@ msgstr ""
 
 #: cogs/werewolf/__init__.py:301
 msgid "See available werewolf game speeds"
-msgstr ""
+msgstr "Xem các tốc độ có thể chọn của Người Sói"
 
 #: cogs/werewolf/__init__.py:304
 msgid "Used to see the list of available werewolf game speeds."
-msgstr ""
+msgstr "Sử dụng để xem các tốc độ có thể chọn của Người Sói."
 
 #: cogs/werewolf/__init__.py:307
 msgid "Werewolf Game Speeds"
-msgstr ""
+msgstr "Tốc độ trò chơi Người Sói"
 
 #: cogs/werewolf/__init__.py:309
 msgid ""
@@ -12616,10 +12973,24 @@ msgid ""
 "killing anyone every night or every election will likely end the game with "
 "no winners."
 msgstr ""
+"**Game speeds** (tính bằng giây): `Normal`: 60 (mặc định), `Extended`: 90, "
+"`Fast`: 45, `Blitz`: 30\n"
+"`Normal`: Các sự kiện lớn giới hạn trong 60 giây và số ngày chơi không hạn "
+"chế.\n"
+"`Extended`: Các sự kiện lớn giới hạn trong 90 giây và số ngày chơi không hạn "
+"chế.\n"
+"`Fast`: Các sự kiện lớn giới hạn trong 45 giây và số ngày chơi phụ thuộc vào "
+"số người chơi cộng thêm 3 ngày. Điều này có nghĩa là không giết ai mỗi đêm "
+"hay trong mỗi lần bỏ phiếu sẽ rất dễ có kết thúc với không người thắng.\n"
+"`Blitz`: Cảnh báo: Đây là một tốc độ rất nhanh chỉ phù hợp với những người "
+"chơi có kinh nghiệm. Các sự kiện giới hạn trong 30 giây và số ngày chơi phụ "
+"thuộc vào số người chơi cộng thêm 3 ngày. Điều này có nghĩa là không giết ai "
+"mỗi đêm hay trong mỗi lần bỏ phiếu sẽ rất dễ có kết thúc với không người "
+"thắng."
 
 #: cogs/werewolf/__init__.py:322
 msgid "Check your werewolf role"
-msgstr ""
+msgstr "Kiểm tra vai của bạn trong Người Sói"
 
 #: cogs/werewolf/__init__.py:326
 msgid ""
@@ -12627,31 +12998,35 @@ msgid ""
 "\n"
 "            You must be part of the ongoing game to get your role."
 msgstr ""
+"Kiểm tra vai của bạn trong Người Sói và để bot nhắn tin riêng cho bạn.\n"
+"\n"
+"            Bạn phải đang tham gia một trò chơi để xem vai của mình."
 
 #: cogs/werewolf/__init__.py:333
 #, python-brace-format
 msgid "There is no werewolf game in this channel! {author}"
-msgstr ""
+msgstr "Không có trò chơi Người Sói nào trong kênh này! {author}"
 
 #: cogs/werewolf/__init__.py:339
 #, python-brace-format
 msgid "The game has yet to be started {author}."
-msgstr ""
+msgstr "Trò chơi chưa bắt đầu đâu {author}."
 
 #: cogs/werewolf/__init__.py:345
 #, python-brace-format
 msgid "You're not in the game {author}."
-msgstr ""
+msgstr "Bạn không ở trong trò chơi, {author}."
 
 #: cogs/werewolf/__init__.py:352
 #, python-brace-format
 msgid "You asked for your role in {channel} but your info couldn't be found."
 msgstr ""
+"Bạn hỏi vai của mình trong {channel} nhưng không tìm thấy thông tin về bạn."
 
 #: cogs/werewolf/__init__.py:360
 #, python-brace-format
 msgid " A **{initial_roles}** initially"
-msgstr ""
+msgstr "Ban đầu là **{initial_roles}**"
 
 #: cogs/werewolf/__init__.py:373
 #, python-brace-format
@@ -12661,20 +13036,24 @@ msgid ""
 "\n"
 "{description}"
 msgstr ""
+"Kiểm tra vai của bạn trong {ww_channel}... Bạn là **{role_name}**!"
+"{initial_role_info}\n"
+"\n"
+"{description}"
 
 #: cogs/werewolf/__init__.py:383
 #, python-brace-format
 msgid "I sent a DM containing your role info, {author}."
-msgstr ""
+msgstr "Tôi đã nhắn tin riêng cho bạn về vai của bạn, {author}."
 
 #: cogs/werewolf/__init__.py:389
 #, python-brace-format
 msgid "I couldn't send a DM to you {author}."
-msgstr ""
+msgstr "Tôi không thể nhắn tin riêng cho bạn, {author}."
 
 #: cogs/werewolf/__init__.py:394
 msgid "View descriptions of game roles"
-msgstr ""
+msgstr "Xem miêu tả các vai trong trò chơi"
 
 #: cogs/werewolf/__init__.py:398
 #, python-brace-format
@@ -12684,6 +13063,10 @@ msgid ""
 "            `{prefix}roles <role name here>` to view info about a role.\n"
 "            "
 msgstr ""
+"Xem miêu tả các vai trong trò chơi Người Sói.\n"
+"            `{prefix}roles` để xem tất cả các vai.\n"
+"            `{prefix}roles <role name here>` để xem thông tin về một vai.\n"
+"            "
 
 #: cogs/werewolf/__init__.py:403
 msgid "(IdleRPG mode only)"
@@ -12691,39 +13074,39 @@ msgstr ""
 
 #: cogs/werewolf/__init__.py:406
 msgid "The Werewolves"
-msgstr ""
+msgstr "Người Sói"
 
 #: cogs/werewolf/__init__.py:411
 msgid "Must eliminate all other villagers"
-msgstr ""
+msgstr "Phải tiêu diệt tất cả dân làng"
 
 #: cogs/werewolf/__init__.py:414
 msgid "The Villagers"
-msgstr ""
+msgstr "Dân Làng"
 
 #: cogs/werewolf/__init__.py:421
 msgid "Must find and eliminate the werewolves"
-msgstr ""
+msgstr "Phải tìm ra và tiêu diệt Người Sói"
 
 #: cogs/werewolf/__init__.py:424
 msgid "The Ambiguous"
-msgstr ""
+msgstr "Kẻ Mơ Hồ"
 
 #: cogs/werewolf/__init__.py:428
 msgid "Make their side win"
-msgstr ""
+msgstr "Giúp phe của họ chiến thắng"
 
 #: cogs/werewolf/__init__.py:431
 msgid "The Loners"
-msgstr ""
+msgstr "Kẻ Đơn Độc"
 
 #: cogs/werewolf/__init__.py:437
 msgid "Must complete their own objective"
-msgstr ""
+msgstr "Phải hoàn thành nhiệm vụ riêng của mình"
 
 #: cogs/werewolf/__init__.py:443
 msgid "Werewolf Roles"
-msgstr ""
+msgstr "Các vai trong Người Sói"
 
 #: cogs/werewolf/__init__.py:445
 msgid ""
@@ -12734,25 +13117,31 @@ msgid ""
 "4. the Loners.\n"
 "**The available roles are:**"
 msgstr ""
+"Các vai được chia thành các phe \n"
+"1. Người Sói,\n"
+"2. Dân Làng,\n"
+"3. Kẻ Mơ Hồ, và\n"
+"4. Kẻ Đơn Độc.\n"
+"**Những vai có trong trò chơi là:**"
 
 #: cogs/werewolf/__init__.py:454
 #, python-brace-format
 msgid ""
 "Use `{prefix}ww roles <role>` to view the description on a specific role."
-msgstr ""
+msgstr "Sử dụng `{prefix}ww roles <vai>` để xem miêu tả của một vai cụ thể."
 
 #: cogs/werewolf/__init__.py:472
 #, python-brace-format
 msgid "{role}? I couldn't find that role."
-msgstr ""
+msgstr "{role}? Tôi không tìm thấy vai này."
 
 #: cogs/werewolf/__init__.py:482
 msgid "Side:"
-msgstr ""
+msgstr "Phe:"
 
 #: cogs/werewolf/__init__.py:493
 msgid "Goal:"
-msgstr ""
+msgstr "Mục tiêu:"
 
 #: cogs/snowballfight/__init__.py:78
 #, python-brace-format
@@ -12760,15 +13149,17 @@ msgid ""
 "{author}, type `snowballfight nominate @user` to add ten of your comrades to "
 "the fight. You need 10 total!"
 msgstr ""
+"{author}, gõ `snowballfight nominate @người_chơi` để thêm 10 đồng đội vào "
+"trận chiến. Bạn cần tổng cộng 10 người!"
 
 #: cogs/snowballfight/__init__.py:92 cogs/snowballfight/__init__.py:116
 msgid "Taken!"
-msgstr ""
+msgstr "Đã được chọn!"
 
 #: cogs/snowballfight/__init__.py:96 cogs/snowballfight/__init__.py:120
 #, python-brace-format
 msgid "{user} has been added to your team, {user2}."
-msgstr ""
+msgstr "{user} đã được thêm vào đội của bạn, {user2}."
 
 #: cogs/snowballfight/__init__.py:102
 #, python-brace-format
@@ -12776,6 +13167,8 @@ msgid ""
 "{enemy}, use `snowballfight nominate @user` to add ten of your comrades to "
 "the fight. You need 10 total!"
 msgstr ""
+"{enemy}, gõ `snowballfight nominate @người_chơi` để thêm 10 đồng đội vào "
+"trận chiến. Bạn cần tổng cộng 10 người!"
 
 #: cogs/scheduler/__init__.py:46
 msgid "Reminds you about something"
@@ -12797,15 +13190,28 @@ msgid ""
 "            Please keep it in order of {prefix}remind time subject to make "
 "sure this works properly"
 msgstr ""
+"<when_and_what> - Việc và thời gian cần nhắc, xem phía dưới để biết thêm chi "
+"tiết.\n"
+"\n"
+"            Nhắc bản thân về một việc bạn cần làm trong tương lai.\n"
+"\n"
+"            `<when_and_what>` có thể là lời nhắc và thời gian, những định "
+"dạng sau đều được chấp nhận:\n"
+"              - {prefix}remind 12h bình chọn trên top.gg\n"
+"              - {prefix}remind 12am sử dụng {prefix}daily\n"
+"              - {prefix}remind next monday kiểm tra chỉ số may mắn của Thần\n"
+"\n"
+"            Xin hãy giữ thứ tự {prefix}remind thời_gian lời_nhắn để đảm bảo "
+"lệnh này hoạt động chính xác"
 
 #: cogs/scheduler/__init__.py:64
 msgid "Please choose a shorter reminder text."
-msgstr ""
+msgstr "Xin hãy chọn một nhắc nhở ngắn."
 
 #: cogs/scheduler/__init__.py:82
 #, python-brace-format
 msgid "{user}, reminder set for {subject} in {time}."
-msgstr ""
+msgstr "{user}, đã ghi nhận nhắc nhở {subject} trong vòng {time}."
 
 #: cogs/scheduler/__init__.py:87 cogs/scheduler/__init__.py:149
 msgid "Shows a list of your running reminders."
@@ -12821,12 +13227,12 @@ msgstr ""
 
 #: cogs/scheduler/__init__.py:99
 msgid "No running reminders."
-msgstr ""
+msgstr "Hiện không có nhắc nhở nào."
 
 #: cogs/scheduler/__init__.py:105
 #, python-brace-format
 msgid "{user}'s reminders"
-msgstr ""
+msgstr "Nhắc nhở của {user}"
 
 #: cogs/scheduler/__init__.py:120
 msgid "Remove running reminders"
@@ -12844,12 +13250,12 @@ msgstr ""
 
 #: cogs/scheduler/__init__.py:137
 msgid "None of these reminder IDs belong to you."
-msgstr ""
+msgstr "Không có ID nhắc nhở nào trong này thuộc về bạn."
 
 #: cogs/scheduler/__init__.py:146
 #, python-brace-format
 msgid "Removed the following reminders: `{ids}`"
-msgstr ""
+msgstr "Xóa bỏ những nhắc nhở sau: `{ids}`"
 
 #: cogs/scheduler/__init__.py:153
 #, python-brace-format
@@ -12872,10 +13278,17 @@ msgid ""
 "Moves are case-sensitive! Pieces uppercase: `N`, `Q` or `B`, fields "
 "lowercase: `a`, `b` or `h`. Castling is `0-0` or `0-0-0`."
 msgstr ""
+"**Nước cờ thứ {move_no}: lượt của {player}**\n"
+"Chỉ cần gõ nước cờ của bạn. Bạn có 2 phút để gõ một nước cờ hợp lệ. Tôi chấp "
+"nhận những định dạng bình thường cũng như `resign` hoặc `draw`.\n"
+"Ví dụ: `g1f3`, `Nf3`, `0-0` hoặc `xe3`.\n"
+"Nước cờ phân biệt chữ viết hoa viết thường! Các quân cờ viết hoa: `N`, `Q` "
+"hoặc `B`, ô cờ viết thường: `a`, `b` hoặc `h`. Nhập thành là `0-0` hoặc "
+"`0-0-0`."
 
 #: utils/chess.py:252
 msgid "You entered no valid move! You lost!"
-msgstr ""
+msgstr "Bạn không nhập nước cờ hợp lệ! Bạn đã thua!"
 
 #: utils/chess.py:263 utils/chess.py:270
 #, python-brace-format
@@ -12883,49 +13296,53 @@ msgid ""
 "**Move {move_no}**\n"
 "Let me think... This might take up to 2 minutes"
 msgstr ""
+"**Nước cờ thứ {move_no}**\n"
+"Để tôi nghĩ xem… Có thể sẽ mất 2 phút"
 
 #: utils/chess.py:293
 msgid "Waiting for AI draw response..."
-msgstr ""
+msgstr "Chờ AI trả lời đề nghị hòa..."
 
 #: utils/chess.py:306
 #, python-brace-format
 msgid "Your enemy has proposed a draw, {player}. Do you agree?"
-msgstr ""
+msgstr "Đối thủ của bạn muốn hòa ván, {player}. Bạn có đồng ý không?"
 
 #: utils/chess.py:338
 msgid "The draw was rejected."
-msgstr ""
+msgstr "Đề nghị hòa đã bị từ chối."
 
 #: utils/chess.py:394
 #, python-brace-format
 msgid "**Checkmate! {result}**"
-msgstr ""
+msgstr "**Chiếu tướng! {result}**"
 
 #: utils/chess.py:399
 #, python-brace-format
 msgid "**Stalemate! {result}**"
-msgstr ""
+msgstr "**Không có nước đi! {result}**"
 
 #: utils/chess.py:404
 #, python-brace-format
 msgid "**Insufficient material! {result}**"
-msgstr ""
+msgstr "**Không đủ quân cờ! {result}**"
 
 #: utils/chess.py:414
 #, python-brace-format
 msgid "**Draw accepted! {result}**"
-msgstr ""
+msgstr "**Chấp nhận hòa! {result}**"
 
 #: utils/chess.py:419
 msgid "For the nerds:"
-msgstr ""
+msgstr "Cho các con mọt sách:"
 
 #: utils/werewolf.py:95
 msgid ""
 "Your objective is to kill all villagers together with the other Werewolves. "
 "Every night, you will get to choose one villager to kill - choose carefully!"
 msgstr ""
+"Mục tiêu của bạn là giết tất cả Dân Làng cùng với những Người Sói khác. Mỗi "
+"đêm, bạn sẽ được chọn một Dân Làng để giết - hãy chọn cẩn thận!"
 
 #: utils/werewolf.py:99
 msgid ""
@@ -12934,6 +13351,10 @@ msgid ""
 "After that, you will wake up once more to kill an additional villager, but "
 "as long as no Werewolf or Wild Child has been killed."
 msgstr ""
+"Mục tiêu của bạn là giết tất cả Dân Làng cùng với những Người Sói khác. Mỗi "
+"đêm, bạn sẽ được chọn một Dân Làng để giết cùng với những Người Sói khác. "
+"Sau đó, bạn sẽ được đánh thức một lần nữa để chọn giết thêm một Dân Làng, "
+"nhưng chỉ khi chưa có Người Sói hay Đứa Bé Hoang Dã nào bị giết."
 
 #: utils/werewolf.py:105
 msgid ""
@@ -12941,6 +13362,9 @@ msgid ""
 "haunting the town at nights and survive yourself. At the daily elections, "
 "your voice makes the difference."
 msgstr ""
+"Bạn là một linh hồn trong sáng. Mục tiêu của bạn là loại trừ tất cả những "
+"Người Sói săn giết thị trấn vào ban đêm và sống sót. Vào những buổi bỏ phiếu "
+"ban ngày, lời nói của bạn sẽ tạo nên sự khác biệt."
 
 #: utils/werewolf.py:110
 msgid ""
@@ -12948,6 +13372,9 @@ msgid ""
 "from Wolves and kill them all - at the daily elections, many will hear your "
 "voice, they know you will be honest."
 msgstr ""
+"Mọi người biết bạn không phải là Người Sói. Mục tiêu của bạn là giữ thị trấn "
+"an toàn khỏi Người Sói và giết hết bọn chúng - vào những buổi bỏ phiếu ban "
+"ngày, nhiều người sẽ lắng nghe lời nói của bạn, họ biết bạn sẽ nói thật."
 
 #: utils/werewolf.py:115
 msgid ""
@@ -12955,6 +13382,9 @@ msgid ""
 "night - but don't tell the villagers too fast, else you will be targeted "
 "yourself."
 msgstr ""
+"Bạn là một Dân Làng với khả năng đặc biệt là nhận dạng người khác vào mỗi "
+"tối - nhưng đừng kể cho các Dân Làng khác nghe quá sớm, hoặc bản thân bạn sẽ "
+"trở thành mục tiêu."
 
 #: utils/werewolf.py:120
 msgid ""
@@ -12962,18 +13392,25 @@ msgid ""
 "the beginning of the game - they will love each other so much that they will "
 "die once their beloved one bites the dust."
 msgstr ""
+"Bạn là hiện thân của một vị thần La Mã và được chọn một cặp tình nhân vào "
+"đầu trận - họ sẽ yêu nhau đến mức họ sẽ chết nếu người yêu của họ nằm xuống "
+"lòng đất."
 
 #: utils/werewolf.py:125
 msgid ""
 "You are a powerful villager with two special brews: One will kill, one will "
 "heal. Use them wisely to influence the game in your favor."
 msgstr ""
+"Bạn là một Dân Làng mạnh mẽ với hai lọ thuốc: Một để giết, một để cứu. Hãy "
+"dùng chúng một cách khôn ngoan để tác động trò chơi theo hướng có lợi."
 
 #: utils/werewolf.py:129
 msgid ""
 "You are the Hunter. Do your best to protect the Community and your precise "
 "shot will trigger when you die, killing a target of your choice."
 msgstr ""
+"Bạn là Thợ Săn. Hãy làm hết sức mình để bảo vệ cộng đồng và cú bắn chuẩn xác "
+"của bạn sẽ được kích hoạt khi bạn mất, giết chết một mục tiêu bạn chọn."
 
 #: utils/werewolf.py:133
 msgid ""
@@ -12981,6 +13418,9 @@ msgid ""
 "the Werewolves, but not the same person twice in a row. Make sure the "
 "Villagers stay alive..."
 msgstr ""
+"Bạn là Mục Sư. Mỗi đêm, bạn có thể bảo vệ một Dân Làng khỏi cái chết gây ra "
+"bởi Người Sói, nhưng không thể bảo vệ một người hai lần liên tục. Hãy đảm "
+"bảo Dân Làng sống sót..."
 
 #: utils/werewolf.py:138
 msgid ""
@@ -12997,12 +13437,16 @@ msgid ""
 "The two sisters know each other very well - together, you might be able to "
 "help the community find the Werewolves and eliminate them."
 msgstr ""
+"Hai chị em hiểu rất rõ về nhau - cùng nhau, bạn sẽ có thể giúp cộng đồng tìm "
+"ra Người Sói và tiêu diệt chúng."
 
 #: utils/werewolf.py:150
 msgid ""
 "The three brothers know each other very well - together, you might be able "
 "to help the community find the Werewolves and eliminate them."
 msgstr ""
+"Ba anh em hiểu rất rõ về nhau - cùng nhau, bạn sẽ có thể giúp cộng đồng tìm "
+"ra Người Sói và tiêu diệt chúng."
 
 #: utils/werewolf.py:154
 msgid ""
@@ -13018,6 +13462,9 @@ msgid ""
 "after the first one by mentioning the secret sign we will agree on later "
 "during the vote. Use it wisely..."
 msgstr ""
+"Bạn là Thẩm Phán. Bạn yêu pháp luật và có thể sắp xếp buổi bỏ phiếu thứ hai "
+"sau buổi bỏ phiếu đầu tiên bằng cách đề cập một ký hiệu bí mật chúng ta sẽ "
+"thống nhất sau trong buổi bỏ phiếu. Hãy dùng nó một cách khôn ngoan..."
 
 #: utils/werewolf.py:165
 msgid ""
@@ -13033,6 +13480,9 @@ msgid ""
 "Additionally to the nightly killing spree with the Werewolves, you may kill "
 "one of them later on in the night."
 msgstr ""
+"Bạn là Sói Trắng. Mục tiêu của bạn là giết hết những người khác. Ngoài những "
+"trận săn giết ban đêm cùng những Người Sói khác, bạn có thể giết một người "
+"trong bọn họ sau đó khi đêm đã khuya."
 
 #: utils/werewolf.py:175
 msgid "You are the Thief and can choose your identity soon."
@@ -13049,6 +13499,8 @@ msgid ""
 "You are something between a Werewolf and a Villager. Choose your side "
 "wisely..."
 msgstr ""
+"Bạn là một thứ gì đó giữa Người Sói và Dân Làng. Hãy chọn phe của mình một "
+"cách khôn ngoan..."
 
 #: utils/werewolf.py:185
 msgid ""
@@ -13145,37 +13597,37 @@ msgstr ""
 #: utils/werewolf.py:264
 #, python-brace-format
 msgid "Shortcut back to {ww_channel}"
-msgstr ""
+msgstr "Đường link về {ww_channel}"
 
 #: utils/werewolf.py:351
 msgid "No one"
-msgstr ""
+msgstr "Không một ai"
 
 #: utils/werewolf.py:368
 msgid "**The Werewolves awake...**"
-msgstr ""
+msgstr "**Người Sói thức tỉnh...**"
 
 #: utils/werewolf.py:373
 msgid "Hey **"
-msgstr ""
+msgstr "Này **"
 
 #: utils/werewolf.py:382
 #, python-brace-format
 msgid "__{count}__ Werewolves"
-msgstr ""
+msgstr "__{count}__ Người Sói"
 
 #: utils/werewolf.py:384
 msgid "lone Werewolf"
-msgstr ""
+msgstr "Người Sói đơn độc"
 
 #: utils/werewolf.py:386
 #, python-brace-format
 msgid "**🐺 Wake up {greet_text}! It is time to choose a victim**"
-msgstr ""
+msgstr "**🐺 Thức dậy đi {greet_text}! Đã tới giờ chọn nạn nhân rồi**"
 
 #: utils/werewolf.py:390
 msgid "All possible victims are:"
-msgstr ""
+msgstr "Những người có thể làm nạn nhân là:"
 
 #: utils/werewolf.py:399
 #, python-brace-format
@@ -13184,12 +13636,17 @@ msgid ""
 "to nominate them for killing (you can nominate up to 10 users), voting "
 "starts in {timer} seconds.**"
 msgstr ""
+"**Tôi sẽ chuyển tất cả tin nhắn của bạn cho những Người Sói khác. Gửi một "
+"con số để đề cử một người để giết (bạn có thể đề cử tối đa 10 người), bỏ "
+"phiếu bắt đầu trong {timer} giây.**"
 
 #: utils/werewolf.py:406
 msgid ""
 "**Please do not spam and talk slowly! Relaying can take a while if there are "
 "many Werewolves!**"
 msgstr ""
+"**Xin đừng spam và nói chậm thôi! Chuyển lời có thể tốn một chút thời gian "
+"nếu có quá nhiều Người Sói!**"
 
 #: utils/werewolf.py:435
 msgid "❌ You cannot nominate your Lover."
@@ -13198,7 +13655,7 @@ msgstr ""
 #: utils/werewolf.py:438
 #, python-brace-format
 msgid "**{werewolf}** nominated **{victim}**"
-msgstr ""
+msgstr "**{werewolf}** chọn **{victim}**"
 
 #: utils/werewolf.py:451
 #, python-brace-format
@@ -13207,6 +13664,9 @@ msgid ""
 "😆.\n"
 "{game_link}"
 msgstr ""
+"Không ai trong các bạn muốn tấn công Dân Làng. Đêm nay không có thịt tươi "
+"rồi 😆.\n"
+"{game_link}"
 
 #: utils/werewolf.py:458 utils/werewolf.py:516
 #, python-brace-format
@@ -13215,12 +13675,12 @@ msgstr ""
 
 #: utils/werewolf.py:464
 msgid "The voting is starting, please wait for your turn..."
-msgstr ""
+msgstr "Buổi bỏ phiếu bắt đầu, xin hãy chờ tới lượt của bạn..."
 
 #: utils/werewolf.py:477
 #, python-brace-format
 msgid "React to vote for a target. You have {timer} seconds."
-msgstr ""
+msgstr "Nhấn emoji để chọn mục tiêu. Bạn có {timer} giây."
 
 #: utils/werewolf.py:488
 msgid "You timed out and didn't vote."
@@ -13236,6 +13696,9 @@ msgid ""
 "Werewolves, you are all indecisive. No fresh meat tonight 😆.\n"
 "{game_link}"
 msgstr ""
+"Các Người Sói, tất cả các bạn đều không có chủ kiến. Tối nay không có thịt "
+"tươi 😆.\n"
+"{game_link}"
 
 #: utils/werewolf.py:537
 #, python-brace-format
@@ -13243,11 +13706,14 @@ msgid ""
 "Werewolves, you have decided to kill **{target}** tonight and be your meal.\n"
 "{game_link}"
 msgstr ""
+"Các Người Sói, các bạn đã chọn giết **{target}** đêm nay và làm bữa tối của "
+"bạn.\n"
+"{game_link}"
 
 #: utils/werewolf.py:557
 #, python-brace-format
 msgid "{pure_soul} is a **{role}** and an innocent villager."
-msgstr ""
+msgstr "{pure_soul} là **{role}** và là một Dân Làng vô tội."
 
 #: utils/werewolf.py:565
 #, python-brace-format
@@ -13265,7 +13731,7 @@ msgstr ""
 #: utils/werewolf.py:607
 #, python-brace-format
 msgid "**The __{num}__ inhabitants of the Village:**"
-msgstr ""
+msgstr "**__{num}__ người trong làng:**"
 
 #: utils/werewolf.py:621
 #, python-brace-format
@@ -13273,12 +13739,16 @@ msgid ""
 "**Welcome to Werewolf {mode}!\n"
 "{speed} speed activated - All action timers are limited to {timer} seconds.**"
 msgstr ""
+"**Chào mừng đến với Người Sói {mode}!\n"
+"Kích hoạt tốc độ {speed} - Mọi hành động bị giới hạn trong {timer} giây.**"
 
 #: utils/werewolf.py:632
 msgid ""
 "📜⚠️ Talking to other users privately is prohibited! Posting any screenshots "
 "of my messages containing your role is also forbidden."
 msgstr ""
+"📜⚠️ Việc nói chuyện riêng với người chơi khác là bị cấm! Đăng hình chụp tin "
+"nhắn của tôi đề cập đến vai của bạn cũng bị cấm."
 
 #: utils/werewolf.py:638
 #, python-brace-format
@@ -13287,6 +13757,9 @@ msgid ""
 "later.\n"
 "{house_rules}**"
 msgstr ""
+"**Đang gửi các vai trò chơi... Lát nữa bạn có thể sử dụng `{prefix}ww "
+"myrole` để kiểm tra vai của mình.\n"
+"{house_rules}**"
 
 #: utils/werewolf.py:644
 #, python-brace-format
@@ -13294,22 +13767,24 @@ msgid ""
 "**Welcome to Werewolf {mode}! {house_rules}\n"
 "{game_link}**"
 msgstr ""
+"**Chào mừng đến với Người Sói {mode}! {house_rules}\n"
+"{game_link}**"
 
 #: utils/werewolf.py:652
 msgid "🌘 💤 **Night falls, the town is asleep...**"
-msgstr ""
+msgstr "🌘 💤 **Đêm xuống, thị trấn đang yên giấc...**"
 
 #: utils/werewolf.py:670
 msgid "**The Sisters awake...**"
-msgstr ""
+msgstr "**Các Chị Em thức dậy...**"
 
 #: utils/werewolf.py:674
 msgid "**The Brothers awake...**"
-msgstr ""
+msgstr "**Các Anh Em thức dậy...**"
 
 #: utils/werewolf.py:713
 msgid " 💤 **Night falls, the town is asleep...**"
-msgstr ""
+msgstr " 💤 **Đêm xuống, thị trấn đang yên giấc...**"
 
 #: utils/werewolf.py:805
 #, python-brace-format
@@ -13318,6 +13793,8 @@ msgid ""
 "mentioning their name below. You have {timer} seconds of discussion during "
 "this time."
 msgstr ""
+"Bạn giờ có thể gửi tên người (tối đa 10 người) để bình chọn người bạn muốn "
+"treo cổ bằng cách đề cập tên họ phía dưới. Bạn có {timer} giây để thảo luận."
 
 #: utils/werewolf.py:842
 #, python-brace-format
@@ -13328,6 +13805,8 @@ msgstr ""
 msgid ""
 "I received your secret phrase. We will hold another election after this."
 msgstr ""
+"Tôi đã nhận được từ khóa bí mật của bạn. Chúng ra sẽ tổ chức một buổi bỏ "
+"phiếu nữa sau lần này."
 
 #: utils/werewolf.py:876
 #, python-brace-format
@@ -13337,12 +13816,12 @@ msgstr ""
 #: utils/werewolf.py:887
 #, python-brace-format
 msgid "**{player}** nominated **{nominee}**."
-msgstr ""
+msgstr "**{player}** bình chọn **{nominee}**."
 
 #: utils/werewolf.py:899
 #, python-brace-format
 msgid "Seems sneaky, I added {time_to_add} seconds talk time."
-msgstr ""
+msgstr "Có vẻ đáng ngờ, tôi đã thêm {time_to_add} để thảo luận."
 
 #: utils/werewolf.py:923
 #, python-brace-format
@@ -13350,16 +13829,20 @@ msgid ""
 "**React to vote for killing someone. You have {timer} seconds.**\n"
 "{texts}"
 msgstr ""
+"**Nhấn emoji để bỏ phiếu giết một ai đó. Bạn có {timer} giây.**\n"
+"{texts}"
 
 #: utils/werewolf.py:989
 msgid "An unexpected error occurred."
-msgstr ""
+msgstr "Lỗi bất ngờ xảy ra."
 
 #: utils/werewolf.py:997
 msgid ""
 "**You should not vote since you're not in the game. Please do not try to "
 "influence the game by voting unnecessarily. I will remove your reactions.**"
 msgstr ""
+"**Bạn không nên bỏ phiếu vì bạn không tham gia trò chơi. Xin đừng cố tác "
+"động trò chơi bằng cách bỏ phiếu không cần thiết. Tôi sẽ xóa emoji của bạn.**"
 
 #: utils/werewolf.py:1005
 #, python-brace-format
@@ -13367,6 +13850,7 @@ msgid ""
 "**{author} I couldn't remove reactions. Please give me the proper "
 "permissions to remove reactions.**"
 msgstr ""
+"**{author}, tôi không thể xóa emoji. Xin hãy cho tôi đủ quyền để xóa emoji.**"
 
 #: utils/werewolf.py:1019
 #, python-brace-format
@@ -13374,6 +13858,8 @@ msgid ""
 "Checking AFK players if they're still in the game... Should be done in "
 "{timer} seconds."
 msgstr ""
+"Kiểm tra người chơi AFK xem nếu họ còn trong trò chơi... Hẳn sẽ xong trong "
+"vòng {timer} giây."
 
 #: utils/werewolf.py:1028
 #, python-brace-format
@@ -13382,6 +13868,9 @@ msgid ""
 "**Send any message until I acknowledged that you're not AFK. You have "
 "{timer} seconds.**"
 msgstr ""
+"Bạn đã không bỏ phiếu. Đây chỉ là kiểm tra AFK:\n"
+"**Gửi bất kỳ tin nhắn nào cho tới khi tôi thừa nhận bạn không AFK. Bạn có "
+"{timer} giây.**"
 
 #: utils/werewolf.py:1055
 #, python-brace-format
@@ -13389,12 +13878,14 @@ msgid ""
 "☑️ You're not AFK. You can stop sending message now.\n"
 "{game_link}"
 msgstr ""
+"☑️ Bạn không AFK. Giờ bạn có thể ngừng gửi tin nhắn.\n"
+"{game_link}"
 
 #: utils/werewolf.py:1071
 msgid ""
 "**Strike 3!** You will now be killed by the game for having 3 strikes of "
 "being AFK. Goodbye!"
-msgstr ""
+msgstr "**Lần 3!** Bạn giờ sẽ bị giết bởi trò chơi vì đã AFK 3 lần. Tạm biệt!"
 
 #: utils/werewolf.py:1079
 #, python-brace-format
@@ -13402,17 +13893,18 @@ msgid ""
 "⚠️ **Strike {strikes}!** You have been marked as AFK. __You'll be killed "
 "after 3 strikes.__"
 msgstr ""
+"⚠️ **Lần {strikes}!** Bạn đã bị đánh dấu AFK. __Bạn sẽ bị giết sau 3 lần.__"
 
 #: utils/werewolf.py:1086
 #, python-brace-format
 msgid ""
 "**{afk_player}** has been killed by the game due to having 3 strikes of AFK."
-msgstr ""
+msgstr "**{afk_player}** đã bị giết bởi trò chơi vì đã AFK 3 lần."
 
 #: utils/werewolf.py:1094
 #, python-brace-format
 msgid "The community has decided to kill {to_kill}."
-msgstr ""
+msgstr "Cộng đồng đã quyết định giết {to_kill}."
 
 #: utils/werewolf.py:1116
 #, python-brace-format
@@ -13421,21 +13913,23 @@ msgstr ""
 
 #: utils/werewolf.py:1127
 msgid "🌤️ **The sun rises...**"
-msgstr ""
+msgstr "🌤️ **Mặt trời mọc...**"
 
 #: utils/werewolf.py:1143
 msgid "Indecisively, the community has killed noone."
-msgstr ""
+msgstr "Không quyết đoán, cộng đồng không giết ai cả."
 
 #: utils/werewolf.py:1148
 msgid ""
 "📢 **The Judge used the secret phrase to hold another election to lynch "
 "someone. The Judge's decision cannot be debated.**"
 msgstr ""
+"📢 **Thẩm Phán đã dùng từ khóa bí mật để tổ chức thêm một buổi bỏ phiếu để "
+"treo cổ ai đó. Quyết định của Thẩm Phán không thể bị cãi lại.**"
 
 #: utils/werewolf.py:1157
 msgid "Indecisively, the community has not lynched anyone."
-msgstr ""
+msgstr "Không quyết đoán, cộng đồng không treo cổ ai cả."
 
 #: utils/werewolf.py:1169
 #, python-brace-format
@@ -13450,7 +13944,7 @@ msgstr ""
 #: utils/werewolf.py:1184
 #, python-brace-format
 msgid "{day_count:.0f} days have already passed. Stopping game..."
-msgstr ""
+msgstr "{day_count:.0f} ngày đã trôi qua. Dừng trò chơi..."
 
 #: utils/werewolf.py:1196
 #, python-brace-format
@@ -13480,11 +13974,11 @@ msgstr ""
 #: utils/werewolf.py:1253
 #, python-brace-format
 msgid "{player} is a **{role}**!{initial_role_info}"
-msgstr ""
+msgstr "{player} là **{role}**!{initial_role_info}"
 
 #: utils/werewolf.py:1266
 msgid "The game has ended. I will now reveal the other living players' roles:"
-msgstr ""
+msgstr "Trò chơi đã kết thúc. Tôi giờ sẽ tiết lộ vai của những người còn sống:"
 
 #: utils/werewolf.py:1363
 #, python-brace-format
@@ -13499,6 +13993,8 @@ msgid ""
 "**Type the number of the user to choose for this action. You need to choose "
 "{amount} more.**"
 msgstr ""
+"**Gõ số của người chơi bạn muốn chọn cho hành động này. Bạn cần phải chọn "
+"thêm {amount} người nữa.**"
 
 #: utils/werewolf.py:1383
 msgid ""
@@ -13523,6 +14019,9 @@ msgid ""
 "\n"
 "{description}"
 msgstr ""
+"Bạn là **{role}**\n"
+"\n"
+"{description}"
 
 #: utils/werewolf.py:1434
 #, python-brace-format
@@ -13551,11 +14050,11 @@ msgstr ""
 
 #: utils/werewolf.py:1457
 msgid "Choose your Idol. You will turn into a Werewolf if they die."
-msgstr ""
+msgstr "Hãy chọn thần tượng của bạn. Bạn sẽ biến thành Người Sói nếu họ chết."
 
 #: utils/werewolf.py:1466
 msgid "You didn't choose anyone. A random player will be chosen for you."
-msgstr ""
+msgstr "Bạn không chọn ai cả. Một người chơi ngẫu nhiên sẽ được chọn cho bạn."
 
 #: utils/werewolf.py:1470
 #, python-brace-format
@@ -13597,17 +14096,19 @@ msgstr ""
 
 #: utils/werewolf.py:1526 utils/werewolf.py:2446
 msgid "You didn't choose anything."
-msgstr ""
+msgstr "Bạn không chọn gì cả."
 
 #: utils/werewolf.py:1531 utils/werewolf.py:2451
 msgid ""
 "I couldn't send a DM to someone. Too bad they missed to use their power."
 msgstr ""
+"Tôi không thể gửi tin nhắn riêng cho ai đó. Thật tiếc là họ không thể sử "
+"dụng năng lực của mình."
 
 #: utils/werewolf.py:1554
 #, python-brace-format
 msgid "Your new role is now **{new_role}**.\n"
-msgstr ""
+msgstr "Vai mới của bạn bây giờ là **{new_role}**.\n"
 
 #: utils/werewolf.py:1560
 #, python-brace-format
@@ -13619,11 +14120,11 @@ msgstr ""
 msgid ""
 "**{maid}** reveals themselves as the **{role}** and exchanged roles with "
 "{dying_one}."
-msgstr ""
+msgstr "**{maid}** tiết lộ họ là **{role}** và đổi vai với {dying_one}."
 
 #: utils/werewolf.py:1584
 msgid "Choose a player to protect from Werewolves."
-msgstr ""
+msgstr "Chọn một người chơi để bảo vệ khỏi Người Sói."
 
 #: utils/werewolf.py:1594
 #, python-brace-format
@@ -13657,7 +14158,7 @@ msgstr ""
 
 #: utils/werewolf.py:1634
 msgid "Choose a Werewolf to kill."
-msgstr ""
+msgstr "Chọn một Người Sói để giết."
 
 #: utils/werewolf.py:1644
 #, python-brace-format
@@ -13689,7 +14190,7 @@ msgstr ""
 
 #: utils/werewolf.py:1682
 msgid "Choose a Villager to kill."
-msgstr ""
+msgstr "Chọn một Dân Làng để giết."
 
 #: utils/werewolf.py:1692
 #, python-brace-format
@@ -13717,11 +14218,14 @@ msgid ""
 "Choose someone to heal 🧪. You can rescue a player attacked by the wolves "
 "once throughout the game. You can opt not to use this ability for now."
 msgstr ""
+"Chọn một người để hồi máu 🧪. Bạn có thể cứu một người chơi khỏi Người Sói "
+"một lần duy nhất trong cả trò chơi. Bạn có thể chọn không sử dụng năng lực "
+"này ngay bây giờ."
 
 #: utils/werewolf.py:1737
 #, python-brace-format
 msgid "You chose to heal **{healed}**."
-msgstr ""
+msgstr "Bạn chọn hồi máu cho **{healed}**."
 
 #: utils/werewolf.py:1740
 msgid "You didn't choose to heal anyone."
@@ -13732,17 +14236,20 @@ msgid ""
 "You didn't choose to heal anyone from the list, slowpoke. They're likely to "
 "die."
 msgstr ""
+"Bạn không chọn hồi máu cho ai trong danh sách, chậm quá. Họ hẳn sẽ chết."
 
 #: utils/werewolf.py:1757
 msgid ""
 "Choose someone to poison ☠️. You can kill a player once throughout the game. "
 "You can opt not to use this ability for now."
 msgstr ""
+"Chọn một người để đầu độc ☠️. Bạn có thể giết một người chơi một lần duy nhất "
+"trong cả trò chơi. Bạn có thể chọn không sử dụng năng lực này ngay bây giờ."
 
 #: utils/werewolf.py:1774
 #, python-brace-format
 msgid "You've decided to poison **{poisoned}**."
-msgstr ""
+msgstr "Bạn quyết định đầu độc **{poisoned}**."
 
 #: utils/werewolf.py:1779
 msgid "You didn't choose to poison anyone."
@@ -13750,7 +14257,7 @@ msgstr ""
 
 #: utils/werewolf.py:1782
 msgid "You've ran out of time and missed to poison anyone, slowpoke."
-msgstr ""
+msgstr "Bạn hết giờ và bỏ lỡ cơ hội đầu độc một người nào đó, chậm quá."
 
 #: utils/werewolf.py:1801
 #, python-brace-format
@@ -13761,7 +14268,7 @@ msgstr ""
 
 #: utils/werewolf.py:1808
 msgid "Choose 2 people to enchant."
-msgstr ""
+msgstr "Chọn 2 người để mê hoặc."
 
 #: utils/werewolf.py:1815 utils/werewolf.py:2034 utils/werewolf.py:2140
 #: utils/werewolf.py:2219 utils/werewolf.py:2272 utils/werewolf.py:2320
@@ -13783,12 +14290,12 @@ msgstr ""
 #, python-brace-format
 msgid ""
 "The last {count} possible targets have been automatically enchanted for you."
-msgstr ""
+msgstr "{count} đối tượng cuối đã được tự động chọn để mê hoặc cho bạn."
 
 #: utils/werewolf.py:1839
 #, python-brace-format
 msgid "You have enchanted **{enchanted}**."
-msgstr ""
+msgstr "Bạn đã mê hoặc **{enchanted}**."
 
 #: utils/werewolf.py:1843
 #, python-brace-format
@@ -13801,7 +14308,7 @@ msgstr ""
 #: utils/werewolf.py:1851
 #, python-brace-format
 msgid "Your {relationship}(s) are/is: {members}"
-msgstr ""
+msgstr "{relationship} của bạn là: {members}"
 
 #: utils/werewolf.py:1862
 #, python-brace-format
@@ -13809,10 +14316,12 @@ msgid ""
 "Your new {relationship} is: **{new_member}**. They don't know yet the other "
 "members of the family."
 msgstr ""
+"{relationship} mới của bạn là: **{new_member}**. Họ chưa biết những thành "
+"viên khác trong gia đình."
 
 #: utils/werewolf.py:1873
 msgid "👁️ Choose someone whose identity you would like to see."
-msgstr ""
+msgstr "👁️ Chọn một người bạn muốn xem danh tính."
 
 #: utils/werewolf.py:1883
 #, python-brace-format
@@ -13841,20 +14350,24 @@ msgid ""
 "You will be asked to choose a new role from these:\n"
 "**{choices}**"
 msgstr ""
+"Bạn sẽ được hỏi để chọn một vai mới từ các vai:\n"
+"**{choices}**"
 
 #: utils/werewolf.py:1918
 msgid ""
 "But it seems you don't have a choice. Whether you choose or not, you will "
 "become a Werewolf."
 msgstr ""
+"Nhưng có vẻ bạn không có cơ hội. Dù muốn hay không, bạn sẽ trở thành Người "
+"Sói."
 
 #: utils/werewolf.py:1923
 msgid "Choose nothing and stay as Thief."
-msgstr ""
+msgstr "Không chọn gì cả và tiếp tục làm Tên Trộm."
 
 #: utils/werewolf.py:1928 utils/werewolf.py:1980
 msgid "Choose a new role"
-msgstr ""
+msgstr "Chọn vai mới"
 
 #: utils/werewolf.py:1935
 #, python-brace-format
@@ -13873,6 +14386,8 @@ msgstr ""
 #: utils/werewolf.py:1948
 msgid "I couldn't send a DM to this player. They will stay as Thief."
 msgstr ""
+"Tôi không thể gửi tin nhắn riêng đến người chơi này. Họ sẽ tiếp tục là Tên "
+"Trộm."
 
 #: utils/werewolf.py:1959 utils/werewolf.py:2003
 #, python-brace-format
@@ -13891,6 +14406,8 @@ msgstr ""
 #: utils/werewolf.py:1996
 msgid "I couldn't send a DM. A random role was chosen for them."
 msgstr ""
+"Tôi không thể gửi tin nhắn riêng đến người chơi này. Một vai ngẫu nhiên đã "
+"được chọn cho họ."
 
 #: utils/werewolf.py:2023
 msgid ""
@@ -13938,7 +14455,7 @@ msgstr ""
 
 #: utils/werewolf.py:2104
 msgid "You've ran out of time, slowpoke. Lovers will be chosen randomly."
-msgstr ""
+msgstr "Bạn hết giờ, chậm quá. Cặp Tình Nhân sẽ được chọn ngẫu nhiên."
 
 #: utils/werewolf.py:2108
 #, python-brace-format
@@ -14131,12 +14648,12 @@ msgstr ""
 
 #: utils/werewolf.py:2582
 msgid " Initial roles hidden."
-msgstr ""
+msgstr " Các vai ban đầu bị ẩn giấu."
 
 #: utils/werewolf.py:2601
 #, python-brace-format
 msgid "{user} has died. They were a **{role}**!{initial_role_info}"
-msgstr ""
+msgstr "{user} đã chết. Họ là **{role}**!{initial_role_info}"
 
 #: utils/werewolf.py:2610
 #, python-brace-format
@@ -14152,7 +14669,7 @@ msgstr ""
 
 #: utils/werewolf.py:2637
 msgid "The Hunter grabs their gun."
-msgstr ""
+msgstr "Thợ Săn nắm lấy khẩu súng của họ."
 
 #: utils/werewolf.py:2639
 msgid "Choose someone who shall die with you. 🔫"
@@ -14160,7 +14677,7 @@ msgstr ""
 
 #: utils/werewolf.py:2650
 msgid "The Hunter couldn't find the trigger 😆."
-msgstr ""
+msgstr "Thợ Săn không tìm thấy cò súng 😆."
 
 #: utils/werewolf.py:2655
 msgid "The Hunter refused to shoot anyone."
@@ -14169,12 +14686,12 @@ msgstr ""
 #: utils/werewolf.py:2660
 #, python-brace-format
 msgid "You chose to shoot **{target}**"
-msgstr ""
+msgstr "Bạn chọn bắn **{target}**"
 
 #: utils/werewolf.py:2665
 #, python-brace-format
 msgid "The Hunter is firing. **{target}** got hit!"
-msgstr ""
+msgstr "Thợ Săn đang bắn. **{target}** trúng đạn!"
 
 #: utils/werewolf.py:2678
 #, python-brace-format
@@ -14196,6 +14713,8 @@ msgid ""
 "The villagers killed **{role}**. The villagers lost all their special powers "
 "and became normal villagers."
 msgstr ""
+"Dân Làng đã giết **{role}**. Dân Làng mất tất cả năng lực đặc biệt của họ và "
+"trở thành Dân Làng bình thường."
 
 #: utils/werewolf.py:2718
 #, python-brace-format
@@ -14208,15 +14727,15 @@ msgstr ""
 #: utils/werewolf.py:2732
 #, python-brace-format
 msgid "{dead_player}'s lover, {lover}, will die of sorrow."
-msgstr ""
+msgstr "Người yêu của {dead_player}, {lover}, sẽ chết trong đau khổ."
 
 #: utils/werewolf.py:2762
 msgid "Lovers"
-msgstr ""
+msgstr "Tình Nhân"
 
 #: utils/werewolf.py:2821
 msgid "You are going to die. Use your last breath to choose a new Sheriff."
-msgstr ""
+msgstr "Bạn sắp chết. Hãy dùng hơi thở cuối để chọn Cảnh Sát mới."
 
 #: utils/werewolf.py:2826
 #, python-brace-format
@@ -14238,6 +14757,7 @@ msgid ""
 "You didn't choose anyone. A random player will be chosen to be your "
 "successor."
 msgstr ""
+"Bạn không chọn ai cả. Một người chơi ngẫu nhiên sẽ được chọn để kế thừa bạn."
 
 #: utils/werewolf.py:2860
 #, python-brace-format
@@ -14249,7 +14769,7 @@ msgstr ""
 #: utils/werewolf.py:2866
 #, python-brace-format
 msgid "**{sheriff}** became the new Sheriff."
-msgstr ""
+msgstr "**{sheriff}** trở thành Cảnh Sát mới."
 
 #: utils/werewolf.py:2872
 #, python-brace-format
@@ -14657,6 +15177,596 @@ msgstr ""
 #~ "\n"
 #~ "            Chỉ bang chủ và các viên chức của bang có thể sử dụng lệnh "
 #~ "này."
+
+#~ msgid ""
+#~ "Upvote me to receive a random crate! You will be rewarded a few seconds "
+#~ "afterwards!\n"
+#~ "https://top.gg/bot/idlerpg"
+#~ msgstr ""
+#~ "Bình chọn cho tôi để được nhận một thùng ngẫu nhiên! Bạn sẽ được thưởng "
+#~ "vài giây sau đó!\n"
+#~ "https://top.gg/bot/idlerpg"
+
+#, python-brace-format
+#~ msgid ""
+#~ "Lists all buildings in your city, along with their level. These buildings "
+#~ "give passive rewards to all alliance members:\n"
+#~ "\n"
+#~ "            Thief buildings increase your chance to steal money as a "
+#~ "thief, for every level, this increases your chance by 10%\n"
+#~ "            Raid buildings increase a user's raidstats by 0.1 per level\n"
+#~ "            Trade buildings remove the need to pay the 5% tax when "
+#~ "selling or buying items when it reached at least Level 1. It also "
+#~ "increases the amount of money you get from `{prefix}merch` and `{prefix}"
+#~ "merchall` increasing the reward by 50% for each level\n"
+#~ "            Adventure buildings shorten the adventure time by 1% per "
+#~ "level and increase your succes chances by 1% per level.\n"
+#~ "\n"
+#~ "            Your alliance must own a city to use this command."
+#~ msgstr ""
+#~ "Liệt kê các tòa nhà trong thành phố của bạn, và cấp bậc của chúng. Các "
+#~ "tòa nhà này sẽ cung cấp lợi ích cho các thành viên trong liên minh:\n"
+#~ "\n"
+#~ "            Tòa nhà thief tăng xác suất ăn trộm tiền của đạo chích, mỗi "
+#~ "cấp sẽ tăng 10% xác suất của bạn\n"
+#~ "            Tòa nhà raid tăng 0.1 chỉ số raid của thành viên cho mỗi cấp\n"
+#~ "            Tòa nhà trade miễn thuế 5% khi bán hay mua hàng ở cấp 1. Nó "
+#~ "cũng sẽ tăng 50% số tiền bạn nhận được từ `{prefix}merch` và `{prefix}"
+#~ "merchall` cho mỗi cấp\n"
+#~ "            Tòa nhà adventure giảm 1% thời gian chuyến phiêu lưu cho mỗi "
+#~ "cấp và tăng 1% xác suất thành công của bạn cho mỗi cấp\n"
+#~ "\n"
+#~ "            Liên minh của bạn phải sở hữu thành phố để sử dụng lệnh này."
+
+#, python-brace-format
+#~ msgid ""
+#~ "\n"
+#~ "            `[mode]` - The mode to play, see below for available options. "
+#~ "(optional and defaults to Classic)\n"
+#~ "            `[speed]` - The game speed to play, see below available "
+#~ "options. (optional and defaults to Normal)\n"
+#~ "\n"
+#~ "            Starts a game of Werewolf. Find the werewolves, before they "
+#~ "find you!\n"
+#~ "            Your goal to win is indicated on the role you have.\n"
+#~ "            **Game modes:** `Classic` (default), `Imbalanced`, "
+#~ "`Huntergame`, `Villagergame`, `Valentines`. Use `{prefix}ww modes` for "
+#~ "detailed info.\n"
+#~ "            **Game speeds** (in seconds): `Normal`: 60 (default), "
+#~ "`Extended`: 90, `Fast`: 45, `Blitz`: 30. Use `{prefix}ww speeds` for "
+#~ "detailed info.\n"
+#~ "            **Aliases:**\n"
+#~ "            `ww`\n"
+#~ "            **Examples:**\n"
+#~ "            `{prefix}ww Blitz` for Classic mode on Blitz speed\n"
+#~ "            `{prefix}ww Imbalanced` for Imbalanced mode on Normal speed\n"
+#~ "            `{prefix}ww Valentines Extended` for Valentines mode on "
+#~ "Extended speed\n"
+#~ "            `{prefix}ww Huntergame Fast` for Huntergame mode on Fast "
+#~ "speed\n"
+#~ "            "
+#~ msgstr ""
+#~ "\n"
+#~ "            `[mode]` - Mode bạn muốn chơi, xem phía dưới để biết các mode "
+#~ "bạn có thể chọn. (không bắt buộc và mặc định là Classic)\n"
+#~ "            `[speed]` - Tốc độ bạn muốn chơi, xem phía dưới để biết các "
+#~ "tốc độ bạn có thể chọn. (không bắt buộc và mặc định là Normal)\n"
+#~ "\n"
+#~ "            Bắt đầu một trận Người Sói. Hãy tìm ra người sói, trước khi "
+#~ "họ tìm đến bạn!\n"
+#~ "            Nhiệm vụ để chiến thắng được nhắc trong vai trò của bạn.\n"
+#~ "            **Các mode game:** `Classic` (mặc định), `Imbalanced`, "
+#~ "`Huntergame`, `Villagergame`, `Valentines`. Sử dụng `{prefix}ww modes` để "
+#~ "biết thêm chi tiết.\n"
+#~ "            **Các tốc độ game** (tính bằng giây): `Normal`: 60 (mặc "
+#~ "định), `Extended`: 90, `Fast`: 45, `Blitz`: 30. Sử dụng `{prefix}ww "
+#~ "speeds` để biết thêm chi tiết.\n"
+#~ "            **Tên khác:**\n"
+#~ "            `ww`\n"
+#~ "            **Ví dụ:**\n"
+#~ "            `{prefix}ww Blitz` để chơi Classic ở tốc độ Blitz\n"
+#~ "            `{prefix}ww Imbalanced` để chơi Imbalanced ở tốc độ Normal\n"
+#~ "            `{prefix}ww Valentines Extended` để chơi Valentines ở tốc độ "
+#~ "Extended\n"
+#~ "            `{prefix}ww Huntergame Fast` để chơi Huntergame ở tốc độ "
+#~ "Fast\n"
+#~ "            "
+
+#, python-brace-format
+#~ msgid ""
+#~ "Use `{prefix}help ww` to get help on werewolf commands. Use `{prefix}ww "
+#~ "roles` to view descriptions of game roles and their goals to win. Use "
+#~ "`{prefix}ww modes` and `{prefix}ww speeds` to see info about available "
+#~ "game modes and speeds. Use `{prefix}ww updates` to read the new updates."
+#~ msgstr ""
+#~ "Sử dụng `{prefix}help ww` để được giúp đỡ về các lệnh Người Sói. Sử dụng "
+#~ "`{prefix}ww roles` để xem miêu tả các vai và mục tiêu của từng vai để "
+#~ "chiến thắng. Sử dụng `{prefix}ww modes` và `{prefix}ww speeds` để xem các "
+#~ "mode và tốc độ có thể sự dụng của trò chơi. Sử dụng `{prefix}ww updates` "
+#~ "để đọc các cập nhật mới."
+
+#, python-brace-format
+#~ msgid ""
+#~ "**{author} started a mass-game of Werewolf!**\n"
+#~ "**{mode}** mode on **{speed}** speed. Go to {url} to join in the next 10 "
+#~ "minutes. **Minimum of 5 players are required.**"
+#~ msgstr ""
+#~ "**{author} bắt đầu một trận Người Sói cỡ lớn!**\n"
+#~ "Mode **{mode}** với tốc độ **{speed}**. Vào {url} để tham gia trong 10 "
+#~ "phút tiếp theo. **Cần tối thiểu 5 người chơi.**"
+
+#, python-brace-format
+#~ msgid ""
+#~ "**{author} started a game of Werewolf!**\n"
+#~ "**{mode}** mode on **{speed}** speed. React with :wolf: to join the game! "
+#~ "**Minimum of 5 players are required. Starting in 30 seconds.\n"
+#~ "{num} joined**"
+#~ msgstr ""
+#~ "**{author} bắt đầu một trận người Sói!**\n"
+#~ "Mode **{mode}** với tốc độ **{speed}**. Nhấn emoji :wolf: để tham gia trò "
+#~ "chơi! **Cần tối thiểu 5 người chơi. Bắt đầu sau 30 giây.**\n"
+#~ "**{num} tham gia**"
+
+#~ msgid ""
+#~ "Not enough players joined... We didn't reach the minimum 5 players. 🙁"
+#~ msgstr ""
+#~ "Không đủ người tham gia… Chúng ta không có tối thiểu 5 người chơi. 🙁"
+
+#~ msgid ""
+#~ "**Game modes:** `Classic` (default), `Imbalanced`, `Huntergame`, "
+#~ "`Villagergame`, `Valentines`.\n"
+#~ "`Classic`: Play the classic werewolf game. (default)\n"
+#~ "`Imbalanced`: Some roles that are only available in larger games have "
+#~ "chances to join even in smaller games. (The size of the game being "
+#~ "referred here is about the number of players, i.e. 5-player game is "
+#~ "small)\n"
+#~ "`Huntergame`: Only Hunters and Werewolves are available.\n"
+#~ "`Villagergame`: No special roles, only Villagers and Werewolves are "
+#~ "available.\n"
+#~ "`Valentines`: (Experimental) There are multiple lovers or couples "
+#~ "randomly chosen at the start of the game. A chain of lovers might exist "
+#~ "upon the Amor's arrows. If the remaining players are in a single chain of "
+#~ "lovers, they all win."
+#~ msgstr ""
+#~ "**Mode trò chơi:** `Classic` (mặc định), `Imbalanced`, `Huntergame`, "
+#~ "`Villagergame`, `Valentines`.\n"
+#~ "`Classic`: Chơi Người Sói truyền thống. (mặc định)\n"
+#~ "`Imbalanced`: Một số vai chỉ có ở trò chơi cỡ lớn giờ cũng có thể xuất "
+#~ "hiện ở trò chơi cỡ nhỏ. (Tầm cỡ trò chơi ở đây là nói về số người chơi, "
+#~ "ví dụ 5 người là cỡ nhỏ)\n"
+#~ "`Huntergame`: Chỉ có Thợ Săn và Người Sói.\n"
+#~ "`Villagergame`: Không có vai đặc biệt, chỉ có Dân Làng và Người Sói.\n"
+#~ "`Valentines`: (thí nghiệm) Sẽ có nhiều cặp hoặc nhóm tình nhân được chọn "
+#~ "ngẫu nhiên ở đầu trò chơi. Một chuỗi tình nhân có thể sẽ tồn tại với các "
+#~ "mũi tên của Amor. Nếu những người còn sống là cùng một chuỗi tình nhân, "
+#~ "tất cả bọn họ sẽ thắng."
+
+#~ msgid "Read the updates for Werewolf game."
+#~ msgstr "Xem các cập nhật về trò chơi Người Sói."
+
+#~ msgid ""
+#~ "**Bug Fixes:**\n"
+#~ "1. Fix double deaths when Hunter kills the target of Witch or White Wolf. "
+#~ "A bug showing 2 death messages for Witch-killed or White Wolf-killed "
+#~ "player after it has been killed by the Hunter has been fixed. Second "
+#~ "death will not occur anymore.\n"
+#~ "\n"
+#~ "**Enhancements and Changes:**\n"
+#~ "1. Revised minor details on description of Fox, Big Bad Wolf, and Healer "
+#~ "roles.\n"
+#~ "2. Changed `role` command to `ww myrole` subcommand. (It's the command "
+#~ "that direct messages the player about their current role in a game.)\n"
+#~ "3. Made few adjustments to prevent more than one game instance in a "
+#~ "channel where more than one users attempted to start a werewolf game at "
+#~ "the same time.\n"
+#~ "4. Now users can start a new Werewolf game after failure of getting the "
+#~ "joining message for reasons such as accidental deletion of said message.\n"
+#~ "5. The players are now being shuffled before the start of the game.\n"
+#~ "6. Thief choosing of new role is now optional, but if given with 2 "
+#~ "Werewolf roles as choices, Thief should become a Werewolf. Thief will win "
+#~ "with Villagers' side if Thief's role was retained.\n"
+#~ "7. Improved proper numbering of werewolves' possible victims.\n"
+#~ "8. Now mentions the users in choices of players selection in dm's. This "
+#~ "is to work around users who change their name mid-game which is different "
+#~ "from the cached name.\n"
+#~ "9. Now messages you when you timed out while choosing a player.\n"
+#~ "10. Changed the default 90-seconds discussion time in classic mode. It's "
+#~ "now defaulted to 60 seconds as \"Normal\" speed.\n"
+#~ "11. AFK check has been reworked for lesser time consumption.\n"
+#~ "12. Now shows all the player's previous roles upon player's death or when "
+#~ "game's over. Previously, only the first role is being shown as initial "
+#~ "role. (Works on Thief and Maid)\n"
+#~ "\n"
+#~ "**Additions:**\n"
+#~ "1. Sheriff has been added to the game! The game will randomly choose a "
+#~ "player at the start to become the Sheriff that has double count of vote. "
+#~ "An eliminated Sheriff should choose a new Sheriff as his successor.\n"
+#~ "2. Added subcommand `ww roles` that shows the list of available roles. "
+#~ "`ww roles <role_name>` can be used to view the description or abilities "
+#~ "of the role and see the goal and side it belongs.\n"
+#~ "3. Added new game modes and speeds: (use `ww modes` and `ww speeds` "
+#~ "commands for detailed info)\n"
+#~ "  - Added Game modes: `Imbalanced`, `Huntergame`, `Villagergame`, "
+#~ "`Valentines`.\n"
+#~ "  - Added Game speeds: `Normal` (60 seconds), `Extended` (90 seconds), "
+#~ "`Fast` (45 seconds).\n"
+#~ "4. Now open for massive werewolf games in experimental phase.\n"
+#~ "5. The welcome message now displays the number of players and mentions "
+#~ "them (several messages might be shown for too many players suitable with "
+#~ "mass werewolf game, aka: paginated)\n"
+#~ "6. Major messages that need pagination of players like during daily "
+#~ "elections or when the game is over have been implemented in preparation "
+#~ "for mass werewolf games.\n"
+#~ "7. Now displays the number of in-game days and the limit of days to play "
+#~ "if it's on Fast or Blitz speed.\n"
+#~ "8. Now mentions the werewolf game channel in DM's as shortcut link to "
+#~ "easily go back and forth with the channels.\n"
+#~ "9. Werewolves will now see who the other werewolves are and their count "
+#~ "during the victim selection in DM's.\n"
+#~ "10. Now shows the roles of revealed players next to their names during "
+#~ "players selection in dm's. Pure soul's role will be shown to all players "
+#~ "with ability to choose a player in DM's. Seer will now be shown with the "
+#~ "roles previously revealed to them.\n"
+#~ "11. Werewolves will now see the current number of votes for nominated "
+#~ "victims before they vote.\n"
+#~ "12. Now has detection for sneaky lynching nomination.\n"
+#~ "13. Now has workaround on non-players or dead players influencing the "
+#~ "game by nuisance voting.\n"
+#~ "14. Maid will now be asked whether to swap role with the player about to "
+#~ "be lynched and not after the player's death. The game will announce the "
+#~ "Maid's name that took the player's role. The new role of the Maid will "
+#~ "not be revealed. The role of the eliminated player will be shown as Maid "
+#~ "since they were exchanged.\n"
+#~ "15. The former Maid will have her role be called the following night if "
+#~ "needed as if it's the first night (e.g: Announced as new Pure Soul, "
+#~ "choose from 2 extra roles as Thief (if Thief didn't take other role), "
+#~ "choose an Idol if she took Wild Child, etc.)\n"
+#~ "16. The former Maid can choose another pair of lovers if she took Amor's "
+#~ "role hence a possibility of 2 sets of lovers. A player could get caught "
+#~ "between 2 lovers in the game.\n"
+#~ "17. Judge will now receive a message if he successfully triggered a "
+#~ "second election.\n"
+#~ "18. Added `ww updates` command to see all of these updates."
+#~ msgstr ""
+#~ "**Sửa lỗi:**\n"
+#~ "1. Sửa cái chết đôi khi đối tượng Thợ Săn giết cũng là đối tượng giết của "
+#~ "Phù Thủy hay Sói Trắng. Lỗi hiện hai thông báo bị giết cho người chơi nếu "
+#~ "bị giết bởi Phù Thủy hay Sói Trắng sau khi bị giết bởi Thợ Săn nay đã "
+#~ "được sửa. Sẽ không thể chết một lần nữa.\n"
+#~ "\n"
+#~ "**Nâng cấp và Thay đổi:**\n"
+#~ "1. Sửa vài chi tiết nhỏ về miêu tả của Cáo, Sói Già Gian Ác và Mục Sư.\n"
+#~ "2. Đổi lệnh `role` thành lệnh phụ `ww myrole`. (Lệnh này sẽ nhắn tin "
+#~ "riêng cho người chơi về vai của họ trong trò chơi.)\n"
+#~ "3. Điều chỉnh để tránh có hơn một trận trong cùng một kênh khi có hơn một "
+#~ "người bắt đầu trò chơi Người Sói cùng một lúc.\n"
+#~ "4. Bây giờ người chơi có thể bắt đầu một trận Người Sói mới sau khi không "
+#~ "thể nhận tin nhắn mời tham gia vì những lý do như vô tình xóa tin nhắn.\n"
+#~ "5. Người chơi giờ sẽ được chọn ngẫu nhiên ở đầu trò chơi.\n"
+#~ "6. Tên Trộm chọn vai mới giờ là không bắt buộc, nhưng nếu được chọn giữa "
+#~ "hai vai Người Sói, Tên Trộm phải trở thành Người Sói. Tên Trộm sẽ thắng "
+#~ "cùng phe Dân Làng nếu vai Tên Trộm được giữ.\n"
+#~ "7. Chỉnh đúng số lượng nạn nhân tiềm năng của Người Sói.\n"
+#~ "8. Giờ sẽ liệt kê các người chơi khác để chọn trong tin nhắn riêng. Đây "
+#~ "là để tránh việc người chơi đổi tên giữa trận khiến tên này khác với tên "
+#~ "được ghi nhận.\n"
+#~ "9. Giờ sẽ nhắn tin cho bạn nếu hết thời gian chọn người chơi khác.\n"
+#~ "10. Đổi thời gian thảo luận mặc định 90 giây ở mode Classic. Bây giờ mặc "
+#~ "định là 60 giây với tốc độ \"Normal\".\n"
+#~ "11. Kiểm tra AFK được chỉnh ít thời gian hơn.\n"
+#~ "12. Giờ sẽ hiện tất cả các vai trước của người chơi khi người chơi chết "
+#~ "hoặc hết trận. Lúc trước, chỉ vai đầu tiên được hiện với tên gọi vai ban "
+#~ "đầu. (Áp dụng với Tên Trộm và Người Hầu)\n"
+#~ "\n"
+#~ "**Ngoài ra:**\n"
+#~ "1. Cảnh Sát đã được thêm vào trò chơi! Trò chơi sẽ chọn một người ngẫu "
+#~ "nhiên ở đầu trận để làm Cảnh Sát và phiếu bầu của người này sẽ được nhân "
+#~ "đôi. Cảnh Sát bị loại sẽ được chọn người Cảnh Sát tiếp theo.\n"
+#~ "2. Thêm lệnh phụ `ww roles` để hiện danh sách các vai. `ww roles "
+#~ "<role_name>` có thể được sử dụng để xem miêu tả và năng lực của các vai "
+#~ "và xem mục tiêu và phe của chúng.\n"
+#~ "3. Thêm mode và tốc độ trò chơi mới: (sử dụng các lệnh `ww modes` và `ww "
+#~ "speeds` để biết thêm chi tiết)\n"
+#~ "  - Mode mới: `Imbalanced`, `Huntergame`, `Villagergame`, `Valentines`.\n"
+#~ "  - Tốc độ mới: `Normal` (60 giây), `Extended` (90 giây), `Fast` (45 "
+#~ "giây).\n"
+#~ "4. Giờ đã có trò chơi Người Sói cỡ lớn trong giai đoạn thử nghiệm.\n"
+#~ "5. Tin nhắn chào mừng giờ sẽ hiện số người chơi và nhắc đến họ (vài tin "
+#~ "nhắn có thể sẽ hiện nếu số người chơi quá đông với trò chơi cỡ lớn, aka: "
+#~ "đánh số trang)\n"
+#~ "6. Các tin nhắn quan trọng cần đánh số trang người chơi như trong cuộc bỏ "
+#~ "phiếu ban ngày hoặc khi trò chơi kết thúc đã được ứng dụng để chuẩn bị "
+#~ "sẵn sàng cho trò chơi Người Sói cỡ lớn.\n"
+#~ "7. Giờ sẽ hiện số ngày trong trò chơi và số ngày giới hạn nếu chơi ở tốc "
+#~ "độ Fast hay Blitz.\n"
+#~ "8. Giờ sẽ đề cập kênh chơi Người Sói trong tin nhắn riêng dưới dạng link "
+#~ "ngắn để dễ dàng di chuyển qua lại giữa các kênh.\n"
+#~ "9. Người Sói giờ sẽ thấy những Người Sói khác và phiếu bầu của họ khi "
+#~ "chọn nạn nhân trong tin nhắn riêng.\n"
+#~ "10. Giờ sẽ hiển thị vai của những người chơi đã bị lộ kế bên tên họ trong "
+#~ "tin nhắn riêng khi chọn người chơi. Vai Người Trong Sạch sẽ được hiển thị "
+#~ "cho tất cả những người chơi có thể chọn người chơi khác trong tin nhắn "
+#~ "riêng. Tiên Tri giờ sẽ được thấy các vai mà họ đã được tiết lộ.\n"
+#~ "11. Người Sói giờ sẽ được thấy số phiếu bầu hiện tại cho các nạn nhân "
+#~ "trước khi họ bỏ phiếu.\n"
+#~ "12. Giờ đã có nhận dạng phiếu bầu không hợp lệ.\n"
+#~ "13. Giờ đã có giải pháp cho những người không tham gia trò chơi hoặc "
+#~ "người đã chết bỏ phiếu bậy để ảnh hưởng trò chơi.\n"
+#~ "14. Người Hầu giờ sẽ được hỏi có muốn đổi vai với người sắp bị treo cổ "
+#~ "chứ không phải sau khi họ đã chết. Trò chơi sẽ thông báo tên của Người "
+#~ "Hầu chọn đổi vai. Vai mới của Người Hầu sẽ không được tiết lộ. Vai của "
+#~ "người đã bị loại sẽ được hiện là Người Hầu vì họ đã bị đổi vai.\n"
+#~ "15. Người từng là Người Hầu sẽ được gọi vào đêm tiếp theo trong vai của "
+#~ "họ nếu cần thiết tương tự như đêm đầu tiên (ví dụ: Được thông báo là "
+#~ "Người Trong Sạch mới, chọn từ hai vai khác nếu là Tên Trộm (nếu Tên Trộm "
+#~ "cũ chưa chọn vai khác), chọn thần tượng nếu họ là Đứa Bé Hoang Dã, ...)\n"
+#~ "16. Người Hầu cũ có thể chọn một cặp tình nhân mới nếu họ đổi thành vai "
+#~ "Amor, vậy nên có thể có hai cặp tình nhân. Một người chơi có thể có 2 "
+#~ "tình nhân trong trò chơi.\n"
+#~ "17. Thẩm Phán giờ sẽ được nhận tin nhắn nếu họ kích hoạt thành công lần "
+#~ "bỏ phiếu thứ hai.\n"
+#~ "18. Thêm lệnh  `ww updates` để xem các cập nhật này."
+
+#~ msgid "Werewolf Updates"
+#~ msgstr "Cập nhật Người Sói"
+
+#~ msgid ""
+#~ "You are the oldest member of the community and the Werewolves have been "
+#~ "hurting you for a long time. All the years have granted you a lot of "
+#~ "resistance - you can survive one attack."
+#~ msgstr ""
+#~ "Bạn là người lớn tuổi nhất trong cộng đồng và Người Sói đã săn giết bạn "
+#~ "từ lâu. Những năm tháng đó đã tăng cường khả năng phòng ngự của bạn - bạn "
+#~ "có thể sống sót khỏi một cuộc tấn công."
+
+#~ msgid ""
+#~ "You are a clever little guy who can sense the presence of Werewolves. "
+#~ "Every night, you get to choose 3 players and will be told if at least one "
+#~ "of them is a Werewolf. If you do not find a Werewolf, you lose your "
+#~ "ability."
+#~ msgstr ""
+#~ "Bạn là một cậu nhóc rất thông minh và có thể cảm nhận được sự hiện diện "
+#~ "của Người Sói. Mỗi đêm, bạn có thể chọn 3 người chơi và sẽ được báo nếu "
+#~ "ít nhất một trong số họ là Người Sói. Nếu bạn không thể tìm ra Người Sói, "
+#~ "bạn sẽ mất năng lực của mình."
+
+#~ msgid ""
+#~ "You are the Knight. You will do your best to protect the Villagers from "
+#~ "the Werewolves. When you die, a Werewolf will die with you."
+#~ msgstr ""
+#~ "Bạn là Hiệp Sĩ. Bạn sẽ làm hết sức mình để bảo vệ Dân Làng khỏi Người "
+#~ "Sói. Khi bạn chết, một Người Sói sẽ chết cùng bạn."
+
+#~ msgid "You are the thief and can choose your identity soon."
+#~ msgstr "Bạn là Tên Trộm và có thể chọn vai của mình sớm thôi."
+
+#~ msgid ""
+#~ "You are the wild child and will choose an idol. Once it dies, you turn "
+#~ "into a Werewolf, but until then, you are a normal Villager..."
+#~ msgstr ""
+#~ "Bạn là một Đứa Bé Hoang Dã và có thể chọn một thần tượng. Khi người đó "
+#~ "chết, bạn sẽ biến thành Người Sói, nhưng trước lúc đó, bạn là một Dân "
+#~ "Làng bình thường..."
+
+#~ msgid ""
+#~ "You are the maid who raised the children. It would hurt you to see any of "
+#~ "them die - after the daily election, you may take their identity role "
+#~ "once."
+#~ msgstr ""
+#~ "Bạn là Người Hầu nuôi dạy các đứa bé. Bạn sẽ đau khổ nếu một người trong "
+#~ "bọn chúng chết - sau buổi bỏ phiếu hằng ngày, bạn có thể lấy vai của bọn "
+#~ "họ một lần duy nhất."
+
+#~ msgid ""
+#~ "You are the flutist. Your goal is to enchant the players with your music "
+#~ "to take revenge for being expelled many years ago. Every night, you get "
+#~ "to enchant two of them. Gotta catch them all..."
+#~ msgstr ""
+#~ "Bạn là Người Thổi Sáo. Mục tiêu của bạn là mê hoặc người chơi khác bằng "
+#~ "âm nhạc để trả thù chọ việc bị trục xuất nhiều năm về trước. Mỗi đêm, bạn "
+#~ "có thể mê hoặc hai người. Phải bắt hết bọn họ..."
+
+#~ msgid "**The Healer awakes...**"
+#~ msgstr "**Mục Sư thức tỉnh...**"
+
+#, python-brace-format
+#~ msgid " Votes: {votes}"
+#~ msgstr "Phiếu bầu: {votes}"
+
+#~ msgid "You didn't vote."
+#~ msgstr "Bạn đã không bỏ phiếu."
+
+#, python-brace-format
+#~ msgid ""
+#~ "📢 {sheriff} got randomly chosen as the new **Sheriff** 🎖️. **The vote of "
+#~ "the Sheriff counts as double.**"
+#~ msgstr ""
+#~ "📢 {sheriff} đã được chọn ngẫu nhiên để trở thành **Cảnh Sát** mới 🎖️. "
+#~ "**Phiếu bầu của Cảnh Sát sẽ được tính gấp đôi.**"
+
+#~ msgid "**The Seer awakes...**"
+#~ msgstr "**Tiên Tri thức dậy...**"
+
+#~ msgid "**The Fox awakes...**"
+#~ msgstr "**Cáo thức dậy...**"
+
+#~ msgid "**The Big Bad Wolf awakes...**"
+#~ msgstr "**Sói Già Gian Ác thức dậy...**"
+
+#~ msgid "**The Witch awakes...**"
+#~ msgstr "**Phù Thủy thức dậy...**"
+
+#~ msgid "**The Flutist awakes...**"
+#~ msgstr "**Người Thổi Sáo thức dậy...**"
+
+#~ msgid "**The White Wolf awakes...**"
+#~ msgstr "**Sói Trắng thức dậy...**"
+
+#, python-brace-format
+#~ msgid "Day {day_count:.0f} of {days_limit}"
+#~ msgstr "Ngày {day_count:.0f} của {days_limit}"
+
+#, python-brace-format
+#~ msgid "Day {day_count:.0f}"
+#~ msgstr "Ngày {day_count:.0f}"
+
+#, python-brace-format
+#~ msgid "**The {winning_team} won!** 🎉 Congratulations:"
+#~ msgstr "**Phe {winning_team} thắng!** 🎉 Chúc mừng:"
+
+#~ msgid "**No one won!**"
+#~ msgstr "**Không ai thắng!**"
+
+#, python-brace-format
+#~ msgid "{winner} won!"
+#~ msgstr "{winner} thắng!"
+
+#, python-brace-format
+#~ msgid ""
+#~ "💕 You are in love with **{lover}**! 💘 Amor really knew you had an eye on "
+#~ "them... You can eliminate all others and survive as Lovers. Try to "
+#~ "protect your lover as best as you can. You will immediately commit "
+#~ "suicide once they die.\n"
+#~ "{game_link}"
+#~ msgstr ""
+#~ "💕 Bạn yêu **{lover}**! 💘 Amor biết bạn để ý đến họ… Bạn có thể loại những "
+#~ "người chơi khác và sống sót với vai Tình Nhân. Hãy cố hết sức bảo vệ "
+#~ "người yêu của bạn. Bạn sẽ lập tức tự sát nếu họ chết.\n"
+#~ "{game_link}"
+
+#~ msgid "**The Wild Child awakes and chooses its idol...**"
+#~ msgstr "**Đứa Bé Hoang Dã thức dậy và chọn thần tượng của mình…\""
+
+#, python-brace-format
+#~ msgid "**{idol}** became your Idol.\n"
+#~ msgstr "**{idol}** trở thành thần tượng của bạn.\n"
+
+#~ msgid "**The Judge awakes...**"
+#~ msgstr "**Thẩm Phán thức dậy...**"
+
+#~ msgid ""
+#~ "🧑‍⚖️ Please enter a phrase that will trigger a second election. Its is case "
+#~ "sensitive."
+#~ msgstr ""
+#~ "🧑‍⚖️ Xin hãy chọn từ khóa để kích hoạt lần bỏ phiếu thứ hai. Từ khóa có "
+#~ "phân biệt viết hoa viết thường."
+
+#, python-brace-format
+#~ msgid ""
+#~ "The phrase is **{symbol}**. Enter it right during an election to trigger "
+#~ "another one.\n"
+#~ msgstr ""
+#~ "Từ khóa là **{symbol}**. Nhập nó chính xác trong buổi bỏ phiếu sẽ kích "
+#~ "hoạt buổi bỏ phiếu thứ hai.\n"
+
+#, python-brace-format
+#~ msgid "Would you like to swap roles with {dying_one}?"
+#~ msgstr "Bạn có muốn đổi vai với {dying_one}?"
+
+#~ msgid ""
+#~ "You didn't choose anyone, slowpoke. No one will be protected from "
+#~ "werewolves tonight.\n"
+#~ msgstr ""
+#~ "Bạn không chọn ai cả, chậm quá. Không ai được bảo vệ khỏi Người Sói đêm "
+#~ "nay.\n"
+
+#, python-brace-format
+#~ msgid "**{protected}** won't die from werewolves tonight.\n"
+#~ msgstr "**{protected}** sẽ không chết bởi Người Sói đêm nay.\n"
+
+#~ msgid "There's no other werewolf left to kill.\n"
+#~ msgstr "Không còn Người Sói nào để giết.\n"
+
+#~ msgid "You didn't choose any werewolf to kill.\n"
+#~ msgstr "Bạn đã không chọn Người Sói nào để giết.\n"
+
+#, python-brace-format
+#~ msgid "You chose to kill **{werewolf}**.\n"
+#~ msgstr "Bạn chọn giết **{werewolf}**.\n"
+
+#~ msgid "You didn't choose any villager to kill, slowpoke.\n"
+#~ msgstr "Bạn đã không chọn Dân Làng nào để giết, chậm quá.\n"
+
+#, python-brace-format
+#~ msgid "You've decided to kill **{villager}**.\n"
+#~ msgstr "Bạn quyết định giết **{villager}**.\n"
+
+#~ msgid "You didn't choose enough players to enchant, slowpoke."
+#~ msgstr "Bạn không chọn đủ người chơi để mê hoặc, chậm quá."
+
+#~ msgid ""
+#~ "You have been enchanted by the Flutist. Claim being enchanted to narrow "
+#~ "him down.\n"
+#~ msgstr ""
+#~ "Bạn đã bị mê hoặc bởi Người Thổi Sáo. Thừa nhận bị mê hoặc sẽ giúp thu "
+#~ "nhỏ vòng nghi vấn ai là Người Thổi Sáo.\n"
+
+#~ msgid "You've ran out of time and missed to see someone's role, slowpoke.\n"
+#~ msgstr "Bạn hết giờ và bỏ lỡ cơ hội xem danh tính người khác, chậm quá.\n"
+
+#, python-brace-format
+#~ msgid "**{player}** is a **{role}**.\n"
+#~ msgstr "**{player}** là **{role}**.\n"
+
+#~ msgid "You chose to stay as Thief.\n"
+#~ msgstr "Bạn chọn tiếp tục làm Tên Trộm.\n"
+
+#~ msgid "You didn't choose anything. You will stay as Thief.\n"
+#~ msgstr "Bạn không chọn gì cả. Bạn tiếp tục làm Tên Trộm.\n"
+
+#~ msgid "**The Wolfhound awakes...**"
+#~ msgstr "**Chó Irish thức dậy...**"
+
+#~ msgid "You didn't choose anything. A random role was chosen for you.\n"
+#~ msgstr "Bạn không chọn gì cả. Một vai ngẫu nhiên đã được chọn cho bạn.\n"
+
+#~ msgid "🦊 Choose 3 people who you want to see if any is a werewolf."
+#~ msgstr "🦊 Chọn 3 người bạn muốn xem có ai trong số họ là Người Sói không."
+
+#~ msgid "You didn't choose enough players, slowpoke.\n"
+#~ msgstr "Bạn không chọn đủ người chơi, chậm quá.\n"
+
+#~ msgid "You found no Werewolf so you lost your ability.\n"
+#~ msgstr "Bạn không tìm thấy Người Sói nên bạn mất năng lực của mình.\n"
+
+#~ msgid "One of them is a Werewolf.\n"
+#~ msgstr "Một trong số họ là Người Sói.\n"
+
+#~ msgid "**Amor awakes and shoots his arrows...**"
+#~ msgstr "**Amor thức dậy và bắn mũi tên của mình...**"
+
+#, python-brace-format
+#~ msgid "You've made **{lover1}** and **{lover2}** lovers\n"
+#~ msgstr "Bạn đã khiến **{lover1}** và **{lover2}** trở thành Tình Nhân\n"
+
+#, python-brace-format
+#~ msgid "Your idol **{idol}** died, you turned into a **{new_role}**.\n"
+#~ msgstr ""
+#~ "Thần tượng **{idol}** của bạn đã chết, bạn biến thành **{new_role}**.\n"
+
+#~ msgid "Choose someone who shall die with you."
+#~ msgstr "Chọn một người để chết cùng bạn."
+
+#~ msgid "The Knight is striking a final time with his sword."
+#~ msgstr "Hiệp Sĩ dùng thanh gươm của mình để chém phát cuối cùng."
+
+#~ msgid ""
+#~ "💀 You have been eliminated. Please do not communicate with the other "
+#~ "players until the end of the game.💀\n"
+#~ msgstr ""
+#~ "💀 Bạn đã bị loại. Xin đừng nói chuyện với những người chơi khác cho tới "
+#~ "khi hết trò chơi.💀\n"
+
+#~ msgid "Choose the new Sheriff 🎖️."
+#~ msgstr "Chọn Cảnh Sát mới 🎖️."
+
+#, python-brace-format
+#~ msgid ""
+#~ "📢 {sheriff} got chosen to be the new **Sheriff** 🎖️. **The vote of the "
+#~ "Sheriff counts as double.**"
+#~ msgstr ""
+#~ "📢 {sheriff} được chọn để trở thành **Cảnh Sát** mới 🎖️. **Phiếu bầu của "
+#~ "Cảnh Sát được tính gấp đôi.**"
 
 #, python-brace-format
 #~ msgid ""
