@@ -108,6 +108,8 @@ class Bot(commands.AutoShardedBot):
     def make_linecount(self):
         """Generates a total linecount of all python files"""
         for root, _dirs, files in os.walk(os.getcwd()):
+            if root.split(os.sep)[-1].startswith("."):
+                continue
             for file_ in files:
                 if file_.endswith(".py"):
                     with open(os.sep.join([root, file_]), "r", encoding="utf-8") as f:
