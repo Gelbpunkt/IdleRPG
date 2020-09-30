@@ -15,5 +15,6 @@ WORKDIR /idlerpg/
 COPY --chown=idle:idle requirements.txt /idlerpg/
 
 RUN pip install --no-cache-dir -i https://packages.travitia.xyz/root/idle/+simple/ --no-warn-script-location --pre --use-feature=2020-resolver -r requirements.txt
+RUN echo cheese
 
 COPY --chown=idle:idle . /idlerpg/
