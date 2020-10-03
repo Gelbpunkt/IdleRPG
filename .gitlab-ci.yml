@@ -2,7 +2,7 @@ image: "gelbpunkt/python:ci"
 
 before_script:
   - python --version
-  - echo "https://dl-cdn.alpinelinux.org/alpine/edge/testing" >> /etc/apk/repositories && apk add podman tzdata
+  - echo "https://dl-cdn.alpinelinux.org/alpine/edge/testing" >> /etc/apk/repositories && apk add podman crun tzdata
 
 stages:
   - Static Analysis
@@ -33,7 +33,7 @@ build:
   stage: Test Podman Build
   script:
     - podman --version
-    - podman build --storage-driver vfs --runtime runc --format docker -t gelbpunkt/idlerpg:latest .
+    - podman build --storage-driver vfs --format docker -t gelbpunkt/idlerpg:latest .
 
 upload:
   stage: Release
@@ -41,6 +41,6 @@ upload:
     - current
     - tags
   script:
-    - podman build --storage-driver vfs --runtime runc --format docker -t gelbpunkt/idlerpg:latest .
+    - podman build --storage-driver vfs --format docker -t gelbpunkt/idlerpg:latest .
     - podman login docker.io --username $DOCKERHUB_USERNAME --password $DOCKERHUB_PASSWORD
     - podman push gelbpunkt/idlerpg:latest docker.io/gelbpunkt/idlerpg:latest
