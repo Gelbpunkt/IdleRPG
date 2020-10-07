@@ -15,8 +15,11 @@ GNU Affero General Public License for more details.
 You should have received a copy of the GNU Affero General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
+import asyncio
 import decimal
 import math
+
+from functools import partial
 
 from discord.ext import commands
 from ply.lex import lex
@@ -312,9 +315,8 @@ class Maths(commands.Cog):
             Works with variable assignment and multiline-statements."""
         )
         try:
-            ret = await self.bot.loop.run_in_executor(
-                None, self.parse, expr, ctx.author.id
-            )
+            func = partial(self.parse, expr=expr, id=ctx.author.id)
+            ret = await asyncio.to_thread(func)
         except Exception as e:
             if isinstance(e, Overflow):
                 return await ctx.send(
