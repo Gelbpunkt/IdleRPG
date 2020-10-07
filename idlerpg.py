@@ -28,6 +28,8 @@ import os
 
 import discord
 
+from contextvars_executor import ContextVarExecutor
+
 from classes.bot import Bot
 from classes.logger import file_handler, stream
 
@@ -82,6 +84,7 @@ if __name__ == "__main__":
     log.addHandler(stream)
     log.addHandler(file_handler(cluster_id))
     loop = asyncio.get_event_loop()
+    loop.set_default_executor(ContextVarExecutor())
     try:
         loop.run_until_complete(bot.connect_all())
     except KeyboardInterrupt:
