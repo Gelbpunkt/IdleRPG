@@ -113,10 +113,18 @@ class GameMaster(commands.Cog):
     @is_gm()
     @commands.command(hidden=True, brief=_("Create money"))
     @locale_doc
-    async def gmgive(self, ctx, money: int, other: UserWithCharacter):
+    async def gmgive(
+        self,
+        ctx,
+        money: int,
+        other: UserWithCharacter,
+        *,
+        reason: str = None,
+    ):
         _(
             """`<money>` - the amount of money to generate for the user
             `<other>` - A discord User with a character
+            `[reason]` - The reason this action was done, defaults to the command message link
 
             Gives a user money without subtracting it from the command author's balance.
 
@@ -133,16 +141,29 @@ class GameMaster(commands.Cog):
         )
         await self.bot.http.send_message(
             self.bot.config.gm_log_channel,
-            f"**{ctx.author}** gave **${money}** to **{other}**.",
+            "**{gm}** gave **${money}** to **{other}**.\n\nReason: *{reason}*".format(
+                gm=ctx.author,
+                money=money,
+                other=other,
+                reason=reason or f"<{ctx.message.jump_url}>",
+            ),
         )
 
     @is_gm()
     @commands.command(hidden=True, brief=_("Remove money"))
     @locale_doc
-    async def gmremove(self, ctx, money: int, other: UserWithCharacter):
+    async def gmremove(
+        self,
+        ctx,
+        money: int,
+        other: UserWithCharacter,
+        *,
+        reason: str = None,
+    ):
         _(
             """`<money>` - the amount of money to remove from the user
             `<other>` - a discord User with character
+            `[reason]` - The reason this action was done, defaults to the command message link
 
             Removes money from a user without adding it to the command author's balance.
 
@@ -159,15 +180,21 @@ class GameMaster(commands.Cog):
         )
         await self.bot.http.send_message(
             self.bot.config.gm_log_channel,
-            f"**{ctx.author}** removed **${money}** from **{other}**.",
+            "**{gm}** removed **${money}** from **{other}**.\n\nReason: *{reason}*".format(
+                gm=ctx.author,
+                money=money,
+                other=other,
+                reason=reason or f"<{ctx.message.jump_url}>",
+            ),
         )
 
     @is_gm()
     @commands.command(hidden=True, brief=_("Delete a character"))
     @locale_doc
-    async def gmdelete(self, ctx, other: UserWithCharacter):
+    async def gmdelete(self, ctx, other: UserWithCharacter, *, reason: str = None):
         _(
             """`<other>` - a discord User with character
+            `[reason]` - The reason this action was done, defaults to the command message link
 
             Delete a user's profile. The user cannot be a Game Master.
 
@@ -211,15 +238,19 @@ class GameMaster(commands.Cog):
             await self.bot.cache.update_profile_cols_abs(partner, marriage=0)
         await ctx.send(_("Successfully deleted the character."))
         await self.bot.http.send_message(
-            self.bot.config.gm_log_channel, f"**{ctx.author}** deleted **{other}**."
+            self.bot.config.gm_log_channel,
+            "**{gm}** deleted **{other}**.\n\nReason: *{reason}*".format(
+                gm=ctx.author, other=other, reason=reason or f"<{ctx.message.jump_url}>"
+            ),
         )
 
     @is_gm()
     @commands.command(hidden=True, brief=_("Rename a character"))
     @locale_doc
-    async def gmrename(self, ctx, target: UserWithCharacter):
+    async def gmrename(self, ctx, target: UserWithCharacter, *, reason: str = None):
         _(
             """`<target>` - a discord User with character
+            `[reason]` - The reason this action was done, defaults to the command message link
 
             Rename a user's profile. The user cannot be a Game Master.
 
@@ -252,7 +283,12 @@ class GameMaster(commands.Cog):
         await ctx.send(_("Renamed."))
         await self.bot.http.send_message(
             self.bot.config.gm_log_channel,
-            f"**{ctx.author}** renamed **{target}** to **{name.content}**.",
+            "**{gm}** renamed **{target}** to **{name}**.\n\nReason: *{reason}*".format(
+                gm=ctx.author,
+                target=target,
+                name=name.content,
+                reason=reason or f"<{ctx.message.jump_url}>",
+            ),
         )
 
     @is_gm()
@@ -265,15 +301,17 @@ class GameMaster(commands.Cog):
         owner: UserWithCharacter,
         item_type: str.title,
         value: IntFromTo(0, 100000000),
-        *,
         name: str,
+        *,
+        reason: str = None,
     ):
         _(
             """`<stat>` - the generated item's stat, must be between 0 and 100
             `<owner>` - a discord User with character
             `<item_type>` - the generated item's type, must be either Sword, Shield, Axe, Wand, Dagger, Knife, Spear, Bow, Hammer, Scythe or Howlet
             `<value>` - the generated item's value, a whole number from 0 to 100,000,000
-            `<name>` - the generated item's name
+            `<name>` - the generated item's name, should be in double quotes if the name has multiple words
+            `[reason]` - The reason this action was done, defaults to the command message link
 
             Generate a custom item for a user.
 
@@ -301,8 +339,12 @@ class GameMaster(commands.Cog):
             owner=owner,
         )
 
-        message = (
-            f"{ctx.author} created a {item_type} with name {name} and stat {stat}."
+        message = "{gm} created a {item_type} with name {name} and stat {stat}.\n\nReason: *{reason}*".format(
+            gm=ctx.author,
+            item_type=item_type,
+            name=name,
+            stat=stat,
+            reason=reason or f"<{ctx.message.jump_url}>",
         )
 
         await ctx.send(_("Done."))
@@ -315,12 +357,19 @@ class GameMaster(commands.Cog):
     @commands.command(hidden=True, brief=_("Create crates"))
     @locale_doc
     async def gmcrate(
-        self, ctx, rarity: CrateRarity, amount: int, target: UserWithCharacter
+        self,
+        ctx,
+        rarity: CrateRarity,
+        amount: int,
+        target: UserWithCharacter,
+        *,
+        reason: str = None,
     ):
         _(
             """`<rarity>` - the crates' rarity, can be common, uncommon, rare, magic or legendary
             `<amount>` - the amount of crates to generate for the given user, can be negative
             `<target>` - A discord User with character
+            `[reason]` - The reason this action was done, defaults to the command message link
 
             Generate a set amount of crates of one rarity for a user.
 
@@ -342,16 +391,30 @@ class GameMaster(commands.Cog):
         )
         await self.bot.http.send_message(
             self.bot.config.gm_log_channel,
-            f"**{ctx.author}** gave **{amount}** {rarity} crates to **{target}**.",
+            "**{gm}** gave **{amount}** {rarity} crates to **{target}**.\n\nReason: *{reason}*".format(
+                gm=ctx.author,
+                amount=amount,
+                rarity=rarity,
+                target=target,
+                reason=reason or f"<{ctx.message.jump_url}>",
+            ),
         )
 
     @is_gm()
     @commands.command(hidden=True, brief=_("Generate XP"))
     @locale_doc
-    async def gmxp(self, ctx, target: UserWithCharacter, amount: int):
+    async def gmxp(
+        self,
+        ctx,
+        target: UserWithCharacter,
+        amount: int,
+        *,
+        reason: str = None,
+    ):
         _(
             """`<target>` - A discord User with character
             `<amount>` - The amount of XP to generate, can be negative
+            `[reason]` - The reason this action was done, defaults to the command message link
 
             Generates a set amount of XP for a user.
 
@@ -368,15 +431,21 @@ class GameMaster(commands.Cog):
         )
         await self.bot.http.send_message(
             self.bot.config.gm_log_channel,
-            f"**{ctx.author}** gave **{amount}** XP to **{target}**.",
+            "**{gm}** gave **{amount}** XP to **{target}**.\n\nReason: *{reason}*".format(
+                gm=ctx.author,
+                amount=amount,
+                target=target,
+                reason=reason or f"<{ctx.message.jump_url}>",
+            ),
         )
 
     @is_gm()
     @commands.command(hidden=True, brief=_("Wipe someone's donation perks."))
     @locale_doc
-    async def gmwipeperks(self, ctx, target: UserWithCharacter):
+    async def gmwipeperks(self, ctx, target: UserWithCharacter, *, reason: str = None):
         _(
             """`<target>` - A discord User with character
+            `[reason]` - The reason this action was done, defaults to the command message link
 
             Wipe a user's donation perks. This will:
               - set their background to the default
@@ -414,15 +483,20 @@ class GameMaster(commands.Cog):
         )
         await self.bot.http.send_message(
             self.bot.config.gm_log_channel,
-            f"**{ctx.author}** reset **{target}**'s donator perks.",
+            "**{gm}** reset **{target}**'s donator perks.\n\nReason: *{reason}*".format(
+                gm=ctx.author,
+                target=target,
+                reason=reason or f"<{ctx.message.jump_url}>",
+            ),
         )
 
     @is_gm()
     @commands.command(hidden=True, brief=_("Reset someone's classes"))
     @locale_doc
-    async def gmresetclass(self, ctx, target: UserWithCharacter):
+    async def gmresetclass(self, ctx, target: UserWithCharacter, *, reason: str = None):
         _(
             """`<target>` - a discord User with character
+            `[reason]` - The reason this action was done, defaults to the command message link
 
             Reset a user's classes to No Class. They can then choose their class again for free.
 
@@ -439,17 +513,22 @@ class GameMaster(commands.Cog):
         await ctx.send(_("Successfully reset {target}'s class.").format(target=target))
         await self.bot.http.send_message(
             self.bot.config.gm_log_channel,
-            f"**{ctx.author}** reset **{target}**'s class.",
+            "**{gm}** reset **{target}**'s class.\n\nReason: *{reason}*".format(
+                gm=ctx.author,
+                target=target,
+                reason=reason or f"<{ctx.message.jump_url}>",
+            ),
         )
 
     @is_gm()
     @user_cooldown(604800)  # 7 days
     @commands.command(hidden=True, brief=_("Sign an item"))
     @locale_doc
-    async def gmsign(self, ctx, itemid: int, *, text: str):
+    async def gmsign(self, ctx, itemid: int, text: str, *, reason: str = None):
         _(
             """`<itemid>` - the item's ID to sign
-            `<text>` - The signature to write, must be less than 50 characters combined with the Game Master's tag
+            `<text>` - The signature to write, must be less than 50 characters combined with the Game Master's tag. This should be in double quotes if the text has multiple words.
+            `[reason]` - The reason this action was done, defaults to the command message link
 
             Sign an item. The item's signature is visible in a user's inventory.
 
@@ -466,7 +545,12 @@ class GameMaster(commands.Cog):
         await ctx.send(_("Item successfully signed."))
         await self.bot.http.send_message(
             self.bot.config.gm_log_channel,
-            f"**{ctx.author}** signed {itemid} with *{text}*.",
+            "**{gm}** signed {itemid} with *{text}*.\n\nReason: *{reason}*".format(
+                gm=ctx.author,
+                itemid=itemid,
+                text=text,
+                reason=reason or f"<{ctx.message.jump_url}>",
+            ),
         )
 
     @is_gm()
@@ -582,14 +666,15 @@ class GameMaster(commands.Cog):
         ctx,
         user: Union[discord.User, int],
         command: str,
-        cooldown: IntGreaterThan(-1) = 0,
+        *,
+        reason: str = None,
     ):
         _(
             """`<user>` - A discord User or their User ID
             `<command>` - the command which the cooldown is being set for (subcommands in double quotes, i.e. "guild create")
-            `[cooldown]` - The cooldown to set for the command in seconds, must be greater than -1; defaults to 0
+            `[reason]` - The reason this action was done, defaults to the command message link
 
-            Set a cooldown for a user and commmand. If the cooldown is 0, it will be removed.
+            Reset a cooldown for a user and commmand.
 
             Only Game Masters can use this command."""
         )
@@ -598,18 +683,18 @@ class GameMaster(commands.Cog):
         else:
             user_id = user
 
-        if cooldown == 0:
-            result = await self.bot.redis.execute("DEL", f"cd:{user_id}:{command}")
-        else:
-            result = await self.bot.redis.execute(
-                "EXPIRE", f"cd:{user_id}:{command}", cooldown
-            )
+        result = await self.bot.redis.execute("DEL", f"cd:{user_id}:{command}")
 
         if result == 1:
             await ctx.send(_("The cooldown has been updated!"))
             await self.bot.http.send_message(
                 self.bot.config.gm_log_channel,
-                f"**{ctx.author}** set **{user}**'s cooldown to {cooldown}.",
+                "**{gm}** reset **{user}**'s cooldown for the {command} command.\n\nReason: *{reason}*".format(
+                    gm=ctx.author,
+                    user=user,
+                    command=command,
+                    reason=reason or f"<{ctx.message.jump_url}>",
+                ),
             )
         else:
             await ctx.send(
