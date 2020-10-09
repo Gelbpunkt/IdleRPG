@@ -143,6 +143,8 @@ class Marriage(commands.Cog):
             When divorcing, any kids you have will be split between you and your partner. Each partner will get the children born with their `{prefix}child` commands.
             You can marry another person right away, if you so choose. Divorcing has no negative consequences on gameplay.
 
+            Both players' lovescore will be reset.
+
             Only married players can use this command."""
         )
         if not ctx.character_data["marriage"]:
@@ -150,7 +152,7 @@ class Marriage(commands.Cog):
         if not await ctx.confirm(
             _(
                 "Are you sure you want to divorce your partner? Some of your children"
-                " may be given to your partner."
+                " may be given to your partner and your lovescore will be reset."
             )
         ):
             return await ctx.send(
@@ -158,10 +160,11 @@ class Marriage(commands.Cog):
             )
         async with self.bot.pool.acquire() as conn:
             await conn.execute(
-                'UPDATE profile SET "marriage"=0 WHERE "user"=$1;', ctx.author.id
+                'UPDATE profile SET "marriage"=0, "lovescore"=0 WHERE "user"=$1;',
+                ctx.author.id,
             )
             await conn.execute(
-                'UPDATE profile SET "marriage"=0 WHERE "user"=$1;',
+                'UPDATE profile SET "marriage"=0, "lovescore"=0 WHERE "user"=$1;',
                 ctx.character_data["marriage"],
             )
             await conn.execute(
@@ -171,9 +174,11 @@ class Marriage(commands.Cog):
                 'UPDATE children SET "father"=0 WHERE "mother"=$1;',
                 ctx.character_data["marriage"],
             )
-        await self.bot.cache.update_profile_cols_abs(ctx.author.id, marriage=0)
         await self.bot.cache.update_profile_cols_abs(
-            ctx.character_data["marriage"], marriage=0
+            ctx.author.id, marriage=0, lovescore=0
+        )
+        await self.bot.cache.update_profile_cols_abs(
+            ctx.character_data["marriage"], marriage=0, lovescore=0
         )
         await ctx.send(_("You are now divorced."))
 
