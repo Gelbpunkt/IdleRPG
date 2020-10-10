@@ -16,7 +16,6 @@ You should have received a copy of the GNU Affero General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
 import decimal
-import traceback
 
 from discord.ext import commands
 
@@ -77,8 +76,7 @@ class Maths(commands.Cog):
                 return await ctx.send(_("Can't divide by Zero."))
             if isinstance(e, Reserved):
                 return await ctx.send(_("The variable name is a reserved keyword."))
-            return await ctx.send(traceback.format_exc())
-            # return await ctx.send(_("An unknown error occured."))
+            return await ctx.send(_("An unknown error occured."))
         ret = "\n".join([str(i) for i in result])
         await ctx.send(f"```\n{ret}\n```")
 
