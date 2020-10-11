@@ -20,10 +20,8 @@ import datetime
 
 import discord
 
-from discord import utils
 from discord.ext import commands
 
-from classes.converters import MemberConverter, User
 from utils import i18n
 from utils.i18n import _
 from utils.loops import queue_manager
