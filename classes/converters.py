@@ -44,6 +44,7 @@ class MemberConverter(commands.MemberConverter):
     Copied from https://github.com/Rapptz/discord.py/blob/sharding-rework/discord/ext/commands/converter.py
     """
 
+    @cache(maxsize=8096)
     async def convert(self, ctx, argument):
         match = self._get_id_match(argument) or re.match(r"<@!?([0-9]+)>$", argument)
         guild = ctx.guild
