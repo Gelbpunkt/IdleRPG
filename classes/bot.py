@@ -42,6 +42,7 @@ from classes.context import Context
 from classes.enums import DonatorRank
 from classes.exceptions import GlobalCooldown
 from classes.http import ProxiedClientSession
+from classes.items import ALL_ITEM_TYPES, Hand, ItemType
 from utils import i18n, paginator, random
 from utils.cache import cache
 from utils.checks import user_is_patron
@@ -501,21 +502,19 @@ class Bot(commands.AutoShardedBot):
         owner = owner.id if isinstance(owner, (discord.User, discord.Member)) else owner
         item = {}
         item["owner"] = owner
-        type_ = random.choice(self.config.item_types)
-        if type_ in ["Scythe", "Bow", "Howlet"]:
-            item["hand"] = "both"
-        elif type_ in ["Spear", "Wand"]:
-            item["hand"] = "right"
-        elif type_ == "Shield":
-            item["hand"] = "left"
-        else:
-            item["hand"] = "any"
-        item["type_"] = type_
-        item["damage"] = random.randint(minstat, maxstat) if type_ != "Shield" else 0
-        item["armor"] = random.randint(minstat, maxstat) if type_ == "Shield" else 0
+        type_ = random.choice(ALL_ITEM_TYPES)
+        hand = type_.get_hand()
+        item["hand"] = hand.value
+        item["type_"] = type_.value
+        item["damage"] = (
+            random.randint(minstat, maxstat) if type_ != ItemType.Shield else 0
+        )
+        item["armor"] = (
+            random.randint(minstat, maxstat) if type_ == ItemType.Shield else 0
+        )
         item["value"] = random.randint(minvalue, maxvalue)
-        item["name"] = fn.weapon_name(type_)
-        if item["hand"] == "both":
+        item["name"] = fn.weapon_name(type_.value)
+        if hand == Hand.Both:
             item["damage"] = round(
                 item["damage"] * 2
             )  # both hands = higher damage, else they would be worse
