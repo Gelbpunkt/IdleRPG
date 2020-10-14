@@ -27,14 +27,14 @@ import os.path
 
 from glob import glob
 from os import getcwd
-from typing import Any, Callable, FrozenSet
+from typing import Any, Callable
 
 BASE_DIR = getcwd()
 default_locale = "en_US"
 locale_dir = "locales"
 
 # https://github.com/python/mypy/issues/1317
-locales: FrozenSet[str] = frozenset(
+locales: frozenset[str] = frozenset(
     map(
         os.path.basename,
         filter(os.path.isdir, glob(os.path.join(BASE_DIR, locale_dir, "*"))),

@@ -32,7 +32,7 @@ import asyncio
 import datetime
 
 from enum import Enum
-from typing import List, Optional, Union
+from typing import Optional, Union
 
 import discord
 
@@ -254,7 +254,7 @@ DESCRIPTIONS = {
 
 class Game:
     def __init__(
-        self, ctx: Context, players: List[discord.Member], mode: str, speed: str
+        self, ctx: Context, players: list[discord.Member], mode: str, speed: str
     ) -> None:
         self.ctx = ctx
         self.mode = mode
@@ -293,7 +293,7 @@ class Game:
                 if role not in [Role.WEREWOLF, Role.WHITE_WOLF, Role.BIG_BAD_WOLF]:
                     self.available_roles[idx] = Role.VILLAGER
 
-        self.players: List[Player] = [
+        self.players: list[Player] = [
             Player(role, user, self)
             for role, user in zip(self.available_roles, players)
         ]
@@ -310,11 +310,11 @@ class Game:
         return discord.utils.get(self.alive_players, is_sheriff=True)
 
     @property
-    def alive_players(self) -> List[Player]:
+    def alive_players(self) -> list[Player]:
         return [player for player in self.players if not player.dead]
 
     @property
-    def dead_players(self) -> List[Player]:
+    def dead_players(self) -> list[Player]:
         return [player for player in self.players if player.dead]
 
     def get_role_name(self, player_or_role: Union[Player, Role]) -> str:
@@ -334,7 +334,7 @@ class Game:
         role_name += role.name.title().replace("_", " ")
         return role_name
 
-    def get_players_with_role(self, role: Role) -> List[Player]:
+    def get_players_with_role(self, role: Role) -> list[Player]:
         return [player for player in self.alive_players if player.role == role]
 
     def get_player_with_role(self, role: Role) -> Optional[Player]:
@@ -351,7 +351,7 @@ class Game:
                 return _("No one")
 
     @property
-    def new_afk_players(self) -> List[Player]:
+    def new_afk_players(self) -> list[Player]:
         return [player for player in self.alive_players if player.to_check_afk]
 
     async def wolves(self) -> Optional[Player]:
@@ -599,7 +599,7 @@ class Game:
             chained = self.get_chained_lovers(lover, chained)
         return chained
 
-    async def initial_preparation(self) -> List[Player]:
+    async def initial_preparation(self) -> list[Player]:
         mode_emojis = {"Huntergame": "🔫", "Valentines": "💕"}
         mode_emoji = mode_emojis.get(self.mode, "")
         paginator = commands.Paginator(prefix="", suffix="")
@@ -708,7 +708,7 @@ class Game:
             await superspreader.infect_virus()
         return targets
 
-    async def night(self, white_wolf_ability: bool) -> List[Player]:
+    async def night(self, white_wolf_ability: bool) -> list[Player]:
         moon = "🌕" if white_wolf_ability else "🌘"
         await self.ctx.send(moon + _(" 💤 **Night falls, the town is asleep...**"))
         if self.ex_maid and self.ex_maid.dead:
@@ -1123,7 +1123,7 @@ class Game:
         to_resurrect.lives = 1 if to_resurrect.role != Role.THE_OLD else 2
         to_resurrect.died_from_villagers = False
 
-    async def day(self, deaths: List[Player]) -> None:
+    async def day(self, deaths: list[Player]) -> None:
         await self.ctx.send(_("🌤️ **The sun rises...**"))
         for death in deaths:
             await death.kill()
@@ -1226,7 +1226,7 @@ class Game:
                 )
             )
 
-    def get_players_roles(self, has_won: bool = False) -> List[str]:
+    def get_players_roles(self, has_won: bool = False) -> list[str]:
         if len(self.alive_players) < 1:
             return ""
         else:
@@ -1347,10 +1347,10 @@ class Player:
     async def choose_users(
         self,
         title: str,
-        list_of_users: List[Player],
+        list_of_users: list[Player],
         amount: int,
         required: bool = True,
-    ) -> List[Player]:
+    ) -> list[Player]:
         fmt = [
             f"{idx}. {p.user}"
             f" {p.user.mention}"
@@ -1659,7 +1659,7 @@ class Player:
             )
             return target
 
-    async def choose_villager_to_kill(self, targets: List[Player]) -> Player:
+    async def choose_villager_to_kill(self, targets: list[Player]) -> Player:
         await self.game.ctx.send(
             _("**The {role} awakes...**").format(role=self.role_name)
         )
@@ -1707,7 +1707,7 @@ class Player:
             )
             return target
 
-    async def witch_actions(self, targets: List[Player]) -> Player:
+    async def witch_actions(self, targets: list[Player]) -> Player:
         await self.game.ctx.send(
             _("**The {role} awakes...**").format(role=self.role_name)
         )
@@ -1846,7 +1846,7 @@ class Player:
             )
         await self.send(self.game.game_link)
 
-    async def send_family_msg(self, relationship: str, family: List[Player]) -> None:
+    async def send_family_msg(self, relationship: str, family: list[Player]) -> None:
         await self.send(
             _("Your {relationship}(s) are/is: {members}").format(
                 relationship=relationship,
@@ -1962,7 +1962,7 @@ class Player:
             )
             await self.send_information()
 
-    async def choose_wolfhound_role(self, roles: List[Role]) -> None:
+    async def choose_wolfhound_role(self, roles: list[Role]) -> None:
         await self.game.ctx.send(
             _("**The {role} awakes...**").format(role=self.role_name)
         )
@@ -2553,7 +2553,7 @@ class Player:
         return self.game.get_role_name(self.role)
 
     @property
-    def own_lovers(self) -> List[Player]:
+    def own_lovers(self) -> list[Player]:
         own_lovers = []
         for couple in self.game.lovers:
             couple = list(couple)
@@ -2880,7 +2880,7 @@ class Player:
 # Rule of thumb is to have 50+% of villagers, whereas thief etc count
 # as wolves as there is a good chance they might become some
 # This is the main subject to change for game balance
-ROLES_FOR_PLAYERS: List[Role] = [
+ROLES_FOR_PLAYERS: list[Role] = [
     Role.VILLAGER,
     Role.VILLAGER,
     Role.WEREWOLF,
@@ -2916,7 +2916,7 @@ ROLES_FOR_PLAYERS: List[Role] = [
 ]
 
 
-def get_roles(number_of_players: int, mode: str = None) -> List[Role]:
+def get_roles(number_of_players: int, mode: str = None) -> list[Role]:
     number_of_players += 2  # Thief is in play
     roles_to_give = ROLES_FOR_PLAYERS.copy()
     if mode == "Imbalanced":
@@ -2961,7 +2961,7 @@ def get_roles(number_of_players: int, mode: str = None) -> List[Role]:
     return roles
 
 
-def force_role(roles: List[Role], role_to_force: Role) -> Optional[Role]:
+def force_role(roles: list[Role], role_to_force: Role) -> Optional[Role]:
     # Make sure a role is to be played, force it otherwise
     # Warning: This can replace previously forced role
     available_roles = roles[:-2]

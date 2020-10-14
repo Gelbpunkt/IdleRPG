@@ -38,7 +38,7 @@ DEALINGS IN THE SOFTWARE.
 """
 import asyncio
 
-from typing import TYPE_CHECKING, Any, AsyncGenerator, List, Optional, Tuple, Union
+from typing import TYPE_CHECKING, Any, AsyncGenerator, Optional, Union
 
 import discord
 
@@ -52,8 +52,8 @@ if TYPE_CHECKING:
 
 
 async def pager(
-    entries: Union[List[Any], Tuple[Any]], chunk: int
-) -> AsyncGenerator[Union[List[Any], Tuple[Any, ...]], None]:
+    entries: Union[list[Any], tuple[Any]], chunk: int
+) -> AsyncGenerator[Union[list[Any], tuple[Any, ...]], None]:
     for x in range(0, len(entries), chunk):
         yield entries[x : x + chunk]
 
@@ -85,7 +85,7 @@ class TextPaginator:
         }
 
     @property
-    def pages(self) -> List[str]:
+    def pages(self) -> list[str]:
         return self._paginator.pages
 
     @property
@@ -235,7 +235,7 @@ class Paginator:
         self.ordered = kwargs.get("ordered", False)
 
         self.controller = None
-        self.pages: List[discord.Embed] = []
+        self.pages: list[discord.Embed] = []
         self.base: Optional[discord.Message] = None
 
         self.current = 0
@@ -405,7 +405,7 @@ class ShopPaginator:
         self.timeout = kwargs.get("timeout", 90)
 
         self.controller = None
-        self.pages: List[Tuple[discord.Embed, int]] = []
+        self.pages: list[tuple[discord.Embed, int]] = []
         self.base: Optional[discord.Message] = None
 
         self.current = 0

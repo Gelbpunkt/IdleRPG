@@ -24,7 +24,7 @@ from pathlib import Path
 from socket import socket
 from time import time
 from traceback import print_exc
-from typing import Any, Dict, Iterable, List, Optional, Tuple, Union
+from typing import Any, Iterable, Optional, Union
 
 import aiohttp
 import aioredis
@@ -55,7 +55,7 @@ async def get_shard_count() -> int:
     return shard_count
 
 
-async def get_app_info() -> Tuple[str, int]:
+async def get_app_info() -> tuple[str, int]:
     async with aiohttp.ClientSession() as session, session.get(
         "https://discord.com/api/oauth2/applications/@me", headers=payload
     ) as req:
@@ -63,7 +63,7 @@ async def get_app_info() -> Tuple[str, int]:
     return response["name"], response["id"]
 
 
-def get_cluster_list(shards: int) -> List[List[int]]:
+def get_cluster_list(shards: int) -> list[list[int]]:
     return [
         list(range(0, shards)[i : i + shard_per_cluster])
         for i in range(0, shards, shard_per_cluster)
@@ -74,7 +74,7 @@ class Instance:
     def __init__(
         self,
         instance_id: int,
-        shard_list: List[int],
+        shard_list: list[int],
         shard_count: int,
         name: str,
         loop: asyncio.AbstractEventLoop,
@@ -140,7 +140,7 @@ class Instance:
             await self.stop()
         await self.start()
 
-    async def _run(self) -> Tuple["Instance", bytes, bytes]:
+    async def _run(self) -> tuple["Instance", bytes, bytes]:
         if self._process is None:
             raise RuntimeError(
                 "Function cannot be called before initializing the Process."
@@ -158,11 +158,11 @@ class Instance:
 class Main:
     def __init__(self, loop: Optional[asyncio.AbstractEventLoop] = None) -> None:
         self.loop = loop or asyncio.get_event_loop()
-        self.instances: List[Instance] = []
+        self.instances: list[Instance] = []
         self.redis: Optional[aioredis.Redis] = None
 
     def dead_process_handler(
-        self, result: asyncio.Future[Tuple[Instance, bytes, bytes]]
+        self, result: asyncio.Future[tuple[Instance, bytes, bytes]]
     ) -> None:
         instance, _, stderr = result.result()
         if instance._process is None:
@@ -290,7 +290,7 @@ if __name__ == "__main__":
 
         def shutdown_handler(
             _loop: asyncio.AbstractEventLoop,
-            context: Dict[
+            context: dict[
                 str,
                 Union[
                     str,
