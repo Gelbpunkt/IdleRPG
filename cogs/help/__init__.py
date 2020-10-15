@@ -23,10 +23,10 @@ from typing import Union
 import discord
 
 from asyncpg import UniqueViolationError
+from config import primary_colour
 from discord.ext import commands, menus
 
 from classes.converters import User
-from config import primary_colour
 from utils.checks import has_open_help_request, is_supporter
 from utils.i18n import _, locale_doc
 

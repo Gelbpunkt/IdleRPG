@@ -31,6 +31,7 @@ import aioredis
 import orjson
 
 from config import additional_shards, shard_announce_channel, shard_per_cluster, token
+
 from utils import random
 
 if sys.version_info < (3, 9):

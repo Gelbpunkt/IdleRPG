@@ -1,31 +1,6 @@
-"""Ignore this"""
-from datetime import timedelta
-
-from discord.ext import commands
-
-"""End ignore"""
-
-"""The token it will use for auth with Discord."""
+[bot]
+version = "4.11.0a0"
 token = "my cool bot token"
-
-"""The Postgres database credentials."""
-database = {
-    "database": "database_name",
-    "user": "database_user",
-    "password": "database_password",
-    "host": "localhost",
-}
-
-"""A token for top.gg."""
-topggtoken = "topggtoken"
-
-"""A token for the Discord Bot List (discord.ly)."""
-dbltoken = "dbltoken"
-
-"""A token for the Bots For Discord Website (BFD)."""
-bfdtoken = "bfdtoken"
-
-"""All cogs to load on startup."""
 initial_extensions = [
     "cogs.locale",
     "cogs.owner",
@@ -65,115 +40,131 @@ initial_extensions = [
     "cogs.scheduler",
     "cogs.error_handler",
 ]
-
-"""The prefix to use if none is set custom or we are in DMs."""
 global_prefix = "$"
+is_beta = true
+global_cooldown = 3
+donator_cooldown = 2
 
-"""Extra shards to launch on bot startup"""
-additional_shards = 4
-
-"""How many shard a process will handle (at max)"""
-shard_per_cluster = 4
-
-"""The channel ID to send join logs to."""
-join_channel = 1234567890
-
-"""Defines whether it is a beta version or not. This would disable some parts, e.g. no longer post the stats to DBL and BFD."""
-is_beta = True
-
-"""A list of Game Masters by ID."""
-game_masters = [1234567890]
-
-"""A list of banned users."""
-bans = [1234567890]
-
-"""A list of banned guilds."""
-banned_guilds = [1234567890]
-
-"""The support server ID."""
-support_server_id = 1234567890
-
-"""The helpme channel ID."""
-helpme_channel = 1234567890
-
-"""The ID to allow mass tournaments from."""
-official_tournament_channel_id = 1234567890
-
-"""A channel ID to send GM logs to."""
-gm_log_channel = 1234567890
-
-"""A channel ID to send public logs to."""
-bot_event_channel = 1234567890
-
-"""City config (must be in db)"""
-cities = {
-    "Vopnafjor": ("thief", "raid", "trade", "adventure"),
-    "Medriguen": ("raid", "trade", "adventure"),
-    "Sulitere": ("raid", "trade", "thief"),
-    "Mopra": ("raid", "trade"),
-    "Setrond": ("thief", "trade"),
-    "Armeles": ("adventure", "trade"),
-    "Weyeowen": ("thief",),
-    "Oltash": ("trade",),
-    "Kryvansk": ("raid",),
-    "Drutsk": ("adventure",),
-}
-
-"""Music stuff"""
-music_nodes = [
-    {
-        "host": "127.0.0.1",
-        "port": 2333,
-        "rest_uri": "http://127.0.0.1:2333",
-        "password": "mypass",
-        "region": "frankfurt",
-        "identifier": "DE",
-    }
-]
-query_endpoint = "http://localhost:7000/search"
-resolve_endpoint = "http://localhost:7000/resolve"
-
-"""This is the colour used in most embeds and for everything else. You know that yellow from somewhere ;)"""
-primary_colour = 0xFFBC00
-
-"""Our sentry URL to post bugs to."""
-sentry_url = "https://whatever.sentry.url"
-
-"""The redis PUBSUB channel used to communicate between processes"""
-shard_announce_channel = "guild_channel"
-
-"""The token used to interact with the raid backend."""
+[external]
 raidauth = "my raid api auth code"
-
-"""Imgur token used for uploads."""
 imgur_token = "my secret imgur token"
-
-"""The Travitia API token."""
 traviapi = "just a secret"
-
-"""The Genius key."""
-genius_key = "my key"
-
-"""The base URL for links."""
 base_url = "https://idlerpg.xyz"
-
-"""The base URL for okapi (IdleRPG's image API)."""
 okapi_url = "https://okapi.travitia.xyz"
-
-"""The proxy URL."""
 proxy_url = "http://my.proxy"
 proxy_auth = "proxy-auth-key"
 
-"""The Version of the Bot."""
-version = "4.11.0a0"
+[database]
+postgres_name = "database_name"
+postgres_user = "database_user"
+postgres_password = "database_password"
+postgres_host = "localhost"
+redis_shard_announce_channel = "guild_channel"
 
-"""Global cooldown (rate, per, [.user, .channel, .guild])"""
-cooldown = commands.CooldownMapping.from_cooldown(1, 3, commands.BucketType.user)
+[statistics]
+topggtoken = "topggtoken"
+dbltoken = "dbltoken"
+bfdtoken = "bfdtoken"
+join_channel = 1234567890
+sentry_url = "https://whatever.sentry.url"
 
-"""Bronze donator cooldown (rate, per, [.user, .channel, .guild])"""
-donator_cooldown = commands.CooldownMapping.from_cooldown(
-    1, 2, commands.BucketType.user
-)
+[launcher]
+additional_shards = 4
+shard_per_cluster = 4
+
+[game]
+game_masters = [1234567890]
+bans = [1234567890]
+banned_guilds = [1234567890]
+support_server_id = 1234567890
+helpme_channel = 1234567890
+official_tournament_channel_id = 1234567890
+bot_event_channel = 1234567890
+primary_colour = 16759808
+
+[cities]
+    [cities.vopnafjor]
+    name = "Vopnafjor"
+    thief = true
+    raid = true
+    trade = true
+    adventure = true
+
+    [cities.medriguen]
+    name = "Medriguen"
+    thief = false
+    raid = true
+    trade = true
+    adventure = true
+
+    [cities.sulitere]
+    name = "Sulitere"
+    thief = true
+    raid = true
+    trade = true
+    adventure = false
+
+    [cities.mopra]
+    name = "Mopra"
+    thief = false
+    raid = true
+    trade = true
+    adventure = false
+
+    [cities.setrond]
+    name = "Setrond"
+    thief = true
+    raid = false
+    trade = true
+    adventure = false
+
+    [cities.armeles]
+    name = "Armeles"
+    thief = false
+    raid = false
+    trade = true
+    adventure = true
+
+    [cities.weyeowen]
+    name = "Weyeowen"
+    thief = true
+    raid = false
+    trade = false
+    adventure = false
+
+    [cities.oltash]
+    name = "Oltash"
+    thief = false
+    raid = false
+    trade = true
+    adventure = false
+
+    [cities.kryvansk]
+    name = "Kryvansk"
+    thief = false
+    raid = true
+    trade = false
+    adventure = false
+
+    [cities.drutsk]
+    name = "Drutsk"
+    thief = false
+    raid = false
+    trade = false
+    adventure = true
+
+[music]
+query_endpoint = "http://localhost:7000/search"
+resolve_endpoint = "http://localhost:7000/resolve"
+
+[[music.nodes]]
+host = "127.0.0.1"
+port = 2333
+rest_uri = "http://127.0.0.1:2333"
+password = "mypass"
+region = "frankfurt"
+identifier = "DE"
+
 
 """Member role ID. Permissions will be overridden for this role during raids."""
 member_role = 1234567890

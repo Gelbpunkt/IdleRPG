@@ -42,9 +42,9 @@ from typing import TYPE_CHECKING, Any, AsyncGenerator, Optional, Union
 
 import discord
 
+from config import primary_colour
 from discord.ext import commands
 
-from config import primary_colour
 from utils.i18n import _
 
 if TYPE_CHECKING:
