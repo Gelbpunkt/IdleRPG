@@ -35,8 +35,6 @@ import fantasy_names as fn
 from aioscheduler import TimedScheduler
 from discord.ext import commands
 
-import config
-
 from classes.cache import RedisCache
 from classes.context import Context
 from classes.enums import DonatorRank
@@ -46,6 +44,7 @@ from classes.items import ALL_ITEM_TYPES, Hand, ItemType
 from utils import i18n, paginator, random
 from utils.cache import cache
 from utils.checks import user_is_patron
+from utils.config import ConfigLoader
 from utils.i18n import _
 
 
@@ -59,7 +58,7 @@ class Bot(commands.AutoShardedBot):
         # setup stuff
         self.queue = asyncio.Queue()  # global queue for ordered tasks
         self.schedule_manager = TimedScheduler()
-        self.config = config
+        self.config = ConfigLoader("config.toml")
         self.version = config.version
         self.paginator = paginator
         self.BASE_URL = config.base_url
