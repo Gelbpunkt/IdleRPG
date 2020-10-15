@@ -31,8 +31,8 @@ class Halloween(commands.Cog):
         self.waiting = None
 
     @checks.has_char()
-    @user_cooldown(43200)
-    @commands.command(aliases=["tot"], enabled=False, brief=_("Trick or treat!"))
+    @user_cooldown(10800)
+    @commands.command(aliases=["tot"], brief=_("Trick or treat!"))
     @locale_doc
     async def trickortreat(self, ctx):
         _(
@@ -93,31 +93,29 @@ class Halloween(commands.Cog):
                     )
                 else:
                     await waiting.send(
-                        "{author} rings at your house, but... Nothing for you!".format(
+                        "{author} rings at your house, but... Nothing for you! 👻".format(
                             author=ctx.author
                         )
                     )
             except discord.Forbidden:
                 pass
-            await conn.execute(
-                'UPDATE profile SET "money"="money"+50 WHERE "user"=$1', ctx.author.id
-            )
-            await self.bot.cache.update_profile_cols_rel(ctx.author.id, money=50)
-            usr = await conn.fetchval(
-                'SELECT "user" FROM profile WHERE "money">=50 AND "user"!=$1 ORDER BY'
-                " RANDOM() LIMIT 1;",
-                ctx.author.id,
-            )
-            await conn.execute(
-                'UPDATE profile SET "money"="money"-50 WHERE "user"=$1;', usr
-            )
-            await self.bot.cache.update_profile_cols_rel(usr, money=-50)
-        usr = await self.bot.get_user_global(usr) or "Unknown User"
-        await ctx.send(
-            _("A random stranger nearby, **{user}**, gave you additional $50!").format(
-                user=usr
-            )
-        )
+
+            if random.randint(1, 100) < 5:
+                backgrounds = await conn.fetchval(
+                    'UPDATE profile SET "backgrounds"=array_append("backgrounds", $1) WHERE "user"=$2 RETURNING "backgrounds";',
+                    "https://i.imgur.com/dJqwM1H.png",
+                    ctx.author.id,
+                )
+                await self.bot.cache.update_profile_cols_abs(
+                    ctx.author.id, backgrounds=backgrounds
+                )
+                await ctx.send(
+                    _(
+                        "🎃 As you step out of the door, you open your candy and plastic reveals an ancient image on top of a chocolate bar, passed along for generations. You decide to keep it in your `{prefix}eventbackgrounds`."
+                    ).format(
+                        prefix=ctx.prefix,
+                    )
+                )
 
     @checks.has_char()
     @commands.command(brief=_("Open a trick or treat bag"))
@@ -134,10 +132,14 @@ class Halloween(commands.Cog):
             return await ctx.send(
                 _("Seems you haven't got a trick or treat bag yet. Go get some!")
             )
-        mytry = random.randint(1, 6)
+        mytry = random.randint(1, 100)
         if mytry == 1:
-            minstat, maxstat = 20, 30
-        elif mytry == 2 or mytry == 3:
+            minstat, maxstat = 42, 50
+        elif mytry < 10:
+            minstat, maxstat = 30, 41
+        elif mytry < 30:
+            minstat, maxstat = 20, 29
+        elif mytry < 50:
             minstat, maxstat = 10, 19
         else:
             minstat, maxstat = 1, 9
