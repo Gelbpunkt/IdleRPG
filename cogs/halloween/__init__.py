@@ -45,7 +45,7 @@ class Halloween(commands.Cog):
             There is a 50% chance you will receive a halloween bag from the other person.
             You will also receive an additional $50 from a random user.
 
-            (This command has a cooldown of 12h)"""
+            (This command has a cooldown of 3h)"""
         )
         waiting = self.waiting
         if not waiting:
