@@ -43,7 +43,6 @@ class Halloween(commands.Cog):
             If you are the one waiting, you will get a direct message from the bot later, otherwise you will get a reply immediately.
 
             There is a 50% chance you will receive a halloween bag from the other person.
-            You will also receive an additional $50 from a random user.
 
             (This command has a cooldown of 3h)"""
         )
@@ -124,7 +123,7 @@ class Halloween(commands.Cog):
         _(
             """Open a trick or treat bag, you can get some with `{prefix}trickortreat`.
 
-            Trick or treat bags contain halloween-themed items, ranging from 1 to 30 base stat.
+            Trick or treat bags contain halloween-themed items, ranging from 1 to 50 base stat.
             Their value will be between 1 and 200."""
         )
         # better name?
