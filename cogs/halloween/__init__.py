@@ -198,6 +198,7 @@ class Halloween(commands.Cog):
     @commands.command(
         aliases=["totbags", "halloweenbags"], brief=_("Shows your trick or treat bags")
     )
+    @locale_doc
     async def bags(self, ctx):
         _(
             """Shows the amount of trick or treat bags you have. You can get more by using `{prefix}trickortreat`."""
