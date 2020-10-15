@@ -34,8 +34,8 @@ from config import additional_shards, shard_announce_channel, shard_per_cluster,
 
 from utils import random
 
-if sys.version_info < (3, 9):
-    raise Exception("IdleRPG requires Python 3.9")
+if sys.version_info < (3, 8):
+    raise Exception("IdleRPG requires Python 3.8")
 
 __version__ = "1.0.0"
 
