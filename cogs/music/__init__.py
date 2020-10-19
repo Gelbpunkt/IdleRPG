@@ -15,6 +15,7 @@ You should have received a copy of the GNU Affero General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
 import asyncio
+import html
 
 from collections import defaultdict
 from datetime import timedelta
@@ -606,7 +607,7 @@ class Music(commands.Cog):
         if "error" in result:
             return await ctx.send(_("⚠ No results!"))
         p = commands.Paginator()
-        for line in result["content"].split("\n"):
+        for line in html.unescape(result["content"]).split("\n"):
             for i in chunks(line, 1900):
                 p.add_line(i)
         await self.bot.paginator.Paginator(
