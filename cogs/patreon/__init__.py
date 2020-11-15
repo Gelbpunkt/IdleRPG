@@ -18,6 +18,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 from asyncpg.exceptions import StringDataRightTruncationError
 from discord.ext import commands
 
+from classes.items import ItemType
 from cogs.shard_communication import user_on_cooldown as user_cooldown
 from utils import random
 from utils.checks import has_char, is_guild_leader, is_patron, user_is_patron
@@ -138,8 +139,10 @@ class Patreon(commands.Cog):
 
             Only bronze (or above) tier patrons can use this command."""
         )
-        if new_type not in self.bot.config.item_types:
+        item_type = ItemType.from_string(new_type)
+        if item_type is None:
             return await ctx.send(_("Invalid type."))
+        hand = item_type.get_hand().value
         async with self.bot.pool.acquire() as conn:
             item = await conn.fetchrow(
                 'SELECT * FROM allitems WHERE "owner"=$1 and "id"=$2;',
@@ -157,14 +160,6 @@ class Patreon(commands.Cog):
                 return await ctx.send(
                     _("The item is already a {item_type}.").format(item_type=new_type)
                 )
-            if new_type == "Shield":
-                hand = "left"
-            elif new_type in ("Spear", "Wand"):
-                hand = "right"
-            elif new_type in ("Bow", "Howlet", "Scythe"):
-                hand = "both"
-            else:
-                hand = "any"
 
             if (item["hand"] == "both" and hand != "both") or (
                 item["hand"] != "both" and hand == "both"
@@ -292,11 +287,11 @@ class Patreon(commands.Cog):
                 )
             )
         async with self.bot.trusted_session.post(
-            f"{self.bot.config.okapi_url}/api/genoverlay", json={"url": url}
+            f"{self.bot.config.external.okapi_url}/api/genoverlay", json={"url": url}
         ) as req:
             background = await req.text()
         headers = {
-            "Authorization": f"Client-ID {self.bot.config.imgur_token}",
+            "Authorization": f"Client-ID {self.bot.config.external.imgur_token}",
             "Content-Type": "application/json",
         }
         data = {"image": background, "type": "base64"}

@@ -36,6 +36,8 @@ from aioscheduler import TimedScheduler
 from discord.ext import commands
 
 from classes.cache import RedisCache
+from classes.classes import Mage, Paragon, Raider, Warrior
+from classes.classes import from_string as class_from_string
 from classes.context import Context
 from classes.enums import DonatorRank
 from classes.exceptions import GlobalCooldown
@@ -52,22 +54,37 @@ class Bot(commands.AutoShardedBot):
     def __init__(self, **kwargs):
         self.cluster_name = kwargs.pop("cluster_name")
         self.cluster_id = kwargs.pop("cluster_id")
+        self.config = ConfigLoader("config.toml")
         super().__init__(
-            command_prefix=config.global_prefix, **kwargs
+            command_prefix=self.config.get_config_value_with_default(
+                "bot", "global_prefix", default="$"
+            ),
+            **kwargs,
         )  # we overwrite the prefix when it is connected
         # setup stuff
         self.queue = asyncio.Queue()  # global queue for ordered tasks
         self.schedule_manager = TimedScheduler()
         self.config = ConfigLoader("config.toml")
-        self.version = config.version
+        self.version = self.config.get_config_value_with_default(
+            "bot", "version", default="unknown"
+        )
         self.paginator = paginator
-        self.BASE_URL = config.base_url
-        self.bans = set(config.bans)
+        self.BASE_URL = self.config.get_config_value_with_default(
+            "external", "base_url", default="https://idlerpg.xyz"
+        )
+        self.bans = set(
+            self.config.get_config_value_with_default("game", "bans", default=[])
+        )
+        self.support_server_id = self.config.get_config_value(
+            "game", "support_server_id"
+        )
         self.linecount = 0
         self.make_linecount()
         self.all_prefixes = {}
         self.activity = discord.Game(
-            name=f"IdleRPG v{config.version}" if config.is_beta else config.base_url
+            name=f"IdleRPG v{self.version}"
+            if self.config.get_config_value_with_default("bot", "is_beta", default=True)
+            else self.BASE_URL
         )
         self.logger = logging.getLogger()
 
@@ -79,6 +96,21 @@ class Bot(commands.AutoShardedBot):
         self.eligible_for_cooldown_reduce = set()  # caching
         self.not_eligible_for_cooldown_reduce = set()  # caching
 
+        self.normal_cooldown = commands.CooldownMapping.from_cooldown(
+            1,
+            self.config.get_config_value_with_default(
+                "bot", "global_cooldown", default=3
+            ),
+            commands.BucketType.user,
+        )
+        self.donator_cooldown = commands.CooldownMapping.from_cooldown(
+            1,
+            self.config.get_config_value_with_default(
+                "bot", "donator_cooldown", default=2
+            ),
+            commands.BucketType.user,
+        )
+
     def __repr__(self):
         return "<Bot>"
 
@@ -88,16 +120,16 @@ class Bot(commands.AutoShardedBot):
         and raises a special exception based on CommandOnCooldown
         """
         if ctx.author.id in self.not_eligible_for_cooldown_reduce:
-            bucket = self.config.cooldown.get_bucket(ctx.message)
+            bucket = self.normal_cooldown.get_bucket(ctx.message)
         elif ctx.author.id in self.eligible_for_cooldown_reduce:
-            bucket = self.config.donator_cooldown.get_bucket(ctx.message)
+            bucket = self.donator_cooldown.get_bucket(ctx.message)
         else:
             if await user_is_patron(self, ctx.author, "bronze"):
                 self.eligible_for_cooldown_reduce.add(ctx.author.id)
-                bucket = self.config.donator_cooldown.get_bucket(ctx.message)
+                bucket = self.donator_cooldown.get_bucket(ctx.message)
             else:
                 self.not_eligible_for_cooldown_reduce.add(ctx.author.id)
-                bucket = self.config.cooldown.get_bucket(ctx.message)
+                bucket = self.normal_cooldown.get_bucket(ctx.message)
         retry_after = bucket.update_rate_limit()
 
         if retry_after:
@@ -117,26 +149,50 @@ class Bot(commands.AutoShardedBot):
 
     async def connect_all(self):
         """Connects all databases and initializes sessions"""
-        self.session = ProxiedClientSession(
-            authorization=self.config.proxy_auth, proxy_url=self.config.proxy_url
-        )
+        proxy_auth = self.config.get_config_value("external", "proxy_auth")
+        proxy_url = self.config.get_config_value("external", "proxy_url")
+        if proxy_auth is None or proxy_url is None:
+            self.session = aiohttp.ClientSession()
+        else:
+            self.session = ProxiedClientSession(
+                authorization=proxy_auth, proxy_url=proxy_url
+            )
         self.trusted_session = aiohttp.ClientSession()
         self.redis = await aioredis.create_pool(
             "redis://localhost", minsize=10, maxsize=20
         )
+        database_creds = {
+            "database": self.config.get_config_value_with_default(
+                "database", "postgres_name", default="idlerpg"
+            ),
+            "user": self.config.get_config_value_with_default(
+                "database", "postgres_user", default="jens"
+            ),
+            "password": self.config.get_config_value_with_default(
+                "database", "postgres_password", default="owo"
+            ),
+            "host": self.config.get_config_value_with_default(
+                "database", "postgres_host", default="127.0.0.1"
+            ),
+            "port": self.config.get_config_value_with_default(
+                "database", "postgres_port", default=5432
+            ),
+        }
         self.pool = await asyncpg.create_pool(
-            **self.config.database, min_size=10, max_size=20, command_timeout=60.0
+            **database_creds, min_size=10, max_size=20, command_timeout=60.0
         )
         self.cache = RedisCache(self)
 
-        for extension in self.config.initial_extensions:
+        for extension in self.config.get_config_value_with_default(
+            "bot", "initial_extensions", default=[]
+        ):
             try:
                 self.load_extension(extension)
             except Exception:
                 print(f"Failed to load extension {extension}.", file=sys.stderr)
                 traceback.print_exc()
         self.redis_version = await self.get_redis_version()
-        await self.start(self.config.token)
+        await self.start(self.config.get_config_value_or_err("bot", "token"))
 
     async def get_redis_version(self):
         """Parses the Redis version out of the INFO command"""
@@ -236,18 +292,16 @@ class Bot(commands.AutoShardedBot):
         damage, armor = await self.get_damage_armor_for(
             v, classes=classes, race=race, conn=conn
         )
-        if (buildings := await self.get_city_buildings(guild, conn=conn)):
+        if (buildings := await self.get_city_buildings(guild, conn=conn)) :
             atkmultiply += buildings["raid_building"] * Decimal("0.1")
             defmultiply += buildings["raid_building"] * Decimal("0.1")
-        if self.in_class_line(classes, "Raider"):
-            atkmultiply = atkmultiply + Decimal("0.1") * self.get_class_grade_from(
-                classes, "Raider"
-            )
+        classes = [class_from_string(c) for c in classes]
+        for c in classes:
+            if c and c.in_class_line(Raider):
+                grade = c.class_grade()
+                atkmultiply = atkmultiply + Decimal("0.1") * grade
+                defmultiply = defmultiply + Decimal("0.1") * grade
         dmg = damage * atkmultiply
-        if self.in_class_line(classes, "Raider"):
-            defmultiply = defmultiply + Decimal("0.1") * self.get_class_grade_from(
-                classes, "Raider"
-            )
         deff = armor * defmultiply
         if local:
             await self.pool.release(conn)
@@ -622,32 +676,6 @@ class Bot(commands.AutoShardedBot):
             ).format(new_level=new_level, reward=reward_text, additional=additional)
         )
 
-    def in_class_line(self, classes, line):
-        return any([self.get_class_line(c) == line for c in classes])
-
-    def get_class_grade_from(self, classes, line):
-        for class_ in classes:
-            if self.get_class_line(class_) == line:
-                return self.get_class_grade(class_)
-        return None
-
-    def get_class_line(self, class_):
-        for line, evos in self.config.classes.items():
-            if class_ in evos:
-                return line
-        return "None"
-
-    def get_class_evolves(self):
-        return {line: evos[1:] for line, evos in self.config.classes.items()}
-
-    def get_class_grade(self, class_):
-        for line, evos in self.config.classes.items():
-            try:
-                return evos.index(class_) + 1
-            except ValueError:
-                pass
-        return 0
-
     async def clear_donator_cache(self, user):
         user = user if isinstance(user, int) else user.id
         await self.cogs["Sharding"].handler(
@@ -656,17 +684,19 @@ class Bot(commands.AutoShardedBot):
 
     @cache(maxsize=8096)
     async def get_donator_rank(self, user_id):
+        if self.support_server_id is None:
+            return False
         try:
-            member = await self.http.get_member(self.config.support_server_id, user_id)
+            member = await self.http.get_member(self.support_server_id, user_id)
         except discord.NotFound:
             return False
         top_donator_role = None
         member_roles = [int(i) for i in member.get("roles", [])]
-        for role_id, role_enum_val in zip(
-            self.config.donator_roles, self.config.donator_roles_short
+        for role in self.config.get_config_value_with_default(
+            "external", "donator_roles", default=[]
         ):
-            if role_id in member_roles:
-                top_donator_role = role_enum_val
+            if role["id"] in member_roles:
+                top_donator_role = role["tier"]
         return getattr(DonatorRank, top_donator_role) if top_donator_role else None
 
     async def generate_stats(
@@ -676,14 +706,15 @@ class Bot(commands.AutoShardedBot):
         if not classes or not race:
             row = await self.cache.get_profile(user, conn=conn)
             classes, race = row["class"], row["race"]
-        lines = [self.get_class_line(class_) for class_ in classes]
-        grades = [self.get_class_grade(class_) for class_ in classes]
+        classes = [class_from_string(c) for c in classes]
+        lines = [class_.get_class_line() for class_ in classes if class_]
+        grades = [class_.class_grade() for class_ in classes if class_]
         for line, grade in zip(lines, grades):
-            if line == "Mage":
+            if line == Mage:
                 damage += grade
-            elif line == "Warrior":
+            elif line == Warrior:
                 armor += grade
-            elif line == "Paragon":
+            elif line == Paragon:
                 damage += grade
                 armor += grade
         if race == "Human":

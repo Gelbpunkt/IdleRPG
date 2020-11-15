@@ -233,13 +233,20 @@ class Music(commands.Cog):
         self.bot = bot
         self.queue = defaultdict(lambda: [])  # Redis is not needed because why
 
+        if (
+            self.bot.config.music.query_endpoint is None
+            or self.bot.config.music.resolve_endpoint is None
+        ):
+            bot.logger.warning("music endpoints not set, unloading music cog...")
+            bot.unload_extension("cogs.music")
+
         if not hasattr(self.bot, "wavelink"):
             self.bot.wavelink = wavelink.Client(bot=self.bot)
 
         self.bot.loop.create_task(self.connect())
 
     async def connect(self):
-        for conf in self.bot.config.music_nodes:
+        for conf in self.bot.config.music.nodes:
             if conf["identifier"] not in self.bot.wavelink.nodes:
                 node = await self.bot.wavelink.initiate_node(**conf)
                 node.set_hook(self.event_hook)
@@ -262,7 +269,7 @@ class Music(commands.Cog):
             Query for a track and play or add any result to the playlist, you can choose from a multitude of tracks."""
         )
         async with self.bot.trusted_session.get(
-            f"{self.bot.config.query_endpoint}",
+            self.bot.config.music.query_endpoint,
             params={"limit": 5, "q": query},
         ) as r:
             results = await r.json()
@@ -293,7 +300,7 @@ class Music(commands.Cog):
 
         msg = await ctx.send(_("Loading track... This might take up to 3 seconds..."))
         tracks = await self.bot.wavelink.get_tracks(
-            f"{self.bot.config.resolve_endpoint}?id={track_obj.id}"
+            f"{self.bot.config.music.resolve_endpoint}?id={track_obj.id}"
         )
         if not tracks:
             return await msg.edit(content=_("No results..."))
@@ -330,14 +337,14 @@ class Music(commands.Cog):
             _("Downloading track... This might take up to 3 seconds...")
         )
         async with self.bot.trusted_session.get(
-            f"{self.bot.config.query_endpoint}",
+            self.bot.config.music.query_endpoint,
             params={"limit": 1, "q": query},
         ) as r:
             results = await r.json()
         try:
             track_obj = Track(results[0])
             tracks = await self.bot.wavelink.get_tracks(
-                f"{self.bot.config.resolve_endpoint}?id={track_obj.id}"
+                f"{self.bot.config.music.resolve_endpoint}?id={track_obj.id}"
             )
             if not tracks:
                 return await msg.edit(content=_("No results..."))
@@ -512,7 +519,7 @@ class Music(commands.Cog):
         if not (ctx.guild and ctx.author.color == discord.Color.default()):
             embed_color = ctx.author.color
         else:
-            embed_color = self.bot.config.primary_colour
+            embed_color = self.bot.config.game.primary_colour
 
         playing_embed = discord.Embed(title=_("Now playing..."), colour=embed_color)
         playing_embed.add_field(

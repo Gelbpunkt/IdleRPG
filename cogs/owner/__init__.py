@@ -23,7 +23,6 @@ import traceback
 import tracemalloc
 
 from contextlib import redirect_stdout
-from importlib import reload as importlib_reload
 
 import discord
 import import_expression
@@ -83,7 +82,7 @@ class Owner(commands.Cog):
     @commands.command(hidden=True)
     async def reloadconf(self, ctx):
         try:
-            importlib_reload(self.bot.config)
+            self.bot.config.reload()
         except Exception as e:
             await ctx.send(f"**`ERROR:`** {type(e).__name__} - {e}")
         else:
@@ -103,13 +102,17 @@ class Owner(commands.Cog):
         all_ids = []
         async with self.bot.pool.acquire() as conn:
             for god in self.bot.config.gods:
-                boundaries = self.bot.config.gods[god]["boundaries"]
-                luck = random.randint(boundaries[0] * 100, boundaries[1] * 100) / 100
+                luck = (
+                    random.randint(
+                        god["boundary_low"] * 100, god["boundary_high"] * 100
+                    )
+                    / 100
+                )
                 ids = await conn.fetch(
                     'UPDATE profile SET "luck"=round($1, 2) WHERE "god"=$2 RETURNING'
                     ' "user";',
                     luck,
-                    god,
+                    god["name"],
                 )
                 all_ids.extend([u["user"] for u in ids])
                 top_followers = [
@@ -117,7 +120,7 @@ class Owner(commands.Cog):
                     for u in await conn.fetch(
                         'SELECT "user" FROM profile WHERE "god"=$1 ORDER BY "favor"'
                         " DESC LIMIT 25;",
-                        god,
+                        god["name"],
                     )
                 ]
                 await conn.execute(
@@ -150,7 +153,7 @@ class Owner(commands.Cog):
                     0.1,
                     top_followers[20:25],
                 )
-                text_collection.append(f"{god} set to {luck}.")
+                text_collection.append(f"{god['name']} set to {luck}.")
             await conn.execute('UPDATE profile SET "favor"=0 WHERE "god" IS NOT NULL;')
             text_collection.append("Godless set to 1.0")
             ids = await conn.fetch(

@@ -63,6 +63,7 @@ postgres_name = "database_name"
 postgres_user = "database_user"
 postgres_password = "database_password"
 postgres_host = "localhost"
+postgres_port = 5432
 redis_shard_announce_channel = "guild_channel"
 
 [statistics]
@@ -74,13 +75,14 @@ sentry_url = "https://whatever.sentry.url"
 
 [launcher]
 additional_shards = 4
-shard_per_cluster = 4
+shards_per_cluster = 4
 
 [game]
 game_masters = [1234567890]
 bans = [1234567890]
 banned_guilds = [1234567890]
 support_server_id = 1234567890
+gm_log_channel = 1234567890
 helpme_channel = 1234567890
 official_tournament_channel_id = 1234567890
 bot_event_channel = 1234567890
@@ -95,6 +97,7 @@ support_team_role = 1234567890
     raid = true
     trade = true
     adventure = true
+    tier = 4
 
     [cities.medriguen]
     name = "Medriguen"
@@ -102,6 +105,7 @@ support_team_role = 1234567890
     raid = true
     trade = true
     adventure = true
+    tier = 3
 
     [cities.sulitere]
     name = "Sulitere"
@@ -109,6 +113,7 @@ support_team_role = 1234567890
     raid = true
     trade = true
     adventure = false
+    tier = 3
 
     [cities.mopra]
     name = "Mopra"
@@ -116,6 +121,7 @@ support_team_role = 1234567890
     raid = true
     trade = true
     adventure = false
+    tier = 2
 
     [cities.setrond]
     name = "Setrond"
@@ -123,6 +129,7 @@ support_team_role = 1234567890
     raid = false
     trade = true
     adventure = false
+    tier = 2
 
     [cities.armeles]
     name = "Armeles"
@@ -130,6 +137,7 @@ support_team_role = 1234567890
     raid = false
     trade = true
     adventure = true
+    tier = 2
 
     [cities.weyeowen]
     name = "Weyeowen"
@@ -137,6 +145,7 @@ support_team_role = 1234567890
     raid = false
     trade = false
     adventure = false
+    tier = 1
 
     [cities.oltash]
     name = "Oltash"
@@ -144,6 +153,7 @@ support_team_role = 1234567890
     raid = false
     trade = true
     adventure = false
+    tier = 1
 
     [cities.kryvansk]
     name = "Kryvansk"
@@ -151,6 +161,7 @@ support_team_role = 1234567890
     raid = true
     trade = false
     adventure = false
+    tier = 1
 
     [cities.drutsk]
     name = "Drutsk"
@@ -158,6 +169,7 @@ support_team_role = 1234567890
     raid = false
     trade = false
     adventure = true
+    tier = 1
 
 [music]
 query_endpoint = "http://localhost:7000/search"

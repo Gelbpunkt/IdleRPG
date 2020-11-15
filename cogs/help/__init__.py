@@ -23,7 +23,6 @@ from typing import Union
 import discord
 
 from asyncpg import UniqueViolationError
-from config import primary_colour
 from discord.ext import commands, menus
 
 from classes.converters import User
@@ -42,7 +41,7 @@ class CogMenu(menus.Menu):
         self.title = kwargs.pop("title")
         self.description = kwargs.pop("description")
         self.bot = kwargs.pop("bot")
-        self.color = kwargs.pop("color", 0xCB735C)
+        self.color = kwargs.pop("color")
         self.footer = kwargs.pop("footer")
         self.per_page = kwargs.pop("per_page", 5)
         self.page = 1
@@ -104,7 +103,7 @@ class SubcommandMenu(menus.Menu):
         self.title = kwargs.pop("title")
         self.description = kwargs.pop("description")
         self.bot = kwargs.pop("bot")
-        self.color = kwargs.pop("color", 0xCB735C)
+        self.color = kwargs.pop("color")
         self.per_page = kwargs.pop("per_page", 5)
         self.page = 1
         self.group_emoji = "💠"
@@ -296,7 +295,7 @@ class Help(commands.Cog):
         em.set_footer(text=f"Server ID: {ctx.guild.id}")
 
         message = await self.bot.http.send_message(
-            self.bot.config.helpme_channel, None, embed=em.to_dict()
+            self.bot.config.game.helpme_channel, None, embed=em.to_dict()
         )
         await self.bot.redis.execute(
             "SET",
@@ -333,7 +332,7 @@ class Help(commands.Cog):
             You can only use this command if your server has an open helpme request."""
         )
         message = await self.bot.http.get_message(
-            self.bot.config.helpme_channel, ctx.helpme
+            self.bot.config.game.helpme_channel, ctx.helpme
         )
         inv = discord.utils.find(
             lambda f: f["name"] == "Invite", message["embeds"][0]["fields"]
@@ -351,7 +350,10 @@ class Help(commands.Cog):
         em.set_footer(text=f"Server ID: {ctx.guild.id}")
 
         await self.bot.http.edit_message(
-            self.bot.config.helpme_channel, ctx.helpme, content=None, embed=em.to_dict()
+            self.bot.config.game.helpme_channel,
+            ctx.helpme,
+            content=None,
+            embed=em.to_dict(),
         )
         await ctx.send(
             _("Successfully changed your helpme text from `{old}` to `{new}`!").format(
@@ -374,10 +376,12 @@ class Help(commands.Cog):
             _("Are you sure you want to cancel your helpme request?")
         ):
             return await ctx.send(_("Cancelled cancellation."))
-        await self.bot.http.delete_message(self.bot.config.helpme_channel, ctx.helpme)
+        await self.bot.http.delete_message(
+            self.bot.config.game.helpme_channel, ctx.helpme
+        )
         await self.bot.redis.execute("DEL", f"helpme:{ctx.guild.id}")
         await self.bot.http.send_message(
-            self.bot.config.helpme_channel,
+            self.bot.config.game.helpme_channel,
             f"Helpme request for server {ctx.guild} ({ctx.guild.id}) was cancelled by"
             f" {ctx.author}",
         )
@@ -393,7 +397,7 @@ class Help(commands.Cog):
             You can only use this command if your server has an open helpme request."""
         )
         message = await self.bot.http.get_message(
-            self.bot.config.helpme_channel, ctx.helpme
+            self.bot.config.game.helpme_channel, ctx.helpme
         )
         embed = discord.Embed().from_dict(message["embeds"][0])
 
@@ -420,9 +424,9 @@ class IdleHelp(commands.HelpCommand):
 
         super().__init__(*args, **kwargs)
         self.verify_checks = False
+        self.color = None
         self.gm_exts = {"GameMaster"}
         self.owner_exts = {"Owner"}
-        self.color = primary_colour
         self.group_emoji = "💠"
         self.command_emoji = "🔷"
 
@@ -483,19 +487,17 @@ class IdleHelp(commands.HelpCommand):
         else:
             return await self.send_command_help(cmd)
 
-    def embedbase(self, *args, **kwargs):
-        e = discord.Embed(color=self.color, **kwargs)
+    async def send_bot_help(self, mapping):
+        e = discord.Embed(
+            title=_(
+                "IdleRPG Help {version}",
+                color=self.context.bot.config.game.primary_colour,
+            ).format(version=self.context.bot.version),
+            url="https://idlerpg.xyz/",
+        )
         e.set_author(
             name=self.context.bot.user,
             icon_url=self.context.bot.user.avatar_url_as(static_format="png"),
-        )
-
-        return e
-
-    async def send_bot_help(self, mapping):
-        e = self.embedbase(
-            title=_("IdleRPG Help {version}").format(version=self.context.bot.version),
-            url="https://idlerpg.xyz/",
         )
         e.set_image(
             url="https://media.discordapp.net/attachments/460568954968997890/711740723715637288/idle_banner.png"
@@ -515,7 +517,7 @@ class IdleHelp(commands.HelpCommand):
             if cog is None:
                 continue
             if (
-                self.context.author.id not in self.context.bot.config.game_masters
+                self.context.author.id not in self.context.bot.config.game.game_masters
                 and cog.qualified_name in self.gm_exts
             ):
                 continue
@@ -542,7 +544,7 @@ class IdleHelp(commands.HelpCommand):
 
     async def send_cog_help(self, cog):
         if (cog.qualified_name in self.gm_exts) and (
-            self.context.author.id not in self.context.bot.config.game_masters
+            self.context.author.id not in self.context.bot.config.game.game_masters
         ):
             if self.context.author.id in self.context.bot.owner_ids:
                 pass  # owners don't have restrictions
@@ -563,7 +565,7 @@ class IdleHelp(commands.HelpCommand):
                 " commands"
             ),
             bot=self.context.bot,
-            color=self.color,
+            color=self.context.bot.config.game.primary_colour,
             description=[
                 f"{self.group_emoji if isinstance(c, commands.Group) else self.command_emoji}"
                 f" `{self.clean_prefix}{c.qualified_name} {c.signature}` - {_(c.brief)}"
@@ -579,7 +581,7 @@ class IdleHelp(commands.HelpCommand):
     async def send_command_help(self, command):
         if command.cog:
             if (command.cog.qualified_name in self.gm_exts) and (
-                self.context.author.id not in self.context.bot.config.game_masters
+                self.context.author.id not in self.context.bot.config.game.game_masters
             ):
                 if self.context.author.id in self.context.bot.owner_ids:
                     pass  # owners don't have restrictions
@@ -594,13 +596,19 @@ class IdleHelp(commands.HelpCommand):
                     _("You do not have access to this command!")
                 )
 
-        e = self.embedbase(
+        e = discord.Embed(
             title=(
                 f"[{command.cog.qualified_name.upper()}] {command.qualified_name}"
                 f" {command.signature}"
             ),
+            colour=self.context.bot.config.game.primary_colour,
             description=_(command.help).format(prefix=self.context.prefix),
         )
+        e.set_author(
+            name=self.context.bot.user,
+            icon_url=self.context.bot.user.avatar_url_as(static_format="png"),
+        )
+
         if command.aliases:
             e.add_field(
                 name=_("Aliases"), value="`{}`".format("`, `".join(command.aliases))
@@ -610,7 +618,7 @@ class IdleHelp(commands.HelpCommand):
     async def send_group_help(self, group):
         if group.cog:
             if (
-                self.context.author.id not in self.context.bot.config.game_masters
+                self.context.author.id not in self.context.bot.config.game.game_masters
                 and group.cog.qualified_name in self.gm_exts
             ):
                 return await self.context.send(

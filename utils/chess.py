@@ -212,7 +212,7 @@ class ChessGame:
             check=self.board.king(self.board.turn) if self.board.is_check() else None,
         )
         async with self.ctx.bot.trusted_session.post(
-            f"{self.ctx.bot.config.okapi_url}/api/genchess", json={"xml": svg}
+            f"{self.ctx.bot.config.external.okapi_url}/api/genchess", json={"xml": svg}
         ) as r:
             file_ = io.BytesIO(await r.read())
         return file_

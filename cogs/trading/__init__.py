@@ -29,6 +29,7 @@ from classes.converters import (
     IntGreaterThan,
     MemberWithCharacter,
 )
+from classes.items import ALL_ITEM_TYPES, ItemType
 from cogs.shard_communication import user_on_cooldown as user_cooldown
 from utils.checks import has_char, has_money
 from utils.i18n import _, locale_doc
@@ -297,10 +298,10 @@ class Trading(commands.Cog):
 
             Lists the past successful sales on the market by criteria and shows average, minimum and highest prices by category."""
         )
-        if itemtype not in ["All"] + self.bot.config.item_types:
+        if itemtype != "All" and ItemType.from_string(itemtype) is None:
             return await ctx.send(
                 _("Use either {types} or `All` as a type to filter for.").format(
-                    types=", ".join(f"`{t}`" for t in self.bot.config.item_types)
+                    types=", ".join(f"`{t.value}`" for t in ALL_ITEM_TYPES)
                 )
             )
         if itemtype == "All":
@@ -392,10 +393,10 @@ class Trading(commands.Cog):
 
             To quickly buy an item, you can use the 💰 emoji."""
         )
-        if itemtype not in ["All"] + self.bot.config.item_types:
+        if itemtype != "All" and ItemType.from_string(itemtype) is None:
             return await ctx.send(
                 _("Use either {types} or `All` as a type to filter for.").format(
-                    types=", ".join(f"`{t}`" for t in self.bot.config.item_types)
+                    types=", ".join(f"`{t.value}`" for t in ALL_ITEM_TYPES)
                 )
             )
         if itemtype == "All":

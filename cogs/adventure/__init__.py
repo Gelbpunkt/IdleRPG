@@ -18,12 +18,15 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 import asyncio
 
 from base64 import b64decode
+from datetime import timedelta
 from io import BytesIO
 
 import discord
 
 from discord.ext import commands
 
+from classes.classes import Ritualist
+from classes.classes import from_string as class_from_string
 from classes.converters import IntFromTo
 from classes.enums import DonatorRank
 from cogs.shard_communication import user_on_cooldown as user_cooldown
@@ -33,6 +36,39 @@ from utils import random
 from utils.checks import has_adventure, has_char, has_no_adventure
 from utils.i18n import _, locale_doc
 from utils.maze import Maze
+
+ADVENTURE_NAMES = {
+    1: "Spider Cave",
+    2: "Troll Bridge",
+    3: "A Night Alone Outside",
+    4: "Ogre Raid",
+    5: "Proof Of Confidence",
+    6: "Dragon Canyon",
+    7: "Orc Tower",
+    8: "Seamonster's Temple",
+    9: "Dark Wizard's Castle",
+    10: "Slay The Famous Dragon Arzagor",
+    11: "Search For Excalibur",
+    12: "Find Atlantis",
+    13: "Tame A Phoenix",
+    14: "Slay The Death Reaper",
+    15: "Meet Adrian In Real Life",
+    16: "The League Of Vecca",
+    17: "The Gem Expedition",
+    18: "Gambling Problems?",
+    19: "The Necromancer Of Kord",
+    20: "Last One Standing",
+    21: "Gambling Problems? Again?",
+    22: "Insomnia",
+    23: "Illuminated",
+    24: "Betrayal",
+    25: "IdleRPG",
+    26: "Learn Programming",
+    27: "Scylla's Temple",
+    28: "Trial Of Osiris",
+    29: "Meet The War God In Hell",
+    30: "Divine Intervention",
+}
 
 
 class Adventure(commands.Cog):
@@ -54,7 +90,7 @@ class Adventure(commands.Cog):
         luck_booster = await self.bot.get_booster(ctx.author, "luck")
 
         chances = []
-        for adv in self.bot.config.adventure_times:
+        for adv in range(1, 31):
             success = rpgtools.calcchance(
                 damage,
                 defense,
@@ -67,7 +103,7 @@ class Adventure(commands.Cog):
             chances.append((success[0] - success[2] // 2, success[1] + success[2]))
 
         async with self.bot.trusted_session.post(
-            f"{self.bot.config.okapi_url}/api/genadventures",
+            f"{self.bot.config.external.okapi_url}/api/genadventures",
             json={"percentages": chances},
         ) as r:
             images = await r.json()
@@ -114,7 +150,7 @@ class Adventure(commands.Cog):
                     level=adventure_number
                 )
             )
-        time = self.bot.config.adventure_times[adventure_number]
+        time = timedelta(hours=adventure_number)
 
         if buildings := await self.bot.get_city_buildings(ctx.character_data["guild"]):
             time -= time * (buildings["adventure_building"] / 100)
@@ -471,9 +507,9 @@ class Adventure(commands.Cog):
                     ).format(
                         difficulty=num,
                         time_left=time,
-                        adventure=self.bot.config.adventure_names[num],
+                        adventure=ADVENTURE_NAMES[num],
                     ),
-                    colour=self.bot.config.primary_colour,
+                    colour=self.bot.config.game.primary_colour,
                 )
             )
 
@@ -484,7 +520,7 @@ class Adventure(commands.Cog):
         luck_multiply = ctx.character_data["luck"]
         if (
             buildings := await self.bot.get_city_buildings(ctx.character_data["guild"])
-        ):
+        ) :
             bonus = buildings["adventure_building"]
         else:
             bonus = 0
@@ -520,7 +556,9 @@ class Adventure(commands.Cog):
 
         xp = random.randint(250 * num, 500 * num)
         chance_of_loot = 5 if num == 1 else 5 + 1.5 * num
-        if self.bot.in_class_line(ctx.character_data["class"], "Ritualist"):
+
+        classes = [class_from_string(c) for c in ctx.character_data["class"]]
+        if any(c.in_class_line(Ritualist) for c in classes if c):
             chance_of_loot *= 2  # can be 100 in a 30
 
         async with self.bot.pool.acquire() as conn:

@@ -17,13 +17,15 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
 import datetime
 
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Type
 
 import discord
 import pytz
 
 from discord.ext import commands
 
+from classes.classes import GameClass, Ranger
+from classes.classes import from_string as class_from_string
 from classes.context import Context
 from classes.enums import DonatorRank
 from utils import random
@@ -337,19 +339,21 @@ def owns_no_city() -> "_CheckDecorator":
     return commands.check(predicate)
 
 
-def is_class(class_: str) -> "_CheckDecorator":
+def is_class(class_: Type[GameClass]) -> "_CheckDecorator":
     """Checks for a user to be in a class line."""
 
     async def predicate(ctx: Context) -> bool:
         if not hasattr(ctx, "character_data"):
             ctx.character_data = await ctx.bot.cache.get_profile(ctx.author.id)
-        if (
-            check := ctx.bot.in_class_line(ctx.character_data["class"], class_)
-        ) and class_ == "Ranger":
+        classes = [
+            c for i in ctx.character_data["class"] if (c := class_from_string(i))
+        ]
+        any_in_line = any([c.in_class_line(class_) for c in classes])
+        if class_ == Ranger and any_in_line:
             ctx.pet_data = await ctx.bot.pool.fetchrow(
                 'SELECT * FROM pets WHERE "user"=$1;', ctx.author.id
             )
-        if not check:
+        if not any_in_line:
             raise WrongClass(class_)
         return True
 
@@ -483,7 +487,7 @@ async def guild_has_money(bot: "Bot", guildid: int, money: int) -> bool:
 
 def is_gm() -> "_CheckDecorator":
     async def predicate(ctx: Context) -> bool:
-        return ctx.author.id in ctx.bot.config.game_masters
+        return ctx.author.id in ctx.bot.config.game.game_masters
 
     return commands.check(predicate)
 
@@ -510,12 +514,12 @@ def is_supporter() -> "_CheckDecorator":
     async def predicate(ctx: Context) -> bool:
         try:
             member = await ctx.bot.http.get_member(
-                ctx.bot.config.support_server_id, ctx.author.id
+                ctx.bot.config.game.support_server_id, ctx.author.id
             )
         except discord.NotFound:
             return False
         member_roles = [int(i) for i in member.get("roles", [])]
-        return ctx.bot.config.support_team_role in member_roles
+        return ctx.bot.config.game.support_team_role in member_roles
 
     return commands.check(predicate)
 

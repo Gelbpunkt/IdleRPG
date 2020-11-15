@@ -47,7 +47,8 @@ class Images(commands.Cog):
         url = str(user.avatar_url_as(format="png", size=size))
         # change size to lower for less pixels
         async with self.bot.trusted_session.post(
-            f"{self.bot.config.okapi_url}/api/imageops/pixel", json={"image": url}
+            f"{self.bot.config.external.okapi_url}/api/imageops/pixel",
+            json={"image": url},
         ) as r:
             img = BytesIO(await r.read())
         await ctx.send(file=discord.File(fp=img, filename="pixels.png"))
@@ -61,7 +62,7 @@ class Images(commands.Cog):
             Finds and exaggerates edges in a user's avatar, creating a cool image effect."""
         )
         async with self.bot.trusted_session.post(
-            f"{self.bot.config.okapi_url}/api/imageops/edges",
+            f"{self.bot.config.external.okapi_url}/api/imageops/edges",
             json={"image": str(user.avatar_url_as(format="png"))},
         ) as r:
             img = BytesIO(await r.read())
@@ -79,7 +80,7 @@ class Images(commands.Cog):
             (This command has a channel cooldown of 15 seconds.)"""
         )
         async with self.bot.trusted_session.post(
-            f"{self.bot.config.okapi_url}/api/imageops/invert",
+            f"{self.bot.config.external.okapi_url}/api/imageops/invert",
             json={"image": str(member.avatar_url_as(format="png"))},
         ) as r:
             img = BytesIO(await r.read())
@@ -97,7 +98,7 @@ class Images(commands.Cog):
             (This command has a channel cooldown of 15 seconds.)"""
         )
         async with self.bot.trusted_session.post(
-            f"{self.bot.config.okapi_url}/api/imageops/oil",
+            f"{self.bot.config.external.okapi_url}/api/imageops/oil",
             json={"image": str(member.avatar_url_as(format="png"))},
         ) as r:
             img = BytesIO(await r.read())

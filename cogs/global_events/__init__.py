@@ -32,9 +32,9 @@ from utils.loops import queue_manager
 class GlobalEvents(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
-        self.topgg_auth_headers = {"Authorization": bot.config.topggtoken}
-        self.bfd_auth_headers = {"Authorization": bot.config.bfdtoken}
-        self.dbl_auth_headers = {"Authorization": bot.config.dbltoken}
+        self.topgg_auth_headers = {"Authorization": bot.config.statistics.topggtoken}
+        self.bfd_auth_headers = {"Authorization": bot.config.statistics.bfdtoken}
+        self.dbl_auth_headers = {"Authorization": bot.config.statistics.dbltoken}
         self.is_first_ready = True
 
     @commands.Cog.listener()
@@ -109,22 +109,23 @@ class GlobalEvents(commands.Cog):
 
         # If they were a donator, wipe that cache as well
         roles = [int(i) for i in data["d"]["roles"]]
-        if int(data["d"]["guild_id"]) == self.bot.config.support_server_id and any(
-            id_ in roles for id_ in self.bot.config.donator_roles
+        if int(data["d"]["guild_id"]) == self.bot.config.game.support_server_id and any(
+            role["id"] in roles for role in self.bot.config.external.donator_roles
         ):
             await self.bot.clear_donator_cache(user_id)
 
     @commands.Cog.listener()
     async def on_guild_remove(self, guild):
-        if self.bot.config.is_beta:
+        if self.bot.config.bot.is_beta:
             return
-        await self.bot.http.send_message(
-            self.bot.config.join_channel, f"Bye bye **{guild.name}**!"
-        )
+        if self.bot.config.statistics.join_channel:
+            await self.bot.http.send_message(
+                self.bot.config.statistics.join_channel, f"Bye bye **{guild.name}**!"
+            )
 
     @commands.Cog.listener()
     async def on_guild_join(self, guild):
-        if guild.id in self.bot.config.banned_guilds:
+        if guild.id in self.bot.config.game.banned_guilds:
             await guild.leave()
             return
         embed = discord.Embed(
@@ -135,11 +136,11 @@ class GlobalEvents(commands.Cog):
                 " whole Roleplay with everything it needs!\n\nVisit"
                 f" **{self.bot.BASE_URL}** for a documentation on all my commands."
                 " :innocent:\nTo get started, type"
-                f" `{self.bot.config.global_prefix}create`.\n\nA tutorial can be found"
+                f" `{self.bot.config.bot.global_prefix}create`.\n\nA tutorial can be found"
                 f" on **{self.bot.BASE_URL}/tutorial**.\n\nDon't like my prefix?"
-                f" `{self.bot.config.global_prefix}settings prefix` changes it.\n\nNot"
-                f" English? `{self.bot.config.global_prefix}language` and"
-                f" `{self.bot.config.global_prefix}language set` may include"
+                f" `{self.bot.config.bot.global_prefix}settings prefix` changes it.\n\nNot"
+                f" English? `{self.bot.config.bot.global_prefix}language` and"
+                f" `{self.bot.config.bot.global_prefix}language set` may include"
                 " yours!\n\nHave fun! :wink:"
             ),
         )
@@ -156,19 +157,18 @@ class GlobalEvents(commands.Cog):
         )
         if channels:
             await channels[0].send(embed=embed)
-        if self.bot.config.is_beta:
+        if self.bot.config.bot.is_beta:
             return
-        await self.bot.http.send_message(
-            self.bot.config.join_channel,
-            f"Joined a new server! **{guild.name}** with **{guild.member_count}**"
-            " members!",
-        )
+        if self.bot.config.statistics.join_channel:
+            await self.bot.http.send_message(
+                self.bot.config.statistics.join_channel,
+                f"Joined a new server! **{guild.name}** with **{guild.member_count}**"
+                " members!",
+            )
 
     async def stats_updater(self):
         await self.bot.wait_until_ready()
-        if (
-            self.bot.shard_count - 1 not in self.bot.shards.keys()
-        ) or self.bot.config.is_beta:
+        if (self.bot.shard_count - 1 not in self.bot.shards.keys()) or self.is_beta:
             return
         while not self.bot.is_closed():
             await self.bot.session.post(
@@ -189,9 +189,9 @@ class GlobalEvents(commands.Cog):
             await asyncio.sleep(60 * 10)  # update once every 10 minutes
 
     async def load_settings(self):
-        if self.bot.config.is_beta:
+        if self.is_beta:
             self.bot.command_prefix = commands.when_mentioned_or(
-                self.bot.config.global_prefix
+                self.bot.config.bot.global_prefix
             )
             return  # we're using the default prefix in beta
         ids = [g.id for g in self.bot.guilds]

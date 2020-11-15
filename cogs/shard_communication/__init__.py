@@ -147,7 +147,6 @@ def next_day_cooldown():
 class Sharding(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
-        self.communication_channel = bot.config.shard_announce_channel
         self.router = None
         bot.loop.create_task(self.register_sub())
         self._messages = dict()
@@ -160,16 +159,20 @@ class Sharding(commands.Cog):
 
     async def register_sub(self):
         if (
-            not bytes(self.communication_channel, "utf-8")
+            not bytes(self.bot.config.database.redis_shard_announce_channel, "utf-8")
             in self.bot.redis.pubsub_channels
         ):
-            await self.bot.redis.execute_pubsub("SUBSCRIBE", self.communication_channel)
+            await self.bot.redis.execute_pubsub(
+                "SUBSCRIBE", self.bot.config.database.redis_shard_announce_channel
+            )
         self.router = self.bot.loop.create_task(self.event_handler())
 
     async def unregister_sub(self):
         if self.router and not self.router.cancelled:
             self.router.cancel()
-        await self.bot.redis.execute_pubsub("UNSUBSCRIBE", self.communication_channel)
+        await self.bot.redis.execute_pubsub(
+            "UNSUBSCRIBE", self.bot.config.database.redis_shard_announce_channel
+        )
 
     async def event_handler(self):
         """
@@ -180,7 +183,7 @@ class Sharding(commands.Cog):
         {"output": "<string>", "command_id": "<uuid4>"}
         """
         channel = self.bot.redis.pubsub_channels[
-            bytes(self.communication_channel, "utf-8")
+            bytes(self.bot.config.database.redis_shard_announce_channel, "utf-8")
         ]
         while await channel.wait_message():
             try:
@@ -212,7 +215,9 @@ class Sharding(commands.Cog):
     async def guild_count(self, command_id: str):
         payload = {"output": len(self.bot.guilds), "command_id": command_id}
         await self.bot.redis.execute(
-            "PUBLISH", self.communication_channel, json.dumps(payload)
+            "PUBLISH",
+            self.bot.config.database.redis_shard_announce_channel,
+            json.dumps(payload),
         )
 
     async def send_latency_and_shard_count(self, command_id: str):
@@ -227,7 +232,9 @@ class Sharding(commands.Cog):
             "command_id": command_id,
         }
         await self.bot.redis.execute(
-            "PUBLISH", self.communication_channel, json.dumps(payload)
+            "PUBLISH",
+            self.bot.config.database.redis_shard_announce_channel,
+            json.dumps(payload),
         )
 
     async def evaluate(self, code, command_id: str):
@@ -236,7 +243,9 @@ class Sharding(commands.Cog):
         code = code.strip("` \n")
         payload = {"output": await _evaluate(self.bot, code), "command_id": command_id}
         await self.bot.redis.execute(
-            "PUBLISH", self.communication_channel, json.dumps(payload)
+            "PUBLISH",
+            self.bot.config.database.redis_shard_announce_channel,
+            json.dumps(payload),
         )
 
     async def latency(self, command_id: str):
@@ -245,7 +254,9 @@ class Sharding(commands.Cog):
             "command_id": command_id,
         }
         await self.bot.redis.execute(
-            "PUBLISH", self.communication_channel, json.dumps(payload)
+            "PUBLISH",
+            self.bot.config.database.redis_shard_announce_channel,
+            json.dumps(payload),
         )
 
     async def wait_for_dms(self, event, check, timeout, command_id: str):
@@ -281,7 +292,9 @@ class Sharding(commands.Cog):
         out = await self.bot.wait_for("socket_response", check=pred, timeout=timeout)
         payload = {"output": out["d"], "command_id": command_id}
         await self.bot.redis.execute(
-            "PUBLISH", self.communication_channel, json.dumps(payload)
+            "PUBLISH",
+            self.bot.config.database.redis_shard_announce_channel,
+            json.dumps(payload),
         )
 
     async def handler(
@@ -314,7 +327,9 @@ class Sharding(commands.Cog):
         if args:
             payload["args"] = args
         await self.bot.redis.execute(
-            "PUBLISH", self.communication_channel, json.dumps(payload)
+            "PUBLISH",
+            self.bot.config.database.redis_shard_announce_channel,
+            json.dumps(payload),
         )
         # Message collector
         try:
@@ -363,7 +378,7 @@ class Sharding(commands.Cog):
         process_status = launcher_res[0]
         # We have to calculate number of processes
         processes, shards_left = divmod(
-            self.bot.shard_count, self.bot.config.shard_per_cluster
+            self.bot.shard_count, self.self.bot.config.shard_per_cluster
         )
         if shards_left:
             processes += 1

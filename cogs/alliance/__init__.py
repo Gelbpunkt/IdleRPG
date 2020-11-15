@@ -42,6 +42,7 @@ from utils.i18n import _, locale_doc
 class Alliance(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
+        self.cities = {i["name"]: i for i in bot.config.cities}
 
     @commands.command(brief=_("Shows cities and owners."))
     @locale_doc
@@ -55,21 +56,25 @@ class Alliance(commands.Cog):
             ' d ON c."name"=d."city" GROUP BY c."owner", c."name", g."name";'
         )
         em = discord.Embed(
-            title=_("Cities"), colour=self.bot.config.primary_colour
+            title=_("Cities"), colour=self.bot.config.game.primary_colour
         ).set_image(url="https://idlerpg.xyz/city.png")
-        for city in sorted(
-            cities, key=lambda x: -len(self.bot.config.cities[x["name"]])
-        ):
+        for city in sorted(cities, key=lambda c: -self.cities[city["name"]]["tier"]):
             em.add_field(
                 name=_("{name} (Tier {tier})").format(
-                    name=city["name"], tier=len(self.bot.config.cities[city["name"]])
+                    name=city["name"], tier=self.cities[city["name"]]["tier"]
                 ),
                 value=_(
                     "Owned by {alliance}'s alliance\nBuildings: {buildings}\nTotal"
                     " defense: {defense}"
                 ).format(
                     alliance=city["gname"],
-                    buildings=", ".join(self.bot.config.cities[city["name"]]),
+                    buildings=", ".join(
+                        [
+                            i.title()
+                            for i in ("thief", "raid", "trade", "adventure")
+                            if self.cities[city["name"]][i]
+                        ]
+                    ),
                     defense=city["defense"],
                 ),
             )
@@ -107,7 +112,7 @@ class Alliance(commands.Cog):
                 )
             )
         alliance_embed = discord.Embed(
-            title=_("Your allied guilds"), color=self.bot.config.primary_colour
+            title=_("Your allied guilds"), color=self.bot.config.game.primary_colour
         ).set_thumbnail(url="https://idlerpg.xyz/alliance_banner.png")
         for guild in allied_guilds:
             alliance_embed.add_field(
@@ -329,7 +334,7 @@ class Alliance(commands.Cog):
                 "guild"
             ],  # can only be done by the leading g:uild so this works here
         )
-        if name not in self.bot.config.cities[city["name"]]:
+        if self.cities[city["name"]].get(name, False) is False:
             await self.bot.reset_alliance_cooldown(ctx)
             return await ctx.send(
                 _(
@@ -513,14 +518,15 @@ class Alliance(commands.Cog):
             return await ctx.send(_("Your alliance does not own a city."))
         embed = discord.Embed(
             title=_("{city}'s buildings").format(city=buildings["name"]),
-            colour=self.bot.config.primary_colour,
+            colour=self.bot.config.game.primary_colour,
         ).set_image(url="https://idlerpg.xyz/market.png")
-        for i in self.bot.config.cities[buildings["name"]]:
-            embed.add_field(
-                name=f"{i.capitalize()} building",
-                value=_("Level {level}").format(level=buildings[f"{i}_building"]),
-                inline=True,
-            )
+        for i in ("thief", "raid", "trade", "adventure"):
+            if self.cities[buildings["name"]][i]:
+                embed.add_field(
+                    name=f"{i.capitalize()} building",
+                    value=_("Level {level}").format(level=buildings[f"{i}_building"]),
+                    inline=True,
+                )
         await ctx.send(embed=embed)
 
     @has_char()
@@ -546,7 +552,7 @@ class Alliance(commands.Cog):
             return await ctx.send(_("Your alliance does not own a city."))
         embed = discord.Embed(
             title=_("{city}'s defenses").format(city=city_name),
-            colour=self.bot.config.primary_colour,
+            colour=self.bot.config.game.primary_colour,
         ).set_thumbnail(url="https://idlerpg.xyz/fortress.png")
         i = None
         for i in defenses:
@@ -608,7 +614,7 @@ class Alliance(commands.Cog):
             You cannot occupy a city if your alliance already owns one.
             Only the alliance leader can use this command."""
         )
-        if city not in self.bot.config.cities:
+        if city not in self.cities:
             return await ctx.send(_("Invalid city name."))
         async with self.bot.pool.acquire() as conn:
             num_units = await conn.fetchval(
@@ -672,11 +678,11 @@ class Alliance(commands.Cog):
             Only the alliance leader can use this command.
             (This command has a cooldown of 2 hours.)"""
         )
-        if city not in self.bot.config.cities:
+        if city not in self.cities:
             await self.bot.reset_alliance_cooldown(ctx)
             return await ctx.send(_("Invalid city."))
 
-        if (y := await self.bot.redis.execute("GET", f"city:{city}")):
+        if (y := await self.bot.redis.execute("GET", f"city:{city}")) :
             y = y.decode()
             if y == "cooldown":
                 text = _("**{city}** has just been attacked. Have some mercy!").format(
@@ -707,7 +713,7 @@ class Alliance(commands.Cog):
             await self.bot.reset_alliance_cooldown(ctx)
             return await ctx.send(_("The city is without defenses already."))
 
-        if (y := await self.bot.redis.execute("GET", f"city:{city}")):
+        if (y := await self.bot.redis.execute("GET", f"city:{city}")) :
             y = y.decode()
             if y == "cooldown":
                 text = _("**{city}** has just been attacked. Have some mercy!").format(
@@ -798,7 +804,7 @@ class Alliance(commands.Cog):
                             defense=defense_target["name"],
                             city=city,
                         ),
-                        colour=self.bot.config.primary_colour,
+                        colour=self.bot.config.game.primary_colour,
                     )
                 )
                 if defenses:
@@ -825,7 +831,7 @@ class Alliance(commands.Cog):
                             damage=damage,
                             hp=defense_target["hp"],
                         ),
-                        colour=self.bot.config.primary_colour,
+                        colour=self.bot.config.game.primary_colour,
                     )
                 )
             if not defenses:  # gone
@@ -855,7 +861,7 @@ class Alliance(commands.Cog):
                         description=_("**{user}** got killed in {city}!").format(
                             user=attackers_target["user"], city=city
                         ),
-                        colour=self.bot.config.primary_colour,
+                        colour=self.bot.config.game.primary_colour,
                     )
                 )
             else:
@@ -872,7 +878,7 @@ class Alliance(commands.Cog):
                             damage=damage,
                             hp=attackers_target["hp"],
                         ),
-                        colour=self.bot.config.primary_colour,
+                        colour=self.bot.config.game.primary_colour,
                     )
                 )
 

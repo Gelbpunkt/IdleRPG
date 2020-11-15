@@ -63,7 +63,7 @@ class Races(commands.Cog):
                     " hate against enemies makes them attack efficient and"
                     " concentrated. Their attack and defense skills are pretty equal."
                 ),
-                color=self.bot.config.primary_colour,
+                color=self.bot.config.game.primary_colour,
             ),
             discord.Embed(
                 title=_("Dwarf"),
@@ -73,7 +73,7 @@ class Races(commands.Cog):
                     " equipment. Because of their reflexes, they have more defense than"
                     " attack. Want an ale?"
                 ),
-                color=self.bot.config.primary_colour,
+                color=self.bot.config.game.primary_colour,
             ),
             discord.Embed(
                 title=_("Elf"),
@@ -84,7 +84,7 @@ class Races(commands.Cog):
                     " can call for help and protection. They have more attack than"
                     " defense."
                 ),
-                color=self.bot.config.primary_colour,
+                color=self.bot.config.game.primary_colour,
             ),
             discord.Embed(
                 title=_("Orc"),
@@ -96,7 +96,7 @@ class Races(commands.Cog):
                     " only a bit, but a huge armour. Who cares about the damage as long"
                     " as you don't die?"
                 ),
-                color=self.bot.config.primary_colour,
+                color=self.bot.config.game.primary_colour,
             ),
             discord.Embed(
                 title=_("Jikill"),
@@ -106,7 +106,7 @@ class Races(commands.Cog):
                     " enough for their brain which can kill enemies. These sensitive"
                     " creatures are easily knocked out."
                 ),
-                color=self.bot.config.primary_colour,
+                color=self.bot.config.game.primary_colour,
             ),
         ]
         races = ["Human", "Dwarf", "Elf", "Orc", "Jikill"]

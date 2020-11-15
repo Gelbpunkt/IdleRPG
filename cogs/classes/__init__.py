@@ -22,6 +22,18 @@ import discord
 
 from discord.ext import commands
 
+from classes.classes import (
+    ALL_CLASSES_TYPES,
+    Mage,
+    Paragon,
+    Raider,
+    Ranger,
+    Ritualist,
+    Thief,
+    Warrior,
+)
+from classes.classes import from_string as class_from_string
+from classes.classes import get_class_evolves, get_first_evolution, get_name
 from classes.converters import ImageFormat, ImageUrl
 from cogs.shard_communication import next_day_cooldown
 from cogs.shard_communication import user_on_cooldown as user_cooldown
@@ -70,7 +82,7 @@ class Classes(commands.Cog):
                     "The tank class. Charge into battle with additional defense!\n+1"
                     " defense per evolution."
                 ),
-                color=self.bot.config.primary_colour,
+                color=self.bot.config.game.primary_colour,
             ),
             discord.Embed(
                 title=_("Thief"),
@@ -80,7 +92,7 @@ class Classes(commands.Cog):
                     " steal 10% of a random player's money, if successful.\n+8% success"
                     " chance per evolution."
                 ).format(prefix=ctx.prefix),
-                color=self.bot.config.primary_colour,
+                color=self.bot.config.game.primary_colour,
             ),
             discord.Embed(
                 title=_("Mage"),
@@ -88,7 +100,7 @@ class Classes(commands.Cog):
                     "Utilise powerful magic for stronger attacks.\n+1 damage per"
                     " evolution."
                 ),
-                color=self.bot.config.primary_colour,
+                color=self.bot.config.game.primary_colour,
             ),
             discord.Embed(
                 title=_("Ranger"),
@@ -97,7 +109,7 @@ class Classes(commands.Cog):
                     " `{prefix}pet` to interact with your pet and let it get items for"
                     " you.\n+3 minimum stat and +6 maximum stat per evolution."
                 ).format(prefix=ctx.prefix),
-                colour=self.bot.config.primary_colour,
+                colour=self.bot.config.game.primary_colour,
             ),
             discord.Embed(
                 title=_("Raider"),
@@ -106,7 +118,7 @@ class Classes(commands.Cog):
                     " Zerekiel.\nEvery evolution boosts your raidstats by an additional"
                     " 10%."
                 ),
-                colour=self.bot.config.primary_colour,
+                colour=self.bot.config.game.primary_colour,
             ),
             discord.Embed(
                 title=_("Ritualist"),
@@ -116,10 +128,10 @@ class Classes(commands.Cog):
                     " sacrifices are 5% more effective. They have twice the chance to"
                     " get loot from adventures."
                 ),
-                colour=self.bot.config.primary_colour,
+                colour=self.bot.config.game.primary_colour,
             ),
         ]
-        choices = ["Warrior", "Thief", "Mage", "Ranger", "Raider", "Ritualist"]
+        choices = [Warrior, Thief, Mage, Ranger, Raider, Ritualist]
         if await user_is_patron(self.bot, ctx.author):
             embeds.append(
                 discord.Embed(
@@ -128,16 +140,15 @@ class Classes(commands.Cog):
                         "Absorb the appreciation of the devs into your soul to power"
                         " up.\n+1 damage and defense per evolution."
                     ),
-                    color=self.bot.config.primary_colour,
+                    color=self.bot.config.game.primary_colour,
                 )
             )
-            choices.append("Paragon")
-        lines = [
-            self.bot.get_class_line(class_) for class_ in ctx.character_data["class"]
-        ]
+            choices.append(Paragon)
+        classes = [class_from_string(c) for c in ctx.character_data["class"]]
+        lines = [c.get_class_line() for c in classes if c]
         for line in lines:
             for e in embeds:
-                if _(line) == e.title:
+                if _(get_name(line)) == e.title:
                     embeds.remove(e)
             try:
                 choices.remove(line)
@@ -146,7 +157,7 @@ class Classes(commands.Cog):
         profession = await self.bot.paginator.ChoosePaginator(
             extras=embeds, choices=choices
         ).paginate(ctx)
-        profession_ = self.bot.config.classes[profession][0]
+        profession_ = get_first_evolution(profession).class_name()
         new_classes = copy(ctx.character_data["class"])
         new_classes[val] = profession_
         if not await ctx.confirm(
@@ -159,7 +170,7 @@ class Classes(commands.Cog):
                 )
                 if ctx.character_data["class"][val] == "No Class"
                 else _("This will cost **$5000**."),
-                profession=profession,
+                profession=get_name(profession),
             )
         ):
             return await ctx.send(_("Class selection cancelled."))
@@ -173,13 +184,13 @@ class Classes(commands.Cog):
                 await self.bot.cache.update_profile_cols_abs(
                     ctx.author.id, class_=new_classes
                 )
-                if profession == "Ranger":
+                if profession == Ranger:
                     await conn.execute(
                         'INSERT INTO pets ("user") VALUES ($1);', ctx.author.id
                     )
             await ctx.send(
                 _("Your new class is now `{profession}`.").format(
-                    profession=_(profession)
+                    profession=_(get_name(profession))
                 )
             )
         else:
@@ -201,7 +212,7 @@ class Classes(commands.Cog):
                     ctx.author.id, class_=new_classes, money=-5000
                 )
                 await conn.execute('DELETE FROM pets WHERE "user"=$1;', ctx.author.id)
-                if profession == "Ranger":
+                if profession == Ranger:
                     await conn.execute(
                         'INSERT INTO pets ("user") VALUES ($1);', ctx.author.id
                     )
@@ -217,7 +228,7 @@ class Classes(commands.Cog):
                 _(
                     "You selected the class `{profession}`. **$5000** was taken off"
                     " your balance."
-                ).format(profession=_(profession))
+                ).format(profession=_(get_name(profession)))
             )
 
     @has_char()
@@ -300,17 +311,20 @@ class Classes(commands.Cog):
             This will only show the names, not the respective benefits."""
         )
         embeds = []
-        for class_, evos in self.bot.config.classes.items():
-            evos = [f"Level {idx * 5}: {evo}" for idx, evo in enumerate(evos)]
+        for name, class_ in ALL_CLASSES_TYPES.items():
+            evos = [
+                f"Level {idx * 5}: {evo.class_name()}"
+                for idx, evo in enumerate(get_class_evolves(class_))
+            ]
             embed = discord.Embed(
-                title=class_,
+                title=name,
                 description="\n".join(evos),
-                colour=self.bot.config.primary_colour,
+                colour=self.bot.config.game.primary_colour,
             )
             embeds.append(embed)
         await self.bot.paginator.Paginator(extras=embeds).paginate(ctx)
 
-    @is_class("Thief")
+    @is_class(Thief)
     @has_char()
     @user_cooldown(3600)
     @commands.command(brief=_("Steal money"))
@@ -332,11 +346,14 @@ class Classes(commands.Cog):
             bonus = buildings["thief_building"] * 5
         else:
             bonus = 0
+        grade = 0
+        for class_ in ctx.character_data["class"]:
+            c = class_from_string(class_)
+            if c and c.in_class_line(Thief):
+                grade = c.class_grade()
         if random.randint(0, 99) in range(
             1,
-            self.bot.get_class_grade_from(ctx.character_data["class"], "Thief") * 8
-            + 1
-            + bonus,
+            grade * 8 + 1 + bonus,
         ):
             async with self.bot.pool.acquire() as conn:
                 usr = await conn.fetchrow(
@@ -386,7 +403,7 @@ class Classes(commands.Cog):
         else:
             await ctx.send(_("Your attempt to steal money wasn't successful."))
 
-    @is_class("Ranger")
+    @is_class(Ranger)
     @has_char()
     @commands.group(invoke_without_command=True, brief=_("Interact with your pet"))
     @update_pet()
@@ -404,7 +421,11 @@ class Classes(commands.Cog):
 
             Only rangers can use this command."""
         )
-        petlvl = self.bot.get_class_grade_from(ctx.character_data["class"], "Ranger")
+        petlvl = 0
+        for class_ in ctx.character_data["class"]:
+            c = class_from_string(class_)
+            if c and c.in_class_line(Ranger):
+                petlvl = c.class_grade()
         em = discord.Embed(title=_("{user}'s pet").format(user=ctx.disp))
         em.add_field(name=_("Name"), value=ctx.pet_data["name"], inline=False)
         em.add_field(name=_("Level"), value=petlvl, inline=False)
@@ -419,7 +440,7 @@ class Classes(commands.Cog):
         await ctx.send(embed=em)
 
     @update_pet()
-    @is_class("Ranger")
+    @is_class(Ranger)
     @has_char()
     @pet.command(brief=_("Feed your pet"))
     @locale_doc
@@ -477,7 +498,7 @@ class Classes(commands.Cog):
         )
 
     @update_pet()
-    @is_class("Ranger")
+    @is_class(Ranger)
     @has_char()
     @pet.command(brief=_("Give your pet something to drink."))
     @locale_doc
@@ -535,7 +556,7 @@ class Classes(commands.Cog):
         )
 
     @update_pet()
-    @is_class("Ranger")
+    @is_class(Ranger)
     @has_char()
     @user_cooldown(21600)
     @pet.command(aliases=["caress", "hug", "kiss"], brief=_("Love your pet"))
@@ -562,7 +583,7 @@ class Classes(commands.Cog):
         )
 
     @update_pet()
-    @is_class("Ranger")
+    @is_class(Ranger)
     @has_char()
     @user_cooldown(21600)  # We are mean, indeed
     @pet.command(aliases=["fun"], brief=_("Play with your pet"))
@@ -602,7 +623,7 @@ class Classes(commands.Cog):
         )
 
     @update_pet()
-    @is_class("Ranger")
+    @is_class(Ranger)
     @has_char()
     @pet.command(aliases=["name"], brief=_("Rename your pet"))
     @locale_doc
@@ -620,7 +641,7 @@ class Classes(commands.Cog):
         await ctx.send(_("Pet name updated."))
 
     @update_pet()
-    @is_class("Ranger")
+    @is_class(Ranger)
     @has_char()
     @pet.command(brief=_("Set a new image for your pet"))
     @locale_doc
@@ -658,7 +679,7 @@ class Classes(commands.Cog):
         await ctx.send(_("Your pet's image was successfully updated."))
 
     @update_pet()
-    @is_class("Ranger")
+    @is_class(Ranger)
     @has_char()
     @next_day_cooldown()
     @pet.command(brief=_("Let your pet hunt a weapon"))
@@ -683,7 +704,11 @@ class Classes(commands.Cog):
             Only rangers can use this command.
             (This command has a cooldown until 12am UTC.)"""
         )
-        petlvl = self.bot.get_class_grade_from(ctx.character_data["class"], "Ranger")
+        petlvl = 0
+        for class_ in ctx.character_data["class"]:
+            c = class_from_string(class_)
+            if c and c.in_class_line(Ranger):
+                petlvl = c.class_grade()
         joy_multiply = Decimal(ctx.pet_data["joy"] / 100)
         luck_multiply = ctx.character_data["luck"]
         minstat = round(petlvl * 3 * luck_multiply * joy_multiply)

@@ -103,7 +103,7 @@ class Scheduling(commands.Cog):
         for chunk in reminder_chunks:
             embed = discord.Embed(
                 title=_("{user}'s reminders").format(user=ctx.disp),
-                color=self.bot.config.primary_colour,
+                color=self.bot.config.game.primary_colour,
             )
             for reminder in chunk:
                 time = reminder["end"] - now

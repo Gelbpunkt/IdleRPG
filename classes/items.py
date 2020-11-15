@@ -15,7 +15,10 @@ GNU Affero General Public License for more details.
 You should have received a copy of the GNU Affero General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
+from __future__ import annotations
+
 from enum import Enum
+from typing import Optional
 
 
 class Hand(Enum):
@@ -39,6 +42,10 @@ class ItemType(Enum):
     Hammer = "Hammer"
     Scythe = "Scythe"
     Howlet = "Howlet"
+
+    @classmethod
+    def from_string(cls, name: str) -> Optional[ItemType]:
+        return cls.__members__.get(name, None)
 
     def get_hand(self) -> Hand:
         if self in TWO_HANDED_ITEM_TYPES:

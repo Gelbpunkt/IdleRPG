@@ -106,7 +106,7 @@ Server created at: `{created_at}`"""
         if len(prefix) > 10:
             return await ctx.send(_("Prefixes may not be longer than 10 characters."))
         if self.bot.all_prefixes.get(ctx.guild.id):
-            if prefix == self.bot.config.global_prefix:
+            if prefix == self.bot.config.bot.global_prefix:
                 del self.bot.all_prefixes[ctx.guild.id]
                 await self.bot.pool.execute(
                     'DELETE FROM server WHERE "id"=$1;', ctx.guild.id
@@ -121,7 +121,7 @@ Server created at: `{created_at}`"""
                 ctx.guild.id,
                 prefix,
             )
-        if prefix != self.bot.config.global_prefix:
+        if prefix != self.bot.config.bot.global_prefix:
             self.bot.all_prefixes[ctx.guild.id] = prefix
         await ctx.send(_("Prefix changed to `{prefix}`.").format(prefix=prefix))
 
@@ -139,7 +139,9 @@ Server created at: `{created_at}`"""
     @locale_doc
     async def prefix(self, ctx):
         _("""View the bot prefix for the server""")
-        prefix_ = self.bot.all_prefixes.get(ctx.guild.id, self.bot.config.global_prefix)
+        prefix_ = self.bot.all_prefixes.get(
+            ctx.guild.id, self.bot.config.bot.global_prefix
+        )
         await ctx.send(
             _(
                 "The prefix for server **{server}** is"

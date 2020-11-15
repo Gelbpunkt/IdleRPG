@@ -29,6 +29,7 @@ from discord.ext import commands, menus
 
 import utils.checks
 
+from classes.classes import get_name
 from classes.converters import (
     DateOutOfRange,
     InvalidCoinSide,
@@ -52,9 +53,9 @@ from utils.paginator import NoChoice
 try:
     import sentry_sdk
 except ModuleNotFoundError:
-    SENTRY_SUPPORT = False
+    SENTRY_AVAILABLE = False
 else:
-    SENTRY_SUPPORT = True
+    SENTRY_AVAILABLE = True
 
 
 def before_send(event, hint):
@@ -71,8 +72,10 @@ class Errorhandler(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
         bot.on_command_error = self._on_command_error
-        if SENTRY_SUPPORT:
-            sentry_sdk.init(self.bot.config.sentry_url, before_send=before_send)
+        sentry_url = self.bot.config.statistics.sentry_url
+        self.SENTRY_SUPPORT = SENTRY_AVAILABLE and sentry_url is not None
+        if self.SENTRY_SUPPORT:
+            sentry_sdk.init(sentry_url, before_send=before_send)
 
     async def _on_command_error(self, ctx, error, bypass=False):
         if (
@@ -195,7 +198,7 @@ class Errorhandler(commands.Cog):
                         description=_(
                             ":x: You don't have the permissions to use this command. It"
                             " is thought for {error} class users."
-                        ).format(error=error),
+                        ).format(error=get_name(error)),
                         colour=0xFF0000,
                     )
                 )
@@ -340,7 +343,7 @@ class Errorhandler(commands.Cog):
                         " try again."
                     )
                 )
-            if not SENTRY_SUPPORT:
+            if not self.SENTRY_SUPPORT:
                 print("In {}:".format(ctx.command.qualified_name), file=sys.stderr)
                 traceback.print_tb(error.original.__traceback__)
                 print(

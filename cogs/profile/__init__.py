@@ -26,7 +26,9 @@ from aiohttp import ContentTypeError
 from discord.ext import commands
 from discord.ext.commands.default import Author
 
+from classes.classes import from_string as class_from_string
 from classes.converters import IntFromTo, MemberWithCharacter, User, UserWithCharacter
+from classes.items import ALL_ITEM_TYPES, ItemType
 from cogs.help import chunks
 from cogs.shard_communication import user_on_cooldown as user_cooldown
 from utils import checks, colors
@@ -179,91 +181,89 @@ IdleRPG is a global bot, your characters are valid everywhere"""
             damage, armor = await self.bot.generate_stats(
                 targetid, v1, v2, classes=profile["class"], race=profile["race"]
             )
-            extras = (damage - v1, armor - v2)
-            sworddmg = f"{v1}{' (+' + str(extras[0]) + ')' if extras[0] else ''}"
-            shielddef = f"{v2}{' (+' + str(extras[1]) + ')' if extras[1] else ''}"
+        extras = (damage - v1, armor - v2)
+        sworddmg = f"{v1}{' (+' + str(extras[0]) + ')' if extras[0] else ''}"
+        shielddef = f"{v2}{' (+' + str(extras[1]) + ')' if extras[1] else ''}"
 
-            right_hand = "None Equipped"
-            left_hand = "None Equipped"
+        right_hand = "None Equipped"
+        left_hand = "None Equipped"
 
-            any_count = sum(1 for i in items if i["hand"] == "any")
-            if len(items) == 2 and any_count == 1 and items[0]["hand"] == "any":
-                items = [items[1], items[0]]
+        any_count = sum(1 for i in items if i["hand"] == "any")
+        if len(items) == 2 and any_count == 1 and items[0]["hand"] == "any":
+            items = [items[1], items[0]]
 
-            for i in items:
-                if i["hand"] == "both":
-                    right_hand, left_hand = i["name"], i["name"]
-                elif i["hand"] == "left":
-                    left_hand = i["name"]
-                elif i["hand"] == "right":
+        for i in items:
+            if i["hand"] == "both":
+                right_hand, left_hand = i["name"], i["name"]
+            elif i["hand"] == "left":
+                left_hand = i["name"]
+            elif i["hand"] == "right":
+                right_hand = i["name"]
+            elif i["hand"] == "any":
+                if right_hand == "None Equipped":
                     right_hand = i["name"]
-                elif i["hand"] == "any":
-                    if right_hand == "None Equipped":
-                        right_hand = i["name"]
-                    else:
-                        left_hand = i["name"]
-
-            color = profile["colour"]
-            color = [color["red"], color["green"], color["blue"], color["alpha"]]
-
-            url = f"{self.bot.config.okapi_url}/api/genprofile"
-
-            async with self.bot.trusted_session.post(
-                url,
-                json={
-                    "name": profile["name"],
-                    "color": color,
-                    "image": profile["background"],
-                    "race": profile["race"],
-                    "classes": profile["class"],
-                    "damage": sworddmg,
-                    "defense": shielddef,
-                    "sword_name": right_hand,
-                    "shield_name": left_hand,
-                    "level": f"{rpgtools.xptolevel(profile['xp'])}",
-                    "money": f"{profile['money']}",
-                    "pvp_wins": f"{profile['pvpwins']}",
-                    "marriage": i
-                    if (
-                        i := await rpgtools.lookup(
-                            self.bot, profile["marriage"], return_none=True
-                        )
-                    )
-                    else _("Not Married"),
-                    "guild": guild or _("No Guild"),
-                    "god": profile["god"] or _("No God"),
-                    "icons": [
-                        self.bot.get_class_line(c).lower() for c in profile["class"]
-                    ],
-                    "adventure": (
-                        "Adventure"
-                        f" {mission[0]}\n{mission[1] if not mission[2] else _('Finished')}"
-                    )
-                    if mission
-                    else _("No Mission"),
-                },
-            ) as req:
-                if req.status == 200:
-                    img = BytesIO(await req.read())
                 else:
-                    # Error, means try reading the response JSON error
-                    try:
-                        error_json = await req.json()
-                        return await ctx.send(
-                            _(
-                                "There was an error processing your image. Reason: {reason} ({detail})"
-                            ).format(
-                                reason=error_json["reason"], detail=error_json["detail"]
-                            )
+                    left_hand = i["name"]
+
+        color = profile["colour"]
+        color = [color["red"], color["green"], color["blue"], color["alpha"]]
+        classes = [class_from_string(c) for c in profile["class"]]
+        icons = [c.get_class_line_name().lower() if c else "none" for c in classes]
+
+        url = f"{self.bot.config.external.okapi_url}/api/genprofile"
+
+        async with self.bot.trusted_session.post(
+            url,
+            json={
+                "name": profile["name"],
+                "color": color,
+                "image": profile["background"],
+                "race": profile["race"],
+                "classes": profile["class"],
+                "damage": sworddmg,
+                "defense": shielddef,
+                "sword_name": right_hand,
+                "shield_name": left_hand,
+                "level": f"{rpgtools.xptolevel(profile['xp'])}",
+                "money": f"{profile['money']}",
+                "pvp_wins": f"{profile['pvpwins']}",
+                "marriage": i
+                if (
+                    i := await rpgtools.lookup(
+                        self.bot, profile["marriage"], return_none=True
+                    )
+                )
+                else _("Not Married"),
+                "guild": guild or _("No Guild"),
+                "god": profile["god"] or _("No God"),
+                "icons": icons,
+                "adventure": (
+                    "Adventure"
+                    f" {mission[0]}\n{mission[1] if not mission[2] else _('Finished')}"
+                )
+                if mission
+                else _("No Mission"),
+            },
+        ) as req:
+            if req.status == 200:
+                img = BytesIO(await req.read())
+            else:
+                # Error, means try reading the response JSON error
+                try:
+                    error_json = await req.json()
+                    return await ctx.send(
+                        _(
+                            "There was an error processing your image. Reason: {reason} ({detail})"
+                        ).format(
+                            reason=error_json["reason"], detail=error_json["detail"]
                         )
-                    except ContentTypeError:
-                        return await ctx.send(
-                            _("Unexpected internal error when generating image.")
-                        )
-                    except Exception:
-                        return await ctx.send(
-                            _("Unexpected error when generating image.")
-                        )
+                    )
+                except ContentTypeError:
+                    return await ctx.send(
+                        _("Unexpected internal error when generating image.")
+                    )
+                except Exception:
+                    return await ctx.send(_("Unexpected error when generating image."))
         await ctx.send(file=discord.File(fp=img, filename="Profile.png"))
 
     @commands.command(
@@ -526,12 +526,13 @@ IdleRPG is a global bot, your characters are valid everywhere"""
             return await ctx.send(
                 _("Make sure that the `highest` value is greater than `lowest`.")
             )
-        if itemtype not in self.bot.config.item_types + ["All"]:
+        itemtype_cls = ItemType.from_string(itemtype)
+        if itemtype != "All" and itemtype_cls is None:
             return await ctx.send(
                 _(
                     "Please select a valid item type or `all`. Available types:"
                     " `{all_types}`"
-                ).format(all_types=", ".join(self.bot.config.item_types))
+                ).format(all_types=", ".join([t.name for t in ALL_ITEM_TYPES]))
             )
         if itemtype == "All":
             ret = await self.bot.pool.fetch(
@@ -624,7 +625,7 @@ IdleRPG is a global bot, your characters are valid everywhere"""
 
             If you choose money, you will get the loots' combined value in cash. For XP, you will get 1/4th of the combined value in XP."""
         )
-        if (none_given := (len(loot_ids) == 0)):
+        if (none_given := (len(loot_ids) == 0)) :
             value, count = await self.bot.pool.fetchval(
                 'SELECT (SUM("value"), COUNT(*)) FROM loot WHERE "user"=$1',
                 ctx.author.id,

@@ -122,7 +122,10 @@ class Werewolf(commands.Cog):
         ).format(prefix=ctx.prefix)
         mode_emojis = {"Huntergame": "🔫", "Valentines": "💕"}
         mode_emoji = mode_emojis.get(mode, "")
-        if ctx.channel.id == self.bot.config.official_tournament_channel_id:
+        if (
+            self.bot.config.game.official_tournament_channel_id
+            and ctx.channel.id == self.bot.config.game.official_tournament_channel_id
+        ):
             # TODO: Determine threshold players when wolves can kill 2 villagers per night in mass-games
             id_ = await self.bot.start_joins()
             url = f"https://join.idlerpg.xyz/{id_}"
@@ -143,7 +146,7 @@ class Werewolf(commands.Cog):
                             min_players=min_players,
                         ),
                         url=url,
-                        colour=self.bot.config.primary_colour,
+                        colour=self.bot.config.game.primary_colour,
                     )
                     .set_author(
                         name=str(ctx.author), icon_url=ctx.author.avatar_url_as(size=64)
@@ -181,7 +184,7 @@ class Werewolf(commands.Cog):
                             min_players=min_players,
                             num=len(players),
                         ),
-                        colour=self.bot.config.primary_colour,
+                        colour=self.bot.config.game.primary_colour,
                     )
                     .set_author(
                         name=str(ctx.author), icon_url=ctx.author.avatar_url_as(size=64)
@@ -225,7 +228,7 @@ class Werewolf(commands.Cog):
                             min_players=min_players,
                             num=len(players),
                         ),
-                        colour=self.bot.config.primary_colour,
+                        colour=self.bot.config.game.primary_colour,
                     )
                     .set_author(
                         name=str(ctx.author), icon_url=ctx.author.avatar_url_as(size=64)
@@ -292,7 +295,7 @@ class Werewolf(commands.Cog):
 `Valentines`: There are multiple lovers or couples randomly chosen at the start of the game. A chain of lovers might exist upon the Amor's arrows. If the remaining players are in a single chain of lovers, they all win.
 `IdleRPG`: (based on Imbalanced mode) New roles are available: Paragon, Raider, Ritualist, Lawyer, Troublemaker, War Veteran, Wolf Shaman, Wolf Necromancer, Superspreader."""
                 ),
-                colour=self.bot.config.primary_colour,
+                colour=self.bot.config.game.primary_colour,
             ).set_author(
                 name=str(ctx.author), icon_url=ctx.author.avatar_url_as(size=64)
             )
@@ -313,7 +316,7 @@ class Werewolf(commands.Cog):
 `Fast`: All major action timers are limited to 45 seconds and number of days to play is dependent on the number of players plus 3 days. This means not killing anyone every night or every election will likely end the game with no winners.
 `Blitz`: Warning: This is a faster game speed suitable for experienced players. All action timers are limited to 30 seconds and number of days to play is dependent on the number of players plus 3 days. This means not killing anyone every night or every election will likely end the game with no winners."""
                 ),
-                colour=self.bot.config.primary_colour,
+                colour=self.bot.config.game.primary_colour,
             ).set_author(
                 name=str(ctx.author), icon_url=ctx.author.avatar_url_as(size=64)
             )
@@ -446,7 +449,7 @@ class Werewolf(commands.Cog):
                     " the Ambiguous, and\n4. the Loners.\n**The available roles are:**"
                 ),
                 url="https://wiki.idlerpg.xyz/index.php?title=Werewolf",
-                colour=self.bot.config.primary_colour,
+                colour=self.bot.config.game.primary_colour,
             ).set_author(
                 name=str(ctx.author), icon_url=ctx.author.avatar_url_as(size=64)
             )
@@ -476,7 +479,7 @@ class Werewolf(commands.Cog):
             embed=discord.Embed(
                 title=search_role.title().replace("_", " "),
                 description=ROLE_DESC[ROLES[search_role]],
-                colour=self.bot.config.primary_colour,
+                colour=self.bot.config.game.primary_colour,
             )
             .add_field(
                 name=_("Side:"),

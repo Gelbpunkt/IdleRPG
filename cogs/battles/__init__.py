@@ -25,6 +25,8 @@ import discord
 
 from discord.ext import commands
 
+from classes.classes import Ranger
+from classes.classes import from_string as class_from_string
 from classes.converters import IntGreaterThan, MemberConverter
 from cogs.shard_communication import user_on_cooldown as user_cooldown
 from utils import random
@@ -287,7 +289,7 @@ class Battles(commands.Cog):
         )
 
         embed = discord.Embed(
-            description=battle_log[0][1], color=self.bot.config.primary_colour
+            description=battle_log[0][1], color=self.bot.config.game.primary_colour
         )
 
         log_message = await ctx.send(
@@ -333,7 +335,7 @@ class Battles(commands.Cog):
                     p2=players[1]["user"],
                     hp2=players[1]["hp"],
                 ),
-                color=self.bot.config.primary_colour,
+                color=self.bot.config.game.primary_colour,
             )
 
             for line in battle_log:
@@ -491,8 +493,13 @@ class Battles(commands.Cog):
             await self.bot.cache.update_profile_cols_rel(enemy_.id, money=-money)
 
             for p in players:
-                c = await self.bot.cache.get_profile_col(p.id, "class", conn=conn)
-                if self.bot.in_class_line(c, "Ranger"):
+                classes = [
+                    class_from_string(i)
+                    for i in await self.bot.cache.get_profile_col(
+                        p.id, "class", conn=conn
+                    )
+                ]
+                if any(c.in_class_line(Ranger) for c in classes if c):
                     players[p]["hp"] = 120
                 else:
                     players[p]["hp"] = 100
@@ -511,7 +518,7 @@ class Battles(commands.Cog):
             _("Battle {p1} vs {p2}").format(p1=ctx.author.mention, p2=enemy_.mention),
             embed=discord.Embed(
                 title=_("Let the battle begin!"),
-                color=self.bot.config.primary_colour,
+                color=self.bot.config.game.primary_colour,
             ),
         )
 

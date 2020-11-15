@@ -69,7 +69,10 @@ class Tournament(commands.Cog):
         )
         await self.bot.cache.update_profile_cols_rel(ctx.author.id, money=-prize)
 
-        if ctx.channel.id == self.bot.config.official_tournament_channel_id:
+        if (
+            self.bot.config.game.official_tournament_channel_id
+            and ctx.channel.id == self.bot.config.game.official_tournament_channel_id
+        ):
             id_ = await self.bot.start_joins()
             await ctx.send(
                 "A mass-tournament has been started. Please join at"
@@ -241,7 +244,10 @@ class Tournament(commands.Cog):
         )
         await self.bot.cache.update_profile_cols_rel(ctx.author.id, money=-prize)
 
-        if ctx.channel.id == self.bot.config.official_tournament_channel_id:
+        if (
+            self.bot.config.game.official_tournament_channel_id
+            and ctx.channel.id == self.bot.config.game.official_tournament_channel_id
+        ):
             id_ = await self.bot.start_joins()
             await ctx.send(
                 "A mass-raidtournament has been started. Please join at"
@@ -356,7 +362,7 @@ class Tournament(commands.Cog):
 
                 embed = discord.Embed(
                     description=battle_log[0][1],
-                    color=self.bot.config.primary_colour,
+                    color=self.bot.config.game.primary_colour,
                 )
 
                 log_message = await ctx.send(embed=embed)
@@ -403,7 +409,7 @@ class Tournament(commands.Cog):
                             p2=players[1]["user"],
                             hp2=players[1]["hp"],
                         ),
-                        color=self.bot.config.primary_colour,
+                        color=self.bot.config.game.primary_colour,
                     )
 
                     for line in battle_log:

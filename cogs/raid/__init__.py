@@ -25,6 +25,8 @@ import discord
 
 from discord.ext import commands
 
+from classes.classes import Raider
+from classes.classes import from_string as class_from_string
 from classes.converters import IntGreaterThan
 from cogs.shard_communication import user_on_cooldown as user_cooldown
 from utils import random
@@ -53,7 +55,7 @@ def raid_free():
 def is_cm():
     def predicate(ctx) -> bool:
         return (
-            ctx.guild.id == ctx.bot.config.support_server_id
+            ctx.guild.id == ctx.bot.config.game.support_server_id
             and 491353140042530826 in [r.id for r in ctx.author.roles]
         )
 
@@ -120,19 +122,20 @@ class Raid(commands.Cog):
         await self.set_raid_timer()
         await self.bot.session.get(
             "https://raid.idlerpg.xyz/toggle",
-            headers={"Authorization": self.bot.config.raidauth},
+            headers={"Authorization": self.bot.config.external.raidauth},
         )
         role = discord.utils.get(ctx.guild.roles, name="Ruby Donators")
         role2 = discord.utils.get(ctx.guild.roles, name="Diamond Donators")
         users = [u.id for u in role.members + role2.members]
         await self.bot.session.post(
             "https://raid.idlerpg.xyz/autosignup",
-            headers={"Authorization": self.bot.config.raidauth},
+            headers={"Authorization": self.bot.config.external.raidauth},
             json={"users": users},
         )
         self.boss = {"hp": hp, "initial_hp": hp, "min_dmg": 100, "max_dmg": 500}
         await ctx.channel.set_permissions(
-            ctx.guild.get_role(self.bot.config.member_role), overwrite=self.read_only
+            ctx.guild.get_role(self.bot.config.game.member_role),
+            overwrite=self.read_only,
         )
 
         fi = discord.File("assets/other/dragon.jpg")
@@ -146,7 +149,7 @@ class Raid(commands.Cog):
                 " join [click"
                 " here](https://discord.com/oauth2/authorize?client_id=453963965521985536&scope=identify&response_type=code&redirect_uri=https://raid.idlerpg.xyz/callback)!"
             ),
-            color=self.bot.config.primary_colour,
+            color=self.bot.config.game.primary_colour,
         )
         em.set_image(url="attachment://dragon.jpg")
         em.set_thumbnail(url=ctx.author.avatar_url)
@@ -154,7 +157,7 @@ class Raid(commands.Cog):
         spawnmsg = await ctx.send(embed=em, file=fi)
         self.boss.update(message=spawnmsg.id)
 
-        if not self.bot.config.is_beta:
+        if not self.bot.config.bot.is_beta:
             summary_channel = self.bot.get_channel(506_167_065_464_406_041)
             raid_ping = await summary_channel.send(
                 "@everyone Zerekiel spawned! 15 Minutes until he is vulnerable...\nUse"
@@ -193,7 +196,7 @@ class Raid(commands.Cog):
 
         async with self.bot.session.get(
             "https://raid.idlerpg.xyz/joined",
-            headers={"Authorization": self.bot.config.raidauth},
+            headers={"Authorization": self.bot.config.external.raidauth},
         ) as r:
             raid_raw = await r.json()
         async with self.bot.pool.acquire() as conn:
@@ -279,7 +282,7 @@ class Raid(commands.Cog):
             summary_duration = f"{minutes} minutes, {seconds} seconds"
 
             await ctx.channel.set_permissions(
-                ctx.guild.get_role(self.bot.config.member_role),
+                ctx.guild.get_role(self.bot.config.game.member_role),
                 overwrite=self.allow_sending,
             )
             highest_bid = [
@@ -402,11 +405,12 @@ class Raid(commands.Cog):
 
         await asyncio.sleep(30)
         await ctx.channel.set_permissions(
-            ctx.guild.get_role(self.bot.config.member_role), overwrite=self.deny_sending
+            ctx.guild.get_role(self.bot.config.game.member_role),
+            overwrite=self.deny_sending,
         )
         await self.clear_raid_timer()
 
-        if not self.bot.config.is_beta:
+        if not self.bot.config.bot.is_beta:
             summary = (
                 "**Raid result:**\n"
                 f"Emoji_here Health: **{self.boss['initial_hp']:,.0f}**\n"
@@ -445,7 +449,7 @@ class Raid(commands.Cog):
                 "The evil god will be vulnerable in 15 Minutes\n\nUse"
                 f" https://join.idlerpg.xyz/{id_} to join the fight!"
             ),
-            color=self.bot.config.primary_colour,
+            color=self.bot.config.game.primary_colour,
         )
         em.set_image(url="attachment://cthulhu.jpg")
         em.set_thumbnail(url=ctx.author.avatar_url)
@@ -549,10 +553,11 @@ class Raid(commands.Cog):
         await self.set_raid_timer()
         await self.bot.session.get(
             "https://raid.idlerpg.xyz/toggle",
-            headers={"Authorization": self.bot.config.raidauth},
+            headers={"Authorization": self.bot.config.external.raidauth},
         )
         await ctx.channel.set_permissions(
-            ctx.guild.get_role(self.bot.config.member_role), overwrite=self.read_only
+            ctx.guild.get_role(self.bot.config.game.member_role),
+            overwrite=self.read_only,
         )
         await ctx.send(
             """
@@ -565,7 +570,7 @@ Quick and ugly: <https://discord.com/oauth2/authorize?client_id=4539639655219855
 """,
             file=discord.File("assets/other/guilt.jpg"),
         )
-        if not self.bot.config.is_beta:
+        if not self.bot.config.bot.is_beta:
             await asyncio.sleep(300)
             await ctx.send("**The terror will begin in 10 minutes**")
             await asyncio.sleep(300)
@@ -585,7 +590,7 @@ Quick and ugly: <https://discord.com/oauth2/authorize?client_id=4539639655219855
 
         async with self.bot.session.get(
             "https://raid.idlerpg.xyz/joined",
-            headers={"Authorization": self.bot.config.raidauth},
+            headers={"Authorization": self.bot.config.external.raidauth},
         ) as r:
             raid_raw = await r.json()
         async with self.bot.pool.acquire() as conn:
@@ -686,7 +691,7 @@ Quick and ugly: <https://discord.com/oauth2/authorize?client_id=4539639655219855
         await self.set_raid_timer()
         await self.bot.session.get(
             "https://raid.idlerpg.xyz/toggle",
-            headers={"Authorization": self.bot.config.raidauth},
+            headers={"Authorization": self.bot.config.external.raidauth},
         )
         scrael = [{"hp": random.randint(80, 100), "id": i + 1} for i in range(scrael)]
         await ctx.send(
@@ -700,7 +705,7 @@ Quick and ugly: <https://discord.com/oauth2/authorize?client_id=4539639655219855
 """,
             file=discord.File("assets/other/cthae.jpg"),
         )
-        if not self.bot.config.is_beta:
+        if not self.bot.config.bot.is_beta:
             await asyncio.sleep(300)
             await ctx.send("**The scrael arrive in 10 minutes**")
             await asyncio.sleep(300)
@@ -721,7 +726,7 @@ Quick and ugly: <https://discord.com/oauth2/authorize?client_id=4539639655219855
             await asyncio.sleep(60)
         async with self.bot.session.get(
             "https://raid.idlerpg.xyz/joined",
-            headers={"Authorization": self.bot.config.raidauth},
+            headers={"Authorization": self.bot.config.external.raidauth},
         ) as r:
             raid_raw = await r.json()
         async with self.bot.pool.acquire() as conn:
@@ -856,11 +861,12 @@ Quick and ugly: <https://discord.com/oauth2/authorize?client_id=4539639655219855
         await self.set_raid_timer()
         await self.bot.session.get(
             "https://raid.idlerpg.xyz/toggle",
-            headers={"Authorization": self.bot.config.raidauth},
+            headers={"Authorization": self.bot.config.external.raidauth},
         )
         self.boss = {"hp": hp, "min_dmg": 100, "max_dmg": 500}
         await ctx.channel.set_permissions(
-            ctx.guild.get_role(self.bot.config.member_role), overwrite=self.read_only
+            ctx.guild.get_role(self.bot.config.game.member_role),
+            overwrite=self.read_only,
         )
         await ctx.send(
             f"""
@@ -872,7 +878,7 @@ Quick and ugly: <https://discord.com/oauth2/authorize?client_id=4539639655219855
 """,
             file=discord.File("assets/other/guardian.jpg"),
         )
-        if not self.bot.config.is_beta:
+        if not self.bot.config.bot.is_beta:
             await asyncio.sleep(300)
             await ctx.send("**The guardian will be vulnerable in 10 minutes**")
             await asyncio.sleep(300)
@@ -894,7 +900,7 @@ Quick and ugly: <https://discord.com/oauth2/authorize?client_id=4539639655219855
 
         async with self.bot.session.get(
             "https://raid.idlerpg.xyz/joined",
-            headers={"Authorization": self.bot.config.raidauth},
+            headers={"Authorization": self.bot.config.external.raidauth},
         ) as r:
             raid_raw = await r.json()
         async with self.bot.pool.acquire() as conn:
@@ -975,7 +981,7 @@ Quick and ugly: <https://discord.com/oauth2/authorize?client_id=4539639655219855
             await ctx.send("The raid was all wiped!")
         elif self.boss["hp"] < 1:
             await ctx.channel.set_permissions(
-                ctx.guild.get_role(self.bot.config.member_role),
+                ctx.guild.get_role(self.bot.config.game.member_role),
                 overwrite=self.allow_sending,
             )
             winner = random.choice(list(raid.keys()))
@@ -1013,7 +1019,8 @@ Quick and ugly: <https://discord.com/oauth2/authorize?client_id=4539639655219855
 
         await asyncio.sleep(30)
         await ctx.channel.set_permissions(
-            ctx.guild.get_role(self.bot.config.member_role), overwrite=self.deny_sending
+            ctx.guild.get_role(self.bot.config.game.member_role),
+            overwrite=self.deny_sending,
         )
         await self.clear_raid_timer()
         self.boss = None
@@ -1026,10 +1033,11 @@ Quick and ugly: <https://discord.com/oauth2/authorize?client_id=4539639655219855
         await self.set_raid_timer()
         await self.bot.session.get(
             "https://raid.idlerpg.xyz/toggle",
-            headers={"Authorization": self.bot.config.raidauth},
+            headers={"Authorization": self.bot.config.external.raidauth},
         )
         await ctx.channel.set_permissions(
-            ctx.guild.get_role(self.bot.config.member_role), overwrite=self.read_only
+            ctx.guild.get_role(self.bot.config.game.member_role),
+            overwrite=self.read_only,
         )
         await ctx.send(
             """
@@ -1043,7 +1051,7 @@ Quick and ugly: <https://discord.com/oauth2/authorize?client_id=4539639655219855
 """,
             file=discord.File("assets/other/tet.png"),
         )
-        if not self.bot.config.is_beta:
+        if not self.bot.config.bot.is_beta:
             await asyncio.sleep(300)
             await ctx.send("**The game starts in 10 minutes**")
             await asyncio.sleep(300)
@@ -1065,7 +1073,7 @@ Quick and ugly: <https://discord.com/oauth2/authorize?client_id=4539639655219855
 
         async with self.bot.session.get(
             "https://raid.idlerpg.xyz/joined",
-            headers={"Authorization": self.bot.config.raidauth},
+            headers={"Authorization": self.bot.config.external.raidauth},
         ) as r:
             raid_raw = await r.json()
         async with self.bot.pool.acquire() as conn:
@@ -1138,7 +1146,7 @@ Quick and ugly: <https://discord.com/oauth2/authorize?client_id=4539639655219855
 
         if len(raid) == 1:
             await ctx.channel.set_permissions(
-                ctx.guild.get_role(self.bot.config.member_role),
+                ctx.guild.get_role(self.bot.config.game.member_role),
                 overwrite=self.allow_sending,
             )
             winner = raid[0]
@@ -1158,7 +1166,8 @@ Quick and ugly: <https://discord.com/oauth2/authorize?client_id=4539639655219855
 
         await asyncio.sleep(30)
         await ctx.channel.set_permissions(
-            ctx.guild.get_role(self.bot.config.member_role), overwrite=self.deny_sending
+            ctx.guild.get_role(self.bot.config.game.member_role),
+            overwrite=self.deny_sending,
         )
         await self.clear_raid_timer()
         self.boss = None
@@ -1171,11 +1180,12 @@ Quick and ugly: <https://discord.com/oauth2/authorize?client_id=4539639655219855
         await self.set_raid_timer()
         await self.bot.session.get(
             "https://raid.idlerpg.xyz/toggle",
-            headers={"Authorization": self.bot.config.raidauth},
+            headers={"Authorization": self.bot.config.external.raidauth},
         )
         self.boss = {"hp": hp, "min_dmg": 100, "max_dmg": 500}
         await ctx.channel.set_permissions(
-            ctx.guild.get_role(self.bot.config.member_role), overwrite=self.read_only
+            ctx.guild.get_role(self.bot.config.game.member_role),
+            overwrite=self.read_only,
         )
         await ctx.send(
             f"""
@@ -1190,7 +1200,7 @@ Quick and ugly: <https://discord.com/oauth2/authorize?client_id=4539639655219855
 """,
             file=discord.File("assets/other/hamburger.jpg"),
         )
-        if not self.bot.config.is_beta:
+        if not self.bot.config.bot.is_beta:
             await asyncio.sleep(300)
             await ctx.send("**The hamburger will be vulnerable in 10 minutes**")
             await asyncio.sleep(300)
@@ -1212,7 +1222,7 @@ Quick and ugly: <https://discord.com/oauth2/authorize?client_id=4539639655219855
 
         async with self.bot.session.get(
             "https://raid.idlerpg.xyz/joined",
-            headers={"Authorization": self.bot.config.raidauth},
+            headers={"Authorization": self.bot.config.external.raidauth},
         ) as r:
             raid_raw = await r.json()
         async with self.bot.pool.acquire() as conn:
@@ -1293,7 +1303,7 @@ Quick and ugly: <https://discord.com/oauth2/authorize?client_id=4539639655219855
             await ctx.send("The raid was all wiped!")
         elif self.boss["hp"] < 1:
             await ctx.channel.set_permissions(
-                ctx.guild.get_role(self.bot.config.member_role),
+                ctx.guild.get_role(self.bot.config.game.member_role),
                 overwrite=self.allow_sending,
             )
             highest_bid = [
@@ -1392,7 +1402,8 @@ Quick and ugly: <https://discord.com/oauth2/authorize?client_id=4539639655219855
 
         await asyncio.sleep(30)
         await ctx.channel.set_permissions(
-            ctx.guild.get_role(self.bot.config.member_role), overwrite=self.deny_sending
+            ctx.guild.get_role(self.bot.config.game.member_role),
+            overwrite=self.deny_sending,
         )
         await self.clear_raid_timer()
         self.boss = None
@@ -1405,11 +1416,12 @@ Quick and ugly: <https://discord.com/oauth2/authorize?client_id=4539639655219855
         await self.set_raid_timer()
         await self.bot.session.get(
             "https://raid.idlerpg.xyz/toggle",
-            headers={"Authorization": self.bot.config.raidauth},
+            headers={"Authorization": self.bot.config.external.raidauth},
         )
         self.boss = {"hp": hp, "min_dmg": 100, "max_dmg": 500}
         await ctx.channel.set_permissions(
-            ctx.guild.get_role(self.bot.config.member_role), overwrite=self.read_only
+            ctx.guild.get_role(self.bot.config.game.member_role),
+            overwrite=self.read_only,
         )
         await ctx.send(
             """
@@ -1424,7 +1436,7 @@ Quick and ugly: <https://discord.com/oauth2/authorize?client_id=4539639655219855
 """,
             file=discord.File("assets/other/cyberus.jpg"),
         )
-        if not self.bot.config.is_beta:
+        if not self.bot.config.bot.is_beta:
             await asyncio.sleep(300)
             await ctx.send("**Cyberus will be vulnerable in 10 minutes**")
             await asyncio.sleep(300)
@@ -1446,7 +1458,7 @@ Quick and ugly: <https://discord.com/oauth2/authorize?client_id=4539639655219855
 
         async with self.bot.session.get(
             "https://raid.idlerpg.xyz/joined",
-            headers={"Authorization": self.bot.config.raidauth},
+            headers={"Authorization": self.bot.config.external.raidauth},
         ) as r:
             raid_raw = await r.json()
         async with self.bot.pool.acquire() as conn:
@@ -1617,7 +1629,7 @@ Quick and ugly: <https://discord.com/oauth2/authorize?client_id=4539639655219855
             await ctx.send("The raid was all wiped!")
         elif self.boss["hp"] < 1:
             await ctx.channel.set_permissions(
-                ctx.guild.get_role(self.bot.config.member_role),
+                ctx.guild.get_role(self.bot.config.game.member_role),
                 overwrite=self.allow_sending,
             )
             highest_bid = [
@@ -1716,7 +1728,8 @@ Quick and ugly: <https://discord.com/oauth2/authorize?client_id=4539639655219855
 
         await asyncio.sleep(30)
         await ctx.channel.set_permissions(
-            ctx.guild.get_role(self.bot.config.member_role), overwrite=self.deny_sending
+            ctx.guild.get_role(self.bot.config.game.member_role),
+            overwrite=self.deny_sending,
         )
         await self.clear_raid_timer()
         self.boss = None
@@ -1729,11 +1742,12 @@ Quick and ugly: <https://discord.com/oauth2/authorize?client_id=4539639655219855
         await self.set_raid_timer()
         await self.bot.session.get(
             "https://raid.idlerpg.xyz/toggle",
-            headers={"Authorization": self.bot.config.raidauth},
+            headers={"Authorization": self.bot.config.external.raidauth},
         )
         self.boss = {"hp": hp, "min_dmg": 100, "max_dmg": 500}
         await ctx.channel.set_permissions(
-            ctx.guild.get_role(self.bot.config.member_role), overwrite=self.read_only
+            ctx.guild.get_role(self.bot.config.game.member_role),
+            overwrite=self.read_only,
         )
         await ctx.send(
             """
@@ -1746,7 +1760,7 @@ Quick and ugly: <https://discord.com/oauth2/authorize?client_id=4539639655219855
 """,
             file=discord.File("assets/other/asmodeus.png"),
         )
-        if not self.bot.config.is_beta:
+        if not self.bot.config.bot.is_beta:
             await asyncio.sleep(300)
             await ctx.send("**Asmodeus will be vulnerable in 10 minutes**")
             await asyncio.sleep(300)
@@ -1768,7 +1782,7 @@ Quick and ugly: <https://discord.com/oauth2/authorize?client_id=4539639655219855
 
         async with self.bot.session.get(
             "https://raid.idlerpg.xyz/joined",
-            headers={"Authorization": self.bot.config.raidauth},
+            headers={"Authorization": self.bot.config.external.raidauth},
         ) as r:
             raid_raw = await r.json()
         async with self.bot.pool.acquire() as conn:
@@ -1875,11 +1889,12 @@ Quick and ugly: <https://discord.com/oauth2/authorize?client_id=4539639655219855
         await self.set_raid_timer()
         await self.bot.session.get(
             "https://raid.idlerpg.xyz/toggle",
-            headers={"Authorization": self.bot.config.raidauth},
+            headers={"Authorization": self.bot.config.external.raidauth},
         )
         self.boss = {"hp": hp, "min_dmg": 100, "max_dmg": 500}
         await ctx.channel.set_permissions(
-            ctx.guild.get_role(self.bot.config.member_role), overwrite=self.read_only
+            ctx.guild.get_role(self.bot.config.game.member_role),
+            overwrite=self.read_only,
         )
         await ctx.send(
             f"""
@@ -1895,7 +1910,7 @@ Quick and ugly: <https://discord.com/oauth2/authorize?client_id=4539639655219855
 """,
             file=discord.File("assets/other/atheistus.jpg"),
         )
-        if not self.bot.config.is_beta:
+        if not self.bot.config.bot.is_beta:
             await asyncio.sleep(300)
             await ctx.send("**Atheistus will be vulnerable in 10 minutes**")
             await asyncio.sleep(300)
@@ -1917,7 +1932,7 @@ Quick and ugly: <https://discord.com/oauth2/authorize?client_id=4539639655219855
 
         async with self.bot.session.get(
             "https://raid.idlerpg.xyz/joined",
-            headers={"Authorization": self.bot.config.raidauth},
+            headers={"Authorization": self.bot.config.external.raidauth},
         ) as r:
             raid_raw = await r.json()
         async with self.bot.pool.acquire() as conn:
@@ -1987,7 +2002,7 @@ Quick and ugly: <https://discord.com/oauth2/authorize?client_id=4539639655219855
             await ctx.send("The raid was all wiped!")
         elif self.boss["hp"] < 1:
             await ctx.channel.set_permissions(
-                ctx.guild.get_role(self.bot.config.member_role),
+                ctx.guild.get_role(self.bot.config.game.member_role),
                 overwrite=self.allow_sending,
             )
             highest_bid = [
@@ -2086,7 +2101,8 @@ Quick and ugly: <https://discord.com/oauth2/authorize?client_id=4539639655219855
 
         await asyncio.sleep(30)
         await ctx.channel.set_permissions(
-            ctx.guild.get_role(self.bot.config.member_role), overwrite=self.deny_sending
+            ctx.guild.get_role(self.bot.config.game.member_role),
+            overwrite=self.deny_sending,
         )
         await self.clear_raid_timer()
         self.boss = None
@@ -2228,10 +2244,12 @@ Quick and ugly: <https://discord.com/oauth2/authorize?client_id=4539639655219855
         deff = ctx.character_data["defmultiply"]
         atkp = self.getpriceto(atk + Decimal("0.1"))
         deffp = self.getpriceto(deff + Decimal("0.1"))
-        if self.bot.in_class_line(ctx.character_data["class"], "Raider"):
-            tier = self.bot.get_class_grade_from(ctx.character_data["class"], "Raider")
-            atk += Decimal("0.1") * tier
-            deff += Decimal("0.1") * tier
+        classes = [class_from_string(c) for c in ctx.character_data["class"]]
+        for c in classes:
+            if c and c.in_class_line(Raider):
+                tier = c.class_grade()
+                atk += Decimal("0.1") * tier
+                deff += Decimal("0.1") * tier
         if buildings := await self.bot.get_city_buildings(ctx.character_data["guild"]):
             atk += Decimal("0.1") * buildings["raid_building"]
             deff += Decimal("0.1") * buildings["raid_building"]

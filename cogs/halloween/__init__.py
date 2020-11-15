@@ -178,7 +178,7 @@ class Halloween(commands.Cog):
         embed = discord.Embed(
             title=_("You gained an item!"),
             description=_("You found a new item when opening a trick-or-treat bag!"),
-            color=self.bot.config.primary_colour,
+            color=self.bot.config.game.primary_colour,
         )
         embed.set_thumbnail(url=ctx.author.avatar_url)
         embed.add_field(name=_("Name"), value=item["name"], inline=False)

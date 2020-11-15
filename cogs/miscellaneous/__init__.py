@@ -69,7 +69,9 @@ class Miscellaneous(commands.Cog):
     async def get_imgur_url(self, url: str):
         async with self.bot.session.post(
             "https://api.imgur.com/3/image",
-            headers={"Authorization": f"Client-ID {self.bot.config.imgur_token}"},
+            headers={
+                "Authorization": f"Client-ID {self.bot.config.external.imgur_token}"
+            },
             json={"image": url},
         ) as r:
             try:
@@ -921,7 +923,7 @@ Average hours of work: **{hours}**"""
         async with self.bot.session.post(
             "https://public-api.travitia.xyz/talk",
             json={"text": text, "context": context},
-            headers={"authorization": self.bot.config.traviapi},
+            headers={"authorization": self.bot.config.external.traviapi},
         ) as req:
             json = await req.json()
         await ctx.send(f"{ctx.author.mention}, {json['response']}")
@@ -944,7 +946,7 @@ Average hours of work: **{hours}**"""
             For example: `2013 12 25` is the same as `25 12 2013`, both meaning December 25th 2013."""
         )
         await ctx.send(
-            embed=discord.Embed(color=self.bot.config.primary_colour).set_image(
+            embed=discord.Embed(color=self.bot.config.game.primary_colour).set_image(
                 url=f"https://d1ejxu6vysztl5.cloudfront.net/comics/garfield/{date.year}/{date.strftime('%Y-%m-%d')}.gif?format=png"
             )
         )
@@ -973,7 +975,7 @@ Average hours of work: **{hours}**"""
 
         await ctx.send(
             embed=discord.Embed(
-                color=self.bot.config.primary_colour,
+                color=self.bot.config.game.primary_colour,
                 url="http://userfriendly.org",
                 title=_("Taken from userfriendly.org"),
                 description=str(date),

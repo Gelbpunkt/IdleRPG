@@ -30,9 +30,7 @@ from utils.i18n import _, locale_doc
 class Gods(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
-        self.bot.gods = {
-            god["user"]: name for name, god in self.bot.config.gods.items()
-        }
+        self.bot.gods = {god["user"]: god for god in self.bot.config.gods}
 
     @has_god()
     @has_char()
@@ -152,14 +150,14 @@ class Gods(commands.Cog):
             return await ctx.send("You became Godless and cannot follow a God anymore.")
         embeds = [
             discord.Embed(
-                title=name,
+                title=god["name"],
                 description=god["description"],
-                color=self.bot.config.primary_colour,
+                color=self.bot.config.game.primary_colour,
             )
-            for name, god in self.bot.config.gods.items()
+            for god in self.bot.gods.values()
         ]
         god = await self.bot.paginator.ChoosePaginator(
-            extras=embeds, choices=list(self.bot.config.gods.keys())
+            extras=embeds, choices=[g["name"] for g in self.bot.gods.values()]
         ).paginate(ctx)
 
         if not await ctx.confirm(
@@ -350,7 +348,7 @@ Are you sure you want to follow {god}?"""
             The result is attached as a text file."""
         )
         if ctx.author.id in self.bot.gods:
-            god = self.bot.gods[ctx.author.id]
+            god = self.bot.gods[ctx.author.id]["name"]
         elif not ctx.character_data["god"]:
             return await ctx.send(
                 _(

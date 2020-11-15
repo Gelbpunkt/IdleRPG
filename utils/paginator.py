@@ -42,7 +42,6 @@ from typing import TYPE_CHECKING, Any, AsyncGenerator, Optional, Union
 
 import discord
 
-from config import primary_colour
 from discord.ext import commands
 
 from utils.i18n import _
@@ -224,7 +223,7 @@ class Paginator:
 
         self.title = kwargs.get("title", None)
         self.description = kwargs.get("description", None)
-        self.colour = kwargs.get("colour", primary_colour)
+        self.colour = kwargs.get("colour", None)
         self.footer = kwargs.get("footer", None)
 
         self.length = kwargs.get("length", 10)
@@ -292,6 +291,8 @@ class Paginator:
         bot = ctx.bot
         author = ctx.author
 
+        if self.colour is None:
+            self.colour = ctx.bot.config.game.primary_colour
         self.base = await ctx.send(embed=self.pages[0])
 
         if len(self.pages) == 1:
@@ -913,7 +914,7 @@ class Choose:
         self.entries = entries
         self.title = title or "Untitled"
         self.footer = footer
-        self.colour = colour or primary_colour
+        self.colour = colour
         self.timeout = timeout
         self.return_index = return_index
 
@@ -924,6 +925,8 @@ class Choose:
             raise ValueError(
                 "There must be enough data to create at least 1 page for choosing."
             )
+        if self.colour is None:
+            self.colour = ctx.bot.config.game.primary_colour
         em = discord.Embed(title=self.title, description="", colour=self.colour)
         self.emojis = []
         for index, chunk in enumerate(self.entries):
@@ -1018,7 +1021,7 @@ class Akinator:
         self.title = title or "Untitled"
         self.footer_text = footer_text or discord.Embed.Empty
         self.footer_icon = footer_icon or discord.Embed.Empty
-        self.colour = colour or primary_colour
+        self.colour = colour
         self.timeout = timeout
         self.return_index = return_index
         self.undo = undo
@@ -1033,6 +1036,8 @@ class Akinator:
             raise ValueError(
                 "There must be enough data to create at least 1 page for choosing."
             )
+        if self.colour is None:
+            self.colour = ctx.bot.config.game.primary_colour
         em = discord.Embed(title=self.title, description="", colour=self.colour)
         self.emojis = []
         for index, chunk in enumerate(self.entries):
