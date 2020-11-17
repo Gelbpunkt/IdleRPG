@@ -491,8 +491,8 @@ class IdleHelp(commands.HelpCommand):
         e = discord.Embed(
             title=_(
                 "IdleRPG Help {version}",
-                color=self.context.bot.config.game.primary_colour,
             ).format(version=self.context.bot.version),
+            color=self.context.bot.config.game.primary_colour,
             url="https://idlerpg.xyz/",
         )
         e.set_author(
@@ -638,7 +638,7 @@ class IdleHelp(commands.HelpCommand):
                 f" {group.signature}"
             ),
             bot=self.context.bot,
-            color=self.color,
+            color=self.context.bot.config.game.primary_colour,
             description=_(group.help).format(prefix=self.context.prefix),
             cmds=list(group.commands),
         )

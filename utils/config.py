@@ -118,6 +118,7 @@ class GameSection:
         "bans",
         "banned_guilds",
         "support_server_id",
+        "gm_log_channel",
         "helpme_channel",
         "official_tournament_channel_id",
         "bot_event_channel",
@@ -143,7 +144,7 @@ class GameSection:
 
 
 class MusicSection:
-    __slots__ = {"query_endpoint", "resolve_endpoint"}
+    __slots__ = {"query_endpoint", "resolve_endpoint", "nodes"}
 
     def __init__(self, data: dict[str, Any]) -> None:
         self.query_endpoint = data.get("query_endpoint", None)
@@ -154,7 +155,19 @@ class MusicSection:
 class ConfigLoader:
     """ConfigLoader provides methods for loading and reading values from a .toml file."""
 
-    __slots__ = {"config", "values"}
+    __slots__ = {
+        "config",
+        "values",
+        "bot",
+        "external",
+        "database",
+        "statistics",
+        "launcher",
+        "game",
+        "cities",
+        "music",
+        "gods",
+    }
 
     def __init__(self, path: str) -> None:
         # the path to the config file of this loader

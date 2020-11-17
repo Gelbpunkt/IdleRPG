@@ -110,7 +110,7 @@ class GlobalEvents(commands.Cog):
         # If they were a donator, wipe that cache as well
         roles = [int(i) for i in data["d"]["roles"]]
         if int(data["d"]["guild_id"]) == self.bot.config.game.support_server_id and any(
-            role["id"] in roles for role in self.bot.config.external.donator_roles
+            role.id in roles for role in self.bot.config.external.donator_roles
         ):
             await self.bot.clear_donator_cache(user_id)
 
@@ -168,7 +168,9 @@ class GlobalEvents(commands.Cog):
 
     async def stats_updater(self):
         await self.bot.wait_until_ready()
-        if (self.bot.shard_count - 1 not in self.bot.shards.keys()) or self.is_beta:
+        if (
+            self.bot.shard_count - 1 not in self.bot.shards.keys()
+        ) or self.bot.config.bot.is_beta:
             return
         while not self.bot.is_closed():
             await self.bot.session.post(
@@ -189,7 +191,7 @@ class GlobalEvents(commands.Cog):
             await asyncio.sleep(60 * 10)  # update once every 10 minutes
 
     async def load_settings(self):
-        if self.is_beta:
+        if self.bot.config.bot.is_beta:
             self.bot.command_prefix = commands.when_mentioned_or(
                 self.bot.config.bot.global_prefix
             )

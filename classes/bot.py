@@ -56,34 +56,23 @@ class Bot(commands.AutoShardedBot):
         self.cluster_id = kwargs.pop("cluster_id")
         self.config = ConfigLoader("config.toml")
         super().__init__(
-            command_prefix=self.config.get_config_value_with_default(
-                "bot", "global_prefix", default="$"
-            ),
+            command_prefix=self.config.bot.global_prefix,
             **kwargs,
         )  # we overwrite the prefix when it is connected
         # setup stuff
         self.queue = asyncio.Queue()  # global queue for ordered tasks
         self.schedule_manager = TimedScheduler()
-        self.config = ConfigLoader("config.toml")
-        self.version = self.config.get_config_value_with_default(
-            "bot", "version", default="unknown"
-        )
+        self.version = self.config.bot.version
         self.paginator = paginator
-        self.BASE_URL = self.config.get_config_value_with_default(
-            "external", "base_url", default="https://idlerpg.xyz"
-        )
-        self.bans = set(
-            self.config.get_config_value_with_default("game", "bans", default=[])
-        )
-        self.support_server_id = self.config.get_config_value(
-            "game", "support_server_id"
-        )
+        self.BASE_URL = self.config.external.base_url
+        self.bans = set(self.config.game.bans)
+        self.support_server_id = self.config.game.support_server_id
         self.linecount = 0
         self.make_linecount()
         self.all_prefixes = {}
         self.activity = discord.Game(
             name=f"IdleRPG v{self.version}"
-            if self.config.get_config_value_with_default("bot", "is_beta", default=True)
+            if self.config.bot.is_beta
             else self.BASE_URL
         )
         self.logger = logging.getLogger()
@@ -98,16 +87,12 @@ class Bot(commands.AutoShardedBot):
 
         self.normal_cooldown = commands.CooldownMapping.from_cooldown(
             1,
-            self.config.get_config_value_with_default(
-                "bot", "global_cooldown", default=3
-            ),
+            self.config.bot.global_cooldown,
             commands.BucketType.user,
         )
         self.donator_cooldown = commands.CooldownMapping.from_cooldown(
             1,
-            self.config.get_config_value_with_default(
-                "bot", "donator_cooldown", default=2
-            ),
+            self.config.bot.donator_cooldown,
             commands.BucketType.user,
         )
 
@@ -149,8 +134,8 @@ class Bot(commands.AutoShardedBot):
 
     async def connect_all(self):
         """Connects all databases and initializes sessions"""
-        proxy_auth = self.config.get_config_value("external", "proxy_auth")
-        proxy_url = self.config.get_config_value("external", "proxy_url")
+        proxy_auth = self.config.external.proxy_auth
+        proxy_url = self.config.external.proxy_url
         if proxy_auth is None or proxy_url is None:
             self.session = aiohttp.ClientSession()
         else:
@@ -162,37 +147,25 @@ class Bot(commands.AutoShardedBot):
             "redis://localhost", minsize=10, maxsize=20
         )
         database_creds = {
-            "database": self.config.get_config_value_with_default(
-                "database", "postgres_name", default="idlerpg"
-            ),
-            "user": self.config.get_config_value_with_default(
-                "database", "postgres_user", default="jens"
-            ),
-            "password": self.config.get_config_value_with_default(
-                "database", "postgres_password", default="owo"
-            ),
-            "host": self.config.get_config_value_with_default(
-                "database", "postgres_host", default="127.0.0.1"
-            ),
-            "port": self.config.get_config_value_with_default(
-                "database", "postgres_port", default=5432
-            ),
+            "database": self.config.database.postgres_name,
+            "user": self.config.database.postgres_user,
+            "password": self.config.database.postgres_password,
+            "host": self.config.database.postgres_host,
+            "port": self.config.database.postgres_port,
         }
         self.pool = await asyncpg.create_pool(
             **database_creds, min_size=10, max_size=20, command_timeout=60.0
         )
         self.cache = RedisCache(self)
 
-        for extension in self.config.get_config_value_with_default(
-            "bot", "initial_extensions", default=[]
-        ):
+        for extension in self.config.bot.initial_extensions:
             try:
                 self.load_extension(extension)
             except Exception:
                 print(f"Failed to load extension {extension}.", file=sys.stderr)
                 traceback.print_exc()
         self.redis_version = await self.get_redis_version()
-        await self.start(self.config.get_config_value_or_err("bot", "token"))
+        await self.start(self.config.bot.token)
 
     async def get_redis_version(self):
         """Parses the Redis version out of the INFO command"""
@@ -344,13 +317,15 @@ class Bot(commands.AutoShardedBot):
         or the global_prefix
         """
         if not message.guild:
-            return self.config.global_prefix  # Use global prefix in DMs
+            return self.config.bot.global_prefix  # Use global prefix in DMs
         try:
             return commands.when_mentioned_or(self.all_prefixes[message.guild.id])(
                 self, message
             )
         except KeyError:
-            return commands.when_mentioned_or(self.config.global_prefix)(self, message)
+            return commands.when_mentioned_or(self.config.bot.global_prefix)(
+                self, message
+            )
 
     async def wait_for_dms(self, event, check, timeout=30):
         """
@@ -692,11 +667,9 @@ class Bot(commands.AutoShardedBot):
             return False
         top_donator_role = None
         member_roles = [int(i) for i in member.get("roles", [])]
-        for role in self.config.get_config_value_with_default(
-            "external", "donator_roles", default=[]
-        ):
-            if role["id"] in member_roles:
-                top_donator_role = role["tier"]
+        for role in self.config.external.donator_roles:
+            if role.id in member_roles:
+                top_donator_role = role.tier
         return getattr(DonatorRank, top_donator_role) if top_donator_role else None
 
     async def generate_stats(
@@ -736,14 +709,14 @@ class Bot(commands.AutoShardedBot):
         id_ = "".join(random.choice(string.ascii_letters) for i in range(7))
         await self.session.get(
             f"https://join.idlerpg.xyz/toggle/{id_}",
-            headers={"Authorization": self.config.raidauth},
+            headers={"Authorization": self.config.external.raidauth},
         )
         return id_
 
     async def get_joins(self, id_):
         async with self.session.get(
             f"https://join.idlerpg.xyz/joined/{id_}",
-            headers={"Authorization": self.config.raidauth},
+            headers={"Authorization": self.config.external.raidauth},
         ) as r:
             j = await r.json()
         return [u for i in j if (u := await self.get_user_global(i)) is not None]
@@ -823,7 +796,7 @@ Command: {ctx.command.qualified_name}
             await self.pool.release(conn)
 
     async def public_log(self, event: str):
-        await self.http.send_message(self.config.bot_event_channel, event)
+        await self.http.send_message(self.config.game.bot_event_channel, event)
 
     async def get_city_buildings(self, guild_id, conn=None):
         if not guild_id:  # also catches guild_id = 0
