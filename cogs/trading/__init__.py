@@ -44,7 +44,7 @@ class Trading(commands.Cog):
     @has_char()
     @commands.command(brief=_("Put an item in the market"))
     @locale_doc
-    async def sell(self, ctx, itemid: int, price: IntGreaterThan(-1)):
+    async def sell(self, ctx, itemid: int, price: IntFromTo(1,100000000)):
         _(
             """`<itemid>` - The ID of the item to sell
             `<price>` - The price to sell the item for, can be 0 or above
@@ -55,7 +55,7 @@ class Trading(commands.Cog):
             If you are in an alliance with owns a city with a trade building, you do not have to pay the tax.
 
             Please note that you won't get the money right away, another player has to buy the item first.
-            With that being said, please choose a reasonable price.
+            With that being said, please choose a reasonable price.  Acceptable price range is 1 to 100M.
 
             If your item has not been bought for 14 days, it will be removed from the market and put back into your inventory."""
         )
