@@ -659,11 +659,11 @@ class Trading(commands.Cog):
         self, ctx, maxstat: IntFromTo(0, 100) = 100, minstat: IntFromTo(0, 100) = 0
     ):
         _(
-            """`[maxstat]` - The highest damage/defense to include; defaults to 75
+            """`[maxstat]` - The highest damage/defense to include; defaults to 100
             `[minstat]` - The lowest damage/defense to include; defaults to 0
 
             Sells all your non-equipped items for their value. A convenient way to sell a large amount of items at once.
-            If you are in an alliance which owns a trade building, your winnings will be multiplied by 1.5 for each level.
+            If you are in an alliance which owns a trade building, your earnings will be increased by 50% for each level.
 
             (This command has a cooldown of 30 minutes.)"""
         )
