@@ -727,7 +727,7 @@ class Classes(commands.Cog):
         embed = discord.Embed(
             title=_("You gained an item!"),
             description=_("Your pet found an item!"),
-            color=0xFF0000,
+            color=0xff0000,
         )
         embed.set_thumbnail(url=ctx.author.avatar_url)
         embed.add_field(name=_("ID"), value=item["id"], inline=False)

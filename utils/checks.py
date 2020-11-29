@@ -25,6 +25,7 @@ import pytz
 from discord.ext import commands
 
 from classes.classes import GameClass, Ranger
+from classes.classes import from_string
 from classes.classes import from_string as class_from_string
 from classes.context import Context
 from classes.enums import DonatorRank
@@ -411,9 +412,10 @@ def update_pet() -> "_CheckDecorator":
                 )
                 ctx.pet_data = data
                 classes = ctx.character_data["class"]
-                for evolve in ["Caretaker"] + ctx.bot.get_class_evolves()["Ranger"]:
-                    if evolve in classes:
-                        idx = classes.index(evolve)
+                for c_idx, class_ in enumerate(classes):
+                    class_real = from_string(class_)
+                    if class_real.get_class_line() == Ranger:
+                        idx = c_idx
                         break
                 if data["food"] < 0 or data["drink"] < 0:
                     classes[idx] = "No Class"

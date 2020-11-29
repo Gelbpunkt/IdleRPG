@@ -625,7 +625,7 @@ IdleRPG is a global bot, your characters are valid everywhere"""
 
             If you choose money, you will get the loots' combined value in cash. For XP, you will get 1/4th of the combined value in XP."""
         )
-        if (none_given := (len(loot_ids) == 0)) :
+        if (none_given := (len(loot_ids) == 0)):
             value, count = await self.bot.pool.fetchval(
                 'SELECT (SUM("value"), COUNT(*)) FROM loot WHERE "user"=$1',
                 ctx.author.id,

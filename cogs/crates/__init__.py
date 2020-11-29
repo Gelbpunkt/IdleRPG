@@ -176,7 +176,7 @@ class Crates(commands.Cog):
             embed = discord.Embed(
                 title=_("You gained an item!"),
                 description=_("You found a new item when opening a crate!"),
-                color=0xFF0000,
+                color=0xff0000,
             )
             embed.set_thumbnail(url=ctx.author.avatar_url)
             embed.add_field(name=_("ID"), value=item["id"], inline=False)

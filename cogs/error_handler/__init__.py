@@ -159,7 +159,7 @@ class Errorhandler(commands.Cog):
                     description=_(
                         ":x: This command is only avaiable for the bot owner."
                     ),
-                    colour=0xFF0000,
+                    colour=0xff0000,
                 )
             )
         elif isinstance(error, commands.CheckFailure):
@@ -199,7 +199,7 @@ class Errorhandler(commands.Cog):
                             ":x: You don't have the permissions to use this command. It"
                             " is thought for {error} class users."
                         ).format(error=get_name(error)),
-                        colour=0xFF0000,
+                        colour=0xff0000,
                     )
                 )
             elif isinstance(error, utils.checks.NeedsNoAdventure):
@@ -308,7 +308,7 @@ class Errorhandler(commands.Cog):
                             ":x: You don't have the permissions to use this command. It"
                             " is thought for other users."
                         ),
-                        colour=0xFF0000,
+                        colour=0xff0000,
                     )
                 )
         elif isinstance(error, NoChoice):

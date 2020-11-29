@@ -520,7 +520,7 @@ class Adventure(commands.Cog):
         luck_multiply = ctx.character_data["luck"]
         if (
             buildings := await self.bot.get_city_buildings(ctx.character_data["guild"])
-        ) :
+        ):
             bonus = buildings["adventure_building"]
         else:
             bonus = 0
@@ -545,7 +545,7 @@ class Adventure(commands.Cog):
                 embed=discord.Embed(
                     title=_("Adventure Failed"),
                     description=_("You died on your mission. Try again!"),
-                    colour=0xFF0000,
+                    colour=0xff0000,
                 )
             )
 
@@ -649,7 +649,7 @@ class Adventure(commands.Cog):
                         storage_type=storage_type,
                         xp=xp,
                     ),
-                    colour=0x00FF00,
+                    colour=0x00ff00,
                 )
             )
 

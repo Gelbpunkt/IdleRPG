@@ -44,7 +44,7 @@ class Server(commands.Cog):
         em = discord.Embed(
             title=_("Server Information"),
             description=_("Compact information about this server"),
-            colour=0xDEADBF,
+            colour=0xdeadbf,
         )
         em.add_field(
             name=_("Information"),

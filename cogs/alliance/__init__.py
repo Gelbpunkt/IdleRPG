@@ -682,7 +682,7 @@ class Alliance(commands.Cog):
             await self.bot.reset_alliance_cooldown(ctx)
             return await ctx.send(_("Invalid city."))
 
-        if (y := await self.bot.redis.execute("GET", f"city:{city}")) :
+        if (y := await self.bot.redis.execute("GET", f"city:{city}")):
             y = y.decode()
             if y == "cooldown":
                 text = _("**{city}** has just been attacked. Have some mercy!").format(
@@ -713,7 +713,7 @@ class Alliance(commands.Cog):
             await self.bot.reset_alliance_cooldown(ctx)
             return await ctx.send(_("The city is without defenses already."))
 
-        if (y := await self.bot.redis.execute("GET", f"city:{city}")) :
+        if (y := await self.bot.redis.execute("GET", f"city:{city}")):
             y = y.decode()
             if y == "cooldown":
                 text = _("**{city}** has just been attacked. Have some mercy!").format(

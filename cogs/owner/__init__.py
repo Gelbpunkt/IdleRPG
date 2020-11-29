@@ -169,7 +169,7 @@ class Owner(commands.Cog):
 
     @commands.command(hidden=True)
     async def shutdown(self, ctx):
-        embed = discord.Embed(color=0xFF0000)
+        embed = discord.Embed(color=0xff0000)
         embed.add_field(name="Shutting down...", value="Goodbye!", inline=False)
         await ctx.send(embed=embed)
         await self.bot.logout()
