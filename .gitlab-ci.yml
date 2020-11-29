@@ -41,6 +41,6 @@ upload:
     - current
     - tags
   script:
-    - podman build --storage-driver vfs --format docker -t gelbpunkt/idlerpg:latest .
+    - podman build --squash-all --storage-driver vfs --format docker -t gelbpunkt/idlerpg:latest .
     - podman login docker.io --username $DOCKERHUB_USERNAME --password $DOCKERHUB_PASSWORD
     - podman push gelbpunkt/idlerpg:latest docker.io/gelbpunkt/idlerpg:latest
