@@ -382,7 +382,7 @@ Even $1 can help us.
             value=_(
                 """\
 CPU: **{cpu_name}**
-CPU Usage: **{cpu}%**, **{cores}** cores @ **{freq}** GHz
+CPU Usage: **{cpu}%**, **{cores}** cores/**{threads}** threads @ **{freq}** GHz
 RAM Usage: **{ram}%** (Total: **{total_ram}**)
 CPU Temperature: **{cpu_temp}°C**
 Python Version **{python}** <:python:445247273065250817>
@@ -395,7 +395,8 @@ Redis Version: **{redis_version}**"""
             ).format(
                 cpu_name=cpu_name,
                 cpu=psutil.cpu_percent(),
-                cores=psutil.cpu_count(),
+                cores=psutil.cpu_count(logical=False),
+                threads=psutil.cpu_count(),
                 cpu_temp=round(cpu_temp, 2),
                 freq=cpu_freq.max / 1000
                 if cpu_freq.max

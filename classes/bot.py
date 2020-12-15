@@ -178,15 +178,12 @@ class Bot(commands.AutoShardedBot):
     # https://github.com/Rapptz/discord.py/blob/master/discord/ext/commands/bot.py#L131
     def dispatch(self, event_name, *args, **kwargs):
         """Overriden version of Bot.dispatch to ignore reactions by banned users"""
-        if event_name == "reaction_add" and args[1].id in self.bans:  # args[1] is user
+        if (event_name == "raw_reaction_add" and args[0].user_id in self.bans) or (
+            event_name == "message"
+            and (args[0].author.id in self.bans or args[0].author.bot)
+        ):  # args[1] is user
             return
         super().dispatch(event_name, *args, **kwargs)
-
-    async def on_message(self, message):
-        """Handler for every incoming message"""
-        if message.author.bot or message.author.id in self.bans:
-            return
-        await self.process_commands(message)
 
     async def on_message_edit(self, before, after):
         """Handler for edited messages, re-executes commands"""
@@ -559,6 +556,8 @@ class Bot(commands.AutoShardedBot):
         if conn is None:
             conn = await self.pool.acquire()
             local = True
+        else:
+            local = False
         if (reward := random.choice(["crates", "money", "item"])) == "crates":
             if new_level < 6:
                 column = "crates_common"
