@@ -176,11 +176,11 @@ IdleRPG is a global bot, your characters are valid everywhere"""
             guild = await conn.fetchval(
                 'SELECT name FROM guild WHERE "id"=$1;', profile["guild"]
             )
-            v1 = sum(i["damage"] for i in items)
-            v2 = sum(i["armor"] for i in items)
-            damage, armor = await self.bot.generate_stats(
-                targetid, v1, v2, classes=profile["class"], race=profile["race"]
-            )
+        v1 = sum(i["damage"] for i in items)
+        v2 = sum(i["armor"] for i in items)
+        damage, armor = await self.bot.get_damage_armor_for(
+            targetid, items=items, classes=profile["class"], race=profile["race"]
+        )
         extras = (damage - v1, armor - v2)
         sworddmg = f"{v1}{' (+' + str(extras[0]) + ')' if extras[0] else ''}"
         shielddef = f"{v2}{' (+' + str(extras[1]) + ')' if extras[1] else ''}"

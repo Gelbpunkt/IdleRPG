@@ -36,7 +36,7 @@ from aioscheduler import TimedScheduler
 from discord.ext import commands
 
 from classes.cache import RedisCache
-from classes.classes import Mage, Paragon, Raider, Warrior
+from classes.classes import Mage, Paragon, Raider, Ranger, Ritualist, Thief, Warrior
 from classes.classes import from_string as class_from_string
 from classes.context import Context
 from classes.enums import DonatorRank
@@ -292,15 +292,6 @@ class Bot(commands.AutoShardedBot):
         if local:
             await self.pool.release(conn)
         return items
-
-    async def get_damage_armor_for(self, thing, classes=None, race=None, conn=None):
-        """Returns a user's weapon attack and defense value"""
-        items = await self.get_equipped_items_for(thing, conn=conn)
-        damage = sum(i["damage"] for i in items)
-        defense = sum(i["armor"] for i in items)
-        return await self.generate_stats(
-            thing, damage, defense, classes=classes, race=race, conn=conn
-        )
 
     async def get_context(self, message, *, cls=None):
         """Overrides the default Context with a custom Context"""
@@ -671,16 +662,49 @@ class Bot(commands.AutoShardedBot):
                 top_donator_role = role.tier
         return getattr(DonatorRank, top_donator_role) if top_donator_role else None
 
-    async def generate_stats(
-        self, user, damage, armor, classes=None, race=None, conn=None
+    async def get_damage_armor_for(
+        self, user, items=None, classes=None, race=None, conn=None
     ):
         user = user.id if isinstance(user, (discord.User, discord.Member)) else user
+        if items is None:
+            items = await self.get_equipped_items_for(user, conn=conn)
         if not classes or not race:
             row = await self.cache.get_profile(user, conn=conn)
             classes, race = row["class"], row["race"]
-        classes = [class_from_string(c) for c in classes]
-        lines = [class_.get_class_line() for class_ in classes if class_]
-        grades = [class_.class_grade() for class_ in classes if class_]
+
+        damage = 0
+        armor = 0
+
+        classes = [i for c in classes if (i := class_from_string(c))]
+        is_paragon = any(c.in_class_line(Paragon) for c in classes)
+        is_ranger = any(c.in_class_line(Ranger) for c in classes)
+        is_warrior = any(c.in_class_line(Warrior) for c in classes)
+        is_thief = any(c.in_class_line(Thief) for c in classes)
+        is_raider = any(c.in_class_line(Raider) for c in classes)
+        is_caster = any(
+            c.in_class_line(Mage) or c.in_class_line(Ritualist) for c in classes
+        )
+
+        for item in items:
+            damage += item["damage"]
+            armor += item["armor"]
+
+            type_ = ItemType.from_string(item["type"])
+            if type_ == ItemType.Spear and is_paragon:
+                damage += 5
+            elif type_ == ItemType.Dagger and is_thief:
+                damage += 5
+            elif type_ == ItemType.Sword and is_warrior:
+                damage += 5
+            elif type_ == ItemType.Bow and is_ranger:
+                damage += 8
+            elif type_ == ItemType.Wand and is_caster:
+                damage += 5
+            elif type_ == ItemType.Axe and is_raider:
+                damage += 5
+
+        lines = [class_.get_class_line() for class_ in classes]
+        grades = [class_.class_grade() for class_ in classes]
         for line, grade in zip(lines, grades):
             if line == Mage:
                 damage += grade
