@@ -360,6 +360,9 @@ class Paginator:
         if self.extras:
             self.pages = [p for p in self.extras if isinstance(p, discord.Embed)]
 
+        if not self.colour:
+            self.colour = ctx.bot.config.game.primary_colour
+
         if self.entries:
             chunks = [c async for c in pager(self.entries, self.length)]
 
