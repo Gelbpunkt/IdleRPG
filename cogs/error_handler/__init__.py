@@ -29,7 +29,6 @@ from discord.ext import commands, menus
 
 import utils.checks
 
-from classes.classes import get_name
 from classes.converters import (
     DateOutOfRange,
     InvalidCoinSide,
@@ -198,7 +197,7 @@ class Errorhandler(commands.Cog):
                         description=_(
                             ":x: You don't have the permissions to use this command. It"
                             " is thought for {error} class users."
-                        ).format(error=get_name(error)),
+                        ).format(error=error),
                         colour=0xff0000,
                     )
                 )

@@ -27,6 +27,7 @@ from discord.ext import commands
 from classes.classes import GameClass, Ranger
 from classes.classes import from_string
 from classes.classes import from_string as class_from_string
+from classes.classes import get_name
 from classes.context import Context
 from classes.enums import DonatorRank
 from utils import random
@@ -355,7 +356,7 @@ def is_class(class_: Type[GameClass]) -> "_CheckDecorator":
                 'SELECT * FROM pets WHERE "user"=$1;', ctx.author.id
             )
         if not any_in_line:
-            raise WrongClass(class_)
+            raise WrongClass(get_name(class_))
         return True
 
     return commands.check(predicate)
