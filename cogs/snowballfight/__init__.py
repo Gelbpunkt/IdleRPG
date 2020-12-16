@@ -22,7 +22,7 @@ import discord
 
 from discord.ext import commands
 
-from classes.converters import MemberConverter
+from classes.converters import IntFromTo, MemberConverter
 from utils import random
 from utils.i18n import _, locale_doc
 
@@ -35,7 +35,9 @@ class SnowballFight(commands.Cog):
 
     @commands.command()
     @locale_doc
-    async def snowballfight(self, ctx, enemy: MemberConverter):
+    async def snowballfight(
+        self, ctx, enemy: MemberConverter, players: IntFromTo(2, 10) = 10
+    ):
         _("""Make a snowball fights against another guild.""")
         if enemy is ctx.author:
             return await ctx.send(_("You may not fight yourself."))
@@ -63,64 +65,52 @@ class SnowballFight(commands.Cog):
         team2 = [enemy]
 
         def check1(msg):
-            return (
-                msg.content.startswith("snowballfight nominate")
-                and msg.author == ctx.author
+            return msg.author == ctx.author and any(
+                [i not in team1 for i in msg.mentions]
             )
 
         def check2(msg):
-            return (
-                msg.content.startswith("snowballfight nominate") and msg.author == enemy
-            )
+            return msg.author == enemy and any([i not in team2 for i in msg.mentions])
 
         await ctx.send(
             _(
-                "{author}, type `snowballfight nominate @user` to add ten of your"
-                " comrades to the fight. You need 10 total!"
-            ).format(author=ctx.author.mention)
+                "{author}, `@mention` one at once to add guild mates"
+                " to the fight. You need {num} total!"
+            ).format(author=ctx.author.mention, num=players)
         )
-        while len(team1) < 10:
+        while len(team1) < players:
             try:
                 msg = await self.bot.wait_for("message", check=check1, timeout=60)
             except asyncio.TimeoutError:
                 return await ctx.send(_("Timed out..."))
-            try:
-                u = msg.mentions[0]
-            except IndexError:
-                continue
-            if u in team1 or u in team1:
-                await ctx.send(_("Taken!"))
-            else:
-                team1.append(u)
-                await ctx.send(
-                    _("{user} has been added to your team, {user2}.").format(
-                        user=u.mention, user2=ctx.author.mention
+            for u in msg.mentions:
+                if u not in team1:
+                    team1.append(u)
+                    await ctx.send(
+                        _("{user} has been added to your team, {user2}.").format(
+                            user=u.mention, user2=ctx.author.mention
+                        )
                     )
-                )
         await ctx.send(
             _(
-                "{enemy}, use `snowballfight nominate @user` to add ten of your"
-                " comrades to the fight. You need 10 total!"
-            ).format(enemy=enemy.mention)
+                "{enemy}, `@mention` one at once to add guild mates"
+                " to the fight. You need {num} total!"
+            ).format(enemy=enemy.mention, num=players)
         )
-        while len(team2) < 10:
+        while len(team2) < players:
             try:
                 msg = await self.bot.wait_for("message", check=check2, timeout=30)
             except asyncio.TimeoutError:
                 return await ctx.send(_("Timed out..."))
-            try:
-                u = msg.mentions[0]
-            except IndexError:
-                continue
-            if u in team2 or u in team1:
-                await ctx.send(_("Taken!"))
-            else:
-                team2.append(u)
-                await ctx.send(
-                    _("{user} has been added to your team, {user2}.").format(
-                        user=u.mention, user2=enemy.mention
+            for u in msg.mentions:
+                if u not in team2:
+                    team2.append(u)
+                    await ctx.send(
+                        _("{user} has been added to your team, {user2}.").format(
+                            user=u.mention, user2=enemy.mention
+                        )
                     )
-                )
+
         points1 = 1
         points2 = 1
         while points1 < 10 and points2 < 10:
