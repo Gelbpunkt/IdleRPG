@@ -24,8 +24,6 @@ from discord import utils
 from discord.ext import commands
 
 from classes.converters import MemberConverter, User
-from utils import i18n
-from utils.i18n import _
 from utils.loops import queue_manager
 
 
@@ -232,26 +230,6 @@ class GlobalEvents(commands.Cog):
             )
         }
 
-    async def send_reminder(
-        self,
-        reminder_id: int,
-        channel_id: int,
-        user_id: int,
-        reminder_text: str,
-        time_diff: str,
-    ):
-        await self.bot.pool.execute('DELETE FROM reminders WHERE "id"=$1;', reminder_id)
-        locale = await self.bot.get_cog("Locale").locale(user_id)
-        i18n.current_locale.set(locale)
-        await self.bot.http.send_message(
-            channel_id,
-            _("{user}, you wanted to be reminded about {subject} {diff} ago.").format(
-                user=f"<@{user_id}>",
-                subject=reminder_text,
-                diff=time_diff,
-            ),
-        )
-
     async def reschedule_reminders(self):
         valid_channels = [channel.id for channel in self.bot.get_all_channels()]
         all_reminders = await self.bot.pool.fetch("SELECT * FROM reminders;")
@@ -265,16 +243,29 @@ class GlobalEvents(commands.Cog):
                 elif reminder["channel"] not in valid_channels:
                     pass  # don't schedule channels that the bot won't be able to send to
                 else:
-                    task = self.bot.schedule_manager.schedule(
-                        self.send_reminder(
-                            reminder["id"],
-                            reminder["channel"],
-                            reminder["user"],
-                            reminder["content"],
-                            str(reminder["end"] - reminder["start"]).split(".")[0],
-                        ),
-                        reminder["end"],
-                    )
+                    if reminder["type"] == "reminder":
+                        task = self.bot.schedule_manager.schedule(
+                            self.bot.cogs["Scheduling"]._remind(
+                                reminder["user"],
+                                reminder["channel"],
+                                reminder["content"],
+                                str(reminder["end"] - reminder["start"]).split(".")[0],
+                                reminder["id"],
+                            ),
+                            reminder["end"],
+                        )
+                    elif reminder["type"] == "adventure":
+                        task = self.bot.schedule_manager.schedule(
+                            self.bot.cogs["Scheduling"]._remind_adventure(
+                                reminder["user"],
+                                reminder["channel"],
+                                reminder["content"],
+                                reminder["id"],
+                            ),
+                            reminder["end"],
+                        )
+                    else:
+                        continue
                     new_reminders.update({reminder["id"]: task.uuid})
             except (KeyError, ValueError, TypeError) as e:
                 self.bot.logger.warning(f"{type(e).__name__}: {e}")

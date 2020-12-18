@@ -18,11 +18,13 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 import asyncio
 
 from base64 import b64decode
-from datetime import timedelta
+from datetime import datetime, timedelta
+from functools import partial
 from io import BytesIO
 
 import discord
 
+from aioscheduler.task import Task
 from discord.ext import commands
 
 from classes.classes import Ritualist
@@ -164,6 +166,29 @@ class Adventure(commands.Cog):
         if await self.bot.get_booster(ctx.author, "time"):
             time = time / 2
         await self.bot.start_adventure(ctx.author, adventure_number, time)
+
+        async with self.bot.pool.acquire() as conn:
+            remind_adv = await conn.fetchval(
+                'SELECT "adventure_reminder" FROM user_settings WHERE "user"=$1;',
+                ctx.author.id,
+            )
+            if remind_adv:
+                subject = f"{adventure_number}"
+                finish_time = datetime.utcnow() + time
+                await self.bot.cogs["Scheduling"].create_reminder(
+                    subject,
+                    ctx,
+                    finish_time,
+                    partial(
+                        self.bot.cogs["Scheduling"]._remind_adventure,
+                        ctx.author.id,
+                        ctx.channel.id,
+                        subject,
+                    ),
+                    conn=conn,
+                    type="adventure",
+                )
+
         await ctx.send(
             _(
                 "Successfully sent your character out on an adventure. Use"
@@ -673,6 +698,16 @@ class Adventure(commands.Cog):
                 _("Did not cancel your adventure. The journey continues...")
             )
         await self.bot.delete_adventure(ctx.author)
+
+        reminder = await self.bot.pool.fetchrow(
+            'DELETE FROM reminders WHERE "user"=$1 AND "type"=$2 RETURNING "id", "internal_id";',
+            ctx.author.id,
+            "adventure",
+        )
+        if reminder:
+            fake_task = Task(0, reminder["internal_id"], 0)
+            self.bot.schedule_manager.cancel(fake_task)
+
         await ctx.send(
             _(
                 "Canceled your mission. Use `{prefix}adventure [missionID]` to start a"

@@ -29,25 +29,19 @@ class Locale(commands.Cog):
 
     async def set_locale(self, user, locale):
         """Sets the locale for a user."""
-        if locale == i18n.default_locale:
-            await self.bot.pool.execute(
-                'DELETE FROM user_settings WHERE "user"=$1;', user.id
-            )
-            locale = None
-        else:
-            async with self.bot.pool.acquire() as conn:
-                try:
-                    await conn.execute(
-                        'INSERT INTO user_settings ("user", "locale") VALUES ($1, $2);',
-                        user.id,
-                        locale,
-                    )
-                except UniqueViolationError:
-                    await conn.execute(
-                        'UPDATE user_settings SET "locale"=$1 WHERE "user"=$2;',
-                        locale,
-                        user.id,
-                    )
+        async with self.bot.pool.acquire() as conn:
+            try:
+                await conn.execute(
+                    'INSERT INTO user_settings ("user", "locale") VALUES ($1, $2);',
+                    user.id,
+                    locale,
+                )
+            except UniqueViolationError:
+                await conn.execute(
+                    'UPDATE user_settings SET "locale"=$1 WHERE "user"=$2;',
+                    locale,
+                    user.id,
+                )
         self.bot.locale_cache[user.id] = locale
 
     async def get_locale(self, user):

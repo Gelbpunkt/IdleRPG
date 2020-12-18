@@ -16,6 +16,7 @@ You should have received a copy of the GNU Affero General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
 from datetime import datetime, timedelta
+from functools import partial
 
 import discord
 
@@ -24,7 +25,8 @@ from discord.ext import commands
 
 from classes.converters import DateTimeScheduler, IntGreaterThan
 from cogs.help import chunks
-from utils.i18n import _, locale_doc
+from utils.checks import has_char
+from utils.i18n import _, current_locale, locale_doc
 from utils.misc import nice_join
 
 
@@ -32,13 +34,54 @@ class Scheduling(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
 
-    async def _remind(self, ctx, subject, diff, task_id):
-        await self.bot.pool.execute("DELETE FROM reminders WHERE id=$1;", task_id)
-        await ctx.send(
+    async def _remind(self, user_id, channel_id, subject, diff, task_id):
+        locale = await self.bot.get_cog("Locale").locale(user_id)
+        current_locale.set(locale)
+        await self.bot.pool.execute('DELETE FROM reminders WHERE "id"=$1;', task_id)
+        await self.bot.http.send_message(
+            channel_id,
             _("{user}, you wanted to be reminded about {subject} {diff} ago.").format(
-                user=ctx.author.mention, subject=subject, diff=diff
-            )
+                user=f"<@{user_id}>", subject=subject, diff=diff
+            ),
         )
+
+    async def _remind_adventure(self, user_id, channel_id, adventure, task_id):
+        locale = await self.bot.get_cog("Locale").locale(user_id)
+        current_locale.set(locale)
+        await self.bot.pool.execute('DELETE FROM reminders WHERE "id"=$1;', task_id)
+        await self.bot.http.send_message(
+            channel_id,
+            _("{user}, your adventure {num} has finished.").format(
+                user=f"<@{user_id}>", num=adventure
+            ),
+        )
+
+    async def create_reminder(
+        self, subject, ctx, end, callback, type="reminder", conn=None
+    ):
+        if conn is None:
+            conn = await self.bot.pool.acquire()
+            local = True
+        else:
+            local = False
+
+        task_id = await conn.fetchval(
+            'INSERT INTO reminders ("user", content, channel, "start", "end", "type") VALUES'
+            " ($1, $2, $3, $4, $5, $6) RETURNING id;",
+            ctx.author.id,
+            subject,
+            ctx.channel.id,
+            datetime.utcnow(),
+            end,
+            type,
+        )
+        task = self.bot.schedule_manager.schedule(callback(task_id=task_id), end)
+        await conn.execute(
+            'UPDATE reminders SET "internal_id"=$1 WHERE "id"=$2;', task.uuid, task_id
+        )
+
+        if local:
+            await self.bot.pool.release(conn)
 
     @commands.group(
         aliases=["r", "reminder", "remindme"],
@@ -63,20 +106,11 @@ class Scheduling(commands.Cog):
         if len(subject) > 100:
             return await ctx.send(_("Please choose a shorter reminder text."))
         diff = str(time - datetime.utcnow()).split(".")[0]
-        id = await self.bot.pool.fetchval(
-            'INSERT INTO reminders ("user", content, channel, "start", "end") VALUES'
-            " ($1, $2, $3, $4, $5) RETURNING id;",
-            ctx.author.id,
+        await self.create_reminder(
             subject,
-            ctx.channel.id,
-            datetime.utcnow(),
+            ctx,
             time,
-        )
-        task = self.bot.schedule_manager.schedule(
-            self._remind(ctx, subject, diff, id), time
-        )
-        await self.bot.pool.execute(
-            'UPDATE reminders SET "internal_id"=$1 WHERE "id"=$2;', task.uuid, id
+            partial(self._remind, ctx.author.id, ctx.channel.id, subject, diff),
         )
         await ctx.send(
             _("{user}, reminder set for {subject} in {time}.").format(
@@ -93,7 +127,9 @@ class Scheduling(commands.Cog):
             Reminders can be cancelled using `{prefix}reminder cancel <id>`."""
         )
         reminders = await self.bot.pool.fetch(
-            'SELECT * FROM reminders WHERE "user"=$1 ORDER BY "end" ASC;', ctx.author.id
+            'SELECT * FROM reminders WHERE "user"=$1 AND "type"=$2 ORDER BY "end" ASC;',
+            ctx.author.id,
+            "reminder",
         )
         if not reminders:
             return await ctx.send(_("No running reminders."))
@@ -129,9 +165,10 @@ class Scheduling(commands.Cog):
             To find a reminder's ID, use `{prefix}reminder list`."""
         )
         reminders = await self.bot.pool.fetch(
-            'SELECT id, internal_id FROM reminders WHERE "id"=ANY($1) AND "user"=$2;',
+            'SELECT id, internal_id FROM reminders WHERE "id"=ANY($1) AND "user"=$2 AND "type"=$3;',
             ids,
             ctx.author.id,
+            "reminder",
         )
         if not reminders:
             return await ctx.send(_("None of these reminder IDs belong to you."))
@@ -157,6 +194,32 @@ class Scheduling(commands.Cog):
             (serves as an alias for `{prefix}reminder list`)"""
         )
         await ctx.invoke(self.bot.get_command("reminder list"))
+
+    @has_char()
+    @commands.command(brief=_("Enable or disable automatic adventure reminders"))
+    @locale_doc
+    async def adventureremind(self, ctx):
+        _("""Toggles automatic adventure reminders when you finish an adventure.""")
+        current_settings = await self.bot.pool.fetchval(
+            'SELECT "adventure_reminder" FROM user_settings WHERE "user"=$1;',
+            ctx.author.id,
+        )
+        if current_settings is None:
+            await self.bot.pool.execute(
+                'INSERT INTO user_settings ("user", "adventure_reminder") VALUES ($1, $2);',
+                ctx.author.id,
+                True,
+            )
+            new = True
+        else:
+            new = await self.bot.pool.fetchval(
+                'UPDATE user_settings SET "adventure_reminder"=NOT "adventure_reminder" WHERE "user"=$1 RETURNING "adventure_reminder";',
+                ctx.author.id,
+            )
+        if new:
+            await ctx.send(_("Successfully opted in to automatic adventure reminders."))
+        else:
+            await ctx.send(_("Opted out of automatic adventure reminders."))
 
 
 def setup(bot):

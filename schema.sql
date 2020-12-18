@@ -17,8 +17,8 @@
 -- PostgreSQL database dump
 --
 
--- Dumped from database version 13beta2
--- Dumped by pg_dump version 13beta2
+-- Dumped from database version 13.1
+-- Dumped by pg_dump version 13.1
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -627,7 +627,8 @@ ALTER SEQUENCE public.transactions_id_seq OWNED BY public.transactions.id;
 
 CREATE TABLE public.user_settings (
     "user" bigint NOT NULL,
-    locale character varying(20) NOT NULL
+    locale character varying(20) DEFAULT 'en_US'::character varying NOT NULL,
+    adventure_reminder boolean DEFAULT false NOT NULL
 );
 
 
