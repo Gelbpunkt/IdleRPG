@@ -160,7 +160,8 @@ class Raid(commands.Cog):
             summary_channel = self.bot.get_channel(506_167_065_464_406_041)
             raid_ping = await summary_channel.send(
                 "@everyone Zerekiel spawned! 15 Minutes until he is vulnerable...\nUse"
-                " https://raid.idlerpg.xyz/ to join the raid!"
+                " https://raid.idlerpg.xyz/ to join the raid!",
+                allowed_mentions=discord.AllowedMentions.all(),
             )
             try:
                 await raid_ping.publish()
