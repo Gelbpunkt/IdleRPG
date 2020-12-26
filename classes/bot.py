@@ -692,12 +692,12 @@ class Bot(commands.AutoShardedBot):
             type_ = ItemType.from_string(item["type"])
             if type_ == ItemType.Spear and is_paragon:
                 damage += 5
-            elif type_ == ItemType.Dagger and is_thief:
+            elif (type_ == ItemType.Dagger or type_ == ItemType.Knife) and is_thief:
                 damage += 5
             elif type_ == ItemType.Sword and is_warrior:
                 damage += 5
             elif type_ == ItemType.Bow and is_ranger:
-                damage += 8
+                damage += 10
             elif type_ == ItemType.Wand and is_caster:
                 damage += 5
             elif type_ == ItemType.Axe and is_raider:
