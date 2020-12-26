@@ -33,6 +33,7 @@ import discord
 import fantasy_names as fn
 
 from aioscheduler import TimedScheduler
+from discord import AllowedMentions
 from discord.ext import commands
 
 from classes.cache import RedisCache
@@ -55,7 +56,10 @@ class Bot(commands.AutoShardedBot):
         self.cluster_name = kwargs.pop("cluster_name")
         self.cluster_id = kwargs.pop("cluster_id")
         self.config = ConfigLoader("config.toml")
+        mentions = AllowedMentions.none()
+        mentions.users = True
         super().__init__(
+            allowed_mentions=mentions,
             command_prefix=self.config.bot.global_prefix,
             **kwargs,
         )  # we overwrite the prefix when it is connected

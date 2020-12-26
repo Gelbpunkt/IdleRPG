@@ -17,11 +17,9 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
 from __future__ import annotations
 
-import re
-
 from asyncio import TimeoutError
 from contextlib import suppress
-from typing import TYPE_CHECKING, Any, Optional, Union
+from typing import TYPE_CHECKING, Optional, Union
 
 import discord
 
@@ -103,27 +101,3 @@ class Context(commands.Context):
                 elif self.command.root_parent.name == "alliance":
                     await self.bot.reset_alliance_cooldown(self)
             return False
-
-    async def send(
-        self, content: Optional[Any] = None, *args: Any, **kwargs: Any
-    ) -> discord.Message:
-        if content is not None:
-            content = str(content)
-
-            if kwargs.pop("escape_massmentions", True):
-                content = content.replace("@here", "@\u200bhere").replace(
-                    "@everyone", "@\u200beveryone"
-                )
-            if kwargs.pop("escape_mentions", False):
-                # There are 2 options here:
-                # #1 Simple replace
-                # content = re.sub(r"@([!&]?[0-9]{17,21})", "@\u200b\\1", content)
-                #
-                # #2 Advanced replace (gets matches and replaces with user repr)
-                content = re.sub(
-                    r"<@[!&]?([0-9]{17,21})>",
-                    lambda x: f"@{self.bot.get_user(int(x.group(1)))}",
-                    content,
-                )
-
-        return await super().send(content, *args, **kwargs)

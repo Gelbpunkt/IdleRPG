@@ -563,7 +563,7 @@ Average hours of work: **{hours}**"""
             await ctx.message.delete()
         except discord.Forbidden:
             pass
-        await ctx.send(phrase, escape_mentions=True)
+        await ctx.send(phrase, allowed_mentions=discord.AllowedMentions.none())
 
     @commands.command(brief=_("Help you decide"))
     @locale_doc
@@ -578,7 +578,7 @@ Average hours of work: **{hours}**"""
             return await ctx.send(_("Cannot choose from an empty list..."))
         await ctx.send(
             _("My choice is: **{result}**.").format(result=random.choice(results)),
-            escape_mentions=True,
+            allowed_mentions=discord.AllowedMentions.none(),
         )
 
     @commands.guild_only()
