@@ -1184,6 +1184,230 @@ Quick and ugly: <https://discord.com/oauth2/authorize?client_id=4539639655219855
 
     @is_god()
     @raid_free()
+    @commands.command(hidden=True, brief=_("Start a Kirby raid"))
+    async def kirbycultspawn(self, ctx, hp: IntGreaterThan(0)):
+        """[Kirby only] Starts a raid."""
+        await self.set_raid_timer()
+        await self.bot.session.get(
+            "https://raid.idlerpg.xyz/toggle",
+            headers={"Authorization": self.bot.config.external.raidauth},
+        )
+        self.boss = {"hp": hp, "min_dmg": 200, "max_dmg": 300}
+        em = discord.Embed(
+            title="Dark Mind attacks Dream Land",
+            description=f"""
+**A great curse has fallen upon Dream Land! Dark Mind is trying to conquer Dream Land and absorb it to the Mirror World! Join forces and defend Dream Land!**
+
+This boss has {self.boss['hp']} HP and will be vulnerable in 15 Minutes
+
+Use https://raid.idlerpg.xyz/ to join the raid!
+**Only followers of Kirby may join.**
+
+Click [here](https://discord.com/oauth2/authorize?client_id=453963965521985536&scope=identify&response_type=code&redirect_uri=https://raid.idlerpg.xyz/callback) for a quick and ugly join""",
+            color=0xffb900,
+        )
+        em.set_image(url=f"{self.bot.BASE_URL}/image/dark_mind.png")
+        await ctx.send(embed=em)
+
+        if not self.bot.config.bot.is_beta:
+            await asyncio.sleep(300)
+            await ctx.send("**The attack on Dream Land will start in 10 minutes**")
+            await asyncio.sleep(300)
+            await ctx.send("**The attack on Dream Land will start in 5 minutes**")
+            await asyncio.sleep(180)
+            await ctx.send("**The attack on Dream Land will start in 2 minutes**")
+            await asyncio.sleep(60)
+            await ctx.send("**The attack on Dream Land will start in 1 minute**")
+            await asyncio.sleep(30)
+            await ctx.send("**The attack on Dream Land will start in 30 seconds**")
+            await asyncio.sleep(20)
+            await ctx.send("**The attack on Dream Land will start in 10 seconds**")
+            await asyncio.sleep(10)
+        else:
+            await asyncio.sleep(60)
+        await ctx.send(
+            "**The attack on Dream Land started! Fetching participant data... Hang on!**"
+        )
+
+        async with self.bot.session.get(
+            "https://raid.idlerpg.xyz/joined",
+            headers={"Authorization": self.bot.config.external.raidauth},
+        ) as r:
+            raid_raw = await r.json()
+        async with self.bot.pool.acquire() as conn:
+            raid = {}
+            for i in raid_raw:
+                u = await self.bot.get_user_global(i)
+                if not u:
+                    continue
+                if (
+                    not (profile := await self.bot.cache.get_profile(u.id, conn=conn))
+                    or profile["god"] != "Kirby"
+                ):
+                    continue
+                try:
+                    dmg, deff = await self.bot.get_raidstats(u, god="Kirby", conn=conn)
+                except ValueError:
+                    continue
+                raid[u] = {"hp": 250, "armor": deff, "damage": dmg}
+
+        await ctx.send("**Done getting data!**")
+
+        start = datetime.datetime.utcnow()
+
+        while (
+            self.boss["hp"] > 0
+            and len(raid) > 0
+            and datetime.datetime.utcnow() < start + datetime.timedelta(minutes=10)
+        ):
+            target = random.choice(list(raid.keys()))
+            dmg = random.randint(self.boss["min_dmg"], self.boss["max_dmg"])
+            dmg = self.getfinaldmg(dmg, raid[target]["armor"])
+            raid[target]["hp"] -= dmg
+            if raid[target]["hp"] > 0:
+                em = discord.Embed(
+                    title="Dark Mind attacked!",
+                    description=f"{target} now has {raid[target]['hp']} HP!",
+                    colour=0xffb900,
+                )
+            else:
+                em = discord.Embed(
+                    title="Dark Mind attacked!",
+                    description=f"{target} died!",
+                    colour=0xffb900,
+                )
+            em.add_field(name="Theoretical Damage", value=dmg + raid[target]["armor"])
+            em.add_field(name="Shield", value=raid[target]["armor"])
+            em.add_field(name="Effective Damage", value=dmg)
+            em.set_author(name=str(target), icon_url=target.avatar_url)
+            em.set_thumbnail(url=f"{self.bot.BASE_URL}/image/dark_mind.png")
+            await ctx.send(embed=em)
+            if raid[target]["hp"] <= 0:
+                del raid[target]
+            dmg_to_take = sum(i["damage"] for i in raid.values())
+            self.boss["hp"] -= dmg_to_take
+            await asyncio.sleep(4)
+            em = discord.Embed(title="The raiders attacked Dark Mind!", colour=0xff5c00)
+            em.set_thumbnail(url=f"{self.bot.BASE_URL}/image/kirby_raiders.png")
+            em.add_field(name="Damage", value=dmg_to_take)
+            if self.boss["hp"] > 0:
+                em.add_field(name="HP left", value=self.boss["hp"])
+            else:
+                em.add_field(name="HP left", value="Dead!")
+            await ctx.send(embed=em)
+            await asyncio.sleep(4)
+
+        if len(raid) == 0:
+            em = discord.Embed(
+                title="Defeat!",
+                description="Dark Mind was too strong! You cannot stop him from conquering Dream Land as he ushers in a dark period of terror and tyranny!",
+                color=0xffb900,
+            )
+            em.set_image(url=f"{self.bot.BASE_URL}/image/kirby_loss.png")
+            await self.clear_raid_timer()
+            return await ctx.send(embed=em)
+        elif self.boss["hp"] > 0:
+            em = discord.Embed(
+                title="Timed out!",
+                description="You took too long! The mirror world has successfully absorbed Dream Land and it is lost forever.",
+                color=0xffb900,
+            )
+            em.set_image(url=f"{self.bot.BASE_URL}/image/kirby_timeout.png")
+            await self.clear_raid_timer()
+            return await ctx.send(embed=em)
+        em = discord.Embed(
+            title="Win!",
+            description="Hooray! Dream Land is saved!",
+            color=0xffb900,
+        )
+        em.set_image(url=f"{self.bot.BASE_URL}/image/kirby_win.png")
+        await ctx.send(embed=em)
+        await asyncio.sleep(5)
+        em = discord.Embed(
+            title="Dark Mind returns!",
+            description="Oh no! Dark Mind is back in his final form, stronger than ever before! Defeat him once and for all to protect Dream Land!",
+            color=0xffb900,
+        )
+        em.set_image(url=f"{self.bot.BASE_URL}/image/kirby_return.png")
+        await ctx.send(embed=em)
+        await asyncio.sleep(5)
+
+        self.boss = {"hp": hp, "min_dmg": 300, "max_dmg": 400}
+        while self.boss["hp"] > 0 and len(raid) > 0:
+            target = random.choice(list(raid.keys()))
+            dmg = random.randint(self.boss["min_dmg"], self.boss["max_dmg"])
+            dmg = self.getfinaldmg(dmg, raid[target]["armor"])
+            raid[target]["hp"] -= dmg
+            if raid[target]["hp"] > 0:
+                em = discord.Embed(
+                    title="Dark Mind attacked!",
+                    description=f"{target} now has {raid[target]['hp']} HP!",
+                    colour=0xffb900,
+                )
+            else:
+                em = discord.Embed(
+                    title="Dark Mind attacked!",
+                    description=f"{target} died!",
+                    colour=0xffb900,
+                )
+            em.add_field(name="Theoretical Damage", value=dmg + raid[target]["armor"])
+            em.add_field(name="Shield", value=raid[target]["armor"])
+            em.add_field(name="Effective Damage", value=dmg)
+            em.set_author(name=str(target), icon_url=target.avatar_url)
+            em.set_thumbnail(url=f"{self.bot.BASE_URL}/image/dark_mind_final.png")
+            await ctx.send(embed=em)
+            if raid[target]["hp"] <= 0:
+                del raid[target]
+            dmg_to_take = sum(i["damage"] for i in raid.values())
+            self.boss["hp"] -= dmg_to_take
+            await asyncio.sleep(4)
+            em = discord.Embed(title="The raiders attacked Dark Mind!", colour=0xff5c00)
+            em.set_thumbnail(url=f"{self.bot.BASE_URL}/image/kirby_raiders.png")
+            em.add_field(name="Damage", value=dmg_to_take)
+            if self.boss["hp"] > 0:
+                em.add_field(name="HP left", value=self.boss["hp"])
+            else:
+                em.add_field(name="HP left", value="Dead!")
+            await ctx.send(embed=em)
+            await asyncio.sleep(4)
+
+        if self.boss["hp"] > 0:
+            em = discord.Embed(
+                title="Defeat!",
+                description="Dark Mind was too strong! You cannot stop him from conquering Dream Land as he ushers in a dark period of terror and tyranny!",
+                color=0xffb900,
+            )
+            em.set_image(url=f"{self.bot.BASE_URL}/image/kirby_loss.png")
+            await self.clear_raid_timer()
+            return await ctx.send(embed=em)
+        winner = random.choice(list(raid.keys()))
+        em = discord.Embed(
+            title="Win!",
+            description=f"Hooray! Dark Mind is defeated and his dream of conquering Dream Land is shattered. You return back to Dream Land to Cappy Town where you are met with a huge celebration! The Mayor gives {winner.mention} a Legendary Crate for your bravery!\n**Gave $10000 to each survivor**",
+            color=0xffb900,
+        )
+        em.set_image(url=f"{self.bot.BASE_URL}/image/kirby_final_win.png")
+        await ctx.send(embed=em)
+
+        users = [u.id for u in raid]
+
+        async with self.bot.pool.acquire() as conn:
+            await conn.execute(
+                'UPDATE profile SET "crates_legendary"="crates_legendary"+1 WHERE "user"=$1;',
+                winner.id,
+            )
+            await conn.execute(
+                'UPDATE profile SET "money"="money"+$1 WHERE "user"=ANY($2);',
+                10000,
+                users,
+            )
+        await self.bot.cache.update_profile_cols_rel(winner.id, crates_legendary=1)
+        for user in users:
+            await self.bot.cache.update_profile_cols_rel(user, money=10000)
+        await self.clear_raid_timer()
+
+    @is_god()
+    @raid_free()
     @commands.command(hidden=True, brief=_("Start a Jesus raid"))
     async def jesusspawn(self, ctx, hp: IntGreaterThan(0)):
         """[Jesus only] Starts a raid."""
