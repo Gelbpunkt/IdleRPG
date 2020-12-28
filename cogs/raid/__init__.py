@@ -1016,6 +1016,174 @@ Quick and ugly: <https://discord.com/oauth2/authorize?client_id=4539639655219855
 
     @is_god()
     @raid_free()
+    @commands.command(hidden=True, brief=_("Starts Lyx' raid"))
+    async def lyxspawn(self, ctx):
+        """[Lyx only] Starts a raid."""
+        await self.set_raid_timer()
+        await self.bot.session.get(
+            "https://raid.idlerpg.xyz/toggle",
+            headers={"Authorization": self.bot.config.external.raidauth},
+        )
+        await ctx.send(
+            """
+Lyx has awoken, he challenges his followers.
+Stare the dawn.
+Face your Ouroboros.
+Are you worthy? Can your soul handle the force of your sins?
+
+Use https://raid.idlerpg.xyz/ to join the raid!
+**Only followers of Lyx may join.**
+
+Quick and ugly: <https://discord.com/oauth2/authorize?client_id=453963965521985536&scope=identify&response_type=code&redirect_uri=https://raid.idlerpg.xyz/callback>""",
+            file=discord.File("assets/other/lyx.png"),
+        )
+        if not self.bot.config.bot.is_beta:
+            await asyncio.sleep(300)
+            await ctx.send("**Lyx and his Ouroboros will be visible in 10 minutes**")
+            await asyncio.sleep(300)
+            await ctx.send("**Lyx and his Ouroboros will be visible in 5 minutes**")
+            await asyncio.sleep(180)
+            await ctx.send("**Lyx and his Ouroboros will be visible in 2 minutes**")
+            await asyncio.sleep(60)
+            await ctx.send("**Lyx and his Ouroboros will be visible in 1 minute**")
+            await asyncio.sleep(30)
+            await ctx.send("**Lyx and his Ouroboros will be visible in 30 seconds**")
+            await asyncio.sleep(20)
+            await ctx.send("**Lyx and his Ouroboros will be visible in 10 seconds**")
+        else:
+            await asyncio.sleep(60)
+        await ctx.send(
+            "**Lyx and his Ouroboros are visible! Fetch participant data... Hang on!**"
+        )
+
+        async with self.bot.session.get(
+            "https://raid.idlerpg.xyz/joined",
+            headers={"Authorization": self.bot.config.external.raidauth},
+        ) as r:
+            raid_raw = await r.json()
+
+        async with self.bot.pool.acquire() as conn:
+            raid = []
+            for i in raid_raw:
+                u = await self.bot.get_user_global(i)
+                if not u:
+                    continue
+                if (
+                    not (profile := await self.bot.cache.get_profile(u.id, conn=conn))
+                    or profile["god"] != "Lyx"
+                ):
+                    continue
+                raid.append(u)
+
+        await ctx.send("**Done getting data!**")
+
+        while len(raid) > 1:
+            time = random.choice(["day", "night"])
+            if time == "day":
+                em = discord.Embed(
+                    title="It turns day",
+                    description="The sun rises and Ouroboros seems visibly weaker.",
+                    colour=0xffb900,
+                )
+            else:
+                em = discord.Embed(
+                    title="It turns night",
+                    description="Nightfalls. Ouroboros seems visibly stronger.",
+                    colour=0xffb900,
+                )
+            em.set_thumbnail(url=f"{self.bot.BASE_URL}/image/lyx.png")
+            await ctx.send(embed=em)
+            await asyncio.sleep(5)
+            target = random.choice(raid)
+            if time == "day":
+                event = random.choice(
+                    [
+                        {
+                            "text": "Your Ouroboros lurks close.",
+                            "win": 60,
+                            "win_text": "After your trial of fears, Ouroboros deems you worthy.",
+                            "loose_text": "You couldn’t face your fears. Ouroboros has defeated you.",
+                        },
+                        {
+                            "text": "Your Ouroboros is chasing you, will you escape?",
+                            "win": 50,
+                            "win_text": "After your trial of fears, Ouroboros deems you worthy.",
+                            "loose_text": "You couldn’t hide your fears. Ouroboros has defeated you.",
+                        },
+                        {
+                            "text": "Your Ouroboros catches you.",
+                            "win": 20,
+                            "win_text": "After your trial of fears, Ouroboros deems you worthy.",
+                            "loose_text": "You couldn’t hide your fears. Ouroboros has defeated you.",
+                        },
+                        {
+                            "text": "Lyx has your back, but does Ouroboros?",
+                            "win": 80,
+                            "win_text": "After your trial of fears, Ouroboros deems you worthy.",
+                            "loose_text": "You couldn’t hide your fears. Ouroboros has defeated you.",
+                        },
+                    ]
+                )
+            else:
+                event = random.choice(
+                    [
+                        {
+                            "text": "Your Ouroboros lurks close.",
+                            "win": 20,
+                            "win_text": "After your trial of fears, Ouroboros deems you worthy.",
+                            "loose_text": "You couldn’t hide your fears. Ouroboros has defeated you.",
+                        },
+                        {
+                            "text": "Your Ouroboros is chasing you, will you escape?",
+                            "win": 30,
+                            "win_text": "After your trial of fears, Ouroboros deems you worthy.",
+                            "loose_text": "You couldn’t hide your fears. Ouroboros has defeated you.",
+                        },
+                        {
+                            "text": "Your Ouroboros catches you.",
+                            "win": 1,
+                            "win_text": "After your trial of fears, Ouroboros deems you worthy.",
+                            "loose_text": "You couldn’t face your fears. Ouroboros has defeated you.",
+                        },
+                        {
+                            "text": "Lyx has your back, but does Ouroboros?",
+                            "win": 45,
+                            "win_text": "After your trial of fears, Ouroboros deems you worthy.",
+                            "loose_text": "You couldn’t hide your fears. Ouroboros has defeated you.",
+                        },
+                    ]
+                )
+            does_win = event["win"] >= random.randint(1, 100)
+            if does_win:
+                text = event["win_text"]
+            else:
+                text = event["loose_text"]
+                raid.remove(target)
+            em = discord.Embed(
+                title=event["text"],
+                description=text,
+                colour=0xffb900,
+            )
+            em.set_author(name=f"{target}", icon_url=target.avatar_url)
+            em.set_footer(text=f"{len(raid)} followers remain")
+            em.set_thumbnail(url=f"{self.bot.BASE_URL}/image/lyx.png")
+            await ctx.send(embed=em)
+            await asyncio.sleep(5)
+
+        winner = raid[0]
+        await ctx.send(
+            f"Out of the strongest survivors to escape Ouroboros fangs, {winner.mention} has joined Lyx in the cosmos. They find a legendary crate amongst the stars."
+        )
+        async with self.bot.pool.acquire() as conn:
+            await conn.execute(
+                'UPDATE profile SET "crates_legendary"="crates_legendary"+1 WHERE "user"=$1;',
+                winner.id,
+            )
+        await self.bot.cache.update_profile_cols_rel(winner.id, crates_legendary=1)
+        await self.clear_raid_timer()
+
+    @is_god()
+    @raid_free()
     @commands.command(hidden=True, brief=_("Start a Jesus raid"))
     async def jesusspawn(self, ctx, hp: IntGreaterThan(0)):
         """[Jesus only] Starts a raid."""
