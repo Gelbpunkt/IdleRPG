@@ -65,7 +65,7 @@ class Custom(commands.Cog):
     @commands.command(
         hidden=True,
         brief=_("A custom command for ExZyond to express several emotions."),
-        name="ExZ",
+        name="ExZy",
     )
     @locale_doc
     async def _exz(self, ctx, user: MemberConverter, emotion: str):
