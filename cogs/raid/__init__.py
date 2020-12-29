@@ -1184,6 +1184,192 @@ Quick and ugly: <https://discord.com/oauth2/authorize?client_id=4539639655219855
 
     @is_god()
     @raid_free()
+    @commands.command(hidden=True, brief=_("Start a Monox raid"))
+    async def monoxspawn(self, ctx):
+        """[Monox only] Starts a raid."""
+        await self.set_raid_timer()
+        await self.bot.session.get(
+            "https://raid.idlerpg.xyz/toggle",
+            headers={"Authorization": self.bot.config.external.raidauth},
+        )
+
+        boss_hp = random.randint(500, 1000)
+        em = discord.Embed(
+            title="Raid the Cheese Facility",
+            description=f"""
+Monox asks his gang to raid a top secret facility in Indonesia to steal the world's creamiest cheese.
+
+However, there is a boss, Mathis Mensing, who needs to be defeat for us to acquire the cheese.
+Thankfully, Monox has given all of us critical sausages to attack with (don't mention Mensing's gun).
+
+Mensing has {boss_hp} HP and will be vulnerable in 15 Minutes
+
+Use https://raid.idlerpg.xyz/ to join the raid!
+**Only followers of Monox may join.**
+
+Click [here](https://discord.com/oauth2/authorize?client_id=453963965521985536&scope=identify&response_type=code&redirect_uri=https://raid.idlerpg.xyz/callback) for a quick and ugly join""",
+            color=0xffb900,
+        )
+        em.set_image(url=f"{self.bot.BASE_URL}/image/matmen.png")
+        await ctx.send(embed=em)
+
+        if not self.bot.config.bot.is_beta:
+            await asyncio.sleep(300)
+            await ctx.send("**The raid on the facility will start in 10 minutes**")
+            await asyncio.sleep(300)
+            await ctx.send("**The raid on the facility will start in 5 minutes**")
+            await asyncio.sleep(180)
+            await ctx.send("**The raid on the facility will start in 2 minutes**")
+            await asyncio.sleep(60)
+            await ctx.send("**The raid on the facility will start in 1 minute**")
+            await asyncio.sleep(30)
+            await ctx.send("**The raid on the facility will start in 30 seconds**")
+            await asyncio.sleep(20)
+            await ctx.send("**The raid on the facility will start in 10 seconds**")
+            await asyncio.sleep(10)
+        else:
+            await asyncio.sleep(60)
+        await ctx.send(
+            "**The raid on the facility started! Fetching participant data... Hang on!**"
+        )
+
+        async with self.bot.session.get(
+            "https://raid.idlerpg.xyz/joined",
+            headers={"Authorization": self.bot.config.external.raidauth},
+        ) as r:
+            raid_raw = await r.json()
+        async with self.bot.pool.acquire() as conn:
+            raid = {}
+            for i in raid_raw:
+                u = await self.bot.get_user_global(i)
+                if not u:
+                    continue
+                if (
+                    not (profile := await self.bot.cache.get_profile(u.id, conn=conn))
+                    or profile["god"] != "Monox"
+                ):
+                    continue
+                raid[u] = 250
+
+        await ctx.send("**Done getting data!**")
+
+        start = datetime.datetime.utcnow()
+
+        while (
+            boss_hp > 0
+            and len(raid) > 0
+            and datetime.datetime.utcnow() < start + datetime.timedelta(minutes=45)
+        ):
+            target = random.choice(list(raid.keys()))
+            dmg = random.randint(100, 300)
+            raid[target] -= dmg
+            if raid[target] > 0:
+                em = discord.Embed(
+                    title="Mensing shoots!",
+                    description=f"{target} now has {raid[target]} HP!",
+                    colour=0xffb900,
+                )
+            else:
+                em = discord.Embed(
+                    title="Mensing hits critical!",
+                    description=f"{target} died!",
+                    colour=0xffb900,
+                )
+            em.add_field(name="Damage", value=dmg)
+            em.set_author(name=str(target), icon_url=target.avatar_url)
+            em.set_thumbnail(url=f"{self.bot.BASE_URL}/image/matmen.png")
+            await ctx.send(embed=em)
+            if raid[target] <= 0:
+                del raid[target]
+
+            # Russian lemon powerup restores your hp by 100
+            if random.randint(1, 5) == 1:
+                await asyncio.sleep(4)
+                target = random.choice(list(raid.keys()))
+                raid[target] += 100
+                em = discord.Embed(
+                    title=f"{target} uses Russian Lemon!",
+                    description=f"It's super effective!\n{target} now has {raid[target]} HP!",
+                    colour=0xffb900,
+                )
+                em.set_author(name=str(target), icon_url=target.avatar_url)
+                em.set_thumbnail(url=f"{self.bot.BASE_URL}/image/lemon.png")
+                await ctx.send(embed=em)
+
+            # NIC traps might explode
+            if random.randint(1, 5) == 1:
+                await asyncio.sleep(4)
+                if len(raid) >= 3:
+                    targets = random.sample(list(raid.keys()), 3)
+                else:
+                    targets = list(raid.keys())
+                for target in targets:
+                    raid[target] -= 100
+                    if raid[target] <= 0:
+                        del raid[target]
+                em = discord.Embed(
+                    title="Mensing blows up NIC traps!",
+                    description=f"It's super effective!\n{', '.join(str(u) for u in targets)} take 100 damage!",
+                    colour=0xffb900,
+                )
+                em.set_thumbnail(url=f"{self.bot.BASE_URL}/image/matmen.png")
+                await ctx.send(embed=em)
+
+            # Sausages do 25dmg and a 10% crit of 75-100
+            dmg_to_take = sum(
+                25 if random.randint(1, 10) != 10 else random.randint(75, 100)
+                for u in raid
+            )
+            boss_hp -= dmg_to_take
+            await asyncio.sleep(4)
+            em = discord.Embed(
+                title="The power of Monox's sausages attacks Mensing!", colour=0xff5c00
+            )
+            em.set_thumbnail(url=f"{self.bot.BASE_URL}/image/monox.png")
+            em.add_field(name="Damage", value=dmg_to_take)
+            if boss_hp > 0:
+                em.add_field(name="HP left", value=boss_hp)
+            else:
+                em.add_field(name="HP left", value="Dead!")
+            await ctx.send(embed=em)
+            await asyncio.sleep(4)
+
+        if boss_hp > 1 and len(raid) > 0:
+            # Timed out
+            em = discord.Embed(
+                title="Defeat",
+                description="The followers of Monox were not able to raid the factory, Mensing has alarmed security. Mathis Mensing will be waiting with the cheese, though.",
+                color=0xffb900,
+            )
+            em.set_image(url=f"{self.bot.BASE_URL}/image/matmen.png")
+            await ctx.send(embed=em)
+        elif len(raid) == 0:
+            em = discord.Embed(
+                title="Defeat",
+                description="The followers of Monox were defeat. Creamy cheese... Maybe next time?",
+                color=0xffb900,
+            )
+            em.set_image(url=f"{self.bot.BASE_URL}/image/matmen.png")
+            await ctx.send(embed=em)
+        else:
+            winner = random.choice(list(raid.keys()))
+            async with self.bot.pool.acquire() as conn:
+                await conn.execute(
+                    'UPDATE profile SET "crates_legendary"="crates_legendary"+1 WHERE "user"=$1;',
+                    winner.id,
+                )
+            await self.bot.cache.update_profile_cols_rel(winner.id, crates_legendary=1)
+            em = discord.Embed(
+                title="Win!",
+                description=f"The followers of Monox defeated Mensing and the creamy cheese is ours!\n{winner.mention} has been the biggest coomer and gets a legendary crate from Monox!",
+                color=0xffb900,
+            )
+            em.set_image(url=f"{self.bot.BASE_URL}/image/monox.png")
+            await ctx.send(embed=em)
+        await self.clear_raid_timer()
+
+    @is_god()
+    @raid_free()
     @commands.command(hidden=True, brief=_("Start a Kirby raid"))
     async def kirbycultspawn(self, ctx, hp: IntGreaterThan(0)):
         """[Kirby only] Starts a raid."""
