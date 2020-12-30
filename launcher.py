@@ -30,19 +30,20 @@ import aiohttp
 import aioredis
 import orjson
 
-from config import additional_shards, shard_announce_channel, shard_per_cluster, token
-
 from utils import random
+from utils.config import ConfigLoader
 
 if sys.version_info < (3, 8):
     raise Exception("IdleRPG requires Python 3.8")
+
+config = ConfigLoader("config.toml")
 
 __version__ = "1.0.0"
 
 BOT_FILE = "idlerpg.py"
 
 payload = {
-    "Authorization": f"Bot {token}",
+    "Authorization": f"Bot {config.bot.token}",
     "User-Agent": f"IdleRPG launcher (v{__version__})",
 }
 
@@ -66,8 +67,8 @@ async def get_app_info() -> tuple[str, int]:
 
 def get_cluster_list(shards: int) -> list[list[int]]:
     return [
-        list(range(0, shards)[i : i + shard_per_cluster])
-        for i in range(0, shards, shard_per_cluster)
+        list(range(0, shards)[i : i + config.launcher.shards_per_cluster])
+        for i in range(0, shards, config.launcher.shards_per_cluster)
     ]
 
 
@@ -204,8 +205,12 @@ class Main:
             print_exc()
             exit("[ERROR] Redis must be installed properly")
 
-        await self.redis.execute_pubsub("SUBSCRIBE", shard_announce_channel)
-        channel = self.redis.pubsub_channels[bytes(shard_announce_channel, "utf-8")]
+        await self.redis.execute_pubsub(
+            "SUBSCRIBE", config.database.redis_shard_announce_channel
+        )
+        channel = self.redis.pubsub_channels[
+            bytes(config.database.redis_shard_announce_channel, "utf-8")
+        ]
         while await channel.wait_message():
             try:
                 payload = await channel.get_json(encoding="utf-8")
@@ -247,7 +252,7 @@ class Main:
                     }
                 await self.redis.execute(
                     "PUBLISH",
-                    shard_announce_channel,
+                    config.database.redis_shard_announce_channel,
                     orjson.dumps(
                         {"command_id": payload["command_id"], "output": statuses}
                     ),
@@ -255,7 +260,7 @@ class Main:
 
     async def launch(self) -> None:
         loop.create_task(self.event_handler())
-        shard_count = await get_shard_count() + additional_shards
+        shard_count = await get_shard_count() + config.launcher.additional_shards
         clusters = get_cluster_list(shard_count)
         name, id = await get_app_info()
         print(f"[MAIN] Starting {name} ({id}) - {len(clusters)} clusters")
@@ -270,7 +275,7 @@ class Main:
             self.instances.append(
                 Instance(i, shard_list, shard_count, name, self.loop, main=self)
             )
-            await asyncio.sleep(shard_per_cluster * 5)
+            await asyncio.sleep(config.launcher.shards_per_cluster * 5)
 
 
 if __name__ == "__main__":
