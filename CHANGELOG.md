@@ -1,3 +1,41 @@
+<a name="v4.11.0"></a>
+## [v4.11.0](https://git.travitia.xyz/Kenvyra/IdleRPG/compare/v4.10.0...v4.11.0)
+
+> 2020-12-29
+
+### Additions
+
+* New gods and god raids: Kirby, Monox and Lyx
+* Classes now get bonuses for weapon types (Paragon +5 attack with Spear, Thief +5 attack with Dagger or Knife, Warrior +5 with Sword, Ranger +10 with Bow, Mage/Ritualist +5 with Wand, Raider +5 with Axe)
+* Added support for sending statistics to discordbotlist.com
+* `$adventureremind` will toggle automatic reminders when your adventures end
+
+### Changed
+
+* Clarified merchall help.
+* Fixed linecount in enviroments with hidden directories
+* Fixed Dockerfile for podman 2.1.0
+* Fixed too early ready events occuring
+* Fixed `$status help text
+* Changed the config to use TOML instead of Python
+* Update to discord.py 1.5
+* Modernize maths parser and migrate to sly
+* New reason parameter in game master commands
+* Removed old god raids
+* Lovescore now resets on divorce
+* Updated es_AR and tr_TR
+* Updated Vietnamese
+* Using AllowedMentions now to prevent an issue with role mentions
+* Minimum Python version is now 3.9 and not 3.8
+
+### Merge Requests
+
+* Merge branch 'next' into 'next'
+* Merge branch 'fix_typos' into 'next'
+* Merge branch 'next' into 'next'
+* Merge branch 'next' into 'next'
+* Merge branch 'gm-reasons' into 'next'
+
 <a name="v4.10.0"></a>
 ## [v4.10.0](https://git.travitia.xyz/Kenvyra/IdleRPG/compare/v4.9.0...v4.10.0)
 
