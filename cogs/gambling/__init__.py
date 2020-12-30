@@ -496,7 +496,7 @@ class Gambling(commands.Cog):
                 if not await ctx.confirm(
                     _(
                         "{author} challenges {enemy} to a game of Draw for"
-                        " **${money:,.0f}**. Do you accept?"
+                        " **${money}**. Do you accept?"
                     ).format(
                         author=ctx.author.mention,
                         enemy=enemy.mention,
@@ -635,7 +635,7 @@ class Gambling(commands.Cog):
                             title=_("Break the tie?"),
                             description=_(
                                 "{author}, {enemy} You tied. Do you want to break the"
-                                " tie by playing again for **${money:,.0f}**?"
+                                " tie by playing again for **${money}**?"
                             ).format(
                                 author=ctx.author.mention,
                                 enemy=enemy.mention,
