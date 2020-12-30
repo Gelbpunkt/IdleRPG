@@ -19,6 +19,7 @@ import discord
 
 from discord.ext import commands
 
+from classes.classes import Ritualist, from_string
 from classes.converters import IntGreaterThan
 from cogs.shard_communication import next_day_cooldown
 from cogs.shard_communication import user_on_cooldown as user_cooldown
@@ -81,13 +82,16 @@ class Gods(commands.Cog):
                         )
                     )
             class_ = ctx.character_data["class"]
-            if self.bot.in_class_line(class_, "Ritualist"):
-                value = round(
-                    value
-                    * Decimal(
-                        1 + 0.05 * self.bot.get_class_grade_from(class_, "Ritualist")
+            for class_ in ctx.character_data["class"]:
+                c = from_string(class_)
+                if c and c.in_class_line(Ritualist):
+                    value = round(
+                        value
+                        * Decimal(
+                            1
+                            + 0.05 * self.bot.get_class_grade_from(class_, "Ritualist")
+                        )
                     )
-                )
 
             if len(loot_ids) > 0:
                 await conn.execute(

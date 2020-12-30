@@ -32,6 +32,7 @@ from classes.classes import (
     Thief,
     Warrior,
 )
+from classes.classes import from_string
 from classes.classes import from_string as class_from_string
 from classes.classes import get_class_evolves, get_first_evolution, get_name
 from classes.converters import ImageFormat, ImageUrl
@@ -276,16 +277,14 @@ class Classes(commands.Cog):
         level = rpgtools.xptolevel(ctx.character_data["xp"])
         if level < 5:
             return await ctx.send(_("Your level isn't high enough to evolve."))
-        newindex = int(level / 5) - 1
+        newindex = int(level / 5)
         updated = 0
         new_classes = []
         for class_ in ctx.character_data["class"]:
-            if class_ != "No Class":
-                new_classes.append(
-                    self.bot.get_class_evolves()[self.bot.get_class_line(class_)][
-                        newindex
-                    ]
-                )
+            c = from_string(class_)
+            if c:
+                evolves = get_class_evolves(c.get_class_line())
+                new_classes.append(evolves[newindex])
                 updated += 1
             else:
                 new_classes.append("No Class")
