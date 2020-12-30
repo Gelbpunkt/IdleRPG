@@ -85,13 +85,7 @@ class Gods(commands.Cog):
             for class_ in ctx.character_data["class"]:
                 c = from_string(class_)
                 if c and c.in_class_line(Ritualist):
-                    value = round(
-                        value
-                        * Decimal(
-                            1
-                            + 0.05 * self.bot.get_class_grade_from(class_, "Ritualist")
-                        )
-                    )
+                    value = round(value * Decimal(1 + 0.05 * c.class_grade()))
 
             if len(loot_ids) > 0:
                 await conn.execute(
