@@ -45,5 +45,5 @@ upload:
     - echo "https://dl-cdn.alpinelinux.org/alpine/edge/testing" >> /etc/apk/repositories
     - apk add podman crun tzdata
     - podman build --squash-all --storage-driver vfs --format docker -t gelbpunkt/idlerpg:latest .
-    - podman login docker.io --username $DOCKERHUB_USERNAME --password $DOCKERHUB_PASSWORD
+    - echo $DOCKERHUB_PASSWORD | podman login docker.io --username $DOCKERHUB_USERNAME --password-stdin
     - podman push gelbpunkt/idlerpg:latest docker.io/gelbpunkt/idlerpg:latest
