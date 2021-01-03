@@ -449,10 +449,10 @@ class Bot(commands.AutoShardedBot):
 
     async def has_crates(self, user, crates, rarity, conn=None):
         user = user.id if isinstance(user, (discord.User, discord.Member)) else user
-        return (
-            await self.cache.get_profile_col(user, f"crates_{rarity}", conn=conn)
-            >= crates
+        cur_crates = await self.cache.get_profile_col(
+            user, f"crates_{rarity}", conn=conn
         )
+        return cur_crates is not None and cur_crates >= crates
 
     async def has_item(self, user, item, conn=None):
         user = user.id if isinstance(user, (discord.User, discord.Member)) else user
