@@ -136,6 +136,7 @@ ALL_CLASSES_TYPES = {
     "Raider": Raider,
     "Ranger": Ranger,
     "Ritualist": Ritualist,
+    "Warrior": Warrior,
 }
 
 
