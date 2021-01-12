@@ -191,7 +191,7 @@ class Bot(commands.AutoShardedBot):
 
     async def on_message_edit(self, before, after):
         """Handler for edited messages, re-executes commands"""
-        if before.content != after.content:
+        if before.content != after.content and after.author.id not in self.bans:
             await self.on_message(after)
 
     async def invoke(self, ctx):
