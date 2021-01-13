@@ -231,7 +231,7 @@ class Trading(commands.Cog):
             with suppress(discord.Forbidden, discord.HTTPException):
                 await seller.send(
                     "A traveler has bought your **{name}** for **${price}** from the market.".format(
-                       name=item["name"], price=item["price"]
+                        name=item["name"], price=item["price"]
                     )
                 )
         return True
