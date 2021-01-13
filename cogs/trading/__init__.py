@@ -230,8 +230,8 @@ class Trading(commands.Cog):
         if seller:
             with suppress(discord.Forbidden, discord.HTTPException):
                 await seller.send(
-                    "**{author}** bought your **{name}** for **${price}** from the market.".format(
-                        author=ctx.author.name, name=item["name"], price=item["price"]
+                    "A traveler has bought your **{name}** for **${price}** from the market.".format(
+                       name=item["name"], price=item["price"]
                     )
                 )
         return True
