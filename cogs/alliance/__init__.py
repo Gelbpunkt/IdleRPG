@@ -42,7 +42,7 @@ from utils.i18n import _, locale_doc
 class Alliance(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
-        self.cities = {i["name"]: i for i in bot.config.cities}
+        self.cities = {name.title(): i for name, i in bot.config.cities.items()}
 
     @commands.command(brief=_("Shows cities and owners."))
     @locale_doc
@@ -58,7 +58,7 @@ class Alliance(commands.Cog):
         em = discord.Embed(
             title=_("Cities"), colour=self.bot.config.game.primary_colour
         ).set_image(url="https://idlerpg.xyz/city.png")
-        for city in sorted(cities, key=lambda c: -self.cities[city["name"]]["tier"]):
+        for city in sorted(cities, key=lambda c: -self.cities[c["name"]]["tier"]):
             em.add_field(
                 name=_("{name} (Tier {tier})").format(
                     name=city["name"], tier=self.cities[city["name"]]["tier"]
