@@ -213,16 +213,13 @@ class Bot(commands.AutoShardedBot):
             local = True
         else:
             local = False
+
         xp = await conn.fetchval(
-            "SELECT position FROM (SELECT profile.*, ROW_NUMBER() OVER(ORDER BY"
-            " profile.xp DESC) AS position FROM profile) s WHERE s.user = $1"
-            " LIMIT 1;",
+            'SELECT COUNT(*) FROM profile WHERE "xp">=(SELECT "xp" FROM profile WHERE "user"=$1);',
             v,
         )
         money = await conn.fetchval(
-            "SELECT position FROM (SELECT profile.*, ROW_NUMBER() OVER(ORDER BY"
-            " profile.money DESC) AS position FROM profile) s WHERE s.user = $1"
-            " LIMIT 1;",
+            'SELECT COUNT(*) FROM profile WHERE "money">=(SELECT "money" FROM profile WHERE "user"=$1);',
             v,
         )
         if local:
