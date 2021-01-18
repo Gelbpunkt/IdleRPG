@@ -70,7 +70,7 @@ bot = Bot(
     cluster_name=cluster_name,
     intents=intents,
     chunk_guilds_at_startup=False,  # chunking is nerfed
-    guild_ready_timeout=30 * (shard_count // 4),  # fix on_ready firing too early
+    guild_ready_timeout=30 * (len(shard_ids) // 4),  # fix on_ready firing too early
     max_messages=10000,  # We have a ton of incoming messages, higher cache means commands like activeadventure
     # or guild adventure joining will stay in cache so reactions are counted
 )
