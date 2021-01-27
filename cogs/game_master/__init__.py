@@ -328,8 +328,8 @@ class GameMaster(commands.Cog):
             name=name,
             value=value,
             type_=item_type.value,
-            damage=stat if item_type != "Shield" else 0,
-            armor=stat if item_type == "Shield" else 0,
+            damage=stat if item_type != ItemType.Shield else 0,
+            armor=stat if item_type == ItemType.Shield else 0,
             hand=hand,
             owner=owner,
         )
