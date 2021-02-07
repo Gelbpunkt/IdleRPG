@@ -327,16 +327,16 @@ class GameMaster(commands.Cog):
         await self.bot.create_item(
             name=name,
             value=value,
-            type_=item_type,
-            damage=stat if item_type != "Shield" else 0,
-            armor=stat if item_type == "Shield" else 0,
+            type_=item_type.value,
+            damage=stat if item_type != ItemType.Shield else 0,
+            armor=stat if item_type == ItemType.Shield else 0,
             hand=hand,
             owner=owner,
         )
 
         message = "{gm} created a {item_type} with name {name} and stat {stat}.\n\nReason: *{reason}*".format(
             gm=ctx.author,
-            item_type=item_type,
+            item_type=item_type.value,
             name=name,
             stat=stat,
             reason=reason or f"<{ctx.message.jump_url}>",

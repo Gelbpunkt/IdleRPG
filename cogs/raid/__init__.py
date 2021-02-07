@@ -1281,6 +1281,8 @@ Click [here](https://discord.com/oauth2/authorize?client_id=453963965521985536&s
             await ctx.send(embed=em)
             if raid[target] <= 0:
                 del raid[target]
+                if len(raid) == 0:
+                    break
 
             # Russian lemon powerup restores your hp by 100
             if random.randint(1, 5) == 1:

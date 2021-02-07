@@ -129,7 +129,8 @@ class Bot(commands.AutoShardedBot):
     def make_linecount(self):
         """Generates a total linecount of all python files"""
         for root, _dirs, files in os.walk(os.getcwd()):
-            if root.split(os.sep)[-1].startswith("."):
+            root_parts = root.split(os.sep)
+            if len(root_parts) > 2 and root_parts[2].startswith("."):
                 continue
             for file_ in files:
                 if file_.endswith(".py"):
@@ -213,16 +214,13 @@ class Bot(commands.AutoShardedBot):
             local = True
         else:
             local = False
+
         xp = await conn.fetchval(
-            "SELECT position FROM (SELECT profile.*, ROW_NUMBER() OVER(ORDER BY"
-            " profile.xp DESC) AS position FROM profile) s WHERE s.user = $1"
-            " LIMIT 1;",
+            'SELECT COUNT(*) FROM profile WHERE "xp">=(SELECT "xp" FROM profile WHERE "user"=$1);',
             v,
         )
         money = await conn.fetchval(
-            "SELECT position FROM (SELECT profile.*, ROW_NUMBER() OVER(ORDER BY"
-            " profile.money DESC) AS position FROM profile) s WHERE s.user = $1"
-            " LIMIT 1;",
+            'SELECT COUNT(*) FROM profile WHERE "money">=(SELECT "money" FROM profile WHERE "user"=$1);',
             v,
         )
         if local:

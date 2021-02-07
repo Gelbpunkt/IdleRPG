@@ -51,13 +51,13 @@ ALTER TYPE public.rgba OWNER TO jens;
 
 CREATE FUNCTION public.insert_alliance_default() RETURNS trigger
     LANGUAGE plpgsql
-    AS $$
-begin
-if NEW.alliance is null then
-NEW.alliance := NEW.id;
-end if;
-return new;
-end;
+    AS $$
+begin
+if NEW.alliance is null then
+NEW.alliance := NEW.id;
+end if;
+return new;
+end;
 $$;
 
 
@@ -542,7 +542,8 @@ CREATE TABLE public.reminders (
     id integer NOT NULL,
     "end" timestamp without time zone NOT NULL,
     channel bigint NOT NULL,
-    start timestamp without time zone NOT NULL
+    start timestamp without time zone NOT NULL,
+    type character varying(20) DEFAULT 'reminder'::character varying NOT NULL
 );
 
 
@@ -575,9 +576,8 @@ ALTER SEQUENCE public.reminders_id_seq OWNED BY public.reminders.id;
 --
 
 CREATE TABLE public.server (
-    id bigint,
-    prefix character varying(10),
-    unknown boolean
+    id bigint NOT NULL,
+    prefix character varying(10)
 );
 
 
@@ -832,6 +832,14 @@ ALTER TABLE ONLY public.reminders
 
 
 --
+-- Name: server server_pkey; Type: CONSTRAINT; Schema: public; Owner: jens
+--
+
+ALTER TABLE ONLY public.server
+    ADD CONSTRAINT server_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: transactions transactions_pkey; Type: CONSTRAINT; Schema: public; Owner: jens
 --
 
@@ -855,6 +863,13 @@ CREATE INDEX allitems_id_idx ON public.allitems USING btree (id);
 
 
 --
+-- Name: allitems_owner_idx; Type: INDEX; Schema: public; Owner: jens
+--
+
+CREATE INDEX allitems_owner_idx ON public.allitems USING btree (owner);
+
+
+--
 -- Name: inventory_item_idx; Type: INDEX; Schema: public; Owner: jens
 --
 
@@ -873,6 +888,41 @@ CREATE INDEX loot_id_idx ON public.loot USING btree (id);
 --
 
 CREATE INDEX market_item_idx ON public.market USING btree (item);
+
+
+--
+-- Name: profile_guild_idx; Type: INDEX; Schema: public; Owner: jens
+--
+
+CREATE INDEX profile_guild_idx ON public.profile USING btree (guild);
+
+
+--
+-- Name: profile_lovescore_idx; Type: INDEX; Schema: public; Owner: jens
+--
+
+CREATE INDEX profile_lovescore_idx ON public.profile USING btree (lovescore);
+
+
+--
+-- Name: profile_money_idx; Type: INDEX; Schema: public; Owner: jens
+--
+
+CREATE INDEX profile_money_idx ON public.profile USING btree (money);
+
+
+--
+-- Name: profile_pvpwins_idx; Type: INDEX; Schema: public; Owner: jens
+--
+
+CREATE INDEX profile_pvpwins_idx ON public.profile USING btree (pvpwins);
+
+
+--
+-- Name: profile_xp_idx; Type: INDEX; Schema: public; Owner: jens
+--
+
+CREATE INDEX profile_xp_idx ON public.profile USING btree (xp);
 
 
 --
@@ -1008,13 +1058,6 @@ GRANT SELECT ON TABLE public.guild TO prest;
 
 
 --
--- Name: TABLE helpme; Type: ACL; Schema: public; Owner: jens
---
-
-GRANT SELECT ON TABLE public.helpme TO prest;
-
-
---
 -- Name: TABLE inventory; Type: ACL; Schema: public; Owner: jens
 --
 
@@ -1036,6 +1079,20 @@ GRANT SELECT ON TABLE public.market TO prest;
 
 
 --
+-- Name: TABLE market_history; Type: ACL; Schema: public; Owner: jens
+--
+
+GRANT SELECT ON TABLE public.market_history TO prest;
+
+
+--
+-- Name: SEQUENCE market_history_id_seq; Type: ACL; Schema: public; Owner: jens
+--
+
+GRANT SELECT ON SEQUENCE public.market_history_id_seq TO prest;
+
+
+--
 -- Name: TABLE pets; Type: ACL; Schema: public; Owner: jens
 --
 
@@ -1048,27 +1105,6 @@ GRANT SELECT ON TABLE public.pets TO prest;
 
 GRANT ALL ON TABLE public.profile TO votehandler;
 GRANT SELECT ON TABLE public.profile TO prest;
-
-
---
--- Name: TABLE server; Type: ACL; Schema: public; Owner: jens
---
-
-GRANT SELECT ON TABLE public.server TO prest;
-
-
---
--- Name: TABLE transactions; Type: ACL; Schema: public; Owner: jens
---
-
-GRANT SELECT ON TABLE public.transactions TO prest;
-
-
---
--- Name: TABLE user_settings; Type: ACL; Schema: public; Owner: jens
---
-
-GRANT SELECT ON TABLE public.user_settings TO prest;
 
 
 --
