@@ -16,8 +16,10 @@ class EffectFlags(Enum):
     bleeding = 8
     # Same as bleeding but more severe
     poisoned = 16
-    # Healing is less efficient on this target
+    # Healing is 80% less efficient on this target
     marked = 32
+    # Armor is 50% less effective
+    shattered_armor = 64
 
 
 @fill_with_flags()
@@ -47,6 +49,10 @@ class Effects(BaseFlags):
     @flag_value
     def marked(self):
         return EffectFlags.marked.value
+
+    @flag_value
+    def shattered_armor(self):
+        return EffectFlags.shattered_armor.value
 
     def all(self):
         return [effect for effect in EffectFlags if self._has_flag(effect.value)]
