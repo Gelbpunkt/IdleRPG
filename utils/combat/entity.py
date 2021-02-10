@@ -18,7 +18,7 @@ from utils.random import randint
 
 from .effect import Effects
 from .item import Item
-from .skill import BaseSkill
+from .skill import BaseSkill, Target
 
 
 class Race(Enum):
@@ -29,16 +29,25 @@ class Race(Enum):
     Orc = 4
 
 
+class Faction(Enum):
+    # Just a unique identifier for each side
+    # so they can know who is friendly
+    One = 0
+    Two = 1
+
+
 class Entity:
     def __init__(
         self,
         hp: float,
+        faction: Faction,
         is_player: bool = False,
         equipped_items: list[Item] = [],
         classes: list[GameClass] = [],
         race: Optional[Race] = None,
     ):
         self.hp = hp
+        self.faction = faction
         self.is_player = is_player
         self.equipped_items = equipped_items
         self.classes = classes
@@ -46,7 +55,7 @@ class Entity:
         self.effects = Effects()
 
     def can_attack(self, other: Entity) -> bool:
-        raise NotImplementedError
+        return self.faction != other.faction
 
     def damage_against(self, other: Entity) -> float:
         damage = 0
@@ -134,10 +143,16 @@ class Entity:
         other.apply_damage_reducible(self.damage_against(other))
 
     def apply_skill(self, skill: BaseSkill) -> None:
-        if self.effects.dazed or (self.effects.blind and randint(0, 1) == 0):
-            return
-
         self.apply_damage_reducible(skill.damage)
         self.apply_healing_reducible(skill.healing)
         self.effects.merge_with(skill.causes_effects)
         self.effects.substract(skill.removes_effects)
+
+    def use_skill(self, skill: BaseSkill, target: Entity) -> None:
+        if self.effects.dazed or (self.effects.blind and randint(0, 1) == 0):
+            return
+        if skill.target == Target.Friendly and self.faction != target.faction:
+            return
+        if skill.target == Target.Hostile and self.faction == target.faction:
+            return
+        target.apply_skill(skill)
