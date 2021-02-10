@@ -99,7 +99,7 @@ class Entity:
         return damage
 
     def get_armor(self) -> float:
-        armor = 0
+        armor = sum(i.armor for i in self.equipped_items)
 
         lines = [class_.get_class_line() for class_ in self.classes]
         grades = [class_.class_grade() for class_ in self.classes]
