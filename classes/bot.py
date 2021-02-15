@@ -36,6 +36,7 @@ from aioscheduler import TimedScheduler
 from discord import AllowedMentions
 from discord.ext import commands
 
+from classes.bucket_cooldown import Cooldown, CooldownMapping
 from classes.cache import RedisCache
 from classes.classes import Mage, Paragon, Raider, Ranger, Ritualist, Thief, Warrior
 from classes.classes import from_string as class_from_string
@@ -89,15 +90,11 @@ class Bot(commands.AutoShardedBot):
         self.eligible_for_cooldown_reduce = set()  # caching
         self.not_eligible_for_cooldown_reduce = set()  # caching
 
-        self.normal_cooldown = commands.CooldownMapping.from_cooldown(
-            1,
-            self.config.bot.global_cooldown,
-            commands.BucketType.user,
+        self.normal_cooldown = CooldownMapping(
+            Cooldown(3, 3, 1, 3, commands.BucketType.user)
         )
-        self.donator_cooldown = commands.CooldownMapping.from_cooldown(
-            1,
-            self.config.bot.donator_cooldown,
-            commands.BucketType.user,
+        self.donator_cooldown = CooldownMapping(
+            Cooldown(3, 3, 1, 2, commands.BucketType.user)
         )
 
     def __repr__(self):
