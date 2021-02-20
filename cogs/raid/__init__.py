@@ -133,7 +133,7 @@ class Raid(commands.Cog):
         )
         self.boss = {"hp": hp, "initial_hp": hp, "min_dmg": 100, "max_dmg": 500}
         await ctx.channel.set_permissions(
-            ctx.guild.get_role(self.bot.config.game.member_role),
+            ctx.guild.default_role,
             overwrite=self.read_only,
         )
 
@@ -282,7 +282,7 @@ class Raid(commands.Cog):
             summary_duration = f"{minutes} minutes, {seconds} seconds"
 
             await ctx.channel.set_permissions(
-                ctx.guild.get_role(self.bot.config.game.member_role),
+                ctx.guild.default_role,
                 overwrite=self.allow_sending,
             )
             highest_bid = [
@@ -405,7 +405,7 @@ class Raid(commands.Cog):
 
         await asyncio.sleep(30)
         await ctx.channel.set_permissions(
-            ctx.guild.get_role(self.bot.config.game.member_role),
+            ctx.guild.default_role,
             overwrite=self.deny_sending,
         )
         await self.clear_raid_timer()
@@ -618,7 +618,7 @@ Quick and ugly: <https://discord.com/oauth2/authorize?client_id=4539639655219855
         )
         self.boss = {"hp": hp, "min_dmg": 100, "max_dmg": 500}
         await ctx.channel.set_permissions(
-            ctx.guild.get_role(self.bot.config.game.member_role),
+            ctx.guild.default_role,
             overwrite=self.read_only,
         )
         await ctx.send(
@@ -734,7 +734,7 @@ Quick and ugly: <https://discord.com/oauth2/authorize?client_id=4539639655219855
             await ctx.send("The raid was all wiped!")
         elif self.boss["hp"] < 1:
             await ctx.channel.set_permissions(
-                ctx.guild.get_role(self.bot.config.game.member_role),
+                ctx.guild.default_role,
                 overwrite=self.allow_sending,
             )
             winner = random.choice(list(raid.keys()))
@@ -772,7 +772,7 @@ Quick and ugly: <https://discord.com/oauth2/authorize?client_id=4539639655219855
 
         await asyncio.sleep(30)
         await ctx.channel.set_permissions(
-            ctx.guild.get_role(self.bot.config.game.member_role),
+            ctx.guild.default_role,
             overwrite=self.deny_sending,
         )
         await self.clear_raid_timer()
@@ -790,7 +790,7 @@ Quick and ugly: <https://discord.com/oauth2/authorize?client_id=4539639655219855
         )
         self.boss = {"hp": hp, "min_dmg": 100, "max_dmg": 500}
         await ctx.channel.set_permissions(
-            ctx.guild.get_role(self.bot.config.game.member_role),
+            ctx.guild.default_role,
             overwrite=self.read_only,
         )
         await ctx.send(
@@ -909,7 +909,7 @@ Quick and ugly: <https://discord.com/oauth2/authorize?client_id=4539639655219855
             await ctx.send("The raid was all wiped!")
         elif self.boss["hp"] < 1:
             await ctx.channel.set_permissions(
-                ctx.guild.get_role(self.bot.config.game.member_role),
+                ctx.guild.default_role,
                 overwrite=self.allow_sending,
             )
             highest_bid = [
@@ -1008,7 +1008,7 @@ Quick and ugly: <https://discord.com/oauth2/authorize?client_id=4539639655219855
 
         await asyncio.sleep(30)
         await ctx.channel.set_permissions(
-            ctx.guild.get_role(self.bot.config.game.member_role),
+            ctx.guild.default_role,
             overwrite=self.deny_sending,
         )
         await self.clear_raid_timer()
@@ -1606,7 +1606,7 @@ Click [here](https://discord.com/oauth2/authorize?client_id=453963965521985536&s
         )
         self.boss = {"hp": hp, "min_dmg": 100, "max_dmg": 500}
         await ctx.channel.set_permissions(
-            ctx.guild.get_role(self.bot.config.game.member_role),
+            ctx.guild.default_role,
             overwrite=self.read_only,
         )
         await ctx.send(
@@ -1715,7 +1715,7 @@ Quick and ugly: <https://discord.com/oauth2/authorize?client_id=4539639655219855
             await ctx.send("The raid was all wiped!")
         elif self.boss["hp"] < 1:
             await ctx.channel.set_permissions(
-                ctx.guild.get_role(self.bot.config.game.member_role),
+                ctx.guild.default_role,
                 overwrite=self.allow_sending,
             )
             highest_bid = [
@@ -1814,7 +1814,7 @@ Quick and ugly: <https://discord.com/oauth2/authorize?client_id=4539639655219855
 
         await asyncio.sleep(30)
         await ctx.channel.set_permissions(
-            ctx.guild.get_role(self.bot.config.game.member_role),
+            ctx.guild.default_role,
             overwrite=self.deny_sending,
         )
         await self.clear_raid_timer()
