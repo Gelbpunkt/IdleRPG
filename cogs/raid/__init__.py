@@ -123,14 +123,6 @@ class Raid(commands.Cog):
             "https://raid.idlerpg.xyz/toggle",
             headers={"Authorization": self.bot.config.external.raidauth},
         )
-        role = discord.utils.get(ctx.guild.roles, name="Ruby Donators")
-        role2 = discord.utils.get(ctx.guild.roles, name="Diamond Donators")
-        users = [u.id for u in role.members + role2.members]
-        await self.bot.session.post(
-            "https://raid.idlerpg.xyz/autosignup",
-            headers={"Authorization": self.bot.config.external.raidauth},
-            json={"users": users},
-        )
         self.boss = {"hp": hp, "initial_hp": hp, "min_dmg": 100, "max_dmg": 500}
         await ctx.channel.set_permissions(
             ctx.guild.default_role,
