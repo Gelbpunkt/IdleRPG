@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from dataclasses import dataclass
 from enum import Enum
 
@@ -37,10 +39,28 @@ devouring_slash = BaseSkill(
     skill_type=SkillType.SpecialAttack,
     damage=100,
     healing=0,
-    causes_effects=Effects(bleeding=True),
+    causes_effects=Effects(bleeding=2),
     removes_effects=Effects(),
     effects_duration=3,
     target=Target.Hostile,
     name="Devouring Slash",
     recharge=2,
 )
+
+
+class SkillDeck:
+    def __init__(self, skills: list[BaseSkill]) -> None:
+        self.skills = {skill: 0 for skill in skills}
+
+    def use(self, skill: BaseSkill) -> None:
+        self.skills[skill] = skill.recharge
+
+    def available(self, skill: BaseSkill) -> bool:
+        return self.skills.get(skill, -1) == 0
+
+    def tick(self) -> None:
+        self.skills = {(k, v - 1) if v != 0 else (k, 0) for k, v in self.skills.items()}
+
+    @classmethod
+    def empty(self) -> SkillDeck:
+        return SkillDeck([])

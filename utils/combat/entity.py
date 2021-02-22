@@ -18,7 +18,7 @@ from utils.random import randint
 
 from .effect import Effects
 from .item import Item
-from .skill import BaseSkill, Target
+from .skill import BaseSkill, SkillDeck, Target
 
 
 class Race(Enum):
@@ -42,6 +42,7 @@ class Entity:
         hp: float,
         faction: Faction,
         is_player: bool = False,
+        deck: SkillDeck = SkillDeck.empty(),
         equipped_items: list[Item] = [],
         classes: list[GameClass] = [],
         race: Optional[Race] = None,
@@ -53,6 +54,7 @@ class Entity:
         self.classes = classes
         self.race = race
         self.effects = Effects()
+        self.deck = deck
 
     def can_attack(self, other: Entity) -> bool:
         return self.faction != other.faction
@@ -155,4 +157,15 @@ class Entity:
             return
         if skill.target == Target.Hostile and self.faction == target.faction:
             return
+        if not self.deck.available(skill):
+            return
+        self.deck.use(skill)
         target.apply_skill(skill)
+
+    def tick(self) -> None:
+        if self.effects.bleeding:
+            self.hp -= 15
+        if self.effects.poisoned:
+            self.hp -= 30
+        self.deck.tick()
+        self.effects.tick()

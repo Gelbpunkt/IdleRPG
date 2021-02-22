@@ -1,68 +1,55 @@
 from __future__ import annotations
 
-from enum import Enum
-
-from discord.flags import BaseFlags, fill_with_flags, flag_value
-
-
-class EffectFlags(Enum):
-    # Deals 30% less damage
-    weakened = 1
-    # Has a 50% chance to fail spells
-    blind = 2
-    # Cannot cast spells
-    dazed = 4
-    # Takes some damage over time
-    bleeding = 8
-    # Same as bleeding but more severe
-    poisoned = 16
-    # Healing is 80% less efficient on this target
-    marked = 32
-    # Armor is 50% less effective
-    shattered_armor = 64
+ALL_EFFECTS = (
+    "weakened",
+    "blind",
+    "dazed",
+    "bleeding",
+    "poisoned",
+    "marked",
+    "shattered_armor",
+)
 
 
-@fill_with_flags()
-class Effects(BaseFlags):
-    __slots__ = ()
+class Effects:
+    __slots__ = ALL_EFFECTS
 
-    @flag_value
-    def weakened(self):
-        return EffectFlags.weakened.value
-
-    @flag_value
-    def blind(self):
-        return EffectFlags.blind.value
-
-    @flag_value
-    def dazed(self):
-        return EffectFlags.dazed.value
-
-    @flag_value
-    def bleeding(self):
-        return EffectFlags.bleeding.value
-
-    @flag_value
-    def poisoned(self):
-        return EffectFlags.poisoned.value
-
-    @flag_value
-    def marked(self):
-        return EffectFlags.marked.value
-
-    @flag_value
-    def shattered_armor(self):
-        return EffectFlags.shattered_armor.value
+    def __init__(
+        self,
+        weakened: int = 0,
+        blind: int = 0,
+        dazed: int = 0,
+        bleeding: int = 0,
+        poisoned: int = 0,
+        marked: int = 0,
+        shattered_armor: int = 0,
+    ) -> None:
+        # Deals 30% less damage
+        self.weakened = weakened
+        # Has a 50% chance to fail spells
+        self.blind = blind
+        # Cannot cast spells
+        self.dazed = dazed
+        # Takes 15 damage per tick
+        self.bleeding = bleeding
+        # Takes 30 damage per tick
+        self.poisoned = poisoned
+        # Healing is 80% less efficient on this target
+        self.marked = marked
+        # Armor is 50% less effective
+        self.shattered_armor = shattered_armor
 
     def all(self):
-        return [effect for effect in EffectFlags if self._has_flag(effect.value)]
+        return [effect for effect in ALL_EFFECTS if getattr(self, effect) > 0]
 
     def merge_with(self, other: Effects) -> None:
-        for effect in EffectFlags:
-            if other._has_flag(effect.value):
-                self._set_flag(effect.value, True)
+        for effect in ALL_EFFECTS:
+            setattr(self, effect, getattr(other, effect) + getattr(self, effect))
 
     def substract(self, other: Effects) -> None:
-        for effect in EffectFlags:
-            if other._has_flag(effect.value):
-                self._set_flag(effect.value, False)
+        for effect in ALL_EFFECTS:
+            setattr(self, effect, getattr(self, effect) - getattr(other, effect))
+
+    def tick(self) -> None:
+        for effect in ALL_EFFECTS:
+            setattr(self, effect, getattr(self, effect) - 1)
