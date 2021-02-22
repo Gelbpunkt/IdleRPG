@@ -24,14 +24,9 @@ class BaseSkill:
     healing: float
     causes_effects: Effects
     removes_effects: Effects
-    effects_duration: int
     target: Target
     name: str
     recharge: int
-
-    @property
-    def is_available(self) -> bool:
-        raise NotImplementedError("last used tracking needs to be done")
 
 
 # Some really dumb example
@@ -41,7 +36,6 @@ devouring_slash = BaseSkill(
     healing=0,
     causes_effects=Effects(bleeding=2),
     removes_effects=Effects(),
-    effects_duration=3,
     target=Target.Hostile,
     name="Devouring Slash",
     recharge=2,

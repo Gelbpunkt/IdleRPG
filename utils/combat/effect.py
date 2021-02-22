@@ -48,8 +48,14 @@ class Effects:
 
     def substract(self, other: Effects) -> None:
         for effect in ALL_EFFECTS:
-            setattr(self, effect, getattr(self, effect) - getattr(other, effect))
+            setattr(
+                self,
+                effect,
+                val
+                if (val := getattr(self, effect) - getattr(other, effect)) >= 0
+                else 0,
+            )
 
     def tick(self) -> None:
         for effect in ALL_EFFECTS:
-            setattr(self, effect, getattr(self, effect) - 1)
+            setattr(self, effect, val if (val := getattr(self, effect) - 1) >= 0 else 0)
