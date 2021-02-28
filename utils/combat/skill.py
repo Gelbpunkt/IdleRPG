@@ -7,9 +7,10 @@ from .effect import Effects
 
 
 class Target(Enum):
-    Friendly = 0
-    Hostile = 1
-    Any = 2
+    Self = 0
+    Friendly = 1
+    Hostile = 2
+    Any = 3
 
 
 class SkillType(Enum):
@@ -18,13 +19,18 @@ class SkillType(Enum):
 
 
 @dataclass
-class BaseSkill:
-    skill_type: SkillType
+class Action:
+    target: Target
     damage: float
     healing: float
     causes_effects: Effects
     removes_effects: Effects
-    target: Target
+
+
+@dataclass
+class BaseSkill:
+    skill_type: SkillType
+    actions: list[Action]
     name: str
     recharge: int
 
@@ -32,11 +38,15 @@ class BaseSkill:
 # Some really dumb example
 devouring_slash = BaseSkill(
     skill_type=SkillType.SpecialAttack,
-    damage=100,
-    healing=0,
-    causes_effects=Effects(bleeding=2),
-    removes_effects=Effects(),
-    target=Target.Hostile,
+    actions=[
+        Action(
+            target=Target.Hostile,
+            damage=100,
+            healing=0,
+            causes_effects=Effects(bleeding=2),
+            removes_effects=Effects(),
+        )
+    ],
     name="Devouring Slash",
     recharge=2,
 )

@@ -18,7 +18,7 @@ from utils.random import randint
 
 from .effect import Effects
 from .item import Item
-from .skill import BaseSkill, SkillDeck, Target
+from .skill import Action, BaseSkill, SkillDeck, SkillType, Target
 
 
 class Race(Enum):
@@ -144,23 +144,30 @@ class Entity:
     def attack(self, other: Entity) -> None:
         other.apply_damage_reducible(self.damage_against(other))
 
-    def apply_skill(self, skill: BaseSkill) -> None:
-        self.apply_damage_reducible(skill.damage)
-        self.apply_healing_reducible(skill.healing)
-        self.effects.merge_with(skill.causes_effects)
-        self.effects.substract(skill.removes_effects)
+    def apply_action(self, action: Action) -> None:
+        self.apply_damage_reducible(action.damage)
+        self.apply_healing_reducible(action.healing)
+        self.effects.merge_with(action.causes_effects)
+        self.effects.substract(action.removes_effects)
 
     def use_skill(self, skill: BaseSkill, target: Entity) -> None:
-        if self.effects.dazed or (self.effects.blind and randint(0, 1) == 0):
+        if skill.skill_type == SkillType.Spell and (
+            self.effects.dazed or (self.effects.blind and randint(0, 1) == 0)
+        ):
             return
-        if skill.target == Target.Friendly and self.faction != target.faction:
-            return
-        if skill.target == Target.Hostile and self.faction == target.faction:
-            return
+
         if not self.deck.available(skill):
             return
         self.deck.use(skill)
-        target.apply_skill(skill)
+        for action in skill.actions:
+            if (skill.target == Target.Friendly and self.faction != target.faction) or (
+                skill.target == Target.Hostile and self.faction == target.faction
+            ):
+                continue
+            if action.target == Target.Self:
+                self.apply_action(action)
+            else:
+                target.apply_action(action)
 
     def tick(self) -> None:
         if self.effects.bleeding:
