@@ -378,7 +378,7 @@ class Sharding(commands.Cog):
         process_status = launcher_res[0]
         # We have to calculate number of processes
         processes, shards_left = divmod(
-            self.bot.shard_count, self.self.bot.config.shard_per_cluster
+            self.bot.shard_count, self.bot.config.shard_per_cluster
         )
         if shards_left:
             processes += 1
