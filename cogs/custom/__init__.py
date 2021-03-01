@@ -74,7 +74,7 @@ class Custom(commands.Cog):
 
             This custom group of commands were added on December 1st 2020, requested by User ExZyond."""
         )
-        if (picked_emotion := exz_emotions.get(emotion.lower())):
+        if picked_emotion := exz_emotions.get(emotion.lower()):
             await ctx.send(
                 embed=Embed(
                     title=f"{ctx.author.display_name} {picked_emotion[0]} {user.display_name}."

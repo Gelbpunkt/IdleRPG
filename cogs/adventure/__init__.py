@@ -543,9 +543,7 @@ class Adventure(commands.Cog):
         luck_booster = await self.bot.get_booster(ctx.author, "luck")
         current_level = int(rpgtools.xptolevel(ctx.character_data["xp"]))
         luck_multiply = ctx.character_data["luck"]
-        if (
-            buildings := await self.bot.get_city_buildings(ctx.character_data["guild"])
-        ):
+        if buildings := await self.bot.get_city_buildings(ctx.character_data["guild"]):
             bonus = buildings["adventure_building"]
         else:
             bonus = 0
