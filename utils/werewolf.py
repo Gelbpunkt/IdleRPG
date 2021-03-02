@@ -2172,7 +2172,7 @@ class Player:
         elif self.role == Role.AMOR:
             await self.choose_lovers()
         elif self.role == Role.PURE_SOUL:
-            await self.announce_pure_soul(self)
+            await self.game.announce_pure_soul(self)
         elif self.role == Role.TROUBLEMAKER:
             await self.choose_2_to_exchange()
         elif self.role == Role.WILD_CHILD:
