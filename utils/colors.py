@@ -33,7 +33,7 @@ OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 Modified and extended by the IdleRPG Project
 
 The IdleRPG Discord Bot
-Copyright (C) 2018-2020 Diniboy and Gelbpunkt
+Copyright (C) 2018-2021 Diniboy and Gelbpunkt
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU Affero General Public License as published by
