@@ -46,4 +46,4 @@ upload:
     - apk add podman crun tzdata
     - podman build --squash-all --storage-driver vfs --format docker -t gelbpunkt/idlerpg:latest .
     - podman --storage-driver vfs login docker.io --username $DOCKERHUB_USERNAME --password $DOCKERHUB_PASSWORD
-    - podman push gelbpunkt/idlerpg:latest docker.io/gelbpunkt/idlerpg:latest
+    - podman --storage-driver vfs push gelbpunkt/idlerpg:latest docker.io/gelbpunkt/idlerpg:latest
