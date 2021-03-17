@@ -194,7 +194,7 @@ class Patreon(commands.Cog):
 
     @is_patron("gold")
     @has_char()
-    @user_cooldown(86400)
+    @next_day_cooldown()
     @commands.command(brief=_("[gold] Receive a daily booster"))
     @locale_doc
     async def donatordaily(self, ctx):
