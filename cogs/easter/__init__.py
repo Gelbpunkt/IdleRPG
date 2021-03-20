@@ -115,7 +115,7 @@ You have **{eggs}** <:easteregg:566251086986608650>."""
                 )
             await self.bot.cache.update_profile_cols_rel(
                 ctx.author.id,
-                **{f"crates_{reward[3]}": reward[2], "eastereggs": -[reward[0]]},
+                **{f"crates_{reward[3]}": reward[2], "eastereggs": -reward[0]},
             )
         elif reward[1] == "money":
             async with self.bot.pool.acquire() as conn:
@@ -163,7 +163,7 @@ You have **{eggs}** <:easteregg:566251086986608650>."""
                 await conn.execute(
                     'UPDATE guild SET "badges"=array_append("badges", $1) WHERE'
                     ' "id"=$2;',
-                    "https://i.imgur.com/VHUDdTv.jpg",
+                    "https://idlerpg.xyz/image/birthday2021_badge.png",
                     ctx.character_data["guild"],
                 )
             await self.bot.cache.update_profile_cols_rel(

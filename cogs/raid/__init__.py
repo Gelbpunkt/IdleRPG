@@ -129,20 +129,20 @@ class Raid(commands.Cog):
             overwrite=self.read_only,
         )
 
-        fi = discord.File("assets/other/dragon.jpg")
+        fi = discord.File("assets/other/tort.jpg")
         em = discord.Embed(
-            title="Zerekiel Spawned",
+            title="A Giant Tort Spawned",
             url="https://raid.travitia.xyz",
             description=(
-                f"This boss has {self.boss['hp']:,.0f} HP and has high-end loot!\nThe"
-                " evil dragon will be vulnerable in 15 Minutes\n\nUse"
+                f"This delicious beast of a product of human baking knowledge has {self.boss['hp']:,.0f} HP and has high-end loot!\nThe"
+                " tasty cake will be vulnerable in 15 Minutes\n\nUse"
                 " https://raid.idlerpg.xyz/ to join the raid!\n\nFor a quick and ugly"
                 " join [click"
                 " here](https://discord.com/oauth2/authorize?client_id=453963965521985536&scope=identify&response_type=code&redirect_uri=https://raid.idlerpg.xyz/callback)!"
             ),
             color=self.bot.config.game.primary_colour,
         )
-        em.set_image(url="attachment://dragon.jpg")
+        em.set_image(url="attachment://tort.jpg")
         em.set_thumbnail(url=ctx.author.avatar_url)
 
         spawnmsg = await ctx.send(embed=em, file=fi)
@@ -151,7 +151,7 @@ class Raid(commands.Cog):
         if not self.bot.config.bot.is_beta:
             summary_channel = self.bot.get_channel(506_167_065_464_406_041)
             raid_ping = await summary_channel.send(
-                "@everyone Zerekiel spawned! 15 Minutes until he is vulnerable...\nUse"
+                "@everyone A giant tort spawned! 15 Minutes until it is vulnerable...\nUse"
                 " https://raid.idlerpg.xyz/ to join the raid!",
                 allowed_mentions=discord.AllowedMentions.all(),
             )
@@ -168,22 +168,22 @@ class Raid(commands.Cog):
                 )
 
             await asyncio.sleep(300)
-            await ctx.send("**The dragon will be vulnerable in 10 minutes**")
+            await ctx.send("**The cake will be vulnerable in 10 minutes**")
             await asyncio.sleep(300)
-            await ctx.send("**The dragon will be vulnerable in 5 minutes**")
+            await ctx.send("**The cake will be vulnerable in 5 minutes**")
             await asyncio.sleep(180)
-            await ctx.send("**The dragon will be vulnerable in 2 minutes**")
+            await ctx.send("**The cake will be vulnerable in 2 minutes**")
             await asyncio.sleep(60)
-            await ctx.send("**The dragon will be vulnerable in 1 minute**")
+            await ctx.send("**The cake will be vulnerable in 1 minute**")
             await asyncio.sleep(30)
-            await ctx.send("**The dragon will be vulnerable in 30 seconds**")
+            await ctx.send("**The cake will be vulnerable in 30 seconds**")
             await asyncio.sleep(20)
-            await ctx.send("**The dragon will be vulnerable in 10 seconds**")
+            await ctx.send("**The cake will be vulnerable in 10 seconds**")
             await asyncio.sleep(10)
         else:
             await asyncio.sleep(60)
         await ctx.send(
-            "**The dragon is vulnerable! Fetching participant data... Hang on!**"
+            "**The cake is vulnerable! Fetching participant data... Hang on!**"
         )
 
         async with self.bot.session.get(
@@ -227,13 +227,13 @@ class Raid(commands.Cog):
             raid[target]["hp"] -= finaldmg  # damage dealt
             if raid[target]["hp"] > 0:
                 em = discord.Embed(
-                    title="Zerekiel attacked!",
+                    title="Tort attacked!",
                     description=f"{target} now has {raid[target]['hp']} HP!",
                     colour=0xffb900,
                 )
             else:
                 em = discord.Embed(
-                    title="Zerekiel attacked!",
+                    title="Tort attacked!",
                     description=f"{target} died!",
                     colour=0xffb900,
                 )
@@ -243,14 +243,14 @@ class Raid(commands.Cog):
             em.add_field(name="Shield", value=raid[target]["armor"])
             em.add_field(name="Effective Damage", value=finaldmg)
             em.set_author(name=str(target), icon_url=target.avatar_url)
-            em.set_thumbnail(url=f"{self.bot.BASE_URL}/dragon.jpg")
+            em.set_thumbnail(url=f"{self.bot.BASE_URL}/torte.jpg")
             await ctx.send(target.mention, embed=em)
             if raid[target]["hp"] <= 0:
                 del raid[target]
             dmg_to_take = sum(i["damage"] for i in raid.values())
             self.boss["hp"] -= dmg_to_take
             await asyncio.sleep(4)
-            em = discord.Embed(title="The raid attacked Zerekiel!", colour=0xff5c00)
+            em = discord.Embed(title="The raid attacked the cake!", colour=0xff5c00)
             em.set_thumbnail(url=f"{self.bot.BASE_URL}/knight.jpg")
             em.add_field(name="Damage", value=dmg_to_take)
             if self.boss["hp"] > 0:
@@ -264,7 +264,7 @@ class Raid(commands.Cog):
             m = await ctx.send("The raid was all wiped!")
             await m.add_reaction("\U0001F1EB")
             summary_text = (
-                "Emoji_here The raid was all wiped! Zerekiel had"
+                "Emoji_here The raid was all wiped! The cake had"
                 f" **{self.boss['hp']:,.3f}** health remaining. Better luck next time."
             )
         elif self.boss["hp"] < 1:
@@ -277,6 +277,7 @@ class Raid(commands.Cog):
                 ctx.guild.default_role,
                 overwrite=self.allow_sending,
             )
+            """
             highest_bid = [
                 356_091_260_429_402_122,
                 0,
@@ -359,6 +360,17 @@ class Raid(commands.Cog):
                     f" supposed winning bidder <@{highest_bid[0]}> spent the money in"
                     " the meantime. They will get banned if it happens again."
                 )
+            """
+            winner = random.choice(list(raid.keys()))
+            await self.bot.pool.execute(
+                'UPDATE profile SET "crates_legendary"="crates_legendary"+1 WHERE "user"=$1;',
+                winner.id,
+            )
+            await self.bot.cache.update_profile_cols_rel(winner.id, crates_legendary=1)
+            await ctx.send(
+                f"The tort is defeated and apart from a ton of cake mass, we found a <:CrateLegendary:598094865678598144> inside. {winner.mention} was so heroic and lucky to stand nearby, they snagged it!"
+            )
+            summary_crate = f"Emoji_here Legendary crate snagged by {winner.mention}"
 
             cash_pool = int(self.boss["initial_hp"] / 4)
             survivors = len(raid)
@@ -372,7 +384,7 @@ class Raid(commands.Cog):
             for user in users:
                 await self.bot.cache.update_profile_cols_rel(user, money=cash)
             await ctx.send(
-                f"**Gave ${cash:,.0f} of the Zerekiel's ${cash_pool:,.0f} drop to all"
+                f"**Gave ${cash:,.0f} of the cake's ${cash_pool:,.0f} drop to all"
                 " survivors!**"
             )
 
@@ -385,13 +397,13 @@ class Raid(commands.Cog):
 
         else:
             m = await ctx.send(
-                "The raid did not manage to kill Zerekiel within 45 Minutes... He"
+                "The raid did not manage to kill the cake within 45 Minutes... It"
                 " disappeared!"
             )
             await m.add_reaction("\U0001F1EB")
             summary_text = (
-                "Emoji_here The raid did not manage to kill Zerekiel within 45"
-                f" Minutes... He disappeared with **{self.boss['hp']:,.3f}** health"
+                "Emoji_here The raid did not manage to kill the cake within 45"
+                f" Minutes... It disappeared with **{self.boss['hp']:,.3f}** health"
                 " remaining."
             )
 
