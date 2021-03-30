@@ -1,49 +1,54 @@
-image: "docker.io/gelbpunkt/python:ci"
-
+# You can override the included template(s) by including variable overrides
+# See https://docs.gitlab.com/ee/user/application_security/sast/#customizing-the-sast-settings
+# Note that environment variables can be set in several places
+# See https://docs.gitlab.com/ee/ci/variables/#priority-of-environment-variables
+image: docker.io/gelbpunkt/python:ci
 before_script:
-  - python --version
-
+- python --version
 stages:
-  - Static Analysis
-  - Test Podman Build
-  - Release
-
+- Static Analysis
+- Test Podman Build
+- Release
+- test
 black:
   stage: Static Analysis
   script:
-    - black --version
-    - black .
-    - ash -c '[ -z "$(git status --porcelain)" ] || exit 1'
-
+  - black --version
+  - black .
+  - ash -c '[ -z "$(git status --porcelain)" ] || exit 1'
 isort:
   stage: Static Analysis
   script:
-    - isort --version
-    - isort .
-    - ash -c '[ -z "$(git status --porcelain)" ] || exit 1'
-
+  - isort --version
+  - isort .
+  - ash -c '[ -z "$(git status --porcelain)" ] || exit 1'
 flake8:
   stage: Static Analysis
   script:
-    - flake8 --version
-    - flake8
-
+  - flake8 --version
+  - flake8
 build:
   stage: Test Podman Build
   script:
-    - echo "https://dl-cdn.alpinelinux.org/alpine/edge/testing" >> /etc/apk/repositories
-    - apk add podman crun tzdata
-    - podman --version
-    - podman build --storage-driver vfs --format docker -t gelbpunkt/idlerpg:latest .
-
+  - echo "https://dl-cdn.alpinelinux.org/alpine/edge/testing" >> /etc/apk/repositories
+  - apk add podman crun tzdata
+  - podman --version
+  - podman build --storage-driver vfs --format docker -t gelbpunkt/idlerpg:latest
+    .
 upload:
   stage: Release
   only:
-    - current
-    - tags
+  - current
+  - tags
   script:
-    - echo "https://dl-cdn.alpinelinux.org/alpine/edge/testing" >> /etc/apk/repositories
-    - apk add podman crun tzdata
-    - podman build --squash-all --storage-driver vfs --format docker -t gelbpunkt/idlerpg:latest .
-    - podman --storage-driver vfs login docker.io --username $DOCKERHUB_USERNAME --password $DOCKERHUB_PASSWORD
-    - podman --storage-driver vfs push gelbpunkt/idlerpg:latest docker.io/gelbpunkt/idlerpg:latest
+  - echo "https://dl-cdn.alpinelinux.org/alpine/edge/testing" >> /etc/apk/repositories
+  - apk add podman crun tzdata
+  - podman build --squash-all --storage-driver vfs --format docker -t gelbpunkt/idlerpg:latest
+    .
+  - podman --storage-driver vfs login docker.io --username $DOCKERHUB_USERNAME --password
+    $DOCKERHUB_PASSWORD
+  - podman --storage-driver vfs push gelbpunkt/idlerpg:latest docker.io/gelbpunkt/idlerpg:latest
+sast:
+  stage: test
+include:
+- template: Security/SAST.gitlab-ci.yml
