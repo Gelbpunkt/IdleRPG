@@ -616,15 +616,11 @@ class Adventure(commands.Cog):
                     guild,
                 )
 
-            # EASTER
-            eggs = int(num ** 1.2 * random.randint(3, 6))
-
             await conn.execute(
                 'UPDATE profile SET "money"="money"+$1, "xp"="xp"+$2,'
-                ' "completed"="completed"+1, "eastereggs"="eastereggs"+$3 WHERE "user"=$4;',
+                ' "completed"="completed"+1 WHERE "user"=$3;',
                 gold,
                 xp,
-                eggs,
                 ctx.author.id,
             )
             await self.bot.cache.update_profile_cols_rel(
@@ -632,7 +628,6 @@ class Adventure(commands.Cog):
                 money=gold,
                 xp=xp,
                 completed=1,
-                eastereggs=eggs,
             )
 
             if partner := ctx.character_data["marriage"]:
@@ -665,7 +660,7 @@ class Adventure(commands.Cog):
                         "You have completed your adventure and received **${gold}** as"
                         " well as a new item:\n**{item}** added to your"
                         " `{prefix}{storage_type}`\nType: **{type}**\n{stat}Value:"
-                        " **{value}**\nExperience gained: **{xp}**.\nYou found **{eggs}** eastereggs! <:easteregg:566251086986608650> (`{prefix}easter`)"
+                        " **{value}**\nExperience gained: **{xp}**."
                     ).format(
                         gold=gold,
                         type=_("Loot item") if storage_type == "loot" else item["type"],
@@ -679,7 +674,6 @@ class Adventure(commands.Cog):
                         prefix=ctx.prefix,
                         storage_type=storage_type,
                         xp=xp,
-                        eggs=eggs,
                     ),
                     colour=0x00ff00,
                 )
