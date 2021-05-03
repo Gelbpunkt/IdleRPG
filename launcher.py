@@ -23,7 +23,6 @@ import sys
 from pathlib import Path
 from socket import socket
 from time import time
-from traceback import print_exc
 from typing import Any, Iterable, Optional, Union
 
 import aiohttp
@@ -197,25 +196,21 @@ class Main:
         raise ValueError("Unknown instance")
 
     async def event_handler(self) -> None:
-        try:
-            self.redis = await aioredis.create_pool(
-                "redis://localhost", minsize=1, maxsize=2
-            )
-        except aioredis.RedisError:
-            print_exc()
-            exit("[ERROR] Redis must be installed properly")
-
-        await self.redis.execute_pubsub(
-            "SUBSCRIBE", config.database.redis_shard_announce_channel
+        pool = aioredis.ConnectionPool.from_url(
+            "redis://localhost",
+            max_connections=2,
         )
-        channel = self.redis.pubsub_channels[
-            bytes(config.database.redis_shard_announce_channel, "utf-8")
-        ]
-        while await channel.wait_message():
+        self.redis = aioredis.Redis(connection_pool=pool)
+
+        pubsub = self.redis.pubsub()
+        await pubsub.subscribe(config.database.redis_shard_announce_channel)
+        async for message in pubsub.listen():
+            if message["type"] != "message":
+                continue
             try:
-                payload = await channel.get_json(encoding="utf-8")
+                payload = orjson.loads(message["data"])
             except orjson.JSONDecodeError:
-                continue  # not a valid JSON message
+                continue
             if payload.get("scope") != "launcher" or not payload.get("action"):
                 continue  # not the launcher's task
             # parse the JSON args
@@ -250,7 +245,7 @@ class Main:
                         "started_at": instance.started_at,
                         "shard_list": instance.shard_list,
                     }
-                await self.redis.execute(
+                await self.redis.execute_command(
                     "PUBLISH",
                     config.database.redis_shard_announce_channel,
                     orjson.dumps(

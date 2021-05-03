@@ -256,7 +256,9 @@ class Help(commands.Cog):
             Make sure the bot has permissions to create instant invites.
             English is preferred."""
         )
-        if (cd := await self.bot.redis.execute("TTL", f"helpme:{ctx.guild.id}")) != -2:
+        if (
+            cd := await self.bot.redis.execute_command("TTL", f"helpme:{ctx.guild.id}")
+        ) != -2:
             time = timedelta(seconds=cd)
             return await ctx.send(
                 _(
@@ -297,7 +299,7 @@ class Help(commands.Cog):
         message = await self.bot.http.send_message(
             self.bot.config.game.helpme_channel, None, embed=em.to_dict()
         )
-        await self.bot.redis.execute(
+        await self.bot.redis.execute_command(
             "SET",
             f"helpme:{ctx.guild.id}",
             message["id"],
@@ -317,7 +319,7 @@ class Help(commands.Cog):
 
             Clear a server's helpme cooldown. If this is not done, they will be on cooldown for 48 hours."""
         )
-        await self.bot.redis.execute("DEL", f"helpme:{guild_id}")
+        await self.bot.redis.execute_command("DEL", f"helpme:{guild_id}")
         await ctx.send("Clear!", delete_after=5)
 
     @has_open_help_request()
@@ -379,7 +381,7 @@ class Help(commands.Cog):
         await self.bot.http.delete_message(
             self.bot.config.game.helpme_channel, ctx.helpme
         )
-        await self.bot.redis.execute("DEL", f"helpme:{ctx.guild.id}")
+        await self.bot.redis.execute_command("DEL", f"helpme:{ctx.guild.id}")
         await self.bot.http.send_message(
             self.bot.config.game.helpme_channel,
             f"Helpme request for server {ctx.guild} ({ctx.guild.id}) was cancelled by"

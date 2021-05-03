@@ -77,7 +77,7 @@ class RedisCache:
         Gets the profile database entry for a user, preferably from Redis.
         If it is not in Redis, it gets the data from Postgres and inserts to Redis.
         """
-        row = await self.redis.execute("GET", f"profilecache:{user_id}")
+        row = await self.redis.execute_command("GET", f"profilecache:{user_id}")
         if row is None:
             if conn is None:
                 conn = await self.postgres.acquire()
@@ -92,7 +92,7 @@ class RedisCache:
 
             if row is None:
                 return None
-            await self.redis.execute(
+            await self.redis.execute_command(
                 "SET",
                 f"profilecache:{user_id}",
                 orjson.dumps(dict(row), default=default),
@@ -105,7 +105,7 @@ class RedisCache:
         """
         Updates profile columns in the cache by a relative difference.
         """
-        row = await self.redis.execute("GET", f"profilecache:{user_id}")
+        row = await self.redis.execute_command("GET", f"profilecache:{user_id}")
         if row is None:
             return None
         row = fix(orjson.loads(row))
@@ -116,7 +116,7 @@ class RedisCache:
             else:
                 new_val = val
             row[key] = new_val
-        await self.redis.execute(
+        await self.redis.execute_command(
             "SET",
             f"profilecache:{user_id}",
             orjson.dumps(dict(row), default=default),
@@ -126,13 +126,13 @@ class RedisCache:
         """
         Updates profile columns in the cache by an absolute value.
         """
-        row = await self.redis.execute("GET", f"profilecache:{user_id}")
+        row = await self.redis.execute_command("GET", f"profilecache:{user_id}")
         if row is None:
             return None
         row = orjson.loads(row)
         for key, val in vals.items():
             row[key.rstrip("_")] = val
-        await self.redis.execute(
+        await self.redis.execute_command(
             "SET",
             f"profilecache:{user_id}",
             orjson.dumps(dict(row), default=default),
@@ -143,7 +143,7 @@ class RedisCache:
         Deletes the Redis cache for a profile.
         """
         user_ids = [f"profilecache:{i}" for i in user_ids]
-        await self.redis.execute("DEL", *user_ids)
+        await self.redis.execute_command("DEL", *user_ids)
 
     async def get_profile_col(self, user_id, column_name, conn=None):
         """

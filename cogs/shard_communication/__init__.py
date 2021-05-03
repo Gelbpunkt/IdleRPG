@@ -39,9 +39,11 @@ def user_on_cooldown(cooldown: int, identifier: str = None):
             cmd_id = ctx.command.qualified_name
         else:
             cmd_id = identifier
-        command_ttl = await ctx.bot.redis.execute("TTL", f"cd:{ctx.author.id}:{cmd_id}")
+        command_ttl = await ctx.bot.redis.execute_command(
+            "TTL", f"cd:{ctx.author.id}:{cmd_id}"
+        )
         if command_ttl == -2:
-            await ctx.bot.redis.execute(
+            await ctx.bot.redis.execute_command(
                 "SET",
                 f"cd:{ctx.author.id}:{cmd_id}",
                 cmd_id,
@@ -66,11 +68,11 @@ def guild_on_cooldown(cooldown: int):
             )
         else:
             guild = guild["guild"]
-        command_ttl = await ctx.bot.redis.execute(
+        command_ttl = await ctx.bot.redis.execute_command(
             "TTL", f"guildcd:{guild}:{ctx.command.qualified_name}"
         )
         if command_ttl == -2:
-            await ctx.bot.redis.execute(
+            await ctx.bot.redis.execute_command(
                 "SET",
                 f"guildcd:{guild}:{ctx.command.qualified_name}",
                 ctx.command.qualified_name,
@@ -101,11 +103,11 @@ def alliance_on_cooldown(cooldown: int):
                 'SELECT alliance FROM guild WHERE "id"=$1;', guild
             )
 
-        command_ttl = await ctx.bot.redis.execute(
+        command_ttl = await ctx.bot.redis.execute_command(
             "TTL", f"alliancecd:{alliance}:{ctx.command.qualified_name}"
         )
         if command_ttl == -2:
-            await ctx.bot.redis.execute(
+            await ctx.bot.redis.execute_command(
                 "SET",
                 f"alliancecd:{alliance}:{ctx.command.qualified_name}",
                 ctx.command.qualified_name,
@@ -122,14 +124,14 @@ def alliance_on_cooldown(cooldown: int):
 
 def next_day_cooldown():
     async def predicate(ctx):
-        command_ttl = await ctx.bot.redis.execute(
+        command_ttl = await ctx.bot.redis.execute_command(
             "TTL", f"cd:{ctx.author.id}:{ctx.command.qualified_name}"
         )
         if command_ttl == -2:
             ctt = int(
                 86400 - (time() % 86400)
             )  # Calculate the number of seconds until next UTC midnight
-            await ctx.bot.redis.execute(
+            await ctx.bot.redis.execute_command(
                 "SET",
                 f"cd:{ctx.author.id}:{ctx.command.qualified_name}",
                 ctx.command.qualified_name,
@@ -148,6 +150,7 @@ class Sharding(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
         self.router = None
+        self.pubsub = bot.redis.pubsub()
         bot.loop.create_task(self.register_sub())
         self._messages = dict()
         """
@@ -158,20 +161,16 @@ class Sharding(commands.Cog):
         self.bot.loop.create_task(self.unregister_sub())
 
     async def register_sub(self):
-        if (
-            not bytes(self.bot.config.database.redis_shard_announce_channel, "utf-8")
-            in self.bot.redis.pubsub_channels
-        ):
-            await self.bot.redis.execute_pubsub(
-                "SUBSCRIBE", self.bot.config.database.redis_shard_announce_channel
-            )
+        await self.pubsub.subscribe(
+            self.bot.config.database.redis_shard_announce_channel
+        )
         self.router = self.bot.loop.create_task(self.event_handler())
 
     async def unregister_sub(self):
         if self.router and not self.router.cancelled:
             self.router.cancel()
-        await self.bot.redis.execute_pubsub(
-            "UNSUBSCRIBE", self.bot.config.database.redis_shard_announce_channel
+        await self.pubsub.unsubscribe(
+            self.bot.config.database.redis_shard_announce_channel
         )
 
     async def event_handler(self):
@@ -182,14 +181,14 @@ class Sharding(commands.Cog):
         {"scope":<bot/launcher>, "action": "<name>", "args": "<dict of args>", "command_id": "<uuid4>"}
         {"output": "<string>", "command_id": "<uuid4>"}
         """
-        channel = self.bot.redis.pubsub_channels[
-            bytes(self.bot.config.database.redis_shard_announce_channel, "utf-8")
-        ]
-        while await channel.wait_message():
+        async for message in self.pubsub.listen():
+            if message["type"] != "message":
+                continue
             try:
-                payload = await channel.get_json(encoding="utf-8")
+                payload = json.loads(message["data"])
             except json.JSONDecodeError:
-                continue  # not a valid JSON message
+                continue
+
             if payload.get("action") and hasattr(self, payload.get("action")):
                 if payload.get("scope") != "bot":
                     continue  # it's not our cup of tea
@@ -214,7 +213,7 @@ class Sharding(commands.Cog):
 
     async def guild_count(self, command_id: str):
         payload = {"output": len(self.bot.guilds), "command_id": command_id}
-        await self.bot.redis.execute(
+        await self.bot.redis.execute_command(
             "PUBLISH",
             self.bot.config.database.redis_shard_announce_channel,
             json.dumps(payload),
@@ -231,7 +230,7 @@ class Sharding(commands.Cog):
             },
             "command_id": command_id,
         }
-        await self.bot.redis.execute(
+        await self.bot.redis.execute_command(
             "PUBLISH",
             self.bot.config.database.redis_shard_announce_channel,
             json.dumps(payload),
@@ -242,7 +241,7 @@ class Sharding(commands.Cog):
             code = "\n".join(code.split("\n")[1:-1])
         code = code.strip("` \n")
         payload = {"output": await _evaluate(self.bot, code), "command_id": command_id}
-        await self.bot.redis.execute(
+        await self.bot.redis.execute_command(
             "PUBLISH",
             self.bot.config.database.redis_shard_announce_channel,
             json.dumps(payload),
@@ -253,7 +252,7 @@ class Sharding(commands.Cog):
             "output": round(self.bot.latency * 1000, 2),
             "command_id": command_id,
         }
-        await self.bot.redis.execute(
+        await self.bot.redis.execute_command(
             "PUBLISH",
             self.bot.config.database.redis_shard_announce_channel,
             json.dumps(payload),
@@ -291,7 +290,7 @@ class Sharding(commands.Cog):
 
         out = await self.bot.wait_for("socket_response", check=pred, timeout=timeout)
         payload = {"output": out["d"], "command_id": command_id}
-        await self.bot.redis.execute(
+        await self.bot.redis.execute_command(
             "PUBLISH",
             self.bot.config.database.redis_shard_announce_channel,
             json.dumps(payload),
@@ -326,7 +325,7 @@ class Sharding(commands.Cog):
         payload = {"scope": scope, "action": action, "command_id": command_id}
         if args:
             payload["args"] = args
-        await self.bot.redis.execute(
+        await self.bot.redis.execute_command(
             "PUBLISH",
             self.bot.config.database.redis_shard_announce_channel,
             json.dumps(payload),
@@ -346,7 +345,9 @@ class Sharding(commands.Cog):
     @locale_doc
     async def timers(self, ctx):
         _("""Lists all your cooldowns, including your adventure timer.""")
-        cooldowns = await self.bot.redis.execute("KEYS", f"cd:{ctx.author.id}:*")
+        cooldowns = await self.bot.redis.execute_command(
+            "KEYS", f"cd:{ctx.author.id}:*"
+        )
         adv = await self.bot.get_adventure(ctx.author)
         if not cooldowns and (not adv or adv[2]):
             return await ctx.send(
@@ -355,7 +356,7 @@ class Sharding(commands.Cog):
         timers = _("Commands on cooldown:")
         for key in cooldowns:
             key = key.decode()
-            cooldown = await self.bot.redis.execute("TTL", key)
+            cooldown = await self.bot.redis.execute_command("TTL", key)
             cmd = key.replace(f"cd:{ctx.author.id}:", "")
             text = _("{cmd} is on cooldown and will be available after {time}").format(
                 cmd=cmd, time=timedelta(seconds=int(cooldown))
@@ -378,7 +379,7 @@ class Sharding(commands.Cog):
         process_status = launcher_res[0]
         # We have to calculate number of processes
         processes, shards_left = divmod(
-            self.bot.shard_count, self.bot.config.shard_per_cluster
+            self.bot.shard_count, self.bot.config.launcher.shards_per_cluster
         )
         if shards_left:
             processes += 1

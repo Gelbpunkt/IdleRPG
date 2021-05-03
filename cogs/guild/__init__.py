@@ -1550,7 +1550,7 @@ Time it will take: **{time}**
         _(
             """Lists guild-specific cooldowns, meaning all guild members have these cooldowns and cannot use the commands."""
         )
-        cooldowns = await self.bot.redis.execute(
+        cooldowns = await self.bot.redis.execute_command(
             "KEYS", f"guildcd:{ctx.character_data['guild']}:*"
         )
         adv = await self.bot.get_guild_adventure(ctx.character_data["guild"])
@@ -1561,7 +1561,7 @@ Time it will take: **{time}**
         timers = _("Commands on cooldown:")
         for key in cooldowns:
             key = key.decode()
-            cooldown = await self.bot.redis.execute("TTL", key)
+            cooldown = await self.bot.redis.execute_command("TTL", key)
             cmd = key.replace(f"guildcd:{ctx.character_data['guild']}:", "")
             text = _("{cmd} is on cooldown and will be available after {time}").format(
                 cmd=cmd, time=timedelta(seconds=int(cooldown))

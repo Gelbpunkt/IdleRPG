@@ -440,7 +440,7 @@ class Alliance(commands.Cog):
                 'SELECT name FROM city WHERE "owner"=$1;', ctx.character_data["guild"]
             )
             if (
-                await self.bot.redis.execute("GET", f"city:{city_name}")
+                await self.bot.redis.execute_command("GET", f"city:{city_name}")
             ) == b"under attack":
                 await self.bot.reset_alliance_cooldown(ctx)
                 return await ctx.send(
@@ -592,7 +592,7 @@ class Alliance(commands.Cog):
             'UPDATE city SET "owner"=1 WHERE "owner"=$1 RETURNING "name";',
             ctx.character_data["guild"],
         )
-        await self.bot.redis.execute("DEL", f"city:{name}:occ")
+        await self.bot.redis.execute_command("DEL", f"city:{name}:occ")
         await ctx.send(_("{city} was abandoned.").format(city=name))
         await self.bot.public_log(f"**{ctx.author}** abandoned **{name}**.")
 
@@ -620,7 +620,7 @@ class Alliance(commands.Cog):
             num_units = await conn.fetchval(
                 'SELECT COUNT(*) FROM defenses WHERE "city"=$1;', city
             )
-            occ_ttl = await self.bot.redis.execute("TTL", f"city:{city}:occ")
+            occ_ttl = await self.bot.redis.execute_command("TTL", f"city:{city}:occ")
             if num_units != 0:
                 return await ctx.send(
                     _(
@@ -646,7 +646,7 @@ class Alliance(commands.Cog):
                 " occupy the city!"
             ).format(city=city)
         )
-        await self.bot.redis.execute(
+        await self.bot.redis.execute_command(
             "SET", f"city:{city}:occ", ctx.character_data["guild"], "EX", 600
         )
         await self.bot.public_log(
@@ -682,7 +682,7 @@ class Alliance(commands.Cog):
             await self.bot.reset_alliance_cooldown(ctx)
             return await ctx.send(_("Invalid city."))
 
-        if y := await self.bot.redis.execute("GET", f"city:{city}"):
+        if y := await self.bot.redis.execute_command("GET", f"city:{city}"):
             y = y.decode()
             if y == "cooldown":
                 text = _("**{city}** has just been attacked. Have some mercy!").format(
@@ -713,7 +713,7 @@ class Alliance(commands.Cog):
             await self.bot.reset_alliance_cooldown(ctx)
             return await ctx.send(_("The city is without defenses already."))
 
-        if y := await self.bot.redis.execute("GET", f"city:{city}"):
+        if y := await self.bot.redis.execute_command("GET", f"city:{city}"):
             y = y.decode()
             if y == "cooldown":
                 text = _("**{city}** has just been attacked. Have some mercy!").format(
@@ -771,7 +771,9 @@ class Alliance(commands.Cog):
             return await ctx.send(_("Noone joined."))
 
         # Set city as under attack
-        await self.bot.redis.execute("SET", f"city:{city}", "under attack", "EX", 7200)
+        await self.bot.redis.execute_command(
+            "SET", f"city:{city}", "under attack", "EX", 7200
+        )
 
         await ctx.send(
             _("Attack on **{city}** starting with **{amount}** attackers!").format(
@@ -884,7 +886,7 @@ class Alliance(commands.Cog):
 
             await asyncio.sleep(5)
 
-        await self.bot.redis.execute(
+        await self.bot.redis.execute_command(
             "SET", f"city:{city}", "cooldown", "EX", 600
         )  # 10min attack cooldown
 
@@ -921,7 +923,9 @@ class Alliance(commands.Cog):
             'SELECT alliance FROM guild WHERE "id"=$1;',
             ctx.character_data["guild"],
         )
-        cooldowns = await self.bot.redis.execute("KEYS", f"alliancecd:{alliance}:*")
+        cooldowns = await self.bot.redis.execute_command(
+            "KEYS", f"alliancecd:{alliance}:*"
+        )
         if not cooldowns:
             return await ctx.send(
                 _("Your alliance does not have any active cooldown at the moment.")
@@ -929,7 +933,7 @@ class Alliance(commands.Cog):
         timers = _("Commands on cooldown:")
         for key in cooldowns:
             key = key.decode()
-            cooldown = await self.bot.redis.execute("TTL", key)
+            cooldown = await self.bot.redis.execute_command("TTL", key)
             cmd = key.replace(f"alliancecd:{alliance}:", "")
             text = _("{cmd} is on cooldown and will be available after {time}").format(
                 cmd=cmd, time=timedelta(seconds=int(cooldown))

@@ -43,7 +43,7 @@ def raid_channel():
 
 def raid_free():
     async def predicate(ctx):
-        ttl = await ctx.bot.redis.execute("TTL", "special:raid")
+        ttl = await ctx.bot.redis.execute_command("TTL", "special:raid")
         if ttl != -2:
             raise AlreadyRaiding("There is already a raid ongoing.")
         return True
@@ -82,7 +82,7 @@ class Raid(commands.Cog):
         return v if (v := damage - defense) > 0 else 0
 
     async def set_raid_timer(self):
-        await self.bot.redis.execute(
+        await self.bot.redis.execute_command(
             "SET",
             "special:raid",
             "running",  # ctx isn't available
@@ -91,7 +91,7 @@ class Raid(commands.Cog):
         )
 
     async def clear_raid_timer(self):
-        await self.bot.redis.execute("DEL", "special:raid")
+        await self.bot.redis.execute_command("DEL", "special:raid")
 
     @is_gm()
     @commands.command(hidden=True)

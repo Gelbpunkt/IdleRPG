@@ -133,8 +133,10 @@ class Miscellaneous(commands.Cog):
 
             (This command has a cooldown until 12am UTC.)"""
         )
-        streak = await self.bot.redis.execute("INCR", f"idle:daily:{ctx.author.id}")
-        await self.bot.redis.execute(
+        streak = await self.bot.redis.execute_command(
+            "INCR", f"idle:daily:{ctx.author.id}"
+        )
+        await self.bot.redis.execute_command(
             "EXPIRE", f"idle:daily:{ctx.author.id}", 48 * 60 * 60
         )  # 48h: after 2 days, they missed it
         money = 2 ** ((streak + 9) % 10) * 50
@@ -211,7 +213,9 @@ class Miscellaneous(commands.Cog):
         _(
             """Want to flex your streak on someone or just check how many days in a row you've claimed your daily reward? This command is for you"""
         )
-        streak = await self.bot.redis.execute("GET", f"idle:daily:{ctx.author.id}")
+        streak = await self.bot.redis.execute_command(
+            "GET", f"idle:daily:{ctx.author.id}"
+        )
         if not streak:
             return await ctx.send(
                 _(

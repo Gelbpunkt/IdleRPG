@@ -678,7 +678,7 @@ class GameMaster(commands.Cog):
         else:
             user_id = user
 
-        result = await self.bot.redis.execute("DEL", f"cd:{user_id}:{command}")
+        result = await self.bot.redis.execute_command("DEL", f"cd:{user_id}:{command}")
 
         if result == 1:
             await ctx.send(_("The cooldown has been updated!"))

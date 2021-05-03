@@ -88,7 +88,9 @@ class Akinator(commands.Cog):
             )
         try:
             api_url = (
-                await self.bot.redis.execute("GET", f"aki:language:{ctx.author.id}")
+                await self.bot.redis.execute_command(
+                    "GET", f"aki:language:{ctx.author.id}"
+                )
             ).decode("utf-8")
         except AttributeError:
             # if there is no key, we cannot decode it
@@ -118,8 +120,8 @@ class Akinator(commands.Cog):
         ).paginate(ctx)
         if choice == 5:
             # if choice is us, we don't need to store the key (less data to store)
-            await self.bot.redis.execute("DEL", f"aki:language:{ctx.author.id}")
-        await self.bot.redis.execute(
+            await self.bot.redis.execute_command("DEL", f"aki:language:{ctx.author.id}")
+        await self.bot.redis.execute_command(
             "SET", f"aki:language:{ctx.author.id}", list(self.regions.values())[choice]
         )
         await ctx.send(

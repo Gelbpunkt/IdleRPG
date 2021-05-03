@@ -145,9 +145,11 @@ class Bot(commands.AutoShardedBot):
                 authorization=proxy_auth, proxy_url=proxy_url
             )
         self.trusted_session = aiohttp.ClientSession()
-        self.redis = await aioredis.create_pool(
-            "redis://localhost", minsize=10, maxsize=20
+        pool = aioredis.ConnectionPool.from_url(
+            "redis://localhost",
+            max_connections=20,
         )
+        self.redis = aioredis.Redis(connection_pool=pool)
         database_creds = {
             "database": self.config.database.postgres_name,
             "user": self.config.database.postgres_user,
@@ -171,11 +173,8 @@ class Bot(commands.AutoShardedBot):
 
     async def get_redis_version(self):
         """Parses the Redis version out of the INFO command"""
-        info = (await self.redis.execute("INFO")).decode()
-        for line in info.split("\n"):
-            if line.startswith("redis_version"):
-                return line.split(":")[1]
-        return None
+        info = await self.redis.execute_command("INFO")
+        return info["redis_version"]
 
     # https://github.com/Rapptz/discord.py/blob/master/discord/ext/commands/bot.py#L131
     def dispatch(self, event_name, *args, **kwargs):
@@ -361,13 +360,13 @@ class Bot(commands.AutoShardedBot):
 
     async def reset_cooldown(self, ctx):
         """Resets someone's cooldown for a Context"""
-        await self.redis.execute(
+        await self.redis.execute_command(
             "DEL", f"cd:{ctx.author.id}:{ctx.command.qualified_name}"
         )
 
     async def reset_guild_cooldown(self, ctx):
         """Resets a guild's cooldown for a Context"""
-        await self.redis.execute(
+        await self.redis.execute_command(
             "DEL", f"guildcd:{ctx.character_data['guild']}:{ctx.command.qualified_name}"
         )
 
@@ -376,7 +375,7 @@ class Bot(commands.AutoShardedBot):
         alliance = await self.pool.fetchval(
             'SELECT alliance FROM guild WHERE "id"=$1;', ctx.character_data["guild"]
         )
-        await self.redis.execute(
+        await self.redis.execute_command(
             "DEL", f"alliancecd:{alliance}:{ctx.command.qualified_name}"
         )
 
@@ -393,7 +392,7 @@ class Bot(commands.AutoShardedBot):
         else:
             user_id = ctx_or_user_id
 
-        await self.redis.execute(
+        await self.redis.execute_command(
             "SET",
             f"cd:{user_id}:{cmd_id}",
             cmd_id,
@@ -406,28 +405,30 @@ class Bot(commands.AutoShardedBot):
         if type_ not in ["time", "luck", "money"]:
             raise ValueError("Not a valid booster type.")
         user = user.id if isinstance(user, (discord.User, discord.Member)) else user
-        await self.redis.execute("SET", f"booster:{user}:{type_}", 1, "EX", 86400)
+        await self.redis.execute_command(
+            "SET", f"booster:{user}:{type_}", 1, "EX", 86400
+        )
 
     async def get_booster(self, user, type_):
         """Returns how longer a user has a booster running"""
         user = user.id if isinstance(user, (discord.User, discord.Member)) else user
-        val = await self.redis.execute("TTL", f"booster:{user}:{type_}")
+        val = await self.redis.execute_command("TTL", f"booster:{user}:{type_}")
         return datetime.timedelta(seconds=val) if val != -2 else None
 
     async def start_adventure(self, user, number, time):
         """Sends a user on an adventure"""
         user = user.id if isinstance(user, (discord.User, discord.Member)) else user
-        await self.redis.execute(
+        await self.redis.execute_command(
             "SET", f"adv:{user}", number, "EX", int(time.total_seconds()) + 259_200
         )  # +3 days
 
     async def get_adventure(self, user):
         """Returns a user's adventure"""
         user = user.id if isinstance(user, (discord.User, discord.Member)) else user
-        ttl = await self.redis.execute("TTL", f"adv:{user}")
+        ttl = await self.redis.execute_command("TTL", f"adv:{user}")
         if ttl == -2:
             return
-        num = await self.redis.execute("GET", f"adv:{user}")
+        num = await self.redis.execute_command("GET", f"adv:{user}")
         ttl = ttl - 259_200
         done = ttl <= 0
         time = datetime.timedelta(seconds=ttl)
@@ -436,7 +437,7 @@ class Bot(commands.AutoShardedBot):
     async def delete_adventure(self, user):
         """Deletes a user's adventure"""
         user = user.id if isinstance(user, (discord.User, discord.Member)) else user
-        await self.redis.execute("DEL", f"adv:{user}")
+        await self.redis.execute_command("DEL", f"adv:{user}")
 
     async def has_money(self, user, money, conn=None):
         user = user.id if isinstance(user, (discord.User, discord.Member)) else user
@@ -461,7 +462,7 @@ class Bot(commands.AutoShardedBot):
             )
 
     async def start_guild_adventure(self, guild, difficulty, time):
-        await self.redis.execute(
+        await self.redis.execute_command(
             "SET",
             f"guildadv:{guild}",
             difficulty,
@@ -470,17 +471,17 @@ class Bot(commands.AutoShardedBot):
         )  # +3 days
 
     async def get_guild_adventure(self, guild):
-        ttl = await self.redis.execute("TTL", f"guildadv:{guild}")
+        ttl = await self.redis.execute_command("TTL", f"guildadv:{guild}")
         if ttl == -2:
             return
-        num = await self.redis.execute("GET", f"guildadv:{guild}")
+        num = await self.redis.execute_command("GET", f"guildadv:{guild}")
         ttl = ttl - 259_200
         done = ttl <= 0
         time = datetime.timedelta(seconds=ttl)
         return int(num.decode("ascii")), time, done
 
     async def delete_guild_adventure(self, guild):
-        await self.redis.execute("DEL", f"guildadv:{guild}")
+        await self.redis.execute_command("DEL", f"guildadv:{guild}")
 
     async def create_item(
         self, name, value, type_, damage, armor, owner, hand, equipped=False, conn=None

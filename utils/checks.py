@@ -529,7 +529,7 @@ def is_supporter() -> "_CheckDecorator":
 
 def has_open_help_request() -> "_CheckDecorator":
     async def predicate(ctx: Context) -> bool:
-        response = await ctx.bot.redis.execute("GET", f"helpme:{ctx.guild.id}")
+        response = await ctx.bot.redis.execute_command("GET", f"helpme:{ctx.guild.id}")
         if not response:
             raise NoOpenHelpRequest()
         ctx.helpme = response.decode()
