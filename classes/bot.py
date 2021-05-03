@@ -64,6 +64,14 @@ class Bot(commands.AutoShardedBot):
             command_prefix=self.config.bot.global_prefix,
             **kwargs,
         )  # we overwrite the prefix when it is connected
+
+        processes, shards_left = divmod(
+            self.shard_count, self.config.launcher.shards_per_cluster
+        )
+        if shards_left:
+            processes += 1
+        self.process_count = processes
+
         # setup stuff
         self.queue = asyncio.Queue()  # global queue for ordered tasks
         self.schedule_manager = TimedScheduler()

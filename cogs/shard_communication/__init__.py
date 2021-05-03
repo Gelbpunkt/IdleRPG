@@ -309,7 +309,7 @@ class Sharding(commands.Cog):
         A function that sends an event and catches all incoming events. Can be used anywhere.
 
         ex:
-          await ctx.send(await bot.cogs["Sharding"].handler("evaluate", 4, {"code": '", ".join([f"{a} - {round(b*1000,2)} ms" for a,b in self.bot.latencies])'}))
+            await ctx.send(await bot.cogs["Sharding"].handler("evaluate", 4, {"code": '", ".join([f"{a} - {round(b*1000,2)} ms" for a,b in self.bot.latencies])'}))
 
         action: str          Must be the function's name you need to call
         expected_count: int  Minimal amount of data to send back. Can be more than the given and less on timeout
@@ -377,14 +377,8 @@ class Sharding(commands.Cog):
         if not launcher_res:
             return await ctx.send(_("Launcher is dead, that is really bad."))
         process_status = launcher_res[0]
-        # We have to calculate number of processes
-        processes, shards_left = divmod(
-            self.bot.shard_count, self.bot.config.launcher.shards_per_cluster
-        )
-        if shards_left:
-            processes += 1
         process_res = await self.handler(
-            "send_latency_and_shard_count", processes, scope="bot"
+            "send_latency_and_shard_count", self.bot.process_count, scope="bot"
         )
         actual_status = []
         for cluster_id, cluster_data in process_status.items():

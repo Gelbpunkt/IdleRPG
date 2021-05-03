@@ -276,7 +276,9 @@ class Miscellaneous(commands.Cog):
             Thank you for supporting IdleRPG!"""
         )
         guild_count = sum(
-            await self.bot.cogs["Sharding"].handler("guild_count", self.bot.shard_count)
+            await self.bot.cogs["Sharding"].handler(
+                "guild_count", self.bot.process_count
+            )
         )
         await ctx.send(
             _(
