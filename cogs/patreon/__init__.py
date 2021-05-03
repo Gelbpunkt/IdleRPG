@@ -344,7 +344,7 @@ class Patreon(commands.Cog):
                 )
             else:
                 await conn.execute(
-                    'UPDATE guild SET "banklimit"="banklimit"*$1 WHERE "leader"=$2;',
+                    'UPDATE guild SET "banklimit"="upgrade"*250000*$1 WHERE "leader"=$2;',
                     m,
                     ctx.author.id,
                 )
