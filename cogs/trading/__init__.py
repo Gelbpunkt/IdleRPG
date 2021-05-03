@@ -120,7 +120,9 @@ class Trading(commands.Cog):
                 ctx.author.id,
             )
             await conn.execute(
-                "INSERT INTO market (item, price) VALUES ($1, $2);", itemid, price
+                "INSERT INTO market (item, price) VALUES ($1, $2);",
+                itemid,
+                price,
             )
         await ctx.send(
             _(
@@ -174,7 +176,9 @@ class Trading(commands.Cog):
                 itemid,
             )
             await conn.execute(
-                "UPDATE allitems SET owner=$1 WHERE id=$2;", ctx.author.id, item["id"]
+                "UPDATE allitems SET owner=$1 WHERE id=$2;",
+                ctx.author.id,
+                item["id"],
             )
             await conn.execute(
                 'UPDATE profile SET "money"="money"+$1 WHERE "user"=$2;',
@@ -268,7 +272,9 @@ class Trading(commands.Cog):
                 ctx.author.id,
             )
             await conn.execute(
-                "INSERT INTO inventory (item, equipped) VALUES ($1, $2);", itemid, False
+                "INSERT INTO inventory (item, equipped) VALUES ($1, $2);",
+                itemid,
+                False,
             )
         await ctx.send(
             _(
@@ -503,10 +509,16 @@ class Trading(commands.Cog):
 
         if not await ctx.confirm(
             _(
-                "{user}, {author} offered you an item! React to buy it! The price is"
-                " **${price}**. You have **2 Minutes** to accept the trade or the offer"
-                " will be canceled."
-            ).format(user=user.mention, author=ctx.author.mention, price=price),
+                "{user}, {author} offered a **{stat}** **{itemtype}**! React to buy it!"
+                " The price is **${price}**. You have **2 Minutes** to accept the trade"
+                " or the offer will be canceled."
+            ).format(
+                user=user.mention,
+                author=ctx.author.mention,
+                stat=item["damage"] + item["armor"],
+                itemtype=item["type"],
+                price=price,
+            ),
             user=user,
             timeout=120,
         ):
@@ -543,10 +555,14 @@ class Trading(commands.Cog):
                 ctx.author.id,
             )
             await conn.execute(
-                'UPDATE profile SET money=money-$1 WHERE "user"=$2;', price, user.id
+                'UPDATE profile SET money=money-$1 WHERE "user"=$2;',
+                price,
+                user.id,
             )
             await conn.execute(
-                'UPDATE inventory SET "equipped"=$1 WHERE "item"=$2;', False, itemid
+                'UPDATE inventory SET "equipped"=$1 WHERE "item"=$2;',
+                False,
+                itemid,
             )
             await self.bot.log_transaction(
                 ctx,
@@ -557,7 +573,12 @@ class Trading(commands.Cog):
                 conn=conn,
             )
             await self.bot.log_transaction(
-                ctx, from_=ctx.author, to=user, subject="offer", data=item, conn=conn
+                ctx,
+                from_=ctx.author,
+                to=user,
+                subject="offer",
+                data=item,
+                conn=conn,
             )
         await self.bot.cache.update_profile_cols_rel(ctx.author.id, money=price)
         await self.bot.cache.update_profile_cols_rel(user.id, money=-price)
@@ -656,7 +677,10 @@ class Trading(commands.Cog):
     @commands.command(brief=_("Merch all non-equipped items"))
     @locale_doc
     async def merchall(
-        self, ctx, maxstat: IntFromTo(0, 100) = 100, minstat: IntFromTo(0, 100) = 0
+        self,
+        ctx,
+        maxstat: IntFromTo(0, 100) = 100,
+        minstat: IntFromTo(0, 100) = 0,
     ):
         _(
             """`[maxstat]` - The highest damage/defense to include; defaults to 100
