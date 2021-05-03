@@ -346,7 +346,7 @@ Even $1 can help us.
         cpu_temp = statistics.mean(x.current for x in temps)
         pg_version = f"{pg_version.major}.{pg_version.micro} {pg_version.releaselevel}"
         d0 = self.bot.user.created_at
-        d1 = datetime.datetime.now()
+        d1 = datetime.datetime.now(datetime.timezone.utc)
         delta = d1 - d0
         myhours = delta.days * 1.5
         sysinfo = distro.linux_distribution()
@@ -372,10 +372,10 @@ Even $1 can help us.
                 "Official Support Server Invite: https://support.idlerpg.xyz"
             ),
         )
-        embed.set_thumbnail(url=self.bot.user.avatar_url)
+        embed.set_thumbnail(url=self.bot.user.avatar.url)
         embed.set_footer(
             text=f"IdleRPG {self.bot.version} | By {owner}",
-            icon_url=self.bot.user.avatar_url,
+            icon_url=self.bot.user.avatar.url,
         )
         embed.add_field(
             name=_("Hosting Statistics"),
@@ -831,7 +831,7 @@ Average hours of work: **{hours}**"""
             ),
             color=m.color,
         )
-        em.set_image(url=m.avatar_url)
+        em.set_image(url=m.avatar.url)
         await ctx.send(embed=em)
 
         def check(msg):
@@ -902,7 +902,7 @@ Average hours of work: **{hours}**"""
         ]
         result = random.choice(possible_answers)
         em = discord.Embed(title=question, description=result, colour=ctx.author.colour)
-        em.set_thumbnail(url=ctx.author.avatar_url)
+        em.set_thumbnail(url=ctx.author.avatar.url)
         em.timestamp = datetime.datetime.now()
         await ctx.send(embed=em)
 

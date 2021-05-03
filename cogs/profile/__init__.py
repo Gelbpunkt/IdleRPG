@@ -331,7 +331,7 @@ IdleRPG is a global bot, your characters are valid everywhere"""
         )
         level = rpgtools.xptolevel(p_data["xp"])
         em = discord.Embed(colour=colour, title=f"{target}: {p_data['name']}")
-        em.set_thumbnail(url=target.avatar_url)
+        em.set_thumbnail(url=target.avatar.url)
         em.add_field(
             name=_("General"),
             value=_(

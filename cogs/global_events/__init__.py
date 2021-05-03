@@ -90,7 +90,7 @@ class GlobalEvents(commands.Cog):
                 guild._add_member(member)
             member._user.name = user_data["username"]
             member._user.discriminator = user_data["discriminator"]
-            member._user.avatar = user_data["avatar"]
+            member._user._avatar = user_data["avatar"]
 
     @commands.Cog.listener()
     async def on_socket_response(self, data):
@@ -146,7 +146,7 @@ class GlobalEvents(commands.Cog):
         embed.set_image(url=f"{self.bot.BASE_URL}/IdleRPG.png")
         embed.set_footer(
             text=f"IdleRPG Version {self.bot.version}",
-            icon_url=self.bot.user.avatar_url,
+            icon_url=self.bot.user.avatar.url,
         )
         channels = list(
             filter(

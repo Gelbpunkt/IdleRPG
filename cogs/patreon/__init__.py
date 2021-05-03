@@ -19,7 +19,7 @@ from asyncpg.exceptions import StringDataRightTruncationError
 from discord.ext import commands
 
 from classes.items import ItemType
-from cogs.shard_communication import user_on_cooldown as user_cooldown
+from cogs.shard_communication import next_day_cooldown
 from utils import random
 from utils.checks import has_char, is_guild_leader, is_patron, user_is_patron
 from utils.i18n import _, locale_doc

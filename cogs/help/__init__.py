@@ -57,11 +57,11 @@ class CogMenu(menus.Menu):
         )
         e.set_author(
             name=self.bot.user,
-            icon_url=self.bot.user.avatar_url_as(static_format="png"),
+            icon_url=self.bot.user.avatar.url,
         )
         e.set_footer(
             text=f"{self.footer} | Page {self.page}/{self.pages}",
-            icon_url=self.bot.user.avatar_url_as(static_format="png"),
+            icon_url=self.bot.user.avatar.url,
         )
         return e
 
@@ -120,7 +120,7 @@ class SubcommandMenu(menus.Menu):
         )
         e.set_author(
             name=self.bot.user,
-            icon_url=self.bot.user.avatar_url_as(static_format="png"),
+            icon_url=self.bot.user.avatar.url,
         )
         e.add_field(
             name=_("Subcommands"),
@@ -134,7 +134,7 @@ class SubcommandMenu(menus.Menu):
         )
         if self.should_add_reactions():
             e.set_footer(
-                icon_url=self.bot.user.avatar_url_as(static_format="png"),
+                icon_url=self.bot.user.avatar.url,
                 text=_(
                     "Click on the reactions to see more subcommands. | Page"
                     " {start}/{end}"
@@ -497,7 +497,7 @@ class IdleHelp(commands.HelpCommand):
         )
         e.set_author(
             name=self.context.bot.user,
-            icon_url=self.context.bot.user.avatar_url_as(static_format="png"),
+            icon_url=self.context.bot.user.avatar.url,
         )
         e.set_image(
             url="https://media.discordapp.net/attachments/460568954968997890/711740723715637288/idle_banner.png"
@@ -606,7 +606,7 @@ class IdleHelp(commands.HelpCommand):
         )
         e.set_author(
             name=self.context.bot.user,
-            icon_url=self.context.bot.user.avatar_url_as(static_format="png"),
+            icon_url=self.context.bot.user.avatar.url,
         )
 
         if command.aliases:

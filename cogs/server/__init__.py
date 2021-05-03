@@ -160,9 +160,9 @@ Server created at: `{created_at}`"""
         await ctx.send(
             embed=discord.Embed(
                 title=_("Download Link"),
-                url=str(target.avatar_url_as(static_format="png")),
+                url=target.avatar.url,
                 color=target.color,
-            ).set_image(url=target.avatar_url_as(static_format="png"))
+            ).set_image(url=target.avatar.url)
         )
 
 

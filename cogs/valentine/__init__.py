@@ -165,7 +165,7 @@ class Valentine(commands.Cog):
                 description=_("The chocolate box contained an item!"),
                 color=0xff0000,
             )
-            embed.set_thumbnail(url=ctx.author.avatar_url)
+            embed.set_thumbnail(url=ctx.author.avatar.url)
             embed.add_field(name=_("ID"), value=item["id"], inline=False)
             embed.add_field(name=_("Name"), value=item["name"], inline=False)
             embed.add_field(name=_("Type"), value=item["type"], inline=False)

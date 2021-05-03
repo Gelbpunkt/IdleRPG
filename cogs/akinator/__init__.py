@@ -387,7 +387,7 @@ class GameBase:
             return_index=True,
             title=f"{question} - {self.step+1}. {question_}",
             colour=get_colour(self.progress),
-            footer_icon=self.ctx.author.avatar_url_as(static_format="png"),
+            footer_icon=self.ctx.author.avatar.url,
             footer_text=_("Playing with {user}").format(user=self.ctx.disp),
             undo=is_undoable,
             view_current=is_guessable,
