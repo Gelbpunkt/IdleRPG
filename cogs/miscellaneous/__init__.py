@@ -363,7 +363,9 @@ Even $1 can help us.
         else:
             owner = str(await self.bot.get_user_global(self.bot.owner_id))
         guild_count = sum(
-            await self.bot.cogs["Sharding"].handler("guild_count", self.bot.process_count)
+            await self.bot.cogs["Sharding"].handler(
+                "guild_count", self.bot.process_count
+            )
         )
         meminfo = psutil.virtual_memory()
         cpu_freq = psutil.cpu_freq()
