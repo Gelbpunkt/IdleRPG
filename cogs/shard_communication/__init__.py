@@ -24,7 +24,6 @@ from uuid import uuid4
 
 import discord
 
-from async_timeout import timeout
 from discord.ext import commands
 
 from utils.eval import evaluate as _evaluate
@@ -206,7 +205,10 @@ class Sharding(commands.Cog):
                         )
                     )
             if payload.get("output") and payload["command_id"] in self._messages:
-                self._messages[payload["command_id"]].append(payload["output"])
+                for fut in self._messages[payload["command_id"]]:
+                    if not fut.done():
+                        fut.set_result(payload["output"])
+                        break
 
     async def clear_donator_cache(self, user_id: int, command_id: int):
         self.bot.get_donator_rank.invalidate(self.bot, user_id)
@@ -319,7 +321,10 @@ class Sharding(commands.Cog):
         """
         # Preparation
         command_id = f"{uuid4()}"  # str conversion
-        self._messages[command_id] = []  # must create it (see the router)
+        self._messages[command_id] = [
+            asyncio.Future() for _ in range(expected_count)
+        ]  # must create it (see the router)
+        results = []
 
         # Sending
         payload = {"scope": scope, "action": action, "command_id": command_id}
@@ -332,12 +337,13 @@ class Sharding(commands.Cog):
         )
         # Message collector
         try:
-            async with timeout(_timeout):
-                while len(self._messages[command_id]) < expected_count:
-                    await asyncio.sleep(0.1)
+            done, _ = await asyncio.wait(self._messages[command_id], timeout=_timeout)
+            for fut in done:
+                results.append(fut.result())
         except asyncio.TimeoutError:
             pass
-        return self._messages.pop(command_id, None)  # Cleanup
+        del self._messages[command_id]
+        return results
 
     @commands.command(
         aliases=["cooldowns", "t", "cds"], brief=_("Lists all your cooldowns")
