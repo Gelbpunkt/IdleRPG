@@ -297,7 +297,7 @@ def is_alliance_leader() -> "_CheckDecorator":
 
 
 def owns_city() -> "_CheckDecorator":
-    """"Checks whether an alliance owns a city."""
+    """Checks whether an alliance owns a city."""
 
     async def predicate(ctx: Context) -> bool:
         async with ctx.bot.pool.acquire() as conn:
@@ -320,7 +320,7 @@ def owns_city() -> "_CheckDecorator":
 
 
 def owns_no_city() -> "_CheckDecorator":
-    """"Checks whether an alliance owns no city."""
+    """Checks whether an alliance owns no city."""
 
     async def predicate(ctx: Context) -> bool:
         async with ctx.bot.pool.acquire() as conn:

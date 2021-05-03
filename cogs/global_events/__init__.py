@@ -128,7 +128,7 @@ class GlobalEvents(commands.Cog):
             return
         embed = discord.Embed(
             title="Thanks for adding me!",
-            colour=0xeec340,
+            colour=0xEEC340,
             description=(
                 "Hi! I am **IdleRPG**, a Discord Bot by `Adrian#1337`.\nI simulate a"
                 " whole Roleplay with everything it needs!\n\nVisit"

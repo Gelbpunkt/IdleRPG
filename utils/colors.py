@@ -246,7 +246,7 @@ def hex_to_rgba(hex_value: str) -> RGBA:
     suitable for use in an ``rgba()`` specifying that color.
     """
     int_value = int(normalize_hex(hex_value)[1:], 16)
-    return RGBA(int_value >> 16, int_value >> 8 & 0xff, int_value & 0xff, 1)
+    return RGBA(int_value >> 16, int_value >> 8 & 0xFF, int_value & 0xFF, 1)
 
 
 def parse_rgba(rgb_or_rgba) -> RGBA:

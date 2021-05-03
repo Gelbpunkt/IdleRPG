@@ -229,13 +229,13 @@ class Raid(commands.Cog):
                 em = discord.Embed(
                     title="Zerekiel attacked!",
                     description=f"{target} now has {raid[target]['hp']} HP!",
-                    colour=0xffb900,
+                    colour=0xFFB900,
                 )
             else:
                 em = discord.Embed(
                     title="Zerekiel attacked!",
                     description=f"{target} died!",
-                    colour=0xffb900,
+                    colour=0xFFB900,
                 )
             em.add_field(
                 name="Theoretical Damage", value=finaldmg + raid[target]["armor"]
@@ -250,7 +250,7 @@ class Raid(commands.Cog):
             dmg_to_take = sum(i["damage"] for i in raid.values())
             self.boss["hp"] -= dmg_to_take
             await asyncio.sleep(4)
-            em = discord.Embed(title="The raid attacked the dragon!", colour=0xff5c00)
+            em = discord.Embed(title="The raid attacked the dragon!", colour=0xFF5C00)
             em.set_thumbnail(url=f"{self.bot.BASE_URL}/knight.jpg")
             em.add_field(name="Damage", value=dmg_to_take)
             if self.boss["hp"] > 0:
@@ -692,13 +692,13 @@ Quick and ugly: <https://discord.com/oauth2/authorize?client_id=4539639655219855
                 em = discord.Embed(
                     title="The Guardian attacks the seekers of the garden!",
                     description=f"{target} now has {raid[target]['hp']} HP!",
-                    colour=0xffb900,
+                    colour=0xFFB900,
                 )
             else:
                 em = discord.Embed(
                     title="The Guardian attacks the seekers of the garden!",
                     description=f"{target} died!",
-                    colour=0xffb900,
+                    colour=0xFFB900,
                 )
             em.add_field(name="Theoretical Damage", value=dmg + raid[target]["armor"])
             em.add_field(name="Shield", value=raid[target]["armor"])
@@ -712,7 +712,7 @@ Quick and ugly: <https://discord.com/oauth2/authorize?client_id=4539639655219855
             self.boss["hp"] -= dmg_to_take
             await asyncio.sleep(4)
             em = discord.Embed(
-                title="The seekers attacked the Guardian!", colour=0xff5c00
+                title="The seekers attacked the Guardian!", colour=0xFF5C00
             )
             em.set_thumbnail(url=f"{self.bot.BASE_URL}/eden_followers.jpg")
             em.add_field(name="Damage", value=dmg_to_take)
@@ -867,13 +867,13 @@ Quick and ugly: <https://discord.com/oauth2/authorize?client_id=4539639655219855
                 em = discord.Embed(
                     title="Hamburger attacked!",
                     description=f"{target} now has {raid[target]['hp']} HP!",
-                    colour=0xffb900,
+                    colour=0xFFB900,
                 )
             else:
                 em = discord.Embed(
                     title="Hamburger attacked!",
                     description=f"{target} died!",
-                    colour=0xffb900,
+                    colour=0xFFB900,
                 )
             em.add_field(name="Theoretical Damage", value=dmg + raid[target]["armor"])
             em.add_field(name="Shield", value=raid[target]["armor"])
@@ -887,7 +887,7 @@ Quick and ugly: <https://discord.com/oauth2/authorize?client_id=4539639655219855
             self.boss["hp"] -= dmg_to_take
             await asyncio.sleep(4)
             em = discord.Embed(
-                title="The raid attacked the hamburger!", colour=0xff5c00
+                title="The raid attacked the hamburger!", colour=0xFF5C00
             )
             em.set_thumbnail(url=f"{self.bot.BASE_URL}/knight.jpg")
             em.add_field(name="Damage", value=dmg_to_take)
@@ -1076,13 +1076,13 @@ Quick and ugly: <https://discord.com/oauth2/authorize?client_id=4539639655219855
                 em = discord.Embed(
                     title="It turns day",
                     description="The sun rises and Ouroboros seems visibly weaker.",
-                    colour=0xffb900,
+                    colour=0xFFB900,
                 )
             else:
                 em = discord.Embed(
                     title="It turns night",
                     description="Nightfalls. Ouroboros seems visibly stronger.",
-                    colour=0xffb900,
+                    colour=0xFFB900,
                 )
             em.set_thumbnail(url=f"{self.bot.BASE_URL}/image/lyx.png")
             await ctx.send(embed=em)
@@ -1155,7 +1155,7 @@ Quick and ugly: <https://discord.com/oauth2/authorize?client_id=4539639655219855
             em = discord.Embed(
                 title=event["text"],
                 description=text,
-                colour=0xffb900,
+                colour=0xFFB900,
             )
             em.set_author(name=f"{target}", icon_url=target.avatar.url)
             em.set_footer(text=f"{len(raid)} followers remain")
@@ -1201,7 +1201,7 @@ Use https://raid.idlerpg.xyz/ to join the raid!
 **Only followers of Monox may join.**
 
 Click [here](https://discord.com/oauth2/authorize?client_id=453963965521985536&scope=identify&response_type=code&redirect_uri=https://raid.idlerpg.xyz/callback) for a quick and ugly join""",
-            color=0xffb900,
+            color=0xFFB900,
         )
         em.set_image(url=f"{self.bot.BASE_URL}/image/matmen.png")
         await ctx.send(embed=em)
@@ -1260,13 +1260,13 @@ Click [here](https://discord.com/oauth2/authorize?client_id=453963965521985536&s
                 em = discord.Embed(
                     title="Mensing shoots!",
                     description=f"{target} now has {raid[target]} HP!",
-                    colour=0xffb900,
+                    colour=0xFFB900,
                 )
             else:
                 em = discord.Embed(
                     title="Mensing hits critical!",
                     description=f"{target} died!",
-                    colour=0xffb900,
+                    colour=0xFFB900,
                 )
             em.add_field(name="Damage", value=dmg)
             em.set_author(name=str(target), icon_url=target.avatar.url)
@@ -1285,7 +1285,7 @@ Click [here](https://discord.com/oauth2/authorize?client_id=453963965521985536&s
                 em = discord.Embed(
                     title=f"{target} uses Russian Lemon!",
                     description=f"It's super effective!\n{target} now has {raid[target]} HP!",
-                    colour=0xffb900,
+                    colour=0xFFB900,
                 )
                 em.set_author(name=str(target), icon_url=target.avatar.url)
                 em.set_thumbnail(url=f"{self.bot.BASE_URL}/image/lemon.png")
@@ -1305,7 +1305,7 @@ Click [here](https://discord.com/oauth2/authorize?client_id=453963965521985536&s
                 em = discord.Embed(
                     title="Mensing blows up NIC traps!",
                     description=f"It's super effective!\n{', '.join(str(u) for u in targets)} take 100 damage!",
-                    colour=0xffb900,
+                    colour=0xFFB900,
                 )
                 em.set_thumbnail(url=f"{self.bot.BASE_URL}/image/matmen.png")
                 await ctx.send(embed=em)
@@ -1318,7 +1318,7 @@ Click [here](https://discord.com/oauth2/authorize?client_id=453963965521985536&s
             boss_hp -= dmg_to_take
             await asyncio.sleep(4)
             em = discord.Embed(
-                title="The power of Monox's sausages attacks Mensing!", colour=0xff5c00
+                title="The power of Monox's sausages attacks Mensing!", colour=0xFF5C00
             )
             em.set_thumbnail(url=f"{self.bot.BASE_URL}/image/monox.png")
             em.add_field(name="Damage", value=dmg_to_take)
@@ -1334,7 +1334,7 @@ Click [here](https://discord.com/oauth2/authorize?client_id=453963965521985536&s
             em = discord.Embed(
                 title="Defeat",
                 description="The followers of Monox were not able to raid the factory, Mensing has alarmed security. Mathis Mensing will be waiting with the cheese, though.",
-                color=0xffb900,
+                color=0xFFB900,
             )
             em.set_image(url=f"{self.bot.BASE_URL}/image/matmen.png")
             await ctx.send(embed=em)
@@ -1342,7 +1342,7 @@ Click [here](https://discord.com/oauth2/authorize?client_id=453963965521985536&s
             em = discord.Embed(
                 title="Defeat",
                 description="The followers of Monox were defeat. Creamy cheese... Maybe next time?",
-                color=0xffb900,
+                color=0xFFB900,
             )
             em.set_image(url=f"{self.bot.BASE_URL}/image/matmen.png")
             await ctx.send(embed=em)
@@ -1357,7 +1357,7 @@ Click [here](https://discord.com/oauth2/authorize?client_id=453963965521985536&s
             em = discord.Embed(
                 title="Win!",
                 description=f"The followers of Monox defeated Mensing and the creamy cheese is ours!\n{winner.mention} has been the biggest coomer and gets a legendary crate from Monox!",
-                color=0xffb900,
+                color=0xFFB900,
             )
             em.set_image(url=f"{self.bot.BASE_URL}/image/monox.png")
             await ctx.send(embed=em)
@@ -1385,7 +1385,7 @@ Use https://raid.idlerpg.xyz/ to join the raid!
 **Only followers of Kirby may join.**
 
 Click [here](https://discord.com/oauth2/authorize?client_id=453963965521985536&scope=identify&response_type=code&redirect_uri=https://raid.idlerpg.xyz/callback) for a quick and ugly join""",
-            color=0xffb900,
+            color=0xFFB900,
         )
         em.set_image(url=f"{self.bot.BASE_URL}/image/dark_mind.png")
         await ctx.send(embed=em)
@@ -1449,13 +1449,13 @@ Click [here](https://discord.com/oauth2/authorize?client_id=453963965521985536&s
                 em = discord.Embed(
                     title="Dark Mind attacked!",
                     description=f"{target} now has {raid[target]['hp']} HP!",
-                    colour=0xffb900,
+                    colour=0xFFB900,
                 )
             else:
                 em = discord.Embed(
                     title="Dark Mind attacked!",
                     description=f"{target} died!",
-                    colour=0xffb900,
+                    colour=0xFFB900,
                 )
             em.add_field(name="Theoretical Damage", value=dmg + raid[target]["armor"])
             em.add_field(name="Shield", value=raid[target]["armor"])
@@ -1468,7 +1468,7 @@ Click [here](https://discord.com/oauth2/authorize?client_id=453963965521985536&s
             dmg_to_take = sum(i["damage"] for i in raid.values())
             self.boss["hp"] -= dmg_to_take
             await asyncio.sleep(4)
-            em = discord.Embed(title="The raiders attacked Dark Mind!", colour=0xff5c00)
+            em = discord.Embed(title="The raiders attacked Dark Mind!", colour=0xFF5C00)
             em.set_thumbnail(url=f"{self.bot.BASE_URL}/image/kirby_raiders.png")
             em.add_field(name="Damage", value=dmg_to_take)
             if self.boss["hp"] > 0:
@@ -1482,7 +1482,7 @@ Click [here](https://discord.com/oauth2/authorize?client_id=453963965521985536&s
             em = discord.Embed(
                 title="Defeat!",
                 description="Dark Mind was too strong! You cannot stop him from conquering Dream Land as he ushers in a dark period of terror and tyranny!",
-                color=0xffb900,
+                color=0xFFB900,
             )
             em.set_image(url=f"{self.bot.BASE_URL}/image/kirby_loss.png")
             await self.clear_raid_timer()
@@ -1491,7 +1491,7 @@ Click [here](https://discord.com/oauth2/authorize?client_id=453963965521985536&s
             em = discord.Embed(
                 title="Timed out!",
                 description="You took too long! The mirror world has successfully absorbed Dream Land and it is lost forever.",
-                color=0xffb900,
+                color=0xFFB900,
             )
             em.set_image(url=f"{self.bot.BASE_URL}/image/kirby_timeout.png")
             await self.clear_raid_timer()
@@ -1499,7 +1499,7 @@ Click [here](https://discord.com/oauth2/authorize?client_id=453963965521985536&s
         em = discord.Embed(
             title="Win!",
             description="Hooray! Dream Land is saved!",
-            color=0xffb900,
+            color=0xFFB900,
         )
         em.set_image(url=f"{self.bot.BASE_URL}/image/kirby_win.png")
         await ctx.send(embed=em)
@@ -1507,7 +1507,7 @@ Click [here](https://discord.com/oauth2/authorize?client_id=453963965521985536&s
         em = discord.Embed(
             title="Dark Mind returns!",
             description="Oh no! Dark Mind is back in his final form, stronger than ever before! Defeat him once and for all to protect Dream Land!",
-            color=0xffb900,
+            color=0xFFB900,
         )
         em.set_image(url=f"{self.bot.BASE_URL}/image/kirby_return.png")
         await ctx.send(embed=em)
@@ -1523,13 +1523,13 @@ Click [here](https://discord.com/oauth2/authorize?client_id=453963965521985536&s
                 em = discord.Embed(
                     title="Dark Mind attacked!",
                     description=f"{target} now has {raid[target]['hp']} HP!",
-                    colour=0xffb900,
+                    colour=0xFFB900,
                 )
             else:
                 em = discord.Embed(
                     title="Dark Mind attacked!",
                     description=f"{target} died!",
-                    colour=0xffb900,
+                    colour=0xFFB900,
                 )
             em.add_field(name="Theoretical Damage", value=dmg + raid[target]["armor"])
             em.add_field(name="Shield", value=raid[target]["armor"])
@@ -1542,7 +1542,7 @@ Click [here](https://discord.com/oauth2/authorize?client_id=453963965521985536&s
             dmg_to_take = sum(i["damage"] for i in raid.values())
             self.boss["hp"] -= dmg_to_take
             await asyncio.sleep(4)
-            em = discord.Embed(title="The raiders attacked Dark Mind!", colour=0xff5c00)
+            em = discord.Embed(title="The raiders attacked Dark Mind!", colour=0xFF5C00)
             em.set_thumbnail(url=f"{self.bot.BASE_URL}/image/kirby_raiders.png")
             em.add_field(name="Damage", value=dmg_to_take)
             if self.boss["hp"] > 0:
@@ -1556,7 +1556,7 @@ Click [here](https://discord.com/oauth2/authorize?client_id=453963965521985536&s
             em = discord.Embed(
                 title="Defeat!",
                 description="Dark Mind was too strong! You cannot stop him from conquering Dream Land as he ushers in a dark period of terror and tyranny!",
-                color=0xffb900,
+                color=0xFFB900,
             )
             em.set_image(url=f"{self.bot.BASE_URL}/image/kirby_loss.png")
             await self.clear_raid_timer()
@@ -1565,7 +1565,7 @@ Click [here](https://discord.com/oauth2/authorize?client_id=453963965521985536&s
         em = discord.Embed(
             title="Win!",
             description=f"Hooray! Dark Mind is defeated and his dream of conquering Dream Land is shattered. You return back to Dream Land to Cappy Town where you are met with a huge celebration! The Mayor gives {winner.mention} a Legendary Crate for your bravery!\n**Gave $10000 to each survivor**",
-            color=0xffb900,
+            color=0xFFB900,
         )
         em.set_image(url=f"{self.bot.BASE_URL}/image/kirby_final_win.png")
         await ctx.send(embed=em)
@@ -1675,13 +1675,13 @@ Quick and ugly: <https://discord.com/oauth2/authorize?client_id=4539639655219855
                 em = discord.Embed(
                     title="Atheistus attacked!",
                     description=f"{target} now has {raid[target]['hp']} HP!",
-                    colour=0xffb900,
+                    colour=0xFFB900,
                 )
             else:
                 em = discord.Embed(
                     title="Atheistus attacked!",
                     description=f"{target} died!",
-                    colour=0xffb900,
+                    colour=0xFFB900,
                 )
             em.add_field(name="Theoretical Damage", value=dmg + raid[target]["armor"])
             em.add_field(name="Shield", value=raid[target]["armor"])
@@ -1694,7 +1694,7 @@ Quick and ugly: <https://discord.com/oauth2/authorize?client_id=4539639655219855
             dmg_to_take = sum(i["damage"] for i in raid.values())
             self.boss["hp"] -= dmg_to_take
             await asyncio.sleep(4)
-            em = discord.Embed(title="The raid attacked Atheistus!", colour=0xff5c00)
+            em = discord.Embed(title="The raid attacked Atheistus!", colour=0xFF5C00)
             em.set_thumbnail(url=f"{self.bot.BASE_URL}/knight.jpg")
             em.add_field(name="Damage", value=dmg_to_take)
             if self.boss["hp"] > 0:

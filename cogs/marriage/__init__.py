@@ -73,7 +73,7 @@ class Marriage(commands.Cog):
                     "{author} wants to marry you, {partner}! React with :heart: to"
                     " marry them!"
                 ).format(author=ctx.author.mention, partner=partner.mention),
-                colour=0xff0000,
+                colour=0xFF0000,
             )
             .set_image(url=ctx.author.avatar.url)
             .set_thumbnail(

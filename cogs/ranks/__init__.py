@@ -47,7 +47,7 @@ class Ranks(commands.Cog):
             )
             result = f"{result}{idx + 1}. {text}\n"
         result = discord.Embed(
-            title=_("The Richest Players"), description=result, colour=0xe7ca01
+            title=_("The Richest Players"), description=result, colour=0xE7CA01
         )
         await ctx.send(embed=result)
 
@@ -74,7 +74,7 @@ class Ranks(commands.Cog):
             )
             result = f"{result}{idx + 1}. {text}\n"
         result = discord.Embed(
-            title=_("The Best Players"), description=result, colour=0xe7ca01
+            title=_("The Best Players"), description=result, colour=0xE7CA01
         )
         await ctx.send(embed=result)
 
@@ -97,7 +97,7 @@ class Ranks(commands.Cog):
             )
             result = f"{result}{idx + 1}. {text}\n"
         result = discord.Embed(
-            title=_("The Best PvPers"), description=result, colour=0xe7ca01
+            title=_("The Best PvPers"), description=result, colour=0xE7CA01
         )
         await ctx.send(embed=result)
 
@@ -123,7 +123,7 @@ class Ranks(commands.Cog):
             )
             result = f"{result}**{idx + 1}**. {text}\n"
         result = discord.Embed(
-            title=_("The Best lovers"), description=result, colour=0xe7ca01
+            title=_("The Best lovers"), description=result, colour=0xE7CA01
         )
         await ctx.send(embed=result)
 

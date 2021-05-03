@@ -235,7 +235,7 @@ class Miscellaneous(commands.Cog):
                 description=_("My current latency is {lat}ms").format(
                     lat=round(self.bot.latency * 1000, 2)
                 ),
-                color=0xf1c60c,
+                color=0xF1C60C,
             )
         )
 
@@ -366,7 +366,7 @@ Even $1 can help us.
 
         embed = discord.Embed(
             title=_("IdleRPG Statistics"),
-            colour=0xb8bbff,
+            colour=0xB8BBFF,
             url=self.bot.BASE_URL,
             description=_(
                 "Official Support Server Invite: https://support.idlerpg.xyz"
@@ -596,7 +596,7 @@ Average hours of work: **{hours}**"""
                 description=_("Calculating Love for {first} and {second}...").format(
                     first=first.mention, second=second.mention
                 ),
-                color=0xff0000,
+                color=0xFF0000,
             )
         )
         await asyncio.sleep(5)
@@ -610,7 +610,7 @@ Average hours of work: **{hours}**"""
             description=_("Love for {first} and {second} is at **{love}%**! ❤").format(
                 first=first.mention, second=second.mention, love=love
             ),
-            color=0xff0000,
+            color=0xFF0000,
         )
         await msg.edit(embed=embed)
 
@@ -654,7 +654,7 @@ Average hours of work: **{hours}**"""
             f"https://some-random-api.ml/meme?lol={random.randint(1,1000000)}"
         ) as resp:
             await ctx.send(
-                embed=discord.Embed(color=0x0a00ff).set_image(
+                embed=discord.Embed(color=0x0A00FF).set_image(
                     url=(await resp.json())["image"]
                 )
             )

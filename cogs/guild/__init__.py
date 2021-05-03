@@ -157,7 +157,7 @@ class Guild(commands.Cog):
             result = f"{result}{idx + 1}. {guild['name']}, {text}\n"
         await ctx.send(
             embed=discord.Embed(
-                title=_("The Best GvG Guilds"), description=result, colour=0xe7ca01
+                title=_("The Best GvG Guilds"), description=result, colour=0xE7CA01
             )
         )
 
@@ -830,7 +830,7 @@ class Guild(commands.Cog):
             embed=discord.Embed(
                 title=_("The Richest Players of {guild}").format(guild=guild["name"]),
                 description=result,
-                colour=0xe7ca01,
+                colour=0xE7CA01,
             )
         )
 
@@ -871,7 +871,7 @@ class Guild(commands.Cog):
             embed=discord.Embed(
                 title=_("The Best Players of {name}").format(name=guild["name"]),
                 description=result,
-                colour=0xe7ca01,
+                colour=0xE7CA01,
             )
         )
 
