@@ -1,3 +1,26 @@
+<a name="v4.11.1"></a>
+## [v4.11.1](https://git.travitia.xyz/Kenvyra/IdleRPG/compare/v4.11.0...v4.11.1)
+
+> 2021-05-04
+
+### Fixes
+
+* Items cannot be sold for more than 100m on the market anymore, fixing an issue with items disappearing
+* Several bugfixes related to alliances
+* Fixed an issue with the Spanish translation in `$guild distribute`
+* Several Werewolf bugfixes
+* Typos fixed in alliance module
+* Fixed an infinite guild bank stacking exploit
+
+### Changes
+
+* Market purchases are now anonymous
+* The global ratelimit is now burstable, allowing you to use 3 commands in 3 seconds in a short time frame which restocks every two seconds by 1 allowed command
+* The bot rules now prohibit trading in-game items for *anything* outside of the game
+* `$donatordaily` now resets at the same time as `$daily`
+* The entire codebase should now work with discord.py 2.0 alpha and aioredis 2.0
+* Improved performance of cross-process communication by a huge margin
+
 <a name="v4.11.0"></a>
 ## [v4.11.0](https://git.travitia.xyz/Kenvyra/IdleRPG/compare/v4.10.0...v4.11.0)
 
