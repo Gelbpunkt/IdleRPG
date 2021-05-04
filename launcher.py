@@ -98,7 +98,7 @@ class Instance:
         )
         self._process: Optional[asyncio.subprocess.Process] = None
         self.status = Status.Initialized
-        self.future = asyncio.Future()
+        self.future: asyncio.Future[None] = asyncio.Future()
 
     @property
     def is_active(self) -> bool:
@@ -128,7 +128,7 @@ class Instance:
             print(f"[Cluster #{self.id} ({self.name})] Restarting...")
             asyncio.create_task(self.start())
 
-    async def start(self) -> Optional[asyncio.Task]:
+    async def start(self) -> None:
         if self.is_active:
             print(f"[Cluster #{self.id} ({self.name})] The cluster is already up")
             return
@@ -141,10 +141,9 @@ class Instance:
             stdout=asyncio.subprocess.DEVNULL,
             stderr=asyncio.subprocess.PIPE,
         )
-        task = asyncio.create_task(self._run())
+        asyncio.create_task(self._run())
         print(f"[Cluster #{self.id}] Started successfully")
         self.status = Status.Running
-        return task
 
     async def stop(self) -> None:
         self.status = Status.Stopped
@@ -165,7 +164,7 @@ class Instance:
             await self.stop()
         await self.start()
 
-    async def _run(self):
+    async def _run(self) -> None:
         if self._process is None:
             raise RuntimeError(
                 "Function cannot be called before initializing the Process."
