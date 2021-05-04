@@ -570,7 +570,7 @@ class IdleHelp(commands.HelpCommand):
             color=self.context.bot.config.game.primary_colour,
             description=[
                 f"{self.group_emoji if isinstance(c, commands.Group) else self.command_emoji}"
-                f" `{self.clean_prefix}{c.qualified_name} {c.signature}` - {_(c.brief)}"
+                f" `{self.context.clean_prefix}{c.qualified_name} {c.signature}` - {_(c.brief)}"
                 for c in cog.get_commands()
             ],
             footer=_("See '{prefix}help <command>' for more detailed info").format(
