@@ -284,13 +284,13 @@ class Raid(commands.Cog):
             ]  # userid, amount
 
             def check(msg):
-                if (
-                    msg.channel.id != ctx.channel.id
-                    or (not msg.content.isdigit())
-                    or (msg.author not in raid)
-                ):
+                try:
+                    val = int(msg.content)
+                except ValueError:
                     return False
-                if not (int(msg.content) > highest_bid[1]):
+                if msg.channel.id != ctx.channel.id or (msg.author not in raid):
+                    return False
+                if not val > highest_bid[1]:
                     return False
                 if (
                     msg.author.id == highest_bid[0]
