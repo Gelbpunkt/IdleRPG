@@ -113,7 +113,7 @@ class Errorhandler(commands.Cog):
                 await ctx.send(_("The role you referenced was not found."))
             elif isinstance(error, commands.BadInviteArgument):
                 await ctx.send(
-                    _("The invited you referenced is invalid or has expired.")
+                    _("The invite you referenced is invalid or has expired.")
                 )
             elif isinstance(error, commands.EmojiNotFound):
                 await ctx.send(_("The emoji you referenced was not found."))
