@@ -683,6 +683,7 @@ class Trading(commands.Cog):
         minstat: IntFromTo(0, 100) = 0,
     ):
         _(
+            # xgettext: no-python-format
             """`[maxstat]` - The highest damage/defense to include; defaults to 100
             `[minstat]` - The lowest damage/defense to include; defaults to 0
 
