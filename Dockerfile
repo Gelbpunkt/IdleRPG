@@ -3,7 +3,7 @@ FROM docker.io/gelbpunkt/python:latest
 LABEL maintainer="adrian@travitia.xyz" \
       description="docker image to run latest IdleRPG"
 
-CMD ["python", "/idlerpg/launcher.py"]
+CMD ["python", "-OO", "/idlerpg/launcher.py"]
 
 RUN mkdir /idlerpg && \
     adduser -h /idlerpg -s /bin/false -D -H idle && \

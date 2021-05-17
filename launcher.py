@@ -93,7 +93,7 @@ class Instance:
         self.id = instance_id
         self.name = name
         self.command = (
-            f'{sys.executable} {Path.cwd() / BOT_FILE} "{shard_list}" {shard_count}'
+            f'{sys.executable} -OO {Path.cwd() / BOT_FILE} "{shard_list}" {shard_count}'
             f" {self.id} {self.name}"
         )
         self._process: Optional[asyncio.subprocess.Process] = None
