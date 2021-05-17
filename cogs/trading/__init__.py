@@ -46,6 +46,7 @@ class Trading(commands.Cog):
     @locale_doc
     async def sell(self, ctx, itemid: int, price: IntFromTo(1, 100000000)):
         _(
+            # xgettext: no-python-format
             """`<itemid>` - The ID of the item to sell
             `<price>` - The price to sell the item for, can be 0 or above
 

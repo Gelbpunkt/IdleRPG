@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-05-17 10:22+0200\n"
+"POT-Creation-Date: 2021-05-17 13:43+0200\n"
 "PO-Revision-Date: 2019-05-30 15:36+0300\n"
 "Last-Translator: \n"
 "Language-Team: \n"
@@ -337,35 +337,35 @@ msgstr "Вы получили новый предмет, во время отк�
 
 #: cogs/halloween/__init__.py:184 cogs/crates/__init__.py:183
 #: cogs/classes/__init__.py:428 cogs/classes/__init__.py:732
-#: cogs/trading/__init__.py:349 cogs/trading/__init__.py:444
-#: cogs/trading/__init__.py:779 cogs/valentine/__init__.py:170
+#: cogs/trading/__init__.py:350 cogs/trading/__init__.py:445
+#: cogs/trading/__init__.py:780 cogs/valentine/__init__.py:170
 msgid "Name"
 msgstr "Имя"
 
 #: cogs/halloween/__init__.py:185 cogs/crates/__init__.py:184
-#: cogs/classes/__init__.py:733 cogs/trading/__init__.py:350
-#: cogs/trading/__init__.py:445 cogs/trading/__init__.py:780
+#: cogs/classes/__init__.py:733 cogs/trading/__init__.py:351
+#: cogs/trading/__init__.py:446 cogs/trading/__init__.py:781
 #: cogs/valentine/__init__.py:171
 msgid "Type"
 msgstr "Тип"
 
 #: cogs/halloween/__init__.py:186 cogs/crates/__init__.py:185
-#: cogs/classes/__init__.py:737 cogs/trading/__init__.py:351
-#: cogs/trading/__init__.py:446 cogs/trading/__init__.py:781
+#: cogs/classes/__init__.py:737 cogs/trading/__init__.py:352
+#: cogs/trading/__init__.py:447 cogs/trading/__init__.py:782
 #: cogs/valentine/__init__.py:175
 msgid "Damage"
 msgstr "Урон"
 
 #: cogs/halloween/__init__.py:187 cogs/crates/__init__.py:186
-#: cogs/classes/__init__.py:735 cogs/trading/__init__.py:352
-#: cogs/trading/__init__.py:447 cogs/trading/__init__.py:782
+#: cogs/classes/__init__.py:735 cogs/trading/__init__.py:353
+#: cogs/trading/__init__.py:448 cogs/trading/__init__.py:783
 #: cogs/valentine/__init__.py:173
 msgid "Armor"
 msgstr "Защита"
 
 #: cogs/halloween/__init__.py:188 cogs/crates/__init__.py:187
-#: cogs/classes/__init__.py:738 cogs/trading/__init__.py:353
-#: cogs/trading/__init__.py:448 cogs/trading/__init__.py:783
+#: cogs/classes/__init__.py:738 cogs/trading/__init__.py:354
+#: cogs/trading/__init__.py:449 cogs/trading/__init__.py:784
 #: cogs/valentine/__init__.py:176
 msgid "Value"
 msgstr "Стоимость"
@@ -1264,99 +1264,143 @@ msgstr ""
 msgid "Oops! You forgot a required argument: `{arg}`"
 msgstr "Упс! Вы забыли недостающий аргумент: `{arg}`"
 
+#: cogs/error_handler/__init__.py:97
+msgid "The message you referenced was not found."
+msgstr ""
+
+#: cogs/error_handler/__init__.py:99
+msgid "The member you referenced was not found."
+msgstr ""
+
 #: cogs/error_handler/__init__.py:101
-msgid "The user you specified as a parameter does not have a character."
+msgid "The server you referenced was not found."
+msgstr ""
+
+#: cogs/error_handler/__init__.py:103
+msgid "The user you referenced was not found."
+msgstr ""
+
+#: cogs/error_handler/__init__.py:105
+msgid "The channel you referenced was not found."
 msgstr ""
 
 #: cogs/error_handler/__init__.py:108
+msgid "I cannot read messages in the channel you referenced."
+msgstr ""
+
+#: cogs/error_handler/__init__.py:111
+msgid "I could not parse a colour from this."
+msgstr ""
+
+#: cogs/error_handler/__init__.py:113
+msgid "The role you referenced was not found."
+msgstr ""
+
+#: cogs/error_handler/__init__.py:116
+msgid "The invited you referenced is invalid or has expired."
+msgstr ""
+
+#: cogs/error_handler/__init__.py:119
+msgid "The emoji you referenced was not found."
+msgstr ""
+
+#: cogs/error_handler/__init__.py:121
+msgid "I could not parse a boolean from this."
+msgstr ""
+
+#: cogs/error_handler/__init__.py:127
+msgid "The user you specified as a parameter does not have a character."
+msgstr ""
+
+#: cogs/error_handler/__init__.py:134
 msgid ""
 "You did not enter a valid crate rarity. Possible ones are: common (c), "
 "uncommon (u), rare (r), magic (m) and legendary (l)."
 msgstr ""
 
-#: cogs/error_handler/__init__.py:115
+#: cogs/error_handler/__init__.py:141
 msgid "You did not enter a valid coin side. Please use `heads` or `tails`."
 msgstr ""
 
-#: cogs/error_handler/__init__.py:122
+#: cogs/error_handler/__init__.py:148
 #, python-brace-format
 msgid ""
 "You entered a date that was out of range. It should be newer than {date}."
 msgstr ""
 
-#: cogs/error_handler/__init__.py:131
+#: cogs/error_handler/__init__.py:157
 msgid ""
 "You sent an invalid URL. Make sure to send the full URL; it should start "
 "with \"http\" and end with \".png\" or \".jpeg\"."
 msgstr ""
 
-#: cogs/error_handler/__init__.py:136
+#: cogs/error_handler/__init__.py:162
 msgid "You used a malformed argument!"
 msgstr "Вы использовали бесформенный аргумент!"
 
-#: cogs/error_handler/__init__.py:140
+#: cogs/error_handler/__init__.py:166
 #, python-brace-format
 msgid ""
 "You are being rate-limited. Chill down, you can use a command again in {time}"
 "s."
 msgstr ""
 
-#: cogs/error_handler/__init__.py:146
+#: cogs/error_handler/__init__.py:172
 #, python-brace-format
 msgid "You are on cooldown. Try again in {time}."
 msgstr "Перезарядка. Попробуйте снова в {time}."
 
-#: cogs/error_handler/__init__.py:157 cogs/error_handler/__init__.py:196
-#: cogs/error_handler/__init__.py:305
+#: cogs/error_handler/__init__.py:183 cogs/error_handler/__init__.py:222
+#: cogs/error_handler/__init__.py:331
 msgid "Permission denied"
 msgstr "Доступ запрещён"
 
-#: cogs/error_handler/__init__.py:159
+#: cogs/error_handler/__init__.py:185
 msgid ":x: This command is only avaiable for the bot owner."
 msgstr ":x: Эта команда доступна только для владельца бота."
 
-#: cogs/error_handler/__init__.py:166
+#: cogs/error_handler/__init__.py:192
 msgid "You don't have a character yet."
 msgstr "У вас ещё нет персонажа."
 
-#: cogs/error_handler/__init__.py:170
+#: cogs/error_handler/__init__.py:196
 msgid ""
 "This command requires you to not have created a character yet. You already "
 "have one."
 msgstr ""
 
-#: cogs/error_handler/__init__.py:177
+#: cogs/error_handler/__init__.py:203
 #, python-brace-format
 msgid ""
 "You need to be following a god for this command. Please use `{prefix}follow` "
 "to choose one."
 msgstr ""
 
-#: cogs/error_handler/__init__.py:182
+#: cogs/error_handler/__init__.py:208
 msgid "You need to have a guild to use this command."
 msgstr "Вам нужна гильдия, чтобы использовать данную команду."
 
-#: cogs/error_handler/__init__.py:184
+#: cogs/error_handler/__init__.py:210
 msgid "You need to be in no guild to use this command."
 msgstr "Вы должны быть не в гильдии, чтобы использовать эту команду."
 
-#: cogs/error_handler/__init__.py:187
+#: cogs/error_handler/__init__.py:213
 msgid "Your rank in the guild is too low to use this command."
 msgstr "Ваш ранк в гильдии слишком низок для использования данной команды."
 
-#: cogs/error_handler/__init__.py:191
+#: cogs/error_handler/__init__.py:217
 msgid "You mustn't be the owner of a guild to use this command."
 msgstr ""
 "Вы не должны быть владельцем гильдии, чтобы использовать данную команду."
 
-#: cogs/error_handler/__init__.py:198
+#: cogs/error_handler/__init__.py:224
 #, python-brace-format
 msgid ""
 ":x: You don't have the permissions to use this command. It is thought for "
 "{error} class users."
 msgstr ""
 
-#: cogs/error_handler/__init__.py:207
+#: cogs/error_handler/__init__.py:233
 #, python-brace-format
 msgid ""
 "You are already on an adventure. Use `{prefix}status` to see how long it "
@@ -1365,7 +1409,7 @@ msgstr ""
 "Вы уже на приключении. Используйте `{prefix}status` , чтобы увидеть, как "
 "долго оно длится."
 
-#: cogs/error_handler/__init__.py:214
+#: cogs/error_handler/__init__.py:240
 #, python-brace-format
 msgid ""
 "You need to be on an adventure to use this command. Try `{prefix}adventure`!"
@@ -1373,56 +1417,56 @@ msgstr ""
 "Вы должны быть на приключении, чтобы использовать данную команду. Попробуйте "
 "`{prefix}adventure`!"
 
-#: cogs/error_handler/__init__.py:219
+#: cogs/error_handler/__init__.py:245
 msgid "You need to be in a voice chat to use this command."
 msgstr ""
 
-#: cogs/error_handler/__init__.py:221
+#: cogs/error_handler/__init__.py:247
 msgid "The vote did not pass."
 msgstr ""
 
-#: cogs/error_handler/__init__.py:225
+#: cogs/error_handler/__init__.py:251
 #, python-brace-format
 msgid ""
 "You need to be playing music, for example with `{prefix}play`, to use this "
 "command."
 msgstr ""
 
-#: cogs/error_handler/__init__.py:230
+#: cogs/error_handler/__init__.py:256
 msgid "The DJ has locked the music player."
 msgstr ""
 
-#: cogs/error_handler/__init__.py:232
+#: cogs/error_handler/__init__.py:258
 msgid "You must be the DJ to use this command."
 msgstr ""
 
-#: cogs/error_handler/__init__.py:236
+#: cogs/error_handler/__init__.py:262
 #, python-brace-format
 msgid ""
 "Your pet has gone missing. Maybe some aliens abducted it? Since you can't "
 "find it anymore, you are no longer a {profession}"
 msgstr ""
 
-#: cogs/error_handler/__init__.py:239 cogs/error_handler/__init__.py:261
-#: cogs/error_handler/__init__.py:269 cogs/classes/__init__.py:106
+#: cogs/error_handler/__init__.py:265 cogs/error_handler/__init__.py:287
+#: cogs/error_handler/__init__.py:295 cogs/classes/__init__.py:106
 msgid "Ranger"
 msgstr "Охотник"
 
-#: cogs/error_handler/__init__.py:258
+#: cogs/error_handler/__init__.py:284
 #, python-brace-format
 msgid ""
 "Your pet **{pet}** died! You did not give it enough to eat or drink. Because "
 "of your bad treatment, you are no longer a {profession}."
 msgstr ""
 
-#: cogs/error_handler/__init__.py:266
+#: cogs/error_handler/__init__.py:292
 #, python-brace-format
 msgid ""
 "Your pet **{pet}** ran away! You did not show it your love enough! Because "
 "of your bad treatment, you are no longer a {profession}."
 msgstr ""
 
-#: cogs/error_handler/__init__.py:274
+#: cogs/error_handler/__init__.py:300
 #, python-brace-format
 msgid ""
 "You need to be a {tier} tier donator to use this command. Please head to "
@@ -1430,34 +1474,34 @@ msgid ""
 "to support us."
 msgstr ""
 
-#: cogs/error_handler/__init__.py:282
+#: cogs/error_handler/__init__.py:308
 msgid "There is another raid already ongoing. Try again at a later time."
 msgstr ""
 
-#: cogs/error_handler/__init__.py:287 cogs/alliance/__init__.py:518
+#: cogs/error_handler/__init__.py:313 cogs/alliance/__init__.py:518
 #: cogs/alliance/__init__.py:552
 msgid "Your alliance does not own a city."
 msgstr ""
 
-#: cogs/error_handler/__init__.py:289
+#: cogs/error_handler/__init__.py:315
 msgid "Your alliance already owns a city."
 msgstr ""
 
-#: cogs/error_handler/__init__.py:291
+#: cogs/error_handler/__init__.py:317
 msgid "Your alliance rank is too low."
 msgstr ""
 
-#: cogs/error_handler/__init__.py:293
+#: cogs/error_handler/__init__.py:319
 msgid "Your server does not have an open help request."
 msgstr ""
 
-#: cogs/error_handler/__init__.py:297
+#: cogs/error_handler/__init__.py:323
 msgid ""
 "There was an error when uploading to Imgur. Please try again or visit "
 "<https://imgur.com/upload> to manually upload your image."
 msgstr ""
 
-#: cogs/error_handler/__init__.py:307
+#: cogs/error_handler/__init__.py:333
 msgid ""
 ":x: You don't have the permissions to use this command. It is thought for "
 "other users."
@@ -1466,24 +1510,24 @@ msgstr ""
 "других игроков."
 
 #. prevent cooldown reset
-#: cogs/error_handler/__init__.py:314 cogs/trading/__init__.py:830
+#: cogs/error_handler/__init__.py:340 cogs/trading/__init__.py:831
 msgid "You did not choose anything."
 msgstr "Вы ничего не выбрали."
 
-#: cogs/error_handler/__init__.py:333
+#: cogs/error_handler/__init__.py:359
 msgid ""
 "An argument or value you entered was far too high for me to handle properly!"
 msgstr ""
 "Аргумент или цена, которую вы ввели была слишком высока, чтобы работать "
 "правильно!"
 
-#: cogs/error_handler/__init__.py:340
+#: cogs/error_handler/__init__.py:366
 msgid ""
 "The languages have been reloaded while you were using a command. The "
 "execution therefore had to be stopped. Please try again."
 msgstr ""
 
-#: cogs/error_handler/__init__.py:372
+#: cogs/error_handler/__init__.py:398
 msgid ""
 "The command you tried to use ran into an error. The incident has been "
 "reported and the team will work hard to fix the issue!"
@@ -3071,7 +3115,7 @@ msgid "Name too long."
 msgstr "Имя слишком длинное."
 
 #: cogs/patreon/__init__.py:109 cogs/patreon/__init__.py:154
-#: cogs/trading/__init__.py:494
+#: cogs/trading/__init__.py:495
 #, python-brace-format
 msgid "You don't have an item with the ID `{itemid}`."
 msgstr "У вас нету предмета с данным ID `{itemid}`."
@@ -4488,43 +4532,43 @@ msgstr ""
 "Из **{total}** приключений, вы умерли**{deaths}** раз и выжили **{completed}"
 "** раз, следуя из этого ваша доля успеха **{rate}%**."
 
-#: cogs/shard_communication/__init__.py:349
+#: cogs/shard_communication/__init__.py:354
 msgid "Lists all your cooldowns"
 msgstr ""
 
-#: cogs/shard_communication/__init__.py:353
+#: cogs/shard_communication/__init__.py:358
 msgid "Lists all your cooldowns, including your adventure timer."
 msgstr ""
 
-#: cogs/shard_communication/__init__.py:360 cogs/guild/__init__.py:1559
+#: cogs/shard_communication/__init__.py:365 cogs/guild/__init__.py:1559
 msgid "You don't have any active cooldown at the moment."
 msgstr "У вас нет активных перезарядок на данный момент."
 
-#: cogs/shard_communication/__init__.py:362 cogs/guild/__init__.py:1561
+#: cogs/shard_communication/__init__.py:367 cogs/guild/__init__.py:1561
 #: cogs/alliance/__init__.py:933
 msgid "Commands on cooldown:"
 msgstr "Команды на перезарядке:"
 
-#: cogs/shard_communication/__init__.py:367 cogs/guild/__init__.py:1566
+#: cogs/shard_communication/__init__.py:372 cogs/guild/__init__.py:1566
 #: cogs/alliance/__init__.py:938
 #, python-brace-format
 msgid "{cmd} is on cooldown and will be available after {time}"
 msgstr "{cmd} в данный момент на перезарядке и будет доступен позже {time}"
 
-#: cogs/shard_communication/__init__.py:372
+#: cogs/shard_communication/__init__.py:377
 #, python-brace-format
 msgid "Adventure is running and will be done after {time}"
 msgstr ""
 
-#: cogs/shard_communication/__init__.py:378
+#: cogs/shard_communication/__init__.py:383
 msgid "Show the clusters"
 msgstr ""
 
-#: cogs/shard_communication/__init__.py:381
+#: cogs/shard_communication/__init__.py:386
 msgid "Lists all clusters and their current status."
 msgstr ""
 
-#: cogs/shard_communication/__init__.py:384
+#: cogs/shard_communication/__init__.py:389
 msgid "Launcher is dead, that is really bad."
 msgstr ""
 
@@ -4936,8 +4980,8 @@ msgstr ""
 msgid "Put an item in the market"
 msgstr ""
 
-#: cogs/trading/__init__.py:49
-#, python-format
+#: cogs/trading/__init__.py:50
+#, no-python-format
 msgid ""
 "`<itemid>` - The ID of the item to sell\n"
 "            `<price>` - The price to sell the item for, can be 0 or above\n"
@@ -4959,51 +5003,51 @@ msgid ""
 "from the market and put back into your inventory."
 msgstr ""
 
-#: cogs/trading/__init__.py:71
+#: cogs/trading/__init__.py:72
 #, python-brace-format
 msgid "You don't own an item with the ID: {itemid}"
 msgstr "У вас нет предмета с данным ID: {itemid}"
 
-#: cogs/trading/__init__.py:76 cogs/trading/__init__.py:500
-#: cogs/trading/__init__.py:548
+#: cogs/trading/__init__.py:77 cogs/trading/__init__.py:501
+#: cogs/trading/__init__.py:549
 msgid "You may not sell donator-modified items."
 msgstr ""
 
-#: cogs/trading/__init__.py:80
+#: cogs/trading/__init__.py:81
 #, python-brace-format
 msgid ""
 "Selling an item below its value is a bad idea. You can always do `{prefix}"
 "merchant {itemid}` to get more money."
 msgstr ""
 
-#: cogs/trading/__init__.py:87
+#: cogs/trading/__init__.py:88
 msgid ""
 "Your item is either equal to a Starter Item or worse. Noone would buy it."
 msgstr ""
 "Ваш предмет или равен стартовому предмету или ещё хуже. Никто не захочет "
 "купить его."
 
-#: cogs/trading/__init__.py:99
+#: cogs/trading/__init__.py:100
 #, python-brace-format
 msgid "You cannot afford the tax of 5% (${amount})."
 msgstr ""
 
-#: cogs/trading/__init__.py:129
+#: cogs/trading/__init__.py:130
 #, python-brace-format
 msgid ""
 "Successfully added your item to the shop! Use `{prefix}shop` to view it in "
 "the market! {additional}"
 msgstr ""
 
-#: cogs/trading/__init__.py:133
+#: cogs/trading/__init__.py:134
 msgid "The tax of 5% has been deducted from your account."
 msgstr ""
 
-#: cogs/trading/__init__.py:140
+#: cogs/trading/__init__.py:141
 msgid "Buy an item from the shop"
 msgstr ""
 
-#: cogs/trading/__init__.py:144
+#: cogs/trading/__init__.py:145
 #, python-brace-format
 msgid ""
 "`<itemid>` - The ID of the item to buy\n"
@@ -5014,20 +5058,20 @@ msgid ""
 "in `{prefix}shop`."
 msgstr ""
 
-#: cogs/trading/__init__.py:158
+#: cogs/trading/__init__.py:159
 #, python-brace-format
 msgid "There is no item in the shop with the ID: {itemid}"
 msgstr "Предмета с данным ID: {itemid} нет в магазине."
 
-#: cogs/trading/__init__.py:164
+#: cogs/trading/__init__.py:165
 msgid "You may not buy your own items."
 msgstr ""
 
-#: cogs/trading/__init__.py:171
+#: cogs/trading/__init__.py:172
 msgid "You're too poor to buy this item."
 msgstr "Вы слишком бедны, чтобы купить этот предмет."
 
-#: cogs/trading/__init__.py:230
+#: cogs/trading/__init__.py:231
 #, python-brace-format
 msgid ""
 "Successfully bought item `{id}`. Use `{prefix}inventory` to view your "
@@ -5036,11 +5080,11 @@ msgstr ""
 "Предмет `{id}` успешно куплен. Используйте `{prefix}inventory` , чтобы "
 "посмотреть ваш инвентарь."
 
-#: cogs/trading/__init__.py:244
+#: cogs/trading/__init__.py:245
 msgid "Remove your item from the shop."
 msgstr ""
 
-#: cogs/trading/__init__.py:248
+#: cogs/trading/__init__.py:249
 #, python-brace-format
 msgid ""
 "`<itemid>` - The item to remove from the shop\n"
@@ -5052,23 +5096,23 @@ msgid ""
 "Paid tax money will not be returned."
 msgstr ""
 
-#: cogs/trading/__init__.py:264
+#: cogs/trading/__init__.py:265
 #, python-brace-format
 msgid "You don't have an item of yours in the shop with the ID `{itemid}`."
 msgstr "У вас нет вашего предмета в магазине с этим ID `{itemid}`."
 
-#: cogs/trading/__init__.py:281
+#: cogs/trading/__init__.py:282
 #, python-brace-format
 msgid ""
 "Successfully removed item `{itemid}` from the shop and put it in your "
 "inventory."
 msgstr "`{itemid}` был успешно удалён из магазина и возвращён в ваш инвентарь."
 
-#: cogs/trading/__init__.py:288
+#: cogs/trading/__init__.py:289
 msgid "View sale history for the item market"
 msgstr ""
 
-#: cogs/trading/__init__.py:301
+#: cogs/trading/__init__.py:302
 msgid ""
 "`[itemtype]` - The type of item to filter; defaults to all item types\n"
 "             `[minstat]` - The minimum damage/defense an item has to have to "
@@ -5080,35 +5124,35 @@ msgid ""
 "shows average, minimum and highest prices by category."
 msgstr ""
 
-#: cogs/trading/__init__.py:309 cogs/trading/__init__.py:404
+#: cogs/trading/__init__.py:310 cogs/trading/__init__.py:405
 #, python-brace-format
 msgid "Use either {types} or `All` as a type to filter for."
 msgstr ""
 
-#: cogs/trading/__init__.py:337 cogs/trading/__init__.py:433
+#: cogs/trading/__init__.py:338 cogs/trading/__init__.py:434
 msgid "No results."
 msgstr "Нет результатов."
 
-#: cogs/trading/__init__.py:346
+#: cogs/trading/__init__.py:347
 msgid "IdleRPG Shop History"
 msgstr ""
 
-#: cogs/trading/__init__.py:355 cogs/trading/__init__.py:450
-#: cogs/trading/__init__.py:784 cogs/marriage/__init__.py:279
+#: cogs/trading/__init__.py:356 cogs/trading/__init__.py:451
+#: cogs/trading/__init__.py:785 cogs/marriage/__init__.py:279
 msgid "Price"
 msgstr "Цена"
 
-#: cogs/trading/__init__.py:359 cogs/trading/__init__.py:454
-#: cogs/trading/__init__.py:786
+#: cogs/trading/__init__.py:360 cogs/trading/__init__.py:455
+#: cogs/trading/__init__.py:787
 #, python-brace-format
 msgid "Item {num} of {total}"
 msgstr "Вещь {num} из {total}"
 
-#: cogs/trading/__init__.py:366
+#: cogs/trading/__init__.py:367
 msgid "Search results"
 msgstr ""
 
-#: cogs/trading/__init__.py:369
+#: cogs/trading/__init__.py:370
 #, python-brace-format
 msgid ""
 "The search found {amount} sales starting at ${min_price}, ending at "
@@ -5117,11 +5161,11 @@ msgid ""
 "Navigate to see the sales."
 msgstr ""
 
-#: cogs/trading/__init__.py:384
+#: cogs/trading/__init__.py:385
 msgid "View the global item market"
 msgstr ""
 
-#: cogs/trading/__init__.py:394
+#: cogs/trading/__init__.py:395
 msgid ""
 "`[itemtype]` - The type of item to filter; defaults to all item types\n"
 "            `[minstat]` - The minimum damage/defense an item has to have to "
@@ -5135,20 +5179,20 @@ msgid ""
 "            To quickly buy an item, you can use the 💰 emoji."
 msgstr ""
 
-#: cogs/trading/__init__.py:438
+#: cogs/trading/__init__.py:439
 msgid "IdleRPG Shop"
 msgstr "Магазин IdleRPG"
 
-#: cogs/trading/__init__.py:439 cogs/trading/__init__.py:774
+#: cogs/trading/__init__.py:440 cogs/trading/__init__.py:775
 #, python-brace-format
 msgid "Use `{prefix}buy {item}` to buy this."
 msgstr "Используйте `{prefix}buy {item}` , чтобы купить это."
 
-#: cogs/trading/__init__.py:467
+#: cogs/trading/__init__.py:468
 msgid "Offer an item to a user"
 msgstr ""
 
-#: cogs/trading/__init__.py:477
+#: cogs/trading/__init__.py:478
 msgid ""
 "`<itemid>` - The ID of the item to offer\n"
 "            `<price>` - The price the other has to pay, can be a number from "
@@ -5160,20 +5204,20 @@ msgid ""
 "            Once the other user accepts, the item belongs to them."
 msgstr ""
 
-#: cogs/trading/__init__.py:485
+#: cogs/trading/__init__.py:486
 msgid "You may not offer items to yourself."
 msgstr ""
 
-#: cogs/trading/__init__.py:504
+#: cogs/trading/__init__.py:505
 #, python-brace-format
 msgid "Are you sure you want to sell your equipped {item}?"
 msgstr "Вы точно хотите продать надетый предмет? {item}?"
 
-#: cogs/trading/__init__.py:508
+#: cogs/trading/__init__.py:509
 msgid "Item selling cancelled."
 msgstr "Продажа вещи отменена."
 
-#: cogs/trading/__init__.py:512
+#: cogs/trading/__init__.py:513
 #, python-brace-format
 msgid ""
 "{user}, {author} offered a **{stat}** **{itemtype}**! React to buy it! The "
@@ -5181,21 +5225,21 @@ msgid ""
 "offer will be canceled."
 msgstr ""
 
-#: cogs/trading/__init__.py:525
+#: cogs/trading/__init__.py:526
 msgid "They didn't want it."
 msgstr "Они не захотели этого."
 
-#: cogs/trading/__init__.py:530
+#: cogs/trading/__init__.py:531
 #, python-brace-format
 msgid "{user}, you're too poor to buy this item!"
 msgstr "{user}, вы слишком бедны, чтобы купить данный предмет!"
 
-#: cogs/trading/__init__.py:543
+#: cogs/trading/__init__.py:544
 #, python-brace-format
 msgid "The owner sold the item with the ID `{itemid}` in the meantime."
 msgstr "Владелец продал предмет с ID `{itemid}` ."
 
-#: cogs/trading/__init__.py:587
+#: cogs/trading/__init__.py:588
 #, python-brace-format
 msgid ""
 "Successfully bought item `{itemid}`. Use `{prefix}inventory` to view your "
@@ -5205,11 +5249,11 @@ msgstr ""
 "посмотреть на ваш обновленный инвентарь."
 
 #. prevent too long sale times
-#: cogs/trading/__init__.py:594
+#: cogs/trading/__init__.py:595
 msgid "Sell items for their value"
 msgstr ""
 
-#: cogs/trading/__init__.py:598
+#: cogs/trading/__init__.py:599
 msgid ""
 "`<itemids>` - The IDs of the items to sell, seperated by space\n"
 "\n"
@@ -5222,40 +5266,40 @@ msgid ""
 "            (This command has a cooldown of 10 minutes.)"
 msgstr ""
 
-#: cogs/trading/__init__.py:608
+#: cogs/trading/__init__.py:609
 msgid "You cannot sell nothing."
 msgstr ""
 
-#: cogs/trading/__init__.py:626
+#: cogs/trading/__init__.py:627
 #, python-brace-format
 msgid "You don't own any items with the IDs: {itemids}"
 msgstr ""
 
-#: cogs/trading/__init__.py:634
+#: cogs/trading/__init__.py:635
 #, python-brace-format
 msgid "You are about to sell {amount} equipped items. Are you sure?"
 msgstr ""
 
-#: cogs/trading/__init__.py:638
+#: cogs/trading/__init__.py:639
 msgid "Cancelled."
 msgstr "Отменено."
 
-#: cogs/trading/__init__.py:661
+#: cogs/trading/__init__.py:662
 #, python-brace-format
 msgid ""
 "You received **${money}** when selling item(s) `{itemids}`. {additional}"
 msgstr ""
 
-#: cogs/trading/__init__.py:667 cogs/profile/__init__.py:699
+#: cogs/trading/__init__.py:668 cogs/profile/__init__.py:699
 #, python-brace-format
 msgid "Skipped `{amount}` because they did not belong to you."
 msgstr ""
 
-#: cogs/trading/__init__.py:677
+#: cogs/trading/__init__.py:678
 msgid "Merch all non-equipped items"
 msgstr ""
 
-#: cogs/trading/__init__.py:687
+#: cogs/trading/__init__.py:688
 #, no-python-format
 msgid ""
 "`[maxstat]` - The highest damage/defense to include; defaults to 100\n"
@@ -5270,55 +5314,55 @@ msgid ""
 "            (This command has a cooldown of 30 minutes.)"
 msgstr ""
 
-#: cogs/trading/__init__.py:707
+#: cogs/trading/__init__.py:708
 msgid "Nothing to merch."
 msgstr "Нечего продавать."
 
-#: cogs/trading/__init__.py:714
+#: cogs/trading/__init__.py:715
 #, python-brace-format
 msgid ""
 "You are about to sell **{count} items for ${money}!**\n"
 "Are you sure you want to do this?"
 msgstr ""
 
-#: cogs/trading/__init__.py:719
+#: cogs/trading/__init__.py:720
 msgid "Cancelled selling your items."
 msgstr ""
 
-#: cogs/trading/__init__.py:731
+#: cogs/trading/__init__.py:732
 msgid ""
 "Looks like you got more or less items in that range in the meantime. Please "
 "try again."
 msgstr ""
 
-#: cogs/trading/__init__.py:753
+#: cogs/trading/__init__.py:754
 #, python-brace-format
 msgid "Merched **{count}** items for **${money}**."
 msgstr "Продано **{count}** вещей на сумму **${money}**."
 
-#: cogs/trading/__init__.py:758
+#: cogs/trading/__init__.py:759
 msgid "View your shop offers"
 msgstr ""
 
-#: cogs/trading/__init__.py:762
+#: cogs/trading/__init__.py:763
 msgid ""
 "View your pending shop offers. This is a convenient way to find IDs of items "
 "that you put on the market."
 msgstr ""
 
-#: cogs/trading/__init__.py:770
+#: cogs/trading/__init__.py:771
 msgid "You don't have any pending shop offers."
 msgstr "У вас нет рассматриваемых предложений."
 
-#: cogs/trading/__init__.py:773
+#: cogs/trading/__init__.py:774
 msgid "Your pending items"
 msgstr "Ваши рассматриваемые предметы"
 
-#: cogs/trading/__init__.py:794
+#: cogs/trading/__init__.py:795
 msgid "Buys an item from the trader"
 msgstr ""
 
-#: cogs/trading/__init__.py:798
+#: cogs/trading/__init__.py:799
 msgid ""
 "Buys items at the trader. These items can range from 1 stat to 15 stat, with "
 "their price being 50 times their stat.\n"
@@ -5327,19 +5371,19 @@ msgid ""
 "            (This command has a cooldown of 1 hour.)"
 msgstr ""
 
-#: cogs/trading/__init__.py:818
+#: cogs/trading/__init__.py:819
 msgid "The Trader"
 msgstr "Торговец"
 
-#: cogs/trading/__init__.py:819
+#: cogs/trading/__init__.py:820
 msgid "Hit a button to buy it"
 msgstr "Нажмите на кнопку, чтобы купить это"
 
-#: cogs/trading/__init__.py:836
+#: cogs/trading/__init__.py:837
 msgid "You are too poor to buy this item."
 msgstr "Вы слишком бедны для того, чтобы купить этот предмет."
 
-#: cogs/trading/__init__.py:858
+#: cogs/trading/__init__.py:859
 #, python-brace-format
 msgid ""
 "Successfully bought offer **{offer}**. Use `{prefix}inventory` to view your "
