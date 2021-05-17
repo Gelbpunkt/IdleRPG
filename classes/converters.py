@@ -83,7 +83,7 @@ class MemberConverter(commands.MemberConverter):
                     result = results[0]
 
         if result is None:
-            raise commands.BadArgument(f'Member "{argument}" not found')
+            raise commands.MemberNotFound(argument)
 
         return result
 
@@ -138,10 +138,14 @@ class User(commands.UserConverter):
             pass
 
         match = self._get_id_match(argument) or re.match(r"<@!?([0-9]+)>$", argument)
-        try:
-            return await ctx.bot.fetch_user(int(match.group(1)))
-        except discord.NotFound:
-            raise commands.BadArgument(f"User {argument} not found")
+
+        if match:
+            try:
+                return await ctx.bot.fetch_user(int(match.group(1)))
+            except discord.NotFound:
+                raise commands.UserNotFound(argument)
+        else:
+            raise commands.UserNotFound(argument)
 
 
 _custom_user_converter = User()

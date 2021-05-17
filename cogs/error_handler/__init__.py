@@ -93,7 +93,33 @@ class Errorhandler(commands.Cog):
                 )
             )
         elif isinstance(error, commands.BadArgument):
-            if isinstance(error, NotInRange):
+            if isinstance(error, commands.MessageNotFound):
+                await ctx.send(_("The message you referenced was not found."))
+            elif isinstance(error, commands.MemberNotFound):
+                await ctx.send(_("The member you referenced was not found."))
+            elif isinstance(error, commands.GuildNotFound):
+                await ctx.send(_("The server you referenced was not found."))
+            elif isinstance(error, commands.UserNotFound):
+                await ctx.send(_("The user you referenced was not found."))
+            elif isinstance(error, commands.ChannelNotFound):
+                await ctx.send(_("The channel you referenced was not found."))
+            elif isinstance(error, commands.ChannelNotReadable):
+                await ctx.send(
+                    _("I cannot read messages in the channel you referenced.")
+                )
+            elif isinstance(error, commands.BadColourArgument):
+                await ctx.send(_("I could not parse a colour from this."))
+            elif isinstance(error, commands.RoleNotFound):
+                await ctx.send(_("The role you referenced was not found."))
+            elif isinstance(error, commands.BadInviteArgument):
+                await ctx.send(
+                    _("The invited you referenced is invalid or has expired.")
+                )
+            elif isinstance(error, commands.EmojiNotFound):
+                await ctx.send(_("The emoji you referenced was not found."))
+            elif isinstance(error, commands.BadBoolArgument):
+                await ctx.send(_("I could not parse a boolean from this."))
+            elif isinstance(error, NotInRange):
                 await ctx.send(error.text)
             elif isinstance(error, UserHasNoChar):
                 await ctx.send(

@@ -321,10 +321,11 @@ class Sharding(commands.Cog):
         """
         # Preparation
         command_id = f"{uuid4()}"  # str conversion
-        self._messages[command_id] = [
-            asyncio.Future() for _ in range(expected_count)
-        ]  # must create it (see the router)
-        results = []
+        if expected_count > 0:
+            self._messages[command_id] = [
+                asyncio.Future() for _ in range(expected_count)
+            ]  # must create it (see the router)
+            results = []
 
         # Sending
         payload = {"scope": scope, "action": action, "command_id": command_id}
@@ -335,15 +336,19 @@ class Sharding(commands.Cog):
             self.bot.config.database.redis_shard_announce_channel,
             json.dumps(payload),
         )
-        # Message collector
-        try:
-            done, _ = await asyncio.wait(self._messages[command_id], timeout=_timeout)
-            for fut in done:
-                results.append(fut.result())
-        except asyncio.TimeoutError:
-            pass
-        del self._messages[command_id]
-        return results
+
+        if expected_count > 0:
+            # Message collector
+            try:
+                done, _ = await asyncio.wait(
+                    self._messages[command_id], timeout=_timeout
+                )
+                for fut in done:
+                    results.append(fut.result())
+            except asyncio.TimeoutError:
+                pass
+            del self._messages[command_id]
+            return results
 
     @commands.command(
         aliases=["cooldowns", "t", "cds"], brief=_("Lists all your cooldowns")

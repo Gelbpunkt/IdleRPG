@@ -105,11 +105,8 @@ class GlobalEvents(commands.Cog):
         MemberConverter.convert.invalidate_value(lambda member: member.id == user_id)
         User.convert.invalidate_value(lambda user: user.id == user_id)
 
-        # If they were a donator, wipe that cache as well
-        roles = [int(i) for i in data["d"]["roles"]]
-        if int(data["d"]["guild_id"]) == self.bot.config.game.support_server_id and any(
-            role.id in roles for role in self.bot.config.external.donator_roles
-        ):
+        # We can't know which roles they had before so just wipe the donator cache
+        if int(data["d"]["guild_id"]) == self.bot.config.game.support_server_id:
             await self.bot.clear_donator_cache(user_id)
 
     @commands.Cog.listener()
