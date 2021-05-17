@@ -329,6 +329,7 @@ class Classes(commands.Cog):
     @locale_doc
     async def steal(self, ctx):
         _(
+            # xgettext: no-python-format
             """Steal money from a random user.
 
             Your steal chance is increased by evolving your class and your alliance's thief buildings, if you have an alliance that owns a city.
