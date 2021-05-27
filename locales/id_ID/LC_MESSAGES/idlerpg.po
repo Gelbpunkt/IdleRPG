@@ -8,19 +8,20 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-05-17 14:13+0200\n"
-"PO-Revision-Date: 2020-04-06 22:20+0700\n"
-"Last-Translator: \n"
-"Language-Team: \n"
-"Language: id\n"
+"PO-Revision-Date: 2021-05-27 07:08+0000\n"
+"Last-Translator: hinata <iamfalconwoman@gmail.com>\n"
+"Language-Team: Indonesian <http://translate.travitia.xyz/projects/idlerpg/"
+"bot/id/>\n"
+"Language: id_ID\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 2.3\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Weblate 4.6.2\n"
 
 #: cogs/tournament/__init__.py:43
 msgid "Start a new tournament"
-msgstr ""
+msgstr "Memulai sebuah turnamen baru"
 
 #: cogs/tournament/__init__.py:47
 #, python-brace-format
@@ -45,6 +46,25 @@ msgid ""
 "\n"
 "            (This command has a cooldown of 30 minutes.)"
 msgstr ""
+"`[prize]` - Jumlah uang yang akan didapatkan oleh pemenang\n"
+"\n"
+" Memulai sebuah turnamen baru. Pemain memiliki waktu 30 detik untuk "
+"bergabung melewati reaksi yang diberikan.\n"
+" Biaya masuk turnamen gratis, hanya pembuat turnamennya yang harus membayar "
+"biayanya.\n"
+"\n"
+" Hanya kelipatan dari 2 (2^n) pemain yang dapat bergabung. Jika ada lebih "
+"dari kelipatan terdekat, pemain yang bergabung terakhir akan dikeluarkan.\n"
+"\n"
+" Jalannya pertandingan akan diputuskan secara acak, sedangkan pertarungannya "
+"sendiri akan diputuskan seperti pertempuran biasa (lihat `{prefix}help "
+"battle` untuk informasinya).\n"
+"\n"
+" Pemenang dari pertandingannya akan bergerak ke ronde selanjutnya, yang "
+"kalah akan dieleminasi, hingga tersisa satu pemain.\n"
+" Turnamen di IdleRPG mengikuti prinsip eleminasi tunggal.\n"
+"\n"
+" (Perintah ini memiliki waktu cooldown selama 30 menit.)"
 
 #: cogs/tournament/__init__.py:63 cogs/tournament/__init__.py:238
 #: cogs/battles/__init__.py:65 cogs/battles/__init__.py:202
@@ -61,18 +81,18 @@ msgid ""
 "{author} started a tournament! Free entries, prize is **${prize}**! React "
 "with ⚔ to join!"
 msgstr ""
-"{author} memulai sebuah turnamen! Entri gratis, hadiahnya adalah **${prize}"
-"**! Bereaksi dengan ⚔ untuk bergabung!"
+"{author} memulai sebuah turnamen! Biaya masuk gratis, hadiahnya adalah "
+"**${prize}**! Bereaksi dengan ⚔ untuk bergabung!"
 
 #: cogs/tournament/__init__.py:127
 #, python-brace-format
 msgid "Noone joined your tournament {author}."
-msgstr "Tidak ada yang bergabung turnamen kamu {author}."
+msgstr "Tidak ada yang bergabung ke turnamen kamu {author}."
 
 #: cogs/tournament/__init__.py:138
 #, python-brace-format
 msgid "{user} joined the tournament."
-msgstr "{user} bergabung ke turnamen."
+msgstr "{user} bergabung ke turnamennya."
 
 #: cogs/tournament/__init__.py:142 cogs/tournament/__init__.py:315
 #, python-brace-format
@@ -85,8 +105,8 @@ msgid ""
 "There are **{num}** entries, due to the fact we need a playable tournament, "
 "the last **{removed}** have been removed."
 msgstr ""
-"Saat ini ada **{num}** entri, karena kami membutuhkan turnamen yang dapat "
-"dimainkan, **{removed}** yang terakhir telah dihapus."
+"Saat ini ada **{num}** entri, karena kami membutuhkan sebuah turnamen yang "
+"dapat dimainkan, **{removed}** yang terakhir telah dihapus."
 
 #: cogs/tournament/__init__.py:155 cogs/tournament/__init__.py:328
 #, python-brace-format
@@ -118,7 +138,7 @@ msgid ""
 "Money was given!"
 msgstr ""
 "Turnamen berakhir! Pemenangnya adalah {winner}.\n"
-"Uang telah diberikan!"
+"Uangnya telah diberikan!"
 
 #: cogs/tournament/__init__.py:222
 #, python-brace-format
@@ -143,6 +163,25 @@ msgid ""
 "\n"
 "            (This command has a cooldown of 30 minutes.)"
 msgstr ""
+"`[prize]` - Jumlah uang yang akan didapatkan oleh pemenang\n"
+"\n"
+" Memulai sebuah raid turnamen yang baru. Pemain memiliki waktu 30 detik "
+"untuk bergabung melewati reaksi yang diberikan.\n"
+" Biaya masuk turnamen gratis, hanya pembuat turnamennya yang harus membayar "
+"biayanya.\n"
+"\n"
+" Hanya kelipatan dari 2 (2^n) pemain yang dapat bergabung. Jika ada lebih "
+"dari kelipatan terdekat, pemain yang bergabung terakhir akan dikeluarkan.\n"
+"\n"
+" Jalannya pertandingan akan diputuskan secara acak, sedangkan pertarungannya "
+"sendiri akan diputuskan seperti pertempuran raid (lihat `{prefix}help "
+"raidbattle` untuk informasinya).\n"
+"\n"
+" Pemenang dari pertandingannya akan bergerak ke ronde selanjutnya, yang "
+"kalah akan dieleminasi, hingga tersisa satu pemain.\n"
+" Turnamen di IdleRPG mengikuti prinsip eleminasi tunggal.\n"
+"\n"
+" (Perintah ini memiliki waktu cooldown selama 30 menit.)"
 
 #: cogs/tournament/__init__.py:268
 #, python-brace-format
@@ -150,18 +189,18 @@ msgid ""
 "{author} started a raid tournament! Free entries, prize is **${prize}**! "
 "React with ⚔ to join!"
 msgstr ""
-"{author} memulai sebuah turnamen penyerangan! Gratis entri, hadiahnya adalah "
-"**${prize}**! Bereaksi dengan ⚔ untuk bergabung!"
+"{author} memulai sebuah turnamen raid! Gratis biaya masuk, hadiahnya adalah "
+"**${prize}**! tekan tombol reaksi dengan ⚔ untuk bergabung!"
 
 #: cogs/tournament/__init__.py:301
 #, python-brace-format
 msgid "Noone joined your raid tournament {author}."
-msgstr "Tidak ada yang bergabung ke turnamen penyerangan kamu {author}."
+msgstr "Tidak ada yang bergabung ke turnamen raid kamu {author}."
 
 #: cogs/tournament/__init__.py:311
 #, python-brace-format
 msgid "{user} joined the raidtournament."
-msgstr ""
+msgstr "{user} bergabung ke turnamen raid."
 
 #: cogs/tournament/__init__.py:321
 #, python-brace-format
@@ -169,13 +208,13 @@ msgid ""
 "There are **{num}** entries, due to the fact we need a playable raid "
 "tournament, the last **{removed}** have been removed."
 msgstr ""
-"Saat ini ada **{num}** entri. karena kami membutuhkan turnamen penyerangan "
-"yang dapat dimainkan, **{removed}** yang terakhir telah dihapus."
+"Saat ini ada **{num}** yang bergabung, karena kami membutuhkan turnamen raid "
+"yang dapat dimainkan, **{removed}** yang terakhir telah dikeluarkan."
 
 #: cogs/tournament/__init__.py:355 cogs/battles/__init__.py:283
 #, python-brace-format
 msgid "Raidbattle {p1} vs. {p2} started!"
-msgstr "Pertempuran {p1} versus {p2} dimulai!"
+msgstr "Raidbattle {p1} versus {p2} dimulai!"
 
 #: cogs/tournament/__init__.py:393 cogs/battles/__init__.py:322
 #, python-brace-format
@@ -199,7 +238,7 @@ msgstr "Aksi #{number}"
 #: cogs/tournament/__init__.py:439
 #, python-brace-format
 msgid "Raid Tournament ended! The winner is {winner}."
-msgstr "Turnamen penyerangan berakhir! Pemenangnya adalah {winner}."
+msgstr "Turnamen raid berakhir! Pemenangnya adalah {winner}."
 
 #: cogs/tournament/__init__.py:461
 #, python-brace-format
@@ -207,12 +246,13 @@ msgid ""
 "Raid Tournament ended! The winner is {winner}.\n"
 "Money was given!"
 msgstr ""
-"Turnamen penyerangan berakhir! Pemenangnya adalah {winner}.\n"
+"Turnamen raid berakhir! Pemenangnya adalah {winner}.\n"
 "Uang telah diberikan!"
 
 #: cogs/images/__init__.py:34
+#, fuzzy
 msgid "Pixelfy an avatar"
-msgstr ""
+msgstr "Mengubah sebuah avatar menjadi pixel"
 
 #: cogs/images/__init__.py:38
 msgid ""
@@ -223,6 +263,13 @@ msgid ""
 "            Pixelfies a user's avatar. If the user has an animated icon, the "
 "first frame is used."
 msgstr ""
+"`[user]` - Seorang Pengguna discord yang avatarnya ingin dibuat menjadi "
+"pixel; jika tidak disebutkan maka akan dianggap untuk diri sendiri\n"
+" `[size]` - Tingkat pixelation untuk digunakan, bisa berupa angka antara 1 "
+"dan 5; jika tidak disebutkan maka akan dianggap angka 2\n"
+"\n"
+" Mengubah avatar pengguna menjadi pixel. Jika pengguna memiliki ikon "
+"beranimasi, frame pertama akan digunakan."
 
 #: cogs/images/__init__.py:46
 msgid "Use 1, 2, 3, 4 or 5 as intensity value."
@@ -233,16 +280,22 @@ msgid "Defines an avatar's edges"
 msgstr ""
 
 #: cogs/images/__init__.py:60
+#, fuzzy
 msgid ""
 "`[user]` - A discord User whose avatar to edit; defaults to oneself\n"
 "\n"
 "            Finds and exaggerates edges in a user's avatar, creating a cool "
 "image effect."
 msgstr ""
+"`[user]` - Seorang Pengguna Discord yang avatarnya ingin diedit; jika tidak "
+"disebutkan maka akan dianggap ke diri sendiri \n"
+"\n"
+" Menemukan dan melebih-lebihkan sisi gelapnya sebuah avatar pengguna, "
+"memberikan efek gambar yang menakjubkan."
 
 #: cogs/images/__init__.py:72
 msgid "Inverts a user's avatar"
-msgstr ""
+msgstr "Menghasilkan warna negatif pada avatar"
 
 #: cogs/images/__init__.py:76
 msgid ""
@@ -252,10 +305,16 @@ msgid ""
 "\n"
 "            (This command has a channel cooldown of 15 seconds.)"
 msgstr ""
+"`[user]` - Seorang Pengguna discord yang avatarnya ingin dibuat negatif; "
+"jika tidak disebutkan maka akan dianggap untuk diri sendiri \n"
+"\n"
+" Memberikan warna negatif ke avatar seseorang.\n"
+"\n"
+" (Perintah ini memiliki waktu cooldown channel selama 15 detik.)"
 
 #: cogs/images/__init__.py:90
 msgid "oil-paint someone's avatar"
-msgstr ""
+msgstr "memberikan efek cat minyak kepada avatar seseorang"
 
 #: cogs/images/__init__.py:94
 msgid ""
@@ -265,6 +324,12 @@ msgid ""
 "\n"
 "            (This command has a channel cooldown of 15 seconds.)"
 msgstr ""
+"`[user]` - Seorang Pengguna discord yang avatarnya ingin diberi efek cat "
+"minyak; jika tidak disebutkan maka akan berlaku untuk diri sendiri\n"
+"\n"
+" Membuat efek cat minyak kepada avatar seseorang.\n"
+"\n"
+" (Perintah ini memiliki waktu cooldown channel selama 15 detik.)"
 
 #: cogs/halloween/__init__.py:35
 msgid "Trick or treat!"
@@ -286,6 +351,18 @@ msgid ""
 "\n"
 "            (This command has a cooldown of 3h)"
 msgstr ""
+"Berjalan mengelilingi rumahnya dan menakuti penghuninya! Mungkin mereka "
+"memiliki sebuah hadiah untukmu?\n"
+"\n"
+" Perintah ini membutuhkan dua pemain, satunya menunggu dan satunya lagi "
+"membunyikan belnya.\n"
+" Jika kamu adalah bagian yang menunggu, kamu akan mendapatkan pesan langsung "
+"dari botnya nanti, jika tidak maka kamu akan mendapatkan balasan langsung.\n"
+"\n"
+" Ada kemungkinan 50% kamu akan mendapatkan sebuah tas halloween dari orang "
+"satunya.\n"
+"\n"
+" (Perintah ini memliki waktu cooldown selama 3 jam)"
 
 #: cogs/halloween/__init__.py:53
 msgid "You walk around the houses... Noone is there... *yet*"
@@ -298,7 +375,7 @@ msgid ""
 "treat bag for you, yay!"
 msgstr ""
 "Kamu berjalan di sekitar rumahnya dan membunyikan bel di rumahnya {waiting}! "
-"Itu adalah tas trick or treat untukmu, yay!"
+"Itu adalah sebuah tas trick or treat untukmu, yay!"
 
 #: cogs/halloween/__init__.py:75
 #, python-brace-format
@@ -316,10 +393,14 @@ msgid ""
 "ancient image on top of a chocolate bar, passed along for generations. You "
 "decide to keep it in your `{prefix}eventbackground`s."
 msgstr ""
+"🎃 Saat kamu melangkah keluar pintu, kamu membuka permen dan plastik yang "
+"mengungkapkan gambar kuno diatas sebatang coklat, yang diturunkan dari "
+"generasi ke generasi. Kamu memutuskan untuk menyimpannya di "
+"`{prefix}eventbackground`s."
 
 #: cogs/halloween/__init__.py:120
 msgid "Open a trick or treat bag"
-msgstr ""
+msgstr "Membuka tas trick or treat"
 
 #: cogs/halloween/__init__.py:124
 #, python-brace-format
@@ -330,6 +411,12 @@ msgid ""
 "1 to 50 base stat.\n"
 "            Their value will be between 1 and 200."
 msgstr ""
+"Membuka tas trick or treat, kamu bisa mendapatkannya dengan "
+"`{prefix}trickortreat`.\n"
+"\n"
+" Kantong trick or treat berisi barang bertema halloween, mulai dari 1 sampai "
+"50 status dasar.\n"
+" Nilainya antara 1 dan 200."
 
 #: cogs/halloween/__init__.py:132
 msgid "Seems you haven't got a trick or treat bag yet. Go get some!"
@@ -338,11 +425,11 @@ msgstr "Sepertinya kamu belum memiliki tas trick or treat. Dapatkan beberapa!"
 #: cogs/halloween/__init__.py:179 cogs/crates/__init__.py:177
 #: cogs/classes/__init__.py:727 cogs/valentine/__init__.py:164
 msgid "You gained an item!"
-msgstr "Kamu mendapatkan barang!"
+msgstr "Kamu mendapatkan sebuah barang!"
 
 #: cogs/halloween/__init__.py:180
 msgid "You found a new item when opening a trick-or-treat bag!"
-msgstr "Kamu mendapatkan barang baru ketika membuka tas trick-or-treat!"
+msgstr "Kamu mendapatkan sebuah barang baru ketika membuka tas trick-or-treat!"
 
 #: cogs/halloween/__init__.py:184 cogs/crates/__init__.py:183
 #: cogs/classes/__init__.py:429 cogs/classes/__init__.py:733
@@ -362,6 +449,7 @@ msgstr "Tipe"
 #: cogs/classes/__init__.py:738 cogs/trading/__init__.py:352
 #: cogs/trading/__init__.py:447 cogs/trading/__init__.py:782
 #: cogs/valentine/__init__.py:175
+#, fuzzy
 msgid "Damage"
 msgstr "Kerusakan"
 
@@ -370,7 +458,7 @@ msgstr "Kerusakan"
 #: cogs/trading/__init__.py:448 cogs/trading/__init__.py:783
 #: cogs/valentine/__init__.py:173
 msgid "Armor"
-msgstr "Perlindungan"
+msgstr "Perisai"
 
 #: cogs/halloween/__init__.py:188 cogs/crates/__init__.py:187
 #: cogs/classes/__init__.py:739 cogs/trading/__init__.py:354
@@ -386,7 +474,7 @@ msgstr "Tas trick-or-treat tersisa: {bags}"
 
 #: cogs/halloween/__init__.py:198
 msgid "Shows your trick or treat bags"
-msgstr ""
+msgstr "Menampilkan tas trick or treat milikmu"
 
 #: cogs/halloween/__init__.py:203
 #, python-brace-format
@@ -394,15 +482,17 @@ msgid ""
 "Shows the amount of trick or treat bags you have. You can get more by using "
 "`{prefix}trickortreat`."
 msgstr ""
+"Menampilkan jumlah tas trick or treat yang kamu miliki. Kamu bisa "
+"mendapatkan lebih banyak lagi dengan menggunakan `{prefix}trickortreat`."
 
 #: cogs/halloween/__init__.py:207
 #, python-brace-format
 msgid "You currently have **{trickortreat}** Trick or Treat Bags, {author}!"
-msgstr ""
+msgstr "Saat ini kamu memiliki **{trickortreat}** Tas Trick or Treat, {author}!"
 
 #: cogs/locale/__init__.py:64
 msgid "Check the available languages"
-msgstr ""
+msgstr "Memeriksa bahasa yang tersedia"
 
 #: cogs/locale/__init__.py:69
 msgid ""
@@ -415,6 +505,15 @@ msgid ""
 "            If something is not yet translated, the english original text is "
 "used."
 msgstr ""
+"Melihat semua kode lokal bahasa yang tersedia. Kamu bisa memeriksa jika "
+"bahasamu tersedia dengan membandingkanya pada [this list](https://saimana."
+"com/list-of-country-locale-code/)\n"
+"\n"
+" Beberapa dari bahasa ini, seperti xtreme-owo atau unplayable bukanlah "
+"bahasa yang nyata tetapi digunakan untuk membuat teks bahasa inggris lebih "
+"asyik.\n"
+" Jika ada yang belum diterjemahkan, maka teks bahasa inggrisnya yang akan "
+"digunakan."
 
 #: cogs/locale/__init__.py:80
 #, python-brace-format
@@ -424,10 +523,14 @@ msgid ""
 "\n"
 "Please use `{prefix}locale set language_code` to choose one."
 msgstr ""
+"Bahasa kamu saat ini adalah **{current_locale}**. Pilihan yang tersedia: "
+"{all_locales}\n"
+"\n"
+"Silahkan gunakan `{prefix}locale set language_code` untuk memilihnya."
 
 #: cogs/locale/__init__.py:90
 msgid "Set your language"
-msgstr ""
+msgstr "Mengatur bahasamu"
 
 #: cogs/locale/__init__.py:94
 #, python-brace-format
@@ -437,6 +540,10 @@ msgid ""
 "\n"
 "            Changes the language the bot replies for you."
 msgstr ""
+"`<locale>` - Kode lokal bahasa yang ingin kamu gunakan; daftar lengkap dapat "
+"dilihat di `{prefix}language`\n"
+"\n"
+" Mengubah bahasa bot yang akan dipakai untukmu."
 
 #: cogs/locale/__init__.py:99
 msgid "Not a valid language."
@@ -448,12 +555,13 @@ msgid ""
 "To permanently choose a language, please create a character and enter this "
 "command again. I set it to {language} temporarily."
 msgstr ""
-"Untuk memilih bahasa secara permanen, tolong buat karakter dan masukkan "
-"perintah ini lagi. Aku mengaturnya untuk {language} sementara."
+"Untuk memilih bahasa secara permanen, tolong buat sebuah karakter dan "
+"masukkan kembali perintah ini. Aku mengaturnya ke bahasa {language} "
+"sementara."
 
 #: cogs/battles/__init__.py:43
 msgid "Battle against another player"
-msgstr ""
+msgstr "Pertarungan melawan pemain lain"
 
 #: cogs/battles/__init__.py:49
 msgid ""
@@ -526,7 +634,7 @@ msgstr "{winner} memenangkan pertarungannya melawan {looser}! Selamat!"
 
 #: cogs/battles/__init__.py:178
 msgid "Battle against a player (inclusdes raidstats)"
-msgstr ""
+msgstr "Pertarungan melawan pemain lain (termasuk raidstats)"
 
 #: cogs/battles/__init__.py:184
 msgid ""
@@ -587,7 +695,7 @@ msgstr "{p1} memenangkan pertempuran melawan {p2}! Selamat!"
 
 #: cogs/battles/__init__.py:380
 msgid "Battle against a player (active)"
-msgstr ""
+msgstr "Pertarungan melawan pemain lain (aktiv)"
 
 #: cogs/battles/__init__.py:386
 msgid ""
@@ -646,11 +754,11 @@ msgstr ""
 #: cogs/battles/__init__.py:518
 #, python-brace-format
 msgid "Battle {p1} vs {p2}"
-msgstr ""
+msgstr "Pertarungan {p1} versus {p2}"
 
 #: cogs/battles/__init__.py:520
 msgid "Let the battle begin!"
-msgstr ""
+msgstr "Pertarungan dimulai!"
 
 #: cogs/battles/__init__.py:535 cogs/battles/__init__.py:694
 #, python-brace-format
@@ -719,11 +827,11 @@ msgstr "Kalian berdua mati!"
 #: cogs/battles/__init__.py:706
 #, python-brace-format
 msgid "{winner} won the active battle vs {looser}! Congratulations!"
-msgstr ""
+msgstr "{winner} memenangkan pertempuran aktif melawan {looser}! Selamat!"
 
 #: cogs/easter/__init__.py:30
 msgid "Easter related commands"
-msgstr ""
+msgstr "Perintah Paskah yang terkait"
 
 #: cogs/easter/__init__.py:34
 #, python-brace-format
@@ -735,6 +843,12 @@ msgid ""
 "finishing adventures, which can be exchanged for several rewards, including "
 "crates, items, money, or special guild badges."
 msgstr ""
+"Berisi semua perintah yang terkait dengan paskah. Lihat `{prefix}help easter`"
+" untuk daftar perintah.\n"
+"\n"
+" Selama acara paskah, pengguna akan menemukan telur paskah saat "
+"menyelesaikan petualangan, yang dapat ditukarkan dengan beberapa hadiah, "
+"termasuk peti, item, uang, atau lencana spesial guild."
 
 #: cogs/easter/__init__.py:40
 #, python-brace-format
@@ -755,7 +869,7 @@ msgstr ""
 
 #: cogs/easter/__init__.py:47
 msgid "Lists all easter rewards"
-msgstr ""
+msgstr "Daftar semua hadiah paskah"
 
 #: cogs/easter/__init__.py:51
 #, python-brace-format
@@ -764,6 +878,10 @@ msgid ""
 "\n"
 "            To claim a reward, use `{prefix}easter reward <ID>`."
 msgstr ""
+"Menampilkan semua hadiah yang tersedia di event paskah, bersama dengan ID "
+"hadiah.\n"
+"\n"
+" Untuk mengklaim sebuah hadiah, gunakan `{prefix}easter reward <ID>`."
 
 #: cogs/easter/__init__.py:57
 #, python-brace-format
@@ -794,13 +912,13 @@ msgstr ""
 "**(5) 2500 <:easteregg:566251086986608650>** - 10 boosters dari semua tipe\n"
 "**(6) 5000 <:easteregg:566251086986608650>** - 10 peti langka\n"
 "**(7) 7500 <:easteregg:566251086986608650>** - lencana ulang tahun guild\n"
-"**(8) 7500 <:easteregg:566251086986608650>** - 1 peti magic\n"
+"**(8) 7500 <:easteregg:566251086986608650>** - 1 peti magis\n"
 "**(9) 12500 <:easteregg:566251086986608650>** - 1 peti legendaris\n"
 "Kamu memiliki **{eggs}** <:easteregg:566251086986608650>."
 
 #: cogs/easter/__init__.py:75
 msgid "Claim an easter reward"
-msgstr ""
+msgstr "Klaim sebuah hadiah paskah"
 
 #: cogs/easter/__init__.py:79
 #, python-brace-format
@@ -812,6 +930,11 @@ msgid ""
 "            A list of rewards along with their ID can be seen with `{prefix}"
 "easter rewards`."
 msgstr ""
+"`<reward_id>` - Sebuah angka dari 1 sampai 9\n"
+"\n"
+" Klaim sebuah hadiah berdasarkan IDnya.\n"
+"\n"
+" Daftar hadiah dan IDnya dapat dilihat dengan `{prefix}easter rewards`."
 
 #: cogs/easter/__init__.py:97
 msgid "You don't have enough eggs to claim this."
@@ -827,7 +950,7 @@ msgstr ""
 
 #: cogs/crates/__init__.py:48
 msgid "Show your crates."
-msgstr ""
+msgstr "Menampilkan peti Anda."
 
 #: cogs/crates/__init__.py:52
 #, python-brace-format
@@ -844,6 +967,17 @@ msgid ""
 "vote`, using `{prefix}daily` and with a small chance from `{prefix}"
 "familyevent`, if you have children."
 msgstr ""
+"Menampilkan semua peti yang kamu miliki.\n"
+"\n"
+" Common peti berisi barang mulai dari stats 1 sampai 30\n"
+" Uncommon peti berisi barang mulai dari stats 10 sampai 35\n"
+" Rare peti berisi barang mulai dari stats 20 sampai 40\n"
+" Magic peti berisi barang mulai dari stats 30 sampai 45\n"
+" Legendary peti berisi barang mulai dari stats 41 sampai 50\n"
+"\n"
+" Kamu bisa mendapatkan peti dengan memvoting bot melalui `{prefix}vote`, "
+"menggunakan `{prefix}daily` dan dengan sedikit peluang dari "
+"`{prefix}familyevent`, jika kamu memiliki anak."
 
 #: cogs/crates/__init__.py:64
 #, python-brace-format
@@ -870,7 +1004,7 @@ msgstr ""
 
 #: cogs/crates/__init__.py:88
 msgid "Open a crate"
-msgstr ""
+msgstr "Membuka sebuah peti"
 
 #: cogs/crates/__init__.py:94
 #, python-brace-format
@@ -892,6 +1026,8 @@ msgid ""
 "Seems like you don't have {amount} crate(s) of this rarity yet. Vote me up "
 "to get a random one or find them!"
 msgstr ""
+"Sepertinya kamu tidak memiliki {amount} peti(s) dari jenis peti ini. "
+"Silahkan voting bot ini untuk mendapatkan peti acak!"
 
 #: cogs/crates/__init__.py:178
 msgid "You found a new item when opening a crate!"
@@ -924,10 +1060,23 @@ msgid ""
 "{most_common_types}\n"
 "```"
 msgstr ""
+"Sukses membuka {amount} {rarity} peti. Rata-rata stat: {average_stat}\n"
+"Stats paling umum:\n"
+"```\n"
+"{most_common}\n"
+"```\n"
+"Stats terbaik:\n"
+"```\n"
+"{top}\n"
+"```\n"
+"Tipe:\n"
+"```\n"
+"{most_common_types}\n"
+"```"
 
 #: cogs/crates/__init__.py:245
 msgid "Give crates to someone"
-msgstr ""
+msgstr "Berikan peti kepada seseorang"
 
 #: cogs/crates/__init__.py:255
 #, python-brace-format
@@ -954,7 +1103,7 @@ msgstr "Sangat lucu..."
 #: cogs/crates/__init__.py:267 cogs/guild/__init__.py:945
 #: cogs/profile/__init__.py:1038
 msgid "For me? I'm flattered, but I can't accept this..."
-msgstr ""
+msgstr "Untuk Saya? saya tersanjung, tapi saya tidak bisa menerima ini..."
 
 #: cogs/crates/__init__.py:270
 msgid "You don't have any crates of this rarity."
@@ -967,7 +1116,7 @@ msgstr "Berhasil memberikan {amount} peti {rarity} untuk {other}."
 
 #: cogs/crates/__init__.py:308
 msgid "Offer crates to another player"
-msgstr ""
+msgstr "Menawarkan peti ke pemain lain"
 
 #: cogs/crates/__init__.py:320
 #, python-brace-format
@@ -985,29 +1134,43 @@ msgid ""
 "            `{prefix}offercrate 5 common 75000 @buyer#1234`\n"
 "            `{prefix}oc 5 c 75000 @buyer#1234`"
 msgstr ""
+"`<quantity>` - Jumlah peti yang akan ditawarkan\n"
+" `<rarity>` - Jenis peti yang akan ditawarkan. Huruf pertama dari jenis peti "
+"juga bisa digunakan.\n"
+" `<price>` - Harga yang akan dibayar oleh pembeli, jumlah angka dari 0 "
+"sampai 100000000\n"
+" `<buyer>` - Pemain idleRPG yang akan membeli peti\n"
+"\n"
+" Menawarkan peti kepada pemain lain. Setelah tawaranya diterima oleh pemain "
+"lain, mereka akan menerima petinya dan kamu akan menerima bayarannya.\n"
+" Contoh:\n"
+" `{prefix}offercrate 5 common 75000 @buyer#1234`\n"
+" `{prefix}oc 5 c 75000 @buyer#1234`"
 
 #: cogs/crates/__init__.py:331
 msgid "You may not offer crates to yourself."
-msgstr ""
+msgstr "Kamu tidak bisa menawarkan peti ke diri sendiri."
 
 #: cogs/crates/__init__.py:334
 msgid "No, I don't want any crates."
-msgstr ""
+msgstr "Tidak, Saya tidak ingin peti."
 
 #: cogs/crates/__init__.py:340
 #, python-brace-format
 msgid "You don't have {quantity} {rarity} crate(s). Check `{prefix}crates`."
-msgstr ""
+msgstr "Kamu tidak memiliki {quantity} {rarity} peti. Periksa `{prefix}crates`."
 
 #: cogs/crates/__init__.py:348
 msgid ""
 "{author}, are you sure you want to offer **{quantity} {emoji} {rarity}** "
 "crate(s) for **${price:,.0f}**?"
 msgstr ""
+"{author}, Apakah kamu yakin ingin menawarkan **{quantity} {emoji} {rarity}** "
+"peti dengan harga **${price:,.0f}**?"
 
 #: cogs/crates/__init__.py:358
 msgid "Offer cancelled."
-msgstr ""
+msgstr "Penawaran dibatalkan."
 
 #: cogs/crates/__init__.py:364
 msgid ""
@@ -1015,19 +1178,22 @@ msgid ""
 "${price:,.0f}!** React to buy it! You have **2 Minutes** to accept the trade "
 "or the offer will be cancelled."
 msgstr ""
+"{buyer}, {author} menawarkanmu **{quantity} {emoji} {rarity}** peti dengan "
+"harga **${price:,.0f}!** Bereaksi untuk membelinya! Kamu memiliki **2 "
+"Minutes** untuk menerimanya atau penawaran akan dibatalkan."
 
 #: cogs/crates/__init__.py:379
 msgid "They didn't want to buy the crate(s). Offer cancelled."
-msgstr ""
+msgstr "Mereka tidak ingin membeli peti. Penawaran dibatalkan."
 
 #: cogs/crates/__init__.py:383
 msgid "They couldn't make up their mind. Offer cancelled."
-msgstr ""
+msgstr "Mereka tidak dapat mengambil keputusan. Penawaran dibatalkan."
 
 #: cogs/crates/__init__.py:389
 #, python-brace-format
 msgid "{buyer}, you're too poor to buy the crate(s)!"
-msgstr ""
+msgstr "{buyer}, kamu terlalu miskin untuk membeli peti!"
 
 #: cogs/crates/__init__.py:400
 msgid "The seller traded/opened the crate(s) in the meantime. Offer cancelled."
@@ -1039,6 +1205,8 @@ msgid ""
 "{buyer}, you've successfully bought **{quantity} {emoji} {rarity}** crate(s) "
 "from {seller}. Use `{prefix}crates` to view your updated crates."
 msgstr ""
+"{buyer}, kamu sukses membeli **{quantity} {emoji} {rarity}** peti dari "
+"{seller}. Gunakan `{prefix}crates` untuk melihat peti yang sudah diperbarui."
 
 #: cogs/hungergames/__init__.py:48
 msgid "Gather as much food as you can"
@@ -1074,7 +1242,7 @@ msgstr "bunuh diri dengan sebuah pisau"
 
 #: cogs/hungergames/__init__.py:60
 msgid "Run away from the Cornucopia"
-msgstr ""
+msgstr "Lari dari Cornucopia"
 
 #: cogs/hungergames/__init__.py:61
 msgid "runs away from the Cornucopia"
@@ -1252,7 +1420,7 @@ msgstr "Tim"
 
 #: cogs/hungergames/__init__.py:259
 msgid "**The cast**"
-msgstr ""
+msgstr "**Pemeran**"
 
 #: cogs/hungergames/__init__.py:276
 #, python-brace-format
@@ -1265,7 +1433,7 @@ msgstr "Semuanya mati!"
 
 #: cogs/hungergames/__init__.py:289
 msgid "Play the hunger games"
-msgstr ""
+msgstr "Bermain hunger games"
 
 #: cogs/hungergames/__init__.py:293
 msgid ""
@@ -1282,6 +1450,18 @@ msgid ""
 "            Not every player will get the opportunity to choose an action. "
 "Sometimes nobody gets to choose, so don't be discouraged. "
 msgstr ""
+"Memulai permainan hunger games\n"
+"\n"
+" Pemain dapat bergabung melalui :shallow_pan_of_food: emoji.\n"
+"Permainan dikendalikan melalui tindakan acak dan kemungkinan tindakan yang "
+"dapat dipilih.\n"
+" Pemain boleh memilih tindakan jika mereka mendapatkan pesan masuk dari bot. "
+"Jika pemain tidak memilih sebuah tindakan, bot akan memilih satu tindakan "
+"untuk mereka.\n"
+"\n"
+" Tidak setiap pemain akan mendapatkan kesempatan untuk memilih sebuah "
+"tindakan. Terkadang tidak ada yang bisa memilih tindakan, jadi jangan "
+"berkecil hati. "
 
 #: cogs/hungergames/__init__.py:302 cogs/werewolf/__init__.py:77
 msgid "There is already a game in here!"
@@ -1298,7 +1478,7 @@ msgstr ""
 
 #: cogs/hungergames/__init__.py:355
 msgid "An error happened during the hungergames. Please try again!"
-msgstr ""
+msgstr "Terjadi kesalahan selama permainan hungergames. Silahkan coba lagi!"
 
 #: cogs/hungergames/__init__.py:361
 msgid "Not enough players joined..."
@@ -1315,43 +1495,43 @@ msgstr "Oops! Kamu lupa dengan argumen yang diperlukan: `{arg}`"
 
 #: cogs/error_handler/__init__.py:97
 msgid "The message you referenced was not found."
-msgstr ""
+msgstr "Pesan yang kamu ajukan tidak ditemukan."
 
 #: cogs/error_handler/__init__.py:99
 msgid "The member you referenced was not found."
-msgstr ""
+msgstr "Anggota yang kamu ajukan tidak ditemukan."
 
 #: cogs/error_handler/__init__.py:101
 msgid "The server you referenced was not found."
-msgstr ""
+msgstr "Server yang kamu ajukan tidak ditemukan."
 
 #: cogs/error_handler/__init__.py:103
 msgid "The user you referenced was not found."
-msgstr ""
+msgstr "Pengguna yang kamu ajukan tidak ditemukan."
 
 #: cogs/error_handler/__init__.py:105
 msgid "The channel you referenced was not found."
-msgstr ""
+msgstr "Kanal yang kamu ajukan tidak ditemukan."
 
 #: cogs/error_handler/__init__.py:108
 msgid "I cannot read messages in the channel you referenced."
-msgstr ""
+msgstr "Saya tidak bisa membaca pesan dikanal yang kamu ajukan."
 
 #: cogs/error_handler/__init__.py:111
 msgid "I could not parse a colour from this."
-msgstr ""
+msgstr "Saya tidak bisa membuat warna dari ini."
 
 #: cogs/error_handler/__init__.py:113
 msgid "The role you referenced was not found."
-msgstr ""
+msgstr "Peran yang kamu ajukan tidak dapat ditemukan."
 
 #: cogs/error_handler/__init__.py:116
 msgid "The invite you referenced is invalid or has expired."
-msgstr ""
+msgstr "Undangan yang kamu ajukan tidak valid atau sudah kedaluwarsa."
 
 #: cogs/error_handler/__init__.py:119
 msgid "The emoji you referenced was not found."
-msgstr ""
+msgstr "Emoji yang kamu ajukan tidak ditemukan."
 
 #: cogs/error_handler/__init__.py:121
 msgid "I could not parse a boolean from this."
@@ -1367,6 +1547,8 @@ msgid ""
 "You did not enter a valid crate rarity. Possible ones are: common (c), "
 "uncommon (u), rare (r), magic (m) and legendary (l)."
 msgstr ""
+"Kamu tidak memasukan jenis peti yang valid. Yang benar adalah: common (c), "
+"uncommon (u), rare (r), magic (m) and legendary (l)."
 
 #: cogs/error_handler/__init__.py:141
 msgid "You did not enter a valid coin side. Please use `heads` or `tails`."
@@ -1387,6 +1569,8 @@ msgid ""
 "You sent an invalid URL. Make sure to send the full URL; it should start "
 "with \"http\" and end with \".png\" or \".jpeg\"."
 msgstr ""
+"Kamu mengirim URL yang tidak valid. Pastikan untuk mengirim URL lengkap; "
+"yang diawali dengan \"http\" dan diakhiri dengan \".png\" atau \".jpeg\"."
 
 #: cogs/error_handler/__init__.py:162
 msgid "You used a malformed argument!"
@@ -1398,6 +1582,8 @@ msgid ""
 "You are being rate-limited. Chill down, you can use a command again in {time}"
 "s."
 msgstr ""
+"Kamu sedang dibatasi. Tenang, kamu bisa menggunkan perintah ini dalam "
+"{time}s."
 
 #: cogs/error_handler/__init__.py:172
 #, python-brace-format
@@ -1490,14 +1676,16 @@ msgid ""
 "You need to be playing music, for example with `{prefix}play`, to use this "
 "command."
 msgstr ""
+"Kamu perlu memainkan musik, misalnya gunakan `{prefix}play`, untuk "
+"menggunkan perintah ini."
 
 #: cogs/error_handler/__init__.py:256
 msgid "The DJ has locked the music player."
-msgstr ""
+msgstr "DJ telah mengunci pemutar musik."
 
 #: cogs/error_handler/__init__.py:258
 msgid "You must be the DJ to use this command."
-msgstr ""
+msgstr "Kamu harus menjadi DJ untuk menggunakan perintah ini."
 
 #: cogs/error_handler/__init__.py:262
 #, python-brace-format
@@ -1572,6 +1760,8 @@ msgid ""
 "There was an error when uploading to Imgur. Please try again or visit "
 "<https://imgur.com/upload> to manually upload your image."
 msgstr ""
+"Terjadi kesalahan saat mengunggah ke Imgur. Silahkan coba lagi atau kunjungi "
+"<https://imgur.com/upload> untuk mengunggah gambar kamu secara manual."
 
 #: cogs/error_handler/__init__.py:333
 msgid ""
@@ -1637,7 +1827,7 @@ msgstr "Sepotong puzzle misterius"
 #: cogs/wintersday/__init__.py:121
 #, python-brace-format
 msgid "{crates} {rarity} crate"
-msgstr ""
+msgstr "{crates} {rarity} peti"
 
 #: cogs/wintersday/__init__.py:155
 #, python-brace-format
@@ -1663,6 +1853,9 @@ msgid ""
 "`{prefix}eventbackground {num}` to set your new background that you just "
 "acquired...*"
 msgstr ""
+"Kamu telah menggabungkan teka-teki! kamu berbisik: *Bagus sekali. Sekarang "
+"gunakan `{prefix}eventbackground {num}` untuk menggunakan latar belakang "
+"baru yang baru saja kamu dapat...*"
 
 #: cogs/miscellaneous/__init__.py:83 cogs/miscellaneous/__init__.py:655
 msgid "Evoke cringe"
@@ -1678,7 +1871,7 @@ msgstr "Tidak. Hanya tidak. Aku adalah bot. Apa yang kamu pikirkan?"
 
 #: cogs/miscellaneous/__init__.py:91
 msgid "Get your daily reward"
-msgstr ""
+msgstr "Ambil hadiah harian kamu"
 
 #: cogs/miscellaneous/__init__.py:95
 msgid ""
@@ -1763,7 +1956,7 @@ msgstr ""
 
 #: cogs/miscellaneous/__init__.py:232
 msgid "Show the bot's ping"
-msgstr ""
+msgstr "Menampilkan ping bot"
 
 #: cogs/miscellaneous/__init__.py:235
 msgid "Shows you the bot's current websocket latency in milliseconds."
@@ -1780,7 +1973,7 @@ msgstr "Latensi aku saat ini adalah {lat}ms"
 
 #: cogs/miscellaneous/__init__.py:246
 msgid "Shorten an image URL."
-msgstr ""
+msgstr "Persingkat URL gambar."
 
 #: cogs/miscellaneous/__init__.py:250
 msgid ""
@@ -1810,7 +2003,7 @@ msgstr "Ini adalah URL gambar pendek kamu: <{link}>"
 
 #: cogs/miscellaneous/__init__.py:269
 msgid "Support the bot financially"
-msgstr ""
+msgstr "Dukung bot secara finansial"
 
 #: cogs/miscellaneous/__init__.py:273
 #, python-brace-format
@@ -1904,13 +2097,15 @@ msgstr ""
 
 #: cogs/miscellaneous/__init__.py:340
 msgid "Shows statistics about the bot"
-msgstr ""
+msgstr "Menampilkan statistik bot"
 
 #: cogs/miscellaneous/__init__.py:344
 msgid ""
 "Show some stats about the bot, ranging from hard- and software statistics, "
 "over performance to ingame stats."
 msgstr ""
+"Menampilkan beberapa statistik tentang bot, mulai dari statistik perangkat "
+"keras dan perangkat lunak, kinerja hingga statistik dalam game."
 
 #: cogs/miscellaneous/__init__.py:376
 msgid "IdleRPG Statistics"
@@ -1918,7 +2113,7 @@ msgstr "Statistik IdleRPG"
 
 #: cogs/miscellaneous/__init__.py:380
 msgid "Official Support Server Invite: https://support.idlerpg.xyz"
-msgstr ""
+msgstr "Undangan resmi Suport Server: https://support.idlerpg.xyz"
 
 #: cogs/miscellaneous/__init__.py:389
 msgid "Hosting Statistics"
@@ -1964,7 +2159,7 @@ msgstr ""
 
 #: cogs/miscellaneous/__init__.py:447
 msgid "Roll a dice"
-msgstr ""
+msgstr "Lempar dadu"
 
 #: cogs/miscellaneous/__init__.py:451
 msgid ""
@@ -1973,6 +2168,9 @@ msgid ""
 "            Roll a dice with `<maximum>` sides and let the bot display the "
 "outcome."
 msgstr ""
+"`<maximum>` - Angka lebih besar dari 0\n"
+"\n"
+" Lempar dadu dengan `<maximum>` sisi dan bot akan menampilkan hasilnya."
 
 #: cogs/miscellaneous/__init__.py:456
 #, python-brace-format
@@ -1981,15 +2179,15 @@ msgstr ":1234: Kamu mengocok **{num}**, {author}!"
 
 #: cogs/miscellaneous/__init__.py:461
 msgid "View the changelog"
-msgstr ""
+msgstr "Lihat changelog"
 
 #: cogs/miscellaneous/__init__.py:464
 msgid "Shows you the bots current version along with its major updates."
-msgstr ""
+msgstr "Menampilkan versi bot saat ini beserta pembaruan utamanya."
 
 #: cogs/miscellaneous/__init__.py:504
 msgid "Delete messages"
-msgstr ""
+msgstr "Hapus pesan"
 
 #: cogs/miscellaneous/__init__.py:508
 msgid ""
@@ -2017,13 +2215,15 @@ msgstr "👍 Menghapus **{num}** pesan untuk kamu."
 
 #: cogs/miscellaneous/__init__.py:530
 msgid "Ask the magic 8ball a question"
-msgstr ""
+msgstr "Ajukan pertanyaan pada 8ball ajaib"
 
 #: cogs/miscellaneous/__init__.py:534
 msgid ""
 "Provides a variety of answers to all of your questions. If in doubt, ask the "
 "magic 8ball."
 msgstr ""
+"Memberikan berbagai jawaban untuk semua pertanyaamu. Jika ragu, tanyakan "
+"pada 8ball ajaib."
 
 #: cogs/miscellaneous/__init__.py:537
 msgid "It is certain"
@@ -2113,7 +2313,7 @@ msgstr ":8ball: mengatakan: **{result}**."
 
 #: cogs/miscellaneous/__init__.py:562
 msgid "Repeat what you said."
-msgstr ""
+msgstr "Mengulangi apa yang kamu katakan."
 
 #: cogs/miscellaneous/__init__.py:566
 msgid ""
@@ -2122,6 +2322,10 @@ msgid ""
 "            Repeats what you said. This will delete the command message if "
 "possible."
 msgstr ""
+"`<phrase>` - Kalimat yang akan diulang\n"
+"\n"
+" Mengulangi apa yang kamu katakan. Ini akan menghapus perintah pesan jika "
+"memungkinkan."
 
 #: cogs/miscellaneous/__init__.py:576
 msgid "Help you decide"
@@ -2173,7 +2377,7 @@ msgstr "Cinta untuk {first} dan {second} berada di **{love}%**! ❤"
 
 #: cogs/miscellaneous/__init__.py:625
 msgid "Replaces text with emoji"
-msgstr ""
+msgstr "Mengganti teks dengan emoji"
 
 #: cogs/miscellaneous/__init__.py:629
 msgid ""
@@ -2181,15 +2385,19 @@ msgid ""
 "\n"
 "            Replaces text and numbers with emoji."
 msgstr ""
+"`<text>` - Teks yang akan diperbesar\n"
+"\n"
+" Mengganti teks dan angka dengan emoji."
 
 #: cogs/miscellaneous/__init__.py:659
 msgid ""
 "Sends a random meme from [Some Random API](https://some-random-api.ml/)."
 msgstr ""
+"Mengirim lelucon acak dari [Some Random API](https://some-random-api.ml/)."
 
 #: cogs/miscellaneous/__init__.py:670
 msgid "Roll some dice"
-msgstr ""
+msgstr "Lempar dadu"
 
 #: cogs/miscellaneous/__init__.py:674
 msgid ""
@@ -2252,31 +2460,31 @@ msgstr ""
 
 #: cogs/miscellaneous/__init__.py:750
 msgid "Cat pics"
-msgstr ""
+msgstr "Gambar kucing"
 
 #: cogs/miscellaneous/__init__.py:753
 msgid "Sends cute cat pics from [The Cat API](https://thecatapi.com/)."
-msgstr ""
+msgstr "Mengirim gambar kucing lucu dari [The Cat API](https://thecatapi.com/)."
 
 #: cogs/miscellaneous/__init__.py:760
 msgid "Meow!"
-msgstr "Meow!"
+msgstr "Meong!"
 
 #: cogs/miscellaneous/__init__.py:764
 msgid "Dog pics"
-msgstr ""
+msgstr "Gambar anjing"
 
 #: cogs/miscellaneous/__init__.py:767
 msgid "Sends cute dog pics from [The Dog API](https://thedogapi.com/)."
-msgstr ""
+msgstr "Mengirim gambar anjing lucu dari [The Dog API](https://thedogapi.com/)."
 
 #: cogs/miscellaneous/__init__.py:774
 msgid "Wouff!"
-msgstr "Wouff!"
+msgstr "Guk guk!"
 
 #: cogs/miscellaneous/__init__.py:778
 msgid "View the uptime"
-msgstr ""
+msgstr "Lihat uptime"
 
 #: cogs/miscellaneous/__init__.py:781
 msgid "Shows how long the bot has been connected to Discord."
@@ -2294,6 +2502,7 @@ msgstr "Setiap perangkat lunak yang baik memiliki Easter egg."
 #: cogs/miscellaneous/__init__.py:791
 msgid "Wouldn't be any fun if I told you how to find it, right?"
 msgstr ""
+"Tidak akan menyenangkan jika saya memberitahumu cara menemukannya, bukan?"
 
 #: cogs/miscellaneous/__init__.py:792
 msgid "Find it!"
@@ -2301,7 +2510,7 @@ msgstr "Temukan!"
 
 #: cogs/miscellaneous/__init__.py:795
 msgid "Give a cookie to a user"
-msgstr ""
+msgstr "Memberikan kukis kepada pemain"
 
 #: cogs/miscellaneous/__init__.py:799
 msgid ""
@@ -2310,6 +2519,10 @@ msgid ""
 "            Gives a cookie to a user. Sadly, this cookie does not have an "
 "effect on gameplay."
 msgstr ""
+"`<user>` - pengguna discord yang akan diberikan kukis\n"
+"\n"
+" Memberikan kukis kepada pemain. Sayangnya, kukis ini tidak memengaruhi "
+"permainan dalam game."
 
 #: cogs/miscellaneous/__init__.py:805
 #, python-brace-format
@@ -2318,7 +2531,7 @@ msgstr "**{user}**, kamu telah diberikan cookie oleh **{author}**. :cookie:"
 
 #: cogs/miscellaneous/__init__.py:810
 msgid "Give icecream to a user"
-msgstr ""
+msgstr "Memberikan es krim kepada pemain"
 
 #: cogs/miscellaneous/__init__.py:814
 msgid ""
@@ -2327,6 +2540,10 @@ msgid ""
 "            Gives icecream to a user. Sadly, this ice does not have an "
 "effect on gameplay."
 msgstr ""
+"`<other>` - pengguna discord yang akan diberikan es krim\n"
+"\n"
+" Memberikan es krim kepada pemain. Sayangnya, es krim ini tidak memengaruhi "
+"permainan dalam game."
 
 #: cogs/miscellaneous/__init__.py:819
 #, python-brace-format
@@ -2335,7 +2552,7 @@ msgstr "{other}, ini es krim kamu. :ice_cream: !"
 
 #: cogs/miscellaneous/__init__.py:824
 msgid "User guessing game"
-msgstr ""
+msgstr "Game tebak-tebakan"
 
 #: cogs/miscellaneous/__init__.py:828
 msgid ""
@@ -2347,6 +2564,13 @@ msgid ""
 "\n"
 "            (This command has a channel cooldown of 20 seconds.)"
 msgstr ""
+"Menebak pengguna discord berdasarkan avatar dan angka diskriminator (4 digit "
+"angka setelah # pada discord tag)\n"
+"\n"
+" Baik discord tag dan nickname keduanya merupakan jawaban. Kamu memiliki 20 "
+"detik untuk menebak.\n"
+"\n"
+" (Perintah ini memiliki waktu tenang selama 20 detik)"
 
 #: cogs/miscellaneous/__init__.py:836
 msgid "Can you guess who this is?"
@@ -2369,7 +2593,7 @@ msgstr "{user}, kamu benar!"
 
 #: cogs/miscellaneous/__init__.py:858
 msgid "Get a yes/no answer"
-msgstr ""
+msgstr "Dapatkan jawaban ya/tidak"
 
 #: cogs/miscellaneous/__init__.py:862
 #, python-brace-format
@@ -2378,10 +2602,13 @@ msgid ""
 "\n"
 "            An alternative to `{prefix}8ball` with some more blunt answers."
 msgstr ""
+"`<question>` - Pertanyaan yang akan dijawab\n"
+"\n"
+" Alternatif untuk `{prefix}8ball` dengan beberapa jawaban yang blak-blakan."
 
 #: cogs/miscellaneous/__init__.py:917
 msgid "Talk to me"
-msgstr ""
+msgstr "Berbicaralah denganku"
 
 #: cogs/miscellaneous/__init__.py:921
 msgid ""
@@ -2389,6 +2616,10 @@ msgid ""
 "\n"
 "            Talk to me! This uses a chatbot AI backend."
 msgstr ""
+"`<text>` - Kalimat yang ingin kamu katakan, berisi antara 3 sampai 60 "
+"karakter.\n"
+"\n"
+" Berbicaralah denganku! Ini menggunakan chatbot AI backend."
 
 #: cogs/miscellaneous/__init__.py:928
 msgid "Text too long or too short. May be 3 to 60 characters."
@@ -2398,7 +2629,7 @@ msgstr ""
 
 #: cogs/miscellaneous/__init__.py:940
 msgid "Show a Garfield comic strip"
-msgstr ""
+msgstr "Menampilkan komik strip Garfield"
 
 #: cogs/miscellaneous/__init__.py:951
 msgid ""
@@ -2477,10 +2708,13 @@ msgid ""
 "Cleverbot is a Discord bot that will chat with you and your friends.\n"
 "[top.gg Page](https://top.gg/bot/508012980194115595)"
 msgstr ""
+"Cleverbot adalah sebuah Discord bot yang bisa berbicara denganmu dan teman-"
+"temanmu.\n"
+"[top.gg Page](https://top.gg/bot/508012980194115595)"
 
 #: cogs/miscellaneous/__init__.py:1031
 msgid "Search wikipedia"
-msgstr ""
+msgstr "Pencarian wikipedia"
 
 #: cogs/miscellaneous/__init__.py:1035
 msgid ""
@@ -2488,6 +2722,9 @@ msgid ""
 "\n"
 "            Searches Wikipedia for an entry."
 msgstr ""
+"`<query>` - Pertanyaan wikipedia yang akan dicari\n"
+"\n"
+" Masukan pencarian diwikipedia."
 
 #: cogs/miscellaneous/__init__.py:1043
 msgid "No wikipedia entry found."
@@ -2499,7 +2736,7 @@ msgstr "Tidak dapat menguraikan ringkasan artikel."
 
 #: cogs/miscellaneous/__init__.py:1054
 msgid "Search the Idle Wiki"
-msgstr ""
+msgstr "Pencarian Idle Wiki"
 
 #: cogs/miscellaneous/__init__.py:1058
 msgid ""
@@ -2507,6 +2744,9 @@ msgid ""
 "\n"
 "            Searches Idle's wiki for an entry."
 msgstr ""
+"`[query]` - Pertanyaan idlewiki yang akan dicari\n"
+"\n"
+" Masukan pencarian diidlewiki."
 
 #: cogs/miscellaneous/__init__.py:1065
 msgid ""
@@ -2526,7 +2766,7 @@ msgstr "Tidak ada konten untuk diperlihatkan."
 
 #: cogs/miscellaneous/__init__.py:1086
 msgid "Info about the bot and related sites"
-msgstr ""
+msgstr "Informasi tentang bot dan situs terkait"
 
 #: cogs/miscellaneous/__init__.py:1090
 msgid "About the bot and our websites."
@@ -2563,12 +2803,14 @@ msgstr ""
 
 #: cogs/miscellaneous/__init__.py:1118
 msgid "Show the rules again"
-msgstr ""
+msgstr "Menampilkan peraturan"
 
 #: cogs/miscellaneous/__init__.py:1122
 msgid ""
 "Shows the rules you consent to when creating a character. Don't forget them!"
 msgstr ""
+"Menampilkan peraturan yang kamu setujui ketika membuat sebuah karakter. "
+"Jangan lupa peraturannya!"
 
 #: cogs/miscellaneous/__init__.py:1126
 msgid ""
@@ -2583,45 +2825,47 @@ msgstr ""
 
 #: cogs/raid/__init__.py:118
 msgid "Start a Zerekiel raid"
-msgstr ""
+msgstr "Memulai penyerangan Zerekiel"
 
 #: cogs/raid/__init__.py:434
 msgid "Start a Kvothe raid"
-msgstr ""
+msgstr "Memulai penyerangan Kvothe"
 
 #: cogs/raid/__init__.py:604
 msgid "Start an Eden raid"
-msgstr ""
+msgstr "Memulai penyerangan Eden"
 
 #: cogs/raid/__init__.py:776
 msgid "Start a CHamburr raid"
-msgstr ""
+msgstr "Memulai penyerangan CHamburr"
 
 #: cogs/raid/__init__.py:1012
 msgid "Starts Lyx' raid"
-msgstr ""
+msgstr "Memulai penyerangan Lyx"
 
 #: cogs/raid/__init__.py:1180
 msgid "Start a Monox raid"
-msgstr ""
+msgstr "Memulai penyerangan Monox"
 
 #: cogs/raid/__init__.py:1368
 msgid "Start a Kirby raid"
-msgstr ""
+msgstr "Memulai penyerangan Kirby"
 
 #: cogs/raid/__init__.py:1592
 msgid "Start a Jesus raid"
-msgstr ""
+msgstr "Memulai penyerangan Jesus"
 
 #: cogs/raid/__init__.py:1819
 msgid "Increase your raidstats"
-msgstr ""
+msgstr "Meningkatkan raidstatsmu"
 
 #: cogs/raid/__init__.py:1823
 msgid ""
 "Upgrade your raid damage or defense multiplier. These will affect your "
 "performance in raids and raidbattles."
 msgstr ""
+"Tingkatkan kerusakan penyeranganmu atau gandakan pertahananmu. Raidstats "
+"akan mempengaruhi kinerjamu dalam pertarungan raid dan raidbattles."
 
 #: cogs/raid/__init__.py:1827
 #, python-brace-format
@@ -2630,15 +2874,15 @@ msgid ""
 "multiplier by 10%."
 msgstr ""
 "Gunakan `{prefix}increase damage/defense` untuk meningkatkan kerusakan "
-"pertempuran/perlindungan kamu sebanyak 10%."
+"penyerangan/pertahanan kamu sebanyak 10%."
 
 #: cogs/raid/__init__.py:1834
 msgid "Upgrade your raid damage"
-msgstr ""
+msgstr "Tingkatkan kerusakan penyeranganmu"
 
 #: cogs/raid/__init__.py:1837
 msgid "Increase your raid damage."
-msgstr "Meningkatkan kerusakan pertempuranmu."
+msgstr "Meningkatkan kerusakan penyeranganmu."
 
 #: cogs/raid/__init__.py:1843 cogs/raid/__init__.py:1858
 #, python-brace-format
@@ -2655,6 +2899,8 @@ msgid ""
 "Upgrading your weapon attack raid multiplier to {newlvl} costs **${price}**, "
 "proceed?"
 msgstr ""
+"Meningkatkan pengganda penyerangan pertempuran senjata kamu ke {newlvl} "
+"dengan biaya **${price}**, lanjutkan?"
 
 #: cogs/raid/__init__.py:1882
 #, python-brace-format
@@ -2666,11 +2912,11 @@ msgstr ""
 
 #: cogs/raid/__init__.py:1889
 msgid "Upgrade your raid defense"
-msgstr ""
+msgstr "Tingkatkan pertahanan pertempuran"
 
 #: cogs/raid/__init__.py:1892
 msgid "Increase your raid defense."
-msgstr "Meningkatkan perlindungan pertempuranmu."
+msgstr "Meningkatkan pertahanan pertempuranmu."
 
 #: cogs/raid/__init__.py:1898 cogs/raid/__init__.py:1913
 #, python-brace-format
@@ -2678,7 +2924,7 @@ msgid ""
 "Upgrading your shield defense raid multiplier to {newlvl} costs **${price}"
 "**, you are too poor."
 msgstr ""
-"Meningkatkan pengganda penyerangan perlindungan perisai kamu ke {newlvl} "
+"Meningkatkan pengganda penyerangan pertahanan perisai kamu ke {newlvl} "
 "dengan biaya **${price}**, kamu terlalu miskin."
 
 #: cogs/raid/__init__.py:1904
@@ -2687,6 +2933,8 @@ msgid ""
 "Upgrading your shield defense raid multiplier to {newlvl} costs **${price}"
 "**, proceed?"
 msgstr ""
+"Meningkatkan pengganda penyerangan pertahanan perisai kamu ke {newlvl} "
+"dengan biaya **${price}**, lanjutkan?"
 
 #: cogs/raid/__init__.py:1937
 #, python-brace-format
@@ -2694,18 +2942,20 @@ msgid ""
 "You upgraded your shield defense raid multiplier to {newlvl} for **${price}"
 "**."
 msgstr ""
-"Kamu meningkatkan pengganda penyerangan perlindungan perisai kamu ke "
-"{newlvl} dengan biaya **${price}**."
+"Kamu meningkatkan pengganda penyerangan pertahanan perisai kamu ke {newlvl} "
+"dengan biaya **${price}**."
 
 #: cogs/raid/__init__.py:1943
 msgid "View your raid stats"
-msgstr ""
+msgstr "Menampilkan raidstatsmu"
 
 #: cogs/raid/__init__.py:1947
 msgid ""
 "View your raidstats. These will affect your performance in raids and "
 "raidbattles."
 msgstr ""
+"Menampilkan raidstatsmu. Raidstats akan mempengaruhi kinerjamu dalam "
+"pertarungan raid dan raidbattles."
 
 #: cogs/raid/__init__.py:1964
 #, python-brace-format
@@ -2715,12 +2965,12 @@ msgid ""
 "Defense Multiplier: x{deff} (Upgrading: ${deffp})"
 msgstr ""
 "**Pengganda serangan {author}**\n"
-"Pengganda kerusakan: x{atk} (Peningkatan: ${atkp})\n"
-"Pengganda perlindungan: x{deff} (Peningkatan: ${deffp})"
+"Pengganda kerusakan: x{atk} (Tingkatkan: ${atkp})\n"
+"Pengganda pertahanan: x{deff} (Tingkatkan: ${deffp})"
 
 #: cogs/raid/__init__.py:1971
 msgid "Did somebody say Raid?"
-msgstr ""
+msgstr "Apakah seseorang mengatakan Raid?"
 
 #: cogs/raid/__init__.py:1974
 msgid "Informs you about joining raids."
@@ -2914,16 +3164,16 @@ msgstr "Berhasil mengaktifkan {types} untuk **24 jam** berikutnya!"
 
 #: cogs/help/__init__.py:126
 msgid "Subcommands"
-msgstr ""
+msgstr "Subperintah"
 
 #: cogs/help/__init__.py:139
 #, python-brace-format
 msgid "Click on the reactions to see more subcommands. | Page {start}/{end}"
-msgstr ""
+msgstr "Klik reaksi untuk melihat semua subperintah. | Halaman {start}/{end}"
 
 #: cogs/help/__init__.py:181
 msgid "View the command list"
-msgstr ""
+msgstr "Melihat daftar perintah"
 
 #: cogs/help/__init__.py:184
 msgid "Sends a link to the official documentation."
@@ -2936,11 +3186,11 @@ msgstr "<:blackcheck:441826948919066625> **Cek {url} untuk daftar perintah**"
 
 #: cogs/help/__init__.py:192
 msgid "View the tutorial"
-msgstr ""
+msgstr "Melihat tutorial"
 
 #: cogs/help/__init__.py:195
 msgid "Link to the bot tutorial and FAQ."
-msgstr ""
+msgstr "Tautan ke tutorial bot dan FAQ."
 
 #: cogs/help/__init__.py:198
 #, python-brace-format
@@ -2949,7 +3199,7 @@ msgstr "<:blackcheck:441826948919066625> **Cek {url} untuk tutorial dan FAQ**"
 
 #: cogs/help/__init__.py:204
 msgid "Allow someone/-thing to use helpme again"
-msgstr ""
+msgstr "Izinkan seseorang/sesuatu untuk menggunakan helpme"
 
 #: cogs/help/__init__.py:208
 #, python-brace-format
@@ -2961,6 +3211,12 @@ msgid ""
 "\n"
 "            Only Support Team Members can use this command."
 msgstr ""
+"`<thing_to_unban>` - Pengguna discord, User IDnya, atau ID server\n"
+"\n"
+" Batalkan pemblokiran akun/server sebelumnya dari penggunaan perintah "
+"`{prefix}helpme`.\n"
+"\n"
+" Hanya Anggota Tim Suport yang dapat menggunakan perintah ini."
 
 #: cogs/help/__init__.py:221
 #, python-brace-format
@@ -2969,7 +3225,7 @@ msgstr "{thing} telah diunblokir dari perintah helpme :ok_hand:"
 
 #: cogs/help/__init__.py:227
 msgid "Ban someone/-thing from using helpme"
-msgstr ""
+msgstr "Blokir seseorang/sesuatu dari penggunaan helpme"
 
 #: cogs/help/__init__.py:231
 #, python-brace-format
@@ -2980,6 +3236,11 @@ msgid ""
 "\n"
 "            Only Support Team Members can use this command."
 msgstr ""
+"`<thing_to_ban>` - Pengguna discord, User IDnya, atau ID server\n"
+"\n"
+" Blokir akun/server dari penggunaan perintah `{prefix}helpme`.\n"
+"\n"
+" Hanya Anggota Tim Suport yang dapat menggunakan perintah ini."
 
 #: cogs/help/__init__.py:241
 msgid "Error... Maybe they're already banned?"
@@ -2987,11 +3248,11 @@ msgstr "Terjadi kesalahan... Mungkin mereka sudah diblokir?"
 
 #: cogs/help/__init__.py:242
 msgid "They have been banned for the helpme command :ok_hand:"
-msgstr ""
+msgstr "Mereka telah diblokir dari perintah helpme :ok_hand:"
 
 #: cogs/help/__init__.py:246
 msgid "Ask our Support Team for help"
-msgstr ""
+msgstr "Minta bantuan Tim Support kami"
 
 #: cogs/help/__init__.py:251
 msgid ""
@@ -3005,6 +3266,15 @@ msgid ""
 "            Make sure the bot has permissions to create instant invites.\n"
 "            English is preferred."
 msgstr ""
+"`<text>` - Teks untuk menjelaskan pertanyaanmu atau masalah yang kamu alami\n"
+"\n"
+" Minta bantuan tim suport kami untuk membantumu, mengizinkan mereka untuk "
+"bergabung dengan servermu dan membantumu secara langsung.\n"
+" Jika mereka tidak bergabung dalam waktu 48 jam, kamu boleh menggunakan "
+"perintah helpme sekali lagi.\n"
+"\n"
+" Pastika bot memiliki izin untuk membuat undangan discord server.\n"
+" Gunakan bahasa inggris."
 
 #: cogs/help/__init__.py:265
 #, python-brace-format
@@ -3012,6 +3282,8 @@ msgid ""
 "You server already has a helpme request open! Please wait until the support "
 "team gets to you or wait {time} to try again. "
 msgstr ""
+"Server kamu sudah membuka permintaan helpme! Mohon menunggu sampai tim "
+"suport kami menghubungi kamu atau tunggu {time} untuk coba lagi. "
 
 #: cogs/help/__init__.py:276
 msgid "You or your server has been blacklisted for some reason."
@@ -3036,7 +3308,7 @@ msgstr "Tim dukungan telah diberi tahu dan akan bergabung sesegera mungkin!"
 
 #: cogs/help/__init__.py:314
 msgid "Finish the helpme request"
-msgstr ""
+msgstr "Menyelesaikan permintaan helpme"
 
 #: cogs/help/__init__.py:318
 msgid ""
@@ -3048,7 +3320,7 @@ msgstr ""
 
 #: cogs/help/__init__.py:326
 msgid "Change your helpme text"
-msgstr ""
+msgstr "Mengubah pesan helpme"
 
 #: cogs/help/__init__.py:330
 msgid ""
@@ -3060,15 +3332,22 @@ msgid ""
 "            You can only use this command if your server has an open helpme "
 "request."
 msgstr ""
+"`<new_text>` - Pesan baru yang akan digunakan untuk permintaan helpme\n"
+"\n"
+" Mengedit pesanmu pada permintaan terbuka helpme. Tim suport kami akan "
+"segera melihat pesan baru.\n"
+"\n"
+" Kamu dapat menggunkan perintah ini jika server kamu memiliki permintaan "
+"terbuka helpme."
 
 #: cogs/help/__init__.py:361
 #, python-brace-format
 msgid "Successfully changed your helpme text from `{old}` to `{new}`!"
-msgstr ""
+msgstr "Sukses mengganti pesan helpme kamu dari `{old}` ke `{new}`!"
 
 #: cogs/help/__init__.py:368
 msgid "Cancel your open helpme request"
-msgstr ""
+msgstr "Membatalkan permintaan terbuka helpme"
 
 #: cogs/help/__init__.py:373
 msgid ""
@@ -3078,22 +3357,27 @@ msgid ""
 "            You can only use this command if your server has an open helpme "
 "request."
 msgstr ""
+"Membatalkan permintaan terbuka helpme yang sedang berlangsung. Tim Suport "
+"kami tidak akan bergabung ke servermu.\n"
+"\n"
+" Kamu dapat menggunakan perintah ini jika server kamu memilki permintaan "
+"terbuka helpme."
 
 #: cogs/help/__init__.py:378
 msgid "Are you sure you want to cancel your helpme request?"
-msgstr ""
+msgstr "Apakah kamu yakin ingin membatalkan permintaan helpme?"
 
 #: cogs/help/__init__.py:380
 msgid "Cancelled cancellation."
-msgstr ""
+msgstr "Pembatalan dibatalkan."
 
 #: cogs/help/__init__.py:390
 msgid "Your helpme request has been cancelled."
-msgstr ""
+msgstr "Permintaan helpme kamu telah dibatalkan."
 
 #: cogs/help/__init__.py:393
 msgid "View your current helpme request"
-msgstr ""
+msgstr "Melihat permintaan helpme kamu saat ini"
 
 #: cogs/help/__init__.py:397
 msgid ""
@@ -3103,14 +3387,19 @@ msgid ""
 "            You can only use this command if your server has an open helpme "
 "request."
 msgstr ""
+"Melihat bagaimana permintaan helpme server kamu saat ini yang terlihat oleh "
+"Tim Suport kami.\n"
+"\n"
+" Kamu dapat menggunakan perintah ini jika server kamu memiliki permintaan "
+"terbuka helpme."
 
 #: cogs/help/__init__.py:407
 msgid "Your help request is visible to our support team like this:"
-msgstr ""
+msgstr "Permintaan bantuan kamu terlihat oleh tim suport kami seperti ini:"
 
 #: cogs/help/__init__.py:415
 msgid "Views the help on a topic."
-msgstr ""
+msgstr "Melihat bantuan pada suatu topik."
 
 #: cogs/help/__init__.py:417
 #, python-brace-format
@@ -3125,11 +3414,19 @@ msgid ""
 "            To view the help on a module explicitely, use `{prefix}help "
 "module [name]`"
 msgstr ""
+"Melihat bantuan pada suatu topik.\n"
+"\n"
+" Topiknya bisa berupa nama perintah atau nama modul.\n"
+" Lebih baik pakai nama perintah, contohnya `{prefix}help adventure`\n"
+" akan menampilkan bantuan pada perintah tersebut, bukan modulnya.\n"
+"\n"
+" Untuk melihat bantuan pada modul dengan jelas, gunakan `{prefix}help module "
+"[name]`"
 
 #: cogs/help/__init__.py:495
 #, python-brace-format
 msgid "IdleRPG Help {version}"
-msgstr ""
+msgstr "Bantuan IdleRPG {version}"
 
 #: cogs/help/__init__.py:508
 #, python-brace-format
@@ -3146,32 +3443,43 @@ msgid ""
 "*See `{prefix}help [command]` and `{prefix}help module [module]` for more "
 "info*"
 msgstr ""
+"**Selamat datang di bantuan IdleRPG.**\n"
+"Lihat tutorial!\n"
+"- https://idlerpg.xyz/tutorial/\n"
+"Apakah kamu kesulitan? Silahkan minta bantuan di server suport!\n"
+"- https://support.idlerpg.xyz/\n"
+"Apakah kamu membutuhkan bantuan pribadi?\n"
+"- Hubungi tim suport kami dengan menggunakan `{prefix}helpme`.\n"
+"Apakah kamu ingin mengundang bot IdleRPG ke servermu?\n"
+"- https://invite.idlerpg.xyz/\n"
+"*Lihat `{prefix}help [command]` dan `{prefix}help module [module]` untuk "
+"info lebih lanjut*"
 
 #: cogs/help/__init__.py:543
 msgid "Modules"
-msgstr ""
+msgstr "Modul"
 
 #: cogs/help/__init__.py:555 cogs/help/__init__.py:561
 msgid "You do not have access to these commands!"
-msgstr ""
+msgstr "Kamu tidak memilki akses untuk perintah ini!"
 
 #: cogs/help/__init__.py:576
 #, python-brace-format
 msgid "See '{prefix}help <command>' for more detailed info"
-msgstr ""
+msgstr "Lihat '{prefix}help <command>' untuk info yang lengkap"
 
 #: cogs/help/__init__.py:592 cogs/help/__init__.py:598
 #: cogs/help/__init__.py:627 cogs/help/__init__.py:634
 msgid "You do not have access to this command!"
-msgstr ""
+msgstr "Kamu tidak memiliki akses untuk perintah ini!"
 
 #: cogs/help/__init__.py:616
 msgid "Aliases"
-msgstr ""
+msgstr "Alias"
 
 #: cogs/patreon/__init__.py:33
 msgid "Reset a modified item"
-msgstr ""
+msgstr "Mengatur ulang barang yang dimodifikasi"
 
 #: cogs/patreon/__init__.py:37
 msgid ""
@@ -3180,6 +3488,10 @@ msgid ""
 "            Reset an item's type and name, if modified. Once an item is "
 "reset, it can be sold again."
 msgstr ""
+"`<itemid>` - ID barang yang akan diatur ulang\n"
+"\n"
+" Mengatur ulang sebuah tipe dan nama barang, jika dimodifikasi. Setelah "
+"barang diatur ulang, barang tersebut dapat dijual kembali."
 
 #: cogs/patreon/__init__.py:45 cogs/transaction/__init__.py:461
 msgid "You do not own this item."
@@ -3195,7 +3507,7 @@ msgstr "Barang diatur ulang."
 
 #: cogs/patreon/__init__.py:88
 msgid "[basic] Change an item's name"
-msgstr ""
+msgstr "[basic] Mengubah nama barang"
 
 #: cogs/patreon/__init__.py:92
 msgid ""
@@ -3208,6 +3520,14 @@ msgid ""
 "\n"
 "            Only basic (or above) tier patrons can use this command."
 msgstr ""
+"`<itemid>` - ID barang yang akan diganti namanya\n"
+" `<newname>` - Nama baru yang akan diberikan, hanya 40 karakter saja\n"
+"\n"
+" Mengubah nama barang. Setelah nama barang diganti, barang tersebut tidak "
+"dapat dijual lagi.\n"
+"\n"
+" Hanya pelanggan tingkat dasar (atau lebih tinggi) yang dapat menggunakan "
+"perintah ini."
 
 #: cogs/patreon/__init__.py:100
 msgid "Name too long."
@@ -3226,7 +3546,7 @@ msgstr "Barang dengan ID `{itemid}` sekarang disebut `{newname}`."
 
 #: cogs/patreon/__init__.py:128
 msgid "[bronze] Change an item's type"
-msgstr ""
+msgstr "[bronze] Mengubah tipe barang"
 
 #: cogs/patreon/__init__.py:132
 msgid ""
@@ -3357,10 +3677,12 @@ msgid ""
 "Imgur Link for `{prefix}background`\n"
 "{link}"
 msgstr ""
+"Tautan Imgur untuk `{prefix}background`\n"
+"{link}"
 
 #: cogs/patreon/__init__.py:313
 msgid "[basic] Upgrade your guild"
-msgstr ""
+msgstr "[basic] Meningkatkan guildmu"
 
 #: cogs/patreon/__init__.py:317
 msgid ""
@@ -3383,7 +3705,7 @@ msgstr "Guild kamu telah diperbarui."
 
 #: cogs/patreon/__init__.py:354
 msgid "Change your background"
-msgstr ""
+msgstr "Mengubah latar belakangmu"
 
 #: cogs/patreon/__init__.py:358
 msgid ""
@@ -3392,6 +3714,11 @@ msgid ""
 "            Update your background to one from the events. You can get event "
 "backgrounds from special events, for example easter or christmas."
 msgstr ""
+"`<number>` - Nomor latarbelakang event yang akan digunakan\n"
+"\n"
+" Memperbarui latarbelakang yang kamu dapat dari salah satu event tersebut. "
+"Kamu bisa mendapatkan latarbelakang event dari event khusus, contohnya event "
+"paskah atau natal."
 
 #: cogs/patreon/__init__.py:365
 msgid ""
@@ -3414,7 +3741,7 @@ msgstr "Latar belakang diperbarui!"
 
 #: cogs/classes/__init__.py:52
 msgid "Choose or change your class(es)"
-msgstr ""
+msgstr "Memilih atau mengubah kelasmu"
 
 #: cogs/classes/__init__.py:56
 #, python-brace-format
@@ -3438,6 +3765,26 @@ msgid ""
 "\n"
 "            (This command has a cooldown of 24 hours)"
 msgstr ""
+"Mengubah atau memilih kelas pertama atau kelas keduamu.\n"
+"\n"
+" - Warriors mendapatkan pertahanan tambahan\n"
+" - Thieves memperoleh akses ke `{prefix}steal`\n"
+" - Mages mendapatkan kerusakan tambahan\n"
+" - Rangers mendapatkan akses untuk hewan peliharaan yang dapat berburu "
+"barang-barang\n"
+" - Raiders mendapatkan raidstats tambahan, digunakan dalam pertempuran "
+"raidbattles dan raids\n"
+" - Ritualists mendapatkan berkat tambahan dengan mengorbankan item dan dua "
+"kali lebih mungkin untuk mendapatkan barang jarahan dari petualangan\n"
+" (- Paragons mendapatkan kerusakan *dan* pertahanan tambahan; kelas hanya "
+"tersedia untuk pelanggan)\n"
+"\n"
+" Kelas kedua terbuka saat mencapai level 12. Memilih kelas untuk pertama "
+"kalinya gratis (Belum ada kelas -> Kelas), tetapi ketika kamu ingin "
+"mengubahnya lagi akan dikenakan biaya sebesar $5,000 (Kelas -> mengganti "
+"kelas yang lain)\n"
+"\n"
+" (Perintah ini memiliki waktu cooldown selama 24 jam)"
 
 #: cogs/classes/__init__.py:72
 msgid "Select class to change"
@@ -3445,11 +3792,11 @@ msgstr "Pilih kelas untuk diganti"
 
 #: cogs/classes/__init__.py:73
 msgid "Primary Class"
-msgstr "Kelas Primer"
+msgstr "Kelas Pertama"
 
 #: cogs/classes/__init__.py:73
 msgid "Secondary Class"
-msgstr "Kelas Sekunder"
+msgstr "Kelas kedua"
 
 #: cogs/classes/__init__.py:80
 msgid "Warrior"
@@ -3475,6 +3822,10 @@ msgid ""
 "successful.\n"
 "+8% success chance per evolution."
 msgstr ""
+"Pencuri uang yang licik...\n"
+"Mendapatkan akses ke `{prefix}steal` untuk mencuri uang sebesar 10% dari "
+"uang pemain acak, jika berhasil.\n"
+"+8% peluang sukses per evolusi."
 
 #: cogs/classes/__init__.py:98
 msgid "Mage"
@@ -3583,11 +3934,12 @@ msgstr ""
 
 #: cogs/classes/__init__.py:235
 msgid "View your class(es)"
-msgstr ""
+msgstr "Melihat kelasmu"
 
 #: cogs/classes/__init__.py:238
 msgid "Show your class(es) and their added benefits, sent as images."
 msgstr ""
+"Menampilkan kelasmu dan keuntungan tambahannya, yang dikirim sebagai gambar."
 
 #: cogs/classes/__init__.py:252
 #, python-brace-format
@@ -3596,7 +3948,7 @@ msgstr "Gambar dari kelasmu **{class_}** masih belum ditambahkan."
 
 #: cogs/classes/__init__.py:258
 msgid "Evolve your class(es)"
-msgstr ""
+msgstr "Mengevolusi kelasmu"
 
 #: cogs/classes/__init__.py:263
 #, no-python-format
@@ -3619,6 +3971,22 @@ msgid ""
 "evolution\n"
 "            (- Paragons gain +1 damage *and* +1 defense per evolution)"
 msgstr ""
+"Mengevolusi kelasmu, meningkatkan ke level selanjutnya dan mendapatkan bonus "
+"kelas yang lebih baik.\n"
+"\n"
+" Kamu dapat berevolusi setiap 5 level, yaitu pada level 5, level 10, level "
+"15, level 20, level 25 dan yang terakhir level 30.\n"
+"\n"
+" - Warriors mendapatkan +1 pertahanan setiap berevolusi\n"
+" - Thieves memperoleh +8% untuk peluang sukses per evolusi\n"
+" - Mages mendapatkan +1 kerusakan setiap berevolusi\n"
+" - Rangers barang yang diburu hewan peliharaan mendapatkan +3 minimum stat "
+"dan +6 maksimum stat setiap berevolusi\n"
+" - artinya hewan peliharaan level 1 dapat berburu barang dari stat 3 hingga "
+"stat 6; level 2 dari stat 6 hingga stat 12\n"
+" - Raiders mendapatkan +0.1 raidstats pertahanan dan kerusakan\n"
+" - Ritualists memperoleh +5% ekstra berkat saat berkorban setiap berevolusi\n"
+" (- Paragons mendapatkan +1 kerusakan *dan* +1 pertahanan setiap berevolusi)"
 
 #: cogs/classes/__init__.py:278
 msgid "Your level isn't high enough to evolve."
@@ -3630,7 +3998,7 @@ msgstr "Kamu masih belum memiliki kelas."
 
 #: cogs/classes/__init__.py:293
 msgid "Nothing to evolve."
-msgstr ""
+msgstr "Tidak ada yang dievolusi."
 
 #: cogs/classes/__init__.py:299
 #, python-brace-format
@@ -3639,17 +4007,20 @@ msgstr "Kamu sekarang adalah `{class1}` dan `{class2}`."
 
 #: cogs/classes/__init__.py:304
 msgid "Shows the evolution tree"
-msgstr ""
+msgstr "Menampilkan pohon evolusi"
 
 #: cogs/classes/__init__.py:308
 msgid ""
 "Shows the evolution tree for each class.\n"
 "            This will only show the names, not the respective benefits."
 msgstr ""
+"Menampilkan pohon evolusi setiap kelas.\n"
+" Hanya menampilkan nama-nama evolusi, tidak menampilkan manfaat setiap "
+"evolusi."
 
 #: cogs/classes/__init__.py:328
 msgid "Steal money"
-msgstr ""
+msgstr "Mencuri uang"
 
 #: cogs/classes/__init__.py:333
 #, no-python-format
@@ -3670,6 +4041,20 @@ msgid ""
 "            Only thieves can use this command.\n"
 "            (This command has a cooldown of 1 hour.)"
 msgstr ""
+"Mencuri uang dari pemain acak.\n"
+"\n"
+" Peluangmu untuk mencuri akan meningkat dengan mengevolusi kelasmu dan "
+"bangunan pencuri aliansimu, Jika kamu memiliki aliansi yang mempunyai kota.\n"
+" Jika kamu sukses mencuri, kamu akan mencuri 10% dari uang pemain acak.\n"
+"\n"
+" Kamu *tidak bisa* memilih target, targetnya akan selalu pemain acak. Jika "
+"bot tidak dapat menemukan nama pemain, maka akan diganti dengan \"seorang "
+"wisatawan yang baru saja lewat\".\n"
+" Pemain acak tidak boleh siapapun dengan uang kurang dari $10, kamu sendiri, "
+"atau salah satu pemilik bot.\n"
+"\n"
+" Hanya pencuri yang dapat menggunakan perintah ini.\n"
+" (Perintah ini memiliki waktu cooldown selama 1 jam.)"
 
 #: cogs/classes/__init__.py:367
 msgid "You attempted to steal from a bot VIP, but the bodyguards caught you."
@@ -3682,7 +4067,7 @@ msgstr "Kamu mencuri **${stolen}** dari {user}."
 
 #: cogs/classes/__init__.py:399
 msgid "a traveller just passing by"
-msgstr "seorang wisatawan baru saja melewati"
+msgstr "seorang wisatawan yang baru saja lewat"
 
 #: cogs/classes/__init__.py:403
 msgid "Your attempt to steal money wasn't successful."
@@ -3690,7 +4075,7 @@ msgstr "Upaya kamu untuk mencuri uang tidak berhasil."
 
 #: cogs/classes/__init__.py:407
 msgid "Interact with your pet"
-msgstr ""
+msgstr "Berinteraksi dengan hewan peliharaanmu"
 
 #: cogs/classes/__init__.py:412
 #, python-brace-format
@@ -3710,6 +4095,21 @@ msgid ""
 "\n"
 "            Only rangers can use this command."
 msgstr ""
+"Berinteraksi dengan hewan peliharaanmu. Pastikan untuk lihat `{prefix}help "
+"pet`.\n"
+"\n"
+" Setiap dua jam, hewan peliharaan akan kehilangan 2 poin makanan, 4 poin "
+"minuman, 1 poin gembira dan 1 poin kasih sayang.\n"
+"\n"
+" Jika makanan atau minuman turun dibawa nol, hewan peliharaanmu akan mati "
+"dan kelas ranger akan dicopot darimu.\n"
+" Jika kasih sayang turun dibawa 75, hewan peliharaanmu akan berkesempatan "
+"melarikan diri yang akan membuat kasih sayangnya terus menurun.\n"
+"\n"
+" Kegembiraan hewan peliharamu memengaruhi barang yang diburunya, bertindak "
+"sebagai pengganda untuk stat barang tersebut.\n"
+"\n"
+" Hanya ranger yang dapat menggunakan perintah ini."
 
 #: cogs/classes/__init__.py:428
 #, python-brace-format
@@ -3730,7 +4130,7 @@ msgstr "Minuman"
 
 #: cogs/classes/__init__.py:435
 msgid "Love"
-msgstr "Cinta"
+msgstr "Kasih sayang"
 
 #: cogs/classes/__init__.py:436
 msgid "Joy"
@@ -3747,6 +4147,10 @@ msgid ""
 "\n"
 "            Only rangers can use this command."
 msgstr ""
+"Memberi makan peliharaanmu. Ini akan menampilkan menu interaktif dimana kamu "
+"dapat membeli makanan.\n"
+"\n"
+" Hanya ranger yang dapat menggunakan perintah ini."
 
 #: cogs/classes/__init__.py:453
 msgid "Potato"
@@ -3766,7 +4170,7 @@ msgstr "Daging"
 
 #: cogs/classes/__init__.py:457
 msgid "Salad"
-msgstr "Salad"
+msgstr "Sayur-mayur"
 
 #: cogs/classes/__init__.py:458
 msgid "Sushi"
@@ -3792,7 +4196,7 @@ msgstr ""
 
 #: cogs/classes/__init__.py:502
 msgid "Give your pet something to drink."
-msgstr ""
+msgstr "Memberikan minuman untuk hewan peliharaanmu."
 
 #: cogs/classes/__init__.py:506
 msgid ""
@@ -3801,6 +4205,10 @@ msgid ""
 "\n"
 "            Only rangers can use this command."
 msgstr ""
+"Memberikan minuman untuk hewan peliharaanmu. Ini akan menampilakn menu "
+"interaktif  dimana kamu dapat membeli minuman.\n"
+"\n"
+" Hanya ranger yang dapat menggunakan perintah ini."
 
 #: cogs/classes/__init__.py:511
 msgid "Some Water"
@@ -3816,7 +4224,7 @@ msgstr "Koktail"
 
 #: cogs/classes/__init__.py:514
 msgid "Wine"
-msgstr "Wine"
+msgstr "Anggur"
 
 #: cogs/classes/__init__.py:515
 msgid "Beer"
@@ -3845,7 +4253,7 @@ msgstr ""
 
 #: cogs/classes/__init__.py:561
 msgid "Love your pet"
-msgstr ""
+msgstr "Menyayangi hewan peliharaanmu"
 
 #: cogs/classes/__init__.py:565
 msgid ""
@@ -3855,6 +4263,12 @@ msgid ""
 "            Only rangers can use this command.\n"
 "            (This command has a cooldown of 6 hours.)"
 msgstr ""
+"Berpelukan dengan hewan peliharaanmu untuk meningkatkan poin kasih "
+"sayangnya. Hewan peliharaanmu bisa mendapatkan poin kasih sayang dari 1 "
+"hingga 12 setiap kali berpelukan.\n"
+"\n"
+" Hanya ranger yang dapat menggunakan perintah ini.\n"
+" (Perintah ini memiliki waktu cooldown selama 6 jam.)"
 
 #: cogs/classes/__init__.py:579
 #, python-brace-format
@@ -3868,7 +4282,7 @@ msgstr ""
 #. We are mean, indeed
 #: cogs/classes/__init__.py:588
 msgid "Play with your pet"
-msgstr ""
+msgstr "Bermain dengan hewan peliharaanmu"
 
 #: cogs/classes/__init__.py:592
 msgid ""
@@ -3878,6 +4292,12 @@ msgid ""
 "            Only rangers can use this command.\n"
 "            (This command has a cooldown of 6 hours.)"
 msgstr ""
+"Bermain dengan hewan peliharaanmu untuk meningkatkan poin kegembiraannya. "
+"Hewan peliharaanmu bisa mendapatkan poin kegembiraan dari 1 hingga 12 setiap "
+"kali bermain.\n"
+"\n"
+" Hanya ranger yang dapat menggunakan perintah ini.\n"
+" (Perintah ini memiliki waktu cooldown selama 6 jam.)"
 
 #: cogs/classes/__init__.py:606
 #, python-brace-format
@@ -3920,7 +4340,7 @@ msgstr "berski :ski:"
 
 #: cogs/classes/__init__.py:627
 msgid "Rename your pet"
-msgstr ""
+msgstr "Mengganti nama hewan peliharaanmu"
 
 #: cogs/classes/__init__.py:631
 msgid ""
@@ -3928,18 +4348,22 @@ msgid ""
 "\n"
 "            Only rangers can use this command."
 msgstr ""
+"Memberikan nama baru pada hewan peliharaanmu. Nama tidak bisa lebih dari 20 "
+"karakter.\n"
+"\n"
+" Hanya ranger yang dapat menggunakan perintah ini."
 
 #: cogs/classes/__init__.py:636
 msgid "Please enter a name shorter than 20 characters."
-msgstr "Tolong masukkan nama yang lebih pendek dari 20 karakter."
+msgstr "Tolong masukkan sebuah nama yang lebih pendek dari 20 karakter."
 
 #: cogs/classes/__init__.py:640
 msgid "Pet name updated."
-msgstr "Nama hewan peliharaan diperbarui."
+msgstr "Nama hewan peliharaan telah diperbarui."
 
 #: cogs/classes/__init__.py:645
 msgid "Set a new image for your pet"
-msgstr ""
+msgstr "Menetapkan sebuah gambar baru untuk hewan peliharaanmu"
 
 #: cogs/classes/__init__.py:649
 #, python-brace-format
@@ -3956,21 +4380,34 @@ msgid ""
 "\n"
 "            Only rangers can use this command."
 msgstr ""
+"`[url]` - Sebuah url gambar untuk hewan peliharaannya, harus berupa 60 "
+"karakter atau lebih pendek\n"
+"\n"
+" Memperbarui gambar yang akan ditampilkan di `{prefix}pet`.\n"
+"\n"
+" Kesulitan menemukan tautan gambar yang pendek? Ikuti [this "
+"tutorial](https://wiki.idlerpg.xyz/index."
+"php?title=Tutorial:_Short_Image_URLs) atau cukup lampirkan gambar yang ingin "
+"kamu gunakan (png, jpg, webp dan gif juga didukung)!\n"
+"\n"
+" Hanya ranger yang dapat menggunakan perintah ini."
 
 #: cogs/classes/__init__.py:661
 #, python-brace-format
 msgid "Your current pet image is: {url}"
-msgstr ""
+msgstr "Gambar hewan peliharaan kamu saat ini adalah: {url}"
 
 #: cogs/classes/__init__.py:667 cogs/guild/__init__.py:282
 #: cogs/guild/__init__.py:704
 msgid "No image URL found in your message, using image attachment..."
 msgstr ""
+"Tidak ada URL gambar yang ditemukan dalam pesan kamu, menggunakan lampiran "
+"gambar..."
 
 #: cogs/classes/__init__.py:671 cogs/guild/__init__.py:287
 #: cogs/guild/__init__.py:708
 msgid "Image URL too long, shortening..."
-msgstr ""
+msgstr "URL gambar terlalu panjang, memendekkan..."
 
 #: cogs/classes/__init__.py:678
 msgid "Your pet's image was successfully updated."
@@ -3978,7 +4415,7 @@ msgstr "Gambar hewan peliharaanmu berhasil diperbarui."
 
 #: cogs/classes/__init__.py:684
 msgid "Let your pet hunt a weapon"
-msgstr ""
+msgstr "Membiarkan hewan peliharaanmu berburu sebuah senjata"
 
 #: cogs/classes/__init__.py:689
 #, no-python-format
@@ -4005,6 +4442,28 @@ msgid ""
 "            Only rangers can use this command.\n"
 "            (This command has a cooldown until 12am UTC.)"
 msgstr ""
+"Membiarkan hewan peliharaanmu berburu sebuah barang untukmu.\n"
+"\n"
+" Stat barang tergantung level hewan peliharaanmu (ditentukan oleh evolusi "
+"kelas) serta skor kegembiraannya.\n"
+" Stat dasar terendah yang dapat ditemukan hewan peliharaanmu adalah tiga "
+"kali levelnya, tertinggi adalah 6 kali levelnya.\n"
+" Skor kegembiraan hewan peliharaanmu dalam persen adalah dikalikan dengan "
+"stat dasar.\n"
+"\n"
+" Contohnya:\n"
+" - Hewan peliharaanmu berada dilevel 2, skor kegembiraannya adalah 50.\n"
+" - Stat dasar barangnya adalah (3x2) hingga (6x2), jadi stat barangnya dari "
+"6 sampai 12.\n"
+" - Skor kegembiraan dalam persen dikalikan: 50% x 6 hingga 50% x 12, jadi 3 "
+"hingga 6.\n"
+"\n"
+" Dalam contoh ini, hewan peliharaanmu dapat berburu sebuah barang dengan "
+"stat 3 hingga 6. Ini memiliki batas maksimum 30.\n"
+" Nilai barang akan berada di antara 0 dan 250.\n"
+"\n"
+" Hanya ranger yang dapat menggunakan perintah ini.\n"
+" (Perintah ini memiliki waktu cooldown sampai 12am UTC.)"
 
 #: cogs/classes/__init__.py:717
 msgid "Your pet is not happy enough to hunt an item. Try making it joyful!"
@@ -4081,7 +4540,7 @@ msgstr "Pemilihan telah selesai!"
 
 #: cogs/music/__init__.py:263
 msgid "Choose a result to play"
-msgstr ""
+msgstr "Pilih sebuah hasil untuk dimainkan"
 
 #: cogs/music/__init__.py:267
 msgid ""
@@ -4090,6 +4549,10 @@ msgid ""
 "            Query for a track and play or add any result to the playlist, "
 "you can choose from a multitude of tracks."
 msgstr ""
+"`<query>` - Permintaan pencarian sebuah lagu\n"
+"\n"
+" Pencarian sebuah lagu dan memainkan atau menambahkan apa saja kedalam "
+"daftar putar lagu, kamu dapat memilih dari banyak track yang ada."
 
 #: cogs/music/__init__.py:277 cogs/music/__init__.py:306
 #: cogs/music/__init__.py:350 cogs/music/__init__.py:359
@@ -4100,19 +4563,19 @@ msgstr "Tidak ada hasil..."
 
 #: cogs/music/__init__.py:281
 msgid "Song results"
-msgstr ""
+msgstr "Hasil lagu"
 
 #: cogs/music/__init__.py:282
 msgid "Hit a button to play one"
-msgstr ""
+msgstr "Tekan tombol untuk memainkan lagu"
 
 #: cogs/music/__init__.py:301
 msgid "Loading track... This might take up to 3 seconds..."
-msgstr ""
+msgstr "Memuat lagu... Ini mungkin memerlukan waktu hingga 3 detik..."
 
 #: cogs/music/__init__.py:327
 msgid "Play a song"
-msgstr ""
+msgstr "Memutar sebuah lagu"
 
 #: cogs/music/__init__.py:331
 #, python-brace-format
@@ -4124,14 +4587,19 @@ msgid ""
 "            If this is not the song you were looking for, try `{prefix}"
 "chooseplay`."
 msgstr ""
+"`<query>` - Permintaan pencarian sebuah lagu\n"
+"\n"
+" Pencarian sebuah lagu dan memainkan atau menambahkan hasil pertama kedalam "
+"daftar putar.\n"
+" Jika ini bukan lagu yang kamu cari, coba`{prefix}chooseplay`."
 
 #: cogs/music/__init__.py:337
 msgid "Downloading track... This might take up to 3 seconds..."
-msgstr ""
+msgstr "Mengunduh lagu... Ini mungkin memerlukan waktu hingga 3 detik..."
 
 #: cogs/music/__init__.py:373
 msgid "Lock the player"
-msgstr ""
+msgstr "Mengunci pemutar lagu"
 
 #: cogs/music/__init__.py:377
 msgid ""
@@ -4139,10 +4607,14 @@ msgid ""
 "\n"
 "            Only the session's DJ can use this command."
 msgstr ""
+"Mengunci/membuka kunci pemain lagunya. Ini memungkin agar tidak ada "
+"seorangpun yang dapat mengontrol musiknya.\n"
+"\n"
+" Hanya DJ saja yang dapat menggunakan perintah ini."
 
 #: cogs/music/__init__.py:391
 msgid "Toggle repeat"
-msgstr ""
+msgstr "Mengaktifkan pengulangan"
 
 #: cogs/music/__init__.py:395
 msgid ""
@@ -4154,6 +4626,14 @@ msgid ""
 "            If there are more than one person in the session and a non-DJ "
 "uses this command, a vote has to pass first."
 msgstr ""
+"Mengaktifkan pengulangan antrian pemutaran lagu.\n"
+"\n"
+" Setelah sebuah lagu selesai, lagu tersebut akan ditambahkan diakhir antrian "
+"secara otomatis.\n"
+"\n"
+" Jika ada lebih dari satu orang dalam sesi ini dan seorang non-DJ "
+"menggunakan perintah ini, maka sebuah pemungutan suara harus dilakukan "
+"terlebih dahulu."
 
 #: cogs/music/__init__.py:411
 msgid "Skip the currently playing song."
@@ -4166,10 +4646,14 @@ msgid ""
 "            If there are more than one person in the session and a non-DJ "
 "uses this command, a vote has to pass first."
 msgstr ""
+"Melewati lagu yang sedang diputar.\n"
+"\n"
+"Jika ada lebih dari satu orang dalam sesi ini dan non-DJ menggunakan "
+"perintah ini, maka pemungutan suara harus dilakukan terlebih dahulu."
 
 #: cogs/music/__init__.py:426
 msgid "Stops the music"
-msgstr ""
+msgstr "Menghentikan musiknya"
 
 #: cogs/music/__init__.py:430
 msgid ""
@@ -4178,10 +4662,14 @@ msgid ""
 "            If there are more than one person in the session and a non-DJ "
 "uses this command, a vote has to pass first."
 msgstr ""
+"Menghentikan musiknya dan meninggalkan obrolan suara.\n"
+"\n"
+"Jika ada lebih dari satu orang dalam sesi ini dan non-DJ menggunakan "
+"perintah ini, maka pemungutan suara harus dilakukan terlebih dahulu."
 
 #: cogs/music/__init__.py:442
 msgid "Change the volume"
-msgstr ""
+msgstr "Mengubah volume"
 
 #: cogs/music/__init__.py:446
 msgid ""
@@ -4190,6 +4678,10 @@ msgid ""
 "            If there are more than one person in the session and a non-DJ "
 "uses this command, a vote has to pass first."
 msgstr ""
+"Mengubah volume pemutaran lagu.\n"
+"\n"
+"Jika ada lebih dari satu orang dalam sesi ini dan seorang non-DJ menggunakan "
+"perintah ini, maka pemungutan suara harus dilakukan terlebih dahulu."
 
 #: cogs/music/__init__.py:453
 #, python-brace-format
@@ -4197,6 +4689,9 @@ msgid ""
 "⚠`Playback volume is going to change to {volume} in 5 seconds. To avoid the "
 "sudden earrape, control the volume on client side!`"
 msgstr ""
+"⚠`Volume pemutaran lagu akan diganti ke {volume} dalam 5 detik. Untuk "
+"menghindari suara keras pada telinga secara tiba-tiba, kendalikan volume "
+"dari perangkatmu!`"
 
 #: cogs/music/__init__.py:464
 #, python-brace-format
@@ -4210,6 +4705,11 @@ msgid ""
 "            If there are more than one person in the session and a non-DJ "
 "uses this command, a vote has to pass first."
 msgstr ""
+"Mengaktifkan pemutaran lagu ke status jeda.\n"
+"\n"
+" Jika ada lebih dari satu orang dalam sesi ini dan seorang non-DJ "
+"menggunakan perintah ini, maka pemungutan suara harus dilakukan terlebih "
+"dahulu."
 
 #: cogs/music/__init__.py:484
 msgid ":white_check_mark:`Song paused!`"
@@ -4221,7 +4721,7 @@ msgstr ":white_check_mark:`Lagu dilanjutkan!`"
 
 #: cogs/music/__init__.py:493
 msgid "Change the equalizer"
-msgstr ""
+msgstr "Mengubah equalizer"
 
 #: cogs/music/__init__.py:497
 msgid ""
@@ -4234,6 +4734,14 @@ msgid ""
 "            If there are more than one person in the session and a non-DJ "
 "uses this command, a vote has to pass first."
 msgstr ""
+"`<eq>` - Equalizer yang akan digunakan\n"
+"\n"
+"Mengatur equalizer. Mungkin menjadi **flat, piano, metal or boost**.\n"
+"Flat adalah standarnya, piano menjadi senyap, metal meningkatkan frekuensi "
+"yang tinggi dan boost meningkatkan frekuensi yang rendah.\n"
+"\n"
+"Jika ada lebih dari satu orang dalam sesi ini dan non-DJ menggunakan "
+"perintah ini, maka pemungutan suara harus dilakukan terlebih dahulu."
 
 #: cogs/music/__init__.py:506
 msgid "Not a valid equalizer. May be flat, piano, metal or boost."
@@ -4242,11 +4750,11 @@ msgstr ""
 
 #: cogs/music/__init__.py:513
 msgid "Shows the current song."
-msgstr ""
+msgstr "Menampilkan lagu saat ini."
 
 #: cogs/music/__init__.py:516
 msgid "Displays some information about the currently playing song."
-msgstr ""
+msgstr "Menampilkan informasi tentang lagu yang sedang diputar."
 
 #: cogs/music/__init__.py:524
 msgid "Now playing..."
@@ -4258,7 +4766,7 @@ msgstr "Judul"
 
 #: cogs/music/__init__.py:529
 msgid "Artist"
-msgstr ""
+msgstr "Artis"
 
 #: cogs/music/__init__.py:533
 msgid "Volume"
@@ -4291,7 +4799,7 @@ msgstr "Pengulangan"
 
 #: cogs/music/__init__.py:544
 msgid "Explicit"
-msgstr ""
+msgstr "Eksplisit"
 
 #: cogs/music/__init__.py:547
 msgid "Equalizer"
@@ -4304,7 +4812,7 @@ msgstr "Lagu diminta oleh: {user}"
 
 #: cogs/music/__init__.py:567
 msgid "Show upcoming songs"
-msgstr ""
+msgstr "Menampilkan lagu yang akan datang"
 
 #: cogs/music/__init__.py:570
 msgid "Show the next (maximum 5) tracks in the queue."
@@ -4316,7 +4824,7 @@ msgstr "Entri yang akan datang"
 
 #: cogs/music/__init__.py:590
 msgid "⚠`No more entries left.`"
-msgstr ""
+msgstr "⚠`Tidak ada entri tersisa.`"
 
 #: cogs/music/__init__.py:596
 msgid ""
@@ -4326,6 +4834,11 @@ msgid ""
 "            Retrieves song lyrics. If no song specified, will check the "
 "current playing song."
 msgstr ""
+"`<query>` - Permintaan pencarian sebuah lagu; Jika tidak ditentukan maka "
+"akan ditetapkan lagu yang sedang diputar.\n"
+"\n"
+"Mengambil lirik lagu. Jika tidak ada lagu yang ditentukan, maka akan "
+"memeriksa lagu yang sedang diputar."
 
 #: cogs/music/__init__.py:605
 msgid "I am not playing. Please specify a song to look for."
@@ -4343,7 +4856,7 @@ msgstr ":x: Cari kata kunci yang lebih panjang!"
 
 #: cogs/music/__init__.py:615
 msgid "⚠ No results!"
-msgstr ""
+msgstr "⚠ Tidak ada hasil!"
 
 #: cogs/music/__init__.py:651
 #, python-brace-format
@@ -4357,7 +4870,7 @@ msgstr "🎧 Memainkan {title}..."
 
 #: cogs/adventure/__init__.py:82
 msgid "Shows adventures and your chances"
-msgstr ""
+msgstr "Menampilkan petualangan dan peluangmu"
 
 #: cogs/adventure/__init__.py:87
 msgid ""
@@ -4366,6 +4879,10 @@ msgid ""
 "            Your chances are determined by your equipped items, race and "
 "class bonuses, your level and your God-given luck."
 msgstr ""
+"Menampilkan semua petualangan, nama, deskripsi, dan peluangmu untuk "
+"mengalahkan mereka dalam bentuk gambar.\n"
+"Peluangmu ditentukan berdasarkan peralatan yang kamu pakai, ras dan bonus "
+"kelas, levelmu dan keberuntungan yang diberikan tuhan."
 
 #: cogs/adventure/__init__.py:131
 msgid "Sends your character on an adventure."
@@ -4392,6 +4909,24 @@ msgid ""
 "            Be sure to check `{prefix}status` to check how much time is "
 "left, or to check if you survived or died."
 msgstr ""
+"`<adventure_number>` - Nomor dari 1 sampai 30\n"
+"\n"
+"Mengirim karaktermu ke petualangan dengan tingkat kesulitan "
+"`<adventure_number>`.\n"
+"Petualangan akan memakan waktu `<adventure_number>` jam jika tidak ada "
+"penguat waktu yang digunakan, dan jika menggunakan penguat waktu maka "
+"waktunya akan dikurangi setengah lebih lama.\n"
+"\n"
+"Jika kamu dalam sebuah aliansi yang memiliki sebuah kota dengan bangunan "
+"petualangan, waktu petualanganmu akan dikurangi oleh level bangunan "
+"petualangan dalam %.\n"
+"Waktu donatur juga akan dikurangi:\n"
+"- 5% pengurangan untuk Silver Donatur\n"
+"- 10% pengurangan untuk Gold Donatur\n"
+"- 25% pengurangan untuk Emerald Donatur keatas\n"
+"\n"
+"Pastikan untuk memeriksa `{prefix}status` untuk melihat berapa banyak waktu "
+"yang tersisa, atau memeriksa apakah kamu selamat atau mati."
 
 #: cogs/adventure/__init__.py:151
 #, python-brace-format
@@ -4410,7 +4945,7 @@ msgstr ""
 
 #: cogs/adventure/__init__.py:202
 msgid "Go out on an active adventure."
-msgstr ""
+msgstr "Melakukan petualangan aktif."
 
 #: cogs/adventure/__init__.py:207
 #, no-python-format
@@ -4443,6 +4978,32 @@ msgid ""
 "            (It is recommended to draw a map of the maze)\n"
 "            (This command has a cooldown of 30 minutes)"
 msgstr ""
+"Petualangan aktif akan menempatkan kamu dalam labirin berukuran 15x15 yang "
+"dibuat secara acak. Kamu akan mulai dari pojok kiri atas (0,0) dan tujuan "
+"kamu adalah menemukan jalan keluar di pojok kanan bawah (14,14)\n"
+"Kamu mengontrol karaktermu dengan reaksi panah di bawah pesan.\n"
+"\n"
+"Kamu memiliki 1000HP. Petualangan berakhir ketika kamu menemukan jalan "
+"keluar atau HP kamu turun ke nol.\n"
+"Kamu bisa kehilangan HP karena kerusakan oleh jebakan atau musuh.\n"
+"\n"
+"Labirin berisi ruang yang ama dan harta karun, tetapi juga jebakan dan musuh."
+"\n"
+"Setiap ruang memiliki peluang 10% untuk sebuah jebakan. Jika ruang tidak "
+"memiliki jebakan, kemungkinannya 10% ruangan itu memiliki musuh.\n"
+"Setiap labirin memiliki 5 peti harta karun.\n"
+"\n"
+"Perangkap dapat memberikan kerusakan padamu dari 30 hingga 120 HP.\n"
+"Kerusakan musuh didasarkan pada kerusakanmu sendiri. Selama pertarungan "
+"musuh, kamu dapat menyerang (⚔️), bertahan (🛡️) atau memulihkan HP (❤️)\n"
+"Peti harta karun dapat memiliki emas hingga 25 kali serangan + pertahananmu."
+"\n"
+"\n"
+"Jika kamu mencapai akhir, kamu akan menerima harta karun khusus dengan emas "
+"hingga 100 kali serangan + pertahananmu.\n"
+"\n"
+"(Disarankan untuk menggambar peta labirin)\n"
+"(Perintah ini memiliki waktu cooldown selama 30 menit)"
 
 #: cogs/adventure/__init__.py:228
 msgid ""
@@ -4597,10 +5158,34 @@ msgid ""
 "gold extra as well, [check the wiki](https://wiki.idlerpg.xyz/index.php?"
 "title=Family#Adventure_Bonus) for the exact portion."
 msgstr ""
+"Memeriksa sisa waktu petualanganmu, atau jika kamu selamat atau mati. "
+"Peluang kamu dilihat disini, bukan di`{prefix}adventure`.\n"
+"Peluang kamu ditentukan berdasarkan perlengkapan yang dipakai, bonus ras dan "
+"kelas, level kamu, keberuntungan yang diberikan tuhan dan mengaktifkan "
+"penguat keberuntungan.\n"
+"\n"
+"Jika kamu berada dalam sebuah aliansi yang memilki kota dengan bangunan "
+"petualangan, peluang kamu akan meningkat sebesar 1% per level bangunan.\n"
+"\n"
+"Jika kamu selamat dalam petualangamu, kamu akan menerima emas dari nomor "
+"petualanganmu dikalikan 60, XP hingga 500 dikalikan nomor petualanganmu dan "
+"atau barang jarahan atau perlengkapan.\n"
+"Kemungkinan mendapatkan barang jarahan tergantung pada nomor petualangan dan "
+"apakah kamu menggunakan kelas Ritualist, [lihat wiki kami](https://wiki."
+"idlerpg.xyz/index.php?title=Loot) untuk peluang yang tepat.\n"
+"\n"
+"Keberuntungan yang diberikan tuhan mempengaruhi emas dan kerusakan/"
+"pertahanan barang perlengkapan dan nilainya.\n"
+"\n"
+"Jika kamu berada dalam sebuah guild, bank guildnua akan menerima 10% dari "
+"jumlah ekstra emas.\n"
+"Jika kamu sudah menikah, pasanganmu akan menerima sebagian dari ekstra "
+"emasmu juga, [lihat wiki](https://wiki.idlerpg.xyz/index."
+"php?title=Family#Adventure_Bonus) untuk porsi yang tepat."
 
 #: cogs/adventure/__init__.py:527
 msgid "Adventure Status"
-msgstr ""
+msgstr "Status petualangan"
 
 #: cogs/adventure/__init__.py:529
 #, python-brace-format
@@ -4609,10 +5194,14 @@ msgid ""
 "Time until it completes: **{time_left}**\n"
 "Adventure name: **{adventure}**"
 msgstr ""
+"Kamu saat ini sedang dalam petualangan dengan tingkat kesulitan "
+"**{difficulty}**.\n"
+"Waktu selesai: **{time_left}**\n"
+"Nama petualangan: **{adventure}**"
 
 #: cogs/adventure/__init__.py:569
 msgid "Adventure Failed"
-msgstr ""
+msgstr "Petualangan gagal"
 
 #: cogs/adventure/__init__.py:570
 msgid "You died on your mission. Try again!"
@@ -4620,7 +5209,7 @@ msgstr "Kamu mati dalam misi kamu. Coba lagi!"
 
 #: cogs/adventure/__init__.py:658
 msgid "Adventure Completed"
-msgstr ""
+msgstr "Petualangan selesai"
 
 #: cogs/adventure/__init__.py:660
 #, python-brace-format
@@ -4632,20 +5221,26 @@ msgid ""
 "{stat}Value: **{value}**\n"
 "Experience gained: **{xp}**."
 msgstr ""
+"Kamu telah menyelesaikan petualanganmu dan menerima **${gold}** dan juga "
+"barang baru:\n"
+"**{item}** telah ditambahkan ke `{prefix}{storage_type}`mu\n"
+"Tipe: **{type}**\n"
+"{stat}Nilai: **{value}**\n"
+"Pengalaman yang didapat: **{xp}**."
 
 #: cogs/adventure/__init__.py:666
 msgid "Loot item"
-msgstr ""
+msgstr "Barang jarahan"
 
 #: cogs/adventure/__init__.py:670
 #, python-brace-format
 msgid "Damage: **{damage}**\n"
-msgstr ""
+msgstr "Kerusakan: **{damage}**\n"
 
 #: cogs/adventure/__init__.py:672
 #, python-brace-format
 msgid "Armor: **{armor}**\n"
-msgstr ""
+msgstr "Perisai: **{armor}**\n"
 
 #: cogs/adventure/__init__.py:689
 msgid "Cancels your current adventure."
@@ -4656,6 +5251,9 @@ msgid ""
 "Cancels your ongoing adventure and allows you to start a new one right away. "
 "You will not receive any rewards if you cancel your adventure."
 msgstr ""
+"Membatalkan petualangan kamu yang sedang berlangsung dan kamu dapat memulai "
+"petualangan yang baru. Kamu tidak akan menerima hadiah apa pun jika kamu "
+"membatalkan petualanganmu."
 
 #: cogs/adventure/__init__.py:696
 msgid "Are you sure you want to cancel your current adventure?"
@@ -4676,13 +5274,15 @@ msgstr ""
 
 #: cogs/adventure/__init__.py:720
 msgid "Show some adventure stats"
-msgstr ""
+msgstr "Menampilkan stats petualangan"
 
 #: cogs/adventure/__init__.py:724
 msgid ""
 "Shows your overall adventure death and completed count, including your "
 "success rate."
 msgstr ""
+"Menampilkan total kematian dalam petualanganmu dan jumlah petualangan yang "
+"berhasil diselesaikan, termasuk tingkat keberhasilanmu."
 
 #: cogs/adventure/__init__.py:736
 #, python-brace-format
@@ -4695,11 +5295,11 @@ msgstr ""
 
 #: cogs/shard_communication/__init__.py:354
 msgid "Lists all your cooldowns"
-msgstr ""
+msgstr "Menampilkan semua waktu cooldown kamu"
 
 #: cogs/shard_communication/__init__.py:358
 msgid "Lists all your cooldowns, including your adventure timer."
-msgstr ""
+msgstr "Menampilkan semua waktu cooldown kamu, termasuk waktu petualanganmu."
 
 #: cogs/shard_communication/__init__.py:365 cogs/guild/__init__.py:1559
 msgid "You don't have any active cooldown at the moment."
@@ -4708,7 +5308,7 @@ msgstr "Kamu tidak memiliki waktu tunggu yang aktif saat ini."
 #: cogs/shard_communication/__init__.py:367 cogs/guild/__init__.py:1561
 #: cogs/alliance/__init__.py:933
 msgid "Commands on cooldown:"
-msgstr "Perintah pada waktu tunggu:"
+msgstr "Perintah dalam waktu tunggu:"
 
 #: cogs/shard_communication/__init__.py:372 cogs/guild/__init__.py:1566
 #: cogs/alliance/__init__.py:938
@@ -4723,15 +5323,15 @@ msgstr "Petualangan sedang berjalan dan akan selesai setelah {time}"
 
 #: cogs/shard_communication/__init__.py:383
 msgid "Show the clusters"
-msgstr ""
+msgstr "Menampilkan klaster"
 
 #: cogs/shard_communication/__init__.py:386
 msgid "Lists all clusters and their current status."
-msgstr ""
+msgstr "Menampilkan semua klaster dan statusnya saat ini."
 
 #: cogs/shard_communication/__init__.py:389
 msgid "Launcher is dead, that is really bad."
-msgstr ""
+msgstr "Peluncurnya mati, ini benar-benar buruk."
 
 #: cogs/gambling/__init__.py:235
 #, python-brace-format
@@ -4820,7 +5420,7 @@ msgstr "Ini seri, kamu mendapatkan **${money}** kembali."
 
 #: cogs/gambling/__init__.py:442
 msgid "Draw a card."
-msgstr ""
+msgstr "Bermain kartu acak."
 
 #: cogs/gambling/__init__.py:448
 msgid ""
@@ -4836,19 +5436,34 @@ msgid ""
 "mentioned.\n"
 "            (This command has a cooldown of 15 seconds.)"
 msgstr ""
+"`[enemy]` - Seorang pengguna discord yang memiliki profil pemain; jika tidak "
+"ditentukan maka tidak ada yang disebutkan\n"
+"`[money]` - Uang taruhan. Angka dari 0 dan lebih besar; jika tidak "
+"ditentukan maka standarnya 0\n"
+"\n"
+"Menarik kartu yang dipilih secara acak dari tumpukan 52 Kartu French. Bisa "
+"juga bermain kartu acak dengan seseorang untuk sejumlah uang jika lawan "
+"ditentukan. Pemain dengan nilai yang tertinggi dari kartu yang dipilih "
+"secara acak akan memenangkan uang taruhannya.\n"
+"\n"
+"Perintah ini tidak berpengaruh pada saldo akun kamu jika tidak ada lawan "
+"yang ditentukan.\n"
+"(Perintah ini memiliki waktu cooldown selama 15 detik.)"
 
 #: cogs/gambling/__init__.py:463
 msgid "Please choose someone else."
-msgstr ""
+msgstr "Silahkan pilih orang lain."
 
 #: cogs/gambling/__init__.py:465
 msgid "You should choose a human to play with you."
-msgstr ""
+msgstr "Kamu harus memilih manusia untuk bermain denganmu."
 
 #: cogs/gambling/__init__.py:470
 #, python-brace-format
 msgid "You don't have a character yet. Create now using `{prefix}create`."
 msgstr ""
+"Kamu belum memiliki karakter. Buatlah karakter dengan menggunakan "
+"`{prefix}create`."
 
 #: cogs/gambling/__init__.py:498
 #, python-brace-format
@@ -4856,12 +5471,15 @@ msgid ""
 "{author} challenges {enemy} to a game of Draw for **${money}**. Do you "
 "accept?"
 msgstr ""
+"{author} menantang {enemy} untuk bermain kartu acak dengan taruhan "
+"**${money}**. terima tantanganya?"
 
 #: cogs/gambling/__init__.py:511
 #, python-brace-format
 msgid ""
 "They declined. They don't want to play a game of Draw with you {author}."
 msgstr ""
+"Mereka menolak. Mereka tidak ingin bermain kartu acak denganmu {author}."
 
 #: cogs/gambling/__init__.py:519
 #, python-brace-format
@@ -4869,11 +5487,13 @@ msgid ""
 "They didn't choose anything. It seems they're not interested to play a game "
 "of Draw with you {author}."
 msgstr ""
+"Mereka tidak memilih apapun. Sepertinya mereka tidak tertarik untuk bermain "
+"kartu acak denganmu {author}."
 
 #: cogs/gambling/__init__.py:527 cogs/gambling/__init__.py:700
 #, python-brace-format
 msgid "{enemy} You don't have enough money to play."
-msgstr ""
+msgstr "{enemy} Kamu tidak memiliki cukup uang untuk bermain."
 
 #: cogs/gambling/__init__.py:555
 msgid ""
@@ -4881,30 +5501,32 @@ msgid ""
 "cards have become insufficient. Please report this issue to the bot "
 "developers."
 msgstr ""
+"Kartu habis. Ini adalah masalah yang sangat langka yang artinya file gambar "
+"untuk kartu tidak cukup. Silahkan laporkan masalah ini ke bot developer."
 
 #: cogs/gambling/__init__.py:583
 #, python-brace-format
 msgid "Nobody won. {author} and {enemy} tied."
-msgstr ""
+msgstr "Tidak ada yang menang. {author} dan {enemy} seri."
 
 #: cogs/gambling/__init__.py:608
 #, python-brace-format
 msgid "{winner} won the Draw vs {loser}! Congratulations!"
-msgstr ""
+msgstr "{winner} memenangkan kartu acak versus {loser}! Selamat!"
 
 #: cogs/gambling/__init__.py:613
 #, python-brace-format
 msgid "{author}, while playing against {enemy}, you drew:"
-msgstr ""
+msgstr "{author}, saat bermain melawan {enemy}, kartu acakmu:"
 
 #: cogs/gambling/__init__.py:621
 #, python-brace-format
 msgid "{enemy}, while playing against {author}, you drew:"
-msgstr ""
+msgstr "{enemy}, saat bermain melawan {author}, kartu acakmu:"
 
 #: cogs/gambling/__init__.py:635
 msgid "Break the tie?"
-msgstr ""
+msgstr "Ingin menantang lawan yang seri sekali lagi?"
 
 #: cogs/gambling/__init__.py:637
 #, python-brace-format
@@ -4912,24 +5534,26 @@ msgid ""
 "{author}, {enemy} You tied. Do you want to break the tie by playing again "
 "for **${money}**?"
 msgstr ""
+"{author}, {enemy} Kalian seri. Apakah kamu ingin menantang lawan yang seri "
+"sekali lagi dengan uang taruhan sebesar **${money}**?"
 
 #: cogs/gambling/__init__.py:677
 msgid "One of you or both didn't react on time."
-msgstr ""
+msgstr "Salah satu dari kalian atau keduanya tidak bereaksi tepat waktu."
 
 #: cogs/gambling/__init__.py:683
 #, python-brace-format
 msgid "{user} declined to break the tie."
-msgstr ""
+msgstr "{user} menolak untuk memutuskan seri."
 
 #: cogs/gambling/__init__.py:694
 #, python-brace-format
 msgid "{author} You don't have enough money to play."
-msgstr ""
+msgstr "{author} Kamu tidak memiliki cukup uang untuk bermain."
 
 #: cogs/gambling/__init__.py:722
 msgid "Play a game of French Roulette"
-msgstr ""
+msgstr "Bermain permainan French Roulette"
 
 #: cogs/gambling/__init__.py:727
 msgid ""
@@ -4969,17 +5593,53 @@ msgid ""
 "Play at your own risk.\n"
 "(This command has a cooldown of 15 seconds.)"
 msgstr ""
+"`<money>` - Sejumlah angka dari 0 hingga 100\n"
+"`<bid>` - Taruhannya, lihat dibawa untuk lebih lanjut\n"
+"\n"
+"Bermain permainan French Roulette\n"
+"\n"
+"Taruhan sederhana yang memungkinkan:\n"
+"- noir (semua angka warna hitam) (pembayaran 1:1)\n"
+"- rouge (semua angka warna merah) (pembayaran 1:1)\n"
+"- pair (semua angka genap) pembayaran 1:1)\n"
+"- impair (semua angka ganjil) (pembayaran 1:1)\n"
+"- manque (1-18) (pembayaran 1:1)\n"
+"- passe (19-36) (pembayaran 1:1t)\n"
+"- premier (1-12) (pembayaran 2:1)\n"
+"- milieu (13-24) (pembayaran 2:1)\n"
+"- dernier (25-36) (pembayaran 2:1)\n"
+"\n"
+"Taruhan yang rumit:\n"
+"- colonne (34/35/36) (semua angka berturut-turut di meja taruhan, baik 1, 4, "
+"..., 34 atau 2, 5, ..., 35 atau 3, 6, ... 36) (pembayaran 2:1)\n"
+"- transversale (vertikal rendah)-(vertikal tinggi) Ini termasuk simple dan "
+"pleine (baris vertikal rendah dalam meja taruhan, misalnya 19-21. juga bisa "
+"dua baris, misalnya 4-9) (pembayaran 11:1 untuk pleine, 5:1 untuk simple)\n"
+"- les trois premiers (angka 0, 1, 2) (pembayaran 11:1)\n"
+"- carre (rendah)-(tinggi) (bagian empat angka didalam kotak di meja taruhan, "
+"misalnya 23-27) (pembayaran 8:1)\n"
+"- les quatre premiers (angka 0, 1, 2, 3) (pembayaran 8:1)\n"
+"- cheval (angka 1) (angka 2) (taruhan sederhana pada dua angka) (pembayaran "
+"17:1)\n"
+"- plein (angka) (taruhan sederhana pada satu angka) (pembayaran 35:1)\n"
+"\n"
+"Untuk dapat melihat baris dan kolom pada meja taruhan, gunakan perintah: "
+"roulette table\n"
+"\n"
+"Perintah ini berada dalam tahap-alfa, artinya kemungkinan besar bug akan "
+"terjadi. Resiko tanggung sendiri.\n"
+"(Perintah ini memiliki waktu cooldown selama 15 detik.)"
 
 #: cogs/gambling/__init__.py:764
 msgid ""
 "Your bid input was invalid. Try the help on this command to view examples."
 msgstr ""
-"Masukan tawaran kamu tidak valid. Coba bantuan pada perintah ini untuk "
+"Masukan taruhan kamu tidak valid. Coba bantuan pada perintah ini untuk "
 "melihat contoh."
 
 #: cogs/gambling/__init__.py:770
 msgid "Show the roulette table"
-msgstr ""
+msgstr "Menampilkan meja taruhan roulette"
 
 #: cogs/gambling/__init__.py:773
 msgid "Sends a picture of a French Roulette table."
@@ -4987,7 +5647,7 @@ msgstr "Mengirimkan sebuah gambar dari French Roulette table."
 
 #: cogs/gambling/__init__.py:778
 msgid "Toss a coin"
-msgstr ""
+msgstr "Lempar koin"
 
 #: cogs/gambling/__init__.py:788
 msgid ""
@@ -5001,6 +5661,17 @@ msgid ""
 "amount in cash. If it's the other side, you lose that amount.\n"
 "            (This command has a cooldown of 5 seconds.)"
 msgstr ""
+"`[side]` - Sisi koin yang akan dilempar, bisa kepala atau ekor; jika tidak "
+"ditentukan, maka dijadikan kepala\n"
+"`[amount]` - Sejumlah angka dari 1 hingga 100,000; jika tidak ditentukan "
+"maka dijadikan 0\n"
+"\n"
+"Taruhan uang dengan coinflip.\n"
+"\n"
+"Jika koin mendarat pada sisi yang kamu lempar, kamu akan menerima sejumlah "
+"uang tunai. Jika mendarat pada sisi lainnya, kamu akan kehilangan sejumlah "
+"uang tunai.\n"
+"(Perintah ini memiliki waktu cooldown selama 5 detik.)"
 
 #: cogs/gambling/__init__.py:824
 #, python-brace-format
@@ -5014,7 +5685,7 @@ msgstr "{result[1]} Itu **{result[0]}**! Kamu hilang **${amount}**!"
 
 #: cogs/gambling/__init__.py:855
 msgid "Bet on a specific outcome of an n-sided dice."
-msgstr ""
+msgstr "Bertaruh pada hasil tertentu dari dadu bersisi n."
 
 #: cogs/gambling/__init__.py:865
 #, python-brace-format
@@ -5038,6 +5709,24 @@ msgid ""
 "\n"
 "            (This command has a cooldown of 5 seconds.)"
 msgstr ""
+"`[maximum]` - Jumlah sisi yang akan dilempar dadu, lebih besar dari 1; jika "
+"tidak ditentukan maka dijadikan 6\n"
+"`[tip]` - Angka taruhan, lebih besar dari 0 dan lebih rendah dari, atau sama "
+"dengan `[maximum]`; jika tidak ditentukan maka dijadikan 6\n"
+"`[money]` - Jumlah uang taruhan, harus berada diantara 0 hingga 100,000; "
+"jika tidak ditentukan maka dijadikan 0\n"
+"\n"
+"Bertaruh pada hasil dadu bersisi n.\n"
+"\n"
+"Kamu akan memenangkan uang [maximum - 1] * [money] jika kamu benar dan "
+"kehilangan [money] jika kamu salah.\n"
+"Sebagai contoh:\n"
+"`{prefix}bet 10 4 100`\n"
+"- Melempar dadu 10 sisi\n"
+"- Jika dadu mendarat pada angka 4, kamu akan menerima $900\n"
+"- Jika dadu mendarat pada angka yang lain, kamu akan kehilangan $100\n"
+"\n"
+"(Perintah ini memiliki waktu cooldown selama 5 detik.)"
 
 #: cogs/gambling/__init__.py:882
 #, python-brace-format
@@ -5067,7 +5756,7 @@ msgstr ""
 
 #: cogs/gambling/__init__.py:949
 msgid "Play blackjack against the bot."
-msgstr ""
+msgstr "Bermain blackjack melawan bot."
 
 #: cogs/gambling/__init__.py:953
 msgid ""
@@ -5095,10 +5784,33 @@ msgid ""
 "\n"
 "            (This command has a cooldown of 5 seconds.)"
 msgstr ""
+"`[amount]` - Jumlah uang taruhan, antara 0 hingga 1000; jika tidak "
+"ditentukan maka dijadikan 0\n"
+"\n"
+"Bermain sebuah ronde blackjack melawan bot, dikendalikan dengan tombol "
+"reaksi.\n"
+"Tujuannya adalah memiliki nilai kartu mendekati angka 21, tanpa melewatinya ("
+"atau dikatakan gagal).\n"
+"Memiliki kartu dengan nilai yang tepat 21 disebut sebagai blackjack.\n"
+"\n"
+"\\U00002934 Hit: Memilih kartu yang lain\n"
+"\\U00002935 Stand: tetap pada nilai kartumu saat ini\n"
+"\\U00002194 Split (jika memiliki dua kartu dengan nilai yang sama): Pisahkan "
+"dua kartumu pada tangan yang berbeda\n"
+"\\U0001F501 Switch (jika dipisahkan): Ubah tangan yang difokuskan\n"
+"\\U000023EC Double down: gandakan jumlah uang yang kamu pertaruhkan dengan "
+"hanya menukarkan satu kartu lagi\n"
+"\n"
+"Jika kamu menang, kamu akan mendapatkan sejumlah uang tunai. Jika kamu "
+"kalah, kamu akan kehilangan sejumlah uang tunai.\n"
+"Jika kamu memenangkan blackjack (dua kartu pertama yang dibagikan dengan "
+"nilai 21), kamu memenangkan 1.5 dikalikan jumlah uang taruhan.\n"
+"\n"
+"(Perintah ini memiliki waktu cooldown selama 5 detik.)"
 
 #: cogs/gambling/__init__.py:990
 msgid "Play double-or-steal"
-msgstr ""
+msgstr "Bermain double-or-steal"
 
 #: cogs/gambling/__init__.py:994
 msgid ""
@@ -5109,11 +5821,19 @@ msgid ""
 "            Each round, a player can double the bet played for, or steal, "
 "removing the bet from the other player and giving it to the first."
 msgstr ""
+"`[user]` - Pengguna discord yang memiliki karakter; jika tidak ditentukan "
+"maka dijadikan untuk siapa saja\n"
+"\n"
+"Bermain sebuah ronde double-or-steal melawan pemain yang lain.\n"
+"\n"
+"Setiap ronde, pemain dapat menggandakan taruhan yang dimainkan, atau "
+"mencuri, menghilangkan taruhan dari pemain lain dan memberikannya pada yang "
+"pertama."
 
 #: cogs/gambling/__init__.py:1001
 #, python-brace-format
 msgid "React with 💰 to play double-or-steal with {user}!"
-msgstr "Bereaksi dengan 💰 untuk bermain double-or-steal dengan {user}!"
+msgstr "Bereaksi dengan tombol 💰 untuk bermain double-or-steal dengan {user}!"
 
 #: cogs/gambling/__init__.py:1024
 #, python-brace-format
@@ -5150,7 +5870,7 @@ msgstr "{user} gandakan ke **${money}**."
 
 #: cogs/trading/__init__.py:45
 msgid "Put an item in the market"
-msgstr ""
+msgstr "Menaruh barang di pasar"
 
 #: cogs/trading/__init__.py:50
 #, no-python-format
@@ -5174,6 +5894,24 @@ msgid ""
 "            If your item has not been bought for 14 days, it will be removed "
 "from the market and put back into your inventory."
 msgstr ""
+"`<itemid>` - ID barang yang akan dijual\n"
+"`<price>` - Harga barang yang akan dijual, bisa jadi angka 0 atau lebih\n"
+"\n"
+"Menaruh barang di pasar. Pajak untuk menjual barang adalah 5% dari harga "
+"barang.\n"
+"\n"
+"Kamu tidak boleh menjual barang yang dimodifikasi, barang dengan harga "
+"terendah dari nilainya, atau barang dibawah stat 4.\n"
+"Jika kamu dalam sebuah aliansi yang memiliki kota dengan bangunan "
+"perdagangan, kamu tidak perlu membayar pajak.\n"
+"\n"
+"Harap dicatat bahwa kamu tidak akan menerima uangnya langsung, pemain lain "
+"harus membeli barangnya terlebih dahulu.\n"
+"Karena itu, mohon buat harga yang wajar.  Kisaran harga yang dapat diterima "
+"adalah 1 hingga 100 juta.\n"
+"\n"
+"Jika barangmu tidak dibeli selama 14 hari, barang tersebut akan dikeluarkan "
+"dari pasar dan dimasukan kembali kedalam persediaanmu."
 
 #: cogs/trading/__init__.py:72
 #, python-brace-format
@@ -5221,7 +5959,7 @@ msgstr "Pajak dari 5% telah diambil dari akun kamu."
 
 #: cogs/trading/__init__.py:141
 msgid "Buy an item from the shop"
-msgstr ""
+msgstr "Membeli barang dari toko"
 
 #: cogs/trading/__init__.py:145
 #, python-brace-format
@@ -5233,6 +5971,12 @@ msgid ""
 "            Buying your own items is impossible. You can find the item's ID "
 "in `{prefix}shop`."
 msgstr ""
+"`<itemid>` - ID barang yang akan dibeli\n"
+"\n"
+"Membeli sebuah barang dari pasar global. Pajak untuk membeli adalah 5%.\n"
+"\n"
+"Kamu tidak dapat membeli barangmu sendiri. Kamu dapat menemukan ID barang di "
+"`{prefix}shop`."
 
 #: cogs/trading/__init__.py:159
 #, python-brace-format
@@ -5258,7 +6002,7 @@ msgstr ""
 
 #: cogs/trading/__init__.py:245
 msgid "Remove your item from the shop."
-msgstr ""
+msgstr "Mengeluarkan barangmu dari toko."
 
 #: cogs/trading/__init__.py:249
 #, python-brace-format
@@ -5271,6 +6015,13 @@ msgid ""
 "            You can check your items on the shop with `{prefix}pending`. "
 "Paid tax money will not be returned."
 msgstr ""
+"`<itemid>` - Barang yang akan dikeluarkan dari toko\n"
+"\n"
+"Mengeluarkan barang dari toko. Kamu hanya dapat mengeluarkan barang kamu "
+"sendiri dari toko.\n"
+"\n"
+"Kamu dapat melihat barangmu ditoko menggunakan `{prefix}pending`. Pajak yang "
+"sudah dibayar tidak dapat dikembalikan."
 
 #: cogs/trading/__init__.py:265
 #, python-brace-format
@@ -5284,12 +6035,12 @@ msgid ""
 "Successfully removed item `{itemid}` from the shop and put it in your "
 "inventory."
 msgstr ""
-"Berhasil menghapus barang `{itemid}` dari toko dan menaruhnya dalam "
-"inventarismu."
+"Berhasil mengeluarkan barang `{itemid}` dari toko dan menaruhnya dalam "
+"persediaanmu."
 
 #: cogs/trading/__init__.py:289
 msgid "View sale history for the item market"
-msgstr ""
+msgstr "Melihat riwayat penjualan barang untuk pasar"
 
 #: cogs/trading/__init__.py:302
 msgid ""
@@ -5302,6 +6053,16 @@ msgid ""
 "            Lists the past successful sales on the market by criteria and "
 "shows average, minimum and highest prices by category."
 msgstr ""
+"`[itemtype]` - Tipe barang yang akan difilter; jika tidak ditentukan maka "
+"dijadikan untuk semua tipe\n"
+"`[minstat]` - Minimum kerusakan/pertahanan barang yang dimiliki untuk "
+"ditampilkan; jika tidak ditentukan maka dijadikan 0\n"
+"`[after_date]` - Menampilkan penjualan hanya setelah tanggl ini, jika tidak "
+"ditentukan maka disesuaikan dengan tanggal pembuatan bot, artinya semuanya\n"
+"\n"
+"Menampilkan penjualan sukses sebelumnya yang ada di pasar berdasarkan "
+"kriteria dan menampilkan harga rata-rata, minimum dan harga tertinggi "
+"berdasarkan kategori."
 
 #: cogs/trading/__init__.py:310 cogs/trading/__init__.py:405
 #, python-brace-format
@@ -5314,7 +6075,7 @@ msgstr "Tidak ada hasil."
 
 #: cogs/trading/__init__.py:347
 msgid "IdleRPG Shop History"
-msgstr ""
+msgstr "Riwayat Toko IdleRPG"
 
 #: cogs/trading/__init__.py:356 cogs/trading/__init__.py:451
 #: cogs/trading/__init__.py:785 cogs/marriage/__init__.py:279
@@ -5329,7 +6090,7 @@ msgstr "Barang {num} dari {total}"
 
 #: cogs/trading/__init__.py:367
 msgid "Search results"
-msgstr ""
+msgstr "Mencari hasil"
 
 #: cogs/trading/__init__.py:370
 #, python-brace-format
@@ -5339,10 +6100,14 @@ msgid ""
 "\n"
 "Navigate to see the sales."
 msgstr ""
+"Pencarian ditemukan {amount} penjualan mulai dari ${min_price}, berakhir "
+"pada ${max_price}. Rata-rata harga penjualan adalah ${avg_price}.\n"
+"\n"
+"Arahkan untuk melihat penjualan."
 
 #: cogs/trading/__init__.py:385
 msgid "View the global item market"
-msgstr ""
+msgstr "Melihat barang pasar global"
 
 #: cogs/trading/__init__.py:395
 msgid ""
@@ -5357,6 +6122,17 @@ msgid ""
 "\n"
 "            To quickly buy an item, you can use the 💰 emoji."
 msgstr ""
+"`[itemtype]` - Tipe barang yang akan difilter; jika tidak ditentukan maka "
+"dijadikan untuk semua tipe\n"
+"`[minstat]` - Minimum kerusakan/pertahanan barang yang dimiliki untuk "
+"ditampilkan; jika tidak ditentukan maka dijadikan 0\n"
+"`[highestprice]` - Harga tertinggi sebuah barang yang dimiliki untuk "
+"ditampilkan; jika tidak ditentukan maka dijadikan $1,000,000\n"
+"\n"
+"Menampilkan daftar barang yang dapat dibeli dipasar. Kamu dapat memfilter "
+"barang yang tidak ingin kamu lihat dengan parameter ini.\n"
+"\n"
+"Untuk membeli barang dengan cepat, kamu bisa menekan tombol 💰 emoji."
 
 #: cogs/trading/__init__.py:439
 msgid "IdleRPG Shop"
@@ -5369,7 +6145,7 @@ msgstr "Gunakan `{prefix}buy{item}` untuk membeli ini."
 
 #: cogs/trading/__init__.py:468
 msgid "Offer an item to a user"
-msgstr ""
+msgstr "Menawarkan sebuah barang kepada pemain"
 
 #: cogs/trading/__init__.py:478
 msgid ""
@@ -5382,6 +6158,14 @@ msgid ""
 "items.\n"
 "            Once the other user accepts, the item belongs to them."
 msgstr ""
+"`<itemid>` - ID barang yang akan ditawarkan\n"
+"`<price>` - Harga yang akan dibayar pembeli, sejumlah angka dari 0 hingga "
+"100,000,000\n"
+"`<user>` - Pemain yang akan ditawari barang tersebut\n"
+"\n"
+"Menawarkan sebuah barang kepada pemain tertentu. Kamu tidak boleh menawarkan "
+"barang yang dimodifikasi.\n"
+"Setelah pemain menerima tawaran, barang tersebut akan menjadi milik mereka."
 
 #: cogs/trading/__init__.py:486
 msgid "You may not offer items to yourself."
@@ -5403,6 +6187,9 @@ msgid ""
 "price is **${price}**. You have **2 Minutes** to accept the trade or the "
 "offer will be canceled."
 msgstr ""
+"{user}, {author} menawarkan **{stat}** **{itemtype}**! Tekan tombol reaksi "
+"untuk membelinya! Harganya **${price}**. Kamu memiliki **2 Minutes** untuk "
+"menerima tawaran ini atau tawarannya akan dibatalkan."
 
 #: cogs/trading/__init__.py:526
 msgid "They didn't want it."
@@ -5430,7 +6217,7 @@ msgstr ""
 #. prevent too long sale times
 #: cogs/trading/__init__.py:595
 msgid "Sell items for their value"
-msgstr ""
+msgstr "Menjual barang dengan nilai barang tersebut"
 
 #: cogs/trading/__init__.py:599
 msgid ""
@@ -5444,6 +6231,15 @@ msgid ""
 "\n"
 "            (This command has a cooldown of 10 minutes.)"
 msgstr ""
+"`<itemids>` - ID barang-barang yang akan dijual, pisahkan dengan spasi\n"
+"\n"
+"Menjual barang dengan nilai barang tersebut. Barang yang tidak kamu miliki "
+"akan disaring.\n"
+"\n"
+"Jika kamu berada dalam sebuah aliansi yang memiliki bangunan perdagangan, "
+"kemenanganmu akan dikalikan dengan 1.5 untuk setiap level.\n"
+"\n"
+"(Perintah ini memiliki waktu cooldown selama 10 menit.)"
 
 #: cogs/trading/__init__.py:609
 msgid "You cannot sell nothing."
@@ -5478,7 +6274,7 @@ msgstr "Melewatkan `{amount}` karena mereka bukan milikmu."
 
 #: cogs/trading/__init__.py:678
 msgid "Merch all non-equipped items"
-msgstr ""
+msgstr "Menjual semua barang yang tidak dipakai"
 
 #: cogs/trading/__init__.py:688
 #, no-python-format
@@ -5494,10 +6290,21 @@ msgid ""
 "\n"
 "            (This command has a cooldown of 30 minutes.)"
 msgstr ""
+"`[maxstat]` - Stat tertinggi kerusakan/pertahanan yang akan dimasukan; jika "
+"tidak ditentukan maka dijadikan 100\n"
+"`[minstat]` - Stat terendah kerusakan/pertahanan yang akan dimasukan; jika "
+"tidak ditentukan maka dijadikan 0\n"
+"\n"
+"Menjual semua barang yang tidak dipakai berdasarkan nilainya. Cara mudah "
+"untuk menjual sejumlah barang sekaligus.\n"
+"Jika kamu berada dalam sebuah aliansi yang memiliki sebuah gedung "
+"perdagangan, penghasilanmu akan meningkat 50% untuk setiap level.\n"
+"\n"
+"(Perintah ini memiliki waktu cooldown selama 30 menit.)"
 
 #: cogs/trading/__init__.py:708
 msgid "Nothing to merch."
-msgstr "Tidak ada barang dagangan."
+msgstr "Tidak ada barang yang dijual."
 
 #: cogs/trading/__init__.py:715
 #, python-brace-format
@@ -5510,7 +6317,7 @@ msgstr ""
 
 #: cogs/trading/__init__.py:720
 msgid "Cancelled selling your items."
-msgstr ""
+msgstr "Membatalkan penjualan barangmu."
 
 #: cogs/trading/__init__.py:732
 msgid ""
@@ -5527,13 +6334,15 @@ msgstr "Menjual **{count}** barang seharga **${money}**."
 
 #: cogs/trading/__init__.py:759
 msgid "View your shop offers"
-msgstr ""
+msgstr "Menampilkan penawaran tokomu"
 
 #: cogs/trading/__init__.py:763
 msgid ""
 "View your pending shop offers. This is a convenient way to find IDs of items "
 "that you put on the market."
 msgstr ""
+"Melihat penawaran tokomu yang tertunda. Ini adalah cara yang mudah untuk "
+"menemukan ID barang yang kamu masukan ke pasar."
 
 #: cogs/trading/__init__.py:771
 msgid "You don't have any pending shop offers."
@@ -5541,11 +6350,11 @@ msgstr "Kamu tidak memiliki penawaran yang tertunda dari tokomu."
 
 #: cogs/trading/__init__.py:774
 msgid "Your pending items"
-msgstr "Barang tertundamu"
+msgstr "Barang kamu yang tertunda"
 
 #: cogs/trading/__init__.py:795
 msgid "Buys an item from the trader"
-msgstr ""
+msgstr "Membeli barang dari pedagang"
 
 #: cogs/trading/__init__.py:799
 msgid ""
@@ -5555,6 +6364,11 @@ msgid ""
 "\n"
 "            (This command has a cooldown of 1 hour.)"
 msgstr ""
+"Membeli barang dari pedagang. Barang-barang ini memiliki kisaran stat dari "
+"stat 1 hingga stat 15, dengan harga barang 50 dikali stat barang tersebut.\n"
+"-Berguna diawal permainan.\n"
+"\n"
+"(Perintah ini memiliki waktu cooldown selama 1 jam.)"
 
 #: cogs/trading/__init__.py:819
 msgid "The Trader"
@@ -5579,7 +6393,7 @@ msgstr ""
 
 #: cogs/marriage/__init__.py:48
 msgid "Propose to a player"
-msgstr ""
+msgstr "Melamar seorang pemain"
 
 #: cogs/marriage/__init__.py:52
 #, python-brace-format
@@ -5599,6 +6413,20 @@ msgid ""
 "\n"
 "            Only players who are not already married can use this command."
 msgstr ""
+"`<partner>` - Pengguna discord dengan karakter yang belum menikah\n"
+"\n"
+"Melamar seorang pemain untuk menikah dengannya. Setelah mereka setuju, "
+"kalian akan menikah.\n"
+"\n"
+"Saat sudah menikah, pasanganmu akan mendapatkan bonus dari petualanganmu, "
+"kamu bisa memiliki anak, yang dapat melakukan beberapa hal (lihat `{prefix}"
+"help familyevent`) dan tingkatkan lovescore kalian, yang berpengaruh pada ["
+"bonus petualangan](https://wiki.idlerpg.xyz/index."
+"php?title=Family#Adventure_Bonus).\n"
+"Jika diantara kalian sudah ada yang memiliki anak, mereka akan dipersatukan "
+"menjadi satu keluarga.\n"
+"\n"
+"Hanya untuk pemain yang belum menikah yang dapat menggunakan perintah ini."
 
 #: cogs/marriage/__init__.py:63
 msgid "You should have a better friend than only yourself."
@@ -5606,7 +6434,7 @@ msgstr "Kamu harus memiliki teman yang lebih baik daripada diri kamu sendiri."
 
 #: cogs/marriage/__init__.py:66
 msgid "One of you is married."
-msgstr "Salah satu dari kamu sudah menikah."
+msgstr "Salah satu dari kalian sudah menikah."
 
 #: cogs/marriage/__init__.py:69
 #, python-brace-format
@@ -5618,8 +6446,8 @@ msgstr "{author} telah meminang sebuah pernikahan!"
 msgid ""
 "{author} wants to marry you, {partner}! React with :heart: to marry them!"
 msgstr ""
-"{author} ingin menikahimu, {partner}! Reaksi dengan :heart: untuk "
-"menikahinya!"
+"{author} ingin menikahimu, {partner}! Tekan tombol reaksi dengan :heart: "
+"untuk menikahinya!"
 
 #: cogs/marriage/__init__.py:97
 msgid "They didn't want to marry."
@@ -5632,11 +6460,11 @@ msgstr "Antara kamu atau dia telah menikah untuk sementara... :broken_heart:"
 #: cogs/marriage/__init__.py:131
 #, python-brace-format
 msgid "Aww! :heart: {author} and {partner} are now married!"
-msgstr ""
+msgstr "Aww! :heart: {author} dan {partner} sekarang telah menikah!"
 
 #: cogs/marriage/__init__.py:137
 msgid "Break up with your partner"
-msgstr ""
+msgstr "Putus dengan pasanganmu"
 
 #: cogs/marriage/__init__.py:141
 #, python-brace-format
@@ -5653,6 +6481,18 @@ msgid ""
 "\n"
 "            Only married players can use this command."
 msgstr ""
+"Cerai dengan pasanganmu, secara efektif membatalkan pernikahan dengan mereka."
+"\n"
+"\n"
+"Saat bercerai, setiap anak yang kamu miliki akan dibagikan kepada kamu dan "
+"pasanganmu. Setiap pasangan akan memiliki seorang anak yang dilahirkan saat "
+"mereka menggunakan perintah `{prefix}child`.\n"
+"Kamu dapat menikah lagi dengan pemain lain, jika kamu mau. Bercerai tidak "
+"memiliki konsekuensi negatif dalam permainan.\n"
+"\n"
+"Lovescore kedua pemain akan diatur ulang.\n"
+"\n"
+"Hanya pemain yang sudah menikah yang dapat menggunakan perintah ini."
 
 #: cogs/marriage/__init__.py:151 cogs/marriage/__init__.py:195
 #: cogs/marriage/__init__.py:354
@@ -5664,6 +6504,8 @@ msgid ""
 "Are you sure you want to divorce your partner? Some of your children may be "
 "given to your partner and your lovescore will be reset."
 msgstr ""
+"Apakah kamu yakin ingin menceraikan pasanganmu? Beberapa dari anakmu mungkin "
+"akan diberikan kepada pasanganmu dan lovescoremu akan diatur ulang."
 
 #: cogs/marriage/__init__.py:159
 msgid "Cancelled the divorce. I guess the marriage is safe for now?"
@@ -5676,7 +6518,7 @@ msgstr "Kamu sekarang telah bercerai."
 
 #: cogs/marriage/__init__.py:186
 msgid "Show your partner"
-msgstr ""
+msgstr "Menampilkan pasanganmu"
 
 #: cogs/marriage/__init__.py:190
 msgid ""
@@ -5684,6 +6526,9 @@ msgid ""
 "\n"
 "            Only married players can use this command."
 msgstr ""
+"Menampilkan tag discord pasanganmu. Ini dapat digunakan diseluruh server.\n"
+"\n"
+"Hanya pemain yang sudah menikah yang dapat menggunakan perintah ini."
 
 #: cogs/marriage/__init__.py:198
 #, python-brace-format
@@ -5692,7 +6537,7 @@ msgstr "Kamu saat ini menikah dengan **{partner}**."
 
 #: cogs/marriage/__init__.py:202
 msgid "Show a player's lovescore"
-msgstr ""
+msgstr "Menampilkan lovescore seorang pemain"
 
 #: cogs/marriage/__init__.py:206
 msgid ""
@@ -5705,6 +6550,14 @@ msgid ""
 "index.php?title=Family#Adventure_Bonus) and the amount of children you can "
 "have."
 msgstr ""
+"`[user]` - Pemain yang lovescorenya ingin ditampilkan; jika tidak ditentukan "
+"maka akan menampilkan milikmu\n"
+"\n"
+"Menampilkan lovescore yang dimiliki seorang pemain. Lovescore dapat "
+"ditingkatkan dengan memanjakan pasanganmu atau pergi berkencan dengannya.\n"
+"\n"
+"Lovescore memengaruhi [bonus petualangan](https://wiki.idlerpg.xyz/index."
+"php?title=Family#Adventure_Bonus) dan jumlah anak yang dapat kamu miliki."
 
 #: cogs/marriage/__init__.py:216
 msgid "noone"
@@ -5721,7 +6574,7 @@ msgstr ""
 
 #: cogs/marriage/__init__.py:225
 msgid "Increase your partner's lovescore"
-msgstr ""
+msgstr "Meningkatkan lovescore pasanganmu"
 
 #: cogs/marriage/__init__.py:229
 msgid ""
@@ -5736,6 +6589,17 @@ msgid ""
 "\n"
 "            Only players who are married can use this command."
 msgstr ""
+"`[item]` - Barang yang akan dibeli, angka dari 1 sampai 40; jika tidak "
+"menyembutkan angkanya, maka hanya akan menampilkan daftar barangnya\n"
+"\n"
+"Beli sesuatu untuk pasanganmu untuk meningkatkan lovescore *mereka*. Untuk "
+"meningkatkan lovescore kamu sendiri, pasanganmu harus memanjakanmu dengan "
+"membelikanmu sesuatu.\n"
+"\n"
+"Harap dicatat bahwa barang-barang ini tidak dapat digunakan dan tidak "
+"berpengaruh dalam permainan, hanya meningkatkan lovescore kalian.\n"
+"\n"
+"Hanya pemain yang sudah menikah yang dapat menggunakan perintah ini."
 
 #: cogs/marriage/__init__.py:238
 msgid "Dog :dog2:"
@@ -5923,7 +6787,7 @@ msgstr "Gagal untuk DM pasanganmu, tidak dapat menemukan akun Discord mereka"
 
 #: cogs/marriage/__init__.py:338
 msgid "Take your partner on a date"
-msgstr ""
+msgstr "Mengajak pasanganmu berkencan"
 
 #: cogs/marriage/__init__.py:343
 msgid ""
@@ -5936,6 +6800,14 @@ msgid ""
 "            Only players who are married can use this command.\n"
 "            (This command has a cooldown of 12 hours.)"
 msgstr ""
+"Mengajak pasanganmu berkencan untuk meningkatkan lovescore *mereka*. Untuk "
+"meningkatkan lovescoremu, pasanganmu harus pergi berkencan denganmu.\n"
+"\n"
+"Lovescore yang diperoleh dari berkencan berkisaran dari 10 hingga 150 dalam "
+"langkah 10.\n"
+"\n"
+"Hanya pemain yang sudah menikah yang dapat menggunakan perintah ini.\n"
+"(Perintah ini memiliki waktu cooldown selama 12 jam.)"
 
 #: cogs/marriage/__init__.py:365
 #, python-brace-format
@@ -5990,7 +6862,7 @@ msgstr "Pengguna Tidak Dikenal"
 #: cogs/marriage/__init__.py:376
 #, python-brace-format
 msgid "This increased their lovescore by {num}"
-msgstr ""
+msgstr "Ini meningkatkan lovescore mereka sebesar {num}"
 
 #: cogs/marriage/__init__.py:394
 #, python-brace-format
@@ -5998,6 +6870,8 @@ msgid ""
 "You already have {max_} children. You can increase this limit by increasing "
 "your lovescores to get {amount} more."
 msgstr ""
+"Kamu sudah memiliki {max_} anak. Kamu dapat meningkatkan jumlah anak dengan "
+"meningkatkan lovescoremu untuk mendapatkan {amount} lebih banyak."
 
 #: cogs/marriage/__init__.py:410
 #, python-brace-format
@@ -6006,10 +6880,13 @@ msgid ""
 "\n"
 "{additional}"
 msgstr ""
+"Kamu mengalami malam yang indah dan memperoleh {ls} lovescore. 😏\n"
+"\n"
+"{additional}"
 
 #: cogs/marriage/__init__.py:420
 msgid "Have a child with your partner"
-msgstr ""
+msgstr "Memiliki anak dengan pasanganmu"
 
 #: cogs/marriage/__init__.py:426
 #, no-python-format, python-brace-format
@@ -6347,6 +7224,9 @@ msgid ""
 "{name} can be renamed! Within 30 seconds, enter a new name:\n"
 "Type `cancel` to leave the name unchanged."
 msgstr ""
+"{name} dapat diganti namanya! Dalam waktu 30 detik, silahkan masukan nama "
+"baru:\n"
+"Ketik `cancel` untuk tidak mengganti namanya."
 
 #: cogs/marriage/__init__.py:823
 msgid "You didn't enter a name."
@@ -6354,26 +7234,28 @@ msgstr "Kamu tidak memasukkan sebuah nama."
 
 #: cogs/marriage/__init__.py:825
 msgid "You didn't want to rename."
-msgstr ""
+msgstr "Kamu tidak ingin mengganti nama."
 
 #: cogs/marriage/__init__.py:827
 msgid "Name must be 1 to 20 characters only."
-msgstr ""
+msgstr "Nama hanya 1 sampai 20 karakter saja."
 
 #: cogs/marriage/__init__.py:842
 #, python-brace-format
 msgid ""
 "{author} Are you sure you want to rename \"{old_name}\" to \"{new_name}\"?"
 msgstr ""
+"{author} Apakah kamu yakin ingin mengganti nama \"{old_name}\" menjadi \""
+"{new_name}\"?"
 
 #: cogs/marriage/__init__.py:851
 #, python-brace-format
 msgid "You didn't change the name to \"{new_name}\"."
-msgstr ""
+msgstr "Kamu tidak mengganti nama menjadi \"{new_name}\"."
 
 #: cogs/marriage/__init__.py:858
 msgid "You didn't confirm."
-msgstr ""
+msgstr "Kamu tidak mengkonfirmasi."
 
 #: cogs/marriage/__init__.py:862
 msgid "You didn't change their name."
@@ -6386,7 +7268,7 @@ msgstr "{old_name} sekarang disebut {new_name}."
 
 #: cogs/ranks/__init__.py:31
 msgid "Show the top 10 richest"
-msgstr ""
+msgstr "Menampilkan 10 pemain terkaya teratas"
 
 #: cogs/ranks/__init__.py:34
 msgid "The 10 most richest players in IdleRPG."
@@ -6403,12 +7285,12 @@ msgstr "Pemain Terkaya"
 
 #: cogs/ranks/__init__.py:54
 msgid "Show the top 10 by XP"
-msgstr ""
+msgstr "Menampilkan 10 pemain teratas berdasarkan XP"
 
 #: cogs/ranks/__init__.py:58
 msgid ""
 "Shows you the top 10 players by XP and displays the corresponding level."
-msgstr ""
+msgstr "Menampilkan 10 pemain teratas berdasarkan XP dan level yang sesuai."
 
 #: cogs/ranks/__init__.py:68
 #, python-brace-format
@@ -6422,11 +7304,13 @@ msgstr "Pemain Terbaik"
 
 #: cogs/ranks/__init__.py:81
 msgid "Show the top 10 PvPers"
-msgstr ""
+msgstr "Menampilkan 10 pemain teratas PvPers"
 
 #: cogs/ranks/__init__.py:84
 msgid "Shows you the top 10 players by the amount of wins in PvP matches."
 msgstr ""
+"Menampilkan 10 pemain teratas berdasarkan jumlah kemenangan dalam "
+"pertandingan PvP."
 
 #: cogs/ranks/__init__.py:93
 #, python-brace-format
@@ -6439,7 +7323,7 @@ msgstr "PvPers Terbaik"
 
 #: cogs/ranks/__init__.py:104
 msgid "Show the top 10 lovers"
-msgstr ""
+msgstr "Menampilkan 10 kekasih teratas"
 
 #: cogs/ranks/__init__.py:107
 msgid "The top 10 lovers sorted by their spouse's lovescore."
@@ -6459,13 +7343,15 @@ msgstr "Kekasih Terbaik"
 
 #: cogs/server/__init__.py:32
 msgid "Displays info on the server"
-msgstr ""
+msgstr "Menampilkan info di server"
 
 #: cogs/server/__init__.py:36
 msgid ""
 "Shows information about your server, from its region and membercount to its "
 "creation date and roles."
 msgstr ""
+"Menampilkan informasi tentang server Anda, dari wilayah dan jumlah anggota "
+"hingga tanggal pembuatan dan perannya."
 
 #: cogs/server/__init__.py:38
 msgid "Link"
@@ -6511,16 +7397,16 @@ msgstr "Cluster"
 
 #: cogs/server/__init__.py:86
 msgid "Change the server settings for the bot"
-msgstr ""
+msgstr "Mengubah pengaturan server untuk bot"
 
 #: cogs/server/__init__.py:90
 msgid "Change the server settings for the bot."
-msgstr ""
+msgstr "Mengubah pengaturan server untuk bot."
 
 #: cogs/server/__init__.py:92
 #, python-brace-format
 msgid "Please use `{prefix}settings prefix value`"
-msgstr ""
+msgstr "Silahkan gunakan `{prefix}settings prefix value`"
 
 #: cogs/server/__init__.py:96
 msgid "Change the prefix"
@@ -6548,7 +7434,7 @@ msgstr "Awalan diganti ke `{prefix}`."
 
 #: cogs/server/__init__.py:129
 msgid "Reset the server settings"
-msgstr ""
+msgstr "Mengatur ulang pengaturan server"
 
 #: cogs/server/__init__.py:132
 msgid "Resets the server settings."
@@ -6579,7 +7465,7 @@ msgstr ""
 
 #: cogs/server/__init__.py:152
 msgid "Show someone's avatar"
-msgstr ""
+msgstr "Menampilkan avatar seseorang"
 
 #: cogs/server/__init__.py:156
 msgid ""
@@ -6595,7 +7481,7 @@ msgstr "Tautan Unduhan"
 
 #: cogs/guild/__init__.py:60
 msgid "Interact with your guild."
-msgstr ""
+msgstr "Berinteraksi dengan guild Anda."
 
 #: cogs/guild/__init__.py:64
 msgid ""
@@ -6636,7 +7522,7 @@ msgstr "ID Guild: {id}"
 
 #: cogs/guild/__init__.py:115
 msgid "Show a specific guild"
-msgstr ""
+msgstr "Menampilkan guild tertentu"
 
 #: cogs/guild/__init__.py:119
 msgid ""
@@ -6655,7 +7541,7 @@ msgstr "**{user}** tidak memiliki sebuah guild."
 
 #: cogs/guild/__init__.py:140
 msgid "Show the best guilds by GvG wins"
-msgstr ""
+msgstr "Menampilkan guild terbaik berdasarkan kemenangan GvG"
 
 #: cogs/guild/__init__.py:144
 #, python-brace-format
@@ -6677,7 +7563,7 @@ msgstr "Guild terbaik dalam GvG"
 
 #: cogs/guild/__init__.py:165
 msgid "Show a list of your guild members."
-msgstr ""
+msgstr "Menampilkan daftar anggota guild."
 
 #: cogs/guild/__init__.py:169
 msgid ""
@@ -6689,6 +7575,14 @@ msgid ""
 "\n"
 "            Only players who are part of a guild can use this command."
 msgstr ""
+"Menampilkan daftar anggota guild Anda. Jika nama pengguna tidak dapat "
+"ditemukan dengan alasan apapun, ID penggunanya akan ditampilkan.\n"
+"\n"
+" Perintah ini membutuhkan beberapa menit untuk dimuat, tergantung pada "
+"jumlah anggota guild. Harap bersabar.\n"
+"\n"
+" Hanya pemain yang merupakan bagian dari guild yang dapat menggunakan "
+"perintah ini."
 
 #: cogs/guild/__init__.py:183
 #, python-brace-format
@@ -6701,7 +7595,7 @@ msgstr "Teman guildmu"
 
 #: cogs/guild/__init__.py:192
 msgid "Change your guild's badge"
-msgstr ""
+msgstr "Mengubah lencana guild"
 
 #: cogs/guild/__init__.py:196
 #, python-brace-format
@@ -6714,6 +7608,12 @@ msgid ""
 "\n"
 "            Only guild leaders can use this command."
 msgstr ""
+"`<number>` - Jumlah lencana guild yang akan digunakan, mulai dari 1 hingga "
+"jumlah lencana yang tersedia\n"
+"\n"
+" Mengubah lencana guild, akan ditampilkan di `{prefix}guild info`.\n"
+"\n"
+" Hanya pemimpin guild yang dapat menggunakan perintah ini."
 
 #: cogs/guild/__init__.py:207
 msgid "Your guild has no badges yet."
@@ -9498,10 +10398,10 @@ msgid ""
 "can deal a lot of damage with their self-crafted equipment. Because of their "
 "reflexes, they have more defense than attack. Want an ale?"
 msgstr ""
-"Kurcaci adalah ahli dari penempa mereka. Meskipun mereka sangat kecil, "
-"mereka dapat menangani banyak serangan dengan peralatan hasil buatan mereka "
-"sendiri. Karena refleks mereka, mereka memiliki perlindungan yang lebih "
-"banyak daripada serangannya. Mau bir?"
+"Kurcaci adalah ahli penempa dibidangnya. Meskipun mereka sangat kecil, tapi "
+"dapat menangani banyak serangan dengan peralatan hasil buatan mereka "
+"sendiri. Karena refleks yang dimilikinya, mereka memiliki perlindungan yang "
+"lebih banyak daripada serangannya. Mau bir?"
 
 #: cogs/races/__init__.py:79
 msgid "Elf"
@@ -12520,7 +13420,7 @@ msgstr ""
 
 #: utils/werewolf.py:2762
 msgid "Lovers"
-msgstr ""
+msgstr "Sepasang kekasih"
 
 #: utils/werewolf.py:2821
 msgid "You are going to die. Use your last breath to choose a new Sheriff."
