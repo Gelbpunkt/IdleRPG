@@ -8,19 +8,20 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-05-17 14:13+0200\n"
-"PO-Revision-Date: 2020-01-25 12:48+0100\n"
-"Last-Translator: Lilli\n"
-"Language-Team: \n"
+"PO-Revision-Date: 2021-05-22 22:00+0000\n"
+"Last-Translator: Mary <diniboy74@gmail.com>\n"
+"Language-Team: Hungarian <http://translate.travitia.xyz/projects/idlerpg/bot/"
+"hu/>\n"
 "Language: hu_HU\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 2.2.4\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Plural-Forms: nplurals=2; plural=n != 1;\n"
+"X-Generator: Weblate 4.6.2\n"
 
 #: cogs/tournament/__init__.py:43
 msgid "Start a new tournament"
-msgstr ""
+msgstr "Új lovagi torna indítása"
 
 #: cogs/tournament/__init__.py:47
 #, python-brace-format
@@ -45,6 +46,24 @@ msgid ""
 "\n"
 "            (This command has a cooldown of 30 minutes.)"
 msgstr ""
+"`[prize]` - A nyeremény összege\n"
+"\n"
+"Új lovagi torna indítása. A játékosoknak 30 másodpercük van benevezni a "
+"reakciójel kattintásával.\n"
+"Nevezési díj nincs, csak a lovagi torna házigazdája fizeti a nyeremény árát."
+"\n"
+"\n"
+"2 vagy annak exponensei számú játékos nevezhet be. Ha ennél több jelentkező "
+"van, a legnagyobb exponens után csatlakozott játékosok kiesnek.\n"
+"\n"
+"A párosítások véletlenszerűek, a párbajok pedig rendes párbaj szabályai "
+"szerint zajlanak (lásd: `{prefix}help battle` a részletekért).\n"
+"\n"
+"A párbaj nyertese továbbjut a következő körbe, a vesztesek pedig kiesnek, "
+"egészen amíg csak egyetlen játékos marad.\n"
+"Az IdleRPG lovagi tornák egyenes kieséses rendszer alapján működnek.\n"
+"\n"
+"(Ennek a parancsnak 30 perc újratöltési ideje van.)"
 
 #: cogs/tournament/__init__.py:63 cogs/tournament/__init__.py:238
 #: cogs/battles/__init__.py:65 cogs/battles/__init__.py:202
@@ -61,13 +80,13 @@ msgid ""
 "{author} started a tournament! Free entries, prize is **${prize}**! React "
 "with ⚔ to join!"
 msgstr ""
-"{author} új lovagi tornát hirdetett! Ingyenes nevezés, a nyeremény: **"
-"${prize}** ! Nevezéshez kattints a  ⚔ reakciójelre!"
+"{author} új lovagi tornát hirdetett! Ingyenes nevezés, a nyeremény: "
+"**${prize}** ! Nevezéshez kattints a ⚔ reakciójelre!"
 
 #: cogs/tournament/__init__.py:127
 #, python-brace-format
 msgid "Noone joined your tournament {author}."
-msgstr ""
+msgstr "Senki nem csatlakozott a lovagi tornádhoz {author}."
 
 #: cogs/tournament/__init__.py:138
 #, python-brace-format
@@ -143,6 +162,25 @@ msgid ""
 "\n"
 "            (This command has a cooldown of 30 minutes.)"
 msgstr ""
+"`[prize]` - A nyeremény összege\n"
+"\n"
+"Új hajtóvadászattal egybekötött lovagi torna indítása. A játékosoknak 30 "
+"másodpercük van benevezni a reakciójel kattintásával.\n"
+"Nevezési díj nincs, csak a lovagi torna házigazdája fizeti a nyeremény árát."
+"\n"
+"\n"
+"2 vagy annak exponensei számú játékos nevezhet be. Ha ennél több jelentkező "
+"van, a legnagyobb exponens után csatlakozott játékosok kiesnek.\n"
+"\n"
+"A párosítások véletlenszerűek, a párbajok pedig rendes hajtóvadászattal "
+"egybekötött párbaj szabályai szerint zajlanak (lásd: `{prefix}help "
+"raidbattle` a részletekért).\n"
+"\n"
+"A párbaj nyertese továbbjut a következő körbe, a vesztesek pedig kiesnek, "
+"egészen amíg csak egyetlen játékos marad.\n"
+"Az IdleRPG lovagi tornák egyenes kieséses rendszer alapján működnek.\n"
+"\n"
+"(Ennek a parancsnak 30 perc újratöltési ideje van.)"
 
 #: cogs/tournament/__init__.py:268
 #, python-brace-format
@@ -150,16 +188,18 @@ msgid ""
 "{author} started a raid tournament! Free entries, prize is **${prize}**! "
 "React with ⚔ to join!"
 msgstr ""
+"{author} indított egy hajtó-lovagi tornát! Nevezési díj nincs, a nyeremény "
+"összege **${prize}**! Kattints a ⚔ reakciójelre, hogy csatlakozz!"
 
 #: cogs/tournament/__init__.py:301
 #, python-brace-format
 msgid "Noone joined your raid tournament {author}."
-msgstr ""
+msgstr "Senki sem csatlakozott a hajtó-lovagi tornádhoz, {author}."
 
 #: cogs/tournament/__init__.py:311
 #, python-brace-format
 msgid "{user} joined the raidtournament."
-msgstr ""
+msgstr "{user} csatlakozott a hajtó-lovagi tornához."
 
 #: cogs/tournament/__init__.py:321
 #, python-brace-format
@@ -167,6 +207,9 @@ msgid ""
 "There are **{num}** entries, due to the fact we need a playable raid "
 "tournament, the last **{removed}** have been removed."
 msgstr ""
+"**{num}** nevezés érkezett a hajtóvadászattal egybekötött lovagi tornára. A "
+"mérkőzések lejátszhatósága érdekében az utolsó **{removed}** nevezés törölve "
+"lett."
 
 #: cogs/tournament/__init__.py:355 cogs/battles/__init__.py:283
 #, python-brace-format
@@ -197,6 +240,7 @@ msgstr "#{number} számú akció"
 #, python-brace-format
 msgid "Raid Tournament ended! The winner is {winner}."
 msgstr ""
+"A hajtóvadászattal egybekötött lovagi torna véget ért! A nyertes {winner}."
 
 #: cogs/tournament/__init__.py:461
 #, python-brace-format
@@ -209,7 +253,7 @@ msgstr ""
 
 #: cogs/images/__init__.py:34
 msgid "Pixelfy an avatar"
-msgstr ""
+msgstr "Pixelezz egy profilképet"
 
 #: cogs/images/__init__.py:38
 msgid ""
@@ -220,6 +264,13 @@ msgid ""
 "            Pixelfies a user's avatar. If the user has an animated icon, the "
 "first frame is used."
 msgstr ""
+"`[user]`- A discord felhasználó, akinek a profilképét pixelezi, "
+"alapértelmezett a saját.\n"
+"`[size]`- A pixelezés intenzitását határozza meg, a szám 1 és 5 között "
+"lehet, 2 az alapértelmezett.\n"
+"\n"
+"Pixelezi egy felhasználó profilképét. Ha a felhasználónak animált profilképe "
+"van, az első kocka lesz használva."
 
 #: cogs/images/__init__.py:46
 msgid "Use 1, 2, 3, 4 or 5 as intensity value."
@@ -227,7 +278,7 @@ msgstr "Jelöld az 1, 2, 3, 4 és 5 számokkal az intenzitás mértékét."
 
 #: cogs/images/__init__.py:56
 msgid "Defines an avatar's edges"
-msgstr ""
+msgstr "Meghatározza egy profilképt peremeit"
 
 #: cogs/images/__init__.py:60
 msgid ""
@@ -236,10 +287,15 @@ msgid ""
 "            Finds and exaggerates edges in a user's avatar, creating a cool "
 "image effect."
 msgstr ""
+"`[user]` - A discord felhasználó, akinek a profilképét szerkeszti, "
+"alapértelmezett a saját.\n"
+"\n"
+"Megtalálja és  megerősíti a felhasználó profilképének peremeit, ezzel egy "
+"érdekes kép effektet teremtve."
 
 #: cogs/images/__init__.py:72
 msgid "Inverts a user's avatar"
-msgstr ""
+msgstr "Invertálja a felhasználó profilképét"
 
 #: cogs/images/__init__.py:76
 msgid ""
@@ -249,10 +305,16 @@ msgid ""
 "\n"
 "            (This command has a channel cooldown of 15 seconds.)"
 msgstr ""
+"`[member]` - A discord felhasználó, akinek a profilképét invertálja, "
+"alapértelmezett a saját.\n"
+"\n"
+"Invertálja a színeket valaki profilképén.\n"
+"\n"
+"(Ennek a parancsnak 15 másodperc újratöltési ideje van a csatornán.)"
 
 #: cogs/images/__init__.py:90
 msgid "oil-paint someone's avatar"
-msgstr ""
+msgstr "olajfestménnyé alakítja valaki profilképét"
 
 #: cogs/images/__init__.py:94
 msgid ""
@@ -262,6 +324,12 @@ msgid ""
 "\n"
 "            (This command has a channel cooldown of 15 seconds.)"
 msgstr ""
+"`[member]` - A discord felhasználó, akinek a profilképét olajfestménnyé "
+"alakítja, alapértelmezett a saját.\n"
+"\n"
+"Olajfestmény effektet tesz valaki profilképére.\n"
+"\n"
+"(Ennek a parancsnak 15 másodperc újratöltési ideje van a csatornán.)"
 
 #: cogs/halloween/__init__.py:35
 msgid "Trick or treat!"
@@ -283,6 +351,17 @@ msgid ""
 "\n"
 "            (This command has a cooldown of 3h)"
 msgstr ""
+"Sétálj a házak körül és ijeszd meg a lakókat! Talán van számodra egy "
+"ajándékuk?\n"
+"\n"
+"Ennek a parancsnak két játékosra van szüksége, egy aki várakozik, és a másik "
+"aki csenget az ajtón.\n"
+"Ha te várakozol, kapsz egy üzenetet a bottól később, egyébként azonnal kapsz "
+"választ.\n"
+"\n"
+"50% esély van arra, hogy egy halloween csomagot kapsz a másik játékostól.\n"
+"\n"
+"(Ennek a parancsnak 3 óra újratöltése van)"
 
 #: cogs/halloween/__init__.py:53
 msgid "You walk around the houses... Noone is there... *yet*"
@@ -313,10 +392,13 @@ msgid ""
 "ancient image on top of a chocolate bar, passed along for generations. You "
 "decide to keep it in your `{prefix}eventbackground`s."
 msgstr ""
+"🎃 Ahogy kilépsz az ajtón és kibontod az édességed, a csomagolás egy ősi "
+"képet fed fel a csokin, ami generációról generációra vándorolt. Úgy döntöd, "
+"hogy megtartod az `{prefix}eventbackground`-ban."
 
 #: cogs/halloween/__init__.py:120
 msgid "Open a trick or treat bag"
-msgstr ""
+msgstr "Bonts ki egy zsákbamacskát"
 
 #: cogs/halloween/__init__.py:124
 #, python-brace-format
@@ -327,6 +409,12 @@ msgid ""
 "1 to 50 base stat.\n"
 "            Their value will be between 1 and 200."
 msgstr ""
+"Bonts ki zsákbamacskát, a `1{prefix}trickortreat` paranccsal tudod őket "
+"beszerezni.\n"
+"\n"
+"Zsákbamacskák halloween témájú 1 és 50 közötti minőségű tárgyakat "
+"tartalmaznak.\n"
+"Az értékük 1 és 200 között lesz."
 
 #: cogs/halloween/__init__.py:132
 msgid "Seems you haven't got a trick or treat bag yet. Go get some!"
@@ -383,7 +471,7 @@ msgstr "Fennmaradó zsákbamacskák száma: {bags}"
 
 #: cogs/halloween/__init__.py:198
 msgid "Shows your trick or treat bags"
-msgstr ""
+msgstr "Megmutatja a zsákbamacskáidat"
 
 #: cogs/halloween/__init__.py:203
 #, python-brace-format
@@ -391,15 +479,17 @@ msgid ""
 "Shows the amount of trick or treat bags you have. You can get more by using "
 "`{prefix}trickortreat`."
 msgstr ""
+"Megmutatja a zsákbamacskáid számát. Be tudsz többet szerezni a "
+"`1{prefix}trickortreat` parancs segítségével."
 
 #: cogs/halloween/__init__.py:207
 #, python-brace-format
 msgid "You currently have **{trickortreat}** Trick or Treat Bags, {author}!"
-msgstr ""
+msgstr "Jelenleg **{trickortreat}** zsákbamacskád van, {author}!"
 
 #: cogs/locale/__init__.py:64
 msgid "Check the available languages"
-msgstr ""
+msgstr "Nézd meg az elérhető nyelveket"
 
 #: cogs/locale/__init__.py:69
 msgid ""
@@ -412,6 +502,13 @@ msgid ""
 "            If something is not yet translated, the english original text is "
 "used."
 msgstr ""
+"Nézd meg az elérhető nyelvek helyi kódjait. Megnézheted, ha a nyelved "
+"elérhető-e ezen a listán. (https://saimana.com/list-of-country-locale-code/)"
+"\n"
+"\n"
+"Némelyik nyelv, például xtreme-owo vagy unplayable (játszhatatlan) nem igazi "
+"nyelvek, de a érdekesebbé teszik az angol nyelvű szöveget.\n"
+"Ha valami még nincs lefordítva, az eredeti angol szöveg van használatban."
 
 #: cogs/locale/__init__.py:80
 #, python-brace-format
@@ -421,10 +518,13 @@ msgid ""
 "\n"
 "Please use `{prefix}locale set language_code` to choose one."
 msgstr ""
+"A jelenlegi nyelved**{current_locale}**. Elérhető opciók: {all_locales}\n"
+"\n"
+"Használd a {prefix}locale set language_code`hogy kiválassz egyet."
 
 #: cogs/locale/__init__.py:90
 msgid "Set your language"
-msgstr ""
+msgstr "Válaszd ki a nyelvet"
 
 #: cogs/locale/__init__.py:94
 #, python-brace-format
@@ -434,6 +534,10 @@ msgid ""
 "\n"
 "            Changes the language the bot replies for you."
 msgstr ""
+"`<locale>`A nyelv kódja amit használni szeretnél, a teljes lista itt "
+"található: `{prefix}language`\n"
+"\n"
+"Megváltoztatja a nyelvet amivel a bot válaszol neked."
 
 #: cogs/locale/__init__.py:99
 msgid "Not a valid language."
@@ -451,7 +555,7 @@ msgstr ""
 
 #: cogs/battles/__init__.py:43
 msgid "Battle against another player"
-msgstr ""
+msgstr "Párbajozz egy másik játékossal"
 
 #: cogs/battles/__init__.py:49
 msgid ""
@@ -475,6 +579,23 @@ msgid ""
 "profile.\n"
 "            (This command has a cooldown of 90 seconds.)"
 msgstr ""
+"`[money]`- Teljes szám ami lehet 0 vagy nagyobb; alapértelmezett a 0\n"
+"`[enemy]`- Felhaszáló akinek van egy profilja, alapértelmezett bárki.\n"
+"\n"
+"Párbaj egy játékos ellen fogadással.\n"
+"A győztes a következőképpen van eldöntve: a játékos eszközei, rassz és kaszt "
+"bónuszai, valamint egy véletlen szám 1 és 7 között lesz összeadva, így "
+"alacsonyabb szintű játékosoknak is van esélyük a nyerésre.\n"
+"\n"
+"A pénz levonásra kerül mindkét játékostól a párbaj kezdetekor. Amikor a "
+"győztes megszületik, visszakapják a pénzt és az ellenfél pénzét is.\n"
+"A párbaj 30 másodpercig tart, miután a győztes és a vesztes is kihirdetésre "
+"kerül.\n"
+"\n"
+"Ha mindkét játékos értéke + véletlen száma ugyanaz, a nyertes "
+"véletlenszerűen lesz kiválasztva.\n"
+"A nyertes kap egy PvP trófeát, ami megjelenik a profilján.\n"
+"(Ennek a parancsnak 90 másodperc újratöltési ideje van.)"
 
 #: cogs/battles/__init__.py:63 cogs/battles/__init__.py:200
 #: cogs/battles/__init__.py:403
@@ -524,7 +645,7 @@ msgstr "{winner} győzedelmeskedett {looser} felett! Dicsőség a bajnoknak!"
 
 #: cogs/battles/__init__.py:178
 msgid "Battle against a player (inclusdes raidstats)"
-msgstr ""
+msgstr "Párbaj egy másik játékossal (hajtó-háború szorzókkal)"
 
 #: cogs/battles/__init__.py:184
 msgid ""
@@ -550,6 +671,25 @@ msgid ""
 "profile.\n"
 "            (This command has a cooldown of 5 minutes)"
 msgstr ""
+"`[money]`- Teljes szám ami lehet 0 vagy nagyobb; alapértelmezett a 0\n"
+"`[enemy]`- Felhaszáló akinek van egy profilja, alapértelmezett bárki.\n"
+"\n"
+"Párbaj egy játékos ellen fogadással.\n"
+"A győztes a következőképpen van eldöntve: a játékos eszközei, rassz és kaszt "
+"bónuszai, valamint hajtó-háború bónuszai kerülnek értékelésre.\n"
+"\n"
+"A pénz levonásra kerül mindkét játékostól a párbaj kezdetekor. Amikor a "
+"győztes megszületik, visszakapják a pénzt és az ellenfél pénzét is.\n"
+"A párbaj körökként zajlik, minden körben támad egy játékos. Az első támadó "
+"véletlenszerűen van kiválasztva, minden következő körben az előző kör "
+"védekezője támad.\n"
+"\n"
+"A párbaj véget ér, ha valakinek az ÉP-je nullára csökken, vagy ha 5 perc "
+"telik el a csata kezdete óta (döntetlen)\n"
+"Döntetlen esetében mindkét fél visszakapja a pénzt.\n"
+"\n"
+"A nyertes kap egy PvP trófeát, ami megjelenik a profilján.\n"
+"(Ennek a parancsnak 5 perc újratöltési ideje van.)"
 
 #: cogs/battles/__init__.py:214
 #, python-brace-format
@@ -585,7 +725,7 @@ msgstr "{p1} győzedelmeskedett {p2} fölött! Vivát!"
 
 #: cogs/battles/__init__.py:380
 msgid "Battle against a player (active)"
-msgstr ""
+msgstr "Párbaj egy játékos ellen (aktív)"
 
 #: cogs/battles/__init__.py:386
 msgid ""
@@ -612,6 +752,25 @@ msgid ""
 "profile.\n"
 "            (This command has a cooldown of 10 minutes.)"
 msgstr ""
+"`[money]`- Teljes szám ami lehet 0 vagy nagyobb; alapértelmezett a 0\n"
+"`[enemy]`- Felhaszáló akinek van egy profilja, alapértelmezett bárki.\n"
+"\n"
+"Párbaj egy játékos ellen fogadással.\n"
+"A játékos eszközei, rassz és kaszt bónuszai vannak értékelve.\n"
+"\n"
+"A pénz levonásra kerül mindkét játékostól a párbaj kezdetekor. Amikor a "
+"győztes megszületik, visszakapják a pénzt és az ellenfél pénzét is.\n"
+"A párbaj körönként zajlik. Mindegyik körben mindkét játékosnak lehetősége "
+"van lépni a reakciókra kattintva.\n"
+"A játékosok támadhatnak (⚔️), védekezhetnek (🛡️) vagy újratölthetnek ÉP-t "
+"(❤️)\n"
+"\n"
+"A párbaj véget ér, ha az egyik játékos ÉP-je 0-ra csökken (nyertes születik)"
+", vagy egy játékos nem lép (feladás).\n"
+"Feladás esetén egyik játékos se kapja a pénzét vissza.\n"
+"\n"
+"A nyertes kap egy PvP trófeát, ami megjelenik a profilján.\n"
+"(Ennek a parancsnak 10 perc újratöltési ideje van.)"
 
 #: cogs/battles/__init__.py:417
 #, python-brace-format
@@ -634,20 +793,20 @@ msgstr ""
 #: cogs/battles/__init__.py:458
 #, python-brace-format
 msgid "Noone wanted to join your activebattle, {author}!"
-msgstr ""
+msgstr "Senki nem fogadta el az aktív párbaj kihívásod, {author}!"
 
 #: cogs/battles/__init__.py:467
 msgid "You don't have enough money to join the activebattle."
-msgstr ""
+msgstr "Nincs elég pénzed, hogy elfogadd az aktív párbaj kihívást."
 
 #: cogs/battles/__init__.py:518
 #, python-brace-format
 msgid "Battle {p1} vs {p2}"
-msgstr ""
+msgstr "Párbaj: {p1} vs {p2}"
 
 #: cogs/battles/__init__.py:520
 msgid "Let the battle begin!"
-msgstr ""
+msgstr "Kezdődjön a harc!"
 
 #: cogs/battles/__init__.py:535 cogs/battles/__init__.py:694
 #, python-brace-format
@@ -657,20 +816,24 @@ msgid ""
 "{player2}: **{hp2}** HP\n"
 "React to play."
 msgstr ""
+"{prevaction}\n"
+"{player1}:**{hp1}** ÉP\n"
+"{player2}:**{hp2}** ÉP\n"
+"Kattints a játékhoz."
 
 #: cogs/battles/__init__.py:548 cogs/battles/__init__.py:549
 #, python-brace-format
 msgid "{user} does nothing..."
-msgstr ""
+msgstr "{user} nem csinált semmit..."
 
 #: cogs/battles/__init__.py:576
 msgid "Someone refused to move. Activebattle stopped."
-msgstr ""
+msgstr "Valaki nem volt hajlandó lépni. Az aktív párbajnak vége."
 
 #: cogs/battles/__init__.py:584
 #, python-brace-format
 msgid "{user}, you already moved! Waiting for {other}'s move..."
-msgstr ""
+msgstr "{user}, te már léptél! Várj {other} lépésére..."
 
 #: cogs/battles/__init__.py:597
 #, python-brace-format
@@ -685,7 +848,7 @@ msgstr "{enemy} **{eff}** sebzést szenvedett {user}-től."
 #: cogs/battles/__init__.py:641
 #, python-brace-format
 msgid "{enemy} tried to defend, but failed."
-msgstr ""
+msgstr "{enemy} próbált védekezni, de sikertelenül."
 
 #: cogs/battles/__init__.py:648
 #, python-brace-format
@@ -695,15 +858,15 @@ msgstr "{user} támadása {enemy} ellen sikertelen volt!"
 #: cogs/battles/__init__.py:651
 #, python-brace-format
 msgid "{enemy} blocked {user}'s attack."
-msgstr ""
+msgstr "{enemy} kivédte {user} támadását."
 
 #: cogs/battles/__init__.py:656
 msgid "You both tried to defend."
-msgstr ""
+msgstr "Mindketten védekezni próbáltatok."
 
 #: cogs/battles/__init__.py:657
 msgid "It was not very effective..."
-msgstr ""
+msgstr "Nem volt valami sikeres..."
 
 #: cogs/battles/__init__.py:668
 msgid "You both died!"
@@ -716,7 +879,7 @@ msgstr "{winner} győzedelmeskedett {looser} felett! Dicsőség a bajnoknak!"
 
 #: cogs/easter/__init__.py:30
 msgid "Easter related commands"
-msgstr ""
+msgstr "Húsvéttal kapcsolatos parancsok"
 
 #: cogs/easter/__init__.py:34
 #, python-brace-format
@@ -728,6 +891,12 @@ msgid ""
 "finishing adventures, which can be exchanged for several rewards, including "
 "crates, items, money, or special guild badges."
 msgstr ""
+"Húsvéttal kapcsolatos parancsok. Lásd `{prefix}help easter`a parancsok "
+"listájához.\n"
+"\n"
+"A húsvéti esemény alatt a játékosok pirostojásokat találnak kalandjaik "
+"befejezésekor, amiket beválthatnak különböző nyereményekre, többek között "
+"ládák, eszközök, pénz vagy különleges céh kitüntetések."
 
 #: cogs/easter/__init__.py:40
 #, python-brace-format
@@ -739,10 +908,16 @@ msgid ""
 "bunny:566290173831151627>\n"
 "Happy hunting!"
 msgstr ""
+"**Húsvéti esemény <:easteregg:566251086986608650>**\n"
+"\n"
+"Idle születésnapjának része!\n"
+"Gyűjts pirostojásokat és használd a `{prefix}easter rewards`parancsot a "
+"díjak listájáért. <:bunny:566290173831151627>\n"
+"Kellemes keresést!"
 
 #: cogs/easter/__init__.py:47
 msgid "Lists all easter rewards"
-msgstr ""
+msgstr "Listázza az összes húsvéti díjat"
 
 #: cogs/easter/__init__.py:51
 #, python-brace-format
@@ -751,6 +926,10 @@ msgid ""
 "\n"
 "            To claim a reward, use `{prefix}easter reward <ID>`."
 msgstr ""
+"Megmutatja az összes elérhető húsvéti nyereményt, a nyeremény azonosítóval "
+"(ID).\n"
+"\n"
+"A nyeremény baváltásához használd az `{prefix}easter reward <ID>`parancsot."
 
 #: cogs/easter/__init__.py:57
 #, python-brace-format
@@ -770,10 +949,26 @@ msgid ""
 "**(9) 12500 <:easteregg:566251086986608650>** - 1 legendary crate\n"
 "You have **{eggs}** <:easteregg:566251086986608650>."
 msgstr ""
+"\n"
+"**Húsvéti esemény - nyeremények**\n"
+"Használd `{prefix}easter reward [1-9]` parancsot, hogy átváltsd a "
+"pirostojásaidat.\n"
+"\n"
+"**(1) 100 <:easteregg:566251086986608650>** - 10 jobbágyi láda\n"
+"**(2) 500 <:easteregg:566251086986608650>** - $10000\n"
+"**(3) 1000 <:easteregg:566251086986608650>** - véletlen eszköz 1-49\n"
+"**(4) 2000 <:easteregg:566251086986608650>** - 250 jobbágyi láda\n"
+"**(5) 2500 <:easteregg:566251086986608650>** - 10 felpörgető mindegyik "
+"fajtából\n"
+"**(6) 5000 <:easteregg:566251086986608650>** - 10 nemesi láda\n"
+"**(7) 7500 <:easteregg:566251086986608650>** - születésnapi céh kitüntetés\n"
+"**(8) 7500 <:easteregg:566251086986608650>** - 1 királyi láda\n"
+"**(9) 12500 <:easteregg:566251086986608650>** - 1 hősi láda\n"
+"**{eggs}** <:easteregg:566251086986608650> pirostojásod van."
 
 #: cogs/easter/__init__.py:75
 msgid "Claim an easter reward"
-msgstr ""
+msgstr "Vegyél át egy húsvéti nyereményt"
 
 #: cogs/easter/__init__.py:79
 #, python-brace-format
@@ -785,6 +980,12 @@ msgid ""
 "            A list of rewards along with their ID can be seen with `{prefix}"
 "easter rewards`."
 msgstr ""
+"`<reward_id>` - Egy egész szám 1 és 9 között\n"
+"\n"
+" Vegyél át egy nyereményt az azonosítószáma alapján.\n"
+"\n"
+" A nyeremény lista az azonosítószámokkal megtekinthető a `{prefix}easter "
+"rewards` parancsot segítségével."
 
 #: cogs/easter/__init__.py:97
 msgid "You don't have enough eggs to claim this."
@@ -801,10 +1002,10 @@ msgstr ""
 
 #: cogs/crates/__init__.py:48
 msgid "Show your crates."
-msgstr ""
+msgstr "Mutasd a ládáidat."
 
 #: cogs/crates/__init__.py:52
-#, python-brace-format
+#, fuzzy, python-brace-format
 msgid ""
 "Shows all the crates you can have.\n"
 "\n"
@@ -817,7 +1018,7 @@ msgid ""
 "            You can receive crates by voting for the bot using `{prefix}"
 "vote`, using `{prefix}daily` and with a small chance from `{prefix}"
 "familyevent`, if you have children."
-msgstr ""
+msgstr "Mutatja az összes ládádat."
 
 #: cogs/crates/__init__.py:64
 #, python-brace-format
@@ -846,7 +1047,7 @@ msgstr ""
 
 #: cogs/crates/__init__.py:88
 msgid "Open a crate"
-msgstr ""
+msgstr "Nyiss ki egy ládát"
 
 #: cogs/crates/__init__.py:94
 #, python-brace-format
@@ -861,6 +1062,14 @@ msgid ""
 "            This command takes up a lot of space, so choose a spammy channel "
 "to open crates."
 msgstr ""
+"`[ritkaság]` - a kinyitandó láda ritkasága, lehet jobbágyi, polgári, nemesi, "
+"királyi vagy hősi; alapértelmezett a jobbágyi\n"
+" `[mennyiség]` - a kinyitandó ládák száma, egyszerre 1 és 100 között lehet\n"
+"\n"
+"  Nyisd ki egy ládádat, hogy találj egy fegyvert. Hogy lásd melyik láda mit "
+"tartalmazhat, használd a `{prefix}help crates` parancsot.\n"
+" Ez a parancs sok helyet foglal el, úgyhogy használj egy fogalmasabb, spam "
+"csatornát ládák nyitásához."
 
 #: cogs/crates/__init__.py:103
 #, python-brace-format
@@ -868,6 +1077,8 @@ msgid ""
 "Seems like you don't have {amount} crate(s) of this rarity yet. Vote me up "
 "to get a random one or find them!"
 msgstr ""
+"Úgy néz ki, hogy nincs {amount}-d ebből a fajtájú ládából. Szavazz rám, hogy "
+"kapj egyet véletlenszerű ládát, vagy keresd őket!"
 
 #: cogs/crates/__init__.py:178
 msgid "You found a new item when opening a crate!"
@@ -900,10 +1111,24 @@ msgid ""
 "{most_common_types}\n"
 "```"
 msgstr ""
+"Sikeresen kinyitottál {amount} {rarity} ládát. Átlagos minőség: "
+"{average_stat}\n"
+"A leggyakoribb minőség:\n"
+"```\n"
+"{most_common}\n"
+"```\n"
+"Legjobb minőség:\n"
+"```\n"
+"{top}\n"
+"```\n"
+"Típusok:\n"
+"```\n"
+"{most_common_types}\n"
+"```"
 
 #: cogs/crates/__init__.py:245
 msgid "Give crates to someone"
-msgstr ""
+msgstr "Adj valakinek ládákat"
 
 #: cogs/crates/__init__.py:255
 #, python-brace-format
@@ -930,7 +1155,7 @@ msgstr "Roppant mulatságos..."
 #: cogs/crates/__init__.py:267 cogs/guild/__init__.py:945
 #: cogs/profile/__init__.py:1038
 msgid "For me? I'm flattered, but I can't accept this..."
-msgstr ""
+msgstr "Nekem? El se hiszem, de sajnos nem fogadhatom el..."
 
 #: cogs/crates/__init__.py:270
 msgid "You don't have any crates of this rarity."
@@ -944,7 +1169,7 @@ msgstr ""
 
 #: cogs/crates/__init__.py:308
 msgid "Offer crates to another player"
-msgstr ""
+msgstr "Ajánlj ládákat egy másik játékosnak"
 
 #: cogs/crates/__init__.py:320
 #, python-brace-format
@@ -965,11 +1190,11 @@ msgstr ""
 
 #: cogs/crates/__init__.py:331
 msgid "You may not offer crates to yourself."
-msgstr ""
+msgstr "Magadnak nem ajánlhatsz ládákat."
 
 #: cogs/crates/__init__.py:334
 msgid "No, I don't want any crates."
-msgstr ""
+msgstr "Nem, nekem nem kellenek ládák."
 
 #: cogs/crates/__init__.py:340
 #, python-brace-format
@@ -984,7 +1209,7 @@ msgstr ""
 
 #: cogs/crates/__init__.py:358
 msgid "Offer cancelled."
-msgstr ""
+msgstr "Ajánlat visszavonva."
 
 #: cogs/crates/__init__.py:364
 msgid ""
@@ -995,20 +1220,20 @@ msgstr ""
 
 #: cogs/crates/__init__.py:379
 msgid "They didn't want to buy the crate(s). Offer cancelled."
-msgstr ""
+msgstr "Nem akarta megvenni a ládákat. Ajánlat visszavonva."
 
 #: cogs/crates/__init__.py:383
 msgid "They couldn't make up their mind. Offer cancelled."
-msgstr ""
+msgstr "Nem tudták eldönteni, hogy mit akarnak. Ajánlat visszavonva."
 
 #: cogs/crates/__init__.py:389
 #, python-brace-format
 msgid "{buyer}, you're too poor to buy the crate(s)!"
-msgstr ""
+msgstr "{buyer}, túl szegény vagy a ládavásárláshoz!"
 
 #: cogs/crates/__init__.py:400
 msgid "The seller traded/opened the crate(s) in the meantime. Offer cancelled."
-msgstr ""
+msgstr "Az eladó már eladta, vagy kinyitotta a ládákat! Ajánlat visszavonva."
 
 #: cogs/crates/__init__.py:452
 #, python-brace-format
@@ -1016,6 +1241,8 @@ msgid ""
 "{buyer}, you've successfully bought **{quantity} {emoji} {rarity}** crate(s) "
 "from {seller}. Use `{prefix}crates` to view your updated crates."
 msgstr ""
+"{buyer}, sikeresen megvettél **{quantity} {emoji} {rarity} ládát {seller}-"
+"tól. Használd a `{prefix}crates` parancsot, hogy megnézd őket."
 
 #: cogs/hungergames/__init__.py:48
 msgid "Gather as much food as you can"
@@ -1051,7 +1278,7 @@ msgstr "késébe dől"
 
 #: cogs/hungergames/__init__.py:60
 msgid "Run away from the Cornucopia"
-msgstr ""
+msgstr "Menekülj meg a Bőségszaru elől"
 
 #: cogs/hungergames/__init__.py:61
 msgid "runs away from the Cornucopia"
@@ -1188,7 +1415,7 @@ msgstr "a holdfényben csókot váltanak"
 
 #: cogs/hungergames/__init__.py:115
 msgid "watch a movie together when USER suddenly gets shot by a stranger"
-msgstr ""
+msgstr "együtt néznek egy filmet, amikor váratlanul USER-t lelövi egy idegen"
 
 #: cogs/hungergames/__init__.py:120
 #, python-brace-format
@@ -1274,7 +1501,7 @@ msgstr ""
 
 #: cogs/hungergames/__init__.py:355
 msgid "An error happened during the hungergames. Please try again!"
-msgstr ""
+msgstr "Hiba történt az éhezők viadala során. Próbálkozz újra!"
 
 #: cogs/hungergames/__init__.py:361
 msgid "Not enough players joined..."
@@ -1476,8 +1703,8 @@ msgid ""
 "Your pet has gone missing. Maybe some aliens abducted it? Since you can't "
 "find it anymore, you are no longer a {profession}"
 msgstr ""
-"A kiskedvenced valahol eltűnt...tán csak nem elrabolták az ufókok? Mivel nem "
-"találod sehol, így nem vagy többé vadőr ({profession})."
+"A kiskedvenced valahol eltűnt... tán csak nem elrabolták az ufókok? Mivel "
+"nem találod sehol, így nem vagy többé vadőr ({profession})"
 
 #: cogs/error_handler/__init__.py:265 cogs/error_handler/__init__.py:287
 #: cogs/error_handler/__init__.py:295 cogs/classes/__init__.py:106
@@ -4440,12 +4667,12 @@ msgid ""
 "will send."
 msgstr ""
 "Egy 15*15 méretű labirintusban kezdesz, ami ellenségekkel, rejtett "
-"csapdákkal és kincsekkel van tele. Ha eléred a jobb sarokban fekvő "
+"csapdákkal és kincsekkel van tele. Ha eléred a jobb alsó sarokban fekvő "
 "kijáratot, hatalmas jutalomban lesz részed! \n"
 "Készen állsz?\n"
 "\n"
 "Tipp: Használj egy üres/alacsony forgalmú csatornát a parancshoz, hogy el "
-"tudj olvasni minden kiküldött szöveget!"
+"tudj olvasni minden kiküldött szöveget."
 
 #: cogs/adventure/__init__.py:236
 msgid "**Generating a maze...**"
