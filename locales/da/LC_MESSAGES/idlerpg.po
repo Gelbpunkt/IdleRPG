@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-05-17 14:13+0200\n"
-"PO-Revision-Date: 2021-05-27 07:08+0000\n"
+"PO-Revision-Date: 2021-06-02 18:09+0000\n"
 "Last-Translator: Aleksander <hizakiplay@gmail.com>\n"
 "Language-Team: Danish <http://translate.travitia.xyz/projects/idlerpg/bot/da/"
 ">\n"
@@ -2055,32 +2055,34 @@ msgid ""
 "You don't have a daily streak yet. You can get one going by using the "
 "command `{prefix}daily`!"
 msgstr ""
+"Du har ikke en daglig streak endnu. Du kan komme i gang med en ved at bruge "
+"kommandoen `{prefix}daily`!"
 
 #: cogs/miscellaneous/__init__.py:227
 #, python-brace-format
 msgid "You are on a daily streak of **{streak}!**"
-msgstr ""
+msgstr "Din daglige streak er **{streak}!**"
 
 #: cogs/miscellaneous/__init__.py:232
 msgid "Show the bot's ping"
-msgstr ""
+msgstr "Vis bottens ping"
 
 #: cogs/miscellaneous/__init__.py:235
 msgid "Shows you the bot's current websocket latency in milliseconds."
-msgstr ""
+msgstr "Viser dig botens aktuelle websocket latenstid i millisekunder."
 
 #: cogs/miscellaneous/__init__.py:238
 msgid "Pong!"
-msgstr ""
+msgstr "Pong!"
 
 #: cogs/miscellaneous/__init__.py:239
 #, python-brace-format
 msgid "My current latency is {lat}ms"
-msgstr ""
+msgstr "Min nuværende latenstid er {lat} ms"
 
 #: cogs/miscellaneous/__init__.py:246
 msgid "Shorten an image URL."
-msgstr ""
+msgstr "Forkorter et billedes URL."
 
 #: cogs/miscellaneous/__init__.py:250
 msgid ""
@@ -2094,23 +2096,32 @@ msgid ""
 "            In case this command fails, you can [manually upload your image "
 "to Imgur](https://imgur.com/upload)."
 msgstr ""
+"`[given_url]` - URL'en der skal forkortes; hvis den ikke gives, vil "
+"kommandoen søge efter vedhæftede billede\n"
+"\n"
+"Få en kort URL fra en lang én eller fra et vedhæftet billede.\n"
+"\n"
+"Hvis der både gives en URL og et vedhæftet billede, foretrækkes "
+"vedhæftningen. GIFs understøttes ikke, kun JPG og PNG.\n"
+"I tilfælde af at kommandoen mislykkes, kan du [manuelt uploade dit billede "
+"til Imgur] (https://imgur.com/upload)."
 
 #: cogs/miscellaneous/__init__.py:258
 msgid "Please supply a URL or an image attachment"
-msgstr ""
+msgstr "Angiv venligst en URL eller et vedhæftet billede"
 
 #: cogs/miscellaneous/__init__.py:261
 msgid "Please only use one image at a time."
-msgstr ""
+msgstr "Brug venligst kun ét billede af gangen."
 
 #: cogs/miscellaneous/__init__.py:267
 #, python-brace-format
 msgid "Here's your short image URL: <{link}>"
-msgstr ""
+msgstr "Her er din korte billede URL: <{link}>"
 
 #: cogs/miscellaneous/__init__.py:269
 msgid "Support the bot financially"
-msgstr ""
+msgstr "Støt botten økonomisk"
 
 #: cogs/miscellaneous/__init__.py:273
 #, python-brace-format
@@ -2122,6 +2133,11 @@ msgid ""
 "\n"
 "            Thank you for supporting IdleRPG!"
 msgstr ""
+"Se botens Patreon side. De forskellige niveauer giver forskellige "
+"belønninger.\n"
+"Se `{prefix}help module Patreon` for at finde de forskellige kommandoer.\n"
+"\n"
+"Tak for din støtte til IdleRPG!"
 
 #: cogs/miscellaneous/__init__.py:285
 #, python-brace-format
@@ -2138,6 +2154,18 @@ msgid ""
 "\n"
 "<https://patreon.com/idlerpg>"
 msgstr ""
+"Denne bot har sin egen patreon side.\n"
+"\n"
+"**Hvorfor skal jeg donere?**\n"
+"Denne bot findes i øjeblikket på {guild_count} servere, og det vokser "
+"hurtigt.\n"
+"At hoste denne bot for alle brugere er ikke let og koster en masse penge.\n"
+"Hvis du vil fortsætte med at bruge boten eller bare hjælpe os, kan du donere "
+"et lille beløb.\n"
+"Selv $1 kan hjælpe os.\n"
+"**Mange tak!**\n"
+"\n"
+"<https://patreon.com/idlerpg>"
 
 #: cogs/miscellaneous/__init__.py:300
 msgid "Shows the source code and license."
