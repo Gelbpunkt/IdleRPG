@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-05-17 14:13+0200\n"
-"PO-Revision-Date: 2021-05-22 22:00+0000\n"
-"Last-Translator: Mary <diniboy74@gmail.com>\n"
+"PO-Revision-Date: 2021-06-02 18:09+0000\n"
+"Last-Translator: Krisztina Koteles <krsztnktls@gmail.com>\n"
 "Language-Team: Hungarian <http://translate.travitia.xyz/projects/idlerpg/bot/"
 "hu/>\n"
 "Language: hu_HU\n"
@@ -1200,12 +1200,16 @@ msgstr "Nem, nekem nem kellenek ládák."
 #, python-brace-format
 msgid "You don't have {quantity} {rarity} crate(s). Check `{prefix}crates`."
 msgstr ""
+"Nincs tulajdonodban {quantity} {rarity} láda. Nézd meg ládáidat a "
+"`{prefix}crates` parancs segítségével."
 
 #: cogs/crates/__init__.py:348
 msgid ""
 "{author}, are you sure you want to offer **{quantity} {emoji} {rarity}** "
 "crate(s) for **${price:,.0f}**?"
 msgstr ""
+"{author}, biztosan szeretnél ajánlani **{quantity} {emoji} {rarity}** ládát "
+"**${price:,.0f}**ért?"
 
 #: cogs/crates/__init__.py:358
 msgid "Offer cancelled."
@@ -1217,6 +1221,9 @@ msgid ""
 "${price:,.0f}!** React to buy it! You have **2 Minutes** to accept the trade "
 "or the offer will be cancelled."
 msgstr ""
+"{buyer}, {author} ajánlott neked **{quantity} {emoji} {rarity}** **${price:,."
+"0f}-ért!** Kattints a vásárláshoz! **2 perced** van, hogy elfogadd az "
+"ajánlatot, különben visszavonásra kerül."
 
 #: cogs/crates/__init__.py:379
 msgid "They didn't want to buy the crate(s). Offer cancelled."
@@ -1455,7 +1462,7 @@ msgstr "Csapat"
 
 #: cogs/hungergames/__init__.py:259
 msgid "**The cast**"
-msgstr ""
+msgstr "**A szereplők**"
 
 #: cogs/hungergames/__init__.py:276
 #, python-brace-format
@@ -1468,7 +1475,7 @@ msgstr "Mindenki meghalt!"
 
 #: cogs/hungergames/__init__.py:289
 msgid "Play the hunger games"
-msgstr ""
+msgstr "Játszd az éhezők viadalát"
 
 #: cogs/hungergames/__init__.py:293
 msgid ""
@@ -1485,6 +1492,15 @@ msgid ""
 "            Not every player will get the opportunity to choose an action. "
 "Sometimes nobody gets to choose, so don't be discouraged. "
 msgstr ""
+"Elindítja az éhezők viadalát\n"
+"\n"
+"A játékosok a :shallow_pan_of_food: emoji segítségével tudnak csatlakozni.\n"
+"A játék véletlenszerű és esetenként tudatos döntések során folyik le.\n"
+"A játékosok néha kapnak lehetőséget döntéshozásra ha kapnak egy privát "
+"üzenetet a bottól. Ha a játékos nem választ, a bot választ helyettük.\n"
+"\n"
+"Nem mindenki kap lehetőséget döntéshozásra. Néha senki sem, úgyhogy ez ne "
+"bátorítson el. "
 
 #: cogs/hungergames/__init__.py:302 cogs/werewolf/__init__.py:77
 msgid "There is already a game in here!"
@@ -1518,43 +1534,43 @@ msgstr "Hoppácska! Kifelejtettél valamit a parancsból: `{arg}`"
 
 #: cogs/error_handler/__init__.py:97
 msgid "The message you referenced was not found."
-msgstr ""
+msgstr "Nem találom az említett üzenetet."
 
 #: cogs/error_handler/__init__.py:99
 msgid "The member you referenced was not found."
-msgstr ""
+msgstr "Nem találom az említett játékost."
 
 #: cogs/error_handler/__init__.py:101
 msgid "The server you referenced was not found."
-msgstr ""
+msgstr "Nem találom az említett szervert."
 
 #: cogs/error_handler/__init__.py:103
 msgid "The user you referenced was not found."
-msgstr ""
+msgstr "Nem találom az említett felhasználót."
 
 #: cogs/error_handler/__init__.py:105
 msgid "The channel you referenced was not found."
-msgstr ""
+msgstr "Nem találom az említett csatornát."
 
 #: cogs/error_handler/__init__.py:108
 msgid "I cannot read messages in the channel you referenced."
-msgstr ""
+msgstr "Nem tudok üzeneteket olvasni az említett csatornán."
 
 #: cogs/error_handler/__init__.py:111
 msgid "I could not parse a colour from this."
-msgstr ""
+msgstr "Nem tudtam ebből színt elemezni."
 
 #: cogs/error_handler/__init__.py:113
 msgid "The role you referenced was not found."
-msgstr ""
+msgstr "Nem találom az említett szerepet."
 
 #: cogs/error_handler/__init__.py:116
 msgid "The invite you referenced is invalid or has expired."
-msgstr ""
+msgstr "Az említett meghívó érvénytelen vagy lejárt."
 
 #: cogs/error_handler/__init__.py:119
 msgid "The emoji you referenced was not found."
-msgstr ""
+msgstr "Nem találom az említett emojit."
 
 #: cogs/error_handler/__init__.py:121
 msgid "I could not parse a boolean from this."
@@ -11443,13 +11459,16 @@ msgstr ""
 
 #: utils/chess.py:419
 msgid "For the nerds:"
-msgstr ""
+msgstr "A kockáknak:"
 
 #: utils/werewolf.py:95
 msgid ""
 "Your objective is to kill all villagers together with the other Werewolves. "
 "Every night, you will get to choose one villager to kill - choose carefully!"
 msgstr ""
+"A célod, hogy az összes falubelit megöld a vérfarkas társaiddal. Minden "
+"éjjel kiválaszhattok egy megölésre szánt falubelit - jól fontold meg "
+"választásod!"
 
 #: utils/werewolf.py:99
 msgid ""
@@ -11458,6 +11477,10 @@ msgid ""
 "After that, you will wake up once more to kill an additional villager, but "
 "as long as no Werewolf or Wild Child has been killed."
 msgstr ""
+"A célod, hogy az összes falubelit megöld a vérfarkas társaiddal. Minden "
+"éjjel kiválaszhattok egy megölésre szánt falubelit. Ezután újra felébredsz, "
+"hogy még egy falubelit megölj, de csak akkor, ha más Vérfarkas vagy Vad "
+"Gyermek nem halt eddig meg."
 
 #: utils/werewolf.py:105
 msgid ""
@@ -11465,6 +11488,8 @@ msgid ""
 "haunting the town at nights and survive yourself. At the daily elections, "
 "your voice makes the difference."
 msgstr ""
+"Te egy ártatlan lélek vagy. A célod a túlélés, és hogy legyőzd az összes "
+"Vérfarkast akik a várost riogatják. Minden nap számít a szavazatod."
 
 #: utils/werewolf.py:110
 msgid ""
@@ -11472,6 +11497,9 @@ msgid ""
 "from Wolves and kill them all - at the daily elections, many will hear your "
 "voice, they know you will be honest."
 msgstr ""
+"Mindenki tudja, hogy te nem vagy Vérfarkas. A célod, hogy megvédd a várost "
+"és kivégeztesd mindegyiket - a napi szavazásokban mindenki tudja, hogy "
+"őszintén beszélsz."
 
 #: utils/werewolf.py:115
 msgid ""
@@ -11479,6 +11507,9 @@ msgid ""
 "night - but don't tell the villagers too fast, else you will be targeted "
 "yourself."
 msgstr ""
+"Te különleges képességel rendelkezel, minden éjjel fel tudod fedezni egy "
+"lakó identitását - de ne mondd el azonnal a falubelieknek, különben te is "
+"célponttá válhatsz."
 
 #: utils/werewolf.py:120
 msgid ""
@@ -11486,18 +11517,27 @@ msgid ""
 "the beginning of the game - they will love each other so much that they will "
 "die once their beloved one bites the dust."
 msgstr ""
+"Te a görög isten megtestesülése vagy és kiválaszthatsz két szeretőt a játék "
+"kezdetén - ők annyira szerelembe esnek, hogy ha egyikük meghal, a másik is "
+"feldobja a talpát."
 
 #: utils/werewolf.py:125
 msgid ""
 "You are a powerful villager with two special brews: One will kill, one will "
 "heal. Use them wisely to influence the game in your favor."
 msgstr ""
+"Te egy nagy hatalmú falubeli vagy két különleges főzettel: egy gyógyít, egy "
+"megöl. Használd őket bölcsen, hogy a saját javadra tudd befolyásolni a "
+"játékot."
 
 #: utils/werewolf.py:129
 msgid ""
 "You are the Hunter. Do your best to protect the Community and your precise "
 "shot will trigger when you die, killing a target of your choice."
 msgstr ""
+"Te vagy a Vadász. Tegyél meg minden tőled telhetőt, hogy megvédd a "
+"falubelieket. Halálodkor elsütöd a puskád, megölve egy általad kiválasztott "
+"célpontot."
 
 #: utils/werewolf.py:133
 msgid ""
@@ -11505,6 +11545,9 @@ msgid ""
 "the Werewolves, but not the same person twice in a row. Make sure the "
 "Villagers stay alive..."
 msgstr ""
+"Te vagy a Gyógyító. Minden éjjel megvédhetsz egy falubelit a vérfarkasoktól, "
+"de egy embert nem választhatsz kétszer egymás után. Tegyél róla, hogy minden "
+"falubeli életben maradjon..."
 
 #: utils/werewolf.py:138
 msgid ""
@@ -11515,18 +11558,27 @@ msgid ""
 "the other Villagers will lose their special powers and become normal "
 "villagers."
 msgstr ""
+"Te vagy a legidősebb tagja a közösségnek és a Vérfarkasok már régóta "
+"kívánják a véredet. Ez a sok év különleges ellenállóképességet adott - "
+"túlélhetsz egy támadást a Vérfarkasoktól. A falubeliek szavazása, a "
+"boszorkány és a vadász viszont meg tud ölni elsőre, és halálod után minden "
+"falubeli elveszti a különleges képességét."
 
 #: utils/werewolf.py:146
 msgid ""
 "The two sisters know each other very well - together, you might be able to "
 "help the community find the Werewolves and eliminate them."
 msgstr ""
+"A két nővér jól ismeri egymást - együtt talán tudtok segíteni a közösségnek "
+"a Vérfarkasok levadászásában."
 
 #: utils/werewolf.py:150
 msgid ""
 "The three brothers know each other very well - together, you might be able "
 "to help the community find the Werewolves and eliminate them."
 msgstr ""
+"A három testvér jól ismeri egymást - együtt talán tudtok segíteni a "
+"közösségnek a Vérfarkasok levadászásában."
 
 #: utils/werewolf.py:154
 msgid ""
@@ -11535,6 +11587,10 @@ msgid ""
 "the center player and will be told if at least one of them is a Werewolf. If "
 "you do not find a Werewolf, you lose your ability for good."
 msgstr ""
+"Egy okos kis csóka vagy aki érzi a farkasok jelenlétét. Minden éjjel "
+"kiválaszthatsz három egymás mellett lévő játékost, a középső játékosra "
+"mutatván megtudod ha legalább egyikük Vérfarkas. A nem találsz egyet sem, "
+"elveszted különleges képességed."
 
 #: utils/werewolf.py:160
 msgid ""
@@ -11542,6 +11598,8 @@ msgid ""
 "after the first one by mentioning the secret sign we will agree on later "
 "during the vote. Use it wisely..."
 msgstr ""
+"Te vagy a bíró. Imádod a törvényt és második szavazást tudsz hívni az első "
+"után, egy titkos jel felmutatása segítségével. Használd bölcsen..."
 
 #: utils/werewolf.py:165
 msgid ""
@@ -11550,6 +11608,9 @@ msgid ""
 "your death becomes diseased from your rusty sword and will die the following "
 "night."
 msgstr ""
+"Te vagy a rozsdás kardú lovag. Minden tőled telhetőt megteszel, hogy megvédd "
+"a falubelieket. Ha a Vérfarkasok megesznek, egy véletlenszerűen kiválaszott "
+"Vérfarkas megbetegszik a rozsdás kardodtól és meghal a következő éjszaka."
 
 #: utils/werewolf.py:171
 msgid ""
@@ -11557,28 +11618,36 @@ msgid ""
 "Additionally to the nightly killing spree with the Werewolves, you may kill "
 "one of them later on in the night."
 msgstr ""
+"Te vagy a Fehér Farkas. A célod, hogy mindenkit megölj. Az éjszakai öldöklés "
+"után megölhetsz egyet a Vérfarkasok közül is."
 
 #: utils/werewolf.py:175
 msgid "You are the Thief and can choose your identity soon."
-msgstr ""
+msgstr "Te vagy a tolvaj, és hamarosan kiválaszthatod a szereped."
 
 #: utils/werewolf.py:177
 msgid ""
 "You are the Wild Child and will choose an idol. Once it dies, you turn into "
 "a Werewolf, but until then, you are a normal Villager..."
 msgstr ""
+"Te vagy a Vad Gyermek és választanod kell egy bálványt. Mikor a bálványod "
+"meghal, Vérfarkassá változol. Előtte viszont átlagos falubeli vagy..."
 
 #: utils/werewolf.py:181
 msgid ""
 "You are something between a Werewolf and a Villager. Choose your side "
 "wisely..."
 msgstr ""
+"Egyelőre pártatlan vagy, de választanod kell a Vérfarkasok és falubeliek "
+"között. Jól gondold át..."
 
 #: utils/werewolf.py:185
 msgid ""
 "You are the Maid who raised the children. It would hurt you to see any of "
 "them die - after the daily election, you may take their identity role once."
 msgstr ""
+"Te vagy a hajadon aki felnevelte a gyermekeket. Fájna, ha bármelyikük is "
+"meghalna - a napi szavazás után átveheted egyszer valamelyikük szerepét."
 
 #: utils/werewolf.py:189
 msgid ""
@@ -11586,6 +11655,9 @@ msgid ""
 "take revenge for being expelled many years ago. Every night, you get to "
 "enchant two of them. Gotta catch them all..."
 msgstr ""
+"Te vagy a fuvolás. A célod, hogy elbűvöld a játékosokat a zenéddel, és hogy "
+"bosszút állj amiért elűztek évekkel ezelőtt. Minden éjjel két játékost "
+"bűvölhetsz el. Kapd el mindet..."
 
 #: utils/werewolf.py:194
 msgid ""
@@ -11596,6 +11668,10 @@ msgid ""
 "killing and devouring them. The cursed villager will then partake each night "
 "in the Werewolves' feast."
 msgstr ""
+"Te vagy az Átkozott Farkas Apa, az átok terjesztésének képességével. A "
+"célod, hogy a Vérfarkasokkal megölj minden falubelit. Egyszer használhatod a "
+"különleges harapásodat, megátkozva egy falubelit. Az átkozott falubeli "
+"minden este részt vesz a Vérfarkasok lakomájában."
 
 #: utils/werewolf.py:202
 msgid ""
