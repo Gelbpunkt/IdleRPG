@@ -29,6 +29,13 @@ def is_exzyond():
     return commands.check(predicate)
 
 
+def is_daley():
+    def predicate(ctx):
+        return ctx.author.id == 284822125162790913
+
+    return commands.check(predicate)
+
+
 exz_emotions = {
     "hug": (
         "hugs",
@@ -84,6 +91,30 @@ class Custom(commands.Cog):
             await ctx.send(
                 f"You need to provide one from the following: `{', '.join(exz_emotions.keys())}`!"
             )
+
+    @is_daley()
+    @commands.command(
+        hidden=True,
+        brief=_(
+            'Daley\'s custom command. In honor of his brother "Dack", a fellow lover of RPGs.'
+        ),
+        name="ExZy",
+    )
+    @locale_doc
+    async def steak(self, ctx):
+        _(
+            """Daley's custom command. In honor of his brother "Dack", a fellow lover of RPGs.
+
+            This custom command was added on June 2nd 2021, requested by User Daley."""
+        )
+        await ctx.send(
+            embed=Embed(
+                title=_("Here's the steak you requested, courtesy of Dack's Diner!"),
+                color=ctx.author.colour,
+            ).set_image(
+                url="https://foodanddrink.scotsman.com/wp-content/uploads/2016/03/I-Need-My-Girl-Edit-6-1024x678.jpg"
+            )
+        )
 
 
 def setup(bot):
