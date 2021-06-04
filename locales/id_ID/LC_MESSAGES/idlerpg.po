@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-06-02 22:07+0200\n"
-"PO-Revision-Date: 2021-06-02 18:09+0000\n"
-"Last-Translator: Feeltis Catcus <davinreginalds@gmail.com>\n"
+"PO-Revision-Date: 2021-06-07 21:24+0000\n"
+"Last-Translator: hinata <iamfalconwoman@gmail.com>\n"
 "Language-Team: Indonesian <http://translate.travitia.xyz/projects/idlerpg/"
 "bot/id/>\n"
 "Language: id_ID\n"
@@ -331,7 +331,7 @@ msgstr ""
 
 #: cogs/halloween/__init__.py:35
 msgid "Trick or treat!"
-msgstr "Trick or treat!"
+msgstr "Tipuan atau permen!"
 
 #: cogs/halloween/__init__.py:40
 #, no-python-format
@@ -364,7 +364,8 @@ msgstr ""
 
 #: cogs/halloween/__init__.py:53
 msgid "You walk around the houses... Noone is there... *yet*"
-msgstr "Kamu berjalan di sekitar rumahnya... Masih *belum* ada orang disana..."
+msgstr ""
+"Kamu berjalan di sekitar rumah-rumah... Masih *belum* ada orang disana..."
 
 #: cogs/halloween/__init__.py:60
 #, python-brace-format
@@ -1795,7 +1796,7 @@ msgstr ""
 #: cogs/error_handler/__init__.py:265 cogs/error_handler/__init__.py:287
 #: cogs/error_handler/__init__.py:295 cogs/classes/__init__.py:106
 msgid "Ranger"
-msgstr "Ranger"
+msgstr "Ranger/Pengembara"
 
 #: cogs/error_handler/__init__.py:284
 #, python-brace-format
@@ -8631,12 +8632,12 @@ msgid ""
 "            Only guild leaders can use this command."
 msgstr ""
 "`[channel]` - Channel untuk mengirim log guild, jika tidak ditentukan maka "
-"yang digunakan adalah channel dimana perintahnya telah digunakan\n"
+"dikirim ke tempat perintah digunakan\n"
 "\n"
 "            Mengatur atau memperbarui pembaruan channel guild. Peristiwa "
 "guild yang terkait akan dikirimkan disini.\n"
-"            Channel dimana perintah telah digunakan akan menjadi channel log "
-"guild, `{prefix}guild channel #channel-name` tidak akan berfungsi.\n"
+"            Tempat dimana perintah telah digunakan akan menjadi log guild, "
+"`{prefix}guild channel #channel-name` tidak akan berfungsi.\n"
 "\n"
 "            Berikut ini yang akan dikirim ke channel log:\n"
 "              - Pembaruan lencana guild\n"
@@ -9331,6 +9332,8 @@ msgid ""
 "Daley's custom command. In honor of his brother \"Dack\", a fellow lover of "
 "RPGs."
 msgstr ""
+"Perintah khusus milik Daley. Untuk menghormati saudaranya \"Dack\", sesama "
+"pecintah RPG."
 
 #: cogs/custom/__init__.py:106
 msgid ""
@@ -9340,10 +9343,15 @@ msgid ""
 "            This custom command was added on June 2nd 2021, requested by "
 "User Daley."
 msgstr ""
+"Perintah khusus milik Daley. Untuk menghormati saudaranya \"Dack\", sesama "
+"pecinta RPG.\n"
+"\n"
+"            Perintah khusus ini ditambahkan pada 2 Juni 2021, diminta oleh "
+"Pengguna Daley."
 
 #: cogs/custom/__init__.py:112
 msgid "Here's the steak you requested, courtesy of Dack's Diner!"
-msgstr ""
+msgstr "Ini daging steik yang kamu minta, disajikan oleh Dack's DIner!"
 
 #: cogs/profile/__init__.py:45
 msgid "Create a new character"
@@ -9444,11 +9452,11 @@ msgstr ""
 
 #: cogs/profile/__init__.py:116
 msgid "Starter Sword"
-msgstr "Starter Sword"
+msgstr "Pedang Pemula"
 
 #: cogs/profile/__init__.py:127
 msgid "Starter Shield"
-msgstr "Starter Shield"
+msgstr "Perisai Pemula"
 
 #: cogs/profile/__init__.py:147
 #, python-brace-format
@@ -13095,6 +13103,42 @@ msgid ""
 "              -Pawn = no notation\n"
 "            Fields are lower case."
 msgstr ""
+"`[difficulty]` - Angka antara 1 hingga 10; jika tidak ditentukan angkanya "
+"maka dijadikan 3\n"
+"            `[enemy]` - Seorang pemain; jika tidak ditentukan pemainnya maka "
+"dijadikan untuk siapa pun\n"
+"\n"
+"            Memulai sebuah permainan catur\n"
+"            Jika sebuah tingkat kesulitan ditentukan, kamu akan bermain "
+"melawan AI catur Stockfish dengan tingkat kesulitan yang ditentukan.\n"
+"            Jika musuh ditentukan, kamu akan bermain melawan musuh tersebut, "
+"ataupun jika kamu mengatur sebuah tingkat kesulitan atau tidak.\n"
+"\n"
+"            Kamu dapat memilih sisi yang mana yang ingin kamu mainkan pada "
+"awal permainan dengan menggunakan tombol emoji.\n"
+"            Jika kamu bermain melawan seorang musuh dan kalian berdua sudah "
+"terdaftar di ELO, kamu akan diberikan pilihan untuk bermain dengan peringkat "
+"atau tidak.\n"
+"\n"
+"            Hanya bisa satu permainan catur yang dapat bermain pada sebuah "
+"channel diwaktu tersebut.\n"
+"\n"
+"            Gerakan catur dapat dikirim dalam beberapa format:\n"
+"              -`g1f3`\n"
+"              -`Nf3` ⚠\n"
+"              -`0-0`\n"
+"              -`xe3`\n"
+"\n"
+"            *Perlu diingat bahwa hal ini sensitif terhadap huruf besar/"
+"kecil:*\n"
+"            Bagian ini adalah huruf besar:\n"
+"              -King = K\n"
+"              -Queen = Q\n"
+"              -Bishop = B\n"
+"              -Knight = N\n"
+"              -Rook = R\n"
+"              -Pawn = no notation\n"
+"            Bidang adalah huruf kecil."
 
 #: cogs/chess/__init__.py:163
 msgid "You cannot play against yourself."
@@ -13194,6 +13238,39 @@ msgid ""
 "            `{prefix}ww Huntergame Fast` for Huntergame mode on Fast speed\n"
 "            "
 msgstr ""
+"\n"
+"            `[mode]` - Jenis mode yang akan dimainkan, lihat dibawah untuk "
+"pilihan yang tersedia. (pilihan dan jika tidak ditentukan maka akan "
+"dijadikan mode Classic)\n"
+"            `[speed]` - Jenis kecepatan permainan yang akan dimainkan, lihat "
+"dibawah untuk pilihan yang tersedia. (pilihan dan jika tidak ditentukan maka "
+"akan dijadikan mode Normal)\n"
+"            `[min_players]` - Minimal pemain yang dibutuhkan untuk bermain. ("
+"pilihan dan jika tidak ditentukan maka tergantung pada mode permainan: "
+"Classic: 5, Imbalanced: 5, Huntergame: 8, Villagergame: 5, Valentines: 8, "
+"IdleRPG: 5)\n"
+"\n"
+"            Memulai sebuah permainan Werewolf. Temukan werewolfnya, sebelum "
+"werewolfnya menemukanmu!\n"
+"            Tujuan kamu untuk menang ditentukan pada peran yang kamu miliki."
+"\n"
+"            **Mode Permainan:** `Classic` (jika tidak ditentukan), "
+"`Imbalanced`, `Huntergame`, `Villagergame`, `Valentines`, `IdleRPG`. Gunakan "
+"`{prefix}ww modes` untuk informasi yang lengkap.\n"
+"            **Kecepatan permainan** (dalam detik): `Normal`: 60 (jika tidak "
+"ditentukan), `Extended`: 90, `Fast`: 45, `Blitz`: 30. Gunakan `{prefix}ww "
+"speeds` untuk informasi yang lengkap.\n"
+"            **Alias:**\n"
+"            `ww`\n"
+"            **Contoh:**\n"
+"            `{prefix}ww Blitz` untuk mode Classic pada kecepatan Blitz\n"
+"            `{prefix}ww Imbalanced` untuk mode Imbalanced pada kecepatan "
+"Normal\n"
+"            `{prefix}ww Valentines Extended` untuk mode Valetines pada "
+"kecepatan Extended\n"
+"            `{prefix}ww Huntergame Fast` untuk mode Huntergame pada "
+"kecepatan Fast\n"
+"            "
 
 #: cogs/werewolf/__init__.py:89
 #, python-brace-format
@@ -13314,9 +13391,10 @@ msgid ""
 "Raider, Ritualist, Lawyer, Troublemaker, War Veteran, Wolf Shaman, Wolf "
 "Necromancer, Superspreader."
 msgstr ""
-"**Mode Permainan:** `Classic` (standar), `Imbalanced`, `Huntergame`, "
-"`Villagergame`, `Valentines`, `IdleRPG`.\n"
-"`Classic`: Bermain permainan werewolf klasik. (standar)\n"
+"**Mode Permainan:** `Classic` (jika tidak ditentukan), `Imbalanced`, "
+"`Huntergame`, `Villagergame`, `Valentines`, `IdleRPG`.\n"
+"`Classic`: Bermain permainan werewolf klasik. (jika tidak ditentukan maka "
+"dijadikan mode Classic)\n"
 "`Imbalanced`: Beberapa peran yang hanya tersedia dalam permainan yang lebih "
 "besar memiliki peluang untuk bergabung bahkan dalam permainan yang lebih "
 "kecil. (Ukuran permainan yang dimaksud disini adalah tentang jumlah pemain, "
@@ -13810,6 +13888,13 @@ msgid ""
 "Moves are case-sensitive! Pieces uppercase: `N`, `Q` or `B`, fields "
 "lowercase: `a`, `b` or `h`. Castling is `0-0` or `0-0-0`."
 msgstr ""
+"**Langka {move_no}: Giliran {player}**\n"
+"Cukup ketik langkahmu. Kamu memiliki 2 menit untuk memasukan langkah yang "
+"valid. Saya dapat menerima notasi normal seperti `resign` atau `draw`.\n"
+"Contoh: `g1f3`, `Nf3`, `0-0` atau `xe3`.\n"
+"Langkah dapat sensitif terhadap huruf kecil/besar! Bagian ini adalah huruf "
+"besar: `N`, `Q` atau `B`, bidangnya adalah huruf kecil: `a`, `b` atau `h`. "
+"Castling adalah`0-0` atau `0-0-0`."
 
 #: utils/chess.py:252
 msgid "You entered no valid move! You lost!"
@@ -13821,49 +13906,54 @@ msgid ""
 "**Move {move_no}**\n"
 "Let me think... This might take up to 2 minutes"
 msgstr ""
+"**Langkah {move_no}**\n"
+"Coba saya pikirkan dulu... Ini mungkin akan memakan waktu hingga 2 menit"
 
 #: utils/chess.py:293
 msgid "Waiting for AI draw response..."
-msgstr ""
+msgstr "Menunggu respon seri AI..."
 
 #: utils/chess.py:306
 #, python-brace-format
 msgid "Your enemy has proposed a draw, {player}. Do you agree?"
-msgstr ""
+msgstr "Lawanmu mengusulkan untuk seri, {player}. Apakah kamu setuju?"
 
 #: utils/chess.py:338
 msgid "The draw was rejected."
-msgstr ""
+msgstr "Permintaan untuk seri ditolak."
 
 #: utils/chess.py:394
 #, python-brace-format
 msgid "**Checkmate! {result}**"
-msgstr ""
+msgstr "**Sekakmat! {result}**"
 
 #: utils/chess.py:399
 #, python-brace-format
 msgid "**Stalemate! {result}**"
-msgstr ""
+msgstr "**Jalan buntu! {result}**"
 
 #: utils/chess.py:404
 #, python-brace-format
 msgid "**Insufficient material! {result}**"
-msgstr ""
+msgstr "**Bahan tidak cukup! {result}**"
 
 #: utils/chess.py:414
 #, python-brace-format
 msgid "**Draw accepted! {result}**"
-msgstr ""
+msgstr "**Permintaan seri diterima! {result}**"
 
 #: utils/chess.py:419
 msgid "For the nerds:"
-msgstr ""
+msgstr "Untuk kutu buku:"
 
 #: utils/werewolf.py:95
 msgid ""
 "Your objective is to kill all villagers together with the other Werewolves. "
 "Every night, you will get to choose one villager to kill - choose carefully!"
 msgstr ""
+"Tujuan kamu adalah untuk membunuh semua penduduk desa bersama dengan "
+"Werewolf lainnya. Setiap malam, kamu akan memilih satu penduduk desa untuk "
+"dibunuh - pilihlah dengan hati-hati!"
 
 #: utils/werewolf.py:99
 msgid ""
@@ -13872,6 +13962,11 @@ msgid ""
 "After that, you will wake up once more to kill an additional villager, but "
 "as long as no Werewolf or Wild Child has been killed."
 msgstr ""
+"Tujuan kamu adalah untuk membunuh semua penduduk desa bersama dengan "
+"Werewolf lainnya. Setiap malam, kamu akan memilih satu penduduk desa untuk "
+"dibunuh bersama dengan mereka. Setelah itu, kamu akan bangun sekali lagi "
+"untuk membunuh penduduk desa tambahan, tetapi selama tidak ada Werewolf atau "
+"Wild Child yang terbunuh."
 
 #: utils/werewolf.py:105
 msgid ""
@@ -13879,6 +13974,9 @@ msgid ""
 "haunting the town at nights and survive yourself. At the daily elections, "
 "your voice makes the difference."
 msgstr ""
+"Kamu adalah jiwa yang tidak bersalah. Tujuan kamu adalah untuk membasmi "
+"semua Werewolf yang menghantui kota di malam hari dan bertahan hidup "
+"sendiri. Pada pemilihan harian, suara kamu membuat perbedaan."
 
 #: utils/werewolf.py:110
 msgid ""
@@ -13886,6 +13984,9 @@ msgid ""
 "from Wolves and kill them all - at the daily elections, many will hear your "
 "voice, they know you will be honest."
 msgstr ""
+"Semua orang tahu kamu bukan Werewolf. Tujuan kamu adalah untuk menjaga kota "
+"aman dari Serigala dan membunuh mereka semua - pada pemilihan harian, banyak "
+"yang akan mendengar suaramu, mereka tahu kamu akan berkata jujur."
 
 #: utils/werewolf.py:115
 msgid ""
@@ -13893,6 +13994,9 @@ msgid ""
 "night - but don't tell the villagers too fast, else you will be targeted "
 "yourself."
 msgstr ""
+"Kamu adalah penduduk desa dengan kemampuan khusus untuk melihat identitas "
+"seseorang setiap malam - tetapi jangan beri tahu penduduk desa terlalu "
+"cepat, jika tidak, kamu sendiri yang akan menjadi sasaran."
 
 #: utils/werewolf.py:120
 msgid ""
@@ -13900,18 +14004,27 @@ msgid ""
 "the beginning of the game - they will love each other so much that they will "
 "die once their beloved one bites the dust."
 msgstr ""
+"Kamu adalah personifikasi dewa Yunani dan dapat memilih dua kekasih di awal "
+"permainan - mereka akan sangat mencintai satu sama lain sehingga mereka akan "
+"mati begitu kekasih mereka tidak dapat bertahan hidup."
 
 #: utils/werewolf.py:125
 msgid ""
 "You are a powerful villager with two special brews: One will kill, one will "
 "heal. Use them wisely to influence the game in your favor."
 msgstr ""
+"Kamu adalah penduduk desa yang kuat dengan dua minuman khusus: Satu akan "
+"membunuh, satu akan menyembuhkan. Gunakan dengan bijak untuk memengaruhi "
+"permainan sesuai keinginanmu."
 
 #: utils/werewolf.py:129
 msgid ""
 "You are the Hunter. Do your best to protect the Community and your precise "
 "shot will trigger when you die, killing a target of your choice."
 msgstr ""
+"Kamu adalah Pemburu. Lakukan yang terbaik untuk melindungi Komunitas dan "
+"tembakanmu yang tepat akan terpicu saat kamu mati, membunuh target dari "
+"pilihanmu."
 
 #: utils/werewolf.py:133
 msgid ""
@@ -13919,6 +14032,9 @@ msgid ""
 "the Werewolves, but not the same person twice in a row. Make sure the "
 "Villagers stay alive..."
 msgstr ""
+"Kamu adalah Penyembuh. Setiap malam, kamu dapat melindungi satu Penduduk "
+"Desa dari kematian oleh Werewolf, tetapi bukan orang yang sama dalam dua "
+"kali berturut-turut. Pastikan Penduduk Desa tetap hidup ..."
 
 #: utils/werewolf.py:138
 msgid ""
@@ -13929,18 +14045,30 @@ msgid ""
 "the other Villagers will lose their special powers and become normal "
 "villagers."
 msgstr ""
+"Kamu adalah anggota tertua dari komunitas dan Werewolf telah menyakiti kamu "
+"untuk waktu yang lama. Selama bertahun-tahun telah memberikanmu banyak "
+"perlawanan - kamu dapat bertahan satu serangan dari Werewolf. Suara yang "
+"dipilih oleh Penduduk Desa, Penyihir, dan Pemburu akan membunuhmu untuk "
+"pertama kalinya, dan setelah mati, semua Penduduk Desa lainnya akan "
+"kehilangan kekuatan khusus mereka dan menjadi penduduk desa biasa."
 
 #: utils/werewolf.py:146
 msgid ""
 "The two sisters know each other very well - together, you might be able to "
 "help the community find the Werewolves and eliminate them."
 msgstr ""
+"Kedua saudara perempuan itu saling mengenal satu sama lain dengan sangat "
+"baik - bersama-sama, kamu mungkin dapat membantu komunitas menemukan "
+"Werewolf dan melenyapkannya."
 
 #: utils/werewolf.py:150
 msgid ""
 "The three brothers know each other very well - together, you might be able "
 "to help the community find the Werewolves and eliminate them."
 msgstr ""
+"Ketiga bersaudara itu saling mengenal satu sama lain dengan sangat baik - "
+"bersama-sama, kamu mungkin dapat membantu komunitas menemukan Werewolf dan "
+"melenyapkannya."
 
 #: utils/werewolf.py:154
 msgid ""
@@ -13949,6 +14077,11 @@ msgid ""
 "the center player and will be told if at least one of them is a Werewolf. If "
 "you do not find a Werewolf, you lose your ability for good."
 msgstr ""
+"Kamu adalah manusia kecil yang pintar yang bisa merasakan kehadiran "
+"Werewolf. Setiap malam, kamu dapat memilih sekelompok 3 pemain tetangga yang "
+"kamu tunjuk sebagai pemain tengah dan akan diberi tahu jika setidaknya salah "
+"satu dari mereka adalah Werewolf. Jika kamu tidak menemukan seekor Werewolf, "
+"kamu kehilangan kemampuanmu untuk selamanya."
 
 #: utils/werewolf.py:160
 msgid ""
@@ -13956,6 +14089,9 @@ msgid ""
 "after the first one by mentioning the secret sign we will agree on later "
 "during the vote. Use it wisely..."
 msgstr ""
+"Kamu adalah Hakim. Kamu menyukai hukum dan dapat mengatur pemungutan suara "
+"harian kedua setelah yang pertama dengan menyebutkan tanda rahasia yang akan "
+"kami setujui nanti selama pemungutan suara. Gunakan dengan bijak..."
 
 #: utils/werewolf.py:165
 msgid ""
@@ -13964,6 +14100,10 @@ msgid ""
 "your death becomes diseased from your rusty sword and will die the following "
 "night."
 msgstr ""
+"Kamu adalah Kesatria Pedang Rusty. Kamu akan melakukan yang terbaik untuk "
+"melindungi Penduduk Desa. Jika kamu mati karena Werewolf, seekor Werewolf "
+"yang menyebabkan kematianmu menjadi sakit karena pedang rustymu dan akan "
+"mati pada malam berikutnya."
 
 #: utils/werewolf.py:171
 msgid ""
@@ -13971,28 +14111,39 @@ msgid ""
 "Additionally to the nightly killing spree with the Werewolves, you may kill "
 "one of them later on in the night."
 msgstr ""
+"Kamu adalah Serigala Putih. Tujuanmu adalah untuk membunuh orang lain. "
+"Selain pembunuhan malam dengan Werewolf, kamu dapat membunuh salah satu dari "
+"mereka nanti di malam hari."
 
 #: utils/werewolf.py:175
 msgid "You are the Thief and can choose your identity soon."
-msgstr ""
+msgstr "Kamu adalah Pencuri dan dapat memilih identitasmu segera."
 
 #: utils/werewolf.py:177
 msgid ""
 "You are the Wild Child and will choose an idol. Once it dies, you turn into "
 "a Werewolf, but until then, you are a normal Villager..."
 msgstr ""
+"Kamu adalah Anak Liar dan akan memilih seorang idola. Setelah mati, kamu "
+"berubah menjadi Werewolf, tetapi sampai saat itu, kamu adalah Penduduk Desa "
+"biasa ..."
 
 #: utils/werewolf.py:181
 msgid ""
 "You are something between a Werewolf and a Villager. Choose your side "
 "wisely..."
 msgstr ""
+"Kamu adalah sesuatu antara Werewolf dan Penduduk Desa. Pilih sisimu dengan "
+"bijak..."
 
 #: utils/werewolf.py:185
 msgid ""
 "You are the Maid who raised the children. It would hurt you to see any of "
 "them die - after the daily election, you may take their identity role once."
 msgstr ""
+"Kamu adalah Pembantu yang membesarkan anak-anak. Akan menyakitkan bagi kamu "
+"untuk melihat salah satu dari mereka mati - setelah pemilihan harian, kamu "
+"dapat mengambil peran identitas mereka hanya sekali."
 
 #: utils/werewolf.py:189
 msgid ""
@@ -14000,6 +14151,9 @@ msgid ""
 "take revenge for being expelled many years ago. Every night, you get to "
 "enchant two of them. Gotta catch them all..."
 msgstr ""
+"Kamu adalah pemain suling. Tujuanmu adalah untuk memikat para pemain dengan "
+"musikmu untuk membalas dendam karena diusir bertahun-tahun yang lalu. Setiap "
+"malam, kamu bisa mempesona dua dari mereka. Harus menangkap mereka semua..."
 
 #: utils/werewolf.py:194
 msgid ""
@@ -14010,6 +14164,13 @@ msgid ""
 "killing and devouring them. The cursed villager will then partake each night "
 "in the Werewolves' feast."
 msgstr ""
+"Kamu adalah Bapa Serigala Terkutuk yang memiliki kemampuan untuk menyebarkan "
+"kutukanmu. Tujuanmu adalah untuk membunuh semua penduduk desa bersama dengan "
+"Werewolf lainnya. Setiap malam, kamu akan memilih satu penduduk desa untuk "
+"dibunuh bersama dengan mereka. Kamu boleh, sekali, menggunakan gigitan "
+"khususmu yang akan mengutuk penduduk desa daripada membunuhnya dan melahap "
+"mereka. Penduduk desa terkutuk itu kemudian akan mengambil bagian setiap "
+"malam dalam pesta Werewolf."
 
 #: utils/werewolf.py:202
 msgid ""
@@ -14018,6 +14179,10 @@ msgid ""
 "players will be voted for during the voting phase removing all other "
 "nominations."
 msgstr ""
+"Kamu adalah Paragon yang memiliki kemampuan untuk membatalkan semua nominasi "
+"lainnya selama pemilihan harian. Saat kamu menominasikan satu atau lebih "
+"pemain, hanya pemain tersebut yang akan dipilih selama fase pemungutan suara "
+"nominasi yang lain akan dihapuskan."
 
 #: utils/werewolf.py:208
 msgid ""
@@ -14025,6 +14190,9 @@ msgid ""
 "role as yours. However, only those who were recently lynched and last "
 "night's dead players are available for you to raid."
 msgstr ""
+"Kamu adalah Raider tunggal. Sebagai Raider, kamu dapat menjarah pemain mati "
+"dan mengambil peran mereka sebagai milikmu. Namun, hanya mereka yang baru "
+"saja digantung dan pemain mati tadi malam yang tersedia untuk kamu serang."
 
 #: utils/werewolf.py:213
 msgid ""
@@ -14032,12 +14200,17 @@ msgid ""
 "only those who were recently lynched and last night's dead players are "
 "available for you to resurrect."
 msgstr ""
+"Kamu adalah Ritualist yang dapat membangkitkan seorang Penduduk Desa sekali "
+"setiap permainan. Namun, hanya mereka yang baru saja digantung dan pemain "
+"mati tadi malam yang tersedia untuk kamu bangkitkan."
 
 #: utils/werewolf.py:218
 msgid ""
 "You are the Troublemaker of the Village. You can exchange the roles of two "
 "other players on the first night."
 msgstr ""
+"Kamu adalah Pembuat Masalah Desa. Kamu dapat bertukar peran dua pemain lain "
+"di malam pertama."
 
 #: utils/werewolf.py:222
 msgid ""
@@ -14046,6 +14219,11 @@ msgid ""
 "voting phase. Just raise the powerful \"Objection!\" protest to use your "
 "ability once per game. (The exclamation point is optional.)"
 msgstr ""
+"Kamu adalah Pengacara yang dapat membantu desa menghentikan keputusan mereka "
+"yang salah dengan menolak proses pencalonan dan mengakhiri hari tanpa "
+"melanjutkan ke fase pemungutan suara apa pun. Katakan saja protes \"Keberatan"
+"!\" dengan kuat untuk menggunakan kemampuan kamu sekali setiap permainan. ("
+"Tanda seru adalah pilihan.)"
 
 #: utils/werewolf.py:228
 msgid ""
@@ -14053,6 +14231,9 @@ msgid ""
 "of your life. Upon being lynched by the village's vote, you will randomly "
 "kill one of them as a form of your betrayal."
 msgstr ""
+"Kamu adalah seorang Veteran Perang. Peperangan masa lalu kamu telah "
+"membawamu sepanjang hidupmu. Setelah digantung oleh suara desa, kamu akan "
+"secara acak membunuh salah satu dari mereka sebagai bentuk pengkhianatanmu."
 
 #: utils/werewolf.py:233
 msgid ""
@@ -14061,6 +14242,11 @@ msgid ""
 "Additionally, you have the ability to summon an ancient werewolf spirit that "
 "will guard and protect a fellow werewolf to block one death."
 msgstr ""
+"Tujuanmu adalah untuk membunuh semua penduduk desa bersama dengan Werewolf "
+"lainnya. Setiap malam, kamu akan memilih satu penduduk desa untuk dibunuh "
+"bersama dengan mereka. Selain itu, kamu memiliki kemampuan untuk memanggil "
+"roh manusia serigala kuno yang akan menjaga dan melindungi sesama manusia "
+"serigala untuk menghadang satu kematian."
 
 #: utils/werewolf.py:239
 msgid ""
@@ -14071,6 +14257,13 @@ msgid ""
 "night once per game. However, only those who were recently lynched and last "
 "night's dead players are available for you to resurrect."
 msgstr ""
+"Tujuanmu adalah untuk membunuh semua penduduk desa bersama dengan Werewolf "
+"lainnya. Setiap malam, kamu akan memilih satu penduduk desa untuk dibunuh "
+"bersama dengan mereka. Karena kamu telah belajar dari nenek moyangmu yang "
+"berubah bentuk keajaiban untuk memanggil orang mati, kamu memiliki kemampuan "
+"untuk membangkitkan werewolf yang mati di malam hari sekali setiap "
+"permainan. Namun, hanya mereka yang baru saja digantung dan pemain mati tadi "
+"malam yang tersedia untuk kamu bangkitkan."
 
 #: utils/werewolf.py:247
 msgid ""
@@ -14079,41 +14272,46 @@ msgid ""
 "players you can infect by one more. Make it Pandemic! (Note: If an infected "
 "player died and is resurrected, they are free from the virus.)"
 msgstr ""
+"Tujuanmu adalah menginfeksi semua pemain dengan virusmu. Setiap malam, kamu "
+"bisa bersin dan batuk pada salah satu pemain. Setiap hari yang berlalu "
+"meningkatkan pemain yang bisa kamu infeksi satu lagi. Jadikan virus ini "
+"Pandemi! (Catatan: Jika pemain yang terinfeksi meninggal dan dibangkitkan, "
+"mereka bebas dari virus.)"
 
 #: utils/werewolf.py:264
 #, python-brace-format
 msgid "Shortcut back to {ww_channel}"
-msgstr ""
+msgstr "Pintasan kembali ke {ww_channel}"
 
 #: utils/werewolf.py:351
 msgid "No one"
-msgstr ""
+msgstr "Tidak ada seorangpun"
 
 #: utils/werewolf.py:368
 msgid "**The Werewolves awake...**"
-msgstr ""
+msgstr "**Werewolf telah bangun...**"
 
 #: utils/werewolf.py:373
 msgid "Hey **"
-msgstr ""
+msgstr "Hei **"
 
 #: utils/werewolf.py:382
 #, python-brace-format
 msgid "__{count}__ Werewolves"
-msgstr ""
+msgstr "__{count}__ Werewolf"
 
 #: utils/werewolf.py:384
 msgid "lone Werewolf"
-msgstr ""
+msgstr "Werewolf sendirian"
 
 #: utils/werewolf.py:386
 #, python-brace-format
 msgid "**🐺 Wake up {greet_text}! It is time to choose a victim**"
-msgstr ""
+msgstr "**🐺 Bangun {greet_text}! saatnya memilih seorang korban**"
 
 #: utils/werewolf.py:390
 msgid "All possible victims are:"
-msgstr ""
+msgstr "Semua korban yang memungkinkan adalah:"
 
 #: utils/werewolf.py:399
 #, python-brace-format
@@ -14122,21 +14320,26 @@ msgid ""
 "to nominate them for killing (you can nominate up to 10 users), voting "
 "starts in {timer} seconds.**"
 msgstr ""
+"**Saya akan menyampaikan semua pesan yang kamu kirim ke Werewolf lainnya. "
+"Kirimkan sebuah angka untuk menominasikan mereka untuk membunuh! (kamu dapat "
+"menominasi hingga 10 pemain), pemungutan suara dimulai dalam {timer} detik.**"
 
 #: utils/werewolf.py:406
 msgid ""
 "**Please do not spam and talk slowly! Relaying can take a while if there are "
 "many Werewolves!**"
 msgstr ""
+"**Tolong jangan spam dan bicara dengan perlahan! Menyampaikan pesan bisa "
+"memakan waktu cukup lama jika ada banyak Werewolf!**"
 
 #: utils/werewolf.py:435
 msgid "❌ You cannot nominate your Lover."
-msgstr ""
+msgstr "❌ Kamu tidak dapat menominasikan Kekasihmu."
 
 #: utils/werewolf.py:438
 #, python-brace-format
 msgid "**{werewolf}** nominated **{victim}**"
-msgstr ""
+msgstr "**{werewolf}** dinominasikan oleh **{victim}**"
 
 #: utils/werewolf.py:451
 #, python-brace-format
@@ -14145,28 +14348,33 @@ msgid ""
 "😆.\n"
 "{game_link}"
 msgstr ""
+"Tidak satu pun dari kalian yang ingin menyerang seorang penduduk desa. Tidak "
+"ada daging segar malam ini 😆.\n"
+"{game_link}"
 
 #: utils/werewolf.py:458 utils/werewolf.py:516
 #, python-brace-format
 msgid "{player_name} Votes: {votes}"
-msgstr ""
+msgstr "{player_name} Pemungutan suara: {votes}"
 
 #: utils/werewolf.py:464
 msgid "The voting is starting, please wait for your turn..."
-msgstr ""
+msgstr "Pemungutan suara sudah dimulai, mohon menunggu untuk giliranmu..."
 
 #: utils/werewolf.py:477
 #, python-brace-format
 msgid "React to vote for a target. You have {timer} seconds."
 msgstr ""
+"Tekan tombol reaksi pemungutan suara untuk memilih target. Kamu memiliki "
+"{timer} detik."
 
 #: utils/werewolf.py:488
 msgid "You timed out and didn't vote."
-msgstr ""
+msgstr "Waktumu habis dan kamu tidak memberikan suara."
 
 #: utils/werewolf.py:494
 msgid "❌ You cannot vote for your Lover to die."
-msgstr ""
+msgstr "❌ Kamu tidak dapat memilih Kekasihmu untuk mati."
 
 #: utils/werewolf.py:527
 #, python-brace-format
@@ -14174,6 +14382,8 @@ msgid ""
 "Werewolves, you are all indecisive. No fresh meat tonight 😆.\n"
 "{game_link}"
 msgstr ""
+"Werewolf, kalian semua ragu-ragu. Tidak ada daging segar malam ini 😆.\n"
+"{game_link}"
 
 #: utils/werewolf.py:537
 #, python-brace-format
@@ -14181,11 +14391,16 @@ msgid ""
 "Werewolves, you have decided to kill **{target}** tonight and be your meal.\n"
 "{game_link}"
 msgstr ""
+"Werewolf, kamu telah memutuskan untuk membunuh **{target}** malam ini dan "
+"menjadi santapanmu.\n"
+"{game_link}"
 
 #: utils/werewolf.py:557
 #, python-brace-format
 msgid "{pure_soul} is a **{role}** and an innocent villager."
 msgstr ""
+"{pure_soul} adalah seorang **{role}** dan seorang penduduk desa yang tidak "
+"bersalah."
 
 #: utils/werewolf.py:565
 #, python-brace-format
@@ -14193,17 +14408,22 @@ msgid ""
 "📢 {sheriff} got randomly chosen as the new 🎖 **Sheriff**️. **The vote of the "
 "Sheriff counts as double.**"
 msgstr ""
+"📢 {sheriff} dipilih secara acak sebagai 🎖 **Sheriff**️ baru. **Pemungutan "
+"suara dari Sheriff dihitung ganda.**"
 
 #: utils/werewolf.py:574
 msgid ""
 "You became the 🎖 **Sheriff. Your vote counts as double. If you died or "
 "exchanged roles using Maid's ability, you must choose a new Sheriff.**"
 msgstr ""
+"Kamu telah menjadi 🎖 **Sheriff. Suara kamu dihitung ganda. Jika kamu mati "
+"atau bertukar peran menggunakan kemampuan Pembantu, kamu harus memilih "
+"Sheriff baru.**"
 
 #: utils/werewolf.py:607
 #, python-brace-format
 msgid "**The __{num}__ inhabitants of the Village:**"
-msgstr ""
+msgstr "**__{num}__ Penduduk Desa:**"
 
 #: utils/werewolf.py:621
 #, python-brace-format
@@ -14211,12 +14431,17 @@ msgid ""
 "**Welcome to Werewolf {mode}!\n"
 "{speed} speed activated - All action timers are limited to {timer} seconds.**"
 msgstr ""
+"**Selamat datang di Werewolf {mode}!\n"
+"{speed} kecepatan diaktifkan - Semua aksi memiliki batas waktu hingga {timer}"
+" detik.**"
 
 #: utils/werewolf.py:632
 msgid ""
 "📜⚠️ Talking to other users privately is prohibited! Posting any screenshots "
 "of my messages containing your role is also forbidden."
 msgstr ""
+"📜⚠️ ️ Berbicara dengan pemain lain secara pribadi dilarang! Memposting "
+"tangkapan layar apa pun dari pesan saya yang berisi peran kamu juga dilarang."
 
 #: utils/werewolf.py:638
 #, python-brace-format
@@ -14225,6 +14450,9 @@ msgid ""
 "later.\n"
 "{house_rules}**"
 msgstr ""
+"**Mengirim peran-peran permainan... Kamu dapat menggunakan `{prefix}ww "
+"myrole` untuk melihat peranmu nanti.\n"
+"{house_rules}**"
 
 #: utils/werewolf.py:644
 #, python-brace-format
@@ -14232,22 +14460,24 @@ msgid ""
 "**Welcome to Werewolf {mode}! {house_rules}\n"
 "{game_link}**"
 msgstr ""
+"**Selamat datang di Werewolf {mode}! {house_rules}\n"
+"{game_link}**"
 
 #: utils/werewolf.py:652
 msgid "🌘 💤 **Night falls, the town is asleep...**"
-msgstr ""
+msgstr "🌘 💤 **Malam telah tiba, seluruh kota sudah tidur...**"
 
 #: utils/werewolf.py:670
 msgid "**The Sisters awake...**"
-msgstr ""
+msgstr "**Saudari perempuan telah bangun...**"
 
 #: utils/werewolf.py:674
 msgid "**The Brothers awake...**"
-msgstr ""
+msgstr "**Saudara laki-laki telah bangun...**"
 
 #: utils/werewolf.py:713
 msgid " 💤 **Night falls, the town is asleep...**"
-msgstr ""
+msgstr " 💤 **Malam telah tiba, seluruh kota sudah tidur...**"
 
 #: utils/werewolf.py:805
 #, python-brace-format
@@ -14256,31 +14486,38 @@ msgid ""
 "mentioning their name below. You have {timer} seconds of discussion during "
 "this time."
 msgstr ""
+"Kamu sekarang dapat memilih seseorang (total hingga 10) untuk pemilihan "
+"siapa yang akan digantung dengan menyebutkan nama mereka dibawah ini. Kamu "
+"memiliki {timer} detik untuk berdiskusi selama waktu ini."
 
 #: utils/werewolf.py:842
 #, python-brace-format
 msgid "**OBJECTION!!!** the **{role}** {user} protested. Nomination ends."
-msgstr ""
+msgstr "**KEBERATAN!!!** **{role}** {user} memprotes. Nominasi berakhir."
 
 #: utils/werewolf.py:857
 msgid ""
 "I received your secret phrase. We will hold another election after this."
 msgstr ""
+"Saya menerima kalimat rahasiamu. Kami akan mengadakan pemilihan lagi setelah "
+"ini."
 
 #: utils/werewolf.py:876
 #, python-brace-format
 msgid "**{role} {player}** nominated **{nominee}**."
-msgstr ""
+msgstr "**{role} {player}** menominasikan **{nominee}**."
 
 #: utils/werewolf.py:887
 #, python-brace-format
 msgid "**{player}** nominated **{nominee}**."
-msgstr ""
+msgstr "**{player}** menominasikan **{nominee}**."
 
 #: utils/werewolf.py:899
 #, python-brace-format
 msgid "Seems sneaky, I added {time_to_add} seconds talk time."
 msgstr ""
+"Tampaknya licik, Saya menambahkan waktu berdiskusi menjadi {time_to_add} "
+"detik."
 
 #: utils/werewolf.py:923
 #, python-brace-format
@@ -14288,16 +14525,22 @@ msgid ""
 "**React to vote for killing someone. You have {timer} seconds.**\n"
 "{texts}"
 msgstr ""
+"**Tekan tombol reaksi pemungutan suara untuk membunuh seseorang. Kamu "
+"memiliki {timer} detik.**\n"
+"{texts}"
 
 #: utils/werewolf.py:989
 msgid "An unexpected error occurred."
-msgstr ""
+msgstr "Terjadi kesalahan yang tidak terduga."
 
 #: utils/werewolf.py:997
 msgid ""
 "**You should not vote since you're not in the game. Please do not try to "
 "influence the game by voting unnecessarily. I will remove your reactions.**"
 msgstr ""
+"**Kamu seharusnya tidak memberikan suara karena kamu tidak ada dalam "
+"permainan. Mohon untuk tidak mencoba mempengaruhi permainan dengan "
+"memberikan suara yang tidak perlu. Saya akan menghapus reaksimu..**"
 
 #: utils/werewolf.py:1005
 #, python-brace-format
@@ -14305,6 +14548,8 @@ msgid ""
 "**{author} I couldn't remove reactions. Please give me the proper "
 "permissions to remove reactions.**"
 msgstr ""
+"**{author} Saya tidak dapat menghapus reaksi. Mohon untuk memberikan izin "
+"yang tepat untuk menghapus reaksi.**"
 
 #: utils/werewolf.py:1019
 #, python-brace-format
@@ -14312,6 +14557,8 @@ msgid ""
 "Checking AFK players if they're still in the game... Should be done in "
 "{timer} seconds."
 msgstr ""
+"Memeriksa pemain AFK jika mereka masih berada dalam permainan...Akan selesai "
+"dalam {timer} detik."
 
 #: utils/werewolf.py:1028
 #, python-brace-format
@@ -14320,6 +14567,9 @@ msgid ""
 "**Send any message until I acknowledged that you're not AFK. You have "
 "{timer} seconds.**"
 msgstr ""
+"Kamu gagal memberikan suara. Hal ini hanya sebuah pemeriksaan AFK:\n"
+"**Kirim pesan apa pun sampai saya mengetahui bahwa kamu tidak AFK. Kamu "
+"memiliki {timer} detik.**"
 
 #: utils/werewolf.py:1055
 #, python-brace-format
@@ -14327,12 +14577,16 @@ msgid ""
 "☑️ You're not AFK. You can stop sending message now.\n"
 "{game_link}"
 msgstr ""
+"☑️ Kamu tidak AFK. Kamu dapat berhenti mengirim pesan sekarang.\n"
+"{game_link}"
 
 #: utils/werewolf.py:1071
 msgid ""
 "**Strike 3!** You will now be killed by the game for having 3 strikes of "
 "being AFK. Goodbye!"
 msgstr ""
+"**Strike 3!** Kamu akan dibunuh dalam permainan karena memiliki 3 Strike "
+"AFK. Selamat tinggal!"
 
 #: utils/werewolf.py:1079
 #, python-brace-format
@@ -14340,89 +14594,97 @@ msgid ""
 "⚠️ **Strike {strikes}!** You have been marked as AFK. __You'll be killed "
 "after 3 strikes.__"
 msgstr ""
+"⚠️ **Strike {strikes}!** Kamu telah ditandai sebagai AFK. __Kamu akan "
+"dibunuh setelah 3 strike.__"
 
 #: utils/werewolf.py:1086
 #, python-brace-format
 msgid ""
 "**{afk_player}** has been killed by the game due to having 3 strikes of AFK."
 msgstr ""
+"**{afk_player}** telah dibunuh dalam permainan karena memiliki 3 strike AFK."
 
 #: utils/werewolf.py:1094
 #, python-brace-format
 msgid "The community has decided to kill {to_kill}."
-msgstr ""
+msgstr "Komunitas telah memutuskan untuk membunuh {to_kill}."
 
 #: utils/werewolf.py:1116
 #, python-brace-format
 msgid "{to_die} died from the disease caused by the Knight's rusty sword."
 msgstr ""
+"{to_die} telah mati karena penyakit yang disebabkan oleh pedang rusty Knight."
 
 #: utils/werewolf.py:1127
 msgid "🌤️ **The sun rises...**"
-msgstr ""
+msgstr "🌤️ **Matahari telah terbit...**"
 
 #: utils/werewolf.py:1143
 msgid "Indecisively, the community has killed noone."
-msgstr ""
+msgstr "Dengan ragu-ragu, komunitas tidak membunuh siapa pun."
 
 #: utils/werewolf.py:1148
 msgid ""
 "📢 **The Judge used the secret phrase to hold another election to lynch "
 "someone. The Judge's decision cannot be debated.**"
 msgstr ""
+"📢 **Hakim menggunakan kalimat rahasia untuk mengadakan pemilihan lain untuk "
+"menghukum mati seseorang. Keputusan Hakim tidak dapat diganggu gugat.**"
 
 #: utils/werewolf.py:1157
 msgid "Indecisively, the community has not lynched anyone."
-msgstr ""
+msgstr "Dengan ragu-ragu, komunitas tidak menghukum mati siapa pun."
 
 #: utils/werewolf.py:1169
 #, python-brace-format
 msgid "**Day {day_count:.0f} of {days_limit}**"
-msgstr ""
+msgstr "**Hari {day_count:.0f} ke {days_limit}**"
 
 #: utils/werewolf.py:1173
 #, python-brace-format
 msgid "**Day {day_count:.0f}**"
-msgstr ""
+msgstr "**Hari {day_count:.0f}**"
 
 #: utils/werewolf.py:1184
 #, python-brace-format
 msgid "{day_count:.0f} days have already passed. Stopping game..."
-msgstr ""
+msgstr "{day_count:.0f} hari telah berlalu. Menghentikan permainan..."
 
 #: utils/werewolf.py:1196
 #, python-brace-format
 msgid "Werewolf {mode} results:"
-msgstr ""
+msgstr "Werewolf {mode} hasil:"
 
 #: utils/werewolf.py:1203
 #, python-brace-format
 msgid "{results_pretext} **The {winning_side} won!** 🎉 Congratulations:"
-msgstr ""
+msgstr "{results_pretext} **{winning_side} menang!** 🎉 Selamat:"
 
 #: utils/werewolf.py:1216
 #, python-brace-format
 msgid "{results_pretext} **No one won!**"
-msgstr ""
+msgstr "{results_pretext} **Tidak ada yang menang!**"
 
 #: utils/werewolf.py:1224
 #, python-brace-format
 msgid "{results_pretext} **{winner} won!**"
-msgstr ""
+msgstr "{results_pretext} **{winner} menang!**"
 
 #: utils/werewolf.py:1241 utils/werewolf.py:2584
 #, python-brace-format
 msgid " A **{initial_roles}** initially."
-msgstr ""
+msgstr " Dengan inisial **{initial_roles}**."
 
 #: utils/werewolf.py:1253
 #, python-brace-format
 msgid "{player} is a **{role}**!{initial_role_info}"
-msgstr ""
+msgstr "{player} adalah seorang **{role}**!{initial_role_info}"
 
 #: utils/werewolf.py:1266
 msgid "The game has ended. I will now reveal the other living players' roles:"
 msgstr ""
+"Permainan telah berakhir. Sekarang saya akan mengungkapkan peran pemain "
+"lainnya yang hidup:"
 
 #: utils/werewolf.py:1363
 #, python-brace-format
@@ -14430,6 +14692,8 @@ msgid ""
 "**Type the number of the user to choose for this action. Type `0` to "
 "dismiss. You need to choose {amount} more.**"
 msgstr ""
+"**Ketik nomor pemain yang akan dipilih untuk aksi ini. Ketik `0` untuk "
+"melewatkan. Kamu harus memilih {amount} lagi.**"
 
 #: utils/werewolf.py:1369
 #, python-brace-format
@@ -14437,22 +14701,26 @@ msgid ""
 "**Type the number of the user to choose for this action. You need to choose "
 "{amount} more.**"
 msgstr ""
+"**Ketik nomor pemain yang akan dipilih untuk aksi ini. Kamu harus memilih "
+"{amount} lagi.**"
 
 #: utils/werewolf.py:1383
 msgid ""
 "I couldn't send a DM to someone. All players should allow me to send Direct "
 "Messages to them."
 msgstr ""
+"Saya tidak dapat mengirim sesuatu ke DM seseorang. Semua pemain harus "
+"mengizinkan saya untuk dapat mengirim Direct Messages kepada mereka."
 
 #: utils/werewolf.py:1411
 #, python-brace-format
 msgid "🚫 You've chosen **{player}** already."
-msgstr ""
+msgstr "🚫 Kamu sudah memilih **{player}**."
 
 #: utils/werewolf.py:1418
 #, python-brace-format
 msgid "**{player}** has been selected."
-msgstr ""
+msgstr "**{player}** telah dipilih."
 
 #: utils/werewolf.py:1426
 #, python-brace-format
@@ -14461,6 +14729,9 @@ msgid ""
 "\n"
 "{description}"
 msgstr ""
+"Kamu adalah seorang **{role}**\n"
+"\n"
+"{description}"
 
 #: utils/werewolf.py:1434
 #, python-brace-format
@@ -14471,6 +14742,11 @@ msgid ""
 "win!\n"
 "{game_link}"
 msgstr ""
+"Hari ini adalah 💕Valentine💕! Kamu jatuh cinta dengan **{lover}**! Kamu dapat "
+"melenyapkan semua pemain lain dan bertahan sebagai **Lovers**. Cobalah untuk "
+"melindungi kekasihmu sebisa mungkin. Kamu akan dengan secara langsung bunuh "
+"diri begitu pasanganmu mati. Semoga kekasih yang terbaik menang!\n"
+"{game_link}"
 
 #: utils/werewolf.py:1441
 #, python-brace-format
@@ -14481,19 +14757,25 @@ msgid ""
 "once they die.\n"
 "{game_link}"
 msgstr ""
+"💕 Kamu jatuh cinta dengan **{lover}**! 💘 Amor benar-benar tahu bahwa kamu "
+"memperhatikan mereka... Kamu dapat melenyapkan semua pemain lain dan "
+"bertahan sebagai **Lovers**. Cobalah untuk melindungi kekasihmu sebisa "
+"mungkin. Kamu akan dengan secara langsung bunuh diri begitu pasanganmu mati."
+"\n"
+"{game_link}"
 
 #: utils/werewolf.py:1450
 #, python-brace-format
 msgid "**The {role} awakes and chooses its idol...**"
-msgstr ""
+msgstr "**{role} telah bangun dan memilih idolanya...**"
 
 #: utils/werewolf.py:1457
 msgid "Choose your Idol. You will turn into a Werewolf if they die."
-msgstr ""
+msgstr "Pilih idolamu. Kamu akan kembali menjadi Werewolf jika mereka mati."
 
 #: utils/werewolf.py:1466
 msgid "You didn't choose anyone. A random player will be chosen for you."
-msgstr ""
+msgstr "Kamu tidak memilih siapa pun. Pemain acak akan dipilihkan untukmu."
 
 #: utils/werewolf.py:1470
 #, python-brace-format
@@ -14501,6 +14783,8 @@ msgid ""
 "**{idol}** became your Idol.\n"
 "{game_link}"
 msgstr ""
+"**{idol}** menjadi idolamu.\n"
+"{game_link}"
 
 #: utils/werewolf.py:1477 utils/werewolf.py:1576 utils/werewolf.py:1617
 #: utils/werewolf.py:1664 utils/werewolf.py:1712 utils/werewolf.py:1793
@@ -14510,13 +14794,15 @@ msgstr ""
 #: utils/werewolf.py:2492
 #, python-brace-format
 msgid "**The {role} awakes...**"
-msgstr ""
+msgstr "**{role} telah bangun...**"
 
 #: utils/werewolf.py:1482
 msgid ""
 "🧑‍⚖️ Please enter a secret phrase that will trigger a second election. It is "
 "case sensitive."
 msgstr ""
+"🧑‍⚖️ Harap masukkan kalimat rahasia yang akan memicu pemilihan kedua. Hal "
+"Ini peka dengan huruf besar-kecil."
 
 #: utils/werewolf.py:1506
 #, python-brace-format
@@ -14525,6 +14811,9 @@ msgid ""
 "another one.\n"
 "{game_link}"
 msgstr ""
+"Kalimatnya adalah **{symbol}**. Masukkan kalimatnya saat pemilihan suara "
+"untuk memicu yang lain.\n"
+"{game_link}"
 
 #: utils/werewolf.py:1520
 #, python-brace-format
@@ -14532,25 +14821,29 @@ msgid ""
 "Would you like to swap roles with {dying_one}? You will learn their role "
 "once you accept."
 msgstr ""
+"Apakah kamu ingin bertukar peran dengan {dying_one}? Kamu akan mempelajari "
+"peran mereka begitu kamu menerimanya."
 
 #: utils/werewolf.py:1526 utils/werewolf.py:2446
 msgid "You didn't choose anything."
-msgstr ""
+msgstr "Kamu tidak memilih apa pun."
 
 #: utils/werewolf.py:1531 utils/werewolf.py:2451
 msgid ""
 "I couldn't send a DM to someone. Too bad they missed to use their power."
 msgstr ""
+"Saya tidak bisa mengirim DM ke seseorang. Sayang sekali mereka melewatkan "
+"untuk menggunakan kekuatan mereka."
 
 #: utils/werewolf.py:1554
 #, python-brace-format
 msgid "Your new role is now **{new_role}**.\n"
-msgstr ""
+msgstr "Peran baru kamu yang sekarang adalah **{new_role}**.\n"
 
 #: utils/werewolf.py:1560
 #, python-brace-format
 msgid "You're no longer enchanted by the {flutist}."
-msgstr ""
+msgstr "Kamu tidak lagi terpesona oleh {flutist}."
 
 #: utils/werewolf.py:1566
 #, python-brace-format
@@ -14558,10 +14851,12 @@ msgid ""
 "**{maid}** reveals themselves as the **{role}** and exchanged roles with "
 "{dying_one}."
 msgstr ""
+"**{maid}** mengungkapkan diri mereka sebagai **{role}** dan menukarkan "
+"perannya dengan {dying_one}."
 
 #: utils/werewolf.py:1584
 msgid "Choose a player to protect from Werewolves."
-msgstr ""
+msgstr "Pilih seorang pemain untuk dilindungi dari Werewolf."
 
 #: utils/werewolf.py:1594
 #, python-brace-format
@@ -14570,6 +14865,9 @@ msgid ""
 "werewolves tonight.\n"
 "{game_link}"
 msgstr ""
+"Kamu tidak memilih untuk menyembuhkan siapa pun. Tidak ada yang akan "
+"dilindungi dari werewolf malam ini.\n"
+"{game_link}"
 
 #: utils/werewolf.py:1602
 #, python-brace-format
@@ -14578,6 +14876,9 @@ msgid ""
 "werewolves tonight.\n"
 "{game_link}"
 msgstr ""
+"Kamu tidak memilih siapa pun, slowpoke. Tidak ada yang akan dilindungi dari "
+"werewolf malam ini.\n"
+"{game_link}"
 
 #: utils/werewolf.py:1611
 #, python-brace-format
@@ -14585,6 +14886,8 @@ msgid ""
 "**{protected}** won't die from the werewolves tonight.\n"
 "{game_link}"
 msgstr ""
+"**{protected}** tidak mati dari serangan werewolf malam ini.\n"
+"{game_link}"
 
 #: utils/werewolf.py:1626
 #, python-brace-format
@@ -14592,10 +14895,12 @@ msgid ""
 "There's no other werewolf left to kill.\n"
 "{game_link}"
 msgstr ""
+"Tidak ada werewolf lain yang tersisa untuk dibunuh.\n"
+"{game_link}"
 
 #: utils/werewolf.py:1634
 msgid "Choose a Werewolf to kill."
-msgstr ""
+msgstr "Pilih seekor werewolf untuk dibunuh."
 
 #: utils/werewolf.py:1644
 #, python-brace-format
@@ -14603,6 +14908,8 @@ msgid ""
 "You didn't choose any werewolf to kill.\n"
 "{game_link}"
 msgstr ""
+"Kamu tidak memilih seekor werewolf untuk dibunuh.\n"
+"{game_link}"
 
 #: utils/werewolf.py:1651
 #, python-brace-format
@@ -14610,6 +14917,8 @@ msgid ""
 "You didn't choose any werewolf to kill, slowpoke.\n"
 "{game_link}"
 msgstr ""
+"Kamu tidak memilih seekor werewolf untuk dibunuh, slowpoke.\n"
+"{game_link}"
 
 #: utils/werewolf.py:1656
 #, python-brace-format
@@ -14626,10 +14935,12 @@ msgid ""
 "There's no other possible villagers left to kill.\n"
 "{game_link}"
 msgstr ""
+"Tidak ada penduduk desa lain yang tersisa untuk dibunuh.\n"
+"{game_link}"
 
 #: utils/werewolf.py:1682
 msgid "Choose a Villager to kill."
-msgstr ""
+msgstr "Pilih seorang penduduk desa untuk dibunuh."
 
 #: utils/werewolf.py:1692
 #, python-brace-format
@@ -14637,6 +14948,8 @@ msgid ""
 "You didn't choose any villager to kill.\n"
 "{game_link}"
 msgstr ""
+"Kamu tidak memilih seorang penduduk desa untuk dibunuh.\n"
+"{game_link}"
 
 #: utils/werewolf.py:1699
 #, python-brace-format
@@ -14644,6 +14957,8 @@ msgid ""
 "You didn't choose any villager to kill, slowpoke.\n"
 "{game_link}"
 msgstr ""
+"Kamu tidak memilih seorang penduduk desa untuk dibunuh, slowpoke.\n"
+"{game_link}"
 
 #: utils/werewolf.py:1704
 #, python-brace-format
@@ -14651,46 +14966,56 @@ msgid ""
 "You've decided to kill **{villager}**.\n"
 "{game_link}"
 msgstr ""
+"Kamu memutuskan untuk membunuh **{villager}**.\n"
+"{game_link}"
 
 #: utils/werewolf.py:1722
 msgid ""
 "Choose someone to heal 🧪. You can rescue a player attacked by the wolves "
 "once throughout the game. You can opt not to use this ability for now."
 msgstr ""
+"Pilih seseorang untuk disembuhkan 🧪. Kamu dapat menyelamatkan pemain yang "
+"diserang oleh serigala sekali sepanjang permainan. Kamu dapat memilih untuk "
+"tidak menggunakan kemampuan ini untuk saat ini."
 
 #: utils/werewolf.py:1737
 #, python-brace-format
 msgid "You chose to heal **{healed}**."
-msgstr ""
+msgstr "Kamu memilih untuk menyembuhkan **{healed}**."
 
 #: utils/werewolf.py:1740
 msgid "You didn't choose to heal anyone."
-msgstr ""
+msgstr "Kamu tidak memilih untuk menyembuhkan siapa pun."
 
 #: utils/werewolf.py:1744
 msgid ""
 "You didn't choose to heal anyone from the list, slowpoke. They're likely to "
 "die."
 msgstr ""
+"Kamu tidak memilih untuk menyembuhkan siapa pun dari daftar itu, slowpoke. "
+"Mereka sepertinya akan mati."
 
 #: utils/werewolf.py:1757
 msgid ""
 "Choose someone to poison ☠️. You can kill a player once throughout the game. "
 "You can opt not to use this ability for now."
 msgstr ""
+"Pilih seseorang untuk diracuni ☠️. Kamu dapat membunuh pemain sekali "
+"sepanjang permainan. Kamu dapat memilih untuk tidak menggunakan kemampuan "
+"ini untuk saat ini."
 
 #: utils/werewolf.py:1774
 #, python-brace-format
 msgid "You've decided to poison **{poisoned}**."
-msgstr ""
+msgstr "Kamu memutuskan untuk meracuni **{poisoned}**."
 
 #: utils/werewolf.py:1779
 msgid "You didn't choose to poison anyone."
-msgstr ""
+msgstr "Kamu tidak memilih untuk meracuni siapa pun."
 
 #: utils/werewolf.py:1782
 msgid "You've ran out of time and missed to poison anyone, slowpoke."
-msgstr ""
+msgstr "Kamu kehabisan waktu dan gagal untuk meracuni siapa pun, slowpoke."
 
 #: utils/werewolf.py:1801
 #, python-brace-format
@@ -14698,10 +15023,12 @@ msgid ""
 "There's no other possible players left to enchant.\n"
 "{game_link}"
 msgstr ""
+"Tidak ada pemain lain yang mungkin tersisa untuk dipikat.\n"
+"{game_link}"
 
 #: utils/werewolf.py:1808
 msgid "Choose 2 people to enchant."
-msgstr ""
+msgstr "Pilih 2 orang untuk memikat satu sama lain."
 
 #: utils/werewolf.py:1815 utils/werewolf.py:2034 utils/werewolf.py:2140
 #: utils/werewolf.py:2219 utils/werewolf.py:2272 utils/werewolf.py:2320
@@ -14711,6 +15038,8 @@ msgid ""
 "You didn't want to use your ability.\n"
 "{game_link}"
 msgstr ""
+"Kamu tidak ingin menggunakan kemampuanmu.\n"
+"{game_link}"
 
 #: utils/werewolf.py:1823
 #, python-brace-format
@@ -14718,17 +15047,20 @@ msgid ""
 "You didn't choose enough players to enchant, slowpoke.\n"
 "{game_link}"
 msgstr ""
+"Kamu tidak cukup memilih pemain untuk dipikat, slowpoke.\n"
+"{game_link}"
 
 #: utils/werewolf.py:1831
 #, python-brace-format
 msgid ""
 "The last {count} possible targets have been automatically enchanted for you."
 msgstr ""
+"{count} target terakhir yang mungkin secara otomatis telah dipikat untukmu."
 
 #: utils/werewolf.py:1839
 #, python-brace-format
 msgid "You have enchanted **{enchanted}**."
-msgstr ""
+msgstr "Kamu telah mempesona **{enchanted}**."
 
 #: utils/werewolf.py:1843
 #, python-brace-format
@@ -14737,11 +15069,14 @@ msgid ""
 "down.\n"
 "{game_link}"
 msgstr ""
+"Kamu telah terpesona oleh Pemain Suling. Klaim telah terpesona untuk "
+"menemukannya.\n"
+"{game_link}"
 
 #: utils/werewolf.py:1851
 #, python-brace-format
 msgid "Your {relationship}(s) are/is: {members}"
-msgstr ""
+msgstr "{relationship} kamu adalah: {members}"
 
 #: utils/werewolf.py:1862
 #, python-brace-format
@@ -14749,10 +15084,12 @@ msgid ""
 "Your new {relationship} is: **{new_member}**. They don't know yet the other "
 "members of the family."
 msgstr ""
+"{relationship} baru kamu adalah: **{new_member}**. Mereka belum tahu anggota "
+"keluarga lainnya."
 
 #: utils/werewolf.py:1873
 msgid "👁️ Choose someone whose identity you would like to see."
-msgstr ""
+msgstr "👁️ Pilih seseorang yang identitasnya ingin kamu lihat."
 
 #: utils/werewolf.py:1883
 #, python-brace-format
@@ -14760,6 +15097,8 @@ msgid ""
 "You didn't want to use your ability to see anyone's role.\n"
 "{game_link}"
 msgstr ""
+"Kamu tidak ingin menggunakan kemampuanmu untuk melihat peran siapa pun.\n"
+"{game_link}"
 
 #: utils/werewolf.py:1891
 #, python-brace-format
@@ -14767,6 +15106,8 @@ msgid ""
 "You've ran out of time and missed to see someone's role, slowpoke.\n"
 "{game_link}"
 msgstr ""
+"Kamu kehabisan waktu dan gagal untuk melihat peran seseorang, slowpoke.\n"
+"{game_link}"
 
 #: utils/werewolf.py:1898
 #, python-brace-format
@@ -14774,6 +15115,8 @@ msgid ""
 "**{player}** is a **{role}**.\n"
 "{game_link}"
 msgstr ""
+"**{player}** adalah seorang **{role}**.\n"
+"{game_link}"
 
 #: utils/werewolf.py:1912 utils/werewolf.py:1972
 #, python-brace-format
@@ -14781,20 +15124,24 @@ msgid ""
 "You will be asked to choose a new role from these:\n"
 "**{choices}**"
 msgstr ""
+"Kamu akan diminta untuk memilih sebuah peran baru dari beberapa peran ini:\n"
+"**{choices}**"
 
 #: utils/werewolf.py:1918
 msgid ""
 "But it seems you don't have a choice. Whether you choose or not, you will "
 "become a Werewolf."
 msgstr ""
+"Tapi sepertinya kamu tidak punya pilihan. Mau kamu memilih atau tidak, kamu "
+"akan menjadi Werewolf."
 
 #: utils/werewolf.py:1923
 msgid "Choose nothing and stay as Thief."
-msgstr ""
+msgstr "Tidak memilih apa pun dan tetap menjadi Pencuri."
 
 #: utils/werewolf.py:1928 utils/werewolf.py:1980
 msgid "Choose a new role"
-msgstr ""
+msgstr "Memilih sebuah peran baru"
 
 #: utils/werewolf.py:1935
 #, python-brace-format
@@ -14802,6 +15149,8 @@ msgid ""
 "You chose to stay as Thief.\n"
 "{game_link}"
 msgstr ""
+"Kamu memilih untuk tetap menjadi Pencuri.\n"
+"{game_link}"
 
 #: utils/werewolf.py:1942
 #, python-brace-format
@@ -14809,10 +15158,14 @@ msgid ""
 "You didn't choose anything. You will stay as Thief.\n"
 "{game_link}"
 msgstr ""
+"Kamu tidak memilih apa pun. Kamu akan tetap menjadi Pencuri.\n"
+"{game_link}"
 
 #: utils/werewolf.py:1948
 msgid "I couldn't send a DM to this player. They will stay as Thief."
 msgstr ""
+"Saya tidak dapat mengirim sebuah DM kepada pemain ini. Mereka akan tetap "
+"menjadi Pencuri."
 
 #: utils/werewolf.py:1959 utils/werewolf.py:2003
 #, python-brace-format
@@ -14820,6 +15173,8 @@ msgid ""
 "Your new role is now **{new_role}**.\n"
 "{game_link}"
 msgstr ""
+"Peran baru kamu sekarang adalah **{new_role}**.\n"
+"{game_link}"
 
 #: utils/werewolf.py:1988
 #, python-brace-format
@@ -14827,10 +15182,14 @@ msgid ""
 "You didn't choose anything. A random role was chosen for you.\n"
 "{game_link}"
 msgstr ""
+"Kamu tidak memilih apa pub. Peran telah dipilih secara acak untukmu.\n"
+"{game_link}"
 
 #: utils/werewolf.py:1996
 msgid "I couldn't send a DM. A random role was chosen for them."
 msgstr ""
+"Saya tidak dapat mengirim sebuah DM. Peran telah dipilih secara acak untuk "
+"mereka."
 
 #: utils/werewolf.py:2023
 msgid ""
@@ -14838,6 +15197,9 @@ msgid ""
 "want to see if any of them is a werewolf.\n"
 "__Note: The First and Last players in the list are neighbors.__"
 msgstr ""
+"🦊 Pilih pemain tengah dari grup 3 pemain tetangga yang ingin kamu lihat "
+"apakah salah satu dari mereka adalah werewolf.\n"
+"__ Catatan: Pemain Pertama dan Terakhir dalam daftar adalah tetangga.__"
 
 #: utils/werewolf.py:2043
 #, python-brace-format
@@ -14845,12 +15207,15 @@ msgid ""
 "You didn't choose a player, slowpoke.\n"
 "{game_link}"
 msgstr ""
+"Kamu tidak memilih seorang pemain, slowpoke.\n"
+"{game_link}"
 
 #: utils/werewolf.py:2059
 #, python-brace-format
 msgid ""
 "The last {count} possible targets have been automatically selected for you."
 msgstr ""
+"{count} target terakhir yang mungkin secara otomatis telah dipilih untukmu."
 
 #: utils/werewolf.py:2068
 #, python-brace-format
@@ -14859,6 +15224,9 @@ msgid ""
 "ability.\n"
 "{game_link}"
 msgstr ""
+"Kamu memilih kelompok dari **{names}**. Kamu tidak menemukan Werewolf "
+"sehingga kamu kehilangan kemampuanmu.\n"
+"{game_link}"
 
 #: utils/werewolf.py:2078
 #, python-brace-format
@@ -14866,19 +15234,24 @@ msgid ""
 "You chose the group of **{names}**. One of them is a **Werewolf**.\n"
 "{game_link}"
 msgstr ""
+"Kamu memilih kelompok dari **{names}**. Salah satu dari mereka adalah seekor "
+"**Werewolf**.\n"
+"{game_link}"
 
 #: utils/werewolf.py:2089
 #, python-brace-format
 msgid "**{role} awakes and shoots their arrows...**"
-msgstr ""
+msgstr "**{role} telah bangun dan menembakkan panah mereka...**"
 
 #: utils/werewolf.py:2096
 msgid "💘 Choose 2 lovers 💕. You should not tell the town who the lovers are."
 msgstr ""
+"💘 Memilih 2 kekasih 💕. Kamu tidak perlu memberitahukan seluruh kota siapa "
+"kekasihnya."
 
 #: utils/werewolf.py:2104
 msgid "You've ran out of time, slowpoke. Lovers will be chosen randomly."
-msgstr ""
+msgstr "Kamu kehabisan waktu, slowpoke. Para kekasih akan dipilih secara acak."
 
 #: utils/werewolf.py:2108
 #, python-brace-format
@@ -14886,10 +15259,13 @@ msgid ""
 "You've made **{lover1}** and **{lover2}** lovers\n"
 "{game_link}"
 msgstr ""
+"Kamu telah menjadikan **{lover1}** dan **{lover2}** sepasang kekasih\n"
+"{game_link}"
 
 #: utils/werewolf.py:2133
 msgid "Choose a dead player to raid and take their role."
 msgstr ""
+"Pilih seorang pemain yang mati untuk diserang dan mengambil peran mereka."
 
 #: utils/werewolf.py:2147 utils/werewolf.py:2228 utils/werewolf.py:2281
 #: utils/werewolf.py:2327
@@ -14898,6 +15274,8 @@ msgid ""
 "You've ran out of time, slowpoke.\n"
 "{game_link}"
 msgstr ""
+"Kamu kehabisan waktu, slowpoke.\n"
+"{game_link}"
 
 #: utils/werewolf.py:2159
 #, python-brace-format
@@ -14906,10 +15284,13 @@ msgid ""
 "**{new_role}**.\n"
 "{game_link}"
 msgstr ""
+"Kamu telah menyerang **{to_raid}** untuk mengambil barang jarahannya dan "
+"peran mereka. Kamu sekarang adalah seorang **{new_role}**.\n"
+"{game_link}"
 
 #: utils/werewolf.py:2212
 msgid "Choose a villager to resurrect."
-msgstr ""
+msgstr "Pilih seorang penduduk desa untuk dibangkitkan."
 
 #: utils/werewolf.py:2237
 #, python-brace-format
@@ -14918,11 +15299,14 @@ msgid ""
 "rituals and prayers of ancient languages.\n"
 "{game_link}"
 msgstr ""
+"Kamu mencoba untuk membangkitkan **{to_resurrect}** dengan melakukan "
+"serangkaian ritual dan doa dari bahasa kuno.\n"
+"{game_link}"
 
 #: utils/werewolf.py:2242
 #, python-brace-format
 msgid "{player} has been resurrected!"
-msgstr ""
+msgstr "{player} telah dibangkitkan!"
 
 #: utils/werewolf.py:2245
 #, python-brace-format
@@ -14930,10 +15314,12 @@ msgid ""
 "You have been resurrected as **{role}!**\n"
 "{game_link}"
 msgstr ""
+"Kamu telah dibangkitkan sebagai **{role}!**\n"
+"{game_link}"
 
 #: utils/werewolf.py:2265
 msgid "Choose a werewolf to resurrect."
-msgstr ""
+msgstr "Memilih seekor werewolf untuk dibangkitkan."
 
 #: utils/werewolf.py:2290
 #, python-brace-format
@@ -14941,11 +15327,13 @@ msgid ""
 "You used necromancy to bring **{to_resurrect}** back to life.\n"
 "{game_link}"
 msgstr ""
+"Kamu menggunakan necromancy untuk menghidupkan kembali **{to_resurrect}**.\n"
+"{game_link}"
 
 #: utils/werewolf.py:2295
 #, python-brace-format
 msgid "**{player}** came back to life!"
-msgstr ""
+msgstr "**{player}** telah hidup kembali!"
 
 #: utils/werewolf.py:2300
 #, python-brace-format
@@ -14953,10 +15341,12 @@ msgid ""
 "You came back to life as **{role}!**\n"
 "{game_link}"
 msgstr ""
+"Kamu hidup kembali sebagai **{role}!**\n"
+"{game_link}"
 
 #: utils/werewolf.py:2313
 msgid "Choose 2 players that will exchange their roles with each other."
-msgstr ""
+msgstr "Pilih 2 pemain yang akan menukarkan peran mereka dengan satu sama lain."
 
 #: utils/werewolf.py:2343
 #, python-brace-format
@@ -14965,6 +15355,9 @@ msgid ""
 "other.\n"
 "{game_link}"
 msgstr ""
+"Kamu telah bertuka peran **{exchange1}** dan **{exchange2}** dengan satu "
+"sama lain.\n"
+"{game_link}"
 
 #: utils/werewolf.py:2353 utils/werewolf.py:2364
 #, python-brace-format
@@ -14973,11 +15366,16 @@ msgid ""
 "**{new_role}**.\n"
 "{game_link}"
 msgstr ""
+"**{troublemaker}** menukarkan peranmu dengan seseorang. Kamu sekarang adalah "
+"seorang **{new_role}**.\n"
+"{game_link}"
 
 #: utils/werewolf.py:2391
 msgid ""
 "Choose a Werewolf to send a spiritual protection to block death for one time."
 msgstr ""
+"Pilih Werewolf untuk mengirim perlindungan spiritual untuk menghadang "
+"kematian untuk satu kali."
 
 #: utils/werewolf.py:2409
 #, python-brace-format
@@ -14985,6 +15383,8 @@ msgid ""
 "You didn't choose anyone, slowpoke.\n"
 "{game_link}"
 msgstr ""
+"Kamu tidak memilih siapa pun, slowpoke.\n"
+"{game_link}"
 
 #: utils/werewolf.py:2418
 #, python-brace-format
@@ -14992,6 +15392,8 @@ msgid ""
 "**{protected}** is now protected to block one death.\n"
 "{game_link}"
 msgstr ""
+"**{protected}** sekarang telah dilindungi untuk menghadang satu kematian.\n"
+"{game_link}"
 
 #: utils/werewolf.py:2423
 #, python-brace-format
@@ -14999,6 +15401,9 @@ msgid ""
 "The **{role}** sent you a spiritual protection to block one death.\n"
 "{game_link}"
 msgstr ""
+"**{role}** mengirimkanmu sebuah perlindungan spiritual untuk menghadang satu "
+"kematian.\n"
+"{game_link}"
 
 #: utils/werewolf.py:2440
 #, python-brace-format
@@ -15006,6 +15411,8 @@ msgid ""
 "Would you like to infect **{target}** with your curse to join your nightly "
 "killings?"
 msgstr ""
+"Apakah kamu ingin menginfeksi **{target}** dengan kutukkanmu untuk bergabung "
+"dengan pembunuhan malammu?"
 
 #: utils/werewolf.py:2462
 #, python-brace-format
@@ -15013,6 +15420,8 @@ msgid ""
 "You have successfully **Cursed {target}**. They will now join each night in "
 "the Werewolves' feast.\n"
 msgstr ""
+"Kamu telah berhasil **Mengutuk {target}**. Mereka sekarang akan bergabung "
+"setiap malam dalam pesta Werewolf.\n"
 
 #: utils/werewolf.py:2468
 #, python-brace-format
@@ -15021,16 +15430,19 @@ msgid ""
 "nightly killings and feast.\n"
 "{game_link}"
 msgstr ""
+"Kamu telah dikutuk oleh **{role}**. Kamu sekarang akan bergabung dalam "
+"pembunuhan malam dan pesta Werewolf.\n"
+"{game_link}"
 
 #: utils/werewolf.py:2477
 #, python-brace-format
 msgid "You became a **{role}** and lost your nocturnal powers."
-msgstr ""
+msgstr "Kamu telah menjadi seorang **{role}** dan kehilangan kekuatan malammu."
 
 #: utils/werewolf.py:2484
 #, python-brace-format
 msgid "You still have your powers as **{role}**."
-msgstr ""
+msgstr "Kamu masih memiliku kekuatanmu sebagai **{role}**."
 
 #: utils/werewolf.py:2502
 #, python-brace-format
@@ -15038,11 +15450,13 @@ msgid ""
 "There's no other possible players left to infect.\n"
 "{game_link}"
 msgstr ""
+"Tidak ada pemain yang tersisa untuk menginfeksi.\n"
+"{game_link}"
 
 #: utils/werewolf.py:2509
 #, python-brace-format
 msgid "Choose {num} player(s) to infect with your virus."
-msgstr ""
+msgstr "Pilih {num} pemain untuk diinfeksikan dengan virusmu."
 
 #: utils/werewolf.py:2526
 #, python-brace-format
@@ -15050,17 +15464,21 @@ msgid ""
 "You didn't choose enough players to infect, slowpoke.\n"
 "{game_link}"
 msgstr ""
+"Kamu tidak memilih cukup pemain untuk diinfeksikan, slowpoke.\n"
+"{game_link}"
 
 #: utils/werewolf.py:2534
 #, python-brace-format
 msgid ""
 "The last {count} possible targets have been automatically infected for you."
 msgstr ""
+"{count} target terakhir yang mungkin secara otomatis telah dinfeksikan "
+"untukmu."
 
 #: utils/werewolf.py:2542
 #, python-brace-format
 msgid "You have infected **{infected}**."
-msgstr ""
+msgstr "Kamu telah terinfeksi **{infected}**."
 
 #: utils/werewolf.py:2545
 #, python-brace-format
@@ -15068,20 +15486,22 @@ msgid ""
 "You have been infected by the {role}.\n"
 "{game_link}"
 msgstr ""
+"Kamu telah terinfeksi oleh {role}.\n"
+"{game_link}"
 
 #: utils/werewolf.py:2582
 msgid " Initial roles hidden."
-msgstr ""
+msgstr " Inisial peran disembunyikan."
 
 #: utils/werewolf.py:2601
 #, python-brace-format
 msgid "{user} has died. They were a **{role}**!{initial_role_info}"
-msgstr ""
+msgstr "{user} telah mati. Mereka adalah seorang **{role}**!{initial_role_info}"
 
 #: utils/werewolf.py:2610
 #, python-brace-format
 msgid "**{user}** lost the disease from viral infection."
-msgstr ""
+msgstr "**{user}** telah kehilangan penyakitnya dari infeksi virus."
 
 #: utils/werewolf.py:2625
 #, python-brace-format
@@ -15089,32 +15509,34 @@ msgid ""
 "Your idol **{idol}** died, you turned into a **{new_role}**.\n"
 "{game_link}"
 msgstr ""
+"Idolamu telah mati **{idol}**, kamu berubah menjadi seorang **{new_role}**.\n"
+"{game_link}"
 
 #: utils/werewolf.py:2637
 msgid "The Hunter grabs their gun."
-msgstr ""
+msgstr "Pemburu mengambil senjata mereka."
 
 #: utils/werewolf.py:2639
 msgid "Choose someone who shall die with you. 🔫"
-msgstr ""
+msgstr "Pilih seseorang yang akan mati bersamamu. 🔫"
 
 #: utils/werewolf.py:2650
 msgid "The Hunter couldn't find the trigger 😆."
-msgstr ""
+msgstr "Pemburu tidak dapat menemukan pemicunya 😆."
 
 #: utils/werewolf.py:2655
 msgid "The Hunter refused to shoot anyone."
-msgstr ""
+msgstr "Pemburu menolak untuk menembak siapa pun."
 
 #: utils/werewolf.py:2660
 #, python-brace-format
 msgid "You chose to shoot **{target}**"
-msgstr ""
+msgstr "Kamu memilih untuk menembak **{target}**"
 
 #: utils/werewolf.py:2665
 #, python-brace-format
 msgid "The Hunter is firing. **{target}** got hit!"
-msgstr ""
+msgstr "Pemburu sedang menembak. **{target}** tertembak!"
 
 #: utils/werewolf.py:2678
 #, python-brace-format
@@ -15122,6 +15544,8 @@ msgid ""
 "The **{role}** wounded one of the werewolves with their Rusty Sword before "
 "dying."
 msgstr ""
+"**{role}** melukai salah satu werewolf dengan Pedang Rusty mereka sebelum "
+"mati."
 
 #: utils/werewolf.py:2689
 #, python-brace-format
@@ -15129,6 +15553,8 @@ msgid ""
 "The **{role}** was lynched by the Village, a random villager **{target}** "
 "was shot."
 msgstr ""
+"**{role}** telah digantung oleh Penduduk Desa, seorang penduduk desa secara "
+"acak **{target}** tertembak."
 
 #: utils/werewolf.py:2712
 #, python-brace-format
@@ -15136,6 +15562,8 @@ msgid ""
 "The villagers killed **{role}**. The villagers lost all their special powers "
 "and became normal villagers."
 msgstr ""
+"Penduduk desa membunuh **{role}**. Penduduk desa kehilangan semua kekuatan "
+"khusus mereka dan menjadi penduduk desa biasa."
 
 #: utils/werewolf.py:2718
 #, python-brace-format
@@ -15144,11 +15572,14 @@ msgid ""
 "until the end of the game.💀\n"
 "{game_link}"
 msgstr ""
+"💀 Kamu telah dieliminasi. Mohon untuk tidak berkomunikasi dengan pemain lain "
+"sampai akhir permainan.💀\n"
+"{game_link}"
 
 #: utils/werewolf.py:2732
 #, python-brace-format
 msgid "{dead_player}'s lover, {lover}, will die of sorrow."
-msgstr ""
+msgstr "Kekasih {dead_player}, {lover}, akan mati karena kesedihan."
 
 #: utils/werewolf.py:2762
 msgid "Lovers"
@@ -15157,27 +15588,33 @@ msgstr "Sepasang kekasih"
 #: utils/werewolf.py:2821
 msgid "You are going to die. Use your last breath to choose a new Sheriff."
 msgstr ""
+"Kamu akan segera mati. Gunakan napas terakhirmu untuk memilih seorang "
+"Sheriff baru."
 
 #: utils/werewolf.py:2826
 #, python-brace-format
 msgid ""
 "You exchanged roles with **{dying_user}**. You should choose the new Sheriff."
 msgstr ""
+"Kamu menukarkan peran dengan **{dying_user}**. Kamu harus memilih Sheriff "
+"baru."
 
 #: utils/werewolf.py:2832
 #, python-brace-format
 msgid "The **Sheriff {sheriff}** should choose their successor."
-msgstr ""
+msgstr "**Sheriff {sheriff}** harus memilih penggantinya."
 
 #: utils/werewolf.py:2840
 msgid "Choose the new 🎖 Sheriff️."
-msgstr ""
+msgstr "Memilih Sheriff baru 🎖."
 
 #: utils/werewolf.py:2854
 msgid ""
 "You didn't choose anyone. A random player will be chosen to be your "
 "successor."
 msgstr ""
+"Kamu tidak memilih siapa pun. Seorang pemain akan dipilih secara acak untuk "
+"menjadi penggantimu."
 
 #: utils/werewolf.py:2860
 #, python-brace-format
@@ -15185,11 +15622,14 @@ msgid ""
 "📢 **{ex_sheriff}** didn't choose anyone. {sheriff} got randomly chosen to be "
 "the new 🎖️ **Sheriff**. **The vote of the Sheriff counts as double.**"
 msgstr ""
+"📢 **{ex_sheriff}** tidak memilih siapa pun. {sheriff} telah terpilih secara "
+"acak untuk menjadi 🎖️ **Sheriff** baru. **Pemungutan suara dari Sheriff "
+"dihitung ganda**"
 
 #: utils/werewolf.py:2866
 #, python-brace-format
 msgid "**{sheriff}** became the new Sheriff."
-msgstr ""
+msgstr "**{sheriff}** telah menjadi Sheriff baru."
 
 #: utils/werewolf.py:2872
 #, python-brace-format
@@ -15197,6 +15637,8 @@ msgid ""
 "📢 {sheriff} got chosen to be the new 🎖️ **Sheriff**. **The vote of the "
 "Sheriff counts as double.**"
 msgstr ""
+"📢 {sheriff} telah dipilih menjadi 🎖️ **Sheriff** baru. **Pemungutan suara "
+"dari Sheriff dihitung ganda.**"
 
 #~ msgid ""
 #~ "1) Only up to two characters per individual\n"
