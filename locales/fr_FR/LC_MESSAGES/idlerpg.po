@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-06-02 22:07+0200\n"
-"PO-Revision-Date: 2021-06-02 18:09+0000\n"
+"PO-Revision-Date: 2021-06-07 21:24+0000\n"
 "Last-Translator: Victor Lemonnier <victorlemonnier50@gmail.com>\n"
 "Language-Team: French <http://translate.travitia.xyz/projects/idlerpg/bot/fr/"
 ">\n"
@@ -4029,22 +4029,24 @@ msgstr ""
 msgid ""
 "You do not have an eventbackground. They can be acquired on seasonal events."
 msgstr ""
+"Tu n'as pas de fond de profil d'évènement. Ils peuvent être obtenus via les "
+"évènements saisonniers."
 
 #: cogs/patreon/__init__.py:374
 #, python-brace-format
 msgid ""
 "The background number {number} is not valid, you only have {total} available."
 msgstr ""
-"L'image de fond numéro {number} n'est pas valide, vous n'avez que {total} de "
-"valable."
+"L'image de fond numéro {number} n'est pas valide, tu n'en as que {total} de "
+"disponibles."
 
 #: cogs/patreon/__init__.py:382
 msgid "Background updated!"
-msgstr "Image de fond mise à jour !"
+msgstr "Fond de profil mis à jour !"
 
 #: cogs/classes/__init__.py:52
 msgid "Choose or change your class(es)"
-msgstr ""
+msgstr "Choisis ou change de classe(s)"
 
 #: cogs/classes/__init__.py:56
 #, python-brace-format
@@ -4068,18 +4070,36 @@ msgid ""
 "\n"
 "            (This command has a cooldown of 24 hours)"
 msgstr ""
+"Sélectionne ou change ta classe primaire ou secondaire.\n"
+"\n"
+"- Les guerriers ont plus de défense\n"
+"- Les voleurs accèdent à la commande `{prefix}steal`\n"
+"- Les mages font plus de dégâts\n"
+"- Les rangers obtiennent un animal de compagnie qui peut trouver de l'"
+"équipement\n"
+"- Les raiders ont de meilleurs stats en raid et en batailles de raid\n"
+"- Les ritualistes obtiennent plus de faveurs en sacrifiant des objets et ont "
+"deux fois plus de chance d'en recevoir à la fin des aventures\n"
+"- Les parangons obtiennent plus de défense *et* infligent plus de dégâts ; "
+"cette classe est seulement disponible pour les donateurs\n"
+"\n"
+"La classe secondaire se débloque au niveau 12. Sélectionner une classe est "
+"gratuit la première fois (Pas de classe -> Classe), mais en changer plus "
+"tard coûtera   5 000$ (Classe -> Une autre classe)\n"
+"\n"
+"(Cette commande a un refroidissement de 24 heures)"
 
 #: cogs/classes/__init__.py:72
 msgid "Select class to change"
-msgstr ""
+msgstr "Sélectionne la classe à changer"
 
 #: cogs/classes/__init__.py:73
 msgid "Primary Class"
-msgstr ""
+msgstr "Classe Primaire"
 
 #: cogs/classes/__init__.py:73
 msgid "Secondary Class"
-msgstr ""
+msgstr "Classe Secondaire"
 
 #: cogs/classes/__init__.py:80
 msgid "Warrior"
@@ -4090,6 +4110,8 @@ msgid ""
 "The tank class. Charge into battle with additional defense!\n"
 "+1 defense per evolution."
 msgstr ""
+"La classe tank. Fonce dans la bataille avec un bonus de défense ! \n"
+"+1 de défense par évolution."
 
 #: cogs/classes/__init__.py:88
 msgid "Thief"
@@ -4103,6 +4125,10 @@ msgid ""
 "successful.\n"
 "+8% success chance per evolution."
 msgstr ""
+"Le sournois voleur d'argent...\n"
+"Accède à la commande `{prefix}steal`. 10% de chance de voler de l'argent à "
+"un joueur aléatoire.\n"
+"+8% de chance à chaque évolution."
 
 #: cogs/classes/__init__.py:98
 msgid "Mage"
@@ -4113,6 +4139,8 @@ msgid ""
 "Utilise powerful magic for stronger attacks.\n"
 "+1 damage per evolution."
 msgstr ""
+"Utilise des sorts puissants pour infliger plus de dégâts.\n"
+"+1 dégât par évolution."
 
 #: cogs/classes/__init__.py:108
 #, python-brace-format
@@ -4122,20 +4150,26 @@ msgid ""
 "for you.\n"
 "+3 minimum stat and +6 maximum stat per evolution."
 msgstr ""
+"Chasseur d'équipement et entraîneur de son propre animal de compagnie.\n"
+"Accède à la commande `{prefix}pet` pour intéragir avec ton animal de "
+"compagnie et le laisser trouver des équipements pour toi.\n"
+"+3 stats minimum aux équipements trouvés et +6 maximum par évolution."
 
 #: cogs/classes/__init__.py:115
 msgid "Raider"
-msgstr ""
+msgstr "Raider"
 
 #: cogs/classes/__init__.py:117
 msgid ""
 "A strong warrior who gives their life for the fight against Zerekiel.\n"
 "Every evolution boosts your raidstats by an additional 10%."
 msgstr ""
+"Un guerrier puissant qui donne sa vie en se battant contre Zerekiel.\n"
+"Chaque évolution augmente de 10% tes stats de raid."
 
 #: cogs/classes/__init__.py:124
 msgid "Ritualist"
-msgstr ""
+msgstr "Ritualiste"
 
 #: cogs/classes/__init__.py:126
 msgid ""
@@ -4144,16 +4178,23 @@ msgid ""
 "evolution, their sacrifices are 5% more effective. They have twice the "
 "chance to get loot from adventures."
 msgstr ""
+"Un voyant, un sacrifieur et un croyant.\n"
+"Le ritualiste dévoue sa vie à son Dieu. Pour chaque évolution, les "
+"sacrifices sont 5% plus efficaces. Ils ont deux fois plus de chance "
+"d'obtenir des reliques avec les aventures."
 
 #: cogs/classes/__init__.py:138
 msgid "Paragon"
-msgstr "Paragon"
+msgstr "Parangon"
 
 #: cogs/classes/__init__.py:140
 msgid ""
 "Absorb the appreciation of the devs into your soul to power up.\n"
 "+1 damage and defense per evolution."
 msgstr ""
+"Absorbe la reconnaissance des développeurs pour nourrir ton âme et te rendre "
+"plus fort.\n"
+"+1 de défense et de dégât par évolution."
 
 #: cogs/classes/__init__.py:165
 #, python-brace-format
@@ -4161,53 +4202,58 @@ msgid ""
 "You are about to select the `{profession}` class for yourself. {textaddon} "
 "Proceed?"
 msgstr ""
+"Tu es sur le point de sélectionner la classe `{profession}`. Cela te coûtera "
+"{textaddon}. Confirmer ?"
 
 #: cogs/classes/__init__.py:169
 msgid "This **costs nothing**, but changing it later will cost **$5000**."
 msgstr ""
+"C'est **gratuit**pour cette fois ! Mais en changer plus tard coûtera **5 "
+"000$**."
 
 #: cogs/classes/__init__.py:172
 msgid "This will cost **$5000**."
-msgstr ""
+msgstr "Cela coûte **5 000$**."
 
 #: cogs/classes/__init__.py:176
 msgid "Class selection cancelled."
-msgstr ""
+msgstr "Sélection de classe annulée."
 
 #: cogs/classes/__init__.py:192
 #, python-brace-format
 msgid "Your new class is now `{profession}`."
-msgstr "Votre nouvelle classe est maintenant `{profession}`."
+msgstr "Ta nouvelle classe est maintenant `{profession}`."
 
 #: cogs/classes/__init__.py:200
 msgid "You're too poor for a class change, it costs **$5000**."
-msgstr ""
-"Vous êtes trop pauvre pour changer de classe, le coût est de **$5000**."
+msgstr "Tu es trop pauvre pour changer de classe, le coût est de **5 000$**."
 
 #: cogs/classes/__init__.py:229
 #, python-brace-format
 msgid ""
 "You selected the class `{profession}`. **$5000** was taken off your balance."
 msgstr ""
+"Tu as choisis la classe `{profession}`. **5 000$** vont être enlevés à ton "
+"solde."
 
 #: cogs/classes/__init__.py:235
 msgid "View your class(es)"
-msgstr ""
+msgstr "Voir tes classes"
 
 #: cogs/classes/__init__.py:238
 msgid "Show your class(es) and their added benefits, sent as images."
-msgstr ""
+msgstr "Affiche tes classes et leurs bonus liés sous forme d'images."
 
 #: cogs/classes/__init__.py:252
 #, python-brace-format
 msgid "The image for your class **{class_}** hasn't been added yet."
 msgstr ""
-"L’image pour votre classe **{class_}** n’a pas encore été ajoutée pour le "
+"L’image pour la classe **{class_}** n’a pas encore été ajoutée pour le "
 "moment."
 
 #: cogs/classes/__init__.py:258
 msgid "Evolve your class(es)"
-msgstr ""
+msgstr "Fais évoluer tes classes"
 
 #: cogs/classes/__init__.py:263
 #, no-python-format
@@ -4230,37 +4276,55 @@ msgid ""
 "evolution\n"
 "            (- Paragons gain +1 damage *and* +1 defense per evolution)"
 msgstr ""
+"Fais évoluer tes classes au niveau supérieur pour te procurer de meilleurs "
+"bonus de classes.\n"
+"\n"
+"Tu peux évoluer tous les 5 niveaux, c'est à dire au niveau 5, niveau 10, "
+"niveau 15, niveau 20, niveau 25 et niveau 30.\n"
+"\n"
+"- Les guerriers gagnent +1 de défense par évolution.\n"
+"- Les voleurs ont 8% plus de chance de réussir leur vol par évolution.\n"
+"- Les mages gagnent +1 d'attaque par évolution.\n"
+"- L'animal de compagnie du ranger trouve des objets avec minimum +3 stats/"
+"maximum +6 par évolution.\n"
+"- Cela signifie qu'un animal de compagnie niveau 1 trouver des équipements "
+"de stats 3 à 6 ; de niveau 6 à 12 au niveau 2.\n"
+"- Les raiders gagnent +0.1 de défense et dégât en stats de raid par "
+"évolution.\n"
+"- Les parangons gagnent +1 d'attaque *ET* de défense par évolution."
 
 #: cogs/classes/__init__.py:278
 msgid "Your level isn't high enough to evolve."
-msgstr "Votre niveau n’est pas assez élevé pour évoluer."
+msgstr "Ton niveau n’est pas assez élevé pour évoluer."
 
 #: cogs/classes/__init__.py:291
 msgid "You haven't got a class yet."
-msgstr "Vous n’avez pas encore de classe."
+msgstr "Tu n'as pas encore de classe."
 
 #: cogs/classes/__init__.py:293
 msgid "Nothing to evolve."
-msgstr ""
+msgstr "Impossible d'évoluer."
 
 #: cogs/classes/__init__.py:299
 #, python-brace-format
 msgid "You are now a `{class1}` and a `{class2}`."
-msgstr ""
+msgstr "Tu es maintenant un `{class1}` et un `{class2}`."
 
 #: cogs/classes/__init__.py:304
 msgid "Shows the evolution tree"
-msgstr ""
+msgstr "Affiche l'arbre d'évolution"
 
 #: cogs/classes/__init__.py:308
 msgid ""
 "Shows the evolution tree for each class.\n"
 "            This will only show the names, not the respective benefits."
 msgstr ""
+"Affiche l'arbre d'évolution pour chaque classe.\n"
+"Cela montrera seulement les noms, pas les bonus respectifs."
 
 #: cogs/classes/__init__.py:328
 msgid "Steal money"
-msgstr ""
+msgstr "Vole de l'argent"
 
 #: cogs/classes/__init__.py:333
 #, no-python-format
@@ -4281,27 +4345,44 @@ msgid ""
 "            Only thieves can use this command.\n"
 "            (This command has a cooldown of 1 hour.)"
 msgstr ""
+"Vole de l'argent à un utilisateur aléatoire.\n"
+"\n"
+"Tes chances de vol sont augmentées en évoluant ta classe ou avec le bâtiment "
+"de voleur de ton alliance, si ton alliance possède une ville.\n"
+"Si tu réussis ton coup, tu voleras 10% du total de l'argent d'un joueur "
+"aléatoire .\n"
+"\n"
+"Tu ne *peux pas* choisir ta cible, c'est toujours un joueur aléatoire. Si le "
+"bot n'arrive pas à trouver un joueur, ce sera remplacé par \"un voyageur qui "
+"passait par là\".\n"
+"Le joueur volé ne peut pas être un joueur possédant moins de 10$, cela "
+"s'applique aussi à toi comme aux développeurs du bot.\n"
+"\n"
+"Seuls les voleurs peuvent utiliser cette commande.\n"
+"(Cette commande a un refroidissement de 1 heure)"
 
 #: cogs/classes/__init__.py:367
 msgid "You attempted to steal from a bot VIP, but the bodyguards caught you."
 msgstr ""
+"Tu as tenté de voler de l'argent à un joueur VIP mais ses gardes du corps "
+"t'ont attrapé."
 
 #: cogs/classes/__init__.py:397
 #, python-brace-format
 msgid "You stole **${stolen}** from {user}."
-msgstr ""
+msgstr "Tu as volé **{stolen}$** à {user}."
 
 #: cogs/classes/__init__.py:399
 msgid "a traveller just passing by"
-msgstr ""
+msgstr "un voyageur qui passait par là"
 
 #: cogs/classes/__init__.py:403
 msgid "Your attempt to steal money wasn't successful."
-msgstr "Votre tentative de vol d’argent est un échec."
+msgstr "Ta tentative de vol est un échec."
 
 #: cogs/classes/__init__.py:407
 msgid "Interact with your pet"
-msgstr ""
+msgstr "Intéragis avec ton animal de compagnie"
 
 #: cogs/classes/__init__.py:412
 #, python-brace-format
@@ -4321,6 +4402,21 @@ msgid ""
 "\n"
 "            Only rangers can use this command."
 msgstr ""
+"Intéragis avec ton animal de compagnie. Assure toi d'utiliser `{prefix}help "
+"pet`.\n"
+"\n"
+"Toutes les deux heures, ton animal de compagnie perdra 2 points de "
+"nourriture, 4 points de boisson, 1 point de joie et 1 point d'amour.\n"
+"\n"
+"Si la nourriture ou la boisson tombe en-dessous de 0, ton animal de "
+"compagnie meurt et ta classe de ranger te sera retirée.\n"
+"Si l'amour tombe en-dessous de 75, ton animal de compagnie a des chances de "
+"s'enfuir. Plus l'amour baisse, plus il a de chances de s'enfuir.\n"
+"\n"
+"La joie de ton animal influence les équipements qu'il trouve, agissant comme "
+"un multiplicateur pour les stats des équipements.\n"
+"\n"
+"Seuls les rangers peuvent utiliser cette commande."
 
 #: cogs/classes/__init__.py:428
 #, python-brace-format
@@ -4333,23 +4429,23 @@ msgstr "Niveau"
 
 #: cogs/classes/__init__.py:431
 msgid "Food"
-msgstr ""
+msgstr "Nourriture"
 
 #: cogs/classes/__init__.py:433
 msgid "Drinks"
-msgstr ""
+msgstr "Boissons"
 
 #: cogs/classes/__init__.py:435
 msgid "Love"
-msgstr ""
+msgstr "Amour"
 
 #: cogs/classes/__init__.py:436
 msgid "Joy"
-msgstr ""
+msgstr "Joie"
 
 #: cogs/classes/__init__.py:444 cogs/classes/__init__.py:466
 msgid "Feed your pet"
-msgstr ""
+msgstr "Nourris ton animal de compagnie"
 
 #: cogs/classes/__init__.py:448
 msgid ""
@@ -4358,39 +4454,43 @@ msgid ""
 "\n"
 "            Only rangers can use this command."
 msgstr ""
+"Nourris ton animal de compagnie. Cela affiche un menu interactif où tu peux "
+"acheter de la nourriture.\n"
+"\n"
+"Seuls les rangers peuvent utiliser cette commande."
 
 #: cogs/classes/__init__.py:453
 msgid "Potato"
-msgstr ""
+msgstr "Patate"
 
 #: cogs/classes/__init__.py:454
 msgid "Apple"
-msgstr ""
+msgstr "Pomme"
 
 #: cogs/classes/__init__.py:455
 msgid "Cucumber"
-msgstr ""
+msgstr "Concombre"
 
 #: cogs/classes/__init__.py:456
 msgid "Meat"
-msgstr ""
+msgstr "Viande"
 
 #: cogs/classes/__init__.py:457
 msgid "Salad"
-msgstr ""
+msgstr "Salade"
 
 #: cogs/classes/__init__.py:458
 msgid "Sushi"
-msgstr ""
+msgstr "Sushi"
 
 #: cogs/classes/__init__.py:459
 msgid "Adrian's Power Poop"
-msgstr ""
+msgstr "Caca de puissance d'Adrian"
 
 #: cogs/classes/__init__.py:470 cogs/classes/__init__.py:528
 #: cogs/marriage/__init__.py:293
 msgid "You are too poor to buy this."
-msgstr "Vous êtes trop pauvre pour acheter ceci."
+msgstr "Tu es trop pauvre pour acheter ceci."
 
 #: cogs/classes/__init__.py:494
 #, python-brace-format
@@ -4398,10 +4498,12 @@ msgid ""
 "You bought **{item}** for your pet and increased its food bar by **{points}"
 "** points."
 msgstr ""
+"Tu as acheté **{item}** pour ton animal de compagnie et a restauré sa barre "
+"de nourriture de **{points}** points."
 
 #: cogs/classes/__init__.py:502
 msgid "Give your pet something to drink."
-msgstr ""
+msgstr "Donne quelque chose à boire à ton animal de compagnie."
 
 #: cogs/classes/__init__.py:506
 msgid ""
@@ -4410,38 +4512,42 @@ msgid ""
 "\n"
 "            Only rangers can use this command."
 msgstr ""
+"Donne quelque chose à boire à ton animal de compagnie. Cela affiche un menu "
+"interactif où tu peux lui acheter à boire.\n"
+"\n"
+"Seuls les rangers peuvent utiliser cette commande."
 
 #: cogs/classes/__init__.py:511
 msgid "Some Water"
-msgstr ""
+msgstr "Un peu d'eau"
 
 #: cogs/classes/__init__.py:512
 msgid "A bottle of water"
-msgstr ""
+msgstr "Une bouteille d'eau"
 
 #: cogs/classes/__init__.py:513
 msgid "Cocktail"
-msgstr ""
+msgstr "Cocktail"
 
 #: cogs/classes/__init__.py:514
 msgid "Wine"
-msgstr ""
+msgstr "Vin"
 
 #: cogs/classes/__init__.py:515
 msgid "Beer"
-msgstr ""
+msgstr "Bière"
 
 #: cogs/classes/__init__.py:516
 msgid "Vodka"
-msgstr ""
+msgstr "Vodka"
 
 #: cogs/classes/__init__.py:517
 msgid "Adrian's Cocktail"
-msgstr ""
+msgstr "Cocktail d'Adrian"
 
 #: cogs/classes/__init__.py:524
 msgid "Give your pet something to drink"
-msgstr ""
+msgstr "Donne quelque chose à boire à ton animal de compagnie"
 
 #: cogs/classes/__init__.py:552
 #, python-brace-format
@@ -4449,10 +4555,12 @@ msgid ""
 "You bought **{item}** for your pet and increased its drinks bar by **{points}"
 "** points."
 msgstr ""
+"Tu as acheté **{item}** pour ton animal de compagnie et a restauré sa barre "
+"de boisson de **{points}** points."
 
 #: cogs/classes/__init__.py:561
 msgid "Love your pet"
-msgstr ""
+msgstr "Donne de l'amour à ton animal de compagnie"
 
 #: cogs/classes/__init__.py:565
 msgid ""
@@ -4462,6 +4570,11 @@ msgid ""
 "            Only rangers can use this command.\n"
 "            (This command has a cooldown of 6 hours.)"
 msgstr ""
+"Câline ton animal de compagnie pour augmenter ses points d'amour. Ton animal "
+"de compagnie peut gagner de 1 à 12 points d'amour par câlin.\n"
+"\n"
+"Seuls les rangers peuvent utiliser cette commande.\n"
+"(Cette commande a un refroidissement de 6 heures.)"
 
 #: cogs/classes/__init__.py:579
 #, python-brace-format
@@ -4469,11 +4582,13 @@ msgid ""
 "Your pet adores you! :heart: Cuddling it has increased its love for you by "
 "**{value}** points."
 msgstr ""
+"Ton animal de compagnie t'adore ! :heart: Lui faire de câlins a augmenté son "
+"amour pour toi de **{value}** points."
 
 #. We are mean, indeed
 #: cogs/classes/__init__.py:588
 msgid "Play with your pet"
-msgstr ""
+msgstr "Joue avec ton animal de compagnie"
 
 #: cogs/classes/__init__.py:592
 msgid ""
@@ -4483,47 +4598,54 @@ msgid ""
 "            Only rangers can use this command.\n"
 "            (This command has a cooldown of 6 hours.)"
 msgstr ""
+"Joue avec ton animal de compagnie pour augmenter sa joie. Ton animal de "
+"compagnie gagne de 1 à 12 points de joie en jouant.\n"
+"\n"
+"Seuls les rangers peuvent utiliser cette commande.\n"
+"(Cette commande a un refroidissement de 6 heures.)"
 
 #: cogs/classes/__init__.py:606
 #, python-brace-format
 msgid "You have been {activity} with your pet and it gained **{value}** joy!"
 msgstr ""
+"Tu as {activity} avec ton animal de compagnie et sa joie a augmentée de "
+"**{value}** !"
 
 #: cogs/classes/__init__.py:610
 msgid "playing football :soccer:"
-msgstr ""
+msgstr "joué au football :soccer:"
 
 #: cogs/classes/__init__.py:611
 msgid "playing American football :football:"
-msgstr ""
+msgstr "joué au football Américain :football:"
 
 #: cogs/classes/__init__.py:612
 msgid "playing rugby :rugby_football:"
-msgstr ""
+msgstr "joué au rugby :rugby_football:"
 
 #: cogs/classes/__init__.py:613
 msgid "playing basketball :basketball:"
-msgstr ""
+msgstr "joué au basket :basketball:"
 
 #: cogs/classes/__init__.py:614
 msgid "playing tennis :tennis:"
-msgstr ""
+msgstr "joué au tennis :tennis:"
 
 #: cogs/classes/__init__.py:615
 msgid "playing ping-pong :ping_pong:"
-msgstr ""
+msgstr "joué au ping-pong :ping_pong:"
 
 #: cogs/classes/__init__.py:616
 msgid "boxing :boxing_glove:"
-msgstr ""
+msgstr "fait de la boxe :boxing_glove:"
 
 #: cogs/classes/__init__.py:617
 msgid "skiing :ski:"
-msgstr ""
+msgstr "fait du ski :ski:"
 
 #: cogs/classes/__init__.py:627
 msgid "Rename your pet"
-msgstr ""
+msgstr "Renomme ton animal de compagnie"
 
 #: cogs/classes/__init__.py:631
 msgid ""
@@ -4531,18 +4653,22 @@ msgid ""
 "\n"
 "            Only rangers can use this command."
 msgstr ""
+"Donne à ton animal de compagnie un nouveau nom. Le nom ne doit pas faire "
+"plus de 20 caractères.\n"
+"\n"
+"Seuls les rangers peuvent utiliser cette commande."
 
 #: cogs/classes/__init__.py:636
 msgid "Please enter a name shorter than 20 characters."
-msgstr ""
+msgstr "Entre un nom de moins de 20 caractères."
 
 #: cogs/classes/__init__.py:640
 msgid "Pet name updated."
-msgstr ""
+msgstr "Nom de ton animal de compagnie mit à jour."
 
 #: cogs/classes/__init__.py:645
 msgid "Set a new image for your pet"
-msgstr ""
+msgstr "Change l'image de ton animal de compagnie"
 
 #: cogs/classes/__init__.py:649
 #, python-brace-format
@@ -4559,29 +4685,39 @@ msgid ""
 "\n"
 "            Only rangers can use this command."
 msgstr ""
+"`[url]` - L'URL d'une image pour l'animal de compagnie, doit faire moins de "
+"60 caractères\n"
+"\n"
+"Change l'image montrée après avoir utilisé `{prefix}pet`.\n"
+"\n"
+"Du mal à trouver un lien court ? Suis [ce tutoriel] (https://wiki.idlerpg."
+"xyz/index.php?title=Tutorial:_Short_Image_URLs) ou attache simplement "
+"l'image que tu veux utiliser (png, jpg, webp et gifs acceptés) !\n"
+"\n"
+"Seuls les rangers peuvent utiliser cette commande."
 
 #: cogs/classes/__init__.py:661
 #, python-brace-format
 msgid "Your current pet image is: {url}"
-msgstr ""
+msgstr "L'image actuelle de ton animal de compagnie est : {url}"
 
 #: cogs/classes/__init__.py:667 cogs/guild/__init__.py:282
 #: cogs/guild/__init__.py:704
 msgid "No image URL found in your message, using image attachment..."
-msgstr ""
+msgstr "Pas d'URL trouvée dans ton message, utilisation de l'image attachée..."
 
 #: cogs/classes/__init__.py:671 cogs/guild/__init__.py:287
 #: cogs/guild/__init__.py:708
 msgid "Image URL too long, shortening..."
-msgstr ""
+msgstr "URL trop longue, raccourcissement..."
 
 #: cogs/classes/__init__.py:678
 msgid "Your pet's image was successfully updated."
-msgstr ""
+msgstr "L'image de ton animal de compagnie a bien été mise à jour."
 
 #: cogs/classes/__init__.py:684
 msgid "Let your pet hunt a weapon"
-msgstr ""
+msgstr "Envoie ton animal de compagnie trouver un équipement"
 
 #: cogs/classes/__init__.py:689
 #, no-python-format
@@ -4608,20 +4744,42 @@ msgid ""
 "            Only rangers can use this command.\n"
 "            (This command has a cooldown until 12am UTC.)"
 msgstr ""
+"Envoie ton animal de compagnie trouver un équipement pour toi.\n"
+"\n"
+"La stat de l'équipement dépend du niveau de ton animal de compagnie ("
+"déterminé par l'évolution de classe) ainsi que de sa joie.\n"
+"La stat la plus basse que ton animal de compagnie peut trouver est x3 son "
+"niveau, la plus haute est x6 son niveau.\n"
+"Le pourcentage de joie de ton animal de compagnie est multiplié avec ces "
+"stats de base.\n"
+"\n"
+"Par exemple : \n"
+"- Ton animal de compagnie est niveau 2, sa joie est de 50.\n"
+"- Les stats de base vont de (3x2) à (6x2), donc de 6 à 12.\n"
+"- Son pourcentage de joie multiplie donc : de 6x50% à 12x50%, donc de 3 à 6\n"
+"\n"
+"Dans cet exemple, ton animal de compagnie peut trouver un équipement avec "
+"des stats allant de 3 à 6. Une limite est fixée à 30.\n"
+"La valeur de l'équipement sera entre 0 et 250.\n"
+"\n"
+"Seuls les rangers peuvent utiliser cette commande.\n"
+"(Cette commande se réinitialise à minuit UTC)"
 
 #: cogs/classes/__init__.py:717
 msgid "Your pet is not happy enough to hunt an item. Try making it joyful!"
 msgstr ""
+"Ton animal de compagnie n'est pas assez heureux pour trouver un équipement. "
+"Essaye de le rendre plus joyeux !"
 
 #: cogs/classes/__init__.py:728
 msgid "Your pet found an item!"
-msgstr "Votre animal de compagnie a trouvé un item !"
+msgstr "Ton animal de compagnie a trouvé un équipement !"
 
 #: cogs/classes/__init__.py:740
 msgid "Your pet needs to recover, wait a day to retry"
 msgstr ""
-"Votre animal de compagnie a besoin de repos, attendez une journée pour "
-"essayer à nouveau"
+"Ton animal de compagnie a besoin de repos, attends une journée pour essayer "
+"à nouveau"
 
 #: cogs/music/__init__.py:135
 #, python-brace-format
@@ -4629,6 +4787,8 @@ msgid ""
 "{user} wants to skip a track. React if you agree. **{current}/{total}** "
 "voted for it!"
 msgstr ""
+"{user} veut passer ce morceau. Réagis si tu es d'accord. "
+"**{current}/{total}** ont voté pour !"
 
 #: cogs/music/__init__.py:140
 #, python-brace-format
@@ -4636,6 +4796,8 @@ msgid ""
 "{user} wants to pause/resume the player. React if you agree. **{current}/"
 "{total}** voted for it!"
 msgstr ""
+"{user} veut mettre sur pause/remettre en route le lecteur. Réagis si tu es "
+"d'accord. **{current}/{total}** ont voté pour !"
 
 #: cogs/music/__init__.py:145
 #, python-brace-format
@@ -4643,6 +4805,8 @@ msgid ""
 "{user} wants to stop playback. React if you agree. **{current}/{total}** "
 "voted for it!"
 msgstr ""
+"{user} veut arrêter le playback. Réagis si tu es d'accord. "
+"**{current}/{total}** ont voté pour !"
 
 #: cogs/music/__init__.py:150
 #, python-brace-format
@@ -4650,6 +4814,8 @@ msgid ""
 "{user} wants to change the volume. React if you agree. **{current}/{total}** "
 "voted for it!"
 msgstr ""
+"{user} veut changer le volume. Réagis si tu es d'accord. "
+"**{current}/{total}** ont voté pour !"
 
 #: cogs/music/__init__.py:155
 #, python-brace-format
@@ -4657,6 +4823,8 @@ msgid ""
 "{user} wants to toggle repeating. React if you agree. **{current}/{total}** "
 "voted for it!"
 msgstr ""
+"{user} veut mettre en boucle. Réagis si tu es d'accord. **{current}/{total}**"
+" ont voté pour !"
 
 #: cogs/music/__init__.py:160
 #, python-brace-format
@@ -4664,14 +4832,16 @@ msgid ""
 "{user} wants to change the equalizer. React if you agree. **{current}/{total}"
 "** voted for it!"
 msgstr ""
+"{user} veut changer l'égaliseur. Réagis si tu es d'accord. "
+"**{current}/{total}** ont voté pour !"
 
 #: cogs/music/__init__.py:198
 msgid "Vote passed!"
-msgstr ""
+msgstr "Vote terminé !"
 
 #: cogs/music/__init__.py:263
 msgid "Choose a result to play"
-msgstr ""
+msgstr "Choisis un résultat à jouer"
 
 #: cogs/music/__init__.py:267
 msgid ""
@@ -4680,29 +4850,33 @@ msgid ""
 "            Query for a track and play or add any result to the playlist, "
 "you can choose from a multitude of tracks."
 msgstr ""
+"`<query>` - La commande à entrer pour trouver une chanson\n"
+"\n"
+"Rechercher un morceau et le jouer ou l'ajouter à la playlist, tu peux "
+"choisir parmi une multitude de morceaux."
 
 #: cogs/music/__init__.py:277 cogs/music/__init__.py:306
 #: cogs/music/__init__.py:350 cogs/music/__init__.py:359
 #: cogs/akinator/__init__.py:191 cogs/akinator/__init__.py:226
 #: cogs/akinator/__init__.py:258 cogs/akinator/__init__.py:306
 msgid "No results..."
-msgstr ""
+msgstr "Pas de résultat..."
 
 #: cogs/music/__init__.py:281
 msgid "Song results"
-msgstr ""
+msgstr "Résultats des titres"
 
 #: cogs/music/__init__.py:282
 msgid "Hit a button to play one"
-msgstr ""
+msgstr "Appuie sur un bouton pour la jouer"
 
 #: cogs/music/__init__.py:301
 msgid "Loading track... This might take up to 3 seconds..."
-msgstr ""
+msgstr "Chargement du titre... Peut prendre environ 3 secondes..."
 
 #: cogs/music/__init__.py:327
 msgid "Play a song"
-msgstr ""
+msgstr "Joue une chanson"
 
 #: cogs/music/__init__.py:331
 #, python-brace-format
@@ -4714,14 +4888,19 @@ msgid ""
 "            If this is not the song you were looking for, try `{prefix}"
 "chooseplay`."
 msgstr ""
+"`<query>` - La recherche à faire pour trouver un titre\n"
+"\n"
+"Rechercher un titre et le jouer ou ajouter le premier résultat à la playlist."
+"\n"
+"Si ce n'est pas le titre que tu cherchais, essaye `{prefix}chooseplay`."
 
 #: cogs/music/__init__.py:337
 msgid "Downloading track... This might take up to 3 seconds..."
-msgstr ""
+msgstr "Téléchargement du titre... Cela peut prendre environ 3 secondes..."
 
 #: cogs/music/__init__.py:373
 msgid "Lock the player"
-msgstr ""
+msgstr "Bloque le lecteur"
 
 #: cogs/music/__init__.py:377
 msgid ""
@@ -4729,10 +4908,14 @@ msgid ""
 "\n"
 "            Only the session's DJ can use this command."
 msgstr ""
+"Bloque/Débloque le lecteur. Cela n'autorise personne d'autre à contrôler la "
+"musique.\n"
+"\n"
+"Seul le DJ de la session peut utiliser cette commande."
 
 #: cogs/music/__init__.py:391
 msgid "Toggle repeat"
-msgstr ""
+msgstr "Activer la répétition"
 
 #: cogs/music/__init__.py:395
 msgid ""
@@ -4744,10 +4927,17 @@ msgid ""
 "            If there are more than one person in the session and a non-DJ "
 "uses this command, a vote has to pass first."
 msgstr ""
+"Activer la répétition de la playlist.\n"
+"\n"
+"Une fois qu'un titre se termine, il sera automatiquement ajouté à la fin de "
+"la playlist.\n"
+"\n"
+"S'il y a plus d'une personne dans la session et qu'un non-DJ utilise cette "
+"commande, un vote sera tenu."
 
 #: cogs/music/__init__.py:411
 msgid "Skip the currently playing song."
-msgstr ""
+msgstr "Passe le titre qui est actuellement joué."
 
 #: cogs/music/__init__.py:415
 msgid ""
@@ -4756,10 +4946,14 @@ msgid ""
 "            If there are more than one person in the session and a non-DJ "
 "uses this command, a vote has to pass first."
 msgstr ""
+"Passe le titre qui est actuellement joué.\n"
+"\n"
+"S'il y a plus d'une personne dans la session et qu'un non-DJ utilise cette "
+"commande, un vote sera tenu."
 
 #: cogs/music/__init__.py:426
 msgid "Stops the music"
-msgstr ""
+msgstr "Arrête la musique"
 
 #: cogs/music/__init__.py:430
 msgid ""
@@ -4768,10 +4962,14 @@ msgid ""
 "            If there are more than one person in the session and a non-DJ "
 "uses this command, a vote has to pass first."
 msgstr ""
+"Arrête la musique et quitte le salon vocal.\n"
+"\n"
+"S'il y a plus d'une personne dans la session et qu'un non-DJ utilise cette "
+"commande, un vote sera tenu."
 
 #: cogs/music/__init__.py:442
 msgid "Change the volume"
-msgstr ""
+msgstr "Change le volume"
 
 #: cogs/music/__init__.py:446
 msgid ""
@@ -4780,6 +4978,10 @@ msgid ""
 "            If there are more than one person in the session and a non-DJ "
 "uses this command, a vote has to pass first."
 msgstr ""
+"Change le volume du playback.\n"
+"\n"
+"S'il y a plus d'une personne dans la session et qu'un non-DJ utilise cette "
+"commande, un vote sera tenu."
 
 #: cogs/music/__init__.py:453
 #, python-brace-format
@@ -4787,11 +4989,13 @@ msgid ""
 "⚠`Playback volume is going to change to {volume} in 5 seconds. To avoid the "
 "sudden earrape, control the volume on client side!`"
 msgstr ""
+"⚠ `Le volume du playback sera changé à {volume} dans 5 secondes. Pour éviter "
+"un viol des oreilles, règle ton volume !`"
 
 #: cogs/music/__init__.py:464
 #, python-brace-format
 msgid ":white_check_mark:` Volume successfully changed to {volume}!`"
-msgstr ":white_check_mark:` Volume changé avec succès à {volume}!`"
+msgstr ":white_check_mark: `Volume changé à {volume} avec succès !`"
 
 #: cogs/music/__init__.py:478
 msgid ""
@@ -4800,18 +5004,22 @@ msgid ""
 "            If there are more than one person in the session and a non-DJ "
 "uses this command, a vote has to pass first."
 msgstr ""
+"Met en pause le playback de la musique.\n"
+"\n"
+"S'il y a plus d'une personne dans la session et qu'un non-DJ utilise cette "
+"commande, un vote sera tenu."
 
 #: cogs/music/__init__.py:484
 msgid ":white_check_mark:`Song paused!`"
-msgstr ":white_check_mark:`Musique en pause!`"
+msgstr ":white_check_mark:`Musique en pause !`"
 
 #: cogs/music/__init__.py:487
 msgid ":white_check_mark:`Song resumed!`"
-msgstr ":white_check_mark:`La chanson à repris!`"
+msgstr ":white_check_mark:`Reprise de la musique !`"
 
 #: cogs/music/__init__.py:493
 msgid "Change the equalizer"
-msgstr ""
+msgstr "Change l'égaliseur"
 
 #: cogs/music/__init__.py:497
 msgid ""
@@ -4824,18 +5032,28 @@ msgid ""
 "            If there are more than one person in the session and a non-DJ "
 "uses this command, a vote has to pass first."
 msgstr ""
+"`<eq>` - L'égaliseur à utiliser\n"
+"\n"
+"Modifie l'égaliseur. Peut être **flat, piano, metal ou boost**.\n"
+"Flat est standard, piano est silencieux, metal booste les fréquences hautes "
+"et boost booste les fréquences basses.\n"
+"\n"
+"S'il y a plus d'une personne dans la session et qu'un non-DJ utilise cette "
+"commande, un vote sera tenu."
 
 #: cogs/music/__init__.py:506
 msgid "Not a valid equalizer. May be flat, piano, metal or boost."
 msgstr ""
+"Cet égalisateur n'est pas valide. Doit être flat, piano, metal ou boost."
 
 #: cogs/music/__init__.py:513
 msgid "Shows the current song."
-msgstr ""
+msgstr "Montre la chanson en cours."
 
 #: cogs/music/__init__.py:516
 msgid "Displays some information about the currently playing song."
 msgstr ""
+"Affiche quelques informations à propos de la chanson jouée en ce moment."
 
 #: cogs/music/__init__.py:524
 msgid "Now playing..."
@@ -4847,7 +5065,7 @@ msgstr "Titre"
 
 #: cogs/music/__init__.py:529
 msgid "Artist"
-msgstr ""
+msgstr "Artiste"
 
 #: cogs/music/__init__.py:533
 msgid "Volume"
@@ -4855,7 +5073,7 @@ msgstr "Volume"
 
 #: cogs/music/__init__.py:535
 msgid "Playing status"
-msgstr "Status en cours"
+msgstr "Statut en cours"
 
 #: cogs/music/__init__.py:535
 msgid "`⏸Paused`"
@@ -4863,41 +5081,41 @@ msgstr "`⏸En pause`"
 
 #: cogs/music/__init__.py:536
 msgid "DJ"
-msgstr ""
+msgstr "DJ"
 
 #: cogs/music/__init__.py:538
 msgid "Locked"
-msgstr ""
+msgstr "Bloqué"
 
 #: cogs/music/__init__.py:538 cogs/music/__init__.py:541
 #: cogs/music/__init__.py:545
 msgid "No"
-msgstr ""
+msgstr "Non"
 
 #: cogs/music/__init__.py:541
 msgid "Looping"
-msgstr ""
+msgstr "En boucle"
 
 #: cogs/music/__init__.py:544
 msgid "Explicit"
-msgstr ""
+msgstr "Explicite"
 
 #: cogs/music/__init__.py:547
 msgid "Equalizer"
-msgstr ""
+msgstr "Égalisateur"
 
 #: cogs/music/__init__.py:558
 #, python-brace-format
 msgid "Song requested by: {user}"
-msgstr "Musique demandé par: {user}"
+msgstr "Musique demandée par : {user}"
 
 #: cogs/music/__init__.py:567
 msgid "Show upcoming songs"
-msgstr ""
+msgstr "Montre les chansons jouées après"
 
 #: cogs/music/__init__.py:570
 msgid "Show the next (maximum 5) tracks in the queue."
-msgstr ""
+msgstr "Montre les prochaines (maximum 5) musiques dans la liste."
 
 #: cogs/music/__init__.py:581
 msgid "Upcoming entries"
@@ -4905,7 +5123,7 @@ msgstr "Les pistes à venir"
 
 #: cogs/music/__init__.py:590
 msgid "⚠`No more entries left.`"
-msgstr ""
+msgstr "⚠ `Plus de pistes restantes.`"
 
 #: cogs/music/__init__.py:596
 msgid ""
@@ -4915,22 +5133,27 @@ msgid ""
 "            Retrieves song lyrics. If no song specified, will check the "
 "current playing song."
 msgstr ""
+"`<query>` - La requête avec laquelle chercher une chanson ; Par défaut la "
+"chanson en cours\n"
+"\n"
+"Trouve les paroles de la chanson. Si non spécifié, affiche les paroles de la "
+"chanson en cours."
 
 #: cogs/music/__init__.py:605
 msgid "I am not playing. Please specify a song to look for."
-msgstr ""
+msgstr "Je ne joue aucune musique. Spécifie quelle chanson chercher."
 
 #: cogs/music/__init__.py:609
 msgid "Please specify a song."
-msgstr ""
+msgstr "Spécifie une chanson."
 
 #: cogs/music/__init__.py:611
 msgid ":x: Look for a longer query!"
-msgstr ""
+msgstr ":x: Cherche une requête plus longue !"
 
 #: cogs/music/__init__.py:615
 msgid "⚠ No results!"
-msgstr ""
+msgstr "⚠ Aucun résultat !"
 
 #: cogs/music/__init__.py:651
 #, python-brace-format
@@ -4940,11 +5163,11 @@ msgstr "🎧 {title} ajouté à la file..."
 #: cogs/music/__init__.py:659 cogs/music/__init__.py:662
 #, python-brace-format
 msgid "🎧 Playing {title}..."
-msgstr "🎧 musique en cours {title}..."
+msgstr "🎧 Musique en cours : {title}..."
 
 #: cogs/adventure/__init__.py:82
 msgid "Shows adventures and your chances"
-msgstr ""
+msgstr "Montre les aventures et tes chances de survie"
 
 #: cogs/adventure/__init__.py:87
 msgid ""
@@ -4953,10 +5176,14 @@ msgid ""
 "            Your chances are determined by your equipped items, race and "
 "class bonuses, your level and your God-given luck."
 msgstr ""
+"Montre toutes les aventures, leur nom, description et tes chances de les "
+"réussir sous forme d'image.\n"
+"Tes chances de survie sont déterminées par tes équipements, ta race, tes "
+"bonus de classe, ton niveau et la chance attribuée par ton Dieu."
 
 #: cogs/adventure/__init__.py:131
 msgid "Sends your character on an adventure."
-msgstr "Envoie votre personnage à l’aventure."
+msgstr "Envoie ton personnage à l’aventure."
 
 #: cogs/adventure/__init__.py:136
 #, python-brace-format
@@ -4979,12 +5206,29 @@ msgid ""
 "            Be sure to check `{prefix}status` to check how much time is "
 "left, or to check if you survived or died."
 msgstr ""
+"`<adventure_number>` - Un nombre entier entre 1 et 30\n"
+"\n"
+"Envoie ton personnage à l'aventure avec une difficulté de "
+"`<adventure_number>`.\n"
+"L'aventure prendra `<adventure_number>` heures si aucun booster de temps "
+"n'est utilisé et deux fois moins longtemps si un booster de temps est "
+"utilisé.\n"
+"\n"
+"Si ton alliance possède une ville avec un bâtiment d'aventure, le temps de "
+"l'aventure sera réduit par le % du niveau du bâtiment.\n"
+"Le temps est aussi réduit pour les donateurs :\n"
+"-5% de réduction pour les donateurs Argent\n"
+"-10% de réduction pour les donateurs Or\n"
+"-25% de réduction pour les donateurs Émeraude et au-dessus\n"
+"\n"
+"Assure toi d'utiliser `{prefix}status` pour vérifier combien de temps il "
+"reste, ou pour terminer l'aventure et voir si tu as survécu ou si tu es mort."
 
 #: cogs/adventure/__init__.py:151
 #, python-brace-format
 msgid "You must be on level **{level}** to do this adventure."
 msgstr ""
-"Vous devez être au moins niveau **{level}** pour participer à cette aventure."
+"Tu dois être au moins niveau **{level}** pour participer à cette aventure."
 
 #: cogs/adventure/__init__.py:194
 #, python-brace-format
@@ -4992,12 +5236,12 @@ msgid ""
 "Successfully sent your character out on an adventure. Use `{prefix}status` "
 "to see the current status of the mission."
 msgstr ""
-"Votre personnage est parti à l’aventure avec succès. Utilisez `{prefix}"
-"status` pour consulter l’état actuel de la mission."
+"Ton personnage est bien parti à l'aventure. Utilise `{prefix}status` pour "
+"consulter l’état actuel de la mission."
 
 #: cogs/adventure/__init__.py:202
 msgid "Go out on an active adventure."
-msgstr ""
+msgstr "Pars faire une aventure intéractive."
 
 #: cogs/adventure/__init__.py:207
 #, no-python-format
