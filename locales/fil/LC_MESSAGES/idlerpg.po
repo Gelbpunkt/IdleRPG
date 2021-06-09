@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-06-02 22:07+0200\n"
-"PO-Revision-Date: 2021-06-02 18:09+0000\n"
+"PO-Revision-Date: 2021-06-11 10:36+0000\n"
 "Last-Translator: Hestoria Celine <libayceline6@gmail.com>\n"
 "Language-Team: Filipino <http://translate.travitia.xyz/projects/idlerpg/bot/"
 "fil/>\n"
@@ -256,7 +256,7 @@ msgstr ""
 
 #: cogs/images/__init__.py:34
 msgid "Pixelfy an avatar"
-msgstr "Pixelfy ang awatara"
+msgstr "Pixelfy an awatara"
 
 #: cogs/images/__init__.py:38
 msgid ""
@@ -267,13 +267,12 @@ msgid ""
 "            Pixelfies a user's avatar. If the user has an animated icon, the "
 "first frame is used."
 msgstr ""
-"`[user]` - Ang user ng discord na ang awatara ay ipixelfy; nakabase sa "
-"sarili\n"
-"            `[size]` - Ang klase ng pikselasyon na gagamitin, puwede sa "
-"nemero na nasa pagitan ng 1 hanggang 5; nakabase sa 2\n"
+"`[user]` - A discord User whose awatara to pixelfy; defaults to oneself\n"
+"            `[size]` - The pixelation rate to use, can be a number between 1 "
+"and 5; defaults to 2\n"
 "\n"
-"            Ipixelfy ang awatara ng user. Kung ang user ay may gumagalaw na "
-"imahe, ang unang frame ang gagamitin."
+"            Pixelfies a user's awatara. If the user has an animated icon, "
+"the first frame is used."
 
 #: cogs/images/__init__.py:46
 msgid "Use 1, 2, 3, 4 or 5 as intensity value."
@@ -281,7 +280,7 @@ msgstr "Gamitin ang 1, 2, 3, 4 or 5 para sa antas ng intensidad."
 
 #: cogs/images/__init__.py:56
 msgid "Defines an avatar's edges"
-msgstr "Tukuyin ang gilid ng awatara"
+msgstr "Defines an awatara's edges"
 
 #: cogs/images/__init__.py:60
 msgid ""
@@ -290,15 +289,14 @@ msgid ""
 "            Finds and exaggerates edges in a user's avatar, creating a cool "
 "image effect."
 msgstr ""
-"`[user]` - Ang user ng discord na ang awatara ay gustong baguhin; nakabase "
-"sa normal\n"
+"`[user]` - A discord User whose awatara to edit; defaults to oneself\n"
 "\n"
-"            Palabisin ang gilid ng awatara ng isang user; nakagagawa ito "
-"nang astig na epekto sa imahe."
+"            Finds and exaggerates edges in a user's avatar, creating a cool "
+"image effect."
 
 #: cogs/images/__init__.py:72
 msgid "Inverts a user's avatar"
-msgstr "Itaob ang awatara ng isang user"
+msgstr "Inverts a user's awatara"
 
 #: cogs/images/__init__.py:76
 msgid ""
@@ -308,10 +306,15 @@ msgid ""
 "\n"
 "            (This command has a channel cooldown of 15 seconds.)"
 msgstr ""
+"`[member]` - A discord User whose awatara to invert; defaults to oneself\n"
+"\n"
+"            Invert the colors in someone's awatara.\n"
+"\n"
+"            (This command has a channel cooldown of 15 seconds.)"
 
 #: cogs/images/__init__.py:90
 msgid "oil-paint someone's avatar"
-msgstr ""
+msgstr "oil-paint someone's awatara"
 
 #: cogs/images/__init__.py:94
 msgid ""
@@ -321,10 +324,15 @@ msgid ""
 "\n"
 "            (This command has a channel cooldown of 15 seconds.)"
 msgstr ""
+"`[member]` - A discord User whose awatara to oil-paint; defaults to oneself\n"
+"\n"
+"            Creates an oil-painting effect on someone's awatara.\n"
+"\n"
+"            (This command has a channel cooldown of 15 seconds.)"
 
 #: cogs/halloween/__init__.py:35
 msgid "Trick or treat!"
-msgstr ""
+msgstr "Trick or treat... Happy Halloween!"
 
 #: cogs/halloween/__init__.py:40
 #, no-python-format
@@ -342,10 +350,22 @@ msgid ""
 "\n"
 "            (This command has a cooldown of 3h)"
 msgstr ""
+"Gumala kat at manakot ng mga residente! Maaaring may nakahandang regalo sila "
+"para sa'yo?\n"
+"\n"
+"            This command requires two players, one that is waiting and one "
+"that rings at the door.\n"
+"            If you are the one waiting, you will get a direct message from "
+"the bot later, otherwise you will get a reply immediately.\n"
+"\n"
+"            Mayroong 50% na pagkakataon na makakuha ka ng Halloween bag mula "
+"sa ibang manlalaro.\n"
+"\n"
+"            (This command has a cooldown of 3h)"
 
 #: cogs/halloween/__init__.py:53
 msgid "You walk around the houses... Noone is there... *yet*"
-msgstr ""
+msgstr "Naglibot ka sa mga bahay-bahay... ngunit walang mga tao... *sa ngayon*"
 
 #: cogs/halloween/__init__.py:60
 #, python-brace-format
@@ -353,6 +373,8 @@ msgid ""
 "You walk around the houses and ring at {waiting}'s house! That's a trick or "
 "treat bag for you, yay!"
 msgstr ""
+"Naglibot ka sa mga bahay at kumatok sa bahay ni {waiting}! May trick ir "
+"treat bag sila para sa'yo, swerte!"
 
 #: cogs/halloween/__init__.py:75
 #, python-brace-format
@@ -360,6 +382,8 @@ msgid ""
 "You walk around the houses and ring at {waiting}'s house! Sadly they don't "
 "have anything for you..."
 msgstr ""
+"Naglibot ka sa mga bahay at kumatok sa bahay ni {waiting}! Kawawa ka naman "
+"wala silang kahit na ano para sa'yo..."
 
 #: cogs/halloween/__init__.py:113
 #, python-brace-format
@@ -368,10 +392,13 @@ msgid ""
 "ancient image on top of a chocolate bar, passed along for generations. You "
 "decide to keep it in your `{prefix}eventbackground`s."
 msgstr ""
+"🎃 Nang paalis ka na sa bahay nila, binuksan mo ang natanggap mong kendi at "
+"plastik at may nakita kang lumang imahe. Napagdesisyunan mong itago ito sa "
+"`{prefix}eventbackground`s."
 
 #: cogs/halloween/__init__.py:120
 msgid "Open a trick or treat bag"
-msgstr ""
+msgstr "Buksan ang trick or treat bag"
 
 #: cogs/halloween/__init__.py:124
 #, python-brace-format
