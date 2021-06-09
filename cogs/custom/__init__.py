@@ -98,7 +98,6 @@ class Custom(commands.Cog):
         brief=_(
             'Daley\'s custom command. In honor of his brother "Dack", a fellow lover of RPGs.'
         ),
-        name="ExZy",
     )
     @locale_doc
     async def steak(self, ctx):

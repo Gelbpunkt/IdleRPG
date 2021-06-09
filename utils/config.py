@@ -178,7 +178,8 @@ class ConfigLoader:
 
     def reload(self) -> None:
         """Loads the config using the path this loader was initialized with, overriding any previously stored values."""
-        self.values = tomli.load(self.config)
+        with open(self.config, "r") as f:
+            self.values = tomli.load(f)
         self.set_attributes()
 
     def set_attributes(self) -> None:
