@@ -17,7 +17,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
 from typing import Any
 
-import toml
+import tomli
 
 
 class BotSection:
@@ -178,7 +178,7 @@ class ConfigLoader:
 
     def reload(self) -> None:
         """Loads the config using the path this loader was initialized with, overriding any previously stored values."""
-        self.values = toml.load(self.config)
+        self.values = tomli.load(self.config)
         self.set_attributes()
 
     def set_attributes(self) -> None:
