@@ -39,7 +39,7 @@ build:
 upload:
   stage: Release
   only:
-    - current
+    - current@Kenvyra/IdleRPG
     - tags
   script:
     - echo "https://dl-cdn.alpinelinux.org/alpine/edge/testing" >> /etc/apk/repositories
