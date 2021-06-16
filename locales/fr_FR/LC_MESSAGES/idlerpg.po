@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-06-02 22:07+0200\n"
-"PO-Revision-Date: 2021-06-07 21:24+0000\n"
+"PO-Revision-Date: 2021-06-17 00:36+0000\n"
 "Last-Translator: Victor Lemonnier <victorlemonnier50@gmail.com>\n"
 "Language-Team: French <http://translate.travitia.xyz/projects/idlerpg/bot/fr/"
 ">\n"
@@ -5274,6 +5274,33 @@ msgid ""
 "            (It is recommended to draw a map of the maze)\n"
 "            (This command has a cooldown of 30 minutes)"
 msgstr ""
+"L'aventure interactive te place dans un labyrinthe de 15x15 généré "
+"aléatoirement. Tu débutes dans le coin en haut à gauche (0,0) et ton but est "
+"de trouver la sortie dans le coin en bas à droite (14,14)\n"
+"Tu contrôles ton personnage avec les flèches en-dessous des messages.\n"
+"\n"
+"Tu as 1000PV. L'aventure se termine quand tu trouves la sortie ou que tes PV "
+"tombent à zéro.\n"
+"Tu peux perdre des PV en tombant dans des pièges ou en te battant contre des "
+"ennemis.\n"
+"\n"
+"Le labyrinthe contient des abris et des trésors mais aussi des pièges et des "
+"ennemis.\n"
+"Chaque case a 10% de chance d'être un piège. Si une case n'a pas de piège, "
+"elle a 10% de chances d'avoir un ennemi.\n"
+"Chaque labyrinthe contient 5 coffres au trésor.\n"
+"\n"
+"Les pièges peuvent t'enlever de 30 à 120 PV.\n"
+"Les dégâts de tes ennemis sont basés sur tes propres dégâts. Durant les "
+"combats, tu peux attaquer (⚔️), te défendre (🛡️) ou te soigner (❤️)\n"
+"Les coffres au trésor peuvent contenir jusqu'à 25 fois le total de ton "
+"attaque + défense.\n"
+"\n"
+"Si tu atteins la sortie, tu recevras un trésor spécial allant jusqu'à 100 "
+"fois le total de ton attaque + défense.\n"
+"\n"
+"(Il est recommandé de dessiner une carte du labyrinthe)\n"
+"(Cette commande a un refroidissement de 30 minutes)"
 
 #: cogs/adventure/__init__.py:228
 msgid ""
@@ -5285,112 +5312,119 @@ msgid ""
 "Tip: Use a silent channel for this, you may want to read all the messages I "
 "will send."
 msgstr ""
+"Tu es sur le point de te rendre dans un labyrinthe de 15x15. Il y a des "
+"ennemis, des trésors et des pièges cachés. Atteins la sortie dans le coin en "
+"bras à droite pour une grosse récompense !\n"
+"Tu es prêt ?\n"
+"\n"
+"Conseil : Utilise un canal silencieux pour ça, plus pratique pour lire tous "
+"les messages que je vais envoyer."
 
 #: cogs/adventure/__init__.py:236
 msgid "**Generating a maze...**"
-msgstr ""
+msgstr "**Génération d'un labyrinthe...**"
 
 #: cogs/adventure/__init__.py:247
 msgid "North"
-msgstr ""
+msgstr "Nord"
 
 #: cogs/adventure/__init__.py:248
 msgid "East"
-msgstr ""
+msgstr "Est"
 
 #: cogs/adventure/__init__.py:249
 msgid "South"
-msgstr ""
+msgstr "Sud"
 
 #: cogs/adventure/__init__.py:250
 msgid "West"
-msgstr ""
+msgstr "Ouest"
 
 #: cogs/adventure/__init__.py:321
 #, python-brace-format
 msgid "To the {side} is a wall."
-msgstr ""
+msgstr "Il y a un mur côté {side}."
 
 #: cogs/adventure/__init__.py:323
 #, python-brace-format
 msgid "To the {side} is an enemy."
-msgstr ""
+msgstr "Il y a un ennemi côté {side}."
 
 #: cogs/adventure/__init__.py:325
 #, python-brace-format
 msgid "To the {side} is a treasure."
-msgstr ""
+msgstr "Il y a un trésor côté {side}."
 
 #: cogs/adventure/__init__.py:327
 #, python-brace-format
 msgid "To the {side} is a floor."
-msgstr ""
+msgstr "Il y a un couloir côté {side}."
 
 #: cogs/adventure/__init__.py:330
 #, python-brace-format
 msgid "You are on {hp} HP"
-msgstr ""
+msgstr "Il te reste {hp} PV"
 
 #: cogs/adventure/__init__.py:340
 #, python-brace-format
 msgid "You stepped on a trap and took {damage} damage!"
-msgstr ""
+msgstr "Tu as marché sur un piège et subi {damage} dégâts !"
 
 #: cogs/adventure/__init__.py:367
 #, python-brace-format
 msgid "You found a treasure with **${money}** inside!"
-msgstr ""
+msgstr "Tu as trouvé un trésor avec **{money}$** à l'intérieur !"
 
 #: cogs/adventure/__init__.py:390
 msgid "Enemy"
-msgstr ""
+msgstr "Ennemi"
 
 #: cogs/adventure/__init__.py:395
 msgid "The Fight started"
-msgstr ""
+msgstr "Le combat commence"
 
 #: cogs/adventure/__init__.py:432
 #, python-brace-format
 msgid "The Enemy healed themselves for {hp} HP"
-msgstr ""
+msgstr "L'ennemi s'est soigné à hauteur de {hp} PV"
 
 #: cogs/adventure/__init__.py:438
 #, python-brace-format
 msgid "You healed yourself for {hp} HP"
-msgstr ""
+msgstr "Tu t'es soigné à hauteur de {hp} PV"
 
 #: cogs/adventure/__init__.py:444
 msgid "Attack blocked."
-msgstr ""
+msgstr "Attaque bloquée."
 
 #: cogs/adventure/__init__.py:449
 #, python-brace-format
 msgid "The Enemy hit you for {dmg} damage"
-msgstr ""
+msgstr "L'ennemi t'a infligé {dmg} dégâts"
 
 #: cogs/adventure/__init__.py:454
 #, python-brace-format
 msgid "You hit the enemy for {dmg} damage"
-msgstr ""
+msgstr "Tu as infligé {dmg} dégâts à l'ennemi"
 
 #: cogs/adventure/__init__.py:468 cogs/adventure/__init__.py:473
 #: cogs/gambling/__init__.py:1021 cogs/gambling/__init__.py:1070
 msgid "Timed out."
-msgstr ""
+msgstr "Temps écoulé."
 
 #: cogs/adventure/__init__.py:475
 msgid "You died."
-msgstr "Vous êtes mort."
+msgstr "Tu es mort."
 
 #: cogs/adventure/__init__.py:497
 #, python-brace-format
 msgid ""
 "You have reached the exit and were rewarded **${money}** for getting out!"
-msgstr ""
+msgstr "Tu as atteint la sortie et trouvé **{money}$** !"
 
 #: cogs/adventure/__init__.py:504
 msgid "Checks your adventure status."
-msgstr "Vérifiez l’état de votre aventure."
+msgstr "Vérifier l'avancée de ton aventure."
 
 #: cogs/adventure/__init__.py:508
 #, python-brace-format
