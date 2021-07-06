@@ -308,7 +308,7 @@ class Bot(commands.AutoShardedBot):
         in guilds it will use a custom set one
         or the global_prefix
         """
-        if not message.guild:  # or self.config.bot.is_beta:
+        if not message.guild or self.config.bot.is_beta:
             return commands.when_mentioned_or(self.config.bot.global_prefix)(
                 self, message
             )  # Use global prefix in DMs
