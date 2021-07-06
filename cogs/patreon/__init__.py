@@ -209,9 +209,6 @@ class Patreon(commands.Cog):
             ' "user"=$1;',
             ctx.author.id,
         )
-        await self.bot.cache.update_profile_cols_rel(
-            ctx.author.id, **{f"{type_}_booster": 1}
-        )
         await ctx.send(_("You received a daily {type_} booster!").format(type_=type_))
 
     @has_char()
@@ -254,9 +251,6 @@ class Patreon(commands.Cog):
                 'UPDATE profile SET "background"=$1 WHERE "user"=$2;',
                 str(url),
                 ctx.author.id,
-            )
-            await self.bot.cache.update_profile_cols_abs(
-                ctx.author.id, background=str(url)
             )
         except StringDataRightTruncationError:
             return await ctx.send(_("The URL is too long."))
@@ -378,7 +372,6 @@ class Patreon(commands.Cog):
         await self.bot.pool.execute(
             'UPDATE profile SET "background"=$1 WHERE "user"=$2;', bg, ctx.author.id
         )
-        await self.bot.cache.update_profile_cols_abs(ctx.author.id, background=bg)
         await ctx.send(_("Background updated!"))
 
 

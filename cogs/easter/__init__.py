@@ -113,10 +113,6 @@ You have **{eggs}** <:easteregg:566251086986608650>."""
                     data={"Rarity": reward[3], "Amount": reward[2]},
                     conn=conn,
                 )
-            await self.bot.cache.update_profile_cols_rel(
-                ctx.author.id,
-                **{f"crates_{reward[3]}": reward[2], "eastereggs": -reward[0]},
-            )
         elif reward[1] == "money":
             async with self.bot.pool.acquire() as conn:
                 await conn.execute(
@@ -134,9 +130,6 @@ You have **{eggs}** <:easteregg:566251086986608650>."""
                     data={"Amount": reward[2]},
                     conn=conn,
                 )
-            await self.bot.cache.update_profile_cols_rel(
-                ctx.author.id, money=reward[2], eastereggs=-reward[0]
-            )
         elif reward[1] == "boosters":
             await self.bot.pool.execute(
                 'UPDATE profile SET "money_booster"="money_booster"+$1,'
@@ -145,13 +138,6 @@ You have **{eggs}** <:easteregg:566251086986608650>."""
                 reward[2],
                 reward[0],
                 ctx.author.id,
-            )
-            await self.bot.cache.update_profile_cols_rel(
-                ctx.author.id,
-                money_booster=reward[2],
-                time_booster=reward[2],
-                luck_booster=reward[2],
-                eastereggs=-reward[0],
             )
         elif reward[1] == "badge":
             async with self.bot.pool.acquire() as conn:
@@ -166,9 +152,6 @@ You have **{eggs}** <:easteregg:566251086986608650>."""
                     "https://idlerpg.xyz/image/birthday2021_badge.png",
                     ctx.character_data["guild"],
                 )
-            await self.bot.cache.update_profile_cols_rel(
-                ctx.author.id, eastereggs=-reward[0]
-            )
         elif reward[1] == "item":
             item = await self.bot.create_random_item(
                 minstat=reward[2],
@@ -198,9 +181,6 @@ You have **{eggs}** <:easteregg:566251086986608650>."""
                     data={"Name": item["name"], "Value": item["value"]},
                     conn=conn,
                 )
-            await self.bot.cache.update_profile_cols_rel(
-                ctx.author.id, eastereggs=-reward[0]
-            )
 
         await ctx.send(
             _(

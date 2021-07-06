@@ -22,7 +22,7 @@ import discord
 
 from discord.ext import commands
 
-from classes.converters import IntFromTo, MemberConverter
+from classes.converters import IntFromTo
 from utils import random
 from utils.i18n import _, locale_doc
 
@@ -36,7 +36,7 @@ class SnowballFight(commands.Cog):
     @commands.command()
     @locale_doc
     async def snowballfight(
-        self, ctx, enemy: MemberConverter, players: IntFromTo(2, 10) = 10
+        self, ctx, enemy: discord.Member, players: IntFromTo(2, 10) = 10
     ):
         _("""Make a snowball fights against another guild.""")
         if enemy is ctx.author:

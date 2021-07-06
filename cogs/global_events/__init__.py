@@ -20,10 +20,8 @@ import datetime
 
 import discord
 
-from discord import utils
 from discord.ext import commands
 
-from classes.converters import MemberConverter, User
 from utils.loops import queue_manager
 
 
@@ -53,7 +51,6 @@ class GlobalEvents(commands.Cog):
             self.bot.logger.info(f"│ {' ' * max_string} │")
             self.bot.logger.info(f"│ {text4.center(max_string, ' ')} │")
             self.bot.logger.info(f"└─{'─' * max_string}─┘")
-            await self.load_settings()
             self.bot.loop.create_task(queue_manager(self.bot, self.bot.queue))
             self.stats_updates = self.bot.loop.create_task(self.stats_updater())
             await self.bot.is_owner(self.bot.user)  # force getting the owners
@@ -62,36 +59,6 @@ class GlobalEvents(commands.Cog):
         else:
             self.bot.logger.warning("[INFO] Discord fired on_ready...")
 
-    def parse_member_update(self, data):
-        """Replacement for hacky https://github.com/Rapptz/discord.py/blob/master/discord/state.py#L547"""
-        guild_id = utils._get_as_snowflake(data, "guild_id")
-        guild = self.bot._connection._get_guild(guild_id)
-        user_data = data["user"]
-        member_id = int(user_data["id"])
-        user = self.bot.get_user(member_id)
-        if guild is None and user is None:
-            return
-        elif guild is None and user is not None:
-            user.name = user_data["username"]
-            user.discriminator = user_data["discriminator"]
-            user.avatar = user_data["avatar"]
-        else:
-            member = guild.get_member(member_id)
-            if member is None:
-                if "username" not in user_data:
-                    # sometimes we receive 'incomplete' member data post-removal.
-                    # skip these useless cases.
-                    return
-
-                # https://github.com/Rapptz/discord.py/blob/master/discord/member.py#L214
-                member = discord.Member(
-                    data=data, guild=guild, state=self.bot._connection
-                )
-                guild._add_member(member)
-            member._user.name = user_data["username"]
-            member._user.discriminator = user_data["discriminator"]
-            member._user._avatar = user_data["avatar"]
-
     @commands.Cog.listener()
     async def on_socket_response(self, data):
         if data["t"] != "GUILD_MEMBER_UPDATE":
@@ -99,11 +66,6 @@ class GlobalEvents(commands.Cog):
 
         user = data["d"]["user"]
         user_id = int(user["id"])
-
-        self.parse_member_update(data["d"])
-        # Wipe the cache for the converters
-        MemberConverter.convert.invalidate_value(lambda member: member.id == user_id)
-        User.convert.invalidate_value(lambda user: user.id == user_id)
 
         # We can't know which roles they had before so just wipe the donator cache
         if int(data["d"]["guild_id"]) == self.bot.config.game.support_server_id:
@@ -184,20 +146,6 @@ class GlobalEvents(commands.Cog):
                 headers=self.dbl_auth_headers,
             )
             await asyncio.sleep(60 * 10)  # update once every 10 minutes
-
-    async def load_settings(self):
-        if self.bot.config.bot.is_beta:
-            self.bot.command_prefix = commands.when_mentioned_or(
-                self.bot.config.bot.global_prefix
-            )
-            return  # we're using the default prefix in beta
-        ids = [g.id for g in self.bot.guilds]
-        self.bot.logger.info(f"Fetching prefixes for {len(ids)} guilds")
-        prefixes = await self.bot.pool.fetch('SELECT "id", "prefix" FROM server;')
-        for row in prefixes:
-            if row["id"] in ids:
-                self.bot.all_prefixes[row["id"]] = row["prefix"]
-        self.bot.command_prefix = self.bot._get_prefix
 
     async def get_topgg_payload(self):
         return {

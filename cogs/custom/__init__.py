@@ -15,10 +15,10 @@ GNU Affero General Public License for more details.
 You should have received a copy of the GNU Affero General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
-from discord import Embed
+import discord
+
 from discord.ext import commands
 
-from classes.converters import MemberConverter
 from utils.i18n import _, locale_doc
 
 
@@ -75,7 +75,7 @@ class Custom(commands.Cog):
         name="ExZy",
     )
     @locale_doc
-    async def _exz(self, ctx, user: MemberConverter, emotion: str):
+    async def _exz(self, ctx, user: discord.Member, emotion: str):
         _(
             """*A custom command for ExZyond to express several emotions.*
 
@@ -83,7 +83,7 @@ class Custom(commands.Cog):
         )
         if picked_emotion := exz_emotions.get(emotion.lower()):
             await ctx.send(
-                embed=Embed(
+                embed=discord.Embed(
                     title=f"{ctx.author.display_name} {picked_emotion[0]} {user.display_name}."
                 ).set_image(url=picked_emotion[1])
             )
@@ -107,7 +107,7 @@ class Custom(commands.Cog):
             This custom command was added on June 2nd 2021, requested by User Daley."""
         )
         await ctx.send(
-            embed=Embed(
+            embed=discord.Embed(
                 title=_("Here's the steak you requested, courtesy of Dack's Diner!"),
                 color=ctx.author.colour,
             ).set_image(

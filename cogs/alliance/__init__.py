@@ -743,7 +743,9 @@ class Alliance(commands.Cog):
 
         async with self.bot.pool.acquire() as conn:
             for u in a_users:
-                profile = await self.bot.cache.get_profile(u.id, conn=conn)
+                profile = await conn.fetchrow(
+                    'SELECT * FROM profile WHERE "user"=$1;', u.id
+                )
                 if not profile:
                     continue  # not a player
                 user_alliance = await conn.fetchval(

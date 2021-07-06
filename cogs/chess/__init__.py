@@ -24,7 +24,6 @@ import discord
 
 from discord.ext import commands
 
-from classes.converters import MemberConverter
 from utils.chess import ChessGame, ProtocolAdapter
 from utils.i18n import _, locale_doc
 
@@ -128,7 +127,7 @@ class Chess(commands.Cog):
         self,
         ctx,
         difficulty: Optional[int] = 3,
-        enemy: MemberConverter = None,
+        enemy: discord.Member = None,
     ):
         _(
             """`[difficulty]` - A whole number between 1 and 10; defaults to 3

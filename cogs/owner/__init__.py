@@ -30,7 +30,6 @@ import import_expression
 from discord.ext import commands
 from tabulate import tabulate
 
-from classes.converters import MemberConverter
 from utils import random, shell
 from utils.misc import random_token
 
@@ -160,7 +159,6 @@ class Owner(commands.Cog):
                 'UPDATE profile SET "luck"=1.0 WHERE "god" IS NULL RETURNING "user";'
             )
             all_ids.extend([u["user"] for u in ids])
-        await self.bot.cache.wipe_profile(*all_ids)
         msg = await ctx.send("\n".join(text_collection))
         try:
             await msg.publish()
@@ -274,7 +272,7 @@ class Owner(commands.Cog):
             await ctx.send(f"```{ret}```")
 
     @commands.command(hidden=True)
-    async def runas(self, ctx, member: MemberConverter, *, command: str):
+    async def runas(self, ctx, member: discord.Member, *, command: str):
         """[Owner Only] Run a command as if you were the user."""
         fake_msg = copy.copy(ctx.message)
         fake_msg._update(dict(channel=ctx.channel, content=ctx.prefix + command))

@@ -4,7 +4,7 @@ podman pull docker://docker.io/library/redis:6-alpine
 podman pull docker://docker.io/library/postgres:13-alpine
 podman pull quay.io/gelbpunkt/stockfish:latest
 podman pull quay.io/gelbpunkt/okapi:latest
-podman pod create --name idlerpgbeta
+podman pod create --name idlerpgbeta -p 5432:5432 -p 6379:6379
 podman run --rm -d --pod idlerpgbeta --name redis-beta redis:6-alpine
 cat <<EOF > start.sh
 createdb idlerpg

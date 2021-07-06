@@ -67,7 +67,6 @@ class Tournament(commands.Cog):
             prize,
             ctx.author.id,
         )
-        await self.bot.cache.update_profile_cols_rel(ctx.author.id, money=-prize)
 
         if (
             self.bot.config.game.official_tournament_channel_id
@@ -84,7 +83,9 @@ class Tournament(commands.Cog):
             participants = []
             async with self.bot.pool.acquire() as conn:
                 for u in a_participants:
-                    if await self.bot.cache.get_profile(u.id, conn=conn):
+                    if await conn.fetchrow(
+                        'SELECT * FROM profile WHERE "user"=$1;', u.id
+                    ):
                         participants.append(u)
 
         else:
@@ -119,9 +120,6 @@ class Tournament(commands.Cog):
                             'UPDATE profile SET "money"="money"+$1 WHERE "user"=$2;',
                             prize,
                             ctx.author.id,
-                        )
-                        await self.bot.cache.update_profile_cols_rel(
-                            ctx.author.id, money=prize
                         )
                         return await ctx.send(
                             _("Noone joined your tournament {author}.").format(
@@ -206,7 +204,6 @@ class Tournament(commands.Cog):
                 data={"Amount": prize},
                 conn=conn,
             )
-        await self.bot.cache.update_profile_cols_rel(participants[0].id, money=prize)
         await msg.edit(
             content=_(
                 "Tournament ended! The winner is {winner}.\nMoney was given!"
@@ -242,7 +239,6 @@ class Tournament(commands.Cog):
             prize,
             ctx.author.id,
         )
-        await self.bot.cache.update_profile_cols_rel(ctx.author.id, money=-prize)
 
         if (
             self.bot.config.game.official_tournament_channel_id
@@ -259,7 +255,9 @@ class Tournament(commands.Cog):
             participants = []
             async with self.bot.pool.acquire() as conn:
                 for u in a_participants:
-                    if await self.bot.cache.get_profile(u.id, conn=conn):
+                    if await conn.fetchrow(
+                        'SELECT * FROM profile WHERE "user"=$1;', u.id
+                    ):
                         participants.append(u)
 
         else:
@@ -293,9 +291,6 @@ class Tournament(commands.Cog):
                             'UPDATE profile SET "money"="money"+$1 WHERE "user"=$2;',
                             prize,
                             ctx.author.id,
-                        )
-                        await self.bot.cache.update_profile_cols_rel(
-                            ctx.author.id, money=prize
                         )
                         return await ctx.send(
                             _("Noone joined your raid tournament {author}.").format(
@@ -455,7 +450,6 @@ class Tournament(commands.Cog):
                 data={"Amount": prize},
                 conn=conn,
             )
-        await self.bot.cache.update_profile_cols_rel(participants[0].id, money=prize)
         await msg.edit(
             content=_(
                 "Raid Tournament ended! The winner is {winner}.\nMoney was given!"

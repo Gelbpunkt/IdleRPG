@@ -88,9 +88,6 @@ class Store(commands.Cog):
                     data={"Amount": price},
                     conn=conn,
                 )
-            await self.bot.cache.update_profile_cols_rel(
-                ctx.author.id, **{f"{booster}_booster": amount, "money": -price}
-            )
         else:
             async with self.bot.pool.acquire() as conn:
                 await conn.execute(
@@ -110,13 +107,6 @@ class Store(commands.Cog):
                     data={"Amount": price},
                     conn=conn,
                 )
-            await self.bot.cache.update_profile_cols_rel(
-                ctx.author.id,
-                time_booster=amount,
-                luck_booster=amount,
-                money_booster=amount,
-                money=-price,
-            )
         await ctx.send(
             _(
                 "Successfully bought **{amount}x** {booster} booster(s). Use"
@@ -210,9 +200,6 @@ class Store(commands.Cog):
                 ' WHERE "user"=$1;',
                 ctx.author.id,
             )
-            await self.bot.cache.update_profile_cols_rel(
-                ctx.author.id, **{f"{boostertype}_booster": -1}
-            )
             await self.bot.activate_booster(ctx.author, boostertype)
             await ctx.send(
                 _(
@@ -242,9 +229,6 @@ class Store(commands.Cog):
 
             await self.bot.pool.execute(
                 f'UPDATE profile SET {to_reduce} WHERE "user"=$1;', ctx.author.id
-            )
-            await self.bot.cache.update_profile_cols_rel(
-                ctx.author.id, **{f"{i}_booster": -1 for i in reducible}
             )
 
             for i in reducible:

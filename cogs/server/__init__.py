@@ -20,7 +20,6 @@ import discord
 from discord.ext import commands
 from discord.ext.commands.default import Author
 
-from classes.converters import MemberConverter
 from utils.i18n import _, locale_doc
 
 
@@ -92,6 +91,7 @@ Server created at: `{created_at}`"""
             _("Please use `{prefix}settings prefix value`").format(prefix=ctx.prefix)
         )
 
+    @commands.guild_only()
     @commands.has_permissions(manage_guild=True)
     @settings.command(name="prefix", brief=_("Change the prefix"))
     @locale_doc
@@ -105,24 +105,28 @@ Server created at: `{created_at}`"""
         )
         if len(prefix) > 10:
             return await ctx.send(_("Prefixes may not be longer than 10 characters."))
-        if self.bot.all_prefixes.get(ctx.guild.id):
-            if prefix == self.bot.config.bot.global_prefix:
-                del self.bot.all_prefixes[ctx.guild.id]
-                await self.bot.pool.execute(
-                    'DELETE FROM server WHERE "id"=$1;', ctx.guild.id
-                )
-            else:
-                await self.bot.pool.execute(
-                    'UPDATE server SET "prefix"=$1 WHERE "id"=$2;', prefix, ctx.guild.id
-                )
-        else:
+        if prefix == self.bot.config.bot.global_prefix:
             await self.bot.pool.execute(
-                'INSERT INTO server ("id", "prefix") VALUES ($1, $2);',
-                ctx.guild.id,
-                prefix,
+                'DELETE FROM server WHERE "id"=$1;', ctx.guild.id
             )
-        if prefix != self.bot.config.bot.global_prefix:
-            self.bot.all_prefixes[ctx.guild.id] = prefix
+        else:
+            async with self.bot.pool.acquire() as conn:
+                prev = await conn.fetchrow(
+                    'SELECT * FROM server WHERE "id"=$1;', ctx.guild.id
+                )
+                if prev:
+                    await conn.execute(
+                        'UPDATE server SET "prefix"=$1 WHERE "id"=$2;',
+                        prefix,
+                        ctx.guild.id,
+                    )
+                else:
+                    await conn.execute(
+                        'INSERT INTO server ("prefix", "id") VALUES ($1, $2);',
+                        prefix,
+                        ctx.guild.id,
+                    )
+        self.bot.all_prefixes[ctx.guild.id] = prefix
         await ctx.send(_("Prefix changed to `{prefix}`.").format(prefix=prefix))
 
     @commands.has_permissions(manage_guild=True)
@@ -151,7 +155,7 @@ Server created at: `{created_at}`"""
 
     @commands.command(brief=_("Show someone's avatar"))
     @locale_doc
-    async def avatar(self, ctx, target: MemberConverter = Author):
+    async def avatar(self, ctx, target: discord.Member = Author):
         _(
             """`<target>` - The user whose avatar to show; defaults to oneself
 

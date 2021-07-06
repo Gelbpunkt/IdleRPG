@@ -30,7 +30,6 @@ from classes.converters import (
     ImageUrl,
     IntGreaterThan,
     MemberWithCharacter,
-    User,
     UserWithCharacter,
 )
 from cogs.shard_communication import guild_on_cooldown as guild_cooldown
@@ -129,7 +128,9 @@ class Guild(commands.Cog):
             else:
                 kwargs.update(name=by)
         else:
-            guild_id = await self.bot.cache.get_profile_col(by.id, "guild")
+            guild_id = await self.bot.pool.fetchval(
+                'SELECT guild FROM profile WHERE "user"=$1;', by.id
+            )
             if not guild_id:
                 return await ctx.send(
                     _("**{user}** does not have a guild.").format(user=by.name)
@@ -320,9 +321,6 @@ class Guild(commands.Cog):
                 10000,
                 ctx.author.id,
             )
-        await self.bot.cache.update_profile_cols_rel(
-            ctx.author.id, guild=guild["id"], guildrank="Leader", money=-10000
-        )
         await ctx.send(
             _(
                 "Successfully added your guild **{name}** with a member limit of"
@@ -389,10 +387,6 @@ class Guild(commands.Cog):
                 "Leader",
                 member.id,
             )
-            await self.bot.cache.update_profile_cols_abs(
-                ctx.author.id, guildrank="Member"
-            )
-            await self.bot.cache.update_profile_cols_abs(member.id, guildrank="Leader")
             name, channel = await conn.fetchval(
                 'UPDATE guild SET "leader"=$1, "banklimit"="upgrade"*250000,'
                 ' "memberlimit"=$2 WHERE "id"=$3 RETURNING ("name", "channel");',
@@ -439,7 +433,6 @@ class Guild(commands.Cog):
                 "Officer",
                 member.id,
             )
-            await self.bot.cache.update_profile_cols_abs(member.id, guildrank="Officer")
             channel = await conn.fetchval(
                 'SELECT "channel" FROM guild WHERE "id"=$1;',
                 ctx.character_data["guild"],
@@ -479,7 +472,6 @@ class Guild(commands.Cog):
                 "Member",
                 member.id,
             )
-            await self.bot.cache.update_profile_cols_abs(member.id, guildrank="Member")
             channel = await conn.fetchval(
                 'SELECT "channel" FROM guild WHERE "id"=$1;',
                 ctx.character_data["guild"],
@@ -515,8 +507,8 @@ class Guild(commands.Cog):
         if ctx.user_data["guild"]:
             return await ctx.send(_("That member already has a guild."))
         async with self.bot.pool.acquire() as conn:
-            id_ = await self.bot.cache.get_profile_col(
-                ctx.author.id, "guild", conn=conn
+            id_ = await conn.fetchval(
+                'SELECT guild FROM profile WHERE "user"=$1;', ctx.author.id
             )
             membercount = await conn.fetchval(
                 'SELECT COUNT(*) FROM profile WHERE "guild"=$1;', id_
@@ -542,7 +534,6 @@ class Guild(commands.Cog):
         await self.bot.pool.execute(
             'UPDATE profile SET "guild"=$1 WHERE "user"=$2;', id_, newmember.id
         )
-        await self.bot.cache.update_profile_cols_abs(newmember.id, guild=id_)
         if channel:
             with suppress(discord.Forbidden, discord.HTTPException):
                 await self.bot.http.send_message(
@@ -573,9 +564,6 @@ class Guild(commands.Cog):
                 "Member",
                 ctx.author.id,
             )
-            await self.bot.cache.update_profile_cols_abs(
-                ctx.author.id, guild=0, guildrank="Member"
-            )
             channel = await conn.fetchval(
                 'SELECT "channel" FROM guild WHERE "id"=$1;',
                 ctx.character_data["guild"],
@@ -603,7 +591,9 @@ class Guild(commands.Cog):
             Only guild leaders and officers can use this command."""
         )
         if not hasattr(ctx, "user_data"):
-            ctx.user_data = await self.bot.cache.get_profile(member)
+            ctx.user_data = await self.bot.pool.fetchrow(
+                'SELECT * FROM profile WHERE "user"=$1;', member
+            )
         else:
             member = member.id
 
@@ -616,9 +606,6 @@ class Guild(commands.Cog):
                 'UPDATE profile SET "guild"=0, "guildrank"=$1 WHERE "user"=$2;',
                 "Member",
                 member,
-            )
-            await self.bot.cache.update_profile_cols_abs(
-                member, guild=0, guildrank="Member"
             )
             channel = await conn.fetchval(
                 'SELECT channel FROM guild WHERE "id"=$1;', ctx.character_data["guild"]
@@ -657,17 +644,12 @@ class Guild(commands.Cog):
                     'DELETE FROM guild WHERE "leader"=$1 RETURNING "channel";',
                     ctx.author.id,
                 )
-                users = await conn.fetch(
-                    'UPDATE profile SET "guild"=$1, "guildrank"=$2 WHERE "guild"=$3'
-                    ' RETURNING "user";',
+                await conn.execute(
+                    'UPDATE profile SET "guild"=$1, "guildrank"=$2 WHERE "guild"=$3;',
                     0,
                     "Member",
                     ctx.character_data["guild"],
                 )
-        for user in users:
-            await self.bot.cache.update_profile_cols_abs(
-                user["user"], guild=0, guildrank="Member"
-            )
         if channel:
             with suppress(discord.Forbidden, discord.HTTPException):
                 await self.bot.http.send_message(
@@ -902,7 +884,6 @@ class Guild(commands.Cog):
                 amount,
                 ctx.author.id,
             )
-            await self.bot.cache.update_profile_cols_rel(ctx.author.id, money=-amount)
             guild_money = await conn.fetchval(
                 'UPDATE guild SET money=money+$1 WHERE "id"=$2 RETURNING money;',
                 amount,
@@ -968,7 +949,6 @@ class Guild(commands.Cog):
                 data={"Amount": amount},
                 conn=conn,
             )
-        await self.bot.cache.update_profile_cols_rel(member.id, money=amount)
         if guild["channel"]:
             with suppress(discord.Forbidden, discord.HTTPException):
                 await self.bot.http.send_message(
@@ -1035,9 +1015,6 @@ class Guild(commands.Cog):
                 'UPDATE profile SET "money"="money"+$1 WHERE "user"=ANY($2);',
                 amounts.items(),
             )
-
-        for member in members:
-            await self.bot.cache.update_profile_cols_rel(member.id, money=for_each)
 
         nice_members = rpgtools.nice_join([str(member) for member in members])
         if guild["channel"]:
@@ -1192,14 +1169,16 @@ class Guild(commands.Cog):
         )
         team1 = []
         team2 = []
-        converter = User()
+        converter = commands.UserConverter()
 
         async def guildcheck(already, guildid, user):
             try:
                 member = await converter.convert(ctx, user)
             except commands.errors.BadArgument:
                 return False
-            guild = await self.bot.cache.get_profile_col(member.id, "guild")
+            guild = await self.bot.pool.fetchval(
+                'SELECT guild FROM profile WHERE "user"=$1;', member.id
+            )
             if guild != guildid:
                 await ctx.send(_("That person isn't in your guild."))
                 return False
@@ -1333,9 +1312,6 @@ class Guild(commands.Cog):
                         amount,
                         ctx.author.id,
                     )
-                    await self.bot.cache.update_profile_cols_rel(
-                        ctx.author.id, money=amount
-                    )
                 await conn.execute(
                     'UPDATE guild SET "money"="money"-$1 WHERE "id"=$2;',
                     amount,
@@ -1364,9 +1340,6 @@ class Guild(commands.Cog):
                         'UPDATE profile SET "money"="money"+$1 WHERE "user"=$2;',
                         amount,
                         enemy.id,
-                    )
-                    await self.bot.cache.update_profile_cols_rel(
-                        ctx.author.id, money=amount
                     )
                 await conn.execute(
                     'UPDATE guild SET "money"="money"-$1 WHERE "id"=$2;',
@@ -1440,7 +1413,9 @@ class Guild(commands.Cog):
 
         async with self.bot.pool.acquire() as conn:
             for u in a_joined:
-                user = await self.bot.cache.get_profile(u.id, conn=conn)
+                user = await conn.fetchrow(
+                    'SELECT * FROM profile WHERE "user"=$1;', u.id
+                )
                 if user and user["guild"] == guild["id"]:
                     difficulty += int(rpgtools.xptolevel(user["xp"]))
                     joined.append(u)

@@ -113,9 +113,6 @@ class Crates(commands.Cog):
                 amount,
                 ctx.author.id,
             )
-            await self.bot.cache.update_profile_cols_rel(
-                ctx.author.id, **{f"crates_{rarity}": -amount}
-            )
             for _i in range(amount):
                 # A number to detemine the crate item range
                 rand = random.randint(0, 9)
@@ -289,12 +286,6 @@ class Crates(commands.Cog):
                 data={"Rarity": rarity, "Amount": amount},
                 conn=conn,
             )
-        await self.bot.cache.update_profile_cols_rel(
-            ctx.author.id, **{f"crates_{rarity}": -amount}
-        )
-        await self.bot.cache.update_profile_cols_rel(
-            other.id, **{f"crates_{rarity}": amount}
-        )
 
         await ctx.send(
             _("Successfully gave {amount} {rarity} crate(s) to {other}.").format(
@@ -391,8 +382,8 @@ class Crates(commands.Cog):
                     )
                 )
                 return await self.bot.reset_cooldown(ctx)
-            crates = await self.bot.cache.get_profile_col(
-                ctx.author.id, f"crates_{rarity}"
+            crates = await conn.fetchval(
+                f'SELECT crates_{rarity} FROM profile WHERE "user"=$1;', ctx.author.id
             )
             if crates < quantity:
                 return await ctx.send(
@@ -439,13 +430,6 @@ class Crates(commands.Cog):
                 },
                 conn=conn,
             )
-
-        await self.bot.cache.update_profile_cols_rel(
-            ctx.author.id, money=price, **{f"crates_{rarity}": -quantity}
-        )
-        await self.bot.cache.update_profile_cols_rel(
-            buyer.id, money=-price, **{f"crates_{rarity}": quantity}
-        )
 
         await ctx.send(
             _(

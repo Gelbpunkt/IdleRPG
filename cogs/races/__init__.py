@@ -171,18 +171,12 @@ class Races(commands.Cog):
                     1,
                     ctx.author.id,
                 )
-                await self.bot.cache.update_profile_cols_rel(
-                    ctx.author.id, reset_points=-1
-                )
             await conn.execute(
                 'UPDATE profile SET "race"=$1, "cv"=$2 WHERE "user"=$3;',
                 race_,
                 answer,
                 ctx.author.id,
             )
-        await self.bot.cache.update_profile_cols_abs(
-            ctx.author.id, race=race_, cv=answer
-        )
         await ctx.send(_("You are now a {race}.").format(race=race_))
 
 

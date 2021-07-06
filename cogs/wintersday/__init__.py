@@ -90,7 +90,6 @@ class Christmas(commands.Cog):
                     'UPDATE profile SET "puzzles"="puzzles"+1 WHERE "user"=$1;',
                     ctx.author.id,
                 )
-                await self.bot.cache.update_profile_cols_rel(ctx.author.id, puzzles=1)
                 text = _("A mysterious puzzle piece")
                 reward_text = f"{reward_text}\n- {text}"
             if reward["crates"]:
@@ -115,9 +114,6 @@ class Christmas(commands.Cog):
                     data={"Rarity": rarity, "Amount": reward["crates"]},
                     conn=conn,
                 )
-                await self.bot.cache.update_profile_cols_rel(
-                    ctx.author.id, **{f"crates_{rarity}": reward["crates"]}
-                )
                 text = _("{crates} {rarity} crate").format(
                     crates=reward["crates"], rarity=rarity
                 )
@@ -136,20 +132,14 @@ class Christmas(commands.Cog):
                     data={"Amount": reward["money"]},
                     conn=conn,
                 )
-                await self.bot.cache.update_profile_cols_rel(
-                    ctx.author.id, money=reward["money"]
-                )
                 reward_text = f"{reward_text}\n- ${reward['money']}"
             if today.day == 24:
                 bg_num = random.randint(1, 7)
-                bgs = await conn.fetchval(
+                await conn.execute(
                     'UPDATE profile SET "backgrounds"=array_append("backgrounds", $1)'
-                    ' WHERE "user"=$2 RETURNING "backgrounds";',
+                    ' WHERE "user"=$2;',
                     f"https://idlerpg.xyz/image/winter2020_{bg_num}.png",
                     ctx.author.id,
-                )
-                await self.bot.cache.update_profile_cols_abs(
-                    ctx.author.id, backgrounds=bgs
                 )
                 text = _(
                     "A special surprise - check out `{prefix}eventbackground` for a new"
@@ -177,9 +167,6 @@ class Christmas(commands.Cog):
             ' "user"=$2 RETURNING "backgrounds";',
             bg,
             ctx.author.id,
-        )
-        await self.bot.cache.update_profile_cols_abs(
-            ctx.author.id, backgrounds=bgs, puzzles=0
         )
         await ctx.send(
             _(

@@ -113,7 +113,6 @@ class Trading(commands.Cog):
                     data={"Amount": tax},
                     conn=conn,
                 )
-                await self.bot.cache.update_profile_cols_rel(ctx.author.id, money=-tax)
             await conn.execute(
                 "DELETE FROM inventory i USING allitems ai WHERE i.item=ai.id AND"
                 " ai.id=$1 AND ai.owner=$2;",
@@ -222,10 +221,6 @@ class Trading(commands.Cog):
                 data=item,
                 conn=conn,
             )
-        await self.bot.cache.update_profile_cols_rel(
-            ctx.author.id, money=-(item["price"] + tax)
-        )
-        await self.bot.cache.update_profile_cols_rel(item["owner"], money=item["price"])
         await ctx.send(
             _(
                 "Successfully bought item `{id}`. Use `{prefix}inventory` to view your"
@@ -581,8 +576,6 @@ class Trading(commands.Cog):
                 data=item,
                 conn=conn,
             )
-        await self.bot.cache.update_profile_cols_rel(ctx.author.id, money=price)
-        await self.bot.cache.update_profile_cols_rel(user.id, money=-price)
         await ctx.send(
             _(
                 "Successfully bought item `{itemid}`. Use `{prefix}inventory` to view"
@@ -656,7 +649,6 @@ class Trading(commands.Cog):
                 data={"Amount": f"{len(itemids)} items", "Value": value},
                 conn=conn,
             )
-        await self.bot.cache.update_profile_cols_rel(ctx.author.id, money=value)
         await ctx.send(
             _(
                 "You received **${money}** when selling item(s) `{itemids}`."
@@ -741,7 +733,6 @@ class Trading(commands.Cog):
                     money,
                     ctx.author.id,
                 )
-            await self.bot.cache.update_profile_cols_rel(ctx.author.id, money=money)
             await self.bot.log_transaction(
                 ctx,
                 from_=1,
@@ -853,7 +844,6 @@ class Trading(commands.Cog):
                 conn=conn,
             )
             await self.bot.create_item(**item[0], conn=conn)
-        await self.bot.cache.update_profile_cols_rel(ctx.author.id, money=-item[1])
         await ctx.send(
             _(
                 "Successfully bought offer **{offer}**. Use `{prefix}inventory` to view"

@@ -23,7 +23,6 @@ from discord.ext import commands
 from discord.ext.commands import BucketType
 from discord.ext.commands.default import Author
 
-from classes.converters import MemberConverter
 from utils.i18n import _, locale_doc
 
 
@@ -33,7 +32,7 @@ class Images(commands.Cog):
 
     @commands.command(brief=_("Pixelfy an avatar"))
     @locale_doc
-    async def pixelfy(self, ctx, user: MemberConverter = Author, size: int = 2):
+    async def pixelfy(self, ctx, user: discord.Member = Author, size: int = 2):
         _(
             """`[user]` - A discord User whose avatar to pixelfy; defaults to oneself
             `[size]` - The pixelation rate to use, can be a number between 1 and 5; defaults to 2
@@ -55,7 +54,7 @@ class Images(commands.Cog):
 
     @commands.command(brief=_("Defines an avatar's edges"))
     @locale_doc
-    async def edgy(self, ctx, user: MemberConverter = Author):
+    async def edgy(self, ctx, user: discord.Member = Author):
         _(
             """`[user]` - A discord User whose avatar to edit; defaults to oneself
 
@@ -71,7 +70,7 @@ class Images(commands.Cog):
     @commands.cooldown(1, 15, BucketType.channel)
     @commands.command(brief=_("Inverts a user's avatar"))
     @locale_doc
-    async def invert(self, ctx, member: MemberConverter = Author):
+    async def invert(self, ctx, member: discord.Member = Author):
         _(
             """`[member]` - A discord User whose avatar to invert; defaults to oneself
 
@@ -89,7 +88,7 @@ class Images(commands.Cog):
     @commands.cooldown(1, 15, BucketType.channel)
     @commands.command(brief=_("oil-paint someone's avatar"))
     @locale_doc
-    async def oil(self, ctx, member: MemberConverter = Author):
+    async def oil(self, ctx, member: discord.Member = Author):
         _(
             """`[member]` - A discord User whose avatar to oil-paint; defaults to oneself
 

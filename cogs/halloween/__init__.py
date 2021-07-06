@@ -66,9 +66,6 @@ class Halloween(commands.Cog):
                     ' "user"=$1;',
                     ctx.author.id,
                 )
-                await self.bot.cache.update_profile_cols_rel(
-                    ctx.author.id, trickortreat=1
-                )
             else:
                 await ctx.send(
                     _(
@@ -87,9 +84,6 @@ class Halloween(commands.Cog):
                         ' "user"=$1;',
                         waiting.id,
                     )
-                    await self.bot.cache.update_profile_cols_rel(
-                        waiting.id, trickortreat=1
-                    )
                 else:
                     await waiting.send(
                         "{author} rings at your house, but... Nothing for you! 👻".format(
@@ -100,13 +94,10 @@ class Halloween(commands.Cog):
                 pass
 
             if random.randint(1, 100) < 5:
-                backgrounds = await conn.fetchval(
-                    'UPDATE profile SET "backgrounds"=array_append("backgrounds", $1) WHERE "user"=$2 RETURNING "backgrounds";',
+                await conn.execute(
+                    'UPDATE profile SET "backgrounds"=array_append("backgrounds", $1) WHERE "user"=$2;',
                     "https://i.imgur.com/dJqwM1H.png",
                     ctx.author.id,
-                )
-                await self.bot.cache.update_profile_cols_abs(
-                    ctx.author.id, backgrounds=backgrounds
                 )
                 await ctx.send(
                     _(
@@ -174,7 +165,6 @@ class Halloween(commands.Cog):
                 'UPDATE profile SET "trickortreat"="trickortreat"-1 WHERE "user"=$1;',
                 ctx.author.id,
             )
-        await self.bot.cache.update_profile_cols_rel(ctx.author.id, trickortreat=-1)
         embed = discord.Embed(
             title=_("You gained an item!"),
             description=_("You found a new item when opening a trick-or-treat bag!"),

@@ -37,7 +37,6 @@ from discord import AllowedMentions
 from discord.ext import commands
 
 from classes.bucket_cooldown import Cooldown, CooldownMapping
-from classes.cache import RedisCache
 from classes.classes import Mage, Paragon, Raider, Ranger, Ritualist, Thief, Warrior
 from classes.classes import from_string as class_from_string
 from classes.context import Context
@@ -61,7 +60,7 @@ class Bot(commands.AutoShardedBot):
         mentions.users = True
         super().__init__(
             allowed_mentions=mentions,
-            command_prefix=self.config.bot.global_prefix,
+            command_prefix=self.command_prefix,
             **kwargs,
         )  # we overwrite the prefix when it is connected
 
@@ -168,7 +167,6 @@ class Bot(commands.AutoShardedBot):
         self.pool = await asyncpg.create_pool(
             **database_creds, min_size=10, max_size=20, command_timeout=60.0
         )
-        self.cache = RedisCache(self)
 
         for extension in self.config.bot.initial_extensions:
             try:
@@ -254,7 +252,7 @@ class Bot(commands.AutoShardedBot):
             or classes is None
             or guild is None
         ):
-            row = await self.cache.get_profile(v, conn=conn)
+            row = await conn.fetchrow('SELECT * FROM profile WHERE "user"=$1;', v)
             atkmultiply, defmultiply, classes, race, guild, user_god = (
                 row["atkmultiply"],
                 row["defmultiply"],
@@ -303,23 +301,27 @@ class Bot(commands.AutoShardedBot):
         """Overrides the default Context with a custom Context"""
         return await super().get_context(message, cls=Context)
 
-    def _get_prefix(self, bot, message):
+    async def command_prefix(self, bot, message):
         """
         Returns the prefix for a message
         Will be the global_prefix in DMs,
         in guilds it will use a custom set one
         or the global_prefix
         """
-        if not message.guild:
-            return self.config.bot.global_prefix  # Use global prefix in DMs
-        try:
-            return commands.when_mentioned_or(self.all_prefixes[message.guild.id])(
-                self, message
-            )
-        except KeyError:
+        if not message.guild:  # or self.config.bot.is_beta:
             return commands.when_mentioned_or(self.config.bot.global_prefix)(
                 self, message
+            )  # Use global prefix in DMs
+        pref = self.all_prefixes.get(message.guild.id)
+        if pref is None:
+            pref = (
+                await self.pool.fetchval(
+                    'SELECT "prefix" FROM server WHERE "id"=$1;', message.guild.id
+                )
+                or self.config.bot.global_prefix
             )
+            self.all_prefixes[message.guild.id] = pref
+        return commands.when_mentioned_or(pref)(self, message)
 
     async def wait_for_dms(self, event, check, timeout=30):
         """
@@ -449,13 +451,31 @@ class Bot(commands.AutoShardedBot):
 
     async def has_money(self, user, money, conn=None):
         user = user.id if isinstance(user, (discord.User, discord.Member)) else user
-        return await self.cache.get_profile_col(user, "money", conn=conn) >= money
+        if conn is None:
+            conn = await self.pool.acquire()
+            local = True
+        else:
+            local = False
+        val = (
+            await conn.fetchval('SELECT money FROM profile WHERE "user"=$1;', user)
+            >= money
+        )
+        if local:
+            await self.pool.release(conn)
+        return val
 
     async def has_crates(self, user, crates, rarity, conn=None):
         user = user.id if isinstance(user, (discord.User, discord.Member)) else user
-        cur_crates = await self.cache.get_profile_col(
-            user, f"crates_{rarity}", conn=conn
+        if conn is None:
+            conn = await self.pool.acquire()
+            local = True
+        else:
+            local = False
+        cur_crates = await conn.fetchval(
+            f'SELECT crates_{rarity} FROM profile WHERE "user"=$1;', user
         )
+        if local:
+            await self.pool.release(conn)
         return cur_crates is not None and cur_crates >= crates
 
     async def has_item(self, user, item, conn=None):
@@ -590,7 +610,6 @@ class Bot(commands.AutoShardedBot):
                 amount,
                 ctx.author.id,
             )
-            await self.cache.update_profile_cols_rel(ctx.author.id, **{column: amount})
         elif reward == "item":
             stat = round(new_level * 1.5)
             item = await self.create_random_item(
@@ -620,7 +639,6 @@ class Bot(commands.AutoShardedBot):
                 money,
                 ctx.author.id,
             )
-            await self.cache.update_profile_cols_rel(ctx.author.id, money=money)
             await self.log_transaction(
                 ctx,
                 from_=1,
@@ -674,11 +692,19 @@ class Bot(commands.AutoShardedBot):
         self, user, items=None, classes=None, race=None, conn=None
     ):
         user = user.id if isinstance(user, (discord.User, discord.Member)) else user
+        if conn is None:
+            conn = await self.pool.acquire()
+            local = True
+        else:
+            local = False
         if items is None:
             items = await self.get_equipped_items_for(user, conn=conn)
         if not classes or not race:
-            row = await self.cache.get_profile(user, conn=conn)
+            row = await conn.fetchrow('SELECT * FROM profile WHERE "user"=$1;', user)
             classes, race = row["class"], row["race"]
+
+        if local:
+            await self.pool.release(conn)
 
         damage = 0
         armor = 0

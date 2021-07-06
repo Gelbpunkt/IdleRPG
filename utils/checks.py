@@ -163,7 +163,9 @@ def has_char() -> "_CheckDecorator":
     """Checks for a user to have a character."""
 
     async def predicate(ctx: Context) -> bool:
-        ctx.character_data = await ctx.bot.cache.get_profile(ctx.author.id)
+        ctx.character_data = await ctx.bot.pool.fetchrow(
+            'SELECT * FROM profile WHERE "user"=$1;', ctx.author.id
+        )
         if ctx.character_data:
             return True
         raise NoCharacter()
@@ -175,7 +177,9 @@ def has_no_char() -> "_CheckDecorator":
     """Checks for a user to have no character."""
 
     async def predicate(ctx: Context) -> bool:
-        if await ctx.bot.cache.get_profile(ctx.author.id):
+        if await ctx.bot.pool.fetchrow(
+            'SELECT * FROM profile WHERE "user"=$1;', ctx.author.id
+        ):
             raise NeedsNoCharacter()
         return True
 
@@ -210,7 +214,9 @@ def has_no_guild() -> "_CheckDecorator":
 
     async def predicate(ctx: Context) -> bool:
         if not hasattr(ctx, "character_data"):
-            ctx.character_data = await ctx.bot.cache.get_profile(ctx.author.id)
+            ctx.character_data = await ctx.bot.pool.fetchrow(
+                'SELECT * FROM profile WHERE "user"=$1;', ctx.author.id
+            )
         if not ctx.character_data["guild"]:
             return True
         raise NeedsNoGuild()
@@ -223,7 +229,9 @@ def has_guild() -> "_CheckDecorator":
 
     async def predicate(ctx: Context) -> bool:
         if not hasattr(ctx, "character_data"):
-            ctx.character_data = await ctx.bot.cache.get_profile(ctx.author.id)
+            ctx.character_data = await ctx.bot.pool.fetchrow(
+                'SELECT * FROM profile WHERE "user"=$1;', ctx.author.id
+            )
         if ctx.character_data and ctx.character_data["guild"]:
             return True
         raise NoGuild()
@@ -236,7 +244,9 @@ def is_guild_officer() -> "_CheckDecorator":
 
     async def predicate(ctx: Context) -> bool:
         if not hasattr(ctx, "character_data"):
-            ctx.character_data = await ctx.bot.cache.get_profile(ctx.author.id)
+            ctx.character_data = await ctx.bot.pool.fetchrow(
+                'SELECT * FROM profile WHERE "user"=$1;', ctx.author.id
+            )
         if (
             ctx.character_data["guildrank"] == "Leader"
             or ctx.character_data["guildrank"] == "Officer"
@@ -252,7 +262,9 @@ def is_guild_leader() -> "_CheckDecorator":
 
     async def predicate(ctx: Context) -> bool:
         if not hasattr(ctx, "character_data"):
-            ctx.character_data = await ctx.bot.cache.get_profile(ctx.author.id)
+            ctx.character_data = await ctx.bot.pool.fetchrow(
+                'SELECT * FROM profile WHERE "user"=$1;', ctx.author.id
+            )
         if ctx.character_data["guildrank"] == "Leader":
             return True
         raise NoGuildPermissions()
@@ -265,7 +277,9 @@ def is_no_guild_leader() -> "_CheckDecorator":
 
     async def predicate(ctx: Context) -> bool:
         if not hasattr(ctx, "character_data"):
-            ctx.character_data = await ctx.bot.cache.get_profile(ctx.author.id)
+            ctx.character_data = await ctx.bot.pool.fetchrow(
+                'SELECT * FROM profile WHERE "user"=$1;', ctx.author.id
+            )
         if ctx.character_data["guildrank"] != "Leader":
             return True
         raise NeedsNoGuildLeader()
@@ -280,8 +294,8 @@ def is_alliance_leader() -> "_CheckDecorator":
 
         async with ctx.bot.pool.acquire() as conn:
             if not hasattr(ctx, "character_data"):
-                ctx.character_data = await ctx.bot.cache.get_profile(
-                    ctx.author.id, conn=conn
+                ctx.character_data = await conn.fetchrow(
+                    'SELECT * FROM profile WHERE "user"=$1;', ctx.author.id
                 )
             leading_guild = await conn.fetchval(
                 'SELECT alliance FROM guild WHERE "id"=$1;', ctx.character_data["guild"]
@@ -302,8 +316,8 @@ def owns_city() -> "_CheckDecorator":
     async def predicate(ctx: Context) -> bool:
         async with ctx.bot.pool.acquire() as conn:
             if not hasattr(ctx, "character_data"):
-                ctx.character_data = await ctx.bot.cache.get_profile(
-                    ctx.author.id, conn=conn
+                ctx.character_data = await conn.fetchrow(
+                    'SELECT * FROM profile WHERE "user"=$1;', ctx.author.id
                 )
             alliance = await conn.fetchval(
                 'SELECT alliance FROM guild WHERE "id"=$1', ctx.character_data["guild"]
@@ -325,8 +339,8 @@ def owns_no_city() -> "_CheckDecorator":
     async def predicate(ctx: Context) -> bool:
         async with ctx.bot.pool.acquire() as conn:
             if not hasattr(ctx, "character_data"):
-                ctx.character_data = await ctx.bot.cache.get_profile(
-                    ctx.author.id, conn=conn
+                ctx.character_data = await conn.fetchrow(
+                    'SELECT * FROM profile WHERE "user"=$1;', ctx.author.id
                 )
             alliance = await conn.fetchval(
                 'SELECT alliance FROM guild WHERE "id"=$1', ctx.character_data["guild"]
@@ -346,7 +360,9 @@ def is_class(class_: Type[GameClass]) -> "_CheckDecorator":
 
     async def predicate(ctx: Context) -> bool:
         if not hasattr(ctx, "character_data"):
-            ctx.character_data = await ctx.bot.cache.get_profile(ctx.author.id)
+            ctx.character_data = await ctx.bot.pool.fetchrow(
+                'SELECT * FROM profile WHERE "user"=$1;', ctx.author.id
+            )
         classes = [
             c for i in ctx.character_data["class"] if (c := class_from_string(i))
         ]
@@ -374,7 +390,9 @@ def has_god() -> "_CheckDecorator":
 
     async def predicate(ctx: Context) -> bool:
         if not hasattr(ctx, "character_data"):
-            ctx.character_data = await ctx.bot.cache.get_profile(ctx.author.id)
+            ctx.character_data = await ctx.bot.pool.fetchrow(
+                'SELECT * FROM profile WHERE "user"=$1;', ctx.author.id
+            )
         if ctx.character_data["god"]:
             return True
         raise NeedsGod()
@@ -428,9 +446,6 @@ def update_pet() -> "_CheckDecorator":
                         classes,
                         ctx.author.id,
                     )
-                    await ctx.bot.cache.update_profile_cols_abs(
-                        ctx.author.id, class_=classes
-                    )
                     raise PetDied()
                 elif data["love"] < 75 and random.randint(0, 99) > data["love"]:
                     classes[idx] = "No Class"
@@ -441,9 +456,6 @@ def update_pet() -> "_CheckDecorator":
                         'UPDATE profile SET "class"=$1 WHERE "user"=$2;',
                         classes,
                         ctx.author.id,
-                    )
-                    await ctx.bot.cache.update_profile_cols_abs(
-                        ctx.author.id, class_=classes
                     )
                     raise PetRanAway()
         return True
@@ -464,23 +476,40 @@ def is_god() -> "_CheckDecorator":
 
 
 async def has_guild_(bot: "Bot", userid: int) -> bool:
-    return bool(await bot.cache.get_profile_col(userid, "guild"))
+    return bool(
+        await bot.pool.fetchval('SELECT guild FROM profile WHERE "user"=$1;', userid)
+    )
 
 
 async def is_member_of_author_guild(ctx: Context, userid: int) -> bool:
-    user_1 = await ctx.bot.cache.get_profile_col(ctx.author.id, "guild")
-    user_2 = await ctx.bot.cache.get_profile_col(userid, "guild")
+    async with ctx.bot.pool.acquire() as conn:
+        user_1 = await conn.fetchval(
+            'SELECT guild FROM profile WHERE "user"=$1;', ctx.author.id
+        )
+        user_2 = await conn.fetchval(
+            'SELECT guild FROM profile WHERE "user"=$1;', userid
+        )
     return user_1 == user_2
 
 
 async def user_has_char(bot: "Bot", userid: int) -> bool:
-    return bool(await bot.cache.get_profile(userid))
+    return bool(
+        await bot.pool.fetchrow('SELECT guild FROM profile WHERE "user"=$1;', userid)
+    )
 
 
 async def has_money(bot: "Bot", userid: int, money: int, conn=None) -> bool:
-    return (
-        bal := await bot.cache.get_profile_col(userid, "money", conn=conn)
+    if conn is None:
+        conn = await bot.pool.acquire()
+        local = True
+    else:
+        local = False
+    res = (
+        bal := await conn.fetchval('SELECT money FROM profile WHERE "user"=$1;', userid)
     ) is not None and bal >= money
+    if local:
+        await bot.pool.release(conn)
+    return res
 
 
 async def guild_has_money(bot: "Bot", guildid: int, money: int) -> bool:

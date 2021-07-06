@@ -197,7 +197,11 @@ class Raid(commands.Cog):
                 u = await self.bot.get_user_global(i)
                 if not u:
                     continue
-                if not (profile := await self.bot.cache.get_profile(u.id, conn=conn)):
+                if not (
+                    profile := await conn.fetchrow(
+                        'SELECT * FROM profile WHERE "user"=$1;', u.id
+                    )
+                ):
                     continue
                 dmg, deff = await self.bot.get_raidstats(
                     u,
@@ -316,7 +320,9 @@ class Raid(commands.Cog):
                 except asyncio.TimeoutError:
                     break
                 bid = int(msg.content)
-                money = await self.bot.cache.get_profile_col(msg.author.id, "money")
+                money = await self.bot.pool.fetchval(
+                    'SELECT money FROM profile WHERE "user"=$1;', msg.author.id
+                )
                 if money and money >= bid:
                     highest_bid = [msg.author.id, bid]
                     await ctx.send(f"{msg.author.mention} bids **${msg.content}**!")
@@ -324,7 +330,9 @@ class Raid(commands.Cog):
                 f"Auction done! Winner is <@{highest_bid[0]}> with"
                 f" **${highest_bid[1]}**!\nGiving Legendary Crate..."
             )
-            money = await self.bot.cache.get_profile_col(highest_bid[0], "money")
+            money = await self.bot.pool.fetchval(
+                'SELECT money FROM profile WHERE "user"=$1;', highest_bid[0]
+            )
             if money >= highest_bid[1]:
                 async with self.bot.pool.acquire() as conn:
                     await conn.execute(
@@ -341,9 +349,6 @@ class Raid(commands.Cog):
                         data={"Amount": highest_bid[1]},
                         conn=conn,
                     )
-                await self.bot.cache.update_profile_cols_rel(
-                    highest_bid[0], money=-highest_bid[1], crates_legendary=1
-                )
                 await msg.edit(content=f"{msg.content} Done!")
                 summary_crate = (
                     "Emoji_here Legendary crate <:CrateLegendary:598094865678598144> "
@@ -370,8 +375,6 @@ class Raid(commands.Cog):
                 cash,
                 users,
             )
-            for user in users:
-                await self.bot.cache.update_profile_cols_rel(user, money=cash)
             await ctx.send(
                 f"**Gave ${cash:,.0f} of Zerekiel's ${cash_pool:,.0f} drop to all"
                 " survivors!**"
@@ -482,7 +485,11 @@ Quick and ugly: <https://discord.com/oauth2/authorize?client_id=4539639655219855
                 if not u:
                     continue
                 if (
-                    not (profile := await self.bot.cache.get_profile(u.id, conn=conn))
+                    not (
+                        profile := await conn.fetchrow(
+                            'SELECT * FROM profile WHERE "user"=$1;', u.id
+                        )
+                    )
                     or profile["god"] != "Kvothe"
                 ):
                     continue
@@ -557,7 +564,6 @@ Quick and ugly: <https://discord.com/oauth2/authorize?client_id=4539639655219855
                     money,
                     target.id,
                 )
-                await self.bot.cache.update_profile_cols_rel(target.id, money=money)
                 scrael.pop(0)
                 em.add_field(
                     name="Hero attack", value=f"Killed the scrael and received ${money}"
@@ -585,9 +591,6 @@ Quick and ugly: <https://discord.com/oauth2/authorize?client_id=4539639655219855
                     data={"Rarity": "legendary", "Amount": 1},
                     conn=conn,
                 )
-            await self.bot.cache.update_profile_cols_rel(
-                most_kills.id, crates_legendary=1
-            )
             await ctx.send(
                 "The scrael were defeated! Our most glorious hero,"
                 f" {most_kills.mention}, has received Kvothe's grace, a"
@@ -656,7 +659,11 @@ Quick and ugly: <https://discord.com/oauth2/authorize?client_id=4539639655219855
                 if not u:
                     continue
                 if (
-                    not (profile := await self.bot.cache.get_profile(u.id, conn=conn))
+                    not (
+                        profile := await conn.fetchrow(
+                            'SELECT * FROM profile WHERE "user"=$1;', u.id
+                        )
+                    )
                     or profile["god"] != "Eden"
                 ):
                     continue
@@ -736,7 +743,6 @@ Quick and ugly: <https://discord.com/oauth2/authorize?client_id=4539639655219855
                 ' "user"=$1;',
                 winner.id,
             )
-            await self.bot.cache.update_profile_cols_rel(winner.id, crates_legendary=1)
             await ctx.send(
                 "The guardian was defeated, the seekers can enter the garden! Eden has"
                 f" gracefully given {winner.mention} a legendary crate for their"
@@ -750,8 +756,6 @@ Quick and ugly: <https://discord.com/oauth2/authorize?client_id=4539639655219855
                 cash,
                 users,
             )
-            for user in users:
-                await self.bot.cache.update_profile_cols_rel(user, money=cash)
             await ctx.send(
                 f"**Gave ${cash} of the Guardian's ${int(hp / 4)} drop to all"
                 " survivors!**"
@@ -831,7 +835,11 @@ Quick and ugly: <https://discord.com/oauth2/authorize?client_id=4539639655219855
                 if not u:
                     continue
                 if (
-                    not (profile := await self.bot.cache.get_profile(u.id, conn=conn))
+                    not (
+                        profile := await conn.fetchrow(
+                            'SELECT * FROM profile WHERE "user"=$1;', u.id
+                        )
+                    )
                     or profile["god"] != "CHamburr"
                 ):
                     continue
@@ -943,7 +951,9 @@ Quick and ugly: <https://discord.com/oauth2/authorize?client_id=4539639655219855
                 except asyncio.TimeoutError:
                     break
                 bid = int(msg.content)
-                money = await self.bot.cache.get_profile_col(msg.author.id, "money")
+                money = await self.bot.pool.fetchval(
+                    'SELECT money FROM profile WHERE "user"=$1;', msg.author.id
+                )
                 if money and money >= bid:
                     highest_bid = [msg.author.id, bid]
                     await ctx.send(f"{msg.author.mention} bids **${msg.content}**!")
@@ -951,7 +961,9 @@ Quick and ugly: <https://discord.com/oauth2/authorize?client_id=4539639655219855
                 f"Auction done! Winner is <@{highest_bid[0]}> with"
                 f" **${highest_bid[1]}**!\nGiving Legendary Crate..."
             )
-            money = await self.bot.cache.get_profile_col(highest_bid[0], "money")
+            money = await self.bot.pool.fetchval(
+                'SELECT money FROM profile WHERE "user"=$1;', highest_bid[0]
+            )
             if money >= highest_bid[1]:
                 async with self.bot.pool.acquire() as conn:
                     await conn.execute(
@@ -968,9 +980,6 @@ Quick and ugly: <https://discord.com/oauth2/authorize?client_id=4539639655219855
                         data={"Amount": highest_bid[1]},
                         conn=conn,
                     )
-                await self.bot.cache.update_profile_cols_rel(
-                    highest_bid[0], money=-highest_bid[1], crates_legendary=1
-                )
                 await msg.edit(content=f"{msg.content} Done!")
             else:
                 await ctx.send(
@@ -986,8 +995,6 @@ Quick and ugly: <https://discord.com/oauth2/authorize?client_id=4539639655219855
                 cash,
                 users,
             )
-            for user in users:
-                await self.bot.cache.update_profile_cols_rel(user, money=cash)
             await ctx.send(
                 f"**Gave ${cash} of the hamburger's ${int(hp / 4)} drop to all"
                 " survivors!**"
@@ -1062,7 +1069,11 @@ Quick and ugly: <https://discord.com/oauth2/authorize?client_id=4539639655219855
                 if not u:
                     continue
                 if (
-                    not (profile := await self.bot.cache.get_profile(u.id, conn=conn))
+                    not (
+                        profile := await conn.fetchrow(
+                            'SELECT * FROM profile WHERE "user"=$1;', u.id
+                        )
+                    )
                     or profile["god"] != "Lyx"
                 ):
                     continue
@@ -1172,7 +1183,6 @@ Quick and ugly: <https://discord.com/oauth2/authorize?client_id=4539639655219855
                 'UPDATE profile SET "crates_legendary"="crates_legendary"+1 WHERE "user"=$1;',
                 winner.id,
             )
-        await self.bot.cache.update_profile_cols_rel(winner.id, crates_legendary=1)
         await self.clear_raid_timer()
 
     @is_god()
@@ -1238,7 +1248,11 @@ Click [here](https://discord.com/oauth2/authorize?client_id=453963965521985536&s
                 if not u:
                     continue
                 if (
-                    not (profile := await self.bot.cache.get_profile(u.id, conn=conn))
+                    not (
+                        profile := await conn.fetchrow(
+                            'SELECT * FROM profile WHERE "user"=$1;', u.id
+                        )
+                    )
                     or profile["god"] != "Monox"
                 ):
                     continue
@@ -1353,7 +1367,6 @@ Click [here](https://discord.com/oauth2/authorize?client_id=453963965521985536&s
                     'UPDATE profile SET "crates_legendary"="crates_legendary"+1 WHERE "user"=$1;',
                     winner.id,
                 )
-            await self.bot.cache.update_profile_cols_rel(winner.id, crates_legendary=1)
             em = discord.Embed(
                 title="Win!",
                 description=f"The followers of Monox defeated Mensing and the creamy cheese is ours!\n{winner.mention} has been the biggest coomer and gets a legendary crate from Monox!",
@@ -1422,7 +1435,11 @@ Click [here](https://discord.com/oauth2/authorize?client_id=453963965521985536&s
                 if not u:
                     continue
                 if (
-                    not (profile := await self.bot.cache.get_profile(u.id, conn=conn))
+                    not (
+                        profile := await conn.fetchrow(
+                            'SELECT * FROM profile WHERE "user"=$1;', u.id
+                        )
+                    )
                     or profile["god"] != "Kirby"
                 ):
                     continue
@@ -1582,9 +1599,6 @@ Click [here](https://discord.com/oauth2/authorize?client_id=453963965521985536&s
                 10000,
                 users,
             )
-        await self.bot.cache.update_profile_cols_rel(winner.id, crates_legendary=1)
-        for user in users:
-            await self.bot.cache.update_profile_cols_rel(user, money=10000)
         await self.clear_raid_timer()
 
     @is_god()
@@ -1648,7 +1662,11 @@ Quick and ugly: <https://discord.com/oauth2/authorize?client_id=4539639655219855
                 if not u:
                     continue
                 if (
-                    not (profile := await self.bot.cache.get_profile(u.id, conn=conn))
+                    not (
+                        profile := await conn.fetchrow(
+                            'SELECT * FROM profile WHERE "user"=$1;', u.id
+                        )
+                    )
                     or profile["god"] != "Jesus"
                 ):
                     continue
@@ -1749,7 +1767,9 @@ Quick and ugly: <https://discord.com/oauth2/authorize?client_id=4539639655219855
                 except asyncio.TimeoutError:
                     break
                 bid = int(msg.content)
-                money = await self.bot.cache.get_profile_col(msg.author.id, "money")
+                money = await self.bot.pool.fetchval(
+                    'SELECT money FROM profile WHERE "user"=$1;', msg.author.id
+                )
                 if money and money >= bid:
                     highest_bid = [msg.author.id, bid]
                     await ctx.send(f"{msg.author.mention} bids **${msg.content}**!")
@@ -1757,7 +1777,9 @@ Quick and ugly: <https://discord.com/oauth2/authorize?client_id=4539639655219855
                 f"Auction done! Winner is <@{highest_bid[0]}> with"
                 f" **${highest_bid[1]}**!\nGiving Legendary Crate..."
             )
-            money = await self.bot.cache.get_profile_col(highest_bid[0], "money")
+            money = await self.bot.pool.fetchval(
+                'SELECT money FROM profile WHERE "user"=$1;', highest_bid[0]
+            )
             if money >= highest_bid[1]:
                 async with self.bot.pool.acquire() as conn:
                     await conn.execute(
@@ -1774,9 +1796,6 @@ Quick and ugly: <https://discord.com/oauth2/authorize?client_id=4539639655219855
                         data={"Amount": highest_bid[1]},
                         conn=conn,
                     )
-                await self.bot.cache.update_profile_cols_rel(
-                    highest_bid[0], money=-highest_bid[1], crates_legendary=1
-                )
                 await msg.edit(content=f"{msg.content} Done!")
             else:
                 await ctx.send(
@@ -1792,8 +1811,6 @@ Quick and ugly: <https://discord.com/oauth2/authorize?client_id=4539639655219855
                 cash,
                 users,
             )
-            for user in users:
-                await self.bot.cache.update_profile_cols_rel(user, money=cash)
             await ctx.send(
                 f"**Gave ${cash} of Atheistus' ${int(hp / 4)} drop to all survivors!"
                 " Thanks to you, the world can live in peace and love again.**"
@@ -1874,9 +1891,6 @@ Quick and ugly: <https://discord.com/oauth2/authorize?client_id=4539639655219855
                 data={"Amount": price},
                 conn=conn,
             )
-        await self.bot.cache.update_profile_cols_rel(
-            ctx.author.id, atkmultiply=Decimal("0.1"), money=-price
-        )
         await ctx.send(
             _(
                 "You upgraded your weapon attack raid multiplier to {newlvl} for"
@@ -1929,9 +1943,6 @@ Quick and ugly: <https://discord.com/oauth2/authorize?client_id=4539639655219855
                 data={"Amount": price},
                 conn=conn,
             )
-        await self.bot.cache.update_profile_cols_rel(
-            ctx.author.id, defmultiply=Decimal("0.1"), money=-price
-        )
         await ctx.send(
             _(
                 "You upgraded your shield defense raid multiplier to {newlvl} for"

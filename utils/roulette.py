@@ -172,9 +172,6 @@ class RouletteGame:
             self.money,
             self.ctx.author.id,
         )
-        await self.ctx.bot.cache.update_profile_cols_rel(
-            self.ctx.author.id, money=-self.money
-        )
 
     async def handle_win(self):
         async with self.ctx.bot.pool.acquire() as conn:
@@ -191,9 +188,6 @@ class RouletteGame:
                 data={"Amount": self.money * self.payout},
                 conn=conn,
             )
-        await self.ctx.bot.cache.update_profile_cols_rel(
-            self.ctx.author.id, money=self.money * (self.payout + 1)
-        )
         await self.message.edit(
             content=_(
                 "It's a :{colour}_circle: {number}! You won **${money}**!"

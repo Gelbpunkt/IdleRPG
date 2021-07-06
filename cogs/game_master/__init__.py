@@ -24,13 +24,7 @@ import discord
 from async_timeout import timeout
 from discord.ext import commands
 
-from classes.converters import (
-    CrateRarity,
-    IntFromTo,
-    IntGreaterThan,
-    MemberConverter,
-    UserWithCharacter,
-)
+from classes.converters import CrateRarity, IntFromTo, IntGreaterThan, UserWithCharacter
 from classes.items import ItemType
 from cogs.shard_communication import user_on_cooldown as user_cooldown
 from utils.checks import has_char, is_gm
@@ -83,7 +77,7 @@ class GameMaster(commands.Cog):
         hidden=True, aliases=["gmcdc"], brief=_("Clear donator cache for a user")
     )
     @locale_doc
-    async def gmcleardonatorcache(self, ctx, *, other: MemberConverter):
+    async def gmcleardonatorcache(self, ctx, *, other: discord.Member):
         _(
             """`<other>` - A server member
 
@@ -134,7 +128,6 @@ class GameMaster(commands.Cog):
         await self.bot.pool.execute(
             'UPDATE profile SET "money"="money"+$1 WHERE "user"=$2;', money, other.id
         )
-        await self.bot.cache.update_profile_cols_rel(other.id, money=money)
         await ctx.send(
             _(
                 "Successfully gave **${money}** without a loss for you to **{other}**."
@@ -173,7 +166,6 @@ class GameMaster(commands.Cog):
         await self.bot.pool.execute(
             'UPDATE profile SET "money"="money"-$1 WHERE "user"=$2;', money, other.id
         )
-        await self.bot.cache.update_profile_cols_rel(other.id, money=-money)
         await ctx.send(
             _("Successfully removed **${money}** from **{other}**.").format(
                 money=money, other=other
@@ -203,23 +195,17 @@ class GameMaster(commands.Cog):
         )
         if other.id in ctx.bot.config.game.game_masters:  # preserve deletion of admins
             return await ctx.send(_("Very funny..."))
-        await self.bot.cache.wipe_profile(other.id)
         async with self.bot.pool.acquire() as conn:
             g = await conn.fetchval(
                 'DELETE FROM guild WHERE "leader"=$1 RETURNING id;', other.id
             )
             if g:
-                users = await conn.fetch(
-                    'UPDATE profile SET "guildrank"=$1, "guild"=$2 WHERE "guild"=$3'
-                    ' RETURNING "user";',
+                await conn.execute(
+                    'UPDATE profile SET "guildrank"=$1, "guild"=$2 WHERE "guild"=$3;',
                     "Member",
                     0,
                     g,
                 )
-                for user in users:
-                    await self.bot.cache.update_profile_cols_abs(
-                        user["user"], guildrank="Member", guild=0
-                    )
                 await conn.execute('UPDATE city SET "owner"=1 WHERE "owner"=$1;', g)
             partner = await conn.fetchval(
                 'UPDATE profile SET "marriage"=$1 WHERE "marriage"=$2 RETURNING'
@@ -234,9 +220,6 @@ class GameMaster(commands.Cog):
                 other.id,
             )
             await self.bot.delete_profile(other.id, conn=conn)
-        await self.bot.cache.wipe_profile(other.id)
-        if partner:
-            await self.bot.cache.update_profile_cols_abs(partner, marriage=0)
         await ctx.send(_("Successfully deleted the character."))
         await self.bot.http.send_message(
             self.bot.config.game.gm_log_channel,
@@ -280,7 +263,6 @@ class GameMaster(commands.Cog):
         await self.bot.pool.execute(
             'UPDATE profile SET "name"=$1 WHERE "user"=$2;', name.content, target.id
         )
-        await self.bot.cache.update_profile_cols_abs(target.id, name=name.content)
         await ctx.send(_("Renamed."))
         await self.bot.http.send_message(
             self.bot.config.game.gm_log_channel,
@@ -376,9 +358,6 @@ class GameMaster(commands.Cog):
             amount,
             target.id,
         )
-        await self.bot.cache.update_profile_cols_rel(
-            target.id, **{f"crates_{rarity}": amount}
-        )
         await ctx.send(
             _("Successfully gave **{amount}** {rarity} crates to **{target}**.").format(
                 amount=amount, target=target, rarity=rarity
@@ -418,7 +397,6 @@ class GameMaster(commands.Cog):
         await self.bot.pool.execute(
             'UPDATE profile SET "xp"="xp"+$1 WHERE "user"=$2;', amount, target.id
         )
-        await self.bot.cache.update_profile_cols_rel(target.id, xp=amount)
         await ctx.send(
             _("Successfully gave **{amount}** XP to **{target}**.").format(
                 amount=amount, target=target
@@ -466,9 +444,6 @@ class GameMaster(commands.Cog):
             await conn.execute(
                 'UPDATE guild SET "memberlimit"=$1 WHERE "leader"=$2;', 50, target.id
             )
-        await self.bot.cache.update_profile_cols_abs(
-            target.id, background="0", class_=["No Class", "No Class"]
-        )
 
         await ctx.send(
             _(
@@ -500,9 +475,6 @@ class GameMaster(commands.Cog):
         await self.bot.pool.execute(
             """UPDATE profile SET "class"='{"No Class", "No Class"}' WHERE "user"=$1;""",
             target.id,
-        )
-        await self.bot.cache.update_profile_cols_abs(
-            target.id, class_=["No Class", "No Class"]
         )
 
         await ctx.send(_("Successfully reset {target}'s class.").format(target=target))
@@ -614,9 +586,6 @@ class GameMaster(commands.Cog):
                 self.top_auction[1],
                 self.top_auction[0].id,
             )
-            await self.bot.cache.update_profile_cols_rel(
-                self.top_auction[0].id, money=self.top_auction[1]
-            )
             await self.bot.log_transaction(
                 ctx,
                 from_=1,
@@ -632,7 +601,6 @@ class GameMaster(commands.Cog):
                 amount,
                 ctx.author.id,
             )
-            await self.bot.cache.update_profile_cols_rel(ctx.author.id, money=-amount)
             await self.bot.log_transaction(
                 ctx,
                 from_=ctx.author.id,

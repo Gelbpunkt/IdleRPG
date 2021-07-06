@@ -315,16 +315,10 @@ class Transaction(commands.Cog):
                         f'UPDATE profile SET {row_string_user1} WHERE "user"=${n_1};',
                         *query_args_user_1,
                     )
-                    await self.bot.cache.update_profile_cols_rel(
-                        user1.id, **profile_cols_to_change_user1
-                    )
                 if profile_cols_to_change_user2:
                     await conn.execute(
                         f'UPDATE profile SET {row_string_user2} WHERE "user"=${n_2};',
                         *query_args_user_2,
-                    )
-                    await self.bot.cache.update_profile_cols_rel(
-                        user2.id, **profile_cols_to_change_user2
                     )
 
             await chan.send(_("Trade successful."))

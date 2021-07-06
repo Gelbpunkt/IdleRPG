@@ -95,36 +95,40 @@ class Marriage(commands.Cog):
             )
         except asyncio.TimeoutError:
             return await ctx.send(_("They didn't want to marry."))
-        # check if someone married in the meantime
-        check1 = await self.bot.cache.get_profile_col(ctx.author.id, "marriage")
-        check2 = await self.bot.cache.get_profile_col(partner.id, "marriage")
-        if check1 or check2:
-            return await ctx.send(
-                _("Either you or your lovee married in the meantime... :broken_heart:")
-            )
         async with self.bot.pool.acquire() as conn:
-            await conn.execute(
-                'UPDATE profile SET "marriage"=$1 WHERE "user"=$2;',
-                partner.id,
-                ctx.author.id,
+            check1 = await conn.fetchval(
+                'SELECT marriage FROM profile WHERE "user"=$1;', ctx.author.id
             )
-            await conn.execute(
-                'UPDATE profile SET "marriage"=$1 WHERE "user"=$2;',
-                ctx.author.id,
-                partner.id,
+            check2 = await conn.fetchval(
+                'SELECT marriage FROM profile WHERE "user"=$2;', partner.id
             )
-            await conn.execute(
-                'UPDATE children SET "father"=$1 WHERE "father"=0 AND "mother"=$2;',
-                partner.id,
-                ctx.author.id,
-            )
-            await conn.execute(
-                'UPDATE children SET "father"=$1 WHERE "father"=0 AND "mother"=$2;',
-                ctx.author.id,
-                partner.id,
-            )
-        await self.bot.cache.update_profile_cols_abs(ctx.author.id, marriage=partner.id)
-        await self.bot.cache.update_profile_cols_abs(partner.id, marriage=ctx.author.id)
+            if check1 or check2:
+                return await ctx.send(
+                    _(
+                        "Either you or your lovee married in the meantime... :broken_heart:"
+                    )
+                )
+            async with conn.transaction():
+                await conn.execute(
+                    'UPDATE profile SET "marriage"=$1 WHERE "user"=$2;',
+                    partner.id,
+                    ctx.author.id,
+                )
+                await conn.execute(
+                    'UPDATE profile SET "marriage"=$1 WHERE "user"=$2;',
+                    ctx.author.id,
+                    partner.id,
+                )
+                await conn.execute(
+                    'UPDATE children SET "father"=$1 WHERE "father"=0 AND "mother"=$2;',
+                    partner.id,
+                    ctx.author.id,
+                )
+                await conn.execute(
+                    'UPDATE children SET "father"=$1 WHERE "father"=0 AND "mother"=$2;',
+                    ctx.author.id,
+                    partner.id,
+                )
         # we give familyevent cooldown to the new partner to avoid exploitation
         await self.bot.set_cooldown(partner.id, 1800, "familyevent")
         await ctx.send(
@@ -174,12 +178,6 @@ class Marriage(commands.Cog):
                 'UPDATE children SET "father"=0 WHERE "mother"=$1;',
                 ctx.character_data["marriage"],
             )
-        await self.bot.cache.update_profile_cols_abs(
-            ctx.author.id, marriage=0, lovescore=0
-        )
-        await self.bot.cache.update_profile_cols_abs(
-            ctx.character_data["marriage"], marriage=0, lovescore=0
-        )
         await ctx.send(_("You are now divorced."))
 
     @has_char()
@@ -312,10 +310,6 @@ class Marriage(commands.Cog):
                 data={"Amount": item[1]},
                 conn=conn,
             )
-        await self.bot.cache.update_profile_cols_rel(ctx.author.id, money=-item[1])
-        await self.bot.cache.update_profile_cols_rel(
-            ctx.character_data["marriage"], lovescore=item[1]
-        )
         await ctx.send(
             _(
                 "You bought a **{item}** for your partner and increased their love"
@@ -357,7 +351,6 @@ class Marriage(commands.Cog):
             num,
             marriage,
         )
-        await self.bot.cache.update_profile_cols_rel(marriage, lovescore=num)
 
         partner = await self.bot.get_user_global(marriage)
         scenario = random.choice(
@@ -403,8 +396,6 @@ class Marriage(commands.Cog):
             ctx.author.id,
             marriage,
         )
-        await self.bot.cache.update_profile_cols_rel(marriage, lovescore=ls)
-        await self.bot.cache.update_profile_cols_rel(ctx.author.id, lovescore=ls)
         return await ctx.send(
             _(
                 "You had a lovely night and gained {ls} lovescore. 😏\n\n{additional}".format(
@@ -448,8 +439,8 @@ class Marriage(commands.Cog):
                 'SELECT name FROM children WHERE "mother"=$1 OR "father"=$1;',
                 ctx.author.id,
             )
-            spouse = await self.bot.cache.get_profile_col(
-                marriage, "lovescore", conn=conn
+            spouse = await conn.fetchval(
+                'SELECT lovescore FROM profile WHERE "user"=$1;', marriage
             )
         max_, missing = self.get_max_kids(ctx.character_data["lovescore"] + spouse)
         names = [name["name"] for name in names]
@@ -711,7 +702,6 @@ class Marriage(commands.Cog):
                     data={"Amount": -money},
                     conn=conn,
                 )
-            await self.bot.cache.update_profile_cols_rel(ctx.author.id, money=-money)
 
             return await ctx.send(
                 _("You lost ${money} because {name} {cause}").format(
@@ -747,7 +737,6 @@ class Marriage(commands.Cog):
                     data={"Amount": money},
                     conn=conn,
                 )
-            await self.bot.cache.update_profile_cols_rel(ctx.author.id, money=money)
             return await ctx.send(
                 _("{name} gave you ${money}, they {cause}").format(
                     name=target["name"], money=money, cause=cause
@@ -775,9 +764,6 @@ class Marriage(commands.Cog):
                     data={"Rarity": type_, "Amount": 1},
                     conn=conn,
                 )
-            await self.bot.cache.update_profile_cols_rel(
-                ctx.author.id, **{f"crates_{type_}": 1}
-            )
             emoji = getattr(self.bot.cogs["Crates"].emotes, type_)
             return await ctx.send(
                 _("{name} found a {emoji} {type_} crate for you!").format(

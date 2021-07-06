@@ -180,9 +180,6 @@ class BlackJack:
                     data={"Amount": self.money * 2},
                     conn=conn,
                 )
-            await self.ctx.bot.cache.update_profile_cols_rel(
-                self.ctx.author.id, money=self.money * 2
-            )
 
     async def player_bj_win(self):
         if self.money > 0:
@@ -201,9 +198,6 @@ class BlackJack:
                     data={"Amount": total},
                     conn=conn,
                 )
-            await self.ctx.bot.cache.update_profile_cols_rel(
-                self.ctx.author.id, money=total
-            )
 
     async def player_cashback(self):
         if self.money > 0:
@@ -221,9 +215,6 @@ class BlackJack:
                     data={"Amount": self.money},
                     conn=conn,
                 )
-            await self.ctx.bot.cache.update_profile_cols_rel(
-                self.ctx.author.id, money=self.money
-            )
 
     def pretty(self, hand):
         return " ".join([card[2] for card in hand])
@@ -369,9 +360,6 @@ class BlackJack:
                             data={"Amount": self.money},
                             conn=conn,
                         )
-                    await self.ctx.bot.cache.update_profile_cols_rel(
-                        self.ctx.author.id, money=-self.money
-                    )
 
                 self.money *= 2
                 valid.remove("\U000023ec")
@@ -438,6 +426,7 @@ class Gambling(commands.Cog):
         self.bot = bot
         self.cards = os.listdir("assets/cards")
 
+    @has_char()
     @commands.cooldown(1, 15, commands.BucketType.user)
     @commands.command(aliases=["card"], brief=_("Draw a card."))
     @locale_doc
@@ -464,15 +453,6 @@ class Gambling(commands.Cog):
             if enemy == ctx.me:
                 return await ctx.send(_("You should choose a human to play with you."))
 
-            if not await user_has_char(self.bot, ctx.author.id):
-                return await ctx.send(
-                    _(
-                        "You don't have a character yet. Create now using"
-                        " `{prefix}create`."
-                    ).format(prefix=ctx.prefix)
-                )
-            else:
-                ctx.character_data = await self.bot.cache.get_profile(ctx.author.id)
             if ctx.character_data["money"] < money:
                 return await ctx.send(_("You are too poor."))
 
@@ -481,7 +461,6 @@ class Gambling(commands.Cog):
                 money,
                 ctx.author.id,
             )
-            await self.bot.cache.update_profile_cols_rel(ctx.author.id, money=-money)
 
             async def money_back():
                 await self.bot.pool.execute(
@@ -489,7 +468,6 @@ class Gambling(commands.Cog):
                     money,
                     ctx.author.id,
                 )
-                await self.bot.cache.update_profile_cols_rel(ctx.author.id, money=money)
                 return await self.bot.reset_cooldown(ctx)
 
             try:
@@ -534,7 +512,6 @@ class Gambling(commands.Cog):
                 money,
                 enemy.id,
             )
-            await self.bot.cache.update_profile_cols_rel(enemy.id, money=-money)
 
             cards = self.cards.copy()
             cards = random.shuffle(cards)
@@ -574,12 +551,6 @@ class Gambling(commands.Cog):
                             ctx.author.id,
                             enemy.id,
                         )
-                        await self.bot.cache.update_profile_cols_rel(
-                            ctx.author.id, money=money
-                        )
-                        await self.bot.cache.update_profile_cols_rel(
-                            enemy.id, money=money
-                        )
                         text = _("Nobody won. {author} and {enemy} tied.").format(
                             author=ctx.author.mention,
                             enemy=enemy.mention,
@@ -592,9 +563,6 @@ class Gambling(commands.Cog):
                             'UPDATE profile SET "money"="money"+$1 WHERE "user"=$2;',
                             money * 2,
                             winner.id,
-                        )
-                        await self.bot.cache.update_profile_cols_rel(
-                            winner.id, money=money * 2
                         )
                         await self.bot.log_transaction(
                             ctx,
@@ -709,10 +677,6 @@ class Gambling(commands.Cog):
                         ctx.author.id,
                         enemy.id,
                     )
-                    await self.bot.cache.update_profile_cols_rel(
-                        ctx.author.id, money=-money
-                    )
-                    await self.bot.cache.update_profile_cols_rel(enemy.id, money=-money)
 
     @has_char()
     @commands.cooldown(1, 15, commands.BucketType.user)
@@ -817,9 +781,6 @@ This command is in an alpha-stage, which means bugs are likely to happen. Play a
                         data={"Amount": amount},
                         conn=conn,
                     )
-                await self.bot.cache.update_profile_cols_rel(
-                    ctx.author.id, money=amount
-                )
             await ctx.send(
                 _("{result[1]} It's **{result[0]}**! You won **${amount}**!").format(
                     result=result, amount=amount
@@ -841,9 +802,6 @@ This command is in an alpha-stage, which means bugs are likely to happen. Play a
                         data={"Amount": amount},
                         conn=conn,
                     )
-                await self.bot.cache.update_profile_cols_rel(
-                    ctx.author.id, money=-amount
-                )
             await ctx.send(
                 _("{result[1]} It's **{result[0]}**! You lost **${amount}**!").format(
                     result=result, amount=amount
@@ -904,9 +862,6 @@ This command is in an alpha-stage, which means bugs are likely to happen. Play a
                         data={"Amount": money * (maximum - 1)},
                         conn=conn,
                     )
-                await self.bot.cache.update_profile_cols_rel(
-                    ctx.author.id, money=money * (maximum - 1)
-                )
             await ctx.send(
                 _(
                     "You won **${money}**! The random number was `{num}`, you tipped"
@@ -934,9 +889,6 @@ This command is in an alpha-stage, which means bugs are likely to happen. Play a
                         data={"Amount": money},
                         conn=conn,
                     )
-                await self.bot.cache.update_profile_cols_rel(
-                    ctx.author.id, money=-money
-                )
             await ctx.send(
                 _(
                     "You lost **${money}**! The random number was `{num}`, you tipped"
@@ -974,7 +926,6 @@ This command is in an alpha-stage, which means bugs are likely to happen. Play a
             amount,
             ctx.author.id,
         )
-        await self.bot.cache.update_profile_cols_rel(ctx.author.id, money=-amount)
         if amount > 0:
             await self.bot.log_transaction(
                 ctx,
@@ -1041,7 +992,6 @@ This command is in an alpha-stage, which means bugs are likely to happen. Play a
                 data={"Amount": 100},
                 conn=conn,
             )
-        await self.bot.cache.update_profile_cols_rel(ctx.author.id, money=-100)
 
         while True:
             user, other = users
@@ -1066,7 +1016,6 @@ This command is in an alpha-stage, which means bugs are likely to happen. Play a
                         data={"Amount": money},
                         conn=conn,
                     )
-                await self.bot.cache.update_profile_cols_rel(other.id, money=money)
                 return await ctx.send(_("Timed out."))
 
             if action:
@@ -1084,7 +1033,6 @@ This command is in an alpha-stage, which means bugs are likely to happen. Play a
                         data={"Amount": money},
                         conn=conn,
                     )
-                await self.bot.cache.update_profile_cols_rel(user.id, money=money)
                 return await ctx.send(
                     _("{user} stole **${money}**.").format(user=user, money=money)
                 )
@@ -1096,7 +1044,6 @@ This command is in an alpha-stage, which means bugs are likely to happen. Play a
                         money,
                         other.id,
                     )
-                    await self.bot.cache.update_profile_cols_rel(other.id, money=money)
                     if not await self.bot.has_money(user.id, new_money, conn=conn):
                         return await ctx.send(
                             _("{user} is too poor to double.").format(user=user)
@@ -1106,7 +1053,6 @@ This command is in an alpha-stage, which means bugs are likely to happen. Play a
                         new_money,
                         user.id,
                     )
-                await self.bot.cache.update_profile_cols_rel(user.id, money=-new_money)
                 await ctx.send(
                     _("{user} doubled to **${money}**.").format(
                         user=user, money=new_money

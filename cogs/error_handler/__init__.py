@@ -275,9 +275,6 @@ class Errorhandler(commands.Cog):
                     classes,
                     ctx.author.id,
                 )
-                await self.bot.cache.update_profile_cols_abs(
-                    ctx.author.id, class_=classes
-                )
             elif isinstance(error, utils.checks.PetDied):
                 await ctx.send(
                     _(

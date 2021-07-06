@@ -27,7 +27,7 @@ from discord.ext import commands
 from discord.ext.commands.default import Author
 
 from classes.classes import from_string as class_from_string
-from classes.converters import IntFromTo, MemberWithCharacter, User, UserWithCharacter
+from classes.converters import IntFromTo, MemberWithCharacter, UserWithCharacter
 from classes.items import ALL_ITEM_TYPES, ItemType
 from cogs.help import chunks
 from cogs.shard_communication import user_on_cooldown as user_cooldown
@@ -156,7 +156,7 @@ IdleRPG is a global bot, your characters are valid everywhere"""
 
     @commands.command(aliases=["me", "p"], brief=_("View someone's profile"))
     @locale_doc
-    async def profile(self, ctx, *, person: User = Author):
+    async def profile(self, ctx, *, person: discord.User = Author):
         _(
             """`[person]` - The person whose profile to view; defaults to oneself
 
@@ -166,7 +166,9 @@ IdleRPG is a global bot, your characters are valid everywhere"""
         await ctx.trigger_typing()
         targetid = person.id
         async with self.bot.pool.acquire() as conn:
-            profile = await self.bot.cache.get_profile(targetid, conn=conn)
+            profile = await conn.fetchrow(
+                'SELECT * FROM profile WHERE "user"=$1;', targetid
+            )
             if not profile:
                 return await ctx.send(
                     _("**{person}** does not have a character.").format(person=person)
@@ -270,7 +272,7 @@ IdleRPG is a global bot, your characters are valid everywhere"""
         aliases=["p2", "pp"], brief=_("View someone's profile differently")
     )
     @locale_doc
-    async def profile2(self, ctx, *, target: User = Author):
+    async def profile2(self, ctx, *, target: discord.User = Author):
         _(
             """`[target]` - The person whose profile to view
 
@@ -280,7 +282,9 @@ IdleRPG is a global bot, your characters are valid everywhere"""
 
         items = await self.bot.get_equipped_items_for(target)
         async with self.bot.pool.acquire() as conn:
-            p_data = await self.bot.cache.get_profile(target.id, conn=conn)
+            p_data = await conn.fetchrow(
+                'SELECT * FROM profile WHERE "user"=$1;', target.id
+            )
             if not p_data:
                 return await ctx.send(
                     _("**{target}** does not have a character.").format(target=target)
@@ -684,7 +688,6 @@ IdleRPG is a global bot, your characters are valid everywhere"""
                 data={"Reward": reward, "Amount": value},
                 conn=conn,
             )
-        await self.bot.cache.update_profile_cols_rel(ctx.author.id, **{reward: value})
         if none_given:
             text = _(
                 "You received **{reward}** when exchanging all of your loot."
@@ -1006,7 +1009,6 @@ IdleRPG is a global bot, your characters are valid everywhere"""
                 data={"Amount": pricetopay},
                 conn=conn,
             )
-        await self.bot.cache.update_profile_cols_rel(ctx.author.id, money=-pricetopay)
         await ctx.send(
             _(
                 "The {stat} of your **{item}** is now **{newstat}**. **${pricetopay}**"
@@ -1060,8 +1062,6 @@ IdleRPG is a global bot, your characters are valid everywhere"""
                 data={"Amount": money},
                 conn=conn,
             )
-        await self.bot.cache.update_profile_cols_rel(ctx.author.id, money=-money)
-        await self.bot.cache.update_profile_cols_rel(other.id, money=money)
         await ctx.send(
             _(
                 "Success!\n{other} now has **${othermoney}**, you now have"
@@ -1107,7 +1107,6 @@ IdleRPG is a global bot, your characters are valid everywhere"""
             await self.bot.pool.execute(
                 'UPDATE profile SET "name"=$1 WHERE "user"=$2;', name, ctx.author.id
             )
-            await self.bot.cache.update_profile_cols_abs(ctx.author.id, name=name)
             await ctx.send(_("Character name updated."))
         elif len(name) < 3:
             await ctx.send(_("Character names must be at least 3 characters!"))
@@ -1138,17 +1137,12 @@ IdleRPG is a global bot, your characters are valid everywhere"""
                 'DELETE FROM guild WHERE "leader"=$1 RETURNING "id";', ctx.author.id
             )
             if g:
-                users = await conn.fetch(
-                    'UPDATE profile SET "guildrank"=$1, "guild"=$2 WHERE "guild"=$3'
-                    ' RETURNING "user";',
+                await conn.execute(
+                    'UPDATE profile SET "guildrank"=$1, "guild"=$2 WHERE "guild"=$3;',
                     "Member",
                     0,
                     g,
                 )
-                for user in users:
-                    await self.bot.cache.update_profile_cols_abs(
-                        user["user"], guildrank="Member", guild=0
-                    )
                 await conn.execute('UPDATE city SET "owner"=1 WHERE "owner"=$1;', g)
             if partner := ctx.character_data["marriage"]:
                 await conn.execute(
@@ -1163,9 +1157,6 @@ IdleRPG is a global bot, your characters are valid everywhere"""
                 ctx.author.id,
             )
             await self.bot.delete_profile(ctx.author.id, conn=conn)
-        await self.bot.cache.wipe_profile(ctx.author.id)
-        if partner:
-            await self.bot.cache.update_profile_cols_abs(partner, marriage=0)
         await self.bot.delete_adventure(ctx.author)
         await ctx.send(
             _("Successfully deleted your character. Sorry to see you go :frowning:")
@@ -1198,15 +1189,6 @@ IdleRPG is a global bot, your characters are valid everywhere"""
             'UPDATE profile SET "colour"=$1 WHERE "user"=$2;',
             (rgba.red, rgba.green, rgba.blue, rgba.alpha),
             ctx.author.id,
-        )
-        await self.bot.cache.update_profile_cols_abs(
-            ctx.author.id,
-            colour={
-                "red": rgba.red,
-                "green": rgba.green,
-                "blue": rgba.blue,
-                "alpha": rgba.alpha,
-            },
         )
         await ctx.send(
             _("Successfully set your profile colour to `{colour}`.").format(

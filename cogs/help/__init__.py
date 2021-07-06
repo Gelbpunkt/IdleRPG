@@ -25,7 +25,6 @@ import discord
 from asyncpg import UniqueViolationError
 from discord.ext import commands, menus
 
-from classes.converters import User
 from utils.checks import has_open_help_request, is_supporter
 from utils.i18n import _, locale_doc
 
@@ -203,7 +202,7 @@ class Help(commands.Cog):
     @is_supporter()
     @commands.command(brief=_("Allow someone/-thing to use helpme again"))
     @locale_doc
-    async def unbanfromhelpme(self, ctx, thing_to_unban: Union[User, int]):
+    async def unbanfromhelpme(self, ctx, thing_to_unban: Union[discord.User, int]):
         _(
             """`<thing_to_unban>` - A discord User, their User ID, or a server ID
 
@@ -226,7 +225,7 @@ class Help(commands.Cog):
     @is_supporter()
     @commands.command(brief=_("Ban someone/-thing from using helpme"))
     @locale_doc
-    async def banfromhelpme(self, ctx, thing_to_ban: Union[User, int]):
+    async def banfromhelpme(self, ctx, thing_to_ban: Union[discord.User, int]):
         _(
             """`<thing_to_ban>` - A discord User, their User ID, or a server ID
 

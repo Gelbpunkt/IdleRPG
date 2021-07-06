@@ -43,7 +43,6 @@ from classes.converters import (
     ImageUrl,
     IntFromTo,
     IntGreaterThan,
-    MemberConverter,
 )
 from cogs.help import chunks
 from cogs.shard_communication import next_day_cooldown
@@ -160,7 +159,6 @@ class Miscellaneous(commands.Cog):
                     data={"Amount": money},
                     conn=conn,
                 )
-            await self.bot.cache.update_profile_cols_rel(ctx.author.id, money=money)
             txt = f"**${money}**"
         else:
             num = round(((streak + 9) % 10 + 1) / 2)
@@ -193,9 +191,6 @@ class Miscellaneous(commands.Cog):
                     data={"Rarity": type_, "Amount": amt},
                     conn=conn,
                 )
-            await self.bot.cache.update_profile_cols_rel(
-                ctx.author.id, **{f"crates_{type_}": amt}
-            )
             txt = f"**{amt}** {getattr(self.bot.cogs['Crates'].emotes, type_)}"
 
         await ctx.send(
@@ -503,7 +498,7 @@ Average hours of work: **{hours}**"""
     @commands.has_permissions(manage_messages=True)
     @commands.command(brief=_("Delete messages"))
     @locale_doc
-    async def clear(self, ctx, num: IntFromTo(1, 1000), target: MemberConverter = None):
+    async def clear(self, ctx, num: IntFromTo(1, 1000), target: discord.Member = None):
         _(
             """`<num>` - A whole number from 1 to 1000
             `[target]` - The user whose messages to delete; defaults to everyone
@@ -592,7 +587,7 @@ Average hours of work: **{hours}**"""
     @commands.guild_only()
     @commands.command(brief=_("Calculates love for two users"))
     @locale_doc
-    async def love(self, ctx, first: MemberConverter, second: MemberConverter):
+    async def love(self, ctx, first: discord.Member, second: discord.Member):
         _(
             """`<first>` - A discord User
             `<second>` - Also a discord User
@@ -794,7 +789,7 @@ Average hours of work: **{hours}**"""
     @commands.guild_only()
     @commands.command(brief=_("Give a cookie to a user"))
     @locale_doc
-    async def cookie(self, ctx, user: MemberConverter):
+    async def cookie(self, ctx, user: discord.Member):
         _(
             """`<user>` - the discord user to give the cookie to
 
@@ -809,7 +804,7 @@ Average hours of work: **{hours}**"""
     @commands.guild_only()
     @commands.command(aliases=["ice-cream"], brief=_("Give icecream to a user"))
     @locale_doc
-    async def ice(self, ctx, other: MemberConverter):
+    async def ice(self, ctx, other: discord.Member):
         _(
             """`<other>` - the discord user to give the icecream to
 

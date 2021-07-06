@@ -27,7 +27,7 @@ from discord.ext import commands
 
 from classes.classes import Ranger
 from classes.classes import from_string as class_from_string
-from classes.converters import IntGreaterThan, MemberConverter
+from classes.converters import IntGreaterThan
 from cogs.shard_communication import user_on_cooldown as user_cooldown
 from utils import random
 from utils.checks import has_char, has_money
@@ -43,7 +43,7 @@ class Battles(commands.Cog):
     @commands.command(brief=_("Battle against another player"))
     @locale_doc
     async def battle(
-        self, ctx, money: IntGreaterThan(-1) = 0, enemy: MemberConverter = None
+        self, ctx, money: IntGreaterThan(-1) = 0, enemy: discord.Member = None
     ):
         _(
             """`[money]` - A whole number that can be 0 or greater; defaults to 0
@@ -69,7 +69,6 @@ class Battles(commands.Cog):
             money,
             ctx.author.id,
         )
-        await self.bot.cache.update_profile_cols_rel(ctx.author.id, money=-money)
 
         if not enemy:
             msg = await ctx.send(
@@ -112,7 +111,6 @@ class Battles(commands.Cog):
                     money,
                     ctx.author.id,
                 )
-                await self.bot.cache.update_profile_cols_rel(ctx.author.id, money=money)
                 return await ctx.send(
                     _("Noone wanted to join your battle, {author}!").format(
                         author=ctx.author.mention
@@ -134,7 +132,6 @@ class Battles(commands.Cog):
         await self.bot.pool.execute(
             'UPDATE profile SET "money"="money"-$1 WHERE "user"=$2;', money, enemy_.id
         )
-        await self.bot.cache.update_profile_cols_rel(enemy_.id, money=-money)
 
         stats = [
             sum(await self.bot.get_damage_armor_for(ctx.author)) + random.randint(1, 7),
@@ -156,9 +153,6 @@ class Battles(commands.Cog):
                 money * 2,
                 winner.id,
             )
-            await self.bot.cache.update_profile_cols_rel(
-                winner.id, pvpwins=1, money=money * 2
-            )
             await self.bot.log_transaction(
                 ctx,
                 from_=looser.id,
@@ -178,7 +172,7 @@ class Battles(commands.Cog):
     @commands.command(brief=_("Battle against a player (inclusdes raidstats)"))
     @locale_doc
     async def raidbattle(
-        self, ctx, money: IntGreaterThan(-1) = 0, enemy: MemberConverter = None
+        self, ctx, money: IntGreaterThan(-1) = 0, enemy: discord.Member = None
     ):
         _(
             """`[money]` - A whole number that can be 0 or greater; defaults to 0
@@ -206,7 +200,6 @@ class Battles(commands.Cog):
             money,
             ctx.author.id,
         )
-        await self.bot.cache.update_profile_cols_rel(ctx.author.id, money=-money)
 
         if not enemy:
             msg = await ctx.send(
@@ -249,7 +242,6 @@ class Battles(commands.Cog):
                     money,
                     ctx.author.id,
                 )
-                await self.bot.cache.update_profile_cols_rel(ctx.author.id, money=money)
                 return await ctx.send(
                     _("Noone wanted to join your raidbattle, {author}!").format(
                         author=ctx.author.mention
@@ -264,7 +256,6 @@ class Battles(commands.Cog):
         await self.bot.pool.execute(
             'UPDATE profile SET "money"="money"-$1 WHERE "user"=$2;', money, enemy_.id
         )
-        await self.bot.cache.update_profile_cols_rel(enemy_.id, money=-money)
 
         players = []
 
@@ -358,9 +349,6 @@ class Battles(commands.Cog):
                 money * 2,
                 winner.id,
             )
-            await self.bot.cache.update_profile_cols_rel(
-                winner.id, money=money * 2, pvpwins=1
-            )
             await self.bot.log_transaction(
                 ctx,
                 from_=looser.id,
@@ -380,7 +368,7 @@ class Battles(commands.Cog):
     @commands.command(brief=_("Battle against a player (active)"))
     @locale_doc
     async def activebattle(
-        self, ctx, money: IntGreaterThan(-1) = 0, enemy: MemberConverter = None
+        self, ctx, money: IntGreaterThan(-1) = 0, enemy: discord.Member = None
     ):
         _(
             """`[money]` - A whole number that can be 0 or greater; defaults to 0
@@ -409,7 +397,6 @@ class Battles(commands.Cog):
             money,
             ctx.author.id,
         )
-        await self.bot.cache.update_profile_cols_rel(ctx.author.id, money=-money)
 
         if not enemy:
             msg = await ctx.send(
@@ -453,7 +440,6 @@ class Battles(commands.Cog):
                     money,
                     ctx.author.id,
                 )
-                await self.bot.cache.update_profile_cols_rel(ctx.author.id, money=money)
                 return await ctx.send(
                     _("Noone wanted to join your activebattle, {author}!").format(
                         author=ctx.author.mention
@@ -490,13 +476,12 @@ class Battles(commands.Cog):
                 money,
                 enemy_.id,
             )
-            await self.bot.cache.update_profile_cols_rel(enemy_.id, money=-money)
 
             for p in players:
                 classes = [
                     class_from_string(i)
-                    for i in await self.bot.cache.get_profile_col(
-                        p.id, "class", conn=conn
+                    for i in await conn.fetchval(
+                        'SELECT class FROM profile WHERE "user"=$1;', p.id
                     )
                 ]
                 if any(c.in_class_line(Ranger) for c in classes if c):
@@ -568,10 +553,6 @@ class Battles(commands.Cog):
                         ctx.author.id,
                         enemy_.id,
                     )
-                    await self.bot.cache.update_profile_cols_rel(
-                        ctx.author.id, money=money
-                    )
-                    await self.bot.cache.update_profile_cols_rel(enemy_.id, money=money)
                     return await ctx.send(
                         _("Someone refused to move. Activebattle stopped.")
                     )
@@ -663,8 +644,6 @@ class Battles(commands.Cog):
                 ctx.author.id,
                 enemy_.id,
             )
-            await self.bot.cache.update_profile_cols_rel(ctx.author.id, money=money)
-            await self.bot.cache.update_profile_cols_rel(enemy_.id, money=money)
             return await ctx.send(_("You both died!"))
         if players[ctx.author]["hp"] > players[enemy_]["hp"]:
             winner, looser = ctx.author, enemy_
@@ -676,9 +655,6 @@ class Battles(commands.Cog):
                 ' "user"=$2;',
                 money * 2,
                 winner.id,
-            )
-            await self.bot.cache.update_profile_cols_rel(
-                winner.id, pvpwins=1, money=money * 2
             )
             await self.bot.log_transaction(
                 ctx,

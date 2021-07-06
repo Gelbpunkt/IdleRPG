@@ -352,9 +352,6 @@ class Adventure(commands.Cog):
                         money,
                         ctx.author.id,
                     )
-                    await self.bot.cache.update_profile_cols_rel(
-                        ctx.author.id, money=money
-                    )
                     await self.bot.log_transaction(
                         ctx,
                         from_=1,
@@ -482,7 +479,6 @@ class Adventure(commands.Cog):
                 money,
                 ctx.author.id,
             )
-            await self.bot.cache.update_profile_cols_rel(ctx.author.id, money=money)
             await self.bot.log_transaction(
                 ctx,
                 from_=1,
@@ -563,7 +559,6 @@ class Adventure(commands.Cog):
             await self.bot.pool.execute(
                 'UPDATE profile SET "deaths"="deaths"+1 WHERE "user"=$1;', ctx.author.id
             )
-            await self.bot.cache.update_profile_cols_rel(ctx.author.id, deaths=1)
             return await ctx.send(
                 embed=discord.Embed(
                     title=_("Adventure Failed"),
@@ -623,21 +618,14 @@ class Adventure(commands.Cog):
                 xp,
                 ctx.author.id,
             )
-            await self.bot.cache.update_profile_cols_rel(
-                ctx.author.id,
-                money=gold,
-                xp=xp,
-                completed=1,
-            )
 
             if partner := ctx.character_data["marriage"]:
-                new_money = await conn.fetchval(
+                await conn.execute(
                     'UPDATE profile SET "money"="money"+($1*(1+"lovescore"/1000000))'
-                    ' WHERE "user"=$2 RETURNING "money";',
+                    ' WHERE "user"=$2;',
                     int(gold / 2),
                     partner,
                 )
-                await self.bot.cache.update_profile_cols_abs(partner, money=new_money)
 
             await self.bot.log_transaction(
                 ctx,

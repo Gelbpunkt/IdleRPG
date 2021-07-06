@@ -100,9 +100,6 @@ class Gods(commands.Cog):
                 value,
                 ctx.author.id,
             )
-            await self.bot.cache.update_profile_cols_rel(
-                ctx.author.id, favor=int(value)
-            )
 
             await self.bot.log_transaction(
                 ctx,
@@ -171,8 +168,8 @@ Are you sure you want to follow {god}?"""
 
         async with self.bot.pool.acquire() as conn:
             if (
-                await self.bot.cache.get_profile_col(
-                    ctx.author.id, "reset_points", conn=conn
+                await conn.fetchval(
+                    'SELECT reset_points FROM profile WHERE "user"=$1;', ctx.author.id
                 )
                 < 0
             ):
@@ -189,13 +186,9 @@ Are you sure you want to follow {god}?"""
                     1,
                     ctx.author.id,
                 )
-                await self.bot.cache.update_profile_cols_rel(
-                    ctx.author.id, reset_points=-1
-                )
             await conn.execute(
                 'UPDATE profile SET "god"=$1 WHERE "user"=$2;', god, ctx.author.id
             )
-            await self.bot.cache.update_profile_cols_abs(ctx.author.id, god=god)
 
         await ctx.send(_("You are now a follower of {god}.").format(god=god))
 
@@ -235,9 +228,6 @@ Are you sure you want to follow {god}?"""
             'UPDATE profile SET "favor"=0, "god"=NULL, "reset_points"=-1 WHERE'
             ' "user"=$1;',
             ctx.author.id,
-        )
-        await self.bot.cache.update_profile_cols_abs(
-            ctx.author.id, favor=0, god="", reset_points=-1
         )
 
         await ctx.send(_("You are now Godless."))
@@ -295,7 +285,6 @@ Are you sure you want to follow {god}?"""
                 val,
                 ctx.author.id,
             )
-            await self.bot.cache.update_profile_cols_rel(ctx.author.id, favor=val)
         await ctx.send(
             _("Your prayer resulted in **{val}** favor. {message}").format(
                 val=val, message=message

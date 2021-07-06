@@ -181,9 +181,6 @@ class Classes(commands.Cog):
                     new_classes,
                     ctx.author.id,
                 )
-                await self.bot.cache.update_profile_cols_abs(
-                    ctx.author.id, class_=new_classes
-                )
                 if profession == Ranger:
                     await conn.execute(
                         'INSERT INTO pets ("user") VALUES ($1);', ctx.author.id
@@ -207,9 +204,6 @@ class Classes(commands.Cog):
                     new_classes,
                     5000,
                     ctx.author.id,
-                )
-                await self.bot.cache.update_profile_cols_rel(
-                    ctx.author.id, class_=new_classes, money=-5000
                 )
                 await conn.execute('DELETE FROM pets WHERE "user"=$1;', ctx.author.id)
                 if profession == Ranger:
@@ -294,7 +288,6 @@ class Classes(commands.Cog):
         await self.bot.pool.execute(
             'UPDATE profile SET "class"=$1 WHERE "user"=$2;', new_classes, ctx.author.id
         )
-        await self.bot.cache.update_profile_cols_abs(ctx.author.id, class_=new_classes)
         await ctx.send(
             _("You are now a `{class1}` and a `{class2}`.").format(
                 class1=new_classes[0], class2=new_classes[1]
@@ -380,10 +373,6 @@ class Classes(commands.Cog):
                     stolen,
                     usr["user"],
                 )
-                await self.bot.cache.update_profile_cols_rel(
-                    ctx.author.id, money=stolen
-                )
-                await self.bot.cache.update_profile_cols_rel(usr["user"], money=-stolen)
                 await self.bot.log_transaction(
                     ctx,
                     from_=usr["user"],
@@ -474,7 +463,6 @@ class Classes(commands.Cog):
                 item[1],
                 ctx.author.id,
             )
-            await self.bot.cache.update_profile_cols_rel(ctx.author.id, money=-item[1])
             await conn.execute(
                 'UPDATE pets SET "food"=CASE WHEN "food"+$1>=100 THEN 100 ELSE'
                 ' "food"+$1 END WHERE "user"=$2;',
@@ -532,7 +520,6 @@ class Classes(commands.Cog):
                 item[1],
                 ctx.author.id,
             )
-            await self.bot.cache.update_profile_cols_rel(ctx.author.id, money=-item[1])
             await conn.execute(
                 'UPDATE pets SET "drink"=CASE WHEN "drink"+$1>=100 THEN 100 ELSE'
                 ' "drink"+$1 END WHERE "user"=$2;',

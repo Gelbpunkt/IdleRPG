@@ -16,80 +16,15 @@ You should have received a copy of the GNU Affero General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
 import datetime
-import re
 
 from enum import Flag
 
 import dateparser
-import discord
 
 from discord.ext import commands
 from yarl import URL
 
-from classes.context import Context
-from utils.cache import cache
 from utils.i18n import _
-
-
-class MemberConverter(commands.MemberConverter):
-    """Converts to a :class:`~discord.Member`.
-    All lookups are via the local cache, the gateway
-    and the HTTP API.
-    The lookup strategy is as follows (in order):
-    1. Lookup by ID.
-    2. Lookup by mention.
-    3. Lookup by name#discrim
-    4. Lookup by name
-    5. Lookup by nickname
-    Copied from https://github.com/Rapptz/discord.py/blob/sharding-rework/discord/ext/commands/converter.py
-    """
-
-    @cache(maxsize=8096)
-    async def convert(self, ctx, argument):
-        match = self._get_id_match(argument) or re.match(r"<@!?([0-9]+)>$", argument)
-        guild = ctx.guild
-        result = None
-        if guild is None:
-            return  # not much we can do here
-
-        if match is None:
-            # not a mention...
-            match = re.match(r"(.*)#(\d{4})", argument)
-            if match:
-                # it is Name#0001
-                name = match.group(1)
-                discrim = match.group(2)
-                result = discord.utils.get(
-                    guild.members, name=name, discriminator=discrim
-                )
-                if not result:
-                    members = await guild.query_members(name)
-                    result = discord.utils.get(members, discriminator=discrim)
-            else:
-                name = argument
-                discrim = None
-                result = discord.utils.get(guild.members, name=name)
-                if not result:
-                    members = await guild.query_members(name, limit=1)
-                    result = members[0]
-        else:
-            user_id = int(match.group(1))
-            result = discord.utils.get(
-                ctx.message.mentions, id=user_id
-            ) or discord.utils.get(guild.members, id=user_id)
-            if result is None:
-                results = await guild.query_members(user_ids=[user_id], limit=1)
-                if results:
-                    result = results[0]
-
-        if result is None:
-            raise commands.MemberNotFound(argument)
-
-        return result
-
-
-_member_converter = MemberConverter()
-_user_converter = commands.UserConverter()
 
 
 class NotInRange(commands.BadArgument):
@@ -129,43 +64,25 @@ class InvalidUrl(commands.BadArgument):
     pass
 
 
-class User(commands.UserConverter):
-    @cache(maxsize=8096)
-    async def convert(self, ctx: Context, argument: str) -> discord.User:
-        try:
-            return await _user_converter.convert(ctx, argument)
-        except commands.BadArgument:
-            pass
-
-        match = self._get_id_match(argument) or re.match(r"<@!?([0-9]+)>$", argument)
-
-        if match:
-            try:
-                return await ctx.bot.fetch_user(int(match.group(1)))
-            except discord.NotFound:
-                raise commands.UserNotFound(argument)
-        else:
-            raise commands.UserNotFound(argument)
-
-
-_custom_user_converter = User()
-
-
-class UserWithCharacter(commands.Converter):
+class UserWithCharacter(commands.UserConverter):
     async def convert(self, ctx, argument):
-        user = await _custom_user_converter.convert(ctx, argument)  # error is ok here
-        ctx.user_data = await ctx.bot.cache.get_profile(user.id)
+        user = await super().convert(ctx, argument)  # error is ok here
+        ctx.user_data = await ctx.bot.pool.fetchrow(
+            'SELECT * FROM profile WHERE "user"=$1;', user.id
+        )
         if ctx.user_data:
             return user
         else:
             raise UserHasNoChar("User has no character.", user)
 
 
-class MemberWithCharacter(commands.converter.IDConverter):
+class MemberWithCharacter(commands.MemberConverter):
     async def convert(self, ctx, argument):
-        member = await _member_converter.convert(ctx, argument)  # error is ok here
+        member = await super().convert(ctx, argument)  # error is ok here
 
-        ctx.user_data = await ctx.bot.cache.get_profile(member.id)
+        ctx.user_data = await ctx.bot.pool.fetchrow(
+            'SELECT * FROM profile WHERE "user"=$1;', member.id
+        )
         if ctx.user_data:
             return member
         else:
