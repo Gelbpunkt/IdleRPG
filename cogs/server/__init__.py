@@ -36,8 +36,8 @@ class Server(commands.Cog):
         )
         text = _("Link")
         urltext = (
-            f"[{text}]({ctx.guild.icon_url})"
-            if ctx.guild.icon_url
+            f"[{text}]({ctx.guild.icon.url})"
+            if ctx.guild.icon.url
             else _("`No icon has been set yet!`")
         )
         em = discord.Embed(
@@ -77,7 +77,7 @@ Server created at: `{created_at}`"""
                 total=self.bot.shard_count,
             ),
         )
-        em.set_thumbnail(url=ctx.guild.icon_url)
+        em.set_thumbnail(url=ctx.guild.icon.url)
         await ctx.send(embed=em)
 
     @commands.guild_only()

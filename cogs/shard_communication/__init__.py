@@ -51,8 +51,7 @@ def user_on_cooldown(cooldown: int, identifier: str = None):
             )
             return True
         else:
-            raise commands.CommandOnCooldown(ctx, command_ttl)
-            return False
+            raise commands.CommandOnCooldown(ctx, command_ttl, commands.BucketType.user)
 
     return commands.check(predicate)  # TODO: Needs a redesign
 
@@ -80,8 +79,9 @@ def guild_on_cooldown(cooldown: int):
             )
             return True
         else:
-            raise commands.CommandOnCooldown(ctx, command_ttl)
-            return False
+            raise commands.CommandOnCooldown(
+                ctx, command_ttl, commands.BucketType.guild
+            )
 
     return commands.check(predicate)
 
@@ -115,8 +115,9 @@ def alliance_on_cooldown(cooldown: int):
             )
             return True
         else:
-            raise commands.CommandOnCooldown(ctx, command_ttl)
-            return False
+            raise commands.CommandOnCooldown(
+                ctx, command_ttl, commands.BucketType.guild
+            )
 
     return commands.check(predicate)
 
@@ -139,8 +140,7 @@ def next_day_cooldown():
             )
             return True
         else:
-            raise commands.CommandOnCooldown(ctx, command_ttl)
-            return False
+            raise commands.CommandOnCooldown(ctx, command_ttl, commands.BucketType.user)
 
     return commands.check(predicate)  # TODO: Needs a redesign
 

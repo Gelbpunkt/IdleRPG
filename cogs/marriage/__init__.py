@@ -100,7 +100,7 @@ class Marriage(commands.Cog):
                 'SELECT marriage FROM profile WHERE "user"=$1;', ctx.author.id
             )
             check2 = await conn.fetchval(
-                'SELECT marriage FROM profile WHERE "user"=$2;', partner.id
+                'SELECT marriage FROM profile WHERE "user"=$1;', partner.id
             )
             if check1 or check2:
                 return await ctx.send(
