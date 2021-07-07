@@ -904,6 +904,41 @@ class ChoosePaginator(Paginator):
         return await self.reaction_controller(ctx)
 
 
+class ChooseView(discord.ui.View):
+    def __init__(
+        self, ctx: commands.Context, future: asyncio.Future, *args, **kwargs
+    ) -> None:
+        super().__init__(*args, **kwargs)
+        self.ctx = ctx
+        self.future = future
+
+    async def interaction_check(self, interaction: discord.Interaction) -> bool:
+        return self.ctx.author.id == interaction.user.id
+
+    async def on_timeout(self) -> None:
+        self.future.set_exception(NoChoice("You didn't choose anything."))
+
+    async def handle(
+        self, interaction: discord.Interaction, selected: Union[str, int]
+    ) -> None:
+        self.stop()
+        self.future.set_result(selected)
+
+
+class ChooseSelect(discord.ui.Select):
+    def __init__(self, return_index: bool = False, *args, **kwargs) -> None:
+        super().__init__(*args, **kwargs)
+        self.return_index = return_index
+
+    async def callback(self, interaction: discord.Interaction) -> None:
+        if self.return_index:
+            await self._view.handle(
+                interaction, [o.label for o in self.options].index(self.values[0])
+            )
+        else:
+            await self._view.handle(interaction, self.values[0])
+
+
 class Choose:
     def __init__(
         self,
@@ -921,8 +956,8 @@ class Choose:
         self.timeout = timeout
         self.return_index = return_index
 
-    async def paginate(self, ctx, location=None, user=None):
-        if len(self.entries) > 10:
+    async def paginate(self, ctx, location=None, user=None) -> str:
+        if len(self.entries) > 25:
             raise ValueError("Exceeds maximum size")
         elif len(self.entries) < 2:
             raise ValueError(
@@ -930,6 +965,10 @@ class Choose:
             )
         if self.colour is None:
             self.colour = ctx.bot.config.game.primary_colour
+
+        future = asyncio.Future()
+        view = ChooseView(ctx, future, timeout=self.timeout)
+        select = ChooseSelect(placeholder=self.title, return_index=self.return_index)
         em = discord.Embed(title=self.title, description="", colour=self.colour)
         self.emojis = []
         for index, chunk in enumerate(self.entries):
@@ -938,71 +977,19 @@ class Choose:
             else:
                 self.emojis.append("\U0001f51f")
             em.description = f"{em.description}{self.emojis[index]} {chunk}\n"
+            select.add_option(label=f"{index + 1}")
 
         if self.footer:
             em.set_footer(text=self.footer)
 
-        self.controller = em
-        return await self.reaction_controller(ctx, location=location, user=user)
+        view.add_item(select)
 
-    async def reaction_controller(self, ctx, location, user):
         if not location:
-            base = await ctx.send(embed=self.controller)
+            await ctx.send(embed=em, view=view)
         else:
-            base = await location.send(embed=self.controller)
+            await location.send(embed=em, view=view)
 
-        for emoji in self.emojis:
-            await base.add_reaction(emoji)
-
-        user = location if location else user
-
-        def check(r, u):
-            if str(r) not in self.emojis:
-                return False
-            elif u.id == ctx.bot.user.id or r.message.id != base.id:
-                return False
-            if not user:
-                if u.id != ctx.author.id:
-                    return False
-            else:
-                if u.id != user.id:
-                    return False
-            return True
-
-        target_id = user.id if user else ctx.author.id
-
-        try:
-            if isinstance(location, (discord.User, discord.Member)):
-                react, user = await ctx.bot.wait_for_dms(
-                    "reaction_add",
-                    check={
-                        "emoji": {"name": self.emojis},
-                        "user_id": target_id,
-                        "message_id": base.id,
-                    },
-                    timeout=self.timeout,
-                )
-            else:
-                react, user = await ctx.bot.wait_for(
-                    "reaction_add", check=check, timeout=self.timeout
-                )
-        except asyncio.TimeoutError:
-            await self.stop_controller(base)
-            raise NoChoice("You didn't choose anything.")
-
-        control = self.entries[self.emojis.index(str(react))]
-
-        await self.stop_controller(base)
-        if not self.return_index:
-            return control
-        else:
-            return self.emojis.index(str(react))
-
-    async def stop_controller(self, message):
-        try:
-            await message.delete()
-        except discord.HTTPException:
-            pass
+        return await future
 
 
 class Akinator:
