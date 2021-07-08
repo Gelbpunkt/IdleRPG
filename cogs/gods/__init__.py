@@ -152,7 +152,9 @@ class Gods(commands.Cog):
             for god in self.bot.gods.values()
         ]
         god = await self.bot.paginator.ChoosePaginator(
-            extras=embeds, choices=[g["name"] for g in self.bot.gods.values()]
+            extras=embeds,
+            placeholder=_("Choose a god"),
+            choices=[g["name"] for g in self.bot.gods.values()],
         ).paginate(ctx)
 
         if not await ctx.confirm(

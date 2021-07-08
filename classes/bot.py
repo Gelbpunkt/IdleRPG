@@ -35,6 +35,7 @@ import fantasy_names as fn
 from aioscheduler import TimedScheduler
 from discord import AllowedMentions
 from discord.ext import commands
+from discord.ext.commands.cooldowns import BucketType
 
 from classes.bucket_cooldown import Cooldown, CooldownMapping
 from classes.classes import Mage, Paragon, Raider, Ranger, Ritualist, Thief, Warrior
@@ -126,7 +127,7 @@ class Bot(commands.AutoShardedBot):
         retry_after = bucket.update_rate_limit()
 
         if retry_after:
-            raise GlobalCooldown(bucket, retry_after)
+            raise GlobalCooldown(bucket, retry_after, BucketType.user)
         else:
             return True
 

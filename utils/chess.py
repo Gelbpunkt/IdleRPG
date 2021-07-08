@@ -31,9 +31,9 @@ import discord
 from async_timeout import timeout
 
 from classes.context import Context
+from classes.errors import NoChoice
 from utils import random
 from utils.i18n import _
-from utils.paginator import NoChoice
 
 
 async def update_player_elos(bot, player1, player2, outcome):

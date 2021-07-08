@@ -156,11 +156,18 @@ class Races(commands.Cog):
             },
         }
         race_ = await self.bot.paginator.ChoosePaginator(
-            extras=embeds, choices=races
+            extras=embeds, choices=races, placeholder=_("Choose a race")
         ).paginate(ctx)
         cv = questions[race_]
         answer = await self.bot.paginator.Choose(
-            title=cv["question"], entries=cv["answers"], return_index=True
+            title=cv["question"],
+            entries=cv["answers"],
+            choices=[
+                answer if len(answer) <= 25 else f"{answer[:22]}..."
+                for answer in cv["answers"]
+            ],
+            placeholder=_("Select your answer"),
+            return_index=True,
         ).paginate(ctx)
 
         async with self.bot.pool.acquire() as conn:

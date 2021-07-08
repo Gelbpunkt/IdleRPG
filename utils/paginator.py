@@ -38,16 +38,15 @@ DEALINGS IN THE SOFTWARE.
 """
 import asyncio
 
-from typing import TYPE_CHECKING, Any, AsyncGenerator, Optional, Union
+from typing import Any, AsyncGenerator, Optional, Union
 
 import discord
 
 from discord.ext import commands
 
+from classes.context import Context
+from classes.errors import NoChoice
 from utils.i18n import _
-
-if TYPE_CHECKING:
-    from classes.context import Context
 
 
 async def pager(
@@ -55,10 +54,6 @@ async def pager(
 ) -> AsyncGenerator[Union[list[Any], tuple[Any, ...]], None]:
     for x in range(0, len(entries), chunk):
         yield entries[x : x + chunk]
-
-
-class NoChoice(discord.ext.commands.CommandInvokeError):
-    pass
 
 
 class TextPaginator:
@@ -743,140 +738,135 @@ class AdventurePaginator:
         self.controller = ctx.bot.loop.create_task(self.reaction_controller(ctx))
 
 
-class ChoosePaginator(Paginator):
+class ChooseLong(discord.ui.View):
+    def __init__(
+        self,
+        ctx: Context,
+        future: asyncio.Future,
+        pages: list[discord.Embed],
+        *args,
+        **kwargs,
+    ) -> None:
+        super().__init__(*args, **kwargs)
+        self.ctx = ctx
+        self.future = future
+        self.current = 0
+        self.pages = pages
+        self.max = len(self.pages) - 1
 
-    __slots__ = (
-        "entries",
-        "extras",
-        "title",
-        "description",
-        "colour",
-        "footer",
-        "length",
-        "prepend",
-        "append",
-        "fmt",
-        "timeout",
-        "ordered",
-        "controls",
-        "controller",
-        "pages",
-        "current",
-        "previous",
-        "eof",
-        "base",
-        "names",
-        "choices",
-    )
+    def cleanup(self, interaction: discord.Interaction) -> None:
+        asyncio.create_task(interaction.message.delete())
 
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
-        self.controls = {
-            "⏮": 0.0,
-            "◀": -1,
-            "⏹": "stop",
-            "▶": +1,
-            "⏭": None,
-            "\U0001f535": "choose",
-            "🔢": "input",
-        }
-        self.choices = kwargs.get("choices")
-        items = self.entries or self.extras
-        assert len(items) == len(self.choices)
+    async def update(self, interaction: discord.Interaction) -> None:
+        await interaction.message.edit(embed=self.pages[self.current])
 
-    async def indexer(self, ctx, ctrl):
-        if ctrl == "stop":
-            await self.stop_controller(self.base)
-            raise NoChoice("You didn't choose anything.")
-
-        elif ctrl == "input":
-            choose_msg = await ctx.send(
-                _("Please send a number between 1 and {max_pages}").format(
-                    max_pages=int(self.eof) + 1
+    async def interaction_check(self, interaction: discord.Interaction) -> bool:
+        if self.ctx.author.id == interaction.user.id:
+            return True
+        else:
+            asyncio.create_task(
+                interaction.response.send_message(
+                    _("This command was not initiated by you."), ephemeral=True
                 )
             )
+            return False
 
-            def check(msg):
-                return (
-                    msg.author.id == ctx.author.id
-                    and msg.content.isdigit()
-                    and 0 < int(msg.content) <= int(self.eof) + 1
-                )
+    async def on_timeout(self) -> None:
+        self.future.set_exception(NoChoice("You didn't choose anything."))
 
-            try:
-                m = await ctx.bot.wait_for("message", check=check, timeout=30)
-                await choose_msg.delete()
-            except TimeoutError:
-                if self.base is not None:
-                    await self.base.delete()
-                await ctx.send(_("Took too long to choose a number. Cancelling."))
-                return
-            self.current = int(m.content) - 1
+    @discord.ui.button(label="First", style=discord.ButtonStyle.blurple, row=0)
+    async def first(
+        self, button: discord.ui.Button, interaction: discord.Interaction
+    ) -> None:
+        self.current = 0
+        await self.update(interaction)
 
-        elif isinstance(ctrl, int):
-            self.current += ctrl
-            if self.current > self.eof or self.current < 0:
-                self.current -= ctrl
-        else:
-            self.current = int(ctrl)
+    @discord.ui.button(label="Previous", style=discord.ButtonStyle.blurple, row=0)
+    async def previous(
+        self, button: discord.ui.Button, interaction: discord.Interaction
+    ) -> None:
+        if self.current != 0:
+            self.current -= 1
+        await self.update(interaction)
 
-    async def reaction_controller(self, ctx):
-        bot = ctx.bot
-        author = ctx.author
+    @discord.ui.button(label="Stop", style=discord.ButtonStyle.red, row=0)
+    async def stop_button(
+        self, button: discord.ui.Button, interaction: discord.Interaction
+    ) -> None:
+        await self.on_timeout()
+        self.stop()
+        self.cleanup(interaction)
 
-        self.base = await ctx.send(embed=self.pages[0])
+    @discord.ui.button(label="Next", style=discord.ButtonStyle.blurple, row=0)
+    async def next(
+        self, button: discord.ui.Button, interaction: discord.Interaction
+    ) -> None:
+        if self.current != self.max:
+            self.current += 1
+        await self.update(interaction)
 
-        if len(self.pages) == 1:
-            await self.base.add_reaction("⏹")
-        else:
-            for reaction in self.controls:
-                try:
-                    await self.base.add_reaction(reaction)
-                except discord.HTTPException:
-                    return
+    @discord.ui.button(label="Last", style=discord.ButtonStyle.blurple, row=0)
+    async def last(
+        self, button: discord.ui.Button, interaction: discord.Interaction
+    ) -> None:
+        self.current = self.max
+        await self.update(interaction)
 
-        def check(r, u):
-            if str(r) not in self.controls.keys():
-                return False
-            elif u.id == bot.user.id or r.message.id != self.base.id:
-                return False
-            elif u.id != author.id:
-                return False
-            return True
+    async def handle(
+        self, interaction: discord.Interaction, selected: Union[str, int]
+    ) -> None:
+        self.future.set_result(selected)
+        self.stop()
+        self.cleanup(interaction)
 
-        while True:
-            try:
-                react, user = await bot.wait_for(
-                    "reaction_add", check=check, timeout=self.timeout
-                )
-            except asyncio.TimeoutError:
-                # return ctx.bot.loop.create_task(self.stop_controller(self.base))
-                await self.stop_controller(self.base)
-                raise NoChoice("You didn't choose anything.")
 
-            control = self.controls.get(str(react))
+class ChoosePaginator:
+    def __init__(
+        self,
+        placeholder: Optional[str] = None,
+        choices: Optional[list[str]] = None,
+        extras: list[discord.Embed] = [],
+        title: str = "Untitled",
+        footer: Optional[str] = None,
+        colour: Optional[int] = None,
+        entries: list[str] = [],
+        fmt: str = "",
+        prepend: str = "",
+        append: str = "",
+        length: int = 10,
+        timeout: int = 30,
+        return_index: bool = False,
+    ):
+        self.extras = extras
+        self.entries = entries
+        self.placeholder = placeholder or title
+        self.title = title
+        self.footer = footer
+        self.choices = choices or entries
+        self.timeout = timeout
+        self.return_index = return_index
+        self.length = length
+        self.colour = colour
+        self.fmt = fmt
+        self.prepend = prepend
+        self.append = append
+        self.pages = []
 
-            try:
-                await self.base.remove_reaction(react, user)
-            except discord.HTTPException:
-                pass
+        entry_count = len(self.entries) + len(self.extras)
+        assert entry_count == len(self.choices)
+        assert 2 <= entry_count <= 25
+        assert not any(len(i) > 25 for i in self.choices)
 
-            if control == "choose":
-                await self.stop_controller(self.base)
-                return self.choices[self.current]
+    def formmater(self, chunk):
+        return "\n".join(
+            f"{self.prepend}{self.fmt}{value}{self.fmt[::-1]}{self.append}"
+            for value in chunk
+        )
 
-            self.previous = self.current
-            await self.indexer(ctx, control)
+    async def paginate(self, ctx, location=None, user=None) -> str:
+        if self.colour is None:
+            self.colour = ctx.bot.config.game.primary_colour
 
-            if self.previous == self.current:
-                continue
-
-            try:
-                await self.base.edit(embed=self.pages[self.current])
-            except KeyError:
-                pass
-
-    async def paginate(self, ctx):
         if self.extras:
             self.pages = [p for p in self.extras if isinstance(p, discord.Embed)]
 
@@ -893,15 +883,27 @@ class ChoosePaginator(Paginator):
                     page.set_footer(text=self.footer)
                 self.pages.append(page)
 
-        if not self.pages:
-            raise ValueError(
-                "There must be enough data to create at least 1 page for pagination."
-            )
+        future = asyncio.Future()
+        view = ChooseLong(ctx, future, self.pages, timeout=self.timeout)
+        select = ChooseSelect(
+            placeholder=self.placeholder,
+            return_index=self.return_index,
+            row=1,
+        )
+        for index, choice in enumerate(self.choices):
+            if not self.return_index:
+                select.add_option(label=choice)
+            else:
+                select.add_option(label=choice, value=f"{index}")
 
-        self.eof = float(len(self.pages) - 1)
-        self.controls["⏭"] = self.eof
-        # self.controller = ctx.bot.loop.create_task(asyncio.gather(self.reaction_controller(ctx))
-        return await self.reaction_controller(ctx)
+        view.add_item(select)
+
+        if not location:
+            await ctx.send(embed=self.pages[0], view=view)
+        else:
+            await location.send(embed=self.pages[0], view=view)
+
+        return await future
 
 
 class ChooseView(discord.ui.View):
@@ -913,7 +915,15 @@ class ChooseView(discord.ui.View):
         self.future = future
 
     async def interaction_check(self, interaction: discord.Interaction) -> bool:
-        return self.ctx.author.id == interaction.user.id
+        if self.ctx.author.id == interaction.user.id:
+            return True
+        else:
+            asyncio.create_task(
+                interaction.response.send_message(
+                    _("This command was not initiated by you."), ephemeral=True
+                )
+            )
+            return False
 
     async def on_timeout(self) -> None:
         self.future.set_exception(NoChoice("You didn't choose anything."))
@@ -921,8 +931,9 @@ class ChooseView(discord.ui.View):
     async def handle(
         self, interaction: discord.Interaction, selected: Union[str, int]
     ) -> None:
-        self.stop()
         self.future.set_result(selected)
+        self.stop()
+        await interaction.message.edit(view=discord.ui.View())
 
 
 class ChooseSelect(discord.ui.Select):
@@ -932,9 +943,7 @@ class ChooseSelect(discord.ui.Select):
 
     async def callback(self, interaction: discord.Interaction) -> None:
         if self.return_index:
-            await self._view.handle(
-                interaction, [o.label for o in self.options].index(self.values[0])
-            )
+            await self._view.handle(interaction, int(self.values[0]))
         else:
             await self._view.handle(interaction, self.values[0])
 
@@ -942,42 +951,44 @@ class ChooseSelect(discord.ui.Select):
 class Choose:
     def __init__(
         self,
-        entries,
-        title=None,
-        footer=None,
-        colour=None,
-        timeout=30,
-        return_index=False,
+        entries: list[str],
+        title: str = "Untitled",
+        placeholder: Optional[str] = None,
+        choices: Optional[list[str]] = None,
+        footer: Optional[str] = None,
+        colour: Optional[int] = None,
+        timeout: int = 30,
+        return_index: bool = False,
     ):
         self.entries = entries
-        self.title = title or "Untitled"
+        self.placeholder = placeholder or title
+        self.choices = choices if choices is not None else entries
+        self.title = title
         self.footer = footer
         self.colour = colour
         self.timeout = timeout
         self.return_index = return_index
 
+        assert len(self.entries) == len(self.choices)
+        assert 2 <= len(self.entries) <= 25
+        assert not any(len(i) > 25 for i in self.choices)
+
     async def paginate(self, ctx, location=None, user=None) -> str:
-        if len(self.entries) > 25:
-            raise ValueError("Exceeds maximum size")
-        elif len(self.entries) < 2:
-            raise ValueError(
-                "There must be enough data to create at least 1 page for choosing."
-            )
         if self.colour is None:
             self.colour = ctx.bot.config.game.primary_colour
 
         future = asyncio.Future()
         view = ChooseView(ctx, future, timeout=self.timeout)
-        select = ChooseSelect(placeholder=self.title, return_index=self.return_index)
+        select = ChooseSelect(
+            placeholder=self.placeholder, return_index=self.return_index
+        )
         em = discord.Embed(title=self.title, description="", colour=self.colour)
-        self.emojis = []
         for index, chunk in enumerate(self.entries):
-            if index < 9:
-                self.emojis.append(f"{index+1}\u20e3")
+            em.description = f"{em.description}\U0001f539 {chunk}\n"
+            if not self.return_index:
+                select.add_option(label=self.choices[index])
             else:
-                self.emojis.append("\U0001f51f")
-            em.description = f"{em.description}{self.emojis[index]} {chunk}\n"
-            select.add_option(label=f"{index + 1}")
+                select.add_option(label=self.choices[index], value=f"{index}")
 
         if self.footer:
             em.set_footer(text=self.footer)

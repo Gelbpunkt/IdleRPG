@@ -655,11 +655,13 @@ IdleRPG is a global bot, your characters are valid everywhere"""
         value = int(value)
         reward = await self.bot.paginator.Choose(
             title=_("Select a reward for the {amount} items".format(amount=count)),
+            placeholder=_("Select a reward"),
             footer=_("Do you want favor? {prefix}sacrifice instead").format(
                 prefix=ctx.prefix
             ),
             return_index=True,
             entries=[f"**${value}**", _("**{value} XP**").format(value=value // 4)],
+            choices=[f"${value}", _("{value} XP").format(value=value // 4)],
         ).paginate(ctx)
         reward = ["money", "xp"][reward]
         if reward == "xp":
@@ -794,10 +796,15 @@ IdleRPG is a global bot, your characters are valid everywhere"""
                     else:
                         item_to_remove = await self.bot.paginator.Choose(
                             title=_("Select an item to unequip"),
-                            footer=_("Hit the button with the item you wish to remove"),
                             return_index=True,
                             entries=[
                                 f"{i['name']}, {i['type']}, {i['damage'] + i['armor']}"
+                                for i in olditems
+                            ],
+                            choices=[
+                                i["name"]
+                                if len(i["name"]) <= 25
+                                else f"{i['name'][:22]}..."
                                 for i in olditems
                             ],
                         ).paginate(ctx)

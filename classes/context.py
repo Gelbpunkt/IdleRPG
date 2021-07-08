@@ -25,7 +25,7 @@ import discord
 
 from discord.ext import commands
 
-from utils.paginator import NoChoice
+from classes.errors import NoChoice
 
 if TYPE_CHECKING:
     from classes.bot import Bot

@@ -29,11 +29,11 @@ from classes.converters import (
     IntGreaterThan,
     MemberWithCharacter,
 )
+from classes.errors import NoChoice
 from classes.items import ALL_ITEM_TYPES, ItemType
 from cogs.shard_communication import user_on_cooldown as user_cooldown
 from utils.checks import has_char, has_money
 from utils.i18n import _, locale_doc
-from utils.paginator import NoChoice
 
 
 class Trading(commands.Cog):
@@ -808,13 +808,19 @@ class Trading(commands.Cog):
         try:
             offerid = await self.bot.paginator.Choose(
                 title=_("The Trader"),
-                footer=_("Hit a button to buy it"),
+                placeholder=_("Select an item to purchase"),
                 return_index=True,
                 entries=[
                     f"**{i[0]['name']}** ({i[0]['type_']}) -"
                     f" {i[0]['armor'] if i[0]['type_'] == 'Shield' else i[0]['damage']}"
                     f" {'armor' if i[0]['type_'] == 'Shield' else 'damage'} -"
                     f" **${i[1]}**"
+                    for i in offers
+                ],
+                choices=[
+                    i[0]["name"]
+                    if len(i[0]["name"]) <= 25
+                    else f"{i[0]['name'][:22]}..."
                     for i in offers
                 ],
             ).paginate(ctx)

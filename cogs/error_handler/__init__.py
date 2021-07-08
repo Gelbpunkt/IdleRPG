@@ -38,6 +38,7 @@ from classes.converters import (
     NotInRange,
     UserHasNoChar,
 )
+from classes.errors import NoChoice
 from classes.exceptions import GlobalCooldown
 from cogs.music import (
     NeedsToBeInVoiceChat,
@@ -47,7 +48,6 @@ from cogs.music import (
     VoteDidNotPass,
 )
 from utils.i18n import _
-from utils.paginator import NoChoice
 
 try:
     import sentry_sdk

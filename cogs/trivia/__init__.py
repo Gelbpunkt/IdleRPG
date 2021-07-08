@@ -48,6 +48,7 @@ class Trivia(commands.Cog):
         answer = await self.bot.paginator.Choose(
             entries=entries,
             title=question["question"],
+            placeholder=_("Select the correct answer"),
             footer=(
                 f"Difficulty: {question['difficulty']} | Category:"
                 f" {question['category']}"

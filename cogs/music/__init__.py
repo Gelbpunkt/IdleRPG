@@ -279,7 +279,7 @@ class Music(commands.Cog):
         if len(track_objs) > 1:
             track_idx = await self.bot.paginator.Choose(
                 title=_("Song results"),
-                footer=_("Hit a button to play one"),
+                placeholder=_("Select a song to play"),
                 return_index=True,
                 entries=[
                     f"**{i.title}** by {i.artist.name} on"
@@ -287,6 +287,7 @@ class Music(commands.Cog):
                     f" ({timedelta(seconds=i.duration)})"
                     for i in track_objs
                 ],
+                choices=[i.title for i in track_objs],
             ).paginate(ctx)
             track_obj = track_objs[track_idx]
         else:

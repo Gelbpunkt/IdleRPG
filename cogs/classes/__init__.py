@@ -154,9 +154,13 @@ class Classes(commands.Cog):
                 choices.remove(line)
             except ValueError:
                 pass
-        profession = await self.bot.paginator.ChoosePaginator(
-            extras=embeds, choices=choices
+        idx = await self.bot.paginator.ChoosePaginator(
+            extras=embeds,
+            placeholder=_("Choose a class"),
+            choices=[line.__name__ for line in choices],
+            return_index=True,
         ).paginate(ctx)
+        profession = choices[idx]
         profession_ = get_first_evolution(profession).class_name()
         new_classes = copy(ctx.character_data["class"])
         new_classes[val] = profession_
@@ -450,6 +454,8 @@ class Classes(commands.Cog):
         item = items[
             await self.bot.paginator.Choose(
                 entries=[f"{i[2]} {i[0]} **${i[1]}** -> +{i[3]}" for i in items],
+                choices=[i[0] for i in items],
+                placeholder=_("Select a dish for your pet"),
                 return_index=True,
                 timeout=30,
                 title=_("Feed your pet"),
@@ -507,6 +513,8 @@ class Classes(commands.Cog):
         item = items[
             await self.bot.paginator.Choose(
                 entries=[f"{i[2]} {i[0]} **${i[1]}** -> +{i[3]}" for i in items],
+                choices=[i[0] for i in items],
+                placeholder=_("Select a drink for your pet"),
                 return_index=True,
                 timeout=30,
                 title=_("Give your pet something to drink"),

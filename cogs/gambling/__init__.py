@@ -998,6 +998,7 @@ This command is in an alpha-stage, which means bugs are likely to happen. Play a
             try:
                 action = await self.bot.paginator.Choose(
                     title=_("Double or steal ${money}?").format(money=money),
+                    placeholder=_("Select an action"),
                     entries=[_("Double"), _("Steal")],
                     return_index=True,
                 ).paginate(ctx, user=user)
