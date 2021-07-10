@@ -188,162 +188,32 @@ class TextPaginator:
 
 
 class Paginator:
-
-    __slots__ = (
-        "entries",
-        "extras",
-        "title",
-        "description",
-        "colour",
-        "footer",
-        "length",
-        "prepend",
-        "append",
-        "fmt",
-        "timeout",
-        "ordered",
-        "controls",
-        "controller",
-        "pages",
-        "current",
-        "previous",
-        "eof",
-        "base",
-        "names",
-    )
-
-    def __init__(self, **kwargs: Any) -> None:
-        self.entries = kwargs.get("entries", None)
-        self.extras = kwargs.get("extras", None)
-
-        self.title = kwargs.get("title", None)
-        self.description = kwargs.get("description", None)
-        self.colour = kwargs.get("colour", None)
-        self.footer = kwargs.get("footer", None)
-
-        self.length = kwargs.get("length", 10)
-        self.prepend = kwargs.get("prepend", "")
-        self.append = kwargs.get("append", "")
-        self.fmt = kwargs.get("fmt", "")
-        self.timeout = kwargs.get("timeout", 90)
-        self.ordered = kwargs.get("ordered", False)
-
-        self.controller = None
-        self.pages: list[discord.Embed] = []
-        self.base: Optional[discord.Message] = None
-
-        self.current = 0
-        self.previous = 0
-        self.eof = 0
-
-        self.controls = {
-            "⏮": 0.0,
-            "◀": -1,
-            "⏹": "stop",
-            "▶": +1,
-            "⏭": None,
-            "🔢": "choose",
-        }
-
-    async def indexer(self, ctx: "Context", ctrl: str) -> None:
-        if self.base is None:
-            raise Exception("Should not be called manually")
-        if ctrl == "stop":
-            ctx.bot.loop.create_task(self.stop_controller(self.base))
-
-        elif ctrl == "choose":
-            choose_msg = await ctx.send(
-                _("Please send a number between 1 and {max_pages}").format(
-                    max_pages=int(self.eof) + 1
-                )
-            )
-
-            def check(msg):
-                return (
-                    msg.author.id == ctx.author.id
-                    and msg.content.isdigit()
-                    and 0 < int(msg.content) <= int(self.eof) + 1
-                )
-
-            try:
-                m = await ctx.bot.wait_for("message", check=check, timeout=30)
-                await choose_msg.delete()
-            except TimeoutError:
-                if self.base is not None:
-                    await self.base.delete()
-                await ctx.send(_("Took too long to choose a number. Cancelling."))
-                return
-            self.current = int(m.content) - 1
-
-        elif isinstance(ctrl, int):
-            self.current += ctrl
-            if self.current > self.eof or self.current < 0:
-                self.current -= ctrl
-        else:
-            self.current = int(ctrl)
-
-    async def reaction_controller(self, ctx: "Context") -> None:
-        bot = ctx.bot
-        author = ctx.author
-
-        if self.colour is None:
-            self.colour = ctx.bot.config.game.primary_colour
-        self.base = await ctx.send(embed=self.pages[0])
-
-        if len(self.pages) == 1:
-            await self.base.add_reaction("⏹")
-        else:
-            for reaction in self.controls:
-                try:
-                    await self.base.add_reaction(reaction)
-                except discord.HTTPException:
-                    return
-
-        def check(r: discord.Reaction, u: discord.User) -> bool:
-            if str(r) not in self.controls.keys():
-                return False
-            elif u.id == bot.user.id or r.message.id != self.base.id:
-                return False
-            elif u.id != author.id:
-                return False
-            return True
-
-        while True:
-            try:
-                react, user = await bot.wait_for(
-                    "reaction_add", check=check, timeout=self.timeout
-                )
-            except asyncio.TimeoutError:
-                return ctx.bot.loop.create_task(self.stop_controller(self.base))
-
-            control = self.controls.get(str(react))
-
-            try:
-                await self.base.remove_reaction(react, user)
-            except discord.HTTPException:
-                pass
-
-            self.previous = self.current
-            await self.indexer(ctx, control)
-
-            if self.previous == self.current:
-                continue
-
-            try:
-                await self.base.edit(embed=self.pages[self.current])
-            except KeyError:
-                pass
-
-    async def stop_controller(self, message: discord.Message) -> None:
-        try:
-            await message.delete()
-        except discord.HTTPException:
-            pass
-
-        try:
-            self.controller.cancel()
-        except Exception:
-            pass
+    def __init__(
+        self,
+        extras: list[discord.Embed] = [],
+        title: str = "Untitled",
+        footer: Optional[str] = None,
+        colour: Optional[int] = None,
+        entries: list[str] = [],
+        fmt: str = "",
+        prepend: str = "",
+        append: str = "",
+        length: int = 10,
+        timeout: int = 30,
+        return_index: bool = False,
+    ):
+        self.extras = extras
+        self.entries = entries
+        self.title = title
+        self.footer = footer
+        self.timeout = timeout
+        self.return_index = return_index
+        self.length = length
+        self.colour = colour
+        self.fmt = fmt
+        self.prepend = prepend
+        self.append = append
+        self.pages = []
 
     def formmater(self, chunk):
         return "\n".join(
@@ -351,12 +221,12 @@ class Paginator:
             for value in chunk
         )
 
-    async def paginate(self, ctx):
+    async def paginate(self, ctx, location=None, user=None) -> None:
+        if self.colour is None:
+            self.colour = ctx.bot.config.game.primary_colour
+
         if self.extras:
             self.pages = [p for p in self.extras if isinstance(p, discord.Embed)]
-
-        if not self.colour:
-            self.colour = ctx.bot.config.game.primary_colour
 
         if self.entries:
             chunks = [c async for c in pager(self.entries, self.length)]
@@ -367,19 +237,16 @@ class Paginator:
                 )
                 page.description = self.formmater(chunk)
 
-                if hasattr(self, "footer"):
-                    if self.footer:
-                        page.set_footer(text=self.footer)
+                if self.footer:
+                    page.set_footer(text=self.footer)
                 self.pages.append(page)
 
-        if not self.pages:
-            raise ValueError(
-                "There must be enough data to create at least 1 page for pagination."
-            )
+        view = NormalPaginator(ctx, self.pages, timeout=self.timeout)
 
-        self.eof = float(len(self.pages) - 1)
-        self.controls["⏭"] = self.eof
-        self.controller = ctx.bot.loop.create_task(self.reaction_controller(ctx))
+        if not location:
+            await ctx.send(embed=self.pages[0], view=view)
+        else:
+            await location.send(embed=self.pages[0], view=view)
 
 
 class ShopPaginator:
@@ -778,8 +645,9 @@ class ChooseLong(discord.ui.View):
     async def first(
         self, button: discord.ui.Button, interaction: discord.Interaction
     ) -> None:
-        self.current = 0
-        await self.update(interaction)
+        if self.current != 0:
+            self.current = 0
+            await self.update(interaction)
 
     @discord.ui.button(label="Previous", style=discord.ButtonStyle.blurple, row=0)
     async def previous(
@@ -787,7 +655,7 @@ class ChooseLong(discord.ui.View):
     ) -> None:
         if self.current != 0:
             self.current -= 1
-        await self.update(interaction)
+            await self.update(interaction)
 
     @discord.ui.button(label="Stop", style=discord.ButtonStyle.red, row=0)
     async def stop_button(
@@ -803,19 +671,44 @@ class ChooseLong(discord.ui.View):
     ) -> None:
         if self.current != self.max:
             self.current += 1
-        await self.update(interaction)
+            await self.update(interaction)
 
     @discord.ui.button(label="Last", style=discord.ButtonStyle.blurple, row=0)
     async def last(
         self, button: discord.ui.Button, interaction: discord.Interaction
     ) -> None:
-        self.current = self.max
-        await self.update(interaction)
+        if self.current != self.max:
+            self.current = self.max
+            await self.update(interaction)
 
     async def handle(
         self, interaction: discord.Interaction, selected: Union[str, int]
     ) -> None:
         self.future.set_result(selected)
+        self.stop()
+        self.cleanup(interaction)
+
+
+class NormalPaginator(ChooseLong):
+    def __init__(
+        self,
+        ctx: Context,
+        pages: list[discord.Embed],
+        *args,
+        **kwargs,
+    ) -> None:
+        super(ChooseLong, self).__init__(*args, **kwargs)
+        self.ctx = ctx
+        self.current = 0
+        self.pages = pages
+        self.max = len(self.pages) - 1
+
+    async def on_timeout(self) -> None:
+        pass
+
+    async def handle(
+        self, interaction: discord.Interaction, selected: Union[str, int]
+    ) -> None:
         self.stop()
         self.cleanup(interaction)
 

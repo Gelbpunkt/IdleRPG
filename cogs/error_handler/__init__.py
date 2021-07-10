@@ -29,6 +29,7 @@ from discord.ext import commands, menus
 
 import utils.checks
 
+from classes.classes import Ranger, get_class_evolves
 from classes.converters import (
     DateOutOfRange,
     InvalidCoinSide,
@@ -265,9 +266,10 @@ class Errorhandler(commands.Cog):
                     ).format(profession=_("Ranger"))
                 )
                 classes = ctx.character_data["class"]
-                for evolve in ["Caretaker"] + ctx.bot.get_class_evolves()["Ranger"]:
-                    if evolve in classes:
-                        idx = classes.index(evolve)
+                for evolve in get_class_evolves(Ranger):
+                    name = evolve.class_name()
+                    if name in classes:
+                        idx = classes.index(name)
                         break
                 classes[idx] = "No Class"
                 await self.bot.pool.execute(
