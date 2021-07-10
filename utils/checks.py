@@ -519,7 +519,10 @@ async def guild_has_money(bot: "Bot", guildid: int, money: int) -> bool:
 
 def is_gm() -> "_CheckDecorator":
     async def predicate(ctx: Context) -> bool:
-        return ctx.author.id in ctx.bot.config.game.game_masters
+        return (
+            ctx.author.id in ctx.bot.config.game.game_masters
+            or ctx.bot.config.bot.is_beta
+        )
 
     return commands.check(predicate)
 
