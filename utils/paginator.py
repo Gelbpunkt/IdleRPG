@@ -243,10 +243,7 @@ class Paginator:
 
         view = NormalPaginator(ctx, self.pages, timeout=self.timeout)
 
-        if not location:
-            await ctx.send(embed=self.pages[0], view=view)
-        else:
-            await location.send(embed=self.pages[0], view=view)
+        await view.start(location or ctx)
 
 
 class ShopPaginator:
@@ -620,12 +617,16 @@ class ChooseLong(discord.ui.View):
         self.current = 0
         self.pages = pages
         self.max = len(self.pages) - 1
+        self.message: Optional[discord.Message] = None
 
-    def cleanup(self, interaction: discord.Interaction) -> None:
-        asyncio.create_task(interaction.message.delete())
+    async def start(self, messagable: discord.abc.Messageable) -> None:
+        self.message = await messagable.send(embed=self.pages[0], view=self)
 
-    async def update(self, interaction: discord.Interaction) -> None:
-        await interaction.message.edit(embed=self.pages[self.current])
+    def cleanup(self) -> None:
+        asyncio.create_task(self.message.delete())
+
+    async def update(self) -> None:
+        await self.message.edit(embed=self.pages[self.current])
 
     async def interaction_check(self, interaction: discord.Interaction) -> bool:
         if self.ctx.author.id == interaction.user.id:
@@ -639,6 +640,7 @@ class ChooseLong(discord.ui.View):
             return False
 
     async def on_timeout(self) -> None:
+        self.cleanup()
         self.future.set_exception(NoChoice("You didn't choose anything."))
 
     @discord.ui.button(label="First", style=discord.ButtonStyle.blurple, row=0)
@@ -647,7 +649,7 @@ class ChooseLong(discord.ui.View):
     ) -> None:
         if self.current != 0:
             self.current = 0
-            await self.update(interaction)
+            await self.update()
 
     @discord.ui.button(label="Previous", style=discord.ButtonStyle.blurple, row=0)
     async def previous(
@@ -655,7 +657,7 @@ class ChooseLong(discord.ui.View):
     ) -> None:
         if self.current != 0:
             self.current -= 1
-            await self.update(interaction)
+            await self.update()
 
     @discord.ui.button(label="Stop", style=discord.ButtonStyle.red, row=0)
     async def stop_button(
@@ -663,7 +665,6 @@ class ChooseLong(discord.ui.View):
     ) -> None:
         await self.on_timeout()
         self.stop()
-        self.cleanup(interaction)
 
     @discord.ui.button(label="Next", style=discord.ButtonStyle.blurple, row=0)
     async def next(
@@ -671,7 +672,7 @@ class ChooseLong(discord.ui.View):
     ) -> None:
         if self.current != self.max:
             self.current += 1
-            await self.update(interaction)
+            await self.update()
 
     @discord.ui.button(label="Last", style=discord.ButtonStyle.blurple, row=0)
     async def last(
@@ -679,14 +680,14 @@ class ChooseLong(discord.ui.View):
     ) -> None:
         if self.current != self.max:
             self.current = self.max
-            await self.update(interaction)
+            await self.update()
 
     async def handle(
         self, interaction: discord.Interaction, selected: Union[str, int]
     ) -> None:
         self.future.set_result(selected)
         self.stop()
-        self.cleanup(interaction)
+        self.cleanup()
 
 
 class NormalPaginator(ChooseLong):
@@ -704,13 +705,13 @@ class NormalPaginator(ChooseLong):
         self.max = len(self.pages) - 1
 
     async def on_timeout(self) -> None:
-        pass
+        self.cleanup()
 
     async def handle(
         self, interaction: discord.Interaction, selected: Union[str, int]
     ) -> None:
         self.stop()
-        self.cleanup(interaction)
+        self.cleanup()
 
 
 class ChoosePaginator:
@@ -791,10 +792,7 @@ class ChoosePaginator:
 
         view.add_item(select)
 
-        if not location:
-            await ctx.send(embed=self.pages[0], view=view)
-        else:
-            await location.send(embed=self.pages[0], view=view)
+        await view.start(location or ctx)
 
         return await future
 
