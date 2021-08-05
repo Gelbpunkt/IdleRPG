@@ -60,20 +60,23 @@ intents.voice_states = True
 intents.messages = True
 intents.reactions = True
 
-bot = Bot(
-    case_insensitive=True,
-    status=discord.Status.idle,
-    description="The one and only IdleRPG bot for discord",
-    shard_ids=shard_ids,
-    shard_count=shard_count,
-    cluster_id=cluster_id,
-    cluster_name=cluster_name,
-    intents=intents,
-    chunk_guilds_at_startup=False,  # chunking is nerfed
-    guild_ready_timeout=30 * (len(shard_ids) // 4),  # fix on_ready firing too early
-    max_messages=10000,  # We have a ton of incoming messages, higher cache means commands like activeadventure
-    # or guild adventure joining will stay in cache so reactions are counted
-)
+
+async def start():
+    bot = Bot(
+        case_insensitive=True,
+        status=discord.Status.idle,
+        description="The one and only IdleRPG bot for discord",
+        shard_ids=shard_ids,
+        shard_count=shard_count,
+        cluster_id=cluster_id,
+        cluster_name=cluster_name,
+        intents=intents,
+        chunk_guilds_at_startup=False,  # chunking is nerfed
+        guild_ready_timeout=30 * (len(shard_ids) // 4),  # fix on_ready firing too early
+        max_messages=10000,  # We have a ton of incoming messages, higher cache means commands like activeadventure
+        # or guild adventure joining will stay in cache so reactions are counted
+    )
+    await bot.connect_all()
 
 
 if __name__ == "__main__":
@@ -81,27 +84,8 @@ if __name__ == "__main__":
     log.setLevel(logging.INFO)
     log.addHandler(stream)
     log.addHandler(file_handler(cluster_id))
-    loop = asyncio.get_event_loop()
+
     try:
-        loop.run_until_complete(bot.connect_all())
+        asyncio.run(start())
     except KeyboardInterrupt:
-
-        def shutdown_handler(loop_, context):
-            if "exception" not in context or not isinstance(
-                context["exception"], asyncio.CancelledError
-            ):
-                loop_.default_exception_handler(context)  # TODO: fix context
-
-        loop.set_exception_handler(shutdown_handler)
-        tasks = asyncio.gather(
-            *asyncio.all_tasks(loop=loop), loop=loop, return_exceptions=True
-        )
-        tasks.add_done_callback(lambda t: loop.stop())
-        tasks.cancel()
-
-        while not tasks.done() and not loop.is_closed():
-            loop.run_forever()
-    finally:
-        if hasattr(loop, "shutdown_asyncgens"):
-            loop.run_until_complete(loop.shutdown_asyncgens())
-        loop.close()
+        pass
