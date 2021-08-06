@@ -162,10 +162,7 @@ class Races(commands.Cog):
         answer = await self.bot.paginator.Choose(
             title=cv["question"],
             entries=cv["answers"],
-            choices=[
-                answer if len(answer) <= 25 else f"{answer[:22]}..."
-                for answer in cv["answers"]
-            ],
+            choices=[answer for answer in cv["answers"]],
             placeholder=_("Select your answer"),
             return_index=True,
         ).paginate(ctx)

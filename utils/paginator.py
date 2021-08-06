@@ -749,7 +749,6 @@ class ChoosePaginator:
         entry_count = len(self.entries) + len(self.extras)
         assert entry_count == len(self.choices)
         assert 2 <= entry_count <= 25
-        assert not any(len(i) > 25 for i in self.choices)
 
     def formmater(self, chunk):
         return "\n".join(
@@ -862,7 +861,6 @@ class Choose:
 
         assert len(self.entries) == len(self.choices)
         assert 2 <= len(self.entries) <= 25
-        assert not any(len(i) > 25 for i in self.choices)
 
     async def paginate(self, ctx, location=None, user=None) -> str:
         if self.colour is None:

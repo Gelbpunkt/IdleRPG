@@ -801,12 +801,7 @@ IdleRPG is a global bot, your characters are valid everywhere"""
                                 f"{i['name']}, {i['type']}, {i['damage'] + i['armor']}"
                                 for i in olditems
                             ],
-                            choices=[
-                                i["name"]
-                                if len(i["name"]) <= 25
-                                else f"{i['name'][:22]}..."
-                                for i in olditems
-                            ],
+                            choices=[i["name"] for i in olditems],
                         ).paginate(ctx)
                         item_to_remove = olditems[item_to_remove]["id"]
                         await conn.execute(

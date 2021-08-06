@@ -817,12 +817,7 @@ class Trading(commands.Cog):
                     f" **${i[1]}**"
                     for i in offers
                 ],
-                choices=[
-                    i[0]["name"]
-                    if len(i[0]["name"]) <= 25
-                    else f"{i[0]['name'][:22]}..."
-                    for i in offers
-                ],
+                choices=[i[0]["name"] for i in offers],
             ).paginate(ctx)
         except NoChoice:  # prevent cooldown reset
             return await ctx.send(_("You did not choose anything."))
