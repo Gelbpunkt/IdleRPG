@@ -246,168 +246,6 @@ class Paginator:
         await view.start(location or ctx)
 
 
-class AdventurePaginator:
-
-    __slots__ = (
-        "embeds",
-        "files",
-        "timeout",
-        "ordered",
-        "controls",
-        "controller",
-        "pages",
-        "current",
-        "previous",
-        "eof",
-        "base",
-        "names",
-    )
-
-    def __init__(self, **kwargs):
-        self.embeds = kwargs["embeds"]
-        self.files = kwargs["files"]
-        self.timeout = kwargs.get("timeout", 90)
-        self.ordered = kwargs.get("ordered", False)
-
-        self.controller = None
-        self.pages = []
-        self.names = []
-        self.base = None
-
-        self.current = 0
-        self.previous = 0
-        self.eof = 0
-
-        self.controls = {
-            "⏮": 0.0,
-            "◀": -1,
-            "⏹": "stop",
-            "▶": +1,
-            "⏭": None,
-            "🔢": "choose",
-        }
-
-    async def indexer(self, ctx, ctrl):
-        if ctrl == "stop":
-            ctx.bot.loop.create_task(self.stop_controller(self.base))
-
-        elif ctrl == "choose":
-            choose_msg = await ctx.send(
-                _("Please send a number between 1 and {max_pages}").format(
-                    max_pages=int(self.eof) + 1
-                )
-            )
-
-            def check(msg):
-                return (
-                    msg.author.id == ctx.author.id
-                    and msg.content.isdigit()
-                    and 0 < int(msg.content) <= int(self.eof) + 1
-                )
-
-            try:
-                m = await ctx.bot.wait_for("message", check=check, timeout=30)
-                await choose_msg.delete()
-            except TimeoutError:
-                if self.base is not None:
-                    await self.base.delete()
-                await ctx.send(_("Took too long to choose a number. Cancelling."))
-                return
-            self.current = int(m.content) - 1
-
-        elif isinstance(ctrl, int):
-            self.current += ctrl
-            if self.current > self.eof or self.current < 0:
-                self.current -= ctrl
-        else:
-            self.current = int(ctrl)
-
-    async def reaction_controller(self, ctx):
-        bot = ctx.bot
-        author = ctx.author
-
-        self.base = await ctx.send(embed=self.pages[0], file=self.files[0])
-
-        if len(self.pages) == 1:
-            await self.base.add_reaction("⏹")
-        else:
-            for reaction in self.controls:
-                try:
-                    await self.base.add_reaction(reaction)
-                except discord.HTTPException:
-                    return
-
-        def check(r, u):
-            if str(r) not in self.controls.keys():
-                return False
-            elif u.id == bot.user.id or r.message.id != self.base.id:
-                return False
-            elif u.id != author.id:
-                return False
-            return True
-
-        while True:
-            try:
-                react, user = await bot.wait_for(
-                    "reaction_add", check=check, timeout=self.timeout
-                )
-            except asyncio.TimeoutError:
-                return ctx.bot.loop.create_task(self.stop_controller(self.base))
-
-            control = self.controls.get(str(react))
-
-            try:
-                await self.base.remove_reaction(react, user)
-            except discord.HTTPException:
-                pass
-
-            self.previous = self.current
-            await self.indexer(ctx, control)
-
-            if self.previous == self.current:
-                continue
-
-            try:
-                await self.base.delete()
-                try:
-                    self.files[self.current].reset()
-                except ValueError:
-                    return
-                self.base = await ctx.send(
-                    embed=self.pages[self.current], file=self.files[self.current]
-                )
-                for reaction in self.controls:
-                    try:
-                        await self.base.add_reaction(reaction)
-                    except discord.HTTPException:
-                        return
-            except KeyError:
-                pass
-
-    async def stop_controller(self, message):
-        try:
-            await message.delete()
-        except discord.HTTPException:
-            pass
-
-        try:
-            self.controller.cancel()
-        except Exception:
-            pass
-
-    async def paginate(self, ctx):
-        self.pages = [p for p in self.embeds if isinstance(p, discord.Embed)]
-
-        if not self.pages:
-            raise ValueError(
-                "There must be enough data to create at least 1 page for pagination."
-            )
-
-        self.eof = float(len(self.pages) - 1)
-        self.controls["⏭"] = self.eof
-        self.controller = ctx.bot.loop.create_task(self.reaction_controller(ctx))
-
-
 class ChooseLong(discord.ui.View):
     def __init__(
         self,
@@ -520,6 +358,31 @@ class NormalPaginator(ChooseLong):
         self.cleanup()
 
 
+class AdventureView(NormalPaginator):
+    def __init__(self, files: list[discord.File], *args, **kwargs) -> None:
+        super().__init__(*args, **kwargs)
+        self.files = files
+
+    async def start(self, messagable: discord.abc.Messageable) -> None:
+        old_close = self.files[self.current].fp.close
+        self.files[self.current].fp.close = lambda: None
+        try:
+            self.message = await messagable.send(
+                embed=self.pages[self.current], file=self.files[self.current], view=self
+            )
+        finally:
+            self.files[self.current].fp.close = old_close
+
+    async def update(self) -> None:
+        self.files[self.current].reset()
+        self.stop()
+        self.cleanup()
+
+        view = AdventureView(self.files, self.ctx, self.pages)
+        view.current = self.current
+        await view.start(self.ctx)
+
+
 class ChooseShop(NormalPaginator):
     def __init__(
         self,
@@ -577,6 +440,21 @@ class ShopPaginator:
         embeds = [i[0] for i in self.entries]
         ids = [i[1] for i in self.entries]
         view = ChooseShop(ids, ctx, embeds, timeout=90)
+
+        await view.start(location or ctx)
+
+
+class AdventurePaginator:
+    def __init__(
+        self,
+        embeds: list[discord.Embed] = [],
+        files: list[discord.File] = [],
+    ):
+        self.embeds = embeds
+        self.files = files
+
+    async def paginate(self, ctx, location=None, user=None) -> None:
+        view = AdventureView(self.files, ctx, self.embeds, timeout=60)
 
         await view.start(location or ctx)
 
