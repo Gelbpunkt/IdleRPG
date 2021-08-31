@@ -99,14 +99,14 @@ def calcchance(
     sword, shield, dungeon, level, luck, returnsuccess=False, booster=False, bonus=0
 ):
     if returnsuccess is False:
-        val1 = sword + shield + 75 - dungeon * 7
-        val2 = sword + shield + 75 - dungeon
+        val1 = sword + shield + 75 - dungeon * 7 + bonus - level / Decimal("2")
+        val2 = sword + shield + 75 - dungeon + bonus + level
         val1 = round(val1 * luck) if val1 >= 0 else round(val1 / luck)
         val2 = round(val2 * luck) if val2 >= 0 else round(val2 / luck)
         if booster:
             val1 += 25
             val2 += 25
-        return (val1, val2, level)
+        return (val1, val2)
     else:
         randomn = random.randint(0, 100)
         if booster:

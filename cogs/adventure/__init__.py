@@ -102,7 +102,7 @@ class Adventure(commands.Cog):
                 booster=luck_booster,
                 returnsuccess=False,
             )
-            chances.append((success[0] - success[2] // 2, success[1] + success[2]))
+            chances.append(success)
 
         async with self.bot.trusted_session.post(
             f"{self.bot.config.external.okapi_url}/api/genadventures",
