@@ -38,7 +38,7 @@ DEALINGS IN THE SOFTWARE.
 """
 import asyncio
 
-from typing import Any, AsyncGenerator, Optional, Union
+from typing import Any, Generator, Optional, Union
 
 import discord
 
@@ -49,9 +49,9 @@ from classes.errors import NoChoice
 from utils.i18n import _
 
 
-async def pager(
+def pager(
     entries: Union[list[Any], tuple[Any]], chunk: int
-) -> AsyncGenerator[Union[list[Any], tuple[Any, ...]], None]:
+) -> Generator[Union[list[Any], tuple[Any, ...]], None, None]:
     for x in range(0, len(entries), chunk):
         yield entries[x : x + chunk]
 
@@ -229,7 +229,7 @@ class Paginator:
             self.pages = [p for p in self.extras if isinstance(p, discord.Embed)]
 
         if self.entries:
-            chunks = [c async for c in pager(self.entries, self.length)]
+            chunks = list(pager(self.entries, self.length))
 
             for index, chunk in enumerate(chunks):
                 page = discord.Embed(
@@ -244,200 +244,6 @@ class Paginator:
         view = NormalPaginator(ctx, self.pages, timeout=self.timeout)
 
         await view.start(location or ctx)
-
-
-class ShopPaginator:
-
-    __slots__ = (
-        "entries",
-        "timeout",
-        "controls",
-        "controller",
-        "pages",
-        "current",
-        "previous",
-        "eof",
-        "base",
-        "names",
-        "items",
-    )
-
-    def __init__(self, **kwargs: Any) -> None:
-        self.entries = kwargs.get("entries", None)
-
-        self.timeout = kwargs.get("timeout", 90)
-
-        self.controller = None
-        self.pages: list[tuple[discord.Embed, int]] = []
-        self.base: Optional[discord.Message] = None
-
-        self.current = 0
-        self.previous = 0
-        self.eof = 0
-
-        self.controls = {
-            "⏮": 0.0,
-            "◀": -1,
-            "⏹": "stop",
-            "▶": +1,
-            "⏭": None,
-            "🔢": "choose",
-            "💰": "buy",
-        }
-
-    async def indexer(self, ctx: "Context", ctrl: str) -> None:
-        if self.base is None:
-            raise Exception("Should not be called manually")
-        if ctrl == "stop":
-            ctx.bot.loop.create_task(self.stop_controller(self.base))
-
-        elif ctrl == "choose":
-            choose_msg = await ctx.send(
-                _("Please send a number between 1 and {max_pages}").format(
-                    max_pages=int(self.eof) + 1
-                )
-            )
-
-            def check(msg):
-                return (
-                    msg.author.id == ctx.author.id
-                    and msg.content.isdigit()
-                    and 0 < int(msg.content) <= int(self.eof) + 1
-                )
-
-            try:
-                m = await ctx.bot.wait_for("message", check=check, timeout=30)
-                await choose_msg.delete()
-            except TimeoutError:
-                if self.base is not None:
-                    await self.base.delete()
-                await ctx.send(_("Took too long to choose a number. Cancelling."))
-                return
-            self.current = int(m.content) - 1
-
-        elif ctrl == "buy":
-            item_id = self.pages[self.current][1]
-            await self.buy(ctx, item_id)
-
-        elif isinstance(ctrl, int):
-            self.current += ctrl
-            if self.current > self.eof or self.current < 0:
-                self.current -= ctrl
-        else:
-            self.current = int(ctrl)
-
-    async def buy(self, ctx: "Context", item_id: int):
-        command = ctx.bot.get_command("buy")
-        if not await command.can_run(ctx):
-            # ensures players have a character and updates ctx.character_data
-            await ctx.send(
-                _("Looks like you deleted your character in the meantime...")
-            )
-            ctx.bot.loop.create_task(self.stop_controller(self.base))
-        if not await ctx.invoke(command, itemid=item_id):
-            return
-        del self.pages[self.current]
-        if len(self.pages) == 0:
-            ctx.bot.loop.create_task(self.stop_controller(self.base))
-        self.eof -= 1
-        self.controls["⏭"] = self.eof
-        try:
-            await self.base.edit(
-                embed=self.pages[self.current][0].set_footer(
-                    text=_("Item {num} of {total}").format(
-                        num=self.current + 1, total=int(self.eof) + 1
-                    )
-                )
-            )
-        except IndexError:
-            self.current -= 1
-            await self.base.edit(
-                embed=self.pages[self.current][0].set_footer(
-                    text=_("Item {num} of {total}").format(
-                        num=self.current + 1, total=int(self.eof) + 1
-                    )
-                )
-            )
-
-    async def reaction_controller(self, ctx: "Context") -> None:
-        bot = ctx.bot
-        author = ctx.author
-
-        self.base = await ctx.send(embed=self.pages[0][0])
-
-        if len(self.pages) == 1:
-            await self.base.add_reaction("⏹")
-            await self.base.add_reaction("💰")
-        else:
-            for reaction in self.controls:
-                try:
-                    await self.base.add_reaction(reaction)
-                except discord.HTTPException:
-                    return
-
-        def check(r: discord.Reaction, u: discord.User) -> bool:
-            if str(r) not in self.controls.keys():
-                return False
-            elif u.id == bot.user.id or r.message.id != self.base.id:
-                return False
-            elif u.id != author.id:
-                return False
-            return True
-
-        while True:
-            try:
-                react, user = await bot.wait_for(
-                    "reaction_add", check=check, timeout=self.timeout
-                )
-            except asyncio.TimeoutError:
-                return ctx.bot.loop.create_task(self.stop_controller(self.base))
-
-            control = self.controls.get(str(react))
-
-            try:
-                await self.base.remove_reaction(react, user)
-            except discord.HTTPException:
-                pass
-
-            self.previous = self.current
-            await self.indexer(ctx, control)
-
-            if self.previous == self.current:
-                continue
-
-            try:
-                await self.base.edit(
-                    embed=self.pages[self.current][0].set_footer(
-                        text=_("Item {num} of {total}").format(
-                            num=self.current + 1, total=int(self.eof) + 1
-                        )
-                    )
-                )
-            except KeyError:
-                pass
-
-    async def stop_controller(self, message: discord.Message) -> None:
-        try:
-            await message.delete()
-        except discord.HTTPException:
-            pass
-
-        try:
-            self.controller.cancel()
-        except Exception:
-            pass
-
-    async def paginate(self, ctx):
-        self.pages = [p for p in self.entries if isinstance(p[0], discord.Embed)]
-
-        if not self.pages:
-            raise ValueError(
-                "There must be enough data to create at least 1 page for pagination."
-            )
-
-        self.eof = float(len(self.pages) - 1)
-        self.controls["⏭"] = self.eof
-        self.controller = ctx.bot.loop.create_task(self.reaction_controller(ctx))
 
 
 class AdventurePaginator:
@@ -714,6 +520,67 @@ class NormalPaginator(ChooseLong):
         self.cleanup()
 
 
+class ChooseShop(NormalPaginator):
+    def __init__(
+        self,
+        ids: list[int],
+        *args,
+        **kwargs,
+    ) -> None:
+        super().__init__(*args, **kwargs)
+        self.ids = ids
+
+    @discord.ui.button(label="Buy", style=discord.ButtonStyle.green, row=1, emoji="💰")
+    async def buy(
+        self, button: discord.ui.Button, interaction: discord.Interaction
+    ) -> None:
+        item_id = self.ids[self.current]
+        command = self.ctx.bot.get_command("buy")
+        if not await command.can_run(self.ctx):
+            return await interaction.response.send_message(
+                _("You don't have a character anymore."), ephemeral=True
+            )
+        if not await self.ctx.invoke(command, itemid=item_id):
+            return
+        del self.pages[self.current]
+        del self.ids[self.current]
+
+        if len(self.pages) == 0:
+            self.stop()
+            self.cleanup()
+            return
+
+        if self.current == self.max:
+            self.current -= 1
+
+        self.max = len(self.pages) - 1
+        self.pages = [
+            page.set_footer(
+                text=_("Item {num} of {total}").format(
+                    num=idx + 1, total=len(self.pages)
+                )
+            )
+            for idx, page in enumerate(self.pages)
+        ]
+
+        await self.update()
+
+
+class ShopPaginator:
+    def __init__(
+        self,
+        entries: list[tuple[discord.Embed, int]] = [],
+    ):
+        self.entries = entries
+
+    async def paginate(self, ctx, location=None, user=None) -> None:
+        embeds = [i[0] for i in self.entries]
+        ids = [i[1] for i in self.entries]
+        view = ChooseShop(ids, ctx, embeds, timeout=90)
+
+        await view.start(location or ctx)
+
+
 class ChoosePaginator:
     def __init__(
         self,
@@ -750,7 +617,7 @@ class ChoosePaginator:
         assert entry_count == len(self.choices)
         assert 2 <= entry_count <= 25
 
-    def formmater(self, chunk):
+    def formatter(self, chunk):
         return "\n".join(
             f"{self.prepend}{self.fmt}{value}{self.fmt[::-1]}{self.append}"
             for value in chunk
@@ -764,13 +631,13 @@ class ChoosePaginator:
             self.pages = [p for p in self.extras if isinstance(p, discord.Embed)]
 
         if self.entries:
-            chunks = [c async for c in pager(self.entries, self.length)]
+            chunks = list(pager(self.entries, self.length))
 
             for index, chunk in enumerate(chunks):
                 page = discord.Embed(
                     title=f"{self.title} - {index + 1}/{len(chunks)}", color=self.colour
                 )
-                page.description = self.formmater(chunk)
+                page.description = self.formatter(chunk)
 
                 if self.footer:
                     page.set_footer(text=self.footer)
@@ -890,117 +757,3 @@ class Choose:
             await location.send(embed=em, view=view)
 
         return await future
-
-
-class Akinator:
-    def __init__(
-        self,
-        entries,
-        title=None,
-        footer_text=None,
-        footer_icon=None,
-        colour=None,
-        timeout=30,
-        return_index=False,
-        undo=True,
-        view_current=True,
-        msg=None,
-        delete=True,
-    ):
-        self.entries = entries
-        self.title = title or "Untitled"
-        self.footer_text = footer_text or discord.Embed.Empty
-        self.footer_icon = footer_icon or discord.Embed.Empty
-        self.colour = colour
-        self.timeout = timeout
-        self.return_index = return_index
-        self.undo = undo
-        self.view_current = view_current
-        self.msg = msg
-        self.delete = delete
-
-    async def paginate(self, ctx):
-        if len(self.entries) > 10:
-            raise ValueError("Exceeds maximum size")
-        elif len(self.entries) < 2:
-            raise ValueError(
-                "There must be enough data to create at least 1 page for choosing."
-            )
-        if self.colour is None:
-            self.colour = ctx.bot.config.game.primary_colour
-        em = discord.Embed(title=self.title, description="", colour=self.colour)
-        self.emojis = []
-        for index, chunk in enumerate(self.entries):
-            if index < 9:
-                self.emojis.append(f"{index+1}\u20e3")
-            else:
-                self.emojis.append("\U0001f51f")
-            em.description = f"{em.description}{self.emojis[index]} {chunk}\n"
-
-        em.set_footer(icon_url=self.footer_icon, text=self.footer_text)
-
-        self.controller = em
-        return await self.reaction_controller(ctx)
-
-    async def reaction_placer(self, base):
-        for emoji in self.emojis:
-            await base.add_reaction(emoji)
-
-        if self.undo:
-            self.emojis.append("\U000021a9")
-            await base.add_reaction("\U000021a9")
-        if self.view_current:
-            self.emojis.append("\U00002139")
-            await base.add_reaction("\U00002139")
-
-    async def reaction_controller(self, ctx):
-        if not self.msg:
-            base = await ctx.send(embed=self.controller)
-        else:
-            base = self.msg
-            await self.msg.edit(content=None, embed=self.controller)
-
-        place_task = ctx.bot.loop.create_task(self.reaction_placer(base))
-
-        def check(r, u):
-            if str(r) not in self.emojis:
-                return False
-            elif u.id == ctx.bot.user.id or r.message.id != base.id:
-                return False
-            elif u.id != ctx.author.id:
-                return False
-            return True
-
-        try:
-            react, user = await ctx.bot.wait_for(
-                "reaction_add", check=check, timeout=self.timeout
-            )
-            place_task.cancel()
-        except asyncio.TimeoutError:
-            place_task.cancel()
-            await self.stop_controller(base)
-            return "nochoice"
-
-        try:
-            control = self.entries[self.emojis.index(str(react))]
-        except IndexError:
-            await self.stop_controller(base)
-            if str(react) == "\U000021a9":
-                return "undo"
-            elif str(react) == "\U00002139":
-                return "current"
-
-        await self.stop_controller(base)
-        if not self.return_index:
-            return control
-        else:
-            return self.emojis.index(str(react))
-
-    async def stop_controller(self, message):
-        try:
-            if self.delete:
-                await message.delete()
-            else:
-                pass
-        except discord.HTTPException:
-            pass
