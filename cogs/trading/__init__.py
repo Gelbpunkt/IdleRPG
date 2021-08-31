@@ -212,10 +212,9 @@ class Trading(commands.Cog):
                 data={"Amount": item["price"]},
                 conn=conn,
             )
-            seller = await self.bot.get_user_global(item["owner"])
             await self.bot.log_transaction(
                 ctx,
-                from_=(seller if seller else item["owner"]),
+                from_=item["owner"],
                 to=ctx.author,
                 subject="shop",
                 data=item,
@@ -227,13 +226,14 @@ class Trading(commands.Cog):
                 " updated inventory."
             ).format(id=item["id"], prefix=ctx.prefix)
         )
-        if seller:
-            with suppress(discord.Forbidden, discord.HTTPException):
-                await seller.send(
-                    "A traveler has bought your **{name}** for **${price}** from the market.".format(
-                        name=item["name"], price=item["price"]
-                    )
-                )
+        with suppress(discord.Forbidden, discord.HTTPException):
+            dm_channel = await self.bot.http.start_private_message(item["owner"])
+            await self.bot.http.send_message(
+                dm_channel.get("id"),
+                "A traveler has bought your **{name}** for **${price}** from the market.".format(
+                    name=item["name"], price=item["price"]
+                ),
+            )
         return True
 
     @has_char()
