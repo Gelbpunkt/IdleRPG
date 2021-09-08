@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: 4.3.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-06-02 22:07+0200\n"
-"PO-Revision-Date: 2021-06-09 17:24+0000\n"
+"PO-Revision-Date: 2021-06-24 18:36+0000\n"
 "Last-Translator: Julian <k.sahleb@gmail.com>\n"
 "Language-Team: German <http://translate.travitia.xyz/projects/idlerpg/bot/de/"
 ">\n"
@@ -2069,7 +2069,7 @@ msgstr ""
 "Kiste\n"
 "\n"
 "            Wenn du diesen Befehl nicht innerhalb von 48 Stunden nach der "
-"ersten Nutzung erneut verwendest, verfällt deine Streak.\n"
+"ersten Nutzung erneut verwendest, verfallen deine gesammelten Tage.\n"
 "\n"
 "            (Dieser Befehl hat einen Cooldown bis Mitternacht/12am UTC.)"
 
@@ -2082,7 +2082,8 @@ msgid ""
 "possibly rare items!*"
 msgstr ""
 "Du hast deine Tägliche {txt}! erhalten!\n"
-"Du hast gerade eine Streak von **{streak}** Tagen!\n"
+"Du hast deine tägliche Belohnung bereits **{streak}** Tage hintereinander "
+"abgeholt!\n"
 "*Tipp: Nutze `{prefix}vote` alle 12 Stunden um Kisten mit einer Seltenheit "
 "bis hin zu legendär, mit möglicherweise seltenen Items, zu erhalten!*"
 
@@ -2096,7 +2097,8 @@ msgid ""
 "you've claimed your daily reward? This command is for you"
 msgstr ""
 "Willst du gegenüber einem Fremden angeben, oder einfach nur nachsehen, wie "
-"hoch lang deine Streak bereits ist? Dieser Befehl ist für dich"
+"lange du bereits deine tägliche Belohnung gesammelt hast? Dieser Befehl ist "
+"für dich"
 
 #: cogs/miscellaneous/__init__.py:222
 #, python-brace-format
@@ -2110,7 +2112,9 @@ msgstr ""
 #: cogs/miscellaneous/__init__.py:227
 #, python-brace-format
 msgid "You are on a daily streak of **{streak}!**"
-msgstr "Du bist in einer Streak von **{streak}** Tagen!"
+msgstr ""
+"Du hast deine tägliche Belohnung bereits **{streak}** Tage hintereinander "
+"abgeholt!"
 
 #: cogs/miscellaneous/__init__.py:232
 msgid "Show the bot's ping"
@@ -3360,8 +3364,8 @@ msgid ""
 "Successfully bought **{amount}x** {booster} booster(s). Use `{prefix}"
 "boosters` to view your new boosters."
 msgstr ""
-"Erfolgreicht **{amount}x** {booster} Booster gekauft. Nutze `{prefix}"
-"boosters` um deine neuen Booster zu sehen."
+"Erfolgreich **{amount}x** {booster} Booster gekauft. Nutze `{prefix}boosters`"
+" um deine(n) neuen Booster zu sehen."
 
 #: cogs/store/__init__.py:128
 msgid "View your boosters"
@@ -3429,7 +3433,7 @@ msgstr "Deine Booster"
 #: cogs/store/__init__.py:177
 #, python-brace-format
 msgid "Use {prefix}activate to activate one"
-msgstr "Nutze {prefix}activate um Enen zu aktivieren"
+msgstr "Nutze {prefix}activate um Einen zu aktivieren"
 
 #: cogs/store/__init__.py:182
 msgid "Activate a booster"
@@ -3452,7 +3456,7 @@ msgstr ""
 
 #: cogs/store/__init__.py:192
 msgid "That is not a valid booster type. Must be `time/luck/money/all`."
-msgstr "Das ist kein gültiger Booster-Typ. Nutze `time/luck/mney/all`."
+msgstr "Das ist kein gültiger Booster-Typ. Nutze `time/luck/money/all`."
 
 #: cogs/store/__init__.py:197
 msgid "You don't have any of these boosters."
