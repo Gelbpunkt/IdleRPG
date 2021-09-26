@@ -377,7 +377,18 @@ class AdventureView(NormalPaginator):
         super().__init__(*args, **kwargs)
         self.files = files
 
-    async def start(self, messagable: discord.abc.Messageable) -> None:
+    async def start(
+        self, messagable: discord.abc.Messageable, user: Optional[discord.User] = None
+    ) -> None:
+        self.allowed_user = (
+            user
+            if user
+            else (
+                messagable
+                if isinstance(messagable, (discord.User, discord.Member))
+                else self.ctx.author
+            )
+        )
         old_close = self.files[self.current].fp.close
         self.files[self.current].fp.close = lambda: None
         try:
@@ -470,7 +481,7 @@ class AdventurePaginator:
     async def paginate(self, ctx, location=None, user=None) -> None:
         view = AdventureView(self.files, ctx, self.embeds, timeout=60)
 
-        await view.start(location or ctx)
+        await view.start(location or ctx, user=user)
 
 
 class ChoosePaginator:
