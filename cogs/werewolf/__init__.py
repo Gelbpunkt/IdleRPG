@@ -148,7 +148,9 @@ class Werewolf(commands.Cog):
                         url=url,
                         colour=self.bot.config.game.primary_colour,
                     )
-                    .set_author(name=str(ctx.author), icon_url=ctx.author.display_avatar.url)
+                    .set_author(
+                        name=str(ctx.author), icon_url=ctx.author.display_avatar.url
+                    )
                     .add_field(name=_("New to Werewolf?"), value=additional_text)
                 )
             except discord.errors.Forbidden:
@@ -184,7 +186,9 @@ class Werewolf(commands.Cog):
                         ),
                         colour=self.bot.config.game.primary_colour,
                     )
-                    .set_author(name=str(ctx.author), icon_url=ctx.author.display_avatar.url)
+                    .set_author(
+                        name=str(ctx.author), icon_url=ctx.author.display_avatar.url
+                    )
                     .add_field(name=_("New to Werewolf?"), value=additional_text)
                 )
                 await msg.add_reaction("\U0001f43a")
@@ -226,7 +230,9 @@ class Werewolf(commands.Cog):
                         ),
                         colour=self.bot.config.game.primary_colour,
                     )
-                    .set_author(name=str(ctx.author), icon_url=ctx.author.display_avatar.url)
+                    .set_author(
+                        name=str(ctx.author), icon_url=ctx.author.display_avatar.url
+                    )
                     .add_field(name=_("New to Werewolf?"), value=additional_text)
                 )
 
