@@ -194,9 +194,7 @@ class Sharding(commands.Cog):
             if (type := payload.get("type")) and (data := payload.get("data")):
                 # Cross process event
                 if type == "raw_interaction" and 0 not in self.bot.shard_ids:
-                    self.bot.loop.create_task(
-                        self.bot._connection.parse_interaction_create(data)
-                    )
+                    self.bot._connection.parse_interaction_create(data)
             if payload.get("action") and hasattr(self, payload.get("action")):
                 if payload.get("scope") != "bot":
                     continue  # it's not our cup of tea
@@ -213,7 +211,7 @@ class Sharding(commands.Cog):
                             command_id=payload["command_id"]
                         )
                     )
-            if payload.get("output") and payload["command_id"] in self._messages:
+            if payload.get("output") and payload.get("command_id") in self._messages:
                 for fut in self._messages[payload["command_id"]]:
                     if not fut.done():
                         fut.set_result(payload["output"])

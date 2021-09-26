@@ -262,8 +262,12 @@ class ChooseLong(discord.ui.View):
         self.pages = pages
         self.max = len(self.pages) - 1
         self.message: Optional[discord.Message] = None
+        self.allowed_user = ctx.author
 
     async def start(self, messagable: discord.abc.Messageable) -> None:
+        self.allowed_user = (
+            messagable if isinstance(messagable, discord.User) else self.ctx.author
+        )
         self.message = await messagable.send(embed=self.pages[0], view=self)
 
     def cleanup(self) -> None:
@@ -273,7 +277,7 @@ class ChooseLong(discord.ui.View):
         await self.message.edit(embed=self.pages[self.current])
 
     async def interaction_check(self, interaction: discord.Interaction) -> bool:
-        if self.ctx.author.id == interaction.user.id:
+        if self.allowed_user.id == interaction.user.id:
             return True
         else:
             asyncio.create_task(
