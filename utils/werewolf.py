@@ -420,7 +420,6 @@ class Game:
                         if p.user.dm_channel is not None
                     ]
                     msg = await self.ctx.bot.wait_for_dms(
-                        "message",
                         check={
                             "author": {"id": wolves_users},
                             "channel_id": channels_ids,
@@ -1040,7 +1039,6 @@ class Game:
                 ]
                 while len(not_afk) < len(self.new_afk_players):
                     msg = await self.ctx.bot.wait_for_dms(
-                        "message",
                         check={
                             "author": {"id": afk_users_id},
                             "channel_id": channels_ids,
@@ -1387,7 +1385,6 @@ class Player:
         chosen = []
         while len(chosen) < amount:
             msg = await self.game.ctx.bot.wait_for_dms(
-                "message",
                 check={
                     "author": {"id": str(self.user.id)},
                     "content": [
@@ -1485,7 +1482,6 @@ class Player:
         )
         try:
             msg = await self.game.ctx.bot.wait_for_dms(
-                "message",
                 check={
                     "author": {"id": str(self.user.id)},
                     "channel_id": [

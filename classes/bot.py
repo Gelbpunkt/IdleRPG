@@ -324,7 +324,7 @@ class Bot(commands.AutoShardedBot):
             self.all_prefixes[message.guild.id] = pref
         return commands.when_mentioned_or(pref)(self, message)
 
-    async def wait_for_dms(self, event, check, timeout=30):
+    async def wait_for_dms(self, check, timeout=30):
         """
         Cross-process DM event handling, check is a dictionary
         """
@@ -332,31 +332,17 @@ class Bot(commands.AutoShardedBot):
             data = (
                 await self.cogs["Sharding"].handler(
                     action="wait_for_dms",
-                    args={"event": event, "check": check, "timeout": timeout},
+                    args={"check": check, "timeout": timeout},
                     expected_count=1,
                     _timeout=timeout,
                 )
             )[0]
         except IndexError:
             raise asyncio.TimeoutError()
-        if event == "message":
-            channel_id = int(data["channel_id"])
-            return discord.Message(
-                state=self._connection, channel=discord.Object(channel_id), data=data
-            )
-        elif event == "reaction_add":
-            emoji = discord.PartialEmoji(
-                name=data["emoji"]["name"],
-                id=int(id_) if (id_ := data["emoji"]["id"]) else id_,
-                animated=data["emoji"].get("animated", False),
-            )
-            message = discord.utils.get(
-                self._connection._messages, id=int(data["message_id"])
-            )
-            reaction = discord.Reaction(
-                message=message, emoji=emoji, data={"me": False}
-            )
-            return reaction, await self.get_user_global(int(data["user_id"]))
+        channel_id = int(data["channel_id"])
+        return discord.Message(
+            state=self._connection, channel=discord.Object(channel_id), data=data
+        )
 
     @cache(maxsize=8096)
     async def get_user_global(self, user_id: int):

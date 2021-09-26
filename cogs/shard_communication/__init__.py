@@ -269,17 +269,13 @@ class Sharding(commands.Cog):
             json.dumps(payload),
         )
 
-    async def wait_for_dms(self, event, check, timeout, command_id: str):
+    async def wait_for_dms(self, check, timeout, command_id: str):
         """
-        This uses socket raw events
+        This uses raw message create events
         The predicate is a dictionary with key-values from the event data to match 1:1
         """
         if 0 not in self.bot.shards.keys():
             return
-        if event == "reaction_add":
-            event = "MESSAGE_REACTION_ADD"
-        elif event == "message":
-            event = "MESSAGE_CREATE"
 
         check = {k: str(v) if isinstance(v, int) else v for k, v in check.items()}
 
@@ -297,11 +293,10 @@ class Sharding(commands.Cog):
             return True
 
         def pred(e):
-            return e["op"] == 0 and e["t"] == event and data_matches(check, e["d"])
+            return data_matches(check, e)
 
-        # TODO: This might be broken in recent dpy?
-        out = await self.bot.wait_for("socket_response", check=pred, timeout=timeout)
-        payload = {"output": out["d"], "command_id": command_id}
+        out = await self.bot.wait_for("raw_message_create", check=pred, timeout=timeout)
+        payload = {"output": out, "command_id": command_id}
         await self.bot.redis.execute_command(
             "PUBLISH",
             self.bot.config.database.redis_shard_announce_channel,
