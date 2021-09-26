@@ -243,7 +243,7 @@ class Paginator:
 
         view = NormalPaginator(ctx, self.pages, timeout=self.timeout)
 
-        await view.start(location or ctx)
+        await view.start(location or ctx, user=user)
 
 
 class ChooseLong(discord.ui.View):
@@ -264,9 +264,19 @@ class ChooseLong(discord.ui.View):
         self.message: Optional[discord.Message] = None
         self.allowed_user = ctx.author
 
-    async def start(self, messagable: discord.abc.Messageable) -> None:
+    async def start(
+        self,
+        messagable: discord.abc.Messageable,
+        user: Optional[discord.User] = None,
+    ) -> None:
         self.allowed_user = (
-            messagable if isinstance(messagable, discord.User) else self.ctx.author
+            user
+            if user
+            else (
+                messagable
+                if isinstance(messagable, (discord.User, discord.Member))
+                else self.ctx.author
+            )
         )
         self.message = await messagable.send(embed=self.pages[0], view=self)
 
@@ -540,7 +550,7 @@ class ChoosePaginator:
 
         view.add_item(select)
 
-        await view.start(location or ctx)
+        await view.start(location or ctx, user=user)
 
         return await future
 
@@ -552,9 +562,23 @@ class ChooseView(discord.ui.View):
         super().__init__(*args, **kwargs)
         self.ctx = ctx
         self.future = future
+        self.allowed_user = ctx.author
+
+    async def start(
+        self,
+        embed: discord.Embed,
+        messagable: discord.abc.Messageable,
+        user: Optional[Union[discord.User]],
+    ) -> None:
+        self.allowed_user = (
+            messagable
+            if isinstance(messagable, (discord.User, discord.Member))
+            else self.ctx.author
+        )
+        self.message = await messagable.send(embed=embed, view=self)
 
     async def interaction_check(self, interaction: discord.Interaction) -> bool:
-        if self.ctx.author.id == interaction.user.id:
+        if self.allowed_user.id == interaction.user.id:
             return True
         else:
             asyncio.create_task(
@@ -633,9 +657,6 @@ class Choose:
 
         view.add_item(select)
 
-        if not location:
-            await ctx.send(embed=em, view=view)
-        else:
-            await location.send(embed=em, view=view)
+        await view.start(em, location or ctx, user=user)
 
         return await future
