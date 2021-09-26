@@ -20,6 +20,7 @@ import json
 
 from datetime import datetime, timedelta
 from time import time
+from typing import Any
 from uuid import uuid4
 
 import discord
@@ -155,6 +156,8 @@ class Sharding(commands.Cog):
         """
         _messages should be a dict with the syntax {"<command_id>": [outputs]}
         """
+        if 0 in self.bot.shard_ids:
+            self.bot.add_listener(self.on_raw_interaction)
 
     def cog_unload(self):
         self.bot.loop.create_task(self.unregister_sub())
@@ -188,6 +191,12 @@ class Sharding(commands.Cog):
             except json.JSONDecodeError:
                 continue
 
+            if (type := payload.get("type")) and (data := payload.get("data")):
+                # Cross process event
+                if type == "raw_interaction" and 0 not in self.bot.shard_ids:
+                    self.bot.loop.create_task(
+                        self.bot._connection.parse_interaction_create(data)
+                    )
             if payload.get("action") and hasattr(self, payload.get("action")):
                 if payload.get("scope") != "bot":
                     continue  # it's not our cup of tea
@@ -290,6 +299,7 @@ class Sharding(commands.Cog):
         def pred(e):
             return e["op"] == 0 and e["t"] == event and data_matches(check, e["d"])
 
+        # TODO: This might be broken in recent dpy?
         out = await self.bot.wait_for("socket_response", check=pred, timeout=timeout)
         payload = {"output": out["d"], "command_id": command_id}
         await self.bot.redis.execute_command(
@@ -349,6 +359,15 @@ class Sharding(commands.Cog):
                 pass
             del self._messages[command_id]
             return results
+
+    async def on_raw_interaction(self, interaction_data: dict[str, Any]) -> None:
+        # Method called when a DM interaction is received
+        payload = {"type": "raw_interaction", "data": interaction_data}
+        await self.bot.redis.execute_command(
+            "PUBLISH",
+            self.bot.config.database.redis_shard_announce_channel,
+            json.dumps(payload),
+        )
 
     @commands.command(
         aliases=["cooldowns", "t", "cds"], brief=_("Lists all your cooldowns")

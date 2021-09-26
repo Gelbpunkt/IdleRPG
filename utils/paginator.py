@@ -215,7 +215,7 @@ class Paginator:
         self.append = append
         self.pages = []
 
-    def formmater(self, chunk):
+    def formatter(self, chunk):
         return "\n".join(
             f"{self.prepend}{self.fmt}{value}{self.fmt[::-1]}{self.append}"
             for value in chunk
@@ -235,7 +235,7 @@ class Paginator:
                 page = discord.Embed(
                     title=f"{self.title} - {index + 1}/{len(chunks)}", color=self.colour
                 )
-                page.description = self.formmater(chunk)
+                page.description = self.formatter(chunk)
 
                 if self.footer:
                     page.set_footer(text=self.footer)
