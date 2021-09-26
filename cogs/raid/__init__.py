@@ -143,7 +143,7 @@ class Raid(commands.Cog):
             color=self.bot.config.game.primary_colour,
         )
         em.set_image(url="attachment://dragon.jpg")
-        em.set_thumbnail(url=ctx.author.avatar.url)
+        em.set_thumbnail(url=ctx.author.display_avatar.url)
 
         spawnmsg = await ctx.send(embed=em, file=fi)
         self.boss.update(message=spawnmsg.id)
@@ -246,7 +246,7 @@ class Raid(commands.Cog):
             )
             em.add_field(name="Shield", value=raid[target]["armor"])
             em.add_field(name="Effective Damage", value=finaldmg)
-            em.set_author(name=str(target), icon_url=target.avatar.url)
+            em.set_author(name=str(target), icon_url=target.display_avatar.url)
             em.set_thumbnail(url=f"{self.bot.BASE_URL}/dragon.jpg")
             await ctx.send(target.mention, embed=em)
             if raid[target]["hp"] <= 0:
@@ -710,7 +710,7 @@ Quick and ugly: <https://discord.com/oauth2/authorize?client_id=4539639655219855
             em.add_field(name="Theoretical Damage", value=dmg + raid[target]["armor"])
             em.add_field(name="Shield", value=raid[target]["armor"])
             em.add_field(name="Effective Damage", value=dmg)
-            em.set_author(name=str(target), icon_url=target.avatar.url)
+            em.set_author(name=str(target), icon_url=target.display_avatar.url)
             em.set_thumbnail(url=f"{self.bot.BASE_URL}/guardian_small.jpg")
             await ctx.send(embed=em)
             if raid[target]["hp"] <= 0:
@@ -886,7 +886,7 @@ Quick and ugly: <https://discord.com/oauth2/authorize?client_id=4539639655219855
             em.add_field(name="Theoretical Damage", value=dmg + raid[target]["armor"])
             em.add_field(name="Shield", value=raid[target]["armor"])
             em.add_field(name="Effective Damage", value=dmg)
-            em.set_author(name=str(target), icon_url=target.avatar.url)
+            em.set_author(name=str(target), icon_url=target.display_avatar.url)
             em.set_thumbnail(url=f"{self.bot.BASE_URL}/hamburger.jpg")
             await ctx.send(embed=em)
             if raid[target]["hp"] <= 0:
@@ -1168,7 +1168,7 @@ Quick and ugly: <https://discord.com/oauth2/authorize?client_id=4539639655219855
                 description=text,
                 colour=0xFFB900,
             )
-            em.set_author(name=f"{target}", icon_url=target.avatar.url)
+            em.set_author(name=f"{target}", icon_url=target.display_avatar.url)
             em.set_footer(text=f"{len(raid)} followers remain")
             em.set_thumbnail(url=f"{self.bot.BASE_URL}/image/lyx.png")
             await ctx.send(embed=em)
@@ -1283,7 +1283,7 @@ Click [here](https://discord.com/oauth2/authorize?client_id=453963965521985536&s
                     colour=0xFFB900,
                 )
             em.add_field(name="Damage", value=dmg)
-            em.set_author(name=str(target), icon_url=target.avatar.url)
+            em.set_author(name=str(target), icon_url=target.display_avatar.url)
             em.set_thumbnail(url=f"{self.bot.BASE_URL}/image/matmen.png")
             await ctx.send(embed=em)
             if raid[target] <= 0:
@@ -1301,7 +1301,7 @@ Click [here](https://discord.com/oauth2/authorize?client_id=453963965521985536&s
                     description=f"It's super effective!\n{target} now has {raid[target]} HP!",
                     colour=0xFFB900,
                 )
-                em.set_author(name=str(target), icon_url=target.avatar.url)
+                em.set_author(name=str(target), icon_url=target.display_avatar.url)
                 em.set_thumbnail(url=f"{self.bot.BASE_URL}/image/lemon.png")
                 await ctx.send(embed=em)
 
@@ -1477,7 +1477,7 @@ Click [here](https://discord.com/oauth2/authorize?client_id=453963965521985536&s
             em.add_field(name="Theoretical Damage", value=dmg + raid[target]["armor"])
             em.add_field(name="Shield", value=raid[target]["armor"])
             em.add_field(name="Effective Damage", value=dmg)
-            em.set_author(name=str(target), icon_url=target.avatar.url)
+            em.set_author(name=str(target), icon_url=target.display_avatar.url)
             em.set_thumbnail(url=f"{self.bot.BASE_URL}/image/dark_mind.png")
             await ctx.send(embed=em)
             if raid[target]["hp"] <= 0:
@@ -1551,7 +1551,7 @@ Click [here](https://discord.com/oauth2/authorize?client_id=453963965521985536&s
             em.add_field(name="Theoretical Damage", value=dmg + raid[target]["armor"])
             em.add_field(name="Shield", value=raid[target]["armor"])
             em.add_field(name="Effective Damage", value=dmg)
-            em.set_author(name=str(target), icon_url=target.avatar.url)
+            em.set_author(name=str(target), icon_url=target.display_avatar.url)
             em.set_thumbnail(url=f"{self.bot.BASE_URL}/image/dark_mind_final.png")
             await ctx.send(embed=em)
             if raid[target]["hp"] <= 0:
@@ -1704,7 +1704,7 @@ Quick and ugly: <https://discord.com/oauth2/authorize?client_id=4539639655219855
             em.add_field(name="Theoretical Damage", value=dmg + raid[target]["armor"])
             em.add_field(name="Shield", value=raid[target]["armor"])
             em.add_field(name="Effective Damage", value=dmg)
-            em.set_author(name=str(target), icon_url=target.avatar.url)
+            em.set_author(name=str(target), icon_url=target.display_avatar.url)
             em.set_thumbnail(url=f"{self.bot.BASE_URL}/atheistus.jpg")
             await ctx.send(embed=em)
             if raid[target]["hp"] <= 0:

@@ -559,7 +559,7 @@ class Music(commands.Cog):
             text=_("Song requested by: {user}").format(
                 user=current_song.requester.display_name
             ),
-            icon_url=current_song.requester.avatar.url,
+            icon_url=current_song.requester.display_avatar.url,
         )
         await ctx.send(embed=playing_embed)
 

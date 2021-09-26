@@ -102,7 +102,7 @@ class GlobalEvents(commands.Cog):
         embed.set_image(url=f"{self.bot.BASE_URL}/IdleRPG.png")
         embed.set_footer(
             text=f"IdleRPG Version {self.bot.version}",
-            icon_url=self.bot.user.avatar.url,
+            icon_url=self.bot.user.display_avatar.url,
         )
         channels = list(
             filter(

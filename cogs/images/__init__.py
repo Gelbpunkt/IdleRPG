@@ -43,7 +43,7 @@ class Images(commands.Cog):
             size = [256, 128, 64, 32, 16][size - 1]
         except IndexError:
             return await ctx.send(_("Use 1, 2, 3, 4 or 5 as intensity value."))
-        url = user.avatar.replace(format="png", size=size).url
+        url = user.display_avatar.replace(format="png", size=size).url
         # change size to lower for less pixels
         async with self.bot.trusted_session.post(
             f"{self.bot.config.external.okapi_url}/api/imageops/pixel",
@@ -62,7 +62,7 @@ class Images(commands.Cog):
         )
         async with self.bot.trusted_session.post(
             f"{self.bot.config.external.okapi_url}/api/imageops/edges",
-            json={"image": user.avatar.replace(format="png").url},
+            json={"image": user.display_avatar.replace(format="png").url},
         ) as r:
             img = BytesIO(await r.read())
         await ctx.send(file=discord.File(fp=img, filename="edgy.png"))
@@ -80,7 +80,7 @@ class Images(commands.Cog):
         )
         async with self.bot.trusted_session.post(
             f"{self.bot.config.external.okapi_url}/api/imageops/invert",
-            json={"image": member.avatar.replace(format="png").url},
+            json={"image": member.display_avatar.replace(format="png").url},
         ) as r:
             img = BytesIO(await r.read())
         await ctx.send(file=discord.File(fp=img, filename="inverted.png"))
@@ -98,7 +98,7 @@ class Images(commands.Cog):
         )
         async with self.bot.trusted_session.post(
             f"{self.bot.config.external.okapi_url}/api/imageops/oil",
-            json={"image": member.avatar.replace(format="png").url},
+            json={"image": member.display_avatar.replace(format="png").url},
         ) as r:
             img = BytesIO(await r.read())
 

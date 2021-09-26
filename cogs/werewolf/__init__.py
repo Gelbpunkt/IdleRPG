@@ -148,7 +148,7 @@ class Werewolf(commands.Cog):
                         url=url,
                         colour=self.bot.config.game.primary_colour,
                     )
-                    .set_author(name=str(ctx.author), icon_url=ctx.author.avatar.url)
+                    .set_author(name=str(ctx.author), icon_url=ctx.author.display_avatar.url)
                     .add_field(name=_("New to Werewolf?"), value=additional_text)
                 )
             except discord.errors.Forbidden:
@@ -184,7 +184,7 @@ class Werewolf(commands.Cog):
                         ),
                         colour=self.bot.config.game.primary_colour,
                     )
-                    .set_author(name=str(ctx.author), icon_url=ctx.author.avatar.url)
+                    .set_author(name=str(ctx.author), icon_url=ctx.author.display_avatar.url)
                     .add_field(name=_("New to Werewolf?"), value=additional_text)
                 )
                 await msg.add_reaction("\U0001f43a")
@@ -226,7 +226,7 @@ class Werewolf(commands.Cog):
                         ),
                         colour=self.bot.config.game.primary_colour,
                     )
-                    .set_author(name=str(ctx.author), icon_url=ctx.author.avatar.url)
+                    .set_author(name=str(ctx.author), icon_url=ctx.author.display_avatar.url)
                     .add_field(name=_("New to Werewolf?"), value=additional_text)
                 )
 
@@ -290,7 +290,7 @@ class Werewolf(commands.Cog):
 `IdleRPG`: (based on Imbalanced mode) New roles are available: Paragon, Raider, Ritualist, Lawyer, Troublemaker, War Veteran, Wolf Shaman, Wolf Necromancer, Superspreader."""
                 ),
                 colour=self.bot.config.game.primary_colour,
-            ).set_author(name=str(ctx.author), icon_url=ctx.author.avatar.url)
+            ).set_author(name=str(ctx.author), icon_url=ctx.author.display_avatar.url)
         )
 
     @werewolf.command(brief=_("See available werewolf game speeds"))
@@ -309,7 +309,7 @@ class Werewolf(commands.Cog):
 `Blitz`: Warning: This is a faster game speed suitable for experienced players. All action timers are limited to 30 seconds and number of days to play is dependent on the number of players plus 3 days. This means not killing anyone every night or every election will likely end the game with no winners."""
                 ),
                 colour=self.bot.config.game.primary_colour,
-            ).set_author(name=str(ctx.author), icon_url=ctx.author.avatar.url)
+            ).set_author(name=str(ctx.author), icon_url=ctx.author.display_avatar.url)
         )
 
     @werewolf.command(brief=_("Check your werewolf role"))
@@ -440,7 +440,7 @@ class Werewolf(commands.Cog):
                 ),
                 url="https://wiki.idlerpg.xyz/index.php?title=Werewolf",
                 colour=self.bot.config.game.primary_colour,
-            ).set_author(name=str(ctx.author), icon_url=ctx.author.avatar.url)
+            ).set_author(name=str(ctx.author), icon_url=ctx.author.display_avatar.url)
             tip = _(
                 "Use `{prefix}ww roles <role>` to view the description on a specific"
                 " role."
@@ -491,7 +491,7 @@ class Werewolf(commands.Cog):
                 ),
                 inline=True,
             )
-            .set_author(name=str(ctx.author), icon_url=ctx.author.avatar.url)
+            .set_author(name=str(ctx.author), icon_url=ctx.author.display_avatar.url)
         )
 
 

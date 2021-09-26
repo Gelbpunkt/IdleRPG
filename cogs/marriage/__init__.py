@@ -75,7 +75,7 @@ class Marriage(commands.Cog):
                 ).format(author=ctx.author.mention, partner=partner.mention),
                 colour=0xFF0000,
             )
-            .set_image(url=ctx.author.avatar.url)
+            .set_image(url=ctx.author.display_avatar.url)
             .set_thumbnail(
                 url="http://www.maasbach.com/wp-content/uploads/The-heart.png"
             )
@@ -557,7 +557,7 @@ class Marriage(commands.Cog):
                     ),
                     inline=False,
                 )
-            em.set_thumbnail(url=ctx.author.avatar.url)
+            em.set_thumbnail(url=ctx.author.display_avatar.url)
             await ctx.send(embed=em)
         else:
             embeds = []

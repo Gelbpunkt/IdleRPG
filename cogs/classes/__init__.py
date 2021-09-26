@@ -427,7 +427,7 @@ class Classes(commands.Cog):
         )
         em.add_field(name=_("Love"), value=f"{ctx.pet_data['love']}/100", inline=False)
         em.add_field(name=_("Joy"), value=f"{ctx.pet_data['joy']}/100", inline=False)
-        em.set_thumbnail(url=ctx.author.avatar.url)
+        em.set_thumbnail(url=ctx.author.display_avatar.url)
         em.set_image(url=ctx.pet_data["image"])
         await ctx.send(embed=em)
 
@@ -723,7 +723,7 @@ class Classes(commands.Cog):
             description=_("Your pet found an item!"),
             color=0xFF0000,
         )
-        embed.set_thumbnail(url=ctx.author.avatar.url)
+        embed.set_thumbnail(url=ctx.author.display_avatar.url)
         embed.add_field(name=_("ID"), value=item["id"], inline=False)
         embed.add_field(name=_("Name"), value=item["name"], inline=False)
         embed.add_field(name=_("Type"), value=item["type"], inline=False)

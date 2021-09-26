@@ -170,7 +170,7 @@ class Halloween(commands.Cog):
             description=_("You found a new item when opening a trick-or-treat bag!"),
             color=self.bot.config.game.primary_colour,
         )
-        embed.set_thumbnail(url=ctx.author.avatar.url)
+        embed.set_thumbnail(url=ctx.author.display_avatar.url)
         embed.add_field(name=_("Name"), value=item["name"], inline=False)
         embed.add_field(name=_("Type"), value=item["type_"], inline=False)
         embed.add_field(name=_("Damage"), value=item["damage"], inline=True)

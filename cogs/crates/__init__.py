@@ -175,7 +175,7 @@ class Crates(commands.Cog):
                 description=_("You found a new item when opening a crate!"),
                 color=0xFF0000,
             )
-            embed.set_thumbnail(url=ctx.author.avatar.url)
+            embed.set_thumbnail(url=ctx.author.display_avatar.url)
             embed.add_field(name=_("ID"), value=item["id"], inline=False)
             embed.add_field(name=_("Name"), value=item["name"], inline=False)
             embed.add_field(name=_("Type"), value=item["type"], inline=False)

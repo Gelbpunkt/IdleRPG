@@ -375,10 +375,10 @@ Even $1 can help us.
                 "Official Support Server Invite: https://support.idlerpg.xyz"
             ),
         )
-        embed.set_thumbnail(url=self.bot.user.avatar.url)
+        embed.set_thumbnail(url=self.bot.user.display_avatar.url)
         embed.set_footer(
             text=f"IdleRPG {self.bot.version} | By {owner}",
-            icon_url=self.bot.user.avatar.url,
+            icon_url=self.bot.user.display_avatar.url,
         )
         embed.add_field(
             name=_("Hosting Statistics"),
@@ -834,7 +834,7 @@ Average hours of work: **{hours}**"""
             ),
             color=m.color,
         )
-        em.set_image(url=m.avatar.url)
+        em.set_image(url=m.display_avatar.url)
         await ctx.send(embed=em)
 
         def check(msg):
@@ -905,7 +905,7 @@ Average hours of work: **{hours}**"""
         ]
         result = random.choice(possible_answers)
         em = discord.Embed(title=question, description=result, colour=ctx.author.colour)
-        em.set_thumbnail(url=ctx.author.avatar.url)
+        em.set_thumbnail(url=ctx.author.display_avatar.url)
         em.timestamp = datetime.datetime.now()
         await ctx.send(embed=em)
 
