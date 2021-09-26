@@ -60,15 +60,12 @@ class GlobalEvents(commands.Cog):
             self.bot.logger.warning("[INFO] Discord fired on_ready...")
 
     @commands.Cog.listener()
-    async def on_socket_response(self, data):
-        if data["t"] != "GUILD_MEMBER_UPDATE":
-            return
-
-        user = data["d"]["user"]
+    async def on_raw_member_update(self, data):
+        user = data["user"]
         user_id = int(user["id"])
 
         # We can't know which roles they had before so just wipe the donator cache
-        if int(data["d"]["guild_id"]) == self.bot.config.game.support_server_id:
+        if int(data["guild_id"]) == self.bot.config.game.support_server_id:
             await self.bot.clear_donator_cache(user_id)
 
     @commands.Cog.listener()
