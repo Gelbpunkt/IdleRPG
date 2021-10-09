@@ -8,17 +8,21 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-06-02 22:07+0200\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: Automatically generated\n"
-"Language-Team: none\n"
+"PO-Revision-Date: 2021-09-11 08:17+0000\n"
+"Last-Translator: Omar Qataberi <ofo978@gmail.com>\n"
+"Language-Team: Arabic <http://translate.travitia.xyz/projects/idlerpg/bot/ar/"
+">\n"
 "Language: ar\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=6; plural=n==0 ? 0 : n==1 ? 1 : n==2 ? 2 : n%100>=3 "
+"&& n%100<=10 ? 3 : n%100>=11 ? 4 : 5;\n"
+"X-Generator: Weblate 4.6.2\n"
 
 #: cogs/tournament/__init__.py:43
 msgid "Start a new tournament"
-msgstr ""
+msgstr "إبدأ مسابقة جديدة"
 
 #: cogs/tournament/__init__.py:47
 #, python-brace-format
@@ -43,6 +47,22 @@ msgid ""
 "\n"
 "            (This command has a cooldown of 30 minutes.)"
 msgstr ""
+"`[جائزة]` - مبلغ المال الذي سيحصل عليه الفائز\n"
+"\n"
+"ابدأ بطولة جديدة. لدى اللاعبين 30 ثانية للانضمام عبر التفاعل.\n"
+"التسجيل بالبطولة مجاني ، فقط مضيف البطولة هو الذي يدفع الثمن.\n"
+"\n"
+"فقط أس 2 (2 ^ n) من المستخدمين يمكنهم الإنظمام. إذا كان هناك لاعبين أكثر من "
+"أقرب أس ، فسيتم تجاهل آخر اللاعبين المنظمين.\n"
+"\n"
+"سيتم تحديد الفرق بشكل عشوائي ، وسيتم تحديد المعارك نفسها مثل المعارك العادية "
+"(راجع `{prefix}help battle` للحصول على التفاصيل).\n"
+"\n"
+"ينتقل الفائز في المباراة إلى الجولة التالية ، ويتم القضاء على الخاسرين ، حتى "
+"يتبقى لاعب واحد فقط.\n"
+"تتبع البطولات في IdleRPG مبدأ الإقصاء الفردي.\n"
+"\n"
+"(هذا الأمر له فترة إنتظار مدتها 30 دقيقة.)"
 
 #: cogs/tournament/__init__.py:63 cogs/tournament/__init__.py:238
 #: cogs/battles/__init__.py:65 cogs/battles/__init__.py:202
@@ -51,7 +71,7 @@ msgstr ""
 #: cogs/game_master/__init__.py:610 cogs/transaction/__init__.py:413
 #: cogs/transaction/__init__.py:527
 msgid "You are too poor."
-msgstr ""
+msgstr "أنت أفقر من أن تستخدم هذا الأمر."
 
 #: cogs/tournament/__init__.py:93
 #, python-brace-format
@@ -59,21 +79,22 @@ msgid ""
 "{author} started a tournament! Free entries, prize is **${prize}**! React "
 "with ⚔ to join!"
 msgstr ""
+"{author} بدأ بطولة، الدخول مجاني، والسعر **${prize}**! تفاعل ب⚔ للإنظمام!"
 
 #: cogs/tournament/__init__.py:127
 #, python-brace-format
 msgid "Noone joined your tournament {author}."
-msgstr ""
+msgstr "{author} لا احد انظم لبطولتك."
 
 #: cogs/tournament/__init__.py:138
 #, python-brace-format
 msgid "{user} joined the tournament."
-msgstr ""
+msgstr "انضم {user} إلى البطولة."
 
 #: cogs/tournament/__init__.py:142 cogs/tournament/__init__.py:315
 #, python-brace-format
 msgid "You don't have a character, {user}."
-msgstr ""
+msgstr "ليس لديك شخصية ، {user}."
 
 #: cogs/tournament/__init__.py:148
 #, python-brace-format
@@ -81,29 +102,31 @@ msgid ""
 "There are **{num}** entries, due to the fact we need a playable tournament, "
 "the last **{removed}** have been removed."
 msgstr ""
+"هناك **{num}** منظمين, ولكي تكون البطولة قابلة للعب , تم إزالة أخر "
+"**{removed}** منظمين."
 
 #: cogs/tournament/__init__.py:155 cogs/tournament/__init__.py:328
 #, python-brace-format
 msgid "Tournament started with **{num}** entries."
-msgstr ""
+msgstr "بدأت البطولة ب{num} منظمين."
 
 #: cogs/tournament/__init__.py:157 cogs/tournament/__init__.py:330
 msgid "vs"
-msgstr ""
+msgstr "ضد"
 
 #: cogs/tournament/__init__.py:183 cogs/tournament/__init__.py:432
 #, python-brace-format
 msgid "Winner of this match is {winner}!"
-msgstr ""
+msgstr "الفائز في هذه المباراة هو {winner}!"
 
 #: cogs/tournament/__init__.py:187 cogs/tournament/__init__.py:436
 msgid "Round Done!"
-msgstr ""
+msgstr "إنتهت الدورة!"
 
 #: cogs/tournament/__init__.py:190
 #, python-brace-format
 msgid "Tournament ended! The winner is {winner}."
-msgstr ""
+msgstr "إنتهت البطولة والفائز هو {winner}."
 
 #: cogs/tournament/__init__.py:212
 #, python-brace-format
@@ -111,6 +134,8 @@ msgid ""
 "Tournament ended! The winner is {winner}.\n"
 "Money was given!"
 msgstr ""
+"إنتهت البطولة والفائز هو {winner}.\n"
+"تم إعطاء المكافئة!"
 
 #: cogs/tournament/__init__.py:222
 #, python-brace-format
