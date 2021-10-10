@@ -17,10 +17,8 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
 import asyncio
 
-from base64 import b64decode
 from datetime import datetime, timedelta
 from functools import partial
-from io import BytesIO
 
 import discord
 
