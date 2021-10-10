@@ -15,6 +15,8 @@ GNU Affero General Public License for more details.
 You should have received a copy of the GNU Affero General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
+import discord
+
 from asyncpg.exceptions import StringDataRightTruncationError
 from discord.ext import commands
 
@@ -373,6 +375,38 @@ class Patreon(commands.Cog):
             'UPDATE profile SET "background"=$1 WHERE "user"=$2;', bg, ctx.author.id
         )
         await ctx.send(_("Background updated!"))
+
+    @has_char()
+    @commands.command(brief=_("View your eventbackgrounds"))
+    @locale_doc
+    async def eventbackgrounds(self, ctx):
+        _(
+            """View a list of all backgrounds you have acquired from events. You can get event backgrounds from special events, for example easter or christmas.
+
+            You can use one of these backgrounds on your profile using `{prefix}eventbackground`."""
+        )
+        if not (bgs := ctx.character_data["backgrounds"]):
+            return await ctx.send(
+                _(
+                    "You do not have an eventbackground. They can be acquired on"
+                    " seasonal events."
+                )
+            )
+        pages = [
+            discord.Embed(
+                title=_("Background {number}/{total}").format(number=i, total=len(bgs)),
+                color=discord.Color.blurple(),
+            )
+            .set_image(url=url)
+            .set_footer(
+                text=_(
+                    "Use {prefix}eventbackground {number} to use this background"
+                ).format(prefix=ctx.prefix, number=i)
+            )
+            for i, url in enumerate(bgs, 1)
+        ]
+
+        await self.bot.paginator.Paginator(extras=pages).paginate(ctx)
 
 
 def setup(bot):

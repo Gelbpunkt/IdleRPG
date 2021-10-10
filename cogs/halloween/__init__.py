@@ -15,6 +15,8 @@ GNU Affero General Public License for more details.
 You should have received a copy of the GNU Affero General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
+from contextlib import suppress
+
 import discord
 
 from discord.ext import commands
@@ -73,7 +75,7 @@ class Halloween(commands.Cog):
                         " Sadly they don't have anything for you..."
                     ).format(waiting=waiting)
                 )
-            try:
+            with suppress(discord.Forbidden):
                 if random.randint(0, 1) == 1:
                     await waiting.send(
                         "The waiting was worth it: {author} rang! That's a trick or"
@@ -90,22 +92,26 @@ class Halloween(commands.Cog):
                             author=ctx.author
                         )
                     )
-            except discord.Forbidden:
-                pass
 
             if random.randint(1, 100) < 5:
-                await conn.execute(
-                    'UPDATE profile SET "backgrounds"=array_append("backgrounds", $1) WHERE "user"=$2;',
-                    "https://i.imgur.com/29i7ZJN.png",
-                    ctx.author.id,
+                backgrounds = ["https://i.imgur.com/29i7ZJN.png"]
+                background = random.choice(backgrounds)
+                current_backgrounds = await conn.fetchval(
+                    'SELECT "backgrounds" FROM profile WHERE "user"=$1;', ctx.author.id
                 )
-                await ctx.send(
-                    _(
-                        "🎃 As you step out of the door, you open your candy and plastic reveals an ancient image on top of a chocolate bar, passed along for generations. You decide to keep it in your `{prefix}eventbackground`s."
-                    ).format(
-                        prefix=ctx.prefix,
+                if background not in current_backgrounds:
+                    await conn.execute(
+                        'UPDATE profile SET "backgrounds"=array_append("backgrounds", $1) WHERE "user"=$2;',
+                        background,
+                        ctx.author.id,
                     )
-                )
+                    await ctx.send(
+                        _(
+                            "🎃 As you step out of the door, you open your candy and plastic reveals an ancient image on top of a chocolate bar, passed along for generations. You decide to keep it in your `{prefix}eventbackground`s."
+                        ).format(
+                            prefix=ctx.prefix,
+                        )
+                    )
 
     @checks.has_char()
     @commands.command(brief=_("Open a trick or treat bag"))

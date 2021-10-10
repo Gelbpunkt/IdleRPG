@@ -38,6 +38,7 @@ class Confirmation(discord.ui.View):
         text: str,
         ctx: Context,
         future: asyncio.Future,
+        user: discord.User,
         *args,
         **kwargs,
     ) -> None:
@@ -45,24 +46,13 @@ class Confirmation(discord.ui.View):
         self.text = text
         self.ctx = ctx
         self.future = future
-        self.allowed_user = ctx.author
+        self.allowed_user = user
         self.message: Optional[discord.Message] = None
 
     async def start(
         self,
-        messagable: discord.abc.Messageable,
-        user: Optional[discord.User] = None,
     ) -> None:
-        self.allowed_user = (
-            user
-            if user
-            else (
-                messagable
-                if isinstance(messagable, (discord.User, discord.Member))
-                else self.ctx.author
-            )
-        )
-        self.message = await messagable.send(
+        self.message = await self.ctx.send(
             embed=discord.Embed(
                 title=_("Confirmation"),
                 description=self.text,
@@ -129,9 +119,9 @@ class Context(commands.Context):
         user: Optional[Union[discord.User, discord.Member]] = None,
     ) -> bool:
         future: asyncio.Future[bool] = asyncio.Future()
-        await Confirmation(message, self, future, timeout=timeout).start(
-            user or self, user
-        )
+        await Confirmation(
+            message, self, future, user=user or self.author, timeout=timeout
+        ).start()
         confirmed = await future
 
         if confirmed:

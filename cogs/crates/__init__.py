@@ -76,7 +76,7 @@ class Crates(commands.Cog):
             )
 
         embed.set_footer(
-            text=_("Use {prefix} open [rarity] to open one!").format(prefix=ctx.prefix)
+            text=_("Use {prefix}open [rarity] to open one!").format(prefix=ctx.prefix)
         )
 
         await ctx.send(embed=embed)
