@@ -36,12 +36,16 @@ from utils.i18n import _, locale_doc
 class Crates(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
-        self.emotes = namedtuple("CrateEmotes", "common uncommon rare magic legendary")(
-            common="<:CrateCommon:598094865666015232>",
-            uncommon="<:CrateUncommon:598094865397579797>",
-            rare="<:CrateRare:598094865485791233>",
-            magic="<:CrateMagic:598094865611358209>",
-            legendary="<:CrateLegendary:598094865678598144>",
+        self.emotes = namedtuple(
+            "CrateEmotes", "common uncommon rare magic legendary item mystery"
+        )(
+            common="<:Common:896715561520750632>",
+            uncommon="<:Uncommon:896715561399091263>",
+            rare="<:Rare:896715561302642709>",
+            magic="<a:MagicAni:896715562078593044>",
+            legendary="<a:LegendaryAni:896715561973739530>",
+            item="<a:ItemAni:896715561550110721>",
+            mystery="<a:MysteryAni:879413330069028914>",
         )
 
     @has_char()
@@ -59,29 +63,23 @@ class Crates(commands.Cog):
 
             You can receive crates by voting for the bot using `{prefix}vote`, using `{prefix}daily` and with a small chance from `{prefix}familyevent`, if you have children."""
         )
-        await ctx.send(
-            _(
-                """\
-**{author}'s crates**
+        embed = discord.Embed(
+            title=_("Your Crates"), color=discord.Color.blurple()
+        ).set_author(name=ctx.disp, icon_url=ctx.author.display_avatar.url)
 
-{emotes.common} [common] {common}
-{emotes.uncommon} [uncommon] {uncommon}
-{emotes.rare} [rare] {rare}
-{emotes.magic} [magic] {magic}
-{emotes.legendary} [legendary] {legendary}
-
- Use `{prefix}open [rarity]` to open one!"""
-            ).format(
-                emotes=self.emotes,
-                common=ctx.character_data["crates_common"],
-                uncommon=ctx.character_data["crates_uncommon"],
-                rare=ctx.character_data["crates_rare"],
-                magic=ctx.character_data["crates_magic"],
-                legendary=ctx.character_data["crates_legendary"],
-                author=ctx.author.mention,
-                prefix=ctx.prefix,
+        for rarity in ("common", "uncommon", "rare", "magic", "legendary"):
+            amount = ctx.character_data[f"crates_{rarity}"]
+            embed.add_field(
+                name=f"{getattr(self.emotes, rarity)} {rarity.title()}",
+                value=_("{amount} crates").format(amount=amount),
+                inline=False,
             )
+
+        embed.set_footer(
+            text=_("Use {prefix} open [rarity] to open one!").format(prefix=ctx.prefix)
         )
+
+        await ctx.send(embed=embed)
 
     @commands.cooldown(1, 10, commands.BucketType.user)
     @has_char()

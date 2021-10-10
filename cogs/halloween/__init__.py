@@ -96,7 +96,7 @@ class Halloween(commands.Cog):
             if random.randint(1, 100) < 5:
                 await conn.execute(
                     'UPDATE profile SET "backgrounds"=array_append("backgrounds", $1) WHERE "user"=$2;',
-                    "https://i.imgur.com/dJqwM1H.png",
+                    "https://i.imgur.com/29i7ZJN.png",
                     ctx.author.id,
                 )
                 await ctx.send(

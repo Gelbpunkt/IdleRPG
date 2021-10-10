@@ -17,8 +17,8 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
 from __future__ import annotations
 
-from asyncio import TimeoutError
-from contextlib import suppress
+import asyncio
+
 from typing import TYPE_CHECKING, Optional, Union
 
 import discord
@@ -26,9 +26,84 @@ import discord
 from discord.ext import commands
 
 from classes.errors import NoChoice
+from utils.i18n import _
 
 if TYPE_CHECKING:
     from classes.bot import Bot
+
+
+class Confirmation(discord.ui.View):
+    def __init__(
+        self,
+        text: str,
+        ctx: Context,
+        future: asyncio.Future,
+        *args,
+        **kwargs,
+    ) -> None:
+        super().__init__(*args, **kwargs)
+        self.text = text
+        self.ctx = ctx
+        self.future = future
+        self.allowed_user = ctx.author
+        self.message: Optional[discord.Message] = None
+
+    async def start(
+        self,
+        messagable: discord.abc.Messageable,
+        user: Optional[discord.User] = None,
+    ) -> None:
+        self.allowed_user = (
+            user
+            if user
+            else (
+                messagable
+                if isinstance(messagable, (discord.User, discord.Member))
+                else self.ctx.author
+            )
+        )
+        self.message = await messagable.send(
+            embed=discord.Embed(
+                title=_("Confirmation"),
+                description=self.text,
+                colour=discord.Colour.blurple(),
+            ),
+            view=self,
+        )
+
+    def cleanup(self) -> None:
+        asyncio.create_task(self.message.delete())
+
+    async def interaction_check(self, interaction: discord.Interaction) -> bool:
+        if self.allowed_user.id == interaction.user.id:
+            return True
+        else:
+            asyncio.create_task(
+                interaction.response.send_message(
+                    _("This command was not initiated by you."), ephemeral=True
+                )
+            )
+            return False
+
+    async def on_timeout(self) -> None:
+        self.cleanup()
+        self.future.set_exception(NoChoice(_("You didn't choose anything.")))
+
+    @discord.ui.button(emoji="❌", style=discord.ButtonStyle.red, row=0)
+    async def no(
+        self, button: discord.ui.Button, interaction: discord.Interaction
+    ) -> None:
+        self.future.set_result(False)
+        self.stop()
+        self.cleanup()
+
+    @discord.ui.button(emoji="✔️", style=discord.ButtonStyle.green, row=0)
+    async def yes(
+        self, button: discord.ui.Button, interaction: discord.Interaction
+    ) -> None:
+        self.future.set_result(True)
+        self.stop()
+        self.cleanup()
 
 
 class Context(commands.Context):
@@ -52,45 +127,13 @@ class Context(commands.Context):
         message: str,
         timeout: int = 20,
         user: Optional[Union[discord.User, discord.Member]] = None,
-        emoji_no: str = "\U0000274e",
-        emoji_yes: str = "\U00002705",
     ) -> bool:
-        user = user or self.author
-        emojis = (emoji_no, emoji_yes)
-
-        if user.id == self.bot.user.id:
-            return False
-
-        msg = await self.send(
-            embed=discord.Embed(
-                title="Confirmation",
-                description=message,
-                colour=discord.Colour.blurple(),
-            )
+        future: asyncio.Future[bool] = asyncio.Future()
+        await Confirmation(message, self, future, timeout=timeout).start(
+            user or self, user
         )
-        for emoji in emojis:
-            await msg.add_reaction(emoji)
+        confirmed = await future
 
-        def check(r: discord.Reaction, u: discord.User) -> bool:
-            return u == user and str(r.emoji) in emojis and r.message.id == msg.id
-
-        async def cleanup() -> None:
-            with suppress(discord.HTTPException):
-                await msg.delete()
-
-        try:
-            reaction, _ = await self.bot.wait_for(
-                "reaction_add", check=check, timeout=timeout
-            )
-        except TimeoutError:
-            await cleanup()
-            raise NoChoice("You did not choose anything.")
-
-        # finally statement should not be used for cleanup because it will be triggered
-        # by bot shutdown/cancellation of command
-        await cleanup()
-
-        confirmed = bool(emojis.index(str(reaction.emoji)))
         if confirmed:
             return confirmed
         else:

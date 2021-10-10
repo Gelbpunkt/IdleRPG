@@ -582,7 +582,9 @@ class ChooseView(discord.ui.View):
         user: Optional[Union[discord.User]],
     ) -> None:
         self.allowed_user = (
-            messagable
+            user
+            if user
+            else messagable
             if isinstance(messagable, (discord.User, discord.Member))
             else self.ctx.author
         )
