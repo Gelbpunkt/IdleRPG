@@ -110,20 +110,14 @@ class Adventure(commands.Cog):
         ) as r:
             images = await r.json()
 
-        files = [
-            discord.File(
-                filename=f"Adventure{idx + 1}.png", fp=BytesIO(b64decode(img[22:]))
-            )
-            for idx, img in enumerate(images)
-        ]
         pages = [
-            discord.Embed().set_image(url=f"attachment://Adventure{idx + 1}.png")
-            for idx in range(len(images))
+            discord.Embed().set_image(
+                url=f"https://image-renderer.idlerpg.xyz/?image={key}"
+            )
+            for key in images
         ]
 
-        await self.bot.paginator.AdventurePaginator(embeds=pages, files=files).paginate(
-            ctx
-        )
+        await self.bot.paginator.Paginator(extras=pages).paginate(ctx)
 
     @has_char()
     @has_no_adventure()
