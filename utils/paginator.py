@@ -372,42 +372,6 @@ class NormalPaginator(ChooseLong):
         self.cleanup()
 
 
-class AdventureView(NormalPaginator):
-    def __init__(self, files: list[discord.File], *args, **kwargs) -> None:
-        super().__init__(*args, **kwargs)
-        self.files = files
-
-    async def start(
-        self, messagable: discord.abc.Messageable, user: Optional[discord.User] = None
-    ) -> None:
-        self.allowed_user = (
-            user
-            if user
-            else (
-                messagable
-                if isinstance(messagable, (discord.User, discord.Member))
-                else self.ctx.author
-            )
-        )
-        old_close = self.files[self.current].fp.close
-        self.files[self.current].fp.close = lambda: None
-        try:
-            self.message = await messagable.send(
-                embed=self.pages[self.current], file=self.files[self.current], view=self
-            )
-        finally:
-            self.files[self.current].fp.close = old_close
-
-    async def update(self) -> None:
-        self.files[self.current].reset()
-        self.stop()
-        self.cleanup()
-
-        view = AdventureView(self.files, self.ctx, self.pages)
-        view.current = self.current
-        await view.start(self.ctx)
-
-
 class ChooseShop(NormalPaginator):
     def __init__(
         self,
@@ -467,21 +431,6 @@ class ShopPaginator:
         view = ChooseShop(ids, ctx, embeds, timeout=90)
 
         await view.start(location or ctx)
-
-
-class AdventurePaginator:
-    def __init__(
-        self,
-        embeds: list[discord.Embed] = [],
-        files: list[discord.File] = [],
-    ):
-        self.embeds = embeds
-        self.files = files
-
-    async def paginate(self, ctx, location=None, user=None) -> None:
-        view = AdventureView(self.files, ctx, self.embeds, timeout=60)
-
-        await view.start(location or ctx, user=user)
 
 
 class ChoosePaginator:
