@@ -285,12 +285,12 @@ class Patreon(commands.Cog):
         async with self.bot.trusted_session.post(
             f"{self.bot.config.external.okapi_url}/api/genoverlay", json={"url": url}
         ) as req:
-            background = await req.text()
+            background = await req.read()
         headers = {
             "Authorization": f"Client-ID {self.bot.config.external.imgur_token}",
             "Content-Type": "application/json",
         }
-        data = {"image": background, "type": "base64"}
+        data = {"image": background, "type": "file"}
         async with self.bot.session.post(
             "https://api.imgur.com/3/image", json=data, headers=headers
         ) as r:
