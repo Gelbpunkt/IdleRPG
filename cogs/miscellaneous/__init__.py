@@ -34,7 +34,7 @@ import psutil
 
 from discord.ext import commands
 
-from classes.converters import DateNewerThan, ImageFormat, ImageUrl
+from classes.converters import ImageFormat, ImageUrl
 from cogs.help import chunks
 from cogs.shard_communication import next_day_cooldown
 from utils import random
@@ -456,62 +456,6 @@ Average hours of work: **{hours}**"""
         ) as req:
             json = await req.json()
         await ctx.send(f"{ctx.author.mention}, {json['response']}")
-
-    @commands.command(brief=_("Show a Garfield comic strip"))
-    @locale_doc
-    async def garfield(
-        self,
-        ctx,
-        *,
-        date: DateNewerThan(
-            datetime.date(year=1978, month=6, day=19)
-        ) = datetime.date.today(),
-    ):
-        _(
-            """`[date]` - The date on which the comic strip was released, see below for more info
-
-            Sends today's garfield comic if no date info is given.
-            Otherwise, the format is `YYYY MM DD` or `DD MM YYYY`, depending on where the year is, with the date parts being seperated with spaces.
-            For example: `2013 12 25` is the same as `25 12 2013`, both meaning December 25th 2013."""
-        )
-        await ctx.send(
-            embed=discord.Embed(color=self.bot.config.game.primary_colour).set_image(
-                url=f"https://d1ejxu6vysztl5.cloudfront.net/comics/garfield/{date.year}/{date.strftime('%Y-%m-%d')}.gif?format=png"
-            )
-        )
-
-    @commands.command(aliases=["uf"], brief=_("Shows a userfriendly comic strip"))
-    @locale_doc
-    async def userfriendly(
-        self,
-        ctx,
-        *,
-        date: DateNewerThan(
-            datetime.date(year=1997, month=11, day=17)
-        ) = datetime.date.today(),
-    ):
-        _(
-            """`[date]` - The date on which the comic strip was released, see below for more info
-
-            Sends today's userfriendly comic if no date info is given.
-            Otherwise, the format is `YYYY MM DD` or `DD MM YYYY`, depending on where the year is, with the date parts being seperated with spaces.
-            For example: `2013 12 25` is the same as `25 12 2013`, both meaning December 25th 2013."""
-        )
-        async with self.bot.session.get(
-            f"http://ars.userfriendly.org/cartoons/?id={date.strftime('%Y%m%d')}&mode=classic"
-        ) as r:
-            stuff = await r.text()
-
-        await ctx.send(
-            embed=discord.Embed(
-                color=self.bot.config.game.primary_colour,
-                url="http://userfriendly.org",
-                title=_("Taken from userfriendly.org"),
-                description=str(date),
-            ).set_image(
-                url=re.compile('<img border="0" src="([^"]+)"').search(stuff).group(1)
-            )
-        )
 
     @commands.command(brief=_("Our partnered bots"))
     @locale_doc
