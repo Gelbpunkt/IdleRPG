@@ -208,6 +208,37 @@ class Miscellaneous(commands.Cog):
                 streak=streak.decode()
             )
         )
+    @commands.command(name="8ball", brief=_("Ask the magic 8ball a question"))
+    @locale_doc
+    async def _ball(self, ctx, *, question: str):
+        _(
+            """Provides a variety of answers to all of your questions. If in doubt, ask the magic 8ball."""
+        )
+        results = [
+            _("It is certain"),
+            _("It is decidedly so"),
+            _("Without a doubt"),
+            _("Yes, definitely"),
+            _("You may rely on it"),
+            _("As I see it, yes"),
+            _("Most likely"),
+            _("Outlook good"),
+            _("Yes"),
+            _("Signs point to yes"),
+            _("Reply hazy try again"),
+            _("Ask again later"),
+            _("Better not tell you now"),
+            _("Cannot predict now"),
+            _("Concentrate and ask again"),
+            _("Don't count on it"),
+            _("My reply is no"),
+            _("My sources say no"),
+            _("Outlook not so good"),
+            _("Very doubtful"),
+        ]
+        await ctx.send(
+            _("The :8ball: says: **{result}**.").format(result=random.choice(results))
+        )
 
     @commands.command(brief=_("Show the bot's ping"))
     @locale_doc
