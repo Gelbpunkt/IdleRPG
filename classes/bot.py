@@ -118,7 +118,7 @@ class Bot(commands.AutoShardedBot):
         # This can take a while
         timeout = aiohttp.ClientTimeout(total=None)
         await self.session.get(
-            f"http://localhost:5007/?shard={shard_id}", timeout=timeout
+            f"http://localhost:5112/?shard={shard_id}", timeout=timeout
         )
 
         self.logger.info(f"Gateway queue permitted shard {shard_id}")
