@@ -23,7 +23,7 @@ import sys
 from enum import Enum
 from pathlib import Path
 from time import time
-from typing import Iterable, Optional, Tuple
+from typing import Iterable, Optional
 
 import aiohttp
 import aioredis
@@ -47,14 +47,13 @@ payload = {
 }
 
 
-async def get_gateway_info() -> Tuple[int, int]:
+async def get_gateway_info() -> int:
     async with aiohttp.ClientSession() as session, session.get(
         "https://discord.com/api/gateway/bot", headers=payload
     ) as req:
         gateway_json = await req.json()
     shard_count: int = gateway_json["shards"]
-    max_concurrency: int = gateway_json["session_start_limit"]["max_concurrency"]
-    return shard_count, max_concurrency
+    return shard_count
 
 
 async def get_app_info() -> tuple[str, int]:
@@ -251,7 +250,7 @@ class Main:
 
         asyncio.create_task(self.event_handler())
 
-        (recommended_shard_count, max_concurrency) = await get_gateway_info()
+        recommended_shard_count = await get_gateway_info()
         shard_count = recommended_shard_count + config.launcher.additional_shards
         clusters = get_cluster_list(shard_count)
         name, id = await get_app_info()
@@ -267,9 +266,6 @@ class Main:
             instance = Instance(i, shard_list, shard_count, name, main=self)
             await instance.start()
             self.instances.append(instance)
-            await asyncio.sleep(
-                5 / max_concurrency / config.launcher.shards_per_cluster
-            )
 
         try:
             await asyncio.wait([i.future for i in self.instances])
