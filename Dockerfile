@@ -1,4 +1,4 @@
-FROM docker.io/gelbpunkt/python:3.10
+FROM docker.io/gelbpunkt/python:latest
 
 LABEL maintainer="adrian@travitia.xyz" \
       description="docker image to run latest IdleRPG"
