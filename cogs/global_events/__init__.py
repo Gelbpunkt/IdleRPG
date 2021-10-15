@@ -212,6 +212,11 @@ class GlobalEvents(commands.Cog):
             except (KeyError, ValueError, TypeError) as e:
                 self.bot.logger.warning(f"{type(e).__name__}: {e}")
                 pass
+
+            # Yield back to the event loop to avoid blocking
+            # because we have a lot of reminders
+            await asyncio.sleep(0)
+
         async with self.bot.pool.acquire() as conn:
             await conn.execute(
                 'DELETE FROM reminders WHERE "id"=ANY($1);', invalid_reminders

@@ -49,7 +49,7 @@ payload = {
 
 async def get_gateway_info() -> int:
     async with aiohttp.ClientSession() as session, session.get(
-        "https://discord.com/api/gateway/bot", headers=payload
+        "http://localhost:5113/api/gateway/bot", headers=payload
     ) as req:
         gateway_json = await req.json()
     shard_count: int = gateway_json["shards"]
@@ -58,7 +58,7 @@ async def get_gateway_info() -> int:
 
 async def get_app_info() -> tuple[str, int]:
     async with aiohttp.ClientSession() as session, session.get(
-        "https://discord.com/api/oauth2/applications/@me", headers=payload
+        "http://localhost:5113/api/oauth2/applications/@me", headers=payload
     ) as req:
         response = await req.json()
     return response["name"], response["id"]
