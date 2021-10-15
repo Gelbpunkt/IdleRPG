@@ -21,11 +21,14 @@ from typing import Optional
 
 import discord
 
+from discord.enums import ButtonStyle
 from discord.ext import commands
+from discord.ui.button import Button
 
 from classes.converters import IntGreaterThan, WerewolfMode
 from utils import random
 from utils.i18n import _, locale_doc
+from utils.joins import JoinView
 from utils.werewolf import DESCRIPTIONS as ROLE_DESC
 from utils.werewolf import Game
 from utils.werewolf import Role as ROLES
@@ -127,11 +130,13 @@ class Werewolf(commands.Cog):
             and ctx.channel.id == self.bot.config.game.official_tournament_channel_id
         ):
             # TODO: Determine threshold players when wolves can kill 2 villagers per night in mass-games
-            id_ = await self.bot.start_joins()
-            url = f"https://join.idlerpg.xyz/{id_}"
+            view = JoinView(
+                Button(style=ButtonStyle.primary, label=_("Join the Werewolf game!")),
+                timeout=60 * 10,
+            )
             text = _(
                 "**{author} started a mass-game of Werewolf!**\n**{mode}** mode on"
-                " **{speed}** speed. Go to {url} to join in the next 10 minutes."
+                " **{speed}** speed. You can join in the next 10 minutes."
                 " **Minimum of {min_players} players are required.**"
             )
             try:
@@ -142,16 +147,15 @@ class Werewolf(commands.Cog):
                             author=ctx.author.mention,
                             mode=mode_emoji + mode,
                             speed=speed,
-                            url=url,
                             min_players=min_players,
                         ),
-                        url=url,
                         colour=self.bot.config.game.primary_colour,
                     )
                     .set_author(
                         name=str(ctx.author), icon_url=ctx.author.display_avatar.url
                     )
-                    .add_field(name=_("New to Werewolf?"), value=additional_text)
+                    .add_field(name=_("New to Werewolf?"), value=additional_text),
+                    view=view,
                 )
             except discord.errors.Forbidden:
                 del self.games[ctx.channel.id]
@@ -163,7 +167,8 @@ class Werewolf(commands.Cog):
                     )
                 )
             await asyncio.sleep(60 * 10)
-            players = await self.bot.get_joins(id_)
+            view.stop()
+            players = list(view.joined)
         else:
             title = _("Werewolf game!")
             text = _(

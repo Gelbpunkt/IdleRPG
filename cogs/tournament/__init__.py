@@ -24,7 +24,9 @@ from decimal import Decimal
 
 import discord
 
+from discord.enums import ButtonStyle
 from discord.ext import commands
+from discord.ui.button import Button
 
 from classes.converters import IntFromTo
 from cogs.help import chunks
@@ -32,6 +34,7 @@ from cogs.shard_communication import user_on_cooldown as user_cooldown
 from utils import random
 from utils.checks import has_char, user_has_char
 from utils.i18n import _, locale_doc
+from utils.joins import JoinView
 
 
 class Tournament(commands.Cog):
@@ -72,17 +75,20 @@ class Tournament(commands.Cog):
             self.bot.config.game.official_tournament_channel_id
             and ctx.channel.id == self.bot.config.game.official_tournament_channel_id
         ):
-            id_ = await self.bot.start_joins()
+            view = JoinView(
+                Button(style=ButtonStyle.primary, label="Join the tournament!"),
+                timeout=60 * 10,
+            )
             await ctx.send(
-                "A mass-tournament has been started. Please join at"
-                f" https://join.idlerpg.xyz/{id_} during the next 10 minutes! The"
-                f" prize is **${prize}**!"
+                "A mass-tournament has been started. The tournament starts in 10 minutes! The"
+                f" prize is **${prize}**!",
+                view=view,
             )
             await asyncio.sleep(60 * 10)
-            a_participants = await self.bot.get_joins(id_)
+            view.stop()
             participants = []
             async with self.bot.pool.acquire() as conn:
-                for u in a_participants:
+                for u in view.joined:
                     if await conn.fetchrow(
                         'SELECT * FROM profile WHERE "user"=$1;', u.id
                     ):
@@ -244,17 +250,19 @@ class Tournament(commands.Cog):
             self.bot.config.game.official_tournament_channel_id
             and ctx.channel.id == self.bot.config.game.official_tournament_channel_id
         ):
-            id_ = await self.bot.start_joins()
+            view = JoinView(
+                Button(style=ButtonStyle.primary, label="Join the tournament!"),
+                timeout=60 * 10,
+            )
             await ctx.send(
-                "A mass-raidtournament has been started. Please join at"
-                f" https://join.idlerpg.xyz/{id_} during the next 10 minutes! The"
+                "A mass-raidtournament has been started. The tournament starts in 10 minutes! The"
                 f" prize is **${prize}**!"
             )
             await asyncio.sleep(60 * 10)
-            a_participants = await self.bot.get_joins(id_)
+            view.stop()
             participants = []
             async with self.bot.pool.acquire() as conn:
-                for u in a_participants:
+                for u in view.joined:
                     if await conn.fetchrow(
                         'SELECT * FROM profile WHERE "user"=$1;', u.id
                     ):

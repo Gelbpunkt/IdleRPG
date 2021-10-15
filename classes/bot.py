@@ -19,7 +19,6 @@ import asyncio
 import datetime
 import logging
 import os
-import string
 import sys
 import traceback
 
@@ -766,22 +765,6 @@ class Bot(commands.AutoShardedBot):
         elif race == "Jikill":
             damage += 4
         return damage, armor
-
-    async def start_joins(self):
-        id_ = "".join(random.choice(string.ascii_letters) for i in range(7))
-        await self.session.get(
-            f"https://join.idlerpg.xyz/toggle/{id_}",
-            headers={"Authorization": self.config.external.raidauth},
-        )
-        return id_
-
-    async def get_joins(self, id_):
-        async with self.session.get(
-            f"https://join.idlerpg.xyz/joined/{id_}",
-            headers={"Authorization": self.config.external.raidauth},
-        ) as r:
-            j = await r.json()
-        return [u for i in j if (u := await self.get_user_global(i)) is not None]
 
     async def log_transaction(self, ctx, from_, to, subject, data, conn=None):
         """Logs a transaction."""

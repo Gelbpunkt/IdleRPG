@@ -568,7 +568,6 @@ This bot is developed by people who love to code for a good cause and improving 
 <https://git.travitia.xyz> - GitLab (Public)
 <https://idlerpg.xyz> - Bot Website
 <https://wiki.idlerpg.xyz> - IdleRPG wiki
-<https://raid.idlerpg.xyz> - Raid Website
 <https://travitia.xyz> - IdleRPG's next major upgrade
 <https://idlerpg.xyz> - Our forums
 <https://public-api.travitia.xyz> - Our public API

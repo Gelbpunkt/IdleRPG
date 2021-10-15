@@ -20,11 +20,14 @@ import copy
 
 import discord
 
+from discord.enums import ButtonStyle
 from discord.ext import commands
+from discord.ui.button import Button
 
 from cogs.help import chunks
 from utils import random
 from utils.i18n import _, locale_doc
+from utils.joins import JoinView
 from utils.misc import nice_join
 
 
@@ -302,13 +305,17 @@ class HungerGames(commands.Cog):
             return await ctx.send(_("There is already a game in here!"))
 
         if ctx.channel.id == self.bot.config.game.official_tournament_channel_id:
-            id_ = await self.bot.start_joins()
+            view = JoinView(
+                Button(style=ButtonStyle.primary, label="Join the Hunger Games!"),
+                timeout=60 * 10,
+            )
             await ctx.send(
-                f"{ctx.author.mention} started a mass-game of Hunger Games! Go to"
-                f" https://join.idlerpg.xyz/{id_} to join in the next 10 minutes."
+                f"{ctx.author.mention} started a mass-game of Hunger Games!",
+                view=view,
             )
             await asyncio.sleep(60 * 10)
-            players = await self.bot.get_joins(id_)
+            view.stop()
+            players = list(view.joined)
         else:
             players = [ctx.author]
             text = _(

@@ -23,7 +23,9 @@ from typing import Union
 
 import discord
 
+from discord.enums import ButtonStyle
 from discord.ext import commands
+from discord.ui.button import Button
 
 from classes.converters import (
     ImageFormat,
@@ -48,6 +50,7 @@ from utils.checks import (
     user_is_patron,
 )
 from utils.i18n import _, locale_doc
+from utils.joins import JoinView
 from utils.markdown import escape_markdown
 
 
@@ -1393,26 +1396,30 @@ class Guild(commands.Cog):
             'SELECT * FROM guild WHERE "id"=$1;', ctx.character_data["guild"]
         )
 
-        id_ = await self.bot.start_joins()
+        view = JoinView(
+            Button(style=ButtonStyle.primary, label=_("Join the adventure!")),
+            timeout=60 * 10,
+        )
 
         await ctx.send(
             _(
                 "{author} seeks a guild adventure for **{guild}**! Follow the link to"
                 " join! Unlimited players can join in the next 10 minutes. The minimum"
-                " of players required is 3.\nPlease go to"
-                " https://join.idlerpg.xyz/{id_} to join the guild adventure."
-            ).format(author=ctx.author.mention, guild=guild["name"], id_=id_)
+                " of players required is 3."
+            ).format(author=ctx.author.mention, guild=guild["name"]),
+            view=view,
         )
 
         difficulty = int(rpgtools.xptolevel(ctx.character_data["xp"]))
 
         await asyncio.sleep(60 * 10)
 
-        a_joined = await self.bot.get_joins(id_)
+        view.stop()
+
         joined = []
 
         async with self.bot.pool.acquire() as conn:
-            for u in a_joined:
+            for u in view.joined:
                 user = await conn.fetchrow(
                     'SELECT * FROM profile WHERE "user"=$1;', u.id
                 )

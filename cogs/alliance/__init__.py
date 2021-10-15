@@ -22,7 +22,9 @@ from typing import Union
 
 import discord
 
+from discord.enums import ButtonStyle
 from discord.ext import commands
+from discord.ui.button import Button
 
 from classes.converters import MemberWithCharacter
 from cogs.shard_communication import alliance_on_cooldown as alliance_cooldown
@@ -37,6 +39,7 @@ from utils.checks import (
     owns_no_city,
 )
 from utils.i18n import _, locale_doc
+from utils.joins import JoinView
 
 
 class Alliance(commands.Cog):
@@ -728,21 +731,25 @@ class Alliance(commands.Cog):
         attackers = []
         attacking_users = []
 
-        id_ = await self.bot.start_joins()
+        view = JoinView(
+            Button(style=ButtonStyle.primary, label=_("Join the attack!")),
+            timeout=60 * 10,
+        )
 
         await ctx.send(
             _(
                 "**{user}** wants to attack **{city}** with **{alliance_name}**'s"
-                " alliance. Head to https://join.idlerpg.xyz/{id_} to join the attack!"
-            ).format(user=ctx.author, city=city, alliance_name=alliance_name, id_=id_)
+                " alliance."
+            ).format(user=ctx.author, city=city, alliance_name=alliance_name),
+            view=view,
         )
 
         await asyncio.sleep(60 * 10)
 
-        a_users = await self.bot.get_joins(id_)
+        view.stop()
 
         async with self.bot.pool.acquire() as conn:
-            for u in a_users:
+            for u in view.joined:
                 profile = await conn.fetchrow(
                     'SELECT * FROM profile WHERE "user"=$1;', u.id
                 )

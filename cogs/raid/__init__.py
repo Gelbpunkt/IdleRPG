@@ -134,10 +134,7 @@ class Raid(commands.Cog):
             url="https://raid.travitia.xyz",
             description=(
                 f"This boss has {self.boss['hp']:,.0f} HP and has high-end loot!\nThe"
-                " evil dragon will be vulnerable in 15 Minutes\n\nUse"
-                " https://raid.idlerpg.xyz/ to join the raid!\n\nFor a quick and ugly"
-                " join [click"
-                " here](https://discord.com/oauth2/authorize?client_id=453963965521985536&scope=identify&response_type=code&redirect_uri=https://raid.idlerpg.xyz/callback)!"
+                " evil dragon will be vulnerable in 15 Minutes!"
             ),
             color=self.bot.config.game.primary_colour,
         )
@@ -155,8 +152,7 @@ class Raid(commands.Cog):
         if not self.bot.config.bot.is_beta:
             summary_channel = self.bot.get_channel(506_167_065_464_406_041)
             raid_ping = await summary_channel.send(
-                "@everyone Zerekiel spawned! 15 Minutes until he is vulnerable...\nUse"
-                " https://raid.idlerpg.xyz/ to join the raid!",
+                "@everyone Zerekiel spawned! 15 Minutes until he is vulnerable...",
                 allowed_mentions=discord.AllowedMentions.all(),
             )
             try:
@@ -197,8 +193,6 @@ class Raid(commands.Cog):
 
         async with self.bot.pool.acquire() as conn:
             for u in view.joined:
-                if not u:
-                    continue
                 if not (
                     profile := await conn.fetchrow(
                         'SELECT * FROM profile WHERE "user"=$1;', u.id
@@ -440,21 +434,19 @@ class Raid(commands.Cog):
     async def kvothespawn(self, ctx, scrael: IntGreaterThan(1)):
         """[Kvothe only] Starts a raid."""
         await self.set_raid_timer()
-        await self.bot.session.get(
-            "https://raid.idlerpg.xyz/toggle",
-            headers={"Authorization": self.bot.config.external.raidauth},
-        )
         scrael = [{"hp": random.randint(80, 100), "id": i + 1} for i in range(scrael)]
+
+        view = JoinView(
+            Button(style=ButtonStyle.primary, label="Join the raid!"), timeout=60 * 15
+        )
+
         await ctx.send(
             """
 The cthae has gathered an army of scrael. Fight for your life!
 
-Use https://raid.idlerpg.xyz/ to join the raid!
-**Only Kvothe's followers may join.**
-
-Quick and ugly: <https://discord.com/oauth2/authorize?client_id=453963965521985536&scope=identify&response_type=code&redirect_uri=https://raid.idlerpg.xyz/callback>
-""",
+**Only Kvothe's followers may join.**""",
             file=discord.File("assets/other/cthae.jpg"),
+            view=view,
         )
         if not self.bot.config.bot.is_beta:
             await asyncio.sleep(300)
@@ -475,17 +467,12 @@ Quick and ugly: <https://discord.com/oauth2/authorize?client_id=4539639655219855
             )
         else:
             await asyncio.sleep(60)
-        async with self.bot.session.get(
-            "https://raid.idlerpg.xyz/joined",
-            headers={"Authorization": self.bot.config.external.raidauth},
-        ) as r:
-            raid_raw = await r.json()
+
+        view.stop()
+
         async with self.bot.pool.acquire() as conn:
             raid = {}
-            for i in raid_raw:
-                u = await self.bot.get_user_global(i)
-                if not u:
-                    continue
+            for u in view.joined:
                 if (
                     not (
                         profile := await conn.fetchrow(
@@ -610,24 +597,25 @@ Quick and ugly: <https://discord.com/oauth2/authorize?client_id=4539639655219855
     async def edenspawn(self, ctx, hp: IntGreaterThan(0)):
         """[Eden only] Starts a raid."""
         await self.set_raid_timer()
-        await self.bot.session.get(
-            "https://raid.idlerpg.xyz/toggle",
-            headers={"Authorization": self.bot.config.external.raidauth},
-        )
         self.boss = {"hp": hp, "min_dmg": 100, "max_dmg": 500}
         await ctx.channel.set_permissions(
             ctx.guild.default_role,
             overwrite=self.read_only,
         )
+
+        view = JoinView(
+            Button(style=ButtonStyle.primary, label="Join the raid!"), timeout=60 * 15
+        )
+
         await ctx.send(
             f"""
 The guardian of the gate to the garden has awoken! To gain entry to the Garden of Sanctuary that lays behind the gate you must defeat the guardian.
 This boss has {self.boss['hp']} HP and will be vulnerable in 15 Minutes
-Use https://raid.idlerpg.xyz/ to join the raid!
+
 **Only followers of Eden may join.**
-Quick and ugly: <https://discord.com/oauth2/authorize?client_id=453963965521985536&scope=identify&response_type=code&redirect_uri=https://raid.idlerpg.xyz/callback>
 """,
             file=discord.File("assets/other/guardian.jpg"),
+            view=view,
         )
         if not self.bot.config.bot.is_beta:
             await asyncio.sleep(300)
@@ -645,21 +633,16 @@ Quick and ugly: <https://discord.com/oauth2/authorize?client_id=4539639655219855
             await asyncio.sleep(10)
         else:
             await asyncio.sleep(60)
+
+        view.stop()
+
         await ctx.send(
             "**The guardian is vulnerable! Fetching participant data... Hang on!**"
         )
 
-        async with self.bot.session.get(
-            "https://raid.idlerpg.xyz/joined",
-            headers={"Authorization": self.bot.config.external.raidauth},
-        ) as r:
-            raid_raw = await r.json()
         async with self.bot.pool.acquire() as conn:
             raid = {}
-            for i in raid_raw:
-                u = await self.bot.get_user_global(i)
-                if not u:
-                    continue
+            for u in view.joined:
                 if (
                     not (
                         profile := await conn.fetchrow(
@@ -783,27 +766,26 @@ Quick and ugly: <https://discord.com/oauth2/authorize?client_id=4539639655219855
     async def chamburrspawn(self, ctx, hp: IntGreaterThan(0)):
         """[CHamburr only] Starts a raid."""
         await self.set_raid_timer()
-        await self.bot.session.get(
-            "https://raid.idlerpg.xyz/toggle",
-            headers={"Authorization": self.bot.config.external.raidauth},
-        )
         self.boss = {"hp": hp, "min_dmg": 100, "max_dmg": 500}
         await ctx.channel.set_permissions(
             ctx.guild.default_role,
             overwrite=self.read_only,
         )
+
+        view = JoinView(
+            Button(style=ButtonStyle.primary, label="Join the raid!"), timeout=60 * 15
+        )
+
         await ctx.send(
             f"""
 *Time to eat the hamburger! No, this time, the hamburger will eat you up...*
 
 This boss has {self.boss['hp']} HP and has high-end loot!
 The hamburger will be vulnerable in 15 Minutes
-Use https://raid.idlerpg.xyz/ to join the raid!
-**Only followers of CHamburr may join.**
 
-Quick and ugly: <https://discord.com/oauth2/authorize?client_id=453963965521985536&scope=identify&response_type=code&redirect_uri=https://raid.idlerpg.xyz/callback>
-""",
+**Only followers of CHamburr may join.**""",
             file=discord.File("assets/other/hamburger.jpg"),
+            view=view,
         )
         if not self.bot.config.bot.is_beta:
             await asyncio.sleep(300)
@@ -821,21 +803,16 @@ Quick and ugly: <https://discord.com/oauth2/authorize?client_id=4539639655219855
             await asyncio.sleep(10)
         else:
             await asyncio.sleep(60)
+
+        view.stop()
+
         await ctx.send(
             "**The hamburger is vulnerable! Fetching participant data... Hang on!**"
         )
 
-        async with self.bot.session.get(
-            "https://raid.idlerpg.xyz/joined",
-            headers={"Authorization": self.bot.config.external.raidauth},
-        ) as r:
-            raid_raw = await r.json()
         async with self.bot.pool.acquire() as conn:
             raid = {}
-            for i in raid_raw:
-                u = await self.bot.get_user_global(i)
-                if not u:
-                    continue
+            for u in view.joined:
                 if (
                     not (
                         profile := await conn.fetchrow(
@@ -1022,10 +999,11 @@ Quick and ugly: <https://discord.com/oauth2/authorize?client_id=4539639655219855
     async def lyxspawn(self, ctx):
         """[Lyx only] Starts a raid."""
         await self.set_raid_timer()
-        await self.bot.session.get(
-            "https://raid.idlerpg.xyz/toggle",
-            headers={"Authorization": self.bot.config.external.raidauth},
+
+        view = JoinView(
+            Button(style=ButtonStyle.primary, label="Join the raid!"), timeout=60 * 15
         )
+
         await ctx.send(
             """
 Lyx has awoken, he challenges his followers.
@@ -1033,11 +1011,9 @@ Stare the dawn.
 Face your Ouroboros.
 Are you worthy? Can your soul handle the force of your sins?
 
-Use https://raid.idlerpg.xyz/ to join the raid!
-**Only followers of Lyx may join.**
-
-Quick and ugly: <https://discord.com/oauth2/authorize?client_id=453963965521985536&scope=identify&response_type=code&redirect_uri=https://raid.idlerpg.xyz/callback>""",
+**Only followers of Lyx may join.**""",
             file=discord.File("assets/other/lyx.png"),
+            view=view,
         )
         if not self.bot.config.bot.is_beta:
             await asyncio.sleep(300)
@@ -1054,22 +1030,16 @@ Quick and ugly: <https://discord.com/oauth2/authorize?client_id=4539639655219855
             await ctx.send("**Lyx and his Ouroboros will be visible in 10 seconds**")
         else:
             await asyncio.sleep(60)
+
+        view.stop()
+
         await ctx.send(
             "**Lyx and his Ouroboros are visible! Fetch participant data... Hang on!**"
         )
 
-        async with self.bot.session.get(
-            "https://raid.idlerpg.xyz/joined",
-            headers={"Authorization": self.bot.config.external.raidauth},
-        ) as r:
-            raid_raw = await r.json()
-
         async with self.bot.pool.acquire() as conn:
             raid = []
-            for i in raid_raw:
-                u = await self.bot.get_user_global(i)
-                if not u:
-                    continue
+            for u in view.joined:
                 if (
                     not (
                         profile := await conn.fetchrow(
@@ -1193,12 +1163,13 @@ Quick and ugly: <https://discord.com/oauth2/authorize?client_id=4539639655219855
     async def monoxspawn(self, ctx):
         """[Monox only] Starts a raid."""
         await self.set_raid_timer()
-        await self.bot.session.get(
-            "https://raid.idlerpg.xyz/toggle",
-            headers={"Authorization": self.bot.config.external.raidauth},
-        )
 
         boss_hp = random.randint(500, 1000)
+
+        view = JoinView(
+            Button(style=ButtonStyle.primary, label="Join the raid!"), timeout=60 * 15
+        )
+
         em = discord.Embed(
             title="Raid the Cheese Facility",
             description=f"""
@@ -1209,14 +1180,11 @@ Thankfully, Monox has given all of us critical sausages to attack with (don't me
 
 Mensing has {boss_hp} HP and will be vulnerable in 15 Minutes
 
-Use https://raid.idlerpg.xyz/ to join the raid!
-**Only followers of Monox may join.**
-
-Click [here](https://discord.com/oauth2/authorize?client_id=453963965521985536&scope=identify&response_type=code&redirect_uri=https://raid.idlerpg.xyz/callback) for a quick and ugly join""",
+**Only followers of Monox may join.**""",
             color=0xFFB900,
         )
         em.set_image(url=f"{self.bot.BASE_URL}/image/matmen.png")
-        await ctx.send(embed=em)
+        await ctx.send(embed=em, view=view)
 
         if not self.bot.config.bot.is_beta:
             await asyncio.sleep(300)
@@ -1234,21 +1202,16 @@ Click [here](https://discord.com/oauth2/authorize?client_id=453963965521985536&s
             await asyncio.sleep(10)
         else:
             await asyncio.sleep(60)
+
+        view.stop()
+
         await ctx.send(
             "**The raid on the facility started! Fetching participant data... Hang on!**"
         )
 
-        async with self.bot.session.get(
-            "https://raid.idlerpg.xyz/joined",
-            headers={"Authorization": self.bot.config.external.raidauth},
-        ) as r:
-            raid_raw = await r.json()
         async with self.bot.pool.acquire() as conn:
             raid = {}
-            for i in raid_raw:
-                u = await self.bot.get_user_global(i)
-                if not u:
-                    continue
+            for u in view.joined:
                 if (
                     not (
                         profile := await conn.fetchrow(
@@ -1384,11 +1347,12 @@ Click [here](https://discord.com/oauth2/authorize?client_id=453963965521985536&s
     async def kirbycultspawn(self, ctx, hp: IntGreaterThan(0)):
         """[Kirby only] Starts a raid."""
         await self.set_raid_timer()
-        await self.bot.session.get(
-            "https://raid.idlerpg.xyz/toggle",
-            headers={"Authorization": self.bot.config.external.raidauth},
-        )
         self.boss = {"hp": hp, "min_dmg": 200, "max_dmg": 300}
+
+        view = JoinView(
+            Button(style=ButtonStyle.primary, label="Join the raid!"), timeout=60 * 15
+        )
+
         em = discord.Embed(
             title="Dark Mind attacks Dream Land",
             description=f"""
@@ -1396,14 +1360,11 @@ Click [here](https://discord.com/oauth2/authorize?client_id=453963965521985536&s
 
 This boss has {self.boss['hp']} HP and will be vulnerable in 15 Minutes
 
-Use https://raid.idlerpg.xyz/ to join the raid!
-**Only followers of Kirby may join.**
-
-Click [here](https://discord.com/oauth2/authorize?client_id=453963965521985536&scope=identify&response_type=code&redirect_uri=https://raid.idlerpg.xyz/callback) for a quick and ugly join""",
+**Only followers of Kirby may join.**""",
             color=0xFFB900,
         )
         em.set_image(url=f"{self.bot.BASE_URL}/image/dark_mind.png")
-        await ctx.send(embed=em)
+        await ctx.send(embed=em, view=view)
 
         if not self.bot.config.bot.is_beta:
             await asyncio.sleep(300)
@@ -1421,21 +1382,16 @@ Click [here](https://discord.com/oauth2/authorize?client_id=453963965521985536&s
             await asyncio.sleep(10)
         else:
             await asyncio.sleep(60)
+
+        view.stop()
+
         await ctx.send(
             "**The attack on Dream Land started! Fetching participant data... Hang on!**"
         )
 
-        async with self.bot.session.get(
-            "https://raid.idlerpg.xyz/joined",
-            headers={"Authorization": self.bot.config.external.raidauth},
-        ) as r:
-            raid_raw = await r.json()
         async with self.bot.pool.acquire() as conn:
             raid = {}
-            for i in raid_raw:
-                u = await self.bot.get_user_global(i)
-                if not u:
-                    continue
+            for u in view.joined:
                 if (
                     not (
                         profile := await conn.fetchrow(
@@ -1609,15 +1565,16 @@ Click [here](https://discord.com/oauth2/authorize?client_id=453963965521985536&s
     async def jesusspawn(self, ctx, hp: IntGreaterThan(0)):
         """[Jesus only] Starts a raid."""
         await self.set_raid_timer()
-        await self.bot.session.get(
-            "https://raid.idlerpg.xyz/toggle",
-            headers={"Authorization": self.bot.config.external.raidauth},
-        )
         self.boss = {"hp": hp, "min_dmg": 100, "max_dmg": 500}
         await ctx.channel.set_permissions(
             ctx.guild.default_role,
             overwrite=self.read_only,
         )
+
+        view = JoinView(
+            Button(style=ButtonStyle.primary, label="Join the raid!"), timeout=60 * 15
+        )
+
         await ctx.send(
             f"""
 **Atheistus the Tormentor has returned to earth to punish humanity for their belief.**
@@ -1625,13 +1582,11 @@ Click [here](https://discord.com/oauth2/authorize?client_id=453963965521985536&s
 This boss has {self.boss['hp']} HP and has high-end loot!
 Atheistus will be vulnerable in 15 Minutes
 
-Use https://raid.idlerpg.xyz/ to join the raid!
-**Only followers of Jesus may join.**
-
-Quick and ugly: <https://discord.com/oauth2/authorize?client_id=453963965521985536&scope=identify&response_type=code&redirect_uri=https://raid.idlerpg.xyz/callback>
-""",
+**Only followers of Jesus may join.**""",
             file=discord.File("assets/other/atheistus.jpg"),
+            view=view,
         )
+
         if not self.bot.config.bot.is_beta:
             await asyncio.sleep(300)
             await ctx.send("**Atheistus will be vulnerable in 10 minutes**")
@@ -1648,21 +1603,16 @@ Quick and ugly: <https://discord.com/oauth2/authorize?client_id=4539639655219855
             await asyncio.sleep(10)
         else:
             await asyncio.sleep(60)
+
+        view.stop()
+
         await ctx.send(
             "**Atheistus is vulnerable! Fetching participant data... Hang on!**"
         )
 
-        async with self.bot.session.get(
-            "https://raid.idlerpg.xyz/joined",
-            headers={"Authorization": self.bot.config.external.raidauth},
-        ) as r:
-            raid_raw = await r.json()
         async with self.bot.pool.acquire() as conn:
             raid = {}
-            for i in raid_raw:
-                u = await self.bot.get_user_global(i)
-                if not u:
-                    continue
+            for u in view.joined:
                 if (
                     not (
                         profile := await conn.fetchrow(
