@@ -23,7 +23,9 @@ from decimal import Decimal
 
 import discord
 
+from discord.enums import ButtonStyle
 from discord.ext import commands
+from discord.ui.button import Button
 
 from classes.classes import Raider
 from classes.classes import from_string as class_from_string
@@ -32,6 +34,7 @@ from cogs.shard_communication import user_on_cooldown as user_cooldown
 from utils import random
 from utils.checks import AlreadyRaiding, has_char, is_gm, is_god
 from utils.i18n import _, locale_doc
+from utils.joins import JoinView
 
 
 def raid_channel():
@@ -119,10 +122,6 @@ class Raid(commands.Cog):
     async def spawn(self, ctx, hp: IntGreaterThan(0)):
         """[Bot Admin only] Starts a raid."""
         await self.set_raid_timer()
-        await self.bot.session.get(
-            "https://raid.idlerpg.xyz/toggle",
-            headers={"Authorization": self.bot.config.external.raidauth},
-        )
         self.boss = {"hp": hp, "initial_hp": hp, "min_dmg": 100, "max_dmg": 500}
         await ctx.channel.set_permissions(
             ctx.guild.default_role,
@@ -145,7 +144,12 @@ class Raid(commands.Cog):
         em.set_image(url="attachment://dragon.jpg")
         em.set_thumbnail(url=ctx.author.display_avatar.url)
 
-        spawnmsg = await ctx.send(embed=em, file=fi)
+        view = JoinView(
+            Button(style=ButtonStyle.primary, label="Join the raid!"), timeout=60 * 15
+        )
+
+        spawnmsg = await ctx.send(embed=em, file=fi, view=view)
+
         self.boss.update(message=spawnmsg.id)
 
         if not self.bot.config.bot.is_beta:
@@ -182,19 +186,17 @@ class Raid(commands.Cog):
             await asyncio.sleep(10)
         else:
             await asyncio.sleep(60)
+
+        view.stop()
+
         await ctx.send(
             "**The dragon is vulnerable! Fetching participant data... Hang on!**"
         )
 
-        async with self.bot.session.get(
-            "https://raid.idlerpg.xyz/joined",
-            headers={"Authorization": self.bot.config.external.raidauth},
-        ) as r:
-            raid_raw = await r.json()
+        raid = {}
+
         async with self.bot.pool.acquire() as conn:
-            raid = {}
-            for i in raid_raw:
-                u = await self.bot.get_user_global(i)
+            for u in view.joined:
                 if not u:
                     continue
                 if not (
