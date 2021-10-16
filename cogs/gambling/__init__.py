@@ -19,17 +19,137 @@ import asyncio
 import os
 
 from contextlib import suppress
+from enum import Enum
+from functools import partial
 from typing import Optional
 
 import discord
 
+from discord.enums import ButtonStyle
 from discord.ext import commands
+from discord.interactions import Interaction
+from discord.ui.button import Button, button
 
 from classes.converters import CoinSide, IntFromTo, IntGreaterThan, MemberWithCharacter
 from utils import random
 from utils.checks import has_char, has_money, user_has_char
 from utils.i18n import _, locale_doc
 from utils.roulette import RouletteGame
+
+
+class BlackJackAction(Enum):
+    Hit = 0
+    Stand = 1
+    DoubleDown = 2
+    ChangeDeck = 3
+    Split = 4
+
+
+class InsuranceView(discord.ui.View):
+    def __init__(
+        self, user: discord.User, future: asyncio.Future[bool], *args, **kwargs
+    ):
+        super().__init__(*args, **kwargs)
+        self.user = user
+        self.future = future
+
+    async def interaction_check(self, interaction: Interaction) -> bool:
+        return interaction.user.id == self.user.id
+
+    @button(label="Take insurance", style=ButtonStyle.green, emoji="\U0001f4b8")
+    async def insurance(self, button: Button, interaction: Interaction) -> None:
+        self.stop()
+        self.future.set_result(True)
+
+    @button(label="Don't take insurance", style=ButtonStyle.red, emoji="\U000026a0")
+    async def no_insurance(self, button: Button, interaction: Interaction) -> None:
+        self.stop()
+        self.future.set_result(False)
+
+    async def on_timeout(self) -> None:
+        self.future.set_result(False)
+
+
+class BlackJackView(discord.ui.View):
+    def __init__(
+        self,
+        user: discord.User,
+        future: asyncio.Future[BlackJackAction],
+        *args,
+        **kwargs,
+    ) -> None:
+        self.user = user
+        self.future = future
+
+        # Buttons to show
+        self.hit = kwargs.pop("hit", False)
+        self.stand = kwargs.pop("stand", False)
+        self.double_down = kwargs.pop("double_down", False)
+        self.change_deck = kwargs.pop("change_deck", False)
+        self.split = kwargs.pop("split", False)
+
+        super().__init__(*args, **kwargs)
+
+        # Row 1 is primary actions
+        hit = Button(
+            style=ButtonStyle.primary,
+            label="Hit",
+            disabled=not self.hit,
+            emoji="\U00002934",
+            row=0,
+        )
+        stand = Button(
+            style=ButtonStyle.primary,
+            label="Stand",
+            disabled=not self.stand,
+            emoji="\U00002935",
+            row=0,
+        )
+        double_down = Button(
+            style=ButtonStyle.primary,
+            label="Double Down",
+            disabled=not self.double_down,
+            emoji="\U000023ec",
+            row=0,
+        )
+
+        # Row 2 is the two split actions
+        change_deck = Button(
+            style=ButtonStyle.secondary,
+            label="Change Deck",
+            disabled=not self.change_deck,
+            emoji="\U0001F501",
+            row=1,
+        )
+        split = Button(
+            style=ButtonStyle.secondary,
+            label="Split",
+            disabled=not self.split,
+            emoji="\U00002194",
+            row=1,
+        )
+
+        hit.callback = partial(self.handle, action=BlackJackAction.Hit)
+        stand.callback = partial(self.handle, action=BlackJackAction.Stand)
+        double_down.callback = partial(self.handle, action=BlackJackAction.DoubleDown)
+        change_deck.callback = partial(self.handle, action=BlackJackAction.ChangeDeck)
+        split.callback = partial(self.handle, action=BlackJackAction.Split)
+
+        self.add_item(hit)
+        self.add_item(stand)
+        self.add_item(double_down)
+        self.add_item(change_deck)
+        self.add_item(split)
+
+    async def interaction_check(self, interaction: Interaction) -> bool:
+        return interaction.user.id == self.user.id
+
+    async def handle(self, interaction: Interaction, action: BlackJackAction) -> None:
+        self.stop()
+        self.future.set_result(action)
+
+    async def on_timeout(self) -> None:
+        self.future.set_exception(asyncio.TimeoutError())
 
 
 class BlackJack:
@@ -219,9 +339,45 @@ class BlackJack:
     def pretty(self, hand):
         return " ".join([card[2] for card in hand])
 
-    async def send(self, additional=""):
+    async def send_insurance(
+        self,
+    ) -> bool:
         player = self.total(self.player)
         dealer = self.total(self.dealer)
+
+        text = _(
+            "The dealer has a {pretty_dealer} for a total of {dealer}\nYou have a"
+            " {pretty_player} for a total of {player}"
+        ).format(
+            pretty_dealer=self.pretty(self.dealer),
+            dealer=dealer,
+            pretty_player=self.pretty(self.player),
+            player=player,
+        )
+
+        future = asyncio.Future()
+        view = InsuranceView(self.ctx.author, future, timeout=20.0)
+
+        if not self.msg:
+            self.msg = await self.ctx.send(text, view=view)
+        else:
+            await self.msg.edit(content=text, view=view)
+
+        return await future
+
+    async def send(
+        self,
+        additional: str = "",
+        hit: bool = False,
+        stand: bool = False,
+        double_down: bool = False,
+        change_deck: bool = False,
+        split: bool = False,
+        wait_for_action: bool = True,
+    ) -> Optional[BlackJackAction]:
+        player = self.total(self.player)
+        dealer = self.total(self.dealer)
+
         text = _(
             "The dealer has a {pretty_dealer} for a total of {dealer}\nYou have a"
             " {pretty_player} for a total of {player}\n{additional}"
@@ -232,26 +388,41 @@ class BlackJack:
             player=player,
             additional=additional,
         )
-        if not self.msg:
-            self.msg = await self.ctx.send(text)
+
+        if wait_for_action:
+            future = asyncio.Future()
+            view = BlackJackView(
+                self.ctx.author,
+                future,
+                hit=hit,
+                stand=stand,
+                double_down=double_down,
+                change_deck=change_deck,
+                split=split,
+                timeout=20.0,
+            )
         else:
-            await self.msg.edit(content=text)
+            view = None
+
+        if not self.msg:
+            self.msg = await self.ctx.send(text, view=view)
+        else:
+            await self.msg.edit(content=text, view=view)
+
+        if wait_for_action:
+            return await future
 
     async def run(self):
         self.player = [self.deal()]
         self.player2 = None
         self.dealer = [self.deal()]
-        await self.send()
-        # Insurance?
-        if self.dealer[0][0] > 9 and await self.ctx.confirm(
-            _(
-                "Would you like insurance? It will cost half your bet and will get you"
-                " 2:1 back if the dealer has a blackjack. Else it is gone."
-            )
-        ):
-            self.insurance = True
+        # Prompt for insurance
+        if self.dealer[0][0] > 9:
+            self.insurance = await self.send_insurance()
+
         self.player = self.hit(self.player)
         self.dealer = self.hit(self.dealer)
+
         if self.has_bj(self.dealer):
             if self.insurance:
                 await self.player_cashback()
@@ -259,89 +430,76 @@ class BlackJack:
                     additional=_(
                         "The dealer got a blackjack. You had insurance and lost"
                         " nothing."
-                    )
+                    ),
+                    wait_for_action=False,
                 )
             else:
                 return await self.send(
                     additional=_(
                         "The dealer got a blackjack. You lost **${money}**."
-                    ).format(money=self.money)
+                    ).format(money=self.money),
+                    wait_for_action=False,
                 )
         elif self.has_bj(self.player):
             await self.player_bj_win()
             return await self.send(
                 additional=_("You got a blackjack and won **${money}**!").format(
                     money=int(self.money * 1.5)
-                )
+                ),
+                wait_for_action=False,
             )
-        else:
-            await self.send()
-        await self.msg.add_reaction("\U00002934")  # hit
-        await self.msg.add_reaction("\U00002935")  # stand
-        valid = ["\U00002934", "\U00002935"]
-        if self.ctx.character_data["money"] - self.money * 2 >= 0:
-            await self.msg.add_reaction("\U000023ec")  # double down
-            valid.append("\U000023ec")
+
+        possible_actions = {
+            "hit": True,
+            "stand": True,
+            "double_down": self.ctx.character_data["money"] - self.money * 2 >= 0,
+            "change_deck": False,
+            "split": False,
+        }
+        additional = ""
+
         while (
             self.total(self.dealer) < 22
             and self.total(self.player) < 22
             and not self.over
         ):
-            if self.twodecks and not self.doubled:  # player has split
-                await self.msg.add_reaction("\U0001F501")  # change active deck
-                valid.append("\U0001F501")
-            if self.splittable(self.player):
-                await self.msg.add_reaction("\U00002194")  # split
-                valid.append("\U00002194")
+            possible_actions["change_deck"] = self.twodecks and not self.doubled
+            possible_actions["split"] = self.splittable(self.player)
 
-            def check(reaction, user):
-                return (
-                    reaction.message.id == self.msg.id
-                    and user == self.ctx.author
-                    and str(reaction.emoji) in valid
-                )
-
+            # Prompt for an action
             try:
-                reaction, user = await self.ctx.bot.wait_for(
-                    "reaction_add", check=check, timeout=20
-                )
+                action = await self.send(additional=additional, **possible_actions)
             except asyncio.TimeoutError:
                 await self.ctx.bot.reset_cooldown(self.ctx)
                 return await self.ctx.send(
                     _("Blackjack timed out... You lost your money!")
                 )
-            try:
-                await self.msg.remove_reaction(reaction, user)
-            except discord.Forbidden:
-                pass
 
             while self.total(self.dealer) < 17:
                 self.dealer = self.hit(self.dealer)
 
-            if reaction.emoji == "\U00002934":  # hit
+            if action == BlackJackAction.Hit:
                 if self.doubled:
-                    valid.append("\U00002935")
-                    valid.remove("\U00002934")
-                    await self.msg.add_reaction("\U00002935")
-                    await self.msg.remove_reaction("\U00002934", self.ctx.bot.user)
+                    possible_actions["hit"] = False
+                    possible_actions["stand"] = True
                 self.player = self.hit(self.player)
-                await self.send()
-            elif reaction.emoji == "\U00002935":  # stand
+
+            elif action == BlackJackAction.Stand:
                 self.over = True
-            elif reaction.emoji == "\U00002194":  # split
+
+            elif action == BlackJackAction.Split:
                 self.player2, self.player = self.split(self.player)
                 self.hit(self.player)
                 self.hit(self.player2)
                 self.twodecks = True
-                await self.send(
-                    additional=_("Split current hand and switched to the second side.")
-                )
-                valid.remove("\U00002194")
-                await self.msg.remove_reaction("\U00002194", self.ctx.bot.user)
-            elif reaction.emoji == "\U0001F501":  # change active side
+                possible_actions["split"] = False
+                additional = _("Split current hand and switched to the second side.")
+
+            elif action == BlackJackAction.ChangeDeck:
                 self.player, self.player2 = self.player2, self.player
-                await self.send(additional=_("Switched to the other side."))
-            else:  # double down
+                additional = _("Switched to the other side.")
+
+            elif action == BlackJackAction.DoubleDown:
                 if not await has_money(self.ctx.bot, self.ctx.author.id, self.money):
                     return await self.ctx.send(
                         _("Invalid. You're too poor and lose the match.")
@@ -364,18 +522,13 @@ class BlackJack:
                         )
 
                 self.money *= 2
-                valid.remove("\U000023ec")
-                valid.remove("\U00002935")
-                await self.msg.remove_reaction("\U000023ec", self.ctx.bot.user)
-                await self.msg.remove_reaction("\U00002935", self.ctx.bot.user)
+                possible_actions["double_down"] = False
+                possible_actions["stand"] = False
                 if self.twodecks:
-                    valid.remove("\U0001F501")
-                    await self.msg.remove_reaction("\U0001F501", self.ctx.bot.user)
-                await self.send(
-                    additional=_(
-                        "You doubled your bid in exchange for only receiving one more"
-                        " card."
-                    )
+                    possible_actions["change_deck"] = False
+                additional = _(
+                    "You doubled your bid in exchange for only receiving one more"
+                    " card."
                 )
 
         player = self.total(self.player)
@@ -385,13 +538,15 @@ class BlackJack:
             await self.send(
                 additional=_("You busted and lost **${money}**.").format(
                     money=self.money
-                )
+                ),
+                wait_for_action=False,
             )
         elif dealer > 21:
             await self.send(
                 additional=_("Dealer busts and you won **${money}**!").format(
                     money=self.money
-                )
+                ),
+                wait_for_action=False,
             )
             await self.player_win()
         else:
@@ -400,7 +555,8 @@ class BlackJack:
                     additional=_(
                         "You have a higher score than the dealer and have won"
                         " **${money}**"
-                    ).format(money=self.money)
+                    ).format(money=self.money),
+                    wait_for_action=False,
                 )
                 await self.player_win()
             elif dealer > player:
@@ -408,14 +564,16 @@ class BlackJack:
                     additional=_(
                         "Dealer has a higher score than you and wins. You lost"
                         " **${money}**."
-                    ).format(money=self.money)
+                    ).format(money=self.money),
+                    wait_for_action=False,
                 )
             else:
                 await self.player_cashback()
                 await self.send(
                     additional=_("It's a tie, you got your **${money}** back.").format(
                         money=self.money
-                    )
+                    ),
+                    wait_for_action=False,
                 )
 
 
