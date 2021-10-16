@@ -131,7 +131,6 @@ class Raid(commands.Cog):
         fi = discord.File("assets/other/dragon.jpg")
         em = discord.Embed(
             title="Zerekiel Spawned",
-            url="https://raid.travitia.xyz",
             description=(
                 f"This boss has {self.boss['hp']:,.0f} HP and has high-end loot!\nThe"
                 " evil dragon will be vulnerable in 15 Minutes!"
