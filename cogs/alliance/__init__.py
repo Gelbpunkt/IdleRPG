@@ -733,6 +733,7 @@ class Alliance(commands.Cog):
 
         view = JoinView(
             Button(style=ButtonStyle.primary, label=_("Join the attack!")),
+            message=_("You joined the attack."),
             timeout=60 * 10,
         )
 

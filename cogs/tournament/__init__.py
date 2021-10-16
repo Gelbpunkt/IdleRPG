@@ -77,6 +77,7 @@ class Tournament(commands.Cog):
         ):
             view = JoinView(
                 Button(style=ButtonStyle.primary, label="Join the tournament!"),
+                message=_("You joined the tournament."),
                 timeout=60 * 10,
             )
             await ctx.send(
@@ -252,6 +253,7 @@ class Tournament(commands.Cog):
         ):
             view = JoinView(
                 Button(style=ButtonStyle.primary, label="Join the tournament!"),
+                message=_("You joined the tournament."),
                 timeout=60 * 10,
             )
             await ctx.send(

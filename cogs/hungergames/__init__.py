@@ -307,6 +307,7 @@ class HungerGames(commands.Cog):
         if ctx.channel.id == self.bot.config.game.official_tournament_channel_id:
             view = JoinView(
                 Button(style=ButtonStyle.primary, label="Join the Hunger Games!"),
+                message=_("You joined the Hunger Games."),
                 timeout=60 * 10,
             )
             await ctx.send(

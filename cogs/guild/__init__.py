@@ -1398,6 +1398,7 @@ class Guild(commands.Cog):
 
         view = JoinView(
             Button(style=ButtonStyle.primary, label=_("Join the adventure!")),
+            message=_("You joined the adventure."),
             timeout=60 * 10,
         )
 

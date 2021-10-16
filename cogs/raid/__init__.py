@@ -142,7 +142,9 @@ class Raid(commands.Cog):
         em.set_thumbnail(url=ctx.author.display_avatar.url)
 
         view = JoinView(
-            Button(style=ButtonStyle.primary, label="Join the raid!"), timeout=60 * 15
+            Button(style=ButtonStyle.primary, label="Join the raid!"),
+            message=_("You joined the raid."),
+            timeout=60 * 15,
         )
 
         spawnmsg = await ctx.send(embed=em, file=fi, view=view)
@@ -437,7 +439,9 @@ class Raid(commands.Cog):
         scrael = [{"hp": random.randint(80, 100), "id": i + 1} for i in range(scrael)]
 
         view = JoinView(
-            Button(style=ButtonStyle.primary, label="Join the raid!"), timeout=60 * 15
+            Button(style=ButtonStyle.primary, label="Join the raid!"),
+            message=_("You joined the raid."),
+            timeout=60 * 15,
         )
 
         await ctx.send(
@@ -604,7 +608,9 @@ The cthae has gathered an army of scrael. Fight for your life!
         )
 
         view = JoinView(
-            Button(style=ButtonStyle.primary, label="Join the raid!"), timeout=60 * 15
+            Button(style=ButtonStyle.primary, label="Join the raid!"),
+            message=_("You joined the raid."),
+            timeout=60 * 15,
         )
 
         await ctx.send(
@@ -773,7 +779,9 @@ This boss has {self.boss['hp']} HP and will be vulnerable in 15 Minutes
         )
 
         view = JoinView(
-            Button(style=ButtonStyle.primary, label="Join the raid!"), timeout=60 * 15
+            Button(style=ButtonStyle.primary, label="Join the raid!"),
+            message=_("You joined the raid."),
+            timeout=60 * 15,
         )
 
         await ctx.send(
@@ -1001,7 +1009,9 @@ The hamburger will be vulnerable in 15 Minutes
         await self.set_raid_timer()
 
         view = JoinView(
-            Button(style=ButtonStyle.primary, label="Join the raid!"), timeout=60 * 15
+            Button(style=ButtonStyle.primary, label="Join the raid!"),
+            message=_("You joined the raid."),
+            timeout=60 * 15,
         )
 
         await ctx.send(
@@ -1167,7 +1177,9 @@ Are you worthy? Can your soul handle the force of your sins?
         boss_hp = random.randint(500, 1000)
 
         view = JoinView(
-            Button(style=ButtonStyle.primary, label="Join the raid!"), timeout=60 * 15
+            Button(style=ButtonStyle.primary, label="Join the raid!"),
+            message=_("You joined the raid."),
+            timeout=60 * 15,
         )
 
         em = discord.Embed(
@@ -1350,7 +1362,9 @@ Mensing has {boss_hp} HP and will be vulnerable in 15 Minutes
         self.boss = {"hp": hp, "min_dmg": 200, "max_dmg": 300}
 
         view = JoinView(
-            Button(style=ButtonStyle.primary, label="Join the raid!"), timeout=60 * 15
+            Button(style=ButtonStyle.primary, label="Join the raid!"),
+            message=_("You joined the raid."),
+            timeout=60 * 15,
         )
 
         em = discord.Embed(
@@ -1572,7 +1586,9 @@ This boss has {self.boss['hp']} HP and will be vulnerable in 15 Minutes
         )
 
         view = JoinView(
-            Button(style=ButtonStyle.primary, label="Join the raid!"), timeout=60 * 15
+            Button(style=ButtonStyle.primary, label="Join the raid!"),
+            message=_("You joined the raid."),
+            timeout=60 * 15,
         )
 
         await ctx.send(

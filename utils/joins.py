@@ -16,18 +16,15 @@ from discord.interactions import Interaction
 from discord.ui import Button, View
 from discord.user import User
 
-from utils.i18n import _
-
 
 class JoinView(View):
-    def __init__(self, join_button: Button, *args, **kwargs) -> None:
+    def __init__(self, join_button: Button, message: str, *args, **kwargs) -> None:
         super().__init__(*args, **kwargs)
+        self.message = message
         join_button.callback = self.button_pressed
         self.add_item(join_button)
         self.joined: set[User] = set()
 
     async def button_pressed(self, interaction: Interaction) -> None:
         self.joined.add(interaction.user)
-        await interaction.response.send_message(
-            _("You have joined the raid."), ephemeral=True
-        )
+        await interaction.response.send_message(self.message, ephemeral=True)

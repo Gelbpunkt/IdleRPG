@@ -132,6 +132,7 @@ class Werewolf(commands.Cog):
             # TODO: Determine threshold players when wolves can kill 2 villagers per night in mass-games
             view = JoinView(
                 Button(style=ButtonStyle.primary, label=_("Join the Werewolf game!")),
+                message=_("You joined the Werewolf game."),
                 timeout=60 * 10,
             )
             text = _(
