@@ -29,21 +29,13 @@ flake8:
     - flake8
 
 build:
-  stage: Test Podman Build
+  stage: Podman Build
   script:
     - echo "https://dl-cdn.alpinelinux.org/alpine/edge/testing" >> /etc/apk/repositories
     - apk add podman crun tzdata
     - podman --version
     - podman build --storage-driver vfs --format docker -t gelbpunkt/idlerpg:latest .
-
-upload:
-  stage: Release
-  only:
-    - current@Kenvyra/IdleRPG
-    - tags
-  script:
-    - echo "https://dl-cdn.alpinelinux.org/alpine/edge/testing" >> /etc/apk/repositories
-    - apk add podman crun tzdata
-    - podman build --squash-all --storage-driver vfs --format docker -t gelbpunkt/idlerpg:latest .
-    - podman --storage-driver vfs login docker.io --username $DOCKERHUB_USERNAME --password $DOCKERHUB_PASSWORD
-    - podman --storage-driver vfs push gelbpunkt/idlerpg:latest docker.io/gelbpunkt/idlerpg:latest
+    - if [ "$CI_COMMIT_BRANCH" == "$CI_DEFAULT_BRANCH" ] && [ "$DOCKERHUB_USERNAME" != "" ] && [ "$DOCKERHUB_PASSWORD" != "" ]; then
+        podman --storage-driver vfs login docker.io --username $DOCKERHUB_USERNAME --password $DOCKERHUB_PASSWORD &&
+        podman --storage-driver vfs push gelbpunkt/idlerpg:latest docker.io/gelbpunkt/idlerpg:latest;
+      fi
