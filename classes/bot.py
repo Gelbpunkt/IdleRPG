@@ -585,23 +585,23 @@ class Bot(commands.AutoShardedBot):
             if new_level < 6:
                 column = "crates_common"
                 amount = new_level
-                reward_text = f"**{amount}** <:CrateCommon:598094865666015232>"
+                reward_text = f"**{amount}** {self.cogs['Crates'].emotes.common}"
             elif new_level < 10:
                 column = "crates_uncommon"
                 amount = round(new_level / 2)
-                reward_text = f"**{amount}** <:CrateUncommon:598094865397579797>"
+                reward_text = f"**{amount}** {self.cogs['Crates'].emotes.uncommon}"
             elif new_level < 18:
                 column = "crates_rare"
                 amount = 2
-                reward_text = "**2** <:CrateRare:598094865485791233>"
+                reward_text = f"**2** {self.cogs['Crates'].emotes.rare}"
             elif new_level < 27:
                 column = "crates_rare"
                 amount = 3
-                reward_text = "**3** <:CrateRare:598094865485791233>"
+                reward_text = f"**3** {self.cogs['Crates'].emotes.rare}"
             else:
                 column = "crates_magic"
                 amount = 1
-                reward_text = "**1** <:CrateMagic:598094865611358209>"
+                reward_text = f"**1** {self.cogs['Crates'].emotes.magic}"
             await self.log_transaction(
                 ctx,
                 from_=0,

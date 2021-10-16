@@ -305,7 +305,7 @@ class Raid(commands.Cog):
                 page.add_line(u.mention)
             page.add_line(
                 "The raid killed the boss!\nHe dropped a"
-                " <:CrateLegendary:598094865678598144> Legendary Crate!\nThe highest"
+                f" {self.bot.cogs['Crates'].emotes.legendary} Legendary Crate!\nThe highest"
                 " bid for it wins <:roosip:505447694408482846>\nSimply type how much"
                 " you bid!"
             )
@@ -349,7 +349,7 @@ class Raid(commands.Cog):
                     )
                 await msg.edit(content=f"{msg.content} Done!")
                 summary_crate = (
-                    "Emoji_here Legendary crate <:CrateLegendary:598094865678598144> "
+                    f"Emoji_here Legendary crate {self.bot.cogs['Crates'].emotes.legendary} "
                     f"sold to: **<@{highest_bid[0]}>** for **${highest_bid[1]:,.0f}**"
                 )
             else:
@@ -925,7 +925,7 @@ The hamburger will be vulnerable in 15 Minutes
                 page.add_line(u.mention)
             page.add_line(
                 "The raid killed the boss!\nHe dropped a"
-                " <:CrateLegendary:598094865678598144> Legendary Crate!\nThe highest"
+                f" {self.bot.cogs['Crates'].emotes.legendary} Legendary Crate!\nThe highest"
                 " bid for it wins <:roosip:505447694408482846>\nSimply type how much"
                 " you bid!"
             )
@@ -1722,7 +1722,7 @@ Atheistus will be vulnerable in 15 Minutes
                 page.add_line(u.mention)
             page.add_line(
                 "The raid killed the boss!\nHe dropped a"
-                " <:CrateLegendary:598094865678598144> Legendary Crate!\nThe highest"
+                f" {self.bot.cogs['Crates'].emotes.legendary} Legendary Crate!\nThe highest"
                 " bid for it wins <:roosip:505447694408482846>\nSimply type how much"
                 " you bid!"
             )
