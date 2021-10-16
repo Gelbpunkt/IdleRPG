@@ -314,8 +314,10 @@ class BlackJack:
                 await self.msg.remove_reaction(reaction, user)
             except discord.Forbidden:
                 pass
+
             while self.total(self.dealer) < 17:
                 self.dealer = self.hit(self.dealer)
+
             if reaction.emoji == "\U00002934":  # hit
                 if self.doubled:
                     valid.append("\U00002935")
@@ -376,10 +378,6 @@ class BlackJack:
                     )
                 )
 
-        try:
-            await self.msg.clear_reactions()
-        except discord.Forbidden:
-            pass
         player = self.total(self.player)
         dealer = self.total(self.dealer)
 

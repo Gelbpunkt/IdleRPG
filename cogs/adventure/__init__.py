@@ -278,15 +278,12 @@ class Adventure(commands.Cog):
         async def wait_for_move():
             possible = free(player_pos())
             needed = [direction_emojis[direction] for direction in possible]
-            try:
-                await msg.clear_reactions()
-            except discord.Forbidden:
-                for r in msg.reactions:
-                    if str(r.emoji) not in needed:
-                        await msg.remove_reaction(r, ctx.guild.me)
-                for r in needed:
-                    if r not in [str(r.emoji) for r in msg.reactions]:
-                        await msg.add_reaction(r)
+            for r in msg.reactions:
+                if str(r.emoji) not in needed:
+                    await msg.remove_reaction(r, ctx.guild.me)
+            for r in needed:
+                if r not in [str(r.emoji) for r in msg.reactions]:
+                    await msg.add_reaction(r)
             else:
                 for direction in possible:
                     await msg.add_reaction(direction_emojis[direction])
@@ -384,7 +381,6 @@ class Adventure(commands.Cog):
                 status1 = _("The Fight started")
                 status2 = ""
 
-                await msg.clear_reactions()
                 for emoji in emojis:
                     await msg.add_reaction(emoji)
 
