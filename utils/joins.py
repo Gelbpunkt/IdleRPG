@@ -16,6 +16,8 @@ from discord.interactions import Interaction
 from discord.ui import Button, View
 from discord.user import User
 
+from utils.i18n import _
+
 
 class JoinView(View):
     def __init__(self, join_button: Button, message: str, *args, **kwargs) -> None:
@@ -26,5 +28,10 @@ class JoinView(View):
         self.joined: set[User] = set()
 
     async def button_pressed(self, interaction: Interaction) -> None:
-        self.joined.add(interaction.user)
-        await interaction.response.send_message(self.message, ephemeral=True)
+        if interaction.user not in self.joined:
+            self.joined.add(interaction.user)
+            await interaction.response.send_message(self.message, ephemeral=True)
+        else:
+            await interaction.response.send_message(
+                _("You already joined."), ephemeral=True
+            )

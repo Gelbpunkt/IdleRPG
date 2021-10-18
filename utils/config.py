@@ -51,6 +51,7 @@ class DonatorRole:
 
 class ExternalSection:
     __slots__ = {
+        "patreon_token",
         "imgur_token",
         "traviapi",
         "base_url",
@@ -61,6 +62,7 @@ class ExternalSection:
     }
 
     def __init__(self, data: dict[str, Any]) -> None:
+        self.patreon_token = data.get("patreon_token", None)
         self.imgur_token = data.get("imgur_token", None)
         self.traviapi = data.get("traviapi", None)
         self.base_url = data.get("base_url", "https://idlerpg.xyz")

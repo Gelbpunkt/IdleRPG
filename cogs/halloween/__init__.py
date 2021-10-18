@@ -94,12 +94,15 @@ class Halloween(commands.Cog):
                     )
 
             if random.randint(1, 100) < 5:
-                backgrounds = ["https://i.imgur.com/29i7ZJN.png"]
+                backgrounds = [
+                    "https://i.imgur.com/29i7ZJN.png",
+                    "https://i.imgur.com/hzn0zVV.png",
+                ]
                 background = random.choice(backgrounds)
                 current_backgrounds = await conn.fetchval(
                     'SELECT "backgrounds" FROM profile WHERE "user"=$1;', ctx.author.id
                 )
-                if background not in current_backgrounds:
+                if current_backgrounds is None or background not in current_backgrounds:
                     await conn.execute(
                         'UPDATE profile SET "backgrounds"=array_append("backgrounds", $1) WHERE "user"=$2;',
                         background,
@@ -107,7 +110,7 @@ class Halloween(commands.Cog):
                     )
                     await ctx.send(
                         _(
-                            "🎃 As you step out of the door, you open your candy and plastic reveals an ancient image on top of a chocolate bar, passed along for generations. You decide to keep it in your `{prefix}eventbackground`s."
+                            "🎃 As you step out of the door, you open your candy and plastic reveals an ancient image on top of a chocolate bar, passed along for generations. You decide to keep it in your `{prefix}eventbackgrounds`."
                         ).format(
                             prefix=ctx.prefix,
                         )

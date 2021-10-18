@@ -15,6 +15,8 @@ GNU Affero General Public License for more details.
 You should have received a copy of the GNU Affero General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
+import asyncio
+
 import discord
 
 from asyncpg.exceptions import StringDataRightTruncationError
@@ -30,6 +32,80 @@ from utils.i18n import _, locale_doc
 class Patreon(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
+        self.ruby_or_above = []
+
+        if self.bot.config.external.patreon_token:
+            asyncio.create_task(self.update_ruby_or_above())
+
+    async def update_ruby_or_above(self) -> None:
+        await self.bot.wait_until_ready()
+
+        if not self.bot.get_guild(self.bot.config.game.support_server_id):
+            return
+
+        headers = {"Authorization": f"Bearer {self.bot.config.external.patreon_token}"}
+        params = {
+            "include": "user",
+            "fields[member]": "lifetime_support_cents,patron_status,pledge_relationship_start,currently_entitled_amount_cents",
+            "fields[user]": "social_connections",
+        }
+
+        async with self.bot.session.get(
+            "https://www.patreon.com/api/oauth2/api/current_user/campaigns",
+            headers=headers,
+        ) as resp:
+            json = await resp.json()
+            campaign_id = json["data"][0]["id"]
+
+        while not self.bot.is_closed():
+            self.bot.logger.info("Starting patreon update")
+
+            ruby_or_higher = []
+            patreon_ids = []
+
+            while True:
+                async with self.bot.session.get(
+                    f"https://www.patreon.com/api/oauth2/v2/campaigns/{campaign_id}/members",
+                    headers=headers,
+                    params=params,
+                ) as resp:
+                    json = await resp.json()
+
+                for donator in json["data"]:
+                    if donator["attributes"]["currently_entitled_amount_cents"] >= 7500:
+                        user_id = int(donator["relationships"]["user"]["data"]["id"])
+                        patreon_ids.append(user_id)
+
+                for user in json["included"]:
+                    if user.get("type") != "user":
+                        continue
+
+                    if not (attributes := user.get("attributes")):
+                        continue
+                    if not (connections := attributes.get("social_connections")):
+                        continue
+                    if not (discord := connections.get("discord")):
+                        continue
+                    discord_user_id = int(discord.get("user_id", "0"))
+                    patreon_user_id = int(user["id"])
+
+                    if patreon_user_id in patreon_ids:
+                        ruby_or_higher.append(discord_user_id)
+
+                pagination_data = json["meta"]["pagination"]
+                if not pagination_data.get("cursors"):
+                    break
+                next_cursor_id = pagination_data["cursors"]["next"]
+                params["page[cursor]"] = next_cursor_id
+
+            self.ruby_or_above = ruby_or_higher
+
+            self.bot.logger.info(
+                f"Done with patreon update, found {len(self.ruby_or_above)} ruby or diamond donators"
+            )
+
+            # Run once per hour
+            await asyncio.sleep(60 * 60)
 
     @has_char()
     @commands.command(brief=_("Reset a modified item"))

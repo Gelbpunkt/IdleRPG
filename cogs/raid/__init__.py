@@ -39,7 +39,7 @@ from utils.joins import JoinView
 
 def raid_channel():
     def predicate(ctx):
-        return ctx.channel.id == 506_133_354_874_404_874
+        return ctx.bot.config.bot.is_beta or ctx.channel.id == 506_133_354_874_404_874
 
     return commands.check(predicate)
 
@@ -122,7 +122,16 @@ class Raid(commands.Cog):
     async def spawn(self, ctx, hp: IntGreaterThan(0)):
         """[Bot Admin only] Starts a raid."""
         await self.set_raid_timer()
+
         self.boss = {"hp": hp, "initial_hp": hp, "min_dmg": 100, "max_dmg": 500}
+        joined = []
+        joined.extend(
+            [
+                await ctx.guild.fetch_member(m)
+                for m in self.bot.cogs["Patreon"].ruby_or_above
+            ]
+        )
+
         await ctx.channel.set_permissions(
             ctx.guild.default_role,
             overwrite=self.read_only,
@@ -192,8 +201,10 @@ class Raid(commands.Cog):
 
         raid = {}
 
+        joined.extend(view.joined)
+
         async with self.bot.pool.acquire() as conn:
-            for u in view.joined:
+            for u in joined:
                 if not (
                     profile := await conn.fetchrow(
                         'SELECT * FROM profile WHERE "user"=$1;', u.id
