@@ -258,7 +258,8 @@ class Tournament(commands.Cog):
             )
             await ctx.send(
                 "A mass-raidtournament has been started. The tournament starts in 10 minutes! The"
-                f" prize is **${prize}**!"
+                f" prize is **${prize}**!",
+                view=view,
             )
             await asyncio.sleep(60 * 10)
             view.stop()
