@@ -18,6 +18,8 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 from typing import Any
 
 from aiohttp.client import ClientSession, _RequestContextManager
+from multidict import MultiDict
+from yarl import URL
 
 
 class ProxiedClientSession:
@@ -33,12 +35,31 @@ class ProxiedClientSession:
         self._session = ClientSession(*args, **kwargs)
 
     def get(self, url: str, *args: Any, **kwargs: Any) -> _RequestContextManager:
+        params = kwargs.pop("params", {})
+        if params:
+            request_url = URL(url)
+            q = MultiDict(request_url.query)
+            url2 = request_url.with_query(params)
+            q.extend(url2.query)
+            request_url = request_url.with_query(q)
+            url = str(request_url)
+
         headers = kwargs.pop("headers", {})
         headers.update(self.permanent_headers)
         headers["Requested-URI"] = url
+
         return self._session.get(self.proxy_url, headers=headers, *args, **kwargs)
 
     def post(self, url: str, *args: Any, **kwargs: Any) -> _RequestContextManager:
+        params = kwargs.pop("params", {})
+        if params:
+            request_url = URL(url)
+            q = MultiDict(request_url.query)
+            url2 = request_url.with_query(params)
+            q.extend(url2.query)
+            request_url = request_url.with_query(q)
+            url = str(request_url)
+
         headers = kwargs.pop("headers", {})
         headers.update(self.permanent_headers)
         headers["Requested-URI"] = url

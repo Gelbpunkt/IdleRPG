@@ -48,6 +48,7 @@ class Patreon(commands.Cog):
             "include": "user",
             "fields[member]": "lifetime_support_cents,patron_status,pledge_relationship_start,currently_entitled_amount_cents",
             "fields[user]": "social_connections",
+            "page[size]": 100000,
         }
 
         async with self.bot.session.get(
