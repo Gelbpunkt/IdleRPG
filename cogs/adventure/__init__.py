@@ -550,28 +550,27 @@ class Adventure(commands.Cog):
     async def activeadventure(self, ctx):
         _(
             # xgettext: no-python-format
-            """Active adventures will put you into a 15x15 randomly generated maze. You will begin in the top left corner (0,0) and your goal is to find the exit in the bottom right corner (14,14)
-            You control your character with the arrow reactions below the message.
+            """Active adventures will put you into a randomly generated maze. You will begin in the top left corner and your goal is to find the exit in the bottom right corner.
+            You control your character with the arrow buttons below the message.
 
-            You have 1000HP. The adventure ends when you find the exit or your HP drop to zero.
+            You have a fixed amount of HP based on your items. The adventure ends when you find the exit or your HP drop to zero.
             You can lose HP by getting damaged by traps or enemies.
 
             The maze contains safe spaces and treasures but also traps and enemies.
             Each space has a 10% chance of being a trap. If a space does not have a trap, it has a 10% chance of having an enemy.
             Each maze has 5 treasure chests.
 
-            Traps can damage you from 30 to 120 HP.
+            Traps can damage you from 1/10 of your total HP to up to 1/8 of your total HP.
             Enemy damage is based on your own damage. During enemy fights, you can attack (⚔️), defend (🛡️) or recover HP (❤️)
             Treasure chests can have gold up to 25 times your attack + defense.
 
             If you reach the end, you will receive a special treasure with gold up to 100 times your attack + defense.
 
-            (It is recommended to draw a map of the maze)
             (This command has a cooldown of 30 minutes)"""
         )
         if not await ctx.confirm(
             _(
-                "You are going to be in a labyrinth of size 15x15. There are enemies,"
+                "You are going to be in a labyrinth. There are enemies,"
                 " treasures and hidden traps. Reach the exit in the bottom right corner"
                 " for a huge extra bonus!\nAre you ready?\n\nTip: Use a silent channel"
                 " for this, you may want to read all the messages I will send."
@@ -581,7 +580,7 @@ class Adventure(commands.Cog):
 
         attack, defense = await self.bot.get_damage_armor_for(ctx.author)
 
-        await ActiveAdventure(ctx, int(attack), int(defense), width=15, height=15).run()
+        await ActiveAdventure(ctx, int(attack), int(defense), width=12, height=12).run()
 
     @has_char()
     @has_adventure()
