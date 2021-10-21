@@ -238,14 +238,18 @@ class ActiveAdventure:
 
             if enemy_action == ActiveAdventureAction.Recover:
                 self.enemy_hp += self.heal_hp
-                self.enemy_hp = 1000 if self.enemy_hp > 1000 else self.enemy_hp
+                self.enemy_hp = (
+                    self.original_enemy_hp
+                    if self.enemy_hp > self.original_enemy_hp
+                    else self.enemy_hp
+                )
                 status_1 = ("The Enemy healed themselves for {hp} HP").format(
                     hp=self.heal_hp
                 )
 
             if action == ActiveAdventureAction.Recover:
                 self.hp += self.heal_hp
-                self.hp = 1000 if self.hp > 1000 else self.hp
+                self.hp = self.original_hp if self.hp > self.original_hp else self.hp
                 status_2 = _("You healed yourself for {hp} HP").format(hp=self.heal_hp)
 
             if (
