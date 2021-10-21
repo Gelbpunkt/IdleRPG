@@ -19,14 +19,19 @@ import asyncio
 
 from datetime import datetime, timedelta
 from functools import partial
+from typing import Literal, Optional
 
 import discord
 
 from aioscheduler.task import Task
+from discord.enums import ButtonStyle
 from discord.ext import commands
+from discord.interactions import Interaction
+from discord.ui.button import Button
 
 from classes.classes import Ritualist
 from classes.classes import from_string as class_from_string
+from classes.context import Context
 from classes.converters import IntFromTo
 from classes.enums import DonatorRank
 from cogs.shard_communication import user_on_cooldown as user_cooldown
@@ -35,7 +40,7 @@ from utils import misc as rpgtools
 from utils import random
 from utils.checks import has_adventure, has_char, has_no_adventure
 from utils.i18n import _, locale_doc
-from utils.maze import Maze
+from utils.maze import Cell, Maze
 
 ADVENTURE_NAMES = {
     1: "Spider Cave",
@@ -69,6 +74,196 @@ ADVENTURE_NAMES = {
     29: "Meet The War God In Hell",
     30: "Divine Intervention",
 }
+
+DIRECTION = Literal["n", "e", "s", "w"]
+ALL_DIRECTIONS: set[DIRECTION] = {"n", "e", "s", "w"}
+
+
+class ActiveAdventureDirectionView(discord.ui.View):
+    def __init__(
+        self,
+        user: discord.User,
+        future: asyncio.Future[DIRECTION],
+        possible_directions: set[DIRECTION],
+        *args,
+        **kwargs,
+    ):
+        super().__init__(*args, **kwargs)
+
+        self.user = user
+        self.future = future
+
+        north = Button(
+            style=ButtonStyle.primary,
+            label=_("North"),
+            disabled="n" not in possible_directions,
+            emoji="\U00002b06",
+            row=0,
+        )
+        east = Button(
+            style=ButtonStyle.primary,
+            label=_("East"),
+            disabled="e" not in possible_directions,
+            emoji="\U000027a1",
+            row=0,
+        )
+        south = Button(
+            style=ButtonStyle.primary,
+            label=_("South"),
+            disabled="s" not in possible_directions,
+            emoji="\U00002b07",
+            row=0,
+        )
+        west = Button(
+            style=ButtonStyle.primary,
+            label=_("West"),
+            disabled="w" not in possible_directions,
+            emoji="\U00002b05",
+            row=0,
+        )
+
+        north.callback = partial(self.handle, direction="n")
+        east.callback = partial(self.handle, direction="e")
+        south.callback = partial(self.handle, direction="s")
+        west.callback = partial(self.handle, direction="w")
+
+        self.add_item(north)
+        self.add_item(east)
+        self.add_item(south)
+        self.add_item(west)
+
+    async def interaction_check(self, interaction: Interaction) -> bool:
+        return interaction.user.id == self.user.id
+
+    async def handle(self, interaction: Interaction, direction: DIRECTION) -> None:
+        self.stop()
+        self.future.set_result(direction)
+
+    async def on_timeout(self) -> None:
+        self.future.set_exception(asyncio.TimeoutError())
+
+
+class ActiveAdventure:
+    def __init__(
+        self, ctx: Context, attack: int, defense: int, width: int = 15, height: int = 15
+    ) -> None:
+        self.ctx = ctx
+
+        self.width = width
+        self.height = height
+        self.maze = Maze.generate(width=width, height=height)
+        self.player_x = 0
+        self.player_y = 0
+        self.attack = attack
+        self.defense = defense
+        self.hp = 1000
+        self.message: Optional[discord.Message] = None
+        self.status_text: Optional[str] = _("The active adventure has started.")
+
+    def move(self, direction: DIRECTION) -> None:
+        if direction == "n":
+            self.player_y -= 1
+        elif direction == "e":
+            self.player_x += 1
+        elif direction == "s":
+            self.player_y += 1
+        else:
+            self.player_x -= 1
+        self.maze.player = (self.player_x, self.player_y)
+
+    async def reward(self, treasure: bool = True) -> int:
+        val = self.attack + self.defense
+        if treasure:
+            money = random.randint(val, val * 25)
+        else:
+            # The adventure end reward
+            money = random.randint(val * 5, val * 100)
+        async with self.ctx.bot.pool.acquire() as conn:
+            await conn.execute(
+                'UPDATE profile SET "money"="money"+$1 WHERE "user"=$2;',
+                money,
+                self.ctx.author.id,
+            )
+            await self.ctx.bot.log_transaction(
+                self.ctx,
+                from_=1,
+                to=self.ctx.author.id,
+                subject="money",
+                data={"Amount": money},
+                conn=conn,
+            )
+
+        return money
+
+    async def run(self) -> None:
+        while not self.is_at_exit:
+            try:
+                move = await self.get_move()
+            except asyncio.TimeoutError:
+                return await self.message.edit(content=_("Timed out."))
+
+            # Reset status message since it'll change now
+            self.status_text = None
+
+            self.move(move)
+
+            # Handle special cases of cells
+
+            if self.cell.trap:
+                damage = random.randint(30, 120)
+                self.hp -= damage
+                self.status_text = _(
+                    "You stepped on a trap and took {damage} damage!"
+                ).format(damage=damage)
+                self.cell.trap = False
+            elif self.cell.treasure:
+                money_rewarded = await self.reward()
+                self.status_text = _(
+                    "You found a treasure with **${money}** inside!"
+                ).format(money=money_rewarded)
+                self.cell.treasure = False
+
+        money_rewarded = await self.reward(treasure=False)
+
+        await self.message.edit(
+            content=_(
+                "You have reached the exit and were rewarded **${money}** for getting"
+                " out!"
+            ).format(money=money_rewarded),
+            view=None,
+        )
+
+    async def get_move(self) -> DIRECTION:
+        explanation_text = _("`@` - You, `!` - Enemy, `*` - Treasure")
+        hp_text = _("You are on {hp} HP").format(hp=self.hp)
+
+        if self.status_text is not None:
+            text = f"{self.status_text}```\n{self.maze}\n```\n{explanation_text}\n{hp_text}"
+        else:
+            text = f"```\n{self.maze}\n```\n{explanation_text}\n{hp_text}"
+
+        possible = self.free
+        future = asyncio.Future()
+        view = ActiveAdventureDirectionView(self.ctx.author, future, possible)
+
+        if self.message:
+            await self.message.edit(content=text, view=view)
+        else:
+            self.message = await self.ctx.send(content=text, view=view)
+
+        return await future
+
+    @property
+    def free(self) -> set[DIRECTION]:
+        return ALL_DIRECTIONS - self.cell.walls
+
+    @property
+    def is_at_exit(self) -> bool:
+        return self.player_x == self.width - 1 and self.player_y == self.height - 1
+
+    @property
+    def cell(self) -> Cell:
+        return self.maze[self.player_x, self.player_y]
 
 
 class Adventure(commands.Cog):
@@ -225,263 +420,9 @@ class Adventure(commands.Cog):
         ):
             return
 
-        msg = await ctx.send(_("**Generating a maze...**"))
-
-        maze = Maze.generate(15, 15)
-        direction_emojis = {
-            "n": "\U00002b06",
-            "e": "\U000027a1",
-            "s": "\U00002b07",
-            "w": "\U00002b05",
-        }
-        direction_emojis_inverse = {val: key for key, val in direction_emojis.items()}
-        direction_names = {
-            "n": _("North"),
-            "e": _("East"),
-            "s": _("South"),
-            "w": _("West"),
-        }
-        all_directions = set(direction_names.keys())
-        x = 0
-        y = 0
-
         attack, defense = await self.bot.get_damage_armor_for(ctx.author)
 
-        attack = int(attack)
-        defense = int(defense)
-
-        hp = 1000
-
-        def free(cell):
-            return all_directions - cell.walls
-
-        def fmt_direction(direction):
-            return direction_names[direction]
-
-        def player_pos():
-            return maze[x, y]
-
-        def is_at_end():
-            return x == 14 and y == 14
-
-        def move(x, y, direction):
-            if direction == "n":
-                y = y - 1
-            elif direction == "e":
-                x = x + 1
-            elif direction == "s":
-                y = y + 1
-            elif direction == "w":
-                x = x - 1
-            return x, y
-
-        async def wait_for_move():
-            possible = free(player_pos())
-            needed = [direction_emojis[direction] for direction in possible]
-            for r in msg.reactions:
-                if str(r.emoji) not in needed:
-                    await msg.remove_reaction(r, ctx.guild.me)
-            for r in needed:
-                if r not in [str(r.emoji) for r in msg.reactions]:
-                    await msg.add_reaction(r)
-            else:
-                for direction in possible:
-                    await msg.add_reaction(direction_emojis[direction])
-
-            def check(evt):
-                return (
-                    evt.user_id == ctx.author.id
-                    and evt.message_id == msg.id
-                    and direction_emojis_inverse.get(str(evt.emoji), None) in possible
-                )
-
-            evt = await self.bot.wait_for("raw_reaction_add", check=check, timeout=30)
-
-            return direction_emojis_inverse[str(evt.emoji)]
-
-        async def update():
-            text = ""
-            pos = player_pos()
-            for direction in ("n", "e", "s", "w"):
-                side = fmt_direction(direction)
-                fake_x, fake_y = move(x, y, direction)
-                fake_cell = maze[fake_x, fake_y]
-                if direction in pos.walls:
-                    text2 = _("To the {side} is a wall.").format(side=side)
-                elif fake_cell.enemy:
-                    text2 = _("To the {side} is an enemy.").format(side=side)
-                elif fake_cell.treasure:
-                    text2 = _("To the {side} is a treasure.").format(side=side)
-                else:
-                    text2 = _("To the {side} is a floor.").format(side=side)
-                text = f"{text}\n{text2}"
-
-            text2 = _("You are on {hp} HP").format(hp=hp)
-            text = f"{text}\n\n{text2}"
-
-            await msg.edit(content=text)
-
-        async def handle_specials(hp):
-            cell = player_pos()
-            if cell.trap:
-                damage = random.randint(30, 120)
-                await ctx.send(
-                    _("You stepped on a trap and took {damage} damage!").format(
-                        damage=damage
-                    )
-                )
-                cell.trap = False  # Remove the trap
-                return hp - damage
-            elif cell.treasure:
-                val = attack + defense
-                money = random.randint(val, val * 25)
-                async with self.bot.pool.acquire() as conn:
-                    await conn.execute(
-                        'UPDATE profile SET "money"="money"+$1 WHERE "user"=$2;',
-                        money,
-                        ctx.author.id,
-                    )
-                    await self.bot.log_transaction(
-                        ctx,
-                        from_=1,
-                        to=ctx.author.id,
-                        subject="money",
-                        data={"Amount": money},
-                        conn=conn,
-                    )
-                await ctx.send(
-                    _("You found a treasure with **${money}** inside!").format(
-                        money=money
-                    )
-                )
-                cell.treasure = False
-            elif cell.enemy:
-                emojis = {
-                    "\U00002694": "attack",
-                    "\U0001f6e1": "defend",
-                    "\U00002764": "recover",
-                }
-
-                def to_bar(hp):
-                    fields = hp // 100
-                    return f"[{'▯' * fields}{'▮' * (10 - fields)}]"
-
-                def is_valid_move(evt):
-                    return (
-                        evt.message_id == msg.id
-                        and evt.user_id == ctx.author.id
-                        and str(evt.emoji) in emojis
-                    )
-
-                enemy = _("Enemy")
-                enemy_hp = 1000
-                heal_hp = round(attack * 0.25) or 1
-                min_dmg = round(attack * 0.5)
-                max_dmg = round(attack * 1.5)
-                status1 = _("The Fight started")
-                status2 = ""
-
-                for emoji in emojis:
-                    await msg.add_reaction(emoji)
-
-                while enemy_hp > 0 and hp > 0:
-                    await msg.edit(
-                        content=f"""\
-```
-{ctx.author.name}{" " * (38 - len(ctx.author.name) - len(enemy))}{enemy}
-------------++++++++++++++------------
-{to_bar(hp)}  {hp}  {enemy_hp}    {to_bar(enemy_hp)}
-
-{status1}
-{status2}
-```"""
-                    )
-
-                    evt = await self.bot.wait_for(
-                        "raw_reaction_add", check=is_valid_move, timeout=30
-                    )
-
-                    try:
-                        await msg.remove_reaction(
-                            evt.emoji, discord.Object(evt.user_id)
-                        )
-                    except discord.Forbidden:
-                        pass
-
-                    enemy_move = random.choice(["attack", "defend", "recover"])
-                    player_move = emojis[str(evt.emoji)]
-
-                    if enemy_move == "recover":
-                        enemy_hp += heal_hp
-                        enemy_hp = 1000 if enemy_hp > 1000 else enemy_hp
-                        status1 = _("The Enemy healed themselves for {hp} HP").format(
-                            hp=heal_hp
-                        )
-                    if player_move == "recover":
-                        hp += heal_hp
-                        hp = 1000 if hp > 1000 else hp
-                        status2 = _("You healed yourself for {hp} HP").format(
-                            hp=heal_hp
-                        )
-                    if (enemy_move == "attack" and player_move == "defend") or (
-                        enemy_move == "defend" and player_move == "attack"
-                    ):
-                        status1 = _("Attack blocked.")
-                        status2 = ""
-                    if enemy_move == "attack" and player_move != "defend":
-                        eff = random.randint(min_dmg, max_dmg)
-                        hp -= eff
-                        status1 = _("The Enemy hit you for {dmg} damage").format(
-                            dmg=eff
-                        )
-                    if player_move == "attack" and enemy_move != "defend":
-                        enemy_hp -= attack
-                        status2 = _("You hit the enemy for {dmg} damage").format(
-                            dmg=attack
-                        )
-
-                if enemy_hp <= 0:
-                    cell.enemy = False
-
-            return hp
-
-        while not is_at_end():
-            await update()
-            try:
-                direction = await wait_for_move()
-            except asyncio.TimeoutError:
-                return await msg.edit(content=_("Timed out."))
-            x, y = move(x, y, direction)  # Python namespacing sucks, to be honest
-            try:
-                hp = await handle_specials(hp)  # Should've used a class for this
-            except asyncio.TimeoutError:
-                return await msg.edit(content=_("Timed out."))
-            if hp <= 0:
-                return await ctx.send(_("You died."))
-
-        val = attack + defense
-        money = random.randint(val * 5, val * 100)
-        async with self.bot.pool.acquire() as conn:
-            await conn.execute(
-                'UPDATE profile SET "money"="money"+$1 WHERE "user"=$2;',
-                money,
-                ctx.author.id,
-            )
-            await self.bot.log_transaction(
-                ctx,
-                from_=1,
-                to=ctx.author.id,
-                subject="money",
-                data={"Amount": money},
-                conn=conn,
-            )
-
-        await ctx.send(
-            _(
-                "You have reached the exit and were rewarded **${money}** for getting"
-                " out!"
-            ).format(money=money)
-        )
+        await ActiveAdventure(ctx, attack, defense, width=10, height=10).run()
 
     @has_char()
     @has_adventure()

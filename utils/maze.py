@@ -15,22 +15,18 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 from utils import random
 
 N, S, W, E = ("n", "s", "w", "e")
+NOT_WALL = (" ", "@", "!", "*")
 
 
-class Cell(object):
-    """
-    Class for each individual cell. Knows only its position and which walls are
-    still standing.
-    """
-
+class Cell:
     def __init__(self, x, y, walls):
         self.x = x
         self.y = y
         self.walls = set(walls)
-        self.trap = random.choice([False] * 9 + [True])  # 10% Chance of being a trap
+        self.trap = random.randint(1, 10) == 1  # 10% Chance of being a trap
         if not self.trap:
-            self.enemy = random.choice(
-                [False] * 9 + [True]
+            self.enemy = (
+                random.randint(1, 10) == 1
             )  # If no trap, 10% Chance of an enemy here
         else:
             self.enemy = False
@@ -38,11 +34,26 @@ class Cell(object):
 
     def __repr__(self):
         # <15, 25 (es  )>
-        return "<{}, {} ({:4})>".format(self.x, self.y, "".join(sorted(self.walls)))
+        return "<{}, {} ({:4}) trap={} enemy={} treasure={}>".format(
+            self.x,
+            self.y,
+            "".join(sorted(self.walls)),
+            self.trap,
+            self.enemy,
+            self.treasure,
+        )
 
     def __contains__(self, item):
         # N in cell
         return item in self.walls
+
+    @property
+    def icon(self):
+        if self.enemy:
+            return "!"
+        elif self.treasure:
+            return "*"
+        return " "
 
     def is_full(self):
         """
@@ -77,7 +88,7 @@ class Cell(object):
         self.walls.remove(self._wall_to(other))
 
 
-class Maze(object):
+class Maze:
     """
     Maze class containing full board and maze generation algorithms.
     """
@@ -105,6 +116,7 @@ class Maze(object):
         """
         Creates a new maze with the given sizes, with all walls standing.
         """
+        self.player = (0, 0)
         self.width = width
         self.height = height
         self.cells = []
@@ -156,7 +168,10 @@ class Maze(object):
         for cell in self.cells:
             x = cell.x * 2 + 1
             y = cell.y * 2 + 1
-            str_matrix[y][x] = " "
+            if (cell.x, cell.y) != self.player:
+                str_matrix[y][x] = cell.icon
+            else:
+                str_matrix[y][x] = "@"
             if N not in cell and y > 0:
                 str_matrix[y - 1][x + 0] = " "
             if S not in cell and y + 1 < self.width:
@@ -196,7 +211,7 @@ class Maze(object):
             double_wide_matrix.append([])
             for char in line:
                 double_wide_matrix[-1].append(char)
-                double_wide_matrix[-1].append(char)
+                double_wide_matrix[-1].append(" " if char in NOT_WALL else char)
 
         # The last two chars of each line are walls, and we will need only one.
         # So we remove the last char of each line.
@@ -210,7 +225,7 @@ class Maze(object):
             This is a temporary helper function.
             """
             if 0 <= x < len(matrix[0]) and 0 <= y < len(matrix):
-                return matrix[y][x] != " "
+                return matrix[y][x] not in NOT_WALL
             else:
                 return False
 
