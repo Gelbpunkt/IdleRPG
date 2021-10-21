@@ -18,6 +18,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 import asyncio
 
 from datetime import datetime, timedelta
+from enum import Enum
 from functools import partial
 from typing import Literal, Optional
 
@@ -79,12 +80,23 @@ DIRECTION = Literal["n", "e", "s", "w"]
 ALL_DIRECTIONS: set[DIRECTION] = {"n", "e", "s", "w"}
 
 
+class ActiveAdventureAction(Enum):
+    MoveNorth = 0
+    MoveEast = 1
+    MoveSouth = 2
+    MoveWest = 3
+
+    AttackEnemy = 4
+    Defend = 5
+    Recover = 6
+
+
 class ActiveAdventureDirectionView(discord.ui.View):
     def __init__(
         self,
         user: discord.User,
-        future: asyncio.Future[DIRECTION],
-        possible_directions: set[DIRECTION],
+        future: asyncio.Future[ActiveAdventureAction],
+        possible_actions: set[ActiveAdventureAction],
         *args,
         **kwargs,
     ):
@@ -96,48 +108,78 @@ class ActiveAdventureDirectionView(discord.ui.View):
         north = Button(
             style=ButtonStyle.primary,
             label=_("North"),
-            disabled="n" not in possible_directions,
+            disabled=ActiveAdventureAction.MoveNorth not in possible_actions,
             emoji="\U00002b06",
             row=0,
         )
         east = Button(
             style=ButtonStyle.primary,
             label=_("East"),
-            disabled="e" not in possible_directions,
+            disabled=ActiveAdventureAction.MoveEast not in possible_actions,
             emoji="\U000027a1",
             row=0,
         )
         south = Button(
             style=ButtonStyle.primary,
             label=_("South"),
-            disabled="s" not in possible_directions,
+            disabled=ActiveAdventureAction.MoveSouth not in possible_actions,
             emoji="\U00002b07",
             row=0,
         )
         west = Button(
             style=ButtonStyle.primary,
             label=_("West"),
-            disabled="w" not in possible_directions,
+            disabled=ActiveAdventureAction.MoveWest not in possible_actions,
             emoji="\U00002b05",
             row=0,
         )
 
-        north.callback = partial(self.handle, direction="n")
-        east.callback = partial(self.handle, direction="e")
-        south.callback = partial(self.handle, direction="s")
-        west.callback = partial(self.handle, direction="w")
+        attack = Button(
+            style=ButtonStyle.secondary,
+            label=_("Attack"),
+            disabled=ActiveAdventureAction.AttackEnemy not in possible_actions,
+            emoji="\U00002694",
+            row=1,
+        )
+        defend = Button(
+            style=ButtonStyle.secondary,
+            label=_("Defend"),
+            disabled=ActiveAdventureAction.Defend not in possible_actions,
+            emoji="\U0001f6e1",
+            row=1,
+        )
+        recover = Button(
+            style=ButtonStyle.secondary,
+            label=_("Recover"),
+            disabled=ActiveAdventureAction.Recover not in possible_actions,
+            emoji="\U00002764",
+            row=1,
+        )
+
+        north.callback = partial(self.handle, action=ActiveAdventureAction.MoveNorth)
+        east.callback = partial(self.handle, action=ActiveAdventureAction.MoveEast)
+        south.callback = partial(self.handle, action=ActiveAdventureAction.MoveSouth)
+        west.callback = partial(self.handle, action=ActiveAdventureAction.MoveWest)
+        attack.callback = partial(self.handle, action=ActiveAdventureAction.AttackEnemy)
+        defend.callback = partial(self.handle, action=ActiveAdventureAction.Defend)
+        recover.callback = partial(self.handle, action=ActiveAdventureAction.Recover)
 
         self.add_item(north)
         self.add_item(east)
         self.add_item(south)
         self.add_item(west)
+        self.add_item(attack)
+        self.add_item(defend)
+        self.add_item(recover)
 
     async def interaction_check(self, interaction: Interaction) -> bool:
         return interaction.user.id == self.user.id
 
-    async def handle(self, interaction: Interaction, direction: DIRECTION) -> None:
+    async def handle(
+        self, interaction: Interaction, action: ActiveAdventureAction
+    ) -> None:
         self.stop()
-        self.future.set_result(direction)
+        self.future.set_result(action)
 
     async def on_timeout(self) -> None:
         self.future.set_exception(asyncio.TimeoutError())
@@ -149,6 +191,9 @@ class ActiveAdventure:
     ) -> None:
         self.ctx = ctx
 
+        self.original_hp = attack * 100
+        self.original_enemy_hp = attack * 10
+
         self.width = width
         self.height = height
         self.maze = Maze.generate(width=width, height=height)
@@ -156,20 +201,78 @@ class ActiveAdventure:
         self.player_y = 0
         self.attack = attack
         self.defense = defense
-        self.hp = 1000
+        self.hp = attack * 100
+
+        self.heal_hp = round(attack * 0.25) or 1
+        self.min_dmg = round(attack * 0.5)
+        self.max_dmg = round(attack * 1.5)
+
+        self.enemy_hp: Optional[int] = None
+
         self.message: Optional[discord.Message] = None
         self.status_text: Optional[str] = _("The active adventure has started.")
 
-    def move(self, direction: DIRECTION) -> None:
-        if direction == "n":
+    def move(self, action: ActiveAdventureAction) -> None:
+        if action == ActiveAdventureAction.MoveNorth:
             self.player_y -= 1
-        elif direction == "e":
+        elif action == ActiveAdventureAction.MoveEast:
             self.player_x += 1
-        elif direction == "s":
+        elif action == ActiveAdventureAction.MoveSouth:
             self.player_y += 1
-        else:
+        elif action == ActiveAdventureAction.MoveWest:
             self.player_x -= 1
+
         self.maze.player = (self.player_x, self.player_y)
+
+        if self.enemy_hp:
+            status_1 = None
+            status_2 = None
+
+            enemy_action = random.choice(
+                [
+                    ActiveAdventureAction.AttackEnemy,
+                    ActiveAdventureAction.Defend,
+                    ActiveAdventureAction.Recover,
+                ]
+            )
+
+            if enemy_action == ActiveAdventureAction.Recover:
+                self.enemy_hp += self.heal_hp
+                self.enemy_hp = 1000 if self.enemy_hp > 1000 else self.enemy_hp
+                status_1 = ("The Enemy healed themselves for {hp} HP").format(
+                    hp=self.heal_hp
+                )
+
+            if action == ActiveAdventureAction.Recover:
+                self.hp += self.heal_hp
+                self.hp = 1000 if self.hp > 1000 else self.hp
+                status_2 = _("You healed yourself for {hp} HP").format(hp=self.heal_hp)
+
+            if (
+                enemy_action == ActiveAdventureAction.AttackEnemy
+                and action == ActiveAdventureAction.Defend
+            ) or (
+                enemy_action == ActiveAdventureAction.Defend
+                and action == ActiveAdventureAction.AttackEnemy
+            ):
+                status_1 = _("Attack blocked.")
+            else:
+                if enemy_action == ActiveAdventureAction.AttackEnemy:
+                    eff = random.randint(self.min_dmg, self.max_dmg)
+                    self.hp -= eff
+                    status_1 = _("The Enemy hit you for {dmg} damage").format(dmg=eff)
+                if action == ActiveAdventureAction.AttackEnemy:
+                    self.enemy_hp -= self.attack
+                    status_2 = _("You hit the enemy for {dmg} damage").format(
+                        dmg=self.attack
+                    )
+
+            if status_1 and status_2:
+                self.status_text = f"{status_1}\n{status_2}"
+            elif status_1:
+                self.status_text = status_1
+            elif status_2:
+                self.status_text = status_2
 
     async def reward(self, treasure: bool = True) -> int:
         val = self.attack + self.defense
@@ -196,7 +299,7 @@ class ActiveAdventure:
         return money
 
     async def run(self) -> None:
-        while not self.is_at_exit:
+        while not self.is_at_exit and self.hp > 0:
             try:
                 move = await self.get_move()
             except asyncio.TimeoutError:
@@ -207,10 +310,15 @@ class ActiveAdventure:
 
             self.move(move)
 
+            if self.enemy_hp is not None and self.enemy_hp <= 0:
+                self.status_text = _("You defeated the enemy.")
+                self.enemy_hp = None
+                self.cell.enemy = False
+
             # Handle special cases of cells
 
             if self.cell.trap:
-                damage = random.randint(30, 120)
+                damage = random.randint(self.original_hp // 10, self.original_hp // 8)
                 self.hp -= damage
                 self.status_text = _(
                     "You stepped on a trap and took {damage} damage!"
@@ -222,6 +330,12 @@ class ActiveAdventure:
                     "You found a treasure with **${money}** inside!"
                 ).format(money=money_rewarded)
                 self.cell.treasure = False
+            elif self.cell.enemy and self.enemy_hp is None:
+                self.enemy_hp = self.original_enemy_hp
+
+        if self.hp <= 0:
+            await self.message.edit(content=_("You died."))
+            return
 
         money_rewarded = await self.reward(treasure=False)
 
@@ -233,16 +347,61 @@ class ActiveAdventure:
             view=None,
         )
 
-    async def get_move(self) -> DIRECTION:
+    @property
+    def player_hp_bar(self) -> str:
+        fields = int(self.hp / self.original_hp * 10)
+        return f"[{'▯' * fields}{'▮' * (10 - fields)}]"
+
+    @property
+    def enemy_hp_bar(self) -> str:
+        fields = int(self.enemy_hp / self.original_enemy_hp * 10)
+        return f"[{'▯' * fields}{'▮' * (10 - fields)}]"
+
+    async def get_move(self) -> ActiveAdventureAction:
         explanation_text = _("`@` - You, `!` - Enemy, `*` - Treasure")
-        hp_text = _("You are on {hp} HP").format(hp=self.hp)
 
-        if self.status_text is not None:
-            text = f"{self.status_text}```\n{self.maze}\n```\n{explanation_text}\n{hp_text}"
+        if self.enemy_hp is None:
+            hp_text = _("You are on {hp} HP").format(hp=self.hp)
+
+            if self.status_text is not None:
+                text = f"{self.status_text}```\n{self.maze}\n```\n{explanation_text}\n{hp_text}"
+            else:
+                text = f"```\n{self.maze}\n```\n{explanation_text}\n{hp_text}"
         else:
-            text = f"```\n{self.maze}\n```\n{explanation_text}\n{hp_text}"
+            enemy = _("Enemy")
+            hp = _("HP")
+            fight_status = f"""```
+{self.ctx.disp}
+{"-" * len(self.ctx.disp)}
+{self.player_hp_bar}  {self.hp} {hp}
 
-        possible = self.free
+{enemy}
+{"-" * len(enemy)}
+{self.enemy_hp_bar}  {self.enemy_hp} {hp}
+```"""
+
+            if self.status_text is not None:
+                text = f"{self.status_text}```\n{self.maze}\n```\n{explanation_text}\n{fight_status}"
+            else:
+                text = f"```\n{self.maze}\n```\n{explanation_text}\n{fight_status}"
+
+        possible = set()
+
+        if self.enemy_hp is not None:
+            possible.add(ActiveAdventureAction.AttackEnemy)
+            possible.add(ActiveAdventureAction.Defend)
+            possible.add(ActiveAdventureAction.Recover)
+        else:
+            free = self.free
+            if "n" in free:
+                possible.add(ActiveAdventureAction.MoveNorth)
+            if "e" in free:
+                possible.add(ActiveAdventureAction.MoveEast)
+            if "s" in free:
+                possible.add(ActiveAdventureAction.MoveSouth)
+            if "w" in free:
+                possible.add(ActiveAdventureAction.MoveWest)
+
         future = asyncio.Future()
         view = ActiveAdventureDirectionView(self.ctx.author, future, possible)
 
@@ -422,7 +581,7 @@ class Adventure(commands.Cog):
 
         attack, defense = await self.bot.get_damage_armor_for(ctx.author)
 
-        await ActiveAdventure(ctx, attack, defense, width=10, height=10).run()
+        await ActiveAdventure(ctx, int(attack), int(defense), width=15, height=15).run()
 
     @has_char()
     @has_adventure()
