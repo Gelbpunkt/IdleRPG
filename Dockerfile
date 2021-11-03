@@ -9,7 +9,7 @@ RUN mkdir /idlerpg && \
     adduser -h /idlerpg -s /bin/false -D -H idle && \
     chown -R idle:idle /idlerpg && \
     apk upgrade --no-cache && \
-    apk add --no-cache git libgcc
+    apk add --no-cache libgcc
 
 USER idle
 WORKDIR /idlerpg/
