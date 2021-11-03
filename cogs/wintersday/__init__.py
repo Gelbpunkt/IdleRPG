@@ -67,7 +67,7 @@ class Christmas(commands.Cog):
             return await ctx.send(_("No calendar to show!"))
         await ctx.send(
             file=discord.File(
-                f"assets/calendar/24 days of IdleRPG - {today - 1} open.jpg"
+                f"assets/calendar/24 days of IdleRPG - {today - 1} open.webp"
             )
         )
 

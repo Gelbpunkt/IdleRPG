@@ -109,7 +109,7 @@ class Raid(commands.Cog):
             edited_embed.description = re.sub(
                 r"\d+(,*\d)+ HP", f"{newhp:,.0f} HP", edited_embed.description
             )
-            edited_embed.set_image(url="attachment://dragon.jpg")
+            edited_embed.set_image(url="attachment://dragon.webp")
             await spawnmsg.edit(embed=edited_embed)
         except discord.NotFound:
             return await ctx.send("Could not edit Boss HP!")
@@ -137,7 +137,7 @@ class Raid(commands.Cog):
             overwrite=self.read_only,
         )
 
-        fi = discord.File("assets/other/dragon.jpg")
+        fi = discord.File("assets/other/dragon.webp")
         em = discord.Embed(
             title="Zerekiel Spawned",
             description=(
@@ -146,7 +146,7 @@ class Raid(commands.Cog):
             ),
             color=self.bot.config.game.primary_colour,
         )
-        em.set_image(url="attachment://dragon.jpg")
+        em.set_image(url="attachment://dragon.webp")
         em.set_thumbnail(url=ctx.author.display_avatar.url)
 
         view = JoinView(
@@ -459,7 +459,7 @@ class Raid(commands.Cog):
 The cthae has gathered an army of scrael. Fight for your life!
 
 **Only Kvothe's followers may join.**""",
-            file=discord.File("assets/other/cthae.jpg"),
+            file=discord.File("assets/other/cthae.webp"),
             view=view,
         )
         if not self.bot.config.bot.is_beta:
@@ -630,7 +630,7 @@ This boss has {self.boss['hp']} HP and will be vulnerable in 15 Minutes
 
 **Only followers of Eden may join.**
 """,
-            file=discord.File("assets/other/guardian.jpg"),
+            file=discord.File("assets/other/guardian.webp"),
             view=view,
         )
         if not self.bot.config.bot.is_beta:
@@ -802,7 +802,7 @@ This boss has {self.boss['hp']} HP and has high-end loot!
 The hamburger will be vulnerable in 15 Minutes
 
 **Only followers of CHamburr may join.**""",
-            file=discord.File("assets/other/hamburger.jpg"),
+            file=discord.File("assets/other/hamburger.webp"),
             view=view,
         )
         if not self.bot.config.bot.is_beta:
@@ -1032,7 +1032,7 @@ Face your Ouroboros.
 Are you worthy? Can your soul handle the force of your sins?
 
 **Only followers of Lyx may join.**""",
-            file=discord.File("assets/other/lyx.png"),
+            file=discord.File("assets/other/lyx.webp"),
             view=view,
         )
         if not self.bot.config.bot.is_beta:
@@ -1609,7 +1609,7 @@ This boss has {self.boss['hp']} HP and has high-end loot!
 Atheistus will be vulnerable in 15 Minutes
 
 **Only followers of Jesus may join.**""",
-            file=discord.File("assets/other/atheistus.jpg"),
+            file=discord.File("assets/other/atheistus.webp"),
             view=view,
         )
 

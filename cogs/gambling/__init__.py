@@ -891,7 +891,7 @@ This command is in an alpha-stage, which means bugs are likely to happen. Play a
     @locale_doc
     async def table(self, ctx):
         _("""Sends a picture of a French Roulette table.""")
-        await ctx.send(file=discord.File("assets/other/roulette.png"))
+        await ctx.send(file=discord.File("assets/other/roulette.webp"))
 
     @has_char()
     @commands.cooldown(1, 5, commands.BucketType.user)
