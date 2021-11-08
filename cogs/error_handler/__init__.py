@@ -41,13 +41,6 @@ from classes.converters import (
 )
 from classes.errors import NoChoice
 from classes.exceptions import GlobalCooldown
-from cogs.music import (
-    NeedsToBeInVoiceChat,
-    NeedsToBePlaying,
-    NotDJ,
-    PlayerLocked,
-    VoteDidNotPass,
-)
 from utils.i18n import _
 
 try:
@@ -242,21 +235,6 @@ class Errorhandler(commands.Cog):
                         " `{prefix}adventure`!"
                     ).format(prefix=ctx.prefix)
                 )
-            elif isinstance(error, NeedsToBeInVoiceChat):
-                await ctx.send(_("You need to be in a voice chat to use this command."))
-            elif isinstance(error, VoteDidNotPass):
-                await ctx.send(_("The vote did not pass."))
-            elif isinstance(error, NeedsToBePlaying):
-                await ctx.send(
-                    _(
-                        "You need to be playing music, for example with `{prefix}play`,"
-                        " to use this command."
-                    ).format(prefix=ctx.prefix)
-                )
-            elif isinstance(error, PlayerLocked):
-                await ctx.send(_("The DJ has locked the music player."))
-            elif isinstance(error, NotDJ):
-                await ctx.send(_("You must be the DJ to use this command."))
             elif isinstance(error, utils.checks.PetGone):
                 await ctx.send(
                     _(

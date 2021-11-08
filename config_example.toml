@@ -25,7 +25,6 @@ initial_extensions = [
     "cogs.images",
     "cogs.global_events",
     "cogs.raid",
-    "cogs.music",
     "cogs.custom",
     "cogs.gods",
     "cogs.transaction",
@@ -170,18 +169,6 @@ support_team_role = 1234567890
     trade = false
     adventure = true
     tier = 1
-
-[music]
-query_endpoint = "http://localhost:7000/search"
-resolve_endpoint = "http://localhost:7000/resolve"
-
-[[music.nodes]]
-host = "127.0.0.1"
-port = 2333
-rest_uri = "http://127.0.0.1:2333"
-password = "mypass"
-region = "frankfurt"
-identifier = "DE"
 
 [[gods]]
 name = "Hello World"

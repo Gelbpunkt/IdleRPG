@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-10-11 21:04+0200\n"
+"POT-Creation-Date: 2021-11-08 21:05+0100\n"
 "PO-Revision-Date: 2021-09-21 08:17+0000\n"
 "Last-Translator: Anonymouse Loves Vintage Cheese <vingamma01@gmail.com>\n"
 "Language-Team: Pirate <http://translate.travitia.xyz/projects/idlerpg/bot/pr/"
@@ -19,11 +19,11 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
 "X-Generator: Weblate 4.6.2\n"
 
-#: cogs/tournament/__init__.py:43
+#: cogs/tournament/__init__.py:46
 msgid "Start a new tournament"
 msgstr "Start a new tourney"
 
-#: cogs/tournament/__init__.py:47
+#: cogs/tournament/__init__.py:50
 #, python-brace-format
 msgid ""
 "`[prize]` - The amount of money the winner will get\n"
@@ -66,16 +66,20 @@ msgstr ""
 " \n"
 "            (This command has a cooldown o' 30 minutes.)"
 
-#: cogs/tournament/__init__.py:63 cogs/tournament/__init__.py:235
+#: cogs/tournament/__init__.py:66 cogs/tournament/__init__.py:242
 #: cogs/battles/__init__.py:65 cogs/battles/__init__.py:196
-#: cogs/battles/__init__.py:393 cogs/gambling/__init__.py:457
-#: cogs/gambling/__init__.py:761 cogs/profile/__init__.py:1045
+#: cogs/battles/__init__.py:393 cogs/gambling/__init__.py:613
+#: cogs/gambling/__init__.py:917 cogs/profile/__init__.py:1045
 #: cogs/game_master/__init__.py:582 cogs/transaction/__init__.py:407
 #: cogs/transaction/__init__.py:521
 msgid "You are too poor."
 msgstr "Avast! Ye aarrr too poor ye bilge rat."
 
-#: cogs/tournament/__init__.py:94
+#: cogs/tournament/__init__.py:80 cogs/tournament/__init__.py:256
+msgid "You joined the tournament."
+msgstr ""
+
+#: cogs/tournament/__init__.py:101
 #, python-brace-format
 msgid ""
 "{author} started a tournament! Free entries, prize is **${prize}**! React "
@@ -84,25 +88,25 @@ msgstr ""
 "Shiver me timbers! Capt'n {author} started a Tourney! Free entries, bounty "
 "be **${prize}** an' a clap o' thunder! React wit' ⚔ ta climb aboard!"
 
-#: cogs/tournament/__init__.py:125
+#: cogs/tournament/__init__.py:132
 #, python-brace-format
 msgid "Noone joined your tournament {author}."
 msgstr ""
 "Arrggh! No lily-livered landlubber climbed aboard yer tourney {author}."
 
-#: cogs/tournament/__init__.py:136
+#: cogs/tournament/__init__.py:143
 #, python-brace-format
 msgid "{user} joined the tournament."
 msgstr "{user} climbed aboard th' tourney."
 
-#: cogs/tournament/__init__.py:140 cogs/tournament/__init__.py:310
+#: cogs/tournament/__init__.py:147 cogs/tournament/__init__.py:321
 #, python-brace-format
 msgid "You don't have a character, {user}."
 msgstr ""
 "Avast! Ye ain't got a character, {user}. Get off me ship, ye scurvy "
 "landlubber."
 
-#: cogs/tournament/__init__.py:146
+#: cogs/tournament/__init__.py:153
 #, python-brace-format
 msgid ""
 "There are **{num}** entries, due to the fact we need a playable tournament, "
@@ -111,30 +115,30 @@ msgstr ""
 "Thar aarrr **{num}** pirates, due ta the fact we need a playable tourney, "
 "th' last **{removed}** 'ave been left ashore."
 
-#: cogs/tournament/__init__.py:153 cogs/tournament/__init__.py:323
+#: cogs/tournament/__init__.py:160 cogs/tournament/__init__.py:334
 #, python-brace-format
 msgid "Tournament started with **{num}** entries."
 msgstr "All hands hoay! Tourney started wit' **{num}** pirates."
 
-#: cogs/tournament/__init__.py:155 cogs/tournament/__init__.py:325
+#: cogs/tournament/__init__.py:162 cogs/tournament/__init__.py:336
 msgid "vs"
 msgstr "vs"
 
-#: cogs/tournament/__init__.py:181 cogs/tournament/__init__.py:427
+#: cogs/tournament/__init__.py:188 cogs/tournament/__init__.py:438
 #, python-brace-format
 msgid "Winner of this match is {winner}!"
 msgstr "Victor o' this match be {winner}!"
 
-#: cogs/tournament/__init__.py:185 cogs/tournament/__init__.py:431
+#: cogs/tournament/__init__.py:192 cogs/tournament/__init__.py:442
 msgid "Round Done!"
 msgstr "Round Done! Yo ho ho!"
 
-#: cogs/tournament/__init__.py:188
+#: cogs/tournament/__init__.py:195
 #, python-brace-format
 msgid "Tournament ended! The winner is {winner}."
 msgstr "Yarrr! Tourney ended! Th' victor be {winner}."
 
-#: cogs/tournament/__init__.py:209
+#: cogs/tournament/__init__.py:216
 #, python-brace-format
 msgid ""
 "Tournament ended! The winner is {winner}.\n"
@@ -143,7 +147,7 @@ msgstr ""
 "Yarrr! Tourney ended! Th' victor be {winner}.\n"
 "Doubloons were shipped! Huzzah!"
 
-#: cogs/tournament/__init__.py:219
+#: cogs/tournament/__init__.py:226
 #, python-brace-format
 msgid ""
 "`[prize]` - The amount of money the winner will get\n"
@@ -186,7 +190,7 @@ msgstr ""
 " \n"
 "            (This command has a cooldown o' 30 minutes.)"
 
-#: cogs/tournament/__init__.py:266
+#: cogs/tournament/__init__.py:277
 #, python-brace-format
 msgid ""
 "{author} started a raid tournament! Free entries, prize is **${prize}**! "
@@ -195,18 +199,18 @@ msgstr ""
 "Shiver me timbers! Capt'n {author} started a Raid Tourney! Free entries, "
 "bounty be **${prize}** an' a clap o' thunder! React wit' ⚔ ta climb aboard!"
 
-#: cogs/tournament/__init__.py:296
+#: cogs/tournament/__init__.py:307
 #, python-brace-format
 msgid "Noone joined your raid tournament {author}."
 msgstr ""
 "Arrggh! No lily-livered landlubber climbed aboard yer raid tourney {author}."
 
-#: cogs/tournament/__init__.py:306
+#: cogs/tournament/__init__.py:317
 #, python-brace-format
 msgid "{user} joined the raidtournament."
 msgstr "{user} climbed aboard th' raid tourney."
 
-#: cogs/tournament/__init__.py:316
+#: cogs/tournament/__init__.py:327
 #, python-brace-format
 msgid ""
 "There are **{num}** entries, due to the fact we need a playable raid "
@@ -215,17 +219,17 @@ msgstr ""
 "Thar aarrr **{num}** pirates, due ta the fact we need a playable raid "
 "tourney, th' last **{removed}** 'ave been left ashore."
 
-#: cogs/tournament/__init__.py:350 cogs/battles/__init__.py:274
+#: cogs/tournament/__init__.py:361 cogs/battles/__init__.py:274
 #, python-brace-format
 msgid "Raidbattle {p1} vs. {p2} started!"
 msgstr "Yarrrrr! Raidbattle {p1} vs. {p2} started!"
 
-#: cogs/tournament/__init__.py:388 cogs/battles/__init__.py:313
+#: cogs/tournament/__init__.py:399 cogs/battles/__init__.py:313
 #, python-brace-format
 msgid "{attacker} attacks! {defender} takes **{dmg}HP** damage."
 msgstr "Arrr! {attacker} attacks! {defender} takes **{dmg}HP** damage."
 
-#: cogs/tournament/__init__.py:400 cogs/battles/__init__.py:323
+#: cogs/tournament/__init__.py:411 cogs/battles/__init__.py:323
 #, python-brace-format
 msgid ""
 "{p1} - {hp1} HP left\n"
@@ -234,17 +238,17 @@ msgstr ""
 "{p1} - {hp1} HP left\n"
 "{p2} - {hp2} HP left"
 
-#: cogs/tournament/__init__.py:412 cogs/battles/__init__.py:334
+#: cogs/tournament/__init__.py:423 cogs/battles/__init__.py:334
 #, python-brace-format
 msgid "Action #{number}"
 msgstr "Action #{number}"
 
-#: cogs/tournament/__init__.py:434
+#: cogs/tournament/__init__.py:445
 #, python-brace-format
 msgid "Raid Tournament ended! The winner is {winner}."
 msgstr "Yarrr! Raid Tourney ended! Th' victor be {winner}."
 
-#: cogs/tournament/__init__.py:455
+#: cogs/tournament/__init__.py:466
 #, python-brace-format
 msgid ""
 "Raid Tournament ended! The winner is {winner}.\n"
@@ -385,22 +389,19 @@ msgstr ""
 "Ye walk around th' houses 'n ring at {waiting}'s house! Sadly the landlubber "
 "ain't got anythin' fer ye..."
 
-#: cogs/halloween/__init__.py:110
+#: cogs/halloween/__init__.py:113
 #, python-brace-format
 msgid ""
 "🎃 As you step out of the door, you open your candy and plastic reveals an "
 "ancient image on top of a chocolate bar, passed along for generations. You "
-"decide to keep it in your `{prefix}eventbackground`s."
+"decide to keep it in your `{prefix}eventbackgrounds`."
 msgstr ""
-"🎃 As ye step out o' the door, ye open yer candy an' plastic reveals an "
-"ancient image atop a chocolate bar, passed along fer generations. Ye decide "
-"t' keep it in yer `{prefix}eventbackground`s."
 
-#: cogs/halloween/__init__.py:117
+#: cogs/halloween/__init__.py:120
 msgid "Open a trick or treat bag"
 msgstr "Open a trick 'r treat bag"
 
-#: cogs/halloween/__init__.py:121
+#: cogs/halloween/__init__.py:124
 #, python-brace-format
 msgid ""
 "Open a trick or treat bag, you can get some with `{prefix}trickortreat`.\n"
@@ -415,66 +416,66 @@ msgstr ""
 "1 to 50 base stat.\n"
 "            Thar value be between 1 'n 200."
 
-#: cogs/halloween/__init__.py:129
+#: cogs/halloween/__init__.py:132
 msgid "Seems you haven't got a trick or treat bag yet. Go get some!"
 msgstr ""
 "Blimey! Ye ain't got a trick 'r treat bag yet. Go get some ye scurvy dog! "
 "Yarrrrr!"
 
-#: cogs/halloween/__init__.py:175 cogs/crates/__init__.py:172
+#: cogs/halloween/__init__.py:178 cogs/crates/__init__.py:172
 #: cogs/classes/__init__.py:722 cogs/valentine/__init__.py:156
 msgid "You gained an item!"
 msgstr "Yarrrrr! Ye looted an item!"
 
-#: cogs/halloween/__init__.py:176
+#: cogs/halloween/__init__.py:179
 msgid "You found a new item when opening a trick-or-treat bag!"
 msgstr "Yarrrrr! Ye looted a new item when openin' a trick-or-treat bag!"
 
-#: cogs/halloween/__init__.py:180 cogs/crates/__init__.py:178
+#: cogs/halloween/__init__.py:183 cogs/crates/__init__.py:178
 #: cogs/classes/__init__.py:422 cogs/classes/__init__.py:728
 #: cogs/trading/__init__.py:345 cogs/trading/__init__.py:440
 #: cogs/trading/__init__.py:771 cogs/valentine/__init__.py:162
 msgid "Name"
 msgstr "Name o' callin'"
 
-#: cogs/halloween/__init__.py:181 cogs/crates/__init__.py:179
+#: cogs/halloween/__init__.py:184 cogs/crates/__init__.py:179
 #: cogs/classes/__init__.py:729 cogs/trading/__init__.py:346
 #: cogs/trading/__init__.py:441 cogs/trading/__init__.py:772
 #: cogs/valentine/__init__.py:163
 msgid "Type"
 msgstr "Type"
 
-#: cogs/halloween/__init__.py:182 cogs/crates/__init__.py:180
+#: cogs/halloween/__init__.py:185 cogs/crates/__init__.py:180
 #: cogs/classes/__init__.py:733 cogs/trading/__init__.py:347
 #: cogs/trading/__init__.py:442 cogs/trading/__init__.py:773
 #: cogs/valentine/__init__.py:167
 msgid "Damage"
 msgstr "Hurtin'"
 
-#: cogs/halloween/__init__.py:183 cogs/crates/__init__.py:181
+#: cogs/halloween/__init__.py:186 cogs/crates/__init__.py:181
 #: cogs/classes/__init__.py:731 cogs/trading/__init__.py:348
 #: cogs/trading/__init__.py:443 cogs/trading/__init__.py:774
 #: cogs/valentine/__init__.py:165
 msgid "Armor"
 msgstr "Protectin'"
 
-#: cogs/halloween/__init__.py:184 cogs/crates/__init__.py:182
+#: cogs/halloween/__init__.py:187 cogs/crates/__init__.py:182
 #: cogs/classes/__init__.py:734 cogs/trading/__init__.py:349
 #: cogs/trading/__init__.py:444 cogs/trading/__init__.py:775
 #: cogs/valentine/__init__.py:168
 msgid "Value"
 msgstr "Value"
 
-#: cogs/halloween/__init__.py:186
+#: cogs/halloween/__init__.py:189
 #, python-brace-format
 msgid "Remaining trick-or-treat bags: {bags}"
 msgstr "Remainin' trick-or-treat bags: {bags}"
 
-#: cogs/halloween/__init__.py:194
+#: cogs/halloween/__init__.py:197
 msgid "Shows your trick or treat bags"
 msgstr "Reveals yer trick 'r treat bags"
 
-#: cogs/halloween/__init__.py:199
+#: cogs/halloween/__init__.py:202
 #, python-brace-format
 msgid ""
 "Shows the amount of trick or treat bags you have. You can get more by using "
@@ -483,7 +484,7 @@ msgstr ""
 "Reveals th' amount o' trick or treat bags ye 'ave. Ye can get moarr by usin' "
 "`{prefix}trickortreat`."
 
-#: cogs/halloween/__init__.py:203
+#: cogs/halloween/__init__.py:206
 #, python-brace-format
 msgid "You currently have **{trickortreat}** Trick or Treat Bags, {author}!"
 msgstr ""
@@ -1176,13 +1177,13 @@ msgstr ""
 
 #. preserve deletion of admins
 #. preserve renaming of admins
-#: cogs/crates/__init__.py:259 cogs/guild/__init__.py:425
-#: cogs/guild/__init__.py:464 cogs/game_master/__init__.py:197
+#: cogs/crates/__init__.py:259 cogs/guild/__init__.py:428
+#: cogs/guild/__init__.py:467 cogs/game_master/__init__.py:197
 #: cogs/game_master/__init__.py:244
 msgid "Very funny..."
 msgstr "Very funny ye scabrous, cheatin' clod!..."
 
-#: cogs/crates/__init__.py:262 cogs/guild/__init__.py:926
+#: cogs/crates/__init__.py:262 cogs/guild/__init__.py:929
 #: cogs/profile/__init__.py:1042
 msgid "For me? I'm flattered, but I can't accept this..."
 msgstr "Fer me? Me flattered, but me ain't acceptin' this..."
@@ -1298,239 +1299,239 @@ msgstr ""
 "crate(s) from {seller}. Command `{prefix}crates` t' view yer updated "
 "manifest o' crates."
 
-#: cogs/hungergames/__init__.py:48
+#: cogs/hungergames/__init__.py:51
 msgid "Gather as much food as you can"
 msgstr "Gather as much grub as ye can"
 
-#: cogs/hungergames/__init__.py:49
+#: cogs/hungergames/__init__.py:52
 msgid "gathers as much food as they can"
 msgstr "gathers as much grub as they can"
 
-#: cogs/hungergames/__init__.py:53
+#: cogs/hungergames/__init__.py:56
 msgid "Grab a backpack and retreat"
 msgstr "Grab a backpack an' retreat"
 
-#: cogs/hungergames/__init__.py:54
+#: cogs/hungergames/__init__.py:57
 msgid "grabs a backpack and retreats"
 msgstr "grabs a backpack an' retreats"
 
-#: cogs/hungergames/__init__.py:57
+#: cogs/hungergames/__init__.py:60
 msgid "Take a pistol and suicide"
 msgstr "Take a flintlock an' suicide"
 
-#: cogs/hungergames/__init__.py:57
+#: cogs/hungergames/__init__.py:60
 msgid "gives themselves the bullet"
 msgstr "gives themselves th' musketball"
 
-#: cogs/hungergames/__init__.py:58
+#: cogs/hungergames/__init__.py:61
 msgid "Ram a knife in your body"
 msgstr "Ram a dagger in yer body"
 
-#: cogs/hungergames/__init__.py:58
+#: cogs/hungergames/__init__.py:61
 msgid "commits suicide with a knife"
 msgstr "commits suicide with a dagger"
 
-#: cogs/hungergames/__init__.py:60
+#: cogs/hungergames/__init__.py:63
 msgid "Run away from the Cornucopia"
 msgstr "Flee from the Cornucopia"
 
-#: cogs/hungergames/__init__.py:61
+#: cogs/hungergames/__init__.py:64
 msgid "runs away from the Cornucopia"
 msgstr "flees from the Cornucopia"
 
-#: cogs/hungergames/__init__.py:65
+#: cogs/hungergames/__init__.py:68
 msgid "Search for a pair of Explosives"
 msgstr "Search fer a pair o' explosives"
 
-#: cogs/hungergames/__init__.py:66
+#: cogs/hungergames/__init__.py:69
 msgid "finds a bag full of explosives"
 msgstr "finds a bag full o' explosives"
 
-#: cogs/hungergames/__init__.py:69
+#: cogs/hungergames/__init__.py:72
 msgid "Look for water"
 msgstr "Look fer rum"
 
-#: cogs/hungergames/__init__.py:69
+#: cogs/hungergames/__init__.py:72
 msgid "finds a canteen full of water"
 msgstr "finds a bottle o' rum"
 
-#: cogs/hungergames/__init__.py:71
+#: cogs/hungergames/__init__.py:74
 msgid "Get a first aid kit"
 msgstr "Snatch a first aid kit"
 
-#: cogs/hungergames/__init__.py:72
+#: cogs/hungergames/__init__.py:75
 msgid "clutches a first aid kit and runs away"
 msgstr "clutches a first aid kit an' flees"
 
-#: cogs/hungergames/__init__.py:76
+#: cogs/hungergames/__init__.py:79
 msgid "Grab a backpack"
 msgstr "Loot a backpack"
 
-#: cogs/hungergames/__init__.py:77
+#: cogs/hungergames/__init__.py:80
 msgid "grabs a backpack, not realizing it is empty"
 msgstr "loots a backpack, nah realizin' 'tis empty"
 
-#: cogs/hungergames/__init__.py:80
+#: cogs/hungergames/__init__.py:83
 msgid "Try to assault USER"
 msgstr "Try t' send USER t' Davy Jones"
 
-#: cogs/hungergames/__init__.py:80
+#: cogs/hungergames/__init__.py:83
 msgid "kills USER"
 msgstr "sends USER t' Davy Jones. Arrrrr"
 
-#: cogs/hungergames/__init__.py:82
+#: cogs/hungergames/__init__.py:85
 msgid "Kill USER at the water"
 msgstr "Cleave USER t' the brisket at the shallow water"
 
-#: cogs/hungergames/__init__.py:83
+#: cogs/hungergames/__init__.py:86
 msgid "assaults USER while they were drinking water at the river"
 msgstr ""
 "cleaves USER t' the brisket while they were drinkin' grog at th' sea. Yarrr"
 
-#: cogs/hungergames/__init__.py:87
+#: cogs/hungergames/__init__.py:90
 msgid "Try to hide some landmines"
 msgstr "Try t' hide some landmines"
 
-#: cogs/hungergames/__init__.py:88
+#: cogs/hungergames/__init__.py:91
 msgid "hides landmines at a few locations"
 msgstr "hides landmines at a few locations. Arrr! Sneaky freebooter"
 
-#: cogs/hungergames/__init__.py:91
+#: cogs/hungergames/__init__.py:94
 msgid "Take a bath"
 msgstr "Wash me body"
 
-#: cogs/hungergames/__init__.py:91
+#: cogs/hungergames/__init__.py:94
 msgid "baths in the water and enjoys the silence"
 msgstr "washes thar body in th' water and enjoys th' silence"
 
-#: cogs/hungergames/__init__.py:94
+#: cogs/hungergames/__init__.py:97
 msgid "kill USER"
 msgstr "send USER t' Davy Jones"
 
-#: cogs/hungergames/__init__.py:95
+#: cogs/hungergames/__init__.py:98
 msgid "grill at the fireplace and tell each other spooky stories"
 msgstr ""
 "grill at th' fireplace an' tell each other stories of Davy Jones' Locker and "
 "th' Kraken"
 
-#: cogs/hungergames/__init__.py:96
+#: cogs/hungergames/__init__.py:99
 msgid "annoy USER"
 msgstr "annoy USER by flopping like a fish"
 
-#: cogs/hungergames/__init__.py:97 cogs/hungergames/__init__.py:106
+#: cogs/hungergames/__init__.py:100 cogs/hungergames/__init__.py:109
 msgid "kill themselves by walking into a landmine"
 msgstr "went t' Davy Jones by walking into a landmine"
 
-#: cogs/hungergames/__init__.py:98
+#: cogs/hungergames/__init__.py:101
 msgid "have a small party and get drunk"
 msgstr "have a small party an' get three sheets t' the wind"
 
-#: cogs/hungergames/__init__.py:99
+#: cogs/hungergames/__init__.py:102
 msgid "watch animes together"
 msgstr "watch cartoons together"
 
-#: cogs/hungergames/__init__.py:100
+#: cogs/hungergames/__init__.py:103
 msgid "enjoy the silence"
 msgstr "enjoy th' sound of silence"
 
-#: cogs/hungergames/__init__.py:101
+#: cogs/hungergames/__init__.py:104
 msgid "attempt to kill USER but fail"
 msgstr "attempt t' send USER t' Davy Jones but fail"
 
-#: cogs/hungergames/__init__.py:102 cogs/hungergames/__init__.py:108
+#: cogs/hungergames/__init__.py:105 cogs/hungergames/__init__.py:111
 msgid "watch a movie together"
 msgstr "watch flickin' pictures together"
 
-#: cogs/hungergames/__init__.py:103
+#: cogs/hungergames/__init__.py:106
 msgid "track down USER and kill them silently"
 msgstr "track down USER an' send them t' Davy Jones silently"
 
-#: cogs/hungergames/__init__.py:107
+#: cogs/hungergames/__init__.py:110
 msgid "decide they want out of here and commit suicide"
 msgstr "decide they want out o' 'ere an' walk the plank"
 
-#: cogs/hungergames/__init__.py:109
+#: cogs/hungergames/__init__.py:112
 msgid "dance YMCA together"
 msgstr "dance YMCA together Yo ho ho"
 
-#: cogs/hungergames/__init__.py:110
+#: cogs/hungergames/__init__.py:113
 msgid "sing songs together"
 msgstr "sing chanteys together Yo ho ho"
 
-#: cogs/hungergames/__init__.py:111
+#: cogs/hungergames/__init__.py:114
 msgid "have a nice romantic evening"
 msgstr "'ave a nice romantic evenin'"
 
-#: cogs/hungergames/__init__.py:112
+#: cogs/hungergames/__init__.py:115
 msgid "watch the others being dumb"
 msgstr "watch the landlubbers bein' daft"
 
-#: cogs/hungergames/__init__.py:113
+#: cogs/hungergames/__init__.py:116
 msgid "kiss in the moonlight"
 msgstr "kiss in th' moonlight"
 
-#: cogs/hungergames/__init__.py:115
+#: cogs/hungergames/__init__.py:118
 msgid "watch a movie together when USER suddenly gets shot by a stranger"
 msgstr ""
 "watch flickin' pictures together when USER suddenly gets shot by an unknown "
 "landlubber"
 
-#: cogs/hungergames/__init__.py:120
+#: cogs/hungergames/__init__.py:123
 #, python-brace-format
 msgid "**Round {round}**"
 msgstr "**Round {round}**"
 
-#: cogs/hungergames/__init__.py:127
+#: cogs/hungergames/__init__.py:130
 #, python-brace-format
 msgid "Letting {user} choose their action..."
 msgstr "Lettin' {user} pick thar thing..."
 
-#: cogs/hungergames/__init__.py:164
+#: cogs/hungergames/__init__.py:167
 msgid "Choose an action"
 msgstr "Pick yer thing"
 
-#: cogs/hungergames/__init__.py:174
+#: cogs/hungergames/__init__.py:177
 #, python-brace-format
 msgid "I couldn't send a DM to {user}! Choosing random action..."
 msgstr ""
 "Avast! Me couldn't send a bottled message t' scurvy {user}! Picking random "
 "thing..."
 
-#: cogs/hungergames/__init__.py:183
+#: cogs/hungergames/__init__.py:186
 #, python-brace-format
 msgid "attempts to kill {user} but fails"
 msgstr "attempts t' send {user} t' Davy Jones but fails"
 
-#: cogs/hungergames/__init__.py:191 cogs/game_master/__init__.py:89
+#: cogs/hungergames/__init__.py:194 cogs/game_master/__init__.py:89
 msgid "Done"
 msgstr "Plundered"
 
-#: cogs/hungergames/__init__.py:211
+#: cogs/hungergames/__init__.py:214
 msgid "do nothing."
 msgstr "do naught."
 
-#: cogs/hungergames/__init__.py:257
+#: cogs/hungergames/__init__.py:260
 msgid "Team"
 msgstr "Team"
 
-#: cogs/hungergames/__init__.py:259
+#: cogs/hungergames/__init__.py:262
 msgid "**The cast**"
 msgstr "**The cast**"
 
-#: cogs/hungergames/__init__.py:276
+#: cogs/hungergames/__init__.py:279
 #, python-brace-format
 msgid "This hunger game's winner is {winner}!"
 msgstr "Sink me! This hunger game's victor be {winner}! Yarrrrr!"
 
-#: cogs/hungergames/__init__.py:281
+#: cogs/hungergames/__init__.py:284
 msgid "Everyone died!"
 msgstr "Dead men tell no tales!"
 
-#: cogs/hungergames/__init__.py:289
+#: cogs/hungergames/__init__.py:292
 msgid "Play the hunger games"
 msgstr "Play the hunger games"
 
-#: cogs/hungergames/__init__.py:293
+#: cogs/hungergames/__init__.py:296
 msgid ""
 "Starts the hunger games\n"
 "\n"
@@ -1558,11 +1559,15 @@ msgstr ""
 "            Not every player will get th' opportunity to choose thar thing. "
 "Sometimes nobody gets to choose, so don't be discouraged. "
 
-#: cogs/hungergames/__init__.py:302 cogs/werewolf/__init__.py:77
+#: cogs/hungergames/__init__.py:305 cogs/werewolf/__init__.py:80
 msgid "There is already a game in here!"
 msgstr "Thar be already a game in 'ere!"
 
-#: cogs/hungergames/__init__.py:315
+#: cogs/hungergames/__init__.py:310
+msgid "You joined the Hunger Games."
+msgstr ""
+
+#: cogs/hungergames/__init__.py:323
 #, python-brace-format
 msgid ""
 "{author} started a game of Hunger Games! React with :shallow_pan_of_food: to "
@@ -1571,82 +1576,82 @@ msgstr ""
 "Shiver me timbers! {author} started a game o' hunger games! React with :"
 "shallow_pan_of_food: t' climb aboard the game! **{num} climbed aboard**"
 
-#: cogs/hungergames/__init__.py:355
+#: cogs/hungergames/__init__.py:363
 msgid "An error happened during the hungergames. Please try again!"
 msgstr ""
 "Sink me! Somethin' fishy happened durin' th' hungergames, and we ran "
 "aground! We're terribly saarry, Capt'n. Please sail again!"
 
-#: cogs/hungergames/__init__.py:361
+#: cogs/hungergames/__init__.py:369
 msgid "Not enough players joined..."
 msgstr "Nah enough sailors climbed aboard..."
 
-#: cogs/hungergames/__init__.py:369
+#: cogs/hungergames/__init__.py:377
 msgid "An error happened during the hungergame. Please try again!"
 msgstr ""
 "Sink me! Somethin' fishy happened durin' th' hungergames, and we ran "
 "aground! We're terribly saarry, Capt'n. Please sail again!"
 
-#: cogs/error_handler/__init__.py:92
+#: cogs/error_handler/__init__.py:85
 #, python-brace-format
 msgid "Oops! You forgot a required argument: `{arg}`"
 msgstr "Avast! Ye forgot a required argument: `{arg}`"
 
-#: cogs/error_handler/__init__.py:98
+#: cogs/error_handler/__init__.py:91
 msgid "The message you referenced was not found."
 msgstr "Arrggh! Couldn't find that message, ye scurvy dog."
 
-#: cogs/error_handler/__init__.py:100
+#: cogs/error_handler/__init__.py:93
 msgid "The member you referenced was not found."
 msgstr "Arrggh! Couldn't find that crew member, ye scurvy dog."
 
-#: cogs/error_handler/__init__.py:102
+#: cogs/error_handler/__init__.py:95
 msgid "The server you referenced was not found."
 msgstr "Arrggh! Couldn't find that island."
 
-#: cogs/error_handler/__init__.py:104
+#: cogs/error_handler/__init__.py:97
 msgid "The user you referenced was not found."
 msgstr ""
 "Arrggh! The sailor ye referenced ain't be seen on th' ship - prolly fish "
 "grub."
 
-#: cogs/error_handler/__init__.py:106
+#: cogs/error_handler/__init__.py:99
 msgid "The channel you referenced was not found."
 msgstr "Arrggh! Couldn't find that channel, ye fish-kissin' smelly swine."
 
-#: cogs/error_handler/__init__.py:109
+#: cogs/error_handler/__init__.py:102
 msgid "I cannot read messages in the channel you referenced."
 msgstr ""
 "Arrggh! Couldn't read messages in that channel ye referenced, ye filthy "
 "buccaneer."
 
-#: cogs/error_handler/__init__.py:112
+#: cogs/error_handler/__init__.py:105
 msgid "I could not parse a colour from this."
 msgstr ""
 "Arrggh! Couldn't parse a colour from this, ye bloody, nattering swindler."
 
-#: cogs/error_handler/__init__.py:114
+#: cogs/error_handler/__init__.py:107
 msgid "The role you referenced was not found."
 msgstr "Arrggh! Couldn't find that role, ye rum-thievin', useless blaggart."
 
-#: cogs/error_handler/__init__.py:117
+#: cogs/error_handler/__init__.py:110
 msgid "The invite you referenced is invalid or has expired."
 msgstr ""
 "Arrggh! Yer lingering summon be invalid or has expired, ye damnable parrot."
 
-#: cogs/error_handler/__init__.py:120
+#: cogs/error_handler/__init__.py:113
 msgid "The emoji you referenced was not found."
 msgstr "Arrggh! Couldn't find that emoji."
 
-#: cogs/error_handler/__init__.py:122
+#: cogs/error_handler/__init__.py:115
 msgid "I could not parse a boolean from this."
 msgstr "Arrggh! Couldn't parse a boolean from this."
 
-#: cogs/error_handler/__init__.py:128
+#: cogs/error_handler/__init__.py:121
 msgid "The user you specified as a parameter does not have a character."
 msgstr "Arrggh! That sailor ain't got a character. They ain't pirates."
 
-#: cogs/error_handler/__init__.py:135
+#: cogs/error_handler/__init__.py:128
 msgid ""
 "You did not enter a valid crate rarity. Possible ones are: common (c), "
 "uncommon (u), rare (r), magic (m) and legendary (l)."
@@ -1654,13 +1659,13 @@ msgstr ""
 "Arrggh! Ye did nah enter a valid crate rarity. Possible ones be: common (c), "
 "uncommon (u), rare (r), magic (m) an' legendary (l)."
 
-#: cogs/error_handler/__init__.py:142
+#: cogs/error_handler/__init__.py:135
 msgid "You did not enter a valid coin side. Please use `heads` or `tails`."
 msgstr ""
 "Arrggh! Ye did nah enter a valid doubloon side. Use `heads` or `tails` ye "
 "scurvy buccaneer."
 
-#: cogs/error_handler/__init__.py:149
+#: cogs/error_handler/__init__.py:142
 #, python-brace-format
 msgid ""
 "You entered a date that was out of range. It should be newer than {date}."
@@ -1668,7 +1673,7 @@ msgstr ""
 "Arrggh! Ye entered a date that was been out o' range. It should be newer "
 "than {date}."
 
-#: cogs/error_handler/__init__.py:158
+#: cogs/error_handler/__init__.py:151
 msgid ""
 "You sent an invalid URL. Make sure to send the full URL; it should start "
 "with \"http\" and end with \".png\" or \".jpeg\"."
@@ -1676,11 +1681,11 @@ msgstr ""
 "Arrggh! Ye sent an invalid URL. Make sure t' send the full URL; it should "
 "start with \"http\" an' end with \".png\" or \".jpeg\"."
 
-#: cogs/error_handler/__init__.py:163
+#: cogs/error_handler/__init__.py:156
 msgid "You used a malformed argument!"
 msgstr "Arrggh! Ye used a malformed argument! Get off me ship, ye scurvy dog!"
 
-#: cogs/error_handler/__init__.py:167
+#: cogs/error_handler/__init__.py:160
 #, python-brace-format
 msgid ""
 "You are being rate-limited. Chill down, you can use a command again in {time}"
@@ -1688,27 +1693,27 @@ msgid ""
 msgstr ""
 "Hold yer ships! Ye aarrr bein' rate-limited. Ye can command again in {time}s."
 
-#: cogs/error_handler/__init__.py:173
+#: cogs/error_handler/__init__.py:166
 #, python-brace-format
 msgid "You are on cooldown. Try again in {time}."
 msgstr "Calm yer ships! Ye aarrr on cooldown. Sail again in {time}."
 
-#: cogs/error_handler/__init__.py:184 cogs/error_handler/__init__.py:223
-#: cogs/error_handler/__init__.py:330
+#: cogs/error_handler/__init__.py:177 cogs/error_handler/__init__.py:216
+#: cogs/error_handler/__init__.py:308
 msgid "Permission denied"
 msgstr "Permission denied. Ye ain't me captain"
 
-#: cogs/error_handler/__init__.py:186
+#: cogs/error_handler/__init__.py:179
 msgid ":x: This command is only avaiable for the bot owner."
 msgstr ":x: Avast! This command be only available fer the bot captain."
 
-#: cogs/error_handler/__init__.py:193
+#: cogs/error_handler/__init__.py:186
 msgid "You don't have a character yet."
 msgstr ""
 "Arrggh! Ye ain't got a character yet, matey. Get off me ship ye scurvy "
 "landlubber."
 
-#: cogs/error_handler/__init__.py:197
+#: cogs/error_handler/__init__.py:190
 msgid ""
 "This command requires you to not have created a character yet. You already "
 "have one."
@@ -1716,7 +1721,7 @@ msgstr ""
 "Arrggh! This command requires ye t' nah have created a character yet, matey. "
 "Ye already 'ave one ye scurvy landlubber."
 
-#: cogs/error_handler/__init__.py:204
+#: cogs/error_handler/__init__.py:197
 #, python-brace-format
 msgid ""
 "You need to be following a god for this command. Please use `{prefix}follow` "
@@ -1725,25 +1730,25 @@ msgstr ""
 "Arrggh! Ye need t' be followin' a god fer this command, matey. Command "
 "`{prefix}follow` t' choose one."
 
-#: cogs/error_handler/__init__.py:209
+#: cogs/error_handler/__init__.py:202
 msgid "You need to have a guild to use this command."
 msgstr ""
 "Arrggh! Ye need t' have a crew t' command this, ye lonely bilge-suckin' rat."
 
-#: cogs/error_handler/__init__.py:211
+#: cogs/error_handler/__init__.py:204
 msgid "You need to be in no guild to use this command."
 msgstr "Arrggh! Ye need t' be nah in a crerw t' command this, ye scurvy dog."
 
-#: cogs/error_handler/__init__.py:214
+#: cogs/error_handler/__init__.py:207
 msgid "Your rank in the guild is too low to use this command."
 msgstr ""
 "Arrggh! Yer rank in th' crew be too low t' command this, ye scurvy buccaneer."
 
-#: cogs/error_handler/__init__.py:218
+#: cogs/error_handler/__init__.py:211
 msgid "You mustn't be the owner of a guild to use this command."
 msgstr "Arrggh! Ye must nah be th' Capt'n o' a crew t' command this, matey."
 
-#: cogs/error_handler/__init__.py:225
+#: cogs/error_handler/__init__.py:218
 #, python-brace-format
 msgid ""
 ":x: You don't have the permissions to use this command. It is thought for "
@@ -1752,7 +1757,7 @@ msgstr ""
 ":x: Arrggh! Ye ain't got th' permissions t' command this, matey. It be "
 "thought fer {error} class sailors."
 
-#: cogs/error_handler/__init__.py:234
+#: cogs/error_handler/__init__.py:227
 #, python-brace-format
 msgid ""
 "You are already on an adventure. Use `{prefix}status` to see how long it "
@@ -1761,7 +1766,7 @@ msgstr ""
 "Arrggh! Ye aarrr already on a voyage, capt'n. Command `{prefix}status` t' "
 "spy out how long it lasts."
 
-#: cogs/error_handler/__init__.py:241
+#: cogs/error_handler/__init__.py:234
 #, python-brace-format
 msgid ""
 "You need to be on an adventure to use this command. Try `{prefix}adventure`!"
@@ -1769,32 +1774,7 @@ msgstr ""
 "Arrggh! Ye need t' be on a voyage t' command this, ye scurvy dog! Try "
 "commandin' `{prefix}adventure`!"
 
-#: cogs/error_handler/__init__.py:246
-msgid "You need to be in a voice chat to use this command."
-msgstr "Arrggh! Ye need t' be in a voice chat t' command this, matey."
-
-#: cogs/error_handler/__init__.py:248
-msgid "The vote did not pass."
-msgstr "Arrrrr! The vote did nah pass."
-
-#: cogs/error_handler/__init__.py:252
-#, python-brace-format
-msgid ""
-"You need to be playing music, for example with `{prefix}play`, to use this "
-"command."
-msgstr ""
-"Arrggh! Ye need t' be playin' chanties, fer example wit' `{prefix}play`, t' "
-"command this."
-
-#: cogs/error_handler/__init__.py:257
-msgid "The DJ has locked the music player."
-msgstr "The DJ has locked the chanties player."
-
-#: cogs/error_handler/__init__.py:259
-msgid "You must be the DJ to use this command."
-msgstr "Arrggh! Ye must be th' DJ to command this, matey."
-
-#: cogs/error_handler/__init__.py:263
+#: cogs/error_handler/__init__.py:241
 #, python-brace-format
 msgid ""
 "Your pet has gone missing. Maybe some aliens abducted it? Since you can't "
@@ -1803,12 +1783,12 @@ msgstr ""
 "Arrggh! Yer pet was gone missin'. Maybe Davy Jones trapped it in his Locker? "
 "Since ye couldn't find it anymoarr, ye aarrr no longer a {profession}"
 
-#: cogs/error_handler/__init__.py:266 cogs/error_handler/__init__.py:286
-#: cogs/error_handler/__init__.py:294 cogs/classes/__init__.py:106
+#: cogs/error_handler/__init__.py:244 cogs/error_handler/__init__.py:264
+#: cogs/error_handler/__init__.py:272 cogs/classes/__init__.py:106
 msgid "Ranger"
 msgstr "Ranger"
 
-#: cogs/error_handler/__init__.py:283
+#: cogs/error_handler/__init__.py:261
 #, python-brace-format
 msgid ""
 "Your pet **{pet}** died! You did not give it enough to eat or drink. Because "
@@ -1818,7 +1798,7 @@ msgstr ""
 "give it enough t' eat or drink. Because o' yer bilge-suckin' treatment, ye "
 "aarrr nah longer a {profession}."
 
-#: cogs/error_handler/__init__.py:291
+#: cogs/error_handler/__init__.py:269
 #, python-brace-format
 msgid ""
 "Your pet **{pet}** ran away! You did not show it your love enough! Because "
@@ -1827,7 +1807,7 @@ msgstr ""
 "Arrggh! Yer pet **{pet}** ran away! Ye did nah show it yer love enough! "
 "Because o' yer bilge-suckin' treatment, ye aarrr nah longer a {profession}."
 
-#: cogs/error_handler/__init__.py:299
+#: cogs/error_handler/__init__.py:277
 #, python-brace-format
 msgid ""
 "You need to be a {tier} tier donator to use this command. Please head to "
@@ -1838,30 +1818,30 @@ msgstr ""
 "`{prefix}donate` an' make sure ye dock yer ship at the Support island if ye "
 "decide t' support us."
 
-#: cogs/error_handler/__init__.py:307
+#: cogs/error_handler/__init__.py:285
 msgid "There is another raid already ongoing. Try again at a later time."
 msgstr ""
 "Arrggh! Thar be another plundering already ongoin', matey. Try again at a "
 "later time."
 
-#: cogs/error_handler/__init__.py:312 cogs/alliance/__init__.py:518
-#: cogs/alliance/__init__.py:552
+#: cogs/error_handler/__init__.py:290 cogs/alliance/__init__.py:521
+#: cogs/alliance/__init__.py:555
 msgid "Your alliance does not own a city."
 msgstr "Arrggh! Yer fleet ain't owning a city, matey."
 
-#: cogs/error_handler/__init__.py:314
+#: cogs/error_handler/__init__.py:292
 msgid "Your alliance already owns a city."
 msgstr "Arrggh! Yer fleet already owns a city, matey."
 
-#: cogs/error_handler/__init__.py:316
+#: cogs/error_handler/__init__.py:294
 msgid "Your alliance rank is too low."
 msgstr "Arrggh! Yer fleet rank be too low, matey. Ye scurvy scallywag."
 
-#: cogs/error_handler/__init__.py:318
+#: cogs/error_handler/__init__.py:296
 msgid "Your server does not have an open help request."
 msgstr "Arrggh! Yer island ain't got an open help request, matey."
 
-#: cogs/error_handler/__init__.py:322
+#: cogs/error_handler/__init__.py:300
 msgid ""
 "There was an error when uploading to Imgur. Please try again or visit "
 "<https://imgur.com/upload> to manually upload your image."
@@ -1869,7 +1849,7 @@ msgstr ""
 "Sink me! Thar been an error when shippin' t' Imgur, matey. Try again or "
 "navigate t' <https://imgur.com/upload> t' manually upload yer picture."
 
-#: cogs/error_handler/__init__.py:332
+#: cogs/error_handler/__init__.py:310
 msgid ""
 ":x: You don't have the permissions to use this command. It is thought for "
 "other users."
@@ -1878,19 +1858,19 @@ msgstr ""
 "is thought for other sailors."
 
 #. prevent cooldown reset
-#: cogs/error_handler/__init__.py:339 cogs/trading/__init__.py:823
+#: cogs/error_handler/__init__.py:317 cogs/trading/__init__.py:823
 msgid "You did not choose anything."
 msgstr ""
 "Arrggh! Ye did nah choose anythin'. Get off me ship, ye scurvy landlubber."
 
-#: cogs/error_handler/__init__.py:358
+#: cogs/error_handler/__init__.py:336
 msgid ""
 "An argument or value you entered was far too high for me to handle properly!"
 msgstr ""
 "Arrggh! An argument or value ye entered been farrr too high like the sky fer "
 "me t' handle properly!"
 
-#: cogs/error_handler/__init__.py:365
+#: cogs/error_handler/__init__.py:343
 msgid ""
 "The languages have been reloaded while you were using a command. The "
 "execution therefore had to be stopped. Please try again."
@@ -1898,7 +1878,7 @@ msgstr ""
 "Arrggh! Th' lingoes have been reloaded while ye be commandin'. The sailin' "
 "therefore had t' be stopped. Please try again, matey."
 
-#: cogs/error_handler/__init__.py:397
+#: cogs/error_handler/__init__.py:375
 msgid ""
 "The command you tried to use ran into an error. The incident has been "
 "reported and the team will work hard to fix the issue!"
@@ -2504,7 +2484,6 @@ msgid ""
 "<https://git.travitia.xyz> - GitLab (Public)\n"
 "<https://idlerpg.xyz> - Bot Website\n"
 "<https://wiki.idlerpg.xyz> - IdleRPG wiki\n"
-"<https://raid.idlerpg.xyz> - Raid Website\n"
 "<https://travitia.xyz> - IdleRPG's next major upgrade\n"
 "<https://idlerpg.xyz> - Our forums\n"
 "<https://public-api.travitia.xyz> - Our public API\n"
@@ -2514,43 +2493,19 @@ msgid ""
 "<https://www.ncpgambling.org/help-treatment/national-helpline-1-800-522-4700/"
 "> - Gambling Helpline"
 msgstr ""
-"**IdleRPG** be Discord's most advanced medieval RPG bot.\n"
-"We aim t' provide th' perfect experience at RPG in Discord with minimum "
-"effort fer th' sailor.\n"
-"\n"
-"We ain't collectin' any data apart from yer character information an' our "
-"transaction logs.\n"
-"Th' bot be 100% free t' use an' open source.\n"
-"This bot be developed by people who love to code fer a jolly cause an' "
-"improvin' yer gameplay experience.\n"
-" \n"
-"**Charted Courses**\n"
-"<https://git.travitia.xyz/kenvyra/idlerpg> - Source Code\n"
-"<https://git.travitia.xyz> - GitLab (Public)\n"
-"<https://idlerpg.xyz> - Bot Website\n"
-"<https://wiki.idlerpg.xyz> - IdleRPG wiki\n"
-"<https://raid.idlerpg.xyz> - Raid Website\n"
-"<https://travitia.xyz> - IdleRPG's next major upgrade\n"
-"<https://idlerpg.xyz> - Our forums\n"
-"<https://public-api.travitia.xyz> - Our public API\n"
-"<https://cloud.idlerpg.xyz> - VPS hostin' by IdleRPG\n"
-"<https://github.com/kenvyra> - Other IdleRPG related code\n"
-"<https://discord.com/terms> - Discord's ToS\n"
-"<https://www.ncpgamblin.org/help-treatment/national-helpline-1-800-522-4700/"
-"> - Gamblin' Helpline"
 
-#: cogs/miscellaneous/__init__.py:582
+#: cogs/miscellaneous/__init__.py:581
 msgid "Show the rules again"
 msgstr "Reveal The Pirate's Code again"
 
-#: cogs/miscellaneous/__init__.py:586
+#: cogs/miscellaneous/__init__.py:585
 msgid ""
 "Shows the rules you consent to when creating a character. Don't forget them!"
 msgstr ""
 "Reveals The Pirate's Code ye consent to when creatin' a character. Don't "
 "forget them!"
 
-#: cogs/miscellaneous/__init__.py:590
+#: cogs/miscellaneous/__init__.py:589
 msgid ""
 "1) Only up to two characters per individual\n"
 "2) No abusing or benefiting from bugs or exploits\n"
@@ -2568,43 +2523,50 @@ msgstr ""
 "\n"
 "IdleRPG be a bot on seven seas, yer characters aarrr valid everywhere"
 
-#: cogs/raid/__init__.py:118
+#: cogs/raid/__init__.py:121
 msgid "Start a Zerekiel raid"
 msgstr "Start a Zerekiel raid"
 
-#: cogs/raid/__init__.py:437
+#: cogs/raid/__init__.py:154 cogs/raid/__init__.py:453
+#: cogs/raid/__init__.py:622 cogs/raid/__init__.py:793
+#: cogs/raid/__init__.py:1023 cogs/raid/__init__.py:1191
+#: cogs/raid/__init__.py:1376 cogs/raid/__init__.py:1600
+msgid "You joined the raid."
+msgstr ""
+
+#: cogs/raid/__init__.py:445
 msgid "Start a Kvothe raid"
 msgstr "Start a Kvothe raid"
 
-#: cogs/raid/__init__.py:607
+#: cogs/raid/__init__.py:610
 msgid "Start an Eden raid"
 msgstr "Start an Eden raid"
 
-#: cogs/raid/__init__.py:780
+#: cogs/raid/__init__.py:781
 msgid "Start a CHamburr raid"
 msgstr "Start a CHamburr raid"
 
-#: cogs/raid/__init__.py:1019
+#: cogs/raid/__init__.py:1016
 msgid "Starts Lyx' raid"
 msgstr "Starts Lyx' raid"
 
-#: cogs/raid/__init__.py:1190
+#: cogs/raid/__init__.py:1182
 msgid "Start a Monox raid"
 msgstr "Start a Monox raid"
 
-#: cogs/raid/__init__.py:1381
+#: cogs/raid/__init__.py:1368
 msgid "Start a Kirby raid"
 msgstr "Start a Kirby raid"
 
-#: cogs/raid/__init__.py:1606
+#: cogs/raid/__init__.py:1588
 msgid "Start a Jesus raid"
 msgstr "Start a Jesus raid"
 
-#: cogs/raid/__init__.py:1836
+#: cogs/raid/__init__.py:1814
 msgid "Increase your raidstats"
 msgstr "Increase yer raidstats"
 
-#: cogs/raid/__init__.py:1840
+#: cogs/raid/__init__.py:1818
 msgid ""
 "Upgrade your raid damage or defense multiplier. These will affect your "
 "performance in raids and raidbattles."
@@ -2612,7 +2574,7 @@ msgstr ""
 "Upgrade yer raid damage or defense multiplier. These will affect yer "
 "performance in raids 'n raidbattles."
 
-#: cogs/raid/__init__.py:1844
+#: cogs/raid/__init__.py:1822
 #, python-brace-format
 msgid ""
 "Use `{prefix}increase damage/defense` to upgrade your raid damage/defense "
@@ -2621,15 +2583,15 @@ msgstr ""
 "Command `{prefix}increase damage/defense` t' upgrade yer raid damage/defense "
 "multiplier by 10%."
 
-#: cogs/raid/__init__.py:1851
+#: cogs/raid/__init__.py:1829
 msgid "Upgrade your raid damage"
 msgstr "Upgrade yer raid damage"
 
-#: cogs/raid/__init__.py:1854
+#: cogs/raid/__init__.py:1832
 msgid "Increase your raid damage."
 msgstr "Increase yer raid damage."
 
-#: cogs/raid/__init__.py:1860 cogs/raid/__init__.py:1875
+#: cogs/raid/__init__.py:1838 cogs/raid/__init__.py:1853
 #, python-brace-format
 msgid ""
 "Upgrading your weapon attack raid multiplier to {newlvl} costs **${price}**, "
@@ -2638,7 +2600,7 @@ msgstr ""
 "Upgradin' yer weapon attack raid multiplier t' {newlvl} costs **${price}**, "
 "ye aarrr too poor ye scurvy dog."
 
-#: cogs/raid/__init__.py:1866
+#: cogs/raid/__init__.py:1844
 #, python-brace-format
 msgid ""
 "Upgrading your weapon attack raid multiplier to {newlvl} costs **${price}**, "
@@ -2647,7 +2609,7 @@ msgstr ""
 "Upgradin' yer weapon attack raid multiplier t' {newlvl} costs **${price}**, "
 "pruseed?"
 
-#: cogs/raid/__init__.py:1896
+#: cogs/raid/__init__.py:1874
 #, python-brace-format
 msgid ""
 "You upgraded your weapon attack raid multiplier to {newlvl} for **${price}**."
@@ -2655,15 +2617,15 @@ msgstr ""
 "Yarrrrr! Ye upgraded yer weapon attack raid multiplier t' {newlvl} fer **"
 "${price}**."
 
-#: cogs/raid/__init__.py:1903
+#: cogs/raid/__init__.py:1881
 msgid "Upgrade your raid defense"
 msgstr "Upgrade yer raid defense"
 
-#: cogs/raid/__init__.py:1906
+#: cogs/raid/__init__.py:1884
 msgid "Increase your raid defense."
 msgstr "Increase yer raid defense."
 
-#: cogs/raid/__init__.py:1912 cogs/raid/__init__.py:1927
+#: cogs/raid/__init__.py:1890 cogs/raid/__init__.py:1905
 #, python-brace-format
 msgid ""
 "Upgrading your shield defense raid multiplier to {newlvl} costs **${price}"
@@ -2672,7 +2634,7 @@ msgstr ""
 "Upgradin' yer shield defense raid multiplier t' {newlvl} costs **${price}**, "
 "ye aarrr too poor ye scurvy dog."
 
-#: cogs/raid/__init__.py:1918
+#: cogs/raid/__init__.py:1896
 #, python-brace-format
 msgid ""
 "Upgrading your shield defense raid multiplier to {newlvl} costs **${price}"
@@ -2681,7 +2643,7 @@ msgstr ""
 "Upgradin' yer shield defense raid multiplier t' {newlvl} costs **${price}**, "
 "pruseed?"
 
-#: cogs/raid/__init__.py:1948
+#: cogs/raid/__init__.py:1926
 #, python-brace-format
 msgid ""
 "You upgraded your shield defense raid multiplier to {newlvl} for **${price}"
@@ -2690,11 +2652,11 @@ msgstr ""
 "Yarrrrr! Ye upgraded yer shield defense raid multiplier t' {newlvl} fer **"
 "${price}**."
 
-#: cogs/raid/__init__.py:1954
+#: cogs/raid/__init__.py:1932
 msgid "View your raid stats"
 msgstr "View yer raid stats"
 
-#: cogs/raid/__init__.py:1958
+#: cogs/raid/__init__.py:1936
 msgid ""
 "View your raidstats. These will affect your performance in raids and "
 "raidbattles."
@@ -2702,7 +2664,7 @@ msgstr ""
 "View yer raidstats. These will affect yer performance in raids 'n "
 "raidbattles."
 
-#: cogs/raid/__init__.py:1975
+#: cogs/raid/__init__.py:1953
 #, python-brace-format
 msgid ""
 "**{author}'s raid multipliers**\n"
@@ -2713,15 +2675,15 @@ msgstr ""
 "Damage Multiplier: x{atk} (Upgradin': ${atkp})\n"
 "Defense Multiplier: x{deff} (Upgradin': ${deffp})"
 
-#: cogs/raid/__init__.py:1982
+#: cogs/raid/__init__.py:1960
 msgid "Did somebody say Raid?"
 msgstr "Sink me! Did somebody say Raid, eh?"
 
-#: cogs/raid/__init__.py:1985
+#: cogs/raid/__init__.py:1963
 msgid "Informs you about joining raids."
 msgstr "Informs ye 'bout joinin' raids."
 
-#: cogs/raid/__init__.py:1988
+#: cogs/raid/__init__.py:1966
 #, python-brace-format
 msgid ""
 "Did you ever want to join together with other players to defeat the dragon "
@@ -2796,9 +2758,9 @@ msgid "Please either buy `time`, `luck` or `money`."
 msgstr ""
 "Arrggh! Ye just buy either `time`, `luck`, `money` or `all`, ye scurvy dog."
 
-#: cogs/store/__init__.py:73 cogs/gambling/__init__.py:722
-#: cogs/gambling/__init__.py:847 cogs/gambling/__init__.py:923
-#: cogs/guild/__init__.py:874
+#: cogs/store/__init__.py:73 cogs/gambling/__init__.py:878
+#: cogs/gambling/__init__.py:1003 cogs/gambling/__init__.py:1079
+#: cogs/guild/__init__.py:877
 msgid "You're too poor."
 msgstr "Ye arrr too poor, ye bilge-rat."
 
@@ -3262,11 +3224,11 @@ msgstr "Arrggh! Ye ain't got access t' this command, ye scurvy dog!"
 msgid "Aliases"
 msgstr "Aliases"
 
-#: cogs/patreon/__init__.py:35
+#: cogs/patreon/__init__.py:112
 msgid "Reset a modified item"
 msgstr "Reset a modified item"
 
-#: cogs/patreon/__init__.py:39
+#: cogs/patreon/__init__.py:116
 msgid ""
 "`<itemid>` - The ID of the item to reset\n"
 "\n"
@@ -3278,23 +3240,23 @@ msgstr ""
 "            Reset an item's type an' name, if modified. Once an item be "
 "reset, it can be sold again."
 
-#: cogs/patreon/__init__.py:47 cogs/transaction/__init__.py:455
+#: cogs/patreon/__init__.py:124 cogs/transaction/__init__.py:455
 msgid "You do not own this item."
 msgstr "Arrggh! Ye do nah own this item, ye scurvy landlubber."
 
-#: cogs/patreon/__init__.py:50
+#: cogs/patreon/__init__.py:127
 msgid "Nothing to do..."
 msgstr "Naught t' do... It ain't modified, matey."
 
-#: cogs/patreon/__init__.py:86
+#: cogs/patreon/__init__.py:163
 msgid "Item reset."
 msgstr "Aye, aye Capt'n! Item been reset."
 
-#: cogs/patreon/__init__.py:90
+#: cogs/patreon/__init__.py:167
 msgid "[basic] Change an item's name"
 msgstr "[basic] Change an item's name o' callin'"
 
-#: cogs/patreon/__init__.py:94
+#: cogs/patreon/__init__.py:171
 msgid ""
 "`<itemid>` - The ID of the item to rename\n"
 "            `<newname>` - The name to give the item, must be shorter than 40 "
@@ -3314,27 +3276,27 @@ msgstr ""
 " \n"
 "            Only basic (or above) tier patrons can command this."
 
-#: cogs/patreon/__init__.py:102
+#: cogs/patreon/__init__.py:179
 msgid "Name too long."
 msgstr "Name o' callin' too long."
 
-#: cogs/patreon/__init__.py:111 cogs/patreon/__init__.py:156
+#: cogs/patreon/__init__.py:188 cogs/patreon/__init__.py:233
 #: cogs/trading/__init__.py:490
 #, python-brace-format
 msgid "You don't have an item with the ID `{itemid}`."
 msgstr "Arrggh! Ye ain't got an item with th' ID `{itemid}`."
 
-#: cogs/patreon/__init__.py:123
+#: cogs/patreon/__init__.py:200
 #, python-brace-format
 msgid "The item with the ID `{itemid}` is now called `{newname}`."
 msgstr ""
 "Aye, aye Capt'n! Th' item with th' ID `{itemid}` be now called `{newname}`."
 
-#: cogs/patreon/__init__.py:130
+#: cogs/patreon/__init__.py:207
 msgid "[bronze] Change an item's type"
 msgstr "[bronze] Change an item's type"
 
-#: cogs/patreon/__init__.py:134
+#: cogs/patreon/__init__.py:211
 msgid ""
 "`<itemid>` - The ID of the item to change type\n"
 "            `<new_type>` - The type to transform the item into\n"
@@ -3360,16 +3322,16 @@ msgstr ""
 " \n"
 "            Only bronze (or above) tier patrons can use this here command."
 
-#: cogs/patreon/__init__.py:146
+#: cogs/patreon/__init__.py:223
 msgid "Invalid type."
 msgstr "Arrggh! That be invalid type, matey."
 
-#: cogs/patreon/__init__.py:163
+#: cogs/patreon/__init__.py:240
 #, python-brace-format
 msgid "The item is already a {item_type}."
 msgstr "Arrggh! Th' item be already a {item_type}, matey."
 
-#: cogs/patreon/__init__.py:171
+#: cogs/patreon/__init__.py:248
 msgid ""
 "You may not change a two-handed item to a single-handed one and vice-versa "
 "due to weapon damage reasons."
@@ -3377,17 +3339,17 @@ msgstr ""
 "Avast! Ye may nah change a two-handed item t' a single-handed one and "
 "reverse due t' weapon damage reasons."
 
-#: cogs/patreon/__init__.py:192
+#: cogs/patreon/__init__.py:269
 #, python-brace-format
 msgid "The item with the ID `{itemid}` is now a `{itemtype}`."
 msgstr ""
 "Aye, aye Capt'n! Th' item with th' ID `{itemid}` be now a `{itemtype}`."
 
-#: cogs/patreon/__init__.py:200
+#: cogs/patreon/__init__.py:277
 msgid "[gold] Receive a daily booster"
 msgstr "[gold] Receive a daily booster, sweet"
 
-#: cogs/patreon/__init__.py:204
+#: cogs/patreon/__init__.py:281
 msgid ""
 "Receive a daily booster. The booster can be a time, money or luck booster.\n"
 "\n"
@@ -3397,16 +3359,16 @@ msgstr ""
 " \n"
 "            (This command has a cooldown o' 24 hours.)"
 
-#: cogs/patreon/__init__.py:214
+#: cogs/patreon/__init__.py:291
 #, python-brace-format
 msgid "You received a daily {type_} booster!"
 msgstr "Aye, aye Capt'n! Ye received a daily {type_} booster! Yarrrrr!"
 
-#: cogs/patreon/__init__.py:217
+#: cogs/patreon/__init__.py:294
 msgid "[basic] Change your profile background"
 msgstr "[basic] Change yer profile background"
 
-#: cogs/patreon/__init__.py:221
+#: cogs/patreon/__init__.py:298
 #, python-brace-format
 msgid ""
 "`<url>` - The image URL to use as the background, may not exceed 60 "
@@ -3438,11 +3400,11 @@ msgstr ""
 "\n"
 "            Only basic (or above) tier patrons can command this, matey."
 
-#: cogs/patreon/__init__.py:241
+#: cogs/patreon/__init__.py:318
 msgid "That is not a valid premade background."
 msgstr "Avast ye! That be nah a valid premade background."
 
-#: cogs/patreon/__init__.py:245 cogs/patreon/__init__.py:281
+#: cogs/patreon/__init__.py:322 cogs/patreon/__init__.py:358
 msgid ""
 "I couldn't read that URL. Does it start with `http://` or `https://` and is "
 "either a png or jpeg?"
@@ -3450,11 +3412,11 @@ msgstr ""
 "Arrggh! Couldn't read that URL. Does it start with `http://` or `https://` "
 "and is either a png or jpeg?"
 
-#: cogs/patreon/__init__.py:258
+#: cogs/patreon/__init__.py:335
 msgid "The URL is too long."
 msgstr "Avast ye! Th' URL be too long."
 
-#: cogs/patreon/__init__.py:260
+#: cogs/patreon/__init__.py:337
 #, python-brace-format
 msgid ""
 "Your new profile picture is now:\n"
@@ -3463,15 +3425,15 @@ msgstr ""
 "Aye, aye Capt'n! Yer new profile picture be now:\n"
 "{url}"
 
-#: cogs/patreon/__init__.py:262
+#: cogs/patreon/__init__.py:339
 msgid "Your profile picture has been reset."
 msgstr "Aye, aye Capt'n! Yer profile picture been reset."
 
-#: cogs/patreon/__init__.py:265
+#: cogs/patreon/__init__.py:342
 msgid "[basic] Formats an image for background compatability"
 msgstr "[basic] Formats a picture fer background compatibility"
 
-#: cogs/patreon/__init__.py:269
+#: cogs/patreon/__init__.py:346
 #, python-brace-format
 msgid ""
 "`<url>` - The image URL to format\n"
@@ -3492,11 +3454,11 @@ msgstr ""
 "\n"
 "            Only basic (or above) tier patrons can give this order."
 
-#: cogs/patreon/__init__.py:300
+#: cogs/patreon/__init__.py:377
 msgid "Error when uploading to Imgur."
 msgstr "Arrggh! Error when shippin' t' Imgur."
 
-#: cogs/patreon/__init__.py:302
+#: cogs/patreon/__init__.py:379
 #, python-brace-format
 msgid ""
 "Imgur Link for `{prefix}background`\n"
@@ -3505,11 +3467,11 @@ msgstr ""
 "Imgur Link fer `{prefix}background`\n"
 "{link}"
 
-#: cogs/patreon/__init__.py:309
+#: cogs/patreon/__init__.py:386
 msgid "[basic] Upgrade your guild"
 msgstr "[basic] Upgrade yer guild"
 
-#: cogs/patreon/__init__.py:313
+#: cogs/patreon/__init__.py:390
 msgid ""
 "Update your guild member limit and bank size according to your donation "
 "tier.\n"
@@ -3534,15 +3496,15 @@ msgstr ""
 " \n"
 "            Only basic (or above) tier patrons can use this here command."
 
-#: cogs/patreon/__init__.py:347
+#: cogs/patreon/__init__.py:424
 msgid "Your guild was updated."
 msgstr "Aye, aye Capt'n! Yer guild been updated."
 
-#: cogs/patreon/__init__.py:350
+#: cogs/patreon/__init__.py:427
 msgid "Change your background"
 msgstr "Change yer background"
 
-#: cogs/patreon/__init__.py:354
+#: cogs/patreon/__init__.py:431
 msgid ""
 "`<number>` - The number of the eventbackground to use\n"
 "\n"
@@ -3554,14 +3516,14 @@ msgstr ""
 "            Update yer background t' one from th' events. Ye can get event "
 "backgrounds from special events, fer example Easter or Christmas."
 
-#: cogs/patreon/__init__.py:361 cogs/patreon/__init__.py:391
+#: cogs/patreon/__init__.py:438 cogs/patreon/__init__.py:468
 msgid ""
 "You do not have an eventbackground. They can be acquired on seasonal events."
 msgstr ""
 "Arrggh! Ye ain't got an eventbackground. They can be looted on seasonal "
 "events."
 
-#: cogs/patreon/__init__.py:370
+#: cogs/patreon/__init__.py:447
 #, python-brace-format
 msgid ""
 "The background number {number} is not valid, you only have {total} available."
@@ -3569,15 +3531,15 @@ msgstr ""
 "Avast ye! Th' background number {number} ain't valid, ye only have {total} "
 "available."
 
-#: cogs/patreon/__init__.py:377
+#: cogs/patreon/__init__.py:454
 msgid "Background updated!"
 msgstr "Aye, aye Capt'n! Background updated! Yarrrrr!"
 
-#: cogs/patreon/__init__.py:380
+#: cogs/patreon/__init__.py:457
 msgid "View your eventbackgrounds"
 msgstr ""
 
-#: cogs/patreon/__init__.py:384
+#: cogs/patreon/__init__.py:461
 #, python-brace-format
 msgid ""
 "View a list of all backgrounds you have acquired from events. You can get "
@@ -3587,12 +3549,12 @@ msgid ""
 "`{prefix}eventbackground`."
 msgstr ""
 
-#: cogs/patreon/__init__.py:397
+#: cogs/patreon/__init__.py:474
 #, python-brace-format
 msgid "Background {number}/{total}"
 msgstr ""
 
-#: cogs/patreon/__init__.py:403
+#: cogs/patreon/__init__.py:480
 #, python-brace-format
 msgid "Use {prefix}eventbackground {number} to use this background"
 msgstr ""
@@ -4267,13 +4229,13 @@ msgstr ""
 msgid "Your current pet image is: {url}"
 msgstr "Yer current pet image be: {url}"
 
-#: cogs/classes/__init__.py:662 cogs/guild/__init__.py:283
-#: cogs/guild/__init__.py:686
+#: cogs/classes/__init__.py:662 cogs/guild/__init__.py:286
+#: cogs/guild/__init__.py:689
 msgid "No image URL found in your message, using image attachment..."
 msgstr "No image URL found in yer message, usin' image attachment..."
 
-#: cogs/classes/__init__.py:666 cogs/guild/__init__.py:288
-#: cogs/guild/__init__.py:690
+#: cogs/classes/__init__.py:666 cogs/guild/__init__.py:291
+#: cogs/guild/__init__.py:693
 msgid "Image URL too long, shortening..."
 msgstr "Image URL too long, shortenin'..."
 
@@ -4344,396 +4306,110 @@ msgstr "Yarrrrr! Yer pet looted an item!"
 msgid "Your pet needs to recover, wait a day to retry"
 msgstr "Avast ye! Yer pet needs t' recover, wait a day t' retry"
 
-#: cogs/music/__init__.py:135
+#: cogs/adventure/__init__.py:110
+msgid "North"
+msgstr "North"
+
+#: cogs/adventure/__init__.py:117
+msgid "East"
+msgstr "East"
+
+#: cogs/adventure/__init__.py:124
+msgid "South"
+msgstr "South"
+
+#: cogs/adventure/__init__.py:131
+msgid "West"
+msgstr "West"
+
+#: cogs/adventure/__init__.py:139
+msgid "Attack"
+msgstr ""
+
+#: cogs/adventure/__init__.py:146
+msgid "Defend"
+msgstr ""
+
+#: cogs/adventure/__init__.py:153
+msgid "Recover"
+msgstr ""
+
+#: cogs/adventure/__init__.py:213
+msgid "The active adventure has started."
+msgstr ""
+
+#: cogs/adventure/__init__.py:253
+#, python-brace-format
+msgid "You healed yourself for {hp} HP"
+msgstr "Ye healed yerself fer {hp} HP"
+
+#: cogs/adventure/__init__.py:262
+msgid "Attack blocked."
+msgstr "Attack blocked."
+
+#: cogs/adventure/__init__.py:267
+#, python-brace-format
+msgid "The Enemy hit you for {dmg} damage"
+msgstr "Th' Enemy hurt ye fer {dmg} damage"
+
+#: cogs/adventure/__init__.py:270
+#, python-brace-format
+msgid "You hit the enemy for {dmg} damage"
+msgstr "Ye hurt th' enemy fer {dmg} damage"
+
+#: cogs/adventure/__init__.py:310 cogs/gambling/__init__.py:1128
+#: cogs/gambling/__init__.py:1176
+msgid "Timed out."
+msgstr "Timed out."
+
+#: cogs/adventure/__init__.py:318
+msgid "You defeated the enemy."
+msgstr ""
+
+#: cogs/adventure/__init__.py:328
+#, python-brace-format
+msgid "You stepped on a trap and took {damage} damage!"
+msgstr "Ye stepped on a trap an' took {damage} damage!"
+
+#: cogs/adventure/__init__.py:334
+#, python-brace-format
+msgid "You found a treasure with **${money}** inside!"
+msgstr "Yarrrrr! Ye found a booty with **${money}** doubloons inside!"
+
+#: cogs/adventure/__init__.py:341
+msgid "You died."
+msgstr "Ye got trapped in Davy Jones' locker."
+
+#: cogs/adventure/__init__.py:348
 #, python-brace-format
 msgid ""
-"{user} wants to skip a track. React if you agree. **{current}/{total}** "
-"voted for it!"
+"You have reached the exit and were rewarded **${money}** for getting out!"
 msgstr ""
-"{user} wants t' skip a chantey. React if ye agree. **{current}/{total}** "
-"said aye!"
+"Ye 'ave reached the exit an' was rewarded **${money}** fer gettin' out! "
+"Yarrrrr!"
 
-#: cogs/music/__init__.py:140
+#: cogs/adventure/__init__.py:365
+msgid "`@` - You, `!` - Enemy, `*` - Treasure"
+msgstr ""
+
+#: cogs/adventure/__init__.py:368
 #, python-brace-format
-msgid ""
-"{user} wants to pause/resume the player. React if you agree. **{current}/"
-"{total}** voted for it!"
-msgstr ""
-"{user} wants t' pause/resume th' player. React if ye agree. **{current}/"
-"{total}** said aye!"
+msgid "You are on {hp} HP"
+msgstr "Ye be on {hp} HP"
 
-#: cogs/music/__init__.py:145
-#, python-brace-format
-msgid ""
-"{user} wants to stop playback. React if you agree. **{current}/{total}** "
-"voted for it!"
-msgstr ""
-"{user} wants t' avast playback. React if ye agree. **{current}/{total}** "
-"said aye!"
+#: cogs/adventure/__init__.py:375
+msgid "Enemy"
+msgstr "Enemy"
 
-#: cogs/music/__init__.py:150
-#, python-brace-format
-msgid ""
-"{user} wants to change the volume. React if you agree. **{current}/{total}** "
-"voted for it!"
-msgstr ""
-"{user} wants t' change the volume. React if ye agree. **{current}/{total}** "
-"said aye!"
-
-#: cogs/music/__init__.py:155
-#, python-brace-format
-msgid ""
-"{user} wants to toggle repeating. React if you agree. **{current}/{total}** "
-"voted for it!"
-msgstr ""
-"{user} wants t' toggle repeatin'. React if ye agree. **{current}/{total}** "
-"said aye!"
-
-#: cogs/music/__init__.py:160
-#, python-brace-format
-msgid ""
-"{user} wants to change the equalizer. React if you agree. **{current}/{total}"
-"** voted for it!"
-msgstr ""
-"{user} wants t' change th' equalizer. React if ye agree. **{current}/{total}"
-"** said aye!"
-
-#: cogs/music/__init__.py:198
-msgid "Vote passed!"
-msgstr "Vote passed!"
-
-#: cogs/music/__init__.py:263
-msgid "Choose a result to play"
-msgstr "Choose a result t' play"
-
-#: cogs/music/__init__.py:267
-msgid ""
-"`<query>` - The query to search a song by\n"
-"\n"
-"            Query for a track and play or add any result to the playlist, "
-"you can choose from a multitude of tracks."
-msgstr ""
-"`<query>` - The query t' search a chantey by\n"
-"\n"
-"            Query fer a track an' play or add any result t' the playlist, ye "
-"can choose from a multitude o' tracks."
-
-#: cogs/music/__init__.py:277 cogs/music/__init__.py:307
-#: cogs/music/__init__.py:351 cogs/music/__init__.py:360
-msgid "No results..."
-msgstr "Arrggh! No results..."
-
-#: cogs/music/__init__.py:281
-msgid "Song results"
-msgstr "Chantey results"
-
-#: cogs/music/__init__.py:282
-msgid "Select a song to play"
+#: cogs/adventure/__init__.py:376
+msgid "HP"
 msgstr ""
 
-#: cogs/music/__init__.py:302
-msgid "Loading track... This might take up to 3 seconds..."
-msgstr "Loadin' chantey... This might take up t' 3 seconds..."
-
-#: cogs/music/__init__.py:328
-msgid "Play a song"
-msgstr "Play a chantey"
-
-#: cogs/music/__init__.py:332
-#, python-brace-format
-msgid ""
-"`<query>` - The query to search a song by\n"
-"\n"
-"            Query for a track and play or add the first result to the "
-"playlist.\n"
-"            If this is not the song you were looking for, try `{prefix}"
-"chooseplay`."
-msgstr ""
-"`<query>` - The query t' search a chantey by\n"
-"\n"
-"            Query fer a track an' play or add th' first result t' the "
-"playlist.\n"
-"            If this be not the chantey ye was lookin' fer, try `{prefix}"
-"chooseplay`."
-
-#: cogs/music/__init__.py:338
-msgid "Downloading track... This might take up to 3 seconds..."
-msgstr "Downloadin' chantey... This might take up t' 3 seconds..."
-
-#: cogs/music/__init__.py:374
-msgid "Lock the player"
-msgstr "Lock th' player"
-
-#: cogs/music/__init__.py:378
-msgid ""
-"Lock/Unlock the player. This allows nobody else to control the music.\n"
-"\n"
-"            Only the session's DJ can use this command."
-msgstr ""
-"Lock/unlock th' player. This allows nobody else t' control th' music.\n"
-" \n"
-"            Only th' session's DJ can command this."
-
-#: cogs/music/__init__.py:392
-msgid "Toggle repeat"
-msgstr "Toggle repeat"
-
-#: cogs/music/__init__.py:396
-msgid ""
-"Toggle repeat of the playing queue.\n"
-"\n"
-"            Once a song finishes, it will be added at the end of the queue "
-"automatically.\n"
-"\n"
-"            If there are more than one person in the session and a non-DJ "
-"uses this command, a vote has to pass first."
-msgstr ""
-"Toggle repeat o' th' playin' queue.\n"
-" \n"
-"            Once a chantey finishes, it'll be added at the end o' the queue "
-"automatically.\n"
-" \n"
-"            If thar aarrr moarr than one sailor in the session an' a non-DJ "
-"commands this, a vote has t' pass first."
-
-#: cogs/music/__init__.py:412
-msgid "Skip the currently playing song."
-msgstr "Skip th' currently playin' chantey."
-
-#: cogs/music/__init__.py:416
-msgid ""
-"Skip the currently playing song.\n"
-"\n"
-"            If there are more than one person in the session and a non-DJ "
-"uses this command, a vote has to pass first."
-msgstr ""
-"Skip th' currently playin' chantey.\n"
-" \n"
-"            If thar aarrr moarr than one person in th' session an' a non-DJ "
-"commands this, a vote has t' pass first."
-
-#: cogs/music/__init__.py:427
-msgid "Stops the music"
-msgstr "Avast th' music"
-
-#: cogs/music/__init__.py:431
-msgid ""
-"Stops the music and leaves voice chat.\n"
-"\n"
-"            If there are more than one person in the session and a non-DJ "
-"uses this command, a vote has to pass first."
-msgstr ""
-"Avast th music an' leaves voice chat.\n"
-" \n"
-"            If thar aarrr moarr than one sailors in th' session an' a non-DJ "
-"commands this, a vote has t' pass first."
-
-#: cogs/music/__init__.py:443
-msgid "Change the volume"
-msgstr "Change th' volume"
-
-#: cogs/music/__init__.py:447
-msgid ""
-"Changes the playback's volume.\n"
-"\n"
-"            If there are more than one person in the session and a non-DJ "
-"uses this command, a vote has to pass first."
-msgstr ""
-"Changes th' playback's volume.\n"
-" \n"
-"            If thar aarrr moarr than one sailor in th' session an' a non-DJ "
-"commands this, a vote has t' pass first."
-
-#: cogs/music/__init__.py:454
-#, python-brace-format
-msgid ""
-"⚠`Playback volume is going to change to {volume} in 5 seconds. To avoid the "
-"sudden earrape, control the volume on client side!`"
-msgstr ""
-"⚠`Playback volume be goin' t' change t' {volume} in 5 seconds. T' avoid th' "
-"sudden earrape, control th' volume on client side!`"
-
-#: cogs/music/__init__.py:465
-#, python-brace-format
-msgid ":white_check_mark:` Volume successfully changed to {volume}!`"
-msgstr ":white_check_mark:` Yarrrrr! Volume successfully changed t' {volume}!`"
-
-#: cogs/music/__init__.py:479
-msgid ""
-"Toggles the music playback's paused state.\n"
-"\n"
-"            If there are more than one person in the session and a non-DJ "
-"uses this command, a vote has to pass first."
-msgstr ""
-"Toggles th' music playback's paused state.\n"
-" \n"
-"            If thar aarrr moarr than one sailor in th' session an' a non-DJ "
-"commands this, a vote has t' pass first."
-
-#: cogs/music/__init__.py:485
-msgid ":white_check_mark:`Song paused!`"
-msgstr ":white_check_mark:`Yarrrrr! Chantey paused!`"
-
-#: cogs/music/__init__.py:488
-msgid ":white_check_mark:`Song resumed!`"
-msgstr ":white_check_mark:`Yarrrrr! Chantey resumed!`"
-
-#: cogs/music/__init__.py:494
-msgid "Change the equalizer"
-msgstr "Change th' equalizer"
-
-#: cogs/music/__init__.py:498
-msgid ""
-"`<eq>` - The equalizer to use\n"
-"\n"
-"            Sets the equalizer. May be **flat, piano, metal or boost**.\n"
-"            Flat is the standard, piano is quiet, metal boosts high "
-"frequencies and boost boosts low frequencies.\n"
-"\n"
-"            If there are more than one person in the session and a non-DJ "
-"uses this command, a vote has to pass first."
-msgstr ""
-"`<eq>` - The equalizer t' use\n"
-"\n"
-"            Sets th' equalizer. May be **flat, piano, metal or boost**.\n"
-"            Flat be th' standard, piano be quiet, metal boosts high "
-"frequencies an' boost boosts low frequencies.\n"
-" \n"
-"            If thar aarrr moarr than one sailor in th' session an' a non-DJ "
-"commands this, a vote has t' pass first."
-
-#: cogs/music/__init__.py:507
-msgid "Not a valid equalizer. May be flat, piano, metal or boost."
-msgstr "Nah a valid equalizer. May be flat, piano, metal or boost."
-
-#: cogs/music/__init__.py:514
-msgid "Shows the current song."
-msgstr "Reveals th' current chantey."
-
-#: cogs/music/__init__.py:517
-msgid "Displays some information about the currently playing song."
-msgstr "Reveals some information 'bout th' currently playin' chantey."
-
-#: cogs/music/__init__.py:525
-msgid "Now playing..."
-msgstr "Now playin'..."
-
-#: cogs/music/__init__.py:527
-msgid "Title"
-msgstr "Title"
-
-#: cogs/music/__init__.py:530
-msgid "Artist"
-msgstr "Artist"
-
-#: cogs/music/__init__.py:534
-msgid "Volume"
-msgstr "Volume"
-
-#: cogs/music/__init__.py:536
-msgid "Playing status"
-msgstr "Playin' status"
-
-#: cogs/music/__init__.py:536
-msgid "`⏸Paused`"
-msgstr "`⏸Paused`"
-
-#: cogs/music/__init__.py:537
-msgid "DJ"
-msgstr "DJ"
-
-#: cogs/music/__init__.py:539
-msgid "Locked"
-msgstr "Locked"
-
-#: cogs/music/__init__.py:539 cogs/music/__init__.py:542
-#: cogs/music/__init__.py:546
-msgid "Yes"
-msgstr "Aye, matey"
-
-#: cogs/music/__init__.py:539 cogs/music/__init__.py:542
-#: cogs/music/__init__.py:546
-msgid "No"
-msgstr "Nay"
-
-#: cogs/music/__init__.py:542
-msgid "Looping"
-msgstr "Loopin'"
-
-#: cogs/music/__init__.py:545
-msgid "Explicit"
-msgstr "Explicit"
-
-#: cogs/music/__init__.py:548
-msgid "Equalizer"
-msgstr "Equalizer"
-
-#: cogs/music/__init__.py:559
-#, python-brace-format
-msgid "Song requested by: {user}"
-msgstr "Chantey requested by: {user}"
-
-#: cogs/music/__init__.py:568
-msgid "Show upcoming songs"
-msgstr "Reveal upcoming chanteys"
-
-#: cogs/music/__init__.py:571
-msgid "Show the next (maximum 5) tracks in the queue."
-msgstr "Reveal th' next (maximum 5) tracks in th' queue."
-
-#: cogs/music/__init__.py:582
-msgid "Upcoming entries"
-msgstr "Upcomin' chanteys"
-
-#: cogs/music/__init__.py:591
-msgid "⚠`No more entries left.`"
-msgstr "⚠`Arrggh! No moarr entries left.`"
-
-#: cogs/music/__init__.py:597
-msgid ""
-"`<query>` - The query to search the song by; defaults to the currently "
-"playing song\n"
-"\n"
-"            Retrieves song lyrics. If no song specified, will check the "
-"current playing song."
-msgstr ""
-"`<query>` - The query t' search th' chantey by; defaults ta the currently "
-"playin' chantey\n"
-"\n"
-"            Retrieves chantey lyrics. If no chantey specified, will check "
-"th' current playin' chantey."
-
-#: cogs/music/__init__.py:606
-msgid "I am not playing. Please specify a song to look for."
-msgstr "Me ain't playin'. Please specify a chantey t' look fer."
-
-#: cogs/music/__init__.py:610
-msgid "Please specify a song."
-msgstr "Please specify a chantey."
-
-#: cogs/music/__init__.py:612
-msgid ":x: Look for a longer query!"
-msgstr ":x: Look fer a longer query!"
-
-#: cogs/music/__init__.py:616
-msgid "⚠ No results!"
-msgstr "⚠ Arrggh! No results!"
-
-#: cogs/music/__init__.py:652
-#, python-brace-format
-msgid "🎧 Added {title} to the queue..."
-msgstr "🎧 Added {title} t' th' queue..."
-
-#: cogs/music/__init__.py:660 cogs/music/__init__.py:663
-#, python-brace-format
-msgid "🎧 Playing {title}..."
-msgstr "🎧 Playin' {title}..."
-
-#: cogs/adventure/__init__.py:80
+#: cogs/adventure/__init__.py:438
 msgid "Shows adventures and your chances"
 msgstr "Reveals voyages 'n yer chances"
 
-#: cogs/adventure/__init__.py:85
+#: cogs/adventure/__init__.py:443
 msgid ""
 "Shows all adventures, their names, descriptions, and your chances to beat "
 "them in picture form.\n"
@@ -4745,11 +4421,11 @@ msgstr ""
 "             Yer chances be determined by yer equipped items, race an' class "
 "bonuses, yer level an' yer God-given luck."
 
-#: cogs/adventure/__init__.py:123
+#: cogs/adventure/__init__.py:481
 msgid "Sends your character on an adventure."
 msgstr "Set sail yer character on a voyage."
 
-#: cogs/adventure/__init__.py:128
+#: cogs/adventure/__init__.py:486
 #, python-brace-format
 msgid ""
 "`<adventure_number>` - a whole number from 1 to 30\n"
@@ -4787,12 +4463,12 @@ msgstr ""
 "            Be sure t' check `{prefix}status` t' spy out how much time be "
 "left, or t' check if ye survived or went to Davy Jones."
 
-#: cogs/adventure/__init__.py:143
+#: cogs/adventure/__init__.py:501
 #, python-brace-format
 msgid "You must be on level **{level}** to do this adventure."
 msgstr "Arrggh! Ye must be on level **{level}** t' do this voyage."
 
-#: cogs/adventure/__init__.py:186
+#: cogs/adventure/__init__.py:544
 #, python-brace-format
 msgid ""
 "Successfully sent your character out on an adventure. Use `{prefix}status` "
@@ -4801,21 +4477,21 @@ msgstr ""
 "Aye, aye Capt'n! Successfully sent yer character out on a voyage. Command "
 "`{prefix}status` t' spy out the current status o' th' mission."
 
-#: cogs/adventure/__init__.py:194
+#: cogs/adventure/__init__.py:552
 msgid "Go out on an active adventure."
 msgstr "Go out on an active voyage."
 
-#: cogs/adventure/__init__.py:199
+#: cogs/adventure/__init__.py:557
 #, no-python-format
 msgid ""
-"Active adventures will put you into a 15x15 randomly generated maze. You "
-"will begin in the top left corner (0,0) and your goal is to find the exit in "
-"the bottom right corner (14,14)\n"
-"            You control your character with the arrow reactions below the "
+"Active adventures will put you into a randomly generated maze. You will "
+"begin in the top left corner and your goal is to find the exit in the bottom "
+"right corner.\n"
+"            You control your character with the arrow buttons below the "
 "message.\n"
 "\n"
-"            You have 1000HP. The adventure ends when you find the exit or "
-"your HP drop to zero.\n"
+"            You have a fixed amount of HP based on your items. The adventure "
+"ends when you find the exit or your HP drop to zero.\n"
 "            You can lose HP by getting damaged by traps or enemies.\n"
 "\n"
 "            The maze contains safe spaces and treasures but also traps and "
@@ -4824,7 +4500,8 @@ msgid ""
 "have a trap, it has a 10% chance of having an enemy.\n"
 "            Each maze has 5 treasure chests.\n"
 "\n"
-"            Traps can damage you from 30 to 120 HP.\n"
+"            Traps can damage you from 1/10 of your total HP to up to 1/8 of "
+"your total HP.\n"
 "            Enemy damage is based on your own damage. During enemy fights, "
 "you can attack (⚔️), defend (🛡️) or recover HP (❤️)\n"
 "            Treasure chests can have gold up to 25 times your attack + "
@@ -4833,163 +4510,24 @@ msgid ""
 "            If you reach the end, you will receive a special treasure with "
 "gold up to 100 times your attack + defense.\n"
 "\n"
-"            (It is recommended to draw a map of the maze)\n"
 "            (This command has a cooldown of 30 minutes)"
 msgstr ""
-"Yarrrrr! Active adventures will put ye into a 15x15 randomly generated maze. "
-"Ye will begin in th' top left corner (0,0) an' yer goal be t' find th' exit "
-"in th' bottom right corner (14,14)\n"
-"            Ye control yer character with th' arrow reactions below th' "
-"message.\n"
-" \n"
-"            Ye have 1000HP. Th' adventure ends when ye find th' exit or yer "
-"HP drop t' zero.\n"
-"            Ye can lose HP by getting' hurt by traps or enemies.\n"
-" \n"
-"            The maze contains safe spaces an' booties but also traps 'n "
-"enemies.\n"
-"            Each space has a 10% chance o' bein' a trap. If a space ain't "
-"got a trap, it has a 10% chance o' havin' an enemy.\n"
-"            Each maze has 5 coffers.\n"
-" \n"
-"            Traps can hurt ye from 30 to 120 HP.\n"
-"            Enemy damage be based on yer own damage. Durin' enemy fights, ye "
-"can attack (⚔️), defend (🛡️) or recover HP (❤️)\n"
-"            Coffers can have doubloons up t' 25 times yer attack + defense.\n"
-" \n"
-"            If ye reach th' end, ye will receive a special booty with "
-"doubloons up to 100 times yer attack + defense.\n"
-" \n"
-"            (It be recommended t' chart a map o' th' maze)\n"
-"            (This command has a cooldown o' 30 minutes)"
 
-#: cogs/adventure/__init__.py:220
+#: cogs/adventure/__init__.py:577
 msgid ""
-"You are going to be in a labyrinth of size 15x15. There are enemies, "
-"treasures and hidden traps. Reach the exit in the bottom right corner for a "
-"huge extra bonus!\n"
+"You are going to be in a labyrinth. There are enemies, treasures and hidden "
+"traps. Reach the exit in the bottom right corner for a huge extra bonus!\n"
 "Are you ready?\n"
 "\n"
 "Tip: Use a silent channel for this, you may want to read all the messages I "
 "will send."
 msgstr ""
-"Ye be goin' t' be in a labyrinth o' size 15x15. Thar aarrr enemies, booties "
-"an' hidden traps. Reach th' exit in th' bottom right corner fer a huge extra "
-"bonus!\n"
-"Aarrr ye ready?\n"
-"\n"
-"Tip: Use a silent channel fer this, ye may want to read all the messages me "
-"will send."
 
-#: cogs/adventure/__init__.py:228
-msgid "**Generating a maze...**"
-msgstr "**Generatin' a maze...**"
-
-#: cogs/adventure/__init__.py:239
-msgid "North"
-msgstr "North"
-
-#: cogs/adventure/__init__.py:240
-msgid "East"
-msgstr "East"
-
-#: cogs/adventure/__init__.py:241
-msgid "South"
-msgstr "South"
-
-#: cogs/adventure/__init__.py:242
-msgid "West"
-msgstr "West"
-
-#: cogs/adventure/__init__.py:313
-#, python-brace-format
-msgid "To the {side} is a wall."
-msgstr "To the {side} be a wall."
-
-#: cogs/adventure/__init__.py:315
-#, python-brace-format
-msgid "To the {side} is an enemy."
-msgstr "To the {side} be an enemy."
-
-#: cogs/adventure/__init__.py:317
-#, python-brace-format
-msgid "To the {side} is a treasure."
-msgstr "To the {side} be a booty."
-
-#: cogs/adventure/__init__.py:319
-#, python-brace-format
-msgid "To the {side} is a floor."
-msgstr "To the {side} be a floor."
-
-#: cogs/adventure/__init__.py:322
-#, python-brace-format
-msgid "You are on {hp} HP"
-msgstr "Ye be on {hp} HP"
-
-#: cogs/adventure/__init__.py:332
-#, python-brace-format
-msgid "You stepped on a trap and took {damage} damage!"
-msgstr "Ye stepped on a trap an' took {damage} damage!"
-
-#: cogs/adventure/__init__.py:356
-#, python-brace-format
-msgid "You found a treasure with **${money}** inside!"
-msgstr "Yarrrrr! Ye found a booty with **${money}** doubloons inside!"
-
-#: cogs/adventure/__init__.py:379
-msgid "Enemy"
-msgstr "Enemy"
-
-#: cogs/adventure/__init__.py:384
-msgid "The Fight started"
-msgstr "Th' Fight started"
-
-#: cogs/adventure/__init__.py:421
-#, python-brace-format
-msgid "The Enemy healed themselves for {hp} HP"
-msgstr "Th' Enemy healed themselves fer {hp} HP"
-
-#: cogs/adventure/__init__.py:427
-#, python-brace-format
-msgid "You healed yourself for {hp} HP"
-msgstr "Ye healed yerself fer {hp} HP"
-
-#: cogs/adventure/__init__.py:433
-msgid "Attack blocked."
-msgstr "Attack blocked."
-
-#: cogs/adventure/__init__.py:438
-#, python-brace-format
-msgid "The Enemy hit you for {dmg} damage"
-msgstr "Th' Enemy hurt ye fer {dmg} damage"
-
-#: cogs/adventure/__init__.py:443
-#, python-brace-format
-msgid "You hit the enemy for {dmg} damage"
-msgstr "Ye hurt th' enemy fer {dmg} damage"
-
-#: cogs/adventure/__init__.py:457 cogs/adventure/__init__.py:462
-#: cogs/gambling/__init__.py:972 cogs/gambling/__init__.py:1020
-msgid "Timed out."
-msgstr "Timed out."
-
-#: cogs/adventure/__init__.py:464
-msgid "You died."
-msgstr "Ye got trapped in Davy Jones' locker."
-
-#: cogs/adventure/__init__.py:485
-#, python-brace-format
-msgid ""
-"You have reached the exit and were rewarded **${money}** for getting out!"
-msgstr ""
-"Ye 'ave reached the exit an' was rewarded **${money}** fer gettin' out! "
-"Yarrrrr!"
-
-#: cogs/adventure/__init__.py:492
+#: cogs/adventure/__init__.py:591
 msgid "Checks your adventure status."
 msgstr "Checks yer voyage status."
 
-#: cogs/adventure/__init__.py:496
+#: cogs/adventure/__init__.py:595
 #, python-brace-format
 msgid ""
 "Checks the remaining time of your adventures, or if you survived or died. "
@@ -5040,11 +4578,11 @@ msgstr ""
 "doubloons extra as well, [check the wiki](https://wiki.idlerpg.xyz/index.php?"
 "title=family#Adventure_Bonus) fer th' exact portion."
 
-#: cogs/adventure/__init__.py:515
+#: cogs/adventure/__init__.py:614
 msgid "Adventure Status"
 msgstr "Voyage Status"
 
-#: cogs/adventure/__init__.py:517
+#: cogs/adventure/__init__.py:616
 #, python-brace-format
 msgid ""
 "You are currently on an adventure with difficulty **{difficulty}**.\n"
@@ -5055,19 +4593,19 @@ msgstr ""
 "Time until it completes: **{time_left}**\n"
 "Adventure name: **{adventure}**"
 
-#: cogs/adventure/__init__.py:556
+#: cogs/adventure/__init__.py:655
 msgid "Adventure Failed"
 msgstr "Yer ship sanked! Voyage Failed"
 
-#: cogs/adventure/__init__.py:557
+#: cogs/adventure/__init__.py:656
 msgid "You died on your mission. Try again!"
 msgstr "Arrggh! Ye went t' Davy Jones, matey! Sail again!"
 
-#: cogs/adventure/__init__.py:638
+#: cogs/adventure/__init__.py:737
 msgid "Adventure Completed"
 msgstr "Ye did it! Yarrrrrrr"
 
-#: cogs/adventure/__init__.py:640
+#: cogs/adventure/__init__.py:739
 #, python-brace-format
 msgid ""
 "You have completed your adventure and received **${gold}** as well as a new "
@@ -5084,25 +4622,25 @@ msgstr ""
 "{stat}Value: **{value}**\n"
 "Knowledge captured: **{xp}** XP."
 
-#: cogs/adventure/__init__.py:646
+#: cogs/adventure/__init__.py:745
 msgid "Loot item"
 msgstr "Loot item"
 
-#: cogs/adventure/__init__.py:650
+#: cogs/adventure/__init__.py:749
 #, python-brace-format
 msgid "Damage: **{damage}**\n"
 msgstr "Hurtin': **{damage}**\n"
 
-#: cogs/adventure/__init__.py:652
+#: cogs/adventure/__init__.py:751
 #, python-brace-format
 msgid "Armor: **{armor}**\n"
 msgstr "Protectin': **{armor}**\n"
 
-#: cogs/adventure/__init__.py:669
+#: cogs/adventure/__init__.py:768
 msgid "Cancels your current adventure."
 msgstr "Cancels yer current voyage an' abandon ship."
 
-#: cogs/adventure/__init__.py:673
+#: cogs/adventure/__init__.py:772
 msgid ""
 "Cancels your ongoing adventure and allows you to start a new one right away. "
 "You will not receive any rewards if you cancel your adventure."
@@ -5110,16 +4648,16 @@ msgstr ""
 "Cancels yer ongoing voyage an' abandon ship allowing ye t' set sail a new "
 "one right away. Ye will not receive any bounties if ye cancel yer voyage."
 
-#: cogs/adventure/__init__.py:676
+#: cogs/adventure/__init__.py:775
 msgid "Are you sure you want to cancel your current adventure?"
 msgstr ""
 "Sail ho! Aarrr ye sure ye want t' cancel yer current voyage an' abandon ship?"
 
-#: cogs/adventure/__init__.py:679
+#: cogs/adventure/__init__.py:778
 msgid "Did not cancel your adventure. The journey continues..."
 msgstr "Did nah cancel yer voyage. The sailing continues..."
 
-#: cogs/adventure/__init__.py:694
+#: cogs/adventure/__init__.py:793
 #, python-brace-format
 msgid ""
 "Canceled your mission. Use `{prefix}adventure [missionID]` to start a new "
@@ -5128,11 +4666,11 @@ msgstr ""
 "Abandoned ship! Use `{prefix}adventure [missionid]` t' set sail fer a new "
 "voyage!"
 
-#: cogs/adventure/__init__.py:700
+#: cogs/adventure/__init__.py:799
 msgid "Show some adventure stats"
 msgstr "Reveal yer tale stats"
 
-#: cogs/adventure/__init__.py:704
+#: cogs/adventure/__init__.py:803
 msgid ""
 "Shows your overall adventure death and completed count, including your "
 "success rate."
@@ -5140,7 +4678,7 @@ msgstr ""
 "Reveals yer overall trips t' Davy Jones' locker and completed voyages count, "
 "including yer success rate."
 
-#: cogs/adventure/__init__.py:716
+#: cogs/adventure/__init__.py:815
 #, python-brace-format
 msgid ""
 "Out of **{total}** adventures, you died **{deaths}** times and survived "
@@ -5157,17 +4695,17 @@ msgstr "Reveals manifest o' cooldowns"
 msgid "Lists all your cooldowns, including your adventure timer."
 msgstr "Reveals manifest o' cooldowns, includin' yer voyage timer."
 
-#: cogs/shard_communication/__init__.py:377 cogs/guild/__init__.py:1534
+#: cogs/shard_communication/__init__.py:377 cogs/guild/__init__.py:1542
 msgid "You don't have any active cooldown at the moment."
 msgstr "Arrrrr! Ye ain't got any active cooldown at th' moment, matey."
 
-#: cogs/shard_communication/__init__.py:379 cogs/guild/__init__.py:1536
-#: cogs/alliance/__init__.py:935
+#: cogs/shard_communication/__init__.py:379 cogs/guild/__init__.py:1544
+#: cogs/alliance/__init__.py:943
 msgid "Commands on cooldown:"
 msgstr "Arrrrr matey! Yer commands on cooldown:"
 
-#: cogs/shard_communication/__init__.py:384 cogs/guild/__init__.py:1541
-#: cogs/alliance/__init__.py:940
+#: cogs/shard_communication/__init__.py:384 cogs/guild/__init__.py:1549
+#: cogs/alliance/__init__.py:948
 #, python-brace-format
 msgid "{cmd} is on cooldown and will be available after {time}"
 msgstr "{cmd} be on cooldown an' be available after {time}"
@@ -5190,7 +4728,14 @@ msgid "Launcher is dead, that is really bad."
 msgstr ""
 "Launcher be trapped in Davy Jones' locker, that be mighty bilge-suckin'."
 
-#: cogs/gambling/__init__.py:226
+#: cogs/gambling/__init__.py:349
+#, python-brace-format
+msgid ""
+"The dealer has a {pretty_dealer} for a total of {dealer}\n"
+"You have a {pretty_player} for a total of {player}"
+msgstr ""
+
+#: cogs/gambling/__init__.py:382
 #, python-brace-format
 msgid ""
 "The dealer has a {pretty_dealer} for a total of {dealer}\n"
@@ -5201,80 +4746,72 @@ msgstr ""
 "Ye 'ave a {pretty_player} fer a total o' {player}\n"
 "{additional}"
 
-#: cogs/gambling/__init__.py:248
-msgid ""
-"Would you like insurance? It will cost half your bet and will get you 2:1 "
-"back if the dealer has a blackjack. Else it is gone."
-msgstr ""
-"Would ye like insurance, matey? It'll cost half yer bet an' will get ye 2:1 "
-"back if th' dealer has a blackjack. Else it be gone."
-
-#: cogs/gambling/__init__.py:260
+#: cogs/gambling/__init__.py:431
 msgid "The dealer got a blackjack. You had insurance and lost nothing."
 msgstr "Th' dealer got a blackjack. Ye 'ad insurance an' lost naught."
 
-#: cogs/gambling/__init__.py:267
+#: cogs/gambling/__init__.py:439
 #, python-brace-format
 msgid "The dealer got a blackjack. You lost **${money}**."
 msgstr "Th' dealer got a blackjack. Ye lost **${money}**."
 
-#: cogs/gambling/__init__.py:273
+#: cogs/gambling/__init__.py:446
 #, python-brace-format
 msgid "You got a blackjack and won **${money}**!"
 msgstr "Ye got a blackjack and won **${money}**, ye scabrous, cheatin' clod!"
 
-#: cogs/gambling/__init__.py:311
+#: cogs/gambling/__init__.py:475
 msgid "Blackjack timed out... You lost your money!"
 msgstr "Arrggh! Blackjack timed out... Ye lost yer doubloons!"
 
-#: cogs/gambling/__init__.py:335
+#: cogs/gambling/__init__.py:496
 msgid "Split current hand and switched to the second side."
 msgstr "Aye! Split current hand an' switched ta the second side."
 
-#: cogs/gambling/__init__.py:341
+#: cogs/gambling/__init__.py:500
 msgid "Switched to the other side."
 msgstr "Aye! Switched ta the other side."
 
-#: cogs/gambling/__init__.py:345
+#: cogs/gambling/__init__.py:505
 msgid "Invalid. You're too poor and lose the match."
 msgstr ""
 "Invalid. Ye aarrr too poor an' lose the match, ye scabrous, cheatin' clod."
 
-#: cogs/gambling/__init__.py:374
+#: cogs/gambling/__init__.py:530
 msgid "You doubled your bid in exchange for only receiving one more card."
 msgstr "Ye doubled yer bid in exchange fer only receivin' one moarr card."
 
-#: cogs/gambling/__init__.py:388
+#: cogs/gambling/__init__.py:539
 #, python-brace-format
 msgid "You busted and lost **${money}**."
 msgstr "Ye busted an' lost **${money}**."
 
-#: cogs/gambling/__init__.py:394
+#: cogs/gambling/__init__.py:546
 #, python-brace-format
 msgid "Dealer busts and you won **${money}**!"
 msgstr "Dealer busts an' ye won **${money}**, ye scabrous, cheatin' clod!"
 
-#: cogs/gambling/__init__.py:403
+#: cogs/gambling/__init__.py:556
 #, python-brace-format
 msgid "You have a higher score than the dealer and have won **${money}**"
 msgstr "Ye 'ave a higher score than th' dealer an' 'ave won **${money}**"
 
-#: cogs/gambling/__init__.py:411
+#: cogs/gambling/__init__.py:565
 #, python-brace-format
 msgid "Dealer has a higher score than you and wins. You lost **${money}**."
 msgstr ""
 "Dealer 'as a higher score than ye an' wins. Ye lost **${money}**, landlubber."
 
-#: cogs/gambling/__init__.py:418
+#: cogs/gambling/__init__.py:573
 #, python-brace-format
 msgid "It's a tie, you got your **${money}** back."
 msgstr "It be a tie, ye got yer **${money}** back, matey."
 
-#: cogs/gambling/__init__.py:431
+#: cogs/gambling/__init__.py:587
 msgid "Draw a card."
 msgstr "Draw a card."
 
-#: cogs/gambling/__init__.py:437
+#: cogs/gambling/__init__.py:593
 msgid ""
 "`[enemy]` - A user who has a profile; defaults to None\n"
 "            `[money]` - The bet money. A whole number that can be 0 or "
@@ -5300,15 +4837,15 @@ msgstr ""
 "mentioned.\n"
 "            (This command has a cooldown o' 15 seconds.)"
 
-#: cogs/gambling/__init__.py:452
+#: cogs/gambling/__init__.py:608
 msgid "Please choose someone else."
 msgstr "Arrggh! Ye must choose someone else, matey."
 
-#: cogs/gambling/__init__.py:454
+#: cogs/gambling/__init__.py:610
 msgid "You should choose a human to play with you."
 msgstr "Arrggh! Ye should choose a human sailor t' play with ye."
 
-#: cogs/gambling/__init__.py:476
+#: cogs/gambling/__init__.py:632
 #, python-brace-format
 msgid ""
 "{author} challenges {enemy} to a game of Draw for **${money}**. Do you "
@@ -5317,13 +4854,13 @@ msgstr ""
 "Shiver me timbers! {author} challenges {enemy} t' a game o' Draw fer **"
 "${money}**. Do ye accept?"
 
-#: cogs/gambling/__init__.py:489
+#: cogs/gambling/__init__.py:645
 #, python-brace-format
 msgid ""
 "They declined. They don't want to play a game of Draw with you {author}."
 msgstr "They said nay. They ain't playin' a game o' Draw wit' ye {author}."
 
-#: cogs/gambling/__init__.py:497
+#: cogs/gambling/__init__.py:653
 #, python-brace-format
 msgid ""
 "They didn't choose anything. It seems they're not interested to play a game "
@@ -5332,12 +4869,12 @@ msgstr ""
 "Arrggh! They did nah choose anythin'. It seems they'rrr nah interested t' "
 "play a game o' Draw wit' ye {author}."
 
-#: cogs/gambling/__init__.py:505 cogs/gambling/__init__.py:668
+#: cogs/gambling/__init__.py:661 cogs/gambling/__init__.py:824
 #, python-brace-format
 msgid "{enemy} You don't have enough money to play."
 msgstr "Avast {enemy}! Ye ain't got enough doubloons t' play."
 
-#: cogs/gambling/__init__.py:532
+#: cogs/gambling/__init__.py:688
 msgid ""
 "Cards ran out. This is a very rare issue that could mean image files for "
 "cards have become insufficient. Please report this issue to the bot "
@@ -5347,31 +4884,31 @@ msgstr ""
 "fer cards 'ave become insufficient. Please report this foul sea ta the bot "
 "developers crew."
 
-#: cogs/gambling/__init__.py:554
+#: cogs/gambling/__init__.py:710
 #, python-brace-format
 msgid "Nobody won. {author} and {enemy} tied."
 msgstr "No sailor won. {author} an' {enemy} tied."
 
-#: cogs/gambling/__init__.py:576
+#: cogs/gambling/__init__.py:732
 #, python-brace-format
 msgid "{winner} won the Draw vs {loser}! Congratulations!"
 msgstr "Yarrrrr! {winner} won th' Draw vs {loser}! Congratulations, matey!"
 
-#: cogs/gambling/__init__.py:581
+#: cogs/gambling/__init__.py:737
 #, python-brace-format
 msgid "{author}, while playing against {enemy}, you drew:"
 msgstr "{author}, while playin' against {enemy}, ye drew:"
 
-#: cogs/gambling/__init__.py:589
+#: cogs/gambling/__init__.py:745
 #, python-brace-format
 msgid "{enemy}, while playing against {author}, you drew:"
 msgstr "{enemy}, while playin' against {author}, ye drew:"
 
-#: cogs/gambling/__init__.py:603
+#: cogs/gambling/__init__.py:759
 msgid "Break the tie?"
 msgstr "Mateys be breaking th' tie?"
 
-#: cogs/gambling/__init__.py:605
+#: cogs/gambling/__init__.py:761
 #, python-brace-format
 msgid ""
 "{author}, {enemy} You tied. Do you want to break the tie by playing again "
@@ -5380,25 +4917,25 @@ msgstr ""
 "{author}, {enemy} Ye tied. Do ye want t' break th' tie by playin' again fer "
 "**${money}**?"
 
-#: cogs/gambling/__init__.py:645
+#: cogs/gambling/__init__.py:801
 msgid "One of you or both didn't react on time."
 msgstr "One o' ye or both did nay react on time, ye scurvy dullards."
 
-#: cogs/gambling/__init__.py:651
+#: cogs/gambling/__init__.py:807
 #, python-brace-format
 msgid "{user} declined to break the tie."
 msgstr "{user} said nay t' break th' tie."
 
-#: cogs/gambling/__init__.py:662
+#: cogs/gambling/__init__.py:818
 #, python-brace-format
 msgid "{author} You don't have enough money to play."
 msgstr "{author} Ye ain't got enough doubloons t' play, ye bilge rat."
 
-#: cogs/gambling/__init__.py:686
+#: cogs/gambling/__init__.py:842
 msgid "Play a game of French Roulette"
 msgstr "Play a game o' French Roulette"
 
-#: cogs/gambling/__init__.py:691
+#: cogs/gambling/__init__.py:847
 msgid ""
 "`<money>` - A whole number from 0 to 100\n"
 "`<bid>` - What to bid on, see below for details\n"
@@ -5472,26 +5009,26 @@ msgstr ""
 "Play at yer own risk.\n"
 "(This command has a cooldown o' 15 seconds.)"
 
-#: cogs/gambling/__init__.py:728
+#: cogs/gambling/__init__.py:884
 msgid ""
 "Your bid input was invalid. Try the help on this command to view examples."
 msgstr ""
 "Arrggh! Yer bid input been invalid. Try th' help on this command t' view "
 "examples."
 
-#: cogs/gambling/__init__.py:734
+#: cogs/gambling/__init__.py:890
 msgid "Show the roulette table"
 msgstr "Reveal th' roulette table"
 
-#: cogs/gambling/__init__.py:737
+#: cogs/gambling/__init__.py:893
 msgid "Sends a picture of a French Roulette table."
 msgstr "Ships a picture o' a French Roulette table."
 
-#: cogs/gambling/__init__.py:742
+#: cogs/gambling/__init__.py:898
 msgid "Toss a coin"
 msgstr "Toss a coin"
 
-#: cogs/gambling/__init__.py:752
+#: cogs/gambling/__init__.py:908
 msgid ""
 "`[side]` - The coin side to bet on, can be heads or tails; defaults to "
 "heads\n"
@@ -5513,21 +5050,21 @@ msgstr ""
 "amount in doubloons. If it be th' other side, ye lose that doubloons.\n"
 "            (This command has a cooldown o' 5 seconds.)"
 
-#: cogs/gambling/__init__.py:785
+#: cogs/gambling/__init__.py:941
 #, python-brace-format
 msgid "{result[1]} It's **{result[0]}**! You won **${amount}**!"
 msgstr "{result[1]} It be **{result[0]}**! Ye won **${amount}**! Yarrrrr!"
 
-#: cogs/gambling/__init__.py:806
+#: cogs/gambling/__init__.py:962
 #, python-brace-format
 msgid "{result[1]} It's **{result[0]}**! You lost **${amount}**!"
 msgstr "{result[1]} It be **{result[0]}**! Ye lost **${amount}**! Arrggh!"
 
-#: cogs/gambling/__init__.py:813
+#: cogs/gambling/__init__.py:969
 msgid "Bet on a specific outcome of an n-sided dice."
 msgstr "Bet on a specific outcome o' an n-sided dice."
 
-#: cogs/gambling/__init__.py:823
+#: cogs/gambling/__init__.py:979
 #, python-brace-format
 msgid ""
 "`[maximum]` - The amount of sides the dice will have, must be greater than "
@@ -5568,16 +5105,16 @@ msgstr ""
 "\n"
 "            (This command has a cooldown o' 5 seconds.)"
 
-#: cogs/gambling/__init__.py:840
+#: cogs/gambling/__init__.py:996
 #, python-brace-format
 msgid "Invalid Tip. Must be in the Range of `1` to `{maximum}`."
 msgstr "Avast! Invalid Tip. Must be in th' Range o' `1` t' `{maximum}`."
 
-#: cogs/gambling/__init__.py:845
+#: cogs/gambling/__init__.py:1001
 msgid "Spend it in a better way. C'mon!"
 msgstr "Spend it in a better way, matey. C'mon!"
 
-#: cogs/gambling/__init__.py:867
+#: cogs/gambling/__init__.py:1023
 #, python-brace-format
 msgid ""
 "You won **${money}**! The random number was `{num}`, you tipped `{tip}`."
@@ -5585,7 +5122,7 @@ msgstr ""
 "Yarrrrr! Ye won **${money}**! Th' random number been `{num}`, ye tipped "
 "`{tip}`."
 
-#: cogs/gambling/__init__.py:894
+#: cogs/gambling/__init__.py:1050
 #, python-brace-format
 msgid ""
 "You lost **${money}**! The random number was `{num}`, you tipped `{tip}`."
@@ -5593,11 +5130,11 @@ msgstr ""
 "Arrggh! Ye lost **${money}**! The random number been `{num}`, ye tipped "
 "`{tip}`."
 
-#: cogs/gambling/__init__.py:901
+#: cogs/gambling/__init__.py:1057
 msgid "Play blackjack against the bot."
 msgstr "Play blackjack against th' bot."
 
-#: cogs/gambling/__init__.py:905
+#: cogs/gambling/__init__.py:1061
 msgid ""
 "`[amount]` - The amount of money you bet, must be between 0 and 1000; "
 "defaults to 0\n"
@@ -5647,11 +5184,11 @@ msgstr ""
 " \n"
 "            (This command has a cooldown o' 5 seconds.)"
 
-#: cogs/gambling/__init__.py:941
+#: cogs/gambling/__init__.py:1097
 msgid "Play double-or-steal"
 msgstr "Play double-or-steal"
 
-#: cogs/gambling/__init__.py:945
+#: cogs/gambling/__init__.py:1101
 msgid ""
 "`[user]` - A discord user with a character; defaults to anyone\n"
 "\n"
@@ -5667,46 +5204,46 @@ msgstr ""
 "            Each round, a pirate can double th' bet played fer, or steal, "
 "removin' th' bet from th' other pirate an' givin' it ta the first."
 
-#: cogs/gambling/__init__.py:952
+#: cogs/gambling/__init__.py:1108
 #, python-brace-format
 msgid "React with 💰 to play double-or-steal with {user}!"
 msgstr "Blimey! React wit' 💰 t' play double-or-steal wit' {user}!"
 
-#: cogs/gambling/__init__.py:975
+#: cogs/gambling/__init__.py:1131
 #, python-brace-format
 msgid "{user} has no character."
 msgstr ""
 "Avast! Ye ain't got a character, {user}. Get off me ship, ye scurvy "
 "landlubber."
 
-#: cogs/gambling/__init__.py:982 cogs/gambling/__init__.py:1050
+#: cogs/gambling/__init__.py:1138 cogs/gambling/__init__.py:1206
 #, python-brace-format
 msgid "{user} is too poor to double."
 msgstr "Bilge rat! {user} be too poor t' double."
 
-#: cogs/gambling/__init__.py:1000
+#: cogs/gambling/__init__.py:1156
 #, python-brace-format
 msgid "Double or steal ${money}?"
 msgstr "Double or plunder ${money}?"
 
-#: cogs/gambling/__init__.py:1001
+#: cogs/gambling/__init__.py:1157
 msgid "Select an action"
 msgstr ""
 
-#: cogs/gambling/__init__.py:1002
+#: cogs/gambling/__init__.py:1158
 msgid "Double"
 msgstr "Double"
 
-#: cogs/gambling/__init__.py:1002
+#: cogs/gambling/__init__.py:1158
 msgid "Steal"
 msgstr "Plunder"
 
-#: cogs/gambling/__init__.py:1038
+#: cogs/gambling/__init__.py:1194
 #, python-brace-format
 msgid "{user} stole **${money}**."
 msgstr "{user} plundered **${money}**."
 
-#: cogs/gambling/__init__.py:1058
+#: cogs/gambling/__init__.py:1214
 #, python-brace-format
 msgid "{user} doubled to **${money}**."
 msgstr "{user} doubled t' **${money}**."
@@ -7377,11 +6914,11 @@ msgstr ""
 msgid "Download Link"
 msgstr "Download Link"
 
-#: cogs/guild/__init__.py:59
+#: cogs/guild/__init__.py:62
 msgid "Interact with your guild."
 msgstr "Interact wit' yer crew."
 
-#: cogs/guild/__init__.py:63
+#: cogs/guild/__init__.py:66
 msgid ""
 "Interact with your guild. If no subcommand is given, this will show your "
 "guild.\n"
@@ -7401,36 +6938,36 @@ msgstr ""
 "            Pirates cannot join crews by themselves, they must be invited by "
 "th' crew captain or one o' its officers."
 
-#: cogs/guild/__init__.py:69
+#: cogs/guild/__init__.py:72
 msgid "You are not in a guild yet."
 msgstr "Avast! Ye ain't in a guild yet."
 
-#: cogs/guild/__init__.py:87
+#: cogs/guild/__init__.py:90
 msgid "No guild found."
 msgstr "No guild found."
 
-#: cogs/guild/__init__.py:92
+#: cogs/guild/__init__.py:95
 msgid "Members"
 msgstr "Crew Members"
 
-#: cogs/guild/__init__.py:95
+#: cogs/guild/__init__.py:98
 msgid "Current Member Count"
 msgstr "Crew Members Count"
 
-#: cogs/guild/__init__.py:99
+#: cogs/guild/__init__.py:102
 msgid "Leader"
 msgstr "Captain"
 
-#: cogs/guild/__init__.py:109
+#: cogs/guild/__init__.py:112
 #, python-brace-format
 msgid "Guild ID: {id}"
 msgstr "Crew ID: {id}"
 
-#: cogs/guild/__init__.py:114
+#: cogs/guild/__init__.py:117
 msgid "Show a specific guild"
 msgstr "Reveal a specific crew"
 
-#: cogs/guild/__init__.py:118
+#: cogs/guild/__init__.py:121
 msgid ""
 "`<by>` - The guild's name (format `guild:name`, i.e. `guild:Adrian's "
 "Refuge`), its ID (format `id:number`, i.e. `id:5003`), or a person in the "
@@ -7446,16 +6983,16 @@ msgstr ""
 "            Reveals a specific crew's info. Ye can spy out crews by its name "
 "o' callin', its ID, or a crewmate in that crew."
 
-#: cogs/guild/__init__.py:136
+#: cogs/guild/__init__.py:139
 #, python-brace-format
 msgid "**{user}** does not have a guild."
 msgstr "Arrggh! **{user}** ain't in a crew."
 
-#: cogs/guild/__init__.py:141
+#: cogs/guild/__init__.py:144
 msgid "Show the best guilds by GvG wins"
 msgstr "Reveal th' best crews by GvG wins"
 
-#: cogs/guild/__init__.py:145
+#: cogs/guild/__init__.py:148
 #, python-brace-format
 msgid ""
 "Shows the top 10 guilds ordered by Guild vs Guild wins.\n"
@@ -7468,20 +7005,20 @@ msgstr ""
 "            To get moarr GvG wins, th' crew captain or its officers can use "
 "`{prefix}guild battle`."
 
-#: cogs/guild/__init__.py:155
+#: cogs/guild/__init__.py:158
 #, python-brace-format
 msgid "a guild by {leader} with **{wins}** GvG Wins"
 msgstr "a crew by {leader} wit' **{wins}** GvG Wins"
 
-#: cogs/guild/__init__.py:161
+#: cogs/guild/__init__.py:164
 msgid "The Best GvG Guilds"
 msgstr "Th' Best GvG Crews"
 
-#: cogs/guild/__init__.py:166
+#: cogs/guild/__init__.py:169
 msgid "Show a list of your guild members."
 msgstr "Reveals a manifest o' yer crew members."
 
-#: cogs/guild/__init__.py:170
+#: cogs/guild/__init__.py:173
 msgid ""
 "Show a list of your guild members. If a user's name cannot be found for "
 "whatever reason, their user ID is displayed.\n"
@@ -7499,20 +7036,20 @@ msgstr ""
 " \n"
 "            Only players who aarrr part o' a crew can command this."
 
-#: cogs/guild/__init__.py:184
+#: cogs/guild/__init__.py:187
 #, python-brace-format
 msgid "Unknown User (ID {id})"
 msgstr "Unknown Sailor (ID {id})"
 
-#: cogs/guild/__init__.py:188
+#: cogs/guild/__init__.py:191
 msgid "Your guild mates"
 msgstr "Yer crew mates"
 
-#: cogs/guild/__init__.py:193
+#: cogs/guild/__init__.py:196
 msgid "Change your guild's badge"
 msgstr "Change yer crew's badge"
 
-#: cogs/guild/__init__.py:197
+#: cogs/guild/__init__.py:200
 #, python-brace-format
 msgid ""
 "`<number>` - The number of the guild badge to use, ranging from 1 to the "
@@ -7530,11 +7067,11 @@ msgstr ""
 " \n"
 "            Only crew captains can command this."
 
-#: cogs/guild/__init__.py:208
+#: cogs/guild/__init__.py:211
 msgid "Your guild has no badges yet."
 msgstr "Avast! Yer crew ain't got badges yet."
 
-#: cogs/guild/__init__.py:214
+#: cogs/guild/__init__.py:217
 #, python-brace-format
 msgid ""
 "The badge number {number} is not valid, your guild only has {amount} "
@@ -7542,15 +7079,15 @@ msgid ""
 msgstr ""
 "Th' badge number {number} be nah valid, yer crew only has {amount} available."
 
-#: cogs/guild/__init__.py:226
+#: cogs/guild/__init__.py:229
 msgid "Badge updated!"
 msgstr "Yarrrrr! Badge updated!"
 
-#: cogs/guild/__init__.py:231
+#: cogs/guild/__init__.py:234
 msgid "Create a guild"
 msgstr "Create a crew"
 
-#: cogs/guild/__init__.py:235
+#: cogs/guild/__init__.py:238
 #, python-brace-format
 msgid ""
 "Create a guild for $10,000.\n"
@@ -7592,37 +7129,37 @@ msgstr ""
 "            Only players who ain't already in a crew can command this.\n"
 "            (This command has a cooldown o' 10 minutes.)"
 
-#: cogs/guild/__init__.py:255
+#: cogs/guild/__init__.py:258
 msgid "Enter a name for your guild. Maximum length is 20 characters."
 msgstr "Enter a name o' callin' fer yer crew. Maximum length be 20 characters."
 
-#: cogs/guild/__init__.py:261 cogs/guild/__init__.py:272
-#: cogs/guild/__init__.py:278
+#: cogs/guild/__init__.py:264 cogs/guild/__init__.py:275
+#: cogs/guild/__init__.py:281
 msgid "Cancelled guild creation."
 msgstr "Cancelled crew creation. Get off me ship landlubber."
 
-#: cogs/guild/__init__.py:264 cogs/guild/__init__.py:346
+#: cogs/guild/__init__.py:267 cogs/guild/__init__.py:349
 msgid "Guild names musn't exceed 20 characters."
 msgstr "Crew names o' callin' musn't exceed 20 characters."
 
-#: cogs/guild/__init__.py:266
+#: cogs/guild/__init__.py:269
 msgid "Send a link to the guild's icon. Maximum length is 60 characters."
 msgstr "Send a link to th' crew's icon. Maximum length be 60 characters."
 
-#: cogs/guild/__init__.py:298
+#: cogs/guild/__init__.py:301
 msgid "Are you sure? React to create a guild for **$10000**"
 msgstr "Sail ho! Aarrr ye sure? React t' create a crew fer **$10000**"
 
-#: cogs/guild/__init__.py:304
+#: cogs/guild/__init__.py:307
 msgid "A guild creation costs **$10000**, you are too poor."
 msgstr ""
 "Avast ye! A crew creation costs **$10000**, ye aarrr too poor ye bilge rat."
 
-#: cogs/guild/__init__.py:307
+#: cogs/guild/__init__.py:310
 msgid "The guild name is taken."
 msgstr "Avast ye! The crew name o' callin' be taken."
 
-#: cogs/guild/__init__.py:326
+#: cogs/guild/__init__.py:329
 #, python-brace-format
 msgid ""
 "Successfully added your guild **{name}** with a member limit of "
@@ -7637,11 +7174,11 @@ msgstr ""
 "Tip: Ye can use `{prefix}guild channel` in an island where ye be the admin "
 "t' set up th' crew loggin' channel."
 
-#: cogs/guild/__init__.py:333
+#: cogs/guild/__init__.py:336
 msgid "Renames your guild"
 msgstr "Renames your crew"
 
-#: cogs/guild/__init__.py:337
+#: cogs/guild/__init__.py:340
 msgid ""
 "`<new_name>` - The new name for the guild.\n"
 "\n"
@@ -7659,16 +7196,16 @@ msgstr ""
 " \n"
 "            Only crew captains can command this."
 
-#: cogs/guild/__init__.py:351
+#: cogs/guild/__init__.py:354
 #, python-brace-format
 msgid "Successfully renamed your guild to {new_name}"
 msgstr "Aye, aye Capt'n! Successfully renamed yer crew t' {new_name}"
 
-#: cogs/guild/__init__.py:355
+#: cogs/guild/__init__.py:358
 msgid "Give your guild to someone else"
 msgstr "Give yer crew ownership t' another sailor"
 
-#: cogs/guild/__init__.py:359
+#: cogs/guild/__init__.py:362
 msgid ""
 "`<member>` - A discord User with a character, must be a member of your "
 "guild.\n"
@@ -7692,25 +7229,25 @@ msgstr ""
 " \n"
 "            Only crew captains can command this."
 
-#: cogs/guild/__init__.py:371
+#: cogs/guild/__init__.py:374
 msgid "Not a member of your guild."
 msgstr "Avast ye! Not a member of yer crew."
 
-#: cogs/guild/__init__.py:373
+#: cogs/guild/__init__.py:376
 #, python-brace-format
 msgid "Are you sure to transfer guild ownership to {user}?"
 msgstr "Sail ho! Aarrr ye sure t' transfer crew ownership t' {user}?"
 
-#: cogs/guild/__init__.py:402
+#: cogs/guild/__init__.py:405
 #, python-brace-format
 msgid "{user} now leads {guild}."
 msgstr "Yarrrrr! {user} now leads {guild}."
 
-#: cogs/guild/__init__.py:405
+#: cogs/guild/__init__.py:408
 msgid "Promote a guild member to officer."
 msgstr "Promote a crew member t' officer."
 
-#: cogs/guild/__init__.py:409
+#: cogs/guild/__init__.py:412
 #, python-brace-format
 msgid ""
 "`<member>` - A discord User with a character, must be a member of your "
@@ -7751,24 +7288,24 @@ msgstr ""
 " \n"
 "            Only crew captains can command this."
 
-#: cogs/guild/__init__.py:427 cogs/guild/__init__.py:466
+#: cogs/guild/__init__.py:430 cogs/guild/__init__.py:469
 msgid "Target is not a member of your guild."
 msgstr "Avast ye! Target pirate be nah a member o' yer crew."
 
-#: cogs/guild/__init__.py:429
+#: cogs/guild/__init__.py:432
 msgid "This user is already an officer of your guild."
 msgstr "Avast ye! This pirate be already an officer o' yer crew."
 
-#: cogs/guild/__init__.py:447
+#: cogs/guild/__init__.py:450
 #, python-brace-format
 msgid "Done! {member} has been promoted to the rank of `Officer`."
 msgstr "Plundered! {member} been promoted ta the rank o' `Officer`."
 
-#: cogs/guild/__init__.py:453
+#: cogs/guild/__init__.py:456
 msgid "Demote a guild officer to member."
 msgstr "Demote a crew officer t' member."
 
-#: cogs/guild/__init__.py:457
+#: cogs/guild/__init__.py:460
 msgid ""
 "`<member>` - A discord User with a character, must be an officer of your "
 "guild\n"
@@ -7786,20 +7323,20 @@ msgstr ""
 " \n"
 "            Only crew captains can command this."
 
-#: cogs/guild/__init__.py:468
+#: cogs/guild/__init__.py:471
 msgid "This user can't be demoted any further."
 msgstr "Avast ye! This sailor can't be demoted any further."
 
-#: cogs/guild/__init__.py:486
+#: cogs/guild/__init__.py:489
 #, python-brace-format
 msgid "Done! {member} has been demoted to the rank of `Member`."
 msgstr "Plundered! {member} been demoted ta the rank o' `Member`."
 
-#: cogs/guild/__init__.py:492
+#: cogs/guild/__init__.py:495
 msgid "Invite new members to your guild."
 msgstr "Invite new members t' yer crew."
 
-#: cogs/guild/__init__.py:496
+#: cogs/guild/__init__.py:499
 msgid ""
 "`<member>` - A discord user with a character who is not yet in a guild.\n"
 "\n"
@@ -7817,19 +7354,19 @@ msgstr ""
 "\n"
 "            Only crew captains an' officers can command this."
 
-#: cogs/guild/__init__.py:505
+#: cogs/guild/__init__.py:508
 msgid "...me? I'm flattered, but I can't accept this invitation..."
 msgstr "...me? Me flattered, but me can't accept this invitation..."
 
-#: cogs/guild/__init__.py:508 cogs/guild/__init__.py:533
+#: cogs/guild/__init__.py:511 cogs/guild/__init__.py:536
 msgid "That member already has a guild."
 msgstr "Avast ye! That pirate already has a crew."
 
-#: cogs/guild/__init__.py:521
+#: cogs/guild/__init__.py:524
 msgid "Your guild is already at the maximum member count."
 msgstr "Avast ye! Yer crew be already at th' maximum member count."
 
-#: cogs/guild/__init__.py:526
+#: cogs/guild/__init__.py:529
 #, python-brace-format
 msgid ""
 "{newmember}, {author} invites you to join **{name}**. React to join the "
@@ -7838,17 +7375,17 @@ msgstr ""
 "We'd like ye on our crew, {newmember}, yarrrrrrrrr! {author} invites ye t' "
 "join **{name}**. React t' join th' crew."
 
-#: cogs/guild/__init__.py:543
+#: cogs/guild/__init__.py:546
 #, python-brace-format
 msgid "{newmember} is now a member of **{name}**. Welcome!"
 msgstr ""
 "Yarrrrr! {newmember} be now a member o' **{name}**. Welcome aboard, matey!"
 
-#: cogs/guild/__init__.py:550
+#: cogs/guild/__init__.py:553
 msgid "Leave your guild"
 msgstr "Abandon yer crew"
 
-#: cogs/guild/__init__.py:554
+#: cogs/guild/__init__.py:557
 msgid ""
 "Leave your current guild\n"
 "\n"
@@ -7866,15 +7403,15 @@ msgstr ""
 "            Only pirates who aarrr in a crew, except crew captains, can "
 "command this."
 
-#: cogs/guild/__init__.py:577
+#: cogs/guild/__init__.py:580
 msgid "You left your guild."
 msgstr "Ye abandoned yer guild."
 
-#: cogs/guild/__init__.py:580
+#: cogs/guild/__init__.py:583
 msgid "Kick a member from your guild."
 msgstr "Kick an' maroon a member from yer crew."
 
-#: cogs/guild/__init__.py:584
+#: cogs/guild/__init__.py:587
 msgid ""
 "`<member>` - A discord User with a character, must be a member of your "
 "guild\n"
@@ -7902,23 +7439,23 @@ msgstr ""
 " \n"
 "            Only crew captains an' officers can command this."
 
-#: cogs/guild/__init__.py:601
+#: cogs/guild/__init__.py:604
 msgid "Not your guild mate."
 msgstr "Nah yer crewmate."
 
-#: cogs/guild/__init__.py:603
+#: cogs/guild/__init__.py:606
 msgid "You can only kick members."
 msgstr "Ye can only maroon scurvy scallywags."
 
-#: cogs/guild/__init__.py:618
+#: cogs/guild/__init__.py:621
 msgid "The person has been kicked!"
 msgstr "Th' crew member been marooned!"
 
-#: cogs/guild/__init__.py:621
+#: cogs/guild/__init__.py:624
 msgid "Delete your guild"
 msgstr "Destroy yer crew"
 
-#: cogs/guild/__init__.py:625
+#: cogs/guild/__init__.py:628
 msgid ""
 "Delete your guild.\n"
 "\n"
@@ -7940,20 +7477,20 @@ msgstr ""
 " \n"
 "            Only crew captains can command this."
 
-#: cogs/guild/__init__.py:634
+#: cogs/guild/__init__.py:637
 msgid "Are you sure to delete your guild? React to confirm the deletion."
 msgstr ""
 "Sail ho! Aarrr ye sure t' destroy yer crew? React t' confirm th' destruction."
 
-#: cogs/guild/__init__.py:658
+#: cogs/guild/__init__.py:661
 msgid "Successfully deleted your guild."
 msgstr "Aye! Successfully destroyed yer crew.."
 
-#: cogs/guild/__init__.py:661
+#: cogs/guild/__init__.py:664
 msgid "Change your guild's icon"
 msgstr "Change yer crew's icon"
 
-#: cogs/guild/__init__.py:665
+#: cogs/guild/__init__.py:668
 msgid ""
 "`[url]` - The image URL to use as the icon\n"
 "\n"
@@ -7980,20 +7517,20 @@ msgstr ""
 "\n"
 "            Only crew captains can command this."
 
-#: cogs/guild/__init__.py:680
+#: cogs/guild/__init__.py:683
 #, python-brace-format
 msgid "Your current guild icon is: {url}"
 msgstr "Yer current crew icon be: {url}"
 
-#: cogs/guild/__init__.py:704
+#: cogs/guild/__init__.py:707
 msgid "Successfully updated the guild icon."
 msgstr "Plundered! Successfully updated th' crew icon."
 
-#: cogs/guild/__init__.py:707
+#: cogs/guild/__init__.py:710
 msgid "Change your guild description."
 msgstr "Change yer crew description."
 
-#: cogs/guild/__init__.py:711
+#: cogs/guild/__init__.py:714
 msgid ""
 "`<text>` - The text to use as the description. Cannot exceed 200 "
 "characters.\n"
@@ -8013,19 +7550,19 @@ msgstr ""
 " \n"
 "            Only crew captains can command this."
 
-#: cogs/guild/__init__.py:719
+#: cogs/guild/__init__.py:722
 msgid "The text may be up to 200 characters only."
 msgstr "Avast ye! The scribbles may be up to 200 characters only."
 
-#: cogs/guild/__init__.py:730
+#: cogs/guild/__init__.py:733
 msgid "Updated!"
 msgstr "Plundered!"
 
-#: cogs/guild/__init__.py:734
+#: cogs/guild/__init__.py:737
 msgid "Set/update the guild update channel."
 msgstr "Set/update th' crew update channel."
 
-#: cogs/guild/__init__.py:738
+#: cogs/guild/__init__.py:741
 #, python-brace-format
 msgid ""
 "`[channel]` - The channel to send guild logs to, defaults to the channel the "
@@ -8082,29 +7619,29 @@ msgstr ""
 "\n"
 "            Only crew captains can command this."
 
-#: cogs/guild/__init__.py:764
+#: cogs/guild/__init__.py:767
 #, python-brace-format
 msgid "{channel} will become the channel for all logs. Are you sure?"
 msgstr ""
 "Sail ho! {channel} will become th' channel fer all logs. Aarrr ye sure?"
 
-#: cogs/guild/__init__.py:772
+#: cogs/guild/__init__.py:775
 msgid ""
 "I cannot send messages there! This channel cannot be the guild log channel."
 msgstr ""
 "Avast ye! I cannot send bottles thar! This channel cannot be th' crew log "
 "channel."
 
-#: cogs/guild/__init__.py:782
+#: cogs/guild/__init__.py:785
 #, python-brace-format
 msgid "**Guild logs will go to {channel} ** ✅"
 msgstr "**Crew logs will go t' {channel} ** ✅"
 
-#: cogs/guild/__init__.py:786
+#: cogs/guild/__init__.py:789
 msgid "Show the richest guild members"
 msgstr "Reveal th' doubloons hoarding crew members"
 
-#: cogs/guild/__init__.py:790
+#: cogs/guild/__init__.py:793
 msgid ""
 "Displays the top 10 richest guild members of your guild.\n"
 "\n"
@@ -8114,21 +7651,21 @@ msgstr ""
 " \n"
 "            Only pirates in a crew can command this."
 
-#: cogs/guild/__init__.py:807
+#: cogs/guild/__init__.py:810
 #, python-brace-format
 msgid "a character by {charname} with **${money}**"
 msgstr "a pirate by {charname} wit' **${money}**"
 
-#: cogs/guild/__init__.py:813
+#: cogs/guild/__init__.py:816
 #, python-brace-format
 msgid "The Richest Players of {guild}"
 msgstr "Th' Doubloons Hoarders o' {guild}"
 
-#: cogs/guild/__init__.py:821
+#: cogs/guild/__init__.py:824
 msgid "Show the best guild members by XP"
 msgstr "Reveal th' seadogs o' th' crew"
 
-#: cogs/guild/__init__.py:826
+#: cogs/guild/__init__.py:829
 msgid ""
 "Displays the top 10 best guild members of your guild ordered by XP.\n"
 "\n"
@@ -8138,21 +7675,21 @@ msgstr ""
 " \n"
 "            Only pirates in a crew can command this."
 
-#: cogs/guild/__init__.py:844
+#: cogs/guild/__init__.py:847
 #, python-brace-format
 msgid "{name}, a character by {charname} with Level **{level}** (**{xp}** XP)"
 msgstr "{name}, a pirate by {charname} wit' Level **{level}** (**{xp}** XP)"
 
-#: cogs/guild/__init__.py:854
+#: cogs/guild/__init__.py:857
 #, python-brace-format
 msgid "The Best Players of {name}"
 msgstr "The Seadogs o' {name}"
 
-#: cogs/guild/__init__.py:861
+#: cogs/guild/__init__.py:864
 msgid "Add money to your guild bank"
 msgstr "Add doubloons to yer crew bank"
 
-#: cogs/guild/__init__.py:865
+#: cogs/guild/__init__.py:868
 msgid ""
 "`<amount>` - A whole number greater than 0\n"
 "\n"
@@ -8174,22 +7711,22 @@ msgstr ""
 "            Th' doubloons in th' crew bank can be used t' upgrade th' bank "
 "or upgrade buildings/build defenses in yer alliance, if it owns a city."
 
-#: cogs/guild/__init__.py:880
+#: cogs/guild/__init__.py:883
 msgid "The bank would be full."
 msgstr "Avast ye! Th' bank would be full."
 
-#: cogs/guild/__init__.py:907
+#: cogs/guild/__init__.py:910
 #, python-brace-format
 msgid ""
 "Done! Now you have `${profile_money}` and the guild has `${guild_money}`."
 msgstr ""
 "Plundered! Now ye 'ave `${profile_money}` an' th' crew has `${guild_money}`."
 
-#: cogs/guild/__init__.py:913
+#: cogs/guild/__init__.py:916
 msgid "Take money out of the guild bank"
 msgstr "Take doubloons out o' th' crew bank"
 
-#: cogs/guild/__init__.py:917
+#: cogs/guild/__init__.py:920
 msgid ""
 "`<amount>` - The amount of money to take out of the bank, must be greater "
 "than 0 and smaller or equal the amount your guild has\n"
@@ -8209,22 +7746,22 @@ msgstr ""
 " \n"
 "            Only crew captains an' officers can command this."
 
-#: cogs/guild/__init__.py:933 cogs/guild/__init__.py:1007
+#: cogs/guild/__init__.py:936 cogs/guild/__init__.py:1010
 msgid "Your guild is too poor."
 msgstr "Avast ye! Yer crew be too poor, ye scurvy dogs."
 
-#: cogs/guild/__init__.py:960
+#: cogs/guild/__init__.py:963
 #, python-brace-format
 msgid "Successfully gave **${amount}** from your guild bank to {member}."
 msgstr ""
 "Plundered! Ye successfully shipped **${amount}** from yer crew bank "
 "t' {member}."
 
-#: cogs/guild/__init__.py:966
+#: cogs/guild/__init__.py:969
 msgid "Pay out money to multiple members"
 msgstr "Pay out douboons t' multiple mateys"
 
-#: cogs/guild/__init__.py:973
+#: cogs/guild/__init__.py:976
 msgid ""
 "`<amount>` - The amount of money to take out all together, must be greater "
 "than 0\n"
@@ -8262,20 +7799,20 @@ msgstr ""
 " \n"
 "            Only crew captains an' officers can command this."
 
-#: cogs/guild/__init__.py:989
+#: cogs/guild/__init__.py:992
 msgid "You can't distribute money to nobody."
 msgstr "Avast! Ye can't distribute doubloons to nobody, ye scurvy dog."
 
-#: cogs/guild/__init__.py:1029
+#: cogs/guild/__init__.py:1032
 #, python-brace-format
 msgid "Distributed **${money}** (${small_money} for each) to {members}."
 msgstr "Distributed **${money}** (${small_money} fer each) t' {members}."
 
-#: cogs/guild/__init__.py:1034
+#: cogs/guild/__init__.py:1037
 msgid "Upgrade your guild bank"
 msgstr "Upgrade yer crew bank"
 
-#: cogs/guild/__init__.py:1038
+#: cogs/guild/__init__.py:1041
 msgid ""
 "Upgrade your guild's bank, adding space for $250,000 each time.\n"
 "\n"
@@ -8303,11 +7840,11 @@ msgstr ""
 " \n"
 "            Only crew captains can command this."
 
-#: cogs/guild/__init__.py:1057
+#: cogs/guild/__init__.py:1060
 msgid "Your guild already reached the maximum upgrade."
 msgstr "Avast! Yer crew already reached th' maximum upgrade."
 
-#: cogs/guild/__init__.py:1062
+#: cogs/guild/__init__.py:1065
 #, python-brace-format
 msgid ""
 "Your guild is too poor, you got **${money}** but it costs **${price}** to "
@@ -8316,7 +7853,7 @@ msgstr ""
 "Avast! Yer crew be too poor, ye bilge rat, ye got **${money}** but it costs "
 "**${price}** t' upgrade."
 
-#: cogs/guild/__init__.py:1069
+#: cogs/guild/__init__.py:1072
 #, python-brace-format
 msgid ""
 "This will upgrade your guild bank limit to **${newlimit}** for **${cost}**. "
@@ -8325,16 +7862,16 @@ msgstr ""
 "Sail ho! This will upgrade yer crew bank limit t' **${newlimit}** fer **"
 "${cost}**. Pruseed?"
 
-#: cogs/guild/__init__.py:1089
+#: cogs/guild/__init__.py:1092
 #, python-brace-format
 msgid "Your new guild bank limit is now **${limit}**."
 msgstr "Huzzah! Yer new crew bank limit be now **${limit}**."
 
-#: cogs/guild/__init__.py:1094
+#: cogs/guild/__init__.py:1097
 msgid "Battle another guild"
 msgstr "Battle another crew"
 
-#: cogs/guild/__init__.py:1104
+#: cogs/guild/__init__.py:1107
 #, python-brace-format
 msgid ""
 "`<enemy>` - A guild officer or leader\n"
@@ -8391,38 +7928,38 @@ msgstr ""
 "            Only crew captains an' officers can command this.\n"
 "            (This command has a crew cooldown o' 30 minutes.)"
 
-#: cogs/guild/__init__.py:1123
+#: cogs/guild/__init__.py:1126
 msgid "Poor kiddo having no friendos."
 msgstr "Poor landlubber 'avin' no mateys."
 
-#: cogs/guild/__init__.py:1127
+#: cogs/guild/__init__.py:1130
 msgid "One of you both doesn't have a guild."
 msgstr "Avast ye! One o' ye or both ain't got a crew."
 
-#: cogs/guild/__init__.py:1130
+#: cogs/guild/__init__.py:1133
 msgid "Battling your own guild? :face_with_raised_eyebrow:"
 msgstr "Arrggh! Battlin' yer own crew, eh? :face_with_raised_eyebrow:"
 
-#: cogs/guild/__init__.py:1136
+#: cogs/guild/__init__.py:1139
 msgid "One of you both isn't an officer of their guild."
 msgstr "Avast ye! One o' ye or both ain't an officer o' thar crew."
 
-#: cogs/guild/__init__.py:1141
+#: cogs/guild/__init__.py:1144
 msgid "One of the guilds can't pay the price."
 msgstr ""
 "Avast ye! One o' th' crews can't pay th' price. Scurvy landlubbering bilge "
 "rats."
 
-#: cogs/guild/__init__.py:1149
+#: cogs/guild/__init__.py:1152
 msgid "One of the guilds is too small."
 msgstr "Avast ye! One o' th' crews be too small."
 
-#: cogs/guild/__init__.py:1158
+#: cogs/guild/__init__.py:1161
 #, python-brace-format
 msgid "{enemy} didn't want to join your battle, {author}."
 msgstr "Arrggh! {enemy} did nah want t' join your crew battle, {author}."
 
-#: cogs/guild/__init__.py:1165
+#: cogs/guild/__init__.py:1168
 #, python-brace-format
 msgid ""
 "{enemy} accepted the challenge by {author}. Please now nominate members, "
@@ -8432,29 +7969,29 @@ msgstr ""
 "members, {author}. Command `battle nominate @sailor` to add crew mate to yer "
 "team."
 
-#: cogs/guild/__init__.py:1183
+#: cogs/guild/__init__.py:1186
 msgid "That person isn't in your guild."
 msgstr "Avast ye! That sailor ain't in yer crew."
 
-#: cogs/guild/__init__.py:1207
+#: cogs/guild/__init__.py:1210
 #, python-brace-format
 msgid "{user} has been added to your team, {author}."
 msgstr "Yarrrrr! {user} been added t' yer team, {author}."
 
-#: cogs/guild/__init__.py:1212 cogs/guild/__init__.py:1241
+#: cogs/guild/__init__.py:1215 cogs/guild/__init__.py:1244
 msgid "User not found."
 msgstr "Sailor ain't be seen in the ship."
 
-#: cogs/guild/__init__.py:1214
+#: cogs/guild/__init__.py:1217
 msgid "Error when adding this user, please try again"
 msgstr "Sink me! Error when addin' this sailor, please try again"
 
-#: cogs/guild/__init__.py:1219 cogs/guild/__init__.py:1246
+#: cogs/guild/__init__.py:1222 cogs/guild/__init__.py:1249
 msgid "Took to long to add members. Fight cancelled."
 msgstr ""
 "Arrggh ye rum-soaked dullard! Took too long to add members. Fight cancelled."
 
-#: cogs/guild/__init__.py:1223
+#: cogs/guild/__init__.py:1226
 #, python-brace-format
 msgid ""
 "Please now nominate members, {enemy}. Use `battle nominate @user` to add "
@@ -8463,12 +8000,12 @@ msgstr ""
 "Nominate crew members, {enemy}. Command `battle nominate @sailor` to add "
 "crew mate to yer team."
 
-#: cogs/guild/__init__.py:1236
+#: cogs/guild/__init__.py:1239
 #, python-brace-format
 msgid "{user} has been added to your team, {enemy}."
 msgstr "Yarrrrr! {user} been added t' yer team, {enemy}."
 
-#: cogs/guild/__init__.py:1255
+#: cogs/guild/__init__.py:1258
 msgid ""
 "Fight started!\n"
 "Generating battles..."
@@ -8476,7 +8013,7 @@ msgstr ""
 "All hands hoay! Fight started!\n"
 "Generatin' battles..."
 
-#: cogs/guild/__init__.py:1257
+#: cogs/guild/__init__.py:1260
 msgid ""
 "Fight started!\n"
 "Generating battles... Done."
@@ -8484,7 +8021,7 @@ msgstr ""
 "All hands hoay! Fight started!\n"
 "Generatin' battles... Plundered."
 
-#: cogs/guild/__init__.py:1264
+#: cogs/guild/__init__.py:1267
 #, python-brace-format
 msgid ""
 "Guild Battle Fight **{num}** of **{total}**.\n"
@@ -8495,7 +8032,7 @@ msgstr ""
 " **{user}** vs **{user2}**!\n"
 "Battle runnin'..."
 
-#: cogs/guild/__init__.py:1287
+#: cogs/guild/__init__.py:1290
 #, python-brace-format
 msgid ""
 "Winner of **{user}** vs **{user2}** is **{winner}**! Current points: "
@@ -8504,24 +8041,24 @@ msgstr ""
 "Victor o' **{user}** vs **{user2}** be **{winner}**! Current points: "
 "**{wins1}** to **{wins2}**."
 
-#: cogs/guild/__init__.py:1301
+#: cogs/guild/__init__.py:1304
 msgid "Some guild spent the money??? Bad looser!"
 msgstr "Arrggh! Some crew spent th' doubloons??? Bilge-suckin' deckswabbers!"
 
-#: cogs/guild/__init__.py:1324 cogs/guild/__init__.py:1353
+#: cogs/guild/__init__.py:1327 cogs/guild/__init__.py:1356
 #, python-brace-format
 msgid "{guild} won the battle! Congratulations!"
 msgstr "Huzzah! {guild} won th' crew battle! Congratulations, mateys!"
 
-#: cogs/guild/__init__.py:1361
+#: cogs/guild/__init__.py:1364
 msgid "It's a tie!"
 msgstr "Arrrr! It be a tie!"
 
-#: cogs/guild/__init__.py:1368
+#: cogs/guild/__init__.py:1371
 msgid "Start a guild adventure"
 msgstr "Start a crew voyage"
 
-#: cogs/guild/__init__.py:1372
+#: cogs/guild/__init__.py:1375
 msgid ""
 "Start a guild adventure. Guild adventures can happen alongside regular "
 "adventures.\n"
@@ -8560,7 +8097,7 @@ msgstr ""
 "            Only crew captains an' officers can command this.\n"
 "            (This command has a crew cooldown o' 1 hour.)"
 
-#: cogs/guild/__init__.py:1388
+#: cogs/guild/__init__.py:1391
 #, python-brace-format
 msgid ""
 "Your guild is already on an adventure! Use `{prefix}guild status` to view "
@@ -8570,24 +8107,26 @@ msgstr ""
 "spy out how long it still lasts."
 
 #: cogs/guild/__init__.py:1400
+msgid "Join the adventure!"
+msgstr ""
+
+#: cogs/guild/__init__.py:1401
+msgid "You joined the adventure."
+msgstr ""
+
+#: cogs/guild/__init__.py:1407
 #, python-brace-format
 msgid ""
 "{author} seeks a guild adventure for **{guild}**! Follow the link to join! "
 "Unlimited players can join in the next 10 minutes. The minimum of players "
-"required is 3.\n"
-"Please go to https://join.idlerpg.xyz/{id_} to join the guild adventure."
+"required is 3."
 msgstr ""
-"Shiver me timbers me hearties! {author} seeks a crew voyage fer **{guild}**! "
-"Follow th' map t' join! Unlimited players can join in th' next 10 minutes. "
-"Th' minimum crew members required is 3.\n"
-"Navigate to https://join.idlerpg.xyz/{id_} t' join th' crew voyage. Yarrrrr! "
-"Batten down the hatches!."
 
-#: cogs/guild/__init__.py:1426
+#: cogs/guild/__init__.py:1434
 msgid "You didn't get enough other players for the guild adventure."
 msgstr "Arrggh! Capt'n, ye didn't get enough crew members fer th' crew voyage."
 
-#: cogs/guild/__init__.py:1442
+#: cogs/guild/__init__.py:1450
 #, python-brace-format
 msgid ""
 "\n"
@@ -8607,11 +8146,11 @@ msgstr ""
 "Level o' Danger is **{difficulty}**\n"
 "Time it'll take: **{time}**\n"
 
-#: cogs/guild/__init__.py:1459
+#: cogs/guild/__init__.py:1467
 msgid "View your guild adventure's status"
 msgstr "View status o' yer crew voyage"
 
-#: cogs/guild/__init__.py:1463
+#: cogs/guild/__init__.py:1471
 msgid ""
 "Check your guild adventure's status\n"
 "\n"
@@ -8628,7 +8167,7 @@ msgstr ""
 "            Only crew captains an' officers can finish voyages, th' status "
 "can be spied by every crew member."
 
-#: cogs/guild/__init__.py:1473
+#: cogs/guild/__init__.py:1481
 #, python-brace-format
 msgid ""
 "Your guild isn't on an adventure yet. Ask your guild officer to use `{prefix}"
@@ -8637,7 +8176,7 @@ msgstr ""
 "Avast! Yer crew isn't on a voyage yet. Ask yer crew officer t' command "
 "`{prefix}guild adventure` t' start one"
 
-#: cogs/guild/__init__.py:1498
+#: cogs/guild/__init__.py:1506
 #, python-brace-format
 msgid ""
 "Your guild has completed an adventure of difficulty `{difficulty}` and **"
@@ -8646,7 +8185,7 @@ msgstr ""
 "Yarrrrr! Yer crew has completed a voyage o' difficulty `{difficulty}` an' **"
 "${gold}** been added ta the bank."
 
-#: cogs/guild/__init__.py:1505
+#: cogs/guild/__init__.py:1513
 #, python-brace-format
 msgid ""
 "Your guild has completed an adventure of difficulty `{difficulty}`, ask a "
@@ -8655,7 +8194,7 @@ msgstr ""
 "Yarrrrr! Yer crew has completed a voyage o' difficulty `{difficulty}`, ask a "
 "crew officer t' check thar status."
 
-#: cogs/guild/__init__.py:1512
+#: cogs/guild/__init__.py:1520
 #, python-brace-format
 msgid ""
 "Your guild is currently in an adventure with difficulty `{difficulty}`.\n"
@@ -8665,11 +8204,11 @@ msgstr ""
 "`.\n"
 "Time remaining: `{remain}`"
 
-#: cogs/guild/__init__.py:1521
+#: cogs/guild/__init__.py:1529
 msgid "Lists guild-specific cooldowns"
 msgstr "Lists crew-specific cooldowns"
 
-#: cogs/guild/__init__.py:1526
+#: cogs/guild/__init__.py:1534
 msgid ""
 "Lists guild-specific cooldowns, meaning all guild members have these "
 "cooldowns and cannot use the commands."
@@ -8677,7 +8216,7 @@ msgstr ""
 "Lists crew-specific cooldowns, meanin' all crew members 'ave these cooldowns "
 "an' cannot command these yet."
 
-#: cogs/guild/__init__.py:1546
+#: cogs/guild/__init__.py:1554
 #, python-brace-format
 msgid "Guild adventure is running and will be done after {time}"
 msgstr "Crew voyage be sailin' an' will be done after {time}"
@@ -11298,11 +10837,11 @@ msgstr "Avast! The variable name be a reserved keyword."
 msgid "An unknown error occured."
 msgstr "Arrggh! A problem be occurrin'."
 
-#: cogs/alliance/__init__.py:47
+#: cogs/alliance/__init__.py:50
 msgid "Shows cities and owners."
 msgstr "Reveal cities an' owners."
 
-#: cogs/alliance/__init__.py:51
+#: cogs/alliance/__init__.py:54
 msgid ""
 "Show all cities, their tiers, owners, available buildings and current "
 "defense."
@@ -11310,16 +10849,16 @@ msgstr ""
 "Reveal all cities, thar tiers, owners, available buildings an' current "
 "defense."
 
-#: cogs/alliance/__init__.py:59
+#: cogs/alliance/__init__.py:62
 msgid "Cities"
 msgstr "Cities"
 
-#: cogs/alliance/__init__.py:63
+#: cogs/alliance/__init__.py:66
 #, python-brace-format
 msgid "{name} (Tier {tier})"
 msgstr "{name} (Tier {tier})"
 
-#: cogs/alliance/__init__.py:67
+#: cogs/alliance/__init__.py:70
 #, python-brace-format
 msgid ""
 "Owned by {alliance}'s alliance\n"
@@ -11330,11 +10869,11 @@ msgstr ""
 "Buildings: {buildings}\n"
 "Total defense: {defense}"
 
-#: cogs/alliance/__init__.py:86
+#: cogs/alliance/__init__.py:89
 msgid "Interact with your alliance."
 msgstr "Interact with yer fleet."
 
-#: cogs/alliance/__init__.py:91
+#: cogs/alliance/__init__.py:94
 #, python-brace-format
 msgid ""
 "Alliances are groups of guilds. Just like a guild requires at least one "
@@ -11358,7 +10897,7 @@ msgstr ""
 "            See `{prefix}help alliance` fer a list o' commands to interact "
 "with yer fleet!"
 
-#: cogs/alliance/__init__.py:109
+#: cogs/alliance/__init__.py:112
 msgid ""
 "You are not in an alliance. You are alone and may still use all other "
 "alliance commands or invite a guild to create a bigger alliance."
@@ -11366,16 +10905,16 @@ msgstr ""
 "Avast! Ye ain't in a fleet. Ye be alone an' may still use all other fleet "
 "commands or invite a crew to create a bigger fleet."
 
-#: cogs/alliance/__init__.py:115
+#: cogs/alliance/__init__.py:118
 msgid "Your allied guilds"
 msgstr "Yer allied crews"
 
-#: cogs/alliance/__init__.py:120
+#: cogs/alliance/__init__.py:123
 #, python-brace-format
 msgid "Led by {leader}"
 msgstr "Led by Capt'n {leader}"
 
-#: cogs/alliance/__init__.py:127
+#: cogs/alliance/__init__.py:130
 #, python-brace-format
 msgid ""
 "{prefix}alliance buildings | {prefix}alliance defenses | {prefix}alliance "
@@ -11384,11 +10923,11 @@ msgstr ""
 "{prefix}alliance buildings | {prefix}alliance defenses | {prefix}alliance "
 "attack | {prefix}alliance occupy"
 
-#: cogs/alliance/__init__.py:137
+#: cogs/alliance/__init__.py:140
 msgid "Invite a guild to your alliance."
 msgstr "Invite a crew t' yer fleet."
 
-#: cogs/alliance/__init__.py:141
+#: cogs/alliance/__init__.py:144
 #, python-brace-format
 msgid ""
 "`<newleader>` - A user with a character who leads a guild.\n"
@@ -11413,54 +10952,54 @@ msgstr ""
 "            Only the fleet captain can command this.\n"
 "            (This command has a cooldown o' 5 minutes.)"
 
-#: cogs/alliance/__init__.py:151
+#: cogs/alliance/__init__.py:154
 msgid "That member is not in a guild."
 msgstr "Avast ye! That sailor ain't in a crew."
 
-#: cogs/alliance/__init__.py:157
+#: cogs/alliance/__init__.py:160
 msgid "That member is not the leader of their guild."
 msgstr "Avast ye! That member ain't the captain o' thar crew."
 
-#: cogs/alliance/__init__.py:163
+#: cogs/alliance/__init__.py:166
 msgid "This member's guild is already part of your alliance."
 msgstr "Avast ye! This sailor's crew be already part o' yer fleet."
 
-#: cogs/alliance/__init__.py:169
+#: cogs/alliance/__init__.py:172
 msgid "This guild is already in an alliance."
 msgstr "Avast ye! This crew be already in a fleet."
 
-#: cogs/alliance/__init__.py:177
+#: cogs/alliance/__init__.py:180
 msgid "This guild is the leader of another alliance."
 msgstr "Avast ye! This crew be th' leader o' another fleet."
 
-#: cogs/alliance/__init__.py:182
+#: cogs/alliance/__init__.py:185
 #, python-brace-format
 msgid ""
 "{newleader}, {author} invites you to join their alliance. React to join now."
 msgstr ""
 "Ahoy {newleader}! {author} invites ye t' join thar fleet. React t' join now."
 
-#: cogs/alliance/__init__.py:196
+#: cogs/alliance/__init__.py:199
 msgid "Your alliance is full."
 msgstr "Yer fleet be full."
 
-#: cogs/alliance/__init__.py:203
+#: cogs/alliance/__init__.py:206
 #, python-brace-format
 msgid "**{user}'s guild is a single-guild alliance and owns a city."
 msgstr "Avast ye! **{user}'s crew be a single-crew fleet an' owns a city."
 
-#: cogs/alliance/__init__.py:213
+#: cogs/alliance/__init__.py:216
 #, python-brace-format
 msgid "**{newguild}** is now part of your alliance, {user}!"
 msgstr ""
 "Welcome aboard, matey! **{newguild}** be now part o' yer fleet, {user}! "
 "Yarrrrr!"
 
-#: cogs/alliance/__init__.py:219
+#: cogs/alliance/__init__.py:222
 msgid "Leave your alliance"
 msgstr "Abandon yer fleet"
 
-#: cogs/alliance/__init__.py:223
+#: cogs/alliance/__init__.py:226
 #, python-brace-format
 msgid ""
 "Leave your alliance. Once you left your alliance, you will no longer benefit "
@@ -11477,19 +11016,19 @@ msgstr ""
 "alliance kick`).\n"
 "             Only crew captains can command this."
 
-#: cogs/alliance/__init__.py:234
+#: cogs/alliance/__init__.py:237
 msgid "You are the alliance's leading guild and cannot leave it!"
 msgstr "Avast! Ye be th' fleet's leadin' crew an' can nah abandon it!"
 
-#: cogs/alliance/__init__.py:240
+#: cogs/alliance/__init__.py:243
 msgid "Your guild left the alliance."
 msgstr "Yer crew abandoned th' fleet."
 
-#: cogs/alliance/__init__.py:244
+#: cogs/alliance/__init__.py:247
 msgid "Kick a guild from your alliance"
 msgstr "Maroon a crew from yer fleet"
 
-#: cogs/alliance/__init__.py:248
+#: cogs/alliance/__init__.py:251
 msgid ""
 "`<guild_to_kick>` -  A guild's name or ID\n"
 "\n"
@@ -11505,36 +11044,36 @@ msgstr ""
 " \n"
 "            Only th' fleet captain can command this."
 
-#: cogs/alliance/__init__.py:266
+#: cogs/alliance/__init__.py:269
 #, python-brace-format
 msgid ""
 "Cannot find guild `{guild_to_kick}`. Are you sure that's the right name/ID?"
 msgstr ""
 "Can nah find crew `{guild_to_kick}`. Aarrr ye sure that be right name/ID?"
 
-#: cogs/alliance/__init__.py:271
+#: cogs/alliance/__init__.py:274
 msgid "That won't work."
 msgstr "Arrggh! That won't work."
 
-#: cogs/alliance/__init__.py:274
+#: cogs/alliance/__init__.py:277
 msgid "This guild is not in your alliance."
 msgstr "Avast ye! This crew be nah in yer alliance."
 
-#: cogs/alliance/__init__.py:277
+#: cogs/alliance/__init__.py:280
 #, python-brace-format
 msgid "Do you really want to kick **{guild}** from your alliance?"
 msgstr "Do ye really wants t' kick **{guild}** from yer fleet?"
 
-#: cogs/alliance/__init__.py:289
+#: cogs/alliance/__init__.py:292
 #, python-brace-format
 msgid "**{guild}** is no longer part of your alliance."
 msgstr "Aye, aye Capt'n! **{guild}** be no longer part o' yer fleet."
 
-#: cogs/alliance/__init__.py:302
+#: cogs/alliance/__init__.py:305
 msgid "Build buildings or defenses"
 msgstr "Build buildings or defenses"
 
-#: cogs/alliance/__init__.py:306
+#: cogs/alliance/__init__.py:309
 #, python-brace-format
 msgid ""
 "Build buildings `{prefix}alliance build building` or defenses `{prefix}"
@@ -11543,7 +11082,7 @@ msgstr ""
 "Build buildings `{prefix}alliance build building` or defenses `{prefix}"
 "alliance build defense`."
 
-#: cogs/alliance/__init__.py:309
+#: cogs/alliance/__init__.py:312
 msgid ""
 "Please use one of these subcommands:\n"
 "\n"
@@ -11551,11 +11090,11 @@ msgstr ""
 "Please use one o' these subcommands:\n"
 "\n"
 
-#: cogs/alliance/__init__.py:315
+#: cogs/alliance/__init__.py:318
 msgid "Upgrade a building in your city."
 msgstr "Upgrade a building in yer city."
 
-#: cogs/alliance/__init__.py:319
+#: cogs/alliance/__init__.py:322
 #, python-brace-format
 msgid ""
 "`<name>` - The name of the building to upgrade.\n"
@@ -11591,7 +11130,7 @@ msgstr ""
 "            Only th' fleet captain can command this.\n"
 "            (This command has a cooldown o' 5 minutes)"
 
-#: cogs/alliance/__init__.py:341
+#: cogs/alliance/__init__.py:344
 #, python-brace-format
 msgid ""
 "Invalid building. Please use `{prefix}{cmd} [thief/raid/trade/adventure]` or "
@@ -11600,11 +11139,11 @@ msgstr ""
 "Avast ye! Invalid buildin'. Command `{prefix}{cmd} [thief/raid/trade/"
 "adventure]` or loot out th' possible buildings in yer city."
 
-#: cogs/alliance/__init__.py:349
+#: cogs/alliance/__init__.py:352
 msgid "This building is fully upgraded."
 msgstr "Avast ye! This building be fully upgraded."
 
-#: cogs/alliance/__init__.py:353
+#: cogs/alliance/__init__.py:356
 #, python-brace-format
 msgid ""
 "Are you sure you want to upgrade the **{name} building** to level "
@@ -11613,7 +11152,7 @@ msgstr ""
 "Sail ho! Aarrr ye sure ye want t' upgrade th' **{name} building** t' level "
 "{new_level}? This will cost $**{price}**."
 
-#: cogs/alliance/__init__.py:362
+#: cogs/alliance/__init__.py:365
 #, python-brace-format
 msgid ""
 "Your guild doesn't have enough money to upgrade the city's {name} building."
@@ -11621,7 +11160,7 @@ msgstr ""
 "Avast! Yer crew ain't got enough doubloons t' upgrade the city's {name} "
 "building."
 
-#: cogs/alliance/__init__.py:389
+#: cogs/alliance/__init__.py:392
 #, python-brace-format
 msgid ""
 "Successfully upgraded the city's {name} building to level **{new_level}**"
@@ -11629,11 +11168,11 @@ msgstr ""
 "Aye, aye Capt'n! Successfully upgraded th' city's {name} building to level "
 "**{new_level}**"
 
-#: cogs/alliance/__init__.py:398
+#: cogs/alliance/__init__.py:401
 msgid "Build a defense in your city."
 msgstr "Build a defense in yer city."
 
-#: cogs/alliance/__init__.py:402
+#: cogs/alliance/__init__.py:405
 msgid ""
 "Build some defensive buildings or place troops in your cities. The following "
 "are available:\n"
@@ -11675,20 +11214,20 @@ msgstr ""
 "            Only th' fleet captain can command this.\n"
 "            (This command has a cooldown o' 1 minute)"
 
-#: cogs/alliance/__init__.py:431
+#: cogs/alliance/__init__.py:434
 #, python-brace-format
 msgid "Invalid defense. Please use `{prefix}{cmd} [{buildings}]`."
 msgstr "Avast ye! Invalid defense. Please use `{prefix}{cmd} [{buildings}]`."
 
-#: cogs/alliance/__init__.py:447
+#: cogs/alliance/__init__.py:450
 msgid "Your city is under attack. Defenses cannot be built."
 msgstr "Avast! Yer city be under attack. Defenses cannot be built."
 
-#: cogs/alliance/__init__.py:454
+#: cogs/alliance/__init__.py:457
 msgid "You may only build up to 10 defenses."
 msgstr "Avast! Ye may only build up to 10 defenses."
 
-#: cogs/alliance/__init__.py:457
+#: cogs/alliance/__init__.py:460
 #, python-brace-format
 msgid ""
 "Are you sure you want to build a **{defense}**? This will cost $**{price}**."
@@ -11696,23 +11235,23 @@ msgstr ""
 "Sail ho! Aarrr ye sure ye want t' build a **{defense}**? This will cost "
 "$**{price}**."
 
-#: cogs/alliance/__init__.py:468
+#: cogs/alliance/__init__.py:471
 #, python-brace-format
 msgid "Your guild doesn't have enough money to build a {defense}."
 msgstr ""
 "Avast! Yer guild ain't got enough doubloons to build a {defense}, ye bilge "
 "rats."
 
-#: cogs/alliance/__init__.py:494
+#: cogs/alliance/__init__.py:497
 #, python-brace-format
 msgid "Successfully built a {defense}."
 msgstr "Aye, aye Capt'n! Successfully built a {defense}."
 
-#: cogs/alliance/__init__.py:497
+#: cogs/alliance/__init__.py:500
 msgid "Lists your city's buildings."
 msgstr "Lists yer city's buildings."
 
-#: cogs/alliance/__init__.py:501
+#: cogs/alliance/__init__.py:504
 #, python-brace-format
 msgid ""
 "Lists all buildings in your city, along with their level. These buildings "
@@ -11745,21 +11284,21 @@ msgstr ""
 " \n"
 "            Yer fleet must own a city to command this."
 
-#: cogs/alliance/__init__.py:520
+#: cogs/alliance/__init__.py:523
 #, python-brace-format
 msgid "{city}'s buildings"
 msgstr "{city}'s buildings"
 
-#: cogs/alliance/__init__.py:527
+#: cogs/alliance/__init__.py:530
 #, python-brace-format
 msgid "Level {level}"
 msgstr "Level {level}"
 
-#: cogs/alliance/__init__.py:533
+#: cogs/alliance/__init__.py:536
 msgid "Lists your city's defenses."
 msgstr "Lists yer city's defenses."
 
-#: cogs/alliance/__init__.py:537
+#: cogs/alliance/__init__.py:540
 msgid ""
 "Lists your city’s defenses and view the HP left for each.\n"
 "\n"
@@ -11769,30 +11308,30 @@ msgstr ""
 " \n"
 "            Yer alliance must own a city to command this."
 
-#: cogs/alliance/__init__.py:554
+#: cogs/alliance/__init__.py:557
 #, python-brace-format
 msgid "{city}'s defenses"
 msgstr "{city}'s defenses"
 
-#: cogs/alliance/__init__.py:561
+#: cogs/alliance/__init__.py:564
 #, python-brace-format
 msgid "HP: {hp}, Defense: {defense}"
 msgstr "HP: {hp}, Defense: {defense}"
 
-#: cogs/alliance/__init__.py:568
+#: cogs/alliance/__init__.py:571
 msgid "None built"
 msgstr "None built"
 
-#: cogs/alliance/__init__.py:569
+#: cogs/alliance/__init__.py:572
 #, python-brace-format
 msgid "Use {prefix}alliance build defense [name]"
 msgstr "Command {prefix}alliance build defense [name]"
 
-#: cogs/alliance/__init__.py:578
+#: cogs/alliance/__init__.py:581
 msgid "Abandon your city"
 msgstr "Abandon yer city"
 
-#: cogs/alliance/__init__.py:582
+#: cogs/alliance/__init__.py:585
 msgid ""
 "Abandoning your city will immediately make all alliance members lose all "
 "passive bonuses offered by the city's buildings and the city ownership will "
@@ -11808,20 +11347,20 @@ msgstr ""
 "            Yer fleet must own a city to use this here command.\n"
 "            Only the fleet captain can command this."
 
-#: cogs/alliance/__init__.py:588
+#: cogs/alliance/__init__.py:591
 msgid "Are you sure you want to give up control of your city?"
 msgstr "Sail ho! Aarrr ye sure ye want to give up control o' yer city?"
 
-#: cogs/alliance/__init__.py:596
+#: cogs/alliance/__init__.py:599
 #, python-brace-format
 msgid "{city} was abandoned."
 msgstr "Aye, aye Capt'n! Abandoned {city}."
 
-#: cogs/alliance/__init__.py:602
+#: cogs/alliance/__init__.py:605
 msgid "Take over a city."
 msgstr "Take o'er a city."
 
-#: cogs/alliance/__init__.py:606
+#: cogs/alliance/__init__.py:609
 #, python-brace-format
 msgid ""
 "`<city>` - The name of a city. You can check the city names with `{prefix}"
@@ -11854,22 +11393,22 @@ msgstr ""
 "            Ye cannot occupy a city if yer fleet already owns one.\n"
 "            Only the fleet captain can command this."
 
-#: cogs/alliance/__init__.py:618
+#: cogs/alliance/__init__.py:621
 msgid "Invalid city name."
 msgstr "Avast ye! Invalid city name."
 
-#: cogs/alliance/__init__.py:627
+#: cogs/alliance/__init__.py:630
 #, python-brace-format
 msgid "The city is occupied by **{amount}** defensive fortifications."
 msgstr ""
 "Avast ye! The city be occupied by **{amount}** defensive fortifications."
 
-#: cogs/alliance/__init__.py:632
+#: cogs/alliance/__init__.py:635
 #, python-brace-format
 msgid "{city} was just occupied and stands under protection."
 msgstr "Avast ye! {city} been just occupied an' stands under protection."
 
-#: cogs/alliance/__init__.py:644
+#: cogs/alliance/__init__.py:647
 #, python-brace-format
 msgid ""
 "Your alliance now rules **{city}**. You should immediately buy defenses. You "
@@ -11878,11 +11417,11 @@ msgstr ""
 "Yarrrrr! Yer fleet now rules **{city}**. Ye should immediately buy defenses. "
 "Ye 'ave **15 minutes** to build defenses before others can occupy th' city!"
 
-#: cogs/alliance/__init__.py:658
+#: cogs/alliance/__init__.py:661
 msgid "Attack a city"
 msgstr "Attack a city"
 
-#: cogs/alliance/__init__.py:662
+#: cogs/alliance/__init__.py:665
 #, python-brace-format
 msgid ""
 "`<city>` - The name of a city. You can check the city names with `{prefix}"
@@ -11944,56 +11483,60 @@ msgstr ""
 "            Only the fleet captain can command this.\n"
 "            (This command has a cooldown o' 2 hours.)"
 
-#: cogs/alliance/__init__.py:683
+#: cogs/alliance/__init__.py:686
 msgid "Invalid city."
 msgstr "Invalid city."
 
-#: cogs/alliance/__init__.py:688 cogs/alliance/__init__.py:719
+#: cogs/alliance/__init__.py:691 cogs/alliance/__init__.py:722
 #, python-brace-format
 msgid "**{city}** has just been attacked. Have some mercy!"
 msgstr "Avast ye! **{city}** has just been attacked. 'ave some mercy!"
 
-#: cogs/alliance/__init__.py:692 cogs/alliance/__init__.py:723
+#: cogs/alliance/__init__.py:695 cogs/alliance/__init__.py:726
 #, python-brace-format
 msgid "**{city}** is already under attack."
 msgstr "Avast ye! **{city}** be already under attack."
 
-#: cogs/alliance/__init__.py:714
+#: cogs/alliance/__init__.py:717
 msgid "The city is without defenses already."
 msgstr "Avast ye! The city be without defenses already."
 
 #: cogs/alliance/__init__.py:735
+msgid "Join the attack!"
+msgstr ""
+
+#: cogs/alliance/__init__.py:736
+msgid "You joined the attack."
+msgstr ""
+
+#: cogs/alliance/__init__.py:742
 #, python-brace-format
 msgid ""
-"**{user}** wants to attack **{city}** with **{alliance_name}**'s alliance. "
-"Head to https://join.idlerpg.xyz/{id_} to join the attack!"
+"**{user}** wants to attack **{city}** with **{alliance_name}**'s alliance."
 msgstr ""
-"Shiver me timbers me hearties! **{user}** wants to attack **{city}** with "
-"**{alliance_name}**'s fleet. Navigate to https://join.idlerpg.xyz/{id_} t' "
-"join th' attack!"
 
-#: cogs/alliance/__init__.py:773
+#: cogs/alliance/__init__.py:781
 msgid "Noone joined."
 msgstr "Noone joined."
 
-#: cogs/alliance/__init__.py:781
+#: cogs/alliance/__init__.py:789
 #, python-brace-format
 msgid "Attack on **{city}** starting with **{amount}** attackers!"
 msgstr ""
 "Arrrrrr! Attack on **{city}** startin' with **{amount}** attackers! Fire in "
 "the hole!"
 
-#: cogs/alliance/__init__.py:803 cogs/alliance/__init__.py:827
-#: cogs/alliance/__init__.py:864 cogs/alliance/__init__.py:875
+#: cogs/alliance/__init__.py:811 cogs/alliance/__init__.py:835
+#: cogs/alliance/__init__.py:872 cogs/alliance/__init__.py:883
 msgid "Alliance Wars"
 msgstr "Alliance Wars"
 
-#: cogs/alliance/__init__.py:805
+#: cogs/alliance/__init__.py:813
 #, python-brace-format
 msgid "**{alliance_name}** destroyed a {defense} in {city}!"
 msgstr "Yarrrrr! **{alliance_name}** destroyed a {defense} in {city}!"
 
-#: cogs/alliance/__init__.py:829
+#: cogs/alliance/__init__.py:837
 #, python-brace-format
 msgid ""
 "**{alliance_name}** hit a {defense} in {city} for {damage} damage! (Now {hp} "
@@ -12002,31 +11545,31 @@ msgstr ""
 "**{alliance_name}** hit a {defense} in {city} fer {damage} damage! (Now {hp} "
 "HP)"
 
-#: cogs/alliance/__init__.py:865
+#: cogs/alliance/__init__.py:873
 #, python-brace-format
 msgid "**{user}** got killed in {city}!"
 msgstr "Arrggh! **{user}** got killed in {city}!"
 
-#: cogs/alliance/__init__.py:877
+#: cogs/alliance/__init__.py:885
 #, python-brace-format
 msgid "**{user}** got hit in {city} for {damage} damage! (Now {hp} HP)"
 msgstr "**{user}** got hurt in {city} fer {damage} damage! (Now {hp} HP)"
 
-#: cogs/alliance/__init__.py:898
+#: cogs/alliance/__init__.py:906
 #, python-brace-format
 msgid "**{alliance_name}** destroyed defenses in **{city}**!"
 msgstr "Yarrrrr! **{alliance_name}** destroyed defenses in **{city}**!"
 
-#: cogs/alliance/__init__.py:908
+#: cogs/alliance/__init__.py:916
 #, python-brace-format
 msgid "**{alliance_name}** failed to destroy defenses in **{city}**!"
 msgstr "Arrggh! **{alliance_name}** failed t' destroy defenses in **{city}**!"
 
-#: cogs/alliance/__init__.py:917
+#: cogs/alliance/__init__.py:925
 msgid "Lists alliance-specific cooldowns"
 msgstr "Lists fleet-specific cooldowns"
 
-#: cogs/alliance/__init__.py:922
+#: cogs/alliance/__init__.py:930
 msgid ""
 "Lists alliance-specific cooldowns, meaning all alliance members have these "
 "cooldowns and cannot use the commands."
@@ -12034,7 +11577,7 @@ msgstr ""
 "Lists fleet-specific cooldowns, meanin' all fleet members 'ave these "
 "cooldowns an' can nah use the commands."
 
-#: cogs/alliance/__init__.py:933
+#: cogs/alliance/__init__.py:941
 msgid "Your alliance does not have any active cooldown at the moment."
 msgstr "Yer fleet ain't got any active cooldown at th' moment."
 
@@ -12310,11 +11853,11 @@ msgstr ""
 msgid "No game here."
 msgstr ""
 
-#: cogs/werewolf/__init__.py:43
+#: cogs/werewolf/__init__.py:46
 msgid "Starts a game of Werewolf"
 msgstr ""
 
-#: cogs/werewolf/__init__.py:54
+#: cogs/werewolf/__init__.py:57
 #, python-brace-format
 msgid ""
 "\n"
@@ -12346,17 +11889,17 @@ msgid ""
 "            "
 msgstr ""
 
-#: cogs/werewolf/__init__.py:89
+#: cogs/werewolf/__init__.py:92
 #, python-brace-format
 msgid "Invalid game mode. Use `{prefix}help ww` to get help on this command."
 msgstr ""
 
-#: cogs/werewolf/__init__.py:99
+#: cogs/werewolf/__init__.py:102
 #, python-brace-format
 msgid "Invalid game speed. Use `{prefix}help ww` to get help on this command."
 msgstr ""
 
-#: cogs/werewolf/__init__.py:118
+#: cogs/werewolf/__init__.py:121
 #, python-brace-format
 msgid ""
 "Use `{prefix}help ww` to get help on werewolf commands. Use `{prefix}ww "
@@ -12365,35 +11908,43 @@ msgid ""
 "modes and speeds."
 msgstr ""
 
-#: cogs/werewolf/__init__.py:133
+#: cogs/werewolf/__init__.py:134
+msgid "Join the Werewolf game!"
+msgstr ""
+
+#: cogs/werewolf/__init__.py:135
+msgid "You joined the Werewolf game."
+msgstr ""
+
+#: cogs/werewolf/__init__.py:139
 #, python-brace-format
 msgid ""
 "**{author} started a mass-game of Werewolf!**\n"
-"**{mode}** mode on **{speed}** speed. Go to {url} to join in the next 10 "
-"minutes. **Minimum of {min_players} players are required.**"
+"**{mode}** mode on **{speed}** speed. You can join in the next 10 minutes. "
+"**Minimum of {min_players} players are required.**"
 msgstr ""
 
-#: cogs/werewolf/__init__.py:140
+#: cogs/werewolf/__init__.py:146
 msgid "Werewolf Mass-game!"
 msgstr ""
 
-#: cogs/werewolf/__init__.py:154 cogs/werewolf/__init__.py:192
-#: cogs/werewolf/__init__.py:236
+#: cogs/werewolf/__init__.py:158 cogs/werewolf/__init__.py:198
+#: cogs/werewolf/__init__.py:242
 msgid "New to Werewolf?"
 msgstr ""
 
-#: cogs/werewolf/__init__.py:160 cogs/werewolf/__init__.py:199
+#: cogs/werewolf/__init__.py:165 cogs/werewolf/__init__.py:205
 msgid ""
 "An error happened during the Werewolf. Missing Permission: `Embed Links` . "
 "Please check the **Edit Channel > Permissions** and **Server Settings > "
 "Roles** then try again!"
 msgstr ""
 
-#: cogs/werewolf/__init__.py:168
+#: cogs/werewolf/__init__.py:174
 msgid "Werewolf game!"
 msgstr ""
 
-#: cogs/werewolf/__init__.py:170
+#: cogs/werewolf/__init__.py:176
 #, python-brace-format
 msgid ""
 "**{author} started a game of Werewolf!**\n"
@@ -12402,30 +11953,30 @@ msgid ""
 "{num} joined**"
 msgstr ""
 
-#: cogs/werewolf/__init__.py:251 cogs/werewolf/__init__.py:272
+#: cogs/werewolf/__init__.py:257 cogs/werewolf/__init__.py:278
 msgid "An error happened during the Werewolf. Please try again!"
 msgstr ""
 
-#: cogs/werewolf/__init__.py:260
+#: cogs/werewolf/__init__.py:266
 #, python-brace-format
 msgid ""
 "Not enough players joined... We didn't reach the minimum {min_players} "
 "players. 🙁"
 msgstr ""
 
-#: cogs/werewolf/__init__.py:281
+#: cogs/werewolf/__init__.py:287
 msgid "See available werewolf game modes"
 msgstr ""
 
-#: cogs/werewolf/__init__.py:284
+#: cogs/werewolf/__init__.py:290
 msgid "Used to see the list of available werewolf game modes."
 msgstr ""
 
-#: cogs/werewolf/__init__.py:287
+#: cogs/werewolf/__init__.py:293
 msgid "Werewolf Game Modes"
 msgstr ""
 
-#: cogs/werewolf/__init__.py:289
+#: cogs/werewolf/__init__.py:295
 msgid ""
 "**Game modes:** `Classic` (default), `Imbalanced`, `Huntergame`, "
 "`Villagergame`, `Valentines`, `IdleRPG`.\n"
@@ -12444,19 +11995,19 @@ msgid ""
 "Necromancer, Superspreader."
 msgstr ""
 
-#: cogs/werewolf/__init__.py:302
+#: cogs/werewolf/__init__.py:308
 msgid "See available werewolf game speeds"
 msgstr ""
 
-#: cogs/werewolf/__init__.py:305
+#: cogs/werewolf/__init__.py:311
 msgid "Used to see the list of available werewolf game speeds."
 msgstr ""
 
-#: cogs/werewolf/__init__.py:308
+#: cogs/werewolf/__init__.py:314
 msgid "Werewolf Game Speeds"
 msgstr ""
 
-#: cogs/werewolf/__init__.py:310
+#: cogs/werewolf/__init__.py:316
 msgid ""
 "**Game speeds** (in seconds): `Normal`: 60 (default), `Extended`: 90, "
 "`Fast`: 45, `Blitz`: 30\n"
@@ -12475,43 +12026,43 @@ msgid ""
 "no winners."
 msgstr ""
 
-#: cogs/werewolf/__init__.py:321
+#: cogs/werewolf/__init__.py:327
 msgid "Check your werewolf role"
 msgstr ""
 
-#: cogs/werewolf/__init__.py:325
+#: cogs/werewolf/__init__.py:331
 msgid ""
 "Check your role in the Werewolf game and have the bot DM it to you.\n"
 "\n"
 "            You must be part of the ongoing game to get your role."
 msgstr ""
 
-#: cogs/werewolf/__init__.py:332
+#: cogs/werewolf/__init__.py:338
 #, python-brace-format
 msgid "There is no werewolf game in this channel! {author}"
 msgstr ""
 
-#: cogs/werewolf/__init__.py:338
+#: cogs/werewolf/__init__.py:344
 #, python-brace-format
 msgid "The game has yet to be started {author}."
 msgstr ""
 
-#: cogs/werewolf/__init__.py:344
+#: cogs/werewolf/__init__.py:350
 #, python-brace-format
 msgid "You're not in the game {author}."
 msgstr ""
 
-#: cogs/werewolf/__init__.py:351
+#: cogs/werewolf/__init__.py:357
 #, python-brace-format
 msgid "You asked for your role in {channel} but your info couldn't be found."
 msgstr ""
 
-#: cogs/werewolf/__init__.py:359
+#: cogs/werewolf/__init__.py:365
 #, python-brace-format
 msgid " A **{initial_roles}** initially"
 msgstr ""
 
-#: cogs/werewolf/__init__.py:372
+#: cogs/werewolf/__init__.py:378
 #, python-brace-format
 msgid ""
 "Checking your role in {ww_channel}... You are a **{role_name}**!"
@@ -12520,21 +12071,21 @@ msgid ""
 "{description}"
 msgstr ""
 
-#: cogs/werewolf/__init__.py:382
+#: cogs/werewolf/__init__.py:388
 #, python-brace-format
 msgid "I sent a DM containing your role info, {author}."
 msgstr ""
 
-#: cogs/werewolf/__init__.py:388
+#: cogs/werewolf/__init__.py:394
 #, python-brace-format
 msgid "I couldn't send a DM to you {author}."
 msgstr ""
 
-#: cogs/werewolf/__init__.py:393
+#: cogs/werewolf/__init__.py:399
 msgid "View descriptions of game roles"
 msgstr ""
 
-#: cogs/werewolf/__init__.py:397
+#: cogs/werewolf/__init__.py:403
 #, python-brace-format
 msgid ""
 "View the descriptions of roles in the Werewolf game.\n"
@@ -12543,47 +12094,47 @@ msgid ""
 "            "
 msgstr ""
 
-#: cogs/werewolf/__init__.py:402
+#: cogs/werewolf/__init__.py:408
 msgid "(IdleRPG mode only)"
 msgstr ""
 
-#: cogs/werewolf/__init__.py:405
+#: cogs/werewolf/__init__.py:411
 msgid "The Werewolves"
 msgstr ""
 
-#: cogs/werewolf/__init__.py:410
+#: cogs/werewolf/__init__.py:416
 msgid "Must eliminate all other villagers"
 msgstr ""
 
-#: cogs/werewolf/__init__.py:413
+#: cogs/werewolf/__init__.py:419
 msgid "The Villagers"
 msgstr ""
 
-#: cogs/werewolf/__init__.py:420
+#: cogs/werewolf/__init__.py:426
 msgid "Must find and eliminate the werewolves"
 msgstr ""
 
-#: cogs/werewolf/__init__.py:423
+#: cogs/werewolf/__init__.py:429
 msgid "The Ambiguous"
 msgstr ""
 
-#: cogs/werewolf/__init__.py:427
+#: cogs/werewolf/__init__.py:433
 msgid "Make their side win"
 msgstr ""
 
-#: cogs/werewolf/__init__.py:430
+#: cogs/werewolf/__init__.py:436
 msgid "The Loners"
 msgstr ""
 
-#: cogs/werewolf/__init__.py:436
+#: cogs/werewolf/__init__.py:442
 msgid "Must complete their own objective"
 msgstr ""
 
-#: cogs/werewolf/__init__.py:442
+#: cogs/werewolf/__init__.py:448
 msgid "Werewolf Roles"
 msgstr ""
 
-#: cogs/werewolf/__init__.py:444
+#: cogs/werewolf/__init__.py:450
 msgid ""
 "Roles are grouped into \n"
 "1. the Werewolves,\n"
@@ -12593,22 +12144,22 @@ msgid ""
 "**The available roles are:**"
 msgstr ""
 
-#: cogs/werewolf/__init__.py:451
+#: cogs/werewolf/__init__.py:457
 #, python-brace-format
 msgid ""
 "Use `{prefix}ww roles <role>` to view the description on a specific role."
 msgstr ""
 
-#: cogs/werewolf/__init__.py:469
+#: cogs/werewolf/__init__.py:475
 #, python-brace-format
 msgid "{role}? I couldn't find that role."
 msgstr ""
 
-#: cogs/werewolf/__init__.py:479
+#: cogs/werewolf/__init__.py:485
 msgid "Side:"
 msgstr ""
 
-#: cogs/werewolf/__init__.py:490
+#: cogs/werewolf/__init__.py:496
 msgid "Goal:"
 msgstr ""
 
@@ -14216,6 +13767,537 @@ msgid ""
 "📢 {sheriff} got chosen to be the new 🎖️ **Sheriff**. **The vote of the "
 "Sheriff counts as double.**"
 msgstr ""
+
+#, python-brace-format
+#~ msgid ""
+#~ "🎃 As you step out of the door, you open your candy and plastic reveals an "
+#~ "ancient image on top of a chocolate bar, passed along for generations. "
+#~ "You decide to keep it in your `{prefix}eventbackground`s."
+#~ msgstr ""
+#~ "🎃 As ye step out o' the door, ye open yer candy an' plastic reveals an "
+#~ "ancient image atop a chocolate bar, passed along fer generations. Ye "
+#~ "decide t' keep it in yer `{prefix}eventbackground`s."
+
+#~ msgid "You need to be in a voice chat to use this command."
+#~ msgstr "Arrggh! Ye need t' be in a voice chat t' command this, matey."
+
+#~ msgid "The vote did not pass."
+#~ msgstr "Arrrrr! The vote did nah pass."
+
+#, python-brace-format
+#~ msgid ""
+#~ "You need to be playing music, for example with `{prefix}play`, to use "
+#~ "this command."
+#~ msgstr ""
+#~ "Arrggh! Ye need t' be playin' chanties, fer example wit' `{prefix}play`, "
+#~ "t' command this."
+
+#~ msgid "The DJ has locked the music player."
+#~ msgstr "The DJ has locked the chanties player."
+
+#~ msgid "You must be the DJ to use this command."
+#~ msgstr "Arrggh! Ye must be th' DJ to command this, matey."
+
+#, no-python-format
+#~ msgid ""
+#~ "**IdleRPG** is Discord's most advanced medieval RPG bot.\n"
+#~ "We aim to provide the perfect experience at RPG in Discord with minimum "
+#~ "effort for the user.\n"
+#~ "\n"
+#~ "We are not collecting any data apart from your character information and "
+#~ "our transaction logs.\n"
+#~ "The bot is 100% free to use and open source.\n"
+#~ "This bot is developed by people who love to code for a good cause and "
+#~ "improving your gameplay experience.\n"
+#~ "\n"
+#~ "**Links**\n"
+#~ "<https://git.travitia.xyz/Kenvyra/IdleRPG> - Source Code\n"
+#~ "<https://git.travitia.xyz> - GitLab (Public)\n"
+#~ "<https://idlerpg.xyz> - Bot Website\n"
+#~ "<https://wiki.idlerpg.xyz> - IdleRPG wiki\n"
+#~ "<https://raid.idlerpg.xyz> - Raid Website\n"
+#~ "<https://travitia.xyz> - IdleRPG's next major upgrade\n"
+#~ "<https://idlerpg.xyz> - Our forums\n"
+#~ "<https://public-api.travitia.xyz> - Our public API\n"
+#~ "<https://cloud.idlerpg.xyz> - VPS hosting by IdleRPG\n"
+#~ "<https://github.com/Kenvyra> - Other IdleRPG related code\n"
+#~ "<https://discord.com/terms> - Discord's ToS\n"
+#~ "<https://www.ncpgambling.org/help-treatment/national-"
+#~ "helpline-1-800-522-4700/> - Gambling Helpline"
+#~ msgstr ""
+#~ "**IdleRPG** be Discord's most advanced medieval RPG bot.\n"
+#~ "We aim t' provide th' perfect experience at RPG in Discord with minimum "
+#~ "effort fer th' sailor.\n"
+#~ "\n"
+#~ "We ain't collectin' any data apart from yer character information an' our "
+#~ "transaction logs.\n"
+#~ "Th' bot be 100% free t' use an' open source.\n"
+#~ "This bot be developed by people who love to code fer a jolly cause an' "
+#~ "improvin' yer gameplay experience.\n"
+#~ " \n"
+#~ "**Charted Courses**\n"
+#~ "<https://git.travitia.xyz/kenvyra/idlerpg> - Source Code\n"
+#~ "<https://git.travitia.xyz> - GitLab (Public)\n"
+#~ "<https://idlerpg.xyz> - Bot Website\n"
+#~ "<https://wiki.idlerpg.xyz> - IdleRPG wiki\n"
+#~ "<https://raid.idlerpg.xyz> - Raid Website\n"
+#~ "<https://travitia.xyz> - IdleRPG's next major upgrade\n"
+#~ "<https://idlerpg.xyz> - Our forums\n"
+#~ "<https://public-api.travitia.xyz> - Our public API\n"
+#~ "<https://cloud.idlerpg.xyz> - VPS hostin' by IdleRPG\n"
+#~ "<https://github.com/kenvyra> - Other IdleRPG related code\n"
+#~ "<https://discord.com/terms> - Discord's ToS\n"
+#~ "<https://www.ncpgamblin.org/help-treatment/national-"
+#~ "helpline-1-800-522-4700/> - Gamblin' Helpline"
+
+#, python-brace-format
+#~ msgid ""
+#~ "{user} wants to skip a track. React if you agree. **{current}/{total}** "
+#~ "voted for it!"
+#~ msgstr ""
+#~ "{user} wants t' skip a chantey. React if ye agree. **{current}/{total}** "
+#~ "said aye!"
+
+#, python-brace-format
+#~ msgid ""
+#~ "{user} wants to pause/resume the player. React if you agree. **{current}/"
+#~ "{total}** voted for it!"
+#~ msgstr ""
+#~ "{user} wants t' pause/resume th' player. React if ye agree. **{current}/"
+#~ "{total}** said aye!"
+
+#, python-brace-format
+#~ msgid ""
+#~ "{user} wants to stop playback. React if you agree. **{current}/{total}** "
+#~ "voted for it!"
+#~ msgstr ""
+#~ "{user} wants t' avast playback. React if ye agree. **{current}/{total}** "
+#~ "said aye!"
+
+#, python-brace-format
+#~ msgid ""
+#~ "{user} wants to change the volume. React if you agree. **{current}/{total}"
+#~ "** voted for it!"
+#~ msgstr ""
+#~ "{user} wants t' change the volume. React if ye agree. **{current}/{total}"
+#~ "** said aye!"
+
+#, python-brace-format
+#~ msgid ""
+#~ "{user} wants to toggle repeating. React if you agree. **{current}/{total}"
+#~ "** voted for it!"
+#~ msgstr ""
+#~ "{user} wants t' toggle repeatin'. React if ye agree. **{current}/{total}"
+#~ "** said aye!"
+
+#, python-brace-format
+#~ msgid ""
+#~ "{user} wants to change the equalizer. React if you agree. **{current}/"
+#~ "{total}** voted for it!"
+#~ msgstr ""
+#~ "{user} wants t' change th' equalizer. React if ye agree. **{current}/"
+#~ "{total}** said aye!"
+
+#~ msgid "Vote passed!"
+#~ msgstr "Vote passed!"
+
+#~ msgid "Choose a result to play"
+#~ msgstr "Choose a result t' play"
+
+#~ msgid ""
+#~ "`<query>` - The query to search a song by\n"
+#~ "\n"
+#~ "            Query for a track and play or add any result to the playlist, "
+#~ "you can choose from a multitude of tracks."
+#~ msgstr ""
+#~ "`<query>` - The query t' search a chantey by\n"
+#~ "\n"
+#~ "            Query fer a track an' play or add any result t' the playlist, "
+#~ "ye can choose from a multitude o' tracks."
+
+#~ msgid "No results..."
+#~ msgstr "Arrggh! No results..."
+
+#~ msgid "Song results"
+#~ msgstr "Chantey results"
+
+#~ msgid "Loading track... This might take up to 3 seconds..."
+#~ msgstr "Loadin' chantey... This might take up t' 3 seconds..."
+
+#~ msgid "Play a song"
+#~ msgstr "Play a chantey"
+
+#, python-brace-format
+#~ msgid ""
+#~ "`<query>` - The query to search a song by\n"
+#~ "\n"
+#~ "            Query for a track and play or add the first result to the "
+#~ "playlist.\n"
+#~ "            If this is not the song you were looking for, try `{prefix}"
+#~ "chooseplay`."
+#~ msgstr ""
+#~ "`<query>` - The query t' search a chantey by\n"
+#~ "\n"
+#~ "            Query fer a track an' play or add th' first result t' the "
+#~ "playlist.\n"
+#~ "            If this be not the chantey ye was lookin' fer, try `{prefix}"
+#~ "chooseplay`."
+
+#~ msgid "Downloading track... This might take up to 3 seconds..."
+#~ msgstr "Downloadin' chantey... This might take up t' 3 seconds..."
+
+#~ msgid "Lock the player"
+#~ msgstr "Lock th' player"
+
+#~ msgid ""
+#~ "Lock/Unlock the player. This allows nobody else to control the music.\n"
+#~ "\n"
+#~ "            Only the session's DJ can use this command."
+#~ msgstr ""
+#~ "Lock/unlock th' player. This allows nobody else t' control th' music.\n"
+#~ " \n"
+#~ "            Only th' session's DJ can command this."
+
+#~ msgid "Toggle repeat"
+#~ msgstr "Toggle repeat"
+
+#~ msgid ""
+#~ "Toggle repeat of the playing queue.\n"
+#~ "\n"
+#~ "            Once a song finishes, it will be added at the end of the "
+#~ "queue automatically.\n"
+#~ "\n"
+#~ "            If there are more than one person in the session and a non-DJ "
+#~ "uses this command, a vote has to pass first."
+#~ msgstr ""
+#~ "Toggle repeat o' th' playin' queue.\n"
+#~ " \n"
+#~ "            Once a chantey finishes, it'll be added at the end o' the "
+#~ "queue automatically.\n"
+#~ " \n"
+#~ "            If thar aarrr moarr than one sailor in the session an' a non-"
+#~ "DJ commands this, a vote has t' pass first."
+
+#~ msgid "Skip the currently playing song."
+#~ msgstr "Skip th' currently playin' chantey."
+
+#~ msgid ""
+#~ "Skip the currently playing song.\n"
+#~ "\n"
+#~ "            If there are more than one person in the session and a non-DJ "
+#~ "uses this command, a vote has to pass first."
+#~ msgstr ""
+#~ "Skip th' currently playin' chantey.\n"
+#~ " \n"
+#~ "            If thar aarrr moarr than one person in th' session an' a non-"
+#~ "DJ commands this, a vote has t' pass first."
+
+#~ msgid "Stops the music"
+#~ msgstr "Avast th' music"
+
+#~ msgid ""
+#~ "Stops the music and leaves voice chat.\n"
+#~ "\n"
+#~ "            If there are more than one person in the session and a non-DJ "
+#~ "uses this command, a vote has to pass first."
+#~ msgstr ""
+#~ "Avast th music an' leaves voice chat.\n"
+#~ " \n"
+#~ "            If thar aarrr moarr than one sailors in th' session an' a non-"
+#~ "DJ commands this, a vote has t' pass first."
+
+#~ msgid "Change the volume"
+#~ msgstr "Change th' volume"
+
+#~ msgid ""
+#~ "Changes the playback's volume.\n"
+#~ "\n"
+#~ "            If there are more than one person in the session and a non-DJ "
+#~ "uses this command, a vote has to pass first."
+#~ msgstr ""
+#~ "Changes th' playback's volume.\n"
+#~ " \n"
+#~ "            If thar aarrr moarr than one sailor in th' session an' a non-"
+#~ "DJ commands this, a vote has t' pass first."
+
+#, python-brace-format
+#~ msgid ""
+#~ "⚠`Playback volume is going to change to {volume} in 5 seconds. To avoid "
+#~ "the sudden earrape, control the volume on client side!`"
+#~ msgstr ""
+#~ "⚠`Playback volume be goin' t' change t' {volume} in 5 seconds. T' avoid "
+#~ "th' sudden earrape, control th' volume on client side!`"
+
+#, python-brace-format
+#~ msgid ":white_check_mark:` Volume successfully changed to {volume}!`"
+#~ msgstr ""
+#~ ":white_check_mark:` Yarrrrr! Volume successfully changed t' {volume}!`"
+
+#~ msgid ""
+#~ "Toggles the music playback's paused state.\n"
+#~ "\n"
+#~ "            If there are more than one person in the session and a non-DJ "
+#~ "uses this command, a vote has to pass first."
+#~ msgstr ""
+#~ "Toggles th' music playback's paused state.\n"
+#~ " \n"
+#~ "            If thar aarrr moarr than one sailor in th' session an' a non-"
+#~ "DJ commands this, a vote has t' pass first."
+
+#~ msgid ":white_check_mark:`Song paused!`"
+#~ msgstr ":white_check_mark:`Yarrrrr! Chantey paused!`"
+
+#~ msgid ":white_check_mark:`Song resumed!`"
+#~ msgstr ":white_check_mark:`Yarrrrr! Chantey resumed!`"
+
+#~ msgid "Change the equalizer"
+#~ msgstr "Change th' equalizer"
+
+#~ msgid ""
+#~ "`<eq>` - The equalizer to use\n"
+#~ "\n"
+#~ "            Sets the equalizer. May be **flat, piano, metal or boost**.\n"
+#~ "            Flat is the standard, piano is quiet, metal boosts high "
+#~ "frequencies and boost boosts low frequencies.\n"
+#~ "\n"
+#~ "            If there are more than one person in the session and a non-DJ "
+#~ "uses this command, a vote has to pass first."
+#~ msgstr ""
+#~ "`<eq>` - The equalizer t' use\n"
+#~ "\n"
+#~ "            Sets th' equalizer. May be **flat, piano, metal or boost**.\n"
+#~ "            Flat be th' standard, piano be quiet, metal boosts high "
+#~ "frequencies an' boost boosts low frequencies.\n"
+#~ " \n"
+#~ "            If thar aarrr moarr than one sailor in th' session an' a non-"
+#~ "DJ commands this, a vote has t' pass first."
+
+#~ msgid "Not a valid equalizer. May be flat, piano, metal or boost."
+#~ msgstr "Nah a valid equalizer. May be flat, piano, metal or boost."
+
+#~ msgid "Shows the current song."
+#~ msgstr "Reveals th' current chantey."
+
+#~ msgid "Displays some information about the currently playing song."
+#~ msgstr "Reveals some information 'bout th' currently playin' chantey."
+
+#~ msgid "Now playing..."
+#~ msgstr "Now playin'..."
+
+#~ msgid "Title"
+#~ msgstr "Title"
+
+#~ msgid "Artist"
+#~ msgstr "Artist"
+
+#~ msgid "Volume"
+#~ msgstr "Volume"
+
+#~ msgid "Playing status"
+#~ msgstr "Playin' status"
+
+#~ msgid "`⏸Paused`"
+#~ msgstr "`⏸Paused`"
+
+#~ msgid "DJ"
+#~ msgstr "DJ"
+
+#~ msgid "Locked"
+#~ msgstr "Locked"
+
+#~ msgid "Yes"
+#~ msgstr "Aye, matey"
+
+#~ msgid "No"
+#~ msgstr "Nay"
+
+#~ msgid "Looping"
+#~ msgstr "Loopin'"
+
+#~ msgid "Explicit"
+#~ msgstr "Explicit"
+
+#~ msgid "Equalizer"
+#~ msgstr "Equalizer"
+
+#, python-brace-format
+#~ msgid "Song requested by: {user}"
+#~ msgstr "Chantey requested by: {user}"
+
+#~ msgid "Show upcoming songs"
+#~ msgstr "Reveal upcoming chanteys"
+
+#~ msgid "Show the next (maximum 5) tracks in the queue."
+#~ msgstr "Reveal th' next (maximum 5) tracks in th' queue."
+
+#~ msgid "Upcoming entries"
+#~ msgstr "Upcomin' chanteys"
+
+#~ msgid "⚠`No more entries left.`"
+#~ msgstr "⚠`Arrggh! No moarr entries left.`"
+
+#~ msgid ""
+#~ "`<query>` - The query to search the song by; defaults to the currently "
+#~ "playing song\n"
+#~ "\n"
+#~ "            Retrieves song lyrics. If no song specified, will check the "
+#~ "current playing song."
+#~ msgstr ""
+#~ "`<query>` - The query t' search th' chantey by; defaults ta the currently "
+#~ "playin' chantey\n"
+#~ "\n"
+#~ "            Retrieves chantey lyrics. If no chantey specified, will check "
+#~ "th' current playin' chantey."
+
+#~ msgid "I am not playing. Please specify a song to look for."
+#~ msgstr "Me ain't playin'. Please specify a chantey t' look fer."
+
+#~ msgid "Please specify a song."
+#~ msgstr "Please specify a chantey."
+
+#~ msgid ":x: Look for a longer query!"
+#~ msgstr ":x: Look fer a longer query!"
+
+#~ msgid "⚠ No results!"
+#~ msgstr "⚠ Arrggh! No results!"
+
+#, python-brace-format
+#~ msgid "🎧 Added {title} to the queue..."
+#~ msgstr "🎧 Added {title} t' th' queue..."
+
+#, python-brace-format
+#~ msgid "🎧 Playing {title}..."
+#~ msgstr "🎧 Playin' {title}..."
+
+#, no-python-format
+#~ msgid ""
+#~ "Active adventures will put you into a 15x15 randomly generated maze. You "
+#~ "will begin in the top left corner (0,0) and your goal is to find the exit "
+#~ "in the bottom right corner (14,14)\n"
+#~ "            You control your character with the arrow reactions below the "
+#~ "message.\n"
+#~ "\n"
+#~ "            You have 1000HP. The adventure ends when you find the exit or "
+#~ "your HP drop to zero.\n"
+#~ "            You can lose HP by getting damaged by traps or enemies.\n"
+#~ "\n"
+#~ "            The maze contains safe spaces and treasures but also traps "
+#~ "and enemies.\n"
+#~ "            Each space has a 10% chance of being a trap. If a space does "
+#~ "not have a trap, it has a 10% chance of having an enemy.\n"
+#~ "            Each maze has 5 treasure chests.\n"
+#~ "\n"
+#~ "            Traps can damage you from 30 to 120 HP.\n"
+#~ "            Enemy damage is based on your own damage. During enemy "
+#~ "fights, you can attack (⚔️), defend (🛡️) or recover HP (❤️)\n"
+#~ "            Treasure chests can have gold up to 25 times your attack + "
+#~ "defense.\n"
+#~ "\n"
+#~ "            If you reach the end, you will receive a special treasure "
+#~ "with gold up to 100 times your attack + defense.\n"
+#~ "\n"
+#~ "            (It is recommended to draw a map of the maze)\n"
+#~ "            (This command has a cooldown of 30 minutes)"
+#~ msgstr ""
+#~ "Yarrrrr! Active adventures will put ye into a 15x15 randomly generated "
+#~ "maze. Ye will begin in th' top left corner (0,0) an' yer goal be t' find "
+#~ "th' exit in th' bottom right corner (14,14)\n"
+#~ "            Ye control yer character with th' arrow reactions below th' "
+#~ "message.\n"
+#~ " \n"
+#~ "            Ye have 1000HP. Th' adventure ends when ye find th' exit or "
+#~ "yer HP drop t' zero.\n"
+#~ "            Ye can lose HP by getting' hurt by traps or enemies.\n"
+#~ " \n"
+#~ "            The maze contains safe spaces an' booties but also traps 'n "
+#~ "enemies.\n"
+#~ "            Each space has a 10% chance o' bein' a trap. If a space ain't "
+#~ "got a trap, it has a 10% chance o' havin' an enemy.\n"
+#~ "            Each maze has 5 coffers.\n"
+#~ " \n"
+#~ "            Traps can hurt ye from 30 to 120 HP.\n"
+#~ "            Enemy damage be based on yer own damage. Durin' enemy fights, "
+#~ "ye can attack (⚔️), defend (🛡️) or recover HP (❤️)\n"
+#~ "            Coffers can have doubloons up t' 25 times yer attack + "
+#~ "defense.\n"
+#~ " \n"
+#~ "            If ye reach th' end, ye will receive a special booty with "
+#~ "doubloons up to 100 times yer attack + defense.\n"
+#~ " \n"
+#~ "            (It be recommended t' chart a map o' th' maze)\n"
+#~ "            (This command has a cooldown o' 30 minutes)"
+
+#~ msgid ""
+#~ "You are going to be in a labyrinth of size 15x15. There are enemies, "
+#~ "treasures and hidden traps. Reach the exit in the bottom right corner for "
+#~ "a huge extra bonus!\n"
+#~ "Are you ready?\n"
+#~ "\n"
+#~ "Tip: Use a silent channel for this, you may want to read all the messages "
+#~ "I will send."
+#~ msgstr ""
+#~ "Ye be goin' t' be in a labyrinth o' size 15x15. Thar aarrr enemies, "
+#~ "booties an' hidden traps. Reach th' exit in th' bottom right corner fer a "
+#~ "huge extra bonus!\n"
+#~ "Aarrr ye ready?\n"
+#~ "\n"
+#~ "Tip: Use a silent channel fer this, ye may want to read all the messages "
+#~ "me will send."
+
+#~ msgid "**Generating a maze...**"
+#~ msgstr "**Generatin' a maze...**"
+
+#, python-brace-format
+#~ msgid "To the {side} is a wall."
+#~ msgstr "To the {side} be a wall."
+
+#, python-brace-format
+#~ msgid "To the {side} is an enemy."
+#~ msgstr "To the {side} be an enemy."
+
+#, python-brace-format
+#~ msgid "To the {side} is a treasure."
+#~ msgstr "To the {side} be a booty."
+
+#, python-brace-format
+#~ msgid "To the {side} is a floor."
+#~ msgstr "To the {side} be a floor."
+
+#~ msgid "The Fight started"
+#~ msgstr "Th' Fight started"
+
+#, python-brace-format
+#~ msgid "The Enemy healed themselves for {hp} HP"
+#~ msgstr "Th' Enemy healed themselves fer {hp} HP"
+
+#~ msgid ""
+#~ "Would you like insurance? It will cost half your bet and will get you 2:1 "
+#~ "back if the dealer has a blackjack. Else it is gone."
+#~ msgstr ""
+#~ "Would ye like insurance, matey? It'll cost half yer bet an' will get ye "
+#~ "2:1 back if th' dealer has a blackjack. Else it be gone."
+
+#, python-brace-format
+#~ msgid ""
+#~ "{author} seeks a guild adventure for **{guild}**! Follow the link to "
+#~ "join! Unlimited players can join in the next 10 minutes. The minimum of "
+#~ "players required is 3.\n"
+#~ "Please go to https://join.idlerpg.xyz/{id_} to join the guild adventure."
+#~ msgstr ""
+#~ "Shiver me timbers me hearties! {author} seeks a crew voyage fer **{guild}"
+#~ "**! Follow th' map t' join! Unlimited players can join in th' next 10 "
+#~ "minutes. Th' minimum crew members required is 3.\n"
+#~ "Navigate to https://join.idlerpg.xyz/{id_} t' join th' crew voyage. "
+#~ "Yarrrrr! Batten down the hatches!."
+
+#, python-brace-format
+#~ msgid ""
+#~ "**{user}** wants to attack **{city}** with **{alliance_name}**'s "
+#~ "alliance. Head to https://join.idlerpg.xyz/{id_} to join the attack!"
+#~ msgstr ""
+#~ "Shiver me timbers me hearties! **{user}** wants to attack **{city}** with "
+#~ "**{alliance_name}**'s fleet. Navigate to https://join.idlerpg.xyz/{id_} "
+#~ "t' join th' attack!"
 
 #, python-brace-format
 #~ msgid ""

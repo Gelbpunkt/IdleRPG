@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-10-11 21:04+0200\n"
+"POT-Creation-Date: 2021-11-08 21:05+0100\n"
 "PO-Revision-Date: 2021-05-26 06:19+0000\n"
 "Last-Translator: Tram Nguyen <ngoctram631992+idlerpg@gmail.com>\n"
 "Language-Team: Vietnamese <http://translate.travitia.xyz/projects/idlerpg/"
@@ -19,11 +19,11 @@ msgstr ""
 "Plural-Forms: nplurals=1; plural=0;\n"
 "X-Generator: Weblate 4.6.2\n"
 
-#: cogs/tournament/__init__.py:43
+#: cogs/tournament/__init__.py:46
 msgid "Start a new tournament"
 msgstr "Bắt đầu mội giải đấu mới"
 
-#: cogs/tournament/__init__.py:47
+#: cogs/tournament/__init__.py:50
 #, python-brace-format
 msgid ""
 "`[prize]` - The amount of money the winner will get\n"
@@ -67,16 +67,20 @@ msgstr ""
 "\n"
 "            (Lệnh này có thời gian chờ 30 giây.)"
 
-#: cogs/tournament/__init__.py:63 cogs/tournament/__init__.py:235
+#: cogs/tournament/__init__.py:66 cogs/tournament/__init__.py:242
 #: cogs/battles/__init__.py:65 cogs/battles/__init__.py:196
-#: cogs/battles/__init__.py:393 cogs/gambling/__init__.py:457
-#: cogs/gambling/__init__.py:761 cogs/profile/__init__.py:1045
+#: cogs/battles/__init__.py:393 cogs/gambling/__init__.py:613
+#: cogs/gambling/__init__.py:917 cogs/profile/__init__.py:1045
 #: cogs/game_master/__init__.py:582 cogs/transaction/__init__.py:407
 #: cogs/transaction/__init__.py:521
 msgid "You are too poor."
 msgstr "Bạn quá nghèo."
 
-#: cogs/tournament/__init__.py:94
+#: cogs/tournament/__init__.py:80 cogs/tournament/__init__.py:256
+msgid "You joined the tournament."
+msgstr ""
+
+#: cogs/tournament/__init__.py:101
 #, python-brace-format
 msgid ""
 "{author} started a tournament! Free entries, prize is **${prize}**! React "
@@ -85,22 +89,22 @@ msgstr ""
 "{author} tổ chức một giải đấu! Tham gia miễn phí, giải thưởng là **${prize}"
 "**! Nhấn ⚔ để tham gia !"
 
-#: cogs/tournament/__init__.py:125
+#: cogs/tournament/__init__.py:132
 #, python-brace-format
 msgid "Noone joined your tournament {author}."
 msgstr "Không ai tham gia giải đấu của bạn {author}."
 
-#: cogs/tournament/__init__.py:136
+#: cogs/tournament/__init__.py:143
 #, python-brace-format
 msgid "{user} joined the tournament."
 msgstr "{user} tham gia vào giải đấu của bạn."
 
-#: cogs/tournament/__init__.py:140 cogs/tournament/__init__.py:310
+#: cogs/tournament/__init__.py:147 cogs/tournament/__init__.py:321
 #, python-brace-format
 msgid "You don't have a character, {user}."
 msgstr "Bạn chưa có nhân vật, {user}."
 
-#: cogs/tournament/__init__.py:146
+#: cogs/tournament/__init__.py:153
 #, python-brace-format
 msgid ""
 "There are **{num}** entries, due to the fact we need a playable tournament, "
@@ -109,30 +113,30 @@ msgstr ""
 "Có **{num}** người tham gia, tuy nhiên để giải đấu có thể hoạt động được, "
 "**{removed}** đã bị loại bỏ."
 
-#: cogs/tournament/__init__.py:153 cogs/tournament/__init__.py:323
+#: cogs/tournament/__init__.py:160 cogs/tournament/__init__.py:334
 #, python-brace-format
 msgid "Tournament started with **{num}** entries."
 msgstr "Giải đấu bắt đầu với **{num}** người tham gia."
 
-#: cogs/tournament/__init__.py:155 cogs/tournament/__init__.py:325
+#: cogs/tournament/__init__.py:162 cogs/tournament/__init__.py:336
 msgid "vs"
 msgstr "vs"
 
-#: cogs/tournament/__init__.py:181 cogs/tournament/__init__.py:427
+#: cogs/tournament/__init__.py:188 cogs/tournament/__init__.py:438
 #, python-brace-format
 msgid "Winner of this match is {winner}!"
 msgstr "Người thắng cuộc là {winner}!"
 
-#: cogs/tournament/__init__.py:185 cogs/tournament/__init__.py:431
+#: cogs/tournament/__init__.py:192 cogs/tournament/__init__.py:442
 msgid "Round Done!"
 msgstr "Vòng đấu kết thúc!"
 
-#: cogs/tournament/__init__.py:188
+#: cogs/tournament/__init__.py:195
 #, python-brace-format
 msgid "Tournament ended! The winner is {winner}."
 msgstr "Giải đấu kết thúc! Người thắng cuộc là {winner}."
 
-#: cogs/tournament/__init__.py:209
+#: cogs/tournament/__init__.py:216
 #, python-brace-format
 msgid ""
 "Tournament ended! The winner is {winner}.\n"
@@ -141,7 +145,7 @@ msgstr ""
 "Giải đấu kết thúc! Người thắng cuộc là {winner}. \n"
 "Tiền thưởng đã được trao!"
 
-#: cogs/tournament/__init__.py:219
+#: cogs/tournament/__init__.py:226
 #, python-brace-format
 msgid ""
 "`[prize]` - The amount of money the winner will get\n"
@@ -185,7 +189,7 @@ msgstr ""
 "\n"
 "            (Lệnh này có thời gian chờ 30 giây.)"
 
-#: cogs/tournament/__init__.py:266
+#: cogs/tournament/__init__.py:277
 #, python-brace-format
 msgid ""
 "{author} started a raid tournament! Free entries, prize is **${prize}**! "
@@ -194,17 +198,17 @@ msgstr ""
 "{author} tổ chức một giải đấu raid! Tham gia miễn phí, giải thưởng là **"
 "${prize}**! Nhấn ⚔ để tham gia!"
 
-#: cogs/tournament/__init__.py:296
+#: cogs/tournament/__init__.py:307
 #, python-brace-format
 msgid "Noone joined your raid tournament {author}."
 msgstr "Không ai tham gia giải đấu raid của bạn {author}."
 
-#: cogs/tournament/__init__.py:306
+#: cogs/tournament/__init__.py:317
 #, python-brace-format
 msgid "{user} joined the raidtournament."
 msgstr "{user} tham gia vào giải đấu raid của bạn."
 
-#: cogs/tournament/__init__.py:316
+#: cogs/tournament/__init__.py:327
 #, python-brace-format
 msgid ""
 "There are **{num}** entries, due to the fact we need a playable raid "
@@ -213,17 +217,17 @@ msgstr ""
 "Có **{num}** người tham gia, tuy nhiên để giải đấu raid có thể hoạt động "
 "được, **{removed}** đã bị loại bỏ."
 
-#: cogs/tournament/__init__.py:350 cogs/battles/__init__.py:274
+#: cogs/tournament/__init__.py:361 cogs/battles/__init__.py:274
 #, python-brace-format
 msgid "Raidbattle {p1} vs. {p2} started!"
 msgstr "Trận raid giữa {p1} vs. {p2} bắt đầu!"
 
-#: cogs/tournament/__init__.py:388 cogs/battles/__init__.py:313
+#: cogs/tournament/__init__.py:399 cogs/battles/__init__.py:313
 #, python-brace-format
 msgid "{attacker} attacks! {defender} takes **{dmg}HP** damage."
 msgstr "{attacker} tấn công! {defender} nhận **{dmg}HP** thiệt hại."
 
-#: cogs/tournament/__init__.py:400 cogs/battles/__init__.py:323
+#: cogs/tournament/__init__.py:411 cogs/battles/__init__.py:323
 #, python-brace-format
 msgid ""
 "{p1} - {hp1} HP left\n"
@@ -232,17 +236,17 @@ msgstr ""
 "{p1} - còn lại {hp1} HP \n"
 "{p2} - còn lại {hp2} HP"
 
-#: cogs/tournament/__init__.py:412 cogs/battles/__init__.py:334
+#: cogs/tournament/__init__.py:423 cogs/battles/__init__.py:334
 #, python-brace-format
 msgid "Action #{number}"
 msgstr "Bắt đầu #{number}"
 
-#: cogs/tournament/__init__.py:434
+#: cogs/tournament/__init__.py:445
 #, python-brace-format
 msgid "Raid Tournament ended! The winner is {winner}."
 msgstr "Giải đấu raid kết thúc! Người thắng cuộc là {winner}."
 
-#: cogs/tournament/__init__.py:455
+#: cogs/tournament/__init__.py:466
 #, python-brace-format
 msgid ""
 "Raid Tournament ended! The winner is {winner}.\n"
@@ -374,19 +378,19 @@ msgstr ""
 "Bạn đi xung quanh và bấm chuông cừa nhà của {waiting}! Đáng tiếc là họ không "
 "có gì cho bạn cả..."
 
-#: cogs/halloween/__init__.py:110
+#: cogs/halloween/__init__.py:113
 #, python-brace-format
 msgid ""
 "🎃 As you step out of the door, you open your candy and plastic reveals an "
 "ancient image on top of a chocolate bar, passed along for generations. You "
-"decide to keep it in your `{prefix}eventbackground`s."
+"decide to keep it in your `{prefix}eventbackgrounds`."
 msgstr ""
 
-#: cogs/halloween/__init__.py:117
+#: cogs/halloween/__init__.py:120
 msgid "Open a trick or treat bag"
 msgstr "Mở túi Trick or treat"
 
-#: cogs/halloween/__init__.py:121
+#: cogs/halloween/__init__.py:124
 #, python-brace-format
 msgid ""
 "Open a trick or treat bag, you can get some with `{prefix}trickortreat`.\n"
@@ -396,65 +400,65 @@ msgid ""
 "            Their value will be between 1 and 200."
 msgstr ""
 
-#: cogs/halloween/__init__.py:129
+#: cogs/halloween/__init__.py:132
 msgid "Seems you haven't got a trick or treat bag yet. Go get some!"
 msgstr ""
 "Có vẻ như bạn chưa có túi Trick or treat nào cả. Tới lúc trick or treat rồi!"
 
-#: cogs/halloween/__init__.py:175 cogs/crates/__init__.py:172
+#: cogs/halloween/__init__.py:178 cogs/crates/__init__.py:172
 #: cogs/classes/__init__.py:722 cogs/valentine/__init__.py:156
 msgid "You gained an item!"
 msgstr "Bạn nhận được một vũ khí!"
 
-#: cogs/halloween/__init__.py:176
+#: cogs/halloween/__init__.py:179
 msgid "You found a new item when opening a trick-or-treat bag!"
 msgstr "Bạn kiếm được một vũ khí khi mở túi Trick or treat!"
 
-#: cogs/halloween/__init__.py:180 cogs/crates/__init__.py:178
+#: cogs/halloween/__init__.py:183 cogs/crates/__init__.py:178
 #: cogs/classes/__init__.py:422 cogs/classes/__init__.py:728
 #: cogs/trading/__init__.py:345 cogs/trading/__init__.py:440
 #: cogs/trading/__init__.py:771 cogs/valentine/__init__.py:162
 msgid "Name"
 msgstr "Tên"
 
-#: cogs/halloween/__init__.py:181 cogs/crates/__init__.py:179
+#: cogs/halloween/__init__.py:184 cogs/crates/__init__.py:179
 #: cogs/classes/__init__.py:729 cogs/trading/__init__.py:346
 #: cogs/trading/__init__.py:441 cogs/trading/__init__.py:772
 #: cogs/valentine/__init__.py:163
 msgid "Type"
 msgstr "Loại"
 
-#: cogs/halloween/__init__.py:182 cogs/crates/__init__.py:180
+#: cogs/halloween/__init__.py:185 cogs/crates/__init__.py:180
 #: cogs/classes/__init__.py:733 cogs/trading/__init__.py:347
 #: cogs/trading/__init__.py:442 cogs/trading/__init__.py:773
 #: cogs/valentine/__init__.py:167
 msgid "Damage"
 msgstr "Sát thương"
 
-#: cogs/halloween/__init__.py:183 cogs/crates/__init__.py:181
+#: cogs/halloween/__init__.py:186 cogs/crates/__init__.py:181
 #: cogs/classes/__init__.py:731 cogs/trading/__init__.py:348
 #: cogs/trading/__init__.py:443 cogs/trading/__init__.py:774
 #: cogs/valentine/__init__.py:165
 msgid "Armor"
 msgstr "Phòng thủ"
 
-#: cogs/halloween/__init__.py:184 cogs/crates/__init__.py:182
+#: cogs/halloween/__init__.py:187 cogs/crates/__init__.py:182
 #: cogs/classes/__init__.py:734 cogs/trading/__init__.py:349
 #: cogs/trading/__init__.py:444 cogs/trading/__init__.py:775
 #: cogs/valentine/__init__.py:168
 msgid "Value"
 msgstr "Giá trị"
 
-#: cogs/halloween/__init__.py:186
+#: cogs/halloween/__init__.py:189
 #, python-brace-format
 msgid "Remaining trick-or-treat bags: {bags}"
 msgstr "Số lượng túi Trick or treat bạn đang có: {bags}"
 
-#: cogs/halloween/__init__.py:194
+#: cogs/halloween/__init__.py:197
 msgid "Shows your trick or treat bags"
 msgstr "Hiển thị các túi Trick or treat của bạn"
 
-#: cogs/halloween/__init__.py:199
+#: cogs/halloween/__init__.py:202
 #, python-brace-format
 msgid ""
 "Shows the amount of trick or treat bags you have. You can get more by using "
@@ -463,7 +467,7 @@ msgstr ""
 "Hiển thị số túi Trick or treat bạn đang có. Bạn có thể kiếm thêm bằng lệnh "
 "`{prefix}trickortreat`."
 
-#: cogs/halloween/__init__.py:203
+#: cogs/halloween/__init__.py:206
 #, python-brace-format
 msgid "You currently have **{trickortreat}** Trick or Treat Bags, {author}!"
 msgstr "Bạn hiện có **{trickortreat}** túi Trick or treat, {author}!"
@@ -1136,13 +1140,13 @@ msgstr ""
 
 #. preserve deletion of admins
 #. preserve renaming of admins
-#: cogs/crates/__init__.py:259 cogs/guild/__init__.py:425
-#: cogs/guild/__init__.py:464 cogs/game_master/__init__.py:197
+#: cogs/crates/__init__.py:259 cogs/guild/__init__.py:428
+#: cogs/guild/__init__.py:467 cogs/game_master/__init__.py:197
 #: cogs/game_master/__init__.py:244
 msgid "Very funny..."
 msgstr "Rất hài..."
 
-#: cogs/crates/__init__.py:262 cogs/guild/__init__.py:926
+#: cogs/crates/__init__.py:262 cogs/guild/__init__.py:929
 #: cogs/profile/__init__.py:1042
 msgid "For me? I'm flattered, but I can't accept this..."
 msgstr "Cho tôi à? Tôi rất vui, nhưng tôi không thể nhận nó được..."
@@ -1251,233 +1255,233 @@ msgstr ""
 "{buyer}, bạn thành công mua **{quantity}** thùng **{emoji} {rarity}** từ "
 "{seller}. Dùng `{prefix}crates` để xem số thùng hiện tại của bạn."
 
-#: cogs/hungergames/__init__.py:48
+#: cogs/hungergames/__init__.py:51
 msgid "Gather as much food as you can"
 msgstr "Thu thập càng nhiều thức ăn càng tốt"
 
-#: cogs/hungergames/__init__.py:49
+#: cogs/hungergames/__init__.py:52
 msgid "gathers as much food as they can"
 msgstr "thu thập càng nhiều thức ăn càng tốt"
 
-#: cogs/hungergames/__init__.py:53
+#: cogs/hungergames/__init__.py:56
 msgid "Grab a backpack and retreat"
 msgstr "Lấy ba lô và rút lui"
 
-#: cogs/hungergames/__init__.py:54
+#: cogs/hungergames/__init__.py:57
 msgid "grabs a backpack and retreats"
 msgstr "lấy ba lô và rút lui"
 
-#: cogs/hungergames/__init__.py:57
+#: cogs/hungergames/__init__.py:60
 msgid "Take a pistol and suicide"
 msgstr "Dùng súng lục tự sát"
 
-#: cogs/hungergames/__init__.py:57
+#: cogs/hungergames/__init__.py:60
 msgid "gives themselves the bullet"
 msgstr "tự bắn mình"
 
-#: cogs/hungergames/__init__.py:58
+#: cogs/hungergames/__init__.py:61
 msgid "Ram a knife in your body"
 msgstr "Đâm mạnh dao vào cơ thể của bạn"
 
-#: cogs/hungergames/__init__.py:58
+#: cogs/hungergames/__init__.py:61
 msgid "commits suicide with a knife"
 msgstr "tự tử bằng dao"
 
-#: cogs/hungergames/__init__.py:60
+#: cogs/hungergames/__init__.py:63
 msgid "Run away from the Cornucopia"
 msgstr ""
 
-#: cogs/hungergames/__init__.py:61
+#: cogs/hungergames/__init__.py:64
 msgid "runs away from the Cornucopia"
 msgstr "chạy trốn khỏi Cornucopia"
 
-#: cogs/hungergames/__init__.py:65
+#: cogs/hungergames/__init__.py:68
 msgid "Search for a pair of Explosives"
 msgstr "Tìm kiếm một cặp chất nổ"
 
-#: cogs/hungergames/__init__.py:66
+#: cogs/hungergames/__init__.py:69
 msgid "finds a bag full of explosives"
 msgstr "tìm thấy một túi đầy chất nổ"
 
-#: cogs/hungergames/__init__.py:69
+#: cogs/hungergames/__init__.py:72
 msgid "Look for water"
 msgstr "Tìm nước"
 
-#: cogs/hungergames/__init__.py:69
+#: cogs/hungergames/__init__.py:72
 msgid "finds a canteen full of water"
 msgstr "tìm thấy một căng tin đầy nước"
 
-#: cogs/hungergames/__init__.py:71
+#: cogs/hungergames/__init__.py:74
 msgid "Get a first aid kit"
 msgstr "Nhận một bộ dụng cụ sơ cứu"
 
-#: cogs/hungergames/__init__.py:72
+#: cogs/hungergames/__init__.py:75
 msgid "clutches a first aid kit and runs away"
 msgstr "nắm chặt một bộ dụng cụ sơ cứu và chạy đi"
 
-#: cogs/hungergames/__init__.py:76
+#: cogs/hungergames/__init__.py:79
 msgid "Grab a backpack"
 msgstr "Lấy ba lô"
 
-#: cogs/hungergames/__init__.py:77
+#: cogs/hungergames/__init__.py:80
 msgid "grabs a backpack, not realizing it is empty"
 msgstr "lấy một cái ba lô, không nhận ra nó trống rỗng"
 
-#: cogs/hungergames/__init__.py:80
+#: cogs/hungergames/__init__.py:83
 msgid "Try to assault USER"
 msgstr "Cố gắng tấn công USER"
 
-#: cogs/hungergames/__init__.py:80
+#: cogs/hungergames/__init__.py:83
 msgid "kills USER"
 msgstr "giết USER"
 
-#: cogs/hungergames/__init__.py:82
+#: cogs/hungergames/__init__.py:85
 msgid "Kill USER at the water"
 msgstr "Giết USER ở dưới nước"
 
-#: cogs/hungergames/__init__.py:83
+#: cogs/hungergames/__init__.py:86
 msgid "assaults USER while they were drinking water at the river"
 msgstr "ám sát USER trong khi họ đang uống nước bên bờ sông"
 
-#: cogs/hungergames/__init__.py:87
+#: cogs/hungergames/__init__.py:90
 msgid "Try to hide some landmines"
 msgstr "Cố gắng giấu một số quả mìn"
 
-#: cogs/hungergames/__init__.py:88
+#: cogs/hungergames/__init__.py:91
 msgid "hides landmines at a few locations"
 msgstr "giấu mìn ở một vài địa điểm"
 
-#: cogs/hungergames/__init__.py:91
+#: cogs/hungergames/__init__.py:94
 msgid "Take a bath"
 msgstr "Đi tắm"
 
-#: cogs/hungergames/__init__.py:91
+#: cogs/hungergames/__init__.py:94
 msgid "baths in the water and enjoys the silence"
 msgstr "tắm trong hồ nước và tận hưởng sự im lặng"
 
-#: cogs/hungergames/__init__.py:94
+#: cogs/hungergames/__init__.py:97
 msgid "kill USER"
 msgstr "giết USER"
 
-#: cogs/hungergames/__init__.py:95
+#: cogs/hungergames/__init__.py:98
 msgid "grill at the fireplace and tell each other spooky stories"
 msgstr "nướng bên lò sưởi và kể cho nhau nghe những câu chuyện ma quái"
 
-#: cogs/hungergames/__init__.py:96
+#: cogs/hungergames/__init__.py:99
 msgid "annoy USER"
 msgstr "chọc giận USER"
 
-#: cogs/hungergames/__init__.py:97 cogs/hungergames/__init__.py:106
+#: cogs/hungergames/__init__.py:100 cogs/hungergames/__init__.py:109
 msgid "kill themselves by walking into a landmine"
 msgstr "tự sát bằng cách đạp một quả mìn"
 
-#: cogs/hungergames/__init__.py:98
+#: cogs/hungergames/__init__.py:101
 msgid "have a small party and get drunk"
 msgstr "có một bữa tiệc nhỏ và say rượu"
 
-#: cogs/hungergames/__init__.py:99
+#: cogs/hungergames/__init__.py:102
 msgid "watch animes together"
 msgstr "cùng nhau xem anime"
 
-#: cogs/hungergames/__init__.py:100
+#: cogs/hungergames/__init__.py:103
 msgid "enjoy the silence"
 msgstr "tận hưởng sự im lặng"
 
-#: cogs/hungergames/__init__.py:101
+#: cogs/hungergames/__init__.py:104
 msgid "attempt to kill USER but fail"
 msgstr "cố giết USER nhưng thất bại"
 
-#: cogs/hungergames/__init__.py:102 cogs/hungergames/__init__.py:108
+#: cogs/hungergames/__init__.py:105 cogs/hungergames/__init__.py:111
 msgid "watch a movie together"
 msgstr "xem một bộ phim cùng nhau"
 
-#: cogs/hungergames/__init__.py:103
+#: cogs/hungergames/__init__.py:106
 msgid "track down USER and kill them silently"
 msgstr "săn lùng USER và âm thầm giết họ"
 
-#: cogs/hungergames/__init__.py:107
+#: cogs/hungergames/__init__.py:110
 msgid "decide they want out of here and commit suicide"
 msgstr "quyết định muốn ra khỏi đây và tự sát"
 
-#: cogs/hungergames/__init__.py:109
+#: cogs/hungergames/__init__.py:112
 msgid "dance YMCA together"
 msgstr "nhảy YMCA cùng nhau"
 
-#: cogs/hungergames/__init__.py:110
+#: cogs/hungergames/__init__.py:113
 msgid "sing songs together"
 msgstr "hát cùng nhau"
 
-#: cogs/hungergames/__init__.py:111
+#: cogs/hungergames/__init__.py:114
 msgid "have a nice romantic evening"
 msgstr "có một đêm lãng mạn"
 
-#: cogs/hungergames/__init__.py:112
+#: cogs/hungergames/__init__.py:115
 msgid "watch the others being dumb"
 msgstr "xem những người khác làm chuyện ngốc"
 
-#: cogs/hungergames/__init__.py:113
+#: cogs/hungergames/__init__.py:116
 msgid "kiss in the moonlight"
 msgstr "hôn dưới ánh trăng"
 
-#: cogs/hungergames/__init__.py:115
+#: cogs/hungergames/__init__.py:118
 msgid "watch a movie together when USER suddenly gets shot by a stranger"
 msgstr "xem phim cùng nhau khi USER đột nhiên bị bắn bở người lạ"
 
-#: cogs/hungergames/__init__.py:120
+#: cogs/hungergames/__init__.py:123
 #, python-brace-format
 msgid "**Round {round}**"
 msgstr "**Vòng {round}**"
 
-#: cogs/hungergames/__init__.py:127
+#: cogs/hungergames/__init__.py:130
 #, python-brace-format
 msgid "Letting {user} choose their action..."
 msgstr "Để {user} chọn hành động..."
 
-#: cogs/hungergames/__init__.py:164
+#: cogs/hungergames/__init__.py:167
 msgid "Choose an action"
 msgstr "Chọn một hành động"
 
-#: cogs/hungergames/__init__.py:174
+#: cogs/hungergames/__init__.py:177
 #, python-brace-format
 msgid "I couldn't send a DM to {user}! Choosing random action..."
 msgstr ""
 "Tôi không thể gửi tin nhắn cho {user}! Chọn một hành động ngẫu nhiên..."
 
-#: cogs/hungergames/__init__.py:183
+#: cogs/hungergames/__init__.py:186
 #, python-brace-format
 msgid "attempts to kill {user} but fails"
 msgstr "cố giết {user} nhưng thất bại"
 
-#: cogs/hungergames/__init__.py:191 cogs/game_master/__init__.py:89
+#: cogs/hungergames/__init__.py:194 cogs/game_master/__init__.py:89
 msgid "Done"
 msgstr "Hoàn thành"
 
-#: cogs/hungergames/__init__.py:211
+#: cogs/hungergames/__init__.py:214
 msgid "do nothing."
 msgstr "không làm gì cả."
 
-#: cogs/hungergames/__init__.py:257
+#: cogs/hungergames/__init__.py:260
 msgid "Team"
 msgstr "Đội"
 
-#: cogs/hungergames/__init__.py:259
+#: cogs/hungergames/__init__.py:262
 msgid "**The cast**"
 msgstr "**Người tham gia**"
 
-#: cogs/hungergames/__init__.py:276
+#: cogs/hungergames/__init__.py:279
 #, python-brace-format
 msgid "This hunger game's winner is {winner}!"
 msgstr "Người chiến thắng của trận hunger game này là {winner}!"
 
-#: cogs/hungergames/__init__.py:281
+#: cogs/hungergames/__init__.py:284
 msgid "Everyone died!"
 msgstr "Tất cả mọi người đều đã chết!"
 
-#: cogs/hungergames/__init__.py:289
+#: cogs/hungergames/__init__.py:292
 msgid "Play the hunger games"
 msgstr ""
 
-#: cogs/hungergames/__init__.py:293
+#: cogs/hungergames/__init__.py:296
 msgid ""
 "Starts the hunger games\n"
 "\n"
@@ -1493,11 +1497,15 @@ msgid ""
 "Sometimes nobody gets to choose, so don't be discouraged. "
 msgstr ""
 
-#: cogs/hungergames/__init__.py:302 cogs/werewolf/__init__.py:77
+#: cogs/hungergames/__init__.py:305 cogs/werewolf/__init__.py:80
 msgid "There is already a game in here!"
 msgstr "Đã có một trò chơi đang diễn ra ở đây!"
 
-#: cogs/hungergames/__init__.py:315
+#: cogs/hungergames/__init__.py:310
+msgid "You joined the Hunger Games."
+msgstr ""
+
+#: cogs/hungergames/__init__.py:323
 #, python-brace-format
 msgid ""
 "{author} started a game of Hunger Games! React with :shallow_pan_of_food: to "
@@ -1506,100 +1514,100 @@ msgstr ""
 "{author} bắt đầu trò chơi hunger game! Nhấn :shallow_pan_of_food: để tham "
 "gia trò chơi! **{num} đã tham gia**"
 
-#: cogs/hungergames/__init__.py:355
+#: cogs/hungergames/__init__.py:363
 msgid "An error happened during the hungergames. Please try again!"
 msgstr ""
 
-#: cogs/hungergames/__init__.py:361
+#: cogs/hungergames/__init__.py:369
 msgid "Not enough players joined..."
 msgstr "Không đủ người chơi tham gia..."
 
-#: cogs/hungergames/__init__.py:369
+#: cogs/hungergames/__init__.py:377
 msgid "An error happened during the hungergame. Please try again!"
 msgstr "Có lỗi khi trò chơi hunger game đang diễn ra. Xin hãy thử lại lần nữa!"
 
-#: cogs/error_handler/__init__.py:92
+#: cogs/error_handler/__init__.py:85
 #, python-brace-format
 msgid "Oops! You forgot a required argument: `{arg}`"
 msgstr "Ôi! Bạn đã quên phần cần thiết trong cú pháp: `{arg}`"
 
-#: cogs/error_handler/__init__.py:98
+#: cogs/error_handler/__init__.py:91
 msgid "The message you referenced was not found."
 msgstr ""
 
-#: cogs/error_handler/__init__.py:100
+#: cogs/error_handler/__init__.py:93
 msgid "The member you referenced was not found."
 msgstr ""
 
-#: cogs/error_handler/__init__.py:102
+#: cogs/error_handler/__init__.py:95
 msgid "The server you referenced was not found."
 msgstr ""
 
-#: cogs/error_handler/__init__.py:104
+#: cogs/error_handler/__init__.py:97
 msgid "The user you referenced was not found."
 msgstr ""
 
-#: cogs/error_handler/__init__.py:106
+#: cogs/error_handler/__init__.py:99
 msgid "The channel you referenced was not found."
 msgstr ""
 
-#: cogs/error_handler/__init__.py:109
+#: cogs/error_handler/__init__.py:102
 msgid "I cannot read messages in the channel you referenced."
 msgstr ""
 
-#: cogs/error_handler/__init__.py:112
+#: cogs/error_handler/__init__.py:105
 msgid "I could not parse a colour from this."
 msgstr ""
 
-#: cogs/error_handler/__init__.py:114
+#: cogs/error_handler/__init__.py:107
 msgid "The role you referenced was not found."
 msgstr ""
 
-#: cogs/error_handler/__init__.py:117
+#: cogs/error_handler/__init__.py:110
 msgid "The invite you referenced is invalid or has expired."
 msgstr ""
 
-#: cogs/error_handler/__init__.py:120
+#: cogs/error_handler/__init__.py:113
 msgid "The emoji you referenced was not found."
 msgstr ""
 
-#: cogs/error_handler/__init__.py:122
+#: cogs/error_handler/__init__.py:115
 msgid "I could not parse a boolean from this."
 msgstr ""
 
-#: cogs/error_handler/__init__.py:128
+#: cogs/error_handler/__init__.py:121
 msgid "The user you specified as a parameter does not have a character."
 msgstr "Người dùng bạn đề cập không có nhân vật."
 
-#: cogs/error_handler/__init__.py:135
+#: cogs/error_handler/__init__.py:128
 msgid ""
 "You did not enter a valid crate rarity. Possible ones are: common (c), "
 "uncommon (u), rare (r), magic (m) and legendary (l)."
 msgstr ""
 
-#: cogs/error_handler/__init__.py:142
+#: cogs/error_handler/__init__.py:135
 msgid "You did not enter a valid coin side. Please use `heads` or `tails`."
 msgstr ""
 "Bạn chưa nhập mặt đồng xu hợp lệ. Xin hãy chọn `heads` (mặt ngửa) hoặc "
 "`tails` (mặt sấp)."
 
-#: cogs/error_handler/__init__.py:149
+#: cogs/error_handler/__init__.py:142
 #, python-brace-format
 msgid ""
 "You entered a date that was out of range. It should be newer than {date}."
 msgstr "Ngày bạn đã nhập nằm ngoài vùng cho phép. Nó phải sau ngày {date}."
 
-#: cogs/error_handler/__init__.py:158
+#: cogs/error_handler/__init__.py:151
 msgid ""
 "You sent an invalid URL. Make sure to send the full URL; it should start "
 "with \"http\" and end with \".png\" or \".jpeg\"."
 msgstr ""
 
-#: cogs/error_handler/__init__.py:163
+#: cogs/error_handler/__init__.py:156
 msgid "You used a malformed argument!"
 msgstr "Bạn đã sử dụng một cú pháp không đúng!"
 
-#: cogs/error_handler/__init__.py:167
+#: cogs/error_handler/__init__.py:160
 #, python-brace-format
 msgid ""
 "You are being rate-limited. Chill down, you can use a command again in {time}"
@@ -1608,31 +1616,31 @@ msgstr ""
 "Bạn đang trong thời gian bị giới hạn. Bình tĩnh nào, bạn có thể thử lại câu "
 "lệnh sau {time} giây."
 
-#: cogs/error_handler/__init__.py:173
+#: cogs/error_handler/__init__.py:166
 #, python-brace-format
 msgid "You are on cooldown. Try again in {time}."
 msgstr "Bạn đang trong thời gian chờ. Thử lại trong {time}."
 
-#: cogs/error_handler/__init__.py:184 cogs/error_handler/__init__.py:223
-#: cogs/error_handler/__init__.py:330
+#: cogs/error_handler/__init__.py:177 cogs/error_handler/__init__.py:216
+#: cogs/error_handler/__init__.py:308
 msgid "Permission denied"
 msgstr "Bạn không có quyền"
 
-#: cogs/error_handler/__init__.py:186
+#: cogs/error_handler/__init__.py:179
 msgid ":x: This command is only avaiable for the bot owner."
 msgstr ":x: Lệnh này chỉ dành cho người chủ bot."
 
-#: cogs/error_handler/__init__.py:193
+#: cogs/error_handler/__init__.py:186
 msgid "You don't have a character yet."
 msgstr "Bạn chưa có nhân vật."
 
-#: cogs/error_handler/__init__.py:197
+#: cogs/error_handler/__init__.py:190
 msgid ""
 "This command requires you to not have created a character yet. You already "
 "have one."
 msgstr "Lệnh này dành cho những người không có nhân vật. Nhưng bạn đã có rồi."
 
-#: cogs/error_handler/__init__.py:204
+#: cogs/error_handler/__init__.py:197
 #, python-brace-format
 msgid ""
 "You need to be following a god for this command. Please use `{prefix}follow` "
@@ -1641,23 +1649,23 @@ msgstr ""
 "Bạn cần phải theo một vị thần để sử dụng lệnh này. Vui lòng dùng `{prefix}"
 "follow` để chọn một."
 
-#: cogs/error_handler/__init__.py:209
+#: cogs/error_handler/__init__.py:202
 msgid "You need to have a guild to use this command."
 msgstr "Bạn cần có một bang hội để sử dụng lệnh này."
 
-#: cogs/error_handler/__init__.py:211
+#: cogs/error_handler/__init__.py:204
 msgid "You need to be in no guild to use this command."
 msgstr "Bạn cần không được ở trong bang hội để sử dụng lệnh này."
 
-#: cogs/error_handler/__init__.py:214
+#: cogs/error_handler/__init__.py:207
 msgid "Your rank in the guild is too low to use this command."
 msgstr "Chức vị của bạn trong bang hội quá thấp để sử dụng lệnh này."
 
-#: cogs/error_handler/__init__.py:218
+#: cogs/error_handler/__init__.py:211
 msgid "You mustn't be the owner of a guild to use this command."
 msgstr "Bạn không được là chủ của bang hội để sử dụng lênh này."
 
-#: cogs/error_handler/__init__.py:225
+#: cogs/error_handler/__init__.py:218
 #, python-brace-format
 msgid ""
 ":x: You don't have the permissions to use this command. It is thought for "
@@ -1666,7 +1674,7 @@ msgstr ""
 ":x: Bạn không có quyền sử dụng lệnh này. Nó dành cho những người thuộc nghề "
 "{error}."
 
-#: cogs/error_handler/__init__.py:234
+#: cogs/error_handler/__init__.py:227
 #, python-brace-format
 msgid ""
 "You are already on an adventure. Use `{prefix}status` to see how long it "
@@ -1675,7 +1683,7 @@ msgstr ""
 "Bạn đang ở trong một cuộc phiêu lưu. Sử dụng `{prefix}status` để xem nó còn "
 "kéo dài bao lâu."
 
-#: cogs/error_handler/__init__.py:241
+#: cogs/error_handler/__init__.py:234
 #, python-brace-format
 msgid ""
 "You need to be on an adventure to use this command. Try `{prefix}adventure`!"
@@ -1683,32 +1691,7 @@ msgstr ""
 "Bạn cần phải ở trong cuộc phiêu lưu để sử dụng lệnh này. Hãy thử `{prefix}"
 "adventure`!"
 
-#: cogs/error_handler/__init__.py:246
-msgid "You need to be in a voice chat to use this command."
-msgstr "Bạn cần phải ở trong phòng voice chat để dùng lệnh này."
-
-#: cogs/error_handler/__init__.py:248
-msgid "The vote did not pass."
-msgstr "Phiếu bầu không được thông qua."
-
-#: cogs/error_handler/__init__.py:252
-#, python-brace-format
-msgid ""
-"You need to be playing music, for example with `{prefix}play`, to use this "
-"command."
-msgstr ""
-"Bạn cần phải đang mở nhạc, ví dụ như bằng lệnh `{prefix}play`, để dùng lệnh "
-"này."
-
-#: cogs/error_handler/__init__.py:257
-msgid "The DJ has locked the music player."
-msgstr "DJ đã chặn phần mềm nhạc này."
-
-#: cogs/error_handler/__init__.py:259
-msgid "You must be the DJ to use this command."
-msgstr "Bạn phải là DJ để dùng lệnh này."
-
-#: cogs/error_handler/__init__.py:263
+#: cogs/error_handler/__init__.py:241
 #, python-brace-format
 msgid ""
 "Your pet has gone missing. Maybe some aliens abducted it? Since you can't "
@@ -1717,12 +1700,12 @@ msgstr ""
 "Bạn đã lạc mất thú cưng. Có thể người ngoài hay tinh đã bắt nó đi? Bởi vì "
 "bạn không thể tìm thấy nó, bây giờ bạn không còn là {profession} nữa"
 
-#: cogs/error_handler/__init__.py:266 cogs/error_handler/__init__.py:286
-#: cogs/error_handler/__init__.py:294 cogs/classes/__init__.py:106
+#: cogs/error_handler/__init__.py:244 cogs/error_handler/__init__.py:264
+#: cogs/error_handler/__init__.py:272 cogs/classes/__init__.py:106
 msgid "Ranger"
 msgstr "Thợ Săn"
 
-#: cogs/error_handler/__init__.py:283
+#: cogs/error_handler/__init__.py:261
 #, python-brace-format
 msgid ""
 "Your pet **{pet}** died! You did not give it enough to eat or drink. Because "
@@ -1731,7 +1714,7 @@ msgstr ""
 "Thú cưng **{pet}** của bạn đã chết! Bạn đã không cho nó ăn hoặc uống đầy đủ. "
 "Vì sự đối xử tệ của bạn, bạn không còn là {profession}."
 
-#: cogs/error_handler/__init__.py:291
+#: cogs/error_handler/__init__.py:269
 #, python-brace-format
 msgid ""
 "Your pet **{pet}** ran away! You did not show it your love enough! Because "
@@ -1740,7 +1723,7 @@ msgstr ""
 "Thú cưng **{pet}** của bạn đã bỏ trốn! Bạn đã không cho nó đầy đủ tình yêu "
 "thương! Vì sự đối xử tệ của bạn, bạn không còn là một {profession}."
 
-#: cogs/error_handler/__init__.py:299
+#: cogs/error_handler/__init__.py:277
 #, python-brace-format
 msgid ""
 "You need to be a {tier} tier donator to use this command. Please head to "
@@ -1751,50 +1734,50 @@ msgstr ""
 "`{prefix}donate` và đảm bảo bạn có tham gia server hỗ trợ của bot nếu bạn "
 "quyết định quyên góp ủng hộ chúng tôi."
 
-#: cogs/error_handler/__init__.py:307
+#: cogs/error_handler/__init__.py:285
 msgid "There is another raid already ongoing. Try again at a later time."
 msgstr "Đã có một raid đang diễn ra. Xin thử lại sau."
 
-#: cogs/error_handler/__init__.py:312 cogs/alliance/__init__.py:518
-#: cogs/alliance/__init__.py:552
+#: cogs/error_handler/__init__.py:290 cogs/alliance/__init__.py:521
+#: cogs/alliance/__init__.py:555
 msgid "Your alliance does not own a city."
 msgstr "Liên minh của bạn không sở hữu thành phố nào."
 
-#: cogs/error_handler/__init__.py:314
+#: cogs/error_handler/__init__.py:292
 msgid "Your alliance already owns a city."
 msgstr "Liên minh của bạn đã sở hữu một thành phố."
 
-#: cogs/error_handler/__init__.py:316
+#: cogs/error_handler/__init__.py:294
 msgid "Your alliance rank is too low."
 msgstr "Thứ hạng của liên minh bạn quá thấp."
 
-#: cogs/error_handler/__init__.py:318
+#: cogs/error_handler/__init__.py:296
 msgid "Your server does not have an open help request."
 msgstr "Server của bạn không có yêu cầu giúp đỡ nào đang tồn tại."
 
-#: cogs/error_handler/__init__.py:322
+#: cogs/error_handler/__init__.py:300
 msgid ""
 "There was an error when uploading to Imgur. Please try again or visit "
 "<https://imgur.com/upload> to manually upload your image."
 msgstr ""
 
-#: cogs/error_handler/__init__.py:332
+#: cogs/error_handler/__init__.py:310
 msgid ""
 ":x: You don't have the permissions to use this command. It is thought for "
 "other users."
 msgstr ":x: Bạn không có quyền sử dụng lệnh này. Nó dành cho người dùng khác."
 
 #. prevent cooldown reset
-#: cogs/error_handler/__init__.py:339 cogs/trading/__init__.py:823
+#: cogs/error_handler/__init__.py:317 cogs/trading/__init__.py:823
 msgid "You did not choose anything."
 msgstr "Bạn đã không chọn cái nào."
 
-#: cogs/error_handler/__init__.py:358
+#: cogs/error_handler/__init__.py:336
 msgid ""
 "An argument or value you entered was far too high for me to handle properly!"
 msgstr "Một đối số hoặc giá trị bạn đã nhập quá cao để tôi xử lý đúng cách!"
 
-#: cogs/error_handler/__init__.py:365
+#: cogs/error_handler/__init__.py:343
 msgid ""
 "The languages have been reloaded while you were using a command. The "
 "execution therefore had to be stopped. Please try again."
@@ -1802,7 +1785,7 @@ msgstr ""
 "Các ngôn ngữ đã được tải lại trong khi bạn đang sử dụng một lệnh. Do đó, "
 "việc thực hiện lệnh đã bị ngừng lại. Xin vui lòng thử lại."
 
-#: cogs/error_handler/__init__.py:397
+#: cogs/error_handler/__init__.py:375
 msgid ""
 "The command you tried to use ran into an error. The incident has been "
 "reported and the team will work hard to fix the issue!"
@@ -2395,7 +2378,6 @@ msgid ""
 "<https://git.travitia.xyz> - GitLab (Public)\n"
 "<https://idlerpg.xyz> - Bot Website\n"
 "<https://wiki.idlerpg.xyz> - IdleRPG wiki\n"
-"<https://raid.idlerpg.xyz> - Raid Website\n"
 "<https://travitia.xyz> - IdleRPG's next major upgrade\n"
 "<https://idlerpg.xyz> - Our forums\n"
 "<https://public-api.travitia.xyz> - Our public API\n"
@@ -2406,16 +2388,16 @@ msgid ""
 "> - Gambling Helpline"
 msgstr ""
 
-#: cogs/miscellaneous/__init__.py:582
+#: cogs/miscellaneous/__init__.py:581
 msgid "Show the rules again"
 msgstr "Hiển thị điều lệ một lần nữa"
 
-#: cogs/miscellaneous/__init__.py:586
+#: cogs/miscellaneous/__init__.py:585
 msgid ""
 "Shows the rules you consent to when creating a character. Don't forget them!"
 msgstr "Hiển thị điều lệ bạn đồng ý khi tạo nhân vật. Đừng quên điều lệ nhé!"
 
-#: cogs/miscellaneous/__init__.py:590
+#: cogs/miscellaneous/__init__.py:589
 msgid ""
 "1) Only up to two characters per individual\n"
 "2) No abusing or benefiting from bugs or exploits\n"
@@ -2426,43 +2408,50 @@ msgid ""
 "IdleRPG is a global bot, your characters are valid everywhere"
 msgstr ""
 
-#: cogs/raid/__init__.py:118
+#: cogs/raid/__init__.py:121
 msgid "Start a Zerekiel raid"
 msgstr "Bắt đầu raid Zerekiel"
 
-#: cogs/raid/__init__.py:437
+#: cogs/raid/__init__.py:154 cogs/raid/__init__.py:453
+#: cogs/raid/__init__.py:622 cogs/raid/__init__.py:793
+#: cogs/raid/__init__.py:1023 cogs/raid/__init__.py:1191
+#: cogs/raid/__init__.py:1376 cogs/raid/__init__.py:1600
+msgid "You joined the raid."
+msgstr ""
+
+#: cogs/raid/__init__.py:445
 msgid "Start a Kvothe raid"
 msgstr "Bắt đầu raid Kvothe"
 
-#: cogs/raid/__init__.py:607
+#: cogs/raid/__init__.py:610
 msgid "Start an Eden raid"
 msgstr "Bắt đầu raid Eden"
 
-#: cogs/raid/__init__.py:780
+#: cogs/raid/__init__.py:781
 msgid "Start a CHamburr raid"
 msgstr "Bắt đầu raid CHamburr"
 
-#: cogs/raid/__init__.py:1019
+#: cogs/raid/__init__.py:1016
 msgid "Starts Lyx' raid"
 msgstr ""
 
-#: cogs/raid/__init__.py:1190
+#: cogs/raid/__init__.py:1182
 msgid "Start a Monox raid"
 msgstr ""
 
-#: cogs/raid/__init__.py:1381
+#: cogs/raid/__init__.py:1368
 msgid "Start a Kirby raid"
 msgstr ""
 
-#: cogs/raid/__init__.py:1606
+#: cogs/raid/__init__.py:1588
 msgid "Start a Jesus raid"
 msgstr "Bắt đầu raid Jesus"
 
-#: cogs/raid/__init__.py:1836
+#: cogs/raid/__init__.py:1814
 msgid "Increase your raidstats"
 msgstr "Tăng chỉ số raid của bạn"
 
-#: cogs/raid/__init__.py:1840
+#: cogs/raid/__init__.py:1818
 msgid ""
 "Upgrade your raid damage or defense multiplier. These will affect your "
 "performance in raids and raidbattles."
@@ -2470,7 +2459,7 @@ msgstr ""
 "Nâng cấp chỉ số raid tấn công hoặc phòng thủ. Các chỉ số này sẽ ảnh hưởng "
 "phong độ của bạn trong các raid và các trận đấu raid."
 
-#: cogs/raid/__init__.py:1844
+#: cogs/raid/__init__.py:1822
 #, python-brace-format
 msgid ""
 "Use `{prefix}increase damage/defense` to upgrade your raid damage/defense "
@@ -2479,15 +2468,15 @@ msgstr ""
 "Sử dụng `{prefix}increase damage/defense` để nâng cấp chỉ số raid tấn công "
 "hoặc phòng thủ lên 10%."
 
-#: cogs/raid/__init__.py:1851
+#: cogs/raid/__init__.py:1829
 msgid "Upgrade your raid damage"
 msgstr "Nâng cấp chỉ số raid tấn công của bạn"
 
-#: cogs/raid/__init__.py:1854
+#: cogs/raid/__init__.py:1832
 msgid "Increase your raid damage."
 msgstr "Tăng chỉ số raid tấn công của bạn."
 
-#: cogs/raid/__init__.py:1860 cogs/raid/__init__.py:1875
+#: cogs/raid/__init__.py:1838 cogs/raid/__init__.py:1853
 #, python-brace-format
 msgid ""
 "Upgrading your weapon attack raid multiplier to {newlvl} costs **${price}**, "
@@ -2496,7 +2485,7 @@ msgstr ""
 "Nâng cấp chỉ số tấn công của vũ khí lên {newlvl} cần **${price}**, nhưng bạn "
 "quá nghèo."
 
-#: cogs/raid/__init__.py:1866
+#: cogs/raid/__init__.py:1844
 #, python-brace-format
 msgid ""
 "Upgrading your weapon attack raid multiplier to {newlvl} costs **${price}**, "
@@ -2504,21 +2493,21 @@ msgid ""
 msgstr ""
 "Nâng cấp chỉ số tấn công của vũ khí lên {newlvl} cần **${price}**, tiếp tục?"
 
-#: cogs/raid/__init__.py:1896
+#: cogs/raid/__init__.py:1874
 #, python-brace-format
 msgid ""
 "You upgraded your weapon attack raid multiplier to {newlvl} for **${price}**."
 msgstr "Nâng cấp chỉ số tấn công của vũ khí lên {newlvl} cần **${price}**."
 
-#: cogs/raid/__init__.py:1903
+#: cogs/raid/__init__.py:1881
 msgid "Upgrade your raid defense"
 msgstr "Nâng cấp chỉ số raid phòng thủ của bạn"
 
-#: cogs/raid/__init__.py:1906
+#: cogs/raid/__init__.py:1884
 msgid "Increase your raid defense."
 msgstr "Tăng chỉ số raid phòng thủ của bạn."
 
-#: cogs/raid/__init__.py:1912 cogs/raid/__init__.py:1927
+#: cogs/raid/__init__.py:1890 cogs/raid/__init__.py:1905
 #, python-brace-format
 msgid ""
 "Upgrading your shield defense raid multiplier to {newlvl} costs **${price}"
@@ -2527,7 +2516,7 @@ msgstr ""
 "Nâng cấp chỉ số phòng thủ của khiên lên {newlvl} cần **${price}**, nhưng bạn "
 "quá nghèo."
 
-#: cogs/raid/__init__.py:1918
+#: cogs/raid/__init__.py:1896
 #, python-brace-format
 msgid ""
 "Upgrading your shield defense raid multiplier to {newlvl} costs **${price}"
@@ -2535,18 +2524,18 @@ msgid ""
 msgstr ""
 "Nâng cấp chỉ số phòng thủ của khiên lên {newlvl} cần **${price}**, tiếp tục?"
 
-#: cogs/raid/__init__.py:1948
+#: cogs/raid/__init__.py:1926
 #, python-brace-format
 msgid ""
 "You upgraded your shield defense raid multiplier to {newlvl} for **${price}"
 "**."
 msgstr "Nâng cấp chỉ số phòng thủ của khiên lên {newlvl} cần **${price}**."
 
-#: cogs/raid/__init__.py:1954
+#: cogs/raid/__init__.py:1932
 msgid "View your raid stats"
 msgstr "Xem chỉ số raid của bạn"
 
-#: cogs/raid/__init__.py:1958
+#: cogs/raid/__init__.py:1936
 msgid ""
 "View your raidstats. These will affect your performance in raids and "
 "raidbattles."
@@ -2554,7 +2543,7 @@ msgstr ""
 "Xem chỉ số raid của bạn. Các chỉ số này sẽ ảnh hưởng phong độ của bạn trong "
 "các raid và các trận đấu raid."
 
-#: cogs/raid/__init__.py:1975
+#: cogs/raid/__init__.py:1953
 #, python-brace-format
 msgid ""
 "**{author}'s raid multipliers**\n"
@@ -2565,15 +2554,15 @@ msgstr ""
 "Chỉ số tấn công: x{atk} (Lần nâng cấp tiếp theo: ${atkp})\n"
 "Chỉ số phòng thủ: x{deff} (Lần nâng cấp tiếp theo: ${deffp})"
 
-#: cogs/raid/__init__.py:1982
+#: cogs/raid/__init__.py:1960
 msgid "Did somebody say Raid?"
 msgstr "Có ai nói Raid à?"
 
-#: cogs/raid/__init__.py:1985
+#: cogs/raid/__init__.py:1963
 msgid "Informs you about joining raids."
 msgstr "Giới thiệu cho bạn cách tham gia raid."
 
-#: cogs/raid/__init__.py:1988
+#: cogs/raid/__init__.py:1966
 #, python-brace-format
 msgid ""
 "Did you ever want to join together with other players to defeat the dragon "
@@ -2641,9 +2630,9 @@ msgstr ""
 msgid "Please either buy `time`, `luck` or `money`."
 msgstr "Vui lòng mua `time`, `luck` hoặc `money`."
 
-#: cogs/store/__init__.py:73 cogs/gambling/__init__.py:722
-#: cogs/gambling/__init__.py:847 cogs/gambling/__init__.py:923
-#: cogs/guild/__init__.py:874
+#: cogs/store/__init__.py:73 cogs/gambling/__init__.py:878
+#: cogs/gambling/__init__.py:1003 cogs/gambling/__init__.py:1079
+#: cogs/guild/__init__.py:877
 msgid "You're too poor."
 msgstr "Bạn quá nghèo."
 
@@ -3098,11 +3087,11 @@ msgstr "Bạn không có quyền sử dụng lệnh này!"
 msgid "Aliases"
 msgstr "Tên khác"
 
-#: cogs/patreon/__init__.py:35
+#: cogs/patreon/__init__.py:112
 msgid "Reset a modified item"
 msgstr "Chỉnh một vũ khí đã được thay đổi về nguyên trạng"
 
-#: cogs/patreon/__init__.py:39
+#: cogs/patreon/__init__.py:116
 msgid ""
 "`<itemid>` - The ID of the item to reset\n"
 "\n"
@@ -3114,23 +3103,23 @@ msgstr ""
 "            Chỉnh loại và tên vũ khí về nguyên trạng, nếu nó đã được thay "
 "đổi. Một khi vũ khí đã được trả về nguyên trạng, nó không thể được bán nữa."
 
-#: cogs/patreon/__init__.py:47 cogs/transaction/__init__.py:455
+#: cogs/patreon/__init__.py:124 cogs/transaction/__init__.py:455
 msgid "You do not own this item."
 msgstr "Bạn không sở hữu vũ khí này."
 
-#: cogs/patreon/__init__.py:50
+#: cogs/patreon/__init__.py:127
 msgid "Nothing to do..."
 msgstr "Không có gì để làm cả..."
 
-#: cogs/patreon/__init__.py:86
+#: cogs/patreon/__init__.py:163
 msgid "Item reset."
 msgstr "Vũ khí đã được trả lại nguyên trạng."
 
-#: cogs/patreon/__init__.py:90
+#: cogs/patreon/__init__.py:167
 msgid "[basic] Change an item's name"
 msgstr "[basic] Thay đổi tên vũ khí"
 
-#: cogs/patreon/__init__.py:94
+#: cogs/patreon/__init__.py:171
 msgid ""
 "`<itemid>` - The ID of the item to rename\n"
 "            `<newname>` - The name to give the item, must be shorter than 40 "
@@ -3150,26 +3139,26 @@ msgstr ""
 "            Chỉ có các nhà tài trợ hạng basic (hoặc cao hơn) có thể dùng "
 "lệnh này."
 
-#: cogs/patreon/__init__.py:102
+#: cogs/patreon/__init__.py:179
 msgid "Name too long."
 msgstr "Tên quá dài."
 
-#: cogs/patreon/__init__.py:111 cogs/patreon/__init__.py:156
+#: cogs/patreon/__init__.py:188 cogs/patreon/__init__.py:233
 #: cogs/trading/__init__.py:490
 #, python-brace-format
 msgid "You don't have an item with the ID `{itemid}`."
 msgstr "Bạn không có vũ khí với ID `{itemid}`."
 
-#: cogs/patreon/__init__.py:123
+#: cogs/patreon/__init__.py:200
 #, python-brace-format
 msgid "The item with the ID `{itemid}` is now called `{newname}`."
 msgstr "Món đồ với ID `{itemid}` bây giờ được gọi là `{newname}`."
 
-#: cogs/patreon/__init__.py:130
+#: cogs/patreon/__init__.py:207
 msgid "[bronze] Change an item's type"
 msgstr "[bronze] Thay đổi loại của vũ khí"
 
-#: cogs/patreon/__init__.py:134
+#: cogs/patreon/__init__.py:211
 msgid ""
 "`<itemid>` - The ID of the item to change type\n"
 "            `<new_type>` - The type to transform the item into\n"
@@ -3196,16 +3185,16 @@ msgstr ""
 "            Chỉ có các nhà tài trợ hạng bronze (hoặc cao hơn) có thể dùng "
 "lệnh này."
 
-#: cogs/patreon/__init__.py:146
+#: cogs/patreon/__init__.py:223
 msgid "Invalid type."
 msgstr "Loại vũ khí này không tồn tại."
 
-#: cogs/patreon/__init__.py:163
+#: cogs/patreon/__init__.py:240
 #, python-brace-format
 msgid "The item is already a {item_type}."
 msgstr "Vũ khí này đã là loại {item_type}."
 
-#: cogs/patreon/__init__.py:171
+#: cogs/patreon/__init__.py:248
 msgid ""
 "You may not change a two-handed item to a single-handed one and vice-versa "
 "due to weapon damage reasons."
@@ -3213,16 +3202,16 @@ msgstr ""
 "Bạn không thể thay đổi vũ khí hai tay thành một tay và ngược lại bởi vì các "
 "chỉ số tấn công."
 
-#: cogs/patreon/__init__.py:192
+#: cogs/patreon/__init__.py:269
 #, python-brace-format
 msgid "The item with the ID `{itemid}` is now a `{itemtype}`."
 msgstr "Vũ khí với ID `{itemid}` bây giờ là `{itemtype}`."
 
-#: cogs/patreon/__init__.py:200
+#: cogs/patreon/__init__.py:277
 msgid "[gold] Receive a daily booster"
 msgstr "[gold] Nhận một booster mỗi ngày"
 
-#: cogs/patreon/__init__.py:204
+#: cogs/patreon/__init__.py:281
 msgid ""
 "Receive a daily booster. The booster can be a time, money or luck booster.\n"
 "\n"
@@ -3232,16 +3221,16 @@ msgstr ""
 "\n"
 "            (Lệnh này có thời gian chờ là 24 tiếng.)"
 
-#: cogs/patreon/__init__.py:214
+#: cogs/patreon/__init__.py:291
 #, python-brace-format
 msgid "You received a daily {type_} booster!"
 msgstr "Bạn nhận được một booster {type_}!"
 
-#: cogs/patreon/__init__.py:217
+#: cogs/patreon/__init__.py:294
 msgid "[basic] Change your profile background"
 msgstr "[basic] Thay đổi hình nền profile của bạn"
 
-#: cogs/patreon/__init__.py:221
+#: cogs/patreon/__init__.py:298
 #, python-brace-format
 msgid ""
 "`<url>` - The image URL to use as the background, may not exceed 60 "
@@ -3273,11 +3262,11 @@ msgstr ""
 "            Chỉ có các nhà tài trợ hạng basic (hoặc cao hơn) có thể dùng "
 "lệnh này."
 
-#: cogs/patreon/__init__.py:241
+#: cogs/patreon/__init__.py:318
 msgid "That is not a valid premade background."
 msgstr "Đây không phải là một hình nền hợp lệ."
 
-#: cogs/patreon/__init__.py:245 cogs/patreon/__init__.py:281
+#: cogs/patreon/__init__.py:322 cogs/patreon/__init__.py:358
 msgid ""
 "I couldn't read that URL. Does it start with `http://` or `https://` and is "
 "either a png or jpeg?"
@@ -3285,11 +3274,11 @@ msgstr ""
 "Tôi không thể đọc URL này. Nó có bắt đầu bằng `http://` hay `https://` và là "
 "png hay jpeg không?"
 
-#: cogs/patreon/__init__.py:258
+#: cogs/patreon/__init__.py:335
 msgid "The URL is too long."
 msgstr "URL quá dài."
 
-#: cogs/patreon/__init__.py:260
+#: cogs/patreon/__init__.py:337
 #, python-brace-format
 msgid ""
 "Your new profile picture is now:\n"
@@ -3298,15 +3287,15 @@ msgstr ""
 "Hình nền profile mới của bạn bây giờ là:\n"
 "{url}"
 
-#: cogs/patreon/__init__.py:262
+#: cogs/patreon/__init__.py:339
 msgid "Your profile picture has been reset."
 msgstr "Hình nền profile của bạn đã được trả về nguyên trạng."
 
-#: cogs/patreon/__init__.py:265
+#: cogs/patreon/__init__.py:342
 msgid "[basic] Formats an image for background compatability"
 msgstr "[basic] Chỉnh bức hình để phù hợp làm hình nền"
 
-#: cogs/patreon/__init__.py:269
+#: cogs/patreon/__init__.py:346
 #, python-brace-format
 msgid ""
 "`<url>` - The image URL to format\n"
@@ -3328,11 +3317,11 @@ msgstr ""
 "            Chỉ có các nhà tài trợ hạng basic (hoặc cao hơn) có thể dùng "
 "lệnh này."
 
-#: cogs/patreon/__init__.py:300
+#: cogs/patreon/__init__.py:377
 msgid "Error when uploading to Imgur."
 msgstr "Lỗi khi upload lên Imgur."
 
-#: cogs/patreon/__init__.py:302
+#: cogs/patreon/__init__.py:379
 #, python-brace-format
 msgid ""
 "Imgur Link for `{prefix}background`\n"
@@ -3341,11 +3330,11 @@ msgstr ""
 "Link Imgur dùng cho `{prefix}background`\n"
 "{link}"
 
-#: cogs/patreon/__init__.py:309
+#: cogs/patreon/__init__.py:386
 msgid "[basic] Upgrade your guild"
 msgstr "[basic] Nâng cấp bang hội của bạn"
 
-#: cogs/patreon/__init__.py:313
+#: cogs/patreon/__init__.py:390
 msgid ""
 "Update your guild member limit and bank size according to your donation "
 "tier.\n"
@@ -3373,15 +3362,15 @@ msgstr ""
 "            Chỉ có các nhà tài trợ hạng basic (hoặc cao hơn) có thể dùng "
 "lệnh này."
 
-#: cogs/patreon/__init__.py:347
+#: cogs/patreon/__init__.py:424
 msgid "Your guild was updated."
 msgstr "Bang hội của bạn đã được nâng cấp."
 
-#: cogs/patreon/__init__.py:350
+#: cogs/patreon/__init__.py:427
 msgid "Change your background"
 msgstr "Thay đổi hình nền của bạn"
 
-#: cogs/patreon/__init__.py:354
+#: cogs/patreon/__init__.py:431
 msgid ""
 "`<number>` - The number of the eventbackground to use\n"
 "\n"
@@ -3394,28 +3383,28 @@ msgstr ""
 "nhận hình nền sự kiện từ các sự kiện đặc biệt, như Lễ phục sinh hay Giáng "
 "sinh."
 
-#: cogs/patreon/__init__.py:361 cogs/patreon/__init__.py:391
+#: cogs/patreon/__init__.py:438 cogs/patreon/__init__.py:468
 msgid ""
 "You do not have an eventbackground. They can be acquired on seasonal events."
 msgstr ""
 "Bạn không có hình nền sự kiện. Chúng có thể được tặng trong các sự kiện đặc "
 "biệt."
 
-#: cogs/patreon/__init__.py:370
+#: cogs/patreon/__init__.py:447
 #, python-brace-format
 msgid ""
 "The background number {number} is not valid, you only have {total} available."
 msgstr "Hình nền số {number} không hợp lệ, bạn chỉ có {total} hình nền."
 
-#: cogs/patreon/__init__.py:377
+#: cogs/patreon/__init__.py:454
 msgid "Background updated!"
 msgstr "Hình nền đã được cập nhật!"
 
-#: cogs/patreon/__init__.py:380
+#: cogs/patreon/__init__.py:457
 msgid "View your eventbackgrounds"
 msgstr ""
 
-#: cogs/patreon/__init__.py:384
+#: cogs/patreon/__init__.py:461
 #, python-brace-format
 msgid ""
 "View a list of all backgrounds you have acquired from events. You can get "
@@ -3425,12 +3414,12 @@ msgid ""
 "`{prefix}eventbackground`."
 msgstr ""
 
-#: cogs/patreon/__init__.py:397
+#: cogs/patreon/__init__.py:474
 #, python-brace-format
 msgid "Background {number}/{total}"
 msgstr ""
 
-#: cogs/patreon/__init__.py:403
+#: cogs/patreon/__init__.py:480
 #, python-brace-format
 msgid "Use {prefix}eventbackground {number} to use this background"
 msgstr ""
@@ -4064,13 +4053,13 @@ msgstr ""
 msgid "Your current pet image is: {url}"
 msgstr ""
 
-#: cogs/classes/__init__.py:662 cogs/guild/__init__.py:283
-#: cogs/guild/__init__.py:686
+#: cogs/classes/__init__.py:662 cogs/guild/__init__.py:286
+#: cogs/guild/__init__.py:689
 msgid "No image URL found in your message, using image attachment..."
 msgstr ""
 
-#: cogs/classes/__init__.py:666 cogs/guild/__init__.py:288
-#: cogs/guild/__init__.py:690
+#: cogs/classes/__init__.py:666 cogs/guild/__init__.py:291
+#: cogs/guild/__init__.py:693
 msgid "Image URL too long, shortening..."
 msgstr ""
 
@@ -4142,396 +4131,108 @@ msgstr "Thú cưng của bạn đã tìm thấy một vũ khí!"
 msgid "Your pet needs to recover, wait a day to retry"
 msgstr "Thú cưng của bạn cần lấy lại sức, chờ một ngày rồi hãy thử lại"
 
-#: cogs/music/__init__.py:135
+#: cogs/adventure/__init__.py:110
+msgid "North"
+msgstr "Bắc"
+
+#: cogs/adventure/__init__.py:117
+msgid "East"
+msgstr "Đông"
+
+#: cogs/adventure/__init__.py:124
+msgid "South"
+msgstr "Nam"
+
+#: cogs/adventure/__init__.py:131
+msgid "West"
+msgstr "Tây"
+
+#: cogs/adventure/__init__.py:139
+msgid "Attack"
+msgstr ""
+
+#: cogs/adventure/__init__.py:146
+msgid "Defend"
+msgstr ""
+
+#: cogs/adventure/__init__.py:153
+msgid "Recover"
+msgstr ""
+
+#: cogs/adventure/__init__.py:213
+msgid "The active adventure has started."
+msgstr ""
+
+#: cogs/adventure/__init__.py:253
+#, python-brace-format
+msgid "You healed yourself for {hp} HP"
+msgstr "Bạn đã hồi {hp} HP"
+
+#: cogs/adventure/__init__.py:262
+msgid "Attack blocked."
+msgstr "Đòn tấn công đã bị chặn."
+
+#: cogs/adventure/__init__.py:267
+#, python-brace-format
+msgid "The Enemy hit you for {dmg} damage"
+msgstr "Kẻ thù đã đánh bạn với {dmg} sát thương"
+
+#: cogs/adventure/__init__.py:270
+#, python-brace-format
+msgid "You hit the enemy for {dmg} damage"
+msgstr "Bạn đã đánh kẻ thù với {dmg} sát thương"
+
+#: cogs/adventure/__init__.py:310 cogs/gambling/__init__.py:1128
+#: cogs/gambling/__init__.py:1176
+msgid "Timed out."
+msgstr "Hết giờ."
+
+#: cogs/adventure/__init__.py:318
+msgid "You defeated the enemy."
+msgstr ""
+
+#: cogs/adventure/__init__.py:328
+#, python-brace-format
+msgid "You stepped on a trap and took {damage} damage!"
+msgstr "Bạn đạp trúng một cái bẫy và nhận {damage} sát thương!"
+
+#: cogs/adventure/__init__.py:334
+#, python-brace-format
+msgid "You found a treasure with **${money}** inside!"
+msgstr "Bạn đã tìm thấy một kho báu với **${money}** bên trong!"
+
+#: cogs/adventure/__init__.py:341
+msgid "You died."
+msgstr "Bạn đã chết."
+
+#: cogs/adventure/__init__.py:348
 #, python-brace-format
 msgid ""
-"{user} wants to skip a track. React if you agree. **{current}/{total}** "
-"voted for it!"
-msgstr ""
-"{user} muốn bỏ qua bài này. Nhấn emoji nếu bạn đồng ý. **{current}/{total}** "
-"đã đồng ý!"
+"You have reached the exit and were rewarded **${money}** for getting out!"
+msgstr "Bạn đã tìm được lối ra và được thưởng **${money}**!"
 
-#: cogs/music/__init__.py:140
+#: cogs/adventure/__init__.py:365
+msgid "`@` - You, `!` - Enemy, `*` - Treasure"
+msgstr ""
+
+#: cogs/adventure/__init__.py:368
 #, python-brace-format
-msgid ""
-"{user} wants to pause/resume the player. React if you agree. **{current}/"
-"{total}** voted for it!"
-msgstr ""
-"{user} muốn tạm dừng/tiếp tục phát nhạc. Nhấn emoji nếu bạn đồng ý. "
-"**{current}/{total}** đã đồng ý!"
+msgid "You are on {hp} HP"
+msgstr "Bạn đang có {hp} HP"
 
-#: cogs/music/__init__.py:145
-#, python-brace-format
-msgid ""
-"{user} wants to stop playback. React if you agree. **{current}/{total}** "
-"voted for it!"
-msgstr ""
-"{user} muốn dừng phát lại. Nhấn emoji nếu bạn đồng ý. **{current}/{total}** "
-"đã đồng ý!"
+#: cogs/adventure/__init__.py:375
+msgid "Enemy"
+msgstr "Kẻ thù"
 
-#: cogs/music/__init__.py:150
-#, python-brace-format
-msgid ""
-"{user} wants to change the volume. React if you agree. **{current}/{total}** "
-"voted for it!"
-msgstr ""
-"{user} muốn thay đổi âm lượng. Nhấn emoji nếu bạn đồng ý. **{current}/{total}"
-"** đã đồng ý!"
-
-#: cogs/music/__init__.py:155
-#, python-brace-format
-msgid ""
-"{user} wants to toggle repeating. React if you agree. **{current}/{total}** "
-"voted for it!"
-msgstr ""
-"{user} muốn lặp lại danh sách bài hát. Nhấn emoji nếu bạn đồng ý. "
-"**{current}/{total}** đã đồng ý!"
-
-#: cogs/music/__init__.py:160
-#, python-brace-format
-msgid ""
-"{user} wants to change the equalizer. React if you agree. **{current}/{total}"
-"** voted for it!"
-msgstr ""
-"{user} muốn thay đổi bộ cân bằng. Nhấn emoji nếu bạn đồng ý. **{current}/"
-"{total}** đã đồng ý!"
-
-#: cogs/music/__init__.py:198
-msgid "Vote passed!"
-msgstr "Đã bỏ phiếu xong!"
-
-#: cogs/music/__init__.py:263
-msgid "Choose a result to play"
-msgstr "Chọn một kết quả để mở nhạc"
-
-#: cogs/music/__init__.py:267
-msgid ""
-"`<query>` - The query to search a song by\n"
-"\n"
-"            Query for a track and play or add any result to the playlist, "
-"you can choose from a multitude of tracks."
-msgstr ""
-"`<query>` - Yêu cầu để tìm bài hát\n"
-"\n"
-"            Yêu cầu tìm bài hát và thêm kết quả vào danh sách nhạc, bạn có "
-"thể chọn từ nhiều bài hát."
-
-#: cogs/music/__init__.py:277 cogs/music/__init__.py:307
-#: cogs/music/__init__.py:351 cogs/music/__init__.py:360
-msgid "No results..."
-msgstr "Không có kết quả..."
-
-#: cogs/music/__init__.py:281
-msgid "Song results"
-msgstr "Kết quả bài hát"
-
-#: cogs/music/__init__.py:282
-msgid "Select a song to play"
+#: cogs/adventure/__init__.py:376
+msgid "HP"
 msgstr ""
 
-#: cogs/music/__init__.py:302
-msgid "Loading track... This might take up to 3 seconds..."
-msgstr "Đang load nhạc… Có thể mất tối đa 3 giây..."
-
-#: cogs/music/__init__.py:328
-msgid "Play a song"
-msgstr "Mở một bài hát"
-
-#: cogs/music/__init__.py:332
-#, python-brace-format
-msgid ""
-"`<query>` - The query to search a song by\n"
-"\n"
-"            Query for a track and play or add the first result to the "
-"playlist.\n"
-"            If this is not the song you were looking for, try `{prefix}"
-"chooseplay`."
-msgstr ""
-"`<query>` - Yêu cầu để tìm bài hát\n"
-"\n"
-"            Yêu cầu tìm bài hát và thêm kết quả đầu tiên vào danh sách "
-"nhạc.\n"
-"            Nếu đó không phải là bài hát bạn tìm, hãy thử `{prefix}"
-"chooseplay`."
-
-#: cogs/music/__init__.py:338
-msgid "Downloading track... This might take up to 3 seconds..."
-msgstr "Đang load nhạc… Có thể mất tối đa 3 giây..."
-
-#: cogs/music/__init__.py:374
-msgid "Lock the player"
-msgstr "Khóa người chơi"
-
-#: cogs/music/__init__.py:378
-msgid ""
-"Lock/Unlock the player. This allows nobody else to control the music.\n"
-"\n"
-"            Only the session's DJ can use this command."
-msgstr ""
-"Khóa/Mở khóa người chơi. Lệnh này sẽ không cho bất cứ ai chỉnh nhạc.\n"
-"\n"
-"            Chỉ DJ của buổi nhạc có thể sử dụng lệnh này."
-
-#: cogs/music/__init__.py:392
-msgid "Toggle repeat"
-msgstr "Lặp lại danh sách bài hát"
-
-#: cogs/music/__init__.py:396
-msgid ""
-"Toggle repeat of the playing queue.\n"
-"\n"
-"            Once a song finishes, it will be added at the end of the queue "
-"automatically.\n"
-"\n"
-"            If there are more than one person in the session and a non-DJ "
-"uses this command, a vote has to pass first."
-msgstr ""
-"Lặp lại danh sách bài hát.\n"
-"\n"
-"            Khi bài hát kết thúc, nó sẽ được tự động thêm vào cuối danh "
-"sách.\n"
-"\n"
-"            Nếu có hơn một người trong buổi nhạc và một người không phải DJ "
-"dùng lệnh này, phải có một cuộc bỏ phiếu."
-
-#: cogs/music/__init__.py:412
-msgid "Skip the currently playing song."
-msgstr "Bỏ qua bài hát đang phát."
-
-#: cogs/music/__init__.py:416
-msgid ""
-"Skip the currently playing song.\n"
-"\n"
-"            If there are more than one person in the session and a non-DJ "
-"uses this command, a vote has to pass first."
-msgstr ""
-"Bỏ qua bài hát đang phát.\n"
-"\n"
-"            Nếu có hơn một người trong buổi nhạc và một người không phải DJ "
-"dùng lệnh này, phải có một cuộc bỏ phiếu."
-
-#: cogs/music/__init__.py:427
-msgid "Stops the music"
-msgstr "Dừng phát nhạc"
-
-#: cogs/music/__init__.py:431
-msgid ""
-"Stops the music and leaves voice chat.\n"
-"\n"
-"            If there are more than one person in the session and a non-DJ "
-"uses this command, a vote has to pass first."
-msgstr ""
-"Dừng phát nhạc và rời khỏi voice chat.\n"
-"\n"
-"            Nếu có hơn một người trong buổi nhạc và một người không phải DJ "
-"dùng lệnh này, phải có một cuộc bỏ phiếu."
-
-#: cogs/music/__init__.py:443
-msgid "Change the volume"
-msgstr "Thay đổi âm lượng"
-
-#: cogs/music/__init__.py:447
-msgid ""
-"Changes the playback's volume.\n"
-"\n"
-"            If there are more than one person in the session and a non-DJ "
-"uses this command, a vote has to pass first."
-msgstr ""
-"Thay đổi âm lượng bài hát.\n"
-"\n"
-"            Nếu có hơn một người trong buổi nhạc và một người không phải DJ "
-"dùng lệnh này, phải có một cuộc bỏ phiếu."
-
-#: cogs/music/__init__.py:454
-#, python-brace-format
-msgid ""
-"⚠`Playback volume is going to change to {volume} in 5 seconds. To avoid the "
-"sudden earrape, control the volume on client side!`"
-msgstr ""
-"⚠`Âm lượng bài hát sẽ chỉnh thành {volume} trong 5 giây. Để trách bị điếc "
-"tai, điều chỉnh âm lượng trên máy bạn!`"
-
-#: cogs/music/__init__.py:465
-#, python-brace-format
-msgid ":white_check_mark:` Volume successfully changed to {volume}!`"
-msgstr ":white_check_mark: ` Âm lượng thành công chỉnh thành {volume}!`"
-
-#: cogs/music/__init__.py:479
-msgid ""
-"Toggles the music playback's paused state.\n"
-"\n"
-"            If there are more than one person in the session and a non-DJ "
-"uses this command, a vote has to pass first."
-msgstr ""
-"Ngừng/Mở lại bài hát.\n"
-"\n"
-"            Nếu có hơn một người trong buổi nhạc và một người không phải DJ "
-"dùng lệnh này, phải có một cuộc bỏ phiếu."
-
-#: cogs/music/__init__.py:485
-msgid ":white_check_mark:`Song paused!`"
-msgstr ":white_check_mark: `Bài hát đã được dừng!`"
-
-#: cogs/music/__init__.py:488
-msgid ":white_check_mark:`Song resumed!`"
-msgstr ":white_check_mark: `Bài hát đã phát trở lại!`"
-
-#: cogs/music/__init__.py:494
-msgid "Change the equalizer"
-msgstr "Thay đổi bộ cân bằng"
-
-#: cogs/music/__init__.py:498
-msgid ""
-"`<eq>` - The equalizer to use\n"
-"\n"
-"            Sets the equalizer. May be **flat, piano, metal or boost**.\n"
-"            Flat is the standard, piano is quiet, metal boosts high "
-"frequencies and boost boosts low frequencies.\n"
-"\n"
-"            If there are more than one person in the session and a non-DJ "
-"uses this command, a vote has to pass first."
-msgstr ""
-"`<eq>` - Bộ cân bằng để sử dụng\n"
-"\n"
-"            Chỉnh bộ cân bằng. Có thể là **flat, piano, metal hoặc boost**.\n"
-"            Flat là bộ cơ bản, piano im lặng hơn, metal tăng tần suất và "
-"boost giảm tần suất.\n"
-"\n"
-"            Nếu có hơn một người trong buổi nhạc và một người không phải DJ "
-"dùng lệnh này, phải có một cuộc bỏ phiếu."
-
-#: cogs/music/__init__.py:507
-msgid "Not a valid equalizer. May be flat, piano, metal or boost."
-msgstr ""
-"Không phải là bộ cân bằng hợp lệ. Có thể là flat, piano, metal hoặc boost."
-
-#: cogs/music/__init__.py:514
-msgid "Shows the current song."
-msgstr "Hiển thị bài hát hiện tại."
-
-#: cogs/music/__init__.py:517
-msgid "Displays some information about the currently playing song."
-msgstr "Hiển thị một số thông tin về bái hát đang mở."
-
-#: cogs/music/__init__.py:525
-msgid "Now playing..."
-msgstr "Đang mở bài hát..."
-
-#: cogs/music/__init__.py:527
-msgid "Title"
-msgstr "Tên bài hát"
-
-#: cogs/music/__init__.py:530
-msgid "Artist"
-msgstr "Nghệ sĩ"
-
-#: cogs/music/__init__.py:534
-msgid "Volume"
-msgstr "Âm lượng"
-
-#: cogs/music/__init__.py:536
-msgid "Playing status"
-msgstr "Trạng thái chơi"
-
-#: cogs/music/__init__.py:536
-msgid "`⏸Paused`"
-msgstr "`⏸Đã dừng`"
-
-#: cogs/music/__init__.py:537
-msgid "DJ"
-msgstr "DJ"
-
-#: cogs/music/__init__.py:539
-msgid "Locked"
-msgstr "Đã khóa"
-
-#: cogs/music/__init__.py:539 cogs/music/__init__.py:542
-#: cogs/music/__init__.py:546
-msgid "Yes"
-msgstr "Có"
-
-#: cogs/music/__init__.py:539 cogs/music/__init__.py:542
-#: cogs/music/__init__.py:546
-msgid "No"
-msgstr "Không"
-
-#: cogs/music/__init__.py:542
-msgid "Looping"
-msgstr "Lặp lại"
-
-#: cogs/music/__init__.py:545
-msgid "Explicit"
-msgstr "Cụ thể"
-
-#: cogs/music/__init__.py:548
-msgid "Equalizer"
-msgstr "Bộ cân bằng"
-
-#: cogs/music/__init__.py:559
-#, python-brace-format
-msgid "Song requested by: {user}"
-msgstr "Bài hát được yêu cầu bởi: {user}"
-
-#: cogs/music/__init__.py:568
-msgid "Show upcoming songs"
-msgstr "Hiển thị các bài hát tiếp theo"
-
-#: cogs/music/__init__.py:571
-msgid "Show the next (maximum 5) tracks in the queue."
-msgstr "Hiển thị (tối đa là 5) bài hát tiếp theo trong danh sách."
-
-#: cogs/music/__init__.py:582
-msgid "Upcoming entries"
-msgstr "Các bài hát tiếp theo"
-
-#: cogs/music/__init__.py:591
-msgid "⚠`No more entries left.`"
-msgstr "⚠`Không còn bài hát nào.`"
-
-#: cogs/music/__init__.py:597
-msgid ""
-"`<query>` - The query to search the song by; defaults to the currently "
-"playing song\n"
-"\n"
-"            Retrieves song lyrics. If no song specified, will check the "
-"current playing song."
-msgstr ""
-"`<query>` - Yêu cầu tìm kiếm bài hát; mặc định là bài hát hiện tại\n"
-"\n"
-"            Tìm lời bài hát. Nếu không lựa bài hát, sẽ tìm kiếm bài hát hiện "
-"tại."
-
-#: cogs/music/__init__.py:606
-msgid "I am not playing. Please specify a song to look for."
-msgstr "Tôi hiện giờ chưa phát nhạc. Hãy yêu cầu một bài hát."
-
-#: cogs/music/__init__.py:610
-msgid "Please specify a song."
-msgstr "Hãy lựa một bài hát."
-
-#: cogs/music/__init__.py:612
-msgid ":x: Look for a longer query!"
-msgstr ":x: Tìm kiếm danh sách dài hơn!"
-
-#: cogs/music/__init__.py:616
-msgid "⚠ No results!"
-msgstr "⚠ Không có kết quả!"
-
-#: cogs/music/__init__.py:652
-#, python-brace-format
-msgid "🎧 Added {title} to the queue..."
-msgstr "🎧 Đã thêm {title} vào danh sách chờ ..."
-
-#: cogs/music/__init__.py:660 cogs/music/__init__.py:663
-#, python-brace-format
-msgid "🎧 Playing {title}..."
-msgstr "🎧 Phát {title}..."
-
-#: cogs/adventure/__init__.py:80
+#: cogs/adventure/__init__.py:438
 msgid "Shows adventures and your chances"
 msgstr "Hiển thị các cuộc phiêu lưu và xác suất thành công của bạn"
 
-#: cogs/adventure/__init__.py:85
+#: cogs/adventure/__init__.py:443
 msgid ""
 "Shows all adventures, their names, descriptions, and your chances to beat "
 "them in picture form.\n"
@@ -4544,11 +4245,11 @@ msgstr ""
 "đeo, điểm cộng từ chủng tộc và nghề nghiệp, cấp độ của bạn và chỉ số may mắn "
 "của vị thần bạn theo đuổi."
 
-#: cogs/adventure/__init__.py:123
+#: cogs/adventure/__init__.py:481
 msgid "Sends your character on an adventure."
 msgstr "Gửi nhân vật của bạn vào một cuộc phiêu lưu."
 
-#: cogs/adventure/__init__.py:128
+#: cogs/adventure/__init__.py:486
 #, python-brace-format
 msgid ""
 "`<adventure_number>` - a whole number from 1 to 30\n"
@@ -4587,12 +4288,12 @@ msgstr ""
 "            Nhớ kiểm tra `{prefix}status` để xem cuộc phiêu lưu còn bao lâu, "
 "hoặc để xem bạn sống sót hay đã chết."
 
-#: cogs/adventure/__init__.py:143
+#: cogs/adventure/__init__.py:501
 #, python-brace-format
 msgid "You must be on level **{level}** to do this adventure."
 msgstr "Bạn phải ở cấp độ **{level}** để thực hiện cuộc phiêu lưu này."
 
-#: cogs/adventure/__init__.py:186
+#: cogs/adventure/__init__.py:544
 #, python-brace-format
 msgid ""
 "Successfully sent your character out on an adventure. Use `{prefix}status` "
@@ -4601,21 +4302,21 @@ msgstr ""
 "Thành công gửi nhân vật của bạn vào một cuộc phiêu lưu. Sử dụng `{prefix}"
 "status` để xem trạng thái hiện tại của nhiệm vụ."
 
-#: cogs/adventure/__init__.py:194
+#: cogs/adventure/__init__.py:552
 msgid "Go out on an active adventure."
 msgstr "Tham gia một cuộc phiêu lưu chủ động."
 
-#: cogs/adventure/__init__.py:199
+#: cogs/adventure/__init__.py:557
 #, no-python-format
 msgid ""
-"Active adventures will put you into a 15x15 randomly generated maze. You "
-"will begin in the top left corner (0,0) and your goal is to find the exit in "
-"the bottom right corner (14,14)\n"
-"            You control your character with the arrow reactions below the "
+"Active adventures will put you into a randomly generated maze. You will "
+"begin in the top left corner and your goal is to find the exit in the bottom "
+"right corner.\n"
+"            You control your character with the arrow buttons below the "
 "message.\n"
 "\n"
-"            You have 1000HP. The adventure ends when you find the exit or "
-"your HP drop to zero.\n"
+"            You have a fixed amount of HP based on your items. The adventure "
+"ends when you find the exit or your HP drop to zero.\n"
 "            You can lose HP by getting damaged by traps or enemies.\n"
 "\n"
 "            The maze contains safe spaces and treasures but also traps and "
@@ -4624,7 +4325,8 @@ msgid ""
 "have a trap, it has a 10% chance of having an enemy.\n"
 "            Each maze has 5 treasure chests.\n"
 "\n"
-"            Traps can damage you from 30 to 120 HP.\n"
+"            Traps can damage you from 1/10 of your total HP to up to 1/8 of "
+"your total HP.\n"
 "            Enemy damage is based on your own damage. During enemy fights, "
 "you can attack (⚔️), defend (🛡️) or recover HP (❤️)\n"
 "            Treasure chests can have gold up to 25 times your attack + "
@@ -4633,162 +4335,24 @@ msgid ""
 "            If you reach the end, you will receive a special treasure with "
 "gold up to 100 times your attack + defense.\n"
 "\n"
-"            (It is recommended to draw a map of the maze)\n"
 "            (This command has a cooldown of 30 minutes)"
 msgstr ""
-"Cuộc phiêu lưu chủ động sẽ gửi bạn vào một mê cung 15x15 được tạo ngẫu "
-"nhiên. Bạn sẽ bắt đầu ở góc trái trên (0,0) và mục tiêu của bạn là tìm lối "
-"ra ở góc phải dưới (14,14)\n"
-"            Bạn sẽ điều khiển nhân vật bằng các emoji mũi tên ở phía dưới "
-"tin nhắn.\n"
-"\n"
-"            Bạn có 1000HP. Cuộc phiêu lưu kết thúc khi bạn tìm được lối ra "
-"hoặc HP về 0.\n"
-"            Bạn có thể mất HP khi đạp trúng bẫy hoặc đối đầu với kẻ thù.\n"
-"\n"
-"            Mê cung có những ô an toàn và kho báu, nhưng cũng có những ô bẫy "
-"và kẻ thù.\n"
-"            Mỗi ô có 10% xác suất là bẫy. Nếu ô đó không có bẫy, nó có 10% "
-"xác suất có kẻ thù.\n"
-"            Mỗi mê cung có 5 thùng kho báu.\n"
-"\n"
-"            Bẫy có thể làm bạn mất từ 30 tới 120 HP.\n"
-"            Sức tấn công của kẻ thù phụ thuộc vào sức tấn công của bạn. "
-"Trong cuộc chiến, bạn có thể tấn công (⚔️), phòng thù (🛡️) or phục hồi HP (❤️)\n"
-"            Thùng kho báu có thể chứa số vàng tối đa gấp 25 lần tổng số tấn "
-"công + phòng thủ của bạn.\n"
-"\n"
-"            Nếu đến được lối ra, bạn sẽ được nhận một thùng kho báu đặc biệt "
-"với số vàng tối đa gấp 100 lần tổng số tấn công + phòng thủ của bạn.\n"
-"\n"
-"            (Khuyến khích nên vẽ bản đồ mê cung)\n"
-"            (Lệnh này có thời gian chờ là 30 phút)"
 
-#: cogs/adventure/__init__.py:220
+#: cogs/adventure/__init__.py:577
 msgid ""
-"You are going to be in a labyrinth of size 15x15. There are enemies, "
-"treasures and hidden traps. Reach the exit in the bottom right corner for a "
-"huge extra bonus!\n"
+"You are going to be in a labyrinth. There are enemies, treasures and hidden "
+"traps. Reach the exit in the bottom right corner for a huge extra bonus!\n"
 "Are you ready?\n"
 "\n"
 "Tip: Use a silent channel for this, you may want to read all the messages I "
 "will send."
 msgstr ""
-"Bạn sẽ ở trong một mê cung có kích thước 15x15. Có kẻ thù, kho báu và những "
-"cái bẫy ẩn giấu. Tiếp cận lối ra ở góc dưới bên phải để nhận thêm tiền "
-"thưởng!\n"
-"Bạn đã sẵn sàng chưa?\n"
-"\n"
-"Mẹo: Dùng một kênh vắng cho lệnh này, bạn có lẽ sẽ muốn đọc tất cả các tin "
-"nhắn do tôi gửi."
 
-#: cogs/adventure/__init__.py:228
-msgid "**Generating a maze...**"
-msgstr "**Đang tạo mê cung...**"
-
-#: cogs/adventure/__init__.py:239
-msgid "North"
-msgstr "Bắc"
-
-#: cogs/adventure/__init__.py:240
-msgid "East"
-msgstr "Đông"
-
-#: cogs/adventure/__init__.py:241
-msgid "South"
-msgstr "Nam"
-
-#: cogs/adventure/__init__.py:242
-msgid "West"
-msgstr "Tây"
-
-#: cogs/adventure/__init__.py:313
-#, python-brace-format
-msgid "To the {side} is a wall."
-msgstr "Phía {side} là một bức tường."
-
-#: cogs/adventure/__init__.py:315
-#, python-brace-format
-msgid "To the {side} is an enemy."
-msgstr "Phía {side} là kẻ thù."
-
-#: cogs/adventure/__init__.py:317
-#, python-brace-format
-msgid "To the {side} is a treasure."
-msgstr "Phía {side} là một kho báu."
-
-#: cogs/adventure/__init__.py:319
-#, python-brace-format
-msgid "To the {side} is a floor."
-msgstr "Phía {side} là sàn nhà."
-
-#: cogs/adventure/__init__.py:322
-#, python-brace-format
-msgid "You are on {hp} HP"
-msgstr "Bạn đang có {hp} HP"
-
-#: cogs/adventure/__init__.py:332
-#, python-brace-format
-msgid "You stepped on a trap and took {damage} damage!"
-msgstr "Bạn đạp trúng một cái bẫy và nhận {damage} sát thương!"
-
-#: cogs/adventure/__init__.py:356
-#, python-brace-format
-msgid "You found a treasure with **${money}** inside!"
-msgstr "Bạn đã tìm thấy một kho báu với **${money}** bên trong!"
-
-#: cogs/adventure/__init__.py:379
-msgid "Enemy"
-msgstr "Kẻ thù"
-
-#: cogs/adventure/__init__.py:384
-msgid "The Fight started"
-msgstr "Trận đấu bắt đầu"
-
-#: cogs/adventure/__init__.py:421
-#, python-brace-format
-msgid "The Enemy healed themselves for {hp} HP"
-msgstr "Kẻ thù đã hồi {hp} HP"
-
-#: cogs/adventure/__init__.py:427
-#, python-brace-format
-msgid "You healed yourself for {hp} HP"
-msgstr "Bạn đã hồi {hp} HP"
-
-#: cogs/adventure/__init__.py:433
-msgid "Attack blocked."
-msgstr "Đòn tấn công đã bị chặn."
-
-#: cogs/adventure/__init__.py:438
-#, python-brace-format
-msgid "The Enemy hit you for {dmg} damage"
-msgstr "Kẻ thù đã đánh bạn với {dmg} sát thương"
-
-#: cogs/adventure/__init__.py:443
-#, python-brace-format
-msgid "You hit the enemy for {dmg} damage"
-msgstr "Bạn đã đánh kẻ thù với {dmg} sát thương"
-
-#: cogs/adventure/__init__.py:457 cogs/adventure/__init__.py:462
-#: cogs/gambling/__init__.py:972 cogs/gambling/__init__.py:1020
-msgid "Timed out."
-msgstr "Hết giờ."
-
-#: cogs/adventure/__init__.py:464
-msgid "You died."
-msgstr "Bạn đã chết."
-
-#: cogs/adventure/__init__.py:485
-#, python-brace-format
-msgid ""
-"You have reached the exit and were rewarded **${money}** for getting out!"
-msgstr "Bạn đã tìm được lối ra và được thưởng **${money}**!"
-
-#: cogs/adventure/__init__.py:492
+#: cogs/adventure/__init__.py:591
 msgid "Checks your adventure status."
 msgstr "Kiểm tra tình trạng cuộc phiêu lưu của bạn."
 
-#: cogs/adventure/__init__.py:496
+#: cogs/adventure/__init__.py:595
 #, python-brace-format
 msgid ""
 "Checks the remaining time of your adventures, or if you survived or died. "
@@ -4816,11 +4380,11 @@ msgid ""
 "title=Family#Adventure_Bonus) for the exact portion."
 msgstr ""
 
-#: cogs/adventure/__init__.py:515
+#: cogs/adventure/__init__.py:614
 msgid "Adventure Status"
 msgstr "Tình trạng cuộc phiêu lưu"
 
-#: cogs/adventure/__init__.py:517
+#: cogs/adventure/__init__.py:616
 #, python-brace-format
 msgid ""
 "You are currently on an adventure with difficulty **{difficulty}**.\n"
@@ -4831,19 +4395,19 @@ msgstr ""
 "Thời gian còn lại: **{time_left}**\n"
 "Tên cuộc phiêu lưu: **{adventure}**"
 
-#: cogs/adventure/__init__.py:556
+#: cogs/adventure/__init__.py:655
 msgid "Adventure Failed"
 msgstr "Cuộc phiêu lưu thất bại"
 
-#: cogs/adventure/__init__.py:557
+#: cogs/adventure/__init__.py:656
 msgid "You died on your mission. Try again!"
 msgstr "Bạn đã chết trong nhiệm vụ. Thử lại!"
 
-#: cogs/adventure/__init__.py:638
+#: cogs/adventure/__init__.py:737
 msgid "Adventure Completed"
 msgstr "Hoàn tất cuộc phiêu lưu"
 
-#: cogs/adventure/__init__.py:640
+#: cogs/adventure/__init__.py:739
 #, python-brace-format
 msgid ""
 "You have completed your adventure and received **${gold}** as well as a new "
@@ -4860,25 +4424,25 @@ msgstr ""
 "{stat}Giá trị: **{value}**\n"
 "Kinh nghiệm nhận được: **{xp}**."
 
-#: cogs/adventure/__init__.py:646
+#: cogs/adventure/__init__.py:745
 msgid "Loot item"
 msgstr "Vật hiến tế"
 
-#: cogs/adventure/__init__.py:650
+#: cogs/adventure/__init__.py:749
 #, python-brace-format
 msgid "Damage: **{damage}**\n"
 msgstr "Tấn công: **{damage}**\n"
 
-#: cogs/adventure/__init__.py:652
+#: cogs/adventure/__init__.py:751
 #, python-brace-format
 msgid "Armor: **{armor}**\n"
 msgstr "Phòng thủ: **{armor}**\n"
 
-#: cogs/adventure/__init__.py:669
+#: cogs/adventure/__init__.py:768
 msgid "Cancels your current adventure."
 msgstr "Hủy bỏ cuộc phiêu lưu hiện tại của bạn."
 
-#: cogs/adventure/__init__.py:673
+#: cogs/adventure/__init__.py:772
 msgid ""
 "Cancels your ongoing adventure and allows you to start a new one right away. "
 "You will not receive any rewards if you cancel your adventure."
@@ -4887,15 +4451,15 @@ msgstr ""
 "phiêu lưu mới ngay lập tức. Bạn sẽ không nhận được bất kỳ phần thưởng nào "
 "nếu bạn hủy bỏ cuộc phiêu lưu."
 
-#: cogs/adventure/__init__.py:676
+#: cogs/adventure/__init__.py:775
 msgid "Are you sure you want to cancel your current adventure?"
 msgstr "Bạn có chắc muốn hủy bỏ cuộc phiêu lưu hiện tại?"
 
-#: cogs/adventure/__init__.py:679
+#: cogs/adventure/__init__.py:778
 msgid "Did not cancel your adventure. The journey continues..."
 msgstr "Bạn không hủy bỏ. Cuộc phiêu lưu tiếp tục..."
 
-#: cogs/adventure/__init__.py:694
+#: cogs/adventure/__init__.py:793
 #, python-brace-format
 msgid ""
 "Canceled your mission. Use `{prefix}adventure [missionID]` to start a new "
@@ -4904,11 +4468,11 @@ msgstr ""
 "Hủy bỏ cuộc phiêu lưu bạn. Sử dụng `{prefix}adventure [missionID]` để bắt "
 "đầu một cuộc phiêu lưu mới!"
 
-#: cogs/adventure/__init__.py:700
+#: cogs/adventure/__init__.py:799
 msgid "Show some adventure stats"
 msgstr "Hiển thị thống kê cuộc phiêu lưu"
 
-#: cogs/adventure/__init__.py:704
+#: cogs/adventure/__init__.py:803
 msgid ""
 "Shows your overall adventure death and completed count, including your "
 "success rate."
@@ -4916,7 +4480,7 @@ msgstr ""
 "Hiển thị tổng số lần chết và sống sót của bạn trong các cuộc phiêu lưu, bao "
 "gồm tỉ lệ thành công."
 
-#: cogs/adventure/__init__.py:716
+#: cogs/adventure/__init__.py:815
 #, python-brace-format
 msgid ""
 "Out of **{total}** adventures, you died **{deaths}** times and survived "
@@ -4935,17 +4499,17 @@ msgstr ""
 "Hiển thị tất cả thời gian chờ của bạn, bao gồm thời gian còn lại của cuộc "
 "phiêu lưu."
 
-#: cogs/shard_communication/__init__.py:377 cogs/guild/__init__.py:1534
+#: cogs/shard_communication/__init__.py:377 cogs/guild/__init__.py:1542
 msgid "You don't have any active cooldown at the moment."
 msgstr "Bạn không có bất kỳ thời gian chờ nào vào lúc này."
 
-#: cogs/shard_communication/__init__.py:379 cogs/guild/__init__.py:1536
-#: cogs/alliance/__init__.py:935
+#: cogs/shard_communication/__init__.py:379 cogs/guild/__init__.py:1544
+#: cogs/alliance/__init__.py:943
 msgid "Commands on cooldown:"
 msgstr "Các lệnh về thời gian chờ:"
 
-#: cogs/shard_communication/__init__.py:384 cogs/guild/__init__.py:1541
-#: cogs/alliance/__init__.py:940
+#: cogs/shard_communication/__init__.py:384 cogs/guild/__init__.py:1549
+#: cogs/alliance/__init__.py:948
 #, python-brace-format
 msgid "{cmd} is on cooldown and will be available after {time}"
 msgstr "{cmd} đang trong thời gian chờ và có thể được sử dụng sau {time}"
@@ -4967,7 +4531,14 @@ msgstr "Hiển thị các cluster và tình trạng của chúng."
 msgid "Launcher is dead, that is really bad."
 msgstr "Phần khởi động chết rồi, thật quá tệ."
 
-#: cogs/gambling/__init__.py:226
+#: cogs/gambling/__init__.py:349
+#, python-brace-format
+msgid ""
+"The dealer has a {pretty_dealer} for a total of {dealer}\n"
+"You have a {pretty_player} for a total of {player}"
+msgstr ""
+
+#: cogs/gambling/__init__.py:382
 #, python-brace-format
 msgid ""
 "The dealer has a {pretty_dealer} for a total of {dealer}\n"
@@ -4978,79 +4549,70 @@ msgstr ""
 "Bạn có {pretty_player} với tổng cộng là {player}\n"
 "{additional}"
 
-#: cogs/gambling/__init__.py:248
-msgid ""
-"Would you like insurance? It will cost half your bet and will get you 2:1 "
-"back if the dealer has a blackjack. Else it is gone."
-msgstr ""
-"Bạn có muốn mua bảo hiểm? Nó có giá bằng một nửa số tiền đặt cược của bạn và "
-"sẽ giúp bạn lấy lại 2:1 nếu người chia bài có xì dách. Nếu không thì nó sẽ "
-"biến mất."
-
-#: cogs/gambling/__init__.py:260
+#: cogs/gambling/__init__.py:431
 msgid "The dealer got a blackjack. You had insurance and lost nothing."
 msgstr "Người chia bài có xì dách. Bạn có bảo hiểm nên không mất gì."
 
-#: cogs/gambling/__init__.py:267
+#: cogs/gambling/__init__.py:439
 #, python-brace-format
 msgid "The dealer got a blackjack. You lost **${money}**."
 msgstr "Người chia bài có xì dách. Bạn mất **${money}**."
 
-#: cogs/gambling/__init__.py:273
+#: cogs/gambling/__init__.py:446
 #, python-brace-format
 msgid "You got a blackjack and won **${money}**!"
 msgstr "Bạn có xì dách và thắng **${money}**!"
 
-#: cogs/gambling/__init__.py:311
+#: cogs/gambling/__init__.py:475
 msgid "Blackjack timed out... You lost your money!"
 msgstr "Xì dách đã hết thời gian... Bạn đã mất tiền của mình!"
 
-#: cogs/gambling/__init__.py:335
+#: cogs/gambling/__init__.py:496
 msgid "Split current hand and switched to the second side."
 msgstr "Tách đôi bài bạn đang có thành hai tụ và chuyển sang tụ thứ hai."
 
-#: cogs/gambling/__init__.py:341
+#: cogs/gambling/__init__.py:500
 msgid "Switched to the other side."
 msgstr "Chuyển sang tụ còn lại."
 
-#: cogs/gambling/__init__.py:345
+#: cogs/gambling/__init__.py:505
 msgid "Invalid. You're too poor and lose the match."
 msgstr "Không hợp lệ. Bạn quá nghèo và thua trận đấu."
 
-#: cogs/gambling/__init__.py:374
+#: cogs/gambling/__init__.py:530
 msgid "You doubled your bid in exchange for only receiving one more card."
 msgstr "Bạn đã nhân đôi mức cược của mình để nhận thêm chỉ một lá bài."
 
-#: cogs/gambling/__init__.py:388
+#: cogs/gambling/__init__.py:539
 #, python-brace-format
 msgid "You busted and lost **${money}**."
 msgstr "Bạn bị quắc và mất **${money}**."
 
-#: cogs/gambling/__init__.py:394
+#: cogs/gambling/__init__.py:546
 #, python-brace-format
 msgid "Dealer busts and you won **${money}**!"
 msgstr "Người chia bài bị quắc và bạn thắng **${money}**!"
 
-#: cogs/gambling/__init__.py:403
+#: cogs/gambling/__init__.py:556
 #, python-brace-format
 msgid "You have a higher score than the dealer and have won **${money}**"
 msgstr "Bạn có số tuổi lớn hơn người chia bài và thắng **${money}**"
 
-#: cogs/gambling/__init__.py:411
+#: cogs/gambling/__init__.py:565
 #, python-brace-format
 msgid "Dealer has a higher score than you and wins. You lost **${money}**."
 msgstr "Người chia bài có số tuổi lớn hơn bạn và thắng. Bạn mất **${money}**."
 
-#: cogs/gambling/__init__.py:418
+#: cogs/gambling/__init__.py:573
 #, python-brace-format
 msgid "It's a tie, you got your **${money}** back."
 msgstr "Ván hòa, bạn nhận lại **${money}**."
 
-#: cogs/gambling/__init__.py:431
+#: cogs/gambling/__init__.py:587
 msgid "Draw a card."
 msgstr "Rút một lá."
 
-#: cogs/gambling/__init__.py:437
+#: cogs/gambling/__init__.py:593
 msgid ""
 "`[enemy]` - A user who has a profile; defaults to None\n"
 "            `[money]` - The bet money. A whole number that can be 0 or "
@@ -5076,28 +4638,28 @@ msgstr ""
 "đối thủ.\n"
 "            (Lệnh này có thời gian chờ là 15 giây.)"
 
-#: cogs/gambling/__init__.py:452
+#: cogs/gambling/__init__.py:608
 msgid "Please choose someone else."
 msgstr "Xin hãy chọn người khác."
 
-#: cogs/gambling/__init__.py:454
+#: cogs/gambling/__init__.py:610
 msgid "You should choose a human to play with you."
 msgstr "Bạn cần chọn một người để chơi với bạn."
 
-#: cogs/gambling/__init__.py:476
+#: cogs/gambling/__init__.py:632
 #, python-brace-format
 msgid ""
 "{author} challenges {enemy} to a game of Draw for **${money}**. Do you "
 "accept?"
 msgstr ""
 
-#: cogs/gambling/__init__.py:489
+#: cogs/gambling/__init__.py:645
 #, python-brace-format
 msgid ""
 "They declined. They don't want to play a game of Draw with you {author}."
 msgstr "Họ từ chối. Họ không muốn chơi Rút bài với bạn {author}."
 
-#: cogs/gambling/__init__.py:497
+#: cogs/gambling/__init__.py:653
 #, python-brace-format
 msgid ""
 "They didn't choose anything. It seems they're not interested to play a game "
@@ -5105,12 +4667,12 @@ msgid ""
 msgstr ""
 "Họ không chọn gì cả. Có vẻ họ không muốn chơi Rút bài với bạn {author}."
 
-#: cogs/gambling/__init__.py:505 cogs/gambling/__init__.py:668
+#: cogs/gambling/__init__.py:661 cogs/gambling/__init__.py:824
 #, python-brace-format
 msgid "{enemy} You don't have enough money to play."
 msgstr "{enemy} Bạn không có đủ tiền để chơi."
 
-#: cogs/gambling/__init__.py:532
+#: cogs/gambling/__init__.py:688
 msgid ""
 "Cards ran out. This is a very rare issue that could mean image files for "
 "cards have become insufficient. Please report this issue to the bot "
@@ -5119,56 +4681,56 @@ msgstr ""
 "Hết bài. Trường hợp này rất hiếm, có lẽ là không đủ hình ảnh cho các lá bài. "
 "Xin hãy báo vấn đề này với các nhà phát triển bot."
 
-#: cogs/gambling/__init__.py:554
+#: cogs/gambling/__init__.py:710
 #, python-brace-format
 msgid "Nobody won. {author} and {enemy} tied."
 msgstr "Không ai thắng. {author} và {enemy} hòa nhau."
 
-#: cogs/gambling/__init__.py:576
+#: cogs/gambling/__init__.py:732
 #, python-brace-format
 msgid "{winner} won the Draw vs {loser}! Congratulations!"
 msgstr "{winner} thắng trò chơi Rút bài với {loser}! Xin chúc mừng!"
 
-#: cogs/gambling/__init__.py:581
+#: cogs/gambling/__init__.py:737
 #, python-brace-format
 msgid "{author}, while playing against {enemy}, you drew:"
 msgstr "{author}, khi chơi với {enemy}, bạn rút:"
 
-#: cogs/gambling/__init__.py:589
+#: cogs/gambling/__init__.py:745
 #, python-brace-format
 msgid "{enemy}, while playing against {author}, you drew:"
 msgstr "{enemy}, khi chơi với {author}, bạn rút:"
 
-#: cogs/gambling/__init__.py:603
+#: cogs/gambling/__init__.py:759
 msgid "Break the tie?"
 msgstr "Phá bỏ thế hòa?"
 
-#: cogs/gambling/__init__.py:605
+#: cogs/gambling/__init__.py:761
 #, python-brace-format
 msgid ""
 "{author}, {enemy} You tied. Do you want to break the tie by playing again "
 "for **${money}**?"
 msgstr ""
 
-#: cogs/gambling/__init__.py:645
+#: cogs/gambling/__init__.py:801
 msgid "One of you or both didn't react on time."
 msgstr "Một trong hai hoặc cả hai bạn đã không nhấn emoji kịp lúc."
 
-#: cogs/gambling/__init__.py:651
+#: cogs/gambling/__init__.py:807
 #, python-brace-format
 msgid "{user} declined to break the tie."
 msgstr "{user} từ chối phá bỏ thế hòa."
 
-#: cogs/gambling/__init__.py:662
+#: cogs/gambling/__init__.py:818
 #, python-brace-format
 msgid "{author} You don't have enough money to play."
 msgstr "{author} Bạn không có đủ tiền để chơi."
 
-#: cogs/gambling/__init__.py:686
+#: cogs/gambling/__init__.py:842
 msgid "Play a game of French Roulette"
 msgstr "Chơi trò Roulette"
 
-#: cogs/gambling/__init__.py:691
+#: cogs/gambling/__init__.py:847
 msgid ""
 "`<money>` - A whole number from 0 to 100\n"
 "`<bid>` - What to bid on, see below for details\n"
@@ -5241,26 +4803,26 @@ msgstr ""
 "nhiệm khi chơi.\n"
 "(Lệnh này có thời gian chờ là 15 giây.)"
 
-#: cogs/gambling/__init__.py:728
+#: cogs/gambling/__init__.py:884
 msgid ""
 "Your bid input was invalid. Try the help on this command to view examples."
 msgstr ""
 "Số tiền cược của bạn không hợp lệ. Xin hãy xem giúp đỡ của lệnh này để xem "
 "ví dụ."
 
-#: cogs/gambling/__init__.py:734
+#: cogs/gambling/__init__.py:890
 msgid "Show the roulette table"
 msgstr "Hiển thị bàn roulette"
 
-#: cogs/gambling/__init__.py:737
+#: cogs/gambling/__init__.py:893
 msgid "Sends a picture of a French Roulette table."
 msgstr "Gửi hình bàn roulette."
 
-#: cogs/gambling/__init__.py:742
+#: cogs/gambling/__init__.py:898
 msgid "Toss a coin"
 msgstr "Quăng đồng xu"
 
-#: cogs/gambling/__init__.py:752
+#: cogs/gambling/__init__.py:908
 msgid ""
 "`[side]` - The coin side to bet on, can be heads or tails; defaults to "
 "heads\n"
@@ -5282,21 +4844,21 @@ msgstr ""
 "Nếu là mặt còn lại, bạn sẽ mất tiền cược.\n"
 "            (Lệnh này có thời gian chờ là 5 giây.)"
 
-#: cogs/gambling/__init__.py:785
+#: cogs/gambling/__init__.py:941
 #, python-brace-format
 msgid "{result[1]} It's **{result[0]}**! You won **${amount}**!"
 msgstr "{result[1]} Nó là **{result[0]}**! Bạn thắng **${amount}**!"
 
-#: cogs/gambling/__init__.py:806
+#: cogs/gambling/__init__.py:962
 #, python-brace-format
 msgid "{result[1]} It's **{result[0]}**! You lost **${amount}**!"
 msgstr "{result[1]} Nó là **{result[0]}**! Bạn mất **${amount}**!"
 
-#: cogs/gambling/__init__.py:813
+#: cogs/gambling/__init__.py:969
 msgid "Bet on a specific outcome of an n-sided dice."
 msgstr "Cược một kết quả nhất định của xúc xắc n mặt."
 
-#: cogs/gambling/__init__.py:823
+#: cogs/gambling/__init__.py:979
 #, python-brace-format
 msgid ""
 "`[maximum]` - The amount of sides the dice will have, must be greater than "
@@ -5336,32 +4898,32 @@ msgstr ""
 "\n"
 "            (Lệnh này có thời gian chờ là 5 giây.)"
 
-#: cogs/gambling/__init__.py:840
+#: cogs/gambling/__init__.py:996
 #, python-brace-format
 msgid "Invalid Tip. Must be in the Range of `1` to `{maximum}`."
 msgstr "Không hợp lệ. Phải nằm trong phạm vi từ `1` đến`{maximum}`."
 
-#: cogs/gambling/__init__.py:845
+#: cogs/gambling/__init__.py:1001
 msgid "Spend it in a better way. C'mon!"
 msgstr "Chi tiêu nó một cách tốt hơn nào!"
 
-#: cogs/gambling/__init__.py:867
+#: cogs/gambling/__init__.py:1023
 #, python-brace-format
 msgid ""
 "You won **${money}**! The random number was `{num}`, you tipped `{tip}`."
 msgstr "Bạn thắng **${money}**! Số ngẫu nhiên là `{num}`, bạn đã chọn `{tip}`."
 
-#: cogs/gambling/__init__.py:894
+#: cogs/gambling/__init__.py:1050
 #, python-brace-format
 msgid ""
 "You lost **${money}**! The random number was `{num}`, you tipped `{tip}`."
 msgstr "Bạn mất **${money}**! Số ngẫu nhiên là `{num}`, bạn đã chọn `{tip}`."
 
-#: cogs/gambling/__init__.py:901
+#: cogs/gambling/__init__.py:1057
 msgid "Play blackjack against the bot."
 msgstr "Chơi xì dách với bot."
 
-#: cogs/gambling/__init__.py:905
+#: cogs/gambling/__init__.py:1061
 msgid ""
 "`[amount]` - The amount of money you bet, must be between 0 and 1000; "
 "defaults to 0\n"
@@ -5409,11 +4971,11 @@ msgstr ""
 "\n"
 " (Lệnh này có thời gian chờ là 5 giây.)"
 
-#: cogs/gambling/__init__.py:941
+#: cogs/gambling/__init__.py:1097
 msgid "Play double-or-steal"
 msgstr "Chơi nhân đôi hay cướp"
 
-#: cogs/gambling/__init__.py:945
+#: cogs/gambling/__init__.py:1101
 msgid ""
 "`[user]` - A discord user with a character; defaults to anyone\n"
 "\n"
@@ -5429,44 +4991,44 @@ msgstr ""
 "            Mỗi vòng, người chơi sẽ chọn nhân đôi số tiền cược hoặc cướp, "
 "đoạt số tiền cược của người chơi khác và bỏ vào túi mình."
 
-#: cogs/gambling/__init__.py:952
+#: cogs/gambling/__init__.py:1108
 #, python-brace-format
 msgid "React with 💰 to play double-or-steal with {user}!"
 msgstr "Nhấn 💰 để chơi nhân đôi hay cướp với {user}!"
 
-#: cogs/gambling/__init__.py:975
+#: cogs/gambling/__init__.py:1131
 #, python-brace-format
 msgid "{user} has no character."
 msgstr "{user} không có nhân vật."
 
-#: cogs/gambling/__init__.py:982 cogs/gambling/__init__.py:1050
+#: cogs/gambling/__init__.py:1138 cogs/gambling/__init__.py:1206
 #, python-brace-format
 msgid "{user} is too poor to double."
 msgstr "{user} quá nghèo để nhân đôi số tiền."
 
-#: cogs/gambling/__init__.py:1000
+#: cogs/gambling/__init__.py:1156
 #, python-brace-format
 msgid "Double or steal ${money}?"
 msgstr "Nhân đôi hay cướp ${money}?"
 
-#: cogs/gambling/__init__.py:1001
+#: cogs/gambling/__init__.py:1157
 msgid "Select an action"
 msgstr ""
 
-#: cogs/gambling/__init__.py:1002
+#: cogs/gambling/__init__.py:1158
 msgid "Double"
 msgstr "Nhân đôi"
 
-#: cogs/gambling/__init__.py:1002
+#: cogs/gambling/__init__.py:1158
 msgid "Steal"
 msgstr "Cướp"
 
-#: cogs/gambling/__init__.py:1038
+#: cogs/gambling/__init__.py:1194
 #, python-brace-format
 msgid "{user} stole **${money}**."
 msgstr "{user} cướp **${money}**."
 
-#: cogs/gambling/__init__.py:1058
+#: cogs/gambling/__init__.py:1214
 #, python-brace-format
 msgid "{user} doubled to **${money}**."
 msgstr "{user} nhân đôi số tiền lên **${money}**."
@@ -7058,11 +6620,11 @@ msgstr ""
 msgid "Download Link"
 msgstr "Tải link"
 
-#: cogs/guild/__init__.py:59
+#: cogs/guild/__init__.py:62
 msgid "Interact with your guild."
 msgstr "Tương tác với bang hội."
 
-#: cogs/guild/__init__.py:63
+#: cogs/guild/__init__.py:66
 msgid ""
 "Interact with your guild. If no subcommand is given, this will show your "
 "guild.\n"
@@ -7082,36 +6644,36 @@ msgstr ""
 "            Người chơi không thể tự tham gia bang hội, họ phải được mời bởi "
 "bang chủ hoặc một trong các viên chức của bang hội."
 
-#: cogs/guild/__init__.py:69
+#: cogs/guild/__init__.py:72
 msgid "You are not in a guild yet."
 msgstr "Bạn chưa ở trong bang hội."
 
-#: cogs/guild/__init__.py:87
+#: cogs/guild/__init__.py:90
 msgid "No guild found."
 msgstr "Không tìm thấy bang hội."
 
-#: cogs/guild/__init__.py:92
+#: cogs/guild/__init__.py:95
 msgid "Members"
 msgstr "Thành viên"
 
-#: cogs/guild/__init__.py:95
+#: cogs/guild/__init__.py:98
 msgid "Current Member Count"
 msgstr "Số lượng thành viên hiện tại"
 
-#: cogs/guild/__init__.py:99
+#: cogs/guild/__init__.py:102
 msgid "Leader"
 msgstr "Bang chủ"
 
-#: cogs/guild/__init__.py:109
+#: cogs/guild/__init__.py:112
 #, python-brace-format
 msgid "Guild ID: {id}"
 msgstr "ID Bang hội: {id}"
 
-#: cogs/guild/__init__.py:114
+#: cogs/guild/__init__.py:117
 msgid "Show a specific guild"
 msgstr "Hiển thị một bang hội nhất định"
 
-#: cogs/guild/__init__.py:118
+#: cogs/guild/__init__.py:121
 msgid ""
 "`<by>` - The guild's name (format `guild:name`, i.e. `guild:Adrian's "
 "Refuge`), its ID (format `id:number`, i.e. `id:5003`), or a person in the "
@@ -7127,16 +6689,16 @@ msgstr ""
 "            Hiển thị thông tin của một bang hội nhất định. Bạn có thể tìm "
 "bằng tên bang, ID bang, hoặc một thành viên của bang."
 
-#: cogs/guild/__init__.py:136
+#: cogs/guild/__init__.py:139
 #, python-brace-format
 msgid "**{user}** does not have a guild."
 msgstr "**{user}** chưa tham gia vào bang nào cả."
 
-#: cogs/guild/__init__.py:141
+#: cogs/guild/__init__.py:144
 msgid "Show the best guilds by GvG wins"
 msgstr "Hiển thị những bang hội tốt nhất theo số trận thắng GvG"
 
-#: cogs/guild/__init__.py:145
+#: cogs/guild/__init__.py:148
 #, python-brace-format
 msgid ""
 "Shows the top 10 guilds ordered by Guild vs Guild wins.\n"
@@ -7149,20 +6711,20 @@ msgstr ""
 " Để tăng số lần thắng trận đấu giữa các bang, bang chủ hoặc một trong các "
 "viên chức có thể sử dụng `{prefix}guild battle`."
 
-#: cogs/guild/__init__.py:155
+#: cogs/guild/__init__.py:158
 #, python-brace-format
 msgid "a guild by {leader} with **{wins}** GvG Wins"
 msgstr "bang hội của {leader} có **{wins}** lần thắng GvG"
 
-#: cogs/guild/__init__.py:161
+#: cogs/guild/__init__.py:164
 msgid "The Best GvG Guilds"
 msgstr "Bang hội GvG tốt nhất"
 
-#: cogs/guild/__init__.py:166
+#: cogs/guild/__init__.py:169
 msgid "Show a list of your guild members."
 msgstr "Hiển thị danh sách thành viên bang hội của bạn."
 
-#: cogs/guild/__init__.py:170
+#: cogs/guild/__init__.py:173
 msgid ""
 "Show a list of your guild members. If a user's name cannot be found for "
 "whatever reason, their user ID is displayed.\n"
@@ -7180,20 +6742,20 @@ msgstr ""
 "\n"
 "            Chỉ những người chơi có bang hội có thể sử dụng lệnh này."
 
-#: cogs/guild/__init__.py:184
+#: cogs/guild/__init__.py:187
 #, python-brace-format
 msgid "Unknown User (ID {id})"
 msgstr "Người dùng không xác định (ID {id})"
 
-#: cogs/guild/__init__.py:188
+#: cogs/guild/__init__.py:191
 msgid "Your guild mates"
 msgstr "Thành viên trong bang hội của bạn"
 
-#: cogs/guild/__init__.py:193
+#: cogs/guild/__init__.py:196
 msgid "Change your guild's badge"
 msgstr "Thay đổi huy hiệu bang"
 
-#: cogs/guild/__init__.py:197
+#: cogs/guild/__init__.py:200
 #, python-brace-format
 msgid ""
 "`<number>` - The number of the guild badge to use, ranging from 1 to the "
@@ -7212,11 +6774,11 @@ msgstr ""
 "\n"
 "            Chỉ bang chủ có thể sử dụng lệnh này."
 
-#: cogs/guild/__init__.py:208
+#: cogs/guild/__init__.py:211
 msgid "Your guild has no badges yet."
 msgstr "Bang hội của bạn chưa có huy hiệu nào."
 
-#: cogs/guild/__init__.py:214
+#: cogs/guild/__init__.py:217
 #, python-brace-format
 msgid ""
 "The badge number {number} is not valid, your guild only has {amount} "
@@ -7224,15 +6786,15 @@ msgid ""
 msgstr ""
 "Huy hiệu số {number} không hợp lệ, bang hội của bạn chỉ có {amount} huy hiệu."
 
-#: cogs/guild/__init__.py:226
+#: cogs/guild/__init__.py:229
 msgid "Badge updated!"
 msgstr "Cập nhật huy hiệu!"
 
-#: cogs/guild/__init__.py:231
+#: cogs/guild/__init__.py:234
 msgid "Create a guild"
 msgstr "Tạo bang hội"
 
-#: cogs/guild/__init__.py:235
+#: cogs/guild/__init__.py:238
 #, python-brace-format
 msgid ""
 "Create a guild for $10,000.\n"
@@ -7273,38 +6835,38 @@ msgstr ""
 "            Chỉ những người chơi chưa có bang hội có thể sử dụng lệnh này.\n"
 "            (Lệnh này có thời gian chờ là 10 phút.)"
 
-#: cogs/guild/__init__.py:255
+#: cogs/guild/__init__.py:258
 msgid "Enter a name for your guild. Maximum length is 20 characters."
 msgstr "Nhập tên cho bang hội của bạn. Độ dài tối đa là 20 ký tự."
 
-#: cogs/guild/__init__.py:261 cogs/guild/__init__.py:272
-#: cogs/guild/__init__.py:278
+#: cogs/guild/__init__.py:264 cogs/guild/__init__.py:275
+#: cogs/guild/__init__.py:281
 msgid "Cancelled guild creation."
 msgstr "Hủy bỏ việc tạo bang hội."
 
-#: cogs/guild/__init__.py:264 cogs/guild/__init__.py:346
+#: cogs/guild/__init__.py:267 cogs/guild/__init__.py:349
 msgid "Guild names musn't exceed 20 characters."
 msgstr "Tên bang hội không được vượt quá 20 ký tự."
 
-#: cogs/guild/__init__.py:266
+#: cogs/guild/__init__.py:269
 msgid "Send a link to the guild's icon. Maximum length is 60 characters."
 msgstr ""
 "Gửi một liên kết để thay đổi biểu tượng của bang hội. Độ dài tối đa là 60 ký "
 "tự."
 
-#: cogs/guild/__init__.py:298
+#: cogs/guild/__init__.py:301
 msgid "Are you sure? React to create a guild for **$10000**"
 msgstr "Bạn có chắc không? Nhấn để tạo bang hội với giá **$10000**"
 
-#: cogs/guild/__init__.py:304
+#: cogs/guild/__init__.py:307
 msgid "A guild creation costs **$10000**, you are too poor."
 msgstr "Chi phí tạo bang hội là **$10000**, bạn quá nghèo."
 
-#: cogs/guild/__init__.py:307
+#: cogs/guild/__init__.py:310
 msgid "The guild name is taken."
 msgstr "Tên bang hội đã được sử dụng."
 
-#: cogs/guild/__init__.py:326
+#: cogs/guild/__init__.py:329
 #, python-brace-format
 msgid ""
 "Successfully added your guild **{name}** with a member limit of "
@@ -7319,11 +6881,11 @@ msgstr ""
 "Mẹo: Bạn có thể sử dụng `{prefix}guild channel` ở server bạn có quyền quản "
 "trị để tạo kênh ghi chép hoạt động bang hội."
 
-#: cogs/guild/__init__.py:333
+#: cogs/guild/__init__.py:336
 msgid "Renames your guild"
 msgstr ""
 
-#: cogs/guild/__init__.py:337
+#: cogs/guild/__init__.py:340
 msgid ""
 "`<new_name>` - The new name for the guild.\n"
 "\n"
@@ -7334,16 +6896,16 @@ msgid ""
 "            Only guild leaders can use this command."
 msgstr ""
 
-#: cogs/guild/__init__.py:351
+#: cogs/guild/__init__.py:354
 #, python-brace-format
 msgid "Successfully renamed your guild to {new_name}"
 msgstr ""
 
-#: cogs/guild/__init__.py:355
+#: cogs/guild/__init__.py:358
 msgid "Give your guild to someone else"
 msgstr "Đưa bang hội của bạn cho người khác"
 
-#: cogs/guild/__init__.py:359
+#: cogs/guild/__init__.py:362
 msgid ""
 "`<member>` - A discord User with a character, must be a member of your "
 "guild.\n"
@@ -7367,25 +6929,25 @@ msgstr ""
 "\n"
 " Chỉ bang chủ có thể sử dụng lệnh này."
 
-#: cogs/guild/__init__.py:371
+#: cogs/guild/__init__.py:374
 msgid "Not a member of your guild."
 msgstr "Không phải là thành viên trong bang của bạn."
 
-#: cogs/guild/__init__.py:373
+#: cogs/guild/__init__.py:376
 #, python-brace-format
 msgid "Are you sure to transfer guild ownership to {user}?"
 msgstr "Bạn có chắc chắn muốn chuyển quyền sở hữu bang hội cho {user} không?"
 
-#: cogs/guild/__init__.py:402
+#: cogs/guild/__init__.py:405
 #, python-brace-format
 msgid "{user} now leads {guild}."
 msgstr "{user} bây giờ là bang chủ của {guild}."
 
-#: cogs/guild/__init__.py:405
+#: cogs/guild/__init__.py:408
 msgid "Promote a guild member to officer."
 msgstr "Thăng cấp một thành viên lên viên chức."
 
-#: cogs/guild/__init__.py:409
+#: cogs/guild/__init__.py:412
 #, python-brace-format
 msgid ""
 "`<member>` - A discord User with a character, must be a member of your "
@@ -7426,24 +6988,24 @@ msgstr ""
 "\n"
 "            Chỉ bang chủ có thể sử dụng lệnh này."
 
-#: cogs/guild/__init__.py:427 cogs/guild/__init__.py:466
+#: cogs/guild/__init__.py:430 cogs/guild/__init__.py:469
 msgid "Target is not a member of your guild."
 msgstr "Người được chọn không phải là thành viên trong bang hội của bạn."
 
-#: cogs/guild/__init__.py:429
+#: cogs/guild/__init__.py:432
 msgid "This user is already an officer of your guild."
 msgstr "Người dùng này đã là viên chức trong bang hội của bạn."
 
-#: cogs/guild/__init__.py:447
+#: cogs/guild/__init__.py:450
 #, python-brace-format
 msgid "Done! {member} has been promoted to the rank of `Officer`."
 msgstr "Xong! {member} đã được thăng cấp thành `Viên chức`."
 
-#: cogs/guild/__init__.py:453
+#: cogs/guild/__init__.py:456
 msgid "Demote a guild officer to member."
 msgstr "Giáng chức một viên chức xuống còn thành viên."
 
-#: cogs/guild/__init__.py:457
+#: cogs/guild/__init__.py:460
 msgid ""
 "`<member>` - A discord User with a character, must be an officer of your "
 "guild\n"
@@ -7461,20 +7023,20 @@ msgstr ""
 "\n"
 "            Chỉ bang chủ có thể sử dụng lệnh này."
 
-#: cogs/guild/__init__.py:468
+#: cogs/guild/__init__.py:471
 msgid "This user can't be demoted any further."
 msgstr "Người dùng này không thể bị giáng cấp hơn nữa."
 
-#: cogs/guild/__init__.py:486
+#: cogs/guild/__init__.py:489
 #, python-brace-format
 msgid "Done! {member} has been demoted to the rank of `Member`."
 msgstr "Xong! {member} đã bị giáng cấp xuống còn `Thành viên`."
 
-#: cogs/guild/__init__.py:492
+#: cogs/guild/__init__.py:495
 msgid "Invite new members to your guild."
 msgstr "Mời thành viên mới vào bang."
 
-#: cogs/guild/__init__.py:496
+#: cogs/guild/__init__.py:499
 msgid ""
 "`<member>` - A discord user with a character who is not yet in a guild.\n"
 "\n"
@@ -7492,35 +7054,35 @@ msgstr ""
 "\n"
 "            Chỉ bang chủ và viên chức có thể sử dụng lệnh này."
 
-#: cogs/guild/__init__.py:505
+#: cogs/guild/__init__.py:508
 msgid "...me? I'm flattered, but I can't accept this invitation..."
 msgstr ""
 
-#: cogs/guild/__init__.py:508 cogs/guild/__init__.py:533
+#: cogs/guild/__init__.py:511 cogs/guild/__init__.py:536
 msgid "That member already has a guild."
 msgstr "Thành viên này đã có bang hội."
 
-#: cogs/guild/__init__.py:521
+#: cogs/guild/__init__.py:524
 msgid "Your guild is already at the maximum member count."
 msgstr "Bang hội của bạn đã đạt đến số lượng thành viên tối đa."
 
-#: cogs/guild/__init__.py:526
+#: cogs/guild/__init__.py:529
 #, python-brace-format
 msgid ""
 "{newmember}, {author} invites you to join **{name}**. React to join the "
 "guild."
 msgstr "{newmember}, {author} mời bạn vào **{name}**. Nhấn emoji để tham gia."
 
-#: cogs/guild/__init__.py:543
+#: cogs/guild/__init__.py:546
 #, python-brace-format
 msgid "{newmember} is now a member of **{name}**. Welcome!"
 msgstr "{newmember} bây giờ là thành viên của **{name}**. Chào mừng bạn!"
 
-#: cogs/guild/__init__.py:550
+#: cogs/guild/__init__.py:553
 msgid "Leave your guild"
 msgstr "Rời bang hội"
 
-#: cogs/guild/__init__.py:554
+#: cogs/guild/__init__.py:557
 msgid ""
 "Leave your current guild\n"
 "\n"
@@ -7538,15 +7100,15 @@ msgstr ""
 "            Chỉ người chơi đang trong bang, ngoại trừ bang chủ, có thể sử "
 "dụng lệnh này."
 
-#: cogs/guild/__init__.py:577
+#: cogs/guild/__init__.py:580
 msgid "You left your guild."
 msgstr "Bạn đã rời khỏi bang hội."
 
-#: cogs/guild/__init__.py:580
+#: cogs/guild/__init__.py:583
 msgid "Kick a member from your guild."
 msgstr "Đá một thành viên khỏi bang."
 
-#: cogs/guild/__init__.py:584
+#: cogs/guild/__init__.py:587
 msgid ""
 "`<member>` - A discord User with a character, must be a member of your "
 "guild\n"
@@ -7562,23 +7124,23 @@ msgid ""
 "            Only guild leaders and officers can use this command."
 msgstr ""
 
-#: cogs/guild/__init__.py:601
+#: cogs/guild/__init__.py:604
 msgid "Not your guild mate."
 msgstr "Không phải là thành viên của bang hội bạn."
 
-#: cogs/guild/__init__.py:603
+#: cogs/guild/__init__.py:606
 msgid "You can only kick members."
 msgstr "Bạn chỉ có thể đá các thành viên."
 
-#: cogs/guild/__init__.py:618
+#: cogs/guild/__init__.py:621
 msgid "The person has been kicked!"
 msgstr "Người đó đã bị đá!"
 
-#: cogs/guild/__init__.py:621
+#: cogs/guild/__init__.py:624
 msgid "Delete your guild"
 msgstr "Xóa bang hội"
 
-#: cogs/guild/__init__.py:625
+#: cogs/guild/__init__.py:628
 msgid ""
 "Delete your guild.\n"
 "\n"
@@ -7600,19 +7162,19 @@ msgstr ""
 "\n"
 "            Chỉ bang chủ có thể sử dụng lệnh này."
 
-#: cogs/guild/__init__.py:634
+#: cogs/guild/__init__.py:637
 msgid "Are you sure to delete your guild? React to confirm the deletion."
 msgstr "Bạn có chắc chắn muốn xóa bang hội? Nhấn emoji để xác nhận xóa."
 
-#: cogs/guild/__init__.py:658
+#: cogs/guild/__init__.py:661
 msgid "Successfully deleted your guild."
 msgstr "Xóa thành công bang hội của bạn."
 
-#: cogs/guild/__init__.py:661
+#: cogs/guild/__init__.py:664
 msgid "Change your guild's icon"
 msgstr "Thay đổi biểu tượng của bang"
 
-#: cogs/guild/__init__.py:665
+#: cogs/guild/__init__.py:668
 msgid ""
 "`[url]` - The image URL to use as the icon\n"
 "\n"
@@ -7627,20 +7189,20 @@ msgid ""
 "            Only guild leaders can use this command."
 msgstr ""
 
-#: cogs/guild/__init__.py:680
+#: cogs/guild/__init__.py:683
 #, python-brace-format
 msgid "Your current guild icon is: {url}"
 msgstr ""
 
-#: cogs/guild/__init__.py:704
+#: cogs/guild/__init__.py:707
 msgid "Successfully updated the guild icon."
 msgstr "Cập nhật thành công biểu tượng bang hội."
 
-#: cogs/guild/__init__.py:707
+#: cogs/guild/__init__.py:710
 msgid "Change your guild description."
 msgstr "Thay đổi miêu tả bang hội."
 
-#: cogs/guild/__init__.py:711
+#: cogs/guild/__init__.py:714
 msgid ""
 "`<text>` - The text to use as the description. Cannot exceed 200 "
 "characters.\n"
@@ -7659,19 +7221,19 @@ msgstr ""
 "\n"
 "            Chỉ bang chủ có thể sử dụng lệnh này."
 
-#: cogs/guild/__init__.py:719
+#: cogs/guild/__init__.py:722
 msgid "The text may be up to 200 characters only."
 msgstr "Văn bản chỉ được có tối đa 200 ký tự."
 
-#: cogs/guild/__init__.py:730
+#: cogs/guild/__init__.py:733
 msgid "Updated!"
 msgstr "Đã cập nhật!"
 
-#: cogs/guild/__init__.py:734
+#: cogs/guild/__init__.py:737
 msgid "Set/update the guild update channel."
 msgstr "Cài đặt/thay đổi kênh cập nhật của bang hội."
 
-#: cogs/guild/__init__.py:738
+#: cogs/guild/__init__.py:741
 #, python-brace-format
 msgid ""
 "`[channel]` - The channel to send guild logs to, defaults to the channel the "
@@ -7702,26 +7264,26 @@ msgid ""
 "            Only guild leaders can use this command."
 msgstr ""
 
-#: cogs/guild/__init__.py:764
+#: cogs/guild/__init__.py:767
 #, python-brace-format
 msgid "{channel} will become the channel for all logs. Are you sure?"
 msgstr ""
 
-#: cogs/guild/__init__.py:772
+#: cogs/guild/__init__.py:775
 msgid ""
 "I cannot send messages there! This channel cannot be the guild log channel."
 msgstr ""
 
-#: cogs/guild/__init__.py:782
+#: cogs/guild/__init__.py:785
 #, python-brace-format
 msgid "**Guild logs will go to {channel} ** ✅"
 msgstr ""
 
-#: cogs/guild/__init__.py:786
+#: cogs/guild/__init__.py:789
 msgid "Show the richest guild members"
 msgstr "Hiển thị các thành viên giàu có nhất bang hội"
 
-#: cogs/guild/__init__.py:790
+#: cogs/guild/__init__.py:793
 msgid ""
 "Displays the top 10 richest guild members of your guild.\n"
 "\n"
@@ -7731,21 +7293,21 @@ msgstr ""
 "\n"
 "            Chỉ người chơi trong bang có thể sử dụng lệnh này."
 
-#: cogs/guild/__init__.py:807
+#: cogs/guild/__init__.py:810
 #, python-brace-format
 msgid "a character by {charname} with **${money}**"
 msgstr "nhân vật của {charname} với **${money}**"
 
-#: cogs/guild/__init__.py:813
+#: cogs/guild/__init__.py:816
 #, python-brace-format
 msgid "The Richest Players of {guild}"
 msgstr "Các người chơi giàu có nhất của {guild}"
 
-#: cogs/guild/__init__.py:821
+#: cogs/guild/__init__.py:824
 msgid "Show the best guild members by XP"
 msgstr "Hiển thị các thành viên lợi hại nhất bang hội theo XP"
 
-#: cogs/guild/__init__.py:826
+#: cogs/guild/__init__.py:829
 msgid ""
 "Displays the top 10 best guild members of your guild ordered by XP.\n"
 "\n"
@@ -7755,21 +7317,21 @@ msgstr ""
 "\n"
 "            Chỉ người chơi trong bang có thể sử dụng lệnh này."
 
-#: cogs/guild/__init__.py:844
+#: cogs/guild/__init__.py:847
 #, python-brace-format
 msgid "{name}, a character by {charname} with Level **{level}** (**{xp}** XP)"
 msgstr "{name}, nhân vật của {charname} với cấp **{level}** (**{xp}** XP)"
 
-#: cogs/guild/__init__.py:854
+#: cogs/guild/__init__.py:857
 #, python-brace-format
 msgid "The Best Players of {name}"
 msgstr "Những người chơi lợi hại nhất của {name}"
 
-#: cogs/guild/__init__.py:861
+#: cogs/guild/__init__.py:864
 msgid "Add money to your guild bank"
 msgstr "Góp tiền vào kho bạc"
 
-#: cogs/guild/__init__.py:865
+#: cogs/guild/__init__.py:868
 msgid ""
 "`<amount>` - A whole number greater than 0\n"
 "\n"
@@ -7791,22 +7353,22 @@ msgstr ""
 "            Tiền trong kho bạc có thể dùng để nâng cấp kho bạc hoặc các tòa "
 "nhà/phòng thủ của liên minh nếu liên minh sở hữu thành phố.."
 
-#: cogs/guild/__init__.py:880
+#: cogs/guild/__init__.py:883
 msgid "The bank would be full."
 msgstr "Kho bạc của bang hội sẽ quá đầy."
 
-#: cogs/guild/__init__.py:907
+#: cogs/guild/__init__.py:910
 #, python-brace-format
 msgid ""
 "Done! Now you have `${profile_money}` and the guild has `${guild_money}`."
 msgstr ""
 "Xong! Bây giờ bạn có `${profile_money}` và bang hội có `${guild_money}`."
 
-#: cogs/guild/__init__.py:913
+#: cogs/guild/__init__.py:916
 msgid "Take money out of the guild bank"
 msgstr "Rút tiền khỏi kho bạc"
 
-#: cogs/guild/__init__.py:917
+#: cogs/guild/__init__.py:920
 msgid ""
 "`<amount>` - The amount of money to take out of the bank, must be greater "
 "than 0 and smaller or equal the amount your guild has\n"
@@ -7826,20 +7388,20 @@ msgstr ""
 "\n"
 "            Chỉ bang chủ và các viên chức của bang có thể sử dụng lệnh này."
 
-#: cogs/guild/__init__.py:933 cogs/guild/__init__.py:1007
+#: cogs/guild/__init__.py:936 cogs/guild/__init__.py:1010
 msgid "Your guild is too poor."
 msgstr "Bang hội của bạn quá nghèo."
 
-#: cogs/guild/__init__.py:960
+#: cogs/guild/__init__.py:963
 #, python-brace-format
 msgid "Successfully gave **${amount}** from your guild bank to {member}."
 msgstr "Thành công gửi **${amount}** từ kho bạc của bang đến {member}."
 
-#: cogs/guild/__init__.py:966
+#: cogs/guild/__init__.py:969
 msgid "Pay out money to multiple members"
 msgstr "Đưa tiền cho nhiều thành viên"
 
-#: cogs/guild/__init__.py:973
+#: cogs/guild/__init__.py:976
 msgid ""
 "`<amount>` - The amount of money to take out all together, must be greater "
 "than 0\n"
@@ -7860,20 +7422,20 @@ msgid ""
 "            Only guild leaders and officers can use this command."
 msgstr ""
 
-#: cogs/guild/__init__.py:989
+#: cogs/guild/__init__.py:992
 msgid "You can't distribute money to nobody."
 msgstr "Bạn không thể đưa tiền cho bất kỳ ai."
 
-#: cogs/guild/__init__.py:1029
+#: cogs/guild/__init__.py:1032
 #, python-brace-format
 msgid "Distributed **${money}** (${small_money} for each) to {members}."
 msgstr "Đã đưa **${money}** (${small_money} mỗi người) cho {members}."
 
-#: cogs/guild/__init__.py:1034
+#: cogs/guild/__init__.py:1037
 msgid "Upgrade your guild bank"
 msgstr "Nâng cấp kho bạc"
 
-#: cogs/guild/__init__.py:1038
+#: cogs/guild/__init__.py:1041
 msgid ""
 "Upgrade your guild's bank, adding space for $250,000 each time.\n"
 "\n"
@@ -7901,11 +7463,11 @@ msgstr ""
 "\n"
 "            Chỉ bang chủ có thể sử dụng lệnh này."
 
-#: cogs/guild/__init__.py:1057
+#: cogs/guild/__init__.py:1060
 msgid "Your guild already reached the maximum upgrade."
 msgstr "Bang hội của bạn đã được nâng cấp tối đa."
 
-#: cogs/guild/__init__.py:1062
+#: cogs/guild/__init__.py:1065
 #, python-brace-format
 msgid ""
 "Your guild is too poor, you got **${money}** but it costs **${price}** to "
@@ -7914,7 +7476,7 @@ msgstr ""
 "Bang hội của bạn quá nghèo, bạn có **${money}** nhưng nó tốn **${price}** để "
 "nâng cấp."
 
-#: cogs/guild/__init__.py:1069
+#: cogs/guild/__init__.py:1072
 #, python-brace-format
 msgid ""
 "This will upgrade your guild bank limit to **${newlimit}** for **${cost}**. "
@@ -7923,16 +7485,16 @@ msgstr ""
 "Lần này sẽ nâng cấp giới hạn kho bạc lên **${newlimit}** với giá **${cost}"
 "**. Bạn có chắc không?"
 
-#: cogs/guild/__init__.py:1089
+#: cogs/guild/__init__.py:1092
 #, python-brace-format
 msgid "Your new guild bank limit is now **${limit}**."
 msgstr "Giới hạn mới của kho bạc là **${limit}**."
 
-#: cogs/guild/__init__.py:1094
+#: cogs/guild/__init__.py:1097
 msgid "Battle another guild"
 msgstr "Chiến đấu với bang hội khác"
 
-#: cogs/guild/__init__.py:1104
+#: cogs/guild/__init__.py:1107
 #, python-brace-format
 msgid ""
 "`<enemy>` - A guild officer or leader\n"
@@ -7988,36 +7550,36 @@ msgstr ""
 "            Chỉ bang chủ và các viên chức của bang có thể sử dụng lệnh này.\n"
 "            (Lệnh này có thời gian chờ là 30 phút.)"
 
-#: cogs/guild/__init__.py:1123
+#: cogs/guild/__init__.py:1126
 msgid "Poor kiddo having no friendos."
 msgstr "Tội nghiệp thằng bé không có bạn."
 
-#: cogs/guild/__init__.py:1127
+#: cogs/guild/__init__.py:1130
 msgid "One of you both doesn't have a guild."
 msgstr "Một trong hai bạn không có bang hội."
 
-#: cogs/guild/__init__.py:1130
+#: cogs/guild/__init__.py:1133
 msgid "Battling your own guild? :face_with_raised_eyebrow:"
 msgstr "Đấu với bang hội của chính mình? :face_with_raised_eyebrow:"
 
-#: cogs/guild/__init__.py:1136
+#: cogs/guild/__init__.py:1139
 msgid "One of you both isn't an officer of their guild."
 msgstr "Một trong hai bạn không phải là viên chức trong bang hội của mình."
 
-#: cogs/guild/__init__.py:1141
+#: cogs/guild/__init__.py:1144
 msgid "One of the guilds can't pay the price."
 msgstr "Một trong hai bang không thể trả tiền cược."
 
-#: cogs/guild/__init__.py:1149
+#: cogs/guild/__init__.py:1152
 msgid "One of the guilds is too small."
 msgstr "Một trong hai bang quá nhỏ."
 
-#: cogs/guild/__init__.py:1158
+#: cogs/guild/__init__.py:1161
 #, python-brace-format
 msgid "{enemy} didn't want to join your battle, {author}."
 msgstr "{enemy} không muốn tham gia vào trận đấu, {author}."
 
-#: cogs/guild/__init__.py:1165
+#: cogs/guild/__init__.py:1168
 #, python-brace-format
 msgid ""
 "{enemy} accepted the challenge by {author}. Please now nominate members, "
@@ -8026,28 +7588,28 @@ msgstr ""
 "{enemy} chấp nhận thách đấu của {author}. Xin hãy đề cử thành viên, "
 "{author}. Sử dụng `battle nominate @người` để them ai đó vào đội của bạn."
 
-#: cogs/guild/__init__.py:1183
+#: cogs/guild/__init__.py:1186
 msgid "That person isn't in your guild."
 msgstr "Người đó không ở trong bang hội của bạn."
 
-#: cogs/guild/__init__.py:1207
+#: cogs/guild/__init__.py:1210
 #, python-brace-format
 msgid "{user} has been added to your team, {author}."
 msgstr "{user} đã được thêm vào đội của bạn, {author}."
 
-#: cogs/guild/__init__.py:1212 cogs/guild/__init__.py:1241
+#: cogs/guild/__init__.py:1215 cogs/guild/__init__.py:1244
 msgid "User not found."
 msgstr "Không tìm thấy người chơi."
 
-#: cogs/guild/__init__.py:1214
+#: cogs/guild/__init__.py:1217
 msgid "Error when adding this user, please try again"
 msgstr "Gặp lỗi khi thêm người chơi này, xin hãy thử lại"
 
-#: cogs/guild/__init__.py:1219 cogs/guild/__init__.py:1246
+#: cogs/guild/__init__.py:1222 cogs/guild/__init__.py:1249
 msgid "Took to long to add members. Fight cancelled."
 msgstr "Mất quá nhiều thời gian để thêm thành viên. Cuộc chiến bị hủy bỏ."
 
-#: cogs/guild/__init__.py:1223
+#: cogs/guild/__init__.py:1226
 #, python-brace-format
 msgid ""
 "Please now nominate members, {enemy}. Use `battle nominate @user` to add "
@@ -8056,12 +7618,12 @@ msgstr ""
 "Xin hãy đề cử thành viên, {enemy}. Sử dụng `battle nominate @người` để thêm "
 "ai đó vào đội của bạn."
 
-#: cogs/guild/__init__.py:1236
+#: cogs/guild/__init__.py:1239
 #, python-brace-format
 msgid "{user} has been added to your team, {enemy}."
 msgstr "{user} đã được thêm vào đội của bạn, {enemy}."
 
-#: cogs/guild/__init__.py:1255
+#: cogs/guild/__init__.py:1258
 msgid ""
 "Fight started!\n"
 "Generating battles..."
@@ -8069,7 +7631,7 @@ msgstr ""
 "Bắt đầu chiến đấu!\n"
 "Tạo trận chiến..."
 
-#: cogs/guild/__init__.py:1257
+#: cogs/guild/__init__.py:1260
 msgid ""
 "Fight started!\n"
 "Generating battles... Done."
@@ -8077,7 +7639,7 @@ msgstr ""
 "Bắt đầu chiến đấu!\n"
 "Tạo trận chiến... Thành công."
 
-#: cogs/guild/__init__.py:1264
+#: cogs/guild/__init__.py:1267
 #, python-brace-format
 msgid ""
 "Guild Battle Fight **{num}** of **{total}**.\n"
@@ -8088,7 +7650,7 @@ msgstr ""
 "**{user}** vs **{user2}**!\n"
 "Trận chiến bắt đầu..."
 
-#: cogs/guild/__init__.py:1287
+#: cogs/guild/__init__.py:1290
 #, python-brace-format
 msgid ""
 "Winner of **{user}** vs **{user2}** is **{winner}**! Current points: "
@@ -8097,24 +7659,24 @@ msgstr ""
 "Người chiến thắng của trận chiến giữa **{user}** vs **{user2}** là **{winner}"
 "**! Điểm hiện tại: **{wins1}** và **{wins2}."
 
-#: cogs/guild/__init__.py:1301
+#: cogs/guild/__init__.py:1304
 msgid "Some guild spent the money??? Bad looser!"
 msgstr "Bang hội nào đó phải trả tiền??? Quá tệ!"
 
-#: cogs/guild/__init__.py:1324 cogs/guild/__init__.py:1353
+#: cogs/guild/__init__.py:1327 cogs/guild/__init__.py:1356
 #, python-brace-format
 msgid "{guild} won the battle! Congratulations!"
 msgstr "{guild} thắng trận chiến! Chúc mừng!"
 
-#: cogs/guild/__init__.py:1361
+#: cogs/guild/__init__.py:1364
 msgid "It's a tie!"
 msgstr "Hòa!"
 
-#: cogs/guild/__init__.py:1368
+#: cogs/guild/__init__.py:1371
 msgid "Start a guild adventure"
 msgstr "Bắt đầu cuộc phiêu lưu bang hội"
 
-#: cogs/guild/__init__.py:1372
+#: cogs/guild/__init__.py:1375
 msgid ""
 "Start a guild adventure. Guild adventures can happen alongside regular "
 "adventures.\n"
@@ -8154,7 +7716,7 @@ msgstr ""
 " Chỉ bang chủ và các viên chức của bang có thể sử dụng lệnh này.\n"
 " (Lệnh này có thời gian chờ là 1 tiếng.)"
 
-#: cogs/guild/__init__.py:1388
+#: cogs/guild/__init__.py:1391
 #, python-brace-format
 msgid ""
 "Your guild is already on an adventure! Use `{prefix}guild status` to view "
@@ -8164,24 +7726,26 @@ msgstr ""
 "để xem nó còn bao lâu."
 
 #: cogs/guild/__init__.py:1400
+msgid "Join the adventure!"
+msgstr ""
+
+#: cogs/guild/__init__.py:1401
+msgid "You joined the adventure."
+msgstr ""
+
+#: cogs/guild/__init__.py:1407
 #, python-brace-format
 msgid ""
 "{author} seeks a guild adventure for **{guild}**! Follow the link to join! "
 "Unlimited players can join in the next 10 minutes. The minimum of players "
-"required is 3.\n"
-"Please go to https://join.idlerpg.xyz/{id_} to join the guild adventure."
+"required is 3."
 msgstr ""
-"{author} muốn tổ chức một cuộc phiêu lưu bang hội cho **{guild}**! Nhấn vào "
-"link để tham gia! Không giới hạn số người chơi có thể tham gia trong 10 phút "
-"kế tiếp. Yêu cầu tối thiểu có 3 người chơi.\n"
-"Xin hãy tới https://join.idlerpg.xyz/{id_} để tham gia cuộc phiêu lưu bang "
-"hội."
 
-#: cogs/guild/__init__.py:1426
+#: cogs/guild/__init__.py:1434
 msgid "You didn't get enough other players for the guild adventure."
 msgstr "Bạn không có đủ người chơi cho cuộc phiêu lưu bang hội."
 
-#: cogs/guild/__init__.py:1442
+#: cogs/guild/__init__.py:1450
 #, python-brace-format
 msgid ""
 "\n"
@@ -8200,11 +7764,11 @@ msgstr ""
 "Độ khó: **{difficulty}**\n"
 "Thời gian: **{time}**\n"
 
-#: cogs/guild/__init__.py:1459
+#: cogs/guild/__init__.py:1467
 msgid "View your guild adventure's status"
 msgstr "Xem tình trạng của cuộc phiêu lưu bang hội"
 
-#: cogs/guild/__init__.py:1463
+#: cogs/guild/__init__.py:1471
 msgid ""
 "Check your guild adventure's status\n"
 "\n"
@@ -8220,7 +7784,7 @@ msgstr ""
 "            Chỉ bang chủ và các viên chức của bang có thể hoàn thành cuộc "
 "phiêu lưu bang hội, tình trạng có thể được xem bởi tất cả thành viên."
 
-#: cogs/guild/__init__.py:1473
+#: cogs/guild/__init__.py:1481
 #, python-brace-format
 msgid ""
 "Your guild isn't on an adventure yet. Ask your guild officer to use `{prefix}"
@@ -8229,7 +7793,7 @@ msgstr ""
 "Bang hội của bạn chưa tiến vào cuộc phiêu lưu. Hãy nói một viên chức bang "
 "hội sử dụng `{prefix}guild adventure` để bắt đầu một cuộc phiêu lưu"
 
-#: cogs/guild/__init__.py:1498
+#: cogs/guild/__init__.py:1506
 #, python-brace-format
 msgid ""
 "Your guild has completed an adventure of difficulty `{difficulty}` and **"
@@ -8238,7 +7802,7 @@ msgstr ""
 "Bang hội của bạn đã hoàn thành một cuộc phiêu lưu với độ khó `{difficulty}` "
 "và **${gold}** đã được thêm vào kho bạc bang hội."
 
-#: cogs/guild/__init__.py:1505
+#: cogs/guild/__init__.py:1513
 #, python-brace-format
 msgid ""
 "Your guild has completed an adventure of difficulty `{difficulty}`, ask a "
@@ -8247,7 +7811,7 @@ msgstr ""
 "Bang hội của bạn đã hoàn thành một cuộc phiêu lưu với độ khó `{difficulty}`, "
 "hãy nói một viên chức bang hội kiểm tra tình trạng của cuộc phiêu lưu."
 
-#: cogs/guild/__init__.py:1512
+#: cogs/guild/__init__.py:1520
 #, python-brace-format
 msgid ""
 "Your guild is currently in an adventure with difficulty `{difficulty}`.\n"
@@ -8257,11 +7821,11 @@ msgstr ""
 "`.\n"
 "Thời gian còn lại: `{remain}`"
 
-#: cogs/guild/__init__.py:1521
+#: cogs/guild/__init__.py:1529
 msgid "Lists guild-specific cooldowns"
 msgstr "Hiển thị những lệnh đang làm lạnh của bang hội"
 
-#: cogs/guild/__init__.py:1526
+#: cogs/guild/__init__.py:1534
 msgid ""
 "Lists guild-specific cooldowns, meaning all guild members have these "
 "cooldowns and cannot use the commands."
@@ -8269,7 +7833,7 @@ msgstr ""
 "Hiển thị những lệnh đang làm lạnh của bang hội, nghĩa là tất cả thành viên "
 "đều có những lệnh đang làm lạnh này nên không thể sử dụng chúng."
 
-#: cogs/guild/__init__.py:1546
+#: cogs/guild/__init__.py:1554
 #, python-brace-format
 msgid "Guild adventure is running and will be done after {time}"
 msgstr "Cuộc phiêu lưu bang hội đang diễn ra và sẽ hoàn thành sau {time}"
@@ -10818,11 +10382,11 @@ msgstr ""
 msgid "An unknown error occured."
 msgstr ""
 
-#: cogs/alliance/__init__.py:47
+#: cogs/alliance/__init__.py:50
 msgid "Shows cities and owners."
 msgstr "Hiển thị các thành phố và chủ sở hữu."
 
-#: cogs/alliance/__init__.py:51
+#: cogs/alliance/__init__.py:54
 msgid ""
 "Show all cities, their tiers, owners, available buildings and current "
 "defense."
@@ -10830,16 +10394,16 @@ msgstr ""
 "Hiển thị các thành phố, hạng, chủ sở hữu, các tòa nhà có thể xây và phòng "
 "thủ hiện tại."
 
-#: cogs/alliance/__init__.py:59
+#: cogs/alliance/__init__.py:62
 msgid "Cities"
 msgstr "Thành phố"
 
-#: cogs/alliance/__init__.py:63
+#: cogs/alliance/__init__.py:66
 #, python-brace-format
 msgid "{name} (Tier {tier})"
 msgstr "{name} (Hạng {tier})"
 
-#: cogs/alliance/__init__.py:67
+#: cogs/alliance/__init__.py:70
 #, python-brace-format
 msgid ""
 "Owned by {alliance}'s alliance\n"
@@ -10850,11 +10414,11 @@ msgstr ""
 "Tòa nhà: {buildings}\n"
 "Phòng thủ: {defense}"
 
-#: cogs/alliance/__init__.py:86
+#: cogs/alliance/__init__.py:89
 msgid "Interact with your alliance."
 msgstr "Tương tác với liên minh của bạn."
 
-#: cogs/alliance/__init__.py:91
+#: cogs/alliance/__init__.py:94
 #, python-brace-format
 msgid ""
 "Alliances are groups of guilds. Just like a guild requires at least one "
@@ -10879,7 +10443,7 @@ msgstr ""
 "            Xem `{prefix}help alliance` để biết danh sách các lệnh tương tác "
 "với liên minh của bạn!"
 
-#: cogs/alliance/__init__.py:109
+#: cogs/alliance/__init__.py:112
 msgid ""
 "You are not in an alliance. You are alone and may still use all other "
 "alliance commands or invite a guild to create a bigger alliance."
@@ -10888,16 +10452,16 @@ msgstr ""
 "dụng các lệnh dành cho liên minh khác hoặc mời bang hội khác để tạo thành "
 "một liên minh lớn hơn."
 
-#: cogs/alliance/__init__.py:115
+#: cogs/alliance/__init__.py:118
 msgid "Your allied guilds"
 msgstr "Các bang hội trong liên minh của bạn"
 
-#: cogs/alliance/__init__.py:120
+#: cogs/alliance/__init__.py:123
 #, python-brace-format
 msgid "Led by {leader}"
 msgstr "Dẫn đầu bởi {leader}"
 
-#: cogs/alliance/__init__.py:127
+#: cogs/alliance/__init__.py:130
 #, python-brace-format
 msgid ""
 "{prefix}alliance buildings | {prefix}alliance defenses | {prefix}alliance "
@@ -10906,11 +10470,11 @@ msgstr ""
 "{prefix}alliance buildings | {prefix}alliance defenses | {prefix}alliance "
 "attack | {prefix}alliance occupy"
 
-#: cogs/alliance/__init__.py:137
+#: cogs/alliance/__init__.py:140
 msgid "Invite a guild to your alliance."
 msgstr "Mời bang hội vào liên minh của bạn."
 
-#: cogs/alliance/__init__.py:141
+#: cogs/alliance/__init__.py:144
 #, python-brace-format
 msgid ""
 "`<newleader>` - A user with a character who leads a guild.\n"
@@ -10936,27 +10500,27 @@ msgstr ""
 "            Chỉ bang chủ có thể sử dụng lệnh này.\n"
 "            (Lệnh này có thời gian chờ là 5 phút.)"
 
-#: cogs/alliance/__init__.py:151
+#: cogs/alliance/__init__.py:154
 msgid "That member is not in a guild."
 msgstr "Thành viên này không có bang hội."
 
-#: cogs/alliance/__init__.py:157
+#: cogs/alliance/__init__.py:160
 msgid "That member is not the leader of their guild."
 msgstr "Thành viên này không phải bang chủ."
 
-#: cogs/alliance/__init__.py:163
+#: cogs/alliance/__init__.py:166
 msgid "This member's guild is already part of your alliance."
 msgstr "Bang hội của thành viên này đã nằm trong liên minh của bạn."
 
-#: cogs/alliance/__init__.py:169
+#: cogs/alliance/__init__.py:172
 msgid "This guild is already in an alliance."
 msgstr "Bang hội này đã có liên minh."
 
-#: cogs/alliance/__init__.py:177
+#: cogs/alliance/__init__.py:180
 msgid "This guild is the leader of another alliance."
 msgstr "Bang hội này là bang dẫn đầu của một liên minh khác."
 
-#: cogs/alliance/__init__.py:182
+#: cogs/alliance/__init__.py:185
 #, python-brace-format
 msgid ""
 "{newleader}, {author} invites you to join their alliance. React to join now."
@@ -10964,25 +10528,25 @@ msgstr ""
 "{newleader}, {author} mời bạn tham gia liên minh của họ. Nhất emoji để tham "
 "gia."
 
-#: cogs/alliance/__init__.py:196
+#: cogs/alliance/__init__.py:199
 msgid "Your alliance is full."
 msgstr "Liên minh của bạn đã đầy."
 
-#: cogs/alliance/__init__.py:203
+#: cogs/alliance/__init__.py:206
 #, python-brace-format
 msgid "**{user}'s guild is a single-guild alliance and owns a city."
 msgstr "Bang hội của **{user}** là liên minh một bang và sở hữu một thành phố."
 
-#: cogs/alliance/__init__.py:213
+#: cogs/alliance/__init__.py:216
 #, python-brace-format
 msgid "**{newguild}** is now part of your alliance, {user}!"
 msgstr "**{newguild}** bây giờ đã nằm trong liên minh của bạn, {user}!"
 
-#: cogs/alliance/__init__.py:219
+#: cogs/alliance/__init__.py:222
 msgid "Leave your alliance"
 msgstr "Rời khỏi liên minh"
 
-#: cogs/alliance/__init__.py:223
+#: cogs/alliance/__init__.py:226
 #, python-brace-format
 msgid ""
 "Leave your alliance. Once you left your alliance, you will no longer benefit "
@@ -10999,19 +10563,19 @@ msgstr ""
 "thử `{prefix}alliance kick`).\n"
 "            Chỉ bang chủ có thể sử dụng lệnh này."
 
-#: cogs/alliance/__init__.py:234
+#: cogs/alliance/__init__.py:237
 msgid "You are the alliance's leading guild and cannot leave it!"
 msgstr "Bạn là bang hội dẫn đầu liên minh và không thể rời khỏi!"
 
-#: cogs/alliance/__init__.py:240
+#: cogs/alliance/__init__.py:243
 msgid "Your guild left the alliance."
 msgstr "Bang hội của bạng đã rời khỏi liên minh."
 
-#: cogs/alliance/__init__.py:244
+#: cogs/alliance/__init__.py:247
 msgid "Kick a guild from your alliance"
 msgstr "Đá một bang khỏi liên minh"
 
-#: cogs/alliance/__init__.py:248
+#: cogs/alliance/__init__.py:251
 msgid ""
 "`<guild_to_kick>` -  A guild's name or ID\n"
 "\n"
@@ -11028,36 +10592,36 @@ msgstr ""
 "\n"
 "            Chỉ người đứng đầu liên minh có thể sử dụng lệnh này."
 
-#: cogs/alliance/__init__.py:266
+#: cogs/alliance/__init__.py:269
 #, python-brace-format
 msgid ""
 "Cannot find guild `{guild_to_kick}`. Are you sure that's the right name/ID?"
 msgstr ""
 "Không tìm thấy bang `{guild_to_kick}`. Bạng có chắc tên/ID này đúng chứ?"
 
-#: cogs/alliance/__init__.py:271
+#: cogs/alliance/__init__.py:274
 msgid "That won't work."
 msgstr "Không được."
 
-#: cogs/alliance/__init__.py:274
+#: cogs/alliance/__init__.py:277
 msgid "This guild is not in your alliance."
 msgstr "Bang này không nằm trong liên minh của bạn."
 
-#: cogs/alliance/__init__.py:277
+#: cogs/alliance/__init__.py:280
 #, python-brace-format
 msgid "Do you really want to kick **{guild}** from your alliance?"
 msgstr "Bạn có chắc chắn muốn đá **{guild}** khỏi liên minh của bạn?"
 
-#: cogs/alliance/__init__.py:289
+#: cogs/alliance/__init__.py:292
 #, python-brace-format
 msgid "**{guild}** is no longer part of your alliance."
 msgstr "**{guild}** không còn nằm trong liên minh của bạn."
 
-#: cogs/alliance/__init__.py:302
+#: cogs/alliance/__init__.py:305
 msgid "Build buildings or defenses"
 msgstr "Xây dựng tòa nhà và phòng thủ"
 
-#: cogs/alliance/__init__.py:306
+#: cogs/alliance/__init__.py:309
 #, python-brace-format
 msgid ""
 "Build buildings `{prefix}alliance build building` or defenses `{prefix}"
@@ -11066,7 +10630,7 @@ msgstr ""
 "Xây dựng tòa nhà `{prefix}alliance build building` hoặc phòng thủ `{prefix}"
 "alliance build defense`."
 
-#: cogs/alliance/__init__.py:309
+#: cogs/alliance/__init__.py:312
 msgid ""
 "Please use one of these subcommands:\n"
 "\n"
@@ -11074,11 +10638,11 @@ msgstr ""
 "Xin hãy dùng một trong các lệnh phụ sau:\n"
 "\n"
 
-#: cogs/alliance/__init__.py:315
+#: cogs/alliance/__init__.py:318
 msgid "Upgrade a building in your city."
 msgstr "Nâng cấp một tòa nhà trong thành phố của bạn."
 
-#: cogs/alliance/__init__.py:319
+#: cogs/alliance/__init__.py:322
 #, python-brace-format
 msgid ""
 "`<name>` - The name of the building to upgrade.\n"
@@ -11114,7 +10678,7 @@ msgstr ""
 "            Chỉ người đứng đầu liên minh có thể sử dụng lệnh này.\n"
 "            (Lệnh này có thời gian chờ là 5 phút)"
 
-#: cogs/alliance/__init__.py:341
+#: cogs/alliance/__init__.py:344
 #, python-brace-format
 msgid ""
 "Invalid building. Please use `{prefix}{cmd} [thief/raid/trade/adventure]` or "
@@ -11123,11 +10687,11 @@ msgstr ""
 "Tòa nhà không hợp lệ. Xin hãy sử dụng `{prefix}{cmd} [thief/raid/trade/"
 "adventure]` hoặc kiểm tra xem tòa nhà nào có thể xây trong thành phố của bạn."
 
-#: cogs/alliance/__init__.py:349
+#: cogs/alliance/__init__.py:352
 msgid "This building is fully upgraded."
 msgstr "Tòa nhà này đã được nâng cấp tối đa."
 
-#: cogs/alliance/__init__.py:353
+#: cogs/alliance/__init__.py:356
 #, python-brace-format
 msgid ""
 "Are you sure you want to upgrade the **{name} building** to level "
@@ -11136,24 +10700,24 @@ msgstr ""
 "Bạn có chắc chắn muốn nâng cấp **tòa nhà {name}** lên cấp {new_level}? Nó sẽ "
 "tốn $**{price}**."
 
-#: cogs/alliance/__init__.py:362
+#: cogs/alliance/__init__.py:365
 #, python-brace-format
 msgid ""
 "Your guild doesn't have enough money to upgrade the city's {name} building."
 msgstr ""
 "Bang hội của bạn không có đủ tiền để nâng cấp tòa nhà {name} trong thành phố."
 
-#: cogs/alliance/__init__.py:389
+#: cogs/alliance/__init__.py:392
 #, python-brace-format
 msgid ""
 "Successfully upgraded the city's {name} building to level **{new_level}**"
 msgstr "Nâng cấp thành công tòa nhà {name} lên **{new_level}**"
 
-#: cogs/alliance/__init__.py:398
+#: cogs/alliance/__init__.py:401
 msgid "Build a defense in your city."
 msgstr "Xây dựng phòng thủ trong thành phố."
 
-#: cogs/alliance/__init__.py:402
+#: cogs/alliance/__init__.py:405
 msgid ""
 "Build some defensive buildings or place troops in your cities. The following "
 "are available:\n"
@@ -11195,41 +10759,41 @@ msgstr ""
 "            Chỉ người đứng đầu liên minh có thể sử dụng lệnh này.\n"
 "            (Lệnh này có thời gian chờ là 1 phút)"
 
-#: cogs/alliance/__init__.py:431
+#: cogs/alliance/__init__.py:434
 #, python-brace-format
 msgid "Invalid defense. Please use `{prefix}{cmd} [{buildings}]`."
 msgstr ""
 "Loại phòng thủ không hợp lệ. Xin hãy sử dụng `{prefix}{cmd} [{buildings}]`."
 
-#: cogs/alliance/__init__.py:447
+#: cogs/alliance/__init__.py:450
 msgid "Your city is under attack. Defenses cannot be built."
 msgstr "Thành phố của bạn đang bị tấn công. Không thể xây dựng phòng thủ."
 
-#: cogs/alliance/__init__.py:454
+#: cogs/alliance/__init__.py:457
 msgid "You may only build up to 10 defenses."
 msgstr "Bạn chỉ có thể xây tối đa 10 loại phòng thủ."
 
-#: cogs/alliance/__init__.py:457
+#: cogs/alliance/__init__.py:460
 #, python-brace-format
 msgid ""
 "Are you sure you want to build a **{defense}**? This will cost $**{price}**."
 msgstr "Bạn có chắc chắn muốn xây dựng **{defense}**? Nó sẽ tốn $**{price}**."
 
-#: cogs/alliance/__init__.py:468
+#: cogs/alliance/__init__.py:471
 #, python-brace-format
 msgid "Your guild doesn't have enough money to build a {defense}."
 msgstr "Bang hội của bạn không có đủ tiền để xây dựng {defense}."
 
-#: cogs/alliance/__init__.py:494
+#: cogs/alliance/__init__.py:497
 #, python-brace-format
 msgid "Successfully built a {defense}."
 msgstr "Xây dựng thành công một {defense}."
 
-#: cogs/alliance/__init__.py:497
+#: cogs/alliance/__init__.py:500
 msgid "Lists your city's buildings."
 msgstr "Liệt kê các tòa nhà trong thành phố."
 
-#: cogs/alliance/__init__.py:501
+#: cogs/alliance/__init__.py:504
 #, python-brace-format
 msgid ""
 "Lists all buildings in your city, along with their level. These buildings "
@@ -11248,21 +10812,21 @@ msgid ""
 "            Your alliance must own a city to use this command."
 msgstr ""
 
-#: cogs/alliance/__init__.py:520
+#: cogs/alliance/__init__.py:523
 #, python-brace-format
 msgid "{city}'s buildings"
 msgstr "Các tòa nhà trong {city}"
 
-#: cogs/alliance/__init__.py:527
+#: cogs/alliance/__init__.py:530
 #, python-brace-format
 msgid "Level {level}"
 msgstr "Cấp {level}"
 
-#: cogs/alliance/__init__.py:533
+#: cogs/alliance/__init__.py:536
 msgid "Lists your city's defenses."
 msgstr "Danh sách các phòng thủ trong thành phố."
 
-#: cogs/alliance/__init__.py:537
+#: cogs/alliance/__init__.py:540
 msgid ""
 "Lists your city’s defenses and view the HP left for each.\n"
 "\n"
@@ -11272,30 +10836,30 @@ msgstr ""
 "\n"
 "            Liên minh của bạn phải sở hữu thành phố để sử dụng lệnh này."
 
-#: cogs/alliance/__init__.py:554
+#: cogs/alliance/__init__.py:557
 #, python-brace-format
 msgid "{city}'s defenses"
 msgstr "Phòng thủ của {city}"
 
-#: cogs/alliance/__init__.py:561
+#: cogs/alliance/__init__.py:564
 #, python-brace-format
 msgid "HP: {hp}, Defense: {defense}"
 msgstr "HP: {hp}, Phòng thủ: {defense}"
 
-#: cogs/alliance/__init__.py:568
+#: cogs/alliance/__init__.py:571
 msgid "None built"
 msgstr "Chưa có cái nào được xây"
 
-#: cogs/alliance/__init__.py:569
+#: cogs/alliance/__init__.py:572
 #, python-brace-format
 msgid "Use {prefix}alliance build defense [name]"
 msgstr "Sử dụng {prefix}alliance build defense [tên]"
 
-#: cogs/alliance/__init__.py:578
+#: cogs/alliance/__init__.py:581
 msgid "Abandon your city"
 msgstr "Bỏ thành phố"
 
-#: cogs/alliance/__init__.py:582
+#: cogs/alliance/__init__.py:585
 msgid ""
 "Abandoning your city will immediately make all alliance members lose all "
 "passive bonuses offered by the city's buildings and the city ownership will "
@@ -11311,20 +10875,20 @@ msgstr ""
 "            Liên minh của bạn phải sở hữu thành phố để sử dụng lệnh này.\n"
 "            Chỉ người đứng đầu liên minh có thể sử dụng lệnh này."
 
-#: cogs/alliance/__init__.py:588
+#: cogs/alliance/__init__.py:591
 msgid "Are you sure you want to give up control of your city?"
 msgstr "Bạn có chắc muốn bỏ quyền sở hữu thành phố?"
 
-#: cogs/alliance/__init__.py:596
+#: cogs/alliance/__init__.py:599
 #, python-brace-format
 msgid "{city} was abandoned."
 msgstr "{city} đã bị bỏ."
 
-#: cogs/alliance/__init__.py:602
+#: cogs/alliance/__init__.py:605
 msgid "Take over a city."
 msgstr "Chiếm thành phố."
 
-#: cogs/alliance/__init__.py:606
+#: cogs/alliance/__init__.py:609
 #, python-brace-format
 msgid ""
 "`<city>` - The name of a city. You can check the city names with `{prefix}"
@@ -11357,21 +10921,21 @@ msgstr ""
 "một.\n"
 "            Chỉ người đứng đầu liên minh có thể sử dụng lệnh này."
 
-#: cogs/alliance/__init__.py:618
+#: cogs/alliance/__init__.py:621
 msgid "Invalid city name."
 msgstr "Tên thành phố không hợp lệ."
 
-#: cogs/alliance/__init__.py:627
+#: cogs/alliance/__init__.py:630
 #, python-brace-format
 msgid "The city is occupied by **{amount}** defensive fortifications."
 msgstr "Thành phố sở hữu **{amount}** loại phòng thủ."
 
-#: cogs/alliance/__init__.py:632
+#: cogs/alliance/__init__.py:635
 #, python-brace-format
 msgid "{city} was just occupied and stands under protection."
 msgstr "{city} vừa bị chiếm và đang được bảo hộ."
 
-#: cogs/alliance/__init__.py:644
+#: cogs/alliance/__init__.py:647
 #, python-brace-format
 msgid ""
 "Your alliance now rules **{city}**. You should immediately buy defenses. You "
@@ -11381,11 +10945,11 @@ msgstr ""
 "lập tức. Bạn có **15 phút** để xây dựng phòng thủ trước khi người khác chiếm "
 "thành phố!"
 
-#: cogs/alliance/__init__.py:658
+#: cogs/alliance/__init__.py:661
 msgid "Attack a city"
 msgstr "Tấn công thành phố"
 
-#: cogs/alliance/__init__.py:662
+#: cogs/alliance/__init__.py:665
 #, python-brace-format
 msgid ""
 "`<city>` - The name of a city. You can check the city names with `{prefix}"
@@ -11446,54 +11010,59 @@ msgstr ""
 "            Chỉ người đứng đầu liên minh có thể sử dụng lệnh này.\n"
 "            (Lệnh này có thời gian chờ là 2 tiếng.)"
 
-#: cogs/alliance/__init__.py:683
+#: cogs/alliance/__init__.py:686
 msgid "Invalid city."
 msgstr "Thành phố không hợp lệ."
 
-#: cogs/alliance/__init__.py:688 cogs/alliance/__init__.py:719
+#: cogs/alliance/__init__.py:691 cogs/alliance/__init__.py:722
 #, python-brace-format
 msgid "**{city}** has just been attacked. Have some mercy!"
 msgstr "**{city}** mới vừa bị tấn công. Hãy nhân từ nào!"
 
-#: cogs/alliance/__init__.py:692 cogs/alliance/__init__.py:723
+#: cogs/alliance/__init__.py:695 cogs/alliance/__init__.py:726
 #, python-brace-format
 msgid "**{city}** is already under attack."
 msgstr "**{city}** đang bị tấn công."
 
-#: cogs/alliance/__init__.py:714
+#: cogs/alliance/__init__.py:717
 msgid "The city is without defenses already."
 msgstr "Thành phố hiện không có phòng thủ."
 
 #: cogs/alliance/__init__.py:735
+msgid "Join the attack!"
+msgstr ""
+
+#: cogs/alliance/__init__.py:736
+msgid "You joined the attack."
+msgstr ""
+
+#: cogs/alliance/__init__.py:742
 #, python-brace-format
 msgid ""
-"**{user}** wants to attack **{city}** with **{alliance_name}**'s alliance. "
-"Head to https://join.idlerpg.xyz/{id_} to join the attack!"
+"**{user}** wants to attack **{city}** with **{alliance_name}**'s alliance."
 msgstr ""
-"**{user}** muốn tấn công **{city}** với liên minh **{alliance_name}**. Hãy "
-"vào https://join.idlerpg.xyz/{id_} để tham gia tấn công!"
 
-#: cogs/alliance/__init__.py:773
+#: cogs/alliance/__init__.py:781
 msgid "Noone joined."
 msgstr "Không ai tham gia."
 
-#: cogs/alliance/__init__.py:781
+#: cogs/alliance/__init__.py:789
 #, python-brace-format
 msgid "Attack on **{city}** starting with **{amount}** attackers!"
 msgstr ""
 "Cuộc tấn công **{city}** bắt đầu với **{amount}** người tham gia tấn công!"
 
-#: cogs/alliance/__init__.py:803 cogs/alliance/__init__.py:827
-#: cogs/alliance/__init__.py:864 cogs/alliance/__init__.py:875
+#: cogs/alliance/__init__.py:811 cogs/alliance/__init__.py:835
+#: cogs/alliance/__init__.py:872 cogs/alliance/__init__.py:883
 msgid "Alliance Wars"
 msgstr "Trận chiến Liên Minh"
 
-#: cogs/alliance/__init__.py:805
+#: cogs/alliance/__init__.py:813
 #, python-brace-format
 msgid "**{alliance_name}** destroyed a {defense} in {city}!"
 msgstr "**{alliance_name}** phá hủy {defense} ở {city}!"
 
-#: cogs/alliance/__init__.py:829
+#: cogs/alliance/__init__.py:837
 #, python-brace-format
 msgid ""
 "**{alliance_name}** hit a {defense} in {city} for {damage} damage! (Now {hp} "
@@ -11502,33 +11071,33 @@ msgstr ""
 "**{alliance_name}** tấn công {defense} ở {city} với {damage} sát thương! "
 "(Giờ còn {hp} HP)"
 
-#: cogs/alliance/__init__.py:865
+#: cogs/alliance/__init__.py:873
 #, python-brace-format
 msgid "**{user}** got killed in {city}!"
 msgstr "**{user}** bị giết ở {city}!"
 
-#: cogs/alliance/__init__.py:877
+#: cogs/alliance/__init__.py:885
 #, python-brace-format
 msgid "**{user}** got hit in {city} for {damage} damage! (Now {hp} HP)"
 msgstr ""
 "**{user}** bị tấn công ở {city} với {damage} sát thương! (Giờ còn {hp} HP)"
 
-#: cogs/alliance/__init__.py:898
+#: cogs/alliance/__init__.py:906
 #, python-brace-format
 msgid "**{alliance_name}** destroyed defenses in **{city}**!"
 msgstr "**{alliance_name}** phá hủy phòng thủ của **{city}**!"
 
-#: cogs/alliance/__init__.py:908
+#: cogs/alliance/__init__.py:916
 #, python-brace-format
 msgid "**{alliance_name}** failed to destroy defenses in **{city}**!"
 msgstr ""
 "**{alliance_name}** thất bại trong việc phá hủy phòng thủ của **{city}**!"
 
-#: cogs/alliance/__init__.py:917
+#: cogs/alliance/__init__.py:925
 msgid "Lists alliance-specific cooldowns"
 msgstr "Liệt kê thời gian chờ của liên minh"
 
-#: cogs/alliance/__init__.py:922
+#: cogs/alliance/__init__.py:930
 msgid ""
 "Lists alliance-specific cooldowns, meaning all alliance members have these "
 "cooldowns and cannot use the commands."
@@ -11536,7 +11105,7 @@ msgstr ""
 "Liệt kê thời gian chờ của liên minh, nghĩa là tất cả thành viên liên minh "
 "đều có thời gian chờ này và không thể sử dụng các lệnh liên quan."
 
-#: cogs/alliance/__init__.py:933
+#: cogs/alliance/__init__.py:941
 msgid "Your alliance does not have any active cooldown at the moment."
 msgstr "Liên minh của bạn hiện không có thời gian chờ nào."
 
@@ -11858,11 +11427,11 @@ msgstr ""
 msgid "No game here."
 msgstr "Không có ván cờ nào ở đây."
 
-#: cogs/werewolf/__init__.py:43
+#: cogs/werewolf/__init__.py:46
 msgid "Starts a game of Werewolf"
 msgstr "Bắt đầu một trận Người Sói"
 
-#: cogs/werewolf/__init__.py:54
+#: cogs/werewolf/__init__.py:57
 #, python-brace-format
 msgid ""
 "\n"
@@ -11894,21 +11463,21 @@ msgid ""
 "            "
 msgstr ""
 
-#: cogs/werewolf/__init__.py:89
+#: cogs/werewolf/__init__.py:92
 #, python-brace-format
 msgid "Invalid game mode. Use `{prefix}help ww` to get help on this command."
 msgstr ""
 "Mode trò chơi không hợp lệ. Sử dụng `{prefix}help ww` để được giúp đỡ về "
 "lệnh này."
 
-#: cogs/werewolf/__init__.py:99
+#: cogs/werewolf/__init__.py:102
 #, python-brace-format
 msgid "Invalid game speed. Use `{prefix}help ww` to get help on this command."
 msgstr ""
 "Tốc độ trò chơi không hợp lệ. Sử dụng `{prefix}help ww` để được giúp đỡ về "
 "lệnh này."
 
-#: cogs/werewolf/__init__.py:118
+#: cogs/werewolf/__init__.py:121
 #, python-brace-format
 msgid ""
 "Use `{prefix}help ww` to get help on werewolf commands. Use `{prefix}ww "
@@ -11917,35 +11486,43 @@ msgid ""
 "modes and speeds."
 msgstr ""
 
-#: cogs/werewolf/__init__.py:133
+#: cogs/werewolf/__init__.py:134
+msgid "Join the Werewolf game!"
+msgstr ""
+
+#: cogs/werewolf/__init__.py:135
+msgid "You joined the Werewolf game."
+msgstr ""
+
+#: cogs/werewolf/__init__.py:139
 #, python-brace-format
 msgid ""
 "**{author} started a mass-game of Werewolf!**\n"
-"**{mode}** mode on **{speed}** speed. Go to {url} to join in the next 10 "
-"minutes. **Minimum of {min_players} players are required.**"
+"**{mode}** mode on **{speed}** speed. You can join in the next 10 minutes. "
+"**Minimum of {min_players} players are required.**"
 msgstr ""
 
-#: cogs/werewolf/__init__.py:140
+#: cogs/werewolf/__init__.py:146
 msgid "Werewolf Mass-game!"
 msgstr "Trò chơi Người Sói cỡ lớn!"
 
-#: cogs/werewolf/__init__.py:154 cogs/werewolf/__init__.py:192
-#: cogs/werewolf/__init__.py:236
+#: cogs/werewolf/__init__.py:158 cogs/werewolf/__init__.py:198
+#: cogs/werewolf/__init__.py:242
 msgid "New to Werewolf?"
 msgstr "Mới chơi Người Sói?"
 
-#: cogs/werewolf/__init__.py:160 cogs/werewolf/__init__.py:199
+#: cogs/werewolf/__init__.py:165 cogs/werewolf/__init__.py:205
 msgid ""
 "An error happened during the Werewolf. Missing Permission: `Embed Links` . "
 "Please check the **Edit Channel > Permissions** and **Server Settings > "
 "Roles** then try again!"
 msgstr ""
 
-#: cogs/werewolf/__init__.py:168
+#: cogs/werewolf/__init__.py:174
 msgid "Werewolf game!"
 msgstr "Trò chơi Người Sói!"
 
-#: cogs/werewolf/__init__.py:170
+#: cogs/werewolf/__init__.py:176
 #, python-brace-format
 msgid ""
 "**{author} started a game of Werewolf!**\n"
@@ -11954,30 +11531,30 @@ msgid ""
 "{num} joined**"
 msgstr ""
 
-#: cogs/werewolf/__init__.py:251 cogs/werewolf/__init__.py:272
+#: cogs/werewolf/__init__.py:257 cogs/werewolf/__init__.py:278
 msgid "An error happened during the Werewolf. Please try again!"
 msgstr "Có lỗi khi đang trong trò chơi Người Sói. Xin hãy thử lại!"
 
-#: cogs/werewolf/__init__.py:260
+#: cogs/werewolf/__init__.py:266
 #, python-brace-format
 msgid ""
 "Not enough players joined... We didn't reach the minimum {min_players} "
 "players. 🙁"
 msgstr ""
 
-#: cogs/werewolf/__init__.py:281
+#: cogs/werewolf/__init__.py:287
 msgid "See available werewolf game modes"
 msgstr "Xem các mode có thể chọn của Người Sói"
 
-#: cogs/werewolf/__init__.py:284
+#: cogs/werewolf/__init__.py:290
 msgid "Used to see the list of available werewolf game modes."
 msgstr "Sử dụng để xem các mode có thể chọn của Người Sói."
 
-#: cogs/werewolf/__init__.py:287
+#: cogs/werewolf/__init__.py:293
 msgid "Werewolf Game Modes"
 msgstr "Mode trò chơi Người Sói"
 
-#: cogs/werewolf/__init__.py:289
+#: cogs/werewolf/__init__.py:295
 msgid ""
 "**Game modes:** `Classic` (default), `Imbalanced`, `Huntergame`, "
 "`Villagergame`, `Valentines`, `IdleRPG`.\n"
@@ -11996,19 +11573,19 @@ msgid ""
 "Necromancer, Superspreader."
 msgstr ""
 
-#: cogs/werewolf/__init__.py:302
+#: cogs/werewolf/__init__.py:308
 msgid "See available werewolf game speeds"
 msgstr "Xem các tốc độ có thể chọn của Người Sói"
 
-#: cogs/werewolf/__init__.py:305
+#: cogs/werewolf/__init__.py:311
 msgid "Used to see the list of available werewolf game speeds."
 msgstr "Sử dụng để xem các tốc độ có thể chọn của Người Sói."
 
-#: cogs/werewolf/__init__.py:308
+#: cogs/werewolf/__init__.py:314
 msgid "Werewolf Game Speeds"
 msgstr "Tốc độ trò chơi Người Sói"
 
-#: cogs/werewolf/__init__.py:310
+#: cogs/werewolf/__init__.py:316
 msgid ""
 "**Game speeds** (in seconds): `Normal`: 60 (default), `Extended`: 90, "
 "`Fast`: 45, `Blitz`: 30\n"
@@ -12041,11 +11618,11 @@ msgstr ""
 "mỗi đêm hay trong mỗi lần bỏ phiếu sẽ rất dễ có kết thúc với không người "
 "thắng."
 
-#: cogs/werewolf/__init__.py:321
+#: cogs/werewolf/__init__.py:327
 msgid "Check your werewolf role"
 msgstr "Kiểm tra vai của bạn trong Người Sói"
 
-#: cogs/werewolf/__init__.py:325
+#: cogs/werewolf/__init__.py:331
 msgid ""
 "Check your role in the Werewolf game and have the bot DM it to you.\n"
 "\n"
@@ -12055,33 +11632,33 @@ msgstr ""
 "\n"
 "            Bạn phải đang tham gia một trò chơi để xem vai của mình."
 
-#: cogs/werewolf/__init__.py:332
+#: cogs/werewolf/__init__.py:338
 #, python-brace-format
 msgid "There is no werewolf game in this channel! {author}"
 msgstr "Không có trò chơi Người Sói nào trong kênh này! {author}"
 
-#: cogs/werewolf/__init__.py:338
+#: cogs/werewolf/__init__.py:344
 #, python-brace-format
 msgid "The game has yet to be started {author}."
 msgstr "Trò chơi chưa bắt đầu đâu {author}."
 
-#: cogs/werewolf/__init__.py:344
+#: cogs/werewolf/__init__.py:350
 #, python-brace-format
 msgid "You're not in the game {author}."
 msgstr "Bạn không ở trong trò chơi, {author}."
 
-#: cogs/werewolf/__init__.py:351
+#: cogs/werewolf/__init__.py:357
 #, python-brace-format
 msgid "You asked for your role in {channel} but your info couldn't be found."
 msgstr ""
 "Bạn hỏi vai của mình trong {channel} nhưng không tìm thấy thông tin về bạn."
 
-#: cogs/werewolf/__init__.py:359
+#: cogs/werewolf/__init__.py:365
 #, python-brace-format
 msgid " A **{initial_roles}** initially"
 msgstr " Ban đầu là **{initial_roles}**"
 
-#: cogs/werewolf/__init__.py:372
+#: cogs/werewolf/__init__.py:378
 #, python-brace-format
 msgid ""
 "Checking your role in {ww_channel}... You are a **{role_name}**!"
@@ -12094,21 +11671,21 @@ msgstr ""
 "\n"
 "{description}"
 
-#: cogs/werewolf/__init__.py:382
+#: cogs/werewolf/__init__.py:388
 #, python-brace-format
 msgid "I sent a DM containing your role info, {author}."
 msgstr "Tôi đã nhắn tin riêng cho bạn về vai của bạn, {author}."
 
-#: cogs/werewolf/__init__.py:388
+#: cogs/werewolf/__init__.py:394
 #, python-brace-format
 msgid "I couldn't send a DM to you {author}."
 msgstr "Tôi không thể nhắn tin riêng cho bạn, {author}."
 
-#: cogs/werewolf/__init__.py:393
+#: cogs/werewolf/__init__.py:399
 msgid "View descriptions of game roles"
 msgstr "Xem miêu tả các vai trong trò chơi"
 
-#: cogs/werewolf/__init__.py:397
+#: cogs/werewolf/__init__.py:403
 #, python-brace-format
 msgid ""
 "View the descriptions of roles in the Werewolf game.\n"
@@ -12121,47 +11698,47 @@ msgstr ""
 "            `{prefix}roles <role name here>` để xem thông tin về một vai.\n"
 "            "
 
-#: cogs/werewolf/__init__.py:402
+#: cogs/werewolf/__init__.py:408
 msgid "(IdleRPG mode only)"
 msgstr ""
 
-#: cogs/werewolf/__init__.py:405
+#: cogs/werewolf/__init__.py:411
 msgid "The Werewolves"
 msgstr "Người Sói"
 
-#: cogs/werewolf/__init__.py:410
+#: cogs/werewolf/__init__.py:416
 msgid "Must eliminate all other villagers"
 msgstr "Phải tiêu diệt tất cả dân làng"
 
-#: cogs/werewolf/__init__.py:413
+#: cogs/werewolf/__init__.py:419
 msgid "The Villagers"
 msgstr "Dân Làng"
 
-#: cogs/werewolf/__init__.py:420
+#: cogs/werewolf/__init__.py:426
 msgid "Must find and eliminate the werewolves"
 msgstr "Phải tìm ra và tiêu diệt Người Sói"
 
-#: cogs/werewolf/__init__.py:423
+#: cogs/werewolf/__init__.py:429
 msgid "The Ambiguous"
 msgstr "Kẻ Mơ Hồ"
 
-#: cogs/werewolf/__init__.py:427
+#: cogs/werewolf/__init__.py:433
 msgid "Make their side win"
 msgstr "Giúp phe của họ chiến thắng"
 
-#: cogs/werewolf/__init__.py:430
+#: cogs/werewolf/__init__.py:436
 msgid "The Loners"
 msgstr "Kẻ Đơn Độc"
 
-#: cogs/werewolf/__init__.py:436
+#: cogs/werewolf/__init__.py:442
 msgid "Must complete their own objective"
 msgstr "Phải hoàn thành nhiệm vụ riêng của mình"
 
-#: cogs/werewolf/__init__.py:442
+#: cogs/werewolf/__init__.py:448
 msgid "Werewolf Roles"
 msgstr "Các vai trong Người Sói"
 
-#: cogs/werewolf/__init__.py:444
+#: cogs/werewolf/__init__.py:450
 msgid ""
 "Roles are grouped into \n"
 "1. the Werewolves,\n"
@@ -12177,22 +11754,22 @@ msgstr ""
 "4. Kẻ Đơn Độc.\n"
 "**Những vai có trong trò chơi là:**"
 
-#: cogs/werewolf/__init__.py:451
+#: cogs/werewolf/__init__.py:457
 #, python-brace-format
 msgid ""
 "Use `{prefix}ww roles <role>` to view the description on a specific role."
 msgstr "Sử dụng `{prefix}ww roles <vai>` để xem miêu tả của một vai cụ thể."
 
-#: cogs/werewolf/__init__.py:469
+#: cogs/werewolf/__init__.py:475
 #, python-brace-format
 msgid "{role}? I couldn't find that role."
 msgstr "{role}? Tôi không tìm thấy vai này."
 
-#: cogs/werewolf/__init__.py:479
+#: cogs/werewolf/__init__.py:485
 msgid "Side:"
 msgstr "Phe:"
 
-#: cogs/werewolf/__init__.py:490
+#: cogs/werewolf/__init__.py:496
 msgid "Goal:"
 msgstr "Mục tiêu:"
 
@@ -13941,6 +13518,477 @@ msgid ""
 "📢 {sheriff} got chosen to be the new 🎖️ **Sheriff**. **The vote of the "
 "Sheriff counts as double.**"
 msgstr ""
+
+#~ msgid "You need to be in a voice chat to use this command."
+#~ msgstr "Bạn cần phải ở trong phòng voice chat để dùng lệnh này."
+
+#~ msgid "The vote did not pass."
+#~ msgstr "Phiếu bầu không được thông qua."
+
+#, python-brace-format
+#~ msgid ""
+#~ "You need to be playing music, for example with `{prefix}play`, to use "
+#~ "this command."
+#~ msgstr ""
+#~ "Bạn cần phải đang mở nhạc, ví dụ như bằng lệnh `{prefix}play`, để dùng "
+#~ "lệnh này."
+
+#~ msgid "The DJ has locked the music player."
+#~ msgstr "DJ đã chặn phần mềm nhạc này."
+
+#~ msgid "You must be the DJ to use this command."
+#~ msgstr "Bạn phải là DJ để dùng lệnh này."
+
+#, python-brace-format
+#~ msgid ""
+#~ "{user} wants to skip a track. React if you agree. **{current}/{total}** "
+#~ "voted for it!"
+#~ msgstr ""
+#~ "{user} muốn bỏ qua bài này. Nhấn emoji nếu bạn đồng ý. **{current}/{total}"
+#~ "** đã đồng ý!"
+
+#, python-brace-format
+#~ msgid ""
+#~ "{user} wants to pause/resume the player. React if you agree. **{current}/"
+#~ "{total}** voted for it!"
+#~ msgstr ""
+#~ "{user} muốn tạm dừng/tiếp tục phát nhạc. Nhấn emoji nếu bạn đồng ý. "
+#~ "**{current}/{total}** đã đồng ý!"
+
+#, python-brace-format
+#~ msgid ""
+#~ "{user} wants to stop playback. React if you agree. **{current}/{total}** "
+#~ "voted for it!"
+#~ msgstr ""
+#~ "{user} muốn dừng phát lại. Nhấn emoji nếu bạn đồng ý. **{current}/{total}"
+#~ "** đã đồng ý!"
+
+#, python-brace-format
+#~ msgid ""
+#~ "{user} wants to change the volume. React if you agree. **{current}/{total}"
+#~ "** voted for it!"
+#~ msgstr ""
+#~ "{user} muốn thay đổi âm lượng. Nhấn emoji nếu bạn đồng ý. **{current}/"
+#~ "{total}** đã đồng ý!"
+
+#, python-brace-format
+#~ msgid ""
+#~ "{user} wants to toggle repeating. React if you agree. **{current}/{total}"
+#~ "** voted for it!"
+#~ msgstr ""
+#~ "{user} muốn lặp lại danh sách bài hát. Nhấn emoji nếu bạn đồng ý. "
+#~ "**{current}/{total}** đã đồng ý!"
+
+#, python-brace-format
+#~ msgid ""
+#~ "{user} wants to change the equalizer. React if you agree. **{current}/"
+#~ "{total}** voted for it!"
+#~ msgstr ""
+#~ "{user} muốn thay đổi bộ cân bằng. Nhấn emoji nếu bạn đồng ý. **{current}/"
+#~ "{total}** đã đồng ý!"
+
+#~ msgid "Vote passed!"
+#~ msgstr "Đã bỏ phiếu xong!"
+
+#~ msgid "Choose a result to play"
+#~ msgstr "Chọn một kết quả để mở nhạc"
+
+#~ msgid ""
+#~ "`<query>` - The query to search a song by\n"
+#~ "\n"
+#~ "            Query for a track and play or add any result to the playlist, "
+#~ "you can choose from a multitude of tracks."
+#~ msgstr ""
+#~ "`<query>` - Yêu cầu để tìm bài hát\n"
+#~ "\n"
+#~ "            Yêu cầu tìm bài hát và thêm kết quả vào danh sách nhạc, bạn "
+#~ "có thể chọn từ nhiều bài hát."
+
+#~ msgid "No results..."
+#~ msgstr "Không có kết quả..."
+
+#~ msgid "Song results"
+#~ msgstr "Kết quả bài hát"
+
+#~ msgid "Loading track... This might take up to 3 seconds..."
+#~ msgstr "Đang load nhạc… Có thể mất tối đa 3 giây..."
+
+#~ msgid "Play a song"
+#~ msgstr "Mở một bài hát"
+
+#, python-brace-format
+#~ msgid ""
+#~ "`<query>` - The query to search a song by\n"
+#~ "\n"
+#~ "            Query for a track and play or add the first result to the "
+#~ "playlist.\n"
+#~ "            If this is not the song you were looking for, try `{prefix}"
+#~ "chooseplay`."
+#~ msgstr ""
+#~ "`<query>` - Yêu cầu để tìm bài hát\n"
+#~ "\n"
+#~ "            Yêu cầu tìm bài hát và thêm kết quả đầu tiên vào danh sách "
+#~ "nhạc.\n"
+#~ "            Nếu đó không phải là bài hát bạn tìm, hãy thử `{prefix}"
+#~ "chooseplay`."
+
+#~ msgid "Downloading track... This might take up to 3 seconds..."
+#~ msgstr "Đang load nhạc… Có thể mất tối đa 3 giây..."
+
+#~ msgid "Lock the player"
+#~ msgstr "Khóa người chơi"
+
+#~ msgid ""
+#~ "Lock/Unlock the player. This allows nobody else to control the music.\n"
+#~ "\n"
+#~ "            Only the session's DJ can use this command."
+#~ msgstr ""
+#~ "Khóa/Mở khóa người chơi. Lệnh này sẽ không cho bất cứ ai chỉnh nhạc.\n"
+#~ "\n"
+#~ "            Chỉ DJ của buổi nhạc có thể sử dụng lệnh này."
+
+#~ msgid "Toggle repeat"
+#~ msgstr "Lặp lại danh sách bài hát"
+
+#~ msgid ""
+#~ "Toggle repeat of the playing queue.\n"
+#~ "\n"
+#~ "            Once a song finishes, it will be added at the end of the "
+#~ "queue automatically.\n"
+#~ "\n"
+#~ "            If there are more than one person in the session and a non-DJ "
+#~ "uses this command, a vote has to pass first."
+#~ msgstr ""
+#~ "Lặp lại danh sách bài hát.\n"
+#~ "\n"
+#~ "            Khi bài hát kết thúc, nó sẽ được tự động thêm vào cuối danh "
+#~ "sách.\n"
+#~ "\n"
+#~ "            Nếu có hơn một người trong buổi nhạc và một người không phải "
+#~ "DJ dùng lệnh này, phải có một cuộc bỏ phiếu."
+
+#~ msgid "Skip the currently playing song."
+#~ msgstr "Bỏ qua bài hát đang phát."
+
+#~ msgid ""
+#~ "Skip the currently playing song.\n"
+#~ "\n"
+#~ "            If there are more than one person in the session and a non-DJ "
+#~ "uses this command, a vote has to pass first."
+#~ msgstr ""
+#~ "Bỏ qua bài hát đang phát.\n"
+#~ "\n"
+#~ "            Nếu có hơn một người trong buổi nhạc và một người không phải "
+#~ "DJ dùng lệnh này, phải có một cuộc bỏ phiếu."
+
+#~ msgid "Stops the music"
+#~ msgstr "Dừng phát nhạc"
+
+#~ msgid ""
+#~ "Stops the music and leaves voice chat.\n"
+#~ "\n"
+#~ "            If there are more than one person in the session and a non-DJ "
+#~ "uses this command, a vote has to pass first."
+#~ msgstr ""
+#~ "Dừng phát nhạc và rời khỏi voice chat.\n"
+#~ "\n"
+#~ "            Nếu có hơn một người trong buổi nhạc và một người không phải "
+#~ "DJ dùng lệnh này, phải có một cuộc bỏ phiếu."
+
+#~ msgid "Change the volume"
+#~ msgstr "Thay đổi âm lượng"
+
+#~ msgid ""
+#~ "Changes the playback's volume.\n"
+#~ "\n"
+#~ "            If there are more than one person in the session and a non-DJ "
+#~ "uses this command, a vote has to pass first."
+#~ msgstr ""
+#~ "Thay đổi âm lượng bài hát.\n"
+#~ "\n"
+#~ "            Nếu có hơn một người trong buổi nhạc và một người không phải "
+#~ "DJ dùng lệnh này, phải có một cuộc bỏ phiếu."
+
+#, python-brace-format
+#~ msgid ""
+#~ "⚠`Playback volume is going to change to {volume} in 5 seconds. To avoid "
+#~ "the sudden earrape, control the volume on client side!`"
+#~ msgstr ""
+#~ "⚠`Âm lượng bài hát sẽ chỉnh thành {volume} trong 5 giây. Để trách bị điếc "
+#~ "tai, điều chỉnh âm lượng trên máy bạn!`"
+
+#, python-brace-format
+#~ msgid ":white_check_mark:` Volume successfully changed to {volume}!`"
+#~ msgstr ":white_check_mark: ` Âm lượng thành công chỉnh thành {volume}!`"
+
+#~ msgid ""
+#~ "Toggles the music playback's paused state.\n"
+#~ "\n"
+#~ "            If there are more than one person in the session and a non-DJ "
+#~ "uses this command, a vote has to pass first."
+#~ msgstr ""
+#~ "Ngừng/Mở lại bài hát.\n"
+#~ "\n"
+#~ "            Nếu có hơn một người trong buổi nhạc và một người không phải "
+#~ "DJ dùng lệnh này, phải có một cuộc bỏ phiếu."
+
+#~ msgid ":white_check_mark:`Song paused!`"
+#~ msgstr ":white_check_mark: `Bài hát đã được dừng!`"
+
+#~ msgid ":white_check_mark:`Song resumed!`"
+#~ msgstr ":white_check_mark: `Bài hát đã phát trở lại!`"
+
+#~ msgid "Change the equalizer"
+#~ msgstr "Thay đổi bộ cân bằng"
+
+#~ msgid ""
+#~ "`<eq>` - The equalizer to use\n"
+#~ "\n"
+#~ "            Sets the equalizer. May be **flat, piano, metal or boost**.\n"
+#~ "            Flat is the standard, piano is quiet, metal boosts high "
+#~ "frequencies and boost boosts low frequencies.\n"
+#~ "\n"
+#~ "            If there are more than one person in the session and a non-DJ "
+#~ "uses this command, a vote has to pass first."
+#~ msgstr ""
+#~ "`<eq>` - Bộ cân bằng để sử dụng\n"
+#~ "\n"
+#~ "            Chỉnh bộ cân bằng. Có thể là **flat, piano, metal hoặc "
+#~ "boost**.\n"
+#~ "            Flat là bộ cơ bản, piano im lặng hơn, metal tăng tần suất và "
+#~ "boost giảm tần suất.\n"
+#~ "\n"
+#~ "            Nếu có hơn một người trong buổi nhạc và một người không phải "
+#~ "DJ dùng lệnh này, phải có một cuộc bỏ phiếu."
+
+#~ msgid "Not a valid equalizer. May be flat, piano, metal or boost."
+#~ msgstr ""
+#~ "Không phải là bộ cân bằng hợp lệ. Có thể là flat, piano, metal hoặc boost."
+
+#~ msgid "Shows the current song."
+#~ msgstr "Hiển thị bài hát hiện tại."
+
+#~ msgid "Displays some information about the currently playing song."
+#~ msgstr "Hiển thị một số thông tin về bái hát đang mở."
+
+#~ msgid "Now playing..."
+#~ msgstr "Đang mở bài hát..."
+
+#~ msgid "Title"
+#~ msgstr "Tên bài hát"
+
+#~ msgid "Artist"
+#~ msgstr "Nghệ sĩ"
+
+#~ msgid "Volume"
+#~ msgstr "Âm lượng"
+
+#~ msgid "Playing status"
+#~ msgstr "Trạng thái chơi"
+
+#~ msgid "`⏸Paused`"
+#~ msgstr "`⏸Đã dừng`"
+
+#~ msgid "DJ"
+#~ msgstr "DJ"
+
+#~ msgid "Locked"
+#~ msgstr "Đã khóa"
+
+#~ msgid "Yes"
+#~ msgstr "Có"
+
+#~ msgid "No"
+#~ msgstr "Không"
+
+#~ msgid "Looping"
+#~ msgstr "Lặp lại"
+
+#~ msgid "Explicit"
+#~ msgstr "Cụ thể"
+
+#~ msgid "Equalizer"
+#~ msgstr "Bộ cân bằng"
+
+#, python-brace-format
+#~ msgid "Song requested by: {user}"
+#~ msgstr "Bài hát được yêu cầu bởi: {user}"
+
+#~ msgid "Show upcoming songs"
+#~ msgstr "Hiển thị các bài hát tiếp theo"
+
+#~ msgid "Show the next (maximum 5) tracks in the queue."
+#~ msgstr "Hiển thị (tối đa là 5) bài hát tiếp theo trong danh sách."
+
+#~ msgid "Upcoming entries"
+#~ msgstr "Các bài hát tiếp theo"
+
+#~ msgid "⚠`No more entries left.`"
+#~ msgstr "⚠`Không còn bài hát nào.`"
+
+#~ msgid ""
+#~ "`<query>` - The query to search the song by; defaults to the currently "
+#~ "playing song\n"
+#~ "\n"
+#~ "            Retrieves song lyrics. If no song specified, will check the "
+#~ "current playing song."
+#~ msgstr ""
+#~ "`<query>` - Yêu cầu tìm kiếm bài hát; mặc định là bài hát hiện tại\n"
+#~ "\n"
+#~ "            Tìm lời bài hát. Nếu không lựa bài hát, sẽ tìm kiếm bài hát "
+#~ "hiện tại."
+
+#~ msgid "I am not playing. Please specify a song to look for."
+#~ msgstr "Tôi hiện giờ chưa phát nhạc. Hãy yêu cầu một bài hát."
+
+#~ msgid "Please specify a song."
+#~ msgstr "Hãy lựa một bài hát."
+
+#~ msgid ":x: Look for a longer query!"
+#~ msgstr ":x: Tìm kiếm danh sách dài hơn!"
+
+#~ msgid "⚠ No results!"
+#~ msgstr "⚠ Không có kết quả!"
+
+#, python-brace-format
+#~ msgid "🎧 Added {title} to the queue..."
+#~ msgstr "🎧 Đã thêm {title} vào danh sách chờ ..."
+
+#, python-brace-format
+#~ msgid "🎧 Playing {title}..."
+#~ msgstr "🎧 Phát {title}..."
+
+#, no-python-format
+#~ msgid ""
+#~ "Active adventures will put you into a 15x15 randomly generated maze. You "
+#~ "will begin in the top left corner (0,0) and your goal is to find the exit "
+#~ "in the bottom right corner (14,14)\n"
+#~ "            You control your character with the arrow reactions below the "
+#~ "message.\n"
+#~ "\n"
+#~ "            You have 1000HP. The adventure ends when you find the exit or "
+#~ "your HP drop to zero.\n"
+#~ "            You can lose HP by getting damaged by traps or enemies.\n"
+#~ "\n"
+#~ "            The maze contains safe spaces and treasures but also traps "
+#~ "and enemies.\n"
+#~ "            Each space has a 10% chance of being a trap. If a space does "
+#~ "not have a trap, it has a 10% chance of having an enemy.\n"
+#~ "            Each maze has 5 treasure chests.\n"
+#~ "\n"
+#~ "            Traps can damage you from 30 to 120 HP.\n"
+#~ "            Enemy damage is based on your own damage. During enemy "
+#~ "fights, you can attack (⚔️), defend (🛡️) or recover HP (❤️)\n"
+#~ "            Treasure chests can have gold up to 25 times your attack + "
+#~ "defense.\n"
+#~ "\n"
+#~ "            If you reach the end, you will receive a special treasure "
+#~ "with gold up to 100 times your attack + defense.\n"
+#~ "\n"
+#~ "            (It is recommended to draw a map of the maze)\n"
+#~ "            (This command has a cooldown of 30 minutes)"
+#~ msgstr ""
+#~ "Cuộc phiêu lưu chủ động sẽ gửi bạn vào một mê cung 15x15 được tạo ngẫu "
+#~ "nhiên. Bạn sẽ bắt đầu ở góc trái trên (0,0) và mục tiêu của bạn là tìm "
+#~ "lối ra ở góc phải dưới (14,14)\n"
+#~ "            Bạn sẽ điều khiển nhân vật bằng các emoji mũi tên ở phía dưới "
+#~ "tin nhắn.\n"
+#~ "\n"
+#~ "            Bạn có 1000HP. Cuộc phiêu lưu kết thúc khi bạn tìm được lối "
+#~ "ra hoặc HP về 0.\n"
+#~ "            Bạn có thể mất HP khi đạp trúng bẫy hoặc đối đầu với kẻ thù.\n"
+#~ "\n"
+#~ "            Mê cung có những ô an toàn và kho báu, nhưng cũng có những ô "
+#~ "bẫy và kẻ thù.\n"
+#~ "            Mỗi ô có 10% xác suất là bẫy. Nếu ô đó không có bẫy, nó có "
+#~ "10% xác suất có kẻ thù.\n"
+#~ "            Mỗi mê cung có 5 thùng kho báu.\n"
+#~ "\n"
+#~ "            Bẫy có thể làm bạn mất từ 30 tới 120 HP.\n"
+#~ "            Sức tấn công của kẻ thù phụ thuộc vào sức tấn công của bạn. "
+#~ "Trong cuộc chiến, bạn có thể tấn công (⚔️), phòng thù (🛡️) or phục hồi HP "
+#~ "(❤️)\n"
+#~ "            Thùng kho báu có thể chứa số vàng tối đa gấp 25 lần tổng số "
+#~ "tấn công + phòng thủ của bạn.\n"
+#~ "\n"
+#~ "            Nếu đến được lối ra, bạn sẽ được nhận một thùng kho báu đặc "
+#~ "biệt với số vàng tối đa gấp 100 lần tổng số tấn công + phòng thủ của "
+#~ "bạn.\n"
+#~ "\n"
+#~ "            (Khuyến khích nên vẽ bản đồ mê cung)\n"
+#~ "            (Lệnh này có thời gian chờ là 30 phút)"
+
+#~ msgid ""
+#~ "You are going to be in a labyrinth of size 15x15. There are enemies, "
+#~ "treasures and hidden traps. Reach the exit in the bottom right corner for "
+#~ "a huge extra bonus!\n"
+#~ "Are you ready?\n"
+#~ "\n"
+#~ "Tip: Use a silent channel for this, you may want to read all the messages "
+#~ "I will send."
+#~ msgstr ""
+#~ "Bạn sẽ ở trong một mê cung có kích thước 15x15. Có kẻ thù, kho báu và "
+#~ "những cái bẫy ẩn giấu. Tiếp cận lối ra ở góc dưới bên phải để nhận thêm "
+#~ "tiền thưởng!\n"
+#~ "Bạn đã sẵn sàng chưa?\n"
+#~ "\n"
+#~ "Mẹo: Dùng một kênh vắng cho lệnh này, bạn có lẽ sẽ muốn đọc tất cả các "
+#~ "tin nhắn do tôi gửi."
+
+#~ msgid "**Generating a maze...**"
+#~ msgstr "**Đang tạo mê cung...**"
+
+#, python-brace-format
+#~ msgid "To the {side} is a wall."
+#~ msgstr "Phía {side} là một bức tường."
+
+#, python-brace-format
+#~ msgid "To the {side} is an enemy."
+#~ msgstr "Phía {side} là kẻ thù."
+
+#, python-brace-format
+#~ msgid "To the {side} is a treasure."
+#~ msgstr "Phía {side} là một kho báu."
+
+#, python-brace-format
+#~ msgid "To the {side} is a floor."
+#~ msgstr "Phía {side} là sàn nhà."
+
+#~ msgid "The Fight started"
+#~ msgstr "Trận đấu bắt đầu"
+
+#, python-brace-format
+#~ msgid "The Enemy healed themselves for {hp} HP"
+#~ msgstr "Kẻ thù đã hồi {hp} HP"
+
+#~ msgid ""
+#~ "Would you like insurance? It will cost half your bet and will get you 2:1 "
+#~ "back if the dealer has a blackjack. Else it is gone."
+#~ msgstr ""
+#~ "Bạn có muốn mua bảo hiểm? Nó có giá bằng một nửa số tiền đặt cược của bạn "
+#~ "và sẽ giúp bạn lấy lại 2:1 nếu người chia bài có xì dách. Nếu không thì "
+#~ "nó sẽ biến mất."
+
+#, python-brace-format
+#~ msgid ""
+#~ "{author} seeks a guild adventure for **{guild}**! Follow the link to "
+#~ "join! Unlimited players can join in the next 10 minutes. The minimum of "
+#~ "players required is 3.\n"
+#~ "Please go to https://join.idlerpg.xyz/{id_} to join the guild adventure."
+#~ msgstr ""
+#~ "{author} muốn tổ chức một cuộc phiêu lưu bang hội cho **{guild}**! Nhấn "
+#~ "vào link để tham gia! Không giới hạn số người chơi có thể tham gia trong "
+#~ "10 phút kế tiếp. Yêu cầu tối thiểu có 3 người chơi.\n"
+#~ "Xin hãy tới https://join.idlerpg.xyz/{id_} để tham gia cuộc phiêu lưu "
+#~ "bang hội."
+
+#, python-brace-format
+#~ msgid ""
+#~ "**{user}** wants to attack **{city}** with **{alliance_name}**'s "
+#~ "alliance. Head to https://join.idlerpg.xyz/{id_} to join the attack!"
+#~ msgstr ""
+#~ "**{user}** muốn tấn công **{city}** với liên minh **{alliance_name}**. "
+#~ "Hãy vào https://join.idlerpg.xyz/{id_} để tham gia tấn công!"
 
 #, python-brace-format
 #~ msgid ""
