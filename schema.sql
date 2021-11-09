@@ -17,8 +17,8 @@
 -- PostgreSQL database dump
 --
 
--- Dumped from database version 13.1
--- Dumped by pg_dump version 13.1
+-- Dumped from database version 14.0
+-- Dumped by pg_dump version 14.0
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -46,18 +46,36 @@ CREATE TYPE public.rgba AS (
 ALTER TYPE public.rgba OWNER TO jens;
 
 --
+-- Name: array_unique_stable(anyarray); Type: FUNCTION; Schema: public; Owner: jens
+--
+
+CREATE FUNCTION public.array_unique_stable(p_input anyarray) RETURNS anyarray
+    LANGUAGE sql IMMUTABLE STRICT PARALLEL SAFE
+    AS $$
+select array_agg(t order by x)
+from (
+  select distinct on (t) t,x
+  from unnest(p_input) with ordinality as p(t,x)
+  order by t,x
+) t2;
+$$;
+
+
+ALTER FUNCTION public.array_unique_stable(p_input anyarray) OWNER TO jens;
+
+--
 -- Name: insert_alliance_default(); Type: FUNCTION; Schema: public; Owner: jens
 --
 
 CREATE FUNCTION public.insert_alliance_default() RETURNS trigger
     LANGUAGE plpgsql
-    AS $$
-begin
-if NEW.alliance is null then
-NEW.alliance := NEW.id;
-end if;
-return new;
-end;
+    AS $$
+begin
+if NEW.alliance is null then
+NEW.alliance := NEW.id;
+end if;
+return new;
+end;
 $$;
 
 
