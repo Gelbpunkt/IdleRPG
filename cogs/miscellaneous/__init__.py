@@ -62,10 +62,11 @@ class Miscellaneous(commands.Cog):
             headers={
                 "Authorization": f"Client-ID {self.bot.config.external.imgur_token}"
             },
-            json={"image": url},
+            json={"image": url, "type": "url"},
         ) as r:
+            json = await r.json()
             try:
-                short_url = (await r.json())["data"]["link"]
+                short_url = json["data"]["link"]
             except KeyError:
                 raise ImgurUploadError()
         return short_url

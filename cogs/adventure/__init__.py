@@ -463,15 +463,11 @@ class Adventure(commands.Cog):
         async with self.bot.trusted_session.post(
             f"{self.bot.config.external.okapi_url}/api/genadventures",
             json={"percentages": chances},
+            headers={"Authorization": self.bot.config.external.okapi_token},
         ) as r:
             images = await r.json()
 
-        pages = [
-            discord.Embed().set_image(
-                url=f"https://image-renderer.idlerpg.xyz/?image={key}"
-            )
-            for key in images
-        ]
+        pages = [discord.Embed().set_image(url=image) for image in images]
 
         await self.bot.paginator.Paginator(extras=pages).paginate(ctx)
 

@@ -15,8 +15,6 @@ GNU Affero General Public License for more details.
 You should have received a copy of the GNU Affero General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
-from io import BytesIO
-
 import discord
 
 from discord.ext import commands
@@ -48,9 +46,12 @@ class Images(commands.Cog):
         async with self.bot.trusted_session.post(
             f"{self.bot.config.external.okapi_url}/api/imageops/pixel",
             json={"image": url},
+            headers={"Authorization": self.bot.config.external.okapi_token},
         ) as r:
-            img = BytesIO(await r.read())
-        await ctx.send(file=discord.File(fp=img, filename="pixels.png"))
+            image = await r.text()
+        await ctx.send(
+            embed=discord.Embed(color=discord.Colour.blurple()).set_image(url=image)
+        )
 
     @commands.command(brief=_("Defines an avatar's edges"))
     @locale_doc
@@ -63,9 +64,12 @@ class Images(commands.Cog):
         async with self.bot.trusted_session.post(
             f"{self.bot.config.external.okapi_url}/api/imageops/edges",
             json={"image": user.display_avatar.replace(format="png").url},
+            headers={"Authorization": self.bot.config.external.okapi_token},
         ) as r:
-            img = BytesIO(await r.read())
-        await ctx.send(file=discord.File(fp=img, filename="edgy.png"))
+            image = await r.text()
+        await ctx.send(
+            embed=discord.Embed(color=discord.Colour.blurple()).set_image(url=image)
+        )
 
     @commands.cooldown(1, 15, BucketType.channel)
     @commands.command(brief=_("Inverts a user's avatar"))
@@ -81,12 +85,15 @@ class Images(commands.Cog):
         async with self.bot.trusted_session.post(
             f"{self.bot.config.external.okapi_url}/api/imageops/invert",
             json={"image": member.display_avatar.replace(format="png").url},
+            headers={"Authorization": self.bot.config.external.okapi_token},
         ) as r:
-            img = BytesIO(await r.read())
-        await ctx.send(file=discord.File(fp=img, filename="inverted.png"))
+            image = await r.text()
+        await ctx.send(
+            embed=discord.Embed(color=discord.Colour.blurple()).set_image(url=image)
+        )
 
     @commands.cooldown(1, 15, BucketType.channel)
-    @commands.command(brief=_("oil-paint someone's avatar"))
+    @commands.command(brief=_("Oil-paint someone's avatar"))
     @locale_doc
     async def oil(self, ctx, member: discord.Member = Author):
         _(
@@ -99,10 +106,12 @@ class Images(commands.Cog):
         async with self.bot.trusted_session.post(
             f"{self.bot.config.external.okapi_url}/api/imageops/oil",
             json={"image": member.display_avatar.replace(format="png").url},
+            headers={"Authorization": self.bot.config.external.okapi_token},
         ) as r:
-            img = BytesIO(await r.read())
-
-        await ctx.send(file=discord.File(fp=img, filename="oil.png"))
+            image = await r.text()
+        await ctx.send(
+            embed=discord.Embed(color=discord.Colour.blurple()).set_image(url=image)
+        )
 
 
 def setup(bot):

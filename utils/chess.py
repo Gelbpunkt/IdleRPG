@@ -204,7 +204,7 @@ class ChessGame:
             return False
         return move
 
-    async def get_board(self):
+    async def get_board(self) -> str:
         svg = chess.svg.board(
             board=self.board,
             flipped=self.board.turn == chess.BLACK,
@@ -212,24 +212,30 @@ class ChessGame:
             check=self.board.king(self.board.turn) if self.board.is_check() else None,
         )
         async with self.ctx.bot.trusted_session.post(
-            f"{self.ctx.bot.config.external.okapi_url}/api/genchess", json={"xml": svg}
+            f"{self.ctx.bot.config.external.okapi_url}/api/genchess",
+            json={"xml": svg},
+            headers={"Authorization": self.ctx.bot.config.external.okapi_token},
         ) as r:
-            file_ = io.BytesIO(await r.read())
-        return file_
+            image = await r.text()
+        return image
 
     async def get_move_from(self, player):
         if player is None:
             return await self.get_ai_move()
-        file_ = await self.get_board()
+        image = await self.get_board()
+
         self.msg = await self.ctx.send(
-            _(
-                "**Move {move_no}: {player}'s turn**\nSimply type your move. You have 2"
-                " minutes to enter a valid move. I accept normal notation as well as"
-                " `resign` or `draw`.\nExample: `g1f3`, `Nf3`, `0-0` or `xe3`.\nMoves"
-                " are case-sensitive! Pieces uppercase: `N`, `Q` or `B`, fields"
-                " lowercase: `a`, `b` or `h`. Castling is `0-0` or `0-0-0`."
-            ).format(move_no=self.move_no, player=player.mention),
-            file=discord.File(fp=file_, filename="board.png"),
+            embed=discord.Embed(
+                title=_("Chess"),
+                description=_(
+                    "**Move {move_no}: {player}'s turn**\nSimply type your move. You have 2"
+                    " minutes to enter a valid move. I accept normal notation as well as"
+                    " `resign` or `draw`.\nExample: `g1f3`, `Nf3`, `0-0` or `xe3`.\nMoves"
+                    " are case-sensitive! Pieces uppercase: `N`, `Q` or `B`, fields"
+                    " lowercase: `a`, `b` or `h`. Castling is `0-0` or `0-0-0`."
+                ).format(move_no=self.move_no, player=player.mention),
+                colour=discord.Colour.blurple(),
+            ).set_image(url=image),
         )
 
         def check(msg):
@@ -355,7 +361,7 @@ class ChessGame:
             result = "1-0" if next_ == white else "0-1"
         else:
             result = self.board.result()
-        file_ = await self.get_board()
+        image = await self.get_board()
         game = chess.pgn.Game.from_board(self.board)
         game.headers["Event"] = "IdleRPG Chess"
         game.headers["Site"] = (
@@ -391,28 +397,40 @@ class ChessGame:
 
         if self.board.is_checkmate():
             await self.ctx.send(
-                _("**Checkmate! {result}**").format(result=result),
-                file=discord.File(fp=file_, filename="board.png"),
+                embed=discord.Embed(
+                    title=_("**Checkmate! {result}**").format(result=result),
+                    colour=discord.Colour.blurple(),
+                ).set_image(url=image)
             )
         elif self.board.is_stalemate():
             await self.ctx.send(
-                _("**Stalemate! {result}**").format(result=result),
-                file=discord.File(fp=file_, filename="board.png"),
+                embed=discord.Embed(
+                    title=_("**Stalemate! {result}**").format(result=result),
+                    colour=discord.Colour.blurple(),
+                ).set_image(url=image)
             )
         elif self.board.is_insufficient_material():
             await self.ctx.send(
-                _("**Insufficient material! {result}**").format(result=result),
-                file=discord.File(fp=file_, filename="board.png"),
+                embed=discord.Embed(
+                    title=_("**Insufficient material! {result}**").format(
+                        result=result
+                    ),
+                    colour=discord.Colour.blurple(),
+                ).set_image(url=image)
             )
         elif self.status.endswith("resigned"):
             await self.ctx.send(
-                f"**{self.status.title()}! {result}**",
-                file=discord.File(fp=file_, filename="board.png"),
+                embed=discord.Embed(
+                    title=f"**{self.status.title()}! {result}**",
+                    colour=discord.Colour.blurple(),
+                ).set_image(url=image)
             )
         elif self.status == "draw":
             await self.ctx.send(
-                _("**Draw accepted! {result}**").format(result=result),
-                file=discord.File(fp=file_, filename="board.png"),
+                embed=discord.Embed(
+                    title=_("**Draw accepted! {result}**").format(result=result),
+                    colour=discord.Colour.blurple(),
+                ).set_image(url=image)
             )
 
         await self.ctx.send(

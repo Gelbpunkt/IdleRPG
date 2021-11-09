@@ -3,7 +3,6 @@
 podman pull docker://docker.io/library/redis:6-alpine
 podman pull docker://docker.io/library/postgres:14-alpine
 podman pull quay.io/gelbpunkt/stockfish:latest
-podman pull quay.io/gelbpunkt/okapi:latest
 podman pod create --name idlerpgbeta -p 5432:5432 -p 6379:6379
 podman run --rm -d --pod idlerpgbeta --name redis-beta redis:6-alpine
 cat <<EOF > start.sh
@@ -23,7 +22,3 @@ podman run --rm -d --pod idlerpgbeta --name postgres-beta -e POSTGRES_PASSWORD="
 sleep 15
 rm start.sh
 podman run --rm -d --pod idlerpgbeta --name stockfish-beta gelbpunkt/stockfish:latest
-podman run --rm -d --pod idlerpgbeta --name okapi-beta gelbpunkt/okapi:latest
-# uncomment to enable lavalink
-# podman build -t lavalink:latest -f units/Dockerfile.lavalink .
-# podman run --rm -d --pod idlerpgbeta --name lavalink-beta -v $(pwd)/application.yml:/lavalink/application.yml:Z lavalink:latest

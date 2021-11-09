@@ -19,13 +19,20 @@ import asyncio
 
 import discord
 
+from aiohttp.client_exceptions import ContentTypeError
 from asyncpg.exceptions import StringDataRightTruncationError
 from discord.ext import commands
 
 from classes.items import ItemType
 from cogs.shard_communication import next_day_cooldown
 from utils import random
-from utils.checks import has_char, is_guild_leader, is_patron, user_is_patron
+from utils.checks import (
+    ImgurUploadError,
+    has_char,
+    is_guild_leader,
+    is_patron,
+    user_is_patron,
+)
 from utils.i18n import _, locale_doc
 
 
@@ -360,21 +367,35 @@ class Patreon(commands.Cog):
                 )
             )
         async with self.bot.trusted_session.post(
-            f"{self.bot.config.external.okapi_url}/api/genoverlay", json={"url": url}
+            f"{self.bot.config.external.okapi_url}/api/genoverlay",
+            json={"url": url},
+            headers={"Authorization": self.bot.config.external.okapi_token},
         ) as req:
-            background = await req.read()
-        headers = {
-            "Authorization": f"Client-ID {self.bot.config.external.imgur_token}",
-            "Content-Type": "application/json",
-        }
-        data = {"image": background, "type": "file"}
-        async with self.bot.session.post(
-            "https://api.imgur.com/3/image", json=data, headers=headers
-        ) as r:
-            try:
-                link = (await r.json())["data"]["link"]
-            except KeyError:
-                return await ctx.send(_("Error when uploading to Imgur."))
+            if req.status == 200:
+                background = await req.text()
+            else:
+                # Error, means try reading the response JSON error
+                try:
+                    error_json = await req.json()
+                    return await ctx.send(
+                        _(
+                            "There was an error processing your image. Reason: {reason} ({detail})"
+                        ).format(
+                            reason=error_json["reason"], detail=error_json["detail"]
+                        )
+                    )
+                except ContentTypeError:
+                    return await ctx.send(
+                        _("Unexpected internal error when generating image.")
+                    )
+                except Exception:
+                    return await ctx.send(_("Unexpected error when generating image."))
+
+        try:
+            link = await self.bot.cogs["Miscellaneous"].get_imgur_url(background)
+        except ImgurUploadError:
+            return await ctx.send(_("Error when uploading to Imgur."))
+
         await ctx.send(
             _("Imgur Link for `{prefix}background`\n{link}").format(
                 prefix=ctx.prefix, link=link

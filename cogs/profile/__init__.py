@@ -17,7 +17,6 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
 import asyncio
 
-from io import BytesIO
 from typing import Optional
 
 import discord
@@ -212,10 +211,8 @@ IdleRPG is a global bot, your characters are valid everywhere"""
         classes = [class_from_string(c) for c in profile["class"]]
         icons = [c.get_class_line_name().lower() if c else "none" for c in classes]
 
-        url = f"{self.bot.config.external.okapi_url}/api/genprofile"
-
         async with self.bot.trusted_session.post(
-            url,
+            f"{self.bot.config.external.okapi_url}/api/genprofile",
             json={
                 "name": profile["name"],
                 "color": color,
@@ -246,9 +243,10 @@ IdleRPG is a global bot, your characters are valid everywhere"""
                 if mission
                 else _("No Mission"),
             },
+            headers={"Authorization": self.bot.config.external.okapi_token},
         ) as req:
             if req.status == 200:
-                img = BytesIO(await req.read())
+                img = await req.text()
             else:
                 # Error, means try reading the response JSON error
                 try:
@@ -266,7 +264,10 @@ IdleRPG is a global bot, your characters are valid everywhere"""
                     )
                 except Exception:
                     return await ctx.send(_("Unexpected error when generating image."))
-        await ctx.send(file=discord.File(fp=img, filename="Profile.png"))
+
+        await ctx.send(
+            embed=discord.Embed(colour=discord.Colour.blurple()).set_image(url=img)
+        )
 
     @commands.command(
         aliases=["p2", "pp"], brief=_("View someone's profile differently")
