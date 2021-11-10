@@ -46,36 +46,18 @@ CREATE TYPE public.rgba AS (
 ALTER TYPE public.rgba OWNER TO jens;
 
 --
--- Name: array_unique_stable(anyarray); Type: FUNCTION; Schema: public; Owner: jens
---
-
-CREATE FUNCTION public.array_unique_stable(p_input anyarray) RETURNS anyarray
-    LANGUAGE sql IMMUTABLE STRICT PARALLEL SAFE
-    AS $$
-select array_agg(t order by x)
-from (
-  select distinct on (t) t,x
-  from unnest(p_input) with ordinality as p(t,x)
-  order by t,x
-) t2;
-$$;
-
-
-ALTER FUNCTION public.array_unique_stable(p_input anyarray) OWNER TO jens;
-
---
 -- Name: insert_alliance_default(); Type: FUNCTION; Schema: public; Owner: jens
 --
 
 CREATE FUNCTION public.insert_alliance_default() RETURNS trigger
     LANGUAGE plpgsql
-    AS $$
-begin
-if NEW.alliance is null then
-NEW.alliance := NEW.id;
-end if;
-return new;
-end;
+    AS $$
+begin
+if NEW.alliance is null then
+NEW.alliance := NEW.id;
+end if;
+return new;
+end;
 $$;
 
 
@@ -126,6 +108,18 @@ ALTER TABLE public.allitems_id_seq OWNER TO jens;
 
 ALTER SEQUENCE public.allitems_id_seq OWNED BY public.allitems.id;
 
+
+--
+-- Name: bans; Type: TABLE; Schema: public; Owner: jens
+--
+
+CREATE TABLE public.bans (
+    "user" bigint NOT NULL,
+    reason character varying(100) DEFAULT NULL::character varying
+);
+
+
+ALTER TABLE public.bans OWNER TO jens;
 
 --
 -- Name: chess_matches; Type: TABLE; Schema: public; Owner: jens
@@ -735,6 +729,14 @@ ALTER TABLE ONLY public.transactions ALTER COLUMN id SET DEFAULT nextval('public
 
 ALTER TABLE ONLY public.allitems
     ADD CONSTRAINT allitems_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: bans bans_pkey; Type: CONSTRAINT; Schema: public; Owner: jens
+--
+
+ALTER TABLE ONLY public.bans
+    ADD CONSTRAINT bans_pkey PRIMARY KEY ("user");
 
 
 --

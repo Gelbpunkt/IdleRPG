@@ -217,6 +217,9 @@ class Sharding(commands.Cog):
                         fut.set_result(payload["output"])
                         break
 
+    async def reload_bans(self, command_id: int):
+        await self.bot.load_bans()
+
     async def clear_donator_cache(self, user_id: int, command_id: int):
         self.bot.get_donator_rank.invalidate(self.bot, user_id)
 

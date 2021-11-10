@@ -77,7 +77,7 @@ class Bot(commands.AutoShardedBot):
         self.version = self.config.bot.version
         self.paginator = paginator
         self.BASE_URL = self.config.external.base_url
-        self.bans = set(self.config.game.bans)
+        self.bans = set()
         self.support_server_id = self.config.game.support_server_id
         self.linecount = 0
         self.make_linecount()
@@ -193,6 +193,7 @@ class Bot(commands.AutoShardedBot):
                 print(f"Failed to load extension {extension}.", file=sys.stderr)
                 traceback.print_exc()
         self.redis_version = await self.get_redis_version()
+        await self.load_bans()
         await self.start(self.config.bot.token)
 
     async def get_redis_version(self):
@@ -676,6 +677,14 @@ class Bot(commands.AutoShardedBot):
         await self.cogs["Sharding"].handler(
             "clear_donator_cache", 0, args={"user_id": user}
         )
+
+    async def load_bans(self):
+        bans = await self.pool.fetch('SELECT "user" FROM bans;')
+        self.bans = {ban["user"] for ban in bans}
+        self.logger.info(f"Loaded {len(self.bans)} bans")
+
+    async def reload_bans(self):
+        await self.cogs["Sharding"].handler("reload_bans", 0)
 
     @cache(maxsize=8096)
     async def get_donator_rank(self, user_id):

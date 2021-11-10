@@ -22,6 +22,7 @@ from typing import Union
 import discord
 
 from async_timeout import timeout
+from asyncpg.exceptions import UniqueViolationError
 from discord.ext import commands
 
 from classes.converters import CrateRarity, IntFromTo, IntGreaterThan, UserWithCharacter
@@ -89,9 +90,42 @@ class GameMaster(commands.Cog):
         await ctx.send(_("Done"))
 
     @is_gm()
+    @commands.command(hidden=True, brief=_("Bot-ban a user"))
+    @locale_doc
+    async def gmban(self, ctx, other: Union[int, discord.User], *, reason: str = ""):
+        _(
+            """`<other>` - A discord User
+
+            Bans a user from the bot, prohibiting them from using commands and reactions.
+
+            Only Game Masters can use this command."""
+        )
+        id_ = other if isinstance(other, int) else other.id
+
+        try:
+            await self.bot.pool.execute(
+                'INSERT INTO bans ("user", "reason") VALUES ($1, $2);', id_, reason
+            )
+            self.bot.bans.add(id_)
+            await self.bot.reload_bans()
+
+            await ctx.send(_("Banned: {other}").format(other=other))
+
+            await self.bot.http.send_message(
+                self.bot.config.game.gm_log_channel,
+                "**{gm}** banned **{other}**.\n\nReason: *{reason}*".format(
+                    gm=ctx.author,
+                    other=other,
+                    reason=reason or f"<{ctx.message.jump_url}>",
+                ),
+            )
+        except UniqueViolationError:
+            await ctx.send(_("{other} is already banned.").format(other=other))
+
+    @is_gm()
     @commands.command(hidden=True, brief=_("Bot-unban a user"))
     @locale_doc
-    async def unban(self, ctx, *, other: discord.User):
+    async def gmunban(self, ctx, other: Union[int, discord.User], *, reason: str = ""):
         _(
             """`<other>` - A discord User
 
@@ -99,11 +133,25 @@ class GameMaster(commands.Cog):
 
             Only Game Masters can use this command."""
         )
+        id_ = other if isinstance(other, int) else other.id
+        await self.bot.pool.execute('DELETE FROM bans WHERE "user"=$1;', id_)
+
         try:
-            self.bot.bans.remove(other.id)
-            await ctx.send(_("Unbanned: {other}").format(other=other.name))
-        except ValueError:
-            await ctx.send(_("{other} is not banned.").format(other=other.name))
+            self.bot.bans.remove(id_)
+            await self.bot.reload_bans()
+
+            await ctx.send(_("Unbanned: {other}").format(other=other))
+
+            await self.bot.http.send_message(
+                self.bot.config.game.gm_log_channel,
+                "**{gm}** unbanned **{other}**.\n\nReason: *{reason}*".format(
+                    gm=ctx.author,
+                    other=other,
+                    reason=reason or f"<{ctx.message.jump_url}>",
+                ),
+            )
+        except KeyError:
+            await ctx.send(_("{other} is not banned.").format(other=other))
 
     @is_gm()
     @commands.command(hidden=True, brief=_("Create money"))

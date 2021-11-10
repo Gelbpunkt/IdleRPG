@@ -117,7 +117,6 @@ class LauncherSection:
 class GameSection:
     __slots__ = {
         "game_masters",
-        "bans",
         "banned_guilds",
         "support_server_id",
         "gm_log_channel",
@@ -131,7 +130,6 @@ class GameSection:
 
     def __init__(self, data: dict[str, Any]) -> None:
         self.game_masters = data.get("game_masters", [])
-        self.bans = data.get("bans", [])
         self.banned_guilds = data.get("banned_guilds", [])
         self.support_server_id = data.get("support_server_id", None)
         self.gm_log_channel = data.get("gm_log_channel", None)
