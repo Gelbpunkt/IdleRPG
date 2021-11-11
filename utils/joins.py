@@ -12,6 +12,9 @@ GNU Affero General Public License for more details.
 You should have received a copy of the GNU Affero General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
+from asyncio import Future
+from typing import Awaitable, Callable, Optional
+
 from discord.interactions import Interaction
 from discord.ui import Button, View
 from discord.user import User
@@ -34,4 +37,48 @@ class JoinView(View):
         else:
             await interaction.response.send_message(
                 _("You already joined."), ephemeral=True
+            )
+
+
+class SingleJoinView(View):
+    def __init__(
+        self,
+        future: Future[User],
+        join_button: Button,
+        allowed: Optional[User] = None,
+        prohibited: Optional[User] = None,
+        check: Optional[Callable[[User], Awaitable[bool]]] = None,
+        check_fail_message: Optional[str] = None,
+        *args,
+        **kwargs
+    ) -> None:
+        super().__init__(*args, **kwargs)
+        join_button.callback = self.button_pressed
+        self.add_item(join_button)
+        self.future = future
+        self.allowed = allowed
+        self.prohibited = prohibited
+        self.check = check
+        self.check_fail_message = check_fail_message
+
+    async def button_pressed(self, interaction: Interaction) -> None:
+        if interaction.user is None:
+            return
+        if self.allowed is not None and self.allowed != interaction.user:
+            await interaction.response.send_message(
+                _("You aren't allowed to join."), ephemeral=True
+            )
+            return
+        if self.prohibited is not None and self.prohibited == interaction.user:
+            await interaction.response.send_message(
+                _("You are prohibited from joining."), ephemeral=True
+            )
+            return
+
+        if await self.check(interaction.user):
+            self.future.set_result(interaction.user)
+            self.stop()
+        else:
+            await interaction.response.send_message(
+                self.check_fail_message, ephemeral=True
             )

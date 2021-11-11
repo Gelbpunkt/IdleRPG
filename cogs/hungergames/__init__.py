@@ -306,7 +306,11 @@ class HungerGames(commands.Cog):
 
         if ctx.channel.id == self.bot.config.game.official_tournament_channel_id:
             view = JoinView(
-                Button(style=ButtonStyle.primary, label="Join the Hunger Games!"),
+                Button(
+                    style=ButtonStyle.primary,
+                    label="Join the Hunger Games!",
+                    emoji="\U0001f958",
+                ),
                 message=_("You joined the Hunger Games."),
                 timeout=60 * 10,
             )
@@ -318,50 +322,21 @@ class HungerGames(commands.Cog):
             view.stop()
             players = list(view.joined)
         else:
-            players = [ctx.author]
-            text = _(
-                "{author} started a game of Hunger Games! React with"
-                " :shallow_pan_of_food: to join the game! **{num} joined**"
+            view = JoinView(
+                Button(
+                    style=ButtonStyle.primary,
+                    label="Join the Hunger Games!",
+                    emoji="\U0001f958",
+                ),
+                message=_("You joined the Hunger Games."),
+                timeout=60 * 2,
             )
-            msg = await ctx.send(text.format(author=ctx.author.mention, num=1))
-            await msg.add_reaction("\U0001f958")
-
-            def check(reaction, user):
-                return (
-                    user not in players
-                    and reaction.message.id == msg.id
-                    and reaction.emoji == "\U0001f958"
-                    and not user.bot
-                )
-
-            self.games[ctx.channel.id] = "forming"
-
-            while True:
-                try:
-                    reaction, user = await self.bot.wait_for(
-                        "reaction_add", check=check, timeout=30
-                    )
-                except asyncio.TimeoutError:
-                    break
-                players.append(user)
-                await msg.edit(
-                    content=text.format(author=ctx.author.mention, num=len(players))
-                )
-
-            # Check for not included players
-            try:
-                msg = await ctx.channel.fetch_message(msg.id)
-                for reaction in msg.reactions:
-                    if reaction.emoji == "\U0001f958":
-                        async for user in reaction.users():
-                            if user != ctx.me and user not in players:
-                                players.append(user)
-                        break
-            except discord.errors.NotFound:
-                del self.games[ctx.channel.id]
-                return await ctx.send(
-                    _("An error happened during the hungergames. Please try again!")
-                )
+            view.joined.add(ctx.author)
+            text = _("{author} started a game of Hunger Games!")
+            await ctx.send(text.format(author=ctx.author.mention), view=view)
+            await asyncio.sleep(60 * 2)
+            view.stop()
+            players = list(view.joined)
 
         if len(players) < 2:
             del self.games[ctx.channel.id]
@@ -372,14 +347,16 @@ class HungerGames(commands.Cog):
         self.games[ctx.channel.id] = game
         try:
             await game.main()
-        except Exception:
+        except Exception as e:
             await ctx.send(
                 _("An error happened during the hungergame. Please try again!")
             )
-        try:
-            del self.games[ctx.channel.id]
-        except KeyError:  # got stuck in between
-            pass
+            raise e
+        finally:
+            try:
+                del self.games[ctx.channel.id]
+            except KeyError:  # got stuck in between
+                pass
 
 
 def setup(bot):

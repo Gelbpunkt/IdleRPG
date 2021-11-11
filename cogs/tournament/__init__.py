@@ -32,7 +32,7 @@ from classes.converters import IntFromTo
 from cogs.help import chunks
 from cogs.shard_communication import user_on_cooldown as user_cooldown
 from utils import random
-from utils.checks import has_char, user_has_char
+from utils.checks import has_char
 from utils.i18n import _, locale_doc
 from utils.joins import JoinView
 
@@ -76,7 +76,11 @@ class Tournament(commands.Cog):
             and ctx.channel.id == self.bot.config.game.official_tournament_channel_id
         ):
             view = JoinView(
-                Button(style=ButtonStyle.primary, label="Join the tournament!"),
+                Button(
+                    style=ButtonStyle.primary,
+                    label="Join the tournament!",
+                    emoji="\U00002694",
+                ),
                 message=_("You joined the tournament."),
                 timeout=60 * 10,
             )
@@ -96,56 +100,46 @@ class Tournament(commands.Cog):
                         participants.append(u)
 
         else:
+            view = JoinView(
+                Button(
+                    style=ButtonStyle.primary,
+                    label="Join the tournament!",
+                    emoji="\U00002694",
+                ),
+                message=_("You joined the tournament."),
+                timeout=60 * 2,
+            )
+            view.joined.add(ctx.author)
             msg = await ctx.send(
                 _(
                     "{author} started a tournament! Free entries, prize is"
-                    " **${prize}**! React with ⚔ to join!"
-                ).format(author=ctx.author.mention, prize=prize)
+                    " **${prize}**!"
+                ).format(author=ctx.author.mention, prize=prize),
+                view=view,
+            )
+            await asyncio.sleep(60 * 10)
+            view.stop()
+            participants = []
+            async with self.bot.pool.acquire() as conn:
+                for u in view.joined:
+                    if await conn.fetchrow(
+                        'SELECT * FROM profile WHERE "user"=$1;', u.id
+                    ):
+                        participants.append(u)
+
+        if len(participants) < 2:
+            await self.bot.reset_cooldown(ctx)
+            await self.bot.pool.execute(
+                'UPDATE profile SET "money"="money"+$1 WHERE "user"=$2;',
+                prize,
+                ctx.author.id,
+            )
+            return await ctx.send(
+                _("Noone joined your tournament {author}.").format(
+                    author=ctx.author.mention
+                )
             )
 
-            participants = [ctx.author]
-
-            await msg.add_reaction("\U00002694")
-
-            def simplecheck(r, u):
-                return (
-                    r.message.id == msg.id
-                    and u not in participants
-                    and str(r.emoji) == "\U00002694"
-                    and not u.bot
-                )
-
-            while True:
-                try:
-                    r, u = await self.bot.wait_for(
-                        "reaction_add", timeout=30, check=simplecheck
-                    )
-                except asyncio.TimeoutError:
-                    if len(participants) < 2:
-                        await self.bot.reset_cooldown(ctx)
-                        await self.bot.pool.execute(
-                            'UPDATE profile SET "money"="money"+$1 WHERE "user"=$2;',
-                            prize,
-                            ctx.author.id,
-                        )
-                        return await ctx.send(
-                            _("Noone joined your tournament {author}.").format(
-                                author=ctx.author.mention
-                            )
-                        )
-                    break
-                if await user_has_char(self.bot, u.id):
-                    if u in participants:
-                        # May be that we're too slow and user reacting too fast
-                        continue
-                    participants.append(u)
-                    await ctx.send(
-                        _("{user} joined the tournament.").format(user=u.mention)
-                    )
-                else:
-                    await ctx.send(
-                        _("You don't have a character, {user}.").format(user=u.mention)
-                    )
         toremove = 2 ** math.floor(math.log2(len(participants)))
         if toremove != len(participants):
             await ctx.send(
@@ -252,8 +246,12 @@ class Tournament(commands.Cog):
             and ctx.channel.id == self.bot.config.game.official_tournament_channel_id
         ):
             view = JoinView(
-                Button(style=ButtonStyle.primary, label="Join the tournament!"),
-                message=_("You joined the tournament."),
+                Button(
+                    style=ButtonStyle.primary,
+                    label="Join the raid tournament!",
+                    emoji="\U00002694",
+                ),
+                message=_("You joined the raid tournament."),
                 timeout=60 * 10,
             )
             await ctx.send(
@@ -272,54 +270,46 @@ class Tournament(commands.Cog):
                         participants.append(u)
 
         else:
+            view = JoinView(
+                Button(
+                    style=ButtonStyle.primary,
+                    label="Join the raid tournament!",
+                    emoji="\U00002694",
+                ),
+                message=_("You joined the raid tournament."),
+                timeout=60 * 2,
+            )
+            view.joined.add(ctx.author)
             msg = await ctx.send(
                 _(
                     "{author} started a raid tournament! Free entries, prize is"
-                    " **${prize}**! React with ⚔ to join!"
-                ).format(author=ctx.author.mention, prize=prize)
+                    " **${prize}**!"
+                ).format(author=ctx.author.mention, prize=prize),
+                view=view,
             )
-            participants = [ctx.author]
+            await asyncio.sleep(60 * 10)
+            view.stop()
+            participants = []
+            async with self.bot.pool.acquire() as conn:
+                for u in view.joined:
+                    if await conn.fetchrow(
+                        'SELECT * FROM profile WHERE "user"=$1;', u.id
+                    ):
+                        participants.append(u)
 
-            await msg.add_reaction("\U00002694")
-
-            def simplecheck(r, u):
-                return (
-                    r.message.id == msg.id
-                    and u not in participants
-                    and str(r.emoji) == "\U00002694"
-                    and not u.bot
+        if len(participants) < 2:
+            await self.bot.reset_cooldown(ctx)
+            await self.bot.pool.execute(
+                'UPDATE profile SET "money"="money"+$1 WHERE "user"=$2;',
+                prize,
+                ctx.author.id,
+            )
+            return await ctx.send(
+                _("Noone joined your raid tournament {author}.").format(
+                    author=ctx.author.mention
                 )
+            )
 
-            while True:
-                try:
-                    r, u = await self.bot.wait_for(
-                        "reaction_add", timeout=30, check=simplecheck
-                    )
-                except asyncio.TimeoutError:
-                    if len(participants) < 2:
-                        await self.bot.reset_cooldown(ctx)
-                        await self.bot.pool.execute(
-                            'UPDATE profile SET "money"="money"+$1 WHERE "user"=$2;',
-                            prize,
-                            ctx.author.id,
-                        )
-                        return await ctx.send(
-                            _("Noone joined your raid tournament {author}.").format(
-                                author=ctx.author.mention
-                            )
-                        )
-                    break
-                if await user_has_char(self.bot, u.id):
-                    if u in participants:
-                        continue
-                    participants.append(u)
-                    await ctx.send(
-                        _("{user} joined the raidtournament.").format(user=u.mention)
-                    )
-                else:
-                    await ctx.send(
-                        _("You don't have a character, {user}.").format(user=u.mention)
-                    )
         toremove = 2 ** math.floor(math.log2(len(participants)))
         if toremove != len(participants):
             await ctx.send(

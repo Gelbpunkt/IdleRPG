@@ -23,7 +23,9 @@ from decimal import Decimal
 
 import discord
 
+from discord.enums import ButtonStyle
 from discord.ext import commands
+from discord.ui.button import Button
 
 from classes.classes import Ranger
 from classes.classes import from_string as class_from_string
@@ -32,6 +34,7 @@ from cogs.shard_communication import user_on_cooldown as user_cooldown
 from utils import random
 from utils.checks import has_char, has_money
 from utils.i18n import _, locale_doc
+from utils.joins import SingleJoinView
 
 
 class Battles(commands.Cog):
@@ -71,66 +74,58 @@ class Battles(commands.Cog):
         )
 
         if not enemy:
-            msg = await ctx.send(
-                _(
-                    "{author} seeks a battle! React with ⚔ now to duel them! The price"
-                    " is **${money}**."
-                ).format(author=ctx.author.mention, money=money)
+            text = _("{author} seeks a battle! The price is **${money}**.").format(
+                author=ctx.author.mention, money=money
             )
         else:
-            msg = await ctx.send(
-                _(
-                    "{author} seeks a battle with {enemy}! React with ⚔ now to duel"
-                    " them! The price is **${money}**."
-                ).format(author=ctx.author.mention, enemy=enemy.mention, money=money)
+            _(
+                "{author} seeks a battle with {enemy}! The price is **${money}**."
+            ).format(author=ctx.author.mention, enemy=enemy.mention, money=money)
+
+        async def check(user: discord.User) -> bool:
+            return await has_money(self.bot, user.id, money)
+
+        future = asyncio.Future()
+        view = SingleJoinView(
+            future,
+            Button(
+                style=ButtonStyle.primary,
+                label=_("Join the battle!"),
+                emoji="\U00002694",
+            ),
+            allowed=enemy,
+            prohibited=ctx.author,
+            timeout=60,
+            check=check,
+            check_fail_message=_("You don't have enough money to join the battle."),
+        )
+
+        await ctx.send(text, view=view)
+
+        try:
+            enemy_ = await future
+        except asyncio.TimeoutError:
+            await self.bot.reset_cooldown(ctx)
+            await self.bot.pool.execute(
+                'UPDATE profile SET "money"="money"+$1 WHERE "user"=$2;',
+                money,
+                ctx.author.id,
+            )
+            return await ctx.send(
+                _("Noone wanted to join your battle, {author}!").format(
+                    author=ctx.author.mention
+                )
             )
 
-        def check(r, u):
-            if enemy:
-                if u != enemy:
-                    return False
-            return (
-                str(r.emoji) == "\U00002694"
-                and r.message.id == msg.id
-                and u != ctx.author
-                and not u.bot
-            )
-
-        await msg.add_reaction("\U00002694")
-        seeking = True
-
-        while seeking:
-            try:
-                _reaction, enemy_ = await self.bot.wait_for(
-                    "reaction_add", timeout=60, check=check
-                )
-            except asyncio.TimeoutError:
-                await self.bot.reset_cooldown(ctx)
-                await self.bot.pool.execute(
-                    'UPDATE profile SET "money"="money"+$1 WHERE "user"=$2;',
-                    money,
-                    ctx.author.id,
-                )
-                return await ctx.send(
-                    _("Noone wanted to join your battle, {author}!").format(
-                        author=ctx.author.mention
-                    )
-                )
-            if await has_money(self.bot, enemy_.id, money):
-                seeking = False
-            else:
-                enemy_ = None
-                await ctx.send(_("You don't have enough money to join the battle."))
+        await self.bot.pool.execute(
+            'UPDATE profile SET "money"="money"-$1 WHERE "user"=$2;', money, enemy_.id
+        )
 
         await ctx.send(
             _(
                 "Battle **{author}** vs **{enemy}** started! 30 seconds of fighting"
                 " will now start!"
             ).format(author=ctx.disp, enemy=enemy_.display_name)
-        )
-
-        await self.bot.pool.execute(
-            'UPDATE profile SET "money"="money"-$1 WHERE "user"=$2;', money, enemy_.id
         )
 
         stats = [
@@ -202,56 +197,48 @@ class Battles(commands.Cog):
         )
 
         if not enemy:
-            msg = await ctx.send(
-                _(
-                    "{author} seeks a raidbattle! React with ⚔ now to duel them! The"
-                    " price is **${money}**."
-                ).format(author=ctx.author.mention, money=money)
+            text = _("{author} seeks a raidbattle! The price is **${money}**.").format(
+                author=ctx.author.mention, money=money
             )
         else:
-            msg = await ctx.send(
-                _(
-                    "{author} seeks a raidbattle with {enemy}! React with ⚔ now to duel"
-                    " them! The price is **${money}**."
-                ).format(author=ctx.author.mention, enemy=enemy.mention, money=money)
+            _(
+                "{author} seeks a raidbattle with {enemy}! The price is **${money}**."
+            ).format(author=ctx.author.mention, enemy=enemy.mention, money=money)
+
+        async def check(user: discord.User) -> bool:
+            return await has_money(self.bot, user.id, money)
+
+        future = asyncio.Future()
+        view = SingleJoinView(
+            future,
+            Button(
+                style=ButtonStyle.primary,
+                label=_("Join the raidbattle!"),
+                emoji="\U00002694",
+            ),
+            allowed=enemy,
+            prohibited=ctx.author,
+            timeout=60,
+            check=check,
+            check_fail_message=_("You don't have enough money to join the raidbattle."),
+        )
+
+        await ctx.send(text, view=view)
+
+        try:
+            enemy_ = await future
+        except asyncio.TimeoutError:
+            await self.bot.reset_cooldown(ctx)
+            await self.bot.pool.execute(
+                'UPDATE profile SET "money"="money"+$1 WHERE "user"=$2;',
+                money,
+                ctx.author.id,
             )
-
-        def check(r, u):
-            if enemy:
-                if u != enemy:
-                    return False
-            return (
-                str(r.emoji) == "\U00002694"
-                and r.message.id == msg.id
-                and u != ctx.author
-                and not u.bot
+            return await ctx.send(
+                _("Noone wanted to join your raidbattle, {author}!").format(
+                    author=ctx.author.mention
+                )
             )
-
-        await msg.add_reaction("\U00002694")
-        seeking = True
-
-        while seeking:
-            try:
-                _reaction, enemy_ = await self.bot.wait_for(
-                    "reaction_add", timeout=60, check=check
-                )
-            except asyncio.TimeoutError:
-                await self.bot.reset_cooldown(ctx)
-                await self.bot.pool.execute(
-                    'UPDATE profile SET "money"="money"+$1 WHERE "user"=$2;',
-                    money,
-                    ctx.author.id,
-                )
-                return await ctx.send(
-                    _("Noone wanted to join your raidbattle, {author}!").format(
-                        author=ctx.author.mention
-                    )
-                )
-            if await has_money(self.bot, enemy_.id, money):
-                seeking = False
-            else:
-                enemy_ = None
-                await ctx.send(_("You don't have enough money to join the raidbattle."))
 
         await self.bot.pool.execute(
             'UPDATE profile SET "money"="money"-$1 WHERE "user"=$2;', money, enemy_.id
@@ -399,59 +386,50 @@ class Battles(commands.Cog):
         )
 
         if not enemy:
-            msg = await ctx.send(
-                _(
-                    "{author} seeks an active battle! React with ⚔ now to duel them!"
-                    " The price is **${money}**."
-                ).format(author=ctx.author.mention, money=money)
-            )
-
+            text = _(
+                "{author} seeks an active battle! The price is **${money}**."
+            ).format(author=ctx.author.mention, money=money)
         else:
-            msg = await ctx.send(
-                _(
-                    "{author} seeks an active battle with {enemy}! React with ⚔ now to"
-                    " duel them! The price is **${money}**."
-                ).format(author=ctx.author.mention, enemy=enemy.mention, money=money)
+            _(
+                "{author} seeks an active battle with {enemy}! The price is **${money}**."
+            ).format(author=ctx.author.mention, enemy=enemy.mention, money=money)
+
+        async def check(user: discord.User) -> bool:
+            return await has_money(self.bot, user.id, money)
+
+        future = asyncio.Future()
+        view = SingleJoinView(
+            future,
+            Button(
+                style=ButtonStyle.primary,
+                label=_("Join the activebattle!"),
+                emoji="\U00002694",
+            ),
+            allowed=enemy,
+            prohibited=ctx.author,
+            timeout=60,
+            check=check,
+            check_fail_message=_(
+                "You don't have enough money to join the activebattle."
+            ),
+        )
+
+        await ctx.send(text, view=view)
+
+        try:
+            enemy_ = await future
+        except asyncio.TimeoutError:
+            await self.bot.reset_cooldown(ctx)
+            await self.bot.pool.execute(
+                'UPDATE profile SET "money"="money"+$1 WHERE "user"=$2;',
+                money,
+                ctx.author.id,
             )
-
-        def check(r, u):
-            if enemy:
-                if u != enemy:
-                    return False
-            return (
-                str(r.emoji) == "\U00002694"
-                and r.message.id == msg.id
-                and u != ctx.author
-                and not u.bot
+            return await ctx.send(
+                _("Noone wanted to join your activebattle, {author}!").format(
+                    author=ctx.author.mention
+                )
             )
-
-        await msg.add_reaction("\U00002694")
-        seeking = True
-
-        while seeking:
-            try:
-                _reaction, enemy_ = await self.bot.wait_for(
-                    "reaction_add", timeout=60, check=check
-                )
-            except asyncio.TimeoutError:
-                await self.bot.reset_cooldown(ctx)
-                await self.bot.pool.execute(
-                    'UPDATE profile SET "money"="money"+$1 WHERE "user"=$2;',
-                    money,
-                    ctx.author.id,
-                )
-                return await ctx.send(
-                    _("Noone wanted to join your activebattle, {author}!").format(
-                        author=ctx.author.mention
-                    )
-                )
-            if await has_money(self.bot, enemy_.id, money):
-                seeking = False
-            else:
-                enemy_ = None
-                await ctx.send(
-                    _("You don't have enough money to join the activebattle.")
-                )
 
         players = {
             ctx.author: {
