@@ -390,7 +390,7 @@ class Battles(commands.Cog):
                 "{author} seeks an active battle! The price is **${money}**."
             ).format(author=ctx.author.mention, money=money)
         else:
-            _(
+            text = _(
                 "{author} seeks an active battle with {enemy}! The price is **${money}**."
             ).format(author=ctx.author.mention, enemy=enemy.mention, money=money)
 
