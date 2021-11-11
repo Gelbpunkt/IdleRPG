@@ -643,7 +643,7 @@ class GameMaster(commands.Cog):
                 conn=conn,
             )
             self.top_auction = (ctx.author, amount)
-            self.auction_cm.shift_by(60 * 30)
+            self.auction_cm.shift(60 * 30)
             await conn.execute(
                 'UPDATE profile SET "money"="money"-$1 WHERE "user"=$2;',
                 amount,

@@ -24,6 +24,7 @@ from decimal import Decimal
 import discord
 
 from discord.enums import ButtonStyle
+from discord.errors import NotFound
 from discord.ext import commands
 from discord.ui.button import Button
 
@@ -125,12 +126,12 @@ class Raid(commands.Cog):
 
         self.boss = {"hp": hp, "initial_hp": hp, "min_dmg": 100, "max_dmg": 500}
         joined = []
-        joined.extend(
-            [
-                await ctx.guild.fetch_member(m)
-                for m in self.bot.cogs["Patreon"].ruby_or_above
-            ]
-        )
+
+        for member_id in self.bot.cogs["Patreon"].ruby_or_above:
+            try:
+                joined.append(await ctx.guild.fetch_member(member_id))
+            except NotFound:
+                pass
 
         await ctx.channel.set_permissions(
             ctx.guild.default_role,

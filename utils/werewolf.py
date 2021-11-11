@@ -892,7 +892,7 @@ class Game:
                                 ):
                                     # Seems sneaky, extend talk time when there's only 10 seconds left
                                     time_to_add = int(self.timer / 2)
-                                    cm.shift_by(time_to_add)
+                                    cm.shift(time_to_add)
                                     await self.ctx.send(
                                         _(
                                             "Seems sneaky, I added {time_to_add}"
