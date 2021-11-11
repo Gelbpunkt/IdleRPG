@@ -72,12 +72,15 @@ class Werewolf(commands.Cog):
             `{prefix}ww Huntergame Fast` for Huntergame mode on Fast speed
             """
         )
+
         # TODO:
         # Bizarro: Roles are flipped.
         # Random: Roles are reassigned randomly every night.
         # Zombie (Classic-based, another team) - There's a chance that a random player will be randomly resurrected as Zombie and they can devour any villagers or werewolves with the other zombies.
+
         if self.games.get(ctx.channel.id):
             return await ctx.send(_("There is already a game in here!"))
+
         game_modes = [
             "Classic",
             "Imbalanced",
@@ -86,6 +89,18 @@ class Werewolf(commands.Cog):
             "Valentines",
             "Idlerpg",
         ]
+
+        minimum_players = {
+            "Classic": 5,
+            "Imbalanced": 5,
+            "Huntergame": 8,
+            "Villagergame": 5,
+            "Valentines": 8,
+            "IdleRPG": 5,
+        }
+
+        game_speeds = ["Normal", "Extended", "Fast", "Blitz"]
+
         if mode not in game_modes:
             return await ctx.send(
                 _(
@@ -95,7 +110,7 @@ class Werewolf(commands.Cog):
             )
         elif mode == "Idlerpg":
             mode = "IdleRPG"
-        game_speeds = ["Normal", "Extended", "Fast", "Blitz"]
+
         if speed not in game_speeds:
             return await ctx.send(
                 _(
@@ -103,28 +118,23 @@ class Werewolf(commands.Cog):
                     " command."
                 ).format(prefix=ctx.prefix)
             )
-        minimum_players = {
-            "Classic": 5,
-            "Imbalanced": 5,
-            "Huntergame": 8,
-            "Villagergame": 5,
-            "Valentines": 8,
-            "IdleRPG": 5,
-        }
+
         if not min_players:
-            default_min_players = (
-                5  # Get default of Classic mode if unexpected value happened
-            )
-            min_players = minimum_players.get(mode, default_min_players)
+            # Get default of Classic mode if unexpected value happened
+            min_players = minimum_players.get(mode, 5)
+
         self.games[ctx.channel.id] = "forming"
+
         additional_text = _(
             "Use `{prefix}help ww` to get help on werewolf commands. Use `{prefix}ww"
             " roles` to view descriptions of game roles and their goals to win. Use"
             " `{prefix}ww modes` and `{prefix}ww speeds` to see info about available"
             " game modes and speeds."
         ).format(prefix=ctx.prefix)
+
         mode_emojis = {"Huntergame": "🔫", "Valentines": "💕"}
         mode_emoji = mode_emojis.get(mode, "")
+
         if (
             self.bot.config.game.official_tournament_channel_id
             and ctx.channel.id == self.bot.config.game.official_tournament_channel_id
@@ -140,10 +150,47 @@ class Werewolf(commands.Cog):
                 " **{speed}** speed. You can join in the next 10 minutes."
                 " **Minimum of {min_players} players are required.**"
             )
+
+            await ctx.send(
+                embed=discord.Embed(
+                    title=_("Werewolf Mass-game!"),
+                    description=text.format(
+                        author=ctx.author.mention,
+                        mode=mode_emoji + mode,
+                        speed=speed,
+                        min_players=min_players,
+                    ),
+                    colour=self.bot.config.game.primary_colour,
+                )
+                .set_author(
+                    name=str(ctx.author), icon_url=ctx.author.display_avatar.url
+                )
+                .add_field(name=_("New to Werewolf?"), value=additional_text),
+                view=view,
+            )
+
+            await asyncio.sleep(60 * 10)
+
+            view.stop()
+            players = list(view.joined)
+        else:
+            view = JoinView(
+                Button(style=ButtonStyle.primary, label=_("Join the Werewolf game!")),
+                message=_("You joined the Werewolf game."),
+                timeout=120,
+            )
+            view.joined.add(ctx.author)
+            title = _("Werewolf game!")
+            text = _(
+                "**{author} started a game of Werewolf!**\n**{mode}** mode on"
+                " **{speed}** speed. Minimum of"
+                " **{min_players}** players are required. Starting in 2 minutes."
+            )
+
             try:
                 await ctx.send(
                     embed=discord.Embed(
-                        title=_("Werewolf Mass-game!"),
+                        title=title,
                         description=text.format(
                             author=ctx.author.mention,
                             mode=mode_emoji + mode,
@@ -167,96 +214,11 @@ class Werewolf(commands.Cog):
                         " Permissions** and **Server Settings > Roles** then try again!"
                     )
                 )
-            await asyncio.sleep(60 * 10)
+
+            await asyncio.sleep(60 * 2)
+
             view.stop()
             players = list(view.joined)
-        else:
-            title = _("Werewolf game!")
-            text = _(
-                "**{author} started a game of Werewolf!**\n**{mode}** mode on"
-                " **{speed}** speed. React with 🐺 to join the game! **Minimum of"
-                " {min_players} players are required. Starting in 30 seconds.\n{num}"
-                " joined**"
-            )
-            players = [ctx.author]
-            try:
-                msg = await ctx.send(
-                    embed=discord.Embed(
-                        title=title,
-                        description=text.format(
-                            author=ctx.author.mention,
-                            mode=mode_emoji + mode,
-                            speed=speed,
-                            min_players=min_players,
-                            num=len(players),
-                        ),
-                        colour=self.bot.config.game.primary_colour,
-                    )
-                    .set_author(
-                        name=str(ctx.author), icon_url=ctx.author.display_avatar.url
-                    )
-                    .add_field(name=_("New to Werewolf?"), value=additional_text)
-                )
-                await msg.add_reaction("\U0001f43a")
-            except discord.errors.Forbidden:
-                del self.games[ctx.channel.id]
-                return await ctx.send(
-                    _(
-                        "An error happened during the Werewolf. Missing Permission:"
-                        " `Embed Links` . Please check the **Edit Channel >"
-                        " Permissions** and **Server Settings > Roles** then try again!"
-                    )
-                )
-
-            def check(reaction, user):
-                return (
-                    user not in players
-                    and reaction.message.id == msg.id
-                    and reaction.emoji == "\U0001f43a"
-                    and not user.bot
-                )
-
-            while True:
-                try:
-                    reaction, user = await self.bot.wait_for(
-                        "reaction_add", check=check, timeout=30
-                    )
-                except asyncio.TimeoutError:
-                    break
-                players.append(user)
-                await msg.edit(
-                    embed=discord.Embed(
-                        title=title,
-                        description=text.format(
-                            author=ctx.author.mention,
-                            mode=mode_emoji + mode,
-                            speed=speed,
-                            min_players=min_players,
-                            num=len(players),
-                        ),
-                        colour=self.bot.config.game.primary_colour,
-                    )
-                    .set_author(
-                        name=str(ctx.author), icon_url=ctx.author.display_avatar.url
-                    )
-                    .add_field(name=_("New to Werewolf?"), value=additional_text)
-                )
-
-            # Check for not included participants
-            try:
-                msg = await ctx.channel.fetch_message(msg.id)
-                for reaction in msg.reactions:
-                    if reaction.emoji == "\U0001f43a":
-                        async for user in reaction.users():
-                            if user != ctx.me and user not in players:
-                                players.append(user)
-                        break
-            except discord.errors.NotFound:
-                del self.games[ctx.channel.id]
-                await ctx.send(
-                    _("An error happened during the Werewolf. Please try again!")
-                )
-                return
 
         if len(players) < min_players:
             del self.games[ctx.channel.id]
@@ -279,6 +241,7 @@ class Werewolf(commands.Cog):
             )
             del self.games[ctx.channel.id]
             raise e
+
         try:
             del self.games[ctx.channel.id]
         except KeyError:  # got stuck in between
