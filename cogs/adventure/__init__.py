@@ -24,7 +24,6 @@ from typing import Literal, Optional
 
 import discord
 
-from aioscheduler.task import Task
 from discord.enums import ButtonStyle
 from discord.ext import commands
 from discord.interactions import Interaction
@@ -525,14 +524,8 @@ class Adventure(commands.Cog):
                     subject,
                     ctx,
                     finish_time,
-                    partial(
-                        self.bot.cogs["Scheduling"]._remind_adventure,
-                        ctx.author.id,
-                        ctx.channel.id,
-                        subject,
-                    ),
-                    conn=conn,
                     type="adventure",
+                    conn=conn,
                 )
 
         await ctx.send(
@@ -775,14 +768,22 @@ class Adventure(commands.Cog):
             )
         await self.bot.delete_adventure(ctx.author)
 
-        reminder = await self.bot.pool.fetchrow(
-            'DELETE FROM reminders WHERE "user"=$1 AND "type"=$2 RETURNING "id", "internal_id";',
+        id = await self.bot.pool.fetchval(
+            'DELETE FROM reminders WHERE "user"=$1 AND "type"=$2 RETURNING "id";',
             ctx.author.id,
             "adventure",
         )
-        if reminder:
-            fake_task = Task(0, reminder["internal_id"], 0)
-            self.bot.schedule_manager.cancel(fake_task)
+
+        if id is not None:
+            if (
+                self.bot.cogs["Scheduling"]._current_timer
+                and self.bot.cogs["Scheduling"]._current_timer.id == id
+            ):
+                # cancel the task and re-run it
+                self.bot.cogs["Scheduling"]._task.cancel()
+                self.bot.cogs["Scheduling"]._task = asyncio.create_task(
+                    self.bot.cogs["Scheduling"].dispatch_timers()
+                )
 
         await ctx.send(
             _(

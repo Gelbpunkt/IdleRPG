@@ -31,7 +31,6 @@ import asyncpg
 import discord
 import fantasy_names as fn
 
-from aioscheduler import TimedScheduler
 from discord import AllowedMentions
 from discord.ext import commands
 from discord.ext.commands.cooldowns import BucketType
@@ -72,8 +71,6 @@ class Bot(commands.AutoShardedBot):
         self.process_count = processes
 
         # setup stuff
-        self.queue = asyncio.Queue()  # global queue for ordered tasks
-        self.schedule_manager = TimedScheduler()
         self.version = self.config.bot.version
         self.paginator = paginator
         self.BASE_URL = self.config.external.base_url

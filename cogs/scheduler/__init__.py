@@ -15,73 +15,183 @@ GNU Affero General Public License for more details.
 You should have received a copy of the GNU Affero General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
-from datetime import datetime, timedelta
-from functools import partial
+from __future__ import annotations
 
+import asyncio
+
+from datetime import datetime, timedelta
+from typing import Optional
+
+import asyncpg
 import discord
 
-from aioscheduler.task import Task
 from discord.ext import commands
 
+from classes.context import Context
 from classes.converters import DateTimeScheduler, IntGreaterThan
 from cogs.help import chunks
 from utils.checks import has_char
 from utils.i18n import _, current_locale, locale_doc
-from utils.misc import nice_join
+
+
+class Timer:
+    __slots__ = ("id", "user", "content", "channel", "type", "start", "end")
+
+    def __init__(self, *, record):
+        self.id: int = record["id"]
+        self.user: int = record["user"]
+        self.content: str = record["content"]
+        self.channel: int = record["channel"]
+        self.type: str = record["type"]
+        self.start: datetime = record["start"]
+        self.end: datetime = record["end"]
+
+    @classmethod
+    def temporary(cls, *, user, content, channel, type, start, end):
+        pseudo = {
+            "id": None,
+            "user": user,
+            "content": content,
+            "channel": channel,
+            "type": type,
+            "start": start,
+            "end": end,
+        }
+        return cls(record=pseudo)
+
+    def __eq__(self, other: Timer) -> bool:
+        try:
+            return self.id == other.id
+        except AttributeError:
+            return False
+
+    def __hash__(self) -> int:
+        return hash(self.id)
+
+    @property
+    def human_delta(self) -> str:
+        return f"{self.end - self.start}".split(".")[0]
 
 
 class Scheduling(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
+        self._have_data = asyncio.Event()
+        self._current_timer = None
+        self._task = asyncio.create_task(self.dispatch_timers())
 
-    async def _remind(self, user_id, channel_id, subject, diff, task_id):
-        locale = await self.bot.get_cog("Locale").locale(user_id)
-        current_locale.set(locale)
-        await self.bot.pool.execute('DELETE FROM reminders WHERE "id"=$1;', task_id)
-        await self.bot.http.send_message(
-            channel_id,
-            _("{user}, you wanted to be reminded about {subject} {diff} ago.").format(
-                user=f"<@{user_id}>", subject=subject, diff=diff
-            ),
-        )
+    async def get_active_timer(self, *, connection=None, days=7) -> Optional[Timer]:
+        query = 'SELECT * FROM reminders WHERE "end" < (CURRENT_DATE + $1::interval) ORDER BY "end" LIMIT 1;'
+        con = connection or self.bot.pool
 
-    async def _remind_adventure(self, user_id, channel_id, adventure, task_id):
-        locale = await self.bot.get_cog("Locale").locale(user_id)
+        record = await con.fetchrow(query, timedelta(days=days))
+        return Timer(record=record) if record else None
+
+    async def wait_for_active_timers(self, *, connection=None, days=7) -> Timer:
+        async with self.bot.pool.acquire() as conn:
+            timer = await self.get_active_timer(connection=conn, days=days)
+            if timer is not None:
+                self._have_data.set()
+                return timer
+
+            self._have_data.clear()
+            self._current_timer = None
+            await self._have_data.wait()
+            return await self.get_active_timer(connection=conn, days=days)
+
+    async def dispatch_timers(self):
+        try:
+            while not self.bot.is_closed():
+                timer = self._current_timer = await self.wait_for_active_timers(days=40)
+                now = datetime.utcnow()
+
+                if timer.end >= now:
+                    to_sleep = (timer.end - now).total_seconds()
+                    await asyncio.sleep(to_sleep)
+
+                await self._remind(timer)
+        except asyncio.CancelledError:
+            raise
+        except (OSError, discord.ConnectionClosed, asyncpg.PostgresConnectionError):
+            self._task.cancel()
+            self._task = self.bot.loop.create_task(self.dispatch_timers())
+
+    async def short_timer_optimisation(self, seconds: int, timer: Timer) -> None:
+        await asyncio.sleep(seconds)
+        await self._remind(timer)
+
+    async def _remind(self, timer: Timer):
+        locale = await self.bot.get_cog("Locale").locale(timer.user)
         current_locale.set(locale)
-        await self.bot.pool.execute('DELETE FROM reminders WHERE "id"=$1;', task_id)
-        await self.bot.http.send_message(
-            channel_id,
-            _("{user}, your adventure {num} has finished.").format(
-                user=f"<@{user_id}>", num=adventure
-            ),
-        )
+        await self.bot.pool.execute('DELETE FROM reminders WHERE "id"=$1;', timer.id)
+
+        if timer.type == "reminder":
+            await self.bot.http.send_message(
+                timer.channel,
+                _(
+                    "{user}, you wanted to be reminded about {subject} {diff} ago."
+                ).format(
+                    user=f"<@{timer.user}>",
+                    subject=timer.content,
+                    diff=timer.human_delta,
+                ),
+            )
+        else:
+            await self.bot.http.send_message(
+                timer.channel,
+                _("{user}, your adventure {num} has finished.").format(
+                    user=f"<@{timer.user}>", num=timer.content
+                ),
+            )
 
     async def create_reminder(
-        self, subject, ctx, end, callback, type="reminder", conn=None
+        self,
+        content: str,
+        ctx: Context,
+        end: datetime,
+        type: str = "reminder",
+        conn=None,
     ):
-        if conn is None:
-            conn = await self.bot.pool.acquire()
-            local = True
-        else:
-            local = False
+        conn = conn or self.bot.pool
 
-        task_id = await conn.fetchval(
-            'INSERT INTO reminders ("user", content, channel, "start", "end", "type") VALUES'
-            " ($1, $2, $3, $4, $5, $6) RETURNING id;",
+        now = datetime.utcnow()
+
+        timer = Timer.temporary(
+            user=ctx.author.id,
+            content=content,
+            channel=ctx.channel.id,
+            type=type,
+            start=now,
+            end=end,
+        )
+        delta = (end - now).total_seconds()
+
+        if delta <= 60:
+            # a shortcut for small timers
+            asyncio.create_task(self.short_timer_optimisation(delta, timer))
+            return timer
+
+        id = await conn.fetchval(
+            'INSERT INTO reminders ("user", "content", "channel", "start", "end", "type") VALUES'
+            ' ($1, $2, $3, $4, $5, $6) RETURNING "id";',
             ctx.author.id,
-            subject,
+            content,
             ctx.channel.id,
-            datetime.utcnow(),
+            now,
             end,
             type,
         )
-        task = self.bot.schedule_manager.schedule(callback(task_id=task_id), end)
-        await conn.execute(
-            'UPDATE reminders SET "internal_id"=$1 WHERE "id"=$2;', task.uuid, task_id
-        )
+        timer.id = id
 
-        if local:
-            await self.bot.pool.release(conn)
+        if delta <= (86400 * 40):  # 40 days
+            self._have_data.set()
+
+        if self._current_timer and end < self._current_timer.end:
+            # cancel the task and re-run it
+            self._task.cancel()
+            self._task = asyncio.create_task(self.dispatch_timers())
+
+        return timer
 
     @commands.group(
         aliases=["r", "reminder", "remindme"],
@@ -110,7 +220,7 @@ class Scheduling(commands.Cog):
             subject,
             ctx,
             time,
-            partial(self._remind, ctx.author.id, ctx.channel.id, subject, diff),
+            "reminder",
         )
         await ctx.send(
             _("{user}, reminder set for {subject} in {time}.").format(
@@ -156,32 +266,30 @@ class Scheduling(commands.Cog):
         aliases=["remove", "rm", "delete", "del"], brief=_("Remove running reminders")
     )
     @locale_doc
-    async def cancel(self, ctx, *ids: IntGreaterThan(0)):
+    async def cancel(self, ctx, id: IntGreaterThan(0)):
         _(
-            """`[ids...]` - A list of reminder IDs, separated by space
+            """`[id]` - A reminder ID
 
-            Cancels running reminders using their IDs.
+            Cancels a running reminder using its ID.
 
             To find a reminder's ID, use `{prefix}reminder list`."""
         )
-        reminders = await self.bot.pool.fetch(
-            'SELECT id, internal_id FROM reminders WHERE "id"=ANY($1) AND "user"=$2 AND "type"=$3;',
-            ids,
+        status = await self.bot.pool.execute(
+            'DELETE FROM reminders WHERE "id"=$1 AND "user"=$2 AND "type"=$3;',
+            id,
             ctx.author.id,
             "reminder",
         )
-        if not reminders:
+
+        if status == "DELETE 0":
             return await ctx.send(_("None of these reminder IDs belong to you."))
-        for reminder in reminders:
-            fake_task = Task(0, reminder["internal_id"], 0)
-            self.bot.schedule_manager.cancel(fake_task)
-        await self.bot.pool.execute(
-            'DELETE FROM reminders WHERE "id"=ANY($1);',
-            ids := [reminder["id"] for reminder in reminders],
-        )
-        await ctx.send(
-            _("Removed the following reminders: `{ids}`").format(ids=nice_join(ids))
-        )
+
+        if self._current_timer and self._current_timer.id == id:
+            # cancel the task and re-run it
+            self._task.cancel()
+            self._task = self.bot.loop.create_task(self.dispatch_timers())
+
+        await ctx.send(_("Successfully cancelled the reminder."))
 
     @commands.command(brief=_("Shows a list of your running reminders."))
     @locale_doc

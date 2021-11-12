@@ -16,13 +16,10 @@ You should have received a copy of the GNU Affero General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
 import asyncio
-import datetime
 
 import discord
 
 from discord.ext import commands
-
-from utils.loops import queue_manager
 
 
 class GlobalEvents(commands.Cog):
@@ -51,11 +48,8 @@ class GlobalEvents(commands.Cog):
             self.bot.logger.info(f"│ {' ' * max_string} │")
             self.bot.logger.info(f"│ {text4.center(max_string, ' ')} │")
             self.bot.logger.info(f"└─{'─' * max_string}─┘")
-            self.bot.loop.create_task(queue_manager(self.bot, self.bot.queue))
             self.stats_updates = self.bot.loop.create_task(self.stats_updater())
             await self.bot.is_owner(self.bot.user)  # force getting the owners
-            await self.reschedule_reminders()
-            self.bot.schedule_manager.start()
         else:
             self.bot.logger.warning("[INFO] Discord fired on_ready...")
 
@@ -171,60 +165,6 @@ class GlobalEvents(commands.Cog):
                 )
             )
         }
-
-    async def reschedule_reminders(self):
-        valid_channels = [channel.id for channel in self.bot.get_all_channels()]
-        all_reminders = await self.bot.pool.fetch("SELECT * FROM reminders;")
-        now = datetime.datetime.utcnow()
-        invalid_reminders = []
-        new_reminders = {}
-        for reminder in all_reminders:
-            try:
-                if reminder["end"] < now:
-                    invalid_reminders.append(reminder["id"])
-                elif reminder["channel"] not in valid_channels:
-                    pass  # don't schedule channels that the bot won't be able to send to
-                else:
-                    if reminder["type"] == "reminder":
-                        task = self.bot.schedule_manager.schedule(
-                            self.bot.cogs["Scheduling"]._remind(
-                                reminder["user"],
-                                reminder["channel"],
-                                reminder["content"],
-                                str(reminder["end"] - reminder["start"]).split(".")[0],
-                                reminder["id"],
-                            ),
-                            reminder["end"],
-                        )
-                    elif reminder["type"] == "adventure":
-                        task = self.bot.schedule_manager.schedule(
-                            self.bot.cogs["Scheduling"]._remind_adventure(
-                                reminder["user"],
-                                reminder["channel"],
-                                reminder["content"],
-                                reminder["id"],
-                            ),
-                            reminder["end"],
-                        )
-                    else:
-                        continue
-                    new_reminders.update({reminder["id"]: task.uuid})
-            except (KeyError, ValueError, TypeError) as e:
-                self.bot.logger.warning(f"{type(e).__name__}: {e}")
-                pass
-
-            # Yield back to the event loop to avoid blocking
-            # because we have a lot of reminders
-            await asyncio.sleep(0)
-
-        async with self.bot.pool.acquire() as conn:
-            await conn.execute(
-                'DELETE FROM reminders WHERE "id"=ANY($1);', invalid_reminders
-            )
-            await conn.executemany(
-                'UPDATE reminders SET "internal_id"=$2 WHERE "id"=$1',
-                new_reminders.items(),
-            )
 
     def cog_unload(self):
         self.stats_updates.cancel()
