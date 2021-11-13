@@ -27,6 +27,7 @@ import discord
 
 from discord.ext import commands
 
+from cogs.scheduler import Timer
 from utils.eval import evaluate as _evaluate
 from utils.i18n import _, locale_doc
 from utils.misc import nice_join
@@ -222,6 +223,15 @@ class Sharding(commands.Cog):
 
     async def clear_donator_cache(self, user_id: int, command_id: int):
         self.bot.get_donator_rank.invalidate(self.bot, user_id)
+
+    async def remove_timer(self, timer_id: int, command_id: int) -> None:
+        self.bot.dispatch("timer_remove", timer_id)
+
+    async def add_timer(self, *args, **kwargs) -> None:
+        kwargs["start"] = datetime.strptime(kwargs["start"], "%Y-%m-%dT%H:%M:%S.%f")
+        kwargs["end"] = datetime.strptime(kwargs["end"], "%Y-%m-%dT%H:%M:%S.%f")
+        timer = Timer(record=kwargs)
+        self.bot.dispatch("timer_add", timer)
 
     async def guild_count(self, command_id: str):
         payload = {"output": len(self.bot.guilds), "command_id": command_id}

@@ -20,13 +20,14 @@ from __future__ import annotations
 import asyncio
 
 from datetime import datetime, timedelta
-from typing import Optional
+from typing import Optional, Union
 
 import asyncpg
 import discord
 
 from discord.ext import commands
 
+from classes.bot import Bot
 from classes.context import Context
 from classes.converters import DateTimeScheduler, IntGreaterThan
 from cogs.help import chunks
@@ -45,6 +46,17 @@ class Timer:
         self.type: str = record["type"]
         self.start: datetime = record["start"]
         self.end: datetime = record["end"]
+
+    def to_dict(self) -> dict[str, Union[int, str, datetime]]:
+        return {
+            "id": self.id,
+            "user": self.user,
+            "content": self.content,
+            "channel": self.channel,
+            "type": self.type,
+            "start": self.start,
+            "end": self.end,
+        }
 
     @classmethod
     def temporary(cls, *, user, content, channel, type, start, end):
@@ -74,22 +86,26 @@ class Timer:
 
 
 class Scheduling(commands.Cog):
-    def __init__(self, bot):
+    def __init__(self, bot: Bot) -> None:
         self.bot = bot
+        self._handles = 0 in self.bot.shard_ids
+
         self._have_data = asyncio.Event()
         self._current_timer = None
-        self._task = asyncio.create_task(self.dispatch_timers())
+
+        if self._handles:
+            self._task = asyncio.create_task(self.dispatch_timers())
+        else:
+            self._task = None
 
     async def get_active_timer(self, *, connection=None, days=7) -> Optional[Timer]:
-        query = 'SELECT * FROM reminders WHERE MOD("id", $1)=$2 AND "end" < (CURRENT_DATE + $3::interval) ORDER BY "end" LIMIT 1;'
+        query = 'SELECT * FROM reminders WHERE "end" < (CURRENT_DATE + $1::interval) ORDER BY "end" LIMIT 1;'
         con = connection or self.bot.pool
 
-        record = await con.fetchrow(
-            query, self.bot.cluster_count, self.bot.cluster_id - 1, timedelta(days=days)
-        )
+        record = await con.fetchrow(query, timedelta(days=days))
         return Timer(record=record) if record else None
 
-    async def wait_for_active_timers(self, *, connection=None, days=7) -> Timer:
+    async def wait_for_active_timers(self, *, conn=None, days=7) -> Timer:
         async with self.bot.pool.acquire() as conn:
             timer = await self.get_active_timer(connection=conn, days=days)
             if timer is not None:
@@ -115,8 +131,38 @@ class Scheduling(commands.Cog):
         except asyncio.CancelledError:
             raise
         except (OSError, discord.ConnectionClosed, asyncpg.PostgresConnectionError):
+            self.restart()
+
+    @commands.Cog.listener()
+    async def on_timer_add(self, timer: Timer) -> None:
+        if not self._handles:
+            return
+
+        if (timer.end - timer.start).total_seconds() <= (86400 * 40):  # 40 days
+            self._have_data.set()
+        if self._current_timer and timer.end < self._current_timer.end:
+            self.restart()
+
+    @commands.Cog.listener()
+    async def on_timer_remove(self, timer_id: int) -> None:
+        if not self._handles:
+            return
+
+        if self._current_timer and self._current_timer.id == timer_id:
+            self.restart()
+
+    async def add_timer(self, timer: Timer) -> None:
+        await self.bot.cogs["Sharding"].handler("add_timer", 0, args=timer.to_dict())
+
+    async def remove_timer(self, timer_id: int) -> None:
+        await self.bot.cogs["Sharding"].handler(
+            "remove_timer", 0, args={"timer_id": timer_id}
+        )
+
+    def restart(self):
+        if self._task:
             self._task.cancel()
-            self._task = self.bot.loop.create_task(self.dispatch_timers())
+            self._task = asyncio.create_task(self.dispatch_timers())
 
     async def short_timer_optimisation(self, seconds: int, timer: Timer) -> None:
         await asyncio.sleep(seconds)
@@ -185,13 +231,7 @@ class Scheduling(commands.Cog):
         )
         timer.id = id
 
-        if delta <= (86400 * 40):  # 40 days
-            self._have_data.set()
-
-        if self._current_timer and end < self._current_timer.end:
-            # cancel the task and re-run it
-            self._task.cancel()
-            self._task = asyncio.create_task(self.dispatch_timers())
+        await self.add_timer(timer)
 
         return timer
 
@@ -286,10 +326,7 @@ class Scheduling(commands.Cog):
         if status == "DELETE 0":
             return await ctx.send(_("None of these reminder IDs belong to you."))
 
-        if self._current_timer and self._current_timer.id == id:
-            # cancel the task and re-run it
-            self._task.cancel()
-            self._task = self.bot.loop.create_task(self.dispatch_timers())
+        await self.remove_timer(id)
 
         await ctx.send(_("Successfully cancelled the reminder."))
 

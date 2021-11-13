@@ -775,15 +775,7 @@ class Adventure(commands.Cog):
         )
 
         if id is not None:
-            if (
-                self.bot.cogs["Scheduling"]._current_timer
-                and self.bot.cogs["Scheduling"]._current_timer.id == id
-            ):
-                # cancel the task and re-run it
-                self.bot.cogs["Scheduling"]._task.cancel()
-                self.bot.cogs["Scheduling"]._task = asyncio.create_task(
-                    self.bot.cogs["Scheduling"].dispatch_timers()
-                )
+            await self.bot.cogs["Scheduling"].remove_timer(id)
 
         await ctx.send(
             _(
