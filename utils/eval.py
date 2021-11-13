@@ -41,8 +41,6 @@ from io import StringIO
 from textwrap import indent
 from traceback import format_exc
 
-import import_expression
-
 
 async def evaluate(bot, body):
     env = {"bot": bot}
@@ -50,7 +48,7 @@ async def evaluate(bot, body):
     stdout = StringIO()
     to_compile = f'async def func():\n{indent(body, "  ")}'
     try:
-        import_expression.exec(to_compile, env)
+        exec(to_compile, env)
     except Exception as e:
         return f"```py\n{e.__class__.__name__}: {e}\n```"
 

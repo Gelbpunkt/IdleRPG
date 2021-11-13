@@ -25,7 +25,6 @@ import tracemalloc
 from contextlib import redirect_stdout
 
 import discord
-import import_expression
 
 from discord.ext import commands
 from tabulate import tabulate
@@ -201,7 +200,7 @@ class Owner(commands.Cog):
         to_compile = f'async def func():\n{textwrap.indent(body, "  ")}'
 
         try:
-            import_expression.exec(to_compile, env)
+            exec(to_compile, env)
         except Exception as e:
             return await ctx.send(f"```py\n{e.__class__.__name__}: {e}\n```")
 
