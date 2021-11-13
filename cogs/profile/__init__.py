@@ -17,8 +17,6 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
 import asyncio
 
-from typing import Optional
-
 import discord
 
 from aiohttp import ContentTypeError
@@ -511,7 +509,7 @@ IdleRPG is a global bot, your characters are valid everywhere"""
     async def inventory(
         self,
         ctx,
-        itemtype: Optional[str.title] = "All",
+        itemtype: str | None = "All",
         lowest: IntFromTo(0, 101) = 0,
         highest: IntFromTo(0, 101) = 101,
     ):
@@ -527,6 +525,8 @@ IdleRPG is a global bot, your characters are valid everywhere"""
 
             To sell unused items for their value, use `{prefix}merch`. To put them up on the global player market, use `{prefix}sell`."""
         )
+        itemtype = itemtype.title()
+
         if highest < lowest:
             return await ctx.send(
                 _("Make sure that the `highest` value is greater than `lowest`.")
@@ -655,7 +655,7 @@ IdleRPG is a global bot, your characters are valid everywhere"""
 
         value = int(value)
         reward = await self.bot.paginator.Choose(
-            title=_("Select a reward for the {amount} items".format(amount=count)),
+            title=_(f"Select a reward for the {count} items"),
             placeholder=_("Select a reward"),
             footer=_("Do you want favor? {prefix}sacrifice instead").format(
                 prefix=ctx.prefix

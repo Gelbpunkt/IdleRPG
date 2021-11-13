@@ -609,7 +609,7 @@ class Trading(commands.Cog):
             )
 
             value, amount, equipped = (
-                sum([i["value"] for i in allitems]),
+                sum(i["value"] for i in allitems),
                 len(allitems),
                 len([i for i in allitems if i["equipped"]]),
             )
@@ -694,7 +694,7 @@ class Trading(commands.Cog):
                 minstat,
                 maxstat,
             )
-            count, money = len(allitems), sum([i["value"] for i in allitems])
+            count, money = len(allitems), sum(i["value"] for i in allitems)
             if count == 0:
                 await self.bot.reset_cooldown(ctx)
                 return await ctx.send(_("Nothing to merch."))

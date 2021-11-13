@@ -346,12 +346,10 @@ class Errorhandler(commands.Cog):
                     )
                 )
             if not self.SENTRY_SUPPORT:
-                print("In {}:".format(ctx.command.qualified_name), file=sys.stderr)
+                print(f"In {ctx.command.qualified_name}:", file=sys.stderr)
                 traceback.print_tb(error.original.__traceback__)
                 print(
-                    "{0}: {1}".format(
-                        error.original.__class__.__name__, error.original
-                    ),
+                    "{}: {}".format(error.original.__class__.__name__, error.original),
                     file=sys.stderr,
                 )
             else:

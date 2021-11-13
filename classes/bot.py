@@ -23,7 +23,6 @@ import sys
 import traceback
 
 from decimal import Decimal
-from typing import Optional, Union
 
 import aiohttp
 import aioredis
@@ -96,7 +95,7 @@ class Bot(commands.AutoShardedBot):
         )
 
     async def before_identify_hook(
-        self, shard_id: Optional[int], *, initial: bool = False
+        self, shard_id: int | None, *, initial: bool = False
     ) -> None:
         # Overwrite the default identify hook that just waits 5s with a call to twilight-gateway-queue
         if shard_id is None:
@@ -147,7 +146,7 @@ class Bot(commands.AutoShardedBot):
                 continue
             for file_ in files:
                 if file_.endswith(".py"):
-                    with open(os.sep.join([root, file_]), "r", encoding="utf-8") as f:
+                    with open(os.sep.join([root, file_]), encoding="utf-8") as f:
                         self.linecount += len(f.readlines())
 
     async def connect_all(self):
@@ -386,7 +385,7 @@ class Bot(commands.AutoShardedBot):
         )
 
     async def set_cooldown(
-        self, ctx_or_user_id: Union[Context, int], cooldown: int, identifier: str = None
+        self, ctx_or_user_id: Context | int, cooldown: int, identifier: str = None
     ):
         """Sets someone's cooldown or overwrite it if the cd already exists"""
         if identifier is None:

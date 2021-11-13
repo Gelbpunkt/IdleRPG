@@ -237,7 +237,7 @@ class Owner(commands.Cog):
         )
         filtered_data = {instance: data.count(instance) for instance in data}
         pretty_data = "".join(
-            "```py\n{0}x | {1}".format(count, instance[6:])
+            f"```py\n{count}x | {instance[6:]}"
             for instance, count in filtered_data.items()
         )
         if len(pretty_data) > 2000:
@@ -321,11 +321,11 @@ class Owner(commands.Cog):
     @commands.command(hidden=True)
     async def makehtml(self, ctx):
         """Generates HTML for commands page."""
-        with open("assets/html/commands.html", "r") as f:
+        with open("assets/html/commands.html") as f:
             base = f.read()
-        with open("assets/html/cog.html", "r") as f:
+        with open("assets/html/cog.html") as f:
             cog = f.read()
-        with open("assets/html/command.html", "r") as f:
+        with open("assets/html/command.html") as f:
             command = f.read()
 
         html = ""
@@ -333,7 +333,7 @@ class Owner(commands.Cog):
         for cog_name, cog_ in self.bot.cogs.items():
             if cog_name in ("GameMaster", "Owner", "Custom"):
                 continue
-            commands = set(c for c in list(cog_.walk_commands()) if not c.hidden)
+            commands = {c for c in list(cog_.walk_commands()) if not c.hidden}
             if len(commands) > 0:
                 html += cog.format(name=cog_name)
                 for cmd in commands:

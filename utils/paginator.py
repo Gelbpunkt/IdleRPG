@@ -38,7 +38,7 @@ DEALINGS IN THE SOFTWARE.
 """
 import asyncio
 
-from typing import Any, Generator, Optional, Union
+from typing import Any, Generator
 
 import discord
 
@@ -50,8 +50,8 @@ from utils.i18n import _
 
 
 def pager(
-    entries: Union[list[Any], tuple[Any]], chunk: int
-) -> Generator[Union[list[Any], tuple[Any, ...]], None, None]:
+    entries: list[Any] | tuple[Any], chunk: int
+) -> Generator[list[Any] | tuple[Any, ...], None, None]:
     for x in range(0, len(entries), chunk):
         yield entries[x : x + chunk]
 
@@ -60,13 +60,13 @@ class TextPaginator:
     __slots__ = ("ctx", "reactions", "_paginator", "current", "message", "update_lock")
 
     def __init__(
-        self, ctx: "Context", prefix: Optional[str] = None, suffix: Optional[str] = None
+        self, ctx: "Context", prefix: str | None = None, suffix: str | None = None
     ) -> None:
         self._paginator = commands.Paginator(
             prefix=prefix, suffix=suffix, max_size=1950
         )
         self.current = 0
-        self.message: Optional[discord.Message] = None
+        self.message: discord.Message | None = None
         self.ctx = ctx
         self.update_lock = asyncio.Semaphore(value=2)
         self.reactions = {
@@ -192,8 +192,8 @@ class Paginator:
         self,
         extras: list[discord.Embed] = [],
         title: str = "Untitled",
-        footer: Optional[str] = None,
-        colour: Optional[int] = None,
+        footer: str | None = None,
+        colour: int | None = None,
         entries: list[str] = [],
         fmt: str = "",
         prepend: str = "",
@@ -261,13 +261,13 @@ class ChooseLong(discord.ui.View):
         self.current = 0
         self.pages = pages
         self.max = len(self.pages) - 1
-        self.message: Optional[discord.Message] = None
+        self.message: discord.Message | None = None
         self.allowed_user = ctx.author
 
     async def start(
         self,
         messagable: discord.abc.Messageable,
-        user: Optional[discord.User] = None,
+        user: discord.User | None = None,
     ) -> None:
         self.allowed_user = (
             user
@@ -341,7 +341,7 @@ class ChooseLong(discord.ui.View):
             await self.update()
 
     async def handle(
-        self, interaction: discord.Interaction, selected: Union[str, int]
+        self, interaction: discord.Interaction, selected: str | int
     ) -> None:
         self.future.set_result(selected)
         self.stop()
@@ -366,7 +366,7 @@ class NormalPaginator(ChooseLong):
         self.cleanup()
 
     async def handle(
-        self, interaction: discord.Interaction, selected: Union[str, int]
+        self, interaction: discord.Interaction, selected: str | int
     ) -> None:
         self.stop()
         self.cleanup()
@@ -436,12 +436,12 @@ class ShopPaginator:
 class ChoosePaginator:
     def __init__(
         self,
-        placeholder: Optional[str] = None,
-        choices: Optional[list[str]] = None,
+        placeholder: str | None = None,
+        choices: list[str] | None = None,
         extras: list[discord.Embed] = [],
         title: str = "Untitled",
-        footer: Optional[str] = None,
-        colour: Optional[int] = None,
+        footer: str | None = None,
+        colour: int | None = None,
         entries: list[str] = [],
         fmt: str = "",
         prepend: str = "",
@@ -528,7 +528,7 @@ class ChooseView(discord.ui.View):
         self,
         embed: discord.Embed,
         messagable: discord.abc.Messageable,
-        user: Optional[Union[discord.User]],
+        user: discord.User | None,
     ) -> None:
         self.allowed_user = (
             user
@@ -554,7 +554,7 @@ class ChooseView(discord.ui.View):
         self.future.set_exception(NoChoice("You didn't choose anything."))
 
     async def handle(
-        self, interaction: discord.Interaction, selected: Union[str, int]
+        self, interaction: discord.Interaction, selected: str | int
     ) -> None:
         self.future.set_result(selected)
         self.stop()
@@ -578,10 +578,10 @@ class Choose:
         self,
         entries: list[str],
         title: str = "Untitled",
-        placeholder: Optional[str] = None,
-        choices: Optional[list[str]] = None,
-        footer: Optional[str] = None,
-        colour: Optional[int] = None,
+        placeholder: str | None = None,
+        choices: list[str] | None = None,
+        footer: str | None = None,
+        colour: int | None = None,
         timeout: int = 30,
         return_index: bool = False,
     ):

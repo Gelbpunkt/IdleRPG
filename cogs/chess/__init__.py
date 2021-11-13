@@ -17,8 +17,6 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
 import asyncio
 
-from typing import Optional
-
 import chess.engine
 import discord
 
@@ -126,7 +124,7 @@ class Chess(commands.Cog):
     async def match(
         self,
         ctx,
-        difficulty: Optional[int] = 3,
+        difficulty: int | None = 3,
         enemy: discord.Member = None,
     ):
         _(

@@ -19,7 +19,7 @@ from __future__ import annotations
 
 import asyncio
 
-from typing import TYPE_CHECKING, Optional, Union
+from typing import TYPE_CHECKING
 
 import discord
 
@@ -47,7 +47,7 @@ class Confirmation(discord.ui.View):
         self.ctx = ctx
         self.future = future
         self.allowed_user = user
-        self.message: Optional[discord.Message] = None
+        self.message: discord.Message | None = None
 
     async def start(
         self,
@@ -103,7 +103,7 @@ class Context(commands.Context):
     for escaping massmentions in ctx.send.
     """
 
-    bot: "Bot"
+    bot: Bot
 
     @property
     def disp(self) -> str:
@@ -116,7 +116,7 @@ class Context(commands.Context):
         self,
         message: str,
         timeout: int = 20,
-        user: Optional[Union[discord.User, discord.Member]] = None,
+        user: discord.User | discord.Member | None = None,
     ) -> bool:
         future: asyncio.Future[bool] = asyncio.Future()
         await Confirmation(

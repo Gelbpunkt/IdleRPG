@@ -17,8 +17,6 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
 import asyncio
 
-from typing import Optional
-
 import discord
 
 from discord.enums import ButtonStyle
@@ -49,7 +47,7 @@ class Werewolf(commands.Cog):
     async def werewolf(
         self,
         ctx,
-        mode: Optional[WerewolfMode] = "Classic",
+        mode: WerewolfMode | None = "Classic",
         speed: str.title = "Normal",
         min_players: IntGreaterThan(1) = None,
     ):

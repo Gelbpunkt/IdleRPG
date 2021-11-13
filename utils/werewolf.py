@@ -32,7 +32,6 @@ import asyncio
 import datetime
 
 from enum import Enum
-from typing import Optional, Union
 
 import discord
 
@@ -317,7 +316,7 @@ class Game:
     def dead_players(self) -> list[Player]:
         return [player for player in self.players if player.dead]
 
-    def get_role_name(self, player_or_role: Union[Player, Role]) -> str:
+    def get_role_name(self, player_or_role: Player | Role) -> str:
         role_name = ""
         if isinstance(player_or_role, Role):
             role = player_or_role
@@ -337,10 +336,10 @@ class Game:
     def get_players_with_role(self, role: Role) -> list[Player]:
         return [player for player in self.alive_players if player.role == role]
 
-    def get_player_with_role(self, role: Role) -> Optional[Player]:
+    def get_player_with_role(self, role: Role) -> Player | None:
         return discord.utils.get(self.alive_players, role=role)
 
-    def winner(self) -> Optional[Player]:
+    def winner(self) -> Player | None:
         objective_reached = discord.utils.get(self.alive_players, has_won=True)
         if objective_reached:
             return objective_reached
@@ -354,7 +353,7 @@ class Game:
     def new_afk_players(self) -> list[Player]:
         return [player for player in self.alive_players if player.to_check_afk]
 
-    async def wolves(self) -> Optional[Player]:
+    async def wolves(self) -> Player | None:
         if healer := self.get_player_with_role(Role.HEALER):
             await healer.set_healer_target()
         wolves = [
@@ -543,7 +542,7 @@ class Game:
         return target
 
     async def announce_pure_soul(
-        self, pure_soul: Player, ex_pure_soul: Optional[Player] = None
+        self, pure_soul: Player, ex_pure_soul: Player | None = None
     ) -> None:
         for p in self.players:
             if ex_pure_soul:
@@ -589,7 +588,7 @@ class Game:
         if chained is None:
             if len(start.own_lovers) == 0:
                 return set()
-            chained = set([start])
+            chained = {start}
         others = set(start.own_lovers) - chained
         if len(others) == 0:
             return chained
@@ -786,7 +785,7 @@ class Game:
             await superspreader.infect_virus()
         return targets
 
-    async def election(self) -> Optional[discord.Member]:
+    async def election(self) -> discord.Member | None:
         paginator = commands.Paginator(prefix="", suffix="")
         players = ""
         eligible_players_lines = []
@@ -1336,7 +1335,7 @@ class Player:
             f" dead={self.dead} won={self.has_won}>"
         )
 
-    async def send(self, *args, **kwargs) -> Optional[discord.Message]:
+    async def send(self, *args, **kwargs) -> discord.Message | None:
         try:
             return await self.user.send(*args, **kwargs)
         except (discord.Forbidden, discord.HTTPException):
@@ -1608,7 +1607,7 @@ class Player:
             ).format(protected=self.last_target.user, game_link=self.game.game_link)
         )
 
-    async def choose_werewolf(self) -> Optional[Player]:
+    async def choose_werewolf(self) -> Player | None:
         await self.game.ctx.send(
             _("**The {role} awakes...**").format(role=self.role_name)
         )
@@ -2720,8 +2719,8 @@ class Player:
             if self.in_love and len(self.own_lovers) > 0:
                 lovers_to_kill = self.own_lovers
                 for lover in lovers_to_kill:
-                    if set([self, lover]) in self.game.lovers:
-                        self.game.lovers.remove(set([self, lover]))
+                    if {self, lover} in self.game.lovers:
+                        self.game.lovers.remove({self, lover})
                     if not lover.dead:
                         await self.game.ctx.send(
                             _(
@@ -2957,7 +2956,7 @@ def get_roles(number_of_players: int, mode: str = None) -> list[Role]:
     return roles
 
 
-def force_role(roles: list[Role], role_to_force: Role) -> Optional[Role]:
+def force_role(roles: list[Role], role_to_force: Role) -> Role | None:
     # Make sure a role is to be played, force it otherwise
     # Warning: This can replace previously forced role
     available_roles = roles[:-2]

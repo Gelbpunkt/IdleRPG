@@ -21,7 +21,6 @@ import os
 from contextlib import suppress
 from enum import Enum
 from functools import partial
-from typing import Optional
 
 import discord
 
@@ -253,9 +252,9 @@ class BlackJack:
 
     def total(self, hand):
         value = sum(
-            [card[0] if card[0] < 11 else 10 for card in hand if card[0] != 14]
+            card[0] if card[0] < 11 else 10 for card in hand if card[0] != 14
         )  # ignore aces for now
-        aces = sum([1 for card in hand if card[0] == 14])
+        aces = sum(1 for card in hand if card[0] == 14)
         value += self.calc_aces(value, aces)
         return value
 
@@ -374,7 +373,7 @@ class BlackJack:
         change_deck: bool = False,
         split: bool = False,
         wait_for_action: bool = True,
-    ) -> Optional[BlackJackAction]:
+    ) -> BlackJackAction | None:
         player = self.total(self.player)
         dealer = self.total(self.dealer)
 
@@ -900,7 +899,7 @@ This command is in an alpha-stage, which means bugs are likely to happen. Play a
     async def flip(
         self,
         ctx,
-        side: Optional[CoinSide] = "heads",
+        side: CoinSide | None = "heads",
         *,
         amount: IntFromTo(0, 100_000) = 0,
     ):

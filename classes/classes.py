@@ -18,7 +18,6 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 from __future__ import annotations
 
 from enum import Enum
-from typing import Optional, Type
 
 
 class GameClass(Enum):
@@ -31,13 +30,13 @@ class GameClass(Enum):
                 out[-1] += char
         return " ".join(out)
 
-    def get_class_line(self) -> Type[GameClass]:
+    def get_class_line(self) -> type[GameClass]:
         return self.__class__
 
     def get_class_line_name(self) -> str:
         return self.__class__.__name__
 
-    def in_class_line(self, class_line: Type[GameClass]) -> bool:
+    def in_class_line(self, class_line: type[GameClass]) -> bool:
         return class_line == self.__class__
 
     def class_grade(self) -> int:
@@ -114,7 +113,7 @@ class Ritualist(GameClass):
     Ritualist = 6
 
 
-def get_class_evolves(class_: Type[GameClass]) -> list[GameClass]:
+def get_class_evolves(class_: type[GameClass]) -> list[GameClass]:
     return list(class_.__members__.values())
 
 
@@ -140,13 +139,13 @@ ALL_CLASSES_TYPES = {
 }
 
 
-def from_string(class_: str) -> Optional[GameClass]:
+def from_string(class_: str) -> GameClass | None:
     return ALL_CLASSES.get(class_, None)
 
 
-def get_name(class_: Type[GameClass]) -> str:
+def get_name(class_: type[GameClass]) -> str:
     return class_.__name__
 
 
-def get_first_evolution(class_: Type[GameClass]) -> GameClass:
+def get_first_evolution(class_: type[GameClass]) -> GameClass:
     return list(class_.__members__.values())[0]

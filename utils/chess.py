@@ -20,8 +20,6 @@ import datetime
 import io
 import re
 
-from typing import Optional
-
 import chess
 import chess.engine
 import chess.pgn
@@ -155,8 +153,8 @@ class ChessGame:
         ctx: Context,
         player: discord.User,
         player_color: str = "white",
-        enemy: Optional[discord.User] = None,
-        difficulty: Optional[int] = None,
+        enemy: discord.User | None = None,
+        difficulty: int | None = None,
         rated: bool = False,
     ):
         self.player = player

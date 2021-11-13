@@ -13,7 +13,7 @@ You should have received a copy of the GNU Affero General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
 from asyncio import Future
-from typing import Awaitable, Callable, Optional
+from typing import Awaitable, Callable
 
 from discord.interactions import Interaction
 from discord.ui import Button, View
@@ -45,10 +45,10 @@ class SingleJoinView(View):
         self,
         future: Future[User],
         join_button: Button,
-        allowed: Optional[User] = None,
-        prohibited: Optional[User] = None,
-        check: Optional[Callable[[User], Awaitable[bool]]] = None,
-        check_fail_message: Optional[str] = None,
+        allowed: User | None = None,
+        prohibited: User | None = None,
+        check: Callable[[User], Awaitable[bool]] | None = None,
+        check_fail_message: str | None = None,
         *args,
         **kwargs
     ) -> None:

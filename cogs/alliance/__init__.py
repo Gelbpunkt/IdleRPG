@@ -18,7 +18,6 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 import asyncio
 
 from datetime import timedelta
-from typing import Union
 
 import discord
 
@@ -246,7 +245,7 @@ class Alliance(commands.Cog):
     @has_char()
     @alliance.command(brief=_("Kick a guild from your alliance"))
     @locale_doc
-    async def kick(self, ctx, *, guild_to_kick: Union[int, str]):
+    async def kick(self, ctx, *, guild_to_kick: int | str):
         _(
             """`<guild_to_kick>` -  A guild's name or ID
 

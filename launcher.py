@@ -23,7 +23,7 @@ import sys
 from enum import Enum
 from pathlib import Path
 from time import time
-from typing import Iterable, Optional
+from typing import Iterable
 
 import aiohttp
 import aioredis
@@ -85,7 +85,7 @@ class Instance:
         shard_list: list[int],
         shard_count: int,
         name: str,
-        main: Optional[Main] = None,
+        main: Main | None = None,
     ):
         self.main = main
         self.shard_count = shard_count  # overall shard count
@@ -98,7 +98,7 @@ class Instance:
             f'{sys.executable} -OO {Path.cwd() / BOT_FILE} "{shard_list}" {shard_count}'
             f" {self.id} {self.instance_count} {self.name}"
         )
-        self._process: Optional[asyncio.subprocess.Process] = None
+        self._process: asyncio.subprocess.Process | None = None
         self.status = Status.Initialized
         self.future: asyncio.Future[None] = asyncio.Future()
 
@@ -247,7 +247,7 @@ class Main:
                 )
 
     async def launch(self) -> None:
-        with open("assets/data/names.txt", "r") as f:
+        with open("assets/data/names.txt") as f:
             names = f.read().splitlines()
 
         asyncio.create_task(self.event_handler())

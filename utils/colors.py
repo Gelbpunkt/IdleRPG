@@ -221,13 +221,11 @@ def normalize_hex(hex_value: str) -> str:
     """
     match = HEX_COLOR_RE.match(hex_value)
     if match is None:
-        raise ValueError(
-            "'{}' is not a valid hexadecimal color value.".format(hex_value)
-        )
+        raise ValueError(f"'{hex_value}' is not a valid hexadecimal color value.")
     hex_digits = match.group(1)
     if len(hex_digits) == 3:
         hex_digits = "".join(2 * s for s in hex_digits)
-    return "#{}".format(hex_digits.lower())
+    return f"#{hex_digits.lower()}"
 
 
 def name_to_hex(name: str) -> str:

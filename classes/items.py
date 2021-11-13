@@ -18,7 +18,6 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 from __future__ import annotations
 
 from enum import Enum
-from typing import Optional
 
 
 class Hand(Enum):
@@ -44,7 +43,7 @@ class ItemType(Enum):
     Howlet = "Howlet"
 
     @classmethod
-    def from_string(cls, name: str) -> Optional[ItemType]:
+    def from_string(cls, name: str) -> ItemType | None:
         return cls.__members__.get(name, None)
 
     def get_hand(self) -> Hand:

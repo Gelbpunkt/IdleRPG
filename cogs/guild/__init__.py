@@ -19,7 +19,6 @@ import asyncio
 
 from contextlib import suppress
 from datetime import timedelta
-from typing import Union
 
 import discord
 
@@ -116,7 +115,7 @@ class Guild(commands.Cog):
 
     @guild.command(brief=_("Show a specific guild"))
     @locale_doc
-    async def info(self, ctx, *, by: Union[MemberWithCharacter, str]):
+    async def info(self, ctx, *, by: MemberWithCharacter | str):
         _(
             """`<by>` - The guild's name (format `guild:name`, i.e. `guild:Adrian's Refuge`), its ID (format `id:number`, i.e. `id:5003`), or a person in the guild.
 
@@ -582,7 +581,7 @@ class Guild(commands.Cog):
     @is_guild_officer()
     @guild.command(brief=_("Kick a member from your guild."))
     @locale_doc
-    async def kick(self, ctx, member: Union[MemberWithCharacter, int]):
+    async def kick(self, ctx, member: MemberWithCharacter | int):
         _(
             """`<member>` - A discord User with a character, must be a member of your guild
 

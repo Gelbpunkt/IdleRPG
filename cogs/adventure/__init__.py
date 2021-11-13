@@ -20,7 +20,7 @@ import asyncio
 from datetime import datetime, timedelta
 from enum import Enum
 from functools import partial
-from typing import Literal, Optional
+from typing import Literal
 
 import discord
 
@@ -206,10 +206,10 @@ class ActiveAdventure:
         self.min_dmg = round(attack * 0.5)
         self.max_dmg = round(attack * 1.5)
 
-        self.enemy_hp: Optional[int] = None
+        self.enemy_hp: int | None = None
 
-        self.message: Optional[discord.Message] = None
-        self.status_text: Optional[str] = _("The active adventure has started.")
+        self.message: discord.Message | None = None
+        self.status_text: str | None = _("The active adventure has started.")
 
     def move(self, action: ActiveAdventureAction) -> None:
         if action == ActiveAdventureAction.MoveNorth:

@@ -20,7 +20,6 @@ from __future__ import annotations
 import asyncio
 
 from datetime import datetime, timedelta
-from typing import Optional, Union
 
 import asyncpg
 import discord
@@ -47,7 +46,7 @@ class Timer:
         self.start: datetime = record["start"]
         self.end: datetime = record["end"]
 
-    def to_dict(self) -> dict[str, Union[int, str, datetime]]:
+    def to_dict(self) -> dict[str, int | str | datetime]:
         return {
             "id": self.id,
             "user": self.user,
@@ -98,7 +97,7 @@ class Scheduling(commands.Cog):
         else:
             self._task = None
 
-    async def get_active_timer(self, *, connection=None, days=7) -> Optional[Timer]:
+    async def get_active_timer(self, *, connection=None, days=7) -> Timer | None:
         query = 'SELECT * FROM reminders WHERE "end" < (CURRENT_DATE + $1::interval) ORDER BY "end" LIMIT 1;'
         con = connection or self.bot.pool
 

@@ -17,8 +17,6 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
 import asyncio
 
-from typing import Union
-
 import discord
 
 from async_timeout import timeout
@@ -92,7 +90,7 @@ class GameMaster(commands.Cog):
     @is_gm()
     @commands.command(hidden=True, brief=_("Bot-ban a user"))
     @locale_doc
-    async def gmban(self, ctx, other: Union[int, discord.User], *, reason: str = ""):
+    async def gmban(self, ctx, other: int | discord.User, *, reason: str = ""):
         _(
             """`<other>` - A discord User
 
@@ -125,7 +123,7 @@ class GameMaster(commands.Cog):
     @is_gm()
     @commands.command(hidden=True, brief=_("Bot-unban a user"))
     @locale_doc
-    async def gmunban(self, ctx, other: Union[int, discord.User], *, reason: str = ""):
+    async def gmunban(self, ctx, other: int | discord.User, *, reason: str = ""):
         _(
             """`<other>` - A discord User
 
@@ -675,7 +673,7 @@ class GameMaster(commands.Cog):
     async def gmsetcooldown(
         self,
         ctx,
-        user: Union[discord.User, int],
+        user: discord.User | int,
         command: str,
         *,
         reason: str = None,

@@ -30,7 +30,7 @@ from utils.i18n import _, locale_doc
 class SnowballFight(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
-        with open("assets/data/hangman.txt", "r") as f:
+        with open("assets/data/hangman.txt") as f:
             self.words = f.readlines()
 
     @commands.command()

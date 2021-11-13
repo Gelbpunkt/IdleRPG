@@ -38,7 +38,7 @@ class GlobalEvents(commands.Cog):
             text2 = f"Using discord.py {discord.__version__}"
             text3 = f"You are running IdleRPG Bot {self.bot.version}"
             text4 = "Created by Adrian#1337 and Mary Johanna#0420"
-            max_string = max([len(i) for i in (text1, text2, text3, text4)])
+            max_string = max(len(i) for i in (text1, text2, text3, text4))
             self.bot.logger.info(f"┌─{'─' * max_string}─┐")
             self.bot.logger.info(f"│ {text1.center(max_string, ' ')} │")
             self.bot.logger.info(f"│ {' ' * max_string} │")

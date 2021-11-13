@@ -17,7 +17,7 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
 import datetime
 
-from typing import TYPE_CHECKING, Type
+from typing import TYPE_CHECKING
 
 import discord
 import pytz
@@ -355,7 +355,7 @@ def owns_no_city() -> "_CheckDecorator":
     return commands.check(predicate)
 
 
-def is_class(class_: Type[GameClass]) -> "_CheckDecorator":
+def is_class(class_: type[GameClass]) -> "_CheckDecorator":
     """Checks for a user to be in a class line."""
 
     async def predicate(ctx: Context) -> bool:

@@ -12,8 +12,6 @@ GNU Affero General Public License for more details.
 You should have received a copy of the GNU Affero General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
-from typing import Union
-
 from utils import random
 
 items = [
@@ -173,6 +171,6 @@ items = [
 ]
 
 
-def get_item() -> dict[str, Union[str, int]]:
+def get_item() -> dict[str, str | int]:
     item = random.choice(items)
     return {"name": item[0], "value": item[1]}
