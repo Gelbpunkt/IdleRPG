@@ -54,6 +54,7 @@ class Bot(commands.AutoShardedBot):
     def __init__(self, **kwargs):
         self.cluster_name = kwargs.pop("cluster_name")
         self.cluster_id = kwargs.pop("cluster_id")
+        self.cluster_count = kwargs.pop("cluster_count")
         self.config = ConfigLoader("config.toml")
         mentions = AllowedMentions.none()
         mentions.users = True
@@ -62,13 +63,6 @@ class Bot(commands.AutoShardedBot):
             command_prefix=self.command_prefix,
             **kwargs,
         )  # we overwrite the prefix when it is connected
-
-        processes, shards_left = divmod(
-            self.shard_count, self.config.launcher.shards_per_cluster
-        )
-        if shards_left:
-            processes += 1
-        self.process_count = processes
 
         # setup stuff
         self.version = self.config.bot.version

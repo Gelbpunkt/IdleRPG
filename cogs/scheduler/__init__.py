@@ -81,10 +81,12 @@ class Scheduling(commands.Cog):
         self._task = asyncio.create_task(self.dispatch_timers())
 
     async def get_active_timer(self, *, connection=None, days=7) -> Optional[Timer]:
-        query = 'SELECT * FROM reminders WHERE "end" < (CURRENT_DATE + $1::interval) ORDER BY "end" LIMIT 1;'
+        query = 'SELECT * FROM reminders WHERE MOD("id", $1)=$2 AND "end" < (CURRENT_DATE + $3::interval) ORDER BY "end" LIMIT 1;'
         con = connection or self.bot.pool
 
-        record = await con.fetchrow(query, timedelta(days=days))
+        record = await con.fetchrow(
+            query, self.bot.cluster_count, self.bot.cluster_id - 1, timedelta(days=days)
+        )
         return Timer(record=record) if record else None
 
     async def wait_for_active_timers(self, *, connection=None, days=7) -> Timer:

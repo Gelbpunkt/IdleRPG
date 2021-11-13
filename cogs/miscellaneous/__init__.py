@@ -258,7 +258,7 @@ class Miscellaneous(commands.Cog):
         )
         guild_count = sum(
             await self.bot.cogs["Sharding"].handler(
-                "guild_count", self.bot.process_count
+                "guild_count", self.bot.cluster_count_count
             )
         )
         await ctx.send(
@@ -345,7 +345,7 @@ Even $1 can help us.
             owner = str(await self.bot.get_user_global(self.bot.owner_id))
         guild_count = sum(
             await self.bot.cogs["Sharding"].handler(
-                "guild_count", self.bot.process_count
+                "guild_count", self.bot.cluster_count
             )
         )
         meminfo = psutil.virtual_memory()

@@ -81,6 +81,7 @@ class Instance:
     def __init__(
         self,
         instance_id: int,
+        instance_count: int,
         shard_list: list[int],
         shard_count: int,
         name: str,
@@ -91,10 +92,11 @@ class Instance:
         self.shard_list = shard_list
         self.started_at = 0.0
         self.id = instance_id
+        self.instance_count = instance_count
         self.name = name
         self.command = (
             f'{sys.executable} -OO {Path.cwd() / BOT_FILE} "{shard_list}" {shard_count}'
-            f" {self.id} {self.name}"
+            f" {self.id} {self.instance_count} {self.name}"
         )
         self._process: Optional[asyncio.subprocess.Process] = None
         self.status = Status.Initialized
@@ -263,7 +265,9 @@ class Main:
             while name == "" or name in used_names:
                 name = random.choice(names)
             used_names.append(name)
-            instance = Instance(i, shard_list, shard_count, name, main=self)
+            instance = Instance(
+                i, len(clusters), shard_list, shard_count, name, main=self
+            )
             await instance.start()
             self.instances.append(instance)
 

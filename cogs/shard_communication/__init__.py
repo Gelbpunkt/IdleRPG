@@ -404,7 +404,7 @@ class Sharding(commands.Cog):
             return await ctx.send(_("Launcher is dead, that is really bad."))
         process_status = launcher_res[0]
         process_res = await self.handler(
-            "send_latency_and_shard_count", self.bot.process_count, scope="bot"
+            "send_latency_and_shard_count", self.bot.cluster_count, scope="bot"
         )
         actual_status = []
         for cluster_id, cluster_data in process_status.items():

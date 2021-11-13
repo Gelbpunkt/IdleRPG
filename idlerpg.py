@@ -31,10 +31,10 @@ import discord
 from classes.bot import Bot
 from classes.logger import file_handler, stream
 
-if len(sys.argv) != 5:
+if len(sys.argv) != 6:
     print(
         f"Usage: {sys.executable} idlerpg.py [shard_ids] [shard_count] [cluster_id]"
-        " [cluster_name]"
+        " [cluster_count] [cluster_name]"
     )
     sys.exit(1)
 
@@ -50,7 +50,8 @@ os.environ["TZ"] = "UTC"
 shard_ids = orjson.loads(sys.argv[1])
 shard_count = int(sys.argv[2])
 cluster_id = int(sys.argv[3])
-cluster_name = sys.argv[4]
+cluster_count = int(sys.argv[4])
+cluster_name = sys.argv[5]
 
 # Configure intents
 intents = discord.Intents.none()
@@ -69,6 +70,7 @@ async def start():
         shard_ids=shard_ids,
         shard_count=shard_count,
         cluster_id=cluster_id,
+        cluster_count=cluster_count,
         cluster_name=cluster_name,
         intents=intents,
         chunk_guilds_at_startup=False,  # chunking is nerfed
