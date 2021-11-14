@@ -258,7 +258,7 @@ class Miscellaneous(commands.Cog):
         )
         guild_count = sum(
             await self.bot.cogs["Sharding"].handler(
-                "guild_count", self.bot.cluster_count_count
+                "guild_count", self.bot.cluster_count
             )
         )
         await ctx.send(
