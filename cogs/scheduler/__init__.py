@@ -126,7 +126,10 @@ class Scheduling(commands.Cog):
                     to_sleep = (timer.end - now).total_seconds()
                     await asyncio.sleep(to_sleep)
 
-                await self._remind(timer)
+                try:
+                    await self._remind(timer)
+                except (discord.NotFound, discord.Forbidden):
+                    pass
         except asyncio.CancelledError:
             raise
         except (OSError, discord.ConnectionClosed, asyncpg.PostgresConnectionError):
