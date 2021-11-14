@@ -678,6 +678,9 @@ class Bot(commands.AutoShardedBot):
 
     @cache(maxsize=8096)
     async def get_donator_rank(self, user_id):
+        if self.config.bot.is_beta:
+            return DonatorRank.diamond
+
         if self.support_server_id is None:
             return False
         try:

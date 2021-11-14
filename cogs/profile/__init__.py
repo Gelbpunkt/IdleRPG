@@ -26,6 +26,7 @@ from discord.ext.commands.default import Author
 from classes.classes import from_string as class_from_string
 from classes.converters import IntFromTo, MemberWithCharacter, UserWithCharacter
 from classes.items import ALL_ITEM_TYPES, ItemType
+from cogs.adventure import ADVENTURE_NAMES
 from cogs.help import chunks
 from cogs.shard_communication import user_on_cooldown as user_cooldown
 from utils import checks, colors
@@ -160,54 +161,63 @@ IdleRPG is a global bot, your characters are valid everywhere"""
             View someone's profile. This will send an image.
             For an explanation what all the fields mean, see [this picture](https://wiki.idlerpg.xyz/images/3/35/Profile_explained.png)"""
         )
-        await ctx.trigger_typing()
         targetid = person.id
+
         async with self.bot.pool.acquire() as conn:
             profile = await conn.fetchrow(
-                'SELECT * FROM profile WHERE "user"=$1;', targetid
+                'SELECT p.*, g.name AS guild_name FROM profile p LEFT JOIN guild g ON (g."id"=p."guild") WHERE "user"=$1;',
+                targetid,
             )
+
             if not profile:
                 return await ctx.send(
                     _("**{person}** does not have a character.").format(person=person)
                 )
+
             items = await self.bot.get_equipped_items_for(targetid, conn=conn)
             mission = await self.bot.get_adventure(targetid)
-            guild = await conn.fetchval(
-                'SELECT name FROM guild WHERE "id"=$1;', profile["guild"]
-            )
-        v1 = sum(i["damage"] for i in items)
-        v2 = sum(i["armor"] for i in items)
-        damage, armor = await self.bot.get_damage_armor_for(
-            targetid, items=items, classes=profile["class"], race=profile["race"]
-        )
-        extras = (damage - v1, armor - v2)
-        sworddmg = f"{v1}{' (+' + str(extras[0]) + ')' if extras[0] else ''}"
-        shielddef = f"{v2}{' (+' + str(extras[1]) + ')' if extras[1] else ''}"
 
-        right_hand = "None Equipped"
-        left_hand = "None Equipped"
+        right_hand = None
+        left_hand = None
 
         any_count = sum(1 for i in items if i["hand"] == "any")
         if len(items) == 2 and any_count == 1 and items[0]["hand"] == "any":
             items = [items[1], items[0]]
 
         for i in items:
+            stat = f"{int(i['damage'] + i['armor'])}"
             if i["hand"] == "both":
-                right_hand, left_hand = i["name"], i["name"]
+                right_hand = (i["type"], i["name"], stat)
             elif i["hand"] == "left":
-                left_hand = i["name"]
+                left_hand = (i["type"], i["name"], stat)
             elif i["hand"] == "right":
-                right_hand = i["name"]
+                right_hand = (i["type"], i["name"], stat)
             elif i["hand"] == "any":
-                if right_hand == "None Equipped":
-                    right_hand = i["name"]
+                if right_hand is None:
+                    right_hand = (i["type"], i["name"], stat)
                 else:
-                    left_hand = i["name"]
+                    left_hand = (i["type"], i["name"], stat)
 
         color = profile["colour"]
         color = [color["red"], color["green"], color["blue"], color["alpha"]]
+        embed_color = discord.Colour.from_rgb(color[0], color[1], color[2])
         classes = [class_from_string(c) for c in profile["class"]]
         icons = [c.get_class_line_name().lower() if c else "none" for c in classes]
+
+        guild_rank = None if not profile["guild"] else profile["guildrank"]
+
+        marriage = (
+            await rpgtools.lookup(self.bot, profile["marriage"], return_none=True)
+            if profile["marriage"]
+            else None
+        )
+
+        if mission:
+            adventure_name = ADVENTURE_NAMES[mission[0]]
+            adventure_time = f"{mission[1]}" if not mission[2] else _("Finished")
+        else:
+            adventure_name = None
+            adventure_time = None
 
         async with self.bot.trusted_session.post(
             f"{self.bot.config.external.okapi_url}/api/genprofile",
@@ -217,29 +227,18 @@ IdleRPG is a global bot, your characters are valid everywhere"""
                 "image": profile["background"],
                 "race": profile["race"],
                 "classes": profile["class"],
-                "damage": sworddmg,
-                "defense": shielddef,
-                "sword_name": right_hand,
-                "shield_name": left_hand,
+                "class_icons": icons,
+                "left_hand_item": left_hand,
+                "right_hand_item": right_hand,
                 "level": f"{rpgtools.xptolevel(profile['xp'])}",
+                "guild_rank": guild_rank,
+                "guild_name": profile["guild_name"],
                 "money": f"{profile['money']}",
                 "pvp_wins": f"{profile['pvpwins']}",
-                "marriage": i
-                if (
-                    i := await rpgtools.lookup(
-                        self.bot, profile["marriage"], return_none=True
-                    )
-                )
-                else _("Not Married"),
-                "guild": guild or _("No Guild"),
+                "marriage": marriage,
                 "god": profile["god"] or _("No God"),
-                "icons": icons,
-                "adventure": (
-                    "Adventure"
-                    f" {mission[0]}\n{mission[1] if not mission[2] else _('Finished')}"
-                )
-                if mission
-                else _("No Mission"),
+                "adventure_name": adventure_name,
+                "adventure_time": adventure_time,
             },
             headers={"Authorization": self.bot.config.external.okapi_token},
         ) as req:
@@ -263,9 +262,7 @@ IdleRPG is a global bot, your characters are valid everywhere"""
                 except Exception:
                     return await ctx.send(_("Unexpected error when generating image."))
 
-        await ctx.send(
-            embed=discord.Embed(colour=discord.Colour.blurple()).set_image(url=img)
-        )
+        await ctx.send(embed=discord.Embed(colour=embed_color).set_image(url=img))
 
     @commands.command(
         aliases=["p2", "pp"], brief=_("View someone's profile differently")

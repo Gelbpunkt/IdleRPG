@@ -348,9 +348,10 @@ class Patreon(commands.Cog):
     @is_patron()
     @commands.command(brief=_("[basic] Formats an image for background compatability"))
     @locale_doc
-    async def makebackground(self, ctx, url: str):
+    async def makebackground(self, ctx, url: str, style: str = "dark"):
         _(
             """`<url>` - The image URL to format
+            `<style>` - The overlay type to use. Available options are dark and light.
 
             Generate a profile background for you. This will stretch/compress your image to 800x650 pixels and layer on an overlay.
             This will return a link you can then use for `{prefix}background`.
@@ -366,9 +367,13 @@ class Patreon(commands.Cog):
                     " `https://` and is either a png or jpeg?"
                 )
             )
+
+        if style not in ("dark", "light"):
+            return await ctx.send(_("Overlay type must be `dark` or `light`."))
+
         async with self.bot.trusted_session.post(
             f"{self.bot.config.external.okapi_url}/api/genoverlay",
-            json={"url": url},
+            json={"url": url, "style": style},
             headers={"Authorization": self.bot.config.external.okapi_token},
         ) as req:
             if req.status == 200:
