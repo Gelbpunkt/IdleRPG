@@ -12,7 +12,7 @@ GNU Affero General Public License for more details.
 You should have received a copy of the GNU Affero General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
-from asyncio import Future
+from asyncio import Future, TimeoutError
 from typing import Awaitable, Callable
 
 from discord.interactions import Interaction
@@ -82,3 +82,6 @@ class SingleJoinView(View):
             await interaction.response.send_message(
                 self.check_fail_message, ephemeral=True
             )
+
+    async def on_timeout(self) -> None:
+        self.future.set_exception(TimeoutError())
