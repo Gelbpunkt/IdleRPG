@@ -227,9 +227,16 @@ class Sharding(commands.Cog):
     async def remove_timer(self, timer_id: int, command_id: int) -> None:
         self.bot.dispatch("timer_remove", timer_id)
 
+    @staticmethod
+    def parse_timestamp(timestamp: str) -> datetime:
+        try:
+            return datetime.strptime(timestamp, "%Y-%m-%dT%H:%M:%S.%f")
+        except ValueError:
+            return datetime.strptime(timestamp, "%Y-%m-%dT%H:%M:%S")
+
     async def add_timer(self, *args, **kwargs) -> None:
-        kwargs["start"] = datetime.strptime(kwargs["start"], "%Y-%m-%dT%H:%M:%S.%f")
-        kwargs["end"] = datetime.strptime(kwargs["end"], "%Y-%m-%dT%H:%M:%S.%f")
+        kwargs["start"] = self.parse_timestamp(kwargs["start"])
+        kwargs["end"] = self.parse_timestamp(kwargs["end"])
         timer = Timer(record=kwargs)
         self.bot.dispatch("timer_add", timer)
 
