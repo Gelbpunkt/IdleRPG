@@ -37,7 +37,7 @@ class Server(commands.Cog):
         text = _("Link")
         urltext = (
             f"[{text}]({ctx.guild.icon.url})"
-            if ctx.guild.icon.url
+            if ctx.guild.icon
             else _("`No icon has been set yet!`")
         )
         em = discord.Embed(
