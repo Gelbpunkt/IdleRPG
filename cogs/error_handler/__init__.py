@@ -349,7 +349,7 @@ class Errorhandler(commands.Cog):
                 print(f"In {ctx.command.qualified_name}:", file=sys.stderr)
                 traceback.print_tb(error.original.__traceback__)
                 print(
-                    "{}: {}".format(error.original.__class__.__name__, error.original),
+                    f"{error.original.__class__.__name__}: {error.original}",
                     file=sys.stderr,
                 )
             else:
