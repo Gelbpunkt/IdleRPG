@@ -304,6 +304,8 @@ class HungerGames(commands.Cog):
         if self.games.get(ctx.channel.id):
             return await ctx.send(_("There is already a game in here!"))
 
+        self.games[ctx.channel.id] = "forming"
+
         if ctx.channel.id == self.bot.config.game.official_tournament_channel_id:
             view = JoinView(
                 Button(
