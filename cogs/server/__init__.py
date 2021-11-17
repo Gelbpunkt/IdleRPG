@@ -77,7 +77,10 @@ Server created at: `{created_at}`"""
                 total=self.bot.shard_count,
             ),
         )
-        em.set_thumbnail(url=ctx.guild.icon.url)
+
+        if ctx.guild.icon:
+            em.set_thumbnail(url=ctx.guild.icon.url)
+
         await ctx.send(embed=em)
 
     @commands.guild_only()
