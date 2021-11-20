@@ -23,7 +23,10 @@ from aiohttp import ContentTypeError
 from discord.ext import commands
 from discord.ext.commands.default import Author
 
+from classes.badges import Badge
+from classes.bot import Bot
 from classes.classes import from_string as class_from_string
+from classes.context import Context
 from classes.converters import IntFromTo, MemberWithCharacter, UserWithCharacter
 from classes.items import ALL_ITEM_TYPES, ItemType
 from cogs.adventure import ADVENTURE_NAMES
@@ -35,7 +38,7 @@ from utils.i18n import _, locale_doc
 
 
 class Profile(commands.Cog):
-    def __init__(self, bot):
+    def __init__(self, bot: Bot) -> None:
         self.bot = bot
 
     @checks.has_no_char()
@@ -219,6 +222,12 @@ IdleRPG is a global bot, your characters are valid everywhere"""
             adventure_name = None
             adventure_time = None
 
+        badge_val = Badge.from_db(profile["badges"])
+        if badge_val:
+            badges = badge_val.to_items_lowercase()
+        else:
+            badges = []
+
         async with self.bot.trusted_session.post(
             f"{self.bot.config.external.okapi_url}/api/genprofile",
             json={
@@ -239,6 +248,7 @@ IdleRPG is a global bot, your characters are valid everywhere"""
                 "god": profile["god"] or _("No God"),
                 "adventure_name": adventure_name,
                 "adventure_time": adventure_time,
+                "badges": badges,
             },
             headers={"Authorization": self.bot.config.external.okapi_token},
         ) as req:
@@ -1195,6 +1205,46 @@ IdleRPG is a global bot, your characters are valid everywhere"""
                 colour=colour
             )
         )
+
+    @checks.has_char()
+    @commands.command(brief=_("Claim your profile badges"))
+    @locale_doc
+    async def claimbadges(self, ctx: Context) -> None:
+        _(
+            """Claim all badges for your profile based on your roles. This command can only be used in the support server."""
+        )
+        if not ctx.guild or ctx.guild.id != self.bot.config.game.support_server_id:
+            await ctx.send(_("This command can only be used in the support server."))
+            return
+
+        roles = {
+            "Contributor": Badge.CONTRIBUTOR,
+            "Designer": Badge.DESIGNER,
+            "Developer": Badge.DEVELOPER,
+            "Game Designer": Badge.GAME_DESIGNER,
+            "Game Masters": Badge.GAME_MASTER,
+            "Support Team": Badge.SUPPORT,
+            "Betasquad": Badge.TESTER,
+            "Veterans": Badge.VETERAN,
+        }
+
+        badges = None
+
+        for role in ctx.author.roles:
+            if (badge := roles.get(role.name)) is not None:
+                if badges is None:
+                    badges = badge
+                else:
+                    badges |= badge
+
+        if badges is not None:
+            await self.bot.pool.execute(
+                'UPDATE profile SET "badges"=$1 WHERE "user"=$2;',
+                badges.to_db(),
+                ctx.author.id,
+            )
+
+        await ctx.send(_("Successfully updated your badges."))
 
 
 def setup(bot):

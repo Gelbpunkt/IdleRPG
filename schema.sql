@@ -17,8 +17,8 @@
 -- PostgreSQL database dump
 --
 
--- Dumped from database version 14.0
--- Dumped by pg_dump version 14.0
+-- Dumped from database version 14.1
+-- Dumped by pg_dump version 14.1
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -537,7 +537,8 @@ CREATE TABLE public.profile (
     chocolates integer DEFAULT 0,
     trickortreat bigint DEFAULT 0,
     eastereggs bigint DEFAULT 0,
-    colour public.rgba DEFAULT '(0,0,0,1)'::public.rgba
+    colour public.rgba DEFAULT '(0,0,0,1)'::public.rgba,
+    badges bit varying(16) DEFAULT '0'::"bit"
 );
 
 

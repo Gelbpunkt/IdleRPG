@@ -20,7 +20,6 @@ import io
 import re
 import textwrap
 import traceback
-import tracemalloc
 
 from contextlib import redirect_stdout
 
@@ -29,72 +28,24 @@ import discord
 from discord.ext import commands
 from tabulate import tabulate
 
+from classes.badges import Badge, BadgeConverter
+from classes.bot import Bot
+from classes.context import Context
+from classes.converters import UserWithCharacter
 from utils import random, shell
 from utils.misc import random_token
 
 
 class Owner(commands.Cog):
-    def __init__(self, bot):
+    def __init__(self, bot: Bot):
         self.bot = bot
         self._last_result = None
 
-    async def cog_check(self, ctx):
+    async def cog_check(self, ctx: Context) -> bool:
         return await self.bot.is_owner(ctx.author)
 
-    @commands.command(name="load", hidden=True)
-    async def _load(self, ctx, *, cog: str):
-        """Command which Loads a Module.
-        Remember to use dot path. e.g: cogs.owner"""
-
-        try:
-            self.bot.load_extension(cog)
-        except Exception as e:
-            await ctx.send(f"**`ERROR:`** {type(e).__name__} - {e}")
-        else:
-            await ctx.send("**`SUCCESS`**")
-
-    @commands.command(name="unload", hidden=True)
-    async def _unload(self, ctx, *, cog: str):
-        """Command which Unloads a Module.
-        Remember to use dot path. e.g: cogs.owner"""
-
-        try:
-            self.bot.unload_extension(cog)
-        except Exception as e:
-            await ctx.send(f"**`ERROR:`** {type(e).__name__} - {e}")
-        else:
-            await ctx.send("**`SUCCESS`**")
-
-    @commands.command(name="reload", hidden=True)
-    async def _reload(self, ctx, *, cog: str):
-        """Command which Reloads a Module.
-        Remember to use dot path. e.g: cogs.owner"""
-
-        try:
-            self.bot.reload_extension(cog)
-        except Exception as e:
-            await ctx.send(f"**`ERROR:`** {type(e).__name__} - {e}")
-        else:
-            await ctx.send("**`SUCCESS`**")
-
     @commands.command(hidden=True)
-    async def reloadconf(self, ctx):
-        try:
-            self.bot.config.reload()
-        except Exception as e:
-            await ctx.send(f"**`ERROR:`** {type(e).__name__} - {e}")
-        else:
-            await ctx.send("**`SUCCESS`**")
-
-    @commands.command(hidden=True)
-    async def debug(self, ctx):
-        if tracemalloc.is_tracing():
-            snapshot = tracemalloc.take_snapshot()
-            top_stats = snapshot.statistics("lineno")
-            await ctx.send("```" + "\n".join([str(x) for x in top_stats[:10]]) + "```")
-
-    @commands.command(hidden=True)
-    async def makeluck(self, ctx):
+    async def makeluck(self, ctx: Context) -> None:
         """Sets the luck for all gods to a random value and give bonus luck to the top 25 followers."""
         text_collection = ["**This week's luck has been decided:**\n"]
         all_ids = []
@@ -164,21 +115,14 @@ class Owner(commands.Cog):
         except (discord.Forbidden, discord.HTTPException) as e:
             await ctx.send(f"Could not publish the message for some reason: `{e}`")
 
-    @commands.command(hidden=True)
-    async def shutdown(self, ctx):
-        embed = discord.Embed(color=0xFF0000)
-        embed.add_field(name="Shutting down...", value="Goodbye!", inline=False)
-        await ctx.send(embed=embed)
-        await self.bot.logout()
-
-    def cleanup_code(self, content):
+    def cleanup_code(self, content: str) -> str:
         """Automatically removes code blocks from the code."""
         if content.startswith("```") and content.endswith("```"):
             return "\n".join(content.split("\n")[1:-1])
         return content.strip("` \n")
 
     @commands.command(hidden=True, name="eval")
-    async def _eval(self, ctx, *, body: str):
+    async def _eval(self, ctx: Context, *, body: str) -> None:
         """Evaluates a code"""
 
         env = {
@@ -230,7 +174,7 @@ class Owner(commands.Cog):
                 await ctx.send(f"```py\n{value}{ret}\n```")
 
     @commands.command(hidden=True)
-    async def evall(self, ctx, *, code: str):
+    async def evall(self, ctx: Context, *, code: str) -> None:
         """[Owner only] Evaluates python code on all processes."""
         data = await self.bot.cogs["Sharding"].handler(
             "evaluate", self.bot.shard_count, {"code": code}
@@ -245,12 +189,12 @@ class Owner(commands.Cog):
         await ctx.send(pretty_data)
 
     @commands.command(hidden=True)
-    async def bash(self, ctx, *, command_to_run: str):
+    async def bash(self, ctx: Context, *, command_to_run: str) -> None:
         """[Owner Only] Run shell commands."""
         await shell.run(command_to_run, ctx)
 
     @commands.command(hidden=True)
-    async def sql(self, ctx, *, query: str):
+    async def sql(self, ctx: Context, *, query: str) -> None:
         """[Owner Only] Very basic SQL command."""
         if "select" in query.lower() or "returning" in query.lower():
             type_ = "fetch"
@@ -271,7 +215,9 @@ class Owner(commands.Cog):
             await ctx.send(f"```{ret}```")
 
     @commands.command(hidden=True)
-    async def runas(self, ctx, member: discord.Member, *, command: str):
+    async def runas(
+        self, ctx: Context, member: discord.Member, *, command: str
+    ) -> None:
         """[Owner Only] Run a command as if you were the user."""
         fake_msg = copy.copy(ctx.message)
         fake_msg._update(dict(channel=ctx.channel, content=ctx.prefix + command))
@@ -319,7 +265,7 @@ class Owner(commands.Cog):
         return f"${aliases} {cmd.signature}"
 
     @commands.command(hidden=True)
-    async def makehtml(self, ctx):
+    async def makehtml(self, ctx: Context) -> None:
         """Generates HTML for commands page."""
         with open("assets/html/commands.html") as f:
             base = f.read()
@@ -378,6 +324,41 @@ class Owner(commands.Cog):
         await ctx.send(
             file=discord.File(filename="commands.html", fp=io.StringIO(html))
         )
+
+    @commands.group(hidden=True, invoke_without_command=True)
+    async def badges(self, ctx: Context, user: UserWithCharacter) -> None:
+        badges = Badge.from_db(ctx.user_data["badges"])
+
+        if badges:
+            await ctx.send(badges.to_pretty())
+        else:
+            await ctx.send("User has no badges")
+
+    @badges.command(hidden=True, name="add")
+    async def badges_add(
+        self, ctx: Context, user: UserWithCharacter, badge: BadgeConverter
+    ) -> None:
+        badges = Badge.from_db(ctx.user_data["badges"])
+        badges |= badge
+
+        await self.bot.pool.execute(
+            'UPDATE profile SET "badges"=$1 WHERE "user"=$2;', badges.to_db(), user.id
+        )
+
+        await ctx.send("Done")
+
+    @badges.command(hidden=True, name="rem", aliases=["remove", "delete", "del"])
+    async def badges_rem(
+        self, ctx: Context, user: UserWithCharacter, badge: BadgeConverter
+    ) -> None:
+        badges = Badge.from_db(ctx.user_data["badges"])
+        badges ^= badge
+
+        await self.bot.pool.execute(
+            'UPDATE profile SET "badges"=$1 WHERE "user"=$2;', badges.to_db(), user.id
+        )
+
+        await ctx.send("Done")
 
 
 def setup(bot):
