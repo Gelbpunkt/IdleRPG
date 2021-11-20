@@ -128,7 +128,7 @@ class Scheduling(commands.Cog):
 
                 try:
                     await self._remind(timer)
-                except (discord.NotFound, discord.Forbidden):
+                except Exception:
                     pass
         except asyncio.CancelledError:
             raise
