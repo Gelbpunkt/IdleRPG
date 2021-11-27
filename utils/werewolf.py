@@ -1856,7 +1856,7 @@ class Player:
             _(
                 "Your new {relationship} is: **{new_member}**. They don't know yet"
                 " the other members of the family."
-            ).form(relationship=relationship, new_member=new_member.user)
+            ).format(relationship=relationship, new_member=new_member.user)
         )
 
     async def check_player_card(self) -> None:
