@@ -1,5 +1,5 @@
 #!/usr/bin/bash
-#img-optimize assets/ --jpg --png --webp
+img-optimize ./ --jpg --png --webp
 for f in **/*.png.webp; do
     mv -- "$f" "${f%.png.webp}.webp"
 done

@@ -65,11 +65,7 @@ class Christmas(commands.Cog):
         today = datetime.datetime.now().day
         if today > 25 or today < 1:
             return await ctx.send(_("No calendar to show!"))
-        await ctx.send(
-            file=discord.File(
-                f"assets/calendar/24 days of IdleRPG - {today - 1} open.webp"
-            )
-        )
+        await ctx.send(file=discord.File("assets/calendar/24 days of IdleRPG.webp"))
 
     @has_char()
     @next_day_cooldown()  # truly make sure they use it once a day
@@ -78,8 +74,8 @@ class Christmas(commands.Cog):
     async def _open(self, ctx):
         _("""Open the Winter Calendar once every day.""")
         today = datetime.datetime.utcnow().date()
-        christmas_too_late = datetime.date(2020, 12, 25)
-        first_dec = datetime.date(2020, 12, 1)
+        christmas_too_late = datetime.date(2021, 12, 25)
+        first_dec = datetime.date(2021, 12, 1)
         if today >= christmas_too_late or today < first_dec:
             return await ctx.send(_("It's not calendar time yet..."))
         reward = rewards[today.day]
@@ -97,8 +93,8 @@ class Christmas(commands.Cog):
                     ["legendary"]
                     + ["magic"] * 2
                     + ["rare"] * 5
-                    + ["uncommon"] * 5
-                    + ["common"] * 5
+                    + ["uncommon"] * 10
+                    + ["common"] * 20
                 )
                 await conn.execute(
                     f'UPDATE profile SET "crates_{rarity}"="crates_{rarity}"+$1 WHERE'
@@ -133,19 +129,6 @@ class Christmas(commands.Cog):
                     conn=conn,
                 )
                 reward_text = f"{reward_text}\n- ${reward['money']}"
-            if today.day == 24:
-                bg_num = random.randint(1, 7)
-                await conn.execute(
-                    'UPDATE profile SET "backgrounds"=array_append("backgrounds", $1)'
-                    ' WHERE "user"=$2;',
-                    f"https://idlerpg.xyz/image/winter2020_{bg_num}.png",
-                    ctx.author.id,
-                )
-                text = _(
-                    "A special surprise - check out `{prefix}eventbackground` for a new"
-                    " Wintersday background!"
-                ).format(prefix=ctx.prefix)
-                reward_text = f"{reward_text}\n- {text}"
         await ctx.send(reward_text)
 
     @has_char()
@@ -160,8 +143,7 @@ class Christmas(commands.Cog):
                     " missing?"
                 )
             )
-        bg_num = random.randint(1, 7)
-        bg = f"https://idlerpg.xyz/image/winter2020_{bg_num}.png"
+        bg = "https://idlerpg.xyz/image/winter2021.png"
         bgs = await self.bot.pool.fetchval(
             'UPDATE profile SET "backgrounds"=array_append("backgrounds", $1), "puzzles"=0 WHERE'
             ' "user"=$2 RETURNING "backgrounds";',
