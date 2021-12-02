@@ -138,16 +138,16 @@ class Raid(commands.Cog):
             overwrite=self.read_only,
         )
 
-        fi = discord.File("assets/other/dragon.webp")
+        fi = discord.File("assets/other/snowman.webp")
         em = discord.Embed(
-            title="Zerekiel Spawned",
+            title="Frosty Spawned",
             description=(
                 f"This boss has {self.boss['hp']:,.0f} HP and has high-end loot!\nThe"
-                " evil dragon will be vulnerable in 15 Minutes!"
+                " evil snowman will be vulnerable in 15 Minutes!"
             ),
             color=self.bot.config.game.primary_colour,
         )
-        em.set_image(url="attachment://dragon.webp")
+        em.set_image(url="attachment://snowman.webp")
         em.set_thumbnail(url=ctx.author.display_avatar.url)
 
         view = JoinView(
@@ -163,7 +163,7 @@ class Raid(commands.Cog):
         if not self.bot.config.bot.is_beta:
             summary_channel = self.bot.get_channel(506_167_065_464_406_041)
             raid_ping = await summary_channel.send(
-                "@everyone Zerekiel spawned! 15 Minutes until he is vulnerable...",
+                "@everyone Frosty spawned! 15 Minutes until he is vulnerable...",
                 allowed_mentions=discord.AllowedMentions.all(),
             )
             try:
@@ -179,17 +179,17 @@ class Raid(commands.Cog):
                 )
 
             await asyncio.sleep(300)
-            await ctx.send("**The dragon will be vulnerable in 10 minutes**")
+            await ctx.send("**The snowman will be vulnerable in 10 minutes**")
             await asyncio.sleep(300)
-            await ctx.send("**The dragon will be vulnerable in 5 minutes**")
+            await ctx.send("**The snowman will be vulnerable in 5 minutes**")
             await asyncio.sleep(180)
-            await ctx.send("**The dragon will be vulnerable in 2 minutes**")
+            await ctx.send("**The snowman will be vulnerable in 2 minutes**")
             await asyncio.sleep(60)
-            await ctx.send("**The dragon will be vulnerable in 1 minute**")
+            await ctx.send("**The snowman will be vulnerable in 1 minute**")
             await asyncio.sleep(30)
-            await ctx.send("**The dragon will be vulnerable in 30 seconds**")
+            await ctx.send("**The snowman will be vulnerable in 30 seconds**")
             await asyncio.sleep(20)
-            await ctx.send("**The dragon will be vulnerable in 10 seconds**")
+            await ctx.send("**The snowman will be vulnerable in 10 seconds**")
             await asyncio.sleep(10)
         else:
             await asyncio.sleep(60)
@@ -197,7 +197,7 @@ class Raid(commands.Cog):
         view.stop()
 
         await ctx.send(
-            "**The dragon is vulnerable! Fetching participant data... Hang on!**"
+            "**The snowman is vulnerable! Fetching participant data... Hang on!**"
         )
 
         raid = {}
@@ -240,13 +240,13 @@ class Raid(commands.Cog):
             raid[target]["hp"] -= finaldmg  # damage dealt
             if raid[target]["hp"] > 0:
                 em = discord.Embed(
-                    title="Zerekiel attacked!",
+                    title="Frosty attacked!",
                     description=f"{target} now has {raid[target]['hp']} HP!",
                     colour=0xFFB900,
                 )
             else:
                 em = discord.Embed(
-                    title="Zerekiel attacked!",
+                    title="Frosty attacked!",
                     description=f"{target} died!",
                     colour=0xFFB900,
                 )
@@ -256,14 +256,14 @@ class Raid(commands.Cog):
             em.add_field(name="Shield", value=raid[target]["armor"])
             em.add_field(name="Effective Damage", value=finaldmg)
             em.set_author(name=str(target), icon_url=target.display_avatar.url)
-            em.set_thumbnail(url=f"{self.bot.BASE_URL}/dragon.jpg")
+            em.set_thumbnail(url=f"{self.bot.BASE_URL}/snowman.png")
             await ctx.send(target.mention, embed=em)
             if raid[target]["hp"] <= 0:
                 del raid[target]
             dmg_to_take = sum(i["damage"] for i in raid.values())
             self.boss["hp"] -= dmg_to_take
             await asyncio.sleep(4)
-            em = discord.Embed(title="The raid attacked the dragon!", colour=0xFF5C00)
+            em = discord.Embed(title="The raid attacked Frosty!", colour=0xFF5C00)
             em.set_thumbnail(url=f"{self.bot.BASE_URL}/knight.jpg")
             em.add_field(name="Damage", value=dmg_to_take)
             if self.boss["hp"] > 0:
@@ -277,7 +277,7 @@ class Raid(commands.Cog):
             m = await ctx.send("The raid was all wiped!")
             await m.add_reaction("\U0001F1EB")
             summary_text = (
-                "Emoji_here The raid was all wiped! Zerekiel had"
+                "Emoji_here The raid was all wiped! Frosty had"
                 f" **{self.boss['hp']:,.3f}** health remaining. Better luck next time."
             )
         elif self.boss["hp"] < 1:
@@ -385,7 +385,7 @@ class Raid(commands.Cog):
                 users,
             )
             await ctx.send(
-                f"**Gave ${cash:,.0f} of Zerekiel's ${cash_pool:,.0f} drop to all"
+                f"**Gave ${cash:,.0f} of Frosty's ${cash_pool:,.0f} drop to all"
                 " survivors!**"
             )
 
@@ -398,12 +398,12 @@ class Raid(commands.Cog):
 
         else:
             m = await ctx.send(
-                "The raid did not manage to kill Zerekiel within 45 Minutes... He"
+                "The raid did not manage to kill Frosty within 45 Minutes... He"
                 " disappeared!"
             )
             await m.add_reaction("\U0001F1EB")
             summary_text = (
-                "Emoji_here The raid did not manage to kill Zerekiel within 45"
+                "Emoji_here The raid did not manage to kill Frosty within 45"
                 f" Minutes... He disappeared with **{self.boss['hp']:,.3f}** health"
                 " remaining."
             )
