@@ -15,6 +15,7 @@ GNU Affero General Public License for more details.
 You should have received a copy of the GNU Affero General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
+import asyncio
 import math
 
 from datetime import timedelta
@@ -22,8 +23,12 @@ from datetime import timedelta
 import discord
 
 from asyncpg import UniqueViolationError
-from discord.ext import commands, menus
+from discord.ext import commands
+from discord.interactions import Interaction
+from discord.ui import Button, View, button
 
+from classes.bot import Bot
+from classes.context import Context
 from utils.checks import has_open_help_request, is_supporter
 from utils.i18n import _, locale_doc
 
@@ -34,22 +39,34 @@ def chunks(iterable, size):
         yield iterable[i : i + size]
 
 
-class CogMenu(menus.Menu):
-    def __init__(self, *args, **kwargs):
-        self.title = kwargs.pop("title")
-        self.description = kwargs.pop("description")
-        self.bot = kwargs.pop("bot")
-        self.color = kwargs.pop("color")
-        self.footer = kwargs.pop("footer")
-        self.per_page = kwargs.pop("per_page", 5)
+class CogMenu(View):
+    def __init__(
+        self,
+        *,
+        title: str,
+        description: str,
+        bot: Bot,
+        color: int,
+        footer: str,
+        per_page: int = 5,
+    ) -> None:
+        self.title = title
+        self.description = description
+        self.bot = bot
+        self.color = color
+        self.footer = footer
+        self.per_page = per_page
         self.page = 1
-        super().__init__(*args, timeout=60.0, delete_message_after=True, **kwargs)
+        self.message: discord.Message | None = None
+        self.allowed_user: discord.User | None = None
+
+        super().__init__(timeout=60.0)
 
     @property
-    def pages(self):
+    def pages(self) -> int:
         return math.ceil(len(self.description) / self.per_page)
 
-    def embed(self, desc):
+    def embed(self, desc: str) -> discord.Embed:
         e = discord.Embed(
             title=self.title, color=self.color, description="\n".join(desc)
         )
@@ -63,56 +80,103 @@ class CogMenu(menus.Menu):
         )
         return e
 
-    def should_add_reactions(self):
+    def should_process(self) -> bool:
         return len(self.description) > self.per_page
 
-    async def send_initial_message(self, ctx, channel):
-        e = self.embed(self.description[0 : self.per_page])
-        return await channel.send(embed=e)
+    def cleanup(self) -> None:
+        asyncio.create_task(self.message.delete())
 
-    @menus.button("\N{BLACK LEFT-POINTING TRIANGLE}\ufe0f")
-    async def on_previous_page(self, payload):
+    async def on_timeout(self) -> None:
+        self.cleanup()
+
+    async def start(self, ctx: Context) -> None:
+        self.allowed_user = ctx.author
+        e = self.embed(self.description[0 : self.per_page])
+
+        if self.should_process():
+            self.message = await ctx.send(embed=e, view=self)
+        else:
+            self.message = await ctx.send(embed=e)
+
+    async def update(self) -> None:
+        start = (self.page - 1) * self.per_page
+        end = self.page * self.per_page
+        items = self.description[start:end]
+        e = self.embed(items)
+        await self.message.edit(embed=e)
+
+    async def interaction_check(self, interaction: discord.Interaction) -> bool:
+        if self.allowed_user.id == interaction.user.id:
+            return True
+        else:
+            asyncio.create_task(
+                interaction.response.send_message(
+                    _("This command was not initiated by you."), ephemeral=True
+                )
+            )
+            return False
+
+    @button(
+        label="Previous",
+        style=discord.ButtonStyle.blurple,
+        emoji="\N{BLACK LEFT-POINTING TRIANGLE}\ufe0f",
+    )
+    async def on_previous_page(self, button: Button, interaction: Interaction) -> None:
         if self.page != 1:
             self.page -= 1
-            start = (self.page - 1) * self.per_page
-            end = self.page * self.per_page
-            items = self.description[start:end]
-            e = self.embed(items)
-            await self.message.edit(embed=e)
+            await self.update()
 
-    @menus.button("\N{BLACK SQUARE FOR STOP}\ufe0f")
-    async def on_stop(self, payload):
+    @button(
+        label="Stop",
+        style=discord.ButtonStyle.red,
+        emoji="\N{BLACK SQUARE FOR STOP}\ufe0f",
+    )
+    async def on_stop(self, button: Button, interaction: Interaction) -> None:
+        self.cleanup()
         self.stop()
 
-    @menus.button("\N{BLACK RIGHT-POINTING TRIANGLE}\ufe0f")
-    async def on_next_page(self, payload):
+    @button(
+        label="Next",
+        style=discord.ButtonStyle.blurple,
+        emoji="\N{BLACK RIGHT-POINTING TRIANGLE}\ufe0f",
+    )
+    async def on_next_page(self, button: Button, interaction: Interaction) -> None:
         if len(self.description) >= (self.page * self.per_page):
             self.page += 1
-            start = (self.page - 1) * self.per_page
-            end = self.page * self.per_page
-            items = self.description[start:end]
-            e = self.embed(items)
-            await self.message.edit(embed=e)
+            await self.update()
 
 
-class SubcommandMenu(menus.Menu):
-    def __init__(self, *args, **kwargs):
-        self.cmds = kwargs.pop("cmds")
-        self.title = kwargs.pop("title")
-        self.description = kwargs.pop("description")
-        self.bot = kwargs.pop("bot")
-        self.color = kwargs.pop("color")
-        self.per_page = kwargs.pop("per_page", 5)
+class SubcommandMenu(View):
+    def __init__(
+        self,
+        *,
+        cmds: list[commands.Command],
+        title: str,
+        description: str,
+        bot: Bot,
+        color: int,
+        per_page: int = 5,
+    ) -> None:
+        self.cmds = cmds
+        self.title = title
+        self.description = description
+        self.bot = bot
+        self.color = color
+        self.per_page = per_page
         self.page = 1
         self.group_emoji = "💠"
         self.command_emoji = "🔷"
-        super().__init__(*args, timeout=60.0, delete_message_after=True, **kwargs)
+
+        self.message: discord.Message | None = None
+        self.ctx: commands.Context | None = None
+
+        super().__init__(timeout=60.0)
 
     @property
-    def pages(self):
+    def pages(self) -> int:
         return math.ceil(len(self.cmds) / self.per_page)
 
-    def embed(self, cmds):
+    def embed(self, cmds: list[commands.Command]) -> discord.Embed:
         e = discord.Embed(
             title=self.title, color=self.color, description=self.description
         )
@@ -130,46 +194,80 @@ class SubcommandMenu(menus.Menu):
                 ]
             ),
         )
-        if self.should_add_reactions():
+        if self.should_process():
             e.set_footer(
                 icon_url=self.bot.user.display_avatar.url,
                 text=_(
-                    "Click on the reactions to see more subcommands. | Page"
+                    "Click on the buttons to see more subcommands. | Page"
                     " {start}/{end}"
                 ).format(start=self.page, end=self.pages),
             )
         return e
 
-    def should_add_reactions(self):
+    def should_process(self) -> bool:
         return len(self.cmds) > self.per_page
 
-    async def send_initial_message(self, ctx, channel):
-        e = self.embed(self.cmds[0 : self.per_page])
-        return await channel.send(embed=e)
+    def cleanup(self) -> None:
+        asyncio.create_task(self.message.delete())
 
-    @menus.button("\N{BLACK LEFT-POINTING TRIANGLE}\ufe0f")
-    async def on_previous_page(self, payload):
+    async def on_timeout(self) -> None:
+        self.cleanup()
+
+    async def start(self, ctx: Context) -> None:
+        self.ctx = ctx
+        e = self.embed(self.cmds[0 : self.per_page])
+
+        if self.should_process():
+            self.message = await ctx.send(embed=e, view=self)
+        else:
+            self.message = await ctx.send(embed=e)
+
+    async def update(self) -> None:
+        start = (self.page - 1) * self.per_page
+        end = self.page * self.per_page
+        items = self.cmds[start:end]
+        e = self.embed(items)
+        await self.message.edit(embed=e)
+
+    async def interaction_check(self, interaction: discord.Interaction) -> bool:
+        if self.ctx.author.id == interaction.user.id:
+            return True
+        else:
+            asyncio.create_task(
+                interaction.response.send_message(
+                    _("This command was not initiated by you."), ephemeral=True
+                )
+            )
+            return False
+
+    @button(
+        label="Previous",
+        style=discord.ButtonStyle.blurple,
+        emoji="\N{BLACK LEFT-POINTING TRIANGLE}\ufe0f",
+    )
+    async def on_previous_page(self, button: Button, interaction: Interaction) -> None:
         if self.page != 1:
             self.page -= 1
-            start = (self.page - 1) * self.per_page
-            end = self.page * self.per_page
-            items = self.cmds[start:end]
-            e = self.embed(items)
-            await self.message.edit(embed=e)
+            await self.update()
 
-    @menus.button("\N{BLACK SQUARE FOR STOP}\ufe0f")
-    async def on_stop(self, payload):
+    @button(
+        label="Stop",
+        style=discord.ButtonStyle.red,
+        emoji="\N{BLACK SQUARE FOR STOP}\ufe0f",
+    )
+    async def on_stop(self, button: Button, interaction: Interaction) -> None:
+        self.cleanup()
         self.stop()
 
-    @menus.button("\N{BLACK RIGHT-POINTING TRIANGLE}\ufe0f")
-    async def on_next_page(self, payload):
+    @button(
+        label="Next",
+        style=discord.ButtonStyle.blurple,
+        emoji="\N{BLACK RIGHT-POINTING TRIANGLE}\ufe0f",
+    )
+    async def on_next_page(self, button: Button, interaction: Interaction) -> None:
         if len(self.cmds) >= (self.page * self.per_page):
             self.page += 1
-            start = (self.page - 1) * self.per_page
-            end = self.page * self.per_page
-            items = self.cmds[start:end]
-            e = self.embed(items)
-            await self.message.edit(embed=e)
+            await self.update()
 
 
 class Help(commands.Cog):
@@ -645,7 +743,7 @@ class IdleHelp(commands.HelpCommand):
         await menu.start(self.context)
 
 
-def setup(bot):
+def setup(bot: Bot) -> None:
     bot.remove_command("help")
     bot.add_cog(Help(bot))
     bot.help_command = IdleHelp()
