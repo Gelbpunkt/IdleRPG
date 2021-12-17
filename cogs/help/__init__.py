@@ -24,6 +24,7 @@ import discord
 
 from asyncpg import UniqueViolationError
 from discord.ext import commands
+from discord.ext.commands.core import Command
 from discord.interactions import Interaction
 from discord.ui import Button, View, button
 
@@ -666,7 +667,7 @@ class IdleHelp(commands.HelpCommand):
             color=self.context.bot.config.game.primary_colour,
             description=[
                 f"{self.group_emoji if isinstance(c, commands.Group) else self.command_emoji}"
-                f" `{self.context.clean_prefix}{c.qualified_name} {c.signature}` - {_(c.brief)}"
+                f" `{self.context.clean_prefix}{c.qualified_name} {c.signature}` - {_(c.brief) if c.brief else _('No brief help available')}"
                 for c in cog.get_commands()
             ],
             footer=_("See '{prefix}help <command>' for more detailed info").format(
@@ -676,7 +677,7 @@ class IdleHelp(commands.HelpCommand):
 
         await menu.start(self.context)
 
-    async def send_command_help(self, command):
+    async def send_command_help(self, command: Command):
         if command.cog:
             if (command.cog.qualified_name in self.gm_exts) and (
                 self.context.author.id not in self.context.bot.config.game.game_masters
@@ -700,7 +701,9 @@ class IdleHelp(commands.HelpCommand):
                 f" {command.signature}"
             ),
             colour=self.context.bot.config.game.primary_colour,
-            description=_(command.help).format(prefix=self.context.prefix),
+            description=_(command.help).format(prefix=self.context.prefix)
+            if command.help
+            else _("No help available"),
         )
         e.set_author(
             name=self.context.bot.user,
