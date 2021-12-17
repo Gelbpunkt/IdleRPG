@@ -23,6 +23,7 @@ from aiohttp.client_exceptions import ContentTypeError
 from asyncpg.exceptions import StringDataRightTruncationError
 from discord.ext import commands
 
+from classes.bot import Bot
 from classes.items import ItemType
 from cogs.shard_communication import next_day_cooldown
 from utils import random
@@ -37,7 +38,7 @@ from utils.i18n import _, locale_doc
 
 
 class Patreon(commands.Cog):
-    def __init__(self, bot):
+    def __init__(self, bot: Bot) -> None:
         self.bot = bot
         self.ruby_or_above = []
 
@@ -512,5 +513,5 @@ class Patreon(commands.Cog):
         await self.bot.paginator.Paginator(extras=pages).paginate(ctx)
 
 
-def setup(bot):
+def setup(bot: Bot) -> None:
     bot.add_cog(Patreon(bot))
