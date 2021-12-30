@@ -210,20 +210,6 @@ class Miscellaneous(commands.Cog):
             )
         )
 
-    @commands.command(brief=_("Show the bot's ping"))
-    @locale_doc
-    async def ping(self, ctx):
-        _("""Shows you the bot's current websocket latency in milliseconds.""")
-        await ctx.send(
-            embed=discord.Embed(
-                title=_("Pong!"),
-                description=_("My current latency is {lat}ms").format(
-                    lat=round(self.bot.latency * 1000, 2)
-                ),
-                color=0xF1C60C,
-            )
-        )
-
     @commands.command(aliases=["shorten"], brief=_("Shorten an image URL."))
     @locale_doc
     async def imgur(self, ctx, given_url: ImageUrl(ImageFormat.all) = None):

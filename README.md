@@ -25,8 +25,8 @@ Note: This requires you to have Podman and Git working. Development instances wi
 git clone https://git.travitia.xyz/Kenvyra/IdleRPG.git
 cd IdleRPG
 ./scripts/beta.sh
-podman build -t idlerpg:latest --build-arg beta=yes .
-podman run --rm -it --name idlerpg --pod idlerpgbeta -v /path/to/config.py:/idlerpg/config.py idlerpg:latest
+podman build -t idlerpg:latest .
+podman run --rm -it --name idlerpg --pod idlerpgbeta -v $(pwd)/config.py:/idlerpg/config.py:Z idlerpg:latest
 ```
 
 ### For hosting permanently

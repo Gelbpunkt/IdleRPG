@@ -17,8 +17,12 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
 from __future__ import annotations
 
-import asyncio
 import sys
+
+if sys.version_info < (3, 9):
+    raise Exception("IdleRPG requires Python 3.9")
+
+import asyncio
 
 from enum import Enum
 from pathlib import Path
@@ -31,9 +35,6 @@ import orjson
 
 from utils import random
 from utils.config import ConfigLoader
-
-if sys.version_info < (3, 9):
-    raise Exception("IdleRPG requires Python 3.9")
 
 config = ConfigLoader("config.toml")
 
