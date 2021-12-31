@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-12-17 21:51+0100\n"
+"POT-Creation-Date: 2021-12-31 13:37+0100\n"
 "PO-Revision-Date: 2021-12-17 17:22+0000\n"
 "Last-Translator: Kaya <darkkaya@gmail.com>\n"
 "Language-Team: Spanish <http://translate.travitia.xyz/projects/idlerpg/bot/"
@@ -2030,27 +2030,10 @@ msgid "You are on a daily streak of **{streak}!**"
 msgstr "¡Estás en una racha diaria de **{streak}!**"
 
 #: cogs/miscellaneous/__init__.py:213
-msgid "Show the bot's ping"
-msgstr "Mostrar el ping del bot"
-
-#: cogs/miscellaneous/__init__.py:216
-msgid "Shows you the bot's current websocket latency in milliseconds."
-msgstr "Muestra la latencia actual del websocket del bot en milisegundos."
-
-#: cogs/miscellaneous/__init__.py:219
-msgid "Pong!"
-msgstr "¡Pong!"
-
-#: cogs/miscellaneous/__init__.py:220
-#, python-brace-format
-msgid "My current latency is {lat}ms"
-msgstr "Mi latencia actual es de {lat}ms"
-
-#: cogs/miscellaneous/__init__.py:227
 msgid "Shorten an image URL."
 msgstr "Acortar la URL de una imagen."
 
-#: cogs/miscellaneous/__init__.py:231
+#: cogs/miscellaneous/__init__.py:217
 msgid ""
 "`[given_url]` - The URL to shorten; if not given, this command will look for "
 "image attachments\n"
@@ -2073,24 +2056,24 @@ msgstr ""
 "            En caso de que este comando falle, puede [cargar manualmente su "
 "imagen a Imgur] (https://imgur.com/upload)."
 
-#: cogs/miscellaneous/__init__.py:239
+#: cogs/miscellaneous/__init__.py:225
 msgid "Please supply a URL or an image attachment"
 msgstr "Por favor, introduce una URL o imagen"
 
-#: cogs/miscellaneous/__init__.py:242
+#: cogs/miscellaneous/__init__.py:228
 msgid "Please only use one image at a time."
 msgstr "Por favor usa sólo una imagen por comando."
 
-#: cogs/miscellaneous/__init__.py:248
+#: cogs/miscellaneous/__init__.py:234
 #, python-brace-format
 msgid "Here's your short image URL: <{link}>"
 msgstr "Aquí está tu enlace URL corto: <{link}>"
 
-#: cogs/miscellaneous/__init__.py:250
+#: cogs/miscellaneous/__init__.py:236
 msgid "Support the bot financially"
 msgstr "Apoye financieramente al bot"
 
-#: cogs/miscellaneous/__init__.py:254
+#: cogs/miscellaneous/__init__.py:240
 #, python-brace-format
 msgid ""
 "View the Patreon page of the bot. The different tiers will grant different "
@@ -2107,7 +2090,7 @@ msgstr ""
 "\n"
 "            ¡Gracias por apoyar a IdleRPG!"
 
-#: cogs/miscellaneous/__init__.py:266
+#: cogs/miscellaneous/__init__.py:252
 #, python-brace-format
 msgid ""
 "This bot has its own patreon page.\n"
@@ -2135,11 +2118,11 @@ msgstr ""
 "\n"
 "<https://patreon.com/idlerpg>"
 
-#: cogs/miscellaneous/__init__.py:281
+#: cogs/miscellaneous/__init__.py:267
 msgid "Shows the source code and license."
 msgstr "Muestra el código fuente y licencia."
 
-#: cogs/miscellaneous/__init__.py:286
+#: cogs/miscellaneous/__init__.py:272
 msgid ""
 "Shows our GitLab page and license.\n"
 "            If you want to contribute, feel free to create an account and "
@@ -2149,11 +2132,11 @@ msgstr ""
 "            Si deseas contribuir, no dudes en crear una cuenta y enviar "
 "problemas y fusionar solicitudes."
 
-#: cogs/miscellaneous/__init__.py:291
+#: cogs/miscellaneous/__init__.py:277
 msgid "Invite the bot to your server."
 msgstr "Invita al bot a tu servidor."
 
-#: cogs/miscellaneous/__init__.py:295
+#: cogs/miscellaneous/__init__.py:281
 msgid ""
 "Invite the bot to your server.\n"
 "\n"
@@ -2167,7 +2150,7 @@ msgstr ""
 "client_id=424606447867789312&scope=bot&permissions=8) en caso de que el "
 "anterior no funcione."
 
-#: cogs/miscellaneous/__init__.py:301
+#: cogs/miscellaneous/__init__.py:287
 #, python-brace-format
 msgid ""
 "You are running version **{version}** by The IdleRPG Developers.\n"
@@ -2176,11 +2159,11 @@ msgstr ""
 "Está ejecutando la versión **{version}** de The IdleRPG Developers.\n"
 "¡Invítame! https://invite.idlerpg.xyz"
 
-#: cogs/miscellaneous/__init__.py:306
+#: cogs/miscellaneous/__init__.py:292
 msgid "Join the Support server"
 msgstr "Únete al servidor de soporte"
 
-#: cogs/miscellaneous/__init__.py:310
+#: cogs/miscellaneous/__init__.py:296
 msgid ""
 "Sends you the link to join the official IdleRPG Support server.\n"
 "\n"
@@ -2192,7 +2175,7 @@ msgstr ""
 "            Utiliza este [backup link] (https://discord.gg/MSBatf6) en caso "
 "de que lo anterior no funcione."
 
-#: cogs/miscellaneous/__init__.py:316
+#: cogs/miscellaneous/__init__.py:302
 msgid ""
 "Got problems or feature requests? Looking for people to play with? Join the "
 "support server:\n"
@@ -2202,11 +2185,11 @@ msgstr ""
 "Únete al servidor de soporte:\n"
 "https://support.idlerpg.xyz"
 
-#: cogs/miscellaneous/__init__.py:321
+#: cogs/miscellaneous/__init__.py:307
 msgid "Shows statistics about the bot"
 msgstr "Muestra estadísticas sobre el bot"
 
-#: cogs/miscellaneous/__init__.py:325
+#: cogs/miscellaneous/__init__.py:311
 msgid ""
 "Show some stats about the bot, ranging from hard- and software statistics, "
 "over performance to ingame stats."
@@ -2214,20 +2197,20 @@ msgstr ""
 "Muestra algunas estadísticas sobre el bot, que van desde estadísticas de "
 "hardware y software, sobre el rendimiento hasta estadísticas del juego."
 
-#: cogs/miscellaneous/__init__.py:357
+#: cogs/miscellaneous/__init__.py:343
 msgid "IdleRPG Statistics"
 msgstr "Estadísticas IdleRPG"
 
-#: cogs/miscellaneous/__init__.py:361
+#: cogs/miscellaneous/__init__.py:347
 msgid "Official Support Server Invite: https://support.idlerpg.xyz"
 msgstr ""
 "Invitación oficial del servidor de soporte: https://support.idlerpg.xyz"
 
-#: cogs/miscellaneous/__init__.py:370
+#: cogs/miscellaneous/__init__.py:356
 msgid "Hosting Statistics"
 msgstr "Estadísticas de Alojamiento"
 
-#: cogs/miscellaneous/__init__.py:372
+#: cogs/miscellaneous/__init__.py:358
 #, python-brace-format
 msgid ""
 "CPU: **{cpu_name}**\n"
@@ -2256,11 +2239,11 @@ msgstr ""
 "Versión de PostgreSQL: **{pg_version}**\n"
 "Versión de Redis: **{redis_version}**"
 
-#: cogs/miscellaneous/__init__.py:407
+#: cogs/miscellaneous/__init__.py:393
 msgid "Bot Statistics"
 msgstr "Estadísticas del Bot"
 
-#: cogs/miscellaneous/__init__.py:409
+#: cogs/miscellaneous/__init__.py:395
 #, python-brace-format
 msgid ""
 "Code lines written: **{lines}**\n"
@@ -2277,24 +2260,24 @@ msgstr ""
 "Objetos: **{items}**\n"
 "Horas de trabajo (promedio): **{hours}**"
 
-#: cogs/miscellaneous/__init__.py:428
+#: cogs/miscellaneous/__init__.py:414
 msgid "View the uptime"
 msgstr "Ver el tiempo de actividad"
 
-#: cogs/miscellaneous/__init__.py:431
+#: cogs/miscellaneous/__init__.py:417
 msgid "Shows how long the bot has been connected to Discord."
 msgstr "Muestra el tiempo que el bot ha estado conectado a Discord."
 
-#: cogs/miscellaneous/__init__.py:433
+#: cogs/miscellaneous/__init__.py:419
 #, python-brace-format
 msgid "I am online for **{time}**."
 msgstr "Estoy online desde hace **{time}**."
 
-#: cogs/miscellaneous/__init__.py:438
+#: cogs/miscellaneous/__init__.py:424
 msgid "Talk to me"
 msgstr "Háblame"
 
-#: cogs/miscellaneous/__init__.py:442
+#: cogs/miscellaneous/__init__.py:428
 msgid ""
 "`<text>` - The text to say, must be between 3 and 60 characters.\n"
 "\n"
@@ -2304,27 +2287,27 @@ msgstr ""
 "\n"
 "            ¡Háblame! Esto utiliza un IA chatbot de soporte."
 
-#: cogs/miscellaneous/__init__.py:449
+#: cogs/miscellaneous/__init__.py:435
 msgid "Text too long or too short. May be 3 to 60 characters."
 msgstr "Texto demasiado largo o corto. Debe contener entre 3 y 60 caracteres."
 
-#: cogs/miscellaneous/__init__.py:461
+#: cogs/miscellaneous/__init__.py:447
 msgid "Our partnered bots"
 msgstr "Nuestros bots asociados"
 
-#: cogs/miscellaneous/__init__.py:464
+#: cogs/miscellaneous/__init__.py:450
 msgid "Awesome bots by other coffee-drinking individuals."
 msgstr "Grandes bots de otros individuos adictos al café."
 
-#: cogs/miscellaneous/__init__.py:466
+#: cogs/miscellaneous/__init__.py:452
 msgid "Partnered Bots"
 msgstr "Bots asociados"
 
-#: cogs/miscellaneous/__init__.py:467
+#: cogs/miscellaneous/__init__.py:453
 msgid "Awesome bots made by other people!"
 msgstr "¡Bots increíbles creados por otras personas!"
 
-#: cogs/miscellaneous/__init__.py:473
+#: cogs/miscellaneous/__init__.py:459
 msgid ""
 "Trivia, Hangman, Minesweeper, Connect 4 and more, right from your chat! A "
 "bot offering non-RPG games made by deprilula28 and Fin.\n"
@@ -2334,7 +2317,7 @@ msgstr ""
 "Este bot ofrece divertidos juegos no-RPG creados por deprilula28 y Fin.\n"
 "[top.gg Page](https://top.gg/bot/gamesrob)"
 
-#: cogs/miscellaneous/__init__.py:481
+#: cogs/miscellaneous/__init__.py:467
 msgid ""
 "Cautious Memory brings wiki-style pages to your server. Use it to document "
 "who's who in your server, inside jokes, or community lore. Includes a full "
@@ -2346,7 +2329,7 @@ msgstr ""
 "la comunidad. Incluye un sistema de permisos para mantener páginas limpias.\n"
 "[Página top.gg](https://top.gg/bot/541707781665718302)"
 
-#: cogs/miscellaneous/__init__.py:490
+#: cogs/miscellaneous/__init__.py:476
 msgid ""
 "Cleverbot is a Discord bot that will chat with you and your friends.\n"
 "[top.gg Page](https://top.gg/bot/508012980194115595)"
@@ -2354,11 +2337,11 @@ msgstr ""
 "Cleverbot es un bot de Discord que conversará contigo y con tus amigos.\n"
 "[página top.gg] (https://top.gg/bot/508012980194115595)"
 
-#: cogs/miscellaneous/__init__.py:496
+#: cogs/miscellaneous/__init__.py:482
 msgid "Search wikipedia"
 msgstr "Buscar en wikipedia"
 
-#: cogs/miscellaneous/__init__.py:500
+#: cogs/miscellaneous/__init__.py:486
 msgid ""
 "`<query>` - The wikipedia query to search for\n"
 "\n"
@@ -2368,19 +2351,19 @@ msgstr ""
 "\n"
 "            Busca en Wikipedia una entrada."
 
-#: cogs/miscellaneous/__init__.py:508
+#: cogs/miscellaneous/__init__.py:494
 msgid "No wikipedia entry found."
 msgstr "No se ha encontrado ninguna entrada en Wikipedia."
 
-#: cogs/miscellaneous/__init__.py:510
+#: cogs/miscellaneous/__init__.py:496
 msgid "Could not parse article summary."
 msgstr "No se pudo analizar el resumen de ese artículo."
 
-#: cogs/miscellaneous/__init__.py:519
+#: cogs/miscellaneous/__init__.py:505
 msgid "Search the Idle Wiki"
 msgstr "Buscar en el Wiki Idle"
 
-#: cogs/miscellaneous/__init__.py:523
+#: cogs/miscellaneous/__init__.py:509
 msgid ""
 "`[query]` - The idlewiki query to search for\n"
 "\n"
@@ -2390,7 +2373,7 @@ msgstr ""
 "\n"
 "            Busca en la wiki de Idle una entrada."
 
-#: cogs/miscellaneous/__init__.py:530
+#: cogs/miscellaneous/__init__.py:516
 msgid ""
 "Check out the official IdleRPG Wiki here:\n"
 "<https://wiki.idlerpg.xyz/index.php?title=Main_Page>"
@@ -2398,23 +2381,23 @@ msgstr ""
 "Pásate por la pagina oficial de IdleRPG Wiki aquí:\n"
 "<https://wiki.idlerpg.xyz/index.php?title=Main_Page>"
 
-#: cogs/miscellaneous/__init__.py:538
+#: cogs/miscellaneous/__init__.py:524
 msgid "No entry found."
 msgstr "No se encontró ninguna entrada."
 
-#: cogs/miscellaneous/__init__.py:541
+#: cogs/miscellaneous/__init__.py:527
 msgid "No content to display."
 msgstr "No hay contenido que mostrar."
 
-#: cogs/miscellaneous/__init__.py:551
+#: cogs/miscellaneous/__init__.py:537
 msgid "Info about the bot and related sites"
 msgstr "Información sobre el bot y sitios relacionados"
 
-#: cogs/miscellaneous/__init__.py:555
+#: cogs/miscellaneous/__init__.py:541
 msgid "About the bot and our websites."
 msgstr "Sobre el bot y nuestros sitios web."
 
-#: cogs/miscellaneous/__init__.py:559
+#: cogs/miscellaneous/__init__.py:545
 #, no-python-format
 msgid ""
 "**IdleRPG** is Discord's most advanced medieval RPG bot.\n"
@@ -2465,16 +2448,16 @@ msgstr ""
 "<https://www.ncpgambling.org/help-treatment/national-helpline-1-800-522-4700/"
 "> - Línea de ayuda de ludopatía"
 
-#: cogs/miscellaneous/__init__.py:582
+#: cogs/miscellaneous/__init__.py:568
 msgid "Show the rules again"
 msgstr "Mostrar las reglas nuevamente"
 
-#: cogs/miscellaneous/__init__.py:586
+#: cogs/miscellaneous/__init__.py:572
 msgid ""
 "Shows the rules you consent to when creating a character. Don't forget them!"
 msgstr "Muestra las reglas que aceptas al crear un personaje. ¡No los olvides!"
 
-#: cogs/miscellaneous/__init__.py:590
+#: cogs/miscellaneous/__init__.py:576
 msgid ""
 "1) Only up to two characters per individual\n"
 "2) No abusing or benefiting from bugs or exploits\n"
@@ -8310,48 +8293,6 @@ msgstr ""
 "\n"
 "- <https://top.gg/bot/idlerpg>\n"
 "- <https://discord.ly/idlerpg>"
-
-#: cogs/custom/__init__.py:74
-msgid "A custom command for ExZyond to express several emotions."
-msgstr "Un comando a medida por ExZyond para expresar diversas emociones."
-
-#: cogs/custom/__init__.py:80
-msgid ""
-"*A custom command for ExZyond to express several emotions.*\n"
-"\n"
-"            This custom group of commands were added on December 1st 2020, "
-"requested by User ExZyond."
-msgstr ""
-"*Un comando a medida por ExZyond para expresar diversas emociones.*\n"
-"\n"
-" Este grupo de comandos a medida fueron añadidos el 1 de diciembre del 2020, "
-"pedidos por el usuario ExZyond."
-
-#: cogs/custom/__init__.py:99
-msgid ""
-"Daley's custom command. In honor of his brother \"Dack\", a fellow lover of "
-"RPGs."
-msgstr ""
-"Comando personalizado de Daley. En honor a su hermano \"Dack\", otro amante "
-"de los RPGs."
-
-#: cogs/custom/__init__.py:105
-msgid ""
-"Daley's custom command. In honor of his brother \"Dack\", a fellow lover of "
-"RPGs.\n"
-"\n"
-"            This custom command was added on June 2nd 2021, requested by "
-"User Daley."
-msgstr ""
-"Comando personalizado de Daley. En honor a su hermano \"Dack\", otro amante "
-"de los RPGs.\n"
-"\n"
-" Este comando personalizado fue añadido el 2 de junio de 2021, pedido por el "
-"usuario Daley."
-
-#: cogs/custom/__init__.py:111
-msgid "Here's the steak you requested, courtesy of Dack's Diner!"
-msgstr "Aquí tienes el filete que has pedido, ¡cortesía del cenador de Dack!"
 
 #: cogs/profile/__init__.py:46
 msgid "Create a new character"
@@ -14426,6 +14367,57 @@ msgid ""
 msgstr ""
 "📢 {sheriff} ha sido elegido como el nuevo 🎖️ **sheriff**. **El voto del "
 "sheriff cuenta el doble.**"
+
+#~ msgid "Show the bot's ping"
+#~ msgstr "Mostrar el ping del bot"
+
+#~ msgid "Shows you the bot's current websocket latency in milliseconds."
+#~ msgstr "Muestra la latencia actual del websocket del bot en milisegundos."
+
+#~ msgid "Pong!"
+#~ msgstr "¡Pong!"
+
+#, python-brace-format
+#~ msgid "My current latency is {lat}ms"
+#~ msgstr "Mi latencia actual es de {lat}ms"
+
+#~ msgid "A custom command for ExZyond to express several emotions."
+#~ msgstr "Un comando a medida por ExZyond para expresar diversas emociones."
+
+#~ msgid ""
+#~ "*A custom command for ExZyond to express several emotions.*\n"
+#~ "\n"
+#~ "            This custom group of commands were added on December 1st "
+#~ "2020, requested by User ExZyond."
+#~ msgstr ""
+#~ "*Un comando a medida por ExZyond para expresar diversas emociones.*\n"
+#~ "\n"
+#~ " Este grupo de comandos a medida fueron añadidos el 1 de diciembre del "
+#~ "2020, pedidos por el usuario ExZyond."
+
+#~ msgid ""
+#~ "Daley's custom command. In honor of his brother \"Dack\", a fellow lover "
+#~ "of RPGs."
+#~ msgstr ""
+#~ "Comando personalizado de Daley. En honor a su hermano \"Dack\", otro "
+#~ "amante de los RPGs."
+
+#~ msgid ""
+#~ "Daley's custom command. In honor of his brother \"Dack\", a fellow lover "
+#~ "of RPGs.\n"
+#~ "\n"
+#~ "            This custom command was added on June 2nd 2021, requested by "
+#~ "User Daley."
+#~ msgstr ""
+#~ "Comando personalizado de Daley. En honor a su hermano \"Dack\", otro "
+#~ "amante de los RPGs.\n"
+#~ "\n"
+#~ " Este comando personalizado fue añadido el 2 de junio de 2021, pedido por "
+#~ "el usuario Daley."
+
+#~ msgid "Here's the steak you requested, courtesy of Dack's Diner!"
+#~ msgstr ""
+#~ "Aquí tienes el filete que has pedido, ¡cortesía del cenador de Dack!"
 
 #, python-brace-format
 #~ msgid ""
