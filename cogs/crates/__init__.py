@@ -67,7 +67,7 @@ class Crates(commands.Cog):
             title=_("Your Crates"), color=discord.Color.blurple()
         ).set_author(name=ctx.disp, icon_url=ctx.author.display_avatar.url)
 
-        for rarity in ("common", "uncommon", "rare", "magic", "legendary"):
+        for rarity in ("common", "uncommon", "rare", "magic", "legendary", "mystery"):
             amount = ctx.character_data[f"crates_{rarity}"]
             embed.add_field(
                 name=f"{getattr(self.emotes, rarity)} {rarity.title()}",
@@ -103,138 +103,214 @@ class Crates(commands.Cog):
                 ).format(amount=amount)
             )
 
-        items = []
         async with self.bot.pool.acquire() as conn:
-            await self.bot.pool.execute(
+            await conn.execute(
                 f'UPDATE profile SET "crates_{rarity}"="crates_{rarity}"-$1 WHERE'
                 ' "user"=$2;',
                 amount,
                 ctx.author.id,
             )
-            for _i in range(amount):
-                # A number to detemine the crate item range
-                rand = random.randint(0, 9)
-                if rarity == "common":
-                    if rand < 2:  # 20% 20-30
-                        minstat, maxstat = (20, 30)
-                    elif rand < 5:  # 30% 10-19
-                        minstat, maxstat = (10, 19)
-                    else:  # 50% 1-9
-                        minstat, maxstat = (1, 9)
-                elif rarity == "uncommon":
-                    if rand < 2:  # 20% 30-35
-                        minstat, maxstat = (30, 35)
-                    elif rand < 5:  # 30% 20-29
-                        minstat, maxstat = (20, 29)
-                    else:  # 50% 10-19
-                        minstat, maxstat = (10, 19)
-                elif rarity == "rare":
-                    if rand < 2:  # 20% 35-40
-                        minstat, maxstat = (35, 40)
-                    elif rand < 5:  # 30% 30-34
-                        minstat, maxstat = (30, 34)
-                    else:  # 50% 20-29
-                        minstat, maxstat = (20, 29)
-                elif rarity == "magic":
-                    if rand < 2:  # 20% 41-45
-                        minstat, maxstat = (41, 45)
-                    elif rand < 5:  # 30% 35-40
-                        minstat, maxstat = (35, 40)
-                    else:
-                        minstat, maxstat = (30, 34)
-                elif rarity == "legendary":  # no else because why
-                    if rand < 2:  # 20% 49-50
-                        minstat, maxstat = (49, 50)
-                    elif rand < 5:  # 30% 46-48
-                        minstat, maxstat = (46, 48)
-                    else:  # 50% 41-45
-                        minstat, maxstat = (41, 45)
 
-                item = await self.bot.create_random_item(
-                    minstat=minstat,
-                    maxstat=maxstat,
-                    minvalue=1,
-                    maxvalue=250,
-                    owner=ctx.author,
-                    conn=conn,
+            if rarity == "mystery":
+                crates = {
+                    "common": 0,
+                    "uncommon": 0,
+                    "rare": 0,
+                    "magic": 0,
+                    "legendary": 0,
+                }
+
+                for _i in range(amount):
+                    rng = random.randint(0, 10000)
+
+                    if rng < 20:
+                        new_rarity = "legendary"
+                    elif rng < 200:
+                        new_rarity = "magic"
+                    elif rng < 1000:
+                        new_rarity = "rare"
+                    elif rng < 2000:
+                        new_rarity = "uncommon"
+                    else:
+                        new_rarity = "common"
+
+                    crates[new_rarity] += 1
+
+                await conn.execute(
+                    'UPDATE profile SET "crates_common"="crates_common"+$1, "crates_uncommon"="crates_uncommon"+$2, "crates_rare"="crates_rare"+$3, "crates_magic"="crates_magic"+$4, "crates_legendary"="crates_legendary"+$5 WHERE "user"=$6;',
+                    crates["common"],
+                    crates["uncommon"],
+                    crates["rare"],
+                    crates["magic"],
+                    crates["legendary"],
+                    ctx.author.id,
                 )
-                items.append(item)
-                await self.bot.log_transaction(
-                    ctx,
-                    from_=1,
-                    to=ctx.author.id,
-                    subject="item",
-                    data={"Name": item["name"], "Value": item["value"]},
-                    conn=conn,
-                )
-        if amount == 1:
-            embed = discord.Embed(
-                title=_("You gained an item!"),
-                description=_("You found a new item when opening a crate!"),
-                color=0xFF0000,
-            )
-            embed.set_thumbnail(url=ctx.author.display_avatar.url)
-            embed.add_field(name=_("ID"), value=item["id"], inline=False)
-            embed.add_field(name=_("Name"), value=item["name"], inline=False)
-            embed.add_field(name=_("Type"), value=item["type"], inline=False)
-            embed.add_field(name=_("Damage"), value=item["damage"], inline=True)
-            embed.add_field(name=_("Armor"), value=item["armor"], inline=True)
-            embed.add_field(name=_("Value"), value=f"${item['value']}", inline=False)
-            embed.set_footer(
-                text=_("Remaining {rarity} crates: {crates}").format(
-                    crates=ctx.character_data[f"crates_{rarity}"] - 1, rarity=rarity
-                )
-            )
-            await ctx.send(embed=embed)
-            if rarity == "legendary":
-                await self.bot.public_log(
-                    f"**{ctx.author}** opened a legendary crate and received"
-                    f" {item['name']} with **{item['damage'] or item['armor']}"
-                    f" {'damage' if item['damage'] else 'armor'}**."
-                )
-            elif rarity == "magic" and item["damage"] + item["armor"] >= 41:
-                if item["damage"] >= 41:
-                    await self.bot.public_log(
-                        f"**{ctx.author}** opened a magic crate and received"
-                        f" {item['name']} with **{item['damage'] or item['armor']}"
-                        f" {'damage' if item['damage'] else 'armor'}**."
-                    )
-        else:
-            stats_raw = [i["damage"] + i["armor"] for i in items]
-            stats = Counter(stats_raw)
-            types = Counter([i["type"] for i in items])
-            most_common = "\n".join(
-                [f"- {i[0]} (x{i[1]})" for i in stats.most_common(5)]
-            )
-            most_common_types = "\n".join(
-                [f"- {i[0]} (x{i[1]})" for i in types.most_common()]
-            )
-            top = "\n".join([f"- {i}" for i in sorted(stats, reverse=True)[:5]])
-            average_stat = round(sum(stats_raw) / amount, 2)
-            await ctx.send(
-                _(
-                    "Successfully opened {amount} {rarity} crates. Average stat:"
-                    " {average_stat}\nMost common stats:\n```\n{most_common}\n```\nBest"
-                    " stats:\n```\n{top}\n```\nTypes:\n```\n{most_common_types}\n```"
+
+                for r, a in crates.items():
+                    if a > 0:
+                        await self.bot.log_transaction(
+                            ctx,
+                            from_=1,
+                            to=ctx.author.id,
+                            subject="crates",
+                            data={"Rarity": r, "Amount": a},
+                            conn=conn,
+                        )
+
+                text = _(
+                    "You opened {mystery_amount} {mystery_emoji} and received:\n"
+                    "- {common_amount} {common_emoji}\n"
+                    "- {uncommon_amount} {uncommon_emoji}\n"
+                    "- {rare_amount} {rare_emoji}\n"
+                    "- {magic_amount} {magic_emoji}\n"
+                    "- {legendary_amount} {legendary_emoji}"
                 ).format(
-                    amount=amount,
-                    rarity=rarity,
-                    average_stat=average_stat,
-                    most_common=most_common,
-                    top=top,
-                    most_common_types=most_common_types,
+                    mystery_amount=amount,
+                    mystery_emoji=self.emotes.mystery,
+                    common_amount=crates["common"],
+                    common_emoji=self.emotes.common,
+                    uncommon_amount=crates["uncommon"],
+                    uncommon_emoji=self.emotes.uncommon,
+                    rare_amount=crates["rare"],
+                    rare_emoji=self.emotes.rare,
+                    magic_amount=crates["magic"],
+                    magic_emoji=self.emotes.magic,
+                    legendary_amount=crates["legendary"],
+                    legendary_emoji=self.emotes.legendary,
                 )
-            )
-            if rarity == "legendary":
-                await self.bot.public_log(
-                    f"**{ctx.author}** opened {amount} legendary crates and received"
-                    f" stats:\n```\n{most_common}\n```\nAverage: {average_stat}"
-                )
-            elif rarity == "magic":
-                await self.bot.public_log(
-                    f"**{ctx.author}** opened {amount} magic crates and received"
-                    f" stats:\n```\n{most_common}\n```\nAverage: {average_stat}"
-                )
+
+                await ctx.send(text)
+
+            else:
+                items = []
+                for _i in range(amount):
+                    # A number to detemine the crate item range
+                    rand = random.randint(0, 9)
+                    if rarity == "common":
+                        if rand < 2:  # 20% 20-30
+                            minstat, maxstat = (20, 30)
+                        elif rand < 5:  # 30% 10-19
+                            minstat, maxstat = (10, 19)
+                        else:  # 50% 1-9
+                            minstat, maxstat = (1, 9)
+                    elif rarity == "uncommon":
+                        if rand < 2:  # 20% 30-35
+                            minstat, maxstat = (30, 35)
+                        elif rand < 5:  # 30% 20-29
+                            minstat, maxstat = (20, 29)
+                        else:  # 50% 10-19
+                            minstat, maxstat = (10, 19)
+                    elif rarity == "rare":
+                        if rand < 2:  # 20% 35-40
+                            minstat, maxstat = (35, 40)
+                        elif rand < 5:  # 30% 30-34
+                            minstat, maxstat = (30, 34)
+                        else:  # 50% 20-29
+                            minstat, maxstat = (20, 29)
+                    elif rarity == "magic":
+                        if rand < 2:  # 20% 41-45
+                            minstat, maxstat = (41, 45)
+                        elif rand < 5:  # 30% 35-40
+                            minstat, maxstat = (35, 40)
+                        else:
+                            minstat, maxstat = (30, 34)
+                    elif rarity == "legendary":  # no else because why
+                        if rand < 2:  # 20% 49-50
+                            minstat, maxstat = (49, 50)
+                        elif rand < 5:  # 30% 46-48
+                            minstat, maxstat = (46, 48)
+                        else:  # 50% 41-45
+                            minstat, maxstat = (41, 45)
+
+                    item = await self.bot.create_random_item(
+                        minstat=minstat,
+                        maxstat=maxstat,
+                        minvalue=1,
+                        maxvalue=250,
+                        owner=ctx.author,
+                        conn=conn,
+                    )
+                    items.append(item)
+                    await self.bot.log_transaction(
+                        ctx,
+                        from_=1,
+                        to=ctx.author.id,
+                        subject="item",
+                        data={"Name": item["name"], "Value": item["value"]},
+                        conn=conn,
+                    )
+
+                if amount == 1:
+                    embed = discord.Embed(
+                        title=_("You gained an item!"),
+                        description=_("You found a new item when opening a crate!"),
+                        color=0xFF0000,
+                    )
+                    embed.set_thumbnail(url=ctx.author.display_avatar.url)
+                    embed.add_field(name=_("ID"), value=item["id"], inline=False)
+                    embed.add_field(name=_("Name"), value=item["name"], inline=False)
+                    embed.add_field(name=_("Type"), value=item["type"], inline=False)
+                    embed.add_field(name=_("Damage"), value=item["damage"], inline=True)
+                    embed.add_field(name=_("Armor"), value=item["armor"], inline=True)
+                    embed.add_field(
+                        name=_("Value"), value=f"${item['value']}", inline=False
+                    )
+                    embed.set_footer(
+                        text=_("Remaining {rarity} crates: {crates}").format(
+                            crates=ctx.character_data[f"crates_{rarity}"] - 1,
+                            rarity=rarity,
+                        )
+                    )
+                    await ctx.send(embed=embed)
+                    if rarity == "legendary":
+                        await self.bot.public_log(
+                            f"**{ctx.author}** opened a legendary crate and received"
+                            f" {item['name']} with **{item['damage'] or item['armor']}"
+                            f" {'damage' if item['damage'] else 'armor'}**."
+                        )
+                    elif rarity == "magic" and item["damage"] + item["armor"] >= 41:
+                        if item["damage"] >= 41:
+                            await self.bot.public_log(
+                                f"**{ctx.author}** opened a magic crate and received"
+                                f" {item['name']} with **{item['damage'] or item['armor']}"
+                                f" {'damage' if item['damage'] else 'armor'}**."
+                            )
+                else:
+                    stats_raw = [i["damage"] + i["armor"] for i in items]
+                    stats = Counter(stats_raw)
+                    types = Counter([i["type"] for i in items])
+                    most_common = "\n".join(
+                        [f"- {i[0]} (x{i[1]})" for i in stats.most_common(5)]
+                    )
+                    most_common_types = "\n".join(
+                        [f"- {i[0]} (x{i[1]})" for i in types.most_common()]
+                    )
+                    top = "\n".join([f"- {i}" for i in sorted(stats, reverse=True)[:5]])
+                    average_stat = round(sum(stats_raw) / amount, 2)
+                    await ctx.send(
+                        _(
+                            "Successfully opened {amount} {rarity} crates. Average stat:"
+                            " {average_stat}\nMost common stats:\n```\n{most_common}\n```\nBest"
+                            " stats:\n```\n{top}\n```\nTypes:\n```\n{most_common_types}\n```"
+                        ).format(
+                            amount=amount,
+                            rarity=rarity,
+                            average_stat=average_stat,
+                            most_common=most_common,
+                            top=top,
+                            most_common_types=most_common_types,
+                        )
+                    )
+                    if rarity == "legendary":
+                        await self.bot.public_log(
+                            f"**{ctx.author}** opened {amount} legendary crates and received"
+                            f" stats:\n```\n{most_common}\n```\nAverage: {average_stat}"
+                        )
+                    elif rarity == "magic":
+                        await self.bot.public_log(
+                            f"**{ctx.author}** opened {amount} magic crates and received"
+                            f" stats:\n```\n{most_common}\n```\nAverage: {average_stat}"
+                        )
 
     @has_char()
     @commands.command(aliases=["tc"], brief=_("Give crates to someone"))

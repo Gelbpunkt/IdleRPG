@@ -538,7 +538,8 @@ CREATE TABLE public.profile (
     trickortreat bigint DEFAULT 0,
     eastereggs bigint DEFAULT 0,
     colour public.rgba DEFAULT '(0,0,0,1)'::public.rgba,
-    badges bit varying(16) DEFAULT '0'::"bit"
+    badges bit varying(16) DEFAULT '0'::"bit",
+    crates_mystery bigint DEFAULT 0
 );
 
 

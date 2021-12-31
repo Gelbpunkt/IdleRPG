@@ -139,6 +139,7 @@ class CrateRarity(commands.Converter):
             "r": "rare",
             "m": "magic",
             "l": "legendary",
+            "myst": "mystery",
         }
         rarity = rarities.get(stuff, stuff)
         if rarity not in rarities.values():
