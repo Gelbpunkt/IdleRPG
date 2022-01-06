@@ -24,8 +24,8 @@ import discord
 from discord.enums import ButtonStyle
 from discord.ext import commands
 from discord.ui.button import Button
-from classes.bot import Bot
 
+from classes.bot import Bot
 from classes.context import Context
 from classes.converters import MemberWithCharacter
 from cogs.shard_communication import alliance_on_cooldown as alliance_cooldown
@@ -144,7 +144,7 @@ class Alliance(commands.Cog):
         _(
             """`<newleader>` - A user with a character who leads a guild.
 
-            Invite a guild to your alliance. All allied guilds will benefit from your city's buildings. Once you’re allied with another guild, it will be shown in {prefix}alliance.
+            Invite a guild to your alliance. All allied guilds will benefit from your city's buildings. Once you're allied with another guild, it will be shown in {prefix}alliance.
             The other guild can't be allied with another alliance or own a city in order to be invited.
 
             Only the alliance leader can use this command.
