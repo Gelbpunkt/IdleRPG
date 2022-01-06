@@ -24,7 +24,9 @@ import discord
 from discord.enums import ButtonStyle
 from discord.ext import commands
 from discord.ui.button import Button
+from classes.bot import Bot
 
+from classes.context import Context
 from classes.converters import MemberWithCharacter
 from cogs.shard_communication import alliance_on_cooldown as alliance_cooldown
 from utils import misc as rpgtools
@@ -42,13 +44,13 @@ from utils.joins import JoinView
 
 
 class Alliance(commands.Cog):
-    def __init__(self, bot):
+    def __init__(self, bot: Bot):
         self.bot = bot
         self.cities = {name.title(): i for name, i in bot.config.cities.items()}
 
     @commands.command(brief=_("Shows cities and owners."))
     @locale_doc
-    async def cities(self, ctx):
+    async def cities(self, ctx: Context) -> None:
         _(
             """Show all cities, their tiers, owners, available buildings and current defense."""
         )
@@ -88,7 +90,7 @@ class Alliance(commands.Cog):
         invoke_without_command=True, brief=_("Interact with your alliance.")
     )
     @locale_doc
-    async def alliance(self, ctx):
+    async def alliance(self, ctx: Context) -> None:
         _(
             """Alliances are groups of guilds. Just like a guild requires at least one member, an alliance requires at least one guild and is considered a single-guild alliance.
             Alliances can occupy cities for passive bonuses given by the buildings.
@@ -138,7 +140,7 @@ class Alliance(commands.Cog):
     @has_char()
     @alliance.command(brief=_("Invite a guild to your alliance."))
     @locale_doc
-    async def invite(self, ctx, newleader: MemberWithCharacter):
+    async def invite(self, ctx: Context, newleader: MemberWithCharacter) -> None:
         _(
             """`<newleader>` - A user with a character who leads a guild.
 
@@ -220,7 +222,7 @@ class Alliance(commands.Cog):
     @is_guild_leader()
     @alliance.command(brief=_("Leave your alliance"))
     @locale_doc
-    async def leave(self, ctx):
+    async def leave(self, ctx: Context) -> None:
         _(
             """Leave your alliance. Once you left your alliance, you will no longer benefit from an owned city's buildings.
 
@@ -245,7 +247,7 @@ class Alliance(commands.Cog):
     @has_char()
     @alliance.command(brief=_("Kick a guild from your alliance"))
     @locale_doc
-    async def kick(self, ctx, *, guild_to_kick: int | str):
+    async def kick(self, ctx: Context, *, guild_to_kick: int | str) -> None:
         _(
             """`<guild_to_kick>` -  A guild's name or ID
 
@@ -293,17 +295,17 @@ class Alliance(commands.Cog):
             )
         )
 
-    def list_subcommands(self, ctx):
+    def list_subcommands(self, ctx: Context) -> list[str] | str:
         if not ctx.command.commands:
             return "None"
         return [ctx.prefix + x.qualified_name for x in ctx.command.commands]
 
-    def get_upgrade_price(self, current):
+    def get_upgrade_price(self, current: int) -> int:
         return (current + 1) * 100000
 
     @alliance.group(invoke_without_command=True, brief=_("Build buildings or defenses"))
     @locale_doc
-    async def build(self, ctx):
+    async def build(self, ctx: Context) -> None:
         _(
             """Build buildings `{prefix}alliance build building` or defenses `{prefix}alliance build defense`."""
         )
@@ -316,7 +318,7 @@ class Alliance(commands.Cog):
     @has_char()
     @build.command(brief=_("Upgrade a building in your city."))
     @locale_doc
-    async def building(self, ctx, name: str.lower):
+    async def building(self, ctx: Context, name: str.lower) -> None:
         _(
             """`<name>` - The name of the building to upgrade.
 
@@ -399,7 +401,7 @@ class Alliance(commands.Cog):
     @has_char()
     @build.command(brief=_("Build a defense in your city."))
     @locale_doc
-    async def defense(self, ctx, *, name: str.lower):
+    async def defense(self, ctx: Context, *, name: str.lower) -> None:
         _(
             """Build some defensive buildings or place troops in your cities. The following are available:
 
@@ -498,7 +500,7 @@ class Alliance(commands.Cog):
     @has_char()
     @alliance.command(brief=_("Lists your city's buildings."))
     @locale_doc
-    async def buildings(self, ctx):
+    async def buildings(self, ctx: Context) -> None:
         _(
             """Lists all buildings in your city, along with their level. These buildings give passive rewards to all alliance members:
 
@@ -534,9 +536,9 @@ class Alliance(commands.Cog):
     @has_char()
     @alliance.command(brief=_("Lists your city's defenses."))
     @locale_doc
-    async def defenses(self, ctx):
+    async def defenses(self, ctx: Context) -> None:
         _(
-            """Lists your city’s defenses and view the HP left for each.
+            """Lists your city's defenses and view the HP left for each.
 
             Your alliance must own a city to use this command."""
         )
@@ -579,7 +581,7 @@ class Alliance(commands.Cog):
     @has_char()
     @alliance.command(brief=_("Abandon your city"))
     @locale_doc
-    async def abandon(self, ctx):
+    async def abandon(self, ctx: Context) -> None:
         _(
             """Abandoning your city will immediately make all alliance members lose all passive bonuses offered by the city's buildings and the city ownership will be given back to the System Guild Alliance.
 
@@ -603,7 +605,7 @@ class Alliance(commands.Cog):
     @has_char()
     @alliance.command(brief=_("Take over a city."))
     @locale_doc
-    async def occupy(self, ctx, *, city: str.title):
+    async def occupy(self, ctx: Context, *, city: str.title) -> None:
         _(
             """`<city>` - The name of a city. You can check the city names with `{prefix}cities`
 
@@ -659,7 +661,7 @@ class Alliance(commands.Cog):
     @is_guild_leader()
     @alliance.command(brief=_("Attack a city"))
     @locale_doc
-    async def attack(self, ctx, *, city: str.title):
+    async def attack(self, ctx: Context, *, city: str.title) -> None:
         _(
             """`<city>` - The name of a city. You can check the city names with `{prefix}cities`
 
@@ -924,7 +926,7 @@ class Alliance(commands.Cog):
         aliases=["cooldowns", "t", "cds"], brief=_("Lists alliance-specific cooldowns")
     )
     @locale_doc
-    async def timers(self, ctx):
+    async def timers(self, ctx: Context) -> None:
         _(
             """Lists alliance-specific cooldowns, meaning all alliance members have these cooldowns and cannot use the commands."""
         )
@@ -951,5 +953,5 @@ class Alliance(commands.Cog):
         await ctx.send(f"```{timers}```")
 
 
-def setup(bot):
+def setup(bot: Bot):
     bot.add_cog(Alliance(bot))

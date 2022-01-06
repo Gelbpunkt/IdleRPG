@@ -56,7 +56,7 @@ DONE
 EOF
 
 chmod 777 start.sh
-podman run --rm -it -d --pod idlerpgbeta --name postgres-beta -e POSTGRES_PASSWORD="test" -v $(pwd)/start.sh:/docker-entrypoint-initdb.d/init.sh:Z postgres:14-alpine
+podman run --rm -it -d --pod idlerpgbeta --name postgres-beta -e POSTGRES_PASSWORD="test" -v $(pwd)/start.sh:/docker-entrypoint-initdb.d/init.sh:Z postgres:14-alpine -N 1000
 sleep 15
 rm start.sh
 podman run --rm -it -d --pod idlerpgbeta --name stockfish-beta gelbpunkt/stockfish:latest
