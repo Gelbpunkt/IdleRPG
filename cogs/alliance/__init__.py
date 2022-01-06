@@ -391,7 +391,7 @@ class Alliance(commands.Cog):
         await ctx.send(
             _(
                 "Successfully upgraded the city's {name} building to level"
-                " **{new_level}**"
+                " **{new_level}**."
             ).format(name=name, new_level=cur_level + 1)
         )
 
@@ -405,13 +405,13 @@ class Alliance(commands.Cog):
         _(
             """Build some defensive buildings or place troops in your cities. The following are available:
 
-            Cannons: 250HP, 60 defense for $200,000
-            Archers: 500HP, 50 defemse for $100,000
-            Outer Wall: 20,000HP, 0 defense for $500,000
-            Inner Wall: 10,000HP, 0 defense for $200,000
-            Moat: 5,000HP, 25 defense for $150,000
-            Tower: 1,000HP, 50 defense for $200,000
-            Ballista: 250HP, 30 defense for $100,000
+            Cannons: 500HP, 60 defense for $200,000
+            Archers: 1,000HP, 50 defense for $100,000
+            Outer Wall: 40,000HP, 0 defense for $500,000
+            Inner Wall: 20,000HP, 0 defense for $200,000
+            Moat: 10,000HP, 25 defense for $150,000
+            Tower: 2,500HP, 50 defense for $200,000
+            Ballista: 500HP, 30 defense for $100,000
 
             Any city can have a maximum of 10 defenses. When attacked, the buildings with the most HP are targeted first.
             You may not build defenses while your city is under attack. The price of the defense is removed from the leading guild's bank.
@@ -421,13 +421,13 @@ class Alliance(commands.Cog):
             (This command has a cooldown of 1 minutes)"""
         )
         building_list = {
-            "cannons": {"hp": 250, "def": 60, "cost": 200000},
-            "archers": {"hp": 500, "def": 50, "cost": 100000},
-            "outer wall": {"hp": 20000, "def": 0, "cost": 500000},
-            "inner wall": {"hp": 10000, "def": 0, "cost": 200000},
-            "moat": {"hp": 5000, "def": 25, "cost": 150000},
-            "tower": {"hp": 1000, "def": 50, "cost": 200000},
-            "ballista": {"hp": 250, "def": 30, "cost": 100000},
+            "cannons": {"hp": 500, "def": 60, "cost": 200000},
+            "archers": {"hp": 1000, "def": 50, "cost": 100000},
+            "outer wall": {"hp": 40000, "def": 0, "cost": 500000},
+            "inner wall": {"hp": 20000, "def": 0, "cost": 200000},
+            "moat": {"hp": 10000, "def": 25, "cost": 150000},
+            "tower": {"hp": 2500, "def": 50, "cost": 200000},
+            "ballista": {"hp": 500, "def": 30, "cost": 100000},
         }
         if name not in building_list:
             await self.bot.reset_alliance_cooldown(ctx)
@@ -459,7 +459,7 @@ class Alliance(commands.Cog):
             if not await ctx.confirm(
                 _(
                     "Are you sure you want to build a **{defense}**? This will cost"
-                    " $**{price}**."
+                    " **${price}**."
                 ).format(defense=name, price=building["cost"])
             ):
                 return
@@ -666,10 +666,11 @@ class Alliance(commands.Cog):
             """`<city>` - The name of a city. You can check the city names with `{prefix}cities`
 
             Attack a city, reducing its defenses to potentially take it over.
-            Attacking a city will activate a grace period of 10 minutes, during which time it cannot be attacked again.
+            Attacking a city will activate a grace period of 12 hours, during which time it cannot be attacked again.
+            Initiating an attack will cost the alliance leader's guild money, depending on the buildings in the defending city.
 
-            When using this command, the bot will send a link used to join the attack. Each member of the alliance can join.
-            Ten minutes after the link was sent, the users who joined will be gathered, their attack and defense depending on their equipped items, class and raid bonuses and their raidstats, and start the attack.
+            When using this command, the bot will send a message with a button used to join the attack. Each member of the alliance can join.
+            Ten minutes after the message was sent, the users who joined will be gathered, their attack and defense depending on their equipped items, class and raid bonuses and their raidstats, and start the attack.
 
             During the attack, the highest HP defenses will be attacked first. All attackers' damage will be summed up.
             The defenses' damage sum up and damage either the attacker with the lowest HP or the attacker with the highest damage.
@@ -705,6 +706,8 @@ class Alliance(commands.Cog):
                 'SELECT name FROM guild WHERE "id"=$1;', alliance_id
             )
 
+            city_data = await conn.fetchrow('SELECT * FROM city WHERE "name"=$1;', city)
+
             # Get all defenses
             defenses = [
                 dict(i)
@@ -712,6 +715,25 @@ class Alliance(commands.Cog):
                     'SELECT * FROM defenses WHERE "city"=$1;', city
                 )
             ]
+
+            # Attacking a city costs money, depending on the buildings inside
+            # Since the absolute maximum guild bank size is 12.5M, attacking a city
+            # with all buildings on maximum should cost 12.5M
+            building_strength = (
+                city_data["thief_building"]
+                + city_data["raid_building"]
+                + city_data["trade_building"]
+                + city_data["adventure_building"]
+            )
+            # 40 is the maximum of all buildings set to 10 in Vopnafjor,
+            # so we calculate the percentage of the maximum
+            building_percentage = building_strength / 40
+            attacking_cost = int(building_percentage * 12500000)
+
+            # Verify that enough money is currently in the alliance leading guild's bank
+            leading_guild_money = await conn.fetchval(
+                'SELECT money FROM guild WHERE "id"=$1;', ctx.character_data["guild"]
+            )
 
         if not defenses:
             await self.bot.reset_alliance_cooldown(ctx)
@@ -727,6 +749,26 @@ class Alliance(commands.Cog):
                 text = _("**{city}** is already under attack.").format(city=city)
             await self.bot.reset_alliance_cooldown(ctx)
             return await ctx.send(text)
+
+        if leading_guild_money < attacking_cost:
+            await self.bot.reset_alliance_cooldown(ctx)
+            return await ctx.send(
+                _(
+                    "**{city}** has excellent infrastructure and attacking it would cost **${attacking_cost}**, but your guild only has **${leading_guild_money}**."
+                ).format(
+                    city=city,
+                    attacking_cost=attacking_cost,
+                    leading_guild_money=leading_guild_money,
+                )
+            )
+        else:
+            if not await ctx.confirm(
+                _(
+                    "**{city}** has excellent infrastructure and attacking it would cost **${attacking_cost}**, do you want to proceed?"
+                ).format(city=city, attacking_cost=attacking_cost)
+            ):
+                await self.bot.reset_alliance_cooldown(ctx)
+                return
 
         # Gather the fighters
         attackers = []
@@ -776,6 +818,25 @@ class Alliance(commands.Cog):
                     attackers.append(
                         {"user": u, "damage": damage, "defense": defense, "hp": 250}
                     )
+
+            # Verify that enough money is currently in the alliance leading guild's bank
+            leading_guild_money = await conn.fetchval(
+                'SELECT money FROM guild WHERE "id"=$1;', ctx.character_data["guild"]
+            )
+
+            if leading_guild_money >= attacking_cost:
+                await conn.execute(
+                    'UPDATE guild SET "money"="money"-$1 WHERE "id"=$2;',
+                    attacking_cost,
+                    ctx.character_data["guild"],
+                )
+            else:
+                await self.bot.reset_alliance_cooldown(ctx)
+                return await ctx.send(
+                    _(
+                        "The money for attacking the city has been spent in the meantime."
+                    )
+                )
 
         if not attackers:
             await self.bot.reset_alliance_cooldown(ctx)
@@ -898,8 +959,8 @@ class Alliance(commands.Cog):
             await asyncio.sleep(5)
 
         await self.bot.redis.execute_command(
-            "SET", f"city:{city}", "cooldown", "EX", 600
-        )  # 10min attack cooldown
+            "SET", f"city:{city}", "cooldown", "EX", 3600 * 12
+        )  # 12h attack cooldown
 
         # it's over
         if not defenses:

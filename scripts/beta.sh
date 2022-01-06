@@ -24,7 +24,6 @@ cat <<EOF > config.json
     "status": "idle",
     "backpressure": 100,
     "twilight_http_proxy": "127.0.0.1:5113",
-    "shards": 5,
     "cache": {
         "channels": true,
         "presences": false,

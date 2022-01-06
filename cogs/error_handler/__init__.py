@@ -124,7 +124,7 @@ class Errorhandler(commands.Cog):
                 await ctx.send(
                     _(
                         "You did not enter a valid crate rarity. Possible ones are:"
-                        " common (c), uncommon (u), rare (r), magic (m) and legendary (l)."
+                        " common (c), uncommon (u), rare (r), magic (m), legendary (l) and mystery (myst)."
                     )
                 )
             elif isinstance(error, InvalidCoinSide):
