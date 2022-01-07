@@ -237,25 +237,20 @@ class BlackJack:
     def deal(self):
         return self.deck.pop()
 
-    def calc_aces(self, value, aces):
-        missing = 21 - value
-        num_11 = 0
-        num_1 = 0
-        for i in range(aces):
-            if missing < 11:
-                num_1 += 1
-                missing -= 1
-            else:
-                num_11 += 1
-                missing -= 11
-        return num_11 * 11 + num_1
-
     def total(self, hand):
         value = sum(
             card[0] if card[0] < 11 else 10 for card in hand if card[0] != 14
         )  # ignore aces for now
         aces = sum(1 for card in hand if card[0] == 14)
-        value += self.calc_aces(value, aces)
+        # Assume the minimum of 1 for every ace
+        value += aces
+        # Now, add 10 for every ace as long as it's below 21
+        for i in range(aces):
+            if value + 10 <= 21:
+                value += 10
+            else:
+                break
+
         return value
 
     def has_bj(self, hand):
