@@ -2175,13 +2175,13 @@ class Player:
         elif self.role == Role.JUDGE:
             await self.get_judge_symbol()
         elif self.role == Role.SISTER:
-            sisters = self.get_players_with_role(Role.SISTER)
+            sisters = self.game.get_players_with_role(Role.SISTER)
             for player in sisters:
                 if player == self:
                     continue
                 await player.send_family_member_msg("sister", self)
         elif self.role == Role.BROTHER:
-            brothers = self.get_players_with_role(Role.BROTHER)
+            brothers = self.game.get_players_with_role(Role.BROTHER)
             for player in brothers:
                 if player == self:
                     continue
