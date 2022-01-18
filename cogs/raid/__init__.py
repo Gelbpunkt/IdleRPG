@@ -40,7 +40,10 @@ from utils.joins import JoinView
 
 def raid_channel():
     def predicate(ctx):
-        return ctx.bot.config.bot.is_beta or ctx.channel.id == 506_133_354_874_404_874
+        return (
+            ctx.bot.config.bot.is_beta
+            or ctx.channel.id == ctx.bot.config.game.raid_channel
+        )
 
     return commands.check(predicate)
 

@@ -127,6 +127,7 @@ class GameSection:
         "game_masters",
         "banned_guilds",
         "support_server_id",
+        "raid_channel",
         "gm_log_channel",
         "helpme_channel",
         "official_tournament_channel_id",
@@ -140,6 +141,7 @@ class GameSection:
         self.game_masters = data.get("game_masters", [])
         self.banned_guilds = data.get("banned_guilds", [])
         self.support_server_id = data.get("support_server_id", None)
+        self.raid_channel = data.get("raid_channel", None)
         self.gm_log_channel = data.get("gm_log_channel", None)
         self.helpme_channel = data.get("helpme_channel", None)
         self.official_tournament_channel_id = data.get(
