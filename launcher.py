@@ -47,10 +47,17 @@ payload = {
     "User-Agent": f"IdleRPG launcher (v{__version__})",
 }
 
+if config.bot.is_custom:
+    GATEWAY_URL = "https://discord.com/api/gateway/bot"
+    APPLICATION_URL = "https://discord.com/api/oauth2/applications/@me"
+else:
+    GATEWAY_URL = "http://localhost:5113/api/gateway/bot"
+    APPLICATION_URL = "http://localhost:5113/api/oauth2/applications/@me"
+
 
 async def get_gateway_info() -> int:
     async with aiohttp.ClientSession() as session, session.get(
-        "http://localhost:5113/api/gateway/bot", headers=payload
+        GATEWAY_URL, headers=payload
     ) as req:
         gateway_json = await req.json()
     shard_count: int = gateway_json["shards"]
@@ -59,7 +66,7 @@ async def get_gateway_info() -> int:
 
 async def get_app_info() -> tuple[str, int]:
     async with aiohttp.ClientSession() as session, session.get(
-        "http://localhost:5113/api/oauth2/applications/@me", headers=payload
+        APPLICATION_URL, headers=payload
     ) as req:
         response = await req.json()
     return response["name"], response["id"]
@@ -186,7 +193,7 @@ class Main:
     def __init__(self) -> None:
         self.instances: list[Instance] = []
         pool = aioredis.ConnectionPool.from_url(
-            "redis://localhost",
+            f"redis://{config.database.redis_host}:{config.database.redis_port}/{config.database.redis_database}",
             max_connections=2,
         )
         self.redis = aioredis.Redis(connection_pool=pool)
