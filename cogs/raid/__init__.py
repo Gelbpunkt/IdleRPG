@@ -161,22 +161,23 @@ class Raid(commands.Cog):
         self.boss.update(message=spawnmsg.id)
 
         if not self.bot.config.bot.is_beta:
-            summary_channel = self.bot.get_channel(506_167_065_464_406_041)
-            raid_ping = await summary_channel.send(
-                "@everyone Frosty spawned! 15 Minutes until he is vulnerable...",
-                allowed_mentions=discord.AllowedMentions.all(),
-            )
-            try:
-                await raid_ping.publish()
-            except discord.Forbidden:
-                await summary_channel.send(
-                    "Error! Couldn't publish message. Please publish manually"
-                    f" {ctx.author.mention}"
+            if not self.bot.config.bot.is_custom:
+                summary_channel = self.bot.get_channel(506_167_065_464_406_041)
+                raid_ping = await summary_channel.send(
+                    "@everyone Frosty spawned! 15 Minutes until he is vulnerable...",
+                    allowed_mentions=discord.AllowedMentions.all(),
                 )
-            else:
-                await summary_channel.send(
-                    "Message has been published!", delete_after=10
-                )
+                try:
+                    await raid_ping.publish()
+                except discord.Forbidden:
+                    await summary_channel.send(
+                        "Error! Couldn't publish message. Please publish manually"
+                        f" {ctx.author.mention}"
+                    )
+                else:
+                    await summary_channel.send(
+                        "Message has been published!", delete_after=10
+                    )
 
             await asyncio.sleep(300)
             await ctx.send("**The snowman will be vulnerable in 10 minutes**")

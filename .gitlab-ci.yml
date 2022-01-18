@@ -35,7 +35,9 @@ build:
     - apk add podman crun tzdata
     - podman --version
     - podman build --storage-driver vfs --format docker -t gelbpunkt/idlerpg:latest .
+    - podman build --storage-driver vfs --format docker -t gelbpunkt/idlerpg:custom --build-arg IS_CUSTOM=true .
     - if [ "$CI_COMMIT_BRANCH" == "$CI_DEFAULT_BRANCH" ] && [ "$DOCKERHUB_USERNAME" != "" ] && [ "$DOCKERHUB_PASSWORD" != "" ]; then
         podman --storage-driver vfs login docker.io --username $DOCKERHUB_USERNAME --password $DOCKERHUB_PASSWORD &&
-        podman --storage-driver vfs push gelbpunkt/idlerpg:latest docker.io/gelbpunkt/idlerpg:latest;
+        podman --storage-driver vfs push gelbpunkt/idlerpg:latest docker.io/gelbpunkt/idlerpg:latest &&
+        podman --storage-driver vfs push gelbpunkt/idlerpg:custom docker.io/gelbpunkt/idlerpg:custom;
       fi

@@ -27,6 +27,7 @@ class BotSection:
         "initial_extensions",
         "global_prefix",
         "is_beta",
+        "is_custom",
         "global_cooldown",
         "donator_cooldown",
     }
@@ -37,6 +38,7 @@ class BotSection:
         self.initial_extensions = data.get("initial_extensions", [])
         self.global_prefix = data.get("global_prefix", "$")
         self.is_beta = data.get("is_beta", True)
+        self.is_custom = data.get("is_custom", False)
         self.global_cooldown = data.get("global_cooldown", 3)
         self.donator_cooldown = data.get("donator_cooldown", 2)
 

@@ -1,7 +1,9 @@
 FROM docker.io/gelbpunkt/python:3.11
 
+ARG IS_CUSTOM=false
+
 LABEL maintainer="adrian@travitia.xyz" \
-      description="docker image to run latest IdleRPG"
+    description="docker image to run latest IdleRPG"
 
 CMD ["python", "-OO", "/idlerpg/launcher.py"]
 
@@ -14,7 +16,22 @@ USER idle
 WORKDIR /idlerpg/
 
 COPY --chown=idle:idle requirements.txt /idlerpg/
+COPY --chown=idle:idle requirements-custom.txt /idlerpg/
 
-RUN pip install --no-cache-dir -i https://packages.travitia.xyz/root/idle/+simple/ --no-warn-script-location --pre -r requirements.txt
+RUN if [ "$IS_CUSTOM" == 'true' ]; then \
+        pip install \
+            --no-cache-dir \
+            -i https://packages.travitia.xyz/root/idle/+simple/ \
+            --no-warn-script-location \
+            --pre \
+            -r requirements-custom.txt; \
+    else \
+        pip install \
+            --no-cache-dir \
+            -i https://packages.travitia.xyz/root/idle/+simple/ \
+            --no-warn-script-location \
+            --pre \
+            -r requirements.txt; \
+    fi
 
 COPY --chown=idle:idle . /idlerpg/

@@ -17,13 +17,17 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
 import asyncio
 
+from typing import Any
+
 import discord
 
 from discord.ext import commands
 
+from classes.bot import Bot
+
 
 class GlobalEvents(commands.Cog):
-    def __init__(self, bot):
+    def __init__(self, bot: Bot) -> None:
         self.bot = bot
         self.topgg_auth_headers = {"Authorization": bot.config.statistics.topggtoken}
         self.bfd_auth_headers = {"Authorization": bot.config.statistics.bfdtoken}
@@ -31,7 +35,7 @@ class GlobalEvents(commands.Cog):
         self.is_first_ready = True
 
     @commands.Cog.listener()
-    async def on_ready(self):
+    async def on_ready(self) -> None:
         if self.is_first_ready:
             self.is_first_ready = False
             text1 = f"Logged in as {self.bot.user.name} (ID: {self.bot.user.id})"
@@ -49,12 +53,10 @@ class GlobalEvents(commands.Cog):
             self.bot.logger.info(f"│ {text4.center(max_string, ' ')} │")
             self.bot.logger.info(f"└─{'─' * max_string}─┘")
             self.stats_updates = self.bot.loop.create_task(self.stats_updater())
-            await self.bot.is_owner(self.bot.user)  # force getting the owners
-        else:
-            self.bot.logger.warning("[INFO] Discord fired on_ready...")
+            await self.bot.is_owner(self.bot.user)
 
     @commands.Cog.listener()
-    async def on_raw_member_update(self, data):
+    async def on_raw_member_update(self, data: dict[str, Any]) -> None:
         user = data["user"]
         user_id = int(user["id"])
 
@@ -63,7 +65,7 @@ class GlobalEvents(commands.Cog):
             await self.bot.clear_donator_cache(user_id)
 
     @commands.Cog.listener()
-    async def on_guild_remove(self, guild):
+    async def on_guild_remove(self, guild: discord.Guild) -> None:
         if self.bot.config.bot.is_beta:
             return
         if self.bot.config.statistics.join_channel:
@@ -72,8 +74,10 @@ class GlobalEvents(commands.Cog):
             )
 
     @commands.Cog.listener()
-    async def on_guild_join(self, guild):
-        if guild.id in self.bot.config.game.banned_guilds:
+    async def on_guild_join(self, guild: discord.Guild) -> None:
+        if guild.id in self.bot.config.game.banned_guilds or (
+            self.bot.config.bot.is_custom and len(self.bot.guilds) >= 50
+        ):
             await guild.leave()
             return
         embed = discord.Embed(
@@ -114,11 +118,13 @@ class GlobalEvents(commands.Cog):
                 " members!",
             )
 
-    async def stats_updater(self):
+    async def stats_updater(self) -> None:
         await self.bot.wait_until_ready()
         if (
-            self.bot.shard_count - 1 not in self.bot.shards.keys()
-        ) or self.bot.config.bot.is_beta:
+            (self.bot.shard_count - 1 not in self.bot.shards.keys())
+            or self.bot.config.bot.is_beta
+            or self.bot.config.bot.is_custom
+        ):
             return
         while not self.bot.is_closed():
             await self.bot.session.post(
@@ -138,7 +144,7 @@ class GlobalEvents(commands.Cog):
             )
             await asyncio.sleep(60 * 10)  # update once every 10 minutes
 
-    async def get_topgg_payload(self):
+    async def get_topgg_payload(self) -> dict[str, int]:
         return {
             "server_count": sum(
                 await self.bot.cogs["Sharding"].handler(
@@ -148,7 +154,7 @@ class GlobalEvents(commands.Cog):
             "shard_count": self.bot.shard_count,
         }
 
-    async def get_bfd_payload(self):
+    async def get_bfd_payload(self) -> dict[str, int]:
         return {
             "server_count": sum(
                 await self.bot.cogs["Sharding"].handler(
@@ -157,7 +163,7 @@ class GlobalEvents(commands.Cog):
             )
         }
 
-    async def get_dbl_payload(self):
+    async def get_dbl_payload(self) -> dict[str, int]:
         return {
             "guilds": sum(
                 await self.bot.cogs["Sharding"].handler(
@@ -166,9 +172,9 @@ class GlobalEvents(commands.Cog):
             )
         }
 
-    def cog_unload(self):
+    def cog_unload(self) -> None:
         self.stats_updates.cancel()
 
 
-def setup(bot):
+def setup(bot: Bot) -> None:
     bot.add_cog(GlobalEvents(bot))
