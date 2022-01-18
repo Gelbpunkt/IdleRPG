@@ -83,6 +83,9 @@ class DatabaseSection:
         "postgres_port",
         "postgres_host",
         "postgres_password",
+        "redis_host",
+        "redis_port",
+        "redis_database",
         "redis_shard_announce_channel",
     }
 
@@ -92,6 +95,9 @@ class DatabaseSection:
         self.postgres_port = data.get("postgres_port", 5432)
         self.postgres_host = data.get("postgres_host", "127.0.0.1")
         self.postgres_password = data.get("postgres_password", "owo")
+        self.redis_host = data.get("redis_host", "127.0.0.1")
+        self.redis_port = data.get("redis_port", 6379)
+        self.redis_database = data.get("redis_database", 0)
         self.redis_shard_announce_channel = data.get(
             "redis_shard_announce_channel", "guild_channel"
         )

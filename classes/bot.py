@@ -143,7 +143,7 @@ class Bot(commands.AutoShardedBot):
             )
         self.trusted_session = aiohttp.ClientSession()
         pool = aioredis.ConnectionPool.from_url(
-            "redis://localhost",
+            f"redis://{self.config.database.redis_host}:{self.config.database.redis_port}/{self.config.database.redis_database}",
             max_connections=20,
         )
         self.redis = aioredis.Redis(connection_pool=pool)
