@@ -97,6 +97,11 @@ class Bot(commands.AutoShardedBot):
     def __repr__(self):
         return "<Bot>"
 
+    async def is_owner(self, user: discord.User) -> bool:
+        if self.config.bot.is_custom:
+            return False
+        return await super().is_owner(user)
+
     async def global_cooldown(self, ctx: commands.Context):
         """
         A function that enables a global per-user cooldown
