@@ -16,51 +16,23 @@ You should have received a copy of the GNU Affero General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
 from typing import Any
+from aiohttp.client_reqrep import ClientResponse
 
-from aiohttp.client import ClientSession, _RequestContextManager
-from multidict import MultiDict
-from yarl import URL
+from aiohttp.client import ClientSession
+
+del ClientSession.__init_subclass__
 
 
-class ProxiedClientSession:
+class ProxiedClientSession(ClientSession):
     """A ClientSession that forwards requests through a custom proxy."""
+
+    __slots__ = ("proxy_url",)
 
     def __init__(self, *args: Any, **kwargs: Any) -> None:
         self.proxy_url = kwargs.pop("proxy_url")
 
-        self.permanent_headers = {
-            "Proxy-Authorization-Key": kwargs.pop("authorization"),
-            "Accept": "application/json",
-        }
-        self._session = ClientSession(*args, **kwargs)
+        super().__init__(*args, **kwargs)
 
-    def get(self, url: str, *args: Any, **kwargs: Any) -> _RequestContextManager:
-        params = kwargs.pop("params", {})
-        if params:
-            request_url = URL(url)
-            q = MultiDict(request_url.query)
-            url2 = request_url.with_query(params)
-            q.extend(url2.query)
-            request_url = request_url.with_query(q)
-            url = str(request_url)
-
-        headers = kwargs.pop("headers", {})
-        headers.update(self.permanent_headers)
-        headers["Requested-URI"] = url
-
-        return self._session.get(self.proxy_url, headers=headers, *args, **kwargs)
-
-    def post(self, url: str, *args: Any, **kwargs: Any) -> _RequestContextManager:
-        params = kwargs.pop("params", {})
-        if params:
-            request_url = URL(url)
-            q = MultiDict(request_url.query)
-            url2 = request_url.with_query(params)
-            q.extend(url2.query)
-            request_url = request_url.with_query(q)
-            url = str(request_url)
-
-        headers = kwargs.pop("headers", {})
-        headers.update(self.permanent_headers)
-        headers["Requested-URI"] = url
-        return self._session.post(self.proxy_url, headers=headers, *args, **kwargs)
+    async def _request(self, *args, **kwargs: Any) -> ClientResponse:
+        kwargs["proxy"] = self.proxy_url
+        return await super()._request(*args, **kwargs)

@@ -136,16 +136,21 @@ class Bot(commands.AutoShardedBot):
                     with open(os.sep.join([root, file_]), encoding="utf-8") as f:
                         self.linecount += len(f.readlines())
 
+    async def close(self):
+        await super().close()
+
+        await self.session.close()
+        await self.trusted_session.close()
+        await self.pool.close()
+        await self.redis.close()
+
     async def connect_all(self):
         """Connects all databases and initializes sessions"""
-        proxy_auth = self.config.external.proxy_auth
         proxy_url = self.config.external.proxy_url
-        if proxy_auth is None or proxy_url is None:
+        if proxy_url is None:
             self.session = aiohttp.ClientSession()
         else:
-            self.session = ProxiedClientSession(
-                authorization=proxy_auth, proxy_url=proxy_url
-            )
+            self.session = ProxiedClientSession(proxy_url=proxy_url)
         self.trusted_session = aiohttp.ClientSession()
         pool = aioredis.ConnectionPool.from_url(
             f"redis://{self.config.database.redis_host}:{self.config.database.redis_port}/{self.config.database.redis_database}",

@@ -60,7 +60,6 @@ class ExternalSection:
         "base_url",
         "okapi_url",
         "proxy_url",
-        "proxy_auth",
         "donator_roles",
     }
 
@@ -72,7 +71,6 @@ class ExternalSection:
         self.base_url = data.get("base_url", "https://idlerpg.xyz")
         self.okapi_url = data.get("okapi_url", "http://localhost:3000")
         self.proxy_url = data.get("proxy_url", None)
-        self.proxy_auth = data.get("proxy_auth", None)
         self.donator_roles = [DonatorRole(i) for i in data.get("donator_roles", [])]
 
 
