@@ -16,9 +16,9 @@ You should have received a copy of the GNU Affero General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
 from typing import Any
-from aiohttp.client_reqrep import ClientResponse
 
 from aiohttp.client import ClientSession
+from aiohttp.client_reqrep import ClientResponse
 
 del ClientSession.__init_subclass__
 
