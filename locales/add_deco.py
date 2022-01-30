@@ -1,5 +1,5 @@
 # adds the @locale_doc deco to all commands and groups in POTFILES
-with open("POTFILES.in", "r") as f:
+with open("POTFILES.in") as f:
     files = f.read().splitlines()
 
 for file in files:

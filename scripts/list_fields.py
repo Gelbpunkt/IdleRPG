@@ -1,4 +1,4 @@
-with open("schema.sql", "r") as f:
+with open("schema.sql") as f:
     stuff = f.read().splitlines()
 
 t = ""

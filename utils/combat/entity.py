@@ -1,7 +1,6 @@
 from __future__ import annotations
 
 from enum import Enum
-from typing import Optional
 
 from classes.classes import (
     GameClass,
@@ -45,7 +44,7 @@ class Entity:
         deck: SkillDeck = SkillDeck.empty(),
         equipped_items: list[Item] = [],
         classes: list[GameClass] = [],
-        race: Optional[Race] = None,
+        race: Race | None = None,
     ):
         self.hp = hp
         self.faction = faction

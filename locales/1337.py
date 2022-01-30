@@ -2,7 +2,7 @@ import os
 import sys
 
 try:
-    with open(sys.argv[1], "r") as f:
+    with open(sys.argv[1]) as f:
         cont = f.read().splitlines()
 except (IndexError, FileNotFoundError):
     print("Please provide a .po file.")

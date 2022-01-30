@@ -1,5 +1,4 @@
 #!/usr/bin/env python3
-# -*- coding: utf-8 -*-
 import os
 import re
 
@@ -20,7 +19,7 @@ def search(pattern: str):
         for file in files:
             if not file.endswith(".py"):
                 continue
-            with open(os.path.join(root, file), "r", errors="ignore") as f:
+            with open(os.path.join(root, file), errors="ignore") as f:
                 text = f.read()
 
                 pattern = pattern.replace("\\n", "�")
