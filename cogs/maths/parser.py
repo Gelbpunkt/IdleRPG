@@ -96,7 +96,7 @@ class CalcParser(Parser):
     def expression(self, p):
         if p.expression0 > 200 or p.expression1 > 200:
             raise Overflow()
-        return p.expression0 ** p.expression1
+        return p.expression0**p.expression1
 
     @_('expression "!"')
     def expression(self, p):
