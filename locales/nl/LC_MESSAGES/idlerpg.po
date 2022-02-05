@@ -8,16 +8,16 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-12-31 13:37+0100\n"
-"PO-Revision-Date: 2021-10-11 05:38+0000\n"
-"Last-Translator: Colin van Ling <colinvanling1672005@gmail.com>\n"
-"Language-Team: Dutch <http://translate.travitia.xyz/projects/idlerpg/bot/nl/"
-">\n"
+"PO-Revision-Date: 2022-02-11 22:50+0000\n"
+"Last-Translator: Christian Fjellsnø <no4h.j.w@gmail.com>\n"
+"Language-Team: Dutch <http://translate.travitia.xyz/projects/idlerpg/bot/nl/>"
+"\n"
 "Language: nl\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.6.2\n"
+"X-Generator: Weblate 4.9.1\n"
 
 #: cogs/tournament/__init__.py:46
 msgid "Start a new tournament"
@@ -78,12 +78,13 @@ msgstr "Jij bent te arm."
 
 #: cogs/tournament/__init__.py:84 cogs/tournament/__init__.py:109
 msgid "You joined the tournament."
-msgstr ""
+msgstr "Je neemt nu deel aan het toernooi."
 
 #: cogs/tournament/__init__.py:115
 #, python-brace-format
 msgid "{author} started a tournament! Free entries, prize is **${prize}**!"
 msgstr ""
+"{author} heeft een toernooi gestart! Gratis toegang, prijs is ** ${prize}**!"
 
 #: cogs/tournament/__init__.py:138
 #, python-brace-format
@@ -177,13 +178,15 @@ msgstr ""
 
 #: cogs/tournament/__init__.py:254 cogs/tournament/__init__.py:279
 msgid "You joined the raid tournament."
-msgstr ""
+msgstr "Je neemt nu deel aan het raid toernooi."
 
 #: cogs/tournament/__init__.py:285
 #, python-brace-format
 msgid ""
 "{author} started a raid tournament! Free entries, prize is **${prize}**!"
 msgstr ""
+"{author} heeft een raid toernooi gestart! Gratis toegang, prijs is "
+"**${prize}**!"
 
 #: cogs/tournament/__init__.py:308
 #, python-brace-format
@@ -272,10 +275,15 @@ msgid ""
 "            Finds and exaggerates edges in a user's avatar, creating a cool "
 "image effect."
 msgstr ""
+"`[user]` - Een discord gebruiker wiens avatar is te bewerken; word standaard "
+"voor zichzelf\n"
+"\n"
+"            Vindt en versterkt randen in de avatar van een gebruiker, "
+"waardoor een cool beeldeffect ontstaat."
 
 #: cogs/images/__init__.py:75
 msgid "Inverts a user's avatar"
-msgstr ""
+msgstr "Keert een gebruikers avatar om"
 
 #: cogs/images/__init__.py:79
 msgid ""
@@ -285,10 +293,16 @@ msgid ""
 "\n"
 "            (This command has a channel cooldown of 15 seconds.)"
 msgstr ""
+"`[member]` - Een discord gebruiker wiens avatar omkeert; word standaard voor "
+"zichzelf\n"
+"\n"
+"            Keer de kleuren in iemand avatar om.\n"
+"\n"
+"            (Deze command heeft een kanaal cooldown van 15 seconden.)"
 
 #: cogs/images/__init__.py:96
 msgid "Oil-paint someone's avatar"
-msgstr ""
+msgstr "Olieverf iemands avatar"
 
 #: cogs/images/__init__.py:100
 msgid ""
@@ -298,6 +312,12 @@ msgid ""
 "\n"
 "            (This command has a channel cooldown of 15 seconds.)"
 msgstr ""
+"`[member]` - Een discord gebruiker wiens avatar olie geverfd is; word "
+"standaard voor zichzelf\n"
+"\n"
+"            Creëert een olieverfeffect op iemands avatar.\n"
+"\n"
+"            (Deze command heeft een kanaal cooldown van 15 seconden.)"
 
 #: cogs/halloween/__init__.py:37
 msgid "Trick or treat!"
@@ -319,10 +339,22 @@ msgid ""
 "\n"
 "            (This command has a cooldown of 3h)"
 msgstr ""
+"Loop om de huizen heen en maak de bewoners bang! Misschien hebben ze een "
+"cadeautje voor je?\n"
+"\n"
+"            Deze command heeft twee spelers nodig, een die wacht en een die "
+"aan de deur belt.\n"
+"            Als jij degene bent die wacht, je zult later dan een direct "
+"bericht van de bot krijgen, anders zal je meteen reactie krijgen.\n"
+"\n"
+"            Er is 50% kans dat je een halloween tas van de andere persoon "
+"ontvangt.\n"
+"\n"
+"            (Deze command heeft een cooldown van 3 uur)"
 
 #: cogs/halloween/__init__.py:55
 msgid "You walk around the houses... Noone is there... *yet*"
-msgstr ""
+msgstr "Je loopt om de huizen heen... Er is nog niemand... *nog niet*"
 
 #: cogs/halloween/__init__.py:62
 #, python-brace-format
@@ -330,6 +362,8 @@ msgid ""
 "You walk around the houses and ring at {waiting}'s house! That's a trick or "
 "treat bag for you, yay!"
 msgstr ""
+"Je loopt om de huizen heen en belt bij {waiting}'s huis! Dat is een trick or "
+"treat-tas voor jou, yay!"
 
 #: cogs/halloween/__init__.py:74
 #, python-brace-format
@@ -337,6 +371,8 @@ msgid ""
 "You walk around the houses and ring at {waiting}'s house! Sadly they don't "
 "have anything for you..."
 msgstr ""
+"Je loopt om de huizen heen en belt bij {waiting}'s huis! Helaas hebben ze "
+"niks voor je..."
 
 #: cogs/halloween/__init__.py:113
 #, python-brace-format
@@ -345,10 +381,13 @@ msgid ""
 "ancient image on top of a chocolate bar, passed along for generations. You "
 "decide to keep it in your `{prefix}eventbackgrounds`."
 msgstr ""
+"🎃 Als je de deur uitstapt, open je het snoep en plastic onthult een oud "
+"beeld bovenop een chocoladereep, generaties lang doorgegeven. Je besluit het "
+"te bewaren in je `{prefix}eventbackgrounds`."
 
 #: cogs/halloween/__init__.py:120
 msgid "Open a trick or treat bag"
-msgstr ""
+msgstr "Open een trick or treat-zakje"
 
 #: cogs/halloween/__init__.py:124
 #, python-brace-format
@@ -359,63 +398,69 @@ msgid ""
 "1 to 50 base stat.\n"
 "            Their value will be between 1 and 200."
 msgstr ""
+"Open een trick or treat-zakje, je kunt wat krijgen met "
+"`{prefix}trickortreat`.\n"
+"\n"
+"            Trick or treat-tassen bevatten spullen met een Halloween-thema, "
+"variërend van 1 tot 50 statistieken.\n"
+"            De waarde zal tussen 1 en 200 liggen."
 
 #: cogs/halloween/__init__.py:132
 msgid "Seems you haven't got a trick or treat bag yet. Go get some!"
-msgstr ""
+msgstr "Het lijkt erop dat je nog geen trick or treat-tasje hebt. Ga wat halen!"
 
 #: cogs/halloween/__init__.py:178 cogs/crates/__init__.py:172
 #: cogs/classes/__init__.py:722 cogs/valentine/__init__.py:156
 msgid "You gained an item!"
-msgstr ""
+msgstr "Je hebt een item gewonnen!"
 
 #: cogs/halloween/__init__.py:179
 msgid "You found a new item when opening a trick-or-treat bag!"
-msgstr ""
+msgstr "Je hebt een nieuw item gevonden in een trick-or-treat-tas!"
 
 #: cogs/halloween/__init__.py:183 cogs/crates/__init__.py:178
 #: cogs/classes/__init__.py:422 cogs/classes/__init__.py:728
 #: cogs/trading/__init__.py:345 cogs/trading/__init__.py:440
 #: cogs/trading/__init__.py:771 cogs/valentine/__init__.py:162
 msgid "Name"
-msgstr ""
+msgstr "Naam"
 
 #: cogs/halloween/__init__.py:184 cogs/crates/__init__.py:179
 #: cogs/classes/__init__.py:729 cogs/trading/__init__.py:346
 #: cogs/trading/__init__.py:441 cogs/trading/__init__.py:772
 #: cogs/valentine/__init__.py:163
 msgid "Type"
-msgstr ""
+msgstr "Type"
 
 #: cogs/halloween/__init__.py:185 cogs/crates/__init__.py:180
 #: cogs/classes/__init__.py:733 cogs/trading/__init__.py:347
 #: cogs/trading/__init__.py:442 cogs/trading/__init__.py:773
 #: cogs/valentine/__init__.py:167
 msgid "Damage"
-msgstr ""
+msgstr "Schade"
 
 #: cogs/halloween/__init__.py:186 cogs/crates/__init__.py:181
 #: cogs/classes/__init__.py:731 cogs/trading/__init__.py:348
 #: cogs/trading/__init__.py:443 cogs/trading/__init__.py:774
 #: cogs/valentine/__init__.py:165
 msgid "Armor"
-msgstr ""
+msgstr "Uitrusting"
 
 #: cogs/halloween/__init__.py:187 cogs/crates/__init__.py:182
 #: cogs/classes/__init__.py:734 cogs/trading/__init__.py:349
 #: cogs/trading/__init__.py:444 cogs/trading/__init__.py:775
 #: cogs/valentine/__init__.py:168
 msgid "Value"
-msgstr ""
+msgstr "Waarde"
 
 #: cogs/halloween/__init__.py:189
 #, python-brace-format
 msgid "Remaining trick-or-treat bags: {bags}"
-msgstr ""
+msgstr "Resterende trick-or-treat-zakjes: {bags}"
 
 #: cogs/halloween/__init__.py:197
 msgid "Shows your trick or treat bags"
-msgstr ""
+msgstr "Laat je trick or treatzakjes zien"
 
 #: cogs/halloween/__init__.py:202
 #, python-brace-format
@@ -423,15 +468,17 @@ msgid ""
 "Shows the amount of trick or treat bags you have. You can get more by using "
 "`{prefix}trickortreat`."
 msgstr ""
+"Toont het aantal trick or treat-zakjes dat je hebt. Je kunt meer krijgen "
+"door `{prefix}trickortreat` te gebruiken."
 
 #: cogs/halloween/__init__.py:206
 #, python-brace-format
 msgid "You currently have **{trickortreat}** Trick or Treat Bags, {author}!"
-msgstr ""
+msgstr "Je hebt momenteel **{trickortreat}** Trick or Treat-tassen, {author}!"
 
 #: cogs/locale/__init__.py:64
 msgid "Check the available languages"
-msgstr ""
+msgstr "Laat de beschikbare talen zien"
 
 #: cogs/locale/__init__.py:69
 msgid ""
@@ -444,6 +491,15 @@ msgid ""
 "            If something is not yet translated, the english original text is "
 "used."
 msgstr ""
+"Laat alle lokale beschikbare talen codes zien. Je kunt controleren of jouw "
+"taal beschikbaar is door te vergelijken met [this list](https://saimana.com/"
+"list-of-country-locale-code/)\n"
+"\n"
+"            Sommige van deze talen, zoals xtreme-owo of unplayable, zijn "
+"geen echte talen, maar dienen als een manier om de Engelse tekst op te "
+"fleuren.\n"
+"            Als iets nog niet vertaald is, wordt de Engelse originele tekst "
+"gebruikt."
 
 #: cogs/locale/__init__.py:80
 #, python-brace-format
@@ -453,10 +509,13 @@ msgid ""
 "\n"
 "Please use `{prefix}locale set language_code` to choose one."
 msgstr ""
+"Je huidige taal is **{current_locale}**.Beschikbare opties: {all_locales}\n"
+"\n"
+"Gebruik `{prefix}locale set language_code` om er een te kiezen."
 
 #: cogs/locale/__init__.py:90
 msgid "Set your language"
-msgstr ""
+msgstr "Stel je taal in"
 
 #: cogs/locale/__init__.py:94
 #, python-brace-format
@@ -466,10 +525,14 @@ msgid ""
 "\n"
 "            Changes the language the bot replies for you."
 msgstr ""
+"`<locale>` - De lokale code van de taal die je wil gebruiken; de hele lijst "
+"kun je vinden in `{prefix}language`\n"
+"\n"
+"            Wijzigt de taal die de bot voor je beantwoordt."
 
 #: cogs/locale/__init__.py:99
 msgid "Not a valid language."
-msgstr ""
+msgstr "Geen geldige taal."
 
 #: cogs/locale/__init__.py:107
 #, python-brace-format
@@ -477,10 +540,12 @@ msgid ""
 "To permanently choose a language, please create a character and enter this "
 "command again. I set it to {language} temporarily."
 msgstr ""
+"Om permanent een taal te kiezen, maak je een teken aan en voer je deze "
+"command opnieuw in. Ik heb het tijdelijk op {language} gezet."
 
 #: cogs/battles/__init__.py:46
 msgid "Battle against another player"
-msgstr ""
+msgstr "Vecht tegen een andere speler"
 
 #: cogs/battles/__init__.py:52
 msgid ""
