@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: 4.7.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-12-31 13:37+0100\n"
-"PO-Revision-Date: 2021-05-22 22:00+0000\n"
-"Last-Translator: Defenestration <def.fluffiness@gmail.com>\n"
+"PO-Revision-Date: 2022-02-13 03:23+0000\n"
+"Last-Translator: Christian Fjellsnø <no4h.j.w@gmail.com>\n"
 "Language-Team: unplayable (generated) <http://translate.travitia.xyz/"
 "projects/idlerpg/bot/unplayable/>\n"
 "Language: unplayable\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.6.2\n"
+"X-Generator: Weblate 4.9.1\n"
 
 #: cogs/tournament/__init__.py:46
 msgid "Start a new tournament"
@@ -58,12 +58,12 @@ msgstr "** **"
 
 #: cogs/tournament/__init__.py:84 cogs/tournament/__init__.py:109
 msgid "You joined the tournament."
-msgstr ""
+msgstr "."
 
 #: cogs/tournament/__init__.py:115
 #, python-brace-format
 msgid "{author} started a tournament! Free entries, prize is **${prize}**!"
-msgstr ""
+msgstr "{author}{prize}!"
 
 #: cogs/tournament/__init__.py:138
 #, python-brace-format
@@ -133,13 +133,13 @@ msgstr "{prefix}"
 
 #: cogs/tournament/__init__.py:254 cogs/tournament/__init__.py:279
 msgid "You joined the raid tournament."
-msgstr ""
+msgstr "."
 
 #: cogs/tournament/__init__.py:285
 #, python-brace-format
 msgid ""
 "{author} started a raid tournament! Free entries, prize is **${prize}**!"
-msgstr ""
+msgstr "{author}, {prize}!"
 
 #: cogs/tournament/__init__.py:308
 #, python-brace-format
@@ -232,7 +232,7 @@ msgstr "** **"
 
 #: cogs/images/__init__.py:96
 msgid "Oil-paint someone's avatar"
-msgstr ""
+msgstr "** **"
 
 #: cogs/images/__init__.py:100
 msgid ""
@@ -288,7 +288,7 @@ msgid ""
 "🎃 As you step out of the door, you open your candy and plastic reveals an "
 "ancient image on top of a chocolate bar, passed along for generations. You "
 "decide to keep it in your `{prefix}eventbackgrounds`."
-msgstr ""
+msgstr "{prefix}."
 
 #: cogs/halloween/__init__.py:120
 msgid "Open a trick or treat bag"
@@ -302,7 +302,7 @@ msgid ""
 "            Trick or treat bags contain halloween-themed items, ranging from "
 "1 to 50 base stat.\n"
 "            Their value will be between 1 and 200."
-msgstr ""
+msgstr "{prefix}."
 
 #: cogs/halloween/__init__.py:132
 msgid "Seems you haven't got a trick or treat bag yet. Go get some!"
@@ -457,16 +457,16 @@ msgstr "** **"
 #: cogs/battles/__init__.py:77
 #, python-brace-format
 msgid "{author} seeks a battle! The price is **${money}**."
-msgstr ""
+msgstr "{author}, {money}."
 
 #: cogs/battles/__init__.py:82
 #, python-brace-format
 msgid "{author} seeks a battle with {enemy}! The price is **${money}**."
-msgstr ""
+msgstr "{author}, {enemy}, {money}."
 
 #: cogs/battles/__init__.py:93
 msgid "Join the battle!"
-msgstr ""
+msgstr "!"
 
 #: cogs/battles/__init__.py:100
 msgid "You don't have enough money to join the battle."
@@ -521,16 +521,16 @@ msgstr "** **"
 #: cogs/battles/__init__.py:200
 #, python-brace-format
 msgid "{author} seeks a raidbattle! The price is **${money}**."
-msgstr ""
+msgstr "{author}, {money}."
 
 #: cogs/battles/__init__.py:205
 #, python-brace-format
 msgid "{author} seeks a raidbattle with {enemy}! The price is **${money}**."
-msgstr ""
+msgstr "{author}, {enemy}, {money}."
 
 #: cogs/battles/__init__.py:216
 msgid "Join the raidbattle!"
-msgstr ""
+msgstr "!"
 
 #: cogs/battles/__init__.py:223
 msgid "You don't have enough money to join the raidbattle."
@@ -544,7 +544,7 @@ msgstr "{author}"
 #: cogs/battles/__init__.py:348
 #, python-brace-format
 msgid "{p1} won the raidbattle vs {p2}! Congratulations!"
-msgstr ""
+msgstr "{p1}, {p2}!"
 
 #: cogs/battles/__init__.py:355
 msgid "Battle against a player (active)"
@@ -579,17 +579,17 @@ msgstr "** **"
 #: cogs/battles/__init__.py:390
 #, python-brace-format
 msgid "{author} seeks an active battle! The price is **${money}**."
-msgstr ""
+msgstr "{author}, {money}."
 
 #: cogs/battles/__init__.py:394
 #, python-brace-format
 msgid ""
 "{author} seeks an active battle with {enemy}! The price is **${money}**."
-msgstr ""
+msgstr "{author}, {enemy}, {money}."
 
 #: cogs/battles/__init__.py:405
 msgid "Join the activebattle!"
-msgstr ""
+msgstr "!"
 
 #: cogs/battles/__init__.py:413
 msgid "You don't have enough money to join the activebattle."
@@ -780,17 +780,17 @@ msgstr "{prefix}, {prefix}, {prefix}"
 
 #: cogs/crates/__init__.py:67
 msgid "Your Crates"
-msgstr ""
+msgstr "** **"
 
 #: cogs/crates/__init__.py:74
 #, python-brace-format
 msgid "{amount} crates"
-msgstr ""
+msgstr "{amount}"
 
 #: cogs/crates/__init__.py:79
 #, python-brace-format
 msgid "Use {prefix}open [rarity] to open one!"
-msgstr ""
+msgstr "{prefix}!"
 
 #: cogs/crates/__init__.py:86
 msgid "Open a crate"
@@ -808,14 +808,14 @@ msgid ""
 "crates contain which items, check `{prefix}help crates`.\n"
 "            This command takes up a lot of space, so choose a spammy channel "
 "to open crates."
-msgstr ""
+msgstr "{prefix}."
 
 #: cogs/crates/__init__.py:101
 #, python-brace-format
 msgid ""
 "Seems like you don't have {amount} crate(s) of this rarity yet. Vote me up "
 "to get a random one or find them!"
-msgstr ""
+msgstr "{amount}!"
 
 #: cogs/crates/__init__.py:173
 msgid "You found a new item when opening a crate!"
@@ -848,6 +848,7 @@ msgid ""
 "{most_common_types}\n"
 "```"
 msgstr ""
+"{amount}, {rarity}, {average_stat}, {most_common}, {top}, {most_common_types}"
 
 #: cogs/crates/__init__.py:240
 msgid "Give crates to someone"
@@ -891,7 +892,7 @@ msgstr "{amount}, {rarity}, {other}"
 
 #: cogs/crates/__init__.py:297
 msgid "Offer crates to another player"
-msgstr ""
+msgstr "** **"
 
 #: cogs/crates/__init__.py:309
 #, python-brace-format
@@ -908,61 +909,61 @@ msgid ""
 "            Example:\n"
 "            `{prefix}offercrate 5 common 75000 @buyer#1234`\n"
 "            `{prefix}oc 5 c 75000 @buyer#1234`"
-msgstr ""
+msgstr "{prefix}, {prefix},"
 
 #: cogs/crates/__init__.py:320
 msgid "You may not offer crates to yourself."
-msgstr ""
+msgstr "."
 
 #: cogs/crates/__init__.py:323
 msgid "No, I don't want any crates."
-msgstr ""
+msgstr "."
 
 #: cogs/crates/__init__.py:329
 #, python-brace-format
 msgid "You don't have {quantity} {rarity} crate(s). Check `{prefix}crates`."
-msgstr ""
+msgstr "{quantity}, {rarity}, {prefix}."
 
 #: cogs/crates/__init__.py:337
 msgid ""
 "{author}, are you sure you want to offer **{quantity} {emoji} {rarity}** "
 "crate(s) for **${price:,.0f}**?"
-msgstr ""
+msgstr "?"
 
 #: cogs/crates/__init__.py:347
 msgid "Offer cancelled."
-msgstr ""
+msgstr "."
 
 #: cogs/crates/__init__.py:353
 msgid ""
 "{buyer}, {author} offered you **{quantity} {emoji} {rarity}** crate(s) for **"
 "${price:,.0f}!** React to buy it! You have **2 Minutes** to accept the trade "
 "or the offer will be cancelled."
-msgstr ""
+msgstr "."
 
 #: cogs/crates/__init__.py:368
 msgid "They didn't want to buy the crate(s). Offer cancelled."
-msgstr ""
+msgstr "."
 
 #: cogs/crates/__init__.py:372
 msgid "They couldn't make up their mind. Offer cancelled."
-msgstr ""
+msgstr "."
 
 #: cogs/crates/__init__.py:378
 #, python-brace-format
 msgid "{buyer}, you're too poor to buy the crate(s)!"
-msgstr ""
+msgstr "{buyer}!"
 
 #: cogs/crates/__init__.py:389
 msgid "The seller traded/opened the crate(s) in the meantime. Offer cancelled."
-msgstr ""
+msgstr "."
 
 #: cogs/crates/__init__.py:434
 #, python-brace-format
 msgid ""
 "{buyer}, you've successfully bought **{quantity} {emoji} {rarity}** crate(s) "
 "from {seller}. Use `{prefix}crates` to view your updated crates."
-msgstr ""
+msgstr "{buyer}, {quantity}, {emoji}, {rarity}, {seller}, {prefix}."
 
 #: cogs/hungergames/__init__.py:51
 msgid "Gather as much food as you can"
@@ -998,7 +999,7 @@ msgstr "** **"
 
 #: cogs/hungergames/__init__.py:63
 msgid "Run away from the Cornucopia"
-msgstr ""
+msgstr "** **"
 
 #: cogs/hungergames/__init__.py:64
 msgid "runs away from the Cornucopia"
@@ -1187,7 +1188,7 @@ msgstr "** **"
 
 #: cogs/hungergames/__init__.py:292
 msgid "Play the hunger games"
-msgstr ""
+msgstr "** **"
 
 #: cogs/hungergames/__init__.py:296
 msgid ""
@@ -1203,7 +1204,7 @@ msgid ""
 "\n"
 "            Not every player will get the opportunity to choose an action. "
 "Sometimes nobody gets to choose, so don't be discouraged. "
-msgstr ""
+msgstr ". "
 
 #: cogs/hungergames/__init__.py:305 cogs/werewolf/__init__.py:80
 msgid "There is already a game in here!"
@@ -1211,12 +1212,12 @@ msgstr "** **"
 
 #: cogs/hungergames/__init__.py:316 cogs/hungergames/__init__.py:333
 msgid "You joined the Hunger Games."
-msgstr ""
+msgstr "."
 
 #: cogs/hungergames/__init__.py:337
 #, python-brace-format
 msgid "{author} started a game of Hunger Games!"
-msgstr ""
+msgstr "{author}!"
 
 #: cogs/hungergames/__init__.py:346
 msgid "Not enough players joined..."
@@ -1233,11 +1234,11 @@ msgstr "{arg}"
 
 #: cogs/error_handler/__init__.py:89
 msgid "The message you referenced was not found."
-msgstr ""
+msgstr "."
 
 #: cogs/error_handler/__init__.py:91
 msgid "The member you referenced was not found."
-msgstr ""
+msgstr "."
 
 #: cogs/error_handler/__init__.py:93
 msgid "The server you referenced was not found."
