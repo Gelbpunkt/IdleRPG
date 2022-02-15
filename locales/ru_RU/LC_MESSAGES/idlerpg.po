@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-12-31 13:37+0100\n"
-"PO-Revision-Date: 2021-12-08 21:22+0000\n"
+"PO-Revision-Date: 2022-02-16 21:23+0000\n"
 "Last-Translator: Денис Османов <OzzDenis0@mail.ru>\n"
 "Language-Team: Russian <http://translate.travitia.xyz/projects/idlerpg/bot/"
 "ru/>\n"
@@ -47,6 +47,26 @@ msgid ""
 "\n"
 "            (This command has a cooldown of 30 minutes.)"
 msgstr ""
+"`[prize]` - Количество денег, которое получит победитель.\n"
+"\n"
+"            Начните новое состязание. У игроков есть 30 секунд на "
+"присоединение через реакцию.\n"
+"            Участие в состязании бесплатное, только организатор состязания "
+"должен заплатить указанное число денег.\n"
+"\n"
+"             Только экспонент из 2 (2^n) игроков может присоединиться. Если "
+"игроков оказалось больше ближайшего экспонента, то последние "
+"присоединившиеся не будут учитываться.\n"
+"\n"
+"            Противники будут подбираться случайно, битвы сами по себе будут "
+"решаться как обычные (просмотрите `{prefix}help battle` для подробностей).\n"
+"\n"
+"            Победитель боя переходит в следующий тур, проигравшие выбывают, "
+"пока не останется один единственный игрок.\n"
+"            Состязания в IdleRPG используют систему с выбыванием после "
+"первого поражения.\n"
+"\n"
+"            (Эта команда имеет перезарядку в 30 минут.)"
 
 #: cogs/tournament/__init__.py:66 cogs/tournament/__init__.py:236
 #: cogs/battles/__init__.py:68 cogs/battles/__init__.py:191
@@ -101,7 +121,7 @@ msgstr "Раунд завершён!"
 #: cogs/tournament/__init__.py:189
 #, python-brace-format
 msgid "Tournament ended! The winner is {winner}."
-msgstr "Состязание закончилось! Победитель - {winner}"
+msgstr "Состязание окончено! Победителем объявляется {winner}."
 
 #: cogs/tournament/__init__.py:210
 #, python-brace-format
@@ -135,21 +155,43 @@ msgid ""
 "\n"
 "            (This command has a cooldown of 30 minutes.)"
 msgstr ""
+"`[prize]` - Количество денег, которое получит победитель.\n"
+"\n"
+"            Начните новое состязание в стиле \"Рейд\". У игроков есть 30 "
+"секунд на присоединение через реакцию.\n"
+"            Участие в состязании бесплатное, только организатор состязания "
+"должен заплатить указанное число денег.\n"
+"\n"
+"             Только экспонент из 2 (2^n) игроков может присоединиться. Если "
+"игроков оказалось больше ближайшего экспонента, то последние "
+"присоединившиеся не будут участвовать.\n"
+"\n"
+"            Противники будут подбираться случайно, битвы будут решаться как "
+"обычные (просмотрите `{prefix}help battle` для подробностей).\n"
+"\n"
+"            Победитель боя переходит в следующий тур, проигравшие выбывают, "
+"пока не останется один единственный игрок.\n"
+"            Состязания в IdleRPG используют систему с выбыванием после "
+"первого поражения.\n"
+"\n"
+"            (Эта команда имеет перезарядку в 30 минут.)"
 
 #: cogs/tournament/__init__.py:254 cogs/tournament/__init__.py:279
 msgid "You joined the raid tournament."
-msgstr ""
+msgstr "Вы присоединились к состязанию в стиле \"Рейд\"."
 
 #: cogs/tournament/__init__.py:285
 #, python-brace-format
 msgid ""
 "{author} started a raid tournament! Free entries, prize is **${prize}**!"
 msgstr ""
+"{author} начал состязание в стиле \"Рейд\"! Участие бесплатное, приз равен "
+"**${prize}**!"
 
 #: cogs/tournament/__init__.py:308
 #, python-brace-format
 msgid "Noone joined your raid tournament {author}."
-msgstr ""
+msgstr "Никто не присоединился к вашему состязанию в стиле \"Рейд\", {author}."
 
 #: cogs/tournament/__init__.py:317
 #, python-brace-format
@@ -157,11 +199,14 @@ msgid ""
 "There are **{num}** entries, due to the fact we need a playable raid "
 "tournament, the last **{removed}** have been removed."
 msgstr ""
+"Присоединилось количество игроков, равное **{num}**, но поскольку нам нужно "
+"подходящее для состязания в стиле \"Рейд\" число участников, последние(й) "
+"**{removed}** не будут(ет) принимать участия."
 
 #: cogs/tournament/__init__.py:351 cogs/battles/__init__.py:261
 #, python-brace-format
 msgid "Raidbattle {p1} vs. {p2} started!"
-msgstr ""
+msgstr "Битва в стиле \"Рейд\" между {p1} и {p2} началась!"
 
 #: cogs/tournament/__init__.py:389 cogs/battles/__init__.py:300
 #, python-brace-format
