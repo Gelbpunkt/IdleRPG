@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: 4.3.0\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-12-31 13:37+0100\n"
-"PO-Revision-Date: 2022-02-11 22:50+0000\n"
+"PO-Revision-Date: 2022-02-22 19:53+0000\n"
 "Last-Translator: Julian <k.sahleb@gmail.com>\n"
 "Language-Team: German <http://translate.travitia.xyz/projects/idlerpg/bot/de/"
 ">\n"
@@ -381,6 +381,10 @@ msgid ""
 "ancient image on top of a chocolate bar, passed along for generations. You "
 "decide to keep it in your `{prefix}eventbackgrounds`."
 msgstr ""
+"🎃 Sobald du aus der Tür getreten bist, öffnest du deine Süßigkeiten und das "
+"Plastik zeigt dir ein antikes Bild auf der Schokolade, welches durch "
+"Generationen hinweg weitergegeben würde. Du entscheidest dich dazu, dieses "
+"in deinen `{prefix}eventbackgrounds` zu behalten."
 
 #: cogs/halloween/__init__.py:120
 msgid "Open a trick or treat bag"
@@ -689,16 +693,17 @@ msgstr ""
 #: cogs/battles/__init__.py:200
 #, python-brace-format
 msgid "{author} seeks a raidbattle! The price is **${money}**."
-msgstr ""
+msgstr "{author} sucht einen Raidkampf! Der Preis beträgt **${money}**."
 
 #: cogs/battles/__init__.py:205
 #, python-brace-format
 msgid "{author} seeks a raidbattle with {enemy}! The price is **${money}**."
 msgstr ""
+"{author} sucht einen Raidampf mit {enemy}! Der Preis beträgt **${money}**."
 
 #: cogs/battles/__init__.py:216
 msgid "Join the raidbattle!"
-msgstr ""
+msgstr "Tritt dem Raidkampf bei!"
 
 #: cogs/battles/__init__.py:223
 msgid "You don't have enough money to join the raidbattle."
@@ -772,17 +777,19 @@ msgstr ""
 #: cogs/battles/__init__.py:390
 #, python-brace-format
 msgid "{author} seeks an active battle! The price is **${money}**."
-msgstr ""
+msgstr "{author} sucht einen aktiven Kampf! Der Preis beträgt **${money}**."
 
 #: cogs/battles/__init__.py:394
 #, python-brace-format
 msgid ""
 "{author} seeks an active battle with {enemy}! The price is **${money}**."
 msgstr ""
+"{author} sucht einen aktiven Kampf mit{enemy}! Der Preis beträgt "
+"**${money}**."
 
 #: cogs/battles/__init__.py:405
 msgid "Join the activebattle!"
-msgstr ""
+msgstr "Tritt dem aktiven Kampf bei!"
 
 #: cogs/battles/__init__.py:413
 msgid "You don't have enough money to join the activebattle."
@@ -1028,17 +1035,17 @@ msgstr ""
 
 #: cogs/crates/__init__.py:67
 msgid "Your Crates"
-msgstr ""
+msgstr "Deine Kisten"
 
 #: cogs/crates/__init__.py:74
 #, python-brace-format
 msgid "{amount} crates"
-msgstr ""
+msgstr "{amount} Kisten"
 
 #: cogs/crates/__init__.py:79
 #, python-brace-format
 msgid "Use {prefix}open [rarity] to open one!"
-msgstr ""
+msgstr "Nutze {prefix}open[rarity] um eine zu öffnen!"
 
 #: cogs/crates/__init__.py:86
 msgid "Open a crate"
@@ -1536,12 +1543,12 @@ msgstr "Hier findet schon ein Match statt!"
 
 #: cogs/hungergames/__init__.py:316 cogs/hungergames/__init__.py:333
 msgid "You joined the Hunger Games."
-msgstr ""
+msgstr "Du bist den Hungerspielen beigetreten."
 
 #: cogs/hungergames/__init__.py:337
 #, python-brace-format
 msgid "{author} started a game of Hunger Games!"
-msgstr ""
+msgstr "{author} hat eine Runde Hungerspiele gestartet!"
 
 #: cogs/hungergames/__init__.py:346
 msgid "Not enough players joined..."
@@ -2425,6 +2432,29 @@ msgid ""
 "<https://www.ncpgambling.org/help-treatment/national-helpline-1-800-522-4700/"
 "> - Gambling Helpline"
 msgstr ""
+"**IdleRPG** ist Discords am weitesten entwickelter mittelalter-RPG-Bot. \n"
+"Wir zielen darauf ab, die perfekte RPG Erfahrung in Discord mit dem "
+"kleinsten Aufwand für den User zu bieten.\n"
+"\n"
+"Wir sammeln keiner Nutzerdaten, abgesehen von den Charakterinformationen und "
+"unseren Transaktionslogs.\n"
+"Der Bot ist 100% kostenfrei und Open Source. \n"
+"Der Bot wird von Leuten entwickelt, die das Coden für einen guten Zweck "
+"lieben und unsere Gameplay-Erfahrung verbessern wollen.\n"
+"\n"
+"**Links**\n"
+"<https://git.travitia.xyz/Kenvyra/IdleRPG> - Source Code\n"
+"<https://git.travitia.xyz> - GitLab (Public)\n"
+"<https://idlerpg.xyz> - Bot Website\n"
+"<https://wiki.idlerpg.xyz> - IdleRPG wiki\n"
+"<https://travitia.xyz> - IdleRPG's next major upgrade\n"
+"<https://idlerpg.xyz> - Our forums\n"
+"<https://public-api.travitia.xyz> - Our public API\n"
+"<https://cloud.idlerpg.xyz> - VPS hosting by IdleRPG\n"
+"<https://github.com/Kenvyra> - Other IdleRPG related code\n"
+"<https://discord.com/terms> - Discord's ToS\n"
+"<https://www.ncpgambling.org/help-treatment/national-helpline-1-800-522-4700/"
+"> - Gambling Helpline"
 
 #: cogs/miscellaneous/__init__.py:568
 msgid "Show the rules again"
@@ -2465,7 +2495,7 @@ msgstr "Startet einen Zerekiel Raid"
 #: cogs/raid/__init__.py:1024 cogs/raid/__init__.py:1192
 #: cogs/raid/__init__.py:1377 cogs/raid/__init__.py:1601
 msgid "You joined the raid."
-msgstr ""
+msgstr "Du bist dem Raid beigetreten."
 
 #: cogs/raid/__init__.py:446
 msgid "Start a Kvothe raid"
@@ -2829,7 +2859,7 @@ msgstr "Erfolgreich {types} für die nächsten **24 Stunden** aktiviert!"
 
 #: cogs/help/__init__.py:115 cogs/help/__init__.py:239
 msgid "This command was not initiated by you."
-msgstr ""
+msgstr "Dieser Befehl wurde nicht von dir gestartet."
 
 #: cogs/help/__init__.py:189
 msgid "Subcommands"
@@ -2839,6 +2869,7 @@ msgstr "Untergeordnete Befehle"
 #, python-brace-format
 msgid "Click on the buttons to see more subcommands. | Page {start}/{end}"
 msgstr ""
+"Klicke auf die Knöpfe um weitere Subkommandos zu sehen. | Page {start}/{end}"
 
 #: cogs/help/__init__.py:278
 msgid "View the command list"
@@ -3158,7 +3189,7 @@ msgstr "Du hast keinen Zugriff auf diesen Befehl!"
 
 #: cogs/help/__init__.py:706
 msgid "No help available"
-msgstr ""
+msgstr "Keine Hilfe verfügbar"
 
 #: cogs/help/__init__.py:715
 msgid "Aliases"
@@ -3390,10 +3421,21 @@ msgid ""
 "\n"
 "            Only basic (or above) tier patrons can use this command."
 msgstr ""
+"`<url>` - Der Bildlink, der formatiert werden soll\n"
+"            `<style>` - Der Typ Overlay, der genutzt werden soll. Verfügbare "
+"Optionen sind dark/dunkel and light/hell.\n"
+"\n"
+"            Generiert einen Profilhintergrund für dich. Dies wird dein Bild "
+"strecken/stauchen (zu 800x633 pixel) und ein Overlay hinzufügen.\n"
+"            Dies wird dann einen Link für dich genieren, den du mit "
+"`{prefix}background` nutzen kannst.\n"
+"\n"
+"            Nur Basic-Donator oder höher (Patreon) können diesen Befehl "
+"nutzen."
 
 #: cogs/patreon/__init__.py:373
 msgid "Overlay type must be `dark` or `light`."
-msgstr ""
+msgstr "Overlay-Typ muss `dark` oder `light` sein."
 
 #: cogs/patreon/__init__.py:388 cogs/profile/__init__.py:263
 #, python-brace-format
@@ -3496,7 +3538,7 @@ msgstr "Hintergrund geändert!"
 
 #: cogs/patreon/__init__.py:484
 msgid "View your eventbackgrounds"
-msgstr ""
+msgstr "Zeigt deine Eventhintergründe an"
 
 #: cogs/patreon/__init__.py:488
 #, python-brace-format
@@ -3507,16 +3549,23 @@ msgid ""
 "            You can use one of these backgrounds on your profile using "
 "`{prefix}eventbackground`."
 msgstr ""
+"Zeigt eine Liste aller Hintergründe an, die du von Events bekommen hast. Du "
+"kannst Eventhintergründe von speziellen Events bekommen, wie etwa Ostern "
+"oder Weihnachten.\n"
+"\n"
+"            Du kannst einen dieser Hintergründe mit dem Befehl "
+"`{prefix}eventbackground` nutzen."
 
 #: cogs/patreon/__init__.py:501
 #, python-brace-format
 msgid "Background {number}/{total}"
-msgstr ""
+msgstr "Hintergrund {number}/{total}"
 
 #: cogs/patreon/__init__.py:507
 #, python-brace-format
 msgid "Use {prefix}eventbackground {number} to use this background"
 msgstr ""
+"Nutze {prefix}eventbackground {number} um diesen Hintergrund zu verwenden"
 
 #: cogs/classes/__init__.py:52
 msgid "Choose or change your class(es)"
@@ -3675,7 +3724,7 @@ msgstr ""
 
 #: cogs/classes/__init__.py:159
 msgid "Choose a class"
-msgstr ""
+msgstr "Wähle eine Klasse"
 
 #: cogs/classes/__init__.py:169
 #, python-brace-format
@@ -3971,7 +4020,7 @@ msgstr "Adrians Superscheißhaufen"
 
 #: cogs/classes/__init__.py:458
 msgid "Select a dish for your pet"
-msgstr ""
+msgstr "Wähle ein Essen für dein Tier"
 
 #: cogs/classes/__init__.py:465 cogs/classes/__init__.py:524
 #: cogs/marriage/__init__.py:291
@@ -4033,7 +4082,7 @@ msgstr "Adrians Cocktail"
 
 #: cogs/classes/__init__.py:517
 msgid "Select a drink for your pet"
-msgstr ""
+msgstr "Wähle ein Getränk für dein Tier"
 
 #: cogs/classes/__init__.py:520
 msgid "Give your pet something to drink"
@@ -4290,19 +4339,19 @@ msgstr "Westen"
 
 #: cogs/adventure/__init__.py:138
 msgid "Attack"
-msgstr ""
+msgstr "Angriff"
 
 #: cogs/adventure/__init__.py:145
 msgid "Defend"
-msgstr ""
+msgstr "Verteidigen"
 
 #: cogs/adventure/__init__.py:152
 msgid "Recover"
-msgstr ""
+msgstr "Heilen"
 
 #: cogs/adventure/__init__.py:212
 msgid "The active adventure has started."
-msgstr ""
+msgstr "Das aktive Abenteuer hat begonnen."
 
 #: cogs/adventure/__init__.py:252
 #, python-brace-format
@@ -4330,7 +4379,7 @@ msgstr "Zeit ausgelaufen."
 
 #: cogs/adventure/__init__.py:317
 msgid "You defeated the enemy."
-msgstr ""
+msgstr "Du hast den Gegner besiegt."
 
 #: cogs/adventure/__init__.py:327
 #, python-brace-format
@@ -4356,7 +4405,7 @@ msgstr ""
 
 #: cogs/adventure/__init__.py:364
 msgid "`@` - You, `!` - Enemy, `*` - Treasure"
-msgstr ""
+msgstr "`@` - Du, `!` - Gegner, `*` - Schatz"
 
 #: cogs/adventure/__init__.py:367
 #, python-brace-format
@@ -4369,7 +4418,7 @@ msgstr "Gegner"
 
 #: cogs/adventure/__init__.py:375
 msgid "HP"
-msgstr ""
+msgstr "KP"
 
 #: cogs/adventure/__init__.py:437
 msgid "Shows adventures and your chances"
@@ -4482,6 +4531,36 @@ msgid ""
 "\n"
 "            (This command has a cooldown of 30 minutes)"
 msgstr ""
+"Aktive Abenteuer werden dich in ein zufällig generiertes Labyrinth "
+"platzieren. Du wirst in der oberen linken Ecke anfangen und dein Ziel wird "
+"es sein, den Ausgang in der rechten unteren Ecke zu finden.\n"
+"            Du kontrollierst deinen Charakter mit den Pfeilreaktionen unter "
+"der Nachricht.\n"
+"\n"
+"            Du hast eine festgelegte Nummer KP, die auf deinen Items "
+"basiert. Das Abenteuer endet, wenn du den Ausgang findest oder deine KP auf "
+"0 fallen.\n"
+"            Du kannst KP durch Fallen oder Feinde verlieren.\n"
+"\n"
+"            Das Labyrinth enthält sichere Felder aber auch Fallen und Feinde."
+"\n"
+"            Jedes Feld hat eine 10% Chance eine Falle zu sein. Wenn ein Feld "
+"keine Falle ist, hat es eine 10% Chance einen Feind zu haben.\n"
+"            Jedes Labyrinth hat 5 Schatzkisten.\n"
+"\n"
+"            Fallen fügen dir zwischen 1/10 und einem 1/8 deiner anfänglichen "
+"KP zu. \n"
+"            Der Schaden der Feinde basiert auf deinem eigenen Schaden. "
+"Während eines Kampfes kannst du mit (⚔️)angreifen, dich mit (🛡️)verteidigen "
+"oder deine KP regenerieren (❤️)\n"
+"            Schatzkisten können das bis zu 25-Fache deines Angriffsschadens +"
+" deiner Verteidigung als Gold enthalten. \n"
+"\n"
+"            Wenn du das Ende erreichst, wirst du einen speziellen Schatz mit "
+"Gold finden, welches dem bis zu 100fachen deiner Angriffspunkte und "
+"Verteidigungspunkte entspricht. \n"
+"\n"
+"            (Dieser Befehl hat einen Cooldown von 2 Stunden)"
 
 #: cogs/adventure/__init__.py:566
 msgid ""
@@ -4492,6 +4571,13 @@ msgid ""
 "Tip: Use a silent channel for this, you may want to read all the messages I "
 "will send."
 msgstr ""
+"Du wirst in einem Labyrinth sein. Es gibt dort Gegner, Schätze und "
+"versteckte Fallen. Erreiche den Ausgang in der unteren rechten Ecke für "
+"einen großen extra Bonus!\n"
+"Bist du bereit?\n"
+"\n"
+"Tipp: Nutze einen ruhigen Kanal für das Abenteuer, du möchtest die Chance "
+"haben, alle Nachrichten, die ich sende, zu lesen."
 
 #: cogs/adventure/__init__.py:580
 msgid "Checks your adventure status."
@@ -4707,6 +4793,8 @@ msgid ""
 "The dealer has a {pretty_dealer} for a total of {dealer}\n"
 "You have a {pretty_player} for a total of {player}"
 msgstr ""
+"Der Dealer hat {pretty_dealer} für eine Gesamtsumme von {dealer}\n"
+"Du hast {pretty_player} für eine Gesamtsumme von {player}"
 
 #: cogs/gambling/__init__.py:381
 #, python-brace-format
@@ -5209,7 +5297,7 @@ msgstr "Verdoppeln oder ${money} stehlen?"
 
 #: cogs/gambling/__init__.py:1156
 msgid "Select an action"
-msgstr ""
+msgstr "Wähle eine Aktion aus"
 
 #: cogs/gambling/__init__.py:1157
 msgid "Double"
@@ -5742,7 +5830,7 @@ msgstr "Der Händler"
 
 #: cogs/trading/__init__.py:811
 msgid "Select an item to purchase"
-msgstr ""
+msgstr "Wähle ein Item aus, dass du kaufen möchtest"
 
 #: cogs/trading/__init__.py:829
 msgid "You are too poor to buy this item."
@@ -8123,11 +8211,11 @@ msgstr ""
 
 #: cogs/guild/__init__.py:1399
 msgid "Join the adventure!"
-msgstr ""
+msgstr "Tritt dem Abenteuer bei!"
 
 #: cogs/guild/__init__.py:1400
 msgid "You joined the adventure."
-msgstr ""
+msgstr "Du bist dem Abenteuer beigetreten."
 
 #: cogs/guild/__init__.py:1406
 #, python-brace-format
@@ -8136,6 +8224,9 @@ msgid ""
 "Unlimited players can join in the next 10 minutes. The minimum of players "
 "required is 3."
 msgstr ""
+"{author} ruft zu einem Gildenabenteuer für **{guild}** auf! Folge dem Link "
+"um beizutreten! Eine unbegrenzte Anzahl an Spieler kann innerhalb der "
+"nächsten zehn Minuten beitreten, es müssen jedoch mindestens 3 sein."
 
 #: cogs/guild/__init__.py:1433
 msgid "You didn't get enough other players for the guild adventure."
@@ -8421,7 +8512,7 @@ msgstr "**{person}** hat kein Profil."
 
 #: cogs/profile/__init__.py:220
 msgid "Finished"
-msgstr ""
+msgstr "Beendet"
 
 #: cogs/profile/__init__.py:248
 msgid "No God"
@@ -8815,7 +8906,7 @@ msgstr "Du hast die Beute mit den IDs {itemids} nicht"
 #: cogs/profile/__init__.py:665
 #, python-brace-format
 msgid "Select a reward for the {count} items"
-msgstr ""
+msgstr "Wähle eine Belohnung für die {count} Items aus"
 
 #: cogs/profile/__init__.py:666
 msgid "Select a reward"
@@ -8834,7 +8925,7 @@ msgstr "**{value} EP**"
 #: cogs/profile/__init__.py:672
 #, python-brace-format
 msgid "{value} XP"
-msgstr ""
+msgstr "{value} EXP"
 
 #: cogs/profile/__init__.py:703
 #, python-brace-format
@@ -9232,21 +9323,23 @@ msgstr "Profilfarbe erfolgreich zu `{colour}` geändert."
 
 #: cogs/profile/__init__.py:1210
 msgid "Claim your profile badges"
-msgstr ""
+msgstr "Erhalte deine Profil-Abzeichen"
 
 #: cogs/profile/__init__.py:1214
 msgid ""
 "Claim all badges for your profile based on your roles. This command can only "
 "be used in the support server."
 msgstr ""
+"Erhalte alle Abzeichen für dein Profil, basierend auf deinen Rollen. Dieser "
+"Befehl kann nur im Support Server genutzt werden."
 
 #: cogs/profile/__init__.py:1217
 msgid "This command can only be used in the support server."
-msgstr ""
+msgstr "Dieser Befehl kann nur im Support Server genutzt werden."
 
 #: cogs/profile/__init__.py:1247
 msgid "Successfully updated your badges."
-msgstr ""
+msgstr "Abzeichen erfolgreich geupdated."
 
 #: cogs/game_master/__init__.py:39
 msgid "Publish an announcement"
@@ -9307,7 +9400,7 @@ msgstr ""
 
 #: cogs/game_master/__init__.py:91
 msgid "Bot-ban a user"
-msgstr ""
+msgstr "Botbannt einen Nutzer"
 
 #: cogs/game_master/__init__.py:95
 msgid ""
@@ -9318,16 +9411,22 @@ msgid ""
 "\n"
 "            Only Game Masters can use this command."
 msgstr ""
+"`<other>` - Ein Discord-Nutzer\n"
+"\n"
+"            Bannt einen Nutzer vom Bot, verbietet diesem die Befehle und "
+"Reaktionen zu nutzen.\n"
+"\n"
+"            Nur Game Master können diesen Befehl nutzen."
 
 #: cogs/game_master/__init__.py:110
 #, python-brace-format
 msgid "Banned: {other}"
-msgstr ""
+msgstr "Gebannt: {other}"
 
 #: cogs/game_master/__init__.py:121
 #, python-brace-format
 msgid "{other} is already banned."
-msgstr ""
+msgstr "{other} ist bereits gebannt."
 
 #: cogs/game_master/__init__.py:124
 msgid "Bot-unban a user"
@@ -9913,7 +10012,7 @@ msgstr ""
 
 #: cogs/gods/__init__.py:156
 msgid "Choose a god"
-msgstr ""
+msgstr "Wähle einen Gott"
 
 #: cogs/gods/__init__.py:162
 #, python-brace-format
@@ -10886,11 +10985,11 @@ msgstr "...ungewöhnliche und mächtige Gerüche."
 
 #: cogs/races/__init__.py:159
 msgid "Choose a race"
-msgstr ""
+msgstr "Wähle eine Rasse"
 
 #: cogs/races/__init__.py:166
 msgid "Select your answer"
-msgstr ""
+msgstr "Wähle deine Antwort"
 
 #: cogs/races/__init__.py:184
 #, python-brace-format
@@ -11625,17 +11724,17 @@ msgstr "Die Stadt hat schon keine Verteidigungen mehr."
 
 #: cogs/alliance/__init__.py:734
 msgid "Join the attack!"
-msgstr ""
+msgstr "Tritt dem Angriff bei!"
 
 #: cogs/alliance/__init__.py:735
 msgid "You joined the attack."
-msgstr ""
+msgstr "Du bist dem Angriff beigetreten."
 
 #: cogs/alliance/__init__.py:741
 #, python-brace-format
 msgid ""
 "**{user}** wants to attack **{city}** with **{alliance_name}**'s alliance."
-msgstr ""
+msgstr "**{user}** möchte **{city}** mit**{alliance_name}** Allianz angreifen."
 
 #: cogs/alliance/__init__.py:780
 msgid "Noone joined."
@@ -11775,7 +11874,7 @@ msgstr "Du hast {chocolates} übrig"
 
 #: cogs/trivia/__init__.py:51
 msgid "Select the correct answer"
-msgstr ""
+msgstr "Wähle die richtige Antwort aus"
 
 #: cogs/trivia/__init__.py:60
 msgid "Answer a trivia question"
@@ -12120,11 +12219,11 @@ msgstr ""
 
 #: cogs/werewolf/__init__.py:142 cogs/werewolf/__init__.py:176
 msgid "Join the Werewolf game!"
-msgstr ""
+msgstr "Tritt dem Werwolf Spiel bei!"
 
 #: cogs/werewolf/__init__.py:143 cogs/werewolf/__init__.py:177
 msgid "You joined the Werewolf game."
-msgstr ""
+msgstr "Du bist dem Werwolf Spiel beigetreten."
 
 #: cogs/werewolf/__init__.py:147
 #, python-brace-format
@@ -12133,6 +12232,10 @@ msgid ""
 "**{mode}** mode on **{speed}** speed. You can join in the next 10 minutes. "
 "**Minimum of {min_players} players are required.**"
 msgstr ""
+"**{author} hat ein massives Spiel Werwolf gestarten!**\n"
+"**{mode}** Modus mit **{speed}** Geschwindigkeit. Du kannst in den nächsten "
+"10 Minuten beitreten. **Ein Minimum von {min_players} Spielern wird "
+"benötigt.**"
 
 #: cogs/werewolf/__init__.py:154
 msgid "Werewolf Mass-game!"
@@ -12153,6 +12256,9 @@ msgid ""
 "**{mode}** mode on **{speed}** speed. Minimum of **{min_players}** players "
 "are required. Starting in 2 minutes."
 msgstr ""
+"**{author}hat ein Werewolf Spiel gestartet!**\n"
+"**{mode}** Modus mit **{speed}** Geschwindigkeit. Ein Minimum von "
+"**{min_players}** Spielern wird benötigt. Startet in 2 Minuten."
 
 #: cogs/werewolf/__init__.py:210
 msgid ""
@@ -12642,6 +12748,11 @@ msgid ""
 "\n"
 "            To find a reminder's ID, use `{prefix}reminder list`."
 msgstr ""
+"`[id]` - Eine Erinnerungs ID\n"
+"\n"
+"            Cancelled eine laufende Erinnerung mithilfe der ID.\n"
+"\n"
+"            Um eine ID zu bekommen, nutze `{prefix}reminder list`."
 
 #: cogs/scheduler/__init__.py:329
 msgid "None of these reminder IDs belong to you."
