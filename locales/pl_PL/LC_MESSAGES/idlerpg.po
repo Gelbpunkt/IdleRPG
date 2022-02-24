@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-12-31 13:37+0100\n"
-"PO-Revision-Date: 2022-02-11 22:50+0000\n"
-"Last-Translator: Christian Fjellsnø <no4h.j.w@gmail.com>\n"
+"PO-Revision-Date: 2022-02-25 21:53+0000\n"
+"Last-Translator: Tomasz Galicki <tomasz.galicki8924@gmail.com>\n"
 "Language-Team: Polish <http://translate.travitia.xyz/projects/idlerpg/bot/pl/"
 ">\n"
 "Language: pl_PL\n"
@@ -22,7 +22,7 @@ msgstr ""
 
 #: cogs/tournament/__init__.py:46
 msgid "Start a new tournament"
-msgstr ""
+msgstr "Zacznij nowy turniej"
 
 #: cogs/tournament/__init__.py:50
 #, python-brace-format
@@ -59,17 +59,17 @@ msgstr "Jesteś zbyt biedny."
 
 #: cogs/tournament/__init__.py:84 cogs/tournament/__init__.py:109
 msgid "You joined the tournament."
-msgstr ""
+msgstr "Dołączyłeś do turnieju."
 
 #: cogs/tournament/__init__.py:115
 #, python-brace-format
 msgid "{author} started a tournament! Free entries, prize is **${prize}**!"
-msgstr ""
+msgstr "{author} zaczął turniej! Darmowy wstęp, nagroda to **${prize}**!"
 
 #: cogs/tournament/__init__.py:138
 #, python-brace-format
 msgid "Noone joined your tournament {author}."
-msgstr ""
+msgstr "Nikt nie dołączył do twojego turnieju {author}."
 
 #: cogs/tournament/__init__.py:147
 #, python-brace-format
@@ -77,13 +77,13 @@ msgid ""
 "There are **{num}** entries, due to the fact we need a playable tournament, "
 "the last **{removed}** have been removed."
 msgstr ""
-"Mamy **{num}** rywali. Z racji, że turniej musi być możliwy do rozegrania, "
-"ostatni **{removed}** został usunięty."
+"Mamy **{num}** osób. Dlatego że turniej musi być możliwy do rozegrania, "
+"ostatni **{removed}** zostali usunięci."
 
 #: cogs/tournament/__init__.py:154 cogs/tournament/__init__.py:324
 #, python-brace-format
 msgid "Tournament started with **{num}** entries."
-msgstr "Turniej rozpoczął się z **{num}** rywalami."
+msgstr "Turniej zaczął się z **{num}** osobami."
 
 #: cogs/tournament/__init__.py:156 cogs/tournament/__init__.py:326
 msgid "vs"
@@ -92,7 +92,7 @@ msgstr "przeciwko"
 #: cogs/tournament/__init__.py:182 cogs/tournament/__init__.py:428
 #, python-brace-format
 msgid "Winner of this match is {winner}!"
-msgstr "Zwycięzcą pojedynku jest {winner}!"
+msgstr "Zwycięzcą tego meczu jest {winner}!"
 
 #: cogs/tournament/__init__.py:186 cogs/tournament/__init__.py:432
 msgid "Round Done!"
@@ -110,7 +110,7 @@ msgid ""
 "Money was given!"
 msgstr ""
 "Turniej zakończony! Zwycięzcą jest {winner}.\n"
-"Pieniądze zostały przyznane!"
+"Pieniądze zostały dane!"
 
 #: cogs/tournament/__init__.py:220
 #, python-brace-format
@@ -138,18 +138,19 @@ msgstr ""
 
 #: cogs/tournament/__init__.py:254 cogs/tournament/__init__.py:279
 msgid "You joined the raid tournament."
-msgstr ""
+msgstr "Dołączyłeś do rajdowego turnieju."
 
 #: cogs/tournament/__init__.py:285
 #, python-brace-format
 msgid ""
 "{author} started a raid tournament! Free entries, prize is **${prize}**!"
 msgstr ""
+"{author} zaczął rajdowy turniej! Darmowy wstęp, nagroda to **${prize}**!"
 
 #: cogs/tournament/__init__.py:308
 #, python-brace-format
 msgid "Noone joined your raid tournament {author}."
-msgstr ""
+msgstr "Nikt nie dołączył do twojego raidowego turnieju {author}."
 
 #: cogs/tournament/__init__.py:317
 #, python-brace-format
@@ -157,16 +158,18 @@ msgid ""
 "There are **{num}** entries, due to the fact we need a playable raid "
 "tournament, the last **{removed}** have been removed."
 msgstr ""
+"Mamy **{num}** osób. Dlatego że rajdowy turniej musi być możliwy do "
+"rozegrania, ostatni **{removed}** zostali usunięci."
 
 #: cogs/tournament/__init__.py:351 cogs/battles/__init__.py:261
 #, python-brace-format
 msgid "Raidbattle {p1} vs. {p2} started!"
-msgstr ""
+msgstr "Bitwa rajdowa {p1} przeciwko {p2} zaczęła się!"
 
 #: cogs/tournament/__init__.py:389 cogs/battles/__init__.py:300
 #, python-brace-format
 msgid "{attacker} attacks! {defender} takes **{dmg}HP** damage."
-msgstr ""
+msgstr "{attacker} atakuje! {defender} otrzymuje obrażenia **{dmg}PW**."
 
 #: cogs/tournament/__init__.py:401 cogs/battles/__init__.py:310
 #, python-brace-format
@@ -174,16 +177,18 @@ msgid ""
 "{p1} - {hp1} HP left\n"
 "{p2} - {hp2} HP left"
 msgstr ""
+"{p1} - pozostało {hp1} PW\n"
+"{p2} - pozostało {hp2} PW"
 
 #: cogs/tournament/__init__.py:413 cogs/battles/__init__.py:321
 #, python-brace-format
 msgid "Action #{number}"
-msgstr ""
+msgstr "Akcja #{number}"
 
 #: cogs/tournament/__init__.py:435
 #, python-brace-format
 msgid "Raid Tournament ended! The winner is {winner}."
-msgstr ""
+msgstr "Turniej rajdowy zakończony! Zwycięzcą jest {winner}."
 
 #: cogs/tournament/__init__.py:456
 #, python-brace-format
@@ -191,6 +196,8 @@ msgid ""
 "Raid Tournament ended! The winner is {winner}.\n"
 "Money was given!"
 msgstr ""
+"Turniej rajdowy zakończony! Zwycięzcą jest {winner}.\n"
+"Pieniądze zostały dane!"
 
 #: cogs/images/__init__.py:31
 msgid "Pixelfy an avatar"
@@ -208,7 +215,7 @@ msgstr ""
 
 #: cogs/images/__init__.py:43
 msgid "Use 1, 2, 3, 4 or 5 as intensity value."
-msgstr "Użyj 1, 2, 3, 4 lub 5 aby określić intensywność."
+msgstr "Wpisz 1, 2, 3, 4 lub 5 aby ustawić intensywność pixeli."
 
 #: cogs/images/__init__.py:56
 msgid "Defines an avatar's edges"
@@ -301,7 +308,7 @@ msgstr ""
 
 #: cogs/halloween/__init__.py:120
 msgid "Open a trick or treat bag"
-msgstr ""
+msgstr "Otwórz torebkę cukierek albo psikus"
 
 #: cogs/halloween/__init__.py:124
 #, python-brace-format
@@ -366,11 +373,11 @@ msgstr "Wartość"
 #: cogs/halloween/__init__.py:189
 #, python-brace-format
 msgid "Remaining trick-or-treat bags: {bags}"
-msgstr "Pozostałe torby-niespodzianki: {bags}"
+msgstr "Pozostałe torebki cukierek albo psikus: {bags}"
 
 #: cogs/halloween/__init__.py:197
 msgid "Shows your trick or treat bags"
-msgstr ""
+msgstr "Pokazuję twoje torebki cukierek albo psikus"
 
 #: cogs/halloween/__init__.py:202
 #, python-brace-format
@@ -432,8 +439,8 @@ msgid ""
 "To permanently choose a language, please create a character and enter this "
 "command again. I set it to {language} temporarily."
 msgstr ""
-"Aby wybrać język na stałe, stwórz postać i wpisz tę komendę ponownie. Obecny "
-"język ({language}) jest ustawiony tymczasowo."
+"Aby wybrać język na stałe, stwórz postać i wpisz tę komendę ponownie. Język "
+"({language}) jest ustawiony tymczasowo."
 
 #: cogs/battles/__init__.py:46
 msgid "Battle against another player"
@@ -2818,15 +2825,15 @@ msgstr "Nie masz eventowego tła. Mogą być zdobyte podczas sezonowych eventów
 #, python-brace-format
 msgid ""
 "The background number {number} is not valid, you only have {total} available."
-msgstr "Numer tła {number} nie jest poprawny, masz tylko {total} dostępnych."
+msgstr "Numer tła {number} nie jest poprawny, masz tylko {total} dostępne."
 
 #: cogs/patreon/__init__.py:481
 msgid "Background updated!"
-msgstr "Tło zaaktualizowane!"
+msgstr "Tło zaktualizowane!"
 
 #: cogs/patreon/__init__.py:484
 msgid "View your eventbackgrounds"
-msgstr ""
+msgstr "Zobacz swoję eventowe tła"
 
 #: cogs/patreon/__init__.py:488
 #, python-brace-format
@@ -2885,7 +2892,7 @@ msgstr "Główna klasa"
 
 #: cogs/classes/__init__.py:73
 msgid "Secondary Class"
-msgstr ""
+msgstr "Druga klasa"
 
 #: cogs/classes/__init__.py:80
 msgid "Warrior"
@@ -2919,6 +2926,8 @@ msgid ""
 "Utilise powerful magic for stronger attacks.\n"
 "+1 damage per evolution."
 msgstr ""
+"Wykorzystaj potężną magię do silniejszych ataków.\n"
+"+1 do obrażeń na każdą ewolucję."
 
 #: cogs/classes/__init__.py:108
 #, python-brace-format
@@ -2928,6 +2937,10 @@ msgid ""
 "for you.\n"
 "+3 minimum stat and +6 maximum stat per evolution."
 msgstr ""
+"Łowca przedmiotów i trener własnego zwierzaka.\n"
+"Uzyskaj dostęp do `{prefix}pet`, aby wchodzić w interakcję ze swoim "
+"zwierzakiem i pozwolić mu dostawać przedmioty dla ciebie.\n"
+"Minimalna statystyka +3 i maksymalna statystyka +6 na ewolucję."
 
 #: cogs/classes/__init__.py:115
 msgid "Raider"
@@ -11023,6 +11036,8 @@ msgid ""
 "You chose to stay as Thief.\n"
 "{game_link}"
 msgstr ""
+"Wybrałeś zostać jako Złodziej.\n"
+"{game_link}"
 
 #: utils/werewolf.py:1937
 #, python-brace-format
