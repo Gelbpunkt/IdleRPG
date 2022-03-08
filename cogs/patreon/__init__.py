@@ -187,15 +187,16 @@ class Patreon(commands.Cog):
             return await ctx.send(_("Name too long."))
         async with self.bot.pool.acquire() as conn:
             item = await conn.fetchrow(
-                'SELECT * FROM allitems WHERE "owner"=$1 and "id"=$2;',
-                ctx.author.id,
+                "SELECT * FROM inventory i JOIN allitems ai ON (i.item=ai.id) WHERE"
+                " ai.id=$1 AND ai.owner=$2;",
                 itemid,
+                ctx.author.id,
             )
             if not item:
                 return await ctx.send(
-                    _("You don't have an item with the ID `{itemid}`.").format(
-                        itemid=itemid
-                    )
+                    _(
+                        "You don't have an item in your inventory with the ID `{itemid}`."
+                    ).format(itemid=itemid)
                 )
             await conn.execute(
                 'UPDATE allitems SET "name"=$1, "original_name"=CASE WHEN'
@@ -232,15 +233,16 @@ class Patreon(commands.Cog):
         hand = item_type.get_hand().value
         async with self.bot.pool.acquire() as conn:
             item = await conn.fetchrow(
-                'SELECT * FROM allitems WHERE "owner"=$1 and "id"=$2;',
-                ctx.author.id,
+                "SELECT * FROM inventory i JOIN allitems ai ON (i.item=ai.id) WHERE"
+                " ai.id=$1 AND ai.owner=$2;",
                 itemid,
+                ctx.author.id,
             )
             if not item:
                 return await ctx.send(
-                    _("You don't have an item with the ID `{itemid}`.").format(
-                        itemid=itemid
-                    )
+                    _(
+                        "You don't have an item in your inventory with the ID `{itemid}`."
+                    ).format(itemid=itemid)
                 )
 
             if item["type"] == new_type:

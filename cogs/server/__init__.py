@@ -18,7 +18,6 @@ along with this program.  If not, see <https://www.gnu.org/licenses/>.
 import discord
 
 from discord.ext import commands
-from discord.ext.commands.default import Author
 
 from utils.i18n import _, locale_doc
 
@@ -158,12 +157,13 @@ Server created at: `{created_at}`"""
 
     @commands.command(brief=_("Show someone's avatar"))
     @locale_doc
-    async def avatar(self, ctx, target: discord.Member = Author):
+    async def avatar(self, ctx, target: discord.Member = None):
         _(
             """`<target>` - The user whose avatar to show; defaults to oneself
 
             Shows someone's avatar, also known as their icon or profile picture."""
         )
+        target = target or ctx.author
         await ctx.send(
             embed=discord.Embed(
                 title=_("Download Link"),

@@ -31,6 +31,8 @@ import discord
 from classes.bot import Bot
 from classes.logger import file_handler, stream
 
+discord.http._set_api_version(9)
+
 if len(sys.argv) != 6:
     print(
         f"Usage: {sys.executable} idlerpg.py [shard_ids] [shard_count] [cluster_id]"

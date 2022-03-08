@@ -30,8 +30,9 @@ from time import time
 from typing import Iterable
 
 import aiohttp
-import aioredis
 import orjson
+
+from redis import asyncio as aioredis
 
 from utils import random
 from utils.config import ConfigLoader

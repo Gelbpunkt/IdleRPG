@@ -25,7 +25,6 @@ import traceback
 from decimal import Decimal
 
 import aiohttp
-import aioredis
 import asyncpg
 import discord
 import fantasy_names as fn
@@ -33,6 +32,7 @@ import fantasy_names as fn
 from discord import AllowedMentions
 from discord.ext import commands
 from discord.ext.commands.cooldowns import BucketType
+from redis import asyncio as aioredis
 
 from classes.bucket_cooldown import Cooldown, CooldownMapping
 from classes.classes import Mage, Paragon, Raider, Ranger, Ritualist, Thief, Warrior

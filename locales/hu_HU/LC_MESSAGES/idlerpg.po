@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-12-31 13:37+0100\n"
+"POT-Creation-Date: 2022-03-08 22:06+0100\n"
 "PO-Revision-Date: 2021-06-02 18:09+0000\n"
 "Last-Translator: Krisztina Koteles <krsztnktls@gmail.com>\n"
 "Language-Team: Hungarian <http://translate.travitia.xyz/projects/idlerpg/bot/"
@@ -67,9 +67,9 @@ msgstr ""
 
 #: cogs/tournament/__init__.py:66 cogs/tournament/__init__.py:236
 #: cogs/battles/__init__.py:68 cogs/battles/__init__.py:191
-#: cogs/battles/__init__.py:380 cogs/gambling/__init__.py:612
-#: cogs/gambling/__init__.py:916 cogs/profile/__init__.py:1053
-#: cogs/game_master/__init__.py:628 cogs/transaction/__init__.py:407
+#: cogs/battles/__init__.py:380 cogs/gambling/__init__.py:607
+#: cogs/gambling/__init__.py:911 cogs/profile/__init__.py:1055
+#: cogs/game_master/__init__.py:632 cogs/transaction/__init__.py:407
 #: cogs/transaction/__init__.py:521
 msgid "You are too poor."
 msgstr "Túl szegény vagy."
@@ -237,11 +237,11 @@ msgstr ""
 "A hajtóvadászattal egybekötött lovagi torna véget ért! A győztes: {winner}.\n"
 "A pénznyeremény átadásra került!"
 
-#: cogs/images/__init__.py:31
+#: cogs/images/__init__.py:30
 msgid "Pixelfy an avatar"
 msgstr "Pixelezz egy profilképet"
 
-#: cogs/images/__init__.py:35
+#: cogs/images/__init__.py:34
 msgid ""
 "`[user]` - A discord User whose avatar to pixelfy; defaults to oneself\n"
 "            `[size]` - The pixelation rate to use, can be a number between 1 "
@@ -279,43 +279,31 @@ msgstr ""
 "Megtalálja és  megerősíti a felhasználó profilképének peremeit, ezzel egy "
 "érdekes kép effektet teremtve."
 
-#: cogs/images/__init__.py:75
+#: cogs/images/__init__.py:76
 msgid "Inverts a user's avatar"
 msgstr "Invertálja a felhasználó profilképét"
 
-#: cogs/images/__init__.py:79
+#: cogs/images/__init__.py:80
 msgid ""
-"`[member]` - A discord User whose avatar to invert; defaults to oneself\n"
+"`[user]` - A discord User whose avatar to invert; defaults to oneself\n"
 "\n"
 "            Invert the colors in someone's avatar.\n"
 "\n"
 "            (This command has a channel cooldown of 15 seconds.)"
 msgstr ""
-"`[member]` - A discord felhasználó, akinek a profilképét invertálja, "
-"alapértelmezett a saját.\n"
-"\n"
-"Invertálja a színeket valaki profilképén.\n"
-"\n"
-"(Ennek a parancsnak 15 másodperc újratöltési ideje van a csatornán.)"
 
-#: cogs/images/__init__.py:96
+#: cogs/images/__init__.py:98
 msgid "Oil-paint someone's avatar"
 msgstr ""
 
-#: cogs/images/__init__.py:100
+#: cogs/images/__init__.py:102
 msgid ""
-"`[member]` - A discord User whose avatar to oil-paint; defaults to oneself\n"
+"`[user]` - A discord User whose avatar to oil-paint; defaults to oneself\n"
 "\n"
 "            Creates an oil-painting effect on someone's avatar.\n"
 "\n"
 "            (This command has a channel cooldown of 15 seconds.)"
 msgstr ""
-"`[member]` - A discord felhasználó, akinek a profilképét olajfestménnyé "
-"alakítja, alapértelmezett a saját.\n"
-"\n"
-"Olajfestmény effektet tesz valaki profilképére.\n"
-"\n"
-"(Ennek a parancsnak 15 másodperc újratöltési ideje van a csatornán.)"
 
 #: cogs/halloween/__init__.py:37
 msgid "Trick or treat!"
@@ -403,7 +391,7 @@ msgstr ""
 msgid "Seems you haven't got a trick or treat bag yet. Go get some!"
 msgstr "Úgy látszik, nincs még zsákbamacskád. Menj és gyűjts párat!"
 
-#: cogs/halloween/__init__.py:178 cogs/crates/__init__.py:172
+#: cogs/halloween/__init__.py:178 cogs/crates/__init__.py:245
 #: cogs/classes/__init__.py:722 cogs/valentine/__init__.py:156
 msgid "You gained an item!"
 msgstr "Új tárgyra tettél szert!"
@@ -412,35 +400,35 @@ msgstr "Új tárgyra tettél szert!"
 msgid "You found a new item when opening a trick-or-treat bag!"
 msgstr "Új tárgyra leltél a zsákbamacskában!"
 
-#: cogs/halloween/__init__.py:183 cogs/crates/__init__.py:178
+#: cogs/halloween/__init__.py:183 cogs/crates/__init__.py:251
 #: cogs/classes/__init__.py:422 cogs/classes/__init__.py:728
 #: cogs/trading/__init__.py:345 cogs/trading/__init__.py:440
 #: cogs/trading/__init__.py:771 cogs/valentine/__init__.py:162
 msgid "Name"
 msgstr "Név"
 
-#: cogs/halloween/__init__.py:184 cogs/crates/__init__.py:179
+#: cogs/halloween/__init__.py:184 cogs/crates/__init__.py:252
 #: cogs/classes/__init__.py:729 cogs/trading/__init__.py:346
 #: cogs/trading/__init__.py:441 cogs/trading/__init__.py:772
 #: cogs/valentine/__init__.py:163
 msgid "Type"
 msgstr "Típus"
 
-#: cogs/halloween/__init__.py:185 cogs/crates/__init__.py:180
+#: cogs/halloween/__init__.py:185 cogs/crates/__init__.py:253
 #: cogs/classes/__init__.py:733 cogs/trading/__init__.py:347
 #: cogs/trading/__init__.py:442 cogs/trading/__init__.py:773
 #: cogs/valentine/__init__.py:167
 msgid "Damage"
 msgstr "Sebzés"
 
-#: cogs/halloween/__init__.py:186 cogs/crates/__init__.py:181
+#: cogs/halloween/__init__.py:186 cogs/crates/__init__.py:254
 #: cogs/classes/__init__.py:731 cogs/trading/__init__.py:348
 #: cogs/trading/__init__.py:443 cogs/trading/__init__.py:774
 #: cogs/valentine/__init__.py:165
 msgid "Armor"
 msgstr "Páncél"
 
-#: cogs/halloween/__init__.py:187 cogs/crates/__init__.py:182
+#: cogs/halloween/__init__.py:187 cogs/crates/__init__.py:256
 #: cogs/classes/__init__.py:734 cogs/trading/__init__.py:349
 #: cogs/trading/__init__.py:444 cogs/trading/__init__.py:775
 #: cogs/valentine/__init__.py:168
@@ -1040,21 +1028,32 @@ msgstr ""
 "Úgy néz ki, hogy nincs {amount}-d ebből a fajtájú ládából. Szavazz rám, hogy "
 "kapj egyet véletlenszerű ládát, vagy keresd őket!"
 
-#: cogs/crates/__init__.py:173
+#: cogs/crates/__init__.py:161
+#, python-brace-format
+msgid ""
+"You opened {mystery_amount} {mystery_emoji} and received:\n"
+"- {common_amount} {common_emoji}\n"
+"- {uncommon_amount} {uncommon_emoji}\n"
+"- {rare_amount} {rare_emoji}\n"
+"- {magic_amount} {magic_emoji}\n"
+"- {legendary_amount} {legendary_emoji}"
+msgstr ""
+
+#: cogs/crates/__init__.py:246
 msgid "You found a new item when opening a crate!"
 msgstr "Új tárgyra leltél a ládában!"
 
-#: cogs/crates/__init__.py:177 cogs/classes/__init__.py:727
+#: cogs/crates/__init__.py:250 cogs/classes/__init__.py:727
 #: cogs/valentine/__init__.py:161
 msgid "ID"
 msgstr "Azonosítószám"
 
-#: cogs/crates/__init__.py:184
+#: cogs/crates/__init__.py:259
 #, python-brace-format
 msgid "Remaining {rarity} crates: {crates}"
 msgstr "Fennmaradó {rarity} ládák: {crates}"
 
-#: cogs/crates/__init__.py:216
+#: cogs/crates/__init__.py:292
 #, python-brace-format
 msgid ""
 "Successfully opened {amount} {rarity} crates. Average stat: {average_stat}\n"
@@ -1086,11 +1085,11 @@ msgstr ""
 "{most_common_types}\n"
 "```"
 
-#: cogs/crates/__init__.py:240
+#: cogs/crates/__init__.py:316
 msgid "Give crates to someone"
 msgstr "Adj valakinek ládákat"
 
-#: cogs/crates/__init__.py:250
+#: cogs/crates/__init__.py:326
 #, python-brace-format
 msgid ""
 "`<other>` - A user with a character\n"
@@ -1106,32 +1105,32 @@ msgstr ""
 
 #. preserve deletion of admins
 #. preserve renaming of admins
-#: cogs/crates/__init__.py:259 cogs/guild/__init__.py:427
-#: cogs/guild/__init__.py:466 cogs/game_master/__init__.py:243
-#: cogs/game_master/__init__.py:290
+#: cogs/crates/__init__.py:335 cogs/guild/__init__.py:427
+#: cogs/guild/__init__.py:466 cogs/game_master/__init__.py:245
+#: cogs/game_master/__init__.py:292
 msgid "Very funny..."
 msgstr "Roppant mulatságos..."
 
-#: cogs/crates/__init__.py:262 cogs/guild/__init__.py:928
-#: cogs/profile/__init__.py:1050
+#: cogs/crates/__init__.py:338 cogs/guild/__init__.py:928
+#: cogs/profile/__init__.py:1052
 msgid "For me? I'm flattered, but I can't accept this..."
 msgstr "Nekem? El se hiszem, de sajnos nem fogadhatom el..."
 
-#: cogs/crates/__init__.py:265
+#: cogs/crates/__init__.py:341
 msgid "You don't have any crates of this rarity."
 msgstr "Nincs ilyen fajtájú ládád."
 
-#: cogs/crates/__init__.py:289
+#: cogs/crates/__init__.py:365
 #, python-brace-format
 msgid "Successfully gave {amount} {rarity} crate(s) to {other}."
 msgstr ""
 "Sikeresen átadtál {amount} darab {rarity} fajtájú ládát {other} játékosnak."
 
-#: cogs/crates/__init__.py:297
+#: cogs/crates/__init__.py:373
 msgid "Offer crates to another player"
 msgstr "Ajánlj ládákat egy másik játékosnak"
 
-#: cogs/crates/__init__.py:309
+#: cogs/crates/__init__.py:385
 #, python-brace-format
 msgid ""
 "`<quantity>` - The quantity of crates to offer\n"
@@ -1148,22 +1147,22 @@ msgid ""
 "            `{prefix}oc 5 c 75000 @buyer#1234`"
 msgstr ""
 
-#: cogs/crates/__init__.py:320
+#: cogs/crates/__init__.py:396
 msgid "You may not offer crates to yourself."
 msgstr "Magadnak nem ajánlhatsz ládákat."
 
-#: cogs/crates/__init__.py:323
+#: cogs/crates/__init__.py:399
 msgid "No, I don't want any crates."
 msgstr "Nem, nekem nem kellenek ládák."
 
-#: cogs/crates/__init__.py:329
+#: cogs/crates/__init__.py:405
 #, python-brace-format
 msgid "You don't have {quantity} {rarity} crate(s). Check `{prefix}crates`."
 msgstr ""
 "Nincs tulajdonodban {quantity} {rarity} láda. Nézd meg ládáidat a `{prefix}"
 "crates` parancs segítségével."
 
-#: cogs/crates/__init__.py:337
+#: cogs/crates/__init__.py:413
 msgid ""
 "{author}, are you sure you want to offer **{quantity} {emoji} {rarity}** "
 "crate(s) for **${price:,.0f}**?"
@@ -1171,11 +1170,11 @@ msgstr ""
 "{author}, biztosan szeretnél ajánlani **{quantity} {emoji} {rarity}** ládát "
 "**${price:,.0f}**ért?"
 
-#: cogs/crates/__init__.py:347
+#: cogs/crates/__init__.py:423
 msgid "Offer cancelled."
 msgstr "Ajánlat visszavonva."
 
-#: cogs/crates/__init__.py:353
+#: cogs/crates/__init__.py:429
 msgid ""
 "{buyer}, {author} offered you **{quantity} {emoji} {rarity}** crate(s) for **"
 "${price:,.0f}!** React to buy it! You have **2 Minutes** to accept the trade "
@@ -1185,24 +1184,24 @@ msgstr ""
 "${price:,.0f}-ért!** Kattints a vásárláshoz! **2 perced** van, hogy elfogadd "
 "az ajánlatot, különben visszavonásra kerül."
 
-#: cogs/crates/__init__.py:368
+#: cogs/crates/__init__.py:444
 msgid "They didn't want to buy the crate(s). Offer cancelled."
 msgstr "Nem akarta megvenni a ládákat. Ajánlat visszavonva."
 
-#: cogs/crates/__init__.py:372
+#: cogs/crates/__init__.py:448
 msgid "They couldn't make up their mind. Offer cancelled."
 msgstr "Nem tudták eldönteni, hogy mit akarnak. Ajánlat visszavonva."
 
-#: cogs/crates/__init__.py:378
+#: cogs/crates/__init__.py:454
 #, python-brace-format
 msgid "{buyer}, you're too poor to buy the crate(s)!"
 msgstr "{buyer}, túl szegény vagy a ládavásárláshoz!"
 
-#: cogs/crates/__init__.py:389
+#: cogs/crates/__init__.py:465
 msgid "The seller traded/opened the crate(s) in the meantime. Offer cancelled."
 msgstr "Az eladó már eladta, vagy kinyitotta a ládákat! Ajánlat visszavonva."
 
-#: cogs/crates/__init__.py:434
+#: cogs/crates/__init__.py:510
 #, python-brace-format
 msgid ""
 "{buyer}, you've successfully bought **{quantity} {emoji} {rarity}** crate(s) "
@@ -1408,7 +1407,7 @@ msgstr "Nem tudtam elérni {user}-t! Lépek helyette találomra..."
 msgid "attempts to kill {user} but fails"
 msgstr "megpróbálja megölni {user}-t...nem jött össze"
 
-#: cogs/hungergames/__init__.py:194 cogs/game_master/__init__.py:88
+#: cogs/hungergames/__init__.py:194 cogs/game_master/__init__.py:90
 msgid "Done"
 msgstr "Kész"
 
@@ -1539,7 +1538,7 @@ msgstr ""
 #: cogs/error_handler/__init__.py:126
 msgid ""
 "You did not enter a valid crate rarity. Possible ones are: common (c), "
-"uncommon (u), rare (r), magic (m) and legendary (l)."
+"uncommon (u), rare (r), magic (m), legendary (l) and mystery (myst)."
 msgstr ""
 
 #: cogs/error_handler/__init__.py:133
@@ -1690,8 +1689,8 @@ msgstr ""
 msgid "There is another raid already ongoing. Try again at a later time."
 msgstr "Egy másik Hajtóvadászat éppen folyamatban van. Próbáld újra később."
 
-#: cogs/error_handler/__init__.py:288 cogs/alliance/__init__.py:520
-#: cogs/alliance/__init__.py:554
+#: cogs/error_handler/__init__.py:288 cogs/alliance/__init__.py:522
+#: cogs/alliance/__init__.py:556
 msgid "Your alliance does not own a city."
 msgstr "A szövetségeteknek nincs még egy város sem a birtokában."
 
@@ -2241,56 +2240,56 @@ msgid ""
 "IdleRPG is a global bot, your characters are valid everywhere"
 msgstr ""
 
-#: cogs/raid/__init__.py:122
+#: cogs/raid/__init__.py:125
 msgid "Start a Zerekiel raid"
 msgstr ""
 
-#: cogs/raid/__init__.py:155 cogs/raid/__init__.py:454
-#: cogs/raid/__init__.py:623 cogs/raid/__init__.py:794
-#: cogs/raid/__init__.py:1024 cogs/raid/__init__.py:1192
-#: cogs/raid/__init__.py:1377 cogs/raid/__init__.py:1601
+#: cogs/raid/__init__.py:158 cogs/raid/__init__.py:458
+#: cogs/raid/__init__.py:627 cogs/raid/__init__.py:798
+#: cogs/raid/__init__.py:1028 cogs/raid/__init__.py:1196
+#: cogs/raid/__init__.py:1381 cogs/raid/__init__.py:1605
 msgid "You joined the raid."
 msgstr ""
 
-#: cogs/raid/__init__.py:446
+#: cogs/raid/__init__.py:450
 msgid "Start a Kvothe raid"
 msgstr ""
 
-#: cogs/raid/__init__.py:611
+#: cogs/raid/__init__.py:615
 msgid "Start an Eden raid"
 msgstr ""
 
-#: cogs/raid/__init__.py:782
+#: cogs/raid/__init__.py:786
 msgid "Start a CHamburr raid"
 msgstr ""
 
-#: cogs/raid/__init__.py:1017
+#: cogs/raid/__init__.py:1021
 msgid "Starts Lyx' raid"
 msgstr ""
 
-#: cogs/raid/__init__.py:1183
+#: cogs/raid/__init__.py:1187
 msgid "Start a Monox raid"
 msgstr ""
 
-#: cogs/raid/__init__.py:1369
+#: cogs/raid/__init__.py:1373
 msgid "Start a Kirby raid"
 msgstr ""
 
-#: cogs/raid/__init__.py:1589
+#: cogs/raid/__init__.py:1593
 msgid "Start a Jesus raid"
 msgstr ""
 
-#: cogs/raid/__init__.py:1815
+#: cogs/raid/__init__.py:1819
 msgid "Increase your raidstats"
 msgstr ""
 
-#: cogs/raid/__init__.py:1819
+#: cogs/raid/__init__.py:1823
 msgid ""
 "Upgrade your raid damage or defense multiplier. These will affect your "
 "performance in raids and raidbattles."
 msgstr ""
 
-#: cogs/raid/__init__.py:1823
+#: cogs/raid/__init__.py:1827
 #, python-brace-format
 msgid ""
 "Use `{prefix}increase damage/defense` to upgrade your raid damage/defense "
@@ -2299,15 +2298,15 @@ msgstr ""
 "Használd a `{prefix}increase damage/defense` parancsokat, hogy 10%-kal "
 "magasabb legyen a Hajtóvadászatban használt sebzés/védelemszorzódat!"
 
-#: cogs/raid/__init__.py:1830
+#: cogs/raid/__init__.py:1834
 msgid "Upgrade your raid damage"
 msgstr ""
 
-#: cogs/raid/__init__.py:1833
+#: cogs/raid/__init__.py:1837
 msgid "Increase your raid damage."
 msgstr "Növeld a Hajtóvadászatban használt sebzésed!"
 
-#: cogs/raid/__init__.py:1839 cogs/raid/__init__.py:1854
+#: cogs/raid/__init__.py:1843 cogs/raid/__init__.py:1858
 #, python-brace-format
 msgid ""
 "Upgrading your weapon attack raid multiplier to {newlvl} costs **${price}**, "
@@ -2317,14 +2316,14 @@ msgstr ""
 "({newlvl}) túl sokba kerül (**${price}**). Sajnos, nem tudod jelenleg "
 "megfizetni."
 
-#: cogs/raid/__init__.py:1845
+#: cogs/raid/__init__.py:1849
 #, python-brace-format
 msgid ""
 "Upgrading your weapon attack raid multiplier to {newlvl} costs **${price}**, "
 "proceed?"
 msgstr ""
 
-#: cogs/raid/__init__.py:1875
+#: cogs/raid/__init__.py:1879
 #, python-brace-format
 msgid ""
 "You upgraded your weapon attack raid multiplier to {newlvl} for **${price}**."
@@ -2332,15 +2331,15 @@ msgstr ""
 "A Hajtóvadászatban használt fegyvered sebzésszorzója sikeresen megnőtt, az "
 "új érték: {newlvl} . Ez összesen **${price}**-ba került."
 
-#: cogs/raid/__init__.py:1882
+#: cogs/raid/__init__.py:1886
 msgid "Upgrade your raid defense"
 msgstr ""
 
-#: cogs/raid/__init__.py:1885
+#: cogs/raid/__init__.py:1889
 msgid "Increase your raid defense."
 msgstr "Növeld a Hajtóvadászatban használt védelmed!"
 
-#: cogs/raid/__init__.py:1891 cogs/raid/__init__.py:1906
+#: cogs/raid/__init__.py:1895 cogs/raid/__init__.py:1910
 #, python-brace-format
 msgid ""
 "Upgrading your shield defense raid multiplier to {newlvl} costs **${price}"
@@ -2350,14 +2349,14 @@ msgstr ""
 "({newlvl}) túl sokba kerül (**${price}**). Sajnos, nem tudod jelenleg "
 "megfizetni."
 
-#: cogs/raid/__init__.py:1897
+#: cogs/raid/__init__.py:1901
 #, python-brace-format
 msgid ""
 "Upgrading your shield defense raid multiplier to {newlvl} costs **${price}"
 "**, proceed?"
 msgstr ""
 
-#: cogs/raid/__init__.py:1927
+#: cogs/raid/__init__.py:1931
 #, python-brace-format
 msgid ""
 "You upgraded your shield defense raid multiplier to {newlvl} for **${price}"
@@ -2366,17 +2365,17 @@ msgstr ""
 "A Hajtóvadászatban használt pajzsod védelem szorzója sikeresen megnőtt, az "
 "új érték: {newlvl} . Ez összesen **${price}**-ba került."
 
-#: cogs/raid/__init__.py:1933
+#: cogs/raid/__init__.py:1937
 msgid "View your raid stats"
 msgstr ""
 
-#: cogs/raid/__init__.py:1937
+#: cogs/raid/__init__.py:1941
 msgid ""
 "View your raidstats. These will affect your performance in raids and "
 "raidbattles."
 msgstr ""
 
-#: cogs/raid/__init__.py:1954
+#: cogs/raid/__init__.py:1958
 #, python-brace-format
 msgid ""
 "**{author}'s raid multipliers**\n"
@@ -2387,15 +2386,15 @@ msgstr ""
 "Sebzésszorzó: x{atk} (Növelés ára: ${atkp})\n"
 "Védelemszorzó: x{deff} (Növelés ára: ${deffp})"
 
-#: cogs/raid/__init__.py:1961
+#: cogs/raid/__init__.py:1965
 msgid "Did somebody say Raid?"
 msgstr ""
 
-#: cogs/raid/__init__.py:1964
+#: cogs/raid/__init__.py:1968
 msgid "Informs you about joining raids."
 msgstr "Értesítés Hajtóvadászat indulásakor."
 
-#: cogs/raid/__init__.py:1967
+#: cogs/raid/__init__.py:1971
 #, python-brace-format
 msgid ""
 "Did you ever want to join together with other players to defeat the dragon "
@@ -2461,8 +2460,8 @@ msgstr ""
 "Kérlek, add meg a kívánt típust: `time` / `luck` / `money` , vagy vegyél "
 "egyszerre mindenből az `all` megadásával!"
 
-#: cogs/store/__init__.py:73 cogs/gambling/__init__.py:877
-#: cogs/gambling/__init__.py:1002 cogs/gambling/__init__.py:1078
+#: cogs/store/__init__.py:73 cogs/gambling/__init__.py:872
+#: cogs/gambling/__init__.py:997 cogs/gambling/__init__.py:1073
 #: cogs/guild/__init__.py:876
 msgid "You're too poor."
 msgstr "Ágrólszakadt vagy."
@@ -2905,22 +2904,21 @@ msgstr ""
 msgid "Name too long."
 msgstr "Ez a név túl hosszú."
 
-#: cogs/patreon/__init__.py:196 cogs/patreon/__init__.py:241
-#: cogs/trading/__init__.py:490
+#: cogs/patreon/__init__.py:198 cogs/patreon/__init__.py:244
 #, python-brace-format
-msgid "You don't have an item with the ID `{itemid}`."
-msgstr "Nincsen `{itemid}` sorszámú tárgyad."
+msgid "You don't have an item in your inventory with the ID `{itemid}`."
+msgstr ""
 
-#: cogs/patreon/__init__.py:208
+#: cogs/patreon/__init__.py:209
 #, python-brace-format
 msgid "The item with the ID `{itemid}` is now called `{newname}`."
 msgstr "A `{itemid}` sorszámú tárgy innentől `{newname}` néven ismert."
 
-#: cogs/patreon/__init__.py:215
+#: cogs/patreon/__init__.py:216
 msgid "[bronze] Change an item's type"
 msgstr ""
 
-#: cogs/patreon/__init__.py:219
+#: cogs/patreon/__init__.py:220
 msgid ""
 "`<itemid>` - The ID of the item to change type\n"
 "            `<new_type>` - The type to transform the item into\n"
@@ -2935,47 +2933,47 @@ msgid ""
 "            Only bronze (or above) tier patrons can use this command."
 msgstr ""
 
-#: cogs/patreon/__init__.py:231
+#: cogs/patreon/__init__.py:232
 msgid "Invalid type."
 msgstr ""
 
-#: cogs/patreon/__init__.py:248
+#: cogs/patreon/__init__.py:250
 #, python-brace-format
 msgid "The item is already a {item_type}."
 msgstr "A kiválasztott tárgy típusa eddig is {item_type} volt."
 
-#: cogs/patreon/__init__.py:256
+#: cogs/patreon/__init__.py:258
 msgid ""
 "You may not change a two-handed item to a single-handed one and vice-versa "
 "due to weapon damage reasons."
 msgstr ""
 
-#: cogs/patreon/__init__.py:277
+#: cogs/patreon/__init__.py:279
 #, python-brace-format
 msgid "The item with the ID `{itemid}` is now a `{itemtype}`."
 msgstr " A `{itemid}` számú tárgy innentől fogva egy `{itemtype}`."
 
-#: cogs/patreon/__init__.py:285
+#: cogs/patreon/__init__.py:287
 msgid "[gold] Receive a daily booster"
 msgstr ""
 
-#: cogs/patreon/__init__.py:289
+#: cogs/patreon/__init__.py:291
 msgid ""
 "Receive a daily booster. The booster can be a time, money or luck booster.\n"
 "\n"
 "            (This command has a cooldown of 24 hours.)"
 msgstr ""
 
-#: cogs/patreon/__init__.py:299
+#: cogs/patreon/__init__.py:301
 #, python-brace-format
 msgid "You received a daily {type_} booster!"
 msgstr "A napi felpörgető szérumod: {type_}!"
 
-#: cogs/patreon/__init__.py:302
+#: cogs/patreon/__init__.py:304
 msgid "[basic] Change your profile background"
 msgstr ""
 
-#: cogs/patreon/__init__.py:306
+#: cogs/patreon/__init__.py:308
 #, python-brace-format
 msgid ""
 "`<url>` - The image URL to use as the background, may not exceed 60 "
@@ -2993,11 +2991,11 @@ msgid ""
 "            Only basic (or above) tier patrons can use this command."
 msgstr ""
 
-#: cogs/patreon/__init__.py:326
+#: cogs/patreon/__init__.py:328
 msgid "That is not a valid premade background."
 msgstr "Ez nem egy érvényes háttérsablon."
 
-#: cogs/patreon/__init__.py:330 cogs/patreon/__init__.py:367
+#: cogs/patreon/__init__.py:332 cogs/patreon/__init__.py:369
 msgid ""
 "I couldn't read that URL. Does it start with `http://` or `https://` and is "
 "either a png or jpeg?"
@@ -3005,11 +3003,11 @@ msgstr ""
 "Nem tudom elolvasni a megadott URL-t. Ellenőrizd, hogy `http://` vagy "
 "`https://` előtaggal kezdődik-e, és hogy a kiterjesztése .png vagy .jpeg!"
 
-#: cogs/patreon/__init__.py:343
+#: cogs/patreon/__init__.py:345
 msgid "The URL is too long."
 msgstr "Az URL túl hosszú."
 
-#: cogs/patreon/__init__.py:345
+#: cogs/patreon/__init__.py:347
 #, python-brace-format
 msgid ""
 "Your new profile picture is now:\n"
@@ -3018,15 +3016,15 @@ msgstr ""
 "Az új profilképed:\n"
 "{url}"
 
-#: cogs/patreon/__init__.py:347
+#: cogs/patreon/__init__.py:349
 msgid "Your profile picture has been reset."
 msgstr "A profilkép megváltozott."
 
-#: cogs/patreon/__init__.py:350
+#: cogs/patreon/__init__.py:352
 msgid "[basic] Formats an image for background compatability"
 msgstr ""
 
-#: cogs/patreon/__init__.py:354
+#: cogs/patreon/__init__.py:356
 #, python-brace-format
 msgid ""
 "`<url>` - The image URL to format\n"
@@ -3041,39 +3039,39 @@ msgid ""
 "            Only basic (or above) tier patrons can use this command."
 msgstr ""
 
-#: cogs/patreon/__init__.py:373
+#: cogs/patreon/__init__.py:375
 msgid "Overlay type must be `dark` or `light`."
 msgstr ""
 
-#: cogs/patreon/__init__.py:388 cogs/profile/__init__.py:263
+#: cogs/patreon/__init__.py:390 cogs/profile/__init__.py:263
 #, python-brace-format
 msgid "There was an error processing your image. Reason: {reason} ({detail})"
 msgstr ""
 
-#: cogs/patreon/__init__.py:395 cogs/profile/__init__.py:270
+#: cogs/patreon/__init__.py:397 cogs/profile/__init__.py:270
 msgid "Unexpected internal error when generating image."
 msgstr ""
 
-#: cogs/patreon/__init__.py:398 cogs/profile/__init__.py:273
+#: cogs/patreon/__init__.py:400 cogs/profile/__init__.py:273
 msgid "Unexpected error when generating image."
 msgstr ""
 
-#: cogs/patreon/__init__.py:403
+#: cogs/patreon/__init__.py:405
 msgid "Error when uploading to Imgur."
 msgstr "A Imgur szerverére való feltöltés problémába ütközött."
 
-#: cogs/patreon/__init__.py:406
+#: cogs/patreon/__init__.py:408
 #, python-brace-format
 msgid ""
 "Imgur Link for `{prefix}background`\n"
 "{link}"
 msgstr ""
 
-#: cogs/patreon/__init__.py:413
+#: cogs/patreon/__init__.py:415
 msgid "[basic] Upgrade your guild"
 msgstr ""
 
-#: cogs/patreon/__init__.py:417
+#: cogs/patreon/__init__.py:419
 msgid ""
 "Update your guild member limit and bank size according to your donation "
 "tier.\n"
@@ -3088,15 +3086,15 @@ msgid ""
 "            Only basic (or above) tier patrons can use this command."
 msgstr ""
 
-#: cogs/patreon/__init__.py:451
+#: cogs/patreon/__init__.py:453
 msgid "Your guild was updated."
 msgstr "Céh fejlesztése elkészült."
 
-#: cogs/patreon/__init__.py:454
+#: cogs/patreon/__init__.py:456
 msgid "Change your background"
 msgstr ""
 
-#: cogs/patreon/__init__.py:458
+#: cogs/patreon/__init__.py:460
 msgid ""
 "`<number>` - The number of the eventbackground to use\n"
 "\n"
@@ -3104,14 +3102,14 @@ msgid ""
 "backgrounds from special events, for example easter or christmas."
 msgstr ""
 
-#: cogs/patreon/__init__.py:465 cogs/patreon/__init__.py:495
+#: cogs/patreon/__init__.py:467 cogs/patreon/__init__.py:497
 msgid ""
 "You do not have an eventbackground. They can be acquired on seasonal events."
 msgstr ""
 "Nincs még ajándékba kapott háttered. Ilyeneket a különböző speciális "
 "eseményeken lehet nyerni."
 
-#: cogs/patreon/__init__.py:474
+#: cogs/patreon/__init__.py:476
 #, python-brace-format
 msgid ""
 "The background number {number} is not valid, you only have {total} available."
@@ -3119,15 +3117,15 @@ msgstr ""
 "A megadott háttér ({number}) sorszáma érvénytelen. Felhasználható hátterek: "
 "{total}."
 
-#: cogs/patreon/__init__.py:481
+#: cogs/patreon/__init__.py:483
 msgid "Background updated!"
 msgstr "Háttér sikeresen lecserélve!"
 
-#: cogs/patreon/__init__.py:484
+#: cogs/patreon/__init__.py:486
 msgid "View your eventbackgrounds"
 msgstr ""
 
-#: cogs/patreon/__init__.py:488
+#: cogs/patreon/__init__.py:490
 #, python-brace-format
 msgid ""
 "View a list of all backgrounds you have acquired from events. You can get "
@@ -3137,12 +3135,12 @@ msgid ""
 "`{prefix}eventbackground`."
 msgstr ""
 
-#: cogs/patreon/__init__.py:501
+#: cogs/patreon/__init__.py:503
 #, python-brace-format
 msgid "Background {number}/{total}"
 msgstr ""
 
-#: cogs/patreon/__init__.py:507
+#: cogs/patreon/__init__.py:509
 #, python-brace-format
 msgid "Use {prefix}eventbackground {number} to use this background"
 msgstr ""
@@ -3820,8 +3818,8 @@ msgstr "Ellenfeled sebzett rajtad {dmg} ÉP-t"
 msgid "You hit the enemy for {dmg} damage"
 msgstr "Sebeztél ellenfeleden {dmg} ÉP-t"
 
-#: cogs/adventure/__init__.py:309 cogs/gambling/__init__.py:1127
-#: cogs/gambling/__init__.py:1175
+#: cogs/adventure/__init__.py:309 cogs/gambling/__init__.py:1122
+#: cogs/gambling/__init__.py:1170
 msgid "Timed out."
 msgstr "Lejárt az idő."
 
@@ -4105,12 +4103,12 @@ msgid "You don't have any active cooldown at the moment."
 msgstr "Minden parancsod újra van töltve."
 
 #: cogs/shard_communication/__init__.py:399 cogs/guild/__init__.py:1543
-#: cogs/alliance/__init__.py:942
+#: cogs/alliance/__init__.py:1005
 msgid "Commands on cooldown:"
 msgstr "Újratöltés alatt álló parancsok:"
 
 #: cogs/shard_communication/__init__.py:404 cogs/guild/__init__.py:1548
-#: cogs/alliance/__init__.py:947
+#: cogs/alliance/__init__.py:1010
 #, python-brace-format
 msgid "{cmd} is on cooldown and will be available after {time}"
 msgstr "{cmd} újratöltés alatt áll és {time} múlva lesz újra elérhető."
@@ -4132,14 +4130,14 @@ msgstr ""
 msgid "Launcher is dead, that is really bad."
 msgstr ""
 
-#: cogs/gambling/__init__.py:348
+#: cogs/gambling/__init__.py:343
 #, python-brace-format
 msgid ""
 "The dealer has a {pretty_dealer} for a total of {dealer}\n"
 "You have a {pretty_player} for a total of {player}"
 msgstr ""
 
-#: cogs/gambling/__init__.py:381
+#: cogs/gambling/__init__.py:376
 #, python-brace-format
 msgid ""
 "The dealer has a {pretty_dealer} for a total of {dealer}\n"
@@ -4150,74 +4148,74 @@ msgstr ""
 "A te lapjaid: {pretty_player} összes lap: {player}\n"
 "{additional}"
 
-#: cogs/gambling/__init__.py:430
+#: cogs/gambling/__init__.py:425
 msgid "The dealer got a blackjack. You had insurance and lost nothing."
 msgstr ""
 "A kártyaosztónak huszonegye van. A biztosításod fedezte, nem vesztettél "
 "semmit."
 
-#: cogs/gambling/__init__.py:438
+#: cogs/gambling/__init__.py:433
 #, python-brace-format
 msgid "The dealer got a blackjack. You lost **${money}**."
 msgstr "A kártyaosztónak huszonegye van. Veszteséged: **${money}**."
 
-#: cogs/gambling/__init__.py:445
+#: cogs/gambling/__init__.py:440
 #, python-brace-format
 msgid "You got a blackjack and won **${money}**!"
 msgstr "Huszonegy! Nyereményed: **${money}**!"
 
-#: cogs/gambling/__init__.py:474
+#: cogs/gambling/__init__.py:469
 msgid "Blackjack timed out... You lost your money!"
 msgstr "Túl lassan reagáltál, kiestél a játékból...A pénzed a házé!"
 
-#: cogs/gambling/__init__.py:495
+#: cogs/gambling/__init__.py:490
 msgid "Split current hand and switched to the second side."
 msgstr ""
 "Split bemondása: jelenlegi kéz két részre osztása. Másik kézre áttérés."
 
-#: cogs/gambling/__init__.py:499
+#: cogs/gambling/__init__.py:494
 msgid "Switched to the other side."
 msgstr "Előző kézre visszatérés."
 
-#: cogs/gambling/__init__.py:504
+#: cogs/gambling/__init__.py:499
 msgid "Invalid. You're too poor and lose the match."
 msgstr "Jó próbálkozás....de túl szegény vagy, vesztettél."
 
-#: cogs/gambling/__init__.py:529
+#: cogs/gambling/__init__.py:524
 msgid "You doubled your bid in exchange for only receiving one more card."
 msgstr "Megdupláztuk a tétedet, de cserébe már csak egy kártyát kaphatsz."
 
-#: cogs/gambling/__init__.py:538
+#: cogs/gambling/__init__.py:533
 #, python-brace-format
 msgid "You busted and lost **${money}**."
 msgstr "Besokalltál. Veszteséged: **${money}**."
 
-#: cogs/gambling/__init__.py:545
+#: cogs/gambling/__init__.py:540
 #, python-brace-format
 msgid "Dealer busts and you won **${money}**!"
 msgstr "A kártyaosztó besokallt. Nyereményed: **${money}**!"
 
-#: cogs/gambling/__init__.py:555
+#: cogs/gambling/__init__.py:550
 #, python-brace-format
 msgid "You have a higher score than the dealer and have won **${money}**"
 msgstr "A lapjaid összértéke magasabb. Nyereményed: **${money}**"
 
-#: cogs/gambling/__init__.py:564
+#: cogs/gambling/__init__.py:559
 #, python-brace-format
 msgid "Dealer has a higher score than you and wins. You lost **${money}**."
 msgstr ""
 "A lapjaid összértéke alacsonyabb, a házé minden. Veszteséged: **${money}**."
 
-#: cogs/gambling/__init__.py:572
+#: cogs/gambling/__init__.py:567
 #, python-brace-format
 msgid "It's a tie, you got your **${money}** back."
 msgstr "Push. Döntetlen. A **${money}** nevezési díjat visszakaptad."
 
-#: cogs/gambling/__init__.py:586
+#: cogs/gambling/__init__.py:581
 msgid "Draw a card."
 msgstr ""
 
-#: cogs/gambling/__init__.py:592
+#: cogs/gambling/__init__.py:587
 msgid ""
 "`[enemy]` - A user who has a profile; defaults to None\n"
 "            `[money]` - The bet money. A whole number that can be 0 or "
@@ -4232,96 +4230,96 @@ msgid ""
 "            (This command has a cooldown of 15 seconds.)"
 msgstr ""
 
-#: cogs/gambling/__init__.py:607
+#: cogs/gambling/__init__.py:602
 msgid "Please choose someone else."
 msgstr ""
 
-#: cogs/gambling/__init__.py:609
+#: cogs/gambling/__init__.py:604
 msgid "You should choose a human to play with you."
 msgstr ""
 
-#: cogs/gambling/__init__.py:631
+#: cogs/gambling/__init__.py:626
 #, python-brace-format
 msgid ""
 "{author} challenges {enemy} to a game of Draw for **${money}**. Do you "
 "accept?"
 msgstr ""
 
-#: cogs/gambling/__init__.py:644
+#: cogs/gambling/__init__.py:639
 #, python-brace-format
 msgid ""
 "They declined. They don't want to play a game of Draw with you {author}."
 msgstr ""
 
-#: cogs/gambling/__init__.py:652
+#: cogs/gambling/__init__.py:647
 #, python-brace-format
 msgid ""
 "They didn't choose anything. It seems they're not interested to play a game "
 "of Draw with you {author}."
 msgstr ""
 
-#: cogs/gambling/__init__.py:660 cogs/gambling/__init__.py:823
+#: cogs/gambling/__init__.py:655 cogs/gambling/__init__.py:818
 #, python-brace-format
 msgid "{enemy} You don't have enough money to play."
 msgstr ""
 
-#: cogs/gambling/__init__.py:687
+#: cogs/gambling/__init__.py:682
 msgid ""
 "Cards ran out. This is a very rare issue that could mean image files for "
 "cards have become insufficient. Please report this issue to the bot "
 "developers."
 msgstr ""
 
-#: cogs/gambling/__init__.py:709
+#: cogs/gambling/__init__.py:704
 #, python-brace-format
 msgid "Nobody won. {author} and {enemy} tied."
 msgstr ""
 
-#: cogs/gambling/__init__.py:731
+#: cogs/gambling/__init__.py:726
 #, python-brace-format
 msgid "{winner} won the Draw vs {loser}! Congratulations!"
 msgstr ""
 
-#: cogs/gambling/__init__.py:736
+#: cogs/gambling/__init__.py:731
 #, python-brace-format
 msgid "{author}, while playing against {enemy}, you drew:"
 msgstr ""
 
-#: cogs/gambling/__init__.py:744
+#: cogs/gambling/__init__.py:739
 #, python-brace-format
 msgid "{enemy}, while playing against {author}, you drew:"
 msgstr ""
 
-#: cogs/gambling/__init__.py:758
+#: cogs/gambling/__init__.py:753
 msgid "Break the tie?"
 msgstr ""
 
-#: cogs/gambling/__init__.py:760
+#: cogs/gambling/__init__.py:755
 #, python-brace-format
 msgid ""
 "{author}, {enemy} You tied. Do you want to break the tie by playing again "
 "for **${money}**?"
 msgstr ""
 
-#: cogs/gambling/__init__.py:800
+#: cogs/gambling/__init__.py:795
 msgid "One of you or both didn't react on time."
 msgstr ""
 
-#: cogs/gambling/__init__.py:806
+#: cogs/gambling/__init__.py:801
 #, python-brace-format
 msgid "{user} declined to break the tie."
 msgstr ""
 
-#: cogs/gambling/__init__.py:817
+#: cogs/gambling/__init__.py:812
 #, python-brace-format
 msgid "{author} You don't have enough money to play."
 msgstr ""
 
-#: cogs/gambling/__init__.py:841
+#: cogs/gambling/__init__.py:836
 msgid "Play a game of French Roulette"
 msgstr ""
 
-#: cogs/gambling/__init__.py:846
+#: cogs/gambling/__init__.py:841
 msgid ""
 "`<money>` - A whole number from 0 to 100\n"
 "`<bid>` - What to bid on, see below for details\n"
@@ -4360,24 +4358,24 @@ msgid ""
 "(This command has a cooldown of 15 seconds.)"
 msgstr ""
 
-#: cogs/gambling/__init__.py:883
+#: cogs/gambling/__init__.py:878
 msgid ""
 "Your bid input was invalid. Try the help on this command to view examples."
 msgstr ""
 
-#: cogs/gambling/__init__.py:889
+#: cogs/gambling/__init__.py:884
 msgid "Show the roulette table"
 msgstr ""
 
-#: cogs/gambling/__init__.py:892
+#: cogs/gambling/__init__.py:887
 msgid "Sends a picture of a French Roulette table."
 msgstr ""
 
-#: cogs/gambling/__init__.py:897
+#: cogs/gambling/__init__.py:892
 msgid "Toss a coin"
 msgstr ""
 
-#: cogs/gambling/__init__.py:907
+#: cogs/gambling/__init__.py:902
 msgid ""
 "`[side]` - The coin side to bet on, can be heads or tails; defaults to "
 "heads\n"
@@ -4390,21 +4388,21 @@ msgid ""
 "            (This command has a cooldown of 5 seconds.)"
 msgstr ""
 
-#: cogs/gambling/__init__.py:940
+#: cogs/gambling/__init__.py:935
 #, python-brace-format
 msgid "{result[1]} It's **{result[0]}**! You won **${amount}**!"
 msgstr "{result[1]} **{result[0]}**! Nyereményed: **${amount}**!"
 
-#: cogs/gambling/__init__.py:961
+#: cogs/gambling/__init__.py:956
 #, python-brace-format
 msgid "{result[1]} It's **{result[0]}**! You lost **${amount}**!"
 msgstr "{result[1]} **{result[0]}**! Elveszített összeg:**${amount}**!"
 
-#: cogs/gambling/__init__.py:968
+#: cogs/gambling/__init__.py:963
 msgid "Bet on a specific outcome of an n-sided dice."
 msgstr ""
 
-#: cogs/gambling/__init__.py:978
+#: cogs/gambling/__init__.py:973
 #, python-brace-format
 msgid ""
 "`[maximum]` - The amount of sides the dice will have, must be greater than "
@@ -4427,16 +4425,16 @@ msgid ""
 "            (This command has a cooldown of 5 seconds.)"
 msgstr ""
 
-#: cogs/gambling/__init__.py:995
+#: cogs/gambling/__init__.py:990
 #, python-brace-format
 msgid "Invalid Tip. Must be in the Range of `1` to `{maximum}`."
 msgstr "Érvénytelen tipp. Adj meg egy számot `1` és `{maximum}` között."
 
-#: cogs/gambling/__init__.py:1000
+#: cogs/gambling/__init__.py:995
 msgid "Spend it in a better way. C'mon!"
 msgstr "Ennyit azért nem kellene egyszerre eljátszani, ember!"
 
-#: cogs/gambling/__init__.py:1022
+#: cogs/gambling/__init__.py:1017
 #, python-brace-format
 msgid ""
 "You won **${money}**! The random number was `{num}`, you tipped `{tip}`."
@@ -4444,7 +4442,7 @@ msgstr ""
 "Eltaláltad! Nyereményed: **${money}**! A dobott szám `{num}`, a tipped pedig "
 "`{tip}` volt."
 
-#: cogs/gambling/__init__.py:1049
+#: cogs/gambling/__init__.py:1044
 #, python-brace-format
 msgid ""
 "You lost **${money}**! The random number was `{num}`, you tipped `{tip}`."
@@ -4452,11 +4450,11 @@ msgstr ""
 "Nem talált! A tét összegét (${money}) elvesztetted! A dobott szám `{num}`, a "
 "tipped pedig `{tip}` volt."
 
-#: cogs/gambling/__init__.py:1056
+#: cogs/gambling/__init__.py:1051
 msgid "Play blackjack against the bot."
 msgstr ""
 
-#: cogs/gambling/__init__.py:1060
+#: cogs/gambling/__init__.py:1055
 msgid ""
 "`[amount]` - The amount of money you bet, must be between 0 and 1000; "
 "defaults to 0\n"
@@ -4483,11 +4481,11 @@ msgid ""
 "            (This command has a cooldown of 5 seconds.)"
 msgstr ""
 
-#: cogs/gambling/__init__.py:1096
+#: cogs/gambling/__init__.py:1091
 msgid "Play double-or-steal"
 msgstr ""
 
-#: cogs/gambling/__init__.py:1100
+#: cogs/gambling/__init__.py:1095
 msgid ""
 "`[user]` - A discord user with a character; defaults to anyone\n"
 "\n"
@@ -4497,45 +4495,45 @@ msgid ""
 "removing the bet from the other player and giving it to the first."
 msgstr ""
 
-#: cogs/gambling/__init__.py:1107
+#: cogs/gambling/__init__.py:1102
 #, python-brace-format
 msgid "React with 💰 to play double-or-steal with {user}!"
 msgstr ""
 "A 💰 reakciógombbal válaszolhatsz a Dupla-vagy-semmi kihívásra {user} ellen!"
 
-#: cogs/gambling/__init__.py:1130
+#: cogs/gambling/__init__.py:1125
 #, python-brace-format
 msgid "{user} has no character."
 msgstr "{user} még nem hozott létre karaktert."
 
-#: cogs/gambling/__init__.py:1137 cogs/gambling/__init__.py:1205
+#: cogs/gambling/__init__.py:1132 cogs/gambling/__init__.py:1200
 #, python-brace-format
 msgid "{user} is too poor to double."
 msgstr "{user} túl szegény ahhoz, hogy megduplázza a tétet."
 
-#: cogs/gambling/__init__.py:1155
+#: cogs/gambling/__init__.py:1150
 #, python-brace-format
 msgid "Double or steal ${money}?"
 msgstr "A tét ${money}; dupla-vagy-semmi?"
 
-#: cogs/gambling/__init__.py:1156
+#: cogs/gambling/__init__.py:1151
 msgid "Select an action"
 msgstr ""
 
-#: cogs/gambling/__init__.py:1157
+#: cogs/gambling/__init__.py:1152
 msgid "Double"
 msgstr "Dupla"
 
-#: cogs/gambling/__init__.py:1157
+#: cogs/gambling/__init__.py:1152
 msgid "Steal"
 msgstr "Semmi"
 
-#: cogs/gambling/__init__.py:1193
+#: cogs/gambling/__init__.py:1188
 #, python-brace-format
 msgid "{user} stole **${money}**."
 msgstr "{user} eltett **${money}** összegű pénzt."
 
-#: cogs/gambling/__init__.py:1213
+#: cogs/gambling/__init__.py:1208
 #, python-brace-format
 msgid "{user} doubled to **${money}**."
 msgstr "{user} megduplázta a  **${money}** tétet."
@@ -4776,6 +4774,11 @@ msgstr ""
 msgid "You may not offer items to yourself."
 msgstr "Magadnak nem tehetsz ajánlatot."
 
+#: cogs/trading/__init__.py:490
+#, python-brace-format
+msgid "You don't have an item with the ID `{itemid}`."
+msgstr "Nincsen `{itemid}` sorszámú tárgyad."
+
 #: cogs/trading/__init__.py:500
 #, python-brace-format
 msgid "Are you sure you want to sell your equipped {item}?"
@@ -4864,7 +4867,7 @@ msgstr ""
 "**${money}** ütötte markodat az alábbi tárgya(i)dért cserébe: `{itemids}`. "
 "{additional}"
 
-#: cogs/trading/__init__.py:660 cogs/profile/__init__.py:712
+#: cogs/trading/__init__.py:660 cogs/profile/__init__.py:714
 #, python-brace-format
 msgid "Skipped `{amount}` because they did not belong to you."
 msgstr ""
@@ -4971,11 +4974,11 @@ msgstr ""
 "Sikeres vásárlás! Új szerzeményedet (**{offer}**) megtekintheted a `{prefix}"
 "inventory` paranccsal."
 
-#: cogs/marriage/__init__.py:48
+#: cogs/marriage/__init__.py:47
 msgid "Propose to a player"
 msgstr ""
 
-#: cogs/marriage/__init__.py:52
+#: cogs/marriage/__init__.py:51
 #, python-brace-format
 msgid ""
 "`<partner>` - A discord User with a character who is not yet married\n"
@@ -4994,20 +4997,20 @@ msgid ""
 "            Only players who are not already married can use this command."
 msgstr ""
 
-#: cogs/marriage/__init__.py:63
+#: cogs/marriage/__init__.py:62
 msgid "You should have a better friend than only yourself."
 msgstr "Azért saját magadnál talán van jobb barátod is."
 
-#: cogs/marriage/__init__.py:66
+#: cogs/marriage/__init__.py:65
 msgid "One of you is married."
 msgstr "Egyikőtök már házas."
 
-#: cogs/marriage/__init__.py:69
+#: cogs/marriage/__init__.py:68
 #, python-brace-format
 msgid "{author} has proposed for a marriage!"
 msgstr "{author} megkérte a kezed!"
 
-#: cogs/marriage/__init__.py:73
+#: cogs/marriage/__init__.py:72
 #, python-brace-format
 msgid ""
 "{author} wants to marry you, {partner}! React with :heart: to marry them!"
@@ -5015,26 +5018,26 @@ msgstr ""
 "{author} megkérte a kezed, {partner}! A :heart: reakciógombbal tudsz igent "
 "mondani!"
 
-#: cogs/marriage/__init__.py:97
+#: cogs/marriage/__init__.py:96
 msgid "They didn't want to marry."
 msgstr "Ki lettél kosarazva."
 
-#: cogs/marriage/__init__.py:108
+#: cogs/marriage/__init__.py:107
 msgid "Either you or your lovee married in the meantime... :broken_heart:"
 msgstr ""
 "Vagy te, vagy a szerelmed tárgya megállapodott idő közben...valaki mással. :"
 "broken_heart:"
 
-#: cogs/marriage/__init__.py:135
+#: cogs/marriage/__init__.py:134
 #, python-brace-format
 msgid "Aww! :heart: {author} and {partner} are now married!"
 msgstr ""
 
-#: cogs/marriage/__init__.py:141
+#: cogs/marriage/__init__.py:140
 msgid "Break up with your partner"
 msgstr ""
 
-#: cogs/marriage/__init__.py:145
+#: cogs/marriage/__init__.py:144
 #, python-brace-format
 msgid ""
 "Divorce your partner, effectively un-marrying them.\n"
@@ -5050,46 +5053,46 @@ msgid ""
 "            Only married players can use this command."
 msgstr ""
 
-#: cogs/marriage/__init__.py:155 cogs/marriage/__init__.py:193
+#: cogs/marriage/__init__.py:154 cogs/marriage/__init__.py:192
 #: cogs/marriage/__init__.py:348
 msgid "You are not married yet."
 msgstr "Még hajadon vagy."
 
-#: cogs/marriage/__init__.py:158
+#: cogs/marriage/__init__.py:157
 msgid ""
 "Are you sure you want to divorce your partner? Some of your children may be "
 "given to your partner and your lovescore will be reset."
 msgstr ""
 
-#: cogs/marriage/__init__.py:163
+#: cogs/marriage/__init__.py:162
 msgid "Cancelled the divorce. I guess the marriage is safe for now?"
 msgstr "Visszavontad a válókeresetet. Várható, hogy egyelőre együtt maradtok?"
 
-#: cogs/marriage/__init__.py:181
+#: cogs/marriage/__init__.py:180
 msgid "You are now divorced."
 msgstr "Elváltál."
 
-#: cogs/marriage/__init__.py:184
+#: cogs/marriage/__init__.py:183
 msgid "Show your partner"
 msgstr ""
 
-#: cogs/marriage/__init__.py:188
+#: cogs/marriage/__init__.py:187
 msgid ""
 "Show your partner's Discord Tag. This works fine across server.\n"
 "\n"
 "            Only married players can use this command."
 msgstr ""
 
-#: cogs/marriage/__init__.py:196
+#: cogs/marriage/__init__.py:195
 #, python-brace-format
 msgid "You are currently married to **{partner}**."
 msgstr "**{partner}** a jobbik feled."
 
-#: cogs/marriage/__init__.py:200
+#: cogs/marriage/__init__.py:199
 msgid "Show a player's lovescore"
 msgstr ""
 
-#: cogs/marriage/__init__.py:204
+#: cogs/marriage/__init__.py:203
 msgid ""
 "`[user]` - The user whose lovescore to show; defaults to oneself\n"
 "\n"
@@ -5852,37 +5855,37 @@ msgstr ""
 msgid "The Best lovers"
 msgstr "A Legvadabb Szeretők"
 
-#: cogs/server/__init__.py:31
+#: cogs/server/__init__.py:30
 msgid "Displays info on the server"
 msgstr ""
 
-#: cogs/server/__init__.py:35
+#: cogs/server/__init__.py:34
 msgid ""
 "Shows information about your server, from its region and membercount to its "
 "creation date and roles."
 msgstr ""
 
-#: cogs/server/__init__.py:37
+#: cogs/server/__init__.py:36
 msgid "Link"
 msgstr "Link"
 
-#: cogs/server/__init__.py:41
+#: cogs/server/__init__.py:40
 msgid "`No icon has been set yet!`"
 msgstr "`Nem lett még ikon kiválasztva!`"
 
-#: cogs/server/__init__.py:44
+#: cogs/server/__init__.py:43
 msgid "Server Information"
 msgstr "Szerverinfó"
 
-#: cogs/server/__init__.py:45
+#: cogs/server/__init__.py:44
 msgid "Compact information about this server"
 msgstr "Tömör infó a szerverünkről"
 
-#: cogs/server/__init__.py:49
+#: cogs/server/__init__.py:48
 msgid "Information"
 msgstr "Információ"
 
-#: cogs/server/__init__.py:51
+#: cogs/server/__init__.py:50
 #, python-brace-format
 msgid ""
 "Server: `{name}`\n"
@@ -5895,33 +5898,33 @@ msgid ""
 "Server created at: `{created_at}`"
 msgstr ""
 
-#: cogs/server/__init__.py:71
+#: cogs/server/__init__.py:70
 #, python-brace-format
 msgid "{name}, Shard {num} of {total}"
 msgstr "{name}, Shardok száma: {num} az összes elérhető {total} darabból"
 
-#: cogs/server/__init__.py:73
+#: cogs/server/__init__.py:72
 msgid "Cluster"
 msgstr "Számítógépfürt (cluster)"
 
-#: cogs/server/__init__.py:88
+#: cogs/server/__init__.py:87
 msgid "Change the server settings for the bot"
 msgstr ""
 
-#: cogs/server/__init__.py:92
+#: cogs/server/__init__.py:91
 msgid "Change the server settings for the bot."
 msgstr ""
 
-#: cogs/server/__init__.py:94
+#: cogs/server/__init__.py:93
 #, python-brace-format
 msgid "Please use `{prefix}settings prefix value`"
 msgstr ""
 
-#: cogs/server/__init__.py:99
+#: cogs/server/__init__.py:98
 msgid "Change the prefix"
 msgstr ""
 
-#: cogs/server/__init__.py:103
+#: cogs/server/__init__.py:102
 msgid ""
 "`<prefix>` - The new prefix to use. Use \"\" quotes to surround it if you "
 "want multiple words or trailing spaces.\n"
@@ -5932,36 +5935,36 @@ msgid ""
 "command."
 msgstr ""
 
-#: cogs/server/__init__.py:110
+#: cogs/server/__init__.py:109
 msgid "Prefixes may not be longer than 10 characters."
 msgstr "A prefixumok nem haladhatják meg a 10 karaktert."
 
-#: cogs/server/__init__.py:133
+#: cogs/server/__init__.py:132
 #, python-brace-format
 msgid "Prefix changed to `{prefix}`."
 msgstr "Prefixum megváltoztatva! Új prefixum: `{prefix}`."
 
-#: cogs/server/__init__.py:136
+#: cogs/server/__init__.py:135
 msgid "Reset the server settings"
 msgstr ""
 
-#: cogs/server/__init__.py:139
+#: cogs/server/__init__.py:138
 msgid "Resets the server settings."
 msgstr "A szerverbeállítások visszaállítása."
 
-#: cogs/server/__init__.py:142
+#: cogs/server/__init__.py:141
 msgid "Done!"
 msgstr "Megtörtént!"
 
-#: cogs/server/__init__.py:145
+#: cogs/server/__init__.py:144
 msgid "View this server's prefix"
 msgstr ""
 
-#: cogs/server/__init__.py:148
+#: cogs/server/__init__.py:147
 msgid "View the bot prefix for the server"
 msgstr ""
 
-#: cogs/server/__init__.py:154
+#: cogs/server/__init__.py:153
 #, python-brace-format
 msgid ""
 "The prefix for server **{server}** is `{serverprefix}`.\n"
@@ -5972,11 +5975,11 @@ msgstr ""
 "\n"
 "Ez a `{prefix}settings prefix` paranccsal módosítható."
 
-#: cogs/server/__init__.py:159
+#: cogs/server/__init__.py:158
 msgid "Show someone's avatar"
 msgstr ""
 
-#: cogs/server/__init__.py:163
+#: cogs/server/__init__.py:162
 msgid ""
 "`<target>` - The user whose avatar to show; defaults to oneself\n"
 "\n"
@@ -7043,11 +7046,11 @@ msgid ""
 "- <https://discord.ly/idlerpg>"
 msgstr ""
 
-#: cogs/profile/__init__.py:46
+#: cogs/profile/__init__.py:45
 msgid "Create a new character"
 msgstr ""
 
-#: cogs/profile/__init__.py:50
+#: cogs/profile/__init__.py:49
 msgid ""
 "`[name]` - The name to give your character; will be interactive if not "
 "given\n"
@@ -7064,7 +7067,7 @@ msgid ""
 "            (This command has a cooldown of 1 hour.)"
 msgstr ""
 
-#: cogs/profile/__init__.py:63
+#: cogs/profile/__init__.py:62
 msgid ""
 "What shall your character's name be? (Minimum 3 Characters, Maximum 20)\n"
 "\n"
@@ -7078,11 +7081,11 @@ msgid ""
 "IdleRPG is a global bot, your characters are valid everywhere"
 msgstr ""
 
-#: cogs/profile/__init__.py:83
+#: cogs/profile/__init__.py:82
 msgid "Timeout expired. Please retry!"
 msgstr "A bünti lejárt, próbálkozz újra!"
 
-#: cogs/profile/__init__.py:88
+#: cogs/profile/__init__.py:87
 msgid ""
 "**Please note that with the creation of a character, you agree to these "
 "rules:**\n"
@@ -7095,25 +7098,25 @@ msgid ""
 "IdleRPG is a global bot, your characters are valid everywhere"
 msgstr ""
 
-#: cogs/profile/__init__.py:98
+#: cogs/profile/__init__.py:97
 msgid "Creation of your character cancelled."
 msgstr "Karakter létrehozása félbehagyva."
 
-#: cogs/profile/__init__.py:103 cogs/profile/__init__.py:1113
+#: cogs/profile/__init__.py:102 cogs/profile/__init__.py:1115
 msgid ""
 "Illegal character (`) found in the name. Please try again and choose another "
 "name."
 msgstr ""
 
-#: cogs/profile/__init__.py:117
+#: cogs/profile/__init__.py:116
 msgid "Starter Sword"
 msgstr "Kezdő Kard"
 
-#: cogs/profile/__init__.py:128
+#: cogs/profile/__init__.py:127
 msgid "Starter Shield"
 msgstr "Kezdő Pajzs"
 
-#: cogs/profile/__init__.py:148
+#: cogs/profile/__init__.py:147
 #, python-brace-format
 msgid ""
 "Successfully added your character **{name}**! Now use `{prefix}profile` to "
@@ -7122,15 +7125,15 @@ msgstr ""
 "Karaktered, **{name}** sikeresen létre lett hozva! A `{prefix}profile` "
 "paranccsal megtekintheted a profilját!"
 
-#: cogs/profile/__init__.py:154
+#: cogs/profile/__init__.py:153
 msgid "Character names must be at least 3 characters and up to 20."
 msgstr "A választott névnek 3 és 20 karakter közé kell esnie."
 
-#: cogs/profile/__init__.py:158
+#: cogs/profile/__init__.py:157
 msgid "View someone's profile"
 msgstr ""
 
-#: cogs/profile/__init__.py:162
+#: cogs/profile/__init__.py:161
 msgid ""
 "`[person]` - The person whose profile to view; defaults to oneself\n"
 "\n"
@@ -7164,20 +7167,20 @@ msgid ""
 "image and is usually faster."
 msgstr ""
 
-#: cogs/profile/__init__.py:296
+#: cogs/profile/__init__.py:297
 #, python-brace-format
 msgid "**{target}** does not have a character."
 msgstr "**{target}** játékoshoz még nem tartozik karakter."
 
-#: cogs/profile/__init__.py:335 cogs/profile/__init__.py:340
+#: cogs/profile/__init__.py:336 cogs/profile/__init__.py:341
 msgid "None Equipped"
 msgstr ""
 
-#: cogs/profile/__init__.py:346
+#: cogs/profile/__init__.py:347
 msgid "General"
 msgstr "Általános infó"
 
-#: cogs/profile/__init__.py:348
+#: cogs/profile/__init__.py:349
 #, python-brace-format
 msgid ""
 "**Money**: `${money}`\n"
@@ -7194,11 +7197,11 @@ msgstr ""
 "**Párbaj győzelmek**: `{pvp}`\n"
 "**Céh**: `{guild}`"
 
-#: cogs/profile/__init__.py:365
+#: cogs/profile/__init__.py:366
 msgid "Ranks"
 msgstr "Rangsorolás"
 
-#: cogs/profile/__init__.py:366
+#: cogs/profile/__init__.py:367
 #, python-brace-format
 msgid ""
 "**Richest**: `{rank_money}`\n"
@@ -7207,26 +7210,26 @@ msgstr ""
 "**Mágnás**: `{rank_money}`\n"
 "**Harcos**: `{rank_xp}`"
 
-#: cogs/profile/__init__.py:371
+#: cogs/profile/__init__.py:372
 msgid "Equipment"
 msgstr "Felszerelés"
 
-#: cogs/profile/__init__.py:372
+#: cogs/profile/__init__.py:373
 #, python-brace-format
 msgid ""
 "Right Hand: {right_hand}\n"
 "Left Hand: {left_hand}"
 msgstr ""
 
-#: cogs/profile/__init__.py:377
+#: cogs/profile/__init__.py:378
 msgid "Mission"
 msgstr "Küldetés"
 
-#: cogs/profile/__init__.py:381
+#: cogs/profile/__init__.py:382
 msgid "Show your current luck"
 msgstr ""
 
-#: cogs/profile/__init__.py:385
+#: cogs/profile/__init__.py:386
 msgid ""
 "Shows your current luck value.\n"
 "\n"
@@ -7251,26 +7254,26 @@ msgid ""
 "update instantly, it will update with everyone else's luck on Monday."
 msgstr ""
 
-#: cogs/profile/__init__.py:403
+#: cogs/profile/__init__.py:404
 #, python-brace-format
 msgid ""
 "Your current luck multiplier is `{luck}x` (≈{percent}% {adj} than usual "
 "(usual=1))."
 msgstr ""
 
-#: cogs/profile/__init__.py:408
+#: cogs/profile/__init__.py:409
 msgid "more"
 msgstr ""
 
-#: cogs/profile/__init__.py:408
+#: cogs/profile/__init__.py:409
 msgid "less"
 msgstr ""
 
-#: cogs/profile/__init__.py:414
+#: cogs/profile/__init__.py:415
 msgid "Shows your balance"
 msgstr ""
 
-#: cogs/profile/__init__.py:419
+#: cogs/profile/__init__.py:420
 msgid ""
 "Shows the amount of money you currently have.\n"
 "\n"
@@ -7280,16 +7283,16 @@ msgid ""
 "              - Gambling"
 msgstr ""
 
-#: cogs/profile/__init__.py:427
+#: cogs/profile/__init__.py:428
 #, python-brace-format
 msgid "You currently have **${money}**, {author}!"
 msgstr "{author} jelenlegi vagyona: **${money}**!"
 
-#: cogs/profile/__init__.py:433
+#: cogs/profile/__init__.py:434
 msgid "Show a player's current XP"
 msgstr ""
 
-#: cogs/profile/__init__.py:437
+#: cogs/profile/__init__.py:438
 msgid ""
 "`[user]` - The player whose XP and level to show; defaults to oneself\n"
 "\n"
@@ -7300,7 +7303,7 @@ msgid ""
 "              - Exchanging loot items for XP"
 msgstr ""
 
-#: cogs/profile/__init__.py:449
+#: cogs/profile/__init__.py:451
 #, python-brace-format
 msgid ""
 "You currently have **{points} XP**, which means you are on Level **{level}"
@@ -7309,7 +7312,7 @@ msgstr ""
 "Jelenleg **{points} TP** pontod van, ami alapján **{level}.** szintű vagy. A "
 "következő szinthez még **{missing}TP** szükséges"
 
-#: cogs/profile/__init__.py:461
+#: cogs/profile/__init__.py:463
 #, python-brace-format
 msgid ""
 "{user} has **{points} XP** and is on Level **{level}**. Missing to next "
@@ -7318,26 +7321,26 @@ msgstr ""
 "{user} karaktere jelenleg a következő szinten áll: **{level}** (**{points}** "
 "TP). A következő szinthez még **{missing}**TP hiányzik."
 
-#: cogs/profile/__init__.py:473
+#: cogs/profile/__init__.py:475
 #, python-brace-format
 msgid "{user}'s inventory includes"
 msgstr "{user} hátizsákjának tartalma"
 
-#: cogs/profile/__init__.py:478
+#: cogs/profile/__init__.py:480
 msgid "(**Equipped**)"
 msgstr "(**Használatban**)"
 
-#: cogs/profile/__init__.py:482
+#: cogs/profile/__init__.py:484
 #, python-brace-format
 msgid "Damage: `{damage}`"
 msgstr "Sebzés: `{damage}`"
 
-#: cogs/profile/__init__.py:484
+#: cogs/profile/__init__.py:486
 #, python-brace-format
 msgid "Armor: `{armor}`"
 msgstr "Védelem: `{armor}`"
 
-#: cogs/profile/__init__.py:487
+#: cogs/profile/__init__.py:489
 #, python-brace-format
 msgid ""
 "\n"
@@ -7346,23 +7349,23 @@ msgstr ""
 "\n"
 "Dedikálás: *{signature}*"
 
-#: cogs/profile/__init__.py:494
+#: cogs/profile/__init__.py:496
 #, python-brace-format
 msgid ""
 "ID: `{id}`, Type: `{type_}` (uses {hand} hand(s)) with {statstr}. Value is **"
 "${value}**{signature}"
 msgstr ""
 
-#: cogs/profile/__init__.py:507 cogs/profile/__init__.py:596
+#: cogs/profile/__init__.py:509 cogs/profile/__init__.py:598
 #, python-brace-format
 msgid "Page {page} of {maxpages}"
 msgstr "{page}. oldal (összes: {maxpages})"
 
-#: cogs/profile/__init__.py:514
+#: cogs/profile/__init__.py:516
 msgid "Show your gear items"
 msgstr ""
 
-#: cogs/profile/__init__.py:524
+#: cogs/profile/__init__.py:526
 #, python-brace-format
 msgid ""
 "`[itemtype]` - The type of item to show; defaults to all items\n"
@@ -7382,36 +7385,36 @@ msgid ""
 "put them up on the global player market, use `{prefix}sell`."
 msgstr ""
 
-#: cogs/profile/__init__.py:539
+#: cogs/profile/__init__.py:541
 msgid "Make sure that the `highest` value is greater than `lowest`."
 msgstr ""
 "Bizonyosodj meg róla, hogy a `highest` érték magasabb, mint a `lowest`."
 
-#: cogs/profile/__init__.py:545
+#: cogs/profile/__init__.py:547
 #, python-brace-format
 msgid ""
 "Please select a valid item type or `all`. Available types: `{all_types}`"
 msgstr ""
 
-#: cogs/profile/__init__.py:573
+#: cogs/profile/__init__.py:575
 msgid "Your inventory is empty."
 msgstr "Hátizsákod jelenleg üres."
 
-#: cogs/profile/__init__.py:584
+#: cogs/profile/__init__.py:586
 #, python-brace-format
 msgid "{user} has the following loot items."
 msgstr "{user} jelenlegi ereklyéi."
 
-#: cogs/profile/__init__.py:590
+#: cogs/profile/__init__.py:592
 #, python-brace-format
 msgid "ID: `{id}` Value is **{value}**"
 msgstr "Sorszám: `{id}` Érték **{value}**"
 
-#: cogs/profile/__init__.py:603
+#: cogs/profile/__init__.py:605
 msgid "Show your loot items"
 msgstr ""
 
-#: cogs/profile/__init__.py:607
+#: cogs/profile/__init__.py:609
 msgid ""
 "Show your loot items.\n"
 "\n"
@@ -7425,15 +7428,15 @@ msgid ""
 "the exact chances."
 msgstr ""
 
-#: cogs/profile/__init__.py:619
+#: cogs/profile/__init__.py:621
 msgid "You do not have any loot at this moment."
 msgstr "Jelenleg egy ereklyéd sincs."
 
-#: cogs/profile/__init__.py:630
+#: cogs/profile/__init__.py:632
 msgid "Exchange your loot for money or XP"
 msgstr ""
 
-#: cogs/profile/__init__.py:634
+#: cogs/profile/__init__.py:636
 msgid ""
 "`[loot_ids...]` - The loot IDs to exchange; defaults to all loot\n"
 "\n"
@@ -7444,58 +7447,58 @@ msgid ""
 "cash. For XP, you will get 1/4th of the combined value in XP."
 msgstr ""
 
-#: cogs/profile/__init__.py:647 cogs/gods/__init__.py:60
+#: cogs/profile/__init__.py:649 cogs/gods/__init__.py:60
 msgid "You don't have any loot."
 msgstr "Jelenleg egy ereklyéd sincs."
 
-#: cogs/profile/__init__.py:658 cogs/gods/__init__.py:79
+#: cogs/profile/__init__.py:660 cogs/gods/__init__.py:79
 #, python-brace-format
 msgid "You don't own any loot items with the IDs: {itemids}"
 msgstr "Az alábbi ereklyék nincsenek a birtokodban: {itemids}"
 
-#: cogs/profile/__init__.py:665
+#: cogs/profile/__init__.py:667
 #, python-brace-format
 msgid "Select a reward for the {count} items"
 msgstr ""
 
-#: cogs/profile/__init__.py:666
+#: cogs/profile/__init__.py:668
 msgid "Select a reward"
 msgstr "Fizetség kiválasztása"
 
-#: cogs/profile/__init__.py:667
+#: cogs/profile/__init__.py:669
 #, python-brace-format
 msgid "Do you want favor? {prefix}sacrifice instead"
 msgstr ""
 "Szeretnéd, ha isteneid elégedettek lennének veled? Ez esetben a `{prefix}"
 "sacrifice` a megfelelő parancs"
 
-#: cogs/profile/__init__.py:671
+#: cogs/profile/__init__.py:673
 #, python-brace-format
 msgid "**{value} XP**"
 msgstr "**{value} TP**"
 
-#: cogs/profile/__init__.py:672
+#: cogs/profile/__init__.py:674
 #, python-brace-format
 msgid "{value} XP"
 msgstr ""
 
-#: cogs/profile/__init__.py:703
+#: cogs/profile/__init__.py:705
 #, python-brace-format
 msgid "You received **{reward}** when exchanging all of your loot."
 msgstr "Az összes ereklyéd fejében **{reward}** fizetségre tettél szert."
 
-#: cogs/profile/__init__.py:707
+#: cogs/profile/__init__.py:709
 #, python-brace-format
 msgid "You received **{reward}** when exchanging loot item(s) `{loot_ids}`. "
 msgstr ""
 "Ereklyéid fejében **{reward}** fizetségre tettél szert. Az alábbi ereklyéket "
 "cserélted be: `{loot_ids}`."
 
-#: cogs/profile/__init__.py:728
+#: cogs/profile/__init__.py:730
 msgid "Equip an item"
 msgstr ""
 
-#: cogs/profile/__init__.py:732
+#: cogs/profile/__init__.py:734
 msgid ""
 "`<itemid>` - The ID of the item to equip\n"
 "\n"
@@ -7511,31 +7514,31 @@ msgid ""
 "item if the one your have equipped is two-handed."
 msgstr ""
 
-#: cogs/profile/__init__.py:752 cogs/profile/__init__.py:856
-#: cogs/profile/__init__.py:971
+#: cogs/profile/__init__.py:754 cogs/profile/__init__.py:858
+#: cogs/profile/__init__.py:973
 #, python-brace-format
 msgid "You don't own an item with the ID `{itemid}`."
 msgstr "A `{itemid}` azonosítójú tárgy nincs a zsákodban."
 
-#: cogs/profile/__init__.py:806
+#: cogs/profile/__init__.py:808
 msgid "Select an item to unequip"
 msgstr ""
 
-#: cogs/profile/__init__.py:827
+#: cogs/profile/__init__.py:829
 #, python-brace-format
 msgid "Successfully equipped item `{itemid}` and put off item(s) {olditems}."
 msgstr ""
 
-#: cogs/profile/__init__.py:835
+#: cogs/profile/__init__.py:837
 #, python-brace-format
 msgid "Successfully equipped item `{itemid}`."
 msgstr "A `{itemid}` azonosítójú tárgyat sikeresen kézbe vetted."
 
-#: cogs/profile/__init__.py:839
+#: cogs/profile/__init__.py:841
 msgid "Unequip an item"
 msgstr ""
 
-#: cogs/profile/__init__.py:843
+#: cogs/profile/__init__.py:845
 msgid ""
 "`<itemid>` - The ID of the item to unequip\n"
 "\n"
@@ -7543,20 +7546,20 @@ msgid ""
 "whatsoever."
 msgstr ""
 
-#: cogs/profile/__init__.py:861
+#: cogs/profile/__init__.py:863
 msgid "You don't have this item equipped."
 msgstr "Ez a tárgy jelenleg nincs használatban."
 
-#: cogs/profile/__init__.py:866
+#: cogs/profile/__init__.py:868
 #, python-brace-format
 msgid "Successfully unequipped item `{itemid}`."
 msgstr "A `{itemid}` azonosítójú tárgy sikeresen visszahelyezve a hátizsákba."
 
-#: cogs/profile/__init__.py:871
+#: cogs/profile/__init__.py:873
 msgid "Merge two items to make a stronger one"
 msgstr ""
 
-#: cogs/profile/__init__.py:875
+#: cogs/profile/__init__.py:877
 msgid ""
 "`<firstitemid>` - The ID of the first item\n"
 "            `<seconditemid>` - The ID of the second item\n"
@@ -7577,15 +7580,15 @@ msgid ""
 "            (This command has a cooldown of 1 hour.)"
 msgstr ""
 
-#: cogs/profile/__init__.py:891
+#: cogs/profile/__init__.py:893
 msgid "Good luck with that."
 msgstr "Sok sikert hozzá."
 
-#: cogs/profile/__init__.py:905
+#: cogs/profile/__init__.py:907
 msgid "You don't own both of these items."
 msgstr "Nincs birtokodban mindkét tárgy."
 
-#: cogs/profile/__init__.py:910
+#: cogs/profile/__init__.py:912
 msgid ""
 "The items are of unequal type. You may only merge a sword with a sword or a "
 "shield with a shield."
@@ -7593,11 +7596,11 @@ msgstr ""
 "Ez két különböző típusú tárgy. Kardot csak karddal, pajzsot csak pajzzsal "
 "kovácsolhatsz össze."
 
-#: cogs/profile/__init__.py:925
+#: cogs/profile/__init__.py:927
 msgid "This item is already on the maximum upgrade level."
 msgstr "Ezt a tárgyat nem lehet tovább fejleszteni."
 
-#: cogs/profile/__init__.py:931
+#: cogs/profile/__init__.py:933
 #, python-brace-format
 msgid ""
 "The second item's stat must be in the range of `{min_}` to `{max_}` to "
@@ -7606,7 +7609,7 @@ msgstr ""
 "Az elhasznált tárgy legalább `{min_}` és legfeljebb `{max_}` minőségűnek "
 "kell lennie, hogy egy `{stat}` minőségű tárgyat lehessen vele fejleszteni."
 
-#: cogs/profile/__init__.py:942
+#: cogs/profile/__init__.py:944
 #, python-brace-format
 msgid ""
 "The {stat} of your **{item}** is now **{newstat}**. The other item was "
@@ -7615,11 +7618,11 @@ msgstr ""
 "Az eddig {stat} minőségű **{item}** tárgyad feljavított minősége **{newstat}"
 "**. A másik tárgy el lett használva."
 
-#: cogs/profile/__init__.py:949
+#: cogs/profile/__init__.py:951
 msgid "Upgrade an item"
 msgstr ""
 
-#: cogs/profile/__init__.py:953
+#: cogs/profile/__init__.py:955
 msgid ""
 "`<itemid>` - The ID of the item to upgrade\n"
 "\n"
@@ -7633,11 +7636,11 @@ msgid ""
 "            (This command has a cooldown of 1 hour.)"
 msgstr ""
 
-#: cogs/profile/__init__.py:986
+#: cogs/profile/__init__.py:988
 msgid "Your weapon already reached the maximum upgrade level."
 msgstr "A fegyveredet nem lehet tovább fejleszteni."
 
-#: cogs/profile/__init__.py:991
+#: cogs/profile/__init__.py:993
 #, python-brace-format
 msgid ""
 "Are you sure you want to upgrade this item: {item}? It will cost **"
@@ -7646,11 +7649,11 @@ msgstr ""
 "Biztos vagy benne, hogy fejleszteni szeretnéd {item} tárgyadat? Ennyibe fog "
 "kerülni: **${pricetopay}**."
 
-#: cogs/profile/__init__.py:995
+#: cogs/profile/__init__.py:997
 msgid "Weapon upgrade cancelled."
 msgstr "Fejlesztés visszavonva."
 
-#: cogs/profile/__init__.py:1000
+#: cogs/profile/__init__.py:1002
 #, python-brace-format
 msgid ""
 "You are too poor to upgrade this item. The upgrade costs **${pricetopay}**, "
@@ -7659,7 +7662,7 @@ msgstr ""
 "Nincs elég pénzed a fegyvered fejlesztésére. Mindössze **${money}** a "
 "vagyonod, és **${pricetopay}** a fejlesztés költsége."
 
-#: cogs/profile/__init__.py:1024
+#: cogs/profile/__init__.py:1026
 #, python-brace-format
 msgid ""
 "The {stat} of your **{item}** is now **{newstat}**. **${pricetopay}** has "
@@ -7668,11 +7671,11 @@ msgstr ""
 "Az eddig {stat} minőségű **{item}** tárgyad feljavított minősége **{newstat}"
 "**. **${pricetopay}** kifizetésre került a kovácsmesternek."
 
-#: cogs/profile/__init__.py:1035
+#: cogs/profile/__init__.py:1037
 msgid "Give someone money"
 msgstr ""
 
-#: cogs/profile/__init__.py:1041
+#: cogs/profile/__init__.py:1043
 msgid ""
 "`<money>` - The amount of money to give to the other person, cannot exceed "
 "100,000,000\n"
@@ -7682,11 +7685,11 @@ msgid ""
 "person."
 msgstr ""
 
-#: cogs/profile/__init__.py:1047
+#: cogs/profile/__init__.py:1049
 msgid "No cheating!"
 msgstr "Nem csalunk!"
 
-#: cogs/profile/__init__.py:1077
+#: cogs/profile/__init__.py:1079
 #, python-brace-format
 msgid ""
 "Success!\n"
@@ -7696,11 +7699,11 @@ msgstr ""
 "{other} vagyona **${othermoney}**-ra nőtt, a tied **${authormoney}**-ra "
 "csökkent."
 
-#: cogs/profile/__init__.py:1085
+#: cogs/profile/__init__.py:1087
 msgid "Rename your character"
 msgstr ""
 
-#: cogs/profile/__init__.py:1089
+#: cogs/profile/__init__.py:1091
 msgid ""
 "`[name]` - The name to use; if not given, this will be interactive\n"
 "\n"
@@ -7708,31 +7711,31 @@ msgid ""
 "long."
 msgstr ""
 
-#: cogs/profile/__init__.py:1096
+#: cogs/profile/__init__.py:1098
 msgid "What shall your character's name be? (Minimum 3 Characters, Maximum 20)"
 msgstr "Minek nevezzünk? (legalább 3, legfeljebb 20 karakter)"
 
-#: cogs/profile/__init__.py:1107
+#: cogs/profile/__init__.py:1109
 msgid "Timeout expired. Retry!"
 msgstr "A bünti lejárt, próbálkozz újra!"
 
-#: cogs/profile/__init__.py:1120
+#: cogs/profile/__init__.py:1122
 msgid "Character name updated."
 msgstr "Karakter sikeresen átkeresztelve."
 
-#: cogs/profile/__init__.py:1122
+#: cogs/profile/__init__.py:1124
 msgid "Character names must be at least 3 characters!"
 msgstr "A választott névnek legalább 3 karakter hosszúnak kell lennie."
 
-#: cogs/profile/__init__.py:1124
+#: cogs/profile/__init__.py:1126
 msgid "Character names mustn't exceed 20 characters!"
 msgstr "A választott név legfeljebb 20 karakter hosszú lehet."
 
-#: cogs/profile/__init__.py:1127
+#: cogs/profile/__init__.py:1129
 msgid "Delete your character"
 msgstr ""
 
-#: cogs/profile/__init__.py:1131
+#: cogs/profile/__init__.py:1133
 msgid ""
 "Deletes your character. There is no way to get your character data back "
 "after deletion.\n"
@@ -7743,7 +7746,7 @@ msgid ""
 "              - Your marriage and children"
 msgstr ""
 
-#: cogs/profile/__init__.py:1140
+#: cogs/profile/__init__.py:1142
 msgid ""
 "Are you absolutely sure you want to delete your character? React in the next "
 "30 seconds to confirm.\n"
@@ -7753,19 +7756,19 @@ msgstr ""
 "30másodperced van rá, hogy eldöntsd!\n"
 "**Nem visszavonható!**"
 
-#: cogs/profile/__init__.py:1144
+#: cogs/profile/__init__.py:1146
 msgid "Cancelled deletion of your character."
 msgstr "Karaktertörlés megszakítva."
 
-#: cogs/profile/__init__.py:1172
+#: cogs/profile/__init__.py:1174
 msgid "Successfully deleted your character. Sorry to see you go :frowning:"
 msgstr "Karaktered sikeresen törölve lett. Hiányozni fogsz :frowning:"
 
-#: cogs/profile/__init__.py:1176
+#: cogs/profile/__init__.py:1178
 msgid "Update your profile color"
 msgstr ""
 
-#: cogs/profile/__init__.py:1180
+#: cogs/profile/__init__.py:1182
 #, python-brace-format
 msgid ""
 "`<color>` - The color to use, see below for allowed format\n"
@@ -7784,56 +7787,56 @@ msgid ""
 "embed color in `{prefix}profile2`."
 msgstr ""
 
-#: cogs/profile/__init__.py:1194
+#: cogs/profile/__init__.py:1196
 msgid ""
 "Format for colour is `#RGB`, `#RRGGBB`, a colour code like `cyan` or rgb/"
 "rgba values like (255, 255, 255, 0.5)."
 msgstr ""
 
-#: cogs/profile/__init__.py:1204
+#: cogs/profile/__init__.py:1206
 #, python-brace-format
 msgid "Successfully set your profile colour to `{colour}`."
 msgstr ""
 
-#: cogs/profile/__init__.py:1210
+#: cogs/profile/__init__.py:1212
 msgid "Claim your profile badges"
 msgstr ""
 
-#: cogs/profile/__init__.py:1214
+#: cogs/profile/__init__.py:1216
 msgid ""
 "Claim all badges for your profile based on your roles. This command can only "
 "be used in the support server."
 msgstr ""
 
-#: cogs/profile/__init__.py:1217
+#: cogs/profile/__init__.py:1219
 msgid "This command can only be used in the support server."
 msgstr ""
 
-#: cogs/profile/__init__.py:1247
+#: cogs/profile/__init__.py:1249
 msgid "Successfully updated your badges."
 msgstr ""
 
-#: cogs/game_master/__init__.py:39
+#: cogs/game_master/__init__.py:41
 msgid "Publish an announcement"
 msgstr ""
 
-#: cogs/game_master/__init__.py:42
+#: cogs/game_master/__init__.py:44
 msgid "Publish a message from an announement channel"
 msgstr ""
 
-#: cogs/game_master/__init__.py:45
+#: cogs/game_master/__init__.py:47
 msgid "Message has been published!"
 msgstr ""
 
-#: cogs/game_master/__init__.py:47
+#: cogs/game_master/__init__.py:49
 msgid "This message is not from an announcement channel!"
 msgstr ""
 
-#: cogs/game_master/__init__.py:51
+#: cogs/game_master/__init__.py:53
 msgid "Clean up the shop"
 msgstr ""
 
-#: cogs/game_master/__init__.py:56
+#: cogs/game_master/__init__.py:58
 msgid ""
 "Remove items from the shop that have been there for more than 14 days, "
 "returning them to the owners' inventories.\n"
@@ -7841,16 +7844,16 @@ msgid ""
 "            Only Game Masters can use this command."
 msgstr ""
 
-#: cogs/game_master/__init__.py:71
+#: cogs/game_master/__init__.py:73
 #, python-brace-format
 msgid "Cleared {num} shop items which timed out."
 msgstr "A régi kacatok közül {num} darab tárgy ki lett hajítva."
 
-#: cogs/game_master/__init__.py:76
+#: cogs/game_master/__init__.py:78
 msgid "Clear donator cache for a user"
 msgstr ""
 
-#: cogs/game_master/__init__.py:81
+#: cogs/game_master/__init__.py:83
 msgid ""
 "`<other>` - A server member\n"
 "\n"
@@ -7860,11 +7863,11 @@ msgid ""
 "            Only Game Masters can use this command."
 msgstr ""
 
-#: cogs/game_master/__init__.py:91
+#: cogs/game_master/__init__.py:93
 msgid "Bot-ban a user"
 msgstr ""
 
-#: cogs/game_master/__init__.py:95
+#: cogs/game_master/__init__.py:97
 msgid ""
 "`<other>` - A discord User\n"
 "\n"
@@ -7874,21 +7877,21 @@ msgid ""
 "            Only Game Masters can use this command."
 msgstr ""
 
-#: cogs/game_master/__init__.py:110
+#: cogs/game_master/__init__.py:112
 #, python-brace-format
 msgid "Banned: {other}"
 msgstr ""
 
-#: cogs/game_master/__init__.py:121
+#: cogs/game_master/__init__.py:123
 #, python-brace-format
 msgid "{other} is already banned."
 msgstr ""
 
-#: cogs/game_master/__init__.py:124
+#: cogs/game_master/__init__.py:126
 msgid "Bot-unban a user"
 msgstr ""
 
-#: cogs/game_master/__init__.py:128
+#: cogs/game_master/__init__.py:130
 msgid ""
 "`<other>` - A discord User\n"
 "\n"
@@ -7898,21 +7901,21 @@ msgid ""
 "            Only Game Masters can use this command."
 msgstr ""
 
-#: cogs/game_master/__init__.py:141
+#: cogs/game_master/__init__.py:143
 #, python-brace-format
 msgid "Unbanned: {other}"
 msgstr "Tiltás feloldva: {other}"
 
-#: cogs/game_master/__init__.py:152
+#: cogs/game_master/__init__.py:154
 #, python-brace-format
 msgid "{other} is not banned."
 msgstr "{other} nincs eltiltva."
 
-#: cogs/game_master/__init__.py:155
+#: cogs/game_master/__init__.py:157
 msgid "Create money"
 msgstr ""
 
-#: cogs/game_master/__init__.py:166
+#: cogs/game_master/__init__.py:168
 msgid ""
 "`<money>` - the amount of money to generate for the user\n"
 "            `<other>` - A discord User with a character\n"
@@ -7925,18 +7928,18 @@ msgid ""
 "            Only Game Masters can use this command."
 msgstr ""
 
-#: cogs/game_master/__init__.py:179
+#: cogs/game_master/__init__.py:181
 #, python-brace-format
 msgid "Successfully gave **${money}** without a loss for you to **{other}**."
 msgstr ""
 "**{other}** sikeresen megkapta az alábbi összeget: **${money}**. A saját "
 "vagyonod nem csökkent."
 
-#: cogs/game_master/__init__.py:193
+#: cogs/game_master/__init__.py:195
 msgid "Remove money"
 msgstr ""
 
-#: cogs/game_master/__init__.py:204
+#: cogs/game_master/__init__.py:206
 msgid ""
 "`<money>` - the amount of money to remove from the user\n"
 "            `<other>` - a discord User with character\n"
@@ -7949,18 +7952,18 @@ msgid ""
 "            Only Game Masters can use this command."
 msgstr ""
 
-#: cogs/game_master/__init__.py:216
+#: cogs/game_master/__init__.py:218
 #, python-brace-format
 msgid "Successfully removed **${money}** from **{other}**."
 msgstr ""
 "**${money}** sikeresen levonásra került **{other}** vagyonából. Az összeg "
 "megsemmisült."
 
-#: cogs/game_master/__init__.py:231
+#: cogs/game_master/__init__.py:233
 msgid "Delete a character"
 msgstr ""
 
-#: cogs/game_master/__init__.py:235
+#: cogs/game_master/__init__.py:237
 msgid ""
 "`<other>` - a discord User with character\n"
 "            `[reason]` - The reason this action was done, defaults to the "
@@ -7971,15 +7974,15 @@ msgid ""
 "            Only Game Masters can use this command."
 msgstr ""
 
-#: cogs/game_master/__init__.py:269
+#: cogs/game_master/__init__.py:271
 msgid "Successfully deleted the character."
 msgstr "Fiók sikeresen törölve."
 
-#: cogs/game_master/__init__.py:278
+#: cogs/game_master/__init__.py:280
 msgid "Rename a character"
 msgstr ""
 
-#: cogs/game_master/__init__.py:282
+#: cogs/game_master/__init__.py:284
 msgid ""
 "`<target>` - a discord User with character\n"
 "            `[reason]` - The reason this action was done, defaults to the "
@@ -7990,23 +7993,23 @@ msgid ""
 "            Only Game Masters can use this command."
 msgstr ""
 
-#: cogs/game_master/__init__.py:293
+#: cogs/game_master/__init__.py:295
 msgid "What shall the character's name be? (min. 3 letters, max. 20)"
 msgstr "Mi legyen az új karakternév? (legalább 3, legfeljebb 20 karakter)"
 
-#: cogs/game_master/__init__.py:307
+#: cogs/game_master/__init__.py:309
 msgid "Timeout expired."
 msgstr "Az időkorlátozás lejárt, próbáld újra."
 
-#: cogs/game_master/__init__.py:312
+#: cogs/game_master/__init__.py:314
 msgid "Renamed."
 msgstr "Név sikeresen megváltoztatva."
 
-#: cogs/game_master/__init__.py:324
+#: cogs/game_master/__init__.py:326
 msgid "Create an item"
 msgstr ""
 
-#: cogs/game_master/__init__.py:338
+#: cogs/game_master/__init__.py:340
 msgid ""
 "`<stat>` - the generated item's stat, must be between 0 and 100\n"
 "            `<owner>` - a discord User with character\n"
@@ -8024,23 +8027,23 @@ msgid ""
 "            Only Game Masters can use this command."
 msgstr ""
 
-#: cogs/game_master/__init__.py:351
+#: cogs/game_master/__init__.py:353
 msgid "Invalid item type."
 msgstr "Érvénytelen tárgy típus."
 
-#: cogs/game_master/__init__.py:353
+#: cogs/game_master/__init__.py:355
 msgid "Invalid stat."
 msgstr "Érvénytelen minőségi érték."
 
-#: cogs/game_master/__init__.py:373
+#: cogs/game_master/__init__.py:375
 msgid "Done."
 msgstr "Kész."
 
-#: cogs/game_master/__init__.py:380
+#: cogs/game_master/__init__.py:382
 msgid "Create crates"
 msgstr ""
 
-#: cogs/game_master/__init__.py:392
+#: cogs/game_master/__init__.py:394
 msgid ""
 "`<rarity>` - the crates' rarity, can be common, uncommon, rare, magic or "
 "legendary\n"
@@ -8055,16 +8058,16 @@ msgid ""
 "            Only Game Masters can use this command."
 msgstr ""
 
-#: cogs/game_master/__init__.py:408
+#: cogs/game_master/__init__.py:410
 #, python-brace-format
 msgid "Successfully gave **{amount}** {rarity} crates to **{target}**."
 msgstr "**{target}** sikeresen megkapta a **{amount}** {rarity} ládát."
 
-#: cogs/game_master/__init__.py:424
+#: cogs/game_master/__init__.py:426
 msgid "Generate XP"
 msgstr ""
 
-#: cogs/game_master/__init__.py:435
+#: cogs/game_master/__init__.py:437
 msgid ""
 "`<target>` - A discord User with character\n"
 "            `<amount>` - The amount of XP to generate, can be negative\n"
@@ -8076,16 +8079,16 @@ msgid ""
 "            Only Game Masters can use this command."
 msgstr ""
 
-#: cogs/game_master/__init__.py:447
+#: cogs/game_master/__init__.py:449
 #, python-brace-format
 msgid "Successfully gave **{amount}** XP to **{target}**."
 msgstr "**{target}** sikeresen kapott **{amount}** TP-t."
 
-#: cogs/game_master/__init__.py:462
+#: cogs/game_master/__init__.py:464
 msgid "Wipe someone's donation perks."
 msgstr ""
 
-#: cogs/game_master/__init__.py:466
+#: cogs/game_master/__init__.py:468
 msgid ""
 "`<target>` - A discord User with character\n"
 "            `[reason]` - The reason this action was done, defaults to the "
@@ -8100,7 +8103,7 @@ msgid ""
 "            Only Game Masters can use this command."
 msgstr ""
 
-#: cogs/game_master/__init__.py:496
+#: cogs/game_master/__init__.py:498
 #, python-brace-format
 msgid ""
 "Successfully reset {target}'s background, class, item names and guild member "
@@ -8109,11 +8112,11 @@ msgstr ""
 "{target} háttérinformációja, kasztja, személyes tárgyainak neve és céhének "
 "tagszámkorlátozása sikeresen alapértékre állítva."
 
-#: cogs/game_master/__init__.py:510
+#: cogs/game_master/__init__.py:512
 msgid "Reset someone's classes"
 msgstr ""
 
-#: cogs/game_master/__init__.py:514
+#: cogs/game_master/__init__.py:516
 msgid ""
 "`<target>` - a discord User with character\n"
 "            `[reason]` - The reason this action was done, defaults to the "
@@ -8125,17 +8128,17 @@ msgid ""
 "            Only Game Masters can use this command."
 msgstr ""
 
-#: cogs/game_master/__init__.py:526
+#: cogs/game_master/__init__.py:528
 #, python-brace-format
 msgid "Successfully reset {target}'s class."
 msgstr "{target} kasztja sikeresen alapértékre állítva."
 
 #. 7 days
-#: cogs/game_master/__init__.py:538
+#: cogs/game_master/__init__.py:540
 msgid "Sign an item"
 msgstr ""
 
-#: cogs/game_master/__init__.py:542
+#: cogs/game_master/__init__.py:544
 msgid ""
 "`<itemid>` - the item's ID to sign\n"
 "            `<text>` - The signature to write, must be less than 50 "
@@ -8151,19 +8154,19 @@ msgid ""
 "            (This command has a cooldown of 7 days.)"
 msgstr ""
 
-#: cogs/game_master/__init__.py:554
+#: cogs/game_master/__init__.py:556
 msgid "Text exceeds 50 characters."
 msgstr "Túllépted az 50 karakteres limitet."
 
-#: cogs/game_master/__init__.py:558
+#: cogs/game_master/__init__.py:560
 msgid "Item successfully signed."
 msgstr "Tárgy sikeresen dedikálva."
 
-#: cogs/game_master/__init__.py:570
+#: cogs/game_master/__init__.py:572
 msgid "Start an auction"
 msgstr ""
 
-#: cogs/game_master/__init__.py:574
+#: cogs/game_master/__init__.py:576
 msgid ""
 "`<item>` - a description of what is being auctioned\n"
 "\n"
@@ -8177,19 +8180,19 @@ msgid ""
 "            Only Game Masters can use this command."
 msgstr ""
 
-#: cogs/game_master/__init__.py:584
+#: cogs/game_master/__init__.py:586
 msgid "There's still an auction running."
 msgstr ""
 
-#: cogs/game_master/__init__.py:591
+#: cogs/game_master/__init__.py:593
 msgid "Auctions channel wasn't found."
 msgstr ""
 
-#: cogs/game_master/__init__.py:613
+#: cogs/game_master/__init__.py:617
 msgid "Bid on an auction"
 msgstr ""
 
-#: cogs/game_master/__init__.py:617
+#: cogs/game_master/__init__.py:621
 msgid ""
 "`<amount>` - the amount of money to bid, must be higher than the current "
 "highest bid\n"
@@ -8201,23 +8204,23 @@ msgid ""
 "not paying up."
 msgstr ""
 
-#: cogs/game_master/__init__.py:624
+#: cogs/game_master/__init__.py:628
 msgid "No auction running."
 msgstr ""
 
-#: cogs/game_master/__init__.py:626
+#: cogs/game_master/__init__.py:630
 msgid "Bid too low."
 msgstr ""
 
-#: cogs/game_master/__init__.py:658
+#: cogs/game_master/__init__.py:662
 msgid "Bid submitted."
 msgstr ""
 
-#: cogs/game_master/__init__.py:670
+#: cogs/game_master/__init__.py:674
 msgid "Set a cooldown"
 msgstr ""
 
-#: cogs/game_master/__init__.py:682
+#: cogs/game_master/__init__.py:686
 msgid ""
 "`<user>` - A discord User or their User ID\n"
 "            `<command>` - the command which the cooldown is being set for "
@@ -8230,17 +8233,29 @@ msgid ""
 "            Only Game Masters can use this command."
 msgstr ""
 
-#: cogs/game_master/__init__.py:698
+#: cogs/game_master/__init__.py:702
 msgid "The cooldown has been updated!"
 msgstr "Az újratöltési idő sikeresen módosítva lett!"
 
-#: cogs/game_master/__init__.py:711
+#: cogs/game_master/__init__.py:715
 msgid ""
 "Cooldown setting unsuccessful (maybe you mistyped the command name or there "
 "is no cooldown for the user?)."
 msgstr ""
 "Újratöltés beállítása sikertelen (elképzelhető, hogy rossz formátumban lett "
 "az idő megadva, vagy a játékosnak már nincs újratöltési idő kiszabva)."
+
+#: cogs/game_master/__init__.py:724
+msgid "Update the luck for all followers"
+msgstr ""
+
+#: cogs/game_master/__init__.py:729
+msgid ""
+"Sets the luck for all gods to a random value and give bonus luck to the top "
+"25 followers.\n"
+"\n"
+"            Only Game Masters can use this command."
+msgstr ""
 
 #: cogs/gods/__init__.py:39
 msgid "Sacrifice loot for favor"
@@ -9121,26 +9136,26 @@ msgstr ""
 msgid "An unknown error occured."
 msgstr ""
 
-#: cogs/alliance/__init__.py:49
+#: cogs/alliance/__init__.py:51
 msgid "Shows cities and owners."
 msgstr "A városok jelenlegi vezetőinek mutatása."
 
-#: cogs/alliance/__init__.py:53
+#: cogs/alliance/__init__.py:55
 msgid ""
 "Show all cities, their tiers, owners, available buildings and current "
 "defense."
 msgstr ""
 
-#: cogs/alliance/__init__.py:61
+#: cogs/alliance/__init__.py:63
 msgid "Cities"
 msgstr "Városok"
 
-#: cogs/alliance/__init__.py:65
+#: cogs/alliance/__init__.py:67
 #, python-brace-format
 msgid "{name} (Tier {tier})"
 msgstr "{name} (Minőség {tier})"
 
-#: cogs/alliance/__init__.py:69
+#: cogs/alliance/__init__.py:71
 #, python-brace-format
 msgid ""
 "Owned by {alliance}'s alliance\n"
@@ -9151,11 +9166,11 @@ msgstr ""
 "Épületek: {buildings}\n"
 "Teljes védelem: {defense}"
 
-#: cogs/alliance/__init__.py:88
+#: cogs/alliance/__init__.py:90
 msgid "Interact with your alliance."
 msgstr ""
 
-#: cogs/alliance/__init__.py:93
+#: cogs/alliance/__init__.py:95
 #, python-brace-format
 msgid ""
 "Alliances are groups of guilds. Just like a guild requires at least one "
@@ -9170,7 +9185,7 @@ msgid ""
 "with your alliance!"
 msgstr ""
 
-#: cogs/alliance/__init__.py:111
+#: cogs/alliance/__init__.py:113
 msgid ""
 "You are not in an alliance. You are alone and may still use all other "
 "alliance commands or invite a guild to create a bigger alliance."
@@ -9179,16 +9194,16 @@ msgstr ""
 "van a szövetségekkel kapcsolatos parancsokat használni, illetve más céheket "
 "meghívni egy nagyobb szövetség létrehozásának érdekében."
 
-#: cogs/alliance/__init__.py:117
+#: cogs/alliance/__init__.py:119
 msgid "Your allied guilds"
 msgstr "Szövetséges céhek"
 
-#: cogs/alliance/__init__.py:122
+#: cogs/alliance/__init__.py:124
 #, python-brace-format
 msgid "Led by {leader}"
 msgstr "Vezetője {leader}"
 
-#: cogs/alliance/__init__.py:129
+#: cogs/alliance/__init__.py:131
 #, python-brace-format
 msgid ""
 "{prefix}alliance buildings | {prefix}alliance defenses | {prefix}alliance "
@@ -9197,17 +9212,17 @@ msgstr ""
 "{prefix}szövetség épületei | {prefix}szövetség védelme | {prefix}szövetség "
 "támadóereje | {prefix}szövetség területfoglalása"
 
-#: cogs/alliance/__init__.py:139
+#: cogs/alliance/__init__.py:141
 msgid "Invite a guild to your alliance."
 msgstr ""
 
-#: cogs/alliance/__init__.py:143
+#: cogs/alliance/__init__.py:145
 #, python-brace-format
 msgid ""
 "`<newleader>` - A user with a character who leads a guild.\n"
 "\n"
 "            Invite a guild to your alliance. All allied guilds will benefit "
-"from your city's buildings. Once you’re allied with another guild, it will "
+"from your city's buildings. Once you're allied with another guild, it will "
 "be shown in {prefix}alliance.\n"
 "            The other guild can't be allied with another alliance or own a "
 "city in order to be invited.\n"
@@ -9216,27 +9231,27 @@ msgid ""
 "            (This command has a cooldown of 5 minutes.)"
 msgstr ""
 
-#: cogs/alliance/__init__.py:153
+#: cogs/alliance/__init__.py:155
 msgid "That member is not in a guild."
 msgstr "Ez a játékos egyik céhnek sem tagja."
 
-#: cogs/alliance/__init__.py:159
+#: cogs/alliance/__init__.py:161
 msgid "That member is not the leader of their guild."
 msgstr "Ez a céhtag nem maga a Céhmester."
 
-#: cogs/alliance/__init__.py:165
+#: cogs/alliance/__init__.py:167
 msgid "This member's guild is already part of your alliance."
 msgstr "Ez a Céhmester már belépett a közös szövetségetekbe."
 
-#: cogs/alliance/__init__.py:171
+#: cogs/alliance/__init__.py:173
 msgid "This guild is already in an alliance."
 msgstr "Ez a céh már másokkal áll szövetségben."
 
-#: cogs/alliance/__init__.py:179
+#: cogs/alliance/__init__.py:181
 msgid "This guild is the leader of another alliance."
 msgstr "Ez a céh egy másik Szövetség vezetője."
 
-#: cogs/alliance/__init__.py:184
+#: cogs/alliance/__init__.py:186
 #, python-brace-format
 msgid ""
 "{newleader}, {author} invites you to join their alliance. React to join now."
@@ -9244,26 +9259,26 @@ msgstr ""
 "{newleader}, {author} szövetséget ajánl céheitek között. A reakciógombokkal "
 "beleegyezhetsz."
 
-#: cogs/alliance/__init__.py:198
+#: cogs/alliance/__init__.py:200
 msgid "Your alliance is full."
 msgstr "A szövetséged elérte a maximum céh-számot."
 
-#: cogs/alliance/__init__.py:205
+#: cogs/alliance/__init__.py:207
 #, python-brace-format
 msgid "**{user}'s guild is a single-guild alliance and owns a city."
 msgstr ""
 "**{user}** céhe egy önálló szervezetet alkot, és tulajdonában áll egy város."
 
-#: cogs/alliance/__init__.py:215
+#: cogs/alliance/__init__.py:217
 #, python-brace-format
 msgid "**{newguild}** is now part of your alliance, {user}!"
 msgstr "A **{newguild}** nevű céh innentől a szövetségesed, {user}!"
 
-#: cogs/alliance/__init__.py:221
+#: cogs/alliance/__init__.py:223
 msgid "Leave your alliance"
 msgstr ""
 
-#: cogs/alliance/__init__.py:225
+#: cogs/alliance/__init__.py:227
 #, python-brace-format
 msgid ""
 "Leave your alliance. Once you left your alliance, you will no longer benefit "
@@ -9274,19 +9289,19 @@ msgid ""
 "            Only guild leaders can use this command."
 msgstr ""
 
-#: cogs/alliance/__init__.py:236
+#: cogs/alliance/__init__.py:238
 msgid "You are the alliance's leading guild and cannot leave it!"
 msgstr "Céhed a jelenlegi vezércéh a szövetségen belül, így nem léphetsz ki!"
 
-#: cogs/alliance/__init__.py:242
+#: cogs/alliance/__init__.py:244
 msgid "Your guild left the alliance."
 msgstr "Céhed kilépett a szövetségből."
 
-#: cogs/alliance/__init__.py:246
+#: cogs/alliance/__init__.py:248
 msgid "Kick a guild from your alliance"
 msgstr ""
 
-#: cogs/alliance/__init__.py:250
+#: cogs/alliance/__init__.py:252
 msgid ""
 "`<guild_to_kick>` -  A guild's name or ID\n"
 "\n"
@@ -9296,7 +9311,7 @@ msgid ""
 "            Only the alliance leader can use this command."
 msgstr ""
 
-#: cogs/alliance/__init__.py:268
+#: cogs/alliance/__init__.py:270
 #, python-brace-format
 msgid ""
 "Cannot find guild `{guild_to_kick}`. Are you sure that's the right name/ID?"
@@ -9304,37 +9319,37 @@ msgstr ""
 "Az említett `{guild_to_kick}` céh nem található. Biztos vagy benne, hogy jó "
 "adatokat használtál?"
 
-#: cogs/alliance/__init__.py:273
+#: cogs/alliance/__init__.py:275
 msgid "That won't work."
 msgstr "Ez így nem fog működni."
 
-#: cogs/alliance/__init__.py:276
+#: cogs/alliance/__init__.py:278
 msgid "This guild is not in your alliance."
 msgstr "Ezzel a céhhel nem állsz szövetségben."
 
-#: cogs/alliance/__init__.py:279
+#: cogs/alliance/__init__.py:281
 #, python-brace-format
 msgid "Do you really want to kick **{guild}** from your alliance?"
 msgstr ""
 "Biztos vagy benne, hogy szeretnéd a **{guild}** céhet kizárni a szövetségből?"
 
-#: cogs/alliance/__init__.py:291
+#: cogs/alliance/__init__.py:293
 #, python-brace-format
 msgid "**{guild}** is no longer part of your alliance."
 msgstr "A **{guild}** céh többé nem áll veled szövetségben."
 
-#: cogs/alliance/__init__.py:304
+#: cogs/alliance/__init__.py:306
 msgid "Build buildings or defenses"
 msgstr ""
 
-#: cogs/alliance/__init__.py:308
+#: cogs/alliance/__init__.py:310
 #, python-brace-format
 msgid ""
 "Build buildings `{prefix}alliance build building` or defenses `{prefix}"
 "alliance build defense`."
 msgstr ""
 
-#: cogs/alliance/__init__.py:311
+#: cogs/alliance/__init__.py:313
 msgid ""
 "Please use one of these subcommands:\n"
 "\n"
@@ -9342,11 +9357,11 @@ msgstr ""
 "Az alábbi parancsokat tudod használni:\n"
 "\n"
 
-#: cogs/alliance/__init__.py:317
+#: cogs/alliance/__init__.py:319
 msgid "Upgrade a building in your city."
 msgstr ""
 
-#: cogs/alliance/__init__.py:321
+#: cogs/alliance/__init__.py:323
 #, python-brace-format
 msgid ""
 "`<name>` - The name of the building to upgrade.\n"
@@ -9367,7 +9382,7 @@ msgid ""
 "            (This command has a cooldown of 5 minutes)"
 msgstr ""
 
-#: cogs/alliance/__init__.py:343
+#: cogs/alliance/__init__.py:345
 #, python-brace-format
 msgid ""
 "Invalid building. Please use `{prefix}{cmd} [thief/raid/trade/adventure]` or "
@@ -9377,11 +9392,11 @@ msgstr ""
 "paranccsal tudod kiválasztani az épületet, amennyiben az adott típus "
 "megtalálható a városban."
 
-#: cogs/alliance/__init__.py:351
+#: cogs/alliance/__init__.py:353
 msgid "This building is fully upgraded."
 msgstr "Ez az épület teljesen ki van maxolva."
 
-#: cogs/alliance/__init__.py:355
+#: cogs/alliance/__init__.py:357
 #, python-brace-format
 msgid ""
 "Are you sure you want to upgrade the **{name} building** to level "
@@ -9390,37 +9405,35 @@ msgstr ""
 "Szeretnéd fejleszteni a **{name} épületet** a következő szintre "
 "({new_level})? Ennek az ára $**{price}** lesz."
 
-#: cogs/alliance/__init__.py:364
+#: cogs/alliance/__init__.py:366
 #, python-brace-format
 msgid ""
 "Your guild doesn't have enough money to upgrade the city's {name} building."
 msgstr ""
 "A céhed kincstára nem tudja fedezni a {name} épület fejlesztési költségét."
 
-#: cogs/alliance/__init__.py:391
+#: cogs/alliance/__init__.py:393
 #, python-brace-format
 msgid ""
-"Successfully upgraded the city's {name} building to level **{new_level}**"
+"Successfully upgraded the city's {name} building to level **{new_level}**."
 msgstr ""
-"Sikeresen fejlesztetted városod {name} épületét. Jelenlegi szintje: "
-"**{new_level}**"
 
-#: cogs/alliance/__init__.py:400
+#: cogs/alliance/__init__.py:402
 msgid "Build a defense in your city."
 msgstr ""
 
-#: cogs/alliance/__init__.py:404
+#: cogs/alliance/__init__.py:406
 msgid ""
 "Build some defensive buildings or place troops in your cities. The following "
 "are available:\n"
 "\n"
-"            Cannons: 250HP, 60 defense for $200,000\n"
-"            Archers: 500HP, 50 defemse for $100,000\n"
-"            Outer Wall: 20,000HP, 0 defense for $500,000\n"
-"            Inner Wall: 10,000HP, 0 defense for $200,000\n"
-"            Moat: 5,000HP, 25 defense for $150,000\n"
-"            Tower: 1,000HP, 50 defense for $200,000\n"
-"            Ballista: 250HP, 30 defense for $100,000\n"
+"            Cannons: 500HP, 60 defense for $200,000\n"
+"            Archers: 1,000HP, 50 defense for $100,000\n"
+"            Outer Wall: 40,000HP, 0 defense for $500,000\n"
+"            Inner Wall: 20,000HP, 0 defense for $200,000\n"
+"            Moat: 10,000HP, 25 defense for $150,000\n"
+"            Tower: 2,500HP, 50 defense for $200,000\n"
+"            Ballista: 500HP, 30 defense for $100,000\n"
 "\n"
 "            Any city can have a maximum of 10 defenses. When attacked, the "
 "buildings with the most HP are targeted first.\n"
@@ -9432,45 +9445,43 @@ msgid ""
 "            (This command has a cooldown of 1 minutes)"
 msgstr ""
 
-#: cogs/alliance/__init__.py:433
+#: cogs/alliance/__init__.py:435
 #, python-brace-format
 msgid "Invalid defense. Please use `{prefix}{cmd} [{buildings}]`."
 msgstr ""
 "Érvénytelen parancs. A `{prefix}{cmd} [{buildings}]` formátumot tudod "
 "használni."
 
-#: cogs/alliance/__init__.py:449
+#: cogs/alliance/__init__.py:451
 msgid "Your city is under attack. Defenses cannot be built."
 msgstr "A városod ostrom alatt áll, ilyenkor már késő a védelmet erősíteni."
 
-#: cogs/alliance/__init__.py:456
+#: cogs/alliance/__init__.py:458
 msgid "You may only build up to 10 defenses."
 msgstr "Maximum összesen 10 különböző védelmi vonalat tudsz létrehozni."
 
-#: cogs/alliance/__init__.py:459
+#: cogs/alliance/__init__.py:461
 #, python-brace-format
 msgid ""
-"Are you sure you want to build a **{defense}**? This will cost $**{price}**."
+"Are you sure you want to build a **{defense}**? This will cost **${price}**."
 msgstr ""
-"Biztos vagy benne, hogy az adott védelmi vonalba (**{defense}**) szeretnél "
-"fektetni? Ennyi kincstári vagyonba fog kerülni: $**{price}**."
 
-#: cogs/alliance/__init__.py:470
+#: cogs/alliance/__init__.py:472
 #, python-brace-format
 msgid "Your guild doesn't have enough money to build a {defense}."
 msgstr ""
 "A céhed kincstára nem tudja fedezni a {defense} befektetési költségét. "
 
-#: cogs/alliance/__init__.py:496
+#: cogs/alliance/__init__.py:498
 #, python-brace-format
 msgid "Successfully built a {defense}."
 msgstr "Védelmi vonal ({defense}) sikeres létrehozása."
 
-#: cogs/alliance/__init__.py:499
+#: cogs/alliance/__init__.py:501
 msgid "Lists your city's buildings."
 msgstr ""
 
-#: cogs/alliance/__init__.py:503
+#: cogs/alliance/__init__.py:505
 #, python-brace-format
 msgid ""
 "Lists all buildings in your city, along with their level. These buildings "
@@ -9489,52 +9500,52 @@ msgid ""
 "            Your alliance must own a city to use this command."
 msgstr ""
 
-#: cogs/alliance/__init__.py:522
+#: cogs/alliance/__init__.py:524
 #, python-brace-format
 msgid "{city}'s buildings"
 msgstr "{city} épületei"
 
-#: cogs/alliance/__init__.py:529
+#: cogs/alliance/__init__.py:531
 #, python-brace-format
 msgid "Level {level}"
 msgstr "{level}. szint"
 
-#: cogs/alliance/__init__.py:535
+#: cogs/alliance/__init__.py:537
 msgid "Lists your city's defenses."
 msgstr ""
 
-#: cogs/alliance/__init__.py:539
+#: cogs/alliance/__init__.py:541
 msgid ""
-"Lists your city’s defenses and view the HP left for each.\n"
+"Lists your city's defenses and view the HP left for each.\n"
 "\n"
 "            Your alliance must own a city to use this command."
 msgstr ""
 
-#: cogs/alliance/__init__.py:556
+#: cogs/alliance/__init__.py:558
 #, python-brace-format
 msgid "{city}'s defenses"
 msgstr "{city} védelmére létrehozva"
 
-#: cogs/alliance/__init__.py:563
+#: cogs/alliance/__init__.py:565
 #, python-brace-format
 msgid "HP: {hp}, Defense: {defense}"
 msgstr "ÉP: {hp}, védelemérték: {defense}"
 
-#: cogs/alliance/__init__.py:570
+#: cogs/alliance/__init__.py:572
 msgid "None built"
 msgstr "Ilyen épület még nincs"
 
-#: cogs/alliance/__init__.py:571
+#: cogs/alliance/__init__.py:573
 #, python-brace-format
 msgid "Use {prefix}alliance build defense [name]"
 msgstr ""
 "A `{prefix}alliance build defense [név]` paranccsal tudsz védelmet létrehozni"
 
-#: cogs/alliance/__init__.py:580
+#: cogs/alliance/__init__.py:582
 msgid "Abandon your city"
 msgstr ""
 
-#: cogs/alliance/__init__.py:584
+#: cogs/alliance/__init__.py:586
 msgid ""
 "Abandoning your city will immediately make all alliance members lose all "
 "passive bonuses offered by the city's buildings and the city ownership will "
@@ -9544,20 +9555,20 @@ msgid ""
 "            Only the alliance leader can use this command."
 msgstr ""
 
-#: cogs/alliance/__init__.py:590
+#: cogs/alliance/__init__.py:592
 msgid "Are you sure you want to give up control of your city?"
 msgstr "Biztos, hogy el akarod hagyni a várost?"
 
-#: cogs/alliance/__init__.py:598
+#: cogs/alliance/__init__.py:600
 #, python-brace-format
 msgid "{city} was abandoned."
 msgstr "{city} ki lett ürítve és el lett hagyva."
 
-#: cogs/alliance/__init__.py:604
+#: cogs/alliance/__init__.py:606
 msgid "Take over a city."
 msgstr ""
 
-#: cogs/alliance/__init__.py:608
+#: cogs/alliance/__init__.py:610
 #, python-brace-format
 msgid ""
 "`<city>` - The name of a city. You can check the city names with `{prefix}"
@@ -9576,34 +9587,34 @@ msgid ""
 "            Only the alliance leader can use this command."
 msgstr ""
 
-#: cogs/alliance/__init__.py:620
+#: cogs/alliance/__init__.py:622
 msgid "Invalid city name."
 msgstr "Érvénytelen városnév."
 
-#: cogs/alliance/__init__.py:629
+#: cogs/alliance/__init__.py:631
 #, python-brace-format
 msgid "The city is occupied by **{amount}** defensive fortifications."
 msgstr ""
 "A város egy másik szövetség igazgatása alatt áll **{amount}** védelmi "
 "vonallal."
 
-#: cogs/alliance/__init__.py:634
+#: cogs/alliance/__init__.py:636
 #, python-brace-format
 msgid "{city} was just occupied and stands under protection."
 msgstr "{city} ki lett sajátítva és jelenleg védelem alatt áll."
 
-#: cogs/alliance/__init__.py:646
+#: cogs/alliance/__init__.py:648
 #, python-brace-format
 msgid ""
 "Your alliance now rules **{city}**. You should immediately buy defenses. You "
 "have **15 minutes** to build defenses before others can occupy the city!"
 msgstr ""
 
-#: cogs/alliance/__init__.py:660
+#: cogs/alliance/__init__.py:662
 msgid "Attack a city"
 msgstr ""
 
-#: cogs/alliance/__init__.py:664
+#: cogs/alliance/__init__.py:666
 #, python-brace-format
 msgid ""
 "`<city>` - The name of a city. You can check the city names with `{prefix}"
@@ -9611,14 +9622,16 @@ msgid ""
 "\n"
 "            Attack a city, reducing its defenses to potentially take it "
 "over.\n"
-"            Attacking a city will activate a grace period of 10 minutes, "
+"            Attacking a city will activate a grace period of 12 hours, "
 "during which time it cannot be attacked again.\n"
+"            Initiating an attack will cost the alliance leader's guild "
+"money, depending on the buildings in the defending city.\n"
 "\n"
-"            When using this command, the bot will send a link used to join "
-"the attack. Each member of the alliance can join.\n"
-"            Ten minutes after the link was sent, the users who joined will "
-"be gathered, their attack and defense depending on their equipped items, "
-"class and raid bonuses and their raidstats, and start the attack.\n"
+"            When using this command, the bot will send a message with a "
+"button used to join the attack. Each member of the alliance can join.\n"
+"            Ten minutes after the message was sent, the users who joined "
+"will be gathered, their attack and defense depending on their equipped "
+"items, class and raid bonuses and their raidstats, and start the attack.\n"
 "\n"
 "            During the attack, the highest HP defenses will be attacked "
 "first. All attackers' damage will be summed up.\n"
@@ -9637,59 +9650,77 @@ msgid ""
 "            (This command has a cooldown of 2 hours.)"
 msgstr ""
 
-#: cogs/alliance/__init__.py:685
+#: cogs/alliance/__init__.py:688
 msgid "Invalid city."
 msgstr "Érvénytelen város."
 
-#: cogs/alliance/__init__.py:690 cogs/alliance/__init__.py:721
+#: cogs/alliance/__init__.py:693 cogs/alliance/__init__.py:745
 #, python-brace-format
 msgid "**{city}** has just been attacked. Have some mercy!"
 msgstr ""
 
-#: cogs/alliance/__init__.py:694 cogs/alliance/__init__.py:725
+#: cogs/alliance/__init__.py:697 cogs/alliance/__init__.py:749
 #, python-brace-format
 msgid "**{city}** is already under attack."
 msgstr "**{city}** ostrom alá került."
 
-#: cogs/alliance/__init__.py:716
+#: cogs/alliance/__init__.py:740
 msgid "The city is without defenses already."
 msgstr "A városnak már semmilyen védelme sincs."
 
-#: cogs/alliance/__init__.py:734
+#: cogs/alliance/__init__.py:757
+#, python-brace-format
+msgid ""
+"**{city}** has excellent infrastructure and attacking it would cost **"
+"${attacking_cost}**, but your guild only has **${leading_guild_money}**."
+msgstr ""
+
+#: cogs/alliance/__init__.py:767
+#, python-brace-format
+msgid ""
+"**{city}** has excellent infrastructure and attacking it would cost **"
+"${attacking_cost}**, do you want to proceed?"
+msgstr ""
+
+#: cogs/alliance/__init__.py:778
 msgid "Join the attack!"
 msgstr ""
 
-#: cogs/alliance/__init__.py:735
+#: cogs/alliance/__init__.py:779
 msgid "You joined the attack."
 msgstr ""
 
-#: cogs/alliance/__init__.py:741
+#: cogs/alliance/__init__.py:785
 #, python-brace-format
 msgid ""
 "**{user}** wants to attack **{city}** with **{alliance_name}**'s alliance."
 msgstr ""
 
-#: cogs/alliance/__init__.py:780
+#: cogs/alliance/__init__.py:837
+msgid "The money for attacking the city has been spent in the meantime."
+msgstr ""
+
+#: cogs/alliance/__init__.py:843
 msgid "Noone joined."
 msgstr "Senki nem állt melléd."
 
-#: cogs/alliance/__init__.py:788
+#: cogs/alliance/__init__.py:851
 #, python-brace-format
 msgid "Attack on **{city}** starting with **{amount}** attackers!"
 msgstr "**{city}* város ostroma megkezdődött egy **{amount}** fős hadsereggel!"
 
-#: cogs/alliance/__init__.py:810 cogs/alliance/__init__.py:834
-#: cogs/alliance/__init__.py:871 cogs/alliance/__init__.py:882
+#: cogs/alliance/__init__.py:873 cogs/alliance/__init__.py:897
+#: cogs/alliance/__init__.py:934 cogs/alliance/__init__.py:945
 msgid "Alliance Wars"
 msgstr "Szövetségek Háborúja"
 
-#: cogs/alliance/__init__.py:812
+#: cogs/alliance/__init__.py:875
 #, python-brace-format
 msgid "**{alliance_name}** destroyed a {defense} in {city}!"
 msgstr ""
 "**{alliance_name}** leverte {city} város egyik {defense} védelmi vonalát!"
 
-#: cogs/alliance/__init__.py:836
+#: cogs/alliance/__init__.py:899
 #, python-brace-format
 msgid ""
 "**{alliance_name}** hit a {defense} in {city} for {damage} damage! (Now {hp} "
@@ -9698,43 +9729,43 @@ msgstr ""
 "**{alliance_name}** támadás alá vette {city} város {defense} védelmi "
 "vonalát, ezzel {damage} sebzést okozva! Fennmaradó ÉP: {hp}"
 
-#: cogs/alliance/__init__.py:872
+#: cogs/alliance/__init__.py:935
 #, python-brace-format
 msgid "**{user}** got killed in {city}!"
 msgstr "**{user}** meghalt {city} város ostroma során!"
 
-#: cogs/alliance/__init__.py:884
+#: cogs/alliance/__init__.py:947
 #, python-brace-format
 msgid "**{user}** got hit in {city} for {damage} damage! (Now {hp} HP)"
 msgstr ""
 "**{user}** {damage} ÉP sebzést szerzett {city} város ostroma során! "
 "Fennmaradó ÉP: {hp}"
 
-#: cogs/alliance/__init__.py:905
+#: cogs/alliance/__init__.py:968
 #, python-brace-format
 msgid "**{alliance_name}** destroyed defenses in **{city}**!"
 msgstr ""
 "**{alliance_name}** sikeresen elpusztított egy védelmi vonalat **{city}** "
 "város ostroma folyamán!"
 
-#: cogs/alliance/__init__.py:915
+#: cogs/alliance/__init__.py:978
 #, python-brace-format
 msgid "**{alliance_name}** failed to destroy defenses in **{city}**!"
 msgstr ""
 "**{alliance_name}** sikertelenül fejezte be az ostromot **{city}** város "
 "ellen!"
 
-#: cogs/alliance/__init__.py:924
+#: cogs/alliance/__init__.py:987
 msgid "Lists alliance-specific cooldowns"
 msgstr ""
 
-#: cogs/alliance/__init__.py:929
+#: cogs/alliance/__init__.py:992
 msgid ""
 "Lists alliance-specific cooldowns, meaning all alliance members have these "
 "cooldowns and cannot use the commands."
 msgstr ""
 
-#: cogs/alliance/__init__.py:940
+#: cogs/alliance/__init__.py:1003
 msgid "Your alliance does not have any active cooldown at the moment."
 msgstr "A szövetséged minden parancsa újra van töltve."
 
@@ -11982,6 +12013,50 @@ msgid ""
 "📢 {sheriff} got chosen to be the new 🎖️ **Sheriff**. **The vote of the "
 "Sheriff counts as double.**"
 msgstr ""
+
+#~ msgid ""
+#~ "`[member]` - A discord User whose avatar to invert; defaults to oneself\n"
+#~ "\n"
+#~ "            Invert the colors in someone's avatar.\n"
+#~ "\n"
+#~ "            (This command has a channel cooldown of 15 seconds.)"
+#~ msgstr ""
+#~ "`[member]` - A discord felhasználó, akinek a profilképét invertálja, "
+#~ "alapértelmezett a saját.\n"
+#~ "\n"
+#~ "Invertálja a színeket valaki profilképén.\n"
+#~ "\n"
+#~ "(Ennek a parancsnak 15 másodperc újratöltési ideje van a csatornán.)"
+
+#~ msgid ""
+#~ "`[member]` - A discord User whose avatar to oil-paint; defaults to "
+#~ "oneself\n"
+#~ "\n"
+#~ "            Creates an oil-painting effect on someone's avatar.\n"
+#~ "\n"
+#~ "            (This command has a channel cooldown of 15 seconds.)"
+#~ msgstr ""
+#~ "`[member]` - A discord felhasználó, akinek a profilképét olajfestménnyé "
+#~ "alakítja, alapértelmezett a saját.\n"
+#~ "\n"
+#~ "Olajfestmény effektet tesz valaki profilképére.\n"
+#~ "\n"
+#~ "(Ennek a parancsnak 15 másodperc újratöltési ideje van a csatornán.)"
+
+#, python-brace-format
+#~ msgid ""
+#~ "Successfully upgraded the city's {name} building to level **{new_level}**"
+#~ msgstr ""
+#~ "Sikeresen fejlesztetted városod {name} épületét. Jelenlegi szintje: "
+#~ "**{new_level}**"
+
+#, python-brace-format
+#~ msgid ""
+#~ "Are you sure you want to build a **{defense}**? This will cost $**{price}"
+#~ "**."
+#~ msgstr ""
+#~ "Biztos vagy benne, hogy az adott védelmi vonalba (**{defense}**) "
+#~ "szeretnél fektetni? Ennyi kincstári vagyonba fog kerülni: $**{price}**."
 
 #~ msgid "Pong!"
 #~ msgstr "Pong!"

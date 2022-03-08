@@ -34,7 +34,8 @@ from utils.i18n import _, locale_doc
 class GameMaster(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
-        self.top_auction = self.auction_cm = None
+        self.top_auction = None
+        self.auction_entry = None
 
     @is_gm()
     @commands.command(brief=_("Publish an announcement"))
@@ -597,18 +598,20 @@ class GameMaster(commands.Cog):
         )
         self.top_auction = (ctx.author, 0)
         timer = 60 * 30
+        self.auction_entry = asyncio.Event()
         try:
-            async with timeout(timer) as cm:
-                self.auction_cm = cm
-                while True:
-                    await asyncio.sleep(timer)
+            while True:
+                async with timeout(timer):
+                    await self.auction_entry.wait()
+                    self.auction_entry.clear()
         except asyncio.TimeoutError:
             pass
         await channel.send(
             f"**{item}** sold to {self.top_auction[0].mention} for"
             f" **${self.top_auction[1]}**!"
         )
-        self.top_auction = self.auction_cm = None
+        self.top_auction = None
+        self.auction_entry = None
 
     @has_char()
     @commands.command(hidden=True, brief=_("Bid on an auction"))
@@ -642,7 +645,7 @@ class GameMaster(commands.Cog):
                 conn=conn,
             )
             self.top_auction = (ctx.author, amount)
-            self.auction_cm.shift(60 * 30)
+            self.auction_entry.set()
             await conn.execute(
                 'UPDATE profile SET "money"="money"-$1 WHERE "user"=$2;',
                 amount,

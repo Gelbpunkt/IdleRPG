@@ -20,7 +20,6 @@ import asyncio
 import discord
 
 from discord.ext import commands
-from discord.ext.commands.default import Author
 
 from classes.converters import IntFromTo, MemberWithCharacter, UserWithCharacter
 from cogs.help import chunks
@@ -199,7 +198,7 @@ class Marriage(commands.Cog):
     @has_char()
     @commands.command(brief=_("Show a player's lovescore"))
     @locale_doc
-    async def lovescore(self, ctx, user: UserWithCharacter = Author):
+    async def lovescore(self, ctx, user: UserWithCharacter = None):
         _(
             """`[user]` - The user whose lovescore to show; defaults to oneself
 
@@ -207,6 +206,7 @@ class Marriage(commands.Cog):
 
             Lovescore affects the [adventure bonus](https://wiki.idlerpg.xyz/index.php?title=Family#Adventure_Bonus) and the amount of children you can have."""
         )
+        user = user or ctx.author
         data = ctx.character_data if user == ctx.author else ctx.user_data
         if data["marriage"]:
             partner = await rpgtools.lookup(self.bot, data["marriage"])

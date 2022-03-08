@@ -21,7 +21,6 @@ import discord
 
 from aiohttp import ContentTypeError
 from discord.ext import commands
-from discord.ext.commands.default import Author
 
 from classes.badges import Badge
 from classes.bot import Bot
@@ -157,13 +156,14 @@ IdleRPG is a global bot, your characters are valid everywhere"""
 
     @commands.command(aliases=["me", "p"], brief=_("View someone's profile"))
     @locale_doc
-    async def profile(self, ctx, *, person: discord.User = Author):
+    async def profile(self, ctx, *, person: discord.User = None):
         _(
             """`[person]` - The person whose profile to view; defaults to oneself
 
             View someone's profile. This will send an image.
             For an explanation what all the fields mean, see [this picture](https://wiki.idlerpg.xyz/images/3/35/Profile_explained.png)"""
         )
+        person = person or ctx.author
         targetid = person.id
 
         async with self.bot.pool.acquire() as conn:
@@ -278,12 +278,13 @@ IdleRPG is a global bot, your characters are valid everywhere"""
         aliases=["p2", "pp"], brief=_("View someone's profile differently")
     )
     @locale_doc
-    async def profile2(self, ctx, *, target: discord.User = Author):
+    async def profile2(self, ctx, *, target: discord.User = None):
         _(
             """`[target]` - The person whose profile to view
 
             View someone's profile. This will send an embed rather than an image and is usually faster."""
         )
+        target = target or ctx.author
         rank_money, rank_xp = await self.bot.get_ranks_for(target)
 
         items = await self.bot.get_equipped_items_for(target)
@@ -432,7 +433,7 @@ IdleRPG is a global bot, your characters are valid everywhere"""
     @checks.has_char()
     @commands.command(brief=_("Show a player's current XP"))
     @locale_doc
-    async def xp(self, ctx, user: UserWithCharacter = Author):
+    async def xp(self, ctx, user: UserWithCharacter = None):
         _(
             """`[user]` - The player whose XP and level to show; defaults to oneself
 
@@ -442,6 +443,7 @@ IdleRPG is a global bot, your characters are valid everywhere"""
               - Completing adventures
               - Exchanging loot items for XP"""
         )
+        user = user or ctx.author
         if user.id == ctx.author.id:
             points = ctx.character_data["xp"]
             await ctx.send(

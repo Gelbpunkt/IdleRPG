@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-12-31 13:37+0100\n"
+"POT-Creation-Date: 2022-03-08 22:06+0100\n"
 "PO-Revision-Date: 2022-02-11 22:50+0000\n"
 "Last-Translator: Christian Fjellsnø <no4h.j.w@gmail.com>\n"
 "Language-Team: Norwegian Bokmål <http://translate.travitia.xyz/projects/"
@@ -68,9 +68,9 @@ msgstr ""
 
 #: cogs/tournament/__init__.py:66 cogs/tournament/__init__.py:236
 #: cogs/battles/__init__.py:68 cogs/battles/__init__.py:191
-#: cogs/battles/__init__.py:380 cogs/gambling/__init__.py:612
-#: cogs/gambling/__init__.py:916 cogs/profile/__init__.py:1053
-#: cogs/game_master/__init__.py:628 cogs/transaction/__init__.py:407
+#: cogs/battles/__init__.py:380 cogs/gambling/__init__.py:607
+#: cogs/gambling/__init__.py:911 cogs/profile/__init__.py:1055
+#: cogs/game_master/__init__.py:632 cogs/transaction/__init__.py:407
 #: cogs/transaction/__init__.py:521
 msgid "You are too poor."
 msgstr "Du er for fattig."
@@ -83,8 +83,8 @@ msgstr "Du har blitt med i turneringen."
 #, python-brace-format
 msgid "{author} started a tournament! Free entries, prize is **${prize}**!"
 msgstr ""
-"{author} har startet en turnering! Gratis inngang, vinner pris er "
-"**${prize}**!"
+"{author} har startet en turnering! Gratis inngang, vinner pris er **${prize}"
+"**!"
 
 #: cogs/tournament/__init__.py:138
 #, python-brace-format
@@ -238,11 +238,11 @@ msgstr ""
 "Raid Turneringen er ferdig! Vinneren er {winner}.\n"
 "Penger har blitt gitt!"
 
-#: cogs/images/__init__.py:31
+#: cogs/images/__init__.py:30
 msgid "Pixelfy an avatar"
 msgstr "Pixelfyre en avatar"
 
-#: cogs/images/__init__.py:35
+#: cogs/images/__init__.py:34
 msgid ""
 "`[user]` - A discord User whose avatar to pixelfy; defaults to oneself\n"
 "            `[size]` - The pixelation rate to use, can be a number between 1 "
@@ -279,43 +279,31 @@ msgstr ""
 "            Finner og overdriver kanter i en brukers avatar, og skaper en "
 "kul bildeeffekt."
 
-#: cogs/images/__init__.py:75
+#: cogs/images/__init__.py:76
 msgid "Inverts a user's avatar"
 msgstr "Inverterer en brukers avatar"
 
-#: cogs/images/__init__.py:79
+#: cogs/images/__init__.py:80
 msgid ""
-"`[member]` - A discord User whose avatar to invert; defaults to oneself\n"
+"`[user]` - A discord User whose avatar to invert; defaults to oneself\n"
 "\n"
 "            Invert the colors in someone's avatar.\n"
 "\n"
 "            (This command has a channel cooldown of 15 seconds.)"
 msgstr ""
-"`[member]` - En discord bruker hvis avatar skal inverteres; misligholder seg "
-"selv\n"
-"\n"
-"            Inverter fargene i noens avatar.\n"
-"\n"
-"            (Denne kommandoen har en kanalnedkjøling på 15 sekunder.)"
 
-#: cogs/images/__init__.py:96
+#: cogs/images/__init__.py:98
 msgid "Oil-paint someone's avatar"
 msgstr "Oljemale noens avatar"
 
-#: cogs/images/__init__.py:100
+#: cogs/images/__init__.py:102
 msgid ""
-"`[member]` - A discord User whose avatar to oil-paint; defaults to oneself\n"
+"`[user]` - A discord User whose avatar to oil-paint; defaults to oneself\n"
 "\n"
 "            Creates an oil-painting effect on someone's avatar.\n"
 "\n"
 "            (This command has a channel cooldown of 15 seconds.)"
 msgstr ""
-"`[medlem]` – En discord bruker sin avatar til oljemaling; misligholder seg "
-"selv\n"
-"\n"
-"            Skaper en oljemalende effekt på noens avatar.\n"
-"\n"
-"            (Denne kommandoen har en kanalnedkjøling på 15 sekunder.)"
 
 #: cogs/halloween/__init__.py:37
 msgid "Trick or treat!"
@@ -406,7 +394,7 @@ msgid "Seems you haven't got a trick or treat bag yet. Go get some!"
 msgstr ""
 "Ser ut til at du ikke har en knask eller knep pose ennå. Gå og hent noen!"
 
-#: cogs/halloween/__init__.py:178 cogs/crates/__init__.py:172
+#: cogs/halloween/__init__.py:178 cogs/crates/__init__.py:245
 #: cogs/classes/__init__.py:722 cogs/valentine/__init__.py:156
 msgid "You gained an item!"
 msgstr "Du har fått en gjenstand!"
@@ -415,35 +403,35 @@ msgstr "Du har fått en gjenstand!"
 msgid "You found a new item when opening a trick-or-treat bag!"
 msgstr "Du fant en ny gjenstand når du åpnet en knask eller knep pose!"
 
-#: cogs/halloween/__init__.py:183 cogs/crates/__init__.py:178
+#: cogs/halloween/__init__.py:183 cogs/crates/__init__.py:251
 #: cogs/classes/__init__.py:422 cogs/classes/__init__.py:728
 #: cogs/trading/__init__.py:345 cogs/trading/__init__.py:440
 #: cogs/trading/__init__.py:771 cogs/valentine/__init__.py:162
 msgid "Name"
 msgstr "Navn"
 
-#: cogs/halloween/__init__.py:184 cogs/crates/__init__.py:179
+#: cogs/halloween/__init__.py:184 cogs/crates/__init__.py:252
 #: cogs/classes/__init__.py:729 cogs/trading/__init__.py:346
 #: cogs/trading/__init__.py:441 cogs/trading/__init__.py:772
 #: cogs/valentine/__init__.py:163
 msgid "Type"
 msgstr "Type"
 
-#: cogs/halloween/__init__.py:185 cogs/crates/__init__.py:180
+#: cogs/halloween/__init__.py:185 cogs/crates/__init__.py:253
 #: cogs/classes/__init__.py:733 cogs/trading/__init__.py:347
 #: cogs/trading/__init__.py:442 cogs/trading/__init__.py:773
 #: cogs/valentine/__init__.py:167
 msgid "Damage"
 msgstr "Skade"
 
-#: cogs/halloween/__init__.py:186 cogs/crates/__init__.py:181
+#: cogs/halloween/__init__.py:186 cogs/crates/__init__.py:254
 #: cogs/classes/__init__.py:731 cogs/trading/__init__.py:348
 #: cogs/trading/__init__.py:443 cogs/trading/__init__.py:774
 #: cogs/valentine/__init__.py:165
 msgid "Armor"
 msgstr "Rustning"
 
-#: cogs/halloween/__init__.py:187 cogs/crates/__init__.py:182
+#: cogs/halloween/__init__.py:187 cogs/crates/__init__.py:256
 #: cogs/classes/__init__.py:734 cogs/trading/__init__.py:349
 #: cogs/trading/__init__.py:444 cogs/trading/__init__.py:775
 #: cogs/valentine/__init__.py:168
@@ -490,12 +478,12 @@ msgid ""
 "used."
 msgstr ""
 "Se alle tilgjengelige språks lokalkoder. Du kan sjekke om språket ditt er "
-"tilgjengelig ved å sammenligne med [denne listen](https://saimana.com/"
-"list-of-country-locale-code/)\n"
+"tilgjengelig ved å sammenligne med [denne listen](https://saimana.com/list-"
+"of-country-locale-code/)\n"
 "\n"
 "            Noen av disse språkene, som xtreme-owo eller unplayable, er "
-"ingen ekte språk, men fungerer som en måte å krydre den engelske teksten på."
-"\n"
+"ingen ekte språk, men fungerer som en måte å krydre den engelske teksten "
+"på.\n"
 "            Hvis noe ennå ikke er oversatt, brukes den engelske "
 "originalteksten."
 
@@ -672,8 +660,8 @@ msgstr ""
 "rundens forsvarer.\n"
 "\n"
 "            Kampen avsluttes hvis en spillers HP faller til 0 (vinneren "
-"avgjort), eller hvis 5 minutter etter at kampen startet passerer (uavgjort)."
-"\n"
+"avgjort), eller hvis 5 minutter etter at kampen startet passerer "
+"(uavgjort).\n"
 "            Ved uavgjort vil begge spillerne få pengene tilbake.\n"
 "\n"
 "            Kampens vinner vil motta en PvP vinn, som vises på profilen "
@@ -897,8 +885,8 @@ msgstr ""
 "**Påskearrangement <:easteregg:566251086986608650>**\n"
 "\n"
 "En del av Idles bursdag!\n"
-"Samle påskeegg og bruk `{prefix}easter rewards` for å sjekke belønningene. "
-"<:bunny:566290173831151627>\n"
+"Samle påskeegg og bruk `{prefix}easter rewards` for å sjekke belønningene. <:"
+"bunny:566290173831151627>\n"
 "God jakt!"
 
 #: cogs/easter/__init__.py:47
@@ -1066,21 +1054,32 @@ msgstr ""
 "Det ser ut til at du ikke har {amount} kasse(r) av denne sjeldenheten ennå. "
 "Stem opp botten for å få en tilfeldig eller finn dem!"
 
-#: cogs/crates/__init__.py:173
+#: cogs/crates/__init__.py:161
+#, python-brace-format
+msgid ""
+"You opened {mystery_amount} {mystery_emoji} and received:\n"
+"- {common_amount} {common_emoji}\n"
+"- {uncommon_amount} {uncommon_emoji}\n"
+"- {rare_amount} {rare_emoji}\n"
+"- {magic_amount} {magic_emoji}\n"
+"- {legendary_amount} {legendary_emoji}"
+msgstr ""
+
+#: cogs/crates/__init__.py:246
 msgid "You found a new item when opening a crate!"
 msgstr "Du fant en ny gjenstand når du åpnet en kasse!"
 
-#: cogs/crates/__init__.py:177 cogs/classes/__init__.py:727
+#: cogs/crates/__init__.py:250 cogs/classes/__init__.py:727
 #: cogs/valentine/__init__.py:161
 msgid "ID"
 msgstr "ID"
 
-#: cogs/crates/__init__.py:184
+#: cogs/crates/__init__.py:259
 #, python-brace-format
 msgid "Remaining {rarity} crates: {crates}"
 msgstr "Gjenværende {rarity} kasser: {crates}"
 
-#: cogs/crates/__init__.py:216
+#: cogs/crates/__init__.py:292
 #, python-brace-format
 msgid ""
 "Successfully opened {amount} {rarity} crates. Average stat: {average_stat}\n"
@@ -1111,11 +1110,11 @@ msgstr ""
 "{most_common_types}\n"
 "```"
 
-#: cogs/crates/__init__.py:240
+#: cogs/crates/__init__.py:316
 msgid "Give crates to someone"
 msgstr "Gi kasser til noen"
 
-#: cogs/crates/__init__.py:250
+#: cogs/crates/__init__.py:326
 #, python-brace-format
 msgid ""
 "`<other>` - A user with a character\n"
@@ -1140,31 +1139,31 @@ msgstr ""
 
 #. preserve deletion of admins
 #. preserve renaming of admins
-#: cogs/crates/__init__.py:259 cogs/guild/__init__.py:427
-#: cogs/guild/__init__.py:466 cogs/game_master/__init__.py:243
-#: cogs/game_master/__init__.py:290
+#: cogs/crates/__init__.py:335 cogs/guild/__init__.py:427
+#: cogs/guild/__init__.py:466 cogs/game_master/__init__.py:245
+#: cogs/game_master/__init__.py:292
 msgid "Very funny..."
 msgstr "Veldig morsomt..."
 
-#: cogs/crates/__init__.py:262 cogs/guild/__init__.py:928
-#: cogs/profile/__init__.py:1050
+#: cogs/crates/__init__.py:338 cogs/guild/__init__.py:928
+#: cogs/profile/__init__.py:1052
 msgid "For me? I'm flattered, but I can't accept this..."
 msgstr "For meg? Jeg rødmer, men jeg kan ikke akseptere dette..."
 
-#: cogs/crates/__init__.py:265
+#: cogs/crates/__init__.py:341
 msgid "You don't have any crates of this rarity."
 msgstr "Du har ingen kasser av denne sjeldenheten."
 
-#: cogs/crates/__init__.py:289
+#: cogs/crates/__init__.py:365
 #, python-brace-format
 msgid "Successfully gave {amount} {rarity} crate(s) to {other}."
 msgstr "Har gitt {amount} {rarity} kasse(r) til {other}."
 
-#: cogs/crates/__init__.py:297
+#: cogs/crates/__init__.py:373
 msgid "Offer crates to another player"
 msgstr "Tilby kasser til en annen spiller"
 
-#: cogs/crates/__init__.py:309
+#: cogs/crates/__init__.py:385
 #, python-brace-format
 msgid ""
 "`<quantity>` - The quantity of crates to offer\n"
@@ -1193,20 +1192,20 @@ msgstr ""
 "            `{prefix}offercrate 5 common 75000 @buyer#1234`\n"
 "            `{prefix}oc 5 c 75000 @buyer#1234`"
 
-#: cogs/crates/__init__.py:320
+#: cogs/crates/__init__.py:396
 msgid "You may not offer crates to yourself."
 msgstr "Du kan ikke tilby kasser til deg selv."
 
-#: cogs/crates/__init__.py:323
+#: cogs/crates/__init__.py:399
 msgid "No, I don't want any crates."
 msgstr "Nei, jeg vil ikke ha noen kasser."
 
-#: cogs/crates/__init__.py:329
+#: cogs/crates/__init__.py:405
 #, python-brace-format
 msgid "You don't have {quantity} {rarity} crate(s). Check `{prefix}crates`."
 msgstr "Du har ikke {quantity} {rarity} kasse(r). Sjekk `{prefix}crates`."
 
-#: cogs/crates/__init__.py:337
+#: cogs/crates/__init__.py:413
 msgid ""
 "{author}, are you sure you want to offer **{quantity} {emoji} {rarity}** "
 "crate(s) for **${price:,.0f}**?"
@@ -1214,39 +1213,39 @@ msgstr ""
 "{author}, er du sikker på at du vil tilby **{quantity} {emoji} {rarity}** "
 "kasse(r) for **${price:,0f}**?"
 
-#: cogs/crates/__init__.py:347
+#: cogs/crates/__init__.py:423
 msgid "Offer cancelled."
 msgstr "Tilbudet kansellert."
 
-#: cogs/crates/__init__.py:353
+#: cogs/crates/__init__.py:429
 msgid ""
 "{buyer}, {author} offered you **{quantity} {emoji} {rarity}** crate(s) for **"
 "${price:,.0f}!** React to buy it! You have **2 Minutes** to accept the trade "
 "or the offer will be cancelled."
 msgstr ""
-"{buyer}, {author} tilbød deg **{quantity} {emoji} {rarity}** kasse(r) for "
-"**${price:,0f}!** Reager for å kjøpe den! Du har **2 minutter** på deg til å "
+"{buyer}, {author} tilbød deg **{quantity} {emoji} {rarity}** kasse(r) for **"
+"${price:,0f}!** Reager for å kjøpe den! Du har **2 minutter** på deg til å "
 "akseptere handelen, ellers vil tilbudet bli kansellert."
 
-#: cogs/crates/__init__.py:368
+#: cogs/crates/__init__.py:444
 msgid "They didn't want to buy the crate(s). Offer cancelled."
 msgstr "De ønsket ikke å kjøpe kassen(e). Tilbudet ble kansellert."
 
-#: cogs/crates/__init__.py:372
+#: cogs/crates/__init__.py:448
 msgid "They couldn't make up their mind. Offer cancelled."
 msgstr "De klarte ikke å bestemme seg. Tilbudet ble kansellert."
 
-#: cogs/crates/__init__.py:378
+#: cogs/crates/__init__.py:454
 #, python-brace-format
 msgid "{buyer}, you're too poor to buy the crate(s)!"
 msgstr "{buyer}, du er for fattig til å kjøpe kassen(e)!"
 
-#: cogs/crates/__init__.py:389
+#: cogs/crates/__init__.py:465
 msgid "The seller traded/opened the crate(s) in the meantime. Offer cancelled."
 msgstr ""
 "Selgeren handlet/åpnet kassen(e) i mellomtiden. Tilbudet ble kansellert."
 
-#: cogs/crates/__init__.py:434
+#: cogs/crates/__init__.py:510
 #, python-brace-format
 msgid ""
 "{buyer}, you've successfully bought **{quantity} {emoji} {rarity}** crate(s) "
@@ -1451,7 +1450,7 @@ msgstr "Jeg kunne ikke sende en DM til {user}! Velger tilfeldig handling..."
 msgid "attempts to kill {user} but fails"
 msgstr "forsøker å drepe {user}, men mislykkes"
 
-#: cogs/hungergames/__init__.py:194 cogs/game_master/__init__.py:88
+#: cogs/hungergames/__init__.py:194 cogs/game_master/__init__.py:90
 msgid "Done"
 msgstr "Ferdig"
 
@@ -1584,10 +1583,8 @@ msgstr "Brukeren du spesifiserte som parameter har ikke et tegn."
 #: cogs/error_handler/__init__.py:126
 msgid ""
 "You did not enter a valid crate rarity. Possible ones are: common (c), "
-"uncommon (u), rare (r), magic (m) and legendary (l)."
+"uncommon (u), rare (r), magic (m), legendary (l) and mystery (myst)."
 msgstr ""
-"Du oppga ikke en gyldig kasse sjeldenhet. Mulige er: vanlig (c), uvanlig (u)"
-", sjelden (r), magi (m) og legendarisk (l)."
 
 #: cogs/error_handler/__init__.py:133
 msgid "You did not enter a valid coin side. Please use `heads` or `tails`."
@@ -1695,8 +1692,8 @@ msgstr ""
 msgid ""
 "You need to be on an adventure to use this command. Try `{prefix}adventure`!"
 msgstr ""
-"Du må være på ett eventyr for å bruke denne kommandoen. Prøv "
-"`{prefix}adventure`!"
+"Du må være på ett eventyr for å bruke denne kommandoen. Prøv `{prefix}"
+"adventure`!"
 
 #: cogs/error_handler/__init__.py:239
 #, python-brace-format
@@ -1746,8 +1743,8 @@ msgid "There is another raid already ongoing. Try again at a later time."
 msgstr ""
 "Det er et nytt raid som allerede pågår. Prøv igjen på et senere tidspunkt."
 
-#: cogs/error_handler/__init__.py:288 cogs/alliance/__init__.py:520
-#: cogs/alliance/__init__.py:554
+#: cogs/error_handler/__init__.py:288 cogs/alliance/__init__.py:522
+#: cogs/alliance/__init__.py:556
 msgid "Your alliance does not own a city."
 msgstr "Alliansen din eier ikke en by."
 
@@ -1915,8 +1912,8 @@ msgstr ""
 "\n"
 "            Etter ti dager vil belønningene dine tilbakestilles. Dag 11 og "
 "dag 1 har samme belønning.\n"
-"            Belønningene vil enten være penger (2/3 sjanse) eller kasser (1/"
-"3 sjanse).\n"
+"            Belønningene vil enten være penger (2/3 sjanse) eller kasser "
+"(1/3 sjanse).\n"
 "\n"
 "            De mulige belønningene er:\n"
 "\n"
@@ -2078,8 +2075,8 @@ msgstr ""
 "Denne botten har sin egen patreon side.\n"
 "\n"
 "**Hvorfor bør jeg donere?**\n"
-"Denne botten er for øyeblikket på {guild_count} servere, og den vokser raskt."
-"\n"
+"Denne botten er for øyeblikket på {guild_count} servere, og den vokser "
+"raskt.\n"
 "Å være vert for denne botten for alle brukere er ikke lett og koster mye "
 "penger.\n"
 "Hvis du vil fortsette å bruke botten eller bare hjelpe oss, vennligst doner "
@@ -2117,9 +2114,9 @@ msgid ""
 msgstr ""
 "Inviter botten til serveren din.\n"
 "\n"
-"            Bruk denne [backup-lenken](https://discord.com/oauth2/"
-"authorize?client_id=424606447867789312&scope=bot&permissions=8) i tilfelle "
-"det ovennevnte ikke fungerer."
+"            Bruk denne [backup-lenken](https://discord.com/oauth2/authorize?"
+"client_id=424606447867789312&scope=bot&permissions=8) i tilfelle det "
+"ovennevnte ikke fungerer."
 
 #: cogs/miscellaneous/__init__.py:287
 #, python-brace-format
@@ -2447,50 +2444,50 @@ msgstr ""
 "\n"
 "IdleRPG er en global bot, karakterene dine er gyldige overalt"
 
-#: cogs/raid/__init__.py:122
+#: cogs/raid/__init__.py:125
 msgid "Start a Zerekiel raid"
 msgstr "Start et Zerekiel raid"
 
-#: cogs/raid/__init__.py:155 cogs/raid/__init__.py:454
-#: cogs/raid/__init__.py:623 cogs/raid/__init__.py:794
-#: cogs/raid/__init__.py:1024 cogs/raid/__init__.py:1192
-#: cogs/raid/__init__.py:1377 cogs/raid/__init__.py:1601
+#: cogs/raid/__init__.py:158 cogs/raid/__init__.py:458
+#: cogs/raid/__init__.py:627 cogs/raid/__init__.py:798
+#: cogs/raid/__init__.py:1028 cogs/raid/__init__.py:1196
+#: cogs/raid/__init__.py:1381 cogs/raid/__init__.py:1605
 msgid "You joined the raid."
 msgstr "Du ble med på raidet."
 
-#: cogs/raid/__init__.py:446
+#: cogs/raid/__init__.py:450
 msgid "Start a Kvothe raid"
 msgstr "Start et Kvothe raid"
 
-#: cogs/raid/__init__.py:611
+#: cogs/raid/__init__.py:615
 msgid "Start an Eden raid"
 msgstr "Start et Eden raid"
 
-#: cogs/raid/__init__.py:782
+#: cogs/raid/__init__.py:786
 msgid "Start a CHamburr raid"
 msgstr "Start et CHamburr raid"
 
-#: cogs/raid/__init__.py:1017
+#: cogs/raid/__init__.py:1021
 msgid "Starts Lyx' raid"
 msgstr "Starter Lyx' raid"
 
-#: cogs/raid/__init__.py:1183
+#: cogs/raid/__init__.py:1187
 msgid "Start a Monox raid"
 msgstr "Start et Monox raid"
 
-#: cogs/raid/__init__.py:1369
+#: cogs/raid/__init__.py:1373
 msgid "Start a Kirby raid"
 msgstr "Start et Kirby raid"
 
-#: cogs/raid/__init__.py:1589
+#: cogs/raid/__init__.py:1593
 msgid "Start a Jesus raid"
 msgstr "Start et Jesus raid"
 
-#: cogs/raid/__init__.py:1815
+#: cogs/raid/__init__.py:1819
 msgid "Increase your raidstats"
 msgstr "Øk raidstats"
 
-#: cogs/raid/__init__.py:1819
+#: cogs/raid/__init__.py:1823
 msgid ""
 "Upgrade your raid damage or defense multiplier. These will affect your "
 "performance in raids and raidbattles."
@@ -2498,7 +2495,7 @@ msgstr ""
 "Oppgrader raidskade eller forsvarsmultiplikatoren din. Disse vil påvirke "
 "ytelsen din i raid og raidkamper."
 
-#: cogs/raid/__init__.py:1823
+#: cogs/raid/__init__.py:1827
 #, python-brace-format
 msgid ""
 "Use `{prefix}increase damage/defense` to upgrade your raid damage/defense "
@@ -2507,87 +2504,87 @@ msgstr ""
 "Bruk `{prefix}increase damage/defense` for å oppgradere raidskade/"
 "forsvarsmultiplikatoren din med 10 %."
 
-#: cogs/raid/__init__.py:1830
+#: cogs/raid/__init__.py:1834
 msgid "Upgrade your raid damage"
 msgstr "Oppgrader raidskaden din"
 
-#: cogs/raid/__init__.py:1833
+#: cogs/raid/__init__.py:1837
 msgid "Increase your raid damage."
 msgstr "Øk raidskaden."
 
-#: cogs/raid/__init__.py:1839 cogs/raid/__init__.py:1854
+#: cogs/raid/__init__.py:1843 cogs/raid/__init__.py:1858
 #, python-brace-format
 msgid ""
 "Upgrading your weapon attack raid multiplier to {newlvl} costs **${price}**, "
 "you are too poor."
 msgstr ""
-"Å oppgradere multiplikatoren for raid våpenangrep til {newlvl} koster "
-"**${price}**, du er for fattig."
+"Å oppgradere multiplikatoren for raid våpenangrep til {newlvl} koster **"
+"${price}**, du er for fattig."
 
-#: cogs/raid/__init__.py:1845
+#: cogs/raid/__init__.py:1849
 #, python-brace-format
 msgid ""
 "Upgrading your weapon attack raid multiplier to {newlvl} costs **${price}**, "
 "proceed?"
 msgstr ""
-"Å oppgradere multiplikatoren for raid våpenangrep til {newlvl} koster "
-"**${price}**, vil du fortsette?"
+"Å oppgradere multiplikatoren for raid våpenangrep til {newlvl} koster **"
+"${price}**, vil du fortsette?"
 
-#: cogs/raid/__init__.py:1875
+#: cogs/raid/__init__.py:1879
 #, python-brace-format
 msgid ""
 "You upgraded your weapon attack raid multiplier to {newlvl} for **${price}**."
 msgstr ""
-"Du oppgraderte multiplikatoren for raid våpenangrep til {newlvl} for "
-"**${price}**."
+"Du oppgraderte multiplikatoren for raid våpenangrep til {newlvl} for **"
+"${price}**."
 
-#: cogs/raid/__init__.py:1882
+#: cogs/raid/__init__.py:1886
 msgid "Upgrade your raid defense"
 msgstr "Oppgrader raidforsvaret ditt"
 
-#: cogs/raid/__init__.py:1885
+#: cogs/raid/__init__.py:1889
 msgid "Increase your raid defense."
 msgstr "Øk raidforsvaret ditt."
 
-#: cogs/raid/__init__.py:1891 cogs/raid/__init__.py:1906
+#: cogs/raid/__init__.py:1895 cogs/raid/__init__.py:1910
 #, python-brace-format
 msgid ""
 "Upgrading your shield defense raid multiplier to {newlvl} costs **${price}"
 "**, you are too poor."
 msgstr ""
-"Å oppgradere multiplikatoren for raid skjoldforsvar til {newlvl} koster "
-"**${price}**, du er for fattig."
+"Å oppgradere multiplikatoren for raid skjoldforsvar til {newlvl} koster **"
+"${price}**, du er for fattig."
 
-#: cogs/raid/__init__.py:1897
+#: cogs/raid/__init__.py:1901
 #, python-brace-format
 msgid ""
 "Upgrading your shield defense raid multiplier to {newlvl} costs **${price}"
 "**, proceed?"
 msgstr ""
-"Å oppgradere multiplikatoren for raid skjoldforsvar til {newlvl} koster "
-"**${price}**, vil du fortsette?"
+"Å oppgradere multiplikatoren for raid skjoldforsvar til {newlvl} koster **"
+"${price}**, vil du fortsette?"
 
-#: cogs/raid/__init__.py:1927
+#: cogs/raid/__init__.py:1931
 #, python-brace-format
 msgid ""
 "You upgraded your shield defense raid multiplier to {newlvl} for **${price}"
 "**."
 msgstr ""
-"Du oppgraderte multiplikatoren for raid skjoldforsvar til {newlvl} for "
-"**${price}**."
+"Du oppgraderte multiplikatoren for raid skjoldforsvar til {newlvl} for **"
+"${price}**."
 
-#: cogs/raid/__init__.py:1933
+#: cogs/raid/__init__.py:1937
 msgid "View your raid stats"
 msgstr "Se raidstatistikken din"
 
-#: cogs/raid/__init__.py:1937
+#: cogs/raid/__init__.py:1941
 msgid ""
 "View your raidstats. These will affect your performance in raids and "
 "raidbattles."
 msgstr ""
 "Se raidstatene dine. Disse vil påvirke ytelsen din i raid og raidkamper."
 
-#: cogs/raid/__init__.py:1954
+#: cogs/raid/__init__.py:1958
 #, python-brace-format
 msgid ""
 "**{author}'s raid multipliers**\n"
@@ -2598,15 +2595,15 @@ msgstr ""
 "Skademultiplikator: x{atk} (oppgradering: ${atkp})\n"
 "Forsvarsmultiplikator: x{deff} (oppgradering: ${deffp})"
 
-#: cogs/raid/__init__.py:1961
+#: cogs/raid/__init__.py:1965
 msgid "Did somebody say Raid?"
 msgstr "Sa noen Raid?"
 
-#: cogs/raid/__init__.py:1964
+#: cogs/raid/__init__.py:1968
 msgid "Informs you about joining raids."
 msgstr "Informerer deg om å bli med i raid."
 
-#: cogs/raid/__init__.py:1967
+#: cogs/raid/__init__.py:1971
 #, python-brace-format
 msgid ""
 "Did you ever want to join together with other players to defeat the dragon "
@@ -2652,8 +2649,8 @@ msgid ""
 "`#3` Money Booster\t**$1000**\tBoosts adventure money rewards by 25%"
 msgstr ""
 "«#1» Time Booster **$1000** Reduserer eventyrtiden med 50 %\n"
-"`#2` Luck Booster **$500** Øker eventyrlykken (ikke `{prefix}luck`) med 25 %"
-"\n"
+"`#2` Luck Booster **$500** Øker eventyrlykken (ikke `{prefix}luck`) med 25 "
+"%\n"
 "«#3» Money Booster **$1000** Øker belønningene for eventyrpenger med 25 %"
 
 #: cogs/store/__init__.py:58
@@ -2680,8 +2677,8 @@ msgstr ""
 msgid "Please either buy `time`, `luck` or `money`."
 msgstr "Vennligst kjøp enten \"time\", \"luck\" eller \"money\"."
 
-#: cogs/store/__init__.py:73 cogs/gambling/__init__.py:877
-#: cogs/gambling/__init__.py:1002 cogs/gambling/__init__.py:1078
+#: cogs/store/__init__.py:73 cogs/gambling/__init__.py:872
+#: cogs/gambling/__init__.py:997 cogs/gambling/__init__.py:1073
 #: cogs/guild/__init__.py:876
 msgid "You're too poor."
 msgstr "Du er for fattig."
@@ -2712,8 +2709,8 @@ msgid ""
 "\n"
 "            Each booster lasts 24 hours after activation."
 msgstr ""
-"Se dine boostere og statusen til de aktive. Hver av dem har en annen effekt."
-"\n"
+"Se dine boostere og statusen til de aktive. Hver av dem har en annen "
+"effekt.\n"
 "\n"
 "              - Tidsforsterkere halverer eventyrenes tider (må være aktiv "
 "før du starter et eventyr)\n"
@@ -2798,7 +2795,8 @@ msgstr "Denne boosteren er allerede aktivert. Vil du oppdatere den likevel?"
 #, python-brace-format
 msgid ""
 "Successfully activated a **{booster} booster** for the next **24 hours**!"
-msgstr "Vellykket aktivert en **{booster} booster** for de neste **24 timene**!"
+msgstr ""
+"Vellykket aktivert en **{booster} booster** for de neste **24 timene**!"
 
 #: cogs/store/__init__.py:213
 msgid "This will overwrite all active boosters and refresh them. Are you sure?"
@@ -2897,8 +2895,8 @@ msgid ""
 msgstr ""
 "`<thing_to_ban>` – En discord-bruker, deres bruker-ID eller en server-ID\n"
 "\n"
-"            Forbyr en bruker/server fra å bruke kommandoen `{prefix}helpme`."
-"\n"
+"            Forbyr en bruker/server fra å bruke kommandoen `{prefix}"
+"helpme`.\n"
 "\n"
 "            Bare Support Team medlemmer kan bruke denne kommandoen."
 
@@ -3203,22 +3201,21 @@ msgstr ""
 msgid "Name too long."
 msgstr "Navnet er for langt."
 
-#: cogs/patreon/__init__.py:196 cogs/patreon/__init__.py:241
-#: cogs/trading/__init__.py:490
+#: cogs/patreon/__init__.py:198 cogs/patreon/__init__.py:244
 #, python-brace-format
-msgid "You don't have an item with the ID `{itemid}`."
-msgstr "Du har ikke en gjenstand med IDen `{itemid}`."
+msgid "You don't have an item in your inventory with the ID `{itemid}`."
+msgstr ""
 
-#: cogs/patreon/__init__.py:208
+#: cogs/patreon/__init__.py:209
 #, python-brace-format
 msgid "The item with the ID `{itemid}` is now called `{newname}`."
 msgstr "Gjenstanden med IDen `{itemid}` heter nå `{newname}`."
 
-#: cogs/patreon/__init__.py:215
+#: cogs/patreon/__init__.py:216
 msgid "[bronze] Change an item's type"
 msgstr "[bronze] Endre en gjenstands type"
 
-#: cogs/patreon/__init__.py:219
+#: cogs/patreon/__init__.py:220
 msgid ""
 "`<itemid>` - The ID of the item to change type\n"
 "            `<new_type>` - The type to transform the item into\n"
@@ -3245,16 +3242,16 @@ msgstr ""
 "            Bare patreon kunder i bronze (eller høyere) kan bruke denne "
 "kommandoen."
 
-#: cogs/patreon/__init__.py:231
+#: cogs/patreon/__init__.py:232
 msgid "Invalid type."
 msgstr "Ugyldig type."
 
-#: cogs/patreon/__init__.py:248
+#: cogs/patreon/__init__.py:250
 #, python-brace-format
 msgid "The item is already a {item_type}."
 msgstr "Gjenstanden er allerede en {item_type}."
 
-#: cogs/patreon/__init__.py:256
+#: cogs/patreon/__init__.py:258
 msgid ""
 "You may not change a two-handed item to a single-handed one and vice-versa "
 "due to weapon damage reasons."
@@ -3262,16 +3259,16 @@ msgstr ""
 "Du kan ikke endre en tohånds gjenstand til en enhånds og omvendt på grunn av "
 "våpenskade."
 
-#: cogs/patreon/__init__.py:277
+#: cogs/patreon/__init__.py:279
 #, python-brace-format
 msgid "The item with the ID `{itemid}` is now a `{itemtype}`."
 msgstr "Gjenstanden med IDen `{itemid}` er nå en `{itemtype}`."
 
-#: cogs/patreon/__init__.py:285
+#: cogs/patreon/__init__.py:287
 msgid "[gold] Receive a daily booster"
 msgstr "[gold] Motta en daglig booster"
 
-#: cogs/patreon/__init__.py:289
+#: cogs/patreon/__init__.py:291
 msgid ""
 "Receive a daily booster. The booster can be a time, money or luck booster.\n"
 "\n"
@@ -3282,16 +3279,16 @@ msgstr ""
 "\n"
 "            (Denne kommandoen har en nedkjøling på 24 timer.)"
 
-#: cogs/patreon/__init__.py:299
+#: cogs/patreon/__init__.py:301
 #, python-brace-format
 msgid "You received a daily {type_} booster!"
 msgstr "Du mottok en daglig {type_} booster!"
 
-#: cogs/patreon/__init__.py:302
+#: cogs/patreon/__init__.py:304
 msgid "[basic] Change your profile background"
 msgstr "[basic] Endre profilbakgrunnen din"
 
-#: cogs/patreon/__init__.py:306
+#: cogs/patreon/__init__.py:308
 #, python-brace-format
 msgid ""
 "`<url>` - The image URL to use as the background, may not exceed 60 "
@@ -3314,21 +3311,21 @@ msgstr ""
 "            Endre profilens bakgrunnsbilde. `{prefix}background reset` "
 "setter den til standarden igjen.\n"
 "\n"
-"            Dette bildet bør formateres med kommandoen "
-"`{prefix}makebackground`, men hvis du vil være kreativ og ikke bruke et "
-"overlegg, eller lage ditt eget, er bildedimensjonene 800x650.\n"
+"            Dette bildet bør formateres med kommandoen `{prefix}"
+"makebackground`, men hvis du vil være kreativ og ikke bruke et overlegg, "
+"eller lage ditt eget, er bildedimensjonene 800x650.\n"
 "            Har du problemer med å finne en kort URL? Prøv å følge [denne "
-"opplæringen](https://wiki.idlerpg.xyz/index."
-"php?title=Tutorial:_Short_Image_URLs)!\n"
+"opplæringen](https://wiki.idlerpg.xyz/index.php?title=Tutorial:"
+"_Short_Image_URLs)!\n"
 "\n"
 "            Bare basic tier patreons (eller høyere) kan bruke denne "
 "kommandoen."
 
-#: cogs/patreon/__init__.py:326
+#: cogs/patreon/__init__.py:328
 msgid "That is not a valid premade background."
 msgstr "Det er ikke en gyldig forhåndslaget bakgrunn."
 
-#: cogs/patreon/__init__.py:330 cogs/patreon/__init__.py:367
+#: cogs/patreon/__init__.py:332 cogs/patreon/__init__.py:369
 msgid ""
 "I couldn't read that URL. Does it start with `http://` or `https://` and is "
 "either a png or jpeg?"
@@ -3336,11 +3333,11 @@ msgstr ""
 "Jeg kunne ikke lese den nettadressen. Begynner det med \"http://\" eller "
 "\"https://\", og er det enten en png eller jpeg?"
 
-#: cogs/patreon/__init__.py:343
+#: cogs/patreon/__init__.py:345
 msgid "The URL is too long."
 msgstr "URL en er for lang."
 
-#: cogs/patreon/__init__.py:345
+#: cogs/patreon/__init__.py:347
 #, python-brace-format
 msgid ""
 "Your new profile picture is now:\n"
@@ -3349,15 +3346,15 @@ msgstr ""
 "Ditt nye profilbilde er nå:\n"
 "{url}"
 
-#: cogs/patreon/__init__.py:347
+#: cogs/patreon/__init__.py:349
 msgid "Your profile picture has been reset."
 msgstr "Profilbildet ditt er tilbakestilt."
 
-#: cogs/patreon/__init__.py:350
+#: cogs/patreon/__init__.py:352
 msgid "[basic] Formats an image for background compatability"
 msgstr "[basic] Formaterer et bilde for bakgrunnskompatibilitet"
 
-#: cogs/patreon/__init__.py:354
+#: cogs/patreon/__init__.py:356
 #, python-brace-format
 msgid ""
 "`<url>` - The image URL to format\n"
@@ -3377,35 +3374,35 @@ msgstr ""
 "\n"
 "            Generer en profilbakgrunn for deg. Dette vil strekke/komprimere "
 "bildet til 800x650 piksler og legge på et overlegg.\n"
-"            Dette vil returnere en lenke du deretter kan bruke for "
-"`{prefix}background`.\n"
+"            Dette vil returnere en lenke du deretter kan bruke for `{prefix}"
+"background`.\n"
 "\n"
 "            Bare basic tier patreons (eller høyere) kan bruke denne "
 "kommandoen."
 
-#: cogs/patreon/__init__.py:373
+#: cogs/patreon/__init__.py:375
 msgid "Overlay type must be `dark` or `light`."
 msgstr "Overleggstypen må være \"dark\" eller \"light\"."
 
-#: cogs/patreon/__init__.py:388 cogs/profile/__init__.py:263
+#: cogs/patreon/__init__.py:390 cogs/profile/__init__.py:263
 #, python-brace-format
 msgid "There was an error processing your image. Reason: {reason} ({detail})"
 msgstr ""
 "Det oppsto en feil under prosessen av bildet ditt. Årsak: {reason} ({detail})"
 
-#: cogs/patreon/__init__.py:395 cogs/profile/__init__.py:270
+#: cogs/patreon/__init__.py:397 cogs/profile/__init__.py:270
 msgid "Unexpected internal error when generating image."
 msgstr "Uventet intern feil under generering av bilde."
 
-#: cogs/patreon/__init__.py:398 cogs/profile/__init__.py:273
+#: cogs/patreon/__init__.py:400 cogs/profile/__init__.py:273
 msgid "Unexpected error when generating image."
 msgstr "Uventet feil under generering av bilde."
 
-#: cogs/patreon/__init__.py:403
+#: cogs/patreon/__init__.py:405
 msgid "Error when uploading to Imgur."
 msgstr "Feil ved opplasting til Imgur."
 
-#: cogs/patreon/__init__.py:406
+#: cogs/patreon/__init__.py:408
 #, python-brace-format
 msgid ""
 "Imgur Link for `{prefix}background`\n"
@@ -3414,11 +3411,11 @@ msgstr ""
 "Imgur linken for `{prefix}background`\n"
 "{link}"
 
-#: cogs/patreon/__init__.py:413
+#: cogs/patreon/__init__.py:415
 msgid "[basic] Upgrade your guild"
 msgstr "[basic] Oppgrader klanen ditt"
 
-#: cogs/patreon/__init__.py:417
+#: cogs/patreon/__init__.py:419
 msgid ""
 "Update your guild member limit and bank size according to your donation "
 "tier.\n"
@@ -3445,15 +3442,15 @@ msgstr ""
 "            Bare basic tier patreons (eller høyere) kan bruke denne "
 "kommandoen."
 
-#: cogs/patreon/__init__.py:451
+#: cogs/patreon/__init__.py:453
 msgid "Your guild was updated."
 msgstr "klanen din ble oppdatert."
 
-#: cogs/patreon/__init__.py:454
+#: cogs/patreon/__init__.py:456
 msgid "Change your background"
 msgstr "Endre bakgrunnen din"
 
-#: cogs/patreon/__init__.py:458
+#: cogs/patreon/__init__.py:460
 msgid ""
 "`<number>` - The number of the eventbackground to use\n"
 "\n"
@@ -3465,29 +3462,29 @@ msgstr ""
 "            Oppdater bakgrunnen din til en fra en event. Du kan få "
 "eventbakgrunner fra spesielle arrangementer, for eksempel påske eller jul."
 
-#: cogs/patreon/__init__.py:465 cogs/patreon/__init__.py:495
+#: cogs/patreon/__init__.py:467 cogs/patreon/__init__.py:497
 msgid ""
 "You do not have an eventbackground. They can be acquired on seasonal events."
 msgstr ""
 "Du har ikke en eventbakgrunn. De kan låses opp på sesongbaserte "
 "arrangementer."
 
-#: cogs/patreon/__init__.py:474
+#: cogs/patreon/__init__.py:476
 #, python-brace-format
 msgid ""
 "The background number {number} is not valid, you only have {total} available."
 msgstr ""
 "Bakgrunnsnummeret {number} er ikke gyldig, du har bare {total} tilgjengelig."
 
-#: cogs/patreon/__init__.py:481
+#: cogs/patreon/__init__.py:483
 msgid "Background updated!"
 msgstr "Bakgrunnen er oppdatert!"
 
-#: cogs/patreon/__init__.py:484
+#: cogs/patreon/__init__.py:486
 msgid "View your eventbackgrounds"
 msgstr "Se eventbakgrunnene dine"
 
-#: cogs/patreon/__init__.py:488
+#: cogs/patreon/__init__.py:490
 #, python-brace-format
 msgid ""
 "View a list of all backgrounds you have acquired from events. You can get "
@@ -3502,12 +3499,12 @@ msgstr ""
 "            Du kan bruke en av disse bakgrunnene på profilen din ved å bruke "
 "`{prefix}eventbackground`."
 
-#: cogs/patreon/__init__.py:501
+#: cogs/patreon/__init__.py:503
 #, python-brace-format
 msgid "Background {number}/{total}"
 msgstr "Bakgrunn {number}/{total}"
 
-#: cogs/patreon/__init__.py:507
+#: cogs/patreon/__init__.py:509
 #, python-brace-format
 msgid "Use {prefix}eventbackground {number} to use this background"
 msgstr "Bruk {prefix}eventbackground {number} for å bruke denne bakgrunnen"
@@ -3678,7 +3675,8 @@ msgstr ""
 
 #: cogs/classes/__init__.py:173
 msgid "This **costs nothing**, but changing it later will cost **$5000**."
-msgstr "Dette **koster ingenting**, men å endre det senere vil koste **$5000**."
+msgstr ""
+"Dette **koster ingenting**, men å endre det senere vil koste **$5000**."
 
 #: cogs/classes/__init__.py:176
 msgid "This will cost **$5000**."
@@ -4157,9 +4155,9 @@ msgstr ""
 "            Oppdaterer bildet som vises i `{prefix}pet`.\n"
 "\n"
 "            Har du problemer med å finne en kort bildelenke? Følg [denne "
-"veiledningen](https://wiki.idlerpg.xyz/index."
-"php?title=Tutorial:_Short_Image_URLs) eller bare legg ved bildet du vil "
-"bruke (png, jpg, webp og gif støttes)!\n"
+"veiledningen](https://wiki.idlerpg.xyz/index.php?title=Tutorial:"
+"_Short_Image_URLs) eller bare legg ved bildet du vil bruke (png, jpg, webp "
+"og gif støttes)!\n"
 "\n"
 "            Bare skogvoktere kan bruke denne kommandoen."
 
@@ -4236,7 +4234,8 @@ msgstr ""
 
 #: cogs/classes/__init__.py:712
 msgid "Your pet is not happy enough to hunt an item. Try making it joyful!"
-msgstr "Kjæledyret ditt er ikke glad nok til å jakte. Prøv å gjøre den gladere!"
+msgstr ""
+"Kjæledyret ditt er ikke glad nok til å jakte. Prøv å gjøre den gladere!"
 
 #: cogs/classes/__init__.py:723
 msgid "Your pet found an item!"
@@ -4297,8 +4296,8 @@ msgstr "Fienden traff deg for {dmg} skade"
 msgid "You hit the enemy for {dmg} damage"
 msgstr "Du traff fienden for {dmg} skade"
 
-#: cogs/adventure/__init__.py:309 cogs/gambling/__init__.py:1127
-#: cogs/gambling/__init__.py:1175
+#: cogs/adventure/__init__.py:309 cogs/gambling/__init__.py:1122
+#: cogs/gambling/__init__.py:1170
 msgid "Timed out."
 msgstr "Tidsavbrudd."
 
@@ -4389,8 +4388,8 @@ msgstr ""
 "            Send karakteren din på et eventyr med vanskelighetsgraden "
 "`<adventure_number>`.\n"
 "            Eventyret vil ta `<adventure_number>` timer hvis ingen "
-"tidsforsterker brukes, og halvparten så lenge hvis en tidsforsterker brukes."
-"\n"
+"tidsforsterker brukes, og halvparten så lenge hvis en tidsforsterker "
+"brukes.\n"
 "\n"
 "            Hvis du er i en allianse som eier en by med eventyrbygninger, "
 "vil eventyrtiden din reduseres med eventyrbyggnivået i %.\n"
@@ -4457,8 +4456,8 @@ msgstr ""
 "            Du styrer karakteren din med pilknappene under meldingen.\n"
 "\n"
 "            Du har en fast mengde HP basert på gjenstandene du bruker. "
-"Eventyret slutter når du finner utgangen eller når HP'en din faller til null."
-"\n"
+"Eventyret slutter når du finner utgangen eller når HP'en din faller til "
+"null.\n"
 "            Du kan miste HP ved å bli skadet av feller eller fiender.\n"
 "\n"
 "            Labyrinten inneholder trygge rom og skatter, men også feller og "
@@ -4471,8 +4470,8 @@ msgstr ""
 "din totale HP.\n"
 "            Fiendens skade er basert på din egen skade. Under fiendtlige "
 "kamper kan du angripe (⚔️), forsvare (🛡️) eller gjenopprette HP (❤️)\n"
-"            Skattekister kan ha gull opptil 25 ganger ditt angrep + forsvar."
-"\n"
+"            Skattekister kan ha gull opptil 25 ganger ditt angrep + "
+"forsvar.\n"
 "\n"
 "            Hvis du når slutten, vil du motta en spesiell skatt med gull "
 "opptil 100 ganger ditt angrep + forsvar.\n"
@@ -4538,8 +4537,8 @@ msgstr ""
 "eventyrtallet ganger 60, XP opptil 500 ganger eventyrnummeret og enten loot "
 "eller en gjenstand.\n"
 "            Sjansen for loot er avhengig av eventyrnummeret og om du bruker "
-"Ritualist-klassen, [sjekk wikien vår](https://wiki.idlerpg.xyz/index."
-"php?title=Loot) for de nøyaktige sjansene.\n"
+"Ritualist-klassen, [sjekk wikien vår](https://wiki.idlerpg.xyz/index.php?"
+"title=Loot) for de nøyaktige sjansene.\n"
 "\n"
 "            Gud gitt flaks påvirker mengden gull og utstyrets skade/forsvar "
 "og verdi.\n"
@@ -4547,8 +4546,8 @@ msgstr ""
 "            Hvis du er i en klan, vil dens klanbank motta 10 % av mengden "
 "gull ekstra.\n"
 "            Hvis du er gift, vil partneren din motta en del av gullet ditt i "
-"tillegg, [sjekk wikien](https://wiki.idlerpg.xyz/index."
-"php?title=Family#Adventure_Bonus) for den nøyaktige delen."
+"tillegg, [sjekk wikien](https://wiki.idlerpg.xyz/index.php?"
+"title=Family#Adventure_Bonus) for den nøyaktige delen."
 
 #: cogs/adventure/__init__.py:603
 msgid "Adventure Status"
@@ -4654,8 +4653,8 @@ msgid ""
 "Out of **{total}** adventures, you died **{deaths}** times and survived "
 "**{completed}** times, which is a success rate of **{rate}%**."
 msgstr ""
-"Av **{total}** eventyr døde du **{deaths}** ganger og overlevde "
-"**{completed}** ganger, som er en suksessrate på **{rate}%**."
+"Av **{total}** eventyr døde du **{deaths}** ganger og overlevde **{completed}"
+"** ganger, som er en suksessrate på **{rate}%**."
 
 #: cogs/shard_communication/__init__.py:386
 msgid "Lists all your cooldowns"
@@ -4670,12 +4669,12 @@ msgid "You don't have any active cooldown at the moment."
 msgstr "Du har ingen aktive nedkjølinger for øyeblikket."
 
 #: cogs/shard_communication/__init__.py:399 cogs/guild/__init__.py:1543
-#: cogs/alliance/__init__.py:942
+#: cogs/alliance/__init__.py:1005
 msgid "Commands on cooldown:"
 msgstr "Kommandoer med nedkjøling:"
 
 #: cogs/shard_communication/__init__.py:404 cogs/guild/__init__.py:1548
-#: cogs/alliance/__init__.py:947
+#: cogs/alliance/__init__.py:1010
 #, python-brace-format
 msgid "{cmd} is on cooldown and will be available after {time}"
 msgstr "{cmd} er på nedkjøling og vil være tilgjengelig om {time}"
@@ -4697,7 +4696,7 @@ msgstr "Viser alle klynger og deres nåværende status."
 msgid "Launcher is dead, that is really bad."
 msgstr "Launcher er død, det er virkelig ille."
 
-#: cogs/gambling/__init__.py:348
+#: cogs/gambling/__init__.py:343
 #, python-brace-format
 msgid ""
 "The dealer has a {pretty_dealer} for a total of {dealer}\n"
@@ -4706,7 +4705,7 @@ msgstr ""
 "Dealeren har en {pretty_dealer} for totalt {dealer}\n"
 "Du har en {pretty_player} for totalt {player}"
 
-#: cogs/gambling/__init__.py:381
+#: cogs/gambling/__init__.py:376
 #, python-brace-format
 msgid ""
 "The dealer has a {pretty_dealer} for a total of {dealer}\n"
@@ -4717,70 +4716,70 @@ msgstr ""
 "Du har en {pretty_player} for totalt {player}\n"
 "{additional}"
 
-#: cogs/gambling/__init__.py:430
+#: cogs/gambling/__init__.py:425
 msgid "The dealer got a blackjack. You had insurance and lost nothing."
 msgstr "Dealeren fikk blackjack. Du hadde forsikring og mistet ingenting."
 
-#: cogs/gambling/__init__.py:438
+#: cogs/gambling/__init__.py:433
 #, python-brace-format
 msgid "The dealer got a blackjack. You lost **${money}**."
 msgstr "Dealeren fikk blackjack. Du tapte **${money}**."
 
-#: cogs/gambling/__init__.py:445
+#: cogs/gambling/__init__.py:440
 #, python-brace-format
 msgid "You got a blackjack and won **${money}**!"
 msgstr "Du fikk blackjack og vant **${money}**!"
 
-#: cogs/gambling/__init__.py:474
+#: cogs/gambling/__init__.py:469
 msgid "Blackjack timed out... You lost your money!"
 msgstr "Blackjack timet ut... Du tapte pengene dine!"
 
-#: cogs/gambling/__init__.py:495
+#: cogs/gambling/__init__.py:490
 msgid "Split current hand and switched to the second side."
 msgstr "Delte gjeldende hånd og byttet til den andre siden."
 
-#: cogs/gambling/__init__.py:499
+#: cogs/gambling/__init__.py:494
 msgid "Switched to the other side."
 msgstr "Byttet til den andre siden."
 
-#: cogs/gambling/__init__.py:504
+#: cogs/gambling/__init__.py:499
 msgid "Invalid. You're too poor and lose the match."
 msgstr "Ugyldig. Du er for fattig og taper kampen."
 
-#: cogs/gambling/__init__.py:529
+#: cogs/gambling/__init__.py:524
 msgid "You doubled your bid in exchange for only receiving one more card."
 msgstr "Du doblet budet ditt i bytte mot bare å motta ett kort til."
 
-#: cogs/gambling/__init__.py:538
+#: cogs/gambling/__init__.py:533
 #, python-brace-format
 msgid "You busted and lost **${money}**."
 msgstr "Du busta og mistet **${money}**."
 
-#: cogs/gambling/__init__.py:545
+#: cogs/gambling/__init__.py:540
 #, python-brace-format
 msgid "Dealer busts and you won **${money}**!"
 msgstr "Dealeren går i stå og du vant **${money}**!"
 
-#: cogs/gambling/__init__.py:555
+#: cogs/gambling/__init__.py:550
 #, python-brace-format
 msgid "You have a higher score than the dealer and have won **${money}**"
 msgstr "Du har en høyere tall enn dealeren og har vunnet **${money}**"
 
-#: cogs/gambling/__init__.py:564
+#: cogs/gambling/__init__.py:559
 #, python-brace-format
 msgid "Dealer has a higher score than you and wins. You lost **${money}**."
 msgstr "Dealeren har høyere tall enn deg og vinner. Du tapte **${money}**."
 
-#: cogs/gambling/__init__.py:572
+#: cogs/gambling/__init__.py:567
 #, python-brace-format
 msgid "It's a tie, you got your **${money}** back."
 msgstr "Det er uavgjort, du fikk **${money}** tilbake."
 
-#: cogs/gambling/__init__.py:586
+#: cogs/gambling/__init__.py:581
 msgid "Draw a card."
 msgstr "Trekk et kort."
 
-#: cogs/gambling/__init__.py:592
+#: cogs/gambling/__init__.py:587
 msgid ""
 "`[enemy]` - A user who has a profile; defaults to None\n"
 "            `[money]` - The bet money. A whole number that can be 0 or "
@@ -4806,15 +4805,15 @@ msgstr ""
 "utføres uten at fienden er nevnt.\n"
 "            (Denne kommandoen har en nedkjøling på 15 sekunder.)"
 
-#: cogs/gambling/__init__.py:607
+#: cogs/gambling/__init__.py:602
 msgid "Please choose someone else."
 msgstr "Vennligst velg noen andre."
 
-#: cogs/gambling/__init__.py:609
+#: cogs/gambling/__init__.py:604
 msgid "You should choose a human to play with you."
 msgstr "Du bør velge et menneske til å spille med deg."
 
-#: cogs/gambling/__init__.py:631
+#: cogs/gambling/__init__.py:626
 #, python-brace-format
 msgid ""
 "{author} challenges {enemy} to a game of Draw for **${money}**. Do you "
@@ -4822,13 +4821,13 @@ msgid ""
 msgstr ""
 "{author} utfordrer {enemy} til et spill av Draw for **${money}**. Godtar du?"
 
-#: cogs/gambling/__init__.py:644
+#: cogs/gambling/__init__.py:639
 #, python-brace-format
 msgid ""
 "They declined. They don't want to play a game of Draw with you {author}."
 msgstr "De takket nei. De vil ikke spille et spill av Draw med deg {author}."
 
-#: cogs/gambling/__init__.py:652
+#: cogs/gambling/__init__.py:647
 #, python-brace-format
 msgid ""
 "They didn't choose anything. It seems they're not interested to play a game "
@@ -4837,12 +4836,12 @@ msgstr ""
 "De valgte ikke noe. Det ser ut til at de ikke er interessert i å spille Draw "
 "med deg {author}."
 
-#: cogs/gambling/__init__.py:660 cogs/gambling/__init__.py:823
+#: cogs/gambling/__init__.py:655 cogs/gambling/__init__.py:818
 #, python-brace-format
 msgid "{enemy} You don't have enough money to play."
 msgstr "{enemy} Du har ikke nok penger til å spille."
 
-#: cogs/gambling/__init__.py:687
+#: cogs/gambling/__init__.py:682
 msgid ""
 "Cards ran out. This is a very rare issue that could mean image files for "
 "cards have become insufficient. Please report this issue to the bot "
@@ -4852,31 +4851,31 @@ msgstr ""
 "bildefiler for kort har blitt utilstrekkelige. Vennligst rapporter dette "
 "problemet til bot-develeporene."
 
-#: cogs/gambling/__init__.py:709
+#: cogs/gambling/__init__.py:704
 #, python-brace-format
 msgid "Nobody won. {author} and {enemy} tied."
 msgstr "Ingen vant. {author} og {enemy} gjorde det uavgjort."
 
-#: cogs/gambling/__init__.py:731
+#: cogs/gambling/__init__.py:726
 #, python-brace-format
 msgid "{winner} won the Draw vs {loser}! Congratulations!"
 msgstr "{winner} vant et spill av Draw mot {loser}! Gratulerer!"
 
-#: cogs/gambling/__init__.py:736
+#: cogs/gambling/__init__.py:731
 #, python-brace-format
 msgid "{author}, while playing against {enemy}, you drew:"
 msgstr "{author}, mens du spilte mot {enemy}, trakk du:"
 
-#: cogs/gambling/__init__.py:744
+#: cogs/gambling/__init__.py:739
 #, python-brace-format
 msgid "{enemy}, while playing against {author}, you drew:"
 msgstr "{enemy}, mens du spilte mot {author}, trakk du:"
 
-#: cogs/gambling/__init__.py:758
+#: cogs/gambling/__init__.py:753
 msgid "Break the tie?"
 msgstr "Bryt uavgjørelsen?"
 
-#: cogs/gambling/__init__.py:760
+#: cogs/gambling/__init__.py:755
 #, python-brace-format
 msgid ""
 "{author}, {enemy} You tied. Do you want to break the tie by playing again "
@@ -4885,25 +4884,25 @@ msgstr ""
 "{author}, {enemy} dere gjorde det uavgjort. Vil du bryte uavgjørelsen ved å "
 "spille igjen for **${money}**?"
 
-#: cogs/gambling/__init__.py:800
+#: cogs/gambling/__init__.py:795
 msgid "One of you or both didn't react on time."
 msgstr "En av dere eller begge reagerte ikke i tide."
 
-#: cogs/gambling/__init__.py:806
+#: cogs/gambling/__init__.py:801
 #, python-brace-format
 msgid "{user} declined to break the tie."
 msgstr "{user} nektet å bryte uavgjort."
 
-#: cogs/gambling/__init__.py:817
+#: cogs/gambling/__init__.py:812
 #, python-brace-format
 msgid "{author} You don't have enough money to play."
 msgstr "{author} Du har ikke nok penger til å spille."
 
-#: cogs/gambling/__init__.py:841
+#: cogs/gambling/__init__.py:836
 msgid "Play a game of French Roulette"
 msgstr "Spill en omgang fransk rulett"
 
-#: cogs/gambling/__init__.py:846
+#: cogs/gambling/__init__.py:841
 msgid ""
 "`<money>` - A whole number from 0 to 100\n"
 "`<bid>` - What to bid on, see below for details\n"
@@ -4958,8 +4957,8 @@ msgstr ""
 "    - dernier (25–36) (2:1 utbetaling)\n"
 "\n"
 "Kompliserte spill:\n"
-"    - colonne (34/35/36) (alle tall på rad på innsatsbordet, enten 1, 4, "
-"..., 34 eller 2, 5, ..., 35 eller 3, 6, ... 36) (2:1 utbetaling)\n"
+"    - colonne (34/35/36) (alle tall på rad på innsatsbordet, enten 1, "
+"4, ..., 34 eller 2, 5, ..., 35 eller 3, 6, ... 36) (2:1 utbetaling)\n"
 "    - transversale (vertikal lav)-(vertikal høy) Dette inkluderer enkel og "
 "pleine (en vertikal rad på spillebordet, f.eks. 19-21. kan også være to "
 "rader, f.eks. 4-9) (11:1 utbetaling for pleine, 5 :1 for enkelt)\n"
@@ -4977,25 +4976,25 @@ msgstr ""
 "vil skje. Spill på egen risiko.\n"
 "(Denne kommandoen har en nedkjøling på 15 sekunder.)"
 
-#: cogs/gambling/__init__.py:883
+#: cogs/gambling/__init__.py:878
 msgid ""
 "Your bid input was invalid. Try the help on this command to view examples."
 msgstr ""
 "Budet ditt var ugyldig. Prøv hjelpen på denne kommandoen for å se eksempler."
 
-#: cogs/gambling/__init__.py:889
+#: cogs/gambling/__init__.py:884
 msgid "Show the roulette table"
 msgstr "Vis rulettbordet"
 
-#: cogs/gambling/__init__.py:892
+#: cogs/gambling/__init__.py:887
 msgid "Sends a picture of a French Roulette table."
 msgstr "Sender et bilde av et fransk rulettbord."
 
-#: cogs/gambling/__init__.py:897
+#: cogs/gambling/__init__.py:892
 msgid "Toss a coin"
 msgstr "Kast en mynt"
 
-#: cogs/gambling/__init__.py:907
+#: cogs/gambling/__init__.py:902
 msgid ""
 "`[side]` - The coin side to bet on, can be heads or tails; defaults to "
 "heads\n"
@@ -5017,21 +5016,21 @@ msgstr ""
 "kontanter. Hvis det er den andre siden, taper du det beløpet.\n"
 "            (Denne kommandoen har en nedkjøling på 5 sekunder.)"
 
-#: cogs/gambling/__init__.py:940
+#: cogs/gambling/__init__.py:935
 #, python-brace-format
 msgid "{result[1]} It's **{result[0]}**! You won **${amount}**!"
 msgstr "{result[1]} Det er **{result[0]}**! Du vant **${amount}**!"
 
-#: cogs/gambling/__init__.py:961
+#: cogs/gambling/__init__.py:956
 #, python-brace-format
 msgid "{result[1]} It's **{result[0]}**! You lost **${amount}**!"
 msgstr "{result[1]} Det er **{result[0]}**! Du mistet **${amount}**!"
 
-#: cogs/gambling/__init__.py:968
+#: cogs/gambling/__init__.py:963
 msgid "Bet on a specific outcome of an n-sided dice."
 msgstr "Sats på et spesifikt utfall av en n-sidet terning."
 
-#: cogs/gambling/__init__.py:978
+#: cogs/gambling/__init__.py:973
 #, python-brace-format
 msgid ""
 "`[maximum]` - The amount of sides the dice will have, must be greater than "
@@ -5072,34 +5071,34 @@ msgstr ""
 "\n"
 "            (Denne kommandoen har en nedkjøling på 5 sekunder.)"
 
-#: cogs/gambling/__init__.py:995
+#: cogs/gambling/__init__.py:990
 #, python-brace-format
 msgid "Invalid Tip. Must be in the Range of `1` to `{maximum}`."
 msgstr "Ugyldig tips. Må være i området `1` til «{maximum}»."
 
-#: cogs/gambling/__init__.py:1000
+#: cogs/gambling/__init__.py:995
 msgid "Spend it in a better way. C'mon!"
 msgstr "Bruk det på en bedre måte. Kom igjen!"
 
-#: cogs/gambling/__init__.py:1022
+#: cogs/gambling/__init__.py:1017
 #, python-brace-format
 msgid ""
 "You won **${money}**! The random number was `{num}`, you tipped `{tip}`."
 msgstr ""
 "Du vant **${money}**! Det tilfeldige tallet var `{num}`, du tippet `{tip}`."
 
-#: cogs/gambling/__init__.py:1049
+#: cogs/gambling/__init__.py:1044
 #, python-brace-format
 msgid ""
 "You lost **${money}**! The random number was `{num}`, you tipped `{tip}`."
 msgstr ""
 "Du tapte **${money}**! Det tilfeldige tallet var `{num}`, du tippet `{tip}`."
 
-#: cogs/gambling/__init__.py:1056
+#: cogs/gambling/__init__.py:1051
 msgid "Play blackjack against the bot."
 msgstr "Spill blackjack mot botten."
 
-#: cogs/gambling/__init__.py:1060
+#: cogs/gambling/__init__.py:1055
 msgid ""
 "`[amount]` - The amount of money you bet, must be between 0 and 1000; "
 "defaults to 0\n"
@@ -5148,11 +5147,11 @@ msgstr ""
 "\n"
 "            (Denne kommandoen har en nedkjøling på 5 sekunder.)"
 
-#: cogs/gambling/__init__.py:1096
+#: cogs/gambling/__init__.py:1091
 msgid "Play double-or-steal"
 msgstr "Spill dobbel eller stjel"
 
-#: cogs/gambling/__init__.py:1100
+#: cogs/gambling/__init__.py:1095
 msgid ""
 "`[user]` - A discord user with a character; defaults to anyone\n"
 "\n"
@@ -5168,44 +5167,44 @@ msgstr ""
 "            Hver runde kan en spiller doble pengene spilt for, eller stjele, "
 "fjerner pengene spilt for fra den andre spilleren og gi den til den første."
 
-#: cogs/gambling/__init__.py:1107
+#: cogs/gambling/__init__.py:1102
 #, python-brace-format
 msgid "React with 💰 to play double-or-steal with {user}!"
 msgstr "Reager med 💰 for å spille dobbel eller stjel med {user}!"
 
-#: cogs/gambling/__init__.py:1130
+#: cogs/gambling/__init__.py:1125
 #, python-brace-format
 msgid "{user} has no character."
 msgstr "{user} har ikke en karakter."
 
-#: cogs/gambling/__init__.py:1137 cogs/gambling/__init__.py:1205
+#: cogs/gambling/__init__.py:1132 cogs/gambling/__init__.py:1200
 #, python-brace-format
 msgid "{user} is too poor to double."
 msgstr "{user} er for fattig til å doble."
 
-#: cogs/gambling/__init__.py:1155
+#: cogs/gambling/__init__.py:1150
 #, python-brace-format
 msgid "Double or steal ${money}?"
 msgstr "Doble eller stjel ${money}?"
 
-#: cogs/gambling/__init__.py:1156
+#: cogs/gambling/__init__.py:1151
 msgid "Select an action"
 msgstr "Velg en handling"
 
-#: cogs/gambling/__init__.py:1157
+#: cogs/gambling/__init__.py:1152
 msgid "Double"
 msgstr "Doble"
 
-#: cogs/gambling/__init__.py:1157
+#: cogs/gambling/__init__.py:1152
 msgid "Steal"
 msgstr "Stjel"
 
-#: cogs/gambling/__init__.py:1193
+#: cogs/gambling/__init__.py:1188
 #, python-brace-format
 msgid "{user} stole **${money}**."
 msgstr "{user} stjal **${money}**."
 
-#: cogs/gambling/__init__.py:1213
+#: cogs/gambling/__init__.py:1208
 #, python-brace-format
 msgid "{user} doubled to **${money}**."
 msgstr "{user} doblet til **${money}**."
@@ -5316,8 +5315,8 @@ msgid ""
 msgstr ""
 "`<gjenstandID>` – ID-en til gjenstanden som skal kjøpes\n"
 "\n"
-"            Kjøp en gjenstand fra det globale markedet. Skatt for kjøp er 5%."
-"\n"
+"            Kjøp en gjenstand fra det globale markedet. Skatt for kjøp er "
+"5%.\n"
 "\n"
 "            Å kjøpe egne gjenstanden er ikke mulig. Du finner gjenstandenes "
 "ID i `{prefix}shop`."
@@ -5513,6 +5512,11 @@ msgstr ""
 msgid "You may not offer items to yourself."
 msgstr "Du kan ikke tilby gjenstander til deg selv."
 
+#: cogs/trading/__init__.py:490
+#, python-brace-format
+msgid "You don't have an item with the ID `{itemid}`."
+msgstr "Du har ikke en gjenstand med IDen `{itemid}`."
+
 #: cogs/trading/__init__.py:500
 #, python-brace-format
 msgid "Are you sure you want to sell your equipped {item}?"
@@ -5608,7 +5612,7 @@ msgid ""
 msgstr ""
 "Du mottok **${money}** når du solgte gjenstand(er) `{itemids}`. {additional}"
 
-#: cogs/trading/__init__.py:660 cogs/profile/__init__.py:712
+#: cogs/trading/__init__.py:660 cogs/profile/__init__.py:714
 #, python-brace-format
 msgid "Skipped `{amount}` because they did not belong to you."
 msgstr "Hoppet over `{amount}` fordi de ikke tilhørte deg."
@@ -5732,11 +5736,11 @@ msgstr ""
 "Vellykket kjøpet av **{offer}**. Bruk `{prefix}inventory` for å se din "
 "oppdaterte inventar."
 
-#: cogs/marriage/__init__.py:48
+#: cogs/marriage/__init__.py:47
 msgid "Propose to a player"
 msgstr "Gift deg med en spiller"
 
-#: cogs/marriage/__init__.py:52
+#: cogs/marriage/__init__.py:51
 #, python-brace-format
 msgid ""
 "`<partner>` - A discord User with a character who is not yet married\n"
@@ -5761,28 +5765,28 @@ msgstr ""
 "            Når du er gift, vil partneren din få bonuser fra eventyrene "
 "dine, du kan få barn som kan gjøre forskjellige ting (se `{prefix}help "
 "familyevent`) og øke kjærlighetsresultatet ditt, noe som har en effekt på "
-"[eventyrbonusen](https: //wiki.idlerpg.xyz/index."
-"php?title=Family#Adventure_Bonus).\n"
+"[eventyrbonusen](https: //wiki.idlerpg.xyz/index.php?"
+"title=Family#Adventure_Bonus).\n"
 "            Hvis noen av dere allerede har barn, vil de bringes sammen til "
 "en familie.\n"
 "\n"
 "            Bare spillere som ikke allerede er gift kan bruke denne "
 "kommandoen."
 
-#: cogs/marriage/__init__.py:63
+#: cogs/marriage/__init__.py:62
 msgid "You should have a better friend than only yourself."
 msgstr "Du burde ha en bedre venn enn bare deg selv."
 
-#: cogs/marriage/__init__.py:66
+#: cogs/marriage/__init__.py:65
 msgid "One of you is married."
 msgstr "En av dere er gift."
 
-#: cogs/marriage/__init__.py:69
+#: cogs/marriage/__init__.py:68
 #, python-brace-format
 msgid "{author} has proposed for a marriage!"
 msgstr "{author} har foreslått et ekteskap!"
 
-#: cogs/marriage/__init__.py:73
+#: cogs/marriage/__init__.py:72
 #, python-brace-format
 msgid ""
 "{author} wants to marry you, {partner}! React with :heart: to marry them!"
@@ -5790,24 +5794,25 @@ msgstr ""
 "{author} vil gifte seg med deg, {partner}! Reager med :hjerte: for å gifte "
 "deg med dem!"
 
-#: cogs/marriage/__init__.py:97
+#: cogs/marriage/__init__.py:96
 msgid "They didn't want to marry."
 msgstr "De ville ikke gifte seg."
 
-#: cogs/marriage/__init__.py:108
+#: cogs/marriage/__init__.py:107
 msgid "Either you or your lovee married in the meantime... :broken_heart:"
-msgstr "Enten du eller kjæresten din giftet seg i mellomtiden... :broken_heart:"
+msgstr ""
+"Enten du eller kjæresten din giftet seg i mellomtiden... :broken_heart:"
 
-#: cogs/marriage/__init__.py:135
+#: cogs/marriage/__init__.py:134
 #, python-brace-format
 msgid "Aww! :heart: {author} and {partner} are now married!"
 msgstr "Aww! :heart: {author} og {partner} er nå gift!"
 
-#: cogs/marriage/__init__.py:141
+#: cogs/marriage/__init__.py:140
 msgid "Break up with your partner"
 msgstr "Slå opp med partneren din"
 
-#: cogs/marriage/__init__.py:145
+#: cogs/marriage/__init__.py:144
 #, python-brace-format
 msgid ""
 "Divorce your partner, effectively un-marrying them.\n"
@@ -5825,8 +5830,8 @@ msgstr ""
 "Skilsmisse fra partneren din, og reelt avgifte dem.\n"
 "\n"
 "            Ved skilsmisse vil eventuelle barn du har, bli delt mellom deg "
-"og partneren din. Hver partner vil få barna født med sine "
-"`{prefix}child`-kommandoer.\n"
+"og partneren din. Hver partner vil få barna født med sine `{prefix}child`-"
+"kommandoer.\n"
 "            Du kan gifte deg med en annen person med en gang, hvis du ønsker "
 "det. Skilsmisse har ingen negative konsekvenser for spillingen.\n"
 "\n"
@@ -5834,12 +5839,12 @@ msgstr ""
 "\n"
 "            Bare gifte spillere kan bruke denne kommandoen."
 
-#: cogs/marriage/__init__.py:155 cogs/marriage/__init__.py:193
+#: cogs/marriage/__init__.py:154 cogs/marriage/__init__.py:192
 #: cogs/marriage/__init__.py:348
 msgid "You are not married yet."
 msgstr "Du er ikke gift ennå."
 
-#: cogs/marriage/__init__.py:158
+#: cogs/marriage/__init__.py:157
 msgid ""
 "Are you sure you want to divorce your partner? Some of your children may be "
 "given to your partner and your lovescore will be reset."
@@ -5848,19 +5853,19 @@ msgstr ""
 "bli gitt til partneren din og kjærlighetsresultatet ditt vil bli "
 "tilbakestilt."
 
-#: cogs/marriage/__init__.py:163
+#: cogs/marriage/__init__.py:162
 msgid "Cancelled the divorce. I guess the marriage is safe for now?"
 msgstr "Avbrutt skilsmissen. Jeg antar at ekteskapet er trygt foreløpig?"
 
-#: cogs/marriage/__init__.py:181
+#: cogs/marriage/__init__.py:180
 msgid "You are now divorced."
 msgstr "Du er nå skilt."
 
-#: cogs/marriage/__init__.py:184
+#: cogs/marriage/__init__.py:183
 msgid "Show your partner"
 msgstr "Vis partneren din"
 
-#: cogs/marriage/__init__.py:188
+#: cogs/marriage/__init__.py:187
 msgid ""
 "Show your partner's Discord Tag. This works fine across server.\n"
 "\n"
@@ -5870,16 +5875,16 @@ msgstr ""
 "\n"
 "            Bare gifte spillere kan bruke denne kommandoen."
 
-#: cogs/marriage/__init__.py:196
+#: cogs/marriage/__init__.py:195
 #, python-brace-format
 msgid "You are currently married to **{partner}**."
 msgstr "Du er for tiden gift med **{partner}**."
 
-#: cogs/marriage/__init__.py:200
+#: cogs/marriage/__init__.py:199
 msgid "Show a player's lovescore"
 msgstr "Vis en spillers kjærlighetsscore"
 
-#: cogs/marriage/__init__.py:204
+#: cogs/marriage/__init__.py:203
 msgid ""
 "`[user]` - The user whose lovescore to show; defaults to oneself\n"
 "\n"
@@ -6426,8 +6431,8 @@ msgstr ""
 "\n"
 "            I hver hendelse vil du vite hva som skjedde.\n"
 "\n"
-"            Bare spillere som er gift og har barn kan bruke denne kommandoen."
-"\n"
+"            Bare spillere som er gift og har barn kan bruke denne "
+"kommandoen.\n"
 "            (Denne kommandoen har en nedkjøling på 30 minutter.)"
 
 #: cogs/marriage/__init__.py:625
@@ -6625,8 +6630,8 @@ msgstr "Navnet må kun bestå av 1 til 20 tegn."
 msgid ""
 "{author} Are you sure you want to rename \"{old_name}\" to \"{new_name}\"?"
 msgstr ""
-"{author} Er du sikker på at du vil endre navn på \"{old_name}\" til \""
-"{new_name}\"?"
+"{author} Er du sikker på at du vil endre navn på \"{old_name}\" til "
+"\"{new_name}\"?"
 
 #: cogs/marriage/__init__.py:837
 #, python-brace-format
@@ -6718,11 +6723,11 @@ msgstr ""
 msgid "The Best lovers"
 msgstr "De beste elskere"
 
-#: cogs/server/__init__.py:31
+#: cogs/server/__init__.py:30
 msgid "Displays info on the server"
 msgstr "Viser informasjon på serveren"
 
-#: cogs/server/__init__.py:35
+#: cogs/server/__init__.py:34
 msgid ""
 "Shows information about your server, from its region and membercount to its "
 "creation date and roles."
@@ -6730,27 +6735,27 @@ msgstr ""
 "Viser informasjon om serveren din, fra regionen og antall medlemmer til "
 "opprettelsesdatoen og rollene."
 
-#: cogs/server/__init__.py:37
+#: cogs/server/__init__.py:36
 msgid "Link"
 msgstr "Link"
 
-#: cogs/server/__init__.py:41
+#: cogs/server/__init__.py:40
 msgid "`No icon has been set yet!`"
 msgstr "`Ingen ikon er satt ennå!`"
 
-#: cogs/server/__init__.py:44
+#: cogs/server/__init__.py:43
 msgid "Server Information"
 msgstr "Server Informasjon"
 
-#: cogs/server/__init__.py:45
+#: cogs/server/__init__.py:44
 msgid "Compact information about this server"
 msgstr "Kompakt informasjon om denne serveren"
 
-#: cogs/server/__init__.py:49
+#: cogs/server/__init__.py:48
 msgid "Information"
 msgstr "Informasjon"
 
-#: cogs/server/__init__.py:51
+#: cogs/server/__init__.py:50
 #, python-brace-format
 msgid ""
 "Server: `{name}`\n"
@@ -6771,33 +6776,33 @@ msgstr ""
 "Roller: `{roles}`\n"
 "Server opprettet på: `{created_at}`"
 
-#: cogs/server/__init__.py:71
+#: cogs/server/__init__.py:70
 #, python-brace-format
 msgid "{name}, Shard {num} of {total}"
 msgstr "{name}, Shard {num} av {total}"
 
-#: cogs/server/__init__.py:73
+#: cogs/server/__init__.py:72
 msgid "Cluster"
 msgstr "Klynge"
 
-#: cogs/server/__init__.py:88
+#: cogs/server/__init__.py:87
 msgid "Change the server settings for the bot"
 msgstr "Endre serverinnstillingene for botten"
 
-#: cogs/server/__init__.py:92
+#: cogs/server/__init__.py:91
 msgid "Change the server settings for the bot."
 msgstr "Endre serverinnstillingene for botten."
 
-#: cogs/server/__init__.py:94
+#: cogs/server/__init__.py:93
 #, python-brace-format
 msgid "Please use `{prefix}settings prefix value`"
 msgstr "Bruk `{prefix}settings prefix value`"
 
-#: cogs/server/__init__.py:99
+#: cogs/server/__init__.py:98
 msgid "Change the prefix"
 msgstr "Endre prefikset"
 
-#: cogs/server/__init__.py:103
+#: cogs/server/__init__.py:102
 msgid ""
 "`<prefix>` - The new prefix to use. Use \"\" quotes to surround it if you "
 "want multiple words or trailing spaces.\n"
@@ -6815,36 +6820,36 @@ msgstr ""
 "            Bare brukere med Administrer server tillatelse kan bruke denne "
 "kommandoen."
 
-#: cogs/server/__init__.py:110
+#: cogs/server/__init__.py:109
 msgid "Prefixes may not be longer than 10 characters."
 msgstr "Prefikser kan ikke være lengre enn 10 tegn."
 
-#: cogs/server/__init__.py:133
+#: cogs/server/__init__.py:132
 #, python-brace-format
 msgid "Prefix changed to `{prefix}`."
 msgstr "Prefikset endret til `{prefix}`."
 
-#: cogs/server/__init__.py:136
+#: cogs/server/__init__.py:135
 msgid "Reset the server settings"
 msgstr "Tilbakestill serverinnstillingene"
 
-#: cogs/server/__init__.py:139
+#: cogs/server/__init__.py:138
 msgid "Resets the server settings."
 msgstr "Tilbakestiller serverinnstillingene."
 
-#: cogs/server/__init__.py:142
+#: cogs/server/__init__.py:141
 msgid "Done!"
 msgstr "Ferdig!"
 
-#: cogs/server/__init__.py:145
+#: cogs/server/__init__.py:144
 msgid "View this server's prefix"
 msgstr "Se denne serverens prefiks"
 
-#: cogs/server/__init__.py:148
+#: cogs/server/__init__.py:147
 msgid "View the bot prefix for the server"
 msgstr "Se bot-prefikset for serveren"
 
-#: cogs/server/__init__.py:154
+#: cogs/server/__init__.py:153
 #, python-brace-format
 msgid ""
 "The prefix for server **{server}** is `{serverprefix}`.\n"
@@ -6855,11 +6860,11 @@ msgstr ""
 "\n"
 "`{prefix}settings prefix` endrer det."
 
-#: cogs/server/__init__.py:159
+#: cogs/server/__init__.py:158
 msgid "Show someone's avatar"
 msgstr "Vis noens avatar"
 
-#: cogs/server/__init__.py:163
+#: cogs/server/__init__.py:162
 msgid ""
 "`<target>` - The user whose avatar to show; defaults to oneself\n"
 "\n"
@@ -7081,8 +7086,8 @@ msgstr ""
 "              - $10 000\n"
 "\n"
 "            Har du problemer med å finne en kort bilde-URL? Sjekk [denne "
-"veiledningen](https://wiki.idlerpg.xyz/index."
-"php?title=Tutorial:_Short_Image_URLs)\n"
+"veiledningen](https://wiki.idlerpg.xyz/index.php?title=Tutorial:"
+"_Short_Image_URLs)\n"
 "\n"
 "            Botten vil be om disse separat. Når du skriver inn klanens navn "
 "eller URL, må du ikke inkludere `{prefix}`.\n"
@@ -7179,8 +7184,8 @@ msgid ""
 "\n"
 "            Only guild leaders can use this command."
 msgstr ""
-"`<medlem>` - En discord bruker med en karakter, må være medlem av klanen din."
-"\n"
+"`<medlem>` - En discord bruker med en karakter, må være medlem av klanen "
+"din.\n"
 "\n"
 "            Overfør klanen din til noen andre. Denne personen blir den nye "
 "klans lederen, mens du blir vanlig medlem.\n"
@@ -7241,8 +7246,8 @@ msgstr ""
 "              - Starte kamper med andre klaner\n"
 "              - Starte og fullføre klans eventyr\n"
 "\n"
-"            Offiserer kan ikke sparkes fra klanen din og må degraderes først."
-"\n"
+"            Offiserer kan ikke sparkes fra klanen din og må degraderes "
+"først.\n"
 "            Forfrem kun medlemmer du stoler på. Du kan degradere offiserer "
 "ved å bruke `{prefix}guild demote`.\n"
 "\n"
@@ -7392,8 +7397,8 @@ msgstr ""
 "få sine bonuser fjernet umiddelbart.\n"
 "\n"
 "            Hvis medlemmet ikke deler noen server med deg, kan du bruke "
-"deres [bruker-ID](https://support.discord.com/hc/en-us/articles/206346498"
-"-Where-can-I-find-my-User- Server-Message-ID-) som medlemsparameter.\n"
+"deres [bruker-ID](https://support.discord.com/hc/en-us/articles/206346498-"
+"Where-can-I-find-my-User- Server-Message-ID-) som medlemsparameter.\n"
 "\n"
 "            Bare klan ledere og offiserer kan bruke denne kommandoen."
 
@@ -7469,10 +7474,10 @@ msgstr ""
 "            ⚠ Dette kan sees av alle, ikke bruk NSFW/upassende bilder. GIF-"
 "er støttes ikke.\n"
 "\n"
-"            Har du problemer med å finne korte bildenettadresser? Følg ["
-"denne veiledningen](https://wiki.idlerpg.xyz/index."
-"php?title=Tutorial:_Short_Image_URLs) eller bare legg ved bildet du vil "
-"bruke (png, jpg og gif støttes)!\n"
+"            Har du problemer med å finne korte bildenettadresser? Følg "
+"[denne veiledningen](https://wiki.idlerpg.xyz/index.php?title=Tutorial:"
+"_Short_Image_URLs) eller bare legg ved bildet du vil bruke (png, jpg og gif "
+"støttes)!\n"
 "\n"
 "            Bare klan ledere kan bruke denne kommandoen."
 
@@ -7743,8 +7748,8 @@ msgstr ""
 "            For eksempel, å distribuere $500 til 5 medlemmer vil gi alle av "
 "dem $100.\n"
 "\n"
-"            Medlemmer som er nevnt flere ganger vil motta flere utbetalinger."
-"\n"
+"            Medlemmer som er nevnt flere ganger vil motta flere "
+"utbetalinger.\n"
 "\n"
 "            I tilfelle et desimalresultat vil botten runde ned, dvs. $7 "
 "fordelt på 3 medlemmer vil gi alle $2.\n"
@@ -7811,8 +7816,8 @@ msgid ""
 "This will upgrade your guild bank limit to **${newlimit}** for **${cost}**. "
 "Proceed?"
 msgstr ""
-"Dette vil oppgradere din klans bank grensen til **${newlimit}** for "
-"**${cost}**. Vil du fortsette?"
+"Dette vil oppgradere din klans bank grensen til **${newlimit}** for **${cost}"
+"**. Vil du fortsette?"
 
 #: cogs/guild/__init__.py:1091
 #, python-brace-format
@@ -8148,8 +8153,8 @@ msgid ""
 "Your guild is currently in an adventure with difficulty `{difficulty}`.\n"
 "Time remaining: `{remain}`"
 msgstr ""
-"Klanen din er for øyeblikket i et eventyr med "
-"vanskelighetsgrad`{difficulty}`.\n"
+"Klanen din er for øyeblikket i et eventyr med vanskelighetsgrad`{difficulty}"
+"`.\n"
 "Gjenstående tid: `{remain}`"
 
 #: cogs/guild/__init__.py:1528
@@ -8210,11 +8215,11 @@ msgstr ""
 "- <https://top.gg/bot/idlerpg>\n"
 "- <https://discord.ly/idlerpg>"
 
-#: cogs/profile/__init__.py:46
+#: cogs/profile/__init__.py:45
 msgid "Create a new character"
 msgstr "Lag en ny karakter"
 
-#: cogs/profile/__init__.py:50
+#: cogs/profile/__init__.py:49
 msgid ""
 "`[name]` - The name to give your character; will be interactive if not "
 "given\n"
@@ -8243,7 +8248,7 @@ msgstr ""
 "\n"
 "            (Denne kommandoen har en nedkjøling på 1 time.)"
 
-#: cogs/profile/__init__.py:63
+#: cogs/profile/__init__.py:62
 msgid ""
 "What shall your character's name be? (Minimum 3 Characters, Maximum 20)\n"
 "\n"
@@ -8267,11 +8272,11 @@ msgstr ""
 "\n"
 "IdleRPG er en global bot, karakterene dine er gyldige overalt"
 
-#: cogs/profile/__init__.py:83
+#: cogs/profile/__init__.py:82
 msgid "Timeout expired. Please retry!"
 msgstr "Tidsavbrudd utløpt. Vennligst prøv på nytt!"
 
-#: cogs/profile/__init__.py:88
+#: cogs/profile/__init__.py:87
 msgid ""
 "**Please note that with the creation of a character, you agree to these "
 "rules:**\n"
@@ -8293,25 +8298,25 @@ msgstr ""
 "\n"
 "IdleRPG er en global bot, karakterene dine er gyldige overalt"
 
-#: cogs/profile/__init__.py:98
+#: cogs/profile/__init__.py:97
 msgid "Creation of your character cancelled."
 msgstr "Opprettelsen av karakteren din avbrutt."
 
-#: cogs/profile/__init__.py:103 cogs/profile/__init__.py:1113
+#: cogs/profile/__init__.py:102 cogs/profile/__init__.py:1115
 msgid ""
 "Illegal character (`) found in the name. Please try again and choose another "
 "name."
 msgstr "Ulovlig tegn (`) funnet i navnet. Prøv igjen og velg et annet navn."
 
-#: cogs/profile/__init__.py:117
+#: cogs/profile/__init__.py:116
 msgid "Starter Sword"
 msgstr "Starter Sverd"
 
-#: cogs/profile/__init__.py:128
+#: cogs/profile/__init__.py:127
 msgid "Starter Shield"
 msgstr "Starter Skjold"
 
-#: cogs/profile/__init__.py:148
+#: cogs/profile/__init__.py:147
 #, python-brace-format
 msgid ""
 "Successfully added your character **{name}**! Now use `{prefix}profile` to "
@@ -8320,15 +8325,15 @@ msgstr ""
 "Har laget karakteren din **{name}**! Bruk nå `{prefix}profile` for å se "
 "karakteren din!"
 
-#: cogs/profile/__init__.py:154
+#: cogs/profile/__init__.py:153
 msgid "Character names must be at least 3 characters and up to 20."
 msgstr "Karakterens navn må være på minst 3 tegn og opptil 20."
 
-#: cogs/profile/__init__.py:158
+#: cogs/profile/__init__.py:157
 msgid "View someone's profile"
 msgstr "Se noens profil"
 
-#: cogs/profile/__init__.py:162
+#: cogs/profile/__init__.py:161
 msgid ""
 "`[person]` - The person whose profile to view; defaults to oneself\n"
 "\n"
@@ -8339,8 +8344,8 @@ msgstr ""
 "`[person]` – personen sin profil som skal vises; misligholder til seg selv\n"
 "\n"
 "            Se noens profil. Dette vil sende et bilde.\n"
-"            For en forklaring på hva alle feltene betyr, se [dette "
-"bildet](https://wiki.idlerpg.xyz/images/3/35/Profile_explained.png)"
+"            For en forklaring på hva alle feltene betyr, se [dette bildet]"
+"(https://wiki.idlerpg.xyz/images/3/35/Profile_explained.png)"
 
 #: cogs/profile/__init__.py:177
 #, python-brace-format
@@ -8371,20 +8376,20 @@ msgstr ""
 "            Se noens profil. Dette vil sende en innebygging i stedet for et "
 "bilde og er vanligvis raskere."
 
-#: cogs/profile/__init__.py:296
+#: cogs/profile/__init__.py:297
 #, python-brace-format
 msgid "**{target}** does not have a character."
 msgstr "**{target}** har ikke en karakter."
 
-#: cogs/profile/__init__.py:335 cogs/profile/__init__.py:340
+#: cogs/profile/__init__.py:336 cogs/profile/__init__.py:341
 msgid "None Equipped"
 msgstr "Ingenting utstyrt"
 
-#: cogs/profile/__init__.py:346
+#: cogs/profile/__init__.py:347
 msgid "General"
 msgstr "Generell"
 
-#: cogs/profile/__init__.py:348
+#: cogs/profile/__init__.py:349
 #, python-brace-format
 msgid ""
 "**Money**: `${money}`\n"
@@ -8401,11 +8406,11 @@ msgstr ""
 "**PvP Vins**: `{pvp}`\n"
 "**Klan**: `{guild}`"
 
-#: cogs/profile/__init__.py:365
+#: cogs/profile/__init__.py:366
 msgid "Ranks"
 msgstr "Ranker"
 
-#: cogs/profile/__init__.py:366
+#: cogs/profile/__init__.py:367
 #, python-brace-format
 msgid ""
 "**Richest**: `{rank_money}`\n"
@@ -8414,11 +8419,11 @@ msgstr ""
 "**Rikest**: `{rank_money}`\n"
 "**XP**: `{rank_xp}`"
 
-#: cogs/profile/__init__.py:371
+#: cogs/profile/__init__.py:372
 msgid "Equipment"
 msgstr "Utstyr"
 
-#: cogs/profile/__init__.py:372
+#: cogs/profile/__init__.py:373
 #, python-brace-format
 msgid ""
 "Right Hand: {right_hand}\n"
@@ -8427,15 +8432,15 @@ msgstr ""
 "Høyre hånd: {right_hand}\n"
 "Venstre hånd: {left_hand}"
 
-#: cogs/profile/__init__.py:377
+#: cogs/profile/__init__.py:378
 msgid "Mission"
 msgstr "Oppdrag"
 
-#: cogs/profile/__init__.py:381
+#: cogs/profile/__init__.py:382
 msgid "Show your current luck"
 msgstr "Vis din nåværende lykke"
 
-#: cogs/profile/__init__.py:385
+#: cogs/profile/__init__.py:386
 msgid ""
 "Shows your current luck value.\n"
 "\n"
@@ -8467,8 +8472,8 @@ msgstr ""
 "som belønningene.\n"
 "\n"
 "            Flaks avgjøres tilfeldig innenfor gudenes lykkegrenser. Du kan "
-"finne din Guds grenser [her](https://wiki.idlerpg.xyz/index."
-"php?title=Gods#List_of_Deities).\n"
+"finne din Guds grenser [her](https://wiki.idlerpg.xyz/index.php?"
+"title=Gods#List_of_Deities).\n"
 "\n"
 "            Hvis du har nok favør til å plassere deg blant de 25 beste "
 "følgerne, vil du få ekstra lykke:\n"
@@ -8481,7 +8486,7 @@ msgstr ""
 "            Hvis du følger en ny Gud (eller blir gudløs), vil ikke lykken "
 "din oppdateres umiddelbart, den oppdateres med alle andres flaks på mandag."
 
-#: cogs/profile/__init__.py:403
+#: cogs/profile/__init__.py:404
 #, python-brace-format
 msgid ""
 "Your current luck multiplier is `{luck}x` (≈{percent}% {adj} than usual "
@@ -8490,19 +8495,19 @@ msgstr ""
 "Din nåværende flaksmultiplikator er `{luck}x` (≈{percent}% {adj} enn vanlig "
 "(vanlig=1))."
 
-#: cogs/profile/__init__.py:408
+#: cogs/profile/__init__.py:409
 msgid "more"
 msgstr "mer"
 
-#: cogs/profile/__init__.py:408
+#: cogs/profile/__init__.py:409
 msgid "less"
 msgstr "mindre"
 
-#: cogs/profile/__init__.py:414
+#: cogs/profile/__init__.py:415
 msgid "Shows your balance"
 msgstr "Viser pengene dine"
 
-#: cogs/profile/__init__.py:419
+#: cogs/profile/__init__.py:420
 msgid ""
 "Shows the amount of money you currently have.\n"
 "\n"
@@ -8518,16 +8523,16 @@ msgstr ""
 "              - Selge gjenstander\n"
 "              - Gambling"
 
-#: cogs/profile/__init__.py:427
+#: cogs/profile/__init__.py:428
 #, python-brace-format
 msgid "You currently have **${money}**, {author}!"
 msgstr "Du har for øyeblikket **${money}**, {author}!"
 
-#: cogs/profile/__init__.py:433
+#: cogs/profile/__init__.py:434
 msgid "Show a player's current XP"
 msgstr "Vis en spillers nåværende XP"
 
-#: cogs/profile/__init__.py:437
+#: cogs/profile/__init__.py:438
 msgid ""
 "`[user]` - The player whose XP and level to show; defaults to oneself\n"
 "\n"
@@ -8545,44 +8550,44 @@ msgstr ""
 "              - Fullføre eventyr\n"
 "              - Utveksling av loot for XP"
 
-#: cogs/profile/__init__.py:449
+#: cogs/profile/__init__.py:451
 #, python-brace-format
 msgid ""
 "You currently have **{points} XP**, which means you are on Level **{level}"
 "**. Missing to next level: **{missing}**"
 msgstr ""
-"Du har for øyeblikket **{points} XP**, som betyr at du er på nivå **{level}**"
-". Mangler til neste nivå: **{missing}**"
+"Du har for øyeblikket **{points} XP**, som betyr at du er på nivå **{level}"
+"**. Mangler til neste nivå: **{missing}**"
 
-#: cogs/profile/__init__.py:461
+#: cogs/profile/__init__.py:463
 #, python-brace-format
 msgid ""
 "{user} has **{points} XP** and is on Level **{level}**. Missing to next "
 "level: **{missing}**"
 msgstr ""
-"{user} har **{points} XP** og er på nivå **{level}**. Mangler til neste nivå:"
-" **{missing}**"
+"{user} har **{points} XP** og er på nivå **{level}**. Mangler til neste "
+"nivå: **{missing}**"
 
-#: cogs/profile/__init__.py:473
+#: cogs/profile/__init__.py:475
 #, python-brace-format
 msgid "{user}'s inventory includes"
 msgstr "{user} sin inventar inkluderer"
 
-#: cogs/profile/__init__.py:478
+#: cogs/profile/__init__.py:480
 msgid "(**Equipped**)"
 msgstr "(**Utstyrt**)"
 
-#: cogs/profile/__init__.py:482
+#: cogs/profile/__init__.py:484
 #, python-brace-format
 msgid "Damage: `{damage}`"
 msgstr "Skade: `{damage}`"
 
-#: cogs/profile/__init__.py:484
+#: cogs/profile/__init__.py:486
 #, python-brace-format
 msgid "Armor: `{armor}`"
 msgstr "Rustning: `{armor}`"
 
-#: cogs/profile/__init__.py:487
+#: cogs/profile/__init__.py:489
 #, python-brace-format
 msgid ""
 "\n"
@@ -8591,7 +8596,7 @@ msgstr ""
 "\n"
 "Signatur: *{signature}*"
 
-#: cogs/profile/__init__.py:494
+#: cogs/profile/__init__.py:496
 #, python-brace-format
 msgid ""
 "ID: `{id}`, Type: `{type_}` (uses {hand} hand(s)) with {statstr}. Value is **"
@@ -8600,16 +8605,16 @@ msgstr ""
 "ID: `{id}`, Type: `{type_}` (bruker {hand} hånd(er)) med {statstr}. Verdien "
 "er **${value}**{signature}"
 
-#: cogs/profile/__init__.py:507 cogs/profile/__init__.py:596
+#: cogs/profile/__init__.py:509 cogs/profile/__init__.py:598
 #, python-brace-format
 msgid "Page {page} of {maxpages}"
 msgstr "Side {page} av {maxpages}"
 
-#: cogs/profile/__init__.py:514
+#: cogs/profile/__init__.py:516
 msgid "Show your gear items"
 msgstr "Vis utstyret ditt"
 
-#: cogs/profile/__init__.py:524
+#: cogs/profile/__init__.py:526
 #, python-brace-format
 msgid ""
 "`[itemtype]` - The type of item to show; defaults to all items\n"
@@ -8643,15 +8648,15 @@ msgstr ""
 "            Du kan få gjenstander ved å fullføre eventyr, åpne kasser eller "
 "la kjæledyret ditt jakte på dem, hvis du er en skogvokter.\n"
 "\n"
-"            For å selge ubrukte gjenstander for sin verdi, bruk "
-"`{prefix}merch`. For å legge dem ut på det globale spillermarkedet, bruk "
-"`{prefix}sell`."
+"            For å selge ubrukte gjenstander for sin verdi, bruk `{prefix}"
+"merch`. For å legge dem ut på det globale spillermarkedet, bruk `{prefix}"
+"sell`."
 
-#: cogs/profile/__init__.py:539
+#: cogs/profile/__init__.py:541
 msgid "Make sure that the `highest` value is greater than `lowest`."
 msgstr "Sørg for at den 'høyeste' verdien er større enn 'laveste'."
 
-#: cogs/profile/__init__.py:545
+#: cogs/profile/__init__.py:547
 #, python-brace-format
 msgid ""
 "Please select a valid item type or `all`. Available types: `{all_types}`"
@@ -8659,25 +8664,25 @@ msgstr ""
 "Velg en gyldig gjenstand type eller \"alle\". Tilgjengelige typer: "
 "`{all_types}`"
 
-#: cogs/profile/__init__.py:573
+#: cogs/profile/__init__.py:575
 msgid "Your inventory is empty."
 msgstr "Inventaren din er tom."
 
-#: cogs/profile/__init__.py:584
+#: cogs/profile/__init__.py:586
 #, python-brace-format
 msgid "{user} has the following loot items."
 msgstr "{user} har følgende loot."
 
-#: cogs/profile/__init__.py:590
+#: cogs/profile/__init__.py:592
 #, python-brace-format
 msgid "ID: `{id}` Value is **{value}**"
 msgstr "ID: `{id}` Verdien er **{value}**"
 
-#: cogs/profile/__init__.py:603
+#: cogs/profile/__init__.py:605
 msgid "Show your loot items"
 msgstr "Vis lootet ditt"
 
-#: cogs/profile/__init__.py:607
+#: cogs/profile/__init__.py:609
 msgid ""
 "Show your loot items.\n"
 "\n"
@@ -8701,15 +8706,15 @@ msgstr ""
 "wiki](https://wiki.idlerpg.xyz/index.php?title=Loot#Probability) for de "
 "nøyaktige sjansene."
 
-#: cogs/profile/__init__.py:619
+#: cogs/profile/__init__.py:621
 msgid "You do not have any loot at this moment."
 msgstr "Du har ikke noe loot for øyeblikket."
 
-#: cogs/profile/__init__.py:630
+#: cogs/profile/__init__.py:632
 msgid "Exchange your loot for money or XP"
 msgstr "Bytt lootet ditt mot penger eller XP"
 
-#: cogs/profile/__init__.py:634
+#: cogs/profile/__init__.py:636
 msgid ""
 "`[loot_ids...]` - The loot IDs to exchange; defaults to all loot\n"
 "\n"
@@ -8726,54 +8731,54 @@ msgstr ""
 "            Velger du penger, vil du få lootet sin samlede verdi i "
 "kontanter. For XP vil du få 1/4 av den samlede verdien i XP."
 
-#: cogs/profile/__init__.py:647 cogs/gods/__init__.py:60
+#: cogs/profile/__init__.py:649 cogs/gods/__init__.py:60
 msgid "You don't have any loot."
 msgstr "Du har ingenting loot."
 
-#: cogs/profile/__init__.py:658 cogs/gods/__init__.py:79
+#: cogs/profile/__init__.py:660 cogs/gods/__init__.py:79
 #, python-brace-format
 msgid "You don't own any loot items with the IDs: {itemids}"
 msgstr "Du eier ingen loot med ID-ene: {itemids}"
 
-#: cogs/profile/__init__.py:665
+#: cogs/profile/__init__.py:667
 #, python-brace-format
 msgid "Select a reward for the {count} items"
 msgstr "Velg en belønning for de {count} gjenstandene"
 
-#: cogs/profile/__init__.py:666
+#: cogs/profile/__init__.py:668
 msgid "Select a reward"
 msgstr "Velg en belønning"
 
-#: cogs/profile/__init__.py:667
+#: cogs/profile/__init__.py:669
 #, python-brace-format
 msgid "Do you want favor? {prefix}sacrifice instead"
 msgstr "Vil du ha favor? `{prefix}sacrifice` i stedet"
 
-#: cogs/profile/__init__.py:671
+#: cogs/profile/__init__.py:673
 #, python-brace-format
 msgid "**{value} XP**"
 msgstr "**{value} XP**"
 
-#: cogs/profile/__init__.py:672
+#: cogs/profile/__init__.py:674
 #, python-brace-format
 msgid "{value} XP"
 msgstr "{value} XP"
 
-#: cogs/profile/__init__.py:703
+#: cogs/profile/__init__.py:705
 #, python-brace-format
 msgid "You received **{reward}** when exchanging all of your loot."
 msgstr "Du mottok **{reward}** når du byttet ut alt lootet ditt."
 
-#: cogs/profile/__init__.py:707
+#: cogs/profile/__init__.py:709
 #, python-brace-format
 msgid "You received **{reward}** when exchanging loot item(s) `{loot_ids}`. "
 msgstr "Du mottok **{reward}** når du byttet ut loot(et) `{loot_ids}`. "
 
-#: cogs/profile/__init__.py:728
+#: cogs/profile/__init__.py:730
 msgid "Equip an item"
 msgstr "Bruk en gjenstand"
 
-#: cogs/profile/__init__.py:732
+#: cogs/profile/__init__.py:734
 msgid ""
 "`<itemid>` - The ID of the item to equip\n"
 "\n"
@@ -8802,32 +8807,32 @@ msgstr ""
 "            Du kan ikke utstyre to gjenstander som bruker samme hånd, eller "
 "en annen gjenstand hvis den du har utstyrt er tohånds."
 
-#: cogs/profile/__init__.py:752 cogs/profile/__init__.py:856
-#: cogs/profile/__init__.py:971
+#: cogs/profile/__init__.py:754 cogs/profile/__init__.py:858
+#: cogs/profile/__init__.py:973
 #, python-brace-format
 msgid "You don't own an item with the ID `{itemid}`."
 msgstr "Du eier ikke en gjenstand med IDen `{itemid}`."
 
-#: cogs/profile/__init__.py:806
+#: cogs/profile/__init__.py:808
 msgid "Select an item to unequip"
 msgstr "Velg en gjenstand som du ikke vil bruke mer"
 
-#: cogs/profile/__init__.py:827
+#: cogs/profile/__init__.py:829
 #, python-brace-format
 msgid "Successfully equipped item `{itemid}` and put off item(s) {olditems}."
 msgstr ""
 "Vellykket tok på gjenstanden `{itemid}` og tok av gjenstand(er) {olditems}."
 
-#: cogs/profile/__init__.py:835
+#: cogs/profile/__init__.py:837
 #, python-brace-format
 msgid "Successfully equipped item `{itemid}`."
 msgstr "Vellykket tok på gjenstand `{itemid}`."
 
-#: cogs/profile/__init__.py:839
+#: cogs/profile/__init__.py:841
 msgid "Unequip an item"
 msgstr "Bruk en gjenstand"
 
-#: cogs/profile/__init__.py:843
+#: cogs/profile/__init__.py:845
 msgid ""
 "`<itemid>` - The ID of the item to unequip\n"
 "\n"
@@ -8839,20 +8844,20 @@ msgstr ""
 "           Ta av en av dine utstyrte gjenstander. Dette har ingen som helst "
 "fordel."
 
-#: cogs/profile/__init__.py:861
+#: cogs/profile/__init__.py:863
 msgid "You don't have this item equipped."
 msgstr "Du har ikke denne gjenstanden utstyrt."
 
-#: cogs/profile/__init__.py:866
+#: cogs/profile/__init__.py:868
 #, python-brace-format
 msgid "Successfully unequipped item `{itemid}`."
 msgstr "Gjenstanden `{itemid}` ble tatt av."
 
-#: cogs/profile/__init__.py:871
+#: cogs/profile/__init__.py:873
 msgid "Merge two items to make a stronger one"
 msgstr "Slå sammen to gjenstander for å gjøre en sterkere"
 
-#: cogs/profile/__init__.py:875
+#: cogs/profile/__init__.py:877
 msgid ""
 "`<firstitemid>` - The ID of the first item\n"
 "            `<seconditemid>` - The ID of the second item\n"
@@ -8890,15 +8895,15 @@ msgstr ""
 "\n"
 "            (Denne kommandoen har en nedkjøling på 1 time.)"
 
-#: cogs/profile/__init__.py:891
+#: cogs/profile/__init__.py:893
 msgid "Good luck with that."
 msgstr "Lykke til med det."
 
-#: cogs/profile/__init__.py:905
+#: cogs/profile/__init__.py:907
 msgid "You don't own both of these items."
 msgstr "Du eier ikke begge disse gjenstandene."
 
-#: cogs/profile/__init__.py:910
+#: cogs/profile/__init__.py:912
 msgid ""
 "The items are of unequal type. You may only merge a sword with a sword or a "
 "shield with a shield."
@@ -8906,11 +8911,11 @@ msgstr ""
 "Gjenstandene er av ulik type. Du kan bare slå sammen et sverd med et sverd "
 "eller et skjold med et skjold."
 
-#: cogs/profile/__init__.py:925
+#: cogs/profile/__init__.py:927
 msgid "This item is already on the maximum upgrade level."
 msgstr "Denne gjenstanden er allerede på maksimalt oppgraderingsnivå."
 
-#: cogs/profile/__init__.py:931
+#: cogs/profile/__init__.py:933
 #, python-brace-format
 msgid ""
 "The second item's stat must be in the range of `{min_}` to `{max_}` to "
@@ -8919,7 +8924,7 @@ msgstr ""
 "Statistikken til den andre gjenstanden må være i området «{min_}» til "
 "«{max_}» for å oppgradere gjenstanden med statistikken «{stat}»."
 
-#: cogs/profile/__init__.py:942
+#: cogs/profile/__init__.py:944
 #, python-brace-format
 msgid ""
 "The {stat} of your **{item}** is now **{newstat}**. The other item was "
@@ -8928,11 +8933,11 @@ msgstr ""
 "{stat} for **{item}** din er nå **{newstat}**. Den andre gjenstanden ble "
 "ødelagt."
 
-#: cogs/profile/__init__.py:949
+#: cogs/profile/__init__.py:951
 msgid "Upgrade an item"
 msgstr "Oppgrader en gjenstand"
 
-#: cogs/profile/__init__.py:953
+#: cogs/profile/__init__.py:955
 msgid ""
 "`<itemid>` - The ID of the item to upgrade\n"
 "\n"
@@ -8949,19 +8954,19 @@ msgstr ""
 "\n"
 "            Oppgraderer en gjenstands statistikk med 1.\n"
 "            Prisen for å oppgradere en gjenstand er 250 ganger den nåværende "
-"statistikken. For eksempel vil oppgradering av et 15 skade sverd koste $3750."
-"\n"
+"statistikken. For eksempel vil oppgradering av et 15 skade sverd koste "
+"$3750.\n"
 "\n"
 "            Enhåndsvåpen kan oppgraderes til 41, tohånds gjenstander opp til "
 "82.\n"
 "\n"
 "            (Denne kommandoen har en nedkjøling på 1 time.)"
 
-#: cogs/profile/__init__.py:986
+#: cogs/profile/__init__.py:988
 msgid "Your weapon already reached the maximum upgrade level."
 msgstr "Våpenet ditt har allerede nådd det maksimale oppgraderingsnivået."
 
-#: cogs/profile/__init__.py:991
+#: cogs/profile/__init__.py:993
 #, python-brace-format
 msgid ""
 "Are you sure you want to upgrade this item: {item}? It will cost **"
@@ -8970,20 +8975,20 @@ msgstr ""
 "Er du sikker på at du vil oppgradere denne gjenstanden: {item}? Det vil "
 "koste **${pricetopay}**."
 
-#: cogs/profile/__init__.py:995
+#: cogs/profile/__init__.py:997
 msgid "Weapon upgrade cancelled."
 msgstr "Våpen oppgradering kansellert."
 
-#: cogs/profile/__init__.py:1000
+#: cogs/profile/__init__.py:1002
 #, python-brace-format
 msgid ""
 "You are too poor to upgrade this item. The upgrade costs **${pricetopay}**, "
 "but you only have **${money}**."
 msgstr ""
-"Du er for fattig til å oppgradere denne gjenstanden. Oppgraderingen koster "
-"**${pricetopay}**, men du har bare **${money}**."
+"Du er for fattig til å oppgradere denne gjenstanden. Oppgraderingen koster **"
+"${pricetopay}**, men du har bare **${money}**."
 
-#: cogs/profile/__init__.py:1024
+#: cogs/profile/__init__.py:1026
 #, python-brace-format
 msgid ""
 "The {stat} of your **{item}** is now **{newstat}**. **${pricetopay}** has "
@@ -8992,11 +8997,11 @@ msgstr ""
 "{stat} for **{item}** din er nå **{newstat}**. **${pricetopay}** er tatt av "
 "saldoen din."
 
-#: cogs/profile/__init__.py:1035
+#: cogs/profile/__init__.py:1037
 msgid "Give someone money"
 msgstr "Gi penger til noen"
 
-#: cogs/profile/__init__.py:1041
+#: cogs/profile/__init__.py:1043
 msgid ""
 "`<money>` - The amount of money to give to the other person, cannot exceed "
 "100,000,000\n"
@@ -9012,11 +9017,11 @@ msgstr ""
 "            Gi penger! Det vil bli fjernet fra deg og gitt til den andre "
 "personen."
 
-#: cogs/profile/__init__.py:1047
+#: cogs/profile/__init__.py:1049
 msgid "No cheating!"
 msgstr "Ingen juksing!"
 
-#: cogs/profile/__init__.py:1077
+#: cogs/profile/__init__.py:1079
 #, python-brace-format
 msgid ""
 "Success!\n"
@@ -9025,11 +9030,11 @@ msgstr ""
 "Suksess!\n"
 "{other} har nå **${othermoney}**, du har nå **${authormoney}**."
 
-#: cogs/profile/__init__.py:1085
+#: cogs/profile/__init__.py:1087
 msgid "Rename your character"
 msgstr "Gi nytt navn til karakteren din"
 
-#: cogs/profile/__init__.py:1089
+#: cogs/profile/__init__.py:1091
 msgid ""
 "`[name]` - The name to use; if not given, this will be interactive\n"
 "\n"
@@ -9042,31 +9047,31 @@ msgstr ""
 "            Gi nytt navn til karakteren din. Navnet må være fra 3 til 20 "
 "tegn langt."
 
-#: cogs/profile/__init__.py:1096
+#: cogs/profile/__init__.py:1098
 msgid "What shall your character's name be? (Minimum 3 Characters, Maximum 20)"
 msgstr "Hva skal karakteren din hete? (Minimum 3 tegn, maksimum 20)"
 
-#: cogs/profile/__init__.py:1107
+#: cogs/profile/__init__.py:1109
 msgid "Timeout expired. Retry!"
 msgstr "Tidsavbrudd utløpt. Prøv på nytt!"
 
-#: cogs/profile/__init__.py:1120
+#: cogs/profile/__init__.py:1122
 msgid "Character name updated."
 msgstr "Karakternavnet er oppdatert."
 
-#: cogs/profile/__init__.py:1122
+#: cogs/profile/__init__.py:1124
 msgid "Character names must be at least 3 characters!"
 msgstr "Karakternavn må være på minst 3 tegn!"
 
-#: cogs/profile/__init__.py:1124
+#: cogs/profile/__init__.py:1126
 msgid "Character names mustn't exceed 20 characters!"
 msgstr "Karakternavn må ikke overstige 20 tegn!"
 
-#: cogs/profile/__init__.py:1127
+#: cogs/profile/__init__.py:1129
 msgid "Delete your character"
 msgstr "Slett karakteren din"
 
-#: cogs/profile/__init__.py:1131
+#: cogs/profile/__init__.py:1133
 msgid ""
 "Deletes your character. There is no way to get your character data back "
 "after deletion.\n"
@@ -9084,7 +9089,7 @@ msgstr ""
 "              - Alliansens byeierskap\n"
 "              - Ditt ekteskap og barn"
 
-#: cogs/profile/__init__.py:1140
+#: cogs/profile/__init__.py:1142
 msgid ""
 "Are you absolutely sure you want to delete your character? React in the next "
 "30 seconds to confirm.\n"
@@ -9094,19 +9099,19 @@ msgstr ""
 "neste 30 sekundene for å bekrefte.\n"
 "**Dette kan ikke ugjort.**"
 
-#: cogs/profile/__init__.py:1144
+#: cogs/profile/__init__.py:1146
 msgid "Cancelled deletion of your character."
 msgstr "Kansellert sletting av karakteren din."
 
-#: cogs/profile/__init__.py:1172
+#: cogs/profile/__init__.py:1174
 msgid "Successfully deleted your character. Sorry to see you go :frowning:"
 msgstr "Slettet karakteren din. Beklager å se at du går :frowning:"
 
-#: cogs/profile/__init__.py:1176
+#: cogs/profile/__init__.py:1178
 msgid "Update your profile color"
 msgstr "Oppdater profil fargen din"
 
-#: cogs/profile/__init__.py:1180
+#: cogs/profile/__init__.py:1182
 #, python-brace-format
 msgid ""
 "`<color>` - The color to use, see below for allowed format\n"
@@ -9133,13 +9138,13 @@ msgstr ""
 "            En tuppel er en datatype som består av flere deler. For å lage "
 "en tuppel for denne kommandoen, separer verdiene dine med et komma, og "
 "omslut dem med parenteser.\n"
-"            Her er et eksempel på en tuppel med fire verdier: `(128,256,0,0."
-"5)`\n"
+"            Her er et eksempel på en tuppel med fire verdier: "
+"`(128,256,0,0.5)`\n"
 "\n"
 "            Dette vil endre tekstfargen i `{prefix}profile` og "
 "innbyggingsfargen i `{prefix}profile2`."
 
-#: cogs/profile/__init__.py:1194
+#: cogs/profile/__init__.py:1196
 msgid ""
 "Format for colour is `#RGB`, `#RRGGBB`, a colour code like `cyan` or rgb/"
 "rgba values like (255, 255, 255, 0.5)."
@@ -9147,16 +9152,16 @@ msgstr ""
 "Formatet for farge er `#RGB`, `#RRGGBB`, en fargekode som `cyan` eller rgb/"
 "rgba-verdier som (255, 255, 255, 0,5)."
 
-#: cogs/profile/__init__.py:1204
+#: cogs/profile/__init__.py:1206
 #, python-brace-format
 msgid "Successfully set your profile colour to `{colour}`."
 msgstr "Satt profil fargen din til `{colour}`."
 
-#: cogs/profile/__init__.py:1210
+#: cogs/profile/__init__.py:1212
 msgid "Claim your profile badges"
 msgstr "Gjør krav på profilmerkene dine"
 
-#: cogs/profile/__init__.py:1214
+#: cogs/profile/__init__.py:1216
 msgid ""
 "Claim all badges for your profile based on your roles. This command can only "
 "be used in the support server."
@@ -9164,35 +9169,35 @@ msgstr ""
 "Gjør krav på alle merkene for profilen din basert på rollene dine. Denne "
 "kommandoen kan bare brukes på støtteserveren."
 
-#: cogs/profile/__init__.py:1217
+#: cogs/profile/__init__.py:1219
 msgid "This command can only be used in the support server."
 msgstr "Denne kommandoen kan bare brukes på støtteserveren."
 
-#: cogs/profile/__init__.py:1247
+#: cogs/profile/__init__.py:1249
 msgid "Successfully updated your badges."
 msgstr "Merkene dine er oppdatert."
 
-#: cogs/game_master/__init__.py:39
+#: cogs/game_master/__init__.py:41
 msgid "Publish an announcement"
 msgstr "Publiser en kunngjøring"
 
-#: cogs/game_master/__init__.py:42
+#: cogs/game_master/__init__.py:44
 msgid "Publish a message from an announement channel"
 msgstr "Publiser en melding fra en kunngjøringskanal"
 
-#: cogs/game_master/__init__.py:45
+#: cogs/game_master/__init__.py:47
 msgid "Message has been published!"
 msgstr "Meldingen er publisert!"
 
-#: cogs/game_master/__init__.py:47
+#: cogs/game_master/__init__.py:49
 msgid "This message is not from an announcement channel!"
 msgstr "Denne meldingen er ikke fra en kunngjøringskanal!"
 
-#: cogs/game_master/__init__.py:51
+#: cogs/game_master/__init__.py:53
 msgid "Clean up the shop"
 msgstr "Rydd opp i butikken"
 
-#: cogs/game_master/__init__.py:56
+#: cogs/game_master/__init__.py:58
 msgid ""
 "Remove items from the shop that have been there for more than 14 days, "
 "returning them to the owners' inventories.\n"
@@ -9204,16 +9209,16 @@ msgstr ""
 "\n"
 "            Bare Game Masters kan bruke denne kommandoen."
 
-#: cogs/game_master/__init__.py:71
+#: cogs/game_master/__init__.py:73
 #, python-brace-format
 msgid "Cleared {num} shop items which timed out."
 msgstr "Fjernet {num} butikkvarer som ble tidsavbrutt."
 
-#: cogs/game_master/__init__.py:76
+#: cogs/game_master/__init__.py:78
 msgid "Clear donator cache for a user"
 msgstr "Tøm donatorbufferen for en bruker"
 
-#: cogs/game_master/__init__.py:81
+#: cogs/game_master/__init__.py:83
 msgid ""
 "`<other>` - A server member\n"
 "\n"
@@ -9229,11 +9234,11 @@ msgstr ""
 "\n"
 "            Bare Game Masters kan bruke denne kommandoen."
 
-#: cogs/game_master/__init__.py:91
+#: cogs/game_master/__init__.py:93
 msgid "Bot-ban a user"
 msgstr "Bot-ban en bruker"
 
-#: cogs/game_master/__init__.py:95
+#: cogs/game_master/__init__.py:97
 msgid ""
 "`<other>` - A discord User\n"
 "\n"
@@ -9249,21 +9254,21 @@ msgstr ""
 "\n"
 "            Bare Game Masters kan bruke denne kommandoen."
 
-#: cogs/game_master/__init__.py:110
+#: cogs/game_master/__init__.py:112
 #, python-brace-format
 msgid "Banned: {other}"
 msgstr "Utestengt: {other}"
 
-#: cogs/game_master/__init__.py:121
+#: cogs/game_master/__init__.py:123
 #, python-brace-format
 msgid "{other} is already banned."
 msgstr "{other} er allerede utestengt."
 
-#: cogs/game_master/__init__.py:124
+#: cogs/game_master/__init__.py:126
 msgid "Bot-unban a user"
 msgstr "Bot-unban en bruker"
 
-#: cogs/game_master/__init__.py:128
+#: cogs/game_master/__init__.py:130
 msgid ""
 "`<other>` - A discord User\n"
 "\n"
@@ -9279,21 +9284,21 @@ msgstr ""
 "\n"
 "            Bare Game Masters kan bruke denne kommandoen."
 
-#: cogs/game_master/__init__.py:141
+#: cogs/game_master/__init__.py:143
 #, python-brace-format
 msgid "Unbanned: {other}"
 msgstr "Opphevet utestengelse: {other}"
 
-#: cogs/game_master/__init__.py:152
+#: cogs/game_master/__init__.py:154
 #, python-brace-format
 msgid "{other} is not banned."
 msgstr "{other} er ikke utestengt."
 
-#: cogs/game_master/__init__.py:155
+#: cogs/game_master/__init__.py:157
 msgid "Create money"
 msgstr "Skap penger"
 
-#: cogs/game_master/__init__.py:166
+#: cogs/game_master/__init__.py:168
 msgid ""
 "`<money>` - the amount of money to generate for the user\n"
 "            `<other>` - A discord User with a character\n"
@@ -9315,16 +9320,16 @@ msgstr ""
 "\n"
 "            Bare Game Masters kan bruke denne kommandoen."
 
-#: cogs/game_master/__init__.py:179
+#: cogs/game_master/__init__.py:181
 #, python-brace-format
 msgid "Successfully gave **${money}** without a loss for you to **{other}**."
 msgstr "Vellykket ga **${money}** uten tap for deg til **{other}**."
 
-#: cogs/game_master/__init__.py:193
+#: cogs/game_master/__init__.py:195
 msgid "Remove money"
 msgstr "Fjern penger"
 
-#: cogs/game_master/__init__.py:204
+#: cogs/game_master/__init__.py:206
 msgid ""
 "`<money>` - the amount of money to remove from the user\n"
 "            `<other>` - a discord User with character\n"
@@ -9346,16 +9351,16 @@ msgstr ""
 "\n"
 "            Bare Game Masters kan bruke denne kommandoen."
 
-#: cogs/game_master/__init__.py:216
+#: cogs/game_master/__init__.py:218
 #, python-brace-format
 msgid "Successfully removed **${money}** from **{other}**."
 msgstr "Fjernet **${money}** fra **{other}**."
 
-#: cogs/game_master/__init__.py:231
+#: cogs/game_master/__init__.py:233
 msgid "Delete a character"
 msgstr "Slett en karakter"
 
-#: cogs/game_master/__init__.py:235
+#: cogs/game_master/__init__.py:237
 msgid ""
 "`<other>` - a discord User with character\n"
 "            `[reason]` - The reason this action was done, defaults to the "
@@ -9373,15 +9378,15 @@ msgstr ""
 "\n"
 "            Bare Game Masters kan bruke denne kommandoen."
 
-#: cogs/game_master/__init__.py:269
+#: cogs/game_master/__init__.py:271
 msgid "Successfully deleted the character."
 msgstr "Karakteren ble slettet."
 
-#: cogs/game_master/__init__.py:278
+#: cogs/game_master/__init__.py:280
 msgid "Rename a character"
 msgstr "Gi nytt navn til en karakter"
 
-#: cogs/game_master/__init__.py:282
+#: cogs/game_master/__init__.py:284
 msgid ""
 "`<target>` - a discord User with character\n"
 "            `[reason]` - The reason this action was done, defaults to the "
@@ -9400,23 +9405,23 @@ msgstr ""
 "\n"
 "            Bare Game Masters kan bruke denne kommandoen."
 
-#: cogs/game_master/__init__.py:293
+#: cogs/game_master/__init__.py:295
 msgid "What shall the character's name be? (min. 3 letters, max. 20)"
 msgstr "Hva skal karakteren hete? (min. 3 bokstaver, maks. 20)"
 
-#: cogs/game_master/__init__.py:307
+#: cogs/game_master/__init__.py:309
 msgid "Timeout expired."
 msgstr "Tidsavbrudd utløpt."
 
-#: cogs/game_master/__init__.py:312
+#: cogs/game_master/__init__.py:314
 msgid "Renamed."
 msgstr "Endret navn."
 
-#: cogs/game_master/__init__.py:324
+#: cogs/game_master/__init__.py:326
 msgid "Create an item"
 msgstr "Skap en gjenstand"
 
-#: cogs/game_master/__init__.py:338
+#: cogs/game_master/__init__.py:340
 msgid ""
 "`<stat>` - the generated item's stat, must be between 0 and 100\n"
 "            `<owner>` - a discord User with character\n"
@@ -9449,23 +9454,23 @@ msgstr ""
 "\n"
 "            Bare Game Masters kan bruke denne kommandoen."
 
-#: cogs/game_master/__init__.py:351
+#: cogs/game_master/__init__.py:353
 msgid "Invalid item type."
 msgstr "Ugyldig gjenstands type."
 
-#: cogs/game_master/__init__.py:353
+#: cogs/game_master/__init__.py:355
 msgid "Invalid stat."
 msgstr "Ugyldig statistikk."
 
-#: cogs/game_master/__init__.py:373
+#: cogs/game_master/__init__.py:375
 msgid "Done."
 msgstr "Ferdig."
 
-#: cogs/game_master/__init__.py:380
+#: cogs/game_master/__init__.py:382
 msgid "Create crates"
 msgstr "Skap kasser"
 
-#: cogs/game_master/__init__.py:392
+#: cogs/game_master/__init__.py:394
 msgid ""
 "`<rarity>` - the crates' rarity, can be common, uncommon, rare, magic or "
 "legendary\n"
@@ -9487,21 +9492,21 @@ msgstr ""
 "            `[grunn]` – Grunnen til at denne handlingen ble utført, er "
 "standard til kommandomeldingslenken\n"
 "\n"
-"            Generer en bestemt mengde kasser av en sjeldenhet for en bruker."
-"\n"
+"            Generer en bestemt mengde kasser av en sjeldenhet for en "
+"bruker.\n"
 "\n"
 "            Bare Game Masters kan bruke denne kommandoen."
 
-#: cogs/game_master/__init__.py:408
+#: cogs/game_master/__init__.py:410
 #, python-brace-format
 msgid "Successfully gave **{amount}** {rarity} crates to **{target}**."
 msgstr "Vellykket ga **{amount}** {rarity} kasser til **{target}**."
 
-#: cogs/game_master/__init__.py:424
+#: cogs/game_master/__init__.py:426
 msgid "Generate XP"
 msgstr "Generer XP"
 
-#: cogs/game_master/__init__.py:435
+#: cogs/game_master/__init__.py:437
 msgid ""
 "`<target>` - A discord User with character\n"
 "            `<amount>` - The amount of XP to generate, can be negative\n"
@@ -9521,16 +9526,16 @@ msgstr ""
 "\n"
 "            Bare Game Masters kan bruke denne kommandoen."
 
-#: cogs/game_master/__init__.py:447
+#: cogs/game_master/__init__.py:449
 #, python-brace-format
 msgid "Successfully gave **{amount}** XP to **{target}**."
 msgstr "Vellykket ga **{amount}** XP til **{target}**."
 
-#: cogs/game_master/__init__.py:462
+#: cogs/game_master/__init__.py:464
 msgid "Wipe someone's donation perks."
 msgstr "Ta vekk noens donasjonsfordeler."
 
-#: cogs/game_master/__init__.py:466
+#: cogs/game_master/__init__.py:468
 msgid ""
 "`<target>` - A discord User with character\n"
 "            `[reason]` - The reason this action was done, defaults to the "
@@ -9557,7 +9562,7 @@ msgstr ""
 "\n"
 "            Bare Game Masters kan bruke denne kommandoen."
 
-#: cogs/game_master/__init__.py:496
+#: cogs/game_master/__init__.py:498
 #, python-brace-format
 msgid ""
 "Successfully reset {target}'s background, class, item names and guild member "
@@ -9566,11 +9571,11 @@ msgstr ""
 "Vellykket tilbakestilling av {target}s bakgrunn, klasse, gjenstands navn og "
 "grense for klans medlemmer."
 
-#: cogs/game_master/__init__.py:510
+#: cogs/game_master/__init__.py:512
 msgid "Reset someone's classes"
 msgstr "Tilbakestill noens klasser"
 
-#: cogs/game_master/__init__.py:514
+#: cogs/game_master/__init__.py:516
 msgid ""
 "`<target>` - a discord User with character\n"
 "            `[reason]` - The reason this action was done, defaults to the "
@@ -9590,17 +9595,17 @@ msgstr ""
 "\n"
 "            Bare Game Masters kan bruke denne kommandoen."
 
-#: cogs/game_master/__init__.py:526
+#: cogs/game_master/__init__.py:528
 #, python-brace-format
 msgid "Successfully reset {target}'s class."
 msgstr "Klassen til {target} er tilbakestilt."
 
 #. 7 days
-#: cogs/game_master/__init__.py:538
+#: cogs/game_master/__init__.py:540
 msgid "Sign an item"
 msgstr "Signer en gjenstand"
 
-#: cogs/game_master/__init__.py:542
+#: cogs/game_master/__init__.py:544
 msgid ""
 "`<itemid>` - the item's ID to sign\n"
 "            `<text>` - The signature to write, must be less than 50 "
@@ -9628,19 +9633,19 @@ msgstr ""
 "            Bare Game Masters kan bruke denne kommandoen.\n"
 "            (Denne kommandoen har en nedkjøling på 7 dager.)"
 
-#: cogs/game_master/__init__.py:554
+#: cogs/game_master/__init__.py:556
 msgid "Text exceeds 50 characters."
 msgstr "Teksten overskrider 50 tegn."
 
-#: cogs/game_master/__init__.py:558
+#: cogs/game_master/__init__.py:560
 msgid "Item successfully signed."
 msgstr "Gjenstanden er signert."
 
-#: cogs/game_master/__init__.py:570
+#: cogs/game_master/__init__.py:572
 msgid "Start an auction"
 msgstr "Start en auksjon"
 
-#: cogs/game_master/__init__.py:574
+#: cogs/game_master/__init__.py:576
 msgid ""
 "`<item>` - a description of what is being auctioned\n"
 "\n"
@@ -9665,19 +9670,19 @@ msgstr ""
 "\n"
 "            Bare Game Masters kan bruke denne kommandoen."
 
-#: cogs/game_master/__init__.py:584
+#: cogs/game_master/__init__.py:586
 msgid "There's still an auction running."
 msgstr "Det pågår fortsatt en auksjon."
 
-#: cogs/game_master/__init__.py:591
+#: cogs/game_master/__init__.py:593
 msgid "Auctions channel wasn't found."
 msgstr "Auksjonskanalen ble ikke funnet."
 
-#: cogs/game_master/__init__.py:613
+#: cogs/game_master/__init__.py:617
 msgid "Bid on an auction"
 msgstr "By på en auksjon"
 
-#: cogs/game_master/__init__.py:617
+#: cogs/game_master/__init__.py:621
 msgid ""
 "`<amount>` - the amount of money to bid, must be higher than the current "
 "highest bid\n"
@@ -9696,23 +9701,23 @@ msgstr ""
 "overbyr deg. Dette er for å forhindre at du byr umulig høyt og deretter ikke "
 "betaler."
 
-#: cogs/game_master/__init__.py:624
+#: cogs/game_master/__init__.py:628
 msgid "No auction running."
 msgstr "Ingen auksjon i gang."
 
-#: cogs/game_master/__init__.py:626
+#: cogs/game_master/__init__.py:630
 msgid "Bid too low."
 msgstr "Bud for lavt."
 
-#: cogs/game_master/__init__.py:658
+#: cogs/game_master/__init__.py:662
 msgid "Bid submitted."
 msgstr "Bud sendt inn."
 
-#: cogs/game_master/__init__.py:670
+#: cogs/game_master/__init__.py:674
 msgid "Set a cooldown"
 msgstr "Sett en nedkjøling"
 
-#: cogs/game_master/__init__.py:682
+#: cogs/game_master/__init__.py:686
 msgid ""
 "`<user>` - A discord User or their User ID\n"
 "            `<command>` - the command which the cooldown is being set for "
@@ -9725,8 +9730,8 @@ msgid ""
 "            Only Game Masters can use this command."
 msgstr ""
 "`<bruker>` – En discord bruker eller deres bruker-ID\n"
-"            `<kommando>` - kommandoen som nedkjølingen settes for ("
-"underkommandoer i doble anførselstegn, dvs. \"lag opprette\")\n"
+"            `<kommando>` - kommandoen som nedkjølingen settes for "
+"(underkommandoer i doble anførselstegn, dvs. \"lag opprette\")\n"
 "            `[grunn]` – Grunnen til at denne handlingen ble utført, er "
 "standard til kommandomeldingslenken\n"
 "\n"
@@ -9734,17 +9739,29 @@ msgstr ""
 "\n"
 "            Bare Game Masters kan bruke denne kommandoen."
 
-#: cogs/game_master/__init__.py:698
+#: cogs/game_master/__init__.py:702
 msgid "The cooldown has been updated!"
 msgstr "Nedkjølingen er oppdatert!"
 
-#: cogs/game_master/__init__.py:711
+#: cogs/game_master/__init__.py:715
 msgid ""
 "Cooldown setting unsuccessful (maybe you mistyped the command name or there "
 "is no cooldown for the user?)."
 msgstr ""
 "Nedkjølingsinnstillingen mislyktes (kanskje du har skrevet feil "
 "kommandonavnet eller det er ingen nedkjøling for brukeren?)."
+
+#: cogs/game_master/__init__.py:724
+msgid "Update the luck for all followers"
+msgstr ""
+
+#: cogs/game_master/__init__.py:729
+msgid ""
+"Sets the luck for all gods to a random value and give bonus luck to the top "
+"25 followers.\n"
+"\n"
+"            Only Game Masters can use this command."
+msgstr ""
 
 #: cogs/gods/__init__.py:39
 msgid "Sacrifice loot for favor"
@@ -9883,8 +9900,8 @@ msgid ""
 msgstr ""
 "Slutt å følge din nåværende Gud og bli gudløs. **Dette er permanent!**\n"
 "\n"
-"            Ønsker du å forandre din Gud i stedet? Bare bruk `{prefix}follow`"
-" igjen.\n"
+"            Ønsker du å forandre din Gud i stedet? Bare bruk `{prefix}"
+"follow` igjen.\n"
 "\n"
 "            Når du blir gudløs, fjernes alle reset poengene og din Gud.\n"
 "            Å bli gudløs betyr ikke at lykken din returnerer til 1.00 "
@@ -10104,8 +10121,8 @@ msgid ""
 "Use `{prefix}trade [add/set/remove] [money/crates/item] [amount/itemid] "
 "[crate rarity]`"
 msgstr ""
-"Bruk `{prefix}trade [add/set/remove] [money/crates/item] [amount/itemid] ["
-"crate rarity]`"
+"Bruk `{prefix}trade [add/set/remove] [money/crates/item] [amount/itemid] "
+"[crate rarity]`"
 
 #: cogs/transaction/__init__.py:125
 msgid "Trade timed out."
@@ -10832,11 +10849,11 @@ msgstr "Variabelnavnet er et reservert nøkkelord."
 msgid "An unknown error occured."
 msgstr "Det oppstod en ukjent feil."
 
-#: cogs/alliance/__init__.py:49
+#: cogs/alliance/__init__.py:51
 msgid "Shows cities and owners."
 msgstr "Viser byer og eiere."
 
-#: cogs/alliance/__init__.py:53
+#: cogs/alliance/__init__.py:55
 msgid ""
 "Show all cities, their tiers, owners, available buildings and current "
 "defense."
@@ -10844,16 +10861,16 @@ msgstr ""
 "Vis alle byer, deres nivåer, eiere, tilgjengelige bygninger og nåværende "
 "forsvar."
 
-#: cogs/alliance/__init__.py:61
+#: cogs/alliance/__init__.py:63
 msgid "Cities"
 msgstr "Byer"
 
-#: cogs/alliance/__init__.py:65
+#: cogs/alliance/__init__.py:67
 #, python-brace-format
 msgid "{name} (Tier {tier})"
 msgstr "{name} (Tier {tier})"
 
-#: cogs/alliance/__init__.py:69
+#: cogs/alliance/__init__.py:71
 #, python-brace-format
 msgid ""
 "Owned by {alliance}'s alliance\n"
@@ -10864,11 +10881,11 @@ msgstr ""
 "Bygninger: {buildings}\n"
 "Totalforsvar: {defense}"
 
-#: cogs/alliance/__init__.py:88
+#: cogs/alliance/__init__.py:90
 msgid "Interact with your alliance."
 msgstr "Samhandle med alliansen din."
 
-#: cogs/alliance/__init__.py:93
+#: cogs/alliance/__init__.py:95
 #, python-brace-format
 msgid ""
 "Alliances are groups of guilds. Just like a guild requires at least one "
@@ -10892,7 +10909,7 @@ msgstr ""
 "            Se `{prefix}help alliance` for en liste over kommandoer for å "
 "samhandle med alliansen din!"
 
-#: cogs/alliance/__init__.py:111
+#: cogs/alliance/__init__.py:113
 msgid ""
 "You are not in an alliance. You are alone and may still use all other "
 "alliance commands or invite a guild to create a bigger alliance."
@@ -10900,16 +10917,16 @@ msgstr ""
 "Du er ikke i en allianse. Du er alene og kan fortsatt bruke alle andre "
 "alliansekommandoer eller invitere en klan til å opprette en større allianse."
 
-#: cogs/alliance/__init__.py:117
+#: cogs/alliance/__init__.py:119
 msgid "Your allied guilds"
 msgstr "Dine allierte klaner"
 
-#: cogs/alliance/__init__.py:122
+#: cogs/alliance/__init__.py:124
 #, python-brace-format
 msgid "Led by {leader}"
 msgstr "Ledet av {leader}"
 
-#: cogs/alliance/__init__.py:129
+#: cogs/alliance/__init__.py:131
 #, python-brace-format
 msgid ""
 "{prefix}alliance buildings | {prefix}alliance defenses | {prefix}alliance "
@@ -10918,17 +10935,17 @@ msgstr ""
 "{prefix}alliance buildings | {prefix}alliance defenses | {prefix}alliance "
 "attack | {prefix}alliance occupy"
 
-#: cogs/alliance/__init__.py:139
+#: cogs/alliance/__init__.py:141
 msgid "Invite a guild to your alliance."
 msgstr "Inviter en klan til alliansen din."
 
-#: cogs/alliance/__init__.py:143
+#: cogs/alliance/__init__.py:145
 #, python-brace-format
 msgid ""
 "`<newleader>` - A user with a character who leads a guild.\n"
 "\n"
 "            Invite a guild to your alliance. All allied guilds will benefit "
-"from your city's buildings. Once you’re allied with another guild, it will "
+"from your city's buildings. Once you're allied with another guild, it will "
 "be shown in {prefix}alliance.\n"
 "            The other guild can't be allied with another alliance or own a "
 "city in order to be invited.\n"
@@ -10936,38 +10953,28 @@ msgid ""
 "            Only the alliance leader can use this command.\n"
 "            (This command has a cooldown of 5 minutes.)"
 msgstr ""
-"`<newleader>` – En bruker med en karakter som leder en klan.\n"
-"\n"
-"            Inviter en klan til alliansen din. Alle allierte klaner vil dra "
-"nytte av byens bygninger. Når du er alliert med en annen klan, vil den vises "
-"i {prefix}alliance.\n"
-"            Den andre klanen kan ikke være alliert med en annen allianse "
-"eller eie en by for å bli invitert.\n"
-"\n"
-"            Bare allianselederen kan bruke denne kommandoen.\n"
-"            (Denne kommandoen har en nedkjøling på 5 minutter.)"
 
-#: cogs/alliance/__init__.py:153
+#: cogs/alliance/__init__.py:155
 msgid "That member is not in a guild."
 msgstr "Det medlemmet er ikke i en klan."
 
-#: cogs/alliance/__init__.py:159
+#: cogs/alliance/__init__.py:161
 msgid "That member is not the leader of their guild."
 msgstr "Det medlemmet er ikke lederen av klanen deres."
 
-#: cogs/alliance/__init__.py:165
+#: cogs/alliance/__init__.py:167
 msgid "This member's guild is already part of your alliance."
 msgstr "Dette medlemmets klan er allerede en del av alliansen din."
 
-#: cogs/alliance/__init__.py:171
+#: cogs/alliance/__init__.py:173
 msgid "This guild is already in an alliance."
 msgstr "Denne klanen er allerede i en allianse."
 
-#: cogs/alliance/__init__.py:179
+#: cogs/alliance/__init__.py:181
 msgid "This guild is the leader of another alliance."
 msgstr "Denne klanen er leder for en annen allianse."
 
-#: cogs/alliance/__init__.py:184
+#: cogs/alliance/__init__.py:186
 #, python-brace-format
 msgid ""
 "{newleader}, {author} invites you to join their alliance. React to join now."
@@ -10975,25 +10982,25 @@ msgstr ""
 "{newleader}, {author} inviterer deg til å bli med i alliansen deres. Reager "
 "for å bli med nå."
 
-#: cogs/alliance/__init__.py:198
+#: cogs/alliance/__init__.py:200
 msgid "Your alliance is full."
 msgstr "Alliansen din er full."
 
-#: cogs/alliance/__init__.py:205
+#: cogs/alliance/__init__.py:207
 #, python-brace-format
 msgid "**{user}'s guild is a single-guild alliance and owns a city."
 msgstr "**{user}s klan er en enkeltlaugallianse og eier en by."
 
-#: cogs/alliance/__init__.py:215
+#: cogs/alliance/__init__.py:217
 #, python-brace-format
 msgid "**{newguild}** is now part of your alliance, {user}!"
 msgstr "**{newguild}** er nå en del av alliansen din, {user}!"
 
-#: cogs/alliance/__init__.py:221
+#: cogs/alliance/__init__.py:223
 msgid "Leave your alliance"
 msgstr "Forlat alliansen din"
 
-#: cogs/alliance/__init__.py:225
+#: cogs/alliance/__init__.py:227
 #, python-brace-format
 msgid ""
 "Leave your alliance. Once you left your alliance, you will no longer benefit "
@@ -11010,19 +11017,19 @@ msgstr ""
 "kommandoen `{prefix}alliance kick`).\n"
 "            Bare klan ledere kan bruke denne kommandoen."
 
-#: cogs/alliance/__init__.py:236
+#: cogs/alliance/__init__.py:238
 msgid "You are the alliance's leading guild and cannot leave it!"
 msgstr "Du er alliansens ledende klan og kan ikke forlate den!"
 
-#: cogs/alliance/__init__.py:242
+#: cogs/alliance/__init__.py:244
 msgid "Your guild left the alliance."
 msgstr "Klanen din forlot alliansen."
 
-#: cogs/alliance/__init__.py:246
+#: cogs/alliance/__init__.py:248
 msgid "Kick a guild from your alliance"
 msgstr "Spark en klan fra alliansen din"
 
-#: cogs/alliance/__init__.py:250
+#: cogs/alliance/__init__.py:252
 msgid ""
 "`<guild_to_kick>` -  A guild's name or ID\n"
 "\n"
@@ -11038,7 +11045,7 @@ msgstr ""
 "\n"
 "            Bare allianselederen kan bruke denne kommandoen."
 
-#: cogs/alliance/__init__.py:268
+#: cogs/alliance/__init__.py:270
 #, python-brace-format
 msgid ""
 "Cannot find guild `{guild_to_kick}`. Are you sure that's the right name/ID?"
@@ -11046,29 +11053,29 @@ msgstr ""
 "Kan ikke finne klan `{guild_to_kick}`. Er du sikker på at det er riktig navn/"
 "ID?"
 
-#: cogs/alliance/__init__.py:273
+#: cogs/alliance/__init__.py:275
 msgid "That won't work."
 msgstr "Det vil ikke fungere."
 
-#: cogs/alliance/__init__.py:276
+#: cogs/alliance/__init__.py:278
 msgid "This guild is not in your alliance."
 msgstr "Denne klanen er ikke i alliansen din."
 
-#: cogs/alliance/__init__.py:279
+#: cogs/alliance/__init__.py:281
 #, python-brace-format
 msgid "Do you really want to kick **{guild}** from your alliance?"
 msgstr "Vil du virkelig sparke **{guild}** fra alliansen din?"
 
-#: cogs/alliance/__init__.py:291
+#: cogs/alliance/__init__.py:293
 #, python-brace-format
 msgid "**{guild}** is no longer part of your alliance."
 msgstr "**{guild}** er ikke lenger en del av alliansen din."
 
-#: cogs/alliance/__init__.py:304
+#: cogs/alliance/__init__.py:306
 msgid "Build buildings or defenses"
 msgstr "Bygg bygninger eller forsvar"
 
-#: cogs/alliance/__init__.py:308
+#: cogs/alliance/__init__.py:310
 #, python-brace-format
 msgid ""
 "Build buildings `{prefix}alliance build building` or defenses `{prefix}"
@@ -11077,7 +11084,7 @@ msgstr ""
 "Bygg bygninger `{prefix}alliance build building` eller forsvar `{prefix}"
 "alliance build defense`."
 
-#: cogs/alliance/__init__.py:311
+#: cogs/alliance/__init__.py:313
 msgid ""
 "Please use one of these subcommands:\n"
 "\n"
@@ -11085,11 +11092,11 @@ msgstr ""
 "Vennligst bruk en av disse underkommandoene:\n"
 "\n"
 
-#: cogs/alliance/__init__.py:317
+#: cogs/alliance/__init__.py:319
 msgid "Upgrade a building in your city."
 msgstr "Oppgrader en bygning i byen din."
 
-#: cogs/alliance/__init__.py:321
+#: cogs/alliance/__init__.py:323
 #, python-brace-format
 msgid ""
 "`<name>` - The name of the building to upgrade.\n"
@@ -11126,7 +11133,7 @@ msgstr ""
 "            Bare allianselederen kan bruke denne kommandoen.\n"
 "            (Denne kommandoen har en nedkjøling på 5 minutter)"
 
-#: cogs/alliance/__init__.py:343
+#: cogs/alliance/__init__.py:345
 #, python-brace-format
 msgid ""
 "Invalid building. Please use `{prefix}{cmd} [thief/raid/trade/adventure]` or "
@@ -11135,11 +11142,11 @@ msgstr ""
 "Ugyldig bygning. Vennligst bruk `{prefix}{cmd} [thief/raid/trade/adventure]` "
 "eller sjekk mulige bygninger i byen din."
 
-#: cogs/alliance/__init__.py:351
+#: cogs/alliance/__init__.py:353
 msgid "This building is fully upgraded."
 msgstr "Denne bygningen er fullstendig oppgradert."
 
-#: cogs/alliance/__init__.py:355
+#: cogs/alliance/__init__.py:357
 #, python-brace-format
 msgid ""
 "Are you sure you want to upgrade the **{name} building** to level "
@@ -11148,34 +11155,34 @@ msgstr ""
 "Er du sikker på at du vil oppgradere **{name} bygningen** til nivå "
 "{new_level}? Dette vil koste $**{price}**."
 
-#: cogs/alliance/__init__.py:364
+#: cogs/alliance/__init__.py:366
 #, python-brace-format
 msgid ""
 "Your guild doesn't have enough money to upgrade the city's {name} building."
 msgstr "Klanen din har ikke nok penger til å oppgradere byens {name} bygning."
 
-#: cogs/alliance/__init__.py:391
+#: cogs/alliance/__init__.py:393
 #, python-brace-format
 msgid ""
-"Successfully upgraded the city's {name} building to level **{new_level}**"
-msgstr "Oppgradert byens {name} bygning til nivå **{new_level}**"
+"Successfully upgraded the city's {name} building to level **{new_level}**."
+msgstr ""
 
-#: cogs/alliance/__init__.py:400
+#: cogs/alliance/__init__.py:402
 msgid "Build a defense in your city."
 msgstr "Bygg et forsvar i byen din."
 
-#: cogs/alliance/__init__.py:404
+#: cogs/alliance/__init__.py:406
 msgid ""
 "Build some defensive buildings or place troops in your cities. The following "
 "are available:\n"
 "\n"
-"            Cannons: 250HP, 60 defense for $200,000\n"
-"            Archers: 500HP, 50 defemse for $100,000\n"
-"            Outer Wall: 20,000HP, 0 defense for $500,000\n"
-"            Inner Wall: 10,000HP, 0 defense for $200,000\n"
-"            Moat: 5,000HP, 25 defense for $150,000\n"
-"            Tower: 1,000HP, 50 defense for $200,000\n"
-"            Ballista: 250HP, 30 defense for $100,000\n"
+"            Cannons: 500HP, 60 defense for $200,000\n"
+"            Archers: 1,000HP, 50 defense for $100,000\n"
+"            Outer Wall: 40,000HP, 0 defense for $500,000\n"
+"            Inner Wall: 20,000HP, 0 defense for $200,000\n"
+"            Moat: 10,000HP, 25 defense for $150,000\n"
+"            Tower: 2,500HP, 50 defense for $200,000\n"
+"            Ballista: 500HP, 30 defense for $100,000\n"
 "\n"
 "            Any city can have a maximum of 10 defenses. When attacked, the "
 "buildings with the most HP are targeted first.\n"
@@ -11186,62 +11193,41 @@ msgid ""
 "            Only the alliance leader can use this command.\n"
 "            (This command has a cooldown of 1 minutes)"
 msgstr ""
-"Bygg noen defensive bygninger eller plasser tropper i byene dine. Følgende "
-"er tilgjengelige:\n"
-"\n"
-"            Kanoner: 250 HK, 60 forsvar for $200 000\n"
-"            Bueskyttere: 500 HK, 50 forsvar for $100 000\n"
-"            Yttervegg: 20 000 HK, 0 forsvar for $ 500 000\n"
-"            Innervegg: 10 000 HK, 0 forsvar for $200 000\n"
-"            Moat: 5000 HK, 25 forsvar for $150 000\n"
-"            Tårn: 1000 HK, 50 forsvar for $200 000\n"
-"            Ballista: 250 HK, 30 forsvar for $100 000\n"
-"\n"
-"            Enhver by kan ha maksimalt 10 forsvar. Ved angrep blir "
-"bygningene med mest HP målrettet først.\n"
-"            Du kan ikke bygge forsvar mens byen din er under angrep. Prisen "
-"på forsvaret fjernes fra ledende laugs bank.\n"
-"\n"
-"            Denne kommandoen krever at alliansen din eier en by.\n"
-"            Bare allianselederen kan bruke denne kommandoen.\n"
-"            (Denne kommandoen har en nedkjøling på 1 minutt)"
 
-#: cogs/alliance/__init__.py:433
+#: cogs/alliance/__init__.py:435
 #, python-brace-format
 msgid "Invalid defense. Please use `{prefix}{cmd} [{buildings}]`."
 msgstr "Ugyldig forsvar. Vennligst bruk `{prefix}{cmd} [{buildings}]`."
 
-#: cogs/alliance/__init__.py:449
+#: cogs/alliance/__init__.py:451
 msgid "Your city is under attack. Defenses cannot be built."
 msgstr "Byen din er under angrep. Forsvar kan ikke bygges."
 
-#: cogs/alliance/__init__.py:456
+#: cogs/alliance/__init__.py:458
 msgid "You may only build up to 10 defenses."
 msgstr "Du kan bare bygge opptil 10 forsvar."
 
-#: cogs/alliance/__init__.py:459
+#: cogs/alliance/__init__.py:461
 #, python-brace-format
 msgid ""
-"Are you sure you want to build a **{defense}**? This will cost $**{price}**."
+"Are you sure you want to build a **{defense}**? This will cost **${price}**."
 msgstr ""
-"Er du sikker på at du vil bygge et **{defense}**? Dette vil koste "
-"$**{price}**."
 
-#: cogs/alliance/__init__.py:470
+#: cogs/alliance/__init__.py:472
 #, python-brace-format
 msgid "Your guild doesn't have enough money to build a {defense}."
 msgstr "Klanen din har ikke nok penger til å bygge et {defense}."
 
-#: cogs/alliance/__init__.py:496
+#: cogs/alliance/__init__.py:498
 #, python-brace-format
 msgid "Successfully built a {defense}."
 msgstr "Vellykket bygget et {defense}."
 
-#: cogs/alliance/__init__.py:499
+#: cogs/alliance/__init__.py:501
 msgid "Lists your city's buildings."
 msgstr "Viser byens bygninger."
 
-#: cogs/alliance/__init__.py:503
+#: cogs/alliance/__init__.py:505
 #, python-brace-format
 msgid ""
 "Lists all buildings in your city, along with their level. These buildings "
@@ -11274,54 +11260,51 @@ msgstr ""
 "\n"
 "            Alliansen din må eie en by for å bruke denne kommandoen."
 
-#: cogs/alliance/__init__.py:522
+#: cogs/alliance/__init__.py:524
 #, python-brace-format
 msgid "{city}'s buildings"
 msgstr "{city} sine bygninger"
 
-#: cogs/alliance/__init__.py:529
+#: cogs/alliance/__init__.py:531
 #, python-brace-format
 msgid "Level {level}"
 msgstr "Nivå {level}"
 
-#: cogs/alliance/__init__.py:535
+#: cogs/alliance/__init__.py:537
 msgid "Lists your city's defenses."
 msgstr "Viser byens forsvar."
 
-#: cogs/alliance/__init__.py:539
+#: cogs/alliance/__init__.py:541
 msgid ""
-"Lists your city’s defenses and view the HP left for each.\n"
+"Lists your city's defenses and view the HP left for each.\n"
 "\n"
 "            Your alliance must own a city to use this command."
 msgstr ""
-"Viser byens forsvar og HP igjen for hver by.\n"
-"\n"
-"            Alliansen din må eie en by for å bruke denne kommandoen."
 
-#: cogs/alliance/__init__.py:556
+#: cogs/alliance/__init__.py:558
 #, python-brace-format
 msgid "{city}'s defenses"
 msgstr "{city} sitt forsvar"
 
-#: cogs/alliance/__init__.py:563
+#: cogs/alliance/__init__.py:565
 #, python-brace-format
 msgid "HP: {hp}, Defense: {defense}"
 msgstr "HP: {hp}, Forsvar: {defense}"
 
-#: cogs/alliance/__init__.py:570
+#: cogs/alliance/__init__.py:572
 msgid "None built"
 msgstr "Ingen bygget"
 
-#: cogs/alliance/__init__.py:571
+#: cogs/alliance/__init__.py:573
 #, python-brace-format
 msgid "Use {prefix}alliance build defense [name]"
 msgstr "Bruk {prefix}alliance build defense [navn]"
 
-#: cogs/alliance/__init__.py:580
+#: cogs/alliance/__init__.py:582
 msgid "Abandon your city"
 msgstr "Forlat byen din"
 
-#: cogs/alliance/__init__.py:584
+#: cogs/alliance/__init__.py:586
 msgid ""
 "Abandoning your city will immediately make all alliance members lose all "
 "passive bonuses offered by the city's buildings and the city ownership will "
@@ -11337,20 +11320,20 @@ msgstr ""
 "            Alliansen din må eie en by for å bruke denne kommandoen.\n"
 "            Bare allianselederen kan bruke denne kommandoen."
 
-#: cogs/alliance/__init__.py:590
+#: cogs/alliance/__init__.py:592
 msgid "Are you sure you want to give up control of your city?"
 msgstr "Er du sikker på at du vil gi opp kontrollen over byen din?"
 
-#: cogs/alliance/__init__.py:598
+#: cogs/alliance/__init__.py:600
 #, python-brace-format
 msgid "{city} was abandoned."
 msgstr "{city} ble forlatt."
 
-#: cogs/alliance/__init__.py:604
+#: cogs/alliance/__init__.py:606
 msgid "Take over a city."
 msgstr "Ta over en by."
 
-#: cogs/alliance/__init__.py:608
+#: cogs/alliance/__init__.py:610
 #, python-brace-format
 msgid ""
 "`<city>` - The name of a city. You can check the city names with `{prefix}"
@@ -11376,27 +11359,27 @@ msgstr ""
 "\n"
 "            Å okkupere en by setter den på en nedkjøling på 10 minutter, i "
 "løpet av denne tiden kan den ikke okkuperes av en annen allianse.\n"
-"            Å okkupere en by setter også alle bygningene tilbake til nivå 0."
-"\n"
+"            Å okkupere en by setter også alle bygningene tilbake til nivå "
+"0.\n"
 "\n"
 "            Du kan ikke okkupere en by hvis alliansen din allerede eier en.\n"
 "            Bare allianselederen kan bruke denne kommandoen."
 
-#: cogs/alliance/__init__.py:620
+#: cogs/alliance/__init__.py:622
 msgid "Invalid city name."
 msgstr "Ugyldig bynavn."
 
-#: cogs/alliance/__init__.py:629
+#: cogs/alliance/__init__.py:631
 #, python-brace-format
 msgid "The city is occupied by **{amount}** defensive fortifications."
 msgstr "Byen er okkupert av **{amount}** defensive festningsverk."
 
-#: cogs/alliance/__init__.py:634
+#: cogs/alliance/__init__.py:636
 #, python-brace-format
 msgid "{city} was just occupied and stands under protection."
 msgstr "{city} var nettopp okkupert og står under beskyttelse."
 
-#: cogs/alliance/__init__.py:646
+#: cogs/alliance/__init__.py:648
 #, python-brace-format
 msgid ""
 "Your alliance now rules **{city}**. You should immediately buy defenses. You "
@@ -11405,11 +11388,11 @@ msgstr ""
 "Alliansen din styrer nå **{city}**. Du bør umiddelbart kjøpe forsvar. Du har "
 "**15 minutter** på deg til å bygge forsvar før andre kan okkupere byen!"
 
-#: cogs/alliance/__init__.py:660
+#: cogs/alliance/__init__.py:662
 msgid "Attack a city"
 msgstr "Angrip en by"
 
-#: cogs/alliance/__init__.py:664
+#: cogs/alliance/__init__.py:666
 #, python-brace-format
 msgid ""
 "`<city>` - The name of a city. You can check the city names with `{prefix}"
@@ -11417,14 +11400,16 @@ msgid ""
 "\n"
 "            Attack a city, reducing its defenses to potentially take it "
 "over.\n"
-"            Attacking a city will activate a grace period of 10 minutes, "
+"            Attacking a city will activate a grace period of 12 hours, "
 "during which time it cannot be attacked again.\n"
+"            Initiating an attack will cost the alliance leader's guild "
+"money, depending on the buildings in the defending city.\n"
 "\n"
-"            When using this command, the bot will send a link used to join "
-"the attack. Each member of the alliance can join.\n"
-"            Ten minutes after the link was sent, the users who joined will "
-"be gathered, their attack and defense depending on their equipped items, "
-"class and raid bonuses and their raidstats, and start the attack.\n"
+"            When using this command, the bot will send a message with a "
+"button used to join the attack. Each member of the alliance can join.\n"
+"            Ten minutes after the message was sent, the users who joined "
+"will be gathered, their attack and defense depending on their equipped "
+"items, class and raid bonuses and their raidstats, and start the attack.\n"
 "\n"
 "            During the attack, the highest HP defenses will be attacked "
 "first. All attackers' damage will be summed up.\n"
@@ -11442,86 +11427,78 @@ msgid ""
 "            Only the alliance leader can use this command.\n"
 "            (This command has a cooldown of 2 hours.)"
 msgstr ""
-"`<by>` – Navnet på en by. Du kan sjekke bynavnene med `{prefix}cities`\n"
-"\n"
-"            Angrip en by, reduser forsvaret for å potensielt overta den.\n"
-"            Å angripe en by vil aktivere en utsettelsesperiode på 10 "
-"minutter, i løpet av denne tiden kan den ikke angripes igjen.\n"
-"\n"
-"            Når du bruker denne kommandoen, vil botten sende en lenke som "
-"brukes til å bli med i angrepet. Hvert medlem av alliansen kan bli med.\n"
-"            Ti minutter etter at lenken ble sendt, vil brukerne som ble med "
-"bli samlet, deres angrep og forsvar avhengig av utstyret deres, klasse og "
-"raidbonuser og deres raidstats, og starte angrepet.\n"
-"\n"
-"            Under angrepet vil det høyeste HP-forsvaret bli angrepet først. "
-"Alle angripernes skade vil bli oppsummert.\n"
-"            Forsvarets skade summerer opp og skader enten angriperen med "
-"lavest HP eller angriperen med høyest skade.\n"
-"\n"
-"            Hvis et forsvar når null HP, vil det bli fjernet fra byen, det "
-"vil ikke regenerere HP etter at angrepet er over.\n"
-"            Angripere som når null HP vil også bli fjernet fra angrepet.\n"
-"\n"
-"            Hvis en bys forsvar ble ødelagt, kan alliansen din ta okkupere "
-"byen med en gang (`{prefix}alliance occupy`)\n"
-"\n"
-"            Bare allianselederen kan bruke denne kommandoen.\n"
-"            (Denne kommandoen har en nedkjøling på 2 timer.)"
 
-#: cogs/alliance/__init__.py:685
+#: cogs/alliance/__init__.py:688
 msgid "Invalid city."
 msgstr "Ugyldig by."
 
-#: cogs/alliance/__init__.py:690 cogs/alliance/__init__.py:721
+#: cogs/alliance/__init__.py:693 cogs/alliance/__init__.py:745
 #, python-brace-format
 msgid "**{city}** has just been attacked. Have some mercy!"
 msgstr "**{city}** har nettopp blitt angrepet. Ha litt nåde!"
 
-#: cogs/alliance/__init__.py:694 cogs/alliance/__init__.py:725
+#: cogs/alliance/__init__.py:697 cogs/alliance/__init__.py:749
 #, python-brace-format
 msgid "**{city}** is already under attack."
 msgstr "**{city}** er allerede under angrep."
 
-#: cogs/alliance/__init__.py:716
+#: cogs/alliance/__init__.py:740
 msgid "The city is without defenses already."
 msgstr "Byen er allerede uten forsvar."
 
-#: cogs/alliance/__init__.py:734
+#: cogs/alliance/__init__.py:757
+#, python-brace-format
+msgid ""
+"**{city}** has excellent infrastructure and attacking it would cost **"
+"${attacking_cost}**, but your guild only has **${leading_guild_money}**."
+msgstr ""
+
+#: cogs/alliance/__init__.py:767
+#, python-brace-format
+msgid ""
+"**{city}** has excellent infrastructure and attacking it would cost **"
+"${attacking_cost}**, do you want to proceed?"
+msgstr ""
+
+#: cogs/alliance/__init__.py:778
 msgid "Join the attack!"
 msgstr "Bli med i angrepet!"
 
-#: cogs/alliance/__init__.py:735
+#: cogs/alliance/__init__.py:779
 msgid "You joined the attack."
 msgstr "Du ble med i angrepet."
 
-#: cogs/alliance/__init__.py:741
+#: cogs/alliance/__init__.py:785
 #, python-brace-format
 msgid ""
 "**{user}** wants to attack **{city}** with **{alliance_name}**'s alliance."
 msgstr ""
 "**{user}** ønsker å angripe **{city}** med **{alliance_name}** sin allianse."
 
-#: cogs/alliance/__init__.py:780
+#: cogs/alliance/__init__.py:837
+msgid "The money for attacking the city has been spent in the meantime."
+msgstr ""
+
+#: cogs/alliance/__init__.py:843
 msgid "Noone joined."
 msgstr "Ingen ble med."
 
-#: cogs/alliance/__init__.py:788
+#: cogs/alliance/__init__.py:851
 #, python-brace-format
 msgid "Attack on **{city}** starting with **{amount}** attackers!"
 msgstr "Angrep på **{city}** starter med **{amount}** angripere!"
 
-#: cogs/alliance/__init__.py:810 cogs/alliance/__init__.py:834
-#: cogs/alliance/__init__.py:871 cogs/alliance/__init__.py:882
+#: cogs/alliance/__init__.py:873 cogs/alliance/__init__.py:897
+#: cogs/alliance/__init__.py:934 cogs/alliance/__init__.py:945
 msgid "Alliance Wars"
 msgstr "Allianse kriger"
 
-#: cogs/alliance/__init__.py:812
+#: cogs/alliance/__init__.py:875
 #, python-brace-format
 msgid "**{alliance_name}** destroyed a {defense} in {city}!"
 msgstr "**{alliance_name}** ødela et {defense} i {city}!"
 
-#: cogs/alliance/__init__.py:836
+#: cogs/alliance/__init__.py:899
 #, python-brace-format
 msgid ""
 "**{alliance_name}** hit a {defense} in {city} for {damage} damage! (Now {hp} "
@@ -11530,31 +11507,31 @@ msgstr ""
 "**{alliance_name}** traff en {defense} i {city} for {damage} skade! (Nå {hp} "
 "HP)"
 
-#: cogs/alliance/__init__.py:872
+#: cogs/alliance/__init__.py:935
 #, python-brace-format
 msgid "**{user}** got killed in {city}!"
 msgstr "**{user}** ble drept i {city}!"
 
-#: cogs/alliance/__init__.py:884
+#: cogs/alliance/__init__.py:947
 #, python-brace-format
 msgid "**{user}** got hit in {city} for {damage} damage! (Now {hp} HP)"
 msgstr "**{user}** ble skadet i {city} for {damage} skade! (Nå {hp} HP)"
 
-#: cogs/alliance/__init__.py:905
+#: cogs/alliance/__init__.py:968
 #, python-brace-format
 msgid "**{alliance_name}** destroyed defenses in **{city}**!"
 msgstr "**{alliance_name}** ødela forsvar i **{city}**!"
 
-#: cogs/alliance/__init__.py:915
+#: cogs/alliance/__init__.py:978
 #, python-brace-format
 msgid "**{alliance_name}** failed to destroy defenses in **{city}**!"
 msgstr "**{alliance_name}** klarte ikke å ødelegge forsvar i **{city}**!"
 
-#: cogs/alliance/__init__.py:924
+#: cogs/alliance/__init__.py:987
 msgid "Lists alliance-specific cooldowns"
 msgstr "Viser alliansespesifikke nedkjølinger"
 
-#: cogs/alliance/__init__.py:929
+#: cogs/alliance/__init__.py:992
 msgid ""
 "Lists alliance-specific cooldowns, meaning all alliance members have these "
 "cooldowns and cannot use the commands."
@@ -11562,7 +11539,7 @@ msgstr ""
 "Viser alliansespesifikke nedkjølinger, noe som betyr at alle "
 "alliansemedlemmer har disse nedkjølingene og kan ikke bruke kommandoene."
 
-#: cogs/alliance/__init__.py:940
+#: cogs/alliance/__init__.py:1003
 msgid "Your alliance does not have any active cooldown at the moment."
 msgstr "Alliansen din har ingen aktive nedkjølinger for øyeblikket."
 
@@ -11923,12 +11900,12 @@ msgstr ""
 "tilgjengelige alternativer. (valgfritt og standard til klassisk)\n"
 "            `[speed]` – Spillhastigheten som skal spilles, se tilgjengelige "
 "alternativer nedenfor. (valgfritt og standard til Normal)\n"
-"            `[min_players]` - Minimum spillere som trengs for å spille. ("
-"valgfritt og standard avhengig av spillmodus: Klassisk: 5, Ubalansert: 5, "
+"            `[min_players]` - Minimum spillere som trengs for å spille. "
+"(valgfritt og standard avhengig av spillmodus: Klassisk: 5, Ubalansert: 5, "
 "Huntergame: 8, Villagergame: 5, Valentines: 8, IdleRPG: 5)\n"
 "\n"
-"            Starter et spill med Werewolf. Finn varulvene før de finner deg!"
-"\n"
+"            Starter et spill med Werewolf. Finn varulvene før de finner "
+"deg!\n"
 "            Målet ditt om å vinne er angitt på rollen du har.\n"
 "            **Spillmoduser:** `Classic` (standard), `Imbalanced`, "
 "`Huntergame`, `Villagergame`, `Valentines`, `IdleRPG`. Bruk `{prefix}ww "
@@ -12037,7 +12014,8 @@ msgstr ""
 
 #: cogs/werewolf/__init__.py:238
 msgid "An error happened during the Werewolf. Please try again!"
-msgstr "Det skjedde en feil under Werewolf spillet. Vær så snill, prøv på nytt!"
+msgstr ""
+"Det skjedde en feil under Werewolf spillet. Vær så snill, prøv på nytt!"
 
 #: cogs/werewolf/__init__.py:248
 msgid "See available werewolf game modes"
@@ -12163,7 +12141,8 @@ msgstr "Du er ikke med i spillet {author}."
 #: cogs/werewolf/__init__.py:318
 #, python-brace-format
 msgid "You asked for your role in {channel} but your info couldn't be found."
-msgstr "Du ba om rollen din i {channel}, men informasjonen din ble ikke funnet."
+msgstr ""
+"Du ba om rollen din i {channel}, men informasjonen din ble ikke funnet."
 
 #: cogs/werewolf/__init__.py:326
 #, python-brace-format
@@ -12178,8 +12157,8 @@ msgid ""
 "\n"
 "{description}"
 msgstr ""
-"Sjekker rollen din i {ww_channel}... Du er en "
-"**{role_name}**!{initial_role_info}\n"
+"Sjekker rollen din i {ww_channel}... Du er en **{role_name}**!"
+"{initial_role_info}\n"
 "\n"
 "{description}"
 
@@ -12530,7 +12509,8 @@ msgstr "Aktiver eller deaktiver automatiske eventyrpåminnelser"
 
 #: cogs/scheduler/__init__.py:351
 msgid "Toggles automatic adventure reminders when you finish an adventure."
-msgstr "Slår på automatiske eventyrpåminnelser når du er ferdig med et eventyr."
+msgstr ""
+"Slår på automatiske eventyrpåminnelser når du er ferdig med et eventyr."
 
 #: cogs/scheduler/__init__.py:369
 msgid "Successfully opted in to automatic adventure reminders."
@@ -12874,8 +12854,8 @@ msgstr ""
 "Du er Advokaten som kan hjelpe landsbyen med å stoppe deres feil "
 "beslutninger ved å protestere mot nominasjonsprosessen og avslutte dagen "
 "uten å gå videre til noen avstemningsfase. Bare reis den kraftige "
-"\"innvending!\" protester for å bruke evnen din en gang per kamp. ("
-"Utropstegnet er valgfritt.)"
+"\"innvending!\" protester for å bruke evnen din en gang per kamp. "
+"(Utropstegnet er valgfritt.)"
 
 #: utils/werewolf.py:227
 msgid ""
@@ -13076,8 +13056,8 @@ msgid ""
 "{speed} speed activated - All action timers are limited to {timer} seconds.**"
 msgstr ""
 "**Velkommen til Werewolf {mode}!\n"
-"{speed} hastighet aktivert – Alle handlingstidtakere er begrenset til {timer}"
-" sekunder.**"
+"{speed} hastighet aktivert – Alle handlingstidtakere er begrenset til "
+"{timer} sekunder.**"
 
 #: utils/werewolf.py:630
 msgid ""
@@ -13509,8 +13489,8 @@ msgid ""
 "werewolves tonight.\n"
 "{game_link}"
 msgstr ""
-"Du valgte ikke noen, slowpoke. Ingen vil bli beskyttet mot Varulvene i kveld."
-"\n"
+"Du valgte ikke noen, slowpoke. Ingen vil bli beskyttet mot Varulvene i "
+"kveld.\n"
 "{game_link}"
 
 #: utils/werewolf.py:1606
@@ -14201,7 +14181,8 @@ msgstr "Elskere"
 
 #: utils/werewolf.py:2816
 msgid "You are going to die. Use your last breath to choose a new Sheriff."
-msgstr "Du kommer til å dø. Bruk ditt siste åndedrag til å velge en ny sheriff."
+msgstr ""
+"Du kommer til å dø. Bruk ditt siste åndedrag til å velge en ny sheriff."
 
 #: utils/werewolf.py:2821
 #, python-brace-format
@@ -14248,3 +14229,185 @@ msgid ""
 msgstr ""
 "📢 {sheriff} ble valgt til å være den nye 🎖️ **Sheriff**. **Sheriffens stemme "
 "teller som det dobbelte.**"
+
+#~ msgid ""
+#~ "`[member]` - A discord User whose avatar to invert; defaults to oneself\n"
+#~ "\n"
+#~ "            Invert the colors in someone's avatar.\n"
+#~ "\n"
+#~ "            (This command has a channel cooldown of 15 seconds.)"
+#~ msgstr ""
+#~ "`[member]` - En discord bruker hvis avatar skal inverteres; misligholder "
+#~ "seg selv\n"
+#~ "\n"
+#~ "            Inverter fargene i noens avatar.\n"
+#~ "\n"
+#~ "            (Denne kommandoen har en kanalnedkjøling på 15 sekunder.)"
+
+#~ msgid ""
+#~ "`[member]` - A discord User whose avatar to oil-paint; defaults to "
+#~ "oneself\n"
+#~ "\n"
+#~ "            Creates an oil-painting effect on someone's avatar.\n"
+#~ "\n"
+#~ "            (This command has a channel cooldown of 15 seconds.)"
+#~ msgstr ""
+#~ "`[medlem]` – En discord bruker sin avatar til oljemaling; misligholder "
+#~ "seg selv\n"
+#~ "\n"
+#~ "            Skaper en oljemalende effekt på noens avatar.\n"
+#~ "\n"
+#~ "            (Denne kommandoen har en kanalnedkjøling på 15 sekunder.)"
+
+#~ msgid ""
+#~ "You did not enter a valid crate rarity. Possible ones are: common (c), "
+#~ "uncommon (u), rare (r), magic (m) and legendary (l)."
+#~ msgstr ""
+#~ "Du oppga ikke en gyldig kasse sjeldenhet. Mulige er: vanlig (c), uvanlig "
+#~ "(u), sjelden (r), magi (m) og legendarisk (l)."
+
+#, python-brace-format
+#~ msgid ""
+#~ "`<newleader>` - A user with a character who leads a guild.\n"
+#~ "\n"
+#~ "            Invite a guild to your alliance. All allied guilds will "
+#~ "benefit from your city's buildings. Once you’re allied with another "
+#~ "guild, it will be shown in {prefix}alliance.\n"
+#~ "            The other guild can't be allied with another alliance or own "
+#~ "a city in order to be invited.\n"
+#~ "\n"
+#~ "            Only the alliance leader can use this command.\n"
+#~ "            (This command has a cooldown of 5 minutes.)"
+#~ msgstr ""
+#~ "`<newleader>` – En bruker med en karakter som leder en klan.\n"
+#~ "\n"
+#~ "            Inviter en klan til alliansen din. Alle allierte klaner vil "
+#~ "dra nytte av byens bygninger. Når du er alliert med en annen klan, vil "
+#~ "den vises i {prefix}alliance.\n"
+#~ "            Den andre klanen kan ikke være alliert med en annen allianse "
+#~ "eller eie en by for å bli invitert.\n"
+#~ "\n"
+#~ "            Bare allianselederen kan bruke denne kommandoen.\n"
+#~ "            (Denne kommandoen har en nedkjøling på 5 minutter.)"
+
+#, python-brace-format
+#~ msgid ""
+#~ "Successfully upgraded the city's {name} building to level **{new_level}**"
+#~ msgstr "Oppgradert byens {name} bygning til nivå **{new_level}**"
+
+#~ msgid ""
+#~ "Build some defensive buildings or place troops in your cities. The "
+#~ "following are available:\n"
+#~ "\n"
+#~ "            Cannons: 250HP, 60 defense for $200,000\n"
+#~ "            Archers: 500HP, 50 defemse for $100,000\n"
+#~ "            Outer Wall: 20,000HP, 0 defense for $500,000\n"
+#~ "            Inner Wall: 10,000HP, 0 defense for $200,000\n"
+#~ "            Moat: 5,000HP, 25 defense for $150,000\n"
+#~ "            Tower: 1,000HP, 50 defense for $200,000\n"
+#~ "            Ballista: 250HP, 30 defense for $100,000\n"
+#~ "\n"
+#~ "            Any city can have a maximum of 10 defenses. When attacked, "
+#~ "the buildings with the most HP are targeted first.\n"
+#~ "            You may not build defenses while your city is under attack. "
+#~ "The price of the defense is removed from the leading guild's bank.\n"
+#~ "\n"
+#~ "            This command requires your alliance to own a city.\n"
+#~ "            Only the alliance leader can use this command.\n"
+#~ "            (This command has a cooldown of 1 minutes)"
+#~ msgstr ""
+#~ "Bygg noen defensive bygninger eller plasser tropper i byene dine. "
+#~ "Følgende er tilgjengelige:\n"
+#~ "\n"
+#~ "            Kanoner: 250 HK, 60 forsvar for $200 000\n"
+#~ "            Bueskyttere: 500 HK, 50 forsvar for $100 000\n"
+#~ "            Yttervegg: 20 000 HK, 0 forsvar for $ 500 000\n"
+#~ "            Innervegg: 10 000 HK, 0 forsvar for $200 000\n"
+#~ "            Moat: 5000 HK, 25 forsvar for $150 000\n"
+#~ "            Tårn: 1000 HK, 50 forsvar for $200 000\n"
+#~ "            Ballista: 250 HK, 30 forsvar for $100 000\n"
+#~ "\n"
+#~ "            Enhver by kan ha maksimalt 10 forsvar. Ved angrep blir "
+#~ "bygningene med mest HP målrettet først.\n"
+#~ "            Du kan ikke bygge forsvar mens byen din er under angrep. "
+#~ "Prisen på forsvaret fjernes fra ledende laugs bank.\n"
+#~ "\n"
+#~ "            Denne kommandoen krever at alliansen din eier en by.\n"
+#~ "            Bare allianselederen kan bruke denne kommandoen.\n"
+#~ "            (Denne kommandoen har en nedkjøling på 1 minutt)"
+
+#, python-brace-format
+#~ msgid ""
+#~ "Are you sure you want to build a **{defense}**? This will cost $**{price}"
+#~ "**."
+#~ msgstr ""
+#~ "Er du sikker på at du vil bygge et **{defense}**? Dette vil koste "
+#~ "$**{price}**."
+
+#~ msgid ""
+#~ "Lists your city’s defenses and view the HP left for each.\n"
+#~ "\n"
+#~ "            Your alliance must own a city to use this command."
+#~ msgstr ""
+#~ "Viser byens forsvar og HP igjen for hver by.\n"
+#~ "\n"
+#~ "            Alliansen din må eie en by for å bruke denne kommandoen."
+
+#, python-brace-format
+#~ msgid ""
+#~ "`<city>` - The name of a city. You can check the city names with `{prefix}"
+#~ "cities`\n"
+#~ "\n"
+#~ "            Attack a city, reducing its defenses to potentially take it "
+#~ "over.\n"
+#~ "            Attacking a city will activate a grace period of 10 minutes, "
+#~ "during which time it cannot be attacked again.\n"
+#~ "\n"
+#~ "            When using this command, the bot will send a link used to "
+#~ "join the attack. Each member of the alliance can join.\n"
+#~ "            Ten minutes after the link was sent, the users who joined "
+#~ "will be gathered, their attack and defense depending on their equipped "
+#~ "items, class and raid bonuses and their raidstats, and start the attack.\n"
+#~ "\n"
+#~ "            During the attack, the highest HP defenses will be attacked "
+#~ "first. All attackers' damage will be summed up.\n"
+#~ "            The defenses' damage sum up and damage either the attacker "
+#~ "with the lowest HP or the attacker with the highest damage.\n"
+#~ "\n"
+#~ "            If a defense reaches zero HP, it will be removed from the "
+#~ "city, it will not regenerate HP after the attack is over.\n"
+#~ "            Attackers reaching zero HP will be removed from the attack as "
+#~ "well.\n"
+#~ "\n"
+#~ "            If a city's defenses were destroyed, your alliance can take "
+#~ "occupy the city right away (`{prefix}alliance occupy`)\n"
+#~ "\n"
+#~ "            Only the alliance leader can use this command.\n"
+#~ "            (This command has a cooldown of 2 hours.)"
+#~ msgstr ""
+#~ "`<by>` – Navnet på en by. Du kan sjekke bynavnene med `{prefix}cities`\n"
+#~ "\n"
+#~ "            Angrip en by, reduser forsvaret for å potensielt overta den.\n"
+#~ "            Å angripe en by vil aktivere en utsettelsesperiode på 10 "
+#~ "minutter, i løpet av denne tiden kan den ikke angripes igjen.\n"
+#~ "\n"
+#~ "            Når du bruker denne kommandoen, vil botten sende en lenke som "
+#~ "brukes til å bli med i angrepet. Hvert medlem av alliansen kan bli med.\n"
+#~ "            Ti minutter etter at lenken ble sendt, vil brukerne som ble "
+#~ "med bli samlet, deres angrep og forsvar avhengig av utstyret deres, "
+#~ "klasse og raidbonuser og deres raidstats, og starte angrepet.\n"
+#~ "\n"
+#~ "            Under angrepet vil det høyeste HP-forsvaret bli angrepet "
+#~ "først. Alle angripernes skade vil bli oppsummert.\n"
+#~ "            Forsvarets skade summerer opp og skader enten angriperen med "
+#~ "lavest HP eller angriperen med høyest skade.\n"
+#~ "\n"
+#~ "            Hvis et forsvar når null HP, vil det bli fjernet fra byen, "
+#~ "det vil ikke regenerere HP etter at angrepet er over.\n"
+#~ "            Angripere som når null HP vil også bli fjernet fra angrepet.\n"
+#~ "\n"
+#~ "            Hvis en bys forsvar ble ødelagt, kan alliansen din ta "
+#~ "okkupere byen med en gang (`{prefix}alliance occupy`)\n"
+#~ "\n"
+#~ "            Bare allianselederen kan bruke denne kommandoen.\n"
+#~ "            (Denne kommandoen har en nedkjøling på 2 timer.)"
