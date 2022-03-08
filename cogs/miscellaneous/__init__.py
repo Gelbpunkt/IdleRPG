@@ -379,7 +379,7 @@ Redis Version: **{redis_version}**"""
                 ram=meminfo.percent,
                 total_ram=humanize.naturalsize(meminfo.total),
                 python=platform.python_version(),
-                dpy=pkg.get_distribution("enhanced-discord.py").version,
+                dpy=pkg.get_distribution("discord.py").version,
                 compiler=compiler,
                 osname=sysinfo[0].title(),
                 osversion=sysinfo[1],
