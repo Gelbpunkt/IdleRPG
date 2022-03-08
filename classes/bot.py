@@ -32,6 +32,7 @@ import fantasy_names as fn
 from discord import AllowedMentions
 from discord.ext import commands
 from discord.ext.commands.cooldowns import BucketType
+from discord.http import handle_message_parameters
 from redis import asyncio as aioredis
 
 from classes.bucket_cooldown import Cooldown, CooldownMapping
@@ -835,7 +836,10 @@ Command: {ctx.command.qualified_name}
             await self.pool.release(conn)
 
     async def public_log(self, event: str):
-        await self.http.send_message(self.config.game.bot_event_channel, event)
+        with handle_message_parameters(content=event) as params:
+            await self.http.send_message(
+                self.config.game.bot_event_channel, params=params
+            )
 
     async def get_city_buildings(self, guild_id, conn=None):
         if not guild_id:  # also catches guild_id = 0

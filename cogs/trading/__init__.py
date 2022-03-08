@@ -22,6 +22,7 @@ from contextlib import suppress
 import discord
 
 from discord.ext import commands
+from discord.http import handle_message_parameters
 
 from classes.converters import (
     DateNewerThan,
@@ -228,12 +229,15 @@ class Trading(commands.Cog):
         )
         with suppress(discord.Forbidden, discord.HTTPException):
             dm_channel = await self.bot.http.start_private_message(item["owner"])
-            await self.bot.http.send_message(
-                dm_channel.get("id"),
-                "A traveler has bought your **{name}** for **${price}** from the market.".format(
+            with handle_message_parameters(
+                content="A traveler has bought your **{name}** for **${price}** from the market.".format(
                     name=item["name"], price=item["price"]
-                ),
-            )
+                )
+            ) as params:
+                await self.bot.http.send_message(
+                    dm_channel.get("id"),
+                    params=params,
+                )
         return True
 
     @has_char()

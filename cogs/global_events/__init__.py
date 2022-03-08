@@ -22,6 +22,7 @@ from typing import Any
 import discord
 
 from discord.ext import commands
+from discord.http import handle_message_parameters
 
 from classes.bot import Bot
 
@@ -69,9 +70,12 @@ class GlobalEvents(commands.Cog):
         if self.bot.config.bot.is_beta:
             return
         if self.bot.config.statistics.join_channel:
-            await self.bot.http.send_message(
-                self.bot.config.statistics.join_channel, f"Bye bye **{guild.name}**!"
-            )
+            with handle_message_parameters(
+                content=f"Bye bye **{guild.name}**!"
+            ) as params:
+                await self.bot.http.send_message(
+                    self.bot.config.statistics.join_channel, params=params
+                )
 
     @commands.Cog.listener()
     async def on_guild_join(self, guild: discord.Guild) -> None:
@@ -112,11 +116,14 @@ class GlobalEvents(commands.Cog):
         if self.bot.config.bot.is_beta:
             return
         if self.bot.config.statistics.join_channel:
-            await self.bot.http.send_message(
-                self.bot.config.statistics.join_channel,
-                f"Joined a new server! **{guild.name}** with **{guild.member_count}**"
-                " members!",
-            )
+            with handle_message_parameters(
+                content=f"Joined a new server! **{guild.name}** with **{guild.member_count}**"
+                " members!"
+            ) as params:
+                await self.bot.http.send_message(
+                    self.bot.config.statistics.join_channel,
+                    params=params,
+                )
 
     async def stats_updater(self) -> None:
         await self.bot.wait_until_ready()

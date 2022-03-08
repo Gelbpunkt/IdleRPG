@@ -25,6 +25,7 @@ import asyncpg
 import discord
 
 from discord.ext import commands
+from discord.http import handle_message_parameters
 
 from classes.bot import Bot
 from classes.context import Context
@@ -176,23 +177,29 @@ class Scheduling(commands.Cog):
         await self.bot.pool.execute('DELETE FROM reminders WHERE "id"=$1;', timer.id)
 
         if timer.type == "reminder":
-            await self.bot.http.send_message(
-                timer.channel,
-                _(
+            with handle_message_parameters(
+                content=_(
                     "{user}, you wanted to be reminded about {subject} {diff} ago."
                 ).format(
                     user=f"<@{timer.user}>",
                     subject=timer.content,
                     diff=timer.human_delta,
-                ),
-            )
+                )
+            ) as params:
+                await self.bot.http.send_message(
+                    timer.channel,
+                    params=params,
+                )
         else:
-            await self.bot.http.send_message(
-                timer.channel,
-                _("{user}, your adventure {num} has finished.").format(
+            with handle_message_parameters(
+                content=_("{user}, your adventure {num} has finished.").format(
                     user=f"<@{timer.user}>", num=timer.content
-                ),
-            )
+                )
+            ) as params:
+                await self.bot.http.send_message(
+                    timer.channel,
+                    params=params,
+                )
 
     async def create_reminder(
         self,

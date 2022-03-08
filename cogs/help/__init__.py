@@ -25,6 +25,7 @@ import discord
 from asyncpg import UniqueViolationError
 from discord.ext import commands
 from discord.ext.commands.core import Command
+from discord.http import handle_message_parameters
 from discord.interactions import Interaction
 from discord.ui import Button, View, button
 
@@ -393,9 +394,10 @@ class Help(commands.Cog):
         em.add_field(name="Invite", value=inv)
         em.set_footer(text=f"Server ID: {ctx.guild.id}")
 
-        message = await self.bot.http.send_message(
-            self.bot.config.game.helpme_channel, None, embed=em.to_dict()
-        )
+        with handle_message_parameters(embed=em) as params:
+            message = await self.bot.http.send_message(
+                self.bot.config.game.helpme_channel, params=params
+            )
         await self.bot.redis.execute_command(
             "SET",
             f"helpme:{ctx.guild.id}",
@@ -479,11 +481,12 @@ class Help(commands.Cog):
             self.bot.config.game.helpme_channel, ctx.helpme
         )
         await self.bot.redis.execute_command("DEL", f"helpme:{ctx.guild.id}")
-        await self.bot.http.send_message(
-            self.bot.config.game.helpme_channel,
-            f"Helpme request for server {ctx.guild} ({ctx.guild.id}) was cancelled by"
-            f" {ctx.author}",
-        )
+        with handle_message_parameters(
+            content=f"Helpme request for server {ctx.guild} ({ctx.guild.id}) was cancelled by {ctx.author}"
+        ) as params:
+            await self.bot.http.send_message(
+                self.bot.config.game.helpme_channel, params=params
+            )
         await ctx.send(_("Your helpme request has been cancelled."))
 
     @has_open_help_request()
