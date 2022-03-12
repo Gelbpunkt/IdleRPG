@@ -19,75 +19,21 @@ import discord
 
 from discord.ext import commands
 
+from classes.bot import Bot
+from classes.context import Context
 from utils.i18n import _, locale_doc
 
 
 class Server(commands.Cog):
-    def __init__(self, bot):
+    def __init__(self, bot: Bot) -> None:
         self.bot = bot
-
-    @commands.guild_only()
-    @commands.command(aliases=["server"], brief=_("Displays info on the server"))
-    @locale_doc
-    async def serverinfo(self, ctx):
-        _(
-            """Shows information about your server, from its region and membercount to its creation date and roles."""
-        )
-        text = _("Link")
-        urltext = (
-            f"[{text}]({ctx.guild.icon.url})"
-            if ctx.guild.icon
-            else _("`No icon has been set yet!`")
-        )
-        em = discord.Embed(
-            title=_("Server Information"),
-            description=_("Compact information about this server"),
-            colour=0xDEADBF,
-        )
-        em.add_field(
-            name=_("Information"),
-            value=_(
-                """\
-Server: `{name}`
-Server Region: `{region}`
-Members Total: `{members}`
-ID: `{id}`
-Icon: {urltext}
-Owner: {owner}
-Roles: `{roles}`
-Server created at: `{created_at}`"""
-            ).format(
-                name=ctx.guild.name,
-                region=ctx.guild.region,
-                members=ctx.guild.member_count,
-                urltext=urltext,
-                owner=f"<@{ctx.guild.owner_id}>",
-                id=ctx.guild.id,
-                roles=len(ctx.guild.roles),
-                created_at=ctx.guild.created_at.__format__("%A %d. %B %Y at %H:%M:%S"),
-            ),
-        )
-        text = _("{name}, Shard {num} of {total}")
-        em.add_field(
-            name=_("Cluster"),
-            value=text.format(
-                name=self.bot.cluster_name,
-                num=ctx.guild.shard_id + 1,
-                total=self.bot.shard_count,
-            ),
-        )
-
-        if ctx.guild.icon:
-            em.set_thumbnail(url=ctx.guild.icon.url)
-
-        await ctx.send(embed=em)
 
     @commands.guild_only()
     @commands.group(
         invoke_without_command=True, brief=_("Change the server settings for the bot")
     )
     @locale_doc
-    async def settings(self, ctx):
+    async def settings(self, ctx: Context) -> None:
         _("""Change the server settings for the bot.""")
         await ctx.send(
             _("Please use `{prefix}settings prefix value`").format(prefix=ctx.prefix)
@@ -97,7 +43,7 @@ Server created at: `{created_at}`"""
     @commands.has_permissions(manage_guild=True)
     @settings.command(name="prefix", brief=_("Change the prefix"))
     @locale_doc
-    async def prefix_(self, ctx, prefix: str):
+    async def prefix_(self, ctx: Context, prefix: str) -> None:
         _(
             """`<prefix>` - The new prefix to use. Use "" quotes to surround it if you want multiple words or trailing spaces.
 
@@ -134,7 +80,7 @@ Server created at: `{created_at}`"""
     @commands.has_permissions(manage_guild=True)
     @settings.command(brief=_("Reset the server settings"))
     @locale_doc
-    async def reset(self, ctx):
+    async def reset(self, ctx: Context) -> None:
         _("""Resets the server settings.""")
         await self.bot.pool.execute('DELETE FROM server WHERE "id"=$1;', ctx.guild.id)
         self.bot.all_prefixes.pop(ctx.guild.id, None)
@@ -143,7 +89,7 @@ Server created at: `{created_at}`"""
     @commands.guild_only()
     @commands.command(brief=_("View this server's prefix"))
     @locale_doc
-    async def prefix(self, ctx):
+    async def prefix(self, ctx: Context) -> None:
         _("""View the bot prefix for the server""")
         prefix_ = self.bot.all_prefixes.get(
             ctx.guild.id, self.bot.config.bot.global_prefix
@@ -157,7 +103,7 @@ Server created at: `{created_at}`"""
 
     @commands.command(brief=_("Show someone's avatar"))
     @locale_doc
-    async def avatar(self, ctx, target: discord.Member = None):
+    async def avatar(self, ctx: Context, target: discord.Member = None) -> None:
         _(
             """`<target>` - The user whose avatar to show; defaults to oneself
 
@@ -173,5 +119,5 @@ Server created at: `{created_at}`"""
         )
 
 
-def setup(bot):
+def setup(bot: Bot) -> None:
     bot.add_cog(Server(bot))
