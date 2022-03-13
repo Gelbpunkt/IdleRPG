@@ -96,7 +96,7 @@ class TextPaginator:
         after = self.page_count
         if after > before:
             self.current = after - 1
-        self.ctx.bot.loop.create_task(self.update())
+        asyncio.create_task(self.update())
 
     async def react(self) -> None:
         if self.message is None:
@@ -108,8 +108,8 @@ class TextPaginator:
         self.message = await self.ctx.send(
             self.pages[self.current] + f"Page {self.current + 1} / {self.page_count}"
         )
-        self.ctx.bot.loop.create_task(self.react())
-        self.ctx.bot.loop.create_task(self.listener())
+        asyncio.create_task(self.react())
+        asyncio.create_task(self.listener())
 
     async def update(self) -> None:
         if self.update_lock.locked():

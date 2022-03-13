@@ -30,12 +30,12 @@ class Chess(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
         self.matches = {}
-        bot.loop.create_task(self.initialize())
+        asyncio.create_task(self.initialize())
 
     async def initialize(self):
         await self.bot.wait_until_ready()
         try:
-            _, adapter = await self.bot.loop.create_connection(
+            _, adapter = await asyncio.get_running_loop().create_connection(
                 lambda: ProtocolAdapter(chess.engine.UciProtocol()), "127.0.0.1", 4000
             )
         except ConnectionRefusedError:
@@ -242,7 +242,7 @@ class Chess(commands.Cog):
 
     def cog_unload(self):
         if hasattr(self, "engine"):
-            self.bot.loop.create_task(self.engine.quit())
+            asyncio.create_task(self.engine.quit())
 
 
 def setup(bot):

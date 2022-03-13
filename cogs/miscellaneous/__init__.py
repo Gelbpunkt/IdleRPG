@@ -15,6 +15,7 @@ GNU Affero General Public License for more details.
 You should have received a copy of the GNU Affero General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
+import asyncio
 import datetime
 import os
 import platform
@@ -48,7 +49,7 @@ class Miscellaneous(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
         self.talk_context = defaultdict(partial(deque, maxlen=3))
-        self.bot.loop.create_task(self.make_wikis())
+        asyncio.create_task(self.make_wikis())
 
     async def make_wikis(self):
         self.bot.wikipedia = aiowiki.Wiki.wikipedia("en", session=self.bot.session)

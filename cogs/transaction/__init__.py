@@ -95,7 +95,7 @@ class Transaction(commands.Cog):
         self.transactions[id_]["base"] = await ctx.send(content)
         if (task := self.transactions[id_]["task"]) is not None:
             task.cancel()
-        self.transactions[id_]["task"] = self.bot.loop.create_task(
+        self.transactions[id_]["task"] = asyncio.create_task(
             self.task(self.transactions[id_])
         )
 

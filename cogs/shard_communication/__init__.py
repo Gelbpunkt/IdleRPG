@@ -152,7 +152,7 @@ class Sharding(commands.Cog):
         self.bot = bot
         self.router = None
         self.pubsub = bot.redis.pubsub()
-        bot.loop.create_task(self.register_sub())
+        asyncio.create_task(self.register_sub())
         self._messages = dict()
         """
         _messages should be a dict with the syntax {"<command_id>": [outputs]}
@@ -161,13 +161,13 @@ class Sharding(commands.Cog):
             self.bot.add_listener(self.on_raw_interaction)
 
     def cog_unload(self):
-        self.bot.loop.create_task(self.unregister_sub())
+        asyncio.create_task(self.unregister_sub())
 
     async def register_sub(self):
         await self.pubsub.subscribe(
             self.bot.config.database.redis_shard_announce_channel
         )
-        self.router = self.bot.loop.create_task(self.event_handler())
+        self.router = asyncio.create_task(self.event_handler())
 
     async def unregister_sub(self):
         if self.router and not self.router.cancelled:
@@ -200,14 +200,14 @@ class Sharding(commands.Cog):
                 if payload.get("scope") != "bot":
                     continue  # it's not our cup of tea
                 if payload.get("args"):
-                    self.bot.loop.create_task(
+                    asyncio.create_task(
                         getattr(self, payload["action"])(
                             **payload["args"],
                             command_id=payload["command_id"],
                         )
                     )
                 else:
-                    self.bot.loop.create_task(
+                    asyncio.create_task(
                         getattr(self, payload["action"])(
                             command_id=payload["command_id"]
                         )

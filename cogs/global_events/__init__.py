@@ -53,7 +53,7 @@ class GlobalEvents(commands.Cog):
             self.bot.logger.info(f"│ {' ' * max_string} │")
             self.bot.logger.info(f"│ {text4.center(max_string, ' ')} │")
             self.bot.logger.info(f"└─{'─' * max_string}─┘")
-            self.stats_updates = self.bot.loop.create_task(self.stats_updater())
+            self.stats_updates = asyncio.create_task(self.stats_updater())
             await self.bot.is_owner(self.bot.user)
 
     @commands.Cog.listener()

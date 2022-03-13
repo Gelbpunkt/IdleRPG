@@ -63,23 +63,19 @@ intents.messages = True
 intents.reactions = True
 
 
-async def start():
-    bot = Bot(
-        case_insensitive=True,
-        status=discord.Status.idle,
-        description="The one and only IdleRPG bot for discord",
-        shard_ids=shard_ids,
-        shard_count=shard_count,
-        cluster_id=cluster_id,
-        cluster_count=cluster_count,
-        cluster_name=cluster_name,
-        intents=intents,
-        chunk_guilds_at_startup=False,  # chunking is nerfed
-        guild_ready_timeout=30 * (len(shard_ids) // 4),  # fix on_ready firing too early
-        max_messages=10000,  # We have a ton of incoming messages, higher cache means commands like activeadventure
-        # or guild adventure joining will stay in cache so reactions are counted
-    )
-    await bot.connect_all()
+bot = Bot(
+    case_insensitive=True,
+    status=discord.Status.idle,
+    description="The one and only IdleRPG bot for discord",
+    shard_ids=shard_ids,
+    shard_count=shard_count,
+    cluster_id=cluster_id,
+    cluster_count=cluster_count,
+    cluster_name=cluster_name,
+    intents=intents,
+    chunk_guilds_at_startup=False,  # chunking is nerfed
+    guild_ready_timeout=30 * (len(shard_ids) // 4),  # fix on_ready firing too early
+)
 
 
 if __name__ == "__main__":
@@ -89,6 +85,6 @@ if __name__ == "__main__":
     log.addHandler(file_handler(cluster_id))
 
     try:
-        asyncio.run(start())
+        asyncio.run(bot.connect_all())
     except KeyboardInterrupt:
         pass
