@@ -3,24 +3,25 @@ msgstr ""
 "Project-Id-Version: idlerpg2\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-03-08 22:06+0100\n"
-"PO-Revision-Date: 2019-05-31 00:51+0300\n"
-"Last-Translator: Falcon.OVI\n"
-"Language-Team: Russian\n"
-"Language: ru_RU\n"
+"PO-Revision-Date: 2022-04-09 08:27+0000\n"
+"Last-Translator: suspectykt <suspectykt@yandex.ru>\n"
+"Language-Team: Russian <http://translate.travitia.xyz/projects/idlerpg/bot/"
+"ru_RU@2/>\n"
+"Language: ru_RU_2\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Generator: Poedit 2.2.3\n"
 "Plural-Forms: nplurals=4; plural=((n%10==1 && n%100!=11) ? 0 : ((n%10 >= 2 "
 "&& n%10 <=4 && (n%100 < 12 || n%100 > 14)) ? 1 : ((n%10 == 0 || (n%10 >= 5 "
 "&& n%10 <=9)) || (n%100 >= 11 && n%100 <= 14)) ? 2 : 3));\n"
+"X-Generator: Weblate 4.9.1\n"
 "X-Crowdin-Project: idlerpg2\n"
 "X-Crowdin-Language: ru\n"
 "X-Crowdin-File: ru_RU.po\n"
 
 #: cogs/tournament/__init__.py:46
 msgid "Start a new tournament"
-msgstr ""
+msgstr "Начать новый турнир"
 
 #: cogs/tournament/__init__.py:50
 #, python-brace-format
@@ -53,21 +54,21 @@ msgstr ""
 #: cogs/game_master/__init__.py:632 cogs/transaction/__init__.py:407
 #: cogs/transaction/__init__.py:521
 msgid "You are too poor."
-msgstr "Вы слишком бедны."
+msgstr "У вас не хватает денежных средств."
 
 #: cogs/tournament/__init__.py:84 cogs/tournament/__init__.py:109
 msgid "You joined the tournament."
-msgstr ""
+msgstr "Вы присоединились к турниру."
 
 #: cogs/tournament/__init__.py:115
 #, python-brace-format
 msgid "{author} started a tournament! Free entries, prize is **${prize}**!"
-msgstr ""
+msgstr "{author} начал турнир! Вход бесплатный, приз **${prize}**!"
 
 #: cogs/tournament/__init__.py:138
 #, python-brace-format
 msgid "Noone joined your tournament {author}."
-msgstr ""
+msgstr "Никто не присоединился к вашему турниру {author}."
 
 #: cogs/tournament/__init__.py:147
 #, python-brace-format
@@ -136,18 +137,18 @@ msgstr ""
 
 #: cogs/tournament/__init__.py:254 cogs/tournament/__init__.py:279
 msgid "You joined the raid tournament."
-msgstr ""
+msgstr "Вы присоединились к рейдовому турниру."
 
 #: cogs/tournament/__init__.py:285
 #, python-brace-format
 msgid ""
 "{author} started a raid tournament! Free entries, prize is **${prize}**!"
-msgstr ""
+msgstr "{author} начался рейдовый турнир! Вход бесплатный, приз **${prize}**!"
 
 #: cogs/tournament/__init__.py:308
 #, python-brace-format
 msgid "Noone joined your raid tournament {author}."
-msgstr ""
+msgstr "Никто не присоединился к вашему рейдовому турниру {author}."
 
 #: cogs/tournament/__init__.py:317
 #, python-brace-format
@@ -159,7 +160,7 @@ msgstr ""
 #: cogs/tournament/__init__.py:351 cogs/battles/__init__.py:261
 #, python-brace-format
 msgid "Raidbattle {p1} vs. {p2} started!"
-msgstr ""
+msgstr "Рейдовая битва {p1} vs. {p2} Началась!"
 
 #: cogs/tournament/__init__.py:389 cogs/battles/__init__.py:300
 #, python-brace-format
@@ -181,7 +182,7 @@ msgstr ""
 #: cogs/tournament/__init__.py:435
 #, python-brace-format
 msgid "Raid Tournament ended! The winner is {winner}."
-msgstr ""
+msgstr "Рейдовый турнир завершен! Победитель: {winner}."
 
 #: cogs/tournament/__init__.py:456
 #, python-brace-format
@@ -189,10 +190,12 @@ msgid ""
 "Raid Tournament ended! The winner is {winner}.\n"
 "Money was given!"
 msgstr ""
+"Рейдовый турнир завершен! Победитель: {winner}.\n"
+"Призовой фонд выдан победителю!"
 
 #: cogs/images/__init__.py:30
 msgid "Pixelfy an avatar"
-msgstr ""
+msgstr "Пиксельный аватар"
 
 #: cogs/images/__init__.py:34
 msgid ""
@@ -210,7 +213,7 @@ msgstr "Используйте 1, 2, 3, 4 или 5 в качестве знач�
 
 #: cogs/images/__init__.py:56
 msgid "Defines an avatar's edges"
-msgstr ""
+msgstr "Определяет края аватара"
 
 #: cogs/images/__init__.py:60
 msgid ""
@@ -222,7 +225,7 @@ msgstr ""
 
 #: cogs/images/__init__.py:76
 msgid "Inverts a user's avatar"
-msgstr ""
+msgstr "Переворачивает аватар пользователя"
 
 #: cogs/images/__init__.py:80
 msgid ""
@@ -382,7 +385,7 @@ msgstr ""
 
 #: cogs/locale/__init__.py:64
 msgid "Check the available languages"
-msgstr ""
+msgstr "Проверьте доступные языки"
 
 #: cogs/locale/__init__.py:69
 msgid ""
@@ -404,10 +407,14 @@ msgid ""
 "\n"
 "Please use `{prefix}locale set language_code` to choose one."
 msgstr ""
+"Ваш текущий язык: **{current_locale}**. Доступные варианты: {all_locales}\n"
+"\n"
+"Пожалуйста, используйте `{prefix}locale set language_code` чтобы выбрать "
+"один из них."
 
 #: cogs/locale/__init__.py:90
 msgid "Set your language"
-msgstr ""
+msgstr "Установите требуемый Вам язык"
 
 #: cogs/locale/__init__.py:94
 #, python-brace-format
@@ -428,10 +435,12 @@ msgid ""
 "To permanently choose a language, please create a character and enter this "
 "command again. I set it to {language} temporarily."
 msgstr ""
+"Чтобы навсегда выбрать язык, создайте персонажа и снова введите эту команду. "
+"Я временно установил {language}."
 
 #: cogs/battles/__init__.py:46
 msgid "Battle against another player"
-msgstr ""
+msgstr "Битва против другого игрока"
 
 #: cogs/battles/__init__.py:52
 msgid ""
@@ -459,7 +468,7 @@ msgstr ""
 #: cogs/battles/__init__.py:66 cogs/battles/__init__.py:189
 #: cogs/battles/__init__.py:378
 msgid "You can't battle yourself."
-msgstr "Вы не можете бить себя."
+msgstr "Вы не можете сражаться с самим собой."
 
 #: cogs/battles/__init__.py:77
 #, python-brace-format
@@ -473,7 +482,7 @@ msgstr ""
 
 #: cogs/battles/__init__.py:93
 msgid "Join the battle!"
-msgstr ""
+msgstr "Присоединиться к битве!"
 
 #: cogs/battles/__init__.py:100
 msgid "You don't have enough money to join the battle."
@@ -490,8 +499,7 @@ msgid ""
 "Battle **{author}** vs **{enemy}** started! 30 seconds of fighting will now "
 "start!"
 msgstr ""
-"Битва ** {author} ** против ** {enemy} ** началась! Бой начнётся через 30 "
-"секунд!"
+"Битва **{author}** против **{enemy}** началась! Бой начнётся через 30 секунд!"
 
 #: cogs/battles/__init__.py:160
 #, python-brace-format
@@ -500,7 +508,7 @@ msgstr "{winner} выиграл бой против {looser}! Поздравля
 
 #: cogs/battles/__init__.py:167
 msgid "Battle against a player (inclusdes raidstats)"
-msgstr ""
+msgstr "Битва против игрока (включая рейдовую статистику)"
 
 #: cogs/battles/__init__.py:173
 msgid ""
@@ -539,11 +547,11 @@ msgstr ""
 
 #: cogs/battles/__init__.py:216
 msgid "Join the raidbattle!"
-msgstr ""
+msgstr "Присоединиться к рейдовой битве!"
 
 #: cogs/battles/__init__.py:223
 msgid "You don't have enough money to join the raidbattle."
-msgstr ""
+msgstr "У вас недостаточно денег, чтобы присоединиться к рейдовой битве."
 
 #: cogs/battles/__init__.py:238
 #, python-brace-format
@@ -598,11 +606,11 @@ msgstr ""
 
 #: cogs/battles/__init__.py:405
 msgid "Join the activebattle!"
-msgstr ""
+msgstr "Присоединиться к активной битве!"
 
 #: cogs/battles/__init__.py:413
 msgid "You don't have enough money to join the activebattle."
-msgstr ""
+msgstr "У вас недостаточно денег, чтобы присоединиться к активной битве."
 
 #: cogs/battles/__init__.py:429
 #, python-brace-format
@@ -616,7 +624,7 @@ msgstr ""
 
 #: cogs/battles/__init__.py:483
 msgid "Let the battle begin!"
-msgstr ""
+msgstr "Да начнется битва!"
 
 #: cogs/battles/__init__.py:498 cogs/battles/__init__.py:648
 #, python-brace-format
@@ -1392,8 +1400,8 @@ msgid ""
 "You are already on an adventure. Use `{prefix}status` to see how long it "
 "lasts."
 msgstr ""
-"Ваша гильдия уже находится в приключении! Используйте `{prefix}гильдия` что "
-"бы узнать оставшееся время приключения."
+"Вы уже в приключении. Используйте `{prefix}status`, чтобы узнать, как долго "
+"это длится."
 
 #: cogs/error_handler/__init__.py:232
 #, python-brace-format
@@ -3473,7 +3481,7 @@ msgstr ""
 
 #: cogs/adventure/__init__.py:261
 msgid "Attack blocked."
-msgstr ""
+msgstr "Атака заблокирована."
 
 #: cogs/adventure/__init__.py:266
 #, python-brace-format
@@ -3525,7 +3533,7 @@ msgstr ""
 
 #: cogs/adventure/__init__.py:374
 msgid "Enemy"
-msgstr ""
+msgstr "Враг"
 
 #: cogs/adventure/__init__.py:375
 msgid "HP"
@@ -3580,8 +3588,8 @@ msgid ""
 "Successfully sent your character out on an adventure. Use `{prefix}status` "
 "to see the current status of the mission."
 msgstr ""
-"Ваш персонаж успешно отправлен в приключение. Используйте статус `{prefix}` "
-"для просмотра текущего состояния миссии."
+"Ваш персонаж успешно отправлен в приключение. Используйте статус "
+"`{prefix}status` для просмотра текущего состояния миссии."
 
 #: cogs/adventure/__init__.py:541
 msgid "Go out on an active adventure."
@@ -3663,7 +3671,7 @@ msgstr ""
 
 #: cogs/adventure/__init__.py:603
 msgid "Adventure Status"
-msgstr ""
+msgstr "Статус приключения"
 
 #: cogs/adventure/__init__.py:605
 #, python-brace-format
@@ -3672,6 +3680,9 @@ msgid ""
 "Time until it completes: **{time_left}**\n"
 "Adventure name: **{adventure}**"
 msgstr ""
+"Сейчас вы участвуете в приключении со сложностью **{difficulty}**.\n"
+"Время до завершения: **{time_left}**\n"
+"Название приключения: **{adventure}**"
 
 #: cogs/adventure/__init__.py:644
 msgid "Adventure Failed"
@@ -3856,7 +3867,7 @@ msgstr ""
 #: cogs/gambling/__init__.py:540
 #, python-brace-format
 msgid "Dealer busts and you won **${money}**!"
-msgstr ""
+msgstr "Дилер разоряется, и вы выиграли **${money}**!"
 
 #: cogs/gambling/__init__.py:550
 #, python-brace-format
@@ -4108,7 +4119,7 @@ msgstr ""
 msgid ""
 "You lost **${money}**! The random number was `{num}`, you tipped `{tip}`."
 msgstr ""
-"Вы выиграли **${money}**! Случайное число было `{num}`, ваше число `{tip}`."
+"Вы проиграли **${money}**! Случайное число было `{num}`, ваше число `{tip}`."
 
 #: cogs/gambling/__init__.py:1051
 msgid "Play blackjack against the bot."
@@ -6248,7 +6259,7 @@ msgstr ""
 
 #: cogs/guild/__init__.py:935 cogs/guild/__init__.py:1009
 msgid "Your guild is too poor."
-msgstr "Ваша гильдия слишком бедна."
+msgstr "У Вашей гильдии не хватает денежных средств."
 
 #: cogs/guild/__init__.py:962
 #, python-brace-format
@@ -6319,8 +6330,8 @@ msgid ""
 "Your guild is too poor, you got **${money}** but it costs **${price}** to "
 "upgrade."
 msgstr ""
-"Ваша гильдия слишком бедна, у вас есть **${money}** а требуется **${price}** "
-"для обновления."
+"У Вашей гильдии недостаточно денежных средств, у вас имеется **${money}** а "
+"требуется **${price}** для обновления."
 
 #: cogs/guild/__init__.py:1071
 #, python-brace-format
@@ -8460,7 +8471,7 @@ msgstr ""
 
 #: cogs/races/__init__.py:59
 msgid "Human"
-msgstr ""
+msgstr "Человек"
 
 #: cogs/races/__init__.py:61
 msgid ""
@@ -8469,10 +8480,14 @@ msgid ""
 "makes them attack efficient and concentrated. Their attack and defense "
 "skills are pretty equal."
 msgstr ""
+"Люди — это команда. Они работают и сражаются рука об руку и никогда не "
+"сдаются, даже когда некоторые из их друзей уже погибли. Их ярость и "
+"ненависть к врагам делают их атаки эффективными и сосредоточенными. Их "
+"навыки атаки и защиты примерно равны."
 
 #: cogs/races/__init__.py:69
 msgid "Dwarf"
-msgstr ""
+msgstr "Гном"
 
 #: cogs/races/__init__.py:71
 msgid ""
@@ -8480,10 +8495,13 @@ msgid ""
 "can deal a lot of damage with their self-crafted equipment. Because of their "
 "reflexes, they have more defense than attack. Want an ale?"
 msgstr ""
+"Гномы - мастера своей кузницы. Хотя они очень маленькие, они могут нанести "
+"большой урон своим самодельным снаряжением. Из-за их рефлексов у них больше "
+"защиты, чем атаки. Хочешь эля?"
 
 #: cogs/races/__init__.py:79
 msgid "Elf"
-msgstr ""
+msgstr "Эльф"
 
 #: cogs/races/__init__.py:81
 msgid ""
@@ -8492,10 +8510,14 @@ msgid ""
 "friends of the wild spirits which they can call for help and protection. "
 "They have more attack than defense."
 msgstr ""
+"Эльфы — мастера маскировки. Они сливаются со своей средой, чтобы атаковать "
+"врагов без их ведома. Их привязанность к природе сделала их хорошими "
+"друзьями диких духов, которых они могут призвать на помощь и защиту. У них "
+"больше атака, чем защита."
 
 #: cogs/races/__init__.py:90
 msgid "Orc"
-msgstr ""
+msgstr "Орк"
 
 #: cogs/races/__init__.py:92
 msgid ""
@@ -8505,10 +8527,15 @@ msgid ""
 "they have mostly no real damage, only a bit, but a huge armour. Who cares "
 "about the damage as long as you don't die?"
 msgstr ""
+"Орки — дружелюбная раса, основанная на их ритуалах призыва предков "
+"благословить дождь и деяния их племени. Скорее уродливые, чем милые, они в "
+"основном избегают нападения врагов. Если они не могут избежать боя, то у них "
+"в основном нет реального урона, только немного, но огромная броня. Кого "
+"волнует ущерб, пока вы не умрете?"
 
 #: cogs/races/__init__.py:102
 msgid "Jikill"
-msgstr ""
+msgstr "Джикилл"
 
 #: cogs/races/__init__.py:104
 msgid ""
@@ -8516,6 +8543,9 @@ msgid ""
 "which lets them have a big and huge forehead, big enough for their brain "
 "which can kill enemies. These sensitive creatures are easily knocked out."
 msgstr ""
+"Джикиллы - карликовые существа с одним глазом посредине лица, что позволяет "
+"им иметь большой и огромный лоб, достаточно большой для их мозга, который "
+"может убивать врагов. Эти чувствительные создания легко нокаутируются."
 
 #: cogs/races/__init__.py:115
 msgid "One of my biggest regrets is..."
@@ -8571,23 +8601,23 @@ msgstr ""
 
 #: cogs/races/__init__.py:140
 msgid "The ancestor that gives me my strength is..."
-msgstr ""
+msgstr "Предок, дающий мне силу, это..."
 
 #: cogs/races/__init__.py:142
 msgid "...my sister."
-msgstr ""
+msgstr "...моя сестра."
 
 #: cogs/races/__init__.py:143
 msgid "...my father."
-msgstr ""
+msgstr "...мой отец."
 
 #: cogs/races/__init__.py:144
 msgid "...my grandmother."
-msgstr ""
+msgstr "...моя бабушка."
 
 #: cogs/races/__init__.py:145
 msgid "...my uncle."
-msgstr ""
+msgstr "...мой дядя."
 
 #: cogs/races/__init__.py:149
 msgid "The biggest action that can outknock me, is..."
