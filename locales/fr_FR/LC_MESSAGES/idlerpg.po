@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-03-08 22:06+0100\n"
-"PO-Revision-Date: 2021-09-09 19:11+0000\n"
-"Last-Translator: Victor Lemonnier <victorlemonnier50@gmail.com>\n"
+"PO-Revision-Date: 2022-05-17 00:53+0000\n"
+"Last-Translator: Simon Pomerleau <simpom19@gmail.com>\n"
 "Language-Team: French <http://translate.travitia.xyz/projects/idlerpg/bot/fr/"
 ">\n"
 "Language: fr_FR\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n > 1;\n"
-"X-Generator: Weblate 4.6.2\n"
+"X-Generator: Weblate 4.11.2\n"
 
 #: cogs/tournament/__init__.py:46
 msgid "Start a new tournament"
@@ -77,12 +77,14 @@ msgstr "Vous êtes trop pauvre."
 
 #: cogs/tournament/__init__.py:84 cogs/tournament/__init__.py:109
 msgid "You joined the tournament."
-msgstr ""
+msgstr "Vous avez rejoint le tournoi."
 
 #: cogs/tournament/__init__.py:115
 #, python-brace-format
 msgid "{author} started a tournament! Free entries, prize is **${prize}**!"
 msgstr ""
+"{author} a commencé un tournoi ! L'entrée est gratuite et la récompense est "
+"**${prize}** !"
 
 #: cogs/tournament/__init__.py:138
 #, python-brace-format
@@ -281,7 +283,7 @@ msgstr ""
 
 #: cogs/images/__init__.py:98
 msgid "Oil-paint someone's avatar"
-msgstr ""
+msgstr "Peinture à l'huile d'un avatar"
 
 #: cogs/images/__init__.py:102
 msgid ""
@@ -354,6 +356,10 @@ msgid ""
 "ancient image on top of a chocolate bar, passed along for generations. You "
 "decide to keep it in your `{prefix}eventbackgrounds`."
 msgstr ""
+"🎃 Au moment où vous sortez par la porte, vous déballez votre barre de "
+"chocolat et y découvrer une ancienne image sur le dessus qui a été passé de "
+"génération en génération. Vous décidez de la mettre dans "
+"votre`{prefix}eventbackgrounds`."
 
 #: cogs/halloween/__init__.py:120
 msgid "Open a trick or treat bag"
@@ -503,6 +509,8 @@ msgid ""
 "To permanently choose a language, please create a character and enter this "
 "command again. I set it to {language} temporarily."
 msgstr ""
+"Pour changer de manière permanente la langue, créé un personnage et entrez "
+"cette commande encore. Elle est temporairement {language} ."
 
 #: cogs/battles/__init__.py:46
 msgid "Battle against another player"
@@ -558,16 +566,16 @@ msgstr "Tu ne peux pas te battre contre toi-même."
 #: cogs/battles/__init__.py:77
 #, python-brace-format
 msgid "{author} seeks a battle! The price is **${money}**."
-msgstr ""
+msgstr "{author} Veut se battre ! Le prix est **${money}**."
 
 #: cogs/battles/__init__.py:82
 #, python-brace-format
 msgid "{author} seeks a battle with {enemy}! The price is **${money}**."
-msgstr ""
+msgstr "{author} veut se battre contre  {enemy}! Le prix est **${money}**."
 
 #: cogs/battles/__init__.py:93
 msgid "Join the battle!"
-msgstr ""
+msgstr "Rejoignez le combat !"
 
 #: cogs/battles/__init__.py:100
 msgid "You don't have enough money to join the battle."
@@ -654,7 +662,7 @@ msgstr ""
 
 #: cogs/battles/__init__.py:216
 msgid "Join the raidbattle!"
-msgstr ""
+msgstr "Rejoignez la bataille de raid !"
 
 #: cogs/battles/__init__.py:223
 msgid "You don't have enough money to join the raidbattle."
@@ -980,17 +988,17 @@ msgstr ""
 
 #: cogs/crates/__init__.py:67
 msgid "Your Crates"
-msgstr ""
+msgstr "Vos caisses"
 
 #: cogs/crates/__init__.py:74
 #, python-brace-format
 msgid "{amount} crates"
-msgstr ""
+msgstr "{amount} caisses"
 
 #: cogs/crates/__init__.py:79
-#, python-brace-format
+#, fuzzy, python-brace-format
 msgid "Use {prefix}open [rarity] to open one!"
-msgstr ""
+msgstr "Utilisez`{prefix} open [rareté]` afin d'en ouvrir une !"
 
 #: cogs/crates/__init__.py:86
 msgid "Open a crate"
@@ -1559,6 +1567,8 @@ msgid ""
 "You did not enter a valid crate rarity. Possible ones are: common (c), "
 "uncommon (u), rare (r), magic (m), legendary (l) and mystery (myst)."
 msgstr ""
+"Vous n'avez pas entré une rareté valide. Les raretés valide sont commune (c)"
+", peu commune (u), rare (r), magique (m), légendaire (l) ou mystère (myst)."
 
 #: cogs/error_handler/__init__.py:133
 msgid "You did not enter a valid coin side. Please use `heads` or `tails`."
@@ -3327,11 +3337,11 @@ msgstr ""
 
 #: cogs/patreon/__init__.py:397 cogs/profile/__init__.py:270
 msgid "Unexpected internal error when generating image."
-msgstr ""
+msgstr "Erreur interne lors de la génération de l'image."
 
 #: cogs/patreon/__init__.py:400 cogs/profile/__init__.py:273
 msgid "Unexpected error when generating image."
-msgstr ""
+msgstr "Erreur innatendue lors de la génération de l'image."
 
 #: cogs/patreon/__init__.py:405
 msgid "Error when uploading to Imgur."
@@ -3596,7 +3606,7 @@ msgstr ""
 
 #: cogs/classes/__init__.py:159
 msgid "Choose a class"
-msgstr ""
+msgstr "Choisissez une classe"
 
 #: cogs/classes/__init__.py:169
 #, python-brace-format
@@ -3891,7 +3901,7 @@ msgstr "Caca de puissance d'Adrian"
 
 #: cogs/classes/__init__.py:458
 msgid "Select a dish for your pet"
-msgstr ""
+msgstr "Sélectionnez un plat pour votre animal de compagnie"
 
 #: cogs/classes/__init__.py:465 cogs/classes/__init__.py:524
 #: cogs/marriage/__init__.py:291
@@ -3953,7 +3963,7 @@ msgstr "Cocktail d'Adrian"
 
 #: cogs/classes/__init__.py:517
 msgid "Select a drink for your pet"
-msgstr ""
+msgstr "Sélectionnez une boisson pour votre animal de compagnie"
 
 #: cogs/classes/__init__.py:520
 msgid "Give your pet something to drink"
@@ -4209,19 +4219,19 @@ msgstr "Ouest"
 
 #: cogs/adventure/__init__.py:138
 msgid "Attack"
-msgstr ""
+msgstr "Attaque"
 
 #: cogs/adventure/__init__.py:145
 msgid "Defend"
-msgstr ""
+msgstr "Défendre"
 
 #: cogs/adventure/__init__.py:152
 msgid "Recover"
-msgstr ""
+msgstr "Récupérer"
 
 #: cogs/adventure/__init__.py:212
 msgid "The active adventure has started."
-msgstr ""
+msgstr "L'aventure active a commencé."
 
 #: cogs/adventure/__init__.py:252
 #, python-brace-format
@@ -4249,7 +4259,7 @@ msgstr "Temps écoulé."
 
 #: cogs/adventure/__init__.py:317
 msgid "You defeated the enemy."
-msgstr ""
+msgstr "Vous avez vaincu un ennemi."
 
 #: cogs/adventure/__init__.py:327
 #, python-brace-format
@@ -4273,7 +4283,7 @@ msgstr "Tu as atteint la sortie et trouvé **{money}$** !"
 
 #: cogs/adventure/__init__.py:364
 msgid "`@` - You, `!` - Enemy, `*` - Treasure"
-msgstr ""
+msgstr "`@` - Vous, `!` - Ennemi, `*` - Trésor"
 
 #: cogs/adventure/__init__.py:367
 #, python-brace-format
@@ -4286,7 +4296,7 @@ msgstr "Ennemi"
 
 #: cogs/adventure/__init__.py:375
 msgid "HP"
-msgstr ""
+msgstr "PV"
 
 #: cogs/adventure/__init__.py:437
 msgid "Shows adventures and your chances"
@@ -4367,7 +4377,7 @@ msgid "Go out on an active adventure."
 msgstr "Pars faire une aventure intéractive."
 
 #: cogs/adventure/__init__.py:546
-#, no-python-format
+#, fuzzy, no-python-format
 msgid ""
 "Active adventures will put you into a randomly generated maze. You will "
 "begin in the top left corner and your goal is to find the exit in the bottom "
@@ -4397,6 +4407,36 @@ msgid ""
 "\n"
 "            (This command has a cooldown of 30 minutes)"
 msgstr ""
+"L'aventure active vous place dans un labyrinthe généré aléatoirement. Vous "
+"commencez dans le coin gauche en haut et votre objectif est de vous rendre "
+"dans le coin droit en bas.\n"
+"            Vous controllez votre personnage avec les flèches en dessous de "
+"ce message.\n"
+"\n"
+"            Vous avez un nombre de PV fixe qui est décidé à partir de vos "
+"objets. L'aventure se termine lorsque vos PV tombe à 0 ou lorsque vous "
+"arrivez au bout du labyrinthe.\n"
+"            Vous perdez des PV lorsque vous marchez sur un piège ou lorsque "
+"vous rencontrez des ennemis.\n"
+"\n"
+"            Le labyrinthe contient des endroits sans-danger et des trésors, "
+"mais il y a aussi des ennemis et des pièges.\n"
+"            Chaque case à 10% de chance d'être un piège. Si la case n'est "
+"pas piégé, elle a 10% de chance d'avoir un ennemi.\n"
+"            Chaque labyrinthe a 5 trésors.\n"
+"\n"
+"            Les pièges enlèvent 1/10 de vos PV totaux jusqu'à un maximum de "
+"1/8 de ceux-ci.\n"
+"            Le dégat infligé par les ennemis est décidé en fonction de votre "
+"propre attaque. Durant les combats, Vous pouvez attaquer (⚔️), défendre(🛡️) "
+"ou récupérer PV (❤️)\n"
+"            Les trésors peuvent avoir jusqu'à 25 fois votre attaque + "
+"défense.\n"
+"\n"
+"            Si vous atteignez la sortie, vous allez recevoir jusqu'à 100 "
+"fois votre attaque + défense.\n"
+"\n"
+"            (Cette action à un temps d'attente de 30mins)"
 
 #: cogs/adventure/__init__.py:566
 msgid ""
