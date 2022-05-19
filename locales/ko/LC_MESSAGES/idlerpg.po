@@ -8,17 +8,20 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-03-08 22:06+0100\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: Automatically generated\n"
-"Language-Team: none\n"
+"PO-Revision-Date: 2022-05-20 16:00+0000\n"
+"Last-Translator: kiricon <kiriconofficial@gmail.com>\n"
+"Language-Team: Korean <http://translate.travitia.xyz/projects/idlerpg/bot/ko/"
+">\n"
 "Language: ko\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0;\n"
+"X-Generator: Weblate 4.11.2\n"
 
 #: cogs/tournament/__init__.py:46
 msgid "Start a new tournament"
-msgstr ""
+msgstr "토너먼트 개최"
 
 #: cogs/tournament/__init__.py:50
 #, python-brace-format
@@ -43,6 +46,27 @@ msgid ""
 "\n"
 "            (This command has a cooldown of 30 minutes.)"
 msgstr ""
+"`[prize]` - 우승자가 획득할 상금의 양을 설정할 수 있습니다.\n"
+"\n"
+"            새로운 토너먼트를 시작합니다. 유저는 30초안에 반응을 통해 "
+"토너먼트에 참여할 수 있습니다.\n"
+"            토너먼트 참가자는 별도의 비용이 들지 않으며, 토너먼트 개최자는 "
+"상금만큼 비용을 지불해야합니다.\n"
+"\n"
+"            참여자는 2의 거듭제곱 단위의 수로만 참여가 가능합니다. 참여자 "
+"수가 2의 거듭제곱 단위를 넘어갈 경우 마지막에 참여한 유저는 참여할 수 없게 "
+"됩니다. \n"
+"\n"
+"            매치는 랜덤으로 배정되며,  전투의 경우 일반적인 전투와 동일한 "
+"방식으로 진행됩니다. (`{prefix}help battle`커맨드를 통해 상세한 정보를 "
+"확인할 수 있습니다).\n"
+"\n"
+"            오직 한명의 우승자만 남을 때까지 매치의 승리자는 다음 라운드로  "
+"넘어가며, 패배자는 탈락합니다.\n"
+"            IdleRPG 에서의 토너먼트에서의 매치는 오직 한사람의 승리자와 "
+"패배자만을 배출하며 무승부는 없습니다.\n"
+"\n"
+"            (이 명령어는 30분의 쿨타임이 존재합니다.)"
 
 #: cogs/tournament/__init__.py:66 cogs/tournament/__init__.py:236
 #: cogs/battles/__init__.py:68 cogs/battles/__init__.py:191
@@ -51,51 +75,54 @@ msgstr ""
 #: cogs/game_master/__init__.py:632 cogs/transaction/__init__.py:407
 #: cogs/transaction/__init__.py:521
 msgid "You are too poor."
-msgstr ""
+msgstr "비용을 지불할 수 있는 충분한 돈을 갖고 있지 않습니다."
 
 #: cogs/tournament/__init__.py:84 cogs/tournament/__init__.py:109
 msgid "You joined the tournament."
-msgstr ""
+msgstr "토너먼트에 참여하였습니다."
 
 #: cogs/tournament/__init__.py:115
 #, python-brace-format
 msgid "{author} started a tournament! Free entries, prize is **${prize}**!"
 msgstr ""
+"{author} 가 토너먼트를 개최하였습니다! 별도의 비용 없이 참여할 수 있으며 "
+"우승자는 **${prize}** 만큼의 상금을 획득할 수 있습니다!"
 
 #: cogs/tournament/__init__.py:138
 #, python-brace-format
 msgid "Noone joined your tournament {author}."
-msgstr ""
+msgstr "{author}가 개최한 토너먼트에 아무도 참여하지 않았습니다."
 
 #: cogs/tournament/__init__.py:147
 #, python-brace-format
 msgid ""
 "There are **{num}** entries, due to the fact we need a playable tournament, "
 "the last **{removed}** have been removed."
-msgstr ""
+msgstr "**{num}**명이 참여하였으며, 토너먼트 진행을 위해 **{removed}**명은 "
+"토너먼트에서 제외됩니다."
 
 #: cogs/tournament/__init__.py:154 cogs/tournament/__init__.py:324
 #, python-brace-format
 msgid "Tournament started with **{num}** entries."
-msgstr ""
+msgstr "**{num}**명의 참여자와 함께 토너먼트를 시작합니다."
 
 #: cogs/tournament/__init__.py:156 cogs/tournament/__init__.py:326
 msgid "vs"
-msgstr ""
+msgstr "vs"
 
 #: cogs/tournament/__init__.py:182 cogs/tournament/__init__.py:428
 #, python-brace-format
 msgid "Winner of this match is {winner}!"
-msgstr ""
+msgstr "{winner}가 이번 매치에서 승리하였습니다!"
 
 #: cogs/tournament/__init__.py:186 cogs/tournament/__init__.py:432
 msgid "Round Done!"
-msgstr ""
+msgstr "라운드 종료!"
 
 #: cogs/tournament/__init__.py:189
 #, python-brace-format
 msgid "Tournament ended! The winner is {winner}."
-msgstr ""
+msgstr "토너먼트 종료! 최종 우승자 **{winner}**"
 
 #: cogs/tournament/__init__.py:210
 #, python-brace-format
@@ -103,6 +130,8 @@ msgid ""
 "Tournament ended! The winner is {winner}.\n"
 "Money was given!"
 msgstr ""
+"토너먼트 종료! 최종 우승자 **{winner}**\n"
+"상금이 지급되었습니다!"
 
 #: cogs/tournament/__init__.py:220
 #, python-brace-format
@@ -127,38 +156,62 @@ msgid ""
 "\n"
 "            (This command has a cooldown of 30 minutes.)"
 msgstr ""
+"`[prize]` - 우승자가 획득할 상금의 양을 설정할 수 있습니다.\n"
+"\n"
+"            새로운 레이드 토너먼트를 시작합니다. 참여자는 30초 안에 반응을 "
+"통해 토너먼트에 참여할 수 있습니다.\n"
+"            참여자는 별도의 비용이 발생하지 않으며, 토너먼트 개최자는 "
+"상금만큼 비용을 지불해야합니다.\n"
+"\n"
+"            참여자는 2의 거듭제곱 단위의 수로만 참여가 가능합니다. 참여자 "
+"수가 2의 거듭제곱 단위를 넘어갈 경우 마지막에 참여한 유저는 참여할 수 없게 "
+"됩니다. \n"
+"\n"
+"            매치는 랜덤으로 배정되며,  전투의 경우 레이드 배틀과 동일한 "
+"방식으로 진행됩니다. (`{prefix}help raidbattle` 커맨드를 통해 상세한 정보를 "
+"확인할 수 있습니다)\n"
+"\n"
+"              오직 한명의 우승자만 남을 때까지 매치의 승리자는 다음 "
+"라운드로  넘어가며, 패배자는 탈락합니다.\n"
+"             IdleRPG 에서의 토너먼트에서의 매치는 오직 한사람의 승리자와 "
+"패배자만을 배출하며 무승부는 없습니다.\n"
+"\n"
+"            (이 명령어는 30분의 쿨타임이 존재합니다.)"
 
 #: cogs/tournament/__init__.py:254 cogs/tournament/__init__.py:279
 msgid "You joined the raid tournament."
-msgstr ""
+msgstr "레이드 토너먼트에 참여하였습니다."
 
 #: cogs/tournament/__init__.py:285
 #, python-brace-format
 msgid ""
 "{author} started a raid tournament! Free entries, prize is **${prize}**!"
 msgstr ""
+"{author} 가 토너먼트를 개최하였습니다! 별도의 비용 없이 참여할 수 있으며 "
+"우승자는 **${prize}** 만큼의 상금을 획득할 수 있습니다!"
 
 #: cogs/tournament/__init__.py:308
 #, python-brace-format
 msgid "Noone joined your raid tournament {author}."
-msgstr ""
+msgstr "{author}가 개최한 레이드 토너먼트에 아무도 참여하지 않았습니다."
 
 #: cogs/tournament/__init__.py:317
 #, python-brace-format
 msgid ""
 "There are **{num}** entries, due to the fact we need a playable raid "
 "tournament, the last **{removed}** have been removed."
-msgstr ""
+msgstr "**{num}**명이 참여하였으며, 토너먼트 진행을 위해 **{removed}**명은 "
+"토너먼트에서 제외됩니다."
 
 #: cogs/tournament/__init__.py:351 cogs/battles/__init__.py:261
 #, python-brace-format
 msgid "Raidbattle {p1} vs. {p2} started!"
-msgstr ""
+msgstr "{p1} vs {p2} 레이드 배틀을 시작합니다!"
 
 #: cogs/tournament/__init__.py:389 cogs/battles/__init__.py:300
 #, python-brace-format
 msgid "{attacker} attacks! {defender} takes **{dmg}HP** damage."
-msgstr ""
+msgstr "{attacker}의 공격! {defender}는 **{dmg}HP** 만큼의 데미지를 받았습니다."
 
 #: cogs/tournament/__init__.py:401 cogs/battles/__init__.py:310
 #, python-brace-format
@@ -166,16 +219,18 @@ msgid ""
 "{p1} - {hp1} HP left\n"
 "{p2} - {hp2} HP left"
 msgstr ""
+"{p1} - 현재 HP : {hp1}\n"
+"{p2} - 현재 HP : {hp2}"
 
 #: cogs/tournament/__init__.py:413 cogs/battles/__init__.py:321
 #, python-brace-format
 msgid "Action #{number}"
-msgstr ""
+msgstr "Action #{number}"
 
 #: cogs/tournament/__init__.py:435
 #, python-brace-format
 msgid "Raid Tournament ended! The winner is {winner}."
-msgstr ""
+msgstr "레이드 토너먼트 종료! 최종 우승자 **{winner}**"
 
 #: cogs/tournament/__init__.py:456
 #, python-brace-format
@@ -183,10 +238,12 @@ msgid ""
 "Raid Tournament ended! The winner is {winner}.\n"
 "Money was given!"
 msgstr ""
+"토너먼트 종료! 최종 우승자 **{winner}**\n"
+"상금이 지급되었습니다!"
 
 #: cogs/images/__init__.py:30
 msgid "Pixelfy an avatar"
-msgstr ""
+msgstr "아바타 픽셀화"
 
 #: cogs/images/__init__.py:34
 msgid ""
@@ -197,14 +254,21 @@ msgid ""
 "            Pixelfies a user's avatar. If the user has an animated icon, the "
 "first frame is used."
 msgstr ""
+"`[user]` - 아바타를 픽셀화시킬 유저입니다. 설정하지 않을 경우 커맨드를 "
+"호출한 유저로 설정됩니다.\n"
+"            `[size]` -픽셀화의 비율을 설정합니다. 기본값은 2이며, 1에서 "
+"5까지 설정가능합니다.\n"
+"\n"
+"            유저의 아바타를 픽셀화합니다. 만일 유저가 애니메이션 아이콘을 "
+"보유한 경우 첫 프레임에 사용됩니다."
 
 #: cogs/images/__init__.py:43
 msgid "Use 1, 2, 3, 4 or 5 as intensity value."
-msgstr ""
+msgstr "1, 2, 3, 4, 5 중의 값을 입력해주세요."
 
 #: cogs/images/__init__.py:56
 msgid "Defines an avatar's edges"
-msgstr ""
+msgstr "아바타 모서리 설정"
 
 #: cogs/images/__init__.py:60
 msgid ""
@@ -213,10 +277,15 @@ msgid ""
 "            Finds and exaggerates edges in a user's avatar, creating a cool "
 "image effect."
 msgstr ""
+"`[user]` - 아바타를 수정할 유저입니다. 설정하지 않을 경우 커맨드를 호출한 "
+"유저로 설정됩니다.\n"
+"\n"
+"            아바타의 가장자리에 효과를 주어, 멋진 아바타 효과를 얻을 수 "
+"있습니다."
 
 #: cogs/images/__init__.py:76
 msgid "Inverts a user's avatar"
-msgstr ""
+msgstr "아바타 반전"
 
 #: cogs/images/__init__.py:80
 msgid ""
@@ -226,10 +295,16 @@ msgid ""
 "\n"
 "            (This command has a channel cooldown of 15 seconds.)"
 msgstr ""
+"`[user]` - 아바타를 반전시킬 유저입니다. 설정하지 않을 경우 커맨드를 호출한 "
+"유저로 설정됩니다.\n"
+"\n"
+"            아바타의 색상을 반전시킵니다.\n"
+"\n"
+"            (이 커맨드는 15초의 쿨타임을 갖습니다.)"
 
 #: cogs/images/__init__.py:98
 msgid "Oil-paint someone's avatar"
-msgstr ""
+msgstr "아바타 유화 효과 적용"
 
 #: cogs/images/__init__.py:102
 msgid ""
@@ -239,10 +314,16 @@ msgid ""
 "\n"
 "            (This command has a channel cooldown of 15 seconds.)"
 msgstr ""
+"`[user]` - 아바타에 유화 효과를 적용할 유저입니다. 설정하지 않을 경우 "
+"커맨드를 호출한 유저로 설정됩니다.\n"
+"\n"
+"            아바타에 유화 효과를 적용합니다.\n"
+"\n"
+"            (이 커맨드는 15초의 쿨타임을 갖습니다.)"
 
 #: cogs/halloween/__init__.py:37
 msgid "Trick or treat!"
-msgstr ""
+msgstr "떡 하나 주면 안잡아 먹지!"
 
 #: cogs/halloween/__init__.py:42
 #, no-python-format
@@ -260,24 +341,37 @@ msgid ""
 "\n"
 "            (This command has a cooldown of 3h)"
 msgstr ""
+"집 주위를 돌아다니면서 주민들을 놀라게 하세요! 그들이 당신을 위한 선물을 "
+"가지고 있을지도 모릅니다!\n"
+"\n"
+"            이 커맨드를 사용하려면 두명의 플레이어가 필요합니다. 한명은 "
+"밖에서 기다리고 한명은 문을 두들깁니다.\n"
+"            대기중인 플레이어는 나중에 봇으로부터 직접 메세지를 받으며, 다른 "
+"플레이어는 즉시 응답을 받을 수 있습니다.\n"
+"\n"
+"            다른 사람으로부터 할로윈 가방을 받을 확률은 50%입니다.\n"
+"\n"
+"            (이 커맨드는 3시간의 쿨타임을 갖습니다.)"
 
 #: cogs/halloween/__init__.py:55
 msgid "You walk around the houses... Noone is there... *yet*"
-msgstr ""
+msgstr "집 주위를 서성이고 있다... 아무도 없다... *아직까지는*"
 
 #: cogs/halloween/__init__.py:62
 #, python-brace-format
 msgid ""
 "You walk around the houses and ring at {waiting}'s house! That's a trick or "
 "treat bag for you, yay!"
-msgstr ""
+msgstr "집 주위를 서성이다가 {waiting}의 집 문을 두들겼다! 좋아! 선물 바구니를 "
+"얻었군."
 
 #: cogs/halloween/__init__.py:74
 #, python-brace-format
 msgid ""
 "You walk around the houses and ring at {waiting}'s house! Sadly they don't "
 "have anything for you..."
-msgstr ""
+msgstr "집 주위를 서성이다가 {waiting}의 집 문을 두들겼다! 안타깝게도 그는 아무 것도 "
+"없었다..."
 
 #: cogs/halloween/__init__.py:113
 #, python-brace-format
@@ -286,10 +380,13 @@ msgid ""
 "ancient image on top of a chocolate bar, passed along for generations. You "
 "decide to keep it in your `{prefix}eventbackgrounds`."
 msgstr ""
+"문을 나서서 선물 바구니를 열어보자, 오랜 시간동안 전설처럼 내려온 고대의 "
+"이미지가 초콜릿 바 위에 그 모습을 드러냈습니다. `{prefix}eventbackgrounds`"
+"커맨드를 통해 이를 간직할 수 있습니다."
 
 #: cogs/halloween/__init__.py:120
 msgid "Open a trick or treat bag"
-msgstr ""
+msgstr "선물 열어보기"
 
 #: cogs/halloween/__init__.py:124
 #, python-brace-format
@@ -300,63 +397,69 @@ msgid ""
 "1 to 50 base stat.\n"
 "            Their value will be between 1 and 200."
 msgstr ""
+"`{prefix}trickortreat`커맨드를 통해 선물을 열어볼 수 있으며 무언가 얻을 수 "
+"있을지도 모릅니다.\n"
+"\n"
+"            선물에는 할로윈 테마 아이템이 들어있으며 기본 스탯은 1부터 "
+"50까지입니다.\n"
+"            값은 1에서 200사이입니다."
 
 #: cogs/halloween/__init__.py:132
 msgid "Seems you haven't got a trick or treat bag yet. Go get some!"
-msgstr ""
+msgstr "선물 바구니를 갖고 있지 않은 것 같군요. 선물 바구니를 얻어오세요!"
 
 #: cogs/halloween/__init__.py:178 cogs/crates/__init__.py:245
 #: cogs/classes/__init__.py:722 cogs/valentine/__init__.py:156
 msgid "You gained an item!"
-msgstr ""
+msgstr "아이템을 얻었습니다!"
 
 #: cogs/halloween/__init__.py:179
 msgid "You found a new item when opening a trick-or-treat bag!"
-msgstr ""
+msgstr "선물 바구니를 열었더니, 새로운 아이템을 발견하였습니다!"
 
 #: cogs/halloween/__init__.py:183 cogs/crates/__init__.py:251
 #: cogs/classes/__init__.py:422 cogs/classes/__init__.py:728
 #: cogs/trading/__init__.py:345 cogs/trading/__init__.py:440
 #: cogs/trading/__init__.py:771 cogs/valentine/__init__.py:162
 msgid "Name"
-msgstr ""
+msgstr "이름"
 
 #: cogs/halloween/__init__.py:184 cogs/crates/__init__.py:252
 #: cogs/classes/__init__.py:729 cogs/trading/__init__.py:346
 #: cogs/trading/__init__.py:441 cogs/trading/__init__.py:772
 #: cogs/valentine/__init__.py:163
 msgid "Type"
-msgstr ""
+msgstr "타입"
 
 #: cogs/halloween/__init__.py:185 cogs/crates/__init__.py:253
 #: cogs/classes/__init__.py:733 cogs/trading/__init__.py:347
 #: cogs/trading/__init__.py:442 cogs/trading/__init__.py:773
 #: cogs/valentine/__init__.py:167
 msgid "Damage"
-msgstr ""
+msgstr "공격력"
 
 #: cogs/halloween/__init__.py:186 cogs/crates/__init__.py:254
 #: cogs/classes/__init__.py:731 cogs/trading/__init__.py:348
 #: cogs/trading/__init__.py:443 cogs/trading/__init__.py:774
 #: cogs/valentine/__init__.py:165
 msgid "Armor"
-msgstr ""
+msgstr "방어력"
 
 #: cogs/halloween/__init__.py:187 cogs/crates/__init__.py:256
 #: cogs/classes/__init__.py:734 cogs/trading/__init__.py:349
 #: cogs/trading/__init__.py:444 cogs/trading/__init__.py:775
 #: cogs/valentine/__init__.py:168
 msgid "Value"
-msgstr ""
+msgstr "값"
 
 #: cogs/halloween/__init__.py:189
 #, python-brace-format
 msgid "Remaining trick-or-treat bags: {bags}"
-msgstr ""
+msgstr "남은 선물 바구니 : {bags}"
 
 #: cogs/halloween/__init__.py:197
 msgid "Shows your trick or treat bags"
-msgstr ""
+msgstr "선물 바구니 확인하기"
 
 #: cogs/halloween/__init__.py:202
 #, python-brace-format
@@ -364,15 +467,17 @@ msgid ""
 "Shows the amount of trick or treat bags you have. You can get more by using "
 "`{prefix}trickortreat`."
 msgstr ""
+"갖고 있는 선물 바구니 갯수를 확인할 수 있습니다. `{prefix}trickortreat`"
+"커맨드를 통해 자세한 정보를 확인할 수 있습니다."
 
 #: cogs/halloween/__init__.py:206
 #, python-brace-format
 msgid "You currently have **{trickortreat}** Trick or Treat Bags, {author}!"
-msgstr ""
+msgstr "{author}님은 현재 **{trickortreat}**를 갖고 있습니다."
 
 #: cogs/locale/__init__.py:64
 msgid "Check the available languages"
-msgstr ""
+msgstr "적용 가능한 언어 확인하기"
 
 #: cogs/locale/__init__.py:69
 msgid ""
