@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-03-08 22:06+0100\n"
-"PO-Revision-Date: 2021-12-11 04:22+0000\n"
+"PO-Revision-Date: 2022-06-24 19:26+0000\n"
 "Last-Translator: Feeltis Catcus <davinreginalds@gmail.com>\n"
 "Language-Team: Indonesian <http://translate.travitia.xyz/projects/idlerpg/"
 "bot/id/>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 4.9.1\n"
+"X-Generator: Weblate 4.11.2\n"
 
 #: cogs/tournament/__init__.py:46
 msgid "Start a new tournament"
@@ -293,6 +293,13 @@ msgid ""
 "\n"
 "            (This command has a channel cooldown of 15 seconds.)"
 msgstr ""
+"`[user]` - Seorang Pengguna discord yang avatarnya ingin diubah ke warna "
+"negatif; jika tidak disebutkan maka akan dianggap ke pengguna itu sendiri\n"
+"\n"
+"               Mengubah warna menjadi warna negatif pada avatar pengguna.\n"
+"\n"
+"               (Perintah ini memiliki waktu channel cooldown selama 15 "
+"detik.)"
 
 #: cogs/images/__init__.py:98
 msgid "Oil-paint someone's avatar"
@@ -306,6 +313,14 @@ msgid ""
 "\n"
 "            (This command has a channel cooldown of 15 seconds.)"
 msgstr ""
+"`[user]` - Seorang Pengguna discord yang avatarnya ingin dirubah ke model "
+"lukisan-minyak; jika tidak disebutkan maka akan dianggap ke pengguna itu "
+"sendiri\n"
+"\n"
+"                Membuat sebuah efek lukisan minyak kepada avatar seseorang.\n"
+"\n"
+"                (Perintah ini memiliki waktu channel cooldown selama 15 "
+"detik.)"
 
 #: cogs/halloween/__init__.py:37
 msgid "Trick or treat!"
@@ -688,15 +703,19 @@ msgstr ""
 #, python-brace-format
 msgid "{author} seeks a raidbattle! The price is **${money}**."
 msgstr ""
+"{author} mencari sebuah pertempuran penyerangan! Biayanya adalah "
+"**${money}**."
 
 #: cogs/battles/__init__.py:205
 #, python-brace-format
 msgid "{author} seeks a raidbattle with {enemy}! The price is **${money}**."
 msgstr ""
+"{author} mencari sebuah pertempuran penyerangan dengan {enemy}! Biayanya "
+"adalah **${money}**."
 
 #: cogs/battles/__init__.py:216
 msgid "Join the raidbattle!"
-msgstr ""
+msgstr "Bergabung dengan pertempuran penyerangan!"
 
 #: cogs/battles/__init__.py:223
 msgid "You don't have enough money to join the raidbattle."
@@ -773,16 +792,19 @@ msgstr ""
 #, python-brace-format
 msgid "{author} seeks an active battle! The price is **${money}**."
 msgstr ""
+"{author} mencari sebuah pertarungan aktif! Biayanya adalah **${money}**."
 
 #: cogs/battles/__init__.py:394
 #, python-brace-format
 msgid ""
 "{author} seeks an active battle with {enemy}! The price is **${money}**."
 msgstr ""
+"{author} mencari sebuah pertarungan aktif dengan {enemy}! Biayanya adalah "
+"**${money}**."
 
 #: cogs/battles/__init__.py:405
 msgid "Join the activebattle!"
-msgstr ""
+msgstr "Bergabung ke pertarungan aktif!"
 
 #: cogs/battles/__init__.py:413
 msgid "You don't have enough money to join the activebattle."
@@ -1083,6 +1105,12 @@ msgid ""
 "- {magic_amount} {magic_emoji}\n"
 "- {legendary_amount} {legendary_emoji}"
 msgstr ""
+"Kamu membuka {mystery_amount} {mystery_emoji} dan mendapatkan:\n"
+"- {common_amount} {common_emoji}\n"
+"- {uncommon_amount} {uncommon_emoji}\n"
+"- {rare_amount} {rare_emoji}\n"
+"- {magic_amount} {magic_emoji}\n"
+"- {legendary_amount} {legendary_emoji}"
 
 #: cogs/crates/__init__.py:246
 msgid "You found a new item when opening a crate!"
@@ -1536,12 +1564,12 @@ msgstr "Sudah ada permainan di sini!"
 
 #: cogs/hungergames/__init__.py:316 cogs/hungergames/__init__.py:333
 msgid "You joined the Hunger Games."
-msgstr ""
+msgstr "Kamu bergabung ke Hunger Games."
 
 #: cogs/hungergames/__init__.py:337
 #, python-brace-format
 msgid "{author} started a game of Hunger Games!"
-msgstr ""
+msgstr "{author} memulai sebuah permainan Hunger Games!"
 
 #: cogs/hungergames/__init__.py:346
 msgid "Not enough players joined..."
@@ -1610,6 +1638,9 @@ msgid ""
 "You did not enter a valid crate rarity. Possible ones are: common (c), "
 "uncommon (u), rare (r), magic (m), legendary (l) and mystery (myst)."
 msgstr ""
+"Kamu tidak memberikan tipe kelangkaan peti yang valid. Yang mungkin hanyalah:"
+" common (c), uncommon (u), rare (r), magic (m), legendary (l), dan mystery "
+"(myst)."
 
 #: cogs/error_handler/__init__.py:133
 msgid "You did not enter a valid coin side. Please use `heads` or `tails`."
@@ -2430,6 +2461,29 @@ msgid ""
 "<https://www.ncpgambling.org/help-treatment/national-helpline-1-800-522-4700/"
 "> - Gambling Helpline"
 msgstr ""
+"**IdleRPG** adalah bot RPG pertengahan yang paling maju di Discord.\n"
+"Kita bertujuan untuk menyediakan pengalaman RPG yang sempurna di Discord "
+"dengan usaha yang minimal dari para pengguna.\n"
+"\n"
+"Kita tidak mengambil data selain informasi karaktermu dan log transaksi kita."
+"\n"
+"Bot ini 100% gratis untuk digunakan dan sumbernya terbuka.\n"
+"Bot ini dibuat oleh orang-orang yang sangat menyukai coding dengan tujuan "
+"yang baik dan meningkatkan pengalaman bermain kamu.\n"
+"\n"
+"**Tautan**\n"
+"<https://git.travitia.xyz/Kenvyra/IdleRPG> - Sumber Kode\n"
+"<https://git.travitia.xyz> - GitLab (Publik)\n"
+"<https://idlerpg.xyz> - Laman Bot\n"
+"<https://wiki.idlerpg.xyz> - Wiki IdleRPG\n"
+"<https://travitia.xyz> - Peningkatan besar IdleRPG berikutnya\n"
+"<https://idlerpg.xyz> - Forum Kita\n"
+"<https://public-api.travitia.xyz> - API Publik Kita\n"
+"<https://cloud.idlerpg.xyz> - VPS hosting oleh IdleRPG\n"
+"<https://github.com/Kenvyra> - Kode lainnya yang berkaitan dengan IdleRPG\n"
+"<https://discord.com/terms> - Persyaratan Layanan Discord\n"
+"<https://www.ncpgambling.org/help-treatment/national-helpline-1-800-522-4700/"
+"> - Layanan Bantuan Perjudian"
 
 #: cogs/miscellaneous/__init__.py:568
 msgid "Show the rules again"
@@ -2470,7 +2524,7 @@ msgstr "Memulai penyerangan Zerekiel"
 #: cogs/raid/__init__.py:1028 cogs/raid/__init__.py:1196
 #: cogs/raid/__init__.py:1381 cogs/raid/__init__.py:1605
 msgid "You joined the raid."
-msgstr ""
+msgstr "Kamu bergabung ke penyerangannya."
 
 #: cogs/raid/__init__.py:450
 msgid "Start a Kvothe raid"
@@ -2839,7 +2893,7 @@ msgstr "Berhasil mengaktifkan {types} untuk **24 jam** berikutnya!"
 
 #: cogs/help/__init__.py:115 cogs/help/__init__.py:239
 msgid "This command was not initiated by you."
-msgstr ""
+msgstr "Perintah ini tidak diaktifkan olehmu."
 
 #: cogs/help/__init__.py:189
 msgid "Subcommands"
@@ -2849,6 +2903,8 @@ msgstr "Subperintah"
 #, python-brace-format
 msgid "Click on the buttons to see more subcommands. | Page {start}/{end}"
 msgstr ""
+"Klik tombolnya untuk melihat lebih banyak sub-perintah. | Halaman "
+"{start}/{end}"
 
 #: cogs/help/__init__.py:278
 msgid "View the command list"
@@ -3158,7 +3214,7 @@ msgstr "Kamu tidak memiliki akses untuk perintah ini!"
 
 #: cogs/help/__init__.py:706
 msgid "No help available"
-msgstr ""
+msgstr "Tidak ada bantuan yang tersedia"
 
 #: cogs/help/__init__.py:715
 msgid "Aliases"
@@ -3223,7 +3279,7 @@ msgstr "Nama terlalu panjang."
 #: cogs/patreon/__init__.py:198 cogs/patreon/__init__.py:244
 #, python-brace-format
 msgid "You don't have an item in your inventory with the ID `{itemid}`."
-msgstr ""
+msgstr "Kamu tidak memiliki sebuah barang dengan ID`{itemid}` di persediaanmu."
 
 #: cogs/patreon/__init__.py:209
 #, python-brace-format
@@ -3386,10 +3442,22 @@ msgid ""
 "\n"
 "            Only basic (or above) tier patrons can use this command."
 msgstr ""
+"`<url>` - URL gambar yang akan diformat\n"
+"              `<style>` - Tipe overlay yang akan digunakan. Opsi yang "
+"tersedia adalah dark dan light.\n"
+"\n"
+"              Menghasilkan sebuah profil latar belakang untukmu. Ini akan "
+"melebarkan/mengkompres gambarmu ke 800x650 pixel dan lapisan di sebuah "
+"overlay.\n"
+"              Ini akan memberikan sebuah link yang kemudian bisa kamu "
+"gunakan untuk `{prefix}background`.\n"
+"\n"
+"              Hanya patrons tier basic (atau diatasnya) yang bisa "
+"menggunakan perintah ini."
 
 #: cogs/patreon/__init__.py:375
 msgid "Overlay type must be `dark` or `light`."
-msgstr ""
+msgstr "Tipe overlay harus berupa `dark` atau `light`."
 
 #: cogs/patreon/__init__.py:390 cogs/profile/__init__.py:263
 #, python-brace-format
@@ -3512,12 +3580,13 @@ msgstr ""
 #: cogs/patreon/__init__.py:503
 #, python-brace-format
 msgid "Background {number}/{total}"
-msgstr ""
+msgstr "Latar Belakang {number}/{total}"
 
 #: cogs/patreon/__init__.py:509
 #, python-brace-format
 msgid "Use {prefix}eventbackground {number} to use this background"
 msgstr ""
+"Gunakan {prefix}eventbackground {number} untuk menggunakan latar belakang ini"
 
 #: cogs/classes/__init__.py:52
 msgid "Choose or change your class(es)"
@@ -3675,7 +3744,7 @@ msgstr ""
 
 #: cogs/classes/__init__.py:159
 msgid "Choose a class"
-msgstr ""
+msgstr "Pilihlah sebuah kelas"
 
 #: cogs/classes/__init__.py:169
 #, python-brace-format
@@ -3966,7 +4035,7 @@ msgstr "Kekuatan Kotoran Adrian"
 
 #: cogs/classes/__init__.py:458
 msgid "Select a dish for your pet"
-msgstr ""
+msgstr "Pilihlah sebuah makanan untuk hewan peliharaanmu"
 
 #: cogs/classes/__init__.py:465 cogs/classes/__init__.py:524
 #: cogs/marriage/__init__.py:291
@@ -4028,7 +4097,7 @@ msgstr "Koktailnya Adrian"
 
 #: cogs/classes/__init__.py:517
 msgid "Select a drink for your pet"
-msgstr ""
+msgstr "Pilihlah sebuah minuman untuk hewan peliharaanmu"
 
 #: cogs/classes/__init__.py:520
 msgid "Give your pet something to drink"
@@ -4290,19 +4359,19 @@ msgstr "Barat"
 
 #: cogs/adventure/__init__.py:138
 msgid "Attack"
-msgstr ""
+msgstr "Serang"
 
 #: cogs/adventure/__init__.py:145
 msgid "Defend"
-msgstr ""
+msgstr "Berlindung"
 
 #: cogs/adventure/__init__.py:152
 msgid "Recover"
-msgstr ""
+msgstr "Memulihkan"
 
 #: cogs/adventure/__init__.py:212
 msgid "The active adventure has started."
-msgstr ""
+msgstr "Petualangan aktif telah dimulai."
 
 #: cogs/adventure/__init__.py:252
 #, python-brace-format
@@ -4330,7 +4399,7 @@ msgstr "Waktu habis."
 
 #: cogs/adventure/__init__.py:317
 msgid "You defeated the enemy."
-msgstr ""
+msgstr "Kamu mengalahkan musuhnya."
 
 #: cogs/adventure/__init__.py:327
 #, python-brace-format
@@ -4356,7 +4425,7 @@ msgstr ""
 
 #: cogs/adventure/__init__.py:364
 msgid "`@` - You, `!` - Enemy, `*` - Treasure"
-msgstr ""
+msgstr "`@` - Kamu, `!` - Musuh, `*` - Harta Karun"
 
 #: cogs/adventure/__init__.py:367
 #, python-brace-format
@@ -4369,7 +4438,7 @@ msgstr "Musuh"
 
 #: cogs/adventure/__init__.py:375
 msgid "HP"
-msgstr ""
+msgstr "HP"
 
 #: cogs/adventure/__init__.py:437
 msgid "Shows adventures and your chances"
@@ -4451,7 +4520,7 @@ msgid "Go out on an active adventure."
 msgstr "Melakukan sebuah petualangan aktif."
 
 #: cogs/adventure/__init__.py:546
-#, no-python-format
+#, fuzzy, no-python-format
 msgid ""
 "Active adventures will put you into a randomly generated maze. You will "
 "begin in the top left corner and your goal is to find the exit in the bottom "
@@ -4480,7 +4549,7 @@ msgid ""
 "gold up to 100 times your attack + defense.\n"
 "\n"
 "            (This command has a cooldown of 30 minutes)"
-msgstr ""
+msgstr "Petualangan aktif akan menempatkanmu ke sebuah labirin"
 
 #: cogs/adventure/__init__.py:566
 msgid ""
