@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-03-08 22:06+0100\n"
-"PO-Revision-Date: 2022-06-17 09:26+0000\n"
+"PO-Revision-Date: 2022-06-28 12:26+0000\n"
 "Last-Translator: Денис Османов <OzzDenis0@mail.ru>\n"
 "Language-Team: Russian <http://translate.travitia.xyz/projects/idlerpg/bot/"
 "ru/>\n"
@@ -211,7 +211,7 @@ msgstr "Битва в стиле \"Рейд\" между {p1} и {p2} начал
 #: cogs/tournament/__init__.py:389 cogs/battles/__init__.py:300
 #, python-brace-format
 msgid "{attacker} attacks! {defender} takes **{dmg}HP** damage."
-msgstr ""
+msgstr "{attacker} атакует! {defender} теряет **{dmg}** очков здоровья."
 
 #: cogs/tournament/__init__.py:401 cogs/battles/__init__.py:310
 #, python-brace-format
@@ -219,16 +219,18 @@ msgid ""
 "{p1} - {hp1} HP left\n"
 "{p2} - {hp2} HP left"
 msgstr ""
+"{p1} - {hp1} очков здоровья осталось\n"
+"{p2} - {hp2} очков здоровья осталось"
 
 #: cogs/tournament/__init__.py:413 cogs/battles/__init__.py:321
 #, python-brace-format
 msgid "Action #{number}"
-msgstr ""
+msgstr "Действие #{number}"
 
 #: cogs/tournament/__init__.py:435
 #, python-brace-format
 msgid "Raid Tournament ended! The winner is {winner}."
-msgstr ""
+msgstr "Рейдовый турнир подошёл к концу! Победителем объявляется {winner}."
 
 #: cogs/tournament/__init__.py:456
 #, python-brace-format
@@ -236,6 +238,8 @@ msgid ""
 "Raid Tournament ended! The winner is {winner}.\n"
 "Money was given!"
 msgstr ""
+"Рейдовый турнир подошёл к концу! Победителем объявляется {winner}.\n"
+"Призовой фонд был выдан победителю!"
 
 #: cogs/images/__init__.py:30
 msgid "Pixelfy an avatar"
@@ -1437,7 +1441,7 @@ msgstr ""
 #: cogs/error_handler/__init__.py:164
 #, python-brace-format
 msgid "You are on cooldown. Try again in {time}."
-msgstr "Перезарядка. Попробуйте снова в {time}."
+msgstr "Перезарядка. Попробуйте снова спустя {time}."
 
 #: cogs/error_handler/__init__.py:175 cogs/error_handler/__init__.py:214
 #: cogs/error_handler/__init__.py:306
@@ -3114,20 +3118,21 @@ msgstr ""
 
 #: cogs/classes/__init__.py:233
 msgid "View your class(es)"
-msgstr ""
+msgstr "Посмотреть взятые вами классы"
 
 #: cogs/classes/__init__.py:236
 msgid "Show your class(es) and their added benefits, sent as images."
 msgstr ""
+"Посмотреть взятые вами классы и их бонусы, отправленные в виде изображения."
 
 #: cogs/classes/__init__.py:250
 #, python-brace-format
 msgid "The image for your class **{class_}** hasn't been added yet."
-msgstr "Картинка для вашего класса **{class_}** ещё не была добавлена."
+msgstr "Изображение для вашего класса **{class_}** ещё не добавлено."
 
 #: cogs/classes/__init__.py:256
 msgid "Evolve your class(es)"
-msgstr ""
+msgstr "Развить взятые вами классы"
 
 #: cogs/classes/__init__.py:261
 #, no-python-format
@@ -3161,26 +3166,28 @@ msgstr "У вас нет класса."
 
 #: cogs/classes/__init__.py:291
 msgid "Nothing to evolve."
-msgstr ""
+msgstr "Нет во что эволюционировать."
 
 #: cogs/classes/__init__.py:296
 #, python-brace-format
 msgid "You are now a `{class1}` and a `{class2}`."
-msgstr ""
+msgstr "Теперь вы `{class1}` и `{class2}`."
 
 #: cogs/classes/__init__.py:301
 msgid "Shows the evolution tree"
-msgstr ""
+msgstr "Показывает дерево эволюции"
 
 #: cogs/classes/__init__.py:305
 msgid ""
 "Shows the evolution tree for each class.\n"
 "            This will only show the names, not the respective benefits."
 msgstr ""
+"Показывает эволюционное древо для каждого класса.\n"
+"            Это покажет лишь имена, а не получаемые бонусы."
 
 #: cogs/classes/__init__.py:325
 msgid "Steal money"
-msgstr ""
+msgstr "Украсть деньги"
 
 #: cogs/classes/__init__.py:330
 #, no-python-format
@@ -3201,27 +3208,44 @@ msgid ""
 "            Only thieves can use this command.\n"
 "            (This command has a cooldown of 1 hour.)"
 msgstr ""
+"Украсть деньги у случайного пользователя.\n"
+"\n"
+"            Ваш шанс кражи возрастает от увеличения уровня вашего класса, а "
+"так же уровня воровского здания альянса, если вы располагаете альянсом с "
+"принадлежащим ему городом.\n"
+"           Если кража пройдёт удачно, то вы получите 10% от денег случайного "
+"игрока.\n"
+"\n"
+"            Вы *не можете* выбрать свою жертву, ей всегда будет случайный "
+"игрок. Если бот не может найти имя игрока, то оно будет заменено на \"мимо "
+"проходящего странника\".\n"
+"            Случайным игроком не может быть кто-либо с капиталом меньше $10, "
+"вы сами, либо любой из владельцев бота.\n"
+"\n"
+"            Только воры могут использовать данную команду.\n"
+"            (Эта команда имеет перезарядку в 1 час)"
 
 #: cogs/classes/__init__.py:364
 msgid "You attempted to steal from a bot VIP, but the bodyguards caught you."
 msgstr ""
+"Вы попытались обокрасть особо важную персону, но телохранители поймали вас."
 
 #: cogs/classes/__init__.py:390
 #, python-brace-format
 msgid "You stole **${stolen}** from {user}."
-msgstr ""
+msgstr "Вы обокрали {user} на **${stolen}**."
 
 #: cogs/classes/__init__.py:392
 msgid "a traveller just passing by"
-msgstr ""
+msgstr "мимо проходящего странника"
 
 #: cogs/classes/__init__.py:396
 msgid "Your attempt to steal money wasn't successful."
-msgstr "Вы попытались своровать, но попытка не была успешной."
+msgstr "Ваша попытка своровать провалилась."
 
 #: cogs/classes/__init__.py:400
 msgid "Interact with your pet"
-msgstr ""
+msgstr "Взаимодействовать с вашим питомцем"
 
 #: cogs/classes/__init__.py:405
 #, python-brace-format
@@ -3241,6 +3265,21 @@ msgid ""
 "\n"
 "            Only rangers can use this command."
 msgstr ""
+"Взаимодействовать с вашим питомцем. Обязательно прочитайте `{prefix}help "
+"pet`.\n"
+"\n"
+"            Каждые два часа ваш питомец будет терять 2 очка насыщения, 4 "
+"очка питья, 1 очко радости и 1 очко любви.\n"
+"\n"
+"            Если насыщение или питьё упадёт до нуля, ваш питомец умрёт, а вы "
+"потеряете класс лесничего.\n"
+"            Если любовь упадёт ниже 75, у вашего питомца появится шанс "
+"сбежать, который будет увеличиваться по мере уменьшения любви.\n"
+"\n"
+"            Счастье вашего питомца влияет на получаемые с охоты вещи, "
+"выступая в роли множителя для характеристик предмета.\n"
+"\n"
+"            Только лесничии могут использовать данную команду."
 
 #: cogs/classes/__init__.py:421
 #, python-brace-format
@@ -3253,23 +3292,23 @@ msgstr "Уровень"
 
 #: cogs/classes/__init__.py:424
 msgid "Food"
-msgstr ""
+msgstr "Еда"
 
 #: cogs/classes/__init__.py:426
 msgid "Drinks"
-msgstr ""
+msgstr "Питьё"
 
 #: cogs/classes/__init__.py:428
 msgid "Love"
-msgstr ""
+msgstr "Любовь"
 
 #: cogs/classes/__init__.py:429
 msgid "Joy"
-msgstr ""
+msgstr "Радость"
 
 #: cogs/classes/__init__.py:437 cogs/classes/__init__.py:461
 msgid "Feed your pet"
-msgstr ""
+msgstr "Накормить вашего питомца"
 
 #: cogs/classes/__init__.py:441
 msgid ""
@@ -3278,30 +3317,34 @@ msgid ""
 "\n"
 "            Only rangers can use this command."
 msgstr ""
+"Накормить вашего питомца. Это вызывает интерактивное меню, где вы можете "
+"купить еду.\n"
+"\n"
+"            Только лесничии могут использовать данную команду."
 
 #: cogs/classes/__init__.py:446
 msgid "Potato"
-msgstr ""
+msgstr "Картошка"
 
 #: cogs/classes/__init__.py:447
 msgid "Apple"
-msgstr ""
+msgstr "Яблоко"
 
 #: cogs/classes/__init__.py:448
 msgid "Cucumber"
-msgstr ""
+msgstr "Огурец"
 
 #: cogs/classes/__init__.py:449
 msgid "Meat"
-msgstr ""
+msgstr "Мясо"
 
 #: cogs/classes/__init__.py:450
 msgid "Salad"
-msgstr ""
+msgstr "Салат"
 
 #: cogs/classes/__init__.py:451
 msgid "Sushi"
-msgstr ""
+msgstr "Суши"
 
 #: cogs/classes/__init__.py:452
 msgid "Adrian's Power Poop"
@@ -3325,7 +3368,7 @@ msgstr ""
 
 #: cogs/classes/__init__.py:496
 msgid "Give your pet something to drink."
-msgstr ""
+msgstr "Дать вашему питомцу что-нибудь попить."
 
 #: cogs/classes/__init__.py:500
 msgid ""
@@ -3334,6 +3377,10 @@ msgid ""
 "\n"
 "            Only rangers can use this command."
 msgstr ""
+"Дать вашем питомцу что-нибудь попить. Это вызывает интерактивное меню, где "
+"вы можете купить питьё.\n"
+"\n"
+"            Только лесничии могут использовать данную команду."
 
 #: cogs/classes/__init__.py:505
 msgid "Some Water"
@@ -3341,19 +3388,19 @@ msgstr ""
 
 #: cogs/classes/__init__.py:506
 msgid "A bottle of water"
-msgstr ""
+msgstr "Бутылка воды"
 
 #: cogs/classes/__init__.py:507
 msgid "Cocktail"
-msgstr ""
+msgstr "Коктейль"
 
 #: cogs/classes/__init__.py:508
 msgid "Wine"
-msgstr ""
+msgstr "Вино"
 
 #: cogs/classes/__init__.py:509
 msgid "Beer"
-msgstr ""
+msgstr "Пиво"
 
 #: cogs/classes/__init__.py:510
 msgid "Vodka"
@@ -3380,7 +3427,7 @@ msgstr ""
 
 #: cogs/classes/__init__.py:556
 msgid "Love your pet"
-msgstr ""
+msgstr "Приласкать вашего питомца"
 
 #: cogs/classes/__init__.py:560
 msgid ""
@@ -3390,6 +3437,11 @@ msgid ""
 "            Only rangers can use this command.\n"
 "            (This command has a cooldown of 6 hours.)"
 msgstr ""
+"Обняться с вашим питомцам для поднятия его очков любви. Ваш питомец может "
+"получить от 1 до 12 очков любви за каждое объятие.\n"
+"\n"
+"            Только лесничии могут использовать данную команду.\n"
+"            (Эта команда имеет перезарядку в 6 часов.)"
 
 #: cogs/classes/__init__.py:574
 #, python-brace-format
@@ -3397,11 +3449,13 @@ msgid ""
 "Your pet adores you! :heart: Cuddling it has increased its love for you by "
 "**{value}** points."
 msgstr ""
+"Ваш питомец обожает вас! :heart: Объятия с ним увеличили его очки любви к "
+"вам на **{value}**."
 
 #. We are mean, indeed
 #: cogs/classes/__init__.py:583
 msgid "Play with your pet"
-msgstr ""
+msgstr "Поиграть с вашим питомцем"
 
 #: cogs/classes/__init__.py:587
 msgid ""
@@ -3411,15 +3465,21 @@ msgid ""
 "            Only rangers can use this command.\n"
 "            (This command has a cooldown of 6 hours.)"
 msgstr ""
+"Поиграть с вашим питомцем для поднятия его настроения. Ваш питомец может "
+"получить от 1 до 12 очков радости за каждую игру.\n"
+"\n"
+"            Только лесничии могут использовать данную команду.\n"
+"            (Эта команда имеет перезарядку в 6 часов)"
 
 #: cogs/classes/__init__.py:601
 #, python-brace-format
 msgid "You have been {activity} with your pet and it gained **{value}** joy!"
 msgstr ""
+"Вы {activity} со своим питомцем, и он получил **{value}** к своей радости!"
 
 #: cogs/classes/__init__.py:605
 msgid "playing football :soccer:"
-msgstr ""
+msgstr "играет в футбол :soccer:"
 
 #: cogs/classes/__init__.py:606
 msgid "playing American football :football:"
@@ -3451,7 +3511,7 @@ msgstr ""
 
 #: cogs/classes/__init__.py:622
 msgid "Rename your pet"
-msgstr ""
+msgstr "Переименовать вашего питомца"
 
 #: cogs/classes/__init__.py:626
 msgid ""
@@ -3470,7 +3530,7 @@ msgstr ""
 
 #: cogs/classes/__init__.py:640
 msgid "Set a new image for your pet"
-msgstr ""
+msgstr "Установить новое изображение для вашего питомца"
 
 #: cogs/classes/__init__.py:644
 #, python-brace-format
