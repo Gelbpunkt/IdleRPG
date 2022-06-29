@@ -26,7 +26,6 @@ from contextlib import redirect_stdout
 import discord
 
 from discord.ext import commands
-from tabulate import tabulate
 
 from classes.badges import Badge, BadgeConverter
 from classes.bot import Bot
@@ -121,27 +120,6 @@ class Owner(commands.Cog):
     async def bash(self, ctx: Context, *, command_to_run: str) -> None:
         """[Owner Only] Run shell commands."""
         await shell.run(command_to_run, ctx)
-
-    @commands.command(hidden=True)
-    async def sql(self, ctx: Context, *, query: str) -> None:
-        """[Owner Only] Very basic SQL command."""
-        if "select" in query.lower() or "returning" in query.lower():
-            type_ = "fetch"
-        else:
-            type_ = "execute"
-        try:
-            ret = await (getattr(self.bot.pool, type_))(query)
-        except Exception:
-            return await ctx.send(f"```py\n{traceback.format_exc()}```")
-        if type_ == "fetch" and len(ret) == 0:
-            return await ctx.send("No results.")
-        elif type_ == "fetch" and len(ret) > 0:
-            ret.insert(0, ret[0].keys())
-            await ctx.send(
-                f"```\n{tabulate(ret, headers='firstrow', tablefmt='psql')}\n```"
-            )
-        else:
-            await ctx.send(f"```{ret}```")
 
     @commands.command(hidden=True)
     async def runas(
