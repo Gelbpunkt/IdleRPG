@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-03-08 22:06+0100\n"
-"PO-Revision-Date: 2022-06-28 12:26+0000\n"
+"PO-Revision-Date: 2022-07-05 22:26+0000\n"
 "Last-Translator: Feeltis Catcus <davinreginalds@gmail.com>\n"
 "Language-Team: Indonesian <http://translate.travitia.xyz/projects/idlerpg/"
 "bot/id/>\n"
@@ -4564,7 +4564,24 @@ msgstr ""
 "\n"
 "            Labirin ini berisi tempat aman dan harta karun begitu juga "
 "dengan jebakan dan musuh.\n"
-"            Setiap"
+"            Setiap ruang mempunyai kemungkinan 10% untuk menjadi jebakan. "
+"Jika sebuah ruangan tidak memiliki jebakan maka akan ada kemungkinan 10% "
+"berisi musuh.\n"
+"            Setiap labirin setidaknya mempunyai 5 harta karun.\n"
+"\n"
+"            Jebakan bisa memberikan serangan damage ke kamu dari 1/10 hingga "
+"1/8 dari total HP kamu.\n"
+"            Jumlah serangan damage musuh bergantung dari jumlah serangan "
+"damagemu. Saat bertarung dengan musuh, kamu bisa menyerang (⚔️), berlindung "
+"(🛡️) atau menyembuhkan diri (❤️)\n"
+"            Harta karun bisa berisi emas hingga 25 kali dari serangan damage "
+"+ perlindungan kamu.\n"
+"\n"
+"           Jika kamu mencapai akhir, kamu akan mendapatkan harta karun "
+"spesial dengan emas hingga 100 kali dari serangan damage + perlindungan kamu."
+"\n"
+"\n"
+"            (Perintah ini memiliki waktu cooldown selama 30 menit)"
 
 #: cogs/adventure/__init__.py:566
 msgid ""
@@ -4575,6 +4592,13 @@ msgid ""
 "Tip: Use a silent channel for this, you may want to read all the messages I "
 "will send."
 msgstr ""
+"Kamu akan berada di dalam sebuah labirin. Akan ada musuh, harta karun dan "
+"perangkap tersembunyi. Capailah jalan keluar yang ada di pojok kanan bawah "
+"untuk ekstra bonus besar!\n"
+"Apakah kamu siap?\n"
+"\n"
+"Tips: Gunakan sebuah channel yang sunyi untuk ini, kamu mungkin mau membaca "
+"semua pesan yang akan aku kirimkan."
 
 #: cogs/adventure/__init__.py:580
 msgid "Checks your adventure status."
@@ -5294,7 +5318,7 @@ msgstr "Gandakan atau curi ${money}?"
 
 #: cogs/gambling/__init__.py:1151
 msgid "Select an action"
-msgstr ""
+msgstr "Pilih sebuah aksi"
 
 #: cogs/gambling/__init__.py:1152
 msgid "Double"
@@ -5827,7 +5851,7 @@ msgstr "Pedagang"
 
 #: cogs/trading/__init__.py:811
 msgid "Select an item to purchase"
-msgstr ""
+msgstr "Pilih sebuah barang untuk dibeli"
 
 #: cogs/trading/__init__.py:829
 msgid "You are too poor to buy this item."
@@ -8223,11 +8247,11 @@ msgstr ""
 
 #: cogs/guild/__init__.py:1399
 msgid "Join the adventure!"
-msgstr ""
+msgstr "Bergabunglah dengan petualangannya!"
 
 #: cogs/guild/__init__.py:1400
 msgid "You joined the adventure."
-msgstr ""
+msgstr "Kamu bergabung ke petualangannya."
 
 #: cogs/guild/__init__.py:1406
 #, python-brace-format
@@ -8236,6 +8260,9 @@ msgid ""
 "Unlimited players can join in the next 10 minutes. The minimum of players "
 "required is 3."
 msgstr ""
+"{author} mencari sebuah petualangan guild untuk **{guild}**! Ikuti linknya "
+"untuk bergabung! Jumlah pemain tidak terbatas bisa bergabung dalam 10 menit. "
+"Pemain yang dibutuhkan paling sedikit adalah 3."
 
 #: cogs/guild/__init__.py:1433
 msgid "You didn't get enough other players for the guild adventure."
@@ -8523,7 +8550,7 @@ msgstr "**{person}** tidak memiliki sebuah karakter."
 
 #: cogs/profile/__init__.py:220
 msgid "Finished"
-msgstr ""
+msgstr "Selesai"
 
 #: cogs/profile/__init__.py:248
 msgid "No God"
@@ -8925,11 +8952,11 @@ msgstr "Kamu tidak memiliki loot apapun dengan ID: {itemids}"
 #: cogs/profile/__init__.py:667
 #, python-brace-format
 msgid "Select a reward for the {count} items"
-msgstr ""
+msgstr "Pilihlah sebuah hadiah untuk {count} barangnya"
 
 #: cogs/profile/__init__.py:668
 msgid "Select a reward"
-msgstr ""
+msgstr "Pilihlah sebuah hadiah"
 
 #: cogs/profile/__init__.py:669
 #, python-brace-format
@@ -8944,7 +8971,7 @@ msgstr "**{value} XP**"
 #: cogs/profile/__init__.py:674
 #, python-brace-format
 msgid "{value} XP"
-msgstr ""
+msgstr "{value} XP"
 
 #: cogs/profile/__init__.py:705
 #, python-brace-format
@@ -9347,21 +9374,23 @@ msgstr "Berhasil mengatur warna profilmu menjadi `{colour}`."
 
 #: cogs/profile/__init__.py:1212
 msgid "Claim your profile badges"
-msgstr ""
+msgstr "Klaim profil lencana kamu"
 
 #: cogs/profile/__init__.py:1216
 msgid ""
 "Claim all badges for your profile based on your roles. This command can only "
 "be used in the support server."
 msgstr ""
+"Klaim semua lencana untuk profil kamu berdasarkan roles kamu. Perintah ini "
+"hanya bisa digunakan di dalam support server."
 
 #: cogs/profile/__init__.py:1219
 msgid "This command can only be used in the support server."
-msgstr ""
+msgstr "Perintah ini hanya bisa digunakan di dalam support server."
 
 #: cogs/profile/__init__.py:1249
 msgid "Successfully updated your badges."
-msgstr ""
+msgstr "Berhasil memperbarui lencana kamu."
 
 #: cogs/game_master/__init__.py:41
 msgid "Publish an announcement"
@@ -9423,7 +9452,7 @@ msgstr ""
 
 #: cogs/game_master/__init__.py:93
 msgid "Bot-ban a user"
-msgstr ""
+msgstr "Bot-ban sebuah pengguna"
 
 #: cogs/game_master/__init__.py:97
 msgid ""
@@ -9434,16 +9463,22 @@ msgid ""
 "\n"
 "            Only Game Masters can use this command."
 msgstr ""
+"`<other>` - Seorang pengguna discord\n"
+"\n"
+"            Melarang seorang pengguna menggunakan bot, mencegah mereka dari "
+"menggunakan perintah dan reaksinya.\n"
+"\n"
+"            Hanya Game Master yang bisa menggunakan perintah ini."
 
 #: cogs/game_master/__init__.py:112
 #, python-brace-format
 msgid "Banned: {other}"
-msgstr ""
+msgstr "Banned: {other}"
 
 #: cogs/game_master/__init__.py:123
 #, python-brace-format
 msgid "{other} is already banned."
-msgstr ""
+msgstr "{other} sudah di ban."
 
 #: cogs/game_master/__init__.py:126
 msgid "Bot-unban a user"
@@ -9940,7 +9975,7 @@ msgstr ""
 
 #: cogs/game_master/__init__.py:724
 msgid "Update the luck for all followers"
-msgstr ""
+msgstr "Memperbarui keberuntungan untuk semua pengikut"
 
 #: cogs/game_master/__init__.py:729
 msgid ""
@@ -9949,6 +9984,10 @@ msgid ""
 "\n"
 "            Only Game Masters can use this command."
 msgstr ""
+"Mengatur keberuntungan untuk semua dewa ke sebuah nilai yang acak dan "
+"memberikan keberuntungan bonus ke top 25 pengikut.\n"
+"\n"
+"            Hanya Game Master yang bisa menggunakan perintah ini."
 
 #: cogs/gods/__init__.py:39
 msgid "Sacrifice loot for favor"
@@ -10046,7 +10085,7 @@ msgstr ""
 
 #: cogs/gods/__init__.py:156
 msgid "Choose a god"
-msgstr ""
+msgstr "Pilihlah seorang Dewa"
 
 #: cogs/gods/__init__.py:162
 #, python-brace-format
@@ -11031,11 +11070,11 @@ msgstr "...bau yang aneh dan menyengat."
 
 #: cogs/races/__init__.py:159
 msgid "Choose a race"
-msgstr ""
+msgstr "Pilihlah sebuah ras"
 
 #: cogs/races/__init__.py:166
 msgid "Select your answer"
-msgstr ""
+msgstr "Pilihlah jawabanmu"
 
 #: cogs/races/__init__.py:184
 #, python-brace-format
@@ -11199,6 +11238,17 @@ msgid ""
 "            Only the alliance leader can use this command.\n"
 "            (This command has a cooldown of 5 minutes.)"
 msgstr ""
+"`<newleader>` - Seorang pengguna yang memiliki karakter yang memimpin sebuah "
+"guild.\n"
+"\n"
+"             Mengundang sebuah guild ke aliansi kamu. Semua aliansi guild "
+"akan mendapatkan keuntungan dari bangunan kota kamu. Ketika kamu ber-aliansi "
+"dengan guild lain, hal tersebut akan muncul di {prefix}alliance.\n"
+"            Guild lain tidak bisa ber-aliansi dengan aliansi lainnya ataupun "
+"sedang memiliki sebuah kota agar bisa diundang.\n"
+"\n"
+"            Hanya pemimpin aliansi yang bisa menggunakan perintah ini.\n"
+"            (Perintah ini memiliki waktu cooldown selama 5 menit.)"
 
 #: cogs/alliance/__init__.py:155
 msgid "That member is not in a guild."
@@ -11416,7 +11466,7 @@ msgstr ""
 #, python-brace-format
 msgid ""
 "Successfully upgraded the city's {name} building to level **{new_level}**."
-msgstr ""
+msgstr "Berhasil meningkatkan bangunan kota {name} ke level **{new_level}**."
 
 #: cogs/alliance/__init__.py:402
 msgid "Build a defense in your city."
@@ -11444,6 +11494,26 @@ msgid ""
 "            Only the alliance leader can use this command.\n"
 "            (This command has a cooldown of 1 minutes)"
 msgstr ""
+"Membangun beberapa bangunan pertahanan atau menempatkan pasukan di kotamu. "
+"Berikut ini adalah yang tersedia:\n"
+"\n"
+"            Meriam: 500HP, 60 perlindungan untuk $200,000\n"
+"            Pemanah: 1,000HP, 50 perlindungan untuk $100,000\n"
+"            Dinding Luar: 40,000HP, 0 perlindungan untuk $500,000\n"
+"            Dinding Dalam: 20,000HP, 0 perlindungan untuk $200,000\n"
+"            Parit: 10,000HP, 25 perlindungan untuk $150,000\n"
+"            Menara: 2,500HP, 50 perlindungan untuk $200,000\n"
+"            Balista: 500HP, 30 perlindungan untuk $100,000\n"
+"\n"
+"            Kota manapun hanya bisa memiliki maksimal 10 pertahanan. Ketika "
+"diserang, bangunan yang punya paling banyak HP akan diserang pertama.\n"
+"            Kamu tidak akan bisa membangun pertahanan ketika kota kamu "
+"sedang diserang. Biaya pertahanan akan diambil dari bank guild pemimpin.\n"
+"\n"
+"            Perintah ini memerlukan untuk aliansi kamu mempunyai sebuah kota."
+"\n"
+"            Hanya pemimpin aliansi yang bisa menggunakan perintah ini.\n"
+"            (Perintah ini memiliki waktu cooldown selama 1 menit)"
 
 #: cogs/alliance/__init__.py:435
 #, python-brace-format
@@ -11463,6 +11533,8 @@ msgstr "Kamu hanya bisa membangun sampai 10 pertahanan."
 msgid ""
 "Are you sure you want to build a **{defense}**? This will cost **${price}**."
 msgstr ""
+"Apakah kamu yakin ingin membangun sebuah **{defense}**? Ini akan memakan "
+"biaya sebesar **${price}**."
 
 #: cogs/alliance/__init__.py:472
 #, python-brace-format
@@ -11534,6 +11606,11 @@ msgid ""
 "\n"
 "            Your alliance must own a city to use this command."
 msgstr ""
+"Daftar pertahanan kota kamu dan memperlihatkan HP tersisa untuk setiap "
+"pertahanannya.\n"
+"\n"
+"            Aliansi kamu harus memiliki sebuah kota agar bisa menggunakan "
+"perintah ini."
 
 #: cogs/alliance/__init__.py:558
 #, python-brace-format
