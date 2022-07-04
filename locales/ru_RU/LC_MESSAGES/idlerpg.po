@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-03-08 22:06+0100\n"
-"PO-Revision-Date: 2022-06-28 12:26+0000\n"
+"PO-Revision-Date: 2022-07-05 22:26+0000\n"
 "Last-Translator: Денис Османов <OzzDenis0@mail.ru>\n"
 "Language-Team: Russian <http://translate.travitia.xyz/projects/idlerpg/bot/"
 "ru/>\n"
@@ -243,7 +243,7 @@ msgstr ""
 
 #: cogs/images/__init__.py:30
 msgid "Pixelfy an avatar"
-msgstr ""
+msgstr "Пикселизируйте фотографию профиля"
 
 #: cogs/images/__init__.py:34
 msgid ""
@@ -1055,23 +1055,27 @@ msgid ""
 "${price:,.0f}!** React to buy it! You have **2 Minutes** to accept the trade "
 "or the offer will be cancelled."
 msgstr ""
+"{buyer}, {author} предлагает вам **{quantity} {emoji} {rarity}** ящик(ов) за "
+"**${price:,.0f}!** Отреагируйте, чтобы купить! У вас есть **2 минуты** на "
+"принятие предложения, пока сделка не будет аннулирована."
 
 #: cogs/crates/__init__.py:444
 msgid "They didn't want to buy the crate(s). Offer cancelled."
-msgstr ""
+msgstr "Они не пожелали купить ящик(и). Сделка аннулирована."
 
 #: cogs/crates/__init__.py:448
 msgid "They couldn't make up their mind. Offer cancelled."
-msgstr ""
+msgstr "Они не смогли решиться. Сделка аннулирована."
 
 #: cogs/crates/__init__.py:454
 #, python-brace-format
 msgid "{buyer}, you're too poor to buy the crate(s)!"
-msgstr ""
+msgstr "{buyer}, вы слишком бедны для данной покупки!"
 
 #: cogs/crates/__init__.py:465
 msgid "The seller traded/opened the crate(s) in the meantime. Offer cancelled."
 msgstr ""
+"Продавец обменял/открыл его ящики во время предложения. Сделка аннулирована."
 
 #: cogs/crates/__init__.py:510
 #, python-brace-format
@@ -1079,6 +1083,9 @@ msgid ""
 "{buyer}, you've successfully bought **{quantity} {emoji} {rarity}** crate(s) "
 "from {seller}. Use `{prefix}crates` to view your updated crates."
 msgstr ""
+"{buyer}, вы успешно приобрели **{quantity} {emoji} {rarity}** ящик(а/ов) у "
+"{seller}. Используйте `{prefix}crates` для просмотра вашего обновлённого "
+"числа ящиков."
 
 #: cogs/hungergames/__init__.py:51
 msgid "Gather as much food as you can"
@@ -1091,12 +1098,11 @@ msgstr "собирает столько еды, сколько может"
 
 #: cogs/hungergames/__init__.py:56
 msgid "Grab a backpack and retreat"
-msgstr "Взять ранец и отступить"
+msgstr "Схватить ранец и спасаться бегством"
 
 #: cogs/hungergames/__init__.py:57
-#, fuzzy
 msgid "grabs a backpack and retreats"
-msgstr "берёт ранец и бежит"
+msgstr "Хватает ранец и удирает"
 
 #: cogs/hungergames/__init__.py:60
 msgid "Take a pistol and suicide"
@@ -5136,11 +5142,13 @@ msgstr ""
 
 #: cogs/marriage/__init__.py:322
 msgid "Failed to DM your spouse, could not find their Discord account"
-msgstr "Неуспешный DM для твоего супруга, не может быть найден Дискорд аккаунт"
+msgstr ""
+"Попытка написать личное сообщение вашему супругу провалилась, не смог найти "
+"его Discord-аккаунт"
 
 #: cogs/marriage/__init__.py:332
 msgid "Take your partner on a date"
-msgstr ""
+msgstr "Пригласить своего партнёра на свидание"
 
 #: cogs/marriage/__init__.py:337
 msgid ""
@@ -5153,6 +5161,16 @@ msgid ""
 "            Only players who are married can use this command.\n"
 "            (This command has a cooldown of 12 hours.)"
 msgstr ""
+"Пригласить своего партнёра на свидание, чтобы увеличить *его* очки любви. "
+"Для увеличения ваших собственных очков любви ваш партнёр должен сходить на "
+"свидание с вами.\n"
+"\n"
+"             Получаемое со свиданий число очков любви может варьироваться от "
+"10 до 150 по ступеням в 10.\n"
+"\n"
+"            Только игроки, состоящие в браке, могут использовать данную "
+"команду.\n"
+"            (Данная команда имеет перезарядку в 12 часов.)"
 
 #: cogs/marriage/__init__.py:358
 #, python-brace-format
@@ -5201,12 +5219,12 @@ msgstr "Вы и {partner} пошли кататься на коньках вме
 
 #: cogs/marriage/__init__.py:368
 msgid "Unknown User"
-msgstr ""
+msgstr "Неизвестный пользователь"
 
 #: cogs/marriage/__init__.py:369
 #, python-brace-format
 msgid "This increased their lovescore by {num}"
-msgstr ""
+msgstr "Это увеличило их очки любви на {num}"
 
 #: cogs/marriage/__init__.py:387
 #, python-brace-format
@@ -5214,6 +5232,8 @@ msgid ""
 "You already have {max_} children. You can increase this limit by increasing "
 "your lovescores to get {amount} more."
 msgstr ""
+"Вы уже обзавелись детьми в количестве {max_} . Вы можете увеличить данный "
+"лимит при помощи увеличения ваших очков любви ещё на {amount} ."
 
 #: cogs/marriage/__init__.py:401
 #, python-brace-format
@@ -5222,6 +5242,9 @@ msgid ""
 "\n"
 "{additional}"
 msgstr ""
+"Вы провели любовную ночь и получили очки любви в количестве {ls}. 😏\n"
+"\n"
+"{additional}"
 
 #: cogs/marriage/__init__.py:411
 msgid "Have a child with your partner"
@@ -6677,13 +6700,17 @@ msgstr "{user} присоединился к вашей команде, {enemy}.
 msgid ""
 "Fight started!\n"
 "Generating battles..."
-msgstr "Битва началась! Генерация битвы..."
+msgstr ""
+"Битва началась!\n"
+"Генерация боёв..."
 
 #: cogs/guild/__init__.py:1259
 msgid ""
 "Fight started!\n"
 "Generating battles... Done."
-msgstr "Битва началась! Генерация битвы... Готово."
+msgstr ""
+"Битва началась!\n"
+"Генерация боёв... Готово."
 
 #: cogs/guild/__init__.py:1266
 #, python-brace-format
