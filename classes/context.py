@@ -81,7 +81,7 @@ class Confirmation(discord.ui.View):
 
     @discord.ui.button(emoji="❌", style=discord.ButtonStyle.red, row=0)
     async def no(
-        self, button: discord.ui.Button, interaction: discord.Interaction
+        self, interaction: discord.Interaction, button: discord.ui.Button
     ) -> None:
         self.future.set_result(False)
         self.stop()
@@ -89,7 +89,7 @@ class Confirmation(discord.ui.View):
 
     @discord.ui.button(emoji="✔️", style=discord.ButtonStyle.green, row=0)
     async def yes(
-        self, button: discord.ui.Button, interaction: discord.Interaction
+        self, interaction: discord.Interaction, button: discord.ui.Button
     ) -> None:
         self.future.set_result(True)
         self.stop()

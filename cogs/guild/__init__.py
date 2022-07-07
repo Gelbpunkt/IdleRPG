@@ -805,7 +805,7 @@ class Guild(commands.Cog):
 
             Only players in a guild can use this command."""
         )
-        await ctx.trigger_typing()
+        await ctx.typing()
         async with self.bot.pool.acquire() as conn:
             guild = await conn.fetchrow(
                 'SELECT * FROM guild WHERE "id"=$1;', ctx.character_data["guild"]
@@ -841,7 +841,7 @@ class Guild(commands.Cog):
 
             Only players in a guild can use this command."""
         )
-        await ctx.trigger_typing()
+        await ctx.typing()
         async with self.bot.pool.acquire() as conn:
             guild = await conn.fetchrow(
                 'SELECT * FROM guild WHERE "id"=$1;', ctx.character_data["guild"]
@@ -1685,5 +1685,5 @@ Time it will take: **{time}**
         '''
 
 
-def setup(bot):
-    bot.add_cog(Guild(bot))
+async def setup(bot):
+    await bot.add_cog(Guild(bot))

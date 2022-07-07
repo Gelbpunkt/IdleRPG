@@ -46,5 +46,5 @@ Each of the following links will reward you with one random crate upon voting:
         )
 
 
-def setup(bot):
-    bot.add_cog(Vote(bot))
+async def setup(bot):
+    await bot.add_cog(Vote(bot))

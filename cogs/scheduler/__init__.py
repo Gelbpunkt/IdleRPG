@@ -378,5 +378,5 @@ class Scheduling(commands.Cog):
             await ctx.send(_("Opted out of automatic adventure reminders."))
 
 
-def setup(bot):
-    bot.add_cog(Scheduling(bot))
+async def setup(bot):
+    await bot.add_cog(Scheduling(bot))

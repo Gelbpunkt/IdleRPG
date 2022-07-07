@@ -183,5 +183,5 @@ class GlobalEvents(commands.Cog):
         self.stats_updates.cancel()
 
 
-def setup(bot: Bot) -> None:
-    bot.add_cog(GlobalEvents(bot))
+async def setup(bot: Bot) -> None:
+    await bot.add_cog(GlobalEvents(bot))

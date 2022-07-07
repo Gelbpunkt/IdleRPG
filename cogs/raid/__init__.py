@@ -1975,5 +1975,5 @@ Atheistus will be vulnerable in 15 Minutes
         )
 
 
-def setup(bot):
-    bot.add_cog(Raid(bot))
+async def setup(bot):
+    await bot.add_cog(Raid(bot))

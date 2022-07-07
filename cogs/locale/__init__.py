@@ -111,5 +111,5 @@ class Locale(commands.Cog):
         await ctx.message.add_reaction("\U00002705")
 
 
-def setup(bot):
-    bot.add_cog(Locale(bot))
+async def setup(bot):
+    await bot.add_cog(Locale(bot))

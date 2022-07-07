@@ -1014,5 +1014,5 @@ class Alliance(commands.Cog):
         await ctx.send(f"```{timers}```")
 
 
-def setup(bot: Bot):
-    bot.add_cog(Alliance(bot))
+async def setup(bot: Bot):
+    await bot.add_cog(Alliance(bot))

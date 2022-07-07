@@ -515,5 +515,5 @@ class Patreon(commands.Cog):
         await self.bot.paginator.Paginator(extras=pages).paginate(ctx)
 
 
-def setup(bot: Bot) -> None:
-    bot.add_cog(Patreon(bot))
+async def setup(bot: Bot) -> None:
+    await bot.add_cog(Patreon(bot))

@@ -191,5 +191,5 @@ You have **{eggs}** <:easteregg:566251086986608650>."""
         )
 
 
-def setup(bot):
-    bot.add_cog(Easter(bot))
+async def setup(bot):
+    await bot.add_cog(Easter(bot))

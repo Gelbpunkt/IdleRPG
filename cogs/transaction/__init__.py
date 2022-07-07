@@ -645,5 +645,5 @@ class Transaction(commands.Cog):
             await self.update(ctx)
 
 
-def setup(bot):
-    bot.add_cog(Transaction(bot))
+async def setup(bot):
+    await bot.add_cog(Transaction(bot))

@@ -123,7 +123,7 @@ class CogMenu(View):
         style=discord.ButtonStyle.blurple,
         emoji="\N{BLACK LEFT-POINTING TRIANGLE}\ufe0f",
     )
-    async def on_previous_page(self, button: Button, interaction: Interaction) -> None:
+    async def on_previous_page(self, interaction: Interaction, button: Button) -> None:
         if self.page != 1:
             self.page -= 1
             await self.update()
@@ -133,7 +133,7 @@ class CogMenu(View):
         style=discord.ButtonStyle.red,
         emoji="\N{BLACK SQUARE FOR STOP}\ufe0f",
     )
-    async def on_stop(self, button: Button, interaction: Interaction) -> None:
+    async def on_stop(self, interaction: Interaction, button: Button) -> None:
         self.cleanup()
         self.stop()
 
@@ -142,7 +142,7 @@ class CogMenu(View):
         style=discord.ButtonStyle.blurple,
         emoji="\N{BLACK RIGHT-POINTING TRIANGLE}\ufe0f",
     )
-    async def on_next_page(self, button: Button, interaction: Interaction) -> None:
+    async def on_next_page(self, interaction: Interaction, button: Button) -> None:
         if len(self.description) >= (self.page * self.per_page):
             self.page += 1
             await self.update()
@@ -247,7 +247,7 @@ class SubcommandMenu(View):
         style=discord.ButtonStyle.blurple,
         emoji="\N{BLACK LEFT-POINTING TRIANGLE}\ufe0f",
     )
-    async def on_previous_page(self, button: Button, interaction: Interaction) -> None:
+    async def on_previous_page(self, interaction: Interaction, button: Button) -> None:
         if self.page != 1:
             self.page -= 1
             await self.update()
@@ -257,7 +257,7 @@ class SubcommandMenu(View):
         style=discord.ButtonStyle.red,
         emoji="\N{BLACK SQUARE FOR STOP}\ufe0f",
     )
-    async def on_stop(self, button: Button, interaction: Interaction) -> None:
+    async def on_stop(self, interaction: Interaction, button: Button) -> None:
         self.cleanup()
         self.stop()
 
@@ -266,7 +266,7 @@ class SubcommandMenu(View):
         style=discord.ButtonStyle.blurple,
         emoji="\N{BLACK RIGHT-POINTING TRIANGLE}\ufe0f",
     )
-    async def on_next_page(self, button: Button, interaction: Interaction) -> None:
+    async def on_next_page(self, interaction: Interaction, button: Button) -> None:
         if len(self.cmds) >= (self.page * self.per_page):
             self.page += 1
             await self.update()
@@ -749,8 +749,8 @@ class IdleHelp(commands.HelpCommand):
         await menu.start(self.context)
 
 
-def setup(bot: Bot) -> None:
+async def setup(bot: Bot) -> None:
     bot.remove_command("help")
-    bot.add_cog(Help(bot))
+    await bot.add_cog(Help(bot))
     bot.help_command = IdleHelp()
     bot.help_command.cog = bot.get_cog("Help")

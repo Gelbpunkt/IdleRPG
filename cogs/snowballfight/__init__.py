@@ -257,5 +257,5 @@ Next round starts in 5 seconds!
             await ctx.send(_("Team 2 ({user}) won!").format(user=enemy.mention))
 
 
-def setup(bot):
-    bot.add_cog(SnowballFight(bot))
+async def setup(bot):
+    await bot.add_cog(SnowballFight(bot))

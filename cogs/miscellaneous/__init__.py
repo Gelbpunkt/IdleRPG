@@ -430,7 +430,7 @@ Average hours of work: **{hours}**"""
 
             Talk to me! This uses a chatbot AI backend."""
         )
-        await ctx.trigger_typing()
+        await ctx.typing()
         if not (3 <= len(text) <= 60):
             return await ctx.send(
                 _("Text too long or too short. May be 3 to 60 characters.")
@@ -586,5 +586,5 @@ IdleRPG is a global bot, your characters are valid everywhere"""
         )
 
 
-def setup(bot):
-    bot.add_cog(Miscellaneous(bot))
+async def setup(bot):
+    await bot.add_cog(Miscellaneous(bot))

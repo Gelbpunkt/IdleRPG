@@ -383,5 +383,5 @@ class Errorhandler(commands.Cog):
                 await self.bot.reset_alliance_cooldown(ctx)
 
 
-def setup(bot):
-    bot.add_cog(Errorhandler(bot))
+async def setup(bot):
+    await bot.add_cog(Errorhandler(bot))

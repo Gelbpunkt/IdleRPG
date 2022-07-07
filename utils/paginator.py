@@ -303,7 +303,7 @@ class ChooseLong(discord.ui.View):
 
     @discord.ui.button(label="First", style=discord.ButtonStyle.blurple, row=0)
     async def first(
-        self, button: discord.ui.Button, interaction: discord.Interaction
+        self, interaction: discord.Interaction, button: discord.ui.Button
     ) -> None:
         if self.current != 0:
             self.current = 0
@@ -311,7 +311,7 @@ class ChooseLong(discord.ui.View):
 
     @discord.ui.button(label="Previous", style=discord.ButtonStyle.blurple, row=0)
     async def previous(
-        self, button: discord.ui.Button, interaction: discord.Interaction
+        self, interaction: discord.Interaction, button: discord.ui.Button
     ) -> None:
         if self.current != 0:
             self.current -= 1
@@ -319,14 +319,14 @@ class ChooseLong(discord.ui.View):
 
     @discord.ui.button(label="Stop", style=discord.ButtonStyle.red, row=0)
     async def stop_button(
-        self, button: discord.ui.Button, interaction: discord.Interaction
+        self, interaction: discord.Interaction, button: discord.ui.Button
     ) -> None:
         await self.on_timeout()
         self.stop()
 
     @discord.ui.button(label="Next", style=discord.ButtonStyle.blurple, row=0)
     async def next(
-        self, button: discord.ui.Button, interaction: discord.Interaction
+        self, interaction: discord.Interaction, button: discord.ui.Button
     ) -> None:
         if self.current != self.max:
             self.current += 1
@@ -334,7 +334,7 @@ class ChooseLong(discord.ui.View):
 
     @discord.ui.button(label="Last", style=discord.ButtonStyle.blurple, row=0)
     async def last(
-        self, button: discord.ui.Button, interaction: discord.Interaction
+        self, interaction: discord.Interaction, button: discord.ui.Button
     ) -> None:
         if self.current != self.max:
             self.current = self.max
@@ -384,7 +384,7 @@ class ChooseShop(NormalPaginator):
 
     @discord.ui.button(label="Buy", style=discord.ButtonStyle.green, row=1, emoji="💰")
     async def buy(
-        self, button: discord.ui.Button, interaction: discord.Interaction
+        self, interaction: discord.Interaction, button: discord.ui.Button
     ) -> None:
         item_id = self.ids[self.current]
         command = self.ctx.bot.get_command("buy")

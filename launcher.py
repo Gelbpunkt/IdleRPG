@@ -31,6 +31,7 @@ from typing import Iterable
 
 import aiohttp
 import orjson
+import uvloop
 
 from redis import asyncio as aioredis
 
@@ -290,6 +291,7 @@ class Main:
 
 if __name__ == "__main__":
     try:
-        asyncio.run(Main().launch())
+        with asyncio.Runner(loop_factory=uvloop.new_event_loop) as runner:
+            runner.run(Main().launch())
     except KeyboardInterrupt:
         pass

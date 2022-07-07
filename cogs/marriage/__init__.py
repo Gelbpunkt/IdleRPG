@@ -862,5 +862,5 @@ class Marriage(commands.Cog):
             )
 
 
-def setup(bot):
-    bot.add_cog(Marriage(bot))
+async def setup(bot):
+    await bot.add_cog(Marriage(bot))

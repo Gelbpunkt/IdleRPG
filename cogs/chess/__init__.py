@@ -245,5 +245,5 @@ class Chess(commands.Cog):
             asyncio.create_task(self.engine.quit())
 
 
-def setup(bot):
-    bot.add_cog(Chess(bot))
+async def setup(bot):
+    await bot.add_cog(Chess(bot))

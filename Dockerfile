@@ -1,4 +1,4 @@
-FROM docker.io/gelbpunkt/python:3.11
+FROM docker.io/gelbpunkt/python:3.12
 
 ARG IS_CUSTOM=false
 

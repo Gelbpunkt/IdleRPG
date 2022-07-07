@@ -145,7 +145,7 @@ class Bot(commands.AutoShardedBot):
         await self.pool.close()
         await self.redis.close()
 
-    async def connect_all(self):
+    async def setup_hook(self):
         """Connects all databases and initializes sessions"""
         proxy_url = self.config.external.proxy_url
         if proxy_url is None:
@@ -171,13 +171,16 @@ class Bot(commands.AutoShardedBot):
 
         for extension in self.config.bot.initial_extensions:
             try:
-                self.load_extension(extension)
+                await self.load_extension(extension)
             except Exception:
                 print(f"Failed to load extension {extension}.", file=sys.stderr)
                 traceback.print_exc()
         self.redis_version = await self.get_redis_version()
         await self.load_bans()
-        await self.start(self.config.bot.token)
+
+    async def connect_all(self):
+        async with self:
+            await self.start(self.config.bot.token)
 
     async def get_redis_version(self):
         """Parses the Redis version out of the INFO command"""

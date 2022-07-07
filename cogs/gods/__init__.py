@@ -365,5 +365,5 @@ Are you sure you want to follow {god}?"""
         )
 
 
-def setup(bot):
-    bot.add_cog(Gods(bot))
+async def setup(bot):
+    await bot.add_cog(Gods(bot))

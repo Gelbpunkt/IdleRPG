@@ -27,6 +27,7 @@ import asyncio
 import os
 
 import discord
+import uvloop
 
 from classes.bot import Bot
 from classes.logger import file_handler, stream
@@ -39,11 +40,6 @@ if len(sys.argv) != 6:
         " [cluster_count] [cluster_name]"
     )
     sys.exit(1)
-
-if sys.platform == "linux":  # uvloop requires linux
-    import uvloop
-
-    uvloop.install()
 
 # Set the timezone to UTC
 os.environ["TZ"] = "UTC"
@@ -85,6 +81,7 @@ if __name__ == "__main__":
     log.addHandler(file_handler(cluster_id))
 
     try:
-        asyncio.run(bot.connect_all())
+        with asyncio.Runner(loop_factory=uvloop.new_event_loop) as runner:
+            runner.run(bot.connect_all())
     except KeyboardInterrupt:
         pass

@@ -19,20 +19,22 @@ import discord
 
 from discord.ext import commands
 
+from classes.bot import Bot
+from classes.context import Context
 from utils import misc as rpgtools
 from utils.i18n import _, locale_doc
 from utils.markdown import escape_markdown
 
 
 class Ranks(commands.Cog):
-    def __init__(self, bot):
+    def __init__(self, bot: Bot):
         self.bot = bot
 
     @commands.command(brief=_("Show the top 10 richest"))
     @locale_doc
-    async def richest(self, ctx):
+    async def richest(self, ctx: Context) -> None:
         _("""The 10 most richest players in IdleRPG.""")
-        await ctx.trigger_typing()
+        await ctx.typing()
         players = await self.bot.pool.fetch(
             'SELECT "user", "name", "money" FROM profile ORDER BY "money" DESC'
             " LIMIT 10;"
@@ -53,11 +55,11 @@ class Ranks(commands.Cog):
 
     @commands.command(aliases=["best", "high", "top"], brief=_("Show the top 10 by XP"))
     @locale_doc
-    async def highscore(self, ctx):
+    async def highscore(self, ctx: Context) -> None:
         _(
             """Shows you the top 10 players by XP and displays the corresponding level."""
         )
-        await ctx.trigger_typing()
+        await ctx.typing()
         players = await self.bot.pool.fetch(
             'SELECT "user", "name", "xp" from profile ORDER BY "xp" DESC LIMIT 10;'
         )
@@ -80,9 +82,9 @@ class Ranks(commands.Cog):
 
     @commands.command(aliases=["pvp", "battles"], brief=_("Show the top 10 PvPers"))
     @locale_doc
-    async def pvpstats(self, ctx):
+    async def pvpstats(self, ctx: Context) -> None:
         _("""Shows you the top 10 players by the amount of wins in PvP matches.""")
-        await ctx.trigger_typing()
+        await ctx.typing()
         players = await self.bot.pool.fetch(
             'SELECT "user", "name", "pvpwins" from profile ORDER BY "pvpwins" DESC'
             " LIMIT 10;"
@@ -103,9 +105,9 @@ class Ranks(commands.Cog):
 
     @commands.command(brief=_("Show the top 10 lovers"))
     @locale_doc
-    async def lovers(self, ctx):
+    async def lovers(self, ctx: Context) -> None:
         _("""The top 10 lovers sorted by their spouse's lovescore.""")
-        await ctx.trigger_typing()
+        await ctx.typing()
         players = await self.bot.pool.fetch(
             'SELECT "user", "marriage", "lovescore" FROM profile ORDER BY "lovescore"'
             " DESC LIMIT 10;"
@@ -128,5 +130,5 @@ class Ranks(commands.Cog):
         await ctx.send(embed=result)
 
 
-def setup(bot):
-    bot.add_cog(Ranks(bot))
+async def setup(bot: Bot) -> None:
+    await bot.add_cog(Ranks(bot))

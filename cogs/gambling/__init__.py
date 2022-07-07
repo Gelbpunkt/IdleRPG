@@ -56,12 +56,12 @@ class InsuranceView(discord.ui.View):
         return interaction.user.id == self.user.id
 
     @button(label="Take insurance", style=ButtonStyle.green, emoji="\U0001f4b8")
-    async def insurance(self, button: Button, interaction: Interaction) -> None:
+    async def insurance(self, interaction: Interaction, button: Button) -> None:
         self.stop()
         self.future.set_result(True)
 
     @button(label="Don't take insurance", style=ButtonStyle.red, emoji="\U000026a0")
-    async def no_insurance(self, button: Button, interaction: Interaction) -> None:
+    async def no_insurance(self, interaction: Interaction, button: Button) -> None:
         self.stop()
         self.future.set_result(False)
 
@@ -1213,5 +1213,5 @@ This command is in an alpha-stage, which means bugs are likely to happen. Play a
                 users = (other, user)
 
 
-def setup(bot):
-    bot.add_cog(Gambling(bot))
+async def setup(bot):
+    await bot.add_cog(Gambling(bot))

@@ -1249,5 +1249,5 @@ IdleRPG is a global bot, your characters are valid everywhere"""
         await ctx.send(_("Successfully updated your badges."))
 
 
-def setup(bot):
-    bot.add_cog(Profile(bot))
+async def setup(bot):
+    await bot.add_cog(Profile(bot))

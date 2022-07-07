@@ -468,5 +468,5 @@ class Werewolf(commands.Cog):
         )
 
 
-def setup(bot):
-    bot.add_cog(Werewolf(bot))
+async def setup(bot):
+    await bot.add_cog(Werewolf(bot))

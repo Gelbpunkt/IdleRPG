@@ -184,5 +184,5 @@ class Races(commands.Cog):
         await ctx.send(_("You are now a {race}.").format(race=race_))
 
 
-def setup(bot):
-    bot.add_cog(Races(bot))
+async def setup(bot):
+    await bot.add_cog(Races(bot))

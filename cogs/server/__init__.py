@@ -119,5 +119,5 @@ class Server(commands.Cog):
         )
 
 
-def setup(bot: Bot) -> None:
-    bot.add_cog(Server(bot))
+async def setup(bot: Bot) -> None:
+    await bot.add_cog(Server(bot))

@@ -81,5 +81,5 @@ class Maths(commands.Cog):
         await ctx.send(f"```\n{ret}\n```")
 
 
-def setup(bot):
-    bot.add_cog(Maths(bot))
+async def setup(bot):
+    await bot.add_cog(Maths(bot))
