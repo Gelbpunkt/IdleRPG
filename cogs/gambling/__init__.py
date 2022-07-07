@@ -59,11 +59,13 @@ class InsuranceView(discord.ui.View):
     async def insurance(self, interaction: Interaction, button: Button) -> None:
         self.stop()
         self.future.set_result(True)
+        await interaction.response.defer()
 
     @button(label="Don't take insurance", style=ButtonStyle.red, emoji="\U000026a0")
     async def no_insurance(self, interaction: Interaction, button: Button) -> None:
         self.stop()
         self.future.set_result(False)
+        await interaction.response.defer()
 
     async def on_timeout(self) -> None:
         self.future.set_result(False)
@@ -146,6 +148,7 @@ class BlackJackView(discord.ui.View):
     async def handle(self, interaction: Interaction, action: BlackJackAction) -> None:
         self.stop()
         self.future.set_result(action)
+        await interaction.response.defer()
 
     async def on_timeout(self) -> None:
         self.future.set_exception(asyncio.TimeoutError())

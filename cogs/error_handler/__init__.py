@@ -15,7 +15,6 @@ GNU Affero General Public License for more details.
 You should have received a copy of the GNU Affero General Public License
 along with this program.  If not, see <https://www.gnu.org/licenses/>.
 """
-import sys
 import traceback
 
 from asyncio import TimeoutError
@@ -29,7 +28,9 @@ from discord.ext import commands
 
 import utils.checks
 
+from classes.bot import Bot
 from classes.classes import Ranger, get_class_evolves
+from classes.context import Context
 from classes.converters import (
     DateOutOfRange,
     InvalidCoinSide,
@@ -60,7 +61,7 @@ def before_send(event, hint):
 
 
 class Errorhandler(commands.Cog):
-    def __init__(self, bot):
+    def __init__(self, bot: Bot) -> None:
         self.bot = bot
         bot.on_command_error = self._on_command_error
         sentry_url = self.bot.config.statistics.sentry_url
@@ -68,7 +69,9 @@ class Errorhandler(commands.Cog):
         if self.SENTRY_SUPPORT:
             sentry_sdk.init(sentry_url, before_send=before_send)
 
-    async def _on_command_error(self, ctx, error, bypass=False):
+    async def _on_command_error(
+        self, ctx: Context, error: Exception, bypass: bool = False
+    ) -> None:
         if (
             hasattr(ctx.command, "on_error")
             or (ctx.command and hasattr(ctx.cog, f"_{ctx.command.cog_name}__error"))
@@ -344,12 +347,8 @@ class Errorhandler(commands.Cog):
                     )
                 )
             if not self.SENTRY_SUPPORT:
-                print(f"In {ctx.command.qualified_name}:", file=sys.stderr)
-                traceback.print_tb(error.original.__traceback__)
-                print(
-                    f"{error.original.__class__.__name__}: {error.original}",
-                    file=sys.stderr,
-                )
+                tb = "\n".join(traceback.format_tb(error.original.__traceback__))
+                self.bot.logger.error(f"In {ctx.command.qualified_name}: {tb}")
             else:
                 try:
                     raise error.original
