@@ -35,7 +35,6 @@ from enum import Enum
 
 import discord
 
-from async_timeout import timeout
 from discord.ext import commands
 
 from classes.context import Context
@@ -411,7 +410,7 @@ class Game:
                 await user.send(page)
         nominated = []
         try:
-            async with timeout(self.timer):
+            async with asyncio.timeout(self.timer):
                 while len(nominated) < 10:
                     channels_ids = [
                         str(p.user.dm_channel.id)
@@ -812,7 +811,7 @@ class Game:
         second_election = False
         eligible_players = [player.user for player in self.alive_players]
         try:
-            async with timeout(self.timer) as cm:
+            async with asyncio.timeout(self.timer) as cm:
                 start = datetime.datetime.utcnow()
                 while len(nominated) < 10:
                     msg = await self.ctx.bot.wait_for(
@@ -1030,7 +1029,7 @@ class Game:
             )
         not_afk = []
         try:
-            async with timeout(self.timer):
+            async with asyncio.timeout(self.timer):
                 channels_ids = [
                     str(p.user.dm_channel.id)
                     for p in self.new_afk_players

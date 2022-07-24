@@ -26,8 +26,6 @@ import chess.pgn
 import chess.svg
 import discord
 
-from async_timeout import timeout
-
 from classes.context import Context
 from classes.errors import NoChoice
 from utils import random
@@ -276,7 +274,7 @@ class ChessGame:
                 ).format(move_no=self.move_no)
             )
         try:
-            async with timeout(120):
+            async with asyncio.timeout(120):
                 move = await self.engine.play(self.board, self.limit)
         except asyncio.TimeoutError:
             move = random.choice(list(self.board.legal_moves))
@@ -296,7 +294,7 @@ class ChessGame:
     async def get_ai_draw_response(self):
         msg = await self.ctx.send(_("Waiting for AI draw response..."))
         try:
-            async with timeout(120):
+            async with asyncio.timeout(120):
                 move = await self.engine.play(self.board, self.limit)
         except asyncio.TimeoutError:
             await msg.delete()

@@ -19,7 +19,6 @@ import asyncio
 
 import discord
 
-from async_timeout import timeout
 from asyncpg.exceptions import UniqueViolationError
 from discord.ext import commands
 from discord.http import handle_message_parameters
@@ -649,7 +648,7 @@ class GameMaster(commands.Cog):
         self.auction_entry = asyncio.Event()
         try:
             while True:
-                async with timeout(timer):
+                async with asyncio.timeout(timer):
                     await self.auction_entry.wait()
                     self.auction_entry.clear()
         except asyncio.TimeoutError:
