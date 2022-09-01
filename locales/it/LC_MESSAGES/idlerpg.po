@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-03-08 22:06+0100\n"
-"PO-Revision-Date: 2021-06-17 00:36+0000\n"
-"Last-Translator: m.s <matteo.sarrantonio@asiconsulting.it>\n"
+"PO-Revision-Date: 2022-09-02 12:55+0000\n"
+"Last-Translator: Alessia T. <alessietta208@gmail.com>\n"
 "Language-Team: Italian <http://translate.travitia.xyz/projects/idlerpg/bot/"
 "it/>\n"
 "Language: it\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=n != 1;\n"
-"X-Generator: Weblate 4.6.2\n"
+"X-Generator: Weblate 4.11.2\n"
 
 #: cogs/tournament/__init__.py:46
 msgid "Start a new tournament"
@@ -77,12 +77,14 @@ msgstr "Sei troppo povero."
 
 #: cogs/tournament/__init__.py:84 cogs/tournament/__init__.py:109
 msgid "You joined the tournament."
-msgstr ""
+msgstr "Hai partecipato al torneo."
 
 #: cogs/tournament/__init__.py:115
 #, python-brace-format
 msgid "{author} started a tournament! Free entries, prize is **${prize}**!"
 msgstr ""
+"{author} ha iniziato un torneo! Iscrizioni gratuite, il premio è "
+"**${prize}**!"
 
 #: cogs/tournament/__init__.py:138
 #, python-brace-format
@@ -114,7 +116,7 @@ msgstr "Il vincitore di questo scontro è {winner}!"
 
 #: cogs/tournament/__init__.py:186 cogs/tournament/__init__.py:432
 msgid "Round Done!"
-msgstr "Scontro finito!"
+msgstr "Turno finito!"
 
 #: cogs/tournament/__init__.py:189
 #, python-brace-format
@@ -584,7 +586,7 @@ msgstr ""
 
 #: cogs/battles/__init__.py:93
 msgid "Join the battle!"
-msgstr ""
+msgstr "Partecipa alla battaglia!"
 
 #: cogs/battles/__init__.py:100
 msgid "You don't have enough money to join the battle."
@@ -812,29 +814,29 @@ msgstr ""
 #: cogs/battles/__init__.py:600
 #, python-brace-format
 msgid "{enemy} tried to defend, but failed."
-msgstr ""
+msgstr "{enemy} ha tentato di difendersi, ma ha fallito."
 
 #: cogs/battles/__init__.py:607
 #, python-brace-format
 msgid "{user}'s attack on {enemy} failed!"
-msgstr ""
+msgstr "L'attacco di {user} su {enemy} è fallito!"
 
 #: cogs/battles/__init__.py:610
 #, python-brace-format
 msgid "{enemy} blocked {user}'s attack."
-msgstr ""
+msgstr "{enemy} ha bloccato l'attacco di {user}."
 
 #: cogs/battles/__init__.py:615
 msgid "You both tried to defend."
-msgstr ""
+msgstr "Entrambi avete provato a difendervi."
 
 #: cogs/battles/__init__.py:616
 msgid "It was not very effective..."
-msgstr ""
+msgstr "Non è stato molto efficace..."
 
 #: cogs/battles/__init__.py:625
 msgid "You both died!"
-msgstr ""
+msgstr "Siete morti entrambi!"
 
 #: cogs/battles/__init__.py:660
 #, python-brace-format
@@ -945,21 +947,21 @@ msgstr ""
 
 #: cogs/crates/__init__.py:67
 msgid "Your Crates"
-msgstr ""
+msgstr "Le tue casse"
 
 #: cogs/crates/__init__.py:74
 #, python-brace-format
 msgid "{amount} crates"
-msgstr ""
+msgstr "{amount} casse"
 
 #: cogs/crates/__init__.py:79
 #, python-brace-format
 msgid "Use {prefix}open [rarity] to open one!"
-msgstr ""
+msgstr "Usa {prefix}open [rarità] per aprirne una!"
 
 #: cogs/crates/__init__.py:86
 msgid "Open a crate"
-msgstr ""
+msgstr "Apre una cassa"
 
 #: cogs/crates/__init__.py:92
 #, python-brace-format
@@ -992,6 +994,12 @@ msgid ""
 "- {magic_amount} {magic_emoji}\n"
 "- {legendary_amount} {legendary_emoji}"
 msgstr ""
+"Hai aperto {mystery_amount} {mystery_emoji} e hai ricevuto:\n"
+"- {common_amount} {common_emoji}\n"
+"- {uncommon_amount} {uncommon_emoji}\n"
+"- {rare_amount} {rare_emoji}\n"
+"- {magic_amount} {magic_emoji}\n"
+"- {legendary_amount} {legendary_emoji}"
 
 #: cogs/crates/__init__.py:246
 msgid "You found a new item when opening a crate!"
@@ -1000,12 +1008,12 @@ msgstr ""
 #: cogs/crates/__init__.py:250 cogs/classes/__init__.py:727
 #: cogs/valentine/__init__.py:161
 msgid "ID"
-msgstr ""
+msgstr "ID"
 
 #: cogs/crates/__init__.py:259
 #, python-brace-format
 msgid "Remaining {rarity} crates: {crates}"
-msgstr ""
+msgstr "Casse {rarity} rimanenti: {crates}"
 
 #: cogs/crates/__init__.py:292
 #, python-brace-format
@@ -1058,7 +1066,7 @@ msgstr ""
 
 #: cogs/crates/__init__.py:341
 msgid "You don't have any crates of this rarity."
-msgstr ""
+msgstr "Non hai nessuna cassa di questa rarità."
 
 #: cogs/crates/__init__.py:365
 #, python-brace-format
@@ -1092,22 +1100,24 @@ msgstr ""
 
 #: cogs/crates/__init__.py:399
 msgid "No, I don't want any crates."
-msgstr ""
+msgstr "No, non voglio nessuna cassa."
 
 #: cogs/crates/__init__.py:405
 #, python-brace-format
 msgid "You don't have {quantity} {rarity} crate(s). Check `{prefix}crates`."
-msgstr ""
+msgstr "Non hai {quantity} casse {rarity}. Controlla`{prefix}crates`."
 
 #: cogs/crates/__init__.py:413
 msgid ""
 "{author}, are you sure you want to offer **{quantity} {emoji} {rarity}** "
 "crate(s) for **${price:,.0f}**?"
 msgstr ""
+"{author}, sei sicuro che vuoi offrire **{quantity} {emoji} casse {rarity}** "
+"per **${price:,.0f}**?"
 
 #: cogs/crates/__init__.py:423
 msgid "Offer cancelled."
-msgstr ""
+msgstr "Offerta annullata."
 
 #: cogs/crates/__init__.py:429
 msgid ""
@@ -1115,19 +1125,22 @@ msgid ""
 "${price:,.0f}!** React to buy it! You have **2 Minutes** to accept the trade "
 "or the offer will be cancelled."
 msgstr ""
+"{buyer}, {author} ti ha offerto **{quantity} {emoji} casse {rarity}** per "
+"**${price:,.0f}!** Reagisci per comprarle! Hai **2 Minutes** per accettare "
+"lo scambio o l'offerta verrà annullata."
 
 #: cogs/crates/__init__.py:444
 msgid "They didn't want to buy the crate(s). Offer cancelled."
-msgstr ""
+msgstr "Non hanno voluto comprare le casse. Offerta annullata."
 
 #: cogs/crates/__init__.py:448
 msgid "They couldn't make up their mind. Offer cancelled."
-msgstr ""
+msgstr "Non sono riusciti a decidersi. Offerta annullata."
 
 #: cogs/crates/__init__.py:454
 #, python-brace-format
 msgid "{buyer}, you're too poor to buy the crate(s)!"
-msgstr ""
+msgstr "{buyer}, sei troppo povero per comprare le casse!"
 
 #: cogs/crates/__init__.py:465
 msgid "The seller traded/opened the crate(s) in the meantime. Offer cancelled."
@@ -1170,7 +1183,7 @@ msgstr ""
 
 #: cogs/hungergames/__init__.py:61
 msgid "commits suicide with a knife"
-msgstr ""
+msgstr "si è suicidato con un coltello"
 
 #: cogs/hungergames/__init__.py:63
 msgid "Run away from the Cornucopia"
@@ -1178,7 +1191,7 @@ msgstr ""
 
 #: cogs/hungergames/__init__.py:64
 msgid "runs away from the Cornucopia"
-msgstr ""
+msgstr "è corso via dalla Cornucopia"
 
 #: cogs/hungergames/__init__.py:68
 msgid "Search for a pair of Explosives"
@@ -1214,11 +1227,11 @@ msgstr ""
 
 #: cogs/hungergames/__init__.py:83
 msgid "Try to assault USER"
-msgstr ""
+msgstr "Prova ad assalire USER"
 
 #: cogs/hungergames/__init__.py:83
 msgid "kills USER"
-msgstr ""
+msgstr "Uccide USER"
 
 #: cogs/hungergames/__init__.py:85
 msgid "Kill USER at the water"
@@ -1238,7 +1251,7 @@ msgstr ""
 
 #: cogs/hungergames/__init__.py:94
 msgid "Take a bath"
-msgstr ""
+msgstr "Fai un bagno"
 
 #: cogs/hungergames/__init__.py:94
 msgid "baths in the water and enjoys the silence"
@@ -1266,11 +1279,11 @@ msgstr ""
 
 #: cogs/hungergames/__init__.py:102
 msgid "watch animes together"
-msgstr ""
+msgstr "guardano anime insieme"
 
 #: cogs/hungergames/__init__.py:103
 msgid "enjoy the silence"
-msgstr ""
+msgstr "apprezza il silenzio"
 
 #: cogs/hungergames/__init__.py:104
 msgid "attempt to kill USER but fail"
@@ -1290,7 +1303,7 @@ msgstr ""
 
 #: cogs/hungergames/__init__.py:112
 msgid "dance YMCA together"
-msgstr ""
+msgstr "ballano YMCA insieme"
 
 #: cogs/hungergames/__init__.py:113
 msgid "sing songs together"
@@ -1306,7 +1319,7 @@ msgstr ""
 
 #: cogs/hungergames/__init__.py:116
 msgid "kiss in the moonlight"
-msgstr ""
+msgstr "si baciano al chiaro di luna"
 
 #: cogs/hungergames/__init__.py:118
 msgid "watch a movie together when USER suddenly gets shot by a stranger"
@@ -1409,7 +1422,7 @@ msgstr ""
 
 #: cogs/error_handler/__init__.py:89
 msgid "The message you referenced was not found."
-msgstr ""
+msgstr "Il messaggio a cui hai fatto riferimento non è stato trovato."
 
 #: cogs/error_handler/__init__.py:91
 msgid "The member you referenced was not found."
@@ -1417,15 +1430,15 @@ msgstr ""
 
 #: cogs/error_handler/__init__.py:93
 msgid "The server you referenced was not found."
-msgstr ""
+msgstr "Il server a cui hai fatto riferimento non è stato trovato."
 
 #: cogs/error_handler/__init__.py:95
 msgid "The user you referenced was not found."
-msgstr ""
+msgstr "L'utente a cui hai fatto riferimento non è stato trovato."
 
 #: cogs/error_handler/__init__.py:97
 msgid "The channel you referenced was not found."
-msgstr ""
+msgstr "Il canale a cui hai fatto riferimento non è stato trovato."
 
 #: cogs/error_handler/__init__.py:100
 msgid "I cannot read messages in the channel you referenced."
@@ -1437,15 +1450,15 @@ msgstr ""
 
 #: cogs/error_handler/__init__.py:105
 msgid "The role you referenced was not found."
-msgstr ""
+msgstr "Il ruolo a cui hai fatto riferimento non è stato trovato."
 
 #: cogs/error_handler/__init__.py:108
 msgid "The invite you referenced is invalid or has expired."
-msgstr ""
+msgstr "L'invito a cui hai fatto riferimento è invalido o scaduto."
 
 #: cogs/error_handler/__init__.py:111
 msgid "The emoji you referenced was not found."
-msgstr ""
+msgstr "L'emoji a cui hai fatto riferimento non è stata trovata."
 
 #: cogs/error_handler/__init__.py:113
 msgid "I could not parse a boolean from this."
@@ -1453,7 +1466,7 @@ msgstr ""
 
 #: cogs/error_handler/__init__.py:119
 msgid "The user you specified as a parameter does not have a character."
-msgstr ""
+msgstr "L'utente che hai specificato come parametro non ha un personaggio."
 
 #: cogs/error_handler/__init__.py:126
 msgid ""
@@ -1496,7 +1509,7 @@ msgstr ""
 #: cogs/error_handler/__init__.py:175 cogs/error_handler/__init__.py:214
 #: cogs/error_handler/__init__.py:306
 msgid "Permission denied"
-msgstr ""
+msgstr "Permesso negato"
 
 #: cogs/error_handler/__init__.py:177
 msgid ":x: This command is only avaiable for the bot owner."
@@ -1504,7 +1517,7 @@ msgstr ""
 
 #: cogs/error_handler/__init__.py:184
 msgid "You don't have a character yet."
-msgstr ""
+msgstr "Non hai ancora un personaggio."
 
 #: cogs/error_handler/__init__.py:188
 msgid ""
@@ -2307,7 +2320,7 @@ msgstr ""
 #: cogs/gambling/__init__.py:997 cogs/gambling/__init__.py:1073
 #: cogs/guild/__init__.py:876
 msgid "You're too poor."
-msgstr ""
+msgstr "Sei troppo povero."
 
 #: cogs/store/__init__.py:112
 #, python-brace-format
@@ -2412,7 +2425,7 @@ msgstr ""
 
 #: cogs/store/__init__.py:226
 msgid "Nothing to activate."
-msgstr ""
+msgstr "Niente da attivare."
 
 #: cogs/store/__init__.py:237
 #, python-brace-format
@@ -2657,7 +2670,7 @@ msgstr ""
 
 #: cogs/help/__init__.py:640
 msgid "Modules"
-msgstr ""
+msgstr "Moduli"
 
 #: cogs/help/__init__.py:652 cogs/help/__init__.py:658
 msgid "You do not have access to these commands!"
@@ -2723,7 +2736,7 @@ msgstr ""
 
 #: cogs/patreon/__init__.py:187
 msgid "Name too long."
-msgstr ""
+msgstr "Il nome è troppo lungo."
 
 #: cogs/patreon/__init__.py:198 cogs/patreon/__init__.py:244
 #, python-brace-format
@@ -2909,7 +2922,7 @@ msgstr ""
 
 #: cogs/patreon/__init__.py:456
 msgid "Change your background"
-msgstr ""
+msgstr "Cambia il tuo sfondo"
 
 #: cogs/patreon/__init__.py:460
 msgid ""
@@ -3009,7 +3022,7 @@ msgstr ""
 
 #: cogs/classes/__init__.py:88
 msgid "Thief"
-msgstr ""
+msgstr "Ladro"
 
 #: cogs/classes/__init__.py:91
 #, no-python-format, python-brace-format
@@ -3022,7 +3035,7 @@ msgstr ""
 
 #: cogs/classes/__init__.py:98
 msgid "Mage"
-msgstr ""
+msgstr "Mago"
 
 #: cogs/classes/__init__.py:100
 msgid ""
@@ -3124,7 +3137,7 @@ msgstr ""
 
 #: cogs/classes/__init__.py:256
 msgid "Evolve your class(es)"
-msgstr ""
+msgstr "Evolvi la tua classe (le tue classi)"
 
 #: cogs/classes/__init__.py:261
 #, no-python-format
@@ -3158,7 +3171,7 @@ msgstr ""
 
 #: cogs/classes/__init__.py:291
 msgid "Nothing to evolve."
-msgstr ""
+msgstr "Niente da evolvere."
 
 #: cogs/classes/__init__.py:296
 #, python-brace-format
@@ -3246,7 +3259,7 @@ msgstr ""
 
 #: cogs/classes/__init__.py:423
 msgid "Level"
-msgstr ""
+msgstr "Livello"
 
 #: cogs/classes/__init__.py:424
 msgid "Food"
@@ -3258,11 +3271,11 @@ msgstr ""
 
 #: cogs/classes/__init__.py:428
 msgid "Love"
-msgstr ""
+msgstr "Amore"
 
 #: cogs/classes/__init__.py:429
 msgid "Joy"
-msgstr ""
+msgstr "Felicità"
 
 #: cogs/classes/__init__.py:437 cogs/classes/__init__.py:461
 msgid "Feed your pet"
@@ -3278,27 +3291,27 @@ msgstr ""
 
 #: cogs/classes/__init__.py:446
 msgid "Potato"
-msgstr ""
+msgstr "Patata"
 
 #: cogs/classes/__init__.py:447
 msgid "Apple"
-msgstr ""
+msgstr "Mela"
 
 #: cogs/classes/__init__.py:448
 msgid "Cucumber"
-msgstr ""
+msgstr "Cetriolo"
 
 #: cogs/classes/__init__.py:449
 msgid "Meat"
-msgstr ""
+msgstr "Carne"
 
 #: cogs/classes/__init__.py:450
 msgid "Salad"
-msgstr ""
+msgstr "Insalata"
 
 #: cogs/classes/__init__.py:451
 msgid "Sushi"
-msgstr ""
+msgstr "Sushi"
 
 #: cogs/classes/__init__.py:452
 msgid "Adrian's Power Poop"
@@ -3342,19 +3355,19 @@ msgstr ""
 
 #: cogs/classes/__init__.py:507
 msgid "Cocktail"
-msgstr ""
+msgstr "Cocktail"
 
 #: cogs/classes/__init__.py:508
 msgid "Wine"
-msgstr ""
+msgstr "Vino"
 
 #: cogs/classes/__init__.py:509
 msgid "Beer"
-msgstr ""
+msgstr "Birra"
 
 #: cogs/classes/__init__.py:510
 msgid "Vodka"
-msgstr ""
+msgstr "Vodka"
 
 #: cogs/classes/__init__.py:511
 msgid "Adrian's Cocktail"
@@ -3448,7 +3461,7 @@ msgstr ""
 
 #: cogs/classes/__init__.py:622
 msgid "Rename your pet"
-msgstr ""
+msgstr "Rinomina il tuo animale domestico"
 
 #: cogs/classes/__init__.py:626
 msgid ""
@@ -3548,19 +3561,19 @@ msgstr ""
 
 #: cogs/adventure/__init__.py:109
 msgid "North"
-msgstr ""
+msgstr "Nord"
 
 #: cogs/adventure/__init__.py:116
 msgid "East"
-msgstr ""
+msgstr "Est"
 
 #: cogs/adventure/__init__.py:123
 msgid "South"
-msgstr ""
+msgstr "Sud"
 
 #: cogs/adventure/__init__.py:130
 msgid "West"
-msgstr ""
+msgstr "Ovest"
 
 #: cogs/adventure/__init__.py:138
 msgid "Attack"
@@ -3637,7 +3650,7 @@ msgstr ""
 
 #: cogs/adventure/__init__.py:374
 msgid "Enemy"
-msgstr ""
+msgstr "Nemico"
 
 #: cogs/adventure/__init__.py:375
 msgid "HP"
@@ -4868,39 +4881,39 @@ msgstr ""
 
 #: cogs/marriage/__init__.py:236
 msgid "Dog :dog2:"
-msgstr ""
+msgstr "Cane :dog2:"
 
 #: cogs/marriage/__init__.py:237
 msgid "Cat :cat2:"
-msgstr ""
+msgstr "Gatto :cat2:"
 
 #: cogs/marriage/__init__.py:238
 msgid "Cow :cow2:"
-msgstr ""
+msgstr "Mucca :cow2:"
 
 #: cogs/marriage/__init__.py:239
 msgid "Penguin :penguin:"
-msgstr ""
+msgstr "Pinguino :penguin:"
 
 #: cogs/marriage/__init__.py:240
 msgid "Unicorn :unicorn:"
-msgstr ""
+msgstr "Unicorno :unicorn:"
 
 #: cogs/marriage/__init__.py:241
 msgid "Potato :potato:"
-msgstr ""
+msgstr "Patata :potato:"
 
 #: cogs/marriage/__init__.py:242
 msgid "Sweet potato :sweet_potato:"
-msgstr ""
+msgstr "Patata dolce :sweet_potato:"
 
 #: cogs/marriage/__init__.py:243
 msgid "Peach :peach:"
-msgstr ""
+msgstr "Pesca :peach:"
 
 #: cogs/marriage/__init__.py:244
 msgid "Ice Cream :ice_cream:"
-msgstr ""
+msgstr "Gelato :ice_cream:"
 
 #: cogs/marriage/__init__.py:245
 msgid "Bento Box :bento:"
@@ -4908,7 +4921,7 @@ msgstr ""
 
 #: cogs/marriage/__init__.py:246
 msgid "Movie Night :ticket:"
-msgstr ""
+msgstr "Serata Cinema :ticket:"
 
 #: cogs/marriage/__init__.py:247
 msgid "Video Game Night :video_game:"
@@ -4920,27 +4933,27 @@ msgstr ""
 
 #: cogs/marriage/__init__.py:249
 msgid "Couple Competition :trophy:"
-msgstr ""
+msgstr "Competizione di coppia :trophy:"
 
 #: cogs/marriage/__init__.py:250
 msgid "Concert Night :musical_keyboard:"
-msgstr ""
+msgstr "Serata Concerto :musical_keyboard:"
 
 #: cogs/marriage/__init__.py:251
 msgid "Bicycle :bike:"
-msgstr ""
+msgstr "Bicicletta :bike:"
 
 #: cogs/marriage/__init__.py:252
 msgid "Motorcycle :motorcycle:"
-msgstr ""
+msgstr "Motocicletta :motorcycle:"
 
 #: cogs/marriage/__init__.py:253
 msgid "Car :red_car:"
-msgstr ""
+msgstr "Automobile :red_car:"
 
 #: cogs/marriage/__init__.py:254
 msgid "Private Jet :airplane:"
-msgstr ""
+msgstr "Jet privato :airplane:"
 
 #: cogs/marriage/__init__.py:255
 msgid "Space Rocket :rocket:"
@@ -4948,19 +4961,19 @@ msgstr ""
 
 #: cogs/marriage/__init__.py:256
 msgid "Credit Card :credit_card:"
-msgstr ""
+msgstr "Carta di Credito :credit_card:"
 
 #: cogs/marriage/__init__.py:257
 msgid "Watch :watch:"
-msgstr ""
+msgstr "Orologio :watch:"
 
 #: cogs/marriage/__init__.py:258
 msgid "Phone :iphone:"
-msgstr ""
+msgstr "Telefono :iphone:"
 
 #: cogs/marriage/__init__.py:259
 msgid "Bed :bed:"
-msgstr ""
+msgstr "Letto :bed:"
 
 #: cogs/marriage/__init__.py:260
 msgid "Home films :projector:"
@@ -4976,7 +4989,7 @@ msgstr ""
 
 #: cogs/marriage/__init__.py:263
 msgid "Shoes :athletic_shoe:"
-msgstr ""
+msgstr "Scarpe :athletic_shoe:"
 
 #: cogs/marriage/__init__.py:264
 msgid "Casual Attire :shirt:"
@@ -4984,19 +4997,19 @@ msgstr ""
 
 #: cogs/marriage/__init__.py:265
 msgid "Ring :ring:"
-msgstr ""
+msgstr "Anello :ring:"
 
 #: cogs/marriage/__init__.py:266
 msgid "Balloon :balloon:"
-msgstr ""
+msgstr "Palloncino :balloon:"
 
 #: cogs/marriage/__init__.py:267
 msgid "Flower Bouquet :bouquet:"
-msgstr ""
+msgstr "Bouquet di fiori :bouquet:"
 
 #: cogs/marriage/__init__.py:268
 msgid "Expensive Chocolates :chocolate_bar:"
-msgstr ""
+msgstr "Cioccolata costosa :chocolate_bar:"
 
 #: cogs/marriage/__init__.py:269
 msgid "Declaration of Love :love_letter:"
@@ -5008,11 +5021,11 @@ msgstr ""
 
 #: cogs/marriage/__init__.py:271
 msgid "Ancient Vase :amphora:"
-msgstr ""
+msgstr "Antico vaso :amphora:"
 
 #: cogs/marriage/__init__.py:272
 msgid "House :house:"
-msgstr ""
+msgstr "Casa :house:"
 
 #: cogs/marriage/__init__.py:273
 msgid "Super Computer :computer:"
@@ -5024,7 +5037,7 @@ msgstr ""
 
 #: cogs/marriage/__init__.py:275
 msgid "Planet :earth_americas:"
-msgstr ""
+msgstr "Pianeta :earth_americas:"
 
 #: cogs/marriage/__init__.py:286
 #, python-brace-format
@@ -5109,7 +5122,7 @@ msgstr ""
 
 #: cogs/marriage/__init__.py:368
 msgid "Unknown User"
-msgstr ""
+msgstr "User Sconosciuto"
 
 #: cogs/marriage/__init__.py:369
 #, python-brace-format
@@ -5200,7 +5213,7 @@ msgstr ""
 #: cogs/marriage/__init__.py:514
 #, python-brace-format
 msgid "{name} was born."
-msgstr ""
+msgstr "{name} è nato."
 
 #: cogs/marriage/__init__.py:517
 msgid "View your children"
@@ -5213,11 +5226,11 @@ msgstr ""
 #: cogs/marriage/__init__.py:530
 #, python-brace-format
 msgid "{amount} children"
-msgstr ""
+msgstr "{amount} figli"
 
 #: cogs/marriage/__init__.py:532
 msgid "one child"
-msgstr ""
+msgstr "un figlio"
 
 #: cogs/marriage/__init__.py:535 cogs/marriage/__init__.py:567
 #, python-brace-format
@@ -5227,7 +5240,7 @@ msgstr ""
 #: cogs/marriage/__init__.py:536 cogs/marriage/__init__.py:568
 #, python-brace-format
 msgid "{author}'s family"
-msgstr ""
+msgstr "famiglia di {author}"
 
 #: cogs/marriage/__init__.py:538 cogs/marriage/__init__.py:570
 #, python-brace-format
@@ -5236,7 +5249,7 @@ msgstr ""
 
 #: cogs/marriage/__init__.py:544
 msgid "No children yet"
-msgstr ""
+msgstr "Ancora nessun figlio"
 
 #: cogs/marriage/__init__.py:545
 #, python-brace-format
@@ -5632,7 +5645,7 @@ msgstr ""
 
 #: cogs/server/__init__.py:98
 msgid "Change the prefix"
-msgstr ""
+msgstr "Cambia il prefisso"
 
 #: cogs/server/__init__.py:102
 msgid ""
@@ -5724,7 +5737,7 @@ msgstr ""
 
 #: cogs/guild/__init__.py:94
 msgid "Members"
-msgstr ""
+msgstr "Membri"
 
 #: cogs/guild/__init__.py:97
 msgid "Current Member Count"
@@ -6488,7 +6501,7 @@ msgstr ""
 
 #: cogs/guild/__init__.py:1214 cogs/guild/__init__.py:1243
 msgid "User not found."
-msgstr ""
+msgstr "Utente non trovato."
 
 #: cogs/guild/__init__.py:1216
 msgid "Error when adding this user, please try again"
@@ -6854,7 +6867,7 @@ msgstr ""
 
 #: cogs/profile/__init__.py:372
 msgid "Equipment"
-msgstr ""
+msgstr "Equipaggiamento"
 
 #: cogs/profile/__init__.py:373
 #, python-brace-format
@@ -6865,7 +6878,7 @@ msgstr ""
 
 #: cogs/profile/__init__.py:378
 msgid "Mission"
-msgstr ""
+msgstr "Missione"
 
 #: cogs/profile/__init__.py:382
 msgid "Show your current luck"
@@ -6966,7 +6979,7 @@ msgstr ""
 
 #: cogs/profile/__init__.py:480
 msgid "(**Equipped**)"
-msgstr ""
+msgstr "(**Equipaggiato**)"
 
 #: cogs/profile/__init__.py:484
 #, python-brace-format
@@ -6995,7 +7008,7 @@ msgstr ""
 #: cogs/profile/__init__.py:509 cogs/profile/__init__.py:598
 #, python-brace-format
 msgid "Page {page} of {maxpages}"
-msgstr ""
+msgstr "Pagina {page} di {maxpages}"
 
 #: cogs/profile/__init__.py:516
 msgid "Show your gear items"
@@ -7108,12 +7121,12 @@ msgstr ""
 #: cogs/profile/__init__.py:673
 #, python-brace-format
 msgid "**{value} XP**"
-msgstr ""
+msgstr "**{value} XP**"
 
 #: cogs/profile/__init__.py:674
 #, python-brace-format
 msgid "{value} XP"
-msgstr ""
+msgstr "{value} XP"
 
 #: cogs/profile/__init__.py:705
 #, python-brace-format
@@ -7317,7 +7330,7 @@ msgstr ""
 
 #: cogs/profile/__init__.py:1087
 msgid "Rename your character"
-msgstr ""
+msgstr "Rinomina il tuo personaggio"
 
 #: cogs/profile/__init__.py:1091
 msgid ""
@@ -7333,7 +7346,7 @@ msgstr ""
 
 #: cogs/profile/__init__.py:1109
 msgid "Timeout expired. Retry!"
-msgstr ""
+msgstr "Tempo scaduto. Riprova!"
 
 #: cogs/profile/__init__.py:1122
 msgid "Character name updated."
@@ -7349,7 +7362,7 @@ msgstr ""
 
 #: cogs/profile/__init__.py:1129
 msgid "Delete your character"
-msgstr ""
+msgstr "Cancella il tuo personaggio"
 
 #: cogs/profile/__init__.py:1133
 msgid ""
@@ -8602,19 +8615,19 @@ msgstr ""
 
 #: cogs/races/__init__.py:142
 msgid "...my sister."
-msgstr ""
+msgstr "...mia sorella."
 
 #: cogs/races/__init__.py:143
 msgid "...my father."
-msgstr ""
+msgstr "...mio padre."
 
 #: cogs/races/__init__.py:144
 msgid "...my grandmother."
-msgstr ""
+msgstr "...mia nonna."
 
 #: cogs/races/__init__.py:145
 msgid "...my uncle."
-msgstr ""
+msgstr "...mio zio."
 
 #: cogs/races/__init__.py:149
 msgid "The biggest action that can outknock me, is..."
@@ -8630,7 +8643,7 @@ msgstr ""
 
 #: cogs/races/__init__.py:153
 msgid "...extreme temperatures."
-msgstr ""
+msgstr "...temperature estreme."
 
 #: cogs/races/__init__.py:154
 msgid "...strange and powerful smells."
@@ -9038,7 +9051,7 @@ msgstr ""
 #: cogs/alliance/__init__.py:531
 #, python-brace-format
 msgid "Level {level}"
-msgstr ""
+msgstr "Livello {level}"
 
 #: cogs/alliance/__init__.py:537
 msgid "Lists your city's defenses."
@@ -9375,7 +9388,7 @@ msgstr ""
 #: cogs/trivia/__init__.py:75
 #, python-brace-format
 msgid "{author}, correct!"
-msgstr ""
+msgstr "{author}, corretto!"
 
 #: cogs/trivia/__init__.py:78
 #, python-brace-format
@@ -9440,11 +9453,11 @@ msgstr ""
 
 #: cogs/chess/__init__.py:106
 msgid "Top 15"
-msgstr ""
+msgstr "Top 15"
 
 #: cogs/chess/__init__.py:119
 msgid "Your position"
-msgstr ""
+msgstr "La tua posizione"
 
 #: cogs/chess/__init__.py:122
 msgid "Play a chess match."
@@ -9870,7 +9883,7 @@ msgstr ""
 #: cogs/snowballfight/__init__.py:63 cogs/snowballfight/__init__.py:85
 #: cogs/snowballfight/__init__.py:104
 msgid "Timed out..."
-msgstr ""
+msgstr "Tempo scaduto..."
 
 #: cogs/snowballfight/__init__.py:77
 #, python-brace-format
@@ -10644,7 +10657,7 @@ msgstr ""
 #: utils/werewolf.py:1170
 #, python-brace-format
 msgid "**Day {day_count:.0f}**"
-msgstr ""
+msgstr "**Giorno {day_count:.0f}**"
 
 #: utils/werewolf.py:1181
 #, python-brace-format
@@ -11456,6 +11469,8 @@ msgid ""
 "📢 {sheriff} got chosen to be the new 🎖️ **Sheriff**. **The vote of the "
 "Sheriff counts as double.**"
 msgstr ""
+"📢{sheriff} è stato scelto per essere il nuovo 🎖️ **Sceriffo**. **Il voto "
+"dello sceriffo vale doppio.**"
 
 #~ msgid ""
 #~ "`[member]` - A discord User whose avatar to invert; defaults to oneself\n"
