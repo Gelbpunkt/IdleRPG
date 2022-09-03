@@ -81,7 +81,7 @@ class Trading(commands.Cog):
                     _(
                         "Selling an item below its value is a bad idea. You can always"
                         " do `{prefix}merchant {itemid}` to get more money."
-                    ).format(prefix=ctx.prefix, itemid=itemid)
+                    ).format(prefix=ctx.clean_prefix, itemid=itemid)
                 )
             elif item["damage"] < 4 and item["armor"] < 4:
                 return await ctx.send(
@@ -130,7 +130,7 @@ class Trading(commands.Cog):
                 "Successfully added your item to the shop! Use `{prefix}shop` to view"
                 " it in the market! {additional}"
             ).format(
-                prefix=ctx.prefix,
+                prefix=ctx.clean_prefix,
                 additional=_("The tax of 5% has been deducted from your account.")
                 if not builds or builds["trade_building"] == 0
                 else "",
@@ -225,7 +225,7 @@ class Trading(commands.Cog):
             _(
                 "Successfully bought item `{id}`. Use `{prefix}inventory` to view your"
                 " updated inventory."
-            ).format(id=item["id"], prefix=ctx.prefix)
+            ).format(id=item["id"], prefix=ctx.clean_prefix)
         )
         with suppress(discord.Forbidden, discord.HTTPException):
             dm_channel = await self.bot.http.start_private_message(item["owner"])
@@ -437,7 +437,7 @@ class Trading(commands.Cog):
                 discord.Embed(
                     title=_("IdleRPG Shop"),
                     description=_("Use `{prefix}buy {item}` to buy this.").format(
-                        prefix=ctx.prefix, item=item["item"]
+                        prefix=ctx.clean_prefix, item=item["item"]
                     ),
                     colour=discord.Colour.blurple(),
                 )
@@ -584,7 +584,7 @@ class Trading(commands.Cog):
             _(
                 "Successfully bought item `{itemid}`. Use `{prefix}inventory` to view"
                 " your updated inventory."
-            ).format(itemid=itemid, prefix=ctx.prefix)
+            ).format(itemid=itemid, prefix=ctx.clean_prefix)
         )
 
     @has_char()
@@ -768,7 +768,7 @@ class Trading(commands.Cog):
             discord.Embed(
                 title=_("Your pending items"),
                 description=_("Use `{prefix}buy {item}` to buy this.").format(
-                    prefix=ctx.prefix, item=item["item"]
+                    prefix=ctx.clean_prefix, item=item["item"]
                 ),
                 colour=discord.Colour.blurple(),
             )
@@ -853,7 +853,7 @@ class Trading(commands.Cog):
             _(
                 "Successfully bought offer **{offer}**. Use `{prefix}inventory` to view"
                 " your updated inventory."
-            ).format(offer=offerid + 1, prefix=ctx.prefix)
+            ).format(offer=offerid + 1, prefix=ctx.clean_prefix)
         )
 
 

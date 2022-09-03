@@ -40,7 +40,7 @@ class Easter(commands.Cog):
                 "**Easter event <:easteregg:566251086986608650>**\n\nPart of Idle's"
                 " birthday!\nCollect eastereggs and use `{prefix}easter rewards` to"
                 " check the rewards. <:bunny:566290173831151627>\nHappy hunting!"
-            ).format(prefix=ctx.prefix)
+            ).format(prefix=ctx.clean_prefix)
         )
 
     @has_char()
@@ -68,7 +68,7 @@ Use `{prefix}easter reward [1-9]` to trade your eggs in.
 **(8) 7500 <:easteregg:566251086986608650>** - 1 magic crate
 **(9) 12500 <:easteregg:566251086986608650>** - 1 legendary crate
 You have **{eggs}** <:easteregg:566251086986608650>."""
-            ).format(prefix=ctx.prefix, eggs=ctx.character_data["eastereggs"])
+            ).format(prefix=ctx.clean_prefix, eggs=ctx.character_data["eastereggs"])
         )
 
     @has_char()

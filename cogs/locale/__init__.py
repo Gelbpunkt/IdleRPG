@@ -83,7 +83,7 @@ class Locale(commands.Cog):
             ).format(
                 current_locale=current_locale,
                 all_locales=all_locales,
-                prefix=ctx.prefix,
+                prefix=ctx.clean_prefix,
             )
         )
 

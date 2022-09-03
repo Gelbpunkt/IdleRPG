@@ -532,7 +532,7 @@ class Adventure(commands.Cog):
             _(
                 "Successfully sent your character out on an adventure. Use"
                 " `{prefix}status` to see the current status of the mission."
-            ).format(prefix=ctx.prefix)
+            ).format(prefix=ctx.clean_prefix)
         )
 
     @has_char()
@@ -739,7 +739,7 @@ class Adventure(commands.Cog):
                         if item["damage"]
                         else _("Armor: **{armor}**\n").format(armor=item["armor"]),
                         value=item["value"],
-                        prefix=ctx.prefix,
+                        prefix=ctx.clean_prefix,
                         storage_type=storage_type,
                         xp=xp,
                     ),
@@ -781,7 +781,7 @@ class Adventure(commands.Cog):
             _(
                 "Canceled your mission. Use `{prefix}adventure [missionID]` to start a"
                 " new one!"
-            ).format(prefix=ctx.prefix)
+            ).format(prefix=ctx.clean_prefix)
         )
 
     @has_char()

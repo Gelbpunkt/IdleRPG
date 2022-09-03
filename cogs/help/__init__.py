@@ -191,7 +191,7 @@ class SubcommandMenu(View):
             value="\n".join(
                 [
                     f"{self.group_emoji if isinstance(c, commands.Group) else self.command_emoji}"
-                    f" `{self.ctx.prefix}{c.qualified_name}` - {_(c.brief)}"
+                    f" `{self.ctx.clean_prefix}{c.qualified_name}` - {_(c.brief)}"
                     for c in cmds
                 ]
             ),
@@ -612,7 +612,7 @@ class IdleHelp(commands.HelpCommand):
             " invite me to your server?\n- https://invite.idlerpg.xyz/\n*See"
             " `{prefix}help [command]` and `{prefix}help module [module]` for more"
             " info*"
-        ).format(prefix=self.context.prefix)
+        ).format(prefix=self.context.clean_prefix)
 
         allowed = []
         for cog in sorted(mapping.keys(), key=lambda x: x.qualified_name if x else ""):
@@ -674,7 +674,7 @@ class IdleHelp(commands.HelpCommand):
                 for c in cog.get_commands()
             ],
             footer=_("See '{prefix}help <command>' for more detailed info").format(
-                prefix=self.context.prefix
+                prefix=self.context.clean_prefix
             ),
         )
 
@@ -704,7 +704,7 @@ class IdleHelp(commands.HelpCommand):
                 f" {command.signature}"
             ),
             colour=self.context.bot.config.game.primary_colour,
-            description=_(command.help).format(prefix=self.context.prefix)
+            description=_(command.help).format(prefix=self.context.clean_prefix)
             if command.help
             else _("No help available"),
         )
@@ -743,7 +743,7 @@ class IdleHelp(commands.HelpCommand):
             ),
             bot=self.context.bot,
             color=self.context.bot.config.game.primary_colour,
-            description=_(group.help).format(prefix=self.context.prefix),
+            description=_(group.help).format(prefix=self.context.clean_prefix),
             cmds=list(group.commands),
         )
         await menu.start(self.context)

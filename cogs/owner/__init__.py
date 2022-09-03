@@ -127,7 +127,7 @@ class Owner(commands.Cog):
     ) -> None:
         """[Owner Only] Run a command as if you were the user."""
         fake_msg = copy.copy(ctx.message)
-        fake_msg._update(dict(channel=ctx.channel, content=ctx.prefix + command))
+        fake_msg._update(dict(channel=ctx.channel, content=ctx.clean_prefix + command))
         fake_msg.author = member
         new_ctx = await ctx.bot.get_context(fake_msg)
         try:

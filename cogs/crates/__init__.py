@@ -76,7 +76,7 @@ class Crates(commands.Cog):
             )
 
         embed.set_footer(
-            text=_("Use {prefix}open [rarity] to open one!").format(prefix=ctx.prefix)
+            text=_("Use {prefix}open [rarity] to open one!").format(prefix=ctx.clean_prefix)
         )
 
         await ctx.send(embed=embed)
@@ -404,7 +404,7 @@ class Crates(commands.Cog):
                 _(
                     "You don't have {quantity} {rarity} crate(s). Check"
                     " `{prefix}crates`."
-                ).format(quantity=quantity, rarity=rarity, prefix=ctx.prefix)
+                ).format(quantity=quantity, rarity=rarity, prefix=ctx.clean_prefix)
             )
             return await self.bot.reset_cooldown(ctx)
 
@@ -516,7 +516,7 @@ class Crates(commands.Cog):
                 emoji=getattr(self.emotes, rarity),
                 rarity=rarity,
                 seller=ctx.author.mention,
-                prefix=ctx.prefix,
+                prefix=ctx.clean_prefix,
             )
         )
 

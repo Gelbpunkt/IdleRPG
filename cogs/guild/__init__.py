@@ -330,7 +330,7 @@ class Guild(commands.Cog):
                 "Successfully added your guild **{name}** with a member limit of"
                 " **{memberlimit}**.\n\nTip: You can use `{prefix}guild channel` in a"
                 " server where you are the admin to set up the guild logging channel."
-            ).format(name=name, memberlimit=memberlimit, prefix=ctx.prefix)
+            ).format(name=name, memberlimit=memberlimit, prefix=ctx.clean_prefix)
         )
 
     @is_guild_leader()
@@ -1401,7 +1401,7 @@ class Guild(commands.Cog):
                 _(
                     "Your guild is already on an adventure! Use `{prefix}guild status`"
                     " to view how long it still lasts."
-                ).format(prefix=ctx.prefix)
+                ).format(prefix=ctx.clean_prefix)
             )
         guild = await self.bot.pool.fetchrow(
             'SELECT * FROM guild WHERE "id"=$1;', ctx.character_data["guild"]
@@ -1490,7 +1490,7 @@ Time it will take: **{time}**
                 _(
                     "Your guild isn't on an adventure yet. Ask your guild officer to"
                     " use `{prefix}guild adventure` to start one"
-                ).format(prefix=ctx.prefix)
+                ).format(prefix=ctx.clean_prefix)
             )
 
         if adventure[2]:
@@ -1607,7 +1607,7 @@ Time it will take: **{time}**
 **(10)** 50000 🎃: 15 additional guild member slots
 *Please note that these will be **gone** if the leader uses `{prefix}updateguild`, so choose carefully*"""
             ).format(
-                bar=progress, percent=percent, pumpkins=pumpkins, prefix=ctx.prefix
+                bar=progress, percent=percent, pumpkins=pumpkins, prefix=ctx.clean_prefix
             )
         )
 

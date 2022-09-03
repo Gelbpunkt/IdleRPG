@@ -38,7 +38,7 @@ class Store(commands.Cog):
             title=_("IdleRPG Store"),
             description=_(
                 "Welcome! Use `{prefix}purchase time/luck/money` to buy something."
-            ).format(prefix=ctx.prefix),
+            ).format(prefix=ctx.clean_prefix),
             colour=discord.Colour.blurple(),
         )
         shopembed.add_field(
@@ -48,7 +48,7 @@ class Store(commands.Cog):
                 " Booster\t**$500**\tBoosts adventure luck (not `{prefix}luck`) by"
                 " 25%\n`#3` Money Booster\t**$1000**\tBoosts adventure money rewards"
                 " by 25%"
-            ).format(prefix=ctx.prefix),
+            ).format(prefix=ctx.clean_prefix),
             inline=False,
         )
         shopembed.set_thumbnail(url=f"{self.bot.BASE_URL}/business.png")
@@ -111,7 +111,7 @@ class Store(commands.Cog):
             _(
                 "Successfully bought **{amount}x** {booster} booster(s). Use"
                 " `{prefix}boosters` to view your new boosters."
-            ).format(amount=amount, booster=booster, prefix=ctx.prefix)
+            ).format(amount=amount, booster=booster, prefix=ctx.clean_prefix)
         )
 
     @has_char()
@@ -164,7 +164,7 @@ class Store(commands.Cog):
                 ),
                 colour=discord.Colour.blurple(),
             ).set_footer(
-                text=_("Use {prefix}activate to activate one").format(prefix=ctx.prefix)
+                text=_("Use {prefix}activate to activate one").format(prefix=ctx.clean_prefix)
             )
         )
 

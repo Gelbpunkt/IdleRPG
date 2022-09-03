@@ -1826,7 +1826,7 @@ Atheistus will be vulnerable in 15 Minutes
             _(
                 "Use `{prefix}increase damage/defense` to upgrade your raid"
                 " damage/defense multiplier by 10%."
-            ).format(prefix=ctx.prefix)
+            ).format(prefix=ctx.clean_prefix)
         )
 
     @user_cooldown(60, identifier="increase")
@@ -1971,7 +1971,7 @@ Atheistus will be vulnerable in 15 Minutes
                 "Did you ever want to join together with other players to defeat the"
                 " dragon that roams this land? Raids got you covered!\nJoin the support"
                 " server (`{prefix}support`) for more information."
-            ).format(prefix=ctx.prefix)
+            ).format(prefix=ctx.clean_prefix)
         )
 
 

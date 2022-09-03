@@ -57,7 +57,7 @@ class Chess(commands.Cog):
             _(
                 "Please use `{prefix}chess match` to play.\nIf you want to play"
                 " ELO-rated, you must use `{prefix}chess register` first."
-            ).format(prefix=ctx.prefix)
+            ).format(prefix=ctx.clean_prefix)
         )
 
     @chess.command(brief=_("Register for ELO-rating in IdleRPG."))

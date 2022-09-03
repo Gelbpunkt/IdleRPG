@@ -146,7 +146,7 @@ IdleRPG is a global bot, your characters are valid everywhere"""
                 _(
                     "Successfully added your character **{name}**! Now use"
                     " `{prefix}profile` to view your character!"
-                ).format(name=name, prefix=ctx.prefix)
+                ).format(name=name, prefix=ctx.clean_prefix)
             )
         elif len(name) < 3 or len(name) > 20:
             await ctx.send(
@@ -667,7 +667,7 @@ IdleRPG is a global bot, your characters are valid everywhere"""
             title=_(f"Select a reward for the {count} items"),
             placeholder=_("Select a reward"),
             footer=_("Do you want favor? {prefix}sacrifice instead").format(
-                prefix=ctx.prefix
+                prefix=ctx.clean_prefix
             ),
             return_index=True,
             entries=[f"**${value}**", _("**{value} XP**").format(value=value // 4)],

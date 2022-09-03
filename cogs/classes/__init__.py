@@ -91,7 +91,7 @@ class Classes(commands.Cog):
                     "The sneaky money stealer...\nGet access to `{prefix}steal` to"
                     " steal 10% of a random player's money, if successful.\n+8% success"
                     " chance per evolution."
-                ).format(prefix=ctx.prefix),
+                ).format(prefix=ctx.clean_prefix),
                 color=self.bot.config.game.primary_colour,
             ),
             discord.Embed(
@@ -108,7 +108,7 @@ class Classes(commands.Cog):
                     "Item hunter and trainer of their very own pet.\nGet access to"
                     " `{prefix}pet` to interact with your pet and let it get items for"
                     " you.\n+3 minimum stat and +6 maximum stat per evolution."
-                ).format(prefix=ctx.prefix),
+                ).format(prefix=ctx.clean_prefix),
                 colour=self.bot.config.game.primary_colour,
             ),
             discord.Embed(

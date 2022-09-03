@@ -185,7 +185,7 @@ class Miscellaneous(commands.Cog):
                 "You received your daily {txt}!\nYou are on a streak of **{streak}**"
                 " days!\n*Tip: `{prefix}vote` every 12 hours to get an up to legendary"
                 " crate with possibly rare items!*"
-            ).format(txt=txt, money=money, streak=streak, prefix=ctx.prefix)
+            ).format(txt=txt, money=money, streak=streak, prefix=ctx.clean_prefix)
         )
 
     @has_char()
@@ -203,7 +203,7 @@ class Miscellaneous(commands.Cog):
                 _(
                     "You don't have a daily streak yet. You can get one going by using"
                     " the command `{prefix}daily`!"
-                ).format(prefix=ctx.prefix)
+                ).format(prefix=ctx.clean_prefix)
             )
         await ctx.send(
             _("You are on a daily streak of **{streak}!**").format(

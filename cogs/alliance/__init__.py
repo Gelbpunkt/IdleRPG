@@ -130,7 +130,7 @@ class Alliance(commands.Cog):
             text=_(
                 "{prefix}alliance buildings | {prefix}alliance defenses |"
                 " {prefix}alliance attack | {prefix}alliance occupy"
-            ).format(prefix=ctx.prefix)
+            ).format(prefix=ctx.clean_prefix)
         )
 
         await ctx.send(embed=alliance_embed)
@@ -298,7 +298,7 @@ class Alliance(commands.Cog):
     def list_subcommands(self, ctx: Context) -> list[str] | str:
         if not ctx.command.commands:
             return "None"
-        return [ctx.prefix + x.qualified_name for x in ctx.command.commands]
+        return [ctx.clean_prefix + x.qualified_name for x in ctx.command.commands]
 
     def get_upgrade_price(self, current: int) -> int:
         return (current + 1) * 100000
@@ -345,7 +345,7 @@ class Alliance(commands.Cog):
                     "Invalid building. Please use `{prefix}{cmd}"
                     " [thief/raid/trade/adventure]` or check the possible buildings in"
                     " your city."
-                ).format(prefix=ctx.prefix, cmd=ctx.command.qualified_name)
+                ).format(prefix=ctx.clean_prefix, cmd=ctx.command.qualified_name)
             )
         cur_level = city[f"{name}_building"]
         if cur_level == 10:
@@ -433,7 +433,7 @@ class Alliance(commands.Cog):
             await self.bot.reset_alliance_cooldown(ctx)
             return await ctx.send(
                 _("Invalid defense. Please use `{prefix}{cmd} [{buildings}]`.").format(
-                    prefix=ctx.prefix,
+                    prefix=ctx.clean_prefix,
                     cmd=ctx.command.qualified_name,
                     buildings="/".join(building_list.keys()),
                 )
@@ -571,7 +571,7 @@ class Alliance(commands.Cog):
             embed.add_field(
                 name=_("None built"),
                 value=_("Use {prefix}alliance build defense [name]").format(
-                    prefix=ctx.prefix
+                    prefix=ctx.clean_prefix
                 ),
             )
         await ctx.send(embed=embed)

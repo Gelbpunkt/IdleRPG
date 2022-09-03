@@ -88,7 +88,7 @@ class Transaction(commands.Cog):
             + _(
                 "Use `{prefix}trade [add/set/remove] [money/crates/item]"
                 " [amount/itemid] [crate rarity]`"
-            ).format(prefix=ctx.prefix)
+            ).format(prefix=ctx.clean_prefix)
         )
         if (base := self.transactions[id_]["base"]) is not None:
             await base.delete()
@@ -385,7 +385,7 @@ class Transaction(commands.Cog):
             _(
                 "Please select something to add. Example: `{prefix}trade add money"
                 " 1337`"
-            ).format(prefix=ctx.prefix)
+            ).format(prefix=ctx.clean_prefix)
         )
 
     @has_transaction()
@@ -499,7 +499,7 @@ class Transaction(commands.Cog):
             _(
                 "Please select something to set. Example: `{prefix}trade set money"
                 " 1337`"
-            ).format(prefix=ctx.prefix)
+            ).format(prefix=ctx.clean_prefix)
         )
 
     @has_transaction()
@@ -557,7 +557,7 @@ class Transaction(commands.Cog):
             _(
                 "Please select something to remove. Example: `{prefix}trade remove"
                 " money 1337`"
-            ).format(prefix=ctx.prefix)
+            ).format(prefix=ctx.clean_prefix)
         )
 
     @has_transaction()

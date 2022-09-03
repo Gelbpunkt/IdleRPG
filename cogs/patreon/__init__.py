@@ -406,7 +406,7 @@ class Patreon(commands.Cog):
 
         await ctx.send(
             _("Imgur Link for `{prefix}background`\n{link}").format(
-                prefix=ctx.prefix, link=link
+                prefix=ctx.clean_prefix, link=link
             )
         )
 
@@ -507,7 +507,7 @@ class Patreon(commands.Cog):
             .set_footer(
                 text=_(
                     "Use {prefix}eventbackground {number} to use this background"
-                ).format(prefix=ctx.prefix, number=i)
+                ).format(prefix=ctx.clean_prefix, number=i)
             )
             for i, url in enumerate(bgs, 1)
         ]

@@ -197,7 +197,7 @@ class Errorhandler(commands.Cog):
                     _(
                         "You need to be following a god for this command. Please use"
                         " `{prefix}follow` to choose one."
-                    ).format(prefix=ctx.prefix)
+                    ).format(prefix=ctx.clean_prefix)
                 )
             elif isinstance(error, utils.checks.NoGuild):
                 await ctx.send(_("You need to have a guild to use this command."))
@@ -227,14 +227,14 @@ class Errorhandler(commands.Cog):
                     _(
                         "You are already on an adventure. Use `{prefix}status` to see"
                         " how long it lasts."
-                    ).format(prefix=ctx.prefix)
+                    ).format(prefix=ctx.clean_prefix)
                 )
             elif isinstance(error, utils.checks.NeedsAdventure):
                 await ctx.send(
                     _(
                         "You need to be on an adventure to use this command. Try"
                         " `{prefix}adventure`!"
-                    ).format(prefix=ctx.prefix)
+                    ).format(prefix=ctx.clean_prefix)
                 )
             elif isinstance(error, utils.checks.PetGone):
                 await ctx.send(
@@ -278,7 +278,7 @@ class Errorhandler(commands.Cog):
                         "You need to be a {tier} tier donator to use this command."
                         " Please head to `{prefix}donate` and make sure you joined the"
                         " support server if you decide to support us."
-                    ).format(tier=error.tier.name.title(), prefix=ctx.prefix)
+                    ).format(tier=error.tier.name.title(), prefix=ctx.clean_prefix)
                 )
             elif isinstance(error, utils.checks.AlreadyRaiding):
                 await ctx.send(

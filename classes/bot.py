@@ -642,7 +642,7 @@ class Bot(commands.AutoShardedBot):
 
         additional = (
             _("You can now choose your second class using `{prefix}class`!").format(
-                prefix=ctx.prefix
+                prefix=ctx.clean_prefix
             )
             if old_level < 12 and new_level >= 12
             else ""

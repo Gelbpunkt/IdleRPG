@@ -634,7 +634,7 @@ class Game:
             _(
                 "**Sending game roles... You may use `{prefix}ww myrole` to check"
                 " your role later.\n{house_rules}**"
-            ).format(prefix=self.ctx.prefix, house_rules=house_rules)
+            ).format(prefix=self.ctx.clean_prefix, house_rules=house_rules)
         )
         for player in self.players:
             await player.send(

@@ -640,7 +640,7 @@ class GameMaster(commands.Cog):
             return await ctx.send(_("Auctions channel wasn't found."))
         await channel.send(
             f"{ctx.author.mention} started auction on **{item}**! Please use"
-            f" `{ctx.prefix}bid amount` to raise the bid. If no more bids are sent"
+            f" `{ctx.clean_prefix}bid amount` to raise the bid. If no more bids are sent"
             " within a 30 minute timeframe, the auction is over."
         )
         self.top_auction = (ctx.author, 0)

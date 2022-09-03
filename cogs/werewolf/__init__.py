@@ -104,7 +104,7 @@ class Werewolf(commands.Cog):
                 _(
                     "Invalid game mode. Use `{prefix}help ww` to get help on this"
                     " command."
-                ).format(prefix=ctx.prefix)
+                ).format(prefix=ctx.clean_prefix)
             )
         elif mode == "Idlerpg":
             mode = "IdleRPG"
@@ -114,7 +114,7 @@ class Werewolf(commands.Cog):
                 _(
                     "Invalid game speed. Use `{prefix}help ww` to get help on this"
                     " command."
-                ).format(prefix=ctx.prefix)
+                ).format(prefix=ctx.clean_prefix)
             )
 
         if not min_players:
@@ -128,7 +128,7 @@ class Werewolf(commands.Cog):
             " roles` to view descriptions of game roles and their goals to win. Use"
             " `{prefix}ww modes` and `{prefix}ww speeds` to see info about available"
             " game modes and speeds."
-        ).format(prefix=ctx.prefix)
+        ).format(prefix=ctx.clean_prefix)
 
         mode_emojis = {"Huntergame": "🔫", "Valentines": "💕"}
         mode_emoji = mode_emojis.get(mode, "")
@@ -417,7 +417,7 @@ class Werewolf(commands.Cog):
             tip = _(
                 "Use `{prefix}ww roles <role>` to view the description on a specific"
                 " role."
-            ).format(prefix=ctx.prefix)
+            ).format(prefix=ctx.clean_prefix)
             embeds = [
                 em.copy().add_field(
                     name=f"{group['side']} - {_('Goal')}: {group['goal']}",

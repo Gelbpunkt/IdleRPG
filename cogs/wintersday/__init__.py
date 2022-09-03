@@ -155,7 +155,7 @@ class Christmas(commands.Cog):
                 "You combined the puzzles! In your head a voice whispers: *Well done."
                 " Now use `{prefix}eventbackground {num}` to set your new background that"
                 " you just acquired...*"
-            ).format(prefix=ctx.prefix, num=len(bgs))
+            ).format(prefix=ctx.clean_prefix, num=len(bgs))
         )
 
 

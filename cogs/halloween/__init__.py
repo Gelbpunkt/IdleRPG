@@ -112,7 +112,7 @@ class Halloween(commands.Cog):
                         _(
                             "🎃 As you step out of the door, you open your candy and plastic reveals an ancient image on top of a chocolate bar, passed along for generations. You decide to keep it in your `{prefix}eventbackgrounds`."
                         ).format(
-                            prefix=ctx.prefix,
+                            prefix=ctx.clean_prefix,
                         )
                     )
 

@@ -284,7 +284,7 @@ class Marriage(commands.Cog):
         if not item:
             text = _(
                 "To buy one of these items for your partner, use `{prefix}spoil shopid`"
-            ).format(prefix=ctx.prefix)
+            ).format(prefix=ctx.clean_prefix)
             return await ctx.send(f"{items_str}\n\n{text}")
         item = items[item - 1]
         if ctx.character_data["money"] < item[1]:
@@ -542,11 +542,11 @@ class Marriage(commands.Cog):
         if not children:
             em.add_field(
                 name=_("No children yet"),
-                value=_("Use `{prefix}child` to make one!").format(prefix=ctx.prefix)
+                value=_("Use `{prefix}child` to make one!").format(prefix=ctx.clean_prefix)
                 if marriage
                 else _(
                     "Get yourself a partner and use `{prefix}child` to make one!"
-                ).format(prefix=ctx.prefix),
+                ).format(prefix=ctx.clean_prefix),
             )
         if len(children) <= 5:
             for child in children:
