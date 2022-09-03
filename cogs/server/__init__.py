@@ -36,7 +36,9 @@ class Server(commands.Cog):
     async def settings(self, ctx: Context) -> None:
         _("""Change the server settings for the bot.""")
         await ctx.send(
-            _("Please use `{prefix}settings prefix value`").format(prefix=ctx.clean_prefix)
+            _("Please use `{prefix}settings prefix value`").format(
+                prefix=ctx.clean_prefix
+            )
         )
 
     @commands.guild_only()

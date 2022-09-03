@@ -542,7 +542,9 @@ class Marriage(commands.Cog):
         if not children:
             em.add_field(
                 name=_("No children yet"),
-                value=_("Use `{prefix}child` to make one!").format(prefix=ctx.clean_prefix)
+                value=_("Use `{prefix}child` to make one!").format(
+                    prefix=ctx.clean_prefix
+                )
                 if marriage
                 else _(
                     "Get yourself a partner and use `{prefix}child` to make one!"

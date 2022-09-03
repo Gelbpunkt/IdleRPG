@@ -164,7 +164,9 @@ class Store(commands.Cog):
                 ),
                 colour=discord.Colour.blurple(),
             ).set_footer(
-                text=_("Use {prefix}activate to activate one").format(prefix=ctx.clean_prefix)
+                text=_("Use {prefix}activate to activate one").format(
+                    prefix=ctx.clean_prefix
+                )
             )
         )
 
