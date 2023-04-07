@@ -1,7 +1,7 @@
 #!/bin/bash
 # Adrian's script for setting up a quick test deployment
 podman pull docker://docker.io/library/redis:7-alpine
-podman pull docker://docker.io/library/postgres:15beta1-alpine
+podman pull docker://docker.io/library/postgres:15-alpine
 podman pull quay.io/gelbpunkt/stockfish:latest
 podman pull docker://docker.io/twilightrs/http-proxy:latest
 podman pull docker://docker.io/gelbpunkt/gateway-proxy:haswell
@@ -15,7 +15,7 @@ cat <<EOF > config.json
 {
     "log_level": "info",
     "token": "$TOKEN",
-    "intents": 13827,
+    "intents": 46595,
     "port": 5112,
     "activity": {
         "type": 0,
@@ -24,6 +24,7 @@ cat <<EOF > config.json
     "status": "idle",
     "backpressure": 100,
     "twilight_http_proxy": "127.0.0.1:5113",
+    "externally_accessible_url": "ws://127.0.0.1:5112",
     "cache": {
         "channels": true,
         "presences": false,
@@ -55,7 +56,7 @@ DONE
 EOF
 
 chmod 777 start.sh
-podman run --rm -it -d --pod idlerpgbeta --name postgres-beta -e POSTGRES_PASSWORD="test" -v $(pwd)/start.sh:/docker-entrypoint-initdb.d/init.sh:Z postgres:15beta1-alpine -N 1000
+podman run --rm -it -d --pod idlerpgbeta --name postgres-beta -e POSTGRES_PASSWORD="test" -v $(pwd)/start.sh:/docker-entrypoint-initdb.d/init.sh:Z postgres:15-alpine -N 1000
 sleep 15
 rm start.sh
 podman run --rm -it -d --pod idlerpgbeta --name stockfish-beta gelbpunkt/stockfish:latest

@@ -32,8 +32,6 @@ import uvloop
 from classes.bot import Bot
 from classes.logger import file_handler, stream
 
-discord.http._set_api_version(9)
-
 if len(sys.argv) != 6:
     print(
         f"Usage: {sys.executable} idlerpg.py [shard_ids] [shard_count] [cluster_id]"
@@ -59,19 +57,20 @@ intents.messages = True
 intents.reactions = True
 
 
-bot = Bot(
-    case_insensitive=True,
-    status=discord.Status.idle,
-    description="The one and only IdleRPG bot for discord",
-    shard_ids=shard_ids,
-    shard_count=shard_count,
-    cluster_id=cluster_id,
-    cluster_count=cluster_count,
-    cluster_name=cluster_name,
-    intents=intents,
-    chunk_guilds_at_startup=False,  # chunking is nerfed
-    guild_ready_timeout=30 * (len(shard_ids) // 4),  # fix on_ready firing too early
-)
+async def main() -> None:
+    async with Bot(
+        case_insensitive=True,
+        status=discord.Status.idle,
+        description="The one and only IdleRPG bot for discord",
+        shard_ids=shard_ids,
+        shard_count=shard_count,
+        cluster_id=cluster_id,
+        cluster_count=cluster_count,
+        cluster_name=cluster_name,
+        intents=intents,
+        chunk_guilds_at_startup=False,  # discord.py defaults this to True if members intent is enabled
+    ) as bot:
+        await bot.start(bot.config.bot.token)
 
 
 if __name__ == "__main__":
@@ -82,6 +81,6 @@ if __name__ == "__main__":
 
     try:
         with asyncio.Runner(loop_factory=uvloop.new_event_loop) as runner:
-            runner.run(bot.connect_all())
+            runner.run(main())
     except KeyboardInterrupt:
         pass

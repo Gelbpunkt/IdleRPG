@@ -29,6 +29,8 @@ from discord.ext import commands
 from discord.interactions import Interaction
 from discord.ui.button import Button, button
 
+from classes.bot import Bot
+from classes.context import Context
 from classes.converters import CoinSide, IntFromTo, IntGreaterThan, MemberWithCharacter
 from utils import random
 from utils.checks import has_char, has_money, user_has_char
@@ -155,7 +157,7 @@ class BlackJackView(discord.ui.View):
 
 
 class BlackJack:
-    def __init__(self, ctx, money):
+    def __init__(self, ctx: Context, money: int) -> None:
         self.cards = {
             "adiamonds": "<:adiamonds:508321810832556033>",
             "2diamonds": "<:2diamonds:508321809536385024>",
@@ -211,15 +213,17 @@ class BlackJack:
             "kspades": "<:kspades:508321811457507329>",
         }
         self.prepare_deck()
+        self.expected_player_money = ctx.character_data["money"] - money
+        self.money_spent = money
+        self.payout = money
         self.ctx = ctx
         self.msg = None
         self.over = False
-        self.money = money
         self.insurance = False
         self.doubled = False
         self.twodecks = False
 
-    def prepare_deck(self):
+    def prepare_deck(self) -> None:
         self.deck = []
         for colour in ["hearts", "diamonds", "spades", "clubs"]:
             for value in range(2, 15):  # 11 = Jack, 12 = Queen, 13 = King, 14 = Ace
@@ -281,32 +285,64 @@ class BlackJack:
         hand2 = [hand[-1]]
         return [hand1, hand2]
 
-    async def player_win(self):
-        if self.money > 0:
+    async def player_takes_insurance(self) -> bool:
+        if self.payout > 0:
+            insurance_cost = self.payout // 2
+            self.expected_player_money -= insurance_cost
+            self.money_spent += insurance_cost
+
             async with self.ctx.bot.pool.acquire() as conn:
+                if not await has_money(
+                    self.ctx.bot, self.ctx.author.id, insurance_cost, conn=conn
+                ):
+                    return False
+
                 await conn.execute(
-                    'UPDATE profile SET "money"="money"+$1 WHERE "user"=$2;',
-                    self.money * 2,
+                    'UPDATE profile SET "money"="money"-$1 WHERE "user"=$2;',
+                    insurance_cost,
                     self.ctx.author.id,
                 )
+
                 await self.ctx.bot.log_transaction(
                     self.ctx,
                     from_=1,
                     to=self.ctx.author.id,
                     subject="gambling",
-                    data={"Amount": self.money * 2},
+                    data={"Amount": insurance_cost},
+                    conn=conn,
+                )
+
+        return True
+
+    async def player_win(self):
+        if self.payout > 0:
+            async with self.ctx.bot.pool.acquire() as conn:
+                await conn.execute(
+                    'UPDATE profile SET "money"="money"+$1 WHERE "user"=$2;',
+                    self.payout * 2,
+                    self.ctx.author.id,
+                )
+
+                await self.ctx.bot.log_transaction(
+                    self.ctx,
+                    from_=1,
+                    to=self.ctx.author.id,
+                    subject="gambling",
+                    data={"Amount": self.payout * 2},
                     conn=conn,
                 )
 
     async def player_bj_win(self):
-        if self.money > 0:
-            total = int(self.money * 2.5)
+        if self.payout > 0:
+            total = int(self.payout * 2.5)
+
             async with self.ctx.bot.pool.acquire() as conn:
                 await conn.execute(
                     'UPDATE profile SET "money"="money"+$1 WHERE "user"=$2;',
                     total,
                     self.ctx.author.id,
                 )
+
                 await self.ctx.bot.log_transaction(
                     self.ctx,
                     from_=1,
@@ -317,19 +353,20 @@ class BlackJack:
                 )
 
     async def player_cashback(self):
-        if self.money > 0:
+        if self.payout > 0:
             async with self.ctx.bot.pool.acquire() as conn:
                 await conn.execute(
                     'UPDATE profile SET "money"="money"+$1 WHERE "user"=$2;',
-                    self.money,
+                    self.payout,
                     self.ctx.author.id,
                 )
+
                 await self.ctx.bot.log_transaction(
                     self.ctx,
                     from_=1,
                     to=self.ctx.author.id,
                     subject="gambling",
-                    data={"Amount": self.money},
+                    data={"Amount": self.payout},
                     conn=conn,
                 )
 
@@ -414,8 +451,17 @@ class BlackJack:
         self.player2 = None
         self.dealer = [self.deal()]
         # Prompt for insurance
-        if self.dealer[0][0] > 9:
+        if self.dealer[0][0] > 9 and self.expected_player_money >= self.payout // 2:
             self.insurance = await self.send_insurance()
+
+            if self.insurance:
+                if not await self.player_takes_insurance():
+                    return await self.send(
+                        additional=_(
+                            "You do not have the money to afford insurance anymore."
+                        ),
+                        wait_for_action=False,
+                    )
 
         self.player = self.hit(self.player)
         self.dealer = self.hit(self.dealer)
@@ -434,14 +480,14 @@ class BlackJack:
                 return await self.send(
                     additional=_(
                         "The dealer got a blackjack. You lost **${money}**."
-                    ).format(money=self.money),
+                    ).format(money=self.money_spent),
                     wait_for_action=False,
                 )
         elif self.has_bj(self.player):
             await self.player_bj_win()
             return await self.send(
                 additional=_("You got a blackjack and won **${money}**!").format(
-                    money=int(self.money * 1.5)
+                    money=int(self.payout * 2.5) - self.money_spent
                 ),
                 wait_for_action=False,
             )
@@ -449,7 +495,7 @@ class BlackJack:
         possible_actions = {
             "hit": True,
             "stand": True,
-            "double_down": self.ctx.character_data["money"] - self.money * 2 >= 0,
+            "double_down": self.expected_player_money - self.payout >= 0,
             "change_deck": False,
             "split": False,
         }
@@ -497,16 +543,22 @@ class BlackJack:
                 additional = _("Switched to the other side.")
 
             elif action == BlackJackAction.DoubleDown:
-                if not await has_money(self.ctx.bot, self.ctx.author.id, self.money):
-                    return await self.ctx.send(
-                        _("Invalid. You're too poor and lose the match.")
-                    )
                 self.doubled = True
-                if self.money > 0:
+                if self.payout > 0:
+                    self.expected_player_money -= self.payout
+                    self.money_spent += self.payout
+
                     async with self.ctx.bot.pool.acquire() as conn:
+                        if not await has_money(
+                            self.ctx.bot, self.ctx.author.id, self.payout, conn=conn
+                        ):
+                            return await self.ctx.send(
+                                _("Invalid. You're too poor and lose the match.")
+                            )
+
                         await conn.execute(
                             'UPDATE profile SET "money"="money"-$1 WHERE "user"=$2;',
-                            self.money,
+                            self.payout,
                             self.ctx.author.id,
                         )
                         await self.ctx.bot.log_transaction(
@@ -514,11 +566,11 @@ class BlackJack:
                             from_=self.ctx.author.id,
                             to=2,
                             subject="gambling",
-                            data={"Amount": self.money},
+                            data={"Amount": self.payout},
                             conn=conn,
                         )
 
-                self.money *= 2
+                self.payout *= 2
                 possible_actions["double_down"] = False
                 possible_actions["stand"] = False
                 if self.twodecks:
@@ -534,14 +586,14 @@ class BlackJack:
         if player > 21:
             await self.send(
                 additional=_("You busted and lost **${money}**.").format(
-                    money=self.money
+                    money=self.money_spent
                 ),
                 wait_for_action=False,
             )
         elif dealer > 21:
             await self.send(
                 additional=_("Dealer busts and you won **${money}**!").format(
-                    money=self.money
+                    money=self.payout * 2 - self.money_spent
                 ),
                 wait_for_action=False,
             )
@@ -552,7 +604,7 @@ class BlackJack:
                     additional=_(
                         "You have a higher score than the dealer and have won"
                         " **${money}**"
-                    ).format(money=self.money),
+                    ).format(money=self.payout * 2 - self.money_spent),
                     wait_for_action=False,
                 )
                 await self.player_win()
@@ -561,21 +613,21 @@ class BlackJack:
                     additional=_(
                         "Dealer has a higher score than you and wins. You lost"
                         " **${money}**."
-                    ).format(money=self.money),
+                    ).format(money=self.money_spent),
                     wait_for_action=False,
                 )
             else:
                 await self.player_cashback()
                 await self.send(
                     additional=_("It's a tie, you got your **${money}** back.").format(
-                        money=self.money
+                        money=self.payout
                     ),
                     wait_for_action=False,
                 )
 
 
 class Gambling(commands.Cog):
-    def __init__(self, bot):
+    def __init__(self, bot: Bot) -> None:
         self.bot = bot
         self.cards = os.listdir("assets/cards")
 
@@ -1072,21 +1124,26 @@ This command is in an alpha-stage, which means bugs are likely to happen. Play a
 
             (This command has a cooldown of 5 seconds.)"""
         )
-        if ctx.character_data["money"] < amount:
-            return await ctx.send(_("You're too poor."))
-        await self.bot.pool.execute(
-            'UPDATE profile SET "money"="money"-$1 WHERE "user"=$2;',
-            amount,
-            ctx.author.id,
-        )
         if amount > 0:
-            await self.bot.log_transaction(
-                ctx,
-                from_=ctx.author.id,
-                to=2,
-                subject="gambling",
-                data={"Amount": amount},
-            )
+            if ctx.character_data["money"] < amount:
+                return await ctx.send(_("You're too poor."))
+
+            async with self.bot.pool.acquire() as conn:
+                await conn.execute(
+                    'UPDATE profile SET "money"="money"-$1 WHERE "user"=$2;',
+                    amount,
+                    ctx.author.id,
+                )
+
+                await self.bot.log_transaction(
+                    ctx,
+                    from_=ctx.author.id,
+                    to=2,
+                    subject="gambling",
+                    data={"Amount": amount},
+                    conn=conn,
+                )
+
         bj = BlackJack(ctx, amount)
         await bj.run()
 
@@ -1216,5 +1273,5 @@ This command is in an alpha-stage, which means bugs are likely to happen. Play a
                 users = (other, user)
 
 
-async def setup(bot):
+async def setup(bot: Bot) -> None:
     await bot.add_cog(Gambling(bot))

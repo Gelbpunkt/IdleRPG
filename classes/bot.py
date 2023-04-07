@@ -58,6 +58,11 @@ class Bot(commands.AutoShardedBot):
         self.config = ConfigLoader("config.toml")
         mentions = AllowedMentions.none()
         mentions.users = True
+
+        # Hacky way to ensure we have message content on a beta bot
+        if self.config.bot.is_beta:
+            kwargs["intents"].message_content = True
+
         super().__init__(
             allowed_mentions=mentions,
             command_prefix=self.command_prefix,
@@ -175,12 +180,9 @@ class Bot(commands.AutoShardedBot):
             except Exception:
                 print(f"Failed to load extension {extension}.", file=sys.stderr)
                 traceback.print_exc()
+
         self.redis_version = await self.get_redis_version()
         await self.load_bans()
-
-    async def connect_all(self):
-        async with self:
-            await self.start(self.config.bot.token)
 
     async def get_redis_version(self):
         """Parses the Redis version out of the INFO command"""
@@ -188,14 +190,15 @@ class Bot(commands.AutoShardedBot):
         return info["redis_version"]
 
     # https://github.com/Rapptz/discord.py/blob/master/discord/ext/commands/bot.py#L131
-    def dispatch(self, event_name, *args, **kwargs):
-        """Overriden version of Bot.dispatch to ignore reactions by banned users"""
-        if (event_name == "raw_reaction_add" and args[0].user_id in self.bans) or (
-            event_name == "message"
-            and (args[0].author.id in self.bans or args[0].author.bot)
-        ):  # args[1] is user
+    def user_can_interact(self, user_id: int) -> bool:
+        return user_id not in self.bans
+
+    async def process_commands(self, message: discord.Message) -> None:
+        if message.author.bot:
             return
-        super().dispatch(event_name, *args, **kwargs)
+
+        ctx = await self.get_context(message)
+        await self.invoke(ctx)
 
     async def on_message_edit(self, before, after):
         """Handler for edited messages, re-executes commands"""

@@ -102,9 +102,14 @@ class Patreon(commands.Cog):
                         ruby_or_higher.append(discord_user_id)
 
                 pagination_data = json["meta"]["pagination"]
-                if not pagination_data.get("cursors"):
+
+                if not (cursors := pagination_data.get("cursors")):
                     break
-                next_cursor_id = pagination_data["cursors"]["next"]
+
+                next_cursor_id = cursors["next"]
+                if not next_cursor_id:
+                    break
+
                 params["page[cursor]"] = next_cursor_id
 
             self.ruby_or_above = ruby_or_higher
