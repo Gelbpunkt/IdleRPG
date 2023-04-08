@@ -212,6 +212,7 @@ class BlackJack:
             "qspades": "<:qspades:508321868193726464>",
             "kspades": "<:kspades:508321811457507329>",
         }
+        self.deck: list[tuple[int, str, str]] = []
         self.prepare_deck()
         self.expected_player_money = ctx.character_data["money"] - money
         self.money_spent = money
@@ -224,7 +225,6 @@ class BlackJack:
         self.twodecks = False
 
     def prepare_deck(self) -> None:
-        self.deck = []
         for colour in ["hearts", "diamonds", "spades", "clubs"]:
             for value in range(2, 15):  # 11 = Jack, 12 = Queen, 13 = King, 14 = Ace
                 if value == 11:
@@ -241,10 +241,10 @@ class BlackJack:
         self.deck = self.deck * 6  # BlackJack is played with 6 sets of cards
         self.deck = random.shuffle(self.deck)
 
-    def deal(self):
+    def deal(self) -> tuple[int, str, str]:
         return self.deck.pop()
 
-    def total(self, hand):
+    def total(self, hand: list[tuple[int, str, str]]) -> int:
         value = sum(
             card[0] if card[0] < 11 else 10 for card in hand if card[0] != 14
         )  # ignore aces for now
@@ -260,30 +260,32 @@ class BlackJack:
 
         return value
 
-    def has_bj(self, hand):
+    def has_bj(self, hand: list[tuple[int, str, str]]) -> bool:
         return self.total(hand) == 21
 
-    def samevalue(self, a: int, b: int):
+    def samevalue(self, a: int, b: int) -> bool:
         if a == b:
             return True
         if a in [10, 11, 12, 13] and b in [10, 11, 12, 13]:
             return True
         return False
 
-    def splittable(self, hand):
+    def splittable(self, hand) -> bool:
         if self.samevalue(hand[0][0], hand[1][0]) and not self.twodecks:
             return True
         return False
 
-    def hit(self, hand):
+    def hit(self, hand: list[tuple[int, str, str]]) -> list[tuple[int, str, str]]:
         card = self.deal()
         hand.append(card)
         return hand
 
-    def split(self, hand):
+    def split(
+        self, hand
+    ) -> tuple[list[tuple[int, str, str]], list[tuple[int, str, str]]]:
         hand1 = hand[:-1]
         hand2 = [hand[-1]]
-        return [hand1, hand2]
+        return (hand1, hand2)
 
     async def player_takes_insurance(self) -> bool:
         if self.payout > 0:
@@ -314,7 +316,7 @@ class BlackJack:
 
         return True
 
-    async def player_win(self):
+    async def player_win(self) -> None:
         if self.payout > 0:
             async with self.ctx.bot.pool.acquire() as conn:
                 await conn.execute(
@@ -332,7 +334,7 @@ class BlackJack:
                     conn=conn,
                 )
 
-    async def player_bj_win(self):
+    async def player_bj_win(self) -> None:
         if self.payout > 0:
             total = int(self.payout * 2.5)
 
@@ -352,12 +354,14 @@ class BlackJack:
                     conn=conn,
                 )
 
-    async def player_cashback(self):
+    async def player_cashback(self) -> None:
         if self.payout > 0:
+            amount = self.money_spent if self.insurance else self.payout
+
             async with self.ctx.bot.pool.acquire() as conn:
                 await conn.execute(
                     'UPDATE profile SET "money"="money"+$1 WHERE "user"=$2;',
-                    self.payout,
+                    amount,
                     self.ctx.author.id,
                 )
 
@@ -366,11 +370,11 @@ class BlackJack:
                     from_=1,
                     to=self.ctx.author.id,
                     subject="gambling",
-                    data={"Amount": self.payout},
+                    data={"Amount": amount},
                     conn=conn,
                 )
 
-    def pretty(self, hand):
+    def pretty(self, hand: list[tuple[int, str, str]]) -> str:
         return " ".join([card[2] for card in hand])
 
     async def send_insurance(
