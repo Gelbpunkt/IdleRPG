@@ -464,7 +464,9 @@ class Game:
             for werewolf in wolves:
 
                 async def get_vote():
-                    while not done_voting[werewolf]:
+                    attempt = 1
+
+                    while not done_voting[werewolf] and attempt <= 2:
                         try:
                             target = await self.ctx.bot.paginator.Choose(
                                 entries=nominated_users,
@@ -490,8 +492,11 @@ class Game:
                                 await werewolf.send(
                                     _("❌ You cannot vote for your Lover to die.")
                                 )
+                                attempt += 1
                                 continue
                             return voted, target
+
+                    return None, None
 
                 voted, target = await get_vote()
                 done_voting[werewolf] = True
