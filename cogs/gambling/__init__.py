@@ -354,9 +354,9 @@ class BlackJack:
                     conn=conn,
                 )
 
-    async def player_cashback(self) -> None:
+    async def player_cashback(self, with_insurance: bool = False) -> None:
         if self.payout > 0:
-            amount = self.money_spent if self.insurance else self.payout
+            amount = self.money_spent if with_insurance else self.payout
 
             async with self.ctx.bot.pool.acquire() as conn:
                 await conn.execute(
@@ -472,7 +472,7 @@ class BlackJack:
 
         if self.has_bj(self.dealer):
             if self.insurance:
-                await self.player_cashback()
+                await self.player_cashback(with_insurance=True)
                 return await self.send(
                     additional=_(
                         "The dealer got a blackjack. You had insurance and lost"
