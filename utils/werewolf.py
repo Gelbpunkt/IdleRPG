@@ -493,26 +493,15 @@ class Game:
                                 continue
                             return voted, target
 
-                done, pending = await asyncio.wait(
-                    {
-                        get_vote(),
-                    },
-                    timeout=self.timer,
-                    return_when=asyncio.FIRST_COMPLETED,
-                )
-                try:
-                    done_voting[werewolf] = True
-                    if len(done) > 0:
-                        voted, target = done.pop().result()
-                    else:
-                        voted = None
-                except asyncio.TimeoutError:
-                    voted = None
+                voted, target = await get_vote()
+                done_voting[werewolf] = True
+
                 if voted:
                     nominated[voted] += 1
                     nominated_users[target] = _("{player_name} Votes: {votes}").format(
                         player_name=voted.user, votes=nominated[voted]
                     )
+
             targets = sorted(list(nominated.keys()), key=lambda x: -nominated[x])
             if nominated[targets[0]] > nominated[targets[1]]:
                 target = targets[0]
