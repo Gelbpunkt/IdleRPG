@@ -96,6 +96,24 @@ class Bot(commands.AutoShardedBot):
             Cooldown(3, 3, 1, 2, commands.BucketType.user)
         )
 
+    async def before_identify_hook(
+        self, shard_id: int | None, *, initial: bool = False
+    ) -> None:
+        # Overwrite the default identify hook that just waits 5s with a call to twilight-gateway-queue
+        if shard_id is None:
+            self.logger.warn("Got no shard ID in before_identify_hook")
+            return
+
+        self.logger.info(f"Requesting gateway queue for shard {shard_id}")
+
+        # This can take a while
+        timeout = aiohttp.ClientTimeout(total=None)
+        await self.trusted_session.get(
+            f"http://localhost:5112/?shard={shard_id}", timeout=timeout
+        )
+
+        self.logger.info(f"Gateway queue permitted shard {shard_id}")
+
     def __repr__(self):
         return "<Bot>"
 
