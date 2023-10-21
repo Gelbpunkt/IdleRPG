@@ -59,10 +59,6 @@ class Bot(commands.AutoShardedBot):
         mentions = AllowedMentions.none()
         mentions.users = True
 
-        # Hacky way to ensure we have message content on a beta bot
-        if self.config.bot.is_beta:
-            kwargs["intents"].message_content = True
-
         super().__init__(
             allowed_mentions=mentions,
             command_prefix=self.command_prefix,

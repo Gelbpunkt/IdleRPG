@@ -94,11 +94,7 @@ class Halloween(commands.Cog):
                     )
 
             if random.randint(1, 100) < 5:
-                backgrounds = [
-                    "https://i.imgur.com/29i7ZJN.png",
-                    "https://i.imgur.com/hzn0zVV.png",
-                ]
-                background = random.choice(backgrounds)
+                background = "https://idlerpg.xyz/image/halloween2023.png"
                 current_backgrounds = await conn.fetchval(
                     'SELECT "backgrounds" FROM profile WHERE "user"=$1;', ctx.author.id
                 )

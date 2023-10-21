@@ -4,7 +4,7 @@ podman pull docker://docker.io/library/redis:7-alpine
 podman pull docker://docker.io/library/postgres:15-alpine
 podman pull quay.io/gelbpunkt/stockfish:latest
 podman pull docker://docker.io/twilightrs/http-proxy:latest
-podman pull docker://docker.io/gelbpunkt/gateway-proxy:haswell
+podman pull docker://docker.io/gelbpunkt/gateway-proxy:skylake
 podman pod create --name idlerpgbeta -p 5432:5432 -p 6379:6379
 
 TOKEN=$(python3 -c 'from utils.config import ConfigLoader; config = ConfigLoader("config.toml"); print(config.bot.token)')
@@ -15,7 +15,7 @@ cat <<EOF > config.json
 {
     "log_level": "info",
     "token": "$TOKEN",
-    "intents": 46595,
+    "intents": 13827,
     "port": 5112,
     "activity": {
         "type": 0,
@@ -40,7 +40,7 @@ cat <<EOF > config.json
 }
 EOF
 
-podman run --rm -it -d --pod idlerpgbeta --name gateway-proxy -v $(pwd)/config.json:/config.json:Z gateway-proxy:haswell
+podman run --rm -it -d --pod idlerpgbeta --name gateway-proxy -v $(pwd)/config.json:/config.json:Z gateway-proxy:skylake
 
 podman run --rm -it -d --pod idlerpgbeta --name redis-beta redis:7-alpine
 cat <<EOF > start.sh

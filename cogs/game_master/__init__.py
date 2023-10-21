@@ -42,6 +42,7 @@ class GameMaster(commands.Cog):
     @locale_doc
     async def publish(self, ctx, message: discord.Message):
         _("Publish a message from an announement channel")
+
         try:
             await message.publish()
             await ctx.send(_("Message has been published!"))
@@ -59,6 +60,7 @@ class GameMaster(commands.Cog):
 
             Only Game Masters can use this command."""
         )
+
         async with self.bot.pool.acquire() as conn:
             timed_out = await conn.fetch(
                 """DELETE FROM market WHERE "published" + '14 days'::interval < NOW() RETURNING *;""",
@@ -100,30 +102,32 @@ class GameMaster(commands.Cog):
 
             Only Game Masters can use this command."""
         )
+
         id_ = other if isinstance(other, int) else other.id
 
         try:
             await self.bot.pool.execute(
                 'INSERT INTO bans ("user", "reason") VALUES ($1, $2);', id_, reason
             )
-            self.bot.bans.add(id_)
-            await self.bot.reload_bans()
-
-            await ctx.send(_("Banned: {other}").format(other=other))
-
-            with handle_message_parameters(
-                content="**{gm}** banned **{other}**.\n\nReason: *{reason}*".format(
-                    gm=ctx.author,
-                    other=other,
-                    reason=reason or f"<{ctx.message.jump_url}>",
-                )
-            ) as params:
-                await self.bot.http.send_message(
-                    self.bot.config.game.gm_log_channel,
-                    params=params,
-                )
         except UniqueViolationError:
             await ctx.send(_("{other} is already banned.").format(other=other))
+
+        self.bot.bans.add(id_)
+        await self.bot.reload_bans()
+
+        with handle_message_parameters(
+            content="**{gm}** banned **{other}**.\n\nReason: *{reason}*".format(
+                gm=ctx.author,
+                other=other,
+                reason=reason[:1000] or f"<{ctx.message.jump_url}>",
+            )
+        ) as params:
+            await self.bot.http.send_message(
+                self.bot.config.game.gm_log_channel,
+                params=params,
+            )
+
+        await ctx.send(_("Banned: {other}").format(other=other))
 
     @is_gm()
     @commands.command(hidden=True, brief=_("Bot-unban a user"))
@@ -136,28 +140,29 @@ class GameMaster(commands.Cog):
 
             Only Game Masters can use this command."""
         )
+
         id_ = other if isinstance(other, int) else other.id
         await self.bot.pool.execute('DELETE FROM bans WHERE "user"=$1;', id_)
 
         try:
             self.bot.bans.remove(id_)
             await self.bot.reload_bans()
-
-            await ctx.send(_("Unbanned: {other}").format(other=other))
-
-            with handle_message_parameters(
-                content="**{gm}** unbanned **{other}**.\n\nReason: *{reason}*".format(
-                    gm=ctx.author,
-                    other=other,
-                    reason=reason or f"<{ctx.message.jump_url}>",
-                )
-            ) as params:
-                await self.bot.http.send_message(
-                    self.bot.config.game.gm_log_channel,
-                    params=params,
-                )
         except KeyError:
-            await ctx.send(_("{other} is not banned.").format(other=other))
+            return await ctx.send(_("{other} is not banned.").format(other=other))
+
+        with handle_message_parameters(
+            content="**{gm}** unbanned **{other}**.\n\nReason: *{reason}*".format(
+                gm=ctx.author,
+                other=other,
+                reason=reason[:1000] or f"<{ctx.message.jump_url}>",
+            )
+        ) as params:
+            await self.bot.http.send_message(
+                self.bot.config.game.gm_log_channel,
+                params=params,
+            )
+
+        await ctx.send(_("Unbanned: {other}").format(other=other))
 
     @is_gm()
     @commands.command(hidden=True, brief=_("Create money"))
@@ -168,7 +173,7 @@ class GameMaster(commands.Cog):
         money: int,
         other: UserWithCharacter,
         *,
-        reason: str = None,
+        reason: str = "",
     ):
         _(
             """`<money>` - the amount of money to generate for the user
@@ -179,13 +184,9 @@ class GameMaster(commands.Cog):
 
             Only Game Masters can use this command."""
         )
+
         await self.bot.pool.execute(
             'UPDATE profile SET "money"="money"+$1 WHERE "user"=$2;', money, other.id
-        )
-        await ctx.send(
-            _(
-                "Successfully gave **${money}** without a loss for you to **{other}**."
-            ).format(money=money, other=other)
         )
 
         with handle_message_parameters(
@@ -193,13 +194,19 @@ class GameMaster(commands.Cog):
                 gm=ctx.author,
                 money=money,
                 other=other,
-                reason=reason or f"<{ctx.message.jump_url}>",
+                reason=reason[:1000] or f"<{ctx.message.jump_url}>",
             )
         ) as params:
             await self.bot.http.send_message(
                 self.bot.config.game.gm_log_channel,
                 params=params,
             )
+
+        await ctx.send(
+            _(
+                "Successfully gave **${money}** without a loss for you to **{other}**."
+            ).format(money=money, other=other)
+        )
 
     @is_gm()
     @commands.command(hidden=True, brief=_("Remove money"))
@@ -210,7 +217,7 @@ class GameMaster(commands.Cog):
         money: int,
         other: UserWithCharacter,
         *,
-        reason: str = None,
+        reason: str = "",
     ):
         _(
             """`<money>` - the amount of money to remove from the user
@@ -221,13 +228,9 @@ class GameMaster(commands.Cog):
 
             Only Game Masters can use this command."""
         )
+
         await self.bot.pool.execute(
             'UPDATE profile SET "money"="money"-$1 WHERE "user"=$2;', money, other.id
-        )
-        await ctx.send(
-            _("Successfully removed **${money}** from **{other}**.").format(
-                money=money, other=other
-            )
         )
 
         with handle_message_parameters(
@@ -235,7 +238,7 @@ class GameMaster(commands.Cog):
                 gm=ctx.author,
                 money=money,
                 other=other,
-                reason=reason or f"<{ctx.message.jump_url}>",
+                reason=reason[:1000] or f"<{ctx.message.jump_url}>",
             )
         ) as params:
             await self.bot.http.send_message(
@@ -243,10 +246,16 @@ class GameMaster(commands.Cog):
                 params=params,
             )
 
+        await ctx.send(
+            _("Successfully removed **${money}** from **{other}**.").format(
+                money=money, other=other
+            )
+        )
+
     @is_gm()
     @commands.command(hidden=True, brief=_("Delete a character"))
     @locale_doc
-    async def gmdelete(self, ctx, other: UserWithCharacter, *, reason: str = None):
+    async def gmdelete(self, ctx, other: UserWithCharacter, *, reason: str = ""):
         _(
             """`<other>` - a discord User with character
             `[reason]` - The reason this action was done, defaults to the command message link
@@ -255,8 +264,10 @@ class GameMaster(commands.Cog):
 
             Only Game Masters can use this command."""
         )
+
         if other.id in ctx.bot.config.game.game_masters:  # preserve deletion of admins
             return await ctx.send(_("Very funny..."))
+
         async with self.bot.pool.acquire() as conn:
             g = await conn.fetchval(
                 'DELETE FROM guild WHERE "leader"=$1 RETURNING id;', other.id
@@ -282,11 +293,12 @@ class GameMaster(commands.Cog):
                 other.id,
             )
             await self.bot.delete_profile(other.id, conn=conn)
-        await ctx.send(_("Successfully deleted the character."))
 
         with handle_message_parameters(
             content="**{gm}** deleted **{other}**.\n\nReason: *{reason}*".format(
-                gm=ctx.author, other=other, reason=reason or f"<{ctx.message.jump_url}>"
+                gm=ctx.author,
+                other=other,
+                reason=reason[:1000] or f"<{ctx.message.jump_url}>",
             )
         ) as params:
             await self.bot.http.send_message(
@@ -294,10 +306,12 @@ class GameMaster(commands.Cog):
                 params=params,
             )
 
+        await ctx.send(_("Successfully deleted the character."))
+
     @is_gm()
     @commands.command(hidden=True, brief=_("Rename a character"))
     @locale_doc
-    async def gmrename(self, ctx, target: UserWithCharacter, *, reason: str = None):
+    async def gmrename(self, ctx, target: UserWithCharacter, *, reason: str = ""):
         _(
             """`<target>` - a discord User with character
             `[reason]` - The reason this action was done, defaults to the command message link
@@ -306,6 +320,7 @@ class GameMaster(commands.Cog):
 
             Only Game Masters can use this command."""
         )
+
         if target.id in ctx.bot.config.game.game_masters:  # preserve renaming of admins
             return await ctx.send(_("Very funny..."))
 
@@ -329,20 +344,21 @@ class GameMaster(commands.Cog):
         await self.bot.pool.execute(
             'UPDATE profile SET "name"=$1 WHERE "user"=$2;', name.content, target.id
         )
-        await ctx.send(_("Renamed."))
 
         with handle_message_parameters(
             content="**{gm}** renamed **{target}** to **{name}**.\n\nReason: *{reason}*".format(
                 gm=ctx.author,
                 target=target,
                 name=name.content,
-                reason=reason or f"<{ctx.message.jump_url}>",
+                reason=reason[:1000] or f"<{ctx.message.jump_url}>",
             )
         ) as params:
             await self.bot.http.send_message(
                 self.bot.config.game.gm_log_channel,
                 params=params,
             )
+
+        await ctx.send(_("Renamed."))
 
     @is_gm()
     @commands.command(hidden=True, brief=_("Create an item"))
@@ -356,7 +372,7 @@ class GameMaster(commands.Cog):
         value: IntFromTo(0, 100000000),
         name: str,
         *,
-        reason: str = None,
+        reason: str = "",
     ):
         _(
             """`<stat>` - the generated item's stat, must be between 0 and 100
@@ -370,11 +386,15 @@ class GameMaster(commands.Cog):
 
             Only Game Masters can use this command."""
         )
+
         item_type = ItemType.from_string(item_type)
+
         if item_type is None:
             return await ctx.send(_("Invalid item type."))
+
         if not 0 <= stat <= 100:
             return await ctx.send(_("Invalid stat."))
+
         hand = item_type.get_hand().value
         await self.bot.create_item(
             name=name,
@@ -391,10 +411,8 @@ class GameMaster(commands.Cog):
             item_type=item_type.value,
             name=name,
             stat=stat,
-            reason=reason or f"<{ctx.message.jump_url}>",
+            reason=reason[:1000] or f"<{ctx.message.jump_url}>",
         )
-
-        await ctx.send(_("Done."))
 
         with handle_message_parameters(content=message) as params:
             await self.bot.http.send_message(
@@ -404,6 +422,8 @@ class GameMaster(commands.Cog):
         for user in self.bot.owner_ids:
             user = await self.bot.get_user_global(user)
             await user.send(message)
+
+        await ctx.send(_("Done."))
 
     @is_gm()
     @commands.command(hidden=True, brief=_("Create crates"))
@@ -415,7 +435,7 @@ class GameMaster(commands.Cog):
         amount: int,
         target: UserWithCharacter,
         *,
-        reason: str = None,
+        reason: str = "",
     ):
         _(
             """`<rarity>` - the crates' rarity, can be common, uncommon, rare, magic or legendary
@@ -427,16 +447,12 @@ class GameMaster(commands.Cog):
 
             Only Game Masters can use this command."""
         )
+
         await self.bot.pool.execute(
             f'UPDATE profile SET "crates_{rarity}"="crates_{rarity}"+$1 WHERE'
             ' "user"=$2;',
             amount,
             target.id,
-        )
-        await ctx.send(
-            _("Successfully gave **{amount}** {rarity} crates to **{target}**.").format(
-                amount=amount, target=target, rarity=rarity
-            )
         )
 
         with handle_message_parameters(
@@ -445,13 +461,19 @@ class GameMaster(commands.Cog):
                 amount=amount,
                 rarity=rarity,
                 target=target,
-                reason=reason or f"<{ctx.message.jump_url}>",
+                reason=reason[:1000] or f"<{ctx.message.jump_url}>",
             )
         ) as params:
             await self.bot.http.send_message(
                 self.bot.config.game.gm_log_channel,
                 params=params,
             )
+
+        await ctx.send(
+            _("Successfully gave **{amount}** {rarity} crates to **{target}**.").format(
+                amount=amount, target=target, rarity=rarity
+            )
+        )
 
     @is_gm()
     @commands.command(hidden=True, brief=_("Generate XP"))
@@ -462,7 +484,7 @@ class GameMaster(commands.Cog):
         target: UserWithCharacter,
         amount: int,
         *,
-        reason: str = None,
+        reason: str = "",
     ):
         _(
             """`<target>` - A discord User with character
@@ -473,13 +495,9 @@ class GameMaster(commands.Cog):
 
             Only Game Masters can use this command."""
         )
+
         await self.bot.pool.execute(
             'UPDATE profile SET "xp"="xp"+$1 WHERE "user"=$2;', amount, target.id
-        )
-        await ctx.send(
-            _("Successfully gave **{amount}** XP to **{target}**.").format(
-                amount=amount, target=target
-            )
         )
 
         with handle_message_parameters(
@@ -487,7 +505,7 @@ class GameMaster(commands.Cog):
                 gm=ctx.author,
                 amount=amount,
                 target=target,
-                reason=reason or f"<{ctx.message.jump_url}>",
+                reason=reason[:1000] or f"<{ctx.message.jump_url}>",
             )
         ) as params:
             await self.bot.http.send_message(
@@ -495,10 +513,16 @@ class GameMaster(commands.Cog):
                 params=params,
             )
 
+        await ctx.send(
+            _("Successfully gave **{amount}** XP to **{target}**.").format(
+                amount=amount, target=target
+            )
+        )
+
     @is_gm()
     @commands.command(hidden=True, brief=_("Wipe someone's donation perks."))
     @locale_doc
-    async def gmwipeperks(self, ctx, target: UserWithCharacter, *, reason: str = None):
+    async def gmwipeperks(self, ctx, target: UserWithCharacter, *, reason: str = ""):
         _(
             """`<target>` - A discord User with character
             `[reason]` - The reason this action was done, defaults to the command message link
@@ -511,6 +535,7 @@ class GameMaster(commands.Cog):
 
             Only Game Masters can use this command."""
         )
+
         async with self.bot.pool.acquire() as conn:
             await conn.execute(
                 'UPDATE profile SET "background"=$1, "class"=$2 WHERE "user"=$3;',
@@ -528,18 +553,11 @@ class GameMaster(commands.Cog):
                 'UPDATE guild SET "memberlimit"=$1 WHERE "leader"=$2;', 50, target.id
             )
 
-        await ctx.send(
-            _(
-                "Successfully reset {target}'s background, class, item names and guild"
-                " member limit."
-            ).format(target=target)
-        )
-
         with handle_message_parameters(
             content="**{gm}** reset **{target}**'s donator perks.\n\nReason: *{reason}*".format(
                 gm=ctx.author,
                 target=target,
-                reason=reason or f"<{ctx.message.jump_url}>",
+                reason=reason[:1000] or f"<{ctx.message.jump_url}>",
             )
         ) as params:
             await self.bot.http.send_message(
@@ -547,10 +565,17 @@ class GameMaster(commands.Cog):
                 params=params,
             )
 
+        await ctx.send(
+            _(
+                "Successfully reset {target}'s background, class, item names and guild"
+                " member limit."
+            ).format(target=target)
+        )
+
     @is_gm()
     @commands.command(hidden=True, brief=_("Reset someone's classes"))
     @locale_doc
-    async def gmresetclass(self, ctx, target: UserWithCharacter, *, reason: str = None):
+    async def gmresetclass(self, ctx, target: UserWithCharacter, *, reason: str = ""):
         _(
             """`<target>` - a discord User with character
             `[reason]` - The reason this action was done, defaults to the command message link
@@ -559,18 +584,17 @@ class GameMaster(commands.Cog):
 
             Only Game Masters can use this command."""
         )
+
         await self.bot.pool.execute(
             """UPDATE profile SET "class"='{"No Class", "No Class"}' WHERE "user"=$1;""",
             target.id,
         )
 
-        await ctx.send(_("Successfully reset {target}'s class.").format(target=target))
-
         with handle_message_parameters(
             content="**{gm}** reset **{target}**'s class.\n\nReason: *{reason}*".format(
                 gm=ctx.author,
                 target=target,
-                reason=reason or f"<{ctx.message.jump_url}>",
+                reason=reason[:1000] or f"<{ctx.message.jump_url}>",
             )
         ) as params:
             await self.bot.http.send_message(
@@ -578,11 +602,13 @@ class GameMaster(commands.Cog):
                 params=params,
             )
 
+        await ctx.send(_("Successfully reset {target}'s class.").format(target=target))
+
     @is_gm()
     @user_cooldown(604800)  # 7 days
     @commands.command(hidden=True, brief=_("Sign an item"))
     @locale_doc
-    async def gmsign(self, ctx, itemid: int, text: str, *, reason: str = None):
+    async def gmsign(self, ctx, itemid: int, text: str, *, reason: str = ""):
         _(
             """`<itemid>` - the item's ID to sign
             `<text>` - The signature to write, must be less than 50 characters combined with the Game Master's tag. This should be in double quotes if the text has multiple words.
@@ -593,27 +619,31 @@ class GameMaster(commands.Cog):
             Only Game Masters can use this command.
             (This command has a cooldown of 7 days.)"""
         )
+
         text = f"{text} (signed by {ctx.author})"
+
         if len(text) > 50:
             await self.bot.reset_cooldown(ctx)
             return await ctx.send(_("Text exceeds 50 characters."))
+
         await self.bot.pool.execute(
             'UPDATE allitems SET "signature"=$1 WHERE "id"=$2;', text, itemid
         )
-        await ctx.send(_("Item successfully signed."))
 
         with handle_message_parameters(
             content="**{gm}** signed {itemid} with *{text}*.\n\nReason: *{reason}*".format(
                 gm=ctx.author,
                 itemid=itemid,
                 text=text,
-                reason=reason or f"<{ctx.message.jump_url}>",
+                reason=reason[:1000] or f"<{ctx.message.jump_url}>",
             )
         ) as params:
             await self.bot.http.send_message(
                 self.bot.config.game.gm_log_channel,
                 params=params,
             )
+
+        await ctx.send(_("Item successfully signed."))
 
     @is_gm()
     @commands.command(hidden=True, brief=_("Start an auction"))
@@ -629,8 +659,10 @@ class GameMaster(commands.Cog):
 
             Only Game Masters can use this command."""
         )
+
         if self.top_auction is not None:
             return await ctx.send(_("There's still an auction running."))
+
         try:
             channel = discord.utils.get(
                 self.bot.get_guild(self.bot.config.game.support_server_id).channels,
@@ -638,14 +670,17 @@ class GameMaster(commands.Cog):
             )
         except AttributeError:
             return await ctx.send(_("Auctions channel wasn't found."))
+
         await channel.send(
             f"{ctx.author.mention} started auction on **{item}**! Please use"
             f" `{ctx.clean_prefix}bid amount` to raise the bid. If no more bids are sent"
             " within a 30 minute timeframe, the auction is over."
         )
+
         self.top_auction = (ctx.author, 0)
         timer = 60 * 30
         self.auction_entry = asyncio.Event()
+
         try:
             while True:
                 async with asyncio.timeout(timer):
@@ -653,10 +688,12 @@ class GameMaster(commands.Cog):
                     self.auction_entry.clear()
         except asyncio.TimeoutError:
             pass
+
         await channel.send(
             f"**{item}** sold to {self.top_auction[0].mention} for"
             f" **${self.top_auction[1]}**!"
         )
+
         self.top_auction = None
         self.auction_entry = None
 
@@ -673,10 +710,13 @@ class GameMaster(commands.Cog):
         )
         if self.top_auction is None:
             return await ctx.send(_("No auction running."))
+
         if amount <= self.top_auction[1]:
             return await ctx.send(_("Bid too low."))
+
         if ctx.character_data["money"] < amount:
             return await ctx.send(_("You are too poor."))
+
         async with self.bot.pool.acquire() as conn:
             await conn.execute(
                 'UPDATE profile SET "money"="money"+$1 WHERE "user"=$2;',
@@ -706,11 +746,14 @@ class GameMaster(commands.Cog):
                 data={"Amount": amount},
                 conn=conn,
             )
+
         await ctx.send(_("Bid submitted."))
+
         channel = discord.utils.get(
             self.bot.get_guild(self.bot.config.game.support_server_id).channels,
             name="auctions",
         )
+
         await channel.send(
             f"**{ctx.author.mention}** bids **${amount}**! Check above for what's being"
             " auctioned."
@@ -727,7 +770,7 @@ class GameMaster(commands.Cog):
         user: discord.User | int,
         command: str,
         *,
-        reason: str = None,
+        reason: str = "",
     ):
         _(
             """`<user>` - A discord User or their User ID
@@ -738,6 +781,7 @@ class GameMaster(commands.Cog):
 
             Only Game Masters can use this command."""
         )
+
         if not isinstance(user, int):
             user_id = user.id
         else:
@@ -746,20 +790,20 @@ class GameMaster(commands.Cog):
         result = await self.bot.redis.execute_command("DEL", f"cd:{user_id}:{command}")
 
         if result == 1:
-            await ctx.send(_("The cooldown has been updated!"))
-
             with handle_message_parameters(
                 content="**{gm}** reset **{user}**'s cooldown for the {command} command.\n\nReason: *{reason}*".format(
                     gm=ctx.author,
                     user=user,
                     command=command,
-                    reason=reason or f"<{ctx.message.jump_url}>",
+                    reason=reason[:1000] or f"<{ctx.message.jump_url}>",
                 )
             ) as params:
                 await self.bot.http.send_message(
                     self.bot.config.game.gm_log_channel,
                     params=params,
                 )
+
+            await ctx.send(_("The cooldown has been updated!"))
         else:
             await ctx.send(
                 _(
@@ -781,6 +825,7 @@ class GameMaster(commands.Cog):
 
             Only Game Masters can use this command."""
         )
+
         text_collection = ["**This week's luck has been decided:**\n"]
         all_ids = []
         async with self.bot.pool.acquire() as conn:
@@ -837,17 +882,13 @@ class GameMaster(commands.Cog):
                     top_followers[20:25],
                 )
                 text_collection.append(f"{god['name']} set to {luck}.")
+
             await conn.execute('UPDATE profile SET "favor"=0 WHERE "god" IS NOT NULL;')
             text_collection.append("Godless set to 1.0")
             ids = await conn.fetch(
                 'UPDATE profile SET "luck"=1.0 WHERE "god" IS NULL RETURNING "user";'
             )
             all_ids.extend([u["user"] for u in ids])
-        msg = await ctx.send("\n".join(text_collection))
-        try:
-            await msg.publish()
-        except (discord.Forbidden, discord.HTTPException) as e:
-            await ctx.send(f"Could not publish the message for some reason: `{e}`")
 
         with handle_message_parameters(
             content=f"**{ctx.author}** updated the global luck"
@@ -856,6 +897,12 @@ class GameMaster(commands.Cog):
                 self.bot.config.game.gm_log_channel,
                 params=params,
             )
+
+        try:
+            msg = await ctx.send("\n".join(text_collection))
+            await msg.publish()
+        except (discord.Forbidden, discord.HTTPException):
+            pass
 
 
 async def setup(bot):
