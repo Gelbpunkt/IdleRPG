@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-03-08 22:06+0100\n"
-"PO-Revision-Date: 2022-07-18 17:26+0000\n"
+"PO-Revision-Date: 2023-11-19 12:50+0000\n"
 "Last-Translator: Feeltis Catcus <davinreginalds@gmail.com>\n"
 "Language-Team: Indonesian <http://translate.travitia.xyz/projects/idlerpg/"
 "bot/id/>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=1; plural=0;\n"
-"X-Generator: Weblate 4.11.2\n"
+"X-Generator: Weblate 5.1.1\n"
 
 #: cogs/tournament/__init__.py:46
 msgid "Start a new tournament"
@@ -48,23 +48,24 @@ msgid ""
 msgstr ""
 "`[prize]` - Jumlah uang yang akan didapatkan oleh pemenang\n"
 "\n"
-" Memulai sebuah turnamen baru. Pemain memiliki waktu 30 detik untuk "
-"bergabung melewati reaksi yang diberikan.\n"
-" Biaya masuk turnamen gratis, hanya pembuat turnamennya yang harus membayar "
-"biayanya.\n"
+"            Memulai sebuah turnamen baru. Pemain memiliki waktu 30 detik "
+"untuk bergabung lewat reaksi yang diberikan.\n"
+"            Biaya masuk turnamen gratis, hanya pembuat turnamennya yang "
+"harus membayar biayanya.\n"
 "\n"
-" Hanya kelipatan dari 2 (2^n) pemain yang dapat bergabung. Jika ada lebih "
-"dari kelipatan terdekat, pemain yang bergabung terakhir akan dikeluarkan.\n"
+"            Hanya kelipatan dari 2 (2^n) pemain yang dapat bergabung. Jika "
+"jumlah pemain lebih dari kelipatan terdekat, maka pemain yang bergabung "
+"terakhir akan dikeluarkan.\n"
 "\n"
-" Jalannya pertandingan akan diputuskan secara acak, sedangkan pertarungannya "
-"sendiri akan diputuskan seperti pertempuran biasa (lihat `{prefix}help "
-"battle` untuk informasinya).\n"
+"            Jalannya pertandingan akan diputuskan secara acak, sedangkan "
+"pertarungannya sendiri akan diputuskan seperti pertempuran biasa (lihat "
+"`{prefix}help battle` untuk informasinya).\n"
 "\n"
-" Pemenang dari pertandingannya akan bergerak ke ronde selanjutnya, yang "
-"kalah akan dieleminasi, hingga tersisa satu pemain.\n"
-" Turnamen di IdleRPG mengikuti prinsip eleminasi tunggal.\n"
+"            Pemenang dari pertandingannya akan bergerak ke ronde "
+"selanjutnya, yang kalah akan dieleminasi, hingga tersisa satu pemain.\n"
+"            Turnamen di IdleRPG mengikuti prinsip eleminasi tunggal.\n"
 "\n"
-" (Perintah ini memiliki waktu cooldown selama 30 menit.)"
+"            (Perintah ini memiliki waktu cooldown selama 30 menit.)"
 
 #: cogs/tournament/__init__.py:66 cogs/tournament/__init__.py:236
 #: cogs/battles/__init__.py:68 cogs/battles/__init__.py:191
@@ -89,7 +90,7 @@ msgstr ""
 #: cogs/tournament/__init__.py:138
 #, python-brace-format
 msgid "Noone joined your tournament {author}."
-msgstr "Tidak ada yang bergabung ke turnamen kamu {author}."
+msgstr "Tidak ada yang mau bergabung ke turnamen {author}."
 
 #: cogs/tournament/__init__.py:147
 #, python-brace-format
@@ -98,7 +99,7 @@ msgid ""
 "the last **{removed}** have been removed."
 msgstr ""
 "Saat ini ada **{num}** entri, karena kami membutuhkan sebuah turnamen yang "
-"dapat dimainkan, **{removed}** yang terakhir telah dihapus."
+"dapat dimainkan, **{removed}** pemain yang terakhir telah dihapus."
 
 #: cogs/tournament/__init__.py:154 cogs/tournament/__init__.py:324
 #, python-brace-format
@@ -107,7 +108,7 @@ msgstr "Turnamen dimulai dengan **{num}** entri."
 
 #: cogs/tournament/__init__.py:156 cogs/tournament/__init__.py:326
 msgid "vs"
-msgstr "versus"
+msgstr "melawan"
 
 #: cogs/tournament/__init__.py:182 cogs/tournament/__init__.py:428
 #, python-brace-format
@@ -157,35 +158,36 @@ msgid ""
 msgstr ""
 "`[prize]` - Jumlah uang yang akan didapatkan oleh pemenang\n"
 "\n"
-" Memulai sebuah raid turnamen yang baru. Pemain memiliki waktu 30 detik "
-"untuk bergabung melewati reaksi yang diberikan.\n"
-" Biaya masuk turnamen gratis, hanya pembuat turnamennya yang harus membayar "
-"biayanya.\n"
+"            Memulai sebuah turnamen raid yang baru. Pemain memiliki waktu 30 "
+"detik untuk bergabung lewat reaksi yang diberikan.\n"
+"            Biaya masuk turnamen gratis, hanya pembuat turnamennya yang "
+"harus membayar biayanya.\n"
 "\n"
-" Hanya kelipatan dari 2 (2^n) pemain yang dapat bergabung. Jika ada lebih "
-"dari kelipatan terdekat, pemain yang bergabung terakhir akan dikeluarkan.\n"
+"            Hanya kelipatan dari 2 (2^n) pemain yang dapat bergabung. Jika "
+"ada lebih dari kelipatan terdekat, pemain yang bergabung terakhir akan "
+"dikeluarkan.\n"
 "\n"
-" Jalannya pertandingan akan diputuskan secara acak, sedangkan pertarungannya "
-"sendiri akan diputuskan seperti pertempuran raid (lihat `{prefix}help "
-"raidbattle` untuk informasinya).\n"
+"            Jalannya pertandingan akan diputuskan secara acak, sedangkan "
+"pertarungannya sendiri akan diputuskan seperti pertempuran raid (lihat "
+"`{prefix}help raidbattle` untuk informasi lebih lanjut).\n"
 "\n"
-" Pemenang dari pertandingannya akan bergerak ke ronde selanjutnya, yang "
-"kalah akan dieleminasi, hingga tersisa satu pemain.\n"
-" Turnamen di IdleRPG mengikuti prinsip eleminasi tunggal.\n"
+"            Pemenang dari pertandingannya akan bergerak ke ronde "
+"selanjutnya, yang kalah akan dieleminasi, hingga tersisa satu pemain.\n"
+"            Turnamen di IdleRPG mengikuti prinsip eleminasi tunggal.\n"
 "\n"
-" (Perintah ini memiliki waktu cooldown selama 30 menit.)"
+"            (Perintah ini memiliki waktu cooldown selama 30 menit.)"
 
 #: cogs/tournament/__init__.py:254 cogs/tournament/__init__.py:279
 msgid "You joined the raid tournament."
-msgstr "Kamu bergabung ke turnamen penyerangan."
+msgstr "Kamu bergabung ke turnamen raid."
 
 #: cogs/tournament/__init__.py:285
 #, python-brace-format
 msgid ""
 "{author} started a raid tournament! Free entries, prize is **${prize}**!"
 msgstr ""
-"{author} memulai sebuah turnamen penyerangan! Biaya masuk gratis, hadiahnya "
-"adalah **${prize}**!"
+"{author} memulai sebuah turnamen raid! Biaya masuk gratis, hadiahnya adalah "
+"**${prize}**!"
 
 #: cogs/tournament/__init__.py:308
 #, python-brace-format
@@ -198,13 +200,14 @@ msgid ""
 "There are **{num}** entries, due to the fact we need a playable raid "
 "tournament, the last **{removed}** have been removed."
 msgstr ""
-"Saat ini ada **{num}** yang bergabung, karena kami membutuhkan turnamen raid "
-"yang dapat dimainkan, **{removed}** yang terakhir telah dikeluarkan."
+"Saat ini ada **{num}** pemain yang bergabung, karena kami membutuhkan "
+"turnamen raid yang dapat dimainkan, **{removed}** pemain yang terakhir telah "
+"dikeluarkan."
 
 #: cogs/tournament/__init__.py:351 cogs/battles/__init__.py:261
 #, python-brace-format
 msgid "Raidbattle {p1} vs. {p2} started!"
-msgstr "Raidbattle {p1} versus {p2} dimulai!"
+msgstr "Raidbattle {p1} melawan {p2} dimulai!"
 
 #: cogs/tournament/__init__.py:389 cogs/battles/__init__.py:300
 #, python-brace-format
@@ -228,7 +231,7 @@ msgstr "Aksi #{number}"
 #: cogs/tournament/__init__.py:435
 #, python-brace-format
 msgid "Raid Tournament ended! The winner is {winner}."
-msgstr "Turnamen raid berakhir! Pemenangnya adalah {winner}."
+msgstr "Turnamen Raid berakhir! Pemenangnya adalah {winner}."
 
 #: cogs/tournament/__init__.py:456
 #, python-brace-format
@@ -236,12 +239,12 @@ msgid ""
 "Raid Tournament ended! The winner is {winner}.\n"
 "Money was given!"
 msgstr ""
-"Turnamen raid berakhir! Pemenangnya adalah {winner}.\n"
-"Uang telah diberikan!"
+"Turnamen Raid berakhir! Pemenangnya adalah {winner}.\n"
+"Uangnya telah diberikan!"
 
 #: cogs/images/__init__.py:30
 msgid "Pixelfy an avatar"
-msgstr "Mengubah sebuah avatar menjadi pixel"
+msgstr "Mengubah sebuah avatar menjadi versi pixel"
 
 #: cogs/images/__init__.py:34
 msgid ""
@@ -252,23 +255,25 @@ msgid ""
 "            Pixelfies a user's avatar. If the user has an animated icon, the "
 "first frame is used."
 msgstr ""
-"`[user]` - Seorang Pengguna discord yang avatarnya ingin dibuat menjadi "
+"`[user]` - Seorang Pengguna discord yang avatarnya ingin diubah menjadi "
 "pixel; jika tidak disebutkan maka akan dianggap untuk diri sendiri\n"
-" `[size]` - Tingkat pixelation untuk digunakan, bisa berupa angka antara 1 "
-"dan 5; jika tidak disebutkan maka akan dianggap angka 2\n"
+"            `[size]` - Tingkat pixelation untuk digunakan, bisa berupa angka "
+"antara 1 dan 5; jika tidak disebutkan maka akan dianggap angka 2\n"
 "\n"
-" Mengubah avatar pengguna menjadi pixel. Jika pengguna memiliki ikon "
-"beranimasi, frame pertama akan digunakan."
+"            Mengubah avatar pengguna menjadi versi pixel. Jika pengguna "
+"memiliki ikon beranimasi, frame pertama akan digunakan."
 
 #: cogs/images/__init__.py:43
 msgid "Use 1, 2, 3, 4 or 5 as intensity value."
 msgstr "Gunakan 1, 2, 3, 4 atau 5 sebagai nilai intensitas."
 
 #: cogs/images/__init__.py:56
+#, fuzzy
 msgid "Defines an avatar's edges"
 msgstr "Membuat tepi gambar profil"
 
 #: cogs/images/__init__.py:60
+#, fuzzy
 msgid ""
 "`[user]` - A discord User whose avatar to edit; defaults to oneself\n"
 "\n"
@@ -276,14 +281,14 @@ msgid ""
 "image effect."
 msgstr ""
 "`[user]` - Seorang Pengguna Discord yang avatarnya ingin diedit; jika tidak "
-"disebutkan maka akan dianggap ke diri sendiri\n"
+"disebutkan maka akan dianggap untuk diri sendiri\n"
 "\n"
-"Menemukan dan melebih-lebihkan tepian pada avatar pengguna, untuk memberikan "
-"efek gambar yang keren."
+"            Menemukan dan melebih-lebihkan tepian pada avatar pengguna, "
+"untuk memberikan efek gambar yang keren."
 
 #: cogs/images/__init__.py:76
 msgid "Inverts a user's avatar"
-msgstr "Menghasilkan warna negatif pada avatar"
+msgstr "Merubah warna avatar pengguna menjadi warna negatif"
 
 #: cogs/images/__init__.py:80
 msgid ""
@@ -296,14 +301,14 @@ msgstr ""
 "`[user]` - Seorang Pengguna discord yang avatarnya ingin diubah ke warna "
 "negatif; jika tidak disebutkan maka akan dianggap ke pengguna itu sendiri\n"
 "\n"
-"               Mengubah warna menjadi warna negatif pada avatar pengguna.\n"
+"               Merubah warna avatar pengguna menjadi warna negatif.\n"
 "\n"
 "               (Perintah ini memiliki waktu channel cooldown selama 15 "
 "detik.)"
 
 #: cogs/images/__init__.py:98
 msgid "Oil-paint someone's avatar"
-msgstr "Mengubah avatar seseorang menjadi lukisan minyak"
+msgstr "Mengubah style avatar seseorang menjadi lukisan minyak"
 
 #: cogs/images/__init__.py:102
 msgid ""
@@ -323,8 +328,9 @@ msgstr ""
 "detik.)"
 
 #: cogs/halloween/__init__.py:37
+#, fuzzy
 msgid "Trick or treat!"
-msgstr "Tipuan atau permen!"
+msgstr "Trick or treat!"
 
 #: cogs/halloween/__init__.py:42
 #, no-python-format
@@ -342,18 +348,19 @@ msgid ""
 "\n"
 "            (This command has a cooldown of 3h)"
 msgstr ""
-"Berjalan mengelilingi rumahnya dan menakuti penghuninya! Mungkin mereka "
+"Berjalan mengelilingi sebuah rumah dan menakuti penghuninya! Mungkin mereka "
 "memiliki sebuah hadiah untukmu?\n"
 "\n"
-" Perintah ini membutuhkan dua pemain, satunya menunggu dan satunya lagi "
-"membunyikan belnya.\n"
-" Jika kamu adalah bagian yang menunggu, kamu akan mendapatkan pesan langsung "
-"dari botnya nanti, jika tidak maka kamu akan mendapatkan balasan langsung.\n"
+"            Perintah ini membutuhkan dua pemain, satunya menunggu dan "
+"satunya lagi untuk membunyikan belnya.\n"
+"            Jika kamu adalah bagian yang menunggu, kamu akan mendapatkan "
+"pesan langsung dari botnya nanti, jika tidak maka kamu akan mendapatkan "
+"balasan langsung.\n"
 "\n"
-" Ada kemungkinan 50% kamu akan mendapatkan sebuah tas halloween dari orang "
-"satunya.\n"
+"            Ada kemungkinan 50% kamu akan mendapatkan sebuah tas halloween "
+"dari orang satunya.\n"
 "\n"
-" (Perintah ini memliki waktu cooldown selama 3 jam)"
+"            (Perintah ini memliki waktu cooldown selama 3 jam)"
 
 #: cogs/halloween/__init__.py:55
 msgid "You walk around the houses... Noone is there... *yet*"
