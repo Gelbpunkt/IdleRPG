@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-03-08 22:06+0100\n"
-"PO-Revision-Date: 2023-11-27 04:13+0000\n"
+"PO-Revision-Date: 2023-11-28 16:13+0000\n"
 "Last-Translator: Feeltis Catcus <davinreginalds@gmail.com>\n"
 "Language-Team: Indonesian <http://translate.travitia.xyz/projects/idlerpg/"
 "bot/id/>\n"
@@ -682,21 +682,21 @@ msgid ""
 "            (This command has a cooldown of 5 minutes)"
 msgstr ""
 "`[money]` - Sejumlah angka dari 0 atau lebih besar; jika tidak ditentukan "
-"maka dijadikan 0\n"
+"maka akan dianggap 0\n"
 "            `[enemy]` - Seorang pengguna yang memiliki profil pemain; jika "
-"tidak ditentukan maka dijadikan untuk siapa saja\n"
+"tidak ditentukan maka akan dianggap untuk siapa saja\n"
 "\n"
 "            Bertarung melawan pemain lain dengan taruhan sejumlah uang.\n"
-"            Untuk menentukan stat pemain, barang , bonus ras dan kelas serta "
-"raidstats pemain akan dipertimbangkan.\n"
+"            Untuk menentukan stats pemain, barang , bonus ras dan kelas "
+"serta raidstats pemain akan dipertimbangkan.\n"
 "\n"
 "            Uang taruhan akan diambil dari kedua pemain diawal pertarungan. "
-"Setelah pemenang ditentukan, pemenang akan menerima uangnya, dan uang "
+"Setelah pemenang ditentukan, pemenang akan menerima uangnya, dan uang dari "
 "musuhnya.\n"
 "            Pertarungan dibagi menjadi beberapa ronde, yang mana setiap "
 "pemain akan menyerang lawannya. Ronde pertama penyerang akan dipilih secara "
-"acak, setiap ronde selanjutnya penyerang adalah yang bertahan dironde "
-"terakhir.\n"
+"acak, setiap ronde selanjutnya setelah pemain penyerang pertama adalah "
+"pemain penyerang satunya.\n"
 "\n"
 "            Pertarungan akan berakhir jika HP salah satu pemain turun "
 "menjadi 0 (pemenang ditentukan), atau jika 5 menit setelah pertarungan yang "
@@ -705,40 +705,41 @@ msgstr ""
 "kembali.\n"
 "\n"
 "            Pemenang pertarungan akan menerima kemenangan PvP, yang akan "
-"ditampilkan di profile mereka.\n"
-"            (Perintah ini memiliki waktu cooldown selama 5 menit.)"
+"ditampilkan di profil mereka.\n"
+"            (Perintah ini memiliki waktu cooldown selama 5 menit)"
 
 #: cogs/battles/__init__.py:200
 #, python-brace-format
 msgid "{author} seeks a raidbattle! The price is **${money}**."
 msgstr ""
-"{author} mencari sebuah pertempuran penyerangan! Biayanya adalah "
-"**${money}**."
+"{author} mencari sebuah pertempuran raidbattle! Biayanya adalah **${money}**."
 
 #: cogs/battles/__init__.py:205
 #, python-brace-format
 msgid "{author} seeks a raidbattle with {enemy}! The price is **${money}**."
 msgstr ""
-"{author} mencari sebuah pertempuran penyerangan dengan {enemy}! Biayanya "
-"adalah **${money}**."
+"{author} mencari sebuah pertempuran penyerangan dengan {enemy}! Biaya "
+"bergabungnya adalah **${money}**."
 
 #: cogs/battles/__init__.py:216
 msgid "Join the raidbattle!"
-msgstr "Bergabung dengan pertempuran penyerangan!"
+msgstr "Bergabung dengan pertempuran raidbattle!"
 
 #: cogs/battles/__init__.py:223
 msgid "You don't have enough money to join the raidbattle."
-msgstr "Kamu tidak memiliki cukup uang untuk bergabung dalam pertempuran."
+msgstr ""
+"Kamu tidak memiliki cukup uang untuk bergabung dalam pertempuran raidbattle."
 
 #: cogs/battles/__init__.py:238
 #, python-brace-format
 msgid "Noone wanted to join your raidbattle, {author}!"
-msgstr "Tidak ada yang ingin bergabung dengan pertempuranmu, {author}!"
+msgstr ""
+"Tidak ada yang ingin bergabung dengan pertempuran raidbattle mu, {author}!"
 
 #: cogs/battles/__init__.py:348
 #, python-brace-format
 msgid "{p1} won the raidbattle vs {p2}! Congratulations!"
-msgstr "{p1} memenangkan pertempuran melawan {p2}! Selamat!"
+msgstr "{p1} memenangkan pertempuran raidbattle melawan {p2}! Selamat!"
 
 #: cogs/battles/__init__.py:355
 msgid "Battle against a player (active)"
