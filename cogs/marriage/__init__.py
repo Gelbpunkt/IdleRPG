@@ -149,14 +149,6 @@ class Marriage(commands.Cog):
         )
         if donator == ctx.author:
             return await ctx.send(_("Haha, very funny."))
-        max, _ = self.get_max_kids(ctx.character_data["lovescore"])
-        async with self.bot.pool.acquire() as conn:
-            names = await conn.fetch(
-                'SELECT name FROM children WHERE "mother"=$1 OR "father"=$1;',
-                ctx.author.id,
-            )
-        if len(names) + 1 > max:
-            return await ctx.send(_("You have too many children already."))
         # ask donator is they want to give away their child
         if not await ctx.confirm(
             _("{donator}, do you want to give {child} to {author}?").format(
@@ -165,6 +157,14 @@ class Marriage(commands.Cog):
             user=donator,
         ):
             return await ctx.send(_("They didn't want to give away their child."))
+        max, _ = self.get_max_kids(ctx.character_data["lovescore"])
+        async with self.bot.pool.acquire() as conn:
+            names = await conn.fetch(
+                'SELECT name FROM children WHERE "mother"=$1 OR "father"=$1;',
+                ctx.author.id,
+            )
+        if len(names) + 1 > max:
+            return await ctx.send(_("You have too many children already."))
         async with self.bot.pool.acquire() as conn:
             child_data = await conn.fetchrow(
                 'SELECT * FROM children WHERE "name"=$1 AND ("mother"=$2 OR "father"=$2);',
