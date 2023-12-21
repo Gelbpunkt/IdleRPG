@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-03-08 22:06+0100\n"
-"PO-Revision-Date: 2023-12-04 08:16+0000\n"
+"PO-Revision-Date: 2023-12-24 08:13+0000\n"
 "Last-Translator: Feeltis Catcus <davinreginalds@gmail.com>\n"
 "Language-Team: Indonesian <http://translate.travitia.xyz/projects/idlerpg/"
 "bot/id/>\n"
@@ -771,17 +771,17 @@ msgid ""
 "            (This command has a cooldown of 10 minutes.)"
 msgstr ""
 "`[money]` - Sejumlah angka dari 0 atau lebih besar; jika tidak ditentukan "
-"maka dijadikan 0\n"
-"            `[enemy]` - Seorang pengguna yang memiliki profil pemain; jika "
-"tidak ditentukan maka dijadikan untuk siapa saja\n"
+"maka akan dianggap 0\n"
+"            `[enemy]` - Seorang pengguna yang memiliki sebuah profil; jika "
+"tidak ditentukan maka akan dianggap untuk siapa saja\n"
 "\n"
-"            Bertarung melawan pemain lain dengan taruhan sejumlah uang.\n"
-"            Untuk menentukan stat pemain, barang, bonus ras dan kelas pemain "
-"akan dipertimbangkan.\n"
+"            Bertarung melawan pemain lain sambil bertaruh sejumlah uang.\n"
+"            Untuk menentukan stats pemain, barang, bonus ras dan kelas "
+"pemain akan dipertimbangkan.\n"
 "\n"
 "            Uang taruhan akan diambil dari kedua pemain diawal pertarungan. "
-"Setelah pemenang ditentukan, pemenang akan menerima uangnya, dan uang "
-"musuhnya\n"
+"Setelah pemenang ditentukan, pemenang akan menerima uangnya, beserta uang "
+"musuhnya.\n"
 "            Pertarungan berlangsung dalam beberapa ronde. Setiap ronde, "
 "kedua pemain harus memilih pergerakkan mereka dengan menggunakan tombol "
 "reaksi.\n"
@@ -789,13 +789,13 @@ msgstr ""
 "(❤️).\n"
 "\n"
 "            Pertarungan akan berakhir jika HP salah satu pemain turun "
-"menjadi 0 (pemenang ditentukan), atau seorang pemain tidak bergerak "
+"menjadi 0 (pemenang telah ditentukan), atau seorang pemain tidak bergerak "
 "(menyerah).\n"
-"            Jika seseorang tidak bergerak, tidak ada pemain yang akan "
-"mendapatkan uangnya kembali.\n"
+"            Jika ronde tersebut berakhir dengan salah satu pemain menyerah, "
+"maka tidak ada pemain yang akan mendapatkan uangnya kembali.\n"
 "\n"
-"            Pemenang pertarungan akan menerima kemenangan PvP, yang akan "
-"ditampilkan di profil mereka.\n"
+"            Pemenang pertarungan akan mendapatkan kemenangan PvP, yang "
+"dimana akan ditampilkan di profil mereka.\n"
 "            (Perintah ini memiliki waktu cooldown selama 10 menit.)"
 
 #: cogs/battles/__init__.py:390
@@ -819,7 +819,8 @@ msgstr "Bergabung ke pertarungan aktif!"
 #: cogs/battles/__init__.py:413
 msgid "You don't have enough money to join the activebattle."
 msgstr ""
-"Kamu tidak memiliki cukup uang untuk bergabung dalam pertarungan aktif."
+"Kamu tidak memiliki cukup uang untuk bergabung dalam pertarungan aktif "
+"tersebut."
 
 #: cogs/battles/__init__.py:429
 #, python-brace-format
@@ -829,11 +830,11 @@ msgstr "Tidak ada yang ingin bergabung dengan pertempuran aktifmu, {author}!"
 #: cogs/battles/__init__.py:481
 #, python-brace-format
 msgid "Battle {p1} vs {p2}"
-msgstr "Pertarungan {p1} versus {p2}"
+msgstr "Pertarungan {p1} melawan {p2}"
 
 #: cogs/battles/__init__.py:483
 msgid "Let the battle begin!"
-msgstr "Pertarungan dimulai!"
+msgstr "Pertarungan akan segera dimulai!"
 
 #: cogs/battles/__init__.py:498 cogs/battles/__init__.py:648
 #, python-brace-format
@@ -846,7 +847,7 @@ msgstr ""
 "{prevaction}\n"
 "{player1}: **{hp1}** HP\n"
 "{player2}: **{hp2}** HP\n"
-"Bereaksi untuk bermain."
+"Tekan reaksi untuk bermain."
 
 #: cogs/battles/__init__.py:511 cogs/battles/__init__.py:512
 #, python-brace-format
@@ -855,12 +856,12 @@ msgstr "**{user}** tidak melakukan apa-apa..."
 
 #: cogs/battles/__init__.py:535
 msgid "Someone refused to move. Activebattle stopped."
-msgstr "Seseorang menolak untuk bergerak. Pertempuran aktif dihentikan."
+msgstr "Seseorang menolak untuk bergerak. Pertempuran aktif akan dihentikan."
 
 #: cogs/battles/__init__.py:543
 #, python-brace-format
 msgid "{user}, you already moved! Waiting for {other}'s move..."
-msgstr "{user}, kamu sudah bergerak! Menunggu untuk {other} bergerak..."
+msgstr "{user}, kamu sudah bergerak! Tunggu {other} untuk bergerak..."
 
 #: cogs/battles/__init__.py:556
 #, python-brace-format
@@ -870,7 +871,7 @@ msgstr "{user} menyembuhkan dirinya sendiri sebanyak **{hp} HP**."
 #: cogs/battles/__init__.py:572 cogs/battles/__init__.py:597
 #, python-brace-format
 msgid "{user} hit {enemy} for **{eff}** damage."
-msgstr "{user} mengenai {enemy} sebanyak **{eff}** serangan."
+msgstr "{user} mengenai {enemy} sebanyak **{eff}** damage."
 
 #: cogs/battles/__init__.py:600
 #, python-brace-format
@@ -906,7 +907,7 @@ msgstr "{winner} memenangkan pertempuran aktif melawan {looser}! Selamat!"
 
 #: cogs/easter/__init__.py:30
 msgid "Easter related commands"
-msgstr "Perintah Paskah yang terkait"
+msgstr "Perintah terkait Paskah"
 
 #: cogs/easter/__init__.py:34
 #, python-brace-format
@@ -918,12 +919,12 @@ msgid ""
 "finishing adventures, which can be exchanged for several rewards, including "
 "crates, items, money, or special guild badges."
 msgstr ""
-"Berisi semua perintah yang terkait dengan paskah. Lihat `{prefix}help "
-"easter` untuk daftar perintah.\n"
+"Berisi semua perintah yang terkait dengan Paskah. Lihat `{prefix}help easter`"
+" untuk daftar perintahnya.\n"
 "\n"
-" Selama acara paskah, pengguna akan menemukan telur paskah saat "
-"menyelesaikan petualangan, yang dapat ditukarkan dengan beberapa hadiah, "
-"termasuk peti, item, uang, atau lencana spesial guild."
+"            Selama acara Paskah, pengguna akan menemukan telur paskah saat "
+"menyelesaikan petualangan, yang dimana dapat ditukarkan dengan beberapa "
+"hadiah, termasuk peti, item, uang, atau lencana spesial guild."
 
 #: cogs/easter/__init__.py:40
 #, python-brace-format
@@ -938,13 +939,13 @@ msgstr ""
 "**Acara Paskah <:easteregg:566251086986608650>**\n"
 "\n"
 "Bagian dari ulang tahun Idle!\n"
-"Koleksi easteregg dan gunakan `{prefix}easter rewards` untuk mengecek "
-"hadiahnya. <:bunny:566290173831151627>\n"
+"Koleksi easteregg (telur Paskah) dan gunakan `{prefix}easter rewards` untuk "
+"mengecek hadiahnya. <:bunny:566290173831151627>\n"
 "Selamat berburu!"
 
 #: cogs/easter/__init__.py:47
 msgid "Lists all easter rewards"
-msgstr "Daftar semua hadiah paskah"
+msgstr "Daftar semua hadiah Paskah"
 
 #: cogs/easter/__init__.py:51
 #, python-brace-format
@@ -953,10 +954,11 @@ msgid ""
 "\n"
 "            To claim a reward, use `{prefix}easter reward <ID>`."
 msgstr ""
-"Menampilkan semua hadiah yang tersedia di event paskah, bersama dengan ID "
-"hadiah.\n"
+"Menampilkan semua hadiah yang tersedia di acara Paskah, bersama dengan ID "
+"hadiahnya.\n"
 "\n"
-" Untuk mengklaim sebuah hadiah, gunakan `{prefix}easter reward <ID>`."
+"            Untuk mengklaim sebuah hadiah, gunakan `{prefix}easter reward "
+"<ID>`."
 
 #: cogs/easter/__init__.py:57
 #, python-brace-format
@@ -1007,9 +1009,10 @@ msgid ""
 msgstr ""
 "`<reward_id>` - Sebuah angka dari 1 sampai 9\n"
 "\n"
-" Klaim sebuah hadiah berdasarkan IDnya.\n"
+"            Klaim sebuah hadiah berdasarkan IDnya.\n"
 "\n"
-" Daftar hadiah dan IDnya dapat dilihat dengan `{prefix}easter rewards`."
+"            Daftar hadiah dan IDnya dapat dilihat dengan `{prefix}easter "
+"rewards`."
 
 #: cogs/easter/__init__.py:97
 msgid "You don't have enough eggs to claim this."
@@ -1020,12 +1023,12 @@ msgid ""
 "You claimed your reward. Check your inventory/boosters/crates/money/etc.! "
 "You can claim multiple rewards, keep hunting!"
 msgstr ""
-"Kamu telah mengklaim hadiahmu. Periksa inventaris/penguat/peti/uang/dll! "
+"Kamu telah mengklaim hadiahmu. Periksa inventorymu/penguat/peti/uang/dll! "
 "Kamu dapat mengklaim banyak hadiah, teruslah berburu!"
 
 #: cogs/crates/__init__.py:52
 msgid "Show your crates."
-msgstr "Menampilkan peti Anda."
+msgstr "Menampilkan peti kamu."
 
 #: cogs/crates/__init__.py:56
 #, python-brace-format
@@ -1044,29 +1047,31 @@ msgid ""
 msgstr ""
 "Menampilkan semua peti yang kamu miliki.\n"
 "\n"
-" Common peti berisi barang mulai dari stats 1 sampai 30\n"
-" Uncommon peti berisi barang mulai dari stats 10 sampai 35\n"
-" Rare peti berisi barang mulai dari stats 20 sampai 40\n"
-" Magic peti berisi barang mulai dari stats 30 sampai 45\n"
-" Legendary peti berisi barang mulai dari stats 41 sampai 50\n"
+"            Peti common (umum) berisi barang mulai dari stats 1 sampai 30\n"
+"            Peti uncommon (tidak umum) berisi barang mulai dari stats 10 "
+"sampai 35\n"
+"            Peti rare (langka) berisi barang mulai dari stats 20 sampai 40\n"
+"            Peti magic (magis) berisi barang mulai dari stats 30 sampai 45\n"
+"            Peti legendary (legendaris) berisi barang mulai dari stats 41 "
+"sampai 50\n"
 "\n"
-" Kamu bisa mendapatkan peti dengan memvoting bot melalui `{prefix}vote`, "
-"menggunakan `{prefix}daily` dan dengan sedikit peluang dari `{prefix}"
-"familyevent`, jika kamu memiliki anak."
+"            Kamu bisa mendapatkan peti dengan memvoting bot melalui "
+"`{prefix}vote`, menggunakan `{prefix}daily` dan dengan sedikit peluang dari "
+"`{prefix}familyevent`, jika kamu memiliki anak."
 
 #: cogs/crates/__init__.py:67
 msgid "Your Crates"
-msgstr "Peti harta kamu"
+msgstr "Peti - Peti Kamu"
 
 #: cogs/crates/__init__.py:74
 #, python-brace-format
 msgid "{amount} crates"
-msgstr "{amount} peti harta"
+msgstr "{amount} peti"
 
 #: cogs/crates/__init__.py:79
 #, python-brace-format
 msgid "Use {prefix}open [rarity] to open one!"
-msgstr "Gunakan {prefix}open [kualitas] untuk membukanya!"
+msgstr "Gunakan {prefix}open [rarity] untuk membukanya!"
 
 #: cogs/crates/__init__.py:86
 msgid "Open a crate"
@@ -1085,8 +1090,9 @@ msgid ""
 "            This command takes up a lot of space, so choose a spammy channel "
 "to open crates."
 msgstr ""
-"`[rarity]` - jenis peti yang akan dibuka, bisa jadi common, uncommon, rare, "
-"magic atau legendary; jika tidak ditentukan maka dijadikan common\n"
+"`[rarity]` - Tipe (kelangkaan) peti yang akan dibuka, bisa jadi common (umum)"
+", uncommon (tidak umum), rare (langka), magic (magis) atau legendary "
+"(legendaris); jika tidak ditentukan maka akan dianggap common (umum)\n"
 "            `[amount]` - jumlah peti yang akan dibuka, berkisaran dari 1 "
 "hingga 100 untuk sekali buka\n"
 "\n"
@@ -1102,8 +1108,8 @@ msgid ""
 "Seems like you don't have {amount} crate(s) of this rarity yet. Vote me up "
 "to get a random one or find them!"
 msgstr ""
-"Sepertinya kamu tidak memiliki {amount} peti(s) dari jenis peti ini. "
-"Silahkan voting bot ini untuk mendapatkan peti acak!"
+"Sepertinya kamu tidak memiliki {amount} peti dari jenis peti ini. Silahkan "
+"voting bot ini untuk mendapatkan peti secara acak atau temukan mereka!"
 
 #: cogs/crates/__init__.py:161
 #, python-brace-format
@@ -1153,7 +1159,7 @@ msgid ""
 "{most_common_types}\n"
 "```"
 msgstr ""
-"Sukses membuka {amount} {rarity} peti. Rata-rata stat: {average_stat}\n"
+"Sukses membuka {amount} peti {rarity}. Stats rata-rata: {average_stat}\n"
 "Stats paling umum:\n"
 "```\n"
 "{most_common}\n"
@@ -1169,7 +1175,7 @@ msgstr ""
 
 #: cogs/crates/__init__.py:316
 msgid "Give crates to someone"
-msgstr "Berikan peti kepada seseorang"
+msgstr "Memberikan peti kepada seseorang"
 
 #: cogs/crates/__init__.py:326
 #, python-brace-format
@@ -1186,15 +1192,16 @@ msgid ""
 msgstr ""
 "`<other>` - Seorang pengguna yang memiliki sebuah karakter\n"
 "            `[amount]` - Sejumlah angka yang lebih besar dari 0; jika tidak "
-"ditentukan maka dijadikan 1\n"
-"            `[rarity]` - Jenis peti yang akan diberikan, bisa jadi common, "
-"uncommon, rare, magic atau legendary; jika tidak ditentukan maka dijadikan "
-"common\n"
+"ditentukan maka akan dianggap 1\n"
+"            `[rarity]` - Jenis tipe (kelangkaan) peti yang akan diberikan, "
+"bisa jadi common (umum), uncommon (tidak umum), rare (langka), magic (magis) "
+"atau legendary (legendaris); jika tidak ditentukan maka akan dianggap common "
+"(umum)\n"
 "\n"
 "            Memberikan petimu kepada pemain lain.\n"
 "\n"
 "            Pemain harus menggunakan perintah ini dengan `{prefix}give` "
-"untuk menyelesaikan transaksi."
+"untuk pertukaran yang komplit."
 
 #. preserve deletion of admins
 #. preserve renaming of admins
@@ -1207,11 +1214,11 @@ msgstr "Sangat lucu..."
 #: cogs/crates/__init__.py:338 cogs/guild/__init__.py:928
 #: cogs/profile/__init__.py:1052
 msgid "For me? I'm flattered, but I can't accept this..."
-msgstr "Untuk Saya? saya tersanjung, tapi saya tidak bisa menerima ini..."
+msgstr "Untuk aku? Aduh aku jadi malu, tapi aku tidak bisa menerima ini..."
 
 #: cogs/crates/__init__.py:341
 msgid "You don't have any crates of this rarity."
-msgstr "Kamu tidak memiliki peti dari kelangkaan ini."
+msgstr "Kamu tidak memiliki peti yang dari tipe kelangkaan ini."
 
 #: cogs/crates/__init__.py:365
 #, python-brace-format
@@ -1239,38 +1246,38 @@ msgid ""
 "            `{prefix}oc 5 c 75000 @buyer#1234`"
 msgstr ""
 "`<quantity>` - Jumlah peti yang akan ditawarkan\n"
-" `<rarity>` - Jenis peti yang akan ditawarkan. Huruf pertama dari jenis peti "
-"juga bisa digunakan.\n"
-" `<price>` - Harga yang akan dibayar oleh pembeli, jumlah angka dari 0 "
-"sampai 100000000\n"
-" `<buyer>` - Pemain idleRPG yang akan membeli peti\n"
+"            `<rarity>` - Tipe (kelangkaan) peti yang akan ditawarkan. Huruf "
+"pertama dari jenis peti juga bisa digunakan.\n"
+"            `<price>` - Harga yang akan dibayar oleh pembeli, berypa angka "
+"dari 0 sampai 100000000\n"
+"            `<buyer>` - Pemain IdleRPG yang akan membeli peti\n"
 "\n"
-" Menawarkan peti kepada pemain lain. Setelah tawaranya diterima oleh pemain "
-"lain, mereka akan menerima petinya dan kamu akan menerima bayarannya.\n"
-" Contoh:\n"
-" `{prefix}offercrate 5 common 75000 @buyer#1234`\n"
-" `{prefix}oc 5 c 75000 @buyer#1234`"
+"            Menawarkan peti kepada pemain lain. Setelah tawaranya diterima "
+"oleh pemain lain, mereka akan menerima petinya dan kamu akan menerima "
+"bayarannya.\n"
+"            Contoh:\n"
+"            `{prefix}offercrate 5 common 75000 @buyer#1234`\n"
+"            `{prefix}oc 5 c 75000 @buyer#1234`"
 
 #: cogs/crates/__init__.py:396
 msgid "You may not offer crates to yourself."
-msgstr "Kamu tidak bisa menawarkan peti ke diri sendiri."
+msgstr "Kamu tidak bisa menawarkan peti ke dirimu sendiri."
 
 #: cogs/crates/__init__.py:399
 msgid "No, I don't want any crates."
-msgstr "Tidak, Saya tidak ingin peti."
+msgstr "Tidak, aku tidak ingin petimu."
 
 #: cogs/crates/__init__.py:405
 #, python-brace-format
 msgid "You don't have {quantity} {rarity} crate(s). Check `{prefix}crates`."
-msgstr ""
-"Kamu tidak memiliki {quantity} {rarity} peti. Periksa `{prefix}crates`."
+msgstr "Kamu tidak memiliki {quantity} peti {rarity}. Periksa `{prefix}crates`."
 
 #: cogs/crates/__init__.py:413
 msgid ""
 "{author}, are you sure you want to offer **{quantity} {emoji} {rarity}** "
 "crate(s) for **${price:,.0f}**?"
 msgstr ""
-"{author}, Apakah kamu yakin ingin menawarkan **{quantity} {emoji} {rarity}** "
+"{author}, apakah kamu yakin ingin menawarkan **{quantity} {emoji} {rarity}** "
 "peti dengan harga **${price:,.0f}**?"
 
 #: cogs/crates/__init__.py:423
@@ -1284,25 +1291,27 @@ msgid ""
 "or the offer will be cancelled."
 msgstr ""
 "{buyer}, {author} menawarkanmu **{quantity} {emoji} {rarity}** peti dengan "
-"harga **${price:,.0f}!** Bereaksi untuk membelinya! Kamu memiliki **2 "
-"Minutes** untuk menerimanya atau penawaran akan dibatalkan."
+"harga **${price:,.0f}!** Berikan reaksi untuk membelinya! Kamu memiliki "
+"waktu **2 Menit** untuk menerimanya atau penawarannya akan dibatalkan."
 
 #: cogs/crates/__init__.py:444
 msgid "They didn't want to buy the crate(s). Offer cancelled."
-msgstr "Mereka tidak ingin membeli peti. Penawaran dibatalkan."
+msgstr "Mereka tidak ingin membeli petinya. Penawaran telah dibatalkan."
 
 #: cogs/crates/__init__.py:448
 msgid "They couldn't make up their mind. Offer cancelled."
-msgstr "Mereka tidak dapat mengambil keputusan. Penawaran dibatalkan."
+msgstr "Mereka tidak dapat mengambil keputusan. Penawaran telah dibatalkan."
 
 #: cogs/crates/__init__.py:454
 #, python-brace-format
 msgid "{buyer}, you're too poor to buy the crate(s)!"
-msgstr "{buyer}, kamu terlalu miskin untuk membeli peti!"
+msgstr "{buyer}, kamu terlalu miskin untuk membeli petinya!"
 
 #: cogs/crates/__init__.py:465
 msgid "The seller traded/opened the crate(s) in the meantime. Offer cancelled."
-msgstr "Penjual menjual/membuka peti untuk sementara. Penawaran dibatalkan."
+msgstr ""
+"Penjual sedang menjual/membuka petinya untuk sementara. Penawaran telah "
+"dibatalkan."
 
 #: cogs/crates/__init__.py:510
 #, python-brace-format
@@ -1311,15 +1320,16 @@ msgid ""
 "from {seller}. Use `{prefix}crates` to view your updated crates."
 msgstr ""
 "{buyer}, kamu sukses membeli **{quantity} {emoji} {rarity}** peti dari "
-"{seller}. Gunakan `{prefix}crates` untuk melihat peti yang sudah diperbarui."
+"{seller}. Gunakan `{prefix}crates` untuk melihat petimu yang sudah "
+"diperbarui."
 
 #: cogs/hungergames/__init__.py:51
 msgid "Gather as much food as you can"
-msgstr "Kumpulkan makanan sebanyak yang kamu bisa"
+msgstr "Kumpulkan makanan-makanan sebanyak yang kamu bisa"
 
 #: cogs/hungergames/__init__.py:52
 msgid "gathers as much food as they can"
-msgstr "mengumpulkan makanan sebanyak yang mereka bisa"
+msgstr "mengumpulkan makanan-makanan sebanyak yang mereka bisa"
 
 #: cogs/hungergames/__init__.py:56
 msgid "Grab a backpack and retreat"
@@ -1335,7 +1345,7 @@ msgstr "Mengambil sebuah pistol dan bunuh diri"
 
 #: cogs/hungergames/__init__.py:60
 msgid "gives themselves the bullet"
-msgstr "memberi diri mereka dengan sebuah peluru"
+msgstr "memberikan diri mereka sendiri dengan sebuah peluru"
 
 #: cogs/hungergames/__init__.py:61
 msgid "Ram a knife in your body"
@@ -1367,23 +1377,23 @@ msgstr "Mencari air"
 
 #: cogs/hungergames/__init__.py:72
 msgid "finds a canteen full of water"
-msgstr "menemukan botol penuh air"
+msgstr "menemukan sebuah botol penuh air"
 
 #: cogs/hungergames/__init__.py:74
 msgid "Get a first aid kit"
-msgstr "Mendapatkan kotak P3K"
+msgstr "Mendapatkan sebuah kotak P3K"
 
 #: cogs/hungergames/__init__.py:75
 msgid "clutches a first aid kit and runs away"
-msgstr "mencengkeram kotak P3K dan melarikan diri"
+msgstr "mencengkeram sebuah kotak P3K dan melarikan diri"
 
 #: cogs/hungergames/__init__.py:79
 msgid "Grab a backpack"
-msgstr "Mengambil tas ransel"
+msgstr "Mengambil sebuah tas ransel"
 
 #: cogs/hungergames/__init__.py:80
 msgid "grabs a backpack, not realizing it is empty"
-msgstr "meraih tas ransel, dan tidak menyadari bahwa tas tersebut kosong"
+msgstr "meraih sebuah tas ransel, tanpa menyadari bahwa tas tersebut kosong"
 
 #: cogs/hungergames/__init__.py:83
 msgid "Try to assault USER"
@@ -1395,7 +1405,7 @@ msgstr "membunuh USER"
 
 #: cogs/hungergames/__init__.py:85
 msgid "Kill USER at the water"
-msgstr "Bunuh USER di perairan"
+msgstr "Membunuh USER di perairan"
 
 #: cogs/hungergames/__init__.py:86
 msgid "assaults USER while they were drinking water at the river"
@@ -1403,7 +1413,7 @@ msgstr "menyerang USER ketika mereka sedang meminum air di sungai"
 
 #: cogs/hungergames/__init__.py:90
 msgid "Try to hide some landmines"
-msgstr "Cobalah untuk menyembunyikan beberapa ranjau darat"
+msgstr "Mencoba untuk menyembunyikan beberapa ranjau darat"
 
 #: cogs/hungergames/__init__.py:91
 msgid "hides landmines at a few locations"
@@ -1451,11 +1461,11 @@ msgstr "berusaha untuk membunuh USER tapi gagal"
 
 #: cogs/hungergames/__init__.py:105 cogs/hungergames/__init__.py:111
 msgid "watch a movie together"
-msgstr "menonton film bersama"
+msgstr "menonton sebuah film bersama"
 
 #: cogs/hungergames/__init__.py:106
 msgid "track down USER and kill them silently"
-msgstr "melacak USER dan membunuhnya secara diam"
+msgstr "melacak USER dan membunuhnya secara diam - diam"
 
 #: cogs/hungergames/__init__.py:110
 msgid "decide they want out of here and commit suicide"
@@ -1471,20 +1481,20 @@ msgstr "bernyanyi bersama"
 
 #: cogs/hungergames/__init__.py:114
 msgid "have a nice romantic evening"
-msgstr "mengalami malam romantis yang menyenangkan"
+msgstr "menikmati malam romantis yang menyenangkan"
 
 #: cogs/hungergames/__init__.py:115
 msgid "watch the others being dumb"
-msgstr "memperhatikan yang lain menjadi bodoh"
+msgstr "memperhatikan orang lain menjadi bodoh"
 
 #: cogs/hungergames/__init__.py:116
 msgid "kiss in the moonlight"
-msgstr "ciuman di bulan purnama"
+msgstr "ciuman di bawah bulan purnama"
 
 #: cogs/hungergames/__init__.py:118
 msgid "watch a movie together when USER suddenly gets shot by a stranger"
 msgstr ""
-"menonton film bersama ketika USER tiba-tiba tertembak oleh orang tidak "
+"menonton film bersama ketika USER tiba-tiba tertembak oleh orang yang tidak "
 "dikenal"
 
 #: cogs/hungergames/__init__.py:123
@@ -1534,11 +1544,11 @@ msgstr "Pemenang dari hunger game ini adalah {winner}!"
 
 #: cogs/hungergames/__init__.py:284
 msgid "Everyone died!"
-msgstr "Semuanya mati!"
+msgstr "Semuanya telah mati!"
 
 #: cogs/hungergames/__init__.py:292
 msgid "Play the hunger games"
-msgstr "Bermain hunger games"
+msgstr "Bermain hunger games nya"
 
 #: cogs/hungergames/__init__.py:296
 msgid ""
@@ -1555,18 +1565,18 @@ msgid ""
 "            Not every player will get the opportunity to choose an action. "
 "Sometimes nobody gets to choose, so don't be discouraged. "
 msgstr ""
-"Memulai permainan hunger games\n"
+"Memulai permainan hunger games nya\n"
 "\n"
-" Pemain dapat bergabung melalui :shallow_pan_of_food: emoji.\n"
-"Permainan dikendalikan melalui tindakan acak dan kemungkinan tindakan yang "
-"dapat dipilih.\n"
-" Pemain boleh memilih tindakan jika mereka mendapatkan pesan masuk dari bot. "
-"Jika pemain tidak memilih sebuah tindakan, bot akan memilih satu tindakan "
-"untuk mereka.\n"
+"            Pemain dapat bergabung melalui emoji :shallow_pan_of_food:.\n"
+"            Permainan dikendalikan melalui tindakan acak dan kemungkinan "
+"tindakan yang dapat dipilih.\n"
+"            Pemain boleh memilih sebuah tindakan jika mereka mendapatkan "
+"pesan masuk dari bot. Jika pemain tersebut tidak memilih sebuah tindakan, "
+"botnya akan memilihkan satu untuk mereka.\n"
 "\n"
-" Tidak setiap pemain akan mendapatkan kesempatan untuk memilih sebuah "
-"tindakan. Terkadang tidak ada yang bisa memilih tindakan, jadi jangan "
-"berkecil hati. "
+"            Tidak semua pemain akan mendapatkan kesempatan untuk memilih "
+"sebuah tindakan. Terkadang tidak ada yang bisa memilih tindakannya, jadi "
+"jangan berkecil hati. "
 
 #: cogs/hungergames/__init__.py:305 cogs/werewolf/__init__.py:80
 msgid "There is already a game in here!"
@@ -1574,7 +1584,7 @@ msgstr "Sudah ada permainan di sini!"
 
 #: cogs/hungergames/__init__.py:316 cogs/hungergames/__init__.py:333
 msgid "You joined the Hunger Games."
-msgstr "Kamu bergabung ke Hunger Games."
+msgstr "Kamu bergabung ke Hunger Games nya."
 
 #: cogs/hungergames/__init__.py:337
 #, python-brace-format
@@ -1583,11 +1593,12 @@ msgstr "{author} memulai sebuah permainan Hunger Games!"
 
 #: cogs/hungergames/__init__.py:346
 msgid "Not enough players joined..."
-msgstr "Tidak cukup pemain bergabung..."
+msgstr "Tidak cukup pemain yang bergabung..."
 
 #: cogs/hungergames/__init__.py:354
 msgid "An error happened during the hungergame. Please try again!"
-msgstr "Sebuah kesalahan terjadi selama hungergame. Tolong coba lagi!"
+msgstr ""
+"Sebuah kesalahan terjadi selama permainan hungergame. Tolong coba kembali!"
 
 #: cogs/error_handler/__init__.py:83
 #, python-brace-format
@@ -1612,23 +1623,25 @@ msgstr "Pengguna yang kamu ajukan tidak ditemukan."
 
 #: cogs/error_handler/__init__.py:97
 msgid "The channel you referenced was not found."
-msgstr "Kanal yang kamu ajukan tidak ditemukan."
+msgstr "Channel yang kamu ajukan tidak ditemukan."
 
 #: cogs/error_handler/__init__.py:100
 msgid "I cannot read messages in the channel you referenced."
-msgstr "Saya tidak bisa membaca pesan dikanal yang kamu ajukan."
+msgstr "Aku tidak bisa membaca pesan di channel yang kamu ajukan."
 
 #: cogs/error_handler/__init__.py:103
 msgid "I could not parse a colour from this."
-msgstr "Saya tidak bisa membuat warna dari ini."
+msgstr "Aku tidak bisa membuat warna dari ini."
 
 #: cogs/error_handler/__init__.py:105
 msgid "The role you referenced was not found."
-msgstr "Peran yang kamu ajukan tidak dapat ditemukan."
+msgstr "Role yang kamu ajukan tidak dapat ditemukan."
 
 #: cogs/error_handler/__init__.py:108
 msgid "The invite you referenced is invalid or has expired."
-msgstr "Undangan yang kamu ajukan tidak valid atau sudah kedaluwarsa."
+msgstr ""
+"Undangan (server discord) yang kamu ajukan tidak valid atau sudah "
+"kedaluwarsa."
 
 #: cogs/error_handler/__init__.py:111
 msgid "The emoji you referenced was not found."
@@ -1641,16 +1654,17 @@ msgstr "Saya tidak dapat menguraikan boolean dari ini."
 #: cogs/error_handler/__init__.py:119
 msgid "The user you specified as a parameter does not have a character."
 msgstr ""
-"Pengguna yang kamu sebutkan sebagai parameter tidak memiliki sebuah karakter."
+"Pengguna yang kamu sebutkan sebagai sebuah parameter tidak memiliki sebuah "
+"karakter."
 
 #: cogs/error_handler/__init__.py:126
 msgid ""
 "You did not enter a valid crate rarity. Possible ones are: common (c), "
 "uncommon (u), rare (r), magic (m), legendary (l) and mystery (myst)."
 msgstr ""
-"Kamu tidak memberikan tipe kelangkaan peti yang valid. Yang mungkin hanyalah:"
-" common (c), uncommon (u), rare (r), magic (m), legendary (l), dan mystery "
-"(myst)."
+"Kamu tidak memberikan tipe (kelangkaan) peti yang valid. Yang mungkin "
+"hanyalah: common (c), uncommon (u), rare (r), magic (m), legendary (l), dan "
+"mystery (myst)."
 
 #: cogs/error_handler/__init__.py:133
 msgid "You did not enter a valid coin side. Please use `heads` or `tails`."
@@ -1671,8 +1685,9 @@ msgid ""
 "You sent an invalid URL. Make sure to send the full URL; it should start "
 "with \"http\" and end with \".png\" or \".jpeg\"."
 msgstr ""
-"Kamu mengirim URL yang tidak valid. Pastikan untuk mengirim URL lengkap; "
-"yang diawali dengan \"http\" dan diakhiri dengan \".png\" atau \".jpeg\"."
+"Kamu mengirim link URL yang tidak valid. Pastikan untuk mengirim link URL "
+"yang lengkap; yang dimana diawali dengan \"http\" dan diakhiri dengan \"."
+"png\" atau \".jpeg\"."
 
 #: cogs/error_handler/__init__.py:154
 msgid "You used a malformed argument!"
@@ -1684,13 +1699,13 @@ msgid ""
 "You are being rate-limited. Chill down, you can use a command again in {time}"
 "s."
 msgstr ""
-"Kamu sedang dibatasi. Tenang, kamu bisa menggunkan perintah ini dalam {time}"
-"s."
+"Kamu sedang dibatasi karena terlalu cepat. Tenanglah, kamu bisa menggunakan "
+"perintah ini dalam {time} detik."
 
 #: cogs/error_handler/__init__.py:164
 #, python-brace-format
 msgid "You are on cooldown. Try again in {time}."
-msgstr "Kamu sedang dalam waktu pendinginan. Coba lagi dalam waktu {time}."
+msgstr "Kamu sedang dalam cooldown. Coba lagi dalam {time}."
 
 #: cogs/error_handler/__init__.py:175 cogs/error_handler/__init__.py:214
 #: cogs/error_handler/__init__.py:306
@@ -1710,8 +1725,8 @@ msgid ""
 "This command requires you to not have created a character yet. You already "
 "have one."
 msgstr ""
-"Perintah ini untuk yang belum membuat sebuah karakter. Kamu sudah memiliki "
-"satu."
+"Perintah ini bagi yang belum membuat sebuah karakter. Kamu sudah memiliki "
+"sebuah karakter."
 
 #: cogs/error_handler/__init__.py:195
 #, python-brace-format
@@ -1719,12 +1734,12 @@ msgid ""
 "You need to be following a god for this command. Please use `{prefix}follow` "
 "to choose one."
 msgstr ""
-"Kamu dibutuhkan untuk mengikuti sebuah dewa untuk perintah ini. Harap "
-"gunakan `{prefix}follow` untuk memilih satu."
+"Kamu dibutuhkan untuk mengikuti seorang dewa untuk menggunakan perintah ini. "
+"Harap gunakan `{prefix}follow` untuk memilih salah satu."
 
 #: cogs/error_handler/__init__.py:200
 msgid "You need to have a guild to use this command."
-msgstr "Kamu harus memiliki guild untuk menggunakan perintah ini."
+msgstr "Kamu harus memiliki sebuah guild untuk menggunakan perintah ini."
 
 #: cogs/error_handler/__init__.py:202
 msgid "You need to be in no guild to use this command."
@@ -1745,7 +1760,7 @@ msgid ""
 "{error} class users."
 msgstr ""
 ":x: Kamu tidak memiliki izin untuk menggunakan perintah ini. Ini "
-"diperkirakan untuk {error} kelas pengguna."
+"diperkirakan untuk pengguna kelas {error}."
 
 #: cogs/error_handler/__init__.py:225
 #, python-brace-format
@@ -1753,16 +1768,16 @@ msgid ""
 "You are already on an adventure. Use `{prefix}status` to see how long it "
 "lasts."
 msgstr ""
-"Kamu sedang dalam petualangan. Gunakan `{prefix}status` untuk melihat berapa "
-"lama lagi akan berakhir."
+"Kamu sedang dalam sebuah petualangan. Gunakan `{prefix}status` untuk melihat "
+"berapa lama lagi akan berakhir."
 
 #: cogs/error_handler/__init__.py:232
 #, python-brace-format
 msgid ""
 "You need to be on an adventure to use this command. Try `{prefix}adventure`!"
 msgstr ""
-"Kamu harus berada dalam petualangan untuk menggunakan perintah ini. Coba "
-"`{prefix}adventure`!"
+"Kamu harus berada dalam sebuah petualangan untuk menggunakan perintah ini. "
+"Coba `{prefix}adventure`!"
 
 #: cogs/error_handler/__init__.py:239
 #, python-brace-format
@@ -1772,12 +1787,13 @@ msgid ""
 msgstr ""
 "Hewan peliharaanmu telah menghilang. Mungkin beberapa alien telah "
 "menculiknya? Karena kamu tidak dapat menemukannya lagi, kamu tidak lagi "
-"menjadi {profession}"
+"menjadi seorang {profession}"
 
 #: cogs/error_handler/__init__.py:242 cogs/error_handler/__init__.py:262
 #: cogs/error_handler/__init__.py:270 cogs/classes/__init__.py:106
+#, fuzzy
 msgid "Ranger"
-msgstr "Ranger/Pengembara"
+msgstr "Ranger"
 
 #: cogs/error_handler/__init__.py:259
 #, python-brace-format
@@ -1785,9 +1801,9 @@ msgid ""
 "Your pet **{pet}** died! You did not give it enough to eat or drink. Because "
 "of your bad treatment, you are no longer a {profession}."
 msgstr ""
-"Peliharaan kamu **{pet}** meninggal! Kamu tidak memberikan makanan ataupun "
-"minuman yang cukup. Karena pemeliharaan yang buruk, kamu tidak lagi menjadi "
-"{profession}."
+"Peliharaan **{pet}** kamu meninggal! Kamu tidak memberikannya makanan "
+"ataupun minuman yang cukup. Karena pemeliharaan yang buruk itu, kamu tidak "
+"lagi menjadi seorang {profession}."
 
 #: cogs/error_handler/__init__.py:267
 #, python-brace-format
@@ -1795,9 +1811,9 @@ msgid ""
 "Your pet **{pet}** ran away! You did not show it your love enough! Because "
 "of your bad treatment, you are no longer a {profession}."
 msgstr ""
-"Peliharaan kamu **{pet}** kabur! Kamu tidak menunjukannya kasih sayangmu "
+"Peliharaan **{pet}** kamu kabur! Kamu tidak menunjukannya kasih sayangmu "
 "yang cukup! Karena pemeliharaanmu yang buruk, kamu tidak lagi menjadi "
-"{profession}."
+"seorang {profession}."
 
 #: cogs/error_handler/__init__.py:275
 #, python-brace-format
@@ -1812,8 +1828,7 @@ msgstr ""
 
 #: cogs/error_handler/__init__.py:283
 msgid "There is another raid already ongoing. Try again at a later time."
-msgstr ""
-"Saat ini sedang ada pertempuran yang sedang berlangsung. Coba lagi nanti."
+msgstr "Saat ini sedang ada raid yang sedang berlangsung. Coba lagi nanti."
 
 #: cogs/error_handler/__init__.py:288 cogs/alliance/__init__.py:522
 #: cogs/alliance/__init__.py:556
@@ -1826,11 +1841,11 @@ msgstr "Aliansimu sudah memiliki sebuah kota."
 
 #: cogs/error_handler/__init__.py:292
 msgid "Your alliance rank is too low."
-msgstr "Peringkat aliansi kamu terlalu rendah."
+msgstr "Peringkat aliansi kamu masih terlalu rendah."
 
 #: cogs/error_handler/__init__.py:294
 msgid "Your server does not have an open help request."
-msgstr "Server kamu tidak memiliki permintaan bantuan terbuka."
+msgstr "Server kamu tidak memiliki sebuah permintaan bantuan terbuka."
 
 #: cogs/error_handler/__init__.py:298
 msgid ""
@@ -1873,12 +1888,12 @@ msgid ""
 "The command you tried to use ran into an error. The incident has been "
 "reported and the team will work hard to fix the issue!"
 msgstr ""
-"Perintah yang kamu coba gunakan mengalami kesalahan. Insiden tersebut telah "
-"dilaporkan dan tim akan bekerja keras memperbaiki permasalahannya!"
+"Perintah yang kamu coba gunakan telah mengalami kesalahan. Insiden tersebut "
+"telah dilaporkan dan tim akan bekerja keras memperbaiki permasalahannya!"
 
 #: cogs/wintersday/__init__.py:64
 msgid "Look at your Winter Calendar"
-msgstr "Lihatlah Kalender Musim Dingin kamu"
+msgstr "Lihatlah Winter Calender (Kalender Musim Dingin) kamu"
 
 #: cogs/wintersday/__init__.py:67
 msgid "No calendar to show!"
@@ -1886,16 +1901,16 @@ msgstr "Tidak ada kalender untuk ditunjukan!"
 
 #: cogs/wintersday/__init__.py:75
 msgid "Open the Winter Calendar once every day."
-msgstr "Buka Kalender Musim Dingin sekali setiap hari."
+msgstr "Buka Winter Calender (Kalender Musim Dingin) sekali setiap harinya."
 
 #: cogs/wintersday/__init__.py:80
 msgid "It's not calendar time yet..."
-msgstr "Ini belum waktunya kalender..."
+msgstr "Ini belum waktunya buka kalendernya..."
 
 #: cogs/wintersday/__init__.py:82
 #, python-brace-format
 msgid "**You opened day {today}!**"
-msgstr "**Kamu membuka hari {today}!**"
+msgstr "**Kamu telah membuka hari {today}!**"
 
 #: cogs/wintersday/__init__.py:89
 msgid "A mysterious puzzle piece"
@@ -1904,7 +1919,7 @@ msgstr "Sepotong puzzle misterius"
 #: cogs/wintersday/__init__.py:113
 #, python-brace-format
 msgid "{crates} {rarity} crate"
-msgstr "{crates} {rarity} peti"
+msgstr "{crates} peti {rarity}"
 
 #: cogs/wintersday/__init__.py:138
 msgid "Combine the mysterious puzzle pieces."
@@ -1912,7 +1927,7 @@ msgstr "Mengkombinasikan potongan puzzle yang misterius."
 
 #: cogs/wintersday/__init__.py:142
 msgid "The mysterious puzzles don't fit together... Maybe some are missing?"
-msgstr "Puzzle misterius tidak cocok bersama... Mungkin ada yang hilang?"
+msgstr "Puzzle misteriusnya masih tidak cocok... Mungkin ada yang hilang?"
 
 #: cogs/wintersday/__init__.py:155
 #, python-brace-format
@@ -1921,9 +1936,9 @@ msgid ""
 "`{prefix}eventbackground {num}` to set your new background that you just "
 "acquired...*"
 msgstr ""
-"Kamu telah menggabungkan teka-teki! kamu berbisik: *Bagus sekali. Sekarang "
-"gunakan `{prefix}eventbackground {num}` untuk menggunakan latar belakang "
-"baru yang baru saja kamu dapat...*"
+"Kamu telah menggabungkan puzzle - puzzlenya! Di dalam kepalamu terdengar "
+"bisikan: *Bagus sekali. Sekarang gunakan `{prefix}eventbackground {num}` "
+"untuk menggunakan latar belakang baru yang baru saja kamu dapatkan...*"
 
 #: cogs/miscellaneous/__init__.py:76
 msgid "Get your daily reward"
@@ -1978,53 +1993,53 @@ msgid ""
 "\n"
 "            (This command has a cooldown until 12am UTC.)"
 msgstr ""
-"Ambil hadiah harianmu. Tergantung pada urutan harian yang kamu lakukan, kamu "
+"Ambil hadiah harianmu. Tergantung pada streak harian yang kamu lakukan, kamu "
 "akan mendapatkan hadiah yang lebih baik.\n"
 "\n"
-"            Setiap sepuluh hari, hadiahmu akan diatur ulang. Hari ke 11 dan "
-"hari ke 1 memiliki hadiah yang sama.\n"
-"            Hadiahnya bisa berupa uang (2/3 peluang) atau peri (1/3 "
-"peluang).\n"
+"            Setiap sepuluh hari, hadiahmu akan diatur ulang. Hari ke-11 dan "
+"hari ke-1 memiliki hadiah yang sama.\n"
+"            Hadiahnya bisa berupa uang (peluangnya 2/3) atau peti ("
+"peluangnya 1/3).\n"
 "\n"
-"            Kemungkinan hadihanya adalah:\n"
+"            Kemungkinan hadiahnya adalah:\n"
 "\n"
-"              __Hari ke 1__\n"
+"              __Hari ke-1__\n"
 "              $50 atau 1-6 peti common\n"
 "\n"
-"              __Hari ke 2__\n"
+"              __Hari ke-2__\n"
 "              $100 atau 1-5 peti common\n"
 "\n"
-"              __Hari ke 3__\n"
+"              __Hari ke-3__\n"
 "              $200 atau 1-4 peti common (99%) atau peti uncommon (1%)\n"
 "\n"
-"              __Hari ke 4__\n"
+"              __Hari ke-4__\n"
 "              $400 atau 1-4 peti common (99%) atau peti uncommon (1%)\n"
 "\n"
-"              __Hari ke 5__\n"
+"              __Hari ke-5__\n"
 "              $800 atau 1-4 peti common (99%) atau peti uncommon (1%)\n"
 "\n"
-"              __Hari ke 6__\n"
-"              $1,600 atau 1-3 peti common (80%), peti uncommon (19%) atau "
+"              __Hari ke-6__\n"
+"              $1.600 atau 1-3 peti common (80%), peti uncommon (19%) atau "
 "peti rare (1%)\n"
 "\n"
-"              __Hari ke 7__\n"
-"              $3,200 atau 1-2 peti uncommon (80%), peti rare (19%) atau peti "
+"              __Hari ke-7__\n"
+"              $3.200 atau 1-2 peti uncommon (80%), peti rare (19%) atau peti "
 "magic (1%)\n"
 "\n"
-"              __Hari ke 8__\n"
-"              $6,400 atau 1-2 peti uncommon (80%), peti rare (19%) atau peti "
+"              __Hari ke-8__\n"
+"              $6.400 atau 1-2 peti uncommon (80%), peti rare (19%) atau peti "
 "magic (1%)\n"
 "\n"
-"              __Hari ke 9__\n"
-"              $12,800 atau 1-2 peti uncommon (80%), peti rare (19%) atau "
+"              __Hari ke-9__\n"
+"              $12.800 atau 1-2 peti uncommon (80%), peti rare (19%) atau "
 "peti magic (1%)\n"
 "\n"
-"              __Hari ke 10__\n"
-"              $25,600 atau 1 peti rare (80%), peti magic (19%) atau peti "
+"              __Hari ke-10__\n"
+"              $25.600 atau 1 peti rare (80%), peti magic (19%) atau peti "
 "legendary (1%)\n"
 "\n"
 "            Jika kamu tidak menggunakan perintah ini lagi dalam waktu 48 jam "
-"setelah penggunaan pertama, kamu akan kehilangan urutan harianmu.\n"
+"setelah penggunaan pertama, kamu akan kehilangan streak harianmu.\n"
 "\n"
 "            (Perintah ini memiliki waktu cooldown sampai pukul 12 tengah "
 "malam dalam waktu UTC.)"
@@ -2037,23 +2052,23 @@ msgid ""
 "*Tip: `{prefix}vote` every 12 hours to get an up to legendary crate with "
 "possibly rare items!*"
 msgstr ""
-"Kamu menerima hadiah harianmu {txt}!\n"
-"Kamu dalam urutan hari ke **{streak}**!\n"
+"Kamu telah menerima hadiah harianmu {txt}!\n"
+"Kamu dalam urutan hari ke-**{streak}**!\n"
 "*Tips: `{prefix}vote` setiap 12 jam untuk berpeluang mendapatkan peti "
 "legendary dengan barang yang langka!*"
 
 #: cogs/miscellaneous/__init__.py:191
 msgid "View your current streak"
-msgstr "Melihat urutan harian kamu saat ini"
+msgstr "Melihat streak harian kamu saat ini"
 
 #: cogs/miscellaneous/__init__.py:195
 msgid ""
 "Want to flex your streak on someone or just check how many days in a row "
 "you've claimed your daily reward? This command is for you"
 msgstr ""
-"Ingin memamerkan urutan harian kamu kepada seseorang atau hanya melihat "
-"sudah berapa hari berturut-turut kamu mengambil hadiahmu? Perintah ini bisa "
-"kamu gunakan"
+"Ingin memamerkan streak harian kamu kepada seseorang atau hanya untuk "
+"melihat sudah berapa hari berturut-turut kamu mengambil hadiahmu? Perintah "
+"ini bisa kamu gunakan"
 
 #: cogs/miscellaneous/__init__.py:203
 #, python-brace-format
@@ -2061,17 +2076,17 @@ msgid ""
 "You don't have a daily streak yet. You can get one going by using the "
 "command `{prefix}daily`!"
 msgstr ""
-"Kamu belum memiliki urutan harian. Kamu bisa memulainya dengan menggunakan "
-"perintah`{prefix}daily`!"
+"Kamu masih belum memiliki streak harian. Kamu bisa memulainya dengan "
+"menggunakan perintah`{prefix}daily`!"
 
 #: cogs/miscellaneous/__init__.py:208
 #, python-brace-format
 msgid "You are on a daily streak of **{streak}!**"
-msgstr "Kamu berada dalam urutan harian ke **{streak}!**"
+msgstr "Kamu sudah berada dalam streak harian ke-**{streak}!**"
 
 #: cogs/miscellaneous/__init__.py:213
 msgid "Shorten an image URL."
-msgstr "Persingkat URL gambar."
+msgstr "Mempersingkat sebuah URL gambar."
 
 #: cogs/miscellaneous/__init__.py:217
 msgid ""
@@ -2085,16 +2100,16 @@ msgid ""
 "            In case this command fails, you can [manually upload your image "
 "to Imgur](https://imgur.com/upload)."
 msgstr ""
-"`[given_url]` - URL yang akan dipersingkat; jika tidak diberikan, perintah "
+"`[given_url]` - URL yang ingin dipersingkat; jika tidak diberikan, perintah "
 "ini akan mencari lampiran gambar\n"
 "\n"
-"            Mendapatkan URL yang pendek dari url yang panjang atau sebuah "
-"lampiran gambar.\n"
+"            Mendapatkan sebuah URL yang pendek dari sebuah URL yang panjang "
+"atau dari sebuah lampiran gambar.\n"
 "\n"
-"            Jika URL dan lampiran gambar diberikan, maka lampiran gambar "
-"lebih disukai. Tidak mendukung GIFs, hanya JPG dan PNG.\n"
-"            Jika perintah ini gagal, kamu dapat [mengupload gambarmu secara "
-"manual ke](https://imgur.com/upload)."
+"            Jika kedua URL dan lampiran gambar diberikan, maka lampiran "
+"gambar yang akan diambil. GIF tidak didukung, hanya JPG dan PNG.\n"
+"            Jika seandainya perintah ini gagal, kamu dapat [mengupload "
+"gambarmu secara manual ke Imgur](https://imgur.com/upload)."
 
 #: cogs/miscellaneous/__init__.py:225
 msgid "Please supply a URL or an image attachment"
@@ -2102,7 +2117,7 @@ msgstr "Harap menyediakan sebuah URL atau lampiran gambar"
 
 #: cogs/miscellaneous/__init__.py:228
 msgid "Please only use one image at a time."
-msgstr "Tolong gunakan satu gambar setiap satu waktu."
+msgstr "Tolong gunakan satu gambar satu-satu."
 
 #: cogs/miscellaneous/__init__.py:234
 #, python-brace-format
@@ -2111,7 +2126,7 @@ msgstr "Ini adalah URL gambar pendek kamu: <{link}>"
 
 #: cogs/miscellaneous/__init__.py:236
 msgid "Support the bot financially"
-msgstr "Dukung bot secara finansial"
+msgstr "Dukung botnya secara finansial"
 
 #: cogs/miscellaneous/__init__.py:240
 #, python-brace-format
@@ -2123,12 +2138,12 @@ msgid ""
 "\n"
 "            Thank you for supporting IdleRPG!"
 msgstr ""
-"Melihat halaman Patreon bot. Tingkatan yang berbeda akan memberikan hadiah "
-"yang berbeda.\n"
+"Melihat halaman Patreon botnya. Tier (tingkatan) yang berbeda akan "
+"memberikan hadiah yang berbeda.\n"
 "            Lihat `{prefix}help module Patreon` untuk melihat berbagai macam "
-"perintah.\n"
+"perintahnya.\n"
 "\n"
-"            Terima kasih sudah mendukuing IdleRPG!"
+"            Terima kasih karena sudah mendukung IdleRPG!"
 
 #: cogs/miscellaneous/__init__.py:252
 #, python-brace-format
@@ -2148,20 +2163,20 @@ msgstr ""
 "Bot ini memiliki laman patreonnya sendiri.\n"
 "\n"
 "**Kenapa aku harus berdonasi?**\n"
-"Bot ini saat ini berada di {guild_count} server, dan dia berkembang dengan "
-"cepat.\n"
+"Saat ini bot ini berada di {guild_count} server, dan dia sedang berkembang "
+"dengan cepat.\n"
 "Memimpin bot ini untuk semua pengguna tidaklah mudah dan menghabiskan banyak "
 "uang.\n"
-"Jika kamu ingin lanjut menggunakan bot ini atau hanya membantu kita, tolong "
-"donasikan sedikit.\n"
-"Bahkan $1 dapat membantu kita.\n"
+"Jika kamu ingin lanjut menggunakan bot ini atau hanya untuk membantu kita, "
+"tolonglah berdonasi, jumlah yang sedikitpun tak apa.\n"
+"Bahkan $1 pun dapat membantu kita.\n"
 "**Terima kasih!**\n"
 "\n"
 "<https://patreon.com/idlerpg>"
 
 #: cogs/miscellaneous/__init__.py:267
 msgid "Shows the source code and license."
-msgstr "Menunjukan kode sumber dan lisensi."
+msgstr "Menunjukan sumber kode dan lisensinya."
 
 #: cogs/miscellaneous/__init__.py:272
 msgid ""
@@ -2175,7 +2190,7 @@ msgstr ""
 
 #: cogs/miscellaneous/__init__.py:277
 msgid "Invite the bot to your server."
-msgstr "Mengundang bot ke servermu."
+msgstr "Mengundang botnya ke servermu."
 
 #: cogs/miscellaneous/__init__.py:281
 msgid ""
