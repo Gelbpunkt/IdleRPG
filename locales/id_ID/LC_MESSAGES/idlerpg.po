@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2022-03-08 22:06+0100\n"
-"PO-Revision-Date: 2024-01-03 08:13+0000\n"
+"PO-Revision-Date: 2024-01-05 04:10+0000\n"
 "Last-Translator: Feeltis Catcus <davinreginalds@gmail.com>\n"
 "Language-Team: Indonesian <http://translate.travitia.xyz/projects/idlerpg/"
 "bot/id/>\n"
@@ -2849,19 +2849,19 @@ msgstr "Saat ini sedang aktif"
 
 #: cogs/store/__init__.py:157
 msgid "Time Boosters"
-msgstr "Time Boosters"
+msgstr "Time Boosters (Booster Waktu)"
 
 #: cogs/store/__init__.py:157
 msgid "Luck Boosters"
-msgstr "Luck Boosters"
+msgstr "Luck Boosters (Booster Keberuntungan)"
 
 #: cogs/store/__init__.py:157
 msgid "Money Boosters"
-msgstr "Money Boosters"
+msgstr "Money Boosters (Booster Uang)"
 
 #: cogs/store/__init__.py:160
 msgid "Your Boosters"
-msgstr "Penguatmu"
+msgstr "Booster kamu"
 
 #: cogs/store/__init__.py:167
 #, python-brace-format
@@ -2881,36 +2881,37 @@ msgid ""
 "            Activate a booster. For a detailed explanation what the boosters "
 "do, check `{prefix}help boosters`."
 msgstr ""
-"`<boostertype>` - Jenis booster yang akan diaktifkan, bisa jadi time, luck, "
-"money atau semuanya\n"
+"`<boostertype>` - Jenis booster yang akan diaktifkan, bisa berupa time "
+"(waktu), luck (keberuntungan), money (uang) atau semuanya\n"
 "\n"
 "            Mengaktifkan sebuah booster. Untuk penjelasan yang lebih lengkap "
-"tentang apa saja kegunaan booster, periksa `{prefix}help boosters`."
+"tentang apa saja kegunaan boosternya, gunakan`{prefix}help boosters`."
 
 #: cogs/store/__init__.py:182
 msgid "That is not a valid booster type. Must be `time/luck/money/all`."
-msgstr "Itu bukan tipe booster yang valid. Harus `time/luck/money`."
+msgstr "Itu bukan tipe booster yang valid. Harus berupa `time/luck/money/all`."
 
 #: cogs/store/__init__.py:187
 msgid "You don't have any of these boosters."
-msgstr "Kamu tidak memiliki penguat ini."
+msgstr "Kamu tidak memiliki booster ini."
 
 #: cogs/store/__init__.py:192
 msgid "This booster is already running. Do you want to refresh it anyways?"
-msgstr "Penguat ini sedang berjalan. Apakah kamu tetap ingin mereset ulang?"
+msgstr ""
+"Booster ini sudah aktif sebelumnya. Apakah kamu tetap ingin mereset ulang?"
 
 #: cogs/store/__init__.py:206
 #, python-brace-format
 msgid ""
 "Successfully activated a **{booster} booster** for the next **24 hours**!"
 msgstr ""
-"Berhasil mengaktifkan **{booster} booster** untuk **24 jam** berikutnya!"
+"Berhasil mengaktifkan **booster {booster}** selama **24 jam** berikutnya!"
 
 #: cogs/store/__init__.py:213
 msgid "This will overwrite all active boosters and refresh them. Are you sure?"
 msgstr ""
-"Ini akan menimpa semua penguat yang aktif dan mereset ulang mereka. Apakah "
-"kamu yakin?"
+"Ini akan menimpa semua booster yang sedang aktif dan mereset ulang mereka. "
+"Apakah kamu yakin?"
 
 #: cogs/store/__init__.py:226
 msgid "Nothing to activate."
@@ -2919,15 +2920,15 @@ msgstr "Tidak ada yang diaktifkan."
 #: cogs/store/__init__.py:237
 #, python-brace-format
 msgid "Successfully activated {types} for the next **24 hours**!"
-msgstr "Berhasil mengaktifkan {types} untuk **24 jam** berikutnya!"
+msgstr "Berhasil mengaktifkan {types} selama **24 jam** berikutnya!"
 
 #: cogs/help/__init__.py:115 cogs/help/__init__.py:239
 msgid "This command was not initiated by you."
-msgstr "Perintah ini tidak diaktifkan olehmu."
+msgstr "Perintah ini tidak sedang diaktifkan olehmu."
 
 #: cogs/help/__init__.py:189
 msgid "Subcommands"
-msgstr "Subperintah"
+msgstr "Sub-perintah"
 
 #: cogs/help/__init__.py:202
 #, python-brace-format
@@ -2938,24 +2939,26 @@ msgstr ""
 
 #: cogs/help/__init__.py:278
 msgid "View the command list"
-msgstr "Melihat daftar perintah"
+msgstr "Melihat daftar perintahnya"
 
 #: cogs/help/__init__.py:281
 msgid "Sends a link to the official documentation."
-msgstr "Mengirim tautan ke dokumentasi resmi."
+msgstr "Mengirim sebuah tautan ke dokumentasi resmi."
 
 #: cogs/help/__init__.py:284
 #, python-brace-format
 msgid "<:blackcheck:441826948919066625> **Check {url} for a list of commands**"
-msgstr "<:blackcheck:441826948919066625> **Cek {url} untuk daftar perintah**"
+msgstr ""
+"<:blackcheck:441826948919066625> **Cek {url} untuk daftar perintah - "
+"perintahnya**"
 
 #: cogs/help/__init__.py:289
 msgid "View the tutorial"
-msgstr "Melihat tutorial"
+msgstr "Melihat tutorialnya"
 
 #: cogs/help/__init__.py:292
 msgid "Link to the bot tutorial and FAQ."
-msgstr "Tautan ke tutorial bot dan FAQ."
+msgstr "Tautan ke tutorial bot dan FAQ-nya."
 
 #: cogs/help/__init__.py:295
 #, python-brace-format
@@ -2964,7 +2967,7 @@ msgstr "<:blackcheck:441826948919066625> **Cek {url} untuk tutorial dan FAQ**"
 
 #: cogs/help/__init__.py:301
 msgid "Allow someone/-thing to use helpme again"
-msgstr "Izinkan seseorang/sesuatu untuk menggunakan helpme"
+msgstr "Izinkan seseorang/sesuatu untuk menggunakan helpme lagi"
 
 #: cogs/help/__init__.py:305
 #, python-brace-format
@@ -2976,17 +2979,18 @@ msgid ""
 "\n"
 "            Only Support Team Members can use this command."
 msgstr ""
-"`<thing_to_unban>` - Pengguna discord, User IDnya, atau ID server\n"
+"`<thing_to_unban>` - Seorang Pengguna discord, User IDnya, atau sebuah ID "
+"server\n"
 "\n"
-" Batalkan pemblokiran akun/server sebelumnya dari penggunaan perintah "
-"`{prefix}helpme`.\n"
+"            Membatalkan ban sebuah akun/server sebelumnya dari penggunaan "
+"perintah `{prefix}helpme`.\n"
 "\n"
-" Hanya Anggota Tim Suport yang dapat menggunakan perintah ini."
+"            Hanya Anggota Tim Dukungan yang dapat menggunakan perintah ini."
 
 #: cogs/help/__init__.py:318
-#, python-brace-format
+#, fuzzy, python-brace-format
 msgid "{thing} has been unbanned for the helpme command :ok_hand:"
-msgstr "{thing} telah diunblokir dari perintah helpme :ok_hand:"
+msgstr "{thing} telah di unban untuk perintah helpme :ok_hand:"
 
 #: cogs/help/__init__.py:324
 msgid "Ban someone/-thing from using helpme"
