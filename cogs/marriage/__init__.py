@@ -135,6 +135,51 @@ class Marriage(commands.Cog):
                 author=ctx.author.mention, partner=partner.mention
             )
         )
+    
+    @has_char()
+    @commands.guild_only()
+    @commands.command(aliases=["kidnap"], brief=_("Adopt another player's child"))
+    @locale_doc
+    async def adopt(self, ctx, donator: MemberWithCharacter, child: str):
+        _(
+            """`<donator>` - The player who is giving you their child
+            `<child>` - The name of the child you want to adopt
+
+            Adopt a child from another player. The child will be removed from their family and added to yours."""
+        )
+        if donator == ctx.author:
+            return await ctx.send(_("Haha, very funny."))
+        # ask donator is they want to give away their child
+        if not await ctx.confirm(
+            _("{donator}, do you want to give {child} to {author}?").format(
+                donator=donator.mention, child=child, author=ctx.author.mention
+            ),
+            user=donator,
+        ):
+            return await ctx.send(_("They didn't want to give away their child."))
+        max, _ = self.get_max_kids(ctx.character_data["lovescore"])
+        async with self.bot.pool.acquire() as conn:
+            names = await conn.fetch(
+                'SELECT name FROM children WHERE "mother"=$1 OR "father"=$1;',
+                ctx.author.id,
+            )
+        if len(names) + 1 > max:
+            return await ctx.send(_("You have too many children already."))
+        async with self.bot.pool.acquire() as conn:
+            child_data = await conn.fetchrow(
+                'SELECT * FROM children WHERE "name"=$1 AND ("mother"=$2 OR "father"=$2);',
+                child,
+                donator.id,
+            )
+            if not child_data:
+                return await ctx.send(_("That child doesn't exist or isn't the donators."))
+            await conn.execute(
+                'UPDATE children SET "mother"=$1, "father"=$1 WHERE "name"=$3 AND ("mother"=$3 OR "father"=$3)',
+                ctx.author.id,
+                child,
+                donator.id,
+            )
+        await ctx.send(_("You adopted {child}!").format(child=child))
 
     @has_char()
     @commands.command(brief=_("Break up with your partner"))
